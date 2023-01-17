@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D425C54E76
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 21:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEB18C54E76
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 21:06:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229492AbjAQVGg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 16:06:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36868 "EHLO
+        id S229529AbjAQVGp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 16:06:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbjAQVFP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 16:05:15 -0500
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BB7C43926
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:31:23 -0800 (PST)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-4dedc46e2d5so126836567b3.21
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:31:23 -0800 (PST)
+        with ESMTP id S229681AbjAQVFQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 16:05:16 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48F8E442CB
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:31:24 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id k5-20020a170902c40500b001947b539123so7030380plk.19
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:31:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DwwyDRcEc/QahaSm8IQ8wFaNXRSbSZzT+SIlbiS7D3Q=;
-        b=W/NlxobfO9eXaE1SjmxL9k3w13xnKd7BKMn5/MwMR9fBoN8mhjUqjNnrWZv04sGlYE
-         xthvgpfRunfo/WJqaqAzrk8qN57uNOKIlAgeEBsMCgVO98ScDCWF9a9loxL8Wq+raFeN
-         7PHnB/1HGzsRxQCTBZmNTGlvAJc92I0HWFduSUHqhHLt7dCVheciitK8dp/RS3tRLaFz
-         YfqLSEMDCGFo6KA4XedyWKSK1f+uJwZMcHgcDGdwzaU6rE5R9/t1o4JZMrnmitpIyGig
-         +01LqCRsHuvrgGEu2Op+3OM0Dh9Da4nukiu8zv8IPoEkMC1Cqzn3sn7WbrzHhLgbXECt
-         xBTw==
+        bh=6rZ466JhVR5XM57QkszJq3kGwqA/2fSr9kRJYjghQas=;
+        b=YVXG8kAI1kbyCxFzWy42ptmGXIAt8GjT7xCzHQP7s81Ya6G4I1ZWe/PNz4r+ZEmHob
+         sWPOfEPOiGf/pxEIU5yxTWPZXvuBG0weg3HwrHS48BGBnRq9Y2NyRHVQXjrKndZz9Prb
+         nOdfl2KLmkyBjQPGTZPIMwToceBsMoZlMum9CJ20vnMXz6HZD7EEXdX1h2CeMyCagBIz
+         OAprnQoD/XQqN3kqZDfrbZm2bp59F9ajeklzMnQXqZPfmQRt83yRvG1JFd/9xP5tAwbu
+         FtbR9/TMDCqqvXaj16FA3ajHkUPvIQPDoC3EnOzxewNpyJ3m5TUqgy05UTdnYseFZySP
+         czwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DwwyDRcEc/QahaSm8IQ8wFaNXRSbSZzT+SIlbiS7D3Q=;
-        b=6WG3ZXXEpyfAX+HkmN/h2i0irJ3QMuPPuCQulkD5k9B5R5XNNmDz2khmcESKdtfo+H
-         lIgbxT3L5X2s6tQqwngFTlW0NZQIB4MhiTgArGWfdkMLGuzHH1ekYcdjh+L9JPMkumvj
-         WyvU8G0aAEI7te1VGQIqF+ZDiRkIEZ2VoCnPCqbevpAEPet1FaB5qZ0var/vJR6X96hH
-         4q5MOKjFn3ScbkrXd0gOY4aSjmJEoUF2B7xLwMNQJ3X2uNs30Asch4qAIIAfwgH9H1mH
-         aKn5+iK5hm1bMxrE9Dx3iZ1WlxZAwGjapl9wIGJBjWdRF4A/oXn9ypUx8MP1BfQ4T7lW
-         6uoA==
-X-Gm-Message-State: AFqh2kqyK5fGKH2O8PBty0qtMlIbIOO7SNLSElCYNjKzO6VtAvNRmg/F
-        vZT11A6cJ1+KW1BbfVsrRN1lcFF5cdASiOljVlLE0FNnh2enw7SuFJvQ/tUvd9wLnselEv3Zdpi
-        +RsxjAlTJROZr2z2EHMA8gkyR7vesW1PY7HSoStUqneumYR4s9yYGges0TvRE4mBmxA==
-X-Google-Smtp-Source: AMrXdXtklQ1GCBkEVTzm7pKEtExQnQV9D+pbcMp4EW89GAAxDH2zSilpv/bskCqtxfrIvCPCLJN8MAmS7ti9tHM=
+        bh=6rZ466JhVR5XM57QkszJq3kGwqA/2fSr9kRJYjghQas=;
+        b=v9vKU79tiCBTEczyuJONdfak/ucoh2OhaSIzfTl6YUjT+PwlywxYx8fL26z2nUWbeU
+         ekLGn34gm8C0ZpsTaY8IEWA1qMx77YO6zsrvdKwDBmdaVnDgRDggiufwOhIEvywyB44h
+         VOF3cIx4Zp9qB6ezFARhs0HBEiwAoxiz42OR9VT8wc+gV2Wff8nhbJj6OVNEpdl8zqfo
+         9vQslxjygZeY7qjczT/saeg2+aDfMv2mAfzH8TjityYZGNkLIL8B49ffADluZlW/qJOp
+         Hm+2D/+mkCHVyCShk5kwI42vOueoO32145C+gZJ6i+kT0W9tg3aL9buLAIehWaXAs51P
+         ujRQ==
+X-Gm-Message-State: AFqh2kqOQmS/nlRp3/Kepl+eiqdsZVN18Xfz4AOGXJ1HmYSvgK2PU+31
+        S5HXoeYVGD0q9FKSK5vhY91j8zc+kVYDHc9gOUZXzKeMbES3vS10NmMrO/N3kmbq1Y5R22cwK4V
+        anrAn6+mE4bqiUNfY8cueT90xqIn4O9hFDEtzwxdXG/YO6+mO70k7j+o0FlsBuc6ZHw==
+X-Google-Smtp-Source: AMrXdXvEUcf5eAHNDR/2h4yrMTTtLPw3nas8aZHn1hkyuDP1U/Z3N6ecNiTjxycyFsn85I1osrSE6z7sI9RpXHw=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a0d:f282:0:b0:4ed:c96d:1b89 with SMTP id
- b124-20020a0df282000000b004edc96d1b89mr616430ywf.130.1673983882139; Tue, 17
- Jan 2023 11:31:22 -0800 (PST)
-Date:   Tue, 17 Jan 2023 19:30:37 +0000
+ (user=calvinwan job=sendgmr) by 2002:a05:6a00:2a04:b0:57f:ef13:63aa with SMTP
+ id ce4-20020a056a002a0400b0057fef1363aamr372389pfb.42.1673983883703; Tue, 17
+ Jan 2023 11:31:23 -0800 (PST)
+Date:   Tue, 17 Jan 2023 19:30:38 +0000
 In-Reply-To: <20230104215415.1083526-1-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20230104215415.1083526-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
-Message-ID: <20230117193041.708692-3-calvinwan@google.com>
-Subject: [PATCH v6 2/6] submodule: strbuf variable rename
+Message-ID: <20230117193041.708692-4-calvinwan@google.com>
+Subject: [PATCH v6 3/6] submodule: move status parsing into function
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Calvin Wan <calvinwan@google.com>, emilyshaffer@google.com,
@@ -63,57 +63,108 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A prepatory change for a future patch that moves the status parsing
-logic to a separate function.
+A future patch requires the ability to parse the output of git
+status --porcelain=2. Move parsing code from is_submodule_modified to
+parse_status_porcelain.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- submodule.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ submodule.c | 74 ++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 42 insertions(+), 32 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index fae24ef34a..faf37c1101 100644
+index faf37c1101..768d4b4cd7 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -1906,25 +1906,28 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+@@ -1870,6 +1870,45 @@ int fetch_submodules(struct repository *r,
+ 	return spf.result;
+ }
  
- 	fp = xfdopen(cp.out, "r");
- 	while (strbuf_getwholeline(&buf, fp, '\n') != EOF) {
-+		char *str = buf.buf;
-+		const size_t len = buf.len;
++static int parse_status_porcelain(char *str, size_t len,
++				  unsigned *dirty_submodule,
++				  int ignore_untracked)
++{
++	/* regular untracked files */
++	if (str[0] == '?')
++		*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
 +
- 		/* regular untracked files */
--		if (buf.buf[0] == '?')
-+		if (str[0] == '?')
- 			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
- 
--		if (buf.buf[0] == 'u' ||
--		    buf.buf[0] == '1' ||
--		    buf.buf[0] == '2') {
++	if (str[0] == 'u' ||
++	    str[0] == '1' ||
++	    str[0] == '2') {
++		/* T = line type, XY = status, SSSS = submodule state */
++		if (len < strlen("T XY SSSS"))
++			BUG("invalid status --porcelain=2 line %s",
++			    str);
++
++		if (str[5] == 'S' && str[8] == 'U')
++			/* nested untracked file */
++			*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
++
 +		if (str[0] == 'u' ||
-+		    str[0] == '1' ||
-+		    str[0] == '2') {
- 			/* T = line type, XY = status, SSSS = submodule state */
--			if (buf.len < strlen("T XY SSSS"))
-+			if (len < strlen("T XY SSSS"))
- 				BUG("invalid status --porcelain=2 line %s",
--				    buf.buf);
-+				    str);
++		    str[0] == '2' ||
++		    memcmp(str + 5, "S..U", 4))
++			/* other change */
++			*dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
++	}
++
++	if ((*dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
++	    ((*dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
++	     ignore_untracked)) {
++		/*
++		* We're not interested in any further information from
++		* the child any more, neither output nor its exit code.
++		*/
++		return 1;
++	}
++	return 0;
++}
++
+ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+@@ -1909,39 +1948,10 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ 		char *str = buf.buf;
+ 		const size_t len = buf.len;
  
--			if (buf.buf[5] == 'S' && buf.buf[8] == 'U')
-+			if (str[5] == 'S' && str[8] == 'U')
- 				/* nested untracked file */
- 				dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+-		/* regular untracked files */
+-		if (str[0] == '?')
+-			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+-
+-		if (str[0] == 'u' ||
+-		    str[0] == '1' ||
+-		    str[0] == '2') {
+-			/* T = line type, XY = status, SSSS = submodule state */
+-			if (len < strlen("T XY SSSS"))
+-				BUG("invalid status --porcelain=2 line %s",
+-				    str);
+-
+-			if (str[5] == 'S' && str[8] == 'U')
+-				/* nested untracked file */
+-				dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+-
+-			if (str[0] == 'u' ||
+-			    str[0] == '2' ||
+-			    memcmp(str + 5, "S..U", 4))
+-				/* other change */
+-				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+-		}
+-
+-		if ((dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
+-		    ((dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
+-		     ignore_untracked)) {
+-			/*
+-			 * We're not interested in any further information from
+-			 * the child any more, neither output nor its exit code.
+-			 */
+-			ignore_cp_exit_code = 1;
++		ignore_cp_exit_code = parse_status_porcelain(str, len, &dirty_submodule,
++							     ignore_untracked);
++		if (ignore_cp_exit_code)
+ 			break;
+-		}
+ 	}
+ 	fclose(fp);
  
--			if (buf.buf[0] == 'u' ||
--			    buf.buf[0] == '2' ||
--			    memcmp(buf.buf + 5, "S..U", 4))
-+			if (str[0] == 'u' ||
-+			    str[0] == '2' ||
-+			    memcmp(str + 5, "S..U", 4))
- 				/* other change */
- 				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
- 		}
 -- 
 2.39.0.314.g84b9a713c41-goog
 
