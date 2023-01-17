@@ -2,100 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98EEBC38142
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 23:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CADCFC00A5A
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 00:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230144AbjAQXf6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 18:35:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55236 "EHLO
+        id S229722AbjARALn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 19:11:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230112AbjAQXe4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 18:34:56 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBD3F4DBE0
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 13:25:58 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id t5so27579931wrq.1
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 13:25:58 -0800 (PST)
+        with ESMTP id S229614AbjARALW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 19:11:22 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BB845DC2D
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 15:27:30 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id x2-20020a17090a46c200b002295ca9855aso511154pjg.2
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 15:27:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=owEwADRFHuU+8npNjB9EeHHTN13pdUYZBa9cWkXwvVQ=;
-        b=He+6o7gXnpAgilxSi/knIGEthr2t8rxoDcYtNH+6k0HrJJk/z3ELlJg4DOSJA/FmIr
-         T9o36NFJv/k+FxI8RzbX/dHsxh2cgIC51cxYiqTw6Zw7NrpYemEmVKxOW152sky7qf0S
-         ySKrgDqIihp1bcY9TwuV4SZ3qKivOnpHNaWrt9K2C4Z/LbDrTCk+M0M8VbZWwON/QeSX
-         eXNRTwBO+n2ZlNnEfPvjH3RzCt7yd7v7qQJ7T90JYXVUzevI0ZlvE5V7MIkjQAYZ+/BT
-         Mf6b8pJ+hbDnPnmiyEYDkIi1E757QxsHex9hAg9LANuOgCOPD+1grQYw5wrfJlUZ9hY4
-         hBbA==
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nOL8Sa6jc/9GGPTwa6CRcJyMjHjB/bYW8e5mhv3ZSmQ=;
+        b=O3yWxH7PIo7dCOIqui1LPRXsaQpW9suJaJ5Ch8WKpMAeO1MnjEyNg/2/aa4M71ebk1
+         nTPFzu2/EH+CodygmiPPSCeh2oJZg0r+2uPuYpNy8m5kWPK0DmEa3aTWymSTFRVClJhM
+         XN0uWHxGTnXBAbU5hys1A44nKPmspMlSFjqB9d3Cey6pdsAgU8jVThFBR8JqbXR+oUmD
+         c0Ig2+mucyMYlJJnYm/Hxs/rqN6N2gg6F/TaLJAQPS1Sw6y7rlDtWAwBREtV4A4PzpgY
+         fx5D4w4Jw7Bvkn3liELhU6gOA/Q69w7+hZyQhYc7xpRvCv56LjfJab4Bj8tQZpCfyf8L
+         RZCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=owEwADRFHuU+8npNjB9EeHHTN13pdUYZBa9cWkXwvVQ=;
-        b=peCCQiiqKjiTKGbdCfVhYGlJ2f5GoUKFMzaeTfI1F9rOUmYWv+eT6Kss2wiGQdQoWb
-         ub3Al6oJp3qyBluMRz6k2V7SQN5g4ODWMaE0qf61Cbq9L6cVqR54MngKufR8udzsiIha
-         ziUzWwV5Tf7sttCI7tfPGuAaHt8wSS1Bk0C3tNdxoZa+Hn94bVxQkj285czQDBzCsSCZ
-         fP2g1eOpTs6yIa2512z0oV4324vPjxN93p1OgIIoAhW3Tx36TMavjZSbiKjqucnTPmUc
-         hNQFaROhKsMyOzpzz0Ne0hrTxY1kkTsli156qdFqZuByA7hJTEBLU9N9AIfxSdIbVEg4
-         98rg==
-X-Gm-Message-State: AFqh2kohATwbIR/SZLcKW+czBy9EhDNEiqaCAOpfNv6MAeiHoBZaIKeP
-        dmiIaKiwPZ3fdwZEude1ISBBh43matE=
-X-Google-Smtp-Source: AMrXdXtPvV9ugiI+++A2wrETCIaXRiKeOjTTOB73ThiQlAMt9eNXUvi/V69Zg5MIKdc3vw4NdrW/qQ==
-X-Received: by 2002:a5d:410b:0:b0:2bc:7fdd:9248 with SMTP id l11-20020a5d410b000000b002bc7fdd9248mr3816960wrp.9.1673990757249;
-        Tue, 17 Jan 2023 13:25:57 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i2-20020adfdec2000000b002b9b9445149sm35599467wrn.54.2023.01.17.13.25.56
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nOL8Sa6jc/9GGPTwa6CRcJyMjHjB/bYW8e5mhv3ZSmQ=;
+        b=KqfImUAvCHEnYKo/kOZBFwrONr3gavk7T4JDqeacqsl4VvM29b8FOQKbiRTr602qmE
+         vkMA5oWILQ3j5PZxEhv3M9YPAtL4JS0v5yCqoAeDlvewyCp6Oh5DMt/R7GxbZltrk0xo
+         WYww7hn/HXeRxT+A7XQQMv9ayeYaPfk4gsFY/Ev4F6ZARDlpsc5EfEYOUCNV+RLuyQii
+         o9zpOGhUSI3yYevHDEx9wxlJh6wDNQQhj6+BNuWLb41MYWP2XcZKZobfy+C2yUHVeDL7
+         wOCX1MHjd6KMIA3FgysD7I4VjjMCXQlHVBWk0Q7CBt6c/888Sq3+hhB2M3eF61Lavjnk
+         R0sQ==
+X-Gm-Message-State: AFqh2kpBqCEyGxd1djxh/aivxS9DVCkoArtPKxEm7CZ0CKC1Fyn9Cxw1
+        +Nn3PSJ+f309C7LCJGf/3qR9UGNjOnE=
+X-Google-Smtp-Source: AMrXdXt/D0Y6WIdZY0x0SHo+73QTYMBUFWY9beMac2FQJa4dcVDD9jCqNX9HQqcJiApppJFTUqBOfg==
+X-Received: by 2002:a17:902:c2d4:b0:193:d12:f892 with SMTP id c20-20020a170902c2d400b001930d12f892mr29166967pla.0.1673998049759;
+        Tue, 17 Jan 2023 15:27:29 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id u2-20020a1709026e0200b001925016e34bsm5288395plk.79.2023.01.17.15.27.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 13:25:56 -0800 (PST)
-Message-Id: <pull.1437.git.git.1673990756466.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Jan 2023 21:25:56 +0000
-Subject: [PATCH] fsm-listen-daarwin: combine bit operations
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 17 Jan 2023 15:27:29 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] worktree: teach find_shared_symref to ignore current
+ worktree
+References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
+Date:   Tue, 17 Jan 2023 15:27:29 -0800
+Message-ID: <xmqqilh491y6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+Rubén Justo <rjusto@gmail.com> writes:
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    fsm-listen-daarwin: combine bit operations
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
+> We prevent some operations from being executed on a branch checked out
+> in a worktree other than the current one.  An example of this was
+> introduced in b5cabb4 (rebase: refuse to switch to branch already
+> checked out elsewhere, 2020-02-23).
+>
+> "find_shared_symref()" is sometimes used to find the worktree in which a
+> branch is checked out.  It performs its search starting with the current
+> worktree.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1437%2FAtariDreams%2Fdarwin-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1437/AtariDreams/darwin-v1
-Pull-Request: https://github.com/git/git/pull/1437
+"starting with the current" may be a correct statement of the fact,
+but it is totally unclear what the relevance it has to the problem
+being solved. Rather, it is unclear what problem you are solving.
 
- compat/fsmonitor/fsm-listen-darwin.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Is it 
 
-diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index 97a55a6f0a4..fccdd21d858 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
-+++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -129,9 +129,9 @@ static int ef_is_root_renamed(const FSEventStreamEventFlags ef)
- 
- static int ef_is_dropped(const FSEventStreamEventFlags ef)
- {
--	return (ef & kFSEventStreamEventFlagMustScanSubDirs ||
--		ef & kFSEventStreamEventFlagKernelDropped ||
--		ef & kFSEventStreamEventFlagUserDropped);
-+	return (ef & (kFSEventStreamEventFlagMustScanSubDirs |
-+		      kFSEventStreamEventFlagKernelDropped |
-+		      kFSEventStreamEventFlagUserDropped));
- }
- 
- /*
+ - We search through the worktrees, starting with the current one,
+   and stop at the first one found.
 
-base-commit: a7caae2729742fc80147bca1c02ae848cb55921a
--- 
-gitgitgadget
+ - If the current branch the the current worktree is checked out in
+   a different worktree, we get the current worktree back.
+
+ - There are callers that want to know ONLY about other worktrees;
+   they check the returned value and when they see it is the current
+   one, they happily ignores the fact that it might be checked out
+   elsewhere as well.
+
+> As we allow to have the same branch checked out in multiple worktrees
+> simultaneously...
+>
+> 	$ git worktree add foo
+> 	$ git worktree add -f bar foo
+> 	$ git checkout --ignore-other-worktrees foo
+>
+> ... if the branch checked out in the current worktree is also checked
+> out in another worktree, with "find_shared_symref()" we will not notice
+> this "other" working tree.
+
+It is somewhat disturbing that your solution only needs to "ignore"
+the current one.  Whatever problem you are seeing by the current
+code not ignoring the current worktree, wouldn't we have a similar
+problem if two non-current worktrees checked out the same branch?
+Would it not be a problem because any non-current worktree returned
+by the function triggers the "already checked-out" safety mechanism?
+
