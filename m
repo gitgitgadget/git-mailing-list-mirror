@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE752C677F1
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 22:02:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 318DCC678D4
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 22:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbjAQWCm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 17:02:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39892 "EHLO
+        id S229748AbjAQWGd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 17:06:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229993AbjAQWA2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 17:00:28 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43A8C2E0D9
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 12:19:27 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id e3so22605129wru.13
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 12:19:27 -0800 (PST)
+        with ESMTP id S229890AbjAQWEM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 17:04:12 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62D303A855
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 12:33:06 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id r2so31860671wrv.7
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 12:33:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fFvS7e0AtSeL5U4qq0ucT3k0W4B9SimIBkmtKlz2XiA=;
-        b=U+buWwX69ZPn7GfQl16OFs7EBza9tjS05mwGF52X2snZIVSJUwPYoElVrg8V5F5vJ3
-         tL7P9gUh3FyWVNsDT59B34AnF3Y+iX411qX3gJygRkwECZ1HLmzB6NzhJTIHfJJ+oXpK
-         a16539ABKUgeSxhr7JX/MmIdUa0F65VcO4O0VrwfpSlHa+WtpJVceIenBoaM6S/B1yvs
-         ZN8B/5Kum91G7wZENlCOObMn6JOqmjBJUHTQRgmRf9eD83sbLQkAElnTRHJqJy7VKb9d
-         Zlxoj40IbvaXiIumaG+ut7UlrDEsvzbTGr9HKiJ/MwY1Q3w5AMQDCIQeZuHWovZeyGS7
-         9b1g==
+        bh=9vcbh7iw7a2EU+e6TRBlUbqRCH9XeQmX+z/KXtE4sX0=;
+        b=Lj6HLycoQGQP0EeaMgpyY/1WFMbwYPz5pY8joBODzvJ3/UIrKJJqWIf3lsnWmUCREb
+         9+X31wGBzCex9/DByQ/fNjljIReb/tXlBwQE+45pjfThWNOzE/Qh94jYKFGqoJd6/+6d
+         tvOrPAcnkbzVBLFJoSQklQam4PBzkhEB+iIo2yYqyLXCClfvhq7ivDhP9Rn7iwwmpQFn
+         5hlUb7QYtgC38j7LckMh3AWdluuBpbRvoRqLXTvsTPexskF0UM6ynufeJU8yqPZoM8UJ
+         A05ubew2GQ5475GGxTeYcEpGl/y+69k088j2IiwMV16Wsx+bQCvz4gBrMrcL5gKCbvT4
+         Dv6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fFvS7e0AtSeL5U4qq0ucT3k0W4B9SimIBkmtKlz2XiA=;
-        b=r8ZDWnYB01ZjLH1v9IE3afHNhJowrKwCjyLfbZThbAAAbQAhcvRHWG1mEhjuKgw3gh
-         KYuNEwXL+/hwWxy1OOxrkuiwL+rHVNZoAF7g4xuSsh7yHJ0Sw5yl1OandahrcZzIIHRf
-         F6giufB/rcEfUUGg02q/LbWucfGsz+acX8lHHlLMKXuDD+LDygAZZuF8ECsULP8GRuHx
-         9ZEgrT56NwYYCkjEsQx/t5nff/mpHHVr3RCMc7KKp5PmwXUDPR9/EvBCoP98yqhRqKM6
-         TpiNRbjB/oGT0fSmDGVqO8QBKw6CkrHG8RA/7zZdkN1Bda+FYXhEGy2QHcRhl7iHBvYD
-         yXzA==
-X-Gm-Message-State: AFqh2kpzX/nsM2JIVJh8nKYrp4I1npkyEi9qUM9EQjAP7uLGHfUG8P6N
-        jhRIlNhkimZ1eh/3r9AugIULiGK2Ll8=
-X-Google-Smtp-Source: AMrXdXtGrJZ6sZWe5gCbHh+i3tFxXI959Lvnq9Zheem24f2tUNhD1zZuQBNWNyMAShBUOlZ0ZfQPcg==
-X-Received: by 2002:a05:6000:98d:b0:2bd:c6ce:7bfb with SMTP id by13-20020a056000098d00b002bdc6ce7bfbmr4329264wrb.28.1673986765618;
-        Tue, 17 Jan 2023 12:19:25 -0800 (PST)
+        bh=9vcbh7iw7a2EU+e6TRBlUbqRCH9XeQmX+z/KXtE4sX0=;
+        b=p+InnuJVFtrs4f1xkGtGZqqnHXHEtVO3l32opEi8CIHQE+HWmBs/NRQWg+Isf12fBT
+         kWw1SpV5BE4YzkUflU2LouWefuXAVJ+CaT1e1N+D5BW55OB92iFRxYl68StRyCbwe8g4
+         z9e+4RDua0VC7X5PExiujtIdBEHZJV1eRz+qz1TIVrQ5tpTyQJL8DeZ7O9/eVI0lg99g
+         w+uSiD2XbOc2vx2VKXkt6bGCMqvnHgjzR7oM7Y/HgQYK3i0Bub+4+YZf6mXmo5ey7LBL
+         cFFpproBbdui1vdF+cdmBvsfoQAOr8TRfAaHGXPQm7LxHLANzG2wy76g1dglmznseUBS
+         04bQ==
+X-Gm-Message-State: AFqh2kr5HEMTRndY7F/+Aev8m+b7Twk9kmscdGadaSKohw+M/fKscVAI
+        uHMUR7iJ2x91/tEHhqYQX35JQ9JSlwU=
+X-Google-Smtp-Source: AMrXdXtjSCjIBm9QaZW7WAqpA1giyPwT8586EWTOC47o5yzNbFwgmppFvZ7vx4DrS+ByHTuoXiG7gg==
+X-Received: by 2002:a5d:6d46:0:b0:2bd:f367:40bc with SMTP id k6-20020a5d6d46000000b002bdf36740bcmr3574802wri.13.1673987584721;
+        Tue, 17 Jan 2023 12:33:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p8-20020a5d4588000000b002bdfb97e029sm7575445wrq.19.2023.01.17.12.19.25
+        by smtp.gmail.com with ESMTPSA id y15-20020adffa4f000000b002bbec19c8acsm24580680wrr.64.2023.01.17.12.33.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 12:19:25 -0800 (PST)
-Message-Id: <pull.1435.v5.git.git.1673986764553.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1435.v4.git.git.1673986152672.gitgitgadget@gmail.com>
-References: <pull.1435.v4.git.git.1673986152672.gitgitgadget@gmail.com>
+        Tue, 17 Jan 2023 12:33:04 -0800 (PST)
+Message-Id: <pull.1435.v7.git.git.1673987583356.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1435.v6.git.git.1673986937738.gitgitgadget@gmail.com>
+References: <pull.1435.v6.git.git.1673986937738.gitgitgadget@gmail.com>
 From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Jan 2023 20:19:24 +0000
-Subject: [PATCH v5] curl: resolve deprecated curl declarations
+Date:   Tue, 17 Jan 2023 20:33:03 +0000
+Subject: [PATCH v7] curl: resolve deprecated curl declarations
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -88,124 +88,47 @@ Signed-off-by: Seija Kijin <doremylover123@gmail.com>
     
     Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1435%2FAtariDreams%2Fcurl-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1435/AtariDreams/curl-v5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1435%2FAtariDreams%2Fcurl-v7
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1435/AtariDreams/curl-v7
 Pull-Request: https://github.com/git/git/pull/1435
 
-Range-diff vs v4:
+Range-diff vs v6:
 
- 1:  ebe36ad23fa ! 1:  c8628c53d22 curl: resolve deprecated curl declarations
+ 1:  6b471a867d5 ! 1:  23094afb2e6 curl: resolve deprecated curl declarations
      @@ http.c: void setup_curl_trace(CURL *handle)
-       	curl_easy_setopt(handle, CURLOPT_DEBUGDATA, NULL);
-       }
-      +#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
-     -+static void get_curl_allowed_protocols(char* protocol_buff, int from_user)
-     ++static void get_curl_allowed_protocols(struct strbuf *proto_buf, int from_user)
-      +{
-      +	unsigned int i = 0;
-      +
-      +	if (is_transport_allowed("http", from_user)) {
-     -+		protocol_buff[i++] = 'h';
-     -+		protocol_buff[i++] = 't';
-     -+		protocol_buff[i++] = 't';
-     -+		protocol_buff[i++] = 'p';
-     ++		strbuf_addstr(proto_buf, "http");
       +	}
-      +
+       
       +	if (is_transport_allowed("https", from_user)) {
-     -+		if (i != 0) {
-     -+			protocol_buff[i++] = ',';
-     -+		}
-     -+
-     -+		protocol_buff[i++] = 'h';
-     -+		protocol_buff[i++] = 't';
-     -+		protocol_buff[i++] = 't';
-     -+		protocol_buff[i++] = 'p';
-     -+		protocol_buff[i++] = 's';
-     ++		if (proto_buf->len)
-     ++			strbuf_addch(proto_buf, ',');
-     ++		strbuf_addstr(proto_buf, "https");
+     -+		if (proto_buf->len)
+     -+			strbuf_addch(proto_buf, ',');
+     -+		strbuf_addstr(proto_buf, "https");
+     ++		strbuf_addstr(proto_buf, proto_buf->len ? "https" : ",https");
       +	}
-     + 
-      +	if (is_transport_allowed("ftp", from_user)) {
-     -+		if (i != 0) {
-     -+			protocol_buff[i++] = ',';
-     -+		}
-     -+
-     -+		protocol_buff[i++] = 'f';
-     -+		protocol_buff[i++] = 't';
-     -+		protocol_buff[i++] = 'p';
-     ++		if (proto_buf->len)
-     ++			strbuf_addch(proto_buf, ',');
-     ++		strbuf_addstr(proto_buf, "ftp");
-      +	}
-     -+	if (is_transport_allowed("ftps", from_user)) {
-     -+		if (i != 0) {
-     -+			protocol_buff[i++] = ',';
-     -+		}
       +
-     -+		protocol_buff[i++] = 'f';
-     -+		protocol_buff[i++] = 't';
-     -+		protocol_buff[i++] = 'p';
-     -+		protocol_buff[i++] = 's';
-     ++	if (is_transport_allowed("ftps", from_user)) {
-     ++		if (proto_buf->len)
-     ++			strbuf_addch(proto_buf, ',');
-     ++		strbuf_addstr(proto_buf, "ftps");
+      +	if (is_transport_allowed("ftp", from_user)) {
+     -+		if (proto_buf->len)
+     -+			strbuf_addch(proto_buf, ',');
+     -+		strbuf_addstr(proto_buf, "ftp");
+     ++		strbuf_addstr(proto_buf, proto_buf->len ? "ftp" : ",ftp");
       +	}
-     - 
-     -+	protocol_buff[i] = '\0';
+      +
+      +	if (is_transport_allowed("ftps", from_user)) {
+     -+		if (proto_buf->len)
+     -+			strbuf_addch(proto_buf, ',');
+     -+		strbuf_addstr(proto_buf, "ftps");
+     ++		strbuf_addstr(proto_buf, proto_buf->len ? "ftps" : ",ftps");
+      +	}
       +}
       +#else
-       static long get_curl_allowed_protocols(int from_user)
-     @@ http.c: static long get_curl_allowed_protocols(int from_user)
-       
-       #ifdef GIT_CURL_HAVE_CURL_HTTP_VERSION_2
-       static int get_curl_http_version_opt(const char *version_string, long *opt)
-     -@@ http.c: static int get_curl_http_version_opt(const char *version_string, long *opt)
-     - 
-     - static CURL *get_curl_handle(void)
-     - {
-     -+
-     -+#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
-     -+char protocol_buff[20];
-     -+#endif
-     -+
-     - 	CURL *result = curl_easy_init();
-     - 
-     - 	if (!result)
-      @@ http.c: static CURL *get_curl_handle(void)
-       
-       	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
-       	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
-      +#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
-     -+	get_curl_allowed_protocols(protocol_buff, 0);
-     -+	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS_STR, protocol_buff);
-     -+	get_curl_allowed_protocols(protocol_buff, -1);
-     -+	curl_easy_setopt(result, CURLOPT_PROTOCOLS_STR, protocol_buff);
-     ++	{
-     ++		struct strbuf buf = STRBUF_INIT;
-     ++
-     ++		get_curl_allowed_protocols(&buf, 0);
-     ++		curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS_STR, buf.buf);
-     ++		strbuf_reset(&buf);
-     ++
-     ++		get_curl_allowed_protocols(&buf, -1);
-     ++		curl_easy_setopt(result, CURLOPT_PROTOCOLS_STR, buf.buf);
-     ++		strbuf_release(&buf);
-     ++	}
-      +#else
-       	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS,
-       			 get_curl_allowed_protocols(0));
 
 
  INSTALL           |  2 +-
- git-curl-compat.h |  8 ++++++
+ git-curl-compat.h |  8 +++++++
  http-push.c       |  6 ++---
- http.c            | 65 ++++++++++++++++++++++++++++++++++++++---------
+ http.c            | 57 +++++++++++++++++++++++++++++++++++++----------
  http.h            |  2 +-
- remote-curl.c     | 31 +++++++++++-----------
- 6 files changed, 81 insertions(+), 33 deletions(-)
+ remote-curl.c     | 31 +++++++++++++-------------
+ 6 files changed, 73 insertions(+), 33 deletions(-)
 
 diff --git a/INSTALL b/INSTALL
 index 33447883974..d5694f8c470 100644
@@ -258,7 +181,7 @@ index 5f4340a36e6..7f71316456c 100644
  	curl_easy_setopt(curl, CURLOPT_NOBODY, 0);
  	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, custom_req);
 diff --git a/http.c b/http.c
-index 8a5ba3f4776..bc343656d5d 100644
+index 8a5ba3f4776..6dfbae96ac6 100644
 --- a/http.c
 +++ b/http.c
 @@ -157,21 +157,19 @@ size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
@@ -293,42 +216,34 @@ index 8a5ba3f4776..bc343656d5d 100644
  }
  
  size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
-@@ -765,7 +763,34 @@ void setup_curl_trace(CURL *handle)
+@@ -765,7 +763,26 @@ void setup_curl_trace(CURL *handle)
  	curl_easy_setopt(handle, CURLOPT_DEBUGFUNCTION, curl_trace);
  	curl_easy_setopt(handle, CURLOPT_DEBUGDATA, NULL);
  }
 +#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
 +static void get_curl_allowed_protocols(struct strbuf *proto_buf, int from_user)
 +{
-+	unsigned int i = 0;
-+
 +	if (is_transport_allowed("http", from_user)) {
 +		strbuf_addstr(proto_buf, "http");
 +	}
-+
-+	if (is_transport_allowed("https", from_user)) {
-+		if (proto_buf->len)
-+			strbuf_addch(proto_buf, ',');
-+		strbuf_addstr(proto_buf, "https");
-+	}
  
++	if (is_transport_allowed("https", from_user)) {
++		strbuf_addstr(proto_buf, proto_buf->len ? "https" : ",https");
++	}
++
 +	if (is_transport_allowed("ftp", from_user)) {
-+		if (proto_buf->len)
-+			strbuf_addch(proto_buf, ',');
-+		strbuf_addstr(proto_buf, "ftp");
++		strbuf_addstr(proto_buf, proto_buf->len ? "ftp" : ",ftp");
 +	}
 +
 +	if (is_transport_allowed("ftps", from_user)) {
-+		if (proto_buf->len)
-+			strbuf_addch(proto_buf, ',');
-+		strbuf_addstr(proto_buf, "ftps");
++		strbuf_addstr(proto_buf, proto_buf->len ? "ftps" : ",ftps");
 +	}
 +}
 +#else
  static long get_curl_allowed_protocols(int from_user)
  {
  	long allowed_protocols = 0;
-@@ -781,6 +806,7 @@ static long get_curl_allowed_protocols(int from_user)
+@@ -781,6 +798,7 @@ static long get_curl_allowed_protocols(int from_user)
  
  	return allowed_protocols;
  }
@@ -336,7 +251,7 @@ index 8a5ba3f4776..bc343656d5d 100644
  
  #ifdef GIT_CURL_HAVE_CURL_HTTP_VERSION_2
  static int get_curl_http_version_opt(const char *version_string, long *opt)
-@@ -923,10 +949,25 @@ static CURL *get_curl_handle(void)
+@@ -923,10 +941,25 @@ static CURL *get_curl_handle(void)
  
  	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
  	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
