@@ -2,156 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEDEDC54EBE
-	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 22:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1035C54EBE
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 00:36:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232656AbjAPWSV convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 16 Jan 2023 17:18:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52384 "EHLO
+        id S231308AbjAQAgr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Jan 2023 19:36:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231158AbjAPWSR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2023 17:18:17 -0500
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B6FEC657
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 14:18:16 -0800 (PST)
-Received: by mail-pf1-f174.google.com with SMTP id s3so19455737pfd.12
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 14:18:16 -0800 (PST)
+        with ESMTP id S234078AbjAQAgq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2023 19:36:46 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C9912A98A
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 16:36:45 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so19871703wma.1
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 16:36:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:cc:to:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+SDoOTS65eSo5MJOkf89cJNkXytPNtIAq/rkSMzbK0g=;
+        b=ZinnHQEgWE/wVoOSoWf0u+D9fRfmN8KtoYZgKezBQdhjDrJM00wKahoaHVBuyL3jH/
+         Fts9Qcw3+ndB0278y6P89t1OCA5stE0vR0p3ClwaLXKgexovDep0XEGsEH5PcBE8x4EE
+         oeSgn3I6N7w+u8dzYK+gxK8hddO2Xeq9u0FMNRBtn0P3lATkuVL0q9WbGI08DLcRxMxh
+         PW5Qn3mvrinWr9yFZCKdErOO5Wn/hEKOyovc8Azvxs+OYAyUaI2tnLkxhko81ZegGdjn
+         ex/sl8x4fLydHdWVUr56tqA6JzJATEz8zszScD0VePFqwZ1rmZ4J+YRH+EbfAWCmlxDJ
+         OW6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:cc:to:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=v24yeBnBW+SVFbnRRBSaPMbPtoN0w+Ye4/XuFs9RAmE=;
-        b=sRCebMPcTp8xFc7XwZpJHd3T+pFVVwm+MVslhLRXw1TUoFS3pxWdERSPykkNQgSrlK
-         me8HPtvKnI6YLmmIa98gYDoKifrqc6pXAlVFiHtEg0c4pOAnFoSMCvk7FASphe+YeDBs
-         piV0nkdnZaYqMo2lHEyMMt9ZE3K490S5fEOIJeoFGOzW0AwQs+vxrhtqaHeRw2vXjjYR
-         xjD0gHbVDByPM5p8d/0YNPhEwNckAHNC5mMMiN6l02XyPWDMvoIyNTxgd6CuF6JaLm+6
-         Ff1gXGi9Wkd2p5w5QHQrM5X/jc/+d7MeNWqLkRPnS5z3U4SWpf189p2qjXo+VeCR/Yqv
-         N9XA==
-X-Gm-Message-State: AFqh2kotXqDdkEP+tl42+O1tsisFwXg8nOu3rw3sNGr0dOY8ls7hsSKK
-        rZNACca9+ssw5bt4Xyeh2ZeMe2EwjnmfamLV0uycVYxIN+Y=
-X-Google-Smtp-Source: AMrXdXvo5XgC5IZGnGgWTsa9B5aXHNhkHepNaGWvNtAaRdqd7cF7m2FFf6QKRQD/JSvHG/MmfgeAzwBcyEgMKKCkjUc=
-X-Received: by 2002:a63:9dc5:0:b0:478:fbfd:5278 with SMTP id
- i188-20020a639dc5000000b00478fbfd5278mr37998pgd.268.1673907495401; Mon, 16
- Jan 2023 14:18:15 -0800 (PST)
+        bh=+SDoOTS65eSo5MJOkf89cJNkXytPNtIAq/rkSMzbK0g=;
+        b=1NslLss0QTPb3v15koAFDHJ/XbqUxXYGcwY99aru+wC7L8aUTlZF8I8B3zmf1Xa7Zd
+         Jm7M8tF7VUHbGDIqPw5i7fFvutK4hRlNrRHlu75NsUOJVOwi3nLpu51NkPOdyheAkwDe
+         VQSSEtKDlQPPH/lpOJDKKEtDmFLxc6klqD/tOslcrYxkGs4/EO5o0D0A5Xw9SRiEhxxS
+         ihEmrbiFJIuFRRU2LfGVw7bpdjgdFfxJfs1yeHEkxkBdvB0x1Gjs7cqYOxhbcOIeVrXm
+         RQe3ZlxyklBqRWxzwDpFjfWOiOnt6HFDco6Xl9THB5B5WIzieRfGgbAW77ShhA9uB09q
+         sY6g==
+X-Gm-Message-State: AFqh2krqC3Eqwp7GwlQ/jMwNiLk15rIDgzGOJuxhR57e/LGmT+GVaKeA
+        9oLSML3Faq77kgTloy668wTd0sJoQDg=
+X-Google-Smtp-Source: AMrXdXtmA2jHd+wVa/mpwAEyeLQ46hUTqBgm359quNBJu4RrSU+ZgUdJFh6DWx/AN0ky6deNbz9jHw==
+X-Received: by 2002:a05:600c:1ca4:b0:3da:f5b5:1401 with SMTP id k36-20020a05600c1ca400b003daf5b51401mr1124351wms.31.1673915803935;
+        Mon, 16 Jan 2023 16:36:43 -0800 (PST)
+Received: from [192.168.2.52] (94.red-88-14-213.dynamicip.rima-tde.net. [88.14.213.94])
+        by smtp.gmail.com with ESMTPSA id i8-20020a05600c354800b003cf894dbc4fsm38338913wmq.25.2023.01.16.16.36.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Jan 2023 16:36:42 -0800 (PST)
+To:     Git List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Subject: [PATCH] worktree: teach find_shared_symref to ignore current worktree
+Message-ID: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
+Date:   Tue, 17 Jan 2023 01:36:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <20230116172824.93218-1-carenas@gmail.com>
-In-Reply-To: <20230116172824.93218-1-carenas@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 16 Jan 2023 17:18:04 -0500
-Message-ID: <CAPig+cR3=wDFJPr8ViUTVFDx-AvaJUGWNUnqndJ2edQPL5smVw@mail.gmail.com>
-Subject: Re: [PATCH] builtin/checkout: check the branch used in -B with worktrees
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, vustthat@gmail.com, pclouds@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 16, 2023 at 12:30 PM Carlo Marcelo Arenas Belón
-<carenas@gmail.com> wrote:
-> builtin/checkout: check the branch used in -B with worktrees
+We prevent some operations from being executed on a branch checked out
+in a worktree other than the current one.  An example of this was
+introduced in b5cabb4 (rebase: refuse to switch to branch already
+checked out elsewhere, 2020-02-23).
 
-Thanks for working on this and coming up with a fix. As mentioned
-earlier, I had started looking into it[1], but lacked the time to
-disentangle the logic, so I'm glad to see a patch arrive so quickly.
+"find_shared_symref()" is sometimes used to find the worktree in which a
+branch is checked out.  It performs its search starting with the current
+worktree.
 
-> When multiple worktrees are being used, checkout/switch check
-> that the target branch is not already checked out with code that
-> evolved from 8d9fdd7087 (worktree.c: check whether branch is rebased
-> in another worktree, 2016-04-22), but that logic wasn't valid for
-> -B/-C
->
-> Avoid reusing the same `branch_info` structure for the checks and
-> assumming that it will be rejected later if is a new branch that
-> already exists as that doesn't apply to -B/-C.
+As we allow to have the same branch checked out in multiple worktrees
+simultaneously...
 
-Even though I'm familiar with the bug report[2] which sparked this
-patch, I find the above description somewhat hard to digest; the
-high-level problem it is addressing doesn't jump off the page at me.
-Perhaps it can be rewritten something like this:
+	$ git worktree add foo
+	$ git worktree add -f bar foo
+	$ git checkout --ignore-other-worktrees foo
 
-    checkout/switch: disallow checking out same branch in multiple worktrees
+... if the branch checked out in the current worktree is also checked
+out in another worktree, with "find_shared_symref()" we will not notice
+this "other" working tree.
 
-    Commands `git switch -C` and `git checkout -B` neglect to check
-    whether the branch being forcibly created is already checked out
-    in some other worktree, which can result in the undesirable
-    situation of the same branch being checked out in multiple
-    worktrees. For instance:
+Let's teach "find_shared_symref()" to ignore the current worktree in the
+search, based on the caller's needs.
 
-        $ git worktree list
-        .../foo    beefb00f [main]
-        $ git worktree add ../other
-        Preparing worktree (new branch 'other')
-        HEAD is now at beefb00f first
-        $ cd ../other
-        $ git switch -C main
-        Switched to and reset branch 'main'
-        $ git worktree list
-        .../foo    beefb00f [main]
-        .../other  beefb00f [main]
-        $
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+ branch.c               | 4 ++--
+ builtin/notes.c        | 2 +-
+ builtin/receive-pack.c | 2 +-
+ t/t3400-rebase.sh      | 3 +++
+ worktree.c             | 6 +++++-
+ worktree.h             | 3 ++-
+ 6 files changed, 14 insertions(+), 6 deletions(-)
 
-    Fix this problem by teaching `git switch -C` and `git checkout -B`
-    to check whether the branch in question is already checked out
-    elsewhere.
-
-after which you might include some details which you wrote about initially.
-
-> Reported-by: Jinwook Jeong <vustthat@gmail.com>
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> @@ -1533,13 +1534,12 @@ static int checkout_branch(struct checkout_opts *opts,
-> -       if (new_branch_info->path && !opts->force_detach && !opts->new_branch &&
-> -           !opts->ignore_other_worktrees) {
-> +       if (check_branch_info->path && !opts->force_detach && !opts->ignore_other_worktrees) {
->                 int flag;
->                 char *head_ref = resolve_refdup("HEAD", 0, NULL, &flag);
->                 if (head_ref &&
-> -                   (!(flag & REF_ISSYMREF) || strcmp(head_ref, new_branch_info->path)))
-> -                       die_if_checked_out(new_branch_info->path, 1);
-> +                   (!(flag & REF_ISSYMREF) || strcmp(head_ref, check_branch_info->path)))
-> +                       die_if_checked_out(check_branch_info->path, 1);
-
-This variable name change (`new_branch_info` => `check_branch_info`)
-helps make the code clearer. Good. (I had found it more than a little
-confusing to have similar named variables `new_branch_info` and
-`opts->new_branch` even though they are unrelated and have very
-different purposes.)
-
-> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> @@ -125,6 +125,13 @@ test_expect_success 'die the same branch is already checked out' '
-> +test_expect_success 'die the same branch is already checked out (checkout -B)' '
-> +       (
-> +               cd here &&
-> +               test_must_fail git checkout -B newmain
-> +       )
-> +'
-
-Although `git switch` and `git checkout` currently share
-implementation, that might not always be the case going forward. As
-such, this test could be made a bit more robust by testing both
-commands rather than just `git-checkout`. So, perhaps:
-
-    test_expect_success 'die the same branch is already checked out' '
-        (
-            cd here &&
-            test_must_fail git checkout -B newmain &&
-            test_must_fail git switch -C newmain
-        )
-    '
-
-> +test_expect_success 'not die on re-checking out current branch (checkout -B)' '
-> +       (
-> +               cd there &&
-> +               git checkout -B newmain
-> +       )
-> +'
-
-Good to see you considered this case too. (I had tested it myself
-manually when trying out your patch.)
-
-[1]: https://lore.kernel.org/git/CAPig+cQc1+D9gH7BAC-r03bGKWx3a9jpPyLuP-ehH-X2P+fV6Q@mail.gmail.com/
-[2]: https://lore.kernel.org/git/CAA3Q-aaO=vcZd9VLFr8UP-g06be80eUWN_GjygfyGkYmrLx9yQ@mail.gmail.com/
+diff --git a/branch.c b/branch.c
+index d182756827..2508e94add 100644
+--- a/branch.c
++++ b/branch.c
+@@ -822,8 +822,8 @@ void die_if_checked_out(const char *branch, int ignore_current_worktree)
+ 	struct worktree **worktrees = get_worktrees();
+ 	const struct worktree *wt;
+ 
+-	wt = find_shared_symref(worktrees, "HEAD", branch);
+-	if (wt && (!ignore_current_worktree || !wt->is_current)) {
++	wt = find_shared_symref(worktrees, "HEAD", branch, ignore_current_worktree);
++	if (wt) {
+ 		skip_prefix(branch, "refs/heads/", &branch);
+ 		die(_("'%s' is already checked out at '%s'"), branch, wt->path);
+ 	}
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 80d9dfd25c..80326bdaab 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -869,7 +869,7 @@ static int merge(int argc, const char **argv, const char *prefix)
+ 		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
+ 		worktrees = get_worktrees();
+ 		wt = find_shared_symref(worktrees, "NOTES_MERGE_REF",
+-					default_notes_ref());
++					default_notes_ref(), 0);
+ 		if (wt)
+ 			die(_("a notes merge into %s is already in-progress at %s"),
+ 			    default_notes_ref(), wt->path);
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index a90af30363..18d400101c 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1460,7 +1460,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 	int do_update_worktree = 0;
+ 	struct worktree **worktrees = get_worktrees();
+ 	const struct worktree *worktree =
+-		find_shared_symref(worktrees, "HEAD", name);
++		find_shared_symref(worktrees, "HEAD", name, 0);
+ 
+ 	/* only refs/... are allowed */
+ 	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index d5a8ee39fc..874cfff8fe 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -407,6 +407,9 @@ test_expect_success 'refuse to switch to branch checked out elsewhere' '
+ 	git checkout main &&
+ 	git worktree add wt &&
+ 	test_must_fail git -C wt rebase main main 2>err &&
++	test_i18ngrep "already checked out" err &&
++	git worktree add --force wt2 main &&
++	test_must_fail git rebase main main &&
+ 	test_i18ngrep "already checked out" err
+ '
+ 
+diff --git a/worktree.c b/worktree.c
+index aa43c64119..3d686137ef 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -405,7 +405,8 @@ int is_worktree_being_bisected(const struct worktree *wt,
+  */
+ const struct worktree *find_shared_symref(struct worktree **worktrees,
+ 					  const char *symref,
+-					  const char *target)
++					  const char *target,
++					  int ignore_current_worktree)
+ {
+ 	const struct worktree *existing = NULL;
+ 	int i = 0;
+@@ -416,6 +417,9 @@ const struct worktree *find_shared_symref(struct worktree **worktrees,
+ 		struct ref_store *refs;
+ 		int flags;
+ 
++		if (wt->is_current && ignore_current_worktree)
++			continue;
++
+ 		if (wt->is_bare)
+ 			continue;
+ 
+diff --git a/worktree.h b/worktree.h
+index 9dcea6fc8c..a9f35ee990 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -147,7 +147,8 @@ void free_worktrees(struct worktree **);
+  */
+ const struct worktree *find_shared_symref(struct worktree **worktrees,
+ 					  const char *symref,
+-					  const char *target);
++					  const char *target,
++					  int ignore_current_worktree);
+ 
+ /*
+  * Similar to head_ref() for all HEADs _except_ one from the current
+-- 
+2.39.0
