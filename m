@@ -2,320 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA584C54E76
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 21:01:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA38C54E76
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 21:05:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229651AbjAQVBc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 16:01:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35866 "EHLO
+        id S229606AbjAQVFZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 16:05:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbjAQVAa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 16:00:30 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 901464A1CD
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:27:23 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id l8so5964007wms.3
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:27:23 -0800 (PST)
+        with ESMTP id S229600AbjAQVDo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 16:03:44 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA17654131
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:31:00 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id me17-20020a17090b17d100b0022901e51ab3so10301428pjb.2
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:31:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=UwCRvuePlHoCmLmrwvm7lRtCJ/FTOgAxgYkK1DkwH+0=;
-        b=koT+IRqxKgXCRs9qDfsIkUrjJjHjwZ23iade93vcn37x/YHXEd8EfctZ4zFJFgpd4L
-         MRQJ07PmSm7SewcPPqMO1PqB7CorbjJgQuFrJxCWi6JrQgxZgBKXgocS5oBFPe1P3e8F
-         nkxYj545zLps8T31Z3MMFMhYYYPgmx3syyMKOueBCejKYbXiGUD4UVQURgI0xs+RmSx1
-         iSiA4dwzkPHYbqDhyJqmjxo9NnQCR54osaU44BQPEsl1pdPoFOkZOjyICjljXng5yoGb
-         ZUqwQG/QPpRLJnwfA/TbU912XYDSQoAAchKqoh8GD16lB0J1VBfyhc5shSVWzsyTWsO+
-         sbNg==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/AwpMbaimP5jOFJfm+ecXOGCeTE6KwZS+RBmwLBsCxs=;
+        b=p8Dye+ShCeSBqzMXNzodIqCXvKzTJFx5+5anBpfMVFBDVqZJFtTkL9UrnikYZHRGEa
+         y6gYIHY/2HWYrvjFrPeW+kCKZpNP6jhNmpNVRBZnrfYnuC5m3I4s/X8OWkNlJ9KCbDTE
+         vxVejLFWjgQvycL3C/ogU6HIdfJh/oC0Y/o+ZHY/FXUfDk9UKXCWwDsf9UJX4MJ4gcdt
+         ab7axuh9OSUpRboHm3MMei6mwKvPusYNITz4D28riWiKz2oEFgTy8YzDv28NUn3/TnDo
+         MTUkZsMFDHefA88/4wqYYljxtxK435ljOIeUMuKNOm3P58wz2bz07B1o+/8cmD9s7jlC
+         /Leg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UwCRvuePlHoCmLmrwvm7lRtCJ/FTOgAxgYkK1DkwH+0=;
-        b=2jte/9NTbqc2EFZay7avXJ/ZsY4mPDktyag9o8NfO4T3NuoFOl0GQ9WOSqgQsGZOT0
-         jfTwGLFHTG7MjSRgJs7tIGIDHb8eQ8XCsUmHSd1MueaO72QCQJwx2+gNh89tjOQPl/5V
-         WSpLMpw8lyCHMFn4t6z6+QE+KyAwqXzVA0RHzl8Tf9SqhwkjIe4pc3KEwiTOewUHzpYq
-         pqwJZeQ2QhBZvOWvAc1PaNdEMfLIqiyQv1b9Xe4HQJ0mND2s4EkRf9y/LNm13/TBHLWd
-         OvswV9OW3bLmq69m2ArqOHqSS5mpg4xudG7OhCMmCpecFxjZFQsYFQhZHAtHq4+9fFJ6
-         eoXg==
-X-Gm-Message-State: AFqh2krI1XT6ArSIbQETUMiJS7SOU2aM8U/axtMlrDhsF7/1lLF7Z9CX
-        tMGfGzmBJaMZGxgTtufSSuYe64no56I=
-X-Google-Smtp-Source: AMrXdXuMAZI3LRvIlYt5jSh+442fwGXRBHrjULZMYEK1iAfuUnrXhf3RymnkqyzbycpvkECz8Ej5YA==
-X-Received: by 2002:a05:600c:3ca6:b0:3d1:caf1:3f56 with SMTP id bg38-20020a05600c3ca600b003d1caf13f56mr13017142wmb.9.1673983641789;
-        Tue, 17 Jan 2023 11:27:21 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g12-20020a05600c310c00b003c70191f267sm46141015wmo.39.2023.01.17.11.27.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 11:27:21 -0800 (PST)
-Message-Id: <pull.1435.git.git.1673983640663.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Jan 2023 19:27:20 +0000
-Subject: [PATCH] curl: resolve deprecated curl declarations
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/AwpMbaimP5jOFJfm+ecXOGCeTE6KwZS+RBmwLBsCxs=;
+        b=Ieg8ENVo4bxGP5z9/dJoXpdJ3puCCDr0vKLjklk0OCkhWvlGwEuWSbVKE4wx9OfQof
+         +jrK14WXtONBksN9aPUU4H7ND5xeMlQY7uI+wRcb+MRD7gdfOoh0ZrmNbMs48HXXt8Yc
+         yHfa8NtNUvDAPzW6hS9yipUMV6jqJXNqBsSDmuD3HmBZzW5RyK2Bggu+1GCZEzSzNj8U
+         N10s5ApijDtXXdNZ7dtC5N6vXJpIvotlSJwwjwmvt3kYleOoLfSpowc2toQOa+2M2OvP
+         f/+yIT7dxsYH6OSQg1FVsVrY+yqgKmYUoafUcoQUNNdTbInWKU0BvEzx9INB6ubXllC/
+         Z1fQ==
+X-Gm-Message-State: AFqh2kraWdDtn0j6/dJLmBENtFAtWJ4jolIzz5Vq2CPCIMsFOjAPNM5y
+        Q8kngxfxug+A4Z81388pDO7GgxXHD+ZH0SuxLGvQDogt34Qlq8lNjHq/o47FkfwkcrdijhTKWSZ
+        tHUz1U7nsH9EtT3gTHSGQtnnqJXaAtlnx36tlLsDCLl6dKk+qQsSNLLcG3VK32aO/VA==
+X-Google-Smtp-Source: AMrXdXueTBygZUowb/ectHHNhM22LklA5GoC8jwpKnAaCaVGV2WR3N97lqZr7x6Gf16RwFOTHJnPObb16ZLknQg=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a17:90b:1901:b0:226:c03e:23fc with SMTP
+ id mp1-20020a17090b190100b00226c03e23fcmr430718pjb.6.1673983860220; Tue, 17
+ Jan 2023 11:31:00 -0800 (PST)
+Date:   Tue, 17 Jan 2023 19:30:35 +0000
+In-Reply-To: <20230104215415.1083526-1-calvinwan@google.com>
+Mime-Version: 1.0
+References: <20230104215415.1083526-1-calvinwan@google.com>
+X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
+Message-ID: <20230117193041.708692-1-calvinwan@google.com>
+Subject: [PATCH v6 0/6] submodule: parallelize diff
+From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
-Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+Cc:     Calvin Wan <calvinwan@google.com>, emilyshaffer@google.com,
+        avarab@gmail.com, phillip.wood123@gmail.com, chooglen@google.com,
+        newren@gmail.com, jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+Original cover letter for context:
+https://lore.kernel.org/git/20221011232604.839941-1-calvinwan@google.com/
 
-Fix CI-Alpine build by replacing deprecated
-declarations with their suggested replacements
+(Quick reroll to fix leaks from v5)
 
-Note that this required changing the
-callbacks of functions because the replacement
-for these deprecations require a different function
-signature for the callback and different parameters.
+Thank you again everyone for the numerous reviews! For this reroll, I
+incorporated most of the feedback given, fixed a bug I found, and made
+some stylistic refactors. I also added a new patch at the end that swaps
+the serial implementation in is_submodule_modified for the new parallel
+one. While I had patch 6 originally smushed with the previous one,
+the diff came out not very reviewer friendly so it has been separated
+out.
 
-Every change done was made as to minimize
-changed behavior as well as get the CI to pass again.
+Changes since v4
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    curl: resolve deprecated curl declarations
-    
-    Fix CI-Alpine build by replacing deprecated declarations with their
-    suggested replacements
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
+(Patch 1)
+The code in run-command.c that calls duplicate_output_fn has been
+cleaned up and no longer passes a separate strbuf for the output. It
+instead passes an offset that represents the starting point in the
+original strbuf.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1435%2FAtariDreams%2Fcurl-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1435/AtariDreams/curl-v1
-Pull-Request: https://github.com/git/git/pull/1435
+(Patch 5)
+Moved status parsing from status_duplicate_output to status_finish. In
+pp_buffer_stderr::run-command.c, output is gathered by strbuf_read_once
+which reads 8192 bytes at once so a longer status message would error
+out during status parsing since part of it would be cut off. Therefore,
+status parsing must happen at the end of the process rather than in
+duplicate_output_fn (and has subsequently been moved).
 
- git-curl-compat.h |  8 +++++
- http-push.c       |  6 ++--
- http.c            | 74 ++++++++++++++++++++++++++++++++++++++---------
- http.h            |  2 +-
- remote-curl.c     | 28 +++++++-----------
- 5 files changed, 83 insertions(+), 35 deletions(-)
+(Patch 6)
+New patch swapping serial implementation in is_submodule_modified for
+the new parallel one.
 
-diff --git a/git-curl-compat.h b/git-curl-compat.h
-index 56a83b6bbd8..a2e6ad79b09 100644
---- a/git-curl-compat.h
-+++ b/git-curl-compat.h
-@@ -127,3 +127,11 @@
- #endif
- 
- #endif
-+
-+/**
-+ * CURLOPT_REDIR_PROTOCOLS_STR was added in 7.83.0, released in August
-+ * 2022.
-+ */
-+#if LIBCURL_VERSION_NUM >= 0x075500
-+#define GIT_CURL_HAVE_OPT_REDIR_PROTOCOLS_STR 1
-+#endif
-diff --git a/http-push.c b/http-push.c
-index 5f4340a36e6..ab458d4d062 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -198,13 +198,13 @@ static void curl_setup_http(CURL *curl, const char *url,
- 		const char *custom_req, struct buffer *buffer,
- 		curl_write_callback write_fn)
- {
--	curl_easy_setopt(curl, CURLOPT_PUT, 1);
-+	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1);
- 	curl_easy_setopt(curl, CURLOPT_URL, url);
- 	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
- 	curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
- 	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
--	curl_easy_setopt(curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
--	curl_easy_setopt(curl, CURLOPT_IOCTLDATA, buffer);
-+	curl_easy_setopt(curl, CURLOPT_SEEKFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(curl, CURLOPT_SEEKDATA, buffer);
- 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_fn);
- 	curl_easy_setopt(curl, CURLOPT_NOBODY, 0);
- 	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, custom_req);
-diff --git a/http.c b/http.c
-index 8a5ba3f4776..60bc84ab9a3 100644
---- a/http.c
-+++ b/http.c
-@@ -157,21 +157,12 @@ size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	return size / eltsize;
- }
- 
--curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
-+int ioctl_buffer(void *userp, curl_off_t offset, int origin)
- {
--	struct buffer *buffer = clientp;
-+	struct buffer *buffer = userp;
- 
--	switch (cmd) {
--	case CURLIOCMD_NOP:
--		return CURLIOE_OK;
--
--	case CURLIOCMD_RESTARTREAD:
--		buffer->posn = 0;
--		return CURLIOE_OK;
--
--	default:
--		return CURLIOE_UNKNOWNCMD;
--	}
-+	buffer->posn = 0;
-+	return CURL_SEEKFUNC_OK;
- }
- 
- size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
-@@ -765,7 +756,52 @@ void setup_curl_trace(CURL *handle)
- 	curl_easy_setopt(handle, CURLOPT_DEBUGFUNCTION, curl_trace);
- 	curl_easy_setopt(handle, CURLOPT_DEBUGDATA, NULL);
- }
-+#ifdef GIT_CURL_HAVE_OPT_REDIR_PROTOCOLS_STR
-+static void get_curl_allowed_protocols(int from_user, char *protocol)
-+{
-+	unsigned int i = 0;
-+
-+	if (is_transport_allowed("http", from_user)) {
-+		protocol[i++] = 'h';
-+		protocol[i++] = 't';
-+		protocol[i++] = 't';
-+		protocol[i++] = 'p';
-+	}
-+
-+	if (is_transport_allowed("https", from_user)) {
-+		if (i != 0) {
-+			protocol[i++] = ',';
-+		}
-+
-+		protocol[i++] = 'h';
-+		protocol[i++] = 't';
-+		protocol[i++] = 't';
-+		protocol[i++] = 'p';
-+		protocol[i++] = 's';
-+	}
-+	if (is_transport_allowed("ftp", from_user)) {
-+		if (i != 0) {
-+			protocol[i++] = ',';
-+		}
- 
-+		protocol[i++] = 'f';
-+		protocol[i++] = 't';
-+		protocol[i++] = 'p';
-+	}
-+	if (is_transport_allowed("ftps", from_user)) {
-+		if (i != 0) {
-+			protocol[i++] = ',';
-+		}
-+
-+		protocol[i++] = 'f';
-+		protocol[i++] = 't';
-+		protocol[i++] = 'p';
-+		protocol[i++] = 's';
-+	}
-+
-+	protocol[i] = '\0';
-+}
-+#else
- static long get_curl_allowed_protocols(int from_user)
- {
- 	long allowed_protocols = 0;
-@@ -781,6 +817,7 @@ static long get_curl_allowed_protocols(int from_user)
- 
- 	return allowed_protocols;
- }
-+#endif
- 
- #ifdef GIT_CURL_HAVE_CURL_HTTP_VERSION_2
- static int get_curl_http_version_opt(const char *version_string, long *opt)
-@@ -810,6 +847,9 @@ static int get_curl_http_version_opt(const char *version_string, long *opt)
- static CURL *get_curl_handle(void)
- {
- 	CURL *result = curl_easy_init();
-+#ifdef GIT_CURL_HAVE_OPT_REDIR_PROTOCOLS_STR
-+	static char protocol[20], redir_protocol[20];
-+#endif
- 
- 	if (!result)
- 		die("curl_easy_init failed");
-@@ -923,10 +963,18 @@ static CURL *get_curl_handle(void)
- 
- 	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
- 	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
-+#ifdef GIT_CURL_HAVE_OPT_REDIR_PROTOCOLS_STR
-+	get_curl_allowed_protocols(0, redir_protocol);
-+	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS_STR, redir_protocol);
-+	get_curl_allowed_protocols(-1, protocol);
-+	curl_easy_setopt(result, CURLOPT_PROTOCOLS_STR, protocol);
-+#else
- 	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS,
- 			 get_curl_allowed_protocols(0));
- 	curl_easy_setopt(result, CURLOPT_PROTOCOLS,
- 			 get_curl_allowed_protocols(-1));
-+#endif
-+
- 	if (getenv("GIT_CURL_VERBOSE"))
- 		http_trace_curl_no_data();
- 	setup_curl_trace(result);
-diff --git a/http.h b/http.h
-index 3c94c479100..0ec572d4a06 100644
---- a/http.h
-+++ b/http.h
-@@ -40,7 +40,7 @@ struct buffer {
- size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
--curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp);
-+int ioctl_buffer(void *userp, curl_off_t offset, int origin);
- 
- /* Slot lifecycle functions */
- struct active_request_slot *get_active_slot(void);
-diff --git a/remote-curl.c b/remote-curl.c
-index 72dfb8fb86a..ae69dcb70d5 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -717,25 +717,17 @@ static size_t rpc_out(void *ptr, size_t eltsize,
- 	return avail;
- }
- 
--static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
-+static int rpc_ioctl(void *userp, curl_off_t offset, int origin)
- {
--	struct rpc_state *rpc = clientp;
-+	struct rpc_state *rpc = userp;
- 
--	switch (cmd) {
--	case CURLIOCMD_NOP:
--		return CURLIOE_OK;
--
--	case CURLIOCMD_RESTARTREAD:
--		if (rpc->initial_buffer) {
--			rpc->pos = 0;
--			return CURLIOE_OK;
--		}
--		error(_("unable to rewind rpc post data - try increasing http.postBuffer"));
--		return CURLIOE_FAILRESTART;
--
--	default:
--		return CURLIOE_UNKNOWNCMD;
-+	if (rpc->initial_buffer) {
-+		rpc->pos = 0;
-+		return CURL_SEEKFUNC_OK;
- 	}
-+
-+	error(_("unable to rewind rpc post data - try increasing http.postBuffer"));
-+	return CURL_SEEKFUNC_FAIL;
- }
- 
- struct check_pktline_state {
-@@ -959,8 +951,8 @@ retry:
- 		rpc->initial_buffer = 1;
- 		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, rpc_out);
- 		curl_easy_setopt(slot->curl, CURLOPT_INFILE, rpc);
--		curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, rpc_ioctl);
--		curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, rpc);
-+		curl_easy_setopt(slot->curl, CURLOPT_SEEKFUNCTION, rpc_ioctl);
-+		curl_easy_setopt(slot->curl, CURLOPT_SEEKDATA, rpc);
- 		if (options.verbosity > 1) {
- 			fprintf(stderr, "POST %s (chunked)\n", rpc->service_name);
- 			fflush(stderr);
+Calvin Wan (6):
+  run-command: add duplicate_output_fn to run_processes_parallel_opts
+  submodule: strbuf variable rename
+  submodule: move status parsing into function
+  diff-lib: refactor match_stat_with_submodule
+  diff-lib: parallelize run_diff_files for submodules
+  submodule: call parallel code from serial status
 
-base-commit: a7caae2729742fc80147bca1c02ae848cb55921a
+ Documentation/config/submodule.txt |  12 ++
+ diff-lib.c                         | 104 ++++++++++--
+ run-command.c                      |  16 +-
+ run-command.h                      |  27 +++
+ submodule.c                        | 254 ++++++++++++++++++++++-------
+ submodule.h                        |   9 +
+ t/helper/test-run-command.c        |  21 +++
+ t/t0061-run-command.sh             |  39 +++++
+ t/t4027-diff-submodule.sh          |  19 +++
+ t/t7506-status-submodule.sh        |  19 +++
+ 10 files changed, 445 insertions(+), 75 deletions(-)
+
 -- 
-gitgitgadget
+2.39.0.314.g84b9a713c41-goog
+
