@@ -2,117 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB7A8C54EBE
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 01:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 497EBC46467
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 03:03:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234550AbjAQBti (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Jan 2023 20:49:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47424 "EHLO
+        id S234744AbjAQDDZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Jan 2023 22:03:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233599AbjAQBtf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2023 20:49:35 -0500
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2041.outbound.protection.outlook.com [40.107.236.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B97C21944
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 17:49:34 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Py9njwzKnOhTRWLAohjiPd/QiVmTXisznClZE477n8W9HweQ/17zkcg7aWxAYMmal6U6EU5LgXkVCYXH8Sii3w3H+DtkwuvoL+ZHSP/+qWHmPu7iZ/XbuGJ6v3ZkrnUH/XG0umscIDYIMdlb4kWwtqlQMJS/BTtiTHmNZ8vGw1qiqn0St6PV4CeC1WivwtMx7Hm/QC3UbIQ1B4755MoosoS75og5fcGqfAJgxlIzG20U9sjZyC0MLoXTpbpilPKTT1S8LVtH/4iqTLzs8UyYlJz5kMpAdE+9mNA2KM9j5tYMAsXJbKDijW+LgUU1Zjfggw/YZOGxnzRdyzauHGdG7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vIZ+H60cVFI6FPEXHsWOGUdtpO+DeK3phEOqD8o7+W4=;
- b=UYHwrUmG41cvGus+1XIcUN1D0SYjc+hCkD4ar9j93B76zu/kMprzwYwxvnDUgXX0/RQUIIBC89cqDHjeTCkCesfMPnJo9an2sjQGJ2LfBoxgDIOHhkpSpFOd1jDIRwFf5pTHm9U71cdfxqa1d0Xg1J/kqTOc/9xxu62+okuQu+ccN+50EdCv1T0lA37l+r0RpNEm28xWAoBI4R8uwuZFq42jXeErj+WUlhs02hcjIREyF++GzzgggxJ+Pvi9M5pdO0IgyZejlAOx40sSBDLF3M1iRPb95bozb/FukVAE98oJcNpJ8aMk5+Lg38TYJegwNti0Yn3dAnMPcSMVSgTEPQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vIZ+H60cVFI6FPEXHsWOGUdtpO+DeK3phEOqD8o7+W4=;
- b=Hhx2gt1OL85mT7GwxQW+0ZtiVrQ1vmjF+/AzW1jf+NXyOqig9NYW20yKUw1Wx0HjcfeOVeedJpYUuqF9o11H77W2XiC5OK+nTdOk2Svhg1mCY6ZjWhEgehTBdP60XDnc1EIrpEuo1IOmOKVqKvx526igCCS/LzwZDULhP/eO/q4=
-Received: from DM6PR12MB4356.namprd12.prod.outlook.com (2603:10b6:5:2aa::8) by
- CH3PR12MB8581.namprd12.prod.outlook.com (2603:10b6:610:15d::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6002.13; Tue, 17 Jan 2023 01:49:31 +0000
-Received: from DM6PR12MB4356.namprd12.prod.outlook.com
- ([fe80::5484:99ef:2b52:eb77]) by DM6PR12MB4356.namprd12.prod.outlook.com
- ([fe80::5484:99ef:2b52:eb77%3]) with mapi id 15.20.5986.019; Tue, 17 Jan 2023
- 01:49:31 +0000
-From:   "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
-Subject: [PATCH v5 0/2] send-email: expose header information to
- git-send-email's sendemail-validate hook
-Thread-Topic: [PATCH v5 0/2] send-email: expose header information to
- git-send-email's sendemail-validate hook
-Thread-Index: AQHZJTjIEvQf9C45R0Sm+0R83mOieq6h4V+A
-Date:   Tue, 17 Jan 2023 01:49:31 +0000
-Message-ID: <20230117014917.49378-1-michael.strawbridge@amd.com>
-References: <20230110211452.2568535-1-michael.strawbridge@amd.com>
-In-Reply-To: <20230110211452.2568535-1-michael.strawbridge@amd.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-mailer: git-send-email 2.34.1
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM6PR12MB4356:EE_|CH3PR12MB8581:EE_
-x-ms-office365-filtering-correlation-id: 0918055d-016d-46ca-7546-08daf82d13b4
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: hv1wwuI2vg2gHANHBAdAooHr4uq07wFBl1/JxGNiEdCLmivSoKDyaGaq/7voL6BQEotWTIP+dvOnCsVjN1FJHlcD2QZF5wdACcN9AKu7VKmkgSTgbfeTzU6866zKTTvUFQj5uoNNBDl2ZJ7u3uIgHve8gSog4h712CyOBWRk8u8l41k4EjyILT7mz2ZLWyQYpJwdju17S9x5fKlC7Q0bHa9PD3Tsys91jC3sWbMyYOaAzLkbZpob5IINAFqOOreZqoxhG6zU6g3m0qhY5kGDL3ZbHCYKWhsHzUN6IhMPd/3DGSZ1QltKWGN42FpphZxlzX1C0aFMYY9A5YDKAAXFA1V32fn/bPowMzJTAqBa7MWlObHXkpBUm8FbvN7zlyO7wRixonNHTp57i6eLbAGCEz2YthlPtEJlsPS8fmgJ87cMTE7i73GrTZEdT/8/YH8TqF92JEVIR8Il/loZhvfimOH+q4vLmw6Esu63YclQzGZZmyTL2PbgQY9iSvblFvAH5xt+Hg6UrdW/4SSeUPVG/OuKJeNIz6nyJsJmvhreGjI0BUiqMNvD69R1gXFQwMwVhqokETJVz3yQ90+mmm1FGraWjJ+AO71LcvOZYn3dV7uXUG4V+KmwrTYoCu77+EQp1acTvfAti6FrGrdKEfbjGiUc+9xK+PG8lF7gFa0WJlpVct+4eblpZZerEpq8aM3hniRjsHcmy+KH5daEdgaQhQ==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(366004)(346002)(136003)(396003)(39860400002)(451199015)(36756003)(558084003)(478600001)(71200400001)(6486002)(6512007)(26005)(6506007)(2906002)(41300700001)(8936002)(5660300002)(316002)(6916009)(4326008)(8676002)(91956017)(66946007)(66556008)(66476007)(66446008)(64756008)(76116006)(122000001)(186003)(38070700005)(38100700002)(2616005)(1076003)(86362001);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?QKpaJ3ogW/lRJenkjcnO6j2xrYVLIogAk3AJ1eJJIVkiHS+nHdjpQ/0jsL?=
- =?iso-8859-1?Q?nhPrCezFt6GfGMcycG/rAxoFIM0MXc649ZUSkURGkQJIyYn25LdORI/juh?=
- =?iso-8859-1?Q?5V0wqdh3qDYPjDnnE2obmZM7kIW5Lq6btzHg0D2CC28hdn+A7v4Q61moq5?=
- =?iso-8859-1?Q?TXBuegQnplj6jF6l1wsQjsJxX8FgLmfIRtZRRj48nDSXsp0IWcS7eievWl?=
- =?iso-8859-1?Q?7xrUH0B3MGaiAO0h6Q6QxmqpnatJcL5BHXc0zQnwX4Zk7qe+iqnb0SUBpM?=
- =?iso-8859-1?Q?kwtiMarnfRkU54aCt9wWv/201knHnkeyFYlyC0YtSNSlIW0ULEED+G+R83?=
- =?iso-8859-1?Q?AWYmwkephCD/8sjFFPTBsNCjOug0C0ko1AjOPi/y5LCC6LOJRIXk6cv6OE?=
- =?iso-8859-1?Q?z7roL8GTvrmRLFI3Gvzn2dM+mLQlhgkYxWK7PXePS8dVuKjgu5Ob8ipSIY?=
- =?iso-8859-1?Q?hFFDPCAY3+cF1CgiAMdf/Wqri1NklpCfnVXptQ5pqHazx4CGz/GAMGofoT?=
- =?iso-8859-1?Q?aYLqdUyh050aLz53tpwE5WlAKooBskQVNrQqRrwCmOu9x0RWhtgJ6/IJ3u?=
- =?iso-8859-1?Q?t+Scr4Kz0/KPn0f3C8goLG8GM8uLInE5CWgcT6aGKX5jzDdGqCRz+uL9EK?=
- =?iso-8859-1?Q?zl9cxknM7pdjvlBWBxtIk6sQb/e13+v7Y092Khj/9q/PA9NIG6rmJpBt+0?=
- =?iso-8859-1?Q?7dgjvzVmTSRybB9lzUv1XpPIg3CH72XSAcRt+BNkpjDL2P/kL7ODiL+khS?=
- =?iso-8859-1?Q?0KjdoCGJvJcCdVwy9rocXQCp32jlYtMUTFj2AWxIZRs/WGWgPCBVNE60RJ?=
- =?iso-8859-1?Q?LNhaFLRYSMTJt4kOHKlDPCe4a+Jm9HVZQiaPReFSecVQbCIY14UkIlKVt5?=
- =?iso-8859-1?Q?dDdFWLqQDyJl2lQY3dZ6Ggdy1CiK11g2vQpnAZVBo9592uBTd5PPvPV03t?=
- =?iso-8859-1?Q?UNYFHp02a4yuWTWVlxFw4+iCFdrfCRvNnqV7kUGJ+E59Kw527P9Vy0hQx8?=
- =?iso-8859-1?Q?/GPpvVB++4Dq3zQ9+Yi7K8vOg1gn+NkbELYoRDqXyUFFY2KIxZKr/0+bT2?=
- =?iso-8859-1?Q?BF45WxORP33oftxl95Glm5sB2fvOX+q5yNPfmNt/0CHE5ZC7G6gv3Yc5Fc?=
- =?iso-8859-1?Q?D9KSYhNz9qlknu7KdOBXzZdIWPtzrKDa1KMkB4B+7XO0VBnAkK1h8XM/hw?=
- =?iso-8859-1?Q?X+Z4kVuY+uVZB0t0c1QPo81+kj9Q7Z+puIsYgSfuMaY/3lTfQJqfZuo+cQ?=
- =?iso-8859-1?Q?uyYjfmUmrBLobSDo0ncZ/fZSlV0M8c/l028wyJu4cv1QLOgBb5XRwMVPIE?=
- =?iso-8859-1?Q?P04XZtJblBv+05ZnL+uaxHm2OWoRStyiec3zcng4Rl0otokdW48sGWJaW7?=
- =?iso-8859-1?Q?wUmRWbp2brSwvp0wt5um2NCQZTBIsYbThaPp223+jDdHAa26d1vp6WKft0?=
- =?iso-8859-1?Q?iFLXEvsu+YwCK2wrs4SF+jpDX43oNabpO9TXn38SakDDvYThNE2nHc0CtB?=
- =?iso-8859-1?Q?zLr1fjoJM1YIIUZiIX/WsQDazrKkyHkqQAEEN6W4dQprLs+iQPJpZZgbkQ?=
- =?iso-8859-1?Q?4SfQPMMg/9tK0NJGL6wWnCby7uJKo+nJ5tpdAfZV1ja8LTycBt86ObMlOS?=
- =?iso-8859-1?Q?9HWKMsU0DSRxdi4fX4IdZ4Yqh4bMIhJM4/?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S234606AbjAQDDY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2023 22:03:24 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0007E9C
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 19:03:22 -0800 (PST)
+Received: (qmail 19188 invoked by uid 109); 17 Jan 2023 03:03:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 17 Jan 2023 03:03:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3829 invoked by uid 111); 17 Jan 2023 03:03:25 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Jan 2023 22:03:25 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 16 Jan 2023 22:03:21 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH v2] avoiding deprecated curl options
+Message-ID: <Y8YP+R/hyNr6sEFA@coredump.intra.peff.net>
+References: <xmqqv8l9n5fj.fsf@gitster.g>
+ <Y8LAim4D3g6qnZdq@coredump.intra.peff.net>
+ <xmqqilh9kqdy.fsf@gitster.g>
+ <xmqqzgakgu0n.fsf@gitster.g>
+ <Y8RddcM9Vr71ljp4@coredump.intra.peff.net>
 MIME-Version: 1.0
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4356.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0918055d-016d-46ca-7546-08daf82d13b4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jan 2023 01:49:31.4000
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: i/WRcKakhBHaS7T8DRAyNDCcbmOlaYryXYCZvyQf6wlVqQs/h9DboQ+oEFZa6SBEAFfGwAWAIaCiIUakzbzHog==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8581
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y8RddcM9Vr71ljp4@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Please ignore this thread.
+On Sun, Jan 15, 2023 at 03:09:26PM -0500, Jeff King wrote:
 
-Michael Strawbridge
+> So I took a look at just dropping the deprecated bits, and it wasn't
+> _too_ bad. Here's that series. The first two I hope are obviously good.
+> The third one is _ugly_, but at least it punts on the whole "how should
+> we silence this" argument, and it takes us in the direction we'd
+> ultimately want to go.
+> 
+>   [1/3]: http-push: prefer CURLOPT_UPLOAD to CURLOPT_PUT
+>   [2/3]: http: prefer CURLOPT_SEEKFUNCTION to CURLOPT_IOCTLFUNCTION
+>   [3/3]: http: support CURLOPT_PROTOCOLS_STR
 
---=20
-2.34.1
+In the interests of wrapping this up, here's a v2 that:
+
+  - bumps the required curl version to 7.19.5 in patch 2
+
+  - aims for slightly better readability in the final code of patch 3,
+    versus minimizing the diff
+
+As discussed, there are a lot of different ways one could do patch 3,
+but I really don't think it's worth spending that much brain power on.
+What's here is correct (most important), and I think should be easy to
+clean up when we can eventually drop the old style.
+
+  [1/3]: http-push: prefer CURLOPT_UPLOAD to CURLOPT_PUT
+  [2/3]: http: prefer CURLOPT_SEEKFUNCTION to CURLOPT_IOCTLFUNCTION
+  [3/3]: http: support CURLOPT_PROTOCOLS_STR
+
+ INSTALL           |  2 +-
+ git-curl-compat.h |  8 +++++
+ http-push.c       |  6 ++--
+ http.c            | 79 +++++++++++++++++++++++++++++++++--------------
+ http.h            |  2 +-
+ remote-curl.c     | 28 ++++++++---------
+ 6 files changed, 81 insertions(+), 44 deletions(-)
+
+1:  2229c0468f = 1:  5ae6831af5 http-push: prefer CURLOPT_UPLOAD to CURLOPT_PUT
+2:  00120fa40e ! 2:  5be76d74de http: prefer CURLOPT_SEEKFUNCTION to CURLOPT_IOCTLFUNCTION
+    @@ Commit message
+         instead. It was added in 2008 via curl 7.18.0; our INSTALL file already
+         indicates we require at least curl 7.19.4.
+     
+    -    We have to rewrite the ioctl functions into seek functions. In some ways
+    -    they are simpler (seeking is the only operation), but in some ways more
+    -    complex (the ioctl allowed only a full rewind, but now we can seek to
+    -    arbitrary offsets).
+    +    But there's one catch: curl says we should use CURL_SEEKFUNC_{OK,FAIL},
+    +    and those didn't arrive until 7.19.5. One workaround would be to use a
+    +    bare 0/1 here (or define our own macros).  But let's just bump the
+    +    minimum required version to 7.19.5. That version is only a minor version
+    +    bump from our existing requirement, and is only a 2 month time bump for
+    +    versions that are almost 13 years old. So it's not likely that anybody
+    +    cares about the distinction.
+    +
+    +    Switching means we have to rewrite the ioctl functions into seek
+    +    functions. In some ways they are simpler (seeking is the only
+    +    operation), but in some ways more complex (the ioctl allowed only a full
+    +    rewind, but now we can seek to arbitrary offsets).
+     
+         Curl will only ever use SEEK_SET (per their documentation), so I didn't
+         bother implementing anything else, since it would naturally be
+    @@ Commit message
+     
+         Signed-off-by: Jeff King <peff@peff.net>
+     
+    + ## INSTALL ##
+    +@@ INSTALL: Issues of note:
+    + 	  not need that functionality, use NO_CURL to build without
+    + 	  it.
+    + 
+    +-	  Git requires version "7.19.4" or later of "libcurl" to build
+    ++	  Git requires version "7.19.5" or later of "libcurl" to build
+    + 	  without NO_CURL. This version requirement may be bumped in
+    + 	  the future.
+    + 
+    +
+      ## http-push.c ##
+     @@ http-push.c: static void curl_setup_http(CURL *curl, const char *url,
+      	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
+3:  22eb2fd0fe ! 3:  d2c28e22e1 http: support CURLOPT_PROTOCOLS_STR
+    @@ http.c: void setup_curl_trace(CURL *handle)
+      }
+      
+     -static long get_curl_allowed_protocols(int from_user)
+    -+static void proto_list_append(struct strbuf *list_str, const char *proto_str,
+    -+			      long *list_bits, long proto_bits)
+    -+{
+    -+	*list_bits |= proto_bits;
+    -+	if (list_str) {
+    -+		if (list_str->len)
+    -+			strbuf_addch(list_str, ',');
+    -+		strbuf_addstr(list_str, proto_str);
+    -+	}
+    -+}
+    -+
+    -+static long get_curl_allowed_protocols(int from_user, struct strbuf *list)
+    ++static void proto_list_append(struct strbuf *list, const char *proto)
+      {
+    - 	long allowed_protocols = 0;
+    +-	long allowed_protocols = 0;
+    ++	if (!list)
+    ++		return;
+    ++	if (list->len)
+    ++		strbuf_addch(list, ',');
+    ++	strbuf_addstr(list, proto);
+    ++}
+      
+    - 	if (is_transport_allowed("http", from_user))
+    +-	if (is_transport_allowed("http", from_user))
+     -		allowed_protocols |= CURLPROTO_HTTP;
+    -+		proto_list_append(list, "http", &allowed_protocols, CURLPROTO_HTTP);
+    - 	if (is_transport_allowed("https", from_user))
+    +-	if (is_transport_allowed("https", from_user))
+     -		allowed_protocols |= CURLPROTO_HTTPS;
+    -+		proto_list_append(list, "https", &allowed_protocols, CURLPROTO_HTTPS);
+    - 	if (is_transport_allowed("ftp", from_user))
+    +-	if (is_transport_allowed("ftp", from_user))
+     -		allowed_protocols |= CURLPROTO_FTP;
+    -+		proto_list_append(list, "ftp", &allowed_protocols, CURLPROTO_FTP);
+    - 	if (is_transport_allowed("ftps", from_user))
+    +-	if (is_transport_allowed("ftps", from_user))
+     -		allowed_protocols |= CURLPROTO_FTPS;
+    -+		proto_list_append(list, "ftps", &allowed_protocols, CURLPROTO_FTPS);
+    ++static long get_curl_allowed_protocols(int from_user, struct strbuf *list)
+    ++{
+    ++	long bits = 0;
+      
+    - 	return allowed_protocols;
+    +-	return allowed_protocols;
+    ++	if (is_transport_allowed("http", from_user)) {
+    ++		bits |= CURLPROTO_HTTP;
+    ++		proto_list_append(list, "http");
+    ++	}
+    ++	if (is_transport_allowed("https", from_user)) {
+    ++		bits |= CURLPROTO_HTTPS;
+    ++		proto_list_append(list, "https");
+    ++	}
+    ++	if (is_transport_allowed("ftp", from_user)) {
+    ++		bits |= CURLPROTO_FTP;
+    ++		proto_list_append(list, "ftp");
+    ++	}
+    ++	if (is_transport_allowed("ftps", from_user)) {
+    ++		bits |= CURLPROTO_FTPS;
+    ++		proto_list_append(list, "ftps");
+    ++	}
+    ++
+    ++	return bits;
+      }
+    + 
+    + #ifdef GIT_CURL_HAVE_CURL_HTTP_VERSION_2
+     @@ http.c: static CURL *get_curl_handle(void)
+      
+      	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
