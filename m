@@ -2,137 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5171C3DA78
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 18:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EC27C54E76
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 18:48:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232550AbjAQSen (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 13:34:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56108 "EHLO
+        id S235027AbjAQSrt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 13:47:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231642AbjAQSbp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 13:31:45 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F8A8402D4;
-        Tue, 17 Jan 2023 10:02:06 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id u1-20020a17090a450100b0022936a63a21so11529042pjg.4;
-        Tue, 17 Jan 2023 10:02:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:subject:cc:to:from:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=06SBabuD60dOHeW+Ln05X7+rSaJ0r5j5hL5snKdE54w=;
-        b=CLBaTDHIhQ+3YYF1XoeZKk02D8QYBaZAjlCuBgKLG8hPkQpjROe96ong7hKknhKU0E
-         cwNBmIGl+42af2MolMPj+R+OxoM0UD+TyZrejVjmL2tsAYXI4dTfVomTsPdqUHMY5nXv
-         qtlyx2Vox/OshXN/CGBm/JHhoW0/JIWPMC0YAjMHy4djchg3F1l4zf9TAYhvuuqNdhn9
-         KjRtKE5+7lceiZ/H/mBwCDvVZPSRU1hw4ilcuzfy+b36tAUsaCMVHbpnAtutvnLQqnte
-         JtBxaQZwDEiOjHabPtdls9PGluqyRHGl0jMPIV1lAjlNN3a5FzE+qJ/PKaOT04b8nNut
-         0QeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=06SBabuD60dOHeW+Ln05X7+rSaJ0r5j5hL5snKdE54w=;
-        b=EDNdW3fVgeull+rSQnIfaJNlwx+qtjGxjXi1rhiHCs+C+jYXLC1JmunbGtVHW9nEfP
-         Io4u4mURh8GRjgRUo7hVxbDHxx+Z/IpAZePciksh9/p+gMGChm9RM8ITRAzSp0vlXow9
-         w5KTic7i9NipcML1gVKWOU9Ta6aYhkSXQbq2EtxK7kqCpxWXj90uHa+4/g3o3c0trhSm
-         vfZJiue31cTxW7xgCt+oRZtaZ2PAMqyWU2j5d1OEQVqHJ0Vg/2f+RC9ha09QuhWEQPjB
-         vWwa2oow0VHzrUcRzZhDRFH6c6gDFBa17xxsn4d1PJiq+ATTbwB2FPFn7mEGtsCv3Eqz
-         /CFg==
-X-Gm-Message-State: AFqh2kqYyfkfossR5eQ9q+mvdbgGF1zG05s2YfWjnNV0pgc7DQnlOGxN
-        QbcwfTF0voX1L6C+RhjkhIOCrcuhgxw=
-X-Google-Smtp-Source: AMrXdXtksnEnIAx5Gh1uhNBCUsfvsGfNk0JwKZ+rhyojx19HF4m9w7zolWZJm0XSJfVqDQEjlZJ97Q==
-X-Received: by 2002:a17:902:bb89:b0:194:9b5e:a0a5 with SMTP id m9-20020a170902bb8900b001949b5ea0a5mr6883617pls.43.1673978525740;
-        Tue, 17 Jan 2023 10:02:05 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id w19-20020a170902a71300b0019339f3368asm4995536plq.3.2023.01.17.10.02.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 10:02:05 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, git-packagers@googlegroups.com,
-        lwn@lwn.net
-Subject: [ANNOUNCE] Git 2.39.1 and others
-Date:   Tue, 17 Jan 2023 10:02:05 -0800
-Message-ID: <xmqq7cxl9h0i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S234199AbjAQShy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 13:37:54 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72D1438023
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 10:08:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1673978933; bh=naatufBJLXc1Thuaq9A4GIoSSulfg9Ck3QmV6CBjUfo=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=jpVwasvE3tv0Bjjmu5GvTWxPCZfCSnIrXWLavfQ3wHl/9nOIUa6CRPyLCwkHqPOdr
+         v6tLcJFNI+vKEvWO777Tz2tQmEYUFb9Zzun9z+c94xuLH+ZGK2YMCQkbhbOtHUU954
+         MV3wWTxrS/OEy4easL0AFho/PEKrLrXVJTaMkr6vX5gYOtdHP2f6ekCLO3gQemqZds
+         1yETi2oJAHoL20RPNAseSjKfSwmhsPm6nCaApE1268Il60WZByeeQnIU8kPSxMwuml
+         52fSjq1wVoOk6RHAbQjm85mx/v2vMh6w2ZcZWfNwIW3TtG1rjvenAO6w4+NJChz1wP
+         RoR4o0Jz++q9w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from
+ fv-az242-789.30y45kzjdhxebl3rnllq33u0kc.cx.internal.cloudapp.net
+ ([172.176.194.114]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MLiCu-1p0B0u3Xv6-00HgNu; Tue, 17 Jan 2023 19:08:53 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.39.1
+Date:   Tue, 17 Jan 2023 18:08:50 +0000
+Message-Id: <20230117180850.3664-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.39.0
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
+Fcc:    Sent
+X-Provags-ID: V03:K1:yMVOBlqLGBchQz/tJyRgJLpu92K+GONlkP1Xq9hyPQlnF/SbBz9
+ pV+R1NMnuaB6yngZr5lKZ807SueNXhWFsBpTQ5XhdcLN+QeDkW9Vy//z37yGI9wQJV1SuyI
+ hZKujZ0nwbhmSHkC8F6l1gl56dMa5Frp8/MBa7SJPFPeiDAHXJcsiiTNWyGOqCE2JmwFFMQ
+ PlUdhMWEsU6qyAR5VH5Vg==
+UI-OutboundReport: notjunk:1;M01:P0:X6htXW4ZjPs=;h82ZmILDWDGOci7d/NQZk8X0WT4
+ EbeNGGRBf6WZHDrpCgR9NG/am33m2VWXf/0p2wiWEanIxj7K4rVs+OI6o5UA4ZFtYY679GWId
+ HD2+HP/8TASJtITgvDs/oHrovTjWLL6KwBCF086dmPw+A2Bb0pHNKOwPiJoED8tCxeKuBcJpG
+ Hu3blwx3aY620pt04h/y35KOeRkzchFvjIyeC3tWP+/avAxaUhz7BC3Ag7IY4F1NYdQ8MghbO
+ Se2HZeau1W2cEdnGkRgZyO5txiyHSAFoPv4ww14OaMtMZt3BSEqJZoY+iLNmz69WabC5JZHGO
+ HmeCJYylaAR84RMgdyGnAhWRWoVif4DAPoUwEcyg2obLhkcMWWSe0kplXAAqpOcrOyO9mWjOo
+ KBJcoPLBzTX/8Gg8M8v8lX+FBiS1Cv5dHrbpOf9PoEenfuKnWZZYCd4w//m16mw4m0IJEZl7W
+ zu2F83wwxY1Cs1mL5SLpe4BX96DvggSYKtRgMrMxBvXkVZzwdMglWDPbuIhSY81VTNJDn0Dn+
+ Qs/PFBZ2bqgY9MeD0ACJaOoYG5OHXYyMBdk0oQr5vML74Ay3NMBLv4o9DAU6cxKvWCh3V5AVe
+ BMK7kDn6RJJw8kJRdoDXqGxi6mcSewd0/J1FPiJldkzeRNzRz1uzfRA13AaXyDkF0qstDFCub
+ GEQ3jLSi4WrOWO7nRxQyg5MJIsFpDN09FEq3e1sigUWh7We1ApA4fvMvrZqPhRZ7pKyP2+tsw
+ z780+yElsMJfT91Lu1SymqDYP4TSiCvYXOG98MS0VnDCEEJIxKTggMCzpLC5GolRNoinfFdWG
+ c6ulxocFji1USCFttUrnYPuzv3cpi9nytDchjC2DH3cdCnMYYlTaXV5HUVnK1TkQVaLLrGlAB
+ DQ7U16JBfD/RCvUdj5UurkgZnmMuQXnobPWRic6t2I26Xl7WqJbxOwI89383a6i4rQ/zkpEbg
+ MllODoOgRWXBYeTNGjh8xbGxBdE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A maintenance release v2.39.1, together with releases for older
-maintenance tracks v2.38.3, v2.37.5, v2.36.4, v2.35.6, v2.34.6,
-v2.33.6, v2.32.5, v2.31.6, and v2.30.7, are now available at the
-usual places.
+Dear Git users,
 
-These maintenance releases are to address the security issues
-identified as CVE-2022-41903 and CVE-2022-23521.
+I hereby announce that Git for Windows 2.39.1 is available from:
 
-The tarballs are found at:
+    https://gitforwindows.org/
 
-    https://www.kernel.org/pub/software/scm/git/
+Changes since Git for Windows v2.39.0(2) (December 21st 2022)
 
-The following public repositories all have a copy of the v2.39.1
-tag, as well as the tags for older maintenance tracks for v2.30.7,
-v2.31.6, v2.32.5, v2.33.6, v2.34.6, v2.35.6, v2.36.4, v2.37.5, and
-v2.38.3.
+This is a security release, addressing CVE-2022-41903, CVE-2022-23521
+and CVE-2022-41953.
 
-  url = https://git.kernel.org/pub/scm/git/git
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
+New Features
 
- * CVE-2022-41903:
+  * Comes with Git v2.39.1.
 
-   git log has the ability to display commits using an arbitrary
-   format with its --format specifiers. This functionality is also
-   exposed to git archive via the export-subst gitattribute.
+Bug Fixes
 
-   When processing the padding operators (e.g., %<(, %<|(, %>(,
-   %>>(, or %><( ), an integer overflow can occur in
-   pretty.c::format_and_pad_commit() where a size_t is improperly
-   stored as an int, and then added as an offset to a subsequent
-   memcpy() call.
+  * Addresses CVE-2022-23521, a critical vulnerability in the
+    .gitattributes parsing that potentially allows malicious code to be
+    executed while cloning.
+  * Addresses CVE-2022-41953, a vulnerability that makes Git GUI's
+    Clone function susceptible to Remote Code Execution attacks.
+  * Addresses CVE-2022-41903, a vulnerability that may allow heap
+    overflows and code to be executed inadvertently during a git
+    archive invocation.
+  * A regression introduced in Git for Windows v2.39.0(2) that
+    prevented cloning from Bitbucket was fixed.
 
-   This overflow can be triggered directly by a user running a
-   command which invokes the commit formatting machinery (e.g., git
-   log --format=...). It may also be triggered indirectly through
-   git archive via the export-subst mechanism, which expands format
-   specifiers inside of files within the repository during a git
-   archive.
+Git-2.39.1-64-bit.exe | 82d088233144054d14d8cc890870544f1ac6ac73aebade87c4d96c97b55d8508
+Git-2.39.1-32-bit.exe | b9ac2863b42eb60ee6cbb0663378bb119cb976a52985d4bbe92ad00b073ffed2
+PortableGit-2.39.1-64-bit.7z.exe | b898306a44084b5fa13b9a52e06408d97234389d07ae41d9409bdf58cad3d227
+PortableGit-2.39.1-32-bit.7z.exe | 2cb1a83f30f0c2948c97d3dc683c8b058c808f89b51bfb813de67253d17caa15
+MinGit-2.39.1-64-bit.zip | 000649846ec6e28e8f76d4a0d02f02b3dd1ba19914385f7dead1c5cde25b3bad
+MinGit-2.39.1-32-bit.zip | e36dc71d97359f584d25efbdabb4122fb71514bcba5a99df1b82a83cee9472e3
+MinGit-2.39.1-busybox-64-bit.zip | c2b54edf2f5b3c7a7bb65640d49f8d7a953145b989125c8749e673d03e2a80f1
+MinGit-2.39.1-busybox-32-bit.zip | 4a28a9bd4e49d260ae3c35bf9a2cdb91f12d4a4cf081f21b3df278e76f401262
+Git-2.39.1-64-bit.tar.bz2 | 2a33c6fef5ed9d2794013fe965066b80c24b556168aca28c0252c1e11859f4ad
+Git-2.39.1-32-bit.tar.bz2 | fdbbd5bcbe00f8981df11cdff87f74440b1a64f40898740559f68e4565555a44
 
-   This integer overflow can result in arbitrary heap writes, which
-   may result in remote code execution.
-
-* CVE-2022-23521:
-
-    gitattributes are a mechanism to allow defining attributes for
-    paths. These attributes can be defined by adding a `.gitattributes`
-    file to the repository, which contains a set of file patterns and
-    the attributes that should be set for paths matching this pattern.
-
-    When parsing gitattributes, multiple integer overflows can occur
-    when there is a huge number of path patterns, a huge number of
-    attributes for a single pattern, or when the declared attribute
-    names are huge.
-
-    These overflows can be triggered via a crafted `.gitattributes` file
-    that may be part of the commit history. Git silently splits lines
-    longer than 2KB when parsing gitattributes from a file, but not when
-    parsing them from the index. Consequentially, the failure mode
-    depends on whether the file exists in the working tree, the index or
-    both.
-
-    This integer overflow can result in arbitrary heap reads and writes,
-    which may result in remote code execution.
-
-Credit for finding CVE-2022-41903 goes to Joern Schneeweisz of GitLab.
-An initial fix was authored by Markus Vervier of X41 D-Sec. Credit for
-finding CVE-2022-23521 goes to Markus Vervier and Eric Sesterhenn of X41
-D-Sec. This work was sponsored by OSTIF.
-
-The proposed fixes have been polished and extended to cover additional
-findings by Patrick Steinhardt of GitLab, with help from others on the
-Git security mailing list.
+Ciao,
+Johannes
