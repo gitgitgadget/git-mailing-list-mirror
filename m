@@ -2,104 +2,244 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EC27C54E76
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 18:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42AECC3DA78
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 19:03:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235027AbjAQSrt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 13:47:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60308 "EHLO
+        id S234403AbjAQS6f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 13:58:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234199AbjAQShy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 13:37:54 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72D1438023
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 10:08:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1673978933; bh=naatufBJLXc1Thuaq9A4GIoSSulfg9Ck3QmV6CBjUfo=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=jpVwasvE3tv0Bjjmu5GvTWxPCZfCSnIrXWLavfQ3wHl/9nOIUa6CRPyLCwkHqPOdr
-         v6tLcJFNI+vKEvWO777Tz2tQmEYUFb9Zzun9z+c94xuLH+ZGK2YMCQkbhbOtHUU954
-         MV3wWTxrS/OEy4easL0AFho/PEKrLrXVJTaMkr6vX5gYOtdHP2f6ekCLO3gQemqZds
-         1yETi2oJAHoL20RPNAseSjKfSwmhsPm6nCaApE1268Il60WZByeeQnIU8kPSxMwuml
-         52fSjq1wVoOk6RHAbQjm85mx/v2vMh6w2ZcZWfNwIW3TtG1rjvenAO6w4+NJChz1wP
-         RoR4o0Jz++q9w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az242-789.30y45kzjdhxebl3rnllq33u0kc.cx.internal.cloudapp.net
- ([172.176.194.114]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MLiCu-1p0B0u3Xv6-00HgNu; Tue, 17 Jan 2023 19:08:53 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.39.1
-Date:   Tue, 17 Jan 2023 18:08:50 +0000
-Message-Id: <20230117180850.3664-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.39.0
-Content-Type: text/plain; charset=UTF-8
+        with ESMTP id S234156AbjAQSyy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 13:54:54 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6A7B5AA5F
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 10:18:05 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id cx21-20020a17090afd9500b00228f2ecc6dbso290014pjb.0
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 10:18:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PRgGkTkGSfGAcPcWfSi9XEOGi5RWaXZ3fQ71sdQjQKo=;
+        b=YVkSJOFTjMf21r7P8maYBoZJBs2A3gh/BIoQRs79FURgUuxL8QfmbLgUy7ITTUvtx0
+         tciZY2vZkF1S6/rloXdq3e2Gpw0RSFPfHQmpDWGjBPJaDMPVT7CLkZPkXze3w8yb+9y+
+         c9KUkwrAkzs21urVk9CcLvvrxhpf3xzDFAi+U+nPiqticdvmaWubp90nrNTIXMAiMqFE
+         qAdvvvdWKpSpCgmkT96ocLUEqb8RbeedaiUgAIhZ+Ui+WFfKU++fB9835SW0iM12tdyK
+         ULH5FnBQdGB/cf+Uwd4m5V9ZhRcnHVXFMF395c8JrKUBtyefY+ycmx1vsDmmLZUfCcCI
+         s0dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PRgGkTkGSfGAcPcWfSi9XEOGi5RWaXZ3fQ71sdQjQKo=;
+        b=v50zuk8QHRy/uDh0NstV8mgUuQsqEQ6RsXOm6qwB/juHvIZpJWTExXhlMs2TPDD9yL
+         qItJV4k4ps/6muAa5BsdUifmR5DFQLmPEYaD+SGvs/+WQ2Gi6qSWp7SECW5LDY2WICzd
+         raZI8UrnyAMjyrT0dTqUn9aRyeAdPI+HCPkDPOCAT9bQ3/lCbuw7LuXc/CyQeoiiQ6Vv
+         2DRUORU0FjITohaOpZoVTlw+3QoBNCgqghVTCv+Rd4zZ3RAhujyoSuUo3JrjnYWM6ZEN
+         +LZ/EqzoBmpfPiFMRJVijQTWYZbn4zsrbZvgt1pn2QXsIQlrN/tfDdw1bdMxgokesNDd
+         tINQ==
+X-Gm-Message-State: AFqh2kozSEtCq3LyzDqluArzIO1l3+Q4km4HIt+gn5TUzHIvLAqqMaRp
+        fgcuhZCVuVjr3OL3mUEHkEe+
+X-Google-Smtp-Source: AMrXdXtGug1+W9h6dJnyJsjZwdlRkPXAbt/BYybkJc7/wHkVYmYXfhsk300m8DtiOR8GMsTfSXZahw==
+X-Received: by 2002:a05:6a20:9305:b0:b8:7ce2:7fad with SMTP id r5-20020a056a20930500b000b87ce27fadmr3469536pzh.51.1673979465706;
+        Tue, 17 Jan 2023 10:17:45 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id z18-20020a63c052000000b0049f2c7e59f5sm17413733pgi.27.2023.01.17.10.17.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 10:17:45 -0800 (PST)
+Message-ID: <4d13cea1-e9f6-381f-14ef-8a5a645e2a8f@github.com>
+Date:   Tue, 17 Jan 2023 10:17:42 -0800
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:yMVOBlqLGBchQz/tJyRgJLpu92K+GONlkP1Xq9hyPQlnF/SbBz9
- pV+R1NMnuaB6yngZr5lKZ807SueNXhWFsBpTQ5XhdcLN+QeDkW9Vy//z37yGI9wQJV1SuyI
- hZKujZ0nwbhmSHkC8F6l1gl56dMa5Frp8/MBa7SJPFPeiDAHXJcsiiTNWyGOqCE2JmwFFMQ
- PlUdhMWEsU6qyAR5VH5Vg==
-UI-OutboundReport: notjunk:1;M01:P0:X6htXW4ZjPs=;h82ZmILDWDGOci7d/NQZk8X0WT4
- EbeNGGRBf6WZHDrpCgR9NG/am33m2VWXf/0p2wiWEanIxj7K4rVs+OI6o5UA4ZFtYY679GWId
- HD2+HP/8TASJtITgvDs/oHrovTjWLL6KwBCF086dmPw+A2Bb0pHNKOwPiJoED8tCxeKuBcJpG
- Hu3blwx3aY620pt04h/y35KOeRkzchFvjIyeC3tWP+/avAxaUhz7BC3Ag7IY4F1NYdQ8MghbO
- Se2HZeau1W2cEdnGkRgZyO5txiyHSAFoPv4ww14OaMtMZt3BSEqJZoY+iLNmz69WabC5JZHGO
- HmeCJYylaAR84RMgdyGnAhWRWoVif4DAPoUwEcyg2obLhkcMWWSe0kplXAAqpOcrOyO9mWjOo
- KBJcoPLBzTX/8Gg8M8v8lX+FBiS1Cv5dHrbpOf9PoEenfuKnWZZYCd4w//m16mw4m0IJEZl7W
- zu2F83wwxY1Cs1mL5SLpe4BX96DvggSYKtRgMrMxBvXkVZzwdMglWDPbuIhSY81VTNJDn0Dn+
- Qs/PFBZ2bqgY9MeD0ACJaOoYG5OHXYyMBdk0oQr5vML74Ay3NMBLv4o9DAU6cxKvWCh3V5AVe
- BMK7kDn6RJJw8kJRdoDXqGxi6mcSewd0/J1FPiJldkzeRNzRz1uzfRA13AaXyDkF0qstDFCub
- GEQ3jLSi4WrOWO7nRxQyg5MJIsFpDN09FEq3e1sigUWh7We1ApA4fvMvrZqPhRZ7pKyP2+tsw
- z780+yElsMJfT91Lu1SymqDYP4TSiCvYXOG98MS0VnDCEEJIxKTggMCzpLC5GolRNoinfFdWG
- c6ulxocFji1USCFttUrnYPuzv3cpi9nytDchjC2DH3cdCnMYYlTaXV5HUVnK1TkQVaLLrGlAB
- DQ7U16JBfD/RCvUdj5UurkgZnmMuQXnobPWRic6t2I26Xl7WqJbxOwI89383a6i4rQ/zkpEbg
- MllODoOgRWXBYeTNGjh8xbGxBdE=
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH 1/8] t5558: add tests for creationToken heuristic
+Content-Language: en-US
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, avarab@gmail.com,
+        steadmon@google.com, chooglen@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+ <39eed9148782c37f5184c5fff7d0e4d1a7a2a1fe.1673037405.git.gitgitgadget@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <39eed9148782c37f5184c5fff7d0e4d1a7a2a1fe.1673037405.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+> 
+> As documented in the bundle URI design doc in 2da14fad8fe (docs:
+> document bundle URI standard, 2022-08-09), the 'creationToken' member of
+> a bundle URI allows a bundle provider to specify a total order on the
+> bundles.
+> 
+> Future changes will allow the Git client to understand these members and
+> modify its behavior around downloading the bundles in that order. In the
+> meantime, create tests that add creation tokens to the bundle list. For
+> now, the Git client correctly ignores these unknown keys.
+> 
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  t/t5558-clone-bundle-uri.sh | 52 +++++++++++++++++++++++++++++++++++--
+>  1 file changed, 50 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+> index 9155f31fa2c..328caeeae9a 100755
+> --- a/t/t5558-clone-bundle-uri.sh
+> +++ b/t/t5558-clone-bundle-uri.sh
+> @@ -284,7 +284,17 @@ test_expect_success 'clone HTTP bundle' '
+>  	test_config -C clone-http log.excludedecoration refs/bundle/
+>  '
+>  
+> +# usage: test_bundle_downloaded <bundle-name> <trace-file>
+> +test_bundle_downloaded () {
+> +	cat >pattern <<-EOF &&
+> +	"event":"child_start".*"argv":\["git-remote-https","$HTTPD_URL/$1"\]
+> +	EOF
+> +	grep -f pattern "$2"
+> +}
+> +
+>  test_expect_success 'clone bundle list (HTTP, no heuristic)' '
+> +	test_when_finished rm -f trace*.txt &&
+> +
+>  	cp clone-from/bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/" &&
+>  	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
+>  	[bundle]
+> @@ -304,12 +314,19 @@ test_expect_success 'clone bundle list (HTTP, no heuristic)' '
+>  		uri = $HTTPD_URL/bundle-4.bundle
+>  	EOF
+>  
+> -	git clone --bundle-uri="$HTTPD_URL/bundle-list" \
+> +	GIT_TRACE2_EVENT="$(pwd)/trace-clone.txt" \
+> +		git clone --bundle-uri="$HTTPD_URL/bundle-list" \
+>  		clone-from clone-list-http  2>err &&
+>  	! grep "Repository lacks these prerequisite commits" err &&
+>  
+>  	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
+> -	git -C clone-list-http cat-file --batch-check <oids
+> +	git -C clone-list-http cat-file --batch-check <oids &&
+> +
+> +	for b in 1 2 3 4
+> +	do
+> +		test_bundle_downloaded bundle-$b.bundle trace-clone.txt ||
+> +			return 1
+> +	done
 
-I hereby announce that Git for Windows 2.39.1 is available from:
+Because the current state of bundle list handling is equivalent to "no
+heuristic", this pre-existing test is just updated to verify all bundles are
+downloaded. This isn't new behavior, but it'll be relevant to compare with
+the behavior of the 'creationToken' heuristic. 
 
-    https://gitforwindows.org/
+I was going to ask how the tests verify that *only* the expected bundles are
+downloaded, and it looks like later patches [1] handle that with
+'! test_bundle_downloaded' checks. That approach seems a bit fragile (if a
+bundle's name doesn't match the '! test_bundle_downloaded' check for some
+reason, the bundle can be either downloaded or not with no effect on the
+test result). Would something like a 'test_downloaded_bundle_count' work
+instead?
 
-Changes since Git for Windows v2.39.0(2) (December 21st 2022)
+-------- 8< --------
 
-This is a security release, addressing CVE-2022-41903, CVE-2022-23521
-and CVE-2022-41953.
+diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+index 0604d721f1..b2f55dd983 100755
+--- a/t/t5558-clone-bundle-uri.sh
++++ b/t/t5558-clone-bundle-uri.sh
+@@ -292,6 +292,16 @@ test_bundle_downloaded () {
+ 	grep -f pattern "$2"
+ }
+ 
++test_download_bundle_count () {
++	cat >exclude <<-EOF &&
++	"event":"child_start".*"argv":\["git-remote-https","$HTTPD_URL/bundle-list"\]
++	EOF
++	cat >pattern <<-EOF &&
++	"event":"child_start".*"argv":\["git-remote-https","$HTTPD_URL/.*"\]
++	EOF
++	test $(grep -f pattern "$2" | grep -v -f exclude | wc -l) -eq "$1"
++}
++
+ test_expect_success 'clone bundle list (HTTP, no heuristic)' '
+ 	test_when_finished rm -f trace*.txt &&
+ 
+@@ -322,6 +332,7 @@ test_expect_success 'clone bundle list (HTTP, no heuristic)' '
+ 	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
+ 	git -C clone-list-http cat-file --batch-check <oids &&
+ 
++	test_download_bundle_count 4 trace-clone.txt &&
+ 	for b in 1 2 3 4
+ 	do
+ 		test_bundle_downloaded bundle-$b.bundle trace-clone.txt ||
 
-New Features
+-------- >8 --------
 
-  * Comes with Git v2.39.1.
+[1] https://lore.kernel.org/git/51f210ddeb46fb06e885dc384a486c4bb16ad8cd.1673037405.git.gitgitgadget@gmail.com/
 
-Bug Fixes
+>  '
+>  
+>  test_expect_success 'clone bundle list (HTTP, any mode)' '
+> @@ -350,6 +367,37 @@ test_expect_success 'clone bundle list (HTTP, any mode)' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'clone bundle list (http, creationToken)' '
+> +	cp clone-from/bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/" &&
+> +	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
+> +	[bundle]
+> +		version = 1
+> +		mode = all
+> +		heuristic = creationToken
+> +
+> +	[bundle "bundle-1"]
+> +		uri = bundle-1.bundle
+> +		creationToken = 1
+> +
+> +	[bundle "bundle-2"]
+> +		uri = bundle-2.bundle
+> +		creationToken = 2
+> +
+> +	[bundle "bundle-3"]
+> +		uri = bundle-3.bundle
+> +		creationToken = 3
+> +
+> +	[bundle "bundle-4"]
+> +		uri = bundle-4.bundle
+> +		creationToken = 4
+> +	EOF
+> +
+> +	git clone --bundle-uri="$HTTPD_URL/bundle-list" . clone-list-http-2 &&
+> +
+> +	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
+> +	git -C clone-list-http-2 cat-file --batch-check <oids
 
-  * Addresses CVE-2022-23521, a critical vulnerability in the
-    .gitattributes parsing that potentially allows malicious code to be
-    executed while cloning.
-  * Addresses CVE-2022-41953, a vulnerability that makes Git GUI's
-    Clone function susceptible to Remote Code Execution attacks.
-  * Addresses CVE-2022-41903, a vulnerability that may allow heap
-    overflows and code to be executed inadvertently during a git
-    archive invocation.
-  * A regression introduced in Git for Windows v2.39.0(2) that
-    prevented cloning from Bitbucket was fixed.
+This test looks like the one that was updated above, but adds the
+'creationToken' heuristic key. However, the 'test_bundle_downloaded' check
+isn't included - if it were, it would need to verify that all bundles were
+downloaded, with the heuristic being ignored, all bundles will be downloaded
+(which isn't consistent with what the 'creationToken' heuristic will
+*eventually* do).
 
-Git-2.39.1-64-bit.exe | 82d088233144054d14d8cc890870544f1ac6ac73aebade87c4d96c97b55d8508
-Git-2.39.1-32-bit.exe | b9ac2863b42eb60ee6cbb0663378bb119cb976a52985d4bbe92ad00b073ffed2
-PortableGit-2.39.1-64-bit.7z.exe | b898306a44084b5fa13b9a52e06408d97234389d07ae41d9409bdf58cad3d227
-PortableGit-2.39.1-32-bit.7z.exe | 2cb1a83f30f0c2948c97d3dc683c8b058c808f89b51bfb813de67253d17caa15
-MinGit-2.39.1-64-bit.zip | 000649846ec6e28e8f76d4a0d02f02b3dd1ba19914385f7dead1c5cde25b3bad
-MinGit-2.39.1-32-bit.zip | e36dc71d97359f584d25efbdabb4122fb71514bcba5a99df1b82a83cee9472e3
-MinGit-2.39.1-busybox-64-bit.zip | c2b54edf2f5b3c7a7bb65640d49f8d7a953145b989125c8749e673d03e2a80f1
-MinGit-2.39.1-busybox-32-bit.zip | 4a28a9bd4e49d260ae3c35bf9a2cdb91f12d4a4cf081f21b3df278e76f401262
-Git-2.39.1-64-bit.tar.bz2 | 2a33c6fef5ed9d2794013fe965066b80c24b556168aca28c0252c1e11859f4ad
-Git-2.39.1-32-bit.tar.bz2 | fdbbd5bcbe00f8981df11cdff87f74440b1a64f40898740559f68e4565555a44
+As a matter of personal preference (so no pressure to change if you
+disagree), I find this test in its current state a bit misleading; because
+it's a 'test_expect_success' and there's no "NEEDSWORK" or "TODO", I could
+easily assume that cloning from a bundle list with the 'creationToken'
+heuristic is working as-intended at this point (that is, there's no
+indication that it's not implemented). 
 
-Ciao,
-Johannes
+If you did want to change it, adding a 'NEEDSWORK' comment, changing to
+'test_expect_failure' & including the appropriate 'test_bundle_downloaded'
+check, or moving this test to the patch where the heuristic is implemented
+would mitigate any confusion. That said, this "issue" is resolved by the
+end of the series anyway, so it's really a low priority fix.
+
+> +'
+> +
+>  # Do not add tests here unless they use the HTTP server, as they will
+>  # not run unless the HTTP dependencies exist.
+>  
+
