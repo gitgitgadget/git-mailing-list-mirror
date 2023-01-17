@@ -2,50 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B4B2C67871
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 01:40:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25DE1C54EBE
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 01:40:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234945AbjAQBkC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Jan 2023 20:40:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43230 "EHLO
+        id S234972AbjAQBkF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Jan 2023 20:40:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235109AbjAQBjp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2023 20:39:45 -0500
+        with ESMTP id S235113AbjAQBjq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2023 20:39:46 -0500
 Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2066.outbound.protection.outlook.com [40.107.220.66])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D552B601
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 17:39:44 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D401229E3C
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 17:39:45 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=S5LM4+un0rvsBL5n02QB0ulfhBVLcM9CcOrkyUiJUcjfkQkJpowNv8B0CTHACdprnmm34lz0gVxT8nTWN2V7lJJ9BRe8XRbc0DR1FsH5kMJ9WkZIMgyqGgjoARV5T6PesKxAYIERZij0JN53EG2RLCO83h+/xueXlZk0WbDYUIvPTTq0E6EegzIQTWvVjigZ0bTuW1ZfHzzTIpNcCoLIu5kph1FWnuMF8uPLRBYm2u2lWkn9C/WAbqqPNlZRkRxTVj5UiAhPrp8bF7xd7jzMrLe5GI24FBFLfFrj9fWmp4k6YbaiD92v0QfRHhgekkVQ9KNvZUfVJ/TVD6rloEuTQw==
+ b=fmHe1SDlk0AL4Pko8V+sBOLbqAhcSnzt3OkvJ2NabUchI/QUTQR6XNKiZ77gbkfP7k9IvH4reErwT5So93OjLcnvY45hE0jUUlGnpIEKhVaRGwE9UEqbUL1RqkQY9kE30gW964nZ+EevW6dwE6V//5Ug7Irn6pb2xwCoTIrUwVjisAocpBJH4KlWciVTfDcxbEwYm2aaTE6I8AvWaAzHTm7imCIrB44jQdDmT56owTxwnSMNGsdWhD3vLCuw2Cz4c2rc9OqWGBF4prnScaMMG2TpKIs6cD8KV2CjS3AUcZrIKeAuKCrNldyxIb5GGg/p+lyTw1ChYWNRLRJWTg/54A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=L9M+LtdeDtARP6sIeVV+OY/iK4R1+9zkz6iAYEq5W3s=;
- b=m2G2iBiFWvy0E/QNxzPq0y9JRceRofuRBHtvzHqBEQGs0hABjrHXjZVflnsTUFgysAP2n/wyT/omiCi2M39mUykda1YyIFFXmT0hBB5GyDn0duAuP4i4LztOLk8VPxDHgzUq4G5JqLwCY2pj/o/l4sUKW7KTHbvuwpgwYGUSpnil0hOG0wI4+y4aknkWpPxfJ/mrvFObYG0AJr9RNSUvmfbe1rnuHLVOpwk6bJ96TXEIVqdNefJ/98DijyDXisMgXsttQ9+yam3s5q6xePxezDoC6g5gLI4HwAtFgqycE7b5PgFKWA+IynqZx04rNtaEfeZ2RU82ENeA0tiBSuzH9g==
+ bh=0DyAUqG3b9/btB8pZwR/kWEKxSxFoTgTjgmQu0O+N5U=;
+ b=XNbsL+y+Ule9g2xLbmWx5IuHsO+2j2AjXenpTR31TaYpgcEZO47tec1dM9+eqmZtn2mbDR7zUt9F+uPegZcXuuzCfsghaqIuhyMBmMvEiBaaZpMXilI3Vmhmubuc4Axv0iIvda+ltWyIRRUxOZQ0wRy5IDn0amY3ecQrY8DeSqUPdGiTbkbyURNgTVZnHM98Ga4z4SwGF0kjxXKgvTcKWofHbNstt+gfR9i+Q84YwkKsIi7+3rxfXRjjFdfW7U2jOTtEVJ+IJ+eovhBjIpJI5qFK5OiCOMkMqGQGPf6Zg2IvDhIp00TH3jnj0Y2z1/bSUVcPCbMRx7ybFAmsORVrsA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=L9M+LtdeDtARP6sIeVV+OY/iK4R1+9zkz6iAYEq5W3s=;
- b=1Hz1usePLnne0a9OLdIZSQvn+LjjElaKM3OpMo3EC6M3IRnWYdztnc7AG9QtiM8Md7rxqUS9HYrEnLkKVQ98AU270AA6pr29nV1wwq7W5PURJAFEErBEu2vEZPke/LbHZ+0V7J+aHKBRJ9Ya70A6C+G93EImfroXoEPsarIdAqI=
+ bh=0DyAUqG3b9/btB8pZwR/kWEKxSxFoTgTjgmQu0O+N5U=;
+ b=uYb3g0tmgypQzBvUAL6cpowaax/XOmtRGcJUcoPOuSrpRgrYA95EChA1vWk/ChF2bPq758pJiEDMRCTz76o4L1hMBnpjAnHeTL5E+vsjHlZigmwHtwUa+kr6kYlZOwfkmMKPPyC8R252KuP7NE0lAekrlJRBalUDeVXA2qwDBy0=
 Received: from DM6PR12MB4356.namprd12.prod.outlook.com (2603:10b6:5:2aa::8) by
  DM6PR12MB5518.namprd12.prod.outlook.com (2603:10b6:5:1b9::21) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6002.13; Tue, 17 Jan 2023 01:39:41 +0000
+ 15.20.6002.13; Tue, 17 Jan 2023 01:39:43 +0000
 Received: from DM6PR12MB4356.namprd12.prod.outlook.com
  ([fe80::5484:99ef:2b52:eb77]) by DM6PR12MB4356.namprd12.prod.outlook.com
  ([fe80::5484:99ef:2b52:eb77%3]) with mapi id 15.20.5986.019; Tue, 17 Jan 2023
- 01:39:41 +0000
+ 01:39:43 +0000
 From:   "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>,
         "Tuikov, Luben" <Luben.Tuikov@amd.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v6 1/2] send-email: refactor header generation functions
-Thread-Topic: [PATCH v6 1/2] send-email: refactor header generation functions
-Thread-Index: AQHZKhSRIu302wxjykuV6JI01Ath/g==
-Date:   Tue, 17 Jan 2023 01:39:41 +0000
-Message-ID: <20230117013932.47570-2-michael.strawbridge@amd.com>
+Subject: [PATCH v6 2/2] send-email: expose header information to
+ git-send-email's sendemail-validate hook
+Thread-Topic: [PATCH v6 2/2] send-email: expose header information to
+ git-send-email's sendemail-validate hook
+Thread-Index: AQHZKhSS7YRHI5G1yk+daSce60b9bA==
+Date:   Tue, 17 Jan 2023 01:39:42 +0000
+Message-ID: <20230117013932.47570-3-michael.strawbridge@amd.com>
 References: <20230117013932.47570-1-michael.strawbridge@amd.com>
 In-Reply-To: <20230117013932.47570-1-michael.strawbridge@amd.com>
 Accept-Language: en-GB, en-US
@@ -57,171 +59,253 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: DM6PR12MB4356:EE_|DM6PR12MB5518:EE_
-x-ms-office365-filtering-correlation-id: 3099e9d5-481c-4b88-9b8d-08daf82bb420
+x-ms-office365-filtering-correlation-id: be7b5833-1db5-4817-8d9c-08daf82bb4f2
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: N/01c0ydFq1Yahb3Caphw9Azo6gSfqQ5ajuUhRTSaEGq5Yz7k39l5GD6AoUm+lhInjz6XwrckLYYAysRhn0bfmBAQrTykUtOH1qK+3vn2LVFV/m74YFXuB0SMRaPX5KZq+27UiPypvq1GS1I9HJydrCpWn8FrI2ZJn05gmDGigYWp7dSwfeQcVQRRLdJV/UJV1SLiS01fJc9ZyS8+2KbHrrz9RGPHlGuVgFjb6l9W04fkG1nSkLgop69bIlcDJnY0iRPeS4Uze5IleBhkrRzaxHCnLKCostsn4LUrUxr4lg+4FitDI3fL12FcFjBKTwbhmDn3Xn5W2Ia7tv1StWRAi1BWMoMjkLifpMKRGD58kEY0JJNFuzhK6IKGc/VLBU2oUxNlD+Uk0FmRgFQgdEpJAusDs2H4jBPIhpra6oRfGpRDBsPFyTysX5gkpojUvBmh6L7Hb65MmzNopatWjwyWkRLetBHGz1FjrH4mxR8L0ZY1JTod4NPJDZ6UkIj0/Flv0TzogtqfzfIg/4I0WEIlIjkJ55pbzjwaDXZa/M3HXxHHIp5JuQm0dDAO7W57vlZb3RORVE/B/vjz0/0Rjtv6O8ZP9/heK9Ysdt0PX/5B15/zRp/DAxNsl0yzp+rK5quhEdrYSLkmhiGM22ocCLMfdgq/xv6SC1rgsIvAio3ZndSaMko3Dxvdq9tNTyD0JCbcfNcY5PXdViMd6Y76i7xEA==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(366004)(346002)(136003)(396003)(39860400002)(451199015)(36756003)(478600001)(71200400001)(6486002)(54906003)(6512007)(26005)(6506007)(2906002)(41300700001)(8936002)(5660300002)(316002)(6916009)(4326008)(8676002)(91956017)(66946007)(66556008)(66476007)(66446008)(64756008)(76116006)(122000001)(186003)(38070700005)(38100700002)(2616005)(1076003)(86362001)(83380400001);DIR:OUT;SFP:1101;
+x-microsoft-antispam-message-info: Q0ou63iixF/LZcqC3UpkZnUxXm0qHaRhk92SbCSpNKsXBTtjHWncgWq9eC+kzVJaFEzEo9syo/+zmB7uLnAUJ5S1rkisqNYj5Kn0yAd4gPSFT1p8fhNFPy7NAxS/aEIavtFYGE3sJO3uWMsHI31eIK4mRVNN/ubufwpeiGQeuAe3BELN9HCqnkexjwCh7FigHNlmhH965qYXF15EgQsnJFQT+02+dYlU91y5a1wuf9wiJL3Yhhm9qbtabuwtvwiMBfT3Mlm2focgUWAOupdTjP969tHLcgqIJhVmHaP75jsvhJn/itlZI1rgQmhhdRnQE3CkyN0OWbcQjJcaAEa1POZJLiEXKxl/ft45AZVo/V0z/mqHxxkBIL5GOs0SQuzCeH8FuYhs/5j2q+H0tSKQETAbxQpGWxEyg3+T/mHUQnBp/e9TLcuQh57EzuQuQSIfU43N4/EVm5xPAWJ9MJP7U7hb9B4QfQ5EnUCy8Kz+vw0vONw59b8jI/ME5gvFa6QckYBOA1UgzRv97qZ/9wbTO4KbAGllXNXhPxSy0qVB3BbMDFCi243YLU5ZrkR9fgVBJmJTnu/e7AHr47q4oqzZaN2mllAHh7OXCOFiMsOoBcn87mxh2ppgLkedw8Gb2idlTCMVk4mA0Is+4Rf878caVAcCISOea6EeMrS0btURwU36g16roDT2pJd8hPLSWZVZA1HtGh320d2DwryqrquynA==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(366004)(346002)(136003)(396003)(39860400002)(451199015)(36756003)(478600001)(71200400001)(6486002)(54906003)(6512007)(26005)(6506007)(15650500001)(2906002)(41300700001)(8936002)(5660300002)(316002)(6916009)(4326008)(8676002)(91956017)(66946007)(66556008)(66476007)(66446008)(64756008)(76116006)(122000001)(186003)(38070700005)(38100700002)(2616005)(1076003)(86362001)(83380400001);DIR:OUT;SFP:1101;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?4MFmYvRRkjupJToWUve8NUnwVqOO3egJdjKK8FeAgCSMmkgYulpcedy/xN?=
- =?iso-8859-1?Q?ukOcV4mb61AyH6c+CVhqNh0UbaeGQczMvqW+pZ4wVVbpSX51afZweKKAzF?=
- =?iso-8859-1?Q?2aVrBaRqLXx24en5v249tKyb4r47P/jqbp9FzkKFU2Yk6lbM0XFu09r4P7?=
- =?iso-8859-1?Q?jAX71qWVgYlToMcxAfSIrG/X//rrVcb8uFgLfU1pFQIpM0xpRIt7V5JFOT?=
- =?iso-8859-1?Q?ZRhNkEXB3E8YUTLc/HPY6w0P0N2+eeh/TC2tniLAT7l5bSqRBjdDYRLGmS?=
- =?iso-8859-1?Q?jZl0Y5hk4Dj7NYGwZroi8Q997eBOoc0GdNF3RdrssNcFeoSnWTno4LgI66?=
- =?iso-8859-1?Q?Cj1h9sP2wui6Kv5ge4xVK6vZO7AD13FzIQsWBGGOcXLpaL60r2BA2RwjMv?=
- =?iso-8859-1?Q?WIJLKcgeo1Xc0yZddU+gpnptnJR9d46QPtaSV+eNlS46phaC+F3EH1eB5J?=
- =?iso-8859-1?Q?lIojJUiF1+yCmc1vgrliArfsXHL3SP+4UfI2qOcZuApN3fD31jg+eib7bj?=
- =?iso-8859-1?Q?EnYAHTbZfU/f4UiCy87VM6kJQCihMrJjPqWp+kkaJINB462hZ//wyg+K+4?=
- =?iso-8859-1?Q?ESNjsOTr8uj6R+ylopmBM8E4TFNZvjfHzPyMhScst4E3SE9KZNIS0BPZCp?=
- =?iso-8859-1?Q?vCtUNpdVy8uSDKCG8smGqxRWtx1ej4LapeihK8hlybVCM5yBFp4CLEBh2Y?=
- =?iso-8859-1?Q?ePNuU1fF/uEx6puh6UmOhkuhKB5NKeJ/Kpnh2cz0XM9Q74NxVpoQeWPl+0?=
- =?iso-8859-1?Q?Q2CxXola+X9PhBT67+KaFk/XvQJg0JXgz2jHFqj5kGZduNlApzBljieOLj?=
- =?iso-8859-1?Q?VC4uTxTq71QkTRXTNH+RljomBti3YN85wkJiCPnxTpO/6ooiHRre4H39L0?=
- =?iso-8859-1?Q?/vzzNPlNK+ItrwklvbBkKhAn37xvxCbifUwyOlzcPEEnAmOo778OwMVNAL?=
- =?iso-8859-1?Q?GQq8fxyWFlyzKhEmz9Cp/GCmQzYY7CjJhtfclowFl9jyCjAJCsuft/sGsK?=
- =?iso-8859-1?Q?RJGsGwNUWz/2zuBBvS7/Apr2IbbA9cAmmBQqFqUf6HGC1mzngrjUxOx9f4?=
- =?iso-8859-1?Q?fPbnmSQPbY1JcocnnkAPcU13oLsGlPKse98DtrJmNkGrlNQBp9zyEz8Yor?=
- =?iso-8859-1?Q?C9TphQmz9BDTcLSFKLO6SN16OCw2avtPN2IFnDl3tlxqoQ2JutRkv0Drap?=
- =?iso-8859-1?Q?pvE0pvFoUAG8DaT7TeMyMpCmKtZ10vMBeyCL1r7zdxZs3SCTjC25Rv8PGr?=
- =?iso-8859-1?Q?ChGZvPmdHmeO5WgLcy9ajVZMmyk128jCBicHN7edvJvfnSEcbRRe+LDrXy?=
- =?iso-8859-1?Q?H23EvsuJA/nFyOYZ3P4O7ihv6vGlI/r37nom1H47CXTwsrMRxKj8FeT0hp?=
- =?iso-8859-1?Q?1Ck7Cn53Q2gRjH8KBEl8+CPlSPdonjTNrKauwP8Xu3FsG+Q8YC49SE4xlW?=
- =?iso-8859-1?Q?c8O54ObnJKnjOWTlfGu3kvXHM9SgOATvtlH+2VTRq/9Bi4TbwcPkmW2rUI?=
- =?iso-8859-1?Q?UM+xyzwlw28PX96Y9i4eQIIXnye2zJf7nRnZBo+oCSlDkOiqbiaggciGQN?=
- =?iso-8859-1?Q?Ae2CfsIpfM0kWPYaoMFvx9SLiKOy3FJzLXMAkEc4xOHmqyote66gBv0BhL?=
- =?iso-8859-1?Q?sk+X+jsCbttlwHOsRg4if9zvY8ioYdm8gR?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?LMljlWf/cM9B6vOGk69z5HVdswGQNCEWiANdzLcUusFLCSTtOaX+zQaoMJ?=
+ =?iso-8859-1?Q?2wVJDRkpASkzkdGHla7+97m7fv4413xJ7JrtjxfJBq9/xKO0h0mgmrYM/C?=
+ =?iso-8859-1?Q?o2orZjRceLprYctTunBRx/X/wv8wj0SFasIlGFWrcdsUz+7/khCtmqz8Ui?=
+ =?iso-8859-1?Q?E6NViYI3/nQGjBiTMBWlZC9TA8u06a0erOgJmJRnASAWoAM8/WoOjIYX/T?=
+ =?iso-8859-1?Q?dueqU0znnqZqCk5Y61yUKT11xjsbekVk8WgnnqrpGaWW26H9i9JNB7n/80?=
+ =?iso-8859-1?Q?45auUCCaM1B99Dx+JkxNbaJXDv1VoaL3SW0J+mnpc3TzBGxgbkux7pYzJb?=
+ =?iso-8859-1?Q?evVNqItbcgoXVa68IPtBTQg1B6Jr3d9Ml/1ne0/pLwcJ6zD/bCDVmb93/E?=
+ =?iso-8859-1?Q?IjzkURTrO40dIzgZG59UpldyBSsKu46VwGYpzLer+VTW/N/GbpuXXaryDk?=
+ =?iso-8859-1?Q?5r8iZ+xpZ5nLFyXvtjHdp4m0Ifkv0m1HXrE0tQ+N+w3CtzMTb4oe/pzPJ1?=
+ =?iso-8859-1?Q?gZ2hNhjn5XJqTU6gEO2pNfUwQ2N+tQUHKTDLeSfUcCKfSBs4xc8M7HHm6g?=
+ =?iso-8859-1?Q?+HBwCuRBo7xoll4q08AGz6T7TFWSqfpf2PX6lfKFJnNkLigGa/OQc90ab+?=
+ =?iso-8859-1?Q?1oEIjHSi9PiGnDqlamtMmdRAKF2fChbMPpO1hVwqD3CwQ3hKm35OytpgYF?=
+ =?iso-8859-1?Q?rRwdX9i5aPC5RIgh2p2rs/K13cJjpI2VRly/i2pMRmehXdwEp7aBfs2IK6?=
+ =?iso-8859-1?Q?BInAUcT605aj7tehueh9Qm2fjwyQLlBBQxZN0rbE1+snIkr3LC0s13AsX7?=
+ =?iso-8859-1?Q?+FZZ15r5CKtpZy9xZ31VEt7eiInoT6E6fnNakRjbG0tp1xV7jSnRkc76Sa?=
+ =?iso-8859-1?Q?IoMHh5T4o/syerNhAWnnqB2819MnhYJIomdvtZtI0kGpqR0DwLewgMQQJp?=
+ =?iso-8859-1?Q?BpwI8GH4TzXlrmv2HX2ClFNKRAPZYQnK2ZCYAGC/mU2uVfIE/EcHEO0uaD?=
+ =?iso-8859-1?Q?WcjYo8b/0IN/KTEDxjYbkRUInLgRzhUegCmzl2Nmfw6CY+tqvNcqCqcjH1?=
+ =?iso-8859-1?Q?HpMjG2KQTcsQ3FeQcYcXSWsOdY+/4YjSt2f9vVeToAlEWZO23QpBVuZj7w?=
+ =?iso-8859-1?Q?kQyO+byiesdfrwvi3l6rN0O4L1Yc3i0LDGrx8yp6XYUc+OzW1quMDyVnOd?=
+ =?iso-8859-1?Q?gB0vtCE0AAurljyf0KmvyaodCAHYLoOBGCrzik0D5toGrgMtmbBVatOxyR?=
+ =?iso-8859-1?Q?66RjRC31VM/lOqLT0hKwAaJvn+7xatmNQb7VMbCgKNxgObQqxQX4GJRk/C?=
+ =?iso-8859-1?Q?c7i4kjnFnd+hvfEejpMm0Gpytgx1C61PluxPl2gE1Xp4bo6hXJBhTBS5EH?=
+ =?iso-8859-1?Q?Flhdw9HwuGPUNUJrzm/fLTtSWyPR1kTdwYlotLENjrMoQZGc07vK+iOwPo?=
+ =?iso-8859-1?Q?OGM7J2mdNZm46EuvKQ+HA9PgqsoGGN4tB409srqWQFjxCcUuuvc9GPj327?=
+ =?iso-8859-1?Q?CfKOh6UdIFXAaw+W8sjfj0dSPBPAf4HpfHdaD27nl0U5DA7sRr8QIetC0l?=
+ =?iso-8859-1?Q?em7Ps8OWsMYuzeFgGo6sYkglHYdBKnoICHyLT29/EE7eWYf1OsDbuCi6//?=
+ =?iso-8859-1?Q?4LiD+R44RX9Cl0NOfT2806tvhyGJ25NI/C?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: amd.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4356.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3099e9d5-481c-4b88-9b8d-08daf82bb420
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jan 2023 01:39:41.5508
+X-MS-Exchange-CrossTenant-Network-Message-Id: be7b5833-1db5-4817-8d9c-08daf82bb4f2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jan 2023 01:39:42.9267
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: hbGfIL4cHVJ26KSx+fnz1unqpWJPiVLik2Hl5/CsQFfYtZS2SLfBTYlzoLOB0oXRlhfq146sbWlghRozDhC5wQ==
+X-MS-Exchange-CrossTenant-userprincipalname: ymhARyBa0NVrVlBotB25k8HWXKM7z9+sHV0G/z8v/cdrBvat9TSH8DoNSf21XA5z/FpjrgDdJiMUroCfxdRCTw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB5518
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Split process_file and send_message into easier to use functions.
-Making SMTP header information more widely available.
+To allow further flexibility in the git hook, the SMTP header
+information of the email that git-send-email intends to send, is now
+passed as a 2nd argument to the sendemail-validate hook.
+
+As an example, this can be useful for acting upon keywords in the
+subject or specific email addresses.
 
 Cc: Luben Tuikov <luben.tuikov@amd.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Michael Strawbridge <michael.strawbridge@amd.com>
 ---
- git-send-email.perl | 49 ++++++++++++++++++++++++++++-----------------
- 1 file changed, 31 insertions(+), 18 deletions(-)
+ Documentation/githooks.txt | 29 +++++++++++++++++++----
+ git-send-email.perl        | 31 +++++++++++++++++--------
+ t/t9001-send-email.sh      | 47 ++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 91 insertions(+), 16 deletions(-)
 
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index a16e62bc8c..e80f481efd 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -583,10 +583,31 @@ processed by rebase.
+ sendemail-validate
+ ~~~~~~~~~~~~~~~~~~
+=20
+-This hook is invoked by linkgit:git-send-email[1].  It takes a single para=
+meter,
+-the name of the file that holds the e-mail to be sent.  Exiting with a
+-non-zero status causes `git send-email` to abort before sending any
+-e-mails.
++This hook is invoked by linkgit:git-send-email[1].
++
++It takes these command line arguments:
++1. the name of the file that holds the e-mail to be sent.
++2. the name of the file that holds the SMTP headers to be used.
++
++The SMTP headers will be passed to the hook in the below format.
++Take notice of the capitalization and multi-line tab structure.
++
++  From: Example <from@example.com>
++  To: to@example.com
++  Cc: cc@example.com,
++	  A <author@example.com>,
++	  One <one@example.com>,
++	  two@example.com
++  Subject: PATCH-STRING
++  Date: DATE-STRING
++  Message-Id: MESSAGE-ID-STRING
++  X-Mailer: X-MAILER-STRING
++  Reply-To: Reply <reply@example.com>
++  MIME-Version: 1.0
++  Content-Transfer-Encoding: quoted-printable
++
++Exiting with a non-zero status causes `git send-email` to abort
++before sending any e-mails.
+=20
+ fsmonitor-watchman
+ ~~~~~~~~~~~~~~~~~~
 diff --git a/git-send-email.perl b/git-send-email.perl
-index 5861e99a6e..810dd1f1ce 100755
+index 810dd1f1ce..b2adca515e 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -1495,16 +1495,7 @@ sub file_name_is_absolute {
- 	return File::Spec::Functions::file_name_is_absolute($path);
+@@ -787,14 +787,6 @@ sub is_format_patch_arg {
+=20
+ @files =3D handle_backup_files(@files);
+=20
+-if ($validate) {
+-	foreach my $f (@files) {
+-		unless (-p $f) {
+-			validate_patch($f, $target_xfer_encoding);
+-		}
+-	}
+-}
+-
+ if (@files) {
+ 	unless ($quiet) {
+ 		print $_,"\n" for (@files);
+@@ -1738,6 +1730,16 @@ sub send_message {
+ 	return 1;
  }
 =20
--# Prepares the email, then asks the user what to do.
--#
--# If the user chooses to send the email, it's sent and 1 is returned.
--# If the user chooses not to send the email, 0 is returned.
--# If the user decides they want to make further edits, -1 is returned and =
-the
--# caller is expected to call send_message again after the edits are perfor=
-med.
--#
--# If an error occurs sending the email, this just dies.
--
--sub send_message {
-+sub gen_header {
- 	my @recipients =3D unique_email_list(@to);
- 	@cc =3D (grep { my $cc =3D extract_valid_address_or_die($_);
- 		      not grep { $cc eq $_ || $_ =3D~ /<\Q${cc}\E>$/ } @recipients
-@@ -1546,6 +1537,22 @@ sub send_message {
- 	if (@xh) {
- 		$header .=3D join("\n", @xh) . "\n";
- 	}
-+	my $recipients_ref =3D \@recipients;
-+	return ($recipients_ref, $to, $date, $gitversion, $cc, $ccline, $header);
++if ($validate) {
++	foreach my $f (@files) {
++		unless (-p $f) {
++		        pre_process_file($f, 1);
++
++			validate_patch($f, $target_xfer_encoding);
++		}
++	}
 +}
 +
-+# Prepares the email, then asks the user what to do.
-+#
-+# If the user chooses to send the email, it's sent and 1 is returned.
-+# If the user chooses not to send the email, 0 is returned.
-+# If the user decides they want to make further edits, -1 is returned and =
-the
-+# caller is expected to call send_message again after the edits are perfor=
-med.
-+#
-+# If an error occurs sending the email, this just dies.
-+
-+sub send_message {
-+	my ($recipients_ref, $to, $date, $gitversion, $cc, $ccline, $header) =3D =
-gen_header();
-+	my @recipients =3D @$recipients_ref;
-=20
- 	my @sendmail_parameters =3D ('-i', @recipients);
- 	my $raw_from =3D $sender;
-@@ -1735,11 +1742,8 @@ sub send_message {
+ $in_reply_to =3D $initial_in_reply_to;
  $references =3D $initial_in_reply_to || '';
  $message_num =3D 0;
-=20
--# Prepares the email, prompts the user, sends it out
--# Returns 0 if an edit was done and the function should be called again, o=
-r 1
--# otherwise.
--sub process_file {
--	my ($t) =3D @_;
-+sub pre_process_file {
-+	my ($t, $quiet) =3D @_;
-=20
- 	open my $fh, "<", $t or die sprintf(__("can't open file %s"), $t);
-=20
-@@ -1893,9 +1897,9 @@ sub process_file {
- 	}
- 	close $fh;
-=20
--	push @to, recipients_cmd("to-cmd", "to", $to_cmd, $t)
-+	push @to, recipients_cmd("to-cmd", "to", $to_cmd, $t, $quiet)
- 		if defined $to_cmd;
--	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t)
-+	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t, $quiet)
- 		if defined $cc_cmd && !$suppress_cc{'cccmd'};
-=20
- 	if ($broken_encoding{$t} && !$has_content_type) {
-@@ -1954,6 +1958,15 @@ sub process_file {
- 			@initial_to =3D @to;
+@@ -2101,11 +2103,20 @@ sub validate_patch {
+ 			chdir($repo->wc_path() or $repo->repo_path())
+ 				or die("chdir: $!");
+ 			local $ENV{"GIT_DIR"} =3D $repo->repo_path();
++
++			my ($recipients_ref, $to, $date, $gitversion, $cc, $ccline, $header) =
+=3D gen_header();
++
++			require File::Temp;
++			my ($header_filehandle, $header_filename) =3D File::Temp::tempfile(
++                            ".gitsendemail.header.XXXXXX", DIR =3D> $repo-=
+>repo_path());
++			print $header_filehandle $header;
++
+ 			my @cmd =3D ("git", "hook", "run", "--ignore-missing",
+ 				    $hook_name, "--");
+-			my @cmd_msg =3D (@cmd, "<patch>");
+-			my @cmd_run =3D (@cmd, $target);
++			my @cmd_msg =3D (@cmd, "<patch>", "<header>");
++			my @cmd_run =3D (@cmd, $target, $header_filename);
+ 			$hook_error =3D system_or_msg(\@cmd_run, undef, "@cmd_msg");
++			unlink($header_filehandle);
+ 			chdir($cwd_save) or die("chdir: $!");
  		}
- 	}
-+}
-+
-+# Prepares the email, prompts the user, sends it out
-+# Returns 0 if an edit was done and the function should be called again, o=
-r 1
-+# otherwise.
-+sub process_file {
-+	my ($t) =3D @_;
-+
-+        pre_process_file($t, $quiet);
+ 		if ($hook_error) {
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 1130ef21b3..346ff1463e 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -540,7 +540,7 @@ test_expect_success $PREREQ "--validate respects relati=
+ve core.hooksPath path" '
+ 	test_path_is_file my-hooks.ran &&
+ 	cat >expect <<-EOF &&
+ 	fatal: longline.patch: rejected by sendemail-validate hook
+-	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <=
+patch>'"'"' died with exit code 1
++	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <=
+patch> <header>'"'"' died with exit code 1
+ 	warning: no patches were sent
+ 	EOF
+ 	test_cmp expect actual
+@@ -559,12 +559,55 @@ test_expect_success $PREREQ "--validate respects abso=
+lute core.hooksPath path" '
+ 	test_path_is_file my-hooks.ran &&
+ 	cat >expect <<-EOF &&
+ 	fatal: longline.patch: rejected by sendemail-validate hook
+-	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <=
+patch>'"'"' died with exit code 1
++	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <=
+patch> <header>'"'"' died with exit code 1
+ 	warning: no patches were sent
+ 	EOF
+ 	test_cmp expect actual
+ '
 =20
- 	my $message_was_sent =3D send_message();
- 	if ($message_was_sent =3D=3D -1) {
-@@ -2002,7 +2015,7 @@ sub process_file {
- # Execute a command (e.g. $to_cmd) to get a list of email addresses
- # and return a results array
- sub recipients_cmd {
--	my ($prefix, $what, $cmd, $file) =3D @_;
-+	my ($prefix, $what, $cmd, $file, $quiet) =3D @_;
-=20
- 	my @addresses =3D ();
- 	open my $fh, "-|", "$cmd \Q$file\E"
++test_expect_success $PREREQ 'setup expect' "
++cat >expected-headers <<\EOF
++From: Example <from@example.com>
++To: to@example.com
++Cc: cc@example.com,
++	A <author@example.com>,
++	One <one@example.com>,
++	two@example.com
++Subject: [PATCH 1/1] Second.
++Date: DATE-STRING
++Message-Id: MESSAGE-ID-STRING
++X-Mailer: X-MAILER-STRING
++Reply-To: Reply <reply@example.com>
++MIME-Version: 1.0
++Content-Transfer-Encoding: quoted-printable
++EOF
++"
++
++test_expect_success $PREREQ "--validate hook supports header argument" '
++	write_script my-hooks/sendemail-validate <<-\EOF &&
++	if test -s "$2"
++	then
++		cat "$2" >actual
++		exit 1
++	fi
++	EOF
++	test_config core.hooksPath "my-hooks" &&
++	test_must_fail git send-email \
++		--dry-run \
++		--suppress-cc=3Dsob \
++		--from=3D"Example <from@example.com>" \
++		--reply-to=3D"Reply <reply@example.com>" \
++		--to=3Dto@example.com \
++		--cc=3Dcc@example.com \
++		--bcc=3Dbcc@example.com \
++		--smtp-server=3D"$(pwd)/fake.sendmail" \
++		--validate \
++		longline.patch &&
++	cat actual | replace_variable_fields \
++	>actual-headers &&
++	test_cmp expected-headers actual-headers
++'
++
+ for enc in 7bit 8bit quoted-printable base64
+ do
+ 	test_expect_success $PREREQ "--transfer-encoding=3D$enc produces correct =
+header" '
 --=20
 2.34.1
