@@ -2,113 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F297CC3DA78
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 15:33:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADA57C3DA78
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 15:34:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232997AbjAQPdw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 10:33:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37392 "EHLO
+        id S232686AbjAQPeP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 10:34:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232691AbjAQPdi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 10:33:38 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3589F3FF20
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 07:33:37 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id ud5so76261158ejc.4
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 07:33:37 -0800 (PST)
+        with ESMTP id S232531AbjAQPeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 10:34:14 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9DEE3FF38
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 07:34:13 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id q15so3565406qtn.0
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 07:34:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WCtkzIJkb5UITkJpYqo2aFE22OnGHe6kwDl5aX/XhtA=;
-        b=QFOeBkT4xpN9/bzVFhwG+QRV1h54BIAHldGYDIwkNW+WG/sAKbYz+qKBLWbQOZiqzf
-         0qKW1aG8MBZg087rCPoXtemHmTLVgj2diwYDUZP34yELhNj375Q0tCGiAgBlkRuGU80w
-         thW5kWCeCyUHxaCQQgfwRTQ13B1+5TvBmf4bujJgnJiS1GVkwuvDUTcXLRdHg+PNWXTZ
-         IiVkPlDCqs6uFLZrgCTc+0OcK/P/NrjMQDpM5qoPgiRRunQ7wSQiea6NUChBtXKlS4TL
-         2CaTWy8ipaDFEW+dKSJwqusNGcNDID3WdmYwFOAB9qToiLCL+3hLjPG3myTdQn5Ft5f8
-         4e9w==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9JA8nCWfW8Z+wjcu1YwKgNLXMQgmhtK2HOJMzgA9wVA=;
+        b=QgRVhUYVhTChByKJ3d0LpQwdrKaFYmxyfuqJs5ZYDq9H2GEaUJmOn9eZw17HQFWv6c
+         S0yP4fnoIiNm54ODpVPMuOMO98MbSM5QxzCu65jSvpyRlzNvYj7BJV7C69umh5tyDa5t
+         m7KEQ2C84pSh20oKeA3b9REYY28tu11VWR6va9p3CcYreh2XQHbe7PB3cEYVqcI73DcM
+         1UJp6tfSkZRe5Vp8s6wkXF2rtV+P86320y2Qt4DSEvOeAyr6OAOT0ms7212HjtDNsFs5
+         VPbaBRNAjoS/dfwCWq39e//NU7pXC6mCG+lhKi0Kk/Vi7Xid/g+B/Oqwz59UJ3yWFOcZ
+         S2ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WCtkzIJkb5UITkJpYqo2aFE22OnGHe6kwDl5aX/XhtA=;
-        b=3ZVLHMiGdSQ+6lNL4ygZ3nfBZRm7x6vBlrZ0VQID2YvByrewKsSVdtZQIyeFj1+yBE
-         6XJroA999WzbnOc7UGgYmjC9rvdQ3MAJXrLNCrRiPnwo3I1PmOwK/F96RQtz6vzWlM/6
-         rjOeLRuRJv0FImOpgFebtZVYt3mzcXn9cA1jgOeQwwSXldGIiJY4U4wmxaVEjp6jmO2v
-         Ok9zYQ8OIeFmQc/JP7IGhgoUXcQxJgGZRmXSQ6/WL9k5JdryeD7hDYjuzwZmhL66KySM
-         k5+sh7Qo1zI+QHuRX2YhOLyJbdDfQKjLsQUpiXKoQh66xZfn3z3aif93eNwb8YcCwxyN
-         fvNw==
-X-Gm-Message-State: AFqh2kq2hi2FyYXFpFVklTxPijS2/WCDVg5lfoRO75F8Jenk2jz04+Hf
-        9SVNImMTD+lLLlsu6YXhi50=
-X-Google-Smtp-Source: AMrXdXv3JxCYFCm8Xs37oBAdzPVfYADICG3dYkVcCtxoYhD66NZzblxt73Jhq8rpy19M28VPU2tkvQ==
-X-Received: by 2002:a17:906:7101:b0:870:4f04:7ad0 with SMTP id x1-20020a170906710100b008704f047ad0mr3357737ejj.45.1673969615663;
-        Tue, 17 Jan 2023 07:33:35 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id b1-20020a1709063ca100b007af0f0d2249sm13331431ejh.52.2023.01.17.07.33.34
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9JA8nCWfW8Z+wjcu1YwKgNLXMQgmhtK2HOJMzgA9wVA=;
+        b=NJFui/l4lfe7sB2XWw0O6/EQa1Fp0KFhIvuZDVmUg41MXKPzBPuM/YjR5WylEYqv9l
+         wtGwEr5EynfVgU65znXjwutq1bTaavdAngP1vQ86dGiBRRtBrPjlQIRLCNSkfnf4L5zh
+         +BlorWZtUiUJy+7QK1ZYLMbEGMZmJ7SVa5GtKl2ctlCRPDHUckrkiJGxY+pa9OvLw0MN
+         ysBpEdsl/BdfhX2ePLWGiOakBPc1bDePiF6brq4OmD1OhmSqGI5Nleun0Xgvg9ZwA/xO
+         hW0xEFCQ18DE6aiw6w7yc9IS3Pm9QrSxfNV3KJ/WfkFjktsLPPJE1mlylwQak7OPj4Kk
+         AoCA==
+X-Gm-Message-State: AFqh2kqG+8S5t0L8Umw2TkTZvwM/qaZY5Vu6F9QGtS47lVTCTTaye3Vv
+        bqo1GbTj6r3Hl7fPYt0qhHlQ
+X-Google-Smtp-Source: AMrXdXsX2d0bS9pxArPYYUYyDoBGk8NpwTSSYy7Njc3adKFkrcKsvtTbIHzW2RB1pT2w/zT5qcWkFg==
+X-Received: by 2002:ac8:4d8d:0:b0:3af:f7f5:2b38 with SMTP id a13-20020ac84d8d000000b003aff7f52b38mr3837084qtw.59.1673969652817;
+        Tue, 17 Jan 2023 07:34:12 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:b9ce:4130:c591:f90b? ([2600:1700:e72:80a0:b9ce:4130:c591:f90b])
+        by smtp.gmail.com with ESMTPSA id z26-20020ac8101a000000b003a70a675066sm16042344qti.79.2023.01.17.07.34.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 07:33:35 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <6d81f2d5-ed76-9855-04a9-89b6e3040da6@dunelm.org.uk>
-Date:   Tue, 17 Jan 2023 15:33:34 +0000
+        Tue, 17 Jan 2023 07:34:12 -0800 (PST)
+Message-ID: <db312853-81a1-542b-db96-d816c463516c@github.com>
+Date:   Tue, 17 Jan 2023 10:34:11 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase -i: allow a comment after a "break" command
+Subject: Re: [PATCH] treewide: always have a valid "index_state.repo" member
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Olliver Schinagl <oliver@schinagl.nl>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>, Sergey Organov <sorganov@gmail.com>
-References: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
- <xmqq358fu4vr.fsf@gitster.g> <Y8A5X0kHE31kSH3z@coredump.intra.peff.net>
- <xmqqilha18yd.fsf@gitster.g>
-In-Reply-To: <xmqqilha18yd.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <xmqqlem2coix.fsf@gitster.g>
+ <patch-1.1-b4998652822-20230117T135234Z-avarab@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <patch-1.1-b4998652822-20230117T135234Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13/01/2023 20:22, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+On 1/17/2023 8:57 AM, Ævar Arnfjörð Bjarmason wrote:
+ 
+> This an updated verison of the 6/6 of [A], which per Junio's [B]
+> wasn't picked up with those patches, which are now in "next".
 > 
->> I had somewhat the opposite thought. The "break" command is special in
->> that it is not doing anything useful except returning control to the
->> user. And hence producing a message is a useful add-on. So I expected
->> the patch to just allow:
->>
->>    break this is a message the user will see
->>
->> without any "#" at all.
+> Junio: Now that Derrick's ds/omit-trailing-hash-in-index has landed on
+> "master" this can be applied on top a merge of "master" and what you
+> have in "ab/cache-api-cleanup" (that topic itself being based on a
+> too-old "master").
 > 
-> Ah, I am OK with that, too.
+> Since the v2 I changed the "Complete the double-reference" logic in
+> repo_read_index() so that we're not working around a state of a
+> affairs that no longer exists with this change.
 > 
->> That does close the door for further arguments, but I have trouble
->> imagining what they would be.
+> A. https://lore.kernel.org/git/cover-v2-0.6-00000000000-20230112T124842Z-avarab@gmail.com/
+> B. https://lore.kernel.org/git/xmqqtu0u2q9u.fsf@gitster.g/
 > 
-> Making almost everything that the tool does not pay attention to
-> (like the patch title of "pick") into comments, floated by Elijah in
-> the thread, does sound another reasonable direction to go.  If we
-> are not doing "pick 0f2d4b69 # the title of the commit", adding the
-> message without "#" to "break" might be a better way to go for
-> consistency.
+> Range-diff:
 
-Indeed, it seems the question is whether we want to make the changes 
-Elijah suggested - if so then we should use a "#" with the "break" 
-command as well but if not then it I agree it would be better not have 
-have "#" for comments with "break".
+These changes look good to me. Thanks for dealing with the branch-
+hopping.
 
-My impression is that there is some support for Elijah's suggestion and 
-no one has spoken up to oppose it so maybe we should go for that.
+Thanks,
+-Stolee
 
-Best Wishes
-
-Phillip
