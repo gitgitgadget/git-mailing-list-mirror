@@ -2,109 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41A1DC00A5A
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 22:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A98C0C38147
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 22:31:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229663AbjAQWW4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 17:22:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32822 "EHLO
+        id S229732AbjAQWbC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 17:31:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230355AbjAQWWS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 17:22:18 -0500
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 302FA9CBB3
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 14:02:11 -0800 (PST)
-Received: by mail-vs1-xe2a.google.com with SMTP id i185so33810918vsc.6
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 14:02:11 -0800 (PST)
+        with ESMTP id S229768AbjAQWaN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 17:30:13 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 384F48455A
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 14:07:45 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id b9-20020a170903228900b00194a0110d7bso2878394plh.6
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 14:07:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:to:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wk79af9HN2fsAgq2bxLSK/NrLu0N3csqboyxVwYYnqA=;
-        b=bbeUeF9r1ovQyYv38cjDbKxiCvJwgqqipKsXpiZPJ7CIQyvHCUe68ROC2sQ6T6bJej
-         fZHJt5nebIx7OuMRw3ICwDoIRS4D1SgwjCazxFAw9tpUVsfO7xby7pKkNzNvU232Wkye
-         IauF4Ho7MpFimeJFenHAEBaHWZWuZiFeh8lEdqplavm4ToYGvfyzDevC9CibaEU+n4y1
-         hljRZeGhQ3T277UCxmQRbj82eEmdjN3NFict6JypXLTm/UacOf0phtZzdGqsv0BwQJfH
-         Xjz+HXnwoEE+M8b1+9Ws0uRa5DTX5m7ah5o0JuSxu1yd8GncowmEArxH6FBzNKp6Nw2v
-         1l0g==
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YH/ONakuSdVdAKDaUBuKqmfPHOtuKz4Gq9l1fAoB2Ew=;
+        b=OIbJihNrtOMV1Y6tYTop6Dt/DUtV2OGKPUvwbJrbSqlpIUiwJ0cDg1flJS/iyxQaXq
+         0ltc2Vopy4mlFlQmKy8iFA9bvqDsqD0evZPUYX1RL/K5e7X74zGFAxnKYV7LPAZ0+DTY
+         0QoVVAHaC7dTXEyb1Sbwm5pz+Y4DmNmEXHhg8iQsE0UZxYy8Lj+26y3HlBfR0jx8FDBy
+         ZV+be48IZKbluFumaBGaN2wrMFsQrF8xIA1CBNlNuLWk6bywqrYc1MjKLcDUGtU12yV6
+         wRvJHJELbTDyKXMBIW9K3RYaYoeMqckGk5WwWiiuUJkPDgr+5R6h1TGpFXW8dOSv3op+
+         rIjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:to:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wk79af9HN2fsAgq2bxLSK/NrLu0N3csqboyxVwYYnqA=;
-        b=BGxOGO6B3McwlCU8jYu5DwOuBDxAcKxYK7COwXqwL/G9R2v6IFeLrAXhp9L4qD1Em9
-         7BLu2ekCsIBitn+lku2CyqgJd8lZjySHub9xnZUyUh0MfhEHE5gfdfoapbzlls4PzJA0
-         bV2yIE6q01+dikBejgRz6gPyuQp5z/9yrId1zKHSClnwF8+CZHJ3tJ5qrrTFZKn3j8Nq
-         hQ7FqvsGV9klcFJVgrLti376lQsOLEomMEkhVM0rkk0wb3oD3UuD9ASqoJzk7Ofd7DHR
-         v18nfspEendBICKsm411UTazFoKI6NRlmmeMW0WjIV9YXV75P7UwRh4ERry71GZMidVY
-         t8Bg==
-X-Gm-Message-State: AFqh2koOSoeDySCi2XpSfy1MJbZ6Ja/GcRhRbeCSokB4JH2R013VHyxq
-        qAjHoP8x5Fxnfrh9UzVeFxU=
-X-Google-Smtp-Source: AMrXdXvvuBAr5x7lWKQNM7mk+8n5/hefxQjomg4uSJYp6QSgVXU5vKe5vt2Pk16fI13lbDeC1xfPhg==
-X-Received: by 2002:a05:6102:4405:b0:3b1:299c:d05 with SMTP id df5-20020a056102440500b003b1299c0d05mr3217735vsb.2.1673992929391;
-        Tue, 17 Jan 2023 14:02:09 -0800 (PST)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id q7-20020a67cc07000000b003d0f0323f8fsm1934404vsl.32.2023.01.17.14.02.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Jan 2023 14:02:08 -0800 (PST)
-To:     Git mailing list <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Elijah Newren <newren@gmail.com>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: [BUG?] 'git rebase --update-refs --whitespace=fix' incompatible, but
- not enforced
-Message-ID: <b322c536-5a75-bb0c-8eac-1a99d3ba3230@gmail.com>
-Date:   Tue, 17 Jan 2023 17:02:07 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: 7bit
+        h=content-transfer-encoding:cc:to:from:subject:message-id
+         :mime-version:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YH/ONakuSdVdAKDaUBuKqmfPHOtuKz4Gq9l1fAoB2Ew=;
+        b=6QPn7Pz6DmGZObDp3LtUOllh/5ayt7TEwLqKsfQNkhuZFowgU9GM78Z8rJeQem4KO2
+         k+EOlSQoixFG/TDZcQmOqarjqLttV2A6mlJXAISNE0GC3qQsg8HeYn6E15UUQx5mGNUo
+         yNLIMEipJCtSGvFAFlUOkWnr4EAn+tMAZB4Euy/cXbpUxNZZgrLokjvjmZakTUBdw6QR
+         N/e/7Oa57wN5YInwMlma2po4iMMB6B5q4pFpGvjiLS3eLfKd+SMkNBlbWU8qSqyTywzA
+         aBJoCwtZ+bumxG39B6bUFfxQLOZD8eAAle/3/xv9FCktMRPP9hRYOavC/3Ywddw9bGuB
+         Rn2Q==
+X-Gm-Message-State: AFqh2koVSsBZITdVpdvAECvIWBY4mGgJdeVfXDQ9O6cJszmTb8SCnhk/
+        5zmpHWIT4GfktCwxqjfEHImpEy6UbnKDM4LCb8tpbVwBvNW4ZzfVkEMbc02wM7mKocXO8Ll0g0E
+        Cq7WDb8B/NsKaju2N9GC1132LL3cqhrjNlBw7oaExfkaYFJ60CD7XtOOiHMqYI+0=
+X-Google-Smtp-Source: AMrXdXtd9vycXmVmr1rae534oak3i6jMjvaeHkTjkh6AKe0TAYmmNoJEIy7FoqJ+QIlxjEh5Lrp6F4W6VsR8xA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:aa7:904c:0:b0:58d:9878:d450 with SMTP id
+ n12-20020aa7904c000000b0058d9878d450mr448275pfo.64.1673993264894; Tue, 17 Jan
+ 2023 14:07:44 -0800 (PST)
+Date:   Tue, 17 Jan 2023 14:07:36 -0800
+Mime-Version: 1.0
+Message-ID: <kl6ltu0oolw7.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Join us for Review Club! (possibly from other timezones)
+From:   Glen Choo <chooglen@google.com>
+To:     git@vger.kernel.org,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah and Stolee,
+Hi everyone, and happy belated new year!
 
-First, Stolee, thanks a lot for adding '--update-refs', it is very useful (I've
-added it to my config so I don't forget to use it).
+Review Club is happening this Wednesday at 14:00 Pacific time (UTC-8).
+You can find more info at [1] and on gitcal [2]. We run a session every
+other week, and you can find the full schedule on gitcal.
 
-I recently learned that 'git rebase --whitespace=fix' exists, which is also
-great but since it uses the apply backend, it can't be used with --update-refs.
-I understand this, and the fact that adding '--whitespace=fix' to the merge
-backend would be a big task; this is not what this email is about.
+This week, we'll be discussing =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason's imp=
+rovements to
+the config API. [3]. Let me know if you're interested and would like
+to join (off-list is fine), and I'll send you an invite :) If you're
+interested but can't make that time, let me know too!
 
-I think there is a bug in that the code does not enforce the fact that
-both options can't be used together.  Whenever '--whitespace' or '-C' are used,
-the code defaults to the apply backend:
+As an aside, I'll be working from a different timezone for ~1 month
+starting next week. I'm considering doing some Europe/APAC-friendly
+sessions if there are folks who would love to join but can't make the
+usual time. Do let me know on this thread if you're interested! The
+normal Review Club sessions will not be affected; many thanks to Calvin
+for offering to conduct the sessions in my absence :)
 
-```builtin/rebase +1502
-        if (options.git_am_opts.nr || options.type == REBASE_APPLY) {
-                /* all am options except -q are compatible only with --apply */
-                for (i = options.git_am_opts.nr - 1; i >= 0; i--)
-                        if (strcmp(options.git_am_opts.v[i], "-q"))
-                                break;
+See you there!
 
-                if (i >= 0) {
-                        if (is_merge(&options))
-                                die(_("apply options and merge options "
-                                          "cannot be used together"));
-                        else
-                                options.type = REBASE_APPLY;
-                }
-```
-
-but 'is_merge' only checks if 'opts->type == REBASE_MERGE', so the check only
-works if --merge was given explicitely, but not when none of '--merge' or '--apply' 
-were given (and so the default "merge" backend is used).
-
-I would have expected the code to die telling me --update-refs and --whitespace
-are incompatible. But instead it defaulted to --apply, and (of course) did not
-update the refs in my history (which I found out later). 
-
-Thanks,
-
-Philippe.
+[1] https://lore.kernel.org/git/Yfl1%2FZN%2FtaYwfGD0@google.com/
+[2] http://tinyurl.com/gitcal=20
+[3] https://lore.kernel.org/git/cover-v3-0.9-00000000000-20221125T093158Z-a=
+varab@gmail.com/
