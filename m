@@ -2,258 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9CC2C3DA78
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 21:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF732C3DA78
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 21:07:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229512AbjAQVHO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 16:07:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36936 "EHLO
+        id S229568AbjAQVHR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 16:07:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229694AbjAQVFS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 16:05:18 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4522B485BF
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:31:28 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id d8-20020a17090a7bc800b00226eb4523ceso14115067pjl.7
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:31:28 -0800 (PST)
+        with ESMTP id S229633AbjAQVFb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 16:05:31 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5FC96C550
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:31:49 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id 188so35355138ybi.9
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:31:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9UYEXF3G0VPlpyjkNaZnMT3/iXrXxy0ZR2fsd622mrc=;
-        b=LQuNnVDBIGOmjWaLV2L1yz1Q5DpXcUKpc3Az8rXXPl069TQEubP9W/xcc/zZq39nqp
-         S6sS44fNGLVygaLox7W8QVG0cVwaqWl52nZCfEKy1iiWW/bTt9yLW85zOwBdbm1xv82T
-         T52akx3FEYQND41/tTO0/MywShde86dI3dCZ0d/Y3EsuwaTXQqIrunD9sG0WJ75k06+3
-         CNNrbngGKXmckg4Pxyv8BTPuLDIuzLE+IpVRkO2dcev/On3S+lAO1sPATCQbZYaODWqt
-         1R/eFQFejw4jnzOyeP+GALrBwV1bUPY+9RZd4AeRKpIunejiQryxRPtz3sTYMI4jNDrQ
-         /O4g==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NpZyOV/1AEVFazFNDkmt1+ytFRV+RN3hiUGt8f37O3A=;
+        b=dOR7RXSXPKO4a8eocfSzSf0bJNVXxxx2UYhZw58rEuEl4kV2NsY4ZdRsQZZgs6sh8f
+         RMsdrWhoGOrbka0+S183+kpB6QIagLHZGDFSVtvuaYEYZ41xg1qRrArRoYaEpUCsScv3
+         Wv78EPeS2ng/MPiUNogj/AIx1VuUlJSXUbwqa2usPdv2vFYX8yYz1g2Yy6gnW22DRE0H
+         Lx55oNoEsx1K93yVJYbWrtJGlxvaUcFyIMH9L1j3/2Zw0awKREHP/JdtWOpnxQnZI6tK
+         VsvchnpjoX4TLfct5Xl12bRh5e2hFISS/P5qhY44Uy6wZ7MPyB3Hg3gKtAVi50spzH6A
+         G0FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9UYEXF3G0VPlpyjkNaZnMT3/iXrXxy0ZR2fsd622mrc=;
-        b=7KRcvF746NLUonLqJopaD0gcl6bCyiU387CRvuojBDdoX6IwkrDQSPOa/CUJz2Oxng
-         6L9H9sabSFujpOQAA+oPp6yo/aYrMrwj+Lh1G1XLGF6rOU24XfyhG0c1iWeivx8iLab2
-         do0AqxpzRj7i71NuDGVCjgxfKjAoHNMQ9Raq1OPwUjGvEt0bItz4j0kCUrBhDgGRVPVN
-         CZuCxhyG9wIcUffvz74jD+xsiN18LWLSvF+TOMSwvP5iJQ6OjaJ/8nv5EG+yS6f2gxqe
-         wKVS+ltqeq4BWzUXyH6IDIl1vNJMK10GHqiJH47FEo+lzLLOCUHgpSuVjeThgzl0DUri
-         xQDg==
-X-Gm-Message-State: AFqh2kp8eqsCs6lsSuRl1wDGwxvq/cKS2wJ23xmJ/g5nhdqMWyIJpAGr
-        w8328nJM8DsVL5fJOZL7+hmLeXQj48mP+1BgG3XTfRqcV2mULxLYU265Conecv1XcfZcieJsPB+
-        OLUDXrkJYnCfWLTf0aZ2mbLG0xV18I4cTQCvprvJw9AnJtxkaiASB7Gay0SaRnFpehQ==
-X-Google-Smtp-Source: AMrXdXt/cpvlTb6EmNhc+xehT08Zv3QlLabSPnv0eFUxlbJZ7bXbm5z3WMskZzcvTZJczbMoSVJLU2dTYyIxNdA=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a17:902:8d8e:b0:193:2bec:a3f2 with SMTP
- id v14-20020a1709028d8e00b001932beca3f2mr401425plo.22.1673983888289; Tue, 17
- Jan 2023 11:31:28 -0800 (PST)
-Date:   Tue, 17 Jan 2023 19:30:41 +0000
-In-Reply-To: <20230104215415.1083526-1-calvinwan@google.com>
-Mime-Version: 1.0
-References: <20230104215415.1083526-1-calvinwan@google.com>
-X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
-Message-ID: <20230117193041.708692-7-calvinwan@google.com>
-Subject: [PATCH v6 6/6] submodule: call parallel code from serial status
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NpZyOV/1AEVFazFNDkmt1+ytFRV+RN3hiUGt8f37O3A=;
+        b=MaQdFZvPZciV40IF+sQS7vevmg26S5hSYSx68mDVBENayAL5LS88nobcpeKQm/Oxz4
+         btI3aoPnDz2fok4nx4m1KSL0e2Ig3AEfekX+SiI2e+vhKtBKwAss9Smv4jyvr4aRwCBg
+         09qCfGkt8qiCvJp/VwjLvV4vgLTrWXDphbhJCcqH2HEGdvdwoQpHsoBNiJeZpE4K9Qou
+         AX389haFCcVDKTlajEI/36zeNQezL7jiWSbZK5lnPuEwuokSHlv0mKQIGc3aTW/AI159
+         0OM1Jar1n0DyVceVaugKabVsMwX0ThVnEsx6z1G696v42GIFPwqwwrTNekKzWMVwECtC
+         4+Gw==
+X-Gm-Message-State: AFqh2kooIa3K/rKm8sQKKQDMnrkM0bKKKGx/GzjoGHl8/m7dg647Adh9
+        F9O+HLsJusacHO8NEzSiTY7w2YnJ9VoXC9D6mrNbIQ==
+X-Google-Smtp-Source: AMrXdXvvnqLhA3Ogc54iz6/lYNsJ+3qeRRHtNFoAe9HcF50U6oKuWdWS2d3BfH/N0f8bGWD9Ocp2/+3sx0m+1UYTAr4=
+X-Received: by 2002:a25:5f50:0:b0:7bc:7e3f:7cc4 with SMTP id
+ h16-20020a255f50000000b007bc7e3f7cc4mr628368ybm.391.1673983908787; Tue, 17
+ Jan 2023 11:31:48 -0800 (PST)
+MIME-Version: 1.0
+References: <20221108184200.2813458-1-calvinwan@google.com> <xmqqv8l8f8j8.fsf@gitster.g>
+In-Reply-To: <xmqqv8l8f8j8.fsf@gitster.g>
 From:   Calvin Wan <calvinwan@google.com>
-To:     git@vger.kernel.org
-Cc:     Calvin Wan <calvinwan@google.com>, emilyshaffer@google.com,
-        avarab@gmail.com, phillip.wood123@gmail.com, chooglen@google.com,
-        newren@gmail.com, jonathantanmy@google.com
+Date:   Tue, 17 Jan 2023 11:31:37 -0800
+Message-ID: <CAFySSZC9XpCLjh7jCSNvixXhfrfGHpVr_coqHrKAXZbYzoT+5w@mail.gmail.com>
+Subject: Re: [PATCH v4 0/5] submodule: parallelize diff
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com, avarab@gmail.com,
+        phillip.wood123@gmail.com, myriamanis@google.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the serial implementation of status inside of
-is_submodule_modified since the parallel implementation of status with
-one job accomplishes the same task.
+Hi Junio
 
-Combine parse_status_porcelain and parse_status_porcelain_strbuf since
-the only other caller of parse_status_porcelain was in
-is_submodule_modified
+I've sent out a reroll to fix this. Thanks!
 
-Signed-off-by: Calvin Wan <calvinwan@google.com>
----
- submodule.c | 146 ++++++++++++++++++----------------------------------
- 1 file changed, 51 insertions(+), 95 deletions(-)
+Passing leaks CI at:
+https://github.com/calvin-wan-google/git/actions/runs/3942292098
+(linux-musl technically failed, but it looks like for other reasons)
 
-diff --git a/submodule.c b/submodule.c
-index da95ea1f5e..2009748d9f 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1887,46 +1887,7 @@ int fetch_submodules(struct repository *r,
- 	return spf.result;
- }
- 
--static int parse_status_porcelain(char *str, size_t len,
--				  unsigned *dirty_submodule,
--				  int ignore_untracked)
--{
--	/* regular untracked files */
--	if (str[0] == '?')
--		*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
--
--	if (str[0] == 'u' ||
--	    str[0] == '1' ||
--	    str[0] == '2') {
--		/* T = line type, XY = status, SSSS = submodule state */
--		if (len < strlen("T XY SSSS"))
--			BUG("invalid status --porcelain=2 line %s",
--			    str);
--
--		if (str[5] == 'S' && str[8] == 'U')
--			/* nested untracked file */
--			*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
--
--		if (str[0] == 'u' ||
--		    str[0] == '2' ||
--		    memcmp(str + 5, "S..U", 4))
--			/* other change */
--			*dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
--	}
--
--	if ((*dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
--	    ((*dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
--	     ignore_untracked)) {
--		/*
--		* We're not interested in any further information from
--		* the child any more, neither output nor its exit code.
--		*/
--		return 1;
--	}
--	return 0;
--}
--
--static void parse_status_porcelain_strbuf(struct strbuf *buf,
-+static void parse_status_porcelain(struct strbuf *buf,
- 				   unsigned *dirty_submodule,
- 				   int ignore_untracked)
- {
-@@ -1936,65 +1897,60 @@ static void parse_status_porcelain_strbuf(struct strbuf *buf,
- 	string_list_split(&list, buf->buf, '\n', -1);
- 
- 	for_each_string_list_item(item, &list) {
--		if (parse_status_porcelain(item->string,
--					   strlen(item->string),
--					   dirty_submodule,
--					   ignore_untracked))
-+		char *str = item->string;
-+		/* regular untracked files */
-+		if (str[0] == '?')
-+			*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
-+
-+		if (str[0] == 'u' ||
-+		str[0] == '1' ||
-+		str[0] == '2') {
-+			/* T = line type, XY = status, SSSS = submodule state */
-+			if (strlen(str) < strlen("T XY SSSS"))
-+				BUG("invalid status --porcelain=2 line %s",
-+				str);
-+
-+			if (str[5] == 'S' && str[8] == 'U')
-+				/* nested untracked file */
-+				*dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
-+
-+			if (str[0] == 'u' ||
-+			str[0] == '2' ||
-+			memcmp(str + 5, "S..U", 4))
-+				/* other change */
-+				*dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
-+		}
-+
-+		if ((*dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
-+		    ((*dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
-+		    ignore_untracked)) {
-+			/*
-+			* We're not interested in any further information from
-+			* the child any more, neither output nor its exit code.
-+			*/
- 			break;
-+		}
- 	}
- 	string_list_clear(&list, 0);
- }
- 
- unsigned is_submodule_modified(const char *path, int ignore_untracked)
- {
--	struct child_process cp = CHILD_PROCESS_INIT;
--	struct strbuf buf = STRBUF_INIT;
--	FILE *fp;
--	unsigned dirty_submodule = 0;
--	const char *git_dir;
--	int ignore_cp_exit_code = 0;
--
--	strbuf_addf(&buf, "%s/.git", path);
--	git_dir = read_gitfile(buf.buf);
--	if (!git_dir)
--		git_dir = buf.buf;
--	if (!is_git_directory(git_dir)) {
--		if (is_directory(git_dir))
--			die(_("'%s' not recognized as a git repository"), git_dir);
--		strbuf_release(&buf);
--		/* The submodule is not checked out, so it is not modified */
--		return 0;
--	}
--	strbuf_reset(&buf);
--
--	strvec_pushl(&cp.args, "status", "--porcelain=2", NULL);
--	if (ignore_untracked)
--		strvec_push(&cp.args, "-uno");
--
--	prepare_submodule_repo_env(&cp.env);
--	cp.git_cmd = 1;
--	cp.no_stdin = 1;
--	cp.out = -1;
--	cp.dir = path;
--	if (start_command(&cp))
--		die(_("Could not run 'git status --porcelain=2' in submodule %s"), path);
--
--	fp = xfdopen(cp.out, "r");
--	while (strbuf_getwholeline(&buf, fp, '\n') != EOF) {
--		char *str = buf.buf;
--		const size_t len = buf.len;
--
--		ignore_cp_exit_code = parse_status_porcelain(str, len, &dirty_submodule,
--							     ignore_untracked);
--		if (ignore_cp_exit_code)
--			break;
--	}
--	fclose(fp);
--
--	if (finish_command(&cp) && !ignore_cp_exit_code)
--		die(_("'git status --porcelain=2' failed in submodule %s"), path);
--
--	strbuf_release(&buf);
-+	struct submodule_status_util util = {
-+		.dirty_submodule = 0,
-+		.ignore_untracked = ignore_untracked,
-+		.path = path,
-+	};
-+	struct string_list sub = STRING_LIST_INIT_NODUP;
-+	struct string_list_item *item;
-+	int dirty_submodule;
-+
-+	item = string_list_append(&sub, path);
-+	item->util = &util;
-+	if (get_submodules_status(&sub, 1))
-+		die(_("submodule status failed"));
-+	dirty_submodule = util.dirty_submodule;
-+	string_list_clear(&sub, 0);
- 	return dirty_submodule;
- }
- 
-@@ -2096,9 +2052,9 @@ static int status_finish(int retvalue, struct strbuf *err,
- 		    task->path);
- 	}
- 
--	parse_status_porcelain_strbuf(&task->out,
--			      &util->dirty_submodule,
--			      util->ignore_untracked);
-+	parse_status_porcelain(&task->out,
-+			       &util->dirty_submodule,
-+			       util->ignore_untracked);
- 
- 	strbuf_release(&task->out);
- 	free(task);
--- 
-2.39.0.314.g84b9a713c41-goog
 
+On Sun, Jan 15, 2023 at 1:31 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Calvin Wan <calvinwan@google.com> writes:
+>
+> > Original cover letter for context:
+> > https://lore.kernel.org/git/20221011232604.839941-1-calvinwan@google.com/
+> > ...
+> > Calvin Wan (5):
+> >   run-command: add duplicate_output_fn to run_processes_parallel_opts
+> >   submodule: strbuf variable rename
+> >   submodule: move status parsing into function
+> >   diff-lib: refactor match_stat_with_submodule
+> >   diff-lib: parallelize run_diff_files for submodules
+> >
+> >  Documentation/config/submodule.txt |  12 ++
+> >  diff-lib.c                         | 103 +++++++++++--
+> >  run-command.c                      |  13 +-
+> >  run-command.h                      |  24 +++
+> >  submodule.c                        | 229 +++++++++++++++++++++++++----
+> >  submodule.h                        |   9 ++
+> >  t/helper/test-run-command.c        |  21 +++
+> >  t/t0061-run-command.sh             |  39 +++++
+> >  t/t4027-diff-submodule.sh          |  19 +++
+> >  t/t7506-status-submodule.sh        |  19 +++
+> >  10 files changed, 441 insertions(+), 47 deletions(-)
+>
+> While the topic is marked as "Needs review" in the recent "What's
+> cooking" reports, merging this topic also breaks the "linux-leaks"
+> job by causing many tests fail:
+>
+>     t3040-subprojects-basic.sh
+>     t4010-diff-pathspec.sh
+>     t4015-diff-whitespace.sh
+>     t4027-diff-submodule.sh
+>     t7403-submodule-sync.sh
+>     t7409-submodule-detached-work-tree.sh
+>     t7416-submodule-dash-url.sh
+>     t7450-bad-git-dotfiles.sh
+>     t7506-status-submodule.sh
+>
+> Two of the test scripts are touched by this topic, and their
+> breakage could be caused by newly using other git subcommands that
+> were known to be leaking (iow, not because this series introduced
+> new leaks). It also is possible that they fail because this series
+> added new leaks to the commands these two test scripts use.  In
+> either case, other tests that haven't been touched by this topic
+> were definitely broken by new leaks introduced by the changes made
+> by this series.
+>
+> Anybody interested should be able to see the breakage themselves by
+> checking out 'seen' and running
+>
+>     SANTIZE=leak GIT_TEST_PASSING_SANITIZE_LEAK=true \
+>     make test
+>
+> to see the tree with all in-flight topics are clean, and then by
+> running the same test after merging this topic to 'seen'.
+>
+> Thanks.
