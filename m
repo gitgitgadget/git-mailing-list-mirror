@@ -2,46 +2,47 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FDFFC00A5A
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 23:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E165C00A5A
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 23:25:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229522AbjAQXX3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 18:23:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44026 "EHLO
+        id S229848AbjAQXZY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 18:25:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229789AbjAQXXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 18:23:11 -0500
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05olkn2062.outbound.protection.outlook.com [40.92.90.62])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70AA16D693
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 13:14:42 -0800 (PST)
+        with ESMTP id S229739AbjAQXX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 18:23:59 -0500
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05olkn2022.outbound.protection.outlook.com [40.92.90.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B04C5A45DA
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 13:17:02 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=N2b8BQuNa6CN3Sn0yUVtpCI6dLNrL97VaxHNcL2aqWXAu5awX2HXxxuX30mNDZ1BgHjbWoc9Fzi3+jgm/EDY/zWnjrXR5+ZpDjiRCdeiEcWxKkpGkJBFtVlLfx5ME9c8hmAhLmXP7IxOmM/6q9OgiHxK1SPWQ0yztq0+8P17rHyB5EzrGAA8XUzm0gy3PTVIIdcSknccnF90CB5brC+ToHWFW1vtMHl9rkRbi7mpjrlV6phc3OtBqduPb39n9HcBmh6PYtFFjmbx0sktW5tD5+u1+ger6EMwC4j3XbVW/aggFgefH4zHR/D02XIYG+7r7xgwwlITIvVPFtv6Xmdl4g==
+ b=WVNqjrUw9pLJgf0YuGnpjTZE/WnFKzVFbsiJEaKS8sbwRvznEsdjZwV+UuFUdIaFYTe+rBuzZGsBs81BpCxDpncVTpPmM/L6z6xBscGV3LttAvJmYLPZySrbZZo5peSAQe7jPpY5h1ZMXGuIPs17zDvwD5RPaGsSFQuKf17B1yDTNtGALUuk4Yio/9IsBIxTtpZxQxGruwH4gZK9LodNITqM2cpIdTy0l+7aCp0JMN+qYs66RyrB40eWqiYcBejUqQ3Qc4Jsc+OPFy3LI56sEzBZ7nBoit/nnyOez3sxa/PeCAFHLr13Nc4j1B+5p1bDH5eKBouEoeivmGjsGFuhHA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3JwoThTFbs7vb5rbQ1CI41UA77Z0eOAXZkiPwLhfXZ4=;
- b=P9XAja2jRzJVVsWQm4jSIkiCyNk97JqQAfI7e86fnoSnO3dPvYovFhm1tMWyMISy16PezpSw5jIgM1/ecXqDFs0auVU3dgNVQ7JcK/uGdQ7hzxjonWHWE+Hh6Tfbwd2kHU5uSQ5vwLCFpuQbnpryUDWqp+5c/O+1VKNaHdSMXgIjeM3WvSEsNxv2gSpe/7xwpnxsI5EWmCi9/hackOI7jiL136iOgBFtLoIOiNxn6n2N9HREKBdHHE5ccKKMjO4yrp0WPvCxVZQpM+5fS3daQcknpI9sehE7kQTLxr3R3UU88fHIutBKu/Bx9xXCvHsYJOsIZh/7nSqxwZV0c5ObmQ==
+ bh=Ws5T2PtKlhHaYb+Do2pizfRXFKovf+BYBXDTrzJp6dM=;
+ b=FKCX+wVxzFu0Y7D92p5Be5aBN9ermYPI5bHObK6k6IWiHSg7x/AeB1g1gfRvEQly4zqxW2bLFAegaKJ97bfNT7+8x4+uW/QGs7JpOcIxjywToC3kZaEBzoW+a5CENDiz5HzFRFLzjH/PRD1L0KhzNApwoo3TorIWfNuLqfeiDMANDQIBc65CNWQRAk8JujfX4Ou2HikO5JlHOl+0mJvEj/MwYosw/MO/nzB40tCPwfCNq3M7VK5s2Y6TgvaTBvjMW3QxRLlcqWLdXNopPK6s1m3DEDgRFi4EsUJd+ll84mGJib4VG+HeiA4XQr3ky1PFMBsvtDkTOWSm1b65VrNTYw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3JwoThTFbs7vb5rbQ1CI41UA77Z0eOAXZkiPwLhfXZ4=;
- b=EkaCwYEfHg3MuxgiF7ccVF8yjKCoRVmMZqoHv0HnvM5B+wv/oIKwuGziLo9u7F0woThuUshF5C8ypvXR6DihPyoe3BWgUOPZle7DeZE5vwOKxzOAvMj3L+sjfWbUPzmhLFRPOFzzWJNNFNUP1h+x8Zaw++ZG4qbdrzwhZX1s2nvRkNAQ5Rz3c0gy1nIbkP756IBQ0qbMPx78cekT5aggu8aS42PK6Bcrdu4MYBxAnDp+bcshW+KyEPD0jQokHNe74KAvfzKPk9+TGG1ImZq7nLsfMgpAnwM4kPVhTgdb6owGcj7q8jvLAo9fapWSAUI07Ywfo3k0vCf5hNKvWSD8aQ==
+ bh=Ws5T2PtKlhHaYb+Do2pizfRXFKovf+BYBXDTrzJp6dM=;
+ b=XgYV4V0BqVZBGllvXkHxki+DQzVUNeAou0NGpcQLSc9/5qAOZdayuJTnBqGnDoACwvSri8LhvUqTqYKKO2R6+Ww/DpFqu+onKYOBEOjpppuPYIsxYgivb74abiIwvPL0CDyAJUolalJM5NJratMLvx0Y3horgyT/9oLPiI7xx1p9eJr513VFqsr8E+Mejee+AsQ8/rbnVrr8O3TMcwp/bcilpLRHzczg5dSYYoQC5XicwwqYm9aPjMCdfldVFvcMyUquHhHyPAzPlBW94dD9YPg/KErSJGRGz79MtBL0Qnf9b7Cvc4eXM3DOcvlA7bFsyhWxf15mRbnhO+5Tnwtfeg==
 Received: from AS2PR03MB9815.eurprd03.prod.outlook.com (2603:10a6:20b:609::16)
  by AS2PR03MB9696.eurprd03.prod.outlook.com (2603:10a6:20b:60c::9) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.12; Tue, 17 Jan
- 2023 21:14:40 +0000
+ 2023 21:17:00 +0000
 Received: from AS2PR03MB9815.eurprd03.prod.outlook.com
  ([fe80::8428:153c:704f:4519]) by AS2PR03MB9815.eurprd03.prod.outlook.com
  ([fe80::8428:153c:704f:4519%8]) with mapi id 15.20.5986.023; Tue, 17 Jan 2023
- 21:14:40 +0000
-Message-ID: <AS2PR03MB9815335902DC90737D178E7CC0C69@AS2PR03MB9815.eurprd03.prod.outlook.com>
-Date:   Tue, 17 Jan 2023 13:14:32 -0800
+ 21:17:00 +0000
+Message-ID: <AS2PR03MB98150A57C1F9729CCEFE4EB3C0C69@AS2PR03MB9815.eurprd03.prod.outlook.com>
+Date:   Tue, 17 Jan 2023 13:16:53 -0800
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH v5 02/10] daemon: libify child process handling functions
+Subject: Re: [PATCH v5 03/10] daemon: rename some esoteric/laboured
+ terminology
 To:     Victoria Dye <vdye@github.com>,
         Matthew John Cheetham via GitGitGadget 
         <gitgitgadget@gmail.com>, git@vger.kernel.org
@@ -53,59 +54,59 @@ Cc:     Derrick Stolee <derrickstolee@github.com>,
         Matthew John Cheetham <mjcheetham@github.com>
 References: <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
  <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
- <bc972fc8d3d3a028d3d160aac354d2a13bad37ae.1673475190.git.gitgitgadget@gmail.com>
- <3a8d1b66-ed06-16a3-5459-9381faa69420@github.com>
+ <8f176d5955dfc83616a39622972aaa71a71f5599.1673475190.git.gitgitgadget@gmail.com>
+ <da31180a-5beb-4f0e-667b-ddceba941e9f@github.com>
 From:   Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <3a8d1b66-ed06-16a3-5459-9381faa69420@github.com>
+In-Reply-To: <da31180a-5beb-4f0e-667b-ddceba941e9f@github.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TMN:  [aoDhAC+Gb+Vr97z8LjUGlbHK909tW26R]
-X-ClientProxiedBy: BY3PR05CA0018.namprd05.prod.outlook.com
- (2603:10b6:a03:254::23) To AS2PR03MB9815.eurprd03.prod.outlook.com
+X-TMN:  [TrG9Q568Y+ZQGryIQjuy9xSUbQQ3tKDu]
+X-ClientProxiedBy: SJ0PR03CA0290.namprd03.prod.outlook.com
+ (2603:10b6:a03:39e::25) To AS2PR03MB9815.eurprd03.prod.outlook.com
  (2603:10a6:20b:609::16)
-X-Microsoft-Original-Message-ID: <d917471b-9a63-3b96-513c-4114fbf9532e@outlook.com>
+X-Microsoft-Original-Message-ID: <4aac4fb5-0a64-b082-37a6-ee09858beebe@outlook.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AS2PR03MB9815:EE_|AS2PR03MB9696:EE_
-X-MS-Office365-Filtering-Correlation-Id: c136ccf4-622f-4b14-4b24-08daf8cfd863
+X-MS-Office365-Filtering-Correlation-Id: 757e593d-23ac-40db-50ab-08daf8d02bb1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: j3FZN4XJGjzGmCvGVCz/m5YAgV66/EpXwoHvL0RpwAWcYJ7U9r3nbf65giD8D0EHzBUjk7C96GxvCMLWSVS42sRHjAdBQo7y8XbMz7HiCuh8rz3Tmmb9jv7e1sjU6IxAGaGjev/WJPpziB5CWJky7pBYrY6tTZP5v4W2kMNrgnB6z1RWH+IllGCzE34UoJt4INIWmPIWYGZHoYtCHQ+h5leBYfBcJ/NsXmQcWeBpO4fHYcykFbcWZgJe1IwDu/1slDnQVmLgGT5CrdVH+u+bHREiruc3mc2khPGNWLrSvowQuO1im6oLmkli3sQsD0wJMrL/yNBLhCe9bso/LnNlieO5XgXPhiPtq9pJ6onXvBbRaGTSzyukSk34rXtiMYE59h2nP0dqVa+6ylqZa3kHDDRPhn+3JSUe7U/pc8wxF4eMwCXjaaMdZA2zuKzFH7d9eiq9XSsoSIOsfPM8iXfYhi9/OZb2w3XX4X9GGVgd+q9i3QjSaA6ND0hvHvnQ1P4rIG+KBlSbML8zRhynP/9dBgzJdAqBDnKAiEr9ZskfwbzTszi2MP7c+fRHo1MvgEt5Ad1dhm86+94SnaWThUeOJyYQgwXzX+J8iY/oLU3ByFSbMJTtKDsGos78idRSodVtTBKgWkLZ6NRaPLzSuF13NA==
+X-Microsoft-Antispam-Message-Info: b5Fdv78x9avXEKeQEO2UzUqG8xNsNOu/LYhpGsRy4KJ+kgNUpzA+dePQsJfGWkaettzTQKht7RdzdztIPm8X6ZVmi3Mofz34jAqfe6zv0nUgBd5vLgfbV4f56yYys4mQTU99UQlneytk9yK8r7/o2emEIHM17lm2EttGk67d1aak7uLLvt7D8omGTzjSqBjEUVbdr6QX+wTEI4ISiSLPBk+yFk4YtwLQGKuVwupf+mFZbTjndMhxfwucMLzWaXXKG/gAW8NjlZXIMQg2OZRHbFExvibhg39z5ojXCFiXAhqbynW7XgHoxNRU/cOpdTx6NawfjW6aJY2luNpT48oYPiC9T9r+pzNm9451N3oJytlMQNjPZ3VAzjkad+r30Mjrb2fO6AI5AVF2fnMoiEFeCKOiyZV8DuSvA9ua+Yvd3bi2/9bigT3ILY4MsrIKZek6RVYrXHCRn26aH3dbzRGzAEGOLg1w3q7KPnFdoFyLwn0NIBww8g9Mnv/+vPlOtUMaFWpW/VUQsrLiKYCr5tqnyQBScyjO/Pm5TcpisX3l6TVpOjOUjRXTQjgTnNm+fem5C3oKhBUFF9iObt5RTyAh+uotlT3crMSslrWT+3h1VYkGtlhtLPV2W2MBAy2jj8i1lyBrnEYi3M6GcaAvbhyNIw==
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NVNKT3RTbWdNL1BTTnlHVVdLNC9WTDRSbmgyMWIxVktuVkg2SHZ1MUtOaWZQ?=
- =?utf-8?B?WHptVkVEMTBVZkdHL2Y1Z29Gb3I0ZmJzRjloSm4zRE10WGxvS2dxME1mK2w5?=
- =?utf-8?B?TDFQb2liUS9SYk9YYmFBeXJUSkFyS0orTngyUlRCdG9rdnFMYmp1RjdUM2sx?=
- =?utf-8?B?V25adUtUZGF2T1ozNGh0ZlpoUDV6emJYOEdFalpoS0ppa2tCOXkrbm96dDRY?=
- =?utf-8?B?N0gwdVVwSEhjc09mcFB0MjlwYzB1UGdidWV1N3dwVUhhRUJIeGx4eFRaSnBW?=
- =?utf-8?B?NUVNVlZGQkNCWDc3Rk5aYUxQZGQ2cFplTkw3VU9LZHFmc2F1cUxhRzNTS2lt?=
- =?utf-8?B?WWVBdlpBZ0Fiekd1UERmcUN5VkZ3YnFZZ21uOWhuVnhhQ2JsdGtvQlIyZkV3?=
- =?utf-8?B?UGFBMVJLckVqbWp4VmxCNm5qM1h5TWtCcGtDQjFKY0ZwRWo5enRIUTBHRmtY?=
- =?utf-8?B?ODZWRmlGMnQ4MDlOMWNMVzVQaVVYSGN2elJKU3pINEk2RGRKbk5yRkI0ZFNi?=
- =?utf-8?B?WEtPVUdDVEd5VWZXVTdHdU9qQldzc0JIYURjQWIxTk9PZVo0UDlzQlluSWF4?=
- =?utf-8?B?V3RrNXJ1S0VBd1hXU1dvT1lvNFdpcVhmQU12OG96Sk1IWHJKUDZXRjVPeUtT?=
- =?utf-8?B?MXJNbnV2Z09qMXZRU3FDQ29RRmFPbFk0ZVQ4OUZYdjdPcjU3cXR3ZzAyQ25o?=
- =?utf-8?B?TjRPNXZMcFZ4aGZRSVFXN3dONEMxTWtZdU84VUxDOExIMzQrWUpPMmc0UkFT?=
- =?utf-8?B?ODY2UGI4bUQwdDJPdGxTNHZtSFV3K1Z3WitmdkkxUS9DNjZmVWg2QWVMUE41?=
- =?utf-8?B?WGZXTWJDNFFKYi8yNmRMY3kvbG1zMm90bEJPbFgzMVdzS1ArbVB6azhVSlpQ?=
- =?utf-8?B?Qmp5QU9jaW95eUc3cm0zRFNyK3Y1WVJXSk5zelR1STFWRE1VeG1RUVlZUXNE?=
- =?utf-8?B?Uk90MnkrTWlxZ1BVUjVVMXQzSWtQS1ZsNjNCOVhLeGw2NVVML0lpVGJ6dUhN?=
- =?utf-8?B?Q0lOeWkrN1A4RzcvNHpRUjF3QXZ2V2Y4ZnhLalBsOXMrdXZ6NDM4cEpQSDVM?=
- =?utf-8?B?ekpCa2hZQ1gzTThaSnZqaVJGMUhBTFlJVk5SOHlWTHlDWWhkampWODZXb25V?=
- =?utf-8?B?YXVUcS84TVhXbkFCMklUSGdYdTRITDVuckRHQ09ITzFzYTFHaEp6VmoxMU44?=
- =?utf-8?B?aVNLb0Nyd2ZmY1IxcXlKMUQweDBDQjZaNUVyNmMxb24zTlJia1BZQUxLcXpR?=
- =?utf-8?B?RmQ5Wjl5RmZsQWgvellrYkhoVFFUZGxFLzgxeGE1bnpPbWFBR0ViQ2ZHNExG?=
- =?utf-8?B?YXA1bmpGdjdFWTM3WllKR21rOGt1N3hWeGJEOEtiYkNQdlU5c2Zmd1IydXRH?=
- =?utf-8?B?cnpQMmRLMXR3aHF4VHBhOEp4d0dGSnZQQm1lSTUxVFd6UkRUaXJrUkNmZCto?=
- =?utf-8?B?OUFTb2UwdkE2NGdsdFUzOFNjOWdyU0UzZ1pLazlnN21Bd0FkdVdRejlURFhw?=
- =?utf-8?B?a1ArMGIwZ09xelc5bHJOZFRLWCt2dW5rOWhtbU4wWTF6RmFLVWNjTHYraTg3?=
- =?utf-8?B?VWxGcWVzL1dBb2FjOUx5S0d4REwxb01tQUd1UGhCa2tSdW5vNUJoMHEvWXhU?=
- =?utf-8?B?ODB6NWIxQnNTSnVEblVKL2RaSlpPeEtCZkVPSXlVYnkweUJnRWxwTHhNTDJZ?=
- =?utf-8?B?dVJPSy84VDVXK3doUHNoTmQ4VnVnNUpzNjUrNE56MlpIdm1vU01KczZBPT0=?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bWNGMnVBcTM2QnRTb3RDdUovd0sxcUtMZm1sVkJGb203aVF4c2UxTGtSYTll?=
+ =?utf-8?B?d0xaMFdQNnVmS2x4WFZvZzRvY0g3VWNXVVlDMGZCeXB4OHQycytZbzJKeTlp?=
+ =?utf-8?B?anRjcVB3VldrUkllVWVtWXkrVjZlYTlTdkdlWW5NSzk4c29aZDVWais2cjFU?=
+ =?utf-8?B?MDJoTDBsbG4ycnZURVVPeDFmNC9XZWZDU0lLeWJpeHQ2L1hnTmh4MFB6b0hY?=
+ =?utf-8?B?cGEyOUpmR3IrendqUUFFTERZOGVhT2Zrby9DcXhVNVNMSm1WYUxWZ0RnRWFH?=
+ =?utf-8?B?T3pWK3JYRFQrRmhLVlJMdG9mZ1lKRlFudDNNcnZ1U3Foa2JDaENXOVVqN29j?=
+ =?utf-8?B?QjJuc1E3cnZyYUNhdktoZlR4OU1pQVBMZ1JodUtZMjRRVFZrcEllcmxGN1dZ?=
+ =?utf-8?B?OWw0SDhpaUxKMTR0bmFQVFloa0JPb05SMlRMdnRTdnFTa24yL215T3BveUMw?=
+ =?utf-8?B?RVpWVDZ0SkZZZzZjVkVWRTBhZ1BlNFJNQk9DNWxmeXE2TnRXV0JhK01sOU5w?=
+ =?utf-8?B?VE81blNZZ1daN2JPMkFCbjJvd0d0RHNKam9ENFkrL1ArTzcrZ3cxZlJwa1c5?=
+ =?utf-8?B?MXphYVVqM29GWlRtYUd2SVEzeGx0WUNIdHB5a1VDMURsTWtaeTRXNW96djhq?=
+ =?utf-8?B?VEhQUEVqdWlhZVN0MkNDVE5kaVg0QmluYkRBa3VBWmlvOEU0WUs2SStLM25M?=
+ =?utf-8?B?emtKVzVJSWRmL050OTdHcnZ3TkpjTzY3bnMyYjljcmJjY0RoYzhlSnFCNmYv?=
+ =?utf-8?B?dys1VHBueGlpVktBT2RqV2crandZMWVHZGx0YVA4OExYc1FZaVhHZXpscVJM?=
+ =?utf-8?B?NGZaUHRnemZCdzlnMXVuNUdsUzhTdFlCRUZ5RDVlNzV5S0IrVTZRaDVONGZy?=
+ =?utf-8?B?a29IZEVnTnlOT2tybDZQM1FsdWRiNld5RERnMVBuZlR4NUh1OUE4TGdJdU5C?=
+ =?utf-8?B?WFhUNE5raUF5SUh1eE5IMTNhYWgxSTBYa1JEZVEwK3Z2VkJtSW9ObU9FeVBt?=
+ =?utf-8?B?dmoyQy9PY2VuVDg5cXRicGtHckV5b0E1U1lxVENrWmxPQ2pFSzRwN0xFdGNx?=
+ =?utf-8?B?YW41RXgzUU05Mnp1QVF5N2cwYmR6WEw1U3RyOVNTZEJqSmhiSW9Ddllublho?=
+ =?utf-8?B?bERtUlJXaTdTUElZZVNSRnRYZjNhZEt1c3Y0U2NSVGhWSDRhbkpsV2taMjNO?=
+ =?utf-8?B?OHNlVmhwUnozbzArMzVzeFNkZGJGZktqa0FGcVZueHR4eVhnWUhGeFhwb0dI?=
+ =?utf-8?B?VUs0M0hvcU5BSjFrZURiWkRyTEI0Z3p4WXJ5OEdWc2N2VVZya3NVOGw4Qm9z?=
+ =?utf-8?B?TXFJSi9ncEl3bWFNbmJpL2pFK013RWlSQTdrNEhvQnhLbWFTMWpxd3RXL2JB?=
+ =?utf-8?B?SGJSTERPM29COFVHeEZMZTRKNCtEa0ZCVkNucmtlcXhkVkZ3K2FZVUc5Y0dE?=
+ =?utf-8?B?U1MxaVVDeTRxdm05VUZ0RlJGd3pXZGJHT1NONitDZmJEci8rT1FqWi9VVEcr?=
+ =?utf-8?B?ODRJWmg2UVJxL051emovc0I4MzB4QytlekRnaFZnZ2NVNUJ5OWM2WXgyWExz?=
+ =?utf-8?B?bFNPUWFWZnlielhucDFzOVJBUTV3Qms0cXo2dkQ1N0lna2Nka1hucmt4YUcr?=
+ =?utf-8?B?cUd1WlVSekhtZXg0bFBSekd5MzVkWmM0QjVaTmw3Z01raXR3YXhKU1h4b0o4?=
+ =?utf-8?B?MmU3QUsyalhKVG1lM00vQlBHTEx5a1NPR3JqdlBBV3FaMEd0djlGTmR3PT0=?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c136ccf4-622f-4b14-4b24-08daf8cfd863
+X-MS-Exchange-CrossTenant-Network-Message-Id: 757e593d-23ac-40db-50ab-08daf8d02bb1
 X-MS-Exchange-CrossTenant-AuthSource: AS2PR03MB9815.eurprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jan 2023 21:14:40.3964
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jan 2023 21:17:00.1129
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -115,137 +116,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023-01-12 11:35, Victoria Dye wrote:
+On 2023-01-12 11:44, Victoria Dye wrote:
 
 > Matthew John Cheetham via GitGitGadget wrote:
 >> From: Matthew John Cheetham <mjcheetham@outlook.com>
 >>
->> Extract functions and structures for managing child processes started
->> from the parent daemon-like process from `daemon.c` to the new shared
->> `daemon-utils.{c,h}` files.
+>> Rename some of the variables and function arguments used to manage child
+>> processes. The existing names are esoteric; stretching an analogy too
+>> far to the point of being confusing to understand.
+>>
+>> Rename "firstborn" to simply "first", "newborn" to "new_cld", "blanket"
+>> to "current" and "cradle" to "ptr".
 > 
-> As with patch 1, it looks like the main changes here are changing global
-> references to function arguments. Specifically, those variables are
-> 'firstborn', 'live_children', and 'loginfo':
+> Thanks for this, I agree that the new names make the code much easier to
+> read.
 > 
->> -static void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrlen)
->> +void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrlen,
->> +	       struct child *firstborn , unsigned int *live_children)
-> 
->> -static void kill_some_child(void)
->> +void kill_some_child(struct child *firstborn)
-> 
->> -static void check_dead_children(void)
->> +void check_dead_children(struct child *firstborn, unsigned int *live_children,
->> +			 log_fn loginfo)
-> 
-> Those values are provided by the callers in 'daemon.c'. The major change
-> here is that 'live_children' is passed as a pointer, since its value is
-> updated by  difference is passing 'live_children' as a pointer, since its
-> value is updated by 'check_dead_children()' and 'add_child()':
-> 
->> @@ -879,9 +797,9 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
->>  	struct child_process cld = CHILD_PROCESS_INIT;
+>> diff --git a/daemon.c b/daemon.c
+>> index ec3b407ecbc..d3e7d81de18 100644
+>> --- a/daemon.c
+>> +++ b/daemon.c
+>> @@ -789,7 +789,7 @@ static int max_connections = 32;
 >>  
->>  	if (max_connections && live_children >= max_connections) {
->> -		kill_some_child();
->> +		kill_some_child(firstborn);
->>  		sleep(1);  /* give it some time to die */
->> -		check_dead_children();
->> +		check_dead_children(firstborn, &live_children, loginfo);
->>  		if (live_children >= max_connections) {
->>  			close(incoming);
->>  			logerror("Too many children, dropping connection");
->> @@ -914,7 +832,7 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
->>  	if (start_command(&cld))
->>  		logerror("unable to fork");
->>  	else
->> -		add_child(&cld, addr, addrlen);
->> +		add_child(&cld, addr, addrlen, firstborn, &live_children);
->>  }
+>>  static unsigned int live_children;
 >>  
->>  static void child_handler(int signo)
->> @@ -944,7 +862,7 @@ static int service_loop(struct socketlist *socklist)
->>  	for (;;) {
->>  		int i;
->>  
->> -		check_dead_children();
->> +		check_dead_children(firstborn, &live_children, loginfo);
->>  
->>  		if (poll(pfd, socklist->nr, -1) < 0) {
->>  			if (errno != EINTR) {
+>> -static struct child *firstborn;
+>> +static struct child *first_child;
 > 
-> However, I think that change to 'live_children' may have caused a bug. In
-> 'check_dead_children()', you decrement the 'live_children' *pointer*. That
-> changes its address, not its value:
+> minor nit: you changed "firstborn" to "first" in 'daemon-utils.c' (aligning
+> with the commit message), but it's "first_child" here. If you end up
+> re-rolling, it would be nice to make the names consistent across both files
+> (could be 'first', 'first_child', 'first_cld', or anything really).
 > 
->> +void check_dead_children(struct child *firstborn, unsigned int *live_children,
->> +			 log_fn loginfo)
->> +{
-> ...
->> +			live_children--;
-> ...
->> +}
-> 
-> Same thing in 'add_child()':
-> 
->> +void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrlen,
->> +	       struct child *firstborn , unsigned int *live_children)
->> +{
-> ...
->> +	live_children++;
-> ...
->> +}
-> 
-> These should be changed to '(*live_children)--' and '(*live_children)++',
-> respectively.
 
-Ah! You are correct; my bad. Will correct this in v6.
-
-> There's also one minor functional change in 'check_dead_children()', where
-> an 'if (loginfo)' check is added guarding the call to 'loginfo()':
-> 
->> +void check_dead_children(struct child *firstborn, unsigned int *live_children,
->> +			 log_fn loginfo)
->> +{
-> ...
->> +			if (loginfo) {
->> +				const char *dead = "";
->> +				if (status)
->> +					dead = " (with error)";
->> +				loginfo("[%"PRIuMAX"] Disconnected%s",
->> +					(uintmax_t)pid, dead);
->> +			}
-> ...
->> +}
-> 
-> I'm guessing this is done because a caller later in the series won't provide
-> a 'loginfo', but if that's the case, it would help to note that in this
-> patch's commit message.
-
-Will call this out in the commit message in v6.
-
-> The one other thing I noticed is that you removed the function documentation
-> for 'kill_some_child()':
-> 
->> -/*
->> - * This gets called if the number of connections grows
->> - * past "max_connections".
->> - *
->> - * We kill the newest connection from a duplicate IP.
->> - */
-> 
-> Is there a reason why you removed it? Otherwise, it should be added back in
-> - probably in 'daemon-utils.h'?
-
-I removed it initially as it was referencing things like `max_connections`
-which no longer existed in the context of `daemon-utils.{c,h}`.
-
-Next iteration I can restore the spirit of the comment, that this should be
-called when the maximimum number of connections has been reached, in order
-to kill the newest connection from a duplicate IP.
-
-> Everything else here looks good.
+Fair point. There's no technical reason to keep them named differently between
+the 'libified' functions, and the actual variables for the callers.
+I shall align these to `first_child` in the next iteration.
 
 Thanks,
 Matthew
