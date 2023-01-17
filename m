@@ -2,369 +2,289 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2422CC677F1
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 21:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA279C3DA78
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 21:37:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229509AbjAQVZm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 16:25:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46338 "EHLO
+        id S229459AbjAQVhE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 16:37:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230022AbjAQVYT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 16:24:19 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3493B577F1
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:43:50 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id k16so2481986wms.2
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:43:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ms84bYlRr7xSD32q06+mEzloC9pyLqiraakY1pkTy8k=;
-        b=elyURk5qLjmxW3Q+85A3hH/x1ysLfIjKUlR4WXdV5nqGpDHJpKKduJVMXIFD2m7+Is
-         8v3q9pu0mWPsmb8FEEvIpixDIpToVPGm2PiiGwU3+1A0z0xIBpRBpl986gNrce87Tfis
-         PtSEdX3vYBB3sPRrf9zJSUZGUwAtrP5k5fuHz1Hw6yVQKdD/f8MDcvJE2hdWlPYHUMSu
-         047t3Id+j6Lnpkgme6/CKFlxxCxvojfWSmJcqJi5sgyAu75VT3VCuF8lnibUyE7Jn3N6
-         vwy0GD9snE11wjJTKZMN9ZTQl91P9BT4iriRSqhIL4GRpjyYK4wyvoAlunvqxu3S4GZm
-         toNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ms84bYlRr7xSD32q06+mEzloC9pyLqiraakY1pkTy8k=;
-        b=3fnWAd++AU1TwtfzT2nbeRGWbJ+UT8JaSeKLSkVYBLVagQsBFYVVJLkaYRIEPBb3CA
-         Wj2WhfxiaXQmqKC5UajOLFsE0I7w14OfZxJuG+Q41pfoXJ9uiv4wkhp+GORAq59FwjJ2
-         PLHtssxzvxG8Vo6sTkTcVMyyVhwhJAzL/xF73EFxT/5DuI4d6TsN72pQcAT622xXx8El
-         9xbMx8oL6VO1TUq7iK/xlmTijvHoxny3mN77Zok4yIcM82Cp8OCvDPFz1GU63CTv45es
-         +5RG1qIa2VR8x4ScXsOjd62BX6vJ9i25ka7TmX7ir7FYCLFmI8IKaDSccXiz8Z+MCN5D
-         j5Hw==
-X-Gm-Message-State: AFqh2kpfT3yK9kdsqBzN8byLQFiKHV2ubQJJ3SeQSXjzXJexW+HZSx0I
-        Lpogu0iWcVi7R/273soA0IX57ipvWTg=
-X-Google-Smtp-Source: AMrXdXvYNOXiuB6V2W/Sgkh9fDWFvtMy9ujPg+7j7ME95O//LrZEaVCVrAa8KvC6kPCaZFoMKCLGNQ==
-X-Received: by 2002:a7b:c8cc:0:b0:3d1:ee6c:f897 with SMTP id f12-20020a7bc8cc000000b003d1ee6cf897mr4123284wml.3.1673984592905;
-        Tue, 17 Jan 2023 11:43:12 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m23-20020a05600c3b1700b003db0cab0844sm2201313wms.40.2023.01.17.11.43.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 11:43:12 -0800 (PST)
-Message-Id: <pull.1435.v2.git.git.1673984591615.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1435.git.git.1673983640663.gitgitgadget@gmail.com>
-References: <pull.1435.git.git.1673983640663.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Jan 2023 19:43:11 +0000
-Subject: [PATCH v2] curl: resolve deprecated curl declarations
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229813AbjAQVez (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 16:34:55 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAF314E531
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 11:58:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1673985507; bh=NAwP8EfcORM8oQ9fSDU3ZD61v+/Z1zuCyVkDO/eK2ww=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=P5n7E/zsSsswe8PzNnTaxfNKaDxEvNY8LeOUpeDO2BU+ou26MuLN7HeK/fWafsJ4P
+         2JD+M9QC8lFNkrksL82kuxGNWnncfi6x7MEFQmVoTAch0k16pkgl78mpZwMV1KOrx7
+         HG5pC654ggFiNe+dC2/6s2VCdTGaOjUNrlCNwMVlQcVC4itXC1wpKFwCFAhVx/oUS2
+         j0ivWj1SdFPWA3tAZNaoW84OtVxlbprpBqRTrSoqGiDyjmfg3QE5rIIo49jAtSpr6W
+         6Z5nOVUrGRo19zZrLZX6UNCqBQyvG4ksjRL6BOtgDW/Kl+sZnAU6vdNiKtYNfM97jq
+         MF1HDPJLWTZOg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.21.69]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MDdyH-1pPG561rxH-00Aj2w; Tue, 17
+ Jan 2023 20:58:27 +0100
+Message-ID: <c0c07b89-7eaf-21cd-748e-e14ea57f09fd@web.de>
+Date:   Tue, 17 Jan 2023 20:58:26 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH v4 19/19] push: free_refs() the "local_refs" in
+ set_refspecs()
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <cover-v3-00.19-00000000000-20230110T054138Z-avarab@gmail.com>
+ <cover-v4-00.19-00000000000-20230117T151201Z-avarab@gmail.com>
+ <patch-v4-19.19-b3aee41d0b4-20230117T151202Z-avarab@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <patch-v4-19.19-b3aee41d0b4-20230117T151202Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:kBoue2Ry7/+PE68CXjglD0mT1Ou7Js0LXcm4geqZPkz8fq3XxjG
+ xK5NgiPm6/zrNd37Y7vBzChX6CimOY/SYDOC5WA4QW+QEIcFBvQI7lgXBrqQNaPquW4/Z5D
+ vRm/q2VLdbO49ZMtg6P2va1WGd0Vt1njqYLdDWXTlzbEW6j9Rm1Qs7/6nlzy4Fg8Q6pqzTI
+ CUxj3oXdS6Qn8kq57inww==
+UI-OutboundReport: notjunk:1;M01:P0:eTVHZcEg8dM=;YORFdQBlq8W4Z3UeTf5opsCi1b7
+ 4Iy4gNiHDL4966uXLSITbAZvRN+VmddnACq2TYsQsqMhX9zitfCt3xF6gMHshynAD3tFvXzUS
+ kper4McCqfniAlfYyriyvz5MfArQA2/Wc7xlYnLmc9YpQaO6a2e7UGB3pQz6LtVHg9ovQhjfg
+ 81Mo2sjV/O1RTCfH4lhJJMfC39DhUQV5e6dun84b3bjKcucntGYavK4nTACF85IN8dplXZMXQ
+ Vr2JicYQtz1gDzwYDKMNGVKf5DBd3PioS6alaM8Q2fqtKTztA16qGlHRSilzYa2u9LZWdwqIC
+ LpHl43gn+CU3ejX7/Gh0WOmJ6U+ZxJIFpK+353dXdabRMgxc8+xNiIEMJeEUUYQsMTaoIxv5+
+ cELnTH+qPAmxByBn0EWWt9EBrYJMgNOtfG2pre/CfbvVVYw4m7vObxF/ob8Xit1c69ywrTknW
+ pR14073TA3EzFoyss2bKojDQ6Vwn4GNTY3tuE7Plx6stxYK46y4xMF99TFK5PYVhrYrt6lphO
+ +CQGHQyXPyA49VQLws2/to9cdEPU+Z4qw+7CwPqtSnDO45wuqYMVARt3t1WrmwEO8gn1dnhBj
+ owDqL1y6nAsVXOj+k5SAzYubNATGHbi8BX/V+v0ajWPblZZ+JSkF5PSabpORLPAs1fFBySkPJ
+ XNfiCygGgXJvyYAgXXffnIpMHo9+FQxJnM+53WP0AFVnQdtXvFfXENj9OF+iSs9QM2KZSOD+1
+ kJsNYQuYh9WgzF8/Bx63IAFvqVN/jIbpYHGh3vLb3LAqNSohNyzf1sVrF+yr/djPEZiglSDSI
+ JBRPnfF5m5DXkJLP0DmVWv08bnHfP8XVidtZ0ykQpUb/MXQhJg1Oe71OdYik6JPLMUyH8oxkb
+ OG90HzqkV2kKkaC1EK0OK2CV8VOStQlEetD/sovF4nBOsr7gToR++Dih4seU0yV3C2qDGHBPb
+ VCKDJtsHcN8LxuYo2QfhPhYad2k=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+Am 17.01.23 um 18:11 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> Fix a memory leak that's been with us since this code was added in
+> ca02465b413 (push: use remote.$name.push as a refmap, 2013-12-03).
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/push.c                          | 1 +
+>  t/t1416-ref-transaction-hooks.sh        | 1 +
+>  t/t2402-worktree-list.sh                | 1 +
+>  t/t5504-fetch-receive-strict.sh         | 1 +
+>  t/t5523-push-upstream.sh                | 1 +
+>  t/t5529-push-errors.sh                  | 2 ++
+>  t/t5546-receive-limits.sh               | 2 ++
+>  t/t5547-push-quarantine.sh              | 2 ++
+>  t/t5606-clone-options.sh                | 1 +
+>  t/t5810-proto-disable-local.sh          | 2 ++
+>  t/t5813-proto-disable-ssh.sh            | 2 ++
+>  t/t7409-submodule-detached-work-tree.sh | 1 +
+>  t/t7416-submodule-dash-url.sh           | 2 ++
+>  t/t7450-bad-git-dotfiles.sh             | 2 ++
+>  14 files changed, 21 insertions(+)
+>
+> diff --git a/builtin/push.c b/builtin/push.c
+> index 60ac8017e52..f48e4c6a856 100644
+> --- a/builtin/push.c
+> +++ b/builtin/push.c
+> @@ -129,6 +129,7 @@ static void set_refspecs(const char **refs, int nr, =
+const char *repo)
+>  		} else
+>  			refspec_append(&rs, ref);
+>  	}
+> +	free_refs(local_refs);
 
-Fix CI-Alpine build by replacing deprecated
-declarations with their suggested replacements
+OK.
 
-Note that this required changing the
-callbacks of functions because the replacement
-for these deprecations require a different function
-signature for the callback and different parameters.
+This can still leak local_refs if remote_get() returns NULL and lazy-
+loading is done over and over.  Unlikely to occur in the wild, I bet --
+who pushes without a remote?  Does it make sense to also check
+local_refs for NULL already in this patch or is it worth its own series?
+Not sure.
 
-Every change done was made as to minimize
-changed behavior as well as get the CI to pass again.
+remote is still leaked if it isn't NULL, though.  We'd need to export
+remote_clear() to release it properly, no?  And shouldn't
+remotes_remote_get_1() call remote_clear() itself before returning
+NULL?  Not simple, separate series.
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    curl: resolve deprecated curl declarations
-    
-    Fix CI-Alpine build by replacing deprecated declarations with their
-    suggested replacements
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1435%2FAtariDreams%2Fcurl-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1435/AtariDreams/curl-v2
-Pull-Request: https://github.com/git/git/pull/1435
-
-Range-diff vs v1:
-
- 1:  d84e7e003da ! 1:  c40fb2de13d curl: resolve deprecated curl declarations
-     @@ git-curl-compat.h
-       #endif
-      +
-      +/**
-     -+ * CURLOPT_REDIR_PROTOCOLS_STR was added in 7.83.0, released in August
-     ++ * CURLOPT_PROTOCOLS_STR was added in 7.83.0, released in August
-      + * 2022.
-      + */
-      +#if LIBCURL_VERSION_NUM >= 0x075500
-     -+#define GIT_CURL_HAVE_OPT_REDIR_PROTOCOLS_STR 1
-     ++#define GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR 1
-      +#endif
-      
-       ## http-push.c ##
-     @@ http.c: void setup_curl_trace(CURL *handle)
-       	curl_easy_setopt(handle, CURLOPT_DEBUGFUNCTION, curl_trace);
-       	curl_easy_setopt(handle, CURLOPT_DEBUGDATA, NULL);
-       }
-     -+#ifdef GIT_CURL_HAVE_OPT_REDIR_PROTOCOLS_STR
-     ++#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
-      +static void get_curl_allowed_protocols(int from_user, char *protocol)
-      +{
-      +	unsigned int i = 0;
-     @@ http.c: static int get_curl_http_version_opt(const char *version_string, long *o
-       static CURL *get_curl_handle(void)
-       {
-       	CURL *result = curl_easy_init();
-     -+#ifdef GIT_CURL_HAVE_OPT_REDIR_PROTOCOLS_STR
-     ++#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
-      +	static char protocol[20], redir_protocol[20];
-      +#endif
-       
-     @@ http.c: static CURL *get_curl_handle(void)
-       
-       	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
-       	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
-     -+#ifdef GIT_CURL_HAVE_OPT_REDIR_PROTOCOLS_STR
-     ++#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
-      +	get_curl_allowed_protocols(0, redir_protocol);
-      +	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS_STR, redir_protocol);
-      +	get_curl_allowed_protocols(-1, protocol);
-
-
- git-curl-compat.h |  8 +++++
- http-push.c       |  6 ++--
- http.c            | 74 ++++++++++++++++++++++++++++++++++++++---------
- http.h            |  2 +-
- remote-curl.c     | 28 +++++++-----------
- 5 files changed, 83 insertions(+), 35 deletions(-)
-
-diff --git a/git-curl-compat.h b/git-curl-compat.h
-index 56a83b6bbd8..38a2237c8fe 100644
---- a/git-curl-compat.h
-+++ b/git-curl-compat.h
-@@ -127,3 +127,11 @@
- #endif
- 
- #endif
-+
-+/**
-+ * CURLOPT_PROTOCOLS_STR was added in 7.83.0, released in August
-+ * 2022.
-+ */
-+#if LIBCURL_VERSION_NUM >= 0x075500
-+#define GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR 1
-+#endif
-diff --git a/http-push.c b/http-push.c
-index 5f4340a36e6..ab458d4d062 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -198,13 +198,13 @@ static void curl_setup_http(CURL *curl, const char *url,
- 		const char *custom_req, struct buffer *buffer,
- 		curl_write_callback write_fn)
- {
--	curl_easy_setopt(curl, CURLOPT_PUT, 1);
-+	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1);
- 	curl_easy_setopt(curl, CURLOPT_URL, url);
- 	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
- 	curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
- 	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
--	curl_easy_setopt(curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
--	curl_easy_setopt(curl, CURLOPT_IOCTLDATA, buffer);
-+	curl_easy_setopt(curl, CURLOPT_SEEKFUNCTION, ioctl_buffer);
-+	curl_easy_setopt(curl, CURLOPT_SEEKDATA, buffer);
- 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_fn);
- 	curl_easy_setopt(curl, CURLOPT_NOBODY, 0);
- 	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, custom_req);
-diff --git a/http.c b/http.c
-index 8a5ba3f4776..ee5f063e5b0 100644
---- a/http.c
-+++ b/http.c
-@@ -157,21 +157,12 @@ size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	return size / eltsize;
- }
- 
--curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
-+int ioctl_buffer(void *userp, curl_off_t offset, int origin)
- {
--	struct buffer *buffer = clientp;
-+	struct buffer *buffer = userp;
- 
--	switch (cmd) {
--	case CURLIOCMD_NOP:
--		return CURLIOE_OK;
--
--	case CURLIOCMD_RESTARTREAD:
--		buffer->posn = 0;
--		return CURLIOE_OK;
--
--	default:
--		return CURLIOE_UNKNOWNCMD;
--	}
-+	buffer->posn = 0;
-+	return CURL_SEEKFUNC_OK;
- }
- 
- size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
-@@ -765,7 +756,52 @@ void setup_curl_trace(CURL *handle)
- 	curl_easy_setopt(handle, CURLOPT_DEBUGFUNCTION, curl_trace);
- 	curl_easy_setopt(handle, CURLOPT_DEBUGDATA, NULL);
- }
-+#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
-+static void get_curl_allowed_protocols(int from_user, char *protocol)
-+{
-+	unsigned int i = 0;
-+
-+	if (is_transport_allowed("http", from_user)) {
-+		protocol[i++] = 'h';
-+		protocol[i++] = 't';
-+		protocol[i++] = 't';
-+		protocol[i++] = 'p';
-+	}
-+
-+	if (is_transport_allowed("https", from_user)) {
-+		if (i != 0) {
-+			protocol[i++] = ',';
-+		}
-+
-+		protocol[i++] = 'h';
-+		protocol[i++] = 't';
-+		protocol[i++] = 't';
-+		protocol[i++] = 'p';
-+		protocol[i++] = 's';
-+	}
-+	if (is_transport_allowed("ftp", from_user)) {
-+		if (i != 0) {
-+			protocol[i++] = ',';
-+		}
- 
-+		protocol[i++] = 'f';
-+		protocol[i++] = 't';
-+		protocol[i++] = 'p';
-+	}
-+	if (is_transport_allowed("ftps", from_user)) {
-+		if (i != 0) {
-+			protocol[i++] = ',';
-+		}
-+
-+		protocol[i++] = 'f';
-+		protocol[i++] = 't';
-+		protocol[i++] = 'p';
-+		protocol[i++] = 's';
-+	}
-+
-+	protocol[i] = '\0';
-+}
-+#else
- static long get_curl_allowed_protocols(int from_user)
- {
- 	long allowed_protocols = 0;
-@@ -781,6 +817,7 @@ static long get_curl_allowed_protocols(int from_user)
- 
- 	return allowed_protocols;
- }
-+#endif
- 
- #ifdef GIT_CURL_HAVE_CURL_HTTP_VERSION_2
- static int get_curl_http_version_opt(const char *version_string, long *opt)
-@@ -810,6 +847,9 @@ static int get_curl_http_version_opt(const char *version_string, long *opt)
- static CURL *get_curl_handle(void)
- {
- 	CURL *result = curl_easy_init();
-+#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
-+	static char protocol[20], redir_protocol[20];
-+#endif
- 
- 	if (!result)
- 		die("curl_easy_init failed");
-@@ -923,10 +963,18 @@ static CURL *get_curl_handle(void)
- 
- 	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
- 	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
-+#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
-+	get_curl_allowed_protocols(0, redir_protocol);
-+	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS_STR, redir_protocol);
-+	get_curl_allowed_protocols(-1, protocol);
-+	curl_easy_setopt(result, CURLOPT_PROTOCOLS_STR, protocol);
-+#else
- 	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS,
- 			 get_curl_allowed_protocols(0));
- 	curl_easy_setopt(result, CURLOPT_PROTOCOLS,
- 			 get_curl_allowed_protocols(-1));
-+#endif
-+
- 	if (getenv("GIT_CURL_VERBOSE"))
- 		http_trace_curl_no_data();
- 	setup_curl_trace(result);
-diff --git a/http.h b/http.h
-index 3c94c479100..0ec572d4a06 100644
---- a/http.h
-+++ b/http.h
-@@ -40,7 +40,7 @@ struct buffer {
- size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
--curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp);
-+int ioctl_buffer(void *userp, curl_off_t offset, int origin);
- 
- /* Slot lifecycle functions */
- struct active_request_slot *get_active_slot(void);
-diff --git a/remote-curl.c b/remote-curl.c
-index 72dfb8fb86a..ae69dcb70d5 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -717,25 +717,17 @@ static size_t rpc_out(void *ptr, size_t eltsize,
- 	return avail;
- }
- 
--static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
-+static int rpc_ioctl(void *userp, curl_off_t offset, int origin)
- {
--	struct rpc_state *rpc = clientp;
-+	struct rpc_state *rpc = userp;
- 
--	switch (cmd) {
--	case CURLIOCMD_NOP:
--		return CURLIOE_OK;
--
--	case CURLIOCMD_RESTARTREAD:
--		if (rpc->initial_buffer) {
--			rpc->pos = 0;
--			return CURLIOE_OK;
--		}
--		error(_("unable to rewind rpc post data - try increasing http.postBuffer"));
--		return CURLIOE_FAILRESTART;
--
--	default:
--		return CURLIOE_UNKNOWNCMD;
-+	if (rpc->initial_buffer) {
-+		rpc->pos = 0;
-+		return CURL_SEEKFUNC_OK;
- 	}
-+
-+	error(_("unable to rewind rpc post data - try increasing http.postBuffer"));
-+	return CURL_SEEKFUNC_FAIL;
- }
- 
- struct check_pktline_state {
-@@ -959,8 +951,8 @@ retry:
- 		rpc->initial_buffer = 1;
- 		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, rpc_out);
- 		curl_easy_setopt(slot->curl, CURLOPT_INFILE, rpc);
--		curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, rpc_ioctl);
--		curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, rpc);
-+		curl_easy_setopt(slot->curl, CURLOPT_SEEKFUNCTION, rpc_ioctl);
-+		curl_easy_setopt(slot->curl, CURLOPT_SEEKDATA, rpc);
- 		if (options.verbosity > 1) {
- 			fprintf(stderr, "POST %s (chunked)\n", rpc->service_name);
- 			fflush(stderr);
-
-base-commit: a7caae2729742fc80147bca1c02ae848cb55921a
--- 
-gitgitgadget
+>  }
+>
+>  static int push_url_of_remote(struct remote *remote, const char ***url_=
+p)
+> diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-=
+hooks.sh
+> index 27731722a5b..b32ca798f9f 100755
+> --- a/t/t1416-ref-transaction-hooks.sh
+> +++ b/t/t1416-ref-transaction-hooks.sh
+> @@ -5,6 +5,7 @@ test_description=3D'reference transaction hooks'
+>  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+>  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  test_expect_success setup '
+> diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
+> index 79e0fce2d90..9ad9be0c208 100755
+> --- a/t/t2402-worktree-list.sh
+> +++ b/t/t2402-worktree-list.sh
+> @@ -5,6 +5,7 @@ test_description=3D'test git worktree list'
+>  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+>  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  test_expect_success 'setup' '
+> diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-str=
+ict.sh
+> index ac4099ca893..14e8af1f3b7 100755
+> --- a/t/t5504-fetch-receive-strict.sh
+> +++ b/t/t5504-fetch-receive-strict.sh
+> @@ -4,6 +4,7 @@ test_description=3D'fetch/receive strict mode'
+>  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+>  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  test_expect_success 'setup and inject "corrupt or missing" object' '
+> diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
+> index fdb42920564..c9acc076353 100755
+> --- a/t/t5523-push-upstream.sh
+> +++ b/t/t5523-push-upstream.sh
+> @@ -4,6 +4,7 @@ test_description=3D'push with --set-upstream'
+>  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+>  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-terminal.sh
+>
+> diff --git a/t/t5529-push-errors.sh b/t/t5529-push-errors.sh
+> index ce85fd30ad1..0247137cb36 100755
+> --- a/t/t5529-push-errors.sh
+> +++ b/t/t5529-push-errors.sh
+> @@ -1,6 +1,8 @@
+>  #!/bin/sh
+>
+>  test_description=3D'detect some push errors early (before contacting re=
+mote)'
+> +
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  test_expect_success 'setup commits' '
+> diff --git a/t/t5546-receive-limits.sh b/t/t5546-receive-limits.sh
+> index 0b0e987fdb7..eed3c9d81ab 100755
+> --- a/t/t5546-receive-limits.sh
+> +++ b/t/t5546-receive-limits.sh
+> @@ -1,6 +1,8 @@
+>  #!/bin/sh
+>
+>  test_description=3D'check receive input limits'
+> +
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  # Let's run tests with different unpack limits: 1 and 10000
+> diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
+> index 1876fb34e51..9f899b8c7d7 100755
+> --- a/t/t5547-push-quarantine.sh
+> +++ b/t/t5547-push-quarantine.sh
+> @@ -1,6 +1,8 @@
+>  #!/bin/sh
+>
+>  test_description=3D'check quarantine of objects during push'
+> +
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  test_expect_success 'create picky dest repo' '
+> diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+> index cf221e92c4d..27f9f776389 100755
+> --- a/t/t5606-clone-options.sh
+> +++ b/t/t5606-clone-options.sh
+> @@ -4,6 +4,7 @@ test_description=3D'basic clone options'
+>  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+>  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  test_expect_success 'setup' '
+> diff --git a/t/t5810-proto-disable-local.sh b/t/t5810-proto-disable-loca=
+l.sh
+> index c1ef99b85c2..862610256fb 100755
+> --- a/t/t5810-proto-disable-local.sh
+> +++ b/t/t5810-proto-disable-local.sh
+> @@ -1,6 +1,8 @@
+>  #!/bin/sh
+>
+>  test_description=3D'test disabling of local paths in clone/fetch'
+> +
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY/lib-proto-disable.sh"
+>
+> diff --git a/t/t5813-proto-disable-ssh.sh b/t/t5813-proto-disable-ssh.sh
+> index 3f084ee3065..2e975dc70ec 100755
+> --- a/t/t5813-proto-disable-ssh.sh
+> +++ b/t/t5813-proto-disable-ssh.sh
+> @@ -1,6 +1,8 @@
+>  #!/bin/sh
+>
+>  test_description=3D'test disabling of git-over-ssh in clone/fetch'
+> +
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY/lib-proto-disable.sh"
+>
+> diff --git a/t/t7409-submodule-detached-work-tree.sh b/t/t7409-submodule=
+-detached-work-tree.sh
+> index 374ed481e9c..574a6fc526e 100755
+> --- a/t/t7409-submodule-detached-work-tree.sh
+> +++ b/t/t7409-submodule-detached-work-tree.sh
+> @@ -13,6 +13,7 @@ TEST_NO_CREATE_REPO=3D1
+>  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
+>  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  test_expect_success 'setup' '
+> diff --git a/t/t7416-submodule-dash-url.sh b/t/t7416-submodule-dash-url.=
+sh
+> index 3ebd9859814..7cf72b9a076 100755
+> --- a/t/t7416-submodule-dash-url.sh
+> +++ b/t/t7416-submodule-dash-url.sh
+> @@ -1,6 +1,8 @@
+>  #!/bin/sh
+>
+>  test_description=3D'check handling of disallowed .gitmodule urls'
+> +
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  test_expect_success 'setup' '
+> diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
+> index ba1f569bcbb..0d0c3f2c683 100755
+> --- a/t/t7450-bad-git-dotfiles.sh
+> +++ b/t/t7450-bad-git-dotfiles.sh
+> @@ -12,6 +12,8 @@ Such as:
+>
+>    - symlinked .gitmodules, etc
+>  '
+> +
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-pack.sh
+>
