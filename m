@@ -2,50 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCCBCC67871
-	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 01:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2691AC54EBE
+	for <git@archiver.kernel.org>; Tue, 17 Jan 2023 01:38:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234749AbjAQBhb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Jan 2023 20:37:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41802 "EHLO
+        id S235008AbjAQBiH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Jan 2023 20:38:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234871AbjAQBh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2023 20:37:27 -0500
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2076.outbound.protection.outlook.com [40.107.100.76])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCB5C25E0E
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 17:37:25 -0800 (PST)
+        with ESMTP id S234786AbjAQBho (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2023 20:37:44 -0500
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2084.outbound.protection.outlook.com [40.107.100.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A63C02887F
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 17:37:37 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G54LfWsi+pVHDwycPxJ5/6/Kld7qsAuN6ckEHNW0WECDNRoFyjuJJUCn7cex3MaCuITdKNFFxYR8phDiIQV65QLq+rv6lV5bb473m4Ac+2ob6bEcbZPUx7nKIo1ZdIS26oR4tI9RY7h34wn4xcOZe6LFG9TMqEv8crIpbuMP/T6CqzSIHUARS+nUhVqYpK+Bglx7RnO13RFiwx3wjJnxdohkgn7YAL6iiMyY8rD/dgp0/bc5ScWSE6n4gXJbGp1K1CU3xi/svI4ET//AOM39W8kw+x8kk5wLcPrDfL+NUIZQdq6gq4WcTlz/wNSPEzaE+QQlj5MwtEEn5SXIlji2zw==
+ b=TfTkztmIjDc6SaAHpkAby5nsQKFU4vHcvERAJBsjYkgbwIQfDXUxUoGm2MiyrmCJmWdvdVI83xXdFNXzG2W2X/7Q98ieNPiESwExn8OVEwZmvsUp5QSN965D5xXuQgFHrnXnkjEDU3WVjGF3ZG2rsOjUmsERYm/sbKDvYj2MU2Q8sA1W5peBhFlant6f/ctfXUL7GJIf3WLA8A1JBFHeW20+/ttjFo88hI+KxI3ChZ0cpDjCf/LsHZTYsq+9PIS59xDgwhKMd+omXN/Jf/A1le76knnkSM+ogt/gEamNo6sMzml4ubRDFsCFznterwBthRJXyRAakK7iFsl7TS8sfw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6g1BJMO7qnNN8grhdPS69fmOHGC7BWB5kalDZ2wHMP0=;
- b=mG5lVhSoSeEQPGkNKdUAoCd+bOvyKfbpNk/WtHa+hZ0aKBFmIXJKERt1BQe7m1WeVnu+tUdPHYzfdhr0vvrU8ZtEgR3koeuFPMTKKLUmx91eodQe27iEyVn4H+w2X5y0D/sW6fJu5JlfsgDWgxE7gcJNjIFL03rO9FOfYuz9ODfR4lGx6f6M9xWMIBM8m0gcuZOz4ml2TDjq7zKDOh+UH999THI+2V2s45lIEP3bF8RBm6fBO2NKcdxIgH6owyX0z5y2CZxjPzKphyFe6sTt3DF915NUnQTzNdp2sIo9wRSCFE2cCQMIKB0vFv2OdyJM3hmBDcsQMZ4vf/LPOafdaA==
+ bh=L9M+LtdeDtARP6sIeVV+OY/iK4R1+9zkz6iAYEq5W3s=;
+ b=U7HRfwTcyud1ExgvCHsttd7xyWlGzrhfDyuzFr/PqVITt6c/k30StiRoLQiLtWAgK/AH73PJCD1jQqWmGLguzol9K/uqyeb5GQsoLQBDeeGdLl9JnwoofZlEO9+G4MylLRkXwPMG9sdu4rJkmuRQKKUz/bC9sdUhX3aS2qXiKd/auIxii9Wu8cMWw/UCdOnUijD9Q2UGk+oDxxjqezgiFeg9hu0m4K/DiURkbptGALP8BJL6mHVLRaU2IPcsjMLZ6/1g/GJfu4TyXfXLCWANOVpXYD9MhmYF91RjfjnedbiBJwo3FboBg4y/NOWAiWzM7Hzqi6Kwt3RKPHhJvedwZA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6g1BJMO7qnNN8grhdPS69fmOHGC7BWB5kalDZ2wHMP0=;
- b=Vz1xKFIgAqMNnRJMm7Ed4laEuHNPwEsVDjig3wjye3rLnoC6qab61ZB3LTEJwckMUTl15yIp0xew2j8IffOH7nmURpxO7/6ZI1EocsH40+JPCPykNQGBGKiHse5hc6o/9Pazf31dgjE4kF3ZaHfnXuoZ43PeHhBKjqGEHHA3rJ0=
+ bh=L9M+LtdeDtARP6sIeVV+OY/iK4R1+9zkz6iAYEq5W3s=;
+ b=jYM5hksQK44ocSTngQqGPYD+zios+7mzj8d+tazUG3kMvesT+xf8lObJz3qr/jxLGVmJncIB/3kUrndYwRPue5tL7j5p9wOgp4nwV7sp4HstzDV6M507V3rBvsfwEE2v+vNla+vUMCoIKl0lHX5oYwrQyc9L9+GqBl2iPb3DYKE=
 Received: from DM6PR12MB4356.namprd12.prod.outlook.com (2603:10b6:5:2aa::8) by
  MN0PR12MB5764.namprd12.prod.outlook.com (2603:10b6:208:377::8) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5986.23; Tue, 17 Jan 2023 01:37:23 +0000
+ 15.20.5986.23; Tue, 17 Jan 2023 01:37:35 +0000
 Received: from DM6PR12MB4356.namprd12.prod.outlook.com
  ([fe80::5484:99ef:2b52:eb77]) by DM6PR12MB4356.namprd12.prod.outlook.com
  ([fe80::5484:99ef:2b52:eb77%3]) with mapi id 15.20.5986.019; Tue, 17 Jan 2023
- 01:37:23 +0000
+ 01:37:35 +0000
 From:   "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
-Subject: [PATCH v5 0/2] send-email: expose header information to
- git-send-email's sendemail-validate hook
-Thread-Topic: [PATCH v5 0/2] send-email: expose header information to
- git-send-email's sendemail-validate hook
-Thread-Index: AQHZKhQ+oLhqeiEshE2lUcnWXQsshg==
-Date:   Tue, 17 Jan 2023 01:37:22 +0000
-Message-ID: <20230117013709.47054-1-michael.strawbridge@amd.com>
+CC:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>,
+        "Tuikov, Luben" <Luben.Tuikov@amd.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v5 1/2] send-email: refactor header generation functions
+Thread-Topic: [PATCH v5 1/2] send-email: refactor header generation functions
+Thread-Index: AQHZKhRG1MTg60LsoEGJJE1KtiZaJg==
+Date:   Tue, 17 Jan 2023 01:37:34 +0000
+Message-ID: <20230117013709.47054-2-michael.strawbridge@amd.com>
+References: <20230117013709.47054-1-michael.strawbridge@amd.com>
+In-Reply-To: <20230117013709.47054-1-michael.strawbridge@amd.com>
 Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -55,79 +57,171 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: DM6PR12MB4356:EE_|MN0PR12MB5764:EE_
-x-ms-office365-filtering-correlation-id: 082e6591-11b7-42c3-b689-08daf82b6195
+x-ms-office365-filtering-correlation-id: a6f8ba53-4442-4f2e-27eb-08daf82b68ca
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: x9A2+uVD2538MOYZFFLIYIVw4N5D4wAiFIUnkkix5X2hsCYiQe+SIjNmnRVjRMlQenVttwQXtDuMZSYxXt0a+3xNIElUpEmA6QEDZvNi5LUmo6Klb4m3yJ/Yz4mS3mmKEq/8sHMSjpRJwuEm5kc5A07k9rzSIPX64lI1kQy6YQGdP2+/bstrODFJwWyrsQMs0mCGkUkvD+ieGNOxRRMq2rLGwByBc/jNy6ahgrAIR7Y+nF8M7XQ+k5O3aUGC1cANKPMTW5ie2Z1jOH4IevRFRgG7fL/5Di/Pibw+9YWOj8CQ698tJd8OmdElKosHSVCpZBmXBOeiAVb8f4gv3EZKcwCpMetsfHd6EBrPM9YQ81qEYKRawbKLYWAgxq5V9E253dSDEKs04fCJ0j5nIrOz9gdj7jr2ojtN1uoosNk/k0Cj3KWLU7b+kX9J4L3bsywth0TYoXqvmjGDswCT4fZLKY5QALkqd1LB6ympvOnBCP+aXdwJ8OQrl1upHX7KB/TQGldwyDS2D6GhWDfVQd2qxslogyLQlghsBSkrUINfkdkaLOG1j1IP73hZ/4RC9VIPh5mwhMK56XYT91kkmXAcOfAfajtSX/auLqPAnCTEA6SDYL78jbyThYyVQApZyn712scPr9c7v99+xv61x/m+a00o8vaasElNoJE3wHzj4oIXW6NjrYDY+jU802RyLVEVE+IGOVzv0n/qR80BOGheTA==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(396003)(346002)(39860400002)(136003)(366004)(451199015)(71200400001)(316002)(478600001)(122000001)(6486002)(5660300002)(1076003)(36756003)(6916009)(38100700002)(4326008)(15650500001)(8676002)(6512007)(38070700005)(2906002)(8936002)(4744005)(83380400001)(2616005)(41300700001)(186003)(26005)(64756008)(86362001)(66556008)(76116006)(66446008)(66476007)(66946007)(91956017)(6506007);DIR:OUT;SFP:1101;
+x-microsoft-antispam-message-info: 5OoQPUudsO3Dl0HBTzBpCBGkuHbC3Ds61LThYB8rsauEY+JSRr8uIV2MnsQRmwZH+yQOXEdQoe5Cw9o7HRbJ4nfCc99bGb4++4W2fSwECSteVqSjpDe4fHKCQF+GxOUDThGmoaErhazsEa+tP1/lUSk3UZtR84EqBfqKOAVcyAB4CyzOdu+kKl9KANBZyWm1d8thJMZa1Y6lIHMnJ3y0YvhVbpP8+n24rumEQeGIw8WYm6eDdhhM6jDBhkiNeLNAmeCuULbCV+1KEwXx2lz8DwjdmEGRLzUx4rOt64h/HJMymhqelwfzaFnqDqPZSacPd+I4Z2/PhM4gYQi6JPCrQn6iooeNXLoU7WcyPbnuOXndB+5t9jiU2ZxbmUUi6IIBi/dFQpeSdGqkRklJbWXn4E22r9EFKY2teEisGHVZIrSZskabVPeGOvo8YtjTfAgSoBcspOSlBsqK3dGjZqW7yKAFNYu/5Iu/+LPXdIbFJ0w68TxIqcupUKeqE4brKthhIChBvRyh3wDmADr9EfSb32sQMhpTuuVCCMGZbKxbbi9MPH61yNYJTX8i2hZRd4uM+76ZBW09X/dYaP2XHhwVlZFHzl5tniuRRio/dbKt/J8d2stLjfWMTbzrwImmsXNLL82w3Mc9TlX//sHFRV4W/Lcpau6Iru3aQRGbynlpkL/M2dxKZC6BWchQPboE2rb0TfSDx66DcHBjbLZgitW1ZQ==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(396003)(346002)(39860400002)(136003)(366004)(451199015)(71200400001)(316002)(478600001)(122000001)(6486002)(5660300002)(1076003)(36756003)(54906003)(6916009)(38100700002)(4326008)(8676002)(6512007)(38070700005)(2906002)(8936002)(83380400001)(2616005)(41300700001)(186003)(26005)(64756008)(86362001)(66556008)(76116006)(66446008)(66476007)(66946007)(91956017)(6506007);DIR:OUT;SFP:1101;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ozKAhfenIa/bxPKN5SqpLkJS256QLQHRH3Zekj/XQv5k7ABQOGjDKmvmMt?=
- =?iso-8859-1?Q?qJqMd4jj6ewPx/sVzJoCe//J06B4L60bU0iTTBqwHtwFPiOigBKuksYCTV?=
- =?iso-8859-1?Q?871KTLyY/47oIE/n8wJDTlOJMiAQezRtEb2Bsi501AuiHXd0vhUuBpNOPX?=
- =?iso-8859-1?Q?Anp2iA9flNV5Y9tKAO9mdt0Sxo0/O1oWlkZ/csonefGs1wTv/iaFpOYUlF?=
- =?iso-8859-1?Q?bM3bnMY38g4ega6FWYiu9/n2lL5MT1wMFwBDZ/UV7jkRlF5T1hA95y+zgg?=
- =?iso-8859-1?Q?eVY8rMseJObxZHDEkM+nIzWAJf5ADLJA/xh/crSm/RnYqK2WkN0EY3EoME?=
- =?iso-8859-1?Q?kt/qFyzA1dERH/DF2Jcz66+c+SvlVTuKArCY8DfhpU86R7UQLLWzREnhx1?=
- =?iso-8859-1?Q?lE18R+K4MFIVeCvmGOxJKmuabnyInFH9BR8A73LCpz8M5o9mNnN1M73cJE?=
- =?iso-8859-1?Q?BvItqlFU+BQmhNx+u42aeR0vCTT2bqZFQYn4uzi42zQXgWBeOIej8RY/ER?=
- =?iso-8859-1?Q?oTHRS9yGoOhE939bJnv6uZHzUes/5fTICwLGDS1sqBO7MYqIusZS6e/b06?=
- =?iso-8859-1?Q?y9FAR55WO24OLW0oR0VE3SYCH2Q7UqUBwtFl5Tfj/gSCporIWAVImtvKRY?=
- =?iso-8859-1?Q?WsIfgoplYHagXKjAVdCoLHkBk6VzLZ6gsMbeoSpxBq5y5Z/S6J5f56q425?=
- =?iso-8859-1?Q?LMqc/vMNwfTCD8B09KnQCEyPuyxy8FetJajffRlw0qvU0KrJSG+u3QFNiX?=
- =?iso-8859-1?Q?IcveAtkmUMszfuVQB+liFrrcM1pCrXB2In38AHl8juqF0o35DhujEklhLX?=
- =?iso-8859-1?Q?Tt0QL2Wwg/XC6MFFhXteuDwS/DgX67JubazQksHZ3kKwVhTiFXYmc8begc?=
- =?iso-8859-1?Q?e+aYr8mrvQtEFz53UIQXnCssNvF5O3PxfD9vCqnXtET9raL82mKHOWHL8I?=
- =?iso-8859-1?Q?E+Hwy3+mARthvukRZ2mnHfjMtxNLIiSX0CZw0XlQ3aeWN9fvpJyl2lRPK+?=
- =?iso-8859-1?Q?+MD0y2Za5eqdxMf3qX9xIlYmL1m+1wSJGxMuiINsvmrD0/08hLi+M1JDsB?=
- =?iso-8859-1?Q?oI+wU/zr+oRgds44VlEFB0E/qz3W/3Gh9yaBde8RbNNhWBl9pLAJGRwMiY?=
- =?iso-8859-1?Q?c6G7+5u6E6XRJAGXtuyZJsUgrJNdioc6hJ8t4970wcUokDbae4ej8pc8ba?=
- =?iso-8859-1?Q?/w5BjluqLhKz1lzwt6Lr9LXdLLoNBkb/sDYVemU9dTyaYPDHQ8mb46T6M6?=
- =?iso-8859-1?Q?xRA3/C52ZJQOo3m9Q15vyc/jRhavhqxNNI65INR4BfpjaSUYJa4/MBYiyp?=
- =?iso-8859-1?Q?uOzc7x+xMvnEcHPRMuZHxTS+trJfMrz/6zJiz0l0pbzT2/dUqwP9HkyHsv?=
- =?iso-8859-1?Q?fxWgclZ25tpxfNTLsfhMDI7BtU4fQmrSNOXJxXTEf8/3xeFcQ+ClhkbQ8R?=
- =?iso-8859-1?Q?7CLklmoEFpJjveB51nCx9qTJVAZN4rVi8XM0cyNBNqiW1xT8Eunwn1aphQ?=
- =?iso-8859-1?Q?O3xR2TUottzKDtFGS9P8+Mdtg4/YJn0lxJw8VGLXGIYC7MoJAPxpvvkmEd?=
- =?iso-8859-1?Q?GhKZzxeOFhc4NSweVrRRXUbJKcav3B+/gsV3T8gjMpNeuH67313GPmm5Gw?=
- =?iso-8859-1?Q?xGQvjkCbEyNUDIHIPPD6nS9r0vqDul+hAh?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?94wQeZO2sriV+WdsnAiaeYqiv9I6VMHLM4Kif4gZUi8tgZnZeKhl8oJJqV?=
+ =?iso-8859-1?Q?X+vGZcis9V/uOIpiC6i16abGjf4w9cozwKfaoJIEOpvKmMgwPe6DXkoC29?=
+ =?iso-8859-1?Q?wFAaLKTsnkycq0IdDM/1cqRA9egR9pyPEGUKV/21mfj35VAFJyvEH89P6e?=
+ =?iso-8859-1?Q?Uq8Zi6UL0UlieBxGR+Tik4/zt5b0lEa+gMFXJpHt5LXEJAbuwjyTiZcAKa?=
+ =?iso-8859-1?Q?tdFO1skiF6Pj4rqorJEFyw/b3GYtjJMCub1F6kK2hI00mnp4pPPPAMlXMC?=
+ =?iso-8859-1?Q?KRYxkzyURURz3E3hua3XG8O6rPgtg2SrLKsl0gteF5OnQKgTSXRyXaOns8?=
+ =?iso-8859-1?Q?ZfGYx+pGSWpi55xC5C/SRY2+HqKqgwclizVB7Mbgb4td/ukgeovGINsWQW?=
+ =?iso-8859-1?Q?a0C/XnUssRmllM9kaEJziwDJPGeWC640h7JyG9RXJQkkWarUg3Ac0Iz8fT?=
+ =?iso-8859-1?Q?8bLPjg9EjZcfHr/xj88C1zJ33Lv4gSfu3u7+Dp2gUX0AyurQb90t4E0Ypp?=
+ =?iso-8859-1?Q?pqLe25S9aTMky4NuvXktnn88LCcUgDJArqr5wu5L5NxTa2ScnUnGPxY33X?=
+ =?iso-8859-1?Q?Hec5zGNjMp+x34lPFhIQCrjZSlBfdAqHKm9G9J610QPw0GHBFI+FLzqZJS?=
+ =?iso-8859-1?Q?ZOEdoeMwcJl7pFgCVFoCr4IbC0KTdT3X5c6xjjAXHNtCvc+uvFK0LASfeW?=
+ =?iso-8859-1?Q?5gOhJgDK/rHXCKXEg129S9SExMvK51kQH4LL5xc+4RBUtQAkg0aZbhR7qj?=
+ =?iso-8859-1?Q?vT8IR/cLKXOaU8bX+cg58rQzdGyGefAx5ZzxhaF7hdHBcSutF6KgQawEmC?=
+ =?iso-8859-1?Q?jRG2JCv4xtgvrio1xgCfHg+UZzGUPDA2cPrmsQZsETft3V1f3sW6RMDNB6?=
+ =?iso-8859-1?Q?tqqYmCPGl7GEaZEzOc7olhapUbIJQbeOrPa4/J8JotzqTE+rCk3B/EZ3LE?=
+ =?iso-8859-1?Q?0p9oQZsuQdvynCovA5QWyTaZlGp115tkqGbRxWg5rnHUnf32om1jwy4MKU?=
+ =?iso-8859-1?Q?Vwkq3/IOrOtsymBUarZmIwy5cvXrzlTUHA5sM2w6cOY6Xfp2PFmSc5l9Oq?=
+ =?iso-8859-1?Q?+6HXXYqADnjqeWm7s8TEmct8i3zZyR8QXCfD/oHuDWDW8P57ilO6SkdxX4?=
+ =?iso-8859-1?Q?7dc6zck+CNcOR7uEAabmClezhUM2FPaxrteBbMLadBX2aSKM4+fwNLIMQ9?=
+ =?iso-8859-1?Q?PXrR87PKoHbXYK5gUAEpm5RjWO4aX5TkTGlaA3SNcAEGiufTTWvbZ4rlf6?=
+ =?iso-8859-1?Q?uaugAFuChHoJtU8cX7PirMcNNK1/unoRyLM5KhRCnwQZt3tbcjdzLzlMK6?=
+ =?iso-8859-1?Q?X9gTq0RtaJSumYfUMT07bSbuqKWiSRXWBEPGnhWHyrFp9T4B9x6S24yTT6?=
+ =?iso-8859-1?Q?LRDXEN1JAinyryXgd/5KMurqsktlB2GYsLunvu3yFVD+gAvJ+rbV4z97hu?=
+ =?iso-8859-1?Q?zt1OsFw8fp5c+MHCj04s82ZlVo1iSxsOcJbP8aq/TZGDBPDIsgdYbUYptL?=
+ =?iso-8859-1?Q?REtoB4+xsYwgTQ2gKnd9tQR2JyAfa9rguWRzZhWO3AAblDHrAatlBgTh5O?=
+ =?iso-8859-1?Q?BdzLeDMo4LpPTtVJi7ZB68QcKWA+oh2euEI6fo7yjx48Mt7PkMJ+554c/U?=
+ =?iso-8859-1?Q?rn2IylB9SsPeZd4JSVj/N7gwEyV7NxofUa?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: amd.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4356.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 082e6591-11b7-42c3-b689-08daf82b6195
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jan 2023 01:37:23.0361
+X-MS-Exchange-CrossTenant-Network-Message-Id: a6f8ba53-4442-4f2e-27eb-08daf82b68ca
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jan 2023 01:37:35.1238
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: agaa8FNe+hFuo0BzBG9O7qIoSIiV3jw7p+7RtwBpS4s+BdGPxVIcRX4KpQhF1sUdAj0+UsSpR1OcSGN2+37P7Q==
+X-MS-Exchange-CrossTenant-userprincipalname: Fc005PIRgpKI5zMQnuLgttxXo0gOFmu7XpwvI/EiRUdpU9jZiC72EmvgHxTBgC7hLSIdRfCgfh07haGfpyMuSQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5764
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Split process_file and send_message into easier to use functions.
+Making SMTP header information more widely available.
 
-I very much appreciate the feedback and believe I have changed things to ma=
-tch.
+Cc: Luben Tuikov <luben.tuikov@amd.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Michael Strawbridge <michael.strawbridge@amd.com>
+---
+ git-send-email.perl | 49 ++++++++++++++++++++++++++++-----------------
+ 1 file changed, 31 insertions(+), 18 deletions(-)
 
-To answer your earlier question, the hook doesn't need to support multiple =
-header capitalizations (ie. only Cc is passed). However, it does need to un=
-derstand that lines beginning with whitespace belong to the previous header=
-.  The header information follows the same format as the confirmation given=
- at the end of send-email.
-
-Michael Strawbridge (2):
-  send-email: refactor header generation functions
-  send-email: expose header information to git-send-email's
-    sendemail-validate hook
-
- Documentation/githooks.txt | 17 ++++++--
- git-send-email.perl        | 80 +++++++++++++++++++++++++-------------
- t/t9001-send-email.sh      | 29 +++++++++++++-
- 3 files changed, 92 insertions(+), 34 deletions(-)
-
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 5861e99a6e..810dd1f1ce 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1495,16 +1495,7 @@ sub file_name_is_absolute {
+ 	return File::Spec::Functions::file_name_is_absolute($path);
+ }
+=20
+-# Prepares the email, then asks the user what to do.
+-#
+-# If the user chooses to send the email, it's sent and 1 is returned.
+-# If the user chooses not to send the email, 0 is returned.
+-# If the user decides they want to make further edits, -1 is returned and =
+the
+-# caller is expected to call send_message again after the edits are perfor=
+med.
+-#
+-# If an error occurs sending the email, this just dies.
+-
+-sub send_message {
++sub gen_header {
+ 	my @recipients =3D unique_email_list(@to);
+ 	@cc =3D (grep { my $cc =3D extract_valid_address_or_die($_);
+ 		      not grep { $cc eq $_ || $_ =3D~ /<\Q${cc}\E>$/ } @recipients
+@@ -1546,6 +1537,22 @@ sub send_message {
+ 	if (@xh) {
+ 		$header .=3D join("\n", @xh) . "\n";
+ 	}
++	my $recipients_ref =3D \@recipients;
++	return ($recipients_ref, $to, $date, $gitversion, $cc, $ccline, $header);
++}
++
++# Prepares the email, then asks the user what to do.
++#
++# If the user chooses to send the email, it's sent and 1 is returned.
++# If the user chooses not to send the email, 0 is returned.
++# If the user decides they want to make further edits, -1 is returned and =
+the
++# caller is expected to call send_message again after the edits are perfor=
+med.
++#
++# If an error occurs sending the email, this just dies.
++
++sub send_message {
++	my ($recipients_ref, $to, $date, $gitversion, $cc, $ccline, $header) =3D =
+gen_header();
++	my @recipients =3D @$recipients_ref;
+=20
+ 	my @sendmail_parameters =3D ('-i', @recipients);
+ 	my $raw_from =3D $sender;
+@@ -1735,11 +1742,8 @@ sub send_message {
+ $references =3D $initial_in_reply_to || '';
+ $message_num =3D 0;
+=20
+-# Prepares the email, prompts the user, sends it out
+-# Returns 0 if an edit was done and the function should be called again, o=
+r 1
+-# otherwise.
+-sub process_file {
+-	my ($t) =3D @_;
++sub pre_process_file {
++	my ($t, $quiet) =3D @_;
+=20
+ 	open my $fh, "<", $t or die sprintf(__("can't open file %s"), $t);
+=20
+@@ -1893,9 +1897,9 @@ sub process_file {
+ 	}
+ 	close $fh;
+=20
+-	push @to, recipients_cmd("to-cmd", "to", $to_cmd, $t)
++	push @to, recipients_cmd("to-cmd", "to", $to_cmd, $t, $quiet)
+ 		if defined $to_cmd;
+-	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t)
++	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t, $quiet)
+ 		if defined $cc_cmd && !$suppress_cc{'cccmd'};
+=20
+ 	if ($broken_encoding{$t} && !$has_content_type) {
+@@ -1954,6 +1958,15 @@ sub process_file {
+ 			@initial_to =3D @to;
+ 		}
+ 	}
++}
++
++# Prepares the email, prompts the user, sends it out
++# Returns 0 if an edit was done and the function should be called again, o=
+r 1
++# otherwise.
++sub process_file {
++	my ($t) =3D @_;
++
++        pre_process_file($t, $quiet);
+=20
+ 	my $message_was_sent =3D send_message();
+ 	if ($message_was_sent =3D=3D -1) {
+@@ -2002,7 +2015,7 @@ sub process_file {
+ # Execute a command (e.g. $to_cmd) to get a list of email addresses
+ # and return a results array
+ sub recipients_cmd {
+-	my ($prefix, $what, $cmd, $file) =3D @_;
++	my ($prefix, $what, $cmd, $file, $quiet) =3D @_;
+=20
+ 	my @addresses =3D ();
+ 	open my $fh, "-|", "$cmd \Q$file\E"
 --=20
 2.34.1
