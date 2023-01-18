@@ -2,114 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CADCFC00A5A
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 00:11:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D991C38142
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 01:09:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229722AbjARALn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 19:11:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53978 "EHLO
+        id S229616AbjARBJK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 20:09:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbjARALW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 19:11:22 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BB845DC2D
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 15:27:30 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id x2-20020a17090a46c200b002295ca9855aso511154pjg.2
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 15:27:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nOL8Sa6jc/9GGPTwa6CRcJyMjHjB/bYW8e5mhv3ZSmQ=;
-        b=O3yWxH7PIo7dCOIqui1LPRXsaQpW9suJaJ5Ch8WKpMAeO1MnjEyNg/2/aa4M71ebk1
-         nTPFzu2/EH+CodygmiPPSCeh2oJZg0r+2uPuYpNy8m5kWPK0DmEa3aTWymSTFRVClJhM
-         XN0uWHxGTnXBAbU5hys1A44nKPmspMlSFjqB9d3Cey6pdsAgU8jVThFBR8JqbXR+oUmD
-         c0Ig2+mucyMYlJJnYm/Hxs/rqN6N2gg6F/TaLJAQPS1Sw6y7rlDtWAwBREtV4A4PzpgY
-         fx5D4w4Jw7Bvkn3liELhU6gOA/Q69w7+hZyQhYc7xpRvCv56LjfJab4Bj8tQZpCfyf8L
-         RZCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nOL8Sa6jc/9GGPTwa6CRcJyMjHjB/bYW8e5mhv3ZSmQ=;
-        b=KqfImUAvCHEnYKo/kOZBFwrONr3gavk7T4JDqeacqsl4VvM29b8FOQKbiRTr602qmE
-         vkMA5oWILQ3j5PZxEhv3M9YPAtL4JS0v5yCqoAeDlvewyCp6Oh5DMt/R7GxbZltrk0xo
-         WYww7hn/HXeRxT+A7XQQMv9ayeYaPfk4gsFY/Ev4F6ZARDlpsc5EfEYOUCNV+RLuyQii
-         o9zpOGhUSI3yYevHDEx9wxlJh6wDNQQhj6+BNuWLb41MYWP2XcZKZobfy+C2yUHVeDL7
-         wOCX1MHjd6KMIA3FgysD7I4VjjMCXQlHVBWk0Q7CBt6c/888Sq3+hhB2M3eF61Lavjnk
-         R0sQ==
-X-Gm-Message-State: AFqh2kpBqCEyGxd1djxh/aivxS9DVCkoArtPKxEm7CZ0CKC1Fyn9Cxw1
-        +Nn3PSJ+f309C7LCJGf/3qR9UGNjOnE=
-X-Google-Smtp-Source: AMrXdXt/D0Y6WIdZY0x0SHo+73QTYMBUFWY9beMac2FQJa4dcVDD9jCqNX9HQqcJiApppJFTUqBOfg==
-X-Received: by 2002:a17:902:c2d4:b0:193:d12:f892 with SMTP id c20-20020a170902c2d400b001930d12f892mr29166967pla.0.1673998049759;
-        Tue, 17 Jan 2023 15:27:29 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id u2-20020a1709026e0200b001925016e34bsm5288395plk.79.2023.01.17.15.27.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 15:27:29 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] worktree: teach find_shared_symref to ignore current
- worktree
-References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
-Date:   Tue, 17 Jan 2023 15:27:29 -0800
-Message-ID: <xmqqilh491y6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229525AbjARBIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 20:08:40 -0500
+Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E3102F784
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 17:03:21 -0800 (PST)
+Received: from [10.0.2.15] ([147.147.167.102])
+        by smtp with ESMTPA
+        id HwrFposo3OE6eHwrGpNNjU; Wed, 18 Jan 2023 01:03:19 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1674003799; bh=FuAQbnn/KfP9gd4jsAxN/srUmG3VYa0Q4aeinRxh0U0=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=H6j2XKLuYUo+REJT/SE4DSV/ZsJSLq6CTUD/amAeiQK1OnLZq20DUAQ5dpywQH7bi
+         I+uQxR/YE7Khs6797V0kr5we16GFQ6XFsUr2L5KJN57w2WejNVdaPackMLBupJS1Cu
+         ymIwgpX9aejHb51hwNAClk0m52UxXewiQxYpIXdhVouG1lslBtGpoHLUkNYGvk8EUe
+         NImrkPrH6st0jWgT69ytnM8evi4uwz57Vu88/BRKX57dOqQ0avU6Hyb8tw033lfbs8
+         6KvJk7ocsvh6ELc1oljv/nG7HnVQJYA8pSIcrNnLEjPR2vDQcRceaK3yGizrv2xEW0
+         MKetY29ZUPVSA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=AO+QjUhr c=1 sm=1 tr=0 ts=63c74557
+ a=O4HnXJxpn4bBnFCb4s/IkQ==:117 a=O4HnXJxpn4bBnFCb4s/IkQ==:17
+ a=IkcTkHD0fZMA:10 a=98nDmZQ3_Cna-MDeUiMA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <bdd4eacb-4883-be16-e0b6-296a27dcd98f@ramsayjones.plus.com>
+Date:   Wed, 18 Jan 2023 01:03:17 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2] avoiding deprecated curl options
+Content-Language: en-GB
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+References: <xmqqv8l9n5fj.fsf@gitster.g>
+ <Y8LAim4D3g6qnZdq@coredump.intra.peff.net> <xmqqilh9kqdy.fsf@gitster.g>
+ <xmqqzgakgu0n.fsf@gitster.g> <Y8RddcM9Vr71ljp4@coredump.intra.peff.net>
+ <Y8YP+R/hyNr6sEFA@coredump.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <Y8YP+R/hyNr6sEFA@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfCAugbUQII6F3GPf72DQR1wRyqvJI1xi6LfRnZgPxkWYK4p7zDXOk/jfnfm1heIspALUmbVMDMrTHJ+QqAIK0DPkEFXQJstTkVQ4GCORwusOYTY7x0HS
+ yZosJ5m+zmKX2qCd+QYhS3kE1enaM8kjM1RWFeI7EYVGWnNDfNbQ+v+6CUF82hQ+W96xllwLtqvs0kHSRd9XiMVOrtcHgglEmQs=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rubén Justo <rjusto@gmail.com> writes:
 
-> We prevent some operations from being executed on a branch checked out
-> in a worktree other than the current one.  An example of this was
-> introduced in b5cabb4 (rebase: refuse to switch to branch already
-> checked out elsewhere, 2020-02-23).
->
-> "find_shared_symref()" is sometimes used to find the worktree in which a
-> branch is checked out.  It performs its search starting with the current
-> worktree.
 
-"starting with the current" may be a correct statement of the fact,
-but it is totally unclear what the relevance it has to the problem
-being solved. Rather, it is unclear what problem you are solving.
+On 17/01/2023 03:03, Jeff King wrote:
+> On Sun, Jan 15, 2023 at 03:09:26PM -0500, Jeff King wrote:
+> 
+>> So I took a look at just dropping the deprecated bits, and it wasn't
+>> _too_ bad. Here's that series. The first two I hope are obviously good.
+>> The third one is _ugly_, but at least it punts on the whole "how should
+>> we silence this" argument, and it takes us in the direction we'd
+>> ultimately want to go.
+>>
+>>   [1/3]: http-push: prefer CURLOPT_UPLOAD to CURLOPT_PUT
+>>   [2/3]: http: prefer CURLOPT_SEEKFUNCTION to CURLOPT_IOCTLFUNCTION
+>>   [3/3]: http: support CURLOPT_PROTOCOLS_STR
+> 
+> In the interests of wrapping this up, here's a v2 that:
+> 
+>   - bumps the required curl version to 7.19.5 in patch 2
+> 
+>   - aims for slightly better readability in the final code of patch 3,
+>     versus minimizing the diff
+> 
 
-Is it 
+I have a _slight_ preference for your v1 patches, but I don't hate
+this version either! :)
 
- - We search through the worktrees, starting with the current one,
-   and stop at the first one found.
+Tonight, I have compile tested both v1 and v2 patches (both in 'seen')
+on cygwin and linux. I would like to say I have run the tests as well,
+but it seems I have disabled all the tests on cygwin (expected) *and*
+on linux (most unexpected).
 
- - If the current branch the the current worktree is checked out in
-   a different worktree, we get the current worktree back.
+ie. I don't have apache installed. (I used to have apache, svn and cvs
+installed to run the tests, but they just took too long to run and
+caused *many* test runs to hang and leave server processes all over
+the place. On cygwin, even with all of those tests skipped, it still
+takes approx 5.5 hours to run the tests).
 
- - There are callers that want to know ONLY about other worktrees;
-   they check the returned value and when they see it is the current
-   one, they happily ignores the fact that it might be checked out
-   elsewhere as well.
+I thought I was still running the '*http*' tests on linux, but I seem
+to have dropped the installation of apache at some point - oops!
 
-> As we allow to have the same branch checked out in multiple worktrees
-> simultaneously...
->
-> 	$ git worktree add foo
-> 	$ git worktree add -f bar foo
-> 	$ git checkout --ignore-other-worktrees foo
->
-> ... if the branch checked out in the current worktree is also checked
-> out in another worktree, with "find_shared_symref()" we will not notice
-> this "other" working tree.
+I guess I should install apache tomorrow ...
 
-It is somewhat disturbing that your solution only needs to "ignore"
-the current one.  Whatever problem you are seeing by the current
-code not ignoring the current worktree, wouldn't we have a similar
-problem if two non-current worktrees checked out the same branch?
-Would it not be a problem because any non-current worktree returned
-by the function triggers the "already checked-out" safety mechanism?
+ATB,
+Ramsay Jones
 
