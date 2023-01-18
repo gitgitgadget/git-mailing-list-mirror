@@ -2,154 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B762CC32793
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 09:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 151DEC004D4
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 09:18:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230016AbjARJJf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 04:09:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35590 "EHLO
+        id S229760AbjARJSJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 04:18:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229969AbjARJIH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 04:08:07 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B717B654C1
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 00:28:05 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id v6so38332821ejg.6
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 00:28:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=LTFRHE4nNOj55jZmic8+esN0u8bW28+HYCRISAjIp6I=;
-        b=cT0hC/7zznHaBdk1wSB1H6DCDOHLcjTR5Z0x9Zd8kUtldXAPKAX9riblsm+rOmS4OK
-         cRGWWjwYfn2xGLIHxJJeiIUxCDBO2vIfttsRuHxgCP01AI0HM0AJwCxNKi6Y5itB3aCb
-         qeNHM5KFu0RpYxmJ//pPYwvU2SRvU1IlwsfG2bxO80um7fy7Iiqdh39Tg4K5BG17qg33
-         zpHM0Y6R+QuyAY3hxwiWj5SX7L8Kpq/Q4JNvrJlYcw/UIqYVo1BIN18N5fNW7fGV8gip
-         ieEqZt0Vp7gx0jl3TszEfVFO5YdFORCkO/fhX1v6Hiy4wCzElMBAnZOFqhvY0QazbjVU
-         NsIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LTFRHE4nNOj55jZmic8+esN0u8bW28+HYCRISAjIp6I=;
-        b=zJo1q5lVFvTY0trGFfx91Ve+b0TogWOWqkI/3TAmOmMirA0k+IzX6FDGAzat9jkHER
-         GtuZtW49TFPTFhyElb0PjUXZ8oSZl0Lg/AQMPUXqLfe/0e/evhPPtPQCYDu68fl7UdKk
-         HipeTR4q6I9QKBZJFr075S6PwtvCWBucUm9S9tq2WGvaQ8ZHmSCX4wp2qBK86n+YPC9y
-         KQH6Gpg+XQ+3FDheGcpcImZcifDIkB0zfn0CaCHVNMJX9DDZyVA8pwvmMGP9HjDkpwWe
-         o1lvoblZNzYcZpWznG3RbKFKjgzgtrcZ2BpLY8d05XO9pN8Kbyh/0DJnVA/Ad4wk9UxH
-         lOfQ==
-X-Gm-Message-State: AFqh2koO1Iz5/TmTWa0cyjdnc+YH8IocCHB9/L/s4MUwhMmrY9mjpUGn
-        aY7GBje36ogX7VF9dMzIVRvcS5gUnWrk6mtR
-X-Google-Smtp-Source: AMrXdXuFcFZHdTaJaG0aKzqaHuTyZ85EPMiOKQ0bZ0FU1p//y/zRjvfK4Tf5o0/SZzhMWyi1SheMmw==
-X-Received: by 2002:a17:907:9b06:b0:872:f259:a7ea with SMTP id kn6-20020a1709079b0600b00872f259a7eamr5961910ejc.53.1674030483091;
-        Wed, 18 Jan 2023 00:28:03 -0800 (PST)
-Received: from localhost.localdomain (78-67-21-133-no600.tbcn.telia.com. [78.67.21.133])
-        by smtp.gmail.com with ESMTPSA id c23-20020a170906155700b007a9c3831409sm14237080ejd.137.2023.01.18.00.28.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 00:28:02 -0800 (PST)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH] git-cat-file.txt: fix list continuations rendering literally
-Date:   Wed, 18 Jan 2023 09:27:49 +0100
-Message-Id: <20230118082749.1252459-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.39.1.405.gd4c25cc71f
-MIME-Version: 1.0
+        with ESMTP id S229521AbjARJOm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 04:14:42 -0500
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2043.outbound.protection.outlook.com [40.107.96.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E185F34C2C
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 00:31:44 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=G2YXkZyRimqW6J+evUOcYD0e2gkq1qsjI73YnOn41I1biCaZ0jh8C+9dglrR7HKha89q09Aijb12PQ6gXXuLpKg5m7TKl6jETvqqPSwK9Zgdf3PWjVseOccBP1MeUVca6Z+7oHP6XvMU6/AsNbN+DOD/MlSRvO+fZFW5jHCJ8SOIkffyFlKjjzldB0izF83FOaBaBXkrFKwSxTRWWKze2EB/qFKhkSK+LezecMzHKV1yy//MRhjvKE65txH+PTgFI5enMiAeYoiDb7G+8TlpqK7y0pzLqO9M29bohdiyT2LL3WV+VIXNRRsqguuKKk+yjNTVIdMDO749P2g2yTSbKg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=eO/Ya0xrzdTMngJ45zz9bNt2MGmxkK9ez+b/JOoMqmM=;
+ b=WjAzwBqa9nnRWpz/fJW5QTMnG2yXkv+EnqFHEBSc9KhfYZ4ubuHYwiBC1cc/UOQFXflXK4kZxqQ9ImYFxPbpIgUlTkfmnyeV2Yi02VatK6g0gvizTtYCohnPCY5/n3BwK08FCIh9eY5KVC4fU55hWVNiUKSnGqkjQsv4tZKOdoMps3/r2CP6HF1X0Bcn7get6IacZGAzOcoB+bQkTe3214k9i/AeHALKtyAKKOYpUE8He0fLFp+uDt+RIZQCYLG4Ckw1B07Kci+iV5j4T/C2w4kdkRavYERJFokfD8EIhcKdacL9kuOW67Ie2JEXhPzlO7vjBrloyWRKnEDx74iXTg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=eO/Ya0xrzdTMngJ45zz9bNt2MGmxkK9ez+b/JOoMqmM=;
+ b=kzpnV4EjxHWxOFAWVUoFE8CzijCgkG7JQeUUVQ7ljzxqow7e4PE63r6YPvP0mCZsVbngpGw0xvS7bzFoPn204Cbt1xWzuevTnlY+Fx05Myh4utvqrxHEUDr863gPZkTz+JHVXolX8A8IR9D5oJQf0Y3OCI8OrhFJXmjh86fTtvQ=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DM6PR12MB3370.namprd12.prod.outlook.com (2603:10b6:5:38::25) by
+ DS0PR12MB8042.namprd12.prod.outlook.com (2603:10b6:8:141::9) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6002.13; Wed, 18 Jan 2023 08:31:42 +0000
+Received: from DM6PR12MB3370.namprd12.prod.outlook.com
+ ([fe80::4df2:b32a:e628:c57e]) by DM6PR12MB3370.namprd12.prod.outlook.com
+ ([fe80::4df2:b32a:e628:c57e%7]) with mapi id 15.20.6002.024; Wed, 18 Jan 2023
+ 08:31:42 +0000
+Message-ID: <71623e1d-805d-cdc7-d872-224821c1383c@amd.com>
+Date:   Wed, 18 Jan 2023 03:31:39 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Content-Language: en-CA
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <20230117013932.47570-1-michael.strawbridge@amd.com>
+ <20230117013932.47570-3-michael.strawbridge@amd.com>
+ <3a2d4559-fce2-80f3-bafd-5eb8ac1a7eff@amd.com> <xmqqbkmxbort.fsf@gitster.g>
+From:   Luben Tuikov <luben.tuikov@amd.com>
+Subject: Re: [PATCH v6 2/2] send-email: expose header information to
+ git-send-email's sendemail-validate hook
+In-Reply-To: <xmqqbkmxbort.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: YT1PR01CA0064.CANPRD01.PROD.OUTLOOK.COM
+ (2603:10b6:b01:2e::33) To DM6PR12MB3370.namprd12.prod.outlook.com
+ (2603:10b6:5:38::25)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3370:EE_|DS0PR12MB8042:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5332f525-ad7e-466e-99c4-08daf92e6cf6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: U2oAu4HTQddYxWXwyYslfnGIAaOxyZwJuq7guh0SjfRhHVbVQCm8UTH9wBfKNtk/o8NbBtiB9By/XwBeb4vmhcZUfrJjOyPPLXh5emVJKLFm909xVcB/YDnUeEMW2fF/RWSJNpy4vzXfgdSvHOr+TyfjomwG/nHvlK053e1UidKKk1H/GOKRcUj+2eh6IZivJ9xF+Hm+c00VvLXZLCBR4Is1EgW6Vcsc7VG/rUyS3jp6fe+cxUzLaMsRGnE0BpbRWa9hbfP/Meh90jSEGTNX8pYrke8f4PrMRMgewfq4BN+TpvFilQLifWehTdnFuGQSlNzalupJSHuTRrDfg+pjnv9U7tcobTLDXktX30JITX+Ot5/dNFJBf/54CUwcmqJfsX/Gfb+Ew0Az3TlBW/QMxT4BZz/LJUZD9/oCUdpIpk9f3+NoSeIFj1+b9k54jFjYpTnGlNdVM8y4vDHycgidV6GEOWacis+LNYrgZjdi6I256HrrErQXZsjNb4LhHgBBstrCnWK/Kxqrex1BrGPFB0BFlriVrPAKycx1zR+eLGp1WHmZAdEyGgWiAlMgMNvVvhOHnEYozOfiO8jY8cvBl/suQROzeyPhul+rHdha79/vyH2p8VVS8s6BuDDDS4J+rdOg3YLj4y+/IGnt/ZmaLLgEKKSaLoM90Srk1HGDPAxLMvqbhtIswpgMnj3wiv++GNFxMxHzni+bDxmdp0mbjKLUqyjZEIfMdN0OyQ6HnM0=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(366004)(396003)(346002)(39860400002)(136003)(451199015)(4326008)(6486002)(41300700001)(38100700002)(478600001)(86362001)(2616005)(54906003)(316002)(31696002)(66946007)(26005)(186003)(5660300002)(8676002)(53546011)(66476007)(6666004)(6916009)(6506007)(2906002)(15650500001)(31686004)(83380400001)(44832011)(66556008)(36756003)(6512007)(8936002)(4744005)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZHFwaWl4ckJiUmVNOEFpeVFwNWtVbE5mVkFWNUdRd0NFVnhLOXZHQnhEUnpJ?=
+ =?utf-8?B?MXNMTTRXbWJYWWVzWGp5bEJsQ3Y2SXVCWnFkOU1ES3pwbklvdFZrb29NWUN4?=
+ =?utf-8?B?ZjBnU2VHOXZ2U2w5ZjVVMWZTL0ZHQytrU3laR2hKaWtJNU9qdEJTc2c2TjRK?=
+ =?utf-8?B?REttU2hQR0dFUGRaMFBweHJyeXlzeFdPekVjWDQ4SXlyNWlWQnQxU3d6Ym9h?=
+ =?utf-8?B?OW95N0lOQ1ZRSHBlRjZ2MjBucy9RZGxvZlhjQTdFeENiYmw3b1NqVjZYRjdN?=
+ =?utf-8?B?QXJkSXFiMmlpeGROb3RVNjk0ZEpMM1o1YzQ4UGx4andTNGRqajdNeXlWUUJz?=
+ =?utf-8?B?RG1FbXE5NDdYUUVqQUh1aTAyZlZjMVRzTDZmSnFJWE55ODRLcmhCd2Fnem1R?=
+ =?utf-8?B?TERCU3J0YXdQanU0RzkrRkJPaWZ3M2cwOE5GdGVqL0FGa0crWlJWZ2IyZ2Vw?=
+ =?utf-8?B?d2gvVkZhMVd2ZUhLSmpjTVhjUER4aUMwdnlHQjBrVXEwVzhFQUJZZk9obzJT?=
+ =?utf-8?B?SFBNbjdTTUxyRXIzNEpnUm5hN0svWmFEQXRWaTBmWHF4K21pZ0d4QnR5Nzlj?=
+ =?utf-8?B?NlRJN2tPRFZjVWp6UFJwUm96RHJ2bHdPdjhPYVF0T3c4ckZJWlBqUVl0T3lH?=
+ =?utf-8?B?NEVvNVovR3lzUGtrNzlTaUl0MVZSdEVmQjUreXQvZi9HOTFOZmJFbEpzVHRw?=
+ =?utf-8?B?VGF2bmRQQTNDZ2paVWNOazRCQVRWWUxGRTJNNm0wdFhEaGNrczM5aXZwelhL?=
+ =?utf-8?B?NjZUNWFGdTUyMW9yNTB0bUFPcjdMeDJTZTdJa2JmYmsxRlZIS2k2Rk5BSDB5?=
+ =?utf-8?B?VExpUUE4eWJrVkwwdzVRdURUemNxLzdjVmlFdmRKQjN6ajcxeHNzMXFoUHlO?=
+ =?utf-8?B?RFZ4NWJ4WTU3TUVoWFdZTG10SU41Zzd5YTZhSkpCRzVuMGJKazJwTTNGV3k4?=
+ =?utf-8?B?a3Fnd3kvdGdKRjRLL01iM2ZRWnY2NUg2Wm1HMHYya2lLWWN6SnB5dVpRbVVh?=
+ =?utf-8?B?aXdjWnBWaVh3WGtVcDUwSHhsWTBPa0FLa0hhR3VWMVFEYi83WHdQVU1zR29n?=
+ =?utf-8?B?cThwc1pJb05iOHNyY0pwYU1EMW4zNXRJZVBJblprUzUxRVg2Mkl1Q2JtNC9R?=
+ =?utf-8?B?b2VLK25NRTFTSnRITWhrTDFZVmQvcmhweWt2SjUycVI2ZVFIcUJaSlZGRFpv?=
+ =?utf-8?B?NjZmcGVaNVpDYnYrclVTemNPMjllT0ZYd1F5MHQ5Wnp2aXNDeGg4K0NJaVVT?=
+ =?utf-8?B?ZjNVbzFKcnNNVU9oWGlyZU9SRFFVaUZ2R2NKUXVPd2kzaFdUdEJEckN3ODU2?=
+ =?utf-8?B?TW5BRnV0dXEzMnYwTFcwOFJmam90NEhBcllqWkdjZXlKNFhHM0F5d3ZqZkVx?=
+ =?utf-8?B?ekxoRmJJSHdKLzE2bmJEQy9SUkxZOG1nYUxiVFF0SDJvTUZiOXBUYTZMaTl2?=
+ =?utf-8?B?b2t2QzFGUXYvYWZtNzV1K2pML05PRzdkamZZSXF1ekI3Vll0d0ZFbjI2YzQ4?=
+ =?utf-8?B?bnVuUk9neTgyV2hHakViNUhSanVSU0pyTldoVFc4S28vbEdTaXE5dTlUNmFE?=
+ =?utf-8?B?UnNaSW15amkweThzOFZlRHRPZ3NKenV1WmJWazZWdmRRSkZBeVN3dU5vOGtU?=
+ =?utf-8?B?cEpzRVBKYjNqeVNpd1Z4UWswM29MUnVrSkFIU0NzaGFjelBPbnhUWEpGd1V2?=
+ =?utf-8?B?dlVkVU9YMytHMlpRbGxFOEtyY3ZSeGRnOU41ekVGMzFPU3dSRU9zYXhVaVd1?=
+ =?utf-8?B?Wk9lT01tNmF1NGc2L1JIK1pZUUtvU2Q2MFN5NzRpUjdIS25pVjF3QjErZlYw?=
+ =?utf-8?B?eXZWZEhDR0Y1TzJqRjgxbUlYb0EwZ3ZEN2xXem5TTXJ3NFA1cExBc25CT3Qv?=
+ =?utf-8?B?aWVvQkY4WEpWMjlUU25LTFgydW5ZemRib2JhekJVZ25XTkJUYzJDNDR1RjZT?=
+ =?utf-8?B?TlFPdjk2MEZxaEd4V1llNVk3ZmdBYWtoUUpCZU1CaXRzTVRjL2lEbU8zajdY?=
+ =?utf-8?B?Tzk2K0V2YUl3MThpSWMwU05nMEU1YWwyZUd5SDN5bkI2TFJpcTZYTmgwcVhO?=
+ =?utf-8?B?U1cyUittdWxLRExwK1RQV2s5MllNSjhwSWFSZ0tSRGEvUERFOFpVd0xiZkR5?=
+ =?utf-8?Q?zJrbj0g6zAUfB0NIT/B0v5kI0?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5332f525-ad7e-466e-99c4-08daf92e6cf6
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3370.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jan 2023 08:31:41.9821
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: XSPtp4LY1mZOgAHKELoiUxct/f3i3O6vG0s4HzhJxCBxGI7FSOIoqn9kAUFJOQbc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8042
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With Asciidoctor, all of the '+' introduced in a797c0ea04 ("cat-file:
-add mailmap support to --batch-check option", 2022-12-20) render
-literally rather than functioning as list continuations. With asciidoc,
-this renders just fine. It's not too surprising that there is room for
-ambiguity and surprises here, since we have lists within lists.
+On 2023-01-17 02:31, Junio C Hamano wrote:
+> Luben Tuikov <luben.tuikov@amd.com> writes:
+> 
+>>> +test_expect_success $PREREQ "--validate hook supports header argument" '
+>>> +	write_script my-hooks/sendemail-validate <<-\EOF &&
+>>> +	if test -s "$2"
+>>> +	then
+>>> +		cat "$2" >actual
+>>> +		exit 1
+>>> +	fi
+>>> +	EOF
+> 
+> If "$2" is not given, or an empty "$2" is given, is that an error?
+> I am wondering if the lack of "else" clause (and the hook exits with
+> success when "$2" is an empty file) here is intentional.
 
-Simply replacing all of these '+' with empty lines makes this render
-fine using both tools. Except, in the third hunk, where after this inner
-'*' list ends, we want to continue with more contents of the outer list
-item (`--batch-command=<format>`). We can solve any ambiguity here and
-make this clear to both tools by wrapping the inner list in an open
-block (using "--").
+I think we'll always have a $2, since it is the SMTP envelope and headers.
 
-For consistency, let's wrap all three of these inner lists from
-a797c0ea04 in open blocks. This also future-proofs us a little -- if we
-ever gain more contents after any of those first two lists, as we did
-already in a797c0ea04 for the third list, we're prepared and should
-render fine with both asciidoc and Asciidoctor from the start.
-
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- Documentation/git-cat-file.txt | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 830f0a2eff..411de2e27d 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -93,47 +93,52 @@ OPTIONS
- 	Print object information and contents for each object provided
- 	on stdin. May not be combined with any other options or arguments
- 	except `--textconv`, `--filters`, or `--use-mailmap`.
--	+
-++
-+--
- 	* When used with `--textconv` or `--filters`, the input lines
- 	  must specify the path, separated by whitespace. See the section
- 	  `BATCH OUTPUT` below for details.
--	+
-+
- 	* When used with `--use-mailmap`, for commit and tag objects, the
- 	  contents part of the output shows the identities replaced using the
- 	  mailmap mechanism, while the information part of the output shows
- 	  the size of the object as if it actually recorded the replacement
- 	  identities.
-+--
- 
- --batch-check::
- --batch-check=<format>::
- 	Print object information for each object provided on stdin. May not be
- 	combined with any other options or arguments except `--textconv`, `--filters`
- 	or `--use-mailmap`.
--	+
-++
-+--
- 	* When used with `--textconv` or `--filters`, the input lines must
- 	 specify the path, separated by whitespace. See the section
- 	 `BATCH OUTPUT` below for details.
--	+
-+
- 	* When used with `--use-mailmap`, for commit and tag objects, the
- 	  printed object information shows the size of the object as if the
- 	  identities recorded in it were replaced by the mailmap mechanism.
-+--
- 
- --batch-command::
- --batch-command=<format>::
- 	Enter a command mode that reads commands and arguments from stdin. May
- 	only be combined with `--buffer`, `--textconv`, `--use-mailmap` or
- 	`--filters`.
--	+
-++
-+--
- 	* When used with `--textconv` or `--filters`, the input lines must
- 	  specify the path, separated by whitespace. See the section
- 	  `BATCH OUTPUT` below for details.
--	+
-+
- 	* When used with `--use-mailmap`, for commit and tag objects, the
- 	  `contents` command shows the identities replaced using the
- 	  mailmap mechanism, while the `info` command shows the size
- 	  of the object as if it actually recorded the replacement
- 	  identities.
--
-+--
- +
- `--batch-command` recognizes the following commands:
- +
+For the rest of the comments, I'll let Michael address them.
 -- 
-2.39.0.348.g5efb778ab0
+Regards,
+Luben
 
