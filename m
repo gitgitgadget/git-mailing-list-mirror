@@ -2,163 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 806A3C38159
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 16:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EEA5C32793
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 17:03:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230358AbjARQg0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 11:36:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41946 "EHLO
+        id S230110AbjARRDF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 12:03:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230080AbjARQgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 11:36:08 -0500
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2065.outbound.protection.outlook.com [40.107.244.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 177C44F364
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:35:23 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=oKtAtTAo8jEVy5Ppma9cbMZ6mOcKR6UWvZLi4Jw0oMDlnHPrqgaF+cKkuJmUflJzxHuMqI5KMubtdbe3G/1v5Xr8GUJ8Sw1AvKXK1X2Jlz6ySrlG1Upcuo7pRB3SpKZB+dQXgwxLEzKw2xntG5dHJocfjGOsa6S8+yknLEAZ87BpyHxQ8adyCO5bqCQokPCJjDapOI5zNsSbB5uoLDK03o+88eavKN1d6wKfZKfseShZQfURzGQwL/ngwV2HcPThK5aP6yVJdj/KDqK/iESfV6KQZ6B+XOQLwiPTzXYwqzQKogUOSSfg2vscyA/JrUHTGBzCMARz87Doy8AtlLxuGg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+HkRdTane9TurdIM+LtE+phMz8IHDUYuOnYNpMVciCU=;
- b=AOpyRHjEL8ibE83Jol3IF8bMvdUqkc7PKNRs83TXZv8Ic3GZsYIudk4PfH0kOj0ITUfLcz2KTJ/xWEl7e6qGk+4aK7xECVLSnA9B/uY643vXV5Fp2zRAluyCPFCcLZIH6MwVVdcMIcVhIUka0B0v01SrgDwS8rrUJ1LP9blsTrn/3aTZCF1xQgbX6yb2mr4vV8HvwT8O+esmf4qU1LoLkpV6rzERs5k1AntdXpQ5MPOAXaBsQVbOGZa9766jjaGaas+OqiV5fHQcn0CzqKMAFOgq3OZJkPX2xbyjYC+yIm67/+tVJJ3EPleUZQLHaSiu357DQ3DSN+0DVRJjIvjk4A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+HkRdTane9TurdIM+LtE+phMz8IHDUYuOnYNpMVciCU=;
- b=Jtdlb0EOPOyb264SWrGSe7uOD9bacaFLjLn1191aQ418s7yw9NQ6Xxzwdwt9Ew5YZsEXDVnepSbTGLAvIGkkAnkGYbHXGMmncof+y1TV0mAHV8sieC4iuS5p0P8ikK7lSzYNW41arlk3tXWoztlj+yJBulM++l9KPBt3ErwuBqM=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DM6PR12MB3370.namprd12.prod.outlook.com (2603:10b6:5:38::25) by
- SJ1PR12MB6220.namprd12.prod.outlook.com (2603:10b6:a03:455::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.13; Wed, 18 Jan
- 2023 16:35:21 +0000
-Received: from DM6PR12MB3370.namprd12.prod.outlook.com
- ([fe80::4df2:b32a:e628:c57e]) by DM6PR12MB3370.namprd12.prod.outlook.com
- ([fe80::4df2:b32a:e628:c57e%7]) with mapi id 15.20.6002.024; Wed, 18 Jan 2023
- 16:35:21 +0000
-Message-ID: <fa9b1371-0a61-147f-637e-cb09f775fe22@amd.com>
-Date:   Wed, 18 Jan 2023 11:35:19 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+        with ESMTP id S229851AbjARRDE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 12:03:04 -0500
+Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3633E4F36E
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 09:03:03 -0800 (PST)
+Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-15f97c478a8so710364fac.13
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 09:03:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XaBjNZJU6VVlfSObhemIU7tcYW9gfJo6tv44CumCx/g=;
+        b=E/jBmDlgyX+XcXet+KHOUFZxXu15q00SPAW9XDB0NXflv0vOVf0YQ8h3l5mrruD2aJ
+         ol7PFAlsA7Bl3ltFTg1GlvpLoR63w8Y7MFEYSpdGMNMvQ0jdqXA8jFoAwrqmpdYiQitc
+         m173Y4Hs5M4ZhZrpjIxkucqqlN+F++JpYAmLNPJasDWJK8wODtD1CsnES7DMKa2n5nGQ
+         uIo7B7BCUSmF7RN2aNj6vlGIBFFGx/R2Ql9ZRnPIxwGPQVpKHcIZn8xOAAm8T5NGRqmk
+         9Fsg9fSm8CTjKGfkXmWbIiqumvaIq0m5gOHlIirQ6tT/mtfR0jJoT5lFG5JLf6q/Q9gk
+         JDzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XaBjNZJU6VVlfSObhemIU7tcYW9gfJo6tv44CumCx/g=;
+        b=P6eZ0iMS7NyDW43Y16mlk3vjW84zq38aLdTDsSV366AgcPECl1kdMwSxgmOawUeoIp
+         +NIPlg+/QV/tjy+S4dAD/1ku6kdnblQSt3ugiD31g/Gp2qtu49fWFqHsdaUSlBW3Q9A7
+         U8rBsz9wR2DTV0wW1a3j1VZBRe9PiWLVLjp7loKoRYcj/MM/0d/mqKD0vkORI9/7TGH1
+         /m3hQh1hyjh8SkKvpXJUEbXPYBca7BGpSP80Cwo//0zSxwZWYmoTBUsPu7qP80gfh1J7
+         dXrtr8Qsw1dXe6mapCa6EtHtupSLV2aYbYDvuA3wmLRTnSIhPfkUtvhDMh1A2RAHiUeo
+         4q5w==
+X-Gm-Message-State: AFqh2kpBdu8MTQnlyUpA0wCqmleM+NT3Wpd8N5Ep5y+NrISIUEPRdbKO
+        Sb58+bNbPQ/WCmxfa68Jy4rk
+X-Google-Smtp-Source: AMrXdXsKVtWV10Sr6qF52dZ2KjxgIdXoqUuOTwMrFDUd1DO4Rt7dgdXz8zye/wB6zg4QiSYZr+G1Xg==
+X-Received: by 2002:a05:6870:7d15:b0:15e:df01:69f3 with SMTP id os21-20020a0568707d1500b0015edf0169f3mr4259772oab.24.1674061382362;
+        Wed, 18 Jan 2023 09:03:02 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:1543:36d:dc9e:b94? ([2600:1700:e72:80a0:1543:36d:dc9e:b94])
+        by smtp.gmail.com with ESMTPSA id x6-20020a05620a448600b0070736988c10sm501221qkp.110.2023.01.18.09.03.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jan 2023 09:03:01 -0800 (PST)
+Message-ID: <58a70c93-22ed-901c-44f2-3224734c27c3@github.com>
+Date:   Wed, 18 Jan 2023 12:03:01 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Content-Language: en-CA
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <20230117013932.47570-1-michael.strawbridge@amd.com>
- <20230117013932.47570-3-michael.strawbridge@amd.com>
- <3a2d4559-fce2-80f3-bafd-5eb8ac1a7eff@amd.com> <xmqqbkmxbort.fsf@gitster.g>
- <71623e1d-805d-cdc7-d872-224821c1383c@amd.com> <xmqqv8l34xkp.fsf@gitster.g>
-From:   Luben Tuikov <luben.tuikov@amd.com>
-Subject: Re: [PATCH v6 2/2] send-email: expose header information to
- git-send-email's sendemail-validate hook
-In-Reply-To: <xmqqv8l34xkp.fsf@gitster.g>
+Subject: Re: [BUG?] 'git rebase --update-refs --whitespace=fix' incompatible,
+ but not enforced
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <b322c536-5a75-bb0c-8eac-1a99d3ba3230@gmail.com>
+ <9445830b-d172-c3b6-ef60-ae4931cab84b@github.com>
+ <CABPp-BGLVMoGiCeBMvyRhQmUSDEv8U7_U8=4B=Fh94=p_=QJVQ@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CABPp-BGLVMoGiCeBMvyRhQmUSDEv8U7_U8=4B=Fh94=p_=QJVQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YT4PR01CA0092.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:ff::26) To DM6PR12MB3370.namprd12.prod.outlook.com
- (2603:10b6:5:38::25)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB3370:EE_|SJ1PR12MB6220:EE_
-X-MS-Office365-Filtering-Correlation-Id: 98acbb75-9f85-4bff-f12e-08daf971fe0c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: aEdNXTJGBSudZVhReJPxYVIyCkr6WfmDcpBHlWSDvweJpn/Bu5CXHJ7Ite0loACbWhpFbc7feH/rJI2IcTfaT2UxxbxF0WgUNdSsPRvQ+itcxwseBVnt4t0KZnc7bHL0TUj2HZyZO3oVnMdCty/wLFJO4Y35TCXElVSiMgn1o2Lgdpjlc+kSS+K56y+0BkETFC3FDG26p9R73G8uTYv0BVQ4xP2p9jOCRuG2fpWJ5NwYBHeHtxlJTlj9Ci5QySZwHSW3838ltVPhn5EOTq/B3Kslsp7AAznNvEQ+2EV7nn5+GUtJqfEK2wINh7a1VUe5NmPGYXZneyJuN281SCx48amPjZ/nn8es9WIRtWBCRxs8o7TfDKVZen3qT3TKBN/ztVnGaB+mdDhiI2KVSWAwstfHiEC1qO6lZjelH510avtPIU7cS325mQYRttvJh5MjdS4H58AxsWZypX7jfRCDcDBE1kbq69Xj0Vu9nGh0Hk8Rh+BuleC6PztcMhoW8lj5bKqGVmSEKmTmwsgzGDCz7OxiJt1eFA+vSLRbJGdz0GTt/jO1FMkNVmVuzN3KNX43cSAz+cnPrklhwV9C9rHkG0wrb4nIMGHxpgKzMyUfPA4ud23YLy9sHIKMCuBJe6tim750VVLcm+L0cRR27b4AlLFbceyHj8ru76YLUy9b9HoYfKbZ+x8J3x4rG5nyHVqwGgvF4qIVzmVh583FBrr22CokdKWQ2gmYUO0FogZEZxU=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3370.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(39860400002)(366004)(136003)(396003)(346002)(376002)(451199015)(36756003)(478600001)(31696002)(54906003)(6486002)(6512007)(6506007)(44832011)(2906002)(26005)(15650500001)(8936002)(66946007)(316002)(41300700001)(5660300002)(6916009)(53546011)(66476007)(8676002)(4326008)(66556008)(2616005)(38100700002)(186003)(86362001)(83380400001)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QkpJV0ZTZHk1UG9jcFZteTR0N3BSdVAxUG1DTnpxeS9ORmkzMHdkWEVZSTNS?=
- =?utf-8?B?V3RFbUQ3TFNKUXo0Q3YxeU5EblQyd09BSWtodXFUaGZPekwvYkEzd3IzR1M1?=
- =?utf-8?B?U2Z4b3AydFNrRzgrc2tkR20zS0h4Y214TVA4emowWjh5WHFsd1J6czBEUFJt?=
- =?utf-8?B?dmNOcDd2QmVCUjFNQ0ZrelRNQm5NajZHSTQrcndyanZSbytMbzdraXcrODJZ?=
- =?utf-8?B?QU5HNkZTZXYzKzRLVlNIcnM2K2ZodjViTkV6Njd5azFkdzJtMDRIYUZRQU9I?=
- =?utf-8?B?NEwyU1d6SkJ6OStsN3RPQi9ZakRxZXZUeENOOWdwYmRjVE0wdFFydnJHTFhC?=
- =?utf-8?B?NVNFVk9qMHBTaWJpU3JTczJhSmdzVUh0Slp0RENkSy9IeFZOVDJEL253TUlu?=
- =?utf-8?B?dmhFR05vQjg4dnE5WTl4RVdTeVJ6dEJMdDFNQkRTdlJ0V1ozRXFLYnIwZDdU?=
- =?utf-8?B?djZCK050eTFKMG00cFlDOHMxcm5ISm1BK2NKTVhibXpiVWR6dVhQYm9Uakov?=
- =?utf-8?B?VjhpdkpzLzdCd1R0UkhyNk5tRDhNK21wK09QVjVWTUN4S2RRaXZqU2tXclJH?=
- =?utf-8?B?NjVMOFYxaVhwaGdQQWlRVXVCTUV0VExsOTZzNEJyMXpBMkxZalE2OFVGOU02?=
- =?utf-8?B?MFJhNVVoNmVOczltUldVdEk2VG4rNHNCcHFkUDljZTZvYUV5KzBMbHlveVE5?=
- =?utf-8?B?VFJpdjBCSXQrSU1oUURWSlA4ZWJtRGNtV1Qwa1ZhMlZoS3hhSE9hWkdxMVpU?=
- =?utf-8?B?eHNYR1FyUkxXQmJwMnZxa1F1WjU3Mk9SR3dBd0FvMW83dmdqN0pBTjhYRy81?=
- =?utf-8?B?NitRcm0wNEZ0QmlyeUczcFRpVnRpeGZRcDM4QlovMWpKNFhUTklCNHNZOW5E?=
- =?utf-8?B?Z0g1RzBSeGtVcjVyZFJoeTJvUXFzQm5oYTJrcitlWENHUVltM2lRK1d3T2w3?=
- =?utf-8?B?S3p4Wkc3ZlFBNW9BLzd5MTM0R1oyd1BWUkJJd0swOXhFYTBJM0xBUjJleEFv?=
- =?utf-8?B?SXdOUzcvSlZDU3RUTWFmMndhc3hkU2VUUW1uK2xHT3BjK1plR3dYYndBNXBx?=
- =?utf-8?B?VERDRmw0Q1BtT2JKeVd0ckV4cFptVVoyd2xZam44aCtzYWI0WFcrU3oweE9n?=
- =?utf-8?B?K0ZhVFpQc1pOUUxFZHVmdWZ1UURJTFE3emhBb3d6aXUreVhhTThSS3dkSXYy?=
- =?utf-8?B?RVl4NUxUQlZiL1pOUXNIc01IQ3BDL0J0RHVhNm9FaUdpTHN4UXVJZmJIMlZy?=
- =?utf-8?B?UG4rQjJZK1ZBS1l2YW4xcEx6ODB6Vzd5R0pISkRDVHA1Q1p2azdFVVk5VHBZ?=
- =?utf-8?B?Z3JaY0Z6UHdhZnFaL2hPRmZvV2Fsbk5JK2JlRGdCTWtMekZZQmhFbTFCWTVR?=
- =?utf-8?B?L1c0ZjVyeWhuWUh2Yjg5R25LU014dkRoTWZMMzZVVlViSXZTNnl5a2hRdEFR?=
- =?utf-8?B?QTdTdzNKSFBzVzJKZGU5a0wyYVJFcURwaWlyeHYwc2NZOXFhT1E0dVV4ZnRG?=
- =?utf-8?B?d1FSRXZXQnlQTmFVRUpEVXI2UFlUZ3NHZlk1S2t2eWtvVHNJNndobGJaRytN?=
- =?utf-8?B?TGVvSWJBckZGYXFBVVlTMnFqYlAzbXFrd2hNbFdLb0NOdzJGOExHWHM5cDFS?=
- =?utf-8?B?TUtxQ2w0d2lGQmxCS3NqUlM0Y2NNY09tZE5LblVmZ3ZZaE5MS0NDUXk3RXVN?=
- =?utf-8?B?WVMyd1F2dmIxbU01UmJNVkNxaUdHcXYvK2taYXJUN3QyaUJtWGFwRWtsNzRs?=
- =?utf-8?B?UjBERVZIYWFOYUI4SGZKalBMcHBpV1ZEWVBMUmtvRndXd1VqMGpKbHpWYmdx?=
- =?utf-8?B?emxRZWJaOVdCLzk5UUtzRFJBaVRCZ0Z5MGdSN2JFNCtITFNpcW1GVDZaR2NO?=
- =?utf-8?B?MHY3OE5LRDRMNVFYK2dhUlFoZnFWenRTbVpMVVo3cXVSdm1TUlZRbi9VRnNl?=
- =?utf-8?B?dUpGZTJONEF2TEZCaFVkRzR1TzZuQnVRVGt2YlR5K0NZeldUTFJrSFMyOHVx?=
- =?utf-8?B?cHgxSzVBUGNWVFYvcXR1UlpCRnNBN3RQd1E3emtmNWRwZGI2bmx6MmMxV2JD?=
- =?utf-8?B?c2xQUzNJcmlBSWw0K3p0RDJCREtzQTZ3WTRoMjhHSnpxeHYwclJDMHVKWTZD?=
- =?utf-8?Q?wF+9Qlfu1i81EbtUuMmCy9Jri?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 98acbb75-9f85-4bff-f12e-08daf971fe0c
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3370.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jan 2023 16:35:21.6634
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0oqoe/U3R7hI+fsSDn7Qb7Fm6/u7/QqR9akPVhNCWkjyTl7xHsuiCAj5t+OcvJiQ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6220
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023-01-18 11:27, Junio C Hamano wrote:
-> Luben Tuikov <luben.tuikov@amd.com> writes:
+On 1/18/2023 11:24 AM, Elijah Newren wrote:
+> On Wed, Jan 18, 2023 at 7:51 AM Derrick Stolee <derrickstolee@github.com> wrote:
+
+>> +       /* Check for arguments that imply --apply before checking --apply itself. */
+>> +       if (options.update_refs) {
+>> +               const char *incompatible = NULL;
+>> +               if (options.git_am_opts.nr)
+>> +                       incompatible = options.git_am_opts.v[0];
+>> +               else if (options.type == REBASE_APPLY)
+>> +                       incompatible = "--apply";
 > 
->> On 2023-01-17 02:31, Junio C Hamano wrote:
->>> Luben Tuikov <luben.tuikov@amd.com> writes:
->>>
->>>>> +test_expect_success $PREREQ "--validate hook supports header argument" '
->>>>> +	write_script my-hooks/sendemail-validate <<-\EOF &&
->>>>> +	if test -s "$2"
->>>>> +	then
->>>>> +		cat "$2" >actual
->>>>> +		exit 1
->>>>> +	fi
->>>>> +	EOF
->>>
->>> If "$2" is not given, or an empty "$2" is given, is that an error?
->>> I am wondering if the lack of "else" clause (and the hook exits with
->>> success when "$2" is an empty file) here is intentional.
+> git_am_opts can include "-q" which is not incompatible since it's also
+> supported under the merge backend.
+
+True, but I don't think that happens at this point in time. Right now,
+the only things in there should be those placed by the opts parsing.
+Things like '-q' get translated later. However, it would be good to be
+sure.
+ 
+>> +
+>> +               if (incompatible) {
+>> +                       int from_config = 0;
+>> +                       if (!git_config_get_bool("rebase.updaterefs", &from_config) &&
+>> +                           from_config) {
+>> +                               warning(_("you have 'rebase.updateRefs' enabled in your config, "
+>> +                                         "but it is incompatible with one or more options;"));
+>> +                               warning(_("run again with '--no-update-refs' to resolve the issue"));
+>> +                       }
+>> +                       die(_("options '%s' and '%s' cannot be used together"),
+>> +                           "--upate-refs", incompatible);
+>> +               }
+>> +       }
+> 
+> We already have imply_merge() to catch the range of incompatibilities;
+> can we just use it?
+
+That would be great! I didn't realize that.
+
+>> +
+>>         if (trace2_is_enabled()) {
+>>                 if (is_merge(&options))
+>>                         trace2_cmd_mode("interactive");
+>> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+>> index 462cefd25df..8681c8a07f8 100755
+>> --- a/t/t3404-rebase-interactive.sh
+>> +++ b/t/t3404-rebase-interactive.sh
+>> @@ -2123,6 +2123,18 @@ test_expect_success '--update-refs: check failed ref update' '
+>>         test_cmp expect err.trimmed
+>>  '
 >>
->> I think we'll always have a $2, since it is the SMTP envelope and headers.
+>> +test_expect_success '--apply options are incompatible with --update-refs' '
+>> +       for opt in "--whitespace=fix" "-C1" "--apply"
+>> +       do
+>> +               test_must_fail git rebase "$opt" --update-refs HEAD~1 2>err &&
+>> +               grep "options '\''--upate-refs'\'' and '\''$opt'\'' cannot be used together" err &&
+>> +
+>> +               test_must_fail git -c rebase.updateRefs=true rebase "$opt" HEAD~1 2>err &&
+>> +               grep "options '\''--upate-refs'\'' and '\''$opt'\'' cannot be used together" err &&
+>> +               grep "you have '\''rebase.updateRefs'\'' enabled" err || return 1
+>> +       done
+>> +'
+>> +
 > 
-> We write our tests to verify _that_ assumption you have.  A future
-> developer mistakenly drops the code to append the file to the
-> command line that invokes the hook, and we want our test to catch
-> such a mistake.
+> t3422 exists specifically for checking for incompatibilities of such
+> options; the test should go over there.
 > 
-> Do we really feed envelope?  E.g. if the --envelope-sender=<who> is
-> used, does $2 have the "From:" from the header and "MAIL TO" from
-> the envelope separately?
+> I have both changes over at
+> https://github.com/gitgitgadget/git/pull/1466; it doesn't include the
+> "--no-update-refs" hint, but maybe that's good enough?  If so, I can
+> submit it.  If not, do you want to alter or adopt some parts of my
+> patch and submit a v2?
 
-I'm not sure--I thought we did, but yes, we should _test_ that we indeed
-1) have/get $2, as a non-empty string,
-2) it is a non-empty, readable file,
-3) contains the test header we included in git-format-patch in the test.
+It sounds like you have a better handle on this and should take it
+from here. I look forward to your patch.
 
-This is what I meant when I wrote "we'll always have $2 ...", not having it
-is failure of some kind and yes we should test for it.
--- 
-Regards,
-Luben
-
+Thanks,
+-Stolee
