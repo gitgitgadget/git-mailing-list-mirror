@@ -2,123 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1E63C32793
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 11:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DF4BC38147
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 11:56:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230251AbjARLsT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 06:48:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54858 "EHLO
+        id S229921AbjARL4A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 06:56:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230265AbjARLqS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 06:46:18 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C306C53B37
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 03:07:43 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id az20so63242473ejc.1
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 03:07:43 -0800 (PST)
+        with ESMTP id S230298AbjARLxj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 06:53:39 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2EB76B9B1
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 03:10:10 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id mp20so35746265ejc.7
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 03:10:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=grvmAS4FNNAVuY66MCe4GKU1XCPJ3NpOEO57ZLA4aoc=;
-        b=Pl/KfxMd+qiJ/q4oENuFLfLcHicCDWNEtrHvI1kONpK7jwzz0mk+nXjtk+1l5vNnwZ
-         rtUOplBkwUs0o0rbJF55GmW+lkvOdxC9RyaBpc+vZfhqmEMROCQ+42OGa0F9NigQ5mJ2
-         q+SwUgi2gicL90+LFUtJrA4RoqggzR+XnJqv2bRZqzEWYGQYQtLngMgmZZMOMoTYC9Q4
-         4lNYoAU0i7ROUJtSDYckXPdkbYJBtA0tSsaatk6V3DQJdI9re+qSmU3a1TPLa4OmJ7Zs
-         ZKFXHy0Fcgmldvrag3cpUhDsG0VfMTBohvn7mIyyySAoqslWAFSZm0/VvimIz2IJ1vcW
-         jYzg==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/wTqrtEMmKcp2a4K/hTx8OwOer9Gw5oohNyZ+bM7QLM=;
+        b=Wz3f7P/2VXIMJQhbXfGWLktN9firikBf0YxNKtGAG551x9APRi2M8b7fRmqAI8PD8d
+         X+owt++UXI69oQJAGZhGJ9MLc/juuoCPcABYbPQ0/bRP3EgY0BJ+cJ5O8VLDtG2Du5zH
+         fZ/Q3lZifP1rhCvEJfV3aTPBF+cU/dP8MSOdd0debvrxOo4rIy33dUs57jgKwzoUmJZV
+         nLaLSfvsmlEQluM/g2xNAN94R6HAlqbQEyBnL1rTbV3meoJ31tw/nmMz+7l6zektUHEO
+         MhwPQ8P5kfsjbOuistJ1SPY5DAABZoktazG8SCcGyuzfZt57ItpJKWWjFd6aK5Fr9nUA
+         o4SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=grvmAS4FNNAVuY66MCe4GKU1XCPJ3NpOEO57ZLA4aoc=;
-        b=5urZyk7iojAZbTHtxifG4uPSQU8Jz784zUObt6T599MlfyguVuL5dyDR3OUPEQaGKc
-         Hqjh5sPdm5j8h09qR8AU816QzqhhtOTlP5VTdqfgusEiBZZ4bryDZkcaDfwWjKxxxq1N
-         GcmbM/DqAzQL+NTvTnNNct95ASuyQys+onmYoZZCfk1yFx225w3grdfK50RatLxJRn0F
-         CEzIH7Vm7rPqDcriavxge5c3NzllYOUM8c8mKCus+KQOtCHHsDuN7OhsC/v3oMv6MMa0
-         hYFR5MweEpJkG7b1EODtbUq5ZeUVnpIa2+H47C6lfGOiLzvzU6Xtvn+sCo+rJnjpqi+S
-         nBug==
-X-Gm-Message-State: AFqh2kocdnVLUn6zdbNFm9+GiFOLDmDwjhkntgXbvDjkmfkoZPWzWwuo
-        ay8TkzXT712XH/xlNfG7eAKk1PQMzPhx/A==
-X-Google-Smtp-Source: AMrXdXvWWEyO9wmUEkoIF+mWobSteIJ6ELptSWzhm/yHy8PrYlbo9V3JClDjwFh8Y1CScEIw88/Nwg==
-X-Received: by 2002:a17:907:d492:b0:7aa:491c:6cdf with SMTP id vj18-20020a170907d49200b007aa491c6cdfmr2912447ejc.18.1674040061743;
-        Wed, 18 Jan 2023 03:07:41 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id fs37-20020a170907602500b0086ffe3a99f9sm4236489ejc.82.2023.01.18.03.07.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 03:07:41 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pI6I8-002nlL-0t;
-        Wed, 18 Jan 2023 12:07:40 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Glen Choo <chooglen@google.com>,
-        Victoria Dye <vdye@github.com>,
-        Matthew John Cheetham <mjcheetham@github.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>
-Subject: Re: [PATCH v6 04/12] test-http-server: add stub HTTP server test
- helper
-Date:   Wed, 18 Jan 2023 12:04:24 +0100
-References: <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
- <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
- <d6e5e8825e8454242820738f0dfb03a9f1c01ced.1674012618.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <d6e5e8825e8454242820738f0dfb03a9f1c01ced.1674012618.git.gitgitgadget@gmail.com>
-Message-ID: <230118.86k01kxfr7.gmgdl@evledraar.gmail.com>
+        bh=/wTqrtEMmKcp2a4K/hTx8OwOer9Gw5oohNyZ+bM7QLM=;
+        b=IZO9yYcfpPIIZhEr7n1qQKVbC3Pr9x4cYinOtThT8iqtG7tskZiyIL9oQrY3nfibSm
+         3YYdJElxWNs5fRyNmUvWDS+XQYgf9fJNfW7bFNkPvyODr7iICOmAV/VtuDkM8aJlj56O
+         8TxLwoOwaJOC4OFMYyoQqMBulnr49rNmuDPDeoVo2U9pllQOH8QPiOS4C+m7dNUYQC/L
+         M/5h4RqOhcABiYqK1ZuBpRa06SDPy4mHmbdUUcfOluq2LZ+vDnl4rgo0a1PYO5Ly2zDo
+         umsCiXY23/i+3r4yz5ELZ2Gss2jXTL2Euz60/N78Nib02k21Pd5+X9mmys/WJ5W9YWoV
+         9ueg==
+X-Gm-Message-State: AFqh2kr4RvxtCfYsMWMxyU/zNcuf/0Ti/3bAatyl2aWj9LEvQ5AxznOP
+        sdOI6/Q02WSrcTXOIoxF2W9SzsPJyY8=
+X-Google-Smtp-Source: AMrXdXvkrw4gyqJpEWOyYs7P1s46l4MLCZ0mwfTTA9CFAnEDYPZUXM8wWr+iOvoo52qu65YnYofTdw==
+X-Received: by 2002:a17:906:80d:b0:870:d15a:c2e0 with SMTP id e13-20020a170906080d00b00870d15ac2e0mr6162258ejd.51.1674040209317;
+        Wed, 18 Jan 2023 03:10:09 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id 20-20020a170906101400b0085ff05d5dbdsm9013498ejm.173.2023.01.18.03.10.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jan 2023 03:10:08 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <abec912c-065d-2098-962e-41f9646dd046@dunelm.org.uk>
+Date:   Wed, 18 Jan 2023 11:10:04 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] ssh signing: better error message when key not in agent
+Content-Language: en-US
+To:     Adam Szkoda via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Adam Szkoda <adaszko@gmail.com>
+References: <pull.1270.git.git.1674029874363.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1270.git.git.1674029874363.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Adam
 
-On Wed, Jan 18 2023, Matthew John Cheetham via GitGitGadget wrote:
+On 18/01/2023 08:17, Adam Szkoda via GitGitGadget wrote:
+> From: Adam Szkoda <adaszko@gmail.com>
+> 
+> When signing a commit with a SSH key, with the private key missing from
+> ssh-agent, a confusing error message is produced:
+> 
+>      error: Load key
+>      "/var/folders/t5/cscwwl_n3n1_8_5j_00x_3t40000gn/T//.git_signing_key_tmpkArSj7":
+>      invalid format? fatal: failed to write commit object
+> 
+> The temporary file .git_signing_key_tmpkArSj7 created by git contains a
+> valid *public* key.  The error message comes from `ssh-keygen -Y sign' and
+> is caused by a fallback mechanism in ssh-keygen whereby it tries to
+> interpret .git_signing_key_tmpkArSj7 as a *private* key if it can't find in
+> the agent [1].  A fix is scheduled to be released in OpenSSH 9.1. All that
+> needs to be done is to pass an additional backward-compatible option -U to
+> 'ssh-keygen -Y sign' call.  With '-U', ssh-keygen always interprets the file
+> as public key and expects to find the private key in the agent.
 
-> From: Matthew John Cheetham <mjcheetham@outlook.com>
-> [...]
-> +enum worker_result {
-> +	/*
-> +	 * Operation successful.
-> +	 * Caller *might* keep the socket open and allow keep-alive.
-> +	 */
-> +	WR_OK       = 0,
-> [...]
-> +	enum worker_result wr = WR_OK;
-> +
-> +	if (client_addr)
-> +		loginfo("Connection from %s:%s", client_addr, client_port);
-> +
-> +	set_keep_alive(0, logerror);
-> +
-> +	while (1) {
-> +		if (write_in_full(STDOUT_FILENO, response, strlen(response)) < 0) {
-> +			logerror("unable to write response");
-> +			wr = WR_IO_ERROR;
-> +		}
-> +
-> +		if (wr != WR_OK)
-> +			break;
-> +	}
-> +
-> +	close(STDIN_FILENO);
-> +	close(STDOUT_FILENO);
-> +
-> +	return !!(wr & WR_IO_ERROR);
-> +}
+The documentation for user.signingKey says
 
-We have cases where we assign "0" to a bitfield-looking structure like
-this, but only in cases where we're planning to use it as a boolean too.
+  If gpg.format is set to ssh this can contain the path to either your 
+private ssh key or the public key when ssh-agent is used.
 
-Or, in other cases where we want some to be explicitly <-1.
+If I've understood correctly passing -U will prevent users from setting 
+this to a private key.
 
-Here though we're adding a mixed "OK" and error use, which seems a bit
-odd. Shouldn't we pick one or the other?
+Best Wishes
 
-So far (maybe in later commits?) nothing uses WR_HANGUP, and oddly we
-also use the bitfield-looking thing as a return value from main()....
+Phillip
+
+> As a result, when the private key is missing from the agent, a more accurate
+> error message gets produced:
+> 
+>      error: Couldn't find key in agent
+> 
+> [1] https://bugzilla.mindrot.org/show_bug.cgi?id=3429
+> 
+> Signed-off-by: Adam Szkoda <adaszko@gmail.com>
+> ---
+>      ssh signing: better error message when key not in agent
+>      
+>      When signing a commit with a SSH key, with the private key missing from
+>      ssh-agent, a confusing error message is produced:
+>      
+>      error: Load key "/var/folders/t5/cscwwl_n3n1_8_5j_00x_3t40000gn/T//.git_signing_key_tmpkArSj7": invalid format?
+>      fatal: failed to write commit object
+>      
+>      
+>      The temporary file .git_signing_key_tmpkArSj7 created by git contains a
+>      valid public key. The error message comes from `ssh-keygen -Y sign' and
+>      is caused by a fallback mechanism in ssh-keygen whereby it tries to
+>      interpret .git_signing_key_tmpkArSj7 as a private key if it can't find
+>      in the agent [1]. A fix is scheduled to be released in OpenSSH 9.1. All
+>      that needs to be done is to pass an additional backward-compatible
+>      option -U to 'ssh-keygen -Y sign' call. With '-U', ssh-keygen always
+>      interprets the file as public key and expects to find the private key in
+>      the agent.
+>      
+>      As a result, when the private key is missing from the agent, a more
+>      accurate error message gets produced:
+>      
+>      error: Couldn't find key in agent
+>      
+>      
+>      [1] https://bugzilla.mindrot.org/show_bug.cgi?id=3429
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1270%2Fradicle-dev%2Fmaint-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1270/radicle-dev/maint-v1
+> Pull-Request: https://github.com/git/git/pull/1270
+> 
+>   gpg-interface.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index 280f1fa1a58..4a5913ae942 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -1022,6 +1022,7 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
+>   	strvec_pushl(&signer.args, use_format->program,
+>   		     "-Y", "sign",
+>   		     "-n", "git",
+> +		     "-U",
+>   		     "-f", ssh_signing_key_file,
+>   		     buffer_file->filename.buf,
+>   		     NULL);
+> 
+> base-commit: e54793a95afeea1e10de1e5ad7eab914e7416250
