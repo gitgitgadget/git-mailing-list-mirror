@@ -2,72 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45AA6C32793
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 23:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78690C38147
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 23:06:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbjARXG1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 18:06:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56226 "EHLO
+        id S229564AbjARXGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 18:06:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229889AbjARXGR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 18:06:17 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E126589B0
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 15:06:13 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id vm8so1266266ejc.2
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 15:06:13 -0800 (PST)
+        with ESMTP id S229499AbjARXGw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 18:06:52 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23F8E539A9
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 15:06:51 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id qx13so1142505ejb.13
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 15:06:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=LY2wmLoXS/K9KbPuVN0Gr4+q3FXNuo9wpP3ca+3U5fg=;
-        b=Ip1AfUFcguPKDVa+dTvcsQ/nho9OaCkAA257/6J5bDnO7rA5LMnM+f1WhpNqs3PSR1
-         GMxH9LhYy3NGZjbqHrgZ+ssx/jisPypb9rO7eJnnjTdFS5mQzxeofjnbkAdwKef3Y6PM
-         jmoEbK3hvYZ0vAbYpFuEjP4GvzPyYMsfS9WxHF5OWMfS9Izff24LeAt1hrLttfgG69J8
-         8IdNHERGa+F85KA4Rb7PaTSeMuo6ia8Z16SptM5YrUI2qgZfwmMXSCmSL7va4a2OfTDL
-         XQmEP5HmGiF6c0vRnkGrYb7DYXyxy2SK+VR6X8uw4hU+80TZV+t6sW0gO/ME4BE0pHOZ
-         0hBA==
+        bh=ji5pzq5L1+K9maEXP8r74KTSLNlItLlPQ74kh//b+Hk=;
+        b=bGtohdOWlGhZRWzXnU20LWfsFTOfGIBOAvlj0nsKPr1Dzs5PBnbywjz2TFUTIBLEGm
+         vZUrUIVP8+1PJEqrZOtYU8J7tAc6+0GRypofLhoC9oRm+sJi6zFya2sHX4gBQzp9kJJy
+         QgX0dLMRGZp+rwtdPgHLwCYSDTc3sSx0PH5FkpIHMU2JE9gVn//MfJzBWFFgHxtWnkEP
+         ccdDPR+loeGwhvdsbNIEWKzsIzq/WzmBzMsKWRtNnpPeL6WA/9xxdWA0lfluv4djoxxb
+         5uKCIIVImi7RK031GzlysoxjciTjY/ctT/KZX6KSIn2B9qmwKaSQXen9KKFzLkr1KYTO
+         0FcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LY2wmLoXS/K9KbPuVN0Gr4+q3FXNuo9wpP3ca+3U5fg=;
-        b=EYqocwt2idLziTClMo2JqJff7CHwHkv2YJm3wcyRilRYq69K4RUiwweXJZ4Ttpy2BC
-         4MO5rqW5xyoR/xsPr3cizzwzMw/ZKwZ9JxexvNXZJE+0+dkJgHxRFi/+kd/+Y6pwTkFH
-         SYzotnqv+zIOBaPiR4RK9GSuSR0ay6Tx6OtVMYWZMlqjPMfuBvXfydGehP/bt20/WbXr
-         HlGM7h5wFpp6y7y/x1dn7hYU2Zz5Ht1rp3htpxLSglgsfn01jWU6OEGqVq8FGDLhpXo+
-         e7zAlIGdZOTPuimVatAtSOQn8o3uQYPbHp3b1m4RAfkoGFtSgTlyJKj5Q8P51ciz0Ov+
-         X+Uw==
-X-Gm-Message-State: AFqh2kpBnIoBGhstq8eFaZqdUrVLlBmY23muXqbg9Q2sKrxFsoRBqVDu
-        qnSTVfaQZr/n54ueFTvGKDI=
-X-Google-Smtp-Source: AMrXdXt6+M7rDWRbphJH/QpxYirIaRxWwDU5SytQy6MU+VeSNPVK0CYNMc31lN+EFwUE9thteic1+g==
-X-Received: by 2002:a17:907:1759:b0:85e:c4e4:cfbf with SMTP id lf25-20020a170907175900b0085ec4e4cfbfmr9181244ejc.15.1674083171765;
-        Wed, 18 Jan 2023 15:06:11 -0800 (PST)
+        bh=ji5pzq5L1+K9maEXP8r74KTSLNlItLlPQ74kh//b+Hk=;
+        b=JNsoY2W4eKniYaeHbYMgpEbPF87R1ryp8VlzbE1HME3fEsEM0xD+rGYpCODae5r9/A
+         bPYPJp1FJth24WBLBUG5R/JSdNrixQ/N8PQc25M3NEBAjPOIDSlA8nFiuPYFNlfHd0uN
+         ledMdc4k6ff13sJbH3gz16RQMRcp4BOlcnlYsoZXwR/Kv2nQN4dGgfCC69e7OlrodrrA
+         3+fHmMWMjceaeZ2BdM02n29HGSan+eCOhjwNJ5wb+sah5QU4jmpFEg5gPzODhmxXHLxE
+         tR2HZzDbsu+Lnq2i6eb2MEDEURaGmCtSozlayE2lx3GQyUp2x/26vWOdGAerd7GjrRnD
+         s+5A==
+X-Gm-Message-State: AFqh2krQ2BrrIzMVtdFFeUEAMSS6oXHatUxrXyJpN602dX0/P4w5OfvX
+        XrJoxdTXRX7oSzKGWxxpmo8=
+X-Google-Smtp-Source: AMrXdXvfG7LxWVC94n7sIBQqrtBte+76sQhHgaq30Zm0qTWplhuPbJZtoWUakcnJsmM95/0UWJv7Kg==
+X-Received: by 2002:a17:906:b14b:b0:864:1902:7050 with SMTP id bt11-20020a170906b14b00b0086419027050mr8530775ejb.69.1674083209494;
+        Wed, 18 Jan 2023 15:06:49 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id qw25-20020a1709066a1900b00781dbdb292asm15333696ejc.155.2023.01.18.15.06.11
+        by smtp.gmail.com with ESMTPSA id o11-20020a170906768b00b0084d242d07ffsm14944936ejm.8.2023.01.18.15.06.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 15:06:11 -0800 (PST)
+        Wed, 18 Jan 2023 15:06:48 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pIHVS-003C3q-1m;
-        Thu, 19 Jan 2023 00:06:10 +0100
+        id 1pIHW4-003C5a-1f;
+        Thu, 19 Jan 2023 00:06:48 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 08/19] worktree: fix a trivial leak in prune_worktrees()
-Date:   Thu, 19 Jan 2023 00:03:48 +0100
-References: <cover-v3-00.19-00000000000-20230110T054138Z-avarab@gmail.com>
-        <cover-v4-00.19-00000000000-20230117T151201Z-avarab@gmail.com>
-        <patch-v4-08.19-1fe25bc6981-20230117T151202Z-avarab@gmail.com>
-        <xmqqedrs8igj.fsf@gitster.g>
-        <230118.86o7qwxg4e.gmgdl@evledraar.gmail.com>
-        <xmqqedrr6cnp.fsf@gitster.g>
+Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        Diomidis Spinellis <dds@aueb.gr>
+Subject: Re: [PATCH v3] grep: correctly identify utf-8 characters with
+ \{b,w} in -P
+Date:   Thu, 19 Jan 2023 00:06:43 +0100
+References: <20230108155217.2817-1-carenas@gmail.com>
+ <20230117105123.58328-1-carenas@gmail.com>
+ <230117.865yd5z4ke.gmgdl@evledraar.gmail.com> <xmqqr0vt9oj9.fsf@gitster.g>
+ <CAPUEspgzrW63GgbjXhKuvjpKXjEhiKaC7jtupiB-3AhcKTba8A@mail.gmail.com>
+ <230118.86tu0ovyvj.gmgdl@evledraar.gmail.com> <xmqq7cxj6chn.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <xmqqedrr6cnp.fsf@gitster.g>
-Message-ID: <230119.86h6wnwihp.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqq7cxj6chn.fsf@gitster.g>
+Message-ID: <230119.86cz7bwign.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -80,34 +80,27 @@ On Wed, Jan 18 2023, Junio C Hamano wrote:
 
 > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
->>> diff --git c/builtin/branch.c w/builtin/branch.c
->>> index f63fd45edb..4fe7757670 100644
->>> --- c/builtin/branch.c
->>> +++ w/builtin/branch.c
->>> @@ -742,6 +742,7 @@ int cmd_branch(int argc, const char **argv, const c=
-har *prefix)
->>>  	if (filter.abbrev =3D=3D -1)
->>>  		filter.abbrev =3D DEFAULT_ABBREV;
->>>  	filter.ignore_case =3D icase;
->>> +	UNLEAK(filter);
->>>=20=20
->>>  	finalize_colopts(&colopts, -1);
->>>  	if (filter.verbose) {
+>>> GNU grep -P has no knob and would likely never have one.
 >>
->> I'll send a v5 re-roll without this change, sorry.
+>> I think the general knob in not just GNU grep but GNU utils and the
+>> wider *nix landscape is "tweak your LC_ALL and/or other locale
+>> varibales".
+>>
+>> Which works for it, and will work for us once we're using PCRE2_UCP too.
+>>
+>>> So for now, I think we should acknowledge the bug, provide an option
+>>> for people that might need the fix, and fix all other problems we
+>>> have, which will include changes in PCRE2 as well to better fit our
+>>> use case.
+>>
+>> Hrm, what are those PCRE2 changes? The one I saw so far (or was it a
+>> proposal) was to just make its "grep" utility use the PCRE2_UCP like GNU
+>> grep is now doing in its unreleased version in its git repo...
 >
-> I'd rather see your reroll with the above addition of UNLEAK() than
-> without it, to fix the breakage.
+> Yeah, I didn't understand Carlo's comment in that paragraph at all.
+>
+> In short, it sounds to me that the earlier one that added PCRE2_UCP
+> unconditionally would be the best alternative among those that have
+> been discussed.
 
-I don't mind that UNLEAK() being in-tree until a better fix for that
-leak, but doesn't the v5 I sent also address this?
-
-The issue was that I mis-marked a test as passing, when it only passed
-depending on my local compiler (-fsanitize=3Dleak is fickle
-sometimes). Now that we're not marking that test as leak-free there's no
-need for the UNLEAK() for now, no?
-
-Or is there some edge case I didn't spot/notice?
-
-1. https://lore.kernel.org/git/cover-v5-00.19-00000000000-20230118T120334Z-=
-avarab@gmail.com/
+I agree.
