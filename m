@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B3D3C38159
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 12:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F03AFC32793
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 12:17:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbjARMDY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 07:03:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40428 "EHLO
+        id S230085AbjARMQ4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 07:16:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229883AbjARMCw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 07:02:52 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D86FF48619
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 03:20:12 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id bk15so24899305ejb.9
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 03:20:12 -0800 (PST)
+        with ESMTP id S230331AbjARMQW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 07:16:22 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C5B98767F
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 03:38:12 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id az20so63432283ejc.1
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 03:38:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/+qkjmz/2ZS4oWHzmQ6eqZ4zW4yrrgLn/jLNcc33Vdg=;
-        b=dAP5fkXvmFZiHkW+V+50Y8eU393nnJC7esUkKE5wAMvVcLKnwUH+M+Wh8r5g9r8G5b
-         UPJ9x9aXjYmyzl8BewPVGl5cAYv4T/AsnxWj1rY0Oji7eNElgXaNnfU6cXeR8epmY4xJ
-         Nk7K77yRboWlJeDbZlUjLL2z5fzyO2JtlmJXYFTc3eT2Aog2eaXFeHwmQ+HdNgb1V3ZB
-         3lybWAi0ecvNm9Z/amsTr+ZGhXY67AF9PAEU9XzlDJPnYh/7aXJMta4mJUTa6bYEIioT
-         kqW61ZLICPsRmYEYD/2+FV4mJyTde6B94//DtZqaTLcOKvPw1Pzs0xJ4OW2jj6ueNKT3
-         I5Qg==
+        bh=qV/1uFHpDRlzPhzesD4TxC6+6m4e63YZrr+uQM0eOUI=;
+        b=Q1nX3OzcSZYoxgQ/IZ2vPHDgs69ucidkGbtvg4WiQV/eWkhqYx2te7O1+BR+mnnmE6
+         8+3eHzYjH+Zia1ntU11lDD92itTArmTEXoeXcaxo95W2CL0YLmi6370dCBBbI2aCdAis
+         eS+RjTg0zV3wNNSi/eNAkreDdR54l10Iofw3CP0Hv9EawkPF6Hh8o/RTRlY0qikzPU+Y
+         KiD70bbU/N/+n1QDEvN1KyyJykSnNDa6Pj74NjeHx+iIvf6Rzjr9cLFJij2dnJzv0HiH
+         614t2lsKoruox5s8KoApNxX+CxwALOzWAeJsoV/VR+rTNYucoMzRm7kSn5WexCiyede4
+         KgGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/+qkjmz/2ZS4oWHzmQ6eqZ4zW4yrrgLn/jLNcc33Vdg=;
-        b=tnj1f40sL6uPcDDY5S16651hCxX3fB/pzzDKsSMlp825S7DP0FyG3lH0Lq6pYB6yzU
-         fMrQ23zkhj/rQ4xASy6J/H3DLpqJ0ZOhcAG/f1dtXC6ull+bkjuEs46K4w81/3PZU/yO
-         MjJ1pvLH+BfvyE/X/hCTmN0lU92HAPbebYshLhgWjI3MdCaZAEo8xUzghImPO2/xAch2
-         CD70V3xATn8ah1jUNtKydwRt1O4+a6Pv1RTYX9c5+PzjNE0LbKQ4Wdeqz0oY48AFk9ar
-         y5MIyucMPrM1702zys2qY4Z0Wp60PEZcBSaP58Ej3WJNHPKnmLa0Pp6jN+MKx7T11hoK
-         KFFw==
-X-Gm-Message-State: AFqh2kppPSpF/fcNrY7O+RBTWnlgC3bmZP9XjGC49m5YTUeIqCrpGhks
-        phdSjxGZn9kBa7/VNK/geM2bVDaFp9Zf8A==
-X-Google-Smtp-Source: AMrXdXt15PznK9A6LzNXQzDGtfZzxpmHaCE9OiqQCzvd7TUDle9SlttHt4OEoUJO7Goa6VnPTE1RdQ==
-X-Received: by 2002:a17:907:6281:b0:7c4:f752:e95c with SMTP id nd1-20020a170907628100b007c4f752e95cmr9380056ejc.1.1674040810917;
-        Wed, 18 Jan 2023 03:20:10 -0800 (PST)
+        bh=qV/1uFHpDRlzPhzesD4TxC6+6m4e63YZrr+uQM0eOUI=;
+        b=cvYNagPNi4E7JziwinzXwB6jI99uvaU+/182VBkIZ2gmFthJHnjNOCrlX8iWFlGwFx
+         I9/+gERKnpzp0bgloGufEkLfNZhTgJnhOAPka6VvX8vVyHYzEBFv8kFGxRkWFYYNAUiz
+         7FCgia6Q2r3+x+TBfzC+sGul0dR2AuVvHxQL2Wi1tbZ3VfZTCyn4yd18NXlTinHVa/z8
+         hFCehYlbB1weeG3K/icI1Ol2DTVcp2eGnFbAgXhipXt6xF9eNJ1nUQ095hV9z6Qm8cDu
+         L7Zcqdoav2zG7K8fMQnNgdqN1Qh5xruYjUncry62JczCgFi8iOzzZuMenJX9hWpvsd7p
+         MpvA==
+X-Gm-Message-State: AFqh2kqEm3bRQ6zEZGw2f6agEy6XYPu29W9iWMk1MrsxpfDAk8AVTRYl
+        zLv71rmNTZTc0UKd1YA4wc0+/OIOoHAi2w==
+X-Google-Smtp-Source: AMrXdXtg39gTbkQ8s09MGLhvvVRM+urlgMtxBAgI6G1HZ9mfHMaJOF660/WdBZQHvT5A3upNZC9Q9A==
+X-Received: by 2002:a17:906:7f8c:b0:86c:360:3dad with SMTP id f12-20020a1709067f8c00b0086c03603dadmr18500878ejr.53.1674041890581;
+        Wed, 18 Jan 2023 03:38:10 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id k8-20020a1709062a4800b0083ffb81f01esm14456546eje.136.2023.01.18.03.20.10
+        by smtp.gmail.com with ESMTPSA id 2-20020a170906200200b007bd7178d311sm14568145ejo.51.2023.01.18.03.38.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 03:20:10 -0800 (PST)
+        Wed, 18 Jan 2023 03:38:09 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pI6UD-002o4B-1e;
-        Wed, 18 Jan 2023 12:20:09 +0100
+        id 1pI6ld-002oUD-1J;
+        Wed, 18 Jan 2023 12:38:09 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
@@ -62,14 +62,14 @@ Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         Victoria Dye <vdye@github.com>,
         Matthew John Cheetham <mjcheetham@github.com>,
         Matthew John Cheetham <mjcheetham@outlook.com>
-Subject: Re: [PATCH v6 06/12] test-http-server: add HTTP request parsing
-Date:   Wed, 18 Jan 2023 12:14:55 +0100
+Subject: Re: [PATCH v6 08/12] test-http-server: add simple authentication
+Date:   Wed, 18 Jan 2023 12:21:29 +0100
 References: <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
  <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
- <252098db219574527c587bc601565eab81b40c2c.1674012618.git.gitgitgadget@gmail.com>
+ <a1ff55dd6e25aa39f14b494f482720edf7d1eabd.1674012618.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <252098db219574527c587bc601565eab81b40c2c.1674012618.git.gitgitgadget@gmail.com>
-Message-ID: <230118.86bkmwxf6e.gmgdl@evledraar.gmail.com>
+In-reply-to: <a1ff55dd6e25aa39f14b494f482720edf7d1eabd.1674012618.git.gitgitgadget@gmail.com>
+Message-ID: <230118.867cxkxece.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -79,156 +79,185 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Jan 18 2023, Matthew John Cheetham via GitGitGadget wrote:
 
-> From: Matthew John Cheetham <mjcheetham@outlook.com>
->
-> Add ability to parse HTTP requests to the test-http-server test helper.
->
-> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
-> ---
->  t/helper/test-http-server.c | 175 +++++++++++++++++++++++++++++++++++-
->  1 file changed, 173 insertions(+), 2 deletions(-)
->
-> diff --git a/t/helper/test-http-server.c b/t/helper/test-http-server.c
-> index 6cdac223a55..36f4a54fe6d 100644
-> --- a/t/helper/test-http-server.c
-> +++ b/t/helper/test-http-server.c
-> @@ -83,6 +83,42 @@ enum worker_result {
->  	WR_HANGUP   = 1<<1,
->  };
->  
-> +/*
-> + * Fields from a parsed HTTP request.
-> + */
-> +struct req {
-> +	struct strbuf start_line;
-> +
-> +	const char *method;
-> +	const char *http_version;
-> +
-> +	struct strbuf uri_path;
-> +	struct strbuf query_args;
-> +
-> +	struct string_list header_list;
-> +	const char *content_type;
-> +	ssize_t content_length;
-> +};
-> +
-> +#define REQ__INIT { \
-> +	.start_line = STRBUF_INIT, \
-> +	.uri_path = STRBUF_INIT, \
-> +	.query_args = STRBUF_INIT, \
-> +	.header_list = STRING_LIST_INIT_NODUP, \
-> +	.content_type = NULL, \
-> +	.content_length = -1 \
-> +	}
 
-Style nit: Don't indent the trailing "}", and add a "," after the last
-"content_length" item.
-
-We omit the comma by convention when there really should not be another
-item, such as when we have a "NULL" terminator, here though we might add
-a struct element at the end, so...
-
-> +static enum worker_result req__read(struct req *req, int fd)
+> +static struct auth_module *get_auth_module(const char *scheme, int create)
 > +{
-> +	struct strbuf h = STRBUF_INIT;
-> +	struct string_list start_line_fields = STRING_LIST_INIT_DUP;
-> +	int nr_start_line_fields;
-> +	const char *uri_target;
-> +	const char *query;
-> +	char *hp;
-> +	const char *hv;
+> +	int i;
+> +	struct auth_module *mod;
+> +	for (i = 0; i < auth_modules_nr; i++) {
+
+We can use "for (size_t i = 0" syntax now, let's do that here to not mix
+"size_t" and "int" types needlessly.
+
+> +	if (create) {
+> +		struct auth_module *mod = xmalloc(sizeof(struct auth_module));
+> +		mod->scheme = xstrdup(scheme);
+> +		mod->challenge_params = NULL;
+> +		CALLOC_ARRAY(mod->tokens, 1);
+> +		string_list_init_dup(mod->tokens);
+
+Don't use CALLOC_ARRAY() if you're then going to use
+string_list_init_dup() (which is good!), use ALLOC_ARRAY() instead. We
+don't need to set the memory to 0, only to overwrite it entirely again.
+
+> +		ALLOC_GROW(auth_modules, auth_modules_nr + 1, auth_modules_alloc);
+> +		auth_modules[auth_modules_nr++] = mod;
+
+I have not looked at the whole context here, but instead of:
+
+	struct auth_module {
+		char *scheme;
+		char *challenge_params;
+		struct string_list *tokens;
+	};
+
+Why not:
+
+	struct auth_module {
+		char *challenge_params;
+		struct string_list *tokens;
+	};
+
+Then you could use a "struct string_list" for this, make the "scheme" be
+the "string" member, and stick the remaining two fields in the "util",
+and thus save yourself the manual memory management etc.
+
+> +static int is_authed(struct req *req, const char **user, enum worker_result *wr)
+> +{
+> +	enum auth_result result = AUTH_UNKNOWN;
+> +	struct string_list hdrs = STRING_LIST_INIT_NODUP;
+> +	struct auth_module *mod;
 > +
-> +	enum worker_result result = WR_OK;
+> +	struct string_list_item *hdr;
+> +	struct string_list_item *token;
+> +	const char *v;
+> +	struct strbuf **split = NULL;
+> +	int i;
+> +	char *challenge;
 > +
 > +	/*
-> +	 * Read line 0 of the request and split it into component parts:
-> +	 *
-> +	 *    <method> SP <uri-target> SP <HTTP-version> CRLF
-> +	 *
+> +	 * Check all auth modules and try to validate the request.
+> +	 * The first Authorization header that matches a known auth module
+> +	 * scheme will be consulted to either approve or deny the request.
+> +	 * If no module is found, or if there is no valid token, then 401 error.
+> +	 * Otherwise, only permit the request if anonymous auth is enabled.
+> +	 * It's atypical for user agents/clients to send multiple Authorization
+> +	 * headers, but not explicitly forbidden or defined.
 > +	 */
-> +	if (strbuf_getwholeline_fd(&req->start_line, fd, '\n') == EOF) {
-> +		result = WR_OK | WR_HANGUP;
-> +		goto done;
-> +	}
+> +	for_each_string_list_item(hdr, &req->header_list) {
+> +		if (skip_iprefix(hdr->string, "Authorization: ", &v)) {
+> +			split = strbuf_split_str(v, ' ', 2);
+> +			if (!split[0] || !split[1]) continue;
 > +
-> +	strbuf_trim_trailing_newline(&req->start_line);
+> +			/* trim trailing space ' ' */
+> +			strbuf_setlen(split[0], split[0]->len - 1);
 > +
-> +	nr_start_line_fields = string_list_split(&start_line_fields,
-> +						 req->start_line.buf,
-> +						 ' ', -1);
-> +	if (nr_start_line_fields != 3) {
-> +		logerror("could not parse request start-line '%s'",
-> +			 req->start_line.buf);
-> +		result = WR_IO_ERROR;
-> +		goto done;
-> +	}
+> +			mod = get_auth_module(split[0]->buf, 0);
+> +			if (mod) {
+> +				result = AUTH_DENY;
 > +
-> +	req->method = xstrdup(start_line_fields.items[0].string);
-> +	req->http_version = xstrdup(start_line_fields.items[2].string);
+> +				for_each_string_list_item(token, mod->tokens) {
+> +					if (!strcmp(split[1]->buf, token->string)) {
+> +						result = AUTH_ALLOW;
+> +						break;
+> +					}
+> +				}
 > +
-> +	uri_target = start_line_fields.items[1].string;
+> +				goto done;
+
+Sometimes we need a strbuf_split_str, but in this case couldn't you use
+the in-place "struct string_list" variant of that instead, and just
+carry a "size_t len" here for it, which you'd then pass to
+get_auth_module() (which this commit adds)?
+
+Also, you "split" in the loop, but...
+
+> +	strbuf_list_free(split);
+...only free() the last one here, isn't this leaking?
+
+> +static int split_auth_param(const char *str, char **scheme, char **val)
+> +{
+> +	struct strbuf **p = strbuf_split_str(str, ':', 2);
 > +
-> +	if (strcmp(req->http_version, "HTTP/1.1")) {
-> +		logerror("unsupported version '%s' (expecting HTTP/1.1)",
-> +			 req->http_version);
-> +		result = WR_IO_ERROR;
-> +		goto done;
-> +	}
+> +	if (!p[0])
+> +		return -1;
 > +
-> +	query = strchr(uri_target, '?');
+> +	/* trim trailing ':' */
+> +	if (p[0]->len > 0 && p[0]->buf[p[0]->len - 1] == ':')
+
+Don't compare unsigned length fields to "> 0", just do "if (len &&
+....)".
+
+Also, maybe I'm just groggy today, but how do we have a trailing ":" if
+we just split on ":", and with a limit such that...
+
+> +	if (p[1])
+> +		*val = strbuf_detach(p[1], NULL);
+
+...we have an item after that?
+
+
+> +static int read_auth_config(const char *name, const char *val, void *data)
+> +{
+> +	int ret = 0;
+> +	char *scheme = NULL;
+
+Don't init this to NULL, instead the split_auth_param() return value
+should be trusted, the compiler will then help us catch errors, no?
+
+> +	char *token = NULL;
+> +	char *challenge = NULL;
+
+In this case it *is* needed though, as the function will return
+non-errors, but *maybe* give us the second out parameter.
+
+For such a function though, isn't just assigning "*second_param = NULL"
+at the start of it less of a "running with scissors" pattern?
+
+> +	struct auth_module *mod = NULL;
+
+This NULL assignment can be dropped, we assign to it below
+unconditionally before using it.
+
 > +
-> +	if (query) {
-> +		strbuf_add(&req->uri_path, uri_target, (query - uri_target));
-> +		strbuf_trim_trailing_dir_sep(&req->uri_path);
-> +		strbuf_addstr(&req->query_args, query + 1);
+> +	if (!strcmp(name, "auth.challenge")) {
+> +		if (split_auth_param(val, &scheme, &challenge)) {
+> +			ret = error("invalid auth challenge '%s'", val);
+> +			goto cleanup;
+> +		}
+> +
+> +		mod = get_auth_module(scheme, 1);
+> +
+> +		/* Replace any existing challenge parameters */
+> +		free(mod->challenge_params);
+> +		mod->challenge_params = challenge ? xstrdup(challenge) : NULL;
+> +	} else if (!strcmp(name, "auth.token")) {
+> +		if (split_auth_param(val, &scheme, &token)) {
+> +			ret = error("invalid auth token '%s'", val);
+> +			goto cleanup;
+> +		}
+> +
+> +		mod = get_auth_module(scheme, 1);
+> +
+> +		/*
+> +		 * Append to set of valid tokens unless an empty token value
+> +		 * is provided, then clear the existing list.
+> +		 */
+> +		if (token)
+> +			string_list_append(mod->tokens, token);
+> +		else
+> +			string_list_clear(mod->tokens, 1);
+> +	} else if (!strcmp(name, "auth.allowanonymous")) {
+> +		allow_anonymous = git_config_bool(name, val);
 > +	} else {
-> +		strbuf_addstr(&req->uri_path, uri_target);
-> +		strbuf_trim_trailing_dir_sep(&req->uri_path);
+> +		warning("unknown auth config '%s'", name);
 > +	}
 > +
-> +	/*
-> +	 * Read the set of HTTP headers into a string-list.
-> +	 */
-> +	while (1) {
-> +		if (strbuf_getwholeline_fd(&h, fd, '\n') == EOF)
-> +			goto done;
-> +		strbuf_trim_trailing_newline(&h);
+> +cleanup:
+> +	free(scheme);
+> +	free(token);
+> +	free(challenge);
 > +
-> +		if (!h.len)
-> +			goto done; /* a blank line ends the header */
+> +	return ret;
+> +}
 > +
-> +		hp = strbuf_detach(&h, NULL);
-> +		string_list_append(&req->header_list, hp);
-> +
-> +		/* also store common request headers as struct req members */
-> +		if (skip_prefix(hp, "Content-Type: ", &hv)) {
-> +			req->content_type = hv;
-> +		} else if (skip_prefix(hp, "Content-Length: ", &hv)) {
-> +			req->content_length = strtol(hv, &hp, 10);
-
-In POSIX the "ssize_t" is not a "this is the unsigned size_t", but can
-be a much smaller integer type (although in practice it tends to be the
-signed version of "size_t".
-
-But this seems like a potential overflow trap as a result, but sometimes
-we need to live with "ssize_t".
-
-However, in this case it seems like we don't, as it seems the only
-reason you init'd this to -1 and then...
-
-> +	if (trace2_is_enabled()) {
-> +		struct string_list_item *item;
-> +		trace2_printf("%s: %s", TR2_CAT, req->start_line.buf);
-> +		trace2_printf("%s: hver: %s", TR2_CAT, req->http_version);
-> +		trace2_printf("%s: hmth: %s", TR2_CAT, req->method);
-> +		trace2_printf("%s: path: %s", TR2_CAT, req->uri_path.buf);
-> +		trace2_printf("%s: qury: %s", TR2_CAT, req->query_args.buf);
-> +		if (req->content_length >= 0)
-> +			trace2_printf("%s: clen: %d", TR2_CAT, req->content_length);
-
-...use that ">= 0" is to keep the state of "did I assign to this above?
-
-So firstly, shouldn't we error or something on a "Content-Length: 0",
-and aside from that wouldn't we just have a "int have_content_length =
-0" in this function that we'd then flip to 1?
