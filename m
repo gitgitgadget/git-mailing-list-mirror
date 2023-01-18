@@ -2,101 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E33F4C32793
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 16:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62C93C38147
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 16:31:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230021AbjARQaf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 11:30:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36286 "EHLO
+        id S229899AbjARQbl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 11:31:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231185AbjARQaL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 11:30:11 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 930C458660
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:27:51 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id k13so4819705plg.0
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:27:51 -0800 (PST)
+        with ESMTP id S230344AbjARQbS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 11:31:18 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8073F47432
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:29:19 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id vm8so84529741ejc.2
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:29:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gafD2/MASubReFWAql1+Ux/nCbeH18eE0TWXtW4ncn0=;
-        b=fGlE8T8NEEcuDRViJF0s/UBhbBSgY+7YOD1FEDHKqKhUk6e3T+KXWYCok8kIBp8K8H
-         DY73F+49TGKri4Qda2FwwaBCgSHS2vunuj1R23t5evv+R/h/eaqdkFUbL38r8smOYQ7a
-         iv27LgDiM+HAQEGRHVTbd1T4txjQI13yT/6JJgy2NbYSt9b6XEbtX1YtjEePXdnAKGU1
-         H/zMR/G+EV44T9/KaQPdXX47WxFu39joTx/I0gKZoQvWIw2uE/VLvSehlFJH33qlSTpq
-         i2cv6asZDAULu+OlthtWc4jHT8xZX+uYiVyQazLQqddbXdTB+zcXuNoKlkxWT1yBYBDO
-         KU4w==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+31/qNT1KZJ6HGh3Df17N7ZHbJBLbZ3OBXwsLgAiJ/c=;
+        b=H3abiiJZsTlbTXsGzVrS09bsmW2Odt+fvUrqsU/rjk/g7N8qpnqIMZL2Yz7tJFPs5C
+         zyoIr4If+bJQfJz3g3aw5eAs7hbe8CBkElrqDrlViNONz4ltOYRUgOrZQcEB+E97Iaz3
+         MfE5tXBQ7i5qPutXUNWbkHLzQBrvP7D5LkMsZw1kTYPAP0bIfyaDUl/lZgZv/lzjl9ob
+         IsflMVRih+6Acl8f78uQlJ9EaWUFbjEypk+W6/WA/54Ds0QwttSowWl+7aYNq8x6Rtu7
+         fNpxmy33F2Csqt9OM5KDTfn1CuCb0xF+rGGs2eBg9pb/9aLVvR0jD6qijJix1mxJvHQN
+         o7kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=gafD2/MASubReFWAql1+Ux/nCbeH18eE0TWXtW4ncn0=;
-        b=Z1TmDFbu0DFSVQD/z/r4jAXmsJFiDcs/69dBYhH4gGefr3AwLGWoE5zODKKOng6tBk
-         ZcNzMrDfLHg5SDjcEeSXxuALxfDORAr+wTTshWmf2QYSYRVLKakLj8tj6Njn32mZtn/H
-         wttVas94TW5hBjRsz1UK45r/c8BXb1QicTWG1x0Gu8d/oY/C1QJiluBUib+H0Gb7uahg
-         CBYBUhSrwShRGs2lokJhveadAHzJDi2DxBsNGJYtwQjR6DIjj3zxEjKX/rtM97Q0ZtNd
-         MVBvPtrXwAaUR9JpEGec7mzvD8T57qEWxa1XLA9MDvXSzK36Cf+mZIzjjBl87IcjZyUc
-         uJxQ==
-X-Gm-Message-State: AFqh2krPQaOPees4CdWdlCGdweeaM1EvY44KLMA2eBONFafd+hFYQFdW
-        CZRVSO3EWT0TDTzLsknY2jM=
-X-Google-Smtp-Source: AMrXdXsacqBvxfjvPrLH+aHCC2lkJ9H0ro+0YRxYvqWb+KXu52JiWhxP/ThYqvx0ykVUSPXrJQbxdw==
-X-Received: by 2002:a17:90b:3695:b0:229:189c:c48e with SMTP id mj21-20020a17090b369500b00229189cc48emr8117026pjb.17.1674059271343;
-        Wed, 18 Jan 2023 08:27:51 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id r8-20020a17090a560800b00226156cf039sm1524604pjf.44.2023.01.18.08.27.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 08:27:50 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luben Tuikov <luben.tuikov@amd.com>
-Cc:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v6 2/2] send-email: expose header information to
- git-send-email's sendemail-validate hook
-References: <20230117013932.47570-1-michael.strawbridge@amd.com>
-        <20230117013932.47570-3-michael.strawbridge@amd.com>
-        <3a2d4559-fce2-80f3-bafd-5eb8ac1a7eff@amd.com>
-        <xmqqbkmxbort.fsf@gitster.g>
-        <71623e1d-805d-cdc7-d872-224821c1383c@amd.com>
-Date:   Wed, 18 Jan 2023 08:27:50 -0800
-In-Reply-To: <71623e1d-805d-cdc7-d872-224821c1383c@amd.com> (Luben Tuikov's
-        message of "Wed, 18 Jan 2023 03:31:39 -0500")
-Message-ID: <xmqqv8l34xkp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+31/qNT1KZJ6HGh3Df17N7ZHbJBLbZ3OBXwsLgAiJ/c=;
+        b=qy1DU+E7Y+G0q8RaaCjwYo7ZXIRyGhCyaoeIvW2tDgWBeMpepp2XAliHI3j07oMhPK
+         QRqFeJkBfMMSe19caseb7nBzjOhhaVUQSfrNfn7Pmtd1S3ac0TQ3Qr82GlYe59JnYc5L
+         xq2I/SWnm0jq+eBaQvjMtcy+z7p+ghv8gUOM1HsYVAK6oQoss37Cu0OqWjBFvNPXKPQT
+         /GU+qI+yQLIHnPW0s2CZDNQa+eoEd9mCLLetFT8887HJM8NQ6FILvaeEKYZmu6tfgq0q
+         +w3sX+xCcI6aHzvTRG57W9195qSnMNhds8pOBEy3yO8fq65cgCpjLJ+IY2MhAWj7Yxnz
+         97SQ==
+X-Gm-Message-State: AFqh2koWK6yRnaS5VdqdNJfjgq/a/tLZw0CN5xC0Z2LcyN4Zv81dgJH0
+        UIu6L+J0Pgnd6EVGZPMhhpzW01kMq0o=
+X-Google-Smtp-Source: AMrXdXsygFKjo7HiT4047hglBaf+F09QMzUabFff5CHerJipRTdFk0oTZGh1JvnEAMD5MO8bQanSNg==
+X-Received: by 2002:a17:907:d685:b0:86e:a761:c5ba with SMTP id wf5-20020a170907d68500b0086ea761c5bamr8183953ejc.37.1674059357813;
+        Wed, 18 Jan 2023 08:29:17 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id t27-20020a170906179b00b008762e2b7004sm1464343eje.208.2023.01.18.08.29.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jan 2023 08:29:17 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <55282dec-825f-8c4b-1fb0-6e26ec326db1@dunelm.org.uk>
+Date:   Wed, 18 Jan 2023 16:29:11 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] ssh signing: better error message when key not in agent
+Content-Language: en-US
+To:     Adam Szkoda <adaszko@gmail.com>
+Cc:     Adam Szkoda via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Fabian Stelzer <fs@gigacodes.de>
+References: <pull.1270.git.git.1674029874363.gitgitgadget@gmail.com>
+ <abec912c-065d-2098-962e-41f9646dd046@dunelm.org.uk>
+ <8025d5c7-ab55-c533-1997-05b4c7339d61@dunelm.org.uk>
+ <CAEroKagqxC86X0SD8=tK0w+yXL7QecZ+z_7sja-K6ajs0=Z=BQ@mail.gmail.com>
+In-Reply-To: <CAEroKagqxC86X0SD8=tK0w+yXL7QecZ+z_7sja-K6ajs0=Z=BQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luben Tuikov <luben.tuikov@amd.com> writes:
+Hi Adam
 
-> On 2023-01-17 02:31, Junio C Hamano wrote:
->> Luben Tuikov <luben.tuikov@amd.com> writes:
->> 
->>>> +test_expect_success $PREREQ "--validate hook supports header argument" '
->>>> +	write_script my-hooks/sendemail-validate <<-\EOF &&
->>>> +	if test -s "$2"
->>>> +	then
->>>> +		cat "$2" >actual
->>>> +		exit 1
->>>> +	fi
->>>> +	EOF
->> 
->> If "$2" is not given, or an empty "$2" is given, is that an error?
->> I am wondering if the lack of "else" clause (and the hook exits with
->> success when "$2" is an empty file) here is intentional.
->
-> I think we'll always have a $2, since it is the SMTP envelope and headers.
+I've cc'd Fabian who knows more about the ssh signing code that I do.
 
-We write our tests to verify _that_ assumption you have.  A future
-developer mistakenly drops the code to append the file to the
-command line that invokes the hook, and we want our test to catch
-such a mistake.
+On 18/01/2023 15:28, Adam Szkoda wrote:
+> Hi Phillip,
+> 
+> Good point!  My first thought is to try doing a stat() syscall on the
+> path from 'user.signingKey' to see if it exists and if not, treat it
+> as a public key (and pass the -U option).  If that sounds reasonable,
+> I can update the patch.
 
-Do we really feed envelope?  E.g. if the --envelope-sender=<who> is
-used, does $2 have the "From:" from the header and "MAIL TO" from
-the envelope separately?
+My reading of the documentation is that user.signingKey may point to a 
+public or private key so I'm not sure how stat()ing would help. Looking 
+at the code in sign_buffer_ssh() we have a function is_literal_ssh_key() 
+that checks if the config value is a public key. When the user passes 
+the path to a key we could read the file check use is_literal_ssh_key() 
+to check if it is a public key (or possibly just check if the file 
+begins with "ssh-"). Fabian - does that sound reasonable?
+
+Best Wishes
+
+Phillip
+
+> Best
+> — Adam
+> 
+> 
+> On Wed, Jan 18, 2023 at 3:34 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> On 18/01/2023 11:10, Phillip Wood wrote:
+>>>> the agent [1].  A fix is scheduled to be released in OpenSSH 9.1. All
+>>>> that
+>>>> needs to be done is to pass an additional backward-compatible option
+>>>> -U to
+>>>> 'ssh-keygen -Y sign' call.  With '-U', ssh-keygen always interprets
+>>>> the file
+>>>> as public key and expects to find the private key in the agent.
+>>>
+>>> The documentation for user.signingKey says
+>>>
+>>>    If gpg.format is set to ssh this can contain the path to either your
+>>> private ssh key or the public key when ssh-agent is used.
+>>>
+>>> If I've understood correctly passing -U will prevent users from setting
+>>> this to a private key.
+>>
+>> If there is an easy way to tell if the user has given us a public key
+>> then we could pass "-U" in that case.
+>>
+>> Best Wishes
+>>
+>> Phillip
