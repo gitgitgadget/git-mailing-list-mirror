@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23371C00A5A
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 03:31:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32EFBC00A5A
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 03:31:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbjARDb2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 22:31:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51920 "EHLO
+        id S229842AbjARDbh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 22:31:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229777AbjARDaf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 22:30:35 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDF9E53E45
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 19:30:30 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id f12-20020a7bc8cc000000b003daf6b2f9b9so519170wml.3
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 19:30:30 -0800 (PST)
+        with ESMTP id S229784AbjARDag (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 22:30:36 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9B7D51C4D
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 19:30:31 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id q10so13290580wrs.2
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 19:30:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8E4ibgh1OESySHvLIe11OZBSXNLpINkcmnXPIcQ6rbo=;
-        b=AWx+tmqSVGkbPhwKvwlqdY/RFCEBEERHfkfDM4oqAXKMeAN4dy3t1G1q2+os/WLq1p
-         o9+Y6hMyaL7jEYx66iFC3qK/sswi8dj1ehd2/+wDPg1vKI0UWEm3/YQZHyBPsC5sXJEj
-         36MWGm14BVWfUnJnP8ojvSfK5qlyoO1pMsikuKoC3+S3WUq+4Gw66QpcdcMmxDy9VfGQ
-         kH8s23EpBExln7xdv8jm6vVgo3H646vvf9AJZuCiA029A5TppfLgY9Ezw/WDPE2eZgsP
-         dXsvWKpGztHePHlC1/4FrleaAYk8yAdduUsuixUxgeIiDfXcX7VxF57BDvQmQOYsfl9q
-         FJzQ==
+        bh=oqov+LakXJJTebf7RM2+rAZA+HKTzRzGbXvTUFu8gW4=;
+        b=egK81/GCigZo9dwWi1sMnXmcTMobT8qZKcVRX7Qf7LSkfcD1zY+50kf43pW4yaJkJZ
+         T6m/9pswLNsOprwjOGj3FVp1N9gg8ZtF0mCWXvYP3lyWBxgL793IlD1WWRdXOrTYGbSc
+         80aQY/oR4c53oIsT0C7IhrAbt4PZo8Qh5hNgG07tLPZZWrm3HTSZaEObr0jG4toABfiQ
+         egHmbcCPL5xp/gasK02g8k11yO3xF7EhYuNtPma96j91Tr07FymSGJHoC4HV4Z1C0zO9
+         90wu5rXW7tNPfIGHrCVcdbX18IHefAGsBuydguBneTqnQaBLj+u//fc/W70Eww0cGw8C
+         pj4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8E4ibgh1OESySHvLIe11OZBSXNLpINkcmnXPIcQ6rbo=;
-        b=IDhPAnMjaApOYuJlr3+2ilpefpHtXE9DpGHB+7kRchD5tfd4L+nYRVLP//Mrg3AeDE
-         oZ8g2PKIvZMZXKM86pZl2bhqAo8Rxvf6Wz176TmpvdmMNNB2mFidZGvb27oCqPpaF3Qu
-         3Uf/UVjwoMHTIcJH+nyzzCWVK3okGHJY68JKetKJrRnK5D0mlm9gZWx8c/lTZh3v0Acm
-         ZJDClBYzdLje0f650oJrNWnnmZGoZU+TM8Qi5qExOiZR7ZjNe1KJCIJgIjuPw7drdLf+
-         te284IuOoBKC/d0wKQLVN8HJo1CEv8I+Pwnla5Lix6v9uMdG8zKil38yT8E/fZd5AHtA
-         Tb3w==
-X-Gm-Message-State: AFqh2kp7ZFqtuLUWlmT+JCrpqKcaYhroZFSb9RJyao0hUXpcINOfiTs5
-        w+XU07qCVxmc/e0tdmlCWSkZT8RjpbE=
-X-Google-Smtp-Source: AMrXdXvnfwDyqjFC67jQZt5Nr5wDdW17PXgFwNMsVoHHqdjH6roqUY5NJldFTMt0YrROSyy/55X/1w==
-X-Received: by 2002:a05:600c:511f:b0:3d0:bd9:edd4 with SMTP id o31-20020a05600c511f00b003d00bd9edd4mr5075688wms.0.1674012629137;
+        bh=oqov+LakXJJTebf7RM2+rAZA+HKTzRzGbXvTUFu8gW4=;
+        b=AB13kS3VeGjPfNOvgt+s7fVUc1Ktd5OEdvSSIhDuB6cdriT43Z8Hnswsy9TIcgnHv0
+         qgyzFsdHynp38GVuJZGOru7WV5J2z/3arzhbg+Tl5Jdk3Lprjg+mhP7Qz97FlpYAKp2b
+         1PO1GSQUZU3678+tZwJAseZ8YNkE6WEyBdY1HnwqMqvQ4hX62uPKq/Iy9SRDYUOQZcW0
+         v9+4nemhpDYEiNljLGYCZMby3Jssz8poqmvwze0cve2m+pnVYk6FrIGGELZP757ltvp6
+         QuuYcTxQpyRGUTr7P3XugEziNWSWeceZe2VSIdMgi03vRDGKWSKEiRLouy9SlpY/bVN0
+         oOlg==
+X-Gm-Message-State: AFqh2kq14U1VfZAPEaGxgE5Ik/qNWmjfbJv557CSkwTicjeu4o6HzrXg
+        8PB8RmvPZHWknAApjctbNl09RuY7210=
+X-Google-Smtp-Source: AMrXdXvKe7GJpuoHjsUuV7rVA4Hw6iUSa4fm/HtyKWqTH1CEAu6K47UK4GLfMfvE10dRizsmAYhTcg==
+X-Received: by 2002:a05:6000:11c6:b0:2bd:bf72:76f2 with SMTP id i6-20020a05600011c600b002bdbf7276f2mr4301750wrx.14.1674012629939;
         Tue, 17 Jan 2023 19:30:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l22-20020a05600c4f1600b003db0b0cc2afsm619782wmq.30.2023.01.17.19.30.28
+        by smtp.gmail.com with ESMTPSA id t18-20020adff612000000b002be2f18938csm406245wrp.41.2023.01.17.19.30.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 19:30:28 -0800 (PST)
-Message-Id: <bc1ac8d3eb3ac6e1161f6b6b67343874c10cd14d.1674012618.git.gitgitgadget@gmail.com>
+        Tue, 17 Jan 2023 19:30:29 -0800 (PST)
+Message-Id: <7c8229f0b11693310ae47551fcc5e58f0bb64a0a.1674012618.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
 References: <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
         <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 18 Jan 2023 03:30:16 +0000
-Subject: [PATCH v6 11/12] http: read HTTP WWW-Authenticate response headers
+Date:   Wed, 18 Jan 2023 03:30:17 +0000
+Subject: [PATCH v6 12/12] credential: add WWW-Authenticate header to cred
+ requests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,207 +78,413 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Read and store the HTTP WWW-Authenticate response headers made for
-a particular request.
+Add the value of the WWW-Authenticate response header to credential
+requests. Credential helpers that understand and support HTTP
+authentication and authorization can use this standard header (RFC 2616
+Section 14.47 [1]) to generate valid credentials.
 
-This will allow us to pass important authentication challenge
-information to credential helpers or others that would otherwise have
-been lost.
+WWW-Authenticate headers can contain information pertaining to the
+authority, authentication mechanism, or extra parameters/scopes that are
+required.
 
-According to RFC2616 Section 4.2 [1], header field names are not
-case-sensitive meaning when collecting multiple values for the same
-field name, we can just use the case of the first observed instance of
-each field name and no normalisation is required.
+The current I/O format for credential helpers only allows for unique
+names for properties/attributes, so in order to transmit multiple header
+values (with a specific order) we introduce a new convention whereby a
+C-style array syntax is used in the property name to denote multiple
+ordered values for the same property.
 
-libcurl only provides us with the ability to read all headers recieved
-for a particular request, including any intermediate redirect requests
-or proxies. The lines returned by libcurl include HTTP status lines
-delinating any intermediate requests such as "HTTP/1.1 200". We use
-these lines to reset the strvec of WWW-Authenticate header values as
-we encounter them in order to only capture the final response headers.
+In this case we send multiple `wwwauth[]` properties where the order
+that the repeated attributes appear in the conversation reflects the
+order that the WWW-Authenticate headers appeared in the HTTP response.
 
-The collection of all header values matching the WWW-Authenticate
-header is complicated by the fact that it is legal for header fields to
-be continued over multiple lines, but libcurl only gives us one line at
-a time.
+Add a set of tests to exercise the HTTP authentication header parsing
+and the interop with credential helpers. Credential helpers will receive
+WWW-Authenticate information in credential requests.
 
-In the future [2] we may be able to leverage functions to read headers
-from libcurl itself, but as of today we must do this ourselves.
-
-[1] https://datatracker.ietf.org/doc/html/rfc2616#section-4.2
-[2] https://daniel.haxx.se/blog/2022/03/22/a-headers-api-for-libcurl/
+[1] https://datatracker.ietf.org/doc/html/rfc2616#section-14.47
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- credential.c |  1 +
- credential.h | 15 +++++++++
- http.c       | 94 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 110 insertions(+)
+ Documentation/git-credential.txt |  19 ++-
+ credential.c                     |  11 ++
+ t/lib-credential-helper.sh       |  27 ++++
+ t/t5556-http-auth.sh             | 245 ++++++++++++++++++++++++++++++-
+ 4 files changed, 300 insertions(+), 2 deletions(-)
+ create mode 100644 t/lib-credential-helper.sh
 
+diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
+index ac2818b9f66..50759153ef1 100644
+--- a/Documentation/git-credential.txt
++++ b/Documentation/git-credential.txt
+@@ -113,7 +113,13 @@ separated by an `=` (equals) sign, followed by a newline.
+ The key may contain any bytes except `=`, newline, or NUL. The value may
+ contain any bytes except newline or NUL.
+ 
+-In both cases, all bytes are treated as-is (i.e., there is no quoting,
++Attributes with keys that end with C-style array brackets `[]` can have
++multiple values. Each instance of a multi-valued attribute forms an
++ordered list of values - the order of the repeated attributes defines
++the order of the values. An empty multi-valued attribute (`key[]=\n`)
++acts to clear any previous entries and reset the list.
++
++In all cases, all bytes are treated as-is (i.e., there is no quoting,
+ and one cannot transmit a value with newline or NUL in it). The list of
+ attributes is terminated by a blank line or end-of-file.
+ 
+@@ -160,6 +166,17 @@ empty string.
+ Components which are missing from the URL (e.g., there is no
+ username in the example above) will be left unset.
+ 
++`wwwauth[]`::
++
++	When an HTTP response is received by Git that includes one or more
++	'WWW-Authenticate' authentication headers, these will be passed by Git
++	to credential helpers.
+++
++Each 'WWW-Authenticate' header value is passed as a multi-valued
++attribute 'wwwauth[]', where the order of the attributes is the same as
++they appear in the HTTP response. This attribute is 'one-way' from Git
++to pass additional information to credential helpers.
++
+ Unrecognised attributes are silently discarded.
+ 
+ GIT
 diff --git a/credential.c b/credential.c
-index f6389a50684..897b4679333 100644
+index 897b4679333..9f39ebc3c7e 100644
 --- a/credential.c
 +++ b/credential.c
-@@ -22,6 +22,7 @@ void credential_clear(struct credential *c)
- 	free(c->username);
- 	free(c->password);
- 	string_list_clear(&c->helpers, 0);
-+	strvec_clear(&c->wwwauth_headers);
- 
- 	credential_init(c);
- }
-diff --git a/credential.h b/credential.h
-index f430e77fea4..6f2e5bc610b 100644
---- a/credential.h
-+++ b/credential.h
-@@ -2,6 +2,7 @@
- #define CREDENTIAL_H
- 
- #include "string-list.h"
-+#include "strvec.h"
- 
- /**
-  * The credentials API provides an abstracted way of gathering username and
-@@ -115,6 +116,19 @@ struct credential {
- 	 */
- 	struct string_list helpers;
- 
-+	/**
-+	 * A `strvec` of WWW-Authenticate header values. Each string
-+	 * is the value of a WWW-Authenticate header in an HTTP response,
-+	 * in the order they were received in the response.
-+	 */
-+	struct strvec wwwauth_headers;
-+
-+	/**
-+	 * Internal use only. Used to keep track of split header fields
-+	 * in order to fold multiple lines into one value.
-+	 */
-+	unsigned header_is_last_match:1;
-+
- 	unsigned approved:1,
- 		 configured:1,
- 		 quit:1,
-@@ -130,6 +144,7 @@ struct credential {
- 
- #define CREDENTIAL_INIT { \
- 	.helpers = STRING_LIST_INIT_DUP, \
-+	.wwwauth_headers = STRVEC_INIT, \
+@@ -263,6 +263,16 @@ static void credential_write_item(FILE *fp, const char *key, const char *value,
+ 	fprintf(fp, "%s=%s\n", key, value);
  }
  
- /* Initialize a credential structure, setting all fields to empty. */
-diff --git a/http.c b/http.c
-index a2a80318bb2..595c93bc7a3 100644
---- a/http.c
-+++ b/http.c
-@@ -183,6 +183,98 @@ size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	return nmemb;
- }
- 
-+static size_t fwrite_wwwauth(char *ptr, size_t eltsize, size_t nmemb, void *p)
++static void credential_write_strvec(FILE *fp, const char *key,
++				    const struct strvec *vec)
 +{
-+	size_t size = st_mult(eltsize, nmemb);
-+	struct strvec *values = &http_auth.wwwauth_headers;
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *val;
-+
-+	/*
-+	 * Header lines may not come NULL-terminated from libcurl so we must
-+	 * limit all scans to the maximum length of the header line, or leverage
-+	 * strbufs for all operations.
-+	 *
-+	 * In addition, it is possible that header values can be split over
-+	 * multiple lines as per RFC 2616 (even though this has since been
-+	 * deprecated in RFC 7230). A continuation header field value is
-+	 * identified as starting with a space or horizontal tab.
-+	 *
-+	 * The formal definition of a header field as given in RFC 2616 is:
-+	 *
-+	 *   message-header = field-name ":" [ field-value ]
-+	 *   field-name     = token
-+	 *   field-value    = *( field-content | LWS )
-+	 *   field-content  = <the OCTETs making up the field-value
-+	 *                    and consisting of either *TEXT or combinations
-+	 *                    of token, separators, and quoted-string>
-+	 */
-+
-+	strbuf_add(&buf, ptr, size);
-+
-+	/* Strip the CRLF that should be present at the end of each field */
-+	strbuf_trim_trailing_newline(&buf);
-+
-+	/* Start of a new WWW-Authenticate header */
-+	if (skip_iprefix(buf.buf, "www-authenticate:", &val)) {
-+		while (isspace(*val))
-+			val++;
-+
-+		strvec_push(values, val);
-+		http_auth.header_is_last_match = 1;
-+		goto exit;
++	char *full_key = xstrfmt("%s[]", key);
++	for (size_t i = 0; i < vec->nr; i++) {
++		credential_write_item(fp, full_key, vec->v[i], 0);
 +	}
-+
-+	/*
-+	 * This line could be a continuation of the previously matched header
-+	 * field. If this is the case then we should append this value to the
-+	 * end of the previously consumed value.
-+	 * Continuation lines start with at least one whitespace, maybe more,
-+	 * so we should collapse these down to a single SP (valid per the spec).
-+	 */
-+	if (http_auth.header_is_last_match && isspace(*buf.buf)) {
-+		/* Trim leading whitespace from this continuation hdr line. */
-+		strbuf_ltrim(&buf);
-+
-+		/*
-+		 * At this point we should always have at least one existing
-+		 * value, even if it is empty. Do not bother appending the new
-+		 * value if this continuation header is itself empty.
-+		 */
-+		if (!values->nr) {
-+			BUG("should have at least one existing header value");
-+		} else if (buf.len) {
-+			char *prev = xstrdup(values->v[values->nr - 1]);
-+
-+			/* Join two non-empty values with a single space. */
-+			const char *const sp = *prev ? " " : "";
-+
-+			strvec_pop(values);
-+			strvec_pushf(values, "%s%s%s", prev, sp, buf.buf);
-+			free(prev);
-+		}
-+
-+		goto exit;
-+	}
-+
-+	/* This is the start of a new header we don't care about */
-+	http_auth.header_is_last_match = 0;
-+
-+	/*
-+	 * If this is a HTTP status line and not a header field, this signals
-+	 * a different HTTP response. libcurl writes all the output of all
-+	 * response headers of all responses, including redirects.
-+	 * We only care about the last HTTP request response's headers so clear
-+	 * the existing array.
-+	 */
-+	if (istarts_with(buf.buf, "http/"))
-+		strvec_clear(values);
-+
-+exit:
-+	strbuf_release(&buf);
-+	return size;
++	free(full_key);
 +}
 +
- size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
+ void credential_write(const struct credential *c, FILE *fp)
  {
- 	return nmemb;
-@@ -1864,6 +1956,8 @@ static int http_request(const char *url,
- 					 fwrite_buffer);
- 	}
+ 	credential_write_item(fp, "protocol", c->protocol, 1);
+@@ -270,6 +280,7 @@ void credential_write(const struct credential *c, FILE *fp)
+ 	credential_write_item(fp, "path", c->path, 0);
+ 	credential_write_item(fp, "username", c->username, 0);
+ 	credential_write_item(fp, "password", c->password, 0);
++	credential_write_strvec(fp, "wwwauth", &c->wwwauth_headers);
+ }
  
-+	curl_easy_setopt(slot->curl, CURLOPT_HEADERFUNCTION, fwrite_wwwauth);
+ static int run_credential_helper(struct credential *c,
+diff --git a/t/lib-credential-helper.sh b/t/lib-credential-helper.sh
+new file mode 100644
+index 00000000000..8b0e4414234
+--- /dev/null
++++ b/t/lib-credential-helper.sh
+@@ -0,0 +1,27 @@
++setup_credential_helper() {
++	test_expect_success 'setup credential helper' '
++		CREDENTIAL_HELPER="$TRASH_DIRECTORY/credential-helper.sh" &&
++		export CREDENTIAL_HELPER &&
++		echo $CREDENTIAL_HELPER &&
 +
- 	accept_language = http_get_accept_language_header();
++		write_script "$CREDENTIAL_HELPER" <<-\EOF
++		cmd=$1
++		teefile=$cmd-query.cred
++		catfile=$cmd-reply.cred
++		sed -n -e "/^$/q" -e "p" >> $teefile
++		if test "$cmd" = "get"; then
++			cat $catfile
++		fi
++		EOF
++	'
++}
++
++set_credential_reply() {
++	cat >"$TRASH_DIRECTORY/$1-reply.cred"
++}
++
++expect_credential_query() {
++	cat >"$TRASH_DIRECTORY/$1-expect.cred" &&
++	test_cmp "$TRASH_DIRECTORY/$1-expect.cred" \
++		 "$TRASH_DIRECTORY/$1-query.cred"
++}
+diff --git a/t/t5556-http-auth.sh b/t/t5556-http-auth.sh
+index e36107ea95d..79122c611a1 100755
+--- a/t/t5556-http-auth.sh
++++ b/t/t5556-http-auth.sh
+@@ -4,6 +4,7 @@ test_description='test http auth header and credential helper interop'
  
- 	if (accept_language)
+ TEST_NO_CREATE_REPO=1
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-credential-helper.sh
+ 
+ test_set_port GIT_TEST_HTTP_PROTOCOL_PORT
+ 
+@@ -33,6 +34,8 @@ test_expect_success 'setup repos' '
+ 	git -C "$REPO_DIR" branch -M main
+ '
+ 
++setup_credential_helper
++
+ stop_http_server () {
+ 	if ! test -f "$PID_FILE"
+ 	then
+@@ -92,7 +95,9 @@ start_http_server () {
+ 
+ per_test_cleanup () {
+ 	stop_http_server &&
+-	rm -f OUT.*
++	rm -f OUT.* &&
++	rm -f *.cred &&
++	rm -f auth.config
+ }
+ 
+ test_expect_success CURL 'http auth server auth config' '
+@@ -152,4 +157,242 @@ test_expect_success 'http auth anonymous no challenge' '
+ 	git ls-remote $ORIGIN_URL
+ '
+ 
++test_expect_success 'http auth www-auth headers to credential helper basic valid' '
++	test_when_finished "per_test_cleanup" &&
++	# base64("alice:secret-passwd")
++	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
++	export USERPASS64 &&
++
++	cat >auth.config <<-EOF &&
++	[auth]
++		challenge = basic:realm=\"example.com\"
++		token = basic:$USERPASS64
++	EOF
++
++	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
++
++	set_credential_reply get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	EOF
++
++	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
++
++	expect_credential_query get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	wwwauth[]=basic realm="example.com"
++	EOF
++
++	expect_credential_query store <<-EOF
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	EOF
++'
++
++test_expect_success 'http auth www-auth headers to credential helper ignore case valid' '
++	test_when_finished "per_test_cleanup" &&
++	# base64("alice:secret-passwd")
++	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
++	export USERPASS64 &&
++
++	cat >auth.config <<-EOF &&
++	[auth]
++		challenge = basic:realm=\"example.com\"
++		token = basic:$USERPASS64
++		extraHeader = wWw-aUtHeNtIcAtE: bEaRer auThoRiTy=\"id.example.com\"
++	EOF
++
++	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
++
++	set_credential_reply get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	EOF
++
++	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
++
++	expect_credential_query get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	wwwauth[]=basic realm="example.com"
++	wwwauth[]=bEaRer auThoRiTy="id.example.com"
++	EOF
++
++	expect_credential_query store <<-EOF
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	EOF
++'
++
++test_expect_success 'http auth www-auth headers to credential helper continuation hdr' '
++	test_when_finished "per_test_cleanup" &&
++	# base64("alice:secret-passwd")
++	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
++	export USERPASS64 &&
++
++	cat >auth.config <<-EOF &&
++	[auth]
++		challenge = "bearer:authority=\"id.example.com\"\\n    q=1\\n \\t p=0"
++		challenge = basic:realm=\"example.com\"
++		token = basic:$USERPASS64
++	EOF
++
++	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
++
++	set_credential_reply get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	EOF
++
++	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
++
++	expect_credential_query get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	wwwauth[]=bearer authority="id.example.com" q=1 p=0
++	wwwauth[]=basic realm="example.com"
++	EOF
++
++	expect_credential_query store <<-EOF
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	EOF
++'
++
++test_expect_success 'http auth www-auth headers to credential helper empty continuation hdrs' '
++	test_when_finished "per_test_cleanup" &&
++	# base64("alice:secret-passwd")
++	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
++	export USERPASS64 &&
++
++	cat >auth.config <<-EOF &&
++	[auth]
++		challenge = basic:realm=\"example.com\"
++		token = basic:$USERPASS64
++		extraheader = "WWW-Authenticate:"
++		extraheader = " "
++		extraheader = " bearer authority=\"id.example.com\""
++	EOF
++
++	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
++
++	set_credential_reply get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	EOF
++
++	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
++
++	expect_credential_query get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	wwwauth[]=basic realm="example.com"
++	wwwauth[]=bearer authority="id.example.com"
++	EOF
++
++	expect_credential_query store <<-EOF
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	EOF
++'
++
++test_expect_success 'http auth www-auth headers to credential helper custom schemes' '
++	test_when_finished "per_test_cleanup" &&
++	# base64("alice:secret-passwd")
++	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
++	export USERPASS64 &&
++
++	cat >auth.config <<-EOF &&
++	[auth]
++		challenge = "foobar:alg=test widget=1"
++		challenge = "bearer:authority=\"id.example.com\" q=1 p=0"
++		challenge = basic:realm=\"example.com\"
++		token = basic:$USERPASS64
++	EOF
++
++	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
++
++	set_credential_reply get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	EOF
++
++	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
++
++	expect_credential_query get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	wwwauth[]=foobar alg=test widget=1
++	wwwauth[]=bearer authority="id.example.com" q=1 p=0
++	wwwauth[]=basic realm="example.com"
++	EOF
++
++	expect_credential_query store <<-EOF
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	EOF
++'
++
++test_expect_success 'http auth www-auth headers to credential helper invalid' '
++	test_when_finished "per_test_cleanup" &&
++	# base64("alice:secret-passwd")
++	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
++	export USERPASS64 &&
++
++	cat >auth.config <<-EOF &&
++	[auth]
++		challenge = "bearer:authority=\"id.example.com\" q=1 p=0"
++		challenge = basic:realm=\"example.com\"
++		token = basic:$USERPASS64
++	EOF
++
++	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
++
++	set_credential_reply get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=invalid-passwd
++	EOF
++
++	test_must_fail git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
++
++	expect_credential_query get <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	wwwauth[]=bearer authority="id.example.com" q=1 p=0
++	wwwauth[]=basic realm="example.com"
++	EOF
++
++	expect_credential_query erase <<-EOF
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=invalid-passwd
++	wwwauth[]=bearer authority="id.example.com" q=1 p=0
++	wwwauth[]=basic realm="example.com"
++	EOF
++'
++
+ test_done
 -- 
 gitgitgadget
-
