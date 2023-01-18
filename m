@@ -2,489 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32EFBC00A5A
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 03:31:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69F2DC004D4
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 05:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229842AbjARDbh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 22:31:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51986 "EHLO
+        id S229502AbjARFod (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 00:44:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229784AbjARDag (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 22:30:36 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9B7D51C4D
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 19:30:31 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id q10so13290580wrs.2
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 19:30:31 -0800 (PST)
+        with ESMTP id S229483AbjARFo3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 00:44:29 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25C0F54121
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 21:44:28 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id j130so27819972oif.4
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 21:44:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oqov+LakXJJTebf7RM2+rAZA+HKTzRzGbXvTUFu8gW4=;
-        b=egK81/GCigZo9dwWi1sMnXmcTMobT8qZKcVRX7Qf7LSkfcD1zY+50kf43pW4yaJkJZ
-         T6m/9pswLNsOprwjOGj3FVp1N9gg8ZtF0mCWXvYP3lyWBxgL793IlD1WWRdXOrTYGbSc
-         80aQY/oR4c53oIsT0C7IhrAbt4PZo8Qh5hNgG07tLPZZWrm3HTSZaEObr0jG4toABfiQ
-         egHmbcCPL5xp/gasK02g8k11yO3xF7EhYuNtPma96j91Tr07FymSGJHoC4HV4Z1C0zO9
-         90wu5rXW7tNPfIGHrCVcdbX18IHefAGsBuydguBneTqnQaBLj+u//fc/W70Eww0cGw8C
-         pj4g==
+        bh=lmZHjoZ3OithC+6g/q+NAL+YdNtLI4kJm1Lzpwhf59M=;
+        b=LKvmDUghA/Ey8VRnIppJiadTwTFhCho67MoczCZvfeF9719RMuMJshxX8AgNSSWcwx
+         4q+QKFh87GrAIjGv3UkrLnWFZpGlGLcoBPzLVj2oc2YiRz2ZvvhtxUHUtE5y+A5tRHDI
+         69d5VmQcebcqc0wHkDHyrHoE7RfLxku+qzfN3hRNkyFoUVwaysYOO1LMDMdzJgAdH6mS
+         SzAp5JTuzqN+szVDMsud678U5S5uj2u6C/jXiQRSMjwDeBY2H1U4eixSJ6CCqsoPXkAK
+         Lk1dXl8Kav0TLgghwdYEYU27jrq5ihiq943JW+WWn7IWclFtmTZhizWT7aic2T22MZtN
+         r2ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oqov+LakXJJTebf7RM2+rAZA+HKTzRzGbXvTUFu8gW4=;
-        b=AB13kS3VeGjPfNOvgt+s7fVUc1Ktd5OEdvSSIhDuB6cdriT43Z8Hnswsy9TIcgnHv0
-         qgyzFsdHynp38GVuJZGOru7WV5J2z/3arzhbg+Tl5Jdk3Lprjg+mhP7Qz97FlpYAKp2b
-         1PO1GSQUZU3678+tZwJAseZ8YNkE6WEyBdY1HnwqMqvQ4hX62uPKq/Iy9SRDYUOQZcW0
-         v9+4nemhpDYEiNljLGYCZMby3Jssz8poqmvwze0cve2m+pnVYk6FrIGGELZP757ltvp6
-         QuuYcTxQpyRGUTr7P3XugEziNWSWeceZe2VSIdMgi03vRDGKWSKEiRLouy9SlpY/bVN0
-         oOlg==
-X-Gm-Message-State: AFqh2kq14U1VfZAPEaGxgE5Ik/qNWmjfbJv557CSkwTicjeu4o6HzrXg
-        8PB8RmvPZHWknAApjctbNl09RuY7210=
-X-Google-Smtp-Source: AMrXdXvKe7GJpuoHjsUuV7rVA4Hw6iUSa4fm/HtyKWqTH1CEAu6K47UK4GLfMfvE10dRizsmAYhTcg==
-X-Received: by 2002:a05:6000:11c6:b0:2bd:bf72:76f2 with SMTP id i6-20020a05600011c600b002bdbf7276f2mr4301750wrx.14.1674012629939;
-        Tue, 17 Jan 2023 19:30:29 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t18-20020adff612000000b002be2f18938csm406245wrp.41.2023.01.17.19.30.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 19:30:29 -0800 (PST)
-Message-Id: <7c8229f0b11693310ae47551fcc5e58f0bb64a0a.1674012618.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
-References: <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
-        <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
-From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 18 Jan 2023 03:30:17 +0000
-Subject: [PATCH v6 12/12] credential: add WWW-Authenticate header to cred
- requests
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=lmZHjoZ3OithC+6g/q+NAL+YdNtLI4kJm1Lzpwhf59M=;
+        b=lX3P+ZB/XJXYvxjJK5PGe8bkFf08OiE5OxqXR7c/JiTNHJG9vXZYFyo29BEFhnahey
+         3yWpc2YdLb9jZzB3wwWAzECYjnWHKTcxelRVYYLwX/1SpY/+2iSAyLpjyYDtMpFrfWrE
+         VyanhBcq2KGRoYq/ELE2IF/+gdNLKCT0Zo2lumCkDRNMzkHcdUIdlsEwyW4EjKpAGQ+8
+         8bjbshZB2WQbCzWSMsvUBlspj7bUdjcRSfvMzHjoe0xgQKZKr0HobYbHzdEqAEFRBehG
+         Unoa356UNue1jwHueGiuFzVEKIrVFG2A5a9eipOc/Wnmy5uzwWyCxKskn1U0SehdLs5d
+         9o2A==
+X-Gm-Message-State: AFqh2koBcoTcfha7DxJ3A/BmUwuN47YhxRIcrfTbiGpvL0HlatF3HKim
+        /GEXltkvEid8+rdrrelof73h8+jVjjyKQNH0Wfw6esDUOp4=
+X-Google-Smtp-Source: AMrXdXv1mRpsKKwAbC0XWrdasrL+Vj188sZIBVWYsxIY88dvGnVW69P+FDAfotyNmdTz6NGp9SJUTgn0VBPRNEMndzc=
+X-Received: by 2002:a05:6808:13d4:b0:359:f10b:5477 with SMTP id
+ d20-20020a05680813d400b00359f10b5477mr331884oiw.277.1674020667237; Tue, 17
+ Jan 2023 21:44:27 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
-        M Hickford <mirth.hickford@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Glen Choo <chooglen@google.com>,
-        Victoria Dye <vdye@github.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Matthew John Cheetham <mjcheetham@github.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>
+References: <20230116172824.93218-1-carenas@gmail.com> <45cb1b38-1284-ddc9-a2d8-0a45f10abafb@gmail.com>
+In-Reply-To: <45cb1b38-1284-ddc9-a2d8-0a45f10abafb@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Tue, 17 Jan 2023 21:44:16 -0800
+Message-ID: <CAPUEsphrbPVZtZi_GV9=8OqOqjk+SZ1JJf1bU_HWpUnT1H6YzA@mail.gmail.com>
+Subject: Re: [PATCH] builtin/checkout: check the branch used in -B with worktrees
+To:     =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
+Cc:     git@vger.kernel.org, vustthat@gmail.com, sunshine@sunshineco.com,
+        pclouds@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Matthew John Cheetham <mjcheetham@outlook.com>
+On Mon, Jan 16, 2023 at 4:53 PM Rub=C3=A9n Justo <rjusto@gmail.com> wrote:
+> On 16/1/23 18:28, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+>
+> > @@ -1533,13 +1534,12 @@ static int checkout_branch(struct checkout_opts=
+ *opts,
+> >       if (!opts->can_switch_when_in_progress)
+> >               die_if_some_operation_in_progress();
+> >
+> > -     if (new_branch_info->path && !opts->force_detach && !opts->new_br=
+anch &&
+> > -         !opts->ignore_other_worktrees) {
+> > +     if (check_branch_info->path && !opts->force_detach && !opts->igno=
+re_other_worktrees) {
+> >               int flag;
+> >               char *head_ref =3D resolve_refdup("HEAD", 0, NULL, &flag)=
+;
+> >               if (head_ref &&
+> > -                 (!(flag & REF_ISSYMREF) || strcmp(head_ref, new_branc=
+h_info->path)))
+> > -                     die_if_checked_out(new_branch_info->path, 1);
+> > +                 (!(flag & REF_ISSYMREF) || strcmp(head_ref, check_bra=
+nch_info->path)))
+> > +                     die_if_checked_out(check_branch_info->path, 1);
+>
+> What we are doing here, if I understand it correctly, is dying if the
+> branch is _not checked out in the current worktree_ and _checked out in
+> any other worktree_.  Which is OK for normal checkout/switch.
 
-Add the value of the WWW-Authenticate response header to credential
-requests. Credential helpers that understand and support HTTP
-authentication and authorization can use this standard header (RFC 2616
-Section 14.47 [1]) to generate valid credentials.
+I think the exception was added to `checkout` only, where it is
+definitely needed, but switch probably should be more strict as it is
+not "plumbing" and as you pointed out there is already a UI option to
+override its safety.
 
-WWW-Authenticate headers can contain information pertaining to the
-authority, authentication mechanism, or extra parameters/scopes that are
-required.
+> But IMHO with "checkout -B" we have to die if the branch is checked out
+> in any other worktree, regardless of whether or not it is checked out in
+> the current working tree.
 
-The current I/O format for credential helpers only allows for unique
-names for properties/attributes, so in order to transmit multiple header
-values (with a specific order) we introduce a new convention whereby a
-C-style array syntax is used in the property name to denote multiple
-ordered values for the same property.
+I have to admit, I thought about that too, but then avoided making a
+change as checkout behaviour affects a lot of other places, but in
+retrospect I think that in this case it might be worth the change of
+behaviour, since it is connected with the bugfix.
 
-In this case we send multiple `wwwauth[]` properties where the order
-that the repeated attributes appear in the conversation reflects the
-order that the WWW-Authenticate headers appeared in the HTTP response.
+Before, the operation was allowed and the logic never tried to prevent
+it (which is why in my first look, I thought it might have been
+intentional), but once Eric pointed out it was a bug, then the obvious
+conclusion would be to prevent it with the extended logic, as you
+pointed out.
 
-Add a set of tests to exercise the HTTP authentication header parsing
-and the interop with credential helpers. Credential helpers will receive
-WWW-Authenticate information in credential requests.
+> Perhaps the scenario where the user has the same branch checked out in
+> multiple worktrees and tries to reset in one of them, is one of those
+> where we could use the "if it hurts, don't do it". But we are providing
+> the "--ignore-other-worktrees" modifier, so I think we should disallow
+> the "-B" if the branch is checked out in any other worktree, and let
+> the user use "--ignore-other-worktrees" if he wants to go wild.
 
-[1] https://datatracker.ietf.org/doc/html/rfc2616#section-14.47
+v2 includes this and AFAIK nothing is broken yet.
 
-Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
----
- Documentation/git-credential.txt |  19 ++-
- credential.c                     |  11 ++
- t/lib-credential-helper.sh       |  27 ++++
- t/t5556-http-auth.sh             | 245 ++++++++++++++++++++++++++++++-
- 4 files changed, 300 insertions(+), 2 deletions(-)
- create mode 100644 t/lib-credential-helper.sh
+Carlo
 
-diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-index ac2818b9f66..50759153ef1 100644
---- a/Documentation/git-credential.txt
-+++ b/Documentation/git-credential.txt
-@@ -113,7 +113,13 @@ separated by an `=` (equals) sign, followed by a newline.
- The key may contain any bytes except `=`, newline, or NUL. The value may
- contain any bytes except newline or NUL.
- 
--In both cases, all bytes are treated as-is (i.e., there is no quoting,
-+Attributes with keys that end with C-style array brackets `[]` can have
-+multiple values. Each instance of a multi-valued attribute forms an
-+ordered list of values - the order of the repeated attributes defines
-+the order of the values. An empty multi-valued attribute (`key[]=\n`)
-+acts to clear any previous entries and reset the list.
-+
-+In all cases, all bytes are treated as-is (i.e., there is no quoting,
- and one cannot transmit a value with newline or NUL in it). The list of
- attributes is terminated by a blank line or end-of-file.
- 
-@@ -160,6 +166,17 @@ empty string.
- Components which are missing from the URL (e.g., there is no
- username in the example above) will be left unset.
- 
-+`wwwauth[]`::
-+
-+	When an HTTP response is received by Git that includes one or more
-+	'WWW-Authenticate' authentication headers, these will be passed by Git
-+	to credential helpers.
-++
-+Each 'WWW-Authenticate' header value is passed as a multi-valued
-+attribute 'wwwauth[]', where the order of the attributes is the same as
-+they appear in the HTTP response. This attribute is 'one-way' from Git
-+to pass additional information to credential helpers.
-+
- Unrecognised attributes are silently discarded.
- 
- GIT
-diff --git a/credential.c b/credential.c
-index 897b4679333..9f39ebc3c7e 100644
---- a/credential.c
-+++ b/credential.c
-@@ -263,6 +263,16 @@ static void credential_write_item(FILE *fp, const char *key, const char *value,
- 	fprintf(fp, "%s=%s\n", key, value);
- }
- 
-+static void credential_write_strvec(FILE *fp, const char *key,
-+				    const struct strvec *vec)
-+{
-+	char *full_key = xstrfmt("%s[]", key);
-+	for (size_t i = 0; i < vec->nr; i++) {
-+		credential_write_item(fp, full_key, vec->v[i], 0);
-+	}
-+	free(full_key);
-+}
-+
- void credential_write(const struct credential *c, FILE *fp)
- {
- 	credential_write_item(fp, "protocol", c->protocol, 1);
-@@ -270,6 +280,7 @@ void credential_write(const struct credential *c, FILE *fp)
- 	credential_write_item(fp, "path", c->path, 0);
- 	credential_write_item(fp, "username", c->username, 0);
- 	credential_write_item(fp, "password", c->password, 0);
-+	credential_write_strvec(fp, "wwwauth", &c->wwwauth_headers);
- }
- 
- static int run_credential_helper(struct credential *c,
-diff --git a/t/lib-credential-helper.sh b/t/lib-credential-helper.sh
-new file mode 100644
-index 00000000000..8b0e4414234
---- /dev/null
-+++ b/t/lib-credential-helper.sh
-@@ -0,0 +1,27 @@
-+setup_credential_helper() {
-+	test_expect_success 'setup credential helper' '
-+		CREDENTIAL_HELPER="$TRASH_DIRECTORY/credential-helper.sh" &&
-+		export CREDENTIAL_HELPER &&
-+		echo $CREDENTIAL_HELPER &&
-+
-+		write_script "$CREDENTIAL_HELPER" <<-\EOF
-+		cmd=$1
-+		teefile=$cmd-query.cred
-+		catfile=$cmd-reply.cred
-+		sed -n -e "/^$/q" -e "p" >> $teefile
-+		if test "$cmd" = "get"; then
-+			cat $catfile
-+		fi
-+		EOF
-+	'
-+}
-+
-+set_credential_reply() {
-+	cat >"$TRASH_DIRECTORY/$1-reply.cred"
-+}
-+
-+expect_credential_query() {
-+	cat >"$TRASH_DIRECTORY/$1-expect.cred" &&
-+	test_cmp "$TRASH_DIRECTORY/$1-expect.cred" \
-+		 "$TRASH_DIRECTORY/$1-query.cred"
-+}
-diff --git a/t/t5556-http-auth.sh b/t/t5556-http-auth.sh
-index e36107ea95d..79122c611a1 100755
---- a/t/t5556-http-auth.sh
-+++ b/t/t5556-http-auth.sh
-@@ -4,6 +4,7 @@ test_description='test http auth header and credential helper interop'
- 
- TEST_NO_CREATE_REPO=1
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-credential-helper.sh
- 
- test_set_port GIT_TEST_HTTP_PROTOCOL_PORT
- 
-@@ -33,6 +34,8 @@ test_expect_success 'setup repos' '
- 	git -C "$REPO_DIR" branch -M main
- '
- 
-+setup_credential_helper
-+
- stop_http_server () {
- 	if ! test -f "$PID_FILE"
- 	then
-@@ -92,7 +95,9 @@ start_http_server () {
- 
- per_test_cleanup () {
- 	stop_http_server &&
--	rm -f OUT.*
-+	rm -f OUT.* &&
-+	rm -f *.cred &&
-+	rm -f auth.config
- }
- 
- test_expect_success CURL 'http auth server auth config' '
-@@ -152,4 +157,242 @@ test_expect_success 'http auth anonymous no challenge' '
- 	git ls-remote $ORIGIN_URL
- '
- 
-+test_expect_success 'http auth www-auth headers to credential helper basic valid' '
-+	test_when_finished "per_test_cleanup" &&
-+	# base64("alice:secret-passwd")
-+	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
-+	export USERPASS64 &&
-+
-+	cat >auth.config <<-EOF &&
-+	[auth]
-+		challenge = basic:realm=\"example.com\"
-+		token = basic:$USERPASS64
-+	EOF
-+
-+	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	wwwauth[]=basic realm="example.com"
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_expect_success 'http auth www-auth headers to credential helper ignore case valid' '
-+	test_when_finished "per_test_cleanup" &&
-+	# base64("alice:secret-passwd")
-+	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
-+	export USERPASS64 &&
-+
-+	cat >auth.config <<-EOF &&
-+	[auth]
-+		challenge = basic:realm=\"example.com\"
-+		token = basic:$USERPASS64
-+		extraHeader = wWw-aUtHeNtIcAtE: bEaRer auThoRiTy=\"id.example.com\"
-+	EOF
-+
-+	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	wwwauth[]=basic realm="example.com"
-+	wwwauth[]=bEaRer auThoRiTy="id.example.com"
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_expect_success 'http auth www-auth headers to credential helper continuation hdr' '
-+	test_when_finished "per_test_cleanup" &&
-+	# base64("alice:secret-passwd")
-+	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
-+	export USERPASS64 &&
-+
-+	cat >auth.config <<-EOF &&
-+	[auth]
-+		challenge = "bearer:authority=\"id.example.com\"\\n    q=1\\n \\t p=0"
-+		challenge = basic:realm=\"example.com\"
-+		token = basic:$USERPASS64
-+	EOF
-+
-+	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	wwwauth[]=bearer authority="id.example.com" q=1 p=0
-+	wwwauth[]=basic realm="example.com"
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_expect_success 'http auth www-auth headers to credential helper empty continuation hdrs' '
-+	test_when_finished "per_test_cleanup" &&
-+	# base64("alice:secret-passwd")
-+	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
-+	export USERPASS64 &&
-+
-+	cat >auth.config <<-EOF &&
-+	[auth]
-+		challenge = basic:realm=\"example.com\"
-+		token = basic:$USERPASS64
-+		extraheader = "WWW-Authenticate:"
-+		extraheader = " "
-+		extraheader = " bearer authority=\"id.example.com\""
-+	EOF
-+
-+	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	wwwauth[]=basic realm="example.com"
-+	wwwauth[]=bearer authority="id.example.com"
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_expect_success 'http auth www-auth headers to credential helper custom schemes' '
-+	test_when_finished "per_test_cleanup" &&
-+	# base64("alice:secret-passwd")
-+	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
-+	export USERPASS64 &&
-+
-+	cat >auth.config <<-EOF &&
-+	[auth]
-+		challenge = "foobar:alg=test widget=1"
-+		challenge = "bearer:authority=\"id.example.com\" q=1 p=0"
-+		challenge = basic:realm=\"example.com\"
-+		token = basic:$USERPASS64
-+	EOF
-+
-+	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	wwwauth[]=foobar alg=test widget=1
-+	wwwauth[]=bearer authority="id.example.com" q=1 p=0
-+	wwwauth[]=basic realm="example.com"
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_expect_success 'http auth www-auth headers to credential helper invalid' '
-+	test_when_finished "per_test_cleanup" &&
-+	# base64("alice:secret-passwd")
-+	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
-+	export USERPASS64 &&
-+
-+	cat >auth.config <<-EOF &&
-+	[auth]
-+		challenge = "bearer:authority=\"id.example.com\" q=1 p=0"
-+		challenge = basic:realm=\"example.com\"
-+		token = basic:$USERPASS64
-+	EOF
-+
-+	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=invalid-passwd
-+	EOF
-+
-+	test_must_fail git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HOST_PORT
-+	wwwauth[]=bearer authority="id.example.com" q=1 p=0
-+	wwwauth[]=basic realm="example.com"
-+	EOF
-+
-+	expect_credential_query erase <<-EOF
-+	protocol=http
-+	host=$HOST_PORT
-+	username=alice
-+	password=invalid-passwd
-+	wwwauth[]=bearer authority="id.example.com" q=1 p=0
-+	wwwauth[]=basic realm="example.com"
-+	EOF
-+'
-+
- test_done
--- 
-gitgitgadget
+PS. As explained before, tightening `switch` might be a good idea, but
+it is obviously punted for this change and will be addressed later.
