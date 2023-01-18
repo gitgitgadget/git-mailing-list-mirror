@@ -2,128 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62C93C38147
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 16:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55E45C38147
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 16:35:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229899AbjARQbl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 11:31:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36780 "EHLO
+        id S229640AbjARQfS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 11:35:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230344AbjARQbS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 11:31:18 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8073F47432
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:29:19 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id vm8so84529741ejc.2
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:29:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+31/qNT1KZJ6HGh3Df17N7ZHbJBLbZ3OBXwsLgAiJ/c=;
-        b=H3abiiJZsTlbTXsGzVrS09bsmW2Odt+fvUrqsU/rjk/g7N8qpnqIMZL2Yz7tJFPs5C
-         zyoIr4If+bJQfJz3g3aw5eAs7hbe8CBkElrqDrlViNONz4ltOYRUgOrZQcEB+E97Iaz3
-         MfE5tXBQ7i5qPutXUNWbkHLzQBrvP7D5LkMsZw1kTYPAP0bIfyaDUl/lZgZv/lzjl9ob
-         IsflMVRih+6Acl8f78uQlJ9EaWUFbjEypk+W6/WA/54Ds0QwttSowWl+7aYNq8x6Rtu7
-         fNpxmy33F2Csqt9OM5KDTfn1CuCb0xF+rGGs2eBg9pb/9aLVvR0jD6qijJix1mxJvHQN
-         o7kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+31/qNT1KZJ6HGh3Df17N7ZHbJBLbZ3OBXwsLgAiJ/c=;
-        b=qy1DU+E7Y+G0q8RaaCjwYo7ZXIRyGhCyaoeIvW2tDgWBeMpepp2XAliHI3j07oMhPK
-         QRqFeJkBfMMSe19caseb7nBzjOhhaVUQSfrNfn7Pmtd1S3ac0TQ3Qr82GlYe59JnYc5L
-         xq2I/SWnm0jq+eBaQvjMtcy+z7p+ghv8gUOM1HsYVAK6oQoss37Cu0OqWjBFvNPXKPQT
-         /GU+qI+yQLIHnPW0s2CZDNQa+eoEd9mCLLetFT8887HJM8NQ6FILvaeEKYZmu6tfgq0q
-         +w3sX+xCcI6aHzvTRG57W9195qSnMNhds8pOBEy3yO8fq65cgCpjLJ+IY2MhAWj7Yxnz
-         97SQ==
-X-Gm-Message-State: AFqh2koWK6yRnaS5VdqdNJfjgq/a/tLZw0CN5xC0Z2LcyN4Zv81dgJH0
-        UIu6L+J0Pgnd6EVGZPMhhpzW01kMq0o=
-X-Google-Smtp-Source: AMrXdXsygFKjo7HiT4047hglBaf+F09QMzUabFff5CHerJipRTdFk0oTZGh1JvnEAMD5MO8bQanSNg==
-X-Received: by 2002:a17:907:d685:b0:86e:a761:c5ba with SMTP id wf5-20020a170907d68500b0086ea761c5bamr8183953ejc.37.1674059357813;
-        Wed, 18 Jan 2023 08:29:17 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id t27-20020a170906179b00b008762e2b7004sm1464343eje.208.2023.01.18.08.29.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Jan 2023 08:29:17 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <55282dec-825f-8c4b-1fb0-6e26ec326db1@dunelm.org.uk>
-Date:   Wed, 18 Jan 2023 16:29:11 +0000
+        with ESMTP id S229788AbjARQeb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 11:34:31 -0500
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2076.outbound.protection.outlook.com [40.107.237.76])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED6B759B48
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:32:43 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=YHRgcyER0CgY5yXn1mwxSE4SB9VXFCb/58GEwuDSL+V37mPV1b5+IR0z8/535KEi+jd2DbDM9W35vUhZ6tEnlbQes532QjrVfWj0B5+nhNsXvgJc7FDQqHbqS1uaUzdn4Z51PXJ2rLvr/HQ1FhKGaBPc5xqK5u/JFbwHGUSP2dJXQBjLfvl0xN/JuMWo04P9kw7r2od/AQQAkccitdkXp1P1fxPR3Z1B22egNGcv3NM24F2nirvtUds+K0GYtbVjTv7tg5uwhbg0e9tDfH9BMRiC3LuFTib7IoRYIFlkknM/nGJOn/O5TmmQ8FKCpJmp8tayXUHw7XjwHv6tA1HIdQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tkRylwzEySmqSj4MLT7bXaLJu1ruejy8N7rGUYccdeM=;
+ b=NmHzR218Wcg0mJlKYTupYqnNaYLGw93es7mybOSF84DlAHuupfgUEp8VLISQ+uTySpLyqklj/KYNMFITG9Rrl1RtmDpCMT+6oZ3G2LhuSfT5flT8xFxQumPYvSrrxkZ58VSU/CMaJlMqXmrEHt5mskrYYyUM2Fz/2VwFjEv3HvSK2xf/IJ/M5wrl5lyRhCaoT2LfT/DMhzvo7dWJUvg4dGqwUShpzHb0LX8ulbJibnE7qgOA/T5wZh1PjrOTaCY9p7wmxGaYFCQ+opRruQ7AO58Nu5i7PgPrW53RrniEst2vGpY7YbdarOx3Zt1xiZuNIDOTm/paDuxMf9tRJgE2ug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tkRylwzEySmqSj4MLT7bXaLJu1ruejy8N7rGUYccdeM=;
+ b=ej4rzhjIO4eL0n+RsCtzKVJ+PmIJawg3srlWmrQfdnImCBv8EAh/tLwG84KXt1xSy4r8XvHwNM0a3KBzh1ojWWwkL1mHi90K1JDmLL/F09RBbBDOUoVtyc60xctraW7WcavZXbLzLypcsyiJFZGBkWPuG/a75kWcIBPavjZxwlQ=
+Received: from BN0PR04CA0098.namprd04.prod.outlook.com (2603:10b6:408:ec::13)
+ by MW4PR12MB6779.namprd12.prod.outlook.com (2603:10b6:303:20f::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.23; Wed, 18 Jan
+ 2023 16:32:40 +0000
+Received: from BL02EPF00010206.namprd05.prod.outlook.com
+ (2603:10b6:408:ec:cafe::25) by BN0PR04CA0098.outlook.office365.com
+ (2603:10b6:408:ec::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.19 via Frontend
+ Transport; Wed, 18 Jan 2023 16:32:40 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BL02EPF00010206.mail.protection.outlook.com (10.167.241.196) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.6002.11 via Frontend Transport; Wed, 18 Jan 2023 16:32:40 +0000
+Received: from mstrawbr-Standard-PC-Q35-ICH9-2009.amd.com (10.180.168.240) by
+ SATLEXMB04.amd.com (10.181.40.145) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.34; Wed, 18 Jan 2023 10:32:40 -0600
+From:   Michael Strawbridge <michael.strawbridge@amd.com>
+To:     <git@vger.kernel.org>
+CC:     <michael.strawbridge@amd.com>
+Subject: [PATCH v8 0/2] send-email: expose header information to git-send-email's sendemail-validate hook
+Date:   Wed, 18 Jan 2023 11:32:01 -0500
+Message-ID: <20230118163203.488652-1-michael.strawbridge@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] ssh signing: better error message when key not in agent
-Content-Language: en-US
-To:     Adam Szkoda <adaszko@gmail.com>
-Cc:     Adam Szkoda via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Fabian Stelzer <fs@gigacodes.de>
-References: <pull.1270.git.git.1674029874363.gitgitgadget@gmail.com>
- <abec912c-065d-2098-962e-41f9646dd046@dunelm.org.uk>
- <8025d5c7-ab55-c533-1997-05b4c7339d61@dunelm.org.uk>
- <CAEroKagqxC86X0SD8=tK0w+yXL7QecZ+z_7sja-K6ajs0=Z=BQ@mail.gmail.com>
-In-Reply-To: <CAEroKagqxC86X0SD8=tK0w+yXL7QecZ+z_7sja-K6ajs0=Z=BQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF00010206:EE_|MW4PR12MB6779:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2138b05a-71ba-4204-f92c-08daf9719e22
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: BEGlwq5mBEnMYZb7kUjaCHlwKpTkjvS1jy/Oq3GdQrVFomnve1gk9qdBfM4YlhBV/wWeammYGoMfQhyFmYBeJobi1JgEBpGHn2iPZM2Gj3FLQXhg0Aeg/gY/OcahJwYf605H6m2GZ0WlrOyRsNYc5MMdo0ggnFQJ8N/N2cpafkgQsSlYzjDaxVt6oWOIlsx19/9tqVeaVqlrY+gzh4P9h5lUhLrRn1Dx/AIaFrYpFD4nRlGcG+WlTUoNLagsnhVe4znOMiS1GFNEkBepu4b5aW1VV7ILknq28DJJ1ACivCwdK7Qy5DXnphJZ/+rr9r216tbYYjuONKY1s4XUNc5Gy7hmUVve7Foyu6UvktLGOh82CwgERFtwgcS4cZmrMhN5OMPzsKBrB/iigLimhNaPUW7Jw536RWmXXn7NVuEHGbrfzTDpRjj1TjDQXfuCOw0MUXWQacbhwYgsk3TkoUjcIO8p0NII8Qr1QjOGDKh9muEyexasP2AfvNvyUK5ZUmhp63zXFV+ovybTCj5UyhQq7BkRfnctETXlaMkCNxEUG57I3mQI1+5Fe6jj/lQbrrAXP7LDfkOf5qvQpnkubNcIrRPBwP++9H5SaeElC68iUlTZXhoQ9D7ibpY/xKChPVdsY6vuYg7OxoNbntE7xTvsK07LFojObmixjwVy34unVbuckTFNcCc0KsvehUPBRsN/ic47+CbQEET7spMcWit4cO5LBNu0GKbkjUasX1T4zrg=
+X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230022)(4636009)(346002)(39860400002)(376002)(396003)(136003)(451199015)(40470700004)(46966006)(36840700001)(2906002)(26005)(4326008)(40460700003)(70206006)(8676002)(70586007)(41300700001)(36756003)(82310400005)(36860700001)(6666004)(1076003)(16526019)(186003)(83380400001)(2616005)(426003)(336012)(86362001)(316002)(40480700001)(47076005)(81166007)(7696005)(356005)(4744005)(8936002)(6916009)(478600001)(82740400003)(5660300002)(44832011)(15650500001)(36900700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jan 2023 16:32:40.5590
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2138b05a-71ba-4204-f92c-08daf9719e22
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF00010206.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6779
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Adam
+This patch version addresses:
+- extra test for number of arguments in the header t9001 test
+- removed use of envelope in the documentation
+- re-arranged the validation loop and surrounding code to be closer to
+  the other code not in functions
+- made a note in the commit message that the moving of validation later
+  can have some difference in stdout compared to before but actual email
+functionality should be ok
 
-I've cc'd Fabian who knows more about the ssh signing code that I do.
+Hopefully this looks better.
 
-On 18/01/2023 15:28, Adam Szkoda wrote:
-> Hi Phillip,
-> 
-> Good point!  My first thought is to try doing a stat() syscall on the
-> path from 'user.signingKey' to see if it exists and if not, treat it
-> as a public key (and pass the -U option).  If that sounds reasonable,
-> I can update the patch.
+Michael Strawbridge (2):
+  send-email: refactor header generation functions
+  send-email: expose header information to git-send-email's
+    sendemail-validate hook
 
-My reading of the documentation is that user.signingKey may point to a 
-public or private key so I'm not sure how stat()ing would help. Looking 
-at the code in sign_buffer_ssh() we have a function is_literal_ssh_key() 
-that checks if the config value is a public key. When the user passes 
-the path to a key we could read the file check use is_literal_ssh_key() 
-to check if it is a public key (or possibly just check if the file 
-begins with "ssh-"). Fabian - does that sound reasonable?
+ Documentation/githooks.txt |  27 +++++++--
+ git-send-email.perl        | 109 ++++++++++++++++++++++---------------
+ t/t9001-send-email.sh      |  27 ++++++++-
+ 3 files changed, 114 insertions(+), 49 deletions(-)
 
-Best Wishes
+-- 
+2.34.1
 
-Phillip
-
-> Best
-> — Adam
-> 
-> 
-> On Wed, Jan 18, 2023 at 3:34 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> On 18/01/2023 11:10, Phillip Wood wrote:
->>>> the agent [1].  A fix is scheduled to be released in OpenSSH 9.1. All
->>>> that
->>>> needs to be done is to pass an additional backward-compatible option
->>>> -U to
->>>> 'ssh-keygen -Y sign' call.  With '-U', ssh-keygen always interprets
->>>> the file
->>>> as public key and expects to find the private key in the agent.
->>>
->>> The documentation for user.signingKey says
->>>
->>>    If gpg.format is set to ssh this can contain the path to either your
->>> private ssh key or the public key when ssh-agent is used.
->>>
->>> If I've understood correctly passing -U will prevent users from setting
->>> this to a private key.
->>
->> If there is an easy way to tell if the user has given us a public key
->> then we could pass "-U" in that case.
->>
->> Best Wishes
->>
->> Phillip
