@@ -2,98 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7612C6379F
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 22:55:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45AA6C32793
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 23:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229892AbjARWzX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 17:55:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50712 "EHLO
+        id S229637AbjARXG1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 18:06:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230106AbjARWzG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 17:55:06 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6E4A93F5
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 14:55:05 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id bj3so632793pjb.0
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 14:55:05 -0800 (PST)
+        with ESMTP id S229889AbjARXGR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 18:06:17 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E126589B0
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 15:06:13 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id vm8so1266266ejc.2
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 15:06:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AqFn9Ld/MXEPCzabPFAbyPt0VcTQ6hCzVNoCpM//eJ4=;
-        b=AUGg42aqV+1Kf9SvpdlwsMgkLQGNoosCnqqDLkEFm7S8krMJe4Azf84YvE8kHB15KK
-         1CK5M+9A7LL8g6NAayP3m6Byi/uO9h5EUGzBWeARmZZ3R3qZq5giCVaEQxXQtgm5pmqA
-         Gcb/pqne4YmmcPSJtbZ767fKaLpO6KSCAizEB6q9b+fzPAo9eYrbLEShPHEaYbwtPIJ/
-         SsNS1ey0FFD/L/mB9HVOzq7IqibAvSi/rA/CCeiLrvOVohdC2+pv0omvCxcKPg/+UZFa
-         mDyqa40cW2u40WTUuVKcIFNVsGs7VssB7lvEFRuYuwpz7KkLoHZeWJb4qQLMAVpvbZYl
-         KZjA==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LY2wmLoXS/K9KbPuVN0Gr4+q3FXNuo9wpP3ca+3U5fg=;
+        b=Ip1AfUFcguPKDVa+dTvcsQ/nho9OaCkAA257/6J5bDnO7rA5LMnM+f1WhpNqs3PSR1
+         GMxH9LhYy3NGZjbqHrgZ+ssx/jisPypb9rO7eJnnjTdFS5mQzxeofjnbkAdwKef3Y6PM
+         jmoEbK3hvYZ0vAbYpFuEjP4GvzPyYMsfS9WxHF5OWMfS9Izff24LeAt1hrLttfgG69J8
+         8IdNHERGa+F85KA4Rb7PaTSeMuo6ia8Z16SptM5YrUI2qgZfwmMXSCmSL7va4a2OfTDL
+         XQmEP5HmGiF6c0vRnkGrYb7DYXyxy2SK+VR6X8uw4hU+80TZV+t6sW0gO/ME4BE0pHOZ
+         0hBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AqFn9Ld/MXEPCzabPFAbyPt0VcTQ6hCzVNoCpM//eJ4=;
-        b=NqvfObp8eJ9DL9kHmirTSw4SjJl+xJRA5uMcUUsPdvgul6qqUCDUgBhRofrvVv9S+J
-         W1BpDQYB6yq7zrvJgX2OTQj7HGMUli+ph1FgK7cxw4zHDkOs0oGRNG0l2MuIQUYrEVOv
-         xug62Wk7bDkPPn57NnIbESnzKhvfFmygSVoSxYO2s3u/1EMXI/E14QpKNpEtw77L3y1U
-         0esgJKEDM+HW0UYIJUHsyiZUmyteyL1ZtfEDTbCYvIXEG2BzW2sLM8MoXH0Sr9DmrLMG
-         f8+2LaCP8iyEYjmBdEw5sRyt/vu2EI0QEFAebu7lKz5y2UQxU11PQWP0W4quR34ResB2
-         MPBA==
-X-Gm-Message-State: AFqh2komIVfBbaDSdgeuSpJ6Rx65H11fTpVmuvOVxDGnG4Rz86c+1hwB
-        ZikRXdYw7eMM3IKzi8X9/9I=
-X-Google-Smtp-Source: AMrXdXt6kIgIdOOog/ERB7lxo60QjsBF80V6xXN8a6veCrvacW+ap1IwjBmxu3hijLv3vAixGFMGKg==
-X-Received: by 2002:a05:6a20:a00d:b0:9d:efbf:6623 with SMTP id p13-20020a056a20a00d00b0009defbf6623mr10119806pzj.49.1674082505059;
-        Wed, 18 Jan 2023 14:55:05 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 35-20020a630d63000000b004cc95c9bd97sm6028689pgn.35.2023.01.18.14.55.04
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LY2wmLoXS/K9KbPuVN0Gr4+q3FXNuo9wpP3ca+3U5fg=;
+        b=EYqocwt2idLziTClMo2JqJff7CHwHkv2YJm3wcyRilRYq69K4RUiwweXJZ4Ttpy2BC
+         4MO5rqW5xyoR/xsPr3cizzwzMw/ZKwZ9JxexvNXZJE+0+dkJgHxRFi/+kd/+Y6pwTkFH
+         SYzotnqv+zIOBaPiR4RK9GSuSR0ay6Tx6OtVMYWZMlqjPMfuBvXfydGehP/bt20/WbXr
+         HlGM7h5wFpp6y7y/x1dn7hYU2Zz5Ht1rp3htpxLSglgsfn01jWU6OEGqVq8FGDLhpXo+
+         e7zAlIGdZOTPuimVatAtSOQn8o3uQYPbHp3b1m4RAfkoGFtSgTlyJKj5Q8P51ciz0Ov+
+         X+Uw==
+X-Gm-Message-State: AFqh2kpBnIoBGhstq8eFaZqdUrVLlBmY23muXqbg9Q2sKrxFsoRBqVDu
+        qnSTVfaQZr/n54ueFTvGKDI=
+X-Google-Smtp-Source: AMrXdXt6+M7rDWRbphJH/QpxYirIaRxWwDU5SytQy6MU+VeSNPVK0CYNMc31lN+EFwUE9thteic1+g==
+X-Received: by 2002:a17:907:1759:b0:85e:c4e4:cfbf with SMTP id lf25-20020a170907175900b0085ec4e4cfbfmr9181244ejc.15.1674083171765;
+        Wed, 18 Jan 2023 15:06:11 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id qw25-20020a1709066a1900b00781dbdb292asm15333696ejc.155.2023.01.18.15.06.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 14:55:04 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Jinwook Jeong <vustthat@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
+        Wed, 18 Jan 2023 15:06:11 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pIHVS-003C3q-1m;
+        Thu, 19 Jan 2023 00:06:10 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] checkout/switch: disallow checking out same branch
- in multiple worktrees
-References: <20230116172824.93218-1-carenas@gmail.com>
-        <20230118061527.76218-1-carenas@gmail.com>
-Date:   Wed, 18 Jan 2023 14:55:04 -0800
-In-Reply-To: <20230118061527.76218-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 17 Jan 2023 22:15:27 -0800")
-Message-ID: <xmqqbkmv4fnb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+Subject: Re: [PATCH v4 08/19] worktree: fix a trivial leak in prune_worktrees()
+Date:   Thu, 19 Jan 2023 00:03:48 +0100
+References: <cover-v3-00.19-00000000000-20230110T054138Z-avarab@gmail.com>
+        <cover-v4-00.19-00000000000-20230117T151201Z-avarab@gmail.com>
+        <patch-v4-08.19-1fe25bc6981-20230117T151202Z-avarab@gmail.com>
+        <xmqqedrs8igj.fsf@gitster.g>
+        <230118.86o7qwxg4e.gmgdl@evledraar.gmail.com>
+        <xmqqedrr6cnp.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <xmqqedrr6cnp.fsf@gitster.g>
+Message-ID: <230119.86h6wnwihp.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Belón  <carenas@gmail.com> writes:
 
-> Changes since v1
-> * A much better commit message
-> * Changes to the tests as suggested by Eric
-> * Changes to the logic as suggested by Rubén
+On Wed, Jan 18 2023, Junio C Hamano wrote:
 
-I queued this topic at the tip of 'seen' as 2fe0b4e3 (Merge branch
-'cb/checkout-same-branch-twice' into seen, 2023-01-18), on top of
-4ea8693b (Merge branch 'mc/credential-helper-auth-headers' into
-seen, 2023-01-18).
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>>> diff --git c/builtin/branch.c w/builtin/branch.c
+>>> index f63fd45edb..4fe7757670 100644
+>>> --- c/builtin/branch.c
+>>> +++ w/builtin/branch.c
+>>> @@ -742,6 +742,7 @@ int cmd_branch(int argc, const char **argv, const c=
+har *prefix)
+>>>  	if (filter.abbrev =3D=3D -1)
+>>>  		filter.abbrev =3D DEFAULT_ABBREV;
+>>>  	filter.ignore_case =3D icase;
+>>> +	UNLEAK(filter);
+>>>=20=20
+>>>  	finalize_colopts(&colopts, -1);
+>>>  	if (filter.verbose) {
+>>
+>> I'll send a v5 re-roll without this change, sorry.
+>
+> I'd rather see your reroll with the above addition of UNLEAK() than
+> without it, to fix the breakage.
 
- - 4ea8693b - https://github.com/git/git/actions/runs/3952916442
- - 2fe0b4e3 - https://github.com/git/git/actions/runs/3953521066
+I don't mind that UNLEAK() being in-tree until a better fix for that
+leak, but doesn't the v5 I sent also address this?
 
-Comparing these two runs, inclusion of this topic seems to introduce
-new leaks, as t1408 and t2018 (neither of which was touched by this
-topic) that used to pass are now failing.
+The issue was that I mis-marked a test as passing, when it only passed
+depending on my local compiler (-fsanitize=3Dleak is fickle
+sometimes). Now that we're not marking that test as leak-free there's no
+need for the UNLEAK() for now, no?
 
->  builtin/checkout.c      | 24 +++++++++++++++++-------
->  t/t2400-worktree-add.sh | 18 ++++++++++++++++--
->  2 files changed, 33 insertions(+), 9 deletions(-)
+Or is there some edge case I didn't spot/notice?
 
-Thanks.  
+1. https://lore.kernel.org/git/cover-v5-00.19-00000000000-20230118T120334Z-=
+avarab@gmail.com/
