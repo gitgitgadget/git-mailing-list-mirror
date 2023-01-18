@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B650C32793
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02CD1C46467
 	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 12:47:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230400AbjARMrH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 07:47:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45782 "EHLO
+        id S230327AbjARMrL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 07:47:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230242AbjARMqM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 07:46:12 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1625C67A
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 04:08:45 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id v10so48119058edi.8
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 04:08:45 -0800 (PST)
+        with ESMTP id S230387AbjARMqT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 07:46:19 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1FC423D83
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 04:08:43 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id x36so14673146ede.13
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 04:08:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i/TBun5atiNc/oQ2kl9/mKAezutuVYs7tQgzxFAmUZ4=;
-        b=DfYpdWUn0N56xNfs+8iGrIUXwN6sR24GJiTkeQxuyu+uEurKFToy2+Mv0RbZ8Ug7Cu
-         acIcun1SRQeyyE3YR+Ca26AK6n84trkXVNnDHZtPuvomxXaZXDRFmHKFmkvyK6+hWiqy
-         IU+nE2mFGILh/CIxAi6fX28fzsycwxkpE/DsXbuQPo57Cy+6AUBGlab4QICJeE+AQgRj
-         nJzbh5VJ6zI6b7PRabqSzp5ugKMqDoZ27W8poQVgLyCF8MusKaSBKFgW9u8g6uGJ5WOf
-         20ypSH2BGWi00Xv8TsnKvJQa9z+A/bB5E7s0RsgvXoOfw3SQVBX8t1XUp41TXmtRv8qX
-         LSfQ==
+        bh=tR+FPXh6Y5O5wMgic69DBql8cZiGwfBcWV0fgMBKx9s=;
+        b=CpRYBhq2PykT8p/AUtkyHy5tfCyexEVnY5ICAlbvmXCB82J1D52JiVai7rAqFH9lvY
+         NUezSzwfRZoUkbaj3T6umAtAnzYPHacIWK9CGD62GW1FdfxV66gjjGO3HOZYrfBFlxAu
+         1qAI6fyr39Jn5iePoI18e9Vjptn6o6cpiw/02jtj98RqaR1rbJJCgDtUKPwciB6pBEAD
+         husBqoO25/ePUHySvyCtDDA9DMV5Ybw4kh5Lft3Xuxs6sf2Q3j+R6Ea5D/ZdKI6Wsfj6
+         30G3pI8Pte/j+PXO+7uCyQuyhB4/EtpbXH/1p0a6qlSpf05sN6lWq2R92zWWVpa263BV
+         AxNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=i/TBun5atiNc/oQ2kl9/mKAezutuVYs7tQgzxFAmUZ4=;
-        b=qIDQVOia3gdWujXVbg3n8osjIYdLII7sOJvrY82Di3bcbIC3eFGLew9EtyBLoKNsqU
-         UDUyyONxWibb05aa30jdh46viXYsUnUrq3y1qBMSc8yFzf3xYdnBBjesqGduAqtDg/Nu
-         An4Eef0GJYsE+lUiBrO8jdwdVci3Q4Qe5dkmZ/2hNGpCKAVMq+LKCHMjaKbhDd2PMoRC
-         R9o65V8tkvUXbqR3YpdUs5kYkIX+R9Xh4Kthuvqay6Tw9+z6aNtW1kG+4xoYBZJISy88
-         WdFZVxCmXQur2Ycba52ThI88IZ1EKQEUUBJV4V83+Z/AWgKbkl+FebJfJe+rLHoJnjwY
-         y2gw==
-X-Gm-Message-State: AFqh2kpTs2eamrz5BjN2+dKDBYc+6KmVFja8e/ol5Qbk7RDSXnOvf9KM
-        4bbdPP2YJdzBAQ0gmr1qIgu3EhyaSs7aUw==
-X-Google-Smtp-Source: AMrXdXs14dsBqvFGlYpUgSd+18f7NSkvXIlMm/kCzx4upzUz4VeeMxfcO2wpz/BhOQFpgs3D0lhUzQ==
-X-Received: by 2002:a05:6402:1f87:b0:49d:221b:4b3f with SMTP id c7-20020a0564021f8700b0049d221b4b3fmr7023221edc.21.1674043723357;
-        Wed, 18 Jan 2023 04:08:43 -0800 (PST)
+        bh=tR+FPXh6Y5O5wMgic69DBql8cZiGwfBcWV0fgMBKx9s=;
+        b=RH0ALi6ZcBBkawDNwoI1sgBwYOXAuOs+eM7enTSSYKh/SUZTqDlpQcEu3ABDiGyB8A
+         r/9D/XBxw5CtGQZo+Hg+t/6WvBI/3JwM/vLNSx9pN9yEk0D7SdsRcwTG7lWL7lA/bwVD
+         pB/NhzpMC/CkBkucL5APRcXoHb7dDtL23UaZmkBz5W4dfcrbh8amuejPkzqQOp76y+qH
+         Z5+CptnbEmEfifhGSN+4kXQXqRvg+SfF64+f10GMa2+IhaeNRyJrIC/zUlBlSiawEK9a
+         rGvP6x212Dw+Ap4AvxzL4jtfmmFsBJKMB1tkdSGW10vRL3q898Ga9VIysBoPz50Vv3Nj
+         DBVw==
+X-Gm-Message-State: AFqh2kqpebBPtNS8A/MSkzhE0f6v7YtCeRxxmwDT8+5mEcT4BeC/usdY
+        TB+X/DX+49CrVxLJIYSEvHsO5WnAD55WgA==
+X-Google-Smtp-Source: AMrXdXs/tGbJxB1No5ee0GWq/LC2J+psTUKd/9uWIwBxLRLZYOdYKld3Po9xfTiymX+wKbJPMql9cg==
+X-Received: by 2002:a05:6402:1f8b:b0:499:b4b1:5266 with SMTP id c11-20020a0564021f8b00b00499b4b15266mr7602920edc.40.1674043721401;
+        Wed, 18 Jan 2023 04:08:41 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b15-20020aa7c90f000000b004615f7495e0sm14120053edt.8.2023.01.18.04.08.42
+        by smtp.gmail.com with ESMTPSA id b15-20020aa7c90f000000b004615f7495e0sm14120053edt.8.2023.01.18.04.08.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 04:08:42 -0800 (PST)
+        Wed, 18 Jan 2023 04:08:40 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 10/19] http-backend.c: fix cmd_main() memory leak, refactor reg{exec,free}()
-Date:   Wed, 18 Jan 2023 13:08:23 +0100
-Message-Id: <patch-v5-10.19-928dea2d4ee-20230118T120334Z-avarab@gmail.com>
+Subject: [PATCH v5 08/19] worktree: fix a trivial leak in prune_worktrees()
+Date:   Wed, 18 Jan 2023 13:08:21 +0100
+Message-Id: <patch-v5-08.19-02248aca3eb-20230118T120334Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1225.g30a3d88132d
 In-Reply-To: <cover-v5-00.19-00000000000-20230118T120334Z-avarab@gmail.com>
 References: <cover-v4-00.19-00000000000-20230117T151201Z-avarab@gmail.com> <cover-v5-00.19-00000000000-20230118T120334Z-avarab@gmail.com>
@@ -70,48 +70,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak that's been with us ever since
-2f4038ab337 (Git-aware CGI to provide dumb HTTP transport,
-2009-10-30). In this case we're not calling regerror() after a failed
-regexec(), and don't otherwise use "re" afterwards.
+We were leaking both the "struct strbuf" in prune_worktrees(), as well
+as the "path" we got from should_prune_worktree(). Since these were
+the only two uses of the "struct string_list" let's change it to a
+"DUP" and push these to it with "string_list_append_nodup()".
 
-We can therefore simplify this code by calling regfree() right after
-the regexec(). An alternative fix would be to add a regfree() to both
-the "return" and "break" path in this for-loop.
+For the string_list_append_nodup() we could also string_list_append()
+the main_path.buf, and then strbuf_release(&main_path) right away. But
+doing it this way avoids an allocation, as we already have the "struct
+strbuf" prepared for appending to "kept".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- http-backend.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ builtin/worktree.c         | 6 +++---
+ t/t2401-worktree-prune.sh  | 1 +
+ t/t2406-worktree-repair.sh | 1 +
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/http-backend.c b/http-backend.c
-index 67819d931ce..8ab58e55f85 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -759,10 +759,14 @@ int cmd_main(int argc, const char **argv)
- 		struct service_cmd *c = &services[i];
- 		regex_t re;
- 		regmatch_t out[1];
-+		int ret;
- 
- 		if (regcomp(&re, c->pattern, REG_EXTENDED))
- 			die("Bogus regex in service table: %s", c->pattern);
--		if (!regexec(&re, dir, 1, out, 0)) {
-+		ret = regexec(&re, dir, 1, out, 0);
-+		regfree(&re);
-+
-+		if (!ret) {
- 			size_t n;
- 
- 			if (strcmp(method, c->method))
-@@ -774,7 +778,6 @@ int cmd_main(int argc, const char **argv)
- 			dir[out[0].rm_so] = 0;
- 			break;
- 		}
--		regfree(&re);
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 591d659faea..865ce9be22b 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -173,7 +173,7 @@ static void prune_worktrees(void)
+ {
+ 	struct strbuf reason = STRBUF_INIT;
+ 	struct strbuf main_path = STRBUF_INIT;
+-	struct string_list kept = STRING_LIST_INIT_NODUP;
++	struct string_list kept = STRING_LIST_INIT_DUP;
+ 	DIR *dir = opendir(git_path("worktrees"));
+ 	struct dirent *d;
+ 	if (!dir)
+@@ -184,14 +184,14 @@ static void prune_worktrees(void)
+ 		if (should_prune_worktree(d->d_name, &reason, &path, expire))
+ 			prune_worktree(d->d_name, reason.buf);
+ 		else if (path)
+-			string_list_append(&kept, path)->util = xstrdup(d->d_name);
++			string_list_append_nodup(&kept, path)->util = xstrdup(d->d_name);
  	}
+ 	closedir(dir);
  
- 	if (!cmd)
+ 	strbuf_add_absolute_path(&main_path, get_git_common_dir());
+ 	/* massage main worktree absolute path to match 'gitdir' content */
+ 	strbuf_strip_suffix(&main_path, "/.");
+-	string_list_append(&kept, strbuf_detach(&main_path, NULL));
++	string_list_append_nodup(&kept, strbuf_detach(&main_path, NULL));
+ 	prune_dups(&kept);
+ 	string_list_clear(&kept, 1);
+ 
+diff --git a/t/t2401-worktree-prune.sh b/t/t2401-worktree-prune.sh
+index 3d28c7f06b2..568a47ec426 100755
+--- a/t/t2401-worktree-prune.sh
++++ b/t/t2401-worktree-prune.sh
+@@ -5,6 +5,7 @@ test_description='prune $GIT_DIR/worktrees'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success initialize '
+diff --git a/t/t2406-worktree-repair.sh b/t/t2406-worktree-repair.sh
+index 5c44453e1c1..8970780efcc 100755
+--- a/t/t2406-worktree-repair.sh
++++ b/t/t2406-worktree-repair.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='test git worktree repair'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
 -- 
 2.39.0.1225.g30a3d88132d
 
