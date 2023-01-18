@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D78AC00A5A
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 03:31:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23371C00A5A
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 03:31:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229827AbjARDbB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Jan 2023 22:31:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51924 "EHLO
+        id S229832AbjARDb2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Jan 2023 22:31:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbjARDad (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Jan 2023 22:30:33 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5016521D3
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 19:30:27 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id q8so11937879wmo.5
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 19:30:27 -0800 (PST)
+        with ESMTP id S229777AbjARDaf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Jan 2023 22:30:35 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDF9E53E45
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 19:30:30 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id f12-20020a7bc8cc000000b003daf6b2f9b9so519170wml.3
+        for <git@vger.kernel.org>; Tue, 17 Jan 2023 19:30:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AJsZr9uc7gd0E/0o2TzFzv3kDRvmk40ohT91L6SsIrA=;
-        b=MyOZr+MXj1xV26+gRC5QgmPRrAl/VZmm3Yl5b66iHcPUC4RjQgS4ml6IRyR5a3PVCW
-         kRLAuBD9YT2yH5dR7WDeM5z6f2SOfwNs7Cq6O1Xu2Ix5YquhBXmAhrQJKUdgOju9LjHB
-         kLmKwOFoYHy4RZoWaOJzdOG9AIvH/iiUh8/ORw5y6mcYUOONJo6DMtpsrd4Y5o6Ry0j/
-         nNHX5Cdd/8Kk1xF5ygwjue4DgF2OdJLs0GU7AOqK2ZKpBNbb9AicUlbl7HDqu4Jlxh3A
-         zBChwThKidLxD4bNUwKcpVX9AsTz878emiMpvptALCTj6SP4XIGRndxqVs/DCnSp0MZo
-         l1rQ==
+        bh=8E4ibgh1OESySHvLIe11OZBSXNLpINkcmnXPIcQ6rbo=;
+        b=AWx+tmqSVGkbPhwKvwlqdY/RFCEBEERHfkfDM4oqAXKMeAN4dy3t1G1q2+os/WLq1p
+         o9+Y6hMyaL7jEYx66iFC3qK/sswi8dj1ehd2/+wDPg1vKI0UWEm3/YQZHyBPsC5sXJEj
+         36MWGm14BVWfUnJnP8ojvSfK5qlyoO1pMsikuKoC3+S3WUq+4Gw66QpcdcMmxDy9VfGQ
+         kH8s23EpBExln7xdv8jm6vVgo3H646vvf9AJZuCiA029A5TppfLgY9Ezw/WDPE2eZgsP
+         dXsvWKpGztHePHlC1/4FrleaAYk8yAdduUsuixUxgeIiDfXcX7VxF57BDvQmQOYsfl9q
+         FJzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AJsZr9uc7gd0E/0o2TzFzv3kDRvmk40ohT91L6SsIrA=;
-        b=HkkzETAMTHIAkDudaK5f2CfkgnVDfD4SrVEFnSO6AjAgchKarUmbFpRFKM5Q1ZiBjD
-         V/1gS8MdD01DHkil42yaMhiw/8vjcw42pa/StQLXBtvvNzhnIaTbAV2otDqZADPRbyGY
-         zs5S81dtvKYcnDUu2ePImJHupuBTCg69U21OFVIoJLheI7cboqoeJGoZgBEF8IpCwKjY
-         k1GfaIaxHZPO5oniz96kVffeFu+pKzrQPzKHEaf1yGHHaR8vZIbVnvT304bbEG0RwGYc
-         3N7JHHJVF3lFMqaIAqmHWEEH+XAHcuT5mblaGgQrX8LcTRg6IrfwsFZ2rMXWzp2cl6l4
-         kYQw==
-X-Gm-Message-State: AFqh2kqZ3X2DBmikj7h3LWnVG3cs+MOjMo202JPVPwAu0eXH4obeqDWD
-        28TNqnccENP4qRTIMrkcJix9BHLtyKo=
-X-Google-Smtp-Source: AMrXdXu86aio7uUZCzCG7UC1vdSOccbHELsl2822bThqFjqrvF/H4T1IdBh6Ao4KahsNuxkLemXH4g==
-X-Received: by 2002:a05:600c:202:b0:3da:f80d:7230 with SMTP id 2-20020a05600c020200b003daf80d7230mr5036914wmi.8.1674012626083;
-        Tue, 17 Jan 2023 19:30:26 -0800 (PST)
+        bh=8E4ibgh1OESySHvLIe11OZBSXNLpINkcmnXPIcQ6rbo=;
+        b=IDhPAnMjaApOYuJlr3+2ilpefpHtXE9DpGHB+7kRchD5tfd4L+nYRVLP//Mrg3AeDE
+         oZ8g2PKIvZMZXKM86pZl2bhqAo8Rxvf6Wz176TmpvdmMNNB2mFidZGvb27oCqPpaF3Qu
+         3Uf/UVjwoMHTIcJH+nyzzCWVK3okGHJY68JKetKJrRnK5D0mlm9gZWx8c/lTZh3v0Acm
+         ZJDClBYzdLje0f650oJrNWnnmZGoZU+TM8Qi5qExOiZR7ZjNe1KJCIJgIjuPw7drdLf+
+         te284IuOoBKC/d0wKQLVN8HJo1CEv8I+Pwnla5Lix6v9uMdG8zKil38yT8E/fZd5AHtA
+         Tb3w==
+X-Gm-Message-State: AFqh2kp7ZFqtuLUWlmT+JCrpqKcaYhroZFSb9RJyao0hUXpcINOfiTs5
+        w+XU07qCVxmc/e0tdmlCWSkZT8RjpbE=
+X-Google-Smtp-Source: AMrXdXvnfwDyqjFC67jQZt5Nr5wDdW17PXgFwNMsVoHHqdjH6roqUY5NJldFTMt0YrROSyy/55X/1w==
+X-Received: by 2002:a05:600c:511f:b0:3d0:bd9:edd4 with SMTP id o31-20020a05600c511f00b003d00bd9edd4mr5075688wms.0.1674012629137;
+        Tue, 17 Jan 2023 19:30:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i17-20020a05600c355100b003dafcd9b750sm578697wmq.43.2023.01.17.19.30.25
+        by smtp.gmail.com with ESMTPSA id l22-20020a05600c4f1600b003db0b0cc2afsm619782wmq.30.2023.01.17.19.30.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 19:30:25 -0800 (PST)
-Message-Id: <ab06ac9b965b827612594e3578b7be2a15ec1586.1674012618.git.gitgitgadget@gmail.com>
+        Tue, 17 Jan 2023 19:30:28 -0800 (PST)
+Message-Id: <bc1ac8d3eb3ac6e1161f6b6b67343874c10cd14d.1674012618.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
 References: <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
         <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 18 Jan 2023 03:30:12 +0000
-Subject: [PATCH v6 07/12] test-http-server: pass Git requests to http-backend
+Date:   Wed, 18 Jan 2023 03:30:16 +0000
+Subject: [PATCH v6 11/12] http: read HTTP WWW-Authenticate response headers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,217 +77,207 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Teach the test-http-sever test helper to forward Git requests to the
-`git-http-backend`.
+Read and store the HTTP WWW-Authenticate response headers made for
+a particular request.
 
-Introduce a new test script t5556-http-auth.sh that spins up the test
-HTTP server and attempts an `ls-remote` on the served repository,
-without any authentication.
+This will allow us to pass important authentication challenge
+information to credential helpers or others that would otherwise have
+been lost.
+
+According to RFC2616 Section 4.2 [1], header field names are not
+case-sensitive meaning when collecting multiple values for the same
+field name, we can just use the case of the first observed instance of
+each field name and no normalisation is required.
+
+libcurl only provides us with the ability to read all headers recieved
+for a particular request, including any intermediate redirect requests
+or proxies. The lines returned by libcurl include HTTP status lines
+delinating any intermediate requests such as "HTTP/1.1 200". We use
+these lines to reset the strvec of WWW-Authenticate header values as
+we encounter them in order to only capture the final response headers.
+
+The collection of all header values matching the WWW-Authenticate
+header is complicated by the fact that it is legal for header fields to
+be continued over multiple lines, but libcurl only gives us one line at
+a time.
+
+In the future [2] we may be able to leverage functions to read headers
+from libcurl itself, but as of today we must do this ourselves.
+
+[1] https://datatracker.ietf.org/doc/html/rfc2616#section-4.2
+[2] https://daniel.haxx.se/blog/2022/03/22/a-headers-api-for-libcurl/
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- t/helper/test-http-server.c |  71 ++++++++++++++++++++++++
- t/t5556-http-auth.sh        | 107 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 178 insertions(+)
- create mode 100755 t/t5556-http-auth.sh
+ credential.c |  1 +
+ credential.h | 15 +++++++++
+ http.c       | 94 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 110 insertions(+)
 
-diff --git a/t/helper/test-http-server.c b/t/helper/test-http-server.c
-index 36f4a54fe6d..ae17c738259 100644
---- a/t/helper/test-http-server.c
-+++ b/t/helper/test-http-server.c
-@@ -291,8 +291,79 @@ done:
- 	return result;
+diff --git a/credential.c b/credential.c
+index f6389a50684..897b4679333 100644
+--- a/credential.c
++++ b/credential.c
+@@ -22,6 +22,7 @@ void credential_clear(struct credential *c)
+ 	free(c->username);
+ 	free(c->password);
+ 	string_list_clear(&c->helpers, 0);
++	strvec_clear(&c->wwwauth_headers);
+ 
+ 	credential_init(c);
+ }
+diff --git a/credential.h b/credential.h
+index f430e77fea4..6f2e5bc610b 100644
+--- a/credential.h
++++ b/credential.h
+@@ -2,6 +2,7 @@
+ #define CREDENTIAL_H
+ 
+ #include "string-list.h"
++#include "strvec.h"
+ 
+ /**
+  * The credentials API provides an abstracted way of gathering username and
+@@ -115,6 +116,19 @@ struct credential {
+ 	 */
+ 	struct string_list helpers;
+ 
++	/**
++	 * A `strvec` of WWW-Authenticate header values. Each string
++	 * is the value of a WWW-Authenticate header in an HTTP response,
++	 * in the order they were received in the response.
++	 */
++	struct strvec wwwauth_headers;
++
++	/**
++	 * Internal use only. Used to keep track of split header fields
++	 * in order to fold multiple lines into one value.
++	 */
++	unsigned header_is_last_match:1;
++
+ 	unsigned approved:1,
+ 		 configured:1,
+ 		 quit:1,
+@@ -130,6 +144,7 @@ struct credential {
+ 
+ #define CREDENTIAL_INIT { \
+ 	.helpers = STRING_LIST_INIT_DUP, \
++	.wwwauth_headers = STRVEC_INIT, \
  }
  
-+static int is_git_request(struct req *req)
+ /* Initialize a credential structure, setting all fields to empty. */
+diff --git a/http.c b/http.c
+index a2a80318bb2..595c93bc7a3 100644
+--- a/http.c
++++ b/http.c
+@@ -183,6 +183,98 @@ size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ 	return nmemb;
+ }
+ 
++static size_t fwrite_wwwauth(char *ptr, size_t eltsize, size_t nmemb, void *p)
 +{
-+	static regex_t *smart_http_regex;
-+	static int initialized;
-+
-+	if (!initialized) {
-+		smart_http_regex = xmalloc(sizeof(*smart_http_regex));
-+		/*
-+		 * This regular expression matches all dumb and smart HTTP
-+		 * requests that are currently in use, and defined in
-+		 * Documentation/gitprotocol-http.txt.
-+		 *
-+		 */
-+		if (regcomp(smart_http_regex, "^/(HEAD|info/refs|"
-+			    "objects/info/[^/]+|git-(upload|receive)-pack)$",
-+			    REG_EXTENDED)) {
-+			warning("could not compile smart HTTP regex");
-+			smart_http_regex = NULL;
-+		}
-+		initialized = 1;
-+	}
-+
-+	return smart_http_regex &&
-+		!regexec(smart_http_regex, req->uri_path.buf, 0, NULL, 0);
-+}
-+
-+static enum worker_result do__git(struct req *req)
-+{
-+	const char *ok = "HTTP/1.1 200 OK\r\n";
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	int res;
++	size_t size = st_mult(eltsize, nmemb);
++	struct strvec *values = &http_auth.wwwauth_headers;
++	struct strbuf buf = STRBUF_INIT;
++	const char *val;
 +
 +	/*
-+	 * Note that we always respond with a 200 OK response even if the
-+	 * http-backend process exits with an error. This helper is intended
-+	 * only to be used to exercise the HTTP auth handling in the Git client,
-+	 * and specifically around authentication (not handled by http-backend).
++	 * Header lines may not come NULL-terminated from libcurl so we must
++	 * limit all scans to the maximum length of the header line, or leverage
++	 * strbufs for all operations.
 +	 *
-+	 * If we wanted to respond with a more 'valid' HTTP response status then
-+	 * we'd need to buffer the output of http-backend, wait for and grok the
-+	 * exit status of the process, then write the HTTP status line followed
-+	 * by the http-backend output. This is outside of the scope of this test
-+	 * helper's use at time of writing.
++	 * In addition, it is possible that header values can be split over
++	 * multiple lines as per RFC 2616 (even though this has since been
++	 * deprecated in RFC 7230). A continuation header field value is
++	 * identified as starting with a space or horizontal tab.
++	 *
++	 * The formal definition of a header field as given in RFC 2616 is:
++	 *
++	 *   message-header = field-name ":" [ field-value ]
++	 *   field-name     = token
++	 *   field-value    = *( field-content | LWS )
++	 *   field-content  = <the OCTETs making up the field-value
++	 *                    and consisting of either *TEXT or combinations
++	 *                    of token, separators, and quoted-string>
 +	 */
-+	if (write(STDOUT_FILENO, ok, strlen(ok)) < 0)
-+		return error(_("could not send '%s'"), ok);
 +
-+	strvec_pushf(&cp.env, "REQUEST_METHOD=%s", req->method);
-+	strvec_pushf(&cp.env, "PATH_TRANSLATED=%s",
-+			req->uri_path.buf);
-+	strvec_push(&cp.env, "SERVER_PROTOCOL=HTTP/1.1");
-+	if (req->query_args.len)
-+		strvec_pushf(&cp.env, "QUERY_STRING=%s",
-+				req->query_args.buf);
-+	if (req->content_type)
-+		strvec_pushf(&cp.env, "CONTENT_TYPE=%s",
-+				req->content_type);
-+	if (req->content_length >= 0)
-+		strvec_pushf(&cp.env, "CONTENT_LENGTH=%" PRIdMAX,
-+				(intmax_t)req->content_length);
-+	cp.git_cmd = 1;
-+	strvec_push(&cp.args, "http-backend");
-+	res = run_command(&cp);
-+	close(STDOUT_FILENO);
-+	close(STDIN_FILENO);
-+	return !!res;
++	strbuf_add(&buf, ptr, size);
++
++	/* Strip the CRLF that should be present at the end of each field */
++	strbuf_trim_trailing_newline(&buf);
++
++	/* Start of a new WWW-Authenticate header */
++	if (skip_iprefix(buf.buf, "www-authenticate:", &val)) {
++		while (isspace(*val))
++			val++;
++
++		strvec_push(values, val);
++		http_auth.header_is_last_match = 1;
++		goto exit;
++	}
++
++	/*
++	 * This line could be a continuation of the previously matched header
++	 * field. If this is the case then we should append this value to the
++	 * end of the previously consumed value.
++	 * Continuation lines start with at least one whitespace, maybe more,
++	 * so we should collapse these down to a single SP (valid per the spec).
++	 */
++	if (http_auth.header_is_last_match && isspace(*buf.buf)) {
++		/* Trim leading whitespace from this continuation hdr line. */
++		strbuf_ltrim(&buf);
++
++		/*
++		 * At this point we should always have at least one existing
++		 * value, even if it is empty. Do not bother appending the new
++		 * value if this continuation header is itself empty.
++		 */
++		if (!values->nr) {
++			BUG("should have at least one existing header value");
++		} else if (buf.len) {
++			char *prev = xstrdup(values->v[values->nr - 1]);
++
++			/* Join two non-empty values with a single space. */
++			const char *const sp = *prev ? " " : "";
++
++			strvec_pop(values);
++			strvec_pushf(values, "%s%s%s", prev, sp, buf.buf);
++			free(prev);
++		}
++
++		goto exit;
++	}
++
++	/* This is the start of a new header we don't care about */
++	http_auth.header_is_last_match = 0;
++
++	/*
++	 * If this is a HTTP status line and not a header field, this signals
++	 * a different HTTP response. libcurl writes all the output of all
++	 * response headers of all responses, including redirects.
++	 * We only care about the last HTTP request response's headers so clear
++	 * the existing array.
++	 */
++	if (istarts_with(buf.buf, "http/"))
++		strvec_clear(values);
++
++exit:
++	strbuf_release(&buf);
++	return size;
 +}
 +
- static enum worker_result dispatch(struct req *req)
+ size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
  {
-+	if (is_git_request(req))
-+		return do__git(req);
+ 	return nmemb;
+@@ -1864,6 +1956,8 @@ static int http_request(const char *url,
+ 					 fwrite_buffer);
+ 	}
+ 
++	curl_easy_setopt(slot->curl, CURLOPT_HEADERFUNCTION, fwrite_wwwauth);
 +
- 	return send_http_error(STDOUT_FILENO, 501, "Not Implemented", -1, NULL,
- 			       WR_OK | WR_HANGUP);
- }
-diff --git a/t/t5556-http-auth.sh b/t/t5556-http-auth.sh
-new file mode 100755
-index 00000000000..ce1abffa6aa
---- /dev/null
-+++ b/t/t5556-http-auth.sh
-@@ -0,0 +1,107 @@
-+#!/bin/sh
-+
-+test_description='test http auth header and credential helper interop'
-+
-+TEST_NO_CREATE_REPO=1
-+. ./test-lib.sh
-+
-+test_set_port GIT_TEST_HTTP_PROTOCOL_PORT
-+
-+# Setup a repository
-+#
-+REPO_DIR="$TRASH_DIRECTORY"/repo
-+
-+# Setup some lookback URLs where test-http-server will be listening.
-+# We will spawn it directly inside the repo directory, so we avoid
-+# any need to configure directory mappings etc - we only serve this
-+# repository from the root '/' of the server.
-+#
-+HOST_PORT=127.0.0.1:$GIT_TEST_HTTP_PROTOCOL_PORT
-+ORIGIN_URL=http://$HOST_PORT/
-+
-+# The pid-file is created by test-http-server when it starts.
-+# The server will shutdown if/when we delete it (this is easier than
-+# killing it by PID).
-+#
-+PID_FILE="$TRASH_DIRECTORY"/pid-file.pid
-+SERVER_LOG="$TRASH_DIRECTORY"/OUT.server.log
-+
-+PATH="$GIT_BUILD_DIR/t/helper/:$PATH" && export PATH
-+
-+test_expect_success 'setup repos' '
-+	test_create_repo "$REPO_DIR" &&
-+	git -C "$REPO_DIR" branch -M main
-+'
-+
-+stop_http_server () {
-+	if ! test -f "$PID_FILE"
-+	then
-+		return 0
-+	fi
-+	#
-+	# The server will shutdown automatically when we delete the pid-file.
-+	#
-+	rm -f "$PID_FILE"
-+	#
-+	# Give it a few seconds to shutdown (mainly to completely release the
-+	# port before the next test start another instance and it attempts to
-+	# bind to it).
-+	#
-+	for k in 0 1 2 3 4
-+	do
-+		if grep -q "Starting graceful shutdown" "$SERVER_LOG"
-+		then
-+			return 0
-+		fi
-+		sleep 1
-+	done
-+
-+	echo "stop_http_server: timeout waiting for server shutdown"
-+	return 1
-+}
-+
-+start_http_server () {
-+	#
-+	# Launch our server into the background in repo_dir.
-+	#
-+	(
-+		cd "$REPO_DIR"
-+		test-http-server --verbose \
-+			--listen=127.0.0.1 \
-+			--port=$GIT_TEST_HTTP_PROTOCOL_PORT \
-+			--reuseaddr \
-+			--pid-file="$PID_FILE" \
-+			"$@" \
-+			2>"$SERVER_LOG" &
-+	)
-+	#
-+	# Give it a few seconds to get started.
-+	#
-+	for k in 0 1 2 3 4
-+	do
-+		if test -f "$PID_FILE"
-+		then
-+			return 0
-+		fi
-+		sleep 1
-+	done
-+
-+	echo "start_http_server: timeout waiting for server startup"
-+	return 1
-+}
-+
-+per_test_cleanup () {
-+	stop_http_server &&
-+	rm -f OUT.*
-+}
-+
-+test_expect_success 'http auth anonymous no challenge' '
-+	test_when_finished "per_test_cleanup" &&
-+
-+	start_http_server &&
-+
-+	# Attempt to read from a protected repository
-+	git ls-remote $ORIGIN_URL
-+'
-+
-+test_done
+ 	accept_language = http_get_accept_language_header();
+ 
+ 	if (accept_language)
 -- 
 gitgitgadget
 
