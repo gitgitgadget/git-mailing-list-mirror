@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA54FC38147
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 16:14:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB14AC38159
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 16:14:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230380AbjARQOS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 11:14:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47192 "EHLO
+        id S229972AbjARQOT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 11:14:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbjARQNg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 11:13:36 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEE57303E3
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:09:30 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id vw16so21276642ejc.12
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:09:30 -0800 (PST)
+        with ESMTP id S230239AbjARQNh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 11:13:37 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 602403250E
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:09:32 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id kt14so25531742ejc.3
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 08:09:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oqE5wxpe0Zeqdrb9j7YRheUEknF+3PccLdohqn+TZAo=;
-        b=DHs+Hd1vARWTtARESmgtyWinMqYNhAtN/oVJ8KirenWpByvpxtNX+/XtGfn0R2udoh
-         TVrzHY7JQpYM81g3hpesNGj8AQc0j4SEH1CGJ9lPQV6w1Pl0EsE9IzLwwhiyefvdXUcu
-         aWLQ/4rQD5iuxKMsUeAYhH9R1uBCWRTt77JmlY3otVIlXb1Hpc+9zkjcZP/NIIGxHqkX
-         oHsyvmC6kmwnxPlaAUuELA1YhjmeM76xv0ocs/g5HVYOkyd1di9AklKOs1rWrbuiNiDH
-         HS2cdjWmVVy/lXO4p/Qhbe0no8eH84poYrEy1h1Nm3jVXZnrr0jHWxU8fdmBMmaxT2qB
-         M32A==
+        bh=V5LVRAk+TBXjsdmx9T0iYBzU2Pp235dr80UzXOD8kjo=;
+        b=aL77JgG/eiq1TCoaWl+1TD+Xd8YGjRwpjg8eDMrfMazI8NndMZFkup2apsrGrs3LfY
+         U3Vcx8It4TeGkivzlsc2BiBQYSqa8kJ9E/r70AkiIyJwesd/9jjgu5b6fJJBRnyypBkm
+         A1qSeTQWKmnVqe1cyFvnpOumFqNTDQc7tep5unn+ueM0uoM0GBivekT4srvZyUuWkKqi
+         aoc2kOTyYbfWRJy9kwspbMZggOXTdRRHHFwfOju4RnDsygozgHT8QV7LeY66rVerRDtR
+         MB+gqDlKXlDG9lDNrs8RSk+dys+NaNnDxqCmQBeW94Izo9B++MZdHHPVZgeESuUzHHME
+         uKjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oqE5wxpe0Zeqdrb9j7YRheUEknF+3PccLdohqn+TZAo=;
-        b=AErJ3jo7nYwoGN7tje5vJnzxmLRp4F46W9V49UoO/+yToaSRmvRIObBlddJYx6cae6
-         2gktJaQE/F+y4watrAvbOLrOrVyAfLuIi/alywovxTX7DWaCKXiVZ1jxdNrNM5dbl31r
-         9JOQ2Bq4Q4UXmG66KIGA5KC4RkCfjy0EL5ylTnT7mXFgyL+DgcZZY4CKdpjLhsDpTKtW
-         7xJOt/bvgNGiQnb0vHxvL6AHJ9KGVjzdq4CpE+r4McXDfX24ifBQt3racXOMGnjOKADl
-         Uh/XuujwF3joUujKTehNHzOAPCDZhVYRMif7GLAVyAHc4TFBn4ZaD6bIIsTOIJECw32F
-         xaZw==
-X-Gm-Message-State: AFqh2kqunbUsB4l1iiFq1eYn4Oerq6L/RAv6jq2aXwwQO59X+oioq4mB
-        cPgsAq7TpFMl82K1+rT2QU8ZXhP+/I+TvA==
-X-Google-Smtp-Source: AMrXdXv0CGaKgOxUxzg4qCtJouv7I1gAioNakDwaoeMri6pi80GMWYlq3S1hsUvTpF6wHhKPBis6MQ==
-X-Received: by 2002:a17:907:3e18:b0:84d:3403:f4f2 with SMTP id hp24-20020a1709073e1800b0084d3403f4f2mr10292368ejc.62.1674058169071;
-        Wed, 18 Jan 2023 08:09:29 -0800 (PST)
+        bh=V5LVRAk+TBXjsdmx9T0iYBzU2Pp235dr80UzXOD8kjo=;
+        b=3Oak4pcv/V0dUlRXz46qSCk/e/YXk39O9u1FMb2HjPgdf2KotdBkvTAU72/YrErs4H
+         uAM6OeME6oPCMfxkejzgaz7KRAPdu3tlmm4XafTgcVj3nAS5usWF4eGyv9U/88goPQ/0
+         Rp5vrn3289qafw5N8jVzT1GIvFO3uXrMRzVctEKe4WJ/g6urzEFt4oYiW0Sb28tH5J8i
+         o1k7bg27AmdtdaSaStyoPcdRAJPYKpMr8i7vQyQhZHdw4NMB791jVCdRfmBgIJ7satrn
+         GDpIVJp0D4IwFf4+dEi7pO6B0qDHh+Izd2pGSltbmYgstXUld+nzCuBuY+JuQfreyo9A
+         8n3w==
+X-Gm-Message-State: AFqh2kqZdgdvn0vVAR5pMX7eDJrmUpyrlWwBZ6VtkmTlHYeKlKi/9kAS
+        Hu3Vt3gdhlr1i2oTCEIDHQQOnPI+4sPeDA==
+X-Google-Smtp-Source: AMrXdXtDcOUGIzfvQQgQiIazpJ++9EdQhNWTH7rWKBglDIlHqQ01b5er/0e7f5Vw5AknsJHOVT/RLA==
+X-Received: by 2002:a17:906:af94:b0:86d:bbf9:302 with SMTP id mj20-20020a170906af9400b0086dbbf90302mr7293680ejb.20.1674058170486;
+        Wed, 18 Jan 2023 08:09:30 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id du1-20020a17090772c100b0084bfd56fb3bsm14778202ejc.162.2023.01.18.08.09.28
+        by smtp.gmail.com with ESMTPSA id du1-20020a17090772c100b0084bfd56fb3bsm14778202ejc.162.2023.01.18.08.09.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 08:09:28 -0800 (PST)
+        Wed, 18 Jan 2023 08:09:30 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 4/8] builtin/revert.c: move free-ing of "revs" to replay_opts_release()
-Date:   Wed, 18 Jan 2023 17:09:12 +0100
-Message-Id: <patch-v3-4.8-9f72cc6e46b-20230118T160600Z-avarab@gmail.com>
+Subject: [PATCH v3 6/8] sequencer.c: always free() the "msgbuf" in do_pick_commit()
+Date:   Wed, 18 Jan 2023 17:09:14 +0100
+Message-Id: <patch-v3-6.8-c07dc006c6d-20230118T160600Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1225.g30a3d88132d
 In-Reply-To: <cover-v3-0.8-00000000000-20230118T160600Z-avarab@gmail.com>
 References: <cover-v2-0.9-00000000000-20230112T124201Z-avarab@gmail.com> <cover-v3-0.8-00000000000-20230118T160600Z-avarab@gmail.com>
@@ -72,60 +72,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In [1] and [2] I added the code being moved here to cmd_revert() and
-cmd_cherry_pick(), now that we've got a "replay_opts_release()" for
-the "struct replay_opts" it should know how to free these "revs",
-rather than having these users reach into the struct to free its
-individual members.
+In [1] the strbuf_release(&msgbuf) was moved into this
+do_pick_commit(), but didn't take into account the case of [2], where
+we'd return before the strbuf_release(&msgbuf).
 
-1. d1ec656d68f (cherry-pick: free "struct replay_opts" members,
-   2022-11-08)
-2. fd74ac95ac3 (revert: free "struct replay_opts" members, 2022-07-01)
+Then when the "fixup" support was added in [3] this leak got worse, as
+in this error case we added another place where we'd "return" before
+reaching the strbuf_release().
+
+This changes the behavior so that we'll call
+update_abort_safety_file() in these cases where we'd previously
+"return", but as noted in [4] "update_abort_safety_file() is a no-op
+when rebasing and you're changing code that is only run when
+rebasing.". Here "no-op" refers to the early return in
+update_abort_safety_file() if git_path_seq_dir() doesn't exist.
+
+1. 452202c74b8 (sequencer: stop releasing the strbuf in
+   write_message(), 2016-10-21)
+2. f241ff0d0a9 (prepare the builtins for a libified merge_recursive(),
+   2016-07-26)
+3. 6e98de72c03 (sequencer (rebase -i): add support for the 'fixup' and
+   'squash' commands, 2017-01-02)
+4. https://lore.kernel.org/git/bcace50b-a4c3-c468-94a3-4fe0c62b3671@dunelm.org.uk/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/revert.c | 6 ------
- sequencer.c      | 3 +++
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ sequencer.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 1cab16bf3ed..77d2035616e 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -248,9 +248,6 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- 	res = run_sequencer(argc, argv, &opts);
- 	if (res < 0)
- 		die(_("revert failed"));
--	if (opts.revs)
--		release_revisions(opts.revs);
--	free(opts.revs);
- 	replay_opts_release(&opts);
- 	return res;
- }
-@@ -263,9 +260,6 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- 	opts.action = REPLAY_PICK;
- 	sequencer_init_config(&opts);
- 	res = run_sequencer(argc, argv, &opts);
--	if (opts.revs)
--		release_revisions(opts.revs);
--	free(opts.revs);
- 	if (res < 0)
- 		die(_("cherry-pick failed"));
- 	replay_opts_release(&opts);
 diff --git a/sequencer.c b/sequencer.c
-index 8ff29262c1e..ea568d99498 100644
+index ea568d99498..2c5ed5bc5ea 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -361,6 +361,9 @@ void replay_opts_release(struct replay_opts *opts)
- 		free(opts->xopts[i]);
- 	free(opts->xopts);
- 	strbuf_release(&opts->current_fixups);
-+	if (opts->revs)
-+		release_revisions(opts->revs);
-+	free(opts->revs);
- }
+@@ -2277,8 +2277,10 @@ static int do_pick_commit(struct repository *r,
+ 		reword = 1;
+ 	else if (is_fixup(command)) {
+ 		if (update_squash_messages(r, command, commit,
+-					   opts, item->flags))
+-			return -1;
++					   opts, item->flags)) {
++			res = -1;
++			goto leave;
++		}
+ 		flags |= AMEND_MSG;
+ 		if (!final_fixup)
+ 			msg_file = rebase_path_squash_msg();
+@@ -2288,9 +2290,11 @@ static int do_pick_commit(struct repository *r,
+ 		} else {
+ 			const char *dest = git_path_squash_msg(r);
+ 			unlink(dest);
+-			if (copy_file(dest, rebase_path_squash_msg(), 0666))
+-				return error(_("could not rename '%s' to '%s'"),
+-					     rebase_path_squash_msg(), dest);
++			if (copy_file(dest, rebase_path_squash_msg(), 0666)) {
++				res = error(_("could not rename '%s' to '%s'"),
++					    rebase_path_squash_msg(), dest);
++				goto leave;
++			}
+ 			unlink(git_path_merge_msg(r));
+ 			msg_file = dest;
+ 			flags |= EDIT_MSG;
+@@ -2328,7 +2332,6 @@ static int do_pick_commit(struct repository *r,
+ 		free_commit_list(common);
+ 		free_commit_list(remotes);
+ 	}
+-	strbuf_release(&msgbuf);
  
- int sequencer_remove_state(struct replay_opts *opts)
+ 	/*
+ 	 * If the merge was clean or if it failed due to conflict, we write
+@@ -2402,6 +2405,7 @@ static int do_pick_commit(struct repository *r,
+ leave:
+ 	free_message(commit, &msg);
+ 	free(author);
++	strbuf_release(&msgbuf);
+ 	update_abort_safety_file();
+ 
+ 	return res;
 -- 
 2.39.0.1225.g30a3d88132d
 
