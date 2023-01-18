@@ -2,110 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F495C32793
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 08:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94ECDC32793
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 09:00:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229575AbjARItd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 03:49:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51864 "EHLO
+        id S229546AbjARJAl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 04:00:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229975AbjARImJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 03:42:09 -0500
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 386D0875B8
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 23:58:50 -0800 (PST)
-Received: by mail-oi1-x22a.google.com with SMTP id p185so6896509oif.2
-        for <git@vger.kernel.org>; Tue, 17 Jan 2023 23:58:50 -0800 (PST)
+        with ESMTP id S229703AbjARI7O (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 03:59:14 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B21E4614E
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 00:17:57 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id r30so8649259wrr.10
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 00:17:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x1iT/ZuSaAeoG6wOLtd3OcJJb8eyDWCJ0f5kpZ5hE7U=;
-        b=PVIZa2HM2bWHnshjrSTANbyO18s3Zls6dIgRy3ldJM9rWV1uMt+7cyY2WnUoJIwPE1
-         Af/OcLD2HwjO+44/jTy4GDaYeE8QEdLILpOfQDmKIP+m8Szjas12G2E8hwM1XvKLnF1t
-         wMtFj1rlYTAe7cZ+f3oUt6o/hSagMqDHkXleizaDhx7h7/mCqJyCtCKcZxAcF6tYNcKm
-         Kmosr7iqWthauyDOS6g52Y+5SDwTPWUznlPjMTNhnOg0fUJN4A8K7HazTauA+jQmMo1d
-         NP2mO4tMtMOc0MgcSg+KlgboLRWF4uAf99QsbbQMfv/bndE3zfbRQFRpPLdwxoQE34l3
-         0gTg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hNl2x06dc4yZteCZjT1tRTvyYDYh579liZtH1QQth9M=;
+        b=g0l8fwnb776sKLmN0dcVa1Z6qYi+2ApF+dBy5jCamMthbV4+Nu+SBXbHUxhZQMxlId
+         Rdmq2sGHYqdb4PO2jQXR1ItENBKlKqtN5OcpXFgQ1sE8y02yIlGo45QKAzbybLVKRPOT
+         oYTFrG/zhb/P744eTSgbLUfONz8jRcikRkRcP3Zp3cns7TIKD2aw/G9xsJC5kCOtuuGi
+         +9ESaI5ngB6BW2qsqTDff3pgyYWGuC8IMJak4Q8sfYW09mwZZMLZmuO0IedmdFQSLqWz
+         Z3LdG8RSTiEqTRbMNqg8ie9qNH/foEZb6haXQo124RZdeHqbHMgSs4E6YLi6NgfM8VSw
+         gTDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=x1iT/ZuSaAeoG6wOLtd3OcJJb8eyDWCJ0f5kpZ5hE7U=;
-        b=AHPWuUrhVL2B8F48PxU8BLv89+gddXs9Fwt7wNk7fZqYKV+tCbPy4kfGp2L79GdYC8
-         ieUIzYUGx+cZfFlY1oBSpz1WxCOgdgzJbMewvbWHZwCJ9npxJrHe/bd9SU3q10+a37ZH
-         +aPtRhd2MAh8SELBmmrYi9SSvrZgdqVhKIDljjdaK5lbyfKmQYX0sz4J20VyRyu2EDl/
-         KkSdeoH0dNQ+YX7N2xL2s2fZpa5rhfV+TbKXzBGcFkloyYjthldxryuTfxVOd/7IDCQz
-         koP7wv3Lc5yx9mcZ37N7HXqStt8/KJEv0E29qh1tJkkEoRmPQVJa6AuR46Qkhknw9sTZ
-         aGZA==
-X-Gm-Message-State: AFqh2kpZP79bRCE9LlaBvluPh9ffTPMqgBruV2VQW7QqMy9WyKrFgYws
-        aQi5MOrMzOUX4mmzp9HGTKC5wQVtTFUEWDByIWPAJ785fDo=
-X-Google-Smtp-Source: AMrXdXu4BZxOzJxM0xcrtZRml5U7Q+xHRKSbuaZeoQD1shxmM1nc1jayv86OMna5PetlNONd2JNbygCpiA4xJNG/33Y=
-X-Received: by 2002:a05:6808:241:b0:365:9be:db6f with SMTP id
- m1-20020a056808024100b0036509bedb6fmr302951oie.59.1674028726259; Tue, 17 Jan
- 2023 23:58:46 -0800 (PST)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hNl2x06dc4yZteCZjT1tRTvyYDYh579liZtH1QQth9M=;
+        b=R7Bd74UH2sYIXANzeE1QrvcdVnVSKDTBazAt6kKzHdJaVKtElgOHs9DbMM18UBMnde
+         0JXd2H6IqIJwPW5iTzHu1X8ZH2VBZ+oUeZQMK+sFP/hjq07NKi4aZgR7aGaKyhWc6Tfp
+         WHh1DHyIj4UCryOvkkJ8pb1y3GlzKwHPcf10mvEO0VXDLbex2pqCtUZoFdUhPs85oxdh
+         P/52+nkJze+NYSl/fkMUwKd4JvGMNE5lPj88gAXF8VuWiSzg5eFpGEMVyF5PXc9S2gi0
+         gKDibt9ASEHLAwKIaRdXE3QTwqjD/+YrT6xkv5M5Kkfhwk0V8LErnjyYsn7iN1gAUtsx
+         UXvA==
+X-Gm-Message-State: AFqh2kpA6nt+onh00JcD3F2G+HZ9WDoqqx8vyx3APr8YNBiGQSsOf0mL
+        8BQfN67fdyxVOFf5BVXfACYyZGREGpI=
+X-Google-Smtp-Source: AMrXdXtWJ4k2Knd6DUqeuR8Vqxcjjrx4l5Bj6qE1fFWJSOvESy9WFC1fWE7NE40chOG/j7tyy+LM4g==
+X-Received: by 2002:a05:6000:1e0f:b0:2bd:fe42:2b34 with SMTP id bj15-20020a0560001e0f00b002bdfe422b34mr5476988wrb.71.1674029875510;
+        Wed, 18 Jan 2023 00:17:55 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k2-20020a5d5182000000b00236545edc91sm31172083wrv.76.2023.01.18.00.17.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jan 2023 00:17:55 -0800 (PST)
+Message-Id: <pull.1270.git.git.1674029874363.gitgitgadget@gmail.com>
+From:   "Adam Szkoda via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 18 Jan 2023 08:17:54 +0000
+Subject: [PATCH] ssh signing: better error message when key not in agent
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20230116172824.93218-1-carenas@gmail.com> <20230118061527.76218-1-carenas@gmail.com>
- <xmqq5yd48hcb.fsf@gitster.g>
-In-Reply-To: <xmqq5yd48hcb.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 17 Jan 2023 23:58:35 -0800
-Message-ID: <CAPUEspjmFJUjZmNBH=f_-TY3hYnOtgVjBY-YtWuo15eg3a+5cQ@mail.gmail.com>
-Subject: Re: [PATCH v2] checkout/switch: disallow checking out same branch in
- multiple worktrees
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Jinwook Jeong <vustthat@gmail.com>,
-        =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Adam Szkoda <adaszko@gmail.com>, Adam Szkoda <adaszko@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 17, 2023 at 10:52 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
->
-> > As reflected on the tests, this will change the behaviour of those
-> > commands when they are invoked in a worktree that has that requested
-> > branch checked out, as that matches the logic used by branch, is safer
-> > (assuming both commands are user facing) and can be overriden with an
-> > existing flag.
->
-> ... meaning you can "--force", or something else?  Allowing an
-> existing option to be used as the safety valve does make sense,
-> especially if the option is something users are already familiar
-> with (like "--force") and naturally expected to work.
+From: Adam Szkoda <adaszko@gmail.com>
 
-the following is the way to override:
+When signing a commit with a SSH key, with the private key missing from
+ssh-agent, a confusing error message is produced:
 
-$ git checkout --ignore-other-worktrees -B foo
+    error: Load key
+    "/var/folders/t5/cscwwl_n3n1_8_5j_00x_3t40000gn/T//.git_signing_key_tmpkArSj7":
+    invalid format? fatal: failed to write commit object
 
-> There might need an documentation update.  Back when "checkout -b"
-> and "branch" was written, there wasn't "multiple worktrees connected
-> to a single repository" hence there was no need to provide safety
-> against checking out the same branch in two different places.  "git
-> branch" might have learned to give that safety while "git checkout
-> -b", which _ought_ to be equivalent to "git branch" followed by "git
-> checkout", might have forgot to do so.
+The temporary file .git_signing_key_tmpkArSj7 created by git contains a
+valid *public* key.  The error message comes from `ssh-keygen -Y sign' and
+is caused by a fallback mechanism in ssh-keygen whereby it tries to
+interpret .git_signing_key_tmpkArSj7 as a *private* key if it can't find in
+the agent [1].  A fix is scheduled to be released in OpenSSH 9.1. All that
+needs to be done is to pass an additional backward-compatible option -U to
+'ssh-keygen -Y sign' call.  With '-U', ssh-keygen always interprets the file
+as public key and expects to find the private key in the agent.
 
-Not sure if it was originally forgotten, but it is definitely working now;
-this change only fixes the uppercase (-B) version.
+As a result, when the private key is missing from the agent, a more accurate
+error message gets produced:
 
-> After this change, it may
-> still be correct to say that "checkout -b" is equivalent to "branch"
-> followed by "checkout", but if the documentation to "branch" talks
-> about this safety, it probably deserves to be mentioned in the
-> documentation to "checkout -b", as well, if only to give an appropriate
-> place to talk about how to override it "with an existing flag".
+    error: Couldn't find key in agent
 
-Interestingly, when the flag was added in 1d0fa898ea (checkout: add
---ignore-other-wortrees, 2015-01-03), it was only added to `checkout`.
+[1] https://bugzilla.mindrot.org/show_bug.cgi?id=3429
 
-`git branch` has no flag and will die even when `-f` is used
+Signed-off-by: Adam Szkoda <adaszko@gmail.com>
+---
+    ssh signing: better error message when key not in agent
+    
+    When signing a commit with a SSH key, with the private key missing from
+    ssh-agent, a confusing error message is produced:
+    
+    error: Load key "/var/folders/t5/cscwwl_n3n1_8_5j_00x_3t40000gn/T//.git_signing_key_tmpkArSj7": invalid format?
+    fatal: failed to write commit object
+    
+    
+    The temporary file .git_signing_key_tmpkArSj7 created by git contains a
+    valid public key. The error message comes from `ssh-keygen -Y sign' and
+    is caused by a fallback mechanism in ssh-keygen whereby it tries to
+    interpret .git_signing_key_tmpkArSj7 as a private key if it can't find
+    in the agent [1]. A fix is scheduled to be released in OpenSSH 9.1. All
+    that needs to be done is to pass an additional backward-compatible
+    option -U to 'ssh-keygen -Y sign' call. With '-U', ssh-keygen always
+    interprets the file as public key and expects to find the private key in
+    the agent.
+    
+    As a result, when the private key is missing from the agent, a more
+    accurate error message gets produced:
+    
+    error: Couldn't find key in agent
+    
+    
+    [1] https://bugzilla.mindrot.org/show_bug.cgi?id=3429
 
-Carlo
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1270%2Fradicle-dev%2Fmaint-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1270/radicle-dev/maint-v1
+Pull-Request: https://github.com/git/git/pull/1270
+
+ gpg-interface.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 280f1fa1a58..4a5913ae942 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -1022,6 +1022,7 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
+ 	strvec_pushl(&signer.args, use_format->program,
+ 		     "-Y", "sign",
+ 		     "-n", "git",
++		     "-U",
+ 		     "-f", ssh_signing_key_file,
+ 		     buffer_file->filename.buf,
+ 		     NULL);
+
+base-commit: e54793a95afeea1e10de1e5ad7eab914e7416250
+-- 
+gitgitgadget
