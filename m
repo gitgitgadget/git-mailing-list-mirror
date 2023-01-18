@@ -2,75 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 781D4C38147
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 22:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7612C6379F
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 22:55:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229916AbjARWrG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 17:47:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44382 "EHLO
+        id S229892AbjARWzX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 17:55:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229908AbjARWrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 17:47:05 -0500
-Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C7D54A1DD
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 14:47:04 -0800 (PST)
-Date:   Wed, 18 Jan 2023 22:46:48 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1674082022; x=1674341222;
-        bh=gqOkPZXtaR704VEM+gm7FpkIrgn0XIinw6kVznwhw6g=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=Y3TkGso0hKnDfAnh/lhBWf4VAa03vaYiXTN+QyOiUe22gki2DQjCmG4a9B33A0J9U
-         HkyHmH6AgRf+BBaNKJcmy29yMX87vl03jzxsTGzvAD37aoEC4G1TbmGOaRST93QZ1P
-         1Strvp943l/uUC3ZTDfAAHwTHP3z7Dutg862yzXAzGYwK8F1AEoO5yCl7B2HlZ7T6A
-         0S3CcZwKo02drCXR64L6PJ9ZFvmbe4U3IRmdlkxOycDIxSyE8B4emnpdGf8FSzZJYc
-         Q26971SO+jFQI4+rKRHULuw3TAc2JHiv3QJcPMzgVnE3QT2th3m3F5OYpvWWgAIuBl
-         r4/eeaHuOv/Wg==
-To:     Junio C Hamano <gitster@pobox.com>
-From:   'Jacob Abel' <jacobabel@nullpo.dev>
-Cc:     rsbecker@nexbridge.com, phillip.wood@dunelm.org.uk,
-        git@vger.kernel.org,
-        =?utf-8?Q?=27=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason=27?= 
-        <avarab@gmail.com>, 'Eric Sunshine' <sunshine@sunshineco.com>,
-        'Phillip Wood' <phillip.wood123@gmail.com>,
-        =?utf-8?Q?=27Rub=C3=A9n_Justo=27?= <rjusto@gmail.com>,
-        'Taylor Blau' <me@ttaylorr.com>
-Subject: Re: [PATCH v8 3/4] worktree add: add --orphan flag
-Message-ID: <20230118224639.d2kxrpgdidk7ez6f@phi>
-In-Reply-To: <xmqq8ri4ihjg.fsf@gitster.g>
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20230107045757.30037-1-jacobabel@nullpo.dev> <20230109173227.29264-1-jacobabel@nullpo.dev> <20230109173227.29264-4-jacobabel@nullpo.dev> <e5aadd5d-9b85-4dc9-e9f7-117892b4b283@dunelm.org.uk> <20230114224715.ewec6sz5h3q3iijs@phi> <xmqqo7r0ijdv.fsf@gitster.g> <013701d92893$3fad5d10$bf081730$@nexbridge.com> <xmqq8ri4ihjg.fsf@gitster.g>
-Feedback-ID: 21506737:user:proton
+        with ESMTP id S230106AbjARWzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 17:55:06 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6E4A93F5
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 14:55:05 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id bj3so632793pjb.0
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 14:55:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AqFn9Ld/MXEPCzabPFAbyPt0VcTQ6hCzVNoCpM//eJ4=;
+        b=AUGg42aqV+1Kf9SvpdlwsMgkLQGNoosCnqqDLkEFm7S8krMJe4Azf84YvE8kHB15KK
+         1CK5M+9A7LL8g6NAayP3m6Byi/uO9h5EUGzBWeARmZZ3R3qZq5giCVaEQxXQtgm5pmqA
+         Gcb/pqne4YmmcPSJtbZ767fKaLpO6KSCAizEB6q9b+fzPAo9eYrbLEShPHEaYbwtPIJ/
+         SsNS1ey0FFD/L/mB9HVOzq7IqibAvSi/rA/CCeiLrvOVohdC2+pv0omvCxcKPg/+UZFa
+         mDyqa40cW2u40WTUuVKcIFNVsGs7VssB7lvEFRuYuwpz7KkLoHZeWJb4qQLMAVpvbZYl
+         KZjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AqFn9Ld/MXEPCzabPFAbyPt0VcTQ6hCzVNoCpM//eJ4=;
+        b=NqvfObp8eJ9DL9kHmirTSw4SjJl+xJRA5uMcUUsPdvgul6qqUCDUgBhRofrvVv9S+J
+         W1BpDQYB6yq7zrvJgX2OTQj7HGMUli+ph1FgK7cxw4zHDkOs0oGRNG0l2MuIQUYrEVOv
+         xug62Wk7bDkPPn57NnIbESnzKhvfFmygSVoSxYO2s3u/1EMXI/E14QpKNpEtw77L3y1U
+         0esgJKEDM+HW0UYIJUHsyiZUmyteyL1ZtfEDTbCYvIXEG2BzW2sLM8MoXH0Sr9DmrLMG
+         f8+2LaCP8iyEYjmBdEw5sRyt/vu2EI0QEFAebu7lKz5y2UQxU11PQWP0W4quR34ResB2
+         MPBA==
+X-Gm-Message-State: AFqh2komIVfBbaDSdgeuSpJ6Rx65H11fTpVmuvOVxDGnG4Rz86c+1hwB
+        ZikRXdYw7eMM3IKzi8X9/9I=
+X-Google-Smtp-Source: AMrXdXt6kIgIdOOog/ERB7lxo60QjsBF80V6xXN8a6veCrvacW+ap1IwjBmxu3hijLv3vAixGFMGKg==
+X-Received: by 2002:a05:6a20:a00d:b0:9d:efbf:6623 with SMTP id p13-20020a056a20a00d00b0009defbf6623mr10119806pzj.49.1674082505059;
+        Wed, 18 Jan 2023 14:55:05 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id 35-20020a630d63000000b004cc95c9bd97sm6028689pgn.35.2023.01.18.14.55.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jan 2023 14:55:04 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com,
+        Jinwook Jeong <vustthat@gmail.com>,
+        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] checkout/switch: disallow checking out same branch
+ in multiple worktrees
+References: <20230116172824.93218-1-carenas@gmail.com>
+        <20230118061527.76218-1-carenas@gmail.com>
+Date:   Wed, 18 Jan 2023 14:55:04 -0800
+In-Reply-To: <20230118061527.76218-1-carenas@gmail.com> ("Carlo Marcelo
+ Arenas
+        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 17 Jan 2023 22:15:27 -0800")
+Message-ID: <xmqqbkmv4fnb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/01/14 07:49PM, Junio C Hamano wrote:
-> <rsbecker@nexbridge.com> writes:
->
-> > [...]
->
-> An orphan is not even detached, if I understand correctly.
->
-> The state is what is called "being on an unborn branch", where your
-> HEAD does not even point at any commit.  HEAD only knows a name of a
-> branch that is not yet created but will be when you make a commit.
->
-> While "(HEAD) being detached" means that you are on an existing
-> commit---it is just that future history you extend by making a
-> commit from that state will not be on any branch.
->
-> So if we wanted to fix the misnomer, s/orphan/unborn/ would be how I
-> would go about it.
->
+Carlo Marcelo Arenas Belón  <carenas@gmail.com> writes:
 
-I would support making this change (s/orphan/unborn/) as it's definitely le=
-ss
-confusing. Especially given that orphan already has a completely different,
-overloaded meaning when referring to orphaned objects & commits (in the con=
-text
-of garbage collection).
+> Changes since v1
+> * A much better commit message
+> * Changes to the tests as suggested by Eric
+> * Changes to the logic as suggested by Rubén
 
+I queued this topic at the tip of 'seen' as 2fe0b4e3 (Merge branch
+'cb/checkout-same-branch-twice' into seen, 2023-01-18), on top of
+4ea8693b (Merge branch 'mc/credential-helper-auth-headers' into
+seen, 2023-01-18).
+
+ - 4ea8693b - https://github.com/git/git/actions/runs/3952916442
+ - 2fe0b4e3 - https://github.com/git/git/actions/runs/3953521066
+
+Comparing these two runs, inclusion of this topic seems to introduce
+new leaks, as t1408 and t2018 (neither of which was touched by this
+topic) that used to pass are now failing.
+
+>  builtin/checkout.c      | 24 +++++++++++++++++-------
+>  t/t2400-worktree-add.sh | 18 ++++++++++++++++--
+>  2 files changed, 33 insertions(+), 9 deletions(-)
+
+Thanks.  
