@@ -2,99 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C8F2C32793
-	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 17:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82751C38147
+	for <git@archiver.kernel.org>; Wed, 18 Jan 2023 17:28:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229459AbjARRTx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 12:19:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49236 "EHLO
+        id S230184AbjARR2y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 12:28:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbjARRTi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 12:19:38 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF2138B58
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 09:19:34 -0800 (PST)
-Received: (qmail 1019 invoked by uid 109); 18 Jan 2023 17:19:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Jan 2023 17:19:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23104 invoked by uid 111); 18 Jan 2023 17:19:34 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Jan 2023 12:19:34 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 18 Jan 2023 12:19:32 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 15/19] object-file.c: release the "tag" in check_tag()
-Message-ID: <Y8gqJESD/wbEHZYb@coredump.intra.peff.net>
-References: <cover-v3-00.19-00000000000-20230110T054138Z-avarab@gmail.com>
- <cover-v4-00.19-00000000000-20230117T151201Z-avarab@gmail.com>
- <patch-v4-15.19-66c24afb893-20230117T151202Z-avarab@gmail.com>
- <7e571cdd-c0fa-7519-848c-b0bc4613abab@web.de>
+        with ESMTP id S229741AbjARR2w (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 12:28:52 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C32821A0D
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 09:28:51 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id 7-20020a17090a098700b002298931e366so2877462pjo.2
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 09:28:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vL+1REH1Wc0552BAok9IqrS1cDmxT7lB5uVZjljrq3I=;
+        b=eAfDiTKWdcLHEZjsjFif82FcBWNlHCuleN+xcz2YI2/Sgwkpz7jmJQHME7IlpHB6oa
+         VZh5SeYceEXnSndu2eyjFq6Rrp4fVkRsyD2I1it/aclONSVcrrFOWJSxjRveFoE14AV6
+         AUwS/S4O9zZK7F+6HCXkNHwK8j6t+AN2XVwV0nbkQViNYTvuW6e22Tf+Pw798m8oPuQ1
+         knLUg/t+myRqUe2vAIzo3qY45wYhZTXIaohs3u5iAgi63MSsVOLGhcH1aRLdP50uaXM0
+         iXzGbWTdbc9BXTT9JXq0k/WN7A/Dl/ZzBeoktj0+0nNdDMFhEjHbZCClNdjbYjlQF7aO
+         SxhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vL+1REH1Wc0552BAok9IqrS1cDmxT7lB5uVZjljrq3I=;
+        b=AsMBmj+BLmPxxC1k/qKvTNr2xvCGkHV+zLdwKt5Fcdm+Nv3HbkAV9OOLGFJhgNAaId
+         RIBfSy9+Ms/4sA7CH4uSOEEcnjSHWRWti5x82Zs7u/eZkaJmJnoa2CanE4k97J8o3oun
+         lwQrfCCKQXPEQBj9w327KdSkDFO2632XGJS4DZ1cc6ygA6JmU5+Of1o8TxINxr62mef4
+         O1t9DeIdPdo1d7ECpKoP8/JzVxuT8IbHeQjPN241v7eWj8eca2cnHomd2ktGzXW6cO+D
+         Hd1hbxql1BNqtHtVTXqJigjSs3Uzog4pyoqmtCvcF6Nv4PNn92/da0kaWfxb83JlvLK2
+         EYiw==
+X-Gm-Message-State: AFqh2koqlE+cgKQ0eta0qa7biBe0ILDj0uwhGuwGXGe3zUhnTDSqSc4m
+        AGzmS6QLXnG+JCrtqsTIvXeLLDyYAqjcEDU=
+X-Google-Smtp-Source: AMrXdXtv27DAsr3SVa3xIrdNpacz6VEIdRylmq42KdEe2XUWpOrzWtVR++nJvaGytE4SbDvFXOVoLA==
+X-Received: by 2002:a17:902:efd4:b0:194:5ee5:3c44 with SMTP id ja20-20020a170902efd400b001945ee53c44mr26822407plb.17.1674062930529;
+        Wed, 18 Jan 2023 09:28:50 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id z1-20020a170902ccc100b00192a8d795f3sm23366629ple.192.2023.01.18.09.28.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Jan 2023 09:28:50 -0800 (PST)
+Message-ID: <aa8abc8d-284b-b87e-f594-27ee40cc4bec@github.com>
+Date:   Wed, 18 Jan 2023 09:28:46 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH v6 10/12] http: replace unsafe size_t multiplication with
+ st_mult
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Matthew John Cheetham via GitGitGadget 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Glen Choo <chooglen@google.com>,
+        Matthew John Cheetham <mjcheetham@github.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>
+References: <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
+ <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
+ <cc9a220ed1f12aef2f4df940e71adc1fad917a6b.1674012618.git.gitgitgadget@gmail.com>
+ <230118.863588xeat.gmgdl@evledraar.gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <230118.863588xeat.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7e571cdd-c0fa-7519-848c-b0bc4613abab@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 17, 2023 at 08:58:24PM +0100, René Scharfe wrote:
-
-> Am 17.01.23 um 18:11 schrieb Ævar Arnfjörð Bjarmason:
-> > Fix a memory leak that's been with us ever since c879daa2372 (Make
-> > hash-object more robust against malformed objects, 2011-02-05). With
-> > "HASH_FORMAT_CHECK" (used by "hash-object" and "replace") we'll parse
-> > tags into a throwaway variable on the stack, but weren't freeing the
-> > "item->tag" we might malloc() when doing so.
-> >
-> > The clearing that release_tag_memory() does for us is redundant here,
-> > but let's use it as-is anyway. It only has one other existing caller,
-> > which does need the tag to be cleared.
+Ævar Arnfjörð Bjarmason wrote:
 > 
-> Calling it is better than getting our hands dirty with tag internals
-> here.
+> On Wed, Jan 18 2023, Matthew John Cheetham via GitGitGadget wrote:
 > 
-> There's similar leak in check_commit() in the same file, but plugging it
-> would require exporting unparse_commit().  Or perhaps using the heavy
-> hammer that is release_commit_memory()?  Anyway, it doesn't seem simple
-> to me, so that would be a patch for a separate series.
+>> From: Matthew John Cheetham <mjcheetham@outlook.com>
+>>
+>> Replace direct multiplication of two size_t parameters in curl response
+>> stream handling callback functions with `st_mult` to guard against
+>> overflows.
+>>
+>> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+>> ---
+>>  http.c | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/http.c b/http.c
+>> index 8a5ba3f4776..a2a80318bb2 100644
+>> --- a/http.c
+>> +++ b/http.c
+>> @@ -146,7 +146,7 @@ static int http_schannel_use_ssl_cainfo;
+>>  
+>>  size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+>>  {
+>> -	size_t size = eltsize * nmemb;
+>> +	size_t size = st_mult(eltsize, nmemb);
+>>  	struct buffer *buffer = buffer_;
+>>  
+>>  	if (size > buffer->buf.len - buffer->posn)
+>> @@ -176,7 +176,7 @@ curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
+>>  
+>>  size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+>>  {
+>> -	size_t size = eltsize * nmemb;
+>> +	size_t size = st_mult(eltsize, nmemb);
+>>  	struct strbuf *buffer = buffer_;
+>>  
+>>  	strbuf_add(buffer, ptr, size);
+> 
+> This is a really worthwhile fix, but shouldn't this be split into its
+> own stand-alone patch? It applies on "master", and seems like something
+> that's a good idea outside of this "test-http-server" topic.
 
-I think both of these cases are a bit sketchy, because they create an
-object struct on the stack, and not via alloc_*_node(), which may
-violate assumptions elsewhere. In the case of the tag, it's probably OK.
-For the commit, though, the "index" field is going to be 0, which may
-confuse release_commit_memory(). It calls free_commit_buffer(), which is
-going to use that index to try to free from the buffer slab.
+While it's this change *can* stand alone, please keep in mind that
+suggestions like this (recommending a series be split and resubmitted) can
+be highly disruptive to the in-flight topic and the original contributor.
 
-So I'd be wary of calling that. I'm also slightly skeptical of the
-existing code that calls parse_commit_buffer(), but I think it works. We
-do not attach the buffer to the commit object there (good), and we pass
-"0" for check_graph, so the graph code (which IIRC also uses the index
-for some slab lookups) isn't run.
+Monitoring and iterating on multiple series at once is time-consuming for
+the contributor and reviewers, and often (although not in this case) it
+creates a dependency of one series on another, which comes with a cost to
+the maintainer's time. Not to say those recommendations should never be made
+(e.g. in a clearly too-long series early in its review cycle, or when
+certain patches lead to excessive context switching while reviewing), just
+that they should be made more carefully, with consideration for the time of
+other contributors.
 
-I think this code would be better off either:
+So, with that in mind, I don't think this patch is critical enough to
+separate into an independent submission, and (subjectively) it does not
+disrupt the flow of this series.
 
-  1. Just allocating an object struct in the usual way. I understand the
-     desire not to spend extra memory, but parse_commit_buffer() is
-     going to allocate structs under the hood for the tree and parent
-     commits anyway.
-
-  2. The point of this code is to find malformed input to hash-object.
-     We're probably better off feeding the buffer to fsck_commit(), etc.
-     It does more thorough checks, and these days it does not need an
-     object struct at all.
-
-Either of which would naturally fix the leak for tags. I'm not sure
-there actually is a leak for commits, as commit structs don't store any
-strings themselves.
-
-I don't think any of that needs to hold up Ævar's current series,
-though. Fixing the leak this way in the meantime is OK, and then if we
-switch to one of the other techniques, the problem just goes away.
-
--Peff
