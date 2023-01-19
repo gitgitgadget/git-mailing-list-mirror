@@ -2,159 +2,236 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDC8BC46467
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 20:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EA90C46467
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 20:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230024AbjASU3B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 15:29:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39888 "EHLO
+        id S229968AbjASUeX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 15:34:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229564AbjASU2z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 15:28:55 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88DB49D281
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 12:28:54 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so4421052wmb.0
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 12:28:54 -0800 (PST)
+        with ESMTP id S229967AbjASUeR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 15:34:17 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C829D28B
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 12:34:15 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id g23so3376684plq.12
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 12:34:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S6T4X/L9c8Ef+KILKhUCz/VsIiF/Cel8uQh9MFJHDCI=;
-        b=GrJ2tx8eB3upJZiX8MIRTFs8oaLS+Is4Bpr1Rweods8IT9zDy++z9mIDWwCDN04RPB
-         wErScnsrOaM/tzn51RCzMQm6/dhZ334ypUC2In6PKUNh5DcE/TYLkG6GDYFlAaYomouF
-         RpVvSOvCWBGSjHIDNJ6kg3g53Af//kanH2tKGKI+L1/RSn1HdhLsQopwlWuXnLDgb4XH
-         OQkpksCZKSZ2m4K3PoCznLXIbSfBMWMWI8CWLp/MFHoTm6FdAQn5XukZgogLVOa7xSfM
-         9EY4NK/rWPqFJCZ0V1kg1WF7QSvX5msGB7OTb2Fsnd29K0u+25r2O5u+GLVDNc3lrrVa
-         vp2w==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oEP3oFAoKUnqxfVf4BOxHmSk2fomZK9Xt7caBjx7Y5o=;
+        b=cazheS46nsRKVs0/1fin6T1QkUMgxwoT5a+BGcRezV5748UFiZwnOqC2YNr8ikMLZ0
+         EQbSj7Ee9MMeqmtU5i0VMJTH6Ue6Cs5GdyATvb8UEaqwx+ChBn2pvdbV896GExwBJ0dd
+         ybZAcJriIf7l99BuQ4AYKl5jIG/tMiN0xi6cV6ujp18iGaCFbHEl8zpS1O5bJRqe7pDW
+         QFMnkXyDm7V9UXgJ47TaFnhmMAyGiv3ZXjt87AypcUYetMwDMtRUNmIdVLmNWLQlj9gj
+         11POJ9m2sravIXJ1OCM8VSQL0U+BNMpeonxsa3C0lcRa4p3D8KVUHSiIT8AoF6+Dz8GQ
+         nc0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S6T4X/L9c8Ef+KILKhUCz/VsIiF/Cel8uQh9MFJHDCI=;
-        b=Uo5x8MtKdDBoZmArjhuVgCrazvgRoE0fQaWfe4s19p6h/zwiNDoPuoHc8j0EFnM7px
-         7e3qBz9pJr9ei+WxNFb4qIl8tIOfC23/vSKS3/bVMjkQ26SqRI8upcRqT7LdBu3VxuGb
-         GbOzGIFmftKobcjz6acAIUBe/JI927vdSLleubzoKrcsJAsRiySPF7DiXknBvarOci2J
-         7/b2JcYDHP5xk/AnCAzUy5y+I0nA+6v0Rdq2W+ORQTdwVkb3dh44pfA/5fxT3MSavUtQ
-         JXw4habAgfJudrHT9ooL7MkmM1Fqdqca49xSBubXP0LUCo58PgQ4PhK7fi/RKX9x5uCO
-         xwxA==
-X-Gm-Message-State: AFqh2kpqtFJTVb/82Xc9SXFtSqs9qYdAUhV+8wR/9o7mc9NEddl3VW90
-        kt8dVmfXPDA+9qz4VleU5Zw5RMYJaF4=
-X-Google-Smtp-Source: AMrXdXtXCQ5o2sao9yYVl+vSFsglFGkHVzmcRtvsedVyN9ZlxvVHIWUNNVAXds/b3EbT+Du44/dt3g==
-X-Received: by 2002:a1c:f310:0:b0:3db:15d9:1485 with SMTP id q16-20020a1cf310000000b003db15d91485mr6460931wmq.39.1674160132946;
-        Thu, 19 Jan 2023 12:28:52 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id fc17-20020a05600c525100b003db1d9553e7sm195288wmb.32.2023.01.19.12.28.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 12:28:52 -0800 (PST)
-Message-Id: <pull.1439.v2.git.git.1674160131967.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1439.git.git.1674156875354.gitgitgadget@gmail.com>
-References: <pull.1439.git.git.1674156875354.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 Jan 2023 20:28:51 +0000
-Subject: [PATCH v2] die: fix inconsistencies with usage header
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oEP3oFAoKUnqxfVf4BOxHmSk2fomZK9Xt7caBjx7Y5o=;
+        b=y7UWrkV9rsPTG6+EY8opGY8Q4C6mUi4AmlsE5Ti9X2jcIcZWCbDrWlICdU+LbotsYN
+         vYjtNg30yddx4y2O6hHsUd20hz9IguiL20kCPJZnAjnMv9VHoCT4+Q9KjHeL1umtYmdp
+         atmweh2o8VV7juOIu7jZS2HTnqK3ei7i4GOXdS+Xl7OLbwHyEEmazXXtmbzF+bj1PLYm
+         ZU1MgPRBAhD20HJnWy45sZq3CtfqNCF3nN1RRcrx+5UtOPJKd0Ni8zfWbh0rQ5OKOhzw
+         ojIK+JjF1Urte+G+SPcuVG+l3qnX6lOnCdpzJ9lYK8dl9mH7azWLSZcoicpm5kLZyO8V
+         FYJA==
+X-Gm-Message-State: AFqh2krMGXnuWKCU9xsTEJB3Fx8SlcvQvAvcTAGizw6aSbeWbsLMHkAB
+        FeJrPBj3pmsck/REDB2oKg4e
+X-Google-Smtp-Source: AMrXdXuggfK4QroSoFwQqp0esMRThYYOrNoth48xNMnDs3YvwlscUOz7UtMOB1HRfWTaKnkb7De67Q==
+X-Received: by 2002:a17:90b:3586:b0:229:772c:a00b with SMTP id mm6-20020a17090b358600b00229772ca00bmr12137153pjb.14.1674160455375;
+        Thu, 19 Jan 2023 12:34:15 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id x8-20020a17090a0bc800b00229bc852468sm90381pjd.0.2023.01.19.12.34.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Jan 2023 12:34:14 -0800 (PST)
+Message-ID: <58269fe6-ebe1-7b12-4cd9-2110a94543e5@github.com>
+Date:   Thu, 19 Jan 2023 12:34:13 -0800
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH 7/8] fetch: fetch from an external bundle URI
+Content-Language: en-US
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, avarab@gmail.com,
+        steadmon@google.com, chooglen@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+ <1627fc158b1e301a1663e24f9f21268b4f1caa55.1673037405.git.gitgitgadget@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <1627fc158b1e301a1663e24f9f21268b4f1caa55.1673037405.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+> 
+> When a user specifies a URI via 'git clone --bundle-uri', that URI may
+> be a bundle list that advertises a 'bundle.heuristic' value. In that
+> case, the Git client stores a 'fetch.bundleURI' config value storing
+> that URI.
+> 
+> Teach 'git fetch' to check for this config value and download bundles
+> from that URI before fetching from the Git remote(s). Likely, the bundle
+> provider has configured a heuristic (such as "creationToken") that will
+> allow the Git client to download only a portion of the bundles before
+> continuing the fetch.
+> 
+> Since this URI is completely independent of the remote server, we want
+> to be sure that we connect to the bundle URI before creating a
+> connection to the Git remote. We do not want to hold a stateful
+> connection for too long if we can avoid it.
+> 
+> To test that this works correctly, extend the previous tests that set
+> 'fetch.bundleURI' to do follow-up fetches. The bundle list is updated
+> incrementally at each phase to demonstrate that the heuristic avoids
+> downloading older bundles. This includes the middle fetch downloading
+> the objects in bundle-3.bundle from the Git remote, and therefore not
+> needing that bundle in the third fetch.
+> 
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  builtin/fetch.c             |  8 +++++
+>  t/t5558-clone-bundle-uri.sh | 59 +++++++++++++++++++++++++++++++++++++
+>  2 files changed, 67 insertions(+)
+> 
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 7378cafeec9..fbb1d470c38 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -29,6 +29,7 @@
+>  #include "commit-graph.h"
+>  #include "shallow.h"
+>  #include "worktree.h"
+> +#include "bundle-uri.h"
+>  
+>  #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
+>  
+> @@ -2109,6 +2110,7 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
+>  int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  {
+>  	int i;
+> +	const char *bundle_uri;
+>  	struct string_list list = STRING_LIST_INIT_DUP;
+>  	struct remote *remote = NULL;
+>  	int result = 0;
+> @@ -2194,6 +2196,12 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  	if (dry_run)
+>  		write_fetch_head = 0;
+>  
+> +	if (!git_config_get_string_tmp("fetch.bundleuri", &bundle_uri) &&
+> +	    !starts_with(bundle_uri, "remote:")) {
 
-The headers for the die and usage functions
-have different parameter names or are missing
-the "NORETURN" attribute
+Maybe a silly question, by why would the bundle URI start with 'remote:'
+(and why do we silently skip fetching from the URI in that case)?
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    die: fix inconsistencies with header
-    
-    The headers for the die and usage functions have different parameter
-    names or are missing the "NORETURN" attribute
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
+> +		if (fetch_bundle_uri(the_repository, bundle_uri, NULL))
+> +			warning(_("failed to fetch bundles from '%s'"), bundle_uri);
+> +	}
+> +
+>  	if (all) {
+>  		if (argc == 1)
+>  			die(_("fetch --all does not take a repository argument"));
+> diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+> index 8ff560425ee..3f4d61a915c 100755
+> --- a/t/t5558-clone-bundle-uri.sh
+> +++ b/t/t5558-clone-bundle-uri.sh
+> @@ -465,6 +465,65 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
+>  	cat >expect <<-\EOF &&
+>  	refs/bundles/base
+>  	EOF
+> +	test_cmp expect refs &&
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1439%2FAtariDreams%2Fperror-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1439/AtariDreams/perror-v2
-Pull-Request: https://github.com/git/git/pull/1439
+At this point in the test, only 'base' is in the cloned repo (equivalent to
+the contents of 'bundle-1').
 
-Range-diff vs v1:
+> +
+> +	cat >>"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
+> +	[bundle "bundle-2"]
+> +		uri = bundle-2.bundle
+> +		creationToken = 2
+> +	EOF
+> +
+> +	# Fetch the objects for bundle-2 _and_ bundle-3.
+> +	GIT_TRACE2_EVENT="$(pwd)/trace1.txt" \
+> +		git -C fetch-http-4 fetch origin --no-tags \
+> +		refs/heads/left:refs/heads/left \
+> +		refs/heads/right:refs/heads/right &&
+> +
+> +	# This fetch should copy two files: the list and bundle-2.
+> +	test_bundle_downloaded bundle-list trace1.txt &&
+> +	test_bundle_downloaded bundle-2.bundle trace1.txt &&
+> +	! test_bundle_downloaded bundle-1.bundle trace1.txt &&
 
- 1:  74e90f0fa5c ! 1:  c3b436cea9d die: fix inconsistencies with header
-     @@ Metadata
-      Author: Seija Kijin <doremylover123@gmail.com>
-      
-       ## Commit message ##
-     -    die: fix inconsistencies with header
-     +    die: fix inconsistencies with usage header
-      
-          The headers for the die and usage functions
-          have different parameter names or are missing
+Now, with 'bundle-2' in the list, fetch 'left' and 'right'. 'bundle-1' is
+not fetched because we already have its contents (in 'base'), 'bundle-2' is
+downloaded to get 'left', and 'right' is fetched directly from the repo.
 
+> +
+> +	# received left from bundle-2
+> +	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
+> +	cat >expect <<-\EOF &&
+> +	refs/bundles/base
+> +	refs/bundles/left
+> +	EOF
+> +	test_cmp expect refs &&
+> +
+> +	cat >>"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
+> +	[bundle "bundle-3"]
+> +		uri = bundle-3.bundle
+> +		creationToken = 3
+> +
+> +	[bundle "bundle-4"]
+> +		uri = bundle-4.bundle
+> +		creationToken = 4
+> +	EOF
+> +
+> +	# This fetch should skip bundle-3.bundle, since its objets are
 
- contrib/credential/osxkeychain/git-credential-osxkeychain.c | 2 +-
- contrib/credential/wincred/git-credential-wincred.c         | 2 +-
- usage.c                                                     | 6 +++---
- 3 files changed, 5 insertions(+), 5 deletions(-)
+s/objets/objects
 
-diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-index e29cc28779d..fa88d621865 100644
---- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-+++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-@@ -11,7 +11,7 @@ static char *password;
- static UInt16 port;
- 
- __attribute__((format (printf, 1, 2)))
--static void die(const char *err, ...)
-+static void NORETURN die(const char *err, ...)
- {
- 	char msg[4096];
- 	va_list params;
-diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
-index ead6e267c78..c0610d7648c 100644
---- a/contrib/credential/wincred/git-credential-wincred.c
-+++ b/contrib/credential/wincred/git-credential-wincred.c
-@@ -12,7 +12,7 @@
- #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
- 
- __attribute__((format (printf, 1, 2)))
--static void die(const char *err, ...)
-+static void NORETURN die(const char *err, ...)
- {
- 	char msg[4096];
- 	va_list params;
-diff --git a/usage.c b/usage.c
-index 5a7c6c346c1..5f5510ceeeb 100644
---- a/usage.c
-+++ b/usage.c
-@@ -206,7 +206,7 @@ static const char *fmt_with_err(char *buf, int n, const char *fmt)
- 	return buf;
- }
- 
--void NORETURN die_errno(const char *fmt, ...)
-+void NORETURN die_errno(const char *err, ...)
- {
- 	char buf[1024];
- 	va_list params;
-@@ -217,8 +217,8 @@ void NORETURN die_errno(const char *fmt, ...)
- 		exit(128);
- 	}
- 
--	va_start(params, fmt);
--	die_routine(fmt_with_err(buf, sizeof(buf), fmt), params);
-+	va_start(params, err);
-+	die_routine(fmt_with_err(buf, sizeof(buf), err), params);
- 	va_end(params);
- }
- 
+> +	# already local (we have the requisite commits for bundle-4.bundle).
+> +	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
+> +		git -C fetch-http-4 fetch origin --no-tags \
+> +		refs/heads/merge:refs/heads/merge &&
+> +
+> +	# This fetch should copy three files: the list, bundle-3, and bundle-4.
+> +	test_bundle_downloaded bundle-list trace2.txt &&
+> +	test_bundle_downloaded bundle-4.bundle trace2.txt &&
+> +	! test_bundle_downloaded bundle-1.bundle trace2.txt &&
+> +	! test_bundle_downloaded bundle-2.bundle trace2.txt &&
+> +	! test_bundle_downloaded bundle-3.bundle trace2.txt &&
 
-base-commit: a7caae2729742fc80147bca1c02ae848cb55921a
--- 
-gitgitgadget
+'bundle-3' and 'bundle-4' are then added to the list and we fetch 'merge'.
+The repository already has 'base', 'left', and 'right' so we don't need to
+download 'bundle-1', 'bundle-2', and 'bundle-3' respectively; 'bundle-4' is
+downloaded to get 'merge'.
+
+> +
+> +	# received merge ref from bundle-4, but right is missing
+> +	# because we did not download bundle-3.
+> +	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	refs/bundles/base
+> +	refs/bundles/left
+> +	refs/bundles/merge
+
+And this confirms that 'base', 'left', and 'merge' all came from bundles
+(and 'right' did not), and everything is working as expected. This is test
+is both easy to understand (the comments clearly explain each step without
+being overly verbose) and thorough. Looks good!
+
+> +	EOF
+>  	test_cmp expect refs
+>  '
+>  
+
