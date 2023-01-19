@@ -2,358 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 612F3C6379F
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 23:00:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 859B0C004D4
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 23:04:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229615AbjASXAh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 18:00:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46116 "EHLO
+        id S230029AbjASXEl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 18:04:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230397AbjASW7b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 17:59:31 -0500
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7549658988
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 14:49:12 -0800 (PST)
-Received: from hatter.bewilderbeest.net (97-113-250-99.tukw.qwest.net [97.113.250.99])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: zev)
-        by thorn.bewilderbeest.net (Postfix) with ESMTPSA id DCD91420D;
-        Thu, 19 Jan 2023 14:39:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
-        s=thorn; t=1674167949;
-        bh=de3uKI9zyE3K27Q3lzTByHEZ3x6sDGPlm8f/EaMbh9A=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=alqgyoujwlYSjZggmQ+wXxtydhG6wVmOq8Z56Gj3FscJIztDHpUAjkVUYlO4Dyv5k
-         CaEjnRwfCeLoNkx3LpOTDAiTjTRXscgEqkAEg8f4Stc+9ZD9o4igjiWWPDIM+DV/dY
-         2cuKr+kp20Ok1i1LlqhVlsECNXlZqZ1R4ZUpDOPg=
-From:   Zev Weiss <zev@bewilderbeest.net>
-To:     git@vger.kernel.org
-Cc:     Zev Weiss <zev@bewilderbeest.net>,
-        Denton Liu <liu.denton@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/5] format-patch: Add support for --{to,cc}-cmd flags
-Date:   Thu, 19 Jan 2023 14:38:58 -0800
-Message-Id: <20230119223858.29262-6-zev@bewilderbeest.net>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230119223858.29262-1-zev@bewilderbeest.net>
-References: <20230119223858.29262-1-zev@bewilderbeest.net>
+        with ESMTP id S230188AbjASXEN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 18:04:13 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBE453D932
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 14:56:07 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id x36so4711376ede.13
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 14:56:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2q7pa0vrqq6PV3zj7YA9fNi6Z0qLQDuI6P4WuGGFyIE=;
+        b=FPT1EcCQZxdP0b2Pb+sXpMxzWBqSQqvtSkECLHlT8HTRk2faRKFy/8Ox5kJpZu2MRR
+         EsKNaQ0S8GLM4IxI6T0mwkv9S26qsh/hyESVu1ij9XR+KFaOl7adWo4LNMRiXduXqCr+
+         mr0ogakC4OMvSN+T4EqvPxPftBpsxlIjVNf5UXNB4PIyYbTMszzbSHe7RT8AXIDAqBNN
+         7CCAy2XMsyHsP/SBFKnEWjXwG8uiIcqy5Wnhf+duaWPNkZkXrRRB11EIAJuzIKxiLs+/
+         3Pd/+9tcULy2aj6tR0pRIWoLKVoGQ9r7f7Bi5yR4iT79mWYACoQh+PRAE0likHNBhykE
+         5Tdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2q7pa0vrqq6PV3zj7YA9fNi6Z0qLQDuI6P4WuGGFyIE=;
+        b=6yvqwLZEOgKQJOgIs5CrxLTw43jxFol8eTTizzhbbTYW2NbIAhjaowIUE8qMxNS2s4
+         FC/ledw7zVOtR/b7DZPLEEEgLMQK7p7ByjQq5HaflL6i6WdyQrQZOHQ3hhBBfX/TmOan
+         2xIh/fAxkzO7wFL22lVqfKE4TlFdEWNgJ/fWssasMq46KyM7xhv0JzTmFhd36GXt5OMF
+         8+pC77ecNcmvB7AOuhgXZJ5NtvZZHSWkhdhx3nFLMIqazHlb9eyr6eBJz5J1iod9a/TA
+         M+fq1OzqkxyQcUVGDolWCetC2942rTXdS+ugD+sLPe81ZXHuBxKkERWr0o7yQ4Nn2ivT
+         MMsg==
+X-Gm-Message-State: AFqh2kpQfmSXzt4uSXiV6y653VtAHwmebrFkeKCRlNRw929SLEcCn0Xx
+        en1LnrB9HhQzjNp0zL716U8mV+Viiphln0CcrLP234wJ
+X-Google-Smtp-Source: AMrXdXtcgt8FTxb5SPc6zcDz07ZoXS5i0eGDXMk+ZPxmXjq67/JmLFx4VYY4AuUwbGnVni97u65NcTVJTEQ6sqYpd/g=
+X-Received: by 2002:aa7:c30d:0:b0:46c:af80:636c with SMTP id
+ l13-20020aa7c30d000000b0046caf80636cmr1348658edq.129.1674168966073; Thu, 19
+ Jan 2023 14:56:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAEcbrFdE6X6=ppBWmFZrm0Z2RqGqFatjNHdZbGb_RMteCk6P6g@mail.gmail.com>
+In-Reply-To: <CAEcbrFdE6X6=ppBWmFZrm0Z2RqGqFatjNHdZbGb_RMteCk6P6g@mail.gmail.com>
+From:   Chris Torek <chris.torek@gmail.com>
+Date:   Thu, 19 Jan 2023 14:55:54 -0800
+Message-ID: <CAPx1GvcBDcZ1K_YJKm3+fUBNYQWKE2FBz-qS6JrV2TJCTc5k1w@mail.gmail.com>
+Subject: Re: Race condition on `git checkout -c`
+To:     Arthur Milchior <arthur.milchior@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Having these flags available for format-patch instead of only on
-send-email makes it much easier to use an automated command to do the
-bulk of the recipient-selection work but still manually adjust it if
-desired.
+(Top note: you mean `git checkout -b` or `git switch -c`, not `git
+checkout -c`.)
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
----
- builtin/log.c           |  10 +++
- log-tree.c              | 179 +++++++++++++++++++++++++++++++++++++++-
- revision.h              |   2 +
- t/t4014-format-patch.sh |  19 +++++
- 4 files changed, 208 insertions(+), 2 deletions(-)
+On Thu, Jan 19, 2023 at 1:24 PM Arthur Milchior
+<arthur.milchior@gmail.com> wrote:
+>
+> I expect either:
+> * to see an error message stating that `b` already exists
+> * to see `b` and `B` in the list of branch.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index c0c7b8544d73..da3edb2a8299 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1877,6 +1877,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	struct strbuf rdiff2 = STRBUF_INIT;
- 	struct strbuf rdiff_title = STRBUF_INIT;
- 	int creation_factor = -1;
-+	char *to_cmd_arg = NULL;
-+	char *cc_cmd_arg = NULL;
- 
- 	const struct option builtin_format_patch_options[] = {
- 		OPT_CALLBACK_F('n', "numbered", &numbered, NULL,
-@@ -1929,6 +1931,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    N_("add email header"), header_callback),
- 		OPT_CALLBACK(0, "to", NULL, N_("email"), N_("add To: header"), to_callback),
- 		OPT_CALLBACK(0, "cc", NULL, N_("email"), N_("add Cc: header"), cc_callback),
-+		OPT_STRING(0, "to-cmd", &to_cmd_arg, N_("command"),
-+		           N_("command to generate To: addresses for a patch")),
-+		OPT_STRING(0, "cc-cmd", &cc_cmd_arg, N_("command"),
-+		           N_("command to generate Cc: addresses for a patch")),
- 		OPT_CALLBACK_F(0, "from", &from, N_("ident"),
- 			    N_("set From address to <ident> (or committer ident if absent)"),
- 			    PARSE_OPT_OPTARG, from_callback),
-@@ -2031,6 +2037,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 
- 	rev.to_recipients = &extra_to;
- 	rev.cc_recipients = &extra_cc;
-+
-+	rev.to_cmd = to_cmd_arg;
-+	rev.cc_cmd = cc_cmd_arg;
-+
- 	rev.extra_headers = to_free = strbuf_detach(&buf, NULL);
- 
- 	if (from) {
-diff --git a/log-tree.c b/log-tree.c
-index 7aa2841dd803..6fdc3a3ffb7f 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -20,6 +20,7 @@
- #include "help.h"
- #include "range-diff.h"
- #include "strmap.h"
-+#include "run-command.h"
- 
- static struct decoration name_decoration = { "object names" };
- static int decoration_loaded;
-@@ -652,11 +653,175 @@ static void next_commentary_block(struct rev_info *opt, struct strbuf *sb)
- 	opt->shown_dashes = 1;
- }
- 
-+/*
-+ * Aims to mirror git-send-email.perl's function of the same name, returning a
-+ * malloc()ed string that the caller must free().
-+ */
-+static char *sanitize_address(const struct rev_info *opt, const char *entry)
-+{
-+	int escaped = 0;
-+	const char *inp;
-+	char *tmp, *outp;
-+	struct strbuf addr = STRBUF_INIT;
-+	struct pretty_print_context ctx = {0};
-+
-+	/* Skip over any leading whitespace */
-+	while (isspace(*entry))
-+		entry++;
-+
-+	outp = tmp = xmalloc(strlen(entry) + 1);
-+
-+	/* Remove non-escaped quotes */
-+	for (inp = entry; *inp; inp++) {
-+		if (escaped) {
-+			escaped = 0;
-+		} else {
-+			switch (*inp) {
-+			case '\\':
-+				escaped = 1;
-+				/* fallthrough */
-+			case '"':
-+				continue;
-+			}
-+		}
-+		*outp++ = *inp;
-+	}
-+	*outp = '\0';
-+
-+	ctx.fmt = opt->commit_format;
-+	ctx.mailmap = opt->mailmap;
-+	ctx.encode_email_headers = opt->encode_email_headers;
-+	ctx.output_encoding = get_log_output_encoding();
-+	ctx.name_and_address_only = 1;
-+
-+	pp_user_info(&ctx, NULL, &addr, tmp, get_log_output_encoding());
-+
-+	free(tmp);
-+
-+	return strbuf_detach(&addr, NULL);
-+}
-+
-+/*
-+ * Given 'text' as the output of a --to-cmd or --cc-cmd command, add each
-+ * entry to 'list'.
-+ */
-+static void ingest_recipients_to_list(const char *text, const struct rev_info *opt,
-+				      struct string_list *list)
-+{
-+	struct string_list_item *item;
-+	struct string_list lines = STRING_LIST_INIT_DUP;
-+
-+	string_list_split(&lines, text, '\n', -1);
-+
-+	for_each_string_list_item(item, &lines) {
-+		char *addr = sanitize_address(opt, item->string);
-+		if (*addr)
-+			string_list_append_nodup(list, addr);
-+		else
-+			free(addr);
-+	}
-+
-+	string_list_clear(&lines, 0);
-+}
-+
-+/*
-+ * Generate a temporary patch file for the given commit, returning its path as
-+ * a malloc()ed string the caller must free (and should unlink when finished
-+ * with it).
-+ */
-+static char *generate_temp_patch(struct commit *commit)
-+{
-+	char path[PATH_MAX];
-+	char *diff_output_arg;
-+	struct strbuf diff_output_arg_buf = STRBUF_INIT;
-+	struct child_process diffproc = CHILD_PROCESS_INIT;
-+
-+	xsnprintf(path, sizeof(path), ".git-temp-diff.XXXXXX");
-+	close(xmkstemp(path));
-+
-+	strbuf_addf(&diff_output_arg_buf, "--output=%s", path);
-+	diff_output_arg = strbuf_detach(&diff_output_arg_buf, NULL);
-+
-+	diffproc.git_cmd = 1;
-+	strvec_push(&diffproc.args, "format-patch");
-+	strvec_push(&diffproc.args, "-1");
-+	strvec_push(&diffproc.args, diff_output_arg);
-+	strvec_push(&diffproc.args, oid_to_hex(&commit->object.oid));
-+
-+	if (run_command(&diffproc))
-+		die(_("Error generating temporary diff"));
-+
-+	free(diff_output_arg);
-+
-+	return xstrdup(path);
-+}
-+
-+/*
-+ * Execute a --to-cmd or --cc-cmd command on a temporary patch file, adding
-+ * each recipient produced to 'list'.
-+ */
-+static void run_recipients_command(const char *cmd, const char *tmpdiff,
-+				   const struct rev_info *opt,
-+				   struct string_list *list)
-+{
-+	char *full_cmd;
-+	char *cmd_output;
-+	struct strbuf cmd_output_buf = STRBUF_INIT;
-+	struct strbuf cmd_buf = STRBUF_INIT;
-+	struct child_process cmdproc = CHILD_PROCESS_INIT;
-+
-+	strbuf_addf(&cmd_buf, "%s %s", cmd, tmpdiff);
-+	full_cmd = strbuf_detach(&cmd_buf, NULL);
-+
-+	cmdproc.use_shell = 1;
-+	strvec_push(&cmdproc.args, full_cmd);
-+	if (capture_command(&cmdproc, &cmd_output_buf, 1024))
-+		die(_("Error generating recipients list: command failed"));
-+
-+	cmd_output = strbuf_detach(&cmd_output_buf, NULL);
-+	ingest_recipients_to_list(cmd_output, opt, list);
-+
-+	free(cmd_output);
-+	free(full_cmd);
-+}
-+
-+/*
-+ * Generate a To or Cc header into 'buf', where 'header' is "To" or "Cc",
-+ * 'fixed' is the list of fixed recipients (e.g. those specified by --to or
-+ * --cc, optional), 'cmd' is the (optional) --to-cmd or --cc-cmd argument to
-+ * generate recipients, and 'tmpdiff' is the path of a temp file containing a
-+ * patch file to run 'cmd' on (mandatory if 'cmd' is non-NULL).
-+ */
-+static void headerize_recipients(const char *header, const char *tmpdiff,
-+				 const struct rev_info *opt,
-+				 const struct string_list *fixed,
-+				 const char *cmd, struct strbuf *buf)
-+{
-+	struct string_list_item *item;
-+	struct string_list recipients = STRING_LIST_INIT_DUP;
-+
-+	if (fixed) {
-+		for_each_string_list_item(item, fixed)
-+			string_list_append(&recipients, item->string);
-+	}
-+
-+	if (cmd)
-+		run_recipients_command(cmd, tmpdiff, opt, &recipients);
-+
-+	string_list_sort(&recipients);
-+	string_list_remove_duplicates(&recipients, 0);
-+
-+	recipients_to_header_buf(header, buf, &recipients);
-+
-+	string_list_clear(&recipients, 0);
-+}
-+
- void show_log(struct rev_info *opt)
- {
- 	struct strbuf msgbuf = STRBUF_INIT;
- 	struct strbuf hdrbuf = STRBUF_INIT;
- 	struct log_info *log = opt->loginfo;
-+	char *tmpdiff = NULL;
- 	struct commit *commit = log->commit, *parent = log->parent;
- 	int abbrev_commit = opt->abbrev_commit ? opt->abbrev : the_hash_algo->hexsz;
- 	const char *extra_headers = opt->extra_headers;
-@@ -715,6 +880,18 @@ void show_log(struct rev_info *opt)
- 	 */
- 	graph_show_commit(opt->graph);
- 
-+	/* Generate dynamic To/Cc lists as needed */
-+	if (opt->to_cmd || opt->cc_cmd)
-+		tmpdiff = generate_temp_patch(commit);
-+
-+	headerize_recipients("To", tmpdiff, opt, opt->to_recipients, opt->to_cmd, &hdrbuf);
-+	headerize_recipients("Cc", tmpdiff, opt, opt->cc_recipients, opt->cc_cmd, &hdrbuf);
-+
-+	if (tmpdiff) {
-+		unlink_or_warn(tmpdiff);
-+		free(tmpdiff);
-+	}
-+
- 	/*
- 	 * Print header line of header..
- 	 */
-@@ -780,8 +957,6 @@ void show_log(struct rev_info *opt)
- 		ctx.notes_message = strbuf_detach(&notebuf, NULL);
- 	}
- 
--	format_recipients(opt, &hdrbuf);
--
- 	if (extra_headers)
- 		strbuf_addstr(&hdrbuf, extra_headers);
- 
-diff --git a/revision.h b/revision.h
-index 330d351b2e4c..9611309ae496 100644
---- a/revision.h
-+++ b/revision.h
-@@ -285,6 +285,8 @@ struct rev_info {
- 	int		add_signoff;
- 	struct string_list *to_recipients;
- 	struct string_list *cc_recipients;
-+	const char	*to_cmd;
-+	const char	*cc_cmd;
- 	const char	*extra_headers;
- 	const char	*log_reencode;
- 	const char	*subject_prefix;
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index ba5fd0efe2ae..2387bda4f272 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -228,6 +228,25 @@ test_expect_failure 'configuration To: header (rfc2047)' '
- 	grep "^To: =?UTF-8?q?R=20=C3=84=20Cipient?= <rcipient@example.com>\$" hdrs9
- '
- 
-+test_expect_success 'dynamic To: header (ascii)' '
-+	git config --unset-all format.to &&
-+	git format-patch --to-cmd="echo \"R E Cipient <rcipient@example.com>\" #" --stdout main..side >patch10 &&
-+	sed -e "/^\$/q" patch10 >hdrs10 &&
-+	grep "^To: R E Cipient <rcipient@example.com>\$" hdrs10
-+'
-+
-+test_expect_success 'dynamic To: header (rfc822)' '
-+	git format-patch --to-cmd="echo \"R. E. Cipient <rcipient@example.com>\" #" --stdout main..side >patch10 &&
-+	sed -e "/^\$/q" patch10 >hdrs10 &&
-+	grep "^To: \"R. E. Cipient\" <rcipient@example.com>\$" hdrs10
-+'
-+
-+test_expect_success 'dynamic To: header (rfc2047)' '
-+	git format-patch --to-cmd="echo \"R Ä Cipient <rcipient@example.com>\" #" --stdout main..side >patch10 &&
-+	sed -e "/^\$/q" patch10 >hdrs10 &&
-+	grep "^To: =?UTF-8?q?R=20=C3=84=20Cipient?= <rcipient@example.com>\$" hdrs10
-+'
-+
- # check_patch <patch>: Verify that <patch> looks like a half-sane
- # patch email to avoid a false positive with !grep
- check_patch () {
--- 
-2.39.1.236.ga8a28b9eace8
+[snip]
 
+> uname: Darwin 22.2.0 Darwin Kernel Version 22.2.0: Fri Nov 11 02:03:51
+
+Darwin (macOS) is your problem here.  The same problem
+occurs on Windows, but not on Linux, by default.
+
+Technically the problem is in the file system itself, combined with
+the ways (plural) that Git stores branch names.
+
+As far as Git itself is concerned, branch names are *always* case
+sensitive, so branches named `b` and `B` are different.  But Git
+stores branch names in two different formats, at the moment:
+
+ * Some are kept in a plain-text file `.git/packed-refs`.
+ * Some are stored as directory-and-file-names in `.git/refs/`.
+
+If the OS's file system is case sensitive, as most standard Linux
+file systems are, there's no problem with the latter. But if the OS's
+file system is case-INsensitive, as the default file systems on
+Windows and MacOS are, this becomes a problem: the attempt
+to create both `refs/heads/b` and a different file, `refs/head/B`,
+fails, with one of the two names "winning" and the other attempt
+to create a new name simply re-using the existing name.
+
+If you create a case-sensitive disk volume on your Mac, which
+can be a simple click-to-mount virtual drive within your regular
+case-insensitive file system, you can happily use Git without this
+complication. Note that the same complication applies to file
+names: Linux users can create two different, separate files
+named `README.TXT` and `ReadMe.txt` in a GIt project, and
+if you use the default case-insensitive macOS file system, you
+won't be able to check out both files.  Using your case sensitive
+volume will allow you to work with the Linux group.
+
+If and when a future version of Git starts using reftables instead
+of the file system to store branch and tag names, this particular
+issue will go away, but until then, I recommend keeping a case
+sensitive volume handy on your mac, and more generally,
+avoiding mixing upper and lower case branch and/or file names
+(at all, ever) whenever possible.  This avoids a lot of problems,
+though nothing can get you past the Windows `aux.h` problem. :-)
+
+Chris
