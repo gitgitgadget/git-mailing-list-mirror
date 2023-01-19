@@ -2,90 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FED8C46467
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 23:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CF9EC46467
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 23:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229919AbjASXeT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 18:34:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42540 "EHLO
+        id S229724AbjASXor (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 18:44:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbjASXeR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 18:34:17 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09AA793734
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 15:34:16 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id e3so3365183wru.13
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 15:34:15 -0800 (PST)
+        with ESMTP id S229518AbjASXop (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 18:44:45 -0500
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D1F69F38B
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 15:44:44 -0800 (PST)
+Received: by mail-yb1-xb2f.google.com with SMTP id p188so4716570yba.5
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 15:44:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fmjzt3/xJOdH5KRYFHIyfnIebe4wTAd/HSB0A5PHDxs=;
-        b=nBd0x7wUZut2uWc7UQ/6pR9AyYph81GyzxY6wqOV4lXbIrx6YBXoh8XVN05XcLtLWP
-         D9xXpTupcJ9PqsbbRYIg2EdHVTwCD2E7KujitP1YzQarTLjMRig9E4q83ZqtjvOxCePe
-         vbdZBqVnz7PWdOjco9+43G4nrpY0wVAEuZSUj0cObV3n4vdUs+Ov6xwpu9hJZDgL0b9t
-         gjosJXziyUT9AP30bviURGbN1zUJRHM9sto78RfHdgNq0bYsCW8W8CdyqZeItcXsaMZn
-         DHW3wAzUgRkq82HMQAQrmNeM7+CLnFAGdFgzVyNw1mygTtL9mlwOBBy9eS9hJiJQ0WyO
-         aYUA==
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=gVqcZN9IzpmpHcNUydKC5RqGc3f6xtfqHwn720yQEHM=;
+        b=EYwhTSW9moDq969FJmIPoSRCqfmurW9ubfhVmIl7MXmmR0FeJ4Xj/8MeXJ9LJbXFmi
+         R/ptn39+jZOrn1ySJ/CmJahRGjeep34qYf67x3eUibFcDhEBYDloCt5FXKWvj6/i7ycU
+         VlNgB2ttPqSs1UU0hIS7BjUpnlTTFDyhW8GTAbAnDtWKu/vjbOxiz+cUNBbyg5eDevY+
+         vtg7bDQ/dLjXQzo4tQF+YbZ+3ANq1RWVrC8sprki6XAjDy/ApQOYOnwB5hL7DMoiJMsR
+         GKvOW6pFC99jGfUikyh8aIHNvUu+fg/v1E2k5WKfk5NDeUx1lPpO9GtoiNrey4JHd8ep
+         vccQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fmjzt3/xJOdH5KRYFHIyfnIebe4wTAd/HSB0A5PHDxs=;
-        b=mcgkEArHAozP7M/85uASQTa42HdnEvdCR99/eXdBSzzjbUg6GX+oGYp38/2XYTxuXF
-         pMZNMLsOuhV1IhX8bBxjiKNnZGFvV+ynsEsGZNWdTqHiAb4YBnicecZNXk4Tc6jzWwUG
-         07cIVvTbszva4Hr7kBIY5X8iopxnddEKz4xUbRIQyFcXjlZIgKcIe3zeFzOWLDqJ5zb4
-         nhct+XsBnXsFzpKKK5Fa5Ged7CcVSU5joo8I+ITJ624gNsJKuIdXPqYJfo01eOywMTcj
-         2wWDdpYW8xao0u2WOesLf3xBEDuDytb20G5Rgh6t/AFJEA57t5QC8sfkkcXTA1JebM7p
-         b/YQ==
-X-Gm-Message-State: AFqh2koEWDl4gtugnNfLIGoFn4SNo3rXYL+ka+3oGIeKeT8btLUTrLx9
-        aj9fTTRzkm6NF94W1LIGJCGAxX6kE04=
-X-Google-Smtp-Source: AMrXdXv+p9UiXmsrqqqvEWf6DWFR0O7dwB/TTHOCEXFjL3kkIm5Z3zGTqWsU7Bh04gbTssaZ7GHEAQ==
-X-Received: by 2002:a05:6000:38a:b0:2be:4c32:a7df with SMTP id u10-20020a056000038a00b002be4c32a7dfmr2523039wrf.63.1674171254545;
-        Thu, 19 Jan 2023 15:34:14 -0800 (PST)
-Received: from [192.168.2.52] (94.red-88-14-213.dynamicip.rima-tde.net. [88.14.213.94])
-        by smtp.gmail.com with ESMTPSA id co22-20020a0560000a1600b002a01e64f7a1sm11330525wrb.88.2023.01.19.15.34.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Jan 2023 15:34:14 -0800 (PST)
-Subject: Re: [PATCH 3/3] branch: rename orphan branches in any worktree
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <ffd675e9-8a64-ae05-fc3b-36ae99092735@gmail.com>
- <34a58449-4f2e-66ef-ea01-119186aebd23@gmail.com>
- <a47ff192-db67-dc4c-ded3-cd1e7c197726@gmail.com> <xmqqedrq1a7h.fsf@gitster.g>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <527f7315-be7b-7ec0-04fc-d07da7d4fefa@gmail.com>
-Date:   Fri, 20 Jan 2023 00:34:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gVqcZN9IzpmpHcNUydKC5RqGc3f6xtfqHwn720yQEHM=;
+        b=3ypT4oGonGjeAmJBrcPnB7OvB22/tb2nxngfbUIczMSesU273e4m9cckI/Q5rc3k80
+         +oqg4MvvCO2rIrZ1EQHtTEOUGbXTLkfXmLQToWsgb8DMS+jw8fwddpeZcnKXE/X5s7J9
+         +8p372l8jtR6MIO626+P/mDza9CWpIBq1G1uYNZPYTInoPJqYlXtjBKkOhR6ZrjVIsqq
+         rffGC+PMQq859BlA7P5PyGH/6oeWCHrM5fsTVOqZxouAF8AB0HAW0rBaTvfq2OyiMC/E
+         GaoRkIZ1WMTqxuClIj5u3E0zAaMA0dZMccYpY7lMqQGuUXmqiOeqPFtwtLRqlqJ/UcI4
+         JNeA==
+X-Gm-Message-State: AFqh2kr1tkdVzF2Z68yLVGMg7IMBauiMCasrijJxbZitwDXcapsesP0i
+        tH0ZpNDwLvzE2piPMqpkYRYih9yR8VTyBNad2CC2zu64wynFb8jdfnI=
+X-Google-Smtp-Source: AMrXdXvTxW888UZ0VKDPBZUFzWMQPlYKoCH/s40OJojMoTqTLXsrCugYZJFB/oNWp2wAIKH1dnQnbx1WqfaLNVMXE7M=
+X-Received: by 2002:a25:814e:0:b0:7c5:d9aa:1493 with SMTP id
+ j14-20020a25814e000000b007c5d9aa1493mr1697859ybm.510.1674171883648; Thu, 19
+ Jan 2023 15:44:43 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqedrq1a7h.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20230119220538.1522464-1-calvinwan@google.com> <xmqq8rhy172q.fsf@gitster.g>
+In-Reply-To: <xmqq8rhy172q.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Thu, 19 Jan 2023 15:44:32 -0800
+Message-ID: <CAFySSZA6MgjejnoBa7HrXAQBNb1zE93aASVZogabAK_ArDNmnA@mail.gmail.com>
+Subject: Re: [PATCH] fetch: fix duplicate remote parallel fetch bug
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19-ene-2023 13:33:06, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> > +	if (!copy && !(ishead > 1) &&
-> 
-> Logically it might be necessary to be able to extend "is that branch
-> what we have checked out, yes or no?" bool into something else that
-> can be something other than 0 or 1, but as soon as you did so,
-> "is_head" is no longer a Boolean "is it a HEAD, yes or no?".
-> 
-> Now what does that value really _mean_?  Please rename the variable
-> and helper function appropriately to make it clear what is going on.
+> As it always is possible to edit .git/config manually, it is
+> necessary to perform deduplication like this patch does on the
+> consumer side of the list, but do you know if our tool create
+> duplication, or is it entirely something the end-user does manually?
 
-The idea is that an unborn branch needs to be a HEAD, so (head > 1)
-codifies that information.
-
-As I said in another reply in this thread, I'm going to reroll.  I hope
-to make it clearer then.
-
-Thank you.
+I checked git-remote and there is protection against duplication
+there, but I'm unsure if there are other places where remotes are
+being added/renamed. I discovered the bug initially by using
+git-config.
