@@ -2,68 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D112C00A5A
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 07:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80F02C00A5A
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 08:04:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229696AbjASHlw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 02:41:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48296 "EHLO
+        id S229590AbjASIEo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 03:04:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229944AbjASHln (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 02:41:43 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E66C63097
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 23:41:40 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id x21-20020a056830245500b006865ccca77aso738216otr.11
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 23:41:40 -0800 (PST)
+        with ESMTP id S229483AbjASIEn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 03:04:43 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1224D460A9
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 00:04:38 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id jl3so1596424plb.8
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 00:04:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3fckHZ5bWVkZNSYMc36kAEA7h+NQCkHSqMEDS+T25Iw=;
-        b=DlloiRoLkQH2OVXNSAL0AgQunZAIpdlUrAT3L+ynnWO7G7zI6HVQuXzpASvTs+2fQ1
-         i4JWwSoJ5SUpIPnJJHSOEG2L0jRGQQvMLdS0Y53/SUFolKhsDBsHzec5qx5fJR3MBL06
-         +Y9L95aaQagVO5LkFYxiShQqzBuEgE6/CvwpfilzDUF9qSPdsq/zqbbwTkyBeoP6fObw
-         Y9WdGsACSrUJtl/24r0tFsOcQN0DT+5TsA0O/DSEX+rlym8JlCqhOooDNehe1ek9oon9
-         OfHCzoB9h1+Foqr4bLoKl9aV1SMAKs1H9Ea8lh0O+LAj0jUla642nKYUOiRBylaw0Rs/
-         aQ4w==
+        bh=i4C29TzLLQbBTKae/Wrs0J81SHefcBaQqB5hCj9HwY0=;
+        b=CgGSahhMSYm6GGCs2MfPjXCfoTDJCnVhz8QcxtiCgshbfUx1k0mzxxUAdFAeWQZodm
+         zpkoZ+VpW6iRgs+z46xFe/0yBzLKvrzXto0Pu/6MuFipstXZ4u36fnaP7+Vu1hkB+mQZ
+         ceRrFb1UXBmu8r8sEZcVBzxPJDlSIakoNZr+mNPNwKwOlZ4a0k+V2QhqUIEIMoSVfPjr
+         jmuqb+AysHitL7AGLf3d7g2OpJGtaW9KKtAbGoAmw2SPH7QWe4C+Z7nq51BvWb0EXPnE
+         JjevBDy9pFoROJLt/5XOvo67dGmebW2LwmfWzRSDe2wcE0DY+Y+5StpnvzIQGJ8zlJVa
+         o4NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3fckHZ5bWVkZNSYMc36kAEA7h+NQCkHSqMEDS+T25Iw=;
-        b=5UiJ+llp+tTLkdSentbeM3C6JOFllEcD7yb4CwytT1DP1SLyQLIdhkclpqQRX34TW6
-         omkqPuVW4m56qYzKgT6maHV5SmpwsZGPcJwYkqgfnQjXLJbS+lSI1JcETSVfocgI/xW+
-         o2UI/SqbOzJdW4cVtvw8gvJRJSKncLv7nQj/Pq4zlUqcmCnpV5mpvUtsAR+BYNhTGoNV
-         GHVfTYHl/UjV+XFt1iITWWBmVdRXx20POR3dg+tqVVoSvacWj+ataMizwrb+8G2RWWYB
-         rL7z48YSSJJiXmIb9c5jtuzRZFLJd0Ajo9zeO+DdqtQ3LdixwPkpphbkH3y3GUSjegt/
-         h9Hg==
-X-Gm-Message-State: AFqh2koxHCa8GitoOR82ZCabDLSPbWOwIt3t6NjQzOAppN73wBuJjLgt
-        1vWwcxgCNX+DWbZEte5MM15kj8AxOAP6jXHzZI4=
-X-Google-Smtp-Source: AMrXdXs8GOSk3g6qsGDQ+m9y1FXiFKhlh7cZmDA3dQrz4bJlrqow324LB/n9RUyEj2hDtIEakJb+hryuttVmAAlJ0fs=
-X-Received: by 2002:a05:6830:111a:b0:684:eca2:a02 with SMTP id
- w26-20020a056830111a00b00684eca20a02mr551334otq.252.1674114100096; Wed, 18
- Jan 2023 23:41:40 -0800 (PST)
+        bh=i4C29TzLLQbBTKae/Wrs0J81SHefcBaQqB5hCj9HwY0=;
+        b=kZ1i3xoRMRDykL4hfGfCQTfgfpnXI6pi/6STyILUDoVV+h5/Ph59Xe1W3UWUu90lQy
+         GMo4dOQNvWAQ7oi+gcgVxQSKxeUccxqGoKU91iOS8Y1srGcuL+nTrTf4tpWcotdOgMgk
+         YZo1kRy1kta24uWd3lUCp3DAbYG2BXL/TxQHG17NzdZ22LFP/k+tomG8MjacMgh8gT5t
+         bBMsOwMUzLbzHiNU9vjFY+VKEDcUqc1S/UXXOnmZNZVqOuifdvyb0SfY09g5B6iu7n1y
+         cjTA+a+oc1bclBq4xa285zWtayBXe1w6JgIC/J/UeRim1JyNpKI8hT40a3icMUElt0Ez
+         o2OA==
+X-Gm-Message-State: AFqh2koBCu5PHeAVlwOUrxSLZfeE10jzc7x5f8xwvIgPCm0juCRC8cRr
+        UFU6TF/tk+5iy12HTUFYaUvWDiDEd9b/mya6DgIC05f4Bkm2pg==
+X-Google-Smtp-Source: AMrXdXsFjOcqtNb40mxTBmSsMUs6kOycGUbzWT1ohdeubs9OIzm0cAtavgM49huW3mB09InrKA8le4I1gMzuENeKA+Q=
+X-Received: by 2002:a17:90a:4dcd:b0:21a:1a66:cd91 with SMTP id
+ r13-20020a17090a4dcd00b0021a1a66cd91mr962174pjl.190.1674115477557; Thu, 19
+ Jan 2023 00:04:37 -0800 (PST)
 MIME-Version: 1.0
-References: <20230118061527.76218-1-carenas@gmail.com> <20230119055325.1013-1-carenas@gmail.com>
- <xmqqa62f2dj1.fsf_-_@gitster.g>
-In-Reply-To: <xmqqa62f2dj1.fsf_-_@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 18 Jan 2023 23:41:29 -0800
-Message-ID: <CAPUEsphr5hhszLmXc84_87gUq3Fc2yQo3_oxaP+UdODaCXHDeA@mail.gmail.com>
-Subject: Re: Re* [PATCH v3] checkout/switch: disallow checking out same branch
- in multiple worktrees
+References: <20230118082749.1252459-1-martin.agren@gmail.com> <xmqqzgaf4xrf.fsf@gitster.g>
+In-Reply-To: <xmqqzgaf4xrf.fsf@gitster.g>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 19 Jan 2023 09:04:26 +0100
+Message-ID: <CAN0heSokODyuYUEgaU8Ym_Evvmdp_y1-V0LxbsTECgm3sP9d-g@mail.gmail.com>
+Subject: Re: [PATCH] git-cat-file.txt: fix list continuations rendering literally
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com,
-        Jinwook Jeong <vustthat@gmail.com>,
-        =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org,
+        Siddharth Asthana <siddharthasthana31@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks, that should round up the documentation for this behaviour nicely.
+On Wed, 18 Jan 2023 at 17:23, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Are you comparing both roff output and html output, by the way?
 
-Carlo
+Yes, I'm trying to make sure all four of
+
+  {asciidoc, asciidoctor} x {man, html}
+
+agree and look good. For the manpages, I use our doc-diff script. (In
+this case, I wanted an empty asciidoc diff (HEAD^ HEAD) and a good
+Asciidoctor diff (s/+//-ish).) For the html, it's a bit more manual
+labour, switching between files in a browser and convincing myself
+everything is good, visually.
+
+Luckily, once both tools agree on the manpages and they look good, in my
+experience, the html is probably also ok.
+
+Martin
