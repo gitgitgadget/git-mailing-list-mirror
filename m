@@ -2,108 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14F0BC004D4
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 22:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 240EBC004D4
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 22:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229766AbjASWWd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 17:22:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54214 "EHLO
+        id S230010AbjASWjR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 17:39:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbjASWVg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 17:21:36 -0500
-Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3087A4B4A5
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 14:06:20 -0800 (PST)
-Received: by mail-pg1-x54a.google.com with SMTP id e184-20020a6369c1000000b0049de6cfcc40so1604108pgc.19
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 14:06:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=DhMNmkuPrG3pJMubkyUVu+MpAAv07MNEdsuXrxZzDZg=;
-        b=mP8rzvca+Hy5of4kteevEZvnSO3XA8OFCPI+VRfndi6s68saKVPCcKDH5FLKrOxOAz
-         W1UAqPiI2of3LzuLaQJXqlfrQz5SJXqUOVB68fqkNu+BvVXGthz5R169/Ony7myOBEn2
-         ovRZVuyjTVHSaXqDO1pEvXpJcq3k2dA/XZiO+5yv9nfQZsNWxhb1R6Qj6D73ddh6UZoR
-         AsM3qDHLw1FnxA9Ej9tsJPsIEyYukzCIPGyONdzdArBLTqHjMs+CUbmZ/qm1enw3UoyL
-         fw+7Cyr8vhJhYedvAfSZxYI8/RVCKjgzbKW4iOiDx3ki/oYyZ0gYNbMDQ1af0e8fZqC6
-         M6IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DhMNmkuPrG3pJMubkyUVu+MpAAv07MNEdsuXrxZzDZg=;
-        b=hHeTebJpG9vStWgFyUYb/Nm8Xs6ci5BG+woJZq2cbMxqCkqWQ0quopNmVhFni529Je
-         vDGJKMbV7ToiEwpW9L6r7rXOqcjzyf64nyDd/yu9KL1oBiG6My3BFdAVt+UgJYBQrzux
-         ZWH5hdVgGMA5HPqeYf/ArnOvMUOGohPUPcUxOkutg2JTzZ3R/u4f+p5AsvC+iGxfxGWG
-         Q8gCEJrXUNnp7PO413b88TDk1nk2FNTdDxFuqUNr8LJ57FIjbKSqt9xPIB9aONT9++/g
-         /yRNw30kG2JRwVmJ2u9SqCTpPBj6CiPZzEEOKSWeb2oKCGqYGQBYIuKhQee8RnDMvYeJ
-         8XBg==
-X-Gm-Message-State: AFqh2kpz4e19En9qgMHjHyZ97C/GIRf6jv+cULF4fje5rY0CIDU2LIvB
-        ejQQsfLlEufbr8yk83oJazCuZlt2nv3GZazcDOLp9gMIe8oAxZWUi9MeDgeMEkCiNeqpyF9mgBJ
-        4VX7W0U1LfYtGATweGO2bEB2KFOBwFxjJBrpuNFp5nvPGvCBG9Py6XLOONHoBKYSjIg==
-X-Google-Smtp-Source: AMrXdXs9zvNq0ZzH9GHmdzr+tAJ2RlPgNJvkr/LiONxrsTXYv+C7m28KVKh82D2fU+ksSRPW4zzbkby6P71BZ0U=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:aa7:850f:0:b0:58d:acfe:7c34 with SMTP id
- v15-20020aa7850f000000b0058dacfe7c34mr1132408pfn.39.1674165979649; Thu, 19
- Jan 2023 14:06:19 -0800 (PST)
-Date:   Thu, 19 Jan 2023 22:05:38 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.39.0.246.g2a6d74b583-goog
-Message-ID: <20230119220538.1522464-1-calvinwan@google.com>
-Subject: [PATCH] fetch: fix duplicate remote parallel fetch bug
-From:   Calvin Wan <calvinwan@google.com>
-To:     git@vger.kernel.org
-Cc:     Calvin Wan <calvinwan@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S230527AbjASWij (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 17:38:39 -0500
+Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 006FA182
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 14:20:32 -0800 (PST)
+Date:   Thu, 19 Jan 2023 22:20:18 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
+        s=protonmail3; t=1674166829; x=1674426029;
+        bh=P1xlvXmeBQCwOKVyyoRVxBROSyG9pvyJwPs+M6VlPao=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=Ytw3AG1YvBw6Kp8MRfxLazM4sPsrFV3ufylUQb3Fr53UaMRVR2iiPzK1mBGgpfZEm
+         UFcBlQp/Xay1VpkQ22FAtvqweNXjhzsDSXkecgyF9rq8mMEbEJZrlWX74YOqI9OKVb
+         VZslhwL2xdoHZlw2pRIi+zSLdvUsrLLHr5x+BvH2g3reJYcQRpp+8D751jPdCRmlLZ
+         jGvfxFlddweM4JEVt1VcmVvlsO1agjtwLpyRvAwsF3FwVgl5q9ZrOMGoPGr5T26n71
+         v8dXcYdiwv5P9UhhPBszt2C3N3C9qsbdy0MEVaieqAiEfC/zYXrDtFp3+C9tN6/QcY
+         H9DV1/BMs24Vw==
+To:     phillip.wood@dunelm.org.uk
+From:   Jacob Abel <jacobabel@nullpo.dev>
+Cc:     git@vger.kernel.org,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
+Subject: Re: [PATCH v8 3/4] worktree add: add --orphan flag
+Message-ID: <20230119222003.qcdrhcsvjlyab6af@phi>
+In-Reply-To: <df2c0ae0-0654-a3e1-cc02-be2d970ea287@dunelm.org.uk>
+References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20230107045757.30037-1-jacobabel@nullpo.dev> <20230109173227.29264-1-jacobabel@nullpo.dev> <20230109173227.29264-4-jacobabel@nullpo.dev> <e5aadd5d-9b85-4dc9-e9f7-117892b4b283@dunelm.org.uk> <20230114224715.ewec6sz5h3q3iijs@phi> <70a01a52-f16c-e85f-297e-c42a23f95a9a@dunelm.org.uk> <20230118224020.vrytmeyt3vbanoh2@phi> <df2c0ae0-0654-a3e1-cc02-be2d970ea287@dunelm.org.uk>
+Feedback-ID: 21506737:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fetching in parallel from a remote group with a duplicated remote results
-in the following:
+On 23/01/19 04:18PM, Phillip Wood wrote:
+> On 18/01/2023 22:40, Jacob Abel wrote:
+> > [...]
+> > Understood.
+> >
+> > I'm not entirely opposed to making this change to OPT_BOOL but I have t=
+o wonder
+> > how often `--orphan` will actually be used by a given user and whether =
+the
+> > slightly shorter invocation will be used regularly.
+> >
+> > With the base `git worktree add $path`, the shorthand/DWYM makes sense =
+as it's
+> > used regularly but I don't see users working with `--orphan` outside of=
+ trying
+> > to create the first branch in a repository.
+>
+> Your example use in the commit message shows the user using the same
+> name for the branch and worktree. If that really is the likely use than
+> I think we should make --orphan OPT_BOOL. If it is not the likely use
+> perhaps you could update the commit message to show how you think it
+> will be used.
 
-error: cannot lock ref '<ref>': is at <oid> but expected <oid>
+The example in the commit message is mostly a trivial example to show the
+change. I think whether someone uses the same name for the branch and workt=
+ree
+depends on how they use the feature. At least personally, generally I name =
+my
+worktree based on either the relevant project/"hat" or using an "a/, b/, c/=
+" or
+"alpha/, beta/, gamma/" style.
 
-This doesn't happen in serial since fetching from the same remote that
-has already been fetched from is a noop. Therefore, remove any duplicated
-remotes after remote groups are parsed.
+So in my personal use, it'd look something like:
 
-Signed-off-by: Calvin Wan <calvinwan@google.com>
+    git worktree add --orphan main alpha/
+
 ---
- builtin/fetch.c          | 1 +
- t/t5506-remote-groups.sh | 9 +++++++++
- 2 files changed, 10 insertions(+)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b06e454cbd..508ab2670c 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -2225,6 +2225,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			argv++;
- 		}
- 	}
-+	string_list_remove_duplicates(&list, 0);
- 
- 	if (negotiate_only) {
- 		struct oidset acked_commits = OIDSET_INIT;
-diff --git a/t/t5506-remote-groups.sh b/t/t5506-remote-groups.sh
-index 5bac03ede8..0e176175a3 100755
---- a/t/t5506-remote-groups.sh
-+++ b/t/t5506-remote-groups.sh
-@@ -99,4 +99,13 @@ test_expect_success 'updating remote name updates that remote' '
- 	! repo_fetched two
- '
- 
-+test_expect_success 'updating group in parallel with a duplicate remote does not fail (fetch)' '
-+	mark fetch-group-duplicate &&
-+	update_repo one &&
-+	git config --add remotes.duplicate one &&
-+	git config --add remotes.duplicate one &&
-+	git -c fetch.parallel=2 remote update duplicate &&
-+	repo_fetched one
-+'
-+
- test_done
--- 
-2.39.0.246.g2a6d74b583-goog
+Or to occassionally break out a scratchpad that I may want to keep around f=
+or a
+while but not actually integrate into the feature branch in it's current fo=
+rm.
+This isn't really for code but rather so I can scratch out and document my =
+logic
+prior to doing a formal write up at the end of a given feature. Of course s=
+ince
+it doesn't make it into the main tree, when everything is written up, I can=
+ just
+toss the branch and let gc take care of it.
+
+This ends up looking like so:
+
+    git worktree add --orphan scratch-1234-foobar-feature scratchpad/
+
+And since `worktree add` only needs to be done once, I only do this the fir=
+st
+time I set up my dev environment on a machine. After that I can just use
+`git switch --orphan` to create new scratchpad branches and `git switch` to
+swap between existing scratchpads.
+
+---
+
+The first example I see as being the main use case (which could hopefully b=
+e
+DWYMed eventually) and the latter example is a quirk of my admittedly niche
+personal usecase for worktrees.
+
+> > And I'd like that operation of creating the first branch in a repo to e=
+ventually
+> > "just work" with the base command, i.e. `git worktree add main/`. The r=
+eason I
+> > hadn't yet added that is because I've yet to figure out how to get it t=
+o work
+> > without accidentally introducing potentially confusing situations and I=
+ didn't
+> > want to hold up introducing the core functionality itself.
+> >
+> > Once that main use-case "just works", I don't see users utilising `--or=
+phan`
+> > except in very rare circumstances. Doubly so since the average user lik=
+ely
+> > shouldn't be using `--orphan` in most cases.
+>
+> This brings us back to the question that we discussed earlier of whether
+> we need --orphan at all. If we can get the main use-case working without
+> it we'd perhaps be better doing that rather than adding an option no one
+> ends up using.
+
+At least personally, I'd rather expose the option for users who may potenti=
+ally
+want it. I think it'd be useful regardless but in the same way `--orphan` i=
+s
+currently useful in `git switch`, which is for very specific niche cases an=
+d
+really only for power users rather than as a common tool everyday users are
+expected to know.
+
+And for the main use case, my concerns were:
+
+1. If we DWYM and create a branch when there are no existing branches, what
+about the case where a user sets up the repo but forgot to fetch. i.e. if a=
+ user
+does:
+
+    # Or instead of init --template, use some language's project init tool =
+to
+    # setup git hooks.
+    % git init --bare --template <tmpldir> .git
+    % git remote add origin <remote>
+    % git worktree add main/
+
+Should we just warn the user that they haven't fetched their remote yet whi=
+le we
+prepare the worktree?
+
+2. Suppose we also check whether the remote has been fetched and the remote=
+ has
+a branch matching the current branch name.
+
+Should we fail (as it currently does on main) with an advise to try the com=
+mand
+`git worktree add main main` instead? Or should that command also "just wor=
+k"
+
+3. If we want to do the above, should it do this for all commands trying to
+create a worktree until at least one real branch (with commits) exists in t=
+he
+repo or should we only do this when the branch name matches the one defined=
+ in
+`init.defaultBranch`?
+
+> Best Wishes
+>
+> Phillip
+>
+> > [...]
 
