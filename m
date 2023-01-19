@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E142C004D4
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 17:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A07B4C38142
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 17:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230004AbjASRee (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 12:34:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42438 "EHLO
+        id S230043AbjASReh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 12:34:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229966AbjASRea (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 12:34:30 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F2B2137
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 09:34:29 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so4107258wmb.0
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 09:34:29 -0800 (PST)
+        with ESMTP id S229969AbjASReb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 12:34:31 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 408795593
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 09:34:30 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id j17so2160094wms.0
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 09:34:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BvjTQMsN1DeH7Uwr283uyqWYtYNqOaCgOSIF09msE0I=;
-        b=hK/HqMR9kDgBgnvI/iL2tyu7dSCMBY8XzvNsaGUuxy1qqRjs7y0C7tpxRpSIlzTxrr
-         Z1jR1uynyDyVd0tKEm+BAwiWffLx5rvnwqunYJ35HZ0K0XCoj4MFnFy6YF/w1khCPRAv
-         2RXkAJJZkn/DpZ3ofF9SUryKq9a8Xc0RgYv9Ojx8JyI2FKeJ2IeRJEfOHo0KxBqsjXtx
-         gbVBgIeShCqgPyxPJl9L7K1HBZ7G6EtnWF6OlmjsR86Ziz0OxRuWb8PTaUZlr8g3w1Oq
-         qUr1HFycxYIzzJLcDdcC7dZJTjV3PR/+81ZHVMY8P8rYdmMMakIKinyLWDEzlIMO6bNm
-         vXDA==
+        bh=cRr/xhIAtx6og2JPYbTn4gKBt0MKzrnOA+Mr8Tq9cl0=;
+        b=ij7OTekWQzP2BiuP/6FQ4g4XcMiIPF7gbP0xdv/rK6TWhz2Ipq1BOae8fMw4eV4kJQ
+         PAo0wQqcr0tIG6WYR+yhPFk0uWqt4+be97g2FcgH9IFHwsz1FrgfI9KgcRk/YrfzkaHd
+         3G43kbYhgw1KoEE6Q1mdTHn8Kn3j2QoJuGVbu7uhKKOgtVDImqQVvaQTzgMvprjcYHJn
+         PFropaUmOV+dEUsEBrFxzOxLMpiCPn7HX9IbNzdrOWW7Pm3vplAEfu2LkjciEOT1PK26
+         Gl3yGdtXbdUpThwGQE3rpJlSz9ZZVENh30zsqtE7eCtlpzJdqTXzeLtZM67qhEva6BZC
+         ckDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BvjTQMsN1DeH7Uwr283uyqWYtYNqOaCgOSIF09msE0I=;
-        b=mVoGEoPGMa5ryvbMETPYHNxqyswy/oD+axrdv+8DaE8VQ5J0BBVA5A+h8qDOMWDeTy
-         TAGeoI6G81zZ3qGNK9cJKhH6LTeDlyCGMbaDwmKg8Oq9qHPdELWJEqJbf/znWvamhSsR
-         aJv1lShcrGQAaI1Vzwa/YG7xEdGzCVFSyTUfwK0QycH+hygABP37+BIwJS1CpIX/J6gs
-         DmU723lK6nT+EqX4iyraWs0sJ1WGfHnq7YxetBfTUOYzEzbIsAus310l1qm4b2za5h00
-         s7uKVHMnDwk6DX8xlaQjUPs+ZvXior4r/h1ZCcPAy88nwRyVAr96+1TdyhqjDlI0rG6/
-         aLuQ==
-X-Gm-Message-State: AFqh2korDx6PQAZVSCHdixuRNuZIrw/4qFyJ+x6XOopYjQh5K2m68eS+
-        uvkfuGaAek6ubatjHzZVwjvdY5GVgSA=
-X-Google-Smtp-Source: AMrXdXuUJRIyWT5z7/+oaKCBJw2S3wmQ1Wfaqwors9TvA79fkovCeGxh2fFD0h93rwgMJZermr6f7g==
-X-Received: by 2002:a05:600c:4f06:b0:3da:f671:eded with SMTP id l6-20020a05600c4f0600b003daf671ededmr11161465wmq.12.1674149667993;
-        Thu, 19 Jan 2023 09:34:27 -0800 (PST)
+        bh=cRr/xhIAtx6og2JPYbTn4gKBt0MKzrnOA+Mr8Tq9cl0=;
+        b=0cDLRBkthaykSjdQ+1S0x0krEkrnP1ta6ArMM8/iG/jcm/GH/lLTDoXcIOFvvCAEvO
+         WxXirD+cKX8LPp1mq6Y/zj2D7WqyVd4le6FNsFuDpZ8ccqjDvdtMc5adqqtrqkOgM6n9
+         igdZpNABOJYYF8pUppS9WvIeO2FjnATuZN3Qx/xFgIoLgf2MZ08t5muLdAfAU84PSqLC
+         am4boFxi2rRwpRxtzFW/A+kdR/89w0uzFWacqOzPnA+5zqweD4MPkBvQ9kjRYULtisbo
+         /aF6aBg7NSN9xjUwG93hOg/ub3dVIWKMZMoXcqZPEhm2DCdlVLoueM08xcAQcqnui4nk
+         lfaA==
+X-Gm-Message-State: AFqh2krbBaO64VJtTEto4nX2h5QqIBYYhTaOjXJflAzbUzv2bMoZqtRg
+        i/HuM/9sfNKCXKcbtRz15hfa5F216HQ=
+X-Google-Smtp-Source: AMrXdXuI++6CfR+0HhJn+EKPAuIiLNBaolse1v213jfrfXcJ/RSBxspjSPLVorihbLGfvqd4MGL/tA==
+X-Received: by 2002:a05:600c:4f45:b0:3cf:68d3:3047 with SMTP id m5-20020a05600c4f4500b003cf68d33047mr11048032wmq.41.1674149668714;
+        Thu, 19 Jan 2023 09:34:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l11-20020a1ced0b000000b003dafb0c8dfbsm6614892wmh.14.2023.01.19.09.34.27
+        by smtp.gmail.com with ESMTPSA id iv8-20020a05600c548800b003b47b80cec3sm6590075wmb.42.2023.01.19.09.34.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 09:34:27 -0800 (PST)
-Message-Id: <cde4827da13a1391501057ee42655836f0ccd337.1674149666.git.gitgitgadget@gmail.com>
+        Thu, 19 Jan 2023 09:34:28 -0800 (PST)
+Message-Id: <9ebd6b77a69be414388a52a482912173f2a4e7d8.1674149666.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1458.v2.git.1674149666.gitgitgadget@gmail.com>
 References: <pull.1458.git.1673451741587.gitgitgadget@gmail.com>
         <pull.1458.v2.git.1674149666.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 Jan 2023 17:34:24 +0000
-Subject: [PATCH v2 1/2] docs: fix sparse-checkout docs link
+Date:   Thu, 19 Jan 2023 17:34:25 +0000
+Subject: [PATCH v2 2/2] ls-files: add %(skipworktree) atom to format option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,171 +75,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: ZheNing Hu <adlternative@gmail.com>
 
-There is a linking error when other documents want to refer to
-technical/sparse-checkout.txt, Also, there is something wrong
-with the format of the paragraphs in sparse-checkout.txt, which
-makes acsiidoc compile errors.
-
-So fix the format of sparse-checkout.txt, and link it in the
-Makefile to correct that.
+Because sometimes we want to check if the files in the
+index match the sparse specification, so introduce
+"%(skipworktree)" atom to git ls-files `--format` option.
+When we use this option, if the file match the sparse
+specification, it will output "1", otherwise, output
+empty string "".
 
 Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 ---
- Documentation/Makefile                      |  1 +
- Documentation/technical/sparse-checkout.txt | 43 ++++++++++++++-------
- 2 files changed, 30 insertions(+), 14 deletions(-)
+ Documentation/git-ls-files.txt |  5 +++++
+ builtin/ls-files.c             |  3 +++
+ t/t3013-ls-files-format.sh     | 23 +++++++++++++++++++++++
+ 3 files changed, 31 insertions(+)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 9c67c3a1c50..7540da27b8c 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -121,6 +121,7 @@ TECH_DOCS += technical/reftable
- TECH_DOCS += technical/scalar
- TECH_DOCS += technical/send-pack-pipeline
- TECH_DOCS += technical/shallow
-+TECH_DOCS += technical/sparse-checkout
- TECH_DOCS += technical/trivial-merge
- SP_ARTICLES += $(TECH_DOCS)
- SP_ARTICLES += technical/api-index
-diff --git a/Documentation/technical/sparse-checkout.txt b/Documentation/technical/sparse-checkout.txt
-index fa0d01cbda4..52e86764a6c 100644
---- a/Documentation/technical/sparse-checkout.txt
-+++ b/Documentation/technical/sparse-checkout.txt
-@@ -1,3 +1,6 @@
-+Sparse Checkout Design Notes
-+============================
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 440043cdb8e..2540b404808 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -260,6 +260,11 @@ eolattr::
+ 	that applies to the path.
+ path::
+ 	The pathname of the file which is recorded in the index.
++skipworktree::
++	If the file in the index marked with SKIP_WORKTREE bit.
++	It means the file do not match the sparse specification.
++	See link:technical/sparse-checkout.txt[sparse-checkout]
++	for more information.
+ 
+ EXCLUDE PATTERNS
+ ----------------
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index a03b559ecaa..bbff868ae6b 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -280,6 +280,9 @@ static size_t expand_show_index(struct strbuf *sb, const char *start,
+ 			      data->pathname));
+ 	else if (skip_prefix(start, "(path)", &p))
+ 		write_name_to_buf(sb, data->pathname);
++	else if (skip_prefix(start, "(skipworktree)", &p))
++		strbuf_addstr(sb, ce_skip_worktree(data->ce) ?
++			      "1" : "");
+ 	else
+ 		die(_("bad ls-files format: %%%.*s"), (int)len, start);
+ 
+diff --git a/t/t3013-ls-files-format.sh b/t/t3013-ls-files-format.sh
+index efb7450bf1e..cd35dba5930 100755
+--- a/t/t3013-ls-files-format.sh
++++ b/t/t3013-ls-files-format.sh
+@@ -92,4 +92,27 @@ test_expect_success 'git ls-files --format with --debug' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git ls-files --format with skipworktree' '
++	test_when_finished "git sparse-checkout disable" &&
++	mkdir dir1 dir2 &&
++	echo "file1" >dir1/file1.txt &&
++	echo "file2" >dir2/file2.txt &&
++	git add dir1 dir2 &&
++	git commit -m skipworktree &&
++	git sparse-checkout set dir1 &&
++	git ls-files --format="%(path)%(skipworktree)" >actual &&
++	cat >expect <<-\EOF &&
++	dir1/file1.txt
++	dir2/file2.txt1
++	o1.txt
++	o2.txt
++	o3.txt
++	o4.txt
++	o5.txt
++	o6.txt
++	o7.txt
++	EOF
++	test_cmp expect actual
++'
 +
- Table of contents:
- 
-   * Terminology
-@@ -14,7 +17,8 @@ Table of contents:
-   * Reference Emails
- 
- 
--=== Terminology ===
-+Terminology
-+-----------
- 
- cone mode: one of two modes for specifying the desired subset of files
- 	in a sparse-checkout.  In cone-mode, the user specifies
-@@ -92,7 +96,8 @@ vivifying: When a command restores a tracked file to the working tree (and
- 	file), this is referred to as "vivifying" the file.
- 
- 
--=== Purpose of sparse-checkouts ===
-+Purpose of sparse-checkouts
-+---------------------------
- 
- sparse-checkouts exist to allow users to work with a subset of their
- files.
-@@ -255,7 +260,8 @@ will perceive the checkout as dense, and commands should thus behave as if
- all files are present.
- 
- 
--=== Usecases of primary concern ===
-+Usecases of primary concern
-+---------------------------
- 
- Most of the rest of this document will focus on Behavior A and Behavior
- B.  Some notes about the other two cases and why we are not focusing on
-@@ -300,7 +306,8 @@ Behavior C do not assume they are part of the Behavior B camp and propose
- patches that break things for the real Behavior B folks.
- 
- 
--=== Oversimplified mental models ===
-+Oversimplified mental models
-+----------------------------
- 
- An oversimplification of the differences in the above behaviors is:
- 
-@@ -313,7 +320,8 @@ An oversimplification of the differences in the above behaviors is:
- 	      they can later lazily be populated instead.
- 
- 
--=== Desired behavior ===
-+Desired behavior
-+----------------
- 
- As noted previously, despite the simple idea of just working with a subset
- of files, there are a range of different behavioral changes that need to be
-@@ -544,7 +552,8 @@ understanding these differences can be beneficial.
-   * gitk?
- 
- 
--=== Behavior classes ===
-+Behavior classes
-+----------------
- 
- From the above there are a few classes of behavior:
- 
-@@ -611,7 +620,8 @@ From the above there are a few classes of behavior:
-     specification.
- 
- 
--=== Subcommand-dependent defaults ===
-+Subcommand-dependent defaults
-+-----------------------------
- 
- Note that we have different defaults depending on the command for the
- desired behavior :
-@@ -751,7 +761,8 @@ desired behavior :
-     implemented.
- 
- 
--=== Sparse specification vs. sparsity patterns ===
-+Sparse specification vs. sparsity patterns
-+------------------------------------------
- 
- In a well-behaved situation, the sparse specification is given directly
- by the $GIT_DIR/info/sparse-checkout file.  However, it can transiently
-@@ -823,7 +834,8 @@ under behavior B index operations are lumped with history and tend to
- operate full-tree.
- 
- 
--=== Implementation Questions ===
-+Implementation Questions
-+------------------------
- 
-   * Do the options --scope={sparse,all} sound good to others?  Are there better
-     options?
-@@ -894,7 +906,8 @@ operate full-tree.
-     is seamless for them.
- 
- 
--=== Implementation Goals/Plans ===
-+Implementation Goals/Plans
-+--------------------------
- 
-  * Get buy-in on this document in general.
- 
-@@ -922,13 +935,14 @@ operate full-tree.
-      commands.  IMPORTANT: make sure diff machinery changes don't mess with
-      format-patch, fast-export, etc.
- 
--=== Known bugs ===
-+Known bugs
-+----------
- 
- This list used to be a lot longer (see e.g. [1,2,3,4,5,6,7,8,9]), but we've
- been working on it.
- 
--0. Behavior A is not well supported in Git.  (Behavior B didn't used to
--   be either, but was the easier of the two to implement.)
-+Behavior A is not well supported in Git.  (Behavior B didn't used to
-+be either, but was the easier of the two to implement.)
- 
- 1. am and apply:
- 
-@@ -1052,7 +1066,8 @@ been working on it.
-     https://lore.kernel.org/git/CABPp-BEkJQoKZsQGCYioyga_uoDQ6iBeW+FKr8JhyuuTMK1RDw@mail.gmail.com/
- 
- 
--=== Reference Emails ===
-+Reference Emails
-+----------------
- 
- Emails that detail various bugs we've had in sparse-checkout:
- 
+ test_done
 -- 
 gitgitgadget
-
