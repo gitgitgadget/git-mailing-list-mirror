@@ -2,68 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB143C004D4
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 16:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89473C004D4
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 16:33:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230209AbjASQYe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 11:24:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48878 "EHLO
+        id S230166AbjASQdd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 11:33:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230255AbjASQYV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 11:24:21 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA8AC70C67
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 08:24:07 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id z13so2773483plg.6
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 08:24:07 -0800 (PST)
+        with ESMTP id S230239AbjASQdQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 11:33:16 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1395C8CE43
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 08:32:54 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id m3-20020a17090a414300b00229ef93c5b0so1601958pjg.2
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 08:32:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BUmXDXVqMwxfZuInVrmd02QrJWeOw3966ODh9p8uOFU=;
-        b=YhUR2cLRvXL/0JJkuVRgsZZos/27bjXyJQeDC8srOjgHgK4b3/EmsOBRkVsKlEGCH5
-         LVnrXiZNG7vIlTgFdWgV0yBsCQCl9ec+Mh/wBXK5I1/bm/PrhRAfMqGJtzD8QyYYgqtp
-         6CMJJk/u+QGKR2I1AYxzvaCfBfzv2qHCKR/70ljYlfzYkz3T1IQxujlHteUyQw7odSyK
-         DC5n7tYqJnhRKS8opvcWgPlp7LKzm7BsNwROX51qDmtKla6KBcffx4xna91NQEcUxbET
-         xLdABrxxg+8bSTRIl5VqFrIdWrABzzhVn7NGrNY+g60zcCCdqcByJrsJaNjXUDoGKEEt
-         kdyA==
+        bh=wrwkOk4CBqbin5pKepHhzw/yzObcxHQh35Y5PaTj4v4=;
+        b=kQfUvIEHXwfCWTZeMA2e3hEGrsu4VEfGiriSLal98AqasUOwkdkXQdZLYwdkDMZQt/
+         2EYIxPhH4119wLS1gW/UgaLCegdQXEYi4VksY2OrldLTn/6fAVQhFkFdwSaXKVl3XX2b
+         ZWQ7jnW+secfdB61cu16ZOHDSId1UQ9fteMsTdoJdJxJYemuf3G4leWSC3NG66qDujeI
+         yPS7QsnaJZHw5DXsMOTowwzYjzNqCuQbpeEeoQWSASGTBmP/p88sAqhauWRvv7f6otXF
+         XIxtXwRIiJv7O11C5tmjTGhdkaxXr3XmCH2fzsr9qgMrVE1IOAUTJyyVHLR5tBYT7LDa
+         rfaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BUmXDXVqMwxfZuInVrmd02QrJWeOw3966ODh9p8uOFU=;
-        b=sAuKSlW8035D1S3g/lMdaUjW5FW25uXEqjb5Afca1TXdcygMl2KTrUkY3mICdSTnKD
-         2ChUlSYmEvBAyGBKpkkHJDURWcptd653ssVONPHx52uwJZla61SvwgvM7XN864Z0L/Kc
-         ngnYoPLSjWhviBSd9QZ0nh57A7hTdqzBQ/e2xAq7N454huf+9JqG8P4EpqbOarq+upSI
-         yfFvreSKYmPBlgeDfsH9AHr0dnkolDku4z5qsM1xwEzS9YWOjEOYpBuR/9ZExPcxD3I5
-         qYOnVRBzcbxug9johXsBoq/hTDi/24Ba3dGzwkXVqSv6WJs8l7qNaZI6paK3/YwOc3NC
-         QsBg==
-X-Gm-Message-State: AFqh2krrP4XmqblEJWh56q2TVNV9jVDE9b0bSAv7INL7/V9OcnBAvVlJ
-        wxc/Tx3B1h7TxT9a4db2CpE=
-X-Google-Smtp-Source: AMrXdXt0rVx+PTCvgyoQqDOXw3uVREFGdw74WWDgvavoVWbjufmkIf4197Koa6TTzm32Ps/ztzN52g==
-X-Received: by 2002:a17:902:d506:b0:193:2fdb:db07 with SMTP id b6-20020a170902d50600b001932fdbdb07mr16246382plg.43.1674145446931;
-        Thu, 19 Jan 2023 08:24:06 -0800 (PST)
+        bh=wrwkOk4CBqbin5pKepHhzw/yzObcxHQh35Y5PaTj4v4=;
+        b=x2Symj69vR5dFVEXAgQW3tID8mJUFw4JISDbGxkWsuAhoUQaD0Bc8gNPW0wQjxqdh6
+         fd9s6Y341ZzWbiV5Olv8f4iep2p90bShXEQM/JRSLPTWwjW6cYCx09DoaZItwXDEo0le
+         WFHmNP52awFgpIerCIHe/Mp9iyXckyDxg+eSTpqTmEjlsTfX2bgHZGBC6QS98d1vWxXI
+         kXW3Dd1E/v/vzFMFpirMnOs9QeyV2rs9wmvHobe0Z3JGaIfITRKrqdCZuEuVw9IEimZy
+         X5sspd+KgBqqwNlosfAYwCB4ZYlHa1uUNnk4ol7QGw0QitZkt9eg/2nPpvu/DMd7tmOQ
+         XBfg==
+X-Gm-Message-State: AFqh2kpGD8LvUVjkAOIf7WrgPG2o1hFcK0hUlhe6pQPCGzLGSd5YSoHh
+        gatV9Q7Mh2X6b1MtaG3uhhA=
+X-Google-Smtp-Source: AMrXdXsCNuZ6T7jpyxOcOkEFpQG9ifcobBhxAABxakbTyNRG7LAyR4TdeOTmHdFiArndBldljRr42g==
+X-Received: by 2002:a05:6a20:b71b:b0:af:6f28:7c42 with SMTP id fg27-20020a056a20b71b00b000af6f287c42mr11191969pzb.62.1674145974253;
+        Thu, 19 Jan 2023 08:32:54 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id i16-20020a170902cf1000b00192c5327021sm25391729plg.200.2023.01.19.08.24.06
+        by smtp.gmail.com with ESMTPSA id r33-20020a635161000000b0046f56534d9fsm20957298pgl.21.2023.01.19.08.32.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 08:24:06 -0800 (PST)
+        Thu, 19 Jan 2023 08:32:53 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org,
-        Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: Re: [PATCH] git-cat-file.txt: fix list continuations rendering
- literally
-References: <20230118082749.1252459-1-martin.agren@gmail.com>
-        <xmqqzgaf4xrf.fsf@gitster.g>
-        <CAN0heSokODyuYUEgaU8Ym_Evvmdp_y1-V0LxbsTECgm3sP9d-g@mail.gmail.com>
-Date:   Thu, 19 Jan 2023 08:24:06 -0800
-In-Reply-To: <CAN0heSokODyuYUEgaU8Ym_Evvmdp_y1-V0LxbsTECgm3sP9d-g@mail.gmail.com>
-        ("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 19 Jan 2023 09:04:26
- +0100")
-Message-ID: <xmqq5yd2332x.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jacob Abel <jacobabel@nullpo.dev>, phillip.wood@dunelm.org.uk,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
+Subject: Re: [PATCH v8 3/4] worktree add: add --orphan flag
+References: <20221104010242.11555-1-jacobabel@nullpo.dev>
+        <20221220023637.29042-1-jacobabel@nullpo.dev>
+        <20221228061539.13740-1-jacobabel@nullpo.dev>
+        <20230107045757.30037-1-jacobabel@nullpo.dev>
+        <20230109173227.29264-1-jacobabel@nullpo.dev>
+        <20230109173227.29264-4-jacobabel@nullpo.dev>
+        <e5aadd5d-9b85-4dc9-e9f7-117892b4b283@dunelm.org.uk>
+        <20230114224715.ewec6sz5h3q3iijs@phi> <xmqqo7r0ijdv.fsf@gitster.g>
+        <20230118221745.wovefwx6vhcm3zzk@phi>
+        <230119.86zgaev8ko.gmgdl@evledraar.gmail.com>
+Date:   Thu, 19 Jan 2023 08:32:53 -0800
+In-Reply-To: <230119.86zgaev8ko.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 19 Jan 2023 16:32:32 +0100")
+Message-ID: <xmqq1qnq32oa.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -72,23 +81,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Ågren <martin.agren@gmail.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> On Wed, 18 Jan 2023 at 17:23, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Are you comparing both roff output and html output, by the way?
->
-> Yes, I'm trying to make sure all four of
->
->   {asciidoc, asciidoctor} x {man, html}
->
-> agree and look good. For the manpages, I use our doc-diff script. (In
-> this case, I wanted an empty asciidoc diff (HEAD^ HEAD) and a good
-> Asciidoctor diff (s/+//-ish).) For the html, it's a bit more manual
-> labour, switching between files in a browser and convincing myself
-> everything is good, visually.
->
-> Luckily, once both tools agree on the manpages and they look good, in my
-> experience, the html is probably also ok.
+> I also think that UX suggestion is sensible, but if we do that we
+> shouldn't just apply that to "git worktree", but also change the the
+> corresponding "git switch" UX, on which this new "git worktree --orphan"
+> is modeled.
 
-Wonderful.  Thanks for your careful work, as always.
+But the thing is that "worktree --orphan" that wants to implicitly
+infer the name of the branch out of the basename of the worktree
+cannot be sensibly modeled after "switch" or "checkout" that do not
+have such a dwimmery.
+
+In any case, fixing UI mistakes after the fact is always painful
+once it is in the released version. When we know there is a new UI
+mistake in an unreleased version, it is sensible to grab the rare
+opportunity that we can avoid such a costly fixes later.
+
+So, I am not quite convinced by what you said, at least not yet.
+
+Thanks.
