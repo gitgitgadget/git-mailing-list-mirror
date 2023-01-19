@@ -2,57 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37D0CC38159
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 00:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9281C677F1
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 00:15:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229570AbjASAKa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 19:10:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39412 "EHLO
+        id S229590AbjASAPr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Jan 2023 19:15:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbjASAK3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 19:10:29 -0500
+        with ESMTP id S229570AbjASAPp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Jan 2023 19:15:45 -0500
 Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87A7D48A12
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 16:10:28 -0800 (PST)
-Received: by mail-pl1-x649.google.com with SMTP id z10-20020a170902ccca00b001898329db72so352498ple.21
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 16:10:28 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9977051430
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 16:15:44 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id s14-20020a17090302ce00b00192d831a155so375115plk.11
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 16:15:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=it18O9wG4VJx2OmRPvxF8sUD8VvzR8ZAXjyWfPSAqtM=;
-        b=ZP6t8b85y2bTjpwY4g+kSxDrbFcLleOqkzVm3G5El/u4HUkx1E5GiwLuRNxscxdzHg
-         XnW69yROeC9Qy4ympQYxhp/y455m9gnxVDKqCHorcBRjVknVOVpiLo8PNopE/NnHGGaP
-         jlbK6rIjZt+5HDGCdzT5yahGynTjkfvD2i/3PrdYx7rbsxZVRLsJZyYbfG7A/jTKBLm7
-         VkQUJHTh8IA86TuaR6j3seDqQo7qiLyon7fsdsj5pa3A6LSGNiFEat9zaQKo3uJDzHvQ
-         Irnx0dnuJ6qPNmySMHWSUzGN51A5jXBpmGt4DNCqUk2yvZc14v7pvNYJdMinT+D0hU6R
-         iZxg==
+        bh=8vtS886Fszar2DU7yholHk38Y9sSRUXFv531iFW8omY=;
+        b=pxcyNfI951ZmcquiNhTIdBiqnqBKLGCzGPMHk/EE9kJ+iXirnJghwmwmVmebkwV7yC
+         +3htEECWBmqHFL3LtLwjyWOptcV1SMAKgOahLO+uyElnMz01OTKyIrCZCuFACjm4BwI3
+         /QDKECKq/0Gxh6EThgxdVZbOnyQ10Aqi491bc4QD85qWHB3UDN5zjbcTIjBPTW3NYMCI
+         tdrN+Q9S9kflc0LNB9YV2dxK2EhkMh92lmjDi0y52zxP98DaaMaXxPgvufXFlX0LaNpL
+         5ZRhXHOZuycMzrQMEAOG1+uFcn144asqcGTZFGh4fS7NhJ7zma7h/DF9dhtbgQ8wWNRd
+         MqCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=it18O9wG4VJx2OmRPvxF8sUD8VvzR8ZAXjyWfPSAqtM=;
-        b=CMEeiexpceZyATqYWeet5hJ6bLqBRUpySaRT6FzsH6ZqF+N7T/jDASa0ppLofA2CsD
-         5y6+hHrNzYh09r+lC8LHXHXuKGpmNx6i6/vvDNm91dgFqK6ejWjSzvvzXpRLu3+ceBE3
-         wZP7yBf8v373V4OWCbO6ijUTZKbyMyLNfIsh8/lCp6Qpp1bobmSC5tvaoXZe2k5QQQr4
-         4vq3pFHUzXg8mv8e2okoKiwmHd7xiqgDyJjioPrgSGSlXBkGIlRYFGjoL+AE2LtvOe0l
-         s05Fb/4v5Uip8htbt3LXXqLGhljEcen/p5Yk99GBl2H3N7+ttYIf+7OzTiN2dHqMDZ6t
-         X+cg==
-X-Gm-Message-State: AFqh2kopEr4HDVDMJNGCebH5+CHsOPFRMjz4wVtG6UrB6WGkGIssQVb/
-        22kfsk3VCLUmuF1MFAfnLoNrKcRZiUiz4w==
-X-Google-Smtp-Source: AMrXdXtEupKJp80ZsH5R9rmOsCWN3Jd4zXNzE8bk9mvxEXA7lQww3omV6GjvcwswHT8BbZRFCtVR3azZZHfcaw==
+        bh=8vtS886Fszar2DU7yholHk38Y9sSRUXFv531iFW8omY=;
+        b=dzOZEZOBHGJKjsG54jr8612i3sccbi+G/MnYU6uaoNyiOZlmJBy5cSJwluDdh5XFSC
+         IYfVIrHdc3vrYSbQGjA9+C/bT3OFSKYtlF7IT0/IlOT3BBnN0GV0120sc4CH+7bvNnao
+         AQPjBMG0zFwpka5GGGUeKAL6/YEVtCgHvdMRs2ic/dNzMrIMgkdbSJuFyQhPvfqcrASx
+         LBG3oi+xpjQv8iHj6Anc5q99/Hq3v01pk3os1BIvFgLqEKTMOlkGhIBMTT7+pjcvE3Xl
+         zdoxK15nf5KTbqWfbmdwlWRm+iwYbLBDmI+gBUcJrGLhcunVutaxBQ4bIddRyA5X5ATW
+         +M5g==
+X-Gm-Message-State: AFqh2kqgeMDseYu4PTfpTNm2Oa3ll4sT/5P4B8UjlfUTkvaP4bBm9HdU
+        tZ3kavHWFsSjhVIZwr6EP1X1Wfb4XaumaA==
+X-Google-Smtp-Source: AMrXdXsbwMibme4oN8BRbS38k2UX5OSOKtlGUvokdRcphSsmAl0GfkOkV7BsHRI5/LnCBP5xnDCR0hdA8V6DJA==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:2a4a:b0:220:1f03:129b with SMTP
- id d10-20020a17090a2a4a00b002201f03129bmr451287pjg.0.1674087027524; Wed, 18
- Jan 2023 16:10:27 -0800 (PST)
-Date:   Wed, 18 Jan 2023 16:10:19 -0800
-In-Reply-To: <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com>
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1a54:b0:58b:c90f:5f1d with SMTP
+ id h20-20020a056a001a5400b0058bc90f5f1dmr853112pfv.31.1674087344025; Wed, 18
+ Jan 2023 16:15:44 -0800 (PST)
+Date:   Wed, 18 Jan 2023 16:15:42 -0800
+In-Reply-To: <patch-v3-2.9-3eb8da6086d-20221125T093159Z-avarab@gmail.com>
 Mime-Version: 1.0
-References: <cover-v2-0.9-00000000000-20221101T225822Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com>
-Message-ID: <kl6llelzo044.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 0/9] config API: make "multi" safe, fix numerous segfaults
+References: <cover-v2-0.9-00000000000-20221101T225822Z-avarab@gmail.com>
+ <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com> <patch-v3-2.9-3eb8da6086d-20221125T093159Z-avarab@gmail.com>
+Message-ID: <kl6lilh3nzv5.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v3 2/9] config tests: cover blind spots in
+ git_die_config() tests
 From:   Glen Choo <chooglen@google.com>
 To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
         git@vger.kernel.org
@@ -67,42 +69,19 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We covered this at Review Club this week (thanks for coming, =C3=86var!). Y=
-ou
-can find the notes at:
-
-  https://docs.google.com/document/d/14L8BAumGTpsXpjDY8VzZ4rRtpAjuGrFSRqn3s=
-tCuS_w/edit
-
-The overall sentiment from the meeting was that this is a positive
-direction for the config API to go in. My personal opinion is that this
-series is close to mergeable and I had mostly minor comments.
-
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason         <avarab@gmail.com> writes:
 
-> This series fixes numerous segfaults in config API users, because they
-> didn't expect *_get_multi() to hand them a string_list with a NULL in
-> it given config like "[a] key" (note, no "=3D"'s).
+> There were no tests checking for the output of the git_die_config()
+> function in the config API, added in 5a80e97c827 (config: add
+> `git_die_config()` to the config-set API, 2014-08-07). We only tested
+> "test_must_fail", but didn't assert the output.
 
-As you mentioned in Review Club, this series also fixes a wart in
-config.h where *_get_value_multi() returned a "struct string_list"
-instead of an error code like all other getters. So this series is
-technically doing two sort-of-different things...
+It wasn't immediately obvious to me why this was relevant to this
+series; but reading ahead to 5/9 shows that git_die_config() is a caller
+of a *_get_value_multi() function that we are changing, so we want to
+assert on the output so that we know that git_die_config() is still
+doing the right thing (since test_must_fail alone won't tell us whether
+we introduced bugs in git_die_config()).
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (9):
->   for-each-repo tests: test bad --config keys
->   config tests: cover blind spots in git_die_config() tests
->   config tests: add "NULL" tests for *_get_value_multi()
->   versioncmp.c: refactor config reading next commit
->   config API: have *_multi() return an "int" and take a "dest"
->   for-each-repo: error on bad --config
-
-Fix the wart..
-
->   config API users: test for *_get_value_multi() segfaults
->   config API: add "string" version of *_value_multi(), fix segfaults
->   for-each-repo: with bad config, don't conflate <path> and <cmd>
-
-and introduce the better API that won't segfault, but I think it's okay
-to have the series do both since they're closely related enough and the
-latter is quite small anyway.
+Might be good to include that extra context, but I don't feel strongly
+about it.
