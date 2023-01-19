@@ -2,150 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9481C677F1
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 02:31:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1D5BC38142
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 05:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229590AbjASCbk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Jan 2023 21:31:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46222 "EHLO
+        id S229845AbjASFgd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 00:36:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjASCbi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Jan 2023 21:31:38 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A594EA24E
-        for <git@vger.kernel.org>; Wed, 18 Jan 2023 18:31:37 -0800 (PST)
-Received: (qmail 5686 invoked by uid 109); 19 Jan 2023 02:31:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 19 Jan 2023 02:31:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28187 invoked by uid 111); 19 Jan 2023 02:31:39 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Jan 2023 21:31:39 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 18 Jan 2023 21:31:36 -0500
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 6/6] hash-object: use fsck for object checks
-Message-ID: <Y8iriP4T2FQPtBfF@coredump.intra.peff.net>
-References: <Y8hX+pIZUKXsyYj5@coredump.intra.peff.net>
- <Y8haHL9xIWntSm0/@coredump.intra.peff.net>
- <Y8hlyr0o6gs9omI5@nand.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        with ESMTP id S229379AbjASFgb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 00:36:31 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FC0EBD
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 21:36:30 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so2813720wma.1
+        for <git@vger.kernel.org>; Wed, 18 Jan 2023 21:36:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=M8xsWqTu2u9ePcWazTcHTaY1g6aichaSk9QKMSYvlzc=;
+        b=BklFuUubPIZtQa+LcnQXcCZIRR2g0nMvmU7jbPZQkx3q23a2b4URsrfEPqBesDvocf
+         X1ShMcCEUA4OgLBVQJazBd7IElN5it95PAbB6TLf9DUO2RwvxAO1xZyIA3UIaVD9hmNP
+         Zr6ah5Vg/fUP7Uhp8Zu/b3QB5w73uOqnk1E4LBWahKCVit6Uiuko028Nfs8OaHtBq1sx
+         1vdm65274zXK5z2OjZiV5bI8uFV5plHrqwTlDgbvSxqLX98JUYPZz5MJzT8d0M5Dcsc2
+         wLSjJ0XMgD+gDQ6qY0LCtfgt8WSMHiMTDrwyw0CQZSu+S7UJtzjJNfctBNPki4RtNg8Z
+         uNLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=M8xsWqTu2u9ePcWazTcHTaY1g6aichaSk9QKMSYvlzc=;
+        b=KRkEXh95xUSUjmtpmYskRf7iyq1XTDFhZCFnFrcginesbtV4IXlqlpnbeNPNr28u+A
+         +pZVnBBYaoh7dlyWGjLApeXcyUkWq3hjt36ljMOgRFfwHP9BftuwHjSLk7pbnO4aFpH6
+         79Pk++mJ9+bpZR2gpfLY2NQwRUaFtgZhbm2Q8g6GE3OEjVltFPYkBzxsvgOapvEHxcqg
+         TvbxLZ+alMmQPs9dIEkE9dg9mmpo9WslvwYJXmLUP2nzcKCXIkKujs1hzAnSrWPaBt9R
+         fzsDiALQmwJYI+nrefF7sM1ADmw0dUDi7J/F8Fw7RH2ky2hkJpTwN0jZQ4w9rV+00xma
+         IrnQ==
+X-Gm-Message-State: AFqh2ko9xG01g6TXiDjVsdGBRJKsJqEVs2UjTA5Y+TEipEmhvqdDHaUC
+        /nENa97XoAOxNeIzFnr6br8CCK8/trY=
+X-Google-Smtp-Source: AMrXdXtOSFZcv/7XHHqTwcb73LjJ1ASaepdAbpCeetoa5/dzIXiuG6FRSoDLslQAAB7wNsX9Ig/s3Q==
+X-Received: by 2002:a05:600c:3ac8:b0:3da:f67c:aca6 with SMTP id d8-20020a05600c3ac800b003daf67caca6mr8931714wms.34.1674106588738;
+        Wed, 18 Jan 2023 21:36:28 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bi12-20020a05600c3d8c00b003d237d60318sm3803509wmb.2.2023.01.18.21.36.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jan 2023 21:36:28 -0800 (PST)
+Message-Id: <pull.1466.git.1674106587550.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 19 Jan 2023 05:36:27 +0000
+Subject: [PATCH] rebase: mark --update-refs as requiring the merge backend
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y8hlyr0o6gs9omI5@nand.local>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 04:34:02PM -0500, Taylor Blau wrote:
+From: Elijah Newren <newren@gmail.com>
 
-> That being said, let me play devil's advocate for a second. Do the new
-> fsck checks slow anything in hash-object down significantly? If so, then
-> it's plausible to imagine a hash-object caller who (a) doesn't use
-> `--literally`, but (b) does care about throughput if they're writing a
-> large number of objects at once.
-> 
-> I don't know if such a situation exists, or if these new fsck checks
-> even slow hash-object down enough to care. But I didn't catch a
-> discussion of this case in your series, so I figured I'd bring it up
-> here just in case.
+--update-refs is built in terms of the sequencer, which requires the
+merge backend.  It was already marked as incompatible with the apply
+backend in the git-rebase manual, but the code didn't check for this
+incompatibility and warn the user.  Check and warn now.
 
-That's a really good point to bring up.
+While at it, fix a typo in t3422...and fix some misleading wording (all
+useful options other than --whitespace=fix have long since been
+implemented in the merge backend).
 
-Prior to timing anything, here were my guesses:
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    rebase: mark --update-refs as requiring the merge backend
+    
+    --update-refs is built in terms of the sequencer, which requires the
+    merge backend. It was already marked as incompatible with the apply
+    backend in the git-rebase manual, but the code didn't check for this
+    incompatibility and warn the user. Check and warn now.
+    
+    While at it, fix a typo in t3422...and fix some misleading wording (all
+    useful options other than --whitespace=fix have long since been
+    implemented in the merge backend).
+    
+    Signed-off-by: Elijah Newren newren@gmail.com
 
-  - it won't make a big difference either way because the time is
-    dominated by computing sha1 anyway
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1466%2Fnewren%2Frebase-update-refs-imply-merge-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1466/newren/rebase-update-refs-imply-merge-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1466
 
-  - we might actually be a little faster for commits and tags in the new
-    code, because they aren't allocating structs for the pointed-to
-    objects (trees, parents, etc). Nor stuffing them into obj_hash, so
-    our total memory usage would be lower.
+ builtin/rebase.c                       |  3 +++
+ t/t3422-rebase-incompatible-options.sh | 15 ++++++++++-----
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
-  - trees may be a little slower, because we're doing a more analysis on
-    the filenames (sort order, various filesystem specific checks for
-    .git, etc)
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 1481c5b6a5b..accd62fce48 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1514,6 +1514,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
++	if (options.update_refs)
++		imply_merge(&options, "--update-refs");
++
+ 	if (options.type == REBASE_UNSPECIFIED) {
+ 		if (!strcmp(options.default_backend, "merge"))
+ 			imply_merge(&options, "--merge");
+diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
+index 6dabb05a2ad..5a00618d265 100755
+--- a/t/t3422-rebase-incompatible-options.sh
++++ b/t/t3422-rebase-incompatible-options.sh
+@@ -25,11 +25,11 @@ test_expect_success 'setup' '
+ '
+ 
+ #
+-# Rebase has lots of useful options like --whitepsace=fix, which are
+-# actually all built in terms of flags to git-am.  Since neither
+-# --merge nor --interactive (nor any options that imply those two) use
+-# git-am, using them together will result in flags like --whitespace=fix
+-# being ignored.  Make sure rebase warns the user and aborts instead.
++# Rebase has a useful option, --whitespace=fix, which is actually
++# built in terms of flags to git-am.  Since neither --merge nor
++# --interactive (nor any options that imply those two) use git-am,
++# using them together will result in --whitespace=fix being ignored.
++# Make sure rebase warns the user and aborts instead.
+ #
+ 
+ test_rebase_am_only () {
+@@ -60,6 +60,11 @@ test_rebase_am_only () {
+ 		test_must_fail git rebase $opt --exec 'true' A
+ 	"
+ 
++	test_expect_success "$opt incompatible with --update-refs" "
++		git checkout B^0 &&
++		test_must_fail git rebase $opt --update-refs A
++	"
++
+ }
+ 
+ test_rebase_am_only --whitespace=fix
 
-And here's what I timed, using linux.git. First I pulled out the raw
-object data like so:
-
-  mkdir -p commit tag tree
-
-  git cat-file --batch-all-objects --unordered --batch-check='%(objecttype) %(objectname)' |
-  perl -alne 'print $F[1] unless $F[0] eq "blob"' |
-  git cat-file --batch |
-  perl -ne '
-    /(\S+) (\S+) (\d+)/ or die "confusing: $_";
-    my $dir = "$2/" . substr($1, 0, 2);
-    my $fn = "$dir/" . substr($1, 2);
-    mkdir($dir);
-    open(my $fh, ">", $fn) or die "open($fn): $!";
-    read(STDIN, my $buf, $3) or die "read($3): $!";
-    print $fh $buf;
-    read(STDIN, $buf, 1); # trailing newline
-  '
-
-And then I timed it like this:
-
-  find commit -type f | sort >input
-  hyperfine -L v old,new './git.{v} hash-object --stdin-paths -t commit <input'
-
-which yielded:
-
-  Benchmark 1: ./git.old hash-object --stdin-paths -t commit <input
-    Time (mean ± σ):      7.264 s ±  0.142 s    [User: 4.129 s, System: 3.043 s]
-    Range (min … max):    7.098 s …  7.558 s    10 runs
-
-  Benchmark 2: ./git.new hash-object --stdin-paths -t commit <input
-    Time (mean ± σ):      6.832 s ±  0.087 s    [User: 3.848 s, System: 2.901 s]
-    Range (min … max):    6.752 s …  7.059 s    10 runs
-
-  Summary
-    './git.new hash-object --stdin-paths -t commit <input' ran
-      1.06 ± 0.02 times faster than './git.old hash-object --stdin-paths -t commit <input'
-
-So the new code is indeed faster, though really most of the time is
-spent reading the data and computing the hash anyway. For comparison,
-using --literally drops it to ~6.3s.
-
-And according to massif, peak heap drops from 241MB to 80k. Which is
-pretty good.
-
-Trees are definitely slower, though. I reduced the number to fit in my
-budget of patience:
-
-  find tree -type f | sort | head -n 200000 >input
-  hyperfine -L v old,new './git.{v} hash-object --stdin-paths -t tree <input'
-
-And got:
-
-  Benchmark 1: ./git.old hash-object --stdin-paths -t tree <input
-    Time (mean ± σ):      2.470 s ±  0.022 s    [User: 1.902 s, System: 0.549 s]
-    Range (min … max):    2.442 s …  2.509 s    10 runs
-  
-  Benchmark 2: ./git.new hash-object --stdin-paths -t tree <input
-    Time (mean ± σ):      3.244 s ±  0.026 s    [User: 2.661 s, System: 0.567 s]
-    Range (min … max):    3.215 s …  3.295 s    10 runs
-  
-  Summary
-    './git.old hash-object --stdin-paths -t tree <input' ran
-      1.31 ± 0.02 times faster than './git.new hash-object --stdin-paths -t tree <input'
-
-So we indeed got a bit slower (and --literally here is ~2.2s). It's
-enough that it outweighs the benefits from the commits getting faster
-(especially because there tend to be more trees than commits). But those
-also get diluted by blobs (which have a lot of data to hash and free
-fsck checks).
-
-So in the end, I think nobody would really care that much. The absolute
-numbers are pretty small, and this is already a fairly dumb way to get
-objects into your repository. The usual way is via index-pack, and it
-already uses the fsck code for its checks. But I do think it was a good
-question to explore (plus it found a descriptor leak in hash-object,
-which I sent a separate patch for).
-
--Peff
+base-commit: 2b4f5a4e4bb102ac8d967cea653ed753b608193c
+-- 
+gitgitgadget
