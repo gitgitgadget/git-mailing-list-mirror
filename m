@@ -2,153 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B0D3C46467
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 22:01:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E09EC46467
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 22:11:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230073AbjASWBf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 17:01:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40456 "EHLO
+        id S229954AbjASWK6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 17:10:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbjASWAx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 17:00:53 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65859C13E7
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 13:39:25 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id g31-20020a63111f000000b004bbc748ca63so1595155pgl.3
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 13:39:25 -0800 (PST)
+        with ESMTP id S229997AbjASWKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 17:10:10 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF3429DCA0
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 13:47:54 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id j9so2730975qtv.4
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 13:47:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TsTW53HGbDwJ/XctrN/5sFzCW8qFig9j6qrUhLlG3rg=;
-        b=PmP4bp9mzv7zTzZAJ/aRwyZ4WUOxzHmOttwFTL9fsK6sWRiDiyVF1YIdYuKhUNm7ho
-         ZMlr3ek8mMV0xc2qK7A1Gg+P4mI/6/FTzTEGEdXelZfjYKDFhDKnaJB6wRggSnbWT21z
-         Yzzm6dy/gfP8lRpd/a6B0W1MoXo93P9UViTMsCRygXCNP40XzoyX1oyCHtz+udsjWtEv
-         /jikwLGGJKI6LtxAyft56MStBW4uTHaI9sgh05gN7dp4sxI0713GPU2xbk9SIrUsTM5/
-         iouKRPXD2XHPvPHlq0VMMM1yNVYQc8R8m4sFg7MoftAVu33FUG52p7F3tiMKy5R5PUkY
-         NNzQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=85mo/Z5ATFE+38TOaeSA4og5uf9v+slLASOH5XfDPj4=;
+        b=QCqYe4rsu8Wb11OHWnuyWOAw3+d8m+JU5kNuSzWlhqnZUSExzSbxNxFup70GUTVWcv
+         WmfrSOw2+QdlhWAZ30b6oiapCeZp60xGqXwRcwXU0RSNCukUKrl66GDz2+zLJKLb4x57
+         +aOskxpdjhy96ed2rbMVGwymCl4EdOV8XS4RS5KgVq0uBQRNlmj7ZJrSUWY/dZ6IH5QV
+         VY9CkSUT4N4Fn4AqM0led+htFz1tuo8wGAJR+MxMq/c6O7i5rfv3Fh4aWv+DzwAPA7yd
+         mZNMuze4xuEUlFoIWEWCNOvdskfdErgqxxFb8ZUUZSrHOthyoKDOH7rlxwhwe+3OiC3y
+         g8Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=TsTW53HGbDwJ/XctrN/5sFzCW8qFig9j6qrUhLlG3rg=;
-        b=NLcsAPMF85CFeopAb2EechMgyy+CzDNd5Tmizns9oafY+rEkEsPunEdOqANn4NHGD+
-         zw2C5rVd8bQuSSAg3clY/0XGdPcNcdi5bFixIoSUCmPOcuUflEC7TiUH/eepACTgbaKm
-         7DgMgRTiJNbJhuykUD23a+Qz/6tUMIjkzSIs7i/BmA8R/8A9m0eoB2hvLkga/iOT8hQN
-         ymBF9gSC06YMLYeciNXGM0Xs5knF8NNt3hRSNfc9KiXrSS6D3+DNOk25xttMg3Z+71zF
-         1ThEpZ0vebjynRFEd2vZBoaQh/hYcUWxI4w8AJeD/hpWDoOdjIzOVJ4wMzxZOQkb0/zW
-         gYMg==
-X-Gm-Message-State: AFqh2koxvQOTg3lx7Ydxjz19bg7iNEPq+KcARDxKjumwqwal1w+Bt8Mg
-        LjFTXVRna+rHvYSk5/GQGUX7rOTkQxTXzhA=
-X-Google-Smtp-Source: AMrXdXvrOBtUC/exBwshtd31jAMQ0Q9eCZd7Us0McYocb+wShFtrdYd6O7t5DQudsAUdhxuCb0LDrNwey99kWgk=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a05:6a00:1302:b0:589:bd89:3651 with SMTP
- id j2-20020a056a00130200b00589bd893651mr1300199pfu.28.1674164360898; Thu, 19
- Jan 2023 13:39:20 -0800 (PST)
-Date:   Thu, 19 Jan 2023 21:39:11 +0000
-In-Reply-To: <DB5PR02MB100691E6422F5E94228F0E0EC8AF79@DB5PR02MB10069.eurprd02.prod.outlook.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.39.0.246.g2a6d74b583-goog
-Message-ID: <20230119213911.1515188-1-calvinwan@google.com>
-Subject: Re: Parallelism for submodule update
-From:   Calvin Wan <calvinwan@google.com>
-To:     Christian.Zitzmann@vitesco.com
-Cc:     Calvin Wan <calvinwan@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=85mo/Z5ATFE+38TOaeSA4og5uf9v+slLASOH5XfDPj4=;
+        b=NiaPmK2u7hlKe5hEAT5riQO4UAWL/xWrm2wVVM+xFGs/VYH0yiOc/Qt6eribY1/4Xc
+         2rys7PCNKs7ikXOR1Ijv8/if0fzc5orfq8dUDkjxBoBH67yFOfzDqSpnv0aPX7tbAAtQ
+         DdBrc9x8kzNTelizeuuHWRNL45cAnyzFhZITjap6o3ZRB4aoniYe62yyZ71wUGBmLZTo
+         bxUuHHDEYTaZtixOLLLu062J2ZEBOAuDj00GCDxgeDJmP2Yr0LerSUil+FxP2NKxkBll
+         kzj5tzPMl0tb4AQ11JGXRYxUaP0lIsbMEx1PdmKChj03EDfOEPNE2bjdLLlphleKLn7b
+         ry/w==
+X-Gm-Message-State: AFqh2kqLRX3vbX/0y0wwpNFqsQsnG4Xk4RnJQ+IFzOz63s8Kl+G2CS2E
+        TqaifHSwpwa7tHHPKThVoqa/0YUYIViwv1M=
+X-Google-Smtp-Source: AMrXdXsCrTWsZziX/8VcKamsqVymuCQGv+V6gcj7Ryd/ujuAqJCUNiDznDZGOPYkUDNlUKyv48yRcA==
+X-Received: by 2002:a05:622a:4897:b0:3a5:3cb5:2485 with SMTP id fc23-20020a05622a489700b003a53cb52485mr20454953qtb.0.1674164874546;
+        Thu, 19 Jan 2023 13:47:54 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:686c:2f5e:d9b:ebfe? ([2600:1700:e72:80a0:686c:2f5e:d9b:ebfe])
+        by smtp.gmail.com with ESMTPSA id bi27-20020a05620a319b00b00706a1551428sm5434549qkb.6.2023.01.19.13.47.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Jan 2023 13:47:54 -0800 (PST)
+Message-ID: <f480813c-7583-179f-0149-d970d3f2519f@github.com>
+Date:   Thu, 19 Jan 2023 16:47:53 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH] rebase: mark --update-refs as requiring the merge backend
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+References: <pull.1466.git.1674106587550.gitgitgadget@gmail.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1466.git.1674106587550.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+On 1/19/2023 12:36 AM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> --update-refs is built in terms of the sequencer, which requires the
+> merge backend.  It was already marked as incompatible with the apply
+> backend in the git-rebase manual, but the code didn't check for this
+> incompatibility and warn the user.  Check and warn now.
 
-I investigated this as well about 2 months ago and am happy to share my
-findings with you :)
+Thank you for submitting this version.
 
-> When updating the submodules, only the fetching part is done in parallel =
-(with config submodule.fetchjobs or --jobs) but the checkout is done sequen=
-tially
+> @@ -1514,6 +1514,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		}
+>  	}
+>  
+> +	if (options.update_refs)
+> +		imply_merge(&options, "--update-refs");
+> +
 
-Correct.
+This solution is very elegant. The only downside is the lack of warning
+if --update-refs was implied by rebase.updateRefs=true, but I'm happy to
+delay implementing that warning in favor of your complete solution here.
 
-> What I=E2=80=99ve recognized when cloning with
-> - scalar clone --full-clone --recurse-submodules <URL>
-> or
-> - git clone --filter=3Dblob:none --also-filter-submodules --recurse-submo=
-dules <URL>
->=20
-> We loose performance, as the fetch of the blobs is done in the sequential=
- checkout part, instead of in the parallel part.
->=20
-> Furthermore, the utilization - without partial clone - of network and har=
-ddisk is not always good, as first the network is utilized (fetch) and then=
- the harddisk (checkout)
+Thinking ahead to that option, are there other options that are implied
+by config that are required in imply_merge()? Is --autosquash in that
+camp? If so, then maybe it would make sense to expand imply_merge() to
+include a boolean config key and supply that warning within its
+implementation. (This consideration should not block this patch, as it
+is complete as-is.)
 
-Also an astute observation that separating out the parallelization of
-fetch and checkout doesn't allow us to fully use our resources.
+> While at it, fix a typo in t3422...and fix some misleading wording (all
+> useful options other than --whitespace=fix have long since been
+> implemented in the merge backend).
 
-> As the checkout part is local to the submodule (no shared resources to bl=
-ock), it would be great if we could move the checkout into the parallelized=
- part.
-> E.g. by doing fetch and checkout (with blob fetching) in one step with e.=
-g. run_processes_parallel_tr2
->=20
-> I expect that this significantly improves the performance, especially whe=
-n using partial clones.
->=20
-> Do you think this is possible? Do I miss anything in my thoughts?
+>  #
+> -# Rebase has lots of useful options like --whitepsace=fix, which are
+> -# actually all built in terms of flags to git-am.  Since neither
+> -# --merge nor --interactive (nor any options that imply those two) use
+> -# git-am, using them together will result in flags like --whitespace=fix
+> -# being ignored.  Make sure rebase warns the user and aborts instead.
+> +# Rebase has a useful option, --whitespace=fix, which is actually
+> +# built in terms of flags to git-am.  Since neither --merge nor
+> +# --interactive (nor any options that imply those two) use git-am,
+> +# using them together will result in --whitespace=fix being ignored.
+> +# Make sure rebase warns the user and aborts instead.
+>  #
 
-Sort of. The issue with run_processes_parallel_tr2 is that it creates a
-subprocess with a git command. There is no git command that we can call
-that lets us do both the correct fetch and checkout command, so first
-you would have to create a new option/command for that (and what happens
-if we want to add to that parallelization in the future? Create another
-option/command?). I think we can do better than that!
+Thanks for the update here. The -C option is also used in this test,
+so --whitespace=fix isn't the only option, right? At least, -C doesn't
+make sense to port over to the merge backend, so maybe that's what
+you mean by --whitespace=fix being the last one?
 
-`git submodule update`, when called from clone, essentially does 4
-things to the submodule: init, clone, checkout, and recursively calls
-itself for child submodules. One idea I had was to separate out the
-individual tasks that `git submodule update` does and create a new
-submodule--helper command (eg. git submodule--helper update-helper) that
-calls those individual tasks. Then, clone would directly call
-run_processes_parallel_tr2 with the new submodule--helper command and
-each process separated by submodule.
+The user could also explicitly request the apply backend with --apply,
+but this test script doesn't check it, strangely. That seems like an
+oversight, but not a drawback to your patch.
 
-This is what I imagine the general idea of what
-`git clone --recurse-submodules` would look like:
-superproject cloning
-run_processes_parallel_tr2(git submodule--helper update-helper)
-        Init
-        Clone
-        Checkout
-        Recursive git submdodule update-helper
+>  test_rebase_am_only () {
+> @@ -60,6 +60,11 @@ test_rebase_am_only () {
+>  		test_must_fail git rebase $opt --exec 'true' A
+>  	"
+>  
+> +	test_expect_success "$opt incompatible with --update-refs" "
+> +		git checkout B^0 &&
+> +		test_must_fail git rebase $opt --update-refs A
+> +	"
+> +
 
-I'll discuss what I think are the benefits of this approach:
-- The entirety of submodule update would be parallelized so network and
-  hard disk resources can be used together
-- There only needs to be one config option that controls how many
-  parallel processes to spawn
-- Any new features to submodule update are automatically parallelized
-
-The drawback is that any new feature that would cause a race condition
-if run in parallel would have to have additional locking code written
-for it since separating it out would be difficult. In this case, only
-adding lines to .gitmodules in init is at risk of a race condition, but
-fortunately that can be handled first in series before running
-everything else in parallel.
-
-I haven't started implementing this and am not planning to fix this in
-the near future. This is because we are planning a more long-term
-solution (2y+) to solve problems like this (notice how much simpler it
-would've been to add parallelization if we didn't have to create
-subprocesses for every separate git command and instead could call from
-a variety of library functions). So if you need the parallelizations
-sooner or want to scratch your itch, you're more than welcome to
-implement it. Happy to bounce ideas off of and review any patches for
-this!
+Thanks for adding this test. I would delay the rebase.updateRefs
+version until there is extra behavior to check, such as the
+warning message.
 
 Thanks,
-Calvin
+-Stolee
