@@ -2,71 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90491C004D4
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 17:32:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EB7AC004D4
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 17:34:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229644AbjASRcR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 12:32:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40636 "EHLO
+        id S229991AbjASReb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 12:34:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjASRcJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 12:32:09 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFC228693
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 09:32:08 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id m3-20020a17090a414300b00229ef93c5b0so1762404pjg.2
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 09:32:08 -0800 (PST)
+        with ESMTP id S229796AbjASRea (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 12:34:30 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5BFBF5
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 09:34:28 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id l8so2122780wms.3
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 09:34:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:subject:cc:to:from:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qyFPbgel+b4r/DXLNbbowc3GkeAQR6cY4u/fhmjfdjE=;
-        b=TdU6i4O/e5J/YTvOx9/XjitajYHuIocwfNa2nVM/xUFc0rOM56QAQlim/2hNie3TwU
-         cGknR+7crNoRS2E0EK2S7gkI56OWoJmRsrQ/DEWoJpGXqX/XWfDsWZ4gFb0oQpRVQx+i
-         2Y9Emj2oy190m5WcHE8FQ8qa3w7+iT5jf2IMu70vFti0q4EsKqgZ20enO82EPw8+Cs8r
-         bA8e+p0HI8rjqSrbsO1Wnjw8k/wZsVNX95PglAaMpjVUNXnWym+2Xly6fqdbLnRhj46m
-         OEeU72hs9kj91YDhGWh7WTtlea6KBmykQWV26hpq55pN7lBcoQAINJoTk+yzl7YVdkSV
-         j5FQ==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HB7ytbwch4Pd7zmvtDX1x1vjiKcle29ao/t6LE6CloM=;
+        b=nwKsUc2/ADmnvdoO8K9dsANIs8NvXyj6Ucc4yRmmCL6hKyPndi4XNh+i7YW36jNZwL
+         Qpbsi/HMzoU1HsBwxbt1D30x8uEE8e7lp6VFOG6ueLtWsNAqsquPWf+yxvCEbxX3XFi2
+         kG7UtnE4EbUDTlHARxWMtGO/TAcDH9dIp7zdbSaL9xG0/CtYTn1wrq0wRZ1yzq5aEaW2
+         A9kYuuTE9ETL1omfFxMSmDFmlDoN3w6P5Z26lmYtP+VzND57zrsuw29g7taX9qaJwldQ
+         cOpZnkkQjxzkiyMbxBu+ioE3va9Gw+HTDV92baoc4FDyeUZWaCR0PJ3NLT9YBnSjyxdn
+         q/vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qyFPbgel+b4r/DXLNbbowc3GkeAQR6cY4u/fhmjfdjE=;
-        b=X1BSqeZTmuwOtDNc8AMlD6wKsksh5hzRW8HQGbeMbv9XLCHeznalQ/E4bbRGAM69OZ
-         +s3xxtz39ouatEqaM/MzPbm6NeXKvGlakebyo3mgi4ns5zvz2MOEc8FhUX51Y6BUHTWR
-         I9mdOIZjmr18CK1vfK7qeZ523UNMtpPyXv34QUs3h57HHTb6yeJ3dKuw3/Izv/FZw33d
-         X2fJmc4ljTEDCV8NpaOXoKftnKtR9NDhOvHFy4XPklbZfpxhJlLNUts3pgSkDfGZzras
-         l40j2PeRavJRIX7Q17MDGv0x40ejFPGmwii2i37xeh6PeX8UUv0mRvaztOMFX+4EU8Cn
-         gdzA==
-X-Gm-Message-State: AFqh2krFU8yK8JRIohBSq6W7TAxX8vBv7/2MwxmPLyNCbm4I5Uq7R/8C
-        gR3zHLN/bAOvwRaXS+eg8cZeMKcznVE=
-X-Google-Smtp-Source: AMrXdXvMDA0WfAXvwOXnNboRq1lQA8FS2sehcF0Fovz7LC3NRUDQhOAopi9MCR/y27q1VJWxzP+6kw==
-X-Received: by 2002:a05:6a21:7888:b0:b5:d63e:a9d7 with SMTP id bf8-20020a056a21788800b000b5d63ea9d7mr16498589pzc.60.1674149528314;
-        Thu, 19 Jan 2023 09:32:08 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id h26-20020a63211a000000b0042988a04bfdsm21040420pgh.9.2023.01.19.09.32.07
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HB7ytbwch4Pd7zmvtDX1x1vjiKcle29ao/t6LE6CloM=;
+        b=BJIuHqjYkNZgOb63JEphkRZb26vv4Bfc+OI4zwaYxPNT//wOLTX1OS4+9sYG4h+WCP
+         pPyvRyDTWx+pCFmTVyVRNSTmFu60mSqmqSt9tZ8mgJOXGd6TQw9DnErcKK9sEQ9VVaOq
+         IMsaJjm3EBYHJT0oViVRx73jdNIJMA66kIUvoLbFIV2v38F7BRg71zFm3ikoZ94mNTYF
+         WJ1U/47Tr0CM0twWG4pQczCB4OeXZIUyCwPHNukBVDacFlATHz34y48t7vrkKxqaD06V
+         HrHCM4Iy5AY+TgtXThmxKC9MTHFU3LEZhGT765nVYydYDZSgxnHfxI49LLBfuEugoP20
+         q3TA==
+X-Gm-Message-State: AFqh2kq+4iYUMjdSzqJrHUq/ljtLlu8vNJnSNduP5J7Pw8HH5zXyGjtz
+        t7IOGh1ocac8vNCc1BoFKrEnLSrUQLA=
+X-Google-Smtp-Source: AMrXdXueZQYUYTkrLM9RIEgNkX+Pn/A3Hm5b7Z28AkOIAGv3E2yrhlD35pXGHe60Im+X8a+Ga3ZG1w==
+X-Received: by 2002:a05:600c:1d8e:b0:3d9:f9ef:3d23 with SMTP id p14-20020a05600c1d8e00b003d9f9ef3d23mr11412826wms.23.1674149667235;
+        Thu, 19 Jan 2023 09:34:27 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x23-20020a1c7c17000000b003d974076f13sm5279074wmc.3.2023.01.19.09.34.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 09:32:07 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Is GGG mislabeling topics?
-Date:   Thu, 19 Jan 2023 09:32:07 -0800
-Message-ID: <xmqqpmba1ld4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Thu, 19 Jan 2023 09:34:26 -0800 (PST)
+Message-Id: <pull.1458.v2.git.1674149666.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1458.git.1673451741587.gitgitgadget@gmail.com>
+References: <pull.1458.git.1673451741587.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 19 Jan 2023 17:34:23 +0000
+Subject: [PATCH v2 0/2] ls-files: add %(skipworktree) atom to format option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Victoria Dye <vdye@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
+        <pclouds@gmail.com>, ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These comments from GGG bot
+Add a %(skipworktree) atom git ls-files --format to indicate whether the
+file in the index match the sparse specification.
 
-    https://github.com/git/git/pull/1435#issuecomment-1386301994
-    https://github.com/git/git/pull/1435#issuecomment-1386302018
+v1: add %(skipworktree) atom to git ls-files format option. v2:
 
-add 'next' and 'seen' labels, citing merges e3ead5f and c52b021
-respectively, but these merges are of a topic that has little to do
-with this pull request (#1435).  Is this expected?
+ 1. no longer mentioned git ls-files -t.
+ 2. change %(skipworktree) output from "true"/"false" to "1"/"".
+ 3. fix the sparse-checkout docs link.
 
+ZheNing Hu (2):
+  docs: fix sparse-checkout docs link
+  ls-files: add %(skipworktree) atom to format option
+
+ Documentation/Makefile                      |  1 +
+ Documentation/git-ls-files.txt              |  5 +++
+ Documentation/technical/sparse-checkout.txt | 43 ++++++++++++++-------
+ builtin/ls-files.c                          |  3 ++
+ t/t3013-ls-files-format.sh                  | 23 +++++++++++
+ 5 files changed, 61 insertions(+), 14 deletions(-)
+
+
+base-commit: a7caae2729742fc80147bca1c02ae848cb55921a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1458%2Fadlternative%2Fzh%2Fls-file-format-skipworktree-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1458/adlternative/zh/ls-file-format-skipworktree-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1458
+
+Range-diff vs v1:
+
+ -:  ----------- > 1:  cde4827da13 docs: fix sparse-checkout docs link
+ 1:  c4cd5b3a32f ! 2:  9ebd6b77a69 ls-files: add %(skipworktree) atom to format option
+     @@ Commit message
+          ls-files: add %(skipworktree) atom to format option
+      
+          Because sometimes we want to check if the files in the
+     -    index match the sparse specification by using
+     -    `git ls-files -t`, but `-t` option have semi-deprecated,
+     -
+     -    So introduce "%(skipworktree)" atom to git ls-files
+     -    `--format` option. When we use this option, if the file
+     -    match the sparse specification and removed from working
+     -    tree, it will output "yes", othewise, output "no".
+     +    index match the sparse specification, so introduce
+     +    "%(skipworktree)" atom to git ls-files `--format` option.
+     +    When we use this option, if the file match the sparse
+     +    specification, it will output "1", otherwise, output
+     +    empty string "".
+      
+          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+      
+     @@ Documentation/git-ls-files.txt: eolattr::
+       	The pathname of the file which is recorded in the index.
+      +skipworktree::
+      +	If the file in the index marked with SKIP_WORKTREE bit.
+     -+	It means the file do not match the sparse specification
+     -+	and removed from working tree.
+     ++	It means the file do not match the sparse specification.
+      +	See link:technical/sparse-checkout.txt[sparse-checkout]
+      +	for more information.
+       
+     @@ builtin/ls-files.c: static size_t expand_show_index(struct strbuf *sb, const cha
+       		write_name_to_buf(sb, data->pathname);
+      +	else if (skip_prefix(start, "(skipworktree)", &p))
+      +		strbuf_addstr(sb, ce_skip_worktree(data->ce) ?
+     -+			      "true" : "false");
+     ++			      "1" : "");
+       	else
+       		die(_("bad ls-files format: %%%.*s"), (int)len, start);
+       
+     @@ t/t3013-ls-files-format.sh: test_expect_success 'git ls-files --format with --de
+       '
+       
+      +test_expect_success 'git ls-files --format with skipworktree' '
+     ++	test_when_finished "git sparse-checkout disable" &&
+      +	mkdir dir1 dir2 &&
+      +	echo "file1" >dir1/file1.txt &&
+      +	echo "file2" >dir2/file2.txt &&
+      +	git add dir1 dir2 &&
+      +	git commit -m skipworktree &&
+      +	git sparse-checkout set dir1 &&
+     -+	git ls-files --format="%(path) %(skipworktree)" >actual &&
+     ++	git ls-files --format="%(path)%(skipworktree)" >actual &&
+      +	cat >expect <<-\EOF &&
+     -+	dir1/file1.txt false
+     -+	dir2/file2.txt true
+     -+	o1.txt false
+     -+	o2.txt false
+     -+	o3.txt false
+     -+	o4.txt false
+     -+	o5.txt false
+     -+	o6.txt false
+     -+	o7.txt false
+     ++	dir1/file1.txt
+     ++	dir2/file2.txt1
+     ++	o1.txt
+     ++	o2.txt
+     ++	o3.txt
+     ++	o4.txt
+     ++	o5.txt
+     ++	o6.txt
+     ++	o7.txt
+      +	EOF
+      +	test_cmp expect actual
+      +'
+
+-- 
+gitgitgadget
