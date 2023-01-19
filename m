@@ -2,184 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CF44C004D4
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 14:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0F39C004D4
+	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 15:38:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231292AbjASOVS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 09:21:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44330 "EHLO
+        id S231217AbjASPiO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 10:38:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbjASOVQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 09:21:16 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AC041BF9
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 06:21:15 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id hw16so6005972ejc.10
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 06:21:15 -0800 (PST)
+        with ESMTP id S230396AbjASPiL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 10:38:11 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C433C829A2
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 07:38:02 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id vw16so6627712ejc.12
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 07:38:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VjrYR4TmumUbwM6NbVHp90Fmg3lViKfFhIYRSEar2j0=;
-        b=XgzV4g6onUg9Xkv7OKOPjgvMdJR2N05XaG4oBOoFsEt2oGGulYpLTiv8VGL22Ehsu8
-         z4TN6RLo+PRjzbMVSO4GFraoSTyGSSaEIroWtseUQWN2TwwzbENr24m2cAnQyWDZA4sa
-         DlVrPbSEgs0sQD2C4zkISZTrBO8ECoez8LO8or5UP2KNlrbVAxLok1fqLcaQuQTmQko+
-         xhvxQSt7a6z7nY796thNqxna0zi9q3oegTf+It81FbVsSlWmhlzTvuPEW3dQ7crGhfdN
-         t2bnHv6pa+CBh1FiX2MvYUkGRUDcdK/ZUlRsyAi+42dJae+9nhpVxD+xwKt1oUrUVVVh
-         VVGA==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9j4qHUdzy8ccQ99JCZfe07VNYqZJ4q8yx0NCobvCzek=;
+        b=qgseGCEOfu7XAHPKgokyDuJgOl7vRN+SdRGrPuVIC9wQpMWE9IfrJxE+cs0f2jSPca
+         UeEHhNdk//tkBvb3ig4stzamW8U6KUQDa58Vu973pkrWzpHLZK+T27zm4vg7BvEWVVT6
+         RCEdekAIF+9ZCu4VMQJ3Tkj6DTxmTZq3jDcgcFTtItBbng4C4PIPwKbyDdajabwPFF1M
+         ru2j7qgh+IHSJ6zPJ88B6YE9Fe4buBqNpzpIxlwyP644Hd32YAqv0j5659twGRQOeLIQ
+         UGWinrC2SMgWYbsoThZqdVFu64VlYH0icmdHKUsQgUn9v7qLFzXKzqJA1IFOglnKbGu8
+         XzHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VjrYR4TmumUbwM6NbVHp90Fmg3lViKfFhIYRSEar2j0=;
-        b=IgRXOVkjyAC397fiSiVHahCQLH9bSyTQApAJ4iInV812myF3rcP3gH1jhRqSpk0oib
-         poKI8DmeiO9/sZJhYN6MDJE90Ab3kMnFjg+5owKOTDg9b6mReKZN4gY564lARVh1HTTO
-         2ChcKno2goRK0FmQ8RryVfX9kQ2u/pq1Ev1M6Hier0PV+/JjHJmKA50vNdH4wKTYsRdm
-         dylozDSJaJTRpmKe7k/ltnZyX5yvESYfdMamDcas0BwRnYpDFAr+VjvdAberrZCiREEf
-         ONFuDOJrkNqlnpsTPCsyu8FqKjuKxz2SmCWT0ZBmN3Zk/COCkmBS+GR24GgYhr4bzawo
-         PPCQ==
-X-Gm-Message-State: AFqh2krWHcb/3kTyJDF/j+rm5trOIWYoRyv03kp3Ltti1WOUEcP/+ekH
-        TtcmjScxwrcypDhN0yzefptVf2TZE1g=
-X-Google-Smtp-Source: AMrXdXvXSe3cN/aFb220o2ln/HJUo/VxTM3X65JpxN2FdCFqMLAbOuR3QZe1BZxpvBF83NuirL0PEg==
-X-Received: by 2002:a17:906:1112:b0:84d:28d6:3179 with SMTP id h18-20020a170906111200b0084d28d63179mr11217214eja.0.1674138073879;
-        Thu, 19 Jan 2023 06:21:13 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id la19-20020a170907781300b007aee7ca1199sm16531312ejc.10.2023.01.19.06.21.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Jan 2023 06:21:13 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <6a0499d4-ad6e-56b7-de72-0f8a3697b534@dunelm.org.uk>
-Date:   Thu, 19 Jan 2023 14:21:05 +0000
+        bh=9j4qHUdzy8ccQ99JCZfe07VNYqZJ4q8yx0NCobvCzek=;
+        b=THiyFkZJu0ZOYDcPFMKncli01wwsM0H8IK1kqErQxNYisMt8YoAPMX5mW6Ws8tkTLo
+         f6yp+9D7vjhzVcH8Ol5sinEmymAuSvbLz5DeFoQe0qj4DYaH5f/TzS97rgfLogCE97l1
+         lGGGr7nE0kfQq6Nty04lLYzf/iLwohlqEFaqt0GYng8R6DB9TsjtM+h7l9xZd2qAp+fS
+         cnO84f6tN1q4+0tEjsJFISFLgpK3k9uO/Sm7V6bZxBd96GYQ2A+J6vTMd+v2smLqKE8I
+         fPKsjR1ZfFU3fQSJzlMpuaaANP2/lxH4q9tnRwolw4CTUjxPjR6B0DyfoMoTL2g3MFkp
+         yekw==
+X-Gm-Message-State: AFqh2kpSTNixI9OWbRj8AM1ZSqtTY7WIIu5fhNhcEAj70pZ6DRPXZ+lX
+        4EhIyCOMdb/nQucsGykq4ZY=
+X-Google-Smtp-Source: AMrXdXs1O0QE5h9qhMeFQjPwbMGjeXUNltn/ZtmobCzO4W33g8DqMGoR/G0DaPzCW09WFlc32JVVJw==
+X-Received: by 2002:a17:906:8d08:b0:86f:e30c:72c1 with SMTP id rv8-20020a1709068d0800b0086fe30c72c1mr13120829ejc.8.1674142681085;
+        Thu, 19 Jan 2023 07:38:01 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id lb25-20020a170907785900b007c00323cc23sm16417526ejc.27.2023.01.19.07.38.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Jan 2023 07:38:00 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pIWzH-003KZZ-2v;
+        Thu, 19 Jan 2023 16:37:59 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jacob Abel <jacobabel@nullpo.dev>
+Cc:     Junio C Hamano <gitster@pobox.com>, phillip.wood@dunelm.org.uk,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
+Subject: Re: [PATCH v8 3/4] worktree add: add --orphan flag
+Date:   Thu, 19 Jan 2023 16:32:32 +0100
+References: <20221104010242.11555-1-jacobabel@nullpo.dev>
+ <20221220023637.29042-1-jacobabel@nullpo.dev>
+ <20221228061539.13740-1-jacobabel@nullpo.dev>
+ <20230107045757.30037-1-jacobabel@nullpo.dev>
+ <20230109173227.29264-1-jacobabel@nullpo.dev>
+ <20230109173227.29264-4-jacobabel@nullpo.dev>
+ <e5aadd5d-9b85-4dc9-e9f7-117892b4b283@dunelm.org.uk>
+ <20230114224715.ewec6sz5h3q3iijs@phi> <xmqqo7r0ijdv.fsf@gitster.g>
+ <20230118221745.wovefwx6vhcm3zzk@phi>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <20230118221745.wovefwx6vhcm3zzk@phi>
+Message-ID: <230119.86zgaev8ko.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] checkout/switch: disallow checking out same branch in
- multiple worktrees
-Content-Language: en-US
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Cc:     pclouds@gmail.com, gitster@pobox.com,
-        Jinwook Jeong <vustthat@gmail.com>,
-        =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <20230118061527.76218-1-carenas@gmail.com>
- <20230119055325.1013-1-carenas@gmail.com>
-In-Reply-To: <20230119055325.1013-1-carenas@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Carlo
 
-Thanks for working on this
+On Wed, Jan 18 2023, Jacob Abel wrote:
 
-On 19/01/2023 05:53, Carlo Marcelo Arenas Belón wrote:
-> Commands `git switch -C` and `git checkout -B` neglect to check whether
-> the provided branch is already checked out in some other worktree, as
-> shown by the following:
-> 
->    $ git worktree list
->    .../foo    beefb00f [main]
->    $ git worktree add ../other
->    Preparing worktree (new branch 'other')
->    HEAD is now at beefb00f first
->    $ cd ../other
->    $ git switch -C main
->    Switched to and reset branch 'main'
->    $ git worktree list
->    .../foo    beefb00f [main]
->    .../other  beefb00f [main]
-> 
-> Fix this problem by teaching `git switch -C` and `git checkout -B` to
-> check whether the branch in question is already checked out elsewhere
-> by expanding on the existing checks that are being used by their non
-> force variants.
- >
-> Unlike what it is done for `git switch` and `git checkout`, that have
-> an historical exception to ignore other workspaces if the branch to
-> check is the current one (as required when called as part of other
-> tools), the logic implemented is more strict and will require the user
-> to invoke the command with `--ignore-other-worktrees` to explicitly
-> indicate they want the risky behaviour.
+> On 23/01/14 07:09PM, Junio C Hamano wrote:
+>> Jacob Abel <jacobabel@nullpo.dev> writes:
+>>
+>> >> 	git worktree add --orphan -b topic main
+>> >> 	git worktree add --orphan -B topic main
+>> >
+>> > I am hesitant to add these as they break away from the syntax used in
+>> > `git switch` and `git checkout`.
+>>
+>> Not that I care too deeply, but doesn't it introduce end-user
+>> confusion if we try to be compatible with "git checkout --orphan
+>> <branch>", while allowing this to be compatible with the default
+>> choice of the branch name done by "git worktree add"?  "--orphan" in
+>> "git checkout" behaves similar to "-b|-B" in that it always wants a
+>> name, but "git worktree add" wants to make it optional.
+>
+> Yes. I think it's a fairly minor degree of confusion but I agree that it adds
+> potentially unneeded confusion.
 
-> This matches the current behaviour of `git branch -f` and is safer, for
-> more details see the tests in t2400.
+I think this topic is ready to advance as-is without Phillip's upthread
+suggestion (<e5aadd5d-9b85-4dc9-e9f7-117892b4b283@dunelm.org.uk>) to
+allow us to combine --orphan and -b and -B.
 
-I think it would be helpful to spell out the behavior of
+I also think that UX suggestion is sensible, but if we do that we
+shouldn't just apply that to "git worktree", but also change the the
+corresponding "git switch" UX, on which this new "git worktree --orphan"
+is modeled.
 
-	git checkout $current_branch
-	git checkout -B $current_branch [<commit>]
-	git checkout -B $current_branch --ignore-other-worktrees [<commit>]
+I don't think it's worth it to make the UX between the two inconsistent
+in this regard, so if "switch" doesn't learn to do this we'd be better
+off with not making "--orphan" a flag.
 
-when the current branch is and is not checked out in another worktree 
-as the tests are hard to follow because they rely on worktrees set up 
-previous tests.
+But if we are going to make it a flag let's have both support the same
+sort of invocation.
 
-> Reported-by: Jinwook Jeong <vustthat@gmail.com>
-> Helped-by: Rubén Justo <rjusto@gmail.com>
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
-> @@ -1818,10 +1831,12 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
->   		strbuf_release(&buf);
->   	}
->   
-> -	if (opts->patch_mode || opts->pathspec.nr)
-> +	if (opts->patch_mode || opts->pathspec.nr) {
-> +		free(check_branch_path);
->   		return checkout_paths(opts, new_branch_info);
-> +	}
->   	else
-> -		return checkout_branch(opts, new_branch_info);
-> +		return checkout_branch(opts, new_branch_info, check_branch_path);
->   }
+Therefore I think this series is ready as-is without this proposed UX
+change. We should first support the same sort of invocations that
+"swich" already supports.
 
-I found the ownership of check_branch_path confusing here. I think it 
-would be clearer to do
-
-	if (opts->patch_mode || opts->pathspec.nr)
-		ret = checkout_path(...);
-	else
-		ret = checkout_branch(...);
-	free(check_branch_path);
-	return ret;
-
- > [...]
-> +test_expect_success 'but die if using force without --ignore-other-worktrees' '
-
-I'm not sure from the title what this test is checking. Having added 
-"git worktree list" and run it is checking that when the current branch 
-is checked out elsewhere we require --ignore-other-worktrees when 
-resetting the current branch.
-
-> +	(
-> +		cd there &&
-> +		test_must_fail git checkout -B newmain &&
-> +		test_must_fail git switch -C newmain &&
-> +		git checkout --ignore-other-worktrees -B newmain &&
-> +		git switch --ignore-other-worktrees -C newmaain >   	)
-
-I tried running
-
-	git switch -C main newbranch
-
-from the main worktree (which is the only worktree that has branch 
-'main' checked out) to check that we did not error out when the branch 
-is not checked out elsewhere and was surprised it failed with
-
-	fatal: 'newbranch' is already checked out at '/dev/shm/trash 
-directory.t2400-worktree-add/short-hand'
-
-It works as expected without this patch so it looks like there is a bug 
-somewhere.
-
-Best Wishes
-
-Phillip
+If we then want to change the UX later we should change it for both, not
+leave the two inconsistent.
