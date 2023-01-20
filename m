@@ -2,68 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19599C05027
-	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 16:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5160AC05027
+	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 16:36:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229597AbjATQQM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 11:16:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49828 "EHLO
+        id S230057AbjATQf7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 11:35:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbjATQQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2023 11:16:10 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3966CB51F
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 08:16:00 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id 5so433729plo.3
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 08:16:00 -0800 (PST)
+        with ESMTP id S229683AbjATQf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2023 11:35:58 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A745917E9
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 08:35:31 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id z9-20020a17090a468900b00226b6e7aeeaso5422089pjf.1
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 08:35:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8ed4kRSDnpjS8oX37YJhjlmbFwdsBt4mzVefiwrOwLg=;
-        b=jj6mOrpLR+gWg0T8QZhDMKUBXdubD+1K5rjeh5pGsG8wovjWs8eQpjsnI7iMbK4FYO
-         DgB0dmAzgb2laKK43GAzBobIIsQ/2LMiqAOAQkqItEaCw+Kg199W9GHBiTPJFhmAq2Jr
-         qdgG9Nrm3IiDOnq7JVw+qG6DRNo5OFFBM1kA918xy33o3bXi4XX+JAcwzbX4+cTiCpwl
-         fdlANwzoNTpb5x1JhW7HHx9HVlSkCnfwothDEp3C9ZCjPra3lVcygN4RIC4EoDmG5VNk
-         Wutq9CJdvu1SixUlG5DPg/FUiU4JHtmNLBr3guaE1ZdV47+bU2K8/Ad5hZhX2ix+DSBb
-         9q2g==
+        bh=ZHTz4LlqjTVzKu64MNle3KauxlHJ9RsdUQIIYkyfJwU=;
+        b=i9x6PnAmcjHKdWuFWrYI3+8vCZe5X1J++Ue9JVijfT/1QDKawgK/cosfBrwlgYWkOA
+         ppRWd3XlOMMY/4XpU4dSfSbPHzh3gIS52aJdh+ltCnT8zbZ+4K75Xdo9/cim7lQscwlV
+         Arx80jWomKGejYIzHm6f9DOQxb3ALgJI9igjfkQLrmDakAqtRpzlLuJXJzzhjNTfGJ1f
+         QWXpAcV71AXQfxi7RrLJ2T6KdwG8mzue6ucsTpSj49cgrobVBpK/A6wdCHMiFKpRKD5B
+         LKCaHERK0c0ZfzHdi0EaBG3Aw0nqOn2qOy/pxWV4+ZaNYenx8LwTPOyMcYkhrl8g6jgL
+         ilOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=8ed4kRSDnpjS8oX37YJhjlmbFwdsBt4mzVefiwrOwLg=;
-        b=s72tyiSyFLy1OEtcKRvU5C1m6c9lLIYewyyHJksCqH4pc/CsSOK1vxRHuqbul6QYJf
-         L0+Pv1nz48g1F7QYFuPmBU3JNdMHL7XPN9WONqHlBKARzBXIxbriyEDVhed5sn4y6teZ
-         Bm7JVVxBf+tyTjiiyi9ho69TeRJU1eXJRnJH7Lh3vuV4tzikg8/jLGEkjU4l38nXmOO/
-         iEzu4rN+83UeUBMQNwrMiB2v8/Dj4IRL9Uh6SZul+HUNnuni6S7Xp+eSskFH2e6+AScV
-         bFKTublU7t28SbAEPBG+I65jlUiApajDR4gfBz7UQmpNTqszmsqWbFvZGVi9jJbzTGTJ
-         YHXw==
-X-Gm-Message-State: AFqh2koWO1zpaELZYzy8PobkxY6yReXUcAxddL7BgDJraQRhROQtFULB
-        1z4fui8wQffn3HGO5XXCsAapqvJrWp0=
-X-Google-Smtp-Source: AMrXdXsM7qo7zHNQZCSz3R7OTcmrBLZpp+o5zgoj/GpjIXcIoxXGsOmOrHOCgkaVb8ZDOAneyLvirg==
-X-Received: by 2002:a17:90a:f483:b0:229:74a2:a692 with SMTP id bx3-20020a17090af48300b0022974a2a692mr16069824pjb.28.1674231360286;
-        Fri, 20 Jan 2023 08:16:00 -0800 (PST)
+        bh=ZHTz4LlqjTVzKu64MNle3KauxlHJ9RsdUQIIYkyfJwU=;
+        b=zE8K5Tht/63gevzLa0bi9taWvIFzATzllk8NP6G1tD/pPkziNFGK9mMk5ZtSnSdrci
+         6bylWMJs+HNVFIU9zE66WspQcWSRH/ap9Dn0DAEszxBp0RDXHSpNLjanOkksTLhCiXii
+         MAGecVwFTlVg0nD4M/eC6ZkDew4HefXSXx+FU11qD8bEtebVvTsC5EUm80RKNJmHdNfS
+         Pf1nnRSOB4qu0faCHcfMF5cskNdobDv0N3kJHCRz0oYxmMM1+a7Gq2hp+SgqO9XB6dHM
+         Fjckto/YI/qYt0xF2msXHPbYMFCCnBM/qT2P5vtp2fiTzFwHfInekjONoVlreDcx9xaH
+         U54w==
+X-Gm-Message-State: AFqh2konYdfoElkD3QdUB3VVx69xZWXmI84uQpsMWxUnjhuiaGbFv9Nz
+        Zuta/uPY+cAvc0mKEqLWe1U=
+X-Google-Smtp-Source: AMrXdXscvBt+Yi/T55F8Y5z+stUTDrgPNvrGJwdWkiKux4BHYmIUMatlNq64xe1LtabKO2gHyIdhCA==
+X-Received: by 2002:a17:90a:7182:b0:229:19f7:a60d with SMTP id i2-20020a17090a718200b0022919f7a60dmr16852067pjk.0.1674232488412;
+        Fri, 20 Jan 2023 08:34:48 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id a9-20020a17090a688900b00219463262desm1681692pjd.39.2023.01.20.08.15.59
+        by smtp.gmail.com with ESMTPSA id y8-20020a17090a16c800b00218a7808ec9sm1742479pje.8.2023.01.20.08.34.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 08:15:59 -0800 (PST)
+        Fri, 20 Jan 2023 08:34:47 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 1/2] rebase: remove completely useless -C option
-References: <pull.1466.git.1674106587550.gitgitgadget@gmail.com>
-        <pull.1466.v2.git.1674190573.gitgitgadget@gmail.com>
-        <a0f8f5fac1c3f79cd46b943e95636728677dffef.1674190573.git.gitgitgadget@gmail.com>
-        <xmqq5yd1za0t.fsf@gitster.g>
-        <CABPp-BFakaEqnpW4Xn1rzcOC6oVmcEz+OxBV4dKA_TJZ-xbTvg@mail.gmail.com>
-Date:   Fri, 20 Jan 2023 08:15:59 -0800
-In-Reply-To: <CABPp-BFakaEqnpW4Xn1rzcOC6oVmcEz+OxBV4dKA_TJZ-xbTvg@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 20 Jan 2023 07:31:15 -0800")
-Message-ID: <xmqqh6wlxjuo.fsf@gitster.g>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Victoria Dye <vdye@github.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v2 2/2] ls-files: add %(skipworktree) atom to format option
+References: <pull.1458.git.1673451741587.gitgitgadget@gmail.com>
+        <pull.1458.v2.git.1674149666.gitgitgadget@gmail.com>
+        <9ebd6b77a69be414388a52a482912173f2a4e7d8.1674149666.git.gitgitgadget@gmail.com>
+        <CABPp-BGLmhoHAcuLoz_yQ4TmNBvDU6Ehymy_3rh0wguSw0hjGw@mail.gmail.com>
+Date:   Fri, 20 Jan 2023 08:34:47 -0800
+In-Reply-To: <CABPp-BGLmhoHAcuLoz_yQ4TmNBvDU6Ehymy_3rh0wguSw0hjGw@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 19 Jan 2023 21:30:19 -0800")
+Message-ID: <xmqqcz79xizc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,19 +77,36 @@ X-Mailing-List: git@vger.kernel.org
 
 Elijah Newren <newren@gmail.com> writes:
 
-> On Fri, Jan 20, 2023 at 4:05 AM Junio C Hamano <gitster@pobox.com> wrote:
->> ...
->> That is, even when a patch does not cleanly apply with full context
->> in the incoming diff, by requiring *smaller* number of lines to
->> match, the diff *could* be forced to apply with reduced precision?
+> On Thu, Jan 19, 2023 at 9:34 AM ZheNing Hu via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: ZheNing Hu <adlternative@gmail.com>
+>>
+>> Because sometimes we want to check if the files in the
+>> index match the sparse specification, so introduce
+>> "%(skipworktree)" atom to git ls-files `--format` option.
+>> When we use this option, if the file match the sparse
+>> specification, it will output "1", otherwise, output
+>> empty string "".
 >
-> Oh!  Reducing the number of lines of context to pay attention to never
-> even occurred to me for whatever reason.  I'll drop the patch.
+> Why is that output format useful?  It seems like it'll just lead to
+> bugs, or someone re-implementing the same field with a different name
+> to make it useful in the future.  In particular, if there are multiple
+> boolean fields and someone specifies e.g.
+>    git ls-files --format="%(path) %(skipworktree) %(intentToAdd)"
+> and both boolean fields are displayed the same way (either a "1" or a
+> blank string), and we see something like:
+>    foo.c 1
+>    bar.c 1
+> Then how do we know if foo.c and bar.c are SKIP_WORKTREE or
+> INTENT_TO_ADD?  The "1" could have come from either field.
 
-Yup.  "completely useless" on the title is less than half correct,
-but still correct for a minor use case where -C is used to use
-*more* context lines than the default.
+Perhaps it becomes useful in conjunction with %(if) and friends,
+when they become avaiable?
 
-We could update "rebase --apply" codepath to increase the context
-lines generated by format-patch.  That would make the "completely
-useless" totally incorrect ;-)
+Until then, I agree that the output format looks pretty klunky.
+The calling scripts still can do
+
+	--format='%(path) A=%(A) B=%(B) C=%(C)'
+
+and take an empty value as false, though.
