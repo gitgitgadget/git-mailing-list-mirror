@@ -2,274 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CF24C05027
-	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 11:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00A18C05027
+	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 12:05:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbjATLgM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 06:36:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52062 "EHLO
+        id S229496AbjATMFn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 07:05:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbjATLgL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2023 06:36:11 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0790E8537A
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 03:36:09 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id z20so3100949plc.2
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 03:36:09 -0800 (PST)
+        with ESMTP id S229703AbjATMFl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2023 07:05:41 -0500
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19B559FDDF
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 04:05:24 -0800 (PST)
+Received: by mail-pf1-x42c.google.com with SMTP id g205so3791223pfb.6
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 04:05:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U1FZ+0BdZgXnWL6pJXbcOJS4gEey0byk6S2JHxwoB/8=;
-        b=h0GRJ6oqrJ4Rifgy2O7RieJxpq3iAURZuHgErtil1vDxF6TYZnhGXohJXML805DL93
-         5cF1c9XiM3ta2poCniCWFVdWAGh46nezczqSvEElHnmiA0ut987fTEenQZrwEniY4VI0
-         kxRTAcrsokvzqhFZgOO50ourHsy5idynkJUobvMQCnj0WHYU6QqgmQaVAETI0WQd8RZ6
-         GOvGTZYlGIlgVEY81WER/dNWUbWyCvGfaOacvVavUBWtg3XjiV+N/uCQvpDTQb8r/Ctq
-         YhYUmZnzNA7SVuKvzpHKKO/dsqmB7IC3g11W5nWxDZdIOr0I7y7ammuHyATi/zISnjcT
-         0wCA==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S1fsfTTaVgUKfNaFqwRlDg4AvISvkdCMiJ38jlJ7YSU=;
+        b=akuyg0hqY6P4PCGuT70JOO7BBjc3Wm9KJm0wIhWgkPvGl1LnlU0gl3UWEVzxlsg8uo
+         bJW7mQKEXMOoQN62ojApxxdvMIExvIn2VRVn1WO3MK6/oa7VqbnxvIhe5D8zEzFOG8+9
+         MJ3UNumetmkDTUL/U6cjv0sx6nYy2gthnMQcf5OEroGG2+T5/VVjjMwsuwrKbBXOVvy1
+         BN76iio/IcUWt4yKKyafMhC39JE5wS5atG02SH6TAHsEnDmyrEb3D/wPWXE40GDIJ6JN
+         seCOWoX3M/xYZnfNE8jSJf/HYK3bCjknphOmPl43mSZD9v8/NsSKLnddSCc3JAowYdqC
+         AknQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=U1FZ+0BdZgXnWL6pJXbcOJS4gEey0byk6S2JHxwoB/8=;
-        b=Pa/p7WdoRKAO28VccBn0b1kM+GqrHw9rMwdZjumi4CVP7kKJqb8kwNQGLTg5QLlUoH
-         4L/rSPzp/tsHJ2fKvnB+xgafrWbJliG3axThoBuYMIqvGCY8oxbX65IiLhiTxnKBoMGd
-         qMNPNfB2UIaaAIUS9gMXmaKLaS3UM4BMbngtLx8JobdB3xhXc//PcOSsuH5oJ+W3yXaG
-         TbzT2n5ywWrnpGn9C7gbJ0H1SCHWzxRwWj1nTQXslnyQAVae1Dj0acwbUKb6/i94eP/m
-         QqjKrkLi6MH3Mu3ShscsAdHi9oHgN3oImS2ws83ymwsP//pJ7cTZt1sHiUO2CGJj5nuG
-         aXCw==
-X-Gm-Message-State: AFqh2kqXyv7XNj8+wBSfzw4TX6ZPhTLQ6TPMWDMZmks4tq6YqhNzvhYD
-        +nseDrfDhFJHVG9bW/HTNTEZgQIHdko=
-X-Google-Smtp-Source: AMrXdXulcPU5R8yKbE8gyS8RpICuEbjbFL0wWva3vMlHbEcp+ZIeSJ8Vipqzm+to9EU02qG/17NAtA==
-X-Received: by 2002:a17:90a:f612:b0:225:e88c:33c2 with SMTP id bw18-20020a17090af61200b00225e88c33c2mr15264783pjb.7.1674214568088;
-        Fri, 20 Jan 2023 03:36:08 -0800 (PST)
-Received: from localhost.localdomain (192-184-217-7.fiber.dynamic.sonic.net. [192.184.217.7])
-        by smtp.gmail.com with ESMTPSA id h1-20020a17090ac38100b0022908f1398dsm1296425pjt.32.2023.01.20.03.36.06
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=S1fsfTTaVgUKfNaFqwRlDg4AvISvkdCMiJ38jlJ7YSU=;
+        b=M3r7dj2pEqLE9lKPxRwZxbUO7i8/cswFzr3e9Yz9mLZhkfzu6leeW3nD95BBGf6Kc0
+         CNx4kIZTb5bdl1k43BSDl0IxBijJeDkbXLkGaqRWFtKLJATWFC9zqaUI1/UFqjJcN9Pa
+         LIipkDxKNnluDWbmfIeyVFZ9x5XVTMFtz1X8n+sIaNC6aTfPkR/2BeS+QMbjkkmhQUEE
+         JdVKbTlw4TTp+CBvJqmHLQbv6iczvk4025epv3RUK/ztPdTY5jM3YNXZhwzbMLt80vRW
+         B+wjU7ldeRkhCaqR1s3Yi63hi4wt1voLcepzLaORLP+45gqp0GOcfzN3dfEwX0mP38Xk
+         wjCw==
+X-Gm-Message-State: AFqh2kpi3B1EJSPI1APYeacUqR/1qSMEP7mgfWZe2LrsYdfUcMqQcIrE
+        ENBrovhSPiOEJjETVYBqu6w=
+X-Google-Smtp-Source: AMrXdXsVJWkHiP1J9oPE2ZKQbg/uCRuyJ7kkci7FIu+eTnaTIoc0hZ3oxH4KdaucMFLcJvPiC0rOrw==
+X-Received: by 2002:a05:6a00:4207:b0:580:eeae:e4ba with SMTP id cd7-20020a056a00420700b00580eeaee4bamr15856307pfb.4.1674216323387;
+        Fri, 20 Jan 2023 04:05:23 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id z26-20020aa79f9a000000b0058da92f7c8dsm9713305pfr.17.2023.01.20.04.05.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 03:36:07 -0800 (PST)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     pclouds@gmail.com, gitster@pobox.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>, Jinwook Jeong <vustthat@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v4] checkout/switch: disallow checking out same branch in multiple worktrees
-Date:   Fri, 20 Jan 2023 03:35:53 -0800
-Message-Id: <20230120113553.24655-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.37.1 (Apple Git-137.1)
-In-Reply-To: <20230119055325.1013-1-carenas@gmail.com>
-References: <20230119055325.1013-1-carenas@gmail.com>
+        Fri, 20 Jan 2023 04:05:22 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 1/2] rebase: remove completely useless -C option
+References: <pull.1466.git.1674106587550.gitgitgadget@gmail.com>
+        <pull.1466.v2.git.1674190573.gitgitgadget@gmail.com>
+        <a0f8f5fac1c3f79cd46b943e95636728677dffef.1674190573.git.gitgitgadget@gmail.com>
+Date:   Fri, 20 Jan 2023 04:05:22 -0800
+In-Reply-To: <a0f8f5fac1c3f79cd46b943e95636728677dffef.1674190573.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Fri, 20 Jan 2023
+        04:56:12 +0000")
+Message-ID: <xmqq5yd1za0t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commands `git switch -C` and `git checkout -B` neglect to check whether
-the provided branch is already checked out in some other worktree, as
-shown by the following:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-  $ git worktree list
-  .../foo    beefb00f [main]
-  $ git worktree add ../other
-  Preparing worktree (new branch 'other')
-  HEAD is now at beefb00f first
-  $ cd ../other
-  $ git switch -C main
-  Switched to and reset branch 'main'
-  $ git worktree list
-  .../foo    beefb00f [main]
-  .../other  beefb00f [main]
+> From: Elijah Newren <newren@gmail.com>
+>
+> The `-C` option to rebase was introduced with 67dad687ad ("add -C[NUM]
+> to git-am", 2007-02-08).
+> ...
+> As per the git-apply documentation for the `-C` option:
+>     Ensure at least <n> lines of surrounding context match...When fewer
+>     lines of surrounding context exist they all must match.
+>
+> The fact that format-patch was not passed a -U option to increase the
+> number of context lines meant that there would still only be 3 lines of
+> context to match on.
 
-Fix this problem by teaching `git switch -C` and `git checkout -B` to
-check whether the branch in question is already checked out elsewhere.
+I am afraid that this is only less than half true.  Isn't the
+intended use of -C<num> similar to how "patch --fuzz" is used?
 
-Unlike what it is done for `git switch` and `git checkout`, that have
-an historical exception to ignore other worktrees if the branch to
-check is the current one (as required when called as part of other
-tools), the logic implemented is more strict and will require the user
-to invoke the command with `--ignore-other-worktrees` to explicitly
-indicate they want the risky behaviour.
+That is, even when a patch does not cleanly apply with full context
+in the incoming diff, by requiring *smaller* number of lines to
+match, the diff *could* be forced to apply with reduced precision?
 
-This matches the current behaviour of `git branch -f` and is safer; for
-more details see the tests in t2400.
+My read of "even if context has changed a bit" in the log of that
+commit is exactly that.  And for such a use case (which I think is
+the primary use case for the feature), you do not need to futz with
+the patch generation side at all.
 
-Reported-by: Jinwook Jeong <vustthat@gmail.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: Rubén Justo <rjusto@gmail.com>
-Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
-Changes since v3
-* Code and Tests improvements as suggested by Phillip
-* Disable unreliable test that triggers a known bug
+commit 67dad687ad15d26d8e26f4d27874af0bc0965ce2
+Author: Michael S. Tsirkin <mst@kernel.org>
+Date:   Thu Feb 8 15:57:08 2007 +0200
 
-Changes since v2
-* A leak free implementation
-* More details in commit as suggested by Junio
-
-Changes since v1
-* A much better commit message
-* Changes to the tests as suggested by Eric
-* Changes to the logic as suggested by Rubén
-
-
- builtin/checkout.c      | 32 ++++++++++++++++++++++++--------
- t/t2400-worktree-add.sh | 34 +++++++++++++++++++++++++++-------
- 2 files changed, 51 insertions(+), 15 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3fa29a08ee..0688652f99 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1474,7 +1474,8 @@ static void die_if_some_operation_in_progress(void)
- }
- 
- static int checkout_branch(struct checkout_opts *opts,
--			   struct branch_info *new_branch_info)
-+			   struct branch_info *new_branch_info,
-+			   char *check_branch_path)
- {
- 	if (opts->pathspec.nr)
- 		die(_("paths cannot be used with switching branches"));
-@@ -1533,13 +1534,13 @@ static int checkout_branch(struct checkout_opts *opts,
- 	if (!opts->can_switch_when_in_progress)
- 		die_if_some_operation_in_progress();
- 
--	if (new_branch_info->path && !opts->force_detach && !opts->new_branch &&
--	    !opts->ignore_other_worktrees) {
-+	if (!opts->ignore_other_worktrees && !opts->force_detach &&
-+	    check_branch_path && ref_exists(check_branch_path)) {
- 		int flag;
- 		char *head_ref = resolve_refdup("HEAD", 0, NULL, &flag);
--		if (head_ref &&
--		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new_branch_info->path)))
--			die_if_checked_out(new_branch_info->path, 1);
-+		if (opts->new_branch_force || (head_ref &&
-+		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, check_branch_path))))
-+			die_if_checked_out(check_branch_path, 1);
- 		free(head_ref);
- 	}
- 
-@@ -1627,7 +1628,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 			 const char * const usagestr[],
- 			 struct branch_info *new_branch_info)
- {
-+	int ret;
- 	int parseopt_flags = 0;
-+	char *check_branch_path = NULL;
- 
- 	opts->overwrite_ignore = 1;
- 	opts->prefix = prefix;
-@@ -1717,6 +1720,13 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 		opts->new_branch = argv0 + 1;
- 	}
- 
-+	if (opts->new_branch && !opts->ignore_other_worktrees) {
-+		struct strbuf buf = STRBUF_INIT;
-+
-+		strbuf_branchname(&buf, opts->new_branch, INTERPRET_BRANCH_LOCAL);
-+		strbuf_splice(&buf, 0, 0, "refs/heads/", 11);
-+		check_branch_path = strbuf_detach(&buf, NULL);
-+	}
- 	/*
- 	 * Extract branch name from command line arguments, so
- 	 * all that is left is pathspecs.
-@@ -1741,6 +1751,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 					     new_branch_info, opts, &rev);
- 		argv += n;
- 		argc -= n;
-+
-+		if (!opts->ignore_other_worktrees && !check_branch_path && new_branch_info->path)
-+			check_branch_path = xstrdup(new_branch_info->path);
- 	} else if (!opts->accept_ref && opts->from_treeish) {
- 		struct object_id rev;
- 
-@@ -1817,9 +1830,12 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	}
- 
- 	if (opts->patch_mode || opts->pathspec.nr)
--		return checkout_paths(opts, new_branch_info);
-+		ret = checkout_paths(opts, new_branch_info);
- 	else
--		return checkout_branch(opts, new_branch_info);
-+		ret = checkout_branch(opts, new_branch_info, check_branch_path);
-+
-+	free(check_branch_path);
-+	return ret;
- }
- 
- int cmd_checkout(int argc, const char **argv, const char *prefix)
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index d587e0b20d..7ab7e87440 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -118,14 +118,17 @@ test_expect_success '"add" worktree creating new branch' '
- 	)
- '
- 
--test_expect_success 'die the same branch is already checked out' '
-+test_expect_success 'die if the same branch is already checked out' '
- 	(
- 		cd here &&
--		test_must_fail git checkout newmain
-+		test_must_fail git checkout newmain &&
-+		test_must_fail git checkout -B newmain &&
-+		test_must_fail git switch newmain &&
-+		test_must_fail git switch -C newmain
- 	)
- '
- 
--test_expect_success SYMLINKS 'die the same branch is already checked out (symlink)' '
-+test_expect_success SYMLINKS 'die if the same branch is already checked out (symlink)' '
- 	head=$(git -C there rev-parse --git-path HEAD) &&
- 	ref=$(git -C there symbolic-ref HEAD) &&
- 	rm "$head" &&
-@@ -133,17 +136,34 @@ test_expect_success SYMLINKS 'die the same branch is already checked out (symlin
- 	test_must_fail git -C here checkout newmain
- '
- 
--test_expect_success 'not die the same branch is already checked out' '
-+test_expect_success 'allow creating multiple worktrees for same branch with force' '
-+	git worktree add --force anothernewmain newmain
-+'
-+
-+test_expect_success 'allow checkout/reset from the conflicted branch' '
- 	(
- 		cd here &&
--		git worktree add --force anothernewmain newmain
-+		git checkout -b conflictedmain newmain &&
-+		git checkout -B conflictedmain newmain &&
-+		git switch -C conflictedmain newmain
-+	)
-+'
-+
-+test_expect_success 'and not die on re-checking out current branch even if conflicted' '
-+	(
-+		cd there &&
-+		git checkout newmain &&
-+		git switch newmain
- 	)
- '
- 
--test_expect_success 'not die on re-checking out current branch' '
-+test_expect_failure 'unless using force without --ignore-other-worktrees' '
- 	(
- 		cd there &&
--		git checkout newmain
-+		test_must_fail git checkout -B newmain &&
-+		test_must_fail git switch -C newmain &&
-+		git checkout --ignore-other-worktrees -B newmain &&
-+		git switch --ignore-other-worktrees -C newmain
- 	)
- '
- 
--- 
-2.37.1 (Apple Git-137.1)
-
+    add -C[NUM] to git-am
+    
+    Add -C[NUM] to git-am and git-rebase so that patches can be applied even
+    if context has changed a bit.
+    
+    Signed-off-by: Michael S. Tsirkin <mst@mellanox.co.il>
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
