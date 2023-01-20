@@ -2,105 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B46FC004D4
-	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 01:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD908C38142
+	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 01:47:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229991AbjATB0f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 20:26:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42732 "EHLO
+        id S229586AbjATBrA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 20:47:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230035AbjATB00 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 20:26:26 -0500
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2067.outbound.protection.outlook.com [40.107.223.67])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB0ADA295A
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 17:26:18 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Xwa10I1X8GWSw7PDx4S6eDGxmsbzvUuwvrZvCFbtnYn/XqVuc9JKK4WY6/ofgpMia8fQDaqIInXD5YNhSFMEm+FXYlmKJIb2/qWSdwYP+qhd40+9ddsCE1RMn9bI5cnYJrDf6h9LVfArddXF3V9+lR5iJGpjBTBqc6PKdvGbi5/+OlwAhswQIYwpjjN7SaX05wjllwtyFmSByBWbAQs4e3u5Z/ftxhJcsyxlHke3X7ttwcBg+BdS3ADDRpw5Qp8L75szvf8NkEgqc/8E1qBAhMIY7cttO3ZOFigX8teqmLXu+liLFv1J1vCDBOF/aS53SXsBTivaM/N79SRAmQFyzg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NMKGbhZqfoAnNrcSRk3Zl/OJtWgVZeCBbwvGYZiox+A=;
- b=lRRfKiw1Gn71iF4uzy28Z7O/wfyH2k2jC7kKjfalQSl1FqUg4YS00hnuAfR4Vcs0lkeNtJmfAD+su47OruKwEJLK91F4CKmDG4qrmKiYHsVAWJahjeJ9SfgU/7xn3WUvEzAI/sU/goWX2180iaMyy7s6WvRhDU/EuXhBRhmMgOy7tbR7XVMbRHlJLRM61reP0HrYkpKQjpZjbaejuUwQBr7CAEBO1QGgnC6/ErDN1cic76dGn9NM/AB5jIClk5GKYh1blo7ePTpNl4MqOYzMpbGOcDR+ILs1fWVDy1QtAV89pGjkkERvRel1hociyrlVv24wrgKcT24bidd5MBY89g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NMKGbhZqfoAnNrcSRk3Zl/OJtWgVZeCBbwvGYZiox+A=;
- b=G7Yl3ZWu7SUw4lSovoG8Ul9Pf4M5xrbQX1fRmXkcrRXymZ0gbSCKKpyJRMfBbDXIrNup9wRKn6wB6JIu/Wwd0tdgn9ZWm3S+yRvYUVVyWKFosCsl7ioRLZrNkrmVCXEhs7YHVg50M2Z8gMWyoyCpk0k8CSofBxrXvmaSFvUU0KQ=
-Received: from DM6PR06CA0017.namprd06.prod.outlook.com (2603:10b6:5:120::30)
- by SN7PR12MB7909.namprd12.prod.outlook.com (2603:10b6:806:340::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.13; Fri, 20 Jan
- 2023 01:25:17 +0000
-Received: from DM6NAM11FT093.eop-nam11.prod.protection.outlook.com
- (2603:10b6:5:120:cafe::f0) by DM6PR06CA0017.outlook.office365.com
- (2603:10b6:5:120::30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.25 via Frontend
- Transport; Fri, 20 Jan 2023 01:25:16 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- DM6NAM11FT093.mail.protection.outlook.com (10.13.172.235) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.6023.16 via Frontend Transport; Fri, 20 Jan 2023 01:25:16 +0000
-Received: from mstrawbr-Standard-PC-Q35-ICH9-2009.amd.com (10.180.168.240) by
- SATLEXMB04.amd.com (10.181.40.145) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.34; Thu, 19 Jan 2023 19:25:15 -0600
-From:   Michael Strawbridge <michael.strawbridge@amd.com>
-To:     <git@vger.kernel.org>
-CC:     <michael.strawbridge@amd.com>
-Subject: [PATCH v9 0/2] send-email: expose header information to git-send-email's sendemail-validate hook
-Date:   Thu, 19 Jan 2023 20:24:57 -0500
-Message-ID: <20230120012459.920932-1-michael.strawbridge@amd.com>
-X-Mailer: git-send-email 2.34.1
+        with ESMTP id S229456AbjATBq6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 20:46:58 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDF319EE26
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 17:46:53 -0800 (PST)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id D17035A58A;
+        Fri, 20 Jan 2023 01:46:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1674179212;
+        bh=inOyK5RtDnu4JOkZ+2DokeawTllQoO/46go43xMpQws=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=wWrtAnj9EWwIS2Ldq1iRBnjH8oCiv/690Goa6kigKHGunch4vIKLh2xpW8t/BSwvw
+         NnHHeBTqis/efodtZGJedOyFnEigDYMksvHKBu07FIB+SklUmD9YmSXKKME+ddgaAM
+         KPrq3/c+W5DP8Pn8TOwnKiXBw3DDzXhX/TmVblcXgkIZ0OC3XZDSC7vCTnQEv0XH+X
+         JZgKS1h9rpUkYDqgDGRi3LPXprYh9UqHpQ7ZA++CtzT/BNlJEzTlmXBatDEDnghXSz
+         ruTbdhvC3VrZxI5e5HrIIVRsEKrgDIJDMLYEWJKNSimpRLCdhoiT4CVRBmRUOG3nVG
+         xRYFheh5DGhok79Aiyyx6UiBFI+vC+gsz75DhplSsNL4eF6rWIyBWdC4p3uiMIxPdv
+         Pvk4e34Aqez3sILnPo0Qze7mPalexxl4l7O0QwH9K7oeWkpaj449O3HZjAIQLyEmOZ
+         QAz4IcwimKAs/97fUfGqo7kdc5fFHrcPgmvVu3eoRDxoVnGlV/6
+Date:   Fri, 20 Jan 2023 01:46:51 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jack Adrian Zappa <adrianh.bsc@gmail.com>
+Cc:     git-mailing-list <git@vger.kernel.org>
+Subject: Re: Redirect isn't working:
+Message-ID: <Y8nyi2QxQN0+kOOk@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jack Adrian Zappa <adrianh.bsc@gmail.com>,
+        git-mailing-list <git@vger.kernel.org>
+References: <CAKepmaibtbRsKqmiZEtDNoLHWr=JyZ7Fhang4dnmw5ROGmBQTQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6NAM11FT093:EE_|SN7PR12MB7909:EE_
-X-MS-Office365-Filtering-Correlation-Id: 27010d1d-f38a-4435-0982-08dafa852fd2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Ilq9stSczQ7NOzWUL8ZMfPRSYxFhHqcG+I4mixaKKLDV+6uaOIh9QPEcelEYb2l4Evxijyy/YYi7F0DdPXHJiUXHiT9i3JBe8JreMms2h/AyPwWrzcAd5h/GcgUY4eHFDzgwOpza8eMYie/M2vypPzI3hIfK7RnWt7TSd6vvfBhxvDKtjgu7dVfS6QSEpjJmz3NGpTaAGxZ46vh1iNMq4rrE0U/cyGpFxZZPXmq8HpsjcgnMQ9RF9UPEQ0WUl7aS1+P+Cp4pQxven2TxrpHAybU6sF0HUDaIJ5P4gLj17xOkGFwB9/XxhZM6XwEZO/G+pB8Cq3lP/SeLIr4R+o7/8mj3aKLoi5yV5ObqB+Sxx6vE+xFEfEkfWNTHSlTos1KtUlyoC4K+euMKoBiar7dB03gZLn6u/n++hndgOtykWpKrPgTiTC+aOw4TDVEP/921qomCobaTvliUhf+CfslukSTnfrOnuodSo33yFU285615qIgXii+kEyV/hiAm9E/gDN3UGzK6hcY1a6Muwd/Mtc3gRN69m0jYqh1S2VlQHPCcOCzs4S16+s71CAvuJ/34ck9MUTee9j4u1FpijOPHjI1jOBcF0aHV61KSehtiZXvnFzaBMv4G1rVW0qduDb3zrAe0M5IwPedlQIE/K4Gohp4hKJ/famEy3A/1DEMxVTY=
-X-Forefront-Antispam-Report: CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:SATLEXMB04.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230022)(4636009)(451199015)(36840700001)(46966006)(83380400001)(36860700001)(86362001)(8676002)(66574015)(6916009)(4326008)(70586007)(82310400005)(15650500001)(5660300002)(4744005)(2906002)(47076005)(426003)(26005)(8936002)(498600001)(1076003)(16526019)(2616005)(336012)(6666004)(81166007)(7696005)(356005)(44832011)(70206006)(186003)(36756003)(36900700001);DIR:OUT;SFP:1101;
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jan 2023 01:25:16.4516
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 27010d1d-f38a-4435-0982-08dafa852fd2
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DM6NAM11FT093.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7909
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="M6/eWjr6v/8K+K4T"
+Content-Disposition: inline
+In-Reply-To: <CAKepmaibtbRsKqmiZEtDNoLHWr=JyZ7Fhang4dnmw5ROGmBQTQ@mail.gmail.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks to Ævar for an idea to simplify these patches further.
 
-Michael Strawbridge (2):
-  send-email: refactor header generation functions
-  send-email: expose header information to git-send-email's
-    sendemail-validate hook
+--M6/eWjr6v/8K+K4T
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- Documentation/githooks.txt | 27 +++++++++--
- git-send-email.perl        | 95 +++++++++++++++++++++++---------------
- t/t9001-send-email.sh      | 27 ++++++++++-
- 3 files changed, 106 insertions(+), 43 deletions(-)
+On 2023-01-19 at 18:06:17, Jack Adrian Zappa wrote:
+> Here is the filled out form for submitting a bug report:
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>=20
+>   At the command line, I typed the following command:
+>=20
+>   $ git diff --no-index --word-diff --color=3Dalways <(od -An -t x1
+> -w10000000000 file1.txt) <(od -An -t x1 -w10000000000 file2.txt)
+>=20
+> What did you expect to happen? (Expected behavior)
+>=20
+>   I expected to see the diff of the two files.
+>=20
+> What happened instead? (Actual behavior)
+>=20
+>   Instead I saw this:
+>=20
+>   error: Could not access '/proc/1961/fd/63'
+>=20
+> What's different between what you expected and what actually happened?
+>=20
+>   The difference is that I would get the difference between the two
+> files as opposed to a critical failure message.
 
--- 
-2.34.1
+Thanks for the report.  This has come up before (and I attempted a
+patch), but the ultimate problem here is that the /proc/PID/fd/* files
+are symlinks on Linux, and instead of dereferencing symlinks, Git tries
+to read them and print where they point to.  That doesn't work in this
+case because the symlinks are symlinks to anonymous pipes, which can't
+be resolved.
 
+On other systems, the behaviour may be different because those files may
+be represented differently.
+
+My patch attempted to solve this by simply opening the contents instead
+of stat'ing them as normal, but I think we found some edge cases and it
+didn't get finished.  Note that this behaviour is what plain diff does
+because it doesn't handle symlinks at all.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--M6/eWjr6v/8K+K4T
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY8nyiwAKCRB8DEliiIei
+gSvAAP0RjFmbhDWL6gOufX0FKWmyTxC0LsAWsqEG83I2w9c2JQEAuKlCr0u5OwB0
+mAFMEii0q+wxxOEeFqp00xPtUn/uygo=
+=r6x6
+-----END PGP SIGNATURE-----
+
+--M6/eWjr6v/8K+K4T--
