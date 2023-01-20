@@ -2,352 +2,328 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43115C25B4E
-	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 14:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EB90C05027
+	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 15:08:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231165AbjATO44 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 09:56:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33618 "EHLO
+        id S231251AbjATPIN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 10:08:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230021AbjATO4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2023 09:56:55 -0500
-Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF43D45F50
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 06:56:53 -0800 (PST)
-Received: by mail-vs1-xe2f.google.com with SMTP id k4so5914887vsc.4
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 06:56:53 -0800 (PST)
+        with ESMTP id S229749AbjATPIK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2023 10:08:10 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14795F394
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 07:08:05 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id y11so7025504edd.6
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 07:08:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6qQWtHKKgQk307wOu9WZo8XuyoQJ/RDnRouiLAWqsYw=;
-        b=fOUeKAHR+Jj+gvuuiIHlKBXU1qsupNGir6lJbELBGaRr9vUb1dwNEvKHX2YMgbsh/K
-         6PmTOdLjMSF3AyyyZXymMVEh9IHkx5jY44g0+sWtEUqKgZF4e3soDkUhBf+2ia5sS0sN
-         gZig8Vujjzc6fatPdujADA2u2pJrN45S4M4IqDPPDlKKHMkOusgF/1aT5Cx6wVSxb//s
-         Tr48hPLYFz0VoLQ2/F3FFJnmpSsWuNZgnUnLP6z4zeLjegXJqEoIHkG3vU3So0LcPUBz
-         rJHLaFQ5rW+We69l1t7VSL/t/rRXmkPN+GNmZ77CbXIuNWIme3bX9gh+pTbG2YDis3i4
-         l7NA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pltJQ3TvEfTOhVnIWFiX61svpvW0QtANBN1RPSPcanc=;
+        b=SXUxLR5O0Uy6kTC4e8MPUj4vE9BnCYMlcvwJFBKcRkm+6D6EYrWLNA+OtBsB0LfWnU
+         0gLH6M7qJ4YCoRQ7rtmiGaz+yX+NUcbro3SYus8NoYOggjAcbU6KfJbDptIkGDZV163B
+         GukDxWkYQKfAFnU2/XqjWC7DxSnHOK0BkOco9O/Ua7iM96V5SOAPmnMOXhgecg+C/Y+k
+         Rb3izwFIScBWlf7UINHcIP6PuWu99ge+Qct7E9p9U+eT9BJ/MjP6lIgIfbr9WRbzaoX6
+         z0FpXCs1jKVu0GN8b6L8Mml6Hb32oTyMOxUqNlzJkxmx5CgEm+8AkFnTNNQT5mKcKfRT
+         UU8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6qQWtHKKgQk307wOu9WZo8XuyoQJ/RDnRouiLAWqsYw=;
-        b=r0ZOzoYvsWX2cLeo866oG8dp4HzJgqjob7xrdHS8Vpq2RhQq2hFreXg1opTncly4FH
-         GE7VkyEsGnWL7ctBetG2nKuD+0XWyidfPhJofVm5PZ9ujxQS/NNidOmF5R9X3bYY78Vm
-         qjWXjyiYWXsWojBBDjkyvjzriQYHnV25kiMl2hxMKiF3W7dWjOype7ToLf/Hs41ReZc2
-         b5RcbzsPF+Ki34hPT4LeadgS9rUF4279m1Um7a+vt/nq895A7QumraelokEbQSgwtLXz
-         EsIYUFGvkBStj4LaUnFX4A8+/QcQgZNF/vh+CA76vc2hCSnba1/QYxxe94rmMesr9tPr
-         0Hbw==
-X-Gm-Message-State: AFqh2kqDtHxToakPDWNo6c/AU4/IRPKZYUL5sFjDWUAWc8slSM61AMxR
-        xvjzcBzaopXU0FbJiw9ZNOqo
-X-Google-Smtp-Source: AMrXdXs02maVuRdDxVpIrQvc/6bWjjVSehDdJCUS00gWYUcBoLefH/aYlAUfx7qNeW1Rx28HRFCkUg==
-X-Received: by 2002:a67:fc06:0:b0:3b1:3a0b:50b0 with SMTP id o6-20020a67fc06000000b003b13a0b50b0mr8657465vsq.24.1674226612665;
-        Fri, 20 Jan 2023 06:56:52 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:ede7:6bce:9af7:733c? ([2600:1700:e72:80a0:ede7:6bce:9af7:733c])
-        by smtp.gmail.com with ESMTPSA id i7-20020a05620a248700b006ff8a122a1asm10339478qkn.78.2023.01.20.06.56.51
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pltJQ3TvEfTOhVnIWFiX61svpvW0QtANBN1RPSPcanc=;
+        b=XGPoIymvCW2TfyD6cNqG7xMQSEiQSSHRGNeN2YCFYzLB+vCnREBCKfvEwWKHZm1hvj
+         aZTUus9DevT6DpeFw4zojav+46izZFeW5pScjZemBDkoGAcAJjBpuUMYcgC0qfzyR6Oc
+         r07Ke7lyXv0j9ADJSZZGcMlIg0QKc9j6fR/2O/BMIR+JkNMiQGb5ZhBb2EeX9C56t/r7
+         ANlcDf7LIzPVroz4nEnKbXdWkuR6lRUqrx5AktPJ2x1eSoLrTnrT8gjDqK9x5uo5KXOL
+         yH4LEk2qWRPWfEs75h7RjoTo7pAwwVvyuRj9rrwnvIa7Bb7MmM5HhJC1umY1uGgPO3wv
+         mh1g==
+X-Gm-Message-State: AFqh2kquSu9zEO5EVMcl+6TdKqt8QZ2KpiIzTfZFnkRm3wLT8Hha2jeo
+        HkxcsbwIOy1KoWW9xaNPHScMNhbhxk8=
+X-Google-Smtp-Source: AMrXdXuWvYQ8r7Z8Cr0xG5neYvHKOZnevXRagmuBpWUXgXyeN60+4CZisVt+7rovDO7+37UqgiNCqw==
+X-Received: by 2002:aa7:cacd:0:b0:49e:20f9:4ade with SMTP id l13-20020aa7cacd000000b0049e20f94ademr14986062edt.10.1674227283775;
+        Fri, 20 Jan 2023 07:08:03 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id b20-20020aa7c6d4000000b004610899742asm17424583eds.13.2023.01.20.07.08.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Jan 2023 06:56:52 -0800 (PST)
-Message-ID: <1e787073-a1f6-58cd-ec5a-f99f2879624f@github.com>
-Date:   Fri, 20 Jan 2023 09:56:50 -0500
+        Fri, 20 Jan 2023 07:08:03 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <8f24fc3c-c30f-dc70-5a94-5ee4ed3de102@dunelm.org.uk>
+Date:   Fri, 20 Jan 2023 15:08:02 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH 4/8] bundle-uri: download in creationToken order
-To:     Victoria Dye <vdye@github.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com, avarab@gmail.com,
-        steadmon@google.com, chooglen@google.com
-References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
- <57c0174d3752fb61a05e0653de9d3057616ed16a.1673037405.git.gitgitgadget@gmail.com>
- <ede340d1-bce4-0c1d-7afb-4874a67d1803@github.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4] checkout/switch: disallow checking out same branch in
+ multiple worktrees
 Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ede340d1-bce4-0c1d-7afb-4874a67d1803@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        git@vger.kernel.org
+Cc:     pclouds@gmail.com, gitster@pobox.com,
+        Jinwook Jeong <vustthat@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+References: <20230119055325.1013-1-carenas@gmail.com>
+ <20230120113553.24655-1-carenas@gmail.com>
+In-Reply-To: <20230120113553.24655-1-carenas@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/19/2023 1:32 PM, Victoria Dye wrote:> Derrick Stolee via GitGitGadget wrote:
->> +static int fetch_bundles_by_token(struct repository *r,
->> +				  struct bundle_list *list)
->> +{
->> +	int cur;
->> +	int pop_or_push = 0;
->> +	struct bundle_list_context ctx = {
->> +		.r = r,
->> +		.list = list,
->> +		.mode = list->mode,
->> +	};
->> +	struct sorted_bundle_list sorted = {
->> +		.alloc = hashmap_get_size(&list->bundles),
->> +	};
->> +
->> +	ALLOC_ARRAY(sorted.items, sorted.alloc);
->> +
->> +	for_all_bundles_in_list(list, insert_bundle, &sorted);
->> +
->> +	QSORT(sorted.items, sorted.nr, compare_creation_token);
->
-> So, at this point, 'sorted' is ordered by *decreasing* creation token? With
-> the loop below being somewhat complex, it would be nice to have a comment
-> mention that explicitly so readers have a clear understanding of the
-> "initial state" before entering the loop.
+Hi Carlo
 
-That's a good point, but also in my local version I have the following line:
+On 20/01/2023 11:35, Carlo Marcelo Arenas Belón wrote:
+> Commands `git switch -C` and `git checkout -B` neglect to check whether
+> the provided branch is already checked out in some other worktree, as
+> shown by the following:
+> 
+>    $ git worktree list
+>    .../foo    beefb00f [main]
+>    $ git worktree add ../other
+>    Preparing worktree (new branch 'other')
+>    HEAD is now at beefb00f first
+>    $ cd ../other
+>    $ git switch -C main
+>    Switched to and reset branch 'main'
+>    $ git worktree list
+>    .../foo    beefb00f [main]
+>    .../other  beefb00f [main]
+> 
+> Fix this problem by teaching `git switch -C` and `git checkout -B` to
+> check whether the branch in question is already checked out elsewhere.
+> 
+> Unlike what it is done for `git switch` and `git checkout`, that have
+> an historical exception to ignore other worktrees if the branch to
+> check is the current one (as required when called as part of other
+> tools), the logic implemented is more strict and will require the user
+> to invoke the command with `--ignore-other-worktrees` to explicitly
+> indicate they want the risky behaviour.
+> 
+> This matches the current behaviour of `git branch -f` and is safer; for
+> more details see the tests in t2400.
 
-	QSORT(bundles.items, bundles.nr, compare_creation_token_decreasing);
+As I said before, it would be much easier for everyone else to 
+understand the changes if you wrote out what they were rather than 
+saying "look at the tests". I do appreciate the improved test 
+descriptions though - thanks for that.
 
-The comparison function was renamed based on Junio's feedback. After making
-that change, this line is more self-documenting. Do you still think that it
-needs a clarification comment if this rename occurs?
+> Reported-by: Jinwook Jeong <vustthat@gmail.com>
+> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> Helped-by: Rubén Justo <rjusto@gmail.com>
+> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+> Changes since v3
+> * Code and Tests improvements as suggested by Phillip
+> * Disable unreliable test that triggers a known bug
+> 
+> Changes since v2
+> * A leak free implementation
+> * More details in commit as suggested by Junio
+> 
+> Changes since v1
+> * A much better commit message
+> * Changes to the tests as suggested by Eric
+> * Changes to the logic as suggested by Rubén
+> 
+> 
+>   builtin/checkout.c      | 32 ++++++++++++++++++++++++--------
+>   t/t2400-worktree-add.sh | 34 +++++++++++++++++++++++++++-------
+>   2 files changed, 51 insertions(+), 15 deletions(-)
+> 
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 3fa29a08ee..0688652f99 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1474,7 +1474,8 @@ static void die_if_some_operation_in_progress(void)
+>   }
+>   
+>   static int checkout_branch(struct checkout_opts *opts,
+> -			   struct branch_info *new_branch_info)
+> +			   struct branch_info *new_branch_info,
+> +			   char *check_branch_path)
+>   {
+>   	if (opts->pathspec.nr)
+>   		die(_("paths cannot be used with switching branches"));
+> @@ -1533,13 +1534,13 @@ static int checkout_branch(struct checkout_opts *opts,
+>   	if (!opts->can_switch_when_in_progress)
+>   		die_if_some_operation_in_progress();
+>   
+> -	if (new_branch_info->path && !opts->force_detach && !opts->new_branch &&
+> -	    !opts->ignore_other_worktrees) {
+> +	if (!opts->ignore_other_worktrees && !opts->force_detach &&
+> +	    check_branch_path && ref_exists(check_branch_path)) {
 
->> +	/*
->> +	 * Use a stack-based approach to download the bundles and attempt
->> +	 * to unbundle them in decreasing order by creation token. If we
->> +	 * fail to unbundle (after a successful download) then move to the
->> +	 * next non-downloaded bundle (push to the stack) and attempt
->> +	 * downloading. Once we succeed in applying a bundle, move to the
->> +	 * previous unapplied bundle (pop the stack) and attempt to unbundle
->> +	 * it again.
->> +	 *
->> +	 * In the case of a fresh clone, we will likely download all of the
->> +	 * bundles before successfully unbundling the oldest one, then the
->> +	 * rest of the bundles unbundle successfully in increasing order
->> +	 * of creationToken.
->> +	 *
->> +	 * If there are existing objects, then this process may terminate
->> +	 * early when all required commits from "new" bundles exist in the
->> +	 * repo's object store.
->> +	 */
->> +	cur = 0;
->> +	while (cur >= 0 && cur < sorted.nr) {
->> +		struct remote_bundle_info *bundle = sorted.items[cur];
->> +		if (!bundle->file) {
->> +			/* Not downloaded yet. Try downloading. */
->> +			if (download_bundle_to_file(bundle, &ctx)) {
->> +				/* Failure. Push to the stack. */
->> +				pop_or_push = 1;
->> +				goto stack_operation;
->
-> Personally, I find the use of "stack" terminology more confusing than not.
-> 'sorted' isn't really a stack, it's a list with fixed contents being
-> traversed stepwise with 'cur'. For example, 'pop_or_push' being renamed to
-> 'move_direction' or 'step' something along those lines might more clearly
-> indicate what's actually happening with 'cur' & 'sorted'.
+I think check_branch_path is NULL if opts->ignore_other_worktrees is set 
+so we could maybe lose "!opts->ignore_other_worktrees" here (or possibly 
+below where you set check_branch_path).
 
-s/pop_or_push/move_direction/ makes a lot of sense.
+>   		int flag;
+>   		char *head_ref = resolve_refdup("HEAD", 0, NULL, &flag);
+> -		if (head_ref &&
+> -		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, new_branch_info->path)))
+> -			die_if_checked_out(new_branch_info->path, 1);
+> +		if (opts->new_branch_force || (head_ref &&
+> +		    (!(flag & REF_ISSYMREF) || strcmp(head_ref, check_branch_path))))
+> +			die_if_checked_out(check_branch_path, 1);
 
-I'll think about describing the strategy differently to avoid the "stack"
-language. Mentally, I'm constructing a stack of "downloaded but unable to
-unbundle bundles", but they aren't actually arranged that way in any
-explicit structure. Instead, they are just the bundles in the list that
-have a file but haven't been unbundled.
+I don't think it is worth a re-roll but the reformatting here is 
+unfortunate. If you add the new condition at the end it is clearer what 
+is being changed.
 
->> +			}
->> +
->> +			/* We expect bundles when using creationTokens. */
->> +			if (!is_bundle(bundle->file, 1)) {
->> +				warning(_("file downloaded from '%s' is not a bundle"),
->> +					bundle->uri);
->> +				break;
->> +			}
->> +		}
->> +
->> +		if (bundle->file && !bundle->unbundled) {
->> +			/*
->> +			 * This was downloaded, but not successfully
->> +			 * unbundled. Try unbundling again.
->> +			 */
->> +			if (unbundle_from_file(ctx.r, bundle->file)) {
->> +				/* Failed to unbundle. Push to stack. */
->> +				pop_or_push = 1;
->> +			} else {
->> +				/* Succeeded in unbundle. Pop stack. */
->> +				pop_or_push = -1;
->> +			}
->> +		}
->> +
->> +		/*
->> +		 * Else case: downloaded and unbundled successfully.
->> +		 * Skip this by moving in the same direction as the
->> +		 * previous step.
->> +		 */
->> +
->> +stack_operation:
->> +		/* Move in the specified direction and repeat. */
->> +		cur += pop_or_push;
->> +	}
->
-> After reading through this loop, I generally understood *what* its doing,
-> but didn't really follow *why* the download & unbundling is done like this.
+		if ((head_ref &&
+		    (!(flag & REF_IS_YMREF) || strcmp(head_ref, check_branch_path))) ||
+		    opts->new_branch_force)
 
-The commit message should be updated to point to refer to the previously-
-added test setup in t5558:
+preserves the original code structure so one can see we've added a new 
+condition and done s/new_branch_info->path/check_branch_path/
 
-# To get interesting tests for bundle lists, we need to construct a
-# somewhat-interesting commit history.
-#
-# ---------------- bundle-4
-#
-#       4
-#      / \
-# ----|---|------- bundle-3
-#     |   |
-#     |   3
-#     |   |
-# ----|---|------- bundle-2
-#     |   |
-#     2   |
-#     |   |
-# ----|---|------- bundle-1
-#      \ /
-#       1
-#       |
-# (previous commits)
+>   		free(head_ref);
+>   	}
+>   
+> @@ -1627,7 +1628,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>   			 const char * const usagestr[],
+>   			 struct branch_info *new_branch_info)
+>   {
+> +	int ret;
+>   	int parseopt_flags = 0;
+> +	char *check_branch_path = NULL;
+>   
+>   	opts->overwrite_ignore = 1;
+>   	opts->prefix = prefix;
+> @@ -1717,6 +1720,13 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>   		opts->new_branch = argv0 + 1;
+>   	}
+>   
+> +	if (opts->new_branch && !opts->ignore_other_worktrees) {
+> +		struct strbuf buf = STRBUF_INIT;
+> +
+> +		strbuf_branchname(&buf, opts->new_branch, INTERPRET_BRANCH_LOCAL);
+> +		strbuf_splice(&buf, 0, 0, "refs/heads/", 11);
+> +		check_branch_path = strbuf_detach(&buf, NULL);
+> +	}
 
-And then this can be used to motivate the algorithm. Suppose we have
-already downloaded commit 1 through a previous fetch. We try to download
-bundle-4 first, but it can't apply because it requires commits that are
-in bundle-3 _and_ bundle-2, but the client doesn't know which bundles
-contain those commits. Downloading bundle-3 successfully unbundles, so a
-naive algorithm would think we are "done" and expect to unbundle bundle-4.
-However, that unbundling fails, so we go deeper into the list to download
-bundle-2. That succeeds, and then retrying bundle-4 succeeds.
+This block will run whenever -b/-B is given which is good
 
-> I needed to refer back to the design doc
-> ('Documentation/technical/bundle-uri.txt') to understand some basic
-> assumptions about bundles:
->
-> - A new bundle's creation token should always be strictly greater than the
->   previous newest bundle's creation token. I don't see any special handling
->   for equal creation tokens, so my assumption is that the sorting of the
->   list arbitrarily assigns one to be "greater" and it's dealt with that way.
+>   	/*
+>   	 * Extract branch name from command line arguments, so
+>   	 * all that is left is pathspecs.
+> @@ -1741,6 +1751,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>   					     new_branch_info, opts, &rev);
+>   		argv += n;
+>   		argc -= n;
+> +
+> +		if (!opts->ignore_other_worktrees && !check_branch_path && new_branch_info->path)
+> +			check_branch_path = xstrdup(new_branch_info->path);
 
-Yes, the bundle provider should not have equal values unless the bundles are
-truly independent. That could be clarified in that doc.
+I'm a bit confused what this is doing.
 
-> - The bundle with the lowest creation token should always be unbundleable,
->   since it contains all objects in an initial clone.
+>   	} else if (!opts->accept_ref && opts->from_treeish) {
+>   		struct object_id rev;
+>   
+> @@ -1817,9 +1830,12 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>   	}
+>   
+>   	if (opts->patch_mode || opts->pathspec.nr)
+> -		return checkout_paths(opts, new_branch_info);
+> +		ret = checkout_paths(opts, new_branch_info);
+>   	else
+> -		return checkout_branch(opts, new_branch_info);
+> +		ret = checkout_branch(opts, new_branch_info, check_branch_path);
+> +
+> +	free(check_branch_path);
+> +	return ret;
 
-Yes, at least it should not have any required commits.
+This is clearer now - thanks
 
-> I do still have some questions, though:
->
-> - Why would 'unbundle_from_file()' fail? From context clues, I'm guessing it
->   fails if it has some unreachable objects (as in an incremental bundle), or
->   if it's corrupted somehow.
+>   }
+>   
+>   int cmd_checkout(int argc, const char **argv, const char *prefix)
+> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+> index d587e0b20d..7ab7e87440 100755
+> --- a/t/t2400-worktree-add.sh
+> +++ b/t/t2400-worktree-add.sh
+> @@ -118,14 +118,17 @@ test_expect_success '"add" worktree creating new branch' '
+>   	)
+>   '
+>   
+> -test_expect_success 'die the same branch is already checked out' '
+> +test_expect_success 'die if the same branch is already checked out' '
+>   	(
+>   		cd here &&
+> -		test_must_fail git checkout newmain
+> +		test_must_fail git checkout newmain &&
+> +		test_must_fail git checkout -B newmain &&
+> +		test_must_fail git switch newmain &&
+> +		test_must_fail git switch -C newmain
+>   	)
+>   '
+>   
+> -test_expect_success SYMLINKS 'die the same branch is already checked out (symlink)' '
+> +test_expect_success SYMLINKS 'die if the same branch is already checked out (symlink)' '
+>   	head=$(git -C there rev-parse --git-path HEAD) &&
+>   	ref=$(git -C there symbolic-ref HEAD) &&
+>   	rm "$head" &&
+> @@ -133,17 +136,34 @@ test_expect_success SYMLINKS 'die the same branch is already checked out (symlin
+>   	test_must_fail git -C here checkout newmain
+>   '
+>   
+> -test_expect_success 'not die the same branch is already checked out' '
+> +test_expect_success 'allow creating multiple worktrees for same branch with force' '
+> +	git worktree add --force anothernewmain newmain
+> +'
+> +
+> +test_expect_success 'allow checkout/reset from the conflicted branch' '
 
-You are correct. We assume that the data is well-formed and so the problem
-must be due to required commits not already present in the local object store.
+I'm not sure what "the conflicted branch" means (it reminds we of merge 
+conflicts). Is this just testing that "checkout -b/B <branch> 
+<start-point>" works?
 
-> - Why would 'download_bundle_to_file()' to fail? Unlike
->   'unbundle_from_file()', it looks like that represents an unexpected error.
+>   	(
+>   		cd here &&
+> -		git worktree add --force anothernewmain newmain
+> +		git checkout -b conflictedmain newmain &&
+> +		git checkout -B conflictedmain newmain &&
+> +		git switch -C conflictedmain newmain
+> +	)
+> +'
+> +
+> +test_expect_success 'and not die on re-checking out current branch even if conflicted' '
 
-Yes, that could fail for network issues such as a server error or other
-network failure. In such cases, the client should expect that we will not
-be able to download that bundle for the process's lifetime. We may be able
-to opportunistically download other bundles, but we will rely on the Git
-protocol to get the objects if the bundles fail.
+I think 'allow re-checking out ...' would be clearer, again I'm not sure 
+what's conflicted here.
 
-These failure conditions are not tested deeply (there are some tests from
-earlier series that test the behavior, but there is room for improvement).
+> +	(
+> +		cd there &&
+> +		git checkout newmain &&
+> +		git switch newmain
+>   	)
+>   '
+>   
+> -test_expect_success 'not die on re-checking out current branch' '
+> +test_expect_failure 'unless using force without --ignore-other-worktrees' '
 
-> Also - it seems like one of the assumptions here is that, if a bundle can't
-> be downloaded & unbundled, no bundle with a higher creation token can be
-> successfully unbundled ('download_bundle_to_file()' sets 'pop_or_push' to
-> '1', which will cause the loop to ignore all higher-token bundles and return
-> a nonzero value from the function).
->
-> I don't think that assumption is necessarily true, though. Suppose you have
-> a "base" bundle 100 and incremental bundles 101 and 102. 101 has all objects
-> from a new branch A, and 102 has all objects from a newer branch B (not
-> based on any objects in A). In this case, 102 could be unbundled even if 101
-> is corrupted/can't be downloaded, but we'd run into issues if we store 102
-> as the "latest unbundled creation token" (because it implies that 101 was
-> unbundled).
+This test passes for me - what's the reason for changing from 
+test_expect_success to test_expect_failure?
 
-You are correct. bundle-3 can be unbundled even if bundle-2 fails in the
-test example above.
+Thanks for working on this
 
-> Is there any benefit to trying to unbundle those higher bundles *without*
-> advancing the "latest creation token"? E.g. in my example, unbundle 102 but
-> store '100' as the latest creation token?
+Phillip
 
-I will need to think more about this.
-
-Generally, most repositories that care about this will not have independent
-bundles because between every bundle creation step the default branch will
-advance. (Of course, exceptions can still occur, such as over weekends.)
-Thus, the latest bundle will have a required commit that only exists in the
-previous bundle. This algorithm and its error conditions are then looking
-for ways to recover when that is not the case.
-
-When a bundle fails to download, my gut feeling is that it is unlikely that
-it was completely independent of a bundle with higher creationToken. However,
-we have already downloaded that bundle and it is a very low cost to attempt
-an unbundling of it.
-
-The tricky part is that we want to avoid downloading _all_ the bundles just
-because one is failing to unbundle. If a failed download would cause the top
-bundle from unbundling, we don't want to go through the whole list of bundles
-even though they unbundle without issue. I'm thinking specifically about the
-incremental fetch case, where we don't want to blow up to a full clone worth
-of downloads.
-
-This deserves a little more attention, so I'll think more on it and get
-back to you.
-
->>  	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
->> -	git -C clone-list-http-2 cat-file --batch-check <oids
->> +	git -C clone-list-http-2 cat-file --batch-check <oids &&
->> +
->> +	for b in 1 2 3 4
->> +	do
->> +		test_bundle_downloaded bundle-$b.bundle trace-clone.txt ||
->> +			return 1
->> +	done
->
-> If I understand correctly, these added conditions would have passed even if
-> they were added when the test was initially created in patch 1, but they're
-> added here to tie them to the implementation of the creationToken heuristic?
-> Seems reasonable.
-
-They probably should have been added in patch 1 to be clear that behavior
-is not changing here.
-
->> +'
->> +
->> +test_expect_success 'clone bundle list (http, creationToken)' '
->
-> This new test has the same name as the one above it - how does it differ
-> from that one? Whatever the difference is, can that be noted somehow in the
-> title or a comment?
-
-The title should change, pointing out that the bundle list is truncated
-and the rest of the clone is being fetched over the Git protocol. It will
-be expanded with fetches later, I think, but it should be better motivated
-in this patch, even if that is so.
-
->> +# Usage: test_bundle_downloaded <bundle-id> <trace-filename>
->> +test_bundle_downloaded () {
->> +	cat >pattern <<-EOF &&
->> +	"event":"child_start".*"argv":\["git-remote-https","$HTTPD_URL/$1.bundle"\]
->> +	EOF
->> +	grep -f pattern "$2"
->> +}
->
-> This function is the same as the one created in 't5558'. Should it be moved
-> to 'lib-bundle.sh' or 'test-lib.sh' to avoid duplicate code?
-
-It's slightly different, but that is just because we are using the advertisement
-and thus we never download a bundle-list and always download .bundle files. That
-is not an important distinction and I expect to replace it with the
-test_remote_https_urls() helper discussed in an earlier response.
-
-Thanks,
--Stolee
+>   	(
+>   		cd there &&
+> -		git checkout newmain
+> +		test_must_fail git checkout -B newmain &&
+> +		test_must_fail git switch -C newmain &&
+> +		git checkout --ignore-other-worktrees -B newmain &&
+> +		git switch --ignore-other-worktrees -C newmain
+>   	)
+>   '
+>   
