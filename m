@@ -2,96 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCC87C05027
-	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 19:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73119C25B50
+	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 19:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229926AbjATTlk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 14:41:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37666 "EHLO
+        id S229911AbjATTtQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 14:49:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjATTlj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2023 14:41:39 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1468E78567
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 11:41:37 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id z3so4772645pfb.2
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 11:41:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QAWcgsmCfqMjEeqZ3B/EqQHLG5xKIsOI9tJR35mNhTE=;
-        b=bJ1KpyJ6wSij7qpAAZ2y+NuaAhFJ6yNl/jKLnysuennPhbdG5T3h/otUQCbHBexK+b
-         S7kpoBD9RKwKxvmcsIFy1DGT/q2lLdJOLT+zVv2SRwRJiGmvkNrcQHG7FWLxgObUqhMl
-         FI0R581Kz6eZNpwhwwrbzE8E4iDwVA3Ue1+AhmIbrIZa+mV1ZrJVY7TVahDRIkE0pm0r
-         +4haNMRPzZLIPbVBFNtdh2uPOlnIY9R0JmEoAXX2fSpJ37HyMP8QIfQwYEdg0voflbaG
-         kB3QCMEs5kov16F4JO4E6j/7YdcbFpby9Xp4oliZDcIgi3HR9SyfcQxKhrrHkIoXfZ1r
-         pbQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QAWcgsmCfqMjEeqZ3B/EqQHLG5xKIsOI9tJR35mNhTE=;
-        b=5SlMmTt9lEWB8Ck1sZlL8LHN6CN3Uu6NxA6bZ3dh8ImSejslqNDu9IIQa5jehei8AC
-         P2tMpYimqnFy0Tl5psQmSP1aHC3BDeT+tZE/ZLCp1sc1EuDoWt0FGnC5EasLQ65wtQh3
-         ZJmkoJAn7ntOA37cOdJe1otC82+3BxB/UG/4R1lNdZfooxX+mBNzl50dPSGlHufFY10A
-         SS9IyCTDht8f5SSqaSTsL8al3rrOxbTfPBo5Cq9OdICvobxx4xx78Ia8idHPmjiH0pES
-         tYdNZYfmfmn54kacaAJTXcZ/cpcG6RzxssBZU5BVPvaHm9KwcJGtTjcptLzX55F2QH9H
-         BLow==
-X-Gm-Message-State: AFqh2koNLIYbEiz6a+FCWxvJDmNn/HeW8BcRW3eKPE0o32fbVzWAMy7d
-        DVYdeq8U73RYmDKMTYnoon4=
-X-Google-Smtp-Source: AMrXdXue26fmMQATig+G6Cx6XwjKohneb1+BjFBCeZpfV7AghqJFEzWBTueYVtG3CSbaBxRJsYyyfw==
-X-Received: by 2002:a05:6a00:438b:b0:588:441:d0d3 with SMTP id bt11-20020a056a00438b00b005880441d0d3mr17098488pfb.23.1674243696402;
-        Fri, 20 Jan 2023 11:41:36 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id u197-20020a6279ce000000b005855d204fd8sm26479782pfc.93.2023.01.20.11.41.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 11:41:35 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH] Makefile: suppress annotated leaks with certain ASan
- options
-References: <b1efe56ab5193d5505ccb9334f7d15e1795c27fb.1674240261.git.me@ttaylorr.com>
-Date:   Fri, 20 Jan 2023 11:41:35 -0800
-In-Reply-To: <b1efe56ab5193d5505ccb9334f7d15e1795c27fb.1674240261.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Fri, 20 Jan 2023 13:46:16 -0500")
-Message-ID: <xmqqsfg5vvrk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S230031AbjATTtN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2023 14:49:13 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FBE690B04
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 11:49:06 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id ADFFBCA124F;
+        Fri, 20 Jan 2023 14:49:05 -0500 (EST)
+Received: from [192.168.4.22] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 6FCFBCC834F;
+        Fri, 20 Jan 2023 14:49:05 -0500 (EST)
+Message-ID: <d9873e9b-6225-169b-4829-92f069b943af@jeffhostetler.com>
+Date:   Fri, 20 Jan 2023 14:48:58 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH v2] fsm-listen-darwin: combine bit operations
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Rose via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>
+References: <pull.1437.git.git.1673990756466.gitgitgadget@gmail.com>
+ <pull.1437.v2.git.git.1673992448371.gitgitgadget@gmail.com>
+ <021ab1ab-b90a-5a24-23c4-44e46d87c476@jeffhostetler.com>
+ <xmqqwn5hw0t5.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+In-Reply-To: <xmqqwn5hw0t5.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: mailmunge 3.10 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
 
-> However, it is possible to use the leak sanitizer without
-> `SANITIZE=leak`. This happens when building with `SANITIZE=address` and
-> enabling the leak sanitizer via the `ASAN_OPTIONS` variable (by
-> including the string "detect_leaks=1").
 
-Yuck.  I cannot tell if this falls into "don't do it then if it
-hurts" or pretty common thing people do that is worth helping.
+On 1/20/23 12:52 PM, Junio C Hamano wrote:
+> Jeff Hostetler <git@jeffhostetler.com> writes:
+> 
+>>>      static int ef_is_dropped(const FSEventStreamEventFlags ef)
+>>>    {
+>>> -	return (ef & kFSEventStreamEventFlagMustScanSubDirs ||
+>>> -		ef & kFSEventStreamEventFlagKernelDropped ||
+>>> -		ef & kFSEventStreamEventFlagUserDropped);
+>>> +	return (ef & (kFSEventStreamEventFlagMustScanSubDirs |
+>>> +		      kFSEventStreamEventFlagKernelDropped |
+>>> +		      kFSEventStreamEventFlagUserDropped));
+>>>    }
+>>
+>> Technically, the returned value is slightly different, but
+>> the only caller is just checking for non-zero, so it doesn't
+>> matter.
+>>
+>> So this is fine.
+> 
+> But is it worth the code churn and reviewer bandwidth?  Don't we
+> have better things to spend our time on?
+> 
+> I would not be surprised if a smart enough compiler used the same
+> transformartion as this patch does manually as an optimization.
+> 
+> Then it matters more which one of the two is more readable by our
+> developers.  And the original matches how we humans would think, I
+> would imagine.  ef might have MustScanSubdirs bit, KernelDropped
+> bit, or UserDropped bit and in these cases we want to say that ef is
+> dropped.  Arguably, the original is more readble, and it would be a
+> good change to adopt if there is an upside, like the updated code
+> resulting in markedly more efficient binary.
+> 
+> So, this might be technically fine, but I am not enthused to see
+> these kind of code churning patches with dubious upside.  An
+> optimization patch should be able to demonstrate its benefit with a
+> solid benchmark, or at least a clear difference in generated code.
+> 
+> In fact.
+> 
+> Compiler explorer godbolt.org tells me that gcc 12 with -O2 compiles
+> the following two functions into identical assembly.  The !! prefix
+> used in the second example is different from the postimage of what
+> Seija posted, but this being a file-scope static function, I would
+> expect the compiler to notice that the actual value would not matter
+> to the callers, only the truth value, does.
+> 
+> 
+> * Input *
+> int one(unsigned int num) {
+>      return ((num & 01) ||
+>              (num & 02) || (num & 04));
+> }
+> 
+> int two(unsigned int num) {
+>      return !!((num) & (01|02|04));
+> }
+> 
+> * Assembly *
+> one(unsigned int):
+>          xor     eax, eax
+>          and     edi, 7
+>          setne   al
+>          ret
+> two(unsigned int):
+>          xor     eax, eax
+>          and     edi, 7
+>          setne   al
+>          ret
 
-> Making it possible to rely on `UNLEAK()` when implicitly using the leak
-> checker via SANITIZE=address builds.
+agreed.  i didn't think the change was really worth the bother
+and churn.  personally, i prefer the conceptual clarity of the
+code the way I wrote it.
 
-But as long as you did all the work, sure, why not ;-).
+and i was wondering if the compiler would generate the same
+result, but didn't take the time (read: was too lazy) to actually
+verify that.
 
-> I found this while playing around with GitHub's ASan-enabled CI builds
-> for our internal fork following a merge with v2.38.3.
->
-> The check-chainlint recipe in t/Makefile started using "git diff" via
-> d00113ec34 (t/Makefile: apply chainlint.pl to existing self-tests,
-> 2022-09-01), which triggered a leak in some of GitHub's custom code. I
-> was surprised when marking the variable with UNLEAK() didn't do the
-> trick, and ended up down this rabbit hole ;-).
+all i was intending to say was that it wasn't a wrong change.
 
-Thanks.  Will queue.
+jeff
