@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D59B5C05027
-	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 22:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ADB2C25B50
+	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 22:09:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229954AbjATWJO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 17:09:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58200 "EHLO
+        id S229963AbjATWJQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 17:09:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbjATWJB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2023 17:09:01 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6363BA5CCB
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 14:08:59 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id q10-20020a1cf30a000000b003db0edfdb74so1546895wmq.1
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 14:08:59 -0800 (PST)
+        with ESMTP id S229915AbjATWJD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2023 17:09:03 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FC8DA19AC
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 14:09:01 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id l8so5076196wms.3
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 14:09:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aJnt4vqCoq8Tp+oulxwG6ozKog0Qc4/RGRUDUNJ3DtY=;
-        b=NZTY2S+UfOS4Iwt2PulyaP3JI3ZezZB1FPK/xoric6u6W97dgcc6YyXUWa7Hlxf+/U
-         B35NYnvP6Cta5ZxuanngmFaz3SZFqQhVoOYSJau0ZfZCPBWOCFT6fbChlY1K+q4sVG9D
-         Z+/449PvKKqFF8HldBLiaPvCuMncwU94AVwdKnjmgxS+D1hxCUmRtGRfrXHKpMbza6SY
-         aFXpb11qSpsQWHiezH/0zqyK4CG6jts/NF1p8KJzuiX8mWCqWGl7P1BfeDqjDBXvqIe5
-         7ilvbH3z7GXPdt7P1qd7TWDSaSBmJEwKfSsfpp/FOVte+6jUW0E6TOGJhxoykC268aQ0
-         UQTA==
+        bh=D8JoO8W1wcgDBqTd5Hya39NGP1gdBhM31YoNnivPdCY=;
+        b=Pg9sybeub1pD0EqbnswBVRv60nYxvsu8EJtVQWuyeOI1gSR7jSTcryRLo3gl0fptwg
+         Ypf9Jp8EMg/6Cd1HH11b/JNDMdVHxXCHAMQKs2rD3Wuq0Mhxn+FQIzR5Su1ABQDcNwXc
+         UJ/vu+tZAPBHKsOsVCEm8cDQ4wSL2PVDvkyTCv5oy7k7zxYMzLNNckWVAIkHzCJ2ChZX
+         0kix/RkwOfJa2rOHLFETQ+ezdzobVz+GiMQC9oBwOAIV1Qag0jsqNq7sfzzMCThsflJ/
+         EDa/AjZ80+lFOXgIDnoZvIaTJ4weNX0wI2UTByrYBdiz71tu8umNcXRvQXI+3Tzbgvin
+         fU1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=aJnt4vqCoq8Tp+oulxwG6ozKog0Qc4/RGRUDUNJ3DtY=;
-        b=o1OJJXKN7Uidh3EmHsJU1WknkVDCsi/UhTiUtDJnM0ZDP/+wNfJyVbzo21EXO0jSK7
-         NurTErW206GN8a6L07itu0EDa94tsCskgQqINtizGMVDFQMui0sk9ZA6JQ+7oWMecETe
-         jGgnws4yAqP+0LftKigDS6qUU8I3a/KtLGYdeSPgrqUTL7SXegO/bzeSsHwmgBPuFpb7
-         lwZHGDcFh+RqNDgm7xoz1zWyd797+yruRoCC3c2U1zDmlJyox9Bthac1aqZYpyjAZUpT
-         9fTtjU8OJFG7ZAwo+U1Gbt9qNkw9EGTiepqZ2Bprr0h5ag0Vvi+qjfPVtgngnxOZCGbd
-         1mjg==
-X-Gm-Message-State: AFqh2kohD0DZZWgByQOEI8rshAFbL7CY+0JDoDE40hOvEhZbjkrIaNcL
-        Z5+C3P1MEuEP7s3PKsnanftBtdgwLTQ=
-X-Google-Smtp-Source: AMrXdXsjA+UEC0EnWGjwGP6hmkQQ7O6qBRO2mLwG7wgFrGhCNCHdYbCcL11Duzx2DlNJLNuH0Tp/+A==
-X-Received: by 2002:a05:600c:b85:b0:3cf:ae53:9193 with SMTP id fl5-20020a05600c0b8500b003cfae539193mr15591170wmb.39.1674252537703;
-        Fri, 20 Jan 2023 14:08:57 -0800 (PST)
+        bh=D8JoO8W1wcgDBqTd5Hya39NGP1gdBhM31YoNnivPdCY=;
+        b=z3ZnDdpipHtGdZ3mXtcdEvh2TyNMDK5YeLIzyH5gnKRg8lxnJOXE8CILuHwtHjD/vR
+         ipfb1AR8qKGVO52DnlD1jISvK7dmQ5l7/ECTPW6lBLAigUIhLos0Gu7BXyp/Pz8RdbD2
+         Sdv2UVZ1B5p4QvuPXhb019efkriJ/W20Hc3dY+ZfEZDD7ipD88Y3RZPY0k0WAxYn7so9
+         iBPPc8hTXhd/X1q42LIrKBhBrWNqWXU01oClL3QXiTtp4ce33x6m5p5b206MJPhKUb3Z
+         PRkd/JflgyVKqdLgfHhaMTJamFTACZMeof8ZxLwa/yFhNrXx7qwlKYrHHqfHjY5mgJKj
+         OJkQ==
+X-Gm-Message-State: AFqh2krhvFMpASCrHjxzxYToUXZShteHGBwKleUHJExD0L1mVgFucRVu
+        2xkG6y2eDnxlOnOtyp4NuoXiUf9ZOfE=
+X-Google-Smtp-Source: AMrXdXvHZk8vc9FbL7TQAkVnnZ5aHk7Mnw3OEvxvPfiFMh5RVRRPfwCbKDxUlpKBNZcz8NCCcGuUAg==
+X-Received: by 2002:a05:600c:810:b0:3da:f0e:fe34 with SMTP id k16-20020a05600c081000b003da0f0efe34mr15096312wmp.32.1674252539339;
+        Fri, 20 Jan 2023 14:08:59 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n35-20020a05600c3ba300b003db12112fcfsm4136487wms.4.2023.01.20.14.08.57
+        by smtp.gmail.com with ESMTPSA id l7-20020a7bc447000000b003dafa04ecc4sm3381999wmi.6.2023.01.20.14.08.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 14:08:57 -0800 (PST)
-Message-Id: <43f1cdcbb82022521558dc649213eb4538364870.1674252531.git.gitgitgadget@gmail.com>
+        Fri, 20 Jan 2023 14:08:58 -0800 (PST)
+Message-Id: <b8d3e81b5534148359c7e92807cf1e2795480ddf.1674252531.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
 References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
         <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 Jan 2023 22:08:44 +0000
-Subject: [PATCH v7 06/12] test-http-server: add HTTP request parsing
+Date:   Fri, 20 Jan 2023 22:08:46 +0000
+Subject: [PATCH v7 08/12] test-http-server: add simple authentication
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,353 +77,391 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Add ability to parse HTTP requests to the test-http-server test helper.
-Introduce `struct req` to store request information including:
+Add simple authentication to the test-http-server test helper.
+Authentication schemes and sets of valid tokens can be specified via
+a configuration file (in the normal gitconfig file format).
+Incoming requests are compared against the set of valid schemes and
+tokens and only approved if a matching token is found, or if no auth
+was provided and anonymous auth is enabled.
 
- * HTTP method & version
- * Request path and query parameters
- * Headers
- * Content type and length (from `Content-Type` and `-Length` headers)
+Configuration for auth includes a simple set of three options:
 
-Failure to parse the request results in a 400 Bad Request response to
-the client. Note that we're not trying to support all possible requests
-here, but just enough to exercise all code under test.
+[auth]
+	challenge = <scheme>[:<challenge_params>]
+	token = <scheme>:[<token>]*
+	allowAnonymous = <bool>
+
+`auth.challenge` allows you define what authentication schemes, and
+optional challenge parameters the server should use. Scheme names are
+unique and subsequently specified challenge parameters in the config
+file will replace previously specified ones.
+
+`auth.token` allows you to define the set of value token values for an
+authentication scheme. This is a multi-var and each entry in the
+config file will append to the set of valid tokens for that scheme.
+Specifying an empty token value will clear the list of tokens so far for
+that scheme, i.e. `token = <scheme>:`.
+
+`auth.allowAnonymous` controls whether or not unauthenticated requests
+(those without any `Authorization` headers) should succeed or not, and
+trigger a 401 Unauthorized response.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- t/helper/test-http-server.c | 202 +++++++++++++++++++++++++++++++++++-
- t/t5556-http-auth.sh        |  90 ++++++++++++++++
- 2 files changed, 290 insertions(+), 2 deletions(-)
- create mode 100755 t/t5556-http-auth.sh
+ t/helper/test-http-server.c | 232 +++++++++++++++++++++++++++++++++++-
+ t/t5556-http-auth.sh        |  43 ++++++-
+ 2 files changed, 272 insertions(+), 3 deletions(-)
 
 diff --git a/t/helper/test-http-server.c b/t/helper/test-http-server.c
-index 7ca4ddc7999..900f5733cc1 100644
+index 4191daf3c64..72c6cca7e5c 100644
 --- a/t/helper/test-http-server.c
 +++ b/t/helper/test-http-server.c
-@@ -81,8 +81,53 @@ enum worker_result {
- 	 * Close the socket and clean up. Does not imply an error.
- 	 */
- 	WR_HANGUP = 2,
-+
-+	/*
-+	 * Unexpected request message or error in request parsing.
-+	 * Respond with an 400 error. Close the socket and cleanup.
-+	 * Exit child-process with a non-zero status.
-+	 */
-+	WR_CLIENT_ERROR = 3,
-+};
-+
-+/*
-+ * Fields from a parsed HTTP request.
-+ */
-+struct req {
-+	struct strbuf start_line;
-+
-+	const char *method;
-+	const char *http_version;
-+
-+	struct strbuf uri_path;
-+	struct strbuf query_args;
-+
-+	struct string_list header_list;
-+	const char *content_type;
-+	uintmax_t content_length;
-+	unsigned has_content_length:1;
- };
+@@ -7,6 +7,7 @@
+ #include "version.h"
+ #include "dir.h"
+ #include "date.h"
++#include "config.h"
  
-+#define REQ__INIT { \
-+	.start_line = STRBUF_INIT, \
-+	.uri_path = STRBUF_INIT, \
-+	.query_args = STRBUF_INIT, \
-+	.header_list = STRING_LIST_INIT_NODUP, \
-+	.content_type = NULL, \
-+	.content_length = 0, \
-+	.has_content_length = 0, \
-+}
-+
-+static void req__release(struct req *req)
-+{
-+	strbuf_release(&req->start_line);
-+
-+	strbuf_release(&req->uri_path);
-+	strbuf_release(&req->query_args);
-+
-+	string_list_clear(&req->header_list, 0);
-+}
-+
- static enum worker_result send_http_error(int fd, int http_code,
- 					  const char *http_code_name,
- 					  int retry_after_seconds,
-@@ -143,8 +188,150 @@ done:
- 	return wr;
+ #define TR2_CAT "test-http-server"
+ 
+@@ -19,6 +20,7 @@ static const char test_http_auth_usage[] =
+ "           [--timeout=<n>] [--max-connections=<n>]\n"
+ "           [--reuseaddr] [--pid-file=<file>]\n"
+ "           [--listen=<host_or_ipaddr>]* [--port=<n>]\n"
++"           [--auth-config=<file>]\n"
+ ;
+ 
+ static unsigned int timeout;
+@@ -349,7 +351,7 @@ static int is_git_request(struct req *req)
+ 		!regexec(smart_http_regex, req->uri_path.buf, 0, NULL, 0);
  }
  
-+/*
-+ * Read the HTTP request up to the start of the optional message-body.
-+ * We do this byte-by-byte because we have keep-alive turned on and
-+ * cannot rely on an EOF.
-+ *
-+ * https://tools.ietf.org/html/rfc7230
-+ *
-+ * We cannot call die() here because our caller needs to properly
-+ * respond to the client and/or close the socket before this
-+ * child exits so that the client doesn't get a connection reset
-+ * by peer error.
-+ */
-+static enum worker_result req__read(struct req *req, int fd)
+-static enum worker_result do__git(struct req *req)
++static enum worker_result do__git(struct req *req, const char *user)
+ {
+ 	const char *ok = "HTTP/1.1 200 OK\r\n";
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+@@ -366,10 +368,16 @@ static enum worker_result do__git(struct req *req)
+ 	 * exit status of the process, then write the HTTP status line followed
+ 	 * by the http-backend output. This is outside of the scope of this test
+ 	 * helper's use at time of writing.
++	 *
++	 * The important auth responses (401) we are handling prior to getting
++	 * to this point.
+ 	 */
+ 	if (write(STDOUT_FILENO, ok, strlen(ok)) < 0)
+ 		return error(_("could not send '%s'"), ok);
+ 
++	if (user)
++		strvec_pushf(&cp.env, "REMOTE_USER=%s", user);
++
+ 	strvec_pushf(&cp.env, "REQUEST_METHOD=%s", req->method);
+ 	strvec_pushf(&cp.env, "PATH_TRANSLATED=%s", req->uri_path.buf);
+ 	strvec_push(&cp.env, "SERVER_PROTOCOL=HTTP/1.1");
+@@ -388,10 +396,217 @@ static enum worker_result do__git(struct req *req)
+ 	return !!res;
+ }
+ 
++enum auth_result {
++	/* No auth module matches the request. */
++	AUTH_UNKNOWN = 0,
++
++	/* Auth module denied the request. */
++	AUTH_DENY = 1,
++
++	/* Auth module successfully validated the request. */
++	AUTH_ALLOW = 2,
++};
++
++struct auth_module {
++	char *scheme;
++	char *challenge_params;
++	struct string_list *tokens;
++};
++
++static int allow_anonymous;
++static struct auth_module **auth_modules = NULL;
++static size_t auth_modules_nr = 0;
++static size_t auth_modules_alloc = 0;
++
++static struct auth_module *get_auth_module(const char *scheme, int create)
 +{
-+	struct strbuf h = STRBUF_INIT;
-+	struct string_list start_line_fields = STRING_LIST_INIT_DUP;
-+	int nr_start_line_fields;
-+	const char *uri_target;
-+	const char *query;
-+	char *hp;
-+	const char *hv;
++	struct auth_module *mod;
++	for (size_t i = 0; i < auth_modules_nr; i++) {
++		mod = auth_modules[i];
++		if (!strcasecmp(mod->scheme, scheme))
++			return mod;
++	}
 +
-+	enum worker_result result = WR_OK;
++	if (create) {
++		struct auth_module *mod = xmalloc(sizeof(struct auth_module));
++		mod->scheme = xstrdup(scheme);
++		mod->challenge_params = NULL;
++		ALLOC_ARRAY(mod->tokens, 1);
++		string_list_init_dup(mod->tokens);
++
++		ALLOC_GROW(auth_modules, auth_modules_nr + 1, auth_modules_alloc);
++		auth_modules[auth_modules_nr++] = mod;
++
++		return mod;
++	}
++
++	return NULL;
++}
++
++static int is_authed(struct req *req, const char **user, enum worker_result *wr)
++{
++	enum auth_result result = AUTH_UNKNOWN;
++	struct string_list hdrs = STRING_LIST_INIT_NODUP;
++	struct auth_module *mod;
++
++	struct string_list_item *hdr;
++	struct string_list_item *token;
++	const char *v;
++	struct strbuf **split = NULL;
++	int i;
++	char *challenge;
 +
 +	/*
-+	 * Read line 0 of the request and split it into component parts:
-+	 *
-+	 *    <method> SP <uri-target> SP <HTTP-version> CRLF
-+	 *
++	 * Check all auth modules and try to validate the request.
++	 * The first Authorization header that matches a known auth module
++	 * scheme will be consulted to either approve or deny the request.
++	 * If no module is found, or if there is no valid token, then 401 error.
++	 * Otherwise, only permit the request if anonymous auth is enabled.
++	 * It's atypical for user agents/clients to send multiple Authorization
++	 * headers, but not explicitly forbidden or defined.
 +	 */
-+	if (strbuf_getwholeline_fd(&req->start_line, fd, '\n') == EOF) {
-+		result = WR_HANGUP;
-+		goto done;
-+	}
++	for_each_string_list_item(hdr, &req->header_list) {
++		if (skip_iprefix(hdr->string, "Authorization: ", &v)) {
++			split = strbuf_split_str(v, ' ', 2);
++			if (split[0] && split[1]) {
++				/* trim trailing space ' ' */
++				strbuf_rtrim(split[0]);
 +
-+	strbuf_trim_trailing_newline(&req->start_line);
++				mod = get_auth_module(split[0]->buf, 0);
++				if (mod) {
++					result = AUTH_DENY;
 +
-+	nr_start_line_fields = string_list_split(&start_line_fields,
-+						 req->start_line.buf,
-+						 ' ', -1);
-+	if (nr_start_line_fields != 3) {
-+		logerror("could not parse request start-line '%s'",
-+			 req->start_line.buf);
-+		result = WR_CLIENT_ERROR;
-+		goto done;
-+	}
++					for_each_string_list_item(token, mod->tokens) {
++						if (!strcmp(split[1]->buf, token->string)) {
++							result = AUTH_ALLOW;
++							break;
++						}
++					}
 +
-+	req->method = xstrdup(start_line_fields.items[0].string);
-+	req->http_version = xstrdup(start_line_fields.items[2].string);
-+
-+	uri_target = start_line_fields.items[1].string;
-+
-+	if (strcmp(req->http_version, "HTTP/1.1")) {
-+		logerror("unsupported version '%s' (expecting HTTP/1.1)",
-+			 req->http_version);
-+		result = WR_CLIENT_ERROR;
-+		goto done;
-+	}
-+
-+	query = strchr(uri_target, '?');
-+
-+	if (query) {
-+		strbuf_add(&req->uri_path, uri_target, (query - uri_target));
-+		strbuf_trim_trailing_dir_sep(&req->uri_path);
-+		strbuf_addstr(&req->query_args, query + 1);
-+	} else {
-+		strbuf_addstr(&req->uri_path, uri_target);
-+		strbuf_trim_trailing_dir_sep(&req->uri_path);
-+	}
-+
-+	/*
-+	 * Read the set of HTTP headers into a string-list.
-+	 */
-+	while (1) {
-+		if (strbuf_getwholeline_fd(&h, fd, '\n') == EOF)
-+			goto done;
-+		strbuf_trim_trailing_newline(&h);
-+
-+		if (!h.len)
-+			goto done; /* a blank line ends the header */
-+
-+		hp = strbuf_detach(&h, NULL);
-+		string_list_append(&req->header_list, hp);
-+
-+		/* also store common request headers as struct req members */
-+		if (skip_iprefix(hp, "Content-Type: ", &hv)) {
-+			req->content_type = hv;
-+		} else if (skip_iprefix(hp, "Content-Length: ", &hv)) {
-+			/*
-+			 * Content-Length is always non-negative, but has no
-+			 * upper bound according to RFC 7230 (§3.3.2).
-+			 */
-+			intmax_t len = 0;
-+			if (sscanf(hv, "%"PRIdMAX, &len) != 1 || len < 0 ||
-+			    len == INTMAX_MAX) {
-+				logerror("invalid content-length: '%s'", hv);
-+				result = WR_CLIENT_ERROR;
-+				goto done;
++					strbuf_list_free(split);
++					goto done;
++				}
 +			}
 +
-+			req->content_length = (uintmax_t)len;
-+			req->has_content_length = 1;
++			strbuf_list_free(split);
 +		}
 +	}
 +
-+	/*
-+	 * We do not attempt to read the <message-body>, if it exists.
-+	 * We let our caller read/chunk it in as appropriate.
-+	 */
-+
 +done:
-+	string_list_clear(&start_line_fields, 0);
++	switch (result) {
++	case AUTH_ALLOW:
++		trace2_printf("%s: auth '%s' ALLOW", TR2_CAT, mod->scheme);
++		*user = "VALID_TEST_USER";
++		*wr = WR_OK;
++		break;
 +
-+	/*
-+	 * This is useful for debugging the request, but very noisy.
-+	 */
-+	if (trace2_is_enabled()) {
-+		struct string_list_item *item;
-+		trace2_printf("%s: %s", TR2_CAT, req->start_line.buf);
-+		trace2_printf("%s: hver: %s", TR2_CAT, req->http_version);
-+		trace2_printf("%s: hmth: %s", TR2_CAT, req->method);
-+		trace2_printf("%s: path: %s", TR2_CAT, req->uri_path.buf);
-+		trace2_printf("%s: qury: %s", TR2_CAT, req->query_args.buf);
-+		if (req->has_content_length)
-+			trace2_printf("%s: clen: %"PRIuMAX, TR2_CAT,
-+				      req->content_length);
-+		if (req->content_type)
-+			trace2_printf("%s: ctyp: %s", TR2_CAT, req->content_type);
-+		for_each_string_list_item(item, &req->header_list)
-+			trace2_printf("%s: hdrs: %s", TR2_CAT, item->string);
++	case AUTH_DENY:
++		trace2_printf("%s: auth '%s' DENY", TR2_CAT, mod->scheme);
++		/* fall-through */
++
++	case AUTH_UNKNOWN:
++		if (result != AUTH_DENY && allow_anonymous)
++			break;
++
++		for (i = 0; i < auth_modules_nr; i++) {
++			mod = auth_modules[i];
++			if (mod->challenge_params)
++				challenge = xstrfmt("WWW-Authenticate: %s %s",
++						    mod->scheme,
++						    mod->challenge_params);
++			else
++				challenge = xstrfmt("WWW-Authenticate: %s",
++						    mod->scheme);
++			string_list_append(&hdrs, challenge);
++		}
++
++		*wr = send_http_error(STDOUT_FILENO, 401, "Unauthorized", -1,
++				      &hdrs, *wr);
 +	}
 +
-+	return result;
++	string_list_clear(&hdrs, 0);
++
++	return result == AUTH_ALLOW ||
++	      (result == AUTH_UNKNOWN && allow_anonymous);
 +}
 +
-+static enum worker_result dispatch(struct req *req)
++static int split_auth_param(const char *str, char **scheme, char **val)
 +{
-+	return send_http_error(STDOUT_FILENO, 501, "Not Implemented", -1, NULL,
-+			       WR_HANGUP);
++	struct strbuf **p = strbuf_split_str(str, ':', 2);
++
++	if (!p[0])
++		return -1;
++
++	/* trim trailing ':' */
++	if (p[0]->len && p[0]->buf[p[0]->len - 1] == ':')
++		strbuf_setlen(p[0], p[0]->len - 1);
++
++	*scheme = strbuf_detach(p[0], NULL);
++	*val = p[1] ? strbuf_detach(p[1], NULL) : NULL;
++
++	strbuf_list_free(p);
++	return 0;
 +}
 +
- static enum worker_result worker(void)
++static int read_auth_config(const char *name, const char *val, void *data)
++{
++	int ret = 0;
++	char *scheme = NULL;
++	char *token = NULL;
++	char *challenge = NULL;
++	struct auth_module *mod;
++
++	if (!strcmp(name, "auth.challenge")) {
++		if (split_auth_param(val, &scheme, &challenge)) {
++			ret = error("invalid auth challenge '%s'", val);
++			goto cleanup;
++		}
++
++		mod = get_auth_module(scheme, 1);
++
++		/* Replace any existing challenge parameters */
++		free(mod->challenge_params);
++		mod->challenge_params = challenge ? xstrdup(challenge) : NULL;
++	} else if (!strcmp(name, "auth.token")) {
++		if (split_auth_param(val, &scheme, &token)) {
++			ret = error("invalid auth token '%s'", val);
++			goto cleanup;
++		}
++
++		mod = get_auth_module(scheme, 1);
++
++		/*
++		 * Append to set of valid tokens unless an empty token value
++		 * is provided, then clear the existing list.
++		 */
++		if (token)
++			string_list_append(mod->tokens, token);
++		else
++			string_list_clear(mod->tokens, 1);
++	} else if (!strcmp(name, "auth.allowanonymous")) {
++		allow_anonymous = git_config_bool(name, val);
++	} else {
++		warning("unknown auth config '%s'", name);
++	}
++
++cleanup:
++	free(scheme);
++	free(token);
++	free(challenge);
++
++	return ret;
++}
++
+ static enum worker_result dispatch(struct req *req)
  {
-+	struct req req = REQ__INIT;
- 	char *client_addr = getenv("REMOTE_ADDR");
- 	char *client_port = getenv("REMOTE_PORT");
- 	enum worker_result wr = WR_OK;
-@@ -155,9 +342,20 @@ static enum worker_result worker(void)
- 	set_keep_alive(0, logerror);
++	enum worker_result wr = WR_OK;
++	const char *user = NULL;
++
++	if (!is_authed(req, &user, &wr))
++		return wr;
++
+ 	if (is_git_request(req))
+-		return do__git(req);
++		return do__git(req, user);
  
- 	while (1) {
--		wr = send_http_error(STDOUT_FILENO, 501, "Not Implemented", -1,
--				     NULL, WR_HANGUP);
-+		req__release(&req);
+ 	return send_http_error(STDOUT_FILENO, 501, "Not Implemented", -1, NULL,
+ 			       WR_HANGUP);
+@@ -655,6 +870,19 @@ int cmd_main(int argc, const char **argv)
+ 			pid_file = v;
+ 			continue;
+ 		}
++		if (skip_prefix(arg, "--auth-config=", &v)) {
++			if (!strlen(v)) {
++				error("invalid argument - missing file path");
++				usage(test_http_auth_usage);
++			}
 +
-+		alarm(timeout);
-+		wr = req__read(&req, 0);
-+		alarm(0);
++			if (git_config_from_file(read_auth_config, v, NULL)) {
++				error("failed to read auth config file '%s'", v);
++				usage(test_http_auth_usage);
++			}
 +
-+		if (wr == WR_CLIENT_ERROR)
-+			wr = send_http_error(STDOUT_FILENO, 400, "Bad Request",
-+					     -1, NULL, wr);
-+
-+		if (wr != WR_OK)
-+			break;
++			continue;
++		}
  
-+		wr = dispatch(&req);
- 		if (wr != WR_OK)
- 			break;
- 	}
+ 		fprintf(stderr, "error: unknown argument '%s'\n", arg);
+ 		usage(test_http_auth_usage);
 diff --git a/t/t5556-http-auth.sh b/t/t5556-http-auth.sh
-new file mode 100755
-index 00000000000..06efc85ca53
---- /dev/null
+index c0a47ce342b..20fd9b09aef 100755
+--- a/t/t5556-http-auth.sh
 +++ b/t/t5556-http-auth.sh
-@@ -0,0 +1,90 @@
-+#!/bin/sh
-+
-+test_description='test http auth header and credential helper interop'
-+
-+TEST_NO_CREATE_REPO=1
-+. ./test-lib.sh
-+
-+# Setup a repository
-+#
-+REPO_DIR="$TRASH_DIRECTORY"/repo
-+
-+SERVER_LOG="$TRASH_DIRECTORY"/OUT.server.log
-+
-+PATH="$GIT_BUILD_DIR/t/helper/:$PATH" && export PATH
-+
-+test_expect_success 'setup repos' '
-+	test_create_repo "$REPO_DIR" &&
-+	git -C "$REPO_DIR" branch -M main
-+'
-+
-+run_http_server_worker() {
-+	(
-+		cd "$REPO_DIR"
-+		test-http-server --worker "$@" 2>"$SERVER_LOG" | tr -d "\r"
-+	)
-+}
-+
-+per_test_cleanup () {
-+	rm -f OUT.* &&
-+	rm -f IN.* &&
-+}
-+
-+test_expect_success 'http auth server request parsing' '
+@@ -101,6 +101,7 @@ per_test_cleanup () {
+ 	stop_http_server &&
+ 	rm -f OUT.* &&
+ 	rm -f IN.* &&
++	rm -f auth.config
+ }
+ 
+ test_expect_success 'http auth server request parsing' '
+@@ -160,11 +161,51 @@ test_expect_success 'http auth server request parsing' '
+ 	test_cmp OUT.http400 OUT.actual
+ '
+ 
++test_expect_success CURL 'http auth server auth config' '
 +	test_when_finished "per_test_cleanup" &&
 +
++	cat >auth.config <<-EOF &&
++	[auth]
++		challenge = no-params
++		challenge = with-params:foo=\"bar\" p=1
++		challenge = with-params:foo=\"replaced\" q=1
++
++		token = no-explicit-challenge:valid-token
++		token = no-explicit-challenge:also-valid
++		token = reset-tokens:these-tokens
++		token = reset-tokens:will-be-reset
++		token = reset-tokens:
++		token = reset-tokens:the-only-valid-one
++
++		allowAnonymous = false
++	EOF
++
++	cat >OUT.expected <<-EOF &&
++	WWW-Authenticate: no-params
++	WWW-Authenticate: with-params foo="replaced" q=1
++	WWW-Authenticate: no-explicit-challenge
++	WWW-Authenticate: reset-tokens
++
++	Error: 401 Unauthorized
++	EOF
++
++	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
++
++	curl --include $ORIGIN_URL >OUT.curl &&
++	tr -d "\r" <OUT.curl | sed -n "/WWW-Authenticate/,\$p" >OUT.actual &&
++
++	test_cmp OUT.expected OUT.actual
++'
+ 
+ test_expect_success 'http auth anonymous no challenge' '
+ 	test_when_finished "per_test_cleanup" &&
+ 
+-	start_http_server &&
 +	cat >auth.config <<-EOF &&
 +	[auth]
 +		allowAnonymous = true
 +	EOF
 +
-+	echo "HTTP/1.1 400 Bad Request" >OUT.http400 &&
-+	echo "HTTP/1.1 200 OK" >OUT.http200 &&
-+
-+	cat >IN.http.valid <<-EOF &&
-+	GET /info/refs HTTP/1.1
-+	Content-Length: 0
-+	EOF
-+
-+	cat >IN.http.badfirstline <<-EOF &&
-+	/info/refs GET HTTP
-+	EOF
-+
-+	cat >IN.http.badhttpver <<-EOF &&
-+	GET /info/refs HTTP/999.9
-+	EOF
-+
-+	cat >IN.http.ltzlen <<-EOF &&
-+	GET /info/refs HTTP/1.1
-+	Content-Length: -1
-+	EOF
-+
-+	cat >IN.http.badlen <<-EOF &&
-+	GET /info/refs HTTP/1.1
-+	Content-Length: not-a-number
-+	EOF
-+
-+	cat >IN.http.overlen <<-EOF &&
-+	GET /info/refs HTTP/1.1
-+	Content-Length: 9223372036854775807
-+	EOF
-+
-+	run_http_server_worker \
-+		--auth-config="$TRASH_DIRECTORY/auth.config" <IN.http.valid \
-+		| head -n1 >OUT.actual &&
-+	test_cmp OUT.http200 OUT.actual &&
-+
-+	run_http_server_worker <IN.http.badfirstline | head -n1 >OUT.actual &&
-+	test_cmp OUT.http400 OUT.actual &&
-+
-+	run_http_server_worker <IN.http.ltzlen | head -n1 >OUT.actual &&
-+	test_cmp OUT.http400 OUT.actual &&
-+
-+	run_http_server_worker <IN.http.badlen | head -n1 >OUT.actual &&
-+	test_cmp OUT.http400 OUT.actual &&
-+
-+	run_http_server_worker <IN.http.overlen | head -n1 >OUT.actual &&
-+	test_cmp OUT.http400 OUT.actual
-+'
-+
-+test_done
++	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
+ 
+ 	# Attempt to read from a protected repository
+ 	git ls-remote $ORIGIN_URL
 -- 
 gitgitgadget
 
