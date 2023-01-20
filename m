@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C309DC27C76
-	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 22:09:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB000C05027
+	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 22:09:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229929AbjATWJH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 17:09:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58182 "EHLO
+        id S229943AbjATWJK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 17:09:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229687AbjATWJA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2023 17:09:00 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D3B4A3179
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 14:08:57 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so4681525wmq.0
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 14:08:56 -0800 (PST)
+        with ESMTP id S229907AbjATWJB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2023 17:09:01 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CE2AA5CD3
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 14:09:00 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id r9so6012658wrw.4
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 14:09:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KsvXxRc41yRRXoCeuMp+jDk6Yf1HTqCPl2KPj4S0kA8=;
-        b=gK+kKG7cs53nPdtDD8sejY0IQk6Th75xNhlmI1vWriXHn4P4yT5yC91On/Ds1Vt8/g
-         sroc31LjFKb2A6z3HE0lVrg+X3vRqGWEY9TBVukCojhQvFWGVwo19XUWF9VCVEnB2UUy
-         OfeiprStPUXYvUtPbVeJA+d+cgy7nFHImW7gpLu8dr5/pTYrsZfd/tB/8zvAGVI/40fZ
-         TS5PvVHceA7Jh2H/EWK5XV/tHj4tvCfkMK6kcEO2WpsD8tqoc7Wv8KFimosCKuwYX9qQ
-         Ew+crB8OBXk8Is7rhyklqQACVhGIHQwmtsTvvfCuHGAwUKIdf27lq1RzhVTh/XjNYvmy
-         RWPA==
+        bh=vt6qt5xy2LTOWOA/ba75VrNCLenL8Di1Ghv67LM82hE=;
+        b=eVZhcTQYCm6Xvc8wIm0POK+m3SuItk1x2qHBk+VRyvEl3AFpNT6dY1q0t1B12IR1S4
+         AHZESoiSx4OdipOg20klPd84CYzh2fjoyrPckAU+kOgyT1i1fCjDEnN+w2iwEtbPUFPl
+         d76OH8p697XKm6DW48rLKnJteb2usWZyyp0vwf/8ISYkz/JjSqSx0ZuGRw/hYjmaUEhV
+         Ym0q/oj5nGf8i1jKJrPAELV3EZDM53PcxRBKWOqPGtu8RqhM3NmxAeZ6XY5ha8eKZIaL
+         MmttbdAzYVIfrSeO7vTpZXcg8IPn54vn0M3RO8HJiOgbmS7e0rOFHnS1DoZUTkP3xdoB
+         rFAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KsvXxRc41yRRXoCeuMp+jDk6Yf1HTqCPl2KPj4S0kA8=;
-        b=435HZ0rv5f7RQ0BuauzX+/I/zPdcc7Ix2aUEnDp2nKP/ElQrhGmhpMFQhX4v77sNSA
-         uhfrmNf6Dd6yhXHN894htEVMyiJ+U1Cjnqomo1H8kt6aFH95aW9NNftaJuxHxvcWu6Fk
-         9I4RP0hwOXnVcvremqKrMPtMKMNtbL76wZtOb+lSR20GIgnRfB9qV/f7gpIcoYTs5uiW
-         ItF8LF3uIBkvvSnuSGna3w1yEJPeVSZV3ZnL+/Ak/Sk9Jh2+dlg2qGUoK6ZUaXHPH42n
-         tJILWcezSZ1xU9sUCYDZrLZCReNTgzkgpFm6fF1YbiVVKD2/sZ9pdIvL01UuO6mOcdlS
-         sPNQ==
-X-Gm-Message-State: AFqh2kqQvJQVfDJWNMfBp5WtUqJcBaXMveXhViYNC5EdhqRegs2FuT80
-        NOPWOzjZAlX0c8gqHq9dOablkeL0bho=
-X-Google-Smtp-Source: AMrXdXuXM+m1NpjdQXkJH47nAcZNzg9CgVxyR8yqFXJe/V3F/GKw/+93EXklJDj/cZAm7ENw4hWXbg==
-X-Received: by 2002:a05:600c:3b29:b0:3da:f678:1322 with SMTP id m41-20020a05600c3b2900b003daf6781322mr16481977wms.38.1674252535335;
-        Fri, 20 Jan 2023 14:08:55 -0800 (PST)
+        bh=vt6qt5xy2LTOWOA/ba75VrNCLenL8Di1Ghv67LM82hE=;
+        b=SgToTNYVwMG9nAZqohvZUID1xQlFzezsEVA2NRp+2svvZuxefR1kL65crK+vSUbJgh
+         atC+cHt0q/lWMMutyzmjXmM3UNE3/rQPC6SQ166zpqY7j+k94Ds70Fy23yh9qgp9QdZE
+         MGUJnLUHRSHhEyZ5NUwZaJiNk4uwsv+ygHJu16MBsSS5s5L8GBYSRRkYeA1q2MO38Apb
+         T//H8FHQrFf6bgik4eJdLUDIos7aNjnTenqfS1qN+XYrj7lm/cz8IC/x+6pDXieET1aJ
+         91VDEwO7vFs/NAljsv5shTWUQcwg9RgoFzF+4uiIb/ZU17wDjSUB8yEbR1ulVT5tgeQb
+         dwLw==
+X-Gm-Message-State: AFqh2kq0yB9DHBuk8Wvaf9P5A7Dn9KxEeeU3w6un5uIMkkhTGDY+KRaP
+        wKVCyJzgF2RSpcXb6bspIQdj278PgBc=
+X-Google-Smtp-Source: AMrXdXtqRI0rxknm7NcPlPcwN6z59xqDITZ4UyLGy+cBY5d1vtdb9TZw232tgz8K5EsvKZ1juXXhUw==
+X-Received: by 2002:a5d:65cc:0:b0:2be:493f:3b2d with SMTP id e12-20020a5d65cc000000b002be493f3b2dmr5611529wrw.10.1674252538469;
+        Fri, 20 Jan 2023 14:08:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m27-20020a05600c3b1b00b003db012d49b7sm14069655wms.2.2023.01.20.14.08.54
+        by smtp.gmail.com with ESMTPSA id p8-20020a5d4588000000b002bdfb97e029sm14810164wrq.19.2023.01.20.14.08.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 14:08:55 -0800 (PST)
-Message-Id: <9967401c972cab547d7619a208c3a0e6a3923cd4.1674252531.git.gitgitgadget@gmail.com>
+        Fri, 20 Jan 2023 14:08:58 -0800 (PST)
+Message-Id: <ca9c2787248688cd7d8e20043a6ed75d93654e35.1674252531.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
 References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
         <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 Jan 2023 22:08:41 +0000
-Subject: [PATCH v7 03/12] daemon: rename some esoteric/laboured terminology
+Date:   Fri, 20 Jan 2023 22:08:45 +0000
+Subject: [PATCH v7 07/12] test-http-server: pass Git requests to http-backend
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,177 +77,211 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Rename some of the variables and function arguments used to manage child
-processes. The existing names are esoteric; stretching an analogy too
-far to the point of being confusing to understand.
+Teach the test-http-sever test helper to forward Git requests to the
+`git-http-backend`.
 
-Rename "firstborn" to "first_child", "newborn" to "new_cld", "blanket"
-to "current" and "cradle" to "ptr".
+Introduce a new test script t5556-http-auth.sh that spins up the test
+HTTP server and attempts an `ls-remote` on the served repository,
+without any authentication.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- daemon-utils.c | 46 +++++++++++++++++++++++-----------------------
- daemon-utils.h |  6 +++---
- daemon.c       | 10 +++++-----
- 3 files changed, 31 insertions(+), 31 deletions(-)
+ t/helper/test-http-server.c | 68 ++++++++++++++++++++++++++++++
+ t/t5556-http-auth.sh        | 83 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 151 insertions(+)
 
-diff --git a/daemon-utils.c b/daemon-utils.c
-index 8506664b440..f23ea35ed7b 100644
---- a/daemon-utils.c
-+++ b/daemon-utils.c
-@@ -230,44 +230,44 @@ static int addrcmp(const struct sockaddr_storage *s1,
+diff --git a/t/helper/test-http-server.c b/t/helper/test-http-server.c
+index 900f5733cc1..4191daf3c64 100644
+--- a/t/helper/test-http-server.c
++++ b/t/helper/test-http-server.c
+@@ -323,8 +323,76 @@ done:
+ 	return result;
  }
  
- void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrlen,
--	       struct child *firstborn , unsigned int *live_children)
-+	       struct child *first_child, unsigned int *live_children)
++static int is_git_request(struct req *req)
++{
++	static regex_t *smart_http_regex;
++	static int initialized;
++
++	if (!initialized) {
++		smart_http_regex = xmalloc(sizeof(*smart_http_regex));
++		/*
++		 * This regular expression matches all dumb and smart HTTP
++		 * requests that are currently in use, and defined in
++		 * Documentation/gitprotocol-http.txt.
++		 *
++		 */
++		if (regcomp(smart_http_regex, "^/(HEAD|info/refs|"
++			    "objects/info/[^/]+|git-(upload|receive)-pack)$",
++			    REG_EXTENDED)) {
++			warning("could not compile smart HTTP regex");
++			smart_http_regex = NULL;
++		}
++		initialized = 1;
++	}
++
++	return smart_http_regex &&
++		!regexec(smart_http_regex, req->uri_path.buf, 0, NULL, 0);
++}
++
++static enum worker_result do__git(struct req *req)
++{
++	const char *ok = "HTTP/1.1 200 OK\r\n";
++	struct child_process cp = CHILD_PROCESS_INIT;
++	int res;
++
++	/*
++	 * Note that we always respond with a 200 OK response even if the
++	 * http-backend process exits with an error. This helper is intended
++	 * only to be used to exercise the HTTP auth handling in the Git client,
++	 * and specifically around authentication (not handled by http-backend).
++	 *
++	 * If we wanted to respond with a more 'valid' HTTP response status then
++	 * we'd need to buffer the output of http-backend, wait for and grok the
++	 * exit status of the process, then write the HTTP status line followed
++	 * by the http-backend output. This is outside of the scope of this test
++	 * helper's use at time of writing.
++	 */
++	if (write(STDOUT_FILENO, ok, strlen(ok)) < 0)
++		return error(_("could not send '%s'"), ok);
++
++	strvec_pushf(&cp.env, "REQUEST_METHOD=%s", req->method);
++	strvec_pushf(&cp.env, "PATH_TRANSLATED=%s", req->uri_path.buf);
++	strvec_push(&cp.env, "SERVER_PROTOCOL=HTTP/1.1");
++	if (req->query_args.len)
++		strvec_pushf(&cp.env, "QUERY_STRING=%s", req->query_args.buf);
++	if (req->content_type)
++		strvec_pushf(&cp.env, "CONTENT_TYPE=%s", req->content_type);
++	if (req->has_content_length)
++		strvec_pushf(&cp.env, "CONTENT_LENGTH=%" PRIuMAX,
++			(uintmax_t)req->content_length);
++	cp.git_cmd = 1;
++	strvec_push(&cp.args, "http-backend");
++	res = run_command(&cp);
++	close(STDOUT_FILENO);
++	close(STDIN_FILENO);
++	return !!res;
++}
++
+ static enum worker_result dispatch(struct req *req)
  {
--	struct child *newborn, **cradle;
-+	struct child *new_cld, **current;
++	if (is_git_request(req))
++		return do__git(req);
++
+ 	return send_http_error(STDOUT_FILENO, 501, "Not Implemented", -1, NULL,
+ 			       WR_HANGUP);
+ }
+diff --git a/t/t5556-http-auth.sh b/t/t5556-http-auth.sh
+index 06efc85ca53..c0a47ce342b 100755
+--- a/t/t5556-http-auth.sh
++++ b/t/t5556-http-auth.sh
+@@ -5,10 +5,25 @@ test_description='test http auth header and credential helper interop'
+ TEST_NO_CREATE_REPO=1
+ . ./test-lib.sh
  
--	CALLOC_ARRAY(newborn, 1);
-+	CALLOC_ARRAY(new_cld, 1);
- 	(*live_children)++;
--	memcpy(&newborn->cld, cld, sizeof(*cld));
--	memcpy(&newborn->address, addr, addrlen);
--	for (cradle = &firstborn; *cradle; cradle = &(*cradle)->next)
--		if (!addrcmp(&(*cradle)->address, &newborn->address))
-+	memcpy(&new_cld->cld, cld, sizeof(*cld));
-+	memcpy(&new_cld->address, addr, addrlen);
-+	for (current = &first_child; *current; current = &(*current)->next)
-+		if (!addrcmp(&(*current)->address, &new_cld->address))
- 			break;
--	newborn->next = *cradle;
--	*cradle = newborn;
-+	new_cld->next = *current;
-+	*current = new_cld;
++test_set_port GIT_TEST_HTTP_PROTOCOL_PORT
++
+ # Setup a repository
+ #
+ REPO_DIR="$TRASH_DIRECTORY"/repo
+ 
++# Setup some lookback URLs where test-http-server will be listening.
++# We will spawn it directly inside the repo directory, so we avoid
++# any need to configure directory mappings etc - we only serve this
++# repository from the root '/' of the server.
++#
++HOST_PORT=127.0.0.1:$GIT_TEST_HTTP_PROTOCOL_PORT
++ORIGIN_URL=http://$HOST_PORT/
++
++# The pid-file is created by test-http-server when it starts.
++# The server will shutdown if/when we delete it (this is easier than
++# killing it by PID).
++#
++PID_FILE="$TRASH_DIRECTORY"/pid-file.pid
+ SERVER_LOG="$TRASH_DIRECTORY"/OUT.server.log
+ 
+ PATH="$GIT_BUILD_DIR/t/helper/:$PATH" && export PATH
+@@ -25,7 +40,65 @@ run_http_server_worker() {
+ 	)
  }
  
--void kill_some_child(struct child *firstborn)
-+void kill_some_child(struct child *first_child)
- {
--	const struct child *blanket, *next;
-+	const struct child *current, *next;
- 
--	if (!(blanket = firstborn))
-+	if (!(current = first_child))
- 		return;
- 
--	for (; (next = blanket->next); blanket = next)
--		if (!addrcmp(&blanket->address, &next->address)) {
--			kill(blanket->cld.pid, SIGTERM);
-+	for (; (next = current->next); current = next)
-+		if (!addrcmp(&current->address, &next->address)) {
-+			kill(current->cld.pid, SIGTERM);
- 			break;
- 		}
++stop_http_server () {
++	if ! test -f "$PID_FILE"
++	then
++		return 0
++	fi
++	#
++	# The server will shutdown automatically when we delete the pid-file.
++	#
++	rm -f "$PID_FILE"
++	#
++	# Give it a few seconds to shutdown (mainly to completely release the
++	# port before the next test start another instance and it attempts to
++	# bind to it).
++	#
++	for k in 0 1 2 3 4
++	do
++		if grep -q "Starting graceful shutdown" "$SERVER_LOG"
++		then
++			return 0
++		fi
++		sleep 1
++	done
++
++	echo "stop_http_server: timeout waiting for server shutdown"
++	return 1
++}
++
++start_http_server () {
++	#
++	# Launch our server into the background in repo_dir.
++	#
++	(
++		cd "$REPO_DIR"
++		test-http-server --verbose \
++			--listen=127.0.0.1 \
++			--port=$GIT_TEST_HTTP_PROTOCOL_PORT \
++			--reuseaddr \
++			--pid-file="$PID_FILE" \
++			"$@" \
++			2>"$SERVER_LOG" &
++	)
++	#
++	# Give it a few seconds to get started.
++	#
++	for k in 0 1 2 3 4
++	do
++		if test -f "$PID_FILE"
++		then
++			return 0
++		fi
++		sleep 1
++	done
++
++	echo "start_http_server: timeout waiting for server startup"
++	return 1
++}
++
+ per_test_cleanup () {
++	stop_http_server &&
+ 	rm -f OUT.* &&
+ 	rm -f IN.* &&
  }
+@@ -87,4 +160,14 @@ test_expect_success 'http auth server request parsing' '
+ 	test_cmp OUT.http400 OUT.actual
+ '
  
--void check_dead_children(struct child *firstborn, unsigned int *live_children,
-+void check_dead_children(struct child *first_child, unsigned int *live_children,
- 			 log_fn loginfo)
- {
- 	int status;
- 	pid_t pid;
- 
--	struct child **cradle, *blanket;
--	for (cradle = &firstborn; (blanket = *cradle);)
--		if ((pid = waitpid(blanket->cld.pid, &status, WNOHANG)) > 1) {
-+	struct child **ptr, *current;
-+	for (ptr = &first_child; (current = *ptr);)
-+		if ((pid = waitpid(current->cld.pid, &status, WNOHANG)) > 1) {
- 			if (loginfo) {
- 				const char *dead = "";
- 				if (status)
-@@ -277,10 +277,10 @@ void check_dead_children(struct child *firstborn, unsigned int *live_children,
- 			}
- 
- 			/* remove the child */
--			*cradle = blanket->next;
-+			*ptr = current->next;
- 			(*live_children)--;
--			child_process_clear(&blanket->cld);
--			free(blanket);
-+			child_process_clear(&current->cld);
-+			free(current);
- 		} else
--			cradle = &blanket->next;
-+			ptr = &current->next;
- }
-diff --git a/daemon-utils.h b/daemon-utils.h
-index 97e5cae20b8..c866e9c9a4e 100644
---- a/daemon-utils.h
-+++ b/daemon-utils.h
-@@ -32,7 +32,7 @@ struct child {
-  * live children.
-  */
- void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrlen,
--	       struct child *firstborn, unsigned int *live_children);
-+	       struct child *first_child, unsigned int *live_children);
- 
- /*
-  * Kill the newest connection from a duplicate IP.
-@@ -40,7 +40,7 @@ void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrl
-  * This function should be called if the number of connections grows
-  * past the maximum number of allowed connections.
-  */
--void kill_some_child(struct child *firstborn);
-+void kill_some_child(struct child *first_child);
- 
- /*
-  * Check for children that have disconnected and remove them from the
-@@ -49,7 +49,7 @@ void kill_some_child(struct child *firstborn);
-  * Optionally log the child PID that disconnected by passing a loginfo
-  * function.
-  */
--void check_dead_children(struct child *firstborn, unsigned int *live_children,
-+void check_dead_children(struct child *first_child, unsigned int *live_children,
- 			 log_fn loginfo);
- 
- #endif
-diff --git a/daemon.c b/daemon.c
-index ec3b407ecbc..d3e7d81de18 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -789,7 +789,7 @@ static int max_connections = 32;
- 
- static unsigned int live_children;
- 
--static struct child *firstborn;
-+static struct child *first_child;
- 
- static struct strvec cld_argv = STRVEC_INIT;
- static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
-@@ -797,9 +797,9 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
- 	struct child_process cld = CHILD_PROCESS_INIT;
- 
- 	if (max_connections && live_children >= max_connections) {
--		kill_some_child(firstborn);
-+		kill_some_child(first_child);
- 		sleep(1);  /* give it some time to die */
--		check_dead_children(firstborn, &live_children, loginfo);
-+		check_dead_children(first_child, &live_children, loginfo);
- 		if (live_children >= max_connections) {
- 			close(incoming);
- 			logerror("Too many children, dropping connection");
-@@ -832,7 +832,7 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
- 	if (start_command(&cld))
- 		logerror("unable to fork");
- 	else
--		add_child(&cld, addr, addrlen, firstborn, &live_children);
-+		add_child(&cld, addr, addrlen, first_child, &live_children);
- }
- 
- static void child_handler(int signo)
-@@ -862,7 +862,7 @@ static int service_loop(struct socketlist *socklist)
- 	for (;;) {
- 		int i;
- 
--		check_dead_children(firstborn, &live_children, loginfo);
-+		check_dead_children(first_child, &live_children, loginfo);
- 
- 		if (poll(pfd, socklist->nr, -1) < 0) {
- 			if (errno != EINTR) {
++
++test_expect_success 'http auth anonymous no challenge' '
++	test_when_finished "per_test_cleanup" &&
++
++	start_http_server &&
++
++	# Attempt to read from a protected repository
++	git ls-remote $ORIGIN_URL
++'
++
+ test_done
 -- 
 gitgitgadget
 
