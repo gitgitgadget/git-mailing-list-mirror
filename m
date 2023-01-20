@@ -2,138 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 684BAC25B4E
-	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 17:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A80EC25B4E
+	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 18:46:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230324AbjATRxT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 12:53:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45050 "EHLO
+        id S230080AbjATSq1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 13:46:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbjATRxS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2023 12:53:18 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 391D872B8
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 09:52:40 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id g23so5952034plq.12
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 09:52:40 -0800 (PST)
+        with ESMTP id S230070AbjATSq0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2023 13:46:26 -0500
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71D1CA5CD3
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 10:46:19 -0800 (PST)
+Received: by mail-il1-x12e.google.com with SMTP id p12so3139030ilq.10
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 10:46:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i37LUY87Z7ylQvVzquQapwQ8qZX4W60wWciZGlZ5254=;
-        b=M6ePgF3kiRodu9+Nx0fc8TlP20aZO1pfwqQw35bc4qWPB3qwG5+nYjGIGFYNS45dPl
-         uymXvWMAL+hN00Ic0T/gum7yRNl3pFaEBDXD9Dv0qkoqD34rlQeQIW3c4jTF7TlFUBxS
-         4+T7WjvkkP9wK6DSe1gAQrHYMTgEDv80akOBe34sUyjNgaZS+NMlsiJCnVbs4e87jhxC
-         KptxfIzNLTjcBolzvyEnElhD60kIggF820eGTC6vMe1BTlbob3OvZNZUrH8V35JQqiOM
-         Lm66hCL0B9PeqNaF7QSQ5pDscDUuVb0/H41lSFskXW05WrWEOdk03cPSK5mTjV4ZkonW
-         2bxA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Wh2TePA5EA9VTUhCd2SdYmlOe/a0oBeYCkaAhuyfeL4=;
+        b=ZkU7YWqXFGQNNHpvVuywogUf0pYM7G/U76de4prlQ3dMRDGg/rh3DwY5rIH3rU/v9f
+         dD/X7ldXUzDSU6A1xxgzfNB8Z7AHKmgqnQ/AyUNAWp4fB81PzAXPbgX9XqUWT5Lq0yKJ
+         uqHt3ppKa6u3WDeAbzqcej0qew5vwa7nhlRQGNUs4r34xSIrKER1HLb3m8r6XulVg3vl
+         9vbyPFNs6ZIA6HBx2GhrJzq9s8lJ+PrZPKvkA5WhqwsbMmxIrXBhx0iisECNpNjJZA4B
+         05r5bDB/1iI605n26N8QPjzZEf3s5oCDLukgZSQcDbB9oVautTptdFFoTWvc6DLGQuFg
+         h1JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=i37LUY87Z7ylQvVzquQapwQ8qZX4W60wWciZGlZ5254=;
-        b=MslGQcWZKgIQUCCk7bZfXfroJcqxWTwsrj5pjDnFg/W1+ItPR3tFTLzg0Hdo+ildoc
-         OkEOGMkOJmfkK9aYzeJ3YTqf0sExj/J7whd7RtCXeB4cdnlou/ypJvCcqLzOwJd17PbV
-         8nEJq+i9EYlo19GPEkjJPdBrbX7EvrSImg/FJxjtau+WYNSiz4n1eudnVasf1huOb6EK
-         vOJ9r1bCQ5TrblXiweALa5FSDgJBX7Y2Esn9tvuuoOgBfWeJY4tp455r7r+oT0awveiA
-         rA8TztbaPTCzC0uf89nZil6kGrOrzyIinCWmy2qr1G4Sq9dClETlGiwulgI1urK9oSCN
-         Vzig==
-X-Gm-Message-State: AFqh2koFLtqcopvYww4pAnujDAIOME7XyO5w2ERGA76TZveXDxXJUKyb
-        rMiKAe0KXbBhqyBwNNZ0N+Y=
-X-Google-Smtp-Source: AMrXdXvbWgAZNcHcRt97k2G7Ho1mLgfSY/cL+T9aVNY4IDzlOt7WJkiS2wEUlXkO4SZJlZQLOoWolQ==
-X-Received: by 2002:a17:90a:67c2:b0:226:c364:2d1d with SMTP id g2-20020a17090a67c200b00226c3642d1dmr16094400pjm.41.1674237159272;
-        Fri, 20 Jan 2023 09:52:39 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id fv23-20020a17090b0e9700b0022bae5c3e1esm1599151pjb.9.2023.01.20.09.52.38
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wh2TePA5EA9VTUhCd2SdYmlOe/a0oBeYCkaAhuyfeL4=;
+        b=MCn0TZtc8qBE6OIAebEpAPoMJpuG9lPejQm1x1W/hg/aFDT8pSkY1dRaQDBWfCMoXW
+         4WpIlW/os5pDx8e2w/O9aiTVCuMqOdNdxqy8jVAApqQvu1/knVyNJZUXMAiQfTGqzi5S
+         akM9KBq6BHnVycfShZo4oJq8suVVyiC29dYRUDTBg75wAx6neZ7F4lvvLEEAnb3N/QKL
+         fe3hByCbvAHvVeVNyxGnFuW+v+ip1zv/GgAKUx9r9WKOlyizlAHkrVmZ9MbBlbIMCP/l
+         H9jmoGidEIBgAOSjVmL8qU6DMWbyVtzGlLZantWfCq/Zlb0TL0CNR9isSVTK150r5YSs
+         W6fA==
+X-Gm-Message-State: AFqh2kruo/5g8YMLtq260pa8gWiiU12lMEbemNBfi9YXEyILF4gq2nQV
+        U95Kp8U6SGYFWWzHBCwu9MdqLtYs98FmUBA4HqA=
+X-Google-Smtp-Source: AMrXdXu88d/MyYuRALrayHU6Z13isf5VSBq21I97ogEvRjXQnmyjV4bkviCwvHSt9+Ci8j5z90SElw==
+X-Received: by 2002:a92:d6cb:0:b0:30c:4754:eda6 with SMTP id z11-20020a92d6cb000000b0030c4754eda6mr12053457ilp.8.1674240378579;
+        Fri, 20 Jan 2023 10:46:18 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id h10-20020a02c4ca000000b00363362cd476sm2227597jaj.101.2023.01.20.10.46.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 09:52:38 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Rose via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>
-Subject: Re: [PATCH v2] fsm-listen-darwin: combine bit operations
-References: <pull.1437.git.git.1673990756466.gitgitgadget@gmail.com>
-        <pull.1437.v2.git.git.1673992448371.gitgitgadget@gmail.com>
-        <021ab1ab-b90a-5a24-23c4-44e46d87c476@jeffhostetler.com>
-Date:   Fri, 20 Jan 2023 09:52:38 -0800
-In-Reply-To: <021ab1ab-b90a-5a24-23c4-44e46d87c476@jeffhostetler.com> (Jeff
-        Hostetler's message of "Fri, 20 Jan 2023 10:48:51 -0500")
-Message-ID: <xmqqwn5hw0t5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Fri, 20 Jan 2023 10:46:18 -0800 (PST)
+Date:   Fri, 20 Jan 2023 13:46:16 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Victoria Dye <vdye@github.com>
+Subject: [PATCH] Makefile: suppress annotated leaks with certain ASan options
+Message-ID: <b1efe56ab5193d5505ccb9334f7d15e1795c27fb.1674240261.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+When building with `SANITIZE=leak`, we define `SUPPRESS_ANNOTATED_LEAKS`
+in order to make the `UNLEAK()` macro work (without the aforementioned
+define, `UNLEAK()` is a noop). This is from `UNLEAK()`'s introduction in
+0e5bba53af (add UNLEAK annotation for reducing leak false positives,
+2017-09-08), where `UNLEAK()` is a noop for performance reasons unless
+we are using the leak sanitizer.
 
->>     static int ef_is_dropped(const FSEventStreamEventFlags ef)
->>   {
->> -	return (ef & kFSEventStreamEventFlagMustScanSubDirs ||
->> -		ef & kFSEventStreamEventFlagKernelDropped ||
->> -		ef & kFSEventStreamEventFlagUserDropped);
->> +	return (ef & (kFSEventStreamEventFlagMustScanSubDirs |
->> +		      kFSEventStreamEventFlagKernelDropped |
->> +		      kFSEventStreamEventFlagUserDropped));
->>   }
->
-> Technically, the returned value is slightly different, but
-> the only caller is just checking for non-zero, so it doesn't
-> matter.
->
-> So this is fine.
+However, it is possible to use the leak sanitizer without
+`SANITIZE=leak`. This happens when building with `SANITIZE=address` and
+enabling the leak sanitizer via the `ASAN_OPTIONS` variable (by
+including the string "detect_leaks=1").
 
-But is it worth the code churn and reviewer bandwidth?  Don't we
-have better things to spend our time on?
+This renders `UNLEAK()` useless when doing `SANITIZE=address` builds
+which also use the leak checker.
 
-I would not be surprised if a smart enough compiler used the same
-transformartion as this patch does manually as an optimization.
+Update our Makefile to pretend as if `SANITIZE=leak` was given when
+`SANITIZE=address` is given and the leak checker is enabled via
+`ASAN_OPTIONS`.
 
-Then it matters more which one of the two is more readable by our
-developers.  And the original matches how we humans would think, I
-would imagine.  ef might have MustScanSubdirs bit, KernelDropped
-bit, or UserDropped bit and in these cases we want to say that ef is
-dropped.  Arguably, the original is more readble, and it would be a
-good change to adopt if there is an upside, like the updated code
-resulting in markedly more efficient binary.
+Playing around with all five options (two spelling "enabled", two
+spelling "disabled", and the empty set of options) yields the correct
+behavior:
 
-So, this might be technically fine, but I am not enthused to see
-these kind of code churning patches with dubious upside.  An
-optimization patch should be able to demonstrate its benefit with a
-solid benchmark, or at least a clear difference in generated code.
+    for opt in '' detect_leaks=1 detect_leaks=true detect_leaks=0 detect_leaks=false
+    do
+      echo "==> ${opt:-(nothing)}"
+      make -B builtin/add.o V=1 SANITIZE=address ASAN_OPTIONS="$opt" 2>&1 |
+        grep -o -- '-DSUPPRESS_ANNOTATED_LEAKS'
+    done
 
-In fact.
+gives us:
 
-Compiler explorer godbolt.org tells me that gcc 12 with -O2 compiles
-the following two functions into identical assembly.  The !! prefix
-used in the second example is different from the postimage of what
-Seija posted, but this being a file-scope static function, I would
-expect the compiler to notice that the actual value would not matter
-to the callers, only the truth value, does.
+    ==> (nothing)
+    -DSUPPRESS_ANNOTATED_LEAKS
+    ==> detect_leaks=1
+    -DSUPPRESS_ANNOTATED_LEAKS
+    ==> detect_leaks=true
+    -DSUPPRESS_ANNOTATED_LEAKS
+    ==> detect_leaks=0
+    ==> detect_leaks=false
 
+Making it possible to rely on `UNLEAK()` when implicitly using the leak
+checker via SANITIZE=address builds.
 
-* Input *
-int one(unsigned int num) {
-    return ((num & 01) ||
-            (num & 02) || (num & 04));
-}
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+I found this while playing around with GitHub's ASan-enabled CI builds
+for our internal fork following a merge with v2.38.3.
 
-int two(unsigned int num) {
-    return !!((num) & (01|02|04));
-}
+The check-chainlint recipe in t/Makefile started using "git diff" via
+d00113ec34 (t/Makefile: apply chainlint.pl to existing self-tests,
+2022-09-01), which triggered a leak in some of GitHub's custom code. I
+was surprised when marking the variable with UNLEAK() didn't do the
+trick, and ended up down this rabbit hole ;-).
 
-* Assembly *
-one(unsigned int):
-        xor     eax, eax
-        and     edi, 7
-        setne   al
-        ret
-two(unsigned int):
-        xor     eax, eax
-        and     edi, 7
-        setne   al
-        ret
+ Makefile | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index db447d0738..b00bb8bd1e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1445,13 +1445,18 @@ ifneq ($(filter undefined,$(SANITIZERS)),)
+ BASIC_CFLAGS += -DSHA1DC_FORCE_ALIGNED_ACCESS
+ endif
+ ifneq ($(filter leak,$(SANITIZERS)),)
+-BASIC_CFLAGS += -DSUPPRESS_ANNOTATED_LEAKS
+-BASIC_CFLAGS += -O0
+ SANITIZE_LEAK = YesCompiledWithIt
+ endif
+ ifneq ($(filter address,$(SANITIZERS)),)
+ NO_REGEX = NeededForASAN
+ SANITIZE_ADDRESS = YesCompiledWithIt
++ifeq ($(filter $(patsubst detect_leaks=%,%,$(ASAN_OPTIONS)),0 false),)
++SANITIZE_LEAK = YesViaASanOptions
++endif
++endif
++ifneq ($(SANITIZE_LEAK),)
++BASIC_CFLAGS += -DSUPPRESS_ANNOTATED_LEAKS
++BASIC_CFLAGS += -O0
+ endif
+ endif
+
+--
+2.38.0.16.g393fd4c6db
