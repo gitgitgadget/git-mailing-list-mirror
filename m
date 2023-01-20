@@ -2,67 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8E45C46467
-	for <git@archiver.kernel.org>; Thu, 19 Jan 2023 23:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEC8CC004D4
+	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 00:33:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230398AbjASX6t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Jan 2023 18:58:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54344 "EHLO
+        id S229505AbjATAdq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Jan 2023 19:33:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230161AbjASX6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Jan 2023 18:58:43 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38B95A19B9
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 15:58:34 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id 12so1104234plo.3
-        for <git@vger.kernel.org>; Thu, 19 Jan 2023 15:58:34 -0800 (PST)
+        with ESMTP id S229490AbjATAdi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Jan 2023 19:33:38 -0500
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0419527D61
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 16:33:36 -0800 (PST)
+Received: by mail-pg1-x529.google.com with SMTP id 36so2936887pgp.10
+        for <git@vger.kernel.org>; Thu, 19 Jan 2023 16:33:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3Mm+selwD2zSmMEI4NVLHkr6pgOd+mimqKzelm+kJcI=;
-        b=CNasxzxY3ZpPfg94WXg4/F8UYCAqnYLgqCeXFxbFyG58l+z4lwUYYU6ko2f/IY5uJI
-         FTPm7kcbdMuslnYnTKJIZ25c6XvRQgbfIL+H1szRzvGvLUxoYB1suo3Qbg0f3IpZ/d46
-         fk6TPUAw7xmHL8HxyR8mrpZmi8XKb0wdQEPaOSwQ0ocjYQQK+AxYsO/BAMFOFfqHncPt
-         j6pBzwjfaFTYbiFtV7dAk1Ua2DbTulw4/fYSBhsdZYPCjSdapY9rJqY/FkNfnGV1u1mk
-         jH3VpzM2HetCQM194iibOrVv1Sfr73w9MzUVGx3KqfAGBP/LBW5InBJb6WpSqNTTleOq
-         BWPg==
+        bh=bTbZnmj9GuKDNMyDO6CvjXfaoJuWw3vwnrsrf5+nnsc=;
+        b=lL5jiD51SYsMW3cnLw8RLbQAKhn6RlFV5XSIRz4CpsLPp9xZ8U1rrHnfGX+hp0zRNX
+         AaucgnncQtJ8yCejnxU8Er9rBnsdEkavx5fVv5/UEjDMqhBR/hDqoNbWdle5ri6z488k
+         aGkW5KPcxcCi4GqG/RJoM4Mb+5ox8tFCF8kLQDc4rUYH9nNWxyYhiERPpBmxE8Furrkb
+         2ktnxCgqRuktXLpW9pmwuenwBp+Z3nE2ZiaWC1zYkmpvUC96t1KdjSHIHmmeaf+YBFf8
+         +5FaA02b4z1cDSVAm55O9atFcLaXKDlHXW35/2VoXIzYF5WOZv+XrndnUCIH9tN2V4/I
+         3Bdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=3Mm+selwD2zSmMEI4NVLHkr6pgOd+mimqKzelm+kJcI=;
-        b=lavamM7Mjtm6MaSkzJ8DAuqa4eP7bo6YIvbyyKNQ7ai0tHBpbJJd5UAh+fENAD1fhl
-         0ta15QpdfgxNLTxB2lMbHfCIlxIJBWsOEWNMTsRk7TyaSt1uF+5+5/whUmHTf2apq2OG
-         5NpfY6ewUdMSCHv89KOfJzTQEV+um931zLTAWI++U2+idm3+KZEXVnZZqX003zycv5l9
-         uF0xgNU3qO5ZOuxinUFzZLuMbH130FrUZxGIuEuQbcQTDZaHoVvDodyPrz3mHzqzdhq0
-         u05fY5sfIkCMc0jiBHPe6FBGShAGd8lOo70/Rg6Xl3799bGCBQ8oypVc/Tu3md/EcUrw
-         lk5g==
-X-Gm-Message-State: AFqh2kqlOXAJRGr1EXZaqciMcNvr8K9429HQ/o4RrCOYfqZU7owFBnYT
-        FNKAmzuEdFwXZ7/ksvAtq8aiBDXb9R4=
-X-Google-Smtp-Source: AMrXdXshMVXj3pe0h6jgDR18xpqEVEwyV5S56fyKiPsVTNKzuRNpbRJfvNXHV6rv7xlNjsSn6DEbxg==
-X-Received: by 2002:a17:90a:950c:b0:228:d353:9612 with SMTP id t12-20020a17090a950c00b00228d3539612mr13268564pjo.31.1674172714025;
-        Thu, 19 Jan 2023 15:58:34 -0800 (PST)
+        bh=bTbZnmj9GuKDNMyDO6CvjXfaoJuWw3vwnrsrf5+nnsc=;
+        b=gPt2TaIYEpyL/mLqnL4ZrVXB5sg6zRBDTu4qSo4tk4FCtqZG7KDqqPs/0mzxRM1nhh
+         k+szW/yAN6WhnzBnJmI2dmC6o5VsWkOa686Xh37OTynv4Dzq5LrwNmglnsXnZxtQ2fQa
+         hVTn1E5RsWyn4Lc5cUczDwlvfL0h6UwAlgcKkEpDqJJzzyK+M8HyvLAXX0hrgrN2dSyN
+         FwvId1Q86tMp4AJwPrcQFiuVyewVYQqlTt5Ld9+TEp4PeuUqyY1m1aIvVpiTKd0dZais
+         0LH6CwxqzV1NxhF3jRjNNX/EQGytwyn7K4GCjGyww/YhatyvjL5SgVAbO61wpveersjJ
+         x7oA==
+X-Gm-Message-State: AFqh2kqFe+ASyYiU8oPuXff9dZH/S+wXJ2lW1c5V1dFUsVlcynh3/kT+
+        BKXqNJb5GomVct49SdSqEDs=
+X-Google-Smtp-Source: AMrXdXszBH/nSLPBSnLzbGwD2QfX/QqnT0HhKxk2vKDQWtg6S2L+hOy4kMoxxkBbJtDMA1FjvgaCYw==
+X-Received: by 2002:a05:6a00:331b:b0:58b:bf9a:fa81 with SMTP id cq27-20020a056a00331b00b0058bbf9afa81mr14146303pfb.4.1674174815350;
+        Thu, 19 Jan 2023 16:33:35 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id i8-20020a17090a65c800b002294615bf59sm220676pjs.18.2023.01.19.15.58.33
+        by smtp.gmail.com with ESMTPSA id a20-20020aa79714000000b0058d9a5bac88sm8980280pfg.203.2023.01.19.16.33.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jan 2023 15:58:33 -0800 (PST)
+        Thu, 19 Jan 2023 16:33:34 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 7/6] fsck: do not assume NUL-termination of buffers
-References: <Y8hX+pIZUKXsyYj5@coredump.intra.peff.net>
-        <Y8ifa7hyqxSbL92U@coredump.intra.peff.net>
-        <Y8nOmZHv7T843uBn@coredump.intra.peff.net>
-Date:   Thu, 19 Jan 2023 15:58:33 -0800
-In-Reply-To: <Y8nOmZHv7T843uBn@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 19 Jan 2023 18:13:29 -0500")
-Message-ID: <xmqq358613h2.fsf@gitster.g>
+To:     Zev Weiss <zev@bewilderbeest.net>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Denton Liu <liu.denton@gmail.com>,
+        Emma Brooks <me@pluvano.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Patrick Hemmer <git@stormcloud9.net>
+Subject: Re: [PATCH 3/5] log: Push to/cc handling down into show_log()
+References: <20230119223858.29262-1-zev@bewilderbeest.net>
+        <20230119223858.29262-4-zev@bewilderbeest.net>
+Date:   Thu, 19 Jan 2023 16:33:34 -0800
+In-Reply-To: <20230119223858.29262-4-zev@bewilderbeest.net> (Zev Weiss's
+        message of "Thu, 19 Jan 2023 14:38:56 -0800")
+Message-ID: <xmqqy1pyyrhd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,27 +74,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Zev Weiss <zev@bewilderbeest.net> writes:
 
-> So here's the result of my digging on this. The good news is that this
-> one commit on top of the rest of the series should make everything safe.
-> I'm sorry the explanation is a bit long, but I wanted to capture a bit
-> of the history, the subtle assumptions, and how I approached analyzing
-> and fixing it.
->
-> There are a few paths forward here:
->
->   - apply this on top of the earlier 6 patches. This is the simplest
->     thing, and my preference. It does mean that t3800 temporarily has a
->     read-one-char-past-buffer bug that is detected by ASan after patch 6
->     but before this patch is applied.
+> Subject: Re: [PATCH 3/5] log: Push to/cc handling down into show_log()
 
-That sounds reasonable, even though purist among us may find it
-slightly disturbing that it breaks "bisectability".
+s/Push/push/
+cf. Documentation/SubmittingPatches[[summary-section]]
 
-> Anyway, here's the patch. I'm happy to repost the whole 7-patch series,
-> too, but since the earlier ones didn't change in my preferred path
-> forward, this seemed easier for now. ;)
+This is common to all these patches.
 
-Thanks.  Will queue.
+> @@ -1326,6 +1326,7 @@ static void make_cover_letter(struct rev_info *rev, int use_separate_file,
+>  	pp.rev = rev;
+>  	pp.print_email_subject = 1;
+>  	pp_user_info(&pp, NULL, &sb, committer, encoding);
+> +	format_recipients(rev, &sb);
 
+This is where the two new members in the rev structure is used.
+
+> @@ -2028,9 +2029,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  		strbuf_addch(&buf, '\n');
+>  	}
+>  
+> -	recipients_to_header_buf("To", &buf, &extra_to);
+> -	recipients_to_header_buf("Cc", &buf, &extra_cc);
+> -
+> +	rev.to_recipients = &extra_to;
+> +	rev.cc_recipients = &extra_cc;
+>  	rev.extra_headers = to_free = strbuf_detach(&buf, NULL);
+
+And these two members point at borrowed memory.  extra_to and
+extra_cc is freed after everything is done, near the end of the
+cmd_format_patch() function.  We don't leak any extra memory by this
+change, which is good.
