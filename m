@@ -2,308 +2,352 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DE50C25B4E
-	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 14:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43115C25B4E
+	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 14:56:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbjATO1H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 09:27:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56254 "EHLO
+        id S231165AbjATO44 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 09:56:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231196AbjATO0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2023 09:26:40 -0500
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2040.outbound.protection.outlook.com [40.107.237.40])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC920D05C6
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 06:26:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JBlHFcwo+1sp+jvP/O3JP6piSVPCGClpPz0F+ehNBAc6rmFSaYKdBU2MrT7vX8bz1303R0oeeOSUfcIbFwE439clyo5mro9UErwsuUuSyjzU/m4yWzNValiDi453O7WCDJ7WQ4pcED/fYuDzSHb8YcMZ+khSBhUUvKZMRGko4gJGsgkZ451MZ+Uq8+Wyt+0RJ8V4IEknPc9K7HePKRf7UKx1aaV2lCe8K2LiNTaEd0ZUVPQMbnIUd9EVTZ/XjdTyehdH53ML3EhxZKnIO76q/F+otc4hWdXFKOfiZSe9ZBbTdGOIv9pW13qyotA7GBtyUyjXLd20dcJyRVCnQEw7+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vhXzn6ZtB03kpqwpWtBUlgxnqOgTh240NBaEzzfriLw=;
- b=AjRnGiaehL5ZMyUoaxyN0gNCP9UQWLFq42B7Im92MIIl/R3Stc3+y33rQRDHlnrV81XKr7xSjMYOhHLtIa7P+n2JDA0OoSesDjVpeie/CAoV/xhksMTaCurNHOC2IoZVlWDzu+jvE6sgnwbA+x9TPLEMcksSzyhnwW3nyARutjipqbuCmoyGcl8r3xzX77EWYvFM6a0CsrU/WjVu8enwjoa6GFvOaSR34LfeF9flOHSreLZA6aRT44Exh4uU2FBdPJJZqxIubmUmqaZpJnoxTwfBRDwYq40xHGZ+dIekh7jj3mlzer3IC9JECU4JtamvhHxGV426OuhS+1qNPxe4zg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vhXzn6ZtB03kpqwpWtBUlgxnqOgTh240NBaEzzfriLw=;
- b=WK5+NygfADy/ufiWSJzhGoRb6eXOO3IVc2cSQ+8f/jT985K6UPKP+HLSJ0KyN/uSOBLwMATIwhTAqyu533OuI9pDOdovmM7hdlM5NiyHbt/94+Q/8DArgxFmliZFBQcAqHl5wnM+mPcXilp1YzLuXXjPLIZMdjUv8ayXU4ct76g=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4363.namprd12.prod.outlook.com (2603:10b6:303:56::14)
- by PH8PR12MB7302.namprd12.prod.outlook.com (2603:10b6:510:221::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.27; Fri, 20 Jan
- 2023 14:25:58 +0000
-Received: from MW3PR12MB4363.namprd12.prod.outlook.com
- ([fe80::e938:9d66:8840:315d]) by MW3PR12MB4363.namprd12.prod.outlook.com
- ([fe80::e938:9d66:8840:315d%7]) with mapi id 15.20.6002.027; Fri, 20 Jan 2023
- 14:25:52 +0000
-Message-ID: <c1ba0a28-3c39-b313-2757-dceb02930334@amd.com>
-Date:   Fri, 20 Jan 2023 09:25:49 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v9 2/2] send-email: expose header information to
- git-send-email's sendemail-validate hook
-To:     Luben Tuikov <luben.tuikov@amd.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20230120012459.920932-1-michael.strawbridge@amd.com>
- <20230120012459.920932-3-michael.strawbridge@amd.com>
- <e353df62-c189-755f-5536-5ea91177c55c@amd.com>
-Content-Language: en-US
-From:   Michael Strawbridge <michael.strawbridge@amd.com>
-In-Reply-To: <e353df62-c189-755f-5536-5ea91177c55c@amd.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: YT4PR01CA0027.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:fe::6) To MW3PR12MB4363.namprd12.prod.outlook.com
- (2603:10b6:303:56::14)
+        with ESMTP id S230021AbjATO4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2023 09:56:55 -0500
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com [IPv6:2607:f8b0:4864:20::e2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF43D45F50
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 06:56:53 -0800 (PST)
+Received: by mail-vs1-xe2f.google.com with SMTP id k4so5914887vsc.4
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 06:56:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6qQWtHKKgQk307wOu9WZo8XuyoQJ/RDnRouiLAWqsYw=;
+        b=fOUeKAHR+Jj+gvuuiIHlKBXU1qsupNGir6lJbELBGaRr9vUb1dwNEvKHX2YMgbsh/K
+         6PmTOdLjMSF3AyyyZXymMVEh9IHkx5jY44g0+sWtEUqKgZF4e3soDkUhBf+2ia5sS0sN
+         gZig8Vujjzc6fatPdujADA2u2pJrN45S4M4IqDPPDlKKHMkOusgF/1aT5Cx6wVSxb//s
+         Tr48hPLYFz0VoLQ2/F3FFJnmpSsWuNZgnUnLP6z4zeLjegXJqEoIHkG3vU3So0LcPUBz
+         rJHLaFQ5rW+We69l1t7VSL/t/rRXmkPN+GNmZ77CbXIuNWIme3bX9gh+pTbG2YDis3i4
+         l7NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6qQWtHKKgQk307wOu9WZo8XuyoQJ/RDnRouiLAWqsYw=;
+        b=r0ZOzoYvsWX2cLeo866oG8dp4HzJgqjob7xrdHS8Vpq2RhQq2hFreXg1opTncly4FH
+         GE7VkyEsGnWL7ctBetG2nKuD+0XWyidfPhJofVm5PZ9ujxQS/NNidOmF5R9X3bYY78Vm
+         qjWXjyiYWXsWojBBDjkyvjzriQYHnV25kiMl2hxMKiF3W7dWjOype7ToLf/Hs41ReZc2
+         b5RcbzsPF+Ki34hPT4LeadgS9rUF4279m1Um7a+vt/nq895A7QumraelokEbQSgwtLXz
+         EsIYUFGvkBStj4LaUnFX4A8+/QcQgZNF/vh+CA76vc2hCSnba1/QYxxe94rmMesr9tPr
+         0Hbw==
+X-Gm-Message-State: AFqh2kqDtHxToakPDWNo6c/AU4/IRPKZYUL5sFjDWUAWc8slSM61AMxR
+        xvjzcBzaopXU0FbJiw9ZNOqo
+X-Google-Smtp-Source: AMrXdXs02maVuRdDxVpIrQvc/6bWjjVSehDdJCUS00gWYUcBoLefH/aYlAUfx7qNeW1Rx28HRFCkUg==
+X-Received: by 2002:a67:fc06:0:b0:3b1:3a0b:50b0 with SMTP id o6-20020a67fc06000000b003b13a0b50b0mr8657465vsq.24.1674226612665;
+        Fri, 20 Jan 2023 06:56:52 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:ede7:6bce:9af7:733c? ([2600:1700:e72:80a0:ede7:6bce:9af7:733c])
+        by smtp.gmail.com with ESMTPSA id i7-20020a05620a248700b006ff8a122a1asm10339478qkn.78.2023.01.20.06.56.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Jan 2023 06:56:52 -0800 (PST)
+Message-ID: <1e787073-a1f6-58cd-ec5a-f99f2879624f@github.com>
+Date:   Fri, 20 Jan 2023 09:56:50 -0500
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4363:EE_|PH8PR12MB7302:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9e9a82fc-95c7-4381-04c9-08dafaf23c22
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: N4LqqVg8oOXBOlTKrVTpJxIsbBzCIYy4M0zzwmyiF4KFogeGvGkTVyyxe8WxP2IX85sT23EfEkkMaZJs2raQ/l9tJgrNp20wg+nX3wiaztYB9/XrJuZvGnd6/SqbhNRSL6FvWEdkEF4PAzexkw04yFA7BOfSJg3cPfkyihDjZKg15hVi1nWdj0eaxKcgaR1A6WV5YK2L1lxTFDCGhKyL/p4pFcdJV+0rFgRMN9Krka3FI27GNLW6MhCPL4uF5OqxtflkSDzHNn9CejZDVoMlo5PolFPXksIfwRryjMmt1XTFl9jlA8oMW7fov/KBb0lqLg6qxIL12LYf8LgSQIKX5vS3pu8iUpTGDFwXHbpje/NNHG3r81vD7yVIFEtt2MgVyrpl6LdJmjFBoO6no/HUZrVBkNE5fGw+xGrO92cAFDHbWLQ6lg01yEhXKsqKJBsZKm7NxMnDrcodh7bJzwEJqVJ2bFNGom212v42IRcIO9YcEohPahqSs9dtdpqE1K28kLh5/Z+QwCXu8h0somno4x1wQJRVxBdE/3WLNaHXnSws1y6gEuIJcuMwkodQatzwu+k+jM8GfDMdJ9Mrf19Pq566vtfKz4zvrk7u4Jvr8oqg9vYqIcjVc1UiMLW4Jt3V+M/pl6XnSPOWZmmoDTosRygenDIl5/YHNgTh1qFuXBb/DF9ok/8HTIddTElpzjMKRHtRuVejBA5RJKQB5xnNxM4wyszfpG/aBHEwsQjPfEE=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4363.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(366004)(39860400002)(376002)(346002)(136003)(396003)(451199015)(36756003)(86362001)(31696002)(31686004)(2616005)(316002)(54906003)(66556008)(8676002)(4326008)(66476007)(66946007)(6512007)(26005)(186003)(6506007)(478600001)(6486002)(6666004)(53546011)(38100700002)(83380400001)(8936002)(66574015)(41300700001)(2906002)(15650500001)(5660300002)(44832011)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Wkp4ajVOT3RFRlJmNjNZZERiTGZEd0dyK2FRYW8vL2plNlVrUk1HWVhKRFY0?=
- =?utf-8?B?NlR2K3BzdEFKOUl0NkNKMnBDV3ovQmlnTm9IS1diYkVORnVzai9pUGcvVUFr?=
- =?utf-8?B?VkZ2cVdNSExRYXVqUzRXUGkrMXRPQXFUSjgrbDBhV2lHZTQ0OUtIcGU4MGI5?=
- =?utf-8?B?TTUzdldRdWFSam05MlZzM1FKY0YrOHdLeXFZQ0xaN2Qydzh3eGFXTHRzK01S?=
- =?utf-8?B?MmpkMTFDY0JORi9CNEpkczdIeGRZRjlZUHl2ZW96VmRCR1l6RHE0Z0NpdElD?=
- =?utf-8?B?R29ScFZ6V3N6U1lEUjdHUDlBeVJTb2VKUGNjUXNnM1d3ODM5R1gxZFptZUhL?=
- =?utf-8?B?LzBEbmNlSTM4bG8zcmVNZ3I2TVZQWVpUeUU5WU5VQXN2SktUcHFZMXN5S2h2?=
- =?utf-8?B?Y2RUdVkzWkZCT215L0RZcnFiaml5a2ducE1RNXQrK2t3bFBxeTk3UzJ6Rkl6?=
- =?utf-8?B?Rk5UNlBzc25Pd21UenhMSFNqVlNpeGJNOGgvaXNPRkpOMFRpZzc3RmY3VThw?=
- =?utf-8?B?Q29FdTBoZnZQbnZwU3FxS1U1ckhEY3NCek5velBzTUt3dkZDWHZxTStLK1BO?=
- =?utf-8?B?YUo3UzlVQUNYcGxnVVRTTXRtUVp4M21XSXVpclE5REYzeDhrM29TNW1KeWJG?=
- =?utf-8?B?UmlSbzZkMVZQVHRBVHNYdTJrWmRDNzZwZHI0SXl6dXErTmVzeEdjOEFaNmgr?=
- =?utf-8?B?YXRId2Y1elNsTjdaeVVkamdnYVpibU5ZL2UvSXBET0Q3bGsvZUg2SktMb05m?=
- =?utf-8?B?MFNPMjRodzBiTzhMa2ZyRjdKV3ZQeHgzanp0TWh2eHdYMWtUN1FPMmpZaUdi?=
- =?utf-8?B?SDJkODcyS1AvMFJjZmlTUmJEWGxtQkh3REduL2pwRXlmak1KajdnTHZaUGFh?=
- =?utf-8?B?MkU0QmFiazBvYjZhM3h0Zm50NEF3dG1pMnJaNjZCaTloRVR4a2gzZ0VMeXV3?=
- =?utf-8?B?S09HSktEcWFCTnU1Umd1Z0JUZkhQayszbDhNS1dyT1Q2MVY1YjIzTnQ1czBj?=
- =?utf-8?B?SFJmejBRTDBaVmJna0hxMWNReWV1UENoVUp4Y3dFOFdVd3E3ZjdCekVueEYw?=
- =?utf-8?B?ekZvejJXT2t2N1JNZ2xNSVpRNHN5YXZ3Ukh3RmF6UVYwNyt6OUFTUDNCSmdm?=
- =?utf-8?B?S05Zd2YyeHh4LzJmSmo5V3VoUnovRmZxbVlhWW1CWVNOakJaVmMra2dzUS92?=
- =?utf-8?B?QjNxMG9Kd0JMbnVCNDNyVnJZTExUMFovYW5iT0hzbElDTzNsc2FhTUNveXV5?=
- =?utf-8?B?eXMxVkxQRWZzb1RjdjMyZ1NuMTh6QllwajhCQnp0MDhSNmd3Mkx2V3Y1ZWFU?=
- =?utf-8?B?YlVPQzNEeXZqSythQW9vYTJyamdzekVxUFlmdWNKck84VVgrek1zUzJGV1FL?=
- =?utf-8?B?UzMrNnFTQm1jdWZvT0dWMENJK1VMaktsZ25hM3RJblk5bnNmdFhoU2tVaXA0?=
- =?utf-8?B?cVhSNjI4SmV6TGNvVVFKK2RDUW01cXJGTmo2QzFnWDYrV2dEZ0dKWWdQMXQ2?=
- =?utf-8?B?UDdrWXdIalorNEJLcWY2bEJBZ0NjZE02bDBJQk9XRHk5VGQvcmtBZzdPQWh0?=
- =?utf-8?B?S0lPNk5neDNMYXBOL1RCMFBTdHl2Sis0ZlFvTW9HSWlqbTJGSHhNY2pZVjJL?=
- =?utf-8?B?UjVqbmdFcU1vMmdiZWhmdjVMZWZtTjZwWWl1MktIeHh1a010SWJteWhkWFAv?=
- =?utf-8?B?dGJMUXcrVnV1TTlUZU92NkI4RllUQjIrTzFManFWcHdzR0Y2S3RvMk5idzdo?=
- =?utf-8?B?MUdFR1QzZlVqSmFWTzZLSzJOQjc3SkRybDdoK3RlOU5GWld1eEVwaUJ2K1Ns?=
- =?utf-8?B?Z3lpdFN1anNjWVYveVpPMFRycG5JMU8rUWlXTHFndzE0MlFYTFhkV2RYZDdp?=
- =?utf-8?B?KzVlZXljZmg4UHU4aUpBWXcxRGlkQlRUQVoycjRaT2VtMlVqMXpmOFBvbTNa?=
- =?utf-8?B?NnM5WTBwcFllNXIwSVVGdWVMZElGZ3BDZDhRb2trR2lGcjRDTDZHc0d3Z2Zq?=
- =?utf-8?B?RXJzQlZQWmpyWXlVZ01zUkFEVjZNZ0lmRFZMUm1nOEoyTjlYK1ZLeFdpdUc1?=
- =?utf-8?B?VllhUThLQTBsY3Fyb0VpZG5naXdkVHI3bWZyY0NrRWFLSkVIRXpTL3RQVTBI?=
- =?utf-8?Q?2n/pcHrsw+0ht3G4ddqAlNqdt?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9e9a82fc-95c7-4381-04c9-08dafaf23c22
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4363.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jan 2023 14:25:52.7512
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qmL/2JM/dZqsBCIA4BAyWGSEMv5J5uaIIPZ45rBTWJUMMZCeAwtOcMd9fXNLSoNtIqtDHzqKtB0x6rjAWDXRFA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7302
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 4/8] bundle-uri: download in creationToken order
+To:     Victoria Dye <vdye@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, avarab@gmail.com,
+        steadmon@google.com, chooglen@google.com
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+ <57c0174d3752fb61a05e0653de9d3057616ed16a.1673037405.git.gitgitgadget@gmail.com>
+ <ede340d1-bce4-0c1d-7afb-4874a67d1803@github.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <ede340d1-bce4-0c1d-7afb-4874a67d1803@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On 2023-01-20 08:07, Luben Tuikov wrote:
-> On 2023-01-19 20:24, Michael Strawbridge wrote:
->> To allow further flexibility in the Git hook, the SMTP header
->> information of the email which git-send-email intends to send, is now
->> passed as the 2nd argument to the sendemail-validate hook.
->>
->> As an example, this can be useful for acting upon keywords in the
->> subject or specific email addresses.
->>
->> Cc: Luben Tuikov <luben.tuikov@amd.com>
->> Cc: Junio C Hamano <gitster@pobox.com>
->> Cc: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> Acked-by: Luben Tuikov <luben.tuikov@amd.com>
->> Signed-off-by: Michael Strawbridge <michael.strawbridge@amd.com>
->> ---
->>  Documentation/githooks.txt | 27 ++++++++++++++++++----
->>  git-send-email.perl        | 46 ++++++++++++++++++++++----------------
->>  t/t9001-send-email.sh      | 27 ++++++++++++++++++++--
->>  3 files changed, 75 insertions(+), 25 deletions(-)
->>
->> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
->> index a16e62bc8c..0decbfc92d 100644
->> --- a/Documentation/githooks.txt
->> +++ b/Documentation/githooks.txt
->> @@ -583,10 +583,29 @@ processed by rebase.
->>  sendemail-validate
->>  ~~~~~~~~~~~~~~~~~~
->>  
->> -This hook is invoked by linkgit:git-send-email[1].  It takes a single parameter,
->> -the name of the file that holds the e-mail to be sent.  Exiting with a
->> -non-zero status causes `git send-email` to abort before sending any
->> -e-mails.
->> +This hook is invoked by linkgit:git-send-email[1].
+On 1/19/2023 1:32 PM, Victoria Dye wrote:> Derrick Stolee via GitGitGadget wrote:
+>> +static int fetch_bundles_by_token(struct repository *r,
+>> +				  struct bundle_list *list)
+>> +{
+>> +	int cur;
+>> +	int pop_or_push = 0;
+>> +	struct bundle_list_context ctx = {
+>> +		.r = r,
+>> +		.list = list,
+>> +		.mode = list->mode,
+>> +	};
+>> +	struct sorted_bundle_list sorted = {
+>> +		.alloc = hashmap_get_size(&list->bundles),
+>> +	};
 >> +
->> +It takes these command line arguments. They are,
->> +1. the name of the file which holds the contents of the email to be sent.
->> +2. The name of the file which holds the SMTP headers of the email.
+>> +	ALLOC_ARRAY(sorted.items, sorted.alloc);
 >> +
->> +The SMTP headers are passed in the exact same way as they are passed to the
->> +user's Mail Transport Agent (MTA). In effect, the email given to the user's
->> +MTA, is the contents of $2 followed by the contents of $1.
+>> +	for_all_bundles_in_list(list, insert_bundle, &sorted);
 >> +
->> +Below is an example for a few common headers. Take notice of the
-> "example of" not "for".
+>> +	QSORT(sorted.items, sorted.nr, compare_creation_token);
 >
-> This maybe clearer:
-> "An example of a few common headers is shown below. Take notice ..."
+> So, at this point, 'sorted' is ordered by *decreasing* creation token? With
+> the loop below being somewhat complex, it would be nice to have a comment
+> mention that explicitly so readers have a clear understanding of the
+> "initial state" before entering the loop.
 
-Good idea - I've fixed it locally.
+That's a good point, but also in my local version I have the following line:
 
->> +capitalization and multi-line tab structure.
+	QSORT(bundles.items, bundles.nr, compare_creation_token_decreasing);
+
+The comparison function was renamed based on Junio's feedback. After making
+that change, this line is more self-documenting. Do you still think that it
+needs a clarification comment if this rename occurs?
+
+>> +	/*
+>> +	 * Use a stack-based approach to download the bundles and attempt
+>> +	 * to unbundle them in decreasing order by creation token. If we
+>> +	 * fail to unbundle (after a successful download) then move to the
+>> +	 * next non-downloaded bundle (push to the stack) and attempt
+>> +	 * downloading. Once we succeed in applying a bundle, move to the
+>> +	 * previous unapplied bundle (pop the stack) and attempt to unbundle
+>> +	 * it again.
+>> +	 *
+>> +	 * In the case of a fresh clone, we will likely download all of the
+>> +	 * bundles before successfully unbundling the oldest one, then the
+>> +	 * rest of the bundles unbundle successfully in increasing order
+>> +	 * of creationToken.
+>> +	 *
+>> +	 * If there are existing objects, then this process may terminate
+>> +	 * early when all required commits from "new" bundles exist in the
+>> +	 * repo's object store.
+>> +	 */
+>> +	cur = 0;
+>> +	while (cur >= 0 && cur < sorted.nr) {
+>> +		struct remote_bundle_info *bundle = sorted.items[cur];
+>> +		if (!bundle->file) {
+>> +			/* Not downloaded yet. Try downloading. */
+>> +			if (download_bundle_to_file(bundle, &ctx)) {
+>> +				/* Failure. Push to the stack. */
+>> +				pop_or_push = 1;
+>> +				goto stack_operation;
+>
+> Personally, I find the use of "stack" terminology more confusing than not.
+> 'sorted' isn't really a stack, it's a list with fixed contents being
+> traversed stepwise with 'cur'. For example, 'pop_or_push' being renamed to
+> 'move_direction' or 'step' something along those lines might more clearly
+> indicate what's actually happening with 'cur' & 'sorted'.
+
+s/pop_or_push/move_direction/ makes a lot of sense.
+
+I'll think about describing the strategy differently to avoid the "stack"
+language. Mentally, I'm constructing a stack of "downloaded but unable to
+unbundle bundles", but they aren't actually arranged that way in any
+explicit structure. Instead, they are just the bundles in the list that
+have a file but haven't been unbundled.
+
+>> +			}
 >> +
->> +  From: Example <from@example.com>
->> +  To: to@example.com
->> +  Cc: cc@example.com,
->> +	  A <author@example.com>,
->> +	  One <one@example.com>,
->> +	  two@example.com
->> +  Subject: PATCH-STRING
+>> +			/* We expect bundles when using creationTokens. */
+>> +			if (!is_bundle(bundle->file, 1)) {
+>> +				warning(_("file downloaded from '%s' is not a bundle"),
+>> +					bundle->uri);
+>> +				break;
+>> +			}
+>> +		}
 >> +
->> +Exiting with a non-zero status causes `git send-email` to abort
->> +before sending any e-mails.
->>  
->>  fsmonitor-watchman
->>  ~~~~~~~~~~~~~~~~~~
->> diff --git a/git-send-email.perl b/git-send-email.perl
->> index 42f135a266..0e595d6ac5 100755
->> --- a/git-send-email.perl
->> +++ b/git-send-email.perl
->> @@ -785,16 +785,31 @@ sub is_format_patch_arg {
->>  	push @files, $repo->command('format-patch', '-o', File::Temp::tempdir(CLEANUP => 1), @rev_list_opts);
->>  }
->>  
->> -@files = handle_backup_files(@files);
->> +if (defined $sender) {
->> +	$sender =~ s/^\s+|\s+$//g;
->> +	($sender) = expand_aliases($sender);
->> +} else {
->> +	$sender = $repoauthor->() || $repocommitter->() || '';
+>> +		if (bundle->file && !bundle->unbundled) {
+>> +			/*
+>> +			 * This was downloaded, but not successfully
+>> +			 * unbundled. Try unbundling again.
+>> +			 */
+>> +			if (unbundle_from_file(ctx.r, bundle->file)) {
+>> +				/* Failed to unbundle. Push to stack. */
+>> +				pop_or_push = 1;
+>> +			} else {
+>> +				/* Succeeded in unbundle. Pop stack. */
+>> +				pop_or_push = -1;
+>> +			}
+>> +		}
+>> +
+>> +		/*
+>> +		 * Else case: downloaded and unbundled successfully.
+>> +		 * Skip this by moving in the same direction as the
+>> +		 * previous step.
+>> +		 */
+>> +
+>> +stack_operation:
+>> +		/* Move in the specified direction and repeat. */
+>> +		cur += pop_or_push;
+>> +	}
+>
+> After reading through this loop, I generally understood *what* its doing,
+> but didn't really follow *why* the download & unbundling is done like this.
+
+The commit message should be updated to point to refer to the previously-
+added test setup in t5558:
+
+# To get interesting tests for bundle lists, we need to construct a
+# somewhat-interesting commit history.
+#
+# ---------------- bundle-4
+#
+#       4
+#      / \
+# ----|---|------- bundle-3
+#     |   |
+#     |   3
+#     |   |
+# ----|---|------- bundle-2
+#     |   |
+#     2   |
+#     |   |
+# ----|---|------- bundle-1
+#      \ /
+#       1
+#       |
+# (previous commits)
+
+And then this can be used to motivate the algorithm. Suppose we have
+already downloaded commit 1 through a previous fetch. We try to download
+bundle-4 first, but it can't apply because it requires commits that are
+in bundle-3 _and_ bundle-2, but the client doesn't know which bundles
+contain those commits. Downloading bundle-3 successfully unbundles, so a
+naive algorithm would think we are "done" and expect to unbundle bundle-4.
+However, that unbundling fails, so we go deeper into the list to download
+bundle-2. That succeeds, and then retrying bundle-4 succeeds.
+
+> I needed to refer back to the design doc
+> ('Documentation/technical/bundle-uri.txt') to understand some basic
+> assumptions about bundles:
+>
+> - A new bundle's creation token should always be strictly greater than the
+>   previous newest bundle's creation token. I don't see any special handling
+>   for equal creation tokens, so my assumption is that the sorting of the
+>   list arbitrarily assigns one to be "greater" and it's dealt with that way.
+
+Yes, the bundle provider should not have equal values unless the bundles are
+truly independent. That could be clarified in that doc.
+
+> - The bundle with the lowest creation token should always be unbundleable,
+>   since it contains all objects in an initial clone.
+
+Yes, at least it should not have any required commits.
+
+> I do still have some questions, though:
+>
+> - Why would 'unbundle_from_file()' fail? From context clues, I'm guessing it
+>   fails if it has some unreachable objects (as in an incremental bundle), or
+>   if it's corrupted somehow.
+
+You are correct. We assume that the data is well-formed and so the problem
+must be due to required commits not already present in the local object store.
+
+> - Why would 'download_bundle_to_file()' to fail? Unlike
+>   'unbundle_from_file()', it looks like that represents an unexpected error.
+
+Yes, that could fail for network issues such as a server error or other
+network failure. In such cases, the client should expect that we will not
+be able to download that bundle for the process's lifetime. We may be able
+to opportunistically download other bundles, but we will rely on the Git
+protocol to get the objects if the bundles fail.
+
+These failure conditions are not tested deeply (there are some tests from
+earlier series that test the behavior, but there is room for improvement).
+
+> Also - it seems like one of the assumptions here is that, if a bundle can't
+> be downloaded & unbundled, no bundle with a higher creation token can be
+> successfully unbundled ('download_bundle_to_file()' sets 'pop_or_push' to
+> '1', which will cause the loop to ignore all higher-token bundles and return
+> a nonzero value from the function).
+>
+> I don't think that assumption is necessarily true, though. Suppose you have
+> a "base" bundle 100 and incremental bundles 101 and 102. 101 has all objects
+> from a new branch A, and 102 has all objects from a newer branch B (not
+> based on any objects in A). In this case, 102 could be unbundled even if 101
+> is corrupted/can't be downloaded, but we'd run into issues if we store 102
+> as the "latest unbundled creation token" (because it implies that 101 was
+> unbundled).
+
+You are correct. bundle-3 can be unbundled even if bundle-2 fails in the
+test example above.
+
+> Is there any benefit to trying to unbundle those higher bundles *without*
+> advancing the "latest creation token"? E.g. in my example, unbundle 102 but
+> store '100' as the latest creation token?
+
+I will need to think more about this.
+
+Generally, most repositories that care about this will not have independent
+bundles because between every bundle creation step the default branch will
+advance. (Of course, exceptions can still occur, such as over weekends.)
+Thus, the latest bundle will have a required commit that only exists in the
+previous bundle. This algorithm and its error conditions are then looking
+for ways to recover when that is not the case.
+
+When a bundle fails to download, my gut feeling is that it is unlikely that
+it was completely independent of a bundle with higher creationToken. However,
+we have already downloaded that bundle and it is a very low cost to attempt
+an unbundling of it.
+
+The tricky part is that we want to avoid downloading _all_ the bundles just
+because one is failing to unbundle. If a failed download would cause the top
+bundle from unbundling, we don't want to go through the whole list of bundles
+even though they unbundle without issue. I'm thinking specifically about the
+incremental fetch case, where we don't want to blow up to a full clone worth
+of downloads.
+
+This deserves a little more attention, so I'll think more on it and get
+back to you.
+
+>>  	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
+>> -	git -C clone-list-http-2 cat-file --batch-check <oids
+>> +	git -C clone-list-http-2 cat-file --batch-check <oids &&
+>> +
+>> +	for b in 1 2 3 4
+>> +	do
+>> +		test_bundle_downloaded bundle-$b.bundle trace-clone.txt ||
+>> +			return 1
+>> +	done
+>
+> If I understand correctly, these added conditions would have passed even if
+> they were added when the test was initially created in patch 1, but they're
+> added here to tie them to the implementation of the creationToken heuristic?
+> Seems reasonable.
+
+They probably should have been added in patch 1 to be clear that behavior
+is not changing here.
+
+>> +'
+>> +
+>> +test_expect_success 'clone bundle list (http, creationToken)' '
+>
+> This new test has the same name as the one above it - how does it differ
+> from that one? Whatever the difference is, can that be noted somehow in the
+> title or a comment?
+
+The title should change, pointing out that the bundle list is truncated
+and the rest of the clone is being fetched over the Git protocol. It will
+be expanded with fetches later, I think, but it should be better motivated
+in this patch, even if that is so.
+
+>> +# Usage: test_bundle_downloaded <bundle-id> <trace-filename>
+>> +test_bundle_downloaded () {
+>> +	cat >pattern <<-EOF &&
+>> +	"event":"child_start".*"argv":\["git-remote-https","$HTTPD_URL/$1.bundle"\]
+>> +	EOF
+>> +	grep -f pattern "$2"
 >> +}
->> +
->> +# $sender could be an already sanitized address
->> +# (e.g. sendemail.from could be manually sanitized by user).
->> +# But it's a no-op to run sanitize_address on an already sanitized address.
->> +$sender = sanitize_address($sender);
->> +
->> +$time = time - scalar $#files;
->>  
->>  if ($validate) {
->>  	foreach my $f (@files) {
->>  		unless (-p $f) {
->> +		        pre_process_file($f, 1);
->>  			validate_patch($f, $target_xfer_encoding);
->>  		}
->>  	}
->>  }
->>  
->> +@files = handle_backup_files(@files);
->> +
->>  if (@files) {
->>  	unless ($quiet) {
->>  		print $_,"\n" for (@files);
->> @@ -1043,18 +1058,6 @@ sub file_declares_8bit_cte {
->>  	}
->>  }
->>  
->> -if (defined $sender) {
->> -	$sender =~ s/^\s+|\s+$//g;
->> -	($sender) = expand_aliases($sender);
->> -} else {
->> -	$sender = $repoauthor->() || $repocommitter->() || '';
->> -}
->> -
->> -# $sender could be an already sanitized address
->> -# (e.g. sendemail.from could be manually sanitized by user).
->> -# But it's a no-op to run sanitize_address on an already sanitized address.
->> -$sender = sanitize_address($sender);
->> -
->>  my $to_whom = __("To whom should the emails be sent (if anyone)?");
->>  my $prompting = 0;
->>  if (!@initial_to && !defined $to_cmd) {
->> @@ -1214,10 +1217,6 @@ sub make_message_id {
->>  	#print "new message id = $message_id\n"; # Was useful for debugging
->>  }
->>  
->> -
->> -
->> -$time = time - scalar $#files;
->> -
->>  sub unquote_rfc2047 {
->>  	local ($_) = @_;
->>  	my $charset;
->> @@ -2101,11 +2100,20 @@ sub validate_patch {
->>  			chdir($repo->wc_path() or $repo->repo_path())
->>  				or die("chdir: $!");
->>  			local $ENV{"GIT_DIR"} = $repo->repo_path();
->> +
->> +			my ($recipients_ref, $to, $date, $gitversion, $cc, $ccline, $header) = gen_header();
->> +
->> +			require File::Temp;
->> +			my ($header_filehandle, $header_filename) = File::Temp::tempfile(
->> +                            ".gitsendemail.header.XXXXXX", DIR => $repo->repo_path());
->> +			print $header_filehandle $header;
->> +
->>  			my @cmd = ("git", "hook", "run", "--ignore-missing",
->>  				    $hook_name, "--");
->> -			my @cmd_msg = (@cmd, "<patch>");
->> -			my @cmd_run = (@cmd, $target);
->> +			my @cmd_msg = (@cmd, "<patch>", "<header>");
->> +			my @cmd_run = (@cmd, $target, $header_filename);
->>  			$hook_error = system_or_msg(\@cmd_run, undef, "@cmd_msg");
->> +			unlink($header_filehandle);
->>  			chdir($cwd_save) or die("chdir: $!");
->>  		}
->>  		if ($hook_error) {
->> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
->> index 1130ef21b3..8a5c111a24 100755
->> --- a/t/t9001-send-email.sh
->> +++ b/t/t9001-send-email.sh
->> @@ -540,7 +540,7 @@ test_expect_success $PREREQ "--validate respects relative core.hooksPath path" '
->>  	test_path_is_file my-hooks.ran &&
->>  	cat >expect <<-EOF &&
->>  	fatal: longline.patch: rejected by sendemail-validate hook
->> -	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <patch>'"'"' died with exit code 1
->> +	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <patch> <header>'"'"' died with exit code 1
->>  	warning: no patches were sent
->>  	EOF
->>  	test_cmp expect actual
->> @@ -559,12 +559,35 @@ test_expect_success $PREREQ "--validate respects absolute core.hooksPath path" '
->>  	test_path_is_file my-hooks.ran &&
->>  	cat >expect <<-EOF &&
->>  	fatal: longline.patch: rejected by sendemail-validate hook
->> -	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <patch>'"'"' died with exit code 1
->> +	fatal: command '"'"'git hook run --ignore-missing sendemail-validate -- <patch> <header>'"'"' died with exit code 1
->>  	warning: no patches were sent
->>  	EOF
->>  	test_cmp expect actual
->>  '
->>  
->> +test_expect_success $PREREQ "--validate hook supports header argument" '
->> +	write_script my-hooks/sendemail-validate <<-\EOF &&
->> +        if test "$#" -ge 2
->> +	then
-> There appears to be an extra indentation of the "if" statement.
-Good catch.  It was a matter of spaces and tabs combining that wasn't
-easy to see.
+>
+> This function is the same as the one created in 't5558'. Should it be moved
+> to 'lib-bundle.sh' or 'test-lib.sh' to avoid duplicate code?
+
+It's slightly different, but that is just because we are using the advertisement
+and thus we never download a bundle-list and always download .bundle files. That
+is not an important distinction and I expect to replace it with the
+test_remote_https_urls() helper discussed in an earlier response.
+
+Thanks,
+-Stolee
