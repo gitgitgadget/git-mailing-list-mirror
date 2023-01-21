@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67B9FC38141
-	for <git@archiver.kernel.org>; Sat, 21 Jan 2023 01:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87AABC27C76
+	for <git@archiver.kernel.org>; Sat, 21 Jan 2023 01:55:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbjAUBzq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 20:55:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41844 "EHLO
+        id S229722AbjAUBzr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 20:55:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41866 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229667AbjAUBzl (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229693AbjAUBzl (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 20 Jan 2023 20:55:41 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B639A71BF3
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 17:55:33 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id m15so5317003wms.4
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 17:55:33 -0800 (PST)
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E43F80BA1
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 17:55:34 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so4909469wmq.0
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 17:55:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ClNPjRAf26eSVe0VCv+WyY36E4T/Isg99sFUT82jjsc=;
-        b=deZ+H8ZoO1z98bcnjuhCqcuv0lpI7aUnVRlDPcK5ApIG+QwR6cfNoGbqVElsgrhW2S
-         Wq5M8yZJ3cta8dMguonzIdlzoXRab3X1Jw8wSHox1IWLRz6qm7ZNpZjKWmUkMo/Ty0u2
-         Rc20IKOWEqRPdjV5sxKjCv7u2w+XEVBL++cQmwdcroNXY1SUACIoEhg/OdW988U7RdLz
-         xCnx2BCgFuIsPD0v07M8B97IvDYqvmNNLdkJaPaPYqbaxprDsPVgHbkSDLtfrKZAZnn4
-         2EgxOq/ljB8v2Qt6/8u53vZO7lCVvcu/I2xHDPanIftoE27UzYG+FxdfaoMGYbwUOIgu
-         qvtQ==
+        bh=iU/zm+ehbTRPkGabk6P07mnqrKUVBXehfmYvbw2TnME=;
+        b=X5ZyU1e7iYQqFrOCrfVDvrstlj4u+Ko+N+g8h2Gdp/Ohhylq93TQJvp0PeHHPDW2BA
+         aSEAVWwJ4jYHbQszCtgeHIEohf4WYDF83vUZ0qH2SwZsE5wgibxMNCFNQb1YGprwKkUj
+         lWJisnpye/my0Fsef8r40DPWUyEC6t8P8yqDKEI3CPQC/s/rxt0MCBBPFqHPNDnq7vBq
+         g5oteyB7YdpkV7MQT8/IQa+lQnsruoYka/JNlK4beP6PihrLgmZo35jjx1lzWt2SZWJz
+         09QVN4AkOGUU9YLK3/LkYGh6N4jlYf21o51ZciURJJ47Yy3bj9lJ2xo3bT1QdcYojN3F
+         NLxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ClNPjRAf26eSVe0VCv+WyY36E4T/Isg99sFUT82jjsc=;
-        b=zyzshy8gWGZphyjniwkKVa2QQ9aNg0YoLJAA1T4vW1ffrI1IpnywRL8COLfXQyJK4D
-         WvyCPBVYGPCXCYmvoav4ncST5Rpxvp9i/kBOyh/JJ7dQdYmJt0/sV6fDmsEk8HX4C//M
-         AQAZSBrq+fqvxVMIh7RS1fbvqSqsUZ1+8jHogiAa58BFdQtVK2vF42u6RS3R1Mq9nR9N
-         /6tKl94UTnsfN/3ELVf+os8NfKUL605kbB14M1TDrzeEtJGdsg3nZJZ4IA2Tp3HvblC7
-         SqCCsR7Ezn4l/w7PTmO+3Fx/RGMuzm3Sj7yxeq/y+76eb5a7zecTBYb+cVOb9LhDxQmA
-         TSVQ==
-X-Gm-Message-State: AFqh2kr0NQ7/GQ1i6c9lr2PxUqn9jG3L2Vz5p97a/3wwuR5sa2EmfEMT
-        msD6P65u2ZRMAgd0Oxpoy6fg71jcwps=
-X-Google-Smtp-Source: AMrXdXsdDZ/Q6DPW3hqvcbpuRW7KG/bo7rPgDw6hm91L9G2XyDy7WTH/7TY2LfkwR7oFd6wSnWhFzA==
-X-Received: by 2002:a05:600c:3b91:b0:3d3:5c9e:6b27 with SMTP id n17-20020a05600c3b9100b003d35c9e6b27mr12633648wms.12.1674266132054;
+        bh=iU/zm+ehbTRPkGabk6P07mnqrKUVBXehfmYvbw2TnME=;
+        b=3TS1X0p6vGgbNeD7Fayfz+Ohb1LdRDEvwUs9JapEfNOgLzcF95SZzeKxi45gXsH0o5
+         rf0eoUgfnfq4vvr3txhXnOvMeo8kTj7NaVwNtFGUC5cYWzg2IKhhRqydzzrOxKXC1oLa
+         +0o9XKgS+S6VJOKKv3/0MmdcyyZ8MHA8pooElNzzE0Wt3Ia49ZeS+n7wPyZHWoMf5zwD
+         UTX47X/EOQ7OHiP/bbTIesq+beUnyb8dIjOP+R83Cf9JPdwq7HYoFm6q9kR7OvhQxYe1
+         Pp8Xt6TrVCKSAixWTIheBHNiUE+ga0q1miCVuMGQboXkiaM8ktX3PHHFUuNF5U/CUmx3
+         Y6NQ==
+X-Gm-Message-State: AFqh2korB5zXAxxDCORvsajJt6MUu0VG1ylc6NOCapSQ2whuTezb4g12
+        HbKNWpOsHV8ukPlltsVguK8s/5NIZXA=
+X-Google-Smtp-Source: AMrXdXsJZkPRscTLXHOAB5Fb/7s/ghhYX1gQaKANR+C8cyeP0jqJH9j6xzJxMjcDUPu63+ilHN2UWQ==
+X-Received: by 2002:a05:600c:35d4:b0:3db:3694:b93c with SMTP id r20-20020a05600c35d400b003db3694b93cmr3315946wmq.15.1674266132756;
         Fri, 20 Jan 2023 17:55:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ba29-20020a0560001c1d00b002b065272da2sm16231936wrb.13.2023.01.20.17.55.31
+        by smtp.gmail.com with ESMTPSA id o6-20020a05600c378600b003d9fba3c7a4sm3780797wmr.16.2023.01.20.17.55.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 17:55:31 -0800 (PST)
-Message-Id: <48c40c0dda00eeb8b9bdc5ba9372b46964eea14a.1674266126.git.gitgitgadget@gmail.com>
+        Fri, 20 Jan 2023 17:55:32 -0800 (PST)
+Message-Id: <8664cce6cf7f42850176d852b5f866bf70e6ce07.1674266126.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
 References: <pull.1466.v2.git.1674190573.gitgitgadget@gmail.com>
         <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Jan 2023 01:55:24 +0000
-Subject: [PATCH v3 5/7] rebase: add coverage of other incompatible options
+Date:   Sat, 21 Jan 2023 01:55:25 +0000
+Subject: [PATCH v3 6/7] rebase: clarify the OPT_CMDMODE incompatibilities
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,101 +74,118 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The git-rebase manual noted several sets of incompatible options, but
-we were missing tests for a few of these.  Further, we were missing
-code checks for some of these, which could result in command line
-options being silently ignored.
+--edit-todo was documented as being incompatible with any of the options
+for the apply backend.  However, it is also incompatible with any of the
+options for the merge backend, and is incompatible with any options that
+are not backend specific as well.  The same can be said for --continue,
+--skip, --abort, --quit, etc.
+
+This is already somewhat implicitly covered by the synopsis, but since
+"[<options>]" in the first two variants are vague it might be easy to
+miss this.  That might not be a big deal, but since the rebase manpage
+has to spend so much verbiage about incompatibility of options, making
+a separate section for these options that are incompatible with
+everything else seems clearer.  Do that, and remove the needless
+inclusion of --edit-todo in the explicit incompatibility list.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/rebase.c                       | 21 ++++++++++++++-------
- t/t3422-rebase-incompatible-options.sh | 20 ++++++++++++++++++++
- 2 files changed, 34 insertions(+), 7 deletions(-)
+ Documentation/git-rebase.txt | 61 +++++++++++++++++++-----------------
+ 1 file changed, 33 insertions(+), 28 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 2a5e0e8a7a0..6dcdb59bb02 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1238,6 +1238,17 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		if (options.fork_point < 0)
- 			options.fork_point = 0;
- 	}
-+	/*
-+	 * reapply_cherry_picks is slightly weird.  It starts out with a
-+	 * value of -1.  It will be assigned a value of keep_base below and
-+	 * then handled specially.  The apply backend is hardcoded to
-+	 * behave like reapply_cherry_picks==1, so if it has that value, we
-+	 * can just ignore the flag with the apply backend.  Thus, we only
-+	 * really need to throw an error and require the merge backend if
-+	 * reapply_cherry_picks==0.
-+	 */
-+	if (options.reapply_cherry_picks == 0)
-+		imply_merge(&options, "--no-reapply-cherry-picks");
- 	/*
- 	 * --keep-base defaults to --reapply-cherry-picks to avoid losing
- 	 * commits when using this option.
-@@ -1420,13 +1431,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (options.empty != EMPTY_UNSPECIFIED)
- 		imply_merge(&options, "--empty");
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 3f12d242d83..00a9e22bc32 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -201,6 +201,39 @@ Alternatively, you can undo the 'git rebase' with
  
--	/*
--	 * --keep-base implements --reapply-cherry-picks by altering upstream so
--	 * it works with both backends.
--	 */
--	if (options.reapply_cherry_picks && !keep_base)
--		imply_merge(&options, "--reapply-cherry-picks");
+     git rebase --abort
+ 
++MODE OPTIONS
++------------
++
++The options in this section cannot be used with any other option,
++including not with each other:
++
++--continue::
++	Restart the rebasing process after having resolved a merge conflict.
++
++--skip::
++	Restart the rebasing process by skipping the current patch.
++
++--abort::
++	Abort the rebase operation and reset HEAD to the original
++	branch. If `<branch>` was provided when the rebase operation was
++	started, then `HEAD` will be reset to `<branch>`. Otherwise `HEAD`
++	will be reset to where it was when the rebase operation was
++	started.
++
++--quit::
++	Abort the rebase operation but `HEAD` is not reset back to the
++	original branch. The index and working tree are also left
++	unchanged as a result. If a temporary stash entry was created
++	using `--autostash`, it will be saved to the stash list.
++
++--edit-todo::
++	Edit the todo list during an interactive rebase.
++
++--show-current-patch::
++	Show the current patch in an interactive rebase or when rebase
++	is stopped because of conflicts. This is the equivalent of
++	`git show REBASE_HEAD`.
++
+ OPTIONS
+ -------
+ --onto <newbase>::
+@@ -242,22 +275,6 @@ See also INCOMPATIBLE OPTIONS below.
+ <branch>::
+ 	Working branch; defaults to `HEAD`.
+ 
+---continue::
+-	Restart the rebasing process after having resolved a merge conflict.
 -
- 	if (gpg_sign)
- 		options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
+---abort::
+-	Abort the rebase operation and reset HEAD to the original
+-	branch. If `<branch>` was provided when the rebase operation was
+-	started, then `HEAD` will be reset to `<branch>`. Otherwise `HEAD`
+-	will be reset to where it was when the rebase operation was
+-	started.
+-
+---quit::
+-	Abort the rebase operation but `HEAD` is not reset back to the
+-	original branch. The index and working tree are also left
+-	unchanged as a result. If a temporary stash entry was created
+-	using `--autostash`, it will be saved to the stash list.
+-
+ --apply::
+ 	Use applying strategies to rebase (calling `git-am`
+ 	internally).  This option may become a no-op in the future
+@@ -338,17 +355,6 @@ See also INCOMPATIBLE OPTIONS below.
+ +
+ See also INCOMPATIBLE OPTIONS below.
  
-@@ -1525,6 +1529,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (options.update_refs)
- 		imply_merge(&options, "--update-refs");
+---skip::
+-	Restart the rebasing process by skipping the current patch.
+-
+---edit-todo::
+-	Edit the todo list during an interactive rebase.
+-
+---show-current-patch::
+-	Show the current patch in an interactive rebase or when rebase
+-	is stopped because of conflicts. This is the equivalent of
+-	`git show REBASE_HEAD`.
+-
+ -m::
+ --merge::
+ 	Using merging strategies to rebase (default).
+@@ -644,7 +650,6 @@ are incompatible with the following options:
+  * --no-keep-empty
+  * --empty=
+  * --reapply-cherry-picks
+- * --edit-todo
+  * --update-refs
+  * --root when used without --onto
  
-+	if (options.autosquash)
-+		imply_merge(&options, "--autosquash");
-+
- 	if (options.type == REBASE_UNSPECIFIED) {
- 		if (!strcmp(options.default_backend, "merge"))
- 			imply_merge(&options, "--merge");
-diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-index f86274990b0..c830025470f 100755
---- a/t/t3422-rebase-incompatible-options.sh
-+++ b/t/t3422-rebase-incompatible-options.sh
-@@ -50,6 +50,11 @@ test_rebase_am_only () {
- 		test_must_fail git rebase $opt --strategy-option=ours A
- 	"
- 
-+	test_expect_success "$opt incompatible with --autosquash" "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --autosquash A
-+	"
-+
- 	test_expect_success "$opt incompatible with --interactive" "
- 		git checkout B^0 &&
- 		test_must_fail git rebase $opt --interactive A
-@@ -60,6 +65,21 @@ test_rebase_am_only () {
- 		test_must_fail git rebase $opt --exec 'true' A
- 	"
- 
-+	test_expect_success "$opt incompatible with --keep-empty" "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --keep-empty A
-+	"
-+
-+	test_expect_success "$opt incompatible with --empty=..." "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --empty=ask A
-+	"
-+
-+	test_expect_success "$opt incompatible with --no-reapply-cherry-picks" "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --no-reapply-cherry-picks A
-+	"
-+
- 	test_expect_success "$opt incompatible with --update-refs" "
- 		git checkout B^0 &&
- 		test_must_fail git rebase $opt --update-refs A
 -- 
 gitgitgadget
 
