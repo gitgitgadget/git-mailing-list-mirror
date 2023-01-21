@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BA75CC004D4
-	for <git@archiver.kernel.org>; Sat, 21 Jan 2023 19:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FEB9C38141
+	for <git@archiver.kernel.org>; Sat, 21 Jan 2023 20:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229686AbjAUTua (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Jan 2023 14:50:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38902 "EHLO
+        id S229815AbjAUUE2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Jan 2023 15:04:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbjAUTu3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jan 2023 14:50:29 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BCF1E1EB
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 11:50:28 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id q5so2896378wrv.0
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 11:50:27 -0800 (PST)
+        with ESMTP id S229812AbjAUUE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jan 2023 15:04:27 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B727422A1F
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 12:04:25 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id d4-20020a05600c3ac400b003db1de2aef0so5935707wms.2
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 12:04:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4ardzAs4S3H+8810dLsUo7YJ5Co5n6t8jnnaFIMjfFA=;
-        b=UjvPe1wtq5tNVchQwMueepjeiMIvtLpcORubzK3PenKzreTwotpR0AF2NkKzFHpkLx
-         Ani3vDSw+4DuOOhGcSjMdXgSKkVSAF0BtusLJysvjtQTtj4gRNmcCQjIdZx7Egr0aJxL
-         is7f6WFxD3JfsPoswRb9eI8oAD6l4Lt9N3Jlv7CrpPcgkPu+ZJsu3LV8vijFPTYU4u4F
-         F5XKNwvCSg/YXIOSA3+FptPeDYUHw9G/l6O9n5t3d/xTmS1AoZM03azibsNOadDsw13G
-         IejS/cdxI3XkkLvDZ7lW2r0PyiObDLd3qzWmndsotZMFyBLiUqgMED8l0UtniwmYMZ3o
-         0roQ==
+        bh=635tptHN5xDofEb7JyPgFkugYZzkGuVaXNmv7iWm0n0=;
+        b=fE0zcrK66KE8itPZesxthjn+Zk4U3My0kgCk3kXZhBuppXUzRTqKbgCg+NP8b/XhPI
+         2k8Rt6vcKXp+ZuI91EKTZLMaDGxnATEVtmjZ1geBpNRNqJaYj6+sIW5GwvafS1KnxPE2
+         x8eojMF8MXDG6eH/ZxL+Whx7jkOgfzlJ+jYy/eiA4Y9jKZLY4P3xb2teLrKyy4Owxrfn
+         6QmavvIZ6jV7dYYpyn1UBSPiLApdGTF8J3IEGQ909T26Lg7Cvenh65iM5yZ0JwoazxNZ
+         25U3/WlZZEYS9LQ8MsMz6ranL/MSM4kiryJuRX3WHJDD4MNDuyaObRsT6AiM1+djy1zr
+         19+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4ardzAs4S3H+8810dLsUo7YJ5Co5n6t8jnnaFIMjfFA=;
-        b=S+9oCpmC+FwWEfrkjGx4WY9/rZaujihyNBSjVcHrVvdVgeyB6OL/ZYYT/Mgn3gAvdk
-         FD0ezmUZP2ycJ/EQk2gpBPknd0UL+/Tr+vu0MFWVw4ELtNjMpsKOAzchrhweovX09QVR
-         oZ8v5W2Ixlqajr0UrwnCdUsEC+gMgP0AbiCiLloE75zA+K/3CqFVE63UH8bXhjTPZku3
-         fYO0Cm038Ngr5JLoQKGDnMysUGSR8EXTSQSNKa22SkHsJX0hmo/ATZjfYZTTwGFf2k2E
-         LM2kT7LkgVRS6ZljjLwx2+vd+WDrgnMi/dEmcMDXA5hdtVlch+SQ4M2Ywa4B7MiRuwLE
-         DD7g==
-X-Gm-Message-State: AFqh2kqOY9BoEadTvThY13WR+rk8vZYwbXFB+bCkQ3V+N0osx8ojCexQ
-        XCVY5/WYpQm3uN8spivSoHO+/mUSRIY=
-X-Google-Smtp-Source: AMrXdXtJzK2qbH7SXcdexjYlxLr7+t843YGDGPVBl7WJrOR20tvrttrK4F8YrxD/virlySQF/6RFAQ==
-X-Received: by 2002:a5d:464f:0:b0:2be:4fbe:42d2 with SMTP id j15-20020a5d464f000000b002be4fbe42d2mr6845284wrs.15.1674330626319;
-        Sat, 21 Jan 2023 11:50:26 -0800 (PST)
+        bh=635tptHN5xDofEb7JyPgFkugYZzkGuVaXNmv7iWm0n0=;
+        b=d8RJeDmx3G/WBQZbcoBEvAXbHSzzIxXz0InAlcqBjHLuVrX45YCtihgrXhyPf8CRFg
+         eLhlOWwB0+2mzTC4QTUQXWc8TOPyYix24ZAmbPEwt4X36Ft3KNGYzIhq88nXKMIMI7it
+         3OZpo0za10+z6FoLF4uEi51YmQnESwIK9SWbWLgSH/ewhA7N1W+Qp6vYHIscM4CKJRGg
+         jjFfSp1vZ/RiMkg1pNM232JmE4QVAp0nSek2KYU+23ne25kbzfcvT4yss/Tt1WJggdYl
+         EJJsTqTc9L4LNV2C+txtgTNAsNOiByD6DG0xEk27zed4517vLz+LF23WETB7vfV4ShGB
+         vcpg==
+X-Gm-Message-State: AFqh2kqgcCFCBY72sHDzjoiev3yrY44oE28TkPoDjEuZ5eBM+x8JXukp
+        r4RpxjLwd7hnulCYfvehv6LejDKXJ+w=
+X-Google-Smtp-Source: AMrXdXtAN3E9HwUSHWGxWBJKUt1yvmUtOSDlvoX8I3qnoIulNXe9owOoEfyXaN0wjxPJtTt3wVVj6g==
+X-Received: by 2002:a05:600c:4fd3:b0:3cf:7197:e68a with SMTP id o19-20020a05600c4fd300b003cf7197e68amr15031907wmq.18.1674331464045;
+        Sat, 21 Jan 2023 12:04:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m17-20020a056000025100b002b8fe58d6desm1156284wrz.62.2023.01.21.11.50.25
+        by smtp.gmail.com with ESMTPSA id p19-20020a1c5453000000b003db09692364sm6033563wmi.11.2023.01.21.12.04.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Jan 2023 11:50:25 -0800 (PST)
-Message-Id: <pull.1438.v3.git.git.1674330625069.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1438.v2.git.git.1674149773693.gitgitgadget@gmail.com>
-References: <pull.1438.v2.git.git.1674149773693.gitgitgadget@gmail.com>
+        Sat, 21 Jan 2023 12:04:23 -0800 (PST)
+Message-Id: <pull.1438.v4.git.git.1674331462560.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1438.v3.git.git.1674330625069.gitgitgadget@gmail.com>
+References: <pull.1438.v3.git.git.1674330625069.gitgitgadget@gmail.com>
 From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Jan 2023 19:50:24 +0000
-Subject: [PATCH v3] mingw: replace deprecated GetVersion with RtlGetVersion
+Date:   Sat, 21 Jan 2023 20:04:22 +0000
+Subject: [PATCH v4] mingw: prefer RtlGetVersion over GetVersion
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,7 +83,7 @@ that is automatically loaded upon launch.
 
 Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
-    mingw: replace deprecated GetVersion with RtlGetVersion
+    mingw: prefer RtlGetVersion over GetVersion
     
     GetVersion has its behavior changed in Windows 8 and above anyway, so
     this is the right way to do it now.
@@ -93,61 +93,22 @@ Signed-off-by: Seija Kijin <doremylover123@gmail.com>
     
     Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1438%2FAtariDreams%2Fmingw-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1438/AtariDreams/mingw-v3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1438%2FAtariDreams%2Fmingw-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1438/AtariDreams/mingw-v4
 Pull-Request: https://github.com/git/git/pull/1438
 
-Range-diff vs v2:
+Range-diff vs v3:
 
- 1:  e5457905028 ! 1:  31f778a6b34 mingw: replace deprecated GetVersion with RtlGetVersion
-     @@ Commit message
-          returning the manifest Windows data
-          as opposed to the actual Windows data.
+ 1:  31f778a6b34 ! 1:  8293e868970 mingw: replace deprecated GetVersion with RtlGetVersion
+     @@ Metadata
+      Author: Seija Kijin <doremylover123@gmail.com>
       
-     -    RtlGetVersion is the correct way to get the Windows version now.
-     +    RtlGetVersion is the correct way
-     +    to get the Windows version now.
-     +
-     +    Note: ntdll does not need to be
-     +    manually loaded into the runtime,
-     +    as this is the one special library
-     +    that is automatically loaded upon launch.
+       ## Commit message ##
+     -    mingw: replace deprecated GetVersion with RtlGetVersion
+     +    mingw: prefer RtlGetVersion over GetVersion
       
-          Signed-off-by: Seija Kijin <doremylover123@gmail.com>
-      
-     @@ compat/mingw.c: int wmain(int argc, const wchar_t **wargv)
-       {
-      -	unsigned v = (unsigned)GetVersion();
-      +	union winprocaddr RtlGetVersionInternal;
-     -+	OSVERSIONINFOA version;
-     ++	OSVERSIONINFOW version;
-     ++
-     ++	memset(&version, 0, sizeof(version));
-     ++	version.dwOSVersionInfoSize = sizeof(version);
-      +
-     ++	/* RtlGetVersion always gets the true Windows version, even when running
-     ++	 * under Windows's compatibility mode*/
-      +	RtlGetVersionInternal.procaddr =
-      +		GetProcAddress(GetModuleHandleW(L"ntdll.dll"), "RtlGetVersion");
-     -+	if (!RtlGetVersionInternal.procaddr) {
-     -+		/* if this is reached, something is seriously, seriously wrong
-     -+		 */
-     -+		perror("Could not call RtlGetVersion in ntdll.dll");
-     -+		abort();
-     -+	}
-      +
-     -+	version.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-     -+	RtlGetVersionInternal.procGetVersion((PRTL_OSVERSIONINFOW)&version);
-     ++	if (RtlGetVersionInternal.procaddr) {
-     ++		RtlGetVersionInternal.procGetVersion((PRTL_OSVERSIONINFOW)&version);
-     ++	} else {
-     ++		/* Should not happen, but just in case, fallback to deprecated
-     ++		 * GetVersionExW */
-     ++		GetVersionExW(&version);
-     ++	}
-      +
-       	memset(buf, 0, sizeof(*buf));
-       	xsnprintf(buf->sysname, sizeof(buf->sysname), "Windows");
+          The previous way is deprecated and returns
+          the wrong value in Windows 8 and up,
 
 
  compat/mingw.c | 39 +++++++++++++++++++++++++++++++++------
