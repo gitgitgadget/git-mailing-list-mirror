@@ -2,259 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9F57C05027
-	for <git@archiver.kernel.org>; Fri, 20 Jan 2023 22:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05F3CC05027
+	for <git@archiver.kernel.org>; Sat, 21 Jan 2023 01:34:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229947AbjATWMg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 17:12:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60526 "EHLO
+        id S229617AbjAUBey (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 20:34:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbjATWMf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2023 17:12:35 -0500
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD98B36442
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 14:12:33 -0800 (PST)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-15eec491b40so7777128fac.12
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 14:12:33 -0800 (PST)
+        with ESMTP id S229608AbjAUBew (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2023 20:34:52 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 118096A331
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 17:34:51 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id j17so10543944lfr.3
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 17:34:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=etzT1McAHxL0/TAqb5q14RcEMlLYzKPbcSEbsSLm/sE=;
-        b=hgRTDoZrvzexINzX2YvwgJqqb2oXYJ4O1zhz/WVhNeL6tKQTrL7HRWDsIxphalkZN3
-         Xhu1AYjtvTPxpWbCXCGdzbUy28M8ShJEQUWzJHMxJu2q3xTKSiKHXPQOcdKjtbdap2pk
-         +LWQYBafZ46GK9b2dMAt4yydTOIQJc8gNqFraUp+M0saazDHwT5TX48bTzrgiGAyYXJP
-         WYIupSepErM4BcF91MGCZf0onXvSFSiIs7PuiOMO8NsYPYIRlk6Iizv4QpWVz7NmsScd
-         Mb3CPHMfbIcElUae4uzARqySmUnyDVLo/IWRrzuGIHR6A3eTDj2yqPoqiUIBkJ48WRCw
-         4K0w==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=FxGAu8a8+6nwKe+SC+UNYdvJfQ/HiT9nAGwH5VEno6w=;
+        b=gMjIDw4fM7UzRg7wBFROciI+fpH81XG8XRAtyGsYslNivzrHXyF3tt6q4fZ58fcei4
+         Kc4rWrdpoUzmRsU5dVn0veRFArEPFHf1zriwBb3Dw+bbdFHmmj/cXCocCiMaamPqZB1/
+         PLHWpbZhYFZL1hNs7VFv/9MxwRlAZlFYA0MrzZk/rnNK28c3Wk9V9E5NOWv+PrUYjTc+
+         iqZaT2i+7ZnEs8NH7Ax/6A643BvgOZpGsHssFsXNN835Lew4CAHd9Jxd3zIw4XU+OSA1
+         IzYL/0ei+tLsKb7IMKRNO5APdHrESR+yRHbDo72wXs1wlMr9YtcLqbtbXJFSFBJupBoQ
+         OyDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=etzT1McAHxL0/TAqb5q14RcEMlLYzKPbcSEbsSLm/sE=;
-        b=1AXCXZhj65dCscC/aAoq2hOZa+kgLD0tzQX2qzoehVbnpR8X4aHGYUPrwIY21m+41+
-         a9SmNcjP11RASV8RRW0+qMAcifwNKAQpdySmnVzCQgiwLVp/Rv8ncyfX1gikLzFASUZy
-         V9tz+vmYIrL5Spti7VGkfdgLHxmXNKYRCTJto9SPrIuED+s13T8fj3vm8VF3dwmWXwUu
-         IYaB/1Ue/Ch7NQsfC+RxLuAg3kIX92/L8q7dNPFcvcsTWKm+6j3+p51Iqy8qoNRQ5WKR
-         AsxhMVEeXvXNh7z5XNaX6vce/hRu/5ARGNv5V+FOu/Hfj2fPBnJvUeGUB+CPOKse8zAj
-         zdNw==
-X-Gm-Message-State: AFqh2ko0TeWslvhncU9rHo0pX30mH0Gj3gEUAUFPvvQvM4Dc6cyBSOo+
-        lOf1oZ4QR1hxR3CAwLh1Ezj7vhp/Qpn5ZLUUpvwruBiMcak=
-X-Google-Smtp-Source: AMrXdXuzIF/z9L9qkMxksezhMl+TobrY0JOEp+bjW0yItFo3fbYROr7f3n8xJ4dQY/0UPfgRSlKC+k4XBoJPpuFKDk0=
-X-Received: by 2002:a05:6870:bc01:b0:15f:33b4:879b with SMTP id
- oa1-20020a056870bc0100b0015f33b4879bmr1097296oab.59.1674252752356; Fri, 20
- Jan 2023 14:12:32 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FxGAu8a8+6nwKe+SC+UNYdvJfQ/HiT9nAGwH5VEno6w=;
+        b=yOKeVuHC+hsv2MvAKpyOW+wnLe5KDex0ugnYX3lqJ6B6a4zFlmGWsD9OsXtZiMak6N
+         X3v8z+DptY11Wmoz+Rs9ZLzuA7OHbSopSF4x+T17+nluA0hNMd5WuWQCXdU1llzSJYZa
+         v/B4m1hczkY51KYIz2zMJN2xwOyhyMNrdKFyAnywM972icZn3bzH2hXuaj+fimiwZfW9
+         3YkG2Qxdj05n25TPtlB3jzF0RrvwuRrA9wQY6QQxS5UJrEaYXV6tmpWjfYg9bi2bjKDS
+         72jqUdwko4HEmQjtPBKAcZEsbcUHR+kcb+oJEytJ7pnPLASespRkg6tgI6sKkruTLj+w
+         yGbA==
+X-Gm-Message-State: AFqh2kq4K3SdpOSw56hCYqsmFJ4MiZKDE+dhysCxQXDxx+liW03SjR4C
+        f8aimMaSf0RAGyBimLglKsL7NGihTCJ8XqE2c/U=
+X-Google-Smtp-Source: AMrXdXvOTJixlj8Jqx/4GQuKBBWNi2WtX4B3y2KsJkoqYMt4ysJQtkAoghC4vJCQ+P+Jo8Eq0cseqv3GBBSe63zNavw=
+X-Received: by 2002:a05:6512:3b9c:b0:4b5:9233:6e9b with SMTP id
+ g28-20020a0565123b9c00b004b592336e9bmr1658389lfv.394.1674264888910; Fri, 20
+ Jan 2023 17:34:48 -0800 (PST)
 MIME-Version: 1.0
-References: <20230119055325.1013-1-carenas@gmail.com> <20230120113553.24655-1-carenas@gmail.com>
- <8f24fc3c-c30f-dc70-5a94-5ee4ed3de102@dunelm.org.uk>
-In-Reply-To: <8f24fc3c-c30f-dc70-5a94-5ee4ed3de102@dunelm.org.uk>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Fri, 20 Jan 2023 14:12:21 -0800
-Message-ID: <CAPUEspjuXSncRxo5DMj1pA5zcYvn4Y6epdijYL6HJRGhk_6q7g@mail.gmail.com>
-Subject: Re: [PATCH v4] checkout/switch: disallow checking out same branch in
- multiple worktrees
+References: <pull.1466.git.1674106587550.gitgitgadget@gmail.com>
+ <pull.1466.v2.git.1674190573.gitgitgadget@gmail.com> <2e44d0b7e571cfac2a25d00f3fe3d143c895793b.1674190573.git.gitgitgadget@gmail.com>
+ <bb75c8e1-05d3-1359-e06a-ee013ae677da@dunelm.org.uk>
+In-Reply-To: <bb75c8e1-05d3-1359-e06a-ee013ae677da@dunelm.org.uk>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 20 Jan 2023 17:34:36 -0800
+Message-ID: <CABPp-BG8JmXApAsTVxpi2_8DpWi6ix-PhuOG6w=NwR0f=eA7xw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] rebase: mark --update-refs as requiring the merge backend
 To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
-        Jinwook Jeong <vustthat@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 20, 2023 at 7:08 AM Phillip Wood <phillip.wood123@gmail.com> wr=
-ote:
+On Fri, Jan 20, 2023 at 8:46 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >
-> On 20/01/2023 11:35, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-> > Commands `git switch -C` and `git checkout -B` neglect to check whether
-> > the provided branch is already checked out in some other worktree, as
-> > shown by the following:
-> >
-> >    $ git worktree list
-> >    .../foo    beefb00f [main]
-> >    $ git worktree add ../other
-> >    Preparing worktree (new branch 'other')
-> >    HEAD is now at beefb00f first
-> >    $ cd ../other
-> >    $ git switch -C main
-> >    Switched to and reset branch 'main'
-> >    $ git worktree list
-> >    .../foo    beefb00f [main]
-> >    .../other  beefb00f [main]
-> >
-> > Fix this problem by teaching `git switch -C` and `git checkout -B` to
-> > check whether the branch in question is already checked out elsewhere.
-> >
-> > Unlike what it is done for `git switch` and `git checkout`, that have
-> > an historical exception to ignore other worktrees if the branch to
-> > check is the current one (as required when called as part of other
-> > tools), the logic implemented is more strict and will require the user
-> > to invoke the command with `--ignore-other-worktrees` to explicitly
-> > indicate they want the risky behaviour.
-> >
-> > This matches the current behaviour of `git branch -f` and is safer; for
-> > more details see the tests in t2400.
+> Hi Elijah
 >
-> As I said before, it would be much easier for everyone else to
-> understand the changes if you wrote out what they were rather than
-> saying "look at the tests". I do appreciate the improved test
-> descriptions though - thanks for that.
-
-Apologies on that, I tried to come up with something that would
-describe the change of behaviour other than the paragraph above and
-couldn't come out with a better explanation except reading the tests
-(which I know is complicated by the fact they are interlinked).
-
-The behaviour I am changing is also not documented (other than by the
-test) and might have been added as a quirk to keep the scripted rebase
-and bisect going when confronted with branches that were checked out
-in multiple worktrees, and as such might had not be intended for
-`switch`, and might not be needed anymore either.
-
-Using`checkout` for simplicity, but also applies to `switch`,
-
-  % git worktree list
-  .../base  6a45aba [main]
-  % git worktree add -f ../other main
-  Preparing worktree (checking out 'main')
-  HEAD is now at 6a45aba init
-  % cd ../other
-  % git checkout main
-  Already on 'main'
-  % git checkout -B main
-  fatal: 'main' is already checked out at '.../base'
-  % git checkout --ignore-other-worktrees -B main
-  Already on 'main'
-
-The change of behaviour only applies to -B and it actually matches the
-documentation better.
-
-> > @@ -1533,13 +1534,13 @@ static int checkout_branch(struct checkout_opts=
- *opts,
-> >       if (!opts->can_switch_when_in_progress)
-> >               die_if_some_operation_in_progress();
+> Thanks for working on this
+>
+> On 20/01/2023 04:56, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
 > >
-> > -     if (new_branch_info->path && !opts->force_detach && !opts->new_br=
-anch &&
-> > -         !opts->ignore_other_worktrees) {
-> > +     if (!opts->ignore_other_worktrees && !opts->force_detach &&
-> > +         check_branch_path && ref_exists(check_branch_path)) {
+> > --update-refs is built in terms of the sequencer, which requires the
+> > merge backend.  It was already marked as incompatible with the apply
+> > backend in the git-rebase manual, but the code didn't check for this
+> > incompatibility and warn the user.  Check and warn now.
 >
-> I think check_branch_path is NULL if opts->ignore_other_worktrees is set
-> so we could maybe lose "!opts->ignore_other_worktrees" here (or possibly
-> below where you set check_branch_path).
+> Strictly speaking we die rather than warn but I don't think that
+> warrants a re-roll.
 
-opts->ignore_other_worktrees was kept from the original expression;
-you are correct that is not needed anymore, but I thought it didn't
-hurt and made the code intention clearer (meaning it is obvious to
-anyone new to the code that this code will be skipped if that flag is
-set), would using an assert or a comment be a better option?
+Oh, good catch.  I'm re-rolling anyway, so I might as well fix this.
 
-> >       /*
-> >        * Extract branch name from command line arguments, so
-> >        * all that is left is pathspecs.
-> > @@ -1741,6 +1751,9 @@ static int checkout_main(int argc, const char **a=
-rgv, const char *prefix,
-> >                                            new_branch_info, opts, &rev)=
-;
-> >               argv +=3D n;
-> >               argc -=3D n;
-> > +
-> > +             if (!opts->ignore_other_worktrees && !check_branch_path &=
-& new_branch_info->path)
-> > +                     check_branch_path =3D xstrdup(new_branch_info->pa=
-th);
->
-> I'm a bit confused what this is doing.
+> I just had a quick look to see how easy it would be
+> to add the advice Stolee's patch had if the user has set
+> rebase.updaterefs but does not pass "--no-update-refs" when using the
+> apply backend but it looks a bit fiddly unfortunately as we could die in
+> imply_merge() or later on.
 
-The branch we are interested in might come from 2 places, either it is
-a parameter to -b, which was picked up before, or it is the argument
-to the command itself, which was detected above.
+Yeah, and it gets even more finicky than that.  If the user specifies
+_any_ merge-specific options on the command line together with an
+apply-specific option, then there's no point bringing up
+rebase.updaterefs (or rebase.autosquash).  We only want to bring up
+those config options if they are the only reasons for getting a
+backends-are-incompatible error message.
 
-If both are provided, we want to make sure to use the one from -b, or
-will have the bug you sharply spotted before, which was frankly
-embarrassing.
+> Thinking more generally, imply_merge() does a good job of telling the
+> user which option is incompatible with "--apply" but if the user passes
+> a merge option with "--whitespace=fix" and omits "--apply" then we just
+> print a generic message saying "apply options and merge options cannot
+> be used together" which isn't terribly helpful to the user (doubly so
+> when the merge option come from a config setting).
 
-> > diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> > index d587e0b20d..7ab7e87440 100755
-> > @@ -133,17 +136,34 @@ test_expect_success SYMLINKS 'die the same branch=
- is already checked out (symlin
-> >       test_must_fail git -C here checkout newmain
-> >   '
-> >
-> > -test_expect_success 'not die the same branch is already checked out' '
-> > +test_expect_success 'allow creating multiple worktrees for same branch=
- with force' '
-> > +     git worktree add --force anothernewmain newmain
-> > +'
-> > +
-> > +test_expect_success 'allow checkout/reset from the conflicted branch' =
-'
->
-> I'm not sure what "the conflicted branch" means (it reminds we of merge
-> conflicts).
+That's not specific to --whitespace=fix (it also happens with -C, and
+in the past happened with other options that used to only work with
+the apply backend).  In particular, it's whenever both backends are
+implied -- in those cases, we don't try to keep track of which options
+implied it and thus only provide a very generic error message.
 
-by "conflicted" I meant one that is checked out in more than one worktree
+> I've also noticed that "--autosquash" is ignored if we end up using the
+> apply backend. That's a separate issue but shares the "this may have
+> come from a config setting rather than a command line argument" problem.
 
-> Is this just testing that "checkout -b/B <branch>
-> <start-point>" works?
+Yeah, Stolee also pointed this one out...and --autosquash was missing
+the same incompatible-with-apply-options warnings too.
 
-yes, but most importantly that we chose the right branch to check if
-both are provided and <start-point> is also a branch
+> All in all I'm not sure if it is friendlier to die when the user has
+> rebsase.updaterefs set and they try to rebase with "--whitespace=fix" or
+> if it is better just to ignore the config in that case. If we can find a
+> way to print some help when we die in that case it would be nicer for
+> the user.
 
-> >       (
-> >               cd here &&
-> > -             git worktree add --force anothernewmain newmain
-> > +             git checkout -b conflictedmain newmain &&
-> > +             git checkout -B conflictedmain newmain &&
-> > +             git switch -C conflictedmain newmain
-> > +     )
-> > +'
-> > +
-> > +test_expect_success 'and not die on re-checking out current branch eve=
-n if conflicted' '
->
-> I think 'allow re-checking out ...' would be clearer, again I'm not sure
-> what's conflicted here.
+I think ignoring it would be worse, as I argued over at [1].  But
+another thing to keep in mind is that we can eventually make the
+question obsolete by deprecating and eventually removing the apply
+backend, as suggested by Junio[2].  That would allow us to remove all
+the incompatibility checking and simplify the manual.
 
-ok
 
-> > +     (
-> > +             cd there &&
-> > +             git checkout newmain &&
-> > +             git switch newmain
-> >       )
-> >   '
-> >
-> > -test_expect_success 'not die on re-checking out current branch' '
-> > +test_expect_failure 'unless using force without --ignore-other-worktre=
-es' '
->
-> This test passes for me - what's the reason for changing from
-> test_expect_success to test_expect_failure?
-
-It also works for me, and for Junio, but somehow it didn't in the last
-runs from the CI and you could reproduce locally by going to the tree
-created above in the example I provided and doing:
-
-  % cd ../base
-  % git checkout -B main
-
-which should fail after finding that main is already checked out in
-`other`, but does not because when looking at the worktrees would
-first find the current one and not die, never aware there is another
-worktree with that same branch.
-
-the bug is the same one that Rub=C3=A9n is trying to address for rebase and
-that you commented on as well and that was mentioned before in this
-thread:
-
-  https://lore.kernel.org/git/eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.co=
-m/
-
-Carlo
+[1] https://lore.kernel.org/git/CABPp-BHDhpSVpuaubTP=smWaf7FBmpzB-_Frh0Dn5oN+vx0xzw@mail.gmail.com/
+[2] See "longer term goal" of
+https://lore.kernel.org/git/xmqqa78d2qmk.fsf@gitster-ct.c.googlers.com/
