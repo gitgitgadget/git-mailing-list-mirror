@@ -2,64 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1A15C004D4
-	for <git@archiver.kernel.org>; Sat, 21 Jan 2023 15:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1565C004D4
+	for <git@archiver.kernel.org>; Sat, 21 Jan 2023 15:20:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229805AbjAUPJj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Jan 2023 10:09:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44526 "EHLO
+        id S229699AbjAUPUi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Jan 2023 10:20:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbjAUPJh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jan 2023 10:09:37 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C076233FC
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 07:09:36 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id bk15so20683306ejb.9
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 07:09:36 -0800 (PST)
+        with ESMTP id S229450AbjAUPUh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jan 2023 10:20:37 -0500
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1F78298C3
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 07:20:35 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id x10so9904368edd.10
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 07:20:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2e/oIYBQGnCmgk7Qb+LgC+pTIjzw8A/j3NNWlS1J7O0=;
-        b=d3bxLgNVVXudfnGRLu4SCkj/ijwKjiL5ujzmk4hPEVtdQazRejgsl0+hNLjmWoQlYu
-         kNbfwE741zziqB0XBSd6EmZINZmCWkqHeUCo32eL61hCWuG2hL7LGRRvUXt3i17NFy5H
-         y/uq7g3DsiGvO9znaagSH5CSic8bnmRO/NUoGGHlm3Y7YfK0tU93OQB4OdkSi1UMMleP
-         mUfcV4KC6G0Oet7IX5aBnycRWwSeeL4I9okAcb8+PlvgYdBKaOmOKN5YgfRs390IwBZb
-         cU8zn3jKaENmSMceBocxAvO2g15WKWvnTROpKgRmvynCWkD0QUd2j3R3iVxheO3+r4rd
-         OmhQ==
+        bh=wFdr9+TqiA6IcijlSriDF4PPHl+NIArsW88BseQjRh8=;
+        b=DY49k+48FSgCoTlaQBtQuP1+iRsOhLCLo84JzxvdJhg6Yio0gC2Pyb2HsOvE1MiYJt
+         x5caejfPXSJ0oZzI4CAJQ5Oe8wljx0/9xl6DixKOn8glCAzqk0vDvMR807DbqrRLuOPi
+         YTM7u3zk3oGyZE2OM3fkBrBhYxzSbTI8z5ZfdgT4Jbq5g6mtGwufjWLDraHwyaOZdemM
+         LBRrjhm4vq1BA8PKDPMD5qjIB62McErcczDq8dl3z20ZfoYcV8fTe4Q+8jXz1Sw23+xN
+         zeNEHbvPukaIMIVLBYxPInH9PykBf/Cz96bonrdb8FL8JrxhUJxA5RdqZ7Ux0cMkoj/f
+         vVwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2e/oIYBQGnCmgk7Qb+LgC+pTIjzw8A/j3NNWlS1J7O0=;
-        b=X22+DQw7WiBAv6YFYi9qx9uqiRljEIv2HIle+538LzBIHfN44KilVLe2GxKJXUnZst
-         zfspETfbPtRL7yMRz9yRCS/3/HTU23k0VtnalY9a6kpeagg0fTog4IzxNNSsmQrgRaxI
-         S2VR5gARnA/VneNv6e+vai+YqV635Q5yw2Mj377iA0Q8SohTv5Kzlfo4+PiH5cy88fkU
-         ZdeRXXkxpfDBmaXAKvqVZ80DLu/MklKZeTXgcLaX+djklaNq7G/USVcYR7DWDYI06LY7
-         I2gOTw0HZw05O/ixyotW+MW5AG2TbFgvD66i22JlXUYVOYConDiyCjuErYjxHrDZtAp6
-         A5SQ==
-X-Gm-Message-State: AFqh2kpWC3AxVfu7D4ty2iEpDKX/AGi7x0Q23DPLeyTyWEF+U1xWmsJh
-        wVUnb8zC32o2l4khlo1AhUU=
-X-Google-Smtp-Source: AMrXdXsch/fy8b/BD/KnBA0DNFWLfJx1ZR60CL/djLPK8/0LZ1uL7Wb76leo7jVOSb1vDvMcYvnyBQ==
-X-Received: by 2002:a17:906:3e13:b0:877:839c:bd6c with SMTP id k19-20020a1709063e1300b00877839cbd6cmr8438416eji.71.1674313774806;
-        Sat, 21 Jan 2023 07:09:34 -0800 (PST)
+        bh=wFdr9+TqiA6IcijlSriDF4PPHl+NIArsW88BseQjRh8=;
+        b=HM1+7J5RKmcDFm+SOTX+efLzvlYLLkj9O0TvN0MsJLBh31YR/b7F6H5CoGZaFq9fET
+         e6t2qJBC2yAf0mryaC+Ey5qM4y9+N/+H3TpfXQgJ7OtUOSyJTwvCnP7h2Xx9W3hIfS5C
+         8E5QMfdJr9VhL1Mdz9/Cd9T4uTo5J70mR5fIe00vkF0cjp+G9Vtf7Sj/i3T8BqVX+Ygc
+         RQv+w4YaVNXPzcfUt940iO3Za0wAW8jZci4BYT8api/vJt90v9UVdoqCwJq1vOcSeRsj
+         NieGYlraJgwF/qHK/HIvu+JV3BhvzYYO8CmqsPAv+qSpfdBnndd7Fkgrvx2swUmYoEgo
+         lykw==
+X-Gm-Message-State: AFqh2ko8cavF4wAi1FZ+nm4xL6kJ8hA+g8wVFj57IdH9UJsq33rtPR89
+        Uhycxc5nR3ING0pqAua1NqPcO3Im6wg=
+X-Google-Smtp-Source: AMrXdXs9ZLGbmR49eFKuYxeFe8zPWV2U9pBHpt/gRgkRRtydpGeRsPWqT0yx3LjaoQlH8HxAWIhhRg==
+X-Received: by 2002:a05:6402:1764:b0:499:8849:5faf with SMTP id da4-20020a056402176400b0049988495fafmr19919893edb.26.1674314434541;
+        Sat, 21 Jan 2023 07:20:34 -0800 (PST)
 Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id l1-20020a1709063d2100b0086d70b9c023sm10423094ejf.63.2023.01.21.07.09.33
+        by smtp.gmail.com with ESMTPSA id r8-20020a05640251c800b0049df0f91b78sm10093332edd.78.2023.01.21.07.20.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 Jan 2023 07:09:34 -0800 (PST)
+        Sat, 21 Jan 2023 07:20:34 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <8d6c741c-3271-db61-4e69-3b93049f9f8f@dunelm.org.uk>
-Date:   Sat, 21 Jan 2023 15:09:33 +0000
+Message-ID: <d5ef5870-baac-14d4-65a5-deb94a848011@dunelm.org.uk>
+Date:   Sat, 21 Jan 2023 15:20:32 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 3/7] rebase: remove --allow-empty-message from
- incompatible opts
+Subject: Re: [PATCH v3 5/7] rebase: add coverage of other incompatible options
 Content-Language: en-US
 To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -70,8 +69,8 @@ Cc:     Derrick Stolee <derrickstolee@github.com>,
         Phillip Wood <phillip.wood123@gmail.com>
 References: <pull.1466.v2.git.1674190573.gitgitgadget@gmail.com>
  <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
- <f4fbfd40d4599542b041081880e89075f4ff792b.1674266126.git.gitgitgadget@gmail.com>
-In-Reply-To: <f4fbfd40d4599542b041081880e89075f4ff792b.1674266126.git.gitgitgadget@gmail.com>
+ <48c40c0dda00eeb8b9bdc5ba9372b46964eea14a.1674266126.git.gitgitgadget@gmail.com>
+In-Reply-To: <48c40c0dda00eeb8b9bdc5ba9372b46964eea14a.1674266126.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -83,35 +82,98 @@ Hi Elijah
 On 21/01/2023 01:55, Elijah Newren via GitGitGadget wrote:
 > From: Elijah Newren <newren@gmail.com>
 > 
-> --allow-empty-message was turned into a no-op and even documented
-> as such; the flag is simply ignored.  Since the flag is ignored, it
-> shouldn't be documented as being incompatible with other flags.
+> The git-rebase manual noted several sets of incompatible options, but
+> we were missing tests for a few of these.  Further, we were missing
+> code checks for some of these, which could result in command line
+> options being silently ignored.
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>   builtin/rebase.c                       | 21 ++++++++++++++-------
+>   t/t3422-rebase-incompatible-options.sh | 20 ++++++++++++++++++++
+>   2 files changed, 34 insertions(+), 7 deletions(-)
+> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 2a5e0e8a7a0..6dcdb59bb02 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1238,6 +1238,17 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   		if (options.fork_point < 0)
+>   			options.fork_point = 0;
+>   	}
+> +	/*
+> +	 * reapply_cherry_picks is slightly weird.  It starts out with a
+> +	 * value of -1.  It will be assigned a value of keep_base below and
+> +	 * then handled specially.  The apply backend is hardcoded to
+> +	 * behave like reapply_cherry_picks==1,
 
-The patch looks fine. Just to note that
+I think it is hard coded to 0 not 1. We generate the patches with
 
-#leftoverbits - I notice there is some code in builtin/rebase.c, 
-builtin/revert.c and sequencer.[ch] related to this option that could be 
-removed. The setting seems to be completely ignored by the sequencer and 
-so could be removed from struct replay_opts.
+	git format-patch --right-only $upstream...$head
+
+so cherry-picks will not be reapplied. I'm hardly an impartial observer 
+but I think the current check is correct. We support
+
+	--whitespace=fix --no-reapply-cherry-picks
+	--whitespace=fix --keep-base --reapply-cherry-picks
+
+but not
+
+	--whitespace=fix --reapply-cherry-picks
+
+> @@ -1525,6 +1529,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   	if (options.update_refs)
+>   		imply_merge(&options, "--update-refs");
+>   
+> +	if (options.autosquash)
+> +		imply_merge(&options, "--autosquash");
+
+Thanks for adding this, it maybe merits a mention in the commit message 
+though as it is a change in behavior for users who have 
+rebase.autosquash set and try to use the apply backend.
 
 Best Wishes
 
 Phillip
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->   Documentation/git-rebase.txt | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 00d21d7287d..3929535c0cd 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -640,7 +640,6 @@ are incompatible with the following options:
->    * --merge
->    * --strategy
->    * --strategy-option
-> - * --allow-empty-message
->    * --[no-]autosquash
->    * --rebase-merges
->    * --interactive
+>   	if (options.type == REBASE_UNSPECIFIED) {
+>   		if (!strcmp(options.default_backend, "merge"))
+>   			imply_merge(&options, "--merge");
+> diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
+> index f86274990b0..c830025470f 100755
+> --- a/t/t3422-rebase-incompatible-options.sh
+> +++ b/t/t3422-rebase-incompatible-options.sh
+> @@ -50,6 +50,11 @@ test_rebase_am_only () {
+>   		test_must_fail git rebase $opt --strategy-option=ours A
+>   	"
+>   
+> +	test_expect_success "$opt incompatible with --autosquash" "
+> +		git checkout B^0 &&
+> +		test_must_fail git rebase $opt --autosquash A
+> +	"
+> +
+>   	test_expect_success "$opt incompatible with --interactive" "
+>   		git checkout B^0 &&
+>   		test_must_fail git rebase $opt --interactive A
+> @@ -60,6 +65,21 @@ test_rebase_am_only () {
+>   		test_must_fail git rebase $opt --exec 'true' A
+>   	"
+>   
+> +	test_expect_success "$opt incompatible with --keep-empty" "
+> +		git checkout B^0 &&
+> +		test_must_fail git rebase $opt --keep-empty A
+> +	"
+> +
+> +	test_expect_success "$opt incompatible with --empty=..." "
+> +		git checkout B^0 &&
+> +		test_must_fail git rebase $opt --empty=ask A
+> +	"
+> +
+> +	test_expect_success "$opt incompatible with --no-reapply-cherry-picks" "
+> +		git checkout B^0 &&
+> +		test_must_fail git rebase $opt --no-reapply-cherry-picks A
+> +	"
+> +
+>   	test_expect_success "$opt incompatible with --update-refs" "
+>   		git checkout B^0 &&
+>   		test_must_fail git rebase $opt --update-refs A
