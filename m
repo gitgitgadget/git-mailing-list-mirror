@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23492C38141
-	for <git@archiver.kernel.org>; Sat, 21 Jan 2023 01:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65515C27C76
+	for <git@archiver.kernel.org>; Sat, 21 Jan 2023 01:55:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229661AbjAUBze (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Jan 2023 20:55:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41510 "EHLO
+        id S229680AbjAUBzh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Jan 2023 20:55:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229623AbjAUBzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Jan 2023 20:55:32 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE6CF73170
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 17:55:30 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id q5so1620382wrv.0
-        for <git@vger.kernel.org>; Fri, 20 Jan 2023 17:55:30 -0800 (PST)
+        with ESMTP id S229648AbjAUBzd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Jan 2023 20:55:33 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96CE871BF3
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 17:55:31 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id b7so6285753wrt.3
+        for <git@vger.kernel.org>; Fri, 20 Jan 2023 17:55:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AZwxIcNCBhyuM9xa73Egxa/KXEsbmEo51Nawts7/CH8=;
-        b=qXgA52zZNmm0a7XBSXpHESC5kdD3JHKjYT19ORYb8Lg0pG7lsd48IMLxr0J+Hsw52v
-         qnL9zFCIPf+Ycg1xazBg0T5+XR04r+BTOVMjEnj2Dk+Y12OKOl9MOP1VoMfC0ViONmch
-         cMaKc8AOORbvAoNmekcp4Xl32/0OypZ7XhSRE3p2dT9Uzr7TTfQzCOoehQbnEmQDr/Ts
-         /sYfXmcldBgiz1u21QYGCpYH/6WoZU1r1CUA8hwGeRF4uzpQ4vD8JFGvhIRHLkxCiEOL
-         qMIyeeaxM51WQdAuFGBrSF2w2ntGz5UPJqF7YI+Q9v4BNyDlR8nmIaQ6qgyBRKWktxMZ
-         7I+g==
+        bh=Zd5G4Z+OrZbl/P0DHHaGnlAkAG4bR8xHytJ1leEchTo=;
+        b=J7U9JxRqb6CQS9zPbOE9ao7JEfG7BmHmDVJNuwIKV36CZ1IIEGrCJcsSrUfJLysNRv
+         rBSO3MdvmxqqRtwTLm8ubQBHFnVNdzlqYEcl8V7tbXM+Rs5lfV5Q4Wp0UJwLfC9ypwQ7
+         y2MBW2BR6YrtHNreea29lnkhX5bdg4bj+3gEm53vOxxvamWKUXYrxqvWFFdFvTF4VrfG
+         lZCVOXtGsyggNFwyWRQ5hzoCe0UtbntdiMy5QJzQPv8b+c8QxdIpA7HCoitG7X4c0/cQ
+         CPl/7Humb8D/4Vn55o0S5e63jKfKVIXGDZJ9DrmxQDmY5f77VB7BLm0Xrm5j/DoZdGpc
+         /efQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AZwxIcNCBhyuM9xa73Egxa/KXEsbmEo51Nawts7/CH8=;
-        b=6GhM9476/gNBXem6jMFUrGJJkfZGO68aQkJQUDXX8IbNIuawMLasQd2RWpUTNl4xVF
-         UaL0n3dVgbzYX/WuaiLL88cx4TMAn3hJ78P8ECHaO1ASl3AEpL9GwmpbMYX5PtCZlONY
-         WfnKS7ZmX5Gvv1/6E1HMGfFVd/hfabKigF9nCFYfPgsRdp3DhG+NH+bM1RZz7D/xCSb+
-         FPpqGivy5PzCfZIpRL8QHfsrmKgboyjt2DigF9WpQLrngoqX0ttNYELMFrhTPXxLhjab
-         dKC84dfWNWILXUvAbJk4JtqyTDXMnHwRJiBHwnpu3BVZt1IeRxkuDaAv+JExusK8jRJM
-         pPhA==
-X-Gm-Message-State: AFqh2kr2iU4/pyUNnKjrS/2Cv+zPB7ecv05wSZ2DQHGvYz5H2WPqBnGB
-        XAgmEG4VWhkfcZvJovHaSefLItEpHf0=
-X-Google-Smtp-Source: AMrXdXvDhYf5azy8eIALLoyEnsUPSHR0ckRu+kpNr+p1P1ZBKkXgBuBStsli7bgbFdMZVcCaKJN2zA==
-X-Received: by 2002:a5d:6f15:0:b0:2b9:28ef:24c9 with SMTP id ay21-20020a5d6f15000000b002b928ef24c9mr16656115wrb.39.1674266129025;
+        bh=Zd5G4Z+OrZbl/P0DHHaGnlAkAG4bR8xHytJ1leEchTo=;
+        b=cjHZ/TVw+h2F7kJGVwcJQDm7Q7X19M5svkz9xTN0z+U5gYsf21oK1tpmFY9du9PWPS
+         TpxY6Ll9Pr3wivnz3ldsd2lVyPHqjPK9rqztHb+fMKBWmVoa8vOevqTA/Hxsk6Pa84VH
+         +/YoRnwtxcPRwCN6S3LHuIiS5n1AoPwG0K2gj0r3b3OrLNuNzgVFmi65kgMbwAHn+RbQ
+         2HXgtgEDAtaooHbRYuMhH9cju4NeiH1M9uuUAMiOMRkhWU26PNapL+7WbNjCVdWm5Fop
+         Qef2StjSXpEmZAjWjgqxiIXy/GN+js6++xARLitix3NJ3ADjjSb+yirlzt9HO5wlMZSu
+         AL/A==
+X-Gm-Message-State: AFqh2kp2H1MNr4tlkPNOvP+H4XCT4F35ssmDcINlBt0Tpe5ceilNzne3
+        ujOAU5+Jinmc+zP248mErL7bJi2/mLo=
+X-Google-Smtp-Source: AMrXdXt2Zb3PHnoFib1B2Gtg1MUIZRvag8ju0tZ104jFiRcCnFNHOR5rY+0GPY2lfHi8D5A47v8uwg==
+X-Received: by 2002:adf:aa8f:0:b0:2bf:5dc0:56c8 with SMTP id h15-20020adfaa8f000000b002bf5dc056c8mr3156726wrc.51.1674266129886;
         Fri, 20 Jan 2023 17:55:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l14-20020a5d526e000000b0028e55b44a99sm19297724wrc.17.2023.01.20.17.55.28
+        by smtp.gmail.com with ESMTPSA id l7-20020a5d6747000000b002b57bae7174sm37541628wrw.5.2023.01.20.17.55.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Jan 2023 17:55:28 -0800 (PST)
-Message-Id: <9089834adeacb2233cb924f36a04b027dac76594.1674266126.git.gitgitgadget@gmail.com>
+        Fri, 20 Jan 2023 17:55:29 -0800 (PST)
+Message-Id: <a8b5a0e4fb01bb3f4332b94f7e82e10d946b7828.1674266126.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
 References: <pull.1466.v2.git.1674190573.gitgitgadget@gmail.com>
         <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Jan 2023 01:55:20 +0000
-Subject: [PATCH v3 1/7] rebase: mark --update-refs as requiring the merge
- backend
+Date:   Sat, 21 Jan 2023 01:55:21 +0000
+Subject: [PATCH v3 2/7] rebase: flag --apply and --merge as incompatible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,82 +74,70 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
---update-refs is built in terms of the sequencer, which requires the
-merge backend.  It was already marked as incompatible with the apply
-backend in the git-rebase manual, but the code didn't check for this
-incompatibility and warn the user.  Check and error now.
-
-While at it, fix a typo in t3422...and fix some misleading wording
-(most options which used to be am-specific have since been implemented
-in the merge backend as well).
+Previously, we flagged options which implied --apply as being
+incompatible with options which implied --merge.  But if both options
+were given explicitly, then we didn't flag the incompatibility.  The
+same is true with --apply and --interactive.  Add the check, and add
+some testcases to verify these are also caught.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt           |  2 ++
- builtin/rebase.c                       |  3 +++
- t/t3422-rebase-incompatible-options.sh | 15 ++++++++++-----
- 3 files changed, 15 insertions(+), 5 deletions(-)
+ builtin/rebase.c                       | 12 ++++++++++--
+ t/t3422-rebase-incompatible-options.sh |  3 +++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index f9675bd24e6..00d21d7287d 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -623,6 +623,8 @@ start would be overridden by the presence of
- +
- If the configuration variable `rebase.updateRefs` is set, then this option
- can be used to override and disable this setting.
-++
-+See also INCOMPATIBLE OPTIONS below.
- 
- INCOMPATIBLE OPTIONS
- --------------------
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 1481c5b6a5b..accd62fce48 100644
+index accd62fce48..2a5e0e8a7a0 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -1514,6 +1514,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		}
- 	}
+@@ -920,6 +920,9 @@ static int parse_opt_am(const struct option *opt, const char *arg, int unset)
+ 	BUG_ON_OPT_NEG(unset);
+ 	BUG_ON_OPT_ARG(arg);
  
-+	if (options.update_refs)
-+		imply_merge(&options, "--update-refs");
++	if (opts->type != REBASE_UNSPECIFIED && opts->type != REBASE_APPLY)
++	    die(_("apply options and merge options cannot be used together"));
 +
- 	if (options.type == REBASE_UNSPECIFIED) {
- 		if (!strcmp(options.default_backend, "merge"))
- 			imply_merge(&options, "--merge");
+ 	opts->type = REBASE_APPLY;
+ 
+ 	return 0;
+@@ -933,8 +936,10 @@ static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
+ 	BUG_ON_OPT_NEG(unset);
+ 	BUG_ON_OPT_ARG(arg);
+ 
+-	if (!is_merge(opts))
+-		opts->type = REBASE_MERGE;
++	if (opts->type != REBASE_UNSPECIFIED && opts->type != REBASE_MERGE)
++	    die(_("apply options and merge options cannot be used together"));
++
++	opts->type = REBASE_MERGE;
+ 
+ 	return 0;
+ }
+@@ -948,6 +953,9 @@ static int parse_opt_interactive(const struct option *opt, const char *arg,
+ 	BUG_ON_OPT_NEG(unset);
+ 	BUG_ON_OPT_ARG(arg);
+ 
++	if (opts->type != REBASE_UNSPECIFIED && opts->type != REBASE_MERGE)
++	    die(_("apply options and merge options cannot be used together"));
++
+ 	opts->type = REBASE_MERGE;
+ 	opts->flags |= REBASE_INTERACTIVE_EXPLICIT;
+ 
 diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-index 6dabb05a2ad..9da39cd91c2 100755
+index 9da39cd91c2..9b9e78479f6 100755
 --- a/t/t3422-rebase-incompatible-options.sh
 +++ b/t/t3422-rebase-incompatible-options.sh
-@@ -25,11 +25,11 @@ test_expect_success 'setup' '
- '
+@@ -67,7 +67,10 @@ test_rebase_am_only () {
  
- #
--# Rebase has lots of useful options like --whitepsace=fix, which are
--# actually all built in terms of flags to git-am.  Since neither
--# --merge nor --interactive (nor any options that imply those two) use
--# git-am, using them together will result in flags like --whitespace=fix
--# being ignored.  Make sure rebase warns the user and aborts instead.
-+# Rebase has a couple options which are specific to the apply backend,
-+# and several options which are specific to the merge backend.  Flags
-+# from the different sets cannot work together, and we do not want to
-+# just ignore one of the sets of flags.  Make sure rebase warns the
-+# user and aborts instead.
- #
- 
- test_rebase_am_only () {
-@@ -60,6 +60,11 @@ test_rebase_am_only () {
- 		test_must_fail git rebase $opt --exec 'true' A
- 	"
- 
-+	test_expect_success "$opt incompatible with --update-refs" "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --update-refs A
-+	"
-+
  }
  
++# Check options which imply --apply
  test_rebase_am_only --whitespace=fix
+ test_rebase_am_only -C4
++# Also check an explicit --apply
++test_rebase_am_only --apply
+ 
+ test_done
 -- 
 gitgitgadget
 
