@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D302AC54E94
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E50C4C25B4E
 	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 06:13:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229744AbjAVGMy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Jan 2023 01:12:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35176 "EHLO
+        id S229686AbjAVGMv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Jan 2023 01:12:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbjAVGMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2023 01:12:50 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 032DBE05C
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 22:12:45 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id l41-20020a05600c1d2900b003daf986faaeso6381262wms.3
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 22:12:45 -0800 (PST)
+        with ESMTP id S229493AbjAVGMs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2023 01:12:48 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7474CCDFD
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 22:12:44 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id y1so3615660wru.2
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 22:12:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JT7FIyhlcVRjmE3c8hSVm89gOiZ7LPsQqMxPR3H0tzY=;
-        b=mEY6h8zZvi05BL7RRSRt0SHiT1BAlIcsUD85cRCeLi4QsMWkgAMURiSDPHJmfzx1qc
-         SJJ/hlB1dgC52wdDlEC7A9HVZu6bU4zD0CoxiSkBAqwG3YjScNooyxzjNDYVfv3f1Ppt
-         D+yu4KDEUoP8aIdCrPMPpnpUEakI4DwFrAexq/BOOHPwUd09L4YexnkfPs+i8f0EnUJl
-         AhP/9HvWuXpLOTeYZBfJ4K4j/gIB5PBz/kC/MWGP9D7vhmTP54CLEzuJfzT5JBFj5yi/
-         XwR80a7sM/A8v50FVO/uU2pHVL8RvT9vZiUVeXJpMBNABAjfsge/SWtAhbxlYrGTxQ1i
-         gBnQ==
+        bh=nrU8/cEIN4YTgZgJeC3HdNmqU6n32Jpq7Vx6L2YCgrg=;
+        b=DMi6FP0afybX2UUcbhDVMD5wYa8EjVi/Qk4ZOWffo+WVrklucQe84m8ZnUB/86nXhi
+         RQMfONhoeWZn5h9rMvp/b9SgKSkGs9Md9k0DCocn/4DHz7o4cwdSJq+cErBwZl1o2kOW
+         /gF9tQkHsNSUI/e/ucx744orpHz3Hnk86zsIcKy5kju77d6v3AF2RnUoR2HnhMpbz9ZN
+         wj5QDrFrcEaj7RqzML2vPNUQPFg5ahbNBEpyW1/iokEuT4OgUNBrEHvp8Qp+mbArMDgK
+         c4T7qtf7Qjn2MYkg0Y0IgU1JnZc4xIGDr79Qzy6sibWNCHwbbTdlGXACsiFHf+R4wB/k
+         /NCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JT7FIyhlcVRjmE3c8hSVm89gOiZ7LPsQqMxPR3H0tzY=;
-        b=KmhGOEq/4XersmCo6Mun3hTetBNg41u00fHtSVhcTdAYg/5Aj0joQcW2GuG+zd2yry
-         rbI5eLy/DsB9HY/xzyoanp0izzFH6wUIvsj0d5vXobtvVQk3chQ2oHX9TCc1gceoVcQv
-         TF6G/YC+bpqimCo82cHkyt2kdHIy4BGe/axxU7JtJ2tnAXKsvBQrYxmZW3ytJQgnH+zb
-         UwIcqIeSwhjNYrlW72zhUCKtsi9eMlgZPz7dIZDpGdofrNEx4wRKF0fbuVSTTuFD7hf2
-         WvuZZNdDxt2+rorETKqexQ0fBAJ5/SQ2p6dn3A4OqWKgffa7XCC/RGwZf1TR8dsq8l2P
-         vUFw==
-X-Gm-Message-State: AFqh2krbZLL9gtxwbTLkB0c4Ob9QkkQp4oyYStD4VIz1Ygoz3K0ko6v9
-        RK0LDNrphdYRj6cpeXiYhQzGfoseUyY=
-X-Google-Smtp-Source: AMrXdXsIB1QsjTZj32axtoLhDVsbIKxI4kinTGzh0U5GtFzLU4UE4ImoKZ+ijbM4Y5uYkCpBZ6cTzQ==
-X-Received: by 2002:a1c:f617:0:b0:3d2:191d:2420 with SMTP id w23-20020a1cf617000000b003d2191d2420mr18837484wmc.7.1674367964374;
-        Sat, 21 Jan 2023 22:12:44 -0800 (PST)
+        bh=nrU8/cEIN4YTgZgJeC3HdNmqU6n32Jpq7Vx6L2YCgrg=;
+        b=03Tv7f05vWfFi46GA5EwZj8/exxLUX5VfVxNy9yXYJFPJOZ/zrJggUffN8HmpHXxKS
+         yiC7J/rc6KmxqyCmKrMctVY1klenUo+dyjXz29Tfp+3nddKgo1R80h+/O9fyuXZ9kTJe
+         yENvEgmTfiMLXCWMdMN4wCVPH/mg6drvzz0KgXY+qUJZRfvyCZZ/w4RBCTxmlob5n3vc
+         ymGzugEWFvBgbdQ+MqeN4+Ic7Xsd6+b2SvdPW3nToTj/uFveDQNAN+x4+lLTmyNNrzH2
+         2ksoI/mGCilnC2wS6yAShUm4uZ3FUTP0P+DZOGBfhRgOnJNNZWqqGInAVQjJjw9WnEOc
+         Q19Q==
+X-Gm-Message-State: AFqh2koNU0rBOgxNVZOtL/EhTT/2FYl8RUIfCdTq/2AQe/YbQbWe5AYc
+        UsOO6iZugqCZBfDyswA/EQ9QRSKcE94=
+X-Google-Smtp-Source: AMrXdXueG9qTBHg4YpU6ljK5Ty0oM7TBEZQPTwWnrZU+n3/mM13WrYlRsU8+EoVxOAU89snlz1ls8g==
+X-Received: by 2002:adf:ee10:0:b0:2bd:d5f5:8820 with SMTP id y16-20020adfee10000000b002bdd5f58820mr17634409wrn.27.1674367962350;
+        Sat, 21 Jan 2023 22:12:42 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id hg8-20020a05600c538800b003d974076f13sm6971985wmb.3.2023.01.21.22.12.43
+        by smtp.gmail.com with ESMTPSA id az22-20020adfe196000000b002bddaea7a0bsm23816414wrb.57.2023.01.21.22.12.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Jan 2023 22:12:44 -0800 (PST)
-Message-Id: <cc129b8718594a98557d21b5c79369af8935d404.1674367961.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com>
+        Sat, 21 Jan 2023 22:12:41 -0800 (PST)
+Message-Id: <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
 References: <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
-        <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 22 Jan 2023 06:12:33 +0000
-Subject: [PATCH v4 2/9] rebase: flag --apply and --merge as incompatible
+Date:   Sun, 22 Jan 2023 06:12:31 +0000
+Subject: [PATCH v4 0/9] rebase: fix several code/testing/documentation issues around flag
+ incompatibilities
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,78 +66,160 @@ Cc:     Derrick Stolee <derrickstolee@github.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
         Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+We had a report about --update-refs being ignored when --whitespace=fix was
+passed, confusing an end user. These were already marked as incompatible in
+the manual, but the code didn't check for the incompatibility and provide an
+error to the user.
 
-Previously, we flagged options which implied --apply as being
-incompatible with options which implied --merge.  But if both options
-were given explicitly, then we didn't flag the incompatibility.  The
-same is true with --apply and --interactive.  Add the check, and add
-some testcases to verify these are also caught.
+Folks brought up other flags tangentially when reviewing an earlier round of
+this series, and I found we had more that were missing checks, and that we
+were missing some testcases, and that the documentation was wrong on some of
+the relevant options. So, I ended up getting lots of little fixes to
+straighten these all out.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/rebase.c                       | 12 ++++++++++--
- t/t3422-rebase-incompatible-options.sh |  3 +++
- 2 files changed, 13 insertions(+), 2 deletions(-)
+Changes since v3:
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index c111b89e137..b742cc8fb5c 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -907,6 +907,9 @@ static int parse_opt_am(const struct option *opt, const char *arg, int unset)
- 	BUG_ON_OPT_NEG(unset);
- 	BUG_ON_OPT_ARG(arg);
- 
-+	if (opts->type != REBASE_UNSPECIFIED && opts->type != REBASE_APPLY)
-+	    die(_("apply options and merge options cannot be used together"));
-+
- 	opts->type = REBASE_APPLY;
- 
- 	return 0;
-@@ -920,8 +923,10 @@ static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
- 	BUG_ON_OPT_NEG(unset);
- 	BUG_ON_OPT_ARG(arg);
- 
--	if (!is_merge(opts))
--		opts->type = REBASE_MERGE;
-+	if (opts->type != REBASE_UNSPECIFIED && opts->type != REBASE_MERGE)
-+	    die(_("apply options and merge options cannot be used together"));
-+
-+	opts->type = REBASE_MERGE;
- 
- 	return 0;
- }
-@@ -935,6 +940,9 @@ static int parse_opt_interactive(const struct option *opt, const char *arg,
- 	BUG_ON_OPT_NEG(unset);
- 	BUG_ON_OPT_ARG(arg);
- 
-+	if (opts->type != REBASE_UNSPECIFIED && opts->type != REBASE_MERGE)
-+	    die(_("apply options and merge options cannot be used together"));
-+
- 	opts->type = REBASE_MERGE;
- 	opts->flags |= REBASE_INTERACTIVE_EXPLICIT;
- 
-diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-index 9da39cd91c2..9b9e78479f6 100755
---- a/t/t3422-rebase-incompatible-options.sh
-+++ b/t/t3422-rebase-incompatible-options.sh
-@@ -67,7 +67,10 @@ test_rebase_am_only () {
- 
- }
- 
-+# Check options which imply --apply
- test_rebase_am_only --whitespace=fix
- test_rebase_am_only -C4
-+# Also check an explicit --apply
-+test_rebase_am_only --apply
- 
- test_done
+ * Corrected the code surrounding --[no-]reapply-cherry-picks, and extended
+   the testcases (Thanks to Phillip for pointing out my error)
+ * I went ahead and implemented the better error message when the merge
+   backend is triggered solely via config options.
+
+Changes since v2:
+
+ * Remove the extra patch and reword the comment in t3422 more thoroughly.
+ * Add tests for other flag incompatibilities that were missing
+ * Add code that was missing for checking various flag incompatibilities
+ * Fix incorrect claims in the documentation around incompatible options
+ * A few other miscellaneous fixups noticed while doing all the above
+
+Changes since v1:
+
+ * Add a patch nuking the -C option to rebase (fixes confusion around the
+   comment in t3422 and acknowledges the fact that the option is totally and
+   utterly useless and always has been. It literally never affects the
+   results of a rebase.)
+
+Signed-off-by: Elijah Newren newren@gmail.com
+
+Elijah Newren (9):
+  rebase: mark --update-refs as requiring the merge backend
+  rebase: flag --apply and --merge as incompatible
+  rebase: remove --allow-empty-message from incompatible opts
+  rebase: fix docs about incompatibilities with --root
+  rebase: add coverage of other incompatible options
+  rebase: clarify the OPT_CMDMODE incompatibilities
+  rebase: fix formatting of rebase --reapply-cherry-picks option in docs
+  rebase: put rebase_options initialization in single place
+  rebase: provide better error message for apply options vs. merge
+    config
+
+ Documentation/git-rebase.txt           | 77 +++++++++++++-------------
+ builtin/rebase.c                       | 72 +++++++++++++++++++-----
+ t/t3422-rebase-incompatible-options.sh | 71 ++++++++++++++++++++++--
+ 3 files changed, 162 insertions(+), 58 deletions(-)
+
+
+base-commit: 56c8fb1e95377900ec9d53c07886022af0a5d3c2
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1466%2Fnewren%2Frebase-update-refs-imply-merge-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1466/newren/rebase-update-refs-imply-merge-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1466
+
+Range-diff vs v3:
+
+  1:  9089834adea =  1:  8a676e6ec1a rebase: mark --update-refs as requiring the merge backend
+  2:  a8b5a0e4fb0 =  2:  cc129b87185 rebase: flag --apply and --merge as incompatible
+  3:  f4fbfd40d45 =  3:  9464bbbe9ba rebase: remove --allow-empty-message from incompatible opts
+  4:  a1e61ac8f21 =  4:  b702f15ed7c rebase: fix docs about incompatibilities with --root
+  5:  48c40c0dda0 !  5:  5e4851e611e rebase: add coverage of other incompatible options
+     @@ Commit message
+          code checks for some of these, which could result in command line
+          options being silently ignored.
+      
+     +    Also, note that adding a check for autosquash means that using
+     +    --whitespace=fix together with the config setting rebase.autosquash=true
+     +    will trigger an error.  A subsequent commit will improve the error
+     +    message.
+     +
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+     + ## Documentation/git-rebase.txt ##
+     +@@ Documentation/git-rebase.txt: are incompatible with the following options:
+     +  * --exec
+     +  * --no-keep-empty
+     +  * --empty=
+     +- * --reapply-cherry-picks
+     ++ * --[no-]reapply-cherry-picks
+     +  * --edit-todo
+     +  * --update-refs
+     +  * --root when used without --onto
+     +
+       ## builtin/rebase.c ##
+      @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix)
+       		if (options.fork_point < 0)
+       			options.fork_point = 0;
+       	}
+      +	/*
+     -+	 * reapply_cherry_picks is slightly weird.  It starts out with a
+     -+	 * value of -1.  It will be assigned a value of keep_base below and
+     -+	 * then handled specially.  The apply backend is hardcoded to
+     -+	 * behave like reapply_cherry_picks==1, so if it has that value, we
+     -+	 * can just ignore the flag with the apply backend.  Thus, we only
+     -+	 * really need to throw an error and require the merge backend if
+     -+	 * reapply_cherry_picks==0.
+     ++	 * The apply backend does not support --[no-]reapply-cherry-picks.
+     ++	 * The behavior it implements by default is equivalent to
+     ++	 * --no-reapply-cherry-picks (due to passing --cherry-picks to
+     ++	 * format-patch), but --keep-base alters the upstream such that no
+     ++	 * cherry-picks can be found (effectively making it act like
+     ++	 * --reapply-cherry-picks).
+     ++	 *
+     ++	 * Now, if the user does specify --[no-]reapply-cherry-picks, but
+     ++	 * does so in such a way that options.reapply_cherry_picks ==
+     ++	 * keep_base, then the behavior they get will match what they
+     ++	 * expect despite options.reapply_cherry_picks being ignored.  We
+     ++	 * could just allow the flag in that case, but it seems better to
+     ++	 * just alert the user that they've specified a flag that the
+     ++	 * backend ignores.
+      +	 */
+     -+	if (options.reapply_cherry_picks == 0)
+     -+		imply_merge(&options, "--no-reapply-cherry-picks");
+     ++	if (options.reapply_cherry_picks >= 0)
+     ++		imply_merge(&options, options.reapply_cherry_picks ? "--reapply-cherry-picks" :
+     ++								     "--no-reapply-cherry-picks");
+     ++
+       	/*
+       	 * --keep-base defaults to --reapply-cherry-picks to avoid losing
+       	 * commits when using this option.
+     @@ t/t3422-rebase-incompatible-options.sh: test_rebase_am_only () {
+      +		git checkout B^0 &&
+      +		test_must_fail git rebase $opt --no-reapply-cherry-picks A
+      +	"
+     ++
+     ++	test_expect_success "$opt incompatible with --reapply-cherry-picks" "
+     ++		git checkout B^0 &&
+     ++		test_must_fail git rebase $opt --reapply-cherry-picks A
+     ++	"
+      +
+       	test_expect_success "$opt incompatible with --update-refs" "
+       		git checkout B^0 &&
+  6:  8664cce6cf7 !  6:  21ae9e05313 rebase: clarify the OPT_CMDMODE incompatibilities
+     @@ Documentation/git-rebase.txt: See also INCOMPATIBLE OPTIONS below.
+      @@ Documentation/git-rebase.txt: are incompatible with the following options:
+        * --no-keep-empty
+        * --empty=
+     -  * --reapply-cherry-picks
+     +  * --[no-]reapply-cherry-picks
+      - * --edit-todo
+        * --update-refs
+        * --root when used without --onto
+  7:  0e8b06163f2 =  7:  74a216bf0c0 rebase: fix formatting of rebase --reapply-cherry-picks option in docs
+  -:  ----------- >  8:  a8adf7fda61 rebase: put rebase_options initialization in single place
+  -:  ----------- >  9:  5cb00e5103b rebase: provide better error message for apply options vs. merge config
+
 -- 
 gitgitgadget
-
