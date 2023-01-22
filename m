@@ -2,102 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BD0DC38142
-	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 16:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E271C25B4E
+	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 16:56:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230072AbjAVQiy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Jan 2023 11:38:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50092 "EHLO
+        id S230091AbjAVQ4e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Jan 2023 11:56:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229837AbjAVQix (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2023 11:38:53 -0500
-X-Greylist: delayed 333 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 22 Jan 2023 08:38:52 PST
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D8D118B38
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:38:52 -0800 (PST)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C7C791EC845;
-        Sun, 22 Jan 2023 11:33:15 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-        :to:cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=fjQDijxuLcizK
-        m62bmtbOljmYZnWOfOqq6u8/CZ3LI4=; b=mwesVFSDjardSW9UVfChIGsjND3Re
-        N+ea1ctV5aMvGWoBOsge77EnN0Ku4NlJ3WIP6gIOnG6hiV0ZomWI7r/Mc0Ntt47u
-        7Yh/ek3Kd3Kiwi9UDUAtnUIY2o1XbembTTHU0FUtQl7jM/IQLUoGoPdbmFmP8fN/
-        OGDxSsm/BzmxA0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C04391EC843;
-        Sun, 22 Jan 2023 11:33:15 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [108.15.224.39])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C2D641EC842;
-        Sun, 22 Jan 2023 11:33:11 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Date:   Sun, 22 Jan 2023 11:33:07 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: t5559 breaks with apache 2.4.55
-Message-ID: <Y81lQwG85+Skujja@pobox.com>
-References: <Y8ztIqYgVCPILJlO@coredump.intra.peff.net>
+        with ESMTP id S229837AbjAVQ4d (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2023 11:56:33 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47BD2196B7
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:56:32 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id v10so12017180edi.8
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:56:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HzQ1ufQiFYRqmK/lk/x+MMhsGbw7S22XsKQXhaGmPzE=;
+        b=kXVxiWHxjMiAmno80jI+qUHN26GU778DDZ6F94BbKvP57qJalLhkMKk5vcw0qIBoIR
+         EQUbwbt+ptbZrbAUVuaF4EsAS7mYN0BobSZoeodrXkwg7oaUak/Cl/iaj73lJGk6/4Au
+         dBhqWPi4oY0PcmwNZIBKtaGQC2vjmlCqRe43jmiwpeCTalyIFzmrCFNR6t/9reEjcwy8
+         85gSC/TsHNh4bF97uDHZsobiZbNOlzLeZB1TVmj5yqEbDAJjzQOElWZuDzkzCbpmcaRK
+         jnDioZf2rbSiNqzQksy2kftndMNuzBiDQtTtaauh/BM/OaZP2EuyMGla34QJNrbXl4g4
+         H0FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HzQ1ufQiFYRqmK/lk/x+MMhsGbw7S22XsKQXhaGmPzE=;
+        b=HzdvFzgfadfzEWgFGpe+i2/ACUSyqur0g9D+k1tRDgz4yuauIypdJlBthNamOGDOuK
+         iyxwd78RXQaIhVym379WS0yxzuszkz6hl0YGo7wzoqGHaLS5lGiMXtIGNSqjPKHJClaA
+         bE3PDzyM9zEwqX/kM9aLiWXPkj0c9CEfmz5SzaQVl30NmQXwLTynVmfUO/THRbFdDmG2
+         LtyjKqTbUCJKEc+KcmzpMiptQME/1FW2XyQjonp7dMjvraBKVBnoraQ6lW+ctByClkd/
+         8Y8T2EfRXAB03HrIVY1+euAS2PO7Au5J0V0mgf7m6rjYWVTHL9iUE76iRca+DZR/NPie
+         r5tw==
+X-Gm-Message-State: AFqh2krazVkyrosnrlxx5XhnWhM9XOgSrKezLzs2HBgDySrbjv+LYrcw
+        eBViHiLgfHDpwIe2zYSOkwNbX2e36RDGUnPk
+X-Google-Smtp-Source: AMrXdXumF0NHMUr0aEe5/YspvUnuxAFC+1euhY3/aC8PXzNWWXnrCMWQvtAFT0zC6Qpzh3QudsePTA==
+X-Received: by 2002:a05:6402:32b:b0:49e:ef4:51c3 with SMTP id q11-20020a056402032b00b0049e0ef451c3mr13967429edw.16.1674406590281;
+        Sun, 22 Jan 2023 08:56:30 -0800 (PST)
+Received: from titov.fritz.box ([212.102.57.98])
+        by smtp.gmail.com with ESMTPSA id v17-20020a170906293100b007be301a1d51sm20829299ejd.211.2023.01.22.08.56.29
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Jan 2023 08:56:29 -0800 (PST)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] Documentation: render dash correctly
+Date:   Sun, 22 Jan 2023 17:56:28 +0100
+Message-Id: <20230122165628.1601062-1-rybak.a.v@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <Y8ztIqYgVCPILJlO@coredump.intra.peff.net>
-X-Pobox-Relay-ID: 76463AA8-9A72-11ED-A43F-C2DA088D43B2-09356542!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> I noticed that the test suite now fails after upgrading from apache
-> 2.4.54 to 2.4.55 (the latter of which just hit debian unstable). The
-> problem is with the http2 tests, specifically t5559.30, where we send a
-> large fetch negotiation over http2. The output from curl is (including
-> some bits of tracing):
->=20
->   =3D=3D Info: Received 101, Switching to HTTP/2
->   =3D=3D Info: Using HTTP2, server supports multiplexing
->   =3D=3D Info: Copying HTTP/2 data in stream buffer to connection buffe=
-r after upgrade: len=3D0
->   =3D=3D Info: Closing connection 1
->   error: RPC failed; HTTP 101 curl 16 Error in the HTTP2 framing layer
->=20
-> Bisecting within apache's Git repo, the culprit is their 9767274b88,
-> which says:
->=20
->   mod_http2: version 2.0.10 of the module, synchronizing changes
->   with the gitgub version. This is a partial rewrite of how connections
->   and streams are handled.
->=20
-> which seems like a plausible source. But the diff is 8000 lines. It may
-> be possible to bisect within the mod_http2 source itself, but I haven't
-> tried it yet.
->=20
-> It's also not 100% clear that it's an apache bug. We could be doing
-> something weird with git-http-backend, or curl might be doing something
-> wrong. Though I tend to doubt it, given the simplicity of the CGI
-> interface on the server side and the fact that curl was working reliabl=
-y
-> with older versions of apache.
->=20
-> So I haven't reported the bug further yet. But I thought I'd post this
-> here before anybody else wastes time digging in the same hole.
+Three hyphens are rendered verbatim in documentation, so "--" has to be
+used to produce a dash.  Fix asciidoc output for dashes.  This is
+similar to previous commits f0b922473e (Documentation: render special
+characters correctly, 2021-07-29) and de82095a95 (doc
+hash-function-transition: fix asciidoc output, 2021-02-05).
 
-FWIW, I think this is the same issue we discussed about 2
-months back, in <Y4fUntdlc1mqwad5@pobox.com>=B9.
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+---
+ Documentation/git-apply.txt                          | 2 +-
+ Documentation/git-read-tree.txt                      | 2 +-
+ Documentation/git.txt                                | 2 +-
+ Documentation/technical/hash-function-transition.txt | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-I haven't done much else with it since then.  It's almost
-surely either an apache httpd/mod_http2 or curl issue.  If I
-had to bet, I'd say mod_http2.  (But then, it could be curl
-and just has yet to be exposed widely because not many are
-using the current mod_http2 code.)
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index 1d478cbe9b..5e16e6db7e 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -208,7 +208,7 @@ behavior:
+ * `warn` outputs warnings for a few such errors, but applies the
+   patch as-is (default).
+ * `fix` outputs warnings for a few such errors, and applies the
+-  patch after fixing them (`strip` is a synonym --- the tool
++  patch after fixing them (`strip` is a synonym -- the tool
+   used to consider only trailing whitespace characters as errors, and the
+   fix involved 'stripping' them, but modern Gits do more).
+ * `error` outputs warnings for a few such errors, and refuses
+diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
+index 7567955bad..b09707474d 100644
+--- a/Documentation/git-read-tree.txt
++++ b/Documentation/git-read-tree.txt
+@@ -219,7 +219,7 @@ see which of the "local changes" that you made were carried forward by running
+ `git diff-index --cached $M`.  Note that this does not
+ necessarily match what `git diff-index --cached $H` would have
+ produced before such a two tree merge.  This is because of cases
+-18 and 19 --- if you already had the changes in $M (e.g. maybe
++18 and 19 -- if you already had the changes in $M (e.g. maybe
+ you picked it up via e-mail in a patch form), `git diff-index
+ --cached $H` would have told you about the change before this
+ merge, but it would not show in `git diff-index --cached $M`
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index f9a7a4554c..74973d3cc4 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -613,7 +613,7 @@ The file parameters can point at the user's working file
+ (e.g. `new-file` in "git-diff-files"), `/dev/null` (e.g. `old-file`
+ when a new file is added), or a temporary file (e.g. `old-file` in the
+ index).  `GIT_EXTERNAL_DIFF` should not worry about unlinking the
+-temporary file --- it is removed when `GIT_EXTERNAL_DIFF` exits.
++temporary file -- it is removed when `GIT_EXTERNAL_DIFF` exits.
+ +
+ For a path that is unmerged, `GIT_EXTERNAL_DIFF` is called with 1
+ parameter, <path>.
+diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
+index e2ac36dd21..ed57481089 100644
+--- a/Documentation/technical/hash-function-transition.txt
++++ b/Documentation/technical/hash-function-transition.txt
+@@ -562,7 +562,7 @@ hash re-encode during clone and to encourage peers to modernize.
+ The design described here allows fetches by SHA-1 clients of a
+ personal SHA-256 repository because it's not much more difficult than
+ allowing pushes from that repository. This support needs to be guarded
+-by a configuration option --- servers like git.kernel.org that serve a
++by a configuration option -- servers like git.kernel.org that serve a
+ large number of clients would not be expected to bear that cost.
+ 
+ Meaning of signatures
+-- 
+2.39.0
 
-=B9 https://lore.kernel.org/git/Y4fUntdlc1mqwad5@pobox.com/
-
---=20
-Todd
