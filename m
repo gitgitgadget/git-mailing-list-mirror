@@ -2,115 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A40D1C25B4E
-	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 10:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6F88C25B4E
+	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 11:39:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229789AbjAVKDz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Jan 2023 05:03:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47608 "EHLO
+        id S229814AbjAVLjj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Jan 2023 06:39:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229636AbjAVKDz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2023 05:03:55 -0500
+        with ESMTP id S229480AbjAVLji (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2023 06:39:38 -0500
 Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F7FD1CF66
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 02:03:53 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 380B01DB99
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 03:39:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1674381820; bh=8UPjDT/n2auJMBUPShtE9z3zwNw0jSMXXb5ff/hTVFM=;
+        t=1674387567; bh=iwvA0zbtXeaNFpYCCzcDNS1aPOhDB+QOQn0Ob6rT1AY=;
         h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=lCaZiwlfPAoK/e7n6MyaA+5xRGKVZIphAYYFO4WX3M86MtynbWxekhgJJlfoAMGsQ
-         B9NF6YiC/pK66BmHMktrPTgfm/ww6VZFRo7WFBC2mOz8cZ5zQl+27bLZ2duWCkZYJT
-         1keg2d0cquAq1UWTE0qokwaD3aLL+1A/HsUuAObIwwYmnjKDfAu4CCcuhn1F49xSKE
-         m8A+WqL+5YD37vUriEq/aUxK5GmD38FLagtKJ9z+kqHit7o88Uqrm8nQiaxj6ZzPXJ
-         8DDO+kUI7MTLxzO32wnjgKXVrev1Cq3oorkfCKY5ov5lCKnGGTX6e2zwP1YdOKV32Z
-         KwRuy2PAQVqCg==
+        b=tsSbBZkcvS9Bg01Pn/G57zQhGUyd/Ggjv7Co4M7VrcO6IuQzbEjcaIj/WtZ8XT+Q1
+         ZWzykNBB91xh2ylkXYxVp5HkfmFxJ3FEqTCKxsM9KimCYCAfj2N7kUgjtweyKZfq/9
+         xQexUJBu1/FF3aQvtuycWIsd3CtomC5w7RidFCETqsVEB9Ozaa/5Ab2n2EfLV5ERfu
+         K/A64pd+7/aBW8EXM5EHAbuLjIWapYC/Yeme675ghJy///PwKwwMBdB6U6IUIDd2I/
+         gq63Z72+F9mx6xEUoV26M7ugkTPKThiLUYPRTvLTzPaal6GZNyU9izlmjn9JRAJnFv
+         SdORBKMK9Ykpw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([79.203.22.223]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MS13n-1p8uBs3jml-00TWez; Sun, 22
- Jan 2023 11:03:39 +0100
-Message-ID: <044bdc8f-fdc9-dfd2-6cbb-941513467524@web.de>
-Date:   Sun, 22 Jan 2023 11:03:38 +0100
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M4sXj-1pIk0m1eYp-001vyT; Sun, 22
+ Jan 2023 12:39:27 +0100
+Message-ID: <d225dddc-973c-f710-9d24-cb53b26b973f@web.de>
+Date:   Sun, 22 Jan 2023 12:39:26 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH] tree-walk: disallow overflowing modes
+Subject: Re: [RFC/PATCH 0/6] hash-object: use fsck to check objects
 Content-Language: en-US
 To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+Cc:     git@vger.kernel.org,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <d673fde7-7eb2-6306-86b6-1c1a4c988ee8@web.de>
- <Y8zquGar3rLyRdTp@coredump.intra.peff.net>
+References: <Y8hX+pIZUKXsyYj5@coredump.intra.peff.net>
+ <Y8ifa7hyqxSbL92U@coredump.intra.peff.net>
+ <97faa323-a5b9-e459-70d7-3f6318446898@web.de>
+ <Y8zqZH+X6fOoCOYV@coredump.intra.peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <Y8zquGar3rLyRdTp@coredump.intra.peff.net>
+In-Reply-To: <Y8zqZH+X6fOoCOYV@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:DxepNwyB+TrSJfMRiVusfDlEUPGwEADp0sEv8Dktgoh+6v7AJmg
- yFt+SZPf9e/V2KAdnPiDxes6ZzCuTaML5ZFz3JSiF4v48GA5uzw9S+hTN0KUmen3NppAFTs
- 2yzjWsOjNLvkhnultQuCUfjTP7mB4RQIQYl8fjhesKJQu80RpsJjfmsQw2O7J+nbHPNcauy
- P0XPZJKJsUKY6sYzUZUBw==
-UI-OutboundReport: notjunk:1;M01:P0:8qZXli1B+BI=;0feul6W+DgZCnBR53LX0OslX3/Y
- 2jjUFiycyQhqIEJH6IUxrJjdwfBv9YPe+z8mF/QMKGDurwuahj4NkMpEFI4AIhKdZJF6W3Mr+
- O78hYKZ/zrXrGUIN+TW05DU3OyjB9gPPidc9IXSm9A9NcXe8Jnt5mfK1/CymAHFDpf6TqHnN1
- i4JRkKqqE0iSLxKXpsE/80iih+KaeDV/z7mEs1WG89xh0SALzCGYuidDDbm89EnwfMzMHMt+J
- 1ka6T+xCM9QvaFpsjo4YESL/r+ha8MMXV7JfNtu6yjJWUnM+E8OfHWjOf62dfSJdqNIupPI28
- h7xVijqxgvzz8WhYaM2ZuMFvuTPo00ZeJe8bPvm4Ye6HHt5nLUgU6pnvhe7kUhcZNVXoIBXBt
- sux29+lI7SuKgAHOPrSIqMZCuwfffC5vCdyXJ/mYDBoyrw6rbQkJtxmUkyKjhhN09q57a9Jco
- UDgNBTxPCJOOjgO8vclcsd2WloP5RmW/0tLh+93OuBWoK4iC4PbbunCu1hEnt78voQJR9cnn9
- aVILdlT7DwqHHfV4erI3marCP2x48mQvOHZVJcxSKV4fMYFkM4n+GjXxNupzJUhdYgbnqUc18
- jId1v/bPADgzRVqkejmWjT8eaZTxrO72O8EK7wmzGztB7bz4HQBxwLPWJDsOJEKFg788AuoeA
- HSsEi6yX5nT5FnZEelCrkFgGafsmbvekCGhGAnuDZBYhyDgGY3/J63RadAO53/ziQxoUw+VAu
- Gmgav6jGQ4pB3IYNYNnyEGEsvnKOyX4eSCiUMvv0s/x37ANUrxxHJMBh/oOsckJqGzHVlfL2S
- z6c5ehX2B8XPdPhlkSzD5Z8hayxBuGTzZFZH+CAMXhxdJa5VZBq9jx/85xpc9MNEN+3578hid
- gSyk0VtXRo07PveH7we9ACZZlFbE4Vvru9gezvqLk8F2BAi+qd3fIuCom+y7x+4hGTWOgARuT
- zkirTqk+6XmsCrlUljshLtc8t1A=
+X-Provags-ID: V03:K1:nYGGaxflsP/Bedmy3Aa2lK+bnTu91JQFXRNlR0P3qabRptlQHKh
+ dDBwsHlUPItN1/cwITkfa7vs6qG57n5QC70UKFxMSJhUyoM9P+bSojkfGhqoDQyU20qZUiP
+ 1i/sZikbk+P/WvJjka6OMA/e/Fylh8P07uih3z/drKkeVkh15/Hyl863zYIFcIG7zK6GVr9
+ 5LnLH2oCGmI+PV9etFakQ==
+UI-OutboundReport: notjunk:1;M01:P0:G6jDABhbYBA=;1QaqKQHstX3eW4syQ9ewOinBt5s
+ NqzBab31AX+OZkCuSsUCMwrlScl4rhDYQz4lbitx79HCEqWXM0pPjnofrFNNBlBvJHZTuJVnf
+ iPbtepzSOub/GZuKhz3ybxFI2sMydR3VA6sMNIVOBzqQE/pAUsBirdjniMVA74OrFT2evn7Yi
+ 95WJD58nK82KZ3Q2uTrs+McJUndrZm5g8UhR21FhtLBSJSS1JrCNLRhEqarEmKNs1kPjbUEIS
+ x1gH4e8/TxIBuhsCj05m6uYBw+0sTZT4rIjzZIs2Em020qiaSgY+ky0LTFTpJ+mndKM4+SE/u
+ d7WTVkSXutd5isp2DCIpchdl0Yh9qtE/O8vPk20hP5uZE8cZX/72K2mJ5okTFi8kNIf4LOXYV
+ f/fhSK2kwVRWpPe0PkEq4Te+ouO0nBxwQX4KCjJoIK5VE7SY1cWt9kxB1H2kpouQErT24PWFy
+ lq8/paCWSfTFBqjUeQ5XlRLwNYTcKkZTahuvf2tGyJvNtbRGulbKkldsL4wzaJ0XJzt6kXc2e
+ qRpXkLSVgXhSdvst0ZKDP6o8hut6ICru/HpTxuZhT7jKbeajJr+JLNJfixDJFE4dOe6FlQe+o
+ CImcAnqZHOgAgWHZTI6iH38K/MtnnC8v4qZAQS49PzYQZeJ/ikj4B2KUvsbwqVo3Y8OlofLMB
+ qUXNDied22ovVsjWcERGi/kzXxRuUCeLbCyeRjBvnuYfJw9EbJPmTvUdd77zGT9QNoYMS/Jbl
+ OxKwpveGZ9K4MrN+WrhLwlp96HukUmw65urJy0gwQrqetelMY6toEHcSEaoMz3CsmbeXzMqSt
+ dnA4HQQSAAbFr4xSb0zl0DzBXKyeBVX+pEYztHLLecRFRrjbWOyoQsCyFp7AkE8uT7qnjj+Ow
+ Qe9/64fvtTwdd6MQC7j45IKoF+q8+3ibdQ+am5+0TW9YlkGz/mEqPYoJRq9kXrbAGwgBmOKyo
+ Bq+gEtGMMOWqHq7T8LXvTytDqAI=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 22.01.23 um 08:50 schrieb Jeff King:
-> On Sat, Jan 21, 2023 at 10:36:09AM +0100, Ren=C3=A9 Scharfe wrote:
+Am 22.01.23 um 08:48 schrieb Jeff King:
+> On Sat, Jan 21, 2023 at 10:36:08AM +0100, Ren=C3=A9 Scharfe wrote:
 >
->> When parsing tree entries, reject mode values that don't fit into an
->> unsigned int.
+>> Am 19.01.23 um 02:39 schrieb Jeff King:
+>>>
+>>> Though I do find the use of strlen() in decode_tree_entry()
+>>> a little suspicious (and that would be true of the current code, as
+>>> well, since it powers hash-object's existing parsing check).
+>>
+>> strlen() won't overrun the buffer because the first check in
+>> decode_tree_entry() makes sure there is a NUL in the buffer ahead.
+>> If get_mode() crosses it then we exit early.
 >
-> Seems reasonable. I don't think you can cause any interesting mischief
-> here, but it's cheap to check, and finding data problems earlier rather
-> than later is always good.
+> Yeah, that was what I found after digging deeper (see my patch 7).
 >
-> Should it be s/unsigned int/uint16_t/, though?
+>> Storing the result in an unsigned int can overflow on platforms where
+>> size_t is bigger.  That would result in pathlen values being too short
+>> for really long paths, but no out-of-bounds access.  They are then
+>> stored as signed int in struct name_entry and used as such in many
+>> places -- that seems like a bad idea, but I didn't actually check them
+>> thoroughly.
+>
+> Yeah, I agree that the use of a signed int there looks questionable. I
+> do think it's orthogonal to my series here, as that tree-decoding is
+> used by the existing hash-object checks.
 
-"mode" is declared as unsigned int, and I was more concerned with
-overflowing that.
+Sure.
 
-We could be more strict and reject everything that oversteps
-S_IFMT|ALLPERMS, but the latter is not defined everywhere.  But
-permission bits are well-known, so the magic number 07777 should be
-recognizable enough.  Like this?
+> But it probably bears further examination, especially because we use it
+> for the fsck checks on incoming objects via receive-pack, etc, which are
+> meant to be the first line of defense for hosters who might receive
+> malicious garbage from users.
+>
+> We probably ought to reject trees with enormous names via fsck anyway. I
+> actually have a patch to do that, but of course it depends on
+> decode_tree_entry() to get the length, so there's a bit of
+> chicken-and-egg.
 
-=2D-- >8 ---
-Subject: [PATCH v2] tree-walk: disallow overflowing modes
+Solvable by limiting the search for the end of the string in
+decode_tree_entry() by using strnlen(3) or memchr(3) instead of
+strlen(3).  You just need to define some (configurable?) limit.
 
-When parsing tree entries, reject mode values with bits set outside file
-type mask and permission bits.
+> We probably also should outright reject gigantic trees,
+> which closes out a whole class of integer truncation problems. I know
+> GitHub has rejected trees over 100MB for years for this reason.
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- tree-walk.c | 2 ++
- 1 file changed, 2 insertions(+)
+Makes sense.
 
-diff --git a/tree-walk.c b/tree-walk.c
-index 74f4d710e8..62da0e5c73 100644
-=2D-- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -18,6 +18,8 @@ static const char *get_mode(const char *str, unsigned in=
-t *modep)
- 		if (c < '0' || c > '7')
- 			return NULL;
- 		mode =3D (mode << 3) + (c - '0');
-+		if (mode & ~(S_IFMT | 07777))
-+			return NULL;
- 	}
- 	*modep =3D mode;
- 	return str;
-=2D-
-2.39.1
+>> get_mode() can overflow "mode" if there are too many octal digits.  Do
+>> we need to accept more than two handfuls in the first place?  I'll send
+>> a patch for at least rejecting overflow.
+>
+> Seems reasonable. I doubt there's an interesting attack here, just
+> because the mode isn't used to index anything. If you feed a garbage
+> mode that happens to overflow to something useful, you could just as
+> easily have sent the useful mode in the first place.
+>
+>> Hmm, what would be the performance impact of trees with mode fields
+>> zero-padded to silly lengths?
+>
+> Certainly it would waste some time parsing the tree, but you could do
+> that already with a long pathname. Or just having a lot of paths in a
+> tree. Or a lot of trees.
+
+That's a cup half full/empty thing, perhaps.  What's the harm in leading
+zeros? vs. Why allow leading zeros?
+
+Ren=C3=A9
