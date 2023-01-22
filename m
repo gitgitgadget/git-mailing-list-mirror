@@ -2,190 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A92E0C61DA4
-	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 06:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C02C25B4E
+	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 06:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229768AbjAVGM6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Jan 2023 01:12:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35188 "EHLO
+        id S229637AbjAVGdt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Jan 2023 01:33:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbjAVGMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2023 01:12:50 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8D5D1814F
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 22:12:48 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id z5so8116294wrt.6
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 22:12:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=isyLaI5FrrfbWCFJGdKsB+gKlvvPyuhi6UTOdxtkXCc=;
-        b=mpepJos11slS0QKh7uTlnFdTf6NCuEvYOlQYYeIp2LHqzekoc9243lsEzbE7Kqw2R4
-         bus4AO1ZyZnZX635hzk+IasENYrmu1jqgrlrdFutmgHddNFsTigSFYq3NaZecO1C55iV
-         KY1MvThVPLNS79cYbxGxwVtWTKyQPu9oSC+M7EiUnUA03gWhuK5m9N1eh+g10TxxqS28
-         qkRj8g+oWacAL/ljwPqPrAfvByQ/322TiptzJgmqQq26iL0KZ7fk2OtTmfL1rSonUa/H
-         NDlr1dcgzlMERnVLMpCGlzPtgpuekcJBL+oa7iJ/tLkro6CVCSDZmaWHpIQ2WmJTQDEd
-         MN5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=isyLaI5FrrfbWCFJGdKsB+gKlvvPyuhi6UTOdxtkXCc=;
-        b=f+3ZrtYHo2c/+HeHDcwXq9ZXdyNhV2NraThaaFdhKFPu/bqebdSN2o2jgWu6r/hx6N
-         mxQ9gLru1EhO7Ihjlx9YWTKnwaV45Szzob28WCGyKHaYiAeJMvb7yrXcKVx/XFmaBmz1
-         CPHRBLtOHjrhekqKV6pGzriEeloVThbDu7Caw4prUnC9eVkGA+F18IfKTgLsDt4sGnO9
-         XgJXwnwqgDCB8NptM1JsvSbOxC81zzMe8ktjXw9bJEW73uaZcuK8S1zeLWIjgpA2g/io
-         5I96OsXIL8INy3gOLyPqhOfhDk046Z9OF/dFNxvxwRxmX0zEXSDgb/sNHeefgsD6FfJy
-         zz6Q==
-X-Gm-Message-State: AFqh2krB5gi9AlTc+OtBi35hw70t5fHwkmnc5pr6Z8dvKkwBxzt4PhYE
-        qiQinBqBTr5KiLjOy2il83ZjIEAmMpc=
-X-Google-Smtp-Source: AMrXdXstA3qOGzDcAbLjPkFqtv+37X3R0qFdmnl+XSm3QL00HMT30y9oKKjiKbuNhc2SknqwGfXA0w==
-X-Received: by 2002:adf:f4cf:0:b0:2bf:95c0:6b30 with SMTP id h15-20020adff4cf000000b002bf95c06b30mr5342100wrp.31.1674367967227;
-        Sat, 21 Jan 2023 22:12:47 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w7-20020adfd4c7000000b002baa780f0fasm1923835wrk.111.2023.01.21.22.12.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Jan 2023 22:12:46 -0800 (PST)
-Message-Id: <21ae9e053131a9a5f0ddb13fba4bf6502a1d19a6.1674367961.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com>
-References: <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
-        <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 22 Jan 2023 06:12:37 +0000
-Subject: [PATCH v4 6/9] rebase: clarify the OPT_CMDMODE incompatibilities
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229480AbjAVGds (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2023 01:33:48 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9396A21A2E
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 22:33:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1674369226; bh=lQgrj76GxmWQg5fzRFeXQS6qR3+qZxPGfAxsuGqj690=;
+        h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
+        b=FyWH9dOEDMDNoO1gCJ/TiNVoVcXxHGGCYdwvCM4i1g0MJaHMSajriD8/YLd2QImW9
+         D0yLlNl4cBOSlzI459X5KT31FSZ6vlDbufcliKpyOrrozN5Ni3COfpvItpFS51YMpC
+         Dn7/hV+Co9oel++UN4+V6Ponoo++uXcW+/eZJwDjUXm+h0Xt6LIeHVRyq5J+7CY2/B
+         472q6/Qd61ObOdA7aea0tpVu1OWVHM9R4I8uvvKbis/X1r48K5ooK+R8ypRiV1jpvx
+         nODzKX27Ufcm8qdDVgD5he+EDSN7dBJQtiU39TdAA7b2mQbwswVDKVAE8ev+29NqmU
+         L/t8SCLjlfm1g==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost.localdomain ([62.20.115.19]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MgibW-1olEPu07ES-00h5xU; Sun, 22
+ Jan 2023 07:28:42 +0100
+From:   tboegi@web.de
+To:     tboegi@web.de, git@vger.kernel.org
+Subject: [PATCH v2 1/1] t0003: Call dd with portable blocksize
+Date:   Sun, 22 Jan 2023 07:28:39 +0100
+Message-Id: <20230122062839.14542-1-tboegi@web.de>
+X-Mailer: git-send-email 2.39.1.254.g904d404274
+In-Reply-To: <20230121110505.21362-1-tboegi@web.de>
+References: 
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:/3n6rr1YUGtXTpFJuogelQt9LHqjD2OmCr0NKy12XKUcCvsDLDh
+ ydPfTzOSP10/lmbq7xnVsrbSbUAhGBgsKjm9iXgBllYTWM4atqF0/4rChgApuWZAyH6Orli
+ cWgVHD9Vv+/qQSBjLdr0aG+JvjKSS/FDhIQk8q2HuDlj5Jb6CaYzr/Tq9LB7j93eJ2abjTr
+ yL+AK9qMDgtlNNZIvpLcg==
+UI-OutboundReport: notjunk:1;M01:P0:EmQaYEEiVRw=;IyTQj19PqsNQh3iyfGgg1xD4M/C
+ Kvm0zbvwtdoR/7vRNqU/sQFhTs15wBN7N9/5OqtreOcXFO7tnzfyrvlhoRcPu3gIois4k5nJS
+ 0Z0cOAFwPOZMVe0NYnOBn4mmUQ0h9zOZHHj/91DCFjSusgpBNDBOaD5JEnbsPy/BuJAuuj+5E
+ lA7rb7uvgjF0EEPCDSx0Uy0EmndsjGtB/rIHde/ZArgnMO8euufvAWY6M+1QWzTuRs2KtzsuB
+ oeOmOiV7+jn6z2/HpS9TrDL9kvUztD5P9eznXYs4EJtd3g6TO8OjMtAJC3zCw+YIXnm/kqJfU
+ OfXDksZzsnXktOogZM4EObn6tpMBvpE+dyC/qBfV2qMzJ0snxBXylsttSuqWWbQpDwezz7Jn6
+ xAZv1w097kvOanQB507OBpKIoxGTA72wBdjOG4hDRnyVsmzU7cn18g4H0QYwzsuaa8puvWYcE
+ Bk3GCKzmqQu+HihiZWqaUD6pFv8NDS34aDt1M5wMTnCzOJWV6k8FJV7z+CcTqBmGnq0ncRQcx
+ irwXxT/u45WjD2G/oTEr2rVTP/8RR76M7JpxLhY5HOH2rNihygyVjTD+1eKJkVzfq7sZa3yPH
+ /UMXe1n5k1CFaQEKtuz9NCJTB/E9tyt8DssAdV6+Uvd5rL1W8vKa2mgJAfgbRJMUKeCRO5oon
+ 6MxcDQJR0G+oxQEL2jjp70se2p7zysVw2ZOvFj6z9946tF6pfdRUF+OoDniOc3urDpS64Csli
+ qLUdCLpFWlwcFFFalMer448OgLhSS/th3DclHIObnE40dajRfdc+WAN9RFm5D1malIpD0aXmz
+ NOQ7v8dS9C6alZ4+4asW10OkjPMbXMcxWHgLbYB6e0U7zZw9z+AfPLyXo9/eM8ENcy0wPxx7p
+ uRAfuCTWxByRTpVsSUoNxsUIm7NmvO1+EvgvCHg9w/fWhGyGBiztcS0L5BqahmBWMsty87kk0
+ /PcX2G0zN3pZusaPlIhMpLLY8qc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+From: Torsten B=C3=B6gershausen <tboegi@web.de>
 
---edit-todo was documented as being incompatible with any of the options
-for the apply backend.  However, it is also incompatible with any of the
-options for the merge backend, and is incompatible with any options that
-are not backend specific as well.  The same can be said for --continue,
---skip, --abort, --quit, etc.
+The command `dd bs=3D101M count=3D1` is not portable,
+e.g. dd shipped with MacOs does not understand the 'M'.
 
-This is already somewhat implicitly covered by the synopsis, but since
-"[<options>]" in the first two variants are vague it might be easy to
-miss this.  That might not be a big deal, but since the rebase manpage
-has to spend so much verbiage about incompatibility of options, making
-a separate section for these options that are incompatible with
-everything else seems clearer.  Do that, and remove the needless
-inclusion of --edit-todo in the explicit incompatibility list.
+Use `bs=3D1048576 count=3D101`, which achives the same, instead.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-rebase.txt | 61 +++++++++++++++++++-----------------
- 1 file changed, 33 insertions(+), 28 deletions(-)
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+=2D--
+ t/t0003-attributes.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 8cb075b2bdb..1ba691e4c5f 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -208,6 +208,39 @@ Alternatively, you can undo the 'git rebase' with
- 
-     git rebase --abort
- 
-+MODE OPTIONS
-+------------
-+
-+The options in this section cannot be used with any other option,
-+including not with each other:
-+
-+--continue::
-+	Restart the rebasing process after having resolved a merge conflict.
-+
-+--skip::
-+	Restart the rebasing process by skipping the current patch.
-+
-+--abort::
-+	Abort the rebase operation and reset HEAD to the original
-+	branch. If `<branch>` was provided when the rebase operation was
-+	started, then `HEAD` will be reset to `<branch>`. Otherwise `HEAD`
-+	will be reset to where it was when the rebase operation was
-+	started.
-+
-+--quit::
-+	Abort the rebase operation but `HEAD` is not reset back to the
-+	original branch. The index and working tree are also left
-+	unchanged as a result. If a temporary stash entry was created
-+	using `--autostash`, it will be saved to the stash list.
-+
-+--edit-todo::
-+	Edit the todo list during an interactive rebase.
-+
-+--show-current-patch::
-+	Show the current patch in an interactive rebase or when rebase
-+	is stopped because of conflicts. This is the equivalent of
-+	`git show REBASE_HEAD`.
-+
- OPTIONS
- -------
- --onto <newbase>::
-@@ -249,22 +282,6 @@ See also INCOMPATIBLE OPTIONS below.
- <branch>::
- 	Working branch; defaults to `HEAD`.
- 
----continue::
--	Restart the rebasing process after having resolved a merge conflict.
--
----abort::
--	Abort the rebase operation and reset HEAD to the original
--	branch. If `<branch>` was provided when the rebase operation was
--	started, then `HEAD` will be reset to `<branch>`. Otherwise `HEAD`
--	will be reset to where it was when the rebase operation was
--	started.
--
----quit::
--	Abort the rebase operation but `HEAD` is not reset back to the
--	original branch. The index and working tree are also left
--	unchanged as a result. If a temporary stash entry was created
--	using `--autostash`, it will be saved to the stash list.
--
- --apply::
- 	Use applying strategies to rebase (calling `git-am`
- 	internally).  This option may become a no-op in the future
-@@ -345,17 +362,6 @@ See also INCOMPATIBLE OPTIONS below.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
----skip::
--	Restart the rebasing process by skipping the current patch.
--
----edit-todo::
--	Edit the todo list during an interactive rebase.
--
----show-current-patch::
--	Show the current patch in an interactive rebase or when rebase
--	is stopped because of conflicts. This is the equivalent of
--	`git show REBASE_HEAD`.
--
- -m::
- --merge::
- 	Using merging strategies to rebase (default).
-@@ -651,7 +657,6 @@ are incompatible with the following options:
-  * --no-keep-empty
-  * --empty=
-  * --[no-]reapply-cherry-picks
-- * --edit-todo
-  * --update-refs
-  * --root when used without --onto
- 
--- 
-gitgitgadget
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index d0284fe2d7..394a08e6d6 100755
+=2D-- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -400,7 +400,7 @@ test_expect_success 'large attributes line ignores tra=
+iling content in tree' '
+
+ test_expect_success EXPENSIVE 'large attributes file ignored in tree' '
+ 	test_when_finished "rm .gitattributes" &&
+-	dd if=3D/dev/zero of=3D.gitattributes bs=3D101M count=3D1 2>/dev/null &&
++	dd if=3D/dev/zero of=3D.gitattributes bs=3D1048576 count=3D101 2>/dev/nu=
+ll &&
+ 	git check-attr --all path >/dev/null 2>err &&
+ 	echo "warning: ignoring overly large gitattributes file ${SQ}.gitattribu=
+tes${SQ}" >expect &&
+ 	test_cmp expect err
+@@ -428,7 +428,7 @@ test_expect_success 'large attributes line ignores tra=
+iling content in index' '
+
+ test_expect_success EXPENSIVE 'large attributes file ignored in index' '
+ 	test_when_finished "git update-index --remove .gitattributes" &&
+-	blob=3D$(dd if=3D/dev/zero bs=3D101M count=3D1 2>/dev/null | git hash-ob=
+=6Aect -w --stdin) &&
++	blob=3D$(dd if=3D/dev/zero bs=3D1048576 count=3D101 2>/dev/null | git ha=
+sh-object -w --stdin) &&
+ 	git update-index --add --cacheinfo 100644,$blob,.gitattributes &&
+ 	git check-attr --cached --all path >/dev/null 2>err &&
+ 	echo "warning: ignoring overly large gitattributes blob ${SQ}.gitattribu=
+tes${SQ}" >expect &&
+=2D-
+2.39.1.254.g904d404274
 
