@@ -2,194 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48B71C27C76
-	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 01:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B767C38142
+	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 01:51:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbjAVBu6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Jan 2023 20:50:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49774 "EHLO
+        id S229672AbjAVBvO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Jan 2023 20:51:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjAVBu5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jan 2023 20:50:57 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E5851F90F
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 17:50:56 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id z4-20020a17090a170400b00226d331390cso8280370pjd.5
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 17:50:56 -0800 (PST)
+        with ESMTP id S229463AbjAVBvN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jan 2023 20:51:13 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99A431F913
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 17:51:12 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id bj3so8941213pjb.0
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 17:51:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ri6Ild9+iOgmuAu5/Gkz/BUWY/K184a0frLtl8bZhww=;
-        b=KWRsVVtj3orerHHrLX5+2uKJjHprMmilQkNcSAI1ZSfLPGSkzYVyMj/sTFRhjUTgEX
-         pF61bsonVTmfRGiyztD+ntnURPgrYzdjTBNZzoVKHsx/xrHwyC3itDG7rUIqeHrOWltA
-         34KU8Pz8o30Xnwr9Hh0JMhpfz/mjgOzAVC1I92vR/V+KS8EyzJrhBEcQf/0TPXDDl/U9
-         PAckWG3Kre0aeRyBKHp+yApn6yee69JL3DQRjcdhVYZCXmAiYDa98Z8g/gGj3f2+d9Fq
-         p43B7JTV+hkSXUywSlN58yQVkciTNJ7OJ30ov56Z6GO8xW4KZkXPBZDk2T8cdcHLKZbZ
-         qqqg==
+        h=mime-version:user-agent:message-id:date:subject:to:from:sender:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=qB49tKtypGgwg8urc9U5TcIuDXUQuI91SatKmkQ3//c=;
+        b=MZBxHSzSzYFb+lPvy3ZvxI94dnGCQzf1XtShTqYaDv7HXZ5K4DUzCvTrqMoU8Ws7BA
+         5k0cS2CoJ2kTfWW0ho5F7BzLijxPNRqvkeEQb+410UnY6YARwTeBufciNEhayHCywyrP
+         3PbVss3nK5UYm1CaGF+9HYohyU+KPnF8OJ+N5msUyYmRmR5dfegMOrmeqjdknurDje8x
+         jrel5TGhDId9CUMHjjKKRNNBxPYYgzXp4UYSnGT7Gcz8G1c3iJKA6MjIgNUwfX9w9dvG
+         pUNfIfILn7ufT9yWLFIiCbaSsmnMmLKKNMsjKzYGf8lyn5E6F2pvyxE3P3K4JFi0LsxW
+         fZMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
+        h=mime-version:user-agent:message-id:date:subject:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ri6Ild9+iOgmuAu5/Gkz/BUWY/K184a0frLtl8bZhww=;
-        b=3HKU6eoliIsc0LPouXUvw1ztU91EY5UiGY53koPo0i3YfsMz8M5NeYKUGRMx+FE7rh
-         hmXxaP+LhihwdcnHkQcvJ4uLsKwb64IS/xKFKPRlo/DamO5D9LMt/Hs6MqHvMRJ7Shtm
-         TGsgGg1yDxoNaHuuG5m3yhDeVmadYuRXN1hgosG+5AXyXB0Iggt2DRua7Y/cDDJzmF4G
-         fZ0FRsiiTI7Y+XSbmPOrpZ8qAYzyWNzqNH5hNp1SXaIvYiMBxojg1d8zjehmfhYVXWQ4
-         BERXeUDzPJ/LLDhqCSVYkCVWGw2Bngt3MqVTml5niQRXKIOCwZc/kjKAcTntxb6X46lr
-         IjpQ==
-X-Gm-Message-State: AFqh2krDD2SZ3r71UylC922FISO32uL79Q0Cb6gnsRx1+Z4+XOpEsjvg
-        sxPEO3RN4jr6H4BODeFPnI7wWTl9hLw=
-X-Google-Smtp-Source: AMrXdXvxSyzUyzsF0WlX3wnTbHU8U+sXF6g2tlONC0GvAJJMdRbMOpPly6M9ZCV64XQ8NLv6Hyux3A==
-X-Received: by 2002:a17:90b:3802:b0:229:ffd4:b0ca with SMTP id mq2-20020a17090b380200b00229ffd4b0camr10283103pjb.17.1674352255914;
-        Sat, 21 Jan 2023 17:50:55 -0800 (PST)
+        bh=qB49tKtypGgwg8urc9U5TcIuDXUQuI91SatKmkQ3//c=;
+        b=2WOVhB17HB7bRUuR6/YWKla5BxPSUj6H/rMuraOP5LH6HV4LUGd8rRnI9GZRAgDlVn
+         t8k3sQxsPN4fsEyTKdZuyFdL7dZ19MPLvL8QIlJMQoAy6ZmUCwk4vKDXzyFziVychFRy
+         x3C76hPaPuMghJBF6H3rktjHA+Ov9uYM71QBNjoIagXG7YIHmilYGHWCIeAc/cQvwJep
+         7fhhGxEbuwgPbGkiXuf3f39Lihf6fpqOKFGeWWZwFGZOph0AfK/0m86162bdws+Wo0T6
+         wFx2G4Xt9VIohBp2THMjzzDHlM02wva8u9Frfb9jxJ0iM9DQrSBbIN3Tq8uCf+XWlDiO
+         NQCQ==
+X-Gm-Message-State: AFqh2kqZpcHDiss2yCw1lCpPMcV4tZMiDzK7JaGUBVDtP/xQ3XAgFVyi
+        yql2CnYY3Uqi+Qmiux9Io4IO8v+oevQ=
+X-Google-Smtp-Source: AMrXdXunPSiq5laxBFyfll8Cj/Sc1G4oEepPVZN4Ao4orQ8Lw6HlwEZISRp1LJvgpj+CmLRrNfwhiQ==
+X-Received: by 2002:a17:903:28e:b0:193:335a:98ac with SMTP id j14-20020a170903028e00b00193335a98acmr23247347plr.68.1674352271794;
+        Sat, 21 Jan 2023 17:51:11 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id mt19-20020a17090b231300b0022704cc03ebsm4058020pjb.41.2023.01.21.17.50.55
+        by smtp.gmail.com with ESMTPSA id b1-20020a170902b60100b0019312dd3f99sm177887pls.176.2023.01.21.17.51.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Jan 2023 17:50:55 -0800 (PST)
+        Sat, 21 Jan 2023 17:51:11 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 1/3] branch: fix die_if_checked_out() when
- ignore_current_worktree
-References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
-        <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
-        <17f267b1-7f5e-2fb6-fb14-1c37ec355e65@gmail.com>
-Date:   Sat, 21 Jan 2023 17:50:55 -0800
-In-Reply-To: <17f267b1-7f5e-2fb6-fb14-1c37ec355e65@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Sun, 22 Jan 2023 02:23:53 +0100")
-Message-ID: <xmqqbkmruykg.fsf@gitster.g>
+To:     git@vger.kernel.org
+Subject: [PATCH] MyFirstContribution: refrain from self-iterating too much
+Date:   Sat, 21 Jan 2023 17:51:11 -0800
+Message-ID: <xmqq3583uyk0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rubén Justo <rjusto@gmail.com> writes:
+Finding mistakes in and improving your own patches is a good idea,
+but doing so too quickly is being inconsiderate to reviewers who
+have just seen the initial iteration and taking their time to review
+it.  Encourage new developers to perform such a self review before
+they send out their patches, not after.
 
-> Let's stop using find_shared_symref() in die_if_checked_out(), to handle
-> correctly ignore_current_worktree.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/MyFirstContribution.txt | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-This says what the code stops using, but does not say what it uses
-instead.
-
-Factoring is_shared_symref() out of find_shared_symref() is probably
-a good idea that can stand alone without any other change in this
-patch as a single step, and then a second step can update
-die_if_checked_out() using the new function.
-
-As the proposed log message explained, updating die_if_checked_out()
-with this patch would fix a bug---can we demonstrate the existing
-breakage and protect the fix from future breakages by adding a test
-or two?
-
-Other than that, it looks like it is going in the right direction.
-Thanks for working on the topic.
-
-> Signed-off-by: Rubén Justo <rjusto@gmail.com>
-> ---
->  branch.c   | 16 +++++++++++-----
->  worktree.c | 54 +++++++++++++++++++++++++++++-------------------------
->  worktree.h |  6 ++++++
->  3 files changed, 46 insertions(+), 30 deletions(-)
->
-> diff --git a/branch.c b/branch.c
-> index d182756827..2378368415 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -820,12 +820,18 @@ void remove_branch_state(struct repository *r, int verbose)
->  void die_if_checked_out(const char *branch, int ignore_current_worktree)
->  {
->  	struct worktree **worktrees = get_worktrees();
-> -	const struct worktree *wt;
-> +	int i;
-> +
-> +	for (i = 0; worktrees[i]; i++)
-> +	{
-
-Style.  WRite the above on a single line, i.e.
-
-	for (i = 0; worktrees[i]; i++) {
-
-Optionally, we can lose the separate declaration of "i" by using C99
-variable declaration, i.e.
-
-	for (int i = 0; worktrees[i]; i++) {
-
-> diff --git a/worktree.c b/worktree.c
-> index aa43c64119..d500d69e4c 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -403,6 +403,33 @@ int is_worktree_being_bisected(const struct worktree *wt,
->   * bisect). New commands that do similar things should update this
->   * function as well.
->   */
-
-The above comment is about find_shared_symref() which iterates over
-worktrees and find the one that uses the named symref.  Now the
-comment appears to apply to is_shared_symref() which does not
-iterate but takes one specific worktree instance.  Do their
-differences necessitate some updates to the comment?
-
-> +int is_shared_symref(const struct worktree *wt, const char *symref,
-> +		     const char *target)
-> +{
-
-What this function does sound more like "is target in use in this
-particular worktree by being pointed at by the symref?"  IOW, I do
-not see where "shared" comes into its name from.
-
-"HEAD" that is tentatively detached while bisecting or rebasing the
-"target" branch is still considered to point at the "target", so
-perhaps symref_points_at_target() or something?
-
->  const struct worktree *find_shared_symref(struct worktree **worktrees,
->  					  const char *symref,
->  					  const char *target)
-> @@ -411,31 +438,8 @@ const struct worktree *find_shared_symref(struct worktree **worktrees,
->  	int i = 0;
->  
->  	for (i = 0; worktrees[i]; i++) {
-
-Not a new problem, but the initialization on the declaration of "i"
-is redundant and unnecessary.  Again, we can use the C99 style, i.e.
-
-	const struct worktree *existing = NULL;
--	int i = 0;
--
--	for (i = 0; worktrees[i]; i++) {
-+	for (int i = 0; worktrees[i]; i++) {
-
-> +		if (is_shared_symref(worktrees[i], symref, target)) {
-> +			existing = worktrees[i];
->  			break;
->  		}
->  	}
-> diff --git a/worktree.h b/worktree.h
-> index 9dcea6fc8c..7889c4761d 100644
-> --- a/worktree.h
-> +++ b/worktree.h
-> @@ -149,6 +149,12 @@ const struct worktree *find_shared_symref(struct worktree **worktrees,
->  					  const char *symref,
->  					  const char *target);
->  
-> +/*
-> + * Returns true if a symref points to a ref in a worktree.
-> + */
-
-Make it clear that what you called "a ref" in the above is what is
-called "target" below.
-
-> +int is_shared_symref(const struct worktree *wt,
-> +		     const char *symref, const char *target);
-> +
->  /*
->   * Similar to head_ref() for all HEADs _except_ one from the current
->   * worktree, which is covered by head_ref().
+diff --git c/Documentation/MyFirstContribution.txt w/Documentation/MyFirstContribution.txt
+index 7c9a037cc2..81dcaedf0c 100644
+--- c/Documentation/MyFirstContribution.txt
++++ w/Documentation/MyFirstContribution.txt
+@@ -1136,6 +1136,26 @@ index 88f126184c..38da593a60 100644
+ [[now-what]]
+ == My Patch Got Emailed - Now What?
+ 
++You should wait for your patch to be reviewed by other people in the
++development community.  While you are waiting, you may want to
++re-read what you wrote in the patch you already have sent, as if you
++are a reviewer who is helping you to improve your patch.  But resist
++the temptation to update the patch and send a new one, until other
++people had enough time to digest your original patch and give you
++their reviews.  They may be taking time to give you a carefully
++written review responses and haven't finished it yet.  Bombarding
++them with new versions before they have a chance to react to the
++first iteration is being rude to them.
++
++Of course, you still may spot mistakes and rooms for improvements
++after you sent your initial patch.  Learn from that experience to
++make sure that you will do such a self-review _before_ sending your
++patches next time.  You do not have to send your patches immediately
++once you finished writing them.  It is not a race.  Take your time
++to self-review them, sleep on them, improve them before sending them
++out, and do not allow you to send them before you are reasonably
++sure that you won't find more mistakes in them yourself.
++
+ [[reviewing]]
+ === Responding to Reviews
+ 
