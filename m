@@ -2,91 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90212C38142
-	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 16:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 730A5C38142
+	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 16:37:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbjAVQgP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Jan 2023 11:36:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49414 "EHLO
+        id S230056AbjAVQhK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Jan 2023 11:37:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229766AbjAVQgO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2023 11:36:14 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0401BFF1C
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:36:14 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id d9so9300513pll.9
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:36:13 -0800 (PST)
+        with ESMTP id S230020AbjAVQhJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2023 11:37:09 -0500
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F837FF3F
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:37:05 -0800 (PST)
+Received: by mail-pg1-x52d.google.com with SMTP id r18so7355091pgr.12
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:37:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2YtmOUro/qrcvbA0VRy29idOED2OvILmJSAvA4fydnI=;
-        b=PxPWHH6dN4sLkBc23G1MW7i9+7yHJhgZs2buTIaVBGPEIkZFCnYS2A81p3hZyZOlha
-         TTlKw1UTRDz5hbeByTNKwBNm/1fIMz2c5RoPM1X7bwIlc977LCD1k5t0VJlRcnXinBS2
-         qOXi1vsYvPW3+AuRoy1ozzuzDxa2kdUAal1TvExCCoiS28t6OsnvwwDmiKVLcwMLFnTB
-         c766saGKJnfNga5uAJ46UDyVFi6L8Kv/irWepf7w7nYNopSotwSwbV380arrRv8UVoMk
-         +lZxlRNAOiCY7S2KNEFu/hzhH036dUxxCs3xxt3X1k881lWgkzX8rxa6BmF/QA77KBrU
-         5i2g==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TpMzlZBrL5vxBCYtEaMhAc9AjD0MqRaXC4oRU8QIKt4=;
+        b=BR+rGJ1wxigdJFSE4KWy/WTSKN5uI9nD5FdUjyQDktoYMSjxmSEaZPK4nFCIAPNiFi
+         usKAFxRTbldM7xyVpkX12HW1CQGQ2ffqi382I+NcToz7SwRbfv5MXcj0/wRhTdxvjVc8
+         1dP5vR8P4b6KLoQkir3iPmPiFUhksENJp2Pm1oOwixOrTYMgoDFJUj7pzAPXXkUctUwq
+         mpR6cD8p9w1b1adEu1tpdlRFVqldkmgGJAlj5F7oM2//qodfGFXat+4eihegPcbH55uZ
+         PJp3/7pDdlJSxqmCJZXc8xyOywBZ7vmCMh2p/MUSXigpbg2UFMSlq1sDjDdMmEedhDOU
+         /YoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2YtmOUro/qrcvbA0VRy29idOED2OvILmJSAvA4fydnI=;
-        b=QQ8eSytZUMLcupiJhXchbcoRYIcK+ax6acR0LXcXdaraoyESZ70CBhgNOIU+TRHA53
-         yGx+ckMCfOBl5JHZcuBRQ2LIiSmCGlCKj50TGVMmr1uOWpcWiHLMSGVMIwSWsNxFxUJc
-         bIAz1h2yEx4Fcr8jyapEMt3XtKxktKomtrJJty8+7Zblc4EwREA+Nm/3VXAmXrKdZBbb
-         VdEoEyoTWoW35GD4qanVswlxyEDOYUtt0fkePvOxXbd4qVFsjpMXRyo+WPGcHyR5InP9
-         NxI4BukezdiI5SXZohtNlB4SyzResFwRaIQZxsZiTcghNWpTOdLaOkOijBjoVuZFU6XJ
-         6KvQ==
-X-Gm-Message-State: AFqh2kpU927wXQOVyn01nY3szbWRbj72IxHTjKTR9tTrsorWsFDngbGF
-        cYJYBC6qhA0Srta+BTf7+MYAfuVYVH8=
-X-Google-Smtp-Source: AMrXdXv3F/J0t7GnfIRuaJVxlVzpiQZ7oB0jW9ADKNayulJvykpfYM2VvYHQ5FBVfWAqNrcm+gnt6w==
-X-Received: by 2002:a05:6a20:7d98:b0:ad:3ada:c712 with SMTP id v24-20020a056a207d9800b000ad3adac712mr27946652pzj.14.1674405373446;
-        Sun, 22 Jan 2023 08:36:13 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=TpMzlZBrL5vxBCYtEaMhAc9AjD0MqRaXC4oRU8QIKt4=;
+        b=n32dYX688SGljV7CrHKhGQQN3X7fZhCuWtN0UmI2ephaqJ7FnEe+L6zQMcHUhXTGuv
+         f+ulxJdWhr6hqNtxP27GTDJwbIhWP4QHoGDNl+7hCJNgi8fasltXAUobdWjChx0+Ijva
+         bpmRSt2/jnoMuqXEW5txK9RfCpE4lfgALZ57MNluYTZAmDyesTujDRLvSDWSkgPBHl2p
+         W8mgXMQs5+nDr5fYzbc80rbKswFt+eIANbUi/Lhn2dCithsk2opqmlmQY6vJuYwRkGZs
+         7qWPc1I/1VWEzVJi1UtwrjyUYXYD3wOd5Ald8heAGo6ttDaBoPXNjfYSZMGVu1O8C3Tt
+         F+0g==
+X-Gm-Message-State: AFqh2kpOvD2lb7pz7e7h4H8BkL6N5mA+AO9zsVApa07s8zbMrlCrGwE+
+        kW1NgiPa7cLDJvz5pKhEqWdkBc01o5U=
+X-Google-Smtp-Source: AMrXdXuKRMaXOhAuT51+suizldYZ5a7giQBTnnkWJmSNNpowOWYdJbSkZZod5xpcdXrYVbdt01Zw+Q==
+X-Received: by 2002:a05:6a00:420a:b0:588:eac0:b05b with SMTP id cd10-20020a056a00420a00b00588eac0b05bmr23015244pfb.27.1674405425143;
+        Sun, 22 Jan 2023 08:37:05 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id k133-20020a636f8b000000b00478c48cf73csm1170374pgc.82.2023.01.22.08.36.12
+        by smtp.gmail.com with ESMTPSA id q4-20020aa79824000000b00581d62be96dsm17286382pfl.197.2023.01.22.08.37.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Jan 2023 08:36:12 -0800 (PST)
+        Sun, 22 Jan 2023 08:37:04 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] tree-walk: disallow overflowing modes
-References: <d673fde7-7eb2-6306-86b6-1c1a4c988ee8@web.de>
-        <Y8zquGar3rLyRdTp@coredump.intra.peff.net>
-        <044bdc8f-fdc9-dfd2-6cbb-941513467524@web.de>
-Date:   Sun, 22 Jan 2023 08:36:12 -0800
-In-Reply-To: <044bdc8f-fdc9-dfd2-6cbb-941513467524@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 22 Jan 2023 11:03:38 +0100")
-Message-ID: <xmqqk01esf0j.fsf@gitster.g>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2023, #05; Tue, 17)
+References: <xmqqv8l581ov.fsf@gitster.g>
+        <6aaa2463-a92a-de06-5e16-f0980be3ed3f@iee.email>
+Date:   Sun, 22 Jan 2023 08:37:04 -0800
+In-Reply-To: <6aaa2463-a92a-de06-5e16-f0980be3ed3f@iee.email> (Philip Oakley's
+        message of "Sun, 22 Jan 2023 15:56:40 +0000")
+Message-ID: <xmqqfsc2sez3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Philip Oakley <philipoakley@iee.email> writes:
 
-> We could be more strict and reject everything that oversteps
-> S_IFMT|ALLPERMS, but the latter is not defined everywhere.  But
-> permission bits are well-known, so the magic number 07777 should be
-> recognizable enough.  Like this?
+> I've now sent a re-roll. It primarily updates the documentation, and
+> adds a test to cover the wide chars and combined characters.
 
-I do not quite see the reason why we want to be more strict than we
-already are at this point in the code path.  Stricter mode check in
-reports FSCK_MSG_ZERO_PADDED_FILEMODE and FSCK_MSG_BAD_FILEMODE from
-"fsck", which I think is probably sufficient.
-
-Avoiding integer wraparound is a good idea, even if it were
-impossible to induce misparsing of the tree data to lead to any
-security issues, for the same reason why we check for zero padded
-filemode, i.e. such a tree mode will allow the same tree object to
-be given different object names.
-
-Thanks.
+Thanks!
