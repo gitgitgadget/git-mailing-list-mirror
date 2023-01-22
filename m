@@ -2,133 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41AF2C27C76
-	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 01:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48B71C27C76
+	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 01:50:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229535AbjAVBiP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Jan 2023 20:38:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48214 "EHLO
+        id S229667AbjAVBu6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Jan 2023 20:50:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjAVBiO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jan 2023 20:38:14 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ED161CAF0
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 17:38:13 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id r9so7893354wrw.4
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 17:38:13 -0800 (PST)
+        with ESMTP id S229484AbjAVBu5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jan 2023 20:50:57 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E5851F90F
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 17:50:56 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id z4-20020a17090a170400b00226d331390cso8280370pjd.5
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 17:50:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:cc:to:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=reN885+wLybWSyzjKiyi/maW5UK/Zi/nIKPL7TywwMU=;
-        b=ESQOM5sDfxxuwQ+zb1EeTerjELVkd8YR028ULlVoeHtCx5PIicW/4CntaRr0yR22wE
-         w0BtTlYJyi9ZGG+kpHa77gVm22B7dbET4CrfG9SX7CPu2uj/ZytA6sUkS6N/m+y7mb/o
-         N303pmog53Y1sXyVIkGXMBx111zCFIwUkbX42ozGzVIAALFT9nbAchTwikLcSCO6N5i8
-         7hgl2v+St4NJ03A1nE2Fa0qFi218CMHjJ1uzZU1OnJCGZIqpC67CAGFjWIx1z+RKsh6D
-         Nm/TNkVMQ39Sp71rQ1iGINUQA5QP0+VRvqpkEWhjhxpTiH4ZTny9/ObpXVR9wX3qT0qE
-         W2IQ==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ri6Ild9+iOgmuAu5/Gkz/BUWY/K184a0frLtl8bZhww=;
+        b=KWRsVVtj3orerHHrLX5+2uKJjHprMmilQkNcSAI1ZSfLPGSkzYVyMj/sTFRhjUTgEX
+         pF61bsonVTmfRGiyztD+ntnURPgrYzdjTBNZzoVKHsx/xrHwyC3itDG7rUIqeHrOWltA
+         34KU8Pz8o30Xnwr9Hh0JMhpfz/mjgOzAVC1I92vR/V+KS8EyzJrhBEcQf/0TPXDDl/U9
+         PAckWG3Kre0aeRyBKHp+yApn6yee69JL3DQRjcdhVYZCXmAiYDa98Z8g/gGj3f2+d9Fq
+         p43B7JTV+hkSXUywSlN58yQVkciTNJ7OJ30ov56Z6GO8xW4KZkXPBZDk2T8cdcHLKZbZ
+         qqqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:cc:to:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=reN885+wLybWSyzjKiyi/maW5UK/Zi/nIKPL7TywwMU=;
-        b=24ZxoPJ+C9r6aDAa07w2U/vaRXwH95QzgVF8tC5drlttAeNQxHWEfSN+aryr3Z2wh8
-         L5v8PGyA3TMvnkoDy8gGOO1Q06q3PUV8elrZjFXu0P9CS8opxbC1cG+7jnbewtuzXWwK
-         af1uxNp4AA9E4f8eWNruBX4Ww9DZJn8EpKk7ac6d8lI1BonC05oJNHnjIxJ0Lb5xs0I1
-         Ngj164nKAPr+yeS2+EbeSDtOzDLzEvq+LLQ9DHay694aO6LZYudeJRNJttk5InYf+hWp
-         YzwhWB/AnK+dBMiRmCXl50M+Hx6u4/LFsdfQjqhPC3IUGpnsp1F75Ql9qHP6L9UlzjCt
-         Hbcw==
-X-Gm-Message-State: AFqh2krf+zkJqF0MCnRE9TFCz+c5fAx7jMN7KSVe91yn3ODbQor4KZam
-        iA7WkMImab1oqBJ3gj7KzsT7eGathIA=
-X-Google-Smtp-Source: AMrXdXtLQN9QROk91wm2tCaiw9/wUuReY58pWJlU+fxYr+BeT9NgvwlFPPYKCH3fgcsfvKJyM9swKA==
-X-Received: by 2002:a05:6000:784:b0:2be:3ccd:7f2f with SMTP id bu4-20020a056000078400b002be3ccd7f2fmr10312278wrb.46.1674351491683;
-        Sat, 21 Jan 2023 17:38:11 -0800 (PST)
-Received: from [192.168.2.52] (94.red-88-14-213.dynamicip.rima-tde.net. [88.14.213.94])
-        by smtp.gmail.com with ESMTPSA id k7-20020adfd227000000b002bdf3809f59sm18763550wrh.38.2023.01.21.17.38.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 Jan 2023 17:38:11 -0800 (PST)
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Subject: [PATCH] bisect: fix "reset" when branch is checked out elsewhere
-Message-ID: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
-Date:   Sun, 22 Jan 2023 02:38:10 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ri6Ild9+iOgmuAu5/Gkz/BUWY/K184a0frLtl8bZhww=;
+        b=3HKU6eoliIsc0LPouXUvw1ztU91EY5UiGY53koPo0i3YfsMz8M5NeYKUGRMx+FE7rh
+         hmXxaP+LhihwdcnHkQcvJ4uLsKwb64IS/xKFKPRlo/DamO5D9LMt/Hs6MqHvMRJ7Shtm
+         TGsgGg1yDxoNaHuuG5m3yhDeVmadYuRXN1hgosG+5AXyXB0Iggt2DRua7Y/cDDJzmF4G
+         fZ0FRsiiTI7Y+XSbmPOrpZ8qAYzyWNzqNH5hNp1SXaIvYiMBxojg1d8zjehmfhYVXWQ4
+         BERXeUDzPJ/LLDhqCSVYkCVWGw2Bngt3MqVTml5niQRXKIOCwZc/kjKAcTntxb6X46lr
+         IjpQ==
+X-Gm-Message-State: AFqh2krDD2SZ3r71UylC922FISO32uL79Q0Cb6gnsRx1+Z4+XOpEsjvg
+        sxPEO3RN4jr6H4BODeFPnI7wWTl9hLw=
+X-Google-Smtp-Source: AMrXdXvxSyzUyzsF0WlX3wnTbHU8U+sXF6g2tlONC0GvAJJMdRbMOpPly6M9ZCV64XQ8NLv6Hyux3A==
+X-Received: by 2002:a17:90b:3802:b0:229:ffd4:b0ca with SMTP id mq2-20020a17090b380200b00229ffd4b0camr10283103pjb.17.1674352255914;
+        Sat, 21 Jan 2023 17:50:55 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id mt19-20020a17090b231300b0022704cc03ebsm4058020pjb.41.2023.01.21.17.50.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Jan 2023 17:50:55 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 1/3] branch: fix die_if_checked_out() when
+ ignore_current_worktree
+References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
+        <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
+        <17f267b1-7f5e-2fb6-fb14-1c37ec355e65@gmail.com>
+Date:   Sat, 21 Jan 2023 17:50:55 -0800
+In-Reply-To: <17f267b1-7f5e-2fb6-fb14-1c37ec355e65@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+        message of "Sun, 22 Jan 2023 02:23:53 +0100")
+Message-ID: <xmqqbkmruykg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 1d0fa89 (checkout: add --ignore-other-wortrees, 2015-01-03) we
-have a safety valve in checkout/switch to prevent the same branch from
-being checked out simultaneously in multiple worktrees.
+Rubén Justo <rjusto@gmail.com> writes:
 
-If a branch is bisected in a worktree while also being checked out in
-another worktree; when the bisection is finished, checking out the
-branch back in the current worktree may fail.
+> Let's stop using find_shared_symref() in die_if_checked_out(), to handle
+> correctly ignore_current_worktree.
 
-Let's teach bisect to use the "--ignore-other-worktrees" flag.
+This says what the code stops using, but does not say what it uses
+instead.
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- builtin/bisect.c            |  3 ++-
- t/t6030-bisect-porcelain.sh | 23 +++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 1 deletion(-)
+Factoring is_shared_symref() out of find_shared_symref() is probably
+a good idea that can stand alone without any other change in this
+patch as a single step, and then a second step can update
+die_if_checked_out() using the new function.
 
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index cc9483e851..56da34648b 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -245,7 +245,8 @@ static int bisect_reset(const char *commit)
- 		struct child_process cmd = CHILD_PROCESS_INIT;
- 
- 		cmd.git_cmd = 1;
--		strvec_pushl(&cmd.args, "checkout", branch.buf, "--", NULL);
-+		strvec_pushl(&cmd.args, "checkout", "--ignore-other-worktrees",
-+				branch.buf, "--", NULL);
- 		if (run_command(&cmd)) {
- 			error(_("could not check out original"
- 				" HEAD '%s'. Try 'git bisect"
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 98a72ff78a..cc8acbab18 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -122,6 +122,29 @@ test_expect_success 'bisect start without -- takes unknown arg as pathspec' '
- 	grep bar ".git/BISECT_NAMES"
- '
- 
-+test_expect_success 'bisect reset: back in a branch checked out also elsewhere' '
-+	echo "shared" > branch.expect &&
-+	test_bisect_reset() {
-+		git -C $1 bisect start &&
-+		git -C $1 bisect good $HASH1 &&
-+		git -C $1 bisect bad $HASH3 &&
-+		git -C $1 bisect reset &&
-+		git -C $1 branch --show-current > branch.output &&
-+		cmp branch.expect branch.output
-+	} &&
-+	test_when_finished "
-+		git worktree remove wt1 &&
-+		git worktree remove wt2 &&
-+		git branch -d shared
-+	" &&
-+	git worktree add wt1 -b shared &&
-+	git worktree add wt2 -f shared &&
-+	# we test in both worktrees to ensure that works
-+	# as expected with "first" and "next" worktrees
-+	test_bisect_reset wt1 &&
-+	test_bisect_reset wt2
-+'
-+
- test_expect_success 'bisect reset: back in the main branch' '
- 	git bisect reset &&
- 	echo "* main" > branch.expect &&
--- 
-2.39.0
+As the proposed log message explained, updating die_if_checked_out()
+with this patch would fix a bug---can we demonstrate the existing
+breakage and protect the fix from future breakages by adding a test
+or two?
+
+Other than that, it looks like it is going in the right direction.
+Thanks for working on the topic.
+
+> Signed-off-by: Rubén Justo <rjusto@gmail.com>
+> ---
+>  branch.c   | 16 +++++++++++-----
+>  worktree.c | 54 +++++++++++++++++++++++++++++-------------------------
+>  worktree.h |  6 ++++++
+>  3 files changed, 46 insertions(+), 30 deletions(-)
+>
+> diff --git a/branch.c b/branch.c
+> index d182756827..2378368415 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -820,12 +820,18 @@ void remove_branch_state(struct repository *r, int verbose)
+>  void die_if_checked_out(const char *branch, int ignore_current_worktree)
+>  {
+>  	struct worktree **worktrees = get_worktrees();
+> -	const struct worktree *wt;
+> +	int i;
+> +
+> +	for (i = 0; worktrees[i]; i++)
+> +	{
+
+Style.  WRite the above on a single line, i.e.
+
+	for (i = 0; worktrees[i]; i++) {
+
+Optionally, we can lose the separate declaration of "i" by using C99
+variable declaration, i.e.
+
+	for (int i = 0; worktrees[i]; i++) {
+
+> diff --git a/worktree.c b/worktree.c
+> index aa43c64119..d500d69e4c 100644
+> --- a/worktree.c
+> +++ b/worktree.c
+> @@ -403,6 +403,33 @@ int is_worktree_being_bisected(const struct worktree *wt,
+>   * bisect). New commands that do similar things should update this
+>   * function as well.
+>   */
+
+The above comment is about find_shared_symref() which iterates over
+worktrees and find the one that uses the named symref.  Now the
+comment appears to apply to is_shared_symref() which does not
+iterate but takes one specific worktree instance.  Do their
+differences necessitate some updates to the comment?
+
+> +int is_shared_symref(const struct worktree *wt, const char *symref,
+> +		     const char *target)
+> +{
+
+What this function does sound more like "is target in use in this
+particular worktree by being pointed at by the symref?"  IOW, I do
+not see where "shared" comes into its name from.
+
+"HEAD" that is tentatively detached while bisecting or rebasing the
+"target" branch is still considered to point at the "target", so
+perhaps symref_points_at_target() or something?
+
+>  const struct worktree *find_shared_symref(struct worktree **worktrees,
+>  					  const char *symref,
+>  					  const char *target)
+> @@ -411,31 +438,8 @@ const struct worktree *find_shared_symref(struct worktree **worktrees,
+>  	int i = 0;
+>  
+>  	for (i = 0; worktrees[i]; i++) {
+
+Not a new problem, but the initialization on the declaration of "i"
+is redundant and unnecessary.  Again, we can use the C99 style, i.e.
+
+	const struct worktree *existing = NULL;
+-	int i = 0;
+-
+-	for (i = 0; worktrees[i]; i++) {
++	for (int i = 0; worktrees[i]; i++) {
+
+> +		if (is_shared_symref(worktrees[i], symref, target)) {
+> +			existing = worktrees[i];
+>  			break;
+>  		}
+>  	}
+> diff --git a/worktree.h b/worktree.h
+> index 9dcea6fc8c..7889c4761d 100644
+> --- a/worktree.h
+> +++ b/worktree.h
+> @@ -149,6 +149,12 @@ const struct worktree *find_shared_symref(struct worktree **worktrees,
+>  					  const char *symref,
+>  					  const char *target);
+>  
+> +/*
+> + * Returns true if a symref points to a ref in a worktree.
+> + */
+
+Make it clear that what you called "a ref" in the above is what is
+called "target" below.
+
+> +int is_shared_symref(const struct worktree *wt,
+> +		     const char *symref, const char *target);
+> +
+>  /*
+>   * Similar to head_ref() for all HEADs _except_ one from the current
+>   * worktree, which is covered by head_ref().
