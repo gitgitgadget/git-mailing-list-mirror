@@ -2,122 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A88BEC27C76
-	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 00:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DEFFC27C76
+	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 01:20:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229575AbjAVAIs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Jan 2023 19:08:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35354 "EHLO
+        id S229698AbjAVBUs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Jan 2023 20:20:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbjAVAIs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jan 2023 19:08:48 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B1BE14E93
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 16:08:47 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id u1-20020a17090a450100b0022936a63a21so12346029pjg.4
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 16:08:47 -0800 (PST)
+        with ESMTP id S229463AbjAVBUr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jan 2023 20:20:47 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F7532448C
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 17:20:45 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id g10so6639307wmo.1
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 17:20:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:cc:references:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0ihuEC8yfU2808c/FxDqxRGTskHbLoTrdf/MSjGemxE=;
-        b=pNULFZviqo+E/tDjWfm4z165on9pGDNC58JsHux4pbsJne08CgOJ0w9xhK7U5nuzXf
-         Tq5q/JEVhbqpuz0QfrbZBb9/lq0ORJoND0IFEtTLcst4TtbLgcrg05dnWdRxykyUAki+
-         kzVtjWst7rXk/5W26Q3lcUcRRSiAQBN8p7cXLz2qCVZymmtSrozPQugSodxwc42wi96Z
-         qrMfxT6OTim/sKeKZhJDvIHtPzHZ/Ae+rcZ7uwoqeYIN4b2JYSZLFkZu0DS0A7ysrsFd
-         4TZszPtFZJROaVqlr4HfmztH8F4atmeKXXyaDc4yWC57t55r5MA5duAm3WynCNeZtZm8
-         20QA==
+        bh=pQPme3d+YlbGhauHzK62bi2t0mG++NYYTxokOKhZEDM=;
+        b=CgYfzfhVwSPHfJHFjMtL7HxqYjogMBavIpwCOEGvxEiSLb71cqPTEr37gk4DJegNhW
+         IJOPULs2am1ebYiGLJ6Jxol0LzWCjb30iGLgzFUPJYQwnW7QGwiMTVLP5eABTExKfC1E
+         NbWN6cFOJVCKY7Wa4yLGLOepPayBDT56TrROMApl/AoLcDp97qWfByOvALvYtByRxENW
+         rQMNIn9XQTPqfPxIrfzvYDCSpjIG4BRDAfD6jyhtTQS1krukaGSNrUKa6UojbYt0rB+0
+         oEbwPVdi/v9x11odool8aLKLv9oSPQH2wQeoc/uRC2YzQ4IKgNAPCOBeQOxKM3B1t3K6
+         Lx2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:cc:references:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ihuEC8yfU2808c/FxDqxRGTskHbLoTrdf/MSjGemxE=;
-        b=AuZ1gt4P1W8oGp8S0gEajfH/Y1+4lyJrCub3xtAWQTW9ZG6OtwVJ3wTG8ni0cev3zC
-         w2zxI4cvlehpa1248uQRwzTEmRDDzK/rYeGQkDagCIE4ijFR/mwppac1Sc3mUxUASd05
-         3ucnaRWOTj4A5nJ9hMzvjgU/dN4zCtblRK9y6WHx1ajQ1fEgF+l2PUhetTM/Z1ISp6ek
-         owXAlaHDoEKM/LjX0igegjwXHLKvcU6b/Xqc1GHxwTl3WkYiSVAdcxSP+F8TWqX03Nat
-         2bpIQtGBHwPG0s8G5OrV7kPotO+xFmjBwQC9o2QjmYHL/buveJdrKVZWWeY910I3WsGK
-         U2sw==
-X-Gm-Message-State: AFqh2koS80jgYyqTW+nOwX7ecTxUQ/1cUkG8ZseoJM55Ttr4Qk6AjCQM
-        w4MLlxwMSfYf5aV9d7aKmW4=
-X-Google-Smtp-Source: AMrXdXsZaUxoBnfLQCVuP1TnTlxUIwE33Rhl9cv0977qFneUIewiNpdKbv7yDytsIy9btAHrHO9ykQ==
-X-Received: by 2002:a17:902:cec4:b0:195:f500:c6fe with SMTP id d4-20020a170902cec400b00195f500c6femr5096130plg.9.1674346126476;
-        Sat, 21 Jan 2023 16:08:46 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id q10-20020a170902daca00b00192d3e7eb8fsm29205395plx.252.2023.01.21.16.08.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Jan 2023 16:08:46 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v1 1/1] t0003: Call dd with portable blocksize
-References: <20230121110505.21362-1-tboegi@web.de>
-Date:   Sat, 21 Jan 2023 16:08:45 -0800
-In-Reply-To: <20230121110505.21362-1-tboegi@web.de> (tboegi@web.de's message
-        of "Sat, 21 Jan 2023 12:05:05 +0100")
-Message-ID: <xmqq8rhvwhv6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        bh=pQPme3d+YlbGhauHzK62bi2t0mG++NYYTxokOKhZEDM=;
+        b=y4w4aBvlJsQFOrcE3zF5oMZZnUMz++gK2oJnZw96XkUJHX13TVK2pa0LROqIhwocw8
+         a9PgX9m4k7g4+iL1cViaQauq0ITrDzMcCEvL2PPeiD+06zD4sKbedSCjEoYNdogX1G35
+         fE8TMFFyxUkg92yffLPnucJLBLlfjz7+Kjg2Q+Yqrc4UyVFjuX6kY8ddfv9L39/vecZS
+         k7TkiiApvQvpoQ7CR302q5x152AH4xlBPDG8Z2dUktdK4Dil2JB6xY4blXyFdd7uSeWw
+         GUyeNWDKeb3eS2unmB8fkiFluEP8zugxWXdw8Yn5LquK59rGNAUTYbXIw7q3iweFfYfY
+         cHaA==
+X-Gm-Message-State: AFqh2kobsDbjkRRekf59vBPQoTZCgU493lyEZCzwFGrbcKyGSXhZ09e/
+        wMuMUOi67BYnSQh18+6ua3s=
+X-Google-Smtp-Source: AMrXdXu0X0/KZ+UZ55zCOhrMDog6tgxmF0qmIAPT0//jL/Z6hUip7m8qqi7/7oYdRJXmgW5g1GrbPA==
+X-Received: by 2002:a05:600c:510b:b0:3db:d3f:a919 with SMTP id o11-20020a05600c510b00b003db0d3fa919mr15616075wms.1.1674350443648;
+        Sat, 21 Jan 2023 17:20:43 -0800 (PST)
+Received: from [192.168.2.52] (94.red-88-14-213.dynamicip.rima-tde.net. [88.14.213.94])
+        by smtp.gmail.com with ESMTPSA id 17-20020a05600c021100b003dafb0c8dfbsm7520845wmi.14.2023.01.21.17.20.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Jan 2023 17:20:43 -0800 (PST)
+Subject: [PATCH v2 0/3] fix die_if_checked_out() when ignore_current_worktree
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+To:     Git List <git@vger.kernel.org>
+References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
+Date:   Sun, 22 Jan 2023 02:20:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
 Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
+Changes:
+- The message explains the change as a bug fix.
+- Introduced a new helper is_shared_symref() to be used from
+  find_shared_symref() and die_if_checked_out().
+- Tests for rebase and switch.
 
-> From: Torsten Bögershausen <tboegi@web.de>
->
-> The command `dd -bs=101M count=1` is not portable.
 
-No need for '-'; the UI of dd was meant as a joke and deliberately
-deviates from UNIX norm to use '-' as an option introducer.
+Rubén Justo (3):
+  branch: fix die_if_checked_out() when ignore_current_worktree
+  rebase: refuse to switch to a branch already checked out elsewhere (test)
+  switch: reject if the branch is already checked out elsewhere (test)
 
-> Use `bs=1048576 count=101`, which does the same, instead.
+ branch.c          | 16 +++++++++-----
+ t/t2060-switch.sh | 29 +++++++++++++++++++++++++
+ t/t3400-rebase.sh | 14 ++++++++++++
+ worktree.c        | 54 +++++++++++++++++++++++++----------------------
+ worktree.h        |  6 ++++++
+ 5 files changed, 89 insertions(+), 30 deletions(-)
 
-Thanks for catching this.  It always is hard to catch these mistakes
-made in code that was cooked behind embargo, as there aren't many
-eyeballs on the changes.
-
-Strictly speaking, "bs=1048576 count=101" does not do the same thing
-(unlike the original that does a single write(2)system call of a
-huge buffer, it issues 101 smaller write(2)).
-
-It definitely is an improvement, independently from the portability
-issues, to rewrite it like you did.  Unnecessarily large an I/O
-should be avoided.
-
-Will queue.  Thanks.
-
-> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
-> ---
->  t/t0003-attributes.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-> index d0284fe2d7..394a08e6d6 100755
-> --- a/t/t0003-attributes.sh
-> +++ b/t/t0003-attributes.sh
-> @@ -400,7 +400,7 @@ test_expect_success 'large attributes line ignores trailing content in tree' '
->
->  test_expect_success EXPENSIVE 'large attributes file ignored in tree' '
->  	test_when_finished "rm .gitattributes" &&
-> -	dd if=/dev/zero of=.gitattributes bs=101M count=1 2>/dev/null &&
-> +	dd if=/dev/zero of=.gitattributes bs=1048576 count=101 2>/dev/null &&
->  	git check-attr --all path >/dev/null 2>err &&
->  	echo "warning: ignoring overly large gitattributes file ${SQ}.gitattributes${SQ}" >expect &&
->  	test_cmp expect err
-> @@ -428,7 +428,7 @@ test_expect_success 'large attributes line ignores trailing content in index' '
->
->  test_expect_success EXPENSIVE 'large attributes file ignored in index' '
->  	test_when_finished "git update-index --remove .gitattributes" &&
-> -	blob=$(dd if=/dev/zero bs=101M count=1 2>/dev/null | git hash-object -w --stdin) &&
-> +	blob=$(dd if=/dev/zero bs=1048576 count=101 2>/dev/null | git hash-object -w --stdin) &&
->  	git update-index --add --cacheinfo 100644,$blob,.gitattributes &&
->  	git check-attr --cached --all path >/dev/null 2>err &&
->  	echo "warning: ignoring overly large gitattributes blob ${SQ}.gitattributes${SQ}" >expect &&
-> --
-> 2.39.1.254.g904d404274
+-- 
+2.39.0
