@@ -2,63 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF07CC25B4E
-	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 16:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90212C38142
+	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 16:36:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229999AbjAVQVs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Jan 2023 11:21:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44810 "EHLO
+        id S229989AbjAVQgP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Jan 2023 11:36:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229766AbjAVQVr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2023 11:21:47 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E531E28E
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:21:46 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id bj3so9720733pjb.0
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:21:46 -0800 (PST)
+        with ESMTP id S229766AbjAVQgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2023 11:36:14 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0401BFF1C
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:36:14 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id d9so9300513pll.9
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 08:36:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OBwsIz4My5C0hDxtnZaDcyzPwZa5Te/4YBMZUDWEP6E=;
-        b=ILlnMQWgnEh1zLSPc0oyAELoTwmizeP0FnaJoS5DYPuJ+W8RNrhCHyVeFIjwk9hmqH
-         yfPhAY8DzvL2RDCdkecsNKLObwfYm919Si6P0OmPrATXrCHwuBvSudspftlR9Uf73CoZ
-         TWs+ZaKqGfjwwTTRxK8ixBlpZgJG+EJc9zJg8laNc1/pzbjEgXVQLnAwgPuUvPtwIpmS
-         ceM0+8gzOHLoGe8CrFGEdV+3clEFBHyjWKoYKCSzFRBNnFXue+Z6ygwAk18MrQyf0/vI
-         oGzNzFXlFsijgGd6++HvGMA6AYMoqM0NtgvrmJ7FPMzHHgRm8FoibOf8X68Oq3q+6cGd
-         Pd2A==
+        bh=2YtmOUro/qrcvbA0VRy29idOED2OvILmJSAvA4fydnI=;
+        b=PxPWHH6dN4sLkBc23G1MW7i9+7yHJhgZs2buTIaVBGPEIkZFCnYS2A81p3hZyZOlha
+         TTlKw1UTRDz5hbeByTNKwBNm/1fIMz2c5RoPM1X7bwIlc977LCD1k5t0VJlRcnXinBS2
+         qOXi1vsYvPW3+AuRoy1ozzuzDxa2kdUAal1TvExCCoiS28t6OsnvwwDmiKVLcwMLFnTB
+         c766saGKJnfNga5uAJ46UDyVFi6L8Kv/irWepf7w7nYNopSotwSwbV380arrRv8UVoMk
+         +lZxlRNAOiCY7S2KNEFu/hzhH036dUxxCs3xxt3X1k881lWgkzX8rxa6BmF/QA77KBrU
+         5i2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OBwsIz4My5C0hDxtnZaDcyzPwZa5Te/4YBMZUDWEP6E=;
-        b=MBhNSEuOSQaHtdtEqKS9HIVERM2/0EoOJafusMOvQA+67NkqEH4/MtN+2rRn6Io0UJ
-         KdupMNw/vfqwCby5o6jdMtRf3lKaRhXI2+e0ptGmZAwK4fSXXHqED4Hni393wwCHnImA
-         YMW6/ejkfEwq8VJJ9n6CNY9arat01YD+5gdfpp9HFY/EICYgNkBkhMPwVGWqk+rl5x4f
-         QKIS7EoKvcWqiCMbLB+M7oTySnzzhKRd/ixGuEMVFlj62oV/3IeuxmCrNEneiLcvX5dv
-         scwu72jgiMHeSvLKQt0cCOa8s8XAlUT5bPwmOsBgvcj1lIKc5ba5VscNZ61NVoDl352Z
-         7MYg==
-X-Gm-Message-State: AFqh2kpr6N9hobRK9D5KbfsMxqdI0YR2w0T2UETaFwOuyDijdijjBYnq
-        bFC/0m8IH6HJPjY/gpakK182XDYHQIQ=
-X-Google-Smtp-Source: AMrXdXuY8j3W7HlDAb0vWBp4+e+k97FAOsPzLBWYO/PcYOuVTOUrYyDpqL5Vqa8GMrcxBD0u41rb5Q==
-X-Received: by 2002:a17:90b:2347:b0:228:f6d0:f14d with SMTP id ms7-20020a17090b234700b00228f6d0f14dmr22334469pjb.32.1674404506108;
-        Sun, 22 Jan 2023 08:21:46 -0800 (PST)
+        bh=2YtmOUro/qrcvbA0VRy29idOED2OvILmJSAvA4fydnI=;
+        b=QQ8eSytZUMLcupiJhXchbcoRYIcK+ax6acR0LXcXdaraoyESZ70CBhgNOIU+TRHA53
+         yGx+ckMCfOBl5JHZcuBRQ2LIiSmCGlCKj50TGVMmr1uOWpcWiHLMSGVMIwSWsNxFxUJc
+         bIAz1h2yEx4Fcr8jyapEMt3XtKxktKomtrJJty8+7Zblc4EwREA+Nm/3VXAmXrKdZBbb
+         VdEoEyoTWoW35GD4qanVswlxyEDOYUtt0fkePvOxXbd4qVFsjpMXRyo+WPGcHyR5InP9
+         NxI4BukezdiI5SXZohtNlB4SyzResFwRaIQZxsZiTcghNWpTOdLaOkOijBjoVuZFU6XJ
+         6KvQ==
+X-Gm-Message-State: AFqh2kpU927wXQOVyn01nY3szbWRbj72IxHTjKTR9tTrsorWsFDngbGF
+        cYJYBC6qhA0Srta+BTf7+MYAfuVYVH8=
+X-Google-Smtp-Source: AMrXdXv3F/J0t7GnfIRuaJVxlVzpiQZ7oB0jW9ADKNayulJvykpfYM2VvYHQ5FBVfWAqNrcm+gnt6w==
+X-Received: by 2002:a05:6a20:7d98:b0:ad:3ada:c712 with SMTP id v24-20020a056a207d9800b000ad3adac712mr27946652pzj.14.1674405373446;
+        Sun, 22 Jan 2023 08:36:13 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id u2-20020a17090a5e4200b0022a1df960e7sm4996636pji.57.2023.01.22.08.21.45
+        by smtp.gmail.com with ESMTPSA id k133-20020a636f8b000000b00478c48cf73csm1170374pgc.82.2023.01.22.08.36.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Jan 2023 08:21:45 -0800 (PST)
+        Sun, 22 Jan 2023 08:36:12 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] t0003: Call dd with portable blocksize
-References: <20230122062839.14542-1-tboegi@web.de>
-Date:   Sun, 22 Jan 2023 08:21:45 -0800
-In-Reply-To: <20230122062839.14542-1-tboegi@web.de> (tboegi@web.de's message
-        of "Sun, 22 Jan 2023 07:28:39 +0100")
-Message-ID: <xmqqtu0isfom.fsf@gitster.g>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] tree-walk: disallow overflowing modes
+References: <d673fde7-7eb2-6306-86b6-1c1a4c988ee8@web.de>
+        <Y8zquGar3rLyRdTp@coredump.intra.peff.net>
+        <044bdc8f-fdc9-dfd2-6cbb-941513467524@web.de>
+Date:   Sun, 22 Jan 2023 08:36:12 -0800
+In-Reply-To: <044bdc8f-fdc9-dfd2-6cbb-941513467524@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 22 Jan 2023 11:03:38 +0100")
+Message-ID: <xmqqk01esf0j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -67,31 +71,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> From: Torsten Bögershausen <tboegi@web.de>
->
-> The command `dd bs=101M count=1` is not portable,
-> e.g. dd shipped with MacOs does not understand the 'M'.
+> We could be more strict and reject everything that oversteps
+> S_IFMT|ALLPERMS, but the latter is not defined everywhere.  But
+> permission bits are well-known, so the magic number 07777 should be
+> recognizable enough.  Like this?
 
-Very good piece of information to have here.
+I do not quite see the reason why we want to be more strict than we
+already are at this point in the code path.  Stricter mode check in
+reports FSCK_MSG_ZERO_PADDED_FILEMODE and FSCK_MSG_BAD_FILEMODE from
+"fsck", which I think is probably sufficient.
 
-> Use `bs=1048576 count=101`, which achives the same, instead.
+Avoiding integer wraparound is a good idea, even if it were
+impossible to induce misparsing of the tree data to lead to any
+security issues, for the same reason why we check for zero padded
+filemode, i.e. such a tree mode will allow the same tree object to
+be given different object names.
 
-I'd locally tweak (read: no need to resend) it to
-
-    Use `dd bs=1048576 count=101`, which ...
-
-and downcase "Call" on the title line.
-
-A tangent.  I wonder how portable 
-
-    dd bs=1024x1024 count=101
-    dd bs=1kx1k count=101
-
-are in practice.  "Two or more positive decimal numbers (with or
-without 'k' or 'b') separated by 'x', specifying the product of the
-indicated values" is from POSIX, but I haven't used it myself (I
-know GNU dd groks it).
-
-In any case, thanks for the update.
+Thanks.
