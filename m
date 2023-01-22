@@ -2,191 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34E93C27C76
-	for <git@archiver.kernel.org>; Sat, 21 Jan 2023 22:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 168BEC27C76
+	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 00:02:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbjAUWxd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Jan 2023 17:53:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50348 "EHLO
+        id S229553AbjAVACR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Jan 2023 19:02:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229578AbjAUWxc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Jan 2023 17:53:32 -0500
-Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAAD925E37
-        for <git@vger.kernel.org>; Sat, 21 Jan 2023 14:53:29 -0800 (PST)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4Nzs921BYpz5tl9;
-        Sat, 21 Jan 2023 23:53:25 +0100 (CET)
-Message-ID: <b516a0a0-6802-2a06-597b-0837a89be9da@kdbg.org>
-Date:   Sat, 21 Jan 2023 23:53:25 +0100
+        with ESMTP id S229463AbjAVACQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Jan 2023 19:02:16 -0500
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D31223663
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 16:02:15 -0800 (PST)
+Received: by mail-pg1-x52b.google.com with SMTP id b12so6641580pgj.6
+        for <git@vger.kernel.org>; Sat, 21 Jan 2023 16:02:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vxzpsBkbNLULM5c5TJDd+Xo05j71A/Pf4H1AOHPqxgI=;
+        b=HmlSrwKlHtEAZ9m6fw/Yow7SxsK/kAWENEz1AJiJWnMPM55EsRtnknyO/XWohjPpw/
+         btHsA+vBd43wxMbFySJCI0yjMB+i0qKDwiGT82jA+15xVhu2rLjeYEX4dHhCyWEMpjjm
+         +pm1CNWkJI1T12aj+rqPIM9NDxiqVj6VdjV7QFrtChA9cKKbegHCPCN1H4cIdWHg3/ft
+         Okp9RI9d6c1W/+OZEFDsDMo4PR+bZquJgmdupPUPucoRBrk+ElT9wmjSlCv6PoUZY5pv
+         udj4dtoHpcekxEh6eIF5t3IuRfiCRixI4jyHQweV1UTcA5z2MN5qJEDjQygKlbg9usyy
+         Yucw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=vxzpsBkbNLULM5c5TJDd+Xo05j71A/Pf4H1AOHPqxgI=;
+        b=gHMoaCuiJY4lNfkq8ChslOFDmBogEjqxKXChr8UveEfXXQ8GmeI6N7jSUQlBuPKPim
+         yL+3C46jAY2SLVXOxL6CPalwepiACMwzQI8LRABuNcm2fxKS1kEVKnRg7OJQMT7nEcGH
+         FYVDHuAwNjYX8jboX9BI0lQdtdoBguKXYEhaZhnDjzCzi1pp4ZnXBQJcuOqRBbLTTkS0
+         R4Sp3SlPguP7alvRSJyprMecbGOhh3Akd2Mvq04LjK5i9frZ2X5DMqYmjPfldlFPiTL0
+         zCh5hFaWMCHPyOh09q8OvKevJvp6I7EUbmkXWKUXd4E5aN5K7vWu907HG+13MmYL0FrS
+         xUJA==
+X-Gm-Message-State: AFqh2krCt18eLot/Gw/by2dZo84lK6j4nhH8WSddkvbcE9lbh845HeFt
+        BefRJKQAojhFwcAH9raVrG+HD5m9Fmw=
+X-Google-Smtp-Source: AMrXdXs8Xn67PuFM3plZ07nqwMAh2Y9Iv16jHyYuL4DSz9kP/lLJk1NqxQ9TIqlFO41iLCBcmJy5nw==
+X-Received: by 2002:a05:6a00:4519:b0:58d:f047:53b7 with SMTP id cw25-20020a056a00451900b0058df04753b7mr13865046pfb.3.1674345734838;
+        Sat, 21 Jan 2023 16:02:14 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id o189-20020a62cdc6000000b0058baa6586f3sm17304566pfg.135.2023.01.21.16.02.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Jan 2023 16:02:14 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 1/2] rebase: remove completely useless -C option
+References: <pull.1466.git.1674106587550.gitgitgadget@gmail.com>
+        <pull.1466.v2.git.1674190573.gitgitgadget@gmail.com>
+        <a0f8f5fac1c3f79cd46b943e95636728677dffef.1674190573.git.gitgitgadget@gmail.com>
+        <xmqq5yd1za0t.fsf@gitster.g>
+        <CABPp-BFakaEqnpW4Xn1rzcOC6oVmcEz+OxBV4dKA_TJZ-xbTvg@mail.gmail.com>
+        <xmqqh6wlxjuo.fsf@gitster.g>
+        <CABPp-BFLUf7htEMXOLGOTNhUP=K11TfKrXQuC-FO4W6mHsjWQg@mail.gmail.com>
+Date:   Sat, 21 Jan 2023 16:02:14 -0800
+In-Reply-To: <CABPp-BFLUf7htEMXOLGOTNhUP=K11TfKrXQuC-FO4W6mHsjWQg@mail.gmail.com>
+        (Elijah Newren's message of "Fri, 20 Jan 2023 20:52:05 -0800")
+Message-ID: <xmqqilgzwi61.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH] win32: fix thread usage for win32
-To:     Rose via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Seija Kijin <doremylover123@gmail.com>, git@vger.kernel.org
-References: <pull.1440.git.git.1674334159116.gitgitgadget@gmail.com>
-Content-Language: en-US
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.1440.git.git.1674334159116.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.01.23 um 21:49 schrieb Rose via GitGitGadget:
-> From: Seija Kijin <doremylover123@gmail.com>
-> 
-> Use pthread_exit instead of async_exit.
-> 
-> This means we do not have
-> to deal with Windows's implementation
-> requiring an unsigned exit coded
-> despite the POSIX exit code requiring
-> a signed exit code.
-> 
-> Use _beginthreadex instead of CreateThread
-> since we use the Windows CRT.
-> 
-> Finally, check for NULL handles, not "INVALID_HANDLE,"
-> as _beginthreadex guarantees a valid handle in most cases
+Elijah Newren <newren@gmail.com> writes:
 
-This explains *what* the patch does, but not *why*. You replace
-CreateThread() in winansi.c, but what has this to do with async_exit and
-why must it be changed?
+> I'd probably go for that, but since in my mind the plan is still to
+> deprecate and remove the apply backend as you suggested at [1], I'm
+> not particularly motivated to improve/extend options specific to the
+> apply backend of rebase.
 
-Please take the time to explain this story more thoroughly.
+I still consider that deprecating and removing the "am|format-patch
+pipeline" mode is a good longer term goal, but it seems we still
+have some features that are only available with the mode and not the
+other "sequence of cherry-pick" mode?  We'd need to port that over
+to the other backend before we can wean ourselves off of the apply
+backend.  Until then, ...
 
-> 
-> Signed-off-by: Seija Kijin <doremylover123@gmail.com>
-> ---
->     win32: fix thread usage for win32
->     
->     Use pthread_exit instead of async_exit.
->     
->     This means we do not have to deal with Windows's implementation
->     requiring an unsigned exit coded despite the POSIX exit code requiring a
->     signed exit code.
->     
->     Use _beginthreadex instead of CreateThread since we use the Windows CRT.
->     
->     Finally, check for NULL handles, not "INVALID_HANDLE," as _beginthreadex
->     guarantees a valid handle in most cases
->     
->     Signed-off-by: Seija Kijin doremylover123@gmail.com
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1440%2FAtariDreams%2FCreateThread-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1440/AtariDreams/CreateThread-v1
-> Pull-Request: https://github.com/git/git/pull/1440
-> 
->  compat/mingw.c   |  2 +-
->  compat/winansi.c |  8 ++++----
->  run-command.c    | 33 ++++++++++++++-------------------
->  3 files changed, 19 insertions(+), 24 deletions(-)
-> 
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index af397e68a1d..c41d821b382 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -2295,7 +2295,7 @@ static int start_timer_thread(void)
->  	timer_event = CreateEvent(NULL, FALSE, FALSE, NULL);
->  	if (timer_event) {
->  		timer_thread = (HANDLE) _beginthreadex(NULL, 0, ticktack, NULL, 0, NULL);
-> -		if (!timer_thread )
-> +		if (!timer_thread)
->  			return errno = ENOMEM,
->  				error("cannot start timer thread");
->  	} else
-> diff --git a/compat/winansi.c b/compat/winansi.c
-> index 3abe8dd5a27..be65b27bd75 100644
-> --- a/compat/winansi.c
-> +++ b/compat/winansi.c
-> @@ -340,7 +340,7 @@ enum {
->  	TEXT = 0, ESCAPE = 033, BRACKET = '['
->  };
->  
-> -static DWORD WINAPI console_thread(LPVOID unused)
-> +static unsigned int WINAPI console_thread(LPVOID unused)
->  {
->  	unsigned char buffer[BUFFER_SIZE];
->  	DWORD bytes;
-> @@ -643,9 +643,9 @@ void winansi_init(void)
->  		die_lasterr("CreateFile for named pipe failed");
->  
->  	/* start console spool thread on the pipe's read end */
-> -	hthread = CreateThread(NULL, 0, console_thread, NULL, 0, NULL);
-> -	if (hthread == INVALID_HANDLE_VALUE)
-> -		die_lasterr("CreateThread(console_thread) failed");
-> +	hthread = (HANDLE)_beginthreadex(NULL, 0, console_thread, NULL, 0, NULL);
-> +	if (!hthread)
-> +		die_lasterr("_beginthreadex(console_thread) failed");
->  
->  	/* schedule cleanup routine */
->  	if (atexit(winansi_exit))
-> diff --git a/run-command.c b/run-command.c
-> index 50cc011654e..93fd0d22d4f 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -1030,6 +1030,13 @@ static void *run_thread(void *data)
->  	return (void *)ret;
->  }
->  
-> +int in_async(void)
-> +{
-> +	if (!main_thread_set)
-> +		return 0; /* no asyncs started yet */
-> +	return !pthread_equal(main_thread, pthread_self());
-> +}
-> +
->  static NORETURN void die_async(const char *err, va_list params)
->  {
->  	report_fn die_message_fn = get_die_message_routine();
-> @@ -1055,18 +1062,6 @@ static int async_die_is_recursing(void)
->  	return ret != NULL;
->  }
->  
-> -int in_async(void)
-> -{
-> -	if (!main_thread_set)
-> -		return 0; /* no asyncs started yet */
-> -	return !pthread_equal(main_thread, pthread_self());
-> -}
-> -
-> -static void NORETURN async_exit(int code)
-> -{
-> -	pthread_exit((void *)(intptr_t)code);
-> -}
-> -
->  #else
->  
->  static struct {
-> @@ -1112,18 +1107,18 @@ int in_async(void)
->  	return process_is_async;
->  }
->  
-> -static void NORETURN async_exit(int code)
-> -{
-> -	exit(code);
-> -}
-> -
->  #endif
->  
->  void check_pipe(int err)
->  {
->  	if (err == EPIPE) {
-> -		if (in_async())
-> -			async_exit(141);
-> +		if (in_async()) {
-> +#ifdef NO_PTHREADS
-> +			exit(141);
-> +#else
-> +			pthread_exit((void *)141);
-> +#endif
-> +		}
->  
->  		signal(SIGPIPE, SIG_DFL);
->  		raise(SIGPIPE);
-> 
-> base-commit: 904d404274fef6695c78a6b055edd184b72e2f9b
 
