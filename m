@@ -2,164 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57368C05027
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 17:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5A7EC25B50
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 18:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232297AbjAWRoH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 12:44:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54312 "EHLO
+        id S233477AbjAWSDU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 13:03:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230489AbjAWRoG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 12:44:06 -0500
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5F3D2B087
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 09:44:05 -0800 (PST)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 045F6CA1253;
-        Mon, 23 Jan 2023 12:44:05 -0500 (EST)
-Received: from [192.168.4.22] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id AB001CC83BB;
-        Mon, 23 Jan 2023 12:44:04 -0500 (EST)
-Message-ID: <9e75f76b-081c-c763-0fae-edd6d97fbc88@jeffhostetler.com>
-Date:   Mon, 23 Jan 2023 12:43:53 -0500
+        with ESMTP id S230128AbjAWSDR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 13:03:17 -0500
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DC80CA0E
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 10:03:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1674496994; bh=A5c9UeYIK1wa49ejprpkc4Qhl2q/hpEz9Lw4t+SE3a4=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=jdd3VujZX5tcT8cBCWs2LnJ/ZRbigy2+77pCKToSju1m79Gl0+/eEqbhVzMCl6Za1
+         xTSuJy/UOm+5JoiJ3VR58FjR6Zr8cQdwZ/7wBMD5OuzpNammUhzpPQx6rHXpnRGAbb
+         64tsMm6ARyqGcKgT9Dusn0nfpTMZ1TTtp1g80Bc6iHBRl840RXxSYl+Igx0xVNH1M/
+         pigzCu2ykaL/RQTyjvwoZ/QCe2n798AHTBgcWuiNDLxzkFHCF8pn9KlI3ajVKfTqbR
+         1HNKWeGBsZH+HXztx+RGM383IYJ8wPZK6j1CpSOGdfVkWE4sIMYQMRoawxaRJF97p9
+         wJXJJfUwgvLZg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MgRMB-1olW8w1gjP-00hsZK; Mon, 23
+ Jan 2023 18:58:05 +0100
+Date:   Mon, 23 Jan 2023 18:58:04 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] MyFirstContribution: refrain from self-iterating too
+ much
+Message-ID: <20230123175804.2bkcr7yawyz5fhkb@tb-raspi4>
+References: <xmqq3583uyk0.fsf@gitster.g>
+ <20230122071156.367jwwt3d5txvkl4@tb-raspi4>
+ <xmqqcz76tv6d.fsf@gitster.g>
+ <xmqqzga9opdu.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH v4] win32: fix thread usage for win32
-Content-Language: en-US
-To:     Rose via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
-References: <pull.1440.v3.git.git.1674492373925.gitgitgadget@gmail.com>
- <pull.1440.v4.git.git.1674492499537.gitgitgadget@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-In-Reply-To: <pull.1440.v4.git.git.1674492499537.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: mailmunge 3.10 on 209.68.5.199
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqzga9opdu.fsf@gitster.g>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:v88nBuaFpeVdB8uzYO8TCPrNc8oaQS9df4L2GNfJrOWAImqh2aj
+ yC7TnE95Du575oAqLqTvn7ygGxlwP2BvYVeSArmJsQmjTsRm8hDl79DqXiHuXfZ4Z7kkPPG
+ sKdbYgNuE5Y7Wsk4wDRQ6W9GNHYCpasH5Kgci2dnrSVlCwoFik2ORtP3msFSRsEV4ZqDdig
+ poHZzzvbTgdhFUHv0ejJw==
+UI-OutboundReport: notjunk:1;M01:P0:N3BGb9QfQRs=;7QOLFhZh03pjmHkryKJYLd3/wIq
+ Y00cjUSNsGyRA1R000QlEg/h+SS1qTqIMbIzXqXo19tPeIbJPGXeduDUyTA1sYD4usm3lLocM
+ M33vc9+JOIAmWSF/jvgURYjTk75QytqwYasdHREcagyfRi+g8M7YkuZ/ar5Q+d5WdgMsKCBcA
+ iE/5dzkyk6ofpc5xVf3KHLNm1RouhIO9cUHDU8SlNepwFx7mi+O1x2ePdudD/5x0VK/hhVciZ
+ c3lDuJOL0z0bWaL9TuqEZyJjDBsW+QpY6OgpBmyJISkkFFrpZZmM0Ceny+ihrTQwXfqMathjS
+ c6N6Ov1ASDnQw0hjuaaAUF2oAQvwCJ6Sk3rSCgo9NxXWHbvw1MY+Yny0iNMCTI/7b6XQ0K0XO
+ rsAuYxQdvP85gAj5K8AGOUzQzfD52K2OXlRCMovk5iwKgICLzoRqNYH+nbfLPYPju5XwfLvOh
+ AT72p36PoHmSnzBgqPCqmoO+PZ6LgVxdzYREjVFqbkzlCQs3JdChkhZs9bflc004bLzVcn4nw
+ 3kJAaxctMWOEakW+DGlYKmPNqU0lAM9W+pwbXl3ug/TFqmfvdV9QhN2XjzuIhQNyxtOA9s15T
+ prPkpzGDfbBKQCLbjvwElxXaG+oPg2htWKvKk/Tq5jRvEibAZef9jutheeqHHgWwfYshy/qDx
+ 2jk2nxS233BvcHB7IhaJq/abe0gdFG538N6DkBsc+W7Wd2M5AKmIpAI3uGbByNja+CP0DgI+T
+ x69bC2FXZ2Dmkk6276OEAdxvS+H5JXG5xFVJAdiuOJk7DERk6mFO9I4Rm+rRElXMIrsnJBSxF
+ 13yrjBz06IJxjYinUnk8RSdSqjuHFnDhiZNcXwglH4ci1HJddRuD4teec8JQOqjtZ4OBXNsso
+ DWHlOsM059Lh7Z9TkKRZbnucwR8LTSoSPQ8SAfaxh7GWKE+UDengzwoj55HC8glKkoWzXj+RF
+ j3KMSQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Jan 22, 2023 at 08:18:05PM -0800, Junio C Hamano wrote:
+
+The whole thing is much more convenient to read, so to say.
+Some nit-picking inline.
+
+> Finding mistakes in and improving your own patches is a good idea,
+> but doing so too quickly is being inconsiderate to reviewers who
+> have just seen the initial iteration and taking their time to review
+> it.  Encourage new developers to perform such a self review before
+> they send out their patches, not after.
+
+I think that this is what V1 was about. Review first, send then.
+Is there still so much focus on this ?
+Or is it more about "what to do when it went wrong?"
+
+How about this, or similar ?
+
+...it.  Encourage developers to wait with a new version too early.
+But if they plan to send one later, they are welcome to comment
+their own work as they where reviers.
 
 
-On 1/23/23 11:48 AM, Rose via GitGitGadget wrote:
-> From: Seija Kijin <doremylover123@gmail.com>
-> 
-> Use _beginthreadex instead of CreateThread
-> since we use the Windows CRT,
-> as Microsoft recommends _beginthreadex
-> over CreateThread for these situations.
-> 
-> Finally, check for NULL handles, not "INVALID_HANDLE,"
-> as _beginthreadex guarantees a valid handle in most cases
-> 
-> Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+>
+> Helped-by: Torsten B=F6gershausen <tboegi@web.de>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
->      win32: fix thread usage for win32
->      
->      Use pthread_exit instead of async_exit.
->      
->      This means we do not have to deal with Windows's implementation
->      requiring an unsigned exit coded despite the POSIX exit code requiring a
->      signed exit code.
->      
->      Use _beginthreadex instead of CreateThread since we use the Windows CRT.
->      
->      Finally, check for NULL handles, not "INVALID_HANDLE," as _beginthreadex
->      guarantees a valid handle in most cases
->      
->      Signed-off-by: Seija Kijin doremylover123@gmail.com
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1440%2FAtariDreams%2FCreateThread-v4
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1440/AtariDreams/CreateThread-v4
-> Pull-Request: https://github.com/git/git/pull/1440
-> 
-> Range-diff vs v3:
-> 
->   1:  68baafba2bd ! 1:  2e2d5ce7745 win32: fix thread usage for win32
->       @@ Commit message
->        
->            Signed-off-by: Seija Kijin <doremylover123@gmail.com>
->        
->       - ## compat/mingw.c ##
->       -@@ compat/mingw.c: static int start_timer_thread(void)
->       - 	timer_event = CreateEvent(NULL, FALSE, FALSE, NULL);
->       - 	if (timer_event) {
->       - 		timer_thread = (HANDLE) _beginthreadex(NULL, 0, ticktack, NULL, 0, NULL);
->       --		if (!timer_thread )
->       -+		if (!timer_thread)
->       - 			return errno = ENOMEM,
->       - 				error("cannot start timer thread");
->       - 	} else
->       -
->         ## compat/winansi.c ##
->        @@ compat/winansi.c: enum {
->         	TEXT = 0, ESCAPE = 033, BRACKET = '['
-> 
-> 
->   compat/winansi.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/compat/winansi.c b/compat/winansi.c
-> index 3abe8dd5a27..be65b27bd75 100644
-> --- a/compat/winansi.c
-> +++ b/compat/winansi.c
-> @@ -340,7 +340,7 @@ enum {
->   	TEXT = 0, ESCAPE = 033, BRACKET = '['
->   };
->   
-> -static DWORD WINAPI console_thread(LPVOID unused)
-> +static unsigned int WINAPI console_thread(LPVOID unused)
->   {
->   	unsigned char buffer[BUFFER_SIZE];
->   	DWORD bytes;
-> @@ -643,9 +643,9 @@ void winansi_init(void)
->   		die_lasterr("CreateFile for named pipe failed");
->   
->   	/* start console spool thread on the pipe's read end */
-> -	hthread = CreateThread(NULL, 0, console_thread, NULL, 0, NULL);
-> -	if (hthread == INVALID_HANDLE_VALUE)
-> -		die_lasterr("CreateThread(console_thread) failed");
-> +	hthread = (HANDLE)_beginthreadex(NULL, 0, console_thread, NULL, 0, NULL);
-> +	if (!hthread)
-> +		die_lasterr("_beginthreadex(console_thread) failed");
->   
->   	/* schedule cleanup routine */
->   	if (atexit(winansi_exit))
-> 
-> base-commit: 56c8fb1e95377900ec9d53c07886022af0a5d3c2
-
-This change may or may not be harmless, but it scares me
-because it is possibly a very subtle change and is being
-made for an unknown reason -- is there a problem being
-fixed here?  Or is this just churn for the sake of churn
-to avoid an awkward cast of the return code?
-
-What does _beginthreadex() specifically do that we need
-it to do for us?
-
-_beginthreadex() does some CRT init and then calls CreateThread(),
-so what are we missing by calling CreateThread() directly?
-
-The code in question is 11+ years old and it hasn't been a
-problem (right?), so I have to wonder what value do we get
-from this change.
-
-The containing function here is setting up a special console
-thread and named pipe to access the console, so I doubt that
-any of the tests in the test suite actually would actually
-exercise this change (since the tests aren't interactive).
-
-The low-level Windows startup code is very tricky and sensitive
-(and we need to test with both GCC's CRT and MSVC's CRT).
-As I said earlier, the change may or may not be harmless, but
-I question the need for it.
-
-Jeff
-
-
+>  Documentation/MyFirstContribution.txt | 30 +++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
+>
+> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFir=
+stContribution.txt
+> index ccfd0cb5f3..3e4f1c7764 100644
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -1256,6 +1256,36 @@ index 88f126184c..38da593a60 100644
+>  [[now-what]]
+>  =3D=3D My Patch Got Emailed - Now What?
+>
+> +After you sent out your first patch, you may find mistakes in it, or
+> +a different and better way to achieve the goal of the patch.  But
+> +resist the temptation to send a new version immediately.
+> +
+> + - If the mistakes you found are minor, send a reply to your patch as
+> +   if you were a reviewer and mention that you will fix them in an
+> +   updated version.
+> +
+> + - On the other hand, if you think you want to change the course so
+> +   drastically that reviews on the initial patch would become
+> +   useless, send a reply to your patch to say so immediately to
+> +   avoid wasting others' time (e.g. "I am working on a better
+> +   approach, so please ignore this patch, and wait for the updated
+> +   version.")
+> +
+> +And give reviewers enough time to process your initial patch before
+> +sending an updated version.
+> +
+> +The above is a good practice if you sent your initial patch
+> +prematurely without polish.  But a better approach of course is to
+> +avoid sending your patch prematurely in the first place.
+> +
+> +Keep in mind that people in the development community do not have to
+> +see your patch immediately after you wrote it.  Instead of seeing
+> +the initial version right now, that you will follow up with several
+> +updated "oops, I like this version better than the previous one"
+> +versions over 2 days, reviewers would much appreciate if a single
+> +more polished version came 2 days late and that version, that
+> +contains fewer mistakes, were the only one they need to review.
+> +
+>  [[reviewing]]
+>  =3D=3D=3D Responding to Reviews
+>
+> --
+> 2.39.1-308-g56c8fb1e95
+>
