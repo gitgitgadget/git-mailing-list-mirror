@@ -2,106 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 789CDC25B4E
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 01:57:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AD61C25B4E
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 02:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230138AbjAWB5a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Jan 2023 20:57:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44278 "EHLO
+        id S230148AbjAWCBu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Jan 2023 21:01:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbjAWB53 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2023 20:57:29 -0500
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C26FC172
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 17:57:27 -0800 (PST)
-Received: by mail-il1-x130.google.com with SMTP id m15so5402868ilq.2
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 17:57:27 -0800 (PST)
+        with ESMTP id S229817AbjAWCBt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2023 21:01:49 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2105D10A91
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 18:01:48 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id k10-20020a17090a590a00b0022ba875a1a4so7003072pji.3
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 18:01:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=+9vwVS5vbVd1YcIIbBE1SXux/+A8m+ZUlqWjS0TYUxU=;
-        b=m5Omo5Jl4cdz12W7JQrv63jws2T6NwV7AXDEJeW3WNRrHXzuM/bbjWpQTUTvEJwGsd
-         glT3XYrknkm4DLBCwlz6X0vKFfgws2z6RIgfbc/EFvejp0RW4NPIYKaStWLhUvuWbSyo
-         2v0ChLV1v4HDx5dzrhVJYcCfqZQ/ID+XRgjDfmuPSd9oq5vc5c+V3csadu61A6MMV4gS
-         VEkZcDWeSPAWm/rve/NVkgfT1jDYbm3E5KW09R7x+TCNI3d9OUQMXVM6+L+Vz4WI4SZK
-         kVotW06VL8OQweb/9kw5W1R8BuVyDzwg7POURfYywzLTBsgkQF0agZgmRwP4kUD25tFb
-         XC7A==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XRwcWgy+TIfVjm2BjajJiwE9L/VnjhH++x2f8sYaFSE=;
+        b=F1h/kTU+jWhgwinwV/ARX9Y2cxpHHE2ze7ThzrFdtKbG+tJ5hyZC/XtK/ZfvuM6cCv
+         Fqp9vW/ZUAFNnT/THFSN6oyi9IZMjkHmufVHIjguxfnImIKcublaHwFGU/i1xkYmPj3j
+         kS+Z5NHFS2lOSHmy/3JR26owxemFdCopRm7On8XklP4JgNGxUUgGzIq22KFJsxJvTrww
+         s6DHI9gZLdvxk1l0MznEybMLUxbRyedddTlEYg+w58XxCakpdJWv6npFtbLdq2485EQH
+         8zgt/dDXlt4IcKKP33nqPUg0qCB4+1uaLjwjpbT9DKMEVhVqj33XTKE+E0UAAUsakYL8
+         jFIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+9vwVS5vbVd1YcIIbBE1SXux/+A8m+ZUlqWjS0TYUxU=;
-        b=ugw7TiRb4e0asJ0NcEmEFLy+hVXw436eRpGQ/jEi8OY6mCT0jDERIWbbELgsgdhzhe
-         nFNRmtzSUHPdP4ukcYBNYEBpZkSOk0Hnj4M3U4OmuVr6U91LfJJRrXoGafMWNK6p2giG
-         5D4XiF52OeT/e0Ethsy/iS/dLF+OY0TUVlrL8U628L4iMJ2QQSOVTMoSYsbdlokDWA4n
-         /H8MZHS7qhC5Bz8TuI38KutO6tsRKfCABaJK8gRqMUa2ep9I+JRPQY0u4erLTP9T/mY1
-         wDo9fmMyGH5dgJCha6xbNKZjpSEbbsGUUqEE3tEstbkbH0GWj3+0IBoKMhsVX0KGdzJS
-         QS1w==
-X-Gm-Message-State: AFqh2kozShqy1j87qy9SnmEDk7+5fiJfdcOAne+3FmpmIUx27ec5Q4cw
-        hIje296pb+XuMl0SeQdJIJlaHzCsacQ=
-X-Google-Smtp-Source: AMrXdXs5WyNIkgo+9EJtWAEu+OcIYvuFkny4277A+nD1qJ7/IKW55lzDlBCywEtfjAnKYDAS8BTu1w==
-X-Received: by 2002:a92:d3c2:0:b0:30f:4feb:50c7 with SMTP id c2-20020a92d3c2000000b0030f4feb50c7mr1448483ilh.3.1674439045864;
-        Sun, 22 Jan 2023 17:57:25 -0800 (PST)
-Received: from stargate ([2620:72:0:a40:a4f2:f04:1f26:7472])
-        by smtp.gmail.com with ESMTPSA id v11-20020a02b90b000000b003a5f2e0bdb4sm5592921jan.68.2023.01.22.17.57.24
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XRwcWgy+TIfVjm2BjajJiwE9L/VnjhH++x2f8sYaFSE=;
+        b=i3rMGxcLXHTgvt5TGbRGNNMECmmGpmIcKFrqItyBAVWYmz0HzCMmjN7aa6wxwTBtaV
+         XU2tyIRLF0E2xsGMa2HQdUMlSp711TanyeO2K1ChD1unIpD3/q0O6Cmh9ikvCBxF1PX7
+         IstI3xB8LQL+YTWHKVdu0eW32dAWmn+yS/BMsQSFnsOQS1QBpmYzcZMr7oVJHCFFMZPl
+         QbllblkEFxqxRWfx89ZSFQYJFC1Hv0itVSDTkXttsOybTtnunxvoPoE7f1o4LP4EkkDs
+         jmveUxUZDanlD2L2t2n1mwBbo92KstYEPXBNSG9CGj0IQ0GIP0EdSGuKyiIpNKcNENjl
+         icqw==
+X-Gm-Message-State: AFqh2ko7gXGaWs2nQlG7G+S7NvcW5fK+NxA7KP+EhowpdA0oD0jmyqh3
+        WOK8WiJD43TQh9BwbNaKUPA=
+X-Google-Smtp-Source: AMrXdXuJO/M/qQqEX8WLf3EFhyNiRXa7o7/coZKmQ09lZMqFgWJigOknlTwlfwf4SVTNklOBThtOuQ==
+X-Received: by 2002:a05:6a20:bf15:b0:b8:8ad6:ee34 with SMTP id gc21-20020a056a20bf1500b000b88ad6ee34mr22724974pzb.51.1674439307430;
+        Sun, 22 Jan 2023 18:01:47 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id p17-20020a170902a41100b0017a032d7ae4sm18423704plq.104.2023.01.22.18.01.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Jan 2023 17:57:25 -0800 (PST)
-References: <xmqq3583uyk0.fsf@gitster.g>
-User-agent: mu4e 1.9.0; emacs 28.1
-From:   Sean Allred <allred.sean@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] MyFirstContribution: refrain from self-iterating too much
-Date:   Sun, 22 Jan 2023 19:47:45 -0600
-In-reply-to: <xmqq3583uyk0.fsf@gitster.g>
-Message-ID: <87cz76c8sb.fsf@gmail.com>
+        Sun, 22 Jan 2023 18:01:46 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] bisect: fix "reset" when branch is checked out elsewhere
+References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
+Date:   Sun, 22 Jan 2023 18:01:46 -0800
+In-Reply-To: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+        message of "Sun, 22 Jan 2023 02:38:10 +0100")
+Message-ID: <xmqqo7qqovp1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-First review on this list; let me know if I've missed any decorum :-)
+Rubén Justo <rjusto@gmail.com> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
-> +Of course, you still may spot mistakes and rooms for improvements
-> +after you sent your initial patch.  Learn from that experience to
-> +make sure that you will do such a self-review _before_ sending your
-> +patches next time.  You do not have to send your patches immediately
-> +once you finished writing them.  It is not a race.  Take your time
-> +to self-review them, sleep on them, improve them before sending them
-> +out, and do not allow you to send them before you are reasonably
-> +sure that you won't find more mistakes in them yourself.
+> Since 1d0fa89 (checkout: add --ignore-other-wortrees, 2015-01-03) we
+> have a safety valve in checkout/switch to prevent the same branch from
+> being checked out simultaneously in multiple worktrees.
+>
+> If a branch is bisected in a worktree while also being checked out in
+> another worktree; when the bisection is finished, checking out the
+> branch back in the current worktree may fail.
 
-Something of a nit:
+True.  But we should explain why failing is a bad thing here.  After
+all, "git checkout foo" to check out a branch 'foo' that is being
+used in a different worktree linked to the same repository fails,
+and that is a GOOD thing.  Is the logic behind your "may fail and
+that is a bad thing" something like this?
 
-    do not allow you to send them...
+    When "git bisect reset" goes back to the branch, it used to error
+    out if the same branch is checked out in a different worktree.
+    Since this can happen only after the end-user deliberately checked
+    out the branch twice, erroring out does not contribute to any
+    safety.
 
-should be
+Having said that...
 
-    do not allow yourself to send them...
+> @@ -245,7 +245,8 @@ static int bisect_reset(const char *commit)
+>  		struct child_process cmd = CHILD_PROCESS_INIT;
+>  
+>  		cmd.git_cmd = 1;
+> -		strvec_pushl(&cmd.args, "checkout", branch.buf, "--", NULL);
+> +		strvec_pushl(&cmd.args, "checkout", "--ignore-other-worktrees",
+> +				branch.buf, "--", NULL);
 
-You're also using 'them' a *lot* which took me for a tumble my first
-read-through. I lost track of what 'them' actually was. Since this
-documentation is especially likely to be read by those who are already
-confused by the process, it may be beneficial to be more explicit at
-some points:
+"git bisect reset" does take an arbitrary commit or branch name,
+which may not be the original branch the user was on.  If the
+user did not have any branch checked out twice, can they do
+something like
 
-    ...
+    $ git checkout foo
+    $ git bisect start HEAD HEAD~20
+    ... bisect session finds the first bad commit ...
+    $ git bisect reset bar
 
-    patches next time. You do not have to send your patches immediately
-    once you finished writing them. It is not a race. Take your time to
-    review your own patches, sleep on them, and improve them. Do not
-    allow yourself to send out your patches for review before you are
-    reasonably sure you won't find more mistakes in them yourself.
+where 'foo' is checked out only in this worktree?  What happens if
+'bar' has been checked out in a different worktree linked to the
+same repository while this bisect was going on?  The current code
+may fail due to the safety "checkout" has, but isn't that exactly
+what we want?  I.e. prevent 'bar' from being checked out twice by
+mistake?  Giving 'bar' on the command line of "bisect reset" is
+likely because the user wants to start working on that branch,
+without necessarily knowing that they already have a worktree that
+checked out the branch elsewhere---in other words, isn't that a lazy
+folks' shorthand for "git bisect reset && git checkout bar"?
 
---
+If we loosen the safety only when bisect_reset() receives NULL to
+its commit parameter, i.e. we are going back to the original branch,
+the damage might be limited to narrower use cases, but I still am
+not sure if the loosening is worth it.
 
-Thanks for all the work you do on this list; it's much appreciated.
+IIUC, the scenario that may be helped would go like this:
 
--Sean
+    ... another worktree has 'foo' checked out ...
+    $ git checkout --ignore-other-worktrees foo
+    $ git bisect start HEAD HEAD~20
+    ... bisect session finds the first bad commit ...
+    $ git bisect reset
 
---
-Sean Allred
+The last step wants to go back to 'foo', and it may be more
+convenient if it did not fail to go back to the risky state the user
+originally created.  But doesn't the error message already tell us
+how to go back after this step refuses to recreate such a risky
+state?  It sugests "git bisect reset <commit>" to switch to a
+detached HEAD, so presumably, after seeing the above fail and
+reading the error message, the user could do
+
+    $ git bisect reset foo^{commit}
+
+to finish the bisect session and detach the head at 'foo', and then
+the "usual" mantra to recreate the risky state that 'foo' is checked
+out twice can be done, i.e.
+
+    $ git checkout --ignore-other-worktrees foo
+
+So, I am not sure if this is a good idea in general.
+
+Or do I misunderstand why you think "checking out may fail" is a bad
+thing?
