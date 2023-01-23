@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3AE1C38142
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 17:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27CAAC38142
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 17:16:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233521AbjAWRPu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 12:15:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49990 "EHLO
+        id S233537AbjAWRQF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 12:16:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233471AbjAWRP0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 12:15:26 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC902BF1F
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 09:15:17 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id kt14so32402207ejc.3
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 09:15:17 -0800 (PST)
+        with ESMTP id S233513AbjAWRPc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 12:15:32 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D01B830E5
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 09:15:18 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id ss4so32273225ejb.11
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 09:15:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=G0EAP/+ht+MCm0hS+nzUQZhtsmL3FyKKtMK1D6L7A8w=;
-        b=nTtacCaabKPItmmgObPGGZZpYUvGXlPfINZEG0xWCScJWZx+mK8ozFo+zgY3nW1OkL
-         2yZjSy7a6YoXgkGBRbRIdFJQ2GeyOU6Aa7vNuGywu/4Lq8kjy8cCQovasug6A5RZEoWA
-         ld3FMk0JfhR5RLuu1USZ4rbwk24OYGXcHAu1BmokQORg2U4k+ql1jNHAlYtYWtnF6PxD
-         6HyiE+8wDOI6VjWQBdMoaVnbmOyq7UcgwYL5NEUrHEKoK4AoplNRyOsB+IckXgXRYT6U
-         tVqbQ8Hv1sgxhls4K3w7m3+9zLiE5i0LMLi4JHGoyHBIegKfTvB2aTf+A117YOKZU4JM
-         7OUQ==
+        bh=CObrc47jsH1/VTaTtfLUTAmc+L7k4mYNPcUFl+dpBQ4=;
+        b=h0v7vfG7IePzIHc/yyfenbI+3xEXLPMpRFaGtbbeacMuJMj8IOnax2cd5NF0t/w9px
+         GMC8eBZq5xh+vUC3EEieON7eVjihQOW/wER24SEYbBbBaLaPrM6Lp1NEnvV+Y/lKOOlS
+         c0E6KPEftN4Gu8Vtd5utpJ60OXPxrbUxVkGVGUlX021Ff4B3TBrBL3iNV4u8KDJDgV51
+         WIWNMw7/+mq9UEKSNKMaapR6CfByLEBrc++SIBadfaiuqquwNGow0IBR5RA1q4z/1Zvo
+         9zquLSPUHyGrUq9RZSrcDJDcGeZhJ6biVDr/ugBEwVppvA8/inYb48LtoVHL9Oyrrrf6
+         czKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=G0EAP/+ht+MCm0hS+nzUQZhtsmL3FyKKtMK1D6L7A8w=;
-        b=l87dxs+VjVnUaCUW9TelpBHhx356x0qN3jWLg44w23nmyts8MUIRMt5BCHSCDdwPRg
-         Hsrj2OVrd1JHWW39vmmlgg5fmceU5sqcX1zWpOwdWe1rcmWbgqBQPADsUf5+5oRNaaor
-         0YJn59QFuk5Zwjf4ob4/iJtfF+2t3eockg3s/B9AEbgABY6sRkrqFyZJpE/J0JCbaACx
-         BckNWcIQNDoNbmK1xz5Qy4OYWEC8qzlpyhVhCH50iOvdfctfQQSBSztJYLjxOcJ/ZgY1
-         hFQ9HokKbVKoWvZPgLKyBD5pvxBsJZabP4YQDhh5KwjB07EaBWPYCKsl1U28q73tfBos
-         y0BQ==
-X-Gm-Message-State: AFqh2koxLNiShd/pATqGaq+QsfIIq5UTBHVfYbxxjh2vllC1BBg4QGn8
-        8si32/F9IiwjQ2Zmx7HKNPdBVO/qy6geBg==
-X-Google-Smtp-Source: AMrXdXsoMhWNN4hJ5w5WlC+Us6SoSC7MKI9DVWkoLMvUy4egjB9peKUabcLexnY0D1i1hVZHUjPYGw==
-X-Received: by 2002:a17:907:c609:b0:862:c1d5:ea1b with SMTP id ud9-20020a170907c60900b00862c1d5ea1bmr29038928ejc.8.1674494115263;
-        Mon, 23 Jan 2023 09:15:15 -0800 (PST)
+        bh=CObrc47jsH1/VTaTtfLUTAmc+L7k4mYNPcUFl+dpBQ4=;
+        b=AfphbGNef1BuzcoEt3R9yYyOtaHVO7W2SrT/s+OPpXEJqC8yO0ZzvGISflPfUTMzXn
+         Xyhm+VnrBl0gPsoipzw5lUYMjRZlFuYbSCs5hqRyOJGQskVTXX7ukSLN9ABo2PrOEiRJ
+         K05tqUwj8ds8RtzKQI9AjKiTEvX6Vmgen674bDf78fFfnZ0C3EomCTqJspBePtSnSi2O
+         HXWS65g0tLHC2X19sdN3dJj/8HAAChK3MiEX+z+2+g47Vr07T82c8AaZRpIgu3Vwqa3X
+         I1yv33pRXmfxO3M4BvvLOc/DY6o6HWi5exymqQ3vaIr9TM8uMXKXucgR2PmyVkEV8OE8
+         e+Xw==
+X-Gm-Message-State: AFqh2kpIJavWCSff3D7TTWnG5WSKtGYCCdTlX1/LD9FrJ9qFEwfgJLi/
+        SQwoK+HQ5tobBABYO5U1z1w6WLcg75PFaQ==
+X-Google-Smtp-Source: AMrXdXsTBUrugCWN3TPbYS2PiVafqZ8wAGvg3RxY9xIS6Z/VjPaXFltimPoUJv6MiWzjfyKrwLZmqQ==
+X-Received: by 2002:a17:906:5283:b0:84d:4be4:aa2b with SMTP id c3-20020a170906528300b0084d4be4aa2bmr39037865ejm.68.1674494117084;
+        Mon, 23 Jan 2023 09:15:17 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n4-20020a170906164400b007c11e5ac250sm22771754ejd.91.2023.01.23.09.15.14
+        by smtp.gmail.com with ESMTPSA id n4-20020a170906164400b007c11e5ac250sm22771754ejd.91.2023.01.23.09.15.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 09:15:14 -0800 (PST)
+        Mon, 23 Jan 2023 09:15:16 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Emily Shaffer <emilyshaffer@google.com>,
         Michael Strawbridge <michael.strawbridge@amd.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/5] hook API: support passing stdin to hooks, convert am's 'post-rewrite'
-Date:   Mon, 23 Jan 2023 18:15:07 +0100
-Message-Id: <patch-3.5-c6b9b69c516-20230123T170551Z-avarab@gmail.com>
+Subject: [PATCH 5/5] hook: support a --to-stdin=<path> option for testing
+Date:   Mon, 23 Jan 2023 18:15:09 +0100
+Message-Id: <patch-5.5-cb9ef7a89c4-20230123T170551Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1301.gffb37c08dee
 In-Reply-To: <cover-0.5-00000000000-20230123T170550Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20230123T170550Z-avarab@gmail.com>
@@ -75,93 +75,93 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Convert the invocation of the 'post-rewrite' hook run by 'git am' to
-use the hook.h library. To do this we need to add a "path_to_stdin"
-member to "struct run_hooks_opt".
-
-In our API this is supported by asking for a file path, rather
-than by reading stdin. Reading directly from stdin would involve caching
-the entire stdin (to memory or to disk) once the hook API is made to
-support "jobs" larger than 1, along with support for executing N hooks
-at a time (i.e. the upcoming config-based hooks).
+Expose the "path_to_stdin" API added in the preceding commit in the
+"git hook run" command. For now we won't be using this command
+interface outside of the tests, but exposing this functionality makes
+it easier to test the hook API.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/am.c | 20 ++++----------------
- hook.c       |  8 +++++++-
- hook.h       |  5 +++++
- 3 files changed, 16 insertions(+), 17 deletions(-)
+ Documentation/git-hook.txt |  7 ++++++-
+ builtin/hook.c             |  4 +++-
+ t/t1800-hook.sh            | 18 ++++++++++++++++++
+ 3 files changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 82a41cbfc4e..8be91617fef 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -495,24 +495,12 @@ static int run_applypatch_msg_hook(struct am_state *state)
-  */
- static int run_post_rewrite_hook(const struct am_state *state)
- {
--	struct child_process cp = CHILD_PROCESS_INIT;
--	const char *hook = find_hook("post-rewrite");
--	int ret;
--
--	if (!hook)
--		return 0;
-+	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
+index 77c3a8ad909..3407f3c2c07 100644
+--- a/Documentation/git-hook.txt
++++ b/Documentation/git-hook.txt
+@@ -8,7 +8,7 @@ git-hook - Run git hooks
+ SYNOPSIS
+ --------
+ [verse]
+-'git hook' run [--ignore-missing] <hook-name> [-- <hook-args>]
++'git hook' run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]
  
--	strvec_push(&cp.args, hook);
--	strvec_push(&cp.args, "rebase");
-+	strvec_push(&opt.args, "rebase");
-+	opt.path_to_stdin = am_path(state, "rewritten");
+ DESCRIPTION
+ -----------
+@@ -31,6 +31,11 @@ linkgit:githooks[5] for arguments hooks might expect (if any).
+ OPTIONS
+ -------
  
--	cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
--	cp.stdout_to_stderr = 1;
--	cp.trace2_hook_name = "post-rewrite";
--
--	ret = run_command(&cp);
--
--	close(cp.in);
--	return ret;
-+	return run_hooks_opt("post-rewrite", &opt);
- }
- 
- /**
-diff --git a/hook.c b/hook.c
-index a4fa1031f28..86c6dc1fe70 100644
---- a/hook.c
-+++ b/hook.c
-@@ -53,8 +53,14 @@ static int pick_next_hook(struct child_process *cp,
- 	if (!hook_path)
- 		return 0;
- 
--	cp->no_stdin = 1;
- 	strvec_pushv(&cp->env, hook_cb->options->env.v);
-+	/* reopen the file for stdin; run_command closes it. */
-+	if (hook_cb->options->path_to_stdin) {
-+		cp->no_stdin = 0;
-+		cp->in = xopen(hook_cb->options->path_to_stdin, O_RDONLY);
-+	} else {
-+		cp->no_stdin = 1;
-+	}
- 	cp->stdout_to_stderr = 1;
- 	cp->trace2_hook_name = hook_cb->hook_name;
- 	cp->dir = hook_cb->options->dir;
-diff --git a/hook.h b/hook.h
-index 4258b13da0d..19ab9a5806e 100644
---- a/hook.h
-+++ b/hook.h
-@@ -30,6 +30,11 @@ struct run_hooks_opt
- 	 * was invoked.
- 	 */
- 	int *invoked_hook;
++--to-stdin::
++	For "run"; Specify a file which will be streamed into the
++	hook's stdin. The hook will receive the entire file from
++	beginning to EOF.
 +
-+	/**
-+	 * Path to file which should be piped to stdin for each hook.
-+	 */
-+	const char *path_to_stdin;
- };
+ --ignore-missing::
+ 	Ignore any missing hook by quietly returning zero. Used for
+ 	tools that want to do a blind one-shot run of a hook that may
+diff --git a/builtin/hook.c b/builtin/hook.c
+index b6530d189ad..f95b7965c58 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -7,7 +7,7 @@
+ #include "strvec.h"
  
- #define RUN_HOOKS_OPT_INIT { \
+ #define BUILTIN_HOOK_RUN_USAGE \
+-	N_("git hook run [--ignore-missing] <hook-name> [-- <hook-args>]")
++	N_("git hook run [--ignore-missing] [--to-stdin=<path>] <hook-name> [-- <hook-args>]")
+ 
+ static const char * const builtin_hook_usage[] = {
+ 	BUILTIN_HOOK_RUN_USAGE,
+@@ -28,6 +28,8 @@ static int run(int argc, const char **argv, const char *prefix)
+ 	struct option run_options[] = {
+ 		OPT_BOOL(0, "ignore-missing", &ignore_missing,
+ 			 N_("silently ignore missing requested <hook-name>")),
++		OPT_STRING(0, "to-stdin", &opt.path_to_stdin, N_("path"),
++			   N_("file to read into hooks' stdin")),
+ 		OPT_END(),
+ 	};
+ 	int ret;
+diff --git a/t/t1800-hook.sh b/t/t1800-hook.sh
+index 2ef3579fa7c..3506f627b6c 100755
+--- a/t/t1800-hook.sh
++++ b/t/t1800-hook.sh
+@@ -177,4 +177,22 @@ test_expect_success 'git hook run a hook with a bad shebang' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'stdin to hooks' '
++	write_script .git/hooks/test-hook <<-\EOF &&
++	echo BEGIN stdin
++	cat
++	echo END stdin
++	EOF
++
++	cat >expect <<-EOF &&
++	BEGIN stdin
++	hello
++	END stdin
++	EOF
++
++	echo hello >input &&
++	git hook run --to-stdin=input test-hook 2>actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.39.1.1301.gffb37c08dee
 
