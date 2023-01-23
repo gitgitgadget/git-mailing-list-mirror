@@ -2,139 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5135C25B4E
-	for <git@archiver.kernel.org>; Sun, 22 Jan 2023 23:28:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 789CDC25B4E
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 01:57:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230122AbjAVXVh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Jan 2023 18:21:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49462 "EHLO
+        id S230138AbjAWB5a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Jan 2023 20:57:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbjAVXVg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2023 18:21:36 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 259EF1C31F
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 15:21:35 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id f19-20020a1c6a13000000b003db0ef4dedcso9447094wmc.4
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 15:21:35 -0800 (PST)
+        with ESMTP id S229817AbjAWB53 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2023 20:57:29 -0500
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C26FC172
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 17:57:27 -0800 (PST)
+Received: by mail-il1-x130.google.com with SMTP id m15so5402868ilq.2
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 17:57:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=18X6EkBv8dWi36EI/Z51TOhJvCFhGb9tRw+TS39XS3Q=;
-        b=Nz+1r6VzV+FDbjngPzW3pfTfmH1kE+eNDcT7Pwz4/etEGXQZaadzO2GpsATBGkmRGB
-         byLZbCBaL7hpDLETWjilyXI+YeMtqEw450B3CWM5j9W/ejhY5XjBfnii4tcHoC+F+2ss
-         PTBH0qG8P/J05Mg92Go1nPVueBqp+pDPM0OVLAUFbVRd042GaRQt5B8ypx3UPrwGNRFQ
-         FwuMyZygk+A34NGa6s0lP0WUwfW2bEAw0WMENw4vz0LK5AHQFXgjlB9WvxtQU6Q0NKTw
-         byCXMWts+m9WOAi8sZTy4ajUAxSrLgHRs4/DWQ3qXJGGxkAbUQiSW3sFHjt8jmUJArkA
-         sH+g==
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
+        bh=+9vwVS5vbVd1YcIIbBE1SXux/+A8m+ZUlqWjS0TYUxU=;
+        b=m5Omo5Jl4cdz12W7JQrv63jws2T6NwV7AXDEJeW3WNRrHXzuM/bbjWpQTUTvEJwGsd
+         glT3XYrknkm4DLBCwlz6X0vKFfgws2z6RIgfbc/EFvejp0RW4NPIYKaStWLhUvuWbSyo
+         2v0ChLV1v4HDx5dzrhVJYcCfqZQ/ID+XRgjDfmuPSd9oq5vc5c+V3csadu61A6MMV4gS
+         VEkZcDWeSPAWm/rve/NVkgfT1jDYbm3E5KW09R7x+TCNI3d9OUQMXVM6+L+Vz4WI4SZK
+         kVotW06VL8OQweb/9kw5W1R8BuVyDzwg7POURfYywzLTBsgkQF0agZgmRwP4kUD25tFb
+         XC7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=18X6EkBv8dWi36EI/Z51TOhJvCFhGb9tRw+TS39XS3Q=;
-        b=S+RHd7Cy35R0CwzLBgq2sL3Mhm6vVbRBKBc/rs/4ow+Etj6u52SouZvYJa9dI02KSi
-         DZorp1hEZD4bxxQU1fxqFP9WqlZFtKcqpMKTI0YvZ5Yte6puAU/V1wwIQfzIzgGYweuN
-         XV7YMZkppi0rk/YrbnbxT4OjYJ+LIG99jq/SA6WO35kBnPGoIULUjatC9w/rn6d8UWsj
-         K9LWUybnR8OYK1FOz9jP7SVJb1YzPNW4JDsRULBSpdmd0t935qr/E7iFRznlxaBQVz8x
-         Ys9zujOl+rs1wfTi7myrBnsb2sijxnyGx6RXE4jWLYelOws+3UQ8JchwCtOlVM2Vitjc
-         w8yw==
-X-Gm-Message-State: AFqh2krrz9JKp+jIOXAu5yO/8F3MRhnyT8ydwajlCERZa8pKYGtSVXC/
-        QiQyigu2oHS8iH8nkgZzL/c=
-X-Google-Smtp-Source: AMrXdXs+u3uZaWaS7jBxIXrfI4p4a1RHCaDSZQuCMAtPS4AdKPMpHzZKWlxhb+/G+olte7Puh6MP+g==
-X-Received: by 2002:a05:600c:4395:b0:3c6:f7ff:6f87 with SMTP id e21-20020a05600c439500b003c6f7ff6f87mr20986105wmn.11.1674429693564;
-        Sun, 22 Jan 2023 15:21:33 -0800 (PST)
-Received: from [192.168.2.52] (94.red-88-14-213.dynamicip.rima-tde.net. [88.14.213.94])
-        by smtp.gmail.com with ESMTPSA id u24-20020adfa198000000b002bc84c55758sm40300529wru.63.2023.01.22.15.21.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 22 Jan 2023 15:21:33 -0800 (PST)
-Subject: Re: [PATCH v2 1/3] branch: fix die_if_checked_out() when
- ignore_current_worktree
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+9vwVS5vbVd1YcIIbBE1SXux/+A8m+ZUlqWjS0TYUxU=;
+        b=ugw7TiRb4e0asJ0NcEmEFLy+hVXw436eRpGQ/jEi8OY6mCT0jDERIWbbELgsgdhzhe
+         nFNRmtzSUHPdP4ukcYBNYEBpZkSOk0Hnj4M3U4OmuVr6U91LfJJRrXoGafMWNK6p2giG
+         5D4XiF52OeT/e0Ethsy/iS/dLF+OY0TUVlrL8U628L4iMJ2QQSOVTMoSYsbdlokDWA4n
+         /H8MZHS7qhC5Bz8TuI38KutO6tsRKfCABaJK8gRqMUa2ep9I+JRPQY0u4erLTP9T/mY1
+         wDo9fmMyGH5dgJCha6xbNKZjpSEbbsGUUqEE3tEstbkbH0GWj3+0IBoKMhsVX0KGdzJS
+         QS1w==
+X-Gm-Message-State: AFqh2kozShqy1j87qy9SnmEDk7+5fiJfdcOAne+3FmpmIUx27ec5Q4cw
+        hIje296pb+XuMl0SeQdJIJlaHzCsacQ=
+X-Google-Smtp-Source: AMrXdXs5WyNIkgo+9EJtWAEu+OcIYvuFkny4277A+nD1qJ7/IKW55lzDlBCywEtfjAnKYDAS8BTu1w==
+X-Received: by 2002:a92:d3c2:0:b0:30f:4feb:50c7 with SMTP id c2-20020a92d3c2000000b0030f4feb50c7mr1448483ilh.3.1674439045864;
+        Sun, 22 Jan 2023 17:57:25 -0800 (PST)
+Received: from stargate ([2620:72:0:a40:a4f2:f04:1f26:7472])
+        by smtp.gmail.com with ESMTPSA id v11-20020a02b90b000000b003a5f2e0bdb4sm5592921jan.68.2023.01.22.17.57.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Jan 2023 17:57:25 -0800 (PST)
+References: <xmqq3583uyk0.fsf@gitster.g>
+User-agent: mu4e 1.9.0; emacs 28.1
+From:   Sean Allred <allred.sean@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood123@gmail.com>
-References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
- <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
- <17f267b1-7f5e-2fb6-fb14-1c37ec355e65@gmail.com> <xmqqbkmruykg.fsf@gitster.g>
- <766b25e1-2d7a-7b5c-10a9-43e545a57dba@gmail.com> <xmqqk01eqr3m.fsf@gitster.g>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <d61a2393-64c8-da49-fe13-00bc4a52d5e3@gmail.com>
-Date:   Mon, 23 Jan 2023 00:21:31 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] MyFirstContribution: refrain from self-iterating too much
+Date:   Sun, 22 Jan 2023 19:47:45 -0600
+In-reply-to: <xmqq3583uyk0.fsf@gitster.g>
+Message-ID: <87cz76c8sb.fsf@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqk01eqr3m.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22-ene-2023 11:58:05, Junio C Hamano wrote:
+First review on this list; let me know if I've missed any decorum :-)
 
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> >> As the proposed log message explained, updating die_if_checked_out()
-> >> with this patch would fix a bug---can we demonstrate the existing
-> >> breakage and protect the fix from future breakages by adding a test
-> >> or two?
-> >
-> > 2/3 and 3/3, I think makes more sense on its own commit.
-> 
-> Hmph, how so?  Especially once you split 1/3 into the preliminary
-> refactoring and the real fix, the fix becomes fairly small and
-> clear.  And the tests to protect the fix would go best in the same
-> commit.
+Junio C Hamano <gitster@pobox.com> writes:
+> +Of course, you still may spot mistakes and rooms for improvements
+> +after you sent your initial patch.  Learn from that experience to
+> +make sure that you will do such a self-review _before_ sending your
+> +patches next time.  You do not have to send your patches immediately
+> +once you finished writing them.  It is not a race.  Take your time
+> +to self-review them, sleep on them, improve them before sending them
+> +out, and do not allow you to send them before you are reasonably
+> +sure that you won't find more mistakes in them yourself.
 
-My intention is to protect rebase (2/3) and switch (3/3).  If any of
-those tests break, even if die_if_checked_out() is no longer used by
-them, I try to make the original intent clear with that in there.
+Something of a nit:
 
-die_if_checked_out() was initially fine, the ignore_current_worktree was
-unfortunately introduced.  I haven't checked, but other callers not
-affected by the change, i.e. ignore_current_worktree = 0, his tests
-should have protected them by the change.
+    do not allow you to send them...
 
-You are right, in a future reroll, split 1/3 could leave a fairly small
-commit, maybe not a bad thing.  Definitely this need a reroll, because
-of the style issues, but I will wait some time for other reviewers. 
+should be
 
-> >> The above comment is about find_shared_symref() which iterates over
-> >> worktrees and find the one that uses the named symref.  Now the
-> >> comment appears to apply to is_shared_symref() which does not
-> >> iterate but takes one specific worktree instance.  Do their
-> >> differences necessitate some updates to the comment?
-> >
-> > I think the comment still makes sense as is for the new function, both the
-> > description and the recommendation.  I will review it again.
-> 
-> OK.  Thanks.
-> 
-> >> > +int is_shared_symref(const struct worktree *wt, const char *symref,
-> >> > +		     const char *target)
-> >> > +{
-> >> 
-> >> What this function does sound more like "is target in use in this
-> >> particular worktree by being pointed at by the symref?"  IOW, I do
-> >> not see where "shared" comes into its name from.
-> >> 
-> >> "HEAD" that is tentatively detached while bisecting or rebasing the
-> >> "target" branch is still considered to point at the "target", so
-> >> perhaps symref_points_at_target() or something?
-> >
-> > I tried to maintain the terms as much as possible.  I'll think about the name
-> > you suggest.
-> 
-> When you did not change a thing in such a way that it does not
-> change the relationship between that thing and other things, it
-> makes perfect sense to keep the same term to refer to the thing.
-> Otherwise, once the thing starts playing different roles in the
-> world, there may be a better word to refer to the updated and
-> improved thing.
+    do not allow yourself to send them...
 
-I tried to maintain the relationship and the role, too.  Just introduce
-the helper, as Phillip suggested and I think it is a good idea. 
+You're also using 'them' a *lot* which took me for a tumble my first
+read-through. I lost track of what 'them' actually was. Since this
+documentation is especially likely to be read by those who are already
+confused by the process, it may be beneficial to be more explicit at
+some points:
 
-Thank you.
+    ...
+
+    patches next time. You do not have to send your patches immediately
+    once you finished writing them. It is not a race. Take your time to
+    review your own patches, sleep on them, and improve them. Do not
+    allow yourself to send out your patches for review before you are
+    reasonably sure you won't find more mistakes in them yourself.
+
+--
+
+Thanks for all the work you do on this list; it's much appreciated.
+
+-Sean
+
+--
+Sean Allred
