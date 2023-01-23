@@ -2,94 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1304C05027
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 21:08:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF772C25B50
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 21:47:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232827AbjAWVIi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 16:08:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43106 "EHLO
+        id S232026AbjAWVrY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 16:47:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231728AbjAWVIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 16:08:37 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20A2526A2
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 13:08:37 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id v23so12749988plo.1
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 13:08:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jHgkHnCgyOEJlhCGsQ1JDyA6IhWhePSh0t4TeOT/QVM=;
-        b=bEKaERLy6eJOnIBljVu3DRhMwsyyG9VUUKItFgEwsFQYLYTZAbPwBiCf5G6LVkYg0k
-         YYJQMbho2cOSAy434bIraSMXCwrpgfwfIsJkVfj5SECv0MYR9gBtb+DD0VEm5ngkQKqF
-         YwQvZzprlgJ5BVvwLTYALv+KJRBlRpEG+C59uBa+28mOc3mc3sQZARQGrHEg+RADIii9
-         O24TB2sN6T8XGCOgFm5qOrx+d6BgO/cll1Jb+J0akbVEE85aG3KobNDgQTOBU2RO274f
-         gZpQdxhzIj4CY1ptzucwqxxgKjfuEd685sQ6HdDX5AKKmpOmQOktPQRrigVuyAag3e/1
-         vAiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jHgkHnCgyOEJlhCGsQ1JDyA6IhWhePSh0t4TeOT/QVM=;
-        b=pm9BlpRUZUrCBTS9m3s+4ypYzCXy8m4/ppKnA1DDlNov8Qb3v48aRR6F1beHIvMhgr
-         buHmqwMyIxXjzzgVib7zgY3MA7FX12oN/JJl1ZSKh0YxoDx6kFAHgVOs0MmTU9kiXKH9
-         UGOT2ch6/yzJS9qDw0c7ddaefrtZoHP+nLWovnUsKvpf7MaTAPd6Tte1gSBddEtpRf2G
-         a35VZeSKZx8iT2oJLhRVq6/iCDd1Vqu4iR5cWBQDzoSPToMLYzz76OuvAdgcNvO5szdP
-         Mb4A+CkU4EqepBlw3+UvowSU/uN2BA3DG4lyVUfd3XVejAevg0D0wVkuJtTzO5N4v6Lm
-         XiQA==
-X-Gm-Message-State: AFqh2koGpTiJsZGlcqw2aC9boqEBF2l0Liurhk8ZLQAxLRVxafheHiGY
-        XiBBGUuOii0QQlAhW3TNqSg=
-X-Google-Smtp-Source: AMrXdXsBD4cmEEF9suu+BKNHMay3vG6gGPDRUiPqCsa3scRLV0K13XltnmeubhKpkriiWuqPKHj00w==
-X-Received: by 2002:a17:902:cf08:b0:192:c125:ac2f with SMTP id i8-20020a170902cf0800b00192c125ac2fmr29386541plg.8.1674508116619;
-        Mon, 23 Jan 2023 13:08:36 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id a23-20020a1709027d9700b00187033cac81sm141308plm.145.2023.01.23.13.08.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 13:08:36 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
-        avarab@gmail.com, steadmon@google.com, chooglen@google.com
-Subject: Re: [PATCH v2 01/10] bundle: optionally skip reachability walk
-References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
-        <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
-        <b3828725bc8f8887b9b4777a0e3d84224a427f31.1674487310.git.gitgitgadget@gmail.com>
-        <xmqqsfg1m8l6.fsf@gitster.g>
-        <eae85534-89c9-6eff-69d5-7d4b2be85fb6@github.com>
-Date:   Mon, 23 Jan 2023 13:08:35 -0800
-In-Reply-To: <eae85534-89c9-6eff-69d5-7d4b2be85fb6@github.com> (Derrick
-        Stolee's message of "Mon, 23 Jan 2023 13:24:26 -0500")
-Message-ID: <xmqqedrlm018.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S232049AbjAWVrX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 16:47:23 -0500
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B11A6A4A
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 13:47:20 -0800 (PST)
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4P13bn3jzRz5tlG;
+        Mon, 23 Jan 2023 22:47:16 +0100 (CET)
+Message-ID: <3dfc2925-0fc3-7c94-f579-331c1b9196b2@kdbg.org>
+Date:   Mon, 23 Jan 2023 22:47:16 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v4] win32: fix thread usage for win32
+Content-Language: en-US
+To:     Jeff Hostetler <git@jeffhostetler.com>,
+        Rose via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Seija Kijin <doremylover123@gmail.com>, git@vger.kernel.org
+References: <pull.1440.v3.git.git.1674492373925.gitgitgadget@gmail.com>
+ <pull.1440.v4.git.git.1674492499537.gitgitgadget@gmail.com>
+ <9e75f76b-081c-c763-0fae-edd6d97fbc88@jeffhostetler.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <9e75f76b-081c-c763-0fae-edd6d97fbc88@jeffhostetler.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Am 23.01.23 um 18:43 schrieb Jeff Hostetler:
+> 
+> 
+> On 1/23/23 11:48 AM, Rose via GitGitGadget wrote:
+>> From: Seija Kijin <doremylover123@gmail.com>
+>>
+>> Use _beginthreadex instead of CreateThread
+>> since we use the Windows CRT,
+>> as Microsoft recommends _beginthreadex
+>> over CreateThread for these situations.
+>>
+>> Finally, check for NULL handles, not "INVALID_HANDLE,"
+>> as _beginthreadex guarantees a valid handle in most cases
+>>
+>> Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+>> ---
+>>      win32: fix thread usage for win32
+>>           Use pthread_exit instead of async_exit.
+>>           This means we do not have to deal with Windows's implementation
+>>      requiring an unsigned exit coded despite the POSIX exit code
+>> requiring a
+>>      signed exit code.
+>>           Use _beginthreadex instead of CreateThread since we use the
+>> Windows CRT.
+>>           Finally, check for NULL handles, not "INVALID_HANDLE," as
+>> _beginthreadex
+>>      guarantees a valid handle in most cases
+>>           Signed-off-by: Seija Kijin doremylover123@gmail.com
+>>
+>> Published-As:
+>> https://github.com/gitgitgadget/git/releases/tag/pr-git-1440%2FAtariDreams%2FCreateThread-v4
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
+>> pr-git-1440/AtariDreams/CreateThread-v4
+>> Pull-Request: https://github.com/git/git/pull/1440
+>>
+>> Range-diff vs v3:
+>>
+>>   1:  68baafba2bd ! 1:  2e2d5ce7745 win32: fix thread usage for win32
+>>       @@ Commit message
+>>                   Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+>>              - ## compat/mingw.c ##
+>>       -@@ compat/mingw.c: static int start_timer_thread(void)
+>>       -     timer_event = CreateEvent(NULL, FALSE, FALSE, NULL);
+>>       -     if (timer_event) {
+>>       -         timer_thread = (HANDLE) _beginthreadex(NULL, 0,
+>> ticktack, NULL, 0, NULL);
+>>       --        if (!timer_thread )
+>>       -+        if (!timer_thread)
+>>       -             return errno = ENOMEM,
+>>       -                 error("cannot start timer thread");
+>>       -     } else
+>>       -
+>>         ## compat/winansi.c ##
+>>        @@ compat/winansi.c: enum {
+>>             TEXT = 0, ESCAPE = 033, BRACKET = '['
+>>
+>>
+>>   compat/winansi.c | 8 ++++----
+>>   1 file changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/compat/winansi.c b/compat/winansi.c
+>> index 3abe8dd5a27..be65b27bd75 100644
+>> --- a/compat/winansi.c
+>> +++ b/compat/winansi.c
+>> @@ -340,7 +340,7 @@ enum {
+>>       TEXT = 0, ESCAPE = 033, BRACKET = '['
+>>   };
+>>   -static DWORD WINAPI console_thread(LPVOID unused)
+>> +static unsigned int WINAPI console_thread(LPVOID unused)
+>>   {
+>>       unsigned char buffer[BUFFER_SIZE];
+>>       DWORD bytes;
+>> @@ -643,9 +643,9 @@ void winansi_init(void)
+>>           die_lasterr("CreateFile for named pipe failed");
+>>         /* start console spool thread on the pipe's read end */
+>> -    hthread = CreateThread(NULL, 0, console_thread, NULL, 0, NULL);
+>> -    if (hthread == INVALID_HANDLE_VALUE)
+>> -        die_lasterr("CreateThread(console_thread) failed");
+>> +    hthread = (HANDLE)_beginthreadex(NULL, 0, console_thread, NULL,
+>> 0, NULL);
+>> +    if (!hthread)
+>> +        die_lasterr("_beginthreadex(console_thread) failed");
+>>         /* schedule cleanup routine */
+>>       if (atexit(winansi_exit))
+>>
+>> base-commit: 56c8fb1e95377900ec9d53c07886022af0a5d3c2
+> 
+> This change may or may not be harmless, but it scares me
+> because it is possibly a very subtle change and is being
+> made for an unknown reason -- is there a problem being
+> fixed here?  Or is this just churn for the sake of churn
+> to avoid an awkward cast of the return code?
+> 
+> What does _beginthreadex() specifically do that we need
+> it to do for us?
+> 
+> _beginthreadex() does some CRT init and then calls CreateThread(),
+> so what are we missing by calling CreateThread() directly?
 
-> Do we do the same as we unpack from a fetch?
+I also question the value of this change. As long as the thread does not
+call into any CRT functions, we do not need the services of
+_beginthreadex(). AFAICS, it only uses WinAPI functions and some
+uncritical C functions like memmove and memset. Am I missing something?
 
-We should.
-
-We only consider tips of refs and objects that are reachable from
-them to be "present", and there may be random objects that float in
-the object store without any guarantee that no the objects that
-ought to be reachable from them are missing from the object store,
-but they do not play part in the common ancestor discovery.
-
-And then after we unpack, we ensure that the proposed updates to
-refs made by the fetch operation will not corrupt the repository.
-This can be guaranteed by making sure that objects to be placed at
-the updated tip can all reach some existing tips of refs.  We trust
-refs before the operation (in this case, 'git fetch') begins.  We
-ensure that refs after the operation can be trusted before updating
-them.  Where "trust" here means "objects pointed at by them are
-connected.
+> 
+> The code in question is 11+ years old and it hasn't been a
+> problem (right?), so I have to wonder what value do we get
+> from this change.
+> 
+> The containing function here is setting up a special console
+> thread and named pipe to access the console, so I doubt that
+> any of the tests in the test suite actually would actually
+> exercise this change (since the tests aren't interactive).
+> 
+> The low-level Windows startup code is very tricky and sensitive
+> (and we need to test with both GCC's CRT and MSVC's CRT).
+> As I said earlier, the change may or may not be harmless, but
+> I question the need for it.
+> 
+> Jeff
+> 
+> 
 
