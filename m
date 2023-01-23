@@ -2,208 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A42CC05027
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 20:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61E08C25B50
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 20:12:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232983AbjAWUI7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 15:08:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43202 "EHLO
+        id S233023AbjAWUMv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 15:12:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232308AbjAWUI6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 15:08:58 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBABE305E1
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 12:08:54 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id az20so33655886ejc.1
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 12:08:54 -0800 (PST)
+        with ESMTP id S232996AbjAWUMt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 15:12:49 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F9893F8
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 12:12:47 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id bk15so33540914ejb.9
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 12:12:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IGzxkK8bST90pB1Sf+NK7LtYSnMNdmoNyJkH4zymZCc=;
-        b=Jqy8peq3XPIEUb0Ab9fsHtR5v+kbz05jVBjmOYNANqg9ov+p1SQJM/47lzY9TDfpfc
-         a542lSQZkulZmFbpdIDsXKiOc4x6xoEMHlglCxnUQ8/mWSQjCySdHIxQyUKWIQRhu1Tc
-         IWGO49MrHTIsXBvtgyKww2w3gYsOBRTu2U280Ji7AmC4dgSMvRN+NR3cwgeMiP4hz5zV
-         bjMkQtwfjc6ItGuXGcZdIEaR5wWFVa9TgYXd4d2GihvuPj+tEiTf8BjLNaNAY7Y51lIq
-         XgHhx1Q6FSld6+x/JR4pe4mohL7gkRH0Qi4Lxyw8VgUmmeqy51ZVDlsz/aYSkCV22wRr
-         pBHg==
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+dOsdRQpqJFs0/5ff33ZUqdpUbD6LUz3XNHbgW+oH6o=;
+        b=P7W3m8o1F6NUwPHTa6c4FpeK3k9qP1wdvdTsfeiM9vHpPTydhizSSm/IFt787GRzdQ
+         Ok6ZtAChGw390mK2RN7urjVhWOOB64b3AY/tNpOmIgTYSxuDlNPMlY7F61LfKMKygh/W
+         u7JKPv+2NKGCLPPHOngxSMwgdNUnmvqKFHSxcWBDvnt0P/gOAiJjutfhh2QHRWJxDYSU
+         4BF+qP1rQ/qlxJ4z99wrMybvnpolmfQDIOqtpBXSVXlnfe//BuG0UZI4onOv3T2P6zpF
+         EJlrYQ28PoAE1sNl/iCb173Xelo4xIQhz5atHgMsc9q/U8IRHabDYJUXXznryfHm2OZq
+         Mx3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IGzxkK8bST90pB1Sf+NK7LtYSnMNdmoNyJkH4zymZCc=;
-        b=P0/9/WenjZUy4RxAHU2WO/F9IcCbcql2cLyQTikjMY9e57S8o8BPUGUylUb7/kFL9s
-         5wVWSqNerSF/dQsvWHsggNkDnO6m4Vz7wlUvSu3tXJ6Xm7yNyfj9E0Qsd3/+uBsxO5At
-         sU/9JGqMnUlgfFhFlngnEYmrWV1W0pDCPHLIWtBarLn1FaZpUBKIoyzRr73FB66l5mRP
-         do7HlMttUcJ7MorS06HfRpnwZItTG596kQ4vGDMngSIuwkxjnueqNVMzzpASmt+0w2tS
-         E4RBybDMbunuwqccJAp3xY7vstOmGgS5Avy8v+JNm2Bx65hIxiy92B+g7kX/dn74uvCm
-         4piw==
-X-Gm-Message-State: AFqh2kq22g2QPGyGk0UehDNreZY40cCkzk+6QK5u5UVxEJUEmfofEyEy
-        qlmWiPwQGC3LCnm4S7bBJfI=
-X-Google-Smtp-Source: AMrXdXtFGz75P2nyJb8QDNqOdkRMmjDMcLHkUa4Cd5Fp19cpJP7bfmPYCjMIQ/Al+PZxOivaX53yIg==
-X-Received: by 2002:a17:907:bb92:b0:871:89d:75e with SMTP id xo18-20020a170907bb9200b00871089d075emr28708912ejc.16.1674504533468;
-        Mon, 23 Jan 2023 12:08:53 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id re7-20020a170907a2c700b00877df3eea64sm194753ejc.155.2023.01.23.12.08.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 12:08:53 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <759fb313-ce88-4eb7-96c0-4adeb75ca9f9@dunelm.org.uk>
-Date:   Mon, 23 Jan 2023 20:08:50 +0000
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+dOsdRQpqJFs0/5ff33ZUqdpUbD6LUz3XNHbgW+oH6o=;
+        b=kQ6dsrgBh/XFnaaRGxa26EOyKzv4lrJOq7O7AZGCIzLEVuWfQjyTowjcJq5+03D8yn
+         wUQie9yC91x5WLXRcOYpVJpxC5tQ/t/lv2vRvhDKWCwe0GCFrFNVbtPiSNaqdgKNjHyq
+         2YmZNt9N13LDxy3criT1vW6zZSLSXyR1nVX1MpSym/Z1WK4WXjzQNcgCOISHo/srkyKD
+         frivkhDGhPDPqZzsn7yCsByhhWf610LB1DW/MFyKj/0XKGxwOeuiZdr1rSatUiSF7zYT
+         I3v6fupO2nYU2DPKfzkjDlajdWJKol705bCp0xSJ/vVFLYDGjn1EIJlz/hrF+9tgUmRA
+         xwLQ==
+X-Gm-Message-State: AFqh2krPx3jDXLLXN6W3dKJV+2cAXA5zBRC38Bx0+2arvKWiQ7cHSmwu
+        +aslz6zJ/hfhxGZi71eySyXpl/Y745NHdV/KyD1V8JlLxd80HPHi
+X-Google-Smtp-Source: AMrXdXsY0NeaqptMZEPAa9u198CjF3drRA/Lu1igdKkZ5NnDr/qJ0VZ3TIFDau2A/fcBj6M+sA2zmsY8y2FN9rkeq8c=
+X-Received: by 2002:a17:907:175a:b0:86f:5319:c584 with SMTP id
+ lf26-20020a170907175a00b0086f5319c584mr1846843ejc.359.1674504765517; Mon, 23
+ Jan 2023 12:12:45 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 5/9] rebase: add coverage of other incompatible options
-Content-Language: en-US
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-References: <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
- <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com>
- <5e4851e611ee18112bd71939ee900e02a8d590c5.1674367961.git.gitgitgadget@gmail.com>
-In-Reply-To: <5e4851e611ee18112bd71939ee900e02a8d590c5.1674367961.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <1716310675.20230122233403@inbox.ru>
+In-Reply-To: <1716310675.20230122233403@inbox.ru>
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Mon, 23 Jan 2023 12:12:32 -0800
+Message-ID: <CAJoAoZkjfOQwkeQqzQY5qDo7Md5QWSz1pOTBQKHL5KwNu2VoDg@mail.gmail.com>
+Subject: Re: nested submodules detection w/o .gitmodules file
+To:     Andry <andry@inbox.ru>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah
+On Sun, Jan 22, 2023 at 12:45 PM Andry <andry@inbox.ru> wrote:
+>
+> Hello Git,
+>
+> I have a pretty long investigation has been started from usage 3dparty pr=
+ojects related directly or indirectly to the git submodules:
+>
+> `svn externals replacement` : https://github.com/chronoxor/gil/issues/6
+> `svn complete replacement for externals` : https://github.com/dirk-thomas=
+/vcstool/issues/243
+>
+> And stumbled on this discussion:
+>
+> `nested submodules detection w/o .gitmodules file` : https://github.com/g=
+itextensions/gitextensions/discussions/10644 (https://github.com/gitextensi=
+ons/gitextensions/issues/10642)
+>
+> The main question here is that, could the git have has submodules without=
+ `.submodules` file?
 
-On 22/01/2023 06:12, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> The git-rebase manual noted several sets of incompatible options, but
-> we were missing tests for a few of these.  Further, we were missing
-> code checks for some of these, which could result in command line
-> options being silently ignored.
-> 
-> Also, note that adding a check for autosquash means that using
-> --whitespace=fix together with the config setting rebase.autosquash=true
-> will trigger an error.  A subsequent commit will improve the error
-> message.
+There is a little nuance here. Git can have nested repositories in a
+few different ways; submodules are just one of them. A submodule is
+the combination of a gitlink object in the object graph *and* a
+corresponding entry in the .gitmodules file. It's certainly possible
+to embed a nested repository in other ways, such as by ignoring the
+.gitmodules file, but then your nested repository is no longer a
+submodule, and operations which recurse over submodules will not
+consider that nested repository. The reason is that we need to
+understand where to clone the submodule from - that information isn't
+contained in the superproject's repository URL, and it can't be
+contained in the gitlink directly (which is in essence just a commit
+object, but one that exists in the nested repository, not in the
+superproject repository). If we didn't have a way of writing down the
+submodule's remote URL and version controlling it, we wouldn't have a
+way to populate the submodules when a user is cloning.
 
-Thanks for updating the commit message and for the new commits at the 
-end of the series.
+>
+> If no, then all side projects which utilizes it's own input file for the =
+externals may subsequentially fail:
+>
+> https://github.com/chronoxor/gil
+> https://github.com/dirk-thomas/vcstool
+> https://github.com/ingydotnet/git-subrepo
+>
+> If yes, then other projects which does rely on the `.submodules` would ha=
+ve not actual or even invalid state:
+>
+> https://github.com/gitextensions/gitextensions
+>
+> Or even the github itself:
+>
+> `Zip archive to include submodule` : https://github.com/dear-github/dear-=
+github/issues/214
+>
+> (`[PATCH] archive: add =E2=80=93recurse-submodules to git-archive command=
+` : https://git.github.io/rev_news/2022/11/30/edition-93/, https://lore.ker=
+nel.org/git/pull.1359.git.git.1665597148042.gitgitgadget@gmail.com/)
+>
+> Mine point here is that:
+>
+> Git database is a primary storage. The `.gitmodules` file is not a primar=
+y storage, so can be in not an actual or desync state with the database.
+> And any application or a 3dparty project must read the database directly.
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1224,6 +1224,26 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   		if (options.fork_point < 0)
->   			options.fork_point = 0;
->   	}
-> +	/*
-> +	 * The apply backend does not support --[no-]reapply-cherry-picks.
-> +	 * The behavior it implements by default is equivalent to
-> +	 * --no-reapply-cherry-picks (due to passing --cherry-picks to
-> +	 * format-patch), but --keep-base alters the upstream such that no
-> +	 * cherry-picks can be found (effectively making it act like
-> +	 * --reapply-cherry-picks).
-> +	 *
-> +	 * Now, if the user does specify --[no-]reapply-cherry-picks, but
-> +	 * does so in such a way that options.reapply_cherry_picks ==
-> +	 * keep_base, then the behavior they get will match what they
-> +	 * expect despite options.reapply_cherry_picks being ignored.  We
-> +	 * could just allow the flag in that case, but it seems better to
-> +	 * just alert the user that they've specified a flag that the
-> +	 * backend ignores.
-> +	 */
+The .gitmodules exists to help at clone time; it's possible, as I
+think you're pointing out, to have some intermediate state locally.
+But this file is what needs to be the source of truth for putting
+together the repository on a new machine for the first time.
 
-I'm a bit confused by this. --keep-base works with either 
---reapply-cherry-picks (which is the default if --keep-base is given) or 
---no-reapply-cherry-picks. Just below this hunk we have
-
-	if (options.reapply_cherry_picks < 0)
-		options.reapply_cherry_picks = keep_base;
-
-So we only set options.reapply_cherry_picks to match keep_base if the 
-user did not specify -[-no]-reapply-cherry-picks on the commandline.
-
-Best Wishes
-
-Phillip
-
-> +	if (options.reapply_cherry_picks >= 0)
-> +		imply_merge(&options, options.reapply_cherry_picks ? "--reapply-cherry-picks" :
-> +								     "--no-reapply-cherry-picks");
-> +
->   	/*
->   	 * --keep-base defaults to --reapply-cherry-picks to avoid losing
->   	 * commits when using this option.
-> @@ -1406,13 +1426,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   	if (options.empty != EMPTY_UNSPECIFIED)
->   		imply_merge(&options, "--empty");
->   
-> -	/*
-> -	 * --keep-base implements --reapply-cherry-picks by altering upstream so
-> -	 * it works with both backends.
-> -	 */
-> -	if (options.reapply_cherry_picks && !keep_base)
-> -		imply_merge(&options, "--reapply-cherry-picks");
-> -
->   	if (gpg_sign)
->   		options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
->   
-> @@ -1503,6 +1516,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   	if (options.update_refs)
->   		imply_merge(&options, "--update-refs");
->   
-> +	if (options.autosquash)
-> +		imply_merge(&options, "--autosquash");
-> +
->   	if (options.type == REBASE_UNSPECIFIED) {
->   		if (!strcmp(options.default_backend, "merge"))
->   			imply_merge(&options, "--merge");
-> diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-> index f86274990b0..6a17b571ec7 100755
-> --- a/t/t3422-rebase-incompatible-options.sh
-> +++ b/t/t3422-rebase-incompatible-options.sh
-> @@ -50,6 +50,11 @@ test_rebase_am_only () {
->   		test_must_fail git rebase $opt --strategy-option=ours A
->   	"
->   
-> +	test_expect_success "$opt incompatible with --autosquash" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --autosquash A
-> +	"
-> +
->   	test_expect_success "$opt incompatible with --interactive" "
->   		git checkout B^0 &&
->   		test_must_fail git rebase $opt --interactive A
-> @@ -60,6 +65,26 @@ test_rebase_am_only () {
->   		test_must_fail git rebase $opt --exec 'true' A
->   	"
->   
-> +	test_expect_success "$opt incompatible with --keep-empty" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --keep-empty A
-> +	"
-> +
-> +	test_expect_success "$opt incompatible with --empty=..." "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --empty=ask A
-> +	"
-> +
-> +	test_expect_success "$opt incompatible with --no-reapply-cherry-picks" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --no-reapply-cherry-picks A
-> +	"
-> +
-> +	test_expect_success "$opt incompatible with --reapply-cherry-picks" "
-> +		git checkout B^0 &&
-> +		test_must_fail git rebase $opt --reapply-cherry-picks A
-> +	"
-> +
->   	test_expect_success "$opt incompatible with --update-refs" "
->   		git checkout B^0 &&
->   		test_must_fail git rebase $opt --update-refs A
+>
+> But another problem here is that the git still does not have a stable API=
+ for that.
+> For example, a submodule can be declared directly from the `.git/config` =
+file in a working copy:
+>
+> https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-in=
+it--ltpathgt82308203
+> https://git-scm.com/docs/gitsubmodules#_active_submodules
+>
+> So, who is right and what is wrong here?
+>
