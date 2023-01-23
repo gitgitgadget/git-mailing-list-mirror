@@ -2,187 +2,229 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A864AC05027
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 16:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FF09C38142
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 16:36:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233121AbjAWQST (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 11:18:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52922 "EHLO
+        id S233213AbjAWQgp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 11:36:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233119AbjAWQSQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 11:18:16 -0500
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C490113D3
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 08:18:06 -0800 (PST)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-4a263c4ddbaso179707007b3.0
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 08:18:06 -0800 (PST)
+        with ESMTP id S233212AbjAWQgo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 11:36:44 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFCE42BEC7
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 08:36:39 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so11059836wmb.0
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 08:36:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4V+M3nv1i59azj9M45e+L4AHNlikmv0/a9pyFv8sDt4=;
-        b=Ukw5UILya4vShFiFhVL1U1CqefHQ3wCZYnS2Pn2YPsdITjSUovRJDc8q9dSjTjB3v3
-         bmsj3Iul1uAd66H03tu3A60ps55MARx8TF6CpphK0yTUtHw3NOeJ+WxjUfr6OLzjKMdf
-         w/1pX0tNAlBgRd0yZFs1RGXJhFMxmY/wK3MAt84tnwPYGDNMSH32bK4E2P/4QsD9dix6
-         73zmpTKCFybnLSUiB5u0QJ0+0907k+tg1zaDBAf6vfoiB3S81mFBecXclUu9+bfXS1vp
-         dWl6B1UMzaN6dNOdtjH3/F6FUWIheHvdzrzDBueEcbO2nsipo1h0gD2wIME5bLLLrrS9
-         caDg==
+        bh=Vcw0YGiPy6dpVwZY6zm31k1ZkvDdFwSvm+eCt9LX9ZU=;
+        b=Cj/7bhxVqvkAr6KcaBUHzxklBpzRqzY4kCX3ZzgyIj751q2XFA1cRY15jHGjYRaJSz
+         b0T1xhwGrys5381YNDQX46JtTjG4x34RxEQ7FOb8CBFuTxJAWJoMsgyUGGqLqXk5rSou
+         VDX7AVDmMm0xPTK2z4lUhQtZ81Tkln0sFHH2PtZsUL1rTA/ZaijvlUM7BnEXrhiZ6A9l
+         vzg8IVlC7zY9OMI5yaghFMkNgqcPMHfRVGWqvVFMv4B42rTj17QZe5x1rSqYZw65L7ZA
+         x8adMCpjZ2G0NzCOBtJnPe6B9K1ufNEIWFR/wdoD/BBYtdfFoyWfjHDjnKYEpstkr3Gx
+         3z/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4V+M3nv1i59azj9M45e+L4AHNlikmv0/a9pyFv8sDt4=;
-        b=ISZEr5M108F2lITQrRi6e7S5iTIeNI9tpAunEKl4KlkXkzz7nXHD7MDlsbGj/aTP6n
-         p/5cHmSgQIHkqTVjzNnJiEDD2C7ghGCfrppjQXM/roKOBDYa3YSm5z7kDpKvYTu9SwQ/
-         dAcXloaWO6yIong5X+l/L0cAsQdSaqdR3aHzg6PllEYnSeF6q6v78KnFzZcNPocpTtwQ
-         iFHJZCC2KiMLZcLjx+hhD+JX1DPOnJ4dmNFvA3icua3pY1P1aesjCluPcH6f968dSIYB
-         T0sznFobEGOlewNJPg1vAvJqhDcuFDDoJ55yEBhQk8ULaeZutn+ZID1yiMZ1BNT4WZJ7
-         SYoA==
-X-Gm-Message-State: AFqh2kqgdyLrY3BGy4gECsu11W0k9hmAVxVtaYP5ruHng3F3hh82yGC0
-        FJtbPcImNJYEgaBT2JvwljgilYXc/I8Q9f5pZs8CvCaxiszQEg==
-X-Google-Smtp-Source: AMrXdXsWW1hetPdATixiqO1KykOGMzzbU0H+KbMCpGgmqBA2/Pb/9HprzJdvOQkP0u0swOsfAd3ZlM4u7ORS4gqqsdE=
-X-Received: by 2002:a0d:cb44:0:b0:500:d985:6c45 with SMTP id
- n65-20020a0dcb44000000b00500d9856c45mr1122024ywd.175.1674490686079; Mon, 23
- Jan 2023 08:18:06 -0800 (PST)
+        bh=Vcw0YGiPy6dpVwZY6zm31k1ZkvDdFwSvm+eCt9LX9ZU=;
+        b=lflgN1bb9s33CosrQs+S1MHUjwZCsUTIftuVA40QAnepkhZIqSqb0+Dx7itIAfZygE
+         DIs4+XVDxIkg/cJPwXLtBPZDuFJl/bN0Vmz/h9zZPwnGJu5FtD3IttKJe61AuxjgTxu5
+         F2hE6WoIK40a4BCk9vMYpiBjffN9vTFq8iO13yCu/+/7ef89oe93N8+L1u5rMtGYVShD
+         gJmaYxHANFMR8GZ0Jx3PJUKpJNQOwnuj9lj1jZvcTcE6Rn7GoGJZjK3hkh7syFhaEcMz
+         5b8/1MmTHHFizSJfZhvpbbdci7kbJZ9bswBKBCVy58r1sTT0Oe2ds7tler1SvzLoTStr
+         YgSA==
+X-Gm-Message-State: AFqh2kpulF43eugPRiakzJRtEZ5sCmZ3nDMRbamJ/8M35Q3Yog+Oi8qy
+        aDq/J/ckzS16vYaTuhXXte/dnpOKgzs=
+X-Google-Smtp-Source: AMrXdXuBsbbJWtJPOqcBEfWCN4EpPUI5bL4T4OEqLKR6/WEVkDo4ri680cp7BmjoUdFevAptNKf57g==
+X-Received: by 2002:a05:600c:a15:b0:3db:18a0:310f with SMTP id z21-20020a05600c0a1500b003db18a0310fmr19070485wmp.33.1674491797942;
+        Mon, 23 Jan 2023 08:36:37 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p25-20020a1c7419000000b003d9f14e9085sm10886188wmc.17.2023.01.23.08.36.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 08:36:37 -0800 (PST)
+Message-Id: <pull.1440.v2.git.git.1674491796648.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1440.git.git.1674334159116.gitgitgadget@gmail.com>
+References: <pull.1440.git.git.1674334159116.gitgitgadget@gmail.com>
+From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 23 Jan 2023 16:36:36 +0000
+Subject: [PATCH v2] win32: fix thread usage for win32
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1270.git.git.1674029874363.gitgitgadget@gmail.com>
- <abec912c-065d-2098-962e-41f9646dd046@dunelm.org.uk> <8025d5c7-ab55-c533-1997-05b4c7339d61@dunelm.org.uk>
- <CAEroKagqxC86X0SD8=tK0w+yXL7QecZ+z_7sja-K6ajs0=Z=BQ@mail.gmail.com>
- <55282dec-825f-8c4b-1fb0-6e26ec326db1@dunelm.org.uk> <20230120090331.37dxkko6bgxbjae7@fs>
- <6e57bef8-7387-3341-5ed5-4bcfa7ded7a0@dunelm.org.uk> <20230123100245.3qbscxkgvbnh7ilt@fs>
-In-Reply-To: <20230123100245.3qbscxkgvbnh7ilt@fs>
-From:   Adam Szkoda <adaszko@gmail.com>
-Date:   Mon, 23 Jan 2023 17:17:30 +0100
-Message-ID: <CAEroKaifs8uLnOCsAhqJkEpkpEfRd+HTnTG3i+6syZZ7Ex3dVA@mail.gmail.com>
-Subject: Re: [PATCH] ssh signing: better error message when key not in agent
-To:     Fabian Stelzer <fs@gigacodes.de>
-Cc:     phillip.wood@dunelm.org.uk,
-        Adam Szkoda via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija Kijin <doremylover123@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!  I've pushed a patch that adds `-U` conditional on is_literal_ssh_key()=
-.
+From: Seija Kijin <doremylover123@gmail.com>
 
-According to the OpenSSH issue ([1]), that option is backward compatible:
+Use _beginthreadex instead of CreateThread
+since we use the Windows CRT.
 
-> It should be safe to use -U even for older versions. It won't require the=
- agent (as openssh-9.1 will) but it won't cause an error.
+Finally, check for NULL handles, not "INVALID_HANDLE,"
+as _beginthreadex guarantees a valid handle in most cases
 
-[1]: https://bugzilla.mindrot.org/show_bug.cgi?id=3D3429
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+---
+    win32: fix thread usage for win32
+    
+    Use pthread_exit instead of async_exit.
+    
+    This means we do not have to deal with Windows's implementation
+    requiring an unsigned exit coded despite the POSIX exit code requiring a
+    signed exit code.
+    
+    Use _beginthreadex instead of CreateThread since we use the Windows CRT.
+    
+    Finally, check for NULL handles, not "INVALID_HANDLE," as _beginthreadex
+    guarantees a valid handle in most cases
+    
+    Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-Cheers
-=E2=80=94 Adam
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1440%2FAtariDreams%2FCreateThread-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1440/AtariDreams/CreateThread-v2
+Pull-Request: https://github.com/git/git/pull/1440
+
+Range-diff vs v1:
+
+ 1:  f5de6bfb759 ! 1:  4a2c3da9d4c win32: fix thread usage for win32
+     @@ Metadata
+       ## Commit message ##
+          win32: fix thread usage for win32
+      
+     -    Use pthread_exit instead of async_exit.
+     -
+     -    This means we do not have
+     -    to deal with Windows's implementation
+     -    requiring an unsigned exit coded
+     -    despite the POSIX exit code requiring
+     -    a signed exit code.
+     -
+          Use _beginthreadex instead of CreateThread
+          since we use the Windows CRT.
+      
+     @@ compat/winansi.c: void winansi_init(void)
+       
+       	/* schedule cleanup routine */
+       	if (atexit(winansi_exit))
+     -
+     - ## run-command.c ##
+     -@@ run-command.c: static void *run_thread(void *data)
+     - 	return (void *)ret;
+     - }
+     - 
+     -+int in_async(void)
+     -+{
+     -+	if (!main_thread_set)
+     -+		return 0; /* no asyncs started yet */
+     -+	return !pthread_equal(main_thread, pthread_self());
+     -+}
+     -+
+     - static NORETURN void die_async(const char *err, va_list params)
+     - {
+     - 	report_fn die_message_fn = get_die_message_routine();
+     -@@ run-command.c: static int async_die_is_recursing(void)
+     - 	return ret != NULL;
+     - }
+     - 
+     --int in_async(void)
+     --{
+     --	if (!main_thread_set)
+     --		return 0; /* no asyncs started yet */
+     --	return !pthread_equal(main_thread, pthread_self());
+     --}
+     --
+     --static void NORETURN async_exit(int code)
+     --{
+     --	pthread_exit((void *)(intptr_t)code);
+     --}
+     --
+     - #else
+     - 
+     - static struct {
+     -@@ run-command.c: int in_async(void)
+     - 	return process_is_async;
+     - }
+     - 
+     --static void NORETURN async_exit(int code)
+     --{
+     --	exit(code);
+     --}
+     --
+     - #endif
+     - 
+     - void check_pipe(int err)
+     - {
+     - 	if (err == EPIPE) {
+     --		if (in_async())
+     --			async_exit(141);
+     -+		if (in_async()) {
+     -+#ifdef NO_PTHREADS
+     -+			exit(141);
+     -+#else
+     -+			pthread_exit((void *)141);
+     -+#endif
+     -+		}
+     - 
+     - 		signal(SIGPIPE, SIG_DFL);
+     - 		raise(SIGPIPE);
 
 
-On Mon, Jan 23, 2023 at 11:02 AM Fabian Stelzer <fs@gigacodes.de> wrote:
->
-> On 23.01.2023 09:33, Phillip Wood wrote:
-> >On 20/01/2023 09:03, Fabian Stelzer wrote:
-> >>On 18.01.2023 16:29, Phillip Wood wrote:
-> >>>Hi Adam
-> >>>
-> >>>I've cc'd Fabian who knows more about the ssh signing code that I do.
-> >>>
-> >>>On 18/01/2023 15:28, Adam Szkoda wrote:
-> >>>>Hi Phillip,
-> >>>>
-> >>>>Good point!  My first thought is to try doing a stat() syscall on the
-> >>>>path from 'user.signingKey' to see if it exists and if not, treat it
-> >>>>as a public key (and pass the -U option).  If that sounds reasonable,
-> >>>>I can update the patch.
-> >>>
-> >>>My reading of the documentation is that user.signingKey may point
-> >>>to a public or private key so I'm not sure how stat()ing would
-> >>>help. Looking at the code in sign_buffer_ssh() we have a function
-> >>>is_literal_ssh_key() that checks if the config value is a public
-> >>>key. When the user passes the path to a key we could read the file
-> >>>check use is_literal_ssh_key() to check if it is a public key (or
-> >>>possibly just check if the file begins with "ssh-"). Fabian - does
-> >>>that sound reasonable?
-> >>
-> >>Hi,
-> >>I have encountered the mentioned problem before as well and tried to
-> >>fix it but did not find a good / reasonable way to do so. Git just
-> >>passes the user.signingKey to ssh-keygen which states:
-> >>`The key used for signing is specified using the -f option and may
-> >>refer to either a private key, or a public key with the private half
-> >>available via ssh-agent(1)`
-> >>
-> >>I don't think it's a good idea for git to parse the key and try to
-> >>determine if it's public or private. The fix should probably be in
-> >>openssh (different error message) but when looking into it last time
-> >>i remember that the logic for using the key is quite deeply embedded
-> >>into the ssh code and not easily adjusted for the signing use case.
-> >>At the moment I don't have the time to look into it but the openssh
-> >>code for signing is quite readable so feel free to give it a try.
-> >>Maybe you find a good way.
-> >
-> >Thanks Fabian, perhaps the easiest way forward is for us to only pass
-> >"-U" when we have a literal key in user.signingKey as we know it must
-> >a be public key in that case.
->
-> Yes, i think that's a good idea as long as the `-U` flag is ignored in ol=
-der
-> ssh versions and shouldn't be too hard to implement. And it should work j=
-ust
-> as well when using `defaultKeyCommand`.
->
-> Best,
-> Fabian
->
-> >
-> >Best Wishes
-> >
-> >Phillip
-> >
-> >>Best regards,
-> >>Fabian
-> >>
-> >>>
-> >>>Best Wishes
-> >>>
-> >>>Phillip
-> >>>
-> >>>>Best
-> >>>>=E2=80=94 Adam
-> >>>>
-> >>>>
-> >>>>On Wed, Jan 18, 2023 at 3:34 PM Phillip Wood
-> >>>><phillip.wood123@gmail.com> wrote:
-> >>>>>
-> >>>>>On 18/01/2023 11:10, Phillip Wood wrote:
-> >>>>>>>the agent [1].  A fix is scheduled to be released in OpenSSH 9.1. =
-All
-> >>>>>>>that
-> >>>>>>>needs to be done is to pass an additional backward-compatible opti=
-on
-> >>>>>>>-U to
-> >>>>>>>'ssh-keygen -Y sign' call.  With '-U', ssh-keygen always interpret=
-s
-> >>>>>>>the file
-> >>>>>>>as public key and expects to find the private key in the agent.
-> >>>>>>
-> >>>>>>The documentation for user.signingKey says
-> >>>>>>
-> >>>>>>  If gpg.format is set to ssh this can contain the path to either y=
-our
-> >>>>>>private ssh key or the public key when ssh-agent is used.
-> >>>>>>
-> >>>>>>If I've understood correctly passing -U will prevent users
-> >>>>>>from setting
-> >>>>>>this to a private key.
-> >>>>>
-> >>>>>If there is an easy way to tell if the user has given us a public ke=
-y
-> >>>>>then we could pass "-U" in that case.
-> >>>>>
-> >>>>>Best Wishes
-> >>>>>
-> >>>>>Phillip
+ compat/mingw.c   | 2 +-
+ compat/winansi.c | 8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index e433740381b..715f1c87e11 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2291,7 +2291,7 @@ static int start_timer_thread(void)
+ 	timer_event = CreateEvent(NULL, FALSE, FALSE, NULL);
+ 	if (timer_event) {
+ 		timer_thread = (HANDLE) _beginthreadex(NULL, 0, ticktack, NULL, 0, NULL);
+-		if (!timer_thread )
++		if (!timer_thread)
+ 			return errno = ENOMEM,
+ 				error("cannot start timer thread");
+ 	} else
+diff --git a/compat/winansi.c b/compat/winansi.c
+index 3abe8dd5a27..be65b27bd75 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -340,7 +340,7 @@ enum {
+ 	TEXT = 0, ESCAPE = 033, BRACKET = '['
+ };
+ 
+-static DWORD WINAPI console_thread(LPVOID unused)
++static unsigned int WINAPI console_thread(LPVOID unused)
+ {
+ 	unsigned char buffer[BUFFER_SIZE];
+ 	DWORD bytes;
+@@ -643,9 +643,9 @@ void winansi_init(void)
+ 		die_lasterr("CreateFile for named pipe failed");
+ 
+ 	/* start console spool thread on the pipe's read end */
+-	hthread = CreateThread(NULL, 0, console_thread, NULL, 0, NULL);
+-	if (hthread == INVALID_HANDLE_VALUE)
+-		die_lasterr("CreateThread(console_thread) failed");
++	hthread = (HANDLE)_beginthreadex(NULL, 0, console_thread, NULL, 0, NULL);
++	if (!hthread)
++		die_lasterr("_beginthreadex(console_thread) failed");
+ 
+ 	/* schedule cleanup routine */
+ 	if (atexit(winansi_exit))
+
+base-commit: 56c8fb1e95377900ec9d53c07886022af0a5d3c2
+-- 
+gitgitgadget
