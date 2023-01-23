@@ -2,143 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72123C61D9D
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 18:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 659B0C25B50
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 18:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233477AbjAWSYi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 13:24:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35140 "EHLO
+        id S231989AbjAWSwX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 13:52:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233827AbjAWSYd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 13:24:33 -0500
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01AC01708
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 10:24:32 -0800 (PST)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-15b9c93848dso14996250fac.1
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 10:24:32 -0800 (PST)
+        with ESMTP id S230315AbjAWSwV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 13:52:21 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9771116E
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 10:52:20 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id qx13so32979109ejb.13
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 10:52:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
+        d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vT1L1NKDWz0fFbrL1Rl/LUyiZzhaBJ0h7PD1L1gtL1g=;
-        b=M0Tc4jWpCEJ4j+QYjSFTQdLpR0tennbrhrfLy9sItbu5mI2pL4gJiYuljBmlSgX7sM
-         70fKivb5QJpdksT8V3hx3GG/FsywIsfivILBEADucCfYk8cbVsuy7Z6bRoEv+K8K3t4N
-         pl6C1O2EUdz1SFoybZwpNTHDR2MMGaFWNgUBoGrGo4N9MHBf3w7quCZFdXjdNJ2+Z5kp
-         uu9NDBvTvmhBgLuxfKe0qphk+cqVxt/IKHjQ7x5zdT0/6oqCgy9r68oQpzP4x4h4tSdq
-         dNjfIe2wQWOcz/BVheGX43MKw9sD8IHxrK19gsSiXoflZEWhdGctscKxKjAl6xgpxndD
-         wbmw==
+        bh=fE0Ux+lbf57b8g4ORcAi9v+YiWUu2p3C37ZfxKip/vg=;
+        b=EJESD2kjrXR131rN8hU3QvdzVPeuiD/hz8JD98mLDcCoFoQisHdMCa7HLZfoRxoe7j
+         Dd8yH/gWr2mW1DAiBaBFOsjnAHBZh8fd6s9UM/kkQAWaouTuf4vvNk/dwcEH6x5/FeoG
+         YFgt3bOvZCLU5mxUwwfRjf5nf1/fWYht7f4Qsn/B6SvK0tDm869Bea09hNWyklbqoZRS
+         U6c3LeFmsexi91QdbO9oCjeCM+sFRSiAyAzsr/E3GvpDDhnks+TiDOMfjgZNbvCeCb1m
+         KnuspHCTtOYE78aTXTBwS8uw9ViJtVTe1r9J7ZzzW5z6gHqtuRmhABf5Ms4CPU3EuUaO
+         m0kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vT1L1NKDWz0fFbrL1Rl/LUyiZzhaBJ0h7PD1L1gtL1g=;
-        b=fIaIXEcO97PLyregMUL/kRwixKUyJc8/hMT/VvkeVZipMeifHKkYrIhSJA9ZyRApwi
-         +ofK8jYf00t48Y2KCW77DwjlDH+lm2VFb1qC92QB5L8+uBtrP6Mqm2wsmCDsDOM3cR/w
-         OZ6oUK2M/or5iV1akjvQalKs3TCKHlBmjJti3xVqr/0hvSW1Bc1BWQDLzzI3t09YD3Tt
-         qIANwFpiERdI+36Y3q7nEhUxHgpMjGSi9NZChbVtBKI/nlxGZMsy66s1yL3t9Wu93R3j
-         USk/M51lePG+omMB/K2DhbnfKKRbjXPxgfDIMJwNz1ouI16Qf9Y7Zw0o6hPL6gncQ9MM
-         eJAw==
-X-Gm-Message-State: AFqh2kqL17++WERviUXJG0GVpXmFu9bvMJSoukTr56j7Npc5OGiaOU2C
-        pjf6i3dNTVB4d1i+M9ctJJ7e
-X-Google-Smtp-Source: AMrXdXvW1sMWU30YlGiy7pzK8mb2+/rpv4e/pdNzBqBTyb1OjyQb4Zmfv4SrXlXZQquNCrklpks5Bg==
-X-Received: by 2002:a05:6870:2a4e:b0:15b:a3dc:d626 with SMTP id jd14-20020a0568702a4e00b0015ba3dcd626mr13245351oab.58.1674498272234;
-        Mon, 23 Jan 2023 10:24:32 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:6108:485d:39de:831b? ([2600:1700:e72:80a0:6108:485d:39de:831b])
-        by smtp.gmail.com with ESMTPSA id t13-20020a056871020d00b0014435b51ef7sm25596880oad.30.2023.01.23.10.24.31
+        bh=fE0Ux+lbf57b8g4ORcAi9v+YiWUu2p3C37ZfxKip/vg=;
+        b=2UpvJ1iZnVlJyULzch2glaUpDQ+NNT1qRW14MdZjwHe+nqQ9BpoKoS0VCu2QIhHhar
+         ecssJv/yPxvfOLo4raK+o3Srj0ilFarCZx/RqFRwwwTfIdd91Nznu2U97Z4d66bjF59S
+         OeFtFR5sNuj7ze/aKeg9Ycqr4bB03BVO8OVSp89dXEMbVFaM6oa5/FNVsS7SQYj6MRqj
+         toOMC1Jif7r5qwRYmGP6GhWVnzFm5EQRzqUoyMjDuPvep+VjdRLozVrQe8bFnFmH5KH4
+         VsQqbTJc8WVxRo8ywrn/7abNaPUO26lqHHwNgW+Hr/4QvL7Jql2CJwBzO1bvE4VNwxNO
+         CLXA==
+X-Gm-Message-State: AFqh2krm36YVMJKhUw1X0AgzFyq4T3T0M10j/+XUSqqRUgKCsbB7v7tb
+        Rt5HXV4LNvQ0pxb+zThMtWY=
+X-Google-Smtp-Source: AMrXdXuZOyrV5WW19IilDI2/I732SRqf5H6ld0A1I+cJCiQ2V0utaaiAicltEM0LakF1MVxm86rgXQ==
+X-Received: by 2002:a17:906:1b4a:b0:84d:4e4e:2c7b with SMTP id p10-20020a1709061b4a00b0084d4e4e2c7bmr39683560ejg.30.1674499938486;
+        Mon, 23 Jan 2023 10:52:18 -0800 (PST)
+Received: from [10.8.18.177] ([45.88.97.214])
+        by smtp.gmail.com with ESMTPSA id kz11-20020a17090777cb00b007aece68483csm22596349ejc.193.2023.01.23.10.52.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 10:24:31 -0800 (PST)
-Message-ID: <eae85534-89c9-6eff-69d5-7d4b2be85fb6@github.com>
-Date:   Mon, 23 Jan 2023 13:24:26 -0500
+        Mon, 23 Jan 2023 10:52:18 -0800 (PST)
+Message-ID: <e3f57ef0-7544-8f35-fd97-fdcbe1144e7e@gmail.com>
+Date:   Mon, 23 Jan 2023 19:52:16 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 01/10] bundle: optionally skip reachability walk
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
-        avarab@gmail.com, steadmon@google.com, chooglen@google.com
-References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
- <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
- <b3828725bc8f8887b9b4777a0e3d84224a427f31.1674487310.git.gitgitgadget@gmail.com>
- <xmqqsfg1m8l6.fsf@gitster.g>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v2] Documentation: render dash correctly
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20230122165628.1601062-1-rybak.a.v@gmail.com>
+ <20230123090114.429844-1-rybak.a.v@gmail.com>
+ <CAN0heSogz0cdhVJdiZhCc2_fcHzJggPjbS0wCAQkRh1uZMxLig@mail.gmail.com>
 Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqsfg1m8l6.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+In-Reply-To: <CAN0heSogz0cdhVJdiZhCc2_fcHzJggPjbS0wCAQkRh1uZMxLig@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/23/2023 1:03 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 23/01/2023 12:04, Martin Ågren wrote:
+> On Mon, 23 Jan 2023 at 10:01, Andrei Rybak <rybak.a.v@gmail.com> wrote:
 > 
->> From: Derrick Stolee <derrickstolee@github.com>
->>
->> When unbundling a bundle, the verify_bundle() method checks two things
->> with regards to the prerequisite commits:
->>
->>  1. Those commits are in the object store, and
->>  2. Those commits are reachable from refs.
->>
->> During testing of the bundle URI feature, where multiple bundles are
->> unbundled in the same process, the ref store did not appear to be
->> refreshing with the new refs/bundles/* references added within that
->> process. This caused the second half -- the reachability walk -- report
->> that some commits were not present, despite actually being present.
->>
->> One way to attempt to fix this would be to create a way to force-refresh
->> the ref state. That would correct this for these cases where the
->> refs/bundles/* references have been updated. However, this still is an
->> expensive operation in a repository with many references.
->>
->> Instead, optionally allow callers to skip this portion by instead just
->> checking for presence within the object store. Use this when unbundling
->> in bundle-uri.c.
+>>   highlighted with a `$` sign; if you are trying to recreate these
+>> -example by hand, do not cut and paste them---they are there
+>> +example by hand, do not cut and paste them--they are there
+>>   primarily to highlight extra whitespace at the end of some lines.
 > 
-> This step is new in this round.
-> 
-> I am assuming that this approach is to avoid repeated "now we
-> unbundled one, let's spend enormous cycles to update the in-core
-> view of the ref store before processing the next bundle"---instead
-> we unbundle all, assuming the prerequisites for each and every
-> bundle are satisfied.
+> OK, so this is one of the new ones compared to v1. I can see the
+> argument for adding some spaces around the "--" for consistency and to
+> make this a bit easier to read in the resulting manpage (which can of
+> course be very subjective), but then I can also see that kind of change
 
-We are specifically removing the requirement that the objects are
-reachable from refs, we still check that the objects are in the
-object store. Thus, we can only be in a bad state afterwards if
-the required objects for a bundle were in the object store,
-previously unreachable, and one of these two things happened:
+There are some less subjective guidelines.  Asciidoc turns "--" into an
+em-dash.[1]  In English, em-dash is almost always not surrounded by
+spaces (it is in French, for example), while en-dash is spaced in
+English when used instead of an em-dash.[2][3][4]
 
-1. Some objects reachable from those required commits were already
-   missing in the repository (so the repo's object store was broken
-   but only for some unreachable objects).
+This means that it's all the other places that use " -- " with spaces
+that are incorrect.
 
-2. A GC pruned those objects between verifying the bundle and
-   writing the refs/bundles/* refs after unbundling.
+References:
 
-I think we should trust the repository to not be in the first state,
-but the race condition in the second option will create a state
-where we have missing objects that are now reachable from refs.
- 
-> I am OK as long as we check the assumption holds true at the end;
-> this looks like a good optimization.
- 
-So are you recommending that we verify all objects reachable from
-the new refs/bundles/* are present after unbundling? That would
-prevent the possibility of a GC race, but at some significant run-
-time performance costs. Do we do the same as we unpack from a
-fetch? Do we apply the same scrutiny to the objects during
-unbundling as we do from a fetched pack? They both use 'git
-index-pack --stdin --fix-thin', so my guess is that we do the same
-amount of checks for both cases.
+1. https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/#text-replacements
 
-Since this is only one of multiple ways to add objects that depend
-on possibly-unreachable objects, my preferred way to avoid the
-GC race is by using care in the GC process itself (such as the new
---expire-to option to recover from these races).
+2. English Wikipedia is clear about its usage of en- and em-dashes:
+    https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style#Dashes
 
-Thanks,
--Stolee
+3. Chicago Manual of Style FAQ doesn't spell out the spacing, but it's
+    clear from examples:
+    https://www.chicagomanualofstyle.org/qanda/data/faq/topics/HyphensEnDashesEmDashes/faq0002.html
+
+4. More confirmation on English Language and Usage Q&A website on Stack
+    Exchange network: https://english.stackexchange.com/a/154998/54197
+
+> being left out as orthogonal to this patch.
+
+Indeed, correcting spacing around dashes is orthogonal.  Also, it might
+not be very desirable to have so much churn for spacing issues.
+  
+> This v2 patch looks good to me.
+
+Thank you for review.
+  
+> Martin
+
