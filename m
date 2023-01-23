@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9F11C54E94
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 15:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FBD7C05027
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 15:22:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231913AbjAWPWu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 10:22:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53644 "EHLO
+        id S232429AbjAWPWy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 10:22:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231883AbjAWPW2 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231974AbjAWPW2 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 Jan 2023 10:22:28 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07DEF1EFED
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 863D929404
         for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:22:03 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so10886052wmb.0
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:22:02 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id d4-20020a05600c3ac400b003db1de2aef0so8831636wms.2
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:22:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1J4PiALmbk8tjvT2I+N+9ZJNQzshR/5SGaQZobABn5U=;
-        b=XJ8899WGegiDvaIpApPo7kFVj1fUwf4F62m48Xyu92xiDrr/hU7K4aswld9+hoT4G0
-         JkDGXX+J0Y9+SluqoG9tx+ylmUkf/cKGWX2HmwfDm/ICuUIBou5f1LAQpJs4JV3VZA7l
-         sRbYUHx3tt8a1X5LqvfB+3RLshHo3lgtMDbvjsCUC73ni4SEFDa+0px3exqeWE3mxECz
-         q0aw6f9LmeqnNlXLNgl6xZrJBdw2tx8qGAcNS6apOEge1/7f2o6iuBXIJEdFCKMBKD2X
-         BjQ3o463z5ee0wKKsCsBY/fEGMzB66KqxvDRaRlRj8ykC06usu+w9FQbOdhqr4BZhuAB
-         YY2Q==
+        bh=znl0EhyHD8RVNecs85AAFqvciRWhRkW3gJPZgJlcpL4=;
+        b=oiECA9DwcvbzFY0/9LR5uJicxJu356qFQ86dpXVQbcwdF0BAm8BcflYASWIv7X830C
+         yrG/ZxypYKAf5NOwxx1jV3wrFgT0BcyecVEeKVAX7NU5BtjqXD2eJZLRMujOF7qyc/zp
+         f6WhojPqSq3EXTrIAf6ZLjqejo/nNZiQTbNBY4FNeYVyxghcE//nDAaiXpU+twaAZ8yI
+         4P2RkINf9PWbDO1H2KPy1YGjf8kXtmDXsIVmdIPMZtaKGbn/YX+F5LMbBXlipjV+8N6d
+         ev0XT8F0NKWFh9YbHd0627iPx0NFQUyW13PAdvhr6WDFyOm5bTi2mOW2fnMDRmFdnEbk
+         UzNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1J4PiALmbk8tjvT2I+N+9ZJNQzshR/5SGaQZobABn5U=;
-        b=UpzbsysVsxCvBnx1zr/a3cC2LKS6qY3L7TwVkv4blX6lbhysovm5vNzt0FTwYUr7Vp
-         aX+Z1fvv+ve7/LQi/JVywIKFWWJeVcuLnQ/YjqroKkLhpfFIWoFtKspDoAVmKES0NiF1
-         gzNv4zy92yd2BijvPShYyusDJsdOVsq23VCY/cmCuSw/MJHYvlo+hyDAKJXLb75Ip86I
-         7qIeq6UdkKmFW/nYSMNm6QmUrYZ7D8tJdFGbkXukvufUtm3D+dIWGEPFc+rGEIyMxltp
-         BAs7pJfV/75NcAwf9MH65rA11asge16i2ofNMc9ZQ1PhIPVHQZj3adGbDC2PNVFlvY7l
-         Sozg==
-X-Gm-Message-State: AFqh2krkK+jXVs4IvKAhWeOA8xeb/9rhxyAKPmcPuo3tuTaKZ22HoccM
-        RhyBXqVwnsDg3ZmH4/JuQ57N03ffYbE=
-X-Google-Smtp-Source: AMrXdXupz0lGnHD2QyPm3xC7pWCocGl+v0ijGrramcRHYA9mwFduZFuNzniG1LzddsISWd65FN35ew==
-X-Received: by 2002:a05:600c:5405:b0:3d3:5709:68e8 with SMTP id he5-20020a05600c540500b003d3570968e8mr23925558wmb.36.1674487316774;
-        Mon, 23 Jan 2023 07:21:56 -0800 (PST)
+        bh=znl0EhyHD8RVNecs85AAFqvciRWhRkW3gJPZgJlcpL4=;
+        b=6c3y7VjP51uX+hJvOZ7VIEYPX+p+FS/5yBLXsHlaQ5HhWURv9uY3eYvL7eZSsib1y2
+         ntnOgc0rjgcmgw6PKAGw6g+9h2Dbe3/u/Mg/Qvsre5DYyx3JyVEeQ1SUo9rP2HZkmt5Z
+         JMYNjdcup7ohOWLlIPA54Yif0gUbJLRreLU+nQKPS8wZ8lqyWM86om1h5755Wjxn4uKN
+         FlEZv73c6r/5uSTP1NLrEC4K/ffVb33bWZ+6JPXF9LYXqgUyGGWQnOd+eVa6OhUkdYcU
+         SISM3kUKkUiE6f2iElQkOuMSnFyoZb5+eVHhxieFTlr2DY+Aa03RCQMBh2sZQlEcpVt1
+         /Jxg==
+X-Gm-Message-State: AFqh2kqTExZTD8T6mz8MsD5WY8oe4cVDWLXTp8VMSPdhMG0vOmlfpEmq
+        /85o9meXj8v89MJSr6Si3TxN1WnHniY=
+X-Google-Smtp-Source: AMrXdXvbtIKj1480JNyHnWXbsD1F/0l9xtf7hDzsiLX5FXdDg2t/Pjd6IsNYzdc+BTrr6y0ZlzIMmg==
+X-Received: by 2002:a1c:7415:0:b0:3da:fd07:1e3 with SMTP id p21-20020a1c7415000000b003dafd0701e3mr23138857wmc.22.1674487317578;
+        Mon, 23 Jan 2023 07:21:57 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u3-20020a7bc043000000b003d1d5a83b2esm10719073wmc.35.2023.01.23.07.21.56
+        by smtp.gmail.com with ESMTPSA id bg24-20020a05600c3c9800b003d9ed40a512sm15136081wmb.45.2023.01.23.07.21.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 07:21:56 -0800 (PST)
-Message-Id: <7cfaa3c518cbedb65c585cc02015bb21ae24e9fa.1674487310.git.gitgitgadget@gmail.com>
+        Mon, 23 Jan 2023 07:21:57 -0800 (PST)
+Message-Id: <17c404c1b836d7c160defe97e1667c631d292fb0.1674487310.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
 References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
         <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 Jan 2023 15:21:45 +0000
-Subject: [PATCH v2 05/10] bundle-uri: download in creationToken order
+Date:   Mon, 23 Jan 2023 15:21:46 +0000
+Subject: [PATCH v2 06/10] clone: set fetch.bundleURI if appropriate
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,293 +71,138 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The creationToken heuristic provides an ordering on the bundles
-advertised by a bundle list. Teach the Git client to download bundles
-differently when this heuristic is advertised.
+Bundle providers may organize their bundle lists in a way that is
+intended to improve incremental fetches, not just initial clones.
+However, they do need to state that they have organized with that in
+mind, or else the client will not expect to save time by downloading
+bundles after the initial clone. This is done by specifying a
+bundle.heuristic value.
 
-The bundles in the list are sorted by their advertised creationToken
-values, then downloaded in decreasing order. This avoids the previous
-strategy of downloading bundles in an arbitrary order and attempting
-to apply them (likely failing in the case of required commits) until
-discovering the order through attempted unbundling.
+There are two types of bundle lists: those at a static URI and those
+that are advertised from a Git remote over protocol v2.
 
-During a fresh 'git clone', it may make sense to download the bundles in
-increasing order, since that would prevent the need to attempt
-unbundling a bundle with required commits that do not exist in our empty
-object store. The cost of testing an unbundle is quite low, and instead
-the chosen order is optimizing for a future bundle download during a
-'git fetch' operation with a non-empty object store.
+The new fetch.bundleURI config value applies for static bundle URIs that
+are not advertised over protocol v2. If the user specifies a static URI
+via 'git clone --bundle-uri', then Git can set this config as a reminder
+for future 'git fetch' operations to check the bundle list before
+connecting to the remote(s).
 
-Since the Git client continues fetching from the Git remote after
-downloading and unbundling bundles, the client's object store can be
-ahead of the bundle provider's object store. The next time it attempts
-to download from the bundle list, it makes most sense to download only
-the most-recent bundles until all tips successfully unbundle. The
-strategy implemented here provides that short-circuit where the client
-downloads a minimal set of bundles.
+For lists provided over protocol v2, we will want to take a different
+approach and create a property of the remote itself by creating a
+remote.<id>.* type config key. That is not implemented in this change.
 
-However, we are not satisfied by the naive approach of downloading
-bundles until one successfully unbundles, expecting the earlier bundles
-to successfully unbundle now. The example repository in t5558
-demonstrates this well:
-
- ---------------- bundle-4
-
-       4
-      / \
- ----|---|------- bundle-3
-     |   |
-     |   3
-     |   |
- ----|---|------- bundle-2
-     |   |
-     2   |
-     |   |
- ----|---|------- bundle-1
-      \ /
-       1
-       |
- (previous commits)
-
-In this repository, if we already have the objects for bundle-1 and then
-try to fetch from this list, the naive approach will fail. bundle-4
-requires both bundle-3 and bundle-2, though bundle-3 will successfully
-unbundle without bundle-2. Thus, the algorithm needs to keep this in
-mind.
-
-A later implementation detail will store the maximum creationToken seen
-during such a bundle download, and the client will avoid downloading a
-bundle unless its creationToken is strictly greater than that stored
-value. For now, if the client seeks to download from an identical
-bundle list since its previous download, it will download the
-most-recent bundle then stop since its required commits are already in
-the object store.
-
-Add tests that exercise this behavior, but we will expand upon these
-tests when incremental downloads during 'git fetch' make use of
-creationToken values.
+Later changes will update 'git fetch' to consume this option.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle-uri.c                | 156 +++++++++++++++++++++++++++++++++++-
- t/t5558-clone-bundle-uri.sh |  40 +++++++--
- t/t5601-clone.sh            |  46 +++++++++++
- 3 files changed, 233 insertions(+), 9 deletions(-)
+ Documentation/config/fetch.txt |  8 +++++++
+ builtin/clone.c                |  6 +++++-
+ bundle-uri.c                   |  5 ++++-
+ bundle-uri.h                   |  8 ++++++-
+ t/t5558-clone-bundle-uri.sh    | 39 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 63 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
+index cd65d236b43..244f44d460f 100644
+--- a/Documentation/config/fetch.txt
++++ b/Documentation/config/fetch.txt
+@@ -96,3 +96,11 @@ fetch.writeCommitGraph::
+ 	merge and the write may take longer. Having an updated commit-graph
+ 	file helps performance of many Git commands, including `git merge-base`,
+ 	`git push -f`, and `git log --graph`. Defaults to false.
++
++fetch.bundleURI::
++	This value stores a URI for downloading Git object data from a bundle
++	URI before performing an incremental fetch from the origin Git server.
++	This is similar to how the `--bundle-uri` option behaves in
++	linkgit:git-clone[1]. `git clone --bundle-uri` will set the
++	`fetch.bundleURI` value if the supplied bundle URI contains a bundle
++	list that is organized for incremental fetches.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 5453ba5277f..5370617664d 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1248,12 +1248,16 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	 * data from the --bundle-uri option.
+ 	 */
+ 	if (bundle_uri) {
++		int has_heuristic = 0;
++
+ 		/* At this point, we need the_repository to match the cloned repo. */
+ 		if (repo_init(the_repository, git_dir, work_tree))
+ 			warning(_("failed to initialize the repo, skipping bundle URI"));
+-		else if (fetch_bundle_uri(the_repository, bundle_uri))
++		else if (fetch_bundle_uri(the_repository, bundle_uri, &has_heuristic))
+ 			warning(_("failed to fetch objects from bundle URI '%s'"),
+ 				bundle_uri);
++		else if (has_heuristic)
++			git_config_set_gently("fetch.bundleuri", bundle_uri);
+ 	}
+ 
+ 	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
 diff --git a/bundle-uri.c b/bundle-uri.c
-index f46ab5c1743..39acd856fb9 100644
+index 39acd856fb9..162a9276f31 100644
 --- a/bundle-uri.c
 +++ b/bundle-uri.c
-@@ -453,6 +453,139 @@ static int download_bundle_to_file(struct remote_bundle_info *bundle, void *data
+@@ -742,7 +742,8 @@ static int unlink_bundle(struct remote_bundle_info *info, void *data)
  	return 0;
  }
  
-+struct bundles_for_sorting {
-+	struct remote_bundle_info **items;
-+	size_t alloc;
-+	size_t nr;
-+};
-+
-+static int append_bundle(struct remote_bundle_info *bundle, void *data)
-+{
-+	struct bundles_for_sorting *list = data;
-+	list->items[list->nr++] = bundle;
-+	return 0;
-+}
-+
-+/**
-+ * For use in QSORT() to get a list sorted by creationToken
-+ * in decreasing order.
-+ */
-+static int compare_creation_token_decreasing(const void *va, const void *vb)
-+{
-+	const struct remote_bundle_info * const *a = va;
-+	const struct remote_bundle_info * const *b = vb;
-+
-+	if ((*a)->creationToken > (*b)->creationToken)
-+		return -1;
-+	if ((*a)->creationToken < (*b)->creationToken)
-+		return 1;
-+	return 0;
-+}
-+
-+static int fetch_bundles_by_token(struct repository *r,
-+				  struct bundle_list *list)
-+{
-+	int cur;
-+	int move_direction = 0;
-+	struct bundle_list_context ctx = {
-+		.r = r,
-+		.list = list,
-+		.mode = list->mode,
-+	};
-+	struct bundles_for_sorting bundles = {
-+		.alloc = hashmap_get_size(&list->bundles),
-+	};
-+
-+	ALLOC_ARRAY(bundles.items, bundles.alloc);
-+
-+	for_all_bundles_in_list(list, append_bundle, &bundles);
-+
-+	QSORT(bundles.items, bundles.nr, compare_creation_token_decreasing);
-+
-+	/*
-+	 * Attempt to download and unbundle the minimum number of bundles by
-+	 * creationToken in decreasing order. If we fail to unbundle (after
-+	 * a successful download) then move to the next non-downloaded bundle
-+	 * and attempt downloading. Once we succeed in applying a bundle,
-+	 * move to the previous unapplied bundle and attempt to unbundle it
-+	 * again.
-+	 *
-+	 * In the case of a fresh clone, we will likely download all of the
-+	 * bundles before successfully unbundling the oldest one, then the
-+	 * rest of the bundles unbundle successfully in increasing order
-+	 * of creationToken.
-+	 *
-+	 * If there are existing objects, then this process may terminate
-+	 * early when all required commits from "new" bundles exist in the
-+	 * repo's object store.
-+	 */
-+	cur = 0;
-+	while (cur >= 0 && cur < bundles.nr) {
-+		struct remote_bundle_info *bundle = bundles.items[cur];
-+		if (!bundle->file) {
-+			/*
-+			 * Not downloaded yet. Try downloading.
-+			 *
-+			 * Note that bundle->file is non-NULL if a download
-+			 * was attempted, even if it failed to download.
-+			 */
-+			if (fetch_bundle_uri_internal(ctx.r, bundle, ctx.depth + 1, ctx.list)) {
-+				/* Mark as unbundled so we do not retry. */
-+				bundle->unbundled = 1;
-+
-+				/* Try looking deeper in the list. */
-+				move_direction = 1;
-+				goto stack_operation;
-+			}
-+
-+			/* We expect bundles when using creationTokens. */
-+			if (!is_bundle(bundle->file, 1)) {
-+				warning(_("file downloaded from '%s' is not a bundle"),
-+					bundle->uri);
-+				break;
-+			}
-+		}
-+
-+		if (bundle->file && !bundle->unbundled) {
-+			/*
-+			 * This was downloaded, but not successfully
-+			 * unbundled. Try unbundling again.
-+			 */
-+			if (unbundle_from_file(ctx.r, bundle->file)) {
-+				/* Try looking deeper in the list. */
-+				move_direction = 1;
-+			} else {
-+				/*
-+				 * Succeeded in unbundle. Retry bundles
-+				 * that previously failed to unbundle.
-+				 */
-+				move_direction = -1;
-+				bundle->unbundled = 1;
-+			}
-+		}
-+
-+		/*
-+		 * Else case: downloaded and unbundled successfully.
-+		 * Skip this by moving in the same direction as the
-+		 * previous step.
-+		 */
-+
-+stack_operation:
-+		/* Move in the specified direction and repeat. */
-+		cur += move_direction;
-+	}
-+
-+	free(bundles.items);
-+
-+	/*
-+	 * We succeed if the loop terminates because 'cur' drops below
-+	 * zero. The other case is that we terminate because 'cur'
-+	 * reaches the end of the list, so we have a failure no matter
-+	 * which bundles we apply from the list.
-+	 */
-+	return cur >= 0;
-+}
-+
- static int download_bundle_list(struct repository *r,
- 				struct bundle_list *local_list,
- 				struct bundle_list *global_list,
-@@ -490,7 +623,15 @@ static int fetch_bundle_list_in_config_format(struct repository *r,
- 		goto cleanup;
- 	}
- 
--	if ((result = download_bundle_list(r, &list_from_bundle,
-+	/*
-+	 * If this list uses the creationToken heuristic, then the URIs
-+	 * it advertises are expected to be bundles, not nested lists.
-+	 * We can drop 'global_list' and 'depth'.
-+	 */
-+	if (list_from_bundle.heuristic == BUNDLE_HEURISTIC_CREATIONTOKEN) {
-+		result = fetch_bundles_by_token(r, &list_from_bundle);
-+		global_list->heuristic = BUNDLE_HEURISTIC_CREATIONTOKEN;
-+	} else if ((result = download_bundle_list(r, &list_from_bundle,
- 					   global_list, depth)))
- 		goto cleanup;
- 
-@@ -632,6 +773,14 @@ int fetch_bundle_list(struct repository *r, struct bundle_list *list)
+-int fetch_bundle_uri(struct repository *r, const char *uri)
++int fetch_bundle_uri(struct repository *r, const char *uri,
++		     int *has_heuristic)
+ {
  	int result;
- 	struct bundle_list global_list;
- 
-+	/*
-+	 * If the creationToken heuristic is used, then the URIs
-+	 * advertised by 'list' are not nested lists and instead
-+	 * direct bundles. We do not need to use global_list.
-+	 */
-+	if (list->heuristic == BUNDLE_HEURISTIC_CREATIONTOKEN)
-+		return fetch_bundles_by_token(r, list);
-+
- 	init_bundle_list(&global_list);
- 
- 	/* If a bundle is added to this global list, then it is required. */
-@@ -640,7 +789,10 @@ int fetch_bundle_list(struct repository *r, struct bundle_list *list)
- 	if ((result = download_bundle_list(r, list, &global_list, 0)))
- 		goto cleanup;
- 
--	result = unbundle_all_bundles(r, &global_list);
-+	if (list->heuristic == BUNDLE_HEURISTIC_CREATIONTOKEN)
-+		result = fetch_bundles_by_token(r, list);
-+	else
-+		result = unbundle_all_bundles(r, &global_list);
+ 	struct bundle_list list;
+@@ -762,6 +763,8 @@ int fetch_bundle_uri(struct repository *r, const char *uri)
+ 	result = unbundle_all_bundles(r, &list);
  
  cleanup:
- 	for_all_bundles_in_list(&global_list, unlink_bundle, NULL);
++	if (has_heuristic)
++		*has_heuristic = (list.heuristic != BUNDLE_HEURISTIC_NONE);
+ 	for_all_bundles_in_list(&list, unlink_bundle, NULL);
+ 	clear_bundle_list(&list);
+ 	clear_remote_bundle_info(&bundle, NULL);
+diff --git a/bundle-uri.h b/bundle-uri.h
+index ef32840bfa6..6dbc780f661 100644
+--- a/bundle-uri.h
++++ b/bundle-uri.h
+@@ -124,8 +124,14 @@ int bundle_uri_parse_config_format(const char *uri,
+  * based on that information.
+  *
+  * Returns non-zero if no bundle information is found at the given 'uri'.
++ *
++ * If the pointer 'has_heuristic' is non-NULL, then the value it points to
++ * will be set to be non-zero if and only if the fetched list has a
++ * heuristic value. Such a value indicates that the list was designed for
++ * incremental fetches.
+  */
+-int fetch_bundle_uri(struct repository *r, const char *uri);
++int fetch_bundle_uri(struct repository *r, const char *uri,
++		     int *has_heuristic);
+ 
+ /**
+  * Given a bundle list that was already advertised (likely by the
 diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-index 474432c8ace..6f9417a0afb 100755
+index 6f9417a0afb..b2d15e141ca 100755
 --- a/t/t5558-clone-bundle-uri.sh
 +++ b/t/t5558-clone-bundle-uri.sh
-@@ -401,17 +401,43 @@ test_expect_success 'clone bundle list (http, creationToken)' '
- 	git -C clone-list-http-2 cat-file --batch-check <oids &&
+@@ -432,6 +432,8 @@ test_expect_success 'clone incomplete bundle list (http, creationToken)' '
+ 		--single-branch --branch=base --no-tags \
+ 		"$HTTPD_URL/smart/fetch.git" clone-token-http &&
  
++	test_cmp_config -C clone-token-http "$HTTPD_URL/bundle-list" fetch.bundleuri &&
++
  	cat >expect <<-EOF &&
--	$HTTPD_URL/bundle-1.bundle
--	$HTTPD_URL/bundle-2.bundle
--	$HTTPD_URL/bundle-3.bundle
-+	$HTTPD_URL/bundle-list
- 	$HTTPD_URL/bundle-4.bundle
-+	$HTTPD_URL/bundle-3.bundle
-+	$HTTPD_URL/bundle-2.bundle
-+	$HTTPD_URL/bundle-1.bundle
-+	EOF
+ 	$HTTPD_URL/bundle-list
+ 	$HTTPD_URL/bundle-1.bundle
+@@ -441,6 +443,43 @@ test_expect_success 'clone incomplete bundle list (http, creationToken)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
++	test_when_finished rm -rf fetch-http-4 trace*.txt &&
 +
-+	test_remote_https_urls <trace-clone.txt >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'clone incomplete bundle list (http, creationToken)' '
-+	test_when_finished rm -f trace*.txt &&
-+
-+	cp clone-from/bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/" &&
 +	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
 +	[bundle]
 +		version = 1
@@ -369,80 +214,31 @@ index 474432c8ace..6f9417a0afb 100755
 +		creationToken = 1
 +	EOF
 +
-+	GIT_TRACE2_EVENT=$(pwd)/trace-clone.txt \
-+	git clone --bundle-uri="$HTTPD_URL/bundle-list" \
-+		--single-branch --branch=base --no-tags \
-+		"$HTTPD_URL/smart/fetch.git" clone-token-http &&
-+
-+	cat >expect <<-EOF &&
- 	$HTTPD_URL/bundle-list
-+	$HTTPD_URL/bundle-1.bundle
- 	EOF
- 
--	# Since the creationToken heuristic is not yet understood by the
--	# client, the order cannot be verified at this moment. Sort the
--	# list for consistent results.
--	test_remote_https_urls <trace-clone.txt | sort >actual &&
-+	test_remote_https_urls <trace-clone.txt >actual &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 1928ea1dd7c..b7d5551262c 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -831,6 +831,52 @@ test_expect_success 'auto-discover multiple bundles from HTTP clone' '
- 	grep -f pattern trace.txt
- '
- 
-+test_expect_success 'auto-discover multiple bundles from HTTP clone: creationToken heuristic' '
-+	test_when_finished rm -rf "$HTTPD_DOCUMENT_ROOT_PATH/repo4.git" &&
-+	test_when_finished rm -rf clone-heuristic trace*.txt &&
-+
-+	test_commit -C src newest &&
-+	git -C src bundle create "$HTTPD_DOCUMENT_ROOT_PATH/newest.bundle" HEAD~1..HEAD &&
-+	git clone --bare --no-local src "$HTTPD_DOCUMENT_ROOT_PATH/repo4.git" &&
-+
-+	cat >>"$HTTPD_DOCUMENT_ROOT_PATH/repo4.git/config" <<-EOF &&
-+	[uploadPack]
-+		advertiseBundleURIs = true
-+
-+	[bundle]
-+		version = 1
-+		mode = all
-+		heuristic = creationToken
-+
-+	[bundle "everything"]
-+		uri = $HTTPD_URL/everything.bundle
-+		creationtoken = 1
-+
-+	[bundle "new"]
-+		uri = $HTTPD_URL/new.bundle
-+		creationtoken = 2
-+
-+	[bundle "newest"]
-+		uri = $HTTPD_URL/newest.bundle
-+		creationtoken = 3
-+	EOF
-+
 +	GIT_TRACE2_EVENT="$(pwd)/trace-clone.txt" \
-+		git -c protocol.version=2 \
-+		    -c transfer.bundleURI=true clone \
-+		"$HTTPD_URL/smart/repo4.git" clone-heuristic &&
++	git clone --single-branch --branch=base \
++		--bundle-uri="$HTTPD_URL/bundle-list" \
++		"$HTTPD_URL/smart/fetch.git" fetch-http-4 &&
++
++	test_cmp_config -C fetch-http-4 "$HTTPD_URL/bundle-list" fetch.bundleuri &&
 +
 +	cat >expect <<-EOF &&
-+	$HTTPD_URL/newest.bundle
-+	$HTTPD_URL/new.bundle
-+	$HTTPD_URL/everything.bundle
++	$HTTPD_URL/bundle-list
++	$HTTPD_URL/bundle-1.bundle
 +	EOF
 +
-+	# We should fetch all bundles in the expected order.
 +	test_remote_https_urls <trace-clone.txt >actual &&
-+	test_cmp expect actual
++	test_cmp expect actual &&
++
++	# only received base ref from bundle-1
++	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	cat >expect <<-\EOF &&
++	refs/bundles/base
++	EOF
++	test_cmp expect refs
 +'
 +
- # DO NOT add non-httpd-specific tests here, because the last part of this
- # test script is only executed when httpd is available and enabled.
+ # Do not add tests here unless they use the HTTP server, as they will
+ # not run unless the HTTP dependencies exist.
  
 -- 
 gitgitgadget
