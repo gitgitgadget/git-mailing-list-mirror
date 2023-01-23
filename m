@@ -2,113 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F311CC05027
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 04:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21C5AC05027
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 04:18:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230355AbjAWEH7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 22 Jan 2023 23:07:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40580 "EHLO
+        id S231294AbjAWESL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 22 Jan 2023 23:18:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbjAWEH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 22 Jan 2023 23:07:57 -0500
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A25F3588
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 20:07:55 -0800 (PST)
-Received: by mail-qt1-x82c.google.com with SMTP id g16so6794298qtu.2
-        for <git@vger.kernel.org>; Sun, 22 Jan 2023 20:07:55 -0800 (PST)
+        with ESMTP id S230355AbjAWESI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 22 Jan 2023 23:18:08 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46E5ACA29
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 20:18:07 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id m3-20020a17090a414300b00229ef93c5b0so9244687pjg.2
+        for <git@vger.kernel.org>; Sun, 22 Jan 2023 20:18:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dHejVunqXyhWDMb0JGq13OPpuSesPlW1gKtEAIlsfog=;
-        b=D3kd0kYqYGf7GTc98SrXM3+/u/t//yuqV4C943sMUOnOrlw8mJsXc8+fT5dULjBeVJ
-         CQ8abqVOE4F7wH8KYkueNc7WLz3lsp+ZW/cQndvyvCs6ST7UbEOif3QwenHOUT0BYhWm
-         WJdxexTWg5Kxt7xwowBTeLcWgRy8l5mGtxLc4sFmr9bxNDS7w8ZcIlagYhqvMAQGwe6x
-         lezNfPcT7ytAFwSagQJKX2eDoaMVniXe8gFZ8RDOXJDJfktrhSfisqEkQe8NYkUfHv76
-         VNVv3FJVuhkn/lD1KzPIoLiosKSt7uwMXvOKOIWelRDgEyqzdZadvT2O5MwRmF6TGxFP
-         LEsw==
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9vy+tuArghifOJJ5CoNgEptnF9PeHKybCkO8Qg7MYfA=;
+        b=kT9PzFtLr5zDcJ0a6wV7HRzASClcbp9aLClFLgqn+YM01EKwyPMkq63Bhzlqxu90DJ
+         HHtNQYCjmpZhts1zUGbaUKFdgfEaT5HfuigrCzPPwOY1mcEOfyic/a2/F2ZuLgJZU93V
+         uhNiP22YdZI+XYbCbpE5mIdeIVtkzgADtZQtQx51ITZQ/wZfG0M/Uzr5/lkrco4fY5iw
+         ef9yy/BEj1bxaTK91uS5xxqiyey6fvkrS98k7R9PljxIdJFlpDR31RZbBbtK2SiaDjAw
+         7s/1EYW48Pvjax3ebAQnu5sbxGSPOcGWA7j1T5A3mqREmOMkXBKoNgCTMtC94m2+KpVA
+         JzYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dHejVunqXyhWDMb0JGq13OPpuSesPlW1gKtEAIlsfog=;
-        b=wbpmjzPFgBhhorBPpX3De8VLLBsmr8B2+upq7bBm8kH9KtnJa1UldoeirM6cFaw5ID
-         T7TIyp8jG5g9HAhRg8mpG43uTx3/+syPL1PPsB3YOUU6pqfQ1ezSreSo+ytbBbiQSQ/v
-         L2FrGigmJRM9elYSi3f+/l+yoriWtHBTCLFy1SPcEBrWHd4vDzIEF0tmeQ8v6DkyZMTF
-         YKtrgan32yIswrL3VNQSnLA9huuVqC9LUNJqDLGS7ex8JKTsx0HUa4m09qJX3FadRZ0F
-         wsR6MxEcbvQLPNGKCXoF+ZlZV/uwhyabZ3DH1GBZOsw8uBpf4I7n9R3tHOJP0WAmK7Sn
-         NA1Q==
-X-Gm-Message-State: AFqh2kq+1+E5VgqD3dWTNZG/mttFxd5eNr/gdoWrjLB/QjOB6iZ5b/H/
-        EZSVhD3BuUVfGI5KEoOiy00=
-X-Google-Smtp-Source: AMrXdXsLLCa1p4rK5/5LMrGzDEls9c0IvaAWLQTV2SgZu1bmd1OLqWW1CVi/HMBxy5UvzScvu1bUsw==
-X-Received: by 2002:ac8:4c90:0:b0:3ad:202f:8797 with SMTP id j16-20020ac84c90000000b003ad202f8797mr32339302qtv.9.1674446874354;
-        Sun, 22 Jan 2023 20:07:54 -0800 (PST)
-Received: from [192.168.1.211] ([2600:4041:4542:c100:1de8:866f:b711:7175])
-        by smtp.gmail.com with ESMTPSA id hj4-20020a05622a620400b003995f6513b9sm23939149qtb.95.2023.01.22.20.07.53
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 Jan 2023 20:07:53 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] attr: fix instructions on how to check attrs
-Date:   Sun, 22 Jan 2023 23:07:53 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <FBC71853-6FC7-4D6A-83D5-3EDA2250F4DE@gmail.com>
-In-Reply-To: <xmqq8rhuturw.fsf@gitster.g>
-References: <pull.1441.git.git.1674356774172.gitgitgadget@gmail.com>
- <xmqq8rhuturw.fsf@gitster.g>
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9vy+tuArghifOJJ5CoNgEptnF9PeHKybCkO8Qg7MYfA=;
+        b=Bd+t9DVB7Z8EEhd7IpEGUCuhSWyCEJxW0NNwPcaskfJY/B6DcgAbdsbDA3QJMxjDpi
+         tRyJPRDyJ1eSys26zAzYbOTBPmjC1Bp0zy8tuXhr4pYARSRmBvQoD6j/FlcnuriEFGeK
+         LjL4RttUyhZ41eFqe55mCpmRV7MYSfcwotxb933x51yINaSI23jg15HgV5EiSgQjeFj+
+         LJY1Vv+3kLuSMFPG+LD7YWqNVoCeIyT+cgvqFSHJY1vB9mRo9GyiympKuGa/duJ4EtcX
+         /+k8bOxu4Hm5uYBwOLrQuvCqCAqgcF4Dd3hTao2m1nhWHJou3TYcNLQH1k0B3TMw67qO
+         7Kdw==
+X-Gm-Message-State: AFqh2koTcCgFOUycN223Ux67D2zJ7Xicl8avxPFmnI2ZX386zxEh6wE4
+        l9bpIKVrpdLlLRIAJJIkptyZO+5gCy8=
+X-Google-Smtp-Source: AMrXdXt5wR8RbrJU5ZLQe5LixGBuCYgnokiqzslRpIAkM+LyFUjyrTyulh+qmg0Iz/+HkecCSmGl+w==
+X-Received: by 2002:a17:903:54d:b0:193:a5b:ccf6 with SMTP id jo13-20020a170903054d00b001930a5bccf6mr20912902plb.0.1674447486421;
+        Sun, 22 Jan 2023 20:18:06 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id g12-20020a170902868c00b00195e77c20a9sm5300066plo.163.2023.01.22.20.18.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 22 Jan 2023 20:18:05 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2] MyFirstContribution: refrain from self-iterating too much
+References: <xmqq3583uyk0.fsf@gitster.g>
+        <20230122071156.367jwwt3d5txvkl4@tb-raspi4>
+        <xmqqcz76tv6d.fsf@gitster.g>
+Date:   Sun, 22 Jan 2023 20:18:05 -0800
+Message-ID: <xmqqzga9opdu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Finding mistakes in and improving your own patches is a good idea,
+but doing so too quickly is being inconsiderate to reviewers who
+have just seen the initial iteration and taking their time to review
+it.  Encourage new developers to perform such a self review before
+they send out their patches, not after.
 
-On 22 Jan 2023, at 11:10, Junio C Hamano wrote:
+Helped-by: Torsten Bögershausen <tboegi@web.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/MyFirstContribution.txt | 30 +++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: John Cai <johncai86@gmail.com>
->>
->> The instructions in attr.h describing what functions to call to check
->> attributes is missing the index as the first argument to git_check_attr.
->>
->> Fix this to make it consistent with the actual function signature.
->
-> Sounds quite sensible.  It would have been very good to explain some
-> research in the above, like
->
->     When 7a400a2c (attr: remove an implicit dependency on the_index,
->     2018-08-13) started passing an index_state instance to
->     git_check_attr(), it forgot to update the API documentation that
->     was in Documentation/technical/api-gitattributes.txt.  Later,
->     3a1b3415 (attr: move doc to attr.h, 2019-11-17) moved the API
->     documentation to attr.h and made it to a comment, without
->     realizing the earlier mistake.
->
-> or something like that.
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index ccfd0cb5f3..3e4f1c7764 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -1256,6 +1256,36 @@ index 88f126184c..38da593a60 100644
+ [[now-what]]
+ == My Patch Got Emailed - Now What?
+ 
++After you sent out your first patch, you may find mistakes in it, or
++a different and better way to achieve the goal of the patch.  But
++resist the temptation to send a new version immediately.
++
++ - If the mistakes you found are minor, send a reply to your patch as
++   if you were a reviewer and mention that you will fix them in an
++   updated version.
++
++ - On the other hand, if you think you want to change the course so
++   drastically that reviews on the initial patch would become
++   useless, send a reply to your patch to say so immediately to
++   avoid wasting others' time (e.g. "I am working on a better
++   approach, so please ignore this patch, and wait for the updated
++   version.")
++
++And give reviewers enough time to process your initial patch before
++sending an updated version.
++
++The above is a good practice if you sent your initial patch
++prematurely without polish.  But a better approach of course is to
++avoid sending your patch prematurely in the first place.
++
++Keep in mind that people in the development community do not have to
++see your patch immediately after you wrote it.  Instead of seeing
++the initial version right now, that you will follow up with several
++updated "oops, I like this version better than the previous one"
++versions over 2 days, reviewers would much appreciate if a single
++more polished version came 2 days late and that version, that
++contains fewer mistakes, were the only one they need to review.
++
+ [[reviewing]]
+ === Responding to Reviews
+ 
+-- 
+2.39.1-308-g56c8fb1e95
 
-good tip about including some history. I'll include that in the re-roll
-
-thanks!
-
->
-> Thanks.
->
->> diff --git a/attr.h b/attr.h
->> index 2f22dffadb3..47f1111f391 100644
->> --- a/attr.h
->> +++ b/attr.h
->> @@ -45,7 +45,7 @@
->>   * const char *path;
->>   *
->>   * setup_check();
->> - * git_check_attr(path, check);
->> + * git_check_attr(&the_index, path, check);
->>   * ------------
->>   *
->>   * - Act on `.value` member of the result, left in `check->items[]`:
->>
->> base-commit: 904d404274fef6695c78a6b055edd184b72e2f9b
