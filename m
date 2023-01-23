@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF8E8C05027
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 17:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3AE1C38142
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 17:15:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233516AbjAWRPe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 12:15:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49950 "EHLO
+        id S233521AbjAWRPu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 12:15:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233438AbjAWRP0 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233471AbjAWRP0 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 23 Jan 2023 12:15:26 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC9462B60A
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC902BF1F
         for <git@vger.kernel.org>; Mon, 23 Jan 2023 09:15:17 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id x10so15397139edd.10
+Received: by mail-ej1-x633.google.com with SMTP id kt14so32402207ejc.3
         for <git@vger.kernel.org>; Mon, 23 Jan 2023 09:15:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bJffQ+wSx+zWVtvsPERwZgxa/0xg5ebkNBKJ8Ka/154=;
-        b=UMCZ6+muaXeG4XnfVSXb04YwIIHZuR0s2hGGxYniJaKZJuuNfn2yaEXnLeFkdrEnQ2
-         gNkmJcwr2XTIAuVT4PE8xSdLJOafDF+TkrPTnKlTAlZ5MiXW2a4iv8VLKcmf8ltYEiE2
-         AOEG6b/DqUqb+cC987VwVd+hOqnARqbtgv4N5dTNZwm/vGOFsGhr2Eg1IUIFT5AFN/KG
-         0WhoGRQRYjuJLjpOWOhApSplQ2NWs6bmfd1Sxle6t0BTYf7XKwmRThWHeYTAOOqDWdPG
-         d0Wz4msIPHGLtc0+CpP51LuhMosK/EUGjqegGS7FcJ6mvi6z0E2cJtAMy7DLHdVehuEq
-         2vCQ==
+        bh=G0EAP/+ht+MCm0hS+nzUQZhtsmL3FyKKtMK1D6L7A8w=;
+        b=nTtacCaabKPItmmgObPGGZZpYUvGXlPfINZEG0xWCScJWZx+mK8ozFo+zgY3nW1OkL
+         2yZjSy7a6YoXgkGBRbRIdFJQ2GeyOU6Aa7vNuGywu/4Lq8kjy8cCQovasug6A5RZEoWA
+         ld3FMk0JfhR5RLuu1USZ4rbwk24OYGXcHAu1BmokQORg2U4k+ql1jNHAlYtYWtnF6PxD
+         6HyiE+8wDOI6VjWQBdMoaVnbmOyq7UcgwYL5NEUrHEKoK4AoplNRyOsB+IckXgXRYT6U
+         tVqbQ8Hv1sgxhls4K3w7m3+9zLiE5i0LMLi4JHGoyHBIegKfTvB2aTf+A117YOKZU4JM
+         7OUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bJffQ+wSx+zWVtvsPERwZgxa/0xg5ebkNBKJ8Ka/154=;
-        b=cRm90K/YdtsGcrG965JllrpIpKWTPS+7T/Mvj1uoEB6ftWF7cgf5R7dRUqb+uYGNw2
-         G6dQQNx937Sr3LJQwvgMkGIBemiqh2O3tWh/jMM/XNBNx1QltY4x6XRbGNo7K+/HxYSY
-         cUtQo5e+cWggWV0CT80aRjvvLoT++UBBVy/vkv/4Ia0LPWisJGk7+n0sa5eDptiLu3cX
-         40vz6kys2D+tTcHOvgHBB9i5V3f5IMLOfF2KpgYYF4Hq2AQEfsNoDbybJ24DwG7hoRh/
-         ev81CeVaGimHsrsH41EXIEutPkZmvGCP2+5qRDEoGIG1N1T4VlOqWS4GY8MHEMLfYlr+
-         dskA==
-X-Gm-Message-State: AFqh2kqAKnhvn7IMYzu2zvoaUJXXk3dXKoPJtifatsL0hAMkPUOi2mz5
-        BTdInO0RswxzhnOMmU4+qj3qYwvcnfzM5g==
-X-Google-Smtp-Source: AMrXdXvD9qtnEYnTRYWjsrFjaXUADFVF0x68WQ+0hpVyGk7yhaY5R35Ie0IKG707ahjZsaMlG5K+Tg==
-X-Received: by 2002:a50:cc4c:0:b0:49e:1c17:904 with SMTP id n12-20020a50cc4c000000b0049e1c170904mr23223877edi.15.1674494116133;
-        Mon, 23 Jan 2023 09:15:16 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n4-20020a170906164400b007c11e5ac250sm22771754ejd.91.2023.01.23.09.15.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=G0EAP/+ht+MCm0hS+nzUQZhtsmL3FyKKtMK1D6L7A8w=;
+        b=l87dxs+VjVnUaCUW9TelpBHhx356x0qN3jWLg44w23nmyts8MUIRMt5BCHSCDdwPRg
+         Hsrj2OVrd1JHWW39vmmlgg5fmceU5sqcX1zWpOwdWe1rcmWbgqBQPADsUf5+5oRNaaor
+         0YJn59QFuk5Zwjf4ob4/iJtfF+2t3eockg3s/B9AEbgABY6sRkrqFyZJpE/J0JCbaACx
+         BckNWcIQNDoNbmK1xz5Qy4OYWEC8qzlpyhVhCH50iOvdfctfQQSBSztJYLjxOcJ/ZgY1
+         hFQ9HokKbVKoWvZPgLKyBD5pvxBsJZabP4YQDhh5KwjB07EaBWPYCKsl1U28q73tfBos
+         y0BQ==
+X-Gm-Message-State: AFqh2koxLNiShd/pATqGaq+QsfIIq5UTBHVfYbxxjh2vllC1BBg4QGn8
+        8si32/F9IiwjQ2Zmx7HKNPdBVO/qy6geBg==
+X-Google-Smtp-Source: AMrXdXsoMhWNN4hJ5w5WlC+Us6SoSC7MKI9DVWkoLMvUy4egjB9peKUabcLexnY0D1i1hVZHUjPYGw==
+X-Received: by 2002:a17:907:c609:b0:862:c1d5:ea1b with SMTP id ud9-20020a170907c60900b00862c1d5ea1bmr29038928ejc.8.1674494115263;
         Mon, 23 Jan 2023 09:15:15 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n4-20020a170906164400b007c11e5ac250sm22771754ejd.91.2023.01.23.09.15.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 09:15:14 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Emily Shaffer <emilyshaffer@google.com>,
         Michael Strawbridge <michael.strawbridge@amd.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/5] sequencer: use the new hook API for the simpler "post-rewrite" call
-Date:   Mon, 23 Jan 2023 18:15:08 +0100
-Message-Id: <patch-4.5-7a55c95f60f-20230123T170551Z-avarab@gmail.com>
+Subject: [PATCH 3/5] hook API: support passing stdin to hooks, convert am's 'post-rewrite'
+Date:   Mon, 23 Jan 2023 18:15:07 +0100
+Message-Id: <patch-3.5-c6b9b69c516-20230123T170551Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1301.gffb37c08dee
 In-Reply-To: <cover-0.5-00000000000-20230123T170550Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20230123T170550Z-avarab@gmail.com>
@@ -75,57 +75,93 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Change the invocation of the "post-rewrite" hook added in
-795160457db (sequencer (rebase -i): run the post-rewrite hook, if
-needed, 2017-01-02) to use the new hook API.
+Convert the invocation of the 'post-rewrite' hook run by 'git am' to
+use the hook.h library. To do this we need to add a "path_to_stdin"
+member to "struct run_hooks_opt".
 
-This leaves the more complex "post-rewrite" invocation added in
-a87a6f3c98e (commit: move post-rewrite code to libgit, 2017-11-17)
-here in sequencer.c unconverted. That'll be done in a subsequent
-commit.
+In our API this is supported by asking for a file path, rather
+than by reading stdin. Reading directly from stdin would involve caching
+the entire stdin (to memory or to disk) once the hook API is made to
+support "jobs" larger than 1, along with support for executing N hooks
+at a time (i.e. the upcoming config-based hooks).
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- sequencer.c | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ builtin/am.c | 20 ++++----------------
+ hook.c       |  8 +++++++-
+ hook.h       |  5 +++++
+ 3 files changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 3e4a1972897..d8d59d05dd4 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4834,8 +4834,7 @@ static int pick_commits(struct repository *r,
- 		if (!stat(rebase_path_rewritten_list(), &st) &&
- 				st.st_size > 0) {
- 			struct child_process child = CHILD_PROCESS_INIT;
--			const char *post_rewrite_hook =
--				find_hook("post-rewrite");
-+			struct run_hooks_opt hook_opt = RUN_HOOKS_OPT_INIT;
- 
- 			child.in = open(rebase_path_rewritten_list(), O_RDONLY);
- 			child.git_cmd = 1;
-@@ -4845,18 +4844,9 @@ static int pick_commits(struct repository *r,
- 			/* we don't care if this copying failed */
- 			run_command(&child);
- 
--			if (post_rewrite_hook) {
--				struct child_process hook = CHILD_PROCESS_INIT;
+diff --git a/builtin/am.c b/builtin/am.c
+index 82a41cbfc4e..8be91617fef 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -495,24 +495,12 @@ static int run_applypatch_msg_hook(struct am_state *state)
+  */
+ static int run_post_rewrite_hook(const struct am_state *state)
+ {
+-	struct child_process cp = CHILD_PROCESS_INIT;
+-	const char *hook = find_hook("post-rewrite");
+-	int ret;
 -
--				hook.in = open(rebase_path_rewritten_list(),
--					O_RDONLY);
--				hook.stdout_to_stderr = 1;
--				hook.trace2_hook_name = "post-rewrite";
--				strvec_push(&hook.args, post_rewrite_hook);
--				strvec_push(&hook.args, "rebase");
--				/* we don't care if this hook failed */
--				run_command(&hook);
--			}
-+			hook_opt.path_to_stdin = rebase_path_rewritten_list();
-+			strvec_push(&hook_opt.args, "rebase");
-+			run_hooks_opt("post-rewrite", &hook_opt);
- 		}
- 		apply_autostash(rebase_path_autostash());
+-	if (!hook)
+-		return 0;
++	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
  
+-	strvec_push(&cp.args, hook);
+-	strvec_push(&cp.args, "rebase");
++	strvec_push(&opt.args, "rebase");
++	opt.path_to_stdin = am_path(state, "rewritten");
+ 
+-	cp.in = xopen(am_path(state, "rewritten"), O_RDONLY);
+-	cp.stdout_to_stderr = 1;
+-	cp.trace2_hook_name = "post-rewrite";
+-
+-	ret = run_command(&cp);
+-
+-	close(cp.in);
+-	return ret;
++	return run_hooks_opt("post-rewrite", &opt);
+ }
+ 
+ /**
+diff --git a/hook.c b/hook.c
+index a4fa1031f28..86c6dc1fe70 100644
+--- a/hook.c
++++ b/hook.c
+@@ -53,8 +53,14 @@ static int pick_next_hook(struct child_process *cp,
+ 	if (!hook_path)
+ 		return 0;
+ 
+-	cp->no_stdin = 1;
+ 	strvec_pushv(&cp->env, hook_cb->options->env.v);
++	/* reopen the file for stdin; run_command closes it. */
++	if (hook_cb->options->path_to_stdin) {
++		cp->no_stdin = 0;
++		cp->in = xopen(hook_cb->options->path_to_stdin, O_RDONLY);
++	} else {
++		cp->no_stdin = 1;
++	}
+ 	cp->stdout_to_stderr = 1;
+ 	cp->trace2_hook_name = hook_cb->hook_name;
+ 	cp->dir = hook_cb->options->dir;
+diff --git a/hook.h b/hook.h
+index 4258b13da0d..19ab9a5806e 100644
+--- a/hook.h
++++ b/hook.h
+@@ -30,6 +30,11 @@ struct run_hooks_opt
+ 	 * was invoked.
+ 	 */
+ 	int *invoked_hook;
++
++	/**
++	 * Path to file which should be piped to stdin for each hook.
++	 */
++	const char *path_to_stdin;
+ };
+ 
+ #define RUN_HOOKS_OPT_INIT { \
 -- 
 2.39.1.1301.gffb37c08dee
 
