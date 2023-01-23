@@ -2,201 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38F4AC38142
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 09:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C592C38142
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 09:33:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231604AbjAWJBW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 04:01:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45602 "EHLO
+        id S231778AbjAWJdQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 04:33:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231482AbjAWJBV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 04:01:21 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEDEAEB58
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 01:01:18 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id mg12so28605103ejc.5
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 01:01:18 -0800 (PST)
+        with ESMTP id S229557AbjAWJdP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 04:33:15 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB75B15C8F
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 01:33:13 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id ud5so28842300ejc.4
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 01:33:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pel2bdzHR0e+v6DTwDiiqrM4SWH0ldeYeTmDNJHkGs4=;
-        b=WYwoTDwGnIVoNaDX419zQN6j35KKbjtU3ENYdx1l4baB7vr7sP0QCEhKUUAFllInQX
-         NKlXhQnTOdmq+hnn18bBa7d/flrFN8fG4c1HKUFl2YMw2x9dUyDhSReQqZD8LSFe2q9X
-         0Ds2GH5mCy5Q/4HU8QB/rLykxSR+mQsgvmBVuqrlYn5mv+GKGeTw/eAkgFYllkzRei2t
-         ilyJkIflLknDCKsC2Pt7gUdkUN2GCkL5ZZxQjZ9vrlYJ1kI3cP4h5JScDfGxHR2lu5Pl
-         CjKM8Nf5chCFVeE1Li7UuqKxjYPyuLvasUvUg5OkzI3lxpMm3Rskdgi2S7bETZISYAMH
-         acrw==
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=V0Hln4zBM0WWS4VsjgLshxI7WghzVLj2DowAzM1FP1I=;
+        b=ExAAk0eAAn993ygnWtp56J52k281BWQPwjSafQg7J2IgFtVwMxou3Shod1Tr9nr7lM
+         JMmKYwidZ4BOPUrN4pl//XnIDh0EJs/VG9TqWTgIU2jlazGs44cWqV5wzeTzmWxwx9ho
+         VGOD0vl+sWvLYh+w66K+MSJ2kBUyot5HcG+Wf8khLQXkiE0wXJ8wqQuFHaGBVGZ41mYQ
+         xRniNt6Z4cbb1qLlEDAjAv8oAjnR31jwo6jv2ceO+B3KfUjuw/qIr4mdeSYZdR4/KPtv
+         7TGjtzRbe9erFvrp1Wo7bHor8HrHhZkAbDTZQGMIOfqi0Swu68VIKREuUqGZov4f0i6D
+         ggRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pel2bdzHR0e+v6DTwDiiqrM4SWH0ldeYeTmDNJHkGs4=;
-        b=RAPi4zj5ycigW6IfpsiPhzDEqlqOqJFjKgmdCbdaQrruBeJ7lj8ttMgIv2fdJIKDg5
-         tkTkaD6v7WfwUu67ejU6+NQo52xXWg9un9DOJS6UUEXhUdhJPSNauJFGrZQDU8gwCtm3
-         UYwbWAz/0zONnFrJXe3AHaTmi5KyNSAgKc/mgiHwzxN695wqKxAa8qTSDqByHkVB4Z9L
-         G61Q7xgtoJ7mOxaDT3iwRvMqxHW8WEDXGFhIPTYtPpuNdeEg3oOlnbuTh+h8Q2+vOPsQ
-         +slTMk1MFzvl2Gq3UuBn8zOv2kge34gU3jvjaxhtYbergJreAZcl5OYEfPh8kca/cmap
-         RzHQ==
-X-Gm-Message-State: AFqh2koHXrQg5hSNv1rMBiZXbW4i4mp59FApSGoRA9mqlrdaJPjQqB6O
-        W0PNgeynek4fNKFBRq7pTQyh+NF3HXReZqra
-X-Google-Smtp-Source: AMrXdXuwPLCfUYnq2aCV5nyFyStiL4K4/enaZxDp1xs3re1ea0I6001phDQ8n6O2KTXq99QlmzLxpg==
-X-Received: by 2002:a17:906:354c:b0:86e:2dd4:6655 with SMTP id s12-20020a170906354c00b0086e2dd46655mr22268120eja.51.1674464476806;
-        Mon, 23 Jan 2023 01:01:16 -0800 (PST)
-Received: from titov.fritz.box ([45.88.97.214])
-        by smtp.gmail.com with ESMTPSA id d9-20020a1709063ec900b007bd9e683639sm21668721ejj.130.2023.01.23.01.01.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 01:01:16 -0800 (PST)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2] Documentation: render dash correctly
-Date:   Mon, 23 Jan 2023 10:01:14 +0100
-Message-Id: <20230123090114.429844-1-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230122165628.1601062-1-rybak.a.v@gmail.com>
-References: <20230122165628.1601062-1-rybak.a.v@gmail.com>
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=V0Hln4zBM0WWS4VsjgLshxI7WghzVLj2DowAzM1FP1I=;
+        b=s7SwuNS1AZbMO7isgeHFeEozBNkEJ+mLlvWaaZzG6Xvo7dz5tyPmeq9TwZaRoR65g7
+         k1A2P80q/YsTNI40jAUMac/6dbFirTgwgHNTt8BBatqD/zHn9LnmVzyIzAz7wpph54wp
+         /jVuNDGQh/QFLlv6a+4flB7feCDQhSGfOpJBXGu9iCW65kGovGaUClMCFxPwqyFJvBF9
+         ARRJq3aMd8H80JWVCKMV08eNnYIHDwjuR7zPAra3EiSByz16N1Kx38bIrXtn1SBtsfFm
+         cWZ2BaQ0dfZbHGaQNM9RuYmNAiJVjWqbEVYgTBA+69TmBkBFRlr5GeiwO6pO9Py3D1hK
+         8r7A==
+X-Gm-Message-State: AFqh2koUNKt3HbQgw1yRXY8924pOUHsBLtyzvtTT3Dqk7i3eKo2sPRNV
+        d3cq0UYyY4bfs+2N1WGYKRS+/1rMAAI=
+X-Google-Smtp-Source: AMrXdXui9JwIM4o2e0BMhPIzd04Hlc/7tlDgDGGbcRSP5xD0XzvjSmdlUdH6I3Uv8wthQTWRAaPvrg==
+X-Received: by 2002:a17:907:1759:b0:85e:c4e4:cfbf with SMTP id lf25-20020a170907175900b0085ec4e4cfbfmr25144304ejc.15.1674466392258;
+        Mon, 23 Jan 2023 01:33:12 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id d22-20020a50fe96000000b0049c6c7670easm13515081edt.70.2023.01.23.01.33.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jan 2023 01:33:11 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <6e57bef8-7387-3341-5ed5-4bcfa7ded7a0@dunelm.org.uk>
+Date:   Mon, 23 Jan 2023 09:33:09 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] ssh signing: better error message when key not in agent
+To:     Fabian Stelzer <fs@gigacodes.de>
+Cc:     Adam Szkoda <adaszko@gmail.com>,
+        Adam Szkoda via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+References: <pull.1270.git.git.1674029874363.gitgitgadget@gmail.com>
+ <abec912c-065d-2098-962e-41f9646dd046@dunelm.org.uk>
+ <8025d5c7-ab55-c533-1997-05b4c7339d61@dunelm.org.uk>
+ <CAEroKagqxC86X0SD8=tK0w+yXL7QecZ+z_7sja-K6ajs0=Z=BQ@mail.gmail.com>
+ <55282dec-825f-8c4b-1fb0-6e26ec326db1@dunelm.org.uk>
+ <20230120090331.37dxkko6bgxbjae7@fs>
+Content-Language: en-US
+In-Reply-To: <20230120090331.37dxkko6bgxbjae7@fs>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Three hyphens are rendered verbatim in documentation, so "--" has to be
-used to produce a dash.  Fix asciidoc output for dashes.  This is
-similar to previous commits f0b922473e (Documentation: render special
-characters correctly, 2021-07-29) and de82095a95 (doc
-hash-function-transition: fix asciidoc output, 2021-02-05).
-
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
-
-On 2023-01-23T09:19, Martin Ågren wrote:
-> I suspect these were identified by greping for " --- ", spaces included.
-
-Indeed.
-
-> We seem to have some "---" that aren't surrounded by spaces. They're
-> perhaps a bit more tedious to find,
-
-Not really:
-
-    git grep -P -i '[^-][a-z0-9]+---[a-z0-9]+[^-]' -- Documentation/
-
-The "[^-]" part is needed to exclude many examples of commit graphs.
-
-The following:
-
-    The horizontal line of history A---Q is taken to be the first parent of each
-    merge.
-
-also comes up in 'Documentation/rev-list-options.txt', but it might be better to
-leave "A---Q" as is to be similar to the commit graph example above it (there
-are commits between A and Q in the graph, but still).
-
-> but I see there are two in
-> gitformat-signature.txt and technical/rerere.txt. Maybe it would be
-> worthwhile addressing them too in this patch.
+On 20/01/2023 09:03, Fabian Stelzer wrote:
+> On 18.01.2023 16:29, Phillip Wood wrote:
+>> Hi Adam
+>>
+>> I've cc'd Fabian who knows more about the ssh signing code that I do.
+>>
+>> On 18/01/2023 15:28, Adam Szkoda wrote:
+>>> Hi Phillip,
+>>>
+>>> Good point!  My first thought is to try doing a stat() syscall on the
+>>> path from 'user.signingKey' to see if it exists and if not, treat it
+>>> as a public key (and pass the -U option).  If that sounds reasonable,
+>>> I can update the patch.
+>>
+>> My reading of the documentation is that user.signingKey may point to a 
+>> public or private key so I'm not sure how stat()ing would help. 
+>> Looking at the code in sign_buffer_ssh() we have a function 
+>> is_literal_ssh_key() that checks if the config value is a public key. 
+>> When the user passes the path to a key we could read the file check 
+>> use is_literal_ssh_key() to check if it is a public key (or possibly 
+>> just check if the file begins with "ssh-"). Fabian - does that sound 
+>> reasonable?
 > 
-> Martin
+> Hi,
+> I have encountered the mentioned problem before as well and tried to fix 
+> it but did not find a good / reasonable way to do so. Git just passes 
+> the user.signingKey to ssh-keygen which states:
+> `The key used for signing is specified using the -f option and may refer 
+> to either a private key, or a public key with the private half available 
+> via ssh-agent(1)`
+> 
+> I don't think it's a good idea for git to parse the key and try to 
+> determine if it's public or private. The fix should probably be in 
+> openssh (different error message) but when looking into it last time i 
+> remember that the logic for using the key is quite deeply embedded into 
+> the ssh code and not easily adjusted for the signing use case. At the 
+> moment I don't have the time to look into it but the openssh code for 
+> signing is quite readable so feel free to give it a try. Maybe you find 
+> a good way.
 
-Thank you for review, here's v2.
+Thanks Fabian, perhaps the easiest way forward is for us to only pass 
+"-U" when we have a literal key in user.signingKey as we know it must a 
+be public key in that case.
 
-Changes from v1:
+Best Wishes
 
- - Added two fixes in gitformat-signature.txt and technical/rerere.txt, as
-   suggested by Martin Ågren.
+Phillip
 
- Documentation/git-apply.txt                          | 2 +-
- Documentation/git-read-tree.txt                      | 2 +-
- Documentation/git.txt                                | 2 +-
- Documentation/gitformat-signature.txt                | 2 +-
- Documentation/technical/hash-function-transition.txt | 2 +-
- Documentation/technical/rerere.txt                   | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 1d478cbe9b..5e16e6db7e 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -208,7 +208,7 @@ behavior:
- * `warn` outputs warnings for a few such errors, but applies the
-   patch as-is (default).
- * `fix` outputs warnings for a few such errors, and applies the
--  patch after fixing them (`strip` is a synonym --- the tool
-+  patch after fixing them (`strip` is a synonym -- the tool
-   used to consider only trailing whitespace characters as errors, and the
-   fix involved 'stripping' them, but modern Gits do more).
- * `error` outputs warnings for a few such errors, and refuses
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-index 7567955bad..b09707474d 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -219,7 +219,7 @@ see which of the "local changes" that you made were carried forward by running
- `git diff-index --cached $M`.  Note that this does not
- necessarily match what `git diff-index --cached $H` would have
- produced before such a two tree merge.  This is because of cases
--18 and 19 --- if you already had the changes in $M (e.g. maybe
-+18 and 19 -- if you already had the changes in $M (e.g. maybe
- you picked it up via e-mail in a patch form), `git diff-index
- --cached $H` would have told you about the change before this
- merge, but it would not show in `git diff-index --cached $M`
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index f9a7a4554c..74973d3cc4 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -613,7 +613,7 @@ The file parameters can point at the user's working file
- (e.g. `new-file` in "git-diff-files"), `/dev/null` (e.g. `old-file`
- when a new file is added), or a temporary file (e.g. `old-file` in the
- index).  `GIT_EXTERNAL_DIFF` should not worry about unlinking the
--temporary file --- it is removed when `GIT_EXTERNAL_DIFF` exits.
-+temporary file -- it is removed when `GIT_EXTERNAL_DIFF` exits.
- +
- For a path that is unmerged, `GIT_EXTERNAL_DIFF` is called with 1
- parameter, <path>.
-diff --git a/Documentation/gitformat-signature.txt b/Documentation/gitformat-signature.txt
-index a249869faf..d8e3eb1bac 100644
---- a/Documentation/gitformat-signature.txt
-+++ b/Documentation/gitformat-signature.txt
-@@ -37,7 +37,7 @@ line.
- This is even true for an originally empty line.  In the following
- examples, the end of line that ends with a whitespace letter is
- highlighted with a `$` sign; if you are trying to recreate these
--example by hand, do not cut and paste them---they are there
-+example by hand, do not cut and paste them--they are there
- primarily to highlight extra whitespace at the end of some lines.
- 
- The signed payload and the way the signature is embedded depends
-diff --git a/Documentation/technical/hash-function-transition.txt b/Documentation/technical/hash-function-transition.txt
-index e2ac36dd21..ed57481089 100644
---- a/Documentation/technical/hash-function-transition.txt
-+++ b/Documentation/technical/hash-function-transition.txt
-@@ -562,7 +562,7 @@ hash re-encode during clone and to encourage peers to modernize.
- The design described here allows fetches by SHA-1 clients of a
- personal SHA-256 repository because it's not much more difficult than
- allowing pushes from that repository. This support needs to be guarded
--by a configuration option --- servers like git.kernel.org that serve a
-+by a configuration option -- servers like git.kernel.org that serve a
- large number of clients would not be expected to bear that cost.
- 
- Meaning of signatures
-diff --git a/Documentation/technical/rerere.txt b/Documentation/technical/rerere.txt
-index 35d4541433..be58f1bee3 100644
---- a/Documentation/technical/rerere.txt
-+++ b/Documentation/technical/rerere.txt
-@@ -99,7 +99,7 @@ conflict to leave line D means that the user declares:
-     compatible with what AB and AC wanted to do.
- 
- So the conflict we would see when merging AB into ACAB should be
--resolved the same way---it is the resolution that is in line with that
-+resolved the same way--it is the resolution that is in line with that
- declaration.
- 
- Imagine that similarly previously a branch XYXZ was forked from XY,
--- 
-2.39.0
-
+> Best regards,
+> Fabian
+> 
+>>
+>> Best Wishes
+>>
+>> Phillip
+>>
+>>> Best
+>>> — Adam
+>>>
+>>>
+>>> On Wed, Jan 18, 2023 at 3:34 PM Phillip Wood 
+>>> <phillip.wood123@gmail.com> wrote:
+>>>>
+>>>> On 18/01/2023 11:10, Phillip Wood wrote:
+>>>>>> the agent [1].  A fix is scheduled to be released in OpenSSH 9.1. All
+>>>>>> that
+>>>>>> needs to be done is to pass an additional backward-compatible option
+>>>>>> -U to
+>>>>>> 'ssh-keygen -Y sign' call.  With '-U', ssh-keygen always interprets
+>>>>>> the file
+>>>>>> as public key and expects to find the private key in the agent.
+>>>>>
+>>>>> The documentation for user.signingKey says
+>>>>>
+>>>>>   If gpg.format is set to ssh this can contain the path to either your
+>>>>> private ssh key or the public key when ssh-agent is used.
+>>>>>
+>>>>> If I've understood correctly passing -U will prevent users from 
+>>>>> setting
+>>>>> this to a private key.
+>>>>
+>>>> If there is an easy way to tell if the user has given us a public key
+>>>> then we could pass "-U" in that case.
+>>>>
+>>>> Best Wishes
+>>>>
+>>>> Phillip
