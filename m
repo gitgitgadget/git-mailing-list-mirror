@@ -2,112 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70E63C05027
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 15:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19852C05027
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 15:56:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232676AbjAWPgD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 10:36:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42486 "EHLO
+        id S232881AbjAWP4R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 10:56:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232529AbjAWPgB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 10:36:01 -0500
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 790EA2915F
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:36:00 -0800 (PST)
-Received: by mail-yb1-xb31.google.com with SMTP id a9so15302497ybb.3
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:36:00 -0800 (PST)
+        with ESMTP id S232970AbjAWP4P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 10:56:15 -0500
+Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C3243C34
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:56:12 -0800 (PST)
+Received: by mail-vs1-xe30.google.com with SMTP id k4so13371970vsc.4
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:56:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2e6ByVIMxxzA4R0SBIQICq6efBeP0XiH5WNJW5hq+iM=;
-        b=MtC7cx8xRyw7PbduPV+V58YAAvXTUSwJK/wiLxYY3/RQN9FOy6crRvs/2EkWLPIXys
-         ZUGi7T1oD/hyIEen2tKhdqKXZqWkXrNAW60wIWyl3d22UPfsVA3X1jjBVVa2US2rnnIA
-         HZNQGIEzyD3XO4rHrsZ9UhpvCtyoYYYlWaY2cIyL9/R85sCDzOKgbWeEV585UkLjDNZc
-         LEIE71y2ai0nh5IPueHhAO9YQlIL/qd6dMUTbj1FDT+zqONcbOUTELiAotsItFXidZLO
-         huVA2pOVlkEseyLhUlXAIAYAOorZDANPatyny/9SN9V/IUBAKZtIecKjDmRuu1NeGdSI
-         05wA==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bZo37c3pTyd5UI6GJWOOZGWs2dS+xF+fIhcOuV6PWxw=;
+        b=WDZdv2LxRS8b6HEdbIzVFVJao/0qDQfjHKkecqw5JdlovK8+sZ6sg6pWIoxFizyHKp
+         +Zk1WgOySRltLNRf/brLXfzchE6L8On0Q3zHb0ko9vH5o6gwtz62sJpwALTM9ja/9/iw
+         DIFJ0O0JPAAQuKBVzS7rGqhEqomYjSSDXiNe97sldV+ht8Y4ZHmB+/6vp9e0xZUJLjdc
+         6jWitHudI3AayacpEjoTujC2vCrG+jfLwDdb/L4CCqb8eLr6awcGHJARPspAh/WKswVZ
+         c3bQvlg6yERw60p239IGfh8dtf8Z7cmRhQs9AejY+Hd7DFNkTcnoIMEA0K+IeJ1/Hoc6
+         J1vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2e6ByVIMxxzA4R0SBIQICq6efBeP0XiH5WNJW5hq+iM=;
-        b=F7z6cUtCyfS6RxeJevCS8vfGrQpJE6szNfgvmGMoc5h+guScIBhUYcYXxKuh604pC8
-         WKYd1razJKQqQ23WNzekJNq32yMHbQwjBnv0oubiAMZJxv17tv5+M1LsRsdEaR2EBMln
-         IxwswmdEGEECDObB33mGtJ6HpxBorAndx2M3JVkctlcKHQ0EGpnUplcfRiP4tqBr4enh
-         ljETarR+ZI0kBVmVCs567Pg/yoK5y68SaiC7Ikk76ik6+528eFHvsKmvj+0MwImhl0ws
-         mYklW+NC+H1cXRoO+waFeYQzG1fb1g83TqeZjL1OUY/P2EKv3bLBLo6d5t7Y9EW+rj0N
-         aJyQ==
-X-Gm-Message-State: AFqh2kosjeXiamduv0B02uzIuYvNJO+vio7gvIYklYA5Nhw/TqiRgnX3
-        r3S5k46gD7w1vlLquAAn7jRkg5aGbwIjGjDJqME=
-X-Google-Smtp-Source: AMrXdXuyOXAN8IuA0yHe6v/lvtP3waJih9OIfQsBrK3gmWm05DmHt1P5JaE4gzmmwmJqrs9m5tZN1IjuJIxoMGk5168=
-X-Received: by 2002:a25:13c3:0:b0:802:f667:b222 with SMTP id
- 186-20020a2513c3000000b00802f667b222mr1080727ybt.100.1674488159644; Mon, 23
- Jan 2023 07:35:59 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bZo37c3pTyd5UI6GJWOOZGWs2dS+xF+fIhcOuV6PWxw=;
+        b=KjJhOUsiVENqROirM4G2EkSMN/4+PL/81488i/sQ91LKM466wd/cm7t3iO6M8SmWmh
+         /QZaCRBH1S0c2LaBqVIMeC1bERi72+qcnguJ3HvaMmor3qrlMmjpHzi/5CTTvAlni76E
+         fS9o8QuOjjTKG7JsBDWfjZ9mX3KyA6AQO9R9LdvIgPp03lKizNpQr9q/zs7LavGNDQ6a
+         xSAJ2znbxzj0DIcKdGjp+KBq3mXIautcePaVdo0/QuS1PDHi8vpvieMW2BosJy5zZtUJ
+         9GLdG8KqlkLykUJUhsZfxSgA1wZhYbFg81NJLRvQZffHvWJUMXWs7FulyUoB4ly+PleF
+         50UQ==
+X-Gm-Message-State: AFqh2koSkEP8vAqNpitKb5inxKqOSHToYD8eZGmRj/o4rb7GL5h4x0/G
+        jAhynVQoqLSu90GLWra391UM
+X-Google-Smtp-Source: AMrXdXuWlTJW9uq6J/LN0pSQktBjs6qM1o5fErK89PvNHv45n9d132W5bSUdJnVIV7kpEozgjF+3Yw==
+X-Received: by 2002:a05:6102:3d8e:b0:3d2:4b17:34a0 with SMTP id h14-20020a0561023d8e00b003d24b1734a0mr13968291vsv.15.1674489371067;
+        Mon, 23 Jan 2023 07:56:11 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:dc71:f436:bb74:17c2? ([2600:1700:e72:80a0:dc71:f436:bb74:17c2])
+        by smtp.gmail.com with ESMTPSA id x4-20020a05620a258400b006fca1691425sm31890704qko.63.2023.01.23.07.56.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jan 2023 07:56:10 -0800 (PST)
+Message-ID: <1d9748df-4f54-908d-75cf-49ff1d154fcb@github.com>
+Date:   Mon, 23 Jan 2023 10:56:05 -0500
 MIME-Version: 1.0
-References: <pull.1458.git.1673451741587.gitgitgadget@gmail.com>
- <pull.1458.v2.git.1674149666.gitgitgadget@gmail.com> <9ebd6b77a69be414388a52a482912173f2a4e7d8.1674149666.git.gitgitgadget@gmail.com>
- <CABPp-BGLmhoHAcuLoz_yQ4TmNBvDU6Ehymy_3rh0wguSw0hjGw@mail.gmail.com> <xmqqcz79xizc.fsf@gitster.g>
-In-Reply-To: <xmqqcz79xizc.fsf@gitster.g>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 23 Jan 2023 23:35:48 +0800
-Message-ID: <CAOLTT8TztbirR9FmD0s_5iPQ9+NETfecXHE8xeJDNXQUNojSJA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] ls-files: add %(skipworktree) atom to format option
-To:     Junio C Hamano <gitster@pobox.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v4 0/9] rebase: fix several code/testing/documentation
+ issues around flag incompatibilities
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
-        ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+References: <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
+ <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2023=E5=B9=B41=E6=9C=8821=E6=97=
-=A5=E5=91=A8=E5=85=AD 00:34=E5=86=99=E9=81=93=EF=BC=9A
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Thu, Jan 19, 2023 at 9:34 AM ZheNing Hu via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> >>
-> >> From: ZheNing Hu <adlternative@gmail.com>
-> >>
-> >> Because sometimes we want to check if the files in the
-> >> index match the sparse specification, so introduce
-> >> "%(skipworktree)" atom to git ls-files `--format` option.
-> >> When we use this option, if the file match the sparse
-> >> specification, it will output "1", otherwise, output
-> >> empty string "".
-> >
-> > Why is that output format useful?  It seems like it'll just lead to
-> > bugs, or someone re-implementing the same field with a different name
-> > to make it useful in the future.  In particular, if there are multiple
-> > boolean fields and someone specifies e.g.
-> >    git ls-files --format=3D"%(path) %(skipworktree) %(intentToAdd)"
-> > and both boolean fields are displayed the same way (either a "1" or a
-> > blank string), and we see something like:
-> >    foo.c 1
-> >    bar.c 1
-> > Then how do we know if foo.c and bar.c are SKIP_WORKTREE or
-> > INTENT_TO_ADD?  The "1" could have come from either field.
->
-> Perhaps it becomes useful in conjunction with %(if) and friends,
-> when they become avaiable?
->
-> Until then, I agree that the output format looks pretty klunky.
-> The calling scripts still can do
->
->         --format=3D'%(path) A=3D%(A) B=3D%(B) C=3D%(C)'
->
-> and take an empty value as false, though.
+On 1/22/2023 1:12 AM, Elijah Newren via GitGitGadget wrote:
+> We had a report about --update-refs being ignored when --whitespace=fix was
+> passed, confusing an end user. These were already marked as incompatible in
+> the manual, but the code didn't check for the incompatibility and provide an
+> error to the user.
+> 
+> Folks brought up other flags tangentially when reviewing an earlier round of
+> this series, and I found we had more that were missing checks, and that we
+> were missing some testcases, and that the documentation was wrong on some of
+> the relevant options. So, I ended up getting lots of little fixes to
+> straighten these all out.
 
-Can this strange design be considered as a bad design of %(if) and
-%(else) in ref-filter?
+Wow, this really expanded since I last looked at it. Thanks for taking on all
+of that extra work! (That was not my intention when recommending that you take
+over the fix.)
+ 
+> Changes since v3:
+> 
+>  * Corrected the code surrounding --[no-]reapply-cherry-picks, and extended
+>    the testcases (Thanks to Phillip for pointing out my error)
+>  * I went ahead and implemented the better error message when the merge
+>    backend is triggered solely via config options.
+
+I really appreciate this extra attention to detail. I'm also really happy with
+how you implemented it, using different variables to signal how the option was
+specified (and using -1 for "unset" in both cases).
+
+While I had not been following version 2 or 3, I read this version in its
+entirety and everything looked good to me. These improvements to our docs,
+tests, and implementation will be felt by users.
+
+Thanks!
+-Stolee
