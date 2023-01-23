@@ -2,267 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7268C54E94
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 15:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C553C05027
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 15:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232533AbjAWPXW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 10:23:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54354 "EHLO
+        id S232366AbjAWPeL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 10:34:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232182AbjAWPWr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 10:22:47 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57F72A16C
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:22:04 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id g10so9303457wmo.1
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:22:04 -0800 (PST)
+        with ESMTP id S232291AbjAWPeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 10:34:09 -0500
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF0051421A
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:34:07 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-4c131bede4bso176905427b3.5
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 07:34:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qvZ0O/bBZenXrlPhO3RM5S4lF2nqmNMOi1HZFOAXj0E=;
-        b=DI7qGFgjU2RVZ2H8f53B6PCVy7Ujk7rHJrpZkJzohzAw15JweGkfOeA0ucsckRzZ70
-         h4sA5WeDyTEskuhbrqQq3x81GB4F2tVFcMI/h2hQrSsHpaW4tSrB3qmZEVfq/NpKEeYH
-         kyQqk6C/XkhyJEUUDnhy+xkKqfdnw49Ml7YqLIfGZQCsAhJDXP6rMQQiFyquVdTYJYc3
-         2Ahw8FQHvr/em1KDiBlzWjUanohbwMmNC0AgSULf27Ub5sVlyYrH6pUqYlQ6CucvXyyo
-         mIXiGsVEgxEsh1EgUDp+3odAArS4XwkE/qRhxgTPZb3PDMPt4gHx13mSWlY11RhmSf7x
-         Xq6g==
+        bh=slJo1MOeWQ2R3Yi9Z3z07USG37GCvFhqmzv2jdBNkn4=;
+        b=I8E5Qu8NnTlqSEtYvSgdTGW3WYfGEsPUTu6WNqdtMGoXLKIdq0Rb+gqVj/YFrccqcx
+         gfU+Zp5g3EblTlFUyzcwulfHJis7nOChZ01SqhZWokc6ZuHjinIcUVI2UxqYU8R00vEd
+         trop2HNl4KXdIujPKK7V5i9fouPkVyRBh0yaYnwrffHzvU3FgACheRrevdmAu8KoGtus
+         agcb7j7Vk3mGK6FPtjwetmobTZnDfWjNw7tLdSAfTMVWe1lODhQbLFgCDy1mEPqieCtf
+         rEGNoQIt8jUR34FbrdS2Pc3LXSLV3AxMN4i3+veHIlu5y6kB51myTS72O3TE3dPW7IpV
+         PcFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qvZ0O/bBZenXrlPhO3RM5S4lF2nqmNMOi1HZFOAXj0E=;
-        b=G/Hns8DEFga8RMsZPkAEFfMPkzh48EnmV3DUZg9wV6OZOrKn2m9YRxX7HG+D9voCF9
-         pAsSLoXzpkgq43OhpmfQNlIoIdY+wBChdMIFkl7T/KdstTQy8GWWlbp4w+H9eXdhTeIy
-         acwjKJ/PPLoVCbmMg6j/9SPyRmlBfBsUTCab8u/6tyS+bpgibuEZlYjwi4PaIPTWfIK7
-         vvtCrJOShiHTGnLDzEZo0MpIc/AypOwyCrJrcE2FjkCzmTv2KiYUUnEfvfutoC38Co8I
-         q1DRVocHn8C00bjaY1rWwegbHT6/htY/iKrzWt9a9v70KWen09IrcZwOsd3mT5XBL9jS
-         hYlQ==
-X-Gm-Message-State: AFqh2krctK+NePVZq6JXJm4X2w1Oc3rcpNRnQE23IycmR3sBWAazseot
-        fLJVHt7exanBMBCAZPgHWkO2gV4UZuM=
-X-Google-Smtp-Source: AMrXdXs+eeUbNoq1oKL13wyZWiZcXlgV3vY8S4SOet6u36cdyDN10q2afWpLHLveCE7yV2hzrcWc/A==
-X-Received: by 2002:a05:600c:3b02:b0:3da:1bb0:4d71 with SMTP id m2-20020a05600c3b0200b003da1bb04d71mr32449632wms.11.1674487319327;
-        Mon, 23 Jan 2023 07:21:59 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n35-20020a05600c3ba300b003db12112fcfsm12367626wms.4.2023.01.23.07.21.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 07:21:58 -0800 (PST)
-Message-Id: <59e57e049683e42248c270b3bfcad2d72769219d.1674487310.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
-References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
-        <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 Jan 2023 15:21:48 +0000
-Subject: [PATCH v2 08/10] fetch: fetch from an external bundle URI
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=slJo1MOeWQ2R3Yi9Z3z07USG37GCvFhqmzv2jdBNkn4=;
+        b=vJyZpvlD22VR91C3Cyga6KK6J4r+0zq24AdfmxLTFp39GN/rvGMwJwQELPVLTwTAki
+         2P4H7SEUDXTB/Sc4wEz6tv9UF3q+zvUGiQoQQVj0WuEP7YGYxITI/E53y44L/CwXq5Ih
+         TPpdHxa4rxCrk+Pkp2FkPh1Pojd+WfHk667VeRYOtZab9Bt9wOMUU/+yCGFlV5KpnbXa
+         11ltbOHDm/VP+UJzjSl6jaLxNY6JkqRhBXIMHQwx0+Z/uxJsh0XCWqOyDeuasj1qqqzd
+         D+ln4pVq6QpM5J5R362B+jcDcUsCz1Me651G4clYJg0HQjHOWqw6hrUQSBp6LwRm5nYU
+         rjoQ==
+X-Gm-Message-State: AFqh2koXKKZCi6FoqhGPRpMtLiCOROd8SrsGLHnKGdmbWGnyHpACbCAG
+        DQaJrF+8QFIpS88AoXebgWUoUyS1G9zZL+J8EY4w0BjyPgA5aw==
+X-Google-Smtp-Source: AMrXdXuulGYFSmPZnW3gbJYKGyEJDqa0sPbMn07+CsKZu1fODBazV6IjjOWWwDxLCcegUKfIoHVi8gZTyg36f4KkGyE=
+X-Received: by 2002:a0d:e582:0:b0:4df:96d1:f67a with SMTP id
+ o124-20020a0de582000000b004df96d1f67amr3019539ywe.246.1674488047051; Mon, 23
+ Jan 2023 07:34:07 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com, vdye@github.com,
-        avarab@gmail.com, steadmon@google.com, chooglen@google.com,
+References: <pull.1458.git.1673451741587.gitgitgadget@gmail.com>
+ <pull.1458.v2.git.1674149666.gitgitgadget@gmail.com> <9ebd6b77a69be414388a52a482912173f2a4e7d8.1674149666.git.gitgitgadget@gmail.com>
+ <CABPp-BGLmhoHAcuLoz_yQ4TmNBvDU6Ehymy_3rh0wguSw0hjGw@mail.gmail.com>
+In-Reply-To: <CABPp-BGLmhoHAcuLoz_yQ4TmNBvDU6Ehymy_3rh0wguSw0hjGw@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 23 Jan 2023 23:33:55 +0800
+Message-ID: <CAOLTT8TfiCaU2o2HzubRV7zxn86JnUUrGhScrYRKSxNrzpbiBA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] ls-files: add %(skipworktree) atom to format option
+To:     Elijah Newren <newren@gmail.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        Victoria Dye <vdye@github.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+Elijah Newren <newren@gmail.com> =E4=BA=8E2023=E5=B9=B41=E6=9C=8820=E6=97=
+=A5=E5=91=A8=E4=BA=94 13:30=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Thu, Jan 19, 2023 at 9:34 AM ZheNing Hu via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: ZheNing Hu <adlternative@gmail.com>
+> >
+> > Because sometimes we want to check if the files in the
+> > index match the sparse specification, so introduce
+> > "%(skipworktree)" atom to git ls-files `--format` option.
+> > When we use this option, if the file match the sparse
+> > specification, it will output "1", otherwise, output
+> > empty string "".
+>
+> Why is that output format useful?  It seems like it'll just lead to
+> bugs, or someone re-implementing the same field with a different name
+> to make it useful in the future.  In particular, if there are multiple
+> boolean fields and someone specifies e.g.
+>    git ls-files --format=3D"%(path) %(skipworktree) %(intentToAdd)"
+> and both boolean fields are displayed the same way (either a "1" or a
+> blank string), and we see something like:
+>    foo.c 1
+>    bar.c 1
+> Then how do we know if foo.c and bar.c are SKIP_WORKTREE or
+> INTENT_TO_ADD?  The "1" could have come from either field.
+>
 
-When a user specifies a URI via 'git clone --bundle-uri', that URI may
-be a bundle list that advertises a 'bundle.heuristic' value. In that
-case, the Git client stores a 'fetch.bundleURI' config value storing
-that URI.
+I understand your confusion here. If we need to combine these
+boolean values in --format with %(if) %(else) of ref-filter in the future,
+we can only do this strange design. Output like "true"/"false" or "1"/"0"
+would be better without considering %(if), %(else).
 
-Teach 'git fetch' to check for this config value and download bundles
-from that URI before fetching from the Git remote(s). Likely, the bundle
-provider has configured a heuristic (such as "creationToken") that will
-allow the Git client to download only a portion of the bundles before
-continuing the fetch.
+> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> > ---
+> >  Documentation/git-ls-files.txt |  5 +++++
+> >  builtin/ls-files.c             |  3 +++
+> >  t/t3013-ls-files-format.sh     | 23 +++++++++++++++++++++++
+> >  3 files changed, 31 insertions(+)
+> >
+> > diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-file=
+s.txt
+> > index 440043cdb8e..2540b404808 100644
+> > --- a/Documentation/git-ls-files.txt
+> > +++ b/Documentation/git-ls-files.txt
+> > @@ -260,6 +260,11 @@ eolattr::
+> >         that applies to the path.
+> >  path::
+> >         The pathname of the file which is recorded in the index.
+> > +skipworktree::
+> > +       If the file in the index marked with SKIP_WORKTREE bit.
+> > +       It means the file do not match the sparse specification.
+> > +       See link:technical/sparse-checkout.txt[sparse-checkout]
+> > +       for more information.
+>
+> minor nits: Missing an "is", and "do" should be "does".
+>
+> I'm curious whether the second sentence is even necessary; we've
+> already got the link to the more technical docs.  Perhaps just:
+>
+> skipworktree::
+>     Whether the file in the index has the SKIP_WORKTREE bit set.
+>     See link:technical/sparse-checkout.txt[sparse-checkout]
+>     for more information.
+>
 
-Since this URI is completely independent of the remote server, we want
-to be sure that we connect to the bundle URI before creating a
-connection to the Git remote. We do not want to hold a stateful
-connection for too long if we can avoid it.
+Agree.
 
-To test that this works correctly, extend the previous tests that set
-'fetch.bundleURI' to do follow-up fetches. The bundle list is updated
-incrementally at each phase to demonstrate that the heuristic avoids
-downloading older bundles. This includes the middle fetch downloading
-the objects in bundle-3.bundle from the Git remote, and therefore not
-needing that bundle in the third fetch.
+> >  EXCLUDE PATTERNS
+> >  ----------------
+> > diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> > index a03b559ecaa..bbff868ae6b 100644
+> > --- a/builtin/ls-files.c
+> > +++ b/builtin/ls-files.c
+> > @@ -280,6 +280,9 @@ static size_t expand_show_index(struct strbuf *sb, =
+const char *start,
+> >                               data->pathname));
+> >         else if (skip_prefix(start, "(path)", &p))
+> >                 write_name_to_buf(sb, data->pathname);
+> > +       else if (skip_prefix(start, "(skipworktree)", &p))
+> > +               strbuf_addstr(sb, ce_skip_worktree(data->ce) ?
+> > +                             "1" : "");
+>
+> As I mentioned in response to the commit message, I don't understand
+> why having an empty string would be desirable.
+>
+> >         else
+> >                 die(_("bad ls-files format: %%%.*s"), (int)len, start);
+> >
+> > diff --git a/t/t3013-ls-files-format.sh b/t/t3013-ls-files-format.sh
+> > index efb7450bf1e..cd35dba5930 100755
+> > --- a/t/t3013-ls-files-format.sh
+> > +++ b/t/t3013-ls-files-format.sh
+> > @@ -92,4 +92,27 @@ test_expect_success 'git ls-files --format with --de=
+bug' '
+> >         test_cmp expect actual
+> >  '
+> >
+> > +test_expect_success 'git ls-files --format with skipworktree' '
+> > +       test_when_finished "git sparse-checkout disable" &&
+> > +       mkdir dir1 dir2 &&
+> > +       echo "file1" >dir1/file1.txt &&
+> > +       echo "file2" >dir2/file2.txt &&
+> > +       git add dir1 dir2 &&
+> > +       git commit -m skipworktree &&
+> > +       git sparse-checkout set dir1 &&
+> > +       git ls-files --format=3D"%(path)%(skipworktree)" >actual &&
+> > +       cat >expect <<-\EOF &&
+> > +       dir1/file1.txt
+> > +       dir2/file2.txt1
+> > +       o1.txt
+> > +       o2.txt
+> > +       o3.txt
+> > +       o4.txt
+> > +       o5.txt
+> > +       o6.txt
+> > +       o7.txt
+> > +       EOF
+> > +       test_cmp expect actual
+> > +'
+>
+> I find this test hard to read; it's just too easy to miss
+> "dir2/file2.txt1" vs "dir2/file2.txt".  I'd suggest at least adding a
+> space, and likely having the skipworktree attribute come first in the
+> format string.  It might also be useful to add "dir*" on the ls-files
+> command to limit which paths are shown, just because there's an awful
+> lot of files in the root directory and no variance between them, and
+> it's easier to notice the binary difference between two items than
+> having a full 9 and figuring out which are relevant.
 
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
- builtin/fetch.c             |   7 +++
- t/t5558-clone-bundle-uri.sh | 113 +++++++++++++++++++++++++++++++++++-
- 2 files changed, 119 insertions(+), 1 deletion(-)
+Good idea.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 7378cafeec9..f101e454dc9 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -29,6 +29,7 @@
- #include "commit-graph.h"
- #include "shallow.h"
- #include "worktree.h"
-+#include "bundle-uri.h"
- 
- #define FORCED_UPDATES_DELAY_WARNING_IN_MS (10 * 1000)
- 
-@@ -2109,6 +2110,7 @@ static int fetch_one(struct remote *remote, int argc, const char **argv,
- int cmd_fetch(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-+	const char *bundle_uri;
- 	struct string_list list = STRING_LIST_INIT_DUP;
- 	struct remote *remote = NULL;
- 	int result = 0;
-@@ -2194,6 +2196,11 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	if (dry_run)
- 		write_fetch_head = 0;
- 
-+	if (!git_config_get_string_tmp("fetch.bundleuri", &bundle_uri)) {
-+		if (fetch_bundle_uri(the_repository, bundle_uri, NULL))
-+			warning(_("failed to fetch bundles from '%s'"), bundle_uri);
-+	}
-+
- 	if (all) {
- 		if (argc == 1)
- 			die(_("fetch --all does not take a repository argument"));
-diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-index b2d15e141ca..7deeb4b8ad1 100755
---- a/t/t5558-clone-bundle-uri.sh
-+++ b/t/t5558-clone-bundle-uri.sh
-@@ -440,7 +440,55 @@ test_expect_success 'clone incomplete bundle list (http, creationToken)' '
- 	EOF
- 
- 	test_remote_https_urls <trace-clone.txt >actual &&
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+
-+	# We now have only one bundle ref.
-+	git -C clone-token-http for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	cat >expect <<-\EOF &&
-+	refs/bundles/base
-+	EOF
-+	test_cmp expect refs &&
-+
-+	# Add remaining bundles, exercising the "deepening" strategy
-+	# for downloading via the creationToken heurisitc.
-+	cat >>"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-+	[bundle "bundle-2"]
-+		uri = bundle-2.bundle
-+		creationToken = 2
-+
-+	[bundle "bundle-3"]
-+		uri = bundle-3.bundle
-+		creationToken = 3
-+
-+	[bundle "bundle-4"]
-+		uri = bundle-4.bundle
-+		creationToken = 4
-+	EOF
-+
-+	GIT_TRACE2_EVENT="$(pwd)/trace1.txt" \
-+		git -C clone-token-http fetch origin --no-tags \
-+		refs/heads/merge:refs/heads/merge &&
-+
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-list
-+	$HTTPD_URL/bundle-4.bundle
-+	$HTTPD_URL/bundle-3.bundle
-+	$HTTPD_URL/bundle-2.bundle
-+	EOF
-+
-+	test_remote_https_urls <trace1.txt >actual &&
-+	test_cmp expect actual &&
-+
-+	# We now have all bundle refs.
-+	git -C clone-token-http for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+
-+	cat >expect <<-\EOF &&
-+	refs/bundles/base
-+	refs/bundles/left
-+	refs/bundles/merge
-+	refs/bundles/right
-+	EOF
-+	test_cmp expect refs
- '
- 
- test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
-@@ -477,6 +525,69 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
- 	cat >expect <<-\EOF &&
- 	refs/bundles/base
- 	EOF
-+	test_cmp expect refs &&
-+
-+	cat >>"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-+	[bundle "bundle-2"]
-+		uri = bundle-2.bundle
-+		creationToken = 2
-+	EOF
-+
-+	# Fetch the objects for bundle-2 _and_ bundle-3.
-+	GIT_TRACE2_EVENT="$(pwd)/trace1.txt" \
-+		git -C fetch-http-4 fetch origin --no-tags \
-+		refs/heads/left:refs/heads/left \
-+		refs/heads/right:refs/heads/right &&
-+
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-list
-+	$HTTPD_URL/bundle-2.bundle
-+	EOF
-+
-+	test_remote_https_urls <trace1.txt >actual &&
-+	test_cmp expect actual &&
-+
-+	# received left from bundle-2
-+	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	cat >expect <<-\EOF &&
-+	refs/bundles/base
-+	refs/bundles/left
-+	EOF
-+	test_cmp expect refs &&
-+
-+	cat >>"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-+	[bundle "bundle-3"]
-+		uri = bundle-3.bundle
-+		creationToken = 3
-+
-+	[bundle "bundle-4"]
-+		uri = bundle-4.bundle
-+		creationToken = 4
-+	EOF
-+
-+	# This fetch should skip bundle-3.bundle, since its objects are
-+	# already local (we have the requisite commits for bundle-4.bundle).
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-+		git -C fetch-http-4 fetch origin --no-tags \
-+		refs/heads/merge:refs/heads/merge &&
-+
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-list
-+	$HTTPD_URL/bundle-4.bundle
-+	EOF
-+
-+	test_remote_https_urls <trace2.txt >actual &&
-+	test_cmp expect actual &&
-+
-+	# received merge ref from bundle-4, but right is missing
-+	# because we did not download bundle-3.
-+	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+
-+	cat >expect <<-\EOF &&
-+	refs/bundles/base
-+	refs/bundles/left
-+	refs/bundles/merge
-+	EOF
- 	test_cmp expect refs
- '
- 
--- 
-gitgitgadget
-
+I deliberately removed the space between %(path) and
+%(skipworktree) before, because according to the current design,
+the "" output by %(skipworktree) is empty, which leads to an extra
+space at the end of the output line, which will break github's
+ "whitespace" ci tests. Maybe swapping the location of %(path) and
+%(skipworktree) will fix this.
