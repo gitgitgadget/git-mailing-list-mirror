@@ -2,155 +2,313 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9804BC38142
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 16:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E17DC38142
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 16:57:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233383AbjAWQs0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 11:48:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54108 "EHLO
+        id S232131AbjAWQ5C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 11:57:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233344AbjAWQsZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 11:48:25 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67DF929E16
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 08:48:22 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id l8so9525780wms.3
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 08:48:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TtuwCzh+v+pSQsHuYd+TjmeSFV8bGfWr45rZGg7FNQY=;
-        b=FjIH1IW0lGW2DszPQldGTYXX6ohP4mXJlmp2l2zuqVFFVQvUm03LSE+ADLNvZ2Hf0V
-         nzI2/NhpFatEDYsJ3fVYrAw6ElmQAFkscGYe0kstovDA84f3XYBZfKHnxFJW/es3LZ4t
-         y6Tir9jFUsjz0W086TdYdDmdQU2mlUh3TL2Lb/JDYFkFDkBgnv3oxy2VvRHF5lWwxghW
-         6tOX0LkK/MtC3yKKul/vzdgtVuv1BgI4vXIp+zk5IE7RVabaT/pfouGt8Arr0PwxHEEH
-         jfE720X/Pre1Nc4aUyJXaqs/3WvQK/8oGW0Bx8nVf/DZmeP6W6syCSW8RZAWgOiEl7sC
-         Wrrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TtuwCzh+v+pSQsHuYd+TjmeSFV8bGfWr45rZGg7FNQY=;
-        b=b9sTaD0mYNN87UjDnWHPu5hvN5/eIZXwLqoAarirIYtJV2pGoWF+boZU+B4gxRF6Ej
-         qyQRBd/Q8mfqvyEMtwH58gxGH1xQEK1CiKaOSs1L2aVUGJ9U0Z62bciq9WydaxDWU6iZ
-         7G/TscodjRcJ5MrCKBzOdlDNR20Ht38HvK5TpDYj+fSj654bcfA4xEClFUduuQvCFfcN
-         otZf9ZUVaAkOO/OEuNl0hx4QfmX8In59x0ZRSGXCiNeltVyh56/eCSV4DGgIuyXlD+n+
-         w+AXEC64/rZEgAhsFA5cYPX0eZANeGovoOqOLAnVWcI+Viyfr/jSWoswv9TE7G/5vve5
-         GYBQ==
-X-Gm-Message-State: AFqh2kpL1EIw6XslIjkkvG1y+y7WTZQ/60vinn8/4RezqJSCC0Y40KMe
-        jpL2ecEt8nUF3hf5zqyK3D/6ItSdZfo=
-X-Google-Smtp-Source: AMrXdXsEFiDQhpAuJvb+63Rl7X1g8OI68U8qdvliYRimbrqOskChmIJ83sXQr14GF9Js5Lxh8WgHWQ==
-X-Received: by 2002:a1c:750e:0:b0:3da:fcf6:7146 with SMTP id o14-20020a1c750e000000b003dafcf67146mr24837399wmc.14.1674492500727;
-        Mon, 23 Jan 2023 08:48:20 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bg24-20020a05600c3c9800b003d9ed40a512sm15433144wmb.45.2023.01.23.08.48.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 08:48:20 -0800 (PST)
-Message-Id: <pull.1440.v4.git.git.1674492499537.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1440.v3.git.git.1674492373925.gitgitgadget@gmail.com>
-References: <pull.1440.v3.git.git.1674492373925.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 Jan 2023 16:48:19 +0000
-Subject: [PATCH v4] win32: fix thread usage for win32
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S230141AbjAWQ5A (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 11:57:00 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D2D04219
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 08:56:58 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 7C186CA1264;
+        Mon, 23 Jan 2023 11:56:57 -0500 (EST)
+Received: from [192.168.4.22] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 39A39CC83BB;
+        Mon, 23 Jan 2023 11:56:57 -0500 (EST)
+Message-ID: <f7449e73-7f50-67ea-2be4-2037f98a69f3@jeffhostetler.com>
+Date:   Mon, 23 Jan 2023 11:56:53 -0500
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [CI]: Is t7527 known to be flakey?
+Content-Language: en-US
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Hostetler <jeffhostetler@github.com>, edecosta@mathworks.com,
+        git@vger.kernel.org
+References: <xmqqtu0lzzn2.fsf@gitster.g> <20230121102355.GA2155@szeder.dev>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+In-Reply-To: <20230121102355.GA2155@szeder.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: mailmunge 3.10 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
-
-Use _beginthreadex instead of CreateThread
-since we use the Windows CRT,
-as Microsoft recommends _beginthreadex
-over CreateThread for these situations.
-
-Finally, check for NULL handles, not "INVALID_HANDLE,"
-as _beginthreadex guarantees a valid handle in most cases
-
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    win32: fix thread usage for win32
-    
-    Use pthread_exit instead of async_exit.
-    
-    This means we do not have to deal with Windows's implementation
-    requiring an unsigned exit coded despite the POSIX exit code requiring a
-    signed exit code.
-    
-    Use _beginthreadex instead of CreateThread since we use the Windows CRT.
-    
-    Finally, check for NULL handles, not "INVALID_HANDLE," as _beginthreadex
-    guarantees a valid handle in most cases
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1440%2FAtariDreams%2FCreateThread-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1440/AtariDreams/CreateThread-v4
-Pull-Request: https://github.com/git/git/pull/1440
-
-Range-diff vs v3:
-
- 1:  68baafba2bd ! 1:  2e2d5ce7745 win32: fix thread usage for win32
-     @@ Commit message
-      
-          Signed-off-by: Seija Kijin <doremylover123@gmail.com>
-      
-     - ## compat/mingw.c ##
-     -@@ compat/mingw.c: static int start_timer_thread(void)
-     - 	timer_event = CreateEvent(NULL, FALSE, FALSE, NULL);
-     - 	if (timer_event) {
-     - 		timer_thread = (HANDLE) _beginthreadex(NULL, 0, ticktack, NULL, 0, NULL);
-     --		if (!timer_thread )
-     -+		if (!timer_thread)
-     - 			return errno = ENOMEM,
-     - 				error("cannot start timer thread");
-     - 	} else
-     -
-       ## compat/winansi.c ##
-      @@ compat/winansi.c: enum {
-       	TEXT = 0, ESCAPE = 033, BRACKET = '['
 
 
- compat/winansi.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+On 1/21/23 5:23 AM, SZEDER Gábor wrote:
+> On Thu, Jan 19, 2023 at 06:52:01PM -0800, Junio C Hamano wrote:
+>> The said test failed its linux-musl job in its first attempt, but
+>> re-running the failed job passed.
+>>
+>>      https://github.com/git/git/actions/runs/3963948890/jobs/6792356234
+>>      (seen@e096683 attempt #1 linux-musl)
+>>
+>>      https://github.com/git/git/actions/runs/3963948890/jobs/6792850313
+>>      (seen@e096683 attempt #2 linux-musl)
+> 
+> t7527 is quite slow, even with the right selection of test cases, but
+> this little tweak makes it much faster:
+> 
+>    diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+>    index 0e497ba98d..4210ef644c 100755
+>    --- a/t/t7527-builtin-fsmonitor.sh
+>    +++ b/t/t7527-builtin-fsmonitor.sh
+>    @@ -676,7 +676,10 @@ test_expect_success 'cleanup worktrees' '
+>     # cause incorrect results when the untracked-cache is enabled.
+>     
+>     test_lazy_prereq UNTRACKED_CACHE '
+>    -	git update-index --test-untracked-cache
+>    +	# This check takes a very long time, but I know it works on
+>    +	# my system, so let's fake it.
+>    +	#git update-index --test-untracked-cache
+>    +	true
+>     '
+>     
+>     test_expect_success 'Matrix: setup for untracked-cache,fsmonitor matrix' '
+> 
+> This with the right selection of test cases makes --stress
+> practicable, and the test tends to fail after a handful of
+> repetitions:
+> 
+>    ./t7527-builtin-fsmonitor.sh --stress -r 8,23-58
+> 
+> I saw different failures in multiple test cases, e.g.:
+> 
+> Unexpected output in case 55:
+> 
+>    expecting success of 7527.55 'Matrix[uc:true][fsm:true] move_directory_contents_deeper':
+>    		matrix_clean_up_repo &&
+>    		$fn &&
+>    		if test $uc = false && test $fsm = false
+>    		then
+>    			git status --porcelain=v1 >.git/expect.$fn
+>    		else
+>    			git status --porcelain=v1 >.git/actual.$fn &&
+>    			test_cmp .git/expect.$fn .git/actual.$fn
+>    		fi
+>    	
+>    + matrix_clean_up_repo
+>    + git reset --hard HEAD
+>    HEAD is now at 1d1edcb initial
+>    + git clean -fd
+>    + move_directory_contents_deeper
+>    + mkdir T1/_new_
+>    + mv T1/F1 T1/F2 T1/T2 T1/_new_
+>    + test true = false
+>    + git status --porcelain=v1
+>    error: read error: Connection reset by peer
+>    error: could not read IPC response
+>    + test_cmp .git/expect.move_directory_contents_deeper .git/actual.move_directory_contents_deeper
+>    + test 2 -ne 2
+>    + eval diff -u "$@"
+>    + diff -u .git/expect.move_directory_contents_deeper .git/actual.move_directory_contents_deeper
+>    --- .git/expect.move_directory_contents_deeper	2023-01-21 09:47:12.677410349 +0000
+>    +++ .git/actual.move_directory_contents_deeper	2023-01-21 09:47:14.045448573 +0000
+>    @@ -7,3 +7,4 @@
+>      D T1/T2/T3/T4/F1
+>      D T1/T2/T3/T4/F2
+>     ?? T1/_new_/
+>    +?? dir1
+>    error: last command exited with $?=1
+>    not ok 55 - Matrix[uc:true][fsm:true] move_directory_contents_deeper
+> 
+> SIGPIPE in 'git status' cases 42, 43 and 55:
+> 
+>    expecting success of 7527.42 'Matrix[uc:false][fsm:true] move_directory_contents_deeper':
+>                    matrix_clean_up_repo &&
+>                    $fn &&
+>                    if test $uc = false && test $fsm = false
+>                    then
+>                            git status --porcelain=v1 >.git/expect.$fn
+>                    else
+>                            git status --porcelain=v1 >.git/actual.$fn &&
+>                            test_cmp .git/expect.$fn .git/actual.$fn
+>                    fi
+>    
+>    + matrix_clean_up_repo
+>    + git reset --hard HEAD
+>    HEAD is now at 1d1edcb initial
+>    + git clean -fd
+>    + move_directory_contents_deeper
+>    + mkdir T1/_new_
+>    + mv T1/F1 T1/F2 T1/T2 T1/_new_
+>    + test false = false
+>    + test true = false
+>    + git status --porcelain=v1
+>    error: last command exited with $?=141
+>    not ok 42 - Matrix[uc:false][fsm:true] move_directory_contents_deeper
+> 
+>    expecting success of 7527.43 'Matrix[uc:false][fsm:true] move_directory_up':
+>    		matrix_clean_up_repo &&
+>    		$fn &&
+>    		if test $uc = false && test $fsm = false
+>    		then
+>    			git status --porcelain=v1 >.git/expect.$fn
+>    		else
+>    			git status --porcelain=v1 >.git/actual.$fn &&
+>    			test_cmp .git/expect.$fn .git/actual.$fn
+>    		fi
+>    	
+>    + matrix_clean_up_repo
+>    + git reset --hard HEAD
+>    HEAD is now at 1d1edcb initial
+>    + git clean -fd
+>    Removing T1/_new_/
+>    + move_directory_up
+>    + mv T1/T2/T3 T1
+>    + test false = false
+>    + test true = false
+>    + git status --porcelain=v1
+>    error: last command exited with $?=141
+>    not ok 43 - Matrix[uc:false][fsm:true] move_directory_up
+> 
+>    expecting success of 7527.55 'Matrix[uc:true][fsm:true] move_directory_contents_deeper':
+>                    matrix_clean_up_repo &&
+>                    $fn &&
+>                    if test $uc = false && test $fsm = false
+>                    then
+>                            git status --porcelain=v1 >.git/expect.$fn
+>                    else
+>                            git status --porcelain=v1 >.git/actual.$fn &&
+>                            test_cmp .git/expect.$fn .git/actual.$fn
+>                    fi
+>    
+>    + matrix_clean_up_repo
+>    + git reset --hard HEAD
+>    HEAD is now at 1d1edcb initial
+>    + git clean -fd
+>    + move_directory_contents_deeper
+>    + mkdir T1/_new_
+>    + mv T1/F1 T1/F2 T1/T2 T1/_new_
+>    + test true = false
+>    + git status --porcelain=v1
+>    error: last command exited with $?=141
+> 
+> I find it interesting that the output of 'git status' is redirected to
+> a file in all these cases, and yet it gets a SIGPIPE.
 
-diff --git a/compat/winansi.c b/compat/winansi.c
-index 3abe8dd5a27..be65b27bd75 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -340,7 +340,7 @@ enum {
- 	TEXT = 0, ESCAPE = 033, BRACKET = '['
- };
- 
--static DWORD WINAPI console_thread(LPVOID unused)
-+static unsigned int WINAPI console_thread(LPVOID unused)
- {
- 	unsigned char buffer[BUFFER_SIZE];
- 	DWORD bytes;
-@@ -643,9 +643,9 @@ void winansi_init(void)
- 		die_lasterr("CreateFile for named pipe failed");
- 
- 	/* start console spool thread on the pipe's read end */
--	hthread = CreateThread(NULL, 0, console_thread, NULL, 0, NULL);
--	if (hthread == INVALID_HANDLE_VALUE)
--		die_lasterr("CreateThread(console_thread) failed");
-+	hthread = (HANDLE)_beginthreadex(NULL, 0, console_thread, NULL, 0, NULL);
-+	if (!hthread)
-+		die_lasterr("_beginthreadex(console_thread) failed");
- 
- 	/* schedule cleanup routine */
- 	if (atexit(winansi_exit))
+The `git status` command talks to the running `git fsmonitor--daemon`
+on a Unix domain socket (or a Named Pipe on Windows), so a SIGPIPE is
+possible.
 
-base-commit: 56c8fb1e95377900ec9d53c07886022af0a5d3c2
--- 
-gitgitgadget
+Was this on Linux or MacOS ?
+
+Jeff
+
+
+
+
+> 
+> 
+> I also saw the test hang a couple of times, e.g.:
+> 
+>    $ ./t7527-builtin-fsmonitor.sh --stress -r 8,23-58
+>    OK    6.1
+>    OK    7.1
+>    OK    1.1
+>    OK    2.1
+>    OK    3.1
+>    OK    5.1
+>    OK    4.1
+>    OK    0.1
+>    OK    6.2
+>    OK    1.2
+>    OK    2.2
+>    OK    7.2
+>    OK    5.2
+>    OK    0.2
+>    OK    4.2
+>    OK    6.3
+>    OK    7.3
+>    OK    2.3
+>    OK    0.3
+>    OK    4.3
+>    OK    6.4
+>    OK    7.4
+>    OK    2.4
+>    OK    0.4
+>    OK    4.4
+>    OK    6.5
+>    OK    7.5
+>    OK    2.5
+>    OK    0.5
+>    OK    4.5
+>    OK    6.6
+>    OK    7.6
+>    OK    2.6
+>    OK    0.6
+>    OK    4.6
+>    OK    6.7
+>    OK    7.7
+>    OK    2.7
+>    OK    0.7
+>    OK    4.7
+>    OK    6.8
+>    OK    7.8
+>    OK    2.8
+>    OK    0.8
+>    OK    4.8
+>    OK    6.9
+>    OK    7.9
+>    OK    2.9
+>    OK    0.9
+>    OK    4.9
+>    OK    6.10
+>    OK    7.10
+>    OK    2.10
+>    OK    0.10
+>    OK    4.10
+>    OK    6.11
+>    OK    7.11
+>    OK    2.11
+>    OK    0.11
+>    OK    4.11
+>    OK    6.12
+>    OK    7.12
+>    OK    2.12
+>    OK    0.12
+>    OK    4.12
+>    OK    6.13
+>    OK    7.13
+>    OK    2.13
+>    OK    0.13
+>    OK    6.14
+>    OK    4.13
+>    OK    7.14
+>    OK    2.14
+>    OK    0.14
+>    OK    6.15
+>    OK    4.14
+>    OK    2.15
+>    OK    7.15
+>    OK    0.15
+>    FAIL  7.16
+>    OK    6.16
+>    OK    2.16
+>    OK    4.15
+>    OK    0.16
+> 
+> At this point the test script should print the log of the failed job,
+> but it hangs instead, as there are a number of stuck fsmonitor--daemon
+> and status processes (notice how the stress test starts with 8 jobs,
+> but the last repetition only has 4):
+> 
+>    $ ps aux |grep git
+>    szeder   1857100  0.0  0.1  72272  4452 pts/2    Sl+  21:40   0:00 /home/szeder/src/git/git fsmonitor--daemon run --detach --ipc-threads=8
+>    szeder   1857779  0.0  0.1   6560  4152 pts/2    S+   21:40   0:00 /home/szeder/src/git/git status --porcelain=v1
+>    szeder   1860020  0.0  0.1  88664  4312 pts/2    Sl+  21:40   0:00 /home/szeder/src/git/git fsmonitor--daemon run --detach --ipc-threads=8
+>    szeder   1860668  0.0  0.1   6560  4040 pts/2    S+   21:40   0:00 /home/szeder/src/git/git status --porcelain=v1
+>    szeder   1860749  0.0  0.1  96860  4528 pts/2    Sl+  21:40   0:00 /home/szeder/src/git/git fsmonitor--daemon run --detach --ipc-threads=8
+>    szeder   1861281  0.0  0.1   6560  4272 pts/2    S+   21:40   0:00 /home/szeder/src/git/git status --porcelain=v1
+> 
