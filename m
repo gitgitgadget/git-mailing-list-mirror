@@ -2,143 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61E08C25B50
-	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 20:12:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D1BDC05027
+	for <git@archiver.kernel.org>; Mon, 23 Jan 2023 20:13:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233023AbjAWUMv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Jan 2023 15:12:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45482 "EHLO
+        id S233036AbjAWUNg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Jan 2023 15:13:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232996AbjAWUMt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Jan 2023 15:12:49 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F9893F8
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 12:12:47 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id bk15so33540914ejb.9
-        for <git@vger.kernel.org>; Mon, 23 Jan 2023 12:12:47 -0800 (PST)
+        with ESMTP id S232996AbjAWUNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Jan 2023 15:13:35 -0500
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98C452B632
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 12:13:34 -0800 (PST)
+Received: by mail-pg1-x52a.google.com with SMTP id r18so9851274pgr.12
+        for <git@vger.kernel.org>; Mon, 23 Jan 2023 12:13:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+dOsdRQpqJFs0/5ff33ZUqdpUbD6LUz3XNHbgW+oH6o=;
-        b=P7W3m8o1F6NUwPHTa6c4FpeK3k9qP1wdvdTsfeiM9vHpPTydhizSSm/IFt787GRzdQ
-         Ok6ZtAChGw390mK2RN7urjVhWOOB64b3AY/tNpOmIgTYSxuDlNPMlY7F61LfKMKygh/W
-         u7JKPv+2NKGCLPPHOngxSMwgdNUnmvqKFHSxcWBDvnt0P/gOAiJjutfhh2QHRWJxDYSU
-         4BF+qP1rQ/qlxJ4z99wrMybvnpolmfQDIOqtpBXSVXlnfe//BuG0UZI4onOv3T2P6zpF
-         EJlrYQ28PoAE1sNl/iCb173Xelo4xIQhz5atHgMsc9q/U8IRHabDYJUXXznryfHm2OZq
-         Mx3Q==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8AS2WVpfcXOSBCa8Agx1sOU/1pske4EbK3DIdQoMZRg=;
+        b=FVvNjzZr8rn+fH4GH52uYM1AQA9mM3fxlNdAP3r51Ak6CZCkR62AitMQylW2UfoiTz
+         jfAS5p9ODR/aYbX/gu2xiu9NTbbkmS1u8fR1XxGd8RI0zUgEey7dNRMImLozq06hRqL1
+         M5jbBH2n9jx6wl8Q+kiGv0+cLNQa7+104Z7l0DyL700puk4rZU94Nel8ixqsghDOCKQJ
+         HgSv6NDgR3QWTJATBbZJu5kBcNeGL2ngAtGJ4E8eZOy9YoVH1s04ilEURESZdRhL+Hp2
+         Q+uC+t7Lyy3VKNRQW1LwTLtTGbFkfFJNea3IxxnGyZM52eBx1L/4sKCj6Brdu8ihXXGG
+         /gFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+dOsdRQpqJFs0/5ff33ZUqdpUbD6LUz3XNHbgW+oH6o=;
-        b=kQ6dsrgBh/XFnaaRGxa26EOyKzv4lrJOq7O7AZGCIzLEVuWfQjyTowjcJq5+03D8yn
-         wUQie9yC91x5WLXRcOYpVJpxC5tQ/t/lv2vRvhDKWCwe0GCFrFNVbtPiSNaqdgKNjHyq
-         2YmZNt9N13LDxy3criT1vW6zZSLSXyR1nVX1MpSym/Z1WK4WXjzQNcgCOISHo/srkyKD
-         frivkhDGhPDPqZzsn7yCsByhhWf610LB1DW/MFyKj/0XKGxwOeuiZdr1rSatUiSF7zYT
-         I3v6fupO2nYU2DPKfzkjDlajdWJKol705bCp0xSJ/vVFLYDGjn1EIJlz/hrF+9tgUmRA
-         xwLQ==
-X-Gm-Message-State: AFqh2krPx3jDXLLXN6W3dKJV+2cAXA5zBRC38Bx0+2arvKWiQ7cHSmwu
-        +aslz6zJ/hfhxGZi71eySyXpl/Y745NHdV/KyD1V8JlLxd80HPHi
-X-Google-Smtp-Source: AMrXdXsY0NeaqptMZEPAa9u198CjF3drRA/Lu1igdKkZ5NnDr/qJ0VZ3TIFDau2A/fcBj6M+sA2zmsY8y2FN9rkeq8c=
-X-Received: by 2002:a17:907:175a:b0:86f:5319:c584 with SMTP id
- lf26-20020a170907175a00b0086f5319c584mr1846843ejc.359.1674504765517; Mon, 23
- Jan 2023 12:12:45 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8AS2WVpfcXOSBCa8Agx1sOU/1pske4EbK3DIdQoMZRg=;
+        b=O5OpfFkk6i8IxFzHU+zV8gzAGNj3QS8PI9ZGiQ4BSRkHane2HNZ7+j75SKCRtB03q4
+         O+MbR1k9HPCpI9tda00vT0W/NfTp8SbXg20+oEDs+5SwDkWtMUfNGJQ3njiat1jb6PNO
+         hNyotPd5Lx8cBEyAfK58yu3Avr40wOMw8BdMzThfZCtpKwz8n69XHkuMroVgPOoLNSEJ
+         pSyAcE/+f1JPWO2oHknSsPukIMq8vNmMTGuCR9At4Ps5j3F2PBDoGXgBLN5Ae/fpPg8J
+         XgpEpKW88RtanzeeltXGFAOe1I+Y46FHdpuPC82w6jxt4HxVyEu64YFXfIx6NwlbzF2H
+         Qocw==
+X-Gm-Message-State: AFqh2krcA1RhMIy1pis748p2rTs1ad6yBns96qIw7uzU1zP9LA8g7Zkf
+        AlmOKsfJ2kdavHx67Wj0Zxmz6mMRZ8o=
+X-Google-Smtp-Source: AMrXdXvQSg1Ch1hzvHlhQKjJ/lgMccRWhSZtLnam2SkTZVNYZFeFBz+kG/H8BKq4C8zJP9hqIhPRJg==
+X-Received: by 2002:a05:6a00:1d23:b0:589:6338:9650 with SMTP id a35-20020a056a001d2300b0058963389650mr24109462pfx.5.1674504813884;
+        Mon, 23 Jan 2023 12:13:33 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id bv15-20020a056a00414f00b0058e1b55391esm6877188pfb.178.2023.01.23.12.13.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 12:13:33 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        avarab@gmail.com, steadmon@google.com, chooglen@google.com
+Subject: Re: [PATCH v2 01/10] bundle: optionally skip reachability walk
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+        <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
+        <b3828725bc8f8887b9b4777a0e3d84224a427f31.1674487310.git.gitgitgadget@gmail.com>
+        <xmqqsfg1m8l6.fsf@gitster.g>
+        <eae85534-89c9-6eff-69d5-7d4b2be85fb6@github.com>
+Date:   Mon, 23 Jan 2023 12:13:33 -0800
+In-Reply-To: <eae85534-89c9-6eff-69d5-7d4b2be85fb6@github.com> (Derrick
+        Stolee's message of "Mon, 23 Jan 2023 13:24:26 -0500")
+Message-ID: <xmqqilgxm2ky.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <1716310675.20230122233403@inbox.ru>
-In-Reply-To: <1716310675.20230122233403@inbox.ru>
-From:   Emily Shaffer <nasamuffin@google.com>
-Date:   Mon, 23 Jan 2023 12:12:32 -0800
-Message-ID: <CAJoAoZkjfOQwkeQqzQY5qDo7Md5QWSz1pOTBQKHL5KwNu2VoDg@mail.gmail.com>
-Subject: Re: nested submodules detection w/o .gitmodules file
-To:     Andry <andry@inbox.ru>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 22, 2023 at 12:45 PM Andry <andry@inbox.ru> wrote:
->
-> Hello Git,
->
-> I have a pretty long investigation has been started from usage 3dparty pr=
-ojects related directly or indirectly to the git submodules:
->
-> `svn externals replacement` : https://github.com/chronoxor/gil/issues/6
-> `svn complete replacement for externals` : https://github.com/dirk-thomas=
-/vcstool/issues/243
->
-> And stumbled on this discussion:
->
-> `nested submodules detection w/o .gitmodules file` : https://github.com/g=
-itextensions/gitextensions/discussions/10644 (https://github.com/gitextensi=
-ons/gitextensions/issues/10642)
->
-> The main question here is that, could the git have has submodules without=
- `.submodules` file?
+Derrick Stolee <derrickstolee@github.com> writes:
 
-There is a little nuance here. Git can have nested repositories in a
-few different ways; submodules are just one of them. A submodule is
-the combination of a gitlink object in the object graph *and* a
-corresponding entry in the .gitmodules file. It's certainly possible
-to embed a nested repository in other ways, such as by ignoring the
-.gitmodules file, but then your nested repository is no longer a
-submodule, and operations which recurse over submodules will not
-consider that nested repository. The reason is that we need to
-understand where to clone the submodule from - that information isn't
-contained in the superproject's repository URL, and it can't be
-contained in the gitlink directly (which is in essence just a commit
-object, but one that exists in the nested repository, not in the
-superproject repository). If we didn't have a way of writing down the
-submodule's remote URL and version controlling it, we wouldn't have a
-way to populate the submodules when a user is cloning.
+> We are specifically removing the requirement that the objects are
+> reachable from refs, we still check that the objects are in the
+> object store. Thus, we can only be in a bad state afterwards if
+> the required objects for a bundle were in the object store,
+> previously unreachable, and one of these two things happened:
+>
+> 1. Some objects reachable from those required commits were already
+>    missing in the repository (so the repo's object store was broken
+>    but only for some unreachable objects).
 
->
-> If no, then all side projects which utilizes it's own input file for the =
-externals may subsequentially fail:
->
-> https://github.com/chronoxor/gil
-> https://github.com/dirk-thomas/vcstool
-> https://github.com/ingydotnet/git-subrepo
->
-> If yes, then other projects which does rely on the `.submodules` would ha=
-ve not actual or even invalid state:
->
-> https://github.com/gitextensions/gitextensions
->
-> Or even the github itself:
->
-> `Zip archive to include submodule` : https://github.com/dear-github/dear-=
-github/issues/214
->
-> (`[PATCH] archive: add =E2=80=93recurse-submodules to git-archive command=
-` : https://git.github.io/rev_news/2022/11/30/edition-93/, https://lore.ker=
-nel.org/git/pull.1359.git.git.1665597148042.gitgitgadget@gmail.com/)
->
-> Mine point here is that:
->
-> Git database is a primary storage. The `.gitmodules` file is not a primar=
-y storage, so can be in not an actual or desync state with the database.
-> And any application or a 3dparty project must read the database directly.
+A repository having some unreachable objects floating in the object
+store is not corrupt.  As long as all the objects reachable from refs
+are connected, that is a perfectly sane state.
 
-The .gitmodules exists to help at clone time; it's possible, as I
-think you're pointing out, to have some intermediate state locally.
-But this file is what needs to be the source of truth for putting
-together the repository on a new machine for the first time.
+But allowing unbundling with the sanity check loosened WILL corrupt
+it, at the moment you point some objects from the bundle with refs.
 
->
-> But another problem here is that the git still does not have a stable API=
- for that.
-> For example, a submodule can be declared directly from the `.git/config` =
-file in a working copy:
->
-> https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-in=
-it--ltpathgt82308203
-> https://git-scm.com/docs/gitsubmodules#_active_submodules
->
-> So, who is right and what is wrong here?
->
+> I think we should trust the repository to not be in the first state,
+
+So, I think this line of thought is simply mistaken.
+
+>> I am OK as long as we check the assumption holds true at the end;
+>> this looks like a good optimization.
+>  
+> So are you recommending that we verify all objects reachable from
+> the new refs/bundles/* are present after unbundling?
+
+Making sure that prerequisites are connected will reduce the span of
+the DAG we would need to verify.  After unbundling all bundles, but
+before updating the refs to point at the tips in the bundles, if we
+can make sure that these prerequisite objects named in the bundles
+are reachable from the tips recorded in the bundles, while stopping
+the traversal at the tips of original refs (remember: we have only
+updated objects in the object store, but haven't updated the refs from
+the bundles), that would allow us to make sure that the updates to
+refs proposed by the bundles will not corrupt the repository.
+
