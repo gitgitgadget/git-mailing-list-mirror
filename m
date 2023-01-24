@@ -2,107 +2,222 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C16ABC38142
-	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 15:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F12FDC38142
+	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 15:42:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234302AbjAXPiH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Jan 2023 10:38:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50792 "EHLO
+        id S234971AbjAXPme (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Jan 2023 10:42:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233992AbjAXPiF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2023 10:38:05 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40B867AA1
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 07:38:02 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id a184so11440540pfa.9
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 07:38:02 -0800 (PST)
+        with ESMTP id S235278AbjAXPmT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2023 10:42:19 -0500
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB4B64C6D8
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 07:42:04 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id z7so17124975ljz.4
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 07:42:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=paTRMOdoAio5JHCS8+Er5ESSjzn1C9cVMUWH6KjoNO4=;
-        b=AtYjlehDWxZAmaFUoyWbkQjlqArrNhJtFsCkFfmuHg4dLDsOoD1ND+IQKtqasZOCP8
-         OZo4dBX18i0gA6Tnun6vSykFq21FTw188ZghubI0L4yNfEjSZPLSpyFaINgn9dHa5u0t
-         XY+HomQcPiID9EYdHdDp4LsV8lAbiAsXi9cRzSpL82dDIFAmBoT6Ibc5pGT0NU5snfQv
-         hWf8n1dMXH/vEIBVB/5zQSEB60X3i++0q4022DgfbzIbltP098cV8NJkJhTE5Vj8fq9c
-         TJBBTYTGgTP/TKfGtUTJJHCRcfD9yVhwrI5hxf37BlFp0kqkRDFR27GuS9S9HKRPpepk
-         yEhA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4CPzwt4J6r/zq6aEs2+u5Q6u+Hf9MTY9dz8UUSfNeeY=;
+        b=SurKPVbYvU8w3lX3XqSWXk+2sdIUJf6SgUycRgtHNuUBvEzwvbh/yXj6N+zfoPg/Mt
+         5MK2HUhZ4YpVny3n0cfgmdYRXTU/4LMAOKZk0XmFllYIS9AWmegyTv6HikZs3iPgHeqS
+         2KczeadZ7UJ53HaqhDSfPPnVR6CIHVjVoC+UTyEmCAXP1/YufIDs7osS2Yx1yYcgZZfJ
+         tROEKo3lHO+3UC002i01XEt+3EpnrOXFkrQph2kmca4xfGQHMEOdo8lPwA2R0MT+9eb2
+         cnNoWdS37Yy6wbahJX5c4ShCoP473ynhTCsBC6F8h/PZkc8CRPktNbJbhz5NVD/X0htV
+         urAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=paTRMOdoAio5JHCS8+Er5ESSjzn1C9cVMUWH6KjoNO4=;
-        b=ZgYR7QHQi611j5hyJ+ygv+foihRLqMjzYRFqn94lp17DJs2ykASY3AM8mWCgxvDXyf
-         z7Dh8ywr6s+mwrcsrrx+o8433Qs25pl7qkXp0g1esBxCch7TkyNz8QR398DAUBDd30o0
-         MAQgMHnmnBLqZLuwR14DOnQ8O/iG+8Bh3R7t+Q+nhDKlRhYKpJEkdIXe9K55xm6q1LHS
-         FVOcv27iuyMybt2brdvj4tvMVOoANmeKXf8UeV0oYrZACe3O+zJ+4M19Gx1nD1GXvd39
-         bzxkqiY64ewyAHOJHOefHTeUJrzbaIx0w4cdSthXUuaLwIRl7684DPUT+pZhgy7M9v+Y
-         RGLw==
-X-Gm-Message-State: AFqh2kqgYZaFZpfqrm6+hpfxoa+sXTKwxuFOYwpfyZs3Vhovw30Ysz3p
-        K1aqLEwFCem4EYS5jgQqHvo=
-X-Google-Smtp-Source: AMrXdXsY1D0a1mOEI9CoFoa0Ej9Gi0Ta6xKnsbFVmD1NRmmMHKQ+n3Xt16UzUvQgNOUgwEYk0+o10g==
-X-Received: by 2002:a05:6a00:7c4:b0:58a:f300:42c9 with SMTP id n4-20020a056a0007c400b0058af30042c9mr26754879pfu.22.1674574681612;
-        Tue, 24 Jan 2023 07:38:01 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id w1-20020aa79541000000b00580fb018e4bsm1711255pfq.211.2023.01.24.07.38.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 07:38:01 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] gitk: prevent overly long command lines
-References: <pull.1469.git.1674559397.gitgitgadget@gmail.com>
-        <89fe0380cd3a373e7e23d663b506466fd6cb5fb6.1674559397.git.gitgitgadget@gmail.com>
-Date:   Tue, 24 Jan 2023 07:38:01 -0800
-In-Reply-To: <89fe0380cd3a373e7e23d663b506466fd6cb5fb6.1674559397.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Tue, 24 Jan 2023
-        11:23:16 +0000")
-Message-ID: <xmqqv8kwhrja.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4CPzwt4J6r/zq6aEs2+u5Q6u+Hf9MTY9dz8UUSfNeeY=;
+        b=vjWq0oFsb159alBDkLKOhEteGSC2nFEuJwsuHf/AF+X+0CWu0lbsYqphwNr3RboDZp
+         LbowyY4oybA32+8vHHE+vmqvomcj0O30Rs5SHNBQNqsRc/liaCGqfh8SCkGBR+qNvhcd
+         rIoumuTKz0v9pAzuDwCFaxHX9b9X3QM6Niem9CprnhaF6D1m6ipUIR70hdnTHB/Q8rPE
+         rIhdP2750ejeAwvewQgTn0aWtpbo0ncDP9OMxbgl3xlBZbxOBa8agyMNHP6aludrF98b
+         Pbk25uPsc+awxYQOVgVazknGKGnasWljC1Yh4eKUPQCibrVYuqR39lRiuBdGxPCKSqCt
+         gmgQ==
+X-Gm-Message-State: AFqh2krwJEpxHcIxZ1Ig6wQQUrJQ6TDbD96Qt+RbK0ZQXxW1GETvBqrM
+        Y9W8O2/RKKRrZBFW6myavmHCzyCgIXBgeIg4Lr4SjGrxbp4=
+X-Google-Smtp-Source: AMrXdXs1WBooYHFgFdwerRvJy1GK/rGIPQirJ4cIb2g3ax4CrwP+RkWHwgsLYwU5YguSFHxgIaQrF6eIqGhmEX6NgTY=
+X-Received: by 2002:a2e:9842:0:b0:289:c64d:cba2 with SMTP id
+ e2-20020a2e9842000000b00289c64dcba2mr2669813ljj.325.1674574922875; Tue, 24
+ Jan 2023 07:42:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
+ <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com> <5e4851e611ee18112bd71939ee900e02a8d590c5.1674367961.git.gitgitgadget@gmail.com>
+ <759fb313-ce88-4eb7-96c0-4adeb75ca9f9@dunelm.org.uk> <CABPp-BE+wRgjmWknARQpNsdUFjNOz0ND9wgx_-_RTyK+EwJjXA@mail.gmail.com>
+ <83d27162-59d4-d8c0-fde3-f522630d024d@dunelm.org.uk> <7b9ee972-2680-2e1b-bef3-201d8a1e4bdd@dunelm.org.uk>
+In-Reply-To: <7b9ee972-2680-2e1b-bef3-201d8a1e4bdd@dunelm.org.uk>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 24 Jan 2023 07:41:48 -0800
+Message-ID: <CABPp-BHVUc7EdY9z_TPcHspCak6Yc3mfDXUkivj4zq_fJem3SQ@mail.gmail.com>
+Subject: Re: [PATCH v4 5/9] rebase: add coverage of other incompatible options
+To:     phillip.wood@dunelm.org.uk
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi Phillip,
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Jan 24, 2023 at 5:16 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >
-> To avoid running into command line limitations, some of Git's commands
-> support the `--stdin` option.
+> >>>> Signed-off-by: Elijah Newren <newren@gmail.com>
+> >>>> --- a/builtin/rebase.c
+> >>>> +++ b/builtin/rebase.c
+> >>>> @@ -1224,6 +1224,26 @@ int cmd_rebase(int argc, const char **argv,
+> >>>> const char *prefix)
+> >>>>                if (options.fork_point < 0)
+> >>>>                        options.fork_point = 0;
+> >>>>        }
+> >>>> +     /*
+> >>>> +      * The apply backend does not support
+> >>>> --[no-]reapply-cherry-picks.
+> >>>> +      * The behavior it implements by default is equivalent to
+> >>>> +      * --no-reapply-cherry-picks (due to passing --cherry-picks to
+> >>>> +      * format-patch), but --keep-base alters the upstream such
+> >>>> that no
+> >>>> +      * cherry-picks can be found (effectively making it act like
+> >>>> +      * --reapply-cherry-picks).
+> >>>> +      *
+> >>>> +      * Now, if the user does specify --[no-]reapply-cherry-picks, but
+> >>>> +      * does so in such a way that options.reapply_cherry_picks ==
+> >>>> +      * keep_base, then the behavior they get will match what they
+> >>>> +      * expect despite options.reapply_cherry_picks being ignored.  We
+> >>>> +      * could just allow the flag in that case, but it seems better to
+> >>>> +      * just alert the user that they've specified a flag that the
+> >>>> +      * backend ignores.
+> >>>> +      */
+> >>>
+> >>> I'm a bit confused by this. --keep-base works with either
+> >>> --reapply-cherry-picks (which is the default if --keep-base is given) or
+> >>> --no-reapply-cherry-picks. Just below this hunk we have
+> >>>
+> >>>          if (options.reapply_cherry_picks < 0)
+> >>>                  options.reapply_cherry_picks = keep_base;
+> >>>
+> >>> So we only set options.reapply_cherry_picks to match keep_base if the
+> >>> user did not specify -[-no]-reapply-cherry-picks on the commandline.
+> >>
+> >> options.reapply_cherry_picks is totally ignored by the apply backend,
+> >> regardless of whether it's set by the user or the setup code in
+> >> builtin/rebase.c.  And if we have an option which is ignored, isn't it
+> >> nicer to provide an error message to the user if they tried to set it?
+> >>
+> >> Said another way, while users could start with these command lines:
+> >>
+> >>      (Y) git rebase --whitespace=fix
+> >>      (Z) git rebase --whitespace=fix --keep-base
+> >>
+> >> and modify them to include flags that would be ignored, we could allow:
+> >>
+> >>      (A) git rebase --whitespace=fix --no-reapply-cherry-picks
+> >>      (B) git rebase --whitespace=fix --keep-base --reapply-cherry-picks
+> >>
+> >> But we could not allow commands like
+> >>
+> >>      (C) git rebase --whitespace=fix --reapply-cherry-picks
+> >>      (D) git rebase --whitespace=fix --keep-base
+> >> --no-reapply-cherry-picks
+> >
+> > (C) is already an error
+> > (D) is currently allowed and I think works as expected (--keep-base only
+> > implies --reapply-cherry-picks, the user is free to override that with
+> > --no-reapply-cherry-picks) so I don't see why we'd want to make it an
+> > error.
+
+Ah, despite looking over the code multiple times to check my
+statements, I somehow kept missing this:
+
+    if (keep_base && options.reapply_cherry_picks)
+        options.upstream = options.onto;
+
+which is how --[no-]reapply-cherry-picks is supported in conjunction
+with --keep-base.  Thanks.
+
+> >> For all four cases (A)-(D), the apply backend will ignore whatever
+> >> --[no-]reapply-cherry-picks flag is provided.
+> >
+> > For (D) the flag is respected, (C) errors out, the other cases
+> > correspond to the default so it's like saying
+> >
+> >      git rebase --merge --no-reapply-cherry-picks
+> >
+> > ignores the flag.
 >
-> Let's use exactly this option in the three rev-list/log invocations in
-> gitk that would otherwise possibly run the danger of trying to invoke a
-> too-long command line.
+> On reflection that is only true for (B). I agree that we should error
+> out on (A) which we don't at the moment.
+>
+> I'd support a change that errors out on (A) and (C) but continues to
+> allow (B) and (D). I think we can do that with the diff below
+>
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 1481c5b6a5..66aef356b8 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1230,12 +1230,6 @@ int cmd_rebase(int argc, const char **argv, const
+> char *prefix)
+>                   if (options.fork_point < 0)
+>                           options.fork_point = 0;
+>           }
+> -        /*
+> -         * --keep-base defaults to --reapply-cherry-picks to avoid losing
+> -         * commits when using this option.
+> -         */
+> -        if (options.reapply_cherry_picks < 0)
+> -                options.reapply_cherry_picks = keep_base;
+>
+>           if (options.root && options.fork_point > 0)
+>                   die(_("options '%s' and '%s' cannot be used
+> together"), "--root", "--fork-point");
+> @@ -1412,11 +1406,17 @@ int cmd_rebase(int argc, const char **argv,
+> const char *prefix)
+>           if (options.empty != EMPTY_UNSPECIFIED)
+>                   imply_merge(&options, "--empty");
+>
+> -        /*
+> -         * --keep-base implements --reapply-cherry-picks by altering
+> upstream so
+> -         * it works with both backends.
+> -         */
+> -        if (options.reapply_cherry_picks && !keep_base)
+> +        if (options.reapply_cherry_picks < 0)
+> +                /*
+> +                 * --keep-base defaults to --reapply-cherry-picks to
+> +                 * avoid losing commits when using this option.
+> +                 */
 
-Makes perfect sense.  I do not know the point of saying exactly
-here, though.
+I know you were copying the previous comment, but this comment is
+really confusing to me.  Shouldn't it read "--reapply-cherry-picks
+defaults to --keep-base" instead of vice-versa?
 
-> While it is easy to redirect either stdin or stdout in Tcl/Tk scripts,
-> what we need here is both. We need to capture the output, yet we also
-> need to pipe in the revs/files arguments via stdin (because stdin does
-> not have any limit, unlike the command line). To help this, we use the
-> neat Tcl feature where you can capture stdout and at the same time feed
-> a fixed string as stdin to the spawned process.
+> +                options.reapply_cherry_picks = keep_base;
+> +        else if (!keep_base)
+> +                /*
+> +                 * --keep-base implements --reapply-cherry-picks by
 
-Nice, so this is not about "we may have too many args to fit in
-our memory", but about "we may have too many args for system to
-spawn the subprocess with".
+Should this be --[no-]reapply-cherry-picks, to clarify that it handles
+both cases?  Especially given how many times I missed it?
 
-> One non-obvious aspect about this change is that the `--stdin` option
-> allows to specify revs, the double-dash, and files, but *no* other
-> options such as `--not`.
+> +                 * altering upstream so it works with both backends.
+> +                 */
+>                   imply_merge(&options, "--reapply-cherry-picks");
 
-It sounds like a design mistake, which may want to be fixed, but of
-course gitk cannot depend on Git it runs with having such a fix, and
-use of "^" prefix is a good alternative (after all, "--not" was
-invented to save us writing ^ in front of many revs).
+And perhaps this should be
 
-Good.
+    imply_merge(&options, options.reapply_cherry_picks ?
+"--reapply-cherry-picks" :
+         "--no-reapply-cherry-picks");
 
+Also, the comment in git-rebase.txt about incompatibilities would become
+
+     * --[no-]reapply-cherry-picks, when --keep-base is not provided
