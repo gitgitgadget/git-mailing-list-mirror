@@ -2,185 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88B8FC54E94
-	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 17:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03021C25B4E
+	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 17:30:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234737AbjAXRQF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Jan 2023 12:16:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50308 "EHLO
+        id S233231AbjAXRaJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Jan 2023 12:30:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234738AbjAXRQC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2023 12:16:02 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 937FC298E2
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:16:01 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id b10so15691319pjo.1
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:16:01 -0800 (PST)
+        with ESMTP id S229670AbjAXRaI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2023 12:30:08 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC39546149
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:30:06 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id u1-20020a17090a450100b0022936a63a21so19323031pjg.4
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:30:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=omzwjVD04r1xh6++tHMwD0t/v6OXACsqZjEgqD5Si4k=;
-        b=qALYBLoA6ebsNb30GqjataGaKE38X8EsjrY8TOWaOViPDD8Ue9NTAqYXCCTPmUn6wy
-         4g717YkwEHh3tLMwxSbyfkhg+P/26TfFedUryRSY6q4/2TQIu1qqttOKczaRV03iXd0f
-         UyPi1wpu/on2gujFefzo+GLscL/UvXRTZc0K0iGQGgZ6P3flaFQddDqBGRhfnD3yjpov
-         7XTFQEwnN759/c/hBQmdLeM+4bRGcTZbOznmWewY/gkWxgi26DJH0LUYz+wqs7T9SA+x
-         vDgLZemeSGVbGJkQyZ/tCtFSL7yAR5RebpxtFzxkqmUeGtswsWcLkeAVIryWVoc/QwBi
-         KmzA==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1N4Nbvf/imrbbsUoyEPO7tSeE+GlugG9Gzd82w0ilFE=;
+        b=hQNEVZWvJ+Dzv9w4KhwI4g+cQkp+jJRb0xHT343bUX55tSvZn+UgRKTKA+2owxxenQ
+         4WpAStN1yYiaBmhERV6QrVn2Ci7EYNBIOzmoA8gQPhR7xzGUIhgbVf74rmegIejQ+pNA
+         17BzzIDzF3pO3CP1TJLSSZi1HqKc/6cVv6VQHxPCqpwXd8CtEu8FuZo2SYLHwTQbIk55
+         oPeJXLYlwYc6qebM7DE+YVutt4Rew9r8tdvisz/v50dmKguhfgyZZO4pKwQ2us9JSbMF
+         ooV2c/5W51XZlDmrjCRp6e9ovnoIavM4W5aH452gNwnqg8zY0oxwvKrnHifKVnFL+yG+
+         SmLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=omzwjVD04r1xh6++tHMwD0t/v6OXACsqZjEgqD5Si4k=;
-        b=ZwmMcFJ1FIIzaKi+Mfab1KE88tsO4hPgEGdtZwVF2J/ey7q67tc8pGrMxkdTj6Qp4U
-         ud5YWsaeE0iitwv7ETI+Uob651BOQED9kVwUquCd1uIejnywWdFOv73kcqJlHwbLmurP
-         OlGdVr28lwBbUbLRSUpsSzsvCfyLGKRofQ975XwNG1buZAu6hQLv0OvYGAfjXBFg+xiu
-         S2bZoplBQXDjOr0mSSLcIVjxKL1GqtZxIBT4Lz4ALmVYgNLN77UvHA+4xACKXwsKDshW
-         r8lWLUmZ0GJQz64B7Pv/GJAiW5j/JT96jchN4yxrDcn+QxiMjmmdK/jUjCd/TCbd6LLV
-         5Zlw==
-X-Gm-Message-State: AFqh2krt/RhxuE3ZSTZHXTcOEZwnz4sgL+JaakW2KB+nthe1uINRq7QC
-        BRvAprsTen+LY6r9uKQFzo35TPmrFbs=
-X-Google-Smtp-Source: AMrXdXuKVpOkjbXj34X2MKbq4ghCJFW/OV7aPH/Si1t4iI6Qhb1Yrq14xh/e1p0FWNwbV0Ve5oKD1w==
-X-Received: by 2002:a17:902:dad2:b0:194:6f0e:987 with SMTP id q18-20020a170902dad200b001946f0e0987mr41263565plx.61.1674580560836;
-        Tue, 24 Jan 2023 09:16:00 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id b14-20020a170902650e00b00183c67844aesm1922706plk.22.2023.01.24.09.16.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 09:16:00 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
-        avarab@gmail.com, steadmon@google.com, chooglen@google.com
-Subject: Re: [PATCH v2.5 01/11] bundle: test unbundling with incomplete history
-References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
-        <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
-        <b3828725bc8f8887b9b4777a0e3d84224a427f31.1674487310.git.gitgitgadget@gmail.com>
-        <xmqqsfg1m8l6.fsf@gitster.g>
-        <eae85534-89c9-6eff-69d5-7d4b2be85fb6@github.com>
-        <xmqqilgxm2ky.fsf@gitster.g> <xmqqtu0glw81.fsf@gitster.g>
-        <771a2993-85bd-0831-0977-24204f84e206@github.com>
-        <01f97aff-58a1-ef2c-e668-d37ea513c64e@github.com>
-Date:   Tue, 24 Jan 2023 09:16:00 -0800
-In-Reply-To: <01f97aff-58a1-ef2c-e668-d37ea513c64e@github.com> (Derrick
-        Stolee's message of "Tue, 24 Jan 2023 09:14:36 -0500")
-Message-ID: <xmqqv8kvhmzz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1N4Nbvf/imrbbsUoyEPO7tSeE+GlugG9Gzd82w0ilFE=;
+        b=dqI2dRqGhVieFi0+uztQmBdi5ZSVMc6XIESXE1pEO/mfYgSGwTttQsTd4sbaZrrK7D
+         41VPFXm0JNyFrFJhQxGYYDS0vDzaL9hGU+B4j0a3Y/NGoD6Z/9XUQfqmpxjTVg9x4zz9
+         y1oDiS/N23dcn1vIP4GHlG5v7JCO6hu/CiUeP/MTu/u0XdYdW4L/xFs/H4IGpgZvhtNK
+         hY1optt/m6R+a9cafTfx/L3EETJHcAmtke47iLJ/nUwE7RQJXdR1V2aj9Ru9PTseNi7D
+         EfwrW80sdSEzubk8WY9a6q6kZytNBsk4UFtYBFjd3AQmb9uF6o3Hi4ZC8tgvGWCTcyii
+         UIoA==
+X-Gm-Message-State: AFqh2kpshuMkiffexQ1dEpUWQr/kfKCzluFAI5d0B/26H1p6G+1cnhm6
+        E5wLq742UvUh2F4MROct6fYJSfOocVIxMD0=
+X-Google-Smtp-Source: AMrXdXsh7bN8QBPpSf6AGT+V/By6aImUfcSZeD7MrYzfLvP7OTwUVu1M0Rac/oL7NCnRsRkWenzrfg==
+X-Received: by 2002:a17:903:2291:b0:194:ab28:3282 with SMTP id b17-20020a170903229100b00194ab283282mr40472771plh.5.1674581406198;
+        Tue, 24 Jan 2023 09:30:06 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id 6-20020a170902c20600b00186acb14c4asm1938041pll.67.2023.01.24.09.30.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Jan 2023 09:30:05 -0800 (PST)
+Message-ID: <e57c1ca3-c21c-db41-a386-e5887f46055c@github.com>
+Date:   Tue, 24 Jan 2023 09:30:02 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH v7 00/12] Enhance credential helper protocol to include
+ auth headers
+Content-Language: en-US
+To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Glen Choo <chooglen@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
+ <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Matthew John Cheetham via GitGitGadget wrote:
+> Updates in v6
+> =============
+> 
+>  * Clarify the change to make logging optional in the check_dead_children()
+>    function during libification of daemon.c.
+> 
+>  * Fix missing pointer dereference bugs identified in libification of child
+>    process handling functions for daemon.c.
+> 
+>  * Add doc comments to child process handling function declarations in the
+>    daemon-utils.h header.
+> 
+>  * Align function parameter names with variable names at callsites for
+>    libified daemon functions.
+> 
+>  * Re-split out the test-http-server test helper commits in to smaller
+>    patches: error response handling, request parsing, http-backend
+>    pass-through, simple authentication, arbitrary header support.
+> 
+>  * Call out auth configuration file format for test-http-server test helper
+>    and supported options in commit messages, as well as a test to exercise
+>    and demonstrate these options.
+> 
+>  * Permit auth.token and auth.challenge to appear in any order; create the
+>    struct auth_module just-in-time as options for that scheme are read. This
+>    simplifies the configuration authoring of the test-http-server test
+>    helper.
+> 
+>  * Update tests to use auth.allowAnoymous in the patch that introduces the
+>    new test helper option.
+> 
+>  * Drop the strvec_push_nodup() commit and update the implementation of HTTP
+>    request header line folding to use xstrdup and strvec_pop and _pushf.
+> 
+>  * Use size_t instead of int in credential.c when iterating over the struct
+>    strvec credential members. Also drop the not required const and cast from
+>    the full_key definition and free.
+> 
+>  * Replace in-tree test-credential-helper-reply.sh test cred helper script
+>    with the lib-credential-helper.sh reusable 'lib' test script and shell
+>    functions to configure the helper behaviour.
+> 
+>  * Leverage sed over the while read $line loop in the test credential helper
+>    script.
+> 
+> 
+> Updates in v7
+> =============
+> 
+>  * Address several whitespace and arg/param list alignment issues.
+> 
+>  * Rethink the test-http-helper worker-mode error and result enum to be more
+>    simple and more informative to the nature of the error.
+> 
+>  * Use uintmax_t to store the Content-Length of a request in the helper
+>    test-http-server. Maintain a bit flag to store if we received such a
+>    header.
+> 
+>  * Return a "400 Bad Request" HTTP response if we fail to parse the request
+>    in the test-http-server.
+> 
+>  * Add test case to cover request message parsing in test-http-server.
+> 
+>  * Use size_t and ALLOC_ARRAY over int and CALLOC_ARRAY respectively in
+>    get_auth_module.
+> 
+>  * Correctly free the split strbufs created in the header parsing loop in
+>    test-http-server.
+> 
+>  * Avoid needless comparison > 0 for unsigned types.
+> 
+>  * Always set optional outputs to NULL if not present in test helper config
+>    value handling.
+> 
+>  * Remove an accidentally commented-out test cleanup line for one test case
+>    in t5556.
+I've re-read the patches in this version; all of my comments from v5 have
+been addressed, and the additional updates w.r.t. other reviewer feedback
+all look good as well. At this point, I think the series is ready for
+'next'.
 
-> In order to construct a broken history, perform a shallow clone of a
-> repository with a linear history, but whose default branch ('base') has
-> a single commit, so dropping the shallow markers leaves a complete
-> history from that reference. However, the 'tip' reference adds a
-> shallow commit whose parent is missing in the cloned repository. Trying
-> to unbundle a bundle with the 'tip' as a prerequisite will succeed past
-> the object store check and move into the reachability check.
+Thanks!
 
-It makes it sound convoluted set-up for tests, but I guess it is the
-most direct way to get to the state you want to test, which is good.
-
-In practice, the problem would appear when you create a multi-commit
-branch, which then is discarded.  GC then decides to expire the
-older part of the commit chain while leaving the commits near the
-tip still in the object store.  So the problem can happen without
-users doing anything esoteric, and is very much worth testing.
-
-> +test_expect_success 'verify catches unreachable, broken prerequisites' '
-> +	test_when_finished rm -rf clone-from clone-to &&
-
-OK, so my understanding of what happens is ...
-
-> +	git init clone-from &&
-> +	(
-> +		cd clone-from &&
-> +		git checkout -b base &&
-> +		test_commit A &&
-> +		git checkout -b tip &&
-> +		git commit --allow-empty -m "will drop by shallow" &&
-> +		git commit --allow-empty -m "will keep by shallow" &&
-> +		git commit --allow-empty -m "for bundle, not clone" &&
-> +		git bundle create tip.bundle tip~1..tip &&
-
-... there is a single strand of pearls
-
-	A---D---K---B tip
-
-where D is with "will drop by shallow" message.  The bundle
-is prepared to give a history leading to B while requiring K.
-
-> +		git reset --hard HEAD~1 &&
-> +		git checkout base
-
-Then B is thrown away before the history is cloned.
-
-> +	) &&
-> +	BAD_OID=$(git -C clone-from rev-parse tip~1) &&
-> +	TIP_OID=$(git -C clone-from rev-parse tip) &&
-> +	git clone --depth=1 --no-single-branch \
-> +		"file://$(pwd)/clone-from" clone-to &&
-> +	(
-> +		cd clone-to &&
-
-The cloned repository should have
-
-	A---d---K
-
-where D is missing behind the shallow boundary, origin/tip pointing
-at K.
-
-> +		# Set up broken history by removing shallow markers
-> +		git update-ref -d refs/remotes/origin/tip &&
-
-But we remove origin/tip, so K (and its trees and blobs) is totally
-disconnected.
-
-> +		rm .git/shallow &&
-
-And then this removes the shallow info that makes us to pretend that
-K does not have D (missing) as its parent.  Now we lack the required
-parent D if we start traversing from K.
-
-> +		# Verify should fail
-> +		test_must_fail git bundle verify \
-> +			../clone-from/tip.bundle 2>err &&
-
-verify_bundle() wants to see traversal from "--all" to hit the
-prerequisite objects and K certainly cannot be reached by any ref.
-
-OK.  So we ended up with a repository where we are on 'base' branch,
-and origin/HEAD and origin/base remote-tracking refs exist, all of
-these refs pointing at A.  Plus K exists but not D, but it is fine
-because K is not referenced by any ref.
-
-This is perfectly constructed test case that checks a very
-interesting scenario.  It is as if the commit chain D---K was
-discarded (via "git branch -D") and then D got expired for being too
-old but K is not old enough.
-
-We want to ensure "git bundle verify" and "git fetch ./bundle.file"
-in this healthy repository, where its refs do honor the promise, but
-its object store has unconnected commits (like "K") that are not
-complete, behaves sensibly.  If we loosen "prerequisites must be
-reachable from refs" to "prerequisites must exist", it will lead to
-repository corruption if we allow the bundle to be unbundled and its
-tips made into our refs, because these new refs point at incomplete
-objects.
-
-Excellent.
-
-> +		# Unbundling should fail
-> +		test_must_fail git bundle unbundle \
-> +			../clone-from/tip.bundle 2>err &&
-> +		grep "Could not read $BAD_OID" err &&
-> +		grep "Failed to traverse parents of commit $TIP_OID" err
-> +	)
-> +'
