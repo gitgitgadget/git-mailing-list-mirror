@@ -2,128 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48B02C25B4E
-	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 11:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44BA6C25B4E
+	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 12:27:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233924AbjAXLX1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Jan 2023 06:23:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50310 "EHLO
+        id S233498AbjAXM1c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Jan 2023 07:27:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233897AbjAXLXZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2023 06:23:25 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3264330B29
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 03:23:24 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so12606941wmb.0
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 03:23:24 -0800 (PST)
+        with ESMTP id S231510AbjAXM1a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2023 07:27:30 -0500
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0254FC171
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 04:27:08 -0800 (PST)
+Received: by mail-qt1-x82d.google.com with SMTP id z9so12859233qtv.5
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 04:27:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xgRiLqjfVWE05Ob4hhY8FHeK/8h4bNIU2GMvmGOMisQ=;
-        b=INiFHo8+nORxldOCIg/4XpuM/iTMFpfaD5+bdRFEXmLyUyh2tOalp+4vfP59dD0LEq
-         80s9Kt7cxU04FIDa83kf+pZq/hIqtXVlOoKijcS5BXhp/6jPxcAJyvjHzfpEsNTlZymi
-         2sMsWQ3AMawvdKJHi9s/Zss9uCrGiv4Y5eztlhUT5YMDKtLWslbzmcx2qAiPk3/B9Ji7
-         6yhCeQ5VkWnOkKHZ0jtvruFTRK+XjFWD8oBrDXkQ/5AFsaZV2NLRGkFguGDs3BuC3STw
-         JDS0usbK0O3nDDx4PV899cklzEmP6gAPygwKocpPaH5IUpp1p/5dMZHvvUddKZaFfB5d
-         d/Rg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VnML+2bZ2glBEn8Bn17mE5fbdiZmVxbLx6tD+Eq4bds=;
+        b=hL4uKewDrAj6Dn7YCBDmgMbvbhPIZEuGdh6/y3bK8UBw2ssTFee3KhjpSICdl+DS8v
+         B9ue/LKHlkpilez+xzKbKkdfyyWuejq91IZy4p9kESOZvdqHaCfXWFZ1l8x7x8LipwSd
+         iw3tR2FhlrX5cs1FIensFE0zalosRKXcKWERgCpDb3wU51D6ig/9/+90kf3rnEXvmXA1
+         8yTIPdBoEG/mLsX0VFv3YUH2+MYTwZpiEyB1Ka8/4Cik3ASt1CwmKqL1Y3KEfvySqvlP
+         mrCHhRU6CqrCqt3Qw/rXUxAv0y45xLHbxJpQ+aJ0fBWAmUaAnOqXtxVumGXIoUEHWRTq
+         ZXXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xgRiLqjfVWE05Ob4hhY8FHeK/8h4bNIU2GMvmGOMisQ=;
-        b=z/aRETomP5//shZMhCziGluaaprT+4HKcNYFm+uKD8nLBdAQ6aUkimmlqDZaP98c8m
-         BCnARAW1ITgb+fawajVkoVx9QVLo1G7FObwR8GiGukkd26PmeyxuCckZzxZxsoX2mEmf
-         YSx0sM3fr8BNmgcPnVut1Dxk3MLo15c/vfHZ3Q69czS+RyJrHB1QbBzzFe3JmvNATj2P
-         27apwwNH+he6CYGZzZN5UYUlKTBrlR+XaC0zw6mAkNmxtLV58i1p5UpqziYt8T0XDTdL
-         oazlZik/ITiHdxwPxQezy0j8ynQUQmxckTvWxry48Qdp8cOeempXRtU8lLIPB22nr8D0
-         M+KQ==
-X-Gm-Message-State: AFqh2ko1BUfG5GvRbzsaHO9uGAcKHfZWdy8dCjKLMW4iI4nDmD7mKyv8
-        JfYOmeKHj/gmjVQz/e7MYaFIZD0+8MM=
-X-Google-Smtp-Source: AMrXdXuLV9h6fcUSzSrpk7cNjJIHewu9wmz3eoxsBK6k3KJwgEF3AmwDIM9wGBSHf4Uj3W3OdwLbmw==
-X-Received: by 2002:a05:600c:b8a:b0:3d9:f806:2f89 with SMTP id fl10-20020a05600c0b8a00b003d9f8062f89mr27407241wmb.41.1674559402547;
-        Tue, 24 Jan 2023 03:23:22 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bg24-20020a05600c3c9800b003d9ed40a512sm18211936wmb.45.2023.01.24.03.23.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 03:23:22 -0800 (PST)
-Message-Id: <ff22dd238e9ea6c540eb1083d3b56a7bd804580f.1674559397.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1469.git.1674559397.gitgitgadget@gmail.com>
-References: <pull.1469.git.1674559397.gitgitgadget@gmail.com>
-From:   "Nico Rieck via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Jan 2023 11:23:17 +0000
-Subject: [PATCH 2/2] gitk: escape file paths before piping to git log
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VnML+2bZ2glBEn8Bn17mE5fbdiZmVxbLx6tD+Eq4bds=;
+        b=BF0yVlta3qP3VABu8o0KQz2180WzSSug9OSjHOpU1tVpgYBs7A800mLR6HPxEepxHK
+         FLLgI3XuvMq0Xr9FB8Jd0wfJcoNNFiI7RZmWsv474zEDU3qvTitgX44XifF+7LHMea8i
+         3sbv07X80bg5Doy89hmBoHagtl/VwAPUsw5cznVCcpbmVNRjk6DMSqKk+rDK9IfoXMW8
+         5rcsqThRfpQhS9RGjYulVNquOoXeyGYX9BMluucw6LuKQEB4Ozxc0T8KOK/+3jrJQ8tm
+         PpzyiJRkVRGKOMc1wtS3X/gXjCfu7dD/8Tfq7IsxZT35Y9e+bgVBYhUuH11opWfsM6O/
+         ZE3A==
+X-Gm-Message-State: AFqh2kpJQWo7IChTF+VWNO99aEa/JBllTwLN7DWuEvIbvp8en6s/XN6b
+        YrF83NIT+HXP9pEw0jxXcVcb
+X-Google-Smtp-Source: AMrXdXsDz5cJsxY7yUw4lQhBSce2pMwucWM33yyVfmG3Xw7i0PoYQw93h52UKONXCk/6h29nXSbhjw==
+X-Received: by 2002:ac8:5ed3:0:b0:3b6:3596:182b with SMTP id s19-20020ac85ed3000000b003b63596182bmr36932572qtx.36.1674563226318;
+        Tue, 24 Jan 2023 04:27:06 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:70c6:2d77:ae17:eae3? ([2600:1700:e72:80a0:70c6:2d77:ae17:eae3])
+        by smtp.gmail.com with ESMTPSA id e127-20020a376985000000b006f9ddaaf01esm1297173qkc.102.2023.01.24.04.27.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Jan 2023 04:27:05 -0800 (PST)
+Message-ID: <771a2993-85bd-0831-0977-24204f84e206@github.com>
+Date:   Tue, 24 Jan 2023 07:27:04 -0500
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Paul Mackerras <paulus@ozlabs.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Nico Rieck <nico.rieck@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 01/10] bundle: optionally skip reachability walk
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        avarab@gmail.com, steadmon@google.com, chooglen@google.com
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+ <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
+ <b3828725bc8f8887b9b4777a0e3d84224a427f31.1674487310.git.gitgitgadget@gmail.com>
+ <xmqqsfg1m8l6.fsf@gitster.g>
+ <eae85534-89c9-6eff-69d5-7d4b2be85fb6@github.com>
+ <xmqqilgxm2ky.fsf@gitster.g> <xmqqtu0glw81.fsf@gitster.g>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqtu0glw81.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nico Rieck <nico.rieck@gmail.com>
+On 1/23/2023 5:30 PM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> A repository having some unreachable objects floating in the object
+>> store is not corrupt.  As long as all the objects reachable from refs
+>> are connected, that is a perfectly sane state.
+>>
+>> But allowing unbundling with the sanity check loosened WILL corrupt
+>> it, at the moment you point some objects from the bundle with refs.
+> 
+> While all of the above is true, I think existing check done by
+> bundle.c::verify_bundle() is stricter than necessary.  We make sure
+> that the prerequiste objects exist and are reachable from the refs.
+> But for the purpose of ensuring the health of the repo after the
+> operation, it is also OK if the prerequisite objects exist and they
+> pass connected.c::check_connected() test to reach existing refs.
+> verify_bundle() that is used in unbundle() does not allow it.
 
-We just started piping the file paths via `stdin` instead of passing
-them via the command-line, to avoid running into command-line
-limitations.
+Thank you for all of the detailed explanation, here and in other
+messages.
 
-However, since we now pipe the file paths, we need to take care of
-special characters.
+I'll focus on this area today and see what I can learn and how I
+can approach this problem in a different way. The current options
+that I see are:
 
-This fixes https://github.com/git-for-windows/git/issues/2293
+ 1. Leave verify_bundle() as-is and figure out how to refresh the
+    refs. (This would remain a stricter check than necessary.)
 
-Signed-off-by: Nico Rieck <nico.rieck@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- gitk | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ 2. Find out how to modify verify_bundle() so it can do the more
+    relaxed connectivity check.
 
-diff --git a/gitk b/gitk
-index 92375ca6a2a..df3ba2ea99b 100755
---- a/gitk
-+++ b/gitk
-@@ -353,6 +353,16 @@ proc parseviewrevs {view revs} {
-     return $ret
- }
- 
-+# Escapes a list of filter paths to be passed to git log via stdin. Note that
-+# paths must not be quoted.
-+proc escape_filter_paths {paths} {
-+	set escaped [list]
-+	foreach path $paths {
-+		lappend escaped [string map {\\ \\\\ "\ " "\\\ "} $path]
-+	}
-+	return $escaped
-+}
-+
- # Start off a git log process and arrange to read its output
- proc start_rev_list {view} {
-     global startmsecs commitidx viewcomplete curview
-@@ -414,7 +424,8 @@ proc start_rev_list {view} {
-     if {[catch {
-         set fd [open [concat | git log --no-color -z --pretty=raw $show_notes \
-                         --parents --boundary $args --stdin \
--                        "<<[join [concat $revs "--" $files] "\\n"]"] r]
-+                        "<<[join [concat $revs "--" \
-+                                [escape_filter_paths $files]] "\\n"]"] r]
-     } err]} {
-         error_popup "[mc "Error executing git log:"] $err"
-         return 0
-@@ -568,7 +579,8 @@ proc updatecommits {} {
-         set fd [open [concat | git log --no-color -z --pretty=raw $show_notes \
-                         --parents --boundary $args --stdin \
-                         "<<[join [concat $revs "--" \
--                                $vfilelimit($view)] "\\n"]"] r]
-+                                [escape_filter_paths \
-+                                        $vfilelimit($view)]] "\\n"]"] r]
-     } err]} {
-         error_popup "[mc "Error executing git log:"] $err"
-         return
--- 
-gitgitgadget
+ 3. Take the connectivity check that fetch uses before updating
+    refs and add that check before updating refs in the bundle URI
+    code.
+
+There could also be a combination of (2) and (3), or others I have
+not considered until I go poking around in the code.
+
+I'll let you know what I find.
+
+Thanks,
+-Stolee
