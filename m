@@ -2,95 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E07EFC54EED
-	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 22:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AACBC54E94
+	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 22:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235147AbjAXWFG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Jan 2023 17:05:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
+        id S229826AbjAXWaR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Jan 2023 17:30:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235135AbjAXWFD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2023 17:05:03 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55BFC51C55
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 14:04:44 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 80BA35A58A;
-        Tue, 24 Jan 2023 22:04:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1674597871;
-        bh=sbbgi3ormvFFCrYkuGZ242LJH8UySXFeVUHew4Lasmw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=1fDZvZ2P9NuWreKfE7H4PycoSX0v/j5Xv8S2gb7HV1CpqN7kfQ2ATdm3xex4uf2uz
-         vlVOBMfHt13aZQ45gKzVuGVe2TPcUpiyo86Puz37PocHHIfEzxuWt2LIH5B0AVMkE4
-         Cu2LBv7H+iQJ3qCQEhoh4igjcooB5gTEQonGJ55BVRf9iGRu0WbpoEjBOsxzNLr2xv
-         shgqUKAzM5kO1lInSn8DSBRSP4UVLEW+4RlLsuOyaO/qe8uylLwuQHJsfbpP/7o11K
-         xdWDN3OZ+P7lxv8J7sXR8jGRu28MbcDxeUZ3tgJe0CvjPrS902le+hWr/jT/iYEyGP
-         Vbf9HKQ4IZWqdExyxYlw2IDk3hQ4oIieyxJaAY+CLQd2/eUaGyguDnWsY+Z7W8bdWO
-         0wjYZpTEyXDk9VIVo+e7hNkSmfDNxS2mV8PAa5XxY656dOTcEYTXvsd7O0O002CS3Z
-         TIlhjHXnDdrRNemZmpkQ1Jnc7yAnDgKl4hZUKuxhqwqQ5mFyv+7
-Date:   Tue, 24 Jan 2023 22:04:30 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Auriane Reverdell <areverdell@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git not allowing 744 as permissions for a file
-Message-ID: <Y9BV7kpHJsORRDiq@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Auriane Reverdell <areverdell@gmail.com>, git@vger.kernel.org
-References: <CAFC92SFZgQtstEzV5pgT_tPSs=6fRJ=rE6ad_DENnn_UoobxFQ@mail.gmail.com>
+        with ESMTP id S229503AbjAXWaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2023 17:30:16 -0500
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 031271BFD
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 14:30:15 -0800 (PST)
+Received: by mail-pg1-x52e.google.com with SMTP id q9so12267640pgq.5
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 14:30:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:date:subject:to:from:sender:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=VJ7nDtK8ui10xm6X1ejc9SDKtr9u0TH8z2hE3Hjx3K8=;
+        b=plBJa8MSc1+f/DisEd/o5DhA6BBKPidbhNoV2dKl3Jhi9HSyuoGWSWYBBr5tCsAqsF
+         +u6gGktj5amagAAtCs02eYu81zaS6RpDL+IU9H/cj92CIMKkqn36fUcBazHGSoCHlRx6
+         NXbWHjlIyuGSvCnHthx2ZGDawT+VkB+VLeP46qEk1G37a25/Sct8blGC6MDvkYtKPdjF
+         Zhw6HDuBXR3GCNECvbrm2jayBRIn2YPpt1f+GzW5ysDPPn6HnDrDiwWXTuY753QjVXiV
+         kFCfrlhq6JjZqZq//6WMUZZ4CdQOUhnkF8WVsBn/HAC4nHOb4Ob9B/1NDx6C/lbh3UrT
+         AgBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:date:subject:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VJ7nDtK8ui10xm6X1ejc9SDKtr9u0TH8z2hE3Hjx3K8=;
+        b=P8gHi6EkmgaxLh5nM9oCnA9NObXZ/iCygdGwfqQH0bXL7me8/tPBRE0Cp6QIbFeiqP
+         WyMy/xQ2yhUgbG2gdZE2FISqSHyet4O39/LEhlpgE8xPKJ+ar1Tx7Ut69g/5U9WBlOzC
+         ih7op5TPx6QApRx/+AzKIW2INIYQxTW/U54o4uOvsh4EcN3gPcINTDvAM3YWLU43yUcz
+         Sr14Cd9HUFGmJVb/lbtopKz6fMWIos7hr7DDNGX/TyctcS96Vh4UHf3FWKfeqZBxMi3I
+         qz9m1plN8AzXHxQnMzVPrFXsnLF076hr5HUyJzo3ft9Bdnx1kjTR1/sa6UtRaE6LxSGL
+         mBxA==
+X-Gm-Message-State: AFqh2kr23nzL1DtAlpXtBWpl7Rwrtq8Hyz5bn1FK5zch059QnxhA3Ebx
+        W8euivdAKMb88+ziOwhSNDGqYLHAlJI=
+X-Google-Smtp-Source: AMrXdXvjlF0Cg4qE6cugV8IOuQi/3yCh5CKWazwsCLbcjmSU2q9qCLcplwi4GC+SsYbFBIs3GVOmCA==
+X-Received: by 2002:a05:6a00:26cc:b0:589:62bd:14d with SMTP id p12-20020a056a0026cc00b0058962bd014dmr29009576pfw.1.1674599414067;
+        Tue, 24 Jan 2023 14:30:14 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id a28-20020aa78e9c000000b0058193135f6bsm2114733pfr.84.2023.01.24.14.30.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Jan 2023 14:30:13 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: A summary of in-flight topics
+Date:   Tue, 24 Jan 2023 14:30:13 -0800
+Message-ID: <xmqq7cxbftvu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="xVtgeNAFUBxkYbwA"
-Content-Disposition: inline
-In-Reply-To: <CAFC92SFZgQtstEzV5pgT_tPSs=6fRJ=rE6ad_DENnn_UoobxFQ@mail.gmail.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I hate to send out new issues of the "What's cooking" report too
+often, but we have too many in-flight topics that are not getting
+traction they may deserve, so let me send out a summary of the
+topics listed in the draft I have for the next issue of it.
 
---xVtgeNAFUBxkYbwA
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Those that are marked as "will merge to 'master'" won't be merged
+immediately; they usually spend at least 1 calendar week in 'next'
+(the second date on the line for each topic is the date they were
+merged to 'next').
 
-On 2023-01-24 at 15:48:36, Auriane Reverdell wrote:
-> Hi,
->=20
-> git doesn't allow to add the execution permission on a file only for
-> the user. A chmod 744 on a file will transform into 755 when added to
-> git. This can potentially lead to security problems on certain
-> systems. Is there a way to fix that? I'll be happy to do so if
-> somebody shows me where to do it.
+--------------------------------------------------
 
-No, there isn't.  Git tracks only whether the executable bit is set.
-All file modes are either 644 or 755.
+Expecting a (hopefully final) reroll.
+ - ms/send-email-feed-header-to-validate-hook                   01-19          #2
+ - cb/checkout-same-branch-twice                                01-20          #1
+ - rj/avoid-switching-to-already-used-branch                    01-22          #3
 
-If you need the permissions or ownership on the file to be different,
-you can do that by using a script to copy the files into another
-location with the proper permissions or ownership instead of using the
-copies in the repository.  For example, I do this with my dotfiles such
-that the files have the correct permissions.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Expecting a hopefully minor and final reroll.
+ - ab/avoid-losing-exit-codes-in-tests                          12-20          #6
 
---xVtgeNAFUBxkYbwA
-Content-Type: application/pgp-signature; name="signature.asc"
+Expecting a reroll.
+ - tl/notes--blankline                                          11-09          #5
+ - ab/tag-object-type-errors                                    11-22          #5
+ - ab/config-multi-and-nonbool                                  11-27          #9
+ - cb/grep-fallback-failing-jit                                 12-17          #1
+ - ja/worktree-orphan                                           01-13          #4
+ - tc/cat-file-z-use-cquote                                     01-16          #1
+ - rj/branch-unborn-in-other-worktrees                          01-19          #3
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+May want to discard.  Breaking compatibility does not seem worth it.
+ - so/diff-merges-more                                          12-18          #5
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY9BV7gAKCRB8DEliiIei
-gdOcAP9aYEg5lnpEYdoD60iCs/jwZQYh0QrCiTJv1dsqLgl9UAD/dV7OBUE9RRSH
-sltaQjBPXuuI8N1kE2g9IEshUPjPhgs=
-=7Z4V
------END PGP SIGNATURE-----
+May want to discard.  Its jaggy edges may be a bit too sharp.
+ - cc/filtered-repack                                           12-25          #3
 
---xVtgeNAFUBxkYbwA--
+Needs review on the updated round.
+ - ed/fsmonitor-inotify                                         12-13          #6
+
+Needs review.
+ - jc/spell-id-in-both-caps-in-message-id                       12-17          #1
+ - ad/test-record-count-when-harness-is-in-use                  12-25          #1
+ - cw/submodule-status-in-parallel                              01-17          #6
+ - ab/sequencer-unleak                                          01-18          #8
+ - ab/various-leak-fixes                                        01-18         #19
+
+Undecided
+ - rs/tree-parse-mode-overflow-check                            01-21          #1
+ - rj/bisect-already-used-branch                                01-22          #1
+ - ab/hook-api-with-stdin                                       01-23          #5
+ - ds/bundle-uri-5                                              01-23         #10
+
+Waiting for review response.
+ - mc/switch-advice                                             11-09          #1
+ - js/range-diff-mbox                                           11-23          #1
+
+Will merge to 'master'.
+ + ab/cache-api-cleanup-users                                   01-17/01-18    #3
+ + sa/cat-file-mailmap--batch-check                             01-18/01-18    #1
+ + km/send-email-with-v-reroll-count                            11-27/01-19    #1
+ + pb/branch-advice-recurse-submodules                          01-18/01-19    #1
+ + jc/doc-branch-update-checked-out-branch                      01-18/01-19    #1
+ + cb/grep-pcre-ucp                                             01-18/01-19    #1
+ + jk/hash-object-literally-fd-leak                             01-19/01-19    #1
+ + cw/fetch-remote-group-with-duplication                       01-19/01-20    #1
+ + jc/doc-checkout-b                                            01-19/01-23    #1
+ + po/pretty-format-columns-doc                                 01-19/01-23    #5
+ + jk/hash-object-fsck                                          01-19/01-23    #7
+ + en/rebase-update-refs-needs-merge-backend                    01-22/01-23    #9
+ + tb/t0003-invoke-dd-more-portably                             01-22/01-23    #1
+ + jc/attr-doc-fix                                              01-22/01-24    #1
+ + ar/markup-em-dash                                            01-23/01-24    #1
+
+Will merge to 'next'.
+ - mc/credential-helper-auth-headers                            01-20         #12
+
+Will merge to 'next'?
+ - en/ls-files-doc-update                                       01-13          #4
+ - as/ssh-signing-improve-key-missing-error                     01-24          #1
