@@ -2,208 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F6A0C25B4E
-	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 13:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 615A2C25B4E
+	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 14:14:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233448AbjAXNQn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Jan 2023 08:16:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44822 "EHLO
+        id S233728AbjAXOOm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Jan 2023 09:14:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232512AbjAXNQm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2023 08:16:42 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E98E113D7E
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 05:16:40 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id ud5so38945395ejc.4
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 05:16:40 -0800 (PST)
+        with ESMTP id S233594AbjAXOOk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2023 09:14:40 -0500
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9C6213DE9
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 06:14:39 -0800 (PST)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-4b718cab0e4so219245587b3.9
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 06:14:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=r/yfiXbq7IW0jxnra/A2NFF4/0S6YyEiUxuqmCQReis=;
-        b=AIPakq8EM7oiPOENpontQU6rGRxukr7gyNLaXNBJG72GHjnhMCOjoxzPb/U5kgQcZy
-         +ID7Hg+JKhKCMt8njyN9jsIV++a2EibjfB3hbFHX8C4KmnNHO2Ix9FuJb5ACHa3pXNSB
-         JLvie4OmpbM2wTZsBN7c/XN7SuzMIjkeJLtWrrMgrnwBKZypHMVzGd33VQTb4EWO+aOY
-         RbMVYqHOCQY0GDSBJomnw/DPbIQzvutt5BwlDovhqaR/O1aoM708XpPdRm1OKSkOx8x9
-         egrHIOvx89P/LGxKCjyO/yX3QX9llICPSe50F2UojBYsSAa67aQGo+HnSzJyE+5xp8hV
-         VsoQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=lT1H7OqJs+cakHt26XnlIGG53LeF/i07z0Q7GCWWu64=;
+        b=Y7sNf8EPmyUrCn2gV7HjgBg+IFDIKDg3f2wGAjn8jn8qfNt+g2gab4QOE7Un8i2bZG
+         G1MKAUsAFujZzQT5ousUw9LH94Dt1wc+R+nX4Empp/Chuly+fX8I4T9hyUgI8AKoEkhA
+         5ILcvBiHpX/R4DrSaae1z0WX/eG7tu+EV6B5/XCdgTaPwLvQlgjymZfDgYvlXIJ0qHie
+         /MBO9Dg95OZl7RLsOlTfk9IOrVJEufi5Mg4MZnoI6AqX5vpTS59DBBl5RTeZWJwLeqXm
+         WlIudkaY0iqjAaN5BhhSKf6yIEEOCNVCFNJuR1T2imGq8RubWvjuFFheAicCrA5RnsoZ
+         CiLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r/yfiXbq7IW0jxnra/A2NFF4/0S6YyEiUxuqmCQReis=;
-        b=IvCgu5cT13gdXtSh+trLNxcjJO/GD00wFs0irswWwaLQYq/t1Abgk/z3chJS07Vw+9
-         TTFpwAofmYR2qB14hgm/OtAY/maTChpfj80OSShQtTp94e/HfdpHshsEC62i2fNUO8gv
-         kKTQvLzkcNku2CubbChXH/z2w1fTK8VxrCBM6Pnk9Plg2K62PpQ3egifS3Y3lN4neYMf
-         r+HvQXpHwIoHk3SfZRQN9MmIamhrgnW4ldw1D+AuWVEvgHiYplbH/2vloauhhTHBzQaj
-         RTu0kgVxapy2nnJacsVqywU6o2R9d27sdmlH6DysnycUFyhea1nqhn/4itINBPLoGSGE
-         bb8w==
-X-Gm-Message-State: AFqh2koaFUfsS6ra/iJ0oCwtWVGGCLiwAEdjMcg/nYHXE5ZP9ESja7Mj
-        LviWus0N+vLCON44SYqKZIk=
-X-Google-Smtp-Source: AMrXdXsZSXB2srbf3gP5jEeGkjd9GSHOb4qmeprbwocmITPh70WOFL64elxBZ5onMRYk8QffTv/MPg==
-X-Received: by 2002:a17:906:7f05:b0:86c:e53a:d20b with SMTP id d5-20020a1709067f0500b0086ce53ad20bmr26383286ejr.21.1674566199261;
-        Tue, 24 Jan 2023 05:16:39 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id l4-20020a170906078400b008711cab8875sm872668ejc.216.2023.01.24.05.16.38
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lT1H7OqJs+cakHt26XnlIGG53LeF/i07z0Q7GCWWu64=;
+        b=cDwsFOncx4wlzhtne42qeUfYhGKmQl7WdavzaoFGZm3mOQZMpxyQkLEB5LtxzzzWUj
+         P/nOAsUszoqDz8CnROMD4rR70YYy9eYVVEAW4+q2Va4DWDyWxLJB3uTOnx+LfsfDVGgs
+         bjvs8kyedL3obQg7+xCzCkVFRBT7ENkb8bftHbpnjzbb2CkirySeLCMgyr1iNHJVTgSj
+         VIWyKs7w1CAH+m/CgOgeQM2CsTsXhrT5vQK0aJvd0Z+4luxftvpZAz4mcvwhyYmg4VFD
+         6md4cSUDhVg3k91lMB3ThcgI//JYEuK6reQoqWHZb6VkyIaqG6i00UHI1LLzkmhMVFni
+         bVyg==
+X-Gm-Message-State: AFqh2kob0Lts4PTBmlYpz0Zp1DQDltA+Oq0zQ2vcbmmuqvI5anaGAzMI
+        7Fzub/R1+4TCKbY/FLHNM9qT
+X-Google-Smtp-Source: AMrXdXuQwbEpNKGYvFZiKIiA3rPFbwjyehyiV6GtBInZgLrLszo42Lk3eJDLPD7hh/fAY5Um3Eudcw==
+X-Received: by 2002:a05:690c:a99:b0:4d1:da3:c18f with SMTP id ci25-20020a05690c0a9900b004d10da3c18fmr18034022ywb.39.1674569677915;
+        Tue, 24 Jan 2023 06:14:37 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:70c6:2d77:ae17:eae3? ([2600:1700:e72:80a0:70c6:2d77:ae17:eae3])
+        by smtp.gmail.com with ESMTPSA id e127-20020a376985000000b006f9ddaaf01esm1452786qkc.102.2023.01.24.06.14.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 05:16:38 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <7b9ee972-2680-2e1b-bef3-201d8a1e4bdd@dunelm.org.uk>
-Date:   Tue, 24 Jan 2023 13:16:34 +0000
+        Tue, 24 Jan 2023 06:14:37 -0800 (PST)
+Message-ID: <01f97aff-58a1-ef2c-e668-d37ea513c64e@github.com>
+Date:   Tue, 24 Jan 2023 09:14:36 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 5/9] rebase: add coverage of other incompatible options
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: [PATCH v2.5 01/11] bundle: test unbundling with incomplete history
+From:   Derrick Stolee <derrickstolee@github.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        avarab@gmail.com, steadmon@google.com, chooglen@google.com
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+ <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
+ <b3828725bc8f8887b9b4777a0e3d84224a427f31.1674487310.git.gitgitgadget@gmail.com>
+ <xmqqsfg1m8l6.fsf@gitster.g>
+ <eae85534-89c9-6eff-69d5-7d4b2be85fb6@github.com>
+ <xmqqilgxm2ky.fsf@gitster.g> <xmqqtu0glw81.fsf@gitster.g>
+ <771a2993-85bd-0831-0977-24204f84e206@github.com>
 Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-References: <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
- <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com>
- <5e4851e611ee18112bd71939ee900e02a8d590c5.1674367961.git.gitgitgadget@gmail.com>
- <759fb313-ce88-4eb7-96c0-4adeb75ca9f9@dunelm.org.uk>
- <CABPp-BE+wRgjmWknARQpNsdUFjNOz0ND9wgx_-_RTyK+EwJjXA@mail.gmail.com>
- <83d27162-59d4-d8c0-fde3-f522630d024d@dunelm.org.uk>
-In-Reply-To: <83d27162-59d4-d8c0-fde3-f522630d024d@dunelm.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <771a2993-85bd-0831-0977-24204f84e206@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>>> Signed-off-by: Elijah Newren <newren@gmail.com>
->>>> --- a/builtin/rebase.c
->>>> +++ b/builtin/rebase.c
->>>> @@ -1224,6 +1224,26 @@ int cmd_rebase(int argc, const char **argv, 
->>>> const char *prefix)
->>>>                if (options.fork_point < 0)
->>>>                        options.fork_point = 0;
->>>>        }
->>>> +     /*
->>>> +      * The apply backend does not support 
->>>> --[no-]reapply-cherry-picks.
->>>> +      * The behavior it implements by default is equivalent to
->>>> +      * --no-reapply-cherry-picks (due to passing --cherry-picks to
->>>> +      * format-patch), but --keep-base alters the upstream such 
->>>> that no
->>>> +      * cherry-picks can be found (effectively making it act like
->>>> +      * --reapply-cherry-picks).
->>>> +      *
->>>> +      * Now, if the user does specify --[no-]reapply-cherry-picks, but
->>>> +      * does so in such a way that options.reapply_cherry_picks ==
->>>> +      * keep_base, then the behavior they get will match what they
->>>> +      * expect despite options.reapply_cherry_picks being ignored.  We
->>>> +      * could just allow the flag in that case, but it seems better to
->>>> +      * just alert the user that they've specified a flag that the
->>>> +      * backend ignores.
->>>> +      */
->>>
->>> I'm a bit confused by this. --keep-base works with either
->>> --reapply-cherry-picks (which is the default if --keep-base is given) or
->>> --no-reapply-cherry-picks. Just below this hunk we have
->>>
->>>          if (options.reapply_cherry_picks < 0)
->>>                  options.reapply_cherry_picks = keep_base;
->>>
->>> So we only set options.reapply_cherry_picks to match keep_base if the
->>> user did not specify -[-no]-reapply-cherry-picks on the commandline.
->>
->> options.reapply_cherry_picks is totally ignored by the apply backend,
->> regardless of whether it's set by the user or the setup code in
->> builtin/rebase.c.  And if we have an option which is ignored, isn't it
->> nicer to provide an error message to the user if they tried to set it?
->>
->> Said another way, while users could start with these command lines:
->>
->>      (Y) git rebase --whitespace=fix
->>      (Z) git rebase --whitespace=fix --keep-base
->>
->> and modify them to include flags that would be ignored, we could allow:
->>
->>      (A) git rebase --whitespace=fix --no-reapply-cherry-picks
->>      (B) git rebase --whitespace=fix --keep-base --reapply-cherry-picks
->>
->> But we could not allow commands like
->>
->>      (C) git rebase --whitespace=fix --reapply-cherry-picks
->>      (D) git rebase --whitespace=fix --keep-base 
->> --no-reapply-cherry-picks
-> 
-> (C) is already an error
-> (D) is currently allowed and I think works as expected (--keep-base only 
-> implies --reapply-cherry-picks, the user is free to override that with 
-> --no-reapply-cherry-picks) so I don't see why we'd want to make it an 
-> error.
-> 
->> For all four cases (A)-(D), the apply backend will ignore whatever
->> --[no-]reapply-cherry-picks flag is provided.
-> 
-> For (D) the flag is respected, (C) errors out, the other cases 
-> correspond to the default so it's like saying
-> 
->      git rebase --merge --no-reapply-cherry-picks
-> 
-> ignores the flag.
+On 1/24/2023 7:27 AM, Derrick Stolee wrote:
 
-On reflection that is only true for (B). I agree that we should error 
-out on (A) which we don't at the moment.
+> I'll focus on this area today and see what I can learn and how I
+> can approach this problem in a different way.
 
-I'd support a change that errors out on (A) and (C) but continues to 
-allow (B) and (D). I think we can do that with the diff below
+The first thing I did was try to figure out how things work today,
+so I created this test case. It appears we were not testing this
+at all previously.
 
-Best Wishes
+This is just a candidate replacement for v3, so don't worry about
+applying it until I re-roll.
 
-Phillip
+Thanks,
+-Stolee
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 1481c5b6a5..66aef356b8 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1230,12 +1230,6 @@ int cmd_rebase(int argc, const char **argv, const 
-char *prefix)
-                  if (options.fork_point < 0)
-                          options.fork_point = 0;
-          }
--        /*
--         * --keep-base defaults to --reapply-cherry-picks to avoid losing
--         * commits when using this option.
--         */
--        if (options.reapply_cherry_picks < 0)
--                options.reapply_cherry_picks = keep_base;
+--- >8 ---
 
-          if (options.root && options.fork_point > 0)
-                  die(_("options '%s' and '%s' cannot be used 
-together"), "--root", "--fork-point");
-@@ -1412,11 +1406,17 @@ int cmd_rebase(int argc, const char **argv, 
-const char *prefix)
-          if (options.empty != EMPTY_UNSPECIFIED)
-                  imply_merge(&options, "--empty");
+From f9b0cc872ac44892fe6b1c973f16b35edfdc5b20 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <derrickstolee@github.com>
+Date: Tue, 24 Jan 2023 08:47:19 -0500
+Subject: [PATCH v2.5 01/11] bundle: test unbundling with incomplete history
 
--        /*
--         * --keep-base implements --reapply-cherry-picks by altering 
-upstream so
--         * it works with both backends.
--         */
--        if (options.reapply_cherry_picks && !keep_base)
-+        if (options.reapply_cherry_picks < 0)
-+                /*
-+                 * --keep-base defaults to --reapply-cherry-picks to
-+                 * avoid losing commits when using this option.
-+                 */
-+                options.reapply_cherry_picks = keep_base;
-+        else if (!keep_base)
-+                /*
-+                 * --keep-base implements --reapply-cherry-picks by
-+                 * altering upstream so it works with both backends.
-+                 */
-                  imply_merge(&options, "--reapply-cherry-picks");
+When verifying a bundle, Git checks first that all prerequisite commits
+exist in the object store, then adds an additional check: those
+prerequisite commits must be reachable from references in the
+repository.
 
-          if (gpg_sign)
+This check is stronger than what is checked for refs being added during
+'git fetch', which simply guarantees that the new refs have a complete
+history up to the point where it intersects with the current reachable
+history.
+
+However, we also do not have any tests that check the behavior under
+this condition. Create a test that demonstrates its behavior.
+
+In order to construct a broken history, perform a shallow clone of a
+repository with a linear history, but whose default branch ('base') has
+a single commit, so dropping the shallow markers leaves a complete
+history from that reference. However, the 'tip' reference adds a
+shallow commit whose parent is missing in the cloned repository. Trying
+to unbundle a bundle with the 'tip' as a prerequisite will succeed past
+the object store check and move into the reachability check.
+
+The two errors that are reported are of this form:
+
+  error: Could not read <missing-commit>
+  fatal: Failed to traverse parents of commit <present-commit>
+
+These messages are not particularly helpful for the person running the
+unbundle command, but they do prevent the command from succeeding.
+
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ t/t6020-bundle-misc.sh | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+index 3a1cf30b1d7..38dbbf89155 100755
+--- a/t/t6020-bundle-misc.sh
++++ b/t/t6020-bundle-misc.sh
+@@ -566,4 +566,44 @@ test_expect_success 'cloning from filtered bundle has useful error' '
+ 	grep "cannot clone from filtered bundle" err
+ '
+
++test_expect_success 'verify catches unreachable, broken prerequisites' '
++	test_when_finished rm -rf clone-from clone-to &&
++	git init clone-from &&
++	(
++		cd clone-from &&
++		git checkout -b base &&
++		test_commit A &&
++		git checkout -b tip &&
++		git commit --allow-empty -m "will drop by shallow" &&
++		git commit --allow-empty -m "will keep by shallow" &&
++		git commit --allow-empty -m "for bundle, not clone" &&
++		git bundle create tip.bundle tip~1..tip &&
++		git reset --hard HEAD~1 &&
++		git checkout base
++	) &&
++	BAD_OID=$(git -C clone-from rev-parse tip~1) &&
++	TIP_OID=$(git -C clone-from rev-parse tip) &&
++	git clone --depth=1 --no-single-branch \
++		"file://$(pwd)/clone-from" clone-to &&
++	(
++		cd clone-to &&
++
++		# Set up broken history by removing shallow markers
++		git update-ref -d refs/remotes/origin/tip &&
++		rm .git/shallow &&
++
++		# Verify should fail
++		test_must_fail git bundle verify \
++			../clone-from/tip.bundle 2>err &&
++		grep "Could not read $BAD_OID" err &&
++		grep "Failed to traverse parents of commit $TIP_OID" err &&
++
++		# Unbundling should fail
++		test_must_fail git bundle unbundle \
++			../clone-from/tip.bundle 2>err &&
++		grep "Could not read $BAD_OID" err &&
++		grep "Failed to traverse parents of commit $TIP_OID" err
++	)
++'
++
+ test_done
+--
+2.39.1.vfs.0.0
+
+
