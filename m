@@ -2,161 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03021C25B4E
-	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 17:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69E93C54E94
+	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 17:33:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233231AbjAXRaJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Jan 2023 12:30:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60918 "EHLO
+        id S233999AbjAXRdN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Jan 2023 12:33:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229670AbjAXRaI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2023 12:30:08 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC39546149
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:30:06 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id u1-20020a17090a450100b0022936a63a21so19323031pjg.4
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:30:06 -0800 (PST)
+        with ESMTP id S234087AbjAXRdK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2023 12:33:10 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28D64E50D
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:33:07 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id s3so11676422pfd.12
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:33:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1N4Nbvf/imrbbsUoyEPO7tSeE+GlugG9Gzd82w0ilFE=;
-        b=hQNEVZWvJ+Dzv9w4KhwI4g+cQkp+jJRb0xHT343bUX55tSvZn+UgRKTKA+2owxxenQ
-         4WpAStN1yYiaBmhERV6QrVn2Ci7EYNBIOzmoA8gQPhR7xzGUIhgbVf74rmegIejQ+pNA
-         17BzzIDzF3pO3CP1TJLSSZi1HqKc/6cVv6VQHxPCqpwXd8CtEu8FuZo2SYLHwTQbIk55
-         oPeJXLYlwYc6qebM7DE+YVutt4Rew9r8tdvisz/v50dmKguhfgyZZO4pKwQ2us9JSbMF
-         ooV2c/5W51XZlDmrjCRp6e9ovnoIavM4W5aH452gNwnqg8zY0oxwvKrnHifKVnFL+yG+
-         SmLQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mL7eRBllfHEOMe3YIXjSJ+YJR/G+r0QK2TOdWK8Sbaw=;
+        b=qhKF9Iy8QE4iiFjuAWDRGtuno/6LEPwslNrhzFlbqcTzrtHX9K6eZp9uIz+kn1Clj3
+         0w22phKQa7XrMd1P6JkK3OMmNKBiziKXyvYFOJwvA/i5T+QiWxjuBIco0pd5WrT0ftCA
+         29PDwRZE4CEVSR1zlVQif59/pMpK6kctGWYpIA850D9VkIwrFvRiUH+4rxz0cWmNITB4
+         yrW1cExKZ2iifoRNWsmgulmQai002aBgC64FVR3YKYFwQTvZh7hQSu5I+g5Rb2s6mE/r
+         sLUw1NgFJ+N+rpE59a0w+eO1cnHWTjc24bNuNPGc32+fu7D81ICDyYO8llgSImSidaVn
+         Qc2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1N4Nbvf/imrbbsUoyEPO7tSeE+GlugG9Gzd82w0ilFE=;
-        b=dqI2dRqGhVieFi0+uztQmBdi5ZSVMc6XIESXE1pEO/mfYgSGwTttQsTd4sbaZrrK7D
-         41VPFXm0JNyFrFJhQxGYYDS0vDzaL9hGU+B4j0a3Y/NGoD6Z/9XUQfqmpxjTVg9x4zz9
-         y1oDiS/N23dcn1vIP4GHlG5v7JCO6hu/CiUeP/MTu/u0XdYdW4L/xFs/H4IGpgZvhtNK
-         hY1optt/m6R+a9cafTfx/L3EETJHcAmtke47iLJ/nUwE7RQJXdR1V2aj9Ru9PTseNi7D
-         EfwrW80sdSEzubk8WY9a6q6kZytNBsk4UFtYBFjd3AQmb9uF6o3Hi4ZC8tgvGWCTcyii
-         UIoA==
-X-Gm-Message-State: AFqh2kpshuMkiffexQ1dEpUWQr/kfKCzluFAI5d0B/26H1p6G+1cnhm6
-        E5wLq742UvUh2F4MROct6fYJSfOocVIxMD0=
-X-Google-Smtp-Source: AMrXdXsh7bN8QBPpSf6AGT+V/By6aImUfcSZeD7MrYzfLvP7OTwUVu1M0Rac/oL7NCnRsRkWenzrfg==
-X-Received: by 2002:a17:903:2291:b0:194:ab28:3282 with SMTP id b17-20020a170903229100b00194ab283282mr40472771plh.5.1674581406198;
-        Tue, 24 Jan 2023 09:30:06 -0800 (PST)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id 6-20020a170902c20600b00186acb14c4asm1938041pll.67.2023.01.24.09.30.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 09:30:05 -0800 (PST)
-Message-ID: <e57c1ca3-c21c-db41-a386-e5887f46055c@github.com>
-Date:   Tue, 24 Jan 2023 09:30:02 -0800
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mL7eRBllfHEOMe3YIXjSJ+YJR/G+r0QK2TOdWK8Sbaw=;
+        b=CceI1lz3ezXRmdxsr/7dfHbSKLtPSM8HzNpGo0mgfQAv5RMtZmZA63EIXns9y8XssK
+         XXbugNdSBVv2XeNT5+x18xG33PSmM3VdmFarFdVJCTujLuGoH0wRLxgIVuusObpx5ITG
+         q3p532+QMAks6NpubMUO/bXjqWitpqadJHEnwlWQTEPymQBkiwN6SLVkBQKGCssFhqm5
+         U0Lm2OC/HmsEDV+B0DPPbwyvFx778y9nNp4/xsY85S8kbpD9G2njAJflkTIcr3qCvarY
+         STVYCX0hq6WQFscUErhYibPqJUIyss3C7z0yAf/GpDyh5/iMi2Btuas0Lx+2y5niaUKF
+         JBkA==
+X-Gm-Message-State: AFqh2kr5w2IcAIUt6KUILlPf2NJyL6esvzmtCX4S5rTp5fs1AqE1O45j
+        YhxSEg5kZpWU6Ccd/+lpuFQ=
+X-Google-Smtp-Source: AMrXdXvypYVGe4TUU0W5P9VVPciePiOb0G18pY0PKQTdfTjQsm97jYJfpYslQm5B9unWNPnD6PnElA==
+X-Received: by 2002:a05:6a00:2147:b0:58d:e2b0:e480 with SMTP id o7-20020a056a00214700b0058de2b0e480mr22224043pfk.17.1674581587125;
+        Tue, 24 Jan 2023 09:33:07 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id 21-20020a621415000000b0057709fce782sm1869611pfu.54.2023.01.24.09.33.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Jan 2023 09:33:06 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        avarab@gmail.com, steadmon@google.com, chooglen@google.com
+Subject: Re: [PATCH v2.5 02/11] bundle: verify using connected()
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+        <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
+        <b3828725bc8f8887b9b4777a0e3d84224a427f31.1674487310.git.gitgitgadget@gmail.com>
+        <xmqqsfg1m8l6.fsf@gitster.g>
+        <eae85534-89c9-6eff-69d5-7d4b2be85fb6@github.com>
+        <xmqqilgxm2ky.fsf@gitster.g> <xmqqtu0glw81.fsf@gitster.g>
+        <771a2993-85bd-0831-0977-24204f84e206@github.com>
+        <ecc6b167-f5c4-48ce-3973-461d1659ed40@github.com>
+Date:   Tue, 24 Jan 2023 09:33:06 -0800
+In-Reply-To: <ecc6b167-f5c4-48ce-3973-461d1659ed40@github.com> (Derrick
+        Stolee's message of "Tue, 24 Jan 2023 09:16:30 -0500")
+Message-ID: <xmqqfsbzhm7h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH v7 00/12] Enhance credential helper protocol to include
- auth headers
-Content-Language: en-US
-To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
-        M Hickford <mirth.hickford@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Glen Choo <chooglen@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
- <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew John Cheetham via GitGitGadget wrote:
-> Updates in v6
-> =============
-> 
->  * Clarify the change to make logging optional in the check_dead_children()
->    function during libification of daemon.c.
-> 
->  * Fix missing pointer dereference bugs identified in libification of child
->    process handling functions for daemon.c.
-> 
->  * Add doc comments to child process handling function declarations in the
->    daemon-utils.h header.
-> 
->  * Align function parameter names with variable names at callsites for
->    libified daemon functions.
-> 
->  * Re-split out the test-http-server test helper commits in to smaller
->    patches: error response handling, request parsing, http-backend
->    pass-through, simple authentication, arbitrary header support.
-> 
->  * Call out auth configuration file format for test-http-server test helper
->    and supported options in commit messages, as well as a test to exercise
->    and demonstrate these options.
-> 
->  * Permit auth.token and auth.challenge to appear in any order; create the
->    struct auth_module just-in-time as options for that scheme are read. This
->    simplifies the configuration authoring of the test-http-server test
->    helper.
-> 
->  * Update tests to use auth.allowAnoymous in the patch that introduces the
->    new test helper option.
-> 
->  * Drop the strvec_push_nodup() commit and update the implementation of HTTP
->    request header line folding to use xstrdup and strvec_pop and _pushf.
-> 
->  * Use size_t instead of int in credential.c when iterating over the struct
->    strvec credential members. Also drop the not required const and cast from
->    the full_key definition and free.
-> 
->  * Replace in-tree test-credential-helper-reply.sh test cred helper script
->    with the lib-credential-helper.sh reusable 'lib' test script and shell
->    functions to configure the helper behaviour.
-> 
->  * Leverage sed over the while read $line loop in the test credential helper
->    script.
-> 
-> 
-> Updates in v7
-> =============
-> 
->  * Address several whitespace and arg/param list alignment issues.
-> 
->  * Rethink the test-http-helper worker-mode error and result enum to be more
->    simple and more informative to the nature of the error.
-> 
->  * Use uintmax_t to store the Content-Length of a request in the helper
->    test-http-server. Maintain a bit flag to store if we received such a
->    header.
-> 
->  * Return a "400 Bad Request" HTTP response if we fail to parse the request
->    in the test-http-server.
-> 
->  * Add test case to cover request message parsing in test-http-server.
-> 
->  * Use size_t and ALLOC_ARRAY over int and CALLOC_ARRAY respectively in
->    get_auth_module.
-> 
->  * Correctly free the split strbufs created in the header parsing loop in
->    test-http-server.
-> 
->  * Avoid needless comparison > 0 for unsigned types.
-> 
->  * Always set optional outputs to NULL if not present in test helper config
->    value handling.
-> 
->  * Remove an accidentally commented-out test cleanup line for one test case
->    in t5556.
-I've re-read the patches in this version; all of my comments from v5 have
-been addressed, and the additional updates w.r.t. other reviewer feedback
-all look good as well. At this point, I think the series is ready for
-'next'.
+Derrick Stolee <derrickstolee@github.com> writes:
 
-Thanks!
+> When Git verifies a bundle to see if it is safe for unbundling, it first
+> looks to see if the prerequisite commits are in the object store. This
+> is usually a sufficient filter, and those missing commits are indicated
+> clearly in the error messages.
+
+I am not sure if our early check is because "does the prerequisite
+even exist?" is sufficient.  It is a short-cut that is cheap and can
+be done without preparing the commit traversal.
+
+> However, if the commits are present in
+> the object store, then there could still be issues if those commits are
+> not reachable from the repository's references. The repository only has
+> guarantees that its object store is closed under reachability for the
+> objects that are reachable from references.
+
+Correct.
+
+> Thus, the code in verify_bundle() has previously had the additional
+> check that all prerequisite commits are reachable from repository
+> references. This is done via a revision walk from all references,
+> stopping only if all prerequisite commits are discovered or all commits
+> are walked. This uses a custom walk to verify_bundle().
+
+Correct.
+
+> This check is more strict than what Git applies even to fetched
+> pack-files.
+
+I do not see the need to say "even" here.  In what other situation
+do we make connectivity checks, and is there a need to be more
+strict than others when checking fetched packfiles?
+
+> In the fetch case, Git guarantees that the new references
+> are closed under reachability by walking from the new references until
+> walking commits that are reachable from repository refs. This is done
+> through the well-used check_connected() method.
+
+Correct and is a good point to make.
+
+> To better align with the restrictions required by 'git fetch',
+> reimplement this check in verify_bundle() to use check_connected(). This
+> also simplifies the code significantly.
+
+Wonderful.  I never liked the custom check done in unbundle code,
+which I am reasonably sure came from scripted hack to unbundle I
+wrote eons ago.
 
