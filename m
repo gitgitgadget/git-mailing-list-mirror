@@ -2,85 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCF7CC25B4E
-	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 19:18:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F504C25B50
+	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 19:21:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234415AbjAXTSv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Jan 2023 14:18:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52418 "EHLO
+        id S230229AbjAXTVZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Jan 2023 14:21:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234091AbjAXTSh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2023 14:18:37 -0500
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A26A94DCE4
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 11:18:36 -0800 (PST)
-Received: by mail-il1-x12e.google.com with SMTP id g16so2001661ilr.1
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 11:18:36 -0800 (PST)
+        with ESMTP id S229792AbjAXTVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2023 14:21:22 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F223A30EBE
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 11:21:20 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id g11so13928703eda.12
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 11:21:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0s4glqa4eS4tuwgUxOmf1OYeFQ6bitnyjQM6p7n3Mlg=;
-        b=uwXB6qZjWWnzcn2GTs5ObLzYbM91Kb6/WGesz4IDVhPIHTFDOD2JOgeWQYfgb/Kdce
-         iSsRmEWYcrGDNrd492OOMi3soNqnIAi5ShuprTG7DGPv07pMzJpdYubw9YnNiKO8ZTPj
-         YrpJvvC0vb5/A4yCGEUisOEfZQPY5S+FKmJ8cB/xxGtScA87mKwS75CVtPrjpxZI9Tkv
-         af1a67bUieBkkVCIxorfOJ5+R8jjpS8hNoBp54Jlyb0ohmKiokowu4/RPJFuzoQD8cqq
-         vA/IrMriMy2ZR8XCNPFRY7G6/9AIbmzyNlqaWbV/hdHN7F1lodZkLNkqK8oozVjJFWr/
-         Uf2g==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RtpZR+/YXt+r+cZMTOFH48Du31+skrZIYLprvLefyno=;
+        b=BiX+5Yp5yVmeQuEqh6X0lutT/2c72mylBl/62s29tIs9vNDx/DgtOpj3erdTAyR0KQ
+         Je5r4gX+pYLsf738JuyBa3JwbJuX0/9u/RWCIOkZI67IVm6iPrz4IAivzrzJ3hGnG3a5
+         moUYhOXQLzkyynKg5zvwpyG1PFayi3e7gnDRC8+tFQd2ovsCqj0QfriKKqAGo/N4Zduo
+         Gm0WYd0IYUQloNzGX9Izdn4D7TPgj3699c7OHFQxj0GtvPBGQX7qRMcQr/+LT6im0Z+8
+         AGK+xWQeGrXfrlO3gh67JdOVrdAL991rqy+pPd1mzCy6tqd0n+KVZ/PVOGrFWB7fHQYF
+         J09g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0s4glqa4eS4tuwgUxOmf1OYeFQ6bitnyjQM6p7n3Mlg=;
-        b=wdRdAoYe8Tmkljyg5YIuOIRs6dhu6SF6LQZgtPYy3zeObsk+2cY0CH0Ws/10Q4QokD
-         z6LEEW22UT6V1fGOIqiQe4s/Q11k6heysgukZFDJyqEm5Mbpf1ywXq5Ic4vfx7cFlOzF
-         qNhDf5fJFstth7SWIy/DVNDCHAv8zRmytiw74EFHNHy/lHw0BjawcJuuvtZo0pMBsRDf
-         ATMiN5Mt6RxhI0NXZ4ToXf75JroWBrqyPqRVXy/vpd5+rcC7WHgljlTbCHa0qoNpf9KQ
-         JRhMU2QGU1pku4lPMyVbIPT9c9Nmg93FX0v7eTiRI11egqkp5eVFM5JRNQDqkLwpdCxy
-         7jEw==
-X-Gm-Message-State: AFqh2koGAjrhEtmXDxl0nwZN43v4dTec4zS1Gcf9t3vtTJdmBWlBPy3h
-        n5Sk7McnGc9bq0q4Ns8gmkzDng==
-X-Google-Smtp-Source: AMrXdXsOJRXQ02Miv9VRI2q1VbebUfONHk81k8ucgMe+2TxiVfz+RtKoeMhszn1dCxcJb7cWLKlPmw==
-X-Received: by 2002:a05:6e02:2194:b0:30f:423f:b979 with SMTP id j20-20020a056e02219400b0030f423fb979mr18325871ila.19.1674587915899;
-        Tue, 24 Jan 2023 11:18:35 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f21-20020a056638023500b0039e6a310d4csm932036jaq.110.2023.01.24.11.18.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 11:18:35 -0800 (PST)
-Date:   Tue, 24 Jan 2023 14:18:32 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Hariom verma <hariom18599@gmail.com>
-Subject: Re: GSoC 2023
-Message-ID: <Y9AvCPC4+37XIZug@nand.local>
-References: <CAP8UFD3jzX5zRRYKS5uES2X9vB4eKJruzT7o6+7KytqLSmmZRg@mail.gmail.com>
- <d8ce0159-c9dc-25c2-4180-70518bb31bfc@gmail.com>
- <CAP8UFD32nDLR8BrhmeTpyraX3QBrc=U1ody+qgyMVY+_-HrASA@mail.gmail.com>
+        bh=RtpZR+/YXt+r+cZMTOFH48Du31+skrZIYLprvLefyno=;
+        b=Z1dVqMHYbr5lmuguVXZzF/Llnb5lbqukIT5dpoGRoukqdwDT4ZP5XQ/YV4xPKgzGSl
+         gNWotREGFjXW9j209GwQF2j/0o7oqNl7fNSWKg8RUp43XtayLTwjZiwImxV05sobmik8
+         8NxHovorMLBt7jqRwmi47uxYc+7TBgpcIeJrKBl8Ila4qnxVWzPbrXlXaJFug1mwHgVg
+         PY0EBpx59plsr0cjdMPwphRCusW0gSa7PZaYZ5AEVbXjrlzR3jY8ntUtKHpILzKMN7qs
+         mcQsgB3Xe41pLrDjGbVrA9B30tGCH8o2rkU7sVw4jEenq4nF0VpvtLI/CnJBYbLjD/Sp
+         F0Rw==
+X-Gm-Message-State: AFqh2kriPNY9iGXCs3EYT9JsIwDfRU2oPbfZGlK9Hw8jl2owRIBMQXKg
+        ntQ5z9wQgqmTiNlKodBW3JM=
+X-Google-Smtp-Source: AMrXdXucaS0EFkA8FYGSBDXyJ/zK/tn5cJto2j4TiPEHpbuKwkIAe4Kfokw/DrU6IzCyhZWoHlf2Gw==
+X-Received: by 2002:a05:6402:1484:b0:49e:9d82:49d6 with SMTP id e4-20020a056402148400b0049e9d8249d6mr18613014edv.10.1674588079386;
+        Tue, 24 Jan 2023 11:21:19 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id m6-20020aa7d346000000b0049c6c7670easm1400608edr.70.2023.01.24.11.21.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Jan 2023 11:21:19 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <83c489c6-7927-ee3a-03bb-7896a928c280@dunelm.org.uk>
+Date:   Tue, 24 Jan 2023 19:21:18 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD32nDLR8BrhmeTpyraX3QBrc=U1ody+qgyMVY+_-HrASA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 5/9] rebase: add coverage of other incompatible options
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+References: <pull.1466.v3.git.1674266126.gitgitgadget@gmail.com>
+ <pull.1466.v4.git.1674367961.gitgitgadget@gmail.com>
+ <5e4851e611ee18112bd71939ee900e02a8d590c5.1674367961.git.gitgitgadget@gmail.com>
+ <759fb313-ce88-4eb7-96c0-4adeb75ca9f9@dunelm.org.uk>
+ <CABPp-BE+wRgjmWknARQpNsdUFjNOz0ND9wgx_-_RTyK+EwJjXA@mail.gmail.com>
+ <83d27162-59d4-d8c0-fde3-f522630d024d@dunelm.org.uk>
+ <7b9ee972-2680-2e1b-bef3-201d8a1e4bdd@dunelm.org.uk>
+ <CABPp-BHVUc7EdY9z_TPcHspCak6Yc3mfDXUkivj4zq_fJem3SQ@mail.gmail.com>
+ <0418e5b6-8cbd-9dc9-085e-31380beda89b@dunelm.org.uk>
+ <CABPp-BEwv+cRMOR_-kz_UhfQt1+SGRdhictLmwmq=122LYZaDw@mail.gmail.com>
+In-Reply-To: <CABPp-BEwv+cRMOR_-kz_UhfQt1+SGRdhictLmwmq=122LYZaDw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 24, 2023 at 05:38:31PM +0100, Christian Couder wrote:
-> Actually you were already an Org Admin last year and it looks like
-> they didn't remove people from the roles they had last year, so you
-> are still an Org Admin.
+On 24/01/2023 17:12, Elijah Newren wrote:
+> On Tue, Jan 24, 2023 at 8:48 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>>> +                options.reapply_cherry_picks = keep_base;
+>>>> +        else if (!keep_base)
+>>>> +                /*
+>>>> +                 * --keep-base implements --reapply-cherry-picks by
+>>>
+>>> Should this be --[no-]reapply-cherry-picks, to clarify that it handles
+>>> both cases?  Especially given how many times I missed it?
+>>
+>> This has obviously proved to be confusing. The aim was to explain that
+>> in order to work with the apply backend "[--reapply-cherry-picks]
+>> --keep-base" was doing something unusual with `upstream` to reapply
+>> cherry picks. "--no-reapply-cherry-picks --keep-base" does not do
+>> anything unusual with `upstream`. I don't think changing it to
+>> --[no-]reapply-cherry-picks quite captures that. I came up with
+>>
+>> To support --reapply-cherry-picks (which is not supported by the apply
+>> backend) --keep-base alters upstream to prevent cherry picked commits
+>> from being dropped.
+>>
+>> but it really needs to mention that --keep-base also supports
+>> --no-reapply-cherry-picks in the usual way
+> 
+> Somewhat wordy, but perhaps:
+> 
+>      /*
+>       * The apply backend always searches for and drops cherry
+>       * picks.  This is often not wanted with --keep-base, so
+>       * --keep-base allows --reapply-cherry-picks to be
+>       * simulated by altering the upstream such that
+>       * cherry-picks cannot be detected and thus all commits are
+>       * reapplied.  Thus, --[no-]reapply-cherry-picks is
+>       * supported when --keep-base is specified, but not when
+>       * --keep-base is left out.
+>       */
 
-I think that puts me in the same boat, though I can't remember if I am
-actually an org admin or not. If I'm not, and you folks need some extra
-help, I'm happy to participate.
+That sounds good to me, it is definitely an improvement on the current 
+comment which I think is too terse.
 
-I am going to pass on mentoring this year, though. It was a fun
-experience for me last time, but took more time than I had planned for.
-If someone needs or wants a co-mentor, though, I'm happy to help there
-as I think it will end up taking less time.
+Best Wishes
 
-Thanks,
-Taylor
+Phillip
