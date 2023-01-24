@@ -2,72 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69E93C54E94
-	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 17:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4347C54E94
+	for <git@archiver.kernel.org>; Tue, 24 Jan 2023 17:52:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233999AbjAXRdN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Jan 2023 12:33:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36552 "EHLO
+        id S232388AbjAXRwY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Jan 2023 12:52:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234087AbjAXRdK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2023 12:33:10 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D28D64E50D
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:33:07 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id s3so11676422pfd.12
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:33:07 -0800 (PST)
+        with ESMTP id S233331AbjAXRwX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2023 12:52:23 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 137E449439
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:52:22 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id m11so3955896pji.0
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 09:52:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mL7eRBllfHEOMe3YIXjSJ+YJR/G+r0QK2TOdWK8Sbaw=;
-        b=qhKF9Iy8QE4iiFjuAWDRGtuno/6LEPwslNrhzFlbqcTzrtHX9K6eZp9uIz+kn1Clj3
-         0w22phKQa7XrMd1P6JkK3OMmNKBiziKXyvYFOJwvA/i5T+QiWxjuBIco0pd5WrT0ftCA
-         29PDwRZE4CEVSR1zlVQif59/pMpK6kctGWYpIA850D9VkIwrFvRiUH+4rxz0cWmNITB4
-         yrW1cExKZ2iifoRNWsmgulmQai002aBgC64FVR3YKYFwQTvZh7hQSu5I+g5Rb2s6mE/r
-         sLUw1NgFJ+N+rpE59a0w+eO1cnHWTjc24bNuNPGc32+fu7D81ICDyYO8llgSImSidaVn
-         Qc2w==
+        bh=B2u+iTOASIgA5/1rEuy7cxU/WvtAOFNXir4JIyQs0RQ=;
+        b=d4PkqbkLXKG5B+5ADzTOUzdDc8jVMHS+85EZuTnJ7AJoqE5+FYLP12y4RVImkkvs8p
+         FfzSVn+BQ2TGC2+5N/FqNJAz581pQlwOqjYYRAG6vWZTaWRLYIMzjrU0IIJeYDtWdPq6
+         7MsLmd+oN8hK6HIwxl/BsN35w16nZjDWam6VmEQjEy1xbETZVahPPFRN+U62JzF3Gle2
+         8hoCmRBdf069K8mDrPRTZVvEH5SWhyq8SujQaHMzzVJW2ezTkvYtXuET+/yzyywWK+SV
+         CJuHYNNpM4QX+pcMFp7ixze6v8sTPQ6R7QqwTCiaYkyTDZD8zrkjijC/mH/xsjjbJTHb
+         nIXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=mL7eRBllfHEOMe3YIXjSJ+YJR/G+r0QK2TOdWK8Sbaw=;
-        b=CceI1lz3ezXRmdxsr/7dfHbSKLtPSM8HzNpGo0mgfQAv5RMtZmZA63EIXns9y8XssK
-         XXbugNdSBVv2XeNT5+x18xG33PSmM3VdmFarFdVJCTujLuGoH0wRLxgIVuusObpx5ITG
-         q3p532+QMAks6NpubMUO/bXjqWitpqadJHEnwlWQTEPymQBkiwN6SLVkBQKGCssFhqm5
-         U0Lm2OC/HmsEDV+B0DPPbwyvFx778y9nNp4/xsY85S8kbpD9G2njAJflkTIcr3qCvarY
-         STVYCX0hq6WQFscUErhYibPqJUIyss3C7z0yAf/GpDyh5/iMi2Btuas0Lx+2y5niaUKF
-         JBkA==
-X-Gm-Message-State: AFqh2kr5w2IcAIUt6KUILlPf2NJyL6esvzmtCX4S5rTp5fs1AqE1O45j
-        YhxSEg5kZpWU6Ccd/+lpuFQ=
-X-Google-Smtp-Source: AMrXdXvypYVGe4TUU0W5P9VVPciePiOb0G18pY0PKQTdfTjQsm97jYJfpYslQm5B9unWNPnD6PnElA==
-X-Received: by 2002:a05:6a00:2147:b0:58d:e2b0:e480 with SMTP id o7-20020a056a00214700b0058de2b0e480mr22224043pfk.17.1674581587125;
-        Tue, 24 Jan 2023 09:33:07 -0800 (PST)
+        bh=B2u+iTOASIgA5/1rEuy7cxU/WvtAOFNXir4JIyQs0RQ=;
+        b=vqnqOaqmpyufW1q5H/n7BUlj22pICP3TmlGwDgQKqMa9NX/bmbe+XCOsC4KDXCcBXR
+         Wmqku5+Xq9HqjJLyc20vwlbSz/NWWKOY62vTx9TNGk4Koylr4fxjeYW+8Mrh6wYIPH9A
+         aAOc5FlP31TqW51AEew4Appsv2nj2odMwMiS2YHQaK3CnTrBiSQH80Y9VXxmLS/VftxB
+         JrTMahai4c5sxEWZ/nFUwwCSpM/gtOBztnFBIJFHMYsi1Nvo0buMdbw0/mrjTaZQ+mXR
+         9zDMbKxS/DoWNBQt2AuYJEgLwApOW9+Oca6NNvouFiPwVF1zvOAL29jKo0yk/YYLn3Dt
+         GVOA==
+X-Gm-Message-State: AFqh2kqpesTaayzUAlrbFNf30ZKotspWOUThfBpueD/uqgrnkO7skhV4
+        D0G2ibh0k0EQ5FSQYfztLcg=
+X-Google-Smtp-Source: AMrXdXuOmkst8bKwb3R0cp2qHQ1VBQyi2qRoKJzbItyJkf0wZ6+WOqzyPfR3979pauMIE1FCXvXy+w==
+X-Received: by 2002:a17:902:b48f:b0:189:b4d0:aee with SMTP id y15-20020a170902b48f00b00189b4d00aeemr26808921plr.67.1674582741448;
+        Tue, 24 Jan 2023 09:52:21 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 21-20020a621415000000b0057709fce782sm1869611pfu.54.2023.01.24.09.33.06
+        by smtp.gmail.com with ESMTPSA id q9-20020a170902bd8900b0019339f3368asm1986355pls.3.2023.01.24.09.52.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 09:33:06 -0800 (PST)
+        Tue, 24 Jan 2023 09:52:21 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
-        avarab@gmail.com, steadmon@google.com, chooglen@google.com
-Subject: Re: [PATCH v2.5 02/11] bundle: verify using connected()
-References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
-        <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
-        <b3828725bc8f8887b9b4777a0e3d84224a427f31.1674487310.git.gitgitgadget@gmail.com>
-        <xmqqsfg1m8l6.fsf@gitster.g>
-        <eae85534-89c9-6eff-69d5-7d4b2be85fb6@github.com>
-        <xmqqilgxm2ky.fsf@gitster.g> <xmqqtu0glw81.fsf@gitster.g>
-        <771a2993-85bd-0831-0977-24204f84e206@github.com>
-        <ecc6b167-f5c4-48ce-3973-461d1659ed40@github.com>
-Date:   Tue, 24 Jan 2023 09:33:06 -0800
-In-Reply-To: <ecc6b167-f5c4-48ce-3973-461d1659ed40@github.com> (Derrick
-        Stolee's message of "Tue, 24 Jan 2023 09:16:30 -0500")
-Message-ID: <xmqqfsbzhm7h.fsf@gitster.g>
+To:     "Adam Szkoda via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Adam Szkoda <adaszko@gmail.com>,
+        Fabian Stelzer <fs@gigacodes.de>
+Subject: Re: [PATCH v2] ssh signing: better error message when key not in agent
+References: <pull.1270.git.git.1674029874363.gitgitgadget@gmail.com>
+        <pull.1270.v2.git.git.1674573972087.gitgitgadget@gmail.com>
+Date:   Tue, 24 Jan 2023 09:52:20 -0800
+In-Reply-To: <pull.1270.v2.git.git.1674573972087.gitgitgadget@gmail.com> (Adam
+        Szkoda via GitGitGadget's message of "Tue, 24 Jan 2023 15:26:11
+        +0000")
+Message-ID: <xmqq1qnjhlbf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,52 +70,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+"Adam Szkoda via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> When Git verifies a bundle to see if it is safe for unbundling, it first
-> looks to see if the prerequisite commits are in the object store. This
-> is usually a sufficient filter, and those missing commits are indicated
-> clearly in the error messages.
+> From: Adam Szkoda <adaszko@gmail.com>
+>
+> When signing a commit with a SSH key, with the private key missing from
+> ssh-agent, a confusing error message is produced:
+>
+>     error: Load key
+>     "/var/folders/t5/cscwwl_n3n1_8_5j_00x_3t40000gn/T//.git_signing_key_tmpkArSj7":
+>     invalid format? fatal: failed to write commit object
+>
+> The temporary file .git_signing_key_tmpkArSj7 created by git contains a
+> valid *public* key.  The error message comes from `ssh-keygen -Y sign' and
+> is caused by a fallback mechanism in ssh-keygen whereby it tries to
+> interpret .git_signing_key_tmpkArSj7 as a *private* key if it can't find in
+> the agent [1].  A fix is scheduled to be released in OpenSSH 9.1. All that
+> needs to be done is to pass an additional backward-compatible option -U to
+> 'ssh-keygen -Y sign' call.  With '-U', ssh-keygen always interprets the file
+> as public key and expects to find the private key in the agent.
+>
+> As a result, when the private key is missing from the agent, a more accurate
+> error message gets produced:
+>
+>     error: Couldn't find key in agent
+>
+> [1] https://bugzilla.mindrot.org/show_bug.cgi?id=3429
+>
+> Signed-off-by: Adam Szkoda <adaszko@gmail.com>
+> ---
 
-I am not sure if our early check is because "does the prerequisite
-even exist?" is sufficient.  It is a short-cut that is cheap and can
-be done without preparing the commit traversal.
+Well explained.
 
-> However, if the commits are present in
-> the object store, then there could still be issues if those commits are
-> not reachable from the repository's references. The repository only has
-> guarantees that its object store is closed under reachability for the
-> objects that are reachable from references.
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1270/radicle-dev/maint-v2
+> Pull-Request: https://github.com/git/git/pull/1270
+>
+> Range-diff vs v1:
+>
+>  1:  0ce06076242 < -:  ----------- ssh signing: better error message when key not in agent
+>  -:  ----------- > 1:  03dfca79387 ssh signing: better error message when key not in agent
 
-Correct.
+This is a fairly useless range-diff.
 
-> Thus, the code in verify_bundle() has previously had the additional
-> check that all prerequisite commits are reachable from repository
-> references. This is done via a revision walk from all references,
-> stopping only if all prerequisite commits are discovered or all commits
-> are walked. This uses a custom walk to verify_bundle().
+Even when a range-diff shows the differences in the patches,
+mechanically generated range-diff can only show _what_ changed.  It
+is helpful to explain the changes in your own words to highlight
+_why_ such changes are done, and this place after the "---" line
+and the diffstat we see below is the place to do so.
 
-Correct.
+Does GitGitGadget allow its users to describe the differences since
+the previous iteration yourself?
 
-> This check is more strict than what Git applies even to fetched
-> pack-files.
+>  gpg-interface.c | 15 ++++++++++-----
+>  1 file changed, 10 insertions(+), 5 deletions(-)
+>
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index f877a1ea564..33899a450eb 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -998,6 +998,7 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
+>  	char *ssh_signing_key_file = NULL;
+>  	struct strbuf ssh_signature_filename = STRBUF_INIT;
+>  	const char *literal_key = NULL;
+> +	int literal_ssh_key = 0;
+>  
+>  	if (!signing_key || signing_key[0] == '\0')
+>  		return error(
+> @@ -1005,6 +1006,7 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
+>  
+>  	if (is_literal_ssh_key(signing_key, &literal_key)) {
+>  		/* A literal ssh key */
+> +		literal_ssh_key = 1;
+>  		key_file = mks_tempfile_t(".git_signing_key_tmpXXXXXX");
+>  		if (!key_file)
+>  			return error_errno(
+> @@ -1036,11 +1038,14 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
+>  	}
+>  
+>  	strvec_pushl(&signer.args, use_format->program,
+> -		     "-Y", "sign",
+> -		     "-n", "git",
+> -		     "-f", ssh_signing_key_file,
+> -		     buffer_file->filename.buf,
+> -		     NULL);
+> +			"-Y", "sign",
+> +			"-n", "git",
+> +			"-f", ssh_signing_key_file,
+> +			NULL);
 
-I do not see the need to say "even" here.  In what other situation
-do we make connectivity checks, and is there a need to be more
-strict than others when checking fetched packfiles?
+Please avoid making a pointless indentation change like this.  We do
+not pass filename yet with this pushl(), because ...
 
-> In the fetch case, Git guarantees that the new references
-> are closed under reachability by walking from the new references until
-> walking commits that are reachable from repository refs. This is done
-> through the well-used check_connected() method.
+> +	if (literal_ssh_key) {
+> +		strvec_push(&signer.args, "-U");
+> +	}
 
-Correct and is a good point to make.
+... when we give a literal key, we want to insert "-U" in front, and then
 
-> To better align with the restrictions required by 'git fetch',
-> reimplement this check in verify_bundle() to use check_connected(). This
-> also simplifies the code significantly.
+> +	strvec_push(&signer.args, buffer_file->filename.buf);
 
-Wonderful.  I never liked the custom check done in unbundle code,
-which I am reasonably sure came from scripted hack to unbundle I
-wrote eons ago.
+... the filename.  Which makes sense.
 
+The insertion of "-U" is a single statement as the body of a if()
+statement.  We do not want {} around it, by the way.
+
+Other than that, nicely done.  Thanks.
+
+>  	sigchain_push(SIGPIPE, SIG_IGN);
+>  	ret = pipe_command(&signer, NULL, 0, NULL, 0, &signer_stderr, 0);
+>
+> base-commit: 844ede312b4e988881b6e27e352f469d8ab80b2a
