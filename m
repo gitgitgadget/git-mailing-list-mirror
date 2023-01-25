@@ -2,68 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 441BFC54E94
-	for <git@archiver.kernel.org>; Wed, 25 Jan 2023 02:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7585BC54E94
+	for <git@archiver.kernel.org>; Wed, 25 Jan 2023 02:24:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230009AbjAYCLV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Jan 2023 21:11:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47826 "EHLO
+        id S233585AbjAYCYO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Jan 2023 21:24:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbjAYCLT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Jan 2023 21:11:19 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772E14F865
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 18:11:18 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id g23so16550692plq.12
-        for <git@vger.kernel.org>; Tue, 24 Jan 2023 18:11:18 -0800 (PST)
+        with ESMTP id S232712AbjAYCYN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Jan 2023 21:24:13 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C48EC53998
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 18:23:47 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id g205so12512041pfb.6
+        for <git@vger.kernel.org>; Tue, 24 Jan 2023 18:23:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PuPAOw5BToOiTS97gk+K9+rDmuNXNPwQpbMbFHxfv/0=;
-        b=KIky2baZuJVGBxDPYfZyr25rGVl7wsFlb+bmdN/0sfUWaUnFSZuiLmWdGtZVMsa+q5
-         DFveh02K0RaHs2F05SkADxdheLVgfQfAM/rAf1n7uK+JS95pTnWIpXt3uxGYdXKWIWVy
-         +2YaEYrTMYQYYS21eAF9xNoSRboTzqU0TZkMvypQ44lrX7zr/xfxv9ntBDDRFvMStNk2
-         OP6VNqyQtYdR9LhTVzZhjcdH1mF1DCsED7Bs8WRRUnwYf9kQEct7RaHKa3iUa6KpMxA0
-         EGflfCQQHRVGc2Sik7UsiUVqkDssDozI2gNrmpgmKJMNjlvIO4P+Pmz7DCPyHRXhpd/H
-         w+Hg==
+        bh=TBFaJTkZzLyRb7RlI/mzXyV5a4GxZ9xfP0gZOYhJDpM=;
+        b=WD3jMXEkz+0Snfw5kGwqk+MYpQBDzXtZw/3jBklVJH0pFstsFgyb/Q060SXtgVtFvW
+         ZPdw8IScnHAmebcClw6JY+o7qgdxMSLKxPozfyi6TAqCs8jdZ3WHsmB6i2spYkRJkBQE
+         myBh/11JY5KHsPKniXhrEtpAP7t2wUB20HcxgrXR1Bc+rrDwE1oSMZz6A4Mvs/iHLnFF
+         YMddZtxVUtuga17fqoTz0TAl2SwDOpBJnHoyFH7KRGK/SSfxJK8cT7hgkTXFnrP8Uy08
+         Y3f67q8m/x0VsRzVqH2F1PA2+4HkdAZqNX6Kr7tj3kytEFwNmXP+L8Ah1SQ1Rx2t6f+b
+         BDRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=PuPAOw5BToOiTS97gk+K9+rDmuNXNPwQpbMbFHxfv/0=;
-        b=mJuaQv67akd6Yk9x6BB/NBdtNhLcrfGdjFImuNGT7WgSf2Tn5bvsrWDgiSKqxMzYTz
-         DPYaCMao+n+QqsKRdC9ydArTqik3LsumHzEPspmvWzwR370Yhi/3R8lzmJ7Lk5QETik/
-         kzL3wivbuZePeI5rtsJ1xdyNLOU1lwIh4jNyic+JcQB8/xMXw1186sQmqbruGRMqfb1B
-         cogjXE37U5sUgOPu2zCnCASDTf8ihCVlBqwU7QYcjAKQJygMVWcavY9SX+MJdYe+vAii
-         SvQjXXh2KN61CpOhxJSJoPd34RwMioN4AF/0Z+D8LG/DBObXFTCrPpXtPLm7sCRQdBcV
-         Xa+g==
-X-Gm-Message-State: AFqh2kq4WDWo9FIW6h1N3iLAkdeJYYCwTngJt8MnZTAsYJbcxj1JTZnH
-        323RNIpkFwXeLeNFL7HxdWQ=
-X-Google-Smtp-Source: AMrXdXtGzCPSUNS8TFqhlwC5bEGhQ33V43Fb/TMpOjRhtQUCwjPCkHLqGF6hSjAAdKZuyuSlfC3faA==
-X-Received: by 2002:a17:902:b701:b0:194:7771:4eeb with SMTP id d1-20020a170902b70100b0019477714eebmr27090438pls.40.1674612677847;
-        Tue, 24 Jan 2023 18:11:17 -0800 (PST)
+        bh=TBFaJTkZzLyRb7RlI/mzXyV5a4GxZ9xfP0gZOYhJDpM=;
+        b=riSDFT/Yc2JLcgNuQOOWn7r6LvNIQ3zQIRecP2RMNnWqH2GilE0DWxHtKb5+ZH2x/x
+         MXsyUZy0qaiuFEz9c1eGYQbo2DjMginLaYIBuUHYjOEfV++FHDkHEXsAnWhpIoFloqjX
+         TfA4xA19ZXqb88iqpzVsXvg5A2V7MwfxjRX0RFCRM7uF5LkPDWwEQTEy9HLVeoR33r6k
+         Q0vkk83CTqUdMlJ97wrgKcT0loLIB/Hm5J0bQD2pNCEKrpXikLIudwwczfCbVk0zacAF
+         7SBAMa+nFAEuVQSzj65kuzM4G8Y+573z6eGsXFpK9rlSqclFOmptWG/GGz9nlkDPyjOx
+         /EIw==
+X-Gm-Message-State: AFqh2krNFB/hUU6L+BvKtfx12Gq0ijW2wdQq2+W18HVcgU353ny/WEUJ
+        2L2yKz/ceJSBBLAaPOiVi3M=
+X-Google-Smtp-Source: AMrXdXte4XRA5nqlb1zCuY7UV5gLNjg+Znrni1q/lezgDEM9J+u8ehbl6ox7x7ci/XxV53VEFkI9xA==
+X-Received: by 2002:a05:6a00:288c:b0:586:8ead:a8e8 with SMTP id ch12-20020a056a00288c00b005868eada8e8mr32294943pfb.8.1674613415017;
+        Tue, 24 Jan 2023 18:23:35 -0800 (PST)
 Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id jh6-20020a170903328600b001960cf9655fsm2273408plb.309.2023.01.24.18.11.17
+        by smtp.gmail.com with ESMTPSA id f20-20020a056a0022d400b005877d374069sm2362201pfj.10.2023.01.24.18.23.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jan 2023 18:11:17 -0800 (PST)
+        Tue, 24 Jan 2023 18:23:34 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Zev Weiss <zev@bewilderbeest.net>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Patrick Hemmer <git@stormcloud9.net>
-Subject: Re: [PATCH 2/5] log: Refactor duplicated code to headerize
- recipient lists
+Cc:     git@vger.kernel.org, Emma Brooks <me@pluvano.com>,
+        Hamza Mahfooz <someguy@effective-light.com>
+Subject: Re: [PATCH 4/5] pretty: Add name_and_address_only parameter
 References: <20230119223858.29262-1-zev@bewilderbeest.net>
-        <20230119223858.29262-3-zev@bewilderbeest.net>
-Date:   Tue, 24 Jan 2023 18:11:16 -0800
-In-Reply-To: <20230119223858.29262-3-zev@bewilderbeest.net> (Zev Weiss's
-        message of "Thu, 19 Jan 2023 14:38:55 -0800")
-Message-ID: <xmqqo7qnfjnf.fsf@gitster.g>
+        <20230119223858.29262-5-zev@bewilderbeest.net>
+Date:   Tue, 24 Jan 2023 18:23:34 -0800
+In-Reply-To: <20230119223858.29262-5-zev@bewilderbeest.net> (Zev Weiss's
+        message of "Thu, 19 Jan 2023 14:38:57 -0800")
+Message-ID: <xmqqedrjfj2x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,35 +70,38 @@ X-Mailing-List: git@vger.kernel.org
 
 Zev Weiss <zev@bewilderbeest.net> writes:
 
-> Subject: Re: [PATCH 2/5] log: Refactor duplicated code to headerize recipient lists
+> This is meant to be used with pp_user_info() when using it to format
+> email recipients generated by --to-cmd/--cc-cmd.  When set it omits
+> the leading 'From: ', trailing linefeed, and the date suffix, and
+> additionally will return the input string unmodified if
+> split_ident_line() can't parse it (e.g. for a bare email address).
 
-Style: "log: Refactor" -> "log: refactor"
+It is somewhat disturbing to see that this only takes effect when
+cmit_fmt_is_mail(pp->fmt) and completely ignored otherwise.  Seeing
+pp->fmt and pp->name_and_address_only sitting next to each other, it
+looks like a layering error.
 
-cf. Documentation/SubmittingPatches[[summary-section]]
+I wonder if you instead want a new value for pp->fmt that
+cmit_fmt_is_mail() considers an e-mail format but is different from
+what we used for usual e-mail format?
 
-> The To and Cc headers are handled identically (the only difference is
-> the header name tag), so we might as well reuse the same code for both
-> instead of duplicating it.
+> diff --git a/pretty.c b/pretty.c
+> index 1e1e21878c83..e6798fadc107 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -509,8 +509,11 @@ void pp_user_info(struct pretty_print_context *pp,
+>  		return;
+>  
+>  	line_end = strchrnul(line, '\n');
+> -	if (split_ident_line(&ident, line, line_end - line))
+> +	if (split_ident_line(&ident, line, line_end - line)) {
+> +		if (pp->name_and_address_only)
+> +			strbuf_addstr(sb, line);
+>  		return;
+> +	}
 
-Makes tons of sense.  But seeing this one ...
-
-> +	recipients_to_header_buf("To", &buf, &extra_to);
-> +	recipients_to_header_buf("Cc", &buf, &extra_cc);
-
-... the parameters to the function probably should be ...
-
-> +void recipients_to_header_buf(const char *hdr, struct strbuf *buf,
-> +			      const struct string_list *recipients);
-
-... in this order, instead:
-
-    format_recipients(&buf, "To", &extra_to);
-
-That is, "To" and &extra_to are much closely related to each other
-than they are to &buf in the sense that they are both input to the
-helper function to work on, while &buf is an output buffer, and we
-tend to place closer things together, next to each other.
-
-Other than that, removal of repetition is very good.
-
-Thanks.
+This error handling is also disturbing.  What makes it correct to
+parrot the original input that does not parse correctly as an ident
+line to the output, only when name_and_address_only bit is on?  It
+does not make any sense to do so when cmit_fmt_is_mail(pp->fmt) is
+false, especially.
