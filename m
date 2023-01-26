@@ -2,183 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78CD8C54E94
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 14:55:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C91E1C05027
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 15:56:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231879AbjAZOzq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Jan 2023 09:55:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33080 "EHLO
+        id S232322AbjAZP4I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Jan 2023 10:56:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbjAZOzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2023 09:55:45 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9099A129
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 06:55:43 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id v10so2076001edi.8
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 06:55:43 -0800 (PST)
+        with ESMTP id S229459AbjAZP4H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2023 10:56:07 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB19548A27
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 07:56:04 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id j5so1898894pjn.5
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 07:56:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=unity3d.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iSMDLN1ewh5SQ0Ck29vj3FQ2Xnfc5dEyqeiFLcqJHeo=;
-        b=hpohY6/vCs9KI4eyWY+LMIrzGqTfzhU3k+p5+3TO1QCnqWYSrRaQyOMvO5gv4+h6py
-         +hDVF3SHjMJ1GIMeY+9AR5w8+ZE5huLOf1Haoia/7IMeTuv6OhHdLgGoxUlqN+Bxs+p0
-         zjgWAu/NaYSmke/9JOg+mxOKPzrw/yG0lROK7qCgPpljJxh31EVrBdvHEXoAg4Uj+f0V
-         j5mRQpdiIEqdhMNlLw3DcxXQ4yXAtUcfkreNBLytUg9fnS9WOixu/tCZmXuhuNDrIAcd
-         QIiiTuvaa8+AUbHnskWWz54baB/FRYhylA4Lv7nISRa++5wFMXuYs5aZAGLnSG/k3c2v
-         zKRw==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vbKm45+B/pTffPf+cGA8Xba1z8Pwk0Ff4480eiBN+gk=;
+        b=Ai2PLPFwskOOEwfGW18nlPlS+xbQhtmaoxQGOd6TljfeXZGuP7GG9U43Xh6kfAYk9U
+         bSd3xB0FhVKZeq5B94aBzwtMiHEzzOH+nuKBkWHR4lwGQD3HqNWWLP7kT/zyWriHH+iq
+         VrLlf/Vn7ppH/uXbtWmE9pQ007e45rZeXAKIQdo5uG2oQxs+ZBjRPu1UydXlCVon3qoB
+         Mhf2SpoV1NDzMOUwq+7CfTyewXDa/FTwypWDpDLml7IfyoZ6DEqwe+C8P+U4dXvCfE78
+         N2PWYptMhrsCUX2XFiJ0vqwZoSq19CjUTmv6os6DFEKPvOT19RIFafYqbdWsS8xrNUem
+         gW2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iSMDLN1ewh5SQ0Ck29vj3FQ2Xnfc5dEyqeiFLcqJHeo=;
-        b=j0MVGgIU1F5hRaSY/UVWFu6YMXU2Ux4zO/ywvBfkx4L+e4itBcHZvpPngs/EAesuaI
-         sV+vFmJPvDVg6LC/9aPSMX5szscbRHcoN0+d7kNScooxXjnjoQv2QJwYt2j2urTu27B9
-         Fc9v/Pq1bdaKK9jq+NKtN8E7j1i5+YEnBEGOL+srE7APr2hWpB7YVsANTejfKbh7cyPQ
-         PAROxUvpC1cwzqdLXYw7sD8yMPTNcwy9zWZeofLPwF4trMDONeFgg3EOIO9sNF43WDrO
-         hkHfnRc3DD+2JK8xYpsjqZlcouY7swNZ9FvH+2Qx5UhuhUnMOWtr7DTdf8JJ3jD/yTSC
-         nxcQ==
-X-Gm-Message-State: AFqh2krrWtxU4tzBrY0CuCDxQtmgq+zuJI30G7J3mZsE5qskWDv74HGY
-        Q9Vk/Sdas/MlsJRa8BPjru+EKnxFdmIpZcnUaRI=
-X-Google-Smtp-Source: AMrXdXv2O09P2ZNpzEmewBr8oJZRRyhUvmaOO1AUs4LYNS33l25KGf88wMKkBm1wZAgYg9FK2NJh6Q==
-X-Received: by 2002:a05:6402:35c1:b0:46f:f36b:a471 with SMTP id z1-20020a05640235c100b0046ff36ba471mr51910091edc.22.1674744942080;
-        Thu, 26 Jan 2023 06:55:42 -0800 (PST)
-Received: from [10.45.33.196] ([80.80.14.217])
-        by smtp.gmail.com with ESMTPSA id g4-20020aa7c584000000b004a0e23a2eebsm701592edq.10.2023.01.26.06.55.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jan 2023 06:55:41 -0800 (PST)
-Message-ID: <d96e6ab4-2302-5326-3a0e-bffecc24a295@unity3d.com>
-Date:   Thu, 26 Jan 2023 15:55:40 +0100
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=vbKm45+B/pTffPf+cGA8Xba1z8Pwk0Ff4480eiBN+gk=;
+        b=WD2/dTFTmXaczUfakjN7QicIX4uIS6CJsP3PPyYBB6QwCuupJrjQFkgL9zgpMHcLBi
+         gNz7LpeuzMYU1fJE7ptuYgQdOhGWjuoImWvpO0o0+iRpNiZWee+TWGZ1QN/rceHz5ySD
+         fOxFws5JO6qz6BQP0ukJ+lO8akxdmDWfUH1qI67EkWfgRX9XdZEoQ8c61XnTn4fWijAM
+         nLxr6/2Kj+pOwv3sdxef0CiFOuLEvuldMbKvlmp7CQ7be388cyV9g8lm7H16yKh0RNgH
+         w6GcSIJxF3iug3/hctTVUrvEuYSvYfxtzg3un6MtUNXtBOMiiXyLgPLBu8hlQOIeJ/mE
+         YkVQ==
+X-Gm-Message-State: AFqh2kqN2NJJvR8W2iONR1tkNaShGcHs3E8gnKsfDd6+eceNp7sQmgJr
+        RnDzvuzDLQatjCOQqNJfBuNbehcfJwA=
+X-Google-Smtp-Source: AMrXdXtj70yGDGT/pX9ruwzkeAjo8nzxIFxLKf4ml9AL+ojnJ2BkTL9x3/9vKAQndbM4Ao1znmKrnA==
+X-Received: by 2002:a05:6a20:958a:b0:b8:6edc:7eac with SMTP id iu10-20020a056a20958a00b000b86edc7eacmr40634483pzb.39.1674748564115;
+        Thu, 26 Jan 2023 07:56:04 -0800 (PST)
+Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
+        by smtp.gmail.com with ESMTPSA id d197-20020a6336ce000000b0042988a04bfdsm897172pga.9.2023.01.26.07.56.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jan 2023 07:56:03 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Yangyang Hua <hyy_41@live.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: When using several ssh key, Git match ssh key by host, instead
+ of hostname in ssh config file.
+References: <OSYP286MB0215D880FA9D82B74E393DD691CF9@OSYP286MB0215.JPNP286.PROD.OUTLOOK.COM>
+Date:   Thu, 26 Jan 2023 07:56:03 -0800
+In-Reply-To: <OSYP286MB0215D880FA9D82B74E393DD691CF9@OSYP286MB0215.JPNP286.PROD.OUTLOOK.COM>
+        (Yangyang Hua's message of "Thu, 26 Jan 2023 14:46:54 +0000")
+Message-ID: <xmqqk019cmss.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH v2] ls-tree: add --sparse-filter-oid argument
-To:     Victoria Dye <vdye@github.com>,
-        William Sprent via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.1459.git.1673456518993.gitgitgadget@gmail.com>
- <pull.1459.v2.git.1674474371817.gitgitgadget@gmail.com>
- <7ccf7b17-4448-5ef4-63b1-9073a400e486@github.com>
- <569043fb-9766-037e-c587-1545c2978e7d@unity3d.com>
- <42e14dda-cd2b-09df-dea8-246b3fcfac42@github.com>
-Content-Language: en-US
-From:   William Sprent <williams@unity3d.com>
-In-Reply-To: <42e14dda-cd2b-09df-dea8-246b3fcfac42@github.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/01/2023 19.32, Victoria Dye wrote:
-> William Sprent wrote:
->> On 24/01/2023 21.11, Victoria Dye wrote>> I haven't looked at your implementation in detail yet, but I did want to
->>> offer a recommendation in case you hadn't considered it: if you want to
->>> allow the use of patterns from a user-specified specific file, it would be
->>> nice to do it in a way that fully replaces the "default" sparse-checkout
->>> settings at the lowest level (i.e., override the values of
->>> 'core_apply_sparse_checkout', 'core_sparse_checkout_cone', and
->>> 'get_sparse_checkout_filename()'). Doing it that way would both make it
->>> easier for other commands to add a '--sparse-patterns' option, and avoid the
->>> separate code path ('path_in_sparse_checkout_1()' vs.
->>> 'recursively_match_path_with_sparse_patterns()', for example) when dealing
->>> with '.git/info/sparse-checkout' patterns vs. manually-specified patterns.
->>>
->>
->> Thanks for the pointers. I'll see what I can do. Do you mean something
->> along the line of the following?
->>
->>     set_sparse_checkout_file(filename);
->>     init_sparse_checkout_patterns(istate);
->>     _ = path_in_sparse_checkout_1(some_path, istate, ...);
->>
-> 
-> Sort of. I mentioned separating the options into "specify the sparse pattern
-> file" and "restrict the displayed files to the active pattern set, if there
-> is one". For the former, you might add an option like:
-> 
-> 	OPT_FILENAME(0, "sparse-patterns", &sparse_pattern_file,
-> 		     N_("override sparse-checkout behavior using patterns from <file>"))
-> 
-> Then do something like what you have, right after option parsing:
-> 
-> 	if (sparse_pattern_file) {
-> 		core_apply_sparse_checkout = 1;
-> 		core_sparse_checkout_cone = <???>;
-> 		set_sparse_checkout_file(filename);
-> 	}
-> 
-> If this option is specified, but the repo already has sparse
-> patterns/settings of its own, you'll need to (carefully) override the repo's
-> existing configuration:
-> 
-> * 'core_apply_sparse_checkout' & 'core_sparse_checkout_cone' are set based
->    on the repo config. You'll need to make sure those values are overridden
->    before loading the sparse-checkout patterns, and also that they're set
->    *after* loading the config.
+Yangyang Hua <hyy_41@live.com> writes:
 
-This sounds a bit easy to get wrong to me, but I assume I can trust that the
-config has been loaded by the time 'cmd_ls_tree()' is invoked.
+> Hi, I find when I use several ssh keys with the right config file
+> and clone my private repo, git can't match the key by hostname.
+> ...
+> I think when git read ssh config, it uses host to match the key
+> instead of hostname. Is this bug?
 
-> * Speaking of 'core_sparse_checkout_cone', there are a bunch of ways you
->    might configure "cone-" vs. "non-cone" for your patterns (user-specified
->    with yet another option, always assume one or the other, try deriving from
->    the patterns). My preference would be to always assume "cone mode" - it's
->    the direction Git has been moving with sparse-checkout over the past year,
->    and still automatically "falls back" on non-cone patterns if the patterns
->    can't be used in cone mode (with a warning from
->    'add_pattern_to_hashsets()': "disabling cone pattern matching").
+This useful feature is given by ssh, and Git does not deserve credit
+for it.  The config file of SSH allows you to write multiple entries
+that points at the same host, e.g.
 
-Alright. I've had similar thoughts. But I ended up deciding to respect the
-config value since there wouldn't be any way for the user to silence the warning
-when passing non-cone mode patterns to the command. I don't feel too strongly about
-it, though.
+    Host host1
+      HostName host.example.com
+      IdentityFile ~/.ssh/id_rsa_111
 
-> * If the repo is using a sparse index, the existing sparse directories may
->    not be compatible with the custom patterns. Probably easiest to force use
->    of a full index, e.g. with 'command_requires_full_index = 1'.
-> 
+    Host host2
+      HostName host.example.com
+      IdentityFile ~/.ssh/id_rsa_222
 
-OK.
+so that you can specify which key to use for the same destination
+when you have more than one user there. "ssh host1" uses id_rsa_111
+while "ssh host2" uses the other one, both connections going to the
+same destination host.
 
-> Fair warning: this probably isn't an exhaustive list of things that would
-> need updating, and it'll need thorough testing to make sure there are no
-> regressions. But, extending the underlying sparse-checkout infrastructure
-> will (ideally) avoid duplicating code and make this behavior reusable across
-> other commands.
-> 
+If host.example.com were a hosting site like github.com, you can use this
+feature to say
 
-Alright. I'll give it a shot.
+    $ git push git@host1:/me/lesson1
 
-> For the other desired behavior ("limit the files to the active
-> sparse-checkout patterns"), you could add an option:
-> 
-> 	OPT_CALLBACK_F(0, "scope", &sparse_scope, "(sparse|all)",
-> 		       N_("specify the scope of results with respect to the sparse-checkout"),
-> 		       PARSE_OPT_NONEG, option_parse_scope),
-> 
-> ...whose callback parses the string arg into a 'restrict_scope'
-> boolean/enum/something. Then, wherever in 'ls-files' a tree or the index are
-> iterated over, you can gate the per-file operation on:
-> 
-> 	if (!restrict_scope || path_in_sparse_checkout(<path>, istate)) {
-> 		/* do something with <path> */
-> 	}
-> 
-> Note that you should use 'path_in_sparse_checkout()', *not* the
-> internal/private function 'path_in_sparse_checkout_1()'; you also don't need
-> to explicitly 'init_sparse_checkout_patterns()'. Regardless of whether you
-> specified custom patterns or are using the ones in
-> '.git/info/sparse-checkout', 'path_in_sparse_checkout()' will initialize &
-> use the appropriate patterns.
-> 
+to connect using id_rsa_111.  If you use
 
-Yeah. And I wouldn't need the refactor of 'path_in_sparse_checkout_1()'.
+    $ git clone git@github.com:/me/lesson1
 
-Thanks a lot (again) for the pointers.
+there is no clue which of the two entries you want to use.
