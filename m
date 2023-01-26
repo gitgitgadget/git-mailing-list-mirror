@@ -2,79 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C7F2C54E94
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 09:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 948C3C05027
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 09:37:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236726AbjAZJdj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Jan 2023 04:33:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42884 "EHLO
+        id S236038AbjAZJhe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Jan 2023 04:37:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbjAZJdi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2023 04:33:38 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE95A44BF
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 01:33:31 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id nm12-20020a17090b19cc00b0022c2155cc0bso1209868pjb.4
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 01:33:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8zSVi/uRKBysItCBio7L3XH/SBDg+xmEP5cCayfEPFQ=;
-        b=KUcyqwCO82Xe/wnqu/zoNYsvVYI3/SsHySLdSvp0KWrgYZW/+g93UlQ9wHM486JZA4
-         3FvO166bZyluJaKodez/Qa8XAji4aZ9+tnh9qJHdE3EfMsgrd7C8vAwU4gyhGcQQ4TxJ
-         bYERzREAPcp3sW55Mb559GJxNqgsFUBnMEoLcWgp0R1OnUT7rMB4sxxVfZdC42coZBdU
-         nRcdnVtQZqZPE56pUFKa7AbQzqhfrWPNXqcFyPfW9Xs7wunKdqPNWlKF5yjLlyyFyA7K
-         X8pa/kbjvYQG4sjyP2gnqxPtUOChO5lWWdmSjw9Yd5p/UO5lsh9C3eoRj4Dyi+C7/iJo
-         TvkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8zSVi/uRKBysItCBio7L3XH/SBDg+xmEP5cCayfEPFQ=;
-        b=evr6duud2nErOJ8kSPvda+v8/VYtbm+BdMAQ9kx0beN16jfmj4oI7F09o8sd1o9D60
-         mgwOGQh+uhL/NusQMVDSrvfs/3W7R2hTwG5EFYqP6HVEE8kYh/FLIGZv6+5ZadGHsMcr
-         KD5UpkT/Srr9F3OX9crlbVqDYS8yDoPjH3UK2fvka9Mr3wqfw7zzOFgkeaurY51KV54b
-         ODDxiKaMoWs35Q59mXOtBkkTiXKxNCUQcpeyuKbfg0mQ7wkXJAbnVh7PpzwfBpW6sSEi
-         xBvjBgneIT0CbtuAbCe7VaWrp2PyLvcsVwmr94YGr6ZJ6T8Eo6RXVc8CNxLWAOo7saAV
-         n+bQ==
-X-Gm-Message-State: AFqh2kpUVafIA85m3C+0LQR70zFrJnNoZXI8JdnXGQAyOj5ZDz5WRXWb
-        XWitSQzN3BvuWo8Bp7dxYaCz5fH9GKO/ugEJH7AbKjlb+14=
-X-Google-Smtp-Source: AMrXdXvJVCAXA57Pgs1c63bF1Tpi3maTH0V/66APUn/xhhDNFkFO1l/+wy+DA47X7zGE0JLC0h/x/x9siAaK3fvhr1o=
-X-Received: by 2002:a17:902:8f85:b0:194:6e99:dc8a with SMTP id
- z5-20020a1709028f8500b001946e99dc8amr4142167plo.1.1674725610786; Thu, 26 Jan
- 2023 01:33:30 -0800 (PST)
+        with ESMTP id S229536AbjAZJhd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2023 04:37:33 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 374EF1AF
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 01:37:32 -0800 (PST)
+Received: (qmail 19083 invoked by uid 109); 26 Jan 2023 09:37:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Jan 2023 09:37:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21699 invoked by uid 111); 26 Jan 2023 09:37:31 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Jan 2023 04:37:31 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 26 Jan 2023 04:37:30 -0500
+From:   Jeff King <peff@peff.net>
+To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Glen Choo <chooglen@google.com>,
+        Victoria Dye <vdye@github.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v7 07/12] test-http-server: pass Git requests to
+ http-backend
+Message-ID: <Y9JJ2moUulG8gTba@coredump.intra.peff.net>
+References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
+ <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
+ <ca9c2787248688cd7d8e20043a6ed75d93654e35.1674252531.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-From:   Michal Aron <aronmgv@gmail.com>
-Date:   Thu, 26 Jan 2023 10:33:20 +0100
-Message-ID: <CAHoQa4-o-=pB4zPR-1SG96KB02rixQG23mFgh0H9ojWrQ_pREg@mail.gmail.com>
-Subject: Feature Request - GIT config - Reference value of init.defaultBranch
- in alias
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ca9c2787248688cd7d8e20043a6ed75d93654e35.1674252531.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Fri, Jan 20, 2023 at 10:08:45PM +0000, Matthew John Cheetham via GitGitGadget wrote:
 
-I am curious why it is not possible to reference other variables in git config.
+> +static int is_git_request(struct req *req)
+> +{
+> +	static regex_t *smart_http_regex;
+> +	static int initialized;
+> +
+> +	if (!initialized) {
+> +		smart_http_regex = xmalloc(sizeof(*smart_http_regex));
+> +		/*
+> +		 * This regular expression matches all dumb and smart HTTP
+> +		 * requests that are currently in use, and defined in
+> +		 * Documentation/gitprotocol-http.txt.
+> +		 *
+> +		 */
+> +		if (regcomp(smart_http_regex, "^/(HEAD|info/refs|"
+> +			    "objects/info/[^/]+|git-(upload|receive)-pack)$",
+> +			    REG_EXTENDED)) {
+> +			warning("could not compile smart HTTP regex");
+> +			smart_http_regex = NULL;
+> +		}
+> +		initialized = 1;
+> +	}
+> +
+> +	return smart_http_regex &&
+> +		!regexec(smart_http_regex, req->uri_path.buf, 0, NULL, 0);
+> +}
 
-Useful scenario:
+Assigning NULL to smart_http_regex leaks the earlier allocation. You
+could free it, but I have to wonder why it is on the heap in the first
+place. Yes, you check for NULL and return 0 if it failed to compile,
+but...why would it? It's hard-coded. And if it does fail, wouldn't you
+want to fail immediately and loudly, because it means all of the tests
+are broken?
 
-Global git config containing all useful aliases which often reference
-the default main branch. I discovered the config variable
-init.defaultBranch and I would like to reference it in the aliases.
+I.e., something like this is a bit simpler:
 
-1) global config having init.defaultBranch = master
-2) global config having alias com = checkout [ init.defaultBranch ]
-3) local repos replacing this value e.g. to init.defaultBranch = main
-4) using this alias in local repo git com, which will checkout me to
-the init.defaultBranch of this repository..
+diff --git a/t/helper/test-http-server.c b/t/helper/test-http-server.c
+index 14d170e640..8048ba1636 100644
+--- a/t/helper/test-http-server.c
++++ b/t/helper/test-http-server.c
+@@ -327,28 +327,25 @@ static enum worker_result req__read(struct req *req, int fd)
+ 
+ static int is_git_request(struct req *req)
+ {
+-	static regex_t *smart_http_regex;
++	static regex_t smart_http_regex;
+ 	static int initialized;
+ 
+ 	if (!initialized) {
+-		smart_http_regex = xmalloc(sizeof(*smart_http_regex));
+ 		/*
+ 		 * This regular expression matches all dumb and smart HTTP
+ 		 * requests that are currently in use, and defined in
+ 		 * Documentation/gitprotocol-http.txt.
+ 		 *
+ 		 */
+-		if (regcomp(smart_http_regex, "^/(HEAD|info/refs|"
++		if (regcomp(&smart_http_regex, "^/(HEAD|info/refs|"
+ 			    "objects/info/[^/]+|git-(upload|receive)-pack)$",
+ 			    REG_EXTENDED)) {
+-			warning("could not compile smart HTTP regex");
+-			smart_http_regex = NULL;
++			die("could not compile smart HTTP regex");
+ 		}
+ 		initialized = 1;
+ 	}
+ 
+-	return smart_http_regex &&
+-		!regexec(smart_http_regex, req->uri_path.buf, 0, NULL, 0);
++	return !regexec(&smart_http_regex, req->uri_path.buf, 0, NULL, 0);
+ }
+ 
+ static enum worker_result do__git(struct req *req, const char *user)
 
-This would allow us to use global aliases independently on the
-repositories.. If this has not yet been discussed I believe it is the
-time since many repositories are being customized to the company
-team/company culture.
+> +start_http_server () {
+> +	#
+> +	# Launch our server into the background in repo_dir.
+> +	#
+> +	(
+> +		cd "$REPO_DIR"
+> +		test-http-server --verbose \
+> +			--listen=127.0.0.1 \
+> +			--port=$GIT_TEST_HTTP_PROTOCOL_PORT \
+> +			--reuseaddr \
+> +			--pid-file="$PID_FILE" \
+> +			"$@" \
+> +			2>"$SERVER_LOG" &
+> +	)
+> +	#
+> +	# Give it a few seconds to get started.
+> +	#
+> +	for k in 0 1 2 3 4
+> +	do
+> +		if test -f "$PID_FILE"
+> +		then
+> +			return 0
+> +		fi
+> +		sleep 1
+> +	done
 
-Appreciate and thanks, Michal
+Yuck. This makes the test take a long time to run, since it will almost
+always "sleep 1" each time (and it looks like you bring the server up
+and down in several tests). Worse, it's at risk of failing racily if it
+ever takes more than 5 seconds to start up. That should be uncommon, I'd
+think, but could happen on a heavily loaded system.
+
+There's a race-less solution using fifos in lib-git-daemon.sh, where we
+wait for the "ready to rumble" line. It's kind of horrific, but it does
+work and is battle-tested.
+
+-Peff
