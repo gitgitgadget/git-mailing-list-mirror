@@ -2,27 +2,27 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9754AC54E94
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 10:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D0AAC05027
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 11:26:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236480AbjAZKcA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Jan 2023 05:32:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55172 "EHLO
+        id S229471AbjAZL0B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Jan 2023 06:26:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236259AbjAZKb7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2023 05:31:59 -0500
+        with ESMTP id S235097AbjAZL0A (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2023 06:26:00 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8034734011
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 02:31:58 -0800 (PST)
-Received: (qmail 19412 invoked by uid 109); 26 Jan 2023 10:31:57 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38C862278
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 03:25:58 -0800 (PST)
+Received: (qmail 20797 invoked by uid 109); 26 Jan 2023 11:25:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Jan 2023 10:31:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Jan 2023 11:25:58 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22100 invoked by uid 111); 26 Jan 2023 10:31:57 -0000
+Received: (qmail 22630 invoked by uid 111); 26 Jan 2023 11:25:57 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Jan 2023 05:31:57 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Jan 2023 06:25:57 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 26 Jan 2023 05:31:57 -0500
+Date:   Thu, 26 Jan 2023 06:25:57 -0500
 From:   Jeff King <peff@peff.net>
 To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
@@ -33,165 +33,157 @@ Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         Glen Choo <chooglen@google.com>,
         Victoria Dye <vdye@github.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v7 11/12] http: read HTTP WWW-Authenticate response
- headers
-Message-ID: <Y9JWnQeEV0weV4yu@coredump.intra.peff.net>
+Subject: Re: [PATCH v7 12/12] credential: add WWW-Authenticate header to cred
+ requests
+Message-ID: <Y9JjRfhl1H4Julv3@coredump.intra.peff.net>
 References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
  <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
- <5f5e46038cf526714f3c5b89ffef2b895b503242.1674252531.git.gitgitgadget@gmail.com>
+ <09164f77d56e8efd1450091cf1b12af2bc6cf2f5.1674252531.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <5f5e46038cf526714f3c5b89ffef2b895b503242.1674252531.git.gitgitgadget@gmail.com>
+In-Reply-To: <09164f77d56e8efd1450091cf1b12af2bc6cf2f5.1674252531.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 20, 2023 at 10:08:49PM +0000, Matthew John Cheetham via GitGitGadget wrote:
+On Fri, Jan 20, 2023 at 10:08:50PM +0000, Matthew John Cheetham via GitGitGadget wrote:
 
 > From: Matthew John Cheetham <mjcheetham@outlook.com>
 > 
-> Read and store the HTTP WWW-Authenticate response headers made for
-> a particular request.
+> Add the value of the WWW-Authenticate response header to credential
+> requests. Credential helpers that understand and support HTTP
+> authentication and authorization can use this standard header (RFC 2616
+> Section 14.47 [1]) to generate valid credentials.
 > 
-> This will allow us to pass important authentication challenge
-> information to credential helpers or others that would otherwise have
-> been lost.
+> WWW-Authenticate headers can contain information pertaining to the
+> authority, authentication mechanism, or extra parameters/scopes that are
+> required.
 
-Makes sense, and the code looks pretty reasonable overall.
-
-A few observations:
-
-> @@ -115,6 +116,19 @@ struct credential {
->  	 */
->  	struct string_list helpers;
->  
-> +	/**
-> +	 * A `strvec` of WWW-Authenticate header values. Each string
-> +	 * is the value of a WWW-Authenticate header in an HTTP response,
-> +	 * in the order they were received in the response.
-> +	 */
-> +	struct strvec wwwauth_headers;
-> +
-> +	/**
-> +	 * Internal use only. Used to keep track of split header fields
-> +	 * in order to fold multiple lines into one value.
-> +	 */
-> +	unsigned header_is_last_match:1;
-> +
-
-Stuffing this into a "struct credential" feels a little weird, just
-because it's specific to http parsing (especially this internal flag).
-And the credential code is seeing full header lines, not broken down at
-all.
-
-I guess I would have expected some level of abstraction here between the
-credential subsystem and the http subsystem, where the latter is parsing
-and then sticking opaque data into the credential to ferry to the
+I'm definitely on board with sending these to the helpers. It does feel
+a bit weird that we don't parse them at all, and just foist that on the
 helpers.
 
-But it probably isn't that big a deal either way. Even though there are
-non-http credentials, it's not too unreasonable for the credential
-system to be aware of http specifically.
+If I understand the RFC correctly, you can have multiple challenges per
+header, but also multiple headers. So:
 
-> +static size_t fwrite_wwwauth(char *ptr, size_t eltsize, size_t nmemb, void *p)
-> +{
-> +	size_t size = st_mult(eltsize, nmemb);
+  WWW-Authenticate: Basic realm="foo", OtherAuth realm="bar"
+  WWW-Authenticate: YetAnotherScheme some-token
 
-Here's that st_mult() again. Same comment as the previous patch. :)
+could be normalized as:
 
-> +	/*
-> +	 * Header lines may not come NULL-terminated from libcurl so we must
-> +	 * limit all scans to the maximum length of the header line, or leverage
-> +	 * strbufs for all operations.
-> +	 *
-> +	 * In addition, it is possible that header values can be split over
-> +	 * multiple lines as per RFC 2616 (even though this has since been
-> +	 * deprecated in RFC 7230). A continuation header field value is
-> +	 * identified as starting with a space or horizontal tab.
-> +	 *
-> +	 * The formal definition of a header field as given in RFC 2616 is:
-> +	 *
-> +	 *   message-header = field-name ":" [ field-value ]
-> +	 *   field-name     = token
-> +	 *   field-value    = *( field-content | LWS )
-> +	 *   field-content  = <the OCTETs making up the field-value
-> +	 *                    and consisting of either *TEXT or combinations
-> +	 *                    of token, separators, and quoted-string>
-> +	 */
-> +
-> +	strbuf_add(&buf, ptr, size);
+  www-auth-challenge=Basic realm="foo"
+  www-auth-challenge=OtherAuth realm="bar"
+  www-auth-challenge=YetAnotherScheme some-token
 
-OK, so we just copy the buffer. I don't think it would be too hard to
-handle the buffer as-is, but this does make things a bit easier.  Given
-that we're going to immediately throw away the copy for anything except
-www-authenticate, we could perhaps wait until we've matched it.  That
-does mean trimming the CRLF ourselves and using skip_prefix_mem() to
-match the start (you'd want skip_iprefix_mem(), of course, but it
-doesn't yet exist; I'll leave that as an exercise).
+which saves each helper from having to do the same work. Likewise, we
+can do a _little_ more parsing to get:
 
-Maybe not worth it to save a few allocations, as an http request is
-already pretty heavyweight. Mostly I flagged it because this is going to
-run for every header of every request, even though most requests won't
-trigger it at all.
+  www-auth-basic=realm="foo"
+  www-auth-otherauth=realm="bar"
+  www-auth-yetanotherscheme=some-token
 
-> +	/* Strip the CRLF that should be present at the end of each field */
-> +	strbuf_trim_trailing_newline(&buf);
-> +
-> +	/* Start of a new WWW-Authenticate header */
-> +	if (skip_iprefix(buf.buf, "www-authenticate:", &val)) {
-> +		while (isspace(*val))
-> +			val++;
-> +
-> +		strvec_push(values, val);
-> +		http_auth.header_is_last_match = 1;
-> +		goto exit;
-> +	}
+I don't think we can go beyond there, though, without understanding the
+syntax of individual schemes. Which is a shame, as one of the goals of
+the credential format was to let the helpers do as little as possible
+(so they can't get it wrong!). But helpers are stuck doing things like
+handling backslashed double-quotes, soaking up extra whitespace, etc.
 
-OK, this looks correct from my knowledge of the RFCs. I saw something
-about isspace() matching newlines, etc, in an earlier thread, but I
-think we'd never see a newline here, as we're expecting curl to be
-splitting on our behalf.
+I'm not really sure what we expect to see in the real world. I guess for
+your purposes, you are working on an already-big helper that is happy to
+just get the raw values and process them according to the rfc. I'm just
+wondering if there are use cases where somebody might want to do
+something with this header, but in a quick shell script kind of way. For
+example, my credential config is still:
 
-> +	/*
-> +	 * This line could be a continuation of the previously matched header
-> +	 * field. If this is the case then we should append this value to the
-> +	 * end of the previously consumed value.
-> +	 * Continuation lines start with at least one whitespace, maybe more,
-> +	 * so we should collapse these down to a single SP (valid per the spec).
-> +	 */
-> +	if (http_auth.header_is_last_match && isspace(*buf.buf)) {
-> +		/* Trim leading whitespace from this continuation hdr line. */
-> +		strbuf_ltrim(&buf);
+  [credential "https://github.com"]
+  username = peff
+  helper = "!f() { test $1 = get && echo password=$(pass ...); }; f"
 
-OK, makes sense. This will memmove(), which is needlessly inefficient
-(we could just advance a pointer), but probably not a big deal in
-practice. Using the strbuf functions is a nice simplification.
+That's an extreme example, but I'm wondering if there's _anything_
+useful somebody would want to do in a similar quick-and-dirty kind of
+way. For example, deciding which cred to use based on basic realm, like:
 
-> +		/*
-> +		 * At this point we should always have at least one existing
-> +		 * value, even if it is empty. Do not bother appending the new
-> +		 * value if this continuation header is itself empty.
-> +		 */
-> +		if (!values->nr) {
-> +			BUG("should have at least one existing header value");
-> +		} else if (buf.len) {
-> +			char *prev = xstrdup(values->v[values->nr - 1]);
-> +
-> +			/* Join two non-empty values with a single space. */
-> +			const char *const sp = *prev ? " " : "";
-> +
-> +			strvec_pop(values);
-> +			strvec_pushf(values, "%s%s%s", prev, sp, buf.buf);
-> +			free(prev);
-> +		}
+  realm=foo
+  while read line; do
+    case "$line" in
+    www-auth-basic=)
+        value=${line#*=}
+	# oops, we're just assuming it's realm= here, and we're
+	# not handling quotes at all. I think it could technically be
+	# realm=foo or realm="foo"
+	realm=${value#realm=}
+	;;
+    esac
+  done
+  echo password=$(pass "pats-by-realm/$realm")
 
-Likewise here we end up with an extra allocation of "prev", just because
-we can't pop/push in the right order. But that's probably OK in
-practice, as this is triggering only for the header we care about.
+which could be made a lot easier if we did more parsing (e.g.,
+www-auth-basic-realm or something). I dunno. Maybe that is just opening
+up a can of worms, as we're stuffing structured data into a linearized
+key-value list. The nice thing about your proposal is that Git does not
+even have to know anything about these schemes; it's all the problem of
+the helper. My biggest fear is just that we'll want to shift that later,
+and we'll be stuck with this microformat forever.
 
-The concatenation itself makes the whole thing quadratic, but unless we
-are worried about a malicious server DoS-ing us with a billion
-www-authenticate continuations, I think we can disregard that.
+> The current I/O format for credential helpers only allows for unique
+> names for properties/attributes, so in order to transmit multiple header
+> values (with a specific order) we introduce a new convention whereby a
+> C-style array syntax is used in the property name to denote multiple
+> ordered values for the same property.
+
+I don't know if this is strictly necessary. The semantics of duplicate
+keys are not really defined anywhere, and just because the
+implementations of current readers happen to replace duplicates for the
+current set of keys doesn't mean everything has to. So you could just
+define "wwwauth" to behave differently. But I don't mind having a
+syntactic marker to indicate this new type.
+
+If you're at all convinced by what I said above, then we also might be
+able to get away with having unique keys anyway.
+
+>  Documentation/git-credential.txt |  19 ++-
+>  credential.c                     |  11 ++
+>  t/lib-credential-helper.sh       |  27 ++++
+>  t/t5556-http-auth.sh             | 242 +++++++++++++++++++++++++++++++
+>  4 files changed, 298 insertions(+), 1 deletion(-)
+>  create mode 100644 t/lib-credential-helper.sh
+
+The patch itself looks pretty reasonable to me.
+
+One small thing I noticed:
+
+> +	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
+
+As you undoubtedly figured out, the helper path is fed to the shell, so
+spaces in the trash directory are a problem. You've solved it here by
+adding a layer of double quotes, which handles spaces. But you'd run
+into problems if the absolute path that somebody is using for the test
+suite has a backslash or a double quote in it.
+
+I don't know how careful we want to be here (or how careful we already
+are[1]), but one simple-ish solution is:
+
+  export CREDENTIAL_HELPER
+  git -c "credential.helper=!\"\$CREDENTIAL_HELPER\"" ...
+
+I.e., letting the inner shell expand the variable itself. Another option
+is to put the helper into $TRASH_DIRECTORY/bin and add that to the
+$PATH.
+
+I also wondered if it was worth having setup_credential_helper() just
+stick it in $TRASH_DIRECTORY/.gitconfig so that individual tests don't
+have to keep doing that ugly "-c" invocation. Or if you really want to
+have each test enable it, perhaps have set_credential_reply() turn it on
+via test_config (which will auto-remove it at the end of the test).
 
 -Peff
+
+[1] Curious, I tried cloning git into this directory:
+
+      mkdir '/tmp/foo/"horrible \"path\"'
+
+    and we do indeed already fail. The first breakage I saw was recent,
+    but going further back, it looks like bin-wrappers don't correctly
+    handle this case anyway. So maybe that's evidence that nobody would
+    do something so ridiculous in practice.
