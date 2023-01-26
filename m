@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFAE0C54E94
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 02:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 022EFC54E94
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 02:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbjAZC0k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Jan 2023 21:26:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60882 "EHLO
+        id S229899AbjAZCef (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Jan 2023 21:34:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjAZC0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2023 21:26:40 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E89A81A943
-        for <git@vger.kernel.org>; Wed, 25 Jan 2023 18:26:38 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id y19so493066ljq.7
-        for <git@vger.kernel.org>; Wed, 25 Jan 2023 18:26:38 -0800 (PST)
+        with ESMTP id S229479AbjAZCee (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2023 21:34:34 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4724561D51
+        for <git@vger.kernel.org>; Wed, 25 Jan 2023 18:34:33 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id g13so1014281lfv.7
+        for <git@vger.kernel.org>; Wed, 25 Jan 2023 18:34:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XAtVvpB2aQuD1XitVpCSn+R23H3WLKoPPCHK4yn6sV4=;
-        b=DvEuWCWm4mNdLcbEe+36kCaoAGmR1RhJ7L5uRwIeVoK1/I4I/TOcWOTaspKS8XTKs4
-         mogPptjpdOtCNYmz16/xV8YdtZ8o/mTZAsB2DiiJUuvN4E+lh83dgIs/URlS0CUMoshH
-         2RGrnYMt8h3idFqxNekunF9N2xzG79rXLfZhy8RFPwFehoDjBhr90IlaDU5AjTF5mFK3
-         ZXXYF5nIxKdqKf6C5sc5L0glpTE+xlTbG1hfShMbkOjgVKNYW/7o6qKyKfLx96nJhexl
-         RdTNd4dAbNUkztXr9oxpH2p00nMUvam4J6zwW1UaeZ4xA2LzRDTp7Dcad5SVgvXXvkoe
-         /Ufg==
+        bh=J0DLnTvkHehTK5UkFxUnBh6Ts+vaIGZkO52eARf6L5s=;
+        b=RypM/bbc244ahmoiyoyJjmhQ6g1Dddi7IjV5nHDYxVoHlSfjqnz+mU7qorLYekI9Yj
+         p3yZReWQwC2Kpi72h6UFzLqScy0c80ELZsIB0rCsIp9yUpjhFwH5OfV0DBjgMoRgceLd
+         MOB+R8LcxMExnAaFs19q8bIA0rbUwqo6nwx7odfQE2seP7pgK38+4sCmlYy3nkuurWwn
+         cxOb25Shbv4PvGi96T8KzT0fD8eRG7D5z9UHXDH2E/3WMUYaibvuR8PD1gZhjUMfN0FF
+         BELRFJRwOcqF5cBGsamo19aDzxxJW+NorLg3EdzAu230NlxxAednQcleO97W0p2961yH
+         U43g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XAtVvpB2aQuD1XitVpCSn+R23H3WLKoPPCHK4yn6sV4=;
-        b=uGB2WS2SYsn9ibkhA0sOhQY6bUTQZpLj+UJnJORW0mmYm7OhgC6wUQopa039EpycRX
-         2i4q2cErKB1MLgx29xbmKcWzA64n946WsSzPqebpejGiarhk1NsPamAhq/2b6LDAD4+i
-         54Ky9XkNQsJH/DKHbJmgCgWS35esfNzmhivhsiK8cSLprGj9LTBk/XDbAv0XCBgIzhJW
-         ByDQSgGVnq5a5IgN8tV1g+UBWJPwJWvn3B0M581fUfyhj/S4vTGpIzGImsTgZkmr8fK6
-         c+PCGSdgZEaepgwDuHD1lyXsA1j3b3jhnZB+1ZAnNPsFgQTL09UDdh5189g1VHJtOJzW
-         7aRg==
-X-Gm-Message-State: AFqh2kr8b8NjRRdp/Of1ioERu0VPqibTLdOX3P5SvvT+tdwkxF8gywiq
-        mZdxIxKkL3lPnWgAfLw20RreeROcZh1CFVB7L5s=
-X-Google-Smtp-Source: AMrXdXtb5dYgBEAluHaVmDImqX3icahK46M79lrX9Fg32oUv+SVvD2LPZU9wR4+OL+LUuAWOHIYaHW+dBH2Xy0xNbrQ=
-X-Received: by 2002:a2e:87ce:0:b0:28b:8405:1be4 with SMTP id
- v14-20020a2e87ce000000b0028b84051be4mr1427351ljj.178.1674699997177; Wed, 25
- Jan 2023 18:26:37 -0800 (PST)
+        bh=J0DLnTvkHehTK5UkFxUnBh6Ts+vaIGZkO52eARf6L5s=;
+        b=58GH3hXB6bp43PYJ0fufBp4qgH3Q6rd+Ssl987GQHalf63pRAvoG4T84DO90KUe1rY
+         X0ZtvFiXO4ODLI2UYr5NG3YHpYHyxhio15KiBpoSsfbkbrNbGyux2mHxdDfLDMNfpVoM
+         +oc9SJtRzQ8kcKu63FX1gcOhgYjRidcAqySEmoU5U9xu2OWSRYsiHYENFL97nv6Dn1L4
+         OQpEfLVLX6ZDsZ0QMOVB7EenR8np3q/b8zn3rEN5S289kw2SGyUaExfQHljrjxtiofuc
+         mnVAJb5Dh+N139dh0FPn8XoHuBjo0RWMq5mk2N805fUIdRaHVxTD/ICtFUVWnreWCNj9
+         VY9w==
+X-Gm-Message-State: AFqh2kpcOIkKr1Pthn4/GK+cUyEMGkv0rqIxXDXID/zkdzOI5rcArS7c
+        rftiaGVA7yZ42GlL/RjxS2WuvG08820Nw45z9FY=
+X-Google-Smtp-Source: AMrXdXuhjsjCYOcfhhm+ONvFuJZMGzAdxkiS58gbGrubJ2BEY7HJOk9B59pPQMRmX5y1o5CeWOh/23by7llbYGOMk3c=
+X-Received: by 2002:a05:6512:4014:b0:4cc:548b:35f9 with SMTP id
+ br20-20020a056512401400b004cc548b35f9mr2728977lfb.192.1674700471435; Wed, 25
+ Jan 2023 18:34:31 -0800 (PST)
 MIME-Version: 1.0
 References: <cover-v4-00.19-00000000000-20230117T151201Z-avarab@gmail.com>
- <cover-v5-00.19-00000000000-20230118T120334Z-avarab@gmail.com> <patch-v5-16.19-10959760dfc-20230118T120334Z-avarab@gmail.com>
-In-Reply-To: <patch-v5-16.19-10959760dfc-20230118T120334Z-avarab@gmail.com>
+ <cover-v5-00.19-00000000000-20230118T120334Z-avarab@gmail.com> <patch-v5-17.19-6a8f4a567aa-20230118T120334Z-avarab@gmail.com>
+In-Reply-To: <patch-v5-17.19-6a8f4a567aa-20230118T120334Z-avarab@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 25 Jan 2023 18:26:00 -0800
-Message-ID: <CABPp-BGucUNYP8TK_aDs4AEPWg2NwaqDXbnqzNX9OZ5aFc4daQ@mail.gmail.com>
-Subject: Re: [PATCH v5 16/19] grep.c: refactor free_grep_patterns()
+Date:   Wed, 25 Jan 2023 18:33:00 -0800
+Message-ID: <CABPp-BFtR81jdjnEMKMaFnD71hdmCfgoQMSRuAEk8oMb3_AYFw@mail.gmail.com>
+Subject: Re: [PATCH v5 17/19] grep API: plug memory leaks by freeing "header_list"
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
         Junio C Hamano <gitster@pobox.com>,
@@ -64,108 +64,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 5:35 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+I had the same reaction to this patch that Rene did on v1.  The commit
+message of the previous patch should probably be reworked so as to not
+mislead.
+
+On Wed, Jan 18, 2023 at 5:15 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
 >
-> Refactor the free_grep_patterns() function to split out the freeing of
-> the "struct grep_pat" it contains, right now we're only freeing the
-> "pattern_list", but we should be freeing another member of the same
-> type, which we'll do in the subsequent commit.
-
-s/contains, right/contains. Right/
-
-> Let's also replace the "return" if we don't have an
-> "opt->pattern_expression" with a conditional call of
-> free_pattern_expr().
+> When the "header_list" struct member was added in [1] it wasn't made
+> to free the list using loop added for the adjacent "pattern_list"
+> member, see [2] for when we started freeing it.
 >
-> Before db84376f981 (grep.c: remove "extended" in favor of
-> "pattern_expression", fix segfault, 2022-10-11) the pattern here was:
+> This makes e.g. this command leak-free when run on git.git:
 >
->         if (!x)
->                 return;
->         free(y);
+>         ./git -P log -1 --color=3Dalways --author=3DA origin/master
 >
-> But after the cleanup in db84376f981 (which was a narrow segfault fix,
-> and thus avoided refactoring this) we ended up with:
+> 1. 80235ba79ef ("log --author=3Dme --grep=3Dit" should find intersection,
+>    not union, 2010-01-17)
+> 2. b48fb5b6a95 (grep: free expressions and patterns when done.,
+>    2006-09-27)
 
-For most of your commits, I like the extended history, but in this
-case I think it's just a distraction.  I think I'd replace the above
-block with just five words:
+That paragraph is really hard to parse for me.  Maybe change the above
+to something like
 
-    While at it, instead of:
+"""
+When the "header_list" struct member was added in [1], freeing this
+field was neglected.  Fix that now, so that commands like
 
->         if (!x)
->                 return;
->         free(x);
->
-> Let's instead do:
->
->         if (x)
->                 free(x);
+    ./git -P log -1 --color=3Dalways --author=3DA origin/master
 
-This is slightly confusing, because "if(x) free(x)" can be compressed
-to "free(x)".  I think you meant "free_pattern_expr" rather than
-"free", which cannot (currently) be similarly compressed.
+will run leak-free.
 
-> This doesn't matter for the subsequent change, but as we're
-> refactoring this function let's make it easier to reason about, and to
-> extend in the future, i.e. if we start to free free() members that
-> come after "pattern_expression" in the "struct grep_opt".
+1. 80235ba79ef ("log --author=3Dme --grep=3Dit" should find intersection,
+    not union, 2010-01-17)
+"""
 
-Perhaps just simplify this paragraph to:
-
-This will make it easier to free additional members from
-free_grep_patterns() in the future.
-
-
->
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  grep.c | 14 +++++++++-----
->  1 file changed, 9 insertions(+), 5 deletions(-)
+>  grep.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
 > diff --git a/grep.c b/grep.c
-> index 06eed694936..a4450df4559 100644
+> index a4450df4559..c908535e0d8 100644
 > --- a/grep.c
 > +++ b/grep.c
-> @@ -769,11 +769,11 @@ static void free_pattern_expr(struct grep_expr *x)
->         free(x);
->  }
->
-> -void free_grep_patterns(struct grep_opt *opt)
-> +static void free_grep_pat(struct grep_pat *pattern)
+> @@ -795,6 +795,7 @@ static void free_grep_pat(struct grep_pat *pattern)
+>  void free_grep_patterns(struct grep_opt *opt)
 >  {
->         struct grep_pat *p, *n;
+>         free_grep_pat(opt->pattern_list);
+> +       free_grep_pat(opt->header_list);
 >
-> -       for (p =3D opt->pattern_list; p; p =3D n) {
-> +       for (p =3D pattern; p; p =3D n) {
->                 n =3D p->next;
->                 switch (p->token) {
->                 case GREP_PATTERN: /* atom */
-> @@ -790,10 +790,14 @@ void free_grep_patterns(struct grep_opt *opt)
->                 }
->                 free(p);
->         }
-> +}
->
-> -       if (!opt->pattern_expression)
-> -               return;
-> -       free_pattern_expr(opt->pattern_expression);
-> +void free_grep_patterns(struct grep_opt *opt)
-> +{
-> +       free_grep_pat(opt->pattern_list);
-> +
-> +       if (opt->pattern_expression)
-> +               free_pattern_expr(opt->pattern_expression);
->  }
+>         if (opt->pattern_expression)
+>                 free_pattern_expr(opt->pattern_expression);
+> --
+> 2.39.0.1225.g30a3d88132d
 
-I think this last function would read even better as:
-
-+void free_grep_patterns(struct grep_opt *opt)
-+{
-+       free_grep_pat(opt->pattern_list);
-+       free_pattern_expr(opt->pattern_expression);
- }
-
-after modifying free_pattern_expr() to return early if passed a NULL argume=
-nt.
+Actual code change looks good.
