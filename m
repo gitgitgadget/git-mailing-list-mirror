@@ -2,163 +2,195 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A7E4C54EAA
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 21:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0213C54EAA
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 21:22:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232925AbjAZVVx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Jan 2023 16:21:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49674 "EHLO
+        id S232935AbjAZVWd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Jan 2023 16:22:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232929AbjAZVVw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2023 16:21:52 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F174571656
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 13:21:50 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id k16so2112619wms.2
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 13:21:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mQVQUgShsSeTCDFT2hsAIj8VCiYb+GtOCAkx60CCsTw=;
-        b=hxxljC82Y2hVZEU+noSWkMIskeI7jlbrCKmr/g4ioAuWYaUCuJL0Mv14ODiAuh8PvP
-         zG+w2+v8fu41zdIglbXJdk33mRwRBIMrbd7ZC98Co3wk+Dr2L59WSS0zEka+BBFW1+eQ
-         pmlgFH4auq8DUCQFUkTCB1nPiU9uWGi6Fz6z9CCgBu4oLUU6UIgwF80ontNK4mvpPH3n
-         /ApODjqd9/wL2m8Jhs9ARsduFYfORc+3NFAtBQJOK1S9sZl0BnmTF3Wv15SOFuUGBqXV
-         /043K/MFKSHxihfVsmdtUQbMQmgIUORYO0r/+tNcUDcsd1w2Y7rG2YzIazdBVehZxCP4
-         jgRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mQVQUgShsSeTCDFT2hsAIj8VCiYb+GtOCAkx60CCsTw=;
-        b=UoT3PJAHL0Jdf8OvZVy0AnjRICtZB+85HsStMCGxQ69jhalCfF3SZA1INRdSLV/bDw
-         7/TG2xibRRmruAvcuUl/Cpw9bAzRnrwQYF6P+iDs8gsiuoOAYXr+DYnMsQa9FNkGyMGP
-         KS/PcOXsIVxKDKuGlUGfaoVbb+jKu8ozAjhp3B9r3HBvgx+67ywdpkI7KkaOzLAe/bg/
-         qT/MXn2WI3qALxh/z28kvzi8iKpkqlyWiLxG/sBLAKquxUI5kCSC3Ve/bsbVfbK44Ysw
-         sgQ7Pk520os0m5tgRUJgO5D8KMrUHGKd4/GX9dm5K3ujLBGHHazoGvdjelX1QX3dGLhp
-         MpSw==
-X-Gm-Message-State: AO0yUKXBI1Fmafcwq5KRS9AshtYkskGJ6az6I/B+pbwUsRgbgQ5BXg8K
-        Lf+q8PE4CwyKNTk/2UnznvEBwgAvVSo=
-X-Google-Smtp-Source: AK7set9fTdrBLLAIPJRZ3V6SAWPJeVOqNWuxRcD8LXzPuuwrHXSINj5umoKEv7JJ32W8h6Ossf5YhQ==
-X-Received: by 2002:a05:600c:d7:b0:3dc:32f1:d99a with SMTP id u23-20020a05600c00d700b003dc32f1d99amr171132wmm.6.1674768109133;
-        Thu, 26 Jan 2023 13:21:49 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c1-20020a05600c0a4100b003d9fba3c7a4sm6098065wmq.16.2023.01.26.13.21.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jan 2023 13:21:48 -0800 (PST)
-Message-Id: <pull.1441.v3.git.git.1674768107941.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1441.v2.git.git.1674447742078.gitgitgadget@gmail.com>
-References: <pull.1441.v2.git.git.1674447742078.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 26 Jan 2023 21:21:47 +0000
-Subject: [PATCH v3] attr: fix instructions on how to check attrs
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S231627AbjAZVWc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2023 16:22:32 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6DC1301B9
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 13:22:29 -0800 (PST)
+Received: (qmail 26494 invoked by uid 109); 26 Jan 2023 21:22:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Jan 2023 21:22:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26984 invoked by uid 111); 26 Jan 2023 21:22:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Jan 2023 16:22:28 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 26 Jan 2023 16:22:28 -0500
+From:   Jeff King <peff@peff.net>
+To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Glen Choo <chooglen@google.com>,
+        Victoria Dye <vdye@github.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v7 08/12] test-http-server: add simple authentication
+Message-ID: <Y9LvFMzriAWUsS58@coredump.intra.peff.net>
+References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
+ <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
+ <b8d3e81b5534148359c7e92807cf1e2795480ddf.1674252531.git.gitgitgadget@gmail.com>
+ <Y9JPslSoEayaCJ3n@coredump.intra.peff.net>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y9JPslSoEayaCJ3n@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+On Thu, Jan 26, 2023 at 05:02:27AM -0500, Jeff King wrote:
 
-The instructions in attr.h describing what functions to call to check
-attributes is missing the index as the first argument to
-git_check_attr(), as well as tree_oid as the second argument.
+> I suspect this could all be done as a CGI wrapping git-http-backend. You
+> can influence the HTTP response code by sending:
+> 
+>    Status: 401 Authorization Required
+>    WWW-Authenticate: whatever you want
+> 
+> And likewise you can see what the client sends by putting something like
+> this in apache.conf:
+> 
+>    SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+> 
+> and then reading $HTTP_AUTHORIZATION as you like. At that point, it
+> feels like a simple shell or perl script could then decide whether to
+> return a 401 or not (and if not, then just exec git-http-backend to do
+> the rest). And the scripts would be simple enough that you could have
+> individual scripts to implement various schemes, rather than
+> implementing this configuration scheme. You can control which script is
+> run based on the URL; see the way we match /broken_smart/, etc, in
+> t/lib-httpd/apache.conf.
 
-When 7a400a2c (attr: remove an implicit dependency on the_index,
-2018-08-13) started passing an index_state instance to git_check_attr(),
-it forgot to update the API documentation in
-Documentation/technical/api-gitattributes.txt. Later, 3a1b3415
-(attr: move doc to attr.h, 2019-11-17) moved the API documentation to
-attr.h as a comment, but still left out the index_state as an argument.
+And here's a minimally worked-out example of that approach. It's on top
+of your patches so I could use your credential-helper infrastructure in
+the test, but the intent is that it would replace all of the test-tool
+server patches and be rolled into t5556 as appropriate.
 
-In 47cfc9b (attr: add flag `--source` to work with tree-ish 2023-01-14)
-added tree_oid as an optional parameter but was not added to the docs in
-attr.h
-
-Fix this to make the documentation in the comment consistent with the
-actual function signature.
-
-Signed-off-by: John Cai <johncai86@gmail.com>
 ---
-    attr: fix instructions on how to check attrs
-    
-    The instructions in attr.h describing what functions to call to check
-    attributes is missing the index as the first argument to git_check_attr.
-    
-    Fix this to make it consistent with the actual function signature.
-    
-    Changes since V2:
-    
-     * updated with adding second argument after rebasing against master
-    
-    Changes since V1:
-    
-     * updated commit message to include some history
-    
-    Signed-off-by: John Cai johncai86@gmail.com
+ t/lib-httpd.sh              |  1 +
+ t/lib-httpd/apache.conf     |  6 ++++++
+ t/lib-httpd/custom-auth.sh  | 18 ++++++++++++++++
+ t/t5563-simple-http-auth.sh | 42 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 67 insertions(+)
+ create mode 100644 t/lib-httpd/custom-auth.sh
+ create mode 100755 t/t5563-simple-http-auth.sh
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1441%2Fjohn-cai%2Fjc%2Ffix-attr-docs-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1441/john-cai/jc/fix-attr-docs-v3
-Pull-Request: https://github.com/git/git/pull/1441
-
-Range-diff vs v2:
-
- 1:  8cfee55e48f ! 1:  cf6f456af47 attr: fix instructions on how to check attrs
-     @@ Commit message
-      
-          The instructions in attr.h describing what functions to call to check
-          attributes is missing the index as the first argument to
-     -    git_check_attr().
-     +    git_check_attr(), as well as tree_oid as the second argument.
-      
-          When 7a400a2c (attr: remove an implicit dependency on the_index,
-          2018-08-13) started passing an index_state instance to git_check_attr(),
-     @@ Commit message
-          (attr: move doc to attr.h, 2019-11-17) moved the API documentation to
-          attr.h as a comment, but still left out the index_state as an argument.
-      
-     +    In 47cfc9b (attr: add flag `--source` to work with tree-ish 2023-01-14)
-     +    added tree_oid as an optional parameter but was not added to the docs in
-     +    attr.h
-     +
-          Fix this to make the documentation in the comment consistent with the
-          actual function signature.
-      
-     @@ attr.h
-        *
-        * setup_check();
-      - * git_check_attr(path, check);
-     -+ * git_check_attr(&the_index, path, check);
-     ++ * git_check_attr(&the_index, tree_oid, path, check);
-        * ------------
-        *
-        * - Act on `.value` member of the result, left in `check->items[]`:
-
-
- attr.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/attr.h b/attr.h
-index 58a2bc1344f..9884ea2bc60 100644
---- a/attr.h
-+++ b/attr.h
-@@ -45,7 +45,7 @@
-  * const char *path;
-  *
-  * setup_check();
-- * git_check_attr(path, check);
-+ * git_check_attr(&the_index, tree_oid, path, check);
-  * ------------
-  *
-  * - Act on `.value` member of the result, left in `check->items[]`:
-
-base-commit: 5dec958dcf965fc75e0f459f8e8ccf9c9f495b15
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 608949ea80..ab255bdbc5 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -137,6 +137,7 @@ prepare_httpd() {
+ 	install_script error-smart-http.sh
+ 	install_script error.sh
+ 	install_script apply-one-time-perl.sh
++	install_script custom-auth.sh
+ 
+ 	ln -s "$LIB_HTTPD_MODULE_PATH" "$HTTPD_ROOT_PATH/modules"
+ 
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 0294739a77..4b2256363f 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -135,6 +135,11 @@ Alias /auth/dumb/ www/auth/dumb/
+ 	SetEnv GIT_HTTP_EXPORT_ALL
+ 	SetEnv GIT_PROTOCOL
+ </LocationMatch>
++<LocationMatch /custom_auth/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++	CGIPassAuth on
++</LocationMatch>
+ ScriptAlias /smart/incomplete_length/git-upload-pack incomplete-length-upload-pack-v2-http.sh/
+ ScriptAlias /smart/incomplete_body/git-upload-pack incomplete-body-upload-pack-v2-http.sh/
+ ScriptAlias /smart/no_report/git-receive-pack error-no-report.sh/
+@@ -144,6 +149,7 @@ ScriptAlias /broken_smart/ broken-smart-http.sh/
+ ScriptAlias /error_smart/ error-smart-http.sh/
+ ScriptAlias /error/ error.sh/
+ ScriptAliasMatch /one_time_perl/(.*) apply-one-time-perl.sh/$1
++ScriptAliasMatch /custom_auth/(.*) custom-auth.sh/$1
+ <Directory ${GIT_EXEC_PATH}>
+ 	Options FollowSymlinks
+ </Directory>
+diff --git a/t/lib-httpd/custom-auth.sh b/t/lib-httpd/custom-auth.sh
+new file mode 100644
+index 0000000000..686895ee8c
+--- /dev/null
++++ b/t/lib-httpd/custom-auth.sh
+@@ -0,0 +1,18 @@
++#!/bin/sh
++
++# Our acceptable auth here is hard-coded, but we could
++# read it from a file provided by individual tests, etc.
++#
++# base64("alice:secret-passwd")
++USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++
++case "$HTTP_AUTHORIZATION" in
++"Basic $USERPASS64")
++	exec "$GIT_EXEC_PATH"/git-http-backend
++	;;
++*)
++	echo 'Status: 401 Auth Required'
++	echo 'WWW-Authenticate: Basic realm="whatever"'
++	echo
++	;;
++esac
+diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
+new file mode 100755
+index 0000000000..314f9217e6
+--- /dev/null
++++ b/t/t5563-simple-http-auth.sh
+@@ -0,0 +1,42 @@
++#!/bin/sh
++
++test_description='test http auth header and credential helper interop'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-httpd.sh
++. "$TEST_DIRECTORY"/lib-credential-helper.sh
++
++start_httpd
++
++setup_credential_helper
++
++test_expect_success 'setup repository' '
++	test_commit foo &&
++	git init --bare "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	git push --mirror "$HTTPD_DOCUMENT_ROOT_PATH/repo.git"
++'
++
++test_expect_success 'access using custom auth' '
++	set_credential_reply get <<-EOF &&
++	username=alice
++	password=secret-passwd
++	EOF
++
++	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote \
++		"$HTTPD_URL/custom_auth/repo.git" &&
++
++	expect_credential_query get <<-EOF &&
++	protocol=http
++	host=$HTTPD_DEST
++	wwwauth[]=Basic realm="whatever"
++	EOF
++
++	expect_credential_query store <<-EOF
++	protocol=http
++	host=$HTTPD_DEST
++	username=alice
++	password=secret-passwd
++	EOF
++'
++
++test_done
 -- 
-gitgitgadget
+2.39.1.738.g5e5f8a2714
+
