@@ -2,131 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4022C27C76
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 03:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3465CC54E94
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 03:25:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234493AbjAZDHI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Jan 2023 22:07:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41592 "EHLO
+        id S235786AbjAZDZz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Jan 2023 22:25:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229772AbjAZDHH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2023 22:07:07 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C5856469A
-        for <git@vger.kernel.org>; Wed, 25 Jan 2023 19:07:06 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id r2so451946wrv.7
-        for <git@vger.kernel.org>; Wed, 25 Jan 2023 19:07:06 -0800 (PST)
+        with ESMTP id S235766AbjAZDZx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2023 22:25:53 -0500
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 596BC9D
+        for <git@vger.kernel.org>; Wed, 25 Jan 2023 19:25:52 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id o20so1155620lfk.5
+        for <git@vger.kernel.org>; Wed, 25 Jan 2023 19:25:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZjtUrPdwbY/O/oftVNeDeaxgc1qp1VANPALO7ZgbSHQ=;
-        b=pjl6cxKnr7I9Eyb62qHrerJnOWw4uk5gpoljRl5Hrr3S4ZeTtnM0biqLdzARN/H6Xz
-         7HouZoQN6x6NR7827i/whEkTTARGQgrfmL0hrz49LWz23wEa0c7+s5wIzcGUe2O7Ir1l
-         pQ7YIomCrCx1FAFFBKnEqVEBw6g/N/luwJSVjCPZSW7C92Wo9wFoPlcyu6HjDUoT3wnT
-         INCGGR7YyskstXILuU3grv1DzBTOUc9R6KB0sW9fsHmyWayB2VHzkoXmxcKiDnedNZAf
-         0tzQNIeSc5pCEZ/NE1ILcljp20fVzSqIX+DuNJSI0w0LS68JfKek5khPh7K3SImQGD7d
-         rQHg==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/3W6eTzY/pC56kZDULanHunZUBQXKOTKWKPAaRZ6mDU=;
+        b=kEDg//Vf0H/kxOWjOty3Y2jlMncftS4RNJIi9ekkOoZtXcWKIb3yI5flI3/QRM+MJG
+         fz5on3HyBwpXD9ppLH19F5DkX9NFdTfyEY2T1bu5LBXJGdwhgSRZbva7IcINB4UTbBv+
+         aepPFICzurH2IFQNQVrEEKEQJG9XXk4qIfh+UxXuskvF8GzL1FWaQ5gqanGvU6Txw5Ja
+         vv7QWD0T9YDtMzPFQs/QggiLxuNLenepOWgcEVQ5KFV5jpXICe5NWoRAYLJ0iXBJCxER
+         FocBW+W9FDE5bqtDgqQxTF/I1CMPmpSP56pujk4QnZG4JpNgxec2qD0jSowOB186/f4m
+         sAYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZjtUrPdwbY/O/oftVNeDeaxgc1qp1VANPALO7ZgbSHQ=;
-        b=JLeTpoRkRNxtP8HmUuXqIsDIMO43VeSbj5GinB1qSnn36ikwNPEaDE/98Sv0REvIA7
-         QNgaSjOmBrT3N4qwyelTL5CojNokCBk9ANt5hQ72Sw+i0i5W0LtCr8y0F3AP2CucxdOJ
-         fYa1Ff9nCuP/9vGFgcWZ8FpjDEr1VfWMxW1odAPqpvwuT/3wLiE28x34MpZWR7Y6kKf8
-         qC5TmokiRKC4Cq0rPjZAfKsuXSDuxIMe7RDBp1uM/gLxO1HLguazCK0uXutGkEF4Ew+l
-         NUdkwmRmw/E+bjyDTxrqdksUYpZH7o2TEc/Dx8f1VZbwWHTseQwj9dAZ3rZyKkEYoMQq
-         UpTg==
-X-Gm-Message-State: AFqh2kpIWj5L7QaHqwf17SnhKZtHAfKqMb+7dQZvm06rLEw3y/mOGtPG
-        5WIqpyQ0mlAKWSOTr26OL/9dsMwaTsM=
-X-Google-Smtp-Source: AMrXdXuDr7jN0TyvnZvR5uaBHfff0J/NuX+BLP4QVOOjvLNEApIr2KMALdOJgdsdnF8aKCh5CNZIfQ==
-X-Received: by 2002:a5d:420e:0:b0:2bc:7f8e:40ba with SMTP id n14-20020a5d420e000000b002bc7f8e40bamr28409325wrq.54.1674702424915;
-        Wed, 25 Jan 2023 19:07:04 -0800 (PST)
-Received: from [192.168.2.52] (85.red-88-14-56.dynamicip.rima-tde.net. [88.14.56.85])
-        by smtp.gmail.com with ESMTPSA id a11-20020a5d508b000000b002be099f78c0sm7934wrt.69.2023.01.25.19.07.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jan 2023 19:07:04 -0800 (PST)
-Subject: Re: [PATCH v2 1/3] branch: fix die_if_checked_out() when
- ignore_current_worktree
-To:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
- <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
- <17f267b1-7f5e-2fb6-fb14-1c37ec355e65@gmail.com> <xmqqbkmruykg.fsf@gitster.g>
- <766b25e1-2d7a-7b5c-10a9-43e545a57dba@gmail.com> <xmqqk01eqr3m.fsf@gitster.g>
- <d61a2393-64c8-da49-fe13-00bc4a52d5e3@gmail.com>
- <1a7fa327-3833-8da3-46d7-60bfe8dae82c@dunelm.org.uk>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <e7943994-3a7a-f877-8cf2-71146def9076@gmail.com>
-Date:   Thu, 26 Jan 2023 04:07:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/3W6eTzY/pC56kZDULanHunZUBQXKOTKWKPAaRZ6mDU=;
+        b=G+GPeHIIeoZVi1lSiEnbDL6AAJN8o1sl6876DoOSrpY8ucq5LXPDnVw5fXdP6v0R5F
+         jjEG5YkFDbaw4KaGGTJeOQRdWAXGQadYVUS89t2V+CVAFHiYK5TjxZBvnvigh60UVrAz
+         0rEfmLVGoM4TeJsD2BwhIM3rHFHhUkJewWZS80ca8HRi/TMbjBkEOx2P4oCwutfdmgpP
+         N12by8W/WoqX4EFoygUB/8IWkIwmcRqdJfAlwJ5ZKVF5Hs7+H03xtHlNq6MDr5tTeQdv
+         2L5WqkprIB1DXEdQ16g5nW4tD03Wlvy0qNKHo5vDaHTHp1tuVukhcAVIoxLf0IOpoL5a
+         K2PQ==
+X-Gm-Message-State: AFqh2kqvG7Rft8GN+adU2VM5UaxZEunOwNMCrhBAWBGHI1zRV5iNrtQw
+        9dBmoYFY814PfTil86kxlubJzvAD90tSc6nBygo=
+X-Google-Smtp-Source: AMrXdXudSOe1kY5WzfyCj29wUByjvuYpBTxzxbK0PQrumIFbvsXs71BxQJ82pA0tJs0ilvEQeI8Av9T6eB/4TfTvNWo=
+X-Received: by 2002:a05:6512:a82:b0:4d4:73e9:89a3 with SMTP id
+ m2-20020a0565120a8200b004d473e989a3mr2270984lfu.183.1674703550297; Wed, 25
+ Jan 2023 19:25:50 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <1a7fa327-3833-8da3-46d7-60bfe8dae82c@dunelm.org.uk>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <pull.1459.git.1673456518993.gitgitgadget@gmail.com>
+ <pull.1459.v2.git.1674474371817.gitgitgadget@gmail.com> <CABPp-BExS8UGfGzT+w9R_p0sY+_=A0-nRzU5QTOKwfBSmX6c3A@mail.gmail.com>
+ <18c94f70-4adf-1b4a-8777-206804c419e6@unity3d.com>
+In-Reply-To: <18c94f70-4adf-1b4a-8777-206804c419e6@unity3d.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 25 Jan 2023 19:25:00 -0800
+Message-ID: <CABPp-BFtLdRV2zWXn0On0b6mOJgMAatwvUumUxfXfNXo9gc=HA@mail.gmail.com>
+Subject: Re: [PATCH v2] ls-tree: add --sparse-filter-oid argument
+To:     William Sprent <williams@unity3d.com>
+Cc:     William Sprent via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24-ene-2023 10:35:26, Phillip Wood wrote:
+On Wed, Jan 25, 2023 at 8:16 AM William Sprent <williams@unity3d.com> wrote=
+:
+>
+> On 25/01/2023 06.11, Elijah Newren wrote:
+> > It looks like =C3=86var and Victoria have both given really good review=
+s
+> > already, but I think I spotted some additional things to comment on.
+> >
+> > On Mon, Jan 23, 2023 at 3:46 AM William Sprent via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> >>
+> >> From: William Sprent <williams@unity3d.com>
+> >>
+> >> There is currently no way to ask git the question "which files would b=
+e
+> >> part of a sparse checkout of commit X with sparse checkout patterns Y"=
+.
+> >> One use-case would be that tooling may want know whether sparse checko=
+uts
+> >> of two commits contain the same content even if the full trees differ.
+> >
+> > Could you say more about this usecase?  Why does tooling need or want
+> > to know this; won't a checkout of the new commit end up being quick
+> > and simple?  (I'm not saying your usecase is bad, just curious that it
+> > had never occurred to me, and I'm afraid I'm still not sure what your
+> > purpose might be.)
+> >
+>
+> I'm thinking mainly about a monorepo context where there are a number of
+> distinct 'units' that can be described with sparse checkout patterns.
+> And perhaps there's some tooling that only wants to perform an action if
+> the content of a 'unit' changes.
 
-> On 22/01/2023 23:21, Rubén Justo wrote:
-> > I tried to maintain the relationship and the role, too.  Just introduce
-> > the helper, as Phillip suggested and I think it is a good idea.
-> 
-> When I suggested adding a helper I was thinking of something like
-> 
-> static const struct worktree *do_find_shared_symref(struct worktree
-> **worktrees,
->  					  const char *symref,
->  					  const char *target,
-> 					  int ignore_current)
-> {
-> 	/*
-> 	 * Body moved from find_share_symref() with a couple
-> 	 * of lines added to support ignore_current
-> 	 /*
-> }
-> 
-> const struct worktree *find_shared_symref(struct worktree **worktrees,
->  					  const char *symref,
->  					  const char *target)
-> {
-> 	return do_find_shared_symref(worktrees, symref, target, 0)
-> }
-> 
-> void die_if_checked_out(const char *branch, int ignore_current_worktree)
-> {
-> 	struct worktree **worktrees = get_worktrees();
-> 	const struct worktree *wt;
-> 
-> 	wt = do_find_shared_symref(worktrees, "HEAD", branch,
-> 				   ignore_current_worktree);
-> 	/* rest unchanged */
-> }
-> 
-> The aim was to avoid changing the public api
+So, you're basically wanting to do something like
+   git ls-tree --paths-matching-sparsity-file=3D<pattern-file> $COMMIT1
+>sparse-files
+   git ls-tree --paths-matching-sparsity-file=3D<pattern-file> $COMMIT2
+>>sparse-files
+   sort sparse-files | uniq >relevant-files
+   git diff --name-only $COMMIT1 $COMMIT2 >changed-files
+and then checking whether relevant-files and changed-files have a
+non-empty intersection?
 
-I thought about a solution like the one you suggest.  Also another one based on
-iterations, something like wt_head_refs()....  I ended up with
-is_shared_symref(), it adds some value, I think.
+Would that potentially be better handled by
+   git diff --name-only $COMMIT1 $COMMIT2 | git check-ignore
+--ignore-file=3D<pattern-file> --stdin
+and seeing whether the output is non-empty?  We'd have to add an
+"--ignore-file" option to check-ignore to override reading of
+.gitignore files and such, and it'd be slightly confusing because the
+documentation talks about "ignored" files rather than "selected"
+files, but that's a confusion point that has been with us ever since
+the gitignore mechanism was repurposed for sparse checkouts.  Or maybe
+we could just add a check-sparsity helper, and then allow it to take
+directories in-lieu of patterns.
 
-The public API remains unchanged, and I like that the comment for
-find_shared_ref(), which is an important note, is moved to is_shared_symref(),
-which contains the essential work related to the comment.
+This seems nicer than opening a can of worms about letting every git
+command specify a different set of sparsity rules.
 
-die_if_checked_out() needs to iterate (here was the wt_heads_refs()), but my
-intuition makes me think it's a good step since we might need another level,
-I'm not sure yet but, like "die_if_if_checked_out(allow_if_current)".
+> Depending on the repo, it won't necessarily be quick to check out the
+> commit with the given patterns. However, it is more about it being
+> inconvenient to have to have a working directory, especially so if you
+> want use the tooling in some kind of service or query rapidly about
+> different revisions/patterns.
+>
+> >> Another interesting use-case would be for tooling to use in conjunctio=
+n
+> >> with 'git update-index --index-info'.
+> >
+> > Sorry, I'm not following.  Could you expound on this a bit?
+> >
+>
+> I was imagining something along the lines of being able to generate new
+> tree objects based on what matches the given sparse checkout patterns.
+> Not that I have a specific use case for it right now.
+>
+> I think what I'm trying to evoke with that paragraph is that this
+> enables integrations with git that seem interesting and weren't possible
+> before.
 
-I'm going to send a v3 addressing the issues Junio commented, still with the
-is_shared_symref().  If the above reasoning doesn't work for you or if the
-change as-is introduces any problem, I have no objection to
-"do_find_shared_symref()".
+I'm not sure if it's interesting, frightening, or something else.
+Hard to say without better descriptions of usecases, which we can't
+have if we don't even have a usecase.  I think I'd just strike this
+paragraph.
 
-Thank you.
+[...]
+> >> +       (*d)->pl.use_cone_patterns =3D core_sparse_checkout_cone;
+> >
+> > Hmm, so the behavior still depends upon the current sparse-checkout
+> > (or lack thereof), despite the documentation and rationale of your
+> > feature as being there to check how a different sparse checkout would
+> > behave?
+> >
+> > I would hate to unconditionally turn cone_patterns off, since that
+> > would come with a huge performance penalty for the biggest repos.  But
+> > turning it unconditionally on wouldn't be good for the non-cone users.
+> > This probably suggests we need something like another flag, or perhaps
+> > separate flags for each mode.  Separate flags might provide the
+> > benefit of allowing cone mode users to specify directories rather than
+> > patterns, which would make it much easier for them to use.
+> >
+> I used 'core_sparse_checkout_cone' because I wanted to allow for the
+> cone mode optimisations, but I also figured that I should respect the
+> configuration. It doesn't change how the patterns are parsed in this case=
+.
+>
+> I agree that it is a bit awkward to have to "translate" the directories
+> into patterns when wanting to use cone mode. I can try adding
+> '--[no]-cone' flags and see how that feels. Together with Victoria's
+> suggestions that would result in having the following flags:
+>
+> * --scope=3D(sparse|all)
+> * --sparse-patterns-file=3D<path>
+> * --[no]-cone: used together with --sparse-patterns-file to tell git
+>    whether to interpret the patterns given as directories (cone) or
+>    patterns (no-cone).
+>
+> Which seems like a lot at first glance. But it allows for passing
+> directories instead of patterns for cone mode, and is similar to the
+> behaviour of 'sparse-checkout set'.
+>
+> Does that seem like something that would make sense?
+
+--sparse-patterns-file still implies patterns; I think that would need
+some rewording.
+
+More importantly, though, based on your usecase description, I wonder
+if you might be better served by either extending the check-ignore
+subcommand or adding a similar helper ("check-sparsity"?), rather than
+tweaking ls-tree.
