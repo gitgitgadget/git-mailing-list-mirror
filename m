@@ -2,67 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E929AC52D11
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 17:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18672C05027
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 18:52:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232056AbjAZRSn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Jan 2023 12:18:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55298 "EHLO
+        id S231543AbjAZSwb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Jan 2023 13:52:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbjAZRSg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2023 12:18:36 -0500
-Received: from pannekake.samfundet.no (pannekake.samfundet.no [IPv6:2001:67c:29f4::50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A3A71BCF
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 09:18:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=gunderson.no; s=legacy; h=In-Reply-To:Content-Type:MIME-Version:References:
-        Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=hTCe51rsQj6w7C3ocjmiT9Vr0c1MySR1vGBoGAlU1jk=; b=eYnL4zEljIuPGkLSVZYiXMfKvR
-        6aaZ6ha8jrSM/SAD9OaysRHi5/22ndoUdSuWEtna8OGY04bUBzjbU0j/qjBPf9riegZqnap0Ftdv1
-        Ay1zwr4HDkMUMJOHYeya6pYupyY8aWL+6buRE0CsesWHTI1ap1S9O/gn/Py7prED9jIYhvPhT5FHP
-        loD1sr1KzKKl1kFrkHB/MHRblKjQ9ulOR1EKuhUfj1u+P24mw0j4ejo122D4kue8m5tZrs7CLMtWE
-        6GAQP6uTc1OUOBg8EXYxBkNjre9yoyYRLymDtgwdDAbeQNotvcm0ssaFrSeiOHioxXD3VYhY02XRr
-        MRCxErng==;
-Received: from sesse by pannekake.samfundet.no with local (Exim 4.94.2)
-        (envelope-from <steinar+bounces@gunderson.no>)
-        id 1pL5tO-00HNnX-Ph; Thu, 26 Jan 2023 18:18:30 +0100
-Date:   Thu, 26 Jan 2023 18:18:30 +0100
-From:   "Steinar H. Gunderson" <steinar+git@gunderson.no>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git log --follow wrongly includes delete commit
-Message-ID: <20230126171830.6qb46wa2ed5h2z3b@sesse.net>
-X-Operating-System: Linux 6.1.3 on a x86_64
-References: <20230126130509.ovii7ji7hi5wm7qx@sesse.net>
- <fcc08ee2-dc58-09da-dc60-c438cfbf6602@github.com>
+        with ESMTP id S229469AbjAZSw3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2023 13:52:29 -0500
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03F1D125A5
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 10:52:29 -0800 (PST)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-50660e2d2ffso36273437b3.1
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 10:52:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=eNNKm7W61wsnBni1MvZZgAef+wx/7plIJ9HXMWbkXWc=;
+        b=b3T0beBQAtFiC+iauwQCjBTZvH3fj1/UPa5qGqKM1h/7Vi2P5KlF2QLS0vLoMZqNg8
+         QHvuBFeuqC1/T+x1eCUbX2P8hoyGegXeLltHj8Uh6bLmbWgTkfVGLHyIkMQrxzsF507B
+         x1jQ13f4CXP66YWB6kWvxCmPZSxGrYQ6yX0l7tybRwrsZFlqUL8ROobeQ9xjtQCmr6Xr
+         vmsTLikCoPskhRJFQ65gE+IghdjNYWL6OfVeh6+kyoOpo8qBk7k9OlZfMiYvRh6Dti52
+         2zZov93CwYdPfrmTnIJQrV84TTuHvR5r4xzbLw86t3/1L4E5JkxzKQybTO4UbLOHGyOC
+         Rrtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eNNKm7W61wsnBni1MvZZgAef+wx/7plIJ9HXMWbkXWc=;
+        b=byPW95zVeBIQ22C88MhUrDuBqTPORYNT/LyMEKTCGqu3TVRFnbadCp0CZPOURGaGGH
+         BODxqLjtaNOdLkGWNLIHWKTEDaxLsYsnkxBoAmN5l4aDWZY644nmBtivE5Wnm+5U0HLo
+         yHlj4rZXa7z5BC8SIzy2YM3AN9TSnuByWz47yCXoaDfhGewcSKPLrXkN6lGG3iHslYn8
+         yMviMQHan/nN3dLYWNIVh6A+pSCQqeM4kTz7cm0GBb/kVglMTlpRGI/XrODBAwk1AwUa
+         Uof6jIb132D66dfO9sdFZHsSrao+LMGDkKpQebDPE5NUNn9zVxUMUoZdxprNjuYhD9x5
+         eZdw==
+X-Gm-Message-State: AFqh2kousPcWEM9qn5PHcNUgGpIM4dtAl55c88e2qogKD5mDzH75C/Ou
+        Q8ZZl74uOKn1UF0Wr5n3EUAuRqTeX1HGlF7MWFWtHA==
+X-Google-Smtp-Source: AMrXdXtbo5F5juYW33uqg3kbA0ofIp/CY/4wU4xiwLP2l6yuxKfcF8N1LkknXK7YwZVf9K4FoBJ8Yjp+a87qIs5fCjk=
+X-Received: by 2002:a81:160a:0:b0:4e3:f87:8c24 with SMTP id
+ 10-20020a81160a000000b004e30f878c24mr4894271yww.248.1674759148068; Thu, 26
+ Jan 2023 10:52:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fcc08ee2-dc58-09da-dc60-c438cfbf6602@github.com>
+References: <20230104215415.1083526-1-calvinwan@google.com>
+ <20230117193041.708692-6-calvinwan@google.com> <kl6lilgtveoe.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6lilgtveoe.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Thu, 26 Jan 2023 10:52:17 -0800
+Message-ID: <CAFySSZBiW7=ZTmXRaLzCoKUi0Jd=fzvW5PJ6=Ka0jKHoP2ddSw@mail.gmail.com>
+Subject: Re: [PATCH v6 5/6] diff-lib: parallelize run_diff_files for submodules
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com, avarab@gmail.com,
+        phillip.wood123@gmail.com, newren@gmail.com,
+        jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 26, 2023 at 11:38:42AM -0500, Derrick Stolee wrote:
-> It's actually a third option: it was deleted but also renamed in an
-> independent point in history, but the delete is more recent "in time"
-> that it shows up first, and the merge that resolves the issue doesn't
-> show up at all.
+On Thu, Jan 26, 2023 at 1:16 AM Glen Choo <chooglen@google.com> wrote:
+>
+>
+> Calvin Wan <calvinwan@google.com> writes:
+>
+> > @@ -226,6 +242,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+> >                       newmode = ce->ce_mode;
+> >               } else {
+> >                       struct stat st;
+> > +                     unsigned ignore_untracked = 0;
+> > +                     int defer_submodule_status = !!revs->repo;
+>
+> What is the reasoning behind this condition? I would expect revs->repo
+> to always be set, and we would always end up deferring.
 
-I see! So basically my parser needs to also start tracking merges,
-except --follow seems to be sort of odd with those as well (though
-I think maybe it's changed in some fairly recent git version).
+Ah looks like a vestigial sanity check. You're correct that we would
+always be deferring anyways.
 
-> (Note: I didn't include --follow here as it filtered the --graph
-> output in a strange way, including dropping the merge commitswhich was
-> confusing to me.)
+>
+> >                       newmode = ce_mode_from_stat(ce, st.st_mode);
+> > +                     if (defer_submodule_status) {
+> > +                             struct submodule_status_util tmp = {
+> > +                                     .changed = changed,
+> > +                                     .dirty_submodule = 0,
+> > +                                     .ignore_untracked = ignore_untracked,
+> > +                                     .newmode = newmode,
+> > +                                     .ce = ce,
+> > +                                     .path = ce->name,
+> > +                             };
+> > +                             struct string_list_item *item;
+> > +
+> > +                             item = string_list_append(&submodules, ce->name);
+> > +                             item->util = xmalloc(sizeof(tmp));
+> > +                             memcpy(item->util, &tmp, sizeof(tmp));
+>
+> (Not a C expert) Since we don't return the string list, I wonder if we
+> can avoid the memcpy() by using &tmp like so:
+>
+>   struct string_list_item *item;
+>   item = string_list_append(&submodules, ce->name);
+>   item->util = &tmp;
+>
+> And then when we call string_list_clear(), we wouldn't need to free the
+> util since we exit the stack frame.
 
-I think you need to give -c or --cc or something similar to see merges in
---follow, but the man pages are not entirely clear to me.
+Unfortunately this doesn't work because tmp is deallocated off the stack
+after changing scope.
 
-/* Steinar */
--- 
-Homepage: https://www.sesse.net/
+> > +test_expect_success 'diff in superproject with submodules respects parallel settings' '
+> > +     test_when_finished "rm -f trace.out" &&
+> > +     (
+> > +             GIT_TRACE=$(pwd)/trace.out git diff &&
+> > +             grep "1 tasks" trace.out &&
+> > +             >trace.out &&
+> > +
+> > +             git config submodule.diffJobs 8 &&
+> > +             GIT_TRACE=$(pwd)/trace.out git diff &&
+> > +             grep "8 tasks" trace.out &&
+> > +             >trace.out &&
+> > +
+> > +             GIT_TRACE=$(pwd)/trace.out git -c submodule.diffJobs=0 diff &&
+> > +             grep "preparing to run up to [0-9]* tasks" trace.out &&
+> > +             ! grep "up to 0 tasks" trace.out &&
+> > +             >trace.out
+> > +     )
+> > +'
+> > +
+>
+> Could we get tests to check that the output of git diff isn't changed by
+> setting parallelism? This might not be feasible for submodule.diffJobs >
+> 1 due to raciness, but it would be good to see for submodule.diffJobs =
+> 1 at least.
+
+ack.
+
+>
+> >  test_expect_success 'git diff --raw HEAD' '
+> >       hexsz=$(test_oid hexsz) &&
+> >       git diff --raw --abbrev=$hexsz HEAD >actual &&
+> > diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
+> > index d050091345..52a82b703f 100755
+> > --- a/t/t7506-status-submodule.sh
+> > +++ b/t/t7506-status-submodule.sh
+> > @@ -412,4 +412,23 @@ test_expect_success 'status with added file in nested submodule (short)' '
+> >       EOF
+> >  '
+> >
+> > +test_expect_success 'status in superproject with submodules respects parallel settings' '
+> > +     test_when_finished "rm -f trace.out" &&
+> > +     (
+> > +             GIT_TRACE=$(pwd)/trace.out git status &&
+> > +             grep "1 tasks" trace.out &&
+> > +             >trace.out &&
+> > +
+> > +             git config submodule.diffJobs 8 &&
+> > +             GIT_TRACE=$(pwd)/trace.out git status &&
+> > +             grep "8 tasks" trace.out &&
+> > +             >trace.out &&
+> > +
+> > +             GIT_TRACE=$(pwd)/trace.out git -c submodule.diffJobs=0 status &&
+> > +             grep "preparing to run up to [0-9]* tasks" trace.out &&
+> > +             ! grep "up to 0 tasks" trace.out &&
+> > +             >trace.out
+> > +     )
+> > +'
+> > +
+>
+> Ditto for "status".
+
+ack.
