@@ -2,70 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED48BC54E94
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 11:39:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F3CFC54E94
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 13:43:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237307AbjAZLj6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Jan 2023 06:39:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49718 "EHLO
+        id S230040AbjAZNnp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Jan 2023 08:43:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237288AbjAZLj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2023 06:39:56 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A17E663844
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 03:39:43 -0800 (PST)
-Received: (qmail 20917 invoked by uid 109); 26 Jan 2023 11:39:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Jan 2023 11:39:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22934 invoked by uid 111); 26 Jan 2023 11:39:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Jan 2023 06:39:42 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 26 Jan 2023 06:39:42 -0500
-From:   Jeff King <peff@peff.net>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: t5559 breaks with apache 2.4.55
-Message-ID: <Y9Jmfg/jlSszVep4@coredump.intra.peff.net>
-References: <Y8ztIqYgVCPILJlO@coredump.intra.peff.net>
- <Y81lQwG85+Skujja@pobox.com>
+        with ESMTP id S229641AbjAZNno (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2023 08:43:44 -0500
+X-Greylist: delayed 2303 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 26 Jan 2023 05:43:36 PST
+Received: from pannekake.samfundet.no (pannekake.samfundet.no [IPv6:2001:67c:29f4::50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0942CB755
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 05:43:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=gunderson.no; s=legacy; h=Content-Type:MIME-Version:Message-ID:Subject:To:
+        From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=aiKYGw4STV6VTesmiIzsG8qCMFMYygNgN+LPpDdneZ4=; b=rjliiOpA80DLyMa//dpfI64sIX
+        26Xz6qec2hB+K8EIELXfdrtkDKEMc1xz4I5CWEv2j2pC7EBds2oL9pKhCYkZq8FgG2vJAfKMSGX10
+        i/3ltrHgB9MlvnHwqJIhkJpLNf21Qqmn5kocp0HnS0iO0PbLqPAEo+U3gEw8nzE0MI0cTfdd9PueQ
+        fEv8eYYuLAXwfppjLLVmwmfPkx61w1C+7kdul9shya8li4OUqJHiUUjMq+C2sb7A6eFASV36UfMIP
+        CkEcGhoEIXeOF7RW4JEku24EnXRDyIaO4HvM1UU+Xo5+Im0DD+KuJqrmFQJaCSPpHGuhA4SzyOAVJ
+        INhfiQFw==;
+Received: from sesse by pannekake.samfundet.no with local (Exim 4.94.2)
+        (envelope-from <steinar+bounces@gunderson.no>)
+        id 1pL1wD-00GjF6-42
+        for git@vger.kernel.org; Thu, 26 Jan 2023 14:05:09 +0100
+Date:   Thu, 26 Jan 2023 14:05:09 +0100
+From:   "Steinar H. Gunderson" <steinar+git@gunderson.no>
+To:     git@vger.kernel.org
+Subject: git log --follow wrongly includes delete commit
+Message-ID: <20230126130509.ovii7ji7hi5wm7qx@sesse.net>
+X-Operating-System: Linux 6.1.3 on a x86_64
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y81lQwG85+Skujja@pobox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 22, 2023 at 11:33:07AM -0500, Todd Zullinger wrote:
+Hi,
 
-> > So I haven't reported the bug further yet. But I thought I'd post this
-> > here before anybody else wastes time digging in the same hole.
-> 
-> FWIW, I think this is the same issue we discussed about 2
-> months back, in <Y4fUntdlc1mqwad5@pobox.com>¹.
-> 
-> I haven't done much else with it since then.  It's almost
-> surely either an apache httpd/mod_http2 or curl issue.  If I
-> had to bet, I'd say mod_http2.  (But then, it could be curl
-> and just has yet to be exposed widely because not many are
-> using the current mod_http2 code.)
-> 
-> ¹ https://lore.kernel.org/git/Y4fUntdlc1mqwad5@pobox.com/
+I'm in the Chromium repository; it can be checked out at
+https://chromium.googlesource.com/chromium/src.git (you don't need the
+sub-repostiories). HEAD is pointing to 4e0db738b37c. git 2.39.1.
 
-Ah, I somehow completely forgot about that issue. Despite being one of
-the two participants on the thread.
+When I run
 
-Yeah, after seeing that, I'm quite sure this is a mod_http2 issue. It
-would be nice to bisect within the mod_http2 history to find the
-culprit, but I'd first have to figure out how to build standalone apache
-modules. ;)
+  git log --raw --follow base/third_party/xdg_user_dirs/xdg_user_dir_lookup.h
 
-I may try to poke at it later if I have time. It might also be worth
-submitting a bug report to the mod_http2 folks. I'd hope to have a more
-compact reproduction, but it does at least seem to fail reliably for me
-(not even racily).
+this is the first commit that it lists (snipped):
 
--Peff
+commit 5d4451ebf298d9d71f716cc0135f465cec41fcd0
+[...]
+:100644 000000 9e81e1b53029f 0000000000000 D base/third_party/xdg_user_dirs/xdg_user_dir_lookup.h
+
+This indicates that the last thing that happened to the file is a delete.
+However, the file isn't deleted; it's alive and well. git log without
+--follow does not list this commit at all.
+
+So either git log --follow is listing a delete commit that doesn't make
+sense, or it's missing whatever commit put it back into place afterwards.
+
+/* Steinar */
+-- 
+Homepage: http://www.sesse.net/
