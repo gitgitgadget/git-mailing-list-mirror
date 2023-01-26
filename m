@@ -2,93 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75F7DC27C76
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 00:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0490C54E94
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 01:36:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbjAZASe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Jan 2023 19:18:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60664 "EHLO
+        id S229957AbjAZBgf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Jan 2023 20:36:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjAZASd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2023 19:18:33 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DC435142D
-        for <git@vger.kernel.org>; Wed, 25 Jan 2023 16:18:32 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id z31so176278pfw.4
-        for <git@vger.kernel.org>; Wed, 25 Jan 2023 16:18:32 -0800 (PST)
+        with ESMTP id S229539AbjAZBge (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2023 20:36:34 -0500
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDF7441B47
+        for <git@vger.kernel.org>; Wed, 25 Jan 2023 17:36:32 -0800 (PST)
+Received: by mail-lj1-x236.google.com with SMTP id k38so418595lje.5
+        for <git@vger.kernel.org>; Wed, 25 Jan 2023 17:36:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=asqg/K3OGZlQf4OewCJ3O0cLOnfXMelFaoJwcpMEcSU=;
-        b=fydCPwY9LLRy8KZ1Z2ZgGPeVCHeFbodFF211l7ymScaNodDiSrl6L1h3ZAVQ5Tiq02
-         kRPqkMYT4Oc2X8rICXiDFxFGV6xCqhVvA2Pch5VjdVkXsamlvCykLpMBTRFN75o3tE5G
-         Th+XzhbuhqCsmpK9DklxTcTPStjGPObiODm08WTY6XeczpPo0iwJcgM+aTqPcRe4WKd/
-         r+2NyIceHALvmO3udIZRk7xaPzL0s/DsSfMKbdrtcAgm9D4laP1HawPrb2a5c1q6+BUo
-         mFM16wBDwG8D4Uk2ccV3bFqpMWqE38UgNTusyF/9o2K8/5S9ooatb+Hh7ZNDPFwUwEge
-         f8cw==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bQV1oUwOXnMZReke0dASwGko+JJv5TVFrb8wdjb/APE=;
+        b=gZ4IwfX+0M5sZe9GVLfQCh2kVyL4jAXHVVc4XPOY+dWk7kD1b0/0nX0a6I7QKmMF6P
+         ophDMQPqQ7IVX/iqKsEOkzSe+M76SAHNUbWoqyPYOsbYbvzRfNEWhlKo1kSa+IvOBIWf
+         0jd3WPsezistEPFbA1DxZxp1gvCQ5ZUxF+TMo7Aq4NR3wuU7r1vXV43dCws9/tVu2Wzt
+         F7LjE4YI967IeMoW+/LT5W6DSW4Ux3ZbVM1xBeMhTLIvu4oehYsJlTkpIIAX+IfTVOd2
+         joEV1LsdpaQCOJ1TmUUW6jFIJZzFNiez7HrwbOKIejlnEO8TPNNZxqGVGkLRXiEIGond
+         yxRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=asqg/K3OGZlQf4OewCJ3O0cLOnfXMelFaoJwcpMEcSU=;
-        b=nL/bF9POndVSZd6TwRCxrcUr7G3xJjA/2IKdy5OeqDaYwV8y6aS7S0acGI/YpvjzfN
-         oIAqgkQP4/zGLPE+CkDKfIUgjtRBZPC+M4kHwu1txhwJHB0ZlqKEr5yFoqaQN0AfI1ks
-         wv9vWGWDn+S/Z7cl8cScKqlrtoo5zBtAcKgVovw7N5LQw3GbkJWUdLrGNWnbC6/70wNo
-         1BaOiOgLB/gJ+CPesj+YTnQHMUBwKz6hoaJMfqcRgqxkLRUnupQmt/NitjcAG9JpnM+v
-         XrdtadIu8XJaStYj3gLocRmoXI+xHUDbMINpuzWzd3monZuPgFANpWYHnk2HJE1/9bZ/
-         fFyA==
-X-Gm-Message-State: AFqh2kpHXrwiV07wkWtIaErnQy2s9/mRz1UP4CllylWqZE9Wv9lyn+zD
-        u9pYHOL4/jFiOGceyhg+VuK1wvV5clE=
-X-Google-Smtp-Source: AMrXdXvIlHHXHGmDCuMIV1Zmcbo4Dox1pTrP1I6mnuSQwGXLI8UCyVtizQP/9hXUotqt1wa3wlxjcA==
-X-Received: by 2002:a05:6a00:300f:b0:58d:94a2:f404 with SMTP id ay15-20020a056a00300f00b0058d94a2f404mr38217728pfb.12.1674692311932;
-        Wed, 25 Jan 2023 16:18:31 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id d11-20020aa7814b000000b00587c11bc925sm4202755pfn.168.2023.01.25.16.18.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jan 2023 16:18:31 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Gwyneth Morgan <gwymor@tilde.club>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] request-pull: filter out SSH/X.509 tag signatures
-References: <20230125230117.3915827-1-gwymor@tilde.club>
-        <20230125234725.3918563-1-gwymor@tilde.club>
-Date:   Wed, 25 Jan 2023 16:18:31 -0800
-In-Reply-To: <20230125234725.3918563-1-gwymor@tilde.club> (Gwyneth Morgan's
-        message of "Wed, 25 Jan 2023 23:47:27 +0000")
-Message-ID: <xmqq4jsedu7c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bQV1oUwOXnMZReke0dASwGko+JJv5TVFrb8wdjb/APE=;
+        b=7sOjDVw32553xR5EX4DTMgw99cqpjjwxJwwnwom0QXxlhHphJqsQDn84DU6jcslOBL
+         1uEnmzKF//tGjJ+oM6UUQqA/GNdyNrGTh4KPNFSQGSNBT1alHmxDwiz+M/WXRgUpVwvp
+         ZAfOkwSgL7wNSPi9CJprVqiZkdMn5pKluplZ5pLQO+kEwLPytuew8+2lF9S+qNTW9U4D
+         9HSVta1+KC4n0F8MRTgzPcqTmxOiknoC8lf0KvBlKmtCtbmTpmBf1nS6WZsLjBOTuZvo
+         RIj1ygNnCrE5SLpvH9T/+y1wTwFoCnzDwbiFilo67pYkbl8m7zHimG3GOM+/7p3JABqD
+         GPRw==
+X-Gm-Message-State: AFqh2koMxwK2ImH+hprRz8kM9R5axEV9byyivUYnkUIu8Ck5DH2UK0ri
+        NDPlLvn2npEMyh4PTEpoHpOnXRJ80hiFZjjxJCk=
+X-Google-Smtp-Source: AMrXdXthLq+i+1KV8F/A0TuUrr9KXDCCs3VfczAFF7H2zlhMAswp4uBCO1NWnMQ1KGvYF7kblzCApGYasGVVXfjd8Ds=
+X-Received: by 2002:a2e:3a06:0:b0:28b:c9a8:ced5 with SMTP id
+ h6-20020a2e3a06000000b0028bc9a8ced5mr856321lja.182.1674696990986; Wed, 25 Jan
+ 2023 17:36:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover-v4-00.19-00000000000-20230117T151201Z-avarab@gmail.com>
+ <cover-v5-00.19-00000000000-20230118T120334Z-avarab@gmail.com> <patch-v5-07.19-1fac90c306a-20230118T120334Z-avarab@gmail.com>
+In-Reply-To: <patch-v5-07.19-1fac90c306a-20230118T120334Z-avarab@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 25 Jan 2023 17:36:00 -0800
+Message-ID: <CABPp-BHg00gpwo6emQXPK63Ub=7xRR=3w2jw6uWdpnpJWPZruQ@mail.gmail.com>
+Subject: Re: [PATCH v5 07/19] repack: fix leaks on error with "goto cleanup"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Gwyneth Morgan <gwymor@tilde.club> writes:
-
-> git request-pull filters PGP signatures out of the tag message, but not
-> SSH or X.509 signatures.
+On Wed, Jan 18, 2023 at 5:10 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Signed-off-by: Gwyneth Morgan <gwymor@tilde.club>
+> Change cmd_repack() to "goto cleanup" rather than "return ret" on
+> error, when we returned we'd potentially skip cleaning up the
+> string_lists and other data we'd allocated in this function.
+
+This is hard to parse; the comma followed by "when" suggests you are
+only changing things under a certain set of conditions rather than
+explaining why you are making an unconditional change.  Perhaps:
+
+In cmd_repack() when we hit an error, replace "return ret" with "goto
+cleanup" to ensure we free the necessary data structures.
+
+
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  git-request-pull.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  builtin/repack.c                    | 13 +++++++------
+>  t/t6011-rev-list-with-bad-commit.sh |  1 +
+>  2 files changed, 8 insertions(+), 6 deletions(-)
 >
-> diff --git a/git-request-pull.sh b/git-request-pull.sh
-> index 2d0e44656c..01640a044b 100755
-> --- a/git-request-pull.sh
-> +++ b/git-request-pull.sh
-> @@ -153,7 +153,7 @@ for you to fetch changes up to %H:
->  if test $(git cat-file -t "$head") = tag
->  then
->  	git cat-file tag "$head" |
-> -	sed -n -e '1,/^$/d' -e '/^-----BEGIN PGP /q' -e p
-> +	sed -n -e '1,/^$/d' -e '/^-----BEGIN \(PGP\|SSH\|SIGNED\) /q' -e p
->  	echo
->  	echo "----------------------------------------------------------------"
->  fi &&
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index c1402ad038f..f6493795318 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -948,7 +948,7 @@ int cmd_repack(int argc, const char **argv, const cha=
+r *prefix)
+>
+>         ret =3D start_command(&cmd);
+>         if (ret)
+> -               return ret;
+> +               goto cleanup;
+>
+>         if (geometry) {
+>                 FILE *in =3D xfdopen(cmd.in, "w");
+> @@ -977,7 +977,7 @@ int cmd_repack(int argc, const char **argv, const cha=
+r *prefix)
+>         fclose(out);
+>         ret =3D finish_command(&cmd);
+>         if (ret)
+> -               return ret;
+> +               goto cleanup;
+>
+>         if (!names.nr && !po_args.quiet)
+>                 printf_ln(_("Nothing new to pack."));
+> @@ -1007,7 +1007,7 @@ int cmd_repack(int argc, const char **argv, const c=
+har *prefix)
+>                                        &existing_nonkept_packs,
+>                                        &existing_kept_packs);
+>                 if (ret)
+> -                       return ret;
+> +                       goto cleanup;
+>
+>                 if (delete_redundant && expire_to) {
+>                         /*
+> @@ -1039,7 +1039,7 @@ int cmd_repack(int argc, const char **argv, const c=
+har *prefix)
+>                                                &existing_nonkept_packs,
+>                                                &existing_kept_packs);
+>                         if (ret)
+> -                               return ret;
+> +                               goto cleanup;
+>                 }
+>         }
+>
+> @@ -1115,7 +1115,7 @@ int cmd_repack(int argc, const char **argv, const c=
+har *prefix)
+>                 string_list_clear(&include, 0);
+>
+>                 if (ret)
+> -                       return ret;
+> +                       goto cleanup;
+>         }
+>
+>         reprepare_packed_git(the_repository);
+> @@ -1172,10 +1172,11 @@ int cmd_repack(int argc, const char **argv, const=
+ char *prefix)
+>                 write_midx_file(get_object_directory(), NULL, NULL, flags=
+);
+>         }
+>
+> +cleanup:
+>         string_list_clear(&names, 1);
+>         string_list_clear(&existing_nonkept_packs, 0);
+>         string_list_clear(&existing_kept_packs, 0);
+>         clear_pack_geometry(geometry);
+>
+> -       return 0;
+> +       return ret;
+>  }
+> diff --git a/t/t6011-rev-list-with-bad-commit.sh b/t/t6011-rev-list-with-=
+bad-commit.sh
+> index bad02cf5b83..b2e422cf0f7 100755
+> --- a/t/t6011-rev-list-with-bad-commit.sh
+> +++ b/t/t6011-rev-list-with-bad-commit.sh
+> @@ -2,6 +2,7 @@
+>
+>  test_description=3D'git rev-list should notice bad commits'
+>
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  # Note:
+> --
+> 2.39.0.1225.g30a3d88132d
 
-Thanks, queued.
+Code changes look fine.
