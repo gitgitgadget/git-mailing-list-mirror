@@ -2,125 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AEA6C61DA4
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 14:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78CD8C54E94
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 14:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230366AbjAZOrB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Jan 2023 09:47:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53720 "EHLO
+        id S231879AbjAZOzq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Jan 2023 09:55:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230109AbjAZOq5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2023 09:46:57 -0500
-Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01olkn2036.outbound.protection.outlook.com [40.92.98.36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 594803AB6
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 06:46:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=OPximloUeUr2wOBC9VzDttALPtZAs3dKOfOsoTFtifTHZGb2HM8uRiTkQigkpTW8Grra39lccMBPsJKOBhOfPx3VvD5zd3f6MEgVfiglkjf602s8Zp1vZ/In46n5HhBhu4T6c2t8E+ayunhdZeFPMCJ+lIT9KUIGGMOAR+yhboeU6kiBo6jTI0Nuyt0a6rQqPzeIxnz/FcFKlyMWk64PjC5pNdpVttwrzWZIY8Fijkp2my5pOluxP5a5HsKRHZZ4XFUUOwIO4eUNJP+U4ozTU1F+7wu1RjslNzXhTqQ+HhE4wYTKTXTFb5g0VUrHI6a2GIS4MuuCc9FlDKCVDSc8uw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NzAokIxfcLpCpjtc5iAQNpllbqbCufUsItLoyT8P+YA=;
- b=T+YjeaYYsXtMr+q9fwbzzSXu41xA6oZnbnoWzF6ctf/hgy5QcEfsIT5lTe8ICAEbnbHq+NkfjEsue8A8xvKZtUmq164WQ2pA6SGqHibcUD6tLUpfI+PtY/RnRFDlui5MTVEA4ECkp/mD4Sp/uBhCVSBBaGKL0Rz+u1xedA/UKZ/eaiKyF+VwTcecyNzdJ+9MOc/yR1eFbI7P/azn+aojtPPxtaJw1BLBFqSWlKvR0i5/hia6TZZO2USiTWwRZ8GgSntAwyrLS+MLjG0Xjn/zeauSZDKlbpk4O7iTmvMhi6BrQ0C0BNiBhRcR2RGjgN4FvwJU4xm1tItJJ1JtgS9fSw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NzAokIxfcLpCpjtc5iAQNpllbqbCufUsItLoyT8P+YA=;
- b=JOUxHjPJR8ErLW6yJb40PJoqDy/TTtm7ZheNw4Nq8w6kGrr9gziKXtaQredWkQ6QQ5TXOiQqMjB/qzCq25yk8THeH5Cy+rlEJefuRha3oEp5LpG6Zs6x7eFi58DYYw6Xp4mpBXIuZTQXWDsRYweroIMoS7gxcrIdR2HdI4IztdOgLRUgH2JniIzoZpeNci4btPTS3+40x0tXXhlbEkj9vFGR0jWPnkCVt1DR40t0Oea/lw+WcU0GuUQ777rAyOFTX/2JaVCsnWS9OpbbndmTg2krI3h358JfDLX8jYFlqat3snWA92WP94x/flXatsosXcx+p6FdB8JBvPlptt7FoQ==
-Received: from OSYP286MB0215.JPNP286.PROD.OUTLOOK.COM (2603:1096:604:84::7) by
- TYWP286MB3205.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:2d1::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6002.33; Thu, 26 Jan 2023 14:46:54 +0000
-Received: from OSYP286MB0215.JPNP286.PROD.OUTLOOK.COM
- ([fe80::1878:5d55:e47:b918]) by OSYP286MB0215.JPNP286.PROD.OUTLOOK.COM
- ([fe80::1878:5d55:e47:b918%3]) with mapi id 15.20.6043.022; Thu, 26 Jan 2023
- 14:46:54 +0000
-From:   Yangyang Hua <hyy_41@live.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: When using several ssh key, Git match ssh key by host, instead of
- hostname in ssh config file.
-Thread-Topic: When using several ssh key, Git match ssh key by host, instead
- of hostname in ssh config file.
-Thread-Index: AQHZMZFP2uywjTKQq0uXSEDuCS1VQw==
-Date:   Thu, 26 Jan 2023 14:46:54 +0000
-Message-ID: <OSYP286MB0215D880FA9D82B74E393DD691CF9@OSYP286MB0215.JPNP286.PROD.OUTLOOK.COM>
-Accept-Language: en-SG, en-US
-Content-Language: en-SG
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn:  [dI8Afrzdgn2qnGSfiTqG6q04xbGWLRhY3KhIA2T/n0+aHmfFs37MpzVkmbjv3Zsr]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OSYP286MB0215:EE_|TYWP286MB3205:EE_
-x-ms-office365-filtering-correlation-id: 22194f04-b0dd-4cfd-d449-08daffac2aee
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: x0tPUNAkxsCCLgLKxqdgORC3jCUqcRynmqPQ3xCQTiK+Tn+9WCm+36xjQsWRSJoXdcftVlRwfpZ7jH3lQboqm18sO0ojh7nXqOZtNtAHRVl2CG7EI/BoD8wkolVnmXiP9Jd6goQXLj4GIqNdWV+9ItUt5zI1ZuDuKeV2UjjL9Y/me8HLxn5qYhK2cK0v2QxujJd+7v7tuItgJVAwUIyTArU9VcZR4epIryFOOer0C+VsEWKovE228BXpH/OR18UKB3tJpsP8Ijmf9FPQ7stUuZbRyDnnpHuVRmPtGxThPjl72JVxbtQXaKQSoE+aCLHqQA6c7jND8sY7thKmDLT72YkoMDD1pP//TkxrdeBQpyrTG1rcnwj+peuNPRO5AGRSfrjvs1Vo0/+Vglyku/won/Wx5DsdTV+d3I1uhSAYt0MuJXNMg9yyNovaQyskdzfZmGraXcgzIz7bVxslyarCrQHGlANGfgDyMHtnwonvP2/R5CfU8ENoufDA4Top+6h90XtdcpKGIQzRHWBgP+LLoT2qy0vdyReM8EwzpmyTp1quSr0bKLGl6RzO09ZetrVTdMgz88w2fvNCpSgpp2iJdpVpj9pCVT9lfNxlT+vZmp0=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?nhdHtB0eYqnteiY26DyCGG4g76C9gfdlWjfAtTlJzIf22S8w/lClxhlZxa?=
- =?iso-8859-1?Q?xhg3PCec2DPzOYtICS2HfrJRNsOkkVKWCMZSCX7XDTZ6zOlpjwba5UCIMI?=
- =?iso-8859-1?Q?m98rjxn2UvtgdZMxerz3BCU2w82fJd2If7qH9KTKrl2LpkWQRkkv5p7RAu?=
- =?iso-8859-1?Q?IqZ70Y1/KfCAQJ3ZEUqwaoFa6dSB/bjIcxf4xziGpXLizQvMuu7Uj+3BOk?=
- =?iso-8859-1?Q?dirbAQb5fcw5dtbQyQMDpB6YT2eJBMs7vBq5kj0TI+f6RM/Bswlz63y5xI?=
- =?iso-8859-1?Q?qsheN5kTm37Fr34ZlHk4J+BuV/Iyjttoz/+/BnwYK5Y4PIQb+JZ4gROuDR?=
- =?iso-8859-1?Q?PvwxDxPnLu1kP1VLWxA5Bw+E169qQNX/ahZRj3sQiQqIzShuQZTwDydouV?=
- =?iso-8859-1?Q?04dSUruU3tUFxSNBKRgM08qbEI6g2hCDpuAiMfGJdNRi2VPdWi9CLQKr/b?=
- =?iso-8859-1?Q?kMxduL8Ns0MVY1awr+9vGeTAg2Nmk1kLDmgEaMOAFphc9M6yFl9L0HbmhB?=
- =?iso-8859-1?Q?McZy/FymdB4LdkIijmFbr1r5ZzlorCBZhJ9U9E/8ZtPbhgTnahDa3as0xQ?=
- =?iso-8859-1?Q?zwOdefkWEtLWA2s2N0+V9wwMDLziCCWy/RxPJ7X6B+TdudysxgEGEVHT44?=
- =?iso-8859-1?Q?Xe2G54qE6sZZkigpkc8ka1yfuFQagf/sSkjnDfOay5beLqkMKJkcjUa3FN?=
- =?iso-8859-1?Q?eqaVjqnbMJ9+y8NplADFMixFEy5tyrTa9q0Rr72sRgyOA4JYqGcJy/tBGG?=
- =?iso-8859-1?Q?YPovUasygeBiJ4EFhvgE9Z2h14+lcZIJoqHbNIbjWsqG+9Wh8cylhsr45n?=
- =?iso-8859-1?Q?BKaUv+bkEebGMHg/KWeODscNNFYmCipiSw5ZogurQEftk8PcS7XKGpcwlB?=
- =?iso-8859-1?Q?aiQT1HFMLGOHIuyO9IIeDrKMaY780zzAAegqAHuWnbsmbOXVTv/ZLFxR7y?=
- =?iso-8859-1?Q?w+KvjTjYvOiidTJ6QmLInvX0uG3pQhOVwnF/mq1HrHTOq678Es2BiIs1R5?=
- =?iso-8859-1?Q?MF7Xb55Yy9iKPTho1Jun+KBSP5POTdqC2Uvw18p3b7iH0YRzsyT68my3kI?=
- =?iso-8859-1?Q?XMeWnJTzLwKAOZN/vKrB/ZCsPUmjHoYyaRjusYEDIE7qKw3YZKlBLooPHq?=
- =?iso-8859-1?Q?FREJM2pWADHLUGzIjOecYy0D07qnbVhTE35ifAw8Si7NxJlqzebhqxQQWP?=
- =?iso-8859-1?Q?sWZ0tplKCRcla6dULvVrakRb0LmOWFpMO7fvqSoGG/mhOoOunVrzn5k8M2?=
- =?iso-8859-1?Q?lfUKzEzvVQ69U3fs5WpqcGeQ3azAbOiCwfaN9pEXWarm6+s1BYQNrdukgl?=
- =?iso-8859-1?Q?8cSKBUoXkqc8tQTTCGb4IB6Xnu1ANmI0gqRsSkvlJPNcVI//1KquIBtpB2?=
- =?iso-8859-1?Q?Fu/kIh+M9k?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229473AbjAZOzp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2023 09:55:45 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9099A129
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 06:55:43 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id v10so2076001edi.8
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 06:55:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=unity3d.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iSMDLN1ewh5SQ0Ck29vj3FQ2Xnfc5dEyqeiFLcqJHeo=;
+        b=hpohY6/vCs9KI4eyWY+LMIrzGqTfzhU3k+p5+3TO1QCnqWYSrRaQyOMvO5gv4+h6py
+         +hDVF3SHjMJ1GIMeY+9AR5w8+ZE5huLOf1Haoia/7IMeTuv6OhHdLgGoxUlqN+Bxs+p0
+         zjgWAu/NaYSmke/9JOg+mxOKPzrw/yG0lROK7qCgPpljJxh31EVrBdvHEXoAg4Uj+f0V
+         j5mRQpdiIEqdhMNlLw3DcxXQ4yXAtUcfkreNBLytUg9fnS9WOixu/tCZmXuhuNDrIAcd
+         QIiiTuvaa8+AUbHnskWWz54baB/FRYhylA4Lv7nISRa++5wFMXuYs5aZAGLnSG/k3c2v
+         zKRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iSMDLN1ewh5SQ0Ck29vj3FQ2Xnfc5dEyqeiFLcqJHeo=;
+        b=j0MVGgIU1F5hRaSY/UVWFu6YMXU2Ux4zO/ywvBfkx4L+e4itBcHZvpPngs/EAesuaI
+         sV+vFmJPvDVg6LC/9aPSMX5szscbRHcoN0+d7kNScooxXjnjoQv2QJwYt2j2urTu27B9
+         Fc9v/Pq1bdaKK9jq+NKtN8E7j1i5+YEnBEGOL+srE7APr2hWpB7YVsANTejfKbh7cyPQ
+         PAROxUvpC1cwzqdLXYw7sD8yMPTNcwy9zWZeofLPwF4trMDONeFgg3EOIO9sNF43WDrO
+         hkHfnRc3DD+2JK8xYpsjqZlcouY7swNZ9FvH+2Qx5UhuhUnMOWtr7DTdf8JJ3jD/yTSC
+         nxcQ==
+X-Gm-Message-State: AFqh2krrWtxU4tzBrY0CuCDxQtmgq+zuJI30G7J3mZsE5qskWDv74HGY
+        Q9Vk/Sdas/MlsJRa8BPjru+EKnxFdmIpZcnUaRI=
+X-Google-Smtp-Source: AMrXdXv2O09P2ZNpzEmewBr8oJZRRyhUvmaOO1AUs4LYNS33l25KGf88wMKkBm1wZAgYg9FK2NJh6Q==
+X-Received: by 2002:a05:6402:35c1:b0:46f:f36b:a471 with SMTP id z1-20020a05640235c100b0046ff36ba471mr51910091edc.22.1674744942080;
+        Thu, 26 Jan 2023 06:55:42 -0800 (PST)
+Received: from [10.45.33.196] ([80.80.14.217])
+        by smtp.gmail.com with ESMTPSA id g4-20020aa7c584000000b004a0e23a2eebsm701592edq.10.2023.01.26.06.55.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Jan 2023 06:55:41 -0800 (PST)
+Message-ID: <d96e6ab4-2302-5326-3a0e-bffecc24a295@unity3d.com>
+Date:   Thu, 26 Jan 2023 15:55:40 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-05f45.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OSYP286MB0215.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 22194f04-b0dd-4cfd-d449-08daffac2aee
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jan 2023 14:46:54.5942
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWP286MB3205
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH v2] ls-tree: add --sparse-filter-oid argument
+To:     Victoria Dye <vdye@github.com>,
+        William Sprent via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.1459.git.1673456518993.gitgitgadget@gmail.com>
+ <pull.1459.v2.git.1674474371817.gitgitgadget@gmail.com>
+ <7ccf7b17-4448-5ef4-63b1-9073a400e486@github.com>
+ <569043fb-9766-037e-c587-1545c2978e7d@unity3d.com>
+ <42e14dda-cd2b-09df-dea8-246b3fcfac42@github.com>
+Content-Language: en-US
+From:   William Sprent <williams@unity3d.com>
+In-Reply-To: <42e14dda-cd2b-09df-dea8-246b3fcfac42@github.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, =0A=
-I find when I use several ssh keys with the right config file and clone my =
-private repo, git can't match the key by hostname.=0A=
-I try ssh-add command to add the keys. "ssh -T git@github.com" can work, bu=
-t git clone/push/pull these action display "Permission denied (publickey)".=
-=0A=
-Test in git version 2.38.1.windows.1 with win10 and git version 2.34.1 with=
- Ubuntu 22.04.1 LTS=0A=
-I check the -v and -vvv log, git does read my config file in ~/.ssh.=0A=
-=0A=
-After I change the repo address to host("github") in my ssh config file, i =
-can clone the repo and push/pull.=0A=
-Host github=0A=
-  HostName github.com=0A=
-  PreferredAuthentications publickey=0A=
-  IdentityFile ~/.ssh/id_rsa_111=0A=
-So I change the host to "github.com" in ssh config, everything is back to n=
-ormal.=0A=
-Host github.com=0A=
-  HostName github.com=0A=
-  PreferredAuthentications publickey=0A=
-  IdentityFile ~/.ssh/id_rsa_111=0A=
-=0A=
- I think when git read ssh config, it uses host to match the key instead of=
- hostname. Is this bug?=
+On 25/01/2023 19.32, Victoria Dye wrote:
+> William Sprent wrote:
+>> On 24/01/2023 21.11, Victoria Dye wrote>> I haven't looked at your implementation in detail yet, but I did want to
+>>> offer a recommendation in case you hadn't considered it: if you want to
+>>> allow the use of patterns from a user-specified specific file, it would be
+>>> nice to do it in a way that fully replaces the "default" sparse-checkout
+>>> settings at the lowest level (i.e., override the values of
+>>> 'core_apply_sparse_checkout', 'core_sparse_checkout_cone', and
+>>> 'get_sparse_checkout_filename()'). Doing it that way would both make it
+>>> easier for other commands to add a '--sparse-patterns' option, and avoid the
+>>> separate code path ('path_in_sparse_checkout_1()' vs.
+>>> 'recursively_match_path_with_sparse_patterns()', for example) when dealing
+>>> with '.git/info/sparse-checkout' patterns vs. manually-specified patterns.
+>>>
+>>
+>> Thanks for the pointers. I'll see what I can do. Do you mean something
+>> along the line of the following?
+>>
+>>     set_sparse_checkout_file(filename);
+>>     init_sparse_checkout_patterns(istate);
+>>     _ = path_in_sparse_checkout_1(some_path, istate, ...);
+>>
+> 
+> Sort of. I mentioned separating the options into "specify the sparse pattern
+> file" and "restrict the displayed files to the active pattern set, if there
+> is one". For the former, you might add an option like:
+> 
+> 	OPT_FILENAME(0, "sparse-patterns", &sparse_pattern_file,
+> 		     N_("override sparse-checkout behavior using patterns from <file>"))
+> 
+> Then do something like what you have, right after option parsing:
+> 
+> 	if (sparse_pattern_file) {
+> 		core_apply_sparse_checkout = 1;
+> 		core_sparse_checkout_cone = <???>;
+> 		set_sparse_checkout_file(filename);
+> 	}
+> 
+> If this option is specified, but the repo already has sparse
+> patterns/settings of its own, you'll need to (carefully) override the repo's
+> existing configuration:
+> 
+> * 'core_apply_sparse_checkout' & 'core_sparse_checkout_cone' are set based
+>    on the repo config. You'll need to make sure those values are overridden
+>    before loading the sparse-checkout patterns, and also that they're set
+>    *after* loading the config.
+
+This sounds a bit easy to get wrong to me, but I assume I can trust that the
+config has been loaded by the time 'cmd_ls_tree()' is invoked.
+
+> * Speaking of 'core_sparse_checkout_cone', there are a bunch of ways you
+>    might configure "cone-" vs. "non-cone" for your patterns (user-specified
+>    with yet another option, always assume one or the other, try deriving from
+>    the patterns). My preference would be to always assume "cone mode" - it's
+>    the direction Git has been moving with sparse-checkout over the past year,
+>    and still automatically "falls back" on non-cone patterns if the patterns
+>    can't be used in cone mode (with a warning from
+>    'add_pattern_to_hashsets()': "disabling cone pattern matching").
+
+Alright. I've had similar thoughts. But I ended up deciding to respect the
+config value since there wouldn't be any way for the user to silence the warning
+when passing non-cone mode patterns to the command. I don't feel too strongly about
+it, though.
+
+> * If the repo is using a sparse index, the existing sparse directories may
+>    not be compatible with the custom patterns. Probably easiest to force use
+>    of a full index, e.g. with 'command_requires_full_index = 1'.
+> 
+
+OK.
+
+> Fair warning: this probably isn't an exhaustive list of things that would
+> need updating, and it'll need thorough testing to make sure there are no
+> regressions. But, extending the underlying sparse-checkout infrastructure
+> will (ideally) avoid duplicating code and make this behavior reusable across
+> other commands.
+> 
+
+Alright. I'll give it a shot.
+
+> For the other desired behavior ("limit the files to the active
+> sparse-checkout patterns"), you could add an option:
+> 
+> 	OPT_CALLBACK_F(0, "scope", &sparse_scope, "(sparse|all)",
+> 		       N_("specify the scope of results with respect to the sparse-checkout"),
+> 		       PARSE_OPT_NONEG, option_parse_scope),
+> 
+> ...whose callback parses the string arg into a 'restrict_scope'
+> boolean/enum/something. Then, wherever in 'ls-files' a tree or the index are
+> iterated over, you can gate the per-file operation on:
+> 
+> 	if (!restrict_scope || path_in_sparse_checkout(<path>, istate)) {
+> 		/* do something with <path> */
+> 	}
+> 
+> Note that you should use 'path_in_sparse_checkout()', *not* the
+> internal/private function 'path_in_sparse_checkout_1()'; you also don't need
+> to explicitly 'init_sparse_checkout_patterns()'. Regardless of whether you
+> specified custom patterns or are using the ones in
+> '.git/info/sparse-checkout', 'path_in_sparse_checkout()' will initialize &
+> use the appropriate patterns.
+> 
+
+Yeah. And I wouldn't need the refactor of 'path_in_sparse_checkout_1()'.
+
+Thanks a lot (again) for the pointers.
