@@ -2,153 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89DC3C05027
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 16:38:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B920DC61DA2
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 17:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231897AbjAZQi4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Jan 2023 11:38:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49634 "EHLO
+        id S231918AbjAZRGd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Jan 2023 12:06:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231734AbjAZQix (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2023 11:38:53 -0500
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E82D826586
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 08:38:44 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id d188so1868235oia.3
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 08:38:44 -0800 (PST)
+        with ESMTP id S231963AbjAZRGb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2023 12:06:31 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 398963C24
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 09:06:30 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id z3so1524403pfb.2
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 09:06:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=wRQCsDtGCRsfmpNUhqGExdLqS7qsRawm3fxX/spjnDs=;
-        b=JyY0aE7J04v3xKAk9AgsjcY/kTX++TNyJ/gL4OcjtRlBqB8Pn6jlyf11LP/d3C9hx1
-         nt+CIfG8D1Rd4W8Uhng8192mBKyQx/lNCKf6mSOj9LcFiUsrlqf5WiOSacg2FAXLKkAI
-         PvkUOvyb+sBcHzin31fmnKSO2SvhZfT7tFIIpJXWgiUX6J7D+Ut5418q73xeV1oDY9Ex
-         zHa71fymbBwCyhHZC7Vpqh9adBGZzCzO7u/+Nc8Q2jFU7K0YtuCWBA59DF5wvq7oMrtx
-         DEeRhReNvo5N7uvEt3EJKdsKH8HqFu2hydpcDAjcUMhgztkru54V4BFpTlN2VVAMPEX/
-         tGfw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H+jiKVdFloZM9A+QHFVsqFhhHpLJJZxdTjpIWMng1qE=;
+        b=K0zstNlPaBtE2d6Smn86OX0jZCGTAt+ToVKrQRZXzrBkoPn8nTie5yAFmgJ4VSJgIA
+         4HgsalMIgnougsOjeVZRj8CHFYDGBRnvXu/5qGrDvmVYkInrEmmHtd1gU9cy+xoCiO5X
+         +SAYCnDUelln7pv7d+lENlvPG2B/BJ+gYZP5okmDL6+zKHtO/9LHKGRJFYBGd6Tyb9Vy
+         p6c+4yLimU8ZQNMkwkYlIkKWXxZwG4xc+Z5VIrnO+m9IC5V0107o6w8EQn+qPG+YBnQq
+         /F88n2Vaej5gjgehQ9Wq+WltwWteXGUFwLqLtlZ5aUfXjnBug0CJJRawlXnfY6DhR6om
+         cmmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wRQCsDtGCRsfmpNUhqGExdLqS7qsRawm3fxX/spjnDs=;
-        b=VRedVcvYNGb5sIp5B1EPp56FGN2MP0H2gi7g/YynTi8GxOxd2ksdxHuIVoYdxz2O1w
-         P/UcdcScvv2OnSGzwqKMkRdgpIY3dWFgkmrnjf5wXwNrag51sXlU2432kQGBMOF/+JU0
-         SBEFQgT6vuKCBZ7b4+Y1suS+/NNEAnf/nEPPrwygpYEwwUY16c/7wFkB4VI7sMn2+47M
-         0kmTTgtFzzr7DbHt+WsudyQVQrxMK0zNLx9XUlMrJScfPYcLjMweQPblscQ/vB3E7CDh
-         TzeVhtwA/QdC/+xfgh4iCrTl+voKfC6qmvrFQ9f6EAOCP96v1qEKLW2NahDFbR06ZXZ+
-         Z0fw==
-X-Gm-Message-State: AO0yUKX31BP1C92SNDKJ2h4Q3ucGDqHnlOzTKT7wMaBnREa0+1efdXoW
-        aT8mGu5oM6aHXGTYLJ3/0amSQ4Q1Rvr67EI=
-X-Google-Smtp-Source: AK7set801XdYOiDfKOSfhE7iXOFfFoZ7V5TrqbYD2Dazv3Fqo1K+Hbwz9WvR/8VA7jsBN13O9KfGAw==
-X-Received: by 2002:a05:6808:1383:b0:364:8dcc:58ec with SMTP id c3-20020a056808138300b003648dcc58ecmr1586082oiw.3.1674751124146;
-        Thu, 26 Jan 2023 08:38:44 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:e5b3:c0fa:dc26:df9d? ([2600:1700:e72:80a0:e5b3:c0fa:dc26:df9d])
-        by smtp.gmail.com with ESMTPSA id o4-20020a9d7644000000b00686574e98d6sm656128otl.72.2023.01.26.08.38.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jan 2023 08:38:43 -0800 (PST)
-Message-ID: <fcc08ee2-dc58-09da-dc60-c438cfbf6602@github.com>
-Date:   Thu, 26 Jan 2023 11:38:42 -0500
+        bh=H+jiKVdFloZM9A+QHFVsqFhhHpLJJZxdTjpIWMng1qE=;
+        b=PEgINIwncaTGsJhcyAL3CwQv+nSpLox8IudOd4rosxowIfb13arJfRxyC/oegFB9Lf
+         bE3wYinRFdqBRStFN3j+6tyl4V9xjDuYlkFnj/Dby7XTKNbOH/C1l2wL7WzCa/GK97yw
+         nvAE+UsTW8z/khyHPHQ8fJe63OGy3gEU1WtUHuk/JIOG0uLK2wN6uduWRRl5dtaNVnsO
+         9YlubG7YNeDo7/3+K+VL+EjZCE/KyI/aiAzzZaPu173B4xNR03XfMv1wjEJ2oq6YAw61
+         f11zLJz7QS9oxU/NHjHtaGOpZXLU0pOduU16/BVL0G4NVEL/X/P6RIUa4nvw9QuoFUwA
+         N7NA==
+X-Gm-Message-State: AFqh2koeSWao1u4Ukufr1A2Y0cYi8Mm2R0o4Kf0NWqdaHuCRDgcJul6O
+        lgGrJBIp/RfjswQpxd6YhgIPRuCEe2g=
+X-Google-Smtp-Source: AMrXdXsFKGjPX/J0xAqGZnurzaz1qN0kFGtZZ3QypyLz8/H9iBKsOCc58wFa/mwWjVJT3jaoQV8tHA==
+X-Received: by 2002:a05:6a00:420a:b0:588:eac0:b05b with SMTP id cd10-20020a056a00420a00b00588eac0b05bmr37458285pfb.27.1674752789210;
+        Thu, 26 Jan 2023 09:06:29 -0800 (PST)
+Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
+        by smtp.gmail.com with ESMTPSA id 144-20020a621496000000b0058d9428e482sm1076009pfu.85.2023.01.26.09.06.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jan 2023 09:06:28 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] bisect: fix "reset" when branch is checked out elsewhere
+References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
+        <xmqqo7qqovp1.fsf@gitster.g>
+        <0d04f8ed-6933-9354-1f64-24d827424c71@gmail.com>
+Date:   Thu, 26 Jan 2023 09:06:28 -0800
+In-Reply-To: <0d04f8ed-6933-9354-1f64-24d827424c71@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+        message of "Thu, 26 Jan 2023 03:18:23 +0100")
+Message-ID: <xmqqzga5b4yz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: git log --follow wrongly includes delete commit
-To:     "Steinar H. Gunderson" <steinar+git@gunderson.no>,
-        git@vger.kernel.org
-References: <20230126130509.ovii7ji7hi5wm7qx@sesse.net>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20230126130509.ovii7ji7hi5wm7qx@sesse.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/26/2023 8:05 AM, Steinar H. Gunderson wrote:
-> I'm in the Chromium repository; it can be checked out at
-> https://chromium.googlesource.com/chromium/src.git (you don't need the
-> sub-repostiories). HEAD is pointing to 4e0db738b37c. git 2.39.1.
-> 
-> When I run
-> 
->   git log --raw --follow base/third_party/xdg_user_dirs/xdg_user_dir_lookup.h
-> 
-> this is the first commit that it lists (snipped):
-> 
-> commit 5d4451ebf298d9d71f716cc0135f465cec41fcd0
-> [...]
-> :100644 000000 9e81e1b53029f 0000000000000 D base/third_party/xdg_user_dirs/xdg_user_dir_lookup.h
-> 
-> This indicates that the last thing that happened to the file is a delete.
-> However, the file isn't deleted; it's alive and well. git log without
-> --follow does not list this commit at all.
-> 
-> So either git log --follow is listing a delete commit that doesn't make
-> sense, or it's missing whatever commit put it back into place afterwards.
+Rubén Justo <rjusto@gmail.com> writes:
 
-It's actually a third option: it was deleted but also renamed in an
-independent point in history, but the delete is more recent "in time"
-that it shows up first, and the merge that resolves the issue doesn't
-show up at all.
+> But, and this is what makes me think that "checking out will fail" is the wrong
+> choice for "bisect", while bisecting, with the worktree in a detached HEAD
+> state, the branch to which "bisect reset" will check out back (BISECT_START),
+> is still considered checked out in the working tree:
+>
+> 	$ git checkout -b work
+> 	$ git bisect start HEAD HEAD~3
+> 	... bisect detaches the current worktree ...
+> 	$ git worktree add work
+> 	Preparing worktree (checkout out 'work')
+> 	fatal: 'work' is already checked out at ...
+>
+> So, checking out back to the implicitly checked out branch sounds like it
+> should not fail.
 
-You can see this when using --full-history --simplify-merges --graph,
-since it will explore enough of the graph to recognize that deletion
-while also showing how things got merged strangely:
+If that is what you are aiming at, I suspect that the posted patch
+is doing it in a wrong way.  Instead, we should just declare that
+the branch being bisected does not mean the branch cannot be checked
+out elsewhere, so that
 
-$ git log --summary --full-history --simplify-merges --graph -- base/third_party/xdg_user_dirs/xdg_user_dir_lookup.h
-*   commit 1e78967ed2f1937b3809c19d91e7dd62d756d307
-|\  Merge: 5d4451ebf298 9e9b6e8ee772
-| | Author: grt@chromium.org <grt@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
-| | Date:   Tue Jul 19 16:14:55 2011 +0000
-| | 
-| |     FileManagerDialogTest.SelectFileAndCancel flaky.
-| |     
-| |     BUG=89733
-| |     TBR=robertshield@chromium.org
-| |     TEST=browser_tests
-| |     Review URL: http://codereview.chromium.org/7447001
-| |     
-| |     git-svn-id: svn://svn.chromium.org/chrome/trunk/src@93027 0039d316-1c4b-4281-b951-d872f2087c98
-| | 
-* | commit 5d4451ebf298d9d71f716cc0135f465cec41fcd0
-|/  Author: jbauman@chromium.org <jbauman@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
-|   Date:   Tue Jul 19 15:45:49 2011 +0000
-|   
-|       Roll ANGLE r704:r705
-|       
-|       BUG=
-|       TEST=try
-|       
-|       Review URL: http://codereview.chromium.org/7375016
-|       
-|       git-svn-id: svn://svn.chromium.org/chrome/trunk/src@93026 0039d316-1c4b-4281-b951-d872f2087c98
-|   
-|    delete mode 100644 base/third_party/xdg_user_dirs/xdg_user_dir_lookup.h
-| 
-* commit 9e9b6e8ee77229781fa8581b7f46413024404a5f
-  Author: thestig@chromium.org <thestig@chromium.org@0039d316-1c4b-4281-b951-d872f2087c98>
-  Date:   Wed Dec 2 08:45:01 2009 +0000
-  
-      Move some XDG code from chrome to base, make DIR_USER_CACHE generic rather than Chromium specific, and clean up a few headers.
-      
-      BUG=none
-      TEST=none
-      Review URL: http://codereview.chromium.org/449048
-      
-      git-svn-id: svn://svn.chromium.org/chrome/trunk/src@33565 0039d316-1c4b-4281-b951-d872f2087c98
-  
-   create mode 100644 base/third_party/xdg_user_dirs/xdg_user_dir_lookup.h
+	$ git worktree add --detach ../another HEAD^0
+	$ git checkout -b work
+	$ git bisect start work work~3
+        ... detaches ...
+	$ git -C ../another checkout work
 
-(Note: I didn't include --follow here as it filtered the --graph
-output in a strange way, including dropping the merge commitswhich was
-confusing to me.)
+should just work, no?
 
-In conclusion: while I agree that this output is confusing, it is due
-to the interesting shape of the commit history, and not actually a bug
-in --follow.
+I admit I haven't thought things through, but I tend to be
+sympathetic to such a declaration.  After all, "bisect" is a
+read-only operation as far as the branch you happened to be on when
+you started a bisect session is concerned.  Jumping around and
+materializing tree states recorded in various commits leading to the
+tip of the branch and inspecting them would not change anything on
+the branch itself.  And more importantly, the branch being checked
+out in another worktree and modified there should not break the
+bisection, EXCEPT that the final "git bisect reset" (without
+arguments) would fail if the other worktree removed the branch.
 
-Thanks,
--Stolee
+So, how about removing the is_worktree_being_bisected() check from
+find_shared_symref(), so that not just "worktree add" and "bisect
+reset", but "checkout" and "switch" are allowed to make the branch
+current even it is being bisected elsewhere?
+
+That would affect the other topic, I suspect, as well.  It may be a
+positive change.  Or are there cases I missed, where the branch
+being bisected should not be touched from elsewhere, and we cannot
+remove the check from find_shared_symref()?
+
+Thanks.
+
+
+
