@@ -2,27 +2,27 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66519C05027
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 10:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4332EC54E94
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 10:09:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237009AbjAZKCb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Jan 2023 05:02:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58450 "EHLO
+        id S236484AbjAZKJj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Jan 2023 05:09:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236877AbjAZKC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2023 05:02:29 -0500
+        with ESMTP id S232982AbjAZKJi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2023 05:09:38 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 685EB43931
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 02:02:28 -0800 (PST)
-Received: (qmail 19152 invoked by uid 109); 26 Jan 2023 10:02:27 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6999465B1
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 02:09:37 -0800 (PST)
+Received: (qmail 19201 invoked by uid 109); 26 Jan 2023 10:09:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Jan 2023 10:02:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Jan 2023 10:09:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21875 invoked by uid 111); 26 Jan 2023 10:02:27 -0000
+Received: (qmail 21945 invoked by uid 111); 26 Jan 2023 10:09:36 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Jan 2023 05:02:27 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Jan 2023 05:09:36 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 26 Jan 2023 05:02:26 -0500
+Date:   Thu, 26 Jan 2023 05:09:35 -0500
 From:   Jeff King <peff@peff.net>
 To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
@@ -33,103 +33,80 @@ Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         Glen Choo <chooglen@google.com>,
         Victoria Dye <vdye@github.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v7 08/12] test-http-server: add simple authentication
-Message-ID: <Y9JPslSoEayaCJ3n@coredump.intra.peff.net>
+Subject: Re: [PATCH v7 10/12] http: replace unsafe size_t multiplication with
+ st_mult
+Message-ID: <Y9JRX02RLHmIKzwo@coredump.intra.peff.net>
 References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
  <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
- <b8d3e81b5534148359c7e92807cf1e2795480ddf.1674252531.git.gitgitgadget@gmail.com>
+ <4b1635b3f6968f8d755bdf6bc4ec7af77aefd315.1674252531.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <b8d3e81b5534148359c7e92807cf1e2795480ddf.1674252531.git.gitgitgadget@gmail.com>
+In-Reply-To: <4b1635b3f6968f8d755bdf6bc4ec7af77aefd315.1674252531.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 20, 2023 at 10:08:46PM +0000, Matthew John Cheetham via GitGitGadget wrote:
+On Fri, Jan 20, 2023 at 10:08:48PM +0000, Matthew John Cheetham via GitGitGadget wrote:
 
-> +struct auth_module {
-> +	char *scheme;
-> +	char *challenge_params;
-> +	struct string_list *tokens;
-> +};
+> Replace direct multiplication of two size_t parameters in curl response
+> stream handling callback functions with `st_mult` to guard against
+> overflows.
 
-This is a really minor nit, but: why is "tokens" a pointer? It's always
-initialized, so you never need or want to test it for NULL.
+Hmm. So part of me says that more overflow detection is better than
+less, but...I really doubt this is doing anything, and it feels odd to
+me to do overflow checks when there is no allocation.
 
-That would make this:
+There are tons of integer multiplications in Git. Our usual strategy is
+to try to handle overflow like this when we're about to allocate a
+buffer, with the idea that we'll avoid a truncated size (that we may
+later fill with too many bytes).
 
-> +	if (create) {
-> +		struct auth_module *mod = xmalloc(sizeof(struct auth_module));
-> +		mod->scheme = xstrdup(scheme);
-> +		mod->challenge_params = NULL;
-> +		ALLOC_ARRAY(mod->tokens, 1);
-> +		string_list_init_dup(mod->tokens);
+In these cases, we could possibly avoid a weird or wrong result due to
+truncation, but I don't see how that is different than most of the rest
+of Git. What makes these worth touching?
 
-simplify to:
+Moreover...
 
-  string_list_init_dup(&mod->tokens);
+> @@ -176,7 +176,7 @@ curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
+>  
+>  size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+>  {
+> -	size_t size = eltsize * nmemb;
+> +	size_t size = st_mult(eltsize, nmemb);
+>  	struct strbuf *buffer = buffer_;
+>  
+>  	strbuf_add(buffer, ptr, size);
 
-and one does not have to wonder why we use ALLOC_ARRAY() there, but not
-when allocating the module itself. :)
+The caller is already claiming to have eltsize*nmemb bytes accessible
+via "ptr". How did it get such a buffer if that overflows size_t?
 
-Likewise you could skip freeing it, but since the memory is held until
-program end anyway, that doesn't happen either way.
+> diff --git a/http.c b/http.c
+> index 8a5ba3f4776..a2a80318bb2 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -146,7 +146,7 @@ static int http_schannel_use_ssl_cainfo;
+>  
+>  size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+>  {
+> -	size_t size = eltsize * nmemb;
+> +	size_t size = st_mult(eltsize, nmemb);
+>  	struct buffer *buffer = buffer_;
+>  
+>  	if (size > buffer->buf.len - buffer->posn)
 
-Certainly what you have won't behave wrong; I'd consider this more like
-a coding style thing.
+Likewise the caller is asking us to fill a buffer that is eltsize*nmemb.
+So they must have allocated it already. How can it be bigger than a
+size_t?
 
-> +	cat >auth.config <<-EOF &&
-> +	[auth]
-> +		challenge = no-params
-> +		challenge = with-params:foo=\"bar\" p=1
-> +		challenge = with-params:foo=\"replaced\" q=1
-> +
-> +		token = no-explicit-challenge:valid-token
-> +		token = no-explicit-challenge:also-valid
-> +		token = reset-tokens:these-tokens
-> +		token = reset-tokens:will-be-reset
-> +		token = reset-tokens:
-> +		token = reset-tokens:the-only-valid-one
-> +
-> +		allowAnonymous = false
-> +	EOF
-> +
-> +	cat >OUT.expected <<-EOF &&
-> +	WWW-Authenticate: no-params
-> +	WWW-Authenticate: with-params foo="replaced" q=1
-> +	WWW-Authenticate: no-explicit-challenge
-> +	WWW-Authenticate: reset-tokens
-> +
-> +	Error: 401 Unauthorized
-> +	EOF
+In practice, of course, these are both coming from curl, and I strongly
+suspect that curl always sets "1" for eltsize anyway, since it's working
+with bytes. The two fields only exist to conform to the weird fread()
+interface for historical reasons.
 
-OK, so I think now we are getting to the interesting part of what your
-custom http-server does compared to something like apache. And the
-answer so far is: custom WWW-Authenticate lines.
-
-I think we could do that with mod_headers pretty easily. But presumably
-we also want to check that we are getting the correct tokens, generate a
-401, etc.
-
-I suspect this could all be done as a CGI wrapping git-http-backend. You
-can influence the HTTP response code by sending:
-
-   Status: 401 Authorization Required
-   WWW-Authenticate: whatever you want
-
-And likewise you can see what the client sends by putting something like
-this in apache.conf:
-
-   SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
-
-and then reading $HTTP_AUTHORIZATION as you like. At that point, it
-feels like a simple shell or perl script could then decide whether to
-return a 401 or not (and if not, then just exec git-http-backend to do
-the rest). And the scripts would be simple enough that you could have
-individual scripts to implement various schemes, rather than
-implementing this configuration scheme. You can control which script is
-run based on the URL; see the way we match /broken_smart/, etc, in
-t/lib-httpd/apache.conf.
+So I don't think this patch is really hurting much. It just feels like a
+weird one-off that makes the code inconsistent. If somebody who was
+wanting to write similar code later asks "why is this one st_mult(), but
+not other multiplications", I wouldn't have an answer for them.
 
 -Peff
