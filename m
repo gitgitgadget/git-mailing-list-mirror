@@ -2,95 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 091F2C05027
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 17:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E929AC52D11
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 17:18:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231839AbjAZRNK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Jan 2023 12:13:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52698 "EHLO
+        id S232056AbjAZRSn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Jan 2023 12:18:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231629AbjAZRNI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Jan 2023 12:13:08 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF44939280
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 09:13:07 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id f3so1489313pgc.2
-        for <git@vger.kernel.org>; Thu, 26 Jan 2023 09:13:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=702D9PRk5zx4wuZwPHUqJD6Qi3WQw6pphieUx+Z8nqY=;
-        b=ZMz/D90dSIzNAUZmVOMtc0OAW9mceXpT719RxiVr1ODRoSWegoh9eZgIetSh25paOg
-         ZX4mr3gq5046RfBBhZrXi2eLUS2HvTicKC5/O+TRX3unskgoGDC2yNncO5DA8OARztgE
-         33gtu25nThY1w7LZE2R96X/fGYPF5odjvfqc41Yx9wUwGjazGdx58zpP5sOKxN+I4m6n
-         Yjp2ciO3OZi8Md4GRJ9+mZV0gqn+n0xRrim9eO8wBQYPed0d24CqoSRiVuz1BKqOmQdJ
-         F4GfypOkcCUbIMSQa1EezhFS5b2h+erMclbVpJX9MVpOEqx8Th90Cql/vyr5hUMmrpzM
-         fNUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=702D9PRk5zx4wuZwPHUqJD6Qi3WQw6pphieUx+Z8nqY=;
-        b=V6F5Lyrq1u9h2NhVyxLco8eDLbwnesqKxKFSjjXkSLohaYUjL3IVE3dBnbjNd+5iO5
-         rRIT+/dBmVuolccTwku65sueBbOyP6F9yeaKuthf6Bwbz9C1bp1OpJ0ct1lb1u6NUKxq
-         wT09dd0VgJ6zTwUJ9pFRsZFjmEGlR18ICi5No+t4FxQPjiaivVenaQ3kQbu93HLbjIpY
-         jFP7NlNQLRonOXzO5fP353aSmQJgcspR00Fyxr2q42YbGasN+j9vXOR8PpuMumyHNYGe
-         7kMb2fIRMcalkVto7KxY9h5cCoZ1Nqxko6HPqYLngwtsFhLaK2ePvjcgEPf3eRll3NEv
-         abkg==
-X-Gm-Message-State: AFqh2kqJEhAdJ53OfN40Fy1PZgyGvS2qzOVMqCoiuUskX3oAcUhxVBaq
-        KmWJkbqlavFyBQylh0ihpSPBAosI4es=
-X-Google-Smtp-Source: AMrXdXvPoH/A7IoPY5rdOVV6KSoh0gkz6kpHpLVYTDW9/kSaLwlzrr2M+cfzHqXYrLEWNxJ2UuiE7w==
-X-Received: by 2002:a05:6a00:1d8d:b0:580:cc63:dcdc with SMTP id z13-20020a056a001d8d00b00580cc63dcdcmr35521576pfw.7.1674753187285;
-        Thu, 26 Jan 2023 09:13:07 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id g1-20020aa79f01000000b005815017d348sm1082836pfr.179.2023.01.26.09.13.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jan 2023 09:13:06 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] bisect: fix "reset" when branch is checked out elsewhere
-References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
-        <xmqqo7qqovp1.fsf@gitster.g>
-        <0d04f8ed-6933-9354-1f64-24d827424c71@gmail.com>
-        <xmqqzga5b4yz.fsf@gitster.g>
-Date:   Thu, 26 Jan 2023 09:13:06 -0800
-In-Reply-To: <xmqqzga5b4yz.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        26 Jan 2023 09:06:28 -0800")
-Message-ID: <xmqqr0vhb4nx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229489AbjAZRSg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Jan 2023 12:18:36 -0500
+Received: from pannekake.samfundet.no (pannekake.samfundet.no [IPv6:2001:67c:29f4::50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A3A71BCF
+        for <git@vger.kernel.org>; Thu, 26 Jan 2023 09:18:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=gunderson.no; s=legacy; h=In-Reply-To:Content-Type:MIME-Version:References:
+        Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+        Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=hTCe51rsQj6w7C3ocjmiT9Vr0c1MySR1vGBoGAlU1jk=; b=eYnL4zEljIuPGkLSVZYiXMfKvR
+        6aaZ6ha8jrSM/SAD9OaysRHi5/22ndoUdSuWEtna8OGY04bUBzjbU0j/qjBPf9riegZqnap0Ftdv1
+        Ay1zwr4HDkMUMJOHYeya6pYupyY8aWL+6buRE0CsesWHTI1ap1S9O/gn/Py7prED9jIYhvPhT5FHP
+        loD1sr1KzKKl1kFrkHB/MHRblKjQ9ulOR1EKuhUfj1u+P24mw0j4ejo122D4kue8m5tZrs7CLMtWE
+        6GAQP6uTc1OUOBg8EXYxBkNjre9yoyYRLymDtgwdDAbeQNotvcm0ssaFrSeiOHioxXD3VYhY02XRr
+        MRCxErng==;
+Received: from sesse by pannekake.samfundet.no with local (Exim 4.94.2)
+        (envelope-from <steinar+bounces@gunderson.no>)
+        id 1pL5tO-00HNnX-Ph; Thu, 26 Jan 2023 18:18:30 +0100
+Date:   Thu, 26 Jan 2023 18:18:30 +0100
+From:   "Steinar H. Gunderson" <steinar+git@gunderson.no>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git log --follow wrongly includes delete commit
+Message-ID: <20230126171830.6qb46wa2ed5h2z3b@sesse.net>
+X-Operating-System: Linux 6.1.3 on a x86_64
+References: <20230126130509.ovii7ji7hi5wm7qx@sesse.net>
+ <fcc08ee2-dc58-09da-dc60-c438cfbf6602@github.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fcc08ee2-dc58-09da-dc60-c438cfbf6602@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Jan 26, 2023 at 11:38:42AM -0500, Derrick Stolee wrote:
+> It's actually a third option: it was deleted but also renamed in an
+> independent point in history, but the delete is more recent "in time"
+> that it shows up first, and the merge that resolves the issue doesn't
+> show up at all.
 
-> the branch itself.  And more importantly, the branch being checked
-> out in another worktree and modified there should not break the
-> bisection, EXCEPT that the final "git bisect reset" (without
-> arguments) would fail if the other worktree removed the branch.
+I see! So basically my parser needs to also start tracking merges,
+except --follow seems to be sort of odd with those as well (though
+I think maybe it's changed in some fairly recent git version).
 
-And "bisect reset [<branch>]" (with or without arguments) should not
-ignore other worktrees when it runs "checkout" internally.  You
-might have done
+> (Note: I didn't include --follow here as it filtered the --graph
+> output in a strange way, including dropping the merge commitswhich was
+> confusing to me.)
 
-    * checkout 'work' in worktree A
-    * start bisection of it there
-    * checkout 'work' in worktree B
-    * finish bisection of 'work' in worktree A
-    * "git bisect reset"
+I think you need to give -c or --cc or something similar to see merges in
+--follow, but the man pages are not entirely clear to me.
 
-and the third step should allow you work on 'work' in the other
-worktree, but then the last step should not allow 'work' to be
-checked out in two places (it is OK for the user to use "git bisect
-reset main" and then "git checkout --ignore-other work" to work it
-around, of course, but the default should be safe).
-
-Hmm?
+/* Steinar */
+-- 
+Homepage: https://www.sesse.net/
