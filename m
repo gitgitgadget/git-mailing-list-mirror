@@ -2,281 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 123F7C54E94
-	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 02:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4022C27C76
+	for <git@archiver.kernel.org>; Thu, 26 Jan 2023 03:07:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229724AbjAZCpD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Jan 2023 21:45:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37802 "EHLO
+        id S234493AbjAZDHI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Jan 2023 22:07:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjAZCpC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Jan 2023 21:45:02 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8960A3C29E
-        for <git@vger.kernel.org>; Wed, 25 Jan 2023 18:45:00 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id cf42so1088018lfb.1
-        for <git@vger.kernel.org>; Wed, 25 Jan 2023 18:45:00 -0800 (PST)
+        with ESMTP id S229772AbjAZDHH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Jan 2023 22:07:07 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C5856469A
+        for <git@vger.kernel.org>; Wed, 25 Jan 2023 19:07:06 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id r2so451946wrv.7
+        for <git@vger.kernel.org>; Wed, 25 Jan 2023 19:07:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l4fWcDZ2uKQbc28VZAAZrJOlKOd4RdSEf2FXuzFSC1Q=;
-        b=ZlfSPI5++HMIhvDUlE1YB5NzpsjEOiLpk+CLqjzmfsnt8D547YL9FKjoxeuSGnejgq
-         BCzaoHad4y5XjmomVJ/7+kgepnqTV9XROjSCwGqUPnKHLE2isu6dsVo2PyKd/1hJbZSO
-         LGoPg+ecYYdUrkdk2hWU0TT197n3zHeZ0t6KR0J90dxBLzVrniSJpHS+A0VYwOvBqpjU
-         +IHPeCcng41tPJikXggXwKcV36fwA0R9uRJBkWaSGWA9K21zJ4S+ReZ12sqd0VNUdoaw
-         DvkI+GkUEcQjDu/fAza1hemzHhSKjeOJJteT8Y6/RjgdvKuCf0m/ELHv9Kq7fSyUh6IZ
-         6Lbg==
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZjtUrPdwbY/O/oftVNeDeaxgc1qp1VANPALO7ZgbSHQ=;
+        b=pjl6cxKnr7I9Eyb62qHrerJnOWw4uk5gpoljRl5Hrr3S4ZeTtnM0biqLdzARN/H6Xz
+         7HouZoQN6x6NR7827i/whEkTTARGQgrfmL0hrz49LWz23wEa0c7+s5wIzcGUe2O7Ir1l
+         pQ7YIomCrCx1FAFFBKnEqVEBw6g/N/luwJSVjCPZSW7C92Wo9wFoPlcyu6HjDUoT3wnT
+         INCGGR7YyskstXILuU3grv1DzBTOUc9R6KB0sW9fsHmyWayB2VHzkoXmxcKiDnedNZAf
+         0tzQNIeSc5pCEZ/NE1ILcljp20fVzSqIX+DuNJSI0w0LS68JfKek5khPh7K3SImQGD7d
+         rQHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=l4fWcDZ2uKQbc28VZAAZrJOlKOd4RdSEf2FXuzFSC1Q=;
-        b=Dluk9fa6lGXZY2jDnr1yE1VkhqLNrUKFMeR0ZadVLJ1bCiCAItsyj190pxvZB2BpY4
-         66+PDVg/9tfmLxzEFtaE6IQNtIEajv0VnW8r+aiuoguF35YPhEOIb8B/e7WG42WJip6k
-         L9lRJYi+XaAOoyo1+mDTh3RLZIj3lEzZTdhpZrMlZ6mkUeTQuKjSvrtB62tRp2opWSaW
-         BPr74NgjYNo9RvKd5OXbPHBsK7wAAilY7gWpbsSQ4X7/q/OA0pkxNKDUy+SLMWr/J4Rw
-         J2m6dfa7H+SeIX8DzEuHBvLxfX4ld7ZjzGECFwQWOs8LscpYLTQGEiOufEufcSVwn77a
-         c2EQ==
-X-Gm-Message-State: AFqh2kqZOSjN2dTDj6+e4Jspv1sppiN7Pc4V/mz16Uwht44Lx0ir3fYg
-        Snv+iT/Kn1EtCvkUmWaXgQ+yFrcLJi5C+Gag6MQ=
-X-Google-Smtp-Source: AMrXdXuxUE4w1PiG0mSKB5QwH4xvooFftb2i3AwjXiD+U7mctE1wMLC8YCzcfKpavOMALldAzzrSHEvtiM4+Ub33HlY=
-X-Received: by 2002:a05:6512:4014:b0:4cc:548b:35f9 with SMTP id
- br20-20020a056512401400b004cc548b35f9mr2731628lfb.192.1674701098793; Wed, 25
- Jan 2023 18:44:58 -0800 (PST)
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZjtUrPdwbY/O/oftVNeDeaxgc1qp1VANPALO7ZgbSHQ=;
+        b=JLeTpoRkRNxtP8HmUuXqIsDIMO43VeSbj5GinB1qSnn36ikwNPEaDE/98Sv0REvIA7
+         QNgaSjOmBrT3N4qwyelTL5CojNokCBk9ANt5hQ72Sw+i0i5W0LtCr8y0F3AP2CucxdOJ
+         fYa1Ff9nCuP/9vGFgcWZ8FpjDEr1VfWMxW1odAPqpvwuT/3wLiE28x34MpZWR7Y6kKf8
+         qC5TmokiRKC4Cq0rPjZAfKsuXSDuxIMe7RDBp1uM/gLxO1HLguazCK0uXutGkEF4Ew+l
+         NUdkwmRmw/E+bjyDTxrqdksUYpZH7o2TEc/Dx8f1VZbwWHTseQwj9dAZ3rZyKkEYoMQq
+         UpTg==
+X-Gm-Message-State: AFqh2kpIWj5L7QaHqwf17SnhKZtHAfKqMb+7dQZvm06rLEw3y/mOGtPG
+        5WIqpyQ0mlAKWSOTr26OL/9dsMwaTsM=
+X-Google-Smtp-Source: AMrXdXuDr7jN0TyvnZvR5uaBHfff0J/NuX+BLP4QVOOjvLNEApIr2KMALdOJgdsdnF8aKCh5CNZIfQ==
+X-Received: by 2002:a5d:420e:0:b0:2bc:7f8e:40ba with SMTP id n14-20020a5d420e000000b002bc7f8e40bamr28409325wrq.54.1674702424915;
+        Wed, 25 Jan 2023 19:07:04 -0800 (PST)
+Received: from [192.168.2.52] (85.red-88-14-56.dynamicip.rima-tde.net. [88.14.56.85])
+        by smtp.gmail.com with ESMTPSA id a11-20020a5d508b000000b002be099f78c0sm7934wrt.69.2023.01.25.19.07.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Jan 2023 19:07:04 -0800 (PST)
+Subject: Re: [PATCH v2 1/3] branch: fix die_if_checked_out() when
+ ignore_current_worktree
+To:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
+ <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
+ <17f267b1-7f5e-2fb6-fb14-1c37ec355e65@gmail.com> <xmqqbkmruykg.fsf@gitster.g>
+ <766b25e1-2d7a-7b5c-10a9-43e545a57dba@gmail.com> <xmqqk01eqr3m.fsf@gitster.g>
+ <d61a2393-64c8-da49-fe13-00bc4a52d5e3@gmail.com>
+ <1a7fa327-3833-8da3-46d7-60bfe8dae82c@dunelm.org.uk>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <e7943994-3a7a-f877-8cf2-71146def9076@gmail.com>
+Date:   Thu, 26 Jan 2023 04:07:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <cover-v4-00.19-00000000000-20230117T151201Z-avarab@gmail.com>
- <cover-v5-00.19-00000000000-20230118T120334Z-avarab@gmail.com> <patch-v5-19.19-f29500a4abc-20230118T120334Z-avarab@gmail.com>
-In-Reply-To: <patch-v5-19.19-f29500a4abc-20230118T120334Z-avarab@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 25 Jan 2023 18:44:00 -0800
-Message-ID: <CABPp-BFScBjpDtSU4zTDRa2X+V4OZr2bNfXW39paDvtFaiSyww@mail.gmail.com>
-Subject: Re: [PATCH v5 19/19] push: free_refs() the "local_refs" in set_refspecs()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1a7fa327-3833-8da3-46d7-60bfe8dae82c@dunelm.org.uk>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 5:08 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> Fix a memory leak that's been with us since this code was added in
-> ca02465b413 (push: use remote.$name.push as a refmap, 2013-12-03).
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  builtin/push.c                          | 1 +
->  t/t1416-ref-transaction-hooks.sh        | 1 +
->  t/t2402-worktree-list.sh                | 1 +
->  t/t5504-fetch-receive-strict.sh         | 1 +
->  t/t5523-push-upstream.sh                | 1 +
->  t/t5529-push-errors.sh                  | 2 ++
->  t/t5546-receive-limits.sh               | 2 ++
->  t/t5547-push-quarantine.sh              | 2 ++
->  t/t5606-clone-options.sh                | 1 +
->  t/t5810-proto-disable-local.sh          | 2 ++
->  t/t5813-proto-disable-ssh.sh            | 2 ++
->  t/t7409-submodule-detached-work-tree.sh | 1 +
->  t/t7416-submodule-dash-url.sh           | 2 ++
->  t/t7450-bad-git-dotfiles.sh             | 2 ++
->  14 files changed, 21 insertions(+)
->
-> diff --git a/builtin/push.c b/builtin/push.c
-> index 60ac8017e52..f48e4c6a856 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -129,6 +129,7 @@ static void set_refspecs(const char **refs, int nr, c=
-onst char *repo)
->                 } else
->                         refspec_append(&rs, ref);
->         }
-> +       free_refs(local_refs);
+On 24-ene-2023 10:35:26, Phillip Wood wrote:
 
-In the cover letter, you said you took Rene's feedback as a possible
-future improvement, but perhaps it's at least calling out in the code
-with a TODO comment?
+> On 22/01/2023 23:21, Rubén Justo wrote:
+> > I tried to maintain the relationship and the role, too.  Just introduce
+> > the helper, as Phillip suggested and I think it is a good idea.
+> 
+> When I suggested adding a helper I was thinking of something like
+> 
+> static const struct worktree *do_find_shared_symref(struct worktree
+> **worktrees,
+>  					  const char *symref,
+>  					  const char *target,
+> 					  int ignore_current)
+> {
+> 	/*
+> 	 * Body moved from find_share_symref() with a couple
+> 	 * of lines added to support ignore_current
+> 	 /*
+> }
+> 
+> const struct worktree *find_shared_symref(struct worktree **worktrees,
+>  					  const char *symref,
+>  					  const char *target)
+> {
+> 	return do_find_shared_symref(worktrees, symref, target, 0)
+> }
+> 
+> void die_if_checked_out(const char *branch, int ignore_current_worktree)
+> {
+> 	struct worktree **worktrees = get_worktrees();
+> 	const struct worktree *wt;
+> 
+> 	wt = do_find_shared_symref(worktrees, "HEAD", branch,
+> 				   ignore_current_worktree);
+> 	/* rest unchanged */
+> }
+> 
+> The aim was to avoid changing the public api
 
+I thought about a solution like the one you suggest.  Also another one based on
+iterations, something like wt_head_refs()....  I ended up with
+is_shared_symref(), it adds some value, I think.
 
->  }
->
->  static int push_url_of_remote(struct remote *remote, const char ***url_p=
-)
-> diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-h=
-ooks.sh
-> index 27731722a5b..b32ca798f9f 100755
-> --- a/t/t1416-ref-transaction-hooks.sh
-> +++ b/t/t1416-ref-transaction-hooks.sh
-> @@ -5,6 +5,7 @@ test_description=3D'reference transaction hooks'
->  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->  test_expect_success setup '
-> diff --git a/t/t2402-worktree-list.sh b/t/t2402-worktree-list.sh
-> index 79e0fce2d90..9ad9be0c208 100755
-> --- a/t/t2402-worktree-list.sh
-> +++ b/t/t2402-worktree-list.sh
-> @@ -5,6 +5,7 @@ test_description=3D'test git worktree list'
->  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->  test_expect_success 'setup' '
-> diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-stri=
-ct.sh
-> index ac4099ca893..14e8af1f3b7 100755
-> --- a/t/t5504-fetch-receive-strict.sh
-> +++ b/t/t5504-fetch-receive-strict.sh
-> @@ -4,6 +4,7 @@ test_description=3D'fetch/receive strict mode'
->  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->  test_expect_success 'setup and inject "corrupt or missing" object' '
-> diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-> index fdb42920564..c9acc076353 100755
-> --- a/t/t5523-push-upstream.sh
-> +++ b/t/t5523-push-upstream.sh
-> @@ -4,6 +4,7 @@ test_description=3D'push with --set-upstream'
->  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->  . "$TEST_DIRECTORY"/lib-terminal.sh
->
-> diff --git a/t/t5529-push-errors.sh b/t/t5529-push-errors.sh
-> index ce85fd30ad1..0247137cb36 100755
-> --- a/t/t5529-push-errors.sh
-> +++ b/t/t5529-push-errors.sh
-> @@ -1,6 +1,8 @@
->  #!/bin/sh
->
->  test_description=3D'detect some push errors early (before contacting rem=
-ote)'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->  test_expect_success 'setup commits' '
-> diff --git a/t/t5546-receive-limits.sh b/t/t5546-receive-limits.sh
-> index 0b0e987fdb7..eed3c9d81ab 100755
-> --- a/t/t5546-receive-limits.sh
-> +++ b/t/t5546-receive-limits.sh
-> @@ -1,6 +1,8 @@
->  #!/bin/sh
->
->  test_description=3D'check receive input limits'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->  # Let's run tests with different unpack limits: 1 and 10000
-> diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
-> index 1876fb34e51..9f899b8c7d7 100755
-> --- a/t/t5547-push-quarantine.sh
-> +++ b/t/t5547-push-quarantine.sh
-> @@ -1,6 +1,8 @@
->  #!/bin/sh
->
->  test_description=3D'check quarantine of objects during push'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->  test_expect_success 'create picky dest repo' '
-> diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-> index cf221e92c4d..27f9f776389 100755
-> --- a/t/t5606-clone-options.sh
-> +++ b/t/t5606-clone-options.sh
-> @@ -4,6 +4,7 @@ test_description=3D'basic clone options'
->  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->  test_expect_success 'setup' '
-> diff --git a/t/t5810-proto-disable-local.sh b/t/t5810-proto-disable-local=
-.sh
-> index c1ef99b85c2..862610256fb 100755
-> --- a/t/t5810-proto-disable-local.sh
-> +++ b/t/t5810-proto-disable-local.sh
-> @@ -1,6 +1,8 @@
->  #!/bin/sh
->
->  test_description=3D'test disabling of local paths in clone/fetch'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->  . "$TEST_DIRECTORY/lib-proto-disable.sh"
->
-> diff --git a/t/t5813-proto-disable-ssh.sh b/t/t5813-proto-disable-ssh.sh
-> index 3f084ee3065..2e975dc70ec 100755
-> --- a/t/t5813-proto-disable-ssh.sh
-> +++ b/t/t5813-proto-disable-ssh.sh
-> @@ -1,6 +1,8 @@
->  #!/bin/sh
->
->  test_description=3D'test disabling of git-over-ssh in clone/fetch'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->  . "$TEST_DIRECTORY/lib-proto-disable.sh"
->
-> diff --git a/t/t7409-submodule-detached-work-tree.sh b/t/t7409-submodule-=
-detached-work-tree.sh
-> index 374ed481e9c..574a6fc526e 100755
-> --- a/t/t7409-submodule-detached-work-tree.sh
-> +++ b/t/t7409-submodule-detached-work-tree.sh
-> @@ -13,6 +13,7 @@ TEST_NO_CREATE_REPO=3D1
->  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->  test_expect_success 'setup' '
-> diff --git a/t/t7416-submodule-dash-url.sh b/t/t7416-submodule-dash-url.s=
-h
-> index 3ebd9859814..7cf72b9a076 100755
-> --- a/t/t7416-submodule-dash-url.sh
-> +++ b/t/t7416-submodule-dash-url.sh
-> @@ -1,6 +1,8 @@
->  #!/bin/sh
->
->  test_description=3D'check handling of disallowed .gitmodule urls'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->  test_expect_success 'setup' '
-> diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-> index ba1f569bcbb..0d0c3f2c683 100755
-> --- a/t/t7450-bad-git-dotfiles.sh
-> +++ b/t/t7450-bad-git-dotfiles.sh
-> @@ -12,6 +12,8 @@ Such as:
->
->    - symlinked .gitmodules, etc
->  '
-> +
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->  . "$TEST_DIRECTORY"/lib-pack.sh
->
-> --
-> 2.39.0.1225.g30a3d88132d
->
+The public API remains unchanged, and I like that the comment for
+find_shared_ref(), which is an important note, is moved to is_shared_symref(),
+which contains the essential work related to the comment.
+
+die_if_checked_out() needs to iterate (here was the wt_heads_refs()), but my
+intuition makes me think it's a good step since we might need another level,
+I'm not sure yet but, like "die_if_if_checked_out(allow_if_current)".
+
+I'm going to send a v3 addressing the issues Junio commented, still with the
+is_shared_symref().  If the above reasoning doesn't work for you or if the
+change as-is introduces any problem, I have no objection to
+"do_find_shared_symref()".
+
+Thank you.
