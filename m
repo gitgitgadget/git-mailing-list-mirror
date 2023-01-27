@@ -2,257 +2,225 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 869CCC54EAA
-	for <git@archiver.kernel.org>; Fri, 27 Jan 2023 12:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D575C54EAA
+	for <git@archiver.kernel.org>; Fri, 27 Jan 2023 14:46:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232881AbjA0MLX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Jan 2023 07:11:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39664 "EHLO
+        id S233821AbjA0Oqw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Jan 2023 09:46:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232878AbjA0MLF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2023 07:11:05 -0500
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A9387EFC3
-        for <git@vger.kernel.org>; Fri, 27 Jan 2023 04:05:12 -0800 (PST)
-Received: by mail-ej1-f47.google.com with SMTP id bk15so13054317ejb.9
-        for <git@vger.kernel.org>; Fri, 27 Jan 2023 04:05:12 -0800 (PST)
+        with ESMTP id S230423AbjA0Oqv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2023 09:46:51 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3E8782427
+        for <git@vger.kernel.org>; Fri, 27 Jan 2023 06:46:48 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id q10-20020a1cf30a000000b003db0edfdb74so5584879wmq.1
+        for <git@vger.kernel.org>; Fri, 27 Jan 2023 06:46:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=unity3d.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/ZHnfjlMfRz6aietKsgWdxlzOzPyythQd2wHthJt4Yk=;
-        b=UHeQX3FfzOkzz4qNWKXgM3SqSiIJjXX1hkfNJ+mcCQji6LIVGlunu+qp5Wj9+/LejK
-         wF7aS2afzntiu5JnBz/XrFIwXqpLunfP9VkqOk5Cz7qZrXdJBpcA5qr8mdhN4Fm0bxjW
-         Dq+/xxVcL82VVjDbgNpobslQ1QHCBlk28UPVr1CUIhBzsi0BBldkiWOlo1IKLSbZOZZa
-         J2VMN9wLs4g995eeeDQ5uKlg+jjNnYL485xSQI5fcRb69HjK+cJp3hF6QBCayd74es/P
-         kKfTpnBsgjAvCzLd1LV2JOVIs4ozHuRUEc4igDv7MqeLK420BdPgXk0Rd/rGKyG+1ugn
-         WrHA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SJml04ZqNG95JVc8dedZTN2kTgbpYUtpCVWa9zgQZPI=;
+        b=EsyvQ8sJmKJNT0RIFm5A/s+SZmrwBtvkg19uAf9AL7zuDEPOkyn6bJL0CU2LlMUOS1
+         Z2MbQeMcWU2q19UPq7sgSIgmxOzgkvIDvd5/RCGqjwlmdQ45qNvkUpgj5netZxbvbWcz
+         EvLAcgy6Lj5BNWHIdGTGfnc9NpSQ7k/XtROgKLZ12UCb8LDOXlKpwGsJV4BWMFl+znww
+         kxdDqXhl0QGCYag/AaIiWLGS4DS/mnoKOp36vOPA3diyWXHJzzE9XXtLGhFMTUgNIDrK
+         xMSB+HLSqaW9b5zXteAVrS4qrYikD979VDXrIvxgbFWh+nLcGj78GMJZBxBF0k8EvSVs
+         CSUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/ZHnfjlMfRz6aietKsgWdxlzOzPyythQd2wHthJt4Yk=;
-        b=26nTAJ8nF5opsmdt+WHvApuacTxI4S728XhYVtwfoGsrh+KHBaLsN6PTNao4ZtDOs3
-         F1TVauKJ9y9iMbP44FifOsGyI7hzAD2laWSLnKnOauNxPH4Uj/IkKLVXQiH+F0qnEs7B
-         KdLFZ8AQeXmdCry/cpiqpn4/q6UNvy8NN8WMggXWFf/rNR7MUHXdODikwvFAe/WEkQ0L
-         WuDQR894l1/nsrxr/LIWG4p2jv5Ampsur4Ec97nRyFykKpuYYwkrZx05QgaCzb57hAUn
-         KXr8u3sI1tXqOiiGGg1Py+BiWpKcg8L3eyWN8p09qJQdUjepaF6KDFHQ5sTLFMajkXZk
-         lZpA==
-X-Gm-Message-State: AO0yUKX8nqad1QHOI+uqUP2dUVVXkZy89JlBOIJHSsfzqHpNDEVM/ct3
-        5UYz+4N7DLiMMU9v3EeqoCWKpQ==
-X-Google-Smtp-Source: AK7set/d/e/EJvQ+Q7EBH2AVkrYJWpx62mcy5PpX+mAzgmdeFSuhp327RQwYiGJLOkR/opKPwVDxsw==
-X-Received: by 2002:a17:906:3745:b0:87b:d2e4:40d4 with SMTP id e5-20020a170906374500b0087bd2e440d4mr1958054ejc.30.1674820739346;
-        Fri, 27 Jan 2023 03:58:59 -0800 (PST)
-Received: from [10.45.34.176] ([80.80.14.217])
-        by smtp.gmail.com with ESMTPSA id 1-20020a170906218100b008720c458bd4sm2119740eju.3.2023.01.27.03.58.58
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SJml04ZqNG95JVc8dedZTN2kTgbpYUtpCVWa9zgQZPI=;
+        b=rCTxoUchB89rEIhj3jJ+Xyl1eEp+ieUbKFHa+eeZNVn+tfZEb3fQKO9qSncDZ4WADN
+         mVeNvhrGAMoTHk9DxF6eISV0uuMpyKSvr+LK47VxEgN6CcM7w27ZpT/M3hP/GoOeSlxy
+         ZAGxaK66czT7vGmUHfWdWkR8na3Q3opFVXcRkEasnGIdQID/V6sc6ZubGcoGy7RXZxAr
+         MW4jxh1vw3/rX/y8g/xVgrNel/RozjOQgHBmSmutH9Sxtg1SDkL5YE8uMWmw1viUa8eY
+         zOyaQZe/zu0FsM0cT06ZBJL5O4/hYmZK1BED61HEhzFD+D3hJOXLxPhZ1DNDnjYtHRNQ
+         LiyQ==
+X-Gm-Message-State: AFqh2krzCiBXo8BXW8VZmT4YtDRcn8BMIG8v2wm9/5LL9Z6gKMa2XnfR
+        AF8Ft2MjLPEaplT2RN+AzsE=
+X-Google-Smtp-Source: AMrXdXvXCfsYYLVOYpew2k5NINnrhI4Rfq7Usjamtrwi8DBBoLwelx+2zUrqBZiRFtxOzpVgTe9BzA==
+X-Received: by 2002:a05:600c:3c86:b0:3da:2a59:8a4f with SMTP id bg6-20020a05600c3c8600b003da2a598a4fmr40431709wmb.38.1674830807128;
+        Fri, 27 Jan 2023 06:46:47 -0800 (PST)
+Received: from [192.168.1.212] ([90.248.183.175])
+        by smtp.gmail.com with ESMTPSA id n24-20020a7bcbd8000000b003daf7721bb3sm7475443wmi.12.2023.01.27.06.46.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 03:58:58 -0800 (PST)
-Message-ID: <9dda8cde-7c96-a5f1-f271-951f8b348b80@unity3d.com>
-Date:   Fri, 27 Jan 2023 12:58:57 +0100
+        Fri, 27 Jan 2023 06:46:46 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <a848b7d5-fd40-b043-7ed9-1672f65312e6@dunelm.org.uk>
+Date:   Fri, 27 Jan 2023 14:46:45 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH v2] ls-tree: add --sparse-filter-oid argument
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4] checkout/switch: disallow checking out same branch in
+ multiple worktrees
 Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>
-Cc:     William Sprent via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>
-References: <pull.1459.git.1673456518993.gitgitgadget@gmail.com>
- <pull.1459.v2.git.1674474371817.gitgitgadget@gmail.com>
- <CABPp-BExS8UGfGzT+w9R_p0sY+_=A0-nRzU5QTOKwfBSmX6c3A@mail.gmail.com>
- <18c94f70-4adf-1b4a-8777-206804c419e6@unity3d.com>
- <CABPp-BFtLdRV2zWXn0On0b6mOJgMAatwvUumUxfXfNXo9gc=HA@mail.gmail.com>
-From:   William Sprent <williams@unity3d.com>
-In-Reply-To: <CABPp-BFtLdRV2zWXn0On0b6mOJgMAatwvUumUxfXfNXo9gc=HA@mail.gmail.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com,
+        Jinwook Jeong <vustthat@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+References: <20230119055325.1013-1-carenas@gmail.com>
+ <20230120113553.24655-1-carenas@gmail.com>
+ <8f24fc3c-c30f-dc70-5a94-5ee4ed3de102@dunelm.org.uk>
+ <CAPUEspjuXSncRxo5DMj1pA5zcYvn4Y6epdijYL6HJRGhk_6q7g@mail.gmail.com>
+In-Reply-To: <CAPUEspjuXSncRxo5DMj1pA5zcYvn4Y6epdijYL6HJRGhk_6q7g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/01/2023 04.25, Elijah Newren wrote:
-> On Wed, Jan 25, 2023 at 8:16 AM William Sprent <williams@unity3d.com> wrote:
+Hi Carlo
+
+On 20/01/2023 22:12, Carlo Arenas wrote:
+> On Fri, Jan 20, 2023 at 7:08 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
 >>
->> On 25/01/2023 06.11, Elijah Newren wrote:
->>> It looks like Ævar and Victoria have both given really good reviews
->>> already, but I think I spotted some additional things to comment on.
+>> On 20/01/2023 11:35, Carlo Marcelo Arenas Belón wrote:
+>>> Commands `git switch -C` and `git checkout -B` neglect to check whether
+>>> the provided branch is already checked out in some other worktree, as
+>>> shown by the following:
 >>>
->>> On Mon, Jan 23, 2023 at 3:46 AM William Sprent via GitGitGadget
->>> <gitgitgadget@gmail.com> wrote:
->>>>
->>>> From: William Sprent <williams@unity3d.com>
->>>>
->>>> There is currently no way to ask git the question "which files would be
->>>> part of a sparse checkout of commit X with sparse checkout patterns Y".
->>>> One use-case would be that tooling may want know whether sparse checkouts
->>>> of two commits contain the same content even if the full trees differ.
+>>>     $ git worktree list
+>>>     .../foo    beefb00f [main]
+>>>     $ git worktree add ../other
+>>>     Preparing worktree (new branch 'other')
+>>>     HEAD is now at beefb00f first
+>>>     $ cd ../other
+>>>     $ git switch -C main
+>>>     Switched to and reset branch 'main'
+>>>     $ git worktree list
+>>>     .../foo    beefb00f [main]
+>>>     .../other  beefb00f [main]
 >>>
->>> Could you say more about this usecase?  Why does tooling need or want
->>> to know this; won't a checkout of the new commit end up being quick
->>> and simple?  (I'm not saying your usecase is bad, just curious that it
->>> had never occurred to me, and I'm afraid I'm still not sure what your
->>> purpose might be.)
+>>> Fix this problem by teaching `git switch -C` and `git checkout -B` to
+>>> check whether the branch in question is already checked out elsewhere.
 >>>
+>>> Unlike what it is done for `git switch` and `git checkout`, that have
+>>> an historical exception to ignore other worktrees if the branch to
+>>> check is the current one (as required when called as part of other
+>>> tools), the logic implemented is more strict and will require the user
+>>> to invoke the command with `--ignore-other-worktrees` to explicitly
+>>> indicate they want the risky behaviour.
+>>>
+>>> This matches the current behaviour of `git branch -f` and is safer; for
+>>> more details see the tests in t2400.
 >>
->> I'm thinking mainly about a monorepo context where there are a number of
->> distinct 'units' that can be described with sparse checkout patterns.
->> And perhaps there's some tooling that only wants to perform an action if
->> the content of a 'unit' changes.
+>> As I said before, it would be much easier for everyone else to
+>> understand the changes if you wrote out what they were rather than
+>> saying "look at the tests". I do appreciate the improved test
+>> descriptions though - thanks for that.
 > 
-> So, you're basically wanting to do something like
->     git ls-tree --paths-matching-sparsity-file=<pattern-file> $COMMIT1
->> sparse-files
->     git ls-tree --paths-matching-sparsity-file=<pattern-file> $COMMIT2
->>> sparse-files
->     sort sparse-files | uniq >relevant-files
->     git diff --name-only $COMMIT1 $COMMIT2 >changed-files
-> and then checking whether relevant-files and changed-files have a
-> non-empty intersection?
-
-Well, the concrete use-case I'm exploring is something along the lines
-of using the content hashes of sparse checkouts as cache keys for resource
-heavy jobs (builds/tests/etc).
-
-So, that would be something along the lines of,
-
-     git ls-tree -r --paths-matching-sparsity-file=<pattern-file> \
-     | sha1sum > cache-key
-
-and then performing a lookup before performing an action (which would
-then only be done in the context of the sparse checkout). My thinking
-is that this only would require git and no additional tooling, which in
-turn makes it very easy to reproduce the state where the job took place.
-
-
-> Would that potentially be better handled by
->     git diff --name-only $COMMIT1 $COMMIT2 | git check-ignore
-> --ignore-file=<pattern-file> --stdin
-> and seeing whether the output is non-empty?  We'd have to add an
-> "--ignore-file" option to check-ignore to override reading of
-> .gitignore files and such, and it'd be slightly confusing because the
-> documentation talks about "ignored" files rather than "selected"
-> files, but that's a confusion point that has been with us ever since
-> the gitignore mechanism was repurposed for sparse checkouts.  Or maybe
-> we could just add a check-sparsity helper, and then allow it to take
-> directories in-lieu of patterns. 
-
-I don't think it necessarily would be better handled by that. But it would
-be workable. It would be a matter of collating the output of
-
-   git ls-tree -r <commit>
-
-with
-
-   git ls-tree --name-only -r <commit> | git check-ignore ...
-
-Which is less ergonomic. But it is also a less intrusive change.
-
-Really, the main thing is to expose the sparse filtering logic somehow, and
-allow for building tooling on top of it.
-
-> This seems nicer than opening a can of worms about letting every git
-> command specify a different set of sparsity rules.
-
-I think you are the better judge of how much of a can of worms that would
-be. I don't think it would be too out of line with how git acts in general
-though, as we have things like the the 'GIT_INDEX_FILE' env-var.
-
->> Depending on the repo, it won't necessarily be quick to check out the
->> commit with the given patterns. However, it is more about it being
->> inconvenient to have to have a working directory, especially so if you
->> want use the tooling in some kind of service or query rapidly about
->> different revisions/patterns.
->>
->>>> Another interesting use-case would be for tooling to use in conjunction
->>>> with 'git update-index --index-info'.
->>>
->>> Sorry, I'm not following.  Could you expound on this a bit?
->>>
->>
->> I was imagining something along the lines of being able to generate new
->> tree objects based on what matches the given sparse checkout patterns.
->> Not that I have a specific use case for it right now.
->>
->> I think what I'm trying to evoke with that paragraph is that this
->> enables integrations with git that seem interesting and weren't possible
->> before.
+> Apologies on that, I tried to come up with something that would
+> describe the change of behaviour other than the paragraph above and
+> couldn't come out with a better explanation except reading the tests
+> (which I know is complicated by the fact they are interlinked).
 > 
-> I'm not sure if it's interesting, frightening, or something else.
-> Hard to say without better descriptions of usecases, which we can't
-> have if we don't even have a usecase.  I think I'd just strike this
-> paragraph.
+> The behaviour I am changing is also not documented (other than by the
+> test) and might have been added as a quirk to keep the scripted rebase
+> and bisect going when confronted with branches that were checked out
+> in multiple worktrees, and as such might had not be intended for
+> `switch`, and might not be needed anymore either.
 > 
-> [...]
-
-Fair. Will do.
-
->>>> +       (*d)->pl.use_cone_patterns = core_sparse_checkout_cone;
->>>
->>> Hmm, so the behavior still depends upon the current sparse-checkout
->>> (or lack thereof), despite the documentation and rationale of your
->>> feature as being there to check how a different sparse checkout would
->>> behave?
->>>
->>> I would hate to unconditionally turn cone_patterns off, since that
->>> would come with a huge performance penalty for the biggest repos.  But
->>> turning it unconditionally on wouldn't be good for the non-cone users.
->>> This probably suggests we need something like another flag, or perhaps
->>> separate flags for each mode.  Separate flags might provide the
->>> benefit of allowing cone mode users to specify directories rather than
->>> patterns, which would make it much easier for them to use.
->>>
->> I used 'core_sparse_checkout_cone' because I wanted to allow for the
->> cone mode optimisations, but I also figured that I should respect the
->> configuration. It doesn't change how the patterns are parsed in this case.
->>
->> I agree that it is a bit awkward to have to "translate" the directories
->> into patterns when wanting to use cone mode. I can try adding
->> '--[no]-cone' flags and see how that feels. Together with Victoria's
->> suggestions that would result in having the following flags:
->>
->> * --scope=(sparse|all)
->> * --sparse-patterns-file=<path>
->> * --[no]-cone: used together with --sparse-patterns-file to tell git
->>     whether to interpret the patterns given as directories (cone) or
->>     patterns (no-cone).
->>
->> Which seems like a lot at first glance. But it allows for passing
->> directories instead of patterns for cone mode, and is similar to the
->> behaviour of 'sparse-checkout set'.
->>
->> Does that seem like something that would make sense?
+> Using`checkout` for simplicity, but also applies to `switch`,
 > 
-> --sparse-patterns-file still implies patterns; I think that would need
-> some rewording.
+>    % git worktree list
+>    .../base  6a45aba [main]
+>    % git worktree add -f ../other main
+>    Preparing worktree (checking out 'main')
+>    HEAD is now at 6a45aba init
+>    % cd ../other
+>    % git checkout main
+>    Already on 'main'
+>    % git checkout -B main
+>    fatal: 'main' is already checked out at '.../base'
 
-Yeah. After sleeping on it, I also think that it becomes a difficult
-interface to work with, and you'll get different results with the same
-patterns whether you pass --cone or --no-cone, which seems error prone
-to me.
+Thanks for explaining that. If there is no <start-point> given we don't 
+reset the branch so it seems a bit harsh to error out here. For "git 
+checkout -B <branch> <start-point>" when <branch> is checked out in 
+another worktree requiring --ignore-other-worktrees makes sense.
 
-For better or for worse, both cone and non-cone uses of sparse-checkouts
-end up producing pattern files. And those pattern files do unambiguously
-describe a filtering of the worktree whether it is in cone-mode or not.
+>    % git checkout --ignore-other-worktrees -B main
+>    Already on 'main'
+> 
+> The change of behaviour only applies to -B and it actually matches the
+> documentation better.
+> 
+>>> @@ -1533,13 +1534,13 @@ static int checkout_branch(struct checkout_opts *opts,
+>>>        if (!opts->can_switch_when_in_progress)
+>>>                die_if_some_operation_in_progress();
+>>>
+>>> -     if (new_branch_info->path && !opts->force_detach && !opts->new_branch &&
+>>> -         !opts->ignore_other_worktrees) {
+>>> +     if (!opts->ignore_other_worktrees && !opts->force_detach &&
+>>> +         check_branch_path && ref_exists(check_branch_path)) {
+>>
+>> I think check_branch_path is NULL if opts->ignore_other_worktrees is set
+>> so we could maybe lose "!opts->ignore_other_worktrees" here (or possibly
+>> below where you set check_branch_path).
+> 
+> opts->ignore_other_worktrees was kept from the original expression;
+> you are correct that is not needed anymore, but I thought it didn't
+> hurt and made the code intention clearer (meaning it is obvious to
+> anyone new to the code that this code will be skipped if that flag is
+> set), would using an assert or a comment be a better option?
 
-Given that 'ls-tree' is more of a plumbing command, I think it might still
-make sense to use the patterns. That would also make the interaction
-a bit more logical to me -- e.g. if you want to override the patterns
-you have to pass them in the same format as the ones that would be read
-by default.
+It's a good point that it makes the intention clearer, maybe we should 
+just leave it as it is.
 
-Then maybe it could eventually make sense to expose the translation of
-cone-mode patterns as well, e.g.
+>>>        /*
+>>>         * Extract branch name from command line arguments, so
+>>>         * all that is left is pathspecs.
+>>> @@ -1741,6 +1751,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+>>>                                             new_branch_info, opts, &rev);
+>>>                argv += n;
+>>>                argc -= n;
+>>> +
+>>> +             if (!opts->ignore_other_worktrees && !check_branch_path && new_branch_info->path)
+>>> +                     check_branch_path = xstrdup(new_branch_info->path);
+>>
+>> I'm a bit confused what this is doing.
+> 
+> The branch we are interested in might come from 2 places, either it is
+> a parameter to -b, which was picked up before, or it is the argument
+> to the command itself, which was detected above.
 
-    git sparse-checkout set --cone --std-out dir1 dir2 dir3
+Oh, of course. I was so focused on the -b that I'd forgotten we need the 
+same check when we're checking out an existing branch - thanks for 
+putting me right.
 
-or similar.
+> If both are provided, we want to make sure to use the one from -b, or
+> will have the bug you sharply spotted before, which was frankly
+> embarrassing.
+> 
+>>> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+>>> index d587e0b20d..7ab7e87440 100755
+>>> @@ -133,17 +136,34 @@ test_expect_success SYMLINKS 'die the same branch is already checked out (symlin
+>>>        test_must_fail git -C here checkout newmain
+>>>    '
+>>>
+>>> -test_expect_success 'not die the same branch is already checked out' '
+>>> +test_expect_success 'allow creating multiple worktrees for same branch with force' '
+>>> +     git worktree add --force anothernewmain newmain
+>>> +'
+>>> +
+>>> +test_expect_success 'allow checkout/reset from the conflicted branch' '
+>>
+>> I'm not sure what "the conflicted branch" means (it reminds we of merge
+>> conflicts).
+> 
+> by "conflicted" I meant one that is checked out in more than one worktree
 
-> More importantly, though, based on your usecase description, I wonder
-> if you might be better served by either extending the check-ignore
-> subcommand or adding a similar helper ("check-sparsity"?), rather than
-> tweaking ls-tree.
+I think it would be clearer so say that rather than "conflicted" which 
+has a strong association with merge conflicts.
+
+Best Wishes
+
+Phillip
