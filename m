@@ -2,67 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0819BC54EAA
-	for <git@archiver.kernel.org>; Fri, 27 Jan 2023 22:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63256C54EAA
+	for <git@archiver.kernel.org>; Fri, 27 Jan 2023 22:18:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232813AbjA0WS1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Jan 2023 17:18:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54728 "EHLO
+        id S232839AbjA0WSl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Jan 2023 17:18:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231701AbjA0WS0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2023 17:18:26 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0231987378
-        for <git@vger.kernel.org>; Fri, 27 Jan 2023 14:18:26 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id a1-20020a056830008100b006864df3b1f8so2664057oto.3
-        for <git@vger.kernel.org>; Fri, 27 Jan 2023 14:18:25 -0800 (PST)
+        with ESMTP id S231163AbjA0WSi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2023 17:18:38 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AC7283943
+        for <git@vger.kernel.org>; Fri, 27 Jan 2023 14:18:37 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id lp10so5896298pjb.4
+        for <git@vger.kernel.org>; Fri, 27 Jan 2023 14:18:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=G2zoFpgnAc2KtegCCv435lAcn0DF81oTgEQYqm0b5/A=;
-        b=OHqW5fyq7VrN7dDZYdcxoCyDIbzsARg2WOPO6/Yn0IaliK4nkzmil/5cUQkStBS22O
-         NY/2+TVYSBMBSONHHNZVkHcJPtu7DhBmFnZuIjTBK4zDAa1kErvaNTXSOl+to4c0wAEi
-         JrEpnXlKsoWcBZgX0gCt5vP8Y5J8j/zCsZfMIB+inbwvIZszLlQxd5Hysu7AFoxHnMDW
-         aib218yduxT5HsYK37ehzWWFi3QYlRsIm95FGbRvxF3cbu7cMZJNidx2qEq+aMw8wMC6
-         1N5VYaH3qtnuUUTE6psAT+sEkXs2bBUJVojeo4d35pbqhpkLCkSdpY82BmiRw2paWy0/
-         XbxQ==
+        bh=zU061K7ngmQEOrkWErnZrBnRryXRqKTFUfF8uRwZ0z8=;
+        b=KFEsuFsQ7ocnemmpIepfvkXkaSOqiKDDFlx8mPA0x3QErpsfKHWDi/18S55G6ta0gc
+         bMxz+7L9C/RrQmKHqBsdjohdDyFrmHBvAsyoOrjMdcnFCu9SwljSqgmuon7JkSKGS31d
+         T7Tv49oBDohStjnW0gJhEBucs3i/1D6hpKN2dsWo20J/K+pivVJZWt9LJUCl159EI83v
+         l1HAAtgMXS2N9e8gaWXi6/nHbWEHJM7c2Hddl/1bEntNlo9gZRfZ+tIi6hp9m9kTJ0ac
+         7FXM+kM35RgXVeKHFiX/wha9iASr02QhUhluNMxZyA2AXQLYGejkghi6T0vnuHDCM8OY
+         veog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G2zoFpgnAc2KtegCCv435lAcn0DF81oTgEQYqm0b5/A=;
-        b=4Efqvp+H9WMS697CQRDXH8fQeX8diIiMPjZnhphBcfYZanDgviW2dKKgcbT9/Slugw
-         rym/5Eamw6uRWQePHOucqCc1hIH4J0+T79VweZ7ulm3IuABkb19GNehYrP5vrqiw701k
-         zdKrSYPRgIqrutZEcyra9C3zsAn49tauvs9hU7Tpjol/i2oqvAflD0FPrRtsPNhajHg0
-         a0Csma/8r539+nEE3EEAMsKfG9KojKDUijtxqHaN/NnXax/qISIF2i1Es44neRr39wOE
-         rAKO9+B9tkBWwgWWUdgziwCV9NBkdo34KP6/0B0Xe48zgO/cNYIaYT5hkUCrM/P0D6t6
-         Bf3g==
-X-Gm-Message-State: AO0yUKWfCWk4Kvq2C3x5InW26JL7S7OPcLJVTyuuWfelp9AfNyX5QE/O
-        riMsdGYaSiI7QqdfRzPwShWP
-X-Google-Smtp-Source: AK7set+ufEU1F6n8YJj5JGHW78K985KAtH3ULURefXzsIyiNfsT+9/XSmkDOJmkPZwWyk/dFXU22TA==
-X-Received: by 2002:a9d:6405:0:b0:686:e281:fe49 with SMTP id h5-20020a9d6405000000b00686e281fe49mr3453083otl.14.1674857905225;
-        Fri, 27 Jan 2023 14:18:25 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:a857:f20:476a:b382? ([2600:1700:e72:80a0:a857:f20:476a:b382])
-        by smtp.gmail.com with ESMTPSA id v24-20020a9d69d8000000b00670763270fcsm2290651oto.71.2023.01.27.14.18.24
+        bh=zU061K7ngmQEOrkWErnZrBnRryXRqKTFUfF8uRwZ0z8=;
+        b=l+ltYVyXudrkCqg6OEgZDBsFgJDpsCRhqa4iecjz9usVXQdHgAxUqVv3HnPymLcME8
+         QXJpW8DQp8yZz/MNjU4OHrrtig7msmvwch8DdagJWb9DClkIbe7srobEelfUQZ15mbfL
+         +WoBeCLrgqpSCK0rnByn7UfQoMKlytb/8//9n/B8PDBIr6hPQ2E2czb0aJ+yehfG+VYE
+         e0NcyF3eYEnTzExjfac2xbADa0JACwrne6HXB+5fQKlQsfdpTDcJwcBnGLXLnsOf7vLZ
+         TyhEwZrFkn2fglX3Zqa1tT7SVJkcQNmvd8gyGNoC/wKbD4R0wEQAJMQ/hibk++LzZhqI
+         EQVA==
+X-Gm-Message-State: AO0yUKXmU6Yyt/iDu5J8bHJcCmK9V5UpaxSX9FxAGBr618EdqY021E45
+        EbpLbj85F00/Y9WsYo+zrtUo
+X-Google-Smtp-Source: AK7set9UkNkdeNRwf7aPfGbltEGdGGTok8rAD1JxaAtcCjrdP0zQQ2dSJko2Z0zjTVEkcrZR90Ipag==
+X-Received: by 2002:a17:902:ce89:b0:196:1ab9:afc8 with SMTP id f9-20020a170902ce8900b001961ab9afc8mr17396260plg.4.1674857916697;
+        Fri, 27 Jan 2023 14:18:36 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id jc7-20020a17090325c700b00192588bcce7sm3348260plb.125.2023.01.27.14.18.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jan 2023 14:18:24 -0800 (PST)
-Message-ID: <4913381a-769f-aba0-c04d-559d103e8396@github.com>
-Date:   Fri, 27 Jan 2023 17:18:23 -0500
+        Fri, 27 Jan 2023 14:18:36 -0800 (PST)
+Message-ID: <3ade6d9f-8477-40c2-d683-d629e863c6ab@github.com>
+Date:   Fri, 27 Jan 2023 14:18:35 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
 Subject: Re: [PATCH 3/3] scalar: only warn when background maintenance fails
 Content-Language: en-US
 To:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
 References: <pull.1473.git.1674849963.gitgitgadget@gmail.com>
  <d75780e0567b5f765816ab7522afe550ebaa3521.1674849963.git.gitgitgadget@gmail.com>
  <xmqqleln90ka.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
+From:   Victoria Dye <vdye@github.com>
 In-Reply-To: <xmqqleln90ka.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
@@ -70,7 +70,7 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/27/2023 3:36 PM, Junio C Hamano wrote:
+Junio C Hamano wrote:
 > "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
 >> From: Derrick Stolee <derrickstolee@github.com>
@@ -94,12 +94,7 @@ On 1/27/2023 3:36 PM, Junio C Hamano wrote:
 > 
 > Wasn't the main selling point of scalar that users do not have to
 > worry about various minute details of configuration settings to
-> maintain their clone of projects on the larger side?
-
-Yes, and that includes things like partial clone, sparse-checkout,
-and FS Monitor which are independent of this maintenance change.
-
->  The "maintain
+> maintain their clone of projects on the larger side?  The "maintain
 > their clone" certainly should include running periodic maintenance
 > tasks without them having to worry about it.  It feels like this is
 > calling for an explicit "disable periodic maintenance tasks in this
@@ -107,19 +102,62 @@ and FS Monitor which are independent of this maintenance change.
 > cron-like system services, while keeping the default safer,
 > i.e. fail loudly when the periodic maintenance tasks that the users
 > expect to happen cannot be enabled, or something.
+
+I see Stolee's approach as more in line with how FSMonitor is treated by
+'scalar', which is "only turn it on if it's supported, but otherwise do
+nothing" (the main difference here being that a warning is displayed if
+maintenance can't be turned on). That still fits the stated goal of 'scalar'
+("configure all the niche large-repo settings for me when I
+clone/register"), but it makes 'scalar' more forgiving of system
+configurations that don't support maintenance.
+
+That said, this doesn't distinguish between "maintenance couldn't be turned
+on because the system doesn't support it" and "maintenance couldn't be
+turned on because of an internal error". The latter might still be worth
+failing on, so maybe something like this would be more palatable?
+
+--------8<--------8<--------8<--------
+diff --git a/scalar.c b/scalar.c
+index 6c52243cdf1..138780abe5f 100644
+--- a/scalar.c
++++ b/scalar.c
+@@ -252,6 +252,10 @@ static int stop_fsmonitor_daemon(void)
+ 	return 0;
+ }
+ 
++static int have_maintenance_support(void) {
++	/* check whether at least one scheduler is supported on the system */
++}
++
+ static int register_dir(void)
+ {
+ 	if (add_or_remove_enlistment(1))
+@@ -260,7 +264,7 @@ static int register_dir(void)
+ 	if (set_recommended_config(0))
+ 		return error(_("could not set recommended config"));
+ 
+-	if (toggle_maintenance(1))
++	if (have_maintenance_support() && toggle_maintenance(1))
+ 		return error(_("could not turn on maintenance"));
+ 
+ 	if (have_fsmonitor_support() && start_fsmonitor_daemon()) {
+
+-------->8-------->8-------->8--------
+
 > 
 > Perhaps I am not the primary audience, but hmph, I have a feeling
 > that this is not exactly going into a healthy direction.
 
-Here, we are in an environment where background maintenance is
-unavailable in an unexpected way. If that feature is not available
-to the user, should they not get the benefits of the others?
+I don't think this change would be the start of a larger pattern, since most
+Scalar-related settings aren't system-dependent (only FSMonitor and
+maintenance are, AFAIK). What would be worse, I think, is setting the
+maintenance behavior with a new command option - I could very easily see
+*that* leading to a slippery slope of endless options to toggle 'scalar's
+behaviors, completely defeating it's whole "set everything up for me"
+purpose.
 
-Not having background maintenance is definitely a downside, but it's
-different from failing to connect to the server or being unable to
-complete setting up the working directory. The warning communicates
-the issue, so users can realize the problem exists and work to resolve
-it in their own way.
+> 
+> Other two steps that led to this step looked quite sensible, though.
+> 
+> Thanks.
 
-Thanks,
--Stolee
