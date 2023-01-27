@@ -2,92 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4825DC38142
-	for <git@archiver.kernel.org>; Fri, 27 Jan 2023 18:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 881C7C54EAA
+	for <git@archiver.kernel.org>; Fri, 27 Jan 2023 19:15:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234735AbjA0SqM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Jan 2023 13:46:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50334 "EHLO
+        id S231672AbjA0TPP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Jan 2023 14:15:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234401AbjA0SqJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2023 13:46:09 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31E84757B7
-        for <git@vger.kernel.org>; Fri, 27 Jan 2023 10:46:07 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id g23so5886484plq.12
-        for <git@vger.kernel.org>; Fri, 27 Jan 2023 10:46:07 -0800 (PST)
+        with ESMTP id S230414AbjA0TPO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2023 14:15:14 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D67A77BBD8
+        for <git@vger.kernel.org>; Fri, 27 Jan 2023 11:15:12 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id 88so5481166pjo.3
+        for <git@vger.kernel.org>; Fri, 27 Jan 2023 11:15:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OfjTg/2S4MPnRdCPV2T3oKS0YBU2hKv27vtZ8JLX21k=;
-        b=CSwkplFIvTPTRBUyV/z0stChH/e6fyQ08mUXWnJs5Ss0cF8zA71y5ND/COIbOekoBR
-         Z+gYshrFra7SbWEgLIe/jAS1RkRPCOMbTw1AeP55+XHUBnrKzxVrjL6res3cXgxd/f6W
-         nyE1zjoQROT7BknK/ckU5KU/8WO56lihpnNv5jEG8d7BRFURxY7qRrWj+9EGDFCY/jCS
-         2moXeOdY67AhfB4t92VLGiOiaAYQw8Q1eJVT+8xNrf8NXAlMlGzthKY1cVpsTvvk/V4x
-         qhtkEN+ZYunH/crHWzqhQaxajsw8wATX8YDcqJ32d74f5dt6yV0b8RR4Qy5g+0V2X5Xi
-         Ex3Q==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WC+yj6a3WRExsWlurus6/3TyZZNs6VlYJlwS+lUYiUo=;
+        b=gwk3vROvTBvQ/oOnt+LUzr5SupVBqs9nr4jjnksssa9djyBmNlF6FLaR7/YAKQnlYm
+         8GYpSLONlce9nRO4Qa9jERiLf40lHcnpYKGZviceQs5/yYzp4/2cq0W++RyiwCA0qdi1
+         FTYYP0r017O/UiF+It4r3VKyApOqPfYNugLyez73ApAvBefXkcz1hpvjzoU1/xXrBKzv
+         u7GvxeRLpzTfV6G/Dfd6M7kgWxtDx7ntTAmN4POr7aOk1242hdR1EulTLe5qH8cuE6q9
+         yqN9PBT2EHRER+pTQHBYQ2Pc9ThA7lwsYTscyphvtaFtOJIZCy4gnZf0kXqOpHmzQeUv
+         L45g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=OfjTg/2S4MPnRdCPV2T3oKS0YBU2hKv27vtZ8JLX21k=;
-        b=Gc8ZaYiJE10IcBIhnCd9cMen1pVKpHZAvp1G65J1ShN1Pnq7oioA706LHlmLV8srrL
-         uuziEu/bGIFYfzH6xuOAS9EWCkJ+awagBtr0ay0Rv0HyDb3pWJHhkq4m/KfAXo00xQ1L
-         dTUuRcZJvLrY2okZMBYvmyAUNMoc/fZh4/PkIxUpw2Uh28pIp3kDHtlacn/H8OsYAZse
-         EZva7K5Zkj/IH3x/rEVwILJbsKt6h73cVYIxkZE4J2/HEHvDUT9P5IsqIyw/1Kuq9rFb
-         IfKqu79KTYTxgm+2pyHd4Vwtf7/1jT8ErnszGLRRfhtmu4LEmIBKz6v92KrZlRZBcas1
-         FvOg==
-X-Gm-Message-State: AO0yUKVZmZR9AfFys3SfcG6nBSFQFVE/a2ziYssRTRMjDqlYEUKxzZfo
-        OtGIC8AZwKmi6gNAwh8N4HRK3FJM658=
-X-Google-Smtp-Source: AK7set9e2fHW5WfRm/lwUB8U7R+fwPm2Q1Sdeyac/XOenDAwjgO2Um6eeWK5Go1dmDvmyfMN1CuKsA==
-X-Received: by 2002:a17:902:dac8:b0:196:59a0:bffe with SMTP id q8-20020a170902dac800b0019659a0bffemr2572448plx.17.1674845166607;
-        Fri, 27 Jan 2023 10:46:06 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id g5-20020a1709026b4500b0018b025d9a40sm3164587plt.256.2023.01.27.10.46.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jan 2023 10:46:05 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Mathias Krause <minipli@grsecurity.net>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: Re: [PATCH v2] grep: fall back to interpreter if JIT memory
- allocation fails
-References: <20221216121557.30714-1-minipli@grsecurity.net>
-        <20230127154952.485913-1-minipli@grsecurity.net>
-        <xmqqbkmk9bsn.fsf@gitster.g> <xmqq1qnfancf.fsf@gitster.g>
-Date:   Fri, 27 Jan 2023 10:46:05 -0800
-In-Reply-To: <xmqq1qnfancf.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        27 Jan 2023 09:39:28 -0800")
-Message-ID: <xmqqtu0b95oy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WC+yj6a3WRExsWlurus6/3TyZZNs6VlYJlwS+lUYiUo=;
+        b=SK+pNSQjZ5hLSwU6Hft7lQrhQWzJWmXNdzSRE5rNYRb9xkvJSOW3beHExfgk1rvxVl
+         BhEatY7nTetlgJ+RsS03KTODSsvCKotKVqe9Y5OprAUfr7Wq/F16jOI48Ga8YLTXf5ru
+         vPFyWcHmnAyPV+XVima43hc4Z575z+v4dcchpai6ZjOCsw6wd3ZvNt8QMwapaqIxUCic
+         Zqo9h5WP0HQJTDMmYat7VvZs1re+01Mh7z4taRYZXUvzQz1l8bEvf6fc0i7JykFZGICn
+         /ne5TuhTIU/F8dvYUbQ1Ez0o4MKLTydixeuuFOgb0pMAKd6t0m6IB11eNqlFsGQreEqn
+         jMjQ==
+X-Gm-Message-State: AFqh2kqlD9f35AIEIkvNlisLPJVgsMqkKIVF7fX1jP9J2TyCqoa2Lmp6
+        w7xx46R809tAUGOrLgSFlSx7
+X-Google-Smtp-Source: AMrXdXv0wK8oUJt+HtgPVeQRhikMaejge4LNzXH+Ayiwb0eJsfqmDgdZ1N2wQIj5wmCd9T0x26dL8Q==
+X-Received: by 2002:a05:6a20:c21a:b0:b8:cb15:d6db with SMTP id bt26-20020a056a20c21a00b000b8cb15d6dbmr38519440pzb.23.1674846912215;
+        Fri, 27 Jan 2023 11:15:12 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id v11-20020a17090a4ecb00b00229f68ba7fbsm5390349pjl.19.2023.01.27.11.15.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Jan 2023 11:15:11 -0800 (PST)
+Message-ID: <39e4a13a-2230-919f-4cfc-95d70fb33e3a@github.com>
+Date:   Fri, 27 Jan 2023 11:15:09 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH v2 02/10] t5558: add tests for creationToken heuristic
+Content-Language: en-US
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, avarab@gmail.com,
+        steadmon@google.com, chooglen@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+ <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
+ <427aff4d5e5c85b601f43af8b664515380e11453.1674487310.git.gitgitgadget@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <427aff4d5e5c85b601f43af8b664515380e11453.1674487310.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+> 
+> As documented in the bundle URI design doc in 2da14fad8fe (docs:
+> document bundle URI standard, 2022-08-09), the 'creationToken' member of
+> a bundle URI allows a bundle provider to specify a total order on the
+> bundles.
+> 
+> Future changes will allow the Git client to understand these members and
+> modify its behavior around downloading the bundles in that order. In the
+> meantime, create tests that add creation tokens to the bundle list. For
+> now, the Git client correctly ignores these unknown keys.
+> 
+> Create a new test helper function, test_remote_https_urls, which filters
+> GIT_TRACE2_EVENT output to extract a list of URLs passed to
+> git-remote-https child processes. This can be used to verify the order
+> of these requests as we implement the creationToken heuristic. For now,
+> we need to sort the actual output since the current client does not have
+> a well-defined order that it applies to the bundles.
 
->> What am I missing?
->
-> Note that I've seen and recently re-read the discussion that leads to
-> https://lore.kernel.org/git/f680b274-fa85-6624-096a-7753a2671c15@grsecurity.net/
->
-> I suspect that this auto-probe is related to solving "the user
-> thinks JIT is in use but because of failing JIT the user's pattern
-> is getting horrible performance" somehow.  But I do not think a hard
-> failure is a good approach to help users in such a situation.
+...
 
-I guess what I am saying is that the previous one that has been
-queued on 'seen' may be better.  It should cover your original
-"SELinux and other mechanisms can render JIT unusable because they
-do not allow dynamic generation of code" use case.
+> +# Given a GIT_TRACE2_EVENT log over stdin, writes to stdout a list of URLs
+> +# sent to git-remote-https child processes.
+> +test_remote_https_urls() {
+> +	grep -e '"event":"child_start".*"argv":\["git-remote-https",".*"\]' |
+> +		sed -e 's/{"event":"child_start".*"argv":\["git-remote-https","//g' \
+> +		    -e 's/"\]}//g'
+> +}
+> +
 
-Thanks.
+...
+
+> +	cat >expect <<-EOF &&
+> +	$HTTPD_URL/bundle-1.bundle
+> +	$HTTPD_URL/bundle-2.bundle
+> +	$HTTPD_URL/bundle-3.bundle
+> +	$HTTPD_URL/bundle-4.bundle
+> +	$HTTPD_URL/bundle-list
+> +	EOF
+> +
+> +	# Sort the list, since the order is not well-defined
+> +	# without a heuristic.
+> +	test_remote_https_urls <trace-clone.txt | sort >actual &&
+> +	test_cmp expect actual
+
+...
+
+> +	cat >expect <<-EOF &&
+> +	$HTTPD_URL/bundle-1.bundle
+> +	$HTTPD_URL/bundle-2.bundle
+> +	$HTTPD_URL/bundle-3.bundle
+> +	$HTTPD_URL/bundle-4.bundle
+> +	$HTTPD_URL/bundle-list
+> +	EOF
+> +
+> +	# Since the creationToken heuristic is not yet understood by the
+> +	# client, the order cannot be verified at this moment. Sort the
+> +	# list for consistent results.
+> +	test_remote_https_urls <trace-clone.txt | sort >actual &&
+> +	test_cmp expect actual
+
+These updates make the tests stronger (that is, less likely to let a
+regression slip through), and the additional comments are helpful for
+explaining what is and is not implemented at this point in the series. 
 
