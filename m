@@ -2,82 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56036C54EAA
-	for <git@archiver.kernel.org>; Fri, 27 Jan 2023 17:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CA1BC54EAA
+	for <git@archiver.kernel.org>; Fri, 27 Jan 2023 17:11:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235164AbjA0RIR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Jan 2023 12:08:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33550 "EHLO
+        id S234253AbjA0RLj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Jan 2023 12:11:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235103AbjA0RID (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Jan 2023 12:08:03 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F9F38A544
-        for <git@vger.kernel.org>; Fri, 27 Jan 2023 09:07:04 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id rm7-20020a17090b3ec700b0022c05558d22so5323948pjb.5
-        for <git@vger.kernel.org>; Fri, 27 Jan 2023 09:07:04 -0800 (PST)
+        with ESMTP id S235010AbjA0RLg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Jan 2023 12:11:36 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C63B57B7A3
+        for <git@vger.kernel.org>; Fri, 27 Jan 2023 09:11:08 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id ud5so15501375ejc.4
+        for <git@vger.kernel.org>; Fri, 27 Jan 2023 09:11:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GeYQZNV2BV5sxhqfM/UpqtZKB3PY0oN7FoCCrY7Z5ZQ=;
-        b=mZuf2xWcjpqs856Yr6KO8wpgSMBVrhFi9irnLbqOcoHUlStaF0WIchfOQqQEQWvTOm
-         2fmoC60WfKyTV1ud3xNE+7J/FGvDcYUYtGSBpG+lh2K7ATUZpih4nc3d0g/xDR8YLVQE
-         uhRX6fGh1kP2cARsA15MggIOw7QuFOtOS6hTjTWIXcZQcaxSARZ8ItavNQxOeiMyEPvH
-         0Q83qiQys0CIDfpztameFq2sx+kl5QGVX5r+KT1tneSFVIVN1LkKkFGyXD3egRqXmqNL
-         E8bEsbNl5LGgZxuBXhSSm3SL5y6NycFWBoMX77wYQ877W8FQE7FpUUrrmhUXZeA0fT9+
-         nbyA==
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=h1sTqto0qrZgGfpbbupvCGdtpknGXaF+43N9dtgmsnI=;
+        b=NF2VUqDTF8y28anM45y+pmB+de61ixrd8qo3Sni8ayMcyd2nUsZC8fTYzlI9dy+04E
+         mkvhc7iEWPECd+a1H+XKYHhJk8Bpbde6jdE/Vtx92oVAHoCRIXIN2ngsxqN1+uOjd297
+         sVAfdHXsF6FHr9XqOy2s4VmvmPpDhlu2yRRn+ZaY8/fmYG0BFhyJP0Brp8Odw8G8Xa2T
+         V1v1kHOKlTB03UYltneb4rRRQ4cLD/Vr7CVETGo/df616hUdjqFu9EDsXyx5ugPlg/Br
+         fisQrp2iovO7KdXpkbLYVyrhaGNY298UhBa+m3BGDPjTWqgRSjWSDf8tkVIXRVQ1tGMY
+         6X7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GeYQZNV2BV5sxhqfM/UpqtZKB3PY0oN7FoCCrY7Z5ZQ=;
-        b=BaLJBnv1fVMEelNs7PHodaxRYMhUyQSLisTT4aD8f7VwvgpDdhDfO4Mw1DpXcIjizN
-         qopuGLwgFnaWPzbDKzRDy8fn5BISyhbmsuDk9yNJNkg9NpPQZ8Exc7nfbrSTMwObsq6V
-         4AIdZSnNlHSHLfT89sM/o9qw2WkwBE3eqo62WzOmu+id+dAHpqdcSAtxHJC469Z1s8Qc
-         zfoHsLYV8XVroVmv2/amUzbwNMquv9PjkqcTEAcGHRoo1KrTS9fZv8bGdh1wpW0tHA0i
-         EIu3rlLUYvRAbZInUKSC2O0VZVT+LgDUPmUCcBDRIcEK+Q7dTfkhRSGNxzaxpjPeKS0E
-         g/GQ==
-X-Gm-Message-State: AO0yUKU3sf6kPeb1dqK5THVGwTHKifgtouWbmk1NauXJ2spWFWCC2eWG
-        xAS6NsyHqkXyR/HLX05mbQk=
-X-Google-Smtp-Source: AK7set96P/uIHXkmJLI73U+i4CUstrPn86ulvKc7gRTHdFGLx9UX9jRtw0auhjzH+MmVMumpElkTQA==
-X-Received: by 2002:a17:902:da8d:b0:196:3232:f496 with SMTP id j13-20020a170902da8d00b001963232f496mr11054516plx.4.1674839196841;
-        Fri, 27 Jan 2023 09:06:36 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id k14-20020a170902ce0e00b0018c990ce7fesm3085459plg.239.2023.01.27.09.06.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jan 2023 09:06:36 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rick van Rein <rick@openfortress.nl>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Matthew John Cheetham <mjcheetham@github.com>
-Subject: Re: Git over HTTP; have flexible SASL authentication
-References: <20230127163434.GA784@openfortress.nl>
-Date:   Fri, 27 Jan 2023 09:06:36 -0800
-In-Reply-To: <20230127163434.GA784@openfortress.nl> (Rick van Rein's message
-        of "Fri, 27 Jan 2023 16:34:34 +0000")
-Message-ID: <xmqq7cx7aov7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=h1sTqto0qrZgGfpbbupvCGdtpknGXaF+43N9dtgmsnI=;
+        b=0UiUoYW5vRGFtv+DuMpzLvaOsRjU+6iAOMAOdhfY5xJNZfQyD7Cldd7nNvyWu5rxrb
+         VSvYvRMe+9mv/AwRW7vqMnGFa3a+gOA7/fq+Sbn9D3RE51xNpTNaDu2rzagPyh1MDHL4
+         +fZrc0oXHPy8eJIzZwr3Hrbl+ctfXmALgV+IoQ76u/7SPzzk5kVdU3nJz9gj832qgQvN
+         qM6mdxepkboKmj6tt0MAqs0Hk4+IqTalUtUtpv8+niDVeB/SdTxWYiLVJkZ8ydzHIbGD
+         5Kr5OLPyt3Owk0ba8wHdUXDdgL+OU7L/zIZ+nrVXEUA4qtmKK6bxTG0vDFTdQTBgpGgh
+         FsYg==
+X-Gm-Message-State: AO0yUKXn/QI3AxDtiLdt2PHUNkfO9P09Ckicqqc5WhlXheuf09WPcW4+
+        UmwmHEl9xa2DXUJTKHPKsraG2nHExFvgmt6Salw=
+X-Google-Smtp-Source: AK7set8djgaqmdcHS8p3JM4HAPyXph3zDzquqpvXLeMcwCfI9rIB/9GLXQlExkKLU5/USFhxF6fQbQ==
+X-Received: by 2002:a17:906:4950:b0:87b:d409:f087 with SMTP id f16-20020a170906495000b0087bd409f087mr2738255ejt.21.1674839432458;
+        Fri, 27 Jan 2023 09:10:32 -0800 (PST)
+Received: from smtpclient.apple (132-216-166-62.ftth.glasoperator.nl. [62.166.216.132])
+        by smtp.gmail.com with ESMTPSA id e6-20020a17090658c600b00878621bd86bsm2555249ejs.164.2023.01.27.09.10.31
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 27 Jan 2023 09:10:31 -0800 (PST)
+From:   Ilya Kantor <iliakan@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.400.51.1.1\))
+Subject: How experimental are git switch/restore?
+Message-Id: <BD4D4AEB-C73C-463B-9118-9687E0267B3E@gmail.com>
+Date:   Fri, 27 Jan 2023 18:10:21 +0100
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3731.400.51.1.1)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rick van Rein <rick@openfortress.nl> writes:
+Hello,
 
-> Git providers are inventing proprietary extensions to HTTP authentication
-> for Git.  It seems smarter to use SASL for this purpose, possibly allowing
-> the client a choice and authentication ringback to the client's own domain.
+How experimental are the "recent" git switch and restore commands?
 
-To adopt things like this, the work to extend how to make extensible
-what is on WWW-Authenticate in the thread that contains this recent
-message https://lore.kernel.org/git/Y9LvFMzriAWUsS58@coredump.intra.peff.net/
-may be relevant, perhaps?
+Are there any plans to change the current behavior or remove the =
+"experimental" warning from the manual?
 
-
-
-    
+Kind regards,
+Ilya Kantor=
