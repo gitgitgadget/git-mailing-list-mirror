@@ -2,118 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB1FC38142
-	for <git@archiver.kernel.org>; Sat, 28 Jan 2023 11:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55C3DC27C76
+	for <git@archiver.kernel.org>; Sat, 28 Jan 2023 11:50:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233144AbjA1Ldg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Jan 2023 06:33:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36702 "EHLO
+        id S233952AbjA1Lug (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Jan 2023 06:50:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42248 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230474AbjA1Ldf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jan 2023 06:33:35 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19AFAA271
-        for <git@vger.kernel.org>; Sat, 28 Jan 2023 03:33:34 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id m7-20020a17090a71c700b0022c0c070f2eso10388508pjs.4
-        for <git@vger.kernel.org>; Sat, 28 Jan 2023 03:33:34 -0800 (PST)
+        with ESMTP id S230074AbjA1Luf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jan 2023 06:50:35 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5D023650
+        for <git@vger.kernel.org>; Sat, 28 Jan 2023 03:50:34 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id f3so4791529pgc.2
+        for <git@vger.kernel.org>; Sat, 28 Jan 2023 03:50:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bgbKz13mjW/8A6k22xbdJo5QYh91cKepJoYFWynW90M=;
-        b=X9x70gPUCedpro0bzfCWFLwg3IghGGF0UnQ/HoFDcrBtLAHGG02HvPrqmtWK7Nv4hl
-         aDDapnEihglnNivFYPS48JkEDWQAleEODEaxSiaMz3J/AQJZGdcMG/kxA1hwPm3aG+lO
-         xL6mAzQMZqx8KE/tFk5tdskVTtPBQTiUdgBwe3c6JdXUwh+BAwkxgp5dEDuLOk0Ku7q2
-         9Ig3yssmj/YjoYWZlLPuzalP6P60pqgFHBDyiXwhVo21t8ZsKSbhWI78qhdl2Opa+C00
-         nXbcFxr/QAoe2pqr4E10W/a6OhHghQGzzl+4UbDvnAAtAi+uP9/iouVqlKV/4QmJYKAb
-         uBHA==
+        bh=e3HUOA07SRQPFYU7EH21qiExIryhPf1/SY9Uykyiijc=;
+        b=MhYS4qHvUtYDoaAH+0+H5JsLWSJSelF56yJsEu+Rsvo8DFwS5qPxq9OcYckTSNZW/3
+         M5ClrIud0FWPgErmoXsE4ICZwDIjxLMMux4mUI7p9hkyO6maXk7KJKombiPiQqs5TtiZ
+         VANtI0rnHaqmUd4Kb4ux6yyMocNjzwh/C7sQYjvCiMXZDmrctIq+kKAzG3Mrfj5i/njx
+         Jx9zym1cAbDsZfKS3MkrVtHKWAR6HiCMwqvlRGD0rwS35gmKqwGlTEwS5tSiw2OedywC
+         ncLZgIM0pgFDAfwtDX8eJRvtm40NpD/GOccdmoa4qAiGMkedEUGqHfxmfg54+zO9XQJ7
+         fl0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bgbKz13mjW/8A6k22xbdJo5QYh91cKepJoYFWynW90M=;
-        b=7eTBTAIfSOZ00WnZwvQI1w4eviPeRnQrqDhQ6q3tfvQfn6tDLSJS0aCJQVz1BDodTd
-         kvrV96uGjZ5JDc+5ZUoSMpwsJuSycOHADANOceZVAUHyAiXlTrDlBekkzoR8C69NknO1
-         XH0sh9ZziIxIkSGaR3r94RUGVwsLBLBgS7F1yCUbewfH5QrNrZSBF3pKJ8SVfpze2LB2
-         8LjzWz0qZnN0BtoqSpr94q78Hcciq81qGpVRY3ATYup4FoWfX4QGim5Z1gS5efgU8DFE
-         l/CRCPmvK/LYCdSyugs6ebQmXVUGZlJowBVTcCf+eggACXYOy1QE0gEqUl57gdLYSpOv
-         MLQg==
-X-Gm-Message-State: AO0yUKUxm5Z1zbLy2XhtU4JbBKmAz0pOycX2sJHj1HaC2sRpfi8Fiplv
-        KBwusj7NTbyp58GTLCCw7qFnoFxIN7NagOKU
-X-Google-Smtp-Source: AK7set8f2O41yi9LPMlFEGbZ2FGgEJPjwPjaSECCC+DIMeO5d8RIlhUZlcNJsLZTgIt/INRiZxybpQ==
-X-Received: by 2002:a05:6a20:1612:b0:bc:2a34:ed3 with SMTP id l18-20020a056a20161200b000bc2a340ed3mr2587353pzj.23.1674905613595;
-        Sat, 28 Jan 2023 03:33:33 -0800 (PST)
+        bh=e3HUOA07SRQPFYU7EH21qiExIryhPf1/SY9Uykyiijc=;
+        b=t32V+qUZAfOZHF6mODac9fobuPEY+0WZuWe2qNcB8X1Z8DZVl8h+BUPP5b+J1HGkEz
+         f3xt0ncgyeAoSlxl7yn8n+rqVBHYxzOVvIf3/Lkc9c1L9gf9hoUkbgFpAsgFfCnpORAy
+         kZNLYGkoIMeModRFIx3dYbyz/4d8SyirBKBU9OrQPfIFgKMwmcXRRdBmQVMx+yQrcPwb
+         rjaVI7Q4dLzGb98hPamIyJtvmIrjh+hKC0KzA4nbPOPbwvPY3KihG7vptZRTktYK2+qN
+         IqDfL0ifat+uiUn9gY/fGevXa1ACpWw4I6njYIxBvRm8DD1O3KLH07uDaWLJdU+JNzmA
+         nZWQ==
+X-Gm-Message-State: AFqh2kryzdrl99oAOzE8AFeTFcNaZBACpR4pzQO9hTzEGTduHWmEbHmP
+        rlbilgksPB2CMN2RZPHLa2k=
+X-Google-Smtp-Source: AMrXdXsrTJrwG4I9AvW7GCZLGZYIqqYgS6VAp5bRjfFbxbvxoHXgfuWOc9ykLgzRAQuYSzeQci0DPA==
+X-Received: by 2002:aa7:80d3:0:b0:58d:e33b:d565 with SMTP id a19-20020aa780d3000000b0058de33bd565mr33251474pfn.5.1674906633987;
+        Sat, 28 Jan 2023 03:50:33 -0800 (PST)
 Received: from localhost.localdomain ([47.246.101.60])
-        by smtp.gmail.com with ESMTPSA id w17-20020a637b11000000b004ba55bd69ddsm3721624pgc.57.2023.01.28.03.33.31
+        by smtp.gmail.com with ESMTPSA id i7-20020a056a00004700b005939de7104asm709859pfk.215.2023.01.28.03.50.31
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 28 Jan 2023 03:33:33 -0800 (PST)
+        Sat, 28 Jan 2023 03:50:33 -0800 (PST)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     avarab@gmail.com
-Cc:     dyroneteng@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
+To:     sunshine@sunshineco.com
+Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
         tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v4 2/5] notes.c: cleanup for "designated init" and "char ptr init"
-Date:   Sat, 28 Jan 2023 19:33:27 +0800
-Message-Id: <20230128113327.56797-1-tenglong.tl@alibaba-inc.com>
+Subject: Re: [PATCH v4 3/5] notes.c: drop unreachable code in 'append_edit()'
+Date:   Sat, 28 Jan 2023 19:50:27 +0800
+Message-Id: <20230128115027.57250-1-tenglong.tl@alibaba-inc.com>
 X-Mailer: git-send-email 2.39.0.198.ga38d39a4c50
-In-Reply-To: <230112.867cxs2i83.gmgdl@evledraar.gmail.com>
-References: <230112.867cxs2i83.gmgdl@evledraar.gmail.com>
+In-Reply-To: <CAPig+cR5s3XzmY+L_jDW2g_PEgi5E791x0GuV+VPkxFA_6sB7A@mail.gmail.com>
+References: <CAPig+cR5s3XzmY+L_jDW2g_PEgi5E791x0GuV+VPkxFA_6sB7A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason writes:
+Eric Sunshine writes:
 
-> > From: Teng Long <dyroneteng@gmail.com>
+> > Situation of note "removing" shouldn't happen in 'append_edit()',
+> > unless it's a bug. So, let's drop the unreachable "else" code
+> > in "append_edit()".
 > >
-> > Let's do some cleanup for the following two places in "append_edit()".
-> >
-> > The first place is "char *logmsg;" need to be initialized with NULL.
-> > The second place is "struct note_data d = { 0, 0, NULL, STRBUF_INIT };"
-> > could be replaced with designated init format.
+> > The notes operation "append" is different with "add", the latter
+> > supports to overwrite the existing note then let the "removing"
+> > happen (e.g. execute `git notes add -f -F /dev/null` on an existing
+> > note), but the former will not because it only does "appends" but
+> > not doing "overwrites".
 > >
 > > Signed-off-by: Teng Long <dyroneteng@gmail.com>
 > > ---
-> >  builtin/notes.c | 4 ++--
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> >
 > > diff --git a/builtin/notes.c b/builtin/notes.c
-> > index e57f024824..8ca55ec83e 100644
-> > --- a/builtin/notes.c
-> > +++ b/builtin/notes.c
-> > @@ -566,9 +566,9 @@ static int append_edit(int argc, const char **argv, const char *prefix)
-> >  	struct notes_tree *t;
-> >  	struct object_id object, new_note;
-> >  	const struct object_id *note;
-> > -	char *logmsg;
-> > +	char *logmsg = NULL;
+> > @@ -630,13 +630,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+> >                 if (add_note(t, &object, &new_note, combine_notes_overwrite))
+> >                         BUG("combine_notes_overwrite failed");
+> >                 logmsg = xstrfmt("Notes added by 'git notes %s'", argv[0]);
+> > -       } else {
+> > -               fprintf(stderr, _("Removing note for object %s\n"),
+> > -                       oid_to_hex(&object));
+> > -               remove_note(t, object.hash);
+> > -               logmsg = xstrfmt("Notes removed by 'git notes %s'", argv[0]);
+> > +               commit_notes(the_repository, t, logmsg);
+> >         }
+> > -       commit_notes(the_repository, t, logmsg);
 >
-> This change isn't needed, and the compiler will check that we have it
-> init'd.
+> This change breaks removal of notes using "git notes edit". Prior to
+> this change, if you delete the content of a note using "git notes
+> edit", then the note is removed. Following this change, the note
+> remains, which contradicts documented[1] behavior.
 >
-> It *is* needed when combined with your 3/5, but even then it's the wrong
-> solution. In that change you move the commit_notes() into that "if"
-> branch that needs the "logmsg", and it's correct that you need to
-> NULL-init it to safely pass it to free().
+> [1]: Unfortunately, perhaps, this behavior is documented under the
+> "remove" subcommand rather than the "edit" subcommand, but it is
+> nevertheless documented and has worked this way for ages, so this
+> patch causes a regression.
 
-You are correct, will fix.
+As the commit msg describes, the subcommands I understand should have clear
+responsibilities as possible (documentaion may have some effect in my mind). So,
+the removal opertion under "append subcommand" here is little wired to me, but
+your suggestion makes sense, this may have compatibility issues. Although I
+think it's weird that someone would use this in the presence of the remove
+subcommand, and my feeling is that this code is actually copied from the add
+method (introduced by 52694cdabbf68f19c8289416e7bb3bbef41d8d27), but I'm not
+sure.
 
-> But let's just declare the "logmsg" in that if block then, and move the
-> free() over there, that reduces the scope it's in.
->
-> >  	const char * const *usage;
-> > -	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
-> > +	struct note_data d = { .buf = STRBUF_INIT };
->
-> This change is good, but then let's change the other such case in this
-> file to a designated init too, and make the commit message etc. be about
-> using designated init here.
-
-OK.
+So, it's ok for me to drop this one.
 
 Thanks.
