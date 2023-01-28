@@ -2,99 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23FF8C27C76
-	for <git@archiver.kernel.org>; Sat, 28 Jan 2023 11:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB1FC38142
+	for <git@archiver.kernel.org>; Sat, 28 Jan 2023 11:33:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231244AbjA1LWu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Jan 2023 06:22:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33726 "EHLO
+        id S233144AbjA1Ldg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Jan 2023 06:33:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230502AbjA1LWs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jan 2023 06:22:48 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 243F22696
-        for <git@vger.kernel.org>; Sat, 28 Jan 2023 03:22:46 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id j5so6987957pjn.5
-        for <git@vger.kernel.org>; Sat, 28 Jan 2023 03:22:46 -0800 (PST)
+        with ESMTP id S230474AbjA1Ldf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jan 2023 06:33:35 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19AFAA271
+        for <git@vger.kernel.org>; Sat, 28 Jan 2023 03:33:34 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id m7-20020a17090a71c700b0022c0c070f2eso10388508pjs.4
+        for <git@vger.kernel.org>; Sat, 28 Jan 2023 03:33:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yv+W0llx6SS0BUlliqKQyeP8P0rRGnpHJRogbLa5KJ0=;
-        b=MNEllrTFm4bDlkM4mrcKAuu2QV8Oim95BXVdHfzS7Ns5Zwf/EbbS+N+1oH0JOORNAF
-         eBSy9gdW64f6s1aCjH7MXpm829bezPZlKgZwYhyuMIilf9qIeYntijbXp6I1HNiQc11/
-         jS+yIpPzk7HQwc5exNdNkLDqd2KM+qlrID5BCXr2CeE1fGLMJCpjJ/5IBNtWBwD58ScY
-         NuQB1z1LpjAF75Tmb8qMes06mYHiFGUvN6LZN70FlzKsfWYm5obUMEbUrljXb1FH2jKz
-         tsQRBe2mq8tRmElu3laS8zDi5V6PUYsoSYY70MAAA7ohypjSQ3AdeS1EJVeoEe6llsIO
-         YPjw==
+        bh=bgbKz13mjW/8A6k22xbdJo5QYh91cKepJoYFWynW90M=;
+        b=X9x70gPUCedpro0bzfCWFLwg3IghGGF0UnQ/HoFDcrBtLAHGG02HvPrqmtWK7Nv4hl
+         aDDapnEihglnNivFYPS48JkEDWQAleEODEaxSiaMz3J/AQJZGdcMG/kxA1hwPm3aG+lO
+         xL6mAzQMZqx8KE/tFk5tdskVTtPBQTiUdgBwe3c6JdXUwh+BAwkxgp5dEDuLOk0Ku7q2
+         9Ig3yssmj/YjoYWZlLPuzalP6P60pqgFHBDyiXwhVo21t8ZsKSbhWI78qhdl2Opa+C00
+         nXbcFxr/QAoe2pqr4E10W/a6OhHghQGzzl+4UbDvnAAtAi+uP9/iouVqlKV/4QmJYKAb
+         uBHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yv+W0llx6SS0BUlliqKQyeP8P0rRGnpHJRogbLa5KJ0=;
-        b=ga/a436Ud2XMFpomaQRbYKbOsL8SaZu2QexzSjJBv5dN8hgkBqE4kTG1SZ85UhXmT+
-         JFMH+Ps440E0zKFLNZNpD3xJX+WSnCERs9xtP6ogSyJQYLVadzl2TLfIWY177/ctMWAz
-         1Kt/tfUNbCoi4/iZFJIFtqQASQvuV4DfTIK68PIaVPXr1wEjxTifeSQvoWym/81c76NU
-         IYsmO5SVQ3UZ9bBU9lxqGBeWghPVO+qhmeGIFtTpe0I4Ps7gQpzPW+jsakCyp3sUyNfe
-         YZqYtlgTzo6CDoTZ8IQaPok9SGfyoEiFQ5UhV5m1ycqN9yjJv6/zdisek0OwAcnd/ufi
-         zGkg==
-X-Gm-Message-State: AO0yUKWDtpN67eXM8qdbQR0hQMaq7SYEs6OfPvu2YVWiZomtftJ33WZP
-        0J4wgphPhdJXOZt1KdyJNs8pJNE1p/Vjs8Z7
-X-Google-Smtp-Source: AK7set9e/L3Pykjrf6P02AsG1KeBfSIY2v7i3YDi9S9nDi0cCliLL7Dm9myG2JmAM6OTpy94g5MMGA==
-X-Received: by 2002:a17:90a:4b:b0:219:9973:2746 with SMTP id 11-20020a17090a004b00b0021999732746mr2099242pjb.0.1674904965557;
-        Sat, 28 Jan 2023 03:22:45 -0800 (PST)
+        bh=bgbKz13mjW/8A6k22xbdJo5QYh91cKepJoYFWynW90M=;
+        b=7eTBTAIfSOZ00WnZwvQI1w4eviPeRnQrqDhQ6q3tfvQfn6tDLSJS0aCJQVz1BDodTd
+         kvrV96uGjZ5JDc+5ZUoSMpwsJuSycOHADANOceZVAUHyAiXlTrDlBekkzoR8C69NknO1
+         XH0sh9ZziIxIkSGaR3r94RUGVwsLBLBgS7F1yCUbewfH5QrNrZSBF3pKJ8SVfpze2LB2
+         8LjzWz0qZnN0BtoqSpr94q78Hcciq81qGpVRY3ATYup4FoWfX4QGim5Z1gS5efgU8DFE
+         l/CRCPmvK/LYCdSyugs6ebQmXVUGZlJowBVTcCf+eggACXYOy1QE0gEqUl57gdLYSpOv
+         MLQg==
+X-Gm-Message-State: AO0yUKUxm5Z1zbLy2XhtU4JbBKmAz0pOycX2sJHj1HaC2sRpfi8Fiplv
+        KBwusj7NTbyp58GTLCCw7qFnoFxIN7NagOKU
+X-Google-Smtp-Source: AK7set8f2O41yi9LPMlFEGbZ2FGgEJPjwPjaSECCC+DIMeO5d8RIlhUZlcNJsLZTgIt/INRiZxybpQ==
+X-Received: by 2002:a05:6a20:1612:b0:bc:2a34:ed3 with SMTP id l18-20020a056a20161200b000bc2a340ed3mr2587353pzj.23.1674905613595;
+        Sat, 28 Jan 2023 03:33:33 -0800 (PST)
 Received: from localhost.localdomain ([47.246.101.60])
-        by smtp.gmail.com with ESMTPSA id t4-20020a17090ad14400b00219220edf0dsm4185789pjw.48.2023.01.28.03.22.43
+        by smtp.gmail.com with ESMTPSA id w17-20020a637b11000000b004ba55bd69ddsm3721624pgc.57.2023.01.28.03.33.31
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 28 Jan 2023 03:22:44 -0800 (PST)
+        Sat, 28 Jan 2023 03:33:33 -0800 (PST)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     sunshine@sunshineco.com
-Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
+To:     avarab@gmail.com
+Cc:     dyroneteng@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
         tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v4 1/5] notes.c: cleanup 'strbuf_grow' call in 'append_edit'
-Date:   Sat, 28 Jan 2023 19:22:38 +0800
-Message-Id: <20230128112238.56553-1-tenglong.tl@alibaba-inc.com>
+Subject: Re: [PATCH v4 2/5] notes.c: cleanup for "designated init" and "char ptr init"
+Date:   Sat, 28 Jan 2023 19:33:27 +0800
+Message-Id: <20230128113327.56797-1-tenglong.tl@alibaba-inc.com>
 X-Mailer: git-send-email 2.39.0.198.ga38d39a4c50
-In-Reply-To: <CAPig+cQKJxJCwk1GWtQ=LNNA=z9tQxYUwn9CMcXE4R9g8eKU7A@mail.gmail.com>
-References: <CAPig+cQKJxJCwk1GWtQ=LNNA=z9tQxYUwn9CMcXE4R9g8eKU7A@mail.gmail.com>
+In-Reply-To: <230112.867cxs2i83.gmgdl@evledraar.gmail.com>
+References: <230112.867cxs2i83.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Ævar Arnfjörð Bjarmason writes:
 
-> On Wed, Jan 11, 2023 at 9:48 PM Teng Long <dyroneteng@gmail.com> wrote:
-> > Let's cleanup the unnecessary 'strbuf_grow' call in 'append_edit'. This
-> > "strbuf_grow(&d.buf, size + 1);" is prepared for insert a blank line if
-> > needed, but actually when inserting, "strbuf_insertstr(&d.buf, 0,
-> > "\n");" will do the "grow" for us.
+> > From: Teng Long <dyroneteng@gmail.com>
+> >
+> > Let's do some cleanup for the following two places in "append_edit()".
+> >
+> > The first place is "char *logmsg;" need to be initialized with NULL.
+> > The second place is "struct note_data d = { 0, 0, NULL, STRBUF_INIT };"
+> > could be replaced with designated init format.
 > >
 > > Signed-off-by: Teng Long <dyroneteng@gmail.com>
 > > ---
-> > diff --git a/builtin/notes.c b/builtin/notes.c
-> > @@ -618,7 +618,6 @@ static int append_edit(int argc, const char **argv, const char *prefix)
-> >                 char *prev_buf = read_object_file(note, &type, &size);
+> >  builtin/notes.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
 > >
-> > -               strbuf_grow(&d.buf, size + 1);
-> >                 if (d.buf.len && prev_buf && size)
-> >                         strbuf_insertstr(&d.buf, 0, "\n");
+> > diff --git a/builtin/notes.c b/builtin/notes.c
+> > index e57f024824..8ca55ec83e 100644
+> > --- a/builtin/notes.c
+> > +++ b/builtin/notes.c
+> > @@ -566,9 +566,9 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+> >  	struct notes_tree *t;
+> >  	struct object_id object, new_note;
+> >  	const struct object_id *note;
+> > -	char *logmsg;
+> > +	char *logmsg = NULL;
 >
-> Indeed, it's not clear why that was there in the first place. Digging
-> through history doesn't shed any light on it. It was introduced by
-> 2347fae50b (builtin-notes: Add "append" subcommand for appending to
-> note objects, 2010-02-13)[1], but there's no explanation as to why it
-> was coded that way. Best guess may be that the author originally
-> inserted "\n" manually by direct manipulation of the strbuf rather
-> than employing a strbuf function, but then switched to strbuf_insert()
-> before submitting the series and forgot to remove the now-unnecessary
-> strbuf_grow().
+> This change isn't needed, and the compiler will check that we have it
+> init'd.
+>
+> It *is* needed when combined with your 3/5, but even then it's the wrong
+> solution. In that change you move the commit_notes() into that "if"
+> branch that needs the "logmsg", and it's correct that you need to
+> NULL-init it to safely pass it to free().
 
-Yes, I have the same opinion with you, maybe original idea to savesome array
-creation overhead? I'm not sure, but I think the deletion here is OK.
+You are correct, will fix.
+
+> But let's just declare the "logmsg" in that if block then, and move the
+> free() over there, that reduces the scope it's in.
+>
+> >  	const char * const *usage;
+> > -	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
+> > +	struct note_data d = { .buf = STRBUF_INIT };
+>
+> This change is good, but then let's change the other such case in this
+> file to a designated init too, and make the commit message etc. be about
+> using designated init here.
+
+OK.
 
 Thanks.
