@@ -2,117 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55C3DC27C76
-	for <git@archiver.kernel.org>; Sat, 28 Jan 2023 11:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DB83C27C76
+	for <git@archiver.kernel.org>; Sat, 28 Jan 2023 14:04:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233952AbjA1Lug (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Jan 2023 06:50:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42248 "EHLO
+        id S234315AbjA1OEQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Jan 2023 09:04:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230074AbjA1Luf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Jan 2023 06:50:35 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B5D023650
-        for <git@vger.kernel.org>; Sat, 28 Jan 2023 03:50:34 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id f3so4791529pgc.2
-        for <git@vger.kernel.org>; Sat, 28 Jan 2023 03:50:34 -0800 (PST)
+        with ESMTP id S230175AbjA1OEP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Jan 2023 09:04:15 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF2133C2C
+        for <git@vger.kernel.org>; Sat, 28 Jan 2023 06:04:13 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id j17so5286938wms.0
+        for <git@vger.kernel.org>; Sat, 28 Jan 2023 06:04:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e3HUOA07SRQPFYU7EH21qiExIryhPf1/SY9Uykyiijc=;
-        b=MhYS4qHvUtYDoaAH+0+H5JsLWSJSelF56yJsEu+Rsvo8DFwS5qPxq9OcYckTSNZW/3
-         M5ClrIud0FWPgErmoXsE4ICZwDIjxLMMux4mUI7p9hkyO6maXk7KJKombiPiQqs5TtiZ
-         VANtI0rnHaqmUd4Kb4ux6yyMocNjzwh/C7sQYjvCiMXZDmrctIq+kKAzG3Mrfj5i/njx
-         Jx9zym1cAbDsZfKS3MkrVtHKWAR6HiCMwqvlRGD0rwS35gmKqwGlTEwS5tSiw2OedywC
-         ncLZgIM0pgFDAfwtDX8eJRvtm40NpD/GOccdmoa4qAiGMkedEUGqHfxmfg54+zO9XQJ7
-         fl0A==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=araOlnj+h+BSNA8byuzM/QnHz/hDwOxGhEY2xKqVGNQ=;
+        b=ocCmSf3Lgdt2m4+vYILIfT+NuRpwMHjZ9vcKazyMykiYVf1JhSPyaV7qpn2lKzaWa9
+         L3HU8Egl5f8cCK5/88PJ7CJbCYgkRNEDYijc0sM3D2qE+enuPaR0WSk9Vyitsp5XmT1O
+         JD+k+BWQ6zkWuiZr4aRqCbw1Jz6S1IcKk5FbKSXQ3UcD6US4fbn3/V/n20hH8ZyVLz/H
+         HFbBFKUhU1aBwd5bvdhgrDDcbyLNcmLcjAlF2tRZ++O4T9/B7zeA3hDJ1pOR6vdTMALF
+         zU3drJINfUm6tf48rt68PGzszmuxG7DjhqDetephW+gOJnMezuB+qypfut97vgs+JGvv
+         itbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e3HUOA07SRQPFYU7EH21qiExIryhPf1/SY9Uykyiijc=;
-        b=t32V+qUZAfOZHF6mODac9fobuPEY+0WZuWe2qNcB8X1Z8DZVl8h+BUPP5b+J1HGkEz
-         f3xt0ncgyeAoSlxl7yn8n+rqVBHYxzOVvIf3/Lkc9c1L9gf9hoUkbgFpAsgFfCnpORAy
-         kZNLYGkoIMeModRFIx3dYbyz/4d8SyirBKBU9OrQPfIFgKMwmcXRRdBmQVMx+yQrcPwb
-         rjaVI7Q4dLzGb98hPamIyJtvmIrjh+hKC0KzA4nbPOPbwvPY3KihG7vptZRTktYK2+qN
-         IqDfL0ifat+uiUn9gY/fGevXa1ACpWw4I6njYIxBvRm8DD1O3KLH07uDaWLJdU+JNzmA
-         nZWQ==
-X-Gm-Message-State: AFqh2kryzdrl99oAOzE8AFeTFcNaZBACpR4pzQO9hTzEGTduHWmEbHmP
-        rlbilgksPB2CMN2RZPHLa2k=
-X-Google-Smtp-Source: AMrXdXsrTJrwG4I9AvW7GCZLGZYIqqYgS6VAp5bRjfFbxbvxoHXgfuWOc9ykLgzRAQuYSzeQci0DPA==
-X-Received: by 2002:aa7:80d3:0:b0:58d:e33b:d565 with SMTP id a19-20020aa780d3000000b0058de33bd565mr33251474pfn.5.1674906633987;
-        Sat, 28 Jan 2023 03:50:33 -0800 (PST)
-Received: from localhost.localdomain ([47.246.101.60])
-        by smtp.gmail.com with ESMTPSA id i7-20020a056a00004700b005939de7104asm709859pfk.215.2023.01.28.03.50.31
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 28 Jan 2023 03:50:33 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     sunshine@sunshineco.com
-Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v4 3/5] notes.c: drop unreachable code in 'append_edit()'
-Date:   Sat, 28 Jan 2023 19:50:27 +0800
-Message-Id: <20230128115027.57250-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.39.0.198.ga38d39a4c50
-In-Reply-To: <CAPig+cR5s3XzmY+L_jDW2g_PEgi5E791x0GuV+VPkxFA_6sB7A@mail.gmail.com>
-References: <CAPig+cR5s3XzmY+L_jDW2g_PEgi5E791x0GuV+VPkxFA_6sB7A@mail.gmail.com>
-MIME-Version: 1.0
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=araOlnj+h+BSNA8byuzM/QnHz/hDwOxGhEY2xKqVGNQ=;
+        b=sS22Hs09K5opTrEPh5TBcZ6momGa+N3uVdrcgP04lAf6mUpey3m0JuvsbVQvZ+GxCa
+         W6OeUI1LhRpn3Nn1Wt5Vj3isYMPyLjg9UVpQNjZ/e+EIhxzTw/D59yx8afopcBU8tIag
+         ARgl82n6eTn1GXpqDtcAUZA8SkbER/Vt2/yzrVblHa3oa7qDrSzaSaCQ8svDYs/aOt6e
+         wI5Fp5M6hLbz5+6AZ1yblw3zysWOmdoWts4U9/+Fz6Kn39Xqlrsc5dxFauxCNQB+L5Bi
+         +0AjvJnt95ODJXO5NbJ6HDZHTrXguqOvkN/2QkggyF20s2sZT3kgAkrLWcs2z/R7ud6s
+         kvjg==
+X-Gm-Message-State: AFqh2kr6K3w36Y5ohQ6sLOXZyNxycD7CIC3nblXJqHHxvfjnzImq9amd
+        g+TPvcGkELtdh9SB0xYg6MmDBIkI0gQ=
+X-Google-Smtp-Source: AMrXdXvC/kY+VrIx4Pq57y9AT6Nkh5uCIOVhpes5ZmbwagXc+h2p5g4ZKkOodAKXviLPa9LOF5c2cg==
+X-Received: by 2002:a05:600c:6006:b0:3db:21b8:5f58 with SMTP id az6-20020a05600c600600b003db21b85f58mr36068875wmb.2.1674914652169;
+        Sat, 28 Jan 2023 06:04:12 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l21-20020a05600c4f1500b003dc4050c97bsm5330116wmq.3.2023.01.28.06.04.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Jan 2023 06:04:11 -0800 (PST)
+Message-Id: <pull.1443.git.git.1674914650588.gitgitgadget@gmail.com>
+From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 28 Jan 2023 14:04:10 +0000
+Subject: [PATCH] credential: new attribute password_expiry_utc
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     M Hickford <mirth.hickford@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine writes:
+From: M Hickford <mirth.hickford@gmail.com>
 
-> > Situation of note "removing" shouldn't happen in 'append_edit()',
-> > unless it's a bug. So, let's drop the unreachable "else" code
-> > in "append_edit()".
-> >
-> > The notes operation "append" is different with "add", the latter
-> > supports to overwrite the existing note then let the "removing"
-> > happen (e.g. execute `git notes add -f -F /dev/null` on an existing
-> > note), but the former will not because it only does "appends" but
-> > not doing "overwrites".
-> >
-> > Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> > ---
-> > diff --git a/builtin/notes.c b/builtin/notes.c
-> > @@ -630,13 +630,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
-> >                 if (add_note(t, &object, &new_note, combine_notes_overwrite))
-> >                         BUG("combine_notes_overwrite failed");
-> >                 logmsg = xstrfmt("Notes added by 'git notes %s'", argv[0]);
-> > -       } else {
-> > -               fprintf(stderr, _("Removing note for object %s\n"),
-> > -                       oid_to_hex(&object));
-> > -               remove_note(t, object.hash);
-> > -               logmsg = xstrfmt("Notes removed by 'git notes %s'", argv[0]);
-> > +               commit_notes(the_repository, t, logmsg);
-> >         }
-> > -       commit_notes(the_repository, t, logmsg);
->
-> This change breaks removal of notes using "git notes edit". Prior to
-> this change, if you delete the content of a note using "git notes
-> edit", then the note is removed. Following this change, the note
-> remains, which contradicts documented[1] behavior.
->
-> [1]: Unfortunately, perhaps, this behavior is documented under the
-> "remove" subcommand rather than the "edit" subcommand, but it is
-> nevertheless documented and has worked this way for ages, so this
-> patch causes a regression.
+If password has expired, credential fill no longer returns early,
+so later helpers can generate a fresh credential. This is backwards
+compatible -- no change in behaviour with helpers that discard the
+expiry attribute. The expiry logic is entirely in the git credential
+layer; compatible helpers simply store and return the expiry
+attribute verbatim.
 
-As the commit msg describes, the subcommands I understand should have clear
-responsibilities as possible (documentaion may have some effect in my mind). So,
-the removal opertion under "append subcommand" here is little wired to me, but
-your suggestion makes sense, this may have compatibility issues. Although I
-think it's weird that someone would use this in the presence of the remove
-subcommand, and my feeling is that this code is actually copied from the add
-method (introduced by 52694cdabbf68f19c8289416e7bb3bbef41d8d27), but I'm not
-sure.
+Store new attribute in cache.
 
-So, it's ok for me to drop this one.
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    credential: new attribute password_expiry_utc
+    
+    Some passwords, such as a personal access token or OAuth access token,
+    may have an expiry date (as long as years for PATs or as short as hours
+    for an OAuth access token). Add a new credential attribute
+    password_expiry_utc.
+    
+    If password has expired, credential fill no longer returns early, so
+    later helpers have opportunity to generate a fresh credential. This is
+    backwards compatible -- no change in behaviour with helpers that discard
+    the expiry attribute. The expiry logic is entirely in the git credential
+    layer. Credential-generating helpers need only output the expiry
+    attribute. Storage helpers should store the expiry if they can.
+    
+    Store expiry attribute in cache.
+    
+    This is particularly useful when a storage helper and a
+    credential-generating helper are configured together, eg.
+    
+    [credential]
+        helper = storage  # eg. cache or osxkeychain
+        helper = generate  # eg. oauth
+    
+    
+    Without this patch, credential fill may return an expired credential
+    from storage, causing authentication to fail. With this patch: a fresh
+    credential is generated if and only if the credential is expired.
+    
+    Example usage in a credential-generating helper
+    https://github.com/hickford/git-credential-oauth/pull/16/files
+    
+    Signed-off-by: M Hickford mirth.hickford@gmail.com
 
-Thanks.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1443%2Fhickford%2Fpassword-expiry-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1443/hickford/password-expiry-v1
+Pull-Request: https://github.com/git/git/pull/1443
+
+ Documentation/git-credential.txt   |  4 ++++
+ builtin/credential-cache--daemon.c |  3 +++
+ credential.c                       | 21 +++++++++++++++++++++
+ credential.h                       |  1 +
+ 4 files changed, 29 insertions(+)
+
+diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
+index ac2818b9f66..15ace648bdd 100644
+--- a/Documentation/git-credential.txt
++++ b/Documentation/git-credential.txt
+@@ -144,6 +144,10 @@ Git understands the following attributes:
+ 
+ 	The credential's password, if we are asking it to be stored.
+ 
++`password_expiry_utc`::
++
++	If password is a personal access token or OAuth access token, it may have an expiry date. When getting credentials from a helper, `git credential fill` ignores the password attribute if the expiry date has passed. Storage helpers should store this attribute if possible. Helpers should not implement expiry logic themselves. Represented as Unix time UTC, seconds since 1970.
++
+ `url`::
+ 
+ 	When this special attribute is read by `git credential`, the
+diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
+index f3c89831d4a..5cb8a186b45 100644
+--- a/builtin/credential-cache--daemon.c
++++ b/builtin/credential-cache--daemon.c
+@@ -127,6 +127,9 @@ static void serve_one_client(FILE *in, FILE *out)
+ 		if (e) {
+ 			fprintf(out, "username=%s\n", e->item.username);
+ 			fprintf(out, "password=%s\n", e->item.password);
++			if (e->item.password_expiry_utc != 0) {
++				fprintf(out, "password_expiry_utc=%ld\n", e->item.password_expiry_utc);
++			}
+ 		}
+ 	}
+ 	else if (!strcmp(action.buf, "exit")) {
+diff --git a/credential.c b/credential.c
+index f6389a50684..0a3a9cbf0a2 100644
+--- a/credential.c
++++ b/credential.c
+@@ -7,6 +7,7 @@
+ #include "prompt.h"
+ #include "sigchain.h"
+ #include "urlmatch.h"
++#include <time.h>
+ 
+ void credential_init(struct credential *c)
+ {
+@@ -21,6 +22,7 @@ void credential_clear(struct credential *c)
+ 	free(c->path);
+ 	free(c->username);
+ 	free(c->password);
++	c->password_expiry_utc = 0;
+ 	string_list_clear(&c->helpers, 0);
+ 
+ 	credential_init(c);
+@@ -234,11 +236,23 @@ int credential_read(struct credential *c, FILE *fp)
+ 		} else if (!strcmp(key, "path")) {
+ 			free(c->path);
+ 			c->path = xstrdup(value);
++		} else if (!strcmp(key, "password_expiry_utc")) {
++			// TODO: ignore if can't parse integer
++			c->password_expiry_utc = atoi(value);
+ 		} else if (!strcmp(key, "url")) {
+ 			credential_from_url(c, value);
+ 		} else if (!strcmp(key, "quit")) {
+ 			c->quit = !!git_config_bool("quit", value);
+ 		}
++
++		// if expiry date has passed, ignore password and expiry fields
++		if (c->password_expiry_utc != 0 && time(NULL) > c->password_expiry_utc) {
++			trace_printf(_("Password has expired.\n"));
++			FREE_AND_NULL(c->username);
++			FREE_AND_NULL(c->password);
++			c->password_expiry_utc = 0;
++		}
++
+ 		/*
+ 		 * Ignore other lines; we don't know what they mean, but
+ 		 * this future-proofs us when later versions of git do
+@@ -269,6 +283,13 @@ void credential_write(const struct credential *c, FILE *fp)
+ 	credential_write_item(fp, "path", c->path, 0);
+ 	credential_write_item(fp, "username", c->username, 0);
+ 	credential_write_item(fp, "password", c->password, 0);
++	if (c->password_expiry_utc != 0) {
++		int length = snprintf( NULL, 0, "%ld", c->password_expiry_utc);
++		char* str = malloc( length + 1 );
++		snprintf( str, length + 1, "%ld", c->password_expiry_utc );
++		credential_write_item(fp, "password_expiry_utc", str, 0);
++		free(str);
++	}
+ }
+ 
+ static int run_credential_helper(struct credential *c,
+diff --git a/credential.h b/credential.h
+index f430e77fea4..e10f7c2b313 100644
+--- a/credential.h
++++ b/credential.h
+@@ -126,6 +126,7 @@ struct credential {
+ 	char *protocol;
+ 	char *host;
+ 	char *path;
++	time_t password_expiry_utc;
+ };
+ 
+ #define CREDENTIAL_INIT { \
+
+base-commit: 5cc9858f1b470844dea5c5d3e936af183fdf2c68
+-- 
+gitgitgadget
