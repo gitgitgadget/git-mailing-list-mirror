@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9709FC05027
-	for <git@archiver.kernel.org>; Sun, 29 Jan 2023 12:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EF89C61D97
+	for <git@archiver.kernel.org>; Sun, 29 Jan 2023 13:36:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230038AbjA2M2p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Jan 2023 07:28:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35080 "EHLO
+        id S232549AbjA2Ngk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Jan 2023 08:36:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjA2M2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Jan 2023 07:28:44 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C101DBAB
-        for <git@vger.kernel.org>; Sun, 29 Jan 2023 04:28:41 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id x10so8513165edd.10
-        for <git@vger.kernel.org>; Sun, 29 Jan 2023 04:28:41 -0800 (PST)
+        with ESMTP id S232422AbjA2Ngj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Jan 2023 08:36:39 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 094A01CF4C
+        for <git@vger.kernel.org>; Sun, 29 Jan 2023 05:36:38 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id v10so8603430edi.8
+        for <git@vger.kernel.org>; Sun, 29 Jan 2023 05:36:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=grsecurity.net; s=grsec;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=IA0Bkz3U6hTWLTPxFomaMl4Pc1iEq/JkQqoxL60O4VA=;
-        b=kligiu3YjHXnQcL+5pOz7iiCIYldGOAyCTrX2/xqWVq4qilmdRPqKNUrPjRt6t3abf
-         aDFwx6TgC1RwhJ9TyZNuAWBGDoBRFNK6WFVDQeqZGIf7cDCL15dRo3s29ouKcmG1WltD
-         VM5tmMuMPjZ1+BRhbj4YhR5xW2g51w8bVEo6Nhq4qL+/tHV4ndpOvz65iGn0bw0HVxxC
-         ZiaDMgez64+IVTwQJiOvZJAByNLee3ghaf48kNuuY5aBH1lyJ13rLIBGcfXk/jNdnJwd
-         Kf0SAdgvLO++H8j1Ml8L64VgdcSpcORFTZLM19f2dYPPgc+HEY3tXVxm3E/l4YsbdQRT
-         MDiA==
+        bh=TH4A0epdKZGSczFkZaVzP1kc5upecdDt0S+P8DTQiA0=;
+        b=llq95dqRk/IljFyJEXScdIZyW7TSvJEEuT7ws/ub0UgH6Bs/mBoPlfqLszgJwMZGjS
+         w9ATUTasliOjQpvkEEE+gTzaifgCCV0LRBzHR7HFZ+mvs2fQBdhhtvzAc3O/7y4ozeEL
+         TZaZ+bm7haynSkoVtPXFqial6St8Y/iqIn2PzJOS7J7pz2I60JnbW37YfK7gCXBPU+x4
+         JtmH3F/LD/eqf98r5SMubT0EaEEV5S5skkDSQ1dEebo/nbo7QVc1oZVEbNfkcIjU8dR+
+         K0D7NOFbYjZR+1R44JKstuPZaa8aKYDEvO87YYX/Yi/nIV1zfN/B1Josgsgy/8Ckkpa8
+         OYow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IA0Bkz3U6hTWLTPxFomaMl4Pc1iEq/JkQqoxL60O4VA=;
-        b=kxI3NU7DhSfxGDjxWiFGprgngdQxED/3Ob5pdmZUiyQA1ZtWTEYNCityG5ylCinxRL
-         wp+gU5MuyBz5+qrljIkthiDl/sCvqe6GYqFsT709XlA+2FYy16lsr34SbwTZCAAHhb/E
-         Gpc9Uqlu9ZaFz59K5H819oB358ihVcUKjwnreXFykNjoaKpEE+qY4VyDViObh511OIBK
-         kZV4ns+beNYGqSg/iAUR1Bu+YIp4ooqIXBFcKujQ4XVezNc+N9Sm0nHjhSfHsNv7+erF
-         v6Sl1BJCRbtngWn8Rak2lkBXfjBp2pVShEk8QpDAsHVPVYVuYqwKDTJflu1oSlQsA11b
-         U2KA==
-X-Gm-Message-State: AO0yUKVEhHUmZRFIPrgKIUF/jURq9tz7D6ilun6CDwKLynySfQYk8IFw
-        QUU4dSKo6lwD9KnKbbCa/MbUnw==
-X-Google-Smtp-Source: AK7set/1jj2jIP3d1fOFWJp9fJFQkMCe/RScL0dXYEf6ACyfjt0lxNARlQAwvv2ERKtT6mfsHdHJ/Q==
-X-Received: by 2002:a05:6402:4504:b0:4a2:1d08:283b with SMTP id ez4-20020a056402450400b004a21d08283bmr6284224edb.11.1674995319946;
-        Sun, 29 Jan 2023 04:28:39 -0800 (PST)
+        bh=TH4A0epdKZGSczFkZaVzP1kc5upecdDt0S+P8DTQiA0=;
+        b=sMLnUqHEBmS9DM4EeASqW5PLmY6KxbIAw5C+S3dhYBwNVlDdFNv/RS9xnIw8cQsZa1
+         rrB6bgkAjWFEXsrPsmAoYObEzvS0V/gD43TrGlpRRnqMNWWHFkDTJblgDRlVdzCGiNhi
+         Q86mU3SGVrPtTZi5DA+edbL1qaUASNv3bfFyY4qHKZujE8vyhUpA3jQ2EiVTdVdiM+RJ
+         eXeCuFluroi3yLrKB78gePwVVJSNQXDlKx0E+/NQbSoLNJXhBB709ZmTfhzBP+jiI68B
+         Z/yMADdM013lnCX2Bb9Xq63sU1sgJhvzL0pblpX2bhT/9d8rPvd1G0YOLqGgao5FsKPY
+         CRBA==
+X-Gm-Message-State: AO0yUKWTIZ30nnnYb6lW/+GlPNoh3xljora5oQjtJUdRSgahRaaYkOMr
+        6Dn8m7DN7P5a708x3hLKBHi34g==
+X-Google-Smtp-Source: AK7set9rxB4k0t3LpCQQVcj591I0ibUlB/+uFmYaGbGLIAyl9CiZZzjpfOZYBpIbEDMfw580xHhZ4g==
+X-Received: by 2002:a05:6402:b5a:b0:4a2:331e:85f2 with SMTP id bx26-20020a0564020b5a00b004a2331e85f2mr3420798edb.26.1674999396541;
+        Sun, 29 Jan 2023 05:36:36 -0800 (PST)
 Received: from ?IPV6:2003:f6:af40:8200:19e:ccc3:be2a:f498? (p200300f6af408200019eccc3be2af498.dip0.t-ipconnect.de. [2003:f6:af40:8200:19e:ccc3:be2a:f498])
-        by smtp.gmail.com with ESMTPSA id ov9-20020a170906fc0900b0087bdae9a1ebsm3697805ejb.94.2023.01.29.04.28.39
+        by smtp.gmail.com with ESMTPSA id cf8-20020a0564020b8800b004a18f2ffb86sm4375723edb.79.2023.01.29.05.36.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 29 Jan 2023 04:28:39 -0800 (PST)
-Message-ID: <d9f368bb-ff22-5294-3974-e0017f512c1a@grsecurity.net>
-Date:   Sun, 29 Jan 2023 13:28:38 +0100
+        Sun, 29 Jan 2023 05:36:36 -0800 (PST)
+Message-ID: <adb5a43a-5081-4f60-d1ea-2a6511f858c0@grsecurity.net>
+Date:   Sun, 29 Jan 2023 14:36:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
@@ -63,139 +63,96 @@ Cc:     git@vger.kernel.org,
         =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
 References: <20221216121557.30714-1-minipli@grsecurity.net>
  <20230127154952.485913-1-minipli@grsecurity.net> <xmqqbkmk9bsn.fsf@gitster.g>
+ <xmqq1qnfancf.fsf@gitster.g>
 From:   Mathias Krause <minipli@grsecurity.net>
-In-Reply-To: <xmqqbkmk9bsn.fsf@gitster.g>
+In-Reply-To: <xmqq1qnfancf.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27.01.23 17:34, Junio C Hamano wrote:
-> Mathias Krause <minipli@grsecurity.net> writes:
+On 27.01.23 18:39, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
->> As having a functional PCRE2 JIT compiler is a legitimate use case for
->> performance reasons, we'll only do the fallback if the supposedly
->> available JIT is found to be non-functional by attempting to JIT compile
->> a very simple pattern. If this fails, JIT is deemed to be non-functional
->> and we do the interpreter fallback. For all other cases, i.e. the simple
->> pattern can be compiled but the user provided cannot, we fail hard as we
->> do now as the reason for the failure must be the pattern itself.
+>> Yes, the "instead of failing hard, fall back" makes sense.  Just
+>> that I do not see why the runtime test is a good thing to have.  In
+>> short, we are not in the business of catching bugs in pcre2_jit
+>> implementations, so if they say they cannot compile the pattern (I
+>> would even say I doubt the point of checking the return code to
+>> ensure it is NOMEMORY), it would be fine to let the interpreter
+>> codepath to inspect the pattern and diagnose problems with it, or
+>> take the slow match without JIT.
+>>
+>> What am I missing?
 > 
-> I do not know if it is a good idea to rely on the "very simple
-> pattern".  The implementation of JIT could devise various ways to
-> succeed for such simple patterns without having writable-executable
-> piece of memory.
+> Note that I've seen and recently re-read the discussion that leads to
+> https://lore.kernel.org/git/f680b274-fa85-6624-096a-7753a2671c15@grsecurity.net/
 
-Well, if PCRE2 JIT ever changes to optimize this case, we would be back
-to the error I'm seeing right now. But I doubt that PCRE2 will be doing
-optimizations like that. The current implementation does the JIT memory
-allocation test very early, even before looking at the pattern:
+Ahh, so ignore my last advise in the previous Email. You already read it.
 
-https://github.com/PCRE2Project/pcre2/blob/pcre2-10.42/src/pcre2_jit_compile.c#L14450-L14465
+> I suspect that this auto-probe is related to solving "the user
+> thinks JIT is in use but because of failing JIT the user's pattern
+> is getting horrible performance" somehow.  But I do not think a hard
+> failure is a good approach to help users in such a situation.
 
-But I can add a call to pcre2_pattern_info(PCRE2_INFO_JITSIZE) if you
-really like me to, but IMHO it's not needed.
+Yes, it's exactly trying to detect this case and not cause a regression
+for users expecting 'git grep' to make use of the JIT.
 
->                   What happened to the earlier idea of falling back
-> to the interpreted codepath, which will catch any bad pattern that
-> has "the reason for the failure" by failing anyway?
+So, beside the W|X memory allocation error, other errors are likely only
+to point out limitations of the JIT compiler, e.g. the example I gave in
+https://lore.kernel.org/all/2b04b19a-a2bd-3dd5-6f21-ed0b0ad3e02f@grsecurity.net/,
+which is, admitted, a made up example that can easily be worked around
+by manually prefixing it with '(*NO_JIT)'. It would be a pain having to
+do that for *every* pattern, but only doing it for the pathological
+cases should be fine. Otherwise more users would have run into it
+already and complained about it, no?
 
-Ævar's concerns about always falling back to the interpreter mode made
-me change the patch like this. Basically what he's concerned about are
-two things:
-1/ "Crazy patterns" that fail the JIT but will work for the interpreter
-can be a serve performance regression.
-2/ Always falling back to interpreter mode might mask JIT API usage
-errors, we'd like to see.
+> After such a failure, the user can prefix "(*NO_JIT)" to the pattern
+> and retry, or give up the operation altogether and not get a useful
+> result, but wouldn't it be far more helpful to just fallback as if
+> (*NO_JIT) was on from the beginning?
 
-While 1/ could also be seen as a limitation of current 'git grep', I
-share Ævar's extended runtime regression concerns. If, for example, some
-web interface offers users to supply arbitrary grep patterns, abusing
-the interpreter mode fallback will consume significant more CPU
-resources than it does right now (which simply fails with an error).
+Sure, if it would be required for *every*, i.e. "normal" patterns. But
+always doing it even for abusive ones doesn't feel right.
 
+> Also I notice that p->pcre2_jit_on is per "struct grep_pat", so it
+> is not like "once we see a pathological pattern, we turn off JIT
+> completely for other patterns", right?  That is, if you have
 > 
->> +static int pcre2_jit_functional(void)
->> +{
->> +	static int jit_working = -1;
->> +	pcre2_code *code;
->> +	size_t off;
->> +	int err;
->> +
->> +	if (jit_working != -1)
->> +		return jit_working;
->> +
->> +	/*
->> +	 * Try to JIT compile a simple pattern to probe if the JIT is
->> +	 * working in general. It might fail for systems where creating
->> +	 * memory mappings for runtime code generation is restricted.
->> +	 */
->> +	code = pcre2_compile((PCRE2_SPTR)".", 1, 0, &err, &off, NULL);
->> +	if (!code)
->> +		return 0;
->> +
->> +	jit_working = pcre2_jit_compile(code, PCRE2_JIT_COMPLETE) == 0;
->> +	pcre2_code_free(code);
+>     git grep -P -e "$A" -e "$B"
 > 
-> I'd prefer not having to worry about: Or it might not fail for such
-> systems, as the pattern is too simple and future versions of
-> pcre2_compile() could have special case code.
+> and we fail to compile "$A" (for whatever reason), we could still
+> (attempt to) compile "$B".  Perhaps $A was too complex or was
+> incompatible with JIT combined with other options, but $B may be
+> easy enough to still be JITtable, in which case we would match with
+> the JITted version of $B with interpreted version of $A, instead of
+> failing, right?
 
-See above, it's unlikely to happen.
+The current version of git would fail hard if it fails to JIT compile
+"$A". My patch doesn't change that behavior and that's intentional, as I
+share Ævar's thinking about falling back to the interpreter mode for
+"complex patterns" (which means pathological cases, really) is a bad
+idea. While we might be able to compile the pattern and run it in
+interpreter mode, it'll likely have a *much* higher runtime.
 
-> 
->> @@ -317,8 +342,23 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
->>  	pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
->>  	if (p->pcre2_jit_on) {
->>  		jitret = pcre2_jit_compile(p->pcre2_pattern, PCRE2_JIT_COMPLETE);
->> -		if (jitret)
->> +		if (jitret == PCRE2_ERROR_NOMEMORY && !pcre2_jit_functional()) {
->> +			/*
->> +			 * Even though pcre2_config(PCRE2_CONFIG_JIT, ...)
->> +			 * indicated JIT support, the library might still
->> +			 * fail to generate JIT code for various reasons,
->> +			 * e.g. when SELinux's 'deny_execmem' or PaX's
->> +			 * MPROTECT prevent creating W|X memory mappings.
->> +			 *
->> +			 * Instead of faling hard, fall back to interpreter
->> +			 * mode, just as if the pattern was prefixed with
->> +			 * '(*NO_JIT)'.
->> +			 */
->> +			p->pcre2_jit_on = 0;
->> +			return;
-> 
-> Yes, the "instead of failing hard, fall back" makes sense.  Just
-> that I do not see why the runtime test is a good thing to have.
+Just to get you a glimpse of how much longer, this is what it takes
+running the pathological pattern from above's example on git.git:
 
-It prevents the fallback from being abused and introducing new
-regressions. So it's good to have.
+  $ time git grep -P "(*NO_JIT)$(perl -e 'print "(.)" x 4000')"
+  Binary file git-gui/macosx/git-gui.icns matches
+  Binary file t/t5000/pax.tar matches
+  Binary file t/t5004/big-pack.zip matches
+  Binary file t/t5004/empty-with-pax-header.tar matches
 
->                                                                  In
-> short, we are not in the business of catching bugs in pcre2_jit
-> implementations, so if they say they cannot compile the pattern (I
-> would even say I doubt the point of checking the return code to
-> ensure it is NOMEMORY), it would be fine to let the interpreter
-> codepath to inspect the pattern and diagnose problems with it, or
-> take the slow match without JIT.
+  real	44m42,150s
+  user	577m14,623s
+  sys	0m46,210s
 
-Yeah, unfortunately they're not gonna fix what's a bug, IMHO. They think
-it's a feature: https://github.com/PCRE2Project/pcre2/pull/157
 
-Anyhow, the error code is very well documented, see pcre2_jit_compile(3)
-"""
-          [...]  The  function can also return PCRE2_ERROR_NOMEMORY if
-       JIT is unable to allocate executable memory for  the  compiler,
-       even if it was because of a system security restriction.
-"""
-
-And that's very much in line with what the test in pcre2_jit_compile()'s
-current implementation does.
-
-> What am I missing?
-
-Please have a look at Ævar's reasoning here:
-https://lore.kernel.org/git/221220.86bknxwy9t.gmgdl@evledraar.gmail.com/
+So this grep run eat up ~9.5 *hours* of CPU time. Do we really want to
+fall back to something like this for the pathological cases? ...Yeah, I
+don't think so either.
 
 Thanks,
 Mathias
