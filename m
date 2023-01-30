@@ -2,122 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5BC4C636D3
-	for <git@archiver.kernel.org>; Mon, 30 Jan 2023 18:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D977C54EAA
+	for <git@archiver.kernel.org>; Mon, 30 Jan 2023 18:47:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236733AbjA3Sn0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Jan 2023 13:43:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52744 "EHLO
+        id S236728AbjA3Srf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Jan 2023 13:47:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236294AbjA3SnN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2023 13:43:13 -0500
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C494CDBF9
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 10:43:11 -0800 (PST)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-15ff0a1f735so16270613fac.5
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 10:43:11 -0800 (PST)
+        with ESMTP id S236250AbjA3Srd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2023 13:47:33 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2CA61BADA
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 10:47:32 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id d21-20020a056830005500b0068bd2e0b25bso910535otp.1
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 10:47:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=GYF52DYhlVCWYr9FbAq4nr655m6e0d7aSmrh0tWgA0A=;
-        b=CGJZguPKAP3V8J2eHouAaaKxgc2ilAl9SXGWZJAaTgMRmjiKTJo1OZvsz7+WKfsnf3
-         WWt0CMwghC7LmbGHTVBqWanGeNkSM88QXoc74sZSZF/7XetZ5hCOJAI7FxCDvtm0KpJd
-         9gy8k6+a7lg0y51HcAzJeHaAZkXFm+uDqRigDNkQebNvUO0C0bEWjCBGGtx5Xmq8tre1
-         wtKAP2c28XbqXSFkt0dUwfZshfykgB4U4a5y+6mXQyjR1q/2TcmoDCaDW/2ulhMZlg4t
-         XO/8UV6CWlbnY9r3UL55wTJX8Pz7mlT70BhyVczCFEeFpRiChZv8Qgt4u95sEhnpJ8sH
-         fUjA==
+        bh=BcDC3hsJ0w66Ua16oDlLV7kTzRvG7Shqjl192MOCHGI=;
+        b=UKEE0QRYVDCab9lDlC/Yfaf1F56byP1+K/z0qghl2IdCHHIaYaRTDCpVA96/ey+uRJ
+         BJOWKLHiLj1JrLrjmrIcnHzF+2ZzsHBFqYc9Z+hIACFt9OjRJ02jdZtWoeKpk05F8Dvq
+         +bwLiVgpHSYBHFC1ptmRm6r5cx4spZM3Mk5VuOgoHI9H+gD8C+aXGjaNiP+2cSkERsxT
+         mHTppzg5xeU//+b5GeqhKOsn7CjHVw4Nl6ov9D3mMctnHZilG1J/mH937r36460PulUF
+         lgdBRqZctpyoVssWEOq85ccRo0N7lU257b/M9PvJRLEi4CzLN7B17359ocDVIbzdbdxz
+         uIjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GYF52DYhlVCWYr9FbAq4nr655m6e0d7aSmrh0tWgA0A=;
-        b=qQYdLLApujc5YnzoaJPoso1VH69MAph2oGEjMtuiItoQ51QCaYyB8Qf0vxOBX0SmK7
-         Eg8LejXWh57L0HMJdrAkiL+jpVLISlCL6hACTviAfiaOTuG+EQc6rPnVOaMjVWA9Zqnl
-         NJUF7Hdv6NCKlBliWiEmxqINHVfR0g8NKZLiTq7AUf2FbuwZZQeIOkDDoybuoHZkBVov
-         /wgObkTmif8BDZeLv9tHUqFSCTAXgi3/1tNcGVDtz6WlYbSp65/lG1SqANwETISqXibF
-         fdALyuNPTkTtBvpFRCq0de1IdtGI5vbiUADauyubK1eP3nnIb4xNpZb3Hhmomx0kOKN7
-         pBrQ==
-X-Gm-Message-State: AO0yUKVcm9GrmTw/IqemW0IAxrWvoxr0tTXpbhnjZrCdhrSNlgWAQAmn
-        APRgCQFnHJNE2n3MdeTUOX7i
-X-Google-Smtp-Source: AK7set/r92topECZxFNUwKlZXOjKs2tjIMV00zqIvLre9xoDw20Xvilbf+h3E6kIEwGwltby60yGsQ==
-X-Received: by 2002:a05:6870:b156:b0:15f:3904:6a80 with SMTP id a22-20020a056870b15600b0015f39046a80mr5432600oal.51.1675104191051;
-        Mon, 30 Jan 2023 10:43:11 -0800 (PST)
+        bh=BcDC3hsJ0w66Ua16oDlLV7kTzRvG7Shqjl192MOCHGI=;
+        b=1KQd8XdzVv938axwdP47NztAnkkpDje2pWTnILEdenA2zLDJkT5fJCeYgAWUEIUS3J
+         kSpsfvlPytBtcsWNuykecvR+gWt0YkU1yR23NNvFt4ed6IKyTLfWtOuulUAh6QIhcu1u
+         Eg5qIbj19Yj2QmsCtW+I8cY/Owj1vQytdkjd4oS79E+LRH6YgeHBCfi4uRiAq2KO3r45
+         fX5/HVm45zJgi5f+DXcNATw1d1/0eBR/0lcK9Nq32MrS5NyIzQJDwxZnv7y/erty8qyB
+         1d2yUbJgCGb6CH8fB/+O4eHCSM27/4COQy1Ir9yzhovniK9kOWAKAnj39cIvYAcaidv4
+         NYww==
+X-Gm-Message-State: AFqh2krlCw/Z9hR3ChNU6KR190Ue7ODsdtY7yf2rPMmitQ4oK0+PFXYj
+        GIZiRaGn/yoYL0Ee32LZb2B6
+X-Google-Smtp-Source: AMrXdXs2bVUbxeGD9Kdz4AzdFR/XANp9NwDAI+pv4ReufZF6V715CIHxorj2biqLYrXXtgvFxTVpyg==
+X-Received: by 2002:a9d:4f07:0:b0:684:da63:a710 with SMTP id d7-20020a9d4f07000000b00684da63a710mr26277109otl.4.1675104452287;
+        Mon, 30 Jan 2023 10:47:32 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:ecb7:2dbf:e64c:6f68? ([2600:1700:e72:80a0:ecb7:2dbf:e64c:6f68])
-        by smtp.gmail.com with ESMTPSA id ky12-20020a056871404c00b0014c8b5d54b2sm5502765oab.20.2023.01.30.10.43.10
+        by smtp.gmail.com with ESMTPSA id w25-20020a9d6759000000b0068bd20cf07dsm1552328otm.48.2023.01.30.10.47.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jan 2023 10:43:10 -0800 (PST)
-Message-ID: <07c4658e-89dd-0f82-77e9-e7c443f747cd@github.com>
-Date:   Mon, 30 Jan 2023 13:43:07 -0500
+        Mon, 30 Jan 2023 10:47:31 -0800 (PST)
+Message-ID: <d93aff7f-2fcb-1d4d-4537-c23ea7171215@github.com>
+Date:   Mon, 30 Jan 2023 13:47:29 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH v2 05/10] bundle-uri: download in creationToken order
-To:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, avarab@gmail.com,
+Subject: Re: [PATCH v2 10/10] bundle-uri: test missing bundles with heuristic
+Content-Language: en-US
+To:     Victoria Dye <vdye@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, avarab@gmail.com,
         steadmon@google.com, chooglen@google.com
 References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
  <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
- <7cfaa3c518cbedb65c585cc02015bb21ae24e9fa.1674487310.git.gitgitgadget@gmail.com>
- <a2896d5b-f395-68df-1f23-356d0128cb9c@github.com>
- <xmqqpmaz93k3.fsf@gitster.g>
-Content-Language: en-US
+ <676522615ad0e8f24099ef35a0f39367e5f688ae.1674487310.git.gitgitgadget@gmail.com>
+ <b3f2992d-f614-5cc7-f606-d3607a154685@github.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqpmaz93k3.fsf@gitster.g>
+In-Reply-To: <b3f2992d-f614-5cc7-f606-d3607a154685@github.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/27/2023 2:32 PM, Junio C Hamano wrote:
-> Victoria Dye <vdye@github.com> writes:
+On 1/27/2023 2:21 PM, Victoria Dye wrote:
+> Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <derrickstolee@github.com>
+
+>> +	# Only base bundle unbundled.
+>> +	git -C download-2 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
+>> +	cat >expect <<-EOF &&
+>> +	refs/bundles/base
+>> +	refs/bundles/right
+>> +	EOF
+>> +	test_cmp expect refs &&
 > 
->>> +			/*
->>> +			 * Not downloaded yet. Try downloading.
->>> +			 *
->>> +			 * Note that bundle->file is non-NULL if a download
->>> +			 * was attempted, even if it failed to download.
->>> +			 */
->>> +			if (fetch_bundle_uri_internal(ctx.r, bundle, ctx.depth + 1, ctx.list)) {
->>> +				/* Mark as unbundled so we do not retry. */
->>> +				bundle->unbundled = 1;
->>
->> This implicitly shows that, unlike a failed unbundling, a failed download is
->> always erroneous behavior, with the added benefit of avoiding (potentially
->> expensive) download re-attempts.
+> Maybe I'm misreading, but I don't think the comment ("Only base bundle
+> unbundled") lines up with the expected bundle refs (both bundle-1
+> ('refs/bundles/base') and bundle-3 ('refs/bundles/right') seem to be
+> unbundled). 
+
+>> +	# All bundles failed to unbundle
+>> +	git -C download-3 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
+>> +	cat >expect <<-EOF &&
+>> +	refs/bundles/base
+>> +	refs/bundles/left
+>> +	refs/bundles/right
+>> +	EOF
+>> +	test_cmp expect refs
 > 
-> Hmph, I somehow was hoping that we'd allow an option to use range
-> requests to resume an interrupted download in the future, so
-> outright "always avoid attempts to download again" may not be what
-> we want in the longer run.  But being able to tell if download
-> failed (and there will probably be more than "success/failure" bit,
-> but something like "we got an explicit 401 not found" vs "we were
-> disconnected after downloading a few megabytes"), and unbundling
-> failed (where there is no point attempting) is a good idea.
+> Similar issue with the comment here - it says that all bundles *failed* to
+> unbundle, but the test case description ("Case 3: top bundle does not exist,
+> rest unbundle fine.") and the result show bundle-1, bundle-2, and bundle-3
+> all unbundling successfully.
 
-I think there are two possible directions we can have when talking
-about interrupted downloads:
-
-1. The network connection was disconnected, and the client may want
-   to respond to that with a retry and a ranged request.
-
-2. The client process itself terminates for some reason, and a
-   second process recognizes that some of the data already exists
-   and could be used for a range request of the remainder.
-
-I think both of these would not be handled at this layer, but
-instead further down, inside fetch_bundle_uri_internal()
-(specifically further down in download_https_uri_to_file()).
-
-Any retry logic should happen there, closer to the connection,
-and at the layer of the current patch, we should assume that any
-retry logic that was attempted ended up failing in the end.
-
-Does that satisfy your concerns here?
+Thank you for reading carefully. I'm sorry about not updating
+the comments after copying these checks around the test file.
 
 Thanks,
 -Stolee
