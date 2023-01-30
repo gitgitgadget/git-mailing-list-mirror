@@ -2,157 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFC17C54EED
-	for <git@archiver.kernel.org>; Mon, 30 Jan 2023 11:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EB9AC54EED
+	for <git@archiver.kernel.org>; Mon, 30 Jan 2023 13:44:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235761AbjA3LIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Jan 2023 06:08:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52604 "EHLO
+        id S235426AbjA3Noa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Jan 2023 08:44:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231370AbjA3LIt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2023 06:08:49 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29D4E2D5D
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 03:08:48 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id u21so10562045edv.3
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 03:08:48 -0800 (PST)
+        with ESMTP id S229728AbjA3No2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2023 08:44:28 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0084D15552
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 05:44:27 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id g21-20020a9d6495000000b0068bb336141dso2640511otl.11
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 05:44:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=grsecurity.net; s=grsec;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=VPkZS3e3mFj6Dw2tbc1yStfuGkpMhynftGnEETMy3PQ=;
-        b=e74lq3myrwI7AzdPVRmEMEH4U2TGpFbNT96jg0Two5eOglnn1CzcLgmcrfg6SLD8j1
-         rixWkPCrQlYTZgjfOcT1eAH4fgUCsRCAcp4Ezg7WovIpMQcq4LgK8zQ5Sv5SbV9+INZ/
-         PjXcSIW1/MGEFYiCn4RlBHJURDvcCm+ouCVxCe6PGdgNAPmU2WeBqT3a4Xbh9AN0L2Wm
-         /wpMZp2BHNSNwT7WaHBNMxQJInKyWE/KLd7GYbF81VrgWsf4Bh06x3pVbQ8p9LHdPSwM
-         vzLB2a7BT+Ip+oY0kB+m38+OZ+Fd8d+IwchPRmxRgUwobzM0RC/J2bsXnSYLBC5mNUfa
-         jHoA==
+        bh=2xaLceTrLxUHhb55NHwpqbrkq4ZxF7dhGWksVkJIjqc=;
+        b=Fil5Me8i89tJOG7KEY1JH7NWyvHQfL1xm3QE/4sNDXeNgh8+7DFjKfEiOKrL5B0Zb9
+         M9lvAgbeya4eOmlSmDBEL2r2K8crZoSZmL2RQzyu2MXRq96A4tqYrTB10RiER7CGbWOA
+         gcdm52OerZ5cTydN0FyDmKf4k2iJ7K7GYNGoVpfZMNxElhMIM/xVufSV3Cty2FyiCPt6
+         WEuOXTvLb1txB8HR0NrdOCjIi9u+veb6g4jqPWojFRzLHvPYQ9h6SHfceU96ScjHp214
+         vybfUMZLkBpQMbVc3x+CSwI/antj8oFXiyWEh8WAIaudhLmCdaqLfbOoSmQB+U3tqjxb
+         Ng6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VPkZS3e3mFj6Dw2tbc1yStfuGkpMhynftGnEETMy3PQ=;
-        b=ZnaBcKjXjxcJxagPLAe3ilVgP0RpCZEzBa+utFfxhu0ZDJTLdxCRPxX4/s5MKGUcv2
-         Eb+f6fkS9xjgl3P55Lyed70zglrY4MF3QNkQv5BgXo9idPfPH+4zpGrCnWTIM6goKEbc
-         QbEUSSIU4t1WnLmo4KP+I25nKX/+aD3dKAyrnwZ8swU7Ya8c5+AcjNIVT6WcH8IPcsBs
-         hI708oWFSjsAxfv7LR3U54To1Wy43WqQUR+hO+sSSg7EzGqxcO9SM8cmrNuNouvD9Vl6
-         vVv6Oxk8YLXbyl9J16q1qOCYOnUd7+F0pU3bG8jsqQNUNSJuAjGcEFCm1amodaXf8BpZ
-         46Uw==
-X-Gm-Message-State: AO0yUKXpbehtYySMIdlSZ85KyJ1sdLcLPtvvW4rhycN7NAHfaSGeu+oS
-        fi7USAh/VKxIIv5ftVBE9jKLJQ==
-X-Google-Smtp-Source: AK7set/I2l3s1EeX1HaA7Q8LqrdqORU4HB+/e1bqiXVpEza8Q6tjm8WpYGhNQwglkTDFkRhhqFBvHg==
-X-Received: by 2002:a05:6402:540a:b0:4a2:20ba:71e5 with SMTP id ev10-20020a056402540a00b004a220ba71e5mr10016079edb.26.1675076926632;
-        Mon, 30 Jan 2023 03:08:46 -0800 (PST)
-Received: from ?IPV6:2003:f6:af05:8d00:5f06:9802:2fa1:311a? (p200300f6af058d005f0698022fa1311a.dip0.t-ipconnect.de. [2003:f6:af05:8d00:5f06:9802:2fa1:311a])
-        by smtp.gmail.com with ESMTPSA id m5-20020aa7c485000000b0049e19136c22sm6591557edq.95.2023.01.30.03.08.45
+        bh=2xaLceTrLxUHhb55NHwpqbrkq4ZxF7dhGWksVkJIjqc=;
+        b=KMY6sIsjh3wB1K+z3nJRYWQ8Dr8LTkjlMTwbXyxu3Uyo6d1W1eyF+UlNO4LSWX7szM
+         EejTc4RjDvCncl7uPDi7x9PGezVhCfso0Wq/Vj12CXA5pYbv9v9RDz9TKa+mYFjFTS4a
+         QN0r1FSEQ95hXJ+am4MuSRTCngB5fzZ/3LBzReHsEnbaDMo32bVRQyt5HZ+yFY2sgYY4
+         acHhMT5u80y2ABxKNnY7rR5neEcIciPFCPJxF7tITmxr54xNeeFPg0sRqWnaDeq3lrEr
+         K2I0rN6JzUiuwlrKCFPgztmplF2x50TGbpz3UrqKdd/jnfTM8L6YTkRY1miYMFkdIiwn
+         Jefg==
+X-Gm-Message-State: AO0yUKVNTWMIkmIMU19xQO/A4wc7MTpslUbb5G8FcTJ5G33/OKaeUHDv
+        1c9KimwBQ2kXSbOvVJoU07c3
+X-Google-Smtp-Source: AK7set/aYMQyaBWGSfSQAr8o3bvTx3dV9yA0/zAty2I/19/KQMFXCVB5hvGT2WgXYKcUklKIYjL8mw==
+X-Received: by 2002:a05:6830:18ed:b0:66e:ab30:6ab with SMTP id d13-20020a05683018ed00b0066eab3006abmr4609779otf.20.1675086267275;
+        Mon, 30 Jan 2023 05:44:27 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:ecb7:2dbf:e64c:6f68? ([2600:1700:e72:80a0:ecb7:2dbf:e64c:6f68])
+        by smtp.gmail.com with ESMTPSA id bg12-20020a056808178c00b0035ec1384c9esm4679789oib.23.2023.01.30.05.44.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jan 2023 03:08:46 -0800 (PST)
-Message-ID: <9b5a1113-84f1-1651-bffc-6382462057dd@grsecurity.net>
-Date:   Mon, 30 Jan 2023 12:08:45 +0100
+        Mon, 30 Jan 2023 05:44:26 -0800 (PST)
+Message-ID: <b63611dc-a889-8900-403a-ec7c42a89705@github.com>
+Date:   Mon, 30 Jan 2023 08:44:23 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2] grep: fall back to interpreter if JIT memory
- allocation fails
-Content-Language: en-US, de-DE
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 3/3] scalar: only warn when background maintenance fails
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
-References: <20221216121557.30714-1-minipli@grsecurity.net>
- <20230127154952.485913-1-minipli@grsecurity.net> <xmqqbkmk9bsn.fsf@gitster.g>
- <xmqq1qnfancf.fsf@gitster.g>
- <adb5a43a-5081-4f60-d1ea-2a6511f858c0@grsecurity.net>
- <xmqqk0156z55.fsf@gitster.g>
-From:   Mathias Krause <minipli@grsecurity.net>
-In-Reply-To: <xmqqk0156z55.fsf@gitster.g>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, vdye@github.com
+References: <pull.1473.git.1674849963.gitgitgadget@gmail.com>
+ <d75780e0567b5f765816ab7522afe550ebaa3521.1674849963.git.gitgitgadget@gmail.com>
+ <xmqqleln90ka.fsf@gitster.g>
+ <4913381a-769f-aba0-c04d-559d103e8396@github.com>
+ <xmqq357v8poc.fsf@gitster.g>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqq357v8poc.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 29.01.23 18:15, Junio C Hamano wrote:
-> Mathias Krause <minipli@grsecurity.net> writes:
+On 1/27/2023 7:32 PM, Junio C Hamano wrote:
+> Derrick Stolee <derrickstolee@github.com> writes:
 > 
->> ... While we might be able to compile the pattern and run it in
->> interpreter mode, it'll likely have a *much* higher runtime.
->> ...
->> So this grep run eat up ~9.5 *hours* of CPU time. Do we really want to
->> fall back to something like this for the pathological cases? ...Yeah, I
->> don't think so either.
+>>>  The "maintain
+>>> their clone" certainly should include running periodic maintenance
+>>> tasks without them having to worry about it.  It feels like this is
+>>> calling for an explicit "disable periodic maintenance tasks in this
+>>> repository" option to help these esoteric environments that disable
+>>> cron-like system services, while keeping the default safer,
+>>> i.e. fail loudly when the periodic maintenance tasks that the users
+>>> expect to happen cannot be enabled, or something.
+>>>
+>>> Perhaps I am not the primary audience, but hmph, I have a feeling
+>>> that this is not exactly going into a healthy direction.
+>>
+>> Here, we are in an environment where background maintenance is
+>> unavailable in an unexpected way. If that feature is not available
+>> to the user, should they not get the benefits of the others?
 > 
-> You may not, but I do not agree with you at all.  The code should
-> not outsmart the user in such a case.
+> That is not what I was saying.  I just have expected to see a way
+> for the user to give scalar an explicit "I understand that periodic
+> maintenance does not happen in this repository" consent, instead of
+> demoting an error detection for everybody to a warning that users
+> will just ignore.
 
-It doesn't. My rhetoric question was just missing "automatically" to
-state that I would dislike an *automatic* fallback to the interpreter
-for *pathological cases.* But I'm fine with (and that's what this patch
-is all about!) a fallback to the interpreter for patterns that simply
-fail the JIT because it's broken. Sorry for the confusion.
+Ah, so you'd prefer a --no-maintenance option for users who have
+this problem instead of just a warning. I'll do that in v2.
 
-> Even if the pattern the user came up with is impossible to grok for
-> a working JIT compiler, and it might be hard to grok for the
-> interpreter, what is the next step you recommend the user if you
-> refuse to fall back on the interprete?  "Rewrite it to please the
-> JIT compiler"?
-
-Not at all. A user is still free to disable the JIT and enforce using
-the interpreter by using the "(*NO_JIT)" prefix. My patch doesn't
-disable this behavior. My patch only tries to avoid having to specify it
-for "regular" patterns when the JIT is broken anyways.
-
-The key here is that this would be a manual step (in contrast to an
-automatic fallback), i.e. we require explicit user consent to accept the
-worse runtime performance. And, IMHO, that should be acceptable from a
-usability point of view as this would only be required for the
-pathological cases an otherwise functional JIT simply cannot handle.
-
-> If that is the best pattern the user can produce to solve the
-> problem at hand, being able to give the user an answer in 9 hours is
-> much better than not being able to give anything at all.
-
-Sure, fully agree.
-
-> Maybe after waiting for 5 minutes, the user gets bored and ^C, or
-> without killing it, open another terminal and try a different
-> patern, and in 9 hours, perhaps comes up with an equivalent (or
-> different but close enough) pattern that happens to run much faster,
-> at which time the user may kill the original one.  In any of these
-> cases, by refusing to run, the code is not doing any service to the
-> user.
-
-My patch doesn't make it worse than what 'git grep' would currently be
-doing. On the contrary, actually. It allows me to use PaX's MPROTECT and
-have a functional 'git grep' as well.
-
-Maybe the missing piece here is simply something like below to make
-users more aware of the possibility to disable the JIT for the more
-complex cases?:
-
-diff --git a/grep.c b/grep.c
-index 59afc3f07fc9..1422f168b087 100644
---- a/grep.c
-+++ b/grep.c
-@@ -357,7 +357,8 @@ static void compile_pcre2_pattern(struct grep_pat
-*p, const struct grep_opt *opt
-                        p->pcre2_jit_on = 0;
-                        return;
-                } else if (jitret) {
--                       die("Couldn't JIT the PCRE2 pattern '%s', got
-'%d'\n", p->pattern, jitret);
-+                       die("Couldn't JIT the PCRE2 pattern '%s', got
-'%d'%s\n", p->pattern, jitret,
-+                           pcre2_jit_functional() ? "\nYou might retry
-by prefixing the pattern with '(*NO_JIT)'" : "");
-                }
-
-                /*
-
-(Sorry about the wrapped lines, my mailer is just broken. I'll make it a
-proper patch, if such functionality is indeed wanted.)
+This could be a good time for me to upstream the --no-src option
+while I'm messing with arguments in 'scalar clone'.
 
 Thanks,
-Mathias
+-Stolee
