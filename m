@@ -2,105 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96B58C636D3
-	for <git@archiver.kernel.org>; Mon, 30 Jan 2023 19:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED07AC54EAA
+	for <git@archiver.kernel.org>; Mon, 30 Jan 2023 19:13:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238033AbjA3TGg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Jan 2023 14:06:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37392 "EHLO
+        id S238301AbjA3TNK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Jan 2023 14:13:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236847AbjA3TGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2023 14:06:35 -0500
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 014A139BA6
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 11:06:35 -0800 (PST)
-Received: by mail-oi1-x22f.google.com with SMTP id bx13so5124994oib.13
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 11:06:34 -0800 (PST)
+        with ESMTP id S238247AbjA3TM6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2023 14:12:58 -0500
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E952C66B
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 11:12:45 -0800 (PST)
+Received: by mail-oo1-xc2e.google.com with SMTP id x15-20020a4ab90f000000b004e64a0a967fso1411941ooo.2
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 11:12:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=uJckalHK2pOCjs0+UQq4M9cIOFwWrCasKZRp56URILg=;
-        b=HgCn+IOOvMoB+Y6sqAhC7pkqcgsBSQBYqf/IyseQudg4+0KMQbYlpt4/0Q9n76t/5p
-         EiMtWZslifG2p5R2KyLRkkTyY5CMrGuDbxrVWOzOL7wEDG/qVkaQ3ZwQIRSM1ZH7VN2O
-         BOyJZTmmsOZM8BF4A3jyJE3gBYTdCNfHhoKHCh6RWROnz0UhHMY+E0w+dg2xci4K8nG8
-         gh3S1tkm7vTY/Hu8dUy6EGpKR+srZsX5RfN8sEtXqDeTAw2x9UsKCCju7TxeKXv9voFb
-         Sj31hG2kbltZWBoB/V5BM/gabHFMAyKnAHrM74lLV5nEUgWEJf1g1n9RNPdYo4GqJNjZ
-         aq3Q==
+        bh=9MEK1+P998O1167GFE7aFuI5yCicX9x2PXw8BbP/8EU=;
+        b=JooBIyTm6g53sTAWBgU9xOEfnR4RoDTvZzLnDUzhSdU9YewJWcTAa8qMuRJtRt9eMN
+         VtAfh56U0vP54CRFgKzKiRyI22R5cmvRGuYx4aRiFpp+pZr665t7FzaW990tlSIm7KeF
+         z6inANah34xwF4cqqhKBMhZCE6W7Q0cluGRe4GXd3Lou7stvWNVTHa7oHtGC7R5PaK5p
+         gKT2zod3su/9OrtRwHuaHF/c3/5ZfSF6C6jXMxmKnZIGe30HPkLeMdhR7Gn4RjCLnVUm
+         7ZA1gh6Gjk+YzbaEFgxXY2cipU/Fc5lQbmPveLf4rTBUK6idORjoVd3grIupSmsYW7Jy
+         j/Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uJckalHK2pOCjs0+UQq4M9cIOFwWrCasKZRp56URILg=;
-        b=IY9wN9Pxt7Wkq5Kw/w/YN2WhQ5lrbLq9xsO6327+oTJz4qLe8q6djgQ51wq5hknTqv
-         6XL8QxtCVrfmcTAx5BnMt05WCjQCLpm3As0IA2LbCi380+wYqq1TCzVTgziFZALwISJq
-         myeDfj35LsMTa2Zxi9p/MqClMLX8zPv7KcLLo0hy/pibrZ9YcaWbIaetlnZ7ERREdckP
-         cmDhdNp9lTUZPpLSYl/Yq6pao30MoZbha6BngoGUbrTMTKdUn83ru8cQ8NZbIK8V869M
-         QUh1LriBH3V/oiXO8F9lMMwMaL6YuT3eqyktV/w5/qrXskgUr/0sal8RtJeX4K/WCbwQ
-         6Mmw==
-X-Gm-Message-State: AO0yUKVJxISSXZ5gc4X7k6P1nrCTY47UCNoPc8W4nJssRTcmjcu6qEjE
-        MxUFOW+B8zUy/Tqfi44ie+tY
-X-Google-Smtp-Source: AK7set+PeLZD0q28+7VfIuR5FYBEpCA2iqc/43CehfHY93gt1fK/C3pX+7C2Gw4u5+rFPfKVBdPwPQ==
-X-Received: by 2002:aca:c109:0:b0:377:fae1:1175 with SMTP id r9-20020acac109000000b00377fae11175mr4777591oif.11.1675105594306;
-        Mon, 30 Jan 2023 11:06:34 -0800 (PST)
+        bh=9MEK1+P998O1167GFE7aFuI5yCicX9x2PXw8BbP/8EU=;
+        b=Ot/5f4jTkgPjHGdHLF9Tqi4L3HgdT6KsLMMFnGW8FtIvw8JlPJrS6q0tAydG7witsP
+         DrFWaMIbn2a0PzslmlGQ/3nwbkTGs7/HCg3wwuuT4EwAYPAFe366nD5sUJ15E7fpd2nd
+         8uTe7XunO8MPzGwX/JXJ2HnlxhpFQjLMPwmM2UKNINqx+VuQV9zi6t6zs7OWVYE2ENiR
+         TEYh50YrZe1xj+pEUlfcDOryQoGCu71to7cDjkfO3wlLgjwL8z9YiR54dxo4QDm1BjXO
+         FW75RJ8vvdVNDanIv1MuOXaa9ZXfKTsNP8ObFEyByDUjdZFFn6m8UXxzlRAk5hRDtHWd
+         6HGg==
+X-Gm-Message-State: AO0yUKVCp++qaStYoHNZkXGrBynfXjNs6fbShIi8zi33RyxMkO9qW33K
+        eSaS9JSzgANcMBkHMXsK6aRN
+X-Google-Smtp-Source: AK7set+WEbGo1bThQONOgWpxVgTSlFFO69qmJjjxW8OnDAdp0QJ0eMSmOZ6X6BTgJS2VCxwoBihTEQ==
+X-Received: by 2002:a4a:4881:0:b0:517:98ae:b441 with SMTP id p123-20020a4a4881000000b0051798aeb441mr1124891ooa.1.1675105964854;
+        Mon, 30 Jan 2023 11:12:44 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:ecb7:2dbf:e64c:6f68? ([2600:1700:e72:80a0:ecb7:2dbf:e64c:6f68])
-        by smtp.gmail.com with ESMTPSA id q125-20020aca5c83000000b0036f02656fa5sm5043598oib.34.2023.01.30.11.06.33
+        by smtp.gmail.com with ESMTPSA id e79-20020a4a5552000000b0051765eb8c25sm2209344oob.10.2023.01.30.11.12.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jan 2023 11:06:33 -0800 (PST)
-Message-ID: <35796b79-dfa8-92c3-33e1-3313da10975a@github.com>
-Date:   Mon, 30 Jan 2023 14:06:31 -0500
+        Mon, 30 Jan 2023 11:12:44 -0800 (PST)
+Message-ID: <b6b76b2c-3a81-a612-d2ca-93b2b660feeb@github.com>
+Date:   Mon, 30 Jan 2023 14:12:41 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
-Subject: Re: [PATCH 3/3] scalar: only warn when background maintenance fails
+Subject: Re: [PATCH v2 05/10] bundle-uri: download in creationToken order
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1473.git.1674849963.gitgitgadget@gmail.com>
- <d75780e0567b5f765816ab7522afe550ebaa3521.1674849963.git.gitgitgadget@gmail.com>
- <xmqqleln90ka.fsf@gitster.g>
- <4913381a-769f-aba0-c04d-559d103e8396@github.com>
- <xmqq357v8poc.fsf@gitster.g>
- <b63611dc-a889-8900-403a-ec7c42a89705@github.com>
- <db04e31d-681f-5809-f51a-37b9c734b45a@github.com>
- <xmqqy1pj3l3k.fsf@gitster.g>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Victoria Dye <vdye@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, avarab@gmail.com,
+        steadmon@google.com, chooglen@google.com
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+ <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
+ <7cfaa3c518cbedb65c585cc02015bb21ae24e9fa.1674487310.git.gitgitgadget@gmail.com>
+ <a2896d5b-f395-68df-1f23-356d0128cb9c@github.com>
+ <xmqqpmaz93k3.fsf@gitster.g>
+ <07c4658e-89dd-0f82-77e9-e7c443f747cd@github.com>
+ <xmqqtu073kx1.fsf@gitster.g>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqy1pj3l3k.fsf@gitster.g>
+In-Reply-To: <xmqqtu073kx1.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/30/2023 1:58 PM, Junio C Hamano wrote:
-> Victoria Dye <vdye@github.com> writes:
+On 1/30/2023 2:02 PM, Junio C Hamano wrote:
+> Derrick Stolee <derrickstolee@github.com> writes:
 > 
->> I'm also still worried about cluttering scalar's UX with options that toggle
->> use of its internally-configured options and features. One of the big
->> selling points for including scalar in the upstream project ([2], [3]) was
->> its ability to "intelligently" configure all of the settings a user would
->> need to optimize a large repository *without* a user needing to know what
->> any of those options are/what they mean. These settings are inherently
->> subject to change (due to use of experimental features); exposing a feature
->> toggle entrenches that setting permanently within scalar and makes a user
->> aware of implementation details that were intended to be hidden. At a high
->> level, it pushes scalar towards simply being an "opinionated" 'git
->> config'-configurator, which was a model I explicitly tried to move away from
->> while upstreaming last year.  
-> 
-> I personally do not think "opinionated configurator" is a bad model
-> at all.  And "this does not seem to work here, so let's silently
-> disable it, as the user does not want to hear about minute details"
-> is a valid opinion to have for such a tool.
-> 
-> I too share the aversion to command line option for this one.
-> Disabled periodic task support is most likely system-wide, and
-> passing --no-whatever every time you touch a new repository on the
-> same system does not make much sense.
+>> I think there are two possible directions we can have when talking
+>> about interrupted downloads:
+>>
+>> 1. The network connection was disconnected, and the client may want
+>>    to respond to that with a retry and a ranged request.
+>>
+>> 2. The client process itself terminates for some reason, and a
+>>    second process recognizes that some of the data already exists
+>>    and could be used for a range request of the remainder.
+... 
+> Mostly.  We probably do not want / need to cater to "I killed it
+> with ^C and would want to continue".
 
-Thanks, both. v2 will include --no-src, but not --no-maintenance.
+I mention it because it has been mentioned to me as an example use
+case. This includes other failures, such as power outages.
 
+I don't think we have range requests enabled for the longer-lived
+packfile-uri, but we shall see if adoption of bundle URIs presents
+more motivation to build that feature. Case (1) will be the easiest
+to consider, and I agree that it would be more generally useful.
+
+Thanks,
 -Stolee
