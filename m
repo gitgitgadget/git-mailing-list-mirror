@@ -2,101 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D95EC54EAA
-	for <git@archiver.kernel.org>; Mon, 30 Jan 2023 19:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96B58C636D3
+	for <git@archiver.kernel.org>; Mon, 30 Jan 2023 19:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238000AbjA3TCy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Jan 2023 14:02:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35336 "EHLO
+        id S238033AbjA3TGg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Jan 2023 14:06:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229573AbjA3TCx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2023 14:02:53 -0500
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 364F640FF
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 11:02:52 -0800 (PST)
-Received: by mail-pl1-x62d.google.com with SMTP id r8so5811567pls.2
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 11:02:52 -0800 (PST)
+        with ESMTP id S236847AbjA3TGf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2023 14:06:35 -0500
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 014A139BA6
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 11:06:35 -0800 (PST)
+Received: by mail-oi1-x22f.google.com with SMTP id bx13so5124994oib.13
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 11:06:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=344e+31DW8fBXyio83FE4uNbQu9RwILNH+w1iqC1WNo=;
-        b=I0AqnT9H/ro1i2pM1m0jDq+mqY1TjviUY4ygTRbjaEEvzUIkjlFhh9yA1xSLPeD/37
-         WBueUAB984JJX8+SyGM/FJcEZLcB8RfAHlfEPVuJp2IOFm2qjhW1OO3Utsm6DHF08c25
-         fmJsRNe4j0xk/cPomrn+++uoZVOcFuQ8okIRdiUltVHlyBJ8FkA1R1GkF32HK9eRFDEf
-         aEkFCDxm9Gi5ySPQpdeQiR/qHB9SsMK4xKPRve4h5BOU+KmxwW2LOf4p1jG9wrWRENcz
-         pRuOZx3Jjkn87zHe+/L7yjW1UdWPXSkMhMD3ILjiQ7t3dpltNp67fToWj/eKSawI1RNW
-         BJbg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=uJckalHK2pOCjs0+UQq4M9cIOFwWrCasKZRp56URILg=;
+        b=HgCn+IOOvMoB+Y6sqAhC7pkqcgsBSQBYqf/IyseQudg4+0KMQbYlpt4/0Q9n76t/5p
+         EiMtWZslifG2p5R2KyLRkkTyY5CMrGuDbxrVWOzOL7wEDG/qVkaQ3ZwQIRSM1ZH7VN2O
+         BOyJZTmmsOZM8BF4A3jyJE3gBYTdCNfHhoKHCh6RWROnz0UhHMY+E0w+dg2xci4K8nG8
+         gh3S1tkm7vTY/Hu8dUy6EGpKR+srZsX5RfN8sEtXqDeTAw2x9UsKCCju7TxeKXv9voFb
+         Sj31hG2kbltZWBoB/V5BM/gabHFMAyKnAHrM74lLV5nEUgWEJf1g1n9RNPdYo4GqJNjZ
+         aq3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=344e+31DW8fBXyio83FE4uNbQu9RwILNH+w1iqC1WNo=;
-        b=N0UHIOVDii43nRocZfXO6vvy+Z+jNIHMayvvXfIhI2OHzaMXzqpAPas1swmhbt3+Ox
-         czaaTJaYQ6h9Y4GmHvBKKS9cyRoZngYeZSdue3v9B7MzFH8rSuatTK2nmao+SfVuekhg
-         7QswtoWgvC/v5p5RO53GwbCdfstAE//tu1oVHSII4PQMujoN/uLlZLTJnUyHh2lP+Nwf
-         uQzyxNAcEU//uSSplVtjh1SA0591eNi+f4BHNM/tMVN5MsYAhrrfz/ZzeDHSm0nVex06
-         TBe0Lcb0hX0C4jYb47cyovHNoiea4f/0Y6MXnq6m4Lf9S0DAjkVgoO9HZdjNporPDTkO
-         M9Xw==
-X-Gm-Message-State: AO0yUKXeO2BmFTvO/BvqTc3t0wRknlBNP2rdRmS+/rpCs9oG7L/AML/P
-        8RwNso8oW5hj/ysPmGygPHij2sd9oTA=
-X-Google-Smtp-Source: AK7set+Q/wTsG3vcHGjnu8u9iPxf5/nvb+rThnkdBdJaZmRYi/Bmt94Vv/cGO65UaI0mWgSxs+kUHw==
-X-Received: by 2002:a17:903:3012:b0:196:3853:2926 with SMTP id o18-20020a170903301200b0019638532926mr15996059pla.9.1675105371639;
-        Mon, 30 Jan 2023 11:02:51 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id p14-20020a170902e74e00b0019309be03e7sm7830875plf.66.2023.01.30.11.02.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 11:02:51 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Victoria Dye <vdye@github.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, avarab@gmail.com,
-        steadmon@google.com, chooglen@google.com
-Subject: Re: [PATCH v2 05/10] bundle-uri: download in creationToken order
-References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
-        <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
-        <7cfaa3c518cbedb65c585cc02015bb21ae24e9fa.1674487310.git.gitgitgadget@gmail.com>
-        <a2896d5b-f395-68df-1f23-356d0128cb9c@github.com>
-        <xmqqpmaz93k3.fsf@gitster.g>
-        <07c4658e-89dd-0f82-77e9-e7c443f747cd@github.com>
-Date:   Mon, 30 Jan 2023 11:02:50 -0800
-In-Reply-To: <07c4658e-89dd-0f82-77e9-e7c443f747cd@github.com> (Derrick
-        Stolee's message of "Mon, 30 Jan 2023 13:43:07 -0500")
-Message-ID: <xmqqtu073kx1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uJckalHK2pOCjs0+UQq4M9cIOFwWrCasKZRp56URILg=;
+        b=IY9wN9Pxt7Wkq5Kw/w/YN2WhQ5lrbLq9xsO6327+oTJz4qLe8q6djgQ51wq5hknTqv
+         6XL8QxtCVrfmcTAx5BnMt05WCjQCLpm3As0IA2LbCi380+wYqq1TCzVTgziFZALwISJq
+         myeDfj35LsMTa2Zxi9p/MqClMLX8zPv7KcLLo0hy/pibrZ9YcaWbIaetlnZ7ERREdckP
+         cmDhdNp9lTUZPpLSYl/Yq6pao30MoZbha6BngoGUbrTMTKdUn83ru8cQ8NZbIK8V869M
+         QUh1LriBH3V/oiXO8F9lMMwMaL6YuT3eqyktV/w5/qrXskgUr/0sal8RtJeX4K/WCbwQ
+         6Mmw==
+X-Gm-Message-State: AO0yUKVJxISSXZ5gc4X7k6P1nrCTY47UCNoPc8W4nJssRTcmjcu6qEjE
+        MxUFOW+B8zUy/Tqfi44ie+tY
+X-Google-Smtp-Source: AK7set+PeLZD0q28+7VfIuR5FYBEpCA2iqc/43CehfHY93gt1fK/C3pX+7C2Gw4u5+rFPfKVBdPwPQ==
+X-Received: by 2002:aca:c109:0:b0:377:fae1:1175 with SMTP id r9-20020acac109000000b00377fae11175mr4777591oif.11.1675105594306;
+        Mon, 30 Jan 2023 11:06:34 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:ecb7:2dbf:e64c:6f68? ([2600:1700:e72:80a0:ecb7:2dbf:e64c:6f68])
+        by smtp.gmail.com with ESMTPSA id q125-20020aca5c83000000b0036f02656fa5sm5043598oib.34.2023.01.30.11.06.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Jan 2023 11:06:33 -0800 (PST)
+Message-ID: <35796b79-dfa8-92c3-33e1-3313da10975a@github.com>
+Date:   Mon, 30 Jan 2023 14:06:31 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 3/3] scalar: only warn when background maintenance fails
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+References: <pull.1473.git.1674849963.gitgitgadget@gmail.com>
+ <d75780e0567b5f765816ab7522afe550ebaa3521.1674849963.git.gitgitgadget@gmail.com>
+ <xmqqleln90ka.fsf@gitster.g>
+ <4913381a-769f-aba0-c04d-559d103e8396@github.com>
+ <xmqq357v8poc.fsf@gitster.g>
+ <b63611dc-a889-8900-403a-ec7c42a89705@github.com>
+ <db04e31d-681f-5809-f51a-37b9c734b45a@github.com>
+ <xmqqy1pj3l3k.fsf@gitster.g>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqy1pj3l3k.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+On 1/30/2023 1:58 PM, Junio C Hamano wrote:
+> Victoria Dye <vdye@github.com> writes:
+> 
+>> I'm also still worried about cluttering scalar's UX with options that toggle
+>> use of its internally-configured options and features. One of the big
+>> selling points for including scalar in the upstream project ([2], [3]) was
+>> its ability to "intelligently" configure all of the settings a user would
+>> need to optimize a large repository *without* a user needing to know what
+>> any of those options are/what they mean. These settings are inherently
+>> subject to change (due to use of experimental features); exposing a feature
+>> toggle entrenches that setting permanently within scalar and makes a user
+>> aware of implementation details that were intended to be hidden. At a high
+>> level, it pushes scalar towards simply being an "opinionated" 'git
+>> config'-configurator, which was a model I explicitly tried to move away from
+>> while upstreaming last year.  
+> 
+> I personally do not think "opinionated configurator" is a bad model
+> at all.  And "this does not seem to work here, so let's silently
+> disable it, as the user does not want to hear about minute details"
+> is a valid opinion to have for such a tool.
+> 
+> I too share the aversion to command line option for this one.
+> Disabled periodic task support is most likely system-wide, and
+> passing --no-whatever every time you touch a new repository on the
+> same system does not make much sense.
 
-> I think there are two possible directions we can have when talking
-> about interrupted downloads:
->
-> 1. The network connection was disconnected, and the client may want
->    to respond to that with a retry and a ranged request.
->
-> 2. The client process itself terminates for some reason, and a
->    second process recognizes that some of the data already exists
->    and could be used for a range request of the remainder.
->
-> I think both of these would not be handled at this layer, but
-> instead further down, inside fetch_bundle_uri_internal()
-> (specifically further down in download_https_uri_to_file()).
->
-> Any retry logic should happen there, closer to the connection,
-> and at the layer of the current patch, we should assume that any
-> retry logic that was attempted ended up failing in the end.
->
-> Does that satisfy your concerns here?
+Thanks, both. v2 will include --no-src, but not --no-maintenance.
 
-Mostly.  We probably do not want / need to cater to "I killed it
-with ^C and would want to continue".
-
-Thanks.
+-Stolee
