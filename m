@@ -2,153 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB151C54EAA
-	for <git@archiver.kernel.org>; Mon, 30 Jan 2023 10:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D555C54EAA
+	for <git@archiver.kernel.org>; Mon, 30 Jan 2023 11:08:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235715AbjA3Kxo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Jan 2023 05:53:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43690 "EHLO
+        id S235305AbjA3LIh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Jan 2023 06:08:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230416AbjA3Kxm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2023 05:53:42 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 191FC13D60
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 02:53:41 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id v13so10499080eda.11
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 02:53:41 -0800 (PST)
+        with ESMTP id S231370AbjA3LIg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jan 2023 06:08:36 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08BC87689
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 03:08:35 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id gr7so6012885ejb.5
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 03:08:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jMJNlZ4wspdj2WNCidqYwIT0plFeQbb3QmzUWlmmrwc=;
-        b=QYhtbyId/mxlaJLD5BBoKixHSMWLEHtyLLjAIelJfM/QAWlDg1yKQncEOta56R1zgK
-         k4cWuTWzVt+N1Fo9UPuBCvQkjwouaAGLrIBq5kLz39nbVgoeU5l8IiAypsLd9GX+AqUk
-         rUgYwNd5PNQFjzWNtoA6+ZxCS/NyRCqQhZhOGixKsqC7zUYsNqpsLCf6zNTfO8moxuRO
-         8kJ1P5mHVhFqpw0Gs5gL1edEavBDYI2HrMfdBxQI1BenKmtl6sbDmHRtPOIq40opany5
-         6ejccThQPT73sQdZh8xzxTy3HQ6XXIJ8ORh3n/ghGaWTiSsBs/sXzi81N+AbBVyhxdH3
-         6qGQ==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=G8x4bC0Gj2zZwJghO/Eb2QwtadPZ89qhP/PMcmpyoyQ=;
+        b=jMd6oRTY0T1xAgBcp8avBkmEld5nnGYCjpIR0VogKy24L/8jHZoaweW812CnGAndmY
+         USaD5WelXzRlEsSeUcGhVVVo1tAHhfQEbuv1WHg4ErlVkc1noQzizz8Zh8gKYAF9+JLs
+         mw4xdAA/KZmCI9POf37ebWIBLCC1KjMwLZg4NrNV/JGRC9ISO1UUZ6Ffu4tX0FmIIJP4
+         71FFVaAVQjYL82HD09qHo+2c/OLd1eUwYSh5l9+BTNlC/oFWc0gd+0AR9yho5Xo7L1W2
+         Co1gqd4Lq41PtN0tt4a9MkAZay5vdPimFOJekZT1ehe3ow7pZc+pZ2Z2nhcdlEnsEAbH
+         CulQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jMJNlZ4wspdj2WNCidqYwIT0plFeQbb3QmzUWlmmrwc=;
-        b=y2EgZI1ljpFU5Pa4zf0RobgJ+M2m++zh9zQwl3pEAWtxrQL7muI0BsjwNurR0coW3F
-         2z5pe2exZ01glHriG5ukki3QPFGATOyb6gjD6ipVETRKzCSZ2fbJUS2y7cuK5ffI1pqZ
-         le+LyvxHLeY0N+UooRjZFGDZ6/7VI/0UauaUzGTbAtSj1z2Hn32KC4La/fi+16DcvDC5
-         VqvMrhwqTW/aDbMlUb+WCPhhQ4lVoCFdvnqpSvll6N1q+gYKggGyjK7kI2oMNasikbFC
-         zabq30ef83WVydsSCsCelwiRsTkpQdg2EpP8n2wk38eFIyQ3KKNtDXC5s4058oG4gJTI
-         oRAg==
-X-Gm-Message-State: AO0yUKVUkz2R7yWNdCZSF89mGlqmkwe5SxpSyh9k9jkLjSue5l6T8EzG
-        UQ4jzbSHfNLoReRinHfKW34wbrpmezvO/w==
-X-Google-Smtp-Source: AK7set/PRazdaSnGbu4XhkSRNoC3xjuRD7U/rMQjALnCv791SA640wrmp2fx5m0ek9SebweFgS0bSA==
-X-Received: by 2002:a50:9559:0:b0:4a2:3d3d:a3d9 with SMTP id v25-20020a509559000000b004a23d3da3d9mr5571611eda.2.1675076019610;
-        Mon, 30 Jan 2023 02:53:39 -0800 (PST)
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G8x4bC0Gj2zZwJghO/Eb2QwtadPZ89qhP/PMcmpyoyQ=;
+        b=gMjqjxzMXY5rr8go2hfsKh4IZOqftzDC3MvqqWnBiM6XfnyUBSFDBOFhmbCbZO5fDg
+         s88lKUiIxpvrs/nuKt3ZHeih3TehcL7vlipUG4r0b/Zla6bbp5SLAhSVeMg8XQIss6Uu
+         jETeB83aJu2FrYnPNAMBLqzKhpl2GAgIkJK1uNHr1fmwkWX6CiZB85vf/KPIK4HgXbOd
+         EE9KxN6tmzoh5/6V28WT+XOu4kTsLn7rlI5FXHi/7XrMIoacTGw+doWSFOda2xVz21PT
+         X0avr6QKV3RD+klE6H0D4QoAIF36+sSF6L/q4IiRxOZ6HxNK6Fr3UtzZSxY+j8tjn6u0
+         sCgg==
+X-Gm-Message-State: AO0yUKVEB/zzA2oVkJ83p6eKphox5iT28BnrcU+yq5f/VYySSw3TfHjG
+        7Pc0QDO7wYgKIpyvINSmlYA=
+X-Google-Smtp-Source: AK7set/jxVWasQosUVjr7+yFqKSwCr+fSjWmDRcWs5lTfTOSx+EaDzJ5NGUp4iT8y+g6lQ2BzCAzRQ==
+X-Received: by 2002:a17:907:c245:b0:886:50d:be8d with SMTP id tj5-20020a170907c24500b00886050dbe8dmr6785488ejc.13.1675076913510;
+        Mon, 30 Jan 2023 03:08:33 -0800 (PST)
 Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id ev11-20020a056402540b00b004a2348c5613sm2662453edb.77.2023.01.30.02.53.38
+        by smtp.gmail.com with ESMTPSA id z22-20020a1709067e5600b0087276f66c6asm6669610ejr.115.2023.01.30.03.08.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jan 2023 02:53:39 -0800 (PST)
+        Mon, 30 Jan 2023 03:08:33 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pMRn8-001jYp-1V;
-        Mon, 30 Jan 2023 11:53:38 +0100
+        id 1pMS1Y-001k6r-0P;
+        Mon, 30 Jan 2023 12:08:32 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Michael Strawbridge <michael.strawbridge@amd.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v9 0/2] send-email: expose header information to
- git-send-email's sendemail-validate hook
-Date:   Mon, 30 Jan 2023 11:40:14 +0100
-References: <20230120012459.920932-1-michael.strawbridge@amd.com>
- <230123.86wn5ds602.gmgdl@evledraar.gmail.com>
- <5758ffc7-eb8c-4c16-d226-dd882cb2406b@amd.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Mathias Krause <minipli@grsecurity.net>, git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: [PATCH v2] grep: fall back to interpreter if JIT memory
+        allocation fails
+Date:   Mon, 30 Jan 2023 11:56:42 +0100
+References: <20221216121557.30714-1-minipli@grsecurity.net>
+        <20230127154952.485913-1-minipli@grsecurity.net>
+        <xmqqbkmk9bsn.fsf@gitster.g> <xmqq1qnfancf.fsf@gitster.g>
+        <adb5a43a-5081-4f60-d1ea-2a6511f858c0@grsecurity.net>
+        <xmqqk0156z55.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <5758ffc7-eb8c-4c16-d226-dd882cb2406b@amd.com>
-Message-ID: <230130.86bkmgs37x.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqk0156z55.fsf@gitster.g>
+Message-ID: <230130.867cx4s2j4.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Jan 23 2023, Michael Strawbridge wrote:
+On Sun, Jan 29 2023, Junio C Hamano wrote:
 
-> On 2023-01-23 08:51, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-  * Aside from that, shouldn't we have a new "validate-headers" or
->>    whatever hook, instead of assuming that we can add another argument
->>    to existing users?...
+> Mathias Krause <minipli@grsecurity.net> writes:
 >
-> While it's true we could (and I don't have a super strong opinion here),
-> I suppose I was foreseeing the potential that a user may want to have
-> logic that requires both the email headers and contents.=C2=A0 For exampl=
-e,
-> only checking contents for a specific mailing list.=C2=A0 If we split the
-> hooks, a user would then need to figure out how to have them coordinate.
-
-...
-
->>
->>  * ...except can we do it safely? Now, it seems to me like you have
->>    potential correctness issues here. We call format_2822_time() to make
->>    the headers, but that's based on "$time", which we save away earlier.
->>
->>    But for the rest (e.g. "Message-Id" are we sure that we're giving the
->>    hook the same headers as the one we actually end up sending?
->>
->>    But regardless of that, something that would bypass this entire
->>    stdin/potential correctness etc. problem is if we just pass an offset
->>    to the the, i.e. currently we have a "validate" which gets the
->>    contents, if we had a "validate-raw" or whatever we could just pass:
+>> ... While we might be able to compile the pattern and run it in
+>> interpreter mode, it'll likely have a *much* higher runtime.
+>> ...
+>> So this grep run eat up ~9.5 *hours* of CPU time. Do we really want to
+>> fall back to something like this for the pathological cases? ...Yeah, I
+>> don't think so either.
 >
-> I think there might be a part missing here: "problem is if we just pass
-> an offset to the ___."=C2=A0 So there's a chance I may not fully grasp yo=
-ur
-> suggestion.
+> You may not, but I do not agree with you at all.  The code should
+> not outsmart the user in such a case.
 
-Sorry, a byte offset into the file to indicate the boundary between the
-headers and the content.
+It's the falling back in the nominal case that would be outsmarting the
+user.
 
->
->> 	<headers>
->> 	\n\n
->> 	<content>
->>
->>    Where the current "validate" just gets "content", no? We could then
->>    either pass the offset to the "\n\n", or just trust that such a hook
->>    knows to find the "\n\n".
->>
->>    I also think that would be more generally usable, as the tiny
->>    addition of some exit code interpretation would allow us to say "I
->>    got this, and consider this sent", which would also satisfy some who
->>    have wanted e.g. a way to intrecept it before it invokes "sendmail"
->>    (I remember a recent thread about that in relation to using "mutt" to
->>    send it directly)
->>
->>=20=20=20=20
->
-> Are you suggesting to simply add the header to the current
-> sendemail-validate hook?
+If I compile libpcre2 with JIT support I'm expecting Git to use that,
+and not fall back in those cases where the JIT engine would give up.
 
-No, I'm saying that we currently don't pass them at all, and your patch
-adds another argument to a file with the headers.
+> Even if the pattern the user came up with is impossible to grok for
+> a working JIT compiler, and it might be hard to grok for the
+> interpreter, what is the next step you recommend the user if you
+> refuse to fall back on the interprete?  "Rewrite it to please the
+> JIT compiler"?
 
-That *may* break some existing users if they're only expecting the
-current argument(s) (although that's probably unlikely), more
-importantly we're now doing extra work for all existing hook users, for
-the benefit of only some new users.
+I'd argue that it's pretty much impossible to unintentionally write such
+pathological patterns, the edge cases where e.g. the JIT would run out
+of resources v.s. the normal engine are a non-issue for any "normal"
+use.
 
-So I'm suggesting having some opt-in mechanism for the new semantics,
-both to preserve the existing semantics for existing users, and for
-current and new users avoid writing out the file etc. when we don't need
-to.
+Pathological regexes are pretty much only interesting to anyone in the
+context of DoS attacks where they're being used to cause intentional
+slowdowns.
 
-Which we could do with a config variable,
-e.g. hooks."sendemail-validate".includeHeaders=3Dtrue, or just by having a
-new "sendemail-validate-raw" (or whatever we'd call it).
+Here we're discussing an orthagonal case where the "JIT fails", but
+rather than some pathological pattern it's because SELinux has made it
+not work at runtime, and we're trying to tease the two cases apart.
 
-I think it's fine to enforce that if such a new hook exists we'd take it
-over the "sendemail-validate" (if any), i.e. we wouldn't need to support
-both.
+> If that is the best pattern the user can produce to solve the
+> problem at hand, being able to give the user an answer in 9 hours is
+> much better than not being able to give anything at all.
 
+Speed is a feature in itself, and in a lot of cases (e.g. user-supplied
+patterns vulnerable to a DoS attack) continuing on the slow path is much
+worse.
+
+Even just using my terminal for ad-hoc "git grep", I'd *much* rather get
+an early error about the pattern exceeding JIT resources than continuing
+on the fallback path.
+
+If I had somehow written one by accident (and this is stretching
+credulity) you can usually apply some minor tweaks to the pattern, and
+then execute it in seconds instead of minutes/hours.
+
+> Maybe after waiting for 5 minutes, the user gets bored and ^C, or
+> without killing it, open another terminal and try a different
+> patern, and in 9 hours, perhaps comes up with an equivalent (or
+> different but close enough) pattern that happens to run much faster,
+> at which time the user may kill the original one.  In any of these
+> cases, by refusing to run, the code is not doing any service to the
+> user.
+
+I don't think this is plausible at all per the above, and that we
+shouldn't harm realistic use-cases to satisfy hypothetical ones.
