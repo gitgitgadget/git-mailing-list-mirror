@@ -2,140 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0961FC38142
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 07:49:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1CD3C38142
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 08:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229577AbjAaHth (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 02:49:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51894 "EHLO
+        id S229815AbjAaIIo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 03:08:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229565AbjAaHte (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2023 02:49:34 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDF7345F43
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 23:49:15 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id iv8-20020a05600c548800b003db04a0a46bso400014wmb.0
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 23:49:15 -0800 (PST)
+        with ESMTP id S229572AbjAaIIl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 03:08:41 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA30C2CFF7
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 00:08:40 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id 203so8380876pfx.6
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 00:08:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=grsecurity.net; s=grsec;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OhZM59c72wq8qCsqleTjhvFc/trRzf5ikhK/lJgtgmM=;
-        b=fXk1mOBFdhMDCZf5TrP5CBneGlboGh7sZcuoPdiMnN0WPHzGC0PDtzDOR61sXNDDZo
-         naKEcUXOKOEtUDhzUNPQLaor0C378HJ3dVlFgcxY/v55S6pj1u7oMe38OLNVcBA3e2SW
-         82n6BtLLEB3uZ/98J7VvWtBAectCKW+f7kPUsSmkPb6NJG6ISZ6+51L4nAjzqjiQKoVA
-         GRhQG6dyJ0y5pKJIv1OIrLZo7pUF3zRDGIoSQqJOM7WpeZ/ljER0B+Lk+v5eD0kgD3uh
-         wCYTF7io3Y0sYLapxiY1tZcWxy2HHZO6o3w4sKX7ZuZAVzlIZh4K7bGBGqvNKA1Z0B5y
-         tOqg==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0VZD5u9kvj5KX6aTs8nl4lLqRjnlWzAQRDBDOCvE5Zk=;
+        b=RlQudUnYnkIuz+TsA8z8m1Azj2X2bCzJ/QeFKwdfoVGQlCePa3AdFI6/V0LpOaGbOq
+         lghJZDU9KKdXchhNzBF8UHjh+uBkBv3LVP63Bt65a1xrrRKR0L776xzygm/QTMUXCVyh
+         6E+Wn4aimDzRXUgx9ErT3z9KZ8DG2nCQrKacSRLKLODLtn9mmjy6mH9Tr+aoCCDBIue0
+         B6ySIdVp5IbAzJRD6uRS8T49ZWWPNhvHdyIYQkYohFrgRJ1GeQv95xhWy44M+TSq15/i
+         ptWdfCXowxQn5SKM1t0JhMy4KdZZ2Dp1baYmA7S2KagBCBTXGk6UgsooKRSckeVplfFe
+         25FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OhZM59c72wq8qCsqleTjhvFc/trRzf5ikhK/lJgtgmM=;
-        b=EnZaOjDAPBjzLz6Vq+VBioXBVaYXvg9ru+DQPgN1v+0epxG9L0d8XYxkGubCqn+zOX
-         63F45ZXmG56mDHI0ye83zDrLIoDUGy+qAb8MCzZ8nrz9g8tDpat0psw10J395Aa48rX9
-         U69BeqXZf8dW8moFAKaxU0e1aUzCPme7nojdU7894dxmdgpgNa0U4pExsI/TSl5h0/Eq
-         SfH+3saqrmjfZs7Mgd6Celjjii0CeoQx8Q1Xnd9nFi1OXIWmNx7ZeYmI3AvhdiW7yUcN
-         yyf0sajIxoeL4YpsZPOWWf292X6pXsLpLb1mqsxBSve+dHUlfKb9gCMS/gzgwCS9+RZG
-         iy/A==
-X-Gm-Message-State: AFqh2kquZIvDHa/Voi7tn2EJ4w6no12O9iJgkAqYh/PsuFW60xFtefZ3
-        0ZUwhCjA/5a11Yv0veMjzbd7nA==
-X-Google-Smtp-Source: AMrXdXuZ1hJhG7ElmW6yKseMzl1LKwuJGJWdQAsM+Q5jiS5hCrpWrA3+YIcab6y5qeiju9VNA3Aq6w==
-X-Received: by 2002:a05:600c:3d8d:b0:3db:2c8:d7e1 with SMTP id bi13-20020a05600c3d8d00b003db02c8d7e1mr52404866wmb.20.1675151335780;
-        Mon, 30 Jan 2023 23:48:55 -0800 (PST)
-Received: from ?IPV6:2003:f6:af25:c200:dcc7:5696:ff63:6d6f? (p200300f6af25c200dcc75696ff636d6f.dip0.t-ipconnect.de. [2003:f6:af25:c200:dcc7:5696:ff63:6d6f])
-        by smtp.gmail.com with ESMTPSA id bi5-20020a05600c3d8500b003db0bb81b6asm15734067wmb.1.2023.01.30.23.48.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jan 2023 23:48:55 -0800 (PST)
-Message-ID: <d1c4cbad-bbb8-d610-5e27-970d96dd7a74@grsecurity.net>
-Date:   Tue, 31 Jan 2023 08:48:54 +0100
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0VZD5u9kvj5KX6aTs8nl4lLqRjnlWzAQRDBDOCvE5Zk=;
+        b=a6xHZIcfHToxCi3aLczTTBrsTzjHzwU2ptPBWC5eRALstkFvZ0Db1ufcSIxD19r8c/
+         oxSEy5lETfeLvgmjBSHK2WY60oJAQ0O6Fac0cEjPYE5FrhnFembk6uBfCg8wvBOam0p5
+         T2YKSKYhXKc5DXLaFCTq1WsGCVwbqWUWyHEH676doPCapE697HpkkI3SkOEJQS7O7Ttk
+         sC+qkQcHXj4FywhL0KfT03D7ktrrWGUdeJeLXciZNC3vJbSC1wAsIdyG2p0Js2J+cB0m
+         4GOqKDZmVBJTI0vjd+V3m1beLwKeVE1s89Ha6Bg7UMf5TdQb9pQ+4zrp3flERxvy/4CH
+         ue5w==
+X-Gm-Message-State: AO0yUKXTzaRjBm/ZJ5137lwZXKcNhiQljnbaTAibiy6xcgPdiTo0QPCl
+        8XYrFMBD7JwEnQePa5AO/WzVBdWRaKW5ZCuvvojzvcYHNJc=
+X-Google-Smtp-Source: AK7set9+FKF2gNbppmU6atLRqYoG8kf2Szt9SrGNIYLRjBy/JbuNmwW4IGPPdqj9WoAxrktk/N8K8A+NR7tvudRHov8=
+X-Received: by 2002:a05:6a00:451b:b0:593:a079:639a with SMTP id
+ cw27-20020a056a00451b00b00593a079639amr1654288pfb.44.1675152519951; Tue, 31
+ Jan 2023 00:08:39 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2] grep: fall back to interpreter if JIT memory
- allocation fails
-Content-Language: en-US, de-DE
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
-References: <20221216121557.30714-1-minipli@grsecurity.net>
- <20230127154952.485913-1-minipli@grsecurity.net> <xmqqbkmk9bsn.fsf@gitster.g>
- <xmqq1qnfancf.fsf@gitster.g>
- <adb5a43a-5081-4f60-d1ea-2a6511f858c0@grsecurity.net>
- <xmqqk0156z55.fsf@gitster.g>
- <9b5a1113-84f1-1651-bffc-6382462057dd@grsecurity.net>
- <xmqq357r4zvk.fsf@gitster.g> <xmqqlelj3hvk.fsf@gitster.g>
- <xmqqk0131zxi.fsf@gitster.g>
-From:   Mathias Krause <minipli@grsecurity.net>
-In-Reply-To: <xmqqk0131zxi.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From:   Alessandro Arici <alessandro.arici@gmail.com>
+Date:   Tue, 31 Jan 2023 09:08:28 +0100
+Message-ID: <CAMvf6PPcKQYLWbj1x8P0Y=8rG19i8DNNPG=fCBUvaHLCRKXDmg@mail.gmail.com>
+Subject: =?UTF-8?Q?Git_loses_untracked_files_during_=E2=80=9Cstash=E2=80=9D_if_ther?=
+        =?UTF-8?Q?e_are_conficts?=
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30.01.23 22:21, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Having said all that, I do not mind queuing v2 if the "use *NO_JIT
->> to disable" is added to the message to help users who are forced to
->> redo the query.
-> 
-> In the meantime, here is what I plan to apply on top of v2 while
-> queuing it.  The message given to die() should lack the terminating
-> LF, and the overlong line can and should be split at operator
-> boundary.
-> 
-> Thanks.
-> 
->  grep.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git c/grep.c w/grep.c
-> index 59afc3f07f..42f184bd09 100644
-> --- c/grep.c
-> +++ w/grep.c
-> @@ -357,7 +357,11 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
->  			p->pcre2_jit_on = 0;
->  			return;
->  		} else if (jitret) {
-> -			die("Couldn't JIT the PCRE2 pattern '%s', got '%d'\n", p->pattern, jitret);
-> +			die("Couldn't JIT the PCRE2 pattern '%s', got '%d'%s",
-> +			    p->pattern, jitret,
-> +			    pcre2_jit_functional() 
-> +			    ? "\nPerhaps prefix (*NO_GIT) to your pattern?" 
-> +			    : "");
->  		}
->  
->  		/*
+Using git stash -u, but, as title, when there are conflicts untracked
+files are gone.
 
-Looks sensible, but maybe something like below would be even better?
+This is a link, for example:
+https://www.databasesandlife.com/git-stash-loses-untracked-files/
 
-diff --git a/grep.c b/grep.c
-index 59afc3f07fc9..e0144ba77e7a 100644
---- a/grep.c
-+++ b/grep.c
-@@ -357,7 +357,13 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 			p->pcre2_jit_on = 0;
- 			return;
- 		} else if (jitret) {
--			die("Couldn't JIT the PCRE2 pattern '%s', got '%d'\n", p->pattern, jitret);
-+			int do_clip = p->patternlen > 64;
-+			int clip_len = do_clip ? 64 : p->patternlen;
-+			die("Couldn't JIT the PCRE2 pattern '%.*s'%s, got '%d'%s",
-+			    clip_len, p->pattern, do_clip ? "..." : "", jitret,
-+			    pcre2_jit_functional()
-+			    ? "\nPerhaps prefix (*NO_JIT) to your pattern?"
-+			    : "");
- 		}
- 
- 		/*
+And this is a reproduction of the bug
 
-It'll ensure, git will be printing the hint even for very long patterns,
-like the one I was testing this with ("$(perl -e 'print "(.)" x 4000')").
+# Create a Git repo with a single file committed
+git init
+echo contents > original-file.txt
+git add original-file.txt
+git commit -m "Creating the file"
 
-Thanks,
-Mathias
+# Create a new file, modify an old one, stash
+echo foo > new-file.txt
+echo contents2 > original-file.txt
+git stash push -u
+
+# Modify the old file in a different way, commit
+echo contents3 > original-file.txt
+git commit -am "Altering the file"
+
+# Apply the stash, see conflict, but what about the new file?
+git stash pop
+cat new-file.txt
+
+
+
+Git version, on Linux: 2.34.1
+
+Thank you
