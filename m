@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C31E7C38142
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 13:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5390CC636D4
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 13:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232244AbjAaNaE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 08:30:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40856 "EHLO
+        id S231946AbjAaNaG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 08:30:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232224AbjAaN3j (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232217AbjAaN3j (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 31 Jan 2023 08:29:39 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AD604B76D
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C0FE4DCE0
         for <git@vger.kernel.org>; Tue, 31 Jan 2023 05:29:31 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so12459438wma.1
+Received: by mail-wm1-x32c.google.com with SMTP id n13so3330085wmr.4
         for <git@vger.kernel.org>; Tue, 31 Jan 2023 05:29:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=foPdSOP1k+3PLwuXXDyn4B/taHtg4WPtOdzuqttAkSY=;
-        b=lhxQ/bDE+f513zwtcb1nIsm0cFLiRln/IQN1m74JKbsSs8RxIsN+EG/RSus4q9zZT/
-         MTxQ/F5iksnS3npa5kpPsBGLZ8/UJahS3brmwm5iAGwMFa7A0PY0aWpfvAN8hY3jgjZE
-         PQ5wkj4plgNRGU+ZGKHMxFWrKcLN2SiR0uzEcoOTkdZy20aAe4+fT9l0i5y7admLQg2l
-         FtktbNS/UXrc0T1FEv8PsjyhIo4uJ841q6UURd07QJwEt4C4F8ACo2VP+zNTeCx2KdAQ
-         wlTaKnnXsmYHZMyzC32JrKKexmIPQJ2GXi21G/evwFYmFRawkqSjOXHFR6c7Rvj0GPjH
-         GvzQ==
+        bh=Ji80PUlPvKQbAIOn0OsU1g9u7Sp2n3XxcsOBLiRJA50=;
+        b=KjPNiBaUyMIcCjaqZ91MAL2z9VGYxq8ZB2XCKdb7g6NSsE6eWXEkOXfDsubWzoI0eq
+         WhJJL6kZjrHOoddEOr6/q9RtqZxDIpbIp7odqxjPuv+hbwk/CzVYKdcsNNPUGE9LccWL
+         MNJEj+LFvZ+nOKQCSlC7GM+atloX6baN/FHkYpPVmr3tUDi3QqsEoAIS8RZJ09yM1ZkB
+         uGa76qftBrmmJyu0sOZ0ZrliF+wfc7inw5OKa5hhGm4NW6QYp/xoeybEjjoJLLcSPwYS
+         Mc7FRfUcTNJPPk3A0fzMJzyQYITcYN0jN9Y8T/Efc8yydsSwAR+Mn2dglRyIWYNznziF
+         PTgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=foPdSOP1k+3PLwuXXDyn4B/taHtg4WPtOdzuqttAkSY=;
-        b=E7h90SqHaJd8JfiAtNq9agpz6cre8QoOihSrd9dC1ma+JFeTuFYik3TW8I/HkxAR1M
-         rnLtF7K1Uw79wuMKYbisWUkgkUWHe9zxm0AbW01LKdWOXkUyQDbUuDQW93/gCo8npf3w
-         fdwnOgFPyROTFVI6u/Dp9pfodI+KQRrRN3dp3fBiVA41WdZ8wCVRtjvns2409cHVFd7i
-         ODlhG01eGOAs+n4694PpFEd02tzU2TkdSyeofAbASOCvdcFF0IljwFk0wRODRWfPOJWh
-         vpNnM9GHmUMhpNGTqv1fjRT46ifIVD8yVnPNcwxWLRsl1KU9h5cgoJIaWKTzlOIP2oCh
-         K9xA==
-X-Gm-Message-State: AFqh2koo9LZ61ynv6nNVWyWXUSKV9iabLIfgQjq8WLXib9EAwWLMFZ1I
-        IjudFmRJ8EENFVbSof8irlhqtggsBBU=
-X-Google-Smtp-Source: AMrXdXs1SaRd5GnhksVYE9SQS65n2icyCx4fSesZjIUJkhTpJwJoLdfJElLEupuzAEpvh8UIoTz1bQ==
-X-Received: by 2002:a05:600c:1c9d:b0:3da:db4:6105 with SMTP id k29-20020a05600c1c9d00b003da0db46105mr54537562wms.37.1675171770821;
-        Tue, 31 Jan 2023 05:29:30 -0800 (PST)
+        bh=Ji80PUlPvKQbAIOn0OsU1g9u7Sp2n3XxcsOBLiRJA50=;
+        b=EUKsDNLYt2zktGC10PIbhuUD1j4c2iks5zmIq4oWo3NVt7nm3AJ/l9ify0k9xO0ztm
+         YYDIMZ/g5ZmvGDF/g+0JF3V/LWRhtf50cEw+nHTs19lK1afCb7sySo4cZiDtBZNjjtIT
+         ibk4f2Dvk2valPt8I7dHEGy9jyxEDYxbiQRQ/bnqKEShzQRhZSpGnqLyj2EG61mb6Zyj
+         sqfQB0Oy6Ctu697qswW0b6zDQ3+MF97qqyzDa3uTke412DxLRQcI8rfwvfaFStGnq8Us
+         0X+Oogl4hZ8nolFwJzvJgh4Iqaa+ImBxvbNfgB8JTdzyxxTiBr8/P3JuI4NpNNM1Uujl
+         aUew==
+X-Gm-Message-State: AO0yUKUEs321tZJKvfxA8NYaTLM8JlS0omsmggGdgqIdypwehUcs6wjn
+        H1/WNIUfeJNprAFMvO3nd85X2WHWtRI=
+X-Google-Smtp-Source: AK7set+qu0nccDBqiD41AbpS3TibvCPfqA3DRrCvP3swpbJRKH8C05wvJkPzNUQvqddk84L89GISsA==
+X-Received: by 2002:a05:600c:1c9c:b0:3de:d9f:3025 with SMTP id k28-20020a05600c1c9c00b003de0d9f3025mr79021wms.0.1675171769975;
+        Tue, 31 Jan 2023 05:29:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o16-20020a05600c379000b003dc49e0132asm10470109wmr.1.2023.01.31.05.29.30
+        by smtp.gmail.com with ESMTPSA id iz16-20020a05600c555000b003dd1aa227afsm3385663wmb.31.2023.01.31.05.29.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Jan 2023 05:29:30 -0800 (PST)
-Message-Id: <c968b63febab41f1f665910a103fcec56fac0a59.1675171760.git.gitgitgadget@gmail.com>
+        Tue, 31 Jan 2023 05:29:29 -0800 (PST)
+Message-Id: <4e0465efd19798e7a14d653440233b9b3319b6de.1675171760.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1454.v3.git.1675171759.gitgitgadget@gmail.com>
 References: <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
         <pull.1454.v3.git.1675171759.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 31 Jan 2023 13:29:19 +0000
-Subject: [PATCH v3 11/11] bundle-uri: test missing bundles with heuristic
+Date:   Tue, 31 Jan 2023 13:29:18 +0000
+Subject: [PATCH v3 10/11] bundle-uri: store fetch.bundleCreationToken
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,440 +71,241 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The creationToken heuristic uses a different mechanism for downloading
-bundles from the "standard" approach. Specifically: it uses a concrete
-order based on the creationToken values and attempts to download as few
-bundles as possible. It also modifies local config to store a value for
-future fetches to avoid downloading bundles, if possible.
+When a bundle list specifies the "creationToken" heuristic, the Git
+client downloads the list and then starts downloading bundles in
+descending creationToken order. This process stops as soon as all
+downloaded bundles can be applied to the repository (because all
+required commits are present in the repository or in the downloaded
+bundles).
 
-However, if any of the individual bundles has a failed download, then
-the logic for the ordering comes into question. It is important to avoid
-infinite loops, assigning invalid creation token values in config, but
-also to be opportunistic as possible when downloading as many bundles as
-seem appropriate.
+When checking the same bundle list twice, this strategy requires
+downloading the bundle with the maximum creationToken again, which is
+wasteful. The creationToken heuristic promises that the client will not
+have a use for that bundle if its creationToken value is at most the
+previous creationToken value.
 
-These tests were used to inform the implementation of
-fetch_bundles_by_token() in bundle-uri.c, but are being added
-independently here to allow focusing on faulty downloads. There may be
-more cases that could be added that result in modifications to
-fetch_bundles_by_token() as interesting data shapes reveal themselves in
-real scenarios.
+To prevent these wasteful downloads, create a fetch.bundleCreationToken
+config setting that the Git client sets after downloading bundles. This
+value allows skipping that maximum bundle download when this config
+value is the same value (or larger).
+
+To test that this works correctly, we can insert some "duplicate"
+fetches into existing tests and demonstrate that only the bundle list is
+downloaded.
+
+The previous logic for downloading bundles by creationToken worked even
+if the bundle list was empty, but now we have logic that depends on the
+first entry of the list. Terminate early in the (non-sensical) case of
+an empty bundle list.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- t/t5558-clone-bundle-uri.sh | 400 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 400 insertions(+)
+ Documentation/config/fetch.txt | 16 ++++++++++++
+ bundle-uri.c                   | 48 ++++++++++++++++++++++++++++++++--
+ t/t5558-clone-bundle-uri.sh    | 29 +++++++++++++++++++-
+ 3 files changed, 90 insertions(+), 3 deletions(-)
 
+diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
+index 244f44d460f..568f0f75b30 100644
+--- a/Documentation/config/fetch.txt
++++ b/Documentation/config/fetch.txt
+@@ -104,3 +104,19 @@ fetch.bundleURI::
+ 	linkgit:git-clone[1]. `git clone --bundle-uri` will set the
+ 	`fetch.bundleURI` value if the supplied bundle URI contains a bundle
+ 	list that is organized for incremental fetches.
+++
++If you modify this value and your repository has a `fetch.bundleCreationToken`
++value, then remove that `fetch.bundleCreationToken` value before fetching from
++the new bundle URI.
++
++fetch.bundleCreationToken::
++	When using `fetch.bundleURI` to fetch incrementally from a bundle
++	list that uses the "creationToken" heuristic, this config value
++	stores the maximum `creationToken` value of the downloaded bundles.
++	This value is used to prevent downloading bundles in the future
++	if the advertised `creationToken` is not strictly larger than this
++	value.
+++
++The creation token values are chosen by the provider serving the specific
++bundle URI. If you modify the URI at `fetch.bundleURI`, then be sure to
++remove the value for the `fetch.bundleCreationToken` value before fetching.
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 7a1b6d94bf5..d6f7df7350f 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -481,6 +481,8 @@ static int fetch_bundles_by_token(struct repository *r,
+ {
+ 	int cur;
+ 	int move_direction = 0;
++	const char *creationTokenStr;
++	uint64_t maxCreationToken = 0, newMaxCreationToken = 0;
+ 	struct bundle_list_context ctx = {
+ 		.r = r,
+ 		.list = list,
+@@ -494,8 +496,27 @@ static int fetch_bundles_by_token(struct repository *r,
+ 
+ 	for_all_bundles_in_list(list, append_bundle, &bundles);
+ 
++	if (!bundles.nr) {
++		free(bundles.items);
++		return 0;
++	}
++
+ 	QSORT(bundles.items, bundles.nr, compare_creation_token_decreasing);
+ 
++	/*
++	 * If fetch.bundleCreationToken exists, parses to a uint64t, and
++	 * is not strictly smaller than the maximum creation token in the
++	 * bundle list, then do not download any bundles.
++	 */
++	if (!repo_config_get_value(r,
++				   "fetch.bundlecreationtoken",
++				   &creationTokenStr) &&
++	    sscanf(creationTokenStr, "%"PRIu64, &maxCreationToken) == 1 &&
++	    bundles.items[0]->creationToken <= maxCreationToken) {
++		free(bundles.items);
++		return 0;
++	}
++
+ 	/*
+ 	 * Attempt to download and unbundle the minimum number of bundles by
+ 	 * creationToken in decreasing order. If we fail to unbundle (after
+@@ -516,6 +537,16 @@ static int fetch_bundles_by_token(struct repository *r,
+ 	cur = 0;
+ 	while (cur >= 0 && cur < bundles.nr) {
+ 		struct remote_bundle_info *bundle = bundles.items[cur];
++
++		/*
++		 * If we need to dig into bundles below the previous
++		 * creation token value, then likely we are in an erroneous
++		 * state due to missing or invalid bundles. Halt the process
++		 * instead of continuing to download extra data.
++		 */
++		if (bundle->creationToken <= maxCreationToken)
++			break;
++
+ 		if (!bundle->file) {
+ 			/*
+ 			 * Not downloaded yet. Try downloading.
+@@ -555,6 +586,9 @@ static int fetch_bundles_by_token(struct repository *r,
+ 				 */
+ 				move_direction = -1;
+ 				bundle->unbundled = 1;
++
++				if (bundle->creationToken > newMaxCreationToken)
++					newMaxCreationToken = bundle->creationToken;
+ 			}
+ 		}
+ 
+@@ -569,14 +603,24 @@ move:
+ 		cur += move_direction;
+ 	}
+ 
+-	free(bundles.items);
+-
+ 	/*
+ 	 * We succeed if the loop terminates because 'cur' drops below
+ 	 * zero. The other case is that we terminate because 'cur'
+ 	 * reaches the end of the list, so we have a failure no matter
+ 	 * which bundles we apply from the list.
+ 	 */
++	if (cur < 0) {
++		struct strbuf value = STRBUF_INIT;
++		strbuf_addf(&value, "%"PRIu64"", newMaxCreationToken);
++		if (repo_config_set_multivar_gently(ctx.r,
++						    "fetch.bundleCreationToken",
++						    value.buf, NULL, 0))
++			warning(_("failed to store maximum creation token"));
++
++		strbuf_release(&value);
++	}
++
++	free(bundles.items);
+ 	return cur >= 0;
+ }
+ 
 diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-index 9c2b7934b9b..afd56926c53 100755
+index 7deeb4b8ad1..9c2b7934b9b 100755
 --- a/t/t5558-clone-bundle-uri.sh
 +++ b/t/t5558-clone-bundle-uri.sh
-@@ -618,6 +618,406 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
- 	test_cmp expect actual
+@@ -433,6 +433,7 @@ test_expect_success 'clone incomplete bundle list (http, creationToken)' '
+ 		"$HTTPD_URL/smart/fetch.git" clone-token-http &&
+ 
+ 	test_cmp_config -C clone-token-http "$HTTPD_URL/bundle-list" fetch.bundleuri &&
++	test_cmp_config -C clone-token-http 1 fetch.bundlecreationtoken &&
+ 
+ 	cat >expect <<-EOF &&
+ 	$HTTPD_URL/bundle-list
+@@ -468,6 +469,7 @@ test_expect_success 'clone incomplete bundle list (http, creationToken)' '
+ 	GIT_TRACE2_EVENT="$(pwd)/trace1.txt" \
+ 		git -C clone-token-http fetch origin --no-tags \
+ 		refs/heads/merge:refs/heads/merge &&
++	test_cmp_config -C clone-token-http 4 fetch.bundlecreationtoken &&
+ 
+ 	cat >expect <<-EOF &&
+ 	$HTTPD_URL/bundle-list
+@@ -511,6 +513,7 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
+ 		"$HTTPD_URL/smart/fetch.git" fetch-http-4 &&
+ 
+ 	test_cmp_config -C fetch-http-4 "$HTTPD_URL/bundle-list" fetch.bundleuri &&
++	test_cmp_config -C fetch-http-4 1 fetch.bundlecreationtoken &&
+ 
+ 	cat >expect <<-EOF &&
+ 	$HTTPD_URL/bundle-list
+@@ -538,6 +541,7 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
+ 		git -C fetch-http-4 fetch origin --no-tags \
+ 		refs/heads/left:refs/heads/left \
+ 		refs/heads/right:refs/heads/right &&
++	test_cmp_config -C fetch-http-4 2 fetch.bundlecreationtoken &&
+ 
+ 	cat >expect <<-EOF &&
+ 	$HTTPD_URL/bundle-list
+@@ -555,6 +559,18 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
+ 	EOF
+ 	test_cmp expect refs &&
+ 
++	# No-op fetch
++	GIT_TRACE2_EVENT="$(pwd)/trace1b.txt" \
++		git -C fetch-http-4 fetch origin --no-tags \
++		refs/heads/left:refs/heads/left \
++		refs/heads/right:refs/heads/right &&
++
++	cat >expect <<-EOF &&
++	$HTTPD_URL/bundle-list
++	EOF
++	test_remote_https_urls <trace1b.txt >actual &&
++	test_cmp expect actual &&
++
+ 	cat >>"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
+ 	[bundle "bundle-3"]
+ 		uri = bundle-3.bundle
+@@ -570,6 +586,7 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
+ 	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
+ 		git -C fetch-http-4 fetch origin --no-tags \
+ 		refs/heads/merge:refs/heads/merge &&
++	test_cmp_config -C fetch-http-4 4 fetch.bundlecreationtoken &&
+ 
+ 	cat >expect <<-EOF &&
+ 	$HTTPD_URL/bundle-list
+@@ -588,7 +605,17 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
+ 	refs/bundles/left
+ 	refs/bundles/merge
+ 	EOF
+-	test_cmp expect refs
++	test_cmp expect refs &&
++
++	# No-op fetch
++	GIT_TRACE2_EVENT="$(pwd)/trace2b.txt" \
++		git -C fetch-http-4 fetch origin &&
++
++	cat >expect <<-EOF &&
++	$HTTPD_URL/bundle-list
++	EOF
++	test_remote_https_urls <trace2b.txt >actual &&
++	test_cmp expect actual
  '
  
-+test_expect_success 'creationToken heuristic with failed downloads (clone)' '
-+	test_when_finished rm -rf download-* trace*.txt &&
-+
-+	# Case 1: base bundle does not exist, nothing can unbundle
-+	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+		heuristic = creationToken
-+
-+	[bundle "bundle-1"]
-+		uri = fake.bundle
-+		creationToken = 1
-+
-+	[bundle "bundle-2"]
-+		uri = bundle-2.bundle
-+		creationToken = 2
-+
-+	[bundle "bundle-3"]
-+		uri = bundle-3.bundle
-+		creationToken = 3
-+
-+	[bundle "bundle-4"]
-+		uri = bundle-4.bundle
-+		creationToken = 4
-+	EOF
-+
-+	GIT_TRACE2_EVENT="$(pwd)/trace-clone-1.txt" \
-+	git clone --single-branch --branch=base \
-+		--bundle-uri="$HTTPD_URL/bundle-list" \
-+		"$HTTPD_URL/smart/fetch.git" download-1 &&
-+
-+	# Bundle failure does not set these configs.
-+	test_must_fail git -C download-1 config fetch.bundleuri &&
-+	test_must_fail git -C download-1 config fetch.bundlecreationtoken &&
-+
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-list
-+	$HTTPD_URL/bundle-4.bundle
-+	$HTTPD_URL/bundle-3.bundle
-+	$HTTPD_URL/bundle-2.bundle
-+	$HTTPD_URL/fake.bundle
-+	EOF
-+	test_remote_https_urls <trace-clone-1.txt >actual &&
-+	test_cmp expect actual &&
-+
-+	# All bundles failed to unbundle
-+	git -C download-1 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	test_must_be_empty refs &&
-+
-+	# Case 2: middle bundle does not exist, only two bundles can unbundle
-+	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+		heuristic = creationToken
-+
-+	[bundle "bundle-1"]
-+		uri = bundle-1.bundle
-+		creationToken = 1
-+
-+	[bundle "bundle-2"]
-+		uri = fake.bundle
-+		creationToken = 2
-+
-+	[bundle "bundle-3"]
-+		uri = bundle-3.bundle
-+		creationToken = 3
-+
-+	[bundle "bundle-4"]
-+		uri = bundle-4.bundle
-+		creationToken = 4
-+	EOF
-+
-+	GIT_TRACE2_EVENT="$(pwd)/trace-clone-2.txt" \
-+	git clone --single-branch --branch=base \
-+		--bundle-uri="$HTTPD_URL/bundle-list" \
-+		"$HTTPD_URL/smart/fetch.git" download-2 &&
-+
-+	# Bundle failure does not set these configs.
-+	test_must_fail git -C download-2 config fetch.bundleuri &&
-+	test_must_fail git -C download-2 config fetch.bundlecreationtoken &&
-+
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-list
-+	$HTTPD_URL/bundle-4.bundle
-+	$HTTPD_URL/bundle-3.bundle
-+	$HTTPD_URL/fake.bundle
-+	$HTTPD_URL/bundle-1.bundle
-+	EOF
-+	test_remote_https_urls <trace-clone-2.txt >actual &&
-+	test_cmp expect actual &&
-+
-+	# bundle-1 and bundle-3 could unbundle, but bundle-4 could not
-+	git -C download-2 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	cat >expect <<-EOF &&
-+	refs/bundles/base
-+	refs/bundles/right
-+	EOF
-+	test_cmp expect refs &&
-+
-+	# Case 3: top bundle does not exist, rest unbundle fine.
-+	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+		heuristic = creationToken
-+
-+	[bundle "bundle-1"]
-+		uri = bundle-1.bundle
-+		creationToken = 1
-+
-+	[bundle "bundle-2"]
-+		uri = bundle-2.bundle
-+		creationToken = 2
-+
-+	[bundle "bundle-3"]
-+		uri = bundle-3.bundle
-+		creationToken = 3
-+
-+	[bundle "bundle-4"]
-+		uri = fake.bundle
-+		creationToken = 4
-+	EOF
-+
-+	GIT_TRACE2_EVENT="$(pwd)/trace-clone-3.txt" \
-+	git clone --single-branch --branch=base \
-+		--bundle-uri="$HTTPD_URL/bundle-list" \
-+		"$HTTPD_URL/smart/fetch.git" download-3 &&
-+
-+	# As long as we have continguous successful downloads,
-+	# we _do_ set these configs.
-+	test_cmp_config -C download-3 "$HTTPD_URL/bundle-list" fetch.bundleuri &&
-+	test_cmp_config -C download-3 3 fetch.bundlecreationtoken &&
-+
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-list
-+	$HTTPD_URL/fake.bundle
-+	$HTTPD_URL/bundle-3.bundle
-+	$HTTPD_URL/bundle-2.bundle
-+	$HTTPD_URL/bundle-1.bundle
-+	EOF
-+	test_remote_https_urls <trace-clone-3.txt >actual &&
-+	test_cmp expect actual &&
-+
-+	# fake.bundle did not unbundle, but the others did.
-+	git -C download-3 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	cat >expect <<-EOF &&
-+	refs/bundles/base
-+	refs/bundles/left
-+	refs/bundles/right
-+	EOF
-+	test_cmp expect refs
-+'
-+
-+# Expand the bundle list to include other interesting shapes, specifically
-+# interesting for use when fetching from a previous state.
-+#
-+# ---------------- bundle-7
-+#       7
-+#     _/|\_
-+# ---/--|--\------ bundle-6
-+#   5   |   6
-+# --|---|---|----- bundle-4
-+#   |   4   |
-+#   |  / \  /
-+# --|-|---|/------ bundle-3 (the client will be caught up to this point.)
-+#   \ |   3
-+# ---\|---|------- bundle-2
-+#     2   |
-+# ----|---|------- bundle-1
-+#      \ /
-+#       1
-+#       |
-+# (previous commits)
-+test_expect_success 'expand incremental bundle list' '
-+	(
-+		cd clone-from &&
-+		git checkout -b lefter left &&
-+		test_commit 5 &&
-+		git checkout -b righter right &&
-+		test_commit 6 &&
-+		git checkout -b top lefter &&
-+		git merge -m "7" merge righter &&
-+
-+		git bundle create bundle-6.bundle lefter righter --not left right &&
-+		git bundle create bundle-7.bundle top --not lefter merge righter &&
-+
-+		cp bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/"
-+	) &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/fetch.git" fetch origin +refs/heads/*:refs/heads/*
-+'
-+
-+test_expect_success 'creationToken heuristic with failed downloads (fetch)' '
-+	test_when_finished rm -rf download-* trace*.txt &&
-+
-+	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+		heuristic = creationToken
-+
-+	[bundle "bundle-1"]
-+		uri = bundle-1.bundle
-+		creationToken = 1
-+
-+	[bundle "bundle-2"]
-+		uri = bundle-2.bundle
-+		creationToken = 2
-+
-+	[bundle "bundle-3"]
-+		uri = bundle-3.bundle
-+		creationToken = 3
-+	EOF
-+
-+	git clone --single-branch --branch=left \
-+		--bundle-uri="$HTTPD_URL/bundle-list" \
-+		"$HTTPD_URL/smart/fetch.git" fetch-base &&
-+	test_cmp_config -C fetch-base "$HTTPD_URL/bundle-list" fetch.bundleURI &&
-+	test_cmp_config -C fetch-base 3 fetch.bundleCreationToken &&
-+
-+	# Case 1: all bundles exist: successful unbundling of all bundles
-+	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+		heuristic = creationToken
-+
-+	[bundle "bundle-1"]
-+		uri = bundle-1.bundle
-+		creationToken = 1
-+
-+	[bundle "bundle-2"]
-+		uri = bundle-2.bundle
-+		creationToken = 2
-+
-+	[bundle "bundle-3"]
-+		uri = bundle-3.bundle
-+		creationToken = 3
-+
-+	[bundle "bundle-4"]
-+		uri = bundle-4.bundle
-+		creationToken = 4
-+
-+	[bundle "bundle-6"]
-+		uri = bundle-6.bundle
-+		creationToken = 6
-+
-+	[bundle "bundle-7"]
-+		uri = bundle-7.bundle
-+		creationToken = 7
-+	EOF
-+
-+	cp -r fetch-base fetch-1 &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace-fetch-1.txt" \
-+		git -C fetch-1 fetch origin &&
-+	test_cmp_config -C fetch-1 7 fetch.bundlecreationtoken &&
-+
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-list
-+	$HTTPD_URL/bundle-7.bundle
-+	$HTTPD_URL/bundle-6.bundle
-+	$HTTPD_URL/bundle-4.bundle
-+	EOF
-+	test_remote_https_urls <trace-fetch-1.txt >actual &&
-+	test_cmp expect actual &&
-+
-+	# Check which bundles have unbundled by refs
-+	git -C fetch-1 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	cat >expect <<-EOF &&
-+	refs/bundles/base
-+	refs/bundles/left
-+	refs/bundles/lefter
-+	refs/bundles/merge
-+	refs/bundles/right
-+	refs/bundles/righter
-+	refs/bundles/top
-+	EOF
-+	test_cmp expect refs &&
-+
-+	# Case 2: middle bundle does not exist, only bundle-4 can unbundle
-+	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+		heuristic = creationToken
-+
-+	[bundle "bundle-1"]
-+		uri = bundle-1.bundle
-+		creationToken = 1
-+
-+	[bundle "bundle-2"]
-+		uri = bundle-2.bundle
-+		creationToken = 2
-+
-+	[bundle "bundle-3"]
-+		uri = bundle-3.bundle
-+		creationToken = 3
-+
-+	[bundle "bundle-4"]
-+		uri = bundle-4.bundle
-+		creationToken = 4
-+
-+	[bundle "bundle-6"]
-+		uri = fake.bundle
-+		creationToken = 6
-+
-+	[bundle "bundle-7"]
-+		uri = bundle-7.bundle
-+		creationToken = 7
-+	EOF
-+
-+	cp -r fetch-base fetch-2 &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace-fetch-2.txt" \
-+		git -C fetch-2 fetch origin &&
-+
-+	# Since bundle-7 fails to unbundle, do not update creation token.
-+	test_cmp_config -C fetch-2 3 fetch.bundlecreationtoken &&
-+
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-list
-+	$HTTPD_URL/bundle-7.bundle
-+	$HTTPD_URL/fake.bundle
-+	$HTTPD_URL/bundle-4.bundle
-+	EOF
-+	test_remote_https_urls <trace-fetch-2.txt >actual &&
-+	test_cmp expect actual &&
-+
-+	# Check which bundles have unbundled by refs
-+	git -C fetch-2 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	cat >expect <<-EOF &&
-+	refs/bundles/base
-+	refs/bundles/left
-+	refs/bundles/merge
-+	refs/bundles/right
-+	EOF
-+	test_cmp expect refs &&
-+
-+	# Case 3: top bundle does not exist, rest unbundle fine.
-+	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
-+	[bundle]
-+		version = 1
-+		mode = all
-+		heuristic = creationToken
-+
-+	[bundle "bundle-1"]
-+		uri = bundle-1.bundle
-+		creationToken = 1
-+
-+	[bundle "bundle-2"]
-+		uri = bundle-2.bundle
-+		creationToken = 2
-+
-+	[bundle "bundle-3"]
-+		uri = bundle-3.bundle
-+		creationToken = 3
-+
-+	[bundle "bundle-4"]
-+		uri = bundle-4.bundle
-+		creationToken = 4
-+
-+	[bundle "bundle-6"]
-+		uri = bundle-6.bundle
-+		creationToken = 6
-+
-+	[bundle "bundle-7"]
-+		uri = fake.bundle
-+		creationToken = 7
-+	EOF
-+
-+	cp -r fetch-base fetch-3 &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace-fetch-3.txt" \
-+		git -C fetch-3 fetch origin &&
-+
-+	# As long as we have continguous successful downloads,
-+	# we _do_ set the maximum creation token.
-+	test_cmp_config -C fetch-3 6 fetch.bundlecreationtoken &&
-+
-+	# NOTE: the fetch skips bundle-4 since bundle-6 successfully
-+	# unbundles itself and bundle-7 failed to download.
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-list
-+	$HTTPD_URL/fake.bundle
-+	$HTTPD_URL/bundle-6.bundle
-+	EOF
-+	test_remote_https_urls <trace-fetch-3.txt >actual &&
-+	test_cmp expect actual &&
-+
-+	# Check which bundles have unbundled by refs
-+	git -C fetch-3 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	cat >expect <<-EOF &&
-+	refs/bundles/base
-+	refs/bundles/left
-+	refs/bundles/lefter
-+	refs/bundles/right
-+	refs/bundles/righter
-+	EOF
-+	test_cmp expect refs
-+'
-+
  # Do not add tests here unless they use the HTTP server, as they will
- # not run unless the HTTP dependencies exist.
- 
 -- 
 gitgitgadget
+
