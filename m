@@ -2,104 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F56DC38142
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 20:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FAB2C38142
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 21:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231520AbjAaUqW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 15:46:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49952 "EHLO
+        id S231834AbjAaVFU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 16:05:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230185AbjAaUqV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2023 15:46:21 -0500
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87E7B59B65
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 12:45:53 -0800 (PST)
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out1.suse.de (Postfix) with ESMTP id 3DADB336B7;
-        Tue, 31 Jan 2023 20:45:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1675197952; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=UTlbCN+9FSAgwoms2oh0gZObGFinIm94VUIz77QxdM0=;
-        b=Pvm8ysQ4gWzKY4gfvvvls3BnvpUvxpWCbRnaForXUMpCq62ZgfchQvLkF6SqWGErD4oKSz
-        XGkCH7lVRxktVRX/Y7Qw/6GhKAuSNsS+hsHgiYQUcZT+mmAixJahEQFCN4kAHhkHvjFC6M
-        sQEPDTlbT+/4SY1UpyZa47MJN9IpeMI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1675197952;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=UTlbCN+9FSAgwoms2oh0gZObGFinIm94VUIz77QxdM0=;
-        b=Kq6DxpAhRAEHcZFIKDsUxWthROlD6MU26hzMilwl5FJFxHotqLD4WnQ1tUQkz7JAQJFCeM
-        /1j9xZ9/4F7ZWwBw==
-Received: from kitsune.suse.cz (kitsune.suse.cz [10.100.12.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by relay2.suse.de (Postfix) with ESMTPS id 11EC12C141;
-        Tue, 31 Jan 2023 20:45:52 +0000 (UTC)
-Date:   Tue, 31 Jan 2023 21:45:50 +0100
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     Eli Schwartz <eschwartz93@gmail.com>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
- a possible solution
-Message-ID: <20230131204550.GI19419@kitsune.suse.cz>
-References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
- <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
- <6fc8e122-a190-c291-c347-258a5a2ad9c9@gmail.com>
- <20230131162049.mgqdxcucjesw4afr@meerkat.local>
- <df7b0b43-efa2-ea04-dc5b-9515e7f1d86f@gmail.com>
+        with ESMTP id S230189AbjAaVFQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 16:05:16 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DDFF2739
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 13:05:15 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id m2so11394805plg.4
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 13:05:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=byx9eENnHUvxyMGm6l6Obf0HD6je0+YdTWmEpzhKgSw=;
+        b=iUPICnzK63wshMXvzYSr3rsE5e/HYDfGMlat4nuop2v7fNo8g79C3U8L3QeEA9z7Ie
+         gl8rIBQ9vAHFdmBj0NQOi6YNsnYLEMIMt41gxhUX9wJ1qco0LoCouzWDJQ4BA/8f4Q9A
+         kKQeo+tekHR7qrrZmSNDQ9dpaSEt6OJ+e6MXhP6FjeVfk17LdY7GRL1mB/pRseQg71TV
+         1EX4ZjTiRFu+SCx4IpGudOYaD7k+dp8yhSDXy1RrC4sqnbUxDOP5Dph9wQU+UTxS0Huf
+         YAKh99q150iT7b2FlDMQuFoJ/088nXIoN50mb6OLj4IFbJTm3R/O6OHTi+/S6JJ4SRYD
+         ZehA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=byx9eENnHUvxyMGm6l6Obf0HD6je0+YdTWmEpzhKgSw=;
+        b=vu5I6uc+jbUfF6i7XGksIa529RpROK8mRDVOUUzwL5JvHhyUofewMkToOzR4dFtA40
+         Vsg4JkPqJUnZnOapqAvvYNPOvvwLfjImL+B75LQQomdrVqd9sGJpYmakiJd5Ff1L/3mq
+         mtDXWytc7CfW6yckpQgAeHrKPAhuMZZZAsqB++LYaOP7RyYkkLOAtTVdmqTFVywEAWzS
+         gTJYw98GorlghJSPIJhFxvs/vGUaWIeUizmd/D957wkRPhKbF8ddBI47sKEnuDLkvYIT
+         vUPmwAblM9/knklEOCAivmes8jyj/OdoWT0kXJaf5xfNrxy1N7FZkaLnfjyry4HRlwT5
+         zUrg==
+X-Gm-Message-State: AO0yUKXDMC/wkDQyloPsTzsZ9cuWOvLj3oEz8GIUzLs481rUDcC7QHPI
+        10MctA7g23ehwZGY/TQinuE=
+X-Google-Smtp-Source: AK7set8od/1PSaNtmsVjKQ0cTbjJo6BZ6JF7hNQL3NjQ544Sw/LepPuB9dNlpycjudLQmMbks38EHA==
+X-Received: by 2002:a17:90a:e7ca:b0:22c:932:2870 with SMTP id kb10-20020a17090ae7ca00b0022c09322870mr26026009pjb.33.1675199114865;
+        Tue, 31 Jan 2023 13:05:14 -0800 (PST)
+Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
+        by smtp.gmail.com with ESMTPSA id mj8-20020a17090b368800b0021900ba8eeesm11535081pjb.2.2023.01.31.13.05.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Jan 2023 13:05:14 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Mathias Krause <minipli@grsecurity.net>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: Re: [PATCH v3] grep: fall back to interpreter if JIT memory
+ allocation fails
+References: <20230127154952.485913-1-minipli@grsecurity.net>
+        <20230131185611.520311-1-minipli@grsecurity.net>
+Date:   Tue, 31 Jan 2023 13:05:13 -0800
+In-Reply-To: <20230131185611.520311-1-minipli@grsecurity.net> (Mathias
+        Krause's message of "Tue, 31 Jan 2023 19:56:11 +0100")
+Message-ID: <xmqqedraxvna.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <df7b0b43-efa2-ea04-dc5b-9515e7f1d86f@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 31, 2023 at 11:34:59AM -0500, Eli Schwartz wrote:
-> On 1/31/23 11:20 AM, Konstantin Ryabitsev wrote:
-> > On Tue, Jan 31, 2023 at 10:56:52AM -0500, Eli Schwartz wrote:
-> >> And for tarballs that are generated once and uploaded to ftp storage,
-> >> not repeatedly generated on the fly, we know the checksum will never
-> >> legitimately change, so we *want* to hash the compressed file.
-> >> Decompressing kernel.org tarballs in order to run PGP on them is *slow*.
-> > 
-> > FWIW, the most correct way is:
-> > 
-> > * download sha256sums.asc and verify its signature (auto-signed by infra)
-> > * download the tarball you want and verify that the checksum matches
-> > * uncompress and verify the PGP signature (signed by developer)
-> > 
-> > This script implements this workflow:
-> > https://git.kernel.org/pub/scm/linux/kernel/git/mricon/korg-helpers.git/tree/get-verified-tarball
-> 
-> 
-> This is just what I said, but with an additional first step for when you
-> are updating to a new tarball and don't have your own checksums
-> integrated into your own ecosystem tracking.
-> 
-> In most contexts, it's utterly unacceptable to not remember the checksum
-> of the file you used last time and instead simply trust PGP identity
-> verification. This permits upstream the technical means to be malicious,
-> and re-upload a totally different tarball with the same name, different
-> contents, and different PGP signature, and you will never notice because
-> the PGP signature is still okay.
+Mathias Krause <minipli@grsecurity.net> writes:
 
-But where is the hash remembered?
+> Mention the possibility to prefix a failing pattern with '(*NO_JIT)' in
+> case we run into the JIT's limitations, as per Junio. Also clip the
+> printed pattern to ensure the hint actually gets printed.
 
-The signature is a hash+signature, it you can replace that, you can also
-repolace a hash without a signature.
-
-You can store hashesd of anything you want locally, and indeed such
-stored hashes in some build systemns did detect some code hosting
-corruption but that's not for upstream to do, that's something that only
-unrelated third party can do.
-
-Thanks
-
-Michal
+Looking good.  Will queue.  Thanks.
