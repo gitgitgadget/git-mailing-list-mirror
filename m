@@ -2,114 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F2FDC636CC
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 22:32:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D2DEC38142
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 22:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231716AbjAaWco (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 17:32:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56832 "EHLO
+        id S230189AbjAaWt7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 17:49:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229962AbjAaWcm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2023 17:32:42 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB6B03403B
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 14:32:41 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 283915A300;
-        Tue, 31 Jan 2023 22:32:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1675204361;
-        bh=eO4JRayDanQoHPlfk5fqWkf3pAs0TbI4pk2gL2bNv98=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Uqx580uB2VGRRyLfgFeWrw6fCavxJnyPo0gj58xFq+qjTk6p7lt0LOUvlwpCu5YoH
-         on3fL79lmXl/hVrdMoZEzJ6Y2+Yi9WCqEzgCUr/TOmhDk8zCz6HgPpCUiwDb66gLZ2
-         4PLkS1PDaDw09oPDQnIRulmrXWCX8Jpkz7w/aImWrTxrmz76epH7ylx3H3sih61jGT
-         METPByrIxFGi4g93zau3CXPeantIqOql6IRwKQyJFKIBEu58ldYBKhZN8qReCQKma5
-         ljZIBjQB+uNXo6rgJ6reiMN1MufnMjkxspykNBUt8iqAFijtMzu/WRaeZWsyrvcWkS
-         tZCX8Oi1vbbTu+Wp8QI+VW5/nhFznlUbgR3vPF+AJZhJVH5k24yDOy5NRI9+e4rCAM
-         aybvcYECPqEQ//Qv8hgB8ko9BL3MY4q2ATdOk4dXCjteSnebSPScvlSKxKSV202OkX
-         pze1oBKRWjApwcXuQb0w1utV/2C80ubI8zrAbbOtbzw8ubwP4K/
-Date:   Tue, 31 Jan 2023 22:32:39 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     Eli Schwartz <eschwartz93@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
- a possible solution
-Message-ID: <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eli Schwartz <eschwartz93@gmail.com>,
-        Git List <git@vger.kernel.org>
-References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
- <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
- <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
+        with ESMTP id S232113AbjAaWtw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 17:49:52 -0500
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B2751026E
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 14:49:50 -0800 (PST)
+Received: by mail-il1-x12e.google.com with SMTP id h18so4421731ilj.6
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 14:49:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TIrUQ1BoGHEdipJzbxIKUV114OAgqlftT2kCExAqDzk=;
+        b=dpYXOCLHxg+5qw33b0AJQy6MgZoShh2bFNlFusENedNHnKyFqxlNhvTgwIe/LqvxCs
+         A0fy51AFcsCcliClygZ8eiwIp7y9dyPOFLSSfEjhmR0XiD9EDV69+Ozky1NHfMnB0js3
+         YX4DSnOGfjR4YEMDQb1zGDfd3lcsZLMCp/zmHUjcUOaMTBnCYYsOPoDRKboyw9JHggHm
+         5sn+GZq//fz3n/4OWnct7hoWc1P4dyLkkNutB6Mgr1neaMl0z26Y2GdkWVV6fF7vgiF9
+         BQFwx3IUjQG50aCHYHjbUBUE0F8zrckvVlMnfo4UT4hcUwG06Mw8xFWOqRELW0QmHqNB
+         SwPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TIrUQ1BoGHEdipJzbxIKUV114OAgqlftT2kCExAqDzk=;
+        b=nafKNz2mXPTb+g7VKHwMiIIynhi0+yQfcBn52PDIpKJi60jFzAyfR7G+fGzne8821x
+         8SrIxvsIASRs6vXuTa2Rsv7U16kqS3kpLl70wQkksa1frzxy6OYwaEeRJNi11Xil4zAr
+         ti2n4l6z9Cc3vQD5Yv4lXm4GVK/7w+/M/TOMVLdtanRkw32qp4MEBEhfr1ANJymSVdxr
+         rOKq17M276k5GV3OYpC/kiluwTKTCHWkInZdOrZ0zpUMiE4fJnG/pEpQYz00UdQQuPFn
+         SyR8Yp5yBGOSn3D9CC4x3NPrnwskV9ne/QdHjVU/ZN83n1e3pNHnZHTab6mIb76Omw2E
+         wTnw==
+X-Gm-Message-State: AO0yUKXlTFqWS5KDzTUVfOuW6lONLgFldMcbPR1zPyDV7DOuL0A0fSVR
+        o4FW29HbvQgn0J52EfxJzT05rNb5v7LbOw==
+X-Google-Smtp-Source: AK7set8NgAgIOvuN3qb14PrKQMhIZq5YhIwAgepQwQg4TVmrukyfXXnrgoISZPdQwWCH06i3Yy7GHA==
+X-Received: by 2002:a05:6e02:2194:b0:30d:911c:e6de with SMTP id j20-20020a056e02219400b0030d911ce6demr11716753ila.14.1675205389436;
+        Tue, 31 Jan 2023 14:49:49 -0800 (PST)
+Received: from cheska.uwo-x-22.wireless.uwo.pri (eclipse-22.wireless.uwo.ca. [129.100.255.37])
+        by smtp.googlemail.com with ESMTPSA id a16-20020a056e020e1000b0031108705346sm1116924ilk.79.2023.01.31.14.49.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Jan 2023 14:49:48 -0800 (PST)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>
+Subject: [GSoC][PATCH] t/t4113-apply-ending.sh: Modernize a test script
+Date:   Tue, 31 Jan 2023 17:49:29 -0500
+Message-Id: <20230131224929.2018546-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="XrJ/fdFj5fnUO76c"
-Content-Disposition: inline
-In-Reply-To: <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---XrJ/fdFj5fnUO76c
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I cleaned up some old style in test script.
 
-On 2023-01-31 at 15:05:55, Konstantin Ryabitsev wrote:
-> On Tue, Jan 31, 2023 at 09:54:58AM +0000, brian m. carlson wrote:
-> > I'm one of the GitHub employees who chimed in there, and I'm also a Git
-> > contributor in my own time (and I am speaking here only in my personal
-> > capacity, since this is a personal address).  I made a change some years
-> > back to the archive format to fix the permissions on pax headers when
-> > extracted as files, and kernel.org was relying on that and broke.  Linus
-> > yelled at me because of that.
-> >=20
-> > Since then, I've been very opposed to us guaranteeing output format
-> > consistency without explicitly doing so.  I had sent some patches before
-> > that I don't think ever got picked up that documented this explicitly.
-> > I very much don't want people to come to rely on our behaviour unless we
-> > explicitly guarantee it.
->=20
-> I understand your position, but I also think it's one of those things that
-> happen despite your best efforts to prevent it. :)
->=20
-> May I suggest adding a "git-archive --stable" that offers this guarantee,
-> simply as a matter of codifying the fact that the world has built
-> infrastructure around git's repeatable output. Maybe just for .tar (and
-> .tar.gz).
+for example :
 
-It is my intention to implement just .tar.  That's my proposal: simply a
-pax-based format that serializes in a consistent way according to a
-predefined spec.
+* old style:
 
-As far as whether other people want to implement consistent compression,
-they are welcome to also write a spec and implement it.  I personally
-feel that's too hard to get right and am not planning on working on it.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+    test_expect_success \
+        'title' \
+        'body line 1 &&
+        body line 2'
 
---XrJ/fdFj5fnUO76c
-Content-Type: application/pgp-signature; name="signature.asc"
+  should become:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+    test_expect_success 'title' '
+        body line 1 &&
+        body line 2
+    '
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY9mXBwAKCRB8DEliiIei
-ga79AP9WC0qnQk8C2o6Wz+vf2+nEuJzoKQ3ouQsvCCOVrLVHYgD9H4GK2HF9kFLn
-zrn8xs64Gn2l1DbgSdre+1bGk/3zaQE=
-=3NXQ
------END PGP SIGNATURE-----
 
---XrJ/fdFj5fnUO76c--
+
+
+Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+---
+Hi,I'm Shuqi Liang.a junior student majors in Computer Science at University of Western Ontario. 
+
+This patch is the microproject I try to getting involved with the Git project.
+
+I have read 'MyFirstContribution.txt', 'Hacking Git' and the book 《pro git》 ,and I know more about objects, references, packfile format, etc.
+Over the coming period, I will delve into the source code and gain a deeper understanding and try to  contribute more meaningful patch to the community.
+
+ t/t4113-apply-ending.sh | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/t/t4113-apply-ending.sh b/t/t4113-apply-ending.sh
+index 66fa51591e..aa57895b22 100755
+--- a/t/t4113-apply-ending.sh
++++ b/t/t4113-apply-ending.sh
+@@ -24,13 +24,14 @@ echo 'a' >file
+ echo 'b' >>file
+ echo 'c' >>file
+ 
+-test_expect_success setup \
+-    'git update-index --add file'
+-
++test_expect_success setup '
++    git update-index --add file
++'
+ # test
+ 
+-test_expect_success 'apply at the end' \
+-    'test_must_fail git apply --index test-patch'
++test_expect_success 'apply at the end' '
++    test_must_fail git apply --index test-patch
++'
+ 
+ cat >test-patch <<\EOF
+ diff a/file b/file
+@@ -47,7 +48,8 @@ b
+ c'
+ git update-index file
+ 
+-test_expect_success 'apply at the beginning' \
+-	'test_must_fail git apply --index test-patch'
++test_expect_success 'apply at the beginning' '
++    test_must_fail git apply --index test-patch
++'
+ 
+ test_done
+-- 
+2.39.0
+
