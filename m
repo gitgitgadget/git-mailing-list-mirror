@@ -2,93 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 733BEC636CC
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 20:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 432FEC38142
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 20:34:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbjAaUb5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 15:31:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42462 "EHLO
+        id S231388AbjAaUeb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 15:34:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbjAaUb4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2023 15:31:56 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26886CC38
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 12:31:55 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id t18so15407587wro.1
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 12:31:55 -0800 (PST)
+        with ESMTP id S231305AbjAaUe3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 15:34:29 -0500
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C31185975C
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 12:34:28 -0800 (PST)
+Received: by mail-qv1-xf2c.google.com with SMTP id lc15so4018418qvb.7
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 12:34:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HCqZDDOdWbpi+GP4ZOPIHooLYTb9zy79+4r0hHDVMjs=;
-        b=en9x2W+G0r5RcucaoNoSOt/hgIeba5/eohLqUmwuux88LX8r/ObP4fZcLSkqA29AtW
-         l6+YSEfsn4OzDq56gFgd6esJoiwMdbR3A+J50A6OWh7i6mkNm+ofweK64wyocWIYfYim
-         IstL60yxWtN/xzYKBj9xGqe/qDxfi/u3Br5Klb5iX60Ry62hlyG14FKlKPO345NgusDo
-         vuVsSfzcxSISXc2vPI0pvpZQVjaYURC/vC33su15Ahihzcvtx6W9IK7EcRVNCcVTCqyX
-         NMorsuBd0y40ci27oeRK8k6vS0lF4PLZzG9Ub3pcLt90dYI/iUawF6pvPx/Z2ark5LGG
-         +IKg==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WFPmHE4GwMPcZQCYIpCOfY/dZlIaOQJAAmOh0j/sJZc=;
+        b=iPgmpl0lJaduf/RkvA1VDQ1DYobvj7+o3oMDmj4UW17tGfVPYrZ9/5GsXFs+f9f6FN
+         1ZnC1MHDTuDPOjPlovWGroikpKCaJMTnE3FloHixwG73kU9YEvTA/lU82zxG3ry2lKWV
+         y+X+h9T2NvcAy84M9ByE5sUYKKx/ZFwSCOxwU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HCqZDDOdWbpi+GP4ZOPIHooLYTb9zy79+4r0hHDVMjs=;
-        b=UXtsrzLal5NROSJgUuFVBbTnPEj0yi+/OyPKD0vomTDOWi3ldcszdd1+lK7tM8wd/X
-         h7XT+USJdcWeQihczh6mEb2WqHjXrmVwDV63Asu9P0OjumoHKw4yzwC2PTR9+mmOrrZ0
-         oSWLdsoURxArXYo6WG/k8kvQfAq/mDoOHRQ+7+ZsG2WG7/jJyTzHkM/bacV2k96A1MVA
-         82QCItFZrQNKueeVIvPF0pjCBsQFHHFjU8U7iDJY13LLDtsdubSWPPzvZjgJ2gZFYQkX
-         0mlBGFLmsKkcbwEaz6AnE8rUQYZwaK4WVCqflfCtmqyiSjVVgFVgCG2y+4P+aO/7VT3E
-         abNg==
-X-Gm-Message-State: AO0yUKXaJplK8CzUpU2aooBShMzyrPs1/F5hHMX04EH4qVElQbQsyVUF
-        mD2fVsRpQaPwN3w60OBGsJz/2F/JNzNsns40Jjo=
-X-Google-Smtp-Source: AK7set/jghTrxSXqWJDog312+zG/S+ksjui+m8hLtAyLfx2v9tRXrsISRWET/U7CqORaEt0Zt1OvqyUe4/vYAunDwbc=
-X-Received: by 2002:adf:fdd2:0:b0:2bf:eb2c:367 with SMTP id
- i18-20020adffdd2000000b002bfeb2c0367mr8887wrs.663.1675197113373; Tue, 31 Jan
- 2023 12:31:53 -0800 (PST)
-MIME-Version: 1.0
-References: <4831bbeb0ec29ec84f92e0badfc0d628ecc6921d.camel@siemens.com>
- <Y9j1RxKhNq2TnL4U@tapette.crustytoothpaste.net> <339359ee8a228ea108109cf852bcb7e145807dcf.camel@siemens.com>
-In-Reply-To: <339359ee8a228ea108109cf852bcb7e145807dcf.camel@siemens.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 31 Jan 2023 12:31:41 -0800
-Message-ID: <CA+P7+xpgJKojMmcN9TuGDw8oduQSQk-5nUtsWc+4Seqa+eVDJQ@mail.gmail.com>
-Subject: Re: Bug: Cloning git repositories behind a proxy using the git://
- protocol broken since 2.32
-To:     Florian Bezdeka <florian.bezdeka@siemens.com>
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WFPmHE4GwMPcZQCYIpCOfY/dZlIaOQJAAmOh0j/sJZc=;
+        b=oFx3ezKaZCNL/okAEJ+wEmYcUx/VFP0H2awOGr/AmZrzimB+mUjn3Xqbz0wYmSZvQr
+         rMLBm7PLFlmmg6GHqmt/Uc6AoY0DGeu4P0ty4FJ7Oc7RKW0g2Xh3DGYVOTB1tCSWHxel
+         k9FG/NrTXbNkyUbre8UBXFdhRxlFLzkjcUHZwkJhp9i/o61N5l/8pz6upaLzCsM+gSmF
+         nO1h/UIcSObtlSfiiFbvWw6SffwrNkDKqvRnrhQbTmwNfs5DIkBS8MIwBFf7reWi4CON
+         MdSUB0GsgCopvJYCZBVU5n052apqaUL9ETZ9TW4emUtOz3Zuv5FmCItS55SBsqUfuXcO
+         XWpQ==
+X-Gm-Message-State: AO0yUKXX1N/u20CNFUslr4unl4Go6yp1/+daT93Gz+7nrUjIxXuFL+iF
+        gTyXvlOk/4nDR2zNLzk4hs5AhWH57DLs6/eF
+X-Google-Smtp-Source: AK7set/CB7zIEgsxvhgQp63DN0EER/B/cEjDvVN8nq6UNTDquHzAkhi/+pJbED1zIudzxpmWKzIqHQ==
+X-Received: by 2002:a0c:e051:0:b0:537:7a52:ee8e with SMTP id y17-20020a0ce051000000b005377a52ee8emr495809qvk.20.1675197267842;
+        Tue, 31 Jan 2023 12:34:27 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id h189-20020a3753c6000000b006fbb4b98a25sm10725007qkb.109.2023.01.31.12.34.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Jan 2023 12:34:27 -0800 (PST)
+Date:   Tue, 31 Jan 2023 15:34:25 -0500
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Eli Schwartz <eschwartz93@gmail.com>
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "greg.pflaum@pnp-hcl.com" <greg.pflaum@pnp-hcl.com>,
-        "peff@peff.net" <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+        Git List <git@vger.kernel.org>
+Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
+ a possible solution
+Message-ID: <20230131203425.qxy5f7aappzip5om@meerkat.local>
+References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
+ <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
+ <6fc8e122-a190-c291-c347-258a5a2ad9c9@gmail.com>
+ <20230131162049.mgqdxcucjesw4afr@meerkat.local>
+ <df7b0b43-efa2-ea04-dc5b-9515e7f1d86f@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <df7b0b43-efa2-ea04-dc5b-9515e7f1d86f@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 31, 2023 at 4:17 AM Florian Bezdeka
-<florian.bezdeka@siemens.com> wrote:
-> Thanks for the super fast response, highly appreciated!
->
-> I was able to get it running by switching to ncat using the --no-
-> shutdown option, but I failed to bring back socat support so far.
->
-> For me this is still a regression. We have to change our
-> infrastructure/environment because we have a new requirement
-> (independent handling of stdin/out) after updating git now. I would
-> expect some noise from the yocto/OE community in the future where oe-
-> git-proxy is heavily used.
->
-> I guess proxy support was forgotten when the referenced change was
-> made. Any chance we can avoid closing stdout when running "in proxy
-> mode" to restore backward compatibility?
->
-> Thanks a lot!
+On Tue, Jan 31, 2023 at 11:34:59AM -0500, Eli Schwartz wrote:
+> In most contexts, it's utterly unacceptable to not remember the checksum
+> of the file you used last time and instead simply trust PGP identity
+> verification. This permits upstream the technical means to be malicious,
+> and re-upload a totally different tarball with the same name, different
+> contents, and different PGP signature, and you will never notice because
+> the PGP signature is still okay.
 
-I had this issue in the past and i got it working with socat using "-t
-10". You need a timeout that is larger than the keep alive value of 5
-seconds which is sent by the git protocol.
+Yes, it's true, and it's something that Sigstore tries to address.
 
-Junio pointed out the excellent analysis from Peff regarding the
-situation and the fact that socat is wrong here.
+That said, if I wanted to trojan a download and had access to both the
+infrastructure and the developer's credentials, I wouldn't pick a months-old
+release for this purpose. I would wait until I see a new release coming out
+and then swap it mid-flight. This lets me defeat even transparency-log based
+solutions like sigstore.
 
-What value of -t did you try?
+(I'll probably be giving a talk at the Linux Security Summit titled "How to
+trojan the Linux Kernel" where I'll go into some of these considerations. :))
+
+-K
