@@ -2,79 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96829C636CC
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 22:01:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F2FDC636CC
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 22:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230273AbjAaWBM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 17:01:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35588 "EHLO
+        id S231716AbjAaWco (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 17:32:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230224AbjAaWBK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2023 17:01:10 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDAC2518C9
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 14:01:07 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id a184so11238849pfa.9
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 14:01:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yW6oEc4470t7QgO78oDOqAPAeUQKeh20lqNvT4rreWY=;
-        b=Jn66xJl4sd90Gah4Y6hZlLqZi2IhJFmbJW6o8n1rxAuOYRj2Z77NqZdNNzYe/uZ6PJ
-         LSScbrWc+qmMpW4lSwcRfigNVCsGHnIuGN1Jchx3o+QhFh+Ec6h6eS4xpf93ucVfkHQN
-         87ekack/UkmF+9t8fffDeuBOKo3dG0mDSiADy2UiqmT35IbgwtukpV5qpcn+Mq+UvUk2
-         QiU13TkQuuIT4hWcSjkVCAe3AgemwR7wdIi3bFqTndkHtb2JMPzjRziuMznU7TUPZcHj
-         gD4FePjnxtDKO/IYbwH5MkS5U7xlNM1Gg0e+oZvFjiFQj77FNh/mpShCeP6c6zRcZat0
-         3qNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=yW6oEc4470t7QgO78oDOqAPAeUQKeh20lqNvT4rreWY=;
-        b=ohpWgSjk0Fs1kjm5WDlTttEwV48foN/2QIAMqMxBnXfFaB1gezvDQgLQdAnySE2xWA
-         nUmo6DvPUapKukMC0+1K+jCQ6UV2oEkJSnjtO3mAv5IPxNDqz3xYzwNuIEx+vNYszW4P
-         WUXYv/5LAhHtpgnk5pPFICv6clxpGpPgXKntnPyZmbq7stPYOHF29DIWV4lXql5dMukq
-         2knh+iDaDR8qb9cphjgNBWUJrelSFKqORWdWw4R5TAOXd09QeqyaUW6wQ1tWqkqmQe1m
-         eL4GOJkP496QdZqI63jUJsLqkN/ueN46j+lt7AInlJUxyj2UBm67wtz8KPUCeXcF18n/
-         ti7w==
-X-Gm-Message-State: AO0yUKW0nYJmND9xxFfL8jrnpyEl5zLqUZs0xFbVnwhCQN44dbtKPnsl
-        S5Ivd1wAnfIyb9juvS3diIo=
-X-Google-Smtp-Source: AK7set+pM+WbCzpaP6jHZjU/5uHe/6ajln7gIm9Ev2roNdJPuUmM6E9vV5p9JVXSN6n/WYtNjWKh5w==
-X-Received: by 2002:a05:6a00:26cf:b0:580:ea08:5277 with SMTP id p15-20020a056a0026cf00b00580ea085277mr10629652pfw.16.1675202467151;
-        Tue, 31 Jan 2023 14:01:07 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id y6-20020a056a00180600b00593b06e0493sm5417031pfa.81.2023.01.31.14.01.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Jan 2023 14:01:06 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
-        avarab@gmail.com, steadmon@google.com, chooglen@google.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v3 00/11] Bundle URIs V: creationToken heuristic for
- incremental fetches
-References: <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
-        <pull.1454.v3.git.1675171759.gitgitgadget@gmail.com>
-Date:   Tue, 31 Jan 2023 14:01:06 -0800
-In-Reply-To: <pull.1454.v3.git.1675171759.gitgitgadget@gmail.com> (Derrick
-        Stolee via GitGitGadget's message of "Tue, 31 Jan 2023 13:29:08
-        +0000")
-Message-ID: <xmqqzg9ywehp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229962AbjAaWcm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 17:32:42 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB6B03403B
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 14:32:41 -0800 (PST)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 283915A300;
+        Tue, 31 Jan 2023 22:32:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1675204361;
+        bh=eO4JRayDanQoHPlfk5fqWkf3pAs0TbI4pk2gL2bNv98=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Uqx580uB2VGRRyLfgFeWrw6fCavxJnyPo0gj58xFq+qjTk6p7lt0LOUvlwpCu5YoH
+         on3fL79lmXl/hVrdMoZEzJ6Y2+Yi9WCqEzgCUr/TOmhDk8zCz6HgPpCUiwDb66gLZ2
+         4PLkS1PDaDw09oPDQnIRulmrXWCX8Jpkz7w/aImWrTxrmz76epH7ylx3H3sih61jGT
+         METPByrIxFGi4g93zau3CXPeantIqOql6IRwKQyJFKIBEu58ldYBKhZN8qReCQKma5
+         ljZIBjQB+uNXo6rgJ6reiMN1MufnMjkxspykNBUt8iqAFijtMzu/WRaeZWsyrvcWkS
+         tZCX8Oi1vbbTu+Wp8QI+VW5/nhFznlUbgR3vPF+AJZhJVH5k24yDOy5NRI9+e4rCAM
+         aybvcYECPqEQ//Qv8hgB8ko9BL3MY4q2ATdOk4dXCjteSnebSPScvlSKxKSV202OkX
+         pze1oBKRWjApwcXuQb0w1utV/2C80ubI8zrAbbOtbzw8ubwP4K/
+Date:   Tue, 31 Jan 2023 22:32:39 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     Eli Schwartz <eschwartz93@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
+ a possible solution
+Message-ID: <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Eli Schwartz <eschwartz93@gmail.com>,
+        Git List <git@vger.kernel.org>
+References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
+ <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
+ <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="XrJ/fdFj5fnUO76c"
+Content-Disposition: inline
+In-Reply-To: <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> This fifth part to the bundle URIs feature follows part IV (advertising via
-> protocol v2) which recently merged to 'master', so this series is based on
-> 'master'.
+--XrJ/fdFj5fnUO76c
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for a pleasant read.  Will queue.
+On 2023-01-31 at 15:05:55, Konstantin Ryabitsev wrote:
+> On Tue, Jan 31, 2023 at 09:54:58AM +0000, brian m. carlson wrote:
+> > I'm one of the GitHub employees who chimed in there, and I'm also a Git
+> > contributor in my own time (and I am speaking here only in my personal
+> > capacity, since this is a personal address).  I made a change some years
+> > back to the archive format to fix the permissions on pax headers when
+> > extracted as files, and kernel.org was relying on that and broke.  Linus
+> > yelled at me because of that.
+> >=20
+> > Since then, I've been very opposed to us guaranteeing output format
+> > consistency without explicitly doing so.  I had sent some patches before
+> > that I don't think ever got picked up that documented this explicitly.
+> > I very much don't want people to come to rely on our behaviour unless we
+> > explicitly guarantee it.
+>=20
+> I understand your position, but I also think it's one of those things that
+> happen despite your best efforts to prevent it. :)
+>=20
+> May I suggest adding a "git-archive --stable" that offers this guarantee,
+> simply as a matter of codifying the fact that the world has built
+> infrastructure around git's repeatable output. Maybe just for .tar (and
+> .tar.gz).
+
+It is my intention to implement just .tar.  That's my proposal: simply a
+pax-based format that serializes in a consistent way according to a
+predefined spec.
+
+As far as whether other people want to implement consistent compression,
+they are welcome to also write a spec and implement it.  I personally
+feel that's too hard to get right and am not planning on working on it.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--XrJ/fdFj5fnUO76c
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY9mXBwAKCRB8DEliiIei
+ga79AP9WC0qnQk8C2o6Wz+vf2+nEuJzoKQ3ouQsvCCOVrLVHYgD9H4GK2HF9kFLn
+zrn8xs64Gn2l1DbgSdre+1bGk/3zaQE=
+=3NXQ
+-----END PGP SIGNATURE-----
+
+--XrJ/fdFj5fnUO76c--
