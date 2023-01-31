@@ -2,137 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13BBCC38142
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 11:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 955F0C38142
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 11:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231717AbjAaLCp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 06:02:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46564 "EHLO
+        id S231873AbjAaLyH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 06:54:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231709AbjAaLCm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2023 06:02:42 -0500
-X-Greylist: delayed 4053 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 31 Jan 2023 03:02:33 PST
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECCE83433D
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 03:02:33 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 20AE95A300;
-        Tue, 31 Jan 2023 11:02:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1675162953;
-        bh=h7CBfHQg7VVpMyypus6Trt6tKxyJy7efUbhOipywpEY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=rfrM4Dk1xxCBaYoKGs/fSx2lcNByYM+RdV2hZNuz8M4hhBrqBHa3/DC7LG2EiBN17
-         oaoWGrJ4SP6T5+v2UDUOm7WvqQVFM1KXRcyBZP3UynfZUbNeSQjrnuW0SbFRG9H7ey
-         GMGEeZrkKrHPDRig90ziwfbdgH3XTlTh5t0K+w6E5zvPQoHAz2WveHzO/kwQ7KBJei
-         iSkz/A0KGqj1r71uzfJQNjzwQ4IBcwYUIO3DjAryM4ZSnSQ5gy8tGlhdQfFUUOOo4f
-         pi/e33LckfyC6UyQ+iHEIW++HALR9LioMMFDSZXOulrNUYVOapMAl01Bf1cYMpsvzm
-         NdI+rRQInkli5pcNrNIAeFZ8tP3SC3mMegYmDZqL7vXjdqyH1X+49lFhBm15WNIZ5N
-         9ycEnyghBl6WxY84FKBacvLdN87NKdLhZUyWpGMJ2QoY33qce4yY8tjI1NFImjW0+5
-         0tRzvUN6BeajBauWmT3zcXRoSKcpVsQtPqJxcNvMdJTbYJ7qqQz
-Date:   Tue, 31 Jan 2023 11:02:31 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Bezdeka, Florian" <florian.bezdeka@siemens.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "greg.pflaum@pnp-hcl.com" <greg.pflaum@pnp-hcl.com>,
-        "peff@peff.net" <peff@peff.net>
-Subject: Re: Bug: Cloning git repositories behind a proxy using the git://
- protocol broken since 2.32
-Message-ID: <Y9j1RxKhNq2TnL4U@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Bezdeka, Florian" <florian.bezdeka@siemens.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "greg.pflaum@pnp-hcl.com" <greg.pflaum@pnp-hcl.com>,
-        "peff@peff.net" <peff@peff.net>
-References: <4831bbeb0ec29ec84f92e0badfc0d628ecc6921d.camel@siemens.com>
+        with ESMTP id S231821AbjAaLyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 06:54:06 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C889612073
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 03:54:04 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id n6so11500814edo.9
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 03:54:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cWYjYG3YK5R5HkK4cuhWCvFwW2rsvKyqxtQi2jUF8O0=;
+        b=gojz/mAfoJKeoa1YMV7Jvx7d008EQ+x5pljwg2Mg+hRqWjKvAwQNIqAWo0NKd6896I
+         VdJszu5Riv4ZVHTaXm/ywsX87Myul5897pXtJwLrkFyK+qRo/yBaF8RzYC0Hbb2ZIa4T
+         n5qv5rKZrshm5GDGHdQtjGTzFIYKYgNjJ4WncBn5iHvzM53ot8+9pSldm5hRukgHz3l6
+         x4txcUHWGdlvqF2v0ej58LmJ7MIyLZ+ekwiE1XSLvOuIiIK3cWAYsMAKEFx97h72PHwV
+         huUSctH5pwX4ZfDp998d2mrp0YidJhCwuFJcq8TGCS64H0gg9CqT3W4nBBCZKpkq1AJK
+         3gAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cWYjYG3YK5R5HkK4cuhWCvFwW2rsvKyqxtQi2jUF8O0=;
+        b=wTXey9hefxZlVDlxiBr9SHOJp/DjHV2Z0p2TbAQVY3QbKi2Pp/fd3qExY2GvjeTQ+/
+         J5e3xcFiMzoymYwW9XY91AfF5aKoHn/yyLd9f5U4PvdCv2yclhsDtMpKYxYk1sRyE7gS
+         nscr0f8l7XYD/mcHOmbtDuZEBvTVJyJFdhP9BWb0Tk12FrNDPyo7qiQ5UAwH7bL5aUn4
+         +51hsVY3TCpW4bO+tWckNt7KO5NYlhcER2sgjZZhnDe9ddbdz7ki+40auQDGtHS4ZD2f
+         m+5rITosgqhkSD4Y11i9PNBkn/0ucPUytoNTF0Fmfof/ihi8cbLarAc9Q414/cvDfElR
+         A9PA==
+X-Gm-Message-State: AO0yUKUW/1yUk/sBE4nJMJd/5opysgHEhYuRDyP+QJ7fo/4ICJ2eIAz9
+        x0ZKnCbefJYLI8SXv/HhrSEmfO4llWFlpw==
+X-Google-Smtp-Source: AK7set/ojwAZhkLZdOtLNLtiYVw193OF2MhxFBdmtJMIyl1aGLxXwdvpGXqkZ/g53QpLN4tMb02PHw==
+X-Received: by 2002:a05:6402:43cc:b0:49e:a0f7:9a75 with SMTP id p12-20020a05640243cc00b0049ea0f79a75mr3367431edc.12.1675166043194;
+        Tue, 31 Jan 2023 03:54:03 -0800 (PST)
+Received: from gmgdl ([81.191.238.7])
+        by smtp.gmail.com with ESMTPSA id dn10-20020a05640222ea00b00482b3d0e1absm8199796edb.87.2023.01.31.03.54.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Jan 2023 03:54:02 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pMpD8-0021hy-0E;
+        Tue, 31 Jan 2023 12:54:02 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Eli Schwartz <eschwartz93@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
+ a possible solution
+Date:   Tue, 31 Jan 2023 12:31:43 +0100
+References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
+ <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
+Message-ID: <230131.86tu06rkbp.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Hgixattlv86u/4Km"
-Content-Disposition: inline
-In-Reply-To: <4831bbeb0ec29ec84f92e0badfc0d628ecc6921d.camel@siemens.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Hgixattlv86u/4Km
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, Jan 31 2023, brian m. carlson wrote:
 
-On 2023-01-31 at 10:52:47, Bezdeka, Florian wrote:
-> Hi all,
+> Part of the reason I think this is valuable is that once SHA-1 and
+> SHA-256 interoperability is present, git archive will change the
+> contents of the archive format, since it will embed a SHA-256 hash into
+> the file instead of a SHA-1 hash, since that's what's in the repository.
+> Thus, we can't produce an archive that's deterministic in the face of
+> SHA-1/SHA-256 interoperability concerns, and we need to create a new
+> format that doesn't contain that data embedded in it.
 
-Hey,
+I don't see why a format change would be required in this context.
 
-> I just updated from git 2.30.2 (from Debian 11) to 2.39.0 (from Debian
-> testing) and realized that I can no longer clone repositories using the
-> git:// protocol.
->=20
-> There is one specialty in my setup: I'm located behind a proxy, so
-> GIT_PROXY_COMMAND is set. I'm usiung the oe-git-proxy script [1] here.
-> My environment provides the http_proxy variable and privoxy [2] is
-> running on the server side. That information should be sufficient to
-> reproduce.
->=20
-> I tried the following two repositories for testing:
->  - git clone git://git.code.sf.net/p/linuxptp/code linuxptp
->  - git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.g=
-it
->=20
-> The result is:
-> Cloning into 'linuxptp'...
-> fetch-pack: unexpected disconnect while reading sideband packet
-> fatal: early EOF
-> fatal: fetch-pack: invalid index-pack output
->=20
-> I was able to "git bisect" it to the following commit:
-> ae1a7eefffe6 ("fetch-pack: signal v2 server that we are done making reque=
-sts")
->=20
-> Reverting this commit on top of the master branch fixes my issue.
-> All people involved in this commit should be in CC.
->=20
-> Looking at the TCP byte stream shows that the socket is closed after
-> the client received the first "part" of the packfile.
->=20
-> ...
-> 0032want ec3f28a0ac13df805278164f2c72e69676d13134
-> 0032want 57caf5d94876e8329be65d2dc29d3c528b149724
-> 0009done
-> 0000000dpackfile
->=20
-> Let me know if you need further information. Hopefully this was the
-> correct way of submitting a bug to git...
+If a repository were to switch over to SHA-256 wouldn't a better
+solution to this be to disambiguate whether you're requesting a SHA-1 or
+SHA-256 derived archive in the URL? E.g. to never serve up an archive
+with a SHA-256 embedded in the header at:
 
-I think this may have come up before, and I think the rule is that you
-need a proxy where closing standard input doesn't close standard output.
-Since that script is using socat, I believe you need the -t option to
-make this work, or some other approach where standard input and standard
-output can be closed independently.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+	https://github.com/git/git/archive/refs/tags/v2.39.1.tar.gz
 
---Hgixattlv86u/4Km
-Content-Type: application/pgp-signature; name="signature.asc"
+But require a URL like:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+	https://github.com/git/git/archive-sha256/refs/tags/v2.39.1.tar.gz
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY9j1RwAKCRB8DEliiIei
-gRQ9AP9X/qBlhLZ1gBLVX0KNgO50dWUeQAl6Aqck9Hq+ly9aIQEAjNQulTHSfGkK
-lBVStljyY6PqoOQEsQcC1O47ke2J/wA=
-=jCL0
------END PGP SIGNATURE-----
+If you did that then existing archives would continue to have the same
+byte-for-byte content (assuming that the result of this discussion is
+that we support that forever), but they'd always be generated with "-c
+extensions.objectFormat=sha1". For always-SHA256 repos such a URL would
+fail to generate anything.
 
---Hgixattlv86u/4Km--
+But for repos that used to be SHA-1 but are now SHA-256 either URL would
+work, but the PAX header would be different, referring to the SHA-1 or
+SHA-256 commit, respectively.
+
+Whereas your proposal seems to be that we should omit that SHA-(1|256)
+from the "comment" entirely. That would seem to require either a one-off
+change of all existing archives, or some cut-off date (or other marker).
+
+If you've got a cut-off, you could also just use it to decide whether to
+generate a SHA-1 or SHA-256 archive, and without that you'd be back to
+the one-off breakage.
+
+I also find it very useful that we've got the commit OID in the archive,
+as it allows for round-tripping from archives back to the relevant
+repository commit. Losing that entirely for SHA-1<->SHA-256 interop
+would be unfortunate, especially if it turns out we could have easily
+kept it
+
+> Having said that, I don't think this should be based on the timestamp of
+> the file, since that means that two otherwise identical archives
+> differing in timestamp aren't ever going to be the same, and we do see
+> people who import or vendor other projects.
+
+Yes, I agree that doing this by that sort of heuristic would be bad.
+
+> Nor do I think we should
+> attempt to provide consistent compression, since I believe the output of
+> things like zlib has changed in the past, and we can't continually carry
+> an old, potentially insecure version of zlib just because the output
+> changed.  People should be able to implement compression using gzip,
+> zlib, pigz, miniz_oxide, or whatever if they want, since people
+> implement Git in many different languages, and we won't want to force
+> people using memory-safe languages like Go and Rust to explicitly use
+> zlib for archives.
+
+As I noted in the side-thread I think an acceptable solution would be to
+push the problem of the consistent compressor downstream. I.e. if a site
+like GitHub wants to maintain a potentially old version of GNU gzip that
+should be up to them.
+
+But I think it's a valid concern that we should guarantee the stability
+of the archive format.
