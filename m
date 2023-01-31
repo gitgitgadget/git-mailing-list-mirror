@@ -2,198 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4E6EC54EAA
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 00:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2FC7C38142
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 07:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229900AbjAaAG5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Jan 2023 19:06:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49242 "EHLO
+        id S229943AbjAaHaR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 02:30:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229644AbjAaAGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jan 2023 19:06:54 -0500
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4D0F3C1A
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 16:06:52 -0800 (PST)
-Received: by mail-il1-x12b.google.com with SMTP id k12so846108ilv.10
-        for <git@vger.kernel.org>; Mon, 30 Jan 2023 16:06:52 -0800 (PST)
+        with ESMTP id S229844AbjAaHaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 02:30:16 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF9AB2B0B7
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 23:30:15 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id m2so38489547ejb.8
+        for <git@vger.kernel.org>; Mon, 30 Jan 2023 23:30:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MPWK8CMZOhZ4oBvMZsj+3Ky03MwQUWKf4nUh3nEwg2w=;
-        b=RcadiSYqe1u3iANWmKLW2rjFz5NfE6kfR6BlKkjpG2C8M8WAobCh9UHcsjoRStHMOv
-         haFtAsh0zWfyd+ieeIFhfJu15J9d2xRBj89TFF4w5NhZGLoBBXPp+rNP3Z2jY5PH/kDD
-         Wq9jxV50wJ/6aPxns1oDfQkY9Jy0qiH2OsS6riY/aYxVG3ttV5Oyji6eqRN1gbq1cjPe
-         UmkXP4afdAMxNf7EYGWKxHAPtXxa/E/etj8eXn71Gn1Ycs2ZMdK3L2kLe0eH3mj3jusr
-         7JUIejVXQTGqVhoIRZsBxRLi7VHIAlw0RoJdBp8ZTn7p6NVcUULzfExZfFjMpzgTYH39
-         hPcg==
+        d=grsecurity.net; s=grsec;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L61b6dYBP5ovjV6guxACk3tujO9EPPclkXcAXLq5m0k=;
+        b=vwADfXMMUaiN7N2rp1nvX/Wr5b+r7UFScCss2e3oieOSJ0EQlL0BnPXTe9GmMR59L0
+         9s0NEVraFrcUiKA+TGBgJS/akilTeF69dtvCa2EaXAw6sIFq4fPCbI6Y9EmQw8DHK7pF
+         RFS/fjVnmP8mv/YWMPP6pb6pnVd8AxhyuiWUTiwUTeSW7AnRK7NqVqYLS+l80meaf3Yb
+         4ARIJ3y++J9OdqrAEF2M1v60AwfrACdgkoak7YFXpstvaek9XKvLlWH1IP31sNme7HZV
+         1EZDBW8X87bjtfEKHQ0m+1Nh/SJFIAALI0GPWiQwu7SMHU1wZI67wA3LitLCX3BMu8Jz
+         xa7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=MPWK8CMZOhZ4oBvMZsj+3Ky03MwQUWKf4nUh3nEwg2w=;
-        b=RcQ4RYc9vSMXSmkeZRJpEf2BvhDk9de+ITRu0P4RLuJ78M3/fvPwRGM9J7tPED/zxB
-         9KUo6WqsW98WPTgaGxl12Pfi0Ef6Wpm+ij+oB3b8SwVYssikNxldBjkhalcwq091XPO5
-         yqZbqg93RXFZtboGtVu3/6++zZ8081lxVNzDhC8lvEUahEu8pujBri97e5x3KH6sMH63
-         L7NgPiLH6E4+RURYs/t/94C0dRo/H823mkGj+y72C1zFHBDigUwMdUyACqMDbyI9RENX
-         wsazerAnY5LcIFdFAuxchlqbM05RZh+3xugXFcJuCRdrWtmMyq7QchnyZwiFIzgoPd5I
-         ziiQ==
-X-Gm-Message-State: AO0yUKX2Hh2SSkGTTDVKkTDzCUQxBV2ZeAgSWfjr8XtEp2cd/I50X8dS
-        b48Zad0VwKh79zz8gc7FcWzKzy/5G/4=
-X-Google-Smtp-Source: AK7set8yN+negBhCLRywVY6h8J6/PwhQ/5D1t3u8ytYL0Y7wETSQ8J7y92veACj7TFz92H3YK57kvw==
-X-Received: by 2002:a05:6e02:1747:b0:310:b84b:c884 with SMTP id y7-20020a056e02174700b00310b84bc884mr13919256ill.18.1675123611591;
-        Mon, 30 Jan 2023 16:06:51 -0800 (PST)
-Received: from [192.168.1.72] (108-200-163-197.lightspeed.bcvloh.sbcglobal.net. [108.200.163.197])
-        by smtp.gmail.com with ESMTPSA id u185-20020a0223c2000000b0039e2deb748fsm5214113jau.168.2023.01.30.16.06.50
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=L61b6dYBP5ovjV6guxACk3tujO9EPPclkXcAXLq5m0k=;
+        b=LbZoQ9CahnjZ8Jp8pUg7pNaasg5rN9bb5SAE/v9JfoT0G/EV/ME8Wk7Jp3kGRTRAL+
+         JBb+OObgzl1PcjkB9Z2pF7SAbW+H5xRa1qp/8tO5KnWCGnYGD2eIY+4E3qtjytSbc1Oc
+         5/eQrldZZd9WI8R+GhhffrdjTgu0Omimq9oBewKr9ctWqJpiYN54ERxV8mry61OElEOE
+         wZWqcTriqt/Ds2XhFc3Jw7/3YAbtnJ0boKPKYt3m2NETNUUw6tDmPBBagPd4/hshjIhs
+         gES3Kr1F5vD2A0k7FyLM2ASkEqmLXBh0Ni1ZtYzg/HwYaN1zkTLDq/wE2XbqqD3Je+pE
+         ILdg==
+X-Gm-Message-State: AO0yUKVyF85BYF/PLTYCNRJ+8I5/AariNba0zkZQkmOmIDR50brNS9BV
+        OW909Ey4AIXP+KPluLbY88fyPA==
+X-Google-Smtp-Source: AK7set9QEAfHj0MdzxDlY7/uS+/2ZLmkIBgV1R70y6/rB5RpbPS++4TykgvEcdmsez9vfhmm0LWjkw==
+X-Received: by 2002:a17:906:6592:b0:883:3299:91c8 with SMTP id x18-20020a170906659200b00883329991c8mr12045925ejn.55.1675150214306;
+        Mon, 30 Jan 2023 23:30:14 -0800 (PST)
+Received: from ?IPV6:2003:f6:af25:c200:dcc7:5696:ff63:6d6f? (p200300f6af25c200dcc75696ff636d6f.dip0.t-ipconnect.de. [2003:f6:af25:c200:dcc7:5696:ff63:6d6f])
+        by smtp.gmail.com with ESMTPSA id f6-20020a17090631c600b0088879b211easm2875813ejf.69.2023.01.30.23.30.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jan 2023 16:06:51 -0800 (PST)
-Message-ID: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
-Date:   Mon, 30 Jan 2023 19:06:44 -0500
+        Mon, 30 Jan 2023 23:30:13 -0800 (PST)
+Message-ID: <580c2754-5bc3-760e-c85b-62b44baf7e13@grsecurity.net>
+Date:   Tue, 31 Jan 2023 08:30:12 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.1
-Content-Language: en-US-large
-To:     Git List <git@vger.kernel.org>
-From:   Eli Schwartz <eschwartz93@gmail.com>
-Subject: Stability of git-archive, breaking (?) the Github universe, and a
- possible solution
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
-X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v2] grep: fall back to interpreter if JIT memory
+ allocation fails
+Content-Language: en-US, de-DE
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
+References: <20221216121557.30714-1-minipli@grsecurity.net>
+ <20230127154952.485913-1-minipli@grsecurity.net> <xmqqbkmk9bsn.fsf@gitster.g>
+ <xmqq1qnfancf.fsf@gitster.g>
+ <adb5a43a-5081-4f60-d1ea-2a6511f858c0@grsecurity.net>
+ <xmqqk0156z55.fsf@gitster.g>
+ <9b5a1113-84f1-1651-bffc-6382462057dd@grsecurity.net>
+ <xmqq357r4zvk.fsf@gitster.g> <xmqqlelj3hvk.fsf@gitster.g>
+From:   Mathias Krause <minipli@grsecurity.net>
+In-Reply-To: <xmqqlelj3hvk.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For those that haven't seen, github changed its checksums for all
-"source code" artifacts attached to any git repository with tags. This
-change is now reverted due to widespread breakage -- and the lack of
-advance warning. The technical details of the change appear simple: they
-upgraded git.
+On 30.01.23 21:08, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> If we were to keep that "die", it is absolutely required, I would
+>> think.  Users who got their Git with JIT-enabled pcre2 may be
+>> viewing JIT merely as "a clever optimization the implementation is
+>> allowed to use when able", without knowing and more importantly
+>> without wanting to know how to disable it from within their
+>> patterns.
+>>
+>> But can't we drop that die() if we took the v1 route?
+> 
+> Having said all that, I do not mind queuing v2 if the "use *NO_JIT
+> to disable" is added to the message to help users who are forced to
+> redo the query.
+> 
+> And in practice, it shouldn't make that much difference, because the
+> only scenario (other than the SELinux-like situation where JIT is
+> compiled in but does not work at all) that the difference may matter
+> would happen when a non-trivial portion of the patterns users use
+> are not workable with JIT, but if that were the case, we would have
+> written JIT off as not mature enough and not yet usable long time
+> ago.  So, in practice, patterns refused by JIT would be a very tiny
+> minority to matter in real life, and "failing fast to inconvenience
+> users" would not be too bad.
 
-Probably the main discussion, complete with Github employees from this
-mailing list responding:
+Exactly!
 
-https://github.com/bazel-contrib/SIG-rules-authors/issues/11#issuecomment-1409438954
+> So while I still think v1's simplicity is the right thing to have
+> here, I think it is waste of our braincell to compare v1 vs v2.  As
+> v2 gives smaller incremental behaviour change perceived by end
+> users, if somebody really wanted to, I'd expect that a low-hanging
+> fruit #leftoverbit on top of such a patch, after the dust settles,
+> would be to
+> 
+>  (1) rename pcre2_jit_functional() to fall_back_to_interpreter() or
+>      something,
+> 
+>  (2) add a configuration variable to tell fall_back_to_interpreter()
+>      that any form of JIT error is allowed to fall back to
+>      interpreter().
+> 
+> and such a patch will essentially give back the simplicity of v1 to
+> folks who opt into the configuration.
 
-Consequences of that discussion, attempting to mitigate issues by
-warning people that it already happened:
+Fair enough. But aside from the W|X memory allocation denial exception
+is the likelihood to run into the limitations of PCRE2's JIT requiring
+the interpreter fallback so little (as otherwise we'd see it in the past
+already), I think, the demand for such a knob is basically nonexistent.
 
-https://github.blog/changelog/2023-01-30-git-archive-checksums-may-change/
-
-And where I first saw it: https://github.com/mesonbuild/wrapdb/pull/884
-
-Historically speaking, git-archive has been stable minus... a bug fix or
-two in rare cases, specifically relating to an inability to transcribe
-the contents of the git repo at all, I think? And the other factor is
-the compression algorithm used, which is generally GNU gzip, and
-historically whatever the system `gzip` command is.
-
-And gzip is a stable format. It's a worn-out, battle-weary format, even
--- it's not the best at compressing, and it's not the best at
-decompressing, and "all the cool kids" are working on cooler formats,
-such as zstd which does indeed regularly change its byte output between
-versions. But the advantage of gzip is that it's good *enough*, and it's
-probably *everywhere*, and it's *reliable*.
-
-GNU gzip is reproducible. busybox gzip was fixed to agree with GNU gzip
-(this is relevant to the handful of people running software forges on,
-say, Alpine Linux):
-
-https://reproducible-builds.org/reports/2019-08/#upstream-news
-
-...
-
-Nevertheless, I've seen the sentiment a few times that git doesn't like
-committing to output stability of git-archive, because it isn't
-officially documented (but it's not entirely clear what the benefits of
-changing are). And yet, git endeavors to do so, in order to prevent
-unnecessary breakage of people who embody Hyrum's Law and need that
-stability.
-
-Even with the new change to the compressor, git-archive is still
-reproducible, it's the internal gzip compressor that isn't. (This may be
-fixable, possibly by embedding an implementation from busybox or from
-GNU gzip? I'm not going to discuss that right now, though I think it's
-an interesting avenue of exploration.)
-
-I've thought about this now and then over the last couple of years,
-because I think I have a reasonable compromise that might make everyone
-(or at least most people) happy, and now seems like a good idea to
-mention it.
-
-What does everyone think about offering versioned git-archive outputs?
-This could be user-selectable as an option to `git archive`, but the
-main goal would be to select a good versioned output format depending on
-what is being archived. So:
-
-- first things first, un-default the internal compressor again
-- implement a v2 archive format, where the internal compressor is the
-  default -- no other changes
-- teach git to select an archive format based on the date of the object
-  being archived
-  - when given a commit/tag ID to archive, check which support frame the
-    committer date falls inside
-  - for tree IDs, always use the latest format (it always uses the
-    current date anyway)
-- schedule a date, for the sake of argument, 6 months after the next
-  scheduled release date of git version X.Y in which this change goes
-  live; bake this into the git sources as a transition date, all commits
-  or tags generated after this date fall into the next format support
-  frame
-
-
-The end result is that for all historic commits or tags, `git archive`
-will always produce the same output. This can be documented in the
-git-archive manpage: "the produced archive is guaranteed to be
-reproducible, unless you override the `tar.<format>.command` or your
-system compressor is not reproducible".
-
-For *new* commits or tags, everyone gets the benefit of fascinating,
-cool new archive formats with useful improvements at the tar container
-level, which is apparently a very desirable feature. The git project no
-longer has to worry, at all, about whether users will come to complain
-about how their build pipelines suddenly fail with checksum issues. The
-git project can simply, fearlessly, go implement innovative new changes
-without giving any thought to backwards compatibility.
-
-It is, simply, that those new changes only apply to projects which are
-still under active development, and which push new commits or tag new
-releases after the transition date.
-
-Old states of existing projects (regardless of whether they are still
-actively updating) can go have their old and apparently inefficient
-archives and don't get cool new stuff. That's fine. They're also
-increasingly rarely used, because they are, after all, old -- and most
-likely only used for historic archival purposes. If the worst comes to
-worst, well, they managed to produce a somehow useful archive with an
-older version of git -- nothing will *break* if they don't get the cool
-new stuff.
-
-And for the vast majority of new downloads for new stuff, the in-process
-compressor saves one fork+exec and is a bit more efficient, I guess?
-
-A note on the transition date: I suggested 6 months after the scheduled
-release date, because this gives everyone running a software forge time
-to update git itself, and have everything ready, in time to handle the
-first wave of commits and tags that naturally occur after the transition
-date. And you don't want it to be immediate, because then people will
-take days or weeks to deploy and the most recent archives will change
-
-
-For the purposes of this thought experiment, we assume that people don't
-routinely set the system time to a year in the future. This will only be
-done in situations such as, say, testing a git upgrade deployment for a
-software forge.
-
-...
-
-
-"And then no one ever complained about archive checksums changing again."
-
-🤞🙏🥺
-
--- 
-Eli Schwartz
+Thanks,
+Mathias
