@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59BABC636D3
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 13:29:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C9DFC38142
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 13:29:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232183AbjAaN3a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 08:29:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40410 "EHLO
+        id S232192AbjAaN3c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 08:29:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232067AbjAaN30 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2023 08:29:26 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DDA548615
+        with ESMTP id S232043AbjAaN31 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 08:29:27 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7D9849565
         for <git@vger.kernel.org>; Tue, 31 Jan 2023 05:29:25 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so12459176wma.1
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 05:29:24 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id m14so13739165wrg.13
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 05:29:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SEWWW/J6pfqbgcEnSGKk8RmYi0LognbbM6TQuGUEkcE=;
-        b=HH9f86Eiird7UcIU90HzM3SkBiVfdtIhGj1lWIrVUztNLL4NO4kb6WqSyuLAckzGXn
-         PHdMwvuqETbd9AEl+OlYV/WNZ21TQc/V8B6soWTTfimkGxjN6wvxOzohnYZdHa23+DMY
-         pjCzy5lP+tVht6HzJlCPh8wtPWo5VKdmAdclzDg9aLEusKD/zUuadYjYuap1zubLbycX
-         +Ye28Xyd+R3+bH7yYuwKIWUZtA/SlZyjgR2nAOlpYjzBioq+AUCVkldMXWppDqViFS45
-         p+WBZS/0g+C/99lKK7qy8dnywABPYvIuf/7+A7fw3l5HsMMWcNRpVlVShXP1wt+i5N1K
-         ljXg==
+        bh=GNgYHe2+hAaU8wbxFrTySxoshKCEj59J0s/xFDZd5wE=;
+        b=EAOS+/q+9Zb01DDKv7MZlT4C/ahKNQWMjhqO9JkTkPbPpiQhoVv0f+I99RiM0T+jmy
+         IYcN/nuKRFm/6VAFJOZuUAfRmcwSmLT1WJZ/P+Nv4OFcfMcsBTtGqedaSVB41EIi8IGm
+         FQckpBfuZ3dF2MBjkFrsWCbBJw8MgBJhztn1s4KgXEKEiau+zFF/IU3SaDd8TObf2sBM
+         itI2vUIqM8JNsQhBVlaPleXIIGer0pASeHKXtoOHwcpvf8XL9DIcncqO56If/AaifLVZ
+         glYonnaxdQU0nx5m+UOOsfeIiOx8PAqQK98RkRGAYX7gt64IvSJocQM1aoxmAocdBjyI
+         7LvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SEWWW/J6pfqbgcEnSGKk8RmYi0LognbbM6TQuGUEkcE=;
-        b=zPZ5k5KFChbAhi/zTaSx41Qyt7HneWqlLoiUitttpmAo9d5FoiyPwmDf5LjaLMun8m
-         Xox48LKQbaLBPKsmeyIEegMBMKXNGi4pBPZ8cDkTUqM/2B7Sq20AEPudi2VSvXk6uTAV
-         wPuFqkIj4CvC0T1Y0P0tVkrXEwVdVeW5md9Az81xNZRbKviflJw0D5/a7k9HJVP0mg97
-         cmVi7NqNvuP6W84u/s27ZKw6yzdIPJjt48NtzQ18GLGULiUSsHroKjME8hOYpVwiyqmi
-         i/CuoUQcJp7L1jY+L6L+K7NUgn0kDPMjDjNIGMqITbrBbH18WdtcrPmTBL71a05E3Hjn
-         vrwA==
-X-Gm-Message-State: AO0yUKUO8GFo5s2h3amTC63WgCUUEL3DbtEZSMG3FfzTAH6gzVhnHtLm
-        eQP5GaXeo7IFxFvlWSse1uuboJJWdC8=
-X-Google-Smtp-Source: AK7set9bpZKMVaFqB/ly8xp1VrloQoQgXWXfsiPLjC2o0BbepMLYKItmdAtnMypX3ZCntY0/ajBnzA==
-X-Received: by 2002:a05:600c:4447:b0:3dc:4481:b07 with SMTP id v7-20020a05600c444700b003dc44810b07mr16101827wmn.20.1675171763410;
-        Tue, 31 Jan 2023 05:29:23 -0800 (PST)
+        bh=GNgYHe2+hAaU8wbxFrTySxoshKCEj59J0s/xFDZd5wE=;
+        b=RPRm0EKgOYAZ/b+2egxRnEV5JkwANrR9N49w+stpRz7C3CrCbcyTtPJvsQ9WSlYUIM
+         58iG0R01kMoR9NiLspePr2kp+BKNtaT5WqCya8kNNVs3LC6jEad95stchezUv29rc2Qe
+         Ku47g+aBdRClhGQpD2gTiW8GiihsRGc3jq9i8qJKsqyGt8HRGTjUrYu4shNbMfbVSkdP
+         kl+ABKZHiO0JrfkMu/eVjp/8CVOsmc75gNVKdOqOfx9WDjh5B36KbPQRPb7si7AUgVXG
+         9/WrqhKa7d4t5buJLVQ3XDhYkEtnBvv2upopgLivPvzKz41GTCpzd5Nn0fl3gESwoVQf
+         XuLA==
+X-Gm-Message-State: AO0yUKVCgHx4cXnOnK/byGiRvNntmXPjM/mPmgTlewGecEjWJrzReZ4y
+        Ayi7fuQmtYccfSXrCy4JQvnVfuayNYQ=
+X-Google-Smtp-Source: AK7set/+tRYQtQ3aSt2e1lImfiVLIVWsO9JSiA7g2/7TSezYIPZ8hD75ambD27Eo87VuDpGRFjkZLQ==
+X-Received: by 2002:a5d:4dce:0:b0:2bf:dcf5:f486 with SMTP id f14-20020a5d4dce000000b002bfdcf5f486mr9158023wru.29.1675171764236;
+        Tue, 31 Jan 2023 05:29:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bi5-20020a05600c3d8500b003db0bb81b6asm16724085wmb.1.2023.01.31.05.29.22
+        by smtp.gmail.com with ESMTPSA id l16-20020adffe90000000b002b8fe58d6desm14370903wrr.62.2023.01.31.05.29.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 31 Jan 2023 05:29:23 -0800 (PST)
-Message-Id: <20c29d37f9c1ba1367145331d25dd27f966312cd.1675171759.git.gitgitgadget@gmail.com>
+Message-Id: <45cdf9d13a7e0b1e68932defe46a790f6813ed96.1675171759.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1454.v3.git.1675171759.gitgitgadget@gmail.com>
 References: <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
         <pull.1454.v3.git.1675171759.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 31 Jan 2023 13:29:10 +0000
-Subject: [PATCH v3 02/11] bundle: verify using check_connected()
+Date:   Tue, 31 Jan 2023 13:29:11 +0000
+Subject: [PATCH v3 03/11] t5558: add tests for creationToken heuristic
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,211 +71,146 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-When Git verifies a bundle to see if it is safe for unbundling, it first
-looks to see if the prerequisite commits are in the object store. This
-is an easy way to "fail fast" but it is not a sufficient check for
-updating refs that guarantee closure under reachability. There could
-still be issues if those commits are not reachable from the repository's
-references. The repository only has guarantees that its object store is
-closed under reachability for the objects that are reachable from
-references.
+As documented in the bundle URI design doc in 2da14fad8fe (docs:
+document bundle URI standard, 2022-08-09), the 'creationToken' member of
+a bundle URI allows a bundle provider to specify a total order on the
+bundles.
 
-Thus, the code in verify_bundle() has previously had the additional
-check that all prerequisite commits are reachable from repository
-references. This is done via a revision walk from all references,
-stopping only if all prerequisite commits are discovered or all commits
-are walked. This uses a custom walk to verify_bundle().
+Future changes will allow the Git client to understand these members and
+modify its behavior around downloading the bundles in that order. In the
+meantime, create tests that add creation tokens to the bundle list. For
+now, the Git client correctly ignores these unknown keys.
 
-This check is more strict than what Git applies to fetched pack-files.
-In the fetch case, Git guarantees that the new references are closed
-under reachability by walking from the new references until walking
-commits that are reachable from repository refs. This is done through
-the well-used check_connected() method.
-
-To better align with the restrictions required by 'git fetch',
-reimplement this check in verify_bundle() to use check_connected(). This
-also simplifies the code significantly.
-
-The previous change added a test that verified the behavior of 'git
-bundle verify' and 'git bundle unbundle' in this case, and the error
-messages looked like this:
-
-  error: Could not read <missing-commit>
-  fatal: Failed to traverse parents of commit <extant-commit>
-
-However, by changing the revision walk slightly within check_connected()
-and using its quiet mode, we can omit those messages. Instead, we get
-only this message, tailored to describing the current state of the
-repository:
-
-  error: some prerequisite commits exist in the object store,
-         but are not connected to the repository's history
-
-(Line break added here for the commit message formatting, only.)
-
-While this message does not include any object IDs, there is no
-guarantee that those object IDs would help the user diagnose what is
-going on, as they could be separated from the prerequisite commits by
-some distance. At minimum, this situation describes the situation in a
-more informative way than the previous error messages.
+Create a new test helper function, test_remote_https_urls, which filters
+GIT_TRACE2_EVENT output to extract a list of URLs passed to
+git-remote-https child processes. This can be used to verify the order
+of these requests as we implement the creationToken heuristic. For now,
+we need to sort the actual output since the current client does not have
+a well-defined order that it applies to the bundles.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- bundle.c               | 75 ++++++++++++++++--------------------------
- t/t6020-bundle-misc.sh |  8 ++---
- 2 files changed, 33 insertions(+), 50 deletions(-)
+ t/t5558-clone-bundle-uri.sh | 69 +++++++++++++++++++++++++++++++++++--
+ t/test-lib-functions.sh     |  8 +++++
+ 2 files changed, 75 insertions(+), 2 deletions(-)
 
-diff --git a/bundle.c b/bundle.c
-index 4ef7256aa11..76c3a904898 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -12,6 +12,7 @@
- #include "refs.h"
- #include "strvec.h"
- #include "list-objects-filter-options.h"
-+#include "connected.h"
- 
- static const char v2_bundle_signature[] = "# v2 git bundle\n";
- static const char v3_bundle_signature[] = "# v3 git bundle\n";
-@@ -187,6 +188,21 @@ static int list_refs(struct string_list *r, int argc, const char **argv)
- /* Remember to update object flag allocation in object.h */
- #define PREREQ_MARK (1u<<16)
- 
-+struct string_list_iterator {
-+	struct string_list *list;
-+	size_t cur;
-+};
-+
-+static const struct object_id *iterate_ref_map(void *cb_data)
-+{
-+	struct string_list_iterator *iter = cb_data;
-+
-+	if (iter->cur >= iter->list->nr)
-+		return NULL;
-+
-+	return iter->list->items[iter->cur++].util;
-+}
-+
- int verify_bundle(struct repository *r,
- 		  struct bundle_header *header,
- 		  enum verify_bundle_flags flags)
-@@ -196,26 +212,25 @@ int verify_bundle(struct repository *r,
- 	 * to be verbose about the errors
- 	 */
- 	struct string_list *p = &header->prerequisites;
--	struct rev_info revs = REV_INFO_INIT;
--	const char *argv[] = {NULL, "--all", NULL};
--	struct commit *commit;
--	int i, ret = 0, req_nr;
-+	int i, ret = 0;
- 	const char *message = _("Repository lacks these prerequisite commits:");
-+	struct string_list_iterator iter = {
-+		.list = p,
-+	};
-+	struct check_connected_options opts = {
-+		.quiet = 1,
-+	};
- 
- 	if (!r || !r->objects || !r->objects->odb)
- 		return error(_("need a repository to verify a bundle"));
- 
--	repo_init_revisions(r, &revs, NULL);
- 	for (i = 0; i < p->nr; i++) {
- 		struct string_list_item *e = p->items + i;
- 		const char *name = e->string;
- 		struct object_id *oid = e->util;
- 		struct object *o = parse_object(r, oid);
--		if (o) {
--			o->flags |= PREREQ_MARK;
--			add_pending_object(&revs, o, name);
-+		if (o)
- 			continue;
--		}
- 		ret++;
- 		if (flags & VERIFY_BUNDLE_QUIET)
- 			continue;
-@@ -223,37 +238,14 @@ int verify_bundle(struct repository *r,
- 			error("%s", message);
- 		error("%s %s", oid_to_hex(oid), name);
- 	}
--	if (revs.pending.nr != p->nr)
-+	if (ret)
- 		goto cleanup;
--	req_nr = revs.pending.nr;
--	setup_revisions(2, argv, &revs, NULL);
--
--	list_objects_filter_copy(&revs.filter, &header->filter);
--
--	if (prepare_revision_walk(&revs))
--		die(_("revision walk setup failed"));
- 
--	i = req_nr;
--	while (i && (commit = get_revision(&revs)))
--		if (commit->object.flags & PREREQ_MARK)
--			i--;
--
--	for (i = 0; i < p->nr; i++) {
--		struct string_list_item *e = p->items + i;
--		const char *name = e->string;
--		const struct object_id *oid = e->util;
--		struct object *o = parse_object(r, oid);
--		assert(o); /* otherwise we'd have returned early */
--		if (o->flags & SHOWN)
--			continue;
--		ret++;
--		if (flags & VERIFY_BUNDLE_QUIET)
--			continue;
--		if (ret == 1)
--			error("%s", message);
--		error("%s %s", oid_to_hex(oid), name);
--	}
-+	if ((ret = check_connected(iterate_ref_map, &iter, &opts)))
-+		error(_("some prerequisite commits exist in the object store, "
-+			"but are not connected to the repository's history"));
- 
-+	/* TODO: preserve this verbose language. */
- 	if (flags & VERIFY_BUNDLE_VERBOSE) {
- 		struct string_list *r;
- 
-@@ -282,15 +274,6 @@ int verify_bundle(struct repository *r,
- 				  list_objects_filter_spec(&header->filter));
- 	}
- cleanup:
--	/* Clean up objects used, as they will be reused. */
--	for (i = 0; i < p->nr; i++) {
--		struct string_list_item *e = p->items + i;
--		struct object_id *oid = e->util;
--		commit = lookup_commit_reference_gently(r, oid, 1);
--		if (commit)
--			clear_commit_marks(commit, ALL_REV_FLAGS | PREREQ_MARK);
--	}
--	release_revisions(&revs);
- 	return ret;
- }
- 
-diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index 38dbbf89155..7d40994991e 100755
---- a/t/t6020-bundle-misc.sh
-+++ b/t/t6020-bundle-misc.sh
-@@ -595,14 +595,14 @@ test_expect_success 'verify catches unreachable, broken prerequisites' '
- 		# Verify should fail
- 		test_must_fail git bundle verify \
- 			../clone-from/tip.bundle 2>err &&
--		grep "Could not read $BAD_OID" err &&
--		grep "Failed to traverse parents of commit $TIP_OID" err &&
-+		grep "some prerequisite commits .* are not connected" err &&
-+		test_line_count = 1 err &&
- 
- 		# Unbundling should fail
- 		test_must_fail git bundle unbundle \
- 			../clone-from/tip.bundle 2>err &&
--		grep "Could not read $BAD_OID" err &&
--		grep "Failed to traverse parents of commit $TIP_OID" err
-+		grep "some prerequisite commits .* are not connected" err &&
-+		test_line_count = 1 err
- 	)
+diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
+index 9155f31fa2c..474432c8ace 100755
+--- a/t/t5558-clone-bundle-uri.sh
++++ b/t/t5558-clone-bundle-uri.sh
+@@ -285,6 +285,8 @@ test_expect_success 'clone HTTP bundle' '
  '
  
+ test_expect_success 'clone bundle list (HTTP, no heuristic)' '
++	test_when_finished rm -f trace*.txt &&
++
+ 	cp clone-from/bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/" &&
+ 	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
+ 	[bundle]
+@@ -304,12 +306,26 @@ test_expect_success 'clone bundle list (HTTP, no heuristic)' '
+ 		uri = $HTTPD_URL/bundle-4.bundle
+ 	EOF
+ 
+-	git clone --bundle-uri="$HTTPD_URL/bundle-list" \
++	GIT_TRACE2_EVENT="$(pwd)/trace-clone.txt" \
++		git clone --bundle-uri="$HTTPD_URL/bundle-list" \
+ 		clone-from clone-list-http  2>err &&
+ 	! grep "Repository lacks these prerequisite commits" err &&
+ 
+ 	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
+-	git -C clone-list-http cat-file --batch-check <oids
++	git -C clone-list-http cat-file --batch-check <oids &&
++
++	cat >expect <<-EOF &&
++	$HTTPD_URL/bundle-1.bundle
++	$HTTPD_URL/bundle-2.bundle
++	$HTTPD_URL/bundle-3.bundle
++	$HTTPD_URL/bundle-4.bundle
++	$HTTPD_URL/bundle-list
++	EOF
++
++	# Sort the list, since the order is not well-defined
++	# without a heuristic.
++	test_remote_https_urls <trace-clone.txt | sort >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'clone bundle list (HTTP, any mode)' '
+@@ -350,6 +366,55 @@ test_expect_success 'clone bundle list (HTTP, any mode)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'clone bundle list (http, creationToken)' '
++	test_when_finished rm -f trace*.txt &&
++
++	cp clone-from/bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/" &&
++	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
++	[bundle]
++		version = 1
++		mode = all
++		heuristic = creationToken
++
++	[bundle "bundle-1"]
++		uri = bundle-1.bundle
++		creationToken = 1
++
++	[bundle "bundle-2"]
++		uri = bundle-2.bundle
++		creationToken = 2
++
++	[bundle "bundle-3"]
++		uri = bundle-3.bundle
++		creationToken = 3
++
++	[bundle "bundle-4"]
++		uri = bundle-4.bundle
++		creationToken = 4
++	EOF
++
++	GIT_TRACE2_EVENT="$(pwd)/trace-clone.txt" git \
++		clone --bundle-uri="$HTTPD_URL/bundle-list" \
++		"$HTTPD_URL/smart/fetch.git" clone-list-http-2 &&
++
++	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
++	git -C clone-list-http-2 cat-file --batch-check <oids &&
++
++	cat >expect <<-EOF &&
++	$HTTPD_URL/bundle-1.bundle
++	$HTTPD_URL/bundle-2.bundle
++	$HTTPD_URL/bundle-3.bundle
++	$HTTPD_URL/bundle-4.bundle
++	$HTTPD_URL/bundle-list
++	EOF
++
++	# Since the creationToken heuristic is not yet understood by the
++	# client, the order cannot be verified at this moment. Sort the
++	# list for consistent results.
++	test_remote_https_urls <trace-clone.txt | sort >actual &&
++	test_cmp expect actual
++'
++
+ # Do not add tests here unless they use the HTTP server, as they will
+ # not run unless the HTTP dependencies exist.
+ 
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index f036c4d3003..ace542f4226 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1833,6 +1833,14 @@ test_region () {
+ 	return 0
+ }
+ 
++# Given a GIT_TRACE2_EVENT log over stdin, writes to stdout a list of URLs
++# sent to git-remote-https child processes.
++test_remote_https_urls() {
++	grep -e '"event":"child_start".*"argv":\["git-remote-https",".*"\]' |
++		sed -e 's/{"event":"child_start".*"argv":\["git-remote-https","//g' \
++		    -e 's/"\]}//g'
++}
++
+ # Print the destination of symlink(s) provided as arguments. Basically
+ # the same as the readlink command, but it's not available everywhere.
+ test_readlink () {
 -- 
 gitgitgadget
 
