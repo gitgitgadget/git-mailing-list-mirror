@@ -2,119 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CE24C38142
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 12:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01B31C636CC
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 12:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230244AbjAaMIs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 07:08:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60980 "EHLO
+        id S231895AbjAaMmb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 07:42:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbjAaMIr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2023 07:08:47 -0500
-Received: from mta-65-225.siemens.flowmailer.net (mta-65-225.siemens.flowmailer.net [185.136.65.225])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74A824CB7
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 04:08:44 -0800 (PST)
-Received: by mta-65-225.siemens.flowmailer.net with ESMTPSA id 202301311208419b6d203f51ae650dd0
-        for <git@vger.kernel.org>;
-        Tue, 31 Jan 2023 13:08:42 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; s=fm1;
- d=siemens.com; i=florian.bezdeka@siemens.com;
- h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc:References:In-Reply-To;
- bh=dXACgoDxXsfH5rp3EQFjxtmjezhmzZ1JCnzsvsJ7kRU=;
- b=U3SJrrEwRItQO1Z9q7jDlTg92HFlh0JVSM7d4iQAMGwky6lViActypnZk0wzz9L5N3J4+8
- xrLKztNr6elmbLZetZ2dpduUejh5x0Vi3+ieNXNt8bfR6CPWHqKc+vmcXekaMQNg0K2fzO29
- KC/g/wymxjSVn4K67uy42IBjtEM1E=;
-Message-ID: <339359ee8a228ea108109cf852bcb7e145807dcf.camel@siemens.com>
-Subject: Re: Bug: Cloning git repositories behind a proxy using the git://
- protocol broken since 2.32
-From:   Florian Bezdeka <florian.bezdeka@siemens.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "greg.pflaum@pnp-hcl.com" <greg.pflaum@pnp-hcl.com>,
-        "peff@peff.net" <peff@peff.net>
-Date:   Tue, 31 Jan 2023 13:08:40 +0100
-In-Reply-To: <Y9j1RxKhNq2TnL4U@tapette.crustytoothpaste.net>
-References: <4831bbeb0ec29ec84f92e0badfc0d628ecc6921d.camel@siemens.com>
-         <Y9j1RxKhNq2TnL4U@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S231861AbjAaMm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 07:42:28 -0500
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB8314DE2E
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 04:42:27 -0800 (PST)
+Received: by mail-oi1-x232.google.com with SMTP id bg12so6051911oib.5
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 04:42:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+skPc/v4ySct9ZmbnNmGFXh7Mk69LmWYKYFN135PDBo=;
+        b=KpCckEMlPROe2r4HrXBWGMTCeJDuOeJFpmxXoNBzw/EBIyEim8fNlA9IvuzqsBGiwA
+         3QR6U7yN7fVUuGNlS+Ka6Tq2Rr0zTsKiNkFJM8EqM9XeB1wLHB8c8QtB0V8wCJrXG57V
+         POWtBO1ETuKRaidbYVKhvHYkrYsxZQ2UvWx/q11Hc6Sck+UTxhwcPS/DkM8yaPtYPnfI
+         Ts9PeyPQUuN5LQ8HcjErkh7J/gJbzNPsEe5LnFQ5OxnxkVGrbCDyXDzWcEXJ5QI3uWvS
+         tBg3ebC8bppJlTCcFUIcSRq8WvyPa+8mc0g6EM+e/TDp2wbLhB/yvaRIYyPBTgP67blY
+         ssNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+skPc/v4ySct9ZmbnNmGFXh7Mk69LmWYKYFN135PDBo=;
+        b=RiyT7n4BecyYqRz465CviYcRYnd/0Y2rI4LNh6tQxYUTEQjpv5f3YUqFiI5ALA8/uf
+         SxyX7x/wZ8w+hVKU10rTBlO+mA0j1T5mnqALDBuT/I+d8fksxJUiD2TLWTas9fPYeHSz
+         6pru+S3V7iuHaqk5gyfVhftpejje2Vx/G0S6mwwaSqIta51mZhRmx67Swf/+I5VrnW3M
+         MKl1BH3qcKBLHMDZaVRlndwud8axzgDTZb3Hqcjo62EUiVM15P1DuDOa5j6wLxdW1CzJ
+         f76JUPtgp51v/m1Knr7bjT+rOk/t04DFQISrIsRkH/lFDZunJfbEAkzczTgjsTF6cp4e
+         BpDA==
+X-Gm-Message-State: AO0yUKWdZE7v2NMLQwaTdqWOUx70yUMxQfoVHCJhHqKILOjotdKJjtDR
+        Um70jFX99RB8ukGlE1qYLKWQ6U2Z+WVTVhw=
+X-Google-Smtp-Source: AK7set/B9Ch77ct65QSJugbXa1RMd46X1dgEPcxZEHma+19AFxV2b7DruOwWL2dltIS0RYmhbI8YzQ==
+X-Received: by 2002:a05:6808:494:b0:378:80af:c109 with SMTP id z20-20020a056808049400b0037880afc109mr1202050oid.35.1675168946991;
+        Tue, 31 Jan 2023 04:42:26 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:9142:cc1d:32ed:d329? ([2600:1700:e72:80a0:9142:cc1d:32ed:d329])
+        by smtp.gmail.com with ESMTPSA id f14-20020a9d6c0e000000b0068bdfa56717sm855299otq.36.2023.01.31.04.42.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Jan 2023 04:42:26 -0800 (PST)
+Message-ID: <c71f1ca3-e7e8-db0e-44aa-90a1c0d7193f@github.com>
+Date:   Tue, 31 Jan 2023 07:42:25 -0500
 MIME-Version: 1.0
-X-Flowmailer-Platform: Siemens
-Feedback-ID: 519:519-68982:519-21489:flowmailer
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: What's cooking in git.git (Jan 2023, #07; Mon, 30)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqedrb1uvy.fsf@gitster.g>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqedrb1uvy.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2023-01-31 at 11:02 +0000, brian m. carlson wrote:
-> On 2023-01-31 at 10:52:47, Bezdeka, Florian wrote:
-> > Hi all,
->=20
-> Hey,
->=20
-> > I just updated from git 2.30.2 (from Debian 11) to 2.39.0 (from Debian
-> > testing) and realized that I can no longer clone repositories using the
-> > git:// protocol.
-> >=20
-> > There is one specialty in my setup: I'm located behind a proxy, so
-> > GIT_PROXY_COMMAND is set. I'm usiung the oe-git-proxy script [1] here.
-> > My environment provides the http_proxy variable and privoxy [2] is
-> > running on the server side. That information should be sufficient to
-> > reproduce.
-> >=20
-> > I tried the following two repositories for testing:
-> >  - git clone git://git.code.sf.net/p/linuxptp/code linuxptp
-> >  - git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux=
-.git
-> >=20
-> > The result is:
-> > Cloning into 'linuxptp'...
-> > fetch-pack: unexpected disconnect while reading sideband packet
-> > fatal: early EOF
-> > fatal: fetch-pack: invalid index-pack output
-> >=20
-> > I was able to "git bisect" it to the following commit:
-> > ae1a7eefffe6 ("fetch-pack: signal v2 server that we are done making req=
-uests")
-> >=20
-> > Reverting this commit on top of the master branch fixes my issue.
-> > All people involved in this commit should be in CC.
-> >=20
-> > Looking at the TCP byte stream shows that the socket is closed after
-> > the client received the first "part" of the packfile.
-> >=20
-> > ...
-> > 0032want ec3f28a0ac13df805278164f2c72e69676d13134
-> > 0032want 57caf5d94876e8329be65d2dc29d3c528b149724
-> > 0009done
-> > 0000000dpackfile
-> >=20
-> > Let me know if you need further information. Hopefully this was the
-> > correct way of submitting a bug to git...
->=20
-> I think this may have come up before, and I think the rule is that you
-> need a proxy where closing standard input doesn't close standard output.
-> Since that script is using socat, I believe you need the -t option to
-> make this work, or some other approach where standard input and standard
-> output can be closed independently.
+On 1/30/2023 6:10 PM, Junio C Hamano wrote:
 
-Thanks for the super fast response, highly appreciated!
+> * ds/scalar-ignore-cron-error (2023-01-27) 3 commits
+>  - scalar: only warn when background maintenance fails
+>  - t921*: test scalar behavior starting maintenance
+>  - t: allow 'scalar' in test_must_fail
+> 
+>  Allow "scalar" to warn but continue when its periodic maintenance
+>  feature cannot be enabled.
+> 
+>  Will merge to 'next'.
+>  source: <pull.1473.git.1674849963.gitgitgadget@gmail.com>
 
-I was able to get it running by switching to ncat using the --no-
-shutdown option, but I failed to bring back socat support so far.
+I was intending to re-roll, and prepared the --no-src option,
+but these three patches are fine on their own, so I'm happy
+for them to merge to 'next' and I can do the --no-src on its
+own.
 
-For me this is still a regression. We have to change our
-infrastructure/environment because we have a new requirement
-(independent handling of stdin/out) after updating git now. I would
-expect some noise from the yocto/OE community in the future where oe-
-git-proxy is heavily used.
-
-I guess proxy support was forgotten when the referenced change was
-made. Any chance we can avoid closing stdout when running "in proxy
-mode" to restore backward compatibility?
-
-Thanks a lot!
-
-Florian
-
-
+Thanks,
+-Stolee
