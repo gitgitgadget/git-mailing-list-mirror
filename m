@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C9DFC38142
-	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 13:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A291FC38142
+	for <git@archiver.kernel.org>; Tue, 31 Jan 2023 13:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232192AbjAaN3c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 08:29:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40416 "EHLO
+        id S232216AbjAaN3j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 08:29:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232043AbjAaN31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2023 08:29:27 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7D9849565
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 05:29:25 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id m14so13739165wrg.13
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 05:29:25 -0800 (PST)
+        with ESMTP id S232167AbjAaN32 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 08:29:28 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4BC111650
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 05:29:26 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id f47-20020a05600c492f00b003dc584a7b7eso4434903wmp.3
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 05:29:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GNgYHe2+hAaU8wbxFrTySxoshKCEj59J0s/xFDZd5wE=;
-        b=EAOS+/q+9Zb01DDKv7MZlT4C/ahKNQWMjhqO9JkTkPbPpiQhoVv0f+I99RiM0T+jmy
-         IYcN/nuKRFm/6VAFJOZuUAfRmcwSmLT1WJZ/P+Nv4OFcfMcsBTtGqedaSVB41EIi8IGm
-         FQckpBfuZ3dF2MBjkFrsWCbBJw8MgBJhztn1s4KgXEKEiau+zFF/IU3SaDd8TObf2sBM
-         itI2vUIqM8JNsQhBVlaPleXIIGer0pASeHKXtoOHwcpvf8XL9DIcncqO56If/AaifLVZ
-         glYonnaxdQU0nx5m+UOOsfeIiOx8PAqQK98RkRGAYX7gt64IvSJocQM1aoxmAocdBjyI
-         7LvA==
+        bh=B4sUp7XVYAnX/xBzZnTGLuky6ow9i8XqFCncWHsIoV0=;
+        b=qlHwq0Y7kCAZ6EckYxEbe5epym4pxhfkqv/novbd+nRcRHoIk8q1Ni+LkvvFmZPOpv
+         f4fvUmH/Q8RKGzzx5+qdKJpTQIx9FGL3YSVx3ruXnN9dYKLe72pZZpJNeNjuY1IM1oPr
+         410eJsVyUzZJYmydbI9ploZmkeldqwVNiKliHNITaM9CvBfmauxOawNs+ERQSsKKlIGl
+         4BrYRJ19DIedwM3Oc6iLyXze7pTegjTd2lu+xEBYKYpk9UEQf6tB7//zUVP6QHTsjsut
+         tJ/kAsA0uMVISnPIsTwnuKf3bZndDAKUvN53xzAnVshdLoGgfu3oD0ZjFdF8pBUktnxY
+         5+Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GNgYHe2+hAaU8wbxFrTySxoshKCEj59J0s/xFDZd5wE=;
-        b=RPRm0EKgOYAZ/b+2egxRnEV5JkwANrR9N49w+stpRz7C3CrCbcyTtPJvsQ9WSlYUIM
-         58iG0R01kMoR9NiLspePr2kp+BKNtaT5WqCya8kNNVs3LC6jEad95stchezUv29rc2Qe
-         Ku47g+aBdRClhGQpD2gTiW8GiihsRGc3jq9i8qJKsqyGt8HRGTjUrYu4shNbMfbVSkdP
-         kl+ABKZHiO0JrfkMu/eVjp/8CVOsmc75gNVKdOqOfx9WDjh5B36KbPQRPb7si7AUgVXG
-         9/WrqhKa7d4t5buJLVQ3XDhYkEtnBvv2upopgLivPvzKz41GTCpzd5Nn0fl3gESwoVQf
-         XuLA==
-X-Gm-Message-State: AO0yUKVCgHx4cXnOnK/byGiRvNntmXPjM/mPmgTlewGecEjWJrzReZ4y
-        Ayi7fuQmtYccfSXrCy4JQvnVfuayNYQ=
-X-Google-Smtp-Source: AK7set/+tRYQtQ3aSt2e1lImfiVLIVWsO9JSiA7g2/7TSezYIPZ8hD75ambD27Eo87VuDpGRFjkZLQ==
-X-Received: by 2002:a5d:4dce:0:b0:2bf:dcf5:f486 with SMTP id f14-20020a5d4dce000000b002bfdcf5f486mr9158023wru.29.1675171764236;
-        Tue, 31 Jan 2023 05:29:24 -0800 (PST)
+        bh=B4sUp7XVYAnX/xBzZnTGLuky6ow9i8XqFCncWHsIoV0=;
+        b=lBznr2NSycE8ODNZA2GZUS6b3osraoa9eQKMsUxUR1gp/HVOIC3psLVcGqvIRgHd6i
+         Sv/aCCIDb7R8k7200BCerD/fMn4/DeOqlpqSb/4eGy2YznxpFInv8Uj7LmKsVx1BbmTq
+         aqu0fz+ETjCGUcHf8RoK/V/KpO853Sl4nqaT1B0YDUf5xHptNlT2PjPb2BFTKsBQzRoR
+         ds3ZXoHPW2Dp+hI5neNNX2VK0e+qtkWjf+2ZOUO/F9tg0a47jncRVxWNBPh9zJEZARH2
+         8rBRIfEKp1ORbiLEUVwS5dLXU7oUGecfUeFVeb9as0BUZZSNFMv29DIjgqtT9l4Z24xp
+         5iqw==
+X-Gm-Message-State: AFqh2kqxcTl4E4+1Y2MrDI0uccapVQ1oRAsm9keEwur1QkBh0ZXfhrea
+        CrNkkEiMdksRSmI4ZvIDPTt2mRUodCo=
+X-Google-Smtp-Source: AMrXdXsT6JAIFfLdbP3/0ZWORJS9YxVAcEHqa6Z4btoTyyfyIFLvz7QSqzAHNzKtqtpdF3a9WRmwXw==
+X-Received: by 2002:a05:600c:3d16:b0:3db:1ae8:ad98 with SMTP id bh22-20020a05600c3d1600b003db1ae8ad98mr47092403wmb.33.1675171765115;
+        Tue, 31 Jan 2023 05:29:25 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l16-20020adffe90000000b002b8fe58d6desm14370903wrr.62.2023.01.31.05.29.23
+        by smtp.gmail.com with ESMTPSA id n17-20020a1c7211000000b003dc3f07c876sm13287005wmc.46.2023.01.31.05.29.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Jan 2023 05:29:23 -0800 (PST)
-Message-Id: <45cdf9d13a7e0b1e68932defe46a790f6813ed96.1675171759.git.gitgitgadget@gmail.com>
+        Tue, 31 Jan 2023 05:29:24 -0800 (PST)
+Message-Id: <49bf10e0fd4468720cd86cc47e425bf446a1a4f7.1675171759.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1454.v3.git.1675171759.gitgitgadget@gmail.com>
 References: <pull.1454.v2.git.1674487310.gitgitgadget@gmail.com>
         <pull.1454.v3.git.1675171759.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 31 Jan 2023 13:29:11 +0000
-Subject: [PATCH v3 03/11] t5558: add tests for creationToken heuristic
+Date:   Tue, 31 Jan 2023 13:29:12 +0000
+Subject: [PATCH v3 04/11] bundle-uri: parse bundle.heuristic=creationToken
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,146 +71,168 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-As documented in the bundle URI design doc in 2da14fad8fe (docs:
-document bundle URI standard, 2022-08-09), the 'creationToken' member of
-a bundle URI allows a bundle provider to specify a total order on the
-bundles.
+The bundle.heuristic value communicates that the bundle list is
+organized to make use of the bundle.<id>.creationToken values that may
+be provided in the bundle list. Those values will create a total order
+on the bundles, allowing the Git client to download them in a specific
+order and even remember previously-downloaded bundles by storing the
+maximum creation token value.
 
-Future changes will allow the Git client to understand these members and
-modify its behavior around downloading the bundles in that order. In the
-meantime, create tests that add creation tokens to the bundle list. For
-now, the Git client correctly ignores these unknown keys.
+Before implementing any logic that parses or uses the
+bundle.<id>.creationToken values, teach Git to parse the
+bundle.heuristic value from a bundle list. We can use 'test-tool
+bundle-uri' to print the heuristic value and verify that the parsing
+works correctly.
 
-Create a new test helper function, test_remote_https_urls, which filters
-GIT_TRACE2_EVENT output to extract a list of URLs passed to
-git-remote-https child processes. This can be used to verify the order
-of these requests as we implement the creationToken heuristic. For now,
-we need to sort the actual output since the current client does not have
-a well-defined order that it applies to the bundles.
+As an extra precaution, create the internal 'heuristics' array to be a
+list of (enum, string) pairs so we can iterate through the array entries
+carefully, regardless of the enum values.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- t/t5558-clone-bundle-uri.sh | 69 +++++++++++++++++++++++++++++++++++--
- t/test-lib-functions.sh     |  8 +++++
- 2 files changed, 75 insertions(+), 2 deletions(-)
+ Documentation/config/bundle.txt |  7 +++++++
+ bundle-uri.c                    | 34 +++++++++++++++++++++++++++++++++
+ bundle-uri.h                    | 14 ++++++++++++++
+ t/t5750-bundle-uri-parse.sh     | 19 ++++++++++++++++++
+ 4 files changed, 74 insertions(+)
 
-diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-index 9155f31fa2c..474432c8ace 100755
---- a/t/t5558-clone-bundle-uri.sh
-+++ b/t/t5558-clone-bundle-uri.sh
-@@ -285,6 +285,8 @@ test_expect_success 'clone HTTP bundle' '
+diff --git a/Documentation/config/bundle.txt b/Documentation/config/bundle.txt
+index daa21eb674a..3faae386853 100644
+--- a/Documentation/config/bundle.txt
++++ b/Documentation/config/bundle.txt
+@@ -15,6 +15,13 @@ bundle.mode::
+ 	complete understanding of the bundled information (`all`) or if any one
+ 	of the listed bundle URIs is sufficient (`any`).
+ 
++bundle.heuristic::
++	If this string-valued key exists, then the bundle list is designed to
++	work well with incremental `git fetch` commands. The heuristic signals
++	that there are additional keys available for each bundle that help
++	determine which subset of bundles the client should download. The
++	only value currently understood is `creationToken`.
++
+ bundle.<id>.*::
+ 	The `bundle.<id>.*` keys are used to describe a single item in the
+ 	bundle list, grouped under `<id>` for identification purposes.
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 36268dda172..36ec542718d 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -9,6 +9,14 @@
+ #include "config.h"
+ #include "remote.h"
+ 
++static struct {
++	enum bundle_list_heuristic heuristic;
++	const char *name;
++} heuristics[BUNDLE_HEURISTIC__COUNT] = {
++	{ BUNDLE_HEURISTIC_NONE, ""},
++	{ BUNDLE_HEURISTIC_CREATIONTOKEN, "creationToken" },
++};
++
+ static int compare_bundles(const void *hashmap_cmp_fn_data,
+ 			   const struct hashmap_entry *he1,
+ 			   const struct hashmap_entry *he2,
+@@ -100,6 +108,17 @@ void print_bundle_list(FILE *fp, struct bundle_list *list)
+ 	fprintf(fp, "\tversion = %d\n", list->version);
+ 	fprintf(fp, "\tmode = %s\n", mode);
+ 
++	if (list->heuristic) {
++		int i;
++		for (i = 0; i < BUNDLE_HEURISTIC__COUNT; i++) {
++			if (heuristics[i].heuristic == list->heuristic) {
++				printf("\theuristic = %s\n",
++				       heuristics[list->heuristic].name);
++				break;
++			}
++		}
++	}
++
+ 	for_all_bundles_in_list(list, summarize_bundle, fp);
+ }
+ 
+@@ -142,6 +161,21 @@ static int bundle_list_update(const char *key, const char *value,
+ 			return 0;
+ 		}
+ 
++		if (!strcmp(subkey, "heuristic")) {
++			int i;
++			for (i = 0; i < BUNDLE_HEURISTIC__COUNT; i++) {
++				if (heuristics[i].heuristic &&
++				    heuristics[i].name &&
++				    !strcmp(value, heuristics[i].name)) {
++					list->heuristic = heuristics[i].heuristic;
++					return 0;
++				}
++			}
++
++			/* Ignore unknown heuristics. */
++			return 0;
++		}
++
+ 		/* Ignore other unknown global keys. */
+ 		return 0;
+ 	}
+diff --git a/bundle-uri.h b/bundle-uri.h
+index d5e89f1671c..2e44a50a90b 100644
+--- a/bundle-uri.h
++++ b/bundle-uri.h
+@@ -52,6 +52,14 @@ enum bundle_list_mode {
+ 	BUNDLE_MODE_ANY
+ };
+ 
++enum bundle_list_heuristic {
++	BUNDLE_HEURISTIC_NONE = 0,
++	BUNDLE_HEURISTIC_CREATIONTOKEN,
++
++	/* Must be last. */
++	BUNDLE_HEURISTIC__COUNT
++};
++
+ /**
+  * A bundle_list contains an unordered set of remote_bundle_info structs,
+  * as well as information about the bundle listing, such as version and
+@@ -75,6 +83,12 @@ struct bundle_list {
+ 	 * advertised by the bundle list at that location.
+ 	 */
+ 	char *baseURI;
++
++	/**
++	 * A list can have a heuristic, which helps reduce the number of
++	 * downloaded bundles.
++	 */
++	enum bundle_list_heuristic heuristic;
+ };
+ 
+ void init_bundle_list(struct bundle_list *list);
+diff --git a/t/t5750-bundle-uri-parse.sh b/t/t5750-bundle-uri-parse.sh
+index 7b4f930e532..6fc92a9c0d4 100755
+--- a/t/t5750-bundle-uri-parse.sh
++++ b/t/t5750-bundle-uri-parse.sh
+@@ -250,4 +250,23 @@ test_expect_success 'parse config format edge cases: empty key or value' '
+ 	test_cmp_config_output expect actual
  '
  
- test_expect_success 'clone bundle list (HTTP, no heuristic)' '
-+	test_when_finished rm -f trace*.txt &&
-+
- 	cp clone-from/bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/" &&
- 	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
- 	[bundle]
-@@ -304,12 +306,26 @@ test_expect_success 'clone bundle list (HTTP, no heuristic)' '
- 		uri = $HTTPD_URL/bundle-4.bundle
- 	EOF
- 
--	git clone --bundle-uri="$HTTPD_URL/bundle-list" \
-+	GIT_TRACE2_EVENT="$(pwd)/trace-clone.txt" \
-+		git clone --bundle-uri="$HTTPD_URL/bundle-list" \
- 		clone-from clone-list-http  2>err &&
- 	! grep "Repository lacks these prerequisite commits" err &&
- 
- 	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
--	git -C clone-list-http cat-file --batch-check <oids
-+	git -C clone-list-http cat-file --batch-check <oids &&
-+
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-1.bundle
-+	$HTTPD_URL/bundle-2.bundle
-+	$HTTPD_URL/bundle-3.bundle
-+	$HTTPD_URL/bundle-4.bundle
-+	$HTTPD_URL/bundle-list
-+	EOF
-+
-+	# Sort the list, since the order is not well-defined
-+	# without a heuristic.
-+	test_remote_https_urls <trace-clone.txt | sort >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'clone bundle list (HTTP, any mode)' '
-@@ -350,6 +366,55 @@ test_expect_success 'clone bundle list (HTTP, any mode)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'clone bundle list (http, creationToken)' '
-+	test_when_finished rm -f trace*.txt &&
-+
-+	cp clone-from/bundle-*.bundle "$HTTPD_DOCUMENT_ROOT_PATH/" &&
-+	cat >"$HTTPD_DOCUMENT_ROOT_PATH/bundle-list" <<-EOF &&
++test_expect_success 'parse config format: creationToken heuristic' '
++	cat >expect <<-\EOF &&
 +	[bundle]
 +		version = 1
 +		mode = all
 +		heuristic = creationToken
-+
-+	[bundle "bundle-1"]
-+		uri = bundle-1.bundle
-+		creationToken = 1
-+
-+	[bundle "bundle-2"]
-+		uri = bundle-2.bundle
-+		creationToken = 2
-+
-+	[bundle "bundle-3"]
-+		uri = bundle-3.bundle
-+		creationToken = 3
-+
-+	[bundle "bundle-4"]
-+		uri = bundle-4.bundle
-+		creationToken = 4
++	[bundle "one"]
++		uri = http://example.com/bundle.bdl
++	[bundle "two"]
++		uri = https://example.com/bundle.bdl
++	[bundle "three"]
++		uri = file:///usr/share/git/bundle.bdl
 +	EOF
 +
-+	GIT_TRACE2_EVENT="$(pwd)/trace-clone.txt" git \
-+		clone --bundle-uri="$HTTPD_URL/bundle-list" \
-+		"$HTTPD_URL/smart/fetch.git" clone-list-http-2 &&
-+
-+	git -C clone-from for-each-ref --format="%(objectname)" >oids &&
-+	git -C clone-list-http-2 cat-file --batch-check <oids &&
-+
-+	cat >expect <<-EOF &&
-+	$HTTPD_URL/bundle-1.bundle
-+	$HTTPD_URL/bundle-2.bundle
-+	$HTTPD_URL/bundle-3.bundle
-+	$HTTPD_URL/bundle-4.bundle
-+	$HTTPD_URL/bundle-list
-+	EOF
-+
-+	# Since the creationToken heuristic is not yet understood by the
-+	# client, the order cannot be verified at this moment. Sort the
-+	# list for consistent results.
-+	test_remote_https_urls <trace-clone.txt | sort >actual &&
-+	test_cmp expect actual
++	test-tool bundle-uri parse-config expect >actual 2>err &&
++	test_must_be_empty err &&
++	test_cmp_config_output expect actual
 +'
 +
- # Do not add tests here unless they use the HTTP server, as they will
- # not run unless the HTTP dependencies exist.
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index f036c4d3003..ace542f4226 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1833,6 +1833,14 @@ test_region () {
- 	return 0
- }
- 
-+# Given a GIT_TRACE2_EVENT log over stdin, writes to stdout a list of URLs
-+# sent to git-remote-https child processes.
-+test_remote_https_urls() {
-+	grep -e '"event":"child_start".*"argv":\["git-remote-https",".*"\]' |
-+		sed -e 's/{"event":"child_start".*"argv":\["git-remote-https","//g' \
-+		    -e 's/"\]}//g'
-+}
-+
- # Print the destination of symlink(s) provided as arguments. Basically
- # the same as the readlink command, but it's not available everywhere.
- test_readlink () {
+ test_done
 -- 
 gitgitgadget
 
