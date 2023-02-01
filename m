@@ -2,130 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F7DEC636CD
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 12:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E555C636CD
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 12:54:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231687AbjBAMuj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 07:50:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59924 "EHLO
+        id S230347AbjBAMyo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 07:54:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231564AbjBAMuh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 07:50:37 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6756A5A
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 04:50:36 -0800 (PST)
-Received: (qmail 31839 invoked by uid 109); 1 Feb 2023 12:50:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Feb 2023 12:50:36 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20140 invoked by uid 111); 1 Feb 2023 12:50:35 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Feb 2023 07:50:35 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 1 Feb 2023 07:50:35 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 6/6] hash-object: use fsck for object checks
-Message-ID: <Y9pgG10dAoQABGXG@coredump.intra.peff.net>
-References: <Y8hX+pIZUKXsyYj5@coredump.intra.peff.net>
- <Y8haHL9xIWntSm0/@coredump.intra.peff.net>
+        with ESMTP id S230043AbjBAMyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 07:54:43 -0500
+X-Greylist: delayed 62 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 01 Feb 2023 04:54:40 PST
+Received: from mta-65-226.siemens.flowmailer.net (mta-65-226.siemens.flowmailer.net [185.136.65.226])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 566892D63
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 04:54:40 -0800 (PST)
+Received: by mta-65-226.siemens.flowmailer.net with ESMTPSA id 20230201125335589f7e3dddc1a13ba7
+        for <git@vger.kernel.org>;
+        Wed, 01 Feb 2023 13:53:35 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; s=fm1;
+ d=siemens.com; i=florian.bezdeka@siemens.com;
+ h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Cc:References:In-Reply-To;
+ bh=+FPQP2lrA4BpaS1TJdbtggsuJ6uc3QZSeY6QZi0gAEw=;
+ b=g/eXnZGm2SvY9uVbMZnmyOrL/9KK4leDqQTcCD2Eh2qkD73hSBYNQq2iTSxc/RfW9CfP64
+ LXtZj5w0eeE3iqrF5BGFjgtSgglW02ik53ElkjKWWt+pXEs6bXGCuBe9OSZ3ZFuPEqMzqie+
+ 8Zm7qQpP03PJPvgJ9Bjl47h+W6HEg=;
+Message-ID: <494ac71b378b1afb4349a4fb86767f7f77e781b3.camel@siemens.com>
+Subject: Re: Bug: Cloning git repositories behind a proxy using the git://
+ protocol broken since 2.32
+From:   Florian Bezdeka <florian.bezdeka@siemens.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "greg.pflaum@pnp-hcl.com" <greg.pflaum@pnp-hcl.com>,
+        Gerhard Rieger <gerhard@dest-unreach.org>
+Date:   Wed, 01 Feb 2023 13:53:34 +0100
+In-Reply-To: <Y9pa/YHnrrMU/ufV@coredump.intra.peff.net>
+References: <4831bbeb0ec29ec84f92e0badfc0d628ecc6921d.camel@siemens.com>
+         <Y9j1RxKhNq2TnL4U@tapette.crustytoothpaste.net>
+         <339359ee8a228ea108109cf852bcb7e145807dcf.camel@siemens.com>
+         <CA+P7+xpgJKojMmcN9TuGDw8oduQSQk-5nUtsWc+4Seqa+eVDJQ@mail.gmail.com>
+         <840bbd91453529571a9d4f13472a12f6e472d198.camel@siemens.com>
+         <Y9pa/YHnrrMU/ufV@coredump.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y8haHL9xIWntSm0/@coredump.intra.peff.net>
+X-Flowmailer-Platform: Siemens
+Feedback-ID: 519:519-68982:519-21489:flowmailer
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 18, 2023 at 03:44:12PM -0500, Jeff King wrote:
+On Wed, 2023-02-01 at 07:28 -0500, Jeff King wrote:
+> On Wed, Feb 01, 2023 at 12:19:55AM +0100, Florian Bezdeka wrote:
+>=20
+> > > Junio pointed out the excellent analysis from Peff regarding the
+> > > situation and the fact that socat is wrong here.
+> >=20
+> > Thanks for pointing me to the old discussion. I was quite sure that I'm
+> > not the first one facing this problem but couldn't find something.
+> >=20
+> > It might be that socat is doing something wrong. But git is the
+> > component that triggers the problem. Did someone talk to the socat
+> > maintainers yet?
+>=20
+> I'm not sure I'd say that socat is wrong. It's a generic tool, and it
+> doesn't know what type of protocol the two sides are expecting, or how
+> they'll handle half-duplex shutdowns. The default behavior is to wait
+> 0.5 seconds to see if the other side has anything to say, which is a
+> reasonable compromise. It's just not enough for use a Git proxy in this
+> case.
+>=20
+> The ideal, of course, would be an option to send the half-duplex
+> shutdown to the server and then wait for the server to hang up. But I
+> don't think it has such an option (you can just simulate it with a
+> really large "-t"). Netcat does, FWIW ("-q -1").
 
-> @@ -2350,12 +2340,13 @@ static int index_mem(struct index_state *istate,
->  		}
->  	}
->  	if (flags & HASH_FORMAT_CHECK) {
-> -		if (type == OBJ_TREE)
-> -			check_tree(buf, size);
-> -		if (type == OBJ_COMMIT)
-> -			check_commit(buf, size);
-> -		if (type == OBJ_TAG)
-> -			check_tag(buf, size);
-> +		struct fsck_options opts = FSCK_OPTIONS_DEFAULT;
-> +
-> +		opts.strict = 1;
-> +		opts.error_func = hash_format_check_report;
-> +		if (fsck_buffer(null_oid(), type, buf, size, &opts))
-> +			die(_("refusing to create malformed object"));
-> +		fsck_finish(&opts);
->  	}
+-t doesn't help here. With massive help from the socat maintainer
+(thanks Gerhard!, now in CC) I was able to get the following log out of
+socat:
 
-By the way, I wanted to call out one thing here that nobody mentioned
-during review: we are not checking the return value of fsck_finish().
+2023/02/01 11:06:29.960194 socat[18916] D read(0, 0x56111c858000, 8192)
+2023/02/01 11:06:29.960208 socat[18916] D read -> 0
 
-That is a bit of a weird function. We must call it because it cleans up
-any resources allocated during the fsck_buffer() call. But it also is
-the last chance to fsck any special blobs (like those that are found as
-.gitmodules, etc). We only find out the filenames while looking at the
-enclosing trees, so we queue them and then check the blobs later.
+stdin had EOF. Socat half closes the socket:
 
-So if we are hashing a blob, that is mostly fine. We will not have the
-blob's name queued as anything special, and so the fsck is a noop.
+2023/02/01 11:06:29.960231 socat[18916] I shutdown(6, 1)
 
-But if we fsck a tree, and it has a .gitmodules entry pointing to blob
-X, then we would also pull X from the odb and fsck it during this
-"finish" phase.
+And then, within less than 0.2s, the peer (proxy?) closes the other
+channel:
 
-Which leads me to two diverging lines of thought:
+2023/02/01 11:06:30.118216 socat[18916] D read(6, 0x56111c858000, 8192)
+2023/02/01 11:06:30.118238 socat[18916] D read -> 0
 
-  1. One of my goals with this series is that one could add objects to
-     the repository via "git hash-object -w" and feel confident that no
-     fsck rules were violated, because fsck implements some security
-     checks. In the past when GitHub rolled out security checks this was
-     a major pain, because objects enter repositories not just from
-     pushes, but also from web-client activity (e.g., editing a blob on
-     the website). And since Git had no way to say "fsck just this
-     object", we ended up implementing the fsck checks multiple times,
-     in libgit2 and in some of its calling code.
+It's quite clear now that the remote peer (proxy or server) closes the
+complete connection after receiving the partial shutdown. That's
+nothing that is under my control.
 
-     So I was hoping that just passing the objects to "hash-object"
-     would be a viable solution. I'm not sure if it is or not. If you
-     just hash a blob, then we'll have no clue it's a .gitmodules file.
-     OTOH, you have to get the matching tree which binds the blob to the
-     .gitmodules path somehow. So if that tree is fsck'd, and then
-     checks the blob during fsck_finish(), that should be enough.
-     Assuming that fsck complains when the pointed-to blob cannot be
-     accessed, which I think it should (because really, incremental
-     pushes face the same problem).
+With privoxy and the infrastructure at work (zscaler based) there are
+at least two proxy implementations showing this behavior.=20
 
-     In which case we really ought to be checking the result of
-     fsck_finish() here and complaining.
+Switching to ncat --no-shutdown qualifies as workaround for now, but so
+far I didn't manage to get socat back into the game. Downgrading git is
+the other possibility.
 
-  2. We're not checking fsck connectivity here, and that's intentional.
-     So you can "hash-object" a tree that points to blobs that we don't
-     actually have. But if you hash a tree that points a .gitmodules
-     entry at a blob that doesn't exist, then that will fail the fsck
-     (during the finish step). And respecting the fsck_finish() exit
-     code would break that.
+>=20
+> > Peff also mentioned that the half-duplex shutdown of the socket is
+> > inconsistent between proxy and raw TCP git://. It seems still a valid
+> > option to skip the half-shutdown for the git:// proxy scenario.
+>=20
+> It could be done, but that would reintroduce the "oops, socat died while
+> we were waiting" that ae1a7eefff was solving. The original motivation
+> was with ssh, but the same problem exists for proxies. It _doesn't_
+> exist for raw TCP, because nobody notices the connection died (we just
+> close() it), and there's no error to propagate.
+>=20
+> The raw TCP version does still suffer from leaving the connection open
+> unnecessarily, so it would benefit from getting the same treatment. I
+> didn't care enough to implement it (and TBH, I kind of hoped that git://
+> was on the decline; especially with the v2 protocol, it's pretty much
+> worse in every way than git-over-http).
+>=20
+> > > What value of -t did you try?
+> >=20
+> > I was playing with -t 10 and -t 60 so far. Both does not work for
+> > cloning a kernel stable tree. I guess it's hard to find a value that
+> > works under all circumstances as timings might be different depending
+> > on server/network speed.
+>=20
+> Anything over "5" should be sufficient, because the other side should be
+> sending keep-alive packets (at the Git protocol level) every 5 seconds.
+> It might be worth running socat under strace to see what it's seeing and
+> doing.
+>=20
+> Another workaround is to set protocol.version to "0" in your Git config.
+>=20
+> -Peff
 
-     As an addendum, in a regular fsck, many trees might mention the
-     same blob as .gitmodules, and we'll queue that blob to be checked
-     once. But here, we are potentially running a bunch of individual
-     fscks, one per object we hash. So if you had, say, 1000 trees that
-     all mentioned the same blob (because other entries were changing),
-     and you tried to hash them all with "hash-object --stdin-paths" or
-     similar, then we'd fsck that blob 1000 times.
-
-     Which isn't wrong, per se, but seems inefficient. Solving it would
-     require keeping track of what has been checked between calls to
-     index_mem(). Which is kind of awkward, seeing as how low-level it
-     is. It would be a lot more natural if all this checking happened in
-     hash-object itself.
-
-So I dunno. The code above is doing (2), albeit with the inefficiency of
-checking blobs that we might not care about. I kind of think (1) is the
-right thing, though, and anybody who really wants to make trees that
-point to bogus .gitmodules can use --literally.
-
--Peff
