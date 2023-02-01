@@ -2,143 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26AC7C05027
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 22:51:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3352EC636D3
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 22:56:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231570AbjBAWvV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 17:51:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60866 "EHLO
+        id S231237AbjBAW4w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 17:56:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231215AbjBAWvR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 17:51:17 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A88F6C12C
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 14:51:16 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id bk15so936112ejb.9
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 14:51:16 -0800 (PST)
+        with ESMTP id S229566AbjBAW4v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 17:56:51 -0500
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B00465F23
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 14:56:50 -0800 (PST)
+Received: by mail-yb1-xb35.google.com with SMTP id x139so1673429ybe.13
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 14:56:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TQMhJB9sW7xASvN5U2nHYbXOFoVb0N6iBKuf27ai3d4=;
-        b=fyKIzb+L9y4p2YmgL33daLSVvm1KosS946AAgaqCUaLNKpwHa7UafoSnJmTouuwEM1
-         TS0Vs83Y09j43Bbud1WG1RcTtIJ0vxsQsQyUX+atS7K0ky6pF+l1nzduK8do2N+FXG2H
-         w6iC3Oosk9BcdDCka7PQ3twKt0NPzpc+Cs5L0FvOlGtyVekJrrmUWU133SP3nyLDFNWK
-         laCQvBSr83tT07weH1XXtWfMsApJZ7jTYJvOxS04YZXI+duP1Pym6yMz5ijuOdeZsBfw
-         GGkgFN37t8oaltJxSCArpXnXP3edsMiH1rpXiybCYFl7SAPyuHzWIhrGOHbe/FTsZLsA
-         nCgw==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8oBgwRXjOJFiuadkonl7SJKxrjhtqJf0/H6FzcNPSvA=;
+        b=fWCEJ81j6X2OKeOJ1PJ5poX6ySQ7d9XmEM1uMhJmGz5iqe2dA6FjnNNp0yaUhUi33m
+         X+T3Wr1B2X3yZrw7as2U/FKOEzsanrJ1cmO9rNWDllBCUD0dp/r+VKxr9tuC7ZLqMMlh
+         33RFCODr3IzRc7JfeRt+OZ9PAoSaxfaZblS9krKwdfiVL+FNYSQJaZSFDQ30TzpYMsBT
+         ZacwxAtVjf/X8xErHEzlMTt5X5PzyhznxAUxpDMxV1WXyJP2QAEm91PaddSlJxLMfj0s
+         AcYfJVaiBJfTYnuh/uBx+H7KnwtCpv50PSyvV/DkcLeQPSPcRxQcsBNuXqy178oNZqWK
+         /F/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TQMhJB9sW7xASvN5U2nHYbXOFoVb0N6iBKuf27ai3d4=;
-        b=HCbzX9XZs9PA0eCL9QZh/KWxLT62wuw+C2GWODBKwdb3NVXmRfAZPuLd2WjGraRKDo
-         /FtLWgM03VEz5Q/bRb/LhgVIo4EPNirtFJ7T07E856hCWDdJzYrjTOFEiVPkqhOOKh3a
-         tc/2yUxjeoPVKzLwiJ0b1kvSRvkU/c/CtHTPyg7QlhqTQHH9anJWDdfu2v2Tql4bfUkt
-         1nUoxMCLJAIilvPEX5Pjt5ArRSn1KG6K4QvtGMUPpOce6LOHp7GNivti5DduaaNPAsZt
-         T+4my4mPI+tRTmIhSytfSf3xjFF2LezIZDIHi5fy2yg1OsJQHQ4/iMhyuylWIWCvx7ca
-         rhMw==
-X-Gm-Message-State: AO0yUKU+9f3sxLt9+HJYtCfN2Hxx7CF1oes2Uy7UPH5a8Yn3SJ3GtRTE
-        2i6aN7dxZlcZwdivQNpiBLc=
-X-Google-Smtp-Source: AK7set8uPsLilfjZW9l8Uve5IPpV8G7Mi0duj6VG2KOq4/v8W6b8YLkd5wnuJERdpO5kMrW15ngEsQ==
-X-Received: by 2002:a17:906:11c7:b0:887:3732:f584 with SMTP id o7-20020a17090611c700b008873732f584mr3987541eja.71.1675291874537;
-        Wed, 01 Feb 2023 14:51:14 -0800 (PST)
-Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id c2-20020a170906762200b0087851a76573sm10836597ejn.74.2023.02.01.14.51.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 14:51:14 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pNLwf-002KSG-09;
-        Wed, 01 Feb 2023 23:51:13 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Rafael Dulfer <rafael@dulfer.be>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Andrei Rybak <rybak.a.v@gmail.com>,
-        Rafael Dulfer <rafael.dulfer@gmail.com>
-Subject: Re: [PATCH] rev-list: clarify git-log default date format
-Date:   Wed, 01 Feb 2023 23:28:05 +0100
-References: <20230201155712.86577-1-rafael@dulfer.be>
- <xmqq5ycl1c6h.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <xmqq5ycl1c6h.fsf@gitster.g>
-Message-ID: <230201.864js5q9sv.gmgdl@evledraar.gmail.com>
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8oBgwRXjOJFiuadkonl7SJKxrjhtqJf0/H6FzcNPSvA=;
+        b=M7baIvB9Wk12lhDOZWFPhy120kvrey8ARqERuC5ZOU0bapa6MCMtfaobPZiZc9QdW6
+         x07mgE7E482A8lGTfoVZfd9S0RA55SiFs1G6tbnR4kktzkE+p6qKfkJoUBsmRtbzoDXA
+         KuNrpoowjhjow6y26KZODbww99HUmLLk1/Qu5m/Xh0ayiFv2PesHW/Gf1WwlaoXNyqL2
+         2BbnRU4vn4FjOIzj6QaLk4aH2NUsj0PEIeE0hzfxD94p0J993NjKEavCJAsMKhC2i76l
+         r19WNEL/iZ7LDvAapOljSPsn0sb2QAj/yWXHXcCcfYfkOYRI4GJv7KZvafF6wQd8nMPK
+         Ylyw==
+X-Gm-Message-State: AO0yUKUbZnY1AYrAe4RzKbq2srJpZXsXpgROYTogIH9vSOqTd93qoGEN
+        Lw89MQx/MUznAwUecgeZcJ7n9R7yg5GPR1iFz1jpQxp+ltc=
+X-Google-Smtp-Source: AK7set+GuTkYNjbHwkOzFpcCDeMiv4qjAg5rwjTnKA7j4xfmWAIGN3z9kH6XEJ710/a05BPTvcsZee+QUHsU9BPaK9w=
+X-Received: by 2002:a25:f449:0:b0:7dc:7cf:3ba7 with SMTP id
+ p9-20020a25f449000000b007dc07cf3ba7mr491132ybe.333.1675292209257; Wed, 01 Feb
+ 2023 14:56:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Palaniappan Nagarajan <palaniappan.feb22@gmail.com>
+Date:   Wed, 1 Feb 2023 14:56:37 -0800
+Message-ID: <CAPsey7=9y=j3s1gmO5sFbZXfD_X9osEJ8i-x=SdRM0e27Pbtpg@mail.gmail.com>
+Subject: [Help][Bug] Git pull fails while pulling large commits on FUSE based filesystem
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Community,
+We have a peculiar environment: We use git repository on a directory
+mounted using s3-fuse(https://github.com/s3fs-fuse/s3fs-fuse). The
+directory is backed up to the Amazon S3 bucket. Whenever we try to run
+`git pull` that could pull in *large commits*, we are facing the
+following error.
 
-On Wed, Feb 01 2023, Junio C Hamano wrote:
+$ git pull origin main
+remote: Enumerating objects: 102, done.
+remote: Counting objects: 100% (102/102), done.
+remote: Compressing objects: 100% (101/101), done.
+remote: Total 102 (delta 1), reused 102 (delta 1), pack-reused 0
+Receiving objects: 100% (102/102), 72.24 MiB | 15.48 MiB/s, done.
+Resolving deltas: 100% (1/1), completed with 1 local object.
+fatal: Failed to checksum '.git/objects/pack/tmp_pack_VvTvzo': No such
+file or directory
+fatal: fetch-pack: invalid index-pack output
 
-> Rafael Dulfer <rafael@dulfer.be> writes:
->
->> From: Rafael Dulfer <rafael.dulfer@gmail.com>
->>
->> Currently, the documentation is slightly incomplete, not explaining
->> all the differences the default format has with rfc2822. Leading to
->> confusion for people trying to parse the date format outputted by
->> git log
->>
->> This patch adds 2 more exceptions when compared to rfc2822. Also
->> adds an example of what the format looks like (I originally wanted
->> to specify this in strftime notation, but because of the way
->> day-of-month is formatted this is impossible)
->
-> Overly long lines.
->
->>
->> Signed-off-by: Rafael Dulfer <rafael.dulfer@gmail.com>
->> ---
->>  Documentation/rev-list-options.txt | 10 ++++++++--
->>  1 file changed, 8 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
->> index ff68e48406..8bc8475f3e 100644
->> --- a/Documentation/rev-list-options.txt
->> +++ b/Documentation/rev-list-options.txt
->> @@ -1103,9 +1103,15 @@ format placeholders. When using `-local`, the correct syntax is
->>  `--date=default` is the default format, and is similar to
->>  `--date=rfc2822`, with a few exceptions:
->>  --
->> -	- there is no comma after the day-of-week
->> +	- There is no comma after the day-of-week
->>  
->> -	- the time zone is omitted when the local time zone is used
->> +	- The time zone is omitted when the local time zone is used
->> +
->> +	- Day-of-month and month are switched around
->> +
->> +	- Time-of-day and the year are switched around
->> +
->> +As a result, the format looks as follows: `Thu Jan 1 00:00:00 1970 +0000` with `+0000` being omitted when the local time zone is used.
->
-> All of the above may technically be correct, but I wonder if it
-> makes it easier to follow to simply stop saying "is similar to".
-> That is
->
->     The default format `--date=default` shows a single line with
->     three-letter day of the week, three-letter month, day-of-month,
->     hour-minute-second in the "HH:MM:SS" format, followed by 4-digit
->     year, plus timezone information unless the local time zone is
->     used (e.g. "Thu Jan 1 00:00:00 1970 +0000").
->
-> or something like that.
+I can confirm that the file '.git/objects/pack/tmp_pack_XXXXX' is
+present once the command completes. In the S3 fuse logs, I see that
+the file is read before the file is created.
 
-I think that following such a description in prose is still more
-confusing than just showing an example. E.g. we could say:
-	
-	Assuming a user in timezone +0200 (Central Europe) values of
-	these `--date` argument would produce:
-	
-	|---------------+--------------------------------|
-	| rfc2822       | Thu, 7 Apr 2005 15:13:13 -0700 |
-	| rfc2822-local | Fri, 8 Apr 2005 00:13:13 +0200 |
-	| default       | Thu Apr 7 15:13:13 2005 -0700  |
-	| default-local | Fri Apr 8 00:13:13 2005        |
-	|---------------+--------------------------------|
-	
-In particular your example says "unless the local time zone is used",
-but then shows an example that's 'default', not 'default-local'.
+The issue happens only during `git pull` and `git clone` with the
+large commits works without any issues.
+
+Can anyone help with any pointers/ workaround/ potential solution to
+fix this issue? Is there a way to override the location of temporary
+files "tmp_pack_XXXXX" files so that it can be created outside the
+mount directory? Setting the object directory outside the mount
+directory using GIT_OBJECT_DIRECTORY is not an option as we want to
+backup git history.
+
+P.S. My experiment that could throw some light on the issue.
+1. Created a Git repository with 1000 files of 1 MB.
+(https://github.com/cyn0/2kfiles-large)
+2. Git clone on the mounted directory works without any issue.
+3. Added 5 files of each 1MB size to the repository.
+(https://github.com/cyn0/2kfiles-large/commit/42aa5d83e9035460ffa9c3b2f4494c0828f6b1c7)
+4. From the mounted directory, "git pull origin main" works without any size.
+5. Now, add 100 files of each 1MB to the repository.
+(https://github.com/cyn0/2kfiles-large/commit/7304886116d9bdec8a8c2da020776995a6624bd2)
+6. From the mounted directory, "git pull origin main" fails with the
+above error.
+
+Thanks in advance for your help!
+
+Regards,
+Palaniappan
