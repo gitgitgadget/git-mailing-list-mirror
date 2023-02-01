@@ -2,74 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73B25C05027
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 21:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F0D6C05027
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 21:51:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229848AbjBAVfF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 16:35:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57870 "EHLO
+        id S229916AbjBAVv5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 16:51:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229973AbjBAVfD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 16:35:03 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CB9539BA4
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 13:35:02 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id gr7so486975ejb.5
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 13:35:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=FU4t/gYZ/JEp+ahiXpgh752YFSz1gZ9chE1VmA1z0iM=;
-        b=Dh1yvfZtIXQ5JrXPwkSdUeUu3H9vPMN+QKkqfTNJSv5PA8EhTqo4v9OfXOmQjYV/+Y
-         asZH9N4ae1qcRaok3MIiJ6mez+/BKi4tUE4rtKiqh6h6sotGyyip9+ZTBOYeVkT6d915
-         dcx0bj/1dmFd9YsoEio//B1htSvgJLpi1adcebISTy32hqHrOjlYw10ONlTSh4r4GuaS
-         sOzoxXqz5eeqE8BKri4kuxOZnw2PJzoa0V516San7YZ3nZpEN7xcYqr51Og6R/7GF65r
-         DtSVzpvSiKUCYJNm65oT8KKt9ZInAMyBdyUXp8r0j9CoCPRusv9Fu2vxil/xJm9koiQx
-         d67w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FU4t/gYZ/JEp+ahiXpgh752YFSz1gZ9chE1VmA1z0iM=;
-        b=4tPGKCyNkdpYSZls1qd4YlB4HmFljOquxd0aERQ9bcAM+Iwb3+DoEAsClGdUl9CAAy
-         eu9weeIJTLybTUUpR1qefiP2zBl+yJb61nS0YEi0K3F9TyNxOL0OSBaWjSg6yV82ASZ3
-         EiA7gC0mrOF2JSo0Zr3TMwqFYJEoaq6gzrvRms6rz5T4PKSxd/M5oiO3SCrAT686cZJJ
-         tNrF+uIve/OXFHuqXYZH07VHKAXDHE3674GFTSAVBqQorq+TvwdXpu+Dv7fMHjNiuNDz
-         SUpJLiLhQs6TXdJhxainNFB90Oz55CDZo/rhbOFnxP7yh1piavB2ptfpmdhG4eNSovc2
-         gHsQ==
-X-Gm-Message-State: AO0yUKXr83t6OPhjALL7a8QUR78HZNpz2r8yLVexc6wkWv4yIGow9URi
-        AlLeUDoaJPACDmhWjtqin1XeiDAUK3ki7Gk5jtVTYJBaa6A=
-X-Google-Smtp-Source: AK7set95fLsoJOapWxsG7wQpCNZbR1UksZeT4bOqZly9lNkM/ju7ZYqdvELlCdSIk7DfWqBaYN0bQkTacRys0xr6g04=
-X-Received: by 2002:a17:906:5048:b0:88a:47d7:3c3a with SMTP id
- e8-20020a170906504800b0088a47d73c3amr1217916ejk.182.1675287301150; Wed, 01
- Feb 2023 13:35:01 -0800 (PST)
+        with ESMTP id S229666AbjBAVv4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 16:51:56 -0500
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD9B1CA34
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 13:51:54 -0800 (PST)
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4P6bGv1sMNz5tlC;
+        Wed,  1 Feb 2023 22:51:51 +0100 (CET)
+Message-ID: <f3de2ca3-167e-365c-8124-d6ba9bba920d@kdbg.org>
+Date:   Wed, 1 Feb 2023 22:51:50 +0100
 MIME-Version: 1.0
-References: <CALnO6CAZtwfGY4SYeOuKqdP9+e_0EYNf4F703DRQB7UUfd_bUg@mail.gmail.com>
- <CANgJU+X_e0owKC3uWPaA_gVP54syF1+MJ-cTn+fjPrNS5LDsMA@mail.gmail.com>
- <CALnO6CDCkuN2XU_AyO66hQSm2ztfpe8Rs_baw_J4uTQZmekREw@mail.gmail.com>
- <CANgJU+WZR56xG+KL3P053aD_qTh+rBhZ01mqNajg2qRt_+RNMA@mail.gmail.com>
- <xmqqsffpz05o.fsf@gitster.g> <CALnO6CAZ_RMirOwQqJyqJrq2dY1w09eV1h=0JFosYSb7XhyQVQ@mail.gmail.com>
-In-Reply-To: <CALnO6CAZ_RMirOwQqJyqJrq2dY1w09eV1h=0JFosYSb7XhyQVQ@mail.gmail.com>
-From:   "D. Ben Knoble" <ben.knoble@gmail.com>
-Date:   Wed, 1 Feb 2023 16:34:49 -0500
-Message-ID: <CALnO6CA8ZYfQ7pGMAgupJMhwReZVRzVw7KkfqwAF6i+dCMyzJw@mail.gmail.com>
-Subject: Re: grep: fix multibyte regex handling under macOS (1819ad327b7a1f19540a819813b70a0e8a7f798f)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     demerphq <demerphq@gmail.com>, Git <git@vger.kernel.org>,
-        dds@aueb.gr
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v3] win32: check for NULL after creating thread
+To:     Rose via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Seija Kijin <doremylover123@gmail.com>, git@vger.kernel.org
+References: <pull.1445.v2.git.git.1675176818033.gitgitgadget@gmail.com>
+ <pull.1445.v3.git.git.1675262454817.gitgitgadget@gmail.com>
+Content-Language: en-US
+From:   Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <pull.1445.v3.git.git.1675262454817.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 1, 2023 at 4:33 PM D. Ben Knoble <ben.knoble@gmail.com> wrote:
-> Are you suggesting that I try with `-P` and/or `-E`?
+Am 01.02.23 um 15:40 schrieb Rose via GitGitGadget:
+> From: Seija Kijin <doremylover123@gmail.com>
+> 
+> Check for NULL handles, not "INVALID_HANDLE,"
+> as CreateThread guarantees a valid handle in most cases.
+> 
+> The return value for failed thread creation is NULL,
+> not INVALID_HANDLE_VALUE, unlike other Windows API functions.
 
-Er, obviously these don't exist for git-diff.
+Nice catch!
 
+The subject line sounds as if an error check was missing, but that is
+not true. I'd phrase it
 
+	compat/winansi: check for errors of CreateThread() correctly
 
--- 
-D. Ben Knoble
+Then drop the first sentence of the message body as it is very handwavy:
+talking about "most cases" is not helpful if the few other cases are not
+enumerated. And the subsequent sentence is to the point and very helpful
+(substitute "CreateThread" for "thread creation").
+
+>  compat/winansi.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/compat/winansi.c b/compat/winansi.c
+> index 3abe8dd5a27..f83610f684d 100644
+> --- a/compat/winansi.c
+> +++ b/compat/winansi.c
+> @@ -644,7 +644,7 @@ void winansi_init(void)
+>  
+>  	/* start console spool thread on the pipe's read end */
+>  	hthread = CreateThread(NULL, 0, console_thread, NULL, 0, NULL);
+> -	if (hthread == INVALID_HANDLE_VALUE)
+> +	if (!hthread)
+>  		die_lasterr("CreateThread(console_thread) failed");
+>  
+>  	/* schedule cleanup routine */
+> 
+> base-commit: 2fc9e9ca3c7505bc60069f11e7ef09b1aeeee473
+
+Acked-by: Johannes Sixt <j6t@kdbg.org>
+
+-- Hannes
+
