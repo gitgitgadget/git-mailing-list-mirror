@@ -2,118 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 755DDC636D4
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 18:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF1BDC05027
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 19:36:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231465AbjBAS4t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 13:56:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55980 "EHLO
+        id S231704AbjBATgk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 14:36:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbjBAS4r (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 13:56:47 -0500
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F099B7CCB5
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 10:56:44 -0800 (PST)
-Received: from cwcc.thunk.org (pool-173-48-120-46.bstnma.fios.verizon.net [173.48.120.46])
-        (authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 311IuRTs006244
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 1 Feb 2023 13:56:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-        t=1675277792; bh=CmRccYcJvTlxXx6mqChaeg0P0EXRTp0wfH86+4WSYbc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=HmPaZ4ULREE0VuJxGZIgwzh2+iuTv62NLsQAlialyMuchHkbHSviAadSUJ8h70KQf
-         +AOXb9yKPXF7uVIOyBM5Fk4nxwcUcwPVOQZ0JQArSebS73fHlIPIt337MGhaR8YySe
-         m/Zzky75ODJD4vj56Jox+z6lbVMBSz5GF9HJUsgRh4UNxI1Ea0eBNwewdiQsUOR4IV
-         U40a3m4nqedFduPaTPzjTwKVAJHFJ1+p9c6jQuQ5jQYUa5s42jYs65/4rx/DjlwvG3
-         a7AzW5RU0OW7wdVhlizDXUT9rXLtqnfM02AuZRxu8HofHlqueed4YEnlhcmE3SWmLA
-         EOedJvoBqAiCA==
-Received: by cwcc.thunk.org (Postfix, from userid 15806)
-        id CD8A715C359D; Wed,  1 Feb 2023 13:56:27 -0500 (EST)
-Date:   Wed, 1 Feb 2023 13:56:27 -0500
-From:   "Theodore Ts'o" <tytso@mit.edu>
-To:     demerphq <demerphq@gmail.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eli Schwartz <eschwartz93@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
- a possible solution
-Message-ID: <Y9q129WbseimgeBS@mit.edu>
-References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
- <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
- <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
- <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net>
- <230201.86pmatr9mj.gmgdl@evledraar.gmail.com>
- <CANgJU+V0QRFwmTh8ZzY=28kmbUw=DvSLE24LioOXp6_ozq+RdA@mail.gmail.com>
- <20230201122152.GJ19419@kitsune.suse.cz>
- <CANgJU+VLseURimM++38WA81uFPbnoHiToOt4F4UFL9yVbQpBEw@mail.gmail.com>
- <230201.86cz6tqyvy.gmgdl@evledraar.gmail.com>
- <CANgJU+VNY-VziRijSwyb1WF9s31hKroK+2VJ0qEGiYweiA59Ug@mail.gmail.com>
+        with ESMTP id S229471AbjBATgi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 14:36:38 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93BA97C736
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 11:36:37 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id n13so4027945plf.11
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 11:36:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1OV+sKZZNfN1LZ1zWZOblvkBGXJMdWlVovdyQPURLCs=;
+        b=hjMLO/lF5OMueJejfxOSMubl/qWjjZjsJqbOl+oUpFu2gZTWhclEarFu1gcmpqglL3
+         0uYglAR+Zdco2PKlsXWCjMMWCS0CHdrCIXz4wKlo2+oDYqh0/SyOr91IBSg18dPcDWBW
+         P1ji0FKlQ9OdPFn1UqnsuyVcWrHEjlfOax5IHnnh8PG9gJgyWgBycN/AjQjHza7Pd02g
+         JsAgCsGhdhlb243fzOiP4XuwXUbrNFJV1yZGyjW3xno6CYTLxX1uk9RUGAeiID9lUZ2F
+         jkhL6NQcoRvqUQGn+C0O2ecgSCE9zNkfAfihqbbTVRVMHK50rRR11kj/ANM8qB3JTe+F
+         LPXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=1OV+sKZZNfN1LZ1zWZOblvkBGXJMdWlVovdyQPURLCs=;
+        b=w1UdSC3pDURtiBgC2VkEFVVfQ/pBuMgEnVirdbAyg2HZturLaojgZCKNyZtE8dG0sM
+         DTyOmcXpC/c8u2o9syI/BhCSjiZGp+XnrcjuIlDtJm0LU4S7ccASPy6U6qQOC6YbNIvy
+         W7mdw31yek5nZlPsg8bIQhKyf7LPcAnjswYETZF8NNvNd9xcZwSNMtNl1ffErbP6Ot/P
+         22fdc/StdF/KDQ+C14cqGQX/nIE3xZl/r1YocIyl/HisMiI38cUxrtXoghl2GS44gcM6
+         IjkDVfKt8wTrubxkxaPJZ8TCrwrGcSMbkY+98TvjG0y294guOfNjNydzfm57uwFcdLwG
+         BSPg==
+X-Gm-Message-State: AO0yUKVb4UV6dVhjzy5eBlO6XyFpSI+z77Y9JrGyYPYOIfhSEP/lk3ws
+        yqkG3Pi1ToV7/v+Yyn9EPFWpkQ==
+X-Google-Smtp-Source: AK7set8WtH23H78dMJcWSrRAYZ9IHmYQkF9DuE86oznUkH7BdTWIX0qsCJ8nDgB2xmNqdMHDBiTfEQ==
+X-Received: by 2002:a17:902:e548:b0:189:cc58:7784 with SMTP id n8-20020a170902e54800b00189cc587784mr4836119plf.45.1675280197027;
+        Wed, 01 Feb 2023 11:36:37 -0800 (PST)
+Received: from [192.168.220.208] ([50.54.137.247])
+        by smtp.gmail.com with ESMTPSA id jc17-20020a17090325d100b001949b92f8a8sm9331193plb.279.2023.02.01.11.36.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Feb 2023 11:36:36 -0800 (PST)
+Message-ID: <df7fb59a-ea74-d724-46dd-9a4c32779a30@github.com>
+Date:   Wed, 1 Feb 2023 11:36:35 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANgJU+VNY-VziRijSwyb1WF9s31hKroK+2VJ0qEGiYweiA59Ug@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: Git over HTTP; have flexible SASL authentication
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Rick van Rein <rick@openfortress.nl>, git@vger.kernel.org
+References: <20230127163434.GA784@openfortress.nl>
+ <xmqq7cx7aov7.fsf@gitster.g> <Y9pL0D2WuKqqwB7X@coredump.intra.peff.net>
+From:   Matthew John Cheetham <mjcheetham@github.com>
+In-Reply-To: <Y9pL0D2WuKqqwB7X@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the goal is stable tar.gz files, Debian has a very nice soution
-called pristine-tar[1].  This you to store a tar.gz image which in a
-very efficient way, by leveraging the objects in the git repository.
+On 2023-02-01 03:24, Jeff King wrote:
 
-[1] https://manpages.debian.org/unstable/pristine-tar/pristine-tar.1.en.html
+> On Fri, Jan 27, 2023 at 09:06:36AM -0800, Junio C Hamano wrote:
+> 
+>> Rick van Rein <rick@openfortress.nl> writes:
+>>
+>>> Git providers are inventing proprietary extensions to HTTP authentication
+>>> for Git.  It seems smarter to use SASL for this purpose, possibly allowing
+>>> the client a choice and authentication ringback to the client's own domain.
+>>
+>> To adopt things like this, the work to extend how to make extensible
+>> what is on WWW-Authenticate in the thread that contains this recent
+>> message https://lore.kernel.org/git/Y9LvFMzriAWUsS58@coredump.intra.peff.net/
+>> may be relevant, perhaps?
+> 
+> It's relevant, but I think there's a ways to go. That is just about
+> passing WWW-Authenticate headers to helpers, which can then try to make
+> sense of them. But Git would still only understand getting back a
+> username/password from the helper, and passing it along to curl. And
+> hopefully we'd do it all through curl's SASL support, and not invent our
+> own handling.
+> 
+> I'm not sure what all that might might look like. I'm sure Matthew has
+> probably thought about it, so I'll let him say something more
+> intelligent. :)
+> 
+> -Peff
 
-The data is stored on the pristine-tar branch, and is quite efficient:
+These are the same thoughts I have on this. My patches only add support for the
+Git -> helper information flow, but don't make an attempt to change how helpers
+can change Git's (curl's) response or behaviour.
 
-% git show --stat pristine-tar
-commit 56dded989c9e0c852b8af9ae72ffe94270bfd34a (origin/pristine-tar, github/pristine-tar, pristine-tar)
-Author: Theodore Ts'o <tytso@mit.edu>
-Date:   Thu Dec 30 01:06:13 2021 -0500
+I had earlier iterations [1] of the patch that included the ability to change
+the auth type/headers that curl would respond with based on the helper's output.
 
-    pristine-tar data for e2fsprogs_1.46.5.orig.tar.gz
+For example:
 
- e2fsprogs_1.46.5.orig.tar.gz.asc   |  11 +++++++++++
- e2fsprogs_1.46.5.orig.tar.gz.delta | Bin 0 -> 59034 bytes
- e2fsprogs_1.46.5.orig.tar.gz.id    |   1 +
- 3 files changed, 12 insertions(+)
+protocol=https
+host=example.com
+password=<TOKEN>
+authtype=bearer
 
-And this allows me to reproduce the original tar.gz file, along with a
-GPG signature file, which is about 9 megabytes.  The *.id file
-contains the git commit from which the tar file was generated, and
-this is what allows the *.delta file to be as small as it is.
+..would have Git configure curl to set CURLOPT_XOAUTH2_BEARER. However I pulled
+these patches to keep the scope of that series smaller. It's still my plan to
+reintroduce such a patch series in the future.
 
-% pristine-tar checkout e2fsprogs_1.46.5.orig.tar.gz -s e2fsprogs_1.46.5.orig.tar.gz.asc
-pristine-tar: successfully generated e2fsprogs_1.46.5.orig.tar.gz
-pristine-tar: successfully generated e2fsprogs_1.46.5.orig.tar.gz.asc
+I'd imagine that Git could advertise to helpers that its version of curl supports
+SASL and a helper could enable or select this mechanism. Alternatively it could
+just be a Git config to enable it outright `credential.useSasl` or something.
+I haven't had chance to review SASL yet.
 
-% ls -sh e2fsprogs_1.46.5.orig.tar.gz*
-9.1M e2fsprogs_1.46.5.orig.tar.gz  4.0K e2fsprogs_1.46.5.orig.tar.gz.asc
+Thanks,
+Matthew
 
-% gpg e2fsprogs_1.46.5.orig.tar.gz.asc
-gpg: WARNING: no command supplied.  Trying to guess what you mean ...
-gpg: assuming signed data in 'e2fsprogs_1.46.5.orig.tar.gz'
-gpg: Signature made Thu 30 Dec 2021 01:02:52 AM EST
-gpg:                using RSA key 2B69B954DBFE0879288137C9F2F95956950D81A3
-gpg: Good signature from "Theodore Ts'o <tytso@mit.edu>" [ultimate]
-gpg:                 aka "Theodore Ts'o <tytso@debian.org>" [ultimate]
-gpg:                 aka "Theodore Ts'o <tytso@google.com>" [ultimate]
-Primary key fingerprint: 3AB0 57B7 E78D 945C 8C55  91FB D36F 769B C118 04F0
-     Subkey fingerprint: 2B69 B954 DBFE 0879 2881  37C9 F2F9 5956 950D 81A3
 
-This is currently a Debian special, and while its functionality was
-designed to work well with Debian packaging workflows, but it's a
-general tool that could be used in multiple contexts, not just for
-Debian packaging.
-
-If I recall correctly, pristine-tar is currently in maintenance mode,
-and I suspect if someone was interested in investing time into making
-pristine-tar more portable to other OS's, including MacOS and Windows,
-and maybe potentially even integrating into git directly, the current
-maintainer of pristine-tar might be quite happy to let other people
-give the code more TLC.
-
-						- Ted
+[1] https://lore.kernel.org/git/230118.86k01kxfr7.gmgdl@evledraar.gmail.com/T/#m37fffe327593ca4f7bf32a205b7ee1d1ecd1ed46
