@@ -2,112 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92B7CC636CC
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 01:34:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC4D7C636CC
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 02:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231160AbjBABeA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Jan 2023 20:34:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54300 "EHLO
+        id S230404AbjBACVK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Jan 2023 21:21:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230265AbjBABd7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jan 2023 20:33:59 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79CA3577F7
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 17:33:53 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id fi26so16187157edb.7
-        for <git@vger.kernel.org>; Tue, 31 Jan 2023 17:33:53 -0800 (PST)
+        with ESMTP id S229863AbjBACVJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jan 2023 21:21:09 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74852E045
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 18:21:07 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id lu11so9916619ejb.3
+        for <git@vger.kernel.org>; Tue, 31 Jan 2023 18:21:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=l40BLPNaaQilvf2eZ6DtwfT+PCw9z85iOyJoYsi9PwU=;
-        b=c/oKD9Vfdz3lXGhLo0woTENOTlu7TTB/jKMVTglsEPRlV6/ftZ8QPkX0UUqMEtNJfK
-         oGHSI47CFEYp8miUNHYn7C2BCp7YE86GVmIA+WAvnVqYCct64qujQ5jX0fL71j5Yp/+B
-         FRcJdAvpy+9VksK7SjtEdY4VoC63Ue73VbpGoTCH9PEOiFpy9tJObQVKYTvRdC2/A8m0
-         xzYIHJJh1PpenMNzJXkCSXO1Yu0sNg91VTVa7wHV4djlCPBb+fOXXg4vpwLt7yl7crh+
-         JvSi9IdQsemCPQcOfT6NMn8HkI2N4f5knBbclXR0NgDQwi+3YRbFYcEk1n3bvUyk+Ugr
-         pEag==
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:subject:from:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3rzuNT752cHT1Els3XBb956WmNIXKb13s+rzqixOgr4=;
+        b=DAoG0+k9IpwhQPaxZ/kMoARksF2hwup6EOJ4oh+znITxZ5fIyLvWM95mDCqftNTXQ8
+         XKSkg6NmXfdAKyTp3AREd0xRSiyLey/6ADMtYKKUtSMKQ5voHypjDVOwDNuPTElEmrxB
+         dY7M26nWUEwo0q+mleR3R19zueCJi1I9Ew+ahXrop98XPNo8dAPlG6BCtRwT43N8q+aZ
+         WFh1eh0Sj7V1pDP+sdIsB44GsZuo42MC3REIiECvMMsH1OlK4FP1DlZhWH7kx4aK5/+0
+         P/3Zg/0ls2O+U3irUexBUbVL8BBNVYwGmNSEUi6d9FBFrv0oOOju8tQlw/5HIznMV39v
+         9Caw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:subject:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l40BLPNaaQilvf2eZ6DtwfT+PCw9z85iOyJoYsi9PwU=;
-        b=uMwCgH/1yuJC7YUAA0iL7cgsapya15y4+CPPQLj1cjebPeaOTrPotVZGdh0lCqgPtJ
-         HCXh5Naz8D3MqDJGuORgRoEQyPbrYN/VUQ8hPoXChksUfm/pTrapkrjZXMT77eAlNnwt
-         kxiBc0t/+zDfVoh8Lv8WMF8d/P4Gz4nH4uR7DCljqjkT3tf5CNc3Ivx14UFchEX0LayG
-         KNe74YM85sGaMwFo7A037pN91v754AAjNK37gLOyj+JhozaHI1lVfyVpmfXjClJVoIFX
-         JOqwLy+1Zc5D0kK25xJhVXmgRg4MvKh7a/dZMndsO7iBX2FYJn0RBO9zYgdDtCQtguzv
-         ZPLQ==
-X-Gm-Message-State: AO0yUKU2Ze9wenqbZZDFsvBp7r0J1SZetiAVTmATygLR3M5vISfGzxFX
-        Z8e4uTOOK+iETXATrIhnI1A=
-X-Google-Smtp-Source: AK7set9D+zZ/JBTVBHYnFJUeDHPVHa7p3DOL3Iy8nQuUW7mipmdXgXnbzxFf0PmV5CXDXzFehe5XNg==
-X-Received: by 2002:a50:a682:0:b0:483:21d8:87af with SMTP id e2-20020a50a682000000b0048321d887afmr156168edc.24.1675215231706;
-        Tue, 31 Jan 2023 17:33:51 -0800 (PST)
+        bh=3rzuNT752cHT1Els3XBb956WmNIXKb13s+rzqixOgr4=;
+        b=p/8iCUSWYQFhe9XC53QYgf7UZcALxCbtH3Y4Yw6/7QB6WrvChkSMnqB1BMjfpSF6qH
+         fAOC1Vs+cSTOA7EnWfXHDzl5aLnLXjxrlnppWGlad/HJdYlcBiRdQOGaVmFLDhR+DPqW
+         vIrw6WmTJJR/65gC1amUvyWav1FMZ3kq2ceR2Q2q/KDZKWRkmKGQWMsOBUZLYtAvdZ/Z
+         Vl7vcdO4d9I7aAp+xaVMcChoRjU2iY9D0X9RkFpHezqu89TEAqYCLzafPOUcdNO4zCaB
+         Zc5VNgRJlmLsoidD2dMnDm+Fja+/sisGcMHO95i382B7qynjTMKJGHda9LXQWD3yMVaD
+         feLw==
+X-Gm-Message-State: AO0yUKW1A7ll9TUWJtbGakaU4wezW1bHyUb3c6+i/cgaefbMmyLtTsyJ
+        U76QzOpJV+8xbEqKSeGW2yCJvo6ZZ5Hs7uo1
+X-Google-Smtp-Source: AK7set/edZwjg7fwr5GSZLkfMANdxb+6vrWvxqKp5ILuAR2BC6umUVMOMVaVsE0OzrfX3G1mbi+NEw==
+X-Received: by 2002:a17:907:9916:b0:887:915d:7502 with SMTP id ka22-20020a170907991600b00887915d7502mr659483ejc.31.1675218065953;
+        Tue, 31 Jan 2023 18:21:05 -0800 (PST)
 Received: from [10.43.18.179] ([216.24.213.49])
-        by smtp.gmail.com with ESMTPSA id t4-20020a17090605c400b0084d242d07ffsm9227650ejt.8.2023.01.31.17.33.51
+        by smtp.gmail.com with ESMTPSA id e16-20020a170906081000b0088cf92eb0e2sm1200602ejd.178.2023.01.31.18.21.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Jan 2023 17:33:51 -0800 (PST)
-Message-ID: <8d72f484-6a72-87f9-44f1-3a38471201db@gmail.com>
-Date:   Wed, 1 Feb 2023 02:33:49 +0100
+        Tue, 31 Jan 2023 18:21:05 -0800 (PST)
+Message-ID: <b9a38b83-cdfe-0389-3097-c20a699f183c@gmail.com>
+Date:   Wed, 1 Feb 2023 03:21:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: Inconsistency between git-log documentation and behavior
- regarding default date format.
-To:     Rafael Dulfer <rafael@dulfer.be>
-References: <793c8116-f7ea-eef2-6979-231c3e94639a@dulfer.be>
- <9c3428f6-a254-13b4-046d-6e20ef602aef@dulfer.be>
-Content-Language: en-US
 From:   Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-In-Reply-To: <9c3428f6-a254-13b4-046d-6e20ef602aef@dulfer.be>
+Subject: Re: [GSoC][PATCH] t/t4113-apply-ending.sh: Modernize a test script
+To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
+References: <20230131224929.2018546-1-cheskaqiqi@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20230131224929.2018546-1-cheskaqiqi@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/01/2023 16:09, Rafael Dulfer wrote:
-> The Git documentation 
-> <https://www.git-scm.com/docs/git-log#Documentation/git-log.txt---dateltformatgt> states that if no date format is given (or --date=default is given), the date format is similar to rfc2822 except of a few exceptions, of which those listed are:
+Hi Shuqi Liang,
+
+> Subject: [GSoC][PATCH] t/t4113-apply-ending.sh: Modernize a test script
+
+For patches that change a single test, the subject line can include just
+the "t" and the number.  The part after the colon should start with a
+lowercase letter.  Something like
+
+     t4113: modernize test style
+
+On 31/01/2023 23:49, Shuqi Liang wrote:
 > 
->    * There is no comma after the day-of-week
->    * The time zone is omitted when the local time zone is used
+> I cleaned up some old style in test script.
+
+Commit message should start with description of the existing problem
+in present tense, something like:
+
+     Test scripts in file t4113-apply-ending.sh are written in old style,
+     where the test_expect_success command and test title are written on
+     separate lines ...
+
+Then changes should be described using imperative mood, as if you are
+giving commands to the codebase.  See section "[[describe-changes]]"
+in "Documentation/SubmittingPatches" for details.
+
+You can also find examples of existing commit messages for similar
+changes:
+
+     $ git log --no-merges --grep='modernize' -- t
+
 > 
-> However, if we were to compare the two date formats, you can see another 
-> difference:
+> for example :
 > 
-> git log --default  ->  Tue Jan 24 11:03:47 2023 +0100
-> git log --rfc          ->  Tue, 24 Jan 2023 11:03:47 +0100
-
-It seems that options in these samples were mistyped. They are missing 
-the "--date=" part:
-
-
-     $ git log -1 --date=default  master | grep 'Date:'
-     Date:   Sat Jan 21 16:35:14 2023 -0800
-
-     $ git log -1 --date=rfc2822   master | grep 'Date:'
-     Date:   Sat, 21 Jan 2023 16:35:14 -0800
-
+> * old style:
 > 
-> With the default, the month and day-of-month are switched around. From 
-> my own quick investigation, this behavior occurs because of the 
-> statement found at date.c#L266 
-> <https://github.com/git/git/blob/56c8fb1e95377900ec9d53c07886022af0a5d3c2/date.c#L266> wherein the month is inserted before the day-of-month. I am unsure which behavior is exactly intended and whether this discrepancy was known, but it would probably be a good idea to have a note of it in the documentation.
+>      test_expect_success \
+>          'title' \
+>          'body line 1 &&
+>          body line 2'
+> 
+>    should become:
+> 
+>      test_expect_success 'title' '
+>          body line 1 &&
+>          body line 2
+>      '
+> 
+> 
+> 
+> 
+> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+> ---
+ > Hi,I'm Shuqi Liang.a junior student majors in Computer Science at
+ > University of Western Ontario.
 
-Indeed, the description of the option (which comes from 
-Documentation/rev-list-options.txt) doesn't describe all differences
-between --date=default and --date=rfc2822.
+Welcome!
 
-A fuller list could be:
+>   t/t4113-apply-ending.sh | 16 +++++++++-------
+>   1 file changed, 9 insertions(+), 7 deletions(-)
+> 
+> diff --git a/t/t4113-apply-ending.sh b/t/t4113-apply-ending.sh
+> index 66fa51591e..aa57895b22 100755
+> --- a/t/t4113-apply-ending.sh
+> +++ b/t/t4113-apply-ending.sh
+> @@ -24,13 +24,14 @@ echo 'a' >file
+>   echo 'b' >>file
+>   echo 'c' >>file
 
-     * There is no comma after the day-of-week
-     * The time zone is omitted when the local time zone is used
-     * Day-of-month and month are switched around
-     * Time-of-day and the year are switched around
+A "modern" test could also do such preparation for test files as
+part of its "setup" step.  This could its own patch in the same
+series, separate from style changes.
 
-CC'ing Peff, who wrote the list of exceptions in add00ba2de (date: make 
-"local" orthogonal to date format, 2015-09-03).
+In case of t4113, files "test-patch" and "file" are created twice.
+The second creation of the files could be either its own step
+'setup for apply at the beginning', or incorporated into the step
+'apply at the beginning'.
+
+Section "Recommended style" in t/README also has some notes about
+how heredocs should be indented.
+
+>   
+> -test_expect_success setup \
+> -    'git update-index --add file'
+> -
+> +test_expect_success setup '
+> +    git update-index --add file
+> +'
+
+While changing the quoting around test tiles and commands, the
+indentation with spaces could also be changed to TABs.
+
+>   # test
+
+If the setup code on top level of the file is moved into test
+steps, this comment and the "# setup" comment at line 11 will
+become unnecessary.
+
+>   
+> -test_expect_success 'apply at the end' \
+> -    'test_must_fail git apply --index test-patch'
+> +test_expect_success 'apply at the end' '
+> +    test_must_fail git apply --index test-patch
+> +'
+>   
+>   cat >test-patch <<\EOF
+>   diff a/file b/file
+> @@ -47,7 +48,8 @@ b
+>   c'
+>   git update-index file
+>   
+> -test_expect_success 'apply at the beginning' \
+> -	'test_must_fail git apply --index test-patch'
+> +test_expect_success 'apply at the beginning' '
+> +    test_must_fail git apply --index test-patch
+> +'
+>   
+>   test_done
+
+Thanks.
+
