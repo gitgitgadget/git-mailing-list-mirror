@@ -2,94 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B837BC636CD
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 12:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F7DEC636CD
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 12:50:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231438AbjBAMsd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 07:48:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58804 "EHLO
+        id S231687AbjBAMuj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 07:50:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbjBAMsb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 07:48:31 -0500
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F2C04480
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 04:48:30 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id t9so7920869qkm.2
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 04:48:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zvBlcM1jLRCbdawNf9e0KBSyHBNkh6NRSQtXf04AnVY=;
-        b=bhNxwxB65Wqgr8xQebJnI6Ckb4Oqh6lYPZ99FMIA/xj7V6+gMtUuMF5PqcPBmIRMBe
-         t98tRxEJm018OMBDRswQoTN6Txt8jLclglkWTCBi3ffgGbDiwXjkHWkM8SexHYxRjbQY
-         vGYzZXNWos274A9y1PQf1n3sBMeJBT8E1yPphLmsC7qxcBwBlmu0af0V42c8fVGRr6wP
-         m3kKjiYy2ylLUMx0MZ94/38L7o9+huZHjG32eiWPZLCvhGfj3iWlsRWkBOR+UH3MxOv6
-         SiOCplxqM0sYtD5JzIx5g5oVQTGq/H3gEvX0SciCPxbkQhNjQ8NnbaA4dWUYaYlBU7jy
-         OrUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zvBlcM1jLRCbdawNf9e0KBSyHBNkh6NRSQtXf04AnVY=;
-        b=FkbD9YRKqdc1tWBpddhuSqM3U0ux+sURvUkdLuV5/yV5YnWpJNwv4/UmzLlemy1iuQ
-         WH4w3Lz5kWXEPPMpJxtLWV3+57NSr8XiWXeWrRv83BSX801A1J9sVsYaI+/53iV04piw
-         DNMIStJ15vJT9lnPwqPNHEZdT9pFpbfJvOB87CKsKdRV7rZaBGlkXXpMQWd/SwQIHFlT
-         yGfUG7Dx+J5ApFKL7FhOgTIvUGcNfFHOHAUaFSwgRfaZXDWYNoQ1D6b7vLvX29VPrpyY
-         gPwbVzJZu+zeOQRJT+vAuGEy1ZviFm9Rj2XDDnFhfENhxwWkiMlcSw2NKQE9UQuTTuIX
-         4wkg==
-X-Gm-Message-State: AO0yUKW5uocU77KNDmCP5UY8JYWLJken/WanoOCxqJiqLbCox0l/bmsq
-        GSyAd3O24z8GooRXOTMx2DUS80yhP1CHYcjIBCo=
-X-Google-Smtp-Source: AK7set8CuQ1co2Yn/TCvFDOaeFJED1kRBQHconXYi+IoHNPj2A3gcRKtKXSC8qGUF+nqBRvxqosyiHfU4Cq8TSaRLD0=
-X-Received: by 2002:a37:c85:0:b0:71a:6288:9ea7 with SMTP id
- 127-20020a370c85000000b0071a62889ea7mr212931qkm.221.1675255708608; Wed, 01
- Feb 2023 04:48:28 -0800 (PST)
+        with ESMTP id S231564AbjBAMuh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 07:50:37 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6756A5A
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 04:50:36 -0800 (PST)
+Received: (qmail 31839 invoked by uid 109); 1 Feb 2023 12:50:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Feb 2023 12:50:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20140 invoked by uid 111); 1 Feb 2023 12:50:35 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Feb 2023 07:50:35 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 1 Feb 2023 07:50:35 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 6/6] hash-object: use fsck for object checks
+Message-ID: <Y9pgG10dAoQABGXG@coredump.intra.peff.net>
+References: <Y8hX+pIZUKXsyYj5@coredump.intra.peff.net>
+ <Y8haHL9xIWntSm0/@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
- <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net> <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
- <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net> <230201.86pmatr9mj.gmgdl@evledraar.gmail.com>
- <CANgJU+V0QRFwmTh8ZzY=28kmbUw=DvSLE24LioOXp6_ozq+RdA@mail.gmail.com> <20230201122152.GJ19419@kitsune.suse.cz>
-In-Reply-To: <20230201122152.GJ19419@kitsune.suse.cz>
-From:   demerphq <demerphq@gmail.com>
-Date:   Wed, 1 Feb 2023 13:48:17 +0100
-Message-ID: <CANgJU+VLseURimM++38WA81uFPbnoHiToOt4F4UFL9yVbQpBEw@mail.gmail.com>
-Subject: Re: Stability of git-archive, breaking (?) the Github universe, and a
- possible solution
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eli Schwartz <eschwartz93@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y8haHL9xIWntSm0/@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 1 Feb 2023, 20:21 Michal Such=C3=A1nek, <msuchanek@suse.de> wrote:
->
-> On Wed, Feb 01, 2023 at 12:34:06PM +0100, demerphq wrote:
-> > Why does it have to be gzip? It is not that hard to come up with a
+On Wed, Jan 18, 2023 at 03:44:12PM -0500, Jeff King wrote:
 
-> historical reasons?
+> @@ -2350,12 +2340,13 @@ static int index_mem(struct index_state *istate,
+>  		}
+>  	}
+>  	if (flags & HASH_FORMAT_CHECK) {
+> -		if (type == OBJ_TREE)
+> -			check_tree(buf, size);
+> -		if (type == OBJ_COMMIT)
+> -			check_commit(buf, size);
+> -		if (type == OBJ_TAG)
+> -			check_tag(buf, size);
+> +		struct fsck_options opts = FSCK_OPTIONS_DEFAULT;
+> +
+> +		opts.strict = 1;
+> +		opts.error_func = hash_format_check_report;
+> +		if (fsck_buffer(null_oid(), type, buf, size, &opts))
+> +			die(_("refusing to create malformed object"));
+> +		fsck_finish(&opts);
+>  	}
 
-Currently git doesn't advertise that archive creation is stable
-right[1]? So I wrote that with the assumption that this new
-compression would only be used when making a new archive with a
-hypothetical new '--stable' option. So historical reasons don't come
-up. Or was there some other form of history that you meant?
+By the way, I wanted to call out one thing here that nobody mentioned
+during review: we are not checking the return value of fsck_finish().
 
-I'm just trying to point out here that stable compression is doable
-and doesn't need to be as complex as specifying a stable gzip format.
-I am not even saying git should just do this, just that it /could/ if
-it decided that stability was important, and that doing so wouldn't
-involve the complexity that Avar was implying would be needed.  Simple
-compression like LZ variants are pretty straightforward to implement,
-achieve pretty good compression and can run pretty fast.
+That is a bit of a weird function. We must call it because it cleans up
+any resources allocated during the fsck_buffer() call. But it also is
+the last chance to fsck any special blobs (like those that are found as
+.gitmodules, etc). We only find out the filenames while looking at the
+enclosing trees, so we queue them and then check the blobs later.
 
-Yves
-[1] if it did the issue kicking off this thread would not have
-happened as there would be a test that would have noticed the change.
+So if we are hashing a blob, that is mostly fine. We will not have the
+blob's name queued as anything special, and so the fsck is a noop.
+
+But if we fsck a tree, and it has a .gitmodules entry pointing to blob
+X, then we would also pull X from the odb and fsck it during this
+"finish" phase.
+
+Which leads me to two diverging lines of thought:
+
+  1. One of my goals with this series is that one could add objects to
+     the repository via "git hash-object -w" and feel confident that no
+     fsck rules were violated, because fsck implements some security
+     checks. In the past when GitHub rolled out security checks this was
+     a major pain, because objects enter repositories not just from
+     pushes, but also from web-client activity (e.g., editing a blob on
+     the website). And since Git had no way to say "fsck just this
+     object", we ended up implementing the fsck checks multiple times,
+     in libgit2 and in some of its calling code.
+
+     So I was hoping that just passing the objects to "hash-object"
+     would be a viable solution. I'm not sure if it is or not. If you
+     just hash a blob, then we'll have no clue it's a .gitmodules file.
+     OTOH, you have to get the matching tree which binds the blob to the
+     .gitmodules path somehow. So if that tree is fsck'd, and then
+     checks the blob during fsck_finish(), that should be enough.
+     Assuming that fsck complains when the pointed-to blob cannot be
+     accessed, which I think it should (because really, incremental
+     pushes face the same problem).
+
+     In which case we really ought to be checking the result of
+     fsck_finish() here and complaining.
+
+  2. We're not checking fsck connectivity here, and that's intentional.
+     So you can "hash-object" a tree that points to blobs that we don't
+     actually have. But if you hash a tree that points a .gitmodules
+     entry at a blob that doesn't exist, then that will fail the fsck
+     (during the finish step). And respecting the fsck_finish() exit
+     code would break that.
+
+     As an addendum, in a regular fsck, many trees might mention the
+     same blob as .gitmodules, and we'll queue that blob to be checked
+     once. But here, we are potentially running a bunch of individual
+     fscks, one per object we hash. So if you had, say, 1000 trees that
+     all mentioned the same blob (because other entries were changing),
+     and you tried to hash them all with "hash-object --stdin-paths" or
+     similar, then we'd fsck that blob 1000 times.
+
+     Which isn't wrong, per se, but seems inefficient. Solving it would
+     require keeping track of what has been checked between calls to
+     index_mem(). Which is kind of awkward, seeing as how low-level it
+     is. It would be a lot more natural if all this checking happened in
+     hash-object itself.
+
+So I dunno. The code above is doing (2), albeit with the inefficiency of
+checking blobs that we might not care about. I kind of think (1) is the
+right thing, though, and anybody who really wants to make trees that
+point to bogus .gitmodules can use --literally.
+
+-Peff
