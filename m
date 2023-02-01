@@ -2,242 +2,401 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B59EC05027
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 08:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A9A5C05027
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 09:25:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231956AbjBAIak (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 03:30:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41350 "EHLO
+        id S230301AbjBAJZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 04:25:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230200AbjBAIae (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 03:30:34 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91A4F976F
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 00:30:33 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id g9so9996897pfk.13
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 00:30:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i+EW3qDMMjwKBJ9Zoy5a3yYLqa0SlEMOipieWm9zODU=;
-        b=O/3pxnOM/yJe7J6/Zu7s+a6f3imeVzadB3+4kg0ldKTd8bvUI325BO/MPAvBMVN/+t
-         GRTydYf3Ebbf9q7dtqhJofZC+azIJELFEZw7viz+4a0xZjnDqxtMriUJSZXsCzUNbF6k
-         iTrCfzJecI+UktKxHYUxYxUCJx8SUv5IhurHvPbpWZKTA6xMpJnzlcBEuPCONwS6glrW
-         jYwESLnUu4C4Zqgnhir9S7QLCvhRxs3cXugGK6+f3rw14zfCst3t09gDTUU6MrW5ez4U
-         cvHT4awZUepksdnFON/3t7RLIDpRZTUTkcOH7fyTrv0cqIbt3bXkgJWT+12dliaLE7Kg
-         WwDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=i+EW3qDMMjwKBJ9Zoy5a3yYLqa0SlEMOipieWm9zODU=;
-        b=jYiH4FY4530BEIaUqdiaNOeH/O2ezYrw40pxY1/NIPgxTjYkrJU1W56x5H07G+jVGk
-         uRuCVP9W9XmmzYxCZnITz+TgtG4oUgCN72MYAJ+cGDyh3md7DGLVev2ABKCk8+sPzDO+
-         tgTI+Qa6dXP/5u2TMKDee1G0FLxTdqESzW662wkRzJbcMfULv09HVzv3NF3O13o2qCT4
-         SbLScg7x3LuhpMdy9k6HzcTvfk9S4pXeQWOOzslGkJlU/o6KwrnmgvB+QiOQHmbdLagn
-         BlTb2YxWEbIlBY0TpfRYV6Z/YP7Q40JxdYS/jkbvp1U4e2238SvphYCulpWNOdC+Y4sG
-         wBWA==
-X-Gm-Message-State: AO0yUKXm+PfK86d+kZ0GMM9MEYlE1lkhx73HV/+eX2+anuDS54gAPY/o
-        XT0I0ex49f6ke/c2nnxcRWkndMQLcr6LBXzTW48sgrljjNu2lQ==
-X-Google-Smtp-Source: AK7set9+z6fvTXUH9cu508NtWMaZeT1h+r/xAzveYrB14XUUge12vmaHibSZ7NYia3y1jTQCtGheMCaTmcLJptjhN6o=
-X-Received: by 2002:a65:5a41:0:b0:4da:a8a3:339a with SMTP id
- z1-20020a655a41000000b004daa8a3339amr256125pgs.28.1675240232742; Wed, 01 Feb
- 2023 00:30:32 -0800 (PST)
+        with ESMTP id S230091AbjBAJZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 04:25:57 -0500
+X-Greylist: delayed 328 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 01 Feb 2023 01:25:55 PST
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 785C3539AF
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 01:25:55 -0800 (PST)
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 6D6E91F642;
+        Wed,  1 Feb 2023 09:20:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+        s=selector1; t=1675243227;
+        bh=gescvP7yb9uQlqjRNMauoN8P0ya0OGCxaSO4PtZWPXM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=y+xmVivcpY29I25q5B94xV+Xy8ht6AvEK/fJB47w9obHf+0DESPRQsVli7P5WFhXD
+         XIBQIYK/5t18K+PsLWRLqE5QthajVfm5aUtt2P5Pw4O9DgLxGCt/EwDE2M01vHjnYG
+         4ACLrmPnJ99r8qJv/uk+HTo/S2UZaQ3F77kjxd84=
+Date:   Wed, 1 Feb 2023 09:20:27 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: pack-objects memory use observations [was: [PATCH] delta-islands:
+ free island-related data after use]
+Message-ID: <20230201092027.M96461@dcvr>
+References: <20221116105013.1777440-1-e@80x24.org>
+ <Y3UvhsRC9uCXJJ8P@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <pull.1443.git.git.1674914650588.gitgitgadget@gmail.com> <xmqqpmax5c4v.fsf@gitster.g>
-In-Reply-To: <xmqqpmax5c4v.fsf@gitster.g>
-From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Wed, 1 Feb 2023 08:29:56 +0000
-Message-ID: <CAGJzqskO0sGNtuuSkKWxknh1qv523TfA3U17X_9higDdYdg+PA@mail.gmail.com>
-Subject: Re: [PATCH] credential: new attribute password_expiry_utc
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y3UvhsRC9uCXJJ8P@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 29 Jan 2023 at 20:17, Junio C Hamano <gitster@pobox.com> wrote:
->
-> "M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: M Hickford <mirth.hickford@gmail.com>
-> >
-> > If password has expired, credential fill no longer returns early,
-> > so later helpers can generate a fresh credential. This is backwards
-> > compatible -- no change in behaviour with helpers that discard the
-> > expiry attribute. The expiry logic is entirely in the git credential
-> > layer; compatible helpers simply store and return the expiry
-> > attribute verbatim.
-> >
-> > Store new attribute in cache.
->
-> It is unclear what you are describing in the above.  The current
-> behaviour without the patch?  The behaviour of the code if this
-> patch gets applied?  Write it in such a way that it is clear why
-> the patch is a good idea, not just "this would not hurt because it
-> is backwards compatible".
->
-> The usual way to do so is to sell your change in this order:
->
->  - Give background information to help readers understand what you
->    are going to write in the following explanation.
->
->  - Describe the current behaviour without any change to the code;
->
->  - Present a situation where the current code results in an
->    undesirable outcome. What exactly happens, what visible effect it
->    has to the user, how the code could do better to help the user?
->
->  - Propose an updated behaviour that would behave better in the
->    above sample situation presented.
->
+Jeff King <peff@peff.net> wrote:
+> On Wed, Nov 16, 2022 at 10:50:13AM +0000, Eric Wong wrote:
+> >   Will try to hunt down more memory savings in the nearish future.
+> 
+> Yes, you've probably noticed that pack-objects does not distinguish much
+> between what is necessary for the various phases. A few obvious things
+> to look at:
+> 
+>   1. After the write phase, you can probably ditch the island bitmaps,
+>      too. In many repacks we're basically done then, but if you're
+>      generating bitmaps, that happens afterwards in the same process.
 
-Thanks for the guidance. Writing a better commit message clarified my
-own thoughts.
+Also, island_marks oid_map gets pretty big itself (300M?), and
+realloc gets painful when resizing a big khash especially on
+non-GNU/Linux systems without MREMAP_MAYMOVE realloc.  Currently
+experimenting with tweaks to make oidtree handle kh_oid_map
+functionality to avoid resizes...[1]
 
-> Curiously, what you wrote below the "---" line, that will not be
-> part of the log message, looks to be organized better than the
-> above.  The first paragraph (except for the "Add ...") prepares the
-> readers, It is still unclear if the second paragraph "when expired"
-> describes what happens with the current code (i.e. highlighting why
-> a change is needed) or what you want to happen with the patch, but
-> the paragraph should first explain the problem in the current
-> behaviour to motivate readers to learn why the updated code would
-> lead to a better world.  And follow that with the behaviour of the
-> updated code and its effect (e.g. "without first trying a credential
-> that is stale and see it fail before asking to reauthenticate, such
-> a known-to-be-stale credential gets discarded automatically").
->
->
-> > +`password_expiry_utc`::
-> > +
-> > +     If password is a personal access token or OAuth access token, it =
-may have an expiry date. When getting credentials from a helper, `git crede=
-ntial fill` ignores the password attribute if the expiry date has passed. S=
-torage helpers should store this attribute if possible. Helpers should not =
-implement expiry logic themselves. Represented as Unix time UTC, seconds si=
-nce 1970.
-> > +
->
-> A overly long line.  Please follow Documentation/CodingGuidelines
-> and Documentation/SubmittingPatches
->
-> > diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-ca=
-che--daemon.c
-> > index f3c89831d4a..5cb8a186b45 100644
-> > --- a/builtin/credential-cache--daemon.c
-> > +++ b/builtin/credential-cache--daemon.c
-> > @@ -127,6 +127,9 @@ static void serve_one_client(FILE *in, FILE *out)
-> >               if (e) {
-> >                       fprintf(out, "username=3D%s\n", e->item.username)=
-;
-> >                       fprintf(out, "password=3D%s\n", e->item.password)=
-;
-> > +                     if (e->item.password_expiry_utc !=3D 0) {
-> > +                             fprintf(out, "password_expiry_utc=3D%ld\n=
-", e->item.password_expiry_utc);
-> > +                     }
->
-> Style (multiple issues, check CodingGuidelines):
->
->                 if (e->item.password_expiry_utc)
->                         fprintf(out, "... overly long format template ...=
-",
->                                 e->item.password_expiry_utc);
->
->  * Using integral value or pointer value as a truth value does not
->    require an explicit comparison with 0;
->
->  * A single-statement block does not need {} around it;
->
->  * Overly long line should be folded, with properly indented.
->
-> > diff --git a/credential.c b/credential.c
-> > index f6389a50684..0a3a9cbf0a2 100644
-> > --- a/credential.c
-> > +++ b/credential.c
-> > @@ -7,6 +7,7 @@
-> >  #include "prompt.h"
-> >  #include "sigchain.h"
-> >  #include "urlmatch.h"
-> > +#include <time.h>
->
-> Don't include system headers directly; often git-compat-util.h
-> already has it, and if not, we need to find the right place to have
-> it in git-compat-util.h file, as there are platforms that are
-> finicky in inclusion order of the header files and definition of
-> feature macros.
->
-> > @@ -21,6 +22,7 @@ void credential_clear(struct credential *c)
-> >       free(c->path);
-> >       free(c->username);
-> >       free(c->password);
-> > +     c->password_expiry_utc =3D 0;
->
-> Not a huge deal, but if the rule is "an credential with expiry
-> timestamp that is too old behaves as if it no longer exists or is
-> valid", then a large integer, not zero, may serve as a better
-> sentinel value for "this entry never expires".  Instead of having to
-> do
->
->         if (expiry && expiry < time()) {
->                 ... expired ...
->         }
->
-> you can just do
->
->         if (expiry < time()) {
->                 ... expired ...
->         }
->
-> and that would be simpler to understand for human readers, too.
->
-> > @@ -234,11 +236,23 @@ int credential_read(struct credential *c, FILE *f=
-p)
-> >               } else if (!strcmp(key, "path")) {
-> >                       free(c->path);
-> >                       c->path =3D xstrdup(value);
-> > +             } else if (!strcmp(key, "password_expiry_utc")) {
-> > +                     // TODO: ignore if can't parse integer
->
-> Do not use // comment.  /* Our single-liner comment reads like this */
->
-> > +                     c->password_expiry_utc =3D atoi(value);
->
-> Don't use atoi(); make sure value is not followed by a non-number,
-> e.g.
->
->         const char *value =3D "43q";
->         printf("%d<%s>\n", atoi(value), value);
->
-> would give you 43<43q>, but you want to reject and silently ignore
-> such an expiry timestamp.
->
-> > +             // if expiry date has passed, ignore password and expiry =
-fields
->
-> Ditto, but if you used a large value as sentinel for "never expires"
-> and wrote it like this
->
->                 if (c->password_expiry_utc < time(NULL)) {
->
-> then it is clear enough that you do not even need such a comment.
-> The expression itself makes it clear what is going on (i.e. the
-> current time comes later than the expiry_utc value on the number
-> line hence it appears on the right to it, clearly showing that it
-> has passed the threshold).
->
-> > +             if (c->password_expiry_utc !=3D 0 && time(NULL) > c->pass=
-word_expiry_utc) {
-> > +                     trace_printf(_("Password has expired.\n"));
-> > +                     FREE_AND_NULL(c->username);
-> > +                     FREE_AND_NULL(c->password);
-> > +                     c->password_expiry_utc =3D 0;
-> > +             }
-> > +
+>   2. The object traversal for pack-objects is done in-process these
+>      days. But after it finishes, I suspect that we do not generally
+>      need those object structs anymore, because all of the book-keeping
+>      is done in the bit object_entry array in packing_data.
+
+pdata->objects is 1.4G for me atm after many hours (still going).
+I think packing_data could be split to avoid reallocs, but that
+might need to touch a lot of code...
+
+I need to get better data on my next attempts.  I suspect gcc
+-O2 is throwing off mwrap-perl[2]+addr2line and I need to
+rebuild w/ -O0.
+
+[1] WIP oidtree map, but I feel like I forgot C, again :<
+
+diff --git a/delta-islands.c b/delta-islands.c
+index 90c0d6958f..9e824d7a0d 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -18,11 +18,13 @@
+ #include "pack-objects.h"
+ #include "delta-islands.h"
+ #include "oid-array.h"
++#include "oidtree.h"
+ #include "config.h"
+ 
+ KHASH_INIT(str, const char *, void *, 1, kh_str_hash_func, kh_str_hash_equal)
+ 
+-static kh_oid_map_t *island_marks;
++struct oidtree island_marks_storage;
++static struct oidtree *island_marks;
+ static unsigned island_counter;
+ static unsigned island_counter_core;
+ 
+@@ -93,7 +95,7 @@ static int island_bitmap_get(struct island_bitmap *self, uint32_t i)
+ 
+ int in_same_island(const struct object_id *trg_oid, const struct object_id *src_oid)
+ {
+-	khiter_t trg_pos, src_pos;
++	struct island_bitmap *trg, *src;
+ 
+ 	/* If we aren't using islands, assume everything goes together. */
+ 	if (!island_marks)
+@@ -103,37 +105,30 @@ int in_same_island(const struct object_id *trg_oid, const struct object_id *src_
+ 	 * If we don't have a bitmap for the target, we can delta it
+ 	 * against anything -- it's not an important object
+ 	 */
+-	trg_pos = kh_get_oid_map(island_marks, *trg_oid);
+-	if (trg_pos >= kh_end(island_marks))
++	trg = oidtree_get(island_marks, trg_oid);
++	if (!trg)
+ 		return 1;
+ 
+ 	/*
+ 	 * if the source (our delta base) doesn't have a bitmap,
+ 	 * we don't want to base any deltas on it!
+ 	 */
+-	src_pos = kh_get_oid_map(island_marks, *src_oid);
+-	if (src_pos >= kh_end(island_marks))
++	src = oidtree_get(island_marks, src_oid);
++	if (!src)
+ 		return 0;
+ 
+-	return island_bitmap_is_subset(kh_value(island_marks, trg_pos),
+-				kh_value(island_marks, src_pos));
++	return island_bitmap_is_subset(trg, src);
+ }
+ 
+ int island_delta_cmp(const struct object_id *a, const struct object_id *b)
+ {
+-	khiter_t a_pos, b_pos;
+-	struct island_bitmap *a_bitmap = NULL, *b_bitmap = NULL;
++	struct island_bitmap *a_bitmap, *b_bitmap;
+ 
+ 	if (!island_marks)
+ 		return 0;
+ 
+-	a_pos = kh_get_oid_map(island_marks, *a);
+-	if (a_pos < kh_end(island_marks))
+-		a_bitmap = kh_value(island_marks, a_pos);
+-
+-	b_pos = kh_get_oid_map(island_marks, *b);
+-	if (b_pos < kh_end(island_marks))
+-		b_bitmap = kh_value(island_marks, b_pos);
++	a_bitmap = oidtree_get(island_marks, a);
++	b_bitmap = oidtree_get(island_marks, b);
+ 
+ 	if (a_bitmap) {
+ 		if (!b_bitmap || !island_bitmap_is_subset(a_bitmap, b_bitmap))
+@@ -149,30 +144,28 @@ int island_delta_cmp(const struct object_id *a, const struct object_id *b)
+ 
+ static struct island_bitmap *create_or_get_island_marks(struct object *obj)
+ {
+-	khiter_t pos;
+-	int hash_ret;
++	void **val;
++	size_t n = sizeof(struct island_bitmap *);
+ 
+-	pos = kh_put_oid_map(island_marks, obj->oid, &hash_ret);
+-	if (hash_ret)
+-		kh_value(island_marks, pos) = island_bitmap_new(NULL);
++	if (oidtree_put(island_marks, &obj->oid, &val, n))
++		*val = island_bitmap_new(NULL);
+ 
+-	return kh_value(island_marks, pos);
++	return *val;
+ }
+ 
+ static void set_island_marks(struct object *obj, struct island_bitmap *marks)
+ {
+ 	struct island_bitmap *b;
+-	khiter_t pos;
+-	int hash_ret;
++	void **val;
++	size_t n = sizeof(struct island_bitmap *);
+ 
+-	pos = kh_put_oid_map(island_marks, obj->oid, &hash_ret);
+-	if (hash_ret) {
++	if (oidtree_put(island_marks, &obj->oid, &val, n)) {
+ 		/*
+ 		 * We don't have one yet; make a copy-on-write of the
+ 		 * parent.
+ 		 */
+ 		marks->refcount++;
+-		kh_value(island_marks, pos) = marks;
++		*val = marks;
+ 		return;
+ 	}
+ 
+@@ -180,10 +173,10 @@ static void set_island_marks(struct object *obj, struct island_bitmap *marks)
+ 	 * We do have it. Make sure we split any copy-on-write before
+ 	 * updating.
+ 	 */
+-	b = kh_value(island_marks, pos);
++	b = *val;
+ 	if (b->refcount > 1) {
+ 		b->refcount--;
+-		b = kh_value(island_marks, pos) = island_bitmap_new(b);
++		*val = b = island_bitmap_new(b);
+ 	}
+ 	island_bitmap_or(b, marks);
+ }
+@@ -275,14 +268,11 @@ void resolve_tree_islands(struct repository *r,
+ 		struct tree *tree;
+ 		struct tree_desc desc;
+ 		struct name_entry entry;
+-		khiter_t pos;
+ 
+-		pos = kh_get_oid_map(island_marks, ent->idx.oid);
+-		if (pos >= kh_end(island_marks))
++		root_marks = oidtree_get(island_marks, &ent->idx.oid);
++		if (!root_marks)
+ 			continue;
+ 
+-		root_marks = kh_value(island_marks, pos);
+-
+ 		tree = lookup_tree(r, &ent->idx.oid);
+ 		if (!tree || parse_tree(tree) < 0)
+ 			die(_("bad tree object %s"), oid_to_hex(&ent->idx.oid));
+@@ -485,7 +475,8 @@ void load_delta_islands(struct repository *r, int progress)
+ {
+ 	struct island_load_data ild = { 0 };
+ 
+-	island_marks = kh_init_oid_map();
++	oidtree_init(&island_marks_storage);
++	island_marks = &island_marks_storage;
+ 
+ 	git_config(island_config_callback, &ild);
+ 	ild.remote_islands = kh_init_str();
+@@ -500,11 +491,11 @@ void load_delta_islands(struct repository *r, int progress)
+ 
+ void propagate_island_marks(struct commit *commit)
+ {
+-	khiter_t pos = kh_get_oid_map(island_marks, commit->object.oid);
++	struct island_bitmap *root_marks;
+ 
+-	if (pos < kh_end(island_marks)) {
++	root_marks = oidtree_get(island_marks, &commit->object.oid);
++	if (root_marks) {
+ 		struct commit_list *p;
+-		struct island_bitmap *root_marks = kh_value(island_marks, pos);
+ 
+ 		parse_commit(commit);
+ 		set_island_marks(&get_commit_tree(commit)->object, root_marks);
+@@ -522,16 +513,13 @@ int compute_pack_layers(struct packing_data *to_pack)
+ 
+ 	for (i = 0; i < to_pack->nr_objects; ++i) {
+ 		struct object_entry *entry = &to_pack->objects[i];
+-		khiter_t pos = kh_get_oid_map(island_marks, entry->idx.oid);
++		struct island_bitmap *bitmap;
+ 
+ 		oe_set_layer(to_pack, entry, 1);
+ 
+-		if (pos < kh_end(island_marks)) {
+-			struct island_bitmap *bitmap = kh_value(island_marks, pos);
+-
+-			if (island_bitmap_get(bitmap, island_counter_core))
+-				oe_set_layer(to_pack, entry, 0);
+-		}
++		bitmap = oidtree_get(island_marks, &entry->idx.oid);
++		if (bitmap && island_bitmap_get(bitmap, island_counter_core))
++			oe_set_layer(to_pack, entry, 0);
+ 	}
+ 
+ 	return 2;
+diff --git a/oidtree.c b/oidtree.c
+index 0d39389bee..eb7e76335e 100644
+--- a/oidtree.c
++++ b/oidtree.c
+@@ -28,15 +28,16 @@ void oidtree_clear(struct oidtree *ot)
+ 	}
+ }
+ 
+-void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
++static void **oidtree_insert3(struct oidtree *ot, const struct object_id *oid,
++				size_t extra)
+ {
+ 	struct cb_node *on;
+ 	struct object_id k;
+ 
+ 	if (!oid->algo)
+-		BUG("oidtree_insert requires oid->algo");
++		BUG("oidtree insertion requires oid->algo");
+ 
+-	on = mem_pool_alloc(&ot->mem_pool, sizeof(*on) + sizeof(*oid));
++	on = mem_pool_alloc(&ot->mem_pool, sizeof(*on) + sizeof(*oid) + extra);
+ 
+ 	/*
+ 	 * Clear the padding and copy the result in separate steps to
+@@ -45,19 +46,22 @@ void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
+ 	oidcpy_with_padding(&k, oid);
+ 	memcpy(on->k, &k, sizeof(k));
+ 
+-	/*
+-	 * n.b. Current callers won't get us duplicates, here.  If a
+-	 * future caller causes duplicates, there'll be a a small leak
+-	 * that won't be freed until oidtree_clear.  Currently it's not
+-	 * worth maintaining a free list
+-	 */
+-	cb_insert(&ot->tree, on, sizeof(*oid));
++	if (!cb_insert(&ot->tree, on, sizeof(*oid)))
++		return (void **)(on->k + sizeof(k)); /* success */
++
++	warning("oidtree leak (check contains/get before insert/put)");
++	return NULL;
+ }
+ 
++void oidtree_insert(struct oidtree *ot, const struct object_id *oid)
++{
++	(void)oidtree_insert3(ot, oid, 0);
++}
+ 
+-int oidtree_contains(struct oidtree *ot, const struct object_id *oid)
++static void **oidtree_find(struct oidtree *ot, const struct object_id *oid)
+ {
+ 	struct object_id k;
++	struct cb_node *on;
+ 	size_t klen = sizeof(k);
+ 
+ 	oidcpy_with_padding(&k, oid);
+@@ -69,7 +73,31 @@ int oidtree_contains(struct oidtree *ot, const struct object_id *oid)
+ 	klen += BUILD_ASSERT_OR_ZERO(offsetof(struct object_id, hash) <
+ 				offsetof(struct object_id, algo));
+ 
+-	return cb_lookup(&ot->tree, (const uint8_t *)&k, klen) ? 1 : 0;
++	on = cb_lookup(&ot->tree, (const uint8_t *)&k, klen);
++	return on ? (void **)(on->k + sizeof(k)) : NULL;
++}
++
++int oidtree_put(struct oidtree *ot, const struct object_id *oid,
++		void ***p, size_t n)
++{
++	*p = oidtree_find(ot, oid);
++	if (*p)
++		return 0;
++
++	*p = oidtree_insert3(ot, oid, n);
++	assert(*p);
++	return 1;
++}
++
++void *oidtree_get(struct oidtree *ot, const struct object_id *oid)
++{
++	void **p = oidtree_find(ot, oid);
++	return p ? *p : NULL;
++}
++
++int oidtree_contains(struct oidtree *ot, const struct object_id *oid)
++{
++	return oidtree_find(ot, oid) ? 1 : 0;
+ }
+ 
+ static enum cb_next iter(struct cb_node *n, void *arg)
+diff --git a/oidtree.h b/oidtree.h
+index 77898f510a..2f6e6f1beb 100644
+--- a/oidtree.h
++++ b/oidtree.h
+@@ -12,6 +12,8 @@ struct oidtree {
+ 
+ void oidtree_init(struct oidtree *);
+ void oidtree_clear(struct oidtree *);
++
++/* oid_set-like API */
+ void oidtree_insert(struct oidtree *, const struct object_id *);
+ int oidtree_contains(struct oidtree *, const struct object_id *);
+ 
+@@ -19,4 +21,17 @@ typedef enum cb_next (*oidtree_iter)(const struct object_id *, void *data);
+ void oidtree_each(struct oidtree *, const struct object_id *,
+ 			size_t oidhexsz, oidtree_iter, void *data);
+ 
++/* oid_map-like API */
++
++/* returns a pointer to the data payload associated with object_id */
++void *oidtree_get(struct oidtree *, const struct object_id *);
++
++/*
++ * points @p to the destination of the value
++ * @n must be consistent for the entire oidtree
++ * returns true if a new oidtree node was created,
++ * returns false if reusing an existing oidtree node
++ */
++int oidtree_put(struct oidtree *, const struct object_id *,
++		void ***p, size_t n);
+ #endif /* OIDTREE_H */
+
+
+[2] https://80x24.org/mwrap-perl.git
+
+    # after install, run gc under mwrap-perl with backtrace 10
+    MWRAP=socket_dir:/tmp/mwrap,bt:10 mwrap-perl git gc
+
+    # recommended: use GNU addr2line 2.39+ (Aug 2022) for +OFFSET decoding
+
+    # start HTTP reverse proxy
+    ADDR2LINE='/path/to/addr2line -p -f -i' \
+	mwrap-rproxy --socket-dir=/tmp/mwrap
+
+    # the per-PID each/2000 URLs can get really expensive for browsers
+    # even w3m struggles:
+    w3m http://0:5000/ # follow per-PID links
