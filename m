@@ -2,77 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BBFE4C636D3
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 12:21:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67C01C636D3
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 12:25:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231302AbjBAMV5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 07:21:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42202 "EHLO
+        id S231910AbjBAMZZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 07:25:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230204AbjBAMV4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 07:21:56 -0500
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6064F37B4E
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 04:21:55 -0800 (PST)
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out1.suse.de (Postfix) with ESMTP id 19A9133CD7;
-        Wed,  1 Feb 2023 12:21:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1675254114; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
+        with ESMTP id S231302AbjBAMZY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 07:25:24 -0500
+X-Greylist: delayed 477 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 01 Feb 2023 04:25:21 PST
+Received: from out-198.mta1.migadu.com (out-198.mta1.migadu.com [IPv6:2001:41d0:203:375::c6])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6979C470A2
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 04:25:21 -0800 (PST)
+MIME-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
+        s=default; t=1675253841;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=Aa0UORKVWhmFdCU2sA3CAfWdj4VlwTRRnhDI/yuo8TU=;
-        b=10DSPRQ/n8+R9GW9PgVY6PM39XMM6rS9YPbYzUZEhyJ95OhGdD9AbPlNpT6K59qjT+GuOo
-        MJOXxpzr2gL8A9r3xl3cY2lsAmaD6IvXKcFmZi1iDbFBzWN2xLL1vQuDW+E0SWIkjFgwai
-        iKk0Wi/Hesttnas1n9D5u4kuZEO2jH8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1675254114;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=Aa0UORKVWhmFdCU2sA3CAfWdj4VlwTRRnhDI/yuo8TU=;
-        b=AacS4AiMPWNdga9Z3MAP90DJvdpSoBGaMhbGh7SOIsNch83jOk7ZK1P/0YVCIpiKjBYYsE
-        o6BedyTz6ff63zAw==
-Received: from kitsune.suse.cz (kitsune.suse.cz [10.100.12.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by relay2.suse.de (Postfix) with ESMTPS id DA4512C141;
-        Wed,  1 Feb 2023 12:21:53 +0000 (UTC)
-Date:   Wed, 1 Feb 2023 13:21:52 +0100
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     demerphq <demerphq@gmail.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eli Schwartz <eschwartz93@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
- a possible solution
-Message-ID: <20230201122152.GJ19419@kitsune.suse.cz>
-References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
+        bh=pp+hmvjLkblGrXcocOF5E5+cwFfeuL0c2uDK+eVvlRE=;
+        b=azT1ehjpbrB9yiRqEtuTEzXFskoNS3PJ+YKx08egvvfXnqJDV3Y0tWO9OQcTlJmGjkRh8G
+        OBSry9zTU4hj/FfNR5L/WJ7Zp6uJSWaeh8hALBMoroVeMpJdrkT2SCnj8agJH2YqnkdVoa
+        +Q6CCJ9/YnR+wkGBCOspI90i4iyADPI=
+Date:   Wed, 01 Feb 2023 12:17:14 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From:   "Raymond E. Pasco" <ray@ameretat.dev>
+Message-ID: <8452eb684b212b1e364bdc4709d4b202@ameretat.dev>
+Subject: Re: Stability of git-archive, breaking (?) the Github universe,
+ and a possible solution
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?=" <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>,
+        "Eli Schwartz" <eschwartz93@gmail.com>,
+        "Git List" <git@vger.kernel.org>
+In-Reply-To: <230201.86pmatr9mj.gmgdl@evledraar.gmail.com>
+References: <230201.86pmatr9mj.gmgdl@evledraar.gmail.com>
+ <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
  <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
  <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
  <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net>
- <230201.86pmatr9mj.gmgdl@evledraar.gmail.com>
- <CANgJU+V0QRFwmTh8ZzY=28kmbUw=DvSLE24LioOXp6_ozq+RdA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANgJU+V0QRFwmTh8ZzY=28kmbUw=DvSLE24LioOXp6_ozq+RdA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 01, 2023 at 12:34:06PM +0100, demerphq wrote:
-> On Wed, 1 Feb 2023 at 11:26, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> > That would be going above & beyond what's needed IMO, but still a lot
-> > easier than the daunting task of writing a specification that exactly
-> > described GNU gzip's current behavior, to the point where you could
-> > clean-room implement it and be guaranteed byte-for-byte compatibility.
-> 
-> Why does it have to be gzip? It is not that hard to come up with a
-historical reasons?
+February 1, 2023 4:40 AM, "=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason" <avara=
+b@gmail.com> wrote:=0A> As people have come to rely on the exact "deflate=
+"=0A> implementation "git archive" promises to invoke the system's=0A> "g=
+zip" binary by default, under the assumption that its output=0A> is stabl=
+e. If that's no longer the case you'll need to complain=0A> to whoever ma=
+intains your local "gzip".=0A=0ASurely if reproducibility of .tar.gz file=
+s is the goal,"invoke=0Awhatever arbitrary binary on $PATH happens to be =
+called gzip" is an=0Apoor solution.=0A=0AIt is only even possible to cons=
+ider stabilizing gzip output as a=0Agoal for Git (although this seems ill=
+-advised for the reasons=0ABrian already discussed) in the post-2.38 worl=
+d where git is=0Adoing the gzipping.=0A=0AIf one has the requirement to s=
+ubstitute one's own specific=0Acompressor, there is an option for that.
