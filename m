@@ -2,102 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13E98C05027
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 12:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BD02C636D6
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 12:44:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231896AbjBAM2v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 07:28:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45338 "EHLO
+        id S232113AbjBAMoV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 07:44:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbjBAM2t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 07:28:49 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DA4E521E2
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 04:28:46 -0800 (PST)
-Received: (qmail 31725 invoked by uid 109); 1 Feb 2023 12:28:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Feb 2023 12:28:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19988 invoked by uid 111); 1 Feb 2023 12:28:45 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Feb 2023 07:28:45 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 1 Feb 2023 07:28:45 -0500
-From:   Jeff King <peff@peff.net>
-To:     Florian Bezdeka <florian.bezdeka@siemens.com>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "greg.pflaum@pnp-hcl.com" <greg.pflaum@pnp-hcl.com>
-Subject: Re: Bug: Cloning git repositories behind a proxy using the git://
- protocol broken since 2.32
-Message-ID: <Y9pa/YHnrrMU/ufV@coredump.intra.peff.net>
-References: <4831bbeb0ec29ec84f92e0badfc0d628ecc6921d.camel@siemens.com>
- <Y9j1RxKhNq2TnL4U@tapette.crustytoothpaste.net>
- <339359ee8a228ea108109cf852bcb7e145807dcf.camel@siemens.com>
- <CA+P7+xpgJKojMmcN9TuGDw8oduQSQk-5nUtsWc+4Seqa+eVDJQ@mail.gmail.com>
- <840bbd91453529571a9d4f13472a12f6e472d198.camel@siemens.com>
+        with ESMTP id S232093AbjBAMoT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 07:44:19 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA90B12866
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 04:44:03 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id dr8so29462551ejc.12
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 04:44:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=arnZSYDOwZh1V2BpvWKbDgJWxWvYkVFUEYvlOWQTQtk=;
+        b=l5BrIOVPEW738BuVsh5AxdT2Cao5+s4khmiTaMbGvZ5t0MEIqVMh+KdT8FeFowhh1/
+         KbkREhH6RWbscJywhOOpv+MNgqtd+EiyAiZ7J1mkROILgfzh5FEF0eAhs2E7zegCCAJr
+         AH/e9lyb3V3P/Hddoc7MmrYzq5vgUauTvGvtQEYXeUnimHYHq+BpUKquCG1frQk3dkSI
+         gXcx36awfnfYsJdKPFXW49j8oY4fxDZpLE8QIc9PzeD0J4Mk1EIGARP1eTMmFf4fAB6c
+         4NZ93PxEj6BT3gmMgqxnRPo0V0UM/1JNLrOKrOb8hh3E8hPhAZO1g7JF0uIxNPlevxEE
+         /Cxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=arnZSYDOwZh1V2BpvWKbDgJWxWvYkVFUEYvlOWQTQtk=;
+        b=PCEzbUEF08rJ/asOtfefdXlRObO26K8/xaM6L5gwb/7wMsam8L5rAeZzIwjvrX+AJJ
+         7gzCQM9CC52eD641zVrHIH/waFbCqUEN+2OzXM42Y7ScsIn4tptCUJyzdCx4ksacPiNl
+         G7AX2SmufIsjsl0IXNGN70jDhGB9UBOkUcmNZMxtAmHcQhU38l0ynIEAGi1ScTv2v/43
+         9uZQB0J1DwghHac2iMAeYS2g9Ua2zVXFIXmuSp36NPeWMgn78Uh5Nt4tcR55Ei0NGKzS
+         z9YuoUvV1HpVDHzO7+Bv0VvzHx/6PQxGlYMDnKdZ2uydwAB43ZhFrdtF4wAcvJzixTpa
+         GU4A==
+X-Gm-Message-State: AO0yUKVHHN5tfhgZ5V9ZQr+yppS4uSpL/CfyEpuCG1Xhh1IPgPEjTPFn
+        Ql8ZQPa+gjQL2b5++wFFHMyRxG+kSAai1Q==
+X-Google-Smtp-Source: AK7set+Wvy//+hTS7rDD7vKCeuo/ir0w29GPLex1zPqGIaeeQPeoFSw6duM0awmo/JaWpCe6CIOuqA==
+X-Received: by 2002:a17:906:d7a4:b0:87b:d60a:fcbb with SMTP id pk4-20020a170906d7a400b0087bd60afcbbmr2378015ejb.47.1675255442304;
+        Wed, 01 Feb 2023 04:44:02 -0800 (PST)
+Received: from gmgdl ([81.191.238.7])
+        by smtp.gmail.com with ESMTPSA id p21-20020a170906605500b007c11e5ac250sm10078907ejj.91.2023.02.01.04.44.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Feb 2023 04:44:01 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pNCT2-002Dxx-19;
+        Wed, 01 Feb 2023 13:44:00 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Eli Schwartz <eschwartz93@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
+ a possible solution
+Date:   Wed, 01 Feb 2023 13:42:54 +0100
+References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
+ <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
+Message-ID: <230201.86lelhr1wv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <840bbd91453529571a9d4f13472a12f6e472d198.camel@siemens.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 01, 2023 at 12:19:55AM +0100, Florian Bezdeka wrote:
 
-> > Junio pointed out the excellent analysis from Peff regarding the
-> > situation and the fact that socat is wrong here.
-> 
-> Thanks for pointing me to the old discussion. I was quite sure that I'm
-> not the first one facing this problem but couldn't find something.
-> 
-> It might be that socat is doing something wrong. But git is the
-> component that triggers the problem. Did someone talk to the socat
-> maintainers yet?
+On Tue, Jan 31 2023, brian m. carlson wrote:
 
-I'm not sure I'd say that socat is wrong. It's a generic tool, and it
-doesn't know what type of protocol the two sides are expecting, or how
-they'll handle half-duplex shutdowns. The default behavior is to wait
-0.5 seconds to see if the other side has anything to say, which is a
-reasonable compromise. It's just not enough for use a Git proxy in this
-case.
+> Since then, I've been very opposed to us guaranteeing output format
+> consistency without explicitly doing so.  I had sent some patches before
+> that I don't think ever got picked up that documented this explicitly.
+> I very much don't want people to come to rely on our behaviour unless we
+> explicitly guarantee it.
 
-The ideal, of course, would be an option to send the half-duplex
-shutdown to the server and then wait for the server to hang up. But I
-don't think it has such an option (you can just simulate it with a
-really large "-t"). Netcat does, FWIW ("-q -1").
+FWIW I think the reason that didn't get picked up (I went back and read
+the discussion) is that there was some feedback on the v1, [1] suggested
+(at least to me) that you'd re-roll it, but that re-roll never seems to
+have made it to the list.
 
-> Peff also mentioned that the half-duplex shutdown of the socket is
-> inconsistent between proxy and raw TCP git://. It seems still a valid
-> option to skip the half-shutdown for the git:// proxy scenario.
-
-It could be done, but that would reintroduce the "oops, socat died while
-we were waiting" that ae1a7eefff was solving. The original motivation
-was with ssh, but the same problem exists for proxies. It _doesn't_
-exist for raw TCP, because nobody notices the connection died (we just
-close() it), and there's no error to propagate.
-
-The raw TCP version does still suffer from leaving the connection open
-unnecessarily, so it would benefit from getting the same treatment. I
-didn't care enough to implement it (and TBH, I kind of hoped that git://
-was on the decline; especially with the v2 protocol, it's pretty much
-worse in every way than git-over-http).
-
-> > What value of -t did you try?
-> 
-> I was playing with -t 10 and -t 60 so far. Both does not work for
-> cloning a kernel stable tree. I guess it's hard to find a value that
-> works under all circumstances as timings might be different depending
-> on server/network speed.
-
-Anything over "5" should be sufficient, because the other side should be
-sending keep-alive packets (at the Git protocol level) every 5 seconds.
-It might be worth running socat under strace to see what it's seeing and
-doing.
-
-Another workaround is to set protocol.version to "0" in your Git config.
-
--Peff
+1. https://lore.kernel.org/git/YD7aDwX%2FaiRN0GZs@camp.crustytoothpaste.net/
