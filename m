@@ -2,127 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2374C636D4
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 22:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9432FC05027
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 22:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231665AbjBAWUl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 17:20:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48398 "EHLO
+        id S229940AbjBAWhw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 17:37:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbjBAWUj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 17:20:39 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B17464680
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 14:20:37 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id bg26so71725wmb.0
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 14:20:37 -0800 (PST)
+        with ESMTP id S229451AbjBAWhv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 17:37:51 -0500
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25F7A5593
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 14:37:51 -0800 (PST)
+Received: by mail-pl1-x62d.google.com with SMTP id h9so11376086plf.9
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 14:37:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KyUYdkacW/oSCDKtBwO3yDAxSBJUoTR+Jn4Pv/DzWls=;
-        b=c2v36yC+3pT6EjypsXIfdbP5r715lUJwB2wTdNmsOaoQTCoafz9uzmATfHV5Nv7d51
-         CNwxFUAeSyDfz8H7KJMsuuFI/MVm+cwNrtqsGLljQN7fH1eogKUGXM3zXo5Zz+oPr/aH
-         qiZRqRj8A0Kw41mE/ajz8wwixVlpD2Ce5YqHTwoYN/OmkL2c6chDMDrP7CKsy2UTBWew
-         gPPp+VO87SnUbvnYOTYdXZIT85Bxxf16aqP01pO6++IyoUTgvwYQtTVwrK023EeBUwXP
-         KH0QwbxwEpn7b6R2u13yhl7pThl5uHwTwEPG608i8u9a/gStAcrWa7o+4nq8SRaxTWpB
-         wS+Q==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Zj0JWZzdYYU+PmA2az4xETOaQhdVJTLto1tuNuWZqeg=;
+        b=dgfTxbWoiE6YFzHd61HJu6MBT6/vUmgupd7wALhFYgdO46EhNcl3OPvrRm1mGlXytg
+         66B0S9yhbMcWEh/mT+hi1ibPZo4zLxhhI3QxhzVMYsrLZZGR5JwPe/yCgRcn24KomUsH
+         /HW1ZPschKPOCp5QEDuAXU/+dkNqbk+QuSLfITjm2kxbDKxSuSyVcil/AlgnRiDMcEkJ
+         cjX0Sp7+VzdxnbB/JHAoo3/JzKPYPTo3M6Yb1y8w1NVf5LoG3+K/YlWPFovylZ931A5T
+         oxdFmk58+HDPcQJnSWaY5qRE1bQXK6jL+MBM7+f9fxvmLC4niTBUss1Ip5Gcj1FdtRKy
+         l26w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KyUYdkacW/oSCDKtBwO3yDAxSBJUoTR+Jn4Pv/DzWls=;
-        b=ewYpoT41ex5IbNX0zQT+8RL4yQwfZp4JcTEqGRrJrvEgX1NyMgLYFCHMwDqT7t4qUC
-         TaDHiNElZKhu+GeUoakc5lN2fUkmfqE2khXNwLaDBNDqnRBDyktkHzzT8WKjliEsR+jQ
-         Fe9lqAMPU+iHjJqDs2scqL0lTdbToLMkRPcHTkxu0PogDaCUA9UMeLywd1xop1mZ+iqy
-         UxOYk1I0q484zKDWyRdkE+Ijwy10EVCajmjtkT3+FUp8Jac1rpAOCJ7FQj2wc7ayianV
-         7xnF6Gwj7G9I6rUjcYDHrFbfBoHiX5ycAshtdYgipGRrGTKECmaB+kp6hWBm7fUWauzU
-         ilKQ==
-X-Gm-Message-State: AO0yUKUJTL4r4TQZAyidaDo0LVMj+x6rsK63iPgRXaqQkLR6EvZZj4zo
-        +NEhYIQo09FbcZmQK58zaADKRUQnuUU=
-X-Google-Smtp-Source: AK7set8Fb/XrpNmQ+LnBbDLeTw3tH5oZX21fJUFUYN8neKGIgXjxk3sPWvkAEe4E5d75w0RTbH7TtQ==
-X-Received: by 2002:a05:600c:245:b0:3db:887:8c8c with SMTP id 5-20020a05600c024500b003db08878c8cmr3444877wmj.27.1675290035470;
-        Wed, 01 Feb 2023 14:20:35 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u13-20020a05600c19cd00b003dc434b39c2sm3099762wmq.26.2023.02.01.14.20.34
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Zj0JWZzdYYU+PmA2az4xETOaQhdVJTLto1tuNuWZqeg=;
+        b=YPDUDiumNcetm57ys90C4RoUkNrRTNkIqpYQR0O5nSlSlgKmU1AaTbWvrOEGbQ3FIT
+         vDAFaYHKHwTi73AhS6pqQBqhPjGkXiFu2QzVLqrgGKlLlfG7dDEUON4HLPNJ0UeAIZMc
+         5HQxdPlYvxKCx/mdxuTTPmSYENXNDHg8DTY+yaJhs/1IrYUwRFjjcSkLK308X2oD1s8L
+         RHUuJK1OsKhsdQWHPje4y/8+UEcsGHk6qj01dMgcxUzOT0LeVvmaFailJzdn6AeOWVrH
+         TzHsmNTBeHFN6u/36EZAbPX7Bt/IknJLDiub7hNy/dexr/IhEifmk4MQjCxSOFS04oPC
+         EHhA==
+X-Gm-Message-State: AO0yUKVmKJ08l9aDyeBuGNwzmqgsI+d8y7wSRNMS1EIyWaHlulMH9I8u
+        tYz4BVv3+LryXMAv4Nayy3A6zocrZPA=
+X-Google-Smtp-Source: AK7set/oGh2TTJTVLjYQlsrxtSIMoGT5JVKsr0C6OY6QBmvVoiyhGQdOw297ZeR8eLVVQ8gIysX0xg==
+X-Received: by 2002:a17:903:283:b0:198:96d2:9181 with SMTP id j3-20020a170903028300b0019896d29181mr281500plr.56.1675291070522;
+        Wed, 01 Feb 2023 14:37:50 -0800 (PST)
+Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
+        by smtp.gmail.com with ESMTPSA id v11-20020a170902b7cb00b001925c3ec34esm12167507plz.196.2023.02.01.14.37.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 14:20:35 -0800 (PST)
-Message-Id: <pull.1445.v4.git.git.1675290034144.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1445.v3.git.git.1675262454817.gitgitgadget@gmail.com>
-References: <pull.1445.v3.git.git.1675262454817.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 01 Feb 2023 22:20:33 +0000
-Subject: [PATCH v4] compat/winansi: check for errors of CreateThread()
- correctly
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Wed, 01 Feb 2023 14:37:50 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
         Seija Kijin <doremylover123@gmail.com>
+Subject: Re: [PATCH v4] compat/winansi: check for errors of CreateThread()
+ correctly
+References: <pull.1445.v3.git.git.1675262454817.gitgitgadget@gmail.com>
+        <pull.1445.v4.git.git.1675290034144.gitgitgadget@gmail.com>
+Date:   Wed, 01 Feb 2023 14:37:49 -0800
+In-Reply-To: <pull.1445.v4.git.git.1675290034144.gitgitgadget@gmail.com> (Rose
+        via GitGitGadget's message of "Wed, 01 Feb 2023 22:20:33 +0000")
+Message-ID: <xmqq357pyptu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+"Rose via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The return value for failed thread creation is NULL,
-not INVALID_HANDLE_VALUE, unlike other Windows API functions.
+> From: Seija Kijin <doremylover123@gmail.com>
+>
+> The return value for failed thread creation is NULL,
+> not INVALID_HANDLE_VALUE, unlike other Windows API functions.
+>
+> Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+> ---
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    win32: check for NULL after creating thread
-    
-    Check for NULL handles, not "INVALID_HANDLE," as CreateThread guarantees
-    a valid handle in most cases.
-    
-    The return value for failed thread creation is NULL, not
-    INVALID_HANDLE_VALUE, unlike other Windows API functions.
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1445%2FAtariDreams%2FhThread-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1445/AtariDreams/hThread-v4
-Pull-Request: https://github.com/git/git/pull/1445
-
-Range-diff vs v3:
-
- 1:  1cbc43e0d82 ! 1:  6c4188977e8 win32: check for NULL after creating thread
-     @@ Metadata
-      Author: Seija Kijin <doremylover123@gmail.com>
-      
-       ## Commit message ##
-     -    win32: check for NULL after creating thread
-     -
-     -    Check for NULL handles, not "INVALID_HANDLE,"
-     -    as CreateThread guarantees a valid handle in most cases.
-     +    compat/winansi: check for errors of CreateThread() correctly
-      
-          The return value for failed thread creation is NULL,
-          not INVALID_HANDLE_VALUE, unlike other Windows API functions.
-
-
- compat/winansi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/compat/winansi.c b/compat/winansi.c
-index 3abe8dd5a27..f83610f684d 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -644,7 +644,7 @@ void winansi_init(void)
- 
- 	/* start console spool thread on the pipe's read end */
- 	hthread = CreateThread(NULL, 0, console_thread, NULL, 0, NULL);
--	if (hthread == INVALID_HANDLE_VALUE)
-+	if (!hthread)
- 		die_lasterr("CreateThread(console_thread) failed");
- 
- 	/* schedule cleanup routine */
-
-base-commit: 2fc9e9ca3c7505bc60069f11e7ef09b1aeeee473
--- 
-gitgitgadget
+Thanks.  Will queue with the Ack by j6t given earlier.
