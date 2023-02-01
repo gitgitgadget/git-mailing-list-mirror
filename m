@@ -2,104 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3352EC636D3
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 22:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EB3AC05027
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 22:58:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231237AbjBAW4w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 17:56:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34700 "EHLO
+        id S231245AbjBAW6O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 17:58:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229566AbjBAW4v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 17:56:51 -0500
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B00465F23
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 14:56:50 -0800 (PST)
-Received: by mail-yb1-xb35.google.com with SMTP id x139so1673429ybe.13
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 14:56:50 -0800 (PST)
+        with ESMTP id S231482AbjBAW6M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 17:58:12 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45A7C4FAFF
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 14:58:11 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id mi9so212117pjb.4
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 14:58:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8oBgwRXjOJFiuadkonl7SJKxrjhtqJf0/H6FzcNPSvA=;
-        b=fWCEJ81j6X2OKeOJ1PJ5poX6ySQ7d9XmEM1uMhJmGz5iqe2dA6FjnNNp0yaUhUi33m
-         X+T3Wr1B2X3yZrw7as2U/FKOEzsanrJ1cmO9rNWDllBCUD0dp/r+VKxr9tuC7ZLqMMlh
-         33RFCODr3IzRc7JfeRt+OZ9PAoSaxfaZblS9krKwdfiVL+FNYSQJaZSFDQ30TzpYMsBT
-         ZacwxAtVjf/X8xErHEzlMTt5X5PzyhznxAUxpDMxV1WXyJP2QAEm91PaddSlJxLMfj0s
-         AcYfJVaiBJfTYnuh/uBx+H7KnwtCpv50PSyvV/DkcLeQPSPcRxQcsBNuXqy178oNZqWK
-         /F/A==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dFx+xApWiUl2FLVWcw1SqOh6Qwh2pOmNL/H7KfFDJKk=;
+        b=SEQ/QWuf1RcPa3j093IZR0fXZEIdnkg8FwbdQv4iC3WI6Ap8AWot3q8GwZ2VEYoctY
+         aPzgmgq/f44NQ+reVV6cPzqKjkEefyAdKB7FnJp91kJlS5vFga3QSxT/iRse5SyNi1es
+         S17u8j2mqJXTIM9Qt1d89op2Ky5jGlIIPpBN2wlMbhcpIY+AGfQPFoRw6eF+empHS8qc
+         KqrL0INjziZuy/lI4sPae86O5P5+/ieA4Hh9DAJyi6lUk0van0f3xsb76olK7SKN9i2C
+         YQMqN2K5spUOhxLX8OHQ9s1hnCS3iSkvuC1KPpdHHbmpBVRQBmFbveJBHEHmPknVdlR1
+         aipQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8oBgwRXjOJFiuadkonl7SJKxrjhtqJf0/H6FzcNPSvA=;
-        b=M7baIvB9Wk12lhDOZWFPhy120kvrey8ARqERuC5ZOU0bapa6MCMtfaobPZiZc9QdW6
-         x07mgE7E482A8lGTfoVZfd9S0RA55SiFs1G6tbnR4kktzkE+p6qKfkJoUBsmRtbzoDXA
-         KuNrpoowjhjow6y26KZODbww99HUmLLk1/Qu5m/Xh0ayiFv2PesHW/Gf1WwlaoXNyqL2
-         2BbnRU4vn4FjOIzj6QaLk4aH2NUsj0PEIeE0hzfxD94p0J993NjKEavCJAsMKhC2i76l
-         r19WNEL/iZ7LDvAapOljSPsn0sb2QAj/yWXHXcCcfYfkOYRI4GJv7KZvafF6wQd8nMPK
-         Ylyw==
-X-Gm-Message-State: AO0yUKUbZnY1AYrAe4RzKbq2srJpZXsXpgROYTogIH9vSOqTd93qoGEN
-        Lw89MQx/MUznAwUecgeZcJ7n9R7yg5GPR1iFz1jpQxp+ltc=
-X-Google-Smtp-Source: AK7set+GuTkYNjbHwkOzFpcCDeMiv4qjAg5rwjTnKA7j4xfmWAIGN3z9kH6XEJ710/a05BPTvcsZee+QUHsU9BPaK9w=
-X-Received: by 2002:a25:f449:0:b0:7dc:7cf:3ba7 with SMTP id
- p9-20020a25f449000000b007dc07cf3ba7mr491132ybe.333.1675292209257; Wed, 01 Feb
- 2023 14:56:49 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dFx+xApWiUl2FLVWcw1SqOh6Qwh2pOmNL/H7KfFDJKk=;
+        b=FkFJuKeyVqcsON7L6QNobQs0yWlk5oCRZeKh4FlvgpbQ2pxEN65ZQ767jS6F7p37UX
+         pjthMD7EOxlshLTyVkstyI56zjr7E6od2jNDngzhLxaMDMlTQSTLmEzXh6aPwfsrHR1V
+         9oEYO3N6LPXQjORFw0/oxjIPT+z8qL+xMhJmtrixO5qcRXEw9edOx3LrYprGeBhgByq8
+         wiDe3irICme+aYLUjKD8K/XKogb0VVZbvELYaMbWTWJligq04e4dJMsth/QnbU29FzQg
+         HtgMXYGf4IvzuSsWkNLugsbbwuProNDycZm1mh9owiPnRlnWvI4m/BkrmleKfkJgKU2g
+         EPzA==
+X-Gm-Message-State: AO0yUKWNmdMskiKltbP3rc3j8uu+1OIkuborXk42+EE/jlcJnDdckUn1
+        rHHHVi3o9WJJQGWR1dovpKE=
+X-Google-Smtp-Source: AK7set8RIUBLidn5P+Ukl1Y+qxWip+I5jXTBJgAiliL9+wl6w2of3WPOpu7SHh7jek7FDyHNdJgN+A==
+X-Received: by 2002:a05:6a20:3b89:b0:be:f077:9dc with SMTP id b9-20020a056a203b8900b000bef07709dcmr4157087pzh.19.1675292290658;
+        Wed, 01 Feb 2023 14:58:10 -0800 (PST)
+Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
+        by smtp.gmail.com with ESMTPSA id z11-20020a056a00240b00b0056bcb102e7bsm11963559pfh.68.2023.02.01.14.58.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Feb 2023 14:58:10 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Rafael Dulfer <rafael@dulfer.be>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Andrei Rybak <rybak.a.v@gmail.com>,
+        Rafael Dulfer <rafael.dulfer@gmail.com>
+Subject: Re: [PATCH] rev-list: clarify git-log default date format
+References: <20230201155712.86577-1-rafael@dulfer.be>
+        <xmqq5ycl1c6h.fsf@gitster.g>
+        <230201.864js5q9sv.gmgdl@evledraar.gmail.com>
+Date:   Wed, 01 Feb 2023 14:58:09 -0800
+In-Reply-To: <230201.864js5q9sv.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 01 Feb 2023 23:28:05 +0100")
+Message-ID: <xmqqy1phxabi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Palaniappan Nagarajan <palaniappan.feb22@gmail.com>
-Date:   Wed, 1 Feb 2023 14:56:37 -0800
-Message-ID: <CAPsey7=9y=j3s1gmO5sFbZXfD_X9osEJ8i-x=SdRM0e27Pbtpg@mail.gmail.com>
-Subject: [Help][Bug] Git pull fails while pulling large commits on FUSE based filesystem
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Community,
-We have a peculiar environment: We use git repository on a directory
-mounted using s3-fuse(https://github.com/s3fs-fuse/s3fs-fuse). The
-directory is backed up to the Amazon S3 bucket. Whenever we try to run
-`git pull` that could pull in *large commits*, we are facing the
-following error.
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-$ git pull origin main
-remote: Enumerating objects: 102, done.
-remote: Counting objects: 100% (102/102), done.
-remote: Compressing objects: 100% (101/101), done.
-remote: Total 102 (delta 1), reused 102 (delta 1), pack-reused 0
-Receiving objects: 100% (102/102), 72.24 MiB | 15.48 MiB/s, done.
-Resolving deltas: 100% (1/1), completed with 1 local object.
-fatal: Failed to checksum '.git/objects/pack/tmp_pack_VvTvzo': No such
-file or directory
-fatal: fetch-pack: invalid index-pack output
+>> That is
+>>
+>>     The default format `--date=default` shows a single line with
+>>     three-letter day of the week, three-letter month, day-of-month,
+>>     hour-minute-second in the "HH:MM:SS" format, followed by 4-digit
+>>     year, plus timezone information unless the local time zone is
+>>     used (e.g. "Thu Jan 1 00:00:00 1970 +0000").
+>>
+>> or something like that.
+>
+> I think that following such a description in prose is still more
+> confusing than just showing an example. E.g. we could say:
+> 	
+> 	Assuming a user in timezone +0200 (Central Europe) values of
 
-I can confirm that the file '.git/objects/pack/tmp_pack_XXXXX' is
-present once the command completes. In the S3 fuse logs, I see that
-the file is read before the file is created.
+Add "on day X at time Y" here, and I'd buy that ;-)
 
-The issue happens only during `git pull` and `git clone` with the
-large commits works without any issues.
+> 	these `--date` argument would produce:
+> 	
+> 	|---------------+--------------------------------|
+> 	| rfc2822       | Thu, 7 Apr 2005 15:13:13 -0700 |
+> 	| rfc2822-local | Fri, 8 Apr 2005 00:13:13 +0200 |
+> 	| default       | Thu Apr 7 15:13:13 2005 -0700  |
+> 	| default-local | Fri Apr 8 00:13:13 2005        |
+> 	|---------------+--------------------------------|
 
-Can anyone help with any pointers/ workaround/ potential solution to
-fix this issue? Is there a way to override the location of temporary
-files "tmp_pack_XXXXX" files so that it can be created outside the
-mount directory? Setting the object directory outside the mount
-directory using GIT_OBJECT_DIRECTORY is not an option as we want to
-backup git history.
-
-P.S. My experiment that could throw some light on the issue.
-1. Created a Git repository with 1000 files of 1 MB.
-(https://github.com/cyn0/2kfiles-large)
-2. Git clone on the mounted directory works without any issue.
-3. Added 5 files of each 1MB size to the repository.
-(https://github.com/cyn0/2kfiles-large/commit/42aa5d83e9035460ffa9c3b2f4494c0828f6b1c7)
-4. From the mounted directory, "git pull origin main" works without any size.
-5. Now, add 100 files of each 1MB to the repository.
-(https://github.com/cyn0/2kfiles-large/commit/7304886116d9bdec8a8c2da020776995a6624bd2)
-6. From the mounted directory, "git pull origin main" fails with the
-above error.
-
-Thanks in advance for your help!
-
-Regards,
-Palaniappan
