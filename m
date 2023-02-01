@@ -2,63 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D23CC05027
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 16:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50A56C38142
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 17:12:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231485AbjBAQ4z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 11:56:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55976 "EHLO
+        id S231835AbjBARMI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 12:12:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231420AbjBAQ4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 11:56:53 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADB8379F37
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 08:56:43 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id n2so13047579pfo.3
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 08:56:43 -0800 (PST)
+        with ESMTP id S229576AbjBARMG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 12:12:06 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 509A59EF7
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 09:12:03 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id k13so19173318plg.0
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 09:12:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0ZS0LA4eLIHqmwZoqyEdCWhBdwB6gqOY5cROfK0+Y40=;
-        b=UlQqOgi9TS3seKj9bjf1k6Xq9R0vK3aXFoTFJQ9TPuIp1p2qaTcs4YSTLuwpXWM5Ro
-         aqYg661ymHgy/f6zSPqq+0Fm5WEMaOruGnQNaImKv9tN7sYPlNHqJAfNFWOKc4SzvIVX
-         9GypQHUgtQeRF2gAhLBXhfiZskSttn+VkqX6f26MUY435LzSxwAqh5rnAJzjx9uOmvlA
-         98w039wgNZ6KR+1ZWOSS8ajFiw7w6YygCZs5KE0lBc4L0Au48ryCxanQ73EyMFeqzzat
-         efxjhb7E20VpogwAg7dlLAq5kTByjIAsp4b6yt4coPBiG0CSVCoFS0t89oaqPgGlyJrJ
-         bOZQ==
+        bh=Fb+UzPJwed1xRa1Yn6gesK5jm26hYyoStPMkMKxQpVQ=;
+        b=GCGQIIapa93ot21xYuhVJx8HalOW/q/f2xx9dBOav4v0kMzGbS//6OiHLsP37Dr5c8
+         LCJ4+0ksvUUM4UPrx4/OEwDyZ5fRSnekztpsOJNVrZSmb/AK6iM/Rxt1qw8h/GSvFcGy
+         Na1axCA/Bp6oX1L/5nGJBhTZvl4dfRZtGdQrhBUx9y+9npm3MI4X3lFmyZSrGhVKQQJI
+         8/t29u1IGQG5Mv7x8DNBoS9Kcn3BKR+Dd4LrB8nQP1dKl6NHzoB44KaI3Z2eG6t49Ttt
+         qNuHlH4phnOkgQFpFlqepYy1I6bMn5IwmtR6eTjiq1yb6siDXkMCelhEyj7xdublVHGe
+         6YyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=0ZS0LA4eLIHqmwZoqyEdCWhBdwB6gqOY5cROfK0+Y40=;
-        b=vdeMFCzqTg3goSCwgs1am2lohC2RqZrQtLm8zUkvZEu5MrgRTEe/hT8/7Gvui32+ED
-         tV/5HjjWWQ35igYtpkpq7XdMTMirGFKKTuzhof9cgjVH8OxYWExVofADx+BlQw3oi7HC
-         f5iroC1KGuk9ax7gjqHZ619Ip89Y+Jkj40VbieyMR8emWzIpkMi4spEWYxEFTsQYaDv1
-         3nWEFRLuOLX6WzpLkijdj4UZKeCV5OjlAgHC82tYd36qJ8dMlA2HHbGTPORgtQ1Gm7K0
-         2ceLNUiGHDwkIN3MlJ/1SSyTMpZ2xDFX6I1wiQY6HrOhebXAXB4uKZsRfjJspdNaS07z
-         rOMg==
-X-Gm-Message-State: AO0yUKX8qH24iGTbzHzsmPJgg1sdHO1An6l0NORO6cGlN3Ss3iV2m2wL
-        ClRYjQ34NNu8ZHowxQ1ht0BzWGgmtCE=
-X-Google-Smtp-Source: AK7set9j1cFVJbRRIuW+5bLSLL0dq1B26uoIWxsvmhOle/uw0PaUYR9YytqhfciC6EOgYIEmWX7lIA==
-X-Received: by 2002:aa7:80c6:0:b0:58d:a7f4:9630 with SMTP id a6-20020aa780c6000000b0058da7f49630mr2584174pfn.16.1675270603076;
-        Wed, 01 Feb 2023 08:56:43 -0800 (PST)
+        bh=Fb+UzPJwed1xRa1Yn6gesK5jm26hYyoStPMkMKxQpVQ=;
+        b=2K1TTiRd8Hi9AM46t3G0wqDM+5k/B86Hg1Lwa0rO2E60eb6t4PV+HijJFdH1wIa7sj
+         GteGcjAZSiVNJ2UsljjGYCdF9zi+ScuQY2o3vdNx5rkB5dNA3HU5IzowQVb9V79Pyxk8
+         8zgaB1HHPz8UwtGOAFtKaFEtBFr6Xc+ijfK6sEsr1iFEkqecmqV6uL+mYzPbdLkR0lxp
+         +BGYWVdDWBbwlEyMHWMgSE9mKgW89DvPsUbvfpX1H4P10u6NDXjNqHdxTecgLB/VkErx
+         ahGiWvV0cJCk5sPYVOAAjIk2ZiuQm5mSItG1M6K3iYEKH42xRuNndqF2q2DLaSPGcgI9
+         xnnA==
+X-Gm-Message-State: AO0yUKVaV+298GGXYJ0MBKaTkDPMsSUG3y1mHLvE1lksk+nHeHkYtAAl
+        Wy1VxAmVzIouvKrAl6qwO9Q=
+X-Google-Smtp-Source: AK7set/Agx9fJwmveng4VH3DJppBrJFF95gZO/l7QJ5TsbMusgZ9vaR442RBh2VU+aPdj6R6fwfwQg==
+X-Received: by 2002:a17:903:32ca:b0:198:adc4:2287 with SMTP id i10-20020a17090332ca00b00198adc42287mr2496544plr.2.1675271522705;
+        Wed, 01 Feb 2023 09:12:02 -0800 (PST)
 Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id bw6-20020a056a00408600b005810a54fdefsm11712150pfb.114.2023.02.01.08.56.42
+        by smtp.gmail.com with ESMTPSA id j18-20020a170902da9200b0017ec1b1bf9fsm11963775plx.217.2023.02.01.09.12.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 08:56:42 -0800 (PST)
+        Wed, 01 Feb 2023 09:12:02 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] docs: document zero bits in index "mode"
-References: <20230201024041.29401-1-chooglen@google.com>
-Date:   Wed, 01 Feb 2023 08:56:42 -0800
-In-Reply-To: <20230201024041.29401-1-chooglen@google.com> (Glen Choo's message
-        of "Wed, 1 Feb 2023 10:40:41 +0800")
-Message-ID: <xmqqmt5xwchh.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Cheetham <mjcheetham@outlook.com>,
+        Dennington <lessleydennington@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH v2] credential: new attribute password_expiry_utc
+References: <pull.1443.git.git.1674914650588.gitgitgadget@gmail.com>
+        <pull.1443.v2.git.git.1675244392025.gitgitgadget@gmail.com>
+        <Y9pWxHfgPtgCKO+B@coredump.intra.peff.net>
+Date:   Wed, 01 Feb 2023 09:12:01 -0800
+In-Reply-To: <Y9pWxHfgPtgCKO+B@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 1 Feb 2023 07:10:44 -0500")
+Message-ID: <xmqq8rhh2tum.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,47 +72,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Documentation/gitformat-index.txt describes the "mode" as 32 bits, but
-> only documents 16 bits. Document the missing 16 bits and specify that
-> 'unused' bits must be zero.
+>> diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
+>> index f3c89831d4a..338058be7f9 100644
+>> --- a/builtin/credential-cache--daemon.c
+>> +++ b/builtin/credential-cache--daemon.c
+>> @@ -127,6 +127,9 @@ static void serve_one_client(FILE *in, FILE *out)
+>>  		if (e) {
+>>  			fprintf(out, "username=%s\n", e->item.username);
+>>  			fprintf(out, "password=%s\n", e->item.password);
+>> +			if (e->item.password_expiry_utc != TIME_MAX)
+>> +				fprintf(out, "password_expiry_utc=%"PRItime"\n",
+>> +					e->item.password_expiry_utc);
+>>  		}
+>
+> Is there a particular reason to use TIME_MAX as the sentinel value here,
+> and not just "0"? It's not that big a deal either way, but it's more
+> usual in our code base to use "0" if there's no reason not to (and it
+> seems like nothing should be expiring in 1970 these days).
 
-I actually think the bottom 16-bit should just be described as
-allowing only a limited set of possible values and list them all,
-but this is good as an incremental improvement [*]
+This is my fault ;-).  Here, there is no difference between 0 and
+TIME_MAX, but elsewhere the code needed
 
-Thanks.
+	if (expiry != 0 && expiry < time(NULL))
 
+to see if the entry has expired.  If the sentinel for an entry that
+will never expire were TIME_MAX, you do not need the first half of
+the expression.
 
->    32-bit mode, split into (high to low bits)
->  
-> +    16-bit unused, must be zero
-> +
->      4-bit object type
->        valid values in binary are 1000 (regular file), 1010 (symbolic link)
->        and 1110 (gitlink)
->  
-> -    3-bit unused
-> +    3-bit unused, must be zero
->  
->      9-bit unix permission. Only 0755 and 0644 are valid for regular files.
->      Symbolic links and gitlinks have value 0 in this field.
-
-
-[Footnote]
-
-If I am not mistaken, there are only four possible values allowed.
-So, instead of "split into...", we could just say
-
-        32-bit "mode", which can be one of
-
-          Regular non-executable file     100644
-          Regular executable file         100755
-          Symbolic link                   120000
-          Git link                        160000
-
-        No other values are allowed.
-
-but we can move one step at a time ;-)
-
+I am OK either way.
