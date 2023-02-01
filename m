@@ -2,107 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9743C38142
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 09:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7CF7C636D3
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 10:09:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232195AbjBAJ5d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 04:57:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39174 "EHLO
+        id S231704AbjBAKJX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 05:09:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232019AbjBAJ5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 04:57:32 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01CAD51C61
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 01:57:26 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id f7so9857988edw.5
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 01:57:26 -0800 (PST)
+        with ESMTP id S230204AbjBAKJW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 05:09:22 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D0C45245
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 02:09:21 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id f47-20020a05600c492f00b003dc584a7b7eso940453wmp.3
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 02:09:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=o1aORIhmFCfkbBR+CM/nGakTY/MbdVb/8loYgFsFU1w=;
-        b=i5h9ayQ5tUDtzo8JfwO8SqKlHdv65GXv925hCwZtDjilt20dvfTpFaDQlec1bTSPYz
-         KDlBf/IuisM1fRYk+FsGIzKh9/+fokbqBMk67ooCYQ/ABAJtl3WEuuiPYSoyvt/e3cfZ
-         aKNZnccUXm6vLOf332+gD9P1e3jMfN1A2znmuqQ4jj1l7NywmQN8Y5ewxNEws/wCmG9p
-         bjeeOwIajqDEycXeHAWot1ZipcqsCgJBYSaw8Un+u5VpJDfRSvToVfz2F8dw+BQgfzba
-         KtMPU98GRP1k7Q5HWEzDlYkdTNNJcfGZCmNSZ8AIGkGA6TtQkOclRetBJnzrqBXF4k94
-         OQww==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=XZrrdHlc8TNarfghujMEjC2jvl/JulnvGg5WqVH3NLU=;
+        b=XsFFF97g/gdBWcPAbr3ZHYDctPtduSU5OUtVHIpeo++iflYoD/f8cszaKD7x2LLJ4f
+         3o6Alk9qnYpVruvRUvZSTt78h4cViqlTyTvfFxKDKXknfJK0+prz+JUW8/bUbYL9GeIo
+         2raUBqCHphj0eoLLagBHbHyea1jNC3HQgS7lk0u/AQ+Hk1P2/T2v9bJHCdxMx1+w8XwU
+         mjPBTTh2tU7or+2VPR+7iRt5cl8eO6SyT7si9jmRg3QlxqnbUmBk4Tbgb7rrMf/jvq6t
+         TQsnBhkpiUcVaA+UvUrLDU0SD3WR2NNpxt84rzBHeOiFKIZFbD3miXXAtenszWP8fBUA
+         kzKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o1aORIhmFCfkbBR+CM/nGakTY/MbdVb/8loYgFsFU1w=;
-        b=1m9xjlLT6AGbjQ3bxODPTyI7dfZLdbGamW3sEDmVLz8sHVU33ufUpi/EP/BfX6Xm/a
-         QF5DQt052lk/iNRBkqezZYhjG6FczYxqNn18LB+3ok1mCPgz3k7636JtIIW+Oc2oMH0Y
-         A4Hm1XslBBkHLt6/s2l3L/KvyvPAQIKo9/Js1mrbfj5zj5gfw+uHQ9mHqUjF3zZgj6lS
-         iCwWKzddpLoZNpUasvuDtKCEzymIrXpqmH9g7WOucxxKqNn+JpGFlOmLMoTBy/GlEeFS
-         mIR2BbBdQw4OWMVYiGeaJsUUDAS2aFaDdfTvAwQB/rnLomiJEmYlEJIBY0IyVkPOQwBl
-         SE8g==
-X-Gm-Message-State: AO0yUKVAdjlI47Zeyd+SA0Ue0R9AfdPoxlCTfHKypU2MAJ7nfep5/ZpN
-        yFbrE5tCNQU4jYP+vsa7otHXs4BFEpDTBA==
-X-Google-Smtp-Source: AK7set8G45twUSacelC1IfPrrmW5mU7u4fbQQeU35o/NmiJBXriTi6EK81GQQymUMHqMglcbJe7iLg==
-X-Received: by 2002:a50:c001:0:b0:4a2:2819:ed22 with SMTP id r1-20020a50c001000000b004a22819ed22mr1427386edb.38.1675245445388;
-        Wed, 01 Feb 2023 01:57:25 -0800 (PST)
-Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id p4-20020a056402500400b0049dfd6bdc25sm9561848eda.84.2023.02.01.01.57.24
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XZrrdHlc8TNarfghujMEjC2jvl/JulnvGg5WqVH3NLU=;
+        b=YaDLclEGPfHjI/aejl+CQ5sPY+AoONEhJN+0BEdAWoxgPaA64qOyhoa7znG/fntbD3
+         JRMI8Z+MgZyfFcASktiZpgDHmgfLXw/1NcugCHt6Oukv4pCVB6SGnUn5cw3AGOKawK9E
+         rktdUIfY7H61iXJJGsX2qlPPpxsU0jyo+FG/SmGcvtZlqIW7TREvMp6UFA10TqNrzsCD
+         javxXg4BMc9t+Ej2gXvd5WW81ExbwtGEU5M9f5M7Ro3lpuFJGvEoAM5K6zq4uakFl2mg
+         Sc1GoQJpaktHFNLjUNzyEgUW/+qk2SuRQztErkBRisfQwkE0wShK/cFlGAUH7ekbKDz8
+         2Njw==
+X-Gm-Message-State: AO0yUKUNFyTq1okQwC5r1+Gv815eWR0JfKNBeXEbI9IF7pb1/m7gEWtv
+        BINRnYQzjUghern2hGa0MN2Bc73UmXI=
+X-Google-Smtp-Source: AK7set92N8t05xfHda+gEHCMS7Sz2coF4ZJw1ri5p6VbtV81zzx0CukutStE3euXLEChTLGu5WEkew==
+X-Received: by 2002:a05:600c:4f07:b0:3da:fd06:a6f1 with SMTP id l7-20020a05600c4f0700b003dafd06a6f1mr1398249wmq.31.1675246159334;
+        Wed, 01 Feb 2023 02:09:19 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t8-20020a5d6908000000b002bc7e5a1171sm17175873wru.116.2023.02.01.02.09.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 01:57:24 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pN9ro-002937-0F;
-        Wed, 01 Feb 2023 10:57:24 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eli Schwartz <eschwartz93@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
- a possible solution
-Date:   Wed, 01 Feb 2023 10:40:57 +0100
-References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
- <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
- <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
- <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net>
-Message-ID: <230201.86pmatr9mj.gmgdl@evledraar.gmail.com>
+        Wed, 01 Feb 2023 02:09:18 -0800 (PST)
+Message-Id: <pull.1447.git.git.1675246158282.gitgitgadget@gmail.com>
+From:   "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 01 Feb 2023 10:09:18 +0000
+Subject: [PATCH] clean: flush after each line
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Orgad Shaneh <orgads@gmail.com>, Orgad Shaneh <orgads@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Orgad Shaneh <orgads@gmail.com>
 
-On Tue, Jan 31 2023, brian m. carlson wrote:
+Some platforms don't automatically flush after \n, and this causes delay
+of the output, and also sometimes incomplete file names appear until the
+next chunk is flushed.
 
-> As far as whether other people want to implement consistent compression,
-> they are welcome to also write a spec and implement it.  I personally
-> feel that's too hard to get right and am not planning on working on it.
+Reported here: https://github.com/git-for-windows/git/issues/3706
 
-"A spec" here seems like overkill to me, so far on that front we've been
-shelling out to gzip(1), and the breakage/event that triggered this
-thread is rectified by starting to do that again by default.
+Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+---
+    clean: flush after each line
 
-It means that someone writing a clean-room implementation of git would
-likely run into the same issue, if they used e.g. the Go language and a
-native Go implementation of deflate.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1447%2Forgads%2Fclean-flush-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1447/orgads/clean-flush-v1
+Pull-Request: https://github.com/git/git/pull/1447
 
-But so what? We don't need to make promises for all potential git
-implementations, just this one. So we could add a blurb like this to the
-docs:
+ builtin/clean.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-	As people have come to rely on the exact "deflate"
-	implementation "git archive" promises to invoke the system's
-	"gzip" binary by default, under the assumption that its output
-	is stable. If that's no longer the case you'll need to complain
-	to whoever maintains your local "gzip".
+diff --git a/builtin/clean.c b/builtin/clean.c
+index b2701a28158..f3de8170f9a 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -270,8 +270,10 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
+ 
+ 	if (!*dir_gone && !quiet) {
+ 		int i;
+-		for (i = 0; i < dels.nr; i++)
++		for (i = 0; i < dels.nr; i++) {
+ 			printf(dry_run ?  _(msg_would_remove) : _(msg_remove), dels.items[i].string);
++			fflush(stdout);
++		}
+ 	}
+ out:
+ 	strbuf_release(&realpath);
+@@ -544,6 +546,7 @@ static int parse_choice(struct menu_stuff *menu_stuff,
+ 			clean_print_color(CLEAN_COLOR_ERROR);
+ 			printf(_("Huh (%s)?\n"), (*ptr)->buf);
+ 			clean_print_color(CLEAN_COLOR_RESET);
++			fflush(stdout);
+ 			continue;
+ 		}
+ 
 
-If we wanted to be even more helpful we could bunde and ship an old
-version of GNU gzip with our sources, and either default to that, or
-offer it as a "--stable" implementation of deflate.
-
-That would be going above & beyond what's needed IMO, but still a lot
-easier than the daunting task of writing a specification that exactly
-described GNU gzip's current behavior, to the point where you could
-clean-room implement it and be guaranteed byte-for-byte compatibility.
+base-commit: 2fc9e9ca3c7505bc60069f11e7ef09b1aeeee473
+-- 
+gitgitgadget
