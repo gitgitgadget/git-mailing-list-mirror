@@ -2,69 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50A56C38142
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 17:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D26B8C05027
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 17:22:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231835AbjBARMI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 12:12:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38596 "EHLO
+        id S231908AbjBARWz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 12:22:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjBARMG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 12:12:06 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 509A59EF7
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 09:12:03 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id k13so19173318plg.0
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 09:12:03 -0800 (PST)
+        with ESMTP id S232093AbjBARWs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 12:22:48 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E89404741C
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 09:22:43 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id z1so11608211plg.6
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 09:22:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Fb+UzPJwed1xRa1Yn6gesK5jm26hYyoStPMkMKxQpVQ=;
-        b=GCGQIIapa93ot21xYuhVJx8HalOW/q/f2xx9dBOav4v0kMzGbS//6OiHLsP37Dr5c8
-         LCJ4+0ksvUUM4UPrx4/OEwDyZ5fRSnekztpsOJNVrZSmb/AK6iM/Rxt1qw8h/GSvFcGy
-         Na1axCA/Bp6oX1L/5nGJBhTZvl4dfRZtGdQrhBUx9y+9npm3MI4X3lFmyZSrGhVKQQJI
-         8/t29u1IGQG5Mv7x8DNBoS9Kcn3BKR+Dd4LrB8nQP1dKl6NHzoB44KaI3Z2eG6t49Ttt
-         qNuHlH4phnOkgQFpFlqepYy1I6bMn5IwmtR6eTjiq1yb6siDXkMCelhEyj7xdublVHGe
-         6YyQ==
+        bh=ScoqwsTgYvYpWYsEZxHp6AVMGLGWRf30cTBLn4uwItw=;
+        b=IyLegIs8xP99nxjLZ6uGqtT7JscoqUGN/rxPeKkBAaMmPrdwfxMihqXytIEdDustbP
+         M5d8oVcXFL3V7le8j7LNoYB/c3Gs13YU7xpKjEUg3BHHAl442Ifbrd+pDD5qRCDL0Bks
+         HZ/wEjzOvxx66mxdRV7WwbzwezfThccc4g4B+9lzwqbNz1BG9mZ11+1CYM74uvnoHfW5
+         Irr06aJI5aSdPfOE2rixJJKd/Vtfkx/X34mbTRsN2BUhVGtBFlGdAST5/Fd+pgfEmoSh
+         fOw8lEfKYz/xR6iM4SIlbWexpN7gXR5uglFDttWRsFs7mbEK76bCGMouwD3iZ5DmzIfS
+         9GZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Fb+UzPJwed1xRa1Yn6gesK5jm26hYyoStPMkMKxQpVQ=;
-        b=2K1TTiRd8Hi9AM46t3G0wqDM+5k/B86Hg1Lwa0rO2E60eb6t4PV+HijJFdH1wIa7sj
-         GteGcjAZSiVNJ2UsljjGYCdF9zi+ScuQY2o3vdNx5rkB5dNA3HU5IzowQVb9V79Pyxk8
-         8zgaB1HHPz8UwtGOAFtKaFEtBFr6Xc+ijfK6sEsr1iFEkqecmqV6uL+mYzPbdLkR0lxp
-         +BGYWVdDWBbwlEyMHWMgSE9mKgW89DvPsUbvfpX1H4P10u6NDXjNqHdxTecgLB/VkErx
-         ahGiWvV0cJCk5sPYVOAAjIk2ZiuQm5mSItG1M6K3iYEKH42xRuNndqF2q2DLaSPGcgI9
-         xnnA==
-X-Gm-Message-State: AO0yUKVaV+298GGXYJ0MBKaTkDPMsSUG3y1mHLvE1lksk+nHeHkYtAAl
-        Wy1VxAmVzIouvKrAl6qwO9Q=
-X-Google-Smtp-Source: AK7set/Agx9fJwmveng4VH3DJppBrJFF95gZO/l7QJ5TsbMusgZ9vaR442RBh2VU+aPdj6R6fwfwQg==
-X-Received: by 2002:a17:903:32ca:b0:198:adc4:2287 with SMTP id i10-20020a17090332ca00b00198adc42287mr2496544plr.2.1675271522705;
-        Wed, 01 Feb 2023 09:12:02 -0800 (PST)
+        bh=ScoqwsTgYvYpWYsEZxHp6AVMGLGWRf30cTBLn4uwItw=;
+        b=GaOg5ZsUIGr0Yg6nsllJ0h0v3dMaucu+/C3hh+yQKhPAVO+b0sK5kfYayiShUiV4C3
+         0mcILToW5tUKOKYsX0YYzesgFQNVCfT7F0HsE226zcz8sS703/bb1XHvcBuqcx4bCHN1
+         YFVmKir/dWjkDDCBXuF+AuPzIdk3Q5hzn26UV8cNuJCsm4NLsVcU/JCLwSNU4wNHeE9D
+         pBXGcNUjv+dz5+sl819p3ImFOean23ikswj/a0vFznC/Awnui1WdBaUq+qd+DTLupZFt
+         vStvi+hqflt35IynCTA8hE/t0eqT2FZhO05f9Rw3lQt6DLcYBs6mpiqD9iupo4oUf+i7
+         X3eA==
+X-Gm-Message-State: AO0yUKVXWd/qwgbJ0cYvyKRonpRxYqna1o/ElzEIn4DOpfCjlwCk1o64
+        3GlDkoMkR/zBYzgoXOd+Pc0=
+X-Google-Smtp-Source: AK7set+1qMGnouqAUtgYQVkBChSffyhdzT2vhfB3beEGxBudOeoP/1uFEvH98lijeY6R/hR3trlqRA==
+X-Received: by 2002:a17:90b:4c42:b0:22c:9c7e:a95d with SMTP id np2-20020a17090b4c4200b0022c9c7ea95dmr12726896pjb.30.1675272163242;
+        Wed, 01 Feb 2023 09:22:43 -0800 (PST)
 Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id j18-20020a170902da9200b0017ec1b1bf9fsm11963775plx.217.2023.02.01.09.12.02
+        by smtp.gmail.com with ESMTPSA id n19-20020a637213000000b0044ed37dbca8sm10898133pgc.2.2023.02.01.09.22.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 09:12:02 -0800 (PST)
+        Wed, 01 Feb 2023 09:22:42 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Cheetham <mjcheetham@outlook.com>,
-        Dennington <lessleydennington@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
-Subject: Re: [PATCH v2] credential: new attribute password_expiry_utc
-References: <pull.1443.git.git.1674914650588.gitgitgadget@gmail.com>
-        <pull.1443.v2.git.git.1675244392025.gitgitgadget@gmail.com>
-        <Y9pWxHfgPtgCKO+B@coredump.intra.peff.net>
-Date:   Wed, 01 Feb 2023 09:12:01 -0800
-In-Reply-To: <Y9pWxHfgPtgCKO+B@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 1 Feb 2023 07:10:44 -0500")
-Message-ID: <xmqq8rhh2tum.fsf@gitster.g>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     git@vger.kernel.org, Orgad Shaneh <orgads@gmail.com>,
+        "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: Re: [PATCH] git-gui: fix inability to quit after closing another
+ instance
+References: <pull.1446.git.git.1675239967804.gitgitgadget@gmail.com>
+Date:   Wed, 01 Feb 2023 09:22:42 -0800
+In-Reply-To: <pull.1446.git.git.1675239967804.gitgitgadget@gmail.com> (Orgad
+        Shaneh via GitGitGadget's message of "Wed, 01 Feb 2023 08:26:07
+        +0000")
+Message-ID: <xmqqy1ph1esd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,33 +69,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Orgad, thanks for a patch.
+Yadav, this came to git@vger.kernel.org, so I'm forwarding.
 
->> diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
->> index f3c89831d4a..338058be7f9 100644
->> --- a/builtin/credential-cache--daemon.c
->> +++ b/builtin/credential-cache--daemon.c
->> @@ -127,6 +127,9 @@ static void serve_one_client(FILE *in, FILE *out)
->>  		if (e) {
->>  			fprintf(out, "username=%s\n", e->item.username);
->>  			fprintf(out, "password=%s\n", e->item.password);
->> +			if (e->item.password_expiry_utc != TIME_MAX)
->> +				fprintf(out, "password_expiry_utc=%"PRItime"\n",
->> +					e->item.password_expiry_utc);
->>  		}
+cf. Documentation/SubmittingPatches
+
+    == Subsystems with dedicated maintainers
+
+    Some parts of the system have dedicated maintainers with their own
+    repositories.
+
+    - `git-gui/` comes from git-gui project, maintained by Pratyush Yadav:
+
+            https://github.com/prati0100/git-gui.git
+
+"Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Orgad Shaneh <orgads@gmail.com>
 >
-> Is there a particular reason to use TIME_MAX as the sentinel value here,
-> and not just "0"? It's not that big a deal either way, but it's more
-> usual in our code base to use "0" if there's no reason not to (and it
-> seems like nothing should be expiring in 1970 these days).
-
-This is my fault ;-).  Here, there is no difference between 0 and
-TIME_MAX, but elsewhere the code needed
-
-	if (expiry != 0 && expiry < time(NULL))
-
-to see if the entry has expired.  If the sentinel for an entry that
-will never expire were TIME_MAX, you do not need the first half of
-the expression.
-
-I am OK either way.
+> If you open 2 git gui instances in the same directory, then close one
+> of them and try to close the other, an error message pops up, saying:
+> 'error renaming ".git/GITGUI_BCK": no such file or directory', and it
+> is no longer possible to close the window ever.
+>
+> Fix by catching this error, and proceeding even if the file no longer
+> exists.
+>
+> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+> ---
+>     git-gui: fix inability to quit after closing another instance
+>     
+>     If you open 2 git gui instances in the same directory, then close one of
+>     them and try to close the other, an error message pops up, saying:
+>     'error renaming ".git/GITGUI_BCK": no such file or directory', and it is
+>     no longer possible to close the window ever.
+>     
+>     Fix by catching this error, and proceeding even if the file no longer
+>     exists.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1446%2Forgads%2Fgit-gui-no-quit-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1446/orgads/git-gui-no-quit-v1
+> Pull-Request: https://github.com/git/git/pull/1446
+>
+>  git-gui/git-gui.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index 201524c34ed..b00ee691e3b 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -2307,7 +2307,7 @@ proc do_quit {{rc {1}}} {
+>  		#
+>  		set save [gitdir GITGUI_MSG]
+>  		if {$GITGUI_BCK_exists && ![$ui_comm edit modified]} {
+> -			file rename -force [gitdir GITGUI_BCK] $save
+> +			catch { file rename -force [gitdir GITGUI_BCK] $save }
+>  			set GITGUI_BCK_exists 0
+>  		} elseif {[$ui_comm edit modified]} {
+>  			set msg [string trim [$ui_comm get 0.0 end]]
+>
+> base-commit: 2fc9e9ca3c7505bc60069f11e7ef09b1aeeee473
