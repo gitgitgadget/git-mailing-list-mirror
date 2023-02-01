@@ -2,67 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 517AAC05027
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 18:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13DD7C38142
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 18:54:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232088AbjBASuI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 13:50:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53106 "EHLO
+        id S232202AbjBASyr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 13:54:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230377AbjBASuH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 13:50:07 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C92F93AB3
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 10:50:05 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id v6-20020a17090ad58600b00229eec90a7fso4208187pju.0
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 10:50:05 -0800 (PST)
+        with ESMTP id S231200AbjBASyp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 13:54:45 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2F47CCAF
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 10:54:45 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id on9-20020a17090b1d0900b002300a96b358so2946785pjb.1
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 10:54:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lMV5guU7K5sQFcwxYGQJKnXnXOKjxa/2nRAbfaOyExA=;
-        b=K+9On4pdFoM21VptszbLVzhUYWLfjRAEENHmJy3ruCS8xcpN2SOr/FmCD7IuCR4A33
-         ABGMqQHx0HSKvB6mYefY5Z2MVwbwKgyoNdArbhsLj0RXb7gr2/HIhHbQlfm85WAag6it
-         1O91jnmichjAewkXGJ7fTGo7Egr3ieoP8OkcU/8fdJA3EXWDCLWaRJhD8eXLhK0H0u3k
-         NTFU56w9/MA1ZsxcjyZ3eit11aDi8IBydmKXgk75vyr/IyrhWTfHLtTAUIscHRRC0L44
-         8v8K6hEkWx+QajXsXW6wUUmXKstQMQXdkJscYAdiT6npSD0i9DLyZJ8bcC74jUFwX6TK
-         3AWQ==
+        bh=XHR8mxJQjtHWq/FmWyX0XvqmHq8u3JJowiJfYydhHVc=;
+        b=KW32P3atJpeo7y8HRLcNOmYuWZwtzWvyz7xISN/gOqUuub3dvmZ+IWstfoYRevZy/K
+         QreakV4kGqThTzYLNzpEoV7acoZk84bGiwLO7Ooe0BTvBmMO+0ZSyj306qyYW9fLhwpb
+         lIwzJEwKaEGIE7dnn7uAQkqbuChvdVuJ6Z+SovY3zp3XrigX+5WCZswplVsxX9cuHRb8
+         Ed0DQdUGRgTivjtOgdWl+D8+zLNxC6tUGl4VPK8E7KKhCusbirklESYFic45id46snVE
+         NzEhNO08V5V/nA3sDr+uTi+9mcjGZtmUDWlRKuqHOoqOvEW7dsXwcTFBqRgtzMNFWOJL
+         go7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=lMV5guU7K5sQFcwxYGQJKnXnXOKjxa/2nRAbfaOyExA=;
-        b=pUBCmUshxlYxOXrXaqLXA/8yQ+MfpLNGz5jLtB+6NwvBCArg/FuqU3dRaiMqpO9Dbw
-         iEYGc9eLrDZfrTpqx6EZkLS274zG2168UYU25aZ7edYPeOiHEGVpa2aAbBWOj/Da8NN0
-         ti+n5v/JlfyWVl695bZayB68TMduhatjzTw+PZOFABIV4zqsUsFmpBdcHPUhQxEgGPrK
-         k7DRXwy53v6BnxT6A7h2VI50dVd20Zrszg64Jq6m6CBhWi0XBnmuW4XS1CeqYDVsxMa6
-         x51FvSaKVxLjPpELczDJfgcx1gJHhQ/ndF9JC7iqZJBDwTRPpCYKdkyWYerkkFFRd+dA
-         2c8A==
-X-Gm-Message-State: AO0yUKWtltpNNiR1hbyYVeaRGEJQr5ATpLGy4eHfbER+LWmi335IIdVz
-        velJLcc7uUKdwbcqjhVPaog=
-X-Google-Smtp-Source: AK7set+hOn2LweMJUdCeU9/Aiuuv0kZbi/zye0bkQIbQKKIGIVqhUrQ1p6xFDltfDJoTsUH9P+7/wQ==
-X-Received: by 2002:a17:90b:180b:b0:22b:bae2:ec93 with SMTP id lw11-20020a17090b180b00b0022bbae2ec93mr17667888pjb.3.1675277405179;
-        Wed, 01 Feb 2023 10:50:05 -0800 (PST)
+        bh=XHR8mxJQjtHWq/FmWyX0XvqmHq8u3JJowiJfYydhHVc=;
+        b=7+1sN9ZfANHh4bV3a9AH2X5pCWYOutuZdusmr76snWetFfyXwyLYseZMGIHwtqY/Yq
+         x20IRYXrOaEa51oa9K3ULSyi4jUxU+FZ/LA+YElx8qGpfPipH7kq3IGOo/txvjFH0fLY
+         U/8b2VeXqi8lPd749e7lsyaTGms3SgFRxALUDYXWHcj5Q7+IOlW13CeZic1ROMWr7dmP
+         eX6zok9RAniMnILmFlwcVuahSbJxs1fSmRRk+JdvPBNZ+tFIicF2PDq3J0wkm12nJVcL
+         Oqnocs7qpT7f3gXGXOgrk4HKegogH5WV4UQ4m954AIxrIbgCFFlePhJdjiMtedm/Gc9+
+         ZtyQ==
+X-Gm-Message-State: AO0yUKU59higrhP8GElFEhkre3v1q947DxdanyihDhh032YfoET6VG17
+        j755uRReQOk7wKrjMP2xglk=
+X-Google-Smtp-Source: AK7set/lpmUoQQh6gFL1fhxMFY425ur4iSooKhuA0VKHx8FYVw7+BGUImcOGYnnfuy5zAVkvbNnk1A==
+X-Received: by 2002:a05:6a20:440c:b0:be:bf28:b7da with SMTP id ce12-20020a056a20440c00b000bebf28b7damr4961414pzb.20.1675277684406;
+        Wed, 01 Feb 2023 10:54:44 -0800 (PST)
 Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id s1-20020a17090a440100b00227223c58ecsm1629412pjg.42.2023.02.01.10.50.04
+        by smtp.gmail.com with ESMTPSA id e185-20020a621ec2000000b0058a313f4e4esm12228118pfe.149.2023.02.01.10.54.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 10:50:04 -0800 (PST)
+        Wed, 01 Feb 2023 10:54:43 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     M Hickford <mirth.hickford@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] credential: new attribute password_expiry_utc
-References: <pull.1443.git.git.1674914650588.gitgitgadget@gmail.com>
-        <xmqqpmax5c4v.fsf@gitster.g>
-        <CAGJzqskO0sGNtuuSkKWxknh1qv523TfA3U17X_9higDdYdg+PA@mail.gmail.com>
-Date:   Wed, 01 Feb 2023 10:50:04 -0800
-In-Reply-To: <CAGJzqskO0sGNtuuSkKWxknh1qv523TfA3U17X_9higDdYdg+PA@mail.gmail.com>
-        (M. Hickford's message of "Wed, 1 Feb 2023 08:29:56 +0000")
-Message-ID: <xmqqwn51z0df.fsf@gitster.g>
+To:     demerphq <demerphq@gmail.com>
+Cc:     "D. Ben Knoble" <ben.knoble@gmail.com>, Git <git@vger.kernel.org>
+Subject: Re: grep: fix multibyte regex handling under macOS
+ (1819ad327b7a1f19540a819813b70a0e8a7f798f)
+References: <CALnO6CAZtwfGY4SYeOuKqdP9+e_0EYNf4F703DRQB7UUfd_bUg@mail.gmail.com>
+        <CANgJU+X_e0owKC3uWPaA_gVP54syF1+MJ-cTn+fjPrNS5LDsMA@mail.gmail.com>
+        <CALnO6CDCkuN2XU_AyO66hQSm2ztfpe8Rs_baw_J4uTQZmekREw@mail.gmail.com>
+        <CANgJU+WZR56xG+KL3P053aD_qTh+rBhZ01mqNajg2qRt_+RNMA@mail.gmail.com>
+Date:   Wed, 01 Feb 2023 10:54:43 -0800
+In-Reply-To: <CANgJU+WZR56xG+KL3P053aD_qTh+rBhZ01mqNajg2qRt_+RNMA@mail.gmail.com>
+        (demerphq@gmail.com's message of "Wed, 1 Feb 2023 19:23:28 +0100")
+Message-ID: <xmqqsffpz05o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,14 +70,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-M Hickford <mirth.hickford@gmail.com> writes:
+demerphq <demerphq@gmail.com> writes:
 
-> Thanks for the guidance. Writing a better commit message clarified my
-> own thoughts.
+> ... I saw some discussion
+> recently that the mac regex engine doesn't play nicely in certain
+> ways, but i dont recollect the details.
 
-It is great to hear that somebody agreeing with me on this point.
+There was a discussion on BRE having and not having GNU-like
+extension on macOS, in this thread
 
-We try to write in a way that would make it clear to readers of "git
-log", but I often notice that trying to explain the changes to the
-code clearly does force me to realize better ways to write the
-changes.
+  https://lore.kernel.org/git/26a0d4ca-3d97-ace4-1a1f-92b1ee6715a6@web.de/
+
+The patch we ended up using avoids touching the behaviour with ERE,
+as REG_ENHANCED on macOS affects REG_EXTENDED, but the issue we were
+looking at in the thread was about BRE.
+
