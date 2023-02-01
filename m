@@ -2,78 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 835ADC05027
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 13:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55254C05027
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 14:15:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231226AbjBANt4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 08:49:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42610 "EHLO
+        id S232234AbjBAOPL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 09:15:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232509AbjBANtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 08:49:50 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3737365EC7
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 05:49:24 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id k4so46104391eje.1
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 05:49:24 -0800 (PST)
+        with ESMTP id S232095AbjBAOPK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 09:15:10 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02FF915C8F
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 06:15:09 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id dr8so30228484ejc.12
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 06:15:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=XDs1YK1ptjrxmJ6UtjmM5uV8QP5/kvpiCO6nCQP9ZxE=;
-        b=HTMKF6vo36tTb/3rXoQMw5uNAVgDz3efMMMjqtWo44A1b6uv2kujzKU2T/ekSVCHBq
-         tflGk5sPKmCemXSW2rNSi37S+KfwMsNg2KK8siwvtEj8rbfUwam8TvcwJhmODAxGYcec
-         xbCvlF/guyNAoyvIP4fks1jY1ojhtRyWi4JDw6AE75kra89sVtl/7I6kkIKruyO5SDGq
-         nNM9au3vaynjxIcKz8KbovM+ndLX0j9p2DTOhGnC+m8ElWONCxL4PMSMbSgC9qfLe3QU
-         iKq+K90aHd+GqDnrTLOvF2y3O627Vf25/SyTatpKUNxZhOHKeHCtjKA7ddbO6Vibydc1
-         JaEw==
+        bh=bAtW2wQwjHvOy0Qf4KI4XX+TV3zp/R7orUtOCXaMNFY=;
+        b=Efv2um7alcJAWddffwVIxrQFjXIv2IqOSmQSxxwKFDswVizRwwYLpF083VAmTvrMuc
+         PtZl1n+Cj/3Act+nYkFxPaJCNYu1Bzp5tEOK5wjmKFm+VS4tO4GPx+ORITQjZ3gQRTMw
+         nro7saGsHbR1aHJhutfKUvDn0hdw6mK77MVaQTqKrGI7bPBesDqVd0jBvTzfTT4iLvbO
+         HeF+CFb4MW1vPrXWROaywIQtb3e5XdPFsdP1vlb7ABJixRDGEJbDMi6bLAUv7iBHfmjS
+         Yp7/ES+zgOhC+FIXmVAd4/br/MMJTr6cPc5x092kGT3ailitTmeruMfuCDPdfXfL+ldJ
+         a+1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=XDs1YK1ptjrxmJ6UtjmM5uV8QP5/kvpiCO6nCQP9ZxE=;
-        b=uAeJbxHyPPle4eXPR+8qAYJqeE2ny3dZhL4yUPQiQXomKlyhbZH+Gj1v6IGICGfX14
-         QfaygfE+gQxR+LbGtu4eZATFb7RyLgzE/U/2EcmT1mbyXnHe27Z7YC8tQFOABoTp6rDD
-         7xwmW5FXmJ0AMGYdqDwnmjnBMTSnoDTuuHSggLRpbx5mHMti46M3KKxbjMDxbtmLdeTX
-         9sSxzIobqwQPTTY/u1/mVr3ywGPbSIun1dCI74CBA49igBld8BUGCVbpEiUeHw6J9gw2
-         VLSihABhdG62vbkeVQbZUTNBQ2Zl8mTAGJP7sYzVIbBC/OKg6eHOhU0Z1xo2XrTt8LLx
-         uGvA==
-X-Gm-Message-State: AO0yUKWSwYwpPNNKKNPk/FkA+qM9YGRSPv+n4DCZLoWOmzaxhJgRMmiP
-        5u3ZUBjEGnH5FxmSKIvn7jI=
-X-Google-Smtp-Source: AK7set/NthSR8ZKHSGLrrZUEVRADBb4qrfolq9OIsDnTkQ3XA180hJqW/Ep40MY7oo2izuQ6nA2qfQ==
-X-Received: by 2002:a17:907:2bc2:b0:878:5d77:b4eb with SMTP id gv2-20020a1709072bc200b008785d77b4ebmr2355864ejc.42.1675259362784;
-        Wed, 01 Feb 2023 05:49:22 -0800 (PST)
+        bh=bAtW2wQwjHvOy0Qf4KI4XX+TV3zp/R7orUtOCXaMNFY=;
+        b=h+dD88pYLnimLAdPSadWOIoaTmvE4dLvY5R2CuDJvZD0SNAX7JjlO7vqSF3lU8Eq6N
+         Z3uRSiDkWjkarwnqRHQ51ZJHnvlPp3J5qq15NSqqTaGsFEod8YYerUCNYjeBOoTTPbzb
+         N+R5SeBQFZQZRaDZKpAfVhF8Z0MG8ma3T1asODFHKn9jXOiwH7FB5oN3C1DMTQvDnOQJ
+         1ka+DmBIm0iJFa1Uqyd1iYCcpEkCpiUI5w3/6Fh4987dGqEO022SQKAKMc9HLC1bg/5X
+         ZpWp4/bif7HMR6IX+jNceN41gTZJ8MUl5+qSnFT6dRSWSoQRPylAhpoT0BEnakwHSAum
+         M0eA==
+X-Gm-Message-State: AO0yUKVddjrhwN6hYdU5oC5zSiSoIvyAiQnWqGJerhyACZZIgbeJqV0p
+        ada/AM+Qxmg8SPfMJQ42ksE=
+X-Google-Smtp-Source: AK7set+pXwfepsm0BiJsL92Tg9zpxnfZ2hfv8abaH/vSfx7Phf2ZwItsSnU7r8lDX/KrZFS7mohAVA==
+X-Received: by 2002:a17:906:b04a:b0:878:814d:bc99 with SMTP id bj10-20020a170906b04a00b00878814dbc99mr2220941ejb.66.1675260907596;
+        Wed, 01 Feb 2023 06:15:07 -0800 (PST)
 Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id p23-20020a17090653d700b007ad69e9d34dsm10075875ejo.54.2023.02.01.05.49.22
+        by smtp.gmail.com with ESMTPSA id e18-20020a17090681d200b0088519b92080sm6195726ejx.127.2023.02.01.06.15.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 05:49:22 -0800 (PST)
+        Wed, 01 Feb 2023 06:15:06 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pNDUH-002GEq-1y;
-        Wed, 01 Feb 2023 14:49:21 +0100
+        id 1pNDtC-002H01-0o;
+        Wed, 01 Feb 2023 15:15:06 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     demerphq <demerphq@gmail.com>
-Cc:     Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eli Schwartz <eschwartz93@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
- a possible solution
-Date:   Wed, 01 Feb 2023 14:43:15 +0100
-References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
- <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
- <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
- <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net>
- <230201.86pmatr9mj.gmgdl@evledraar.gmail.com>
- <CANgJU+V0QRFwmTh8ZzY=28kmbUw=DvSLE24LioOXp6_ozq+RdA@mail.gmail.com>
- <20230201122152.GJ19419@kitsune.suse.cz>
- <CANgJU+VLseURimM++38WA81uFPbnoHiToOt4F4UFL9yVbQpBEw@mail.gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [RFC/PATCH 0/6] hash-object: use fsck to check objects
+Date:   Wed, 01 Feb 2023 15:06:39 +0100
+References: <Y8hX+pIZUKXsyYj5@coredump.intra.peff.net>
+ <Y8ifa7hyqxSbL92U@coredump.intra.peff.net>
+ <97faa323-a5b9-e459-70d7-3f6318446898@web.de>
+ <Y8zqZH+X6fOoCOYV@coredump.intra.peff.net>
+ <d225dddc-973c-f710-9d24-cb53b26b973f@web.de>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <CANgJU+VLseURimM++38WA81uFPbnoHiToOt4F4UFL9yVbQpBEw@mail.gmail.com>
-Message-ID: <230201.86cz6tqyvy.gmgdl@evledraar.gmail.com>
+In-reply-to: <d225dddc-973c-f710-9d24-cb53b26b973f@web.de>
+Message-ID: <230201.868rhhqxp1.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -82,49 +74,27 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Feb 01 2023, demerphq wrote:
+On Sun, Jan 22 2023, Ren=C3=A9 Scharfe wrote:
 
-> On Wed, 1 Feb 2023, 20:21 Michal Such=C3=A1nek, <msuchanek@suse.de> wrote:
->>
->> On Wed, Feb 01, 2023 at 12:34:06PM +0100, demerphq wrote:
->> > Why does it have to be gzip? It is not that hard to come up with a
+> Am 22.01.23 um 08:48 schrieb Jeff King:
+>> We probably also should outright reject gigantic trees,
+>> which closes out a whole class of integer truncation problems. I know
+>> GitHub has rejected trees over 100MB for years for this reason.
 >
->> historical reasons?
->
-> Currently git doesn't advertise that archive creation is stable
-> right[1]? So I wrote that with the assumption that this new
-> compression would only be used when making a new archive with a
-> hypothetical new '--stable' option. So historical reasons don't come
-> up. Or was there some other form of history that you meant?
+> Makes sense.
 
-We haven't advertised it, but people have come to rely on it, as the
-widespread breakages reported when upgrading to v2.38.0 at the start of
-this thread show.
+I really don't think it does, let's not forever encode arbitrary limits
+in the formats because of transitory implementation details.
 
-That's unfortunate, and those people probably shouldn't have done that,
-but that's water under the bridge. I think it would be irresponsible to
-change the output willy-nilly at this point, especially when it seems
-rather easy to find some compromise everyone will be happy with.
+Those sort of arbitrary limits are understandable for hosting providers,
+and a sensible trade-off on that front.
 
-> I'm just trying to point out here that stable compression is doable
-> and doesn't need to be as complex as specifying a stable gzip format.
-> I am not even saying git should just do this, just that it /could/ if
-> it decided that stability was important, and that doing so wouldn't
-> involve the complexity that Avar was implying would be needed.  Simple
-> compression like LZ variants are pretty straightforward to implement,
-> achieve pretty good compression and can run pretty fast.
->
-> Yves
-> [1] if it did the issue kicking off this thread would not have
-> happened as there would be a test that would have noticed the change.
+But for git as a general tool? I'd like to be able to throw whatever
+garbage I've got locally at it, and not have it complain.
 
-I have some patches I'm about to submit to address issues in this
-thread, and it does add *a* test for archive output stability.
+We already have a deluge of int v.s. unsigned int v.s. size_t warnings
+that we could address, we're just choosing to suppress them
+currently. Instead we have hacks like cast_size_t_to_int().
 
-But I'm not at all confident that it's exhaustive. I just found it by
-experiment, by locating tests ouf ours where the "git archive" output at
-the end is different with gzip and "git archive gzip".
-
-But is it guaranteed to find all potential cases where repository
-content might trigger different output with different gzip
-implementations? I don't know, but probably not.
+Those sorts of hacks are understandable as band-aid fixes, but let's
+work on fixing the real causes.
