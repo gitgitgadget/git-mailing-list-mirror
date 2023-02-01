@@ -2,91 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 647DBC05027
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 22:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2374C636D4
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 22:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231681AbjBAWQC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 17:16:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47100 "EHLO
+        id S231665AbjBAWUl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 17:20:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231454AbjBAWQB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 17:16:01 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FA425EF9A
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 14:16:00 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id n13so4439871plf.11
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 14:16:00 -0800 (PST)
+        with ESMTP id S229595AbjBAWUj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 17:20:39 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B17464680
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 14:20:37 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id bg26so71725wmb.0
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 14:20:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=k0ADKgPdR0O7MfHYsdPOe9BscYtN/HJagwPfmfrS+eU=;
-        b=G33WNiLHpd0yO0cupN06SJYVajXMuSNm/xEcoQmZMVJyvP4Ic8r7UT2o2nzLc3y6RU
-         A7rfgekq79Vi+KpxjFJpQUI8zcu9K/kJ2dGUjji26cRVuuUV09CEvqIOrK+YVmS0ZLBY
-         tmvo8u6lDKI/Aw0pjhFTmtLdofBcq/zAr7wv8lo4a8flu3Xe8otYABSiC5hacUjDn0/8
-         koEPKzmdBC8+BTYbbvgIhhtn0lzlBMkNkHHWROS69a4J7ny3lAbpntKZXT4cJXUTqinj
-         v2aVud9IawPTg699yghdUsf9en1sKaCEtDsP58CxcKn3RleT3Et25iNITYfneSBKSjuI
-         HocA==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KyUYdkacW/oSCDKtBwO3yDAxSBJUoTR+Jn4Pv/DzWls=;
+        b=c2v36yC+3pT6EjypsXIfdbP5r715lUJwB2wTdNmsOaoQTCoafz9uzmATfHV5Nv7d51
+         CNwxFUAeSyDfz8H7KJMsuuFI/MVm+cwNrtqsGLljQN7fH1eogKUGXM3zXo5Zz+oPr/aH
+         qiZRqRj8A0Kw41mE/ajz8wwixVlpD2Ce5YqHTwoYN/OmkL2c6chDMDrP7CKsy2UTBWew
+         gPPp+VO87SnUbvnYOTYdXZIT85Bxxf16aqP01pO6++IyoUTgvwYQtTVwrK023EeBUwXP
+         KH0QwbxwEpn7b6R2u13yhl7pThl5uHwTwEPG608i8u9a/gStAcrWa7o+4nq8SRaxTWpB
+         wS+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=k0ADKgPdR0O7MfHYsdPOe9BscYtN/HJagwPfmfrS+eU=;
-        b=F+CXq2fISyG0mhivOqwri6ZdjQaD9XJ4HFUw+ixaI9j6f0XKQZ3AAyJgQaOIWbiCcf
-         YdIqNHcrHdw9HYrn+cnucwwAKGnixwLNVgDH8hJveRE75zQLcTR0+BFkuzZdhCG06ZHw
-         gztUiQ2GrRC/xRh7b7K2cY+PyfJroR59/CHVNzim/AkSROIipqeIO/I10PeJJkIhMfXD
-         5aasXD99G0HVSyamZNR/ep346N9OKQ3ila4LnBdN5jM5ItFP93fWzt7RRUlyWnyUxK5M
-         KxB2KfaoedKFEkwl7VfI8M0IGEPCpfZyjmpDNv2fsZ2suBXSACKyQk8+K1szwSKWLZjt
-         YVGg==
-X-Gm-Message-State: AO0yUKWtloudgmmpDQ6OpjBdRKNb2NFw+LGtlFGOtTYxQGAxIx/N3ZnR
-        hWNg7gUVLBsl7KJl0FjzHYs=
-X-Google-Smtp-Source: AK7set/QfmiYh4TW1mhAJUppYLnMKMCZcsgqUia0mfF+rCllVNw2Mopr6CpZXUOHFejAb3GEJwE+jQ==
-X-Received: by 2002:a17:902:ca95:b0:196:8cbc:67e1 with SMTP id v21-20020a170902ca9500b001968cbc67e1mr2786253pld.51.1675289759561;
-        Wed, 01 Feb 2023 14:15:59 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id iy13-20020a170903130d00b00198ac2769b6sm2090945plb.83.2023.02.01.14.15.58
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KyUYdkacW/oSCDKtBwO3yDAxSBJUoTR+Jn4Pv/DzWls=;
+        b=ewYpoT41ex5IbNX0zQT+8RL4yQwfZp4JcTEqGRrJrvEgX1NyMgLYFCHMwDqT7t4qUC
+         TaDHiNElZKhu+GeUoakc5lN2fUkmfqE2khXNwLaDBNDqnRBDyktkHzzT8WKjliEsR+jQ
+         Fe9lqAMPU+iHjJqDs2scqL0lTdbToLMkRPcHTkxu0PogDaCUA9UMeLywd1xop1mZ+iqy
+         UxOYk1I0q484zKDWyRdkE+Ijwy10EVCajmjtkT3+FUp8Jac1rpAOCJ7FQj2wc7ayianV
+         7xnF6Gwj7G9I6rUjcYDHrFbfBoHiX5ycAshtdYgipGRrGTKECmaB+kp6hWBm7fUWauzU
+         ilKQ==
+X-Gm-Message-State: AO0yUKUJTL4r4TQZAyidaDo0LVMj+x6rsK63iPgRXaqQkLR6EvZZj4zo
+        +NEhYIQo09FbcZmQK58zaADKRUQnuUU=
+X-Google-Smtp-Source: AK7set8Fb/XrpNmQ+LnBbDLeTw3tH5oZX21fJUFUYN8neKGIgXjxk3sPWvkAEe4E5d75w0RTbH7TtQ==
+X-Received: by 2002:a05:600c:245:b0:3db:887:8c8c with SMTP id 5-20020a05600c024500b003db08878c8cmr3444877wmj.27.1675290035470;
+        Wed, 01 Feb 2023 14:20:35 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u13-20020a05600c19cd00b003dc434b39c2sm3099762wmq.26.2023.02.01.14.20.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 14:15:58 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc:     demerphq <demerphq@gmail.com>, Git <git@vger.kernel.org>,
-        dds@aueb.gr
-Subject: Re: grep: fix multibyte regex handling under macOS
- (1819ad327b7a1f19540a819813b70a0e8a7f798f)
-References: <CALnO6CAZtwfGY4SYeOuKqdP9+e_0EYNf4F703DRQB7UUfd_bUg@mail.gmail.com>
-        <CANgJU+X_e0owKC3uWPaA_gVP54syF1+MJ-cTn+fjPrNS5LDsMA@mail.gmail.com>
-        <CALnO6CDCkuN2XU_AyO66hQSm2ztfpe8Rs_baw_J4uTQZmekREw@mail.gmail.com>
-        <CANgJU+WZR56xG+KL3P053aD_qTh+rBhZ01mqNajg2qRt_+RNMA@mail.gmail.com>
-        <xmqqsffpz05o.fsf@gitster.g>
-        <CALnO6CAZ_RMirOwQqJyqJrq2dY1w09eV1h=0JFosYSb7XhyQVQ@mail.gmail.com>
-Date:   Wed, 01 Feb 2023 14:15:58 -0800
-In-Reply-To: <CALnO6CAZ_RMirOwQqJyqJrq2dY1w09eV1h=0JFosYSb7XhyQVQ@mail.gmail.com>
-        (D. Ben Knoble's message of "Wed, 1 Feb 2023 16:33:52 -0500")
-Message-ID: <xmqq7cx1yqu9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Wed, 01 Feb 2023 14:20:35 -0800 (PST)
+Message-Id: <pull.1445.v4.git.git.1675290034144.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1445.v3.git.git.1675262454817.gitgitgadget@gmail.com>
+References: <pull.1445.v3.git.git.1675262454817.gitgitgadget@gmail.com>
+From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 01 Feb 2023 22:20:33 +0000
+Subject: [PATCH v4] compat/winansi: check for errors of CreateThread()
+ correctly
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija Kijin <doremylover123@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+From: Seija Kijin <doremylover123@gmail.com>
 
-> On Wed, Feb 1, 2023 at 1:54 PM Junio C Hamano <gitster@pobox.com> wrote:
->> There was a discussion on BRE having and not having GNU-like
->> extension on macOS, in this thread
->>
->>   https://lore.kernel.org/git/26a0d4ca-3d97-ace4-1a1f-92b1ee6715a6@web.de/
->>
->> The patch we ended up using avoids touching the behaviour with ERE,
->> as REG_ENHANCED on macOS affects REG_EXTENDED, but the issue we were
->> looking at in the thread was about BRE.
->>
->
-> Are you suggesting that I try with `-P` and/or `-E`?
+The return value for failed thread creation is NULL,
+not INVALID_HANDLE_VALUE, unlike other Windows API functions.
 
-No.  I was just giving a concrete URL for what I think demerphq was
-referring to as "saw some discussion recently".
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+---
+    win32: check for NULL after creating thread
+    
+    Check for NULL handles, not "INVALID_HANDLE," as CreateThread guarantees
+    a valid handle in most cases.
+    
+    The return value for failed thread creation is NULL, not
+    INVALID_HANDLE_VALUE, unlike other Windows API functions.
+    
+    Signed-off-by: Seija Kijin doremylover123@gmail.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1445%2FAtariDreams%2FhThread-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1445/AtariDreams/hThread-v4
+Pull-Request: https://github.com/git/git/pull/1445
+
+Range-diff vs v3:
+
+ 1:  1cbc43e0d82 ! 1:  6c4188977e8 win32: check for NULL after creating thread
+     @@ Metadata
+      Author: Seija Kijin <doremylover123@gmail.com>
+      
+       ## Commit message ##
+     -    win32: check for NULL after creating thread
+     -
+     -    Check for NULL handles, not "INVALID_HANDLE,"
+     -    as CreateThread guarantees a valid handle in most cases.
+     +    compat/winansi: check for errors of CreateThread() correctly
+      
+          The return value for failed thread creation is NULL,
+          not INVALID_HANDLE_VALUE, unlike other Windows API functions.
+
+
+ compat/winansi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/compat/winansi.c b/compat/winansi.c
+index 3abe8dd5a27..f83610f684d 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -644,7 +644,7 @@ void winansi_init(void)
+ 
+ 	/* start console spool thread on the pipe's read end */
+ 	hthread = CreateThread(NULL, 0, console_thread, NULL, 0, NULL);
+-	if (hthread == INVALID_HANDLE_VALUE)
++	if (!hthread)
+ 		die_lasterr("CreateThread(console_thread) failed");
+ 
+ 	/* schedule cleanup routine */
+
+base-commit: 2fc9e9ca3c7505bc60069f11e7ef09b1aeeee473
+-- 
+gitgitgadget
