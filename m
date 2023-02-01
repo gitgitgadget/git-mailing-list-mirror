@@ -2,64 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CEACC05027
-	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 17:45:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6909C38142
+	for <git@archiver.kernel.org>; Wed,  1 Feb 2023 18:06:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230245AbjBARpc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Feb 2023 12:45:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39194 "EHLO
+        id S230496AbjBASGq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Feb 2023 13:06:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjBARpb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Feb 2023 12:45:31 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CFA7A5DC
-        for <git@vger.kernel.org>; Wed,  1 Feb 2023 09:45:30 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id e8-20020a17090a9a8800b0022c387f0f93so2973760pjp.3
-        for <git@vger.kernel.org>; Wed, 01 Feb 2023 09:45:30 -0800 (PST)
+        with ESMTP id S229576AbjBASGp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Feb 2023 13:06:45 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36FBA1E2BD
+        for <git@vger.kernel.org>; Wed,  1 Feb 2023 10:06:43 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id h9so10663982plf.9
+        for <git@vger.kernel.org>; Wed, 01 Feb 2023 10:06:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5Boc6EA49a6rAsTPNo6vnwuHClyaQfUyPUZxzFjGUDY=;
-        b=KfcqSLmRNh4gDAZkoj658Jg+uq59qB/sl+Nfij7djZO8zGkcaHjVDHSnL9Wfn44JR4
-         39G1YErGF8c1fMhkVrF5RYCmizN2qPhMplifHRrpsjNxHo7yIDl9Bmq7hRCR1pCrRddK
-         oStG4oFDkvEVBO2odp1Q++y/wevAv6H4QZJbKDODfqvpl0vEh8hOB2LEuijowXHrDcjd
-         kJTLT/XIO68HAPoZBDOu3wGbc+Z5OJ1FDxNN9WwuuBpVi2Ry3i0EOWcIxbbs7yqeaVN5
-         emsZeRZymZ1fsX0JwC6wNNkZogxh6STdqf175MEQ6sSjvfWQkcx2+v6c+N4X6AtYK5Ns
-         mmVQ==
+        bh=hpeu1Jo0wEzy7/tIdVYi9DWaIvEciEvEfm+Lcq+av+Q=;
+        b=LDl/hfyC3XR/sy1ysPtv+wndhT2cwqcQWrLKBkZZewvWDrrA8Q9Hc+5OMi3/lrvGs7
+         Njp/l1DkwUgMhtz5vzEDIN6KX8ZQbpI1KbRNKerjqpdWi+vfhpFs/hCqTu8QuWGh0amp
+         gcZdCCOZ39TcQRThSUA/iP0RtvqUpR4NIxKyNcsRtghM/08SmToI6VUtkXohA6dYLSNw
+         7LlZSFbYOGN/+22oMo2O1VcINCJyHHQz7X/mjxZuW5z/AyfzGlpOIk9DDXHPPcQiCUZM
+         6x1sTzy0FfkPDZunda/Cjo9VaVf2O1qLTz0pmF9UkBf5AwbfUiVAXkDhfPhx5EYKt22D
+         WnDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=5Boc6EA49a6rAsTPNo6vnwuHClyaQfUyPUZxzFjGUDY=;
-        b=JSaMFc2cJpbvD+ZvW3MVXlTLk0GpS0AH7NsVj5z8Hfm993RTAeOY25ZR/bXFD5JHUV
-         7hRomyM+ahgDGc6pVEA3LD8sqbHqf9l8j2KltZS4oUrmw/5pJTmQyZ9xMfZ9l/MoReYe
-         I5vgxj8IxBVxTzKK0s7Qm2CQzD4+aUa5FHC95UL7ea13fotjGH5OVn9eZjF8cfZk9/eY
-         2bF4bFQWjhD5Vms/p/c4+DBnXQrgHP4nGOs2cZ4APira7YdP+WgHfSfUyYSopB9mOBr1
-         rcnuuG+m2UWS92otFOabEThaSuCydC7EEhjYgBwweoTLq0cq6kV92eeTPzRViX2a+I/W
-         EmWg==
-X-Gm-Message-State: AO0yUKUoUUXMyFsT0qqur5dLtjgxKamFXmYFSJGbV+J9iztEWdWQVWuh
-        xRFU7k6jVcGDb1L92vCcV6Fw18psJVQ=
-X-Google-Smtp-Source: AK7set9dO16RxN/dFYmkMr2fyi77DHTmv3hLSiLvRwRbosXytAH0QY8zawScmfZ9plFetV5HHSPz6Q==
-X-Received: by 2002:a17:90a:1955:b0:22b:f1d2:784 with SMTP id 21-20020a17090a195500b0022bf1d20784mr3145571pjh.42.1675273529397;
-        Wed, 01 Feb 2023 09:45:29 -0800 (PST)
+        bh=hpeu1Jo0wEzy7/tIdVYi9DWaIvEciEvEfm+Lcq+av+Q=;
+        b=pqi9jEgZOBwDVsTDiHrCB5JnJ4qumryz045HZJQ0Wg8Nr9+ZMjF1Js88CML0br5MJH
+         0SuWJS36MsLjKs+8WFPRdsb3xYGuM3HBvd1eDKhMyHBn1y2DuIDzoxRzvaPs3Tq0wnOK
+         GgrJVA4rZoKVb+9HTMFCwVscQfBUcy1D/+wRAFSzc9OO9iwSxL/b21YwMFpY+jSM32qi
+         eOpNh59vgYt9cnnNVUMC37+r0FH3t8tjFvMMZfqRccKntUZBdoxDHR7g5l1mC7fogFfz
+         Ud/MVbcPu68gaDx4+RgNlK0ZxZy1fyiwDnhPIbEa+Yi3doTGWi75SHJ4mCYFIWRlfgYT
+         i+oQ==
+X-Gm-Message-State: AO0yUKUhMVlYpxskjv4VhwCSio80QiFPGU1+J9fnpqC2Pe3ETUYcBk6S
+        coxLedpQEIL2pymvMBmA2W0=
+X-Google-Smtp-Source: AK7set+Y9RnJtjMmFt4R8nrTSCp3Fm6ivG7+T1J3yYsadW8CBfdRqvqqpZoDHo70Iymhyt0ylcGiJQ==
+X-Received: by 2002:a17:903:2785:b0:198:adc4:2297 with SMTP id jw5-20020a170903278500b00198adc42297mr1762511plb.18.1675274802494;
+        Wed, 01 Feb 2023 10:06:42 -0800 (PST)
 Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id ml17-20020a17090b361100b0022ca3278a8bsm1629602pjb.30.2023.02.01.09.45.28
+        by smtp.gmail.com with ESMTPSA id je14-20020a170903264e00b0019655211783sm10614243plb.306.2023.02.01.10.06.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Feb 2023 09:45:28 -0800 (PST)
+        Wed, 01 Feb 2023 10:06:41 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Orgad Shaneh <orgads@gmail.com>
-Subject: Re: [PATCH] clean: flush after each line
-References: <pull.1447.git.git.1675246158282.gitgitgadget@gmail.com>
-Date:   Wed, 01 Feb 2023 09:45:28 -0800
-In-Reply-To: <pull.1447.git.git.1675246158282.gitgitgadget@gmail.com> (Orgad
-        Shaneh via GitGitGadget's message of "Wed, 01 Feb 2023 10:09:18
-        +0000")
-Message-ID: <xmqqedr91dqf.fsf@gitster.g>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Bernhard Reiter <ockham@raz.or.at>,
+        Remi Pommarel <repk@triplefau.lt>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH 1/2] Makefile: not use mismatched curl_config to check
+ version
+References: <20230201113133.10195-1-worldhello.net@gmail.com>
+Date:   Wed, 01 Feb 2023 10:06:41 -0800
+In-Reply-To: <20230201113133.10195-1-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Wed, 1 Feb 2023 19:31:32 +0800")
+Message-ID: <xmqqa61x1cr2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,78 +69,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Orgad Shaneh via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> From: Orgad Shaneh <orgads@gmail.com>
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 >
-> Some platforms don't automatically flush after \n, and this causes delay
-> of the output, and also sometimes incomplete file names appear until the
-> next chunk is flushed.
+> We may install different versions of curl, E.g.:
 >
-> Reported here: https://github.com/git-for-windows/git/issues/3706
+>  * A system default curl, which version is below 7.34.0, is installed
+>    in "/usr", and the "curl_config" program is located in "/usr/bin/".
 >
-> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
-> ---
->     clean: flush after each line
+>  * A higher version of curl is installed in "/opt/git/embedded/", and
+>    the "curl_config" program is located in "/opt/git/embedded/bin/".
+> ...
+> diff --git a/Makefile b/Makefile
+> index 45bd6ac9c3..f4eaf22523 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1597,6 +1597,7 @@ else
+>  		# Try "-Wl,-rpath=$(CURLDIR)/$(lib)" in such a case.
+>  		CURL_CFLAGS = -I$(CURLDIR)/include
+>  		CURL_LIBCURL = -L$(CURLDIR)/$(lib) $(CC_LD_DYNPATH)$(CURLDIR)/$(lib)
+> +		CURL_CONFIG := $(CURLDIR)/bin/$(CURL_CONFIG)
+>  	else
+>  		CURL_CFLAGS =
+>  		CURL_LIBCURL =
 
-We do not flush after every line when producing output from "git
-diff", "git status".  I do not want to see "git clean" special
-cased, as such a solution will not scale.
+The above is inside "ifdef CURLDIR/else/endif".  Is the assumption
+here that any and all installation of cURL that needs CURLDIR
+specified should have CURL_CONFIG binary under $(CURLDIR)/bin?
 
-> diff --git a/builtin/clean.c b/builtin/clean.c
-> index b2701a28158..f3de8170f9a 100644
-> --- a/builtin/clean.c
-> +++ b/builtin/clean.c
-> @@ -270,8 +270,10 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
->  
->  	if (!*dir_gone && !quiet) {
->  		int i;
-> -		for (i = 0; i < dels.nr; i++)
-> +		for (i = 0; i < dels.nr; i++) {
->  			printf(dry_run ?  _(msg_would_remove) : _(msg_remove), dels.items[i].string);
-> +			fflush(stdout);
-> +		}
+What does this patch do to folks who know the exact location of the
+curl-config binary and have been using CURL_CONFIG from the command
+line or in config.mak to point at it?  Doesn't the above break their
+working set-up?
 
-If the standard output is connected to an interactive terminal, this
-might make sense (but then that equally applies to "git status",
-"git diff" and all other commands), but shouldn't the stdout follow
-the simple "Output streams that refer to terminal devices are always
-line buffered by default" rule?
+For that matter, if you do want to use a specific curl-config binary,
+can't you use the existing mechanism to set CURL_CONFIG to the path,
+which was invented for this exact purpose?
 
-I think this should be fixed at the platform level, either by
-talking to the platform maintainers.  An acceptable workaround may
-be to have an #ifdef'ed hack early in our start-up code, e.g.
+I am not opposed to make it more convenient but I am worried about
+breaking people's working set-up with this change.
 
-	void sanitize_stdfds(void)
-	{
-		int fd = ...;
-		if (fd > 2)
-			close(fd);
-	#ifdef BUGGY_STDOUT_FULLY_BUFFERED
-		if (isatty(1))
-			setlinebuf(stdout);
-	#endif
-	}
-
-somewhere that is reached early from common-main.c::main().
-
-That way, we do not have to carry a special-case in builtin/clean.c
-and watch out for other commands that produce multiple lines of
-output start needing a workaround on platforms with such a buffering
-behaviour.
-
-> @@ -544,6 +546,7 @@ static int parse_choice(struct menu_stuff *menu_stuff,
->  			clean_print_color(CLEAN_COLOR_ERROR);
->  			printf(_("Huh (%s)?\n"), (*ptr)->buf);
->  			clean_print_color(CLEAN_COLOR_RESET);
-> +			fflush(stdout);
->  			continue;
-
-This is clearly interactive codepath, and I do not think we mind an
-extra fflush().  But it would be redundant if we fix the stdio on
-such a platform.
-
->  		}
->  
->
-> base-commit: 2fc9e9ca3c7505bc60069f11e7ef09b1aeeee473
