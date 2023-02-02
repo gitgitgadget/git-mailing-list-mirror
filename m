@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A6DDC61DA4
-	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 09:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B739EC636D4
+	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 09:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232243AbjBBJcz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Feb 2023 04:32:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40542 "EHLO
+        id S232258AbjBBJc4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 04:32:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232014AbjBBJcr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2023 04:32:47 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 555E974C3D
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 01:32:46 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id c10-20020a05600c0a4a00b003db0636ff84so883574wmq.0
-        for <git@vger.kernel.org>; Thu, 02 Feb 2023 01:32:46 -0800 (PST)
+        with ESMTP id S232115AbjBBJct (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2023 04:32:49 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59CC570D7B
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 01:32:47 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id m5-20020a05600c4f4500b003db03b2559eso847432wmq.5
+        for <git@vger.kernel.org>; Thu, 02 Feb 2023 01:32:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UFtOhchuQF+QU6XMHWMrTv/NX3VDwdnvSVuj3x6KWCQ=;
-        b=BBCzaq91OaIo5cmYU/3gcPRe411ZqTMaCs6TH1d+tWywHDrd6JN0fcAGddWxLFCDaN
-         2IimMrK+G38DmSfdRqe1ksRBwat9F4+OUA3KIzn81kCdcr+GUHQBXxpl5FN9+viC2fdf
-         J45kt3I2sgQkl9GjOa2f+IZ899n1vT6tJR+raBduKQiJZWEqbhd98bNFjzTXVk1XJD4k
-         +SKdoEr/QLB3wsJXwOesnc60UhAjVQYN+dvWkgV6xCzd2HHK9R6Ty2ZY7bB6Po8avxdt
-         997KuqI+p5edJX+flGAJSQXFQi/gC0oKR7ePk3pnhTOF6fu41Ce3wIIyg3s/d8UuPq2J
-         Z24Q==
+        bh=TdKHCyjlxNNREhrqbuQsPUv8vHWxJrelx/Q3orVxGRk=;
+        b=Wi1cjiveXtmvtSonG5BVDwu3BCSI5Yhmyq540qbObk1uBGeru0P02oOhQmaRwH4x6c
+         aVGYWizB0tqFW038Nc7LjLhXrKakeFWNhdjIAy9tnDBojPCHfPM0UWDylpY749daMcd2
+         o5QOPf5uLL59DjlV295sprYtWTXoqkzx6d4qfROlYOPxnGLxWBq9J1EZ9HAQhWBpTMUG
+         GDjQUjewDSfhvzc/Cl1c3S87CBSyG24zGebGM9LbXwVdxO3wfiPDroE11+cD6TOIZ5t5
+         kOys2Q/ogu8BP3I9F3hsiREZsmRzOiVFrECzu5HEXUwLONR2qggi4DPQ7iR+fe1WDgjg
+         9oNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UFtOhchuQF+QU6XMHWMrTv/NX3VDwdnvSVuj3x6KWCQ=;
-        b=ZTnpSQipa6ST5MD7srz1idHhNl6vxAQZWZrWFhRf0t+cyuGyQt67TU8RhO2EajnI13
-         LwWdJSr6L3aOasI/BUdgHIQMojIkJbeigz5j0aEjMRnmbRM4U5BOtv/7h+b/SF8vQJFL
-         /P+nwhykk5L0fo+YwXTWCmooz8Pv46UWjLLJYNgxeGmENBSNKmxPUZVKG10mRVtleYv4
-         efuY3YU28BRbs74eEiIvXxjpEITYDeTiSJnhDrf+Op7UcGfC1Vt+J0yGur8neO5MWPSa
-         9YSJwKBGgxgXq9ExDe+AYjgs2JDsCUFlMne5MZ5Ej1wHMJIFjBig+2UxzGhhJFDGfsnW
-         fFVQ==
-X-Gm-Message-State: AO0yUKU/7ocRWyB/5xSZzVC9VkVQo50594g7fscw3dMbF4m0LZzUOvOU
-        WUPJFsu0XRpqgIqud9WQdBpnGFN6pvljG3Zc
-X-Google-Smtp-Source: AK7set+HZMIJJNBt0OT4jNRpEgbpd7Ms1IYxjyHvp3MZA1fHltko14GJSrxftSownajPjhvVwIDNyQ==
-X-Received: by 2002:a05:600c:46c9:b0:3db:1d8:9f25 with SMTP id q9-20020a05600c46c900b003db01d89f25mr4839835wmo.2.1675330364491;
-        Thu, 02 Feb 2023 01:32:44 -0800 (PST)
+        bh=TdKHCyjlxNNREhrqbuQsPUv8vHWxJrelx/Q3orVxGRk=;
+        b=A6TIIq6DrpeaJggG94FxLgwTULn30XYF7REjFkGl9NnvnEqT8agnTAyIQpmzlcJonn
+         HHCcWeihoiuj4dFlHPtBJyxpaRUVr87SQaQdWjYtY/Tzz5rz4/9qOzSLuxS0ItmRwLC3
+         QZSpOh82LiS3ycNIHoXhqlzM2itzX4eVs2Doqleb7AQxe+d+3M39wc5NypdFep9ZTUpB
+         5WosiRPcejkCx8itakJ2KLvYb2jo87XtESlkngVcY4NGZRqWq5hSFc3vT1iTEmbyNatk
+         7mX1WFMsArcm8fFfkcOMnLzpq6rX8izWlOYppOn/x9bgFKkfZv/uxJjvA2Fb7c+FlxNw
+         HZlQ==
+X-Gm-Message-State: AO0yUKUNGgjkRV2/KN0p+LjesCgO6i3cCRda9Jc+IyDex68EUKck5Wt6
+        YcQE+TmZEOjQbehY/RwTzM7M9ZPQ9xoXdQ1F
+X-Google-Smtp-Source: AK7set9FF0QF+ZcAxCPfGyI6GrK2QbtLGVt91MhSseiDmYp9iEYNOXglzvsO9Kh2yyHG44fchuaGOw==
+X-Received: by 2002:a05:600c:4e55:b0:3d9:e5d3:bf with SMTP id e21-20020a05600c4e5500b003d9e5d300bfmr5148421wmq.32.1675330365492;
+        Thu, 02 Feb 2023 01:32:45 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l19-20020a05600c2cd300b003cf71b1f66csm4238753wmc.0.2023.02.02.01.32.43
+        by smtp.gmail.com with ESMTPSA id l19-20020a05600c2cd300b003cf71b1f66csm4238753wmc.0.2023.02.02.01.32.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Feb 2023 01:32:43 -0800 (PST)
+        Thu, 02 Feb 2023 01:32:44 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 5/9] archive-tar.c: move internal gzip implementation to a function
-Date:   Thu,  2 Feb 2023 10:32:25 +0100
-Message-Id: <patch-5.9-498037b2e65-20230202T093212Z-avarab@gmail.com>
+Subject: [PATCH 6/9] archive: use "gzip -cn" for stability, not "git archive gzip"
+Date:   Thu,  2 Feb 2023 10:32:26 +0100
+Message-Id: <patch-6.9-34c7ce73099-20230202T093212Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1392.g63e6d408230
 In-Reply-To: <cover-0.9-00000000000-20230202T093212Z-avarab@gmail.com>
 References: <230131.86357rrtsg.gmgdl@evledraar.gmail.com> <cover-0.9-00000000000-20230202T093212Z-avarab@gmail.com>
@@ -75,83 +75,133 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the code added in 76d7602631a (archive-tar: add internal gzip
-implementation, 2022-06-15) to call the magic "git archive gzip"
-command as a function.
+This reverts and amends [1] so that we don't use "git archive gzip" by
+default, but only fall back on it when we cannot invoke "gzip".
 
-A subsequent commit will start using this as a fallback, but for now
-there's no functional changes here.
+As noted in the discussion at [2] that commit first released with
+v2.38.0 caused widespread breakage in the wild: Hosting sites like
+GitHub tend to offer a feature to download tagged releases as
+archives, which are generated by some variant of "git archive
+--format=tgz".
+
+Downstream distributors then tend to (re-)download those archives
+as-is, hardcoding their known hash their packaging systems. See [3],
+[4] etc. for reports of those systems breaking in conjunction with
+[1].
+
+The reason for "why" is entirely missing from the commit message for
+[1], but as seen in the question about that in [5] and reply at [6] at
+the time it was to "avoid a run[time] dependency; the build/test
+dependency remains.".
+
+It's not immediately apparent what the second part of that is
+referring to, as [1] also removed the "GZIP" prerequisite from some
+tests. The answer is that we still have other tests that need "GZIP",
+but those are invoking "gzip(1)" explicitly.
+
+In any case, whatever promises we make in the future about the
+stability and non-stability of "git archive" output (or the derived
+compressed artifact), this amount of fallout isn't worth it to get to
+the stated goal in [1].
+
+Let's instead default to "gzip -cn" again, but if we can't find it
+fall back on "git archive gzip". Note that we'll only fallback if that
+"gzip -cn" is ours, not if it comes from the user's own
+"tar.<format>.command" configuration.
+
+If we do need the fallback we'll warn about it. No such warning will
+be emitted if the user has explicitly asked for "git archive gzip".
+
+1. 4f4be00d302 (archive-tar: use internal gzip by default, 2022-06-15)
+2. https://lore.kernel.org/git/a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com/
+3. https://github.com/Homebrew/homebrew-core/issues/121877
+4. https://github.com/bazel-contrib/SIG-rules-authors/issues/11
+5. https://lore.kernel.org/git/220615.86wndhwt9a.gmgdl@evledraar.gmail.com/
+6. https://lore.kernel.org/git/3ed80afd-34b3-afd8-5ffb-0187a4475ee1@web.de/
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- archive-tar.c | 43 +++++++++++++++++++++++++------------------
- 1 file changed, 25 insertions(+), 18 deletions(-)
+ Documentation/config/tar.txt |  8 ++++++--
+ archive-tar.c                | 20 +++++++++++++++-----
+ 2 files changed, 21 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/config/tar.txt b/Documentation/config/tar.txt
+index 5456fc617a2..37f24baa73a 100644
+--- a/Documentation/config/tar.txt
++++ b/Documentation/config/tar.txt
+@@ -16,8 +16,12 @@ tar.<format>.command::
+ 	to the command (e.g., `-9`).
+ +
+ The `tar.gz` and `tgz` formats are defined automatically and use the
+-magic command `git archive gzip` by default, which invokes an internal
+-implementation of gzip.
++command `gzip -cn` by default. An internal gzip implementation can be
++used by specifying the value `git archive gzip`.
+++
++If 'gzip -cn' cannot be executed we'll fall back on `git archive gzip`
++with a warning, if you don't have a gzip(1) and would like to use the
++internal `git archive gzip` without warning, configure it explicitly.
+ +
+ The automatically defined commands do not invoke the shell, avoiding
+ the minor overhead of an extra sh(1) process.
 diff --git a/archive-tar.c b/archive-tar.c
-index 8c5de949c64..dfc133deac7 100644
+index dfc133deac7..26efb911ebc 100644
 --- a/archive-tar.c
 +++ b/archive-tar.c
-@@ -465,12 +465,33 @@ static void tgz_write_block(const void *data)
+@@ -464,6 +464,7 @@ static void tgz_write_block(const void *data)
+ }
  
  static const char internal_gzip_command[] = "git archive gzip";
++static const char gzip_cn_command[] = "gzip -cn";
  
--static int write_tar_filter_archive(const struct archiver *ar,
--				    struct archiver_args *args)
-+static int gzip_internally(const struct archiver *ar,
-+			   struct archiver_args *args)
+ static int gzip_internally(const struct archiver *ar,
+ 			   struct archiver_args *args)
+@@ -494,12 +495,15 @@ static int write_tar_filter_archive(const struct archiver *ar,
  {
- #if ZLIB_VERNUM >= 0x1221
- 	struct gz_header_s gzhead = { .os = 3 }; /* Unix, for reproducibility */
- #endif
-+	int r;
-+
-+	write_block = tgz_write_block;
-+	git_deflate_init_gzip(&gzstream, args->compression_level);
-+#if ZLIB_VERNUM >= 0x1221
-+	if (deflateSetHeader(&gzstream.z, &gzhead) != Z_OK)
-+		BUG("deflateSetHeader() called too late");
-+#endif
-+	gzstream.next_out = outbuf;
-+	gzstream.avail_out = sizeof(outbuf);
-+
-+	r = write_tar_archive(ar, args);
-+
-+	tgz_deflate(Z_FINISH);
-+	git_deflate_end(&gzstream);
-+	return r;
-+}
-+
-+static int write_tar_filter_archive(const struct archiver *ar,
-+				    struct archiver_args *args)
-+{
  	struct strbuf cmd = STRBUF_INIT;
  	struct child_process filter = CHILD_PROCESS_INIT;
++	int filter_is_gzip_cn = 0;
  	int r;
-@@ -478,22 +499,8 @@ static int write_tar_filter_archive(const struct archiver *ar,
+ 
  	if (!ar->filter_command)
  		BUG("tar-filter archiver called with no filter defined");
  
--	if (!strcmp(ar->filter_command, internal_gzip_command)) {
--		write_block = tgz_write_block;
--		git_deflate_init_gzip(&gzstream, args->compression_level);
--#if ZLIB_VERNUM >= 0x1221
--		if (deflateSetHeader(&gzstream.z, &gzhead) != Z_OK)
--			BUG("deflateSetHeader() called too late");
--#endif
--		gzstream.next_out = outbuf;
--		gzstream.avail_out = sizeof(outbuf);
--
--		r = write_tar_archive(ar, args);
--
--		tgz_deflate(Z_FINISH);
--		git_deflate_end(&gzstream);
--		return r;
--	}
-+	if (!strcmp(ar->filter_command, internal_gzip_command))
-+		return gzip_internally(ar, args);
+-	if (!strcmp(ar->filter_command, internal_gzip_command))
++	if (!strcmp(ar->filter_command, gzip_cn_command))
++		filter_is_gzip_cn = 1;
++	else if (!strcmp(ar->filter_command, internal_gzip_command))
+ 		return gzip_internally(ar, args);
  
  	strbuf_addstr(&cmd, ar->filter_command);
- 	if (args->compression_level >= 0)
+@@ -515,8 +519,14 @@ static int write_tar_filter_archive(const struct archiver *ar,
+ 	filter.in = -1;
+ 	filter.silent_exec_failure = 1;
+ 
+-	if (start_command(&filter) < 0)
+-		die_errno(_("unable to start '%s' filter"), cmd.buf);
++	if (start_command(&filter) < 0) {
++		if (!filter_is_gzip_cn)
++			die_errno(_("unable to start '%s' filter"), cmd.buf);
++
++		warning_errno(_("unable to start '%s' filter, falling back to '%s'"),
++			      cmd.buf, internal_gzip_command);
++		return gzip_internally(ar, args);
++	}
+ 	close(1);
+ 	if (dup2(filter.in, 1) < 0)
+ 		die_errno(_("unable to redirect descriptor"));
+@@ -544,9 +554,9 @@ void init_tar_archiver(void)
+ 	int configured = 1;
+ 	register_archiver(&tar_archiver);
+ 
+-	tar_filter_config("tar.tgz.command", internal_gzip_command, NULL);
++	tar_filter_config("tar.tgz.command", gzip_cn_command, NULL);
+ 	tar_filter_config("tar.tgz.remote", "true", NULL);
+-	tar_filter_config("tar.tar.gz.command", internal_gzip_command, NULL);
++	tar_filter_config("tar.tar.gz.command", gzip_cn_command, NULL);
+ 	tar_filter_config("tar.tar.gz.remote", "true", NULL);
+ 	git_config(git_tar_config, &configured);
+ 	for (i = 0; i < nr_tar_filters; i++) {
 -- 
 2.39.1.1392.g63e6d408230
 
