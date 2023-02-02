@@ -2,125 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37853C61DA4
-	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 10:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8297BC61DA4
+	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 10:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232049AbjBBKO4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Feb 2023 05:14:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51912 "EHLO
+        id S232603AbjBBKZN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 05:25:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231889AbjBBKOy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2023 05:14:54 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CF594486
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 02:14:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1675332876; bh=SnYjo27GZXPcqybnlZnSzXrNULkr2KEv8t2nwoXygIg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=qozM6JAF7B7DLhbAIyycofGEvwoUdbWkA5CHeaskFVJO1BjhIZrtSuSlRyG6JG8BL
-         8pcQVXB93rFP7afK6XdJx85ef2jXIKUyF2bn7doPlvOq7CoexK0EI3cQXWtmr5GFV/
-         3OLdDRsXFIxh143dIzzDqWrIIAcyajZV7mytq2mMOOuJ0eNDfGY9ehwKxaO2j2+v5c
-         LPGxrcw1cN+idDVfRedWWAL5M8W/E4eQUkBsA3maN2YLk4jl8M0xwBpRZxTCoNMMYp
-         qAC/4SQL5CEAgk1xJ3ZgyZ6Nj1aFYkDl4LZ7j/BnvxBDHi6BpRfuO5+Qh6CIZbpnp6
-         aMkFqVo34IAtw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.128.75] ([89.1.215.7]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N9dwd-1obvoX0wnl-015ZUx; Thu, 02
- Feb 2023 11:14:36 +0100
-Date:   Thu, 2 Feb 2023 11:14:33 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, Victoria Dye <vdye@github.com>,
-        Matthew John Cheetham via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Derrick Stolee <derrickstolee@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
-        M Hickford <mirth.hickford@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Glen Choo <chooglen@google.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v7 00/12] Enhance credential helper protocol to include
- auth headers
-In-Reply-To: <xmqqfsbxcmdd.fsf@gitster.g>
-Message-ID: <6f83ed25-a7e1-06dd-f180-d70c7e1b1973@gmx.de>
-References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>        <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>        <e57c1ca3-c21c-db41-a386-e5887f46055c@github.com>        <xmqqwn5bg695.fsf@gitster.g>        <Y9JkMLueCwjkLHOr@coredump.intra.peff.net>
- <xmqqfsbxcmdd.fsf@gitster.g>
+        with ESMTP id S231903AbjBBKZM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2023 05:25:12 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03AABAD3E
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 02:25:10 -0800 (PST)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 178EB5A1E1;
+        Thu,  2 Feb 2023 10:25:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1675333510;
+        bh=naAnQkYaSu489AvERt6ECY6s5Hd9AQmunJbd1eS/O6M=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=TKSU7pYMaphZlcfzHI5DjpSvJJ/kZC2ECa/A1mei5+G6PHyg/FPC02SJ64vB5NSBb
+         IIAFOMIv1VT2JicCq/zk3edvF32/OkWOY7VBdaFBIMtLNMW+XR4reBS1omY5WPAXH+
+         trmgD1cuELLX3bgHGaBLYvKLuDZ5xNieSjOtgPBbzrZRIVPmhebsRIunGDPLC8/57M
+         RHAOfFdPCEma2pz07XYDoejxeNoS8hymHdMgARyug7iYKtAUHa4BCBGRGA4i2H/r8o
+         WhNI6DzfoPJv0ciqJx9KcILS5n+Po+VGZ5qFCaONuE0265GsHFSAEXlnsBRh6N9XLV
+         kdwG1SLRWFPVHdVZ3w6QRu7845YRAD3+OCBgHfwDT7dZvAInUPRlhsN3jvPMxWceYE
+         FVgGwT3pJE99nXhPHpcx535aL4w9B3yMQuQWcvQD28w6nZ2Ov5Y4bzW9OOXSdj1kKR
+         fjiuYV0BtpPtCT15mq2U/XgMs8GhEFgliUPbVYglQdktbt1R9zg
+Date:   Thu, 2 Feb 2023 10:25:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eli Schwartz <eschwartz93@gmail.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+        "Raymond E . Pasco" <ray@ameretat.dev>,
+        demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>
+Subject: Re: [PATCH 9/9] git archive docs: document output non-stability
+Message-ID: <Y9uPhPnNFlCju8Fo@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eli Schwartz <eschwartz93@gmail.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+        "Raymond E . Pasco" <ray@ameretat.dev>,
+        demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>
+References: <230131.86357rrtsg.gmgdl@evledraar.gmail.com>
+ <cover-0.9-00000000000-20230202T093212Z-avarab@gmail.com>
+ <patch-9.9-b40833b2168-20230202T093212Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:A0Nqy+yUWtcIpd5QRGOwaT5OaKN1PWzxKjWzwJjA5tdgRfXlq5h
- oCJ3OKYmViNmN1woAOSENAl16c1PNazELrFOO+QzJAhYVWU+5B8gzq7pFJP+qPun+wFA5mL
- JmNovxsh5Ml6FqPsrf8gJMuUNr1sMrtcnIx2SnvSE01fhnpQQIhUCSDiTC5wIftWPZxp5uK
- oGCHXN1v6mBLcET7G4bCA==
-UI-OutboundReport: notjunk:1;M01:P0:oCxKYvLh3fQ=;jH41wZ4jJP3vV+Pktkf/TjFinPI
- rPLlCB1jhJU8cM4K61RwcJ4N+RPTFYQHNxjDPn0VFb6G6FsvCq2poH57MKSPyyRurJxrYcNYT
- FM/8xkySpcG7q9dXKD4tr53ZRpVYubq5hhLenCQca0EAITst/UD2WuAMMBircMj9twamNuNud
- 31JJCDME6CDHtR3ZaPRwMuyGgnpjSZFVVr+D1hqf0k4rd936DF/5PVIkc60h0UAkQ0WfIuQrv
- FrZ40X13x3jM4DIX35bCkIOesI3kozMQusFpbOHAZc+nUKc62IWQQKPtA2/LHIj5jWD+spipG
- PKv4dDbS0Q1lAgYsK9gX5rZb9B8Nn+BAwV5TuSWqhPJ13RlCdlxKdGR3eLTeZXUWXGoy8avqs
- 4NpSbGKKgwQmY9nrc3yPCIKJuhmZd1wbSw6TQEBvmCRdH6UVoXyq+wdl+syjpoKHnA4jCscUa
- vK6sU0zBY/WBu6EHnnpf26aPCO2n9u3W+H7n7jDpbiKlLybg2pkBOa4u0QcLdSmdqnBOBGs3/
- WEmWUEp/JTF6f8tyH+iYprdf8mGVIXDLfCzTnKFetxEU2yyCJyBBszkoBRd08FKYftmWag6AI
- bpyqexBYh8Ypeqs+P2LB9eXlzEIha83OjafrxcFqSCLIxm+hPJW9J46c0RvGg2c0nSOXD9epy
- tmm5qQv4utCvOA5zWTJ9KtJGS+qnCxNNLMpGjiLnaL7Assc2BwkNmaJQKVOtNITVqM2OeQh25
- 98HaEPmvMYmoKhDrcRnMempFEhGT/FLLTMSLKkXImb+Q5ZIejT98XsfYlfqv7dAJNfN6MzcrV
- WWkYmAaxozuvMPEQ/MrsMmWW50XPsQcFwRDruhw7yQngYEdWfOM4oFYwB1K+06mSmYnWyvRXm
- Yy9e2il9G3UnjLuxJeUDxJqOQLYVlBYjojO+Q0LKil6Hg/z/ssfyvEyZUCX2Ao4tIKyNuqOqu
- chtAtc6mM3Rp8vm/S4q1hZ2jmiY=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="W8jkwUYUKs8xJ3WJ"
+Content-Disposition: inline
+In-Reply-To: <patch-9.9-b40833b2168-20230202T093212Z-avarab@gmail.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Peff,
 
-On Thu, 26 Jan 2023, Junio C Hamano wrote:
+--W8jkwUYUKs8xJ3WJ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Jeff King <peff@peff.net> writes:
->
-> >> Thanks, both.  Let's merge it down.
-> >
-> > Sorry, I'm a bit late to the party, but I left some comments just now
-> > (this topic had been on my review backlog for ages, but I never quite
-> > got to it).
-> >
-> > Many of my comments were small bits that could be fixed on top (tiny
-> > leaks, etc). But some of my comments were of the form "no, do it total=
-ly
-> > differently". It may simply be too late for those ones, but let's see =
-if
-> > Matthew finds anything compelling in them.
->
-> I do not mind reverting the merge to 'next' to have an improved
-> version.  Your "do we really want to add a custom server based on
-> questionable codebase whose quality as a test-bed for real world
-> usage is dubious?" is a valid concern.
+On 2023-02-02 at 09:32:29, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> +[[STABILITY]]
+> +OUTPUT STABILITY
+> +----------------
+> +
+> +The output of 'git archive' is not guaranteed to be stable, and may
+> +change between versions.
+> +
+> +There are many valid ways to encode the same data in the tar format
+> +itself. For non-`tar` arguments to the `--format` option we rely on
+> +external tools (or libraries) for compressing the output we generate.
+> +
+> +The `tar` format contains the commit ID in the pax header (see the
+> +<<DESCRIPTION>> section above). A repository that's been migrated from
+> +SHA-1 to SHA-256 will therefore have different `tar` output for the
+> +"same" commit. See `extension.objectFormat` in linkgit:git-config[1].
+> +
+> +Instead of relying on the output of `git archive`, you should prefer
+> +to stick to git's own transport protocols, and e.g. validate releases
+> +with linkgit:git-tag[1]'s `--verify` option.
+> +
+> +Despite the output of `git archive` having never been promised to be
+> +stable, various users in the wild have come to rely on that being the
+> +case.
+> +
+> +Most notably, large hosting providers provide a way to download a
+> +given tagged release as a `git archive`. Some downstream tools then
+> +expect the content of that archive to be stable. When that's changed
+> +widespread breakage has been observed, see
+> +https://github.com/orgs/community/discussions/45830 for one such case.
+> +
+> +While we won't promise that the output won't change in the future, we
+> +are aware of these users, and will try to avoid changing it
+> +willy-nilly. Furthermore, we make the following promises:
+> +
+> +* The default gzip compression tool will continue to be gzip(1). If
+> +  you rely on this being e.g. GNU gzip for the purposes of stability,
+> +  it's up to you to ensure that its output is stable across
+> +  versions.
+> ++
+> +
+> +We in turn promise to not e.g. make the internal "git archive gzip"
+> +implementation the default, as it produces different ouput than
+> +gzip(1) in some case.
 
-Except.
+I think this is fine up to here.
 
-Except that this code base would have made for a fine base to potentially
-implement an HTTPS-based replacement for the aging and insecure
-git-daemon.
+> +* We will do our best not to change the "tar" output itself, but won't
+> +  promise that we're never going to change it.
+> ++
+> +If you must avoid using "git" itself for the tree validation, you
+> +should be checksumming the uncompressed "tar" output, not e.g. the
+> +compressed "tgz" output.
+> ++
 
-That code base (which is hardly as questionable codebase as you make it
-sound because it has been in use for years in a slightly different form)
-would have had the opportunity to mature in a relatively safe environment:
-our test suite. And eventually, once robust enough, it could have been
-extended to allow for easy and painless yet secure ad-hoc serving of Git
-repositories, addressing the security concerns around git-daemon.
+I don't think I want to state this, because it implies that the changes
+I made that broke kernel.org (making tar.umask apply to pax headers)
+wouldn't have been allowed.  We should probably just state that "we
+won't promise that the tar output won't change between versions". Maybe,
+"We won't change the tar output needlessly, but it may change from time
+to time."  That is, we won't be "let's change the format just to mix it
+up for users", but if there's a valuable patch that could be applied,
+then we might well take it.
 
-And now that we're throwing out that code we don't have that opportunity,
-making the goal to deprecate the git-daemon and replace it by something
-that is as easy to set up but talks HTTPS instead much, much harder to
-reach.
+As I said, it's my goal to provide more concrete guarantees in a future
+patch, probably this weekend.
 
-In addition, it causes a loss of test coverage because Apache is not
-available in all the setups where the "questionable" code would have had
-no problem being built and validating the credential code.
+> +* We promise that a given version of git will emit stable "tar" output
+> +  for the same tree ID (but not commit ID, see the discussion in the
+> +  <<DESCRIPTION>> section above).
 
-Windows, for example, will now go completely uncovered in CI regarding the
-new code.
+I think that section contradicts this.  The tree version uses the
+current timestamp, which would make the archive change based on the time
+of day.
 
-Ciao,
-Johannes
+> +While you shouldn't assume that different versions of git will emit
+> +the same output, you can assume (e.g. for the purposes of caching)
+> +that a given version's output is stable.
+
+Unfortunately, this isn't actually true if someone uses export-subst.
+That's because adding unrelated objects can increase the length of
+abbreviations, and then the tar contents can be different.  I've
+actually seen this in the wild.
+
+Modulo that, yes, I agree with this.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--W8jkwUYUKs8xJ3WJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY9uPhAAKCRB8DEliiIei
+gXwZAQCe+9nx4n3ag6RxgZlKj2oDpx1k7Uh1pBhfbK6TMBwg7AEAkxC/VIVEqftq
+53s2qtN5WYRMvV2jEz+2vOI1qCRElgQ=
+=AhnP
+-----END PGP SIGNATURE-----
+
+--W8jkwUYUKs8xJ3WJ--
