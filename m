@@ -2,139 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EE75C05027
-	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 23:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A8ACC61DA4
+	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 23:06:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbjBBXBn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Feb 2023 18:01:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33588 "EHLO
+        id S232970AbjBBXGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 18:06:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232593AbjBBXBk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2023 18:01:40 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FBFF7C72E
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 15:01:33 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 3D3E55A1E1;
-        Thu,  2 Feb 2023 23:01:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1675378892;
-        bh=I2wGKFRkfKYaJbkfhAZ6q1GWRGoT82go3MalJpswkbU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=GMzB/UP6UTcsjBZFNIE2I0B8S+zHn52W5ndxHohueFiMgMMX+8J6+LYMfLsXG5gbS
-         4LS64dJiJ6oBe0vSzIUlmm9tUcMIiFx7QDosdQ7UhT47H8ey3ATxUWO+V3ETm9Gxp9
-         keGtGZUL65jsEVooudlaastF/RBZzATcJwRcBOg51VxUFw8/MD2c+hyAqpTSDfOYxS
-         a7jgqUAx3FX2dG/hQSRDPb+wcxZcPJ3/yxiCdfcwW+BZMgZnRkAzjZFIWfkyltKFyD
-         kif2BIqxDxNRnrnrXhss77DUC8Th1YOENNI21Qh2whzNUeXAsGbYNiSd2TTB/M4GhD
-         GKSeRTVWAy+HaSuIrrxyh/UuAmkktKGJW1z04cWrAGFWqUE++6L1EE/9PMFDK+eCLb
-         cloT6nDCe+fI6HXeG240LcSlI7x2PrBuuBZXIroBDHkO4f4gl/jGad3Y4XnLsH6lhB
-         QmayU352YH790plT6jtSg2rsloWwuL+wHyylse6gg0Z3lAzuisQ
-Date:   Thu, 2 Feb 2023 23:01:31 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eli Schwartz <eschwartz93@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
- a possible solution
-Message-ID: <Y9xAv1reHJRj7iKA@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eli Schwartz <eschwartz93@gmail.com>,
-        Git List <git@vger.kernel.org>
-References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
- <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
- <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
- <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net>
- <230201.86pmatr9mj.gmgdl@evledraar.gmail.com>
- <Y9ry5Wxck4s/X2B+@tapette.crustytoothpaste.net>
- <xmqqh6w5x8i8.fsf@gitster.g>
+        with ESMTP id S232981AbjBBXGv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2023 18:06:51 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D203A7EFF2
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 15:06:47 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id n20-20020a17090aab9400b00229ca6a4636so7166462pjq.0
+        for <git@vger.kernel.org>; Thu, 02 Feb 2023 15:06:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eCACNoyb00ebyvY1SmsA/vfol1V6jjnOXWhCq6BilTQ=;
+        b=m7Zqeyl7/lTx0ZzZiAVThTg+ehcGVSYl1EsrbnjGHE+W+Z2AjZzxAprTJBeI9DnbaU
+         C/r+TxAWGbGuMNVw8jUD4NN/pkgusvltgAv8UMRt8XW9/kFgow8IZpV7IvdGlrxS6q7o
+         gXP+4zxK+ipVjIFlg4A2rZVsSV3PVmo05DHMXLh2tsi1D0uaraVtJ/skrxcfrYPg/DTN
+         qvuCZDlb8n4Wb/0BPt20QpMSHn0aoWymdIS+kQKh7FsXlABtvBV2AJiBkVe3dCa3HXio
+         x4YDkoiPfDMcACoFoFO94Zs5FVeATeAGcj8cOQHHp8zwbFYr7kEsS4aye7P+H58qXyGx
+         /Czw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=eCACNoyb00ebyvY1SmsA/vfol1V6jjnOXWhCq6BilTQ=;
+        b=Lttl/bJFnG0M9XHgA9cmERoaK8fMgBIjGeJMy+bNGqF+rSZkGk4IhnFqjkBczuQTBa
+         jtO+L5Mf/aTTn7+M7yx1PP6HxnLuGF/sA/+p57o8A+hj8LtdccTZV9B9Wi/6EuIDHCm0
+         Ty/UzrLg85EN0BHz8VrybZXbySmp4j0QjLZWAQdh2yhHqXKnxVtLAnuzgSD97mqjWThO
+         FTigrBSGuwKv9Rkr5tHBfGIJac77Zszi59IVu7+FC5XH+ExXVt9DDta9YNvFJ8Rh6UAQ
+         44vWVzzZ6JN5P/OMQnLGEFbENtqTPUkqFttjBt6XdMy69RdMFdWqw8kq4pdoucptuo/K
+         yFKw==
+X-Gm-Message-State: AO0yUKUuC5/1H5Mln3enqT+HmRJ9/LpcgVWywe2eulYEKiaz5G7UTNNr
+        AO3gXGWALqn/FHpZjQrvpXA=
+X-Google-Smtp-Source: AK7set+KxV3RVCG00Dj1bEc90tm1z0i/BLMZLOXQtgdSkvp2tuKPHfkOiJ7YXYRys2+r+MPLPeCx2Q==
+X-Received: by 2002:a17:902:e809:b0:196:40ff:97b5 with SMTP id u9-20020a170902e80900b0019640ff97b5mr8775623plg.40.1675379207139;
+        Thu, 02 Feb 2023 15:06:47 -0800 (PST)
+Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
+        by smtp.gmail.com with ESMTPSA id jj14-20020a170903048e00b0019607aeda8bsm204401plb.73.2023.02.02.15.06.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Feb 2023 15:06:46 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kousik Sanagavarapu <five231003@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH] merge: use reverse_commit_list() for list reversal
+References: <20230202165137.118741-1-five231003@gmail.com>
+Date:   Thu, 02 Feb 2023 15:06:46 -0800
+In-Reply-To: <20230202165137.118741-1-five231003@gmail.com> (Kousik
+        Sanagavarapu's message of "Thu, 2 Feb 2023 22:21:41 +0530")
+Message-ID: <xmqq1qn7sm49.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="2ruvbDxxm/CH/Wug"
-Content-Disposition: inline
-In-Reply-To: <xmqqh6w5x8i8.fsf@gitster.g>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Kousik Sanagavarapu <five231003@gmail.com> writes:
 
---2ruvbDxxm/CH/Wug
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Instead of manually doing an in-place list reversal, use the helper
+> function reverse_commit_list(), hence improving code readability.
 
-On 2023-02-01 at 23:37:19, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > I don't think a blurb is necessary, but you're basically underscoring
-> > the problem, which is that nobody is willing to promise that compression
-> > is consistent, but yet people want to rely on that fact.  I'm willing to
-> > write and implement a consistent tar spec and to guarantee compatibility
-> > with that, but the tension here is that people also want gzip to never
-> > change its byte format ever, which frankly seems unrealistic without
-> > explicit guarantees.  Maybe the authors will agree to promise that, but
-> > it seems unlikely.
->=20
-> Just to step back a bit, where does the distinction between
-> guaranteeing the tar format stability and gzip compressed bitstream
-> stability come from?  At both levels, the same thing can be
-> expressed in multiple different ways, I think, but spelling out how
-> exactly the compressor compresses is more involved than spelling out
-> how entries in a tar archive is ordered and each entry is expressed,
-> or something?
+But isn't reverse_commit_list() destructive in that it reuses the
+elements on the original list to create the reversed list?  The
+original code creates a new and separate list, so even when
+try_merge_strategy() is called many times, its "common" parameter
+given by the caller stays the same.
 
-Yes, at least with my understanding about how gzip and compression in
-general work.
+What happens in the second and subsequent call to
+try_merge_strategy() in your updated version?  The element pointed
+at by the "common" variable, which is the first element of the list
+in the first call, gets its .next member NULLed by calling
+reverse_commit_list().  The rest of the try_merge_strategy()
+function in its first call might work the same way as before (as
+long as it does not use "common" and only uses "reversed"; I did not
+check), but because the "common" the caller passed is now a single
+element list that consists of itself, and all the other elements are
+lost.  The caller uses that same "common" to call try_merge_strategy()
+again, with a different strategy.  This second call is getting a common
+ancestor list that was already broken by the first call, no?
 
-The tar format (and the pax format which builds on it) can mostly be
-restricted by explaining what data is to be included in the pax and tar
-headers and how it is to be formatted.  If we say, we will always write
-such and such information in the pax header and sort the keys, and we
-write such and such information in the tar header, then the format is
-completely deterministic, and we can make nice guarantees.
-
-My understanding about how Lempel-Ziv-based compression algorithms work
-is that there's a lot more freedom to decide how best to compress things
-and that there isn't always a logical obvious choice, but I will admit
-my understanding is relatively limited.  If someone thinks we can
-effectively succeed in supporting compression more than just relying on
-gzip, I would be delighted to be shown to be wrong.
-
-> > That would probably break things, because gzip is GPLv3, and we'd need
-> > to ship a much older GPLv2 gzip, which would probably differ from the
-> > current behaviour, and might also have some security problems.
->=20
-> Yup, security issues may make bit-for-bit-stability unrealistic.
-> IIRC, the last time we had discussion on this topic, we settled
-> on stability across the same version of Git (i.e. deterministic
-> result)?
-
-Yes, I think that's what we agreed.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---2ruvbDxxm/CH/Wug
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY9xAywAKCRB8DEliiIei
-gfI/AP0eAZvTzkUE3gaQcxE+yw5HzRGLfw3JtDTnU4Y6vJJgcQD9HQ8lVsl8MTtn
-DRoiIy7NU4BYfLnyhdFiGuOPaDR5Ow4=
-=YIvB
------END PGP SIGNATURE-----
-
---2ruvbDxxm/CH/Wug--
+> Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
+> ---
+>
+> This patch addresses the issue #1156(Use reverse_commit_list() in more
+> places) on gitgitgadget. I also would like to submit this patch as the microproject for
+> GSoC 2023.
+>
+>  builtin/merge.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 5900b81729..4503dbfeb3 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -736,7 +736,6 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+>  		struct commit *result;
+>  		struct commit_list *reversed = NULL;
+>  		struct merge_options o;
+> -		struct commit_list *j;
+>  
+>  		if (remoteheads->next) {
+>  			error(_("Not handling anything other than two heads merge."));
+> @@ -757,8 +756,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+>  		o.branch1 = head_arg;
+>  		o.branch2 = merge_remote_util(remoteheads->item)->name;
+>  
+> -		for (j = common; j; j = j->next)
+> -			commit_list_insert(j->item, &reversed);
+> +		reversed = reverse_commit_list(common);
+>  
+>  		hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
+>  		if (!strcmp(strategy, "ort"))
