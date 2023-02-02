@@ -2,141 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC701C05027
-	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 20:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 941ACC636D3
+	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 21:01:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232772AbjBBU4Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Feb 2023 15:56:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50880 "EHLO
+        id S233087AbjBBVBA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 16:01:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbjBBU4Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2023 15:56:24 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C07B98692
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 12:56:23 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id e6so3137623plg.12
-        for <git@vger.kernel.org>; Thu, 02 Feb 2023 12:56:23 -0800 (PST)
+        with ESMTP id S229710AbjBBVA6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2023 16:00:58 -0500
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAEC081B3F
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 13:00:57 -0800 (PST)
+Received: by mail-pf1-x433.google.com with SMTP id t17so2155180pfj.0
+        for <git@vger.kernel.org>; Thu, 02 Feb 2023 13:00:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4fNwTp/1t404HjDPRjS3E7TURZwJDVunwh8BtWyWwoI=;
-        b=heCOM9Q72OxXMq9ueB0EyqeObIp1Qc3DHt4DUbNIgXejgtBl7A5SustkwCUdXYsXc2
-         CRTDcftJb1FsNb5M3j+fo4+tR729uBC2Ws9NHBbvSbNJPdm+2fxG20BvipsjwR82GyfF
-         1aPTVPVH6tsn9488Y2rNlvyV3Jk/KKonVeM6dW+K2neECdstLdh5IKq16WDimvFJkLtC
-         C8/SzGqczLrz/ttbXa/KmqeJCu1BiCkQPRN2KUEGyvKJLzyLATB3JXaV0ckS4mOfUNyJ
-         UxJWNSVrGcNLT/vaEj6vxCnXKiOdB2PE0H9U6o1qus1F3ZY4dH1VNN7ldM8mGS7q6X7l
-         iE4w==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=M0qcf49yOb9QI9dzYtxbFAIQIqEahWvlaNkmAOJmTpQ=;
+        b=WCglMTf1EVPRyU4pITRQhS8++A/00i2aP4QtHPPxkpihSbuw5cNRFzqlY1JqaVcYhQ
+         aXdj9shFIPEX3gvloLbWzmVW0ZI1kBgP9uvCw2St9R5h+3msC5JDWUr3lWrSj8wk3yo1
+         o4o5YfX+e5i4fgeZknVYP/1b5r40l1ZwF6SFt7vc3W99iu/EO4KzWkM4Oj3YTq1yloly
+         ZBGl3LkRbf0uGVFwSiTpurDg8h47wWCHSLume5N62JT+oY4pvDx/uwXFf1t+30PNQGm1
+         t6pWOqXt1WJxwpJTDggOVpyqzC+YzbiEXWRdl9fOuCUV+yMPrk32/1JcUwj/mr7X4E93
+         fPtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4fNwTp/1t404HjDPRjS3E7TURZwJDVunwh8BtWyWwoI=;
-        b=eD+DiYMNilUaTR9MrWCZu5MGv3mOTNeNmmeRbSx7KyRZaDJv8mGvmKmnLFlAwQLZ3B
-         Q+0sd/mOk8uIG3lOQk1tdYxJtyqANhc1apyQ1yIh9S66FiIEbElCt3+uQgwUgvZB/EoB
-         76+hjtXblsk/kl9LgCFAjiYB39kOez8HlAeKaqMAhVp+1Q1EK9DGW1FsskH2PDtrKKRy
-         uSUnBQxY0Kd58b5B6qBo73WrXJNFSy+tETNN2RH9ooBmF9RJV+hk79Nopl2n3Hh2kP+N
-         vWM+zBTCX4wm/IurMimeLMTKh1D0JP+KibTZkhCSgHVT939MTs+s4cU7RSOuHzE96a4h
-         jDQQ==
-X-Gm-Message-State: AO0yUKWwRU1GCGHYW2cEh2P3rsUEf3KrMM21QWD7S3CNvvXK8vp17HRo
-        sK1snqvsk0nr1+hmtAQTenI=
-X-Google-Smtp-Source: AK7set+3o0R1kci8Kx3+Z9Iczcx/9Jgkjedd+Jn+9MQIUKt+U2/bkyTAZRqN0ThDCc/xKJjH6xjO7Q==
-X-Received: by 2002:a17:902:d482:b0:194:997d:7735 with SMTP id c2-20020a170902d48200b00194997d7735mr9105397plg.48.1675371383162;
-        Thu, 02 Feb 2023 12:56:23 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=M0qcf49yOb9QI9dzYtxbFAIQIqEahWvlaNkmAOJmTpQ=;
+        b=KQs3b3C0eD7457Fvv/5yZx1HifAS6LE0mhfcroWlUSmJDGTC5mRA0THi59GzizcKdN
+         w+LJ8JAkzT2+abl1NqRc8L/uFVpgOfKHF99sMHBSblCcZLEA8u5QU9Jw2hjnBfGaosPB
+         Uuii89Qgqd6sRCV8qX7s6Sb13C4j6zPb/zO8SDkUsuRHlN18VM0bRX6DDE7kw6qPL565
+         bl7tXCQy7WbKAfGdxW0ecO92yHrq/G1xNMC0yNYzIzI6wo3/FTHMHc/oO5Dd6bfJ+TjJ
+         zqXFmHNDcN+99rZBzsk+fKaGRhb1/zpkqdVCCL9WYQY/3b5jd9MMV8dHiZWieYoB24yU
+         I1bw==
+X-Gm-Message-State: AO0yUKWB+3Du3iGokqEUws/ldvkgIcSWQIVfmRi1LnEH3PILLtMl8H2O
+        LFo+bZ+/m1bokwm0xhFznew=
+X-Google-Smtp-Source: AK7set+AoLKvNyyzTHPS/3ztcm16PcvTZB5lEvBH+SwQQ4JkRezA8UaCtl9hnPSbPYSb1byo997LNg==
+X-Received: by 2002:a05:6a00:2150:b0:592:501c:8968 with SMTP id o16-20020a056a00215000b00592501c8968mr7020917pfk.24.1675371657185;
+        Thu, 02 Feb 2023 13:00:57 -0800 (PST)
 Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id 4-20020a170902ee4400b001885d15e3c1sm117091plo.26.2023.02.02.12.56.22
+        by smtp.gmail.com with ESMTPSA id y66-20020a626445000000b005821db4fd84sm111976pfb.131.2023.02.02.13.00.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Feb 2023 12:56:22 -0800 (PST)
+        Thu, 02 Feb 2023 13:00:56 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        Bernhard Reiter <ockham@raz.or.at>,
-        Remi Pommarel <repk@triplefau.lt>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 6/6] imap-send: correctly report "host" when using
- "tunnel"
-References: <patch-1.1-3bea1312322-20230201T225915Z-avarab@gmail.com>
-        <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
-        <patch-v2-6.6-686febb8cdc-20230202T093706Z-avarab@gmail.com>
-Date:   Thu, 02 Feb 2023 12:56:22 -0800
-In-Reply-To: <patch-v2-6.6-686febb8cdc-20230202T093706Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 2 Feb
- 2023 10:44:17
-        +0100")
-Message-ID: <xmqq5ycju6q1.fsf@gitster.g>
+To:     Shuqi Liang <cheskaqiqi@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/4]t4113: replace backslash with single quote
+References: <20230131224929.2018546-1-cheskaqiqi@gmail.com>
+        <20230202171821.10508-1-cheskaqiqi@gmail.com>
+        <20230202171821.10508-2-cheskaqiqi@gmail.com>
+Date:   Thu, 02 Feb 2023 13:00:56 -0800
+In-Reply-To: <20230202171821.10508-2-cheskaqiqi@gmail.com> (Shuqi Liang's
+        message of "Thu, 2 Feb 2023 12:18:18 -0500")
+Message-ID: <xmqq1qn7u6if.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Shuqi Liang <cheskaqiqi@gmail.com> writes:
 
-> Before [1] we'd force the "imap.host" to be set, even if the
-> "imap.tunnel" was set, and then proceed to not use the "host" for
-> establishing a connection, as we'd use the tunneling command.
->
-> However, we'd still use the "imap.host" if it was set as the "host"
-> field given to the credential helper, and in messages that were shared
-> with the non-tunnel mode, until a preceding commit made these OpenSSL
-> codepaths tunnel-only.
->
-> Let's always give "host=tunnel" to the credential helper when in the
-> "imap.tunnel" mode, and rephrase the relevant messages to indicate
-> that we're tunneling. This changes the existing behavior, but that
-> behavior was emergent and didn't make much sense. If we were using
-> "imap.tunnel" the value in "imap.host" might be entirely unrelated to
-> the host we're tunneling to. Let's not pretend to know more than we do
-> in that case.
->
-> 1. 34b5cd1fe9f (Don't force imap.host to be set when imap.tunnel is
->    set, 2008-04-22)
->
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+The example Andrei gave you, i.e.
+
+    Test scripts in file t4113-apply-ending.sh are written in old style,
+    where the test_expect_success command and test title are written on
+    separate lines ...
+
+was quite readable, but this
+
+> Change the old style '\'  to new style "'"
+
+is almost impossible to understand without knowing that this wanted
+to say what Andrei gave in a different way.  The title is worse.
+It's not replacing a backslash with a single quote, which would
+result in
+
+    -test_expect_success setup \
+    +test_expect_success setup '
+        'git update-index --add file'
+
+and obviously that is not what you did (or wanted to do).
+
+> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
 > ---
+>  t/t4113-apply-ending.sh | 16 +++++++++-------
+>  1 file changed, 9 insertions(+), 7 deletions(-)
 
-I agree with the above flow of thought in principle, but I wonder if
-"tunnel" is distinct enough to allow credential helpers to tell that
-they are dealing with a "tunnel", and not a host whose name happens
-to be "tunnel".  Would it help to use a token that can never be a
-valid hostname instead, I wonder?
-
-> @@ -1004,7 +1004,7 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
->  				if (!CAP(AUTH_CRAM_MD5)) {
->  					fprintf(stderr, "You specified "
->  						"CRAM-MD5 as authentication method, "
-> -						"but %s doesn't support it.\n", srvc->host);
-> +						"but tunnel doesn't support it.\n");
-
-Do we need some article before "tunnel"?
-
->  			if (CAP(NOLOGIN)) {
-> -				fprintf(stderr, "Skipping account %s@%s, server forbids LOGIN\n",
-> -					srvc->user, srvc->host);
-> +				fprintf(stderr, "Skipping account %s, server forbids LOGIN\n",
-> +					srvc->user);
->  				goto bail;
-
-OK.  We are talking to whatever "tunnel" is that was spawned to talk
-somewhere we do not have a way to know, so trying to say <this user>
-at <that host> is futile.  Makes sense.
-
-> -	if (!server.host) {
-> -		if (!server.tunnel) {
-> -			fprintf(stderr, "no imap host specified\n");
-> -			return 1;
-> -		}
-> -		server.host = "tunnel";
-> +	if (!server.host && !server.tunnel) {
-> +		fprintf(stderr, "no imap host specified\n");
-> +		return 1;
->  	}
-
-OK, this is a natural consequence that we no longer abuse
-server.host in the tunneling case.  Makes sense.
-
-Thanks.  Will queue.
+The patch text looks OK.
