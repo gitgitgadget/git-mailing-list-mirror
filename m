@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF22EC636D4
-	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 09:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19485C61DA4
+	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 09:53:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232054AbjBBJxP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Feb 2023 04:53:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34514 "EHLO
+        id S232096AbjBBJxQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 04:53:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232002AbjBBJxG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2023 04:53:06 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57CD376BE
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 01:52:59 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id bg26so949513wmb.0
-        for <git@vger.kernel.org>; Thu, 02 Feb 2023 01:52:59 -0800 (PST)
+        with ESMTP id S232022AbjBBJxH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2023 04:53:07 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C982859E5
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 01:53:01 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id bg26so949614wmb.0
+        for <git@vger.kernel.org>; Thu, 02 Feb 2023 01:53:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=adgCct04pNckz7JaSPhGY6S1ptijQH5JMhfdAkwEWEQ=;
-        b=VpCW1pyTzO3jXitiGg6Sb3CIYmvOOmevrilnICULit0I2QN42IS5WWX33vAxQsOYHx
-         VE3Q3mqCi+iUQ21xNm6ZDjPOJRIgw06Rgwb4O3/Zk/R0eNKT2NBGiSCNfvUawXW4KsYW
-         EE1U2Ydye9ZvoQWkenk1HB+qh0OxmaVF63rBiYNRsoIIXrPCRAVleedusQ+Ry2jFRub/
-         tb4FR9cypzdRanTWLiJf3KvhII4cVAU9SV7vHdiVVy3wnBUUpV5DedDfZlp/fN0sag3L
-         XNIAB10q14+qmDKqVcLu0itxtzladDz4NJbZ5J2nZarEtvZ6OWmpBm+mPFf7gsGQGqKA
-         sEEA==
+        bh=LOtckYi8qxV59qg3momEzfXfGro8Sqx42RrYuErg3SY=;
+        b=UephVU5IfxITva7Zys9/ZAw+lSuC0Pl3XAy6qp0hkJAVC45ZnBFNdAvg4O0xdanWhv
+         IkcsOBLD9/EF05l/FvmwX8c1XdT6GZQDTukkWesc3fhJTA5FSREIpxgGLedyPbWlxWXk
+         ajYxrdjM6ptcGjH3OaNtJ9+irzaX3eihrr+ZVL1IyiGdwJaZJARfhTj8vlQ6bhOe6Cod
+         TesftkUPt4dVZrpNyf+kNEAAITIIyI5bwi4/1LgjW0MVjHgBp+HaNfq9JJyS06mKkm2N
+         19l89gar+swCmZxry7qsHxjWcdeLjaidbV1V0eusnJJWTSrEVsRoY1/nW3SMhvWZbdQK
+         sTiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=adgCct04pNckz7JaSPhGY6S1ptijQH5JMhfdAkwEWEQ=;
-        b=Cw58cj2edEbHQEVcWManXfDPSgTP1MVUgLm6ZSz7wz/8qeIBFfInJWQEnux1IH7AaU
-         zheB9rC3fnj/39SgM+URcMbnzi3hDQXeodUoBrkR95JtJ/2Tub8wqB+8QjO6TuAlidoD
-         rSjM36cNeEU0sUAYkNqZiVj2xTAizcgn31DZcfhRueTAFK7vqVovbPyKv/UbRajvGyM1
-         nu0BdI2ETUivd3usoejlkKEIuFNn21mGxz1AsBN25lOcCq2zlyCU58NJCKkCsmmk/4mh
-         Qu0fyC5qhZjbhny3BISWQCq2utvEN8MC2NaagjvMeFrr08YNyrgPXQFtQmur87yQYYpy
-         AZJA==
-X-Gm-Message-State: AO0yUKXxdZzvYonmb1N7GNrxQHn3lJNi2EBFTWpaDggPAwQwUBlHTK01
-        IYXm2tXL5+/KLeAq2tyVPm8q27T3xDHXAv1H
-X-Google-Smtp-Source: AK7set/0h1L/5luZPOi2QE860zmRWBJHuj6YzXd9+yhu0/p8SP0A7EJUbjKi4HiEtii6szyB0SjVUg==
-X-Received: by 2002:a05:600c:4448:b0:3da:107e:a1e6 with SMTP id v8-20020a05600c444800b003da107ea1e6mr5186944wmn.17.1675331577482;
-        Thu, 02 Feb 2023 01:52:57 -0800 (PST)
+        bh=LOtckYi8qxV59qg3momEzfXfGro8Sqx42RrYuErg3SY=;
+        b=bJ0Gn/2+qeNMpRhO10nEg1lhnebJdyrjbZCtAZjk1ALxyaNdR/QFQVBonjqctAC2Ir
+         t05ikdOefscJxrIn5FuHmCSS2dmD+vMab9YAnIMqH/CP5sSsTWpKRGKmuHXn2VAtGCea
+         iodnPvGBtIBr8QToshqH5Leju1cM9/H7/bWfC8cG3eCMAEtruqb2iOf1+OryBs70vsI7
+         oJEZWNNoO/BweFBfdUOR6EhcLUV5SXrjZugKtOhceJga1GmvtOwXhRYYv/7WIonu6RyS
+         a3euGJstJHuRdE5GCl/JEKN4FxuroxGDA07+jyUQ1DV/jcmzLjySBYy/jMn+Cizw93mn
+         RbCQ==
+X-Gm-Message-State: AO0yUKXof5/g0p1rn/lBLB5H7Xb2F68ZNn7dKUnAIsE1EVxmc9sQ15RS
+        Ltgif8NAbJ0jALlQjkkb/fNVo2itP7rhRvfc
+X-Google-Smtp-Source: AK7set+hg9IOkzyooT3SK4KhS9L/Jfz7fQEs8rg5u4nC045h8TI/TrtxscOsMQ8YJxFdLz19/ipQMw==
+X-Received: by 2002:a05:600c:1f10:b0:3dc:4356:533c with SMTP id bd16-20020a05600c1f1000b003dc4356533cmr5194736wmb.5.1675331579613;
+        Thu, 02 Feb 2023 01:52:59 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i13-20020a1c540d000000b003db03725e86sm4356234wmb.8.2023.02.02.01.52.56
+        by smtp.gmail.com with ESMTPSA id i13-20020a1c540d000000b003db03725e86sm4356234wmb.8.2023.02.02.01.52.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Feb 2023 01:52:56 -0800 (PST)
+        Thu, 02 Feb 2023 01:52:58 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 02/19] bundle.c: don't leak the "args" in the "struct child_process"
-Date:   Thu,  2 Feb 2023 10:52:33 +0100
-Message-Id: <patch-v6-02.19-f0f1a388350-20230202T094704Z-avarab@gmail.com>
+Subject: [PATCH v6 04/19] clone: use free() instead of UNLEAK()
+Date:   Thu,  2 Feb 2023 10:52:35 +0100
+Message-Id: <patch-v6-04.19-0430c1fec1b-20230202T094704Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1392.g63e6d408230
 In-Reply-To: <cover-v6-00.19-00000000000-20230202T094704Z-avarab@gmail.com>
 References: <cover-v5-00.19-00000000000-20230118T120334Z-avarab@gmail.com> <cover-v6-00.19-00000000000-20230202T094704Z-avarab@gmail.com>
@@ -71,45 +71,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a leak that's been here since 7366096de9d (bundle API: change
-"flags" to be "extra_index_pack_args", 2021-09-05). If we can't verify
-the bundle, we didn't call child_process_clear() to clear the "args".
+Change an UNLEAK() added in 0c4542738e6 (clone: free or UNLEAK further
+pointers when finished, 2021-03-14) to use a "to_free" pattern
+instead. In this case the "repo" can be either this absolute_pathdup()
+value, or in the "else if" branch seen in the context the the
+"argv[0]" argument to "main()".
 
-But rather than adding an additional child_process_clear() call, let's
-verify the bundle before we start preparing the process we're going to
-spawn. If we fail to verify, we don't need to push anything to the
-child_process "args".
+We can only free() the value in the former case, hence the "to_free"
+pattern.
 
-Helped-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- bundle.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ builtin/clone.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/bundle.c b/bundle.c
-index 4ef7256aa11..9ebb10a8f72 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -627,6 +627,10 @@ int unbundle(struct repository *r, struct bundle_header *header,
- 	     enum verify_bundle_flags flags)
- {
- 	struct child_process ip = CHILD_PROCESS_INIT;
-+
-+	if (verify_bundle(r, header, flags))
-+		return -1;
-+
- 	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 5453ba5277f..ba82f5e4108 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -892,6 +892,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	int is_bundle = 0, is_local;
+ 	int reject_shallow = 0;
+ 	const char *repo_name, *repo, *work_tree, *git_dir;
++	char *repo_to_free = NULL;
+ 	char *path = NULL, *dir, *display_repo = NULL;
+ 	int dest_exists, real_dest_exists = 0;
+ 	const struct ref *refs, *remote_head;
+@@ -949,7 +950,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	path = get_repo_path(repo_name, &is_bundle);
+ 	if (path) {
+ 		FREE_AND_NULL(path);
+-		repo = absolute_pathdup(repo_name);
++		repo = repo_to_free = absolute_pathdup(repo_name);
+ 	} else if (strchr(repo_name, ':')) {
+ 		repo = repo_name;
+ 		display_repo = transport_anonymize_url(repo);
+@@ -1413,7 +1414,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	free(unborn_head);
+ 	free(dir);
+ 	free(path);
+-	UNLEAK(repo);
++	free(repo_to_free);
+ 	junk_mode = JUNK_LEAVE_ALL;
  
- 	/* If there is a filter, then we need to create the promisor pack. */
-@@ -638,8 +642,6 @@ int unbundle(struct repository *r, struct bundle_header *header,
- 		strvec_clear(extra_index_pack_args);
- 	}
- 
--	if (verify_bundle(r, header, flags))
--		return -1;
- 	ip.in = bundle_fd;
- 	ip.no_stdout = 1;
- 	ip.git_cmd = 1;
+ 	transport_ls_refs_options_release(&transport_ls_refs_options);
 -- 
 2.39.1.1392.g63e6d408230
 
