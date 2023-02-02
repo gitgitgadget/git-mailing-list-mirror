@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F50DC61DA4
-	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 13:28:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA67DC636D4
+	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 13:28:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231422AbjBBN2R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Feb 2023 08:28:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59274 "EHLO
+        id S232645AbjBBN2U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 08:28:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232297AbjBBN2J (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232452AbjBBN2J (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 2 Feb 2023 08:28:09 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 036648F252
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 05:27:39 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id m16-20020a05600c3b1000b003dc4050c94aso1380935wms.4
-        for <git@vger.kernel.org>; Thu, 02 Feb 2023 05:27:38 -0800 (PST)
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57E4E8C1F6
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 05:27:41 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id m16-20020a05600c3b1000b003dc4050c94aso1381001wms.4
+        for <git@vger.kernel.org>; Thu, 02 Feb 2023 05:27:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KxhlX7oriGNbj+RRhSBXIpRPnRGMYG9zf5rHSgVYDp4=;
-        b=a1J+LetvFQPZxpt79v1C2qRdp/DbyG7dLJ6QFw1RTjMFpgWC3G3zzCXCfuKeoCS6YR
-         vaJEV8fkHSieoKgvN2BaPhQ/BvgFnD5r5khNKXA61hZQc0gnfFPocV+LAeCDAyoNP3J/
-         Bis2BCmct2NNH35vGf8FRV8w8vcYX0xHTNZuEWZrtibfWOLa3khFdgNTZUvPjUYM6fiW
-         5J7z00zDoNAtzOK/Ia4LEqvFsMIy5ZHfofOLl7Me3+Nig+hZainYwSski9bfpvBhiz4s
-         AX5liAG7nYFy/l2xvewBOcSu9+ZYfi2mlcmNPw23RpWTc9jhD6nr6bjxRiCzLdTXwr4t
-         1JxQ==
+        bh=mdDbSHrPhjpMZN7ZFrZsb78p+pxp/qdpL2PZ2jCYbZw=;
+        b=Af0x4+5CAoTSb+Rm15vo3sPEWNguigdETNgfpjoXTWANx8OEnziXv3SzUa72NwrSzi
+         NcvhMwOzgTzKCSyN/HpIX728cmaX5z7tz9NkFQmGfQ/BXBUYKaHG/mrOud6bUsmKKkFR
+         S2oXsdEtUsA+UBdkGxbbBa/hENSnpvI/zF+tHd8VEi5zXoE6eKlql7ejWsdOy2W+nRCy
+         O5k2Ka3uv1B7uhjGEfhRMSAkOS67OyANkb5wP5kJoXRL3BcI1va4pLnJ7msbzw0PcJQr
+         aqfj3W0XfbdLZj5jqhhWUzXoGlaI7mXg7sqv97XwJyKgUFZ9+Zb8qRGk66YURZRJ1XW9
+         5sTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KxhlX7oriGNbj+RRhSBXIpRPnRGMYG9zf5rHSgVYDp4=;
-        b=FlOzuLqUIStZ3rbo9JaqsajLyqMBTtF2ok8n7Dn13bOGNn1sM0gH1pKKz0HFugIS4+
-         SHDEELcXyDDV0SnCdRZKc+LFSahVoSakNu57UrU+Z5pPBeButOVwRuAMmBtEIw7PcZc3
-         cPyLiApEo6C3Jlzk/v5KSCxxDfsxBUjNDg/GdZzmg6nNbUwowc6U0IBMuxxqzNh/ljod
-         hIZbfSJG9quv40OlAw429RhNnnSz7+z7UjyxEFpmMUYMQEHAJN4iGKXIOERX5Z6kWGsl
-         B936eXdcvcFTVXpX9rP6lGKAUjiDQoBuMfhGlwWBCFVqYfqdYlvu9mcl1jB42vM4u3ya
-         oPow==
-X-Gm-Message-State: AO0yUKXa3RjHOY6akBAGmABYBQnRv4NmkSJwJkFSvepftgJZLFpq5+Sk
-        bs9FgMnCATL5sJCW63yDofFIjjUQeLauZrku
-X-Google-Smtp-Source: AK7set9NWpAYyLe1ggW336MhF/m/lIXyUrd1Mj7hIGieL7cINszJCwZwwt04AhzNlyxgkRetcRT5TA==
-X-Received: by 2002:a05:600c:3d8a:b0:3dd:af7a:53ed with SMTP id bi10-20020a05600c3d8a00b003ddaf7a53edmr6165529wmb.11.1675344457128;
-        Thu, 02 Feb 2023 05:27:37 -0800 (PST)
+        bh=mdDbSHrPhjpMZN7ZFrZsb78p+pxp/qdpL2PZ2jCYbZw=;
+        b=qzvfZsSYlfctogII//3H9Bxmo15pLE/j/TLcmbfnmm6Zv0noVqiUD8bhaa8Sic0MVz
+         7wxNaZ2kcxHncnXViJ5iZVOkj2tszg8V8QbgWZQ+nmq/KAcGe6YDmNe19Md1xPhJx488
+         wpdLIGgOGjwJ7SeTnXpSd31+aCwInqSv7PsELZKYNmchLgrQcy2ZRdhjmBbgF0EVGhCG
+         LBjRr/UBYwgJ0o/OiIWLk3msZsjTKza4QBeBti8qxDikErXUJZ6bRfUQP2qclGzpruXR
+         ZnwvXodn0YS7CZCpW8S3HdQyqkBEEAc1AMzXRzUk3njhqCuF43PGFfE2fWeVdvWJJdzf
+         NY6g==
+X-Gm-Message-State: AO0yUKXOvGXmc9vx6pvF/YElo2+9g2rkrwCPnRB9rwQhOZn0wsNRW1LN
+        O9P5NwlCeJsa/Nke/WzCXv41lbZahWyx4TZA
+X-Google-Smtp-Source: AK7set9/UzUs7Wqr7vCiVSejZTjWnCwAeqk2i/3LoVR7MzdreNOmDyLM1OGJpsgc23V5/UGIlRf9Rg==
+X-Received: by 2002:a05:600c:cca:b0:3db:bc5:b2ae with SMTP id fk10-20020a05600c0cca00b003db0bc5b2aemr5472403wmb.41.1675344459474;
+        Thu, 02 Feb 2023 05:27:39 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id z18-20020a1c4c12000000b003dc48a2f997sm4306052wmf.17.2023.02.02.05.27.35
+        by smtp.gmail.com with ESMTPSA id z18-20020a1c4c12000000b003dc48a2f997sm4306052wmf.17.2023.02.02.05.27.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Feb 2023 05:27:36 -0800 (PST)
+        Thu, 02 Feb 2023 05:27:38 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         zweiss@equinix.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 7/9] config API users: test for *_get_value_multi() segfaults
-Date:   Thu,  2 Feb 2023 14:27:19 +0100
-Message-Id: <patch-v4-7.9-7fc91eaf747-20230202T131155Z-avarab@gmail.com>
+Subject: [PATCH v4 9/9] for-each-repo: with bad config, don't conflate <path> and <cmd>
+Date:   Thu,  2 Feb 2023 14:27:21 +0100
+Message-Id: <patch-v4-9.9-c7a5f5b4133-20230202T131155Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1397.g8c8c074958d
 In-Reply-To: <cover-v4-0.9-00000000000-20230202T131155Z-avarab@gmail.com>
 References: <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com> <cover-v4-0.9-00000000000-20230202T131155Z-avarab@gmail.com>
@@ -76,155 +76,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As we'll discuss in the subsequent commit these tests all
-show *_get_value_multi() API users unable to handle there being a
-value-less key in the config, which is represented with a "NULL" for
-that entry in the "string" member of the returned "struct
-string_list", causing a segfault.
+Fix a logic error in 4950b2a2b5c (for-each-repo: run subcommands on
+configured repos, 2020-09-11). Due to assuming that elements returned
+from the repo_config_get_value_multi() call wouldn't be "NULL" we'd
+conflate the <path> and <command> part of the argument list when
+running commands.
 
-These added tests exhaustively test for that issue, as we'll see in a
-subsequent commit we'll need to change all of the API users
-of *_get_value_multi(). These cases were discovered by triggering each
-one individually, and then adding these tests.
+As noted in the preceding commit the fix is to move to a safer
+"*_string_multi()" version of the *_multi() API. This change is
+separated from the rest because those all segfaulted. In this change
+we ended up with different behavior.
+
+When using the "--config=<config>" form we take each element of the
+list as a path to a repository. E.g. with a configuration like:
+
+	[repo] list = /some/repo
+
+We would, with this command:
+
+	git for-each-repo --config=repo.list status builtin
+
+Run a "git status" in /some/repo, as:
+
+	git -C /some/repo status builtin
+
+I.e. ask "status" to report on the "builtin" directory. But since a
+configuration such as this would result in a "struct string_list *"
+with one element, whose "string" member is "NULL":
+
+	[repo] list
+
+We would, when constructing our command-line in
+"builtin/for-each-repo.c"...
+
+	strvec_pushl(&child.args, "-C", path, NULL);
+	for (i = 0; i < argc; i++)
+		strvec_push(&child.args, argv[i]);
+
+...have that "path" be "NULL", and as strvec_pushl() stops when it
+sees NULL we'd end with the first "argv" element as the argument to
+the "-C" option, e.g.:
+
+	git -C status builtin
+
+I.e. we'd run the command "builtin" in the "status" directory.
+
+In another context this might be an interesting security
+vulnerability, but I think that this amounts to a nothingburger on
+that front.
+
+A hypothetical attacker would need to be able to write config for the
+victim to run, if they're able to do that there's more interesting
+attack vectors. See the "safe.directory" facility added in
+8d1a7448206 (setup.c: create `safe.bareRepository`, 2022-07-14).
+
+An even more unlikely possibility would be an attacker able to
+generate the config used for "for-each-repo --config=<key>", but
+nothing else (e.g. an automated system producing that list).
+
+Even in that case the attack vector is limited to the user running
+commands whose name matches a directory that's interesting to the
+attacker (e.g. a "log" directory in a repository). The second
+argument (if any) of the command is likely to make git die without
+doing anything interesting (e.g. "-p" to "log", there being no "-p"
+built-in command to run).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4202-log.sh                 | 11 +++++++++++
- t/t5310-pack-bitmaps.sh        | 16 ++++++++++++++++
- t/t7004-tag.sh                 | 12 ++++++++++++
- t/t7413-submodule-is-active.sh | 12 ++++++++++++
- t/t7900-maintenance.sh         | 23 +++++++++++++++++++++++
- 5 files changed, 74 insertions(+)
+ builtin/for-each-repo.c  |  2 +-
+ t/t0068-for-each-repo.sh | 13 +++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 2ce2b41174d..e4f02d8208b 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -835,6 +835,17 @@ test_expect_success 'log.decorate configuration' '
+diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
+index 224164addb3..ce8f7a99086 100644
+--- a/builtin/for-each-repo.c
++++ b/builtin/for-each-repo.c
+@@ -46,7 +46,7 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
+ 	if (!config_key)
+ 		die(_("missing --config=<config>"));
  
+-	err = repo_config_get_value_multi(the_repository, config_key, &values);
++	err = repo_config_get_string_multi(the_repository, config_key, &values);
+ 	if (err < 0)
+ 		usage_msg_optf(_("got bad config --config=%s"),
+ 			       for_each_repo_usage, options, config_key);
+diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
+index 6b51e00da0e..4b90b74d5d5 100755
+--- a/t/t0068-for-each-repo.sh
++++ b/t/t0068-for-each-repo.sh
+@@ -46,4 +46,17 @@ test_expect_success 'error on bad config keys' '
+ 	test_expect_code 129 git for-each-repo --config="'\''.b"
  '
  
-+test_expect_failure 'parse log.excludeDecoration with no value' '
-+	cp .git/config .git/config.orig &&
-+	test_when_finished mv .git/config.orig .git/config &&
-+
++test_expect_success 'error on NULL value for config keys' '
 +	cat >>.git/config <<-\EOF &&
-+	[log]
-+		excludeDecoration
++	[empty]
++		key
 +	EOF
-+	git log --decorate=short
++	cat >expect <<-\EOF &&
++	error: missing value for '\''empty.key'\''
++	EOF
++	test_expect_code 129 git for-each-repo --config=empty.key 2>actual.raw &&
++	grep ^error actual.raw >actual &&
++	test_cmp expect actual
 +'
 +
- test_expect_success 'decorate-refs with glob' '
- 	cat >expect.decorate <<-\EOF &&
- 	Merge-tag-reach
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index 7d8dee41b0d..0306b399188 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -404,6 +404,22 @@ test_bitmap_cases () {
- 		)
- 	'
- 
-+	test_expect_failure 'pack.preferBitmapTips' '
-+		git init repo &&
-+		test_when_finished "rm -rf repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
-+			test_commit_bulk --message="%s" 103 &&
-+
-+			cat >>.git/config <<-\EOF &&
-+			[pack]
-+				preferBitmapTips
-+			EOF
-+			git repack -adb
-+		)
-+	'
-+
- 	test_expect_success 'complains about multiple pack bitmaps' '
- 		rm -fr repo &&
- 		git init repo &&
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 9aa1660651b..f343551a7d4 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1843,6 +1843,18 @@ test_expect_success 'invalid sort parameter in configuratoin' '
- 	test_must_fail git tag -l "foo*"
- '
- 
-+test_expect_failure 'version sort handles empty value for versionsort.{prereleaseSuffix,suffix}' '
-+	cp .git/config .git/config.orig &&
-+	test_when_finished mv .git/config.orig .git/config &&
-+
-+	cat >>.git/config <<-\EOF &&
-+	[versionsort]
-+		prereleaseSuffix
-+		suffix
-+	EOF
-+	git tag -l --sort=version:refname
-+'
-+
- test_expect_success 'version sort with prerelease reordering' '
- 	test_config versionsort.prereleaseSuffix -rc &&
- 	git tag foo1.6-rc1 &&
-diff --git a/t/t7413-submodule-is-active.sh b/t/t7413-submodule-is-active.sh
-index 7cdc2637649..bfe27e50732 100755
---- a/t/t7413-submodule-is-active.sh
-+++ b/t/t7413-submodule-is-active.sh
-@@ -51,6 +51,18 @@ test_expect_success 'is-active works with submodule.<name>.active config' '
- 	test-tool -C super submodule is-active sub1
- '
- 
-+test_expect_failure 'is-active handles submodule.active config missing a value' '
-+	cp super/.git/config super/.git/config.orig &&
-+	test_when_finished mv super/.git/config.orig super/.git/config &&
-+
-+	cat >>super/.git/config <<-\EOF &&
-+	[submodule]
-+		active
-+	EOF
-+
-+	test-tool -C super submodule is-active sub1
-+'
-+
- test_expect_success 'is-active works with basic submodule.active config' '
- 	test_when_finished "git -C super config submodule.sub1.URL ../sub" &&
- 	test_when_finished "git -C super config --unset-all submodule.active" &&
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 823331e44a0..d82eac6a471 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -524,6 +524,29 @@ test_expect_success 'register and unregister' '
- 	git maintenance unregister --config-file ./other --force
- '
- 
-+test_expect_failure 'register with no value for maintenance.repo' '
-+	cp .git/config .git/config.orig &&
-+	test_when_finished mv .git/config.orig .git/config &&
-+
-+	cat >>.git/config <<-\EOF &&
-+	[maintenance]
-+		repo
-+	EOF
-+	git maintenance register
-+'
-+
-+test_expect_failure 'unregister with no value for maintenance.repo' '
-+	cp .git/config .git/config.orig &&
-+	test_when_finished mv .git/config.orig .git/config &&
-+
-+	cat >>.git/config <<-\EOF &&
-+	[maintenance]
-+		repo
-+	EOF
-+	git maintenance unregister &&
-+	git maintenance unregister --force
-+'
-+
- test_expect_success !MINGW 'register and unregister with regex metacharacters' '
- 	META="a+b*c" &&
- 	git init "$META" &&
+ test_done
 -- 
 2.39.1.1397.g8c8c074958d
 
