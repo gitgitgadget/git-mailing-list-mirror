@@ -2,164 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B524C05027
-	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 16:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40182C61DA4
+	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 16:23:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231855AbjBBQRR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Feb 2023 11:17:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53912 "EHLO
+        id S229684AbjBBQXZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 11:23:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbjBBQRN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2023 11:17:13 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B98472B5
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 08:17:12 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id a2so1910030wrd.6
-        for <git@vger.kernel.org>; Thu, 02 Feb 2023 08:17:12 -0800 (PST)
+        with ESMTP id S230372AbjBBQXV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2023 11:23:21 -0500
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0D4428858
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 08:22:49 -0800 (PST)
+Received: by mail-qt1-x835.google.com with SMTP id h24so2382578qta.12
+        for <git@vger.kernel.org>; Thu, 02 Feb 2023 08:22:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:subject
-         :reply-to:user-agent:mime-version:date:message-id:from:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qNT70jL516fZ5jRvHoGcKkxMxknMofCoYyzPSUVaVjk=;
-        b=mIzORinyuOTEam6UwEJ9eqKy6HLdIeCVy0wTP3BOsgm7UbCWYd43tf6IOQNyQu7g6w
-         Mt2Ias50zMbFqDSTImDM2VGNkJ6Zkv4zMe6Zp7Oxkoy/LaEOHjkCkAWOAo1hpk33oCVS
-         3w2L7QMF9iRsfNvAqJiNsoxDs+2T2qYsh+neBgGLw2tR32Nix/SLofuxCkj5+Wrk0zfH
-         +jhIavbp9MZ8XNStZI3jVEMlPI+lPxrPA7Si3E7Pffe/MEHkt1oWDzcokjJt6nTHsNTh
-         Txb9/P14QrIVqNhxuBHyz8+uE28s2p7sSnfACOj8QK1fw7ux2+wsR/sYbV+zJZyfLYUj
-         jNlw==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VbiYnTxaPpoHgtHheJjb5fmc3yFioCD18/02KHwg3Nw=;
+        b=d87GVLDwI2RviHCgvO2MXRdqqc6Kyca+xDhAleIU4DsIPf/BXxRiY+8TL2uQE6l2Yg
+         dr8MNc5drGt2dKQN/xmgvUfN4zemRrV3LrkXcTd6EH/MC8zpQZGAYCmDay85HYE3k8TG
+         nTUqSOYj1OhR5aJpMNQeYV2uL+DuBg6GDhfoNx+LQeFv/4GQLg34G6dVzpL1l0rOUtVb
+         zV6ifJHU8NqpOnT6bq5FjgwRLyPITbQZ30RZt2wqR7Jmr76nlvL62PzI/uDo0GR8oLjw
+         1XWyrNZRZx4qQzbXsjT6TzXoAb2QZbWtKgfvG12tXBuFDtRMfnRBGz0mP4aLguJ53yRV
+         TKCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:subject
-         :reply-to:user-agent:mime-version:date:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qNT70jL516fZ5jRvHoGcKkxMxknMofCoYyzPSUVaVjk=;
-        b=m32YvC23W7D0ufxwDV6OxSl4UhX2nr/B6oqcUedlKFM6gL8Q4Vpf+wJ2JNSqoYRzJ4
-         xuGWJNUF3674fvOBIqK8T7JZpaLnApwPqUazPJWoGmMuP/POKCjGk7l3/0lMkWZJvGO6
-         qiPOagfPVW7l4n2/pYb8ZSEGgF1nPFwKXuVtryd70Q7wQwwdwbUfV0FzIDmBNF5BA8vI
-         ShpV5DVOni5xDC5rXxj4/ZgtB/60fGJRdqe1cAUHrwtZ/09Hibtz1XjQr3A34/v+ikk9
-         MaGuUatI2xc/rue2KeqPKrdL028Qs22ujXN6c/3pJbjzGSRtLlPh9/tWogCblcJ9Qu5J
-         BgHQ==
-X-Gm-Message-State: AO0yUKW6hXSRfl2OJZGo0bz0fwLwSEsdc7ULL6zlxKMPaX5RgKN/ycau
-        kTKdV7tue83HwmH2s1PFBcc=
-X-Google-Smtp-Source: AK7set9q6YpgGFTTQ0BvcJTE+rGjrxbJiJbECHjuj4cWfDcZ+DOKIdpO/wSmTkTgfXUzGJbeNiL1mQ==
-X-Received: by 2002:a5d:4c48:0:b0:2be:184a:5d5c with SMTP id n8-20020a5d4c48000000b002be184a5d5cmr5287914wrt.59.1675354631019;
-        Thu, 02 Feb 2023 08:17:11 -0800 (PST)
-Received: from [192.168.1.212] ([90.248.183.175])
-        by smtp.gmail.com with ESMTPSA id r6-20020adff106000000b002bfe05bf6dcsm15284026wro.88.2023.02.02.08.17.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Feb 2023 08:17:10 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <771a98ca-9540-ad4e-dfba-9d304e1dff09@dunelm.org.uk>
-Date:   Thu, 2 Feb 2023 16:17:09 +0000
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VbiYnTxaPpoHgtHheJjb5fmc3yFioCD18/02KHwg3Nw=;
+        b=ub1o5+JzcDs7uGU9eSkPVGRAdudNs2bPwKPKvBoEZ9JbMFceSvCtwUEcmQqfdh+84w
+         65sFnS69DHf1U9R+mZL4zoEoZBMX61vZm3V5OhkxiYoWIFrZWFDk0v0xkCQulVcxQctZ
+         dulK65539Y1Mfk8jXqZKQJgofRzXunstOxgj1NgzF3UWnjZpcTCOKSTy8DuYl0Flazw5
+         aVlKQdEfztsEviGwCcalENNe5IwVM5U1LjabqmzbinAa0QCTwL+dtDZKY/nt8kYT8ZT+
+         JLr1I4Fu8gqpMwYfvEYnizL9XGbAzMU88cewJAE+PR4PVSesYdXJp70eVnds50xtzIcm
+         wcEA==
+X-Gm-Message-State: AO0yUKUnsJ1c943sVbBLsrgnvLNp6P3PfWw1oKkgBjrIfw0vkzxKkzrO
+        i3EvyfZBS25SXWoO/4NUU+fmjS1S+XGeEFY0EgA=
+X-Google-Smtp-Source: AK7set97Ca0dd1XPEgtjJEl3gsXHFQl0u0JCqpAMiWDAcGik5WqnQLAajkqpiV2W2MUZ3zRV8jZ10sf2Qx3MIRrLvcs=
+X-Received: by 2002:a05:622a:1ba9:b0:3b4:6444:546b with SMTP id
+ bp41-20020a05622a1ba900b003b46444546bmr624590qtb.295.1675354968572; Thu, 02
+ Feb 2023 08:22:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/9] git archive: use gzip again by default, document
- output stabilty
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eli Schwartz <eschwartz93@gmail.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        =?UTF-8?Q?Michal_Such=c3=a1nek?= <msuchanek@suse.de>,
-        "Raymond E . Pasco" <ray@ameretat.dev>,
-        demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>
-References: <230131.86357rrtsg.gmgdl@evledraar.gmail.com>
- <cover-0.9-00000000000-20230202T093212Z-avarab@gmail.com>
-In-Reply-To: <cover-0.9-00000000000-20230202T093212Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <CALnO6CAZtwfGY4SYeOuKqdP9+e_0EYNf4F703DRQB7UUfd_bUg@mail.gmail.com>
+ <CANgJU+X_e0owKC3uWPaA_gVP54syF1+MJ-cTn+fjPrNS5LDsMA@mail.gmail.com> <Y9rv29c0dYUAYx8B@coredump.intra.peff.net>
+In-Reply-To: <Y9rv29c0dYUAYx8B@coredump.intra.peff.net>
+From:   demerphq <demerphq@gmail.com>
+Date:   Thu, 2 Feb 2023 17:22:37 +0100
+Message-ID: <CANgJU+XNLqf0E2+YC8yxtRPVh=mevc3P0eeye2_nx=ULB2iVWw@mail.gmail.com>
+Subject: Re: grep: fix multibyte regex handling under macOS (1819ad327b7a1f19540a819813b70a0e8a7f798f)
+To:     Jeff King <peff@peff.net>
+Cc:     "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
+On Thu, 2 Feb 2023 at 00:03, Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Feb 01, 2023 at 05:09:33PM +0100, demerphq wrote:
+>
+> > > Failure (using Zsh to produce the characters; I think there's a Bash
+> > > equivalent):
+> > > ```
+> > > # git diff --word-diff --word-diff-regex=3D$'[\xc0-\xff][\x80-\xbf]+'
+> > > fatal=C2=AC=E2=80=A0: invalid regular expression: [=C2=BF-=CB=87][=C3=
+=84-=C3=B8]+
+> > > ```
+> >
+> > FWIW that looks pretty weird to me, like the escapes in the charclass
+> > were interpolated before being fed to the regex engine. Are you sure
+> > you tested the right thing?
+>
+> I think the point is that he is feeding a raw \xc0 byte (not the escape
+> sequence) to the regex engine, which is bogus UTF8. And the internal
+> userdiff drivers do the same thing. They contain "[\xc0-\xff]", and
+> those "\x" will be interpolated by the compiler into their actual bytes.
 
-On 02/02/2023 09:32, Ævar Arnfjörð Bjarmason wrote:
-> As reported in
-> https://lore.kernel.org/git/a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com/
-> changing the default "tgz" output method of from "gzip(1)" to our
-> internal "git archive gzip" (using zlib ) broke things for users in
-> the wild that assume that the "git archive" output is stable, most
-> notably GitHub: https://github.com/orgs/community/discussions/45830
- >
-> Leaving aside the larger question of whether we're going to promise
-> output stability for "git archive" in general, the motivation for that
-> change was to have a working compression method on systems that lacked
-> a gzip(1).
+Thanks, that was the bit that threw me off. I had completely forgotten
+that C supports \x escapes :-(. The Perl internals and regex engine is
+where I do most of my C hacking and it uses octal exclusively AFAIK.
+(I guess it uses octal because of the "where does the escape end"
+problem that C seems to have with hex escapes). So I had assumed that
+something else, or the regex engine itself was interpolating them. I
+appreciate that you took the time to set me straight.
 
-As I recall the reduction in cpu time used to create a compressed 
-archive was a factor in making it the default.
+> So the regex engine is complaining that it is getting bytes with high
+> bits set, but that are not part of a multi-byte character. I.e., it is
+> not happy to do bytewise matching, but really wants valid UTF8 in the
+> expression.
 
-> As the disruption of changing the default isn't worth it, let's use
-> gzip(1) again by default, and only fall back on the new "git archive
-> gzip" if it isn't available.
+Yeah, that was my first thought too, but as I said above the hex
+escapes threw me off.
 
-Playing devil's advocate for a moment as we're not going to promise that 
-the compressed output of "git archive" will be stable in the future 
-perhaps we should use this breakage as an opportunity to highlight that 
-to users and to advertize the config setting that allows them to use 
-gzip for compressing archives. Reverting the change gives the misleading 
-impression that we're making a commitment to keeping the output stable. 
-The focus of this thread seems to be the problems relating to github 
-which they have already addressed.
+> glibc's regex engine seems OK with this. Try:
+>
+>   git grep $'[\xc0-\xff]'
+>
+> in git.git, and it will find lots of multi-byte characters. But pcre,
+> for example, is not:
+>
+>   $ git grep -P $'[\xc0-\xff]'
+>   fatal: command line, '[<C0>-<FF>]': UTF-8 error: byte 2 top bits not 0x=
+80
 
-I think there is general agreement that it is not practical to promise 
-that the compressed output of "git archive" is stable so maybe it is 
-better to make that clear now while users can work around it in the 
-short term with a config setting rather than waiting until we're faced 
-with some security or other issue that forces a change to the output 
-which users cannot work around so easily.
+I expect that has something to do with how you are configuring PCRE,
+and that with a slightly different config it would be fine with this.
 
-Best Wishes
+> There you really want to feed the literal escapes (obviously dropping
+> the '$ shell interpolation is a better solution, but for the sake of
+> illustration):
+>
+>   git grep -P $'[\\xc0-\\xff]'
+>
+> But I don't think we can rely on the libc BRE supporting "\x" in
+> character classes. Glibc certainly doesn't. I'm not sure what the
+> portable solution is.
 
-Phillip
+I've been lurking watching some of the regex discussion on the list
+and personally I think it is asking for trouble to use "whatever regex
+engine is traditional in a given environment" instead of just choosing
+a good open source engine and using it consistently everywhere.  I
+don't really buy the arguments I have seen to justify a policy of "use
+the standard library version"; regex engines vary widely in
+performance and implementation and feature set, and even the really
+good ones do not entirely agree on every semantic[1], so if you don't
+standardize you will be forever dealing with bugs related to those
+differences.
 
+I think the git project should choose the feature set[2] it thinks are
+important, and then choose a regex engine that provides those features
+and is well supported, and then use it consistently everywhere that
+git needs to do regex based matching. Anything else is asking for
+trouble at some level or another.
 
-> The later parts of this series then document and test for the output
-> stability of the command.
-> 
-> We're not promising anything new there, except that we now promise
-> that we're going to use "gzip" as the default compressor, but that
-> it's up to that command to be stable, should the user desire output
-> stability.
-> 
-> The documentation discusses the various caveats involved, suggests
-> alternatives to checksumming compressed archives, but in the end notes
-> what's been the policy so far: We're not promising that the "tar"
-> output is going to be stable.
-> 
-> The early parts of this series (1-2/9) are clean-up for existing
-> config drift, as later in the series we'll otherwise need to change
-> the divergent config documentation in two places.
-> 
-> CI & branch for this at:
-> https://github.com/avar/git/tree/avar/archive-internal-gzip-not-the-default
-> 
-> Ævar Arnfjörð Bjarmason (9):
->    archive & tar config docs: de-duplicate configuration section
->    git config docs: document "tar.<format>.{command,remote}"
->    archiver API: make the "flags" in "struct archiver" an enum
->    archive: omit the shell for built-in "command" filters
->    archive-tar.c: move internal gzip implementation to a function
->    archive: use "gzip -cn" for stability, not "git archive gzip"
->    test-lib.sh: add a lazy GZIP prerequisite
->    archive tests: test for "gzip -cn" and "git archive gzip" stability
->    git archive docs: document output non-stability
-> 
->   Documentation/config/tar.txt           | 29 +++++++-
->   Documentation/git-archive.txt          | 96 +++++++++++++++++++-------
->   archive-tar.c                          | 78 ++++++++++++++-------
->   archive.h                              | 11 +--
->   t/t5000-tar-tree.sh                    |  2 -
->   t/t5005-archive-stability.sh           | 70 +++++++++++++++++++
->   t/t5562-http-backend-content-length.sh |  2 -
->   t/test-lib.sh                          |  4 ++
->   8 files changed, 231 insertions(+), 61 deletions(-)
->   create mode 100755 t/t5005-archive-stability.sh
-> 
+Cheers,
+yves
+[1] Leaving aside advanced features, even something as simple as
+alternation can vary by engine.  Consider "foo"=3D~/f|fo|foo/. Some
+regex engines will match "foo", and some will match "f", depending on
+whether they implement "longest match" (as most NFA/DFA engines do),
+or if they implement "leftmost longest match" (as Perl and other
+backtracking engines tend to do).
+
+[2] Personally I think that features like recursive patterns, named
+capture, negative and positive lookahead and lookbehind and branch
+reset are so useful that it would be wise to choose an engine that
+supports them, but some might argue for other priorities, performance
+being a likely candidate.
+
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
