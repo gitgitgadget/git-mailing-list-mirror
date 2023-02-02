@@ -2,89 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB9D0C05027
-	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 20:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FA12C61DA4
+	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 20:48:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232892AbjBBUnn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Feb 2023 15:43:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40890 "EHLO
+        id S233079AbjBBUsT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 15:48:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232893AbjBBUnk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2023 15:43:40 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2F2AA24A
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 12:43:15 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id j5so3016883pjn.5
-        for <git@vger.kernel.org>; Thu, 02 Feb 2023 12:43:15 -0800 (PST)
+        with ESMTP id S233129AbjBBUr5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2023 15:47:57 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6AAF1F91E
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 12:47:41 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id lu11so9646151ejb.3
+        for <git@vger.kernel.org>; Thu, 02 Feb 2023 12:47:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VdXE2ImqxG63waGBHNih9+J5wJ7B7e9EZJi9670W4ts=;
-        b=WFV+gOJn7aojTZMmjLv6LuL7I1+8oENoVJTiWygTh9v3w2IaEzi/EHPGXor7n85vWC
-         9n3iRR57kq6Zt0ShyMn/xJVLb0OdVoSLGihEsbJsPXT7EQb+dCRRlZUpZp6J4cA8t7qZ
-         s0urjWLD2aG3rM0WCAPl1bsWU+cig0skEOfkiOoqZD/7/eOW9++I4lPsuAobwY4MGNG+
-         I585x2R2BcWvbJS1SAwpVE6hOpAClr6upZMMRnl22rxBjoVtkGjNWXGeLUWJ8jMjLlS2
-         7+IEkzeu8CsMybr6UwdWduudpldyHRQTbBk9qCZjGZy+eQ/3BpvD8ThRkhCtPM6NoduF
-         6UCw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qDX57KqkGXkCbM6IQ9rwx4xcxzwqrUG+msYwxGXJkQo=;
+        b=et+csyvYYuWl1DgOZ+KcykW8fT1JbLaZszKRHpbuSOdo6Vt70z4W6lBukzaWOrlnRN
+         vUkai3nv9RUXW423+ORGGz57dq3CJnymqXmlE9XHE3tWMwaUqtImVl4gTA37UWDtvVFS
+         LWHnpiFuvNYkcUykkXVSzvsYcD+HHmS9dwdSTg3WXQ5/FfpCM4WWT1p2WNvFuP6VQ92O
+         KiCsuTG54K0oo9jUVnK9n2lDCPgITe60ORIhKbHZQv9YWvvgBESLDJzJ+ymT9YIj+dnu
+         8w+OQzXZPOiTdnwbN/9mTO/b+ARWDiy7OZbz1UFcmZtQ65Sh1DpUi6XZ44JnRvyBlNy3
+         PvJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VdXE2ImqxG63waGBHNih9+J5wJ7B7e9EZJi9670W4ts=;
-        b=3Gj6pGQsND91ZfJUmXWBRHsut26bT0Lyr8tLPoz1AzUPjqRrkmcrcLfdOV0Ey+Rtiz
-         sGPPfuzxrE947qDN73wwvgpfmoA8ivnFJhcI8xBSBgUPSrNwpb2jKfk0QndFGToqdFLG
-         cfhpnxn6DSkjghVdXi1wRzeCNp4kFRbVA/YJcBu4XNPTrXwWk+btFiD0/Ps4Rzhbs02m
-         klay76A7z7VQBvqFTKdTyH0ETEzErFqX7rKWpAhBya1pGNlrVl5c7uyd1Q1/87CFztKx
-         wtJmUhDFYxYkv1VfDckMJpsSZBE+7Lkqv1aVwzXHEx4byyP/9qZo2zMXD31W7Y3iMenP
-         nFkA==
-X-Gm-Message-State: AO0yUKU9plo3Ec6vGNa9Hq556G4AIf60gcjdd2W6ib5eqgB5821tQeS9
-        3bmms0O1gj+3A4mXZTlJcYo=
-X-Google-Smtp-Source: AK7set8uhh0nRpN7a0xVEs9WtV5WKsn8cUYfwiP6uvZPqlvIIwnpgIgsuxxjgFfxwwpesTDnUk8aTQ==
-X-Received: by 2002:a17:90b:4d87:b0:22c:169b:ec47 with SMTP id oj7-20020a17090b4d8700b0022c169bec47mr7994168pjb.41.1675370595156;
-        Thu, 02 Feb 2023 12:43:15 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id b10-20020a17090acc0a00b00219186abd7csm301209pju.16.2023.02.02.12.43.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Feb 2023 12:43:14 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        Bernhard Reiter <ockham@raz.or.at>,
-        Remi Pommarel <repk@triplefau.lt>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 5/6] imap-send: remove old --no-curl codepath
-References: <patch-1.1-3bea1312322-20230201T225915Z-avarab@gmail.com>
-        <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
-        <patch-v2-5.6-17c75e6381a-20230202T093706Z-avarab@gmail.com>
-Date:   Thu, 02 Feb 2023 12:43:14 -0800
-In-Reply-To: <patch-v2-5.6-17c75e6381a-20230202T093706Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 2 Feb
- 2023 10:44:16
-        +0100")
-Message-ID: <xmqqbkmbu7bx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qDX57KqkGXkCbM6IQ9rwx4xcxzwqrUG+msYwxGXJkQo=;
+        b=EqF0aC6+PUYs8F7+iuZgCbW50cXSiA4++w1CFn+S/YOBT2i0+R1O6ZlcQGMIIUfEBj
+         /633j/Ccgg3o8p105Cwe27vxuyTykHSDXFHjKLioJMLIddLXwIcVwKUr38IDEd2kKQt9
+         lwypSjqQCKfm97RENG3WyBqa/dzwJf/Pw6Q9AvlwPMzTzowfv0dwdx63aj0KBu6h52+R
+         H/8tdsdfnmgZyeRx+e4OcQ6t9NbQW+/9LmAQOerqdj0rjWehBrghWOJlTA7WnDqvneI6
+         /sza2Gdi3ctJiOxQfZ/HlmCX7QCyScKK0mRktfl7LYM0HQ92Wvm9a54en5+H8v1N0jIY
+         NoEA==
+X-Gm-Message-State: AO0yUKV82ojCwEMFEZxfrr6Qz6/JK+nyDYa2gkUaFgKdq9U1wQbWcu9c
+        xk6VfCNiYZ19yG4rCHk6Vq9lj9k/j3l9erpIAoleal/ne30=
+X-Google-Smtp-Source: AK7set8BcLSqaOzVkkGUmfLgDkWiMgnWBYKAU9JkASIQtqk3kg1EJvR+3R1Asw9l17KT57KnwJeqqFZQZMGQQwVyH0Q=
+X-Received: by 2002:a17:906:5048:b0:88a:47d7:3c3a with SMTP id
+ e8-20020a170906504800b0088a47d73c3amr2421661ejk.182.1675370860181; Thu, 02
+ Feb 2023 12:47:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CALnO6CAZtwfGY4SYeOuKqdP9+e_0EYNf4F703DRQB7UUfd_bUg@mail.gmail.com>
+ <CANgJU+X_e0owKC3uWPaA_gVP54syF1+MJ-cTn+fjPrNS5LDsMA@mail.gmail.com> <Y9rv29c0dYUAYx8B@coredump.intra.peff.net>
+In-Reply-To: <Y9rv29c0dYUAYx8B@coredump.intra.peff.net>
+From:   "D. Ben Knoble" <ben.knoble@gmail.com>
+Date:   Thu, 2 Feb 2023 15:47:28 -0500
+Message-ID: <CALnO6CA3LL2TbMyvVsgeNgGHr9tGq4-FYR0-RMyJJiMvV3P91w@mail.gmail.com>
+Subject: Re: grep: fix multibyte regex handling under macOS (1819ad327b7a1f19540a819813b70a0e8a7f798f)
+To:     Jeff King <peff@peff.net>
+Cc:     demerphq <demerphq@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+On Wed, Feb 1, 2023 at 6:03 PM Jeff King <peff@peff.net> wrote:
+> So the regex engine is complaining that it is getting bytes with high
+> bits set, but that are not part of a multi-byte character. I.e., it is
+> not happy to do bytewise matching, but really wants valid UTF8 in the
+> expression.
 
-> In the preceding the "--curl" codepath was made mandatory, so now we
-> won't use the OpenSSL implementation codepaths in imap-send.c except
-> for "imap.tunnel".
->
-> So let's follow-up and delete the code on that path which was specific
-> to the "imap.host" mode.
->
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  imap-send.c | 127 +++++++---------------------------------------------
->  1 file changed, 16 insertions(+), 111 deletions(-)
+I did manage to find that the call to regcomp in diff.c's
+init_diff_words_data (line 2212 in v2.39.1) is what crashes; I could
+not step into it with gdb, however.
 
-Nice code reduction.
+Further, the following C program compiles without warnings (except for
+the unused main parameters):
+```
+#include <regex.h>
+#include <assert.h>
+#include <stddef.h>
+#include <stdio.h>
+
+int main(int argc, char **argv) {
+    regex_t re;
+    int ret = regcomp(&re, "[\xc0-\xff][\x80-\xbf]+", REG_EXTENDED |
+REG_NEWLINE);
+    /* assert(ret != 0); */
+    size_t errbuf_size = regerror(ret, &re, NULL, 0);
+    char errbuf[errbuf_size];
+    regerror(ret, &re, errbuf, errbuf_size);
+    printf("%s\n", errbuf);
+}
+```
+
+```
+# CFLAGS='-Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
+-Wold-style-definition -Wshadow -Wpointer-arith -Wcast-qual -pedantic
+-std=c11'
+# cc $CFLAGS regtest.c -o regtest && ./regtest
+*** unknown regexp error code ***
+```
+(the assertion fails because regcomp succeeds!)
+
+So I can neither find out what's to blame nor what to fix. Here are
+the linked libraries on macOS (IIUC):
+```
+# otool -L regtest
+regtest:
+/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current
+version 1311.0.0)
+# otool -L ./git-diff # from v2.39.1 source build today
+./git-diff:
+/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices
+(compatibility version 1.0.0, current version 1141.1.0)
+/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.11)
+/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
+/usr/local/opt/gettext/lib/libintl.8.dylib (compatibility version
+12.0.0, current version 12.0.0)
+/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current
+version 1311.0.0)
+/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
+(compatibility version 150.0.0, current version 1856.105.0)
+```
+
+-- 
+D. Ben Knoble
