@@ -2,126 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A2538C61DA4
-	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 09:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76B2EC63797
+	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 09:45:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232428AbjBBJmg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Feb 2023 04:42:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51210 "EHLO
+        id S232602AbjBBJpQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 04:45:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232198AbjBBJmd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2023 04:42:33 -0500
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BD2686EB2
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 01:42:18 -0800 (PST)
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 072771F5A0;
-        Thu,  2 Feb 2023 09:42:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-        s=selector1; t=1675330938;
-        bh=JNeUVWtt14qzj0+CFdaHadF8X2nXOguVJUt30Gj7HA8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tJ7ULZGSH8c6J/88WjOzYV0NiKChTkNAFWROTirOVxQpBtwRu5mEfoqbc6mjv4Czn
-         sVESh/c0jE2j6+u2fMX0LdREw1QoM76gZgLyNNIHkqglj54dhW0SxewL1+LTzTtTQH
-         bp47Fqim33TOzI+DYL1OhatCBQ6VsxHhbLprdmXo=
-Date:   Thu, 2 Feb 2023 09:42:17 +0000
-From:   Eric Wong <e@80x24.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH v2] delta-islands: free island_marks and bitmaps
-Message-ID: <20230202094217.M955476@dcvr>
-References: <20230202010353.23391-1-e@80x24.org>
- <230202.86mt5wq1i7.gmgdl@evledraar.gmail.com>
+        with ESMTP id S232604AbjBBJo5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2023 04:44:57 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 503CD875AB
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 01:44:26 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id m14so1092947wrg.13
+        for <git@vger.kernel.org>; Thu, 02 Feb 2023 01:44:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WWcCaX2blm8nfgTGsiNz3wflSNtwAhgXBOFbIOfg37g=;
+        b=Q/9qMKAF3Ih9rlH9eCZkTPjfD132SpHxlYPNuSbglrZBfsW/x+prtYj1/qNAq0Oaw7
+         L3S4SjlfxMJ4Gt0Z1BO/EwOSntsPx+H/8dBQhDXW0LDxSDs1LQIGjb2q5Wm3l3aix1jL
+         DPm7BmNyE1rrW82X+VBk4UEJDcKP5zTpkt+fWDhzlY+uxnSwveIIZBi2pz2rNTv4tdgV
+         x0qIyTtW3nM0jFO+2SCCQHdbLwHKC6mbeNEHRH2DcO+yGqo6CvNdBUzJ4gaG3eEUv3KW
+         CCSdgTpxNeUZiG5J1u91/jvMB3FLvO/b5pneAqrGffIQJE2vQfPpYqsXkh1HSjdSZo74
+         vGUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WWcCaX2blm8nfgTGsiNz3wflSNtwAhgXBOFbIOfg37g=;
+        b=ZEnnkwPejkowVGpsqADr4jW1xpBshI/a77RRslU4DATgpd0flbmApgOAGIgq7jNPqO
+         TK7r5y401EQUEvOHRhY8jQvingqDi3WDNmVeg8cM6kV5NSOjQj4r+zA/OKOHzMTVbpFe
+         WvbaEojZByhZRJiFJcV5dContOMNMl13WhxTy2/7frVAIOIf2FdG3etZJOPIwTJTBkkq
+         piuDDihi5tZBRoNThAJq9+ggvlyvPp7mICghNxqXevDj6YVOgfM3mZElCoaHMpNsUstp
+         fXLokIAwQacHDpQ1vTsU+GYK2thDXS0Uo63agnbC6KinZwBwAHG7tJb++YseZeszO9FH
+         d3oQ==
+X-Gm-Message-State: AO0yUKWnsd4U/R+Oexv57m060FbX66YSG8GnvP+d0j0ATTiQ4tQ8WfCT
+        VKqfxd8MINF0WM22a+HG54KHGBio9hdt171x
+X-Google-Smtp-Source: AK7set+/41GJ5KcQzaTcjlYqBtzKXbyAXesB/94dKxaThl5TTSC+EZlafltId+9U2q4OoY5aEdXscw==
+X-Received: by 2002:a05:6000:10c3:b0:2bf:b113:8ae2 with SMTP id b3-20020a05600010c300b002bfb1138ae2mr5222497wrx.15.1675331063978;
+        Thu, 02 Feb 2023 01:44:23 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id b14-20020a05600010ce00b0029e1aa67fd2sm19487938wrx.115.2023.02.02.01.44.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Feb 2023 01:44:23 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Bernhard Reiter <ockham@raz.or.at>,
+        Remi Pommarel <repk@triplefau.lt>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/6] imap-send: note "auth_method", not "host" on auth method failure
+Date:   Thu,  2 Feb 2023 10:44:12 +0100
+Message-Id: <patch-v2-1.6-3187a643035-20230202T093706Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.39.1.1392.g63e6d408230
+In-Reply-To: <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
+References: <patch-1.1-3bea1312322-20230201T225915Z-avarab@gmail.com> <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <230202.86mt5wq1i7.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> On Thu, Feb 02 2023, Eric Wong wrote:
-> 
-> > +	kh_foreach_value(island_marks, bitmap, {
-> > +		if (--bitmap->refcount == 0)
-> 
-> Style nit: if (!--x) rather than if (--x == 0) ?
+Fix error reporting added in ae9c606ed22 (imap-send: support CRAM-MD5
+authentication, 2010-02-15), the use of "srvc->host" here was
+seemingly copy/pasted from other uses added in the same commit.
 
-Oops, fixed in v2
+But here we're complaining about the "auth_method" being incorrect, so
+let's note it, and not the hostname.
 
-> > +			free(bitmap);
-> > +	});
-> > +	kh_destroy_oid_map(island_marks);
-> > +	island_marks = (void *)1; /* crash on unintended future use */
-> 
-> This seems counter-productive. If you just leave it free'd then various
-> analysis tools will spot a use-after-free earlier, won't they?
+In a subsequent commit we'll alter other uses of "host" here after
+getting rid of the non-tunnel OpenSSL codepath. This preparatory fix
+makes that subsequent change smaller.
 
-*shrug*  I thought it might be better to use an explicitly bad
-pointer to catch lifetime issues that I might've missed from
-reading the code.  Since I've run and tested at this point,
-it probably doesn't matter, now.  So I'll just omit the
-assignment and save some icache footprint.
-
-Thanks for the review!
-
---------8<-------
-Subject: [PATCH] delta-islands: free island_marks and bitmaps
-
-On my mirror of linux.git forkgroup with 780 islands, this saves
-nearly 4G of heap memory in pack-objects.  This savings only
-benefits delta island users of pack bitmaps, as the process
-would otherwise be exiting anyways.
-
-However, there's probably not many delta island users, but the
-majority of delta island users would also be pack bitmaps users.
-
-Signed-off-by: Eric Wong <e@80x24.org>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- delta-islands.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ imap-send.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/delta-islands.c b/delta-islands.c
-index 90c0d6958f..c09dab31a4 100644
---- a/delta-islands.c
-+++ b/delta-islands.c
-@@ -513,12 +513,28 @@ void propagate_island_marks(struct commit *commit)
- 	}
- }
- 
-+static void free_island_marks(void)
-+{
-+	struct island_bitmap *bitmap;
-+
-+	kh_foreach_value(island_marks, bitmap, {
-+		if (!--bitmap->refcount)
-+			free(bitmap);
-+	});
-+	kh_destroy_oid_map(island_marks);
-+}
-+
- int compute_pack_layers(struct packing_data *to_pack)
- {
- 	uint32_t i;
- 
--	if (!core_island_name || !island_marks)
-+	if (!island_marks)
-+		return 1;
-+
-+	if (!core_island_name) {
-+		free_island_marks();
- 		return 1;
-+	}
- 
- 	for (i = 0; i < to_pack->nr_objects; ++i) {
- 		struct object_entry *entry = &to_pack->objects[i];
-@@ -533,6 +549,7 @@ int compute_pack_layers(struct packing_data *to_pack)
- 				oe_set_layer(to_pack, entry, 0);
- 		}
- 	}
-+	free_island_marks();
- 
- 	return 2;
- }
+diff --git a/imap-send.c b/imap-send.c
+index a50af56b827..b7902babd4c 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1121,7 +1121,7 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
+ 					goto bail;
+ 				}
+ 			} else {
+-				fprintf(stderr, "Unknown authentication method:%s\n", srvc->host);
++				fprintf(stderr, "Unknown authentication method:%s\n", srvc->auth_method);
+ 				goto bail;
+ 			}
+ 		} else {
+-- 
+2.39.1.1392.g63e6d408230
+
