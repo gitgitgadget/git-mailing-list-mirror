@@ -2,128 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4FEF2C61DA4
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 16:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88B8AC61DA4
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 16:48:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232600AbjBCQnT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Feb 2023 11:43:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35630 "EHLO
+        id S233222AbjBCQsQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Feb 2023 11:48:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232312AbjBCQnO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2023 11:43:14 -0500
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B54A123305
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 08:43:12 -0800 (PST)
-Received: from host-2-103-194-72.as13285.net ([2.103.194.72] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1pNz9a-0003am-Eo;
-        Fri, 03 Feb 2023 16:43:10 +0000
-Message-ID: <43d807f1-07f0-c0a1-e6ae-bdb5df73a565@iee.email>
-Date:   Fri, 3 Feb 2023 16:43:09 +0000
+        with ESMTP id S233351AbjBCQsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2023 11:48:14 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A65D81555D
+        for <git@vger.kernel.org>; Fri,  3 Feb 2023 08:48:09 -0800 (PST)
+Received: (qmail 26235 invoked by uid 109); 3 Feb 2023 16:48:09 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Feb 2023 16:48:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10053 invoked by uid 111); 3 Feb 2023 16:48:08 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Feb 2023 11:48:08 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 3 Feb 2023 11:48:08 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Slavica =?utf-8?B?xJB1a2nEhw==?= <slawica92@hotmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] add: remove Perl version of "git add -[pi]"
+Message-ID: <Y906yEGFEIglRyVb@coredump.intra.peff.net>
+References: <cover-0.3-00000000000-20230203T125859Z-avarab@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] .gitattributes: include `text` attribute for eol
- attributes
-Content-Language: en-GB
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20220216115239.uo2ie3flaqo3nf2d@tb-raspi4>
- <20230203125920.751-1-philipoakley@iee.email>
- <230203.86k00yc167.gmgdl@evledraar.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <230203.86k00yc167.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover-0.3-00000000000-20230203T125859Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/02/2023 13:40, Ævar Arnfjörð Bjarmason wrote:
-> On Fri, Feb 03 2023, Philip Oakley wrote:
->
->> The standard advice for text file eol endings in the .gitattributes file
->> was updated in e28eae3184 (gitattributes: Document the unified "auto"
->> handling, 2016-08-26) with a recent clarification in 8c591dbfce (docs:
->> correct documentation about eol attribute, 2022-01-11), with a follow
->> up comment by the original author in [1] confirming the use of the eol
->> attribute in conjunction with the text attribute.
->>
->> Update Git's .gitattributes file to reflect our own advice.
->>
->> [1] https://lore.kernel.org/git/?q=%3C20220216115239.uo2ie3flaqo3nf2d%40tb-raspi4%3E.
->>
->> Signed-off-by: Philip Oakley <philipoakley@iee.email>
->> ---
->>
->> I was catching up on last year's back emails, and had saved those on
->> eol and text conversion, and was prompted by Torsten's [1] to check
->> my .gitattribute files, only to discover, we aren't providing a good
->> example to others. Let's fix that. 
-> This seems sensible, but if we're taking the churn of changing these
-> lines maybe it's worth moving or adjusting some of this while-at-it.
+On Fri, Feb 03, 2023 at 05:30:01PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-Seems reasonable.
-I've added in dscho (cc) for consideration of the Git for Windows
-viewpoint..
->
-> In particular:
->
->>  .gitattributes | 22 +++++++++++-----------
->>  1 file changed, 11 insertions(+), 11 deletions(-)
->>
->> diff --git a/.gitattributes b/.gitattributes
->> index b0044cf272..158c3d45c4 100644
->> --- a/.gitattributes
->> +++ b/.gitattributes
->> @@ -1,17 +1,17 @@
->>  * whitespace=!indent,trail,space
->>  *.[ch] whitespace=indent,trail,space diff=cpp
->> -*.sh whitespace=indent,trail,space eol=lf
->> -*.perl eol=lf diff=perl
->> -*.pl eof=lf diff=perl
->> -*.pm eol=lf diff=perl
->> -*.py eol=lf diff=python
->> -*.bat eol=crlf
-> We don't have any *.bat in-tree except in compat/vcbuild/. Shouldn't we
-> just create a compat/vcbuild/.gitattributes? This was added in
-> https://lore.kernel.org/git/pull.149.v2.git.gitgitgadget@gmail.com/; so
-> it's for those specific files.
+> After it was made the default we had a next-release regression fix[1],
+> but haven't had any issues since then. Any outstanding bugs in it are
+> something we'd fix in the C code, not something where users are likely
+> to want an escape hatch to scramble back to the Perl implementation.
 
-sensible
->>  CODE_OF_CONDUCT.md -whitespace
+I'm in favor of dropping the perl version, but note that this paragraph
+isn't quite accurate. There was at least one more regression after that,
+solved by fb094cb583 (Merge branch 'js/add-p-diff-parsing-fix',
+2022-09-09).
 
-Maybe the CODE_OF_CONDUCT.md should also be marked as text?
+I'd probably leave the final decision on its status to Johannes. This is
+(I think) the last time we discussed it:
 
->> -/Documentation/**/*.txt eol=lf
->> -/command-list.txt eol=lf
->> -/GIT-VERSION-GEN eol=lf
->> -/mergetools/* eol=lf
->> -/t/oid-info/* eol=lf
->> +/Documentation/**/*.txt text eol=lf
-> We have a Documentation/.gitattributes, shouldn't we move this
-> Documentation/ rule there instead?
+  https://lore.kernel.org/git/rsrn5988-37n4-7q45-s1o9-6n40rropp120@tzk.qr/
 
-ok
->
->> +/command-list.txt text eol=lf
->> +/GIT-VERSION-GEN text eol=lf
->> +/mergetools/* text eol=lf
-> ..maybe we should create a mergetools/.gitattributes & move this there?
+That was 6 months ago, so maybe it's time now.
 
-perhaps. There are probably sufficient listed there to make it work it.
->
->> +/t/oid-info/* text eol=lf
-> Ditto t/.gitattributes and this t/oid-info/ rule.
->
->>  /Documentation/git-merge.txt conflict-marker-size=32
->>  /Documentation/gitk.txt conflict-marker-size=32
->>  /Documentation/user-manual.txt conflict-marker-size=32
-I'll hold a day or so for any extra contributions.
-
-Philip
+-Peff
