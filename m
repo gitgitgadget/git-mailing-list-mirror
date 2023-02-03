@@ -2,95 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD837C05027
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 19:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D26CCC61DA4
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 19:43:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233013AbjBCTeR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Feb 2023 14:34:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39312 "EHLO
+        id S232526AbjBCTna (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Feb 2023 14:43:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232000AbjBCTeQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2023 14:34:16 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB43E40F4
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 11:34:13 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id z3so4483287pfb.2
-        for <git@vger.kernel.org>; Fri, 03 Feb 2023 11:34:13 -0800 (PST)
+        with ESMTP id S229853AbjBCTn3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2023 14:43:29 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20BE392194
+        for <git@vger.kernel.org>; Fri,  3 Feb 2023 11:43:28 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id d2so2379091pjd.5
+        for <git@vger.kernel.org>; Fri, 03 Feb 2023 11:43:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ahTFqGfKn4WRoFrHwxmIs0+9jBmOzBWxAqA+awBa2sw=;
-        b=NTKiowl6XmeBYbseCj5GHY/T10XzCV3yDXzNzaq07D9pmsg3iQbLWIuW9a3U8NwdLh
-         plK9OT5yWliClWS315EnLwe/Km0FvoQE9BvUAI0cXpGR+GUHQOb6ApXgukCfmPoo8bRe
-         Ixyq16z8i1IeLRGxP0q+cPU2JXLJHB/Cse8XIUfVCe1sA4FuOXrg1HLeA/qVSXgAgssV
-         MJE2xHXgDFsTQ30FKL1rpT1seq+xNUlWvjSHcUB4A3SRbCo7lOCrHB5Nb8RZuYyHT4b/
-         vGm9oZdFSgtpSoDyrMPR5fIWvYkt2jOtAzwXSbdRlcO+bn+stf4+viqQ/kJkm8SjN5KY
-         LFLA==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9ta7N5UWWEIpViLnoue6pTfugPnzVHGSmAl47l6sijk=;
+        b=HyVSd1pekxJr1iyd/buWiwYLCryTYQEvynX6+S9Hs+ePljf3F870B96eOraEa0fwAb
+         eFyyxdBiOvL3i1033O3stKF/dRt9vGSPZ1PwfiQxgojEnKteJ0jPm4Fu+Tz6fmmoCdHF
+         Ic+f9Ks05+lf14/kxm0haU8kTrlZHIwhoxbXMK074ER3h4lMpH2ANT6b9lu8dL2CuQEt
+         +Oihdrli6ayFTyRmS/eSBrD1HpR7PsyvN8836sVkb8xbPyw1T6AyQ6kpMPIVcYFqQC9+
+         oDkX2/mt8f8+0jZOXgFP7ckoncf4u1OiZBrgSH6LINhHRuxK5EzyxoUE/ERfH+mlNToI
+         0OQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ahTFqGfKn4WRoFrHwxmIs0+9jBmOzBWxAqA+awBa2sw=;
-        b=GKAELDquXOa7N/zTxjsKPYe1noD4WIm5f8eCfQQvGOM8mrezxDr/0Z7RGjInY7NdUI
-         h2TJirb/jP/afd70Gx21FVhIpWq1z/VLZGDID6Kl0mcfNaaQxXI++bvzsARRQZDSisOo
-         VfQhDqIsR8YF39J9lj6odVGuYTq7rLysyvxON/vpCgfb+IcHS84m9uSWeQHhcPKTd5Cf
-         zjXZWalQv5FxRPOwamS9qO/UrFHLKHLNN7UKsaAnlfvCPnplPNPLd0PHSz2hLB6/sXou
-         0PM9Jb3RC5QKkgSksTNBa1rJfBon7PRgwf5k9il7P7fxqBXzmjl+IkZR6NdLCPPaG4wz
-         mPBg==
-X-Gm-Message-State: AO0yUKX0pP1HMyIF0WYRx0CltVyTchLwuTeEx9iJAXZHhWSckaptcJxk
-        UtT4YKFnH8qY65SMrS50V6Q=
-X-Google-Smtp-Source: AK7set9tT6xh5TtZUdZ65aq+jT9wVw64quPBM0i9CO3iYNlUtfm13SLwUBG3/s19Zr0V1gheGWY+Ag==
-X-Received: by 2002:a05:6a00:15cb:b0:590:7735:5384 with SMTP id o11-20020a056a0015cb00b0059077355384mr13144718pfu.23.1675452853139;
-        Fri, 03 Feb 2023 11:34:13 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9ta7N5UWWEIpViLnoue6pTfugPnzVHGSmAl47l6sijk=;
+        b=FeKiVPzdwa1n6G3NrkfTYCRVxFFhrPFbu1SPpDPYZ06lslgw/8WbPdRl73C/kO3COK
+         Sl5mMwiUjNyoG4V3EoX8nP1AeFuKxbnlnG7DiwnY3QsNrEL/uyhABkN9xma/5EN5/iTa
+         ZaI9Yme34+ycwOy2fQYwSVa5x6Kj/VrbWPsp8si0HxrL6eWoPrwT2ykZ3TFX78uYaIwx
+         UEkaCL5izVUt7T9BsQ2wPycAKJslFgU0XxZrziMnkJk1DYBRUEM4GutaSUIIrJE3DkKM
+         yizyhVNqpn50GIbcBlmgOD2C09EaxTOORg+/d4NnHubnvKR+5K/PkzumAHOJ8H9CwxhU
+         8UJA==
+X-Gm-Message-State: AO0yUKXKdZHXClU8wYbzJYVD56cWH7nxvBFY8L2nq9UZb5HrlHJ/Qcjd
+        JCeZgREVaikigSk1ytw5fjo=
+X-Google-Smtp-Source: AK7set97QfQx9isDQbTdyAWy2G5AGapnhHYGin5g19EHLi/HEswGcCKj514pZweoTfTDTYM5zqPdgA==
+X-Received: by 2002:a17:90a:358:b0:22c:b496:88e with SMTP id 24-20020a17090a035800b0022cb496088emr12292752pjf.12.1675453407516;
+        Fri, 03 Feb 2023 11:43:27 -0800 (PST)
 Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id a77-20020a621a50000000b0058e12658485sm2255352pfa.94.2023.02.03.11.34.12
+        by smtp.gmail.com with ESMTPSA id mz4-20020a17090b378400b0022bfcf5d297sm5498752pjb.9.2023.02.03.11.43.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 11:34:12 -0800 (PST)
+        Fri, 03 Feb 2023 11:43:27 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Slavica =?utf-8?B?xJB1a2nEhw==?= <slawica92@hotmail.com>
-Subject: Re: [PATCH 0/3] add: remove Perl version of "git add -[pi]"
-References: <cover-0.3-00000000000-20230203T125859Z-avarab@gmail.com>
-        <Y906yEGFEIglRyVb@coredump.intra.peff.net>
-Date:   Fri, 03 Feb 2023 11:34:12 -0800
-In-Reply-To: <Y906yEGFEIglRyVb@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 3 Feb 2023 11:48:08 -0500")
-Message-ID: <xmqqilgio85n.fsf@gitster.g>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     git@vger.kernel.org
+Subject: Re: The sad state of git.wiki.kernel.org
+References: <20230203182255.lqla3hsme6riy4w7@meerkat.local>
+Date:   Fri, 03 Feb 2023 11:43:26 -0800
+In-Reply-To: <20230203182255.lqla3hsme6riy4w7@meerkat.local> (Konstantin
+        Ryabitsev's message of "Fri, 3 Feb 2023 13:22:55 -0500")
+Message-ID: <xmqqedr6o7q9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-> On Fri, Feb 03, 2023 at 05:30:01PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> Today, most information found on the wiki is probably outdated and therefore
+> potentially harmful. I would like to solicit ideas what to do with this
+> resource.
 >
->> After it was made the default we had a next-release regression fix[1],
->> but haven't had any issues since then. Any outstanding bugs in it are
->> something we'd fix in the C code, not something where users are likely
->> to want an escape hatch to scramble back to the Perl implementation.
+> # Should it be migrated to RTD-style docs?
 >
-> I'm in favor of dropping the perl version, but note that this paragraph
-> isn't quite accurate. There was at least one more regression after that,
-> solved by fb094cb583 (Merge branch 'js/add-p-diff-parsing-fix',
-> 2022-09-09).
+> We have stopped providing new Mediawiki instances at kernel.org quite some
+> time back, replacing the offering with Dokuwiki. Today, we don't spin up new
+> Dokuwiki instances either and everyone is steered towards readthedocs-style
+> documentation instead, which is a much more sane and manageable medium than
+> wikis, especially when it comes to technical docs (see
+> https://korg.docs.kernel.org/docs.html).
 >
-> I'd probably leave the final decision on its status to Johannes. This is
-> (I think) the last time we discussed it:
->
->   https://lore.kernel.org/git/rsrn5988-37n4-7q45-s1o9-6n40rropp120@tzk.qr/
->
-> That was 6 months ago, so maybe it's time now.
+> However, it's unclear if this is even needed for this wiki, considering the
+> existence of https://git-scm.com/doc.
 
-Sounds good to me, too.
+I tend to agree with this point.  Presense on RTD is nice, but what
+is left in git.wiki.k.o is not something I'd consider porting it
+over; the contents of git-scm.com/ might be but that is off topic
+here.
+
+> # Should it be archived as a static site?
+>
+> It's possible to turn git.wiki.kernel.org into a static site with a large
+> header on every page that it contains historical archival information, with a
+> link to https://git-scm.com/doc
+
+I do not know the size of regular traffic to the git.wiki.k.o; if
+many people visit (on purpose or by mistake) there to warrant such a
+redirection, then it is very much appreciated.  No current contents
+with just "redirect in 5 seconds---please update your bookmark" may
+be fine.
+
+> # Should it be archived and put out of its misery?
+>
+> The last option is to just archive the site and put it out of its increasingly
+> irrelevant existence.
+
+Archiving so that people can retrieve the contents for whatever
+reason may be needed no matter what other things are done, I would
+imagine.
+
+Thanks.
