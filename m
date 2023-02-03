@@ -2,151 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 882FAC636D4
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 13:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4C90C61DA4
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 13:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232866AbjBCNcN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Feb 2023 08:32:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48406 "EHLO
+        id S232915AbjBCNhC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Feb 2023 08:37:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232893AbjBCNbt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2023 08:31:49 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D5FB8E497
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 05:31:39 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id be12so5188813edb.4
-        for <git@vger.kernel.org>; Fri, 03 Feb 2023 05:31:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VJiQ8zYkx/zgjIgk12C9dQAUvOFdnD+o6SdZHQZYjCg=;
-        b=QoVqKSRU0Y9gvCf4IGJNSH/zoiVmmqxa2x6wUyHoBf3btS0Va+NqBcxCLUOhhFXueO
-         1WXaWfAvOdNCm9uFfVZcBiGzgMxW93FSWC6G54Qfvzlr7+Lab8cDM9oNfPjMy8CazyjK
-         DOnbH19vPT+oikEfKWOhLgf9N5e89CXfRbr0eEJZsswCR9Sno5KrZv277Bv+rf0jaquE
-         GFRSVPIEaplYER221XwnQT6XtACz7a6hK/q2dNM7u9LrKl0Vshrr3yvWTSbWZEERFNZd
-         +quvFtlvja4DhLHg0AAbw/u7Pa6Is47F4E4z6MMsDJupCEaPR6Y8XM39c8RVIOQm9cRM
-         0ucw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VJiQ8zYkx/zgjIgk12C9dQAUvOFdnD+o6SdZHQZYjCg=;
-        b=x+1diYRLYSW2lrVrsNaHf3js2rD5+98s1yVbqmjdzFDC8ZyFofomXQCNb3yR8ojpBR
-         5VTWzWkJDKlOmZbgVW6oHsf3LHUJrDuHfNwfv46m2U4WOwmCKdbjIFv4LADa/qf0J470
-         Dvw8iFSZhMOClBF7SgYrLHt5n8KWSAGd3IPc2xZdC1QCEyte7j2/978HK4qzvJSIe7fR
-         i9/cGCUaqKGdN7b+XwAudxf5sfZSaf25CjPhNgMPMFKQgz0qzdlJdpajIc7wYI2oGuuU
-         4pjxCQ7jYxxAQFLSSTJ7h1amk6KDxaY9xQthhHcI1Flz75NMlHTE98gdoLqQpHmZMm6u
-         cpGA==
-X-Gm-Message-State: AO0yUKUaazloeaicJGOj+Q7wBdpk7sXoXQqs4y2SHvd1/xI0/SwrQlKf
-        KUBLrpxIRkHhscYuyWOEZVdVft1Nj93zaWM/
-X-Google-Smtp-Source: AK7set9pdUKl2Hg870BK+JJ5Nad49esV8fvac0NJ5RnRnuL1ovtCcwyAtOAikXIZMd+OltfsJypX+g==
-X-Received: by 2002:a05:6402:4446:b0:49d:fff2:d4b9 with SMTP id o6-20020a056402444600b0049dfff2d4b9mr10329055edb.23.1675431097989;
-        Fri, 03 Feb 2023 05:31:37 -0800 (PST)
-Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id en14-20020a056402528e00b0049622a61f8fsm1141071edb.30.2023.02.03.05.31.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 05:31:37 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pNwAC-000Cw9-1o;
-        Fri, 03 Feb 2023 14:31:36 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     rsbecker@nexbridge.com
-Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        'Junio C Hamano' <gitster@pobox.com>,
-        'Konstantin Ryabitsev' <konstantin@linuxfoundation.org>,
-        'Eli Schwartz' <eschwartz93@gmail.com>,
-        'Git List' <git@vger.kernel.org>
-Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
- a possible solution
-Date:   Fri, 03 Feb 2023 14:18:58 +0100
-References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
-        <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
-        <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
-        <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net>
-        <230201.86pmatr9mj.gmgdl@evledraar.gmail.com>
-        <Y9ry5Wxck4s/X2B+@tapette.crustytoothpaste.net>
-        <xmqqh6w5x8i8.fsf@gitster.g>
-        <Y9xAv1reHJRj7iKA@tapette.crustytoothpaste.net>
-        <01a901d93760$c690d970$53b28c50$@nexbridge.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <01a901d93760$c690d970$53b28c50$@nexbridge.com>
-Message-ID: <230203.86sffmc1tz.gmgdl@evledraar.gmail.com>
+        with ESMTP id S232888AbjBCNg7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2023 08:36:59 -0500
+Received: from smtp39.i.mail.ru (smtp39.i.mail.ru [95.163.41.80])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C367C23660
+        for <git@vger.kernel.org>; Fri,  3 Feb 2023 05:36:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail4;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:CC:To:Message-ID:Reply-To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=8HLxVYxH6iLSc+1sjGs8zWZ83sX8An0Iz4OW20TKh3I=;
+        t=1675431416;x=1675521416; 
+        b=l3/6UOhcY4jK5wSQRwIxKwS943Kmyw58jf73+I5yAWIVkEiAgUSr9HhHLcUXKapTv4vIKrRv1ttEJ75CucVSGSLFwN6Q69OFdBypuBwERsUIzqTOkV9S3i95rE7LDaWpKLxuAyo+LgnrFH1Fq7PdKWq7RHGmD1iRNMb5nYDCHQhZnHpm5tLDaGzDxRp86rny3CmM62pq+D00cTZAxOV05WGx/3AOT3J62Gb/GPgTyqUXDk33DXzBr/fDZwJeV4mfk1cwLfhQ6HoC8xOD/uXPrJqniuh5rO6kbqvmsDNangNfLEkpkt/9wSX6Je5aVJhwWX7j4WRRvQgZkYdEbjPSjw==;
+Received: by smtp39.i.mail.ru with esmtpa (envelope-from <andry@inbox.ru>)
+        id 1pNwFJ-001CqC-RE; Fri, 03 Feb 2023 16:36:54 +0300
+Date:   Fri, 3 Feb 2023 16:37:20 +0300
+From:   Andry <andry@inbox.ru>
+Reply-To: Andry <andry@inbox.ru>
+Message-ID: <1309893232.20230203163720@inbox.ru>
+To:     Philip Oakley <philipoakley@iee.email>,
+        =?utf-8?B?xJBvw6BuIFRyw6LMgG4gQ8O0bmcgRGFuaA==?= 
+        <congdanhqx@gmail.com>
+CC:     git@vger.kernel.org
+Subject: Re: Hash for a commit sourcetree beside to a commit hash
+In-Reply-To: <22255406-42da-9ac3-4783-11a035877a3c@iee.email>
+References: <1798489336.20230203042837@inbox.ru> <Y9xq5VAMjzUqTb6X@danh.dev> 
+  <563617028.20230203052145@inbox.ru>
+  <22255406-42da-9ac3-4783-11a035877a3c@iee.email>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp39.i.mail.ru; auth=pass smtp.auth=andry@inbox.ru smtp.mailfrom=andry@inbox.ru
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD9D919194CF4FC6604027E7E5960EA16BDC088668DE29F56AE182A05F5380850403D8952C0F3FC8A0922F7A71D63E4B08151620A77A9D7ECCAAC1DF38BF399E716
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE712EB008F780777E9EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637F10563012BA5CCB0EA1F7E6F0F101C6723150C8DA25C47586E58E00D9D99D84E1BDDB23E98D2D38B6F1F7B995052D5CE23FD6BB74FE599362E49A4D2C29F612D20879F7C8C5043D14489FFFB0AA5F4BF176DF2183F8FC7C0DEC8C2C8BCD2534D8941B15DA834481FA18204E546F3947CC2B5EEE3591E0D35F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F7900637F1F33655BFBB40449FA2833FD35BB23DF004C90652538430302FCEF25BFAB3454AD6D5ED66289B5278DA827A17800CE731018C22CFFFF913D32BA5DBAC0009BE395957E7521B51C20BC6067A898B09E4090A508E0FED6299176DF2183F8FC7C0E3E3FB6EC827F0A0CD04E86FAF290E2DB606B96278B59C421DD303D21008E29813377AFFFEAFD269A417C69337E82CC2E827F84554CEF50127C277FBC8AE2E8BA83251EDC214901ED5E8D9A59859A8B6816F06BAE7E44B0A089D37D7C0E48F6C5571747095F342E88FB05168BE4CE3AF
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34D9DC20663B80603F2A783E4EE0F2408920C6425F9BC741BC6CA873A8447A243EE7E71962896BFCD61D7E09C32AA3244C7C840B5EF41777A35343CCA0B1004AF8F522A1CF68F4BE05FACE5A9C96DEB163
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojdzjlIIgnltbTfmWpO/J01w==
+X-Mailru-Sender: DC3EB4EBD01594E4BED89F5F1533D14E83C4332ABCAC642022F7A71D63E4B081EA31111DDB2986FB58EE59803C9A990DFB559BB5D741EB96FE679880309AA8C36F53C80213D1719C67EA787935ED9F1B
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello Philip,
 
-On Thu, Feb 02 2023, rsbecker@nexbridge.com wrote:
 
-> On February 2, 2023 6:02 PM, brian m. carlson wrote:
->>On 2023-02-01 at 23:37:19, Junio C Hamano wrote:
->>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->>>
->>> > I don't think a blurb is necessary, but you're basically
->>> > underscoring the problem, which is that nobody is willing to promise
->>> > that compression is consistent, but yet people want to rely on that
->>> > fact.  I'm willing to write and implement a consistent tar spec and
->>> > to guarantee compatibility with that, but the tension here is that
->>> > people also want gzip to never change its byte format ever, which
->>> > frankly seems unrealistic without explicit guarantees.  Maybe the
->>> > authors will agree to promise that, but it seems unlikely.
->>>
->>> Just to step back a bit, where does the distinction between
->>> guaranteeing the tar format stability and gzip compressed bitstream
->>> stability come from?  At both levels, the same thing can be expressed
->>> in multiple different ways, I think, but spelling out how exactly the
->>> compressor compresses is more involved than spelling out how entries
->>> in a tar archive is ordered and each entry is expressed, or something?
+
+Friday, February 3, 2023, 2:11:19 PM, you wrote:
+
+PO> On 03/02/2023 02:21, Andry wrote:
+>> Đoàn, 
+>> Friday, February 3, 2023, 5:01:09 AM, you wrote:
+>> ĐTCD>         git rev-list <a-commit-tish> |
+>> ĐTCD>         while read commit; do
+>> ĐTCD>                 if test $(git rev-parse $commit^{tree}) = $hash; then
+>> ĐTCD>                         echo $commit
+>> ĐTCD>                         break
+>> ĐTCD>                 fi
+>> ĐTCD>         done
 >>
->>Yes, at least with my understanding about how gzip and compression in general
->>work.
->>
->>The tar format (and the pax format which builds on it) can mostly be restricted by
->>explaining what data is to be included in the pax and tar headers and how it is to be
->>formatted.  If we say, we will always write such and such information in the pax
->>header and sort the keys, and we write such and such information in the tar header,
->>then the format is completely deterministic, and we can make nice guarantees.
->>
->>My understanding about how Lempel-Ziv-based compression algorithms work is that
->>there's a lot more freedom to decide how best to compress things and that there
->>isn't always a logical obvious choice, but I will admit my understanding is relatively
->>limited.  If someone thinks we can effectively succeed in supporting compression
->>more than just relying on gzip, I would be delighted to be shown to be wrong.
->
-> The nice part about gzip is that it is generally available on
-> virtually all platforms (or can be easily obtained). Other compression
-> forms, like bz2, which sometimes produces more dense compression, are
-> not necessarily available. Availability is something I would be
-> worried about...
+>> Nice, but I can not apply this over a git hub or a web interface without a clone.
 
-I agree with all of that, gzip is in such wide use for a reason. 
+PO> As a 'Distributed'-VCS, cloning the repository would be the de-facto
+PO> normal approach, otherwise you have re-invented centralised VCS ;-)
 
->... (clone and checkout failures).
+Cloning repository is a heavy operation by downloading everything instead of search a single commit.
+And searching at the remote does not make it a central.
 
-But how would a hypothetical obscure format for "git archive" contribute
-to clone or checkout failures? Are you thinking of our use of zlib for
-e.g. loose objects? That's unrelated to this discussion (and I don't
-think anyone relies on their compressed checksum).
+PO> Alternatively, you could approach the server (hub/web interface)
+PO> provider to see if they are willing to provide that level of search
+PO> interface.
 
-> Tar formats are also to be used carefully. Not all platform
-> implementations of tar support all variants. "ustar" is fairly common
-> but there are others that are not. Interoperability needs to be the
-> biggest factor in this decision, IMHO, rather than compression rates.
+The GitHub already provides that in the search field. Just input a hash and see what happens.
 
-For "git archive" whether you care about interoperability depends on the
-target audience of your archive, and in any case I don't see why we need
-to worry about it, except to perhaps note that some are more portable
-than others if we e.g. had a built-in "tar.bz2" helper method.
-
-> The alternative is having git supply its own implementation, but that
-> is a longer term migration problem, resembling the SHA-256 migration.
-
-I've noted elsewhere in this thread that I don't see the point of
-shipping a fallback "gzip" beyond the "git archive gzip" we have
-already, but even if we did that the scope of that seems pretty simple,
-and *much* easier than the SHA-256 migration.
