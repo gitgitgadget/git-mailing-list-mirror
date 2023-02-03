@@ -2,60 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74D71C636D3
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 01:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19B5FC61DA4
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 01:22:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232402AbjBCBDd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Feb 2023 20:03:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44902 "EHLO
+        id S230230AbjBCBWN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 20:22:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230021AbjBCBDc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2023 20:03:32 -0500
-Received: from smtp29.i.mail.ru (smtp29.i.mail.ru [95.163.41.68])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B8564390C
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 17:03:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail4;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:To:Message-ID:Reply-To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=OItjst8ARpxdATuV/0LadgmCHrHVSKoHUwkwZ0zB9eU=;
-        t=1675386209;x=1675476209; 
-        b=tLEGLoNmbR9H+rAHX34SF/LUbDay4ZO/xUJPzOz0/j9sSCz54xh2scgAUiUW78xt7WOW9XXLtNlM/Dv25aggA5bDsuzpV1ePFbeLpnp2zUF+2FDeWyp39+zaSwhYhUlVeJcb+iqjrhIo0uqyLSoxX+B7hbXnQUed5F3qdk65LfAPK6YLixceUbgi2GYtb3Ds9ELOSfZdiE1x13RUrRy7sc1605oX9Fz1lWJ+p20BnThOMvTztMEQo/jt6zmf/xShAPNhi5SP/ISoWS5C9a3WPDzrIAcK3k4u3m4ZgQPtnLv0jvySBW/Zc5JDjUOHUi7DK0b21JjdQjDE8j6vfnowWw==;
-Received: by smtp29.i.mail.ru with esmtpa (envelope-from <andry@inbox.ru>)
-        id 1pNkUA-00CBRV-K4
-        for git@vger.kernel.org; Fri, 03 Feb 2023 04:03:26 +0300
-Date:   Fri, 3 Feb 2023 04:04:12 +0300
-From:   Andry <andry@inbox.ru>
-Reply-To: Andry <andry@inbox.ru>
-Message-ID: <1628944263.20230203040412@inbox.ru>
-To:     git@vger.kernel.org
-Subject: Re: nested submodules detection w/o .gitmodules file
-In-Reply-To: <1716310675.20230122233403@inbox.ru>
-References: <1716310675.20230122233403@inbox.ru>
+        with ESMTP id S229881AbjBCBWM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2023 20:22:12 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8655974A54
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 17:22:11 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id cl23-20020a17090af69700b0022c745bfdc3so3545026pjb.3
+        for <git@vger.kernel.org>; Thu, 02 Feb 2023 17:22:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RkPiryErL3uib3f9ZOpcWDVw/ys3oAFMbdOpSm8hB/U=;
+        b=P3oa1xahQoM7O8fC3TquKiY8J7Zso5IfBov/f4uR8xtGbDZ217+qo6I7euQYQULoCA
+         MekU93SckIvjkpAXbsyHFnGQz16JSFSVFBWYOFSD6/knQZY2hlVmE6P0u+Q0ut6LTO7c
+         MIJNZ8GFSijkmiMDUTVpVZCQ0Q3E2IzdtPawWis7yzeDoqeVhMW0QReaghgkCzFywmUi
+         uuq308bfQnc4aILVnr6bMCH4ALaHuwcKjTsry+S/HLqHCRJ0sa6zTR9JZHrraAMARbXP
+         mcjNmjxoRW7jYIul2thRdwykAaIZD2yPiYpWCRnEOSu2XfQI72hG2s/FKqZS9ViREGEv
+         8PUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RkPiryErL3uib3f9ZOpcWDVw/ys3oAFMbdOpSm8hB/U=;
+        b=4+HZIhr7l7aoZQkd8dOiyRAa0wH+uttJGbGhgC+Axm5vnsPaLt58rQ9PUkN6tajv4k
+         OaLVAgnYZ4+sbfTY+0yGvW99U3BgXAIPhvzzlc1JKhnhPrZiwXZ8h2H0u2W9qM3tljHg
+         JuyeHRlgy3+OQ2ysX9dwov5Vbz5ueCu2OkdYiTfJOJW2nj7zEz3Kuk4Ct9cbQp0ZW25d
+         xGbpuuIIzv2OA1G9zfRn9YsCQWjgW4qUU5El3WNsJdzuMnJVbVlRjwkLMoSBbyLPUt4g
+         3y/6T22WRB/YXoHYWCmA1ShVAWDOADGtGe6FxD6RhfUIycp7Op03N+WYCEh2k/ySdaxU
+         lX2Q==
+X-Gm-Message-State: AO0yUKU/B3N9zVmjsz3vorDKt4r56P1GQ5NK9bik6PknQOVlGVSIODB1
+        pSQk0yeWkPQcS0QzKtHJWCE=
+X-Google-Smtp-Source: AK7set//rLr6VDe/hZP4KVatTPeOkhX8cHDHbs+R7lvYQbqfJEMG8ZnE3txT/skJ3CW0c6J3zGw01g==
+X-Received: by 2002:a17:902:dac9:b0:198:adc4:2285 with SMTP id q9-20020a170902dac900b00198adc42285mr4153044plx.0.1675387330864;
+        Thu, 02 Feb 2023 17:22:10 -0800 (PST)
+Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
+        by smtp.gmail.com with ESMTPSA id m21-20020a170902bb9500b001947222676csm287011pls.249.2023.02.02.17.22.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Feb 2023 17:22:10 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>, raymond@heliax.dev,
+        zweiss@equinix.com
+Subject: Re: [PATCH v4 1/9] config tests: cover blind spots in
+ git_die_config() tests
+References: <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com>
+        <cover-v4-0.9-00000000000-20230202T131155Z-avarab@gmail.com>
+        <patch-v4-1.9-4ae56cab7c7-20230202T131155Z-avarab@gmail.com>
+Date:   Thu, 02 Feb 2023 17:22:10 -0800
+Message-ID: <xmqqwn4zo859.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Authentication-Results: smtp29.i.mail.ru; auth=pass smtp.auth=andry@inbox.ru smtp.mailfrom=andry@inbox.ru
-X-Mailru-Src: smtp
-X-7564579A: B8F34718100C35BD
-X-77F55803: 4F1203BC0FB41BD9D919194CF4FC6604C1327866F5A8C549A8E0A7997D2AD150182A05F53808504064600C617FA54118A17B0B7A05430999AFEF5C7725AE493DBA9CEC61761100D4
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7466896EF24E80F12EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063770995E888C5C26978638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8D69C57A434B5DEBB3E0ACFDA3C6261766F9789CCF6C18C3F8528715B7D10C86878DA827A17800CE746CC513BB44FBA1D9FA2833FD35BB23D9E625A9149C048EE1E561CDFBCA1751FF6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F7900637FBB89C51EA700D9A389733CBF5DBD5E9B5C8C57E37DE458BD9DD9810294C998ED8FC6C240DEA76428AA50765F79006376D4A5E4BD7D08C50D81D268191BDAD3DBD4B6F7A4D31EC0BEA7A3FFF5B025636D81D268191BDAD3D78DA827A17800CE7BC7D820328A067A1EC76A7562686271ED91E3A1F190DE8FD2E808ACE2090B5E14AD6D5ED66289B5259CC434672EE63711DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C360781E301B93023135872C767BF85DA2F004C90652538430E4A6367B16DE6309
-X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34AF12ADB97C97CD89D53C7642C6788CE2169A033DFB7745884F896DC44AD8A7161AF89DF82F331A801D7E09C32AA3244CCF777BA7D5A3701089B7E292302A43DA7101BF96129E40113EB3F6AD6EA9203E
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojUCXb8yEWKAmNMc/2KvsxFQ==
-X-Mailru-Sender: DC3EB4EBD01594E4BED89F5F1533D14EE6185506797FBF95A17B0B7A0543099906869FDE987C96F758EE59803C9A990DFB559BB5D741EB96FE679880309AA8C36F53C80213D1719C67EA787935ED9F1B
-X-Mras: Ok
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Git,
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
+> There were no tests checking for the output of the git_die_config()
+> function in the config API, added in 5a80e97c827 (config: add
+> `git_die_config()` to the config-set API, 2014-08-07). We only tested
+> "test_must_fail", but didn't assert the output.
 
+It sort of is expected as git_die_config() is useful only for code
+that uses new style config parsing (i.e. instead of using the
+git_config() callback interface to parse what we encounter in the
+config file, actively call git_config_get_foo() interface to ask for
+keys the caller cares about), and dying unconditionally is not
+useful for the old style ones.
 
-Sunday, January 22, 2023, 11:34:03 PM, you wrote:
-
-A> Hello Git,
-
-A> I have a pretty long investigation has been started from usage 3dparty projects related directly or indirectly to the git submodules:
-A> ...
-A> So, who is right and what is wrong here?
-
-Is nobody interested in the issue?
-
+A better coverage is good.
