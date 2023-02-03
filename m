@@ -2,196 +2,257 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67B15C63797
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 23:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB8A0C05027
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 23:44:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233039AbjBCXXy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Feb 2023 18:23:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41482 "EHLO
+        id S232931AbjBCXoc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Feb 2023 18:44:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232835AbjBCXXu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2023 18:23:50 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 776AFA58DC
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 15:23:47 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id n6so6595458edo.9
-        for <git@vger.kernel.org>; Fri, 03 Feb 2023 15:23:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Wj7nxpqbORoWXgKXiDDlC/dI2+jyuhxeXNPC7Or10Zw=;
-        b=BbiSGgSKFMRUXZ/2EcLl43ZdyxmYsFkXkOnckoyHcFY2hWO8QP1Ua+NFRTe/JR5ZOu
-         vTiKsayneH33tb12YaAmY+aFwjPaDUhPossPnL5312JedAPzbwZWYOagc+zJEqON1aC4
-         hhtetgZFZMft4t1l3fdllTJDy6wgX8Pr4IpiX2WHOn3d95rcD6qAhOx2tjN4Tzc/u2Gh
-         j3JzLui78kHBAscDZAe4tbVq81YJUxzCRE8JUy7n0dQJmI0+/SMHjCXfeS9dVnnXxnB6
-         xOYqpTwq/V0Lyeh6LBLfeGlZ6aPi8p3mlF+gdZQiIMsNvpRpEGHemsB2skGCSFNn4C7l
-         hoFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Wj7nxpqbORoWXgKXiDDlC/dI2+jyuhxeXNPC7Or10Zw=;
-        b=U6bKVtQmEetEr/R8DlKM+Qo0VQnX3r14/V1AdR0enrPtKvS2NuKOlf16YOmxScRWgP
-         NSpAg8mz4Gg6bM5LWI/VV5iTRITF0+THPK4z+tS/TAX4SzGL8oBYsDSl21BLVeW4chlj
-         0mNOC0KSl56RfLJB9k/jzxfXkYKpozYM/T0V/6mmRY8nQjCjRfXTa2w+i+3hWCm8+oam
-         bxR0ayelY/KKfNehAYUWjOikgd+I0ya56ZpMtPnIA5PQazrt5OlyAK+7weAq9ST8hOGf
-         L0xtCpUIge3XtE/5d98Qti3N1U1xD+JKZvUoGF8LOgtqwT5l8/Errxj1BHYJz0dnld8C
-         DQMg==
-X-Gm-Message-State: AO0yUKXkJExsAVwzUHtLY4SVpqxe32rYQFZeXhvmbT9HVBn5H+hGclpT
-        jwZ2pJ2c3xbcKL1sFL+Ue6nb4mBNmprrT0f1DUM=
-X-Google-Smtp-Source: AK7set9hal6Gut2Wqczo+ilvitcHBGDXOpt964JuEGBkW4Z4Hxof+qgs/f4gtdEpS4IdFj4AJH6Trw==
-X-Received: by 2002:a05:6402:448c:b0:4a0:e31a:434 with SMTP id er12-20020a056402448c00b004a0e31a0434mr12120944edb.27.1675466625681;
-        Fri, 03 Feb 2023 15:23:45 -0800 (PST)
-Received: from titov.fritz.box ([216.24.213.52])
-        by smtp.gmail.com with ESMTPSA id u4-20020aa7db84000000b0049f88f00f70sm1787917edt.7.2023.02.03.15.23.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 15:23:45 -0800 (PST)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Paolo Bonzini <pbonzini@redhat.com>,
-        Johannes Sixt <j6t@kdbg.org>, Tassilo Horn <tsdh@gnu.org>
-Subject: [PATCH v1 3/3] userdiff: support Java sealed classes
-Date:   Sat,  4 Feb 2023 00:23:39 +0100
-Message-Id: <20230203232339.216592-4-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203232339.216592-1-rybak.a.v@gmail.com>
-References: <20230203232339.216592-1-rybak.a.v@gmail.com>
+        with ESMTP id S232127AbjBCXob (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2023 18:44:31 -0500
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB864402E7
+        for <git@vger.kernel.org>; Fri,  3 Feb 2023 15:44:30 -0800 (PST)
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 9536A1F5A0;
+        Fri,  3 Feb 2023 23:44:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+        s=selector1; t=1675467870;
+        bh=qa4DusLO2rYh7YdqO/N79Lr+wyVFO33/FxY4ODE8xQ4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=wo+l/zJbshNTNvj9XkX7VpbY3XjSr5pHgg/Ru7gMuiKcw0bAbtIy8WMpqQgtqcsU4
+         opvHgkW5yznAQv9+v2o4aW5ibyDTsMtERc2aNFfBavUyDOBWHLFV1U6USrrLVKHOoZ
+         lheelPX00EYr6swBRmaUwoLYmftnpJ2hb9krDInM=
+Date:   Fri, 3 Feb 2023 23:44:30 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: [PATCH v3] delta-islands: free island_marks and bitmaps
+Message-ID: <20230203234430.M553381@dcvr>
+References: <20230202010353.23391-1-e@80x24.org>
+ <230202.86mt5wq1i7.gmgdl@evledraar.gmail.com>
+ <20230202094217.M955476@dcvr>
+ <Y91OZHrMfca6tb/2@coredump.intra.peff.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y91OZHrMfca6tb/2@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A new kind of class was added in Java 17 -- sealed classes.[1]  This
-feature includes several new keywords that may appear in a declaration
-of a class.  New modifiers before name of the class: "sealed" and
-"non-sealed", and a clause after name of the class marked by keyword
-"permits".
+Jeff King <peff@peff.net> wrote:
+> On Thu, Feb 02, 2023 at 09:42:17AM +0000, Eric Wong wrote:
+> 
+> > > > +			free(bitmap);
+> > > > +	});
+> > > > +	kh_destroy_oid_map(island_marks);
+> > > > +	island_marks = (void *)1; /* crash on unintended future use */
+> > > 
+> > > This seems counter-productive. If you just leave it free'd then various
+> > > analysis tools will spot a use-after-free earlier, won't they?
+> > 
+> > *shrug*  I thought it might be better to use an explicitly bad
+> > pointer to catch lifetime issues that I might've missed from
+> > reading the code.  Since I've run and tested at this point,
+> > it probably doesn't matter, now.  So I'll just omit the
+> > assignment and save some icache footprint.
+> 
+> I think it is still worth protecting ourselves. You've run and tested
+> the current code, but the risk remains that somebody will later change
+> the code and introduce a regression.
+> 
+> Yes, analysis tools may spot it. But only if we actually trigger the
+> case in question via the test suite, and while running those tools. We
+> can get more consistent behavior by overwriting the pointer.
 
-The current set of regular expressions in userdiff.c already allows the
-modifier "sealed" and the "permits" clause, but not the modifier
-"non-sealed", which is the first hyphenated keyword in Java.[2]  Allow
-hyphen in the words that precede the name of type to match the
-"non-sealed" modifier.
+OK.
 
-In new input file "java-sealed" for the test t4018-diff-funcname.sh, use
-a Java code comment for the marker "RIGHT".  This workaround is needed,
-because the name of the sealed class appears on the line of code that
-has the "ChangeMe" marker.
+> The usual thing, of course, would just be to set it to NULL. I guess you
+> used "(void *)1" in the original because code like in_same_island()
+> checks for NULL. And so it becomes indistinguishable whether we intended
+> not to use islands, or if there's a bug in the program.
 
-[1] Detailed description in "JEP 409: Sealed Classes"
-    https://openjdk.org/jeps/409
-[2] "JEP draft: Keyword Management for the Java Language"
-    https://openjdk.org/jeps/8223002
+Yes, I used `(void *)1' because of the existing NULL checks.  I
+should have used `(void *)-1' (MAP_FAILED) instead since
+attempts to dereference 1 could conceivably point to a valid
+address, whereas using a maximum value would not.
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+> If we are going to reduce the lifetime of island_marks, I think it would
+> make things cleaner to push the "do we expect to have islands" boolean
+> into its own variable, something like:
+> 
+> diff --git a/delta-islands.c b/delta-islands.c
+> index c09dab31a4..7dd4e1419a 100644
+> --- a/delta-islands.c
+> +++ b/delta-islands.c
+> @@ -22,6 +22,7 @@
+>  
+>  KHASH_INIT(str, const char *, void *, 1, kh_str_hash_func, kh_str_hash_equal)
+>  
+> +static int using_island_marks;
+>  static kh_oid_map_t *island_marks;
+>  static unsigned island_counter;
+>  static unsigned island_counter_core;
+> @@ -96,7 +97,7 @@ int in_same_island(const struct object_id *trg_oid, const struct object_id *src_
+>  	khiter_t trg_pos, src_pos;
+>  
+>  	/* If we aren't using islands, assume everything goes together. */
+> -	if (!island_marks)
+> +	if (!using_island_marks)
+>  		return 1;
+
+I much prefer to rely on invalid pointers than extra flags since
+having multiple sources of truth confuses me[1].
+
+> Of course it would be cleaner still if there was a "struct
+> delta_islands" that encapsulated the variables, and then the caller
+> could free it when they're done. That's more work to retro-fit, though.
+
+Yes and yes :>
+
+> >  int compute_pack_layers(struct packing_data *to_pack)
+> >  {
+> >  	uint32_t i;
+> >  
+> > -	if (!core_island_name || !island_marks)
+> > +	if (!island_marks)
+> > +		return 1;
+> > +
+> > +	if (!core_island_name) {
+> > +		free_island_marks();
+> >  		return 1;
+> > +	}
+> >  
+> >  	for (i = 0; i < to_pack->nr_objects; ++i) {
+> >  		struct object_entry *entry = &to_pack->objects[i];
+> > @@ -533,6 +549,7 @@ int compute_pack_layers(struct packing_data *to_pack)
+> >  				oe_set_layer(to_pack, entry, 0);
+> >  		}
+> >  	}
+> > +	free_island_marks();
+> >  
+> >  	return 2;
+> >  }
+> 
+> This is pretty subtle. It implicitly assumes that compute_pack_layers()
+> is the last thing that will ever need to look at islands. Which is true
+> now (I think), but it's reasonable to think that somebody might use
+> island data during bitmap generation, too.
+
+Yeah.  The reason I used an invalid pointer in the original was
+because I wasn't certain compute_pack_layers() was the last user.
+
+> It seems like it would be a lot more obvious if the sole caller did the
+> free explicitly, like:
+> 
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index cabace4abb..3395f63aba 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -929,8 +929,10 @@ static struct object_entry **compute_write_order(void)
+>  	 */
+>  	for_each_tag_ref(mark_tagged, NULL);
+>  
+> -	if (use_delta_islands)
+> +	if (use_delta_islands) {
+>  		max_layers = compute_pack_layers(&to_pack);
+> +		free_island_marks();
+> +	}
+
+OK, I've done that for v3.  Thanks.
+
+>  	ALLOC_ARRAY(wo, to_pack.nr_objects);
+>  	wo_end = 0;
+> 
+> And of course that would also be a tiny step in the right direction if
+> the delta islands API learned to use a struct (this would be the same
+> spot where we'd say "we're done with islands; free the struct").
+
+I do wonder about performance on register-starved systems,
+though, especially if stuff like island_delta_cmp gets called
+frequently.  I already have enough performance problems atm :<
+
+[1] to go farther, I might even eliminate `int use_delta_islands' as
+    a global from builtin/pack-objects.c and just have that become a
+    `struct delta_islands_foo *' or something.  But I have more
+    pressing performance problems to figure out :<
+
+--------8<-------
+Subject: [PATCH v3] delta-islands: free island_marks and bitmaps
+
+On my mirror of linux.git forkgroup with 780 islands, this saves
+nearly 4G of heap memory in pack-objects.  This savings only
+benefits delta island users of pack bitmaps, as the process
+would otherwise be exiting anyways.
+
+However, there's probably not many delta island users, but the
+majority of delta island users would also be pack bitmaps users.
+
+Signed-off-by: Eric Wong <e@80x24.org>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
 ---
- t/t4018/java-non-sealed                                | 8 ++++++++
- t/t4018/java-sealed                                    | 7 +++++++
- t/t4018/java-sealed-permits                            | 6 ++++++
- t/t4018/java-sealed-type-parameters                    | 6 ++++++
- t/t4018/java-sealed-type-parameters-implements-permits | 6 ++++++
- t/t4018/java-sealed-type-parameters-permits            | 6 ++++++
- userdiff.c                                             | 2 +-
- 7 files changed, 40 insertions(+), 1 deletion(-)
- create mode 100644 t/t4018/java-non-sealed
- create mode 100644 t/t4018/java-sealed
- create mode 100644 t/t4018/java-sealed-permits
- create mode 100644 t/t4018/java-sealed-type-parameters
- create mode 100644 t/t4018/java-sealed-type-parameters-implements-permits
- create mode 100644 t/t4018/java-sealed-type-parameters-permits
+ v3: use (void *)-1 to detect use-after-free,
+     hoist out free_island_marks() call for readability
 
-diff --git a/t/t4018/java-non-sealed b/t/t4018/java-non-sealed
-new file mode 100644
-index 0000000000..f68ffd4ff3
---- /dev/null
-+++ b/t/t4018/java-non-sealed
-@@ -0,0 +1,8 @@
-+public sealed abstract class SealedClass {
-+    public static non-sealed class RIGHT extends SealedClass {
-+        static int ONE;
-+        static int TWO;
-+        static int THREE;
-+        private int ChangeMe;
-+    }
-+}
-diff --git a/t/t4018/java-sealed b/t/t4018/java-sealed
-new file mode 100644
-index 0000000000..e722fee803
---- /dev/null
-+++ b/t/t4018/java-sealed
-@@ -0,0 +1,7 @@
-+public sealed abstract class Sealed { // RIGHT
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    public final class ChangeMe extends Sealed {
-+    }
-+}
-diff --git a/t/t4018/java-sealed-permits b/t/t4018/java-sealed-permits
-new file mode 100644
-index 0000000000..8573f2a7e8
---- /dev/null
-+++ b/t/t4018/java-sealed-permits
-@@ -0,0 +1,6 @@
-+public sealed abstract class RIGHT permits PermittedA, PermittedB {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/t/t4018/java-sealed-type-parameters b/t/t4018/java-sealed-type-parameters
-new file mode 100644
-index 0000000000..ec31115961
---- /dev/null
-+++ b/t/t4018/java-sealed-type-parameters
-@@ -0,0 +1,6 @@
-+public sealed abstract class RIGHT<A, B> {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/t/t4018/java-sealed-type-parameters-implements-permits b/t/t4018/java-sealed-type-parameters-implements-permits
-new file mode 100644
-index 0000000000..9fd4dd5633
---- /dev/null
-+++ b/t/t4018/java-sealed-type-parameters-implements-permits
-@@ -0,0 +1,6 @@
-+public sealed abstract class RIGHT<A, B> implements List<A> permits PermittedA, PermittedB {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/t/t4018/java-sealed-type-parameters-permits b/t/t4018/java-sealed-type-parameters-permits
-new file mode 100644
-index 0000000000..6af2352e46
---- /dev/null
-+++ b/t/t4018/java-sealed-type-parameters-permits
-@@ -0,0 +1,6 @@
-+public sealed abstract class RIGHT<A, B> permits PermittedA, PermittedB {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/userdiff.c b/userdiff.c
-index f92b3029aa..040deb7439 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -171,7 +171,7 @@ PATTERNS("html",
- PATTERNS("java",
- 	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
- 	 /* Class, enum, and interface declarations */
--	 "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*([ \t]+|[<(]).*)$\n"
-+	 "^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*([ \t]+|[<(]).*)$\n"
- 	 /* Method definitions; note that constructor signatures are not */
- 	 /* matched because they are indistinguishable from method calls. */
- 	 "^[ \t]*(([A-Za-z_<>&][][?&<>.,A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
--- 
-2.39.1
+ builtin/pack-objects.c |  4 +++-
+ delta-islands.c        | 14 ++++++++++++++
+ delta-islands.h        |  1 +
+ 3 files changed, 18 insertions(+), 1 deletion(-)
 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index cabace4abb..3395f63aba 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -929,8 +929,10 @@ static struct object_entry **compute_write_order(void)
+ 	 */
+ 	for_each_tag_ref(mark_tagged, NULL);
+ 
+-	if (use_delta_islands)
++	if (use_delta_islands) {
+ 		max_layers = compute_pack_layers(&to_pack);
++		free_island_marks();
++	}
+ 
+ 	ALLOC_ARRAY(wo, to_pack.nr_objects);
+ 	wo_end = 0;
+diff --git a/delta-islands.c b/delta-islands.c
+index 90c0d6958f..8b234cb85b 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -513,6 +513,20 @@ void propagate_island_marks(struct commit *commit)
+ 	}
+ }
+ 
++void free_island_marks(void)
++{
++	struct island_bitmap *bitmap;
++
++	kh_foreach_value(island_marks, bitmap, {
++		if (!--bitmap->refcount)
++			free(bitmap);
++	});
++	kh_destroy_oid_map(island_marks);
++
++	/* detect use-after-free with a an address which is never valid: */
++	island_marks = (void *)-1;
++}
++
+ int compute_pack_layers(struct packing_data *to_pack)
+ {
+ 	uint32_t i;
+diff --git a/delta-islands.h b/delta-islands.h
+index eb0f952629..8d1591ae28 100644
+--- a/delta-islands.h
++++ b/delta-islands.h
+@@ -14,5 +14,6 @@ void resolve_tree_islands(struct repository *r,
+ void load_delta_islands(struct repository *r, int progress);
+ void propagate_island_marks(struct commit *commit);
+ int compute_pack_layers(struct packing_data *to_pack);
++void free_island_marks(void);
+ 
+ #endif /* DELTA_ISLANDS_H */
