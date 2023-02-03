@@ -2,104 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B340C636D4
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 12:59:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 882FAC636D4
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 13:32:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231855AbjBCM7e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Feb 2023 07:59:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59118 "EHLO
+        id S232866AbjBCNcN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Feb 2023 08:32:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231347AbjBCM7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2023 07:59:33 -0500
-Received: from smtp-out-4.talktalk.net (smtp-out-4.talktalk.net [62.24.135.68])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0894DA267
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 04:59:31 -0800 (PST)
-Received: from localhost.localdomain ([2.103.194.72])
-        by smtp.talktalk.net with SMTP
-        id Nvf7pDW65rEXiNvf7pgeCO; Fri, 03 Feb 2023 12:59:29 +0000
-X-Originating-IP: [2.103.194.72]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=TbToSiYh c=1 sm=1 tr=0 a=Qehj7yZWyyqKOS66vkBoiw==:117
- a=Qehj7yZWyyqKOS66vkBoiw==:17 a=MKtGQD3n3ToA:10 a=1oJP67jkp3AA:10
- a=ldyaYNNxDcoA:10 a=VwQbUJbxAAAA:8 a=71sI7BlFOM1_F5eSxv0A:9
- a=AjGcO6oz07-iQ99wixmX:22
-From:   Philip Oakley <philipoakley@iee.email>
-To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Self <philipoakley@iee.email>
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] .gitattributes: include `text` attribute for eol attributes
-Date:   Fri,  3 Feb 2023 12:59:20 +0000
-Message-Id: <20230203125920.751-1-philipoakley@iee.email>
-X-Mailer: git-send-email 2.39.0.rc1.windows.1.334.ge370b595619
-In-Reply-To: <20220216115239.uo2ie3flaqo3nf2d@tb-raspi4>
-References: <20220216115239.uo2ie3flaqo3nf2d@tb-raspi4>
+        with ESMTP id S232893AbjBCNbt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2023 08:31:49 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D5FB8E497
+        for <git@vger.kernel.org>; Fri,  3 Feb 2023 05:31:39 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id be12so5188813edb.4
+        for <git@vger.kernel.org>; Fri, 03 Feb 2023 05:31:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VJiQ8zYkx/zgjIgk12C9dQAUvOFdnD+o6SdZHQZYjCg=;
+        b=QoVqKSRU0Y9gvCf4IGJNSH/zoiVmmqxa2x6wUyHoBf3btS0Va+NqBcxCLUOhhFXueO
+         1WXaWfAvOdNCm9uFfVZcBiGzgMxW93FSWC6G54Qfvzlr7+Lab8cDM9oNfPjMy8CazyjK
+         DOnbH19vPT+oikEfKWOhLgf9N5e89CXfRbr0eEJZsswCR9Sno5KrZv277Bv+rf0jaquE
+         GFRSVPIEaplYER221XwnQT6XtACz7a6hK/q2dNM7u9LrKl0Vshrr3yvWTSbWZEERFNZd
+         +quvFtlvja4DhLHg0AAbw/u7Pa6Is47F4E4z6MMsDJupCEaPR6Y8XM39c8RVIOQm9cRM
+         0ucw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VJiQ8zYkx/zgjIgk12C9dQAUvOFdnD+o6SdZHQZYjCg=;
+        b=x+1diYRLYSW2lrVrsNaHf3js2rD5+98s1yVbqmjdzFDC8ZyFofomXQCNb3yR8ojpBR
+         5VTWzWkJDKlOmZbgVW6oHsf3LHUJrDuHfNwfv46m2U4WOwmCKdbjIFv4LADa/qf0J470
+         Dvw8iFSZhMOClBF7SgYrLHt5n8KWSAGd3IPc2xZdC1QCEyte7j2/978HK4qzvJSIe7fR
+         i9/cGCUaqKGdN7b+XwAudxf5sfZSaf25CjPhNgMPMFKQgz0qzdlJdpajIc7wYI2oGuuU
+         4pjxCQ7jYxxAQFLSSTJ7h1amk6KDxaY9xQthhHcI1Flz75NMlHTE98gdoLqQpHmZMm6u
+         cpGA==
+X-Gm-Message-State: AO0yUKUaazloeaicJGOj+Q7wBdpk7sXoXQqs4y2SHvd1/xI0/SwrQlKf
+        KUBLrpxIRkHhscYuyWOEZVdVft1Nj93zaWM/
+X-Google-Smtp-Source: AK7set9pdUKl2Hg870BK+JJ5Nad49esV8fvac0NJ5RnRnuL1ovtCcwyAtOAikXIZMd+OltfsJypX+g==
+X-Received: by 2002:a05:6402:4446:b0:49d:fff2:d4b9 with SMTP id o6-20020a056402444600b0049dfff2d4b9mr10329055edb.23.1675431097989;
+        Fri, 03 Feb 2023 05:31:37 -0800 (PST)
+Received: from gmgdl ([81.191.238.7])
+        by smtp.gmail.com with ESMTPSA id en14-20020a056402528e00b0049622a61f8fsm1141071edb.30.2023.02.03.05.31.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Feb 2023 05:31:37 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pNwAC-000Cw9-1o;
+        Fri, 03 Feb 2023 14:31:36 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     rsbecker@nexbridge.com
+Cc:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        'Junio C Hamano' <gitster@pobox.com>,
+        'Konstantin Ryabitsev' <konstantin@linuxfoundation.org>,
+        'Eli Schwartz' <eschwartz93@gmail.com>,
+        'Git List' <git@vger.kernel.org>
+Subject: Re: Stability of git-archive, breaking (?) the Github universe, and
+ a possible solution
+Date:   Fri, 03 Feb 2023 14:18:58 +0100
+References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com>
+        <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net>
+        <20230131150555.ewiwsbczwep6ltbi@meerkat.local>
+        <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net>
+        <230201.86pmatr9mj.gmgdl@evledraar.gmail.com>
+        <Y9ry5Wxck4s/X2B+@tapette.crustytoothpaste.net>
+        <xmqqh6w5x8i8.fsf@gitster.g>
+        <Y9xAv1reHJRj7iKA@tapette.crustytoothpaste.net>
+        <01a901d93760$c690d970$53b28c50$@nexbridge.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <01a901d93760$c690d970$53b28c50$@nexbridge.com>
+Message-ID: <230203.86sffmc1tz.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfOIdtiYDkyTO8BpJQv+/DvmyfWj97hn1T8Jj6hVkDPpWjlKxZ5l0iZLFgyY+UF8DbSSgKbxMARbqy3lHO4sTcJSoxwj4qel7Eo0Evzp3oXECF+qRImoI
- aRMrkj/Ms3r5TF5FEVgZh6SJqJj8aySI3BEgBa+u8F+P3mJvDAa9xy9EhNXvWtTD5Sw+FmExzD1rm5g/1LA3ceAlJ1ZZhsgMpWAee++uW72ebbiK1VVcKJ6E
- N8npOW49QBRYr+V8U5OXqDsn2OVueGcAXtg3D7w8V5eF1GoLjXkb3Uo5dph8LVWS2M1qPqzbTaaCKdd0rN0ERX4KOGBoxuhy3yjZW1RbrRM=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The standard advice for text file eol endings in the .gitattributes file
-was updated in e28eae3184 (gitattributes: Document the unified "auto"
-handling, 2016-08-26) with a recent clarification in 8c591dbfce (docs:
-correct documentation about eol attribute, 2022-01-11), with a follow
-up comment by the original author in [1] confirming the use of the eol
-attribute in conjunction with the text attribute.
 
-Update Git's .gitattributes file to reflect our own advice.
+On Thu, Feb 02 2023, rsbecker@nexbridge.com wrote:
 
-[1] https://lore.kernel.org/git/?q=%3C20220216115239.uo2ie3flaqo3nf2d%40tb-raspi4%3E.
+> On February 2, 2023 6:02 PM, brian m. carlson wrote:
+>>On 2023-02-01 at 23:37:19, Junio C Hamano wrote:
+>>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>>>
+>>> > I don't think a blurb is necessary, but you're basically
+>>> > underscoring the problem, which is that nobody is willing to promise
+>>> > that compression is consistent, but yet people want to rely on that
+>>> > fact.  I'm willing to write and implement a consistent tar spec and
+>>> > to guarantee compatibility with that, but the tension here is that
+>>> > people also want gzip to never change its byte format ever, which
+>>> > frankly seems unrealistic without explicit guarantees.  Maybe the
+>>> > authors will agree to promise that, but it seems unlikely.
+>>>
+>>> Just to step back a bit, where does the distinction between
+>>> guaranteeing the tar format stability and gzip compressed bitstream
+>>> stability come from?  At both levels, the same thing can be expressed
+>>> in multiple different ways, I think, but spelling out how exactly the
+>>> compressor compresses is more involved than spelling out how entries
+>>> in a tar archive is ordered and each entry is expressed, or something?
+>>
+>>Yes, at least with my understanding about how gzip and compression in general
+>>work.
+>>
+>>The tar format (and the pax format which builds on it) can mostly be restricted by
+>>explaining what data is to be included in the pax and tar headers and how it is to be
+>>formatted.  If we say, we will always write such and such information in the pax
+>>header and sort the keys, and we write such and such information in the tar header,
+>>then the format is completely deterministic, and we can make nice guarantees.
+>>
+>>My understanding about how Lempel-Ziv-based compression algorithms work is that
+>>there's a lot more freedom to decide how best to compress things and that there
+>>isn't always a logical obvious choice, but I will admit my understanding is relatively
+>>limited.  If someone thinks we can effectively succeed in supporting compression
+>>more than just relying on gzip, I would be delighted to be shown to be wrong.
+>
+> The nice part about gzip is that it is generally available on
+> virtually all platforms (or can be easily obtained). Other compression
+> forms, like bz2, which sometimes produces more dense compression, are
+> not necessarily available. Availability is something I would be
+> worried about...
 
-Signed-off-by: Philip Oakley <philipoakley@iee.email>
----
+I agree with all of that, gzip is in such wide use for a reason. 
 
-I was catching up on last year's back emails, and had saved those on
-eol and text conversion, and was prompted by Torsten's [1] to check
-my .gitattribute files, only to discover, we aren't providing a good
-example to others. Let's fix that. 
+>... (clone and checkout failures).
 
+But how would a hypothetical obscure format for "git archive" contribute
+to clone or checkout failures? Are you thinking of our use of zlib for
+e.g. loose objects? That's unrelated to this discussion (and I don't
+think anyone relies on their compressed checksum).
 
- .gitattributes | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+> Tar formats are also to be used carefully. Not all platform
+> implementations of tar support all variants. "ustar" is fairly common
+> but there are others that are not. Interoperability needs to be the
+> biggest factor in this decision, IMHO, rather than compression rates.
 
-diff --git a/.gitattributes b/.gitattributes
-index b0044cf272..158c3d45c4 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -1,17 +1,17 @@
- * whitespace=!indent,trail,space
- *.[ch] whitespace=indent,trail,space diff=cpp
--*.sh whitespace=indent,trail,space eol=lf
--*.perl eol=lf diff=perl
--*.pl eof=lf diff=perl
--*.pm eol=lf diff=perl
--*.py eol=lf diff=python
--*.bat eol=crlf
-+*.sh whitespace=indent,trail,space text eol=lf
-+*.perl text eol=lf diff=perl
-+*.pl text eof=lf diff=perl
-+*.pm text eol=lf diff=perl
-+*.py text eol=lf diff=python
-+*.bat text eol=crlf
- CODE_OF_CONDUCT.md -whitespace
--/Documentation/**/*.txt eol=lf
--/command-list.txt eol=lf
--/GIT-VERSION-GEN eol=lf
--/mergetools/* eol=lf
--/t/oid-info/* eol=lf
-+/Documentation/**/*.txt text eol=lf
-+/command-list.txt text eol=lf
-+/GIT-VERSION-GEN text eol=lf
-+/mergetools/* text eol=lf
-+/t/oid-info/* text eol=lf
- /Documentation/git-merge.txt conflict-marker-size=32
- /Documentation/gitk.txt conflict-marker-size=32
- /Documentation/user-manual.txt conflict-marker-size=32
--- 
-2.39.1.windows.1
+For "git archive" whether you care about interoperability depends on the
+target audience of your archive, and in any case I don't see why we need
+to worry about it, except to perhaps note that some are more portable
+than others if we e.g. had a built-in "tar.bz2" helper method.
 
+> The alternative is having git supply its own implementation, but that
+> is a longer term migration problem, resembling the SHA-256 migration.
+
+I've noted elsewhere in this thread that I don't see the point of
+shipping a fallback "gzip" beyond the "git archive gzip" we have
+already, but even if we did that the scope of that seems pretty simple,
+and *much* easier than the SHA-256 migration.
