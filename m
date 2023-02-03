@@ -2,120 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CAD8C636CC
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 08:16:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A956FC636CC
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 11:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229914AbjBCIQA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Feb 2023 03:16:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54026 "EHLO
+        id S232165AbjBCLLY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Feb 2023 06:11:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229790AbjBCIPu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2023 03:15:50 -0500
-X-Greylist: delayed 548 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 03 Feb 2023 00:15:45 PST
-Received: from out-35.mta0.migadu.com (out-35.mta0.migadu.com [IPv6:2001:41d0:1004:224b::23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C97E32707
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 00:15:45 -0800 (PST)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-        s=default; t=1675411594;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=xB1hg30Nzgfo7wddXb8sSFTs2Fp3e7NPmIB1IPz2tfg=;
-        b=MhswjQa1wBcWOF2yWOn4JI8dOmrH5ICwy5RB7r4aXAVePasyRLQOtZ//4oQrJEcAjQbnHl
-        0SBGpJubWA/mIa5xZ6oG3gCL16R+XhiyKRKnkHb/XKMa6htWZ2GF2zcnbszHAKG9afDiga
-        9ca87Kbf7gDmqMXVPpzRhhFw1W5olBw=
-From:   "Raymond E. Pasco" <ray@ameretat.dev>
-To:     ray@ameretat.dev
-Cc:     avarab@gmail.com, demerphq@gmail.com, eschwartz93@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com,
-        konstantin@linuxfoundation.org, l.s.r@web.de, msuchanek@suse.de,
-        phillip.wood@dunelm.org.uk, sandals@crustytoothpaste.net,
-        tytso@mit.edu
-Subject: [PATCH] archive: document output stability concerns
-Date:   Fri,  3 Feb 2023 03:06:29 -0500
-Message-Id: <20230203080629.31492-1-ray@ameretat.dev>
-In-Reply-To: <de8f1e338e6ee99cd3ee06b16f1edbce@ameretat.dev>
-References: <de8f1e338e6ee99cd3ee06b16f1edbce@ameretat.dev>
+        with ESMTP id S230384AbjBCLLX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2023 06:11:23 -0500
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3A9B76407
+        for <git@vger.kernel.org>; Fri,  3 Feb 2023 03:11:21 -0800 (PST)
+Received: from host-2-103-194-72.as13285.net ([2.103.194.72] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1pNtyS-0006rm-3w;
+        Fri, 03 Feb 2023 11:11:20 +0000
+Message-ID: <22255406-42da-9ac3-4783-11a035877a3c@iee.email>
+Date:   Fri, 3 Feb 2023 11:11:19 +0000
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: Hash for a commit sourcetree beside to a commit hash
+Content-Language: en-GB
+To:     Andry <andry@inbox.ru>,
+        =?UTF-8?B?xJBvw6BuIFRyw6LMgG4gQ8O0bmcgRGFuaA==?= 
+        <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+References: <1798489336.20230203042837@inbox.ru> <Y9xq5VAMjzUqTb6X@danh.dev>
+ <563617028.20230203052145@inbox.ru>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <563617028.20230203052145@inbox.ru>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 4f4be00d302 (archive-tar: use internal gzip by default), the 'git
-archive' command switched to using an internal compression filter
-implemented with zlib rather than invoking a 'gzip' binary, for the
-'.tar.gz' / '.tgz' output formats.
+On 03/02/2023 02:21, Andry wrote:
+> Đoàn, 
+> Friday, February 3, 2023, 5:01:09 AM, you wrote:
+> ĐTCD>         git rev-list <a-commit-tish> |
+> ĐTCD>         while read commit; do
+> ĐTCD>                 if test $(git rev-parse $commit^{tree}) = $hash; then
+> ĐTCD>                         echo $commit
+> ĐTCD>                         break
+> ĐTCD>                 fi
+> ĐTCD>         done
+>
+> Nice, but I can not apply this over a git hub or a web interface without a clone.
 
-This change brought to light a common misconception that the output of
-'git archive' is intended to be byte-for-byte stable. While this is not
-the case, stable archive output is desirable for many applications; we
-discuss concerns related to output stability and suggest ways in which
-the user can control the compression used with the
-"tar.<format>.command" configuration option.
+As a 'Distributed'-VCS, cloning the repository would be the de-facto
+normal approach, otherwise you have re-invented centralised VCS ;-)
 
-Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
----
-I think that something along these lines should be included in the
-docs, but that the behavior should be kept the same. If it is decided
-later to stabilize output, e.g. by vendoring a blessed zlib version
-forever, the current state as of 2.38 is the best starting point;
-and reverting a useful change because of external breakage which
-already has a solution, while also promising instability, seems like
-a poor choice.
+Alternatively, you could approach the server (hub/web interface)
+provider to see if they are willing to provide that level of search
+interface.
 
- Documentation/git-archive.txt | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
-
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index 60c040988b..77acdacdf8 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -178,6 +178,41 @@ appropriate export-ignore in its `.gitattributes`), adjust the checked out
- option.  Alternatively you can keep necessary attributes that should apply
- while archiving any tree in your `$GIT_DIR/info/attributes` file.
- 
-+[[STABILITY]]
-+STABILITY
-+---------
-+
-+'git archive' does not guarantee that precisely identical archive files
-+will be produced for invocations on the same commit or tree.
-+
-+'git archive' uses an internal implementation of `tar` archiving
-+for the `tar` format, which includes the commit ID in an extended
-+pax header.  For the `tgz` and `tar.gz` formats, it is augmented with
-+a compression filter applied to the output, which is implemented by
-+'git archive' by linking to the system zlib.
-+
-+If the commit ID of the "same" commit is different, for instance in the
-+case of an object format migration from SHA-1 to SHA-256, the `tar`
-+archive will necessarily differ due to including a different ID.
-+
-+The output of the compression filter is less deterministic than
-+the output of the `tar` implementation, because the versions
-+of zlib used may differ. The internal compression filter can be
-+replaced with a particular command specified by the user using the
-+`tar.<format>.command` configuration option; for instance, a particular
-+gzip binary provided by the user could be specified here for consistent
-+output.
-+
-+The `tar` format used by 'git archive' is unlikely to change
-+frequently, but is not guaranteed to be completely stable; its output
-+will remain identical at least within the same Git version.
-+
-+The `zip` format has similar concerns to the `tar.gz` and `tgz`
-+formats; ZIP archiving is implemented internally, but the Deflate
-+compression used relies on the linked zlib. However, because archiving
-+and compression are combined into a single operation, there is no
-+user-specifiable filter command for the `zip` format.
-+
- EXAMPLES
- --------
- `git archive --format=tar --prefix=junk/ HEAD | (cd /var/tmp/ && tar xf -)`::
--- 
-2.39.1.561.g98d13ac3e7
-
+That said, having extra search capability within rev-list to search for
+blobs and tree would/could be useful in specialised scenarios, though
+that is becoming rather niche.
+--
+Philip
