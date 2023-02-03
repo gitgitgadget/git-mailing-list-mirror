@@ -2,124 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78DBAC61DA4
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 21:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25D02C05027
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 22:01:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233850AbjBCVwb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Feb 2023 16:52:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50440 "EHLO
+        id S233223AbjBCWBL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Feb 2023 17:01:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233848AbjBCVw3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2023 16:52:29 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9857728848
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 13:52:26 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id g13so1849412ple.10
-        for <git@vger.kernel.org>; Fri, 03 Feb 2023 13:52:26 -0800 (PST)
+        with ESMTP id S232375AbjBCWBK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2023 17:01:10 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A43A1E1E5
+        for <git@vger.kernel.org>; Fri,  3 Feb 2023 14:01:05 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id d26so6120768eds.12
+        for <git@vger.kernel.org>; Fri, 03 Feb 2023 14:01:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OGirtnY+tGlGH37zwpljEPazEHAUIxX8f7sjtPOzR1s=;
-        b=nc1g+EqR4FbEJolSGF4av6XefQO5C0x1SSwP2g4m0EoIi+NVQmVLgJOMcvtGGCJ8VN
-         2u+dLwy0zXnNjhZVThvtwcihayYAyo1Yv3dQfFI1X1OUrwJguFKt/EdBujnqJQU4atj7
-         AHBKhjxAcJW/FhPQg75A+hEYUzrY0YAMQ6DNwtoMn5+JGp+kICf+xNM/JFrNr3tfgJtX
-         yLX+ZQ2hwvRhrW8kpdqdXVdAoYpXgR4dglJlCJQbRuYZDT+M5/9R6YQKwvOHSMUVBfhz
-         mZfNSohHrETLx7UbbXa78gvr33Ucrf8Bkl80vDOgZ6r//+IJwpEgKxXMT1ukHAKWyXGX
-         4XNA==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=InB/t6dkrKqgL9XBdRKsvMpjkIQCbRJ4qOL3fgwu1NQ=;
+        b=C9T+VqkKSPV8k/StUEXfJY7k6eNInG5Im8mF8owvDLgfh1p5fWyeOzw3x2pW1evgTH
+         E/ch3d7eR/8K5eJn9QXLx1QnaQwsLZOfgAp2nHMit7qEHp8h+e+qOLLA524jawdEUQQu
+         lq/ZZ/EDD5AOP6FcRTjJajQVe82YI6SbTnr80pcaq8BcrPAaZYVxwp4Og4JLm30v4ZaY
+         6CU9CHXZ2Q8fNbqf1F/qG8npRF83UpjpjEocvX+M0KTnt+9GHWfuXdd7ekWo+SvRmKfo
+         RmbIRsE5PRP3KN2ElHmeGZc47P0hFLWhb2SM+G7Q3rc4wWsWezlqpwiYTrsp3DmdJXE/
+         j05g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OGirtnY+tGlGH37zwpljEPazEHAUIxX8f7sjtPOzR1s=;
-        b=6KgmeyaWXRFN8cuP4frjWI8q2Df4hrKt5EPtwAyrGIdwvDNEK9b5l+TftAMj5kXtq6
-         BfredBwXXM8sXeVMvoy3+t8Fq5oomrLrwQNvapeTqoLAkYkDPCTH4K+T0RzkCcjTlBgb
-         7okioOQn2/uKHGxtWscqtvJWM4uRrrpuSwJIgsBmFaXoSPsvTW+0HIK3kTp3hQQKKgOW
-         LCImj5maI0KXpafBN0uWyDWeILWG2Wb5hrawwExl9LfnOmdflJHnIB+RAY+HYVODzwZx
-         U8+4+pmoN5aJMN98xfIHxnzkL/4XL/JWmcdIs/BvZKno1ksxZoQmK5vpgQMcOGW3Z3V9
-         Go1w==
-X-Gm-Message-State: AO0yUKUXnYcDbPm4d7qLDlzxqM3YqaKECXpgiRr7UDJBo4afrgfBAmtr
-        1kxBFfWYubaG8Sk4TA8P1FI=
-X-Google-Smtp-Source: AK7set+RbAgmPYqZRLHB0Gk4xCotM705Tbakfe2YEj1xYsB/Ur4k0ixiq3NNAUXZWOYFTG0u0WsQWA==
-X-Received: by 2002:a17:902:e5c3:b0:196:4643:e1e7 with SMTP id u3-20020a170902e5c300b001964643e1e7mr14999152plf.30.1675461146005;
-        Fri, 03 Feb 2023 13:52:26 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id p21-20020a1709028a9500b0019311ec702asm2094813plo.36.2023.02.03.13.52.25
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=InB/t6dkrKqgL9XBdRKsvMpjkIQCbRJ4qOL3fgwu1NQ=;
+        b=c0CqnvxHV0fiJwJSuH87ajULPp65q7+GAvY+JKJ4T8Xz+3ikBjsiv3OGciLshTkzrq
+         quF56zymPqhIMk94zd53TshP0/6emcRj8PWDDKqn05p1/qygoahLducR2HQIEhpiaV5+
+         UPNFK6lpSK6aRHpilPdoAWbW8URBV7GRByAoI0D/JXxi4q3H3jHMr686AJIlS/wqlvP/
+         ympNMM5vR0QmgAjcDGylcpcPfS4ZJTYkX8hNFsAumYACUZlGQQx9x5jsH7P7m5JwKN9y
+         BEPtduQ2+r6y+zCwoacONLplKfpvyXgGE6fNXXhl4uVNP1Xf2K3EQy8JW5HmrFoUav0W
+         o9gw==
+X-Gm-Message-State: AO0yUKV9WE6yZx5NKKQYCi9zQv6yVnQhzzw5C99ndzftp05lie2FGW58
+        2yOnLtlsHSZkbrRZyfcHvEs=
+X-Google-Smtp-Source: AK7set+GbvTndRyJZMlxyndyMd8qX5nuVHFUvvNsqyxojWSXijEomE/kfP76UJ9cWBe5MKu73zO8jw==
+X-Received: by 2002:a05:6402:128d:b0:499:1ed2:6456 with SMTP id w13-20020a056402128d00b004991ed26456mr11240949edv.22.1675461663899;
+        Fri, 03 Feb 2023 14:01:03 -0800 (PST)
+Received: from gmgdl ([81.191.238.7])
+        by smtp.gmail.com with ESMTPSA id g8-20020a056402114800b004a216fa259esm1678980edw.60.2023.02.03.14.01.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 13:52:25 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>, raymond@heliax.dev,
-        zweiss@equinix.com
-Subject: Re: [PATCH v4 4/9] versioncmp.c: refactor config reading next commit
-References: <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com>
-        <cover-v4-0.9-00000000000-20230202T131155Z-avarab@gmail.com>
-        <patch-v4-4.9-aae1d5c12a9-20230202T131155Z-avarab@gmail.com>
-Date:   Fri, 03 Feb 2023 13:52:25 -0800
-In-Reply-To: <patch-v4-4.9-aae1d5c12a9-20230202T131155Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 2 Feb
- 2023 14:27:16
-        +0100")
-Message-ID: <xmqq1qn6o1ra.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Fri, 03 Feb 2023 14:01:03 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pO47C-000TcK-1I;
+        Fri, 03 Feb 2023 23:01:02 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     demerphq <demerphq@gmail.com>,
+        "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org
+Subject: Re: grep: fix multibyte regex handling under macOS
+ (1819ad327b7a1f19540a819813b70a0e8a7f798f)
+Date:   Fri, 03 Feb 2023 22:56:53 +0100
+References: <CALnO6CAZtwfGY4SYeOuKqdP9+e_0EYNf4F703DRQB7UUfd_bUg@mail.gmail.com>
+ <CANgJU+X_e0owKC3uWPaA_gVP54syF1+MJ-cTn+fjPrNS5LDsMA@mail.gmail.com>
+ <Y9rv29c0dYUAYx8B@coredump.intra.peff.net>
+ <CANgJU+XNLqf0E2+YC8yxtRPVh=mevc3P0eeye2_nx=ULB2iVWw@mail.gmail.com>
+ <Y9098dyaTtiNk506@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <Y9098dyaTtiNk506@coredump.intra.peff.net>
+Message-ID: <230203.86357mbe8x.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Refactor the reading of the versionSort.suffix and
-> versionSort.prereleaseSuffix configuration variables to stay within
-> the bounds of our CodingGuidelines when it comes to line length, and
-> to avoid repeating ourselves.
+On Fri, Feb 03 2023, Jeff King wrote:
+
+> On Thu, Feb 02, 2023 at 05:22:37PM +0100, demerphq wrote:
 >
-> Let's also split out the names of the config variables into variables
-> of our own, so we don't have to repeat ourselves, 
+>> I've been lurking watching some of the regex discussion on the list
+>> and personally I think it is asking for trouble to use "whatever regex
+>> engine is traditional in a given environment" instead of just choosing
+>> a good open source engine and using it consistently everywhere.  I
+>> don't really buy the arguments I have seen to justify a policy of "use
+>> the standard library version"; regex engines vary widely in
+>> performance and implementation and feature set, and even the really
+>> good ones do not entirely agree on every semantic[1], so if you don't
+>> standardize you will be forever dealing with bugs related to those
+>> differences.
+>
+> I think this is a perennial question for portable software: is it better
+> to be consistent across platforms (by shipping our own regex engine), or
+> consistent with other programs on the same platform (by using the system
+> regex).
 
-You do not have to repeat "we don't have to repeat" by mentioning it
-twice in two paragraphs.
+*nod*
 
-> Moving the "initialized = 1" assignment allows us to move some of this
-> to the variable declarations in the subsequent commit.
+> I don't have a strong opinion either way. The main concern I'd have is
+> handling dependencies. I like pcre a lot, but I'm not sure that I would
+> want building Git to require pcre on every platform. If there's an
+> engine we can ship as a vendored dependency that builds everywhere, that
+> helps.
 
-Unclear until looking at these subsequent steps; let's see what
-happens next ;-).
+We can just make that fallback engine be PCRE. I submitted patches a
+while ago to include a minimal version of it in compat/pcre, as we seem
+to have some allergy to external dependencies:
+https://lore.kernel.org/git/20170511175115.648-1-avarab@gmail.com/
 
->  	if (!initialized) {
-> -		const struct string_list *deprecated_prereleases;
-> +		const char *const newk = "versionsort.suffix";
-> +		const char *const oldk = "versionsort.prereleasesuffix";
-> +		const struct string_list *oldl;
-
-With s/oldl/deprecated_prereleases/ the damage would even be
-smaller.  It's not like a more descriptive name in this small scope
-hurts line length or readability, is it?
-
-> +		prereleases = git_config_get_value_multi(newk);
-> +		oldl = git_config_get_value_multi(oldk);
-
-> +		if (prereleases && oldl)
-> +			warning("ignoring %s because %s is set", oldk, newk);
-> +		else if (!prereleases)
-> +			prereleases = oldl;
-
-This makes it more clear than the original what is going on, even
-though they are equivalent.  If we have both, we ignore the
-fallback, and if we don't have what we need, we replace it with the
-fallback, which could be NULL in which case we end up not having
-any.
-
-It is a very nice added bonus that we ended up with a shallow
-nesting.
+It's ~80k lines instead of compat/regex's ~15k, but it's actually
+maintained, and would be much easier to upgrade.
