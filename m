@@ -2,73 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD8A9C05027
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 21:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22AD4C05027
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 21:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233779AbjBCVdG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Feb 2023 16:33:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40150 "EHLO
+        id S233619AbjBCVtq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Feb 2023 16:49:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233771AbjBCVdB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2023 16:33:01 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A2D97682
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 13:32:59 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id gr7so18954330ejb.5
-        for <git@vger.kernel.org>; Fri, 03 Feb 2023 13:32:59 -0800 (PST)
+        with ESMTP id S231593AbjBCVto (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2023 16:49:44 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AB6F2529A
+        for <git@vger.kernel.org>; Fri,  3 Feb 2023 13:49:43 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id p26so18948133ejx.13
+        for <git@vger.kernel.org>; Fri, 03 Feb 2023 13:49:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=d0T3DqxUNYZahbbqLrOmjmS7J0AGGfNRqVpqn3mw9Yw=;
-        b=EZdZctWUA93W707JQf03kdAL5IGFxVGBa3laN6bZ6Bujxg3vCPfzhJ0Vvj5GQS6xEf
-         8pl1OBPIE65apkT+jy2eWyuYDFfRHolW1nUqLo7cO1IHHDc9E5LczeIrSCsZ4uA1jA2G
-         +K1fv13fEYUAypXoUwKj4Ybu1DwjQ69m31aHNbncTdn/R6O7GBQJwU0VT5qYlNg0qo6V
-         0xG3XZGyOm/mqYx9ukC3J6inP1xjMcuK08LnzWJIcxq0jHxlG1iPwGcn4nO/M2sgB0ri
-         np84bLjocnMXVOSO2KAcumX3QyX6Wx1K7EGywKBxEpe3qjN6p/3O1U0gPLV3Hnoos9Gy
-         HeJQ==
+        bh=r/vcsDocGHtBZwQmixfQ05MQYTnwiKZKb6UIIID8UA0=;
+        b=Ku0QPZjVEiqICxW84+o8mLRsybQLfNwhu5U0kzYUpVcjesf+L/kSrHhG1VgKA5tDQ6
+         2TG4wjUmhq2mETkGwjmWJozOqmNhKq9cYAL01e/gwZunJCX34/RGsnC7wqn+dtWKHfO3
+         wXHkUdjJCCPAjosuZjnMF7+qtwHFXFR8IDfYDNke6vtyHl+x+3foWjbpl73QsecnufrE
+         jk2nbL0mSz1aPOySsPJ6iqMb5Dy0h2HdhR+0E/qhb03+Pd6QtaG4fqk5QNMbFJfcVkwP
+         BHR4Zne572jZFvnYG6OHEv7+Y2lVXOdr37o/A6IaqMHJ1pZLdQY9pG84fhipIyVLgP4W
+         Knig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=d0T3DqxUNYZahbbqLrOmjmS7J0AGGfNRqVpqn3mw9Yw=;
-        b=HGgGpEiUvGWhhZ20U+EOt2s/pUpRBqqNMT5ahm91/aJWXEriDKLuo7yUlEKf6eY4xU
-         kXnn/3ErkQ5S/MqfDPP3JW2YJbi5jBpuIyUyzFnJiDFm3aZCIit5IXide7Gv9VGVPSnp
-         zrVOcjcE+3gRsi9sclh0O4lJNY9dN8hP8ZqtnnO9A+OEabBGGnaAX/56ebdQbGl2PD/K
-         yp7b/hev+FHCd2DEPVwK5cNVeN0zJAR2pGkPaQkNFEiwsrSBLTaVGwVLO/cFReIvdgyM
-         /AchDBs/ET2sDBMx8XjunLFvPc9LFzkISlwfTK/PqaV8O1G5ZD86nVJQfY/J9BFdl0oe
-         WoSw==
-X-Gm-Message-State: AO0yUKXbNKGsET4uVyCO58CYK1+ap17sv2QSOqYEY1g0AOaGyYXXwOv+
-        p82Oi6JoKAry48qihCMwYt1cN7SaqgnLoJ6R
-X-Google-Smtp-Source: AK7set8UZAos/gpjOST1XhzE9N7RHvduCY5WIC6CBErYBtM64R/ytMmTUa2dcGiocmCagP57Vj5+4Q==
-X-Received: by 2002:a17:906:ee86:b0:88f:79e7:8305 with SMTP id wt6-20020a170906ee8600b0088f79e78305mr10925588ejb.63.1675459977574;
-        Fri, 03 Feb 2023 13:32:57 -0800 (PST)
+        bh=r/vcsDocGHtBZwQmixfQ05MQYTnwiKZKb6UIIID8UA0=;
+        b=GQlJwoQ0d1mOQ97ncI+2BH+XVZj3Uz1fWzRJJX4uK6qKv/PbdxnLhWtadrsloc9GuH
+         i9ryHn5rc51T3lBLVBcD4MyrGcgI8YigKCP5ePQbTxJbStZ0DOHdi18RXMgg6xQKl3oV
+         p31C8SlWV249kUvQcO5L0uw4wlKTi6hkYrOO0U7MhwjdCMFcE38ipeLl8wEaPch9WgnE
+         ABAbFxnjpRmymLVCwc3CJX/642Xpb1vTAjpB6ttcRRXTEaZZHn2Bq1P6hGCe6KNtscMS
+         sZjdudTayQRqXyuYcVgAcd+lsbQhfmgUUMoYjem7v6rU2sPhzskLK/ZSZ/WoL9Dt4bho
+         8LVA==
+X-Gm-Message-State: AO0yUKUFem6ifx3HnAGsrEr2VZrnJ5YFEtRWi/JSdaHVPRGWjH/7RKqM
+        +BhqG5zP5WCmx7jZ2Pc6lWk=
+X-Google-Smtp-Source: AK7set8ILenkYJZ89nMs4B8DCoWe+7Evr0UUUVqNKIloAV4lX4E82S3BPkq3lXHbGOFvsDWQDj6i9g==
+X-Received: by 2002:a17:906:8da:b0:87b:db53:3829 with SMTP id o26-20020a17090608da00b0087bdb533829mr11607203eje.46.1675460982011;
+        Fri, 03 Feb 2023 13:49:42 -0800 (PST)
 Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id bl3-20020a170906c24300b007bff9fb211fsm1926531ejb.57.2023.02.03.13.32.56
+        by smtp.gmail.com with ESMTPSA id s7-20020a1709064d8700b0087221268e49sm1905849eju.186.2023.02.03.13.49.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 13:32:56 -0800 (PST)
+        Fri, 03 Feb 2023 13:49:41 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pO3g0-000SYy-0o;
-        Fri, 03 Feb 2023 22:32:56 +0100
+        id 1pO3wC-000TBq-2D;
+        Fri, 03 Feb 2023 22:49:40 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
         Bernhard Reiter <ockham@raz.or.at>,
-        Remi Pommarel <repk@triplefau.lt>
-Subject: Re: [PATCH v2 6/6] imap-send: correctly report "host" when using
- "tunnel"
-Date:   Fri, 03 Feb 2023 22:12:27 +0100
+        Remi Pommarel <repk@triplefau.lt>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 4/6] imap-send: make --curl no-optional
+Date:   Fri, 03 Feb 2023 22:46:11 +0100
 References: <patch-1.1-3bea1312322-20230201T225915Z-avarab@gmail.com>
-        <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
-        <patch-v2-6.6-686febb8cdc-20230202T093706Z-avarab@gmail.com>
-        <Y91J+P5P9gV1Dygm@coredump.intra.peff.net>
+ <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
+ <patch-v2-4.6-e9cc9bbed1e-20230202T093706Z-avarab@gmail.com>
+ <xmqqfsbnu7dk.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <Y91J+P5P9gV1Dygm@coredump.intra.peff.net>
-Message-ID: <230203.86bkmabfjr.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqfsbnu7dk.fsf@gitster.g>
+Message-ID: <230203.867cwyberv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -77,113 +75,58 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Feb 03 2023, Jeff King wrote:
+On Thu, Feb 02 2023, Junio C Hamano wrote:
 
-> On Thu, Feb 02, 2023 at 10:44:17AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->> Before [1] we'd force the "imap.host" to be set, even if the
->> "imap.tunnel" was set, and then proceed to not use the "host" for
->> establishing a connection, as we'd use the tunneling command.
->>=20
->> However, we'd still use the "imap.host" if it was set as the "host"
->> field given to the credential helper, and in messages that were shared
->> with the non-tunnel mode, until a preceding commit made these OpenSSL
->> codepaths tunnel-only.
->>=20
->> Let's always give "host=3Dtunnel" to the credential helper when in the
->> "imap.tunnel" mode, and rephrase the relevant messages to indicate
->> that we're tunneling. This changes the existing behavior, but that
->> behavior was emergent and didn't make much sense. If we were using
->> "imap.tunnel" the value in "imap.host" might be entirely unrelated to
->> the host we're tunneling to. Let's not pretend to know more than we do
->> in that case.
+>> In the preceding commit the old "USE_CURL_FOR_IMAP_SEND" define became
+>> always true, as we now require libcurl for git-imap-send.
+>>
+>> But as we require OpenSSL for the "tunnel" mode we still need to keep
+>> the OpenSSL codepath around (ee [1] for an attempt to remove it). But
 >
-> If you tunnel to two different hosts, how is the credential system
-> supposed to know which is which?
+> "(ee" -> ???
+
+Should be "e.g.", will fix.
+
+>> we don't need to keep supporting "--no-curl" to bypass the curl
+>> codepath for the non-tunnel mode.
 >
-> If you really want to distinguish connecting to $host versus tunneling
-> to $host, I think you'd have to invent some new URL scheme
-> (imap-tunnel:// or something).
+> We do not need to because...?
+
+We don't have that code anymore, will clarify.
+
+>> @@ -1519,12 +1519,8 @@ int cmd_main(int argc, const char **argv)
+>>  	if (argc)
+>>  		usage_with_options(imap_send_usage, imap_send_options);
+>>=20=20
+>> -#if defined(NO_OPENSSL)
+>> -	if (!use_curl) {
+>> -		warning("--no-curl not supported in this build");
+>> -		use_curl =3D 1;
+>> -	}
+>> -#endif
+>> +	if (!use_curl)
+>> +		die(_("the --no-curl option to imap-send has been deprecated"));
 >
-> But IMHO it is not really worth it. Your statement of "the value in
-> imap.host might be entirely unrelated" does not match my experience.  I
-> don't use imap-send, but I've been doing imap-tunneling with various
-> programs for two decades, and it's pretty normal to configure both, and
-> to consider the tunnel command as an implementation detail for getting
-> to the host. For example, my mutt config is like[1]:
->
->   set folder =3D imap://example.com/
->   set tunnel =3D "ssh example.com /etc/rimapd"
->
-> and I expect to be able to refer to folders as imap://example.com/foo,
-> etc (well, in mutt you'd use the shorthand "=3Dfoo", but the idea is the
-> same). So if we see:
->
->   [imap]
->   host =3D example.com
->   tunnel =3D ssh example.com /etc/rimapd
->
-> we should likewise think of it as example.com, but with an
-> implementation detail of how to contact the server.
+> We used to force use of cURL when there is no other way to make the
+> program work (i.e. there is no direct OpenSSL codepath available),
+> instead of refusing to work (and forcing user to say --curl or to
+> stop saying --no-curl, which is one unnecessary roadblock for the
+> user).  Why do we want to change the error handling strategy that
+> has been in place?
 
-Except that mutt config is different than the imap-send case in that it
-would presumably break if you changed:
+I can change this to a soft error, but it seemed more sensible to rip
+the band-aid off an option that's never going to do anything now,
+whereas before it would do something based on how you compiled git.
 
-	set folder =3D imap://example.com/
-	set tunnel =3D "ssh example.com /etc/rimapd"
+> I think I made the same comment in some other thread, but the
+> principle is the same.  If there is no other choice the user can
+> take, do we force users to stop and be explicit to choose that only
+> available choice, or do we let the program choose the only available
+> option for the user while clearly telling the user that is what we
+> did?  Here, changing the behaviour sounds like a disservice to the
+> users.
 
-So that one of the two was example.org instead of example.com (or
-whatever).
-
-I agree that "give this to the auth helper" might be useful in general,
-but our current documentation says:
-
-	To use the tool, `imap.folder` and either `imap.tunnel` or `imap.host` mus=
-t be set
-	to appropriate values.
-
-And the docs for "imap.tunnel" say "Required when imap.host is not set",
-and "imap.host" says "Ignored when imap.tunnel is set, but required
-otherwise".
-
-Perhaps we should bless this as an accidental feature instead of my
-proposed patch, but that's why I made this change. It seemed like an
-unintentional bug that nobody intended.
-
-Especially as you're focusing on the case where it contrary to the docs
-would do what you mean, but consider (same as the doc examples, but the
-domains are changed):
-
-	[imap]
-	    folder =3D "INBOX.Drafts"
-	    host =3D imap://imap.bar.com
-	    user =3D bob
-	    pass =3D p4ssw0rd
-
-	[imap]
-	    folder =3D "INBOX.Drafts"
-	    tunnel =3D "ssh -q -C user@foo.com /usr/bin/imapd ./Maildir 2> /dev/nu=
-ll"
-=09
-I.e. I have a config for "bar.com" I tried earlier, but now I'm trying
-to connect to "foo.com", because I read the docs and notice it prefers
-"tunnel" to "host" I think it's going to ignore that "imap.host", but
-it's going to provide the password for bar.com to foo.com if challenged.
-
-So I think if we want to keep this it would be better to have a
-imap.tunnel.credentialHost or something, to avoid conflating the two.
-
-But I think it's okey to just remove this until someone has this
-explicit use-case. I doubt that we have any users relying on this, as
-it's not only undocumented, but the documentation explicitly states that
-it doesn't work like this.
-
-> Of course if you don't set imap.host, then we don't have anything useful
-> to say. But as you saw, in that case imap-send will default the host
-> field to the word "tunnel".
-
-Isn't that more of a suggestion that nobody cares about this? Presumably
-if we had users trying to get this to work someone would have complained
-that they wanted a custom string rather than "tunnel", as the auth
-helper isn't very helpful in that case...
+At best we can make --no-curl use curl anyway with a warning, would that
+be better?
