@@ -2,92 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24109C05027
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 22:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65949C05027
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 23:23:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232802AbjBCWjg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Feb 2023 17:39:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56056 "EHLO
+        id S232929AbjBCXXu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Feb 2023 18:23:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231176AbjBCWjf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2023 17:39:35 -0500
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FECD442E8
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 14:39:33 -0800 (PST)
-Received: from host-2-103-194-72.as13285.net ([2.103.194.72] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1pO4iR-0001v5-6T;
-        Fri, 03 Feb 2023 22:39:31 +0000
-Message-ID: <01dd49c1-026d-1215-dd06-02fe73ce14f8@iee.email>
-Date:   Fri, 3 Feb 2023 22:39:31 +0000
+        with ESMTP id S231299AbjBCXXt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2023 18:23:49 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 639AEA07ED
+        for <git@vger.kernel.org>; Fri,  3 Feb 2023 15:23:44 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id m8so6587025edd.10
+        for <git@vger.kernel.org>; Fri, 03 Feb 2023 15:23:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=s15l9aBTEyGRZvE5ciKCSelLgtDvxHPpSaEX3wkTjXo=;
+        b=Bx4q8BcZTB24BJ/qJLDkHosvADUCPwVtCtI+g/EQ1k/dqIgGKYzQEnHQnpLwOkHZ4p
+         3luQvzhDxTg+7nFWjet3cMGh9vvXkpRrDP6JYXwi3tKYl/h8mL4Gkvt4CLfrak2HNhsG
+         9srtI67ScCpwOZgvQXSaKjYl3QKA4YhUwYGS6+guwKPH1tMmonnca4+wKT/qKN84R/yP
+         3N2IeY5vQzXuM1nLdj+J36JuulQlaLH2D279ltQnNmX2MKbIc4m8cR/bIM/KxI31ZZRP
+         rr5QYaLU+RaRfF79N0uGfCrdmu8dfZq0mzmFyIaps3WGer6b22BhW0pUhNZmDiWkvJhV
+         crog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=s15l9aBTEyGRZvE5ciKCSelLgtDvxHPpSaEX3wkTjXo=;
+        b=x7cd9k0YS0DNBRkiKBO6eRtJ9hrmUA4iH49E07x3DdP+uiQO+OzWqVCLE08jTaQDhQ
+         PEjU1PLwEes1+SHfGCD0YZ7oO0U9ksDe9oKZCyYT2LWJuCKiZJ5O9pGL2pJguhPKOg+7
+         yBuWRsTWivC+bS4PCMjEXLo0luhC8BCjySmIpx/lll4LhHQ+YFSwCKMvVwb0yC6Y0Ucc
+         uNvmtM5ZhMvm09L7cy9hFJG5CtBBdNXJ8oyC1CJsInmx/WsefDiZ/Glem6wEeOlI3R0F
+         1C0fOoeXLjR05LwX0dOwD5njO2VWC+s0PnX489JF+20F8NT2WtzFeY1YtnN1J/mSXAVK
+         gxTw==
+X-Gm-Message-State: AO0yUKVK0uoIXeyzW6n8NRmRZABm8kNFnAokcnYhDirlm6FjTvnp/0h+
+        l5ZFpRq4ykm0wrXGawgFPY2smOSc2u+LPAg9lfE=
+X-Google-Smtp-Source: AK7set9ECfXm4A8rLfbdgbcH7omFjd5Q7JfhXZ7675GQRiaIYtocjopQptejFYkBAGyiN5//VccZ2w==
+X-Received: by 2002:a05:6402:b27:b0:4a2:2daf:adcd with SMTP id bo7-20020a0564020b2700b004a22dafadcdmr11914570edb.27.1675466622481;
+        Fri, 03 Feb 2023 15:23:42 -0800 (PST)
+Received: from titov.fritz.box ([216.24.213.52])
+        by smtp.gmail.com with ESMTPSA id u4-20020aa7db84000000b0049f88f00f70sm1787917edt.7.2023.02.03.15.23.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Feb 2023 15:23:41 -0800 (PST)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Paolo Bonzini <pbonzini@redhat.com>,
+        Johannes Sixt <j6t@kdbg.org>, Tassilo Horn <tsdh@gnu.org>
+Subject: [PATCH v1 0/3] userdiff: Java updates
+Date:   Sat,  4 Feb 2023 00:23:36 +0100
+Message-Id: <20230203232339.216592-1-rybak.a.v@gmail.com>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: Hash for a commit sourcetree beside to a commit hash
-Content-Language: en-GB
-To:     Andry <andry@inbox.ru>,
-        =?UTF-8?B?xJBvw6BuIFRyw6LMgG4gQ8O0bmcgRGFuaA==?= 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org
-References: <1798489336.20230203042837@inbox.ru> <Y9xq5VAMjzUqTb6X@danh.dev>
- <563617028.20230203052145@inbox.ru>
- <22255406-42da-9ac3-4783-11a035877a3c@iee.email>
- <1309893232.20230203163720@inbox.ru>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <1309893232.20230203163720@inbox.ru>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/02/2023 13:37, Andry wrote:
-> Hello Philip,
->
->
->
-> Friday, February 3, 2023, 2:11:19 PM, you wrote:
->
-> PO> On 03/02/2023 02:21, Andry wrote:
->>> Đoàn, 
->>> Friday, February 3, 2023, 5:01:09 AM, you wrote:
->>> ĐTCD>         git rev-list <a-commit-tish> |
->>> ĐTCD>         while read commit; do
->>> ĐTCD>                 if test $(git rev-parse $commit^{tree}) = $hash; then
->>> ĐTCD>                         echo $commit
->>> ĐTCD>                         break
->>> ĐTCD>                 fi
->>> ĐTCD>         done
->>>
->>> Nice, but I can not apply this over a git hub or a web interface without a clone.
-> PO> As a 'Distributed'-VCS, cloning the repository would be the de-facto
-> PO> normal approach, otherwise you have re-invented centralised VCS ;-)
->
-> Cloning repository is a heavy operation by downloading everything instead of search a single commit.
-> And searching at the remote does not make it a central.
+Three patches to improve builtin userdiff support for Java features.  Some
+pretty old features -- type parameters aka generics are actually older than Git,
+and some quite recent features of Java: records and sealed classes, released in
+Java 16 and Java 17 correspondingly, both from 2021.
 
-It's not local though ;-)
+https://en.wikipedia.org/wiki/Java_version_history
 
-Given that there's usually a trusted remote in this scenario (that's why
-your searching it) it does feel very like a 'centralised' VCS, even if
-formally is isn't stated as such.
->
-> PO> Alternatively, you could approach the server (hub/web interface)
-> PO> provider to see if they are willing to provide that level of search
-> PO> interface.
->
-> The GitHub already provides that in the search field. Just input a hash and see what happens.
+Andrei Rybak (3):
+  userdiff: support Java type parameters
+  userdiff: support Java record types
+  userdiff: support Java sealed classes
 
-There is still a need to walk the commit graph to discover each commit's
-tree to do the look-back. There are some catch 22 steps to be done.
+ t/t4018/java-class-type-parameters                     | 6 ++++++
+ t/t4018/java-class-type-parameters-implements          | 6 ++++++
+ t/t4018/java-interface-type-parameters                 | 6 ++++++
+ t/t4018/java-interface-type-parameters-extends         | 6 ++++++
+ t/t4018/java-non-sealed                                | 8 ++++++++
+ t/t4018/java-record                                    | 6 ++++++
+ t/t4018/java-record-type-parameters                    | 6 ++++++
+ t/t4018/java-sealed                                    | 7 +++++++
+ t/t4018/java-sealed-permits                            | 6 ++++++
+ t/t4018/java-sealed-type-parameters                    | 6 ++++++
+ t/t4018/java-sealed-type-parameters-implements-permits | 6 ++++++
+ t/t4018/java-sealed-type-parameters-permits            | 6 ++++++
+ userdiff.c                                             | 2 +-
+ 13 files changed, 76 insertions(+), 1 deletion(-)
+ create mode 100644 t/t4018/java-class-type-parameters
+ create mode 100644 t/t4018/java-class-type-parameters-implements
+ create mode 100644 t/t4018/java-interface-type-parameters
+ create mode 100644 t/t4018/java-interface-type-parameters-extends
+ create mode 100644 t/t4018/java-non-sealed
+ create mode 100644 t/t4018/java-record
+ create mode 100644 t/t4018/java-record-type-parameters
+ create mode 100644 t/t4018/java-sealed
+ create mode 100644 t/t4018/java-sealed-permits
+ create mode 100644 t/t4018/java-sealed-type-parameters
+ create mode 100644 t/t4018/java-sealed-type-parameters-implements-permits
+ create mode 100644 t/t4018/java-sealed-type-parameters-permits
 
-How do you determine the sourcetree has that starts this process? (have
-we accidentally created an XY problem?)
+-- 
+2.39.1
 
-Obliterating history is hard [1].
---
-Philip
-
-[1]
-https://lore.kernel.org/git/5cab1530-f8b6-cef3-7b93-48fad410a160@iee.email/
