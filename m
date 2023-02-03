@@ -2,102 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA411C61DA4
-	for <git@archiver.kernel.org>; Thu,  2 Feb 2023 23:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74D71C636D3
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 01:03:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233348AbjBBX6c convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 2 Feb 2023 18:58:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37570 "EHLO
+        id S232402AbjBCBDd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Feb 2023 20:03:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232240AbjBBX6b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Feb 2023 18:58:31 -0500
-X-Greylist: delayed 602 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 02 Feb 2023 15:58:29 PST
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 553572F7B6
-        for <git@vger.kernel.org>; Thu,  2 Feb 2023 15:58:29 -0800 (PST)
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 312NljX13165638
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 2 Feb 2023 23:47:46 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>,
-        "'Konstantin Ryabitsev'" <konstantin@linuxfoundation.org>,
-        "'Eli Schwartz'" <eschwartz93@gmail.com>,
-        "'Git List'" <git@vger.kernel.org>
-References: <a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com> <Y9jlWYLzZ/yy4NqD@tapette.crustytoothpaste.net> <20230131150555.ewiwsbczwep6ltbi@meerkat.local> <Y9mXB1LaYSUJBlwF@tapette.crustytoothpaste.net> <230201.86pmatr9mj.gmgdl@evledraar.gmail.com> <Y9ry5Wxck4s/X2B+@tapette.crustytoothpaste.net> <xmqqh6w5x8i8.fsf@gitster.g> <Y9xAv1reHJRj7iKA@tapette.crustytoothpaste.net>
-In-Reply-To: <Y9xAv1reHJRj7iKA@tapette.crustytoothpaste.net>
-Subject: RE: Stability of git-archive, breaking (?) the Github universe, and a possible solution
-Date:   Thu, 2 Feb 2023 18:47:50 -0500
-Organization: Nexbridge Inc.
-Message-ID: <01a901d93760$c690d970$53b28c50$@nexbridge.com>
+        with ESMTP id S230021AbjBCBDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Feb 2023 20:03:32 -0500
+Received: from smtp29.i.mail.ru (smtp29.i.mail.ru [95.163.41.68])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B8564390C
+        for <git@vger.kernel.org>; Thu,  2 Feb 2023 17:03:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail4;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:To:Message-ID:Reply-To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=OItjst8ARpxdATuV/0LadgmCHrHVSKoHUwkwZ0zB9eU=;
+        t=1675386209;x=1675476209; 
+        b=tLEGLoNmbR9H+rAHX34SF/LUbDay4ZO/xUJPzOz0/j9sSCz54xh2scgAUiUW78xt7WOW9XXLtNlM/Dv25aggA5bDsuzpV1ePFbeLpnp2zUF+2FDeWyp39+zaSwhYhUlVeJcb+iqjrhIo0uqyLSoxX+B7hbXnQUed5F3qdk65LfAPK6YLixceUbgi2GYtb3Ds9ELOSfZdiE1x13RUrRy7sc1605oX9Fz1lWJ+p20BnThOMvTztMEQo/jt6zmf/xShAPNhi5SP/ISoWS5C9a3WPDzrIAcK3k4u3m4ZgQPtnLv0jvySBW/Zc5JDjUOHUi7DK0b21JjdQjDE8j6vfnowWw==;
+Received: by smtp29.i.mail.ru with esmtpa (envelope-from <andry@inbox.ru>)
+        id 1pNkUA-00CBRV-K4
+        for git@vger.kernel.org; Fri, 03 Feb 2023 04:03:26 +0300
+Date:   Fri, 3 Feb 2023 04:04:12 +0300
+From:   Andry <andry@inbox.ru>
+Reply-To: Andry <andry@inbox.ru>
+Message-ID: <1628944263.20230203040412@inbox.ru>
+To:     git@vger.kernel.org
+Subject: Re: nested submodules detection w/o .gitmodules file
+In-Reply-To: <1716310675.20230122233403@inbox.ru>
+References: <1716310675.20230122233403@inbox.ru>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQLiF3R71KYQrOeqrorv00GrNqikswMEgN+XA4BU8XsBkCBbTgJpxkKiAjqemSAB7GONiQHKluEVrCcOheA=
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Authentication-Results: smtp29.i.mail.ru; auth=pass smtp.auth=andry@inbox.ru smtp.mailfrom=andry@inbox.ru
+X-Mailru-Src: smtp
+X-7564579A: B8F34718100C35BD
+X-77F55803: 4F1203BC0FB41BD9D919194CF4FC6604C1327866F5A8C549A8E0A7997D2AD150182A05F53808504064600C617FA54118A17B0B7A05430999AFEF5C7725AE493DBA9CEC61761100D4
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7466896EF24E80F12EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063770995E888C5C26978638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8D69C57A434B5DEBB3E0ACFDA3C6261766F9789CCF6C18C3F8528715B7D10C86878DA827A17800CE746CC513BB44FBA1D9FA2833FD35BB23D9E625A9149C048EE1E561CDFBCA1751FF6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F7900637FBB89C51EA700D9A389733CBF5DBD5E9B5C8C57E37DE458BD9DD9810294C998ED8FC6C240DEA76428AA50765F79006376D4A5E4BD7D08C50D81D268191BDAD3DBD4B6F7A4D31EC0BEA7A3FFF5B025636D81D268191BDAD3D78DA827A17800CE7BC7D820328A067A1EC76A7562686271ED91E3A1F190DE8FD2E808ACE2090B5E14AD6D5ED66289B5259CC434672EE63711DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C360781E301B93023135872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34AF12ADB97C97CD89D53C7642C6788CE2169A033DFB7745884F896DC44AD8A7161AF89DF82F331A801D7E09C32AA3244CCF777BA7D5A3701089B7E292302A43DA7101BF96129E40113EB3F6AD6EA9203E
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojUCXb8yEWKAmNMc/2KvsxFQ==
+X-Mailru-Sender: DC3EB4EBD01594E4BED89F5F1533D14EE6185506797FBF95A17B0B7A0543099906869FDE987C96F758EE59803C9A990DFB559BB5D741EB96FE679880309AA8C36F53C80213D1719C67EA787935ED9F1B
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 2, 2023 6:02 PM, brian m. carlson wrote:
->On 2023-02-01 at 23:37:19, Junio C Hamano wrote:
->> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->>
->> > I don't think a blurb is necessary, but you're basically
->> > underscoring the problem, which is that nobody is willing to promise
->> > that compression is consistent, but yet people want to rely on that
->> > fact.  I'm willing to write and implement a consistent tar spec and
->> > to guarantee compatibility with that, but the tension here is that
->> > people also want gzip to never change its byte format ever, which
->> > frankly seems unrealistic without explicit guarantees.  Maybe the
->> > authors will agree to promise that, but it seems unlikely.
->>
->> Just to step back a bit, where does the distinction between
->> guaranteeing the tar format stability and gzip compressed bitstream
->> stability come from?  At both levels, the same thing can be expressed
->> in multiple different ways, I think, but spelling out how exactly the
->> compressor compresses is more involved than spelling out how entries
->> in a tar archive is ordered and each entry is expressed, or something?
->
->Yes, at least with my understanding about how gzip and compression in general
->work.
->
->The tar format (and the pax format which builds on it) can mostly be restricted by
->explaining what data is to be included in the pax and tar headers and how it is to be
->formatted.  If we say, we will always write such and such information in the pax
->header and sort the keys, and we write such and such information in the tar header,
->then the format is completely deterministic, and we can make nice guarantees.
->
->My understanding about how Lempel-Ziv-based compression algorithms work is that
->there's a lot more freedom to decide how best to compress things and that there
->isn't always a logical obvious choice, but I will admit my understanding is relatively
->limited.  If someone thinks we can effectively succeed in supporting compression
->more than just relying on gzip, I would be delighted to be shown to be wrong.
+Hello Git,
 
-The nice part about gzip is that it is generally available on virtually all platforms (or can be easily obtained). Other compression forms, like bz2, which sometimes produces more dense compression, are not necessarily available. Availability is something I would be worried about (clone and checkout failures).
 
-Tar formats are also to be used carefully. Not all platform implementations of tar support all variants. "ustar" is fairly common but there are others that are not. Interoperability needs to be the biggest factor in this decision, IMHO, rather than compression rates.
 
-The alternative is having git supply its own implementation, but that is a longer term migration problem, resembling the SHA-256 migration.
+Sunday, January 22, 2023, 11:34:03 PM, you wrote:
 
->
->> > That would probably break things, because gzip is GPLv3, and we'd
->> > need to ship a much older GPLv2 gzip, which would probably differ
->> > from the current behaviour, and might also have some security problems.
->>
->> Yup, security issues may make bit-for-bit-stability unrealistic.
->> IIRC, the last time we had discussion on this topic, we settled on
->> stability across the same version of Git (i.e. deterministic result)?
+A> Hello Git,
 
-In the old days, it was export concerns. Fortunately, git never really hit those in a post-2007 timeframe. I would not bank on this issue staying off the table.
+A> I have a pretty long investigation has been started from usage 3dparty projects related directly or indirectly to the git submodules:
+A> ...
+A> So, who is right and what is wrong here?
 
---Randall
+Is nobody interested in the issue?
 
