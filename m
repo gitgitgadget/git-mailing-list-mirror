@@ -2,93 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AEA7C05027
-	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 19:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD837C05027
+	for <git@archiver.kernel.org>; Fri,  3 Feb 2023 19:34:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232926AbjBCTHa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Feb 2023 14:07:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50678 "EHLO
+        id S233013AbjBCTeR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Feb 2023 14:34:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232299AbjBCTH2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Feb 2023 14:07:28 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9F111BAD4
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 11:07:26 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id n13so6201422plf.11
-        for <git@vger.kernel.org>; Fri, 03 Feb 2023 11:07:26 -0800 (PST)
+        with ESMTP id S232000AbjBCTeQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Feb 2023 14:34:16 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB43E40F4
+        for <git@vger.kernel.org>; Fri,  3 Feb 2023 11:34:13 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id z3so4483287pfb.2
+        for <git@vger.kernel.org>; Fri, 03 Feb 2023 11:34:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Pr7SpDAPZBMoFVC7i2p0r5dXQvjGr0pBZAkru43GBjw=;
-        b=qWZSZRHYmzJ/FpPSoVIUUBfWi0FLbHaZp5L/f/uleHNQW7hZ6wZ2GTA0FgdaXEb27o
-         iTPiyEwAbqStoSmB9KkmtzuLdNBWp5TGjyXwPsPCcWsfnfytx01P9TCEf0emR0JCNXQ4
-         iTL5TPdHSMV25eDzxzbIh2DPr/XLetdXX+WRCGHZ4oBzhWll1CiV4x3ZRuwAoBuwYAsp
-         m6+fbITnd8kZ6EXBUIBTi1BO3N6NcGkEQLWQ+v2hHcdn299ki2nGBogpZDQIvCxWd2MF
-         WiDxBKdakLMAqh9po+0+sULGpeP9Pnf31/kOUXDUswjMaaDdJc4hTlgo/Zao7Pa2G+ZM
-         pJaQ==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ahTFqGfKn4WRoFrHwxmIs0+9jBmOzBWxAqA+awBa2sw=;
+        b=NTKiowl6XmeBYbseCj5GHY/T10XzCV3yDXzNzaq07D9pmsg3iQbLWIuW9a3U8NwdLh
+         plK9OT5yWliClWS315EnLwe/Km0FvoQE9BvUAI0cXpGR+GUHQOb6ApXgukCfmPoo8bRe
+         Ixyq16z8i1IeLRGxP0q+cPU2JXLJHB/Cse8XIUfVCe1sA4FuOXrg1HLeA/qVSXgAgssV
+         MJE2xHXgDFsTQ30FKL1rpT1seq+xNUlWvjSHcUB4A3SRbCo7lOCrHB5Nb8RZuYyHT4b/
+         vGm9oZdFSgtpSoDyrMPR5fIWvYkt2jOtAzwXSbdRlcO+bn+stf4+viqQ/kJkm8SjN5KY
+         LFLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Pr7SpDAPZBMoFVC7i2p0r5dXQvjGr0pBZAkru43GBjw=;
-        b=OfmA5BlOs9bUGLFKeka+6A/haLpcxdpXq5a2FhQkCo9/LNR2rWdOYd03kUskt7K/9h
-         rd+8N0gBsI8BtU4hXX0fVoR+7fyu7xzntcQjJ81Y1/FIk0jGAm4WXytmLwdM6Ro70dGZ
-         URQubweKa5IDbOrj7826GfzOrpBkiw48HqKnIacWA+WkhTWrcnNVoQaBOlW9WsrpAsbO
-         KcD4pcQ/V7h3D78VJxo2hcJwWF08tKr7GVUJ1vBduTWV1jBbOJAiyyWQ0YIzmtrz9nB4
-         5smiJ8qYqzO6F6w3aEB1MeklsoDKpHC01fLyPdOway11YP4XfKO2HtI4j4H6tYP2t2ke
-         BpVw==
-X-Gm-Message-State: AO0yUKWEjewGPNjWglRyBuJbAko+QeMoNd/Cg3MFUZx2PYF4TnWDsJKT
-        pgFjliJYvMGIoVRplIf594/Yq+1ZwhI=
-X-Google-Smtp-Source: AK7set/8QpCDorTVEVjJD5+NzJweAPlMc4O7Rbosk1HL7u1dZvO6Joks2Af3vdX8ldT8KKGw+W9YJQ==
-X-Received: by 2002:a17:902:c406:b0:196:2ab7:c44 with SMTP id k6-20020a170902c40600b001962ab70c44mr14642034plk.14.1675451246073;
-        Fri, 03 Feb 2023 11:07:26 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ahTFqGfKn4WRoFrHwxmIs0+9jBmOzBWxAqA+awBa2sw=;
+        b=GKAELDquXOa7N/zTxjsKPYe1noD4WIm5f8eCfQQvGOM8mrezxDr/0Z7RGjInY7NdUI
+         h2TJirb/jP/afd70Gx21FVhIpWq1z/VLZGDID6Kl0mcfNaaQxXI++bvzsARRQZDSisOo
+         VfQhDqIsR8YF39J9lj6odVGuYTq7rLysyvxON/vpCgfb+IcHS84m9uSWeQHhcPKTd5Cf
+         zjXZWalQv5FxRPOwamS9qO/UrFHLKHLNN7UKsaAnlfvCPnplPNPLd0PHSz2hLB6/sXou
+         0PM9Jb3RC5QKkgSksTNBa1rJfBon7PRgwf5k9il7P7fxqBXzmjl+IkZR6NdLCPPaG4wz
+         mPBg==
+X-Gm-Message-State: AO0yUKX0pP1HMyIF0WYRx0CltVyTchLwuTeEx9iJAXZHhWSckaptcJxk
+        UtT4YKFnH8qY65SMrS50V6Q=
+X-Google-Smtp-Source: AK7set9tT6xh5TtZUdZ65aq+jT9wVw64quPBM0i9CO3iYNlUtfm13SLwUBG3/s19Zr0V1gheGWY+Ag==
+X-Received: by 2002:a05:6a00:15cb:b0:590:7735:5384 with SMTP id o11-20020a056a0015cb00b0059077355384mr13144718pfu.23.1675452853139;
+        Fri, 03 Feb 2023 11:34:13 -0800 (PST)
 Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id jb10-20020a170903258a00b00194afb5a405sm1940073plb.118.2023.02.03.11.07.25
+        by smtp.gmail.com with ESMTPSA id a77-20020a621a50000000b0058e12658485sm2255352pfa.94.2023.02.03.11.34.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 11:07:25 -0800 (PST)
+        Fri, 03 Feb 2023 11:34:12 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
-Subject: Re: [GSoC][PATCH] merge: use reverse_commit_list() for list reversal
-References: <CABPp-BHE=zGT_vPW8+TZn-wqmufhVdGQT-=LXoLQkto6TMrnrA@mail.gmail.com>
-        <20230203174910.123441-1-five231003@gmail.com>
-        <CABPp-BHnXy+Hpv4y83znMxDGOTCZQfYhnDon=ehBDGOxAnW1vQ@mail.gmail.com>
-Date:   Fri, 03 Feb 2023 11:07:25 -0800
-In-Reply-To: <CABPp-BHnXy+Hpv4y83znMxDGOTCZQfYhnDon=ehBDGOxAnW1vQ@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 3 Feb 2023 10:02:36 -0800")
-Message-ID: <xmqqmt5uo9ea.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Slavica =?utf-8?B?xJB1a2nEhw==?= <slawica92@hotmail.com>
+Subject: Re: [PATCH 0/3] add: remove Perl version of "git add -[pi]"
+References: <cover-0.3-00000000000-20230203T125859Z-avarab@gmail.com>
+        <Y906yEGFEIglRyVb@coredump.intra.peff.net>
+Date:   Fri, 03 Feb 2023 11:34:12 -0800
+In-Reply-To: <Y906yEGFEIglRyVb@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 3 Feb 2023 11:48:08 -0500")
+Message-ID: <xmqqilgio85n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Also, gitgitgadget #1156 was opened because of my suggestion to do
-> this as a "leftoverbit", i.e. I was suggesting it as a micro-project
-> to new people.  I should have checked at the time that it was a valid
-> micro-project, but neglected to do so.  You merely came along and
-> started implementing what was suggested.
+> On Fri, Feb 03, 2023 at 05:30:01PM +0100, Ævar Arnfjörð Bjarmason wrote:
 >
-> Anyway, the point of the GSoC microprojects are to make sure you are
-> familiar with how to format and submit patches to the mailing list and
-> respond; having the code you contribute in a microproject be accepted
-> is not required, just a bonus.  And you clearly managed to send the
-> patch to the list, had a correctly formatted commit message (short
-> summary with area and correct lack of capitalization, good
-> descriptions, signed-off-by), got the additional notes for reviewers
-> (very helpful!) in the correct spot, etc., so I still see this as a
-> successful microproject for you.  I apologize for not doing my due
-> diligence when I suggested it, and for us not catching that it should
-> have been closed when someone implemented the valid half of the
-> suggestion last year.
+>> After it was made the default we had a next-release regression fix[1],
+>> but haven't had any issues since then. Any outstanding bugs in it are
+>> something we'd fix in the C code, not something where users are likely
+>> to want an escape hatch to scramble back to the Perl implementation.
+>
+> I'm in favor of dropping the perl version, but note that this paragraph
+> isn't quite accurate. There was at least one more regression after that,
+> solved by fb094cb583 (Merge branch 'js/add-p-diff-parsing-fix',
+> 2022-09-09).
+>
+> I'd probably leave the final decision on its status to Johannes. This is
+> (I think) the last time we discussed it:
+>
+>   https://lore.kernel.org/git/rsrn5988-37n4-7q45-s1o9-6n40rropp120@tzk.qr/
+>
+> That was 6 months ago, so maybe it's time now.
 
-One possible action item for us may be to rename or give comment to
-highlight the in-place destructive nature of the function to make it
-easier for developers to use (or avoid misusing) it.
+Sounds good to me, too.
