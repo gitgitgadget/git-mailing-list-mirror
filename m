@@ -2,65 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C843C636CC
-	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 22:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6835C636CC
+	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 23:19:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231348AbjBDW5T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Feb 2023 17:57:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55700 "EHLO
+        id S230379AbjBDXTH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Feb 2023 18:19:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjBDW5S (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2023 17:57:18 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51E7C23C59
-        for <git@vger.kernel.org>; Sat,  4 Feb 2023 14:57:17 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id j25so3931042wrc.4
-        for <git@vger.kernel.org>; Sat, 04 Feb 2023 14:57:17 -0800 (PST)
+        with ESMTP id S229547AbjBDXTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2023 18:19:06 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FFA21B558
+        for <git@vger.kernel.org>; Sat,  4 Feb 2023 15:19:05 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id ba1so3425053wrb.5
+        for <git@vger.kernel.org>; Sat, 04 Feb 2023 15:19:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UkGV84LzyNqPexFlKIGd6ONrrJdBMh2cxNjgZg1dkE4=;
-        b=GYp9jIPpaD/mt6HUDi23ttg89itpYnbxI2pMj3X8tGu+Qe0sMQ64ufYMKXk7qZ7cPv
-         4heLuhEDMOYwRHlSs1Axhs2X9p/0eG9KisK4QPe0Z8K2ru+YrHkyi5WYc+msG35kGvMe
-         0ZGzfiOp5mbWjP/H7BPaJttg5HQiTAnOZnw1ytJbOxfmahfN6ZqKQPXWr8n8HPlQQiY0
-         Ywo+cnisQ5eNnv2l/dSf2VqW8zTpvjMtXLGpjpx/ktflG+Hc/hJzgkycK9lE50XS1WCS
-         bYwJc+gY8j6EEHo+UiXTsGN0EC+VA4Iw/216yGAxLCB1qZSvuIuhtzCzlnKTkJdwqgZF
-         1rnQ==
+        bh=mNJJiwU9M+h9eSbS5AaDSn52RciE9m7YEJY1wB3QsjU=;
+        b=lwsZ7Cts7nz5I+pSLudeb/SNERoluhavrM6uF0DhZx6Uj29j0e2C3xEukCws98RTYa
+         wSxcTKfhYOtY096296D/nv84XsuSMB+j4f5me6KoxpzE8UlbSyWUspzWPkJfjA2O+T2A
+         tf4hbBivXLXCc4RsTWGmpf0pdNIXAGRJU10xjtkXKguOCc2uSOAWGAW6DcESwPaXNwPc
+         k9W1/z2X2q2hUYCxYfsVQVRX2qOy1SpaKuVKmJqX7vL8KK8YMTeN1S26UqbKc72LOeL2
+         NpxoXJmbfK+V5yeSWyWXK9adK3udUwIVds//HwL3rqlhAP/NaiciYAMWJt+FiVeZciPB
+         dyfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UkGV84LzyNqPexFlKIGd6ONrrJdBMh2cxNjgZg1dkE4=;
-        b=PJ55qB75oCmd2A5G1lK3Ni5U93Xq/levbxF08ZkAv7xAN6Qsn7MeVCG7lullxFsl6m
-         n4qWjkZFPxaI7GkY4ep0vJgWpsdXbx/KXNvbylQK/xbwoznfnyw7YkV0El0pxKTBcC7+
-         tkoBiQXdiz2zC0ppettSLTKYCcf4xNz/3qRZwAEFaoV3aLqYc/cFuIf9zoefdDF4xnT6
-         hZby72HwFxfc3IYWWKRNEaYrzkFaD266JjZZFssjHpDXWS5ZAz1+YRyRMRmYbRhjmu0N
-         3RR0GiDdF8davn+FA+pvhvNI8IA8b+8+qYaZ+1Xgn3agvO9hNZlOTufX/mYV4ZyFQZMg
-         6Pmw==
-X-Gm-Message-State: AO0yUKXOwDM5P75tTt49T5KceiViAYnDy+eUwg6kOigqs7hMnX2r5qAQ
-        6GjbApP/ssbGY+wsL98gh7ew3uETFvc=
-X-Google-Smtp-Source: AK7set8/n93rI4v/LrUeZ17OyW9XxQyzbbiV/gfISpG51WW9+JhgmYHKwW562o0PWHN6cB2cQmgqqA==
-X-Received: by 2002:a5d:456e:0:b0:2c3:db61:20ec with SMTP id a14-20020a5d456e000000b002c3db6120ecmr3918760wrc.23.1675551435855;
-        Sat, 04 Feb 2023 14:57:15 -0800 (PST)
+        bh=mNJJiwU9M+h9eSbS5AaDSn52RciE9m7YEJY1wB3QsjU=;
+        b=soj/bFsXcpw2uCiGLLNiVdsEqAQ1H22A+V4OQhUfaw47R1ueW6aMrMfkvzm4B4PDwK
+         WGTVDZGXleZ5G9bb+i+hRdyh+Aers/Lfw2vWNcK56hrncyRLYpAR6gxFsyMWfa/RaDya
+         BjHx1IaeonBnJzzNtWaJlaTJxSZNQoCenV8VEv1ktVVmyDQGXUIu77t+bmvVSdUaThkx
+         OlXvkKkDj1Z9M0PZWDeWXBJPgxBrP4MeB/b+R3ixe5e9sEBL8/R8E7tL+l2rw4tbiY2j
+         f6pWTba10FpPa6qNE6/YE7D70GwQucMhKywV9KlhL28D86uCdiT30np9NoTTGV0Sibt0
+         4j/A==
+X-Gm-Message-State: AO0yUKUj1v1Q6kgDMvK3IUJgLp0jnwzjqxDDk3WnSwQ/Yn5oy+tYGIbo
+        qqvT5H7hzT6DrQmga9q1WvU=
+X-Google-Smtp-Source: AK7set/JeK1RSJ/DBtVFyZvbc1mc2QvGJJ6vBjD+TDdzq5kOcx02rEi/PIEThc0z1nLdrAMyvNjMxQ==
+X-Received: by 2002:a5d:55ca:0:b0:2c3:e0a0:94f with SMTP id i10-20020a5d55ca000000b002c3e0a0094fmr2190790wrw.37.1675552743678;
+        Sat, 04 Feb 2023 15:19:03 -0800 (PST)
 Received: from [192.168.2.52] (85.red-88-14-56.dynamicip.rima-tde.net. [88.14.56.85])
-        by smtp.gmail.com with ESMTPSA id l13-20020adffe8d000000b002bfbda53b98sm2373571wrr.35.2023.02.04.14.57.15
+        by smtp.gmail.com with ESMTPSA id k6-20020adfb346000000b0027cb20605e3sm5386762wrd.105.2023.02.04.15.19.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 04 Feb 2023 14:57:15 -0800 (PST)
-Subject: [PATCH v2] bisect: fix "reset" when branch is checked out elsewhere
+        Sat, 04 Feb 2023 15:19:03 -0800 (PST)
+Subject: [PATCH v3 0/4] fix die_if_checked_out() when ignore_current_worktree
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
-Message-ID: <ada28944-6e9e-d4e7-74c9-ffadaf406e1f@gmail.com>
-Date:   Sat, 4 Feb 2023 23:57:14 +0100
+References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
+ <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
+Message-ID: <02a15ebb-b927-1048-db2e-576abef9538b@gmail.com>
+Date:   Sun, 5 Feb 2023 00:19:01 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
+In-Reply-To: <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -68,87 +69,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 1d0fa89 (checkout: add --ignore-other-wortrees, 2015-01-03) we
-have a safety valve in checkout/switch to prevent the same branch from
-being checked out simultaneously in multiple worktrees.
+Changes from v2:
 
-If a branch is bisected in a worktree while also being checked out in
-another worktree; when the bisection is finished, checking out the
-branch back in the current worktree may fail.
+ - is_shared_symref() is introduced in its own commit
+ - code style fixes
 
-Let's teach bisect to use the "--ignore-other-worktrees" flag.
+Rubén Justo (4):
+  worktree: introduce is_shared_symref()
+  branch: fix die_if_checked_out() when ignore_current_worktree
+  rebase: refuse to switch to a branch already checked out elsewhere (test)
+  switch: reject if the branch is already checked out elsewhere (test)
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
-Range-diff against v1:
-1:  f902db6bfb ! 1:  72e1526313 bisect: fix "reset" when branch is checked out elsewhere
-    @@ builtin/bisect.c: static int bisect_reset(const char *commit)
-      
-      		cmd.git_cmd = 1;
-     -		strvec_pushl(&cmd.args, "checkout", branch.buf, "--", NULL);
-    -+		strvec_pushl(&cmd.args, "checkout", "--ignore-other-worktrees",
-    -+				branch.buf, "--", NULL);
-    ++		strvec_pushl(&cmd.args, "checkout", NULL);
-    ++		if (!commit)
-    ++			strvec_pushl(&cmd.args, "--ignore-other-worktrees", NULL);
-    ++		strvec_pushl(&cmd.args, branch.buf, "--", NULL);
-      		if (run_command(&cmd)) {
-      			error(_("could not check out original"
-      				" HEAD '%s'. Try 'git bisect"
+ branch.c          | 14 +++++++----
+ t/t2060-switch.sh | 29 ++++++++++++++++++++++
+ t/t3400-rebase.sh | 14 +++++++++++
+ worktree.c        | 63 +++++++++++++++++++++++------------------------
+ worktree.h        |  6 +++++
+ 5 files changed, 89 insertions(+), 37 deletions(-)
 
- builtin/bisect.c            |  5 ++++-
- t/t6030-bisect-porcelain.sh | 23 +++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 1 deletion(-)
+Range-diff against v2:
+1:  cacdc022f8 < -:  ---------- branch: fix die_if_checked_out() when ignore_current_worktree
+-:  ---------- > 1:  6bbe05f452 worktree: introduce is_shared_symref()
+-:  ---------- > 2:  d787afe77f branch: fix die_if_checked_out() when ignore_current_worktree
+2:  6e9ed45f4e = 3:  4c418d37f8 rebase: refuse to switch to a branch already checked out elsewhere (test)
+3:  a66e58e7b2 = 4:  00b075af6a switch: reject if the branch is already checked out elsewhere (test)
 
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 7301740267..46fba8db50 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -244,7 +244,10 @@ static int bisect_reset(const char *commit)
- 		struct child_process cmd = CHILD_PROCESS_INIT;
+Diff against v2:
+diff --git a/branch.c b/branch.c
+index aa854fa65f..64b7dbfd17 100644
+--- a/branch.c
++++ b/branch.c
+@@ -820,10 +820,8 @@ void remove_branch_state(struct repository *r, int verbose)
+ void die_if_checked_out(const char *branch, int ignore_current_worktree)
+ {
+ 	struct worktree **worktrees = get_worktrees();
+-	int i;
  
- 		cmd.git_cmd = 1;
--		strvec_pushl(&cmd.args, "checkout", branch.buf, "--", NULL);
-+		strvec_pushl(&cmd.args, "checkout", NULL);
-+		if (!commit)
-+			strvec_pushl(&cmd.args, "--ignore-other-worktrees", NULL);
-+		strvec_pushl(&cmd.args, branch.buf, "--", NULL);
- 		if (run_command(&cmd)) {
- 			error(_("could not check out original"
- 				" HEAD '%s'. Try 'git bisect"
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 3ba4fdf615..fb01bd6abc 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -122,6 +122,29 @@ test_expect_success 'bisect start without -- takes unknown arg as pathspec' '
- 	grep bar ".git/BISECT_NAMES"
- '
+-	for (i = 0; worktrees[i]; i++)
+-	{
++	for (int i = 0; worktrees[i]; i++) {
+ 		if (worktrees[i]->is_current && ignore_current_worktree)
+ 			continue;
  
-+test_expect_success 'bisect reset: back in a branch checked out also elsewhere' '
-+	echo "shared" > branch.expect &&
-+	test_bisect_reset() {
-+		git -C $1 bisect start &&
-+		git -C $1 bisect good $HASH1 &&
-+		git -C $1 bisect bad $HASH3 &&
-+		git -C $1 bisect reset &&
-+		git -C $1 branch --show-current > branch.output &&
-+		cmp branch.expect branch.output
-+	} &&
-+	test_when_finished "
-+		git worktree remove wt1 &&
-+		git worktree remove wt2 &&
-+		git branch -d shared
-+	" &&
-+	git worktree add wt1 -b shared &&
-+	git worktree add wt2 -f shared &&
-+	# we test in both worktrees to ensure that works
-+	# as expected with "first" and "next" worktrees
-+	test_bisect_reset wt1 &&
-+	test_bisect_reset wt2
-+'
-+
- test_expect_success 'bisect reset: back in the main branch' '
- 	git bisect reset &&
- 	echo "* main" > branch.expect &&
+diff --git a/worktree.c b/worktree.c
+index d500d69e4c..34043d8fe0 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -434,17 +434,12 @@ const struct worktree *find_shared_symref(struct worktree **worktrees,
+ 					  const char *symref,
+ 					  const char *target)
+ {
+-	const struct worktree *existing = NULL;
+-	int i = 0;
+ 
+-	for (i = 0; worktrees[i]; i++) {
+-		if (is_shared_symref(worktrees[i], symref, target)) {
+-			existing = worktrees[i];
+-			break;
+-		}
+-	}
++	for (int i = 0; worktrees[i]; i++)
++		if (is_shared_symref(worktrees[i], symref, target))
++			return worktrees[i];
+ 
+-	return existing;
++	return NULL;
+ }
+ 
+ int submodule_uses_worktrees(const char *path)
 -- 
 2.39.0
