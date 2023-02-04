@@ -2,93 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9C30C636CC
-	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 14:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A5F2C61DA4
+	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 15:04:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233657AbjBDODb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Feb 2023 09:03:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59694 "EHLO
+        id S233456AbjBDPEU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Feb 2023 10:04:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232557AbjBDOD3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2023 09:03:29 -0500
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F7382203E
-        for <git@vger.kernel.org>; Sat,  4 Feb 2023 06:03:28 -0800 (PST)
-Received: by mail-yb1-xb35.google.com with SMTP id a1so9473277ybj.9
-        for <git@vger.kernel.org>; Sat, 04 Feb 2023 06:03:28 -0800 (PST)
+        with ESMTP id S229516AbjBDPES (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2023 10:04:18 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1DB15FCA
+        for <git@vger.kernel.org>; Sat,  4 Feb 2023 07:04:16 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id j29-20020a05600c1c1d00b003dc52fed235so5854079wms.1
+        for <git@vger.kernel.org>; Sat, 04 Feb 2023 07:04:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z2UsWNEM+P2lAMBvN8hB8UfUbi5KiarlitlUwmvn0J8=;
-        b=NAp2pocLA9T9QrKKr5DMnOypjDxT9EdPeJ7XvOKBslDLzltoHouEESu3de/9lTWKLV
-         /Yual7wwOSHXamlwVjiRIW+/sfh6z/eCdGHkSh+6ZSwuBeF/3KS8qaTmOA5r8MPAbWHG
-         J9FkrS+z6gnRT1uu3e+9uqJOlYCGLdiC7x1HG5zfYqbQes4ViDGSk9RjkJEo8czOoumY
-         s6wJ1PDdx2A9YIhGXdUkD/gDvjF8S3nfyPSvZUJOiqPDTOPAQ4US6J1Tlxdw5lwDr1BD
-         DCrs+/+C1jXHT2rsWs4R15vn2/MM2xqOiBFjnoC7ZErfwcPKUbDMumdbx4+UYfVfJ5wB
-         WQYw==
+        bh=XHiDrPOjUwmCCuj8sT2F23uY8TIpwl93kNfGQubvxqs=;
+        b=f1oyXM9JB53Z8qAQC9a8uJvcp0vLXV/qg/YMi8ygrIplZB0WpcYVTqUAZ9zLYuHjyQ
+         1kT89Ks3NDt5rInoigYZ5/1+7UOSBijGpWhPHmnvsZ3tuArdG3eSyBIn30UEd0Oc+2Mq
+         ts+aY5dtUOq6R0EqJHR483XoZr9N0A3gIeVWFzNA0AyjJqf9/j5sr83+cotqYL/gVzf0
+         /LkHItx8U8nwTuWCvLdOgrZ5VBYA0LsioX1IVASkmMx8u15nKJh2dgQxfuG9SkkW1T5b
+         ttrIlJ9JmaCoYhPkLBA/orH4oD5IOBU93oOhl+mMhUU3Ydj3HL5MQ7+xDF+XH0QUWsK/
+         zp0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Z2UsWNEM+P2lAMBvN8hB8UfUbi5KiarlitlUwmvn0J8=;
-        b=3Rx5rp6siVZ3sOOcO4bT4fotPTokJZRkgMfcoHGDFPTSoviCnUmR5gkB9Ys8gS3skt
-         7DJ7jyjNIhqwOORP/adv4tfnjASlMAa+zwamUjOlv+ezJwaQGaHIZXj/+IPTzcSUQ0eY
-         Y29eAQrjnN5/dLefJDDZhmypTB+5xDNijDS2QxSBexYmk1FaCI7nVB7Gu4hZNgJrcNpu
-         wpr7l6zKp/b6WKsUwZW5GkaP4eImwAljxPWgSxvCdHVh/otgbkZ0xm1v/nTTY15Fj06i
-         kTtSHCOXw+lTK+PjYuoDWs/p9mOfiDMEPTt2ynxeHRIOQGZPg4OGmG0Z9gXGdECQGCAr
-         SG8A==
-X-Gm-Message-State: AO0yUKVhvpLQEeVVKTFJe3R/tGYqTlFUB6aITSbTcf2zVIvGVSMVPQQK
-        OSJ0Y2DBD/fzZM+sicfE46acoYGuDOePztq17pODrU27voY=
-X-Google-Smtp-Source: AK7set9QEH7uUxCtZ9Th9gDNergtGvp4K59innPNl+WGHiiBbk2M1elVGoGngrpY4yC4ZhwWEuQAIt53Vg7s1/Z8Bes=
-X-Received: by 2002:a25:9c49:0:b0:881:642d:90e2 with SMTP id
- x9-20020a259c49000000b00881642d90e2mr117422ybo.259.1675519407553; Sat, 04 Feb
- 2023 06:03:27 -0800 (PST)
+        bh=XHiDrPOjUwmCCuj8sT2F23uY8TIpwl93kNfGQubvxqs=;
+        b=K2c5AO+1pVnnzeHqOeEbp/kM0FE1Uh4rj0XyPoiGgs+Wska1d+EM8QotVndnf7lhAy
+         7QhExILIvze0YWM7RNg4uS2Z1AoQPG36039teNRPciv/pAyaFTbYFGuyc40qVJqPj8D1
+         VApp4gT12XT/CKxI3frm5Jrxfse9QkymZpHO7J6egEfkQoavH6ROVdrxIo2EkKD7cXm4
+         kvffkqHsYFSi/QyjVy12utE9GBYfVBur2xIb/FfvEPMSWfVL4CL/KJ/Sf0DkxdRQHvtD
+         c+dOEErhDgk9avpG812Coep9+AUwzMlTjxPzyCJbQEazfUaPuHiT3b0+vKabBb9Rih8/
+         UrSA==
+X-Gm-Message-State: AO0yUKVla5jAJ4I31V1c70lN7l4jllpJI0Jn/5maQiDNbBP+WszDTt0F
+        uiAusQTuxwhf1osX8dOftx92BATe5TfPStNSmiCPHZ5Ayxk/qw==
+X-Google-Smtp-Source: AK7set9RdutpJq8/FEeTQJ4ghKPrnlbES9AtmOUKYE5phrKYvCJHKFZzKUi5weHJog6V8evYoA7upUQkbYG4uuX5XLo=
+X-Received: by 2002:a05:600c:34c5:b0:3dc:36b8:fb99 with SMTP id
+ d5-20020a05600c34c500b003dc36b8fb99mr626101wmq.107.1675523055364; Sat, 04 Feb
+ 2023 07:04:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20230203182255.lqla3hsme6riy4w7@meerkat.local> <Y95BEaOGJy9uBHkG@coredump.intra.peff.net>
-In-Reply-To: <Y95BEaOGJy9uBHkG@coredump.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 4 Feb 2023 15:03:16 +0100
-Message-ID: <CAP8UFD1q7-XbX4C_NjyL7A-6n6Nc4MgSbUKnzQOiRyKRMtLv_w@mail.gmail.com>
-Subject: Re: The sad state of git.wiki.kernel.org
-To:     Jeff King <peff@peff.net>
-Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        git@vger.kernel.org
+References: <20230202202557.19297-1-kostya.farber@gmail.com> <xmqqa61vsniy.fsf@gitster.g>
+In-Reply-To: <xmqqa61vsniy.fsf@gitster.g>
+From:   Kostya Farber <kostya.farber@gmail.com>
+Date:   Sat, 4 Feb 2023 15:04:04 +0000
+Message-ID: <CAPRQfCZK+zAtT-4mQMAvGwNhB5O3sr3YecSvb0WHTxnC3A5r+A@mail.gmail.com>
+Subject: Re: [GSoC][PATCH] t/t5000-tar-tree: add helper function
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 4, 2023 at 12:48 PM Jeff King <peff@peff.net> wrote:
+On Thu, Feb 2, 2023 at 10:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+
+> Kostya Farber <kostya.farber@gmail.com> writes:
 >
-> On Fri, Feb 03, 2023 at 01:22:55PM -0500, Konstantin Ryabitsev wrote:
-
-> > # Should it be archived as a static site?
-> >
-> > It's possible to turn git.wiki.kernel.org into a static site with a large
-> > header on every page that it contains historical archival information, with a
-> > link to https://git-scm.com/doc
+> > Add the helper function test_file_path_exists to the
+> > interpret pax header test. This change makes it clearer
+> > as to what the test is trying to check, in this case whether
+> > a file path exists.
 >
-> This would be my preference, just because some of the old content may
-> still have value. Some pages (like old gsoc stuff) would better redirect
-> to git.github.io, but it is probably not worth the time to even try to
-> classify pages.
-
-This would be my preference too. I agree that some old content might
-still have some value. We could also move or redirect some old content
-to git.github.io, but I am not sure it's worth the time either.
-
-> > # Should it be archived and put out of its misery?
-> >
-> > The last option is to just archive the site and put it out of its increasingly
-> > irrelevant existence.
+> Really?
 >
-> I'm also OK with this, though if it is not too much work to serve the
-> old content with a warning that it may be out-of-date, that seems
-> better.
+> The code with "test -e" is already clear that it is checking if the
+> path $data exists.  This change does not make it any clearer.  What
+> it helps is that it gives a message upon failure, when the test is
+> run with the "-v" option.
 
-I agree.
+Okay, noted. I will look into the helper functions more closely to
+understand why and how they useful compared to other methods (i.e test
+-e in this instance)
 
-Thanks,
-Christian.
+> > diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+> > index d473048138..19d5bd0c04 100755
+> > --- a/t/t5000-tar-tree.sh
+> > +++ b/t/t5000-tar-tree.sh
+> > @@ -73,7 +73,7 @@ check_tar() {
+> >                       for header in *.paxheader
+> >                       do
+> >                               data=${header%.paxheader}.data &&
+> > -                             if test -h $data || test -e $data
+> > +                             if test -h $data || test_file_path_exists $data
+> >                               then
+> >                                       path=$(get_pax_header $header path) &&
+> >                                       if test -n "$path"
+>
+> Nothing seems to be adding a new helper whose name is
+> test_file_path_exists; the patch expects such a helper already
+> exists and uses it in place for existing "test -e".
+>
+> Perhaps you meant to say "use test_path_exists" not "add helper" on
+> the title, and use that function in the patch instead?
+
+Yes you are right. I made a mistake by using the wrong function name
+and I think "use test_path_exists" was my intention as a title name.
+
+> Thanks.
