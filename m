@@ -2,98 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 362EEC61DA4
-	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 19:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF177C636CC
+	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 20:41:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233581AbjBDTKe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Feb 2023 14:10:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35612 "EHLO
+        id S230393AbjBDUlb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Feb 2023 15:41:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229796AbjBDTKc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2023 14:10:32 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BA302798E
-        for <git@vger.kernel.org>; Sat,  4 Feb 2023 11:10:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1675537824; bh=oxF1jh6PTAcCNstMFmBhwxSsr1Vz5kmJ89Dj9rGWWak=;
-        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
-        b=hlIpp8YmSWOD5ge/pI8Bqd9ZL6UCRedAPfqcaQWXckfjeyGS2wHz8kgstJH27LVHz
-         jD8wbLrO6dEVrbfT9EY+N+WquHwWCPpcp2SVK3U6b56BJxLoGvopdsIoTcLawJP4St
-         7NGUoFKhYi4nTH1H8yyhDWkdtaFR4ZXhKHd+hzWKeMBBoFeXf1weRk3LwDM65k0IwU
-         Am0ielbDlA3B6xthb/L366aUK9Dpj53rEviFBHx3Ovx+VkJrTGU4O1qW8dkV9hdFO4
-         uc4xKaoO7mmI9wGcalK8eo1Pn0TmwhM2+ce33BMAKzy87H0ZYCEkzuz9dC3rJdbkOS
-         xIJ+EwEiwYQww==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.21.51]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MLRUV-1p6a5z23Ln-00IVbJ; Sat, 04
- Feb 2023 20:10:24 +0100
-Message-ID: <ff3ac119-9b00-746f-470c-8db18c9c61a1@web.de>
-Date:   Sat, 4 Feb 2023 20:10:23 +0100
+        with ESMTP id S229560AbjBDUla (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2023 15:41:30 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B12F22915A
+        for <git@vger.kernel.org>; Sat,  4 Feb 2023 12:41:29 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so8280870wma.1
+        for <git@vger.kernel.org>; Sat, 04 Feb 2023 12:41:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xAlR6zgAaqg7wNrJAH59E2eU6ndLy3tnH2fcLJGchOE=;
+        b=HPrKaemUqIqfLfURFgc8lYj5BwOHgaeu+XNP0mTNpLszxOxUj9/zF2pWZRWb+Fwdm9
+         oDbG4nz6bZPjbpzLS41s9RoAyIjvsuokV52KFIK7ux4nw94J/uethGm1yYKMzjxQ16YB
+         YkLNvhNymQ/ifa6S7JA7Wf+WVg3zMG/HaMr/CVScxJzP23lApKbq1U8laUN7R/fU2P70
+         huU+AuKNc+ZBxdmDY1uY5FPTe32n0NE1YIrCgzOla8AkL7HR/gbuHojoD/qWb4o8XFj6
+         HtXZUvYkCf6KgiiH3V2nxp3o4GisfN89roYxk7eeyv7IWggPvQIgTLN4Z7Vv1sZmHxPW
+         HKNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xAlR6zgAaqg7wNrJAH59E2eU6ndLy3tnH2fcLJGchOE=;
+        b=kRUu+JsyjqZdUDMZgR/kK0pWSNwDzYsYBRLWrW1TCzF84AYgcMGefOy26dZ7IvS0F2
+         kb71CZwuB93t/RgJFoDC6TVtC2N3QxQNKOMVXZfuMLUiZ7fAG8HkwTWWbtbHzuaqLaRo
+         Ye82m7rHqoIpkWN5SPCAGP5KD5Q4ikschQBbn0a0SMh3ZIo5z6jTX2AG8JeefeQpgTPo
+         k9sBmKlgCNsY3fUV2DZFN/hnqrZf+XF2dbEVDGDS4zqIrfzY9QsYlnGgyfEjxnN5/wgl
+         R/jfAd5nSKilAJ6CwDGIHYPBzLgE+z5U8TiuBsr1FHeB/PNxRZje1RjgMdnwjlQDT0BR
+         g66A==
+X-Gm-Message-State: AO0yUKV0OZmZEUgWLxDf5YqpgzJm/v/P1/m5Fs1A92Wg54i3iqVG+T33
+        bFXQ8ApeDEG9ELl1SUk5OdHtWRyXIQJ8/11V
+X-Google-Smtp-Source: AK7set/FXdQ1DtxsOXywJqdiO6bH2zKYTqBve064X715q90/3X+OQyXu2sRlQH7en6BAEie5yWSSyw==
+X-Received: by 2002:a05:600c:314a:b0:3df:ee43:860b with SMTP id h10-20020a05600c314a00b003dfee43860bmr4918288wmo.23.1675543286878;
+        Sat, 04 Feb 2023 12:41:26 -0800 (PST)
+Received: from localhost.localdomain (cpc93780-hari17-2-0-cust124.20-2.cable.virginm.net. [77.98.244.125])
+        by smtp.gmail.com with ESMTPSA id j10-20020a05600c1c0a00b003dd1c45a7b0sm7080068wms.23.2023.02.04.12.41.26
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 04 Feb 2023 12:41:26 -0800 (PST)
+From:   Kostya Farber <kostya.farber@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Kostya Farber <kostya.farber@gmail.com>
+Subject: [PATCH] t5000: modernise archive and :(glob) test
+Date:   Sat,  4 Feb 2023 20:41:24 +0000
+Message-Id: <20230204204124.80741-1-kostya.farber@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Content-Language: en-US
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] cache-tree: fix strbuf growth in prime_cache_tree_rec()
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:2Gp1PMLADkV4X9XtQW/Dp08n1kxESntVwy6E5Tl0MNiyL3JZSpP
- n8mwlXwlBb9MFYcRmcj/mjPSx/YRisD/4fGsVrB/8O8eupIWicoG+P7lCZYD1UMgAUTjWs+
- 6FWGcfS/soT8tQfXqllEk9cleFGRx98XBjIg7hsqH7pieInd4J9xknwLl2GpTBg8n4of6eB
- GrkBkOmXib8VWRCKedcqA==
-UI-OutboundReport: notjunk:1;M01:P0:ELARifXa6ks=;lSt+D5ZxT7LJO0X6jXTEaQQe846
- 3wzVLDaaZhu2DpPym3MasbG0nU3DaH71b5CvpkuH9IuS6vZYP/tfXo/bYTa1ll7GepCSAyU1X
- 2QrT6KWAiGO1vFInYqck+uqFc8engx6epbEDsA4HP9atXQIBmdcZjPrODz0m9se6aimT9urqS
- jqwJmByIFZ92k/THGVnKQl0KQn5rh+bhsNO2TJh1yJeiFfhlf5rPc5aszvQb3pi3Vz348Yk7X
- OhFJPubTMi7knX8rbl3g2wNV35ihQJi6ZIUUUITljQtOShhdW7LsnhbCxabZM/e34rXzgK8LJ
- qdwo9EZ5hYIsdUFV57+bQth5KP+e6hnQvwyMnVh+ed1FE1gVY5qlQhjh2wKqaawa3kkwHewU/
- KegVx1JScgwVmtdHv+So4C7wuV3RgH4JSUddEXCfQ+AnOl0IJbWCijHNKUbM3d78Jk3cFy6Fk
- ZNwdyt1KVT1tvEFrrx8bKD4RHg0lW5eB1TnsX9BAGwKOPN0V5zH8ACS1W02h6Q2dapvIFOzxP
- 1Doo5FXlpwCv4HI/fc73EHfeRuDWT4VHZ18yoCpyny+k/XJQGh6dAS20JuEyr6LsVVxQgzWFE
- dsHzjQsqJuXMepkVmFlWBFeO3f63eUM98Li6hZ4Gh5KhFNmvHPnEO+Vn/m/UEgYSicX0l1Hxw
- XnOCssnXFGnBqSSllpBfgfn0DTK21hcUuMTB5sn28EUGwV7TLDgoLfMHoguGqoGvkAvjgKPdd
- ctdsX/vwnZO1SKiddziHVP3Dd/vdvFLVqBOGGch71bPjczhL7zLyT08m2zjZGgdXoftl+JTlB
- nnmkwLeE316Y8ofABujzLvRERkOhiUwXccUnJBV92bgJ4RbMVi2W7PmaXEchUi4CiWsmvYrKn
- PbhS27zAjbRR0k2xuGFFq+5Ed8emL89vySUjuiRPxaTGKjbwnecLLqnYE5JE9zRB47IBGwSyw
- JbrhlQ==
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use size_t to store the original length of the strbuf tree_len, as
-that's the correct type.
+To match present day coding guiding codelines let's:
 
-Don't double the allocated size of the strbuf when adding a subdirectory
-name.  Only extend it to fit that name and a slash.
+- use <<-EOF, so we can indent all lines to the
+  the same level for this test
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- cache-tree.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+- use <<\EOF to notify the reader that no interpolation
+  is exepected in the body
 
-diff --git a/cache-tree.c b/cache-tree.c
-index 9af457f47c..35f7617164 100644
-=2D-- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -760,7 +760,7 @@ static void prime_cache_tree_rec(struct repository *r,
- 	struct tree_desc desc;
- 	struct name_entry entry;
- 	int cnt;
--	int base_path_len =3D tree_path->len;
-+	size_t base_path_len =3D tree_path->len;
+Signed-off-by: Kostya Farber <kostya.farber@gmail.com>
+---
+ t/t5000-tar-tree.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
- 	oidcpy(&it->oid, &tree->object.oid);
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index d473048138..eb3214bc17 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -402,11 +402,11 @@ test_expect_success GZIP 'extract tgz file (external gzip)' '
+ 
+ test_expect_success 'archive and :(glob)' '
+ 	git archive -v HEAD -- ":(glob)**/sh" >/dev/null 2>actual &&
+-	cat >expect <<EOF &&
+-a/
+-a/bin/
+-a/bin/sh
+-EOF
++	cat >expect <<-\EOF &&
++	a/
++	a/bin/
++	a/bin/sh
++	EOF
+ 	test_cmp expect actual
+ '
+ 
+-- 
+2.39.0
 
-@@ -785,7 +785,7 @@ static void prime_cache_tree_rec(struct repository *r,
- 			 */
- 			if (r->index->sparse_index) {
- 				strbuf_setlen(tree_path, base_path_len);
--				strbuf_grow(tree_path, base_path_len + entry.pathlen + 1);
-+				strbuf_grow(tree_path, entry.pathlen + 1);
- 				strbuf_add(tree_path, entry.path, entry.pathlen);
- 				strbuf_addch(tree_path, '/');
- 			}
-=2D-
-2.39.1
