@@ -2,106 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58FE6C636D3
-	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 17:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAD9DC61DA4
+	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 18:08:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229746AbjBDRqi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Feb 2023 12:46:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38270 "EHLO
+        id S233150AbjBDSI6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Feb 2023 13:08:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232234AbjBDRqg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2023 12:46:36 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 620422658E
-        for <git@vger.kernel.org>; Sat,  4 Feb 2023 09:46:35 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 509055A1E1;
-        Sat,  4 Feb 2023 17:46:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1675532794;
-        bh=z5iVgTvmQLbPD8Aa34Y7yw4lw14f9xZEWDe4xlcGayU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=NnkmdYlKTbXd4r2Giu1UDcs7CRzvtUoF0ncrjq7z8zvUldjyWFhs53SFmNOR1K2d6
-         iUp3HmAvk2YNL4W3NkNadOhdfaOIHa3gmPMGqC3XeSwuYRQbKoONCvjWGxcuJ57suQ
-         NnGNppU8cAKZsZiL+XYXPc935L/wwpA6t0D9CVtTsiEHB/6gaeB+SVDqg/zrW3ozLP
-         092PxVrExDCb+mmcQ+RoRzsWL/Y/LTSE5D9Wt3OFl/Kf80p2tHmSFD05zdlIi7hIH2
-         b/oHTOIwZ5EfCrQXnAW0obV9JVG0lijBCPMcgrRrIz1MfJcdDaL9HKHkHp4UpDr/hV
-         KmGC19hpJTRlxRv9bOUTfZL3m9eVCBWoVFhhpN6d4jUms6AMbGXKKwEoY4tbPb7KpU
-         NoQU1DJw2UM7Kh3cltksAQIzHEyeVUcMSvgQoTJVaMUWg7/IaE/jheyISW5e8yu2r5
-         I8CCE6BKPB35RbMmQKkR+f521GFGcXMzcL6dB7wjBcBAdTzRZr9
-Date:   Sat, 4 Feb 2023 17:46:33 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Eli Schwartz <eschwartz93@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        with ESMTP id S231165AbjBDSI5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2023 13:08:57 -0500
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08A3A2E822
+        for <git@vger.kernel.org>; Sat,  4 Feb 2023 10:08:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1675534121; bh=2dXyfYmy3WdPL9C/6ItynfDKpRdHkMTEdZICdx4SZtM=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=NmybpN0uK6GqBqgkw90F+pA44xnE5Y+qVPr1iDI2MMzcyXdjng+nERtzJhpcwX5AZ
+         DTm7w58uYCCK5qYi30gC2PXJWWUcMFjaQtD6dp8muqbX5vLW++FIHCinyeHyz0Cmly
+         wIusPpHvy1r1loELcVQ2/AbALcHjIRiUIbCs7YLajUmrz9gP/qQIx3d2D6VIcGymgX
+         CciAzmL4m35UwMOILG10lMjPEi6AuM3nZDclMUP0Dzvui6eo0/RHStrF17FN7VCupf
+         ldEDmWQSg5Djuyzfh1uVuI41JXJFd3Gr7o40MuPxKouZD7spcG1GfmtfikXOAhlzSa
+         ztnLThlz5mYlg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.21.51]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MxpiU-1oPDtu3gkg-00zICq; Sat, 04
+ Feb 2023 19:08:40 +0100
+Message-ID: <c3f215ca-b4ae-79a2-c14a-3c0f1799e6f7@web.de>
+Date:   Sat, 4 Feb 2023 19:08:39 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH 0/9] git archive: use gzip again by default, document
+ output stabilty
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Eli Schwartz <eschwartz93@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
         Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
-        "Raymond E . Pasco" <ray@ameretat.dev>,
-        demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>
-Subject: Re: [PATCH 9/9] git archive docs: document output non-stability
-Message-ID: <Y96Zbttj+VzsSz+w@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Eli Schwartz <eschwartz93@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+        =?UTF-8?Q?Michal_Such=c3=a1nek?= <msuchanek@suse.de>,
         "Raymond E . Pasco" <ray@ameretat.dev>,
         demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>
 References: <230131.86357rrtsg.gmgdl@evledraar.gmail.com>
  <cover-0.9-00000000000-20230202T093212Z-avarab@gmail.com>
- <patch-9.9-b40833b2168-20230202T093212Z-avarab@gmail.com>
- <Y9uPhPnNFlCju8Fo@tapette.crustytoothpaste.net>
- <xmqq1qn8vxej.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="funelK6qEA+qbHlG"
-Content-Disposition: inline
-In-Reply-To: <xmqq1qn8vxej.fsf@gitster.g>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+ <xmqq5yckvxtb.fsf@gitster.g>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqq5yckvxtb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:JjPAO/uxHXcwc5L0DQlWb7NQ9vpUBa7BI3ADEfOxJt720ZS3f0h
+ iWG24z5nwm/gBFhzBCeVBlEQvRrkzkX+nc+B8mUauWvnrZYpJJ990ejxJ49f6T3kECSgJ+I
+ ZPJFqeckFIj6hjf+zeUukfyC562KAdtwySnUWV6iL+N/cDSXWWdhARYpKPGH7q8QReiRuOc
+ 4T5HQzeywCVFFnpm/x64A==
+UI-OutboundReport: notjunk:1;M01:P0:qKnNh358nL0=;60MnSrKzNJryVhe3TjJVdpcCgq2
+ iiN0OyqQqfjhtnMX81/TZDBtdexBhDedi5s5ZUQdJZZNWVjFQKgBhgTTIJ/u9Iz+P5YF+uuqg
+ hr/J1kQpWCJdPIKwuxs7ZUU+wbhpVdkxDmGZUjMLViRVOCW/P4N4Jnw5xh2Zbcb89yperM5iO
+ r6gm4E8XjuEB+MwWyZlNLrGqJ6MhCzMD6gQKCbTW4svVErmD4ynIxos7dvXDtPkTGdZ3hod8P
+ A5kXrKlY5oeZrgKYIxUdfWx2oI9/7cpV05+jGGKkg2ROpEVSgYVJD8ukUaVUjmhP5PF7NzWsL
+ kP1Ozy/FPsZ4x3Y1NuaBu6Ia9NCGy+H0PYL/dkcCen+Ckqxvq4cQ9kQNh51Wq7lLhWqLFFvhM
+ ehVfsoxopdxVZRdR13YAIFKa/oUUu3ylXMXhcXpl2nByzuqfr/hupstAzCYT2Hh/OIn8qdCCd
+ zbvGhrg9+DIEcT+3wZ1hUly2nn0JLGNw76h5PES0B8b/oOE+CbyeJfO+F1YRfji6vP6WzXeTy
+ kTBiAE9FprLqgmUYXXOEhKU4Ns9X9vRkM543+agq+PHE0HpdRDO4eRVwsuZrHU/ZL3qx+qAn7
+ ARfSQMxcbys7sP6PqSFF7FpUNw1pzfle2jdcPAHBvZnI3JExG221955dVTMc3O7AuCpuSqKJM
+ 0QKWF5BrMusw0urjAef4zUce5zNnFweEde/vuAg65oihJoqHH43Fb4wEUd1ULOACejxc5SeJT
+ vkYmaIZ1ZzR6ogcx4CM92XIDsuu9sd5z8sNvKgw0Ya65zMDWdzxdox7qUyPP6X7GEOJv4JdJc
+ wMATgSf9WfcIbdI4MDYXuNwPo41POKz3KDPckCod59D+i5axRyrRIAn5PD1JOTab1m0pLHM+M
+ v8rw4b9P5skmCqfCKuYakXWNCBW/4TuozPH+LxAzeePSBO/fPwj6JIJDjd0t3b8+18jUuV4pT
+ qv1xZbxFbcdJRmkvnLEr1NSHkqE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 02.02.23 um 17:25 schrieb Junio C Hamano:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> As the disruption of changing the default isn't worth it, let's use
+>> gzip(1) again by default, and only fall back on the new "git archive
+>> gzip" if it isn't available.
+>
+> It perhaps is OK, and lets us answer "ugh, the compressed output of
+> 'git archive' is unstable again" with "we didn't change anything,
+> perhaps you changed your gzip(1)?" when they fix bugs or improve
+> compression or whatever.  Of course that is not an overall win for
+> the end users, but in the short term until gzip gets such a change,
+> we would presumably get the "same" output as before.
 
---funelK6qEA+qbHlG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Restoring the old default is an understandable reflex.  In theory it
+worsens consistency and stability of the output, but in practice using
+whatever was found in $PATH did work before -- or at least it was not
+our problem if it didn't.
 
-On 2023-02-02 at 16:34:44, Junio C Hamano wrote:
-> There shouldn't be cross platform differences to break bit-for-bit
-> stability at least for "tar" format, as we do not rely on any
-> external library.  Can we say the same for "zip"?  I thought we
-> throw the blob at git_deflate_*() so the exact bitstream is up to
-> the libz implementation?
+Are there still people left that would benefit from such a step back,
+however?  As far as I understand forges like GitHub relied on git
+archive producing the same tgz output across versions.  That assumption
+was violated, trust lost.  They had to learn about the configuration
+option tar.tgz.command or find some other way to cope.  Changing the
+default again won't undo that.
 
-That's also true.  There, we can't use gzip, so we do whatever libz
-does.  For Zip, I believe we embed a local timestamp, so the output is
-also dependent on the time zone.  I don't know enough about the Zip
-format to say if there are any other things that may vary.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Ren=C3=A9
 
---funelK6qEA+qbHlG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY96Z+QAKCRB8DEliiIei
-gThIAP9tOClUT2QBOs/RtyBixA+71fUNc13309f8sWTfZl1z6AD/cUTY8W58rrC6
-cfWG4nOM0+6qGgvsG4Ii3FmzNwN/qA4=
-=SqT1
------END PGP SIGNATURE-----
-
---funelK6qEA+qbHlG--
