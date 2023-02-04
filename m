@@ -2,197 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08915C61DA4
-	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 13:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9C30C636CC
+	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 14:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233852AbjBDNnt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Feb 2023 08:43:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49484 "EHLO
+        id S233657AbjBDODb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Feb 2023 09:03:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233736AbjBDNnl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2023 08:43:41 -0500
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08A4A206BF
-        for <git@vger.kernel.org>; Sat,  4 Feb 2023 05:43:40 -0800 (PST)
-Received: by mail-il1-x129.google.com with SMTP id u8so3139022ilq.13
-        for <git@vger.kernel.org>; Sat, 04 Feb 2023 05:43:40 -0800 (PST)
+        with ESMTP id S232557AbjBDOD3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2023 09:03:29 -0500
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F7382203E
+        for <git@vger.kernel.org>; Sat,  4 Feb 2023 06:03:28 -0800 (PST)
+Received: by mail-yb1-xb35.google.com with SMTP id a1so9473277ybj.9
+        for <git@vger.kernel.org>; Sat, 04 Feb 2023 06:03:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EN/S+kOokx9ej9SmTZ3eWReSzA3P4QNkmWICRr4Kteo=;
-        b=qi7TfP1z1sFdbn2gup8yG2wtwnMlQmpKlGlN2q942BWJOU1SJP6ZljvrYBknYM8N06
-         C25RhVbjX8i2uaET/AgFdtqqJ/AXfcLz8/e37S9vWKYvHKp/JAVo9Y5tBeKU1wYe7tQY
-         +IsYfsdsqDAlbp05uwQD9YlbJuzluLuKkPB9JNQ/nCfi32b2VXtgGmmcJoRl0fTfzI4V
-         EHw763LNXSzzsHFsyV1tgMqyybc8kmb7Oe7hYXEpvyveQmMMTviLU+5ntLIBKq5RMlAA
-         HR4uI+HoKd7/1V5+brKehGrNhhexSPzi+RwDTG9qFIA9LpfL0a7d8LSbGXFaLlsIduYV
-         4coA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z2UsWNEM+P2lAMBvN8hB8UfUbi5KiarlitlUwmvn0J8=;
+        b=NAp2pocLA9T9QrKKr5DMnOypjDxT9EdPeJ7XvOKBslDLzltoHouEESu3de/9lTWKLV
+         /Yual7wwOSHXamlwVjiRIW+/sfh6z/eCdGHkSh+6ZSwuBeF/3KS8qaTmOA5r8MPAbWHG
+         J9FkrS+z6gnRT1uu3e+9uqJOlYCGLdiC7x1HG5zfYqbQes4ViDGSk9RjkJEo8czOoumY
+         s6wJ1PDdx2A9YIhGXdUkD/gDvjF8S3nfyPSvZUJOiqPDTOPAQ4US6J1Tlxdw5lwDr1BD
+         DCrs+/+C1jXHT2rsWs4R15vn2/MM2xqOiBFjnoC7ZErfwcPKUbDMumdbx4+UYfVfJ5wB
+         WQYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EN/S+kOokx9ej9SmTZ3eWReSzA3P4QNkmWICRr4Kteo=;
-        b=4wmYMFnqqlNDYCuT5uVt3bpDeWPssrmw4yOaAPkmdeU8h+xCbdh0z4GXBYB8NutokD
-         7TmLauXmuQYF8dafSYS1T5P+E1zXrilv2MV9PsQoQ7eGTfcBJMhKFWcDN4K0PcI14iO3
-         mJoYPHD/3IAY0XJQ9AXnP/ZlOJT5Xx+NXpnkpSWH70Pe2r0OZVCene22jASrn8xzyV5l
-         1w1+hvWVCXX8Enh9WymIb1VdKHi6i7HTTuzaJw/QvEzekHNpy0rZViDzOUlvWiCPfXBz
-         nI2+8oEddilY4to4eb5Au4vnEqd4APrubL0iaMrqmXM2HRHDcgYkDopTGA6CH3xQecOU
-         sL1w==
-X-Gm-Message-State: AO0yUKVziVIVuaO61CXFeMq6DDrI9XqJFrHii9O0WdL/UR9QW4TFKBPX
-        TUsFSIFz3S6J4KcBY4OtWVc=
-X-Google-Smtp-Source: AK7set8d05FPXlSvUkutUDu2YlcpyPWKK8bLaLf8SyI1E2qajZGd1eEZ3VO+h93RAnsH/I6kti/Gsw==
-X-Received: by 2002:a92:cec5:0:b0:311:ad48:ff1b with SMTP id z5-20020a92cec5000000b00311ad48ff1bmr6666438ilq.3.1675518219654;
-        Sat, 04 Feb 2023 05:43:39 -0800 (PST)
-Received: from titov.fritz.box ([191.101.157.6])
-        by smtp.gmail.com with ESMTPSA id q8-20020a027b08000000b003af4300d670sm1802449jac.27.2023.02.04.05.43.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Feb 2023 05:43:39 -0800 (PST)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     Tassilo Horn <tsdh@gnu.org>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Paolo Bonzini <pbonzini@redhat.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2 3/3] userdiff: support Java sealed classes
-Date:   Sat,  4 Feb 2023 14:43:29 +0100
-Message-Id: <20230204134329.251451-4-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230204134329.251451-1-rybak.a.v@gmail.com>
-References: <877cwxvl3a.fsf@gnu.org>
- <20230204134329.251451-1-rybak.a.v@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z2UsWNEM+P2lAMBvN8hB8UfUbi5KiarlitlUwmvn0J8=;
+        b=3Rx5rp6siVZ3sOOcO4bT4fotPTokJZRkgMfcoHGDFPTSoviCnUmR5gkB9Ys8gS3skt
+         7DJ7jyjNIhqwOORP/adv4tfnjASlMAa+zwamUjOlv+ezJwaQGaHIZXj/+IPTzcSUQ0eY
+         Y29eAQrjnN5/dLefJDDZhmypTB+5xDNijDS2QxSBexYmk1FaCI7nVB7Gu4hZNgJrcNpu
+         wpr7l6zKp/b6WKsUwZW5GkaP4eImwAljxPWgSxvCdHVh/otgbkZ0xm1v/nTTY15Fj06i
+         kTtSHCOXw+lTK+PjYuoDWs/p9mOfiDMEPTt2ynxeHRIOQGZPg4OGmG0Z9gXGdECQGCAr
+         SG8A==
+X-Gm-Message-State: AO0yUKVhvpLQEeVVKTFJe3R/tGYqTlFUB6aITSbTcf2zVIvGVSMVPQQK
+        OSJ0Y2DBD/fzZM+sicfE46acoYGuDOePztq17pODrU27voY=
+X-Google-Smtp-Source: AK7set9QEH7uUxCtZ9Th9gDNergtGvp4K59innPNl+WGHiiBbk2M1elVGoGngrpY4yC4ZhwWEuQAIt53Vg7s1/Z8Bes=
+X-Received: by 2002:a25:9c49:0:b0:881:642d:90e2 with SMTP id
+ x9-20020a259c49000000b00881642d90e2mr117422ybo.259.1675519407553; Sat, 04 Feb
+ 2023 06:03:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230203182255.lqla3hsme6riy4w7@meerkat.local> <Y95BEaOGJy9uBHkG@coredump.intra.peff.net>
+In-Reply-To: <Y95BEaOGJy9uBHkG@coredump.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 4 Feb 2023 15:03:16 +0100
+Message-ID: <CAP8UFD1q7-XbX4C_NjyL7A-6n6Nc4MgSbUKnzQOiRyKRMtLv_w@mail.gmail.com>
+Subject: Re: The sad state of git.wiki.kernel.org
+To:     Jeff King <peff@peff.net>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A new kind of class was added in Java 17 -- sealed classes.[1]  This
-feature includes several new keywords that may appear in a declaration
-of a class.  New modifiers before name of the class: "sealed" and
-"non-sealed", and a clause after name of the class marked by keyword
-"permits".
+On Sat, Feb 4, 2023 at 12:48 PM Jeff King <peff@peff.net> wrote:
+>
+> On Fri, Feb 03, 2023 at 01:22:55PM -0500, Konstantin Ryabitsev wrote:
 
-The current set of regular expressions in userdiff.c already allows the
-modifier "sealed" and the "permits" clause, but not the modifier
-"non-sealed", which is the first hyphenated keyword in Java.[2]  Allow
-hyphen in the words that precede the name of type to match the
-"non-sealed" modifier.
+> > # Should it be archived as a static site?
+> >
+> > It's possible to turn git.wiki.kernel.org into a static site with a large
+> > header on every page that it contains historical archival information, with a
+> > link to https://git-scm.com/doc
+>
+> This would be my preference, just because some of the old content may
+> still have value. Some pages (like old gsoc stuff) would better redirect
+> to git.github.io, but it is probably not worth the time to even try to
+> classify pages.
 
-In new input file "java-sealed" for the test t4018-diff-funcname.sh, use
-a Java code comment for the marker "RIGHT".  This workaround is needed,
-because the name of the sealed class appears on the line of code that
-has the "ChangeMe" marker.
+This would be my preference too. I agree that some old content might
+still have some value. We could also move or redirect some old content
+to git.github.io, but I am not sure it's worth the time either.
 
-[1] Detailed description in "JEP 409: Sealed Classes"
-    https://openjdk.org/jeps/409
-[2] "JEP draft: Keyword Management for the Java Language"
-    https://openjdk.org/jeps/8223002
+> > # Should it be archived and put out of its misery?
+> >
+> > The last option is to just archive the site and put it out of its increasingly
+> > irrelevant existence.
+>
+> I'm also OK with this, though if it is not too much work to serve the
+> old content with a warning that it may be out-of-date, that seems
+> better.
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
- t/t4018/java-non-sealed                                | 8 ++++++++
- t/t4018/java-sealed                                    | 7 +++++++
- t/t4018/java-sealed-permits                            | 6 ++++++
- t/t4018/java-sealed-type-parameters                    | 6 ++++++
- t/t4018/java-sealed-type-parameters-implements-permits | 6 ++++++
- t/t4018/java-sealed-type-parameters-permits            | 6 ++++++
- userdiff.c                                             | 2 +-
- 7 files changed, 40 insertions(+), 1 deletion(-)
- create mode 100644 t/t4018/java-non-sealed
- create mode 100644 t/t4018/java-sealed
- create mode 100644 t/t4018/java-sealed-permits
- create mode 100644 t/t4018/java-sealed-type-parameters
- create mode 100644 t/t4018/java-sealed-type-parameters-implements-permits
- create mode 100644 t/t4018/java-sealed-type-parameters-permits
+I agree.
 
-diff --git a/t/t4018/java-non-sealed b/t/t4018/java-non-sealed
-new file mode 100644
-index 0000000000..069087c1c6
---- /dev/null
-+++ b/t/t4018/java-non-sealed
-@@ -0,0 +1,8 @@
-+public abstract sealed class SealedClass {
-+    public static non-sealed class RIGHT extends SealedClass {
-+        static int ONE;
-+        static int TWO;
-+        static int THREE;
-+        private int ChangeMe;
-+    }
-+}
-diff --git a/t/t4018/java-sealed b/t/t4018/java-sealed
-new file mode 100644
-index 0000000000..785fbc62bc
---- /dev/null
-+++ b/t/t4018/java-sealed
-@@ -0,0 +1,7 @@
-+public abstract sealed class Sealed { // RIGHT
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    public final class ChangeMe extends Sealed {
-+    }
-+}
-diff --git a/t/t4018/java-sealed-permits b/t/t4018/java-sealed-permits
-new file mode 100644
-index 0000000000..18dd4894cf
---- /dev/null
-+++ b/t/t4018/java-sealed-permits
-@@ -0,0 +1,6 @@
-+public abstract sealed class RIGHT permits PermittedA, PermittedB {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/t/t4018/java-sealed-type-parameters b/t/t4018/java-sealed-type-parameters
-new file mode 100644
-index 0000000000..e6530c47c3
---- /dev/null
-+++ b/t/t4018/java-sealed-type-parameters
-@@ -0,0 +1,6 @@
-+public abstract sealed class RIGHT<A, B> {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/t/t4018/java-sealed-type-parameters-implements-permits b/t/t4018/java-sealed-type-parameters-implements-permits
-new file mode 100644
-index 0000000000..bd6e6d3582
---- /dev/null
-+++ b/t/t4018/java-sealed-type-parameters-implements-permits
-@@ -0,0 +1,6 @@
-+public abstract sealed class RIGHT<A, B> implements List<A> permits PermittedA, PermittedB {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/t/t4018/java-sealed-type-parameters-permits b/t/t4018/java-sealed-type-parameters-permits
-new file mode 100644
-index 0000000000..25a0da6442
---- /dev/null
-+++ b/t/t4018/java-sealed-type-parameters-permits
-@@ -0,0 +1,6 @@
-+public abstract sealed class RIGHT<A, B> permits PermittedA, PermittedB {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/userdiff.c b/userdiff.c
-index f92b3029aa..040deb7439 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -171,7 +171,7 @@ PATTERNS("html",
- PATTERNS("java",
- 	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
- 	 /* Class, enum, and interface declarations */
--	 "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*([ \t]+|[<(]).*)$\n"
-+	 "^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*([ \t]+|[<(]).*)$\n"
- 	 /* Method definitions; note that constructor signatures are not */
- 	 /* matched because they are indistinguishable from method calls. */
- 	 "^[ \t]*(([A-Za-z_<>&][][?&<>.,A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
--- 
-2.39.1
-
+Thanks,
+Christian.
