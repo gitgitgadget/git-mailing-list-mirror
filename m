@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F160C636D6
-	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 13:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 322D0C636CC
+	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 13:43:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233807AbjBDNnp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Feb 2023 08:43:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49462 "EHLO
+        id S233848AbjBDNns (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Feb 2023 08:43:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233710AbjBDNni (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2023 08:43:38 -0500
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D810221285
-        for <git@vger.kernel.org>; Sat,  4 Feb 2023 05:43:36 -0800 (PST)
-Received: by mail-il1-x129.google.com with SMTP id u8so3138993ilq.13
-        for <git@vger.kernel.org>; Sat, 04 Feb 2023 05:43:36 -0800 (PST)
+        with ESMTP id S233711AbjBDNnk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2023 08:43:40 -0500
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E31B21283
+        for <git@vger.kernel.org>; Sat,  4 Feb 2023 05:43:38 -0800 (PST)
+Received: by mail-il1-x136.google.com with SMTP id u7so3161353ilg.4
+        for <git@vger.kernel.org>; Sat, 04 Feb 2023 05:43:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=O2gJN58XYrIXV6frkqmIifi2QOO4FjIp8US0PDm+Bnc=;
-        b=oi/SMhFcSz4VwaJKVgxcKNplnzjOxzFzzTDRFBphA8J0B6I4Y9mnoRObSlRG0iHh1W
-         i/xdzeDD4gJT7dKSjtAGTIhq2cMJRZT7+8NxjON30O5m+lARWgYbsk2KHK+ErDULgP4u
-         gXEEuisrBWcFL9n3SPZVed4s1y1AbgrLOPlckpLYH8YIdcl8PcJKC9rM58TBcfiAqzX0
-         wxhbuvrJx5YYof6qKisDo/ohqeGvFnuvvXCvXpfC4OPMM6m26hYWOLZBDU3iMX0wFah5
-         V1i6R+DrnIysMgw/Pdg92mDSNmNQP1MOsAXbl+MefLb4o+wO9Ye3LLzTyI3IVVVKw75e
-         YLtg==
+        bh=BbZq5firGddkAkNT9+2+N3pL53e1DAOsm6pG0PlKNhQ=;
+        b=mKzM99Tz22yzy7EGK2yBNck3GMYbAVhaiohBfpkG3lHdwkyGUL3FvcNdW5w+YAX7Zb
+         9bVkryzyGySjar8UsY6Bu3ocjt9CRIo2KYy5IJD1jW9+dYlBKFbHveSZQ9WInqNqOi2H
+         O+vgOc+3nKvgfpiAvuAvaeIGosLfBvkIKI3nyy6lg13chUpcfps7UcA+LNBKsV+QtNIz
+         9rF4AySGySy0koiXdrk3eckwbdMosKfFpihi/p8Bcxz2i+EPYhk9YCpJJHIvl3xgqLCm
+         BtWd8+ouU/8UkKnMXll4AxUOoplu1Srox5PPW7rbL9GoY93+bvfNdv2FC7o6EInsVTNa
+         oHew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=O2gJN58XYrIXV6frkqmIifi2QOO4FjIp8US0PDm+Bnc=;
-        b=1VcbsIT7w0+y8ws/A0FUHaSBPKKYPpBQ4WJ3DAWzgYr/8nKjQ7+6yRxHipeTVdlDNX
-         U3VNDDQnOGfiiSBqsbqb2nQJ07s0krPBtNlrT5f5FI19Pdtxkzf66QvRNvUiXaHCE+mZ
-         Ux75jo9tVGCd/SSvMie6G44dmScHFGi6TrsqBSgPgTyvvg4irvyVcxebvRriXKWj/HAA
-         n5vvogpWRLfgyVQhq4lnAffJJ7Uw0GwUGR3nUcI/z9JJwZwvNQjMTOR0SJZNQVY8bzMa
-         9yOTIVcmc/kDr4QU63x1G1JPrrIQ05mNSD+/LQqoDHEPN3XO1G6+UbtAfwwlsPdJiNSC
-         y3yA==
-X-Gm-Message-State: AO0yUKWLzSX/OwPlKyboZpkx/EwpOygUZmVmuxvH4o8MM/NecyxUJlBE
-        qY1fuJP/PjOZsf4qqp7HqfY=
-X-Google-Smtp-Source: AK7set+So/NA8M1L5KigAcRzke0N+VayHFZwpsiVx2wMHRAPrBs7i4MGKQOTFdd3OKDZRpq3NYDNSA==
-X-Received: by 2002:a05:6e02:1549:b0:310:d05b:3a1 with SMTP id j9-20020a056e02154900b00310d05b03a1mr11581944ilu.20.1675518216056;
-        Sat, 04 Feb 2023 05:43:36 -0800 (PST)
+        bh=BbZq5firGddkAkNT9+2+N3pL53e1DAOsm6pG0PlKNhQ=;
+        b=Y62j5SLlCZauoLrkffaH1ztG2GoICRZjG8JRexEZPUOxzAGb4bnzhShD2Zg3r5++58
+         aCMI+jdZzusmX5a3jQkyV6YPXL+kROP/x52cG4rJfz2xXAH5hgAe6J5RXafso74wfYLB
+         EEpvZYJfecIV387X6B/9CRC0mhiJ+E9meEp8X6a+Wfp0irTrRv0yBv5NnnZ/rjus6piX
+         UTe5xBQPPSrCHBjOiFZxQHjfhfTZmfF8wb7qAoT8f1p74v+eVAWFEKrXmMgEJGRrqeQj
+         glT0u9kl/u7Nzqvqjled7jRb1kHkbXtS/wFau4Le+nYxjfuRT5tgT2EgmiqhGmG0yeDy
+         zRqw==
+X-Gm-Message-State: AO0yUKVU1VzFRVTqc/ZLCtx2oXgjm8Ds6aIyO+jD0TYATVCvHsgXLgu+
+        h7Ii0C2cHiJlGLNQzzIZ8Is=
+X-Google-Smtp-Source: AK7set+2+i3PEM1wn8PgK1YCwhDQtXNJBx1i5y7ckQQJTfijgr97c0fBazWkbvJtgaunxiYDtgHp2w==
+X-Received: by 2002:a92:c645:0:b0:311:ad48:ff20 with SMTP id 5-20020a92c645000000b00311ad48ff20mr5536835ill.8.1675518217871;
+        Sat, 04 Feb 2023 05:43:37 -0800 (PST)
 Received: from titov.fritz.box ([191.101.157.6])
-        by smtp.gmail.com with ESMTPSA id q8-20020a027b08000000b003af4300d670sm1802449jac.27.2023.02.04.05.43.34
+        by smtp.gmail.com with ESMTPSA id q8-20020a027b08000000b003af4300d670sm1802449jac.27.2023.02.04.05.43.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Feb 2023 05:43:35 -0800 (PST)
+        Sat, 04 Feb 2023 05:43:37 -0800 (PST)
 From:   Andrei Rybak <rybak.a.v@gmail.com>
 To:     Tassilo Horn <tsdh@gnu.org>, git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Paolo Bonzini <pbonzini@redhat.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2 1/3] userdiff: support Java type parameters
-Date:   Sat,  4 Feb 2023 14:43:27 +0100
-Message-Id: <20230204134329.251451-2-rybak.a.v@gmail.com>
+Subject: [PATCH v2 2/3] userdiff: support Java record types
+Date:   Sat,  4 Feb 2023 14:43:28 +0100
+Message-Id: <20230204134329.251451-3-rybak.a.v@gmail.com>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230204134329.251451-1-rybak.a.v@gmail.com>
 References: <877cwxvl3a.fsf@gnu.org>
@@ -66,101 +66,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A class or interface in Java [1] can have type parameters immediately
-following the name in the declaration, surrounded by angle brackets
-(paired less than and greater than signs).[2]  Example of a class with
-type parameters "A" and "N":
+A new kind of class was added in Java 16 -- records.[1]  The syntax of
+records is similar to regular classes with one important distinction:
+the name of the record class is followed by a mandatory list of
+components.  The list is enclosed in parentheses, it may be empty, and
+it may immediately follow the name of the class or type parameters, if
+any, without separating whitespace.
 
-    public class ParameterizedClass<A, N> {
-        private A field1;
-        private N field2;
+Code examples:
+
+    public record Example(int i, String s) {
     }
 
-Support matching a parameterized class or interface declaration with
-type parameters immediately following the name of the type in the
-builtin userdiff pattern for Java.  Do so by just allowing matching the
-first character after the name of the type to "<".
+    public record WithTypeParameters<A, B>(A a, B b, String s) {
+    }
 
-An alternative approach could be to match both the opening and the
-closing angle brackets and matching the content between them in various
-ways.  Just use the simpler regex for now.
+Support records in the builtin userdiff pattern for Java.  Add "record"
+to the alternatives of keywords for kinds of class, and match an opening
+parenthesis as the first character right after the type name.
 
-[1] Since Java 5 released in 2004.
-[2] Detailed description is available in the Java Language
-    Specification, sections "Type Variables" and "Parameterized Types":
-    https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html#jls-4.4
+An alternative approach could be to have an optional group that would
+match both the opening and the closing parentheses with some way of
+matching the declarations of the components.  Just use the simpler
+regular expression for now.
+
+[1] detailed description is available in "JEP 395: Records"
+    https://openjdk.org/jeps/395
 
 Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
 ---
- t/t4018/java-class-type-parameters             | 6 ++++++
- t/t4018/java-class-type-parameters-implements  | 6 ++++++
- t/t4018/java-interface-type-parameters         | 6 ++++++
- t/t4018/java-interface-type-parameters-extends | 6 ++++++
- userdiff.c                                     | 2 +-
- 5 files changed, 25 insertions(+), 1 deletion(-)
- create mode 100644 t/t4018/java-class-type-parameters
- create mode 100644 t/t4018/java-class-type-parameters-implements
- create mode 100644 t/t4018/java-interface-type-parameters
- create mode 100644 t/t4018/java-interface-type-parameters-extends
+ t/t4018/java-record                 | 6 ++++++
+ t/t4018/java-record-type-parameters | 6 ++++++
+ userdiff.c                          | 2 +-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
+ create mode 100644 t/t4018/java-record
+ create mode 100644 t/t4018/java-record-type-parameters
 
-diff --git a/t/t4018/java-class-type-parameters b/t/t4018/java-class-type-parameters
+diff --git a/t/t4018/java-record b/t/t4018/java-record
 new file mode 100644
-index 0000000000..579aa7af21
+index 0000000000..97aa819dd8
 --- /dev/null
-+++ b/t/t4018/java-class-type-parameters
++++ b/t/t4018/java-record
 @@ -0,0 +1,6 @@
-+class RIGHT<A, B> {
++public record RIGHT(int comp1, double comp2, String comp3) {
 +    static int ONE;
 +    static int TWO;
 +    static int THREE;
-+    private A ChangeMe;
++    static int ChangeMe;
 +}
-diff --git a/t/t4018/java-class-type-parameters-implements b/t/t4018/java-class-type-parameters-implements
+diff --git a/t/t4018/java-record-type-parameters b/t/t4018/java-record-type-parameters
 new file mode 100644
-index 0000000000..b8038b1866
+index 0000000000..f62a035cc8
 --- /dev/null
-+++ b/t/t4018/java-class-type-parameters-implements
++++ b/t/t4018/java-record-type-parameters
 @@ -0,0 +1,6 @@
-+class RIGHT<A, B> implements List<A> {
++public record RIGHT<A, N extends Number>(A comp1, N comp2, int comp3) {
 +    static int ONE;
 +    static int TWO;
 +    static int THREE;
-+    private A ChangeMe;
-+}
-diff --git a/t/t4018/java-interface-type-parameters b/t/t4018/java-interface-type-parameters
-new file mode 100644
-index 0000000000..a4baa1ae68
---- /dev/null
-+++ b/t/t4018/java-interface-type-parameters
-@@ -0,0 +1,6 @@
-+interface RIGHT<A, B> {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    public B foo(A ChangeMe);
-+}
-diff --git a/t/t4018/java-interface-type-parameters-extends b/t/t4018/java-interface-type-parameters-extends
-new file mode 100644
-index 0000000000..31d7fb3244
---- /dev/null
-+++ b/t/t4018/java-interface-type-parameters-extends
-@@ -0,0 +1,6 @@
-+interface RIGHT<A, B> extends Function<A, B> {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    public B foo(A ChangeMe);
++    static int ChangeMe;
 +}
 diff --git a/userdiff.c b/userdiff.c
-index d71b82feb7..759e22ffff 100644
+index 759e22ffff..f92b3029aa 100644
 --- a/userdiff.c
 +++ b/userdiff.c
 @@ -171,7 +171,7 @@ PATTERNS("html",
  PATTERNS("java",
  	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
  	 /* Class, enum, and interface declarations */
--	 "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+[A-Za-z][A-Za-z0-9_$]*[ \t]+.*)$\n"
-+	 "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+[A-Za-z][A-Za-z0-9_$]*([ \t]+|<).*)$\n"
+-	 "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+[A-Za-z][A-Za-z0-9_$]*([ \t]+|<).*)$\n"
++	 "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*([ \t]+|[<(]).*)$\n"
  	 /* Method definitions; note that constructor signatures are not */
  	 /* matched because they are indistinguishable from method calls. */
  	 "^[ \t]*(([A-Za-z_<>&][][?&<>.,A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
