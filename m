@@ -2,118 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A804DC636CD
-	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 05:22:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64863C636CC
+	for <git@archiver.kernel.org>; Sat,  4 Feb 2023 08:09:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231171AbjBDFWt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Feb 2023 00:22:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41388 "EHLO
+        id S231665AbjBDIJS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Feb 2023 03:09:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229657AbjBDFWs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2023 00:22:48 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 677799218A
-        for <git@vger.kernel.org>; Fri,  3 Feb 2023 21:22:47 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id 7so4984292pgh.7
-        for <git@vger.kernel.org>; Fri, 03 Feb 2023 21:22:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OTX/QB2eVrjYC2t2r82cGInRFM10Elz6c6MF5cx53ns=;
-        b=fq/mBHrHFnWQA1no+B5Tq6SStAsbj04qj5Z4/lZhwkq0tAFbwDEAPqtLd31B7Itk7m
-         HkoRJIi19aI6ECM+eg4L1euWW2zcTMKIuPUzh3ePKyHnUC1tRcrKSBAzYbACndGWlL4f
-         n+5MGiu3+ZEI0mwTl+qzhkcHW1xqpvh1C3bEpvGC4dICvo0whuQ+7ieN9huE1szlny8o
-         40LHYJ8z4u8/IfOuy9dxnmsHku46BSyOHs2juge8Y3ZfEvLsvGwtVZ5KnWTaYU1Q5MCF
-         lbgPpODVkzZW5crUEY4qoMMim3zGlwEFAZD0LvhuRXudy76W/PmQ5LMC9qAhmm2QWWQA
-         c+hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OTX/QB2eVrjYC2t2r82cGInRFM10Elz6c6MF5cx53ns=;
-        b=SJlJKvKbOb/ZYIHWb4OD8bhNl4WmfUImBES8dwWzU76pxSd+IejRNL6yAWvu5eSg+5
-         +Oal/hONpHtLz+Qp2tRDzEAFNIAKzNiVGthg2IZ8SHY8nJNF8OjUbtKasVNBuJGzkeUD
-         LdhjV1bLN6UjC9Cd3bbyVSyULwX+iJBZakuz5zKiBeT1F0ih5w2ocVkjFZ4XzxN4Z/r9
-         kqmDkf3OGnDnwKXM2Zen2QhnYpIxrc7FjHgphEH4uLbnHnpB+MwsKwmrErdqw4Qd/Iwq
-         ew6lQZmGpNe5trwokiBmC8iRB5Wi2PoPjLsLFtDwnAIkaM9FdDXAa2MRZJk/IUF2EiQB
-         wglw==
-X-Gm-Message-State: AO0yUKWCm9GitERWUvADiuYIBLAleNccUNk5yuX1WXWI1yh4pYFc/G64
-        6gL5fxl+pxGfROxBT+7cB72HgQUmEqU=
-X-Google-Smtp-Source: AK7set/5/zKcUeE4JHFEoNuTpm356dkrVS4CUTKV0FGOh7+RWUJIW9Q2qlQJyshu40ZML3k8GraK9g==
-X-Received: by 2002:a62:aa0f:0:b0:593:adfa:84f6 with SMTP id e15-20020a62aa0f000000b00593adfa84f6mr11923113pff.23.1675488166803;
-        Fri, 03 Feb 2023 21:22:46 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id k19-20020aa790d3000000b0058193135f6bsm2756474pfk.84.2023.02.03.21.22.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 21:22:46 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
-        Bernhard Reiter <ockham@raz.or.at>,
-        Remi Pommarel <repk@triplefau.lt>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/6] imap-send: make --curl no-optional
-References: <patch-1.1-3bea1312322-20230201T225915Z-avarab@gmail.com>
-        <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
-        <patch-v2-4.6-e9cc9bbed1e-20230202T093706Z-avarab@gmail.com>
-        <xmqqfsbnu7dk.fsf@gitster.g>
-        <230203.867cwyberv.gmgdl@evledraar.gmail.com>
-Date:   Fri, 03 Feb 2023 21:22:46 -0800
-In-Reply-To: <230203.867cwyberv.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 03 Feb 2023 22:46:11 +0100")
-Message-ID: <xmqqy1peknrt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229448AbjBDIJR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2023 03:09:17 -0500
+X-Greylist: delayed 312 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 04 Feb 2023 00:09:15 PST
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28C3B144B7
+        for <git@vger.kernel.org>; Sat,  4 Feb 2023 00:09:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1675498153; bh=FylgcssI9jiFF7sGkQbVdxp+McfBfOt0elhHOfzeEiY=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=s9QoNfoKXqAlvj/RmwtUukO04shKGegMNjMm8xHDeR1/ujSdN89i0U5uMhoagfmhh
+         O0aj7DzoSaR/coILlbyo9NguIZ5K1bIS5oXPemhmLrn8hjCI/GJnJSJQKgEFd3Rvpz
+         7bDtviXJtyACggdUet1puCdq0G/HjqEXJllnAXzUcj7HHUw1srMSbPnOesjOLsF1wS
+         yHVdG9jlQK9KnpCL74G/bAiYcuwMi6BhGAAnQre/7LrymBA91DlMNApgAUfiH5CJaP
+         MsbSiFvNj7a7T5de3CFhK0LdIO9PZXUfj4w5BmdpiEfrvHnflDiGeTBMf509RlYRVZ
+         6DO4Xm9z6H0RQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MOlwp-1oyi1i3m75-00QDCm; Sat, 04
+ Feb 2023 09:03:50 +0100
+Date:   Sat, 4 Feb 2023 09:03:48 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] .gitattributes: include `text` attribute for eol
+ attributes
+Message-ID: <20230204080348.vqrxsk7ze6bcz4nf@tb-raspi4>
+References: <20220216115239.uo2ie3flaqo3nf2d@tb-raspi4>
+ <20230203125920.751-1-philipoakley@iee.email>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230203125920.751-1-philipoakley@iee.email>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:ZBuYMKtJOJCvil5ndIY44qJRTlgOUEQoTVXLo9WiEiISBp1y7J0
+ sTCF9kHXDf6oad6tUcan1w3Lhg5HbBEiVFKXpN/dtO+k7QiiziboSWoNc5qAJ65e8Gk2Rar
+ Ztf+p3/qb07ONRMs/Jbo3efmTC/n2R0F/nLnLq1+/tc+2RulJxkwXEBUxc4qGojI9TepBDh
+ ygtPvRASunznPtKo3gyOQ==
+UI-OutboundReport: notjunk:1;M01:P0:AJvf4qHm9s4=;cNRltUyeVPBmnXHQ4BtKjA6RDc4
+ Y42oyinzGeDSY2db6P0HQaNiA5mV3PiOiKjpRweDF77ijVBO6C5iiiPtgKKQrAJwom09ZNPC6
+ l4h2Xwk3wGSY3KFf6P7P1YfXu/ZjEnlQJ9TPnCHOwrir3jTWeOl1yLyBwUIRM8c4d1SAhqvz5
+ sjOSbHa0Ptq01Ltv15/0gFFiXiUzF1Rkqq0X7s8ez4plSKLH3Ka36x7n4Ix03XyytlluTQ+/H
+ oF1W6M5+ZHdP6feA7i6g31J8Klruw6NqqP+mtl52+eAMX82RKpN3UPBdGK6hvZ+fEFoFcssrH
+ P2eBCP4KEgC/tZ0+sWY+mpX65t0DWhS9o/wDCC09ZTclD60SNfp0x0On3LO2+Ptc2PanI0awC
+ DSgn8xCFWVevxL3gtc2PFuzI5HXRRRCEJ+iPIcE1NBYlz1rtfg9ojWAj8jsr0gA+BzwXVQFxZ
+ hmbSG0hXh4uMmiGTr63cLDM2bxwnmjai0dY0FikA7PxAaJb4EbGW8xSP5vuXXKJS41jwgIpel
+ ycSWBDo6yPOQlfJQv1ELB64QfLywXYTiCUkoEkrIq+dhATdf749tJLGjEMMGNKJiDC+veDzwx
+ 7lVWKgS4RZ+jZeUIesBE4H9xefRDoUit+4pqDa27MLXfY8EDI8xQ5PQjRKzXz5lCBK4vjSSgE
+ Icwzr8M1/9waxnKo3JbxI9Mdru/pJTu/IUJ1XSLZFJrjrQS6cWnMwUzhAvc5LDnuaamlhxWx0
+ PbSiX+JsCqlrkFTAHbzSG1ybYYXPcYBC4npnUQkdCbKp23tYg8Yu7W57935NGINmo06YJofyy
+ xC44aoXaL9ZDHmBmYa+8N+bYzp+Ckf7btPEvoo4Mrl2j8PYgRsNWWZrXhbUijhijAYV7yc3XA
+ xfe6eIPGJlGWzuSgCvHHpGf3ujW6PkvWVcdLG77KSLbUbuJb3lp23hkWrPDhUsB+UpvVft+tj
+ BZV6z19u2XvooMYMxVUSO5lacp4=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-
-> On Thu, Feb 02 2023, Junio C Hamano wrote:
+On Fri, Feb 03, 2023 at 12:59:20PM +0000, Philip Oakley wrote:
+> The standard advice for text file eol endings in the .gitattributes file
+> was updated in e28eae3184 (gitattributes: Document the unified "auto"
+> handling, 2016-08-26) with a recent clarification in 8c591dbfce (docs:
+> correct documentation about eol attribute, 2022-01-11), with a follow
+> up comment by the original author in [1] confirming the use of the eol
+> attribute in conjunction with the text attribute.
 >
->> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->>
->>> In the preceding commit the old "USE_CURL_FOR_IMAP_SEND" define became
->>> always true, as we now require libcurl for git-imap-send.
->>>
->>> But as we require OpenSSL for the "tunnel" mode we still need to keep
->>> the OpenSSL codepath around (ee [1] for an attempt to remove it). But
->>
->> "(ee" -> ???
+> Update Git's .gitattributes file to reflect our own advice.
 >
-> Should be "e.g.", will fix.
-
-I think it's more like a missing 'S'  before 'ee'.
-
->>> -#if defined(NO_OPENSSL)
->>> -	if (!use_curl) {
->>> -		warning("--no-curl not supported in this build");
->>> -		use_curl = 1;
->>> -	}
->>> -#endif
->>> +	if (!use_curl)
->>> +		die(_("the --no-curl option to imap-send has been deprecated"));
->>
->> We used to force use of cURL when there is no other way to make the
->> program work (i.e. there is no direct OpenSSL codepath available),
->> instead of refusing to work (and forcing user to say --curl or to
->> stop saying --no-curl, which is one unnecessary roadblock for the
->> user).  Why do we want to change the error handling strategy that
->> has been in place?
+> [1] https://lore.kernel.org/git/?q=3D%3C20220216115239.uo2ie3flaqo3nf2d%=
+40tb-raspi4%3E.
 >
-> I can change this to a soft error, but it seemed more sensible to rip
-> the band-aid off an option that's never going to do anything now,
-> whereas before it would do something based on how you compiled git.
+> Signed-off-by: Philip Oakley <philipoakley@iee.email>
+> ---
+>
+> I was catching up on last year's back emails, and had saved those on
+> eol and text conversion, and was prompted by Torsten's [1] to check
+> my .gitattribute files, only to discover, we aren't providing a good
+> example to others. Let's fix that.
+>
+>
+>  .gitattributes | 22 +++++++++++-----------
+>  1 file changed, 11 insertions(+), 11 deletions(-)
+>
+> diff --git a/.gitattributes b/.gitattributes
+> index b0044cf272..158c3d45c4 100644
+> --- a/.gitattributes
+> +++ b/.gitattributes
+> @@ -1,17 +1,17 @@
+>  * whitespace=3D!indent,trail,space
+>  *.[ch] whitespace=3Dindent,trail,space diff=3Dcpp
+> -*.sh whitespace=3Dindent,trail,space eol=3Dlf
+> -*.perl eol=3Dlf diff=3Dperl
+> -*.pl eof=3Dlf diff=3Dperl
+> -*.pm eol=3Dlf diff=3Dperl
+> -*.py eol=3Dlf diff=3Dpython
+> -*.bat eol=3Dcrlf
+> +*.sh whitespace=3Dindent,trail,space text eol=3Dlf
+> +*.perl text eol=3Dlf diff=3Dperl
+> +*.pl text eof=3Dlf diff=3Dperl
+> +*.pm text eol=3Dlf diff=3Dperl
 
-Stopping and forcing the user to spend an extra step does not sound
-sensible to me.  Let's never do this kind of behaviour change "while
-at it".
+> +*.py text eol=3Dlf diff=3Dpython
+In my eperience python doesn't care about CRLF or LF, both work.
 
-Thanks.
+And it is stated here:
+https://docs.python.org/3/reference/lexical_analysis.html?highlight=3Dline=
+%20endings
+
+In that sense we can loosen the eol=3Dlf, and use CRLF under
+Windows and LF elsewhere. This will make e.g. notepad users happy:
+
+> +*.py text  diff=3Dpython
+
+
