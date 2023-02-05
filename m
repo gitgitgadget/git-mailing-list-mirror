@@ -2,200 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0F47C636CC
-	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 14:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00C5DC636CD
+	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 14:53:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229677AbjBEOx0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Feb 2023 09:53:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33736 "EHLO
+        id S229717AbjBEOxa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Feb 2023 09:53:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbjBEOxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2023 09:53:25 -0500
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DE6644AB
-        for <git@vger.kernel.org>; Sun,  5 Feb 2023 06:53:24 -0800 (PST)
-Received: by mail-io1-xd35.google.com with SMTP id y2so3653289iot.4
-        for <git@vger.kernel.org>; Sun, 05 Feb 2023 06:53:24 -0800 (PST)
+        with ESMTP id S229511AbjBEOx2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2023 09:53:28 -0500
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DDE21ABEC
+        for <git@vger.kernel.org>; Sun,  5 Feb 2023 06:53:27 -0800 (PST)
+Received: by mail-il1-x12e.google.com with SMTP id m15so3852180ilh.9
+        for <git@vger.kernel.org>; Sun, 05 Feb 2023 06:53:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yds/P6BQMPTc2+LJgC6HCmf8d8+mrU01zbVtKkjpqSw=;
-        b=ecBkBFmqA+KhRtXsaK/Pn7umBps9BmgoRt0ODimeafUCuz3vAyNX520N3vFW36YX+X
-         ukxVftgGkiazZJ5KsdJl1eB0AwVgW23+X00M09NxxdNEWbywhXDannqDxq2gM8p8uwaT
-         HzcaHFLxTK9Uey/VnPZ3/lgsji3EMoyI2UoO4R2KemN2LjN2hCQqHeBAcWFc2Wx+U16h
-         WieNlTywLgbZNv6Hs7juVVknIF8G5UvYzTkl6F6UpzV0Ou7wHGAoL9N48chEsW8ok63h
-         +mtd7C6tNXmgNoSdNRLzoeeZk9hbIOBgIHb9e+9GuBzRoGv0yZZ9NA/06KpBWptt+Ryu
-         vrQA==
+        bh=gQW9GLDT3EtbSNsIm+495sLYJXGqvr+jNOj4Zhlarxc=;
+        b=Umn1W9GdiUCKKqeInu+ynOk2frRzxtQtYbyF92OE8qn5JiBMmKRyf7W4cTQO093jZb
+         FTir4Y+dEwQPh66gjAF/VOaMkCd+LL6S6wRCZLbolKHHa+1qqmeXSO8348cLyt4azgBH
+         1ZxjoDW5kiAF4id/f2NnVCwTal/jOHtl5wQI8cqTVqJ5mEwWeebM2oGu3D7aBlIbP2ry
+         a2NA9Wx5Fn7Gc3Yeblv1KReh5w5KVj4rSQUEEduGOBaqbUyiVkmEhYiWYh6hbytpxGsO
+         5WaxhhwJpbFtK8QRDMoR2qwgdYg4qTosf0Sk1RZhVdzkRq7+5zWfvxBlciMBJsFyv0tx
+         kojg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yds/P6BQMPTc2+LJgC6HCmf8d8+mrU01zbVtKkjpqSw=;
-        b=vR1Gwk2Bto31uyKMW/oGn8h/XzKKPN+QvyRJaecrvJtpvkr8rjeZ8jYTWviUbrm9x6
-         S3Vo0ac1GTQbw8Q8AfPmiNGe8C9S9JNuu/4HWB3FIO+F2VHuraE5t/kTDTL95e3Q36nA
-         PvQf4TaPHj/fZb1rkYkZ9T+1wv6g8jyHGV4ZPa9PpeBnayAOSgI7a3p6hw1Kx9Bx+WAa
-         SBki52osb0m75wENgxoPjcmDffFdYuzwtxLj9CuIgjlG0ASr8v/x6d0/oKqdUzbmPT8s
-         uE1ffY103UFlDUWx4e2ogj+FKBu0HVMqM7l3xGfXGT+/DdA8ts0GKXzHnM2ayHWgnC7I
-         ZnwA==
-X-Gm-Message-State: AO0yUKURj5rxnr9wTsxufpm3VKy6kCK9MaxsnoFAfzYcws1yOCuhZ7g2
-        4AoASbQZZBvAwGWVr4Xv+A/JxdpEVVF2HQ==
-X-Google-Smtp-Source: AK7set83z9oeQyVdcCVyUXpJxy8pZl9O2eg9vOaS+H2RupAhFKmAXio6B+Jf/LgI1nCjruGCMRx/cQ==
-X-Received: by 2002:a5d:8456:0:b0:71c:1516:1b09 with SMTP id w22-20020a5d8456000000b0071c15161b09mr10206843ior.0.1675608803249;
-        Sun, 05 Feb 2023 06:53:23 -0800 (PST)
+        bh=gQW9GLDT3EtbSNsIm+495sLYJXGqvr+jNOj4Zhlarxc=;
+        b=GgAiXVXXP94/Wtv2z/904Tyrp23tTPh+AkVg9yXr3EhKIWcvkiIb4G3e/CPwRheuyX
+         +wPQOiLrF2eo+49FjiKatpvStVAOm6GMeZWfpOVh5f1vLfjBEy55dKF4zvPHv2youPqa
+         Rsq0kpB5sBDEXqHk2qbc3whspPT81FGnrHTYYoH1jyaOqzKgMmq0zlw1PxlNaMNghymC
+         dUbhkoESTHwEyF/ez2edQ3TBbFvIC/yMGz3Pq/Gpe6nfKBXH3BNgomtcmFIZbwM/6Wob
+         jBOMRCj1/XeN0klaaFQP15XhsJ8eLEAKc1qTzmCZhwAqmlsBlZ71tPM5OBWhtKMrot/B
+         tWig==
+X-Gm-Message-State: AO0yUKUV0nuJ+LQQkoTWp0F+0FSYsv1G6uP++wZcTOVu4wEcexP+3J1k
+        rASEdjw11Qucm28FAlA8ml5DkyZZCt1Pzg==
+X-Google-Smtp-Source: AK7set/9TB58zxbSm3R0GzQFUMKBy8tfLBF8Eej0I1yK5JCg5hZ8x5dElb4J4eQm28uz6YUwM0JW+w==
+X-Received: by 2002:a05:6e02:1888:b0:310:add0:4b1b with SMTP id o8-20020a056e02188800b00310add04b1bmr16668403ilu.5.1675608806472;
+        Sun, 05 Feb 2023 06:53:26 -0800 (PST)
 Received: from localhost.localdomain (bras-base-london142cw-grc-20-69-158-191-243.dsl.bell.ca. [69.158.191.243])
-        by smtp.googlemail.com with ESMTPSA id q18-20020a056e02097200b00310a5b8504asm2518227ilt.36.2023.02.05.06.53.22
+        by smtp.googlemail.com with ESMTPSA id q18-20020a056e02097200b00310a5b8504asm2518227ilt.36.2023.02.05.06.53.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Feb 2023 06:53:22 -0800 (PST)
+        Sun, 05 Feb 2023 06:53:26 -0800 (PST)
 From:   Shuqi Liang <cheskaqiqi@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, rybak.a.v@gmail.com,
-        gitster@pobox.com
-Subject: [PATCH v3 0/3] modernize style
-Date:   Sun,  5 Feb 2023 09:52:42 -0500
-Message-Id: <20230205145245.11078-1-cheskaqiqi@gmail.com>
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>
+Subject: [PATCH v3 1/3]t4113: modernize a test script
+Date:   Sun,  5 Feb 2023 09:52:43 -0500
+Message-Id: <20230205145245.11078-2-cheskaqiqi@gmail.com>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230202171821.10508-1-cheskaqiqi@gmail.com>
+In-Reply-To: <20230205145245.11078-1-cheskaqiqi@gmail.com>
 References: <20230202171821.10508-1-cheskaqiqi@gmail.com>
+ <20230205145245.11078-1-cheskaqiqi@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-different between V2:
+Test scripts in file in this script are written in old style,
+where the test_expect_success command and test title are written on
+separate lines. Change the old style to modern style.
 
-1.change the commit massage in t4113: Modernize test script and t4113: indent with space.
+for example :
+-test_expect_success setup \
+-    'git update-index --add file'
+-
++test_expect_success setup '
++    git update-index --add file
++'
+Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+---
+ t/t4113-apply-ending.sh | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-2. Put the executable lines inside the test_expect_success.Mention the new style problem cause 
-by this change,which is change the "<<" to "<<-" to strip leading TABs used for indentation.
-
-Shuqi Liang (3):
-  t/t4113-apply-ending.sh: Modernize test script
-  t4113: put executable lines to test_expect_success
-  t4113: indent with space
-
- t/t4113-apply-ending.sh | 79 ++++++++++++++++++++---------------------
- 1 file changed, 38 insertions(+), 41 deletions(-)
-
-Range-diff against v2:
-1:  d7d52f1f79 ! 1:  3d40bcce13 t/t4113-apply-ending.sh: Modernize a test script
-    @@ Metadata
-     Author: Shuqi Liang <cheskaqiqi@gmail.com>
-     
-      ## Commit message ##
-    -    t/t4113-apply-ending.sh: Modernize a test script
-    +    t/t4113-apply-ending.sh: Modernize test script
-     
-    +    Test scripts in file in this script are written in old style,
-    +    where the test_expect_success command and test title are written on
-    +    separate lines. Change the old style to modern style.
-    +
-    +    for example :
-    +    -test_expect_success setup \
-    +    -    'git update-index --add file'
-    +    -
-    +    +test_expect_success setup '
-    +    +    git update-index --add file
-    +    +'
-         Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-     
-      ## t/t4113-apply-ending.sh ##
-2:  d9e5a54e32 ! 2:  5c55b208a8 Test scripts in file t4113-apply-ending.sh, files "test-patch" and "file" are created twice.
-    @@ Metadata
-     Author: Shuqi Liang <cheskaqiqi@gmail.com>
-     
-      ## Commit message ##
-    -    Test scripts in file t4113-apply-ending.sh, files
-    -    "test-patch" and "file" are created twice.
-    +    t4113: put executable lines to test_expect_success
-     
-    -    Make the second creation of the files its own step
-    -    'setup for apply at the beginning'.
-    +    This script is written in old style,where there are
-    +    some executable lines outside test_expect_success. Put the executable
-    +    lines inside the test_expect_success.
-    +
-    +    As t/README says,use "<<-" instead of "<<"
-    +    to strip leading TABs used for indentation. change the "<<" to "<<-"
-    +
-    +    for example:
-    +    -cat >test-patch <<\EOF
-    +    -diff a/file b/file
-    +
-    +     test_expect_success 'apply at the beginning' '
-    +    +       cat >test-patch <<-\EOF
-    +    +       diff a/file b/file
-    +    +       --- a/file
-     
-         Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-     
-    @@ t/t4113-apply-ending.sh: test_description='git apply trying to add an ending lin
-      
-     -# setup
-     -
-    - cat >test-patch <<\EOF
-    - diff --git a/file b/file
-    - --- a/file
-    -@@ t/t4113-apply-ending.sh: echo 'c' >>file
-    +-cat >test-patch <<\EOF
-    +-diff --git a/file b/file
-    +---- a/file
-    +-+++ b/file
-    +-@@ -1,2 +1,3 @@
-    +- a
-    +- b
-    +-+c
-    +-EOF
-    +-
-    +-echo 'a' >file
-    +-echo 'b' >>file
-    +-echo 'c' >>file
-    +-
-      test_expect_success setup '
-    ++	cat >test-patch <<-\EOF
-    ++	diff --git a/file b/file
-    ++	--- a/file
-    ++	+++ b/file
-    ++	@@ -1,2 +1,3 @@
-    ++	a
-    ++	b
-    ++	+c
-    ++	EOF
-    ++
-    ++	echo 'a' >file
-    ++	echo 'b' >>file
-    ++	echo 'c' >>file
-          git update-index --add file
-      '
-     -# test
-    @@ -1,2 +1,3 @@
-     -b
-     -c'
-     -git update-index file
-    -+test_expect_success 'setup for apply at the beginning' '
-    -+	cat >test-patch <<\EOF
-    +-
-    + test_expect_success 'apply at the beginning' '
-    ++	cat >test-patch <<-\EOF
-     +	diff a/file b/file
-     +	--- a/file
-     +	+++ b/file
-    @@ -1,2 +1,3 @@
-     +	b
-     +	c'
-     +	git update-index file
-    -+'
-    - 
-    - test_expect_success 'apply at the beginning' '
-          test_must_fail git apply --index test-patch
-    + '
-    + 
-3:  01a5c3285e < -:  ---------- use "<<-" instead of "<<"
-4:  cf2b2ca5a0 < -:  ---------- t4113-apply-ending.sh used 4-column indent with space,fix it in use tabs for indentation.
--:  ---------- > 3:  02b661279f t4113: indent with space
+diff --git a/t/t4113-apply-ending.sh b/t/t4113-apply-ending.sh
+index 66fa51591e..aa57895b22 100755
+--- a/t/t4113-apply-ending.sh
++++ b/t/t4113-apply-ending.sh
+@@ -24,13 +24,14 @@ echo 'a' >file
+ echo 'b' >>file
+ echo 'c' >>file
+ 
+-test_expect_success setup \
+-    'git update-index --add file'
+-
++test_expect_success setup '
++    git update-index --add file
++'
+ # test
+ 
+-test_expect_success 'apply at the end' \
+-    'test_must_fail git apply --index test-patch'
++test_expect_success 'apply at the end' '
++    test_must_fail git apply --index test-patch
++'
+ 
+ cat >test-patch <<\EOF
+ diff a/file b/file
+@@ -47,7 +48,8 @@ b
+ c'
+ git update-index file
+ 
+-test_expect_success 'apply at the beginning' \
+-	'test_must_fail git apply --index test-patch'
++test_expect_success 'apply at the beginning' '
++    test_must_fail git apply --index test-patch
++'
+ 
+ test_done
 -- 
 2.39.0
 
