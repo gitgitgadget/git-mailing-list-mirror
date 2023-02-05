@@ -2,98 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7500FC636CD
-	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 17:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74878C636CD
+	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 17:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229523AbjBERvN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Feb 2023 12:51:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43902 "EHLO
+        id S229542AbjBER7R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Feb 2023 12:59:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbjBERvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2023 12:51:12 -0500
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 608041CF4A
-        for <git@vger.kernel.org>; Sun,  5 Feb 2023 09:51:10 -0800 (PST)
-Received: by mail-pl1-f175.google.com with SMTP id z1so9971019plg.6
-        for <git@vger.kernel.org>; Sun, 05 Feb 2023 09:51:10 -0800 (PST)
+        with ESMTP id S229520AbjBER7Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2023 12:59:16 -0500
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A74415CA3
+        for <git@vger.kernel.org>; Sun,  5 Feb 2023 09:59:15 -0800 (PST)
+Received: by mail-pj1-f52.google.com with SMTP id bx22so6715162pjb.3
+        for <git@vger.kernel.org>; Sun, 05 Feb 2023 09:59:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8ktiXr7BQFzUFT4Urxfb2OfWkLJlgCMBnuziz48k8M0=;
-        b=ut9g4ry4Hec/VyqOgiKMx+W0BlkrvvmXV1XrGgTJK9I1SCrFgP2jYngpVqhH5vhxzi
-         3vbLuDKFgvbZ0571KjGDl2fCYbZHqVkUDhqqGG5SQ3Bi5baMtcLqQzvayyfh1V+PITvj
-         WGZDoqEWgnC+n2FU35rm1zf801yBQKDJWoPAz8EuOc4tlHAJTHM8Z0RVf3QM1u6kd8bb
-         jUh49HXw1LrVQXjHdFQJ3oE426Q18aeXPepL6LcmdojjvvnWLGIdDpPbWVI2bgL9QVMD
-         aFMk0rYrjijIVVm2yRMCIxbNNmmukLkWsuuSIPM9yC6dOGbXMPTjPiJ1zh8W/QVh1Dwi
-         mbOQ==
-X-Gm-Message-State: AO0yUKXaYwTUlUUl2D91A6yoyMJfuB0ufgNA+2I1LmAZJGgjFZSFkt2F
-        VOxLAf1skUERrG5E/0zQpk7XAHtfQk9Z8qyFuEdOLqT9
-X-Google-Smtp-Source: AK7set9T2XI0j+P3E4idLgbMRIzTTCJ4a4PvvsHkizV94lMFHt5zuijg3r2i64uXh6ID/1ynqhpiKO/qeNm9A82xMJE=
-X-Received: by 2002:a17:90a:6587:b0:230:7861:1897 with SMTP id
- k7-20020a17090a658700b0023078611897mr1392644pjj.134.1675619469228; Sun, 05
- Feb 2023 09:51:09 -0800 (PST)
+        bh=YfpHkE4NdRXsOCofA5aPe1c88CZUqqgh0D7/L01vqQ0=;
+        b=CBh2xOcWhX4DrsamIaiglaAGe2KN2SGOWYMeOxh95EzoJ17I5UpxEO3IQszmNuY0Gf
+         VNzgNo+/gGfpV/cGZfoNaf+nBslSAbvrjGDt47bhcS2NnOqmV3wkHYBbLE8KRFDe1Vm8
+         nk6OpnQdh/hXjJ+PPxfNZQTJlqOLl17D2AgMa11B8v+IKEoyL9sNW9hNb4oWbC2ei/1S
+         XYxdSzaJUlQTs9x/dTzaUJ+T9owQAndvLQujR9CI1wlmA9X+SIu/CgW506kNaBxWYjNF
+         iaSZ9Uv76YFaOGmObuYht/h6vIItEWnRPn2QrW0Xwgvmk3xAe+sQRWYB2ZDX90VfBel7
+         SLxQ==
+X-Gm-Message-State: AO0yUKWOJVWS4wqAgp10q+jQl3uX9aLHrAcVfucU9GVdOg0lQg8Yd6dM
+        p3sdtNoi9piSEbvszmw979AyKy/gjK+G9490WrE=
+X-Google-Smtp-Source: AK7set/S+h2pnGSwJOXt7/VXDsgFcVz0KkffmnWQXsDY05kHFbywJSc2vi4kIITd60Ak/FaCZzyO+DhABDKARRAwwtw=
+X-Received: by 2002:a17:903:243:b0:196:4e61:b6b5 with SMTP id
+ j3-20020a170903024300b001964e61b6b5mr4468013plh.2.1675619954587; Sun, 05 Feb
+ 2023 09:59:14 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com> <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
-In-Reply-To: <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
+References: <20230202202557.19297-1-kostya.farber@gmail.com>
+ <xmqqa61vsniy.fsf@gitster.g> <CAPig+cTC4TUK2NXFmP6ymEYYjYAmCSd53dzFhKn0ido8x6uh1Q@mail.gmail.com>
+ <CAPig+cR+1bxgitSmJ47PxD=CPxJjMh5Vm+zRdVU8iEo9pvtutw@mail.gmail.com> <CAPRQfCZUwaE4mko46n0wQbkKjpg4Tqxbg6eKLm9rFrBRj6sVLg@mail.gmail.com>
+In-Reply-To: <CAPRQfCZUwaE4mko46n0wQbkKjpg4Tqxbg6eKLm9rFrBRj6sVLg@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 5 Feb 2023 12:50:57 -0500
-Message-ID: <CAPig+cQNoX1-DN1=aFEX=MxEvoYhdu0NxPyhH++B4_1G2Dmp8w@mail.gmail.com>
-Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Date:   Sun, 5 Feb 2023 12:59:03 -0500
+Message-ID: <CAPig+cT-3GuGg91WDeMC__iQ7db0-1-q7-4z5jBFb19GC3E9mQ@mail.gmail.com>
+Subject: Re: [GSoC][PATCH] t/t5000-tar-tree: add helper function
+To:     Kostya Farber <kostya.farber@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 4, 2023 at 11:47 PM John Cai via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> It can be useful to specify diff algorithms per file type. For example,
-> one may want to use the minimal diff algorithm for .json files, another
-> for .c files, etc.
+On Sat, Feb 4, 2023 at 10:17 AM Kostya Farber <kostya.farber@gmail.com> wrote:
+> On Thu, Feb 2, 2023 at 11:19 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > On Thu, Feb 2, 2023 at 6:09 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > > So, t5000 seems to be one of those relatively rare cases in which the
+> > > raw "test" command is more correct than the higher-level helper
+> > > functions.
+> >
+> > By the way, although the change made by this patch is probably
+> > undesirable, if you would like to try a different submission, there is
+> > a bit of modernization that could be applied to t5000. [...]
 >
-> Teach the diff machinery to check attributes for a diff algorithm.
-> Enforce precedence by favoring the command line option, then looking at
-> attributes, then finally the config.
->
-> To enforce precedence order, set the `xdl_opts_command_line` member
-> during options pasing to indicate the diff algorithm was set via command
-> line args.
->
-> Signed-off-by: John Cai <johncai86@gmail.com>
-> ---
-> diff --git a/diff.c b/diff.c
-> @@ -3652,6 +3652,27 @@ static void builtin_diff(const char *name_a,
-> +               if (!o->xdl_opts_command_line) {
-> +                       static struct attr_check *check;
+> I would be happy to help and submit another patch for this test based
+> on your observations above. Thanks for the suggestion. I am trying to
+> get used to the development workflow of emailing patches and generally
+> getting familiar with the code base and this seems like a small but
+> important step in the right direction.
 
-`check` is declared static...
-
-> +                       const char *one_diff_algo;
-> +                       const char *two_diff_algo;
-> +
-> +                       check = attr_check_alloc();
-
-... is allocated here...
-
-> +                       attr_check_append(check, git_attr("diff-algorithm"));
-> +
-> +                       git_check_attr(the_repository->index, NULL, one->path, check);
-> +                       one_diff_algo = check->items[0].value;
-> +                       git_check_attr(the_repository->index, NULL, two->path, check);
-> +                       two_diff_algo = check->items[0].value;
-> +
-> +                       if (!ATTR_UNSET(one_diff_algo) && !ATTR_UNSET(two_diff_algo) &&
-> +                               !strcmp(one_diff_algo, two_diff_algo))
-> +                               set_diff_algorithm(o, one_diff_algo);
-> +
-> +                       attr_check_free(check);
-
-... and freed here...
-
-> +               }
-
-... so the reason for the `static` declaration is not clear. Am I
-missing something obvious?
+The goal of the microproject isn't so much to get a change accepted
+into the project, but rather to get experience with the workflow and
+review process. Responding to reviewer comments, as you did, is part
+of that process, so you're doing fine.
