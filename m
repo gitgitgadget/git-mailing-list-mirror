@@ -2,216 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F3B9C636CC
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C6FEC636D4
 	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 03:46:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229558AbjBEDq1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Feb 2023 22:46:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56866 "EHLO
+        id S229620AbjBEDq2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Feb 2023 22:46:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbjBEDq0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Feb 2023 22:46:26 -0500
+        with ESMTP id S229557AbjBEDq1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Feb 2023 22:46:27 -0500
 Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 289EB1C5A5
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEDC51EFC3
         for <git@vger.kernel.org>; Sat,  4 Feb 2023 19:46:25 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id o18so7714374wrj.3
+Received: by mail-wr1-x42e.google.com with SMTP id bk16so7682787wrb.11
         for <git@vger.kernel.org>; Sat, 04 Feb 2023 19:46:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qjnipgRy3r/tiLab8yFZsZlkSBGIpNzSs/aai2VJvy0=;
-        b=cucyWDAeuExvzIzwvUhdpkTtpVNFCs6GjxkjloSSSzPQGvEuXc3njRb44N5Jx8JlvB
-         sR9F+97SeoUoy2QuE74tN3n+x1/JAOa3QoFqWwOiWn0cevZU3Wu5xdAkBlghlnKGKILu
-         S2KtH8ZMIRcPc9efuFypyOwDbAlWlaVQW57bNZcxiBbKCgu3++BrlRtADJqxnc9WBd+n
-         b/wKrL5lCOla/Oo1l6KUgg9wRtxPLkvjNPT8BkpbrApvUOUa/rCP4dE1r2HCrgpNHiOx
-         I8HKnOAvr9u49cCYEeI1vqDeh+UCSX2nwd0DKBCctElYbEr9Jnt6sl59DAyuiKwyosne
-         zj6g==
+        bh=2ANGdW31xA7qf86Hz/udtnnud76o+MVccQhRrfX8EuU=;
+        b=amRX/kgiqsTwHd8aP4P4FGvwRozISlFjchh6XeUIr6jhjCLwpaOrHb+iRd7sAz54xW
+         egzRhu1m5bhyuMKGKGz+algIrZvqnxz5tjAwGDGXabBIonHjvNGMyObV5lQ9mse8g1K3
+         AlBIJ60uas4eYCw8Yt2ZST6s6jc+jbmBHtUT5whFMnwtV9oWmG34f+OLRiOVju5d+weK
+         hq9uAbyLsfC1+v9E0/wnBmWfzo2ybdLvCcLg9p+KuRTwH3dg8586pZk3EuLIVI0JXeZF
+         jdw9v31bkDxctijC8Hu5vhXq6bkfXSo7yR3znnkVGf3qa0pgAMXrSwMAi4p3kBt/0syv
+         nNmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qjnipgRy3r/tiLab8yFZsZlkSBGIpNzSs/aai2VJvy0=;
-        b=KLprVr6UVIubCLC8UW1SI21wWOWkxWz9UBh27DhFlPDcIgnD8tuuSctsMWD4/M+uaY
-         4+cUGFSShIgCyXHJmM6FgX5qvb5OuOVsn8YbAi7uW8J+NYHYu+30ZBeyX440AhnDprBX
-         G10o4SDx/7UzQ3v/QCjWPlhL6AQLI2LFN8HJV+Na+rz9ArkSg/Sk3L6DXqMqD0VF800B
-         aKopYL4Vv0FTG5WsOedVBkcHXRd0ZzimFhpbHCQcU1JUiwS8e1BvT5tsG5WzR7VNN4QQ
-         4nHayMvyaqlCeyELnWHy0qpf86zO5E23bh+Hc7WJEP49C2vzi+0xG5ONB3x6CeXxwgHQ
-         cWWA==
-X-Gm-Message-State: AO0yUKWXjCgHhx57aDYD9Gm0x/bfbDyIrI2XlaG0KuUJUQZRQ905p6mR
-        j7G3tz8rtDgvSdx97QTjFL7HA5uIEQk=
-X-Google-Smtp-Source: AK7set8aOBwhM/9CrD0e4XUfxSX+5EjUuyCKM+Yn8HfliP/2RhJ7ZG1HJkt7Xi9+uqHiORK3LBOxiw==
-X-Received: by 2002:a05:6000:10c3:b0:2bf:b113:8ae2 with SMTP id b3-20020a05600010c300b002bfb1138ae2mr15457033wrx.15.1675568783512;
-        Sat, 04 Feb 2023 19:46:23 -0800 (PST)
+        bh=2ANGdW31xA7qf86Hz/udtnnud76o+MVccQhRrfX8EuU=;
+        b=JSvsCU6hu/TjsVCkoFcT4NjlfJCMp8uaDBD60g6WfFVNLBgHz8C06FW62jScBRQmfO
+         D8rgxk3YY9rESe4qWAIlmwIvdlXcRzOV9N+BnVqfolL65pI9q1jBtsQJvo2UyjZKzX7M
+         cmXO3n1lWLvYcjNLeYorxNhUChgo+IDWT0VTX9Ir4/G0+GLSaS0C0akpM1fXZAb3nrAE
+         mwUWMXerZK2rlLK5chtx3ZMJWxNGv4yduTo10Vh2BV3EyIucLq3YL8D0QnVXtDEY7TMV
+         vrnKfGfvDOJw7gU1Q0UyHybolobNeQCl6inZIVWGm1fm7flKWW+WsztXnUmWSAqJXa+3
+         dqHg==
+X-Gm-Message-State: AO0yUKWXx5MuGrwrBa7Na0zbz2pn1WaVmDpCY86uRyCQxtQvFxJ8xKx7
+        kN5+bkOAQarFmoC6d7xx7u1WC1NSefA=
+X-Google-Smtp-Source: AK7set9bsOocJuN2aPFuzmlgfZVq9eXvb1llrveC7ELabGYeqLhenaNCL9wHXG1VShzCXYvjpPfFhg==
+X-Received: by 2002:a05:6000:1c12:b0:2bf:b710:c0b with SMTP id ba18-20020a0560001c1200b002bfb7100c0bmr18595120wrb.1.1675568784192;
+        Sat, 04 Feb 2023 19:46:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i6-20020a0560001ac600b00241fde8fe04sm6063029wry.7.2023.02.04.19.46.23
+        by smtp.gmail.com with ESMTPSA id h4-20020a5d5044000000b002bdf3809f59sm5644154wrt.38.2023.02.04.19.46.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 04 Feb 2023 19:46:23 -0800 (PST)
-Message-Id: <f56bd38ac3f80fb3a7e8c92cadaa57d2b0754b9f.1675568781.git.gitgitgadget@gmail.com>
+Message-Id: <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
 References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 05 Feb 2023 03:46:20 +0000
-Subject: [PATCH 1/2] diff: consolidate diff algorithm option parsing
+Date:   Sun, 05 Feb 2023 03:46:21 +0000
+Subject: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>, John Cai <jcai@gitlab.com>
+Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <jcai@gitlab.com>
+From: John Cai <johncai86@gmail.com>
 
-The diff option parsing for --minimal, --patience, --histgoram can all
-be consolidated into one function. This is a preparatory step for the
-subsequent commit which teaches diff to keep track of whether or not a
-diff algorithm has been set via the command line.
+It can be useful to specify diff algorithms per file type. For example,
+one may want to use the minimal diff algorithm for .json files, another
+for .c files, etc.
 
-While we're at it, the logic that sets the diff algorithm in
-diff_opt_diff_algorithm() can be refactored into a helper that will
-allow multiple callsites to set the diff algorithm.
+Teach the diff machinery to check attributes for a diff algorithm.
+Enforce precedence by favoring the command line option, then looking at
+attributes, then finally the config.
+
+To enforce precedence order, set the `xdl_opts_command_line` member
+during options pasing to indicate the diff algorithm was set via command
+line args.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- diff.c | 87 ++++++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 54 insertions(+), 33 deletions(-)
+ Documentation/gitattributes.txt | 23 +++++++++++++++++++++++
+ diff.c                          | 25 +++++++++++++++++++++++++
+ diff.h                          |  2 ++
+ t/lib-diff-alternative.sh       | 27 ++++++++++++++++++++++++++-
+ 4 files changed, 76 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index c19e64ea0ef..501dd536037 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -736,6 +736,29 @@ String::
+ 	by the configuration variables in the "diff.foo" section of the
+ 	Git config file.
+ 
++`diff-algorithm`
++^^^^^^^^^^^^^^^^
++
++The attribute `diff-algorithm` affects which algorithm Git uses to generate
++diffs. This allows defining diff algorithms per file extension. Precedence rules
++are as follows, in order from highest to lowest:
++
++*Command line option*
++
++Pass in the `--diff-algorithm` command line option int git-diff(1)
++
++*Git attributes*
++
++------------------------
++*.json	diff-algorithm=histogram
++------------------------
++
++*Git config*
++
++----------------------------------------------------------------
++[diff]
++	algorithm = histogram
++----------------------------------------------------------------
+ 
+ Defining an external diff driver
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 diff --git a/diff.c b/diff.c
-index 329eebf16a0..a8a31c81fe7 100644
+index a8a31c81fe7..c78e28daeb0 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -3437,6 +3437,22 @@ static int diff_filepair_is_phoney(struct diff_filespec *one,
- 	return !DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two);
- }
- 
-+static int set_diff_algorithm(struct diff_options *opts,
-+			      const char *alg)
-+{
-+	long value = parse_algorithm_value(alg);
+@@ -3652,6 +3652,27 @@ static void builtin_diff(const char *name_a,
+ 		ecbdata.opt = o;
+ 		if (header.len && !o->flags.suppress_diff_headers)
+ 			ecbdata.header = &header;
 +
-+	if (value < 0)
-+		return 1;
++		if (!o->xdl_opts_command_line) {
++			static struct attr_check *check;
++			const char *one_diff_algo;
++			const char *two_diff_algo;
 +
-+	/* clear out previous settings */
-+	DIFF_XDL_CLR(opts, NEED_MINIMAL);
-+	opts->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-+	opts->xdl_opts |= value;
++			check = attr_check_alloc();
++			attr_check_append(check, git_attr("diff-algorithm"));
 +
-+	return 0;
-+}
++			git_check_attr(the_repository->index, NULL, one->path, check);
++			one_diff_algo = check->items[0].value;
++			git_check_attr(the_repository->index, NULL, two->path, check);
++			two_diff_algo = check->items[0].value;
 +
- static void builtin_diff(const char *name_a,
- 			 const char *name_b,
- 			 struct diff_filespec *one,
-@@ -5107,17 +5123,40 @@ static int diff_opt_diff_algorithm(const struct option *opt,
- 				   const char *arg, int unset)
- {
- 	struct diff_options *options = opt->value;
--	long value = parse_algorithm_value(arg);
- 
- 	BUG_ON_OPT_NEG(unset);
--	if (value < 0)
++			if (!ATTR_UNSET(one_diff_algo) && !ATTR_UNSET(two_diff_algo) &&
++				!strcmp(one_diff_algo, two_diff_algo))
++				set_diff_algorithm(o, one_diff_algo);
 +
-+	if (set_diff_algorithm(options, arg))
++			attr_check_free(check);
++		}
++
+ 		xpp.flags = o->xdl_opts;
+ 		xpp.ignore_regex = o->ignore_regex;
+ 		xpp.ignore_regex_nr = o->ignore_regex_nr;
+@@ -5130,6 +5151,8 @@ static int diff_opt_diff_algorithm(const struct option *opt,
  		return error(_("option diff-algorithm accepts \"myers\", "
  			       "\"minimal\", \"patience\" and \"histogram\""));
  
--	/* clear out previous settings */
--	DIFF_XDL_CLR(options, NEED_MINIMAL);
--	options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
--	options->xdl_opts |= value;
-+	return 0;
-+}
-+
-+static int diff_opt_diff_algorithm_no_arg(const struct option *opt,
-+				   const char *arg, int unset)
-+{
-+	struct diff_options *options = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(arg);
-+
-+	if (!strcmp(opt->long_name, "patience")) {
-+		int i;
-+		/*
-+		 * Both --patience and --anchored use PATIENCE_DIFF
-+		 * internally, so remove any anchors previously
-+		 * specified.
-+		 */
-+		for (i = 0; i < options->anchors_nr; i++)
-+			free(options->anchors[i]);
-+		options->anchors_nr = 0;
-+	}
-+
-+	if (set_diff_algorithm(options, opt->long_name))
-+		return error(_("available diff algorithms include \"myers\", "
-+			       "\"minimal\", \"patience\" and \"histogram\""));
++	options->xdl_opts_command_line = 1;
 +
  	return 0;
  }
  
-@@ -5242,26 +5281,6 @@ static enum parse_opt_result diff_opt_output(struct parse_opt_ctx_t *ctx,
+@@ -5157,6 +5180,8 @@ static int diff_opt_diff_algorithm_no_arg(const struct option *opt,
+ 		return error(_("available diff algorithms include \"myers\", "
+ 			       "\"minimal\", \"patience\" and \"histogram\""));
+ 
++	options->xdl_opts_command_line = 1;
++
  	return 0;
  }
  
--static int diff_opt_patience(const struct option *opt,
--			     const char *arg, int unset)
--{
--	struct diff_options *options = opt->value;
--	int i;
--
--	BUG_ON_OPT_NEG(unset);
--	BUG_ON_OPT_ARG(arg);
--	options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
--	/*
--	 * Both --patience and --anchored use PATIENCE_DIFF
--	 * internally, so remove any anchors previously
--	 * specified.
--	 */
--	for (i = 0; i < options->anchors_nr; i++)
--		free(options->anchors[i]);
--	options->anchors_nr = 0;
--	return 0;
--}
--
- static int diff_opt_ignore_regex(const struct option *opt,
- 				 const char *arg, int unset)
- {
-@@ -5562,9 +5581,10 @@ struct option *add_diff_options(const struct option *opts,
- 			    N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
+diff --git a/diff.h b/diff.h
+index 41eb2c3d428..46b565abfd4 100644
+--- a/diff.h
++++ b/diff.h
+@@ -333,6 +333,8 @@ struct diff_options {
+ 	int prefix_length;
+ 	const char *stat_sep;
+ 	int xdl_opts;
++	/* If xdl_opts has been set via the command line. */
++	int xdl_opts_command_line;
  
- 		OPT_GROUP(N_("Diff algorithm options")),
--		OPT_BIT(0, "minimal", &options->xdl_opts,
--			N_("produce the smallest possible diff"),
--			XDF_NEED_MINIMAL),
-+		OPT_CALLBACK_F(0, "minimal", options, NULL,
-+			       N_("produce the smallest possible diff"),
-+			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-+			       diff_opt_diff_algorithm_no_arg),
- 		OPT_BIT_F('w', "ignore-all-space", &options->xdl_opts,
- 			  N_("ignore whitespace when comparing lines"),
- 			  XDF_IGNORE_WHITESPACE, PARSE_OPT_NONEG),
-@@ -5589,10 +5609,11 @@ struct option *add_diff_options(const struct option *opts,
- 		OPT_CALLBACK_F(0, "patience", options, NULL,
- 			       N_("generate diff using the \"patience diff\" algorithm"),
- 			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
--			       diff_opt_patience),
--		OPT_BITOP(0, "histogram", &options->xdl_opts,
--			  N_("generate diff using the \"histogram diff\" algorithm"),
--			  XDF_HISTOGRAM_DIFF, XDF_DIFF_ALGORITHM_MASK),
-+			       diff_opt_diff_algorithm_no_arg),
-+		OPT_CALLBACK_F(0, "histogram", options, NULL,
-+			       N_("generate diff using the \"histogram diff\" algorithm"),
-+			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-+			       diff_opt_diff_algorithm_no_arg),
- 		OPT_CALLBACK_F(0, "diff-algorithm", options, N_("<algorithm>"),
- 			       N_("choose a diff algorithm"),
- 			       PARSE_OPT_NONEG, diff_opt_diff_algorithm),
+ 	/* see Documentation/diff-options.txt */
+ 	char **anchors;
+diff --git a/t/lib-diff-alternative.sh b/t/lib-diff-alternative.sh
+index 8d1e408bb58..630c98ea65a 100644
+--- a/t/lib-diff-alternative.sh
++++ b/t/lib-diff-alternative.sh
+@@ -107,8 +107,27 @@ EOF
+ 
+ 	STRATEGY=$1
+ 
++	test_expect_success "$STRATEGY diff from attributes" '
++		echo "file* diff-algorithm=$STRATEGY" >.gitattributes &&
++		test_must_fail git diff --no-index file1 file2 > output &&
++		test_cmp expect output
++	'
++
+ 	test_expect_success "$STRATEGY diff" '
+-		test_must_fail git diff --no-index "--$STRATEGY" file1 file2 > output &&
++		test_must_fail git diff --no-index "--diff-algorithm=$STRATEGY" file1 file2 > output &&
++		test_cmp expect output
++	'
++
++	test_expect_success "$STRATEGY diff command line precedence before attributes" '
++		echo "file* diff-algorithm=meyers" >.gitattributes &&
++		test_must_fail git diff --no-index "--diff-algorithm=$STRATEGY" file1 file2 > output &&
++		test_cmp expect output
++	'
++
++	test_expect_success "$STRATEGY diff attributes precedence before config" '
++		git config diff.algorithm default &&
++		echo "file* diff-algorithm=$STRATEGY" >.gitattributes &&
++		test_must_fail git diff --no-index "--diff-algorithm=$STRATEGY" file1 file2 > output &&
+ 		test_cmp expect output
+ 	'
+ 
+@@ -166,5 +185,11 @@ EOF
+ 		test_must_fail git diff --no-index "--$STRATEGY" uniq1 uniq2 > output &&
+ 		test_cmp expect output
+ 	'
++
++	test_expect_success "$STRATEGY diff from attributes" '
++		echo "file* diff-algorithm=$STRATEGY" >.gitattributes &&
++		test_must_fail git diff --no-index uniq1 uniq2 > output &&
++		test_cmp expect output
++	'
+ }
+ 
 -- 
 gitgitgadget
-
