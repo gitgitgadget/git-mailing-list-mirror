@@ -2,94 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B641AC636CC
-	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 18:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CE0FC636CD
+	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 19:27:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229496AbjBESib (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Feb 2023 13:38:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52692 "EHLO
+        id S229567AbjBET1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Feb 2023 14:27:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbjBESia (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2023 13:38:30 -0500
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [IPv6:2a01:e0c:1:1599::13])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD3801C5A6
-        for <git@vger.kernel.org>; Sun,  5 Feb 2023 10:38:27 -0800 (PST)
-Received: from [IPV6:2a01:e0a:3d0:7640:b865:b196:7e8b:98f8] (unknown [IPv6:2a01:e0a:3d0:7640:b865:b196:7e8b:98f8])
-        (Authenticated sender: thomas.koutcher@online.fr)
-        by smtp4-g21.free.fr (Postfix) with ESMTPSA id C1AB719F58C;
-        Sun,  5 Feb 2023 19:38:24 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=online.fr;
-        s=smtp-20201210; t=1675622305;
-        bh=Kb1YGQRn+6e8M8TgnV6fnBX0I518zHOxc6mK+u20ACc=;
-        h=Date:From:Subject:To:From;
-        b=Gx42dduTrQxPwxvGIqmKz41qJDcMQIOPv3cwjl67X1h0PbKssS1N56oBGJ313nBUK
-         GcOYfa6cgSh/nTGxNPOEpKUErA+Gv/wHJXzAdd3xdLUXZVYrlwv728XdpTEThbXMRB
-         /9MHejHzvE7/1OIIv3pI21cqVDQCmcP8+KdNJWENqG6GPEF6nkGZQHVozq/ba4LP1D
-         qT7MQmT2nYtUE6BM699EAIG0kvD56KwGMx9BKbkjAgjd0hCjzdV3EisjAT3wPvLkz3
-         iszvIOQDcbRM4qiI5jBjffbo1Ko4VuXrVsXxwQ4gtoRYpu/ygnWL9kKPZIie0O7Psq
-         VGJD6oCabxEhQ==
-Message-ID: <119fc2c6-510c-84e0-3dad-52a37b2966d6@online.fr>
-Date:   Sun, 5 Feb 2023 19:38:24 +0100
+        with ESMTP id S229478AbjBET1e (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2023 14:27:34 -0500
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 340CC18AB4
+        for <git@vger.kernel.org>; Sun,  5 Feb 2023 11:27:33 -0800 (PST)
+Received: by mail-io1-xd2e.google.com with SMTP id y2so3789881iot.4
+        for <git@vger.kernel.org>; Sun, 05 Feb 2023 11:27:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LOq6yBEOUF05hVScF1qFrXM7OWO/m2ftHVVgOwQ2CQo=;
+        b=AfSzueC+12YmWM/45UYoKiOAl35Lo7kAm+LoV4MfJY6/75HfVqdgVpoqbsSX4vuKp2
+         XeylWkux8QTSeb/C9Mrdz0WGeXZujsyXuXCjgRsIVisrt8fMCApwdu66Usosk1IVUplD
+         YuoQb0ZrgeKha2ZBg/JKnLGJmnDm0aXUxOrfZzzpyMdb8Li/mV7B166KlbKJeVE/n93g
+         wQCvYkFVf2iK0MVDrS8ztWItiUgCGlL+xFzhfB06ezUS7YCOEpT8HweLJV4ieqKL9be8
+         Ug2nzZEA27VtbNyiG0PA8x8L1FvkmO22wPOa2crNILBoVe/iFACatlasfcmY6rZ/h5ds
+         YYAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LOq6yBEOUF05hVScF1qFrXM7OWO/m2ftHVVgOwQ2CQo=;
+        b=YACfCExngRLasJQOW405bN6Ac1+g894yUzpN+uI0ivUSvg0GdrnjDlgORugef0HTZM
+         /9gRg36bHKHdNpRAxi5vntcKUhFbSou0mBIrnVxVNOXfEo/oc0XseWoXNQUNrzUyVpGh
+         NhbNg3lQAHe/fRh8lG1SpxA0woWhOCNIorYibHG8yZZddUxtS/BwFk0jmSOS3vfmRMSs
+         DkKovf3DwUHMoSb6p3aLhXErJHZ8SL+ySwZP+81N/4oGFksTK9gXxmGmev0tCI5MmKp4
+         gYXpEbPb4o5kRuOuwdH+33gZBULXTcjm5BvhZvOUJ/NCULsrtCdwxRajBbICui2zNu4n
+         xFYA==
+X-Gm-Message-State: AO0yUKVtymi8Rfyd3tQzF3ucYrLMSGdI14C5OnSyF8ZjcWiP/8ZBSEt+
+        WVKDvAZ9/d+bzm6Kthys2lSQ/EvbIAxkQDm2I9M=
+X-Google-Smtp-Source: AK7set/S5EfOB0/LM/kCiMqmtwXec2yuNzXZIzJsOZpd1XNl6HhvEWkKeAknyOCqZWSFofEwDvK8oQ==
+X-Received: by 2002:a05:6602:1606:b0:716:596a:1ce9 with SMTP id x6-20020a056602160600b00716596a1ce9mr16239721iow.15.1675625252419;
+        Sun, 05 Feb 2023 11:27:32 -0800 (PST)
+Received: from [10.4.18.48] ([191.101.157.6])
+        by smtp.gmail.com with ESMTPSA id v19-20020a6b5b13000000b007046e9e138esm2611273ioh.22.2023.02.05.11.27.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 05 Feb 2023 11:27:31 -0800 (PST)
+Message-ID: <6ca6ebf0-b357-e1d0-4866-dd04a5f987ad@gmail.com>
+Date:   Sun, 5 Feb 2023 20:27:28 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.1
-From:   Thomas Koutcher <thomas.koutcher@online.fr>
-Subject: [ANNOUNCE] tig-2.5.8
-To:     git@vger.kernel.org
-Content-Language: en-GB, et, fr
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Subject: Re: [PATCH v2 0/3] userdiff: Java updates
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Jeff King <peff@peff.net>, Paolo Bonzini <pbonzini@redhat.com>,
+        git@vger.kernel.org, Tassilo Horn <tsdh@gnu.org>
+References: <877cwxvl3a.fsf@gnu.org>
+ <20230204134329.251451-1-rybak.a.v@gmail.com>
+ <45830cf4-41c1-0bc1-3e4e-26b9f713f452@kdbg.org>
+Content-Language: en-US
+In-Reply-To: <45830cf4-41c1-0bc1-3e4e-26b9f713f452@kdbg.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 2023-02-05T11:09, Johannes Sixt wrote:
+> Am 04.02.23 um 14:43 schrieb Andrei Rybak:
+>> On 04/02/2023 10:22, Tassilo Horn wrote:
+>>> Thanks for including me being the last contributor to java userdiff.
+>>> The patches look good from my POV and are safe-guarded with tests, so
+>>> I'm all for it.
+>>
+>> Thank you for review!
+>>
+>> I've realized that I've been writing modifiers "abstract" and "sealed" in a
+>> technically correct, but not the conventional order.  Here's a reroll with the
+>> order of modifiers following the style of original authors of
+>> https://openjdk.org/jeps/409.  It doesn't matter for the purposes of the test,
+>> but it will be less annoying to any future readers :-)
+> 
+> I've looked through the patches and run the tests, and they all make
+> sense to me. By just looking at the patch text I noted that no
+> whitespace between the identifier and the opening angle bracket is
+> permitted and whether it should be allowed, but the commit messages make
+> quite clear that whitespace is not allowed in this position.
 
-I am pleased to announce Tig version 2.5.8 which brings some improvements
-and bugfixes. See the release notes below for a detailed list of changes.
+There is some kind of misunderstanding.  I guess the wording in commit
+messages of the first and second patches could have been clearer.
 
-What is Tig?
-------------
+In Java, whitespace is allowed between type name and the brackets.
+It is permitted both for angle brackets of type parameters:
 
-Tig is an ncurses-based text-mode interface for git. It functions mainly
-as a Git repository browser, but can also assist in staging changes for
-commit at chunk level and act as a pager for output from various Git
-commands.
+	class SpacesBeforeTypeParameters         <A, B> {
+	}
 
-  - Homepage:https://jonas.github.io/tig/
-  - Manual:https://jonas.github.io/tig/doc/manual.html
-  - Tarballs:https://github.com/jonas/tig/releases
-  - Gitter:https://gitter.im/jonas/tig
-  - Q&A:https://stackoverflow.com/questions/tagged/tig
+and for round brackets of components in records:
 
-Release notes
--------------
+	record SpacesBeforeComponents      (String comp1, int comp2) {
+	}
 
-Improvements:
+The common convention, is however, to omit the whitespace before the
+brackets.
 
-  - Update utf8proc to v2.8.0, supporting Unicode 15.
-  - Support editing from the pager and the log (-p) views. (#1243)
-  - Adjust build for native Apple Silicon.
-  - Autoscroll the pager view while loading. (#1223)
-  - Automatically show next diff in the status view. (#413, #469)
-  - Replace `Unknown` author with `Not Committed Yet`.
-  - Allow use of regular expressions for coloring. (#1249)
-  - Add support for option word-diff-regex. (#1252)
-  - Include original blob name in temporary filename. (#1254)
+The regular expression on branch master already allows for whitespace
+after the name of the type:
 
-Bug fixes:
+	"^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+[A-Za-z][A-Za-z0-9_$]*[ \t]+.*)$\n"
+	                                                                          ^^^^^^
+so I didn't need to cover this case.  Note that it requires a non-zero
+amount of whitespace. This part of the regular expression was left as
+is (v2 after patch 3/3):
 
-  - Use %(file_old) for old filename in the blame view. (#1226)
-  - Correctly report which version of libncurses was linked. (#1240, #1241)
-  - Fix stage view closing when holding the ] key. (#1245)
-  - Make tests work from a path with symlinks.
-  - Fix encoding of very long lines. (#1227)
-  - Fix diffstat color for tig log -p.
-  - Clean IO before closing a view or quitting.
+	"^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*([ \t]+|[<(]).*)$\n"
+	                                                                                   ^^^^^^
 
-Thanks to everyone who contributed (in alphabetical order): Alex Daily,
-alice, Mahmoud Al-Qudsi, Sebastian Gniazdowski, Thomas Koutcher.
 
---
-Thomas Koutcher
+That being said, I guess it would be an improvement to also allow
+the name of the type be followed by the end of the line, for users
+with fairly common code style that puts braces on separate lines:
 
+	class WithLineBreakBeforeOpeningBrace
+	{
+	}
+
+or `extends` and `implements` clauses after a line break:
+
+	class ExtendsOnSeparateLine
+		extends Number
+		implements Serializable
+	{
+	}
+
+even type parameters:
+
+	class TypeParametersOnSeparateLine
+		<A, B>
+	{
+	}
+
+Something like the following:
+
+	"^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*(([ \t]+|[<(]).*)?)$\n"
+	                                                                                  ^               ^^
+perhaps? Technically, the following is also valid Java:
+
+	class WithComment//comment immediately after class name
+	{
+	}
+
+but I'm not sure if allowing it is needed.  If so, we might as well just do this:
+
+	"^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*.*)$\n"
+	                                                                                  ^^
