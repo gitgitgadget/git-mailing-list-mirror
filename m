@@ -2,153 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDBC2C636D3
-	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 21:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 475F7C636CD
+	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 21:36:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229620AbjBEVdd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Feb 2023 16:33:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39114 "EHLO
+        id S229620AbjBEVgO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Feb 2023 16:36:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjBEVdb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2023 16:33:31 -0500
-Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30ED9EC7F
-        for <git@vger.kernel.org>; Sun,  5 Feb 2023 13:33:29 -0800 (PST)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 4P92gn0ZXzz5tlC;
-        Sun,  5 Feb 2023 22:33:24 +0100 (CET)
-Message-ID: <64601c4b-9ced-672f-a5fd-9a9b3b65859d@kdbg.org>
-Date:   Sun, 5 Feb 2023 22:33:24 +0100
+        with ESMTP id S229457AbjBEVgN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2023 16:36:13 -0500
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28719CA09
+        for <git@vger.kernel.org>; Sun,  5 Feb 2023 13:36:12 -0800 (PST)
+Received: by mail-ej1-x636.google.com with SMTP id ud5so29230153ejc.4
+        for <git@vger.kernel.org>; Sun, 05 Feb 2023 13:36:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2V5ESQOdmLkGav881EYV7JvyRcGgEQgDIqw4ib7MIIA=;
+        b=gbT82yu/7nkeUXh8572CizvZeeHdFW7Vw7KuSDTfC1V6t/bsfKg2b/gm/NkAiQsFE1
+         XPasu5Pqo/RxNtSxAFbrpUXEy0CUI0P+1iPjLSjgFZcpuHtE+XYaima/twieb0qzJJYb
+         dzRFrh2RighqxtYhv3icZSuTzjy5R1nz7yJqzZjNYyAk4+02Z05jdCE3XMb2fYmtx8Tg
+         TbUEGyMDY0YXKjaSGomoYNIQ59pGorMCKbgweDnN8RFdfzXRk8wejnH47tMKDY505oqA
+         hr97IQcZf4nZ3/SFegaJIrH4ybsfr24eUiQziovSxobou5dA9Pt/RJ89of//dGxZZERQ
+         xXiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2V5ESQOdmLkGav881EYV7JvyRcGgEQgDIqw4ib7MIIA=;
+        b=1Ek3HOtm9GUnXsmFPke03PmLl+8CUchQzIrewdy19Q+uM8OiLXom1wTs9bDrDG8zaQ
+         geylLBEcX92cgaZ8cWEaT8smP4G4q1Ie+ERahn3AS9KN14Mf0JiUlPaf+D04o7ukKJOM
+         EUN5vzhy3SvzylijwNDSV11ClcbNUn9A8G1y1C8nrbl2aAVKaCXxBmLw574vq4/9TTCL
+         Pjxzc3ZvsmDK41T3knssBT3eS4JBbyMmtPz6EOpF83kpc8T09z5MFKSJOOSWVb+JmZkh
+         xV6TXNBD4aizSORDgymdejSOLSGKsbxZepVUCQKMLYkNzOPrFTs9p1bsVDkBqSj5q21s
+         j6ng==
+X-Gm-Message-State: AO0yUKWilGj6f7Ccw88M8cxbyAgjZg/NlSLa4HBGH+jNebRqwKW64lK0
+        mQIEjJ9K+0PCU3n8hTz/t6c=
+X-Google-Smtp-Source: AK7set9F3gQd8jCDxx9PNLf8yWJZi8rC+VKMmlkbjBcGrAyei3Pei/TUP5p1KNqApGFvkGRBxgzkhg==
+X-Received: by 2002:a17:906:885:b0:86f:356e:ba43 with SMTP id n5-20020a170906088500b0086f356eba43mr18007716eje.18.1675632970667;
+        Sun, 05 Feb 2023 13:36:10 -0800 (PST)
+Received: from gmgdl ([81.191.238.7])
+        by smtp.gmail.com with ESMTPSA id n19-20020a170906701300b00888f92f0708sm4655922ejj.15.2023.02.05.13.36.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Feb 2023 13:36:10 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pOmgD-0007Tj-19;
+        Sun, 05 Feb 2023 22:36:09 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Eli Schwartz <eschwartz93@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
+        "Raymond E . Pasco" <ray@ameretat.dev>,
+        demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>
+Subject: Re: [PATCH 0/9] git archive: use gzip again by default, document
+ output stabilty
+Date:   Sun, 05 Feb 2023 22:30:41 +0100
+References: <230131.86357rrtsg.gmgdl@evledraar.gmail.com>
+        <cover-0.9-00000000000-20230202T093212Z-avarab@gmail.com>
+        <xmqq5yckvxtb.fsf@gitster.g>
+        <c3f215ca-b4ae-79a2-c14a-3c0f1799e6f7@web.de>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <c3f215ca-b4ae-79a2-c14a-3c0f1799e6f7@web.de>
+Message-ID: <230205.86mt5r7q2e.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2 0/3] userdiff: Java updates
-Content-Language: en-US
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Paolo Bonzini <pbonzini@redhat.com>,
-        git@vger.kernel.org, Tassilo Horn <tsdh@gnu.org>
-References: <877cwxvl3a.fsf@gnu.org>
- <20230204134329.251451-1-rybak.a.v@gmail.com>
- <45830cf4-41c1-0bc1-3e4e-26b9f713f452@kdbg.org>
- <6ca6ebf0-b357-e1d0-4866-dd04a5f987ad@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <6ca6ebf0-b357-e1d0-4866-dd04a5f987ad@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.02.23 um 20:27 schrieb Andrei Rybak:
-> On 2023-02-05T11:09, Johannes Sixt wrote:
->> Am 04.02.23 um 14:43 schrieb Andrei Rybak:
->>> On 04/02/2023 10:22, Tassilo Horn wrote:
->>>> Thanks for including me being the last contributor to java userdiff.
->>>> The patches look good from my POV and are safe-guarded with tests, so
->>>> I'm all for it.
->>>
->>> Thank you for review!
->>>
->>> I've realized that I've been writing modifiers "abstract" and
->>> "sealed" in a
->>> technically correct, but not the conventional order.  Here's a reroll
->>> with the
->>> order of modifiers following the style of original authors of
->>> https://openjdk.org/jeps/409.  It doesn't matter for the purposes of
->>> the test,
->>> but it will be less annoying to any future readers :-)
+
+On Sat, Feb 04 2023, Ren=C3=A9 Scharfe wrote:
+
+> Am 02.02.23 um 17:25 schrieb Junio C Hamano:
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >>
->> I've looked through the patches and run the tests, and they all make
->> sense to me. By just looking at the patch text I noted that no
->> whitespace between the identifier and the opening angle bracket is
->> permitted and whether it should be allowed, but the commit messages make
->> quite clear that whitespace is not allowed in this position.
-> 
-> There is some kind of misunderstanding.  I guess the wording in commit
-> messages of the first and second patches could have been clearer.
-> 
-> In Java, whitespace is allowed between type name and the brackets.
-> It is permitted both for angle brackets of type parameters:
-> 
->     class SpacesBeforeTypeParameters         <A, B> {
->     }
-> 
-> and for round brackets of components in records:
-> 
->     record SpacesBeforeComponents      (String comp1, int comp2) {
->     }
-> 
-> The common convention, is however, to omit the whitespace before the
-> brackets.
-> 
-> The regular expression on branch master already allows for whitespace
-> after the name of the type:
-> 
->     "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface)[
-> \t]+[A-Za-z][A-Za-z0-9_$]*[ \t]+.*)$\n"
->                                                                               ^^^^^^
-> so I didn't need to cover this case.  Note that it requires a non-zero
-> amount of whitespace. This part of the regular expression was left as
-> is (v2 after patch 3/3):
-> 
->     "^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[
-> \t]+[A-Za-z][A-Za-z0-9_$]*([ \t]+|[<(]).*)$\n"
->                                                                                        ^^^^^^
-> 
-> 
-> That being said, I guess it would be an improvement to also allow
-> the name of the type be followed by the end of the line, for users
-> with fairly common code style that puts braces on separate lines:
-> 
->     class WithLineBreakBeforeOpeningBrace
->     {
->     }
-> 
-> or `extends` and `implements` clauses after a line break:
-> 
->     class ExtendsOnSeparateLine
->         extends Number
->         implements Serializable
->     {
->     }
-> 
-> even type parameters:
-> 
->     class TypeParametersOnSeparateLine
->         <A, B>
->     {
->     }
-> 
-> Something like the following:
-> 
->     "^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[
-> \t]+[A-Za-z][A-Za-z0-9_$]*(([ \t]+|[<(]).*)?)$\n"
->                                                                                       ^               ^^
-> perhaps? Technically, the following is also valid Java:
-> 
->     class WithComment//comment immediately after class name
->     {
->     }
-> 
-> but I'm not sure if allowing it is needed.  If so, we might as well just
-> do this:
-> 
->     "^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[
-> \t]+[A-Za-z][A-Za-z0-9_$]*.*)$\n"
->                                                                                       ^^
+>>> As the disruption of changing the default isn't worth it, let's use
+>>> gzip(1) again by default, and only fall back on the new "git archive
+>>> gzip" if it isn't available.
+>>
+>> It perhaps is OK, and lets us answer "ugh, the compressed output of
+>> 'git archive' is unstable again" with "we didn't change anything,
+>> perhaps you changed your gzip(1)?" when they fix bugs or improve
+>> compression or whatever.  Of course that is not an overall win for
+>> the end users, but in the short term until gzip gets such a change,
+>> we would presumably get the "same" output as before.
+>
+> Restoring the old default is an understandable reflex.  In theory it
+> worsens consistency and stability of the output, but in practice using
+> whatever was found in $PATH did work before -- or at least it was not
+> our problem if it didn't.
 
-Having seen all these examples, I think the following truncated
-expression might do the right thing for all cases that are valid Java:
+"In theory" because the user might be flip-flopping between different
+gzip(1) versions?
 
-"^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[ \t].*)$"
+> Are there still people left that would benefit from such a step back,
+> however?  As far as I understand forges like GitHub relied on git
+> archive producing the same tgz output across versions.  That assumption
+> was violated, trust lost.  They had to learn about the configuration
+> option tar.tgz.command or find some other way to cope.  Changing the
+> default again won't undo that.
 
-i.e., we recognize a whitespace in order to identify the keyword, and
-then capture anything that follows without being specific. My reasoning
-is that "class", "enum", "interface", and "record" cannot occur in any
-other context than the beginning of a class definition. (But please do
-correct me; I know next to nothing about Java syntax.) As always,
-userdiff regular expressions can assume that only valid constructs are
-inspected.
+I think it's safe to assume that git is used by enough users that
+anything breaking at a major hosting provider is likely to have a very
+long tail in the wild, almost all of which we'll never see in "this
+broke for me" reports to this ML.
 
--- Hannes
+So no, that ship has clearly sailed for GitHub, but this series aims to
+address more than that.
 
+Even if it wasn't for that breakage, I think 4/9 and 6/9 here show the
+main problem you were trying to solve in making "git archive gzip" the
+default didn't need to be solved by changing the default. I.e. the aim
+was to have it work when "gzip(1)" wasn't available, which we can do by
+falling back only if we can't invoke it, rather than changing the
+long-standing default.
