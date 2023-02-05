@@ -2,159 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CE0FC636CD
-	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 19:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88BABC636CD
+	for <git@archiver.kernel.org>; Sun,  5 Feb 2023 19:50:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbjBET1f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Feb 2023 14:27:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34446 "EHLO
+        id S229509AbjBETub (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Feb 2023 14:50:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjBET1e (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Feb 2023 14:27:34 -0500
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 340CC18AB4
-        for <git@vger.kernel.org>; Sun,  5 Feb 2023 11:27:33 -0800 (PST)
-Received: by mail-io1-xd2e.google.com with SMTP id y2so3789881iot.4
-        for <git@vger.kernel.org>; Sun, 05 Feb 2023 11:27:33 -0800 (PST)
+        with ESMTP id S229481AbjBETu3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Feb 2023 14:50:29 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBF111B326
+        for <git@vger.kernel.org>; Sun,  5 Feb 2023 11:50:28 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id ud5so28792315ejc.4
+        for <git@vger.kernel.org>; Sun, 05 Feb 2023 11:50:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LOq6yBEOUF05hVScF1qFrXM7OWO/m2ftHVVgOwQ2CQo=;
-        b=AfSzueC+12YmWM/45UYoKiOAl35Lo7kAm+LoV4MfJY6/75HfVqdgVpoqbsSX4vuKp2
-         XeylWkux8QTSeb/C9Mrdz0WGeXZujsyXuXCjgRsIVisrt8fMCApwdu66Usosk1IVUplD
-         YuoQb0ZrgeKha2ZBg/JKnLGJmnDm0aXUxOrfZzzpyMdb8Li/mV7B166KlbKJeVE/n93g
-         wQCvYkFVf2iK0MVDrS8ztWItiUgCGlL+xFzhfB06ezUS7YCOEpT8HweLJV4ieqKL9be8
-         Ug2nzZEA27VtbNyiG0PA8x8L1FvkmO22wPOa2crNILBoVe/iFACatlasfcmY6rZ/h5ds
-         YYAg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hK1Xwpxe1scT956SbwFKqD/ITvzWu0lXcHIE7FIiuBI=;
+        b=SubHeRoKaYx19btPg6xFJ8OVTQ7NMTDkm2Cl9HHRJz6J6GY5wzRO3EZ6CgKIDwG+rn
+         AV41y1FNTEwcrspteMgORpFY6KqFSgIOTCDmryMW9E3+4cp4+y2gkNyxTtpstTvR4Jod
+         kv2VB5mBkFCZhe6U+d+BgF/Fv3pRk8CplwkBc6SFyXpCPgYax1owZ95e6PLCE7wJ/7L7
+         GohtKYXquxb8gSo0QOoErKtZ5K3pgdQCqMtlRPbv4y30ay+iXqrcBydeq9IEqApVupwi
+         Na9OFRDx5A3PHk3MvL7fPnS32B15TD9tw5ntxqojg7BeUaKpzJwivZp6kpW1jbh5s6/o
+         9BOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LOq6yBEOUF05hVScF1qFrXM7OWO/m2ftHVVgOwQ2CQo=;
-        b=YACfCExngRLasJQOW405bN6Ac1+g894yUzpN+uI0ivUSvg0GdrnjDlgORugef0HTZM
-         /9gRg36bHKHdNpRAxi5vntcKUhFbSou0mBIrnVxVNOXfEo/oc0XseWoXNQUNrzUyVpGh
-         NhbNg3lQAHe/fRh8lG1SpxA0woWhOCNIorYibHG8yZZddUxtS/BwFk0jmSOS3vfmRMSs
-         DkKovf3DwUHMoSb6p3aLhXErJHZ8SL+ySwZP+81N/4oGFksTK9gXxmGmev0tCI5MmKp4
-         gYXpEbPb4o5kRuOuwdH+33gZBULXTcjm5BvhZvOUJ/NCULsrtCdwxRajBbICui2zNu4n
-         xFYA==
-X-Gm-Message-State: AO0yUKVtymi8Rfyd3tQzF3ucYrLMSGdI14C5OnSyF8ZjcWiP/8ZBSEt+
-        WVKDvAZ9/d+bzm6Kthys2lSQ/EvbIAxkQDm2I9M=
-X-Google-Smtp-Source: AK7set/S5EfOB0/LM/kCiMqmtwXec2yuNzXZIzJsOZpd1XNl6HhvEWkKeAknyOCqZWSFofEwDvK8oQ==
-X-Received: by 2002:a05:6602:1606:b0:716:596a:1ce9 with SMTP id x6-20020a056602160600b00716596a1ce9mr16239721iow.15.1675625252419;
-        Sun, 05 Feb 2023 11:27:32 -0800 (PST)
-Received: from [10.4.18.48] ([191.101.157.6])
-        by smtp.gmail.com with ESMTPSA id v19-20020a6b5b13000000b007046e9e138esm2611273ioh.22.2023.02.05.11.27.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Feb 2023 11:27:31 -0800 (PST)
-Message-ID: <6ca6ebf0-b357-e1d0-4866-dd04a5f987ad@gmail.com>
-Date:   Sun, 5 Feb 2023 20:27:28 +0100
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hK1Xwpxe1scT956SbwFKqD/ITvzWu0lXcHIE7FIiuBI=;
+        b=7IuJhqs9IPYsKcVHVFf5TVm0SbeS4QPC6E7VBbyo1erGdLnbGon0sMP5rFDD5O7z2u
+         xMKy9t1gYgd2jU2tvOHNWRSyZMecz0wfxS6b3uBU6TkZaNHip1F/Jnw7e+UGno0vw6Tt
+         DAM24Rb0x0mgCqLe101IfN88xsEXYKZ2FEw9bexkw/xtDx9EnHlLFW0+uifAb7Jn9ocZ
+         ra966Vmn25PrPU554hHkr+lDjw1spTqdbJmrC7U7uidPJ1sezt66JFZCRbso7xLhT4FC
+         Y1I3EvvZCILzLIsPLPVjwylUgry/oUalVlDxzLktC34IZmiUGaVwu+rlwowUP6oY2A7J
+         bDeA==
+X-Gm-Message-State: AO0yUKUsrPykrbVla5elQiPmENuqh9FaCSCtxUQMcDPnlzZVjfpLW+Np
+        fcUUO/iou325Lfy7lCiERwwka9xiC9q0Kg6kQtCJKR4CoXeUPw==
+X-Google-Smtp-Source: AK7set/1/L3dEWvekOmLjAgFoyIbVqeJiegPM2AlXZeDGTjgSvrGfUdl9QS9hL/zyD8BSQKb40DU0vVGfw8bTw4Ccyg=
+X-Received: by 2002:a17:906:bc95:b0:88a:d760:19ab with SMTP id
+ lv21-20020a170906bc9500b0088ad76019abmr4316781ejb.245.1675626627129; Sun, 05
+ Feb 2023 11:50:27 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v2 0/3] userdiff: Java updates
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Jeff King <peff@peff.net>, Paolo Bonzini <pbonzini@redhat.com>,
-        git@vger.kernel.org, Tassilo Horn <tsdh@gnu.org>
-References: <877cwxvl3a.fsf@gnu.org>
- <20230204134329.251451-1-rybak.a.v@gmail.com>
- <45830cf4-41c1-0bc1-3e4e-26b9f713f452@kdbg.org>
-Content-Language: en-US
-In-Reply-To: <45830cf4-41c1-0bc1-3e4e-26b9f713f452@kdbg.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <CAP8UFD3jzX5zRRYKS5uES2X9vB4eKJruzT7o6+7KytqLSmmZRg@mail.gmail.com>
+ <d8ce0159-c9dc-25c2-4180-70518bb31bfc@gmail.com> <CAP8UFD32nDLR8BrhmeTpyraX3QBrc=U1ody+qgyMVY+_-HrASA@mail.gmail.com>
+In-Reply-To: <CAP8UFD32nDLR8BrhmeTpyraX3QBrc=U1ody+qgyMVY+_-HrASA@mail.gmail.com>
+From:   Hariom verma <hariom18599@gmail.com>
+Date:   Mon, 6 Feb 2023 01:20:15 +0530
+Message-ID: <CA+CkUQ-t3-jOaGE4yMHXxREBs3-t35NCAJ3VTSnMSq5072rsBg@mail.gmail.com>
+Subject: Re: GSoC 2023
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023-02-05T11:09, Johannes Sixt wrote:
-> Am 04.02.23 um 14:43 schrieb Andrei Rybak:
->> On 04/02/2023 10:22, Tassilo Horn wrote:
->>> Thanks for including me being the last contributor to java userdiff.
->>> The patches look good from my POV and are safe-guarded with tests, so
->>> I'm all for it.
->>
->> Thank you for review!
->>
->> I've realized that I've been writing modifiers "abstract" and "sealed" in a
->> technically correct, but not the conventional order.  Here's a reroll with the
->> order of modifiers following the style of original authors of
->> https://openjdk.org/jeps/409.  It doesn't matter for the purposes of the test,
->> but it will be less annoying to any future readers :-)
-> 
-> I've looked through the patches and run the tests, and they all make
-> sense to me. By just looking at the patch text I noted that no
-> whitespace between the identifier and the opening angle bracket is
-> permitted and whether it should be allowed, but the commit messages make
-> quite clear that whitespace is not allowed in this position.
+Hi,
 
-There is some kind of misunderstanding.  I guess the wording in commit
-messages of the first and second patches could have been clearer.
+On Tue, Jan 24, 2023 at 10:08 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> I removed the "Reachability bitmap improvements" idea but left the 2 others:
+>
+>   - More Sparse Index Integrations (I removed `git mv` in the list of
+> commands that need to be improved though)
+>   - Unify ref-filter formats with other pretty formats
+>
+> On both of them I removed all possible mentors except me though. They
+> are welcome to tell me that they should be added back.
 
-In Java, whitespace is allowed between type name and the brackets.
-It is permitted both for angle brackets of type parameters:
+I'm positive that I'll be available by the time the GSoC contribution
+officially starts.
+You can add me back to "Unify ref-filter formats with other pretty formats".
+I would be happy to co-mentor it with you.
 
-	class SpacesBeforeTypeParameters         <A, B> {
-	}
-
-and for round brackets of components in records:
-
-	record SpacesBeforeComponents      (String comp1, int comp2) {
-	}
-
-The common convention, is however, to omit the whitespace before the
-brackets.
-
-The regular expression on branch master already allows for whitespace
-after the name of the type:
-
-	"^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+[A-Za-z][A-Za-z0-9_$]*[ \t]+.*)$\n"
-	                                                                          ^^^^^^
-so I didn't need to cover this case.  Note that it requires a non-zero
-amount of whitespace. This part of the regular expression was left as
-is (v2 after patch 3/3):
-
-	"^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*([ \t]+|[<(]).*)$\n"
-	                                                                                   ^^^^^^
-
-
-That being said, I guess it would be an improvement to also allow
-the name of the type be followed by the end of the line, for users
-with fairly common code style that puts braces on separate lines:
-
-	class WithLineBreakBeforeOpeningBrace
-	{
-	}
-
-or `extends` and `implements` clauses after a line break:
-
-	class ExtendsOnSeparateLine
-		extends Number
-		implements Serializable
-	{
-	}
-
-even type parameters:
-
-	class TypeParametersOnSeparateLine
-		<A, B>
-	{
-	}
-
-Something like the following:
-
-	"^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*(([ \t]+|[<(]).*)?)$\n"
-	                                                                                  ^               ^^
-perhaps? Technically, the following is also valid Java:
-
-	class WithComment//comment immediately after class name
-	{
-	}
-
-but I'm not sure if allowing it is needed.  If so, we might as well just do this:
-
-	"^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[ \t]+[A-Za-z][A-Za-z0-9_$]*.*)$\n"
-	                                                                                  ^^
+Thanks,
+Hariom
