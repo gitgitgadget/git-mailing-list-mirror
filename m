@@ -2,282 +2,278 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2D4DC636D3
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 19:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 462FBC05027
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 19:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229973AbjBFT0C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 14:26:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52330 "EHLO
+        id S229934AbjBFT34 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 14:29:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbjBFT0B (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 14:26:01 -0500
-Received: from EUR02-AM0-obe.outbound.protection.outlook.com (mail-am0eur02olkn2099.outbound.protection.outlook.com [40.92.49.99])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 810C31B339
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 11:25:59 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ALVvAQ8lO+AGcqDfyPhhgftikPlikX3oXSHgd2wQTPaSGWMMf0k8zF6crLVGjfQsg7LkaXZSG4q1dMnaxJpLSPGsJOhWmRkgWB2OwrpCwrIk3dEoR9pIoUYchBxsy/CL9O78CNgJaOpICVyvFnK3r4L8vn5IVJQrFCD9hsORD7HoJSq1Q1xpbh9c7az/s4I06SJw834EO3gZElrLEBWFBA+tJ0lK/67CcpN4ibLkd5yoBjbIxnzQc8FK+5UXrgHiNKK1EMXniLXdM9iBYlFgrMf59vrven8NFiUXz5oP1uJh//MWz+sJkRj3ax2/eef997MlCZjQwr5zNkK74wuqkw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kgozUPwPtJ3fToSIfXqDsoH1Jj6gT+hDA3Mtcy6I9uE=;
- b=bqq9GG8NEPsdX9X4kjOEpE4Wcmd75rKjTdNmbJo0OgtDO5uBVLRTky1CnaKmnardeSU6J0tTKwJ3vtvdr5Im7jlxnbxNre23yJRXq81FZXgwx8eY1o35ZKTRKCugPubDzG6n6W3/xCpPiK+1c/d4i5MkvWHw0f5sXQ+YxSlGYoiiUDnn12igSx6nFpHzc0FG/g/6Ib54N6uA+V8uwx42piITkzwZZcLfMgwGbnUiIY2sny/9r8J7pS24aKbdMxQG+InE4mqcz9ubTNEoUkKNFg7LD27NQdNCo5jq4di6Z8vgUnGnOngH1fACgPPMcjjhzBUOK8i/Lyhw/FnlE8kVWw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kgozUPwPtJ3fToSIfXqDsoH1Jj6gT+hDA3Mtcy6I9uE=;
- b=TKB2Q8IXK1GVh/jqxT7UlFjN7Ah9zB+3NTaSLoq2+4FvvU+142hoIb6o2+vcohq2cRWHHWXajSo79iHptpkJjloCWljrgDnqcEkkqb+TsOueIkhbYgPPEiRm6RHHh9ESTvr6pPbKWwO8uSUnZbR5L9ds3hAc5Oc9WhXrU6LVoE+pXC8+yjOz1XKBLDZSIUZ5LBIuNlWkgyxFrrAjxqt56AffweIExoP4fEMyQ6O/ydPQukrYUbc4A2K4f/UHjVeSKonzz2Vbe1V3xrB3060WUJk4leB/CLQRDQzKIlgZQGgFn9kELgOSMOScL7GU+EWTwKizICP+HDLTOmj/7n6cJg==
-Received: from DB9PR03MB9831.eurprd03.prod.outlook.com (2603:10a6:10:461::15)
- by AM7PR03MB6354.eurprd03.prod.outlook.com (2603:10a6:20b:1b0::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6064.34; Mon, 6 Feb
- 2023 19:25:57 +0000
-Received: from DB9PR03MB9831.eurprd03.prod.outlook.com
- ([fe80::fc02:6831:74ff:f92a]) by DB9PR03MB9831.eurprd03.prod.outlook.com
- ([fe80::fc02:6831:74ff:f92a%7]) with mapi id 15.20.6064.032; Mon, 6 Feb 2023
- 19:25:57 +0000
-Message-ID: <DB9PR03MB983150E73B1C963C628CBE75C0DA9@DB9PR03MB9831.eurprd03.prod.outlook.com>
-Date:   Mon, 6 Feb 2023 11:25:49 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH v7 11/12] http: read HTTP WWW-Authenticate response
- headers
-To:     Jeff King <peff@peff.net>,
-        Matthew John Cheetham via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        with ESMTP id S229500AbjBFT3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 14:29:55 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C75F235A2
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 11:29:53 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id q8so9454019wmo.5
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 11:29:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o2CKa+TP0Sfn3JluAO/UtZlHT9sZS//G8XxA1vZEuFw=;
+        b=XjdAzjLk3q5puhMxnBMwIrxhqncqtlZcffP87yfPfHcSq9/oAomLHaCD27p6+k4VMB
+         rXSuRW7dTCQLA0QATZ6EtPMKPWRFLBSZBYMtVfi4XlxHb5rAaEqYhC2fyVC4bUv+KoP0
+         wdewRaZzdKcu0h8gVjTVhH/prDdjyhtEBa4PSxPFnNWcCcwxRmGy13n1oYUnchJSTDEF
+         blTXmRb7PUisObuaskpVhoL0sgFu54g7puE7nJqEDE8bSwe0+g+1SWDxYtyfZQL1qCvn
+         FJrkFCDyTIm5KdJJe7qWTY09lcUSB3GHTdYexeu9/PsqjvzMZk1JcSFOgcvqwFoC7yMK
+         W+Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o2CKa+TP0Sfn3JluAO/UtZlHT9sZS//G8XxA1vZEuFw=;
+        b=YSXCbvrLazKmyItOQ6TifO6ugWyuG8hSww2F9YLuizyOiTb0mtZDfzOdqCSoYqHtVj
+         bLxYR6n8a9GC90+oDkSMFXKTZpA8b1rgFuw8C9gYmkPXt1+EY+Og7MDijsZzT6eHmSPy
+         9hl9QISFr5T/i+J6v01O4WL8es3RmdOzb/X7CXGJ6L4z2Q+e18GTV7fiMi/O2NOwf840
+         dVPbCzlrWBOPnorKpJzhV1JPojVoCnZ/xtPW9B0zfxPSo0hyh7oHWm5AEprNzz2NVHVV
+         nNunq8DOtQjTh8KnXkpoY2GLBoulXWKDbWx8OIZ0GnawqP6lQ/yUOepzatPwPc18SEXI
+         bkug==
+X-Gm-Message-State: AO0yUKUIx/g63xwx9wPfiUnvc/b5CbYPf9DfNtHUFcFyoPRCUhO6GcOb
+        XBxibo+zNikEJSFoCw3Iu8hkaw6iW/A=
+X-Google-Smtp-Source: AK7set8v1ertDV8YDtC1oiZ0NKXFVWavjxrlt2rs/8X3PvcqN3bGzeQe3hro7wRUyGsMKuOh1NPYfg==
+X-Received: by 2002:a05:600c:4a8a:b0:3de:d9f:3025 with SMTP id b10-20020a05600c4a8a00b003de0d9f3025mr848711wmp.0.1675711792090;
+        Mon, 06 Feb 2023 11:29:52 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s24-20020a05600c319800b003dfe5190376sm11171377wmp.35.2023.02.06.11.29.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Feb 2023 11:29:51 -0800 (PST)
+Message-Id: <d362f7016d34c4803adf42a88012997c66e0bde8.1675711789.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1352.v8.git.1675711789.gitgitgadget@gmail.com>
+References: <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
+        <pull.1352.v8.git.1675711789.gitgitgadget@gmail.com>
+From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 06 Feb 2023 19:29:47 +0000
+Subject: [PATCH v8 1/3] t5563: add tests for basic and anoymous HTTP access
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
         Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
         M Hickford <mirth.hickford@gmail.com>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Glen Choo <chooglen@google.com>,
         Victoria Dye <vdye@github.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
- <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
- <5f5e46038cf526714f3c5b89ffef2b895b503242.1674252531.git.gitgitgadget@gmail.com>
- <Y9JWnQeEV0weV4yu@coredump.intra.peff.net>
-From:   Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <Y9JWnQeEV0weV4yu@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TMN:  [U2HirOWBIV3rJFDcKwSridbt2r7R2hU4]
-X-ClientProxiedBy: BY3PR04CA0026.namprd04.prod.outlook.com
- (2603:10b6:a03:217::31) To DB9PR03MB9831.eurprd03.prod.outlook.com
- (2603:10a6:10:461::15)
-X-Microsoft-Original-Message-ID: <e2dd1dc1-abfd-9d10-957c-901ad12e0fa6@outlook.com>
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DB9PR03MB9831:EE_|AM7PR03MB6354:EE_
-X-MS-Office365-Filtering-Correlation-Id: 98b95a31-ac4e-4c89-f082-08db0877f892
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: ZRWQydyxgzITZJ97fpJd/by1OaIvtiVYuJJh/NPHZKMkNK68UYINdtlFUZIoqv0xtEIyKdLwgztNbQb1OLU1UcxYhsgWabLnLS1Nn6Ymnf0rx5MNmXYRL7HzCa0gkgkmhCnTUdlOVX551B/4ngUFZVq8PvvppEp9xp+F7Fzzt8JSQ1r6plajPw5WA4bMrgMrVXJfR4qfpxgLwssJp7dzDxHXzFJAKTLQZ0hqg3pk3/bOJ1a6GMeix+KQ+3tPFWu2tyIfyozBH6v6rhgHr29A0DnaBAak62zudowEDtl8RBEWX6JweRjuGcqtgXzevtokQrm2A9DxsPx+MMLDc7B/kh5d4VwlXEfzYMKe0QMRhRxhzmePTF05bmkxAwSXVuOSOmDJpFCqJhG7ZhTKs8g47Jc4RmGTrrYK6mg5fqAW9kaWG4/k0UdsSXG4yHmoAuUvfaohVCTMckdYrfxjxEwl6z6aIZPNANPa1dvVh19TpPuFMM6b/sEnya9KRe33fQiyLHyqm29sIK+Lqv8xsKBCQ97Nk8RZMXe/sDMUdv0w7wr42F/8kAOCbazRFXqOQrA2D/eLThrwrLhKlw8TzNEpLEapdG4gnFK59HdMftcUkbX9mnw8WU0b3Td903g7QMD0X9teNzclrIO2hK+jfEV9uw==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U3A3ZG5FcUJsRXVPZ1JmbHhKdGVaUDBIZitRTzBrcEpIN2t0THBBTXZ1dUV3?=
- =?utf-8?B?QVd3T29FS0s4M29NMDJnakU2cG1zVnQ0aXg1dWZZYng3a0piR1dWM1FTeWdP?=
- =?utf-8?B?b2ZlSTVleXV5RFdJR0FZSENWdlBLZ2ZtcG90dVlrVENpdysyMlJ3QUo1c0ty?=
- =?utf-8?B?MThraFJxK2t1bkR1QWVpMHhOdkViVDdoQlh1VVU1RURKTDdFdHYzd1FML3lm?=
- =?utf-8?B?eC9VdWhIVU9RdmZyMi9BSjVINlNiRzZNM1JlOE5Jb0NvSlNkbFdkQTZjRng2?=
- =?utf-8?B?SDhwRWZnUDdzQ0lDblZzbGJwSThnclpPMzgwaENSNE43VWVqS0dGUWl4anhq?=
- =?utf-8?B?Zlp6amdaaDNsaVJiaFVtb3gvc0dJaWtNSkdJcEo0ZC9LR2NrOTkzV25NQmN4?=
- =?utf-8?B?Qkdvc2c2Z2JqOVRmbzJQMXRwS3ArYldZS3ZyVk8wbG9GemtyWkMvUkJoMGxV?=
- =?utf-8?B?cUxYR2Vxa1JxL09Dc3E4MExJdHpKZWx0dVlHQVMxUUhVUzRLQTF2UjR4TTE4?=
- =?utf-8?B?dFAvY0d5Zk54aEFSSE9kK3lRMlBIOU41aDFnaW5sY3ZmcjlCM05rZGhPOTZV?=
- =?utf-8?B?WktoWll6Qi9LakoremdNRHBQSGdDRXhzdWlnUDRKcnN3RW9XK2VlSGpuQnBa?=
- =?utf-8?B?b3FLV084U3ArRjAwRzB0TndtZndLakU2blVzMHQ2RnlwRGZ4SjFUOER4V2x3?=
- =?utf-8?B?MEl5dktVaVlhVTA1VlNvOTgyeHNCdXFiNDVicWx4bTdtYkVDRG1kdEpYaHNV?=
- =?utf-8?B?bTkxdWEzSUJNZ1BIWkRIQW9Hc3FGTnNLZm4xNU5XYWpqY3RORTdRalN6QXZv?=
- =?utf-8?B?WFlYckNnYzRPRDgvK3l4a3FJZVVaMEpia2ppeHRBYnFzZmhtemxlMjNtQjVH?=
- =?utf-8?B?eUtvb3drMENwNnZZRnJBYmJKeE9hWmFjeFRNQU91K3NLTnA5ZStIZzNyNWFN?=
- =?utf-8?B?SGdoMXRRVm5zRkM5RlNaRzZhUTZzQVIxQ3Q0UDRVcThHYlFLNHUyVlhqOUsw?=
- =?utf-8?B?N1d0ZXQ1Q1pXektFdWtwU1A2Vzh6YW9GdGFEUUQ1R1p3VENGamFVejFUamtF?=
- =?utf-8?B?SHIrS2FqVEJwMXM3QmZwYjhDMmVaYUNqN2VFV3F0bXk0QUhHRmw0QmdFRTQ2?=
- =?utf-8?B?My96UHJoRTJiZzg2elc1NDZmQk0rcVdIZ3poc0drbnVlRGc1ZFd1Q1QvU21Q?=
- =?utf-8?B?bGE3emlCMmpUL3pXQ2l5OXZ4dXlCQTFWWWF4OVRadGczUFo0VXJLbWJHVHZr?=
- =?utf-8?B?SDc0MXYxSHpMNzdTNVppa3JweDJsN2huSlNlSGdpSFZBMVd3aTZlZnA1Wmxs?=
- =?utf-8?B?aWIvbEpTVm9raGtMR3Q1Q3FrMVBJZjNGajI0STdZTkRRUHdzd0JjWFJ5alNh?=
- =?utf-8?B?MjBUVGxZSmM2VzFqam5CT3c1VG5ualJ5bDlOKzdIQm9QRm1lTFRFSWswZGhX?=
- =?utf-8?B?M0llVDVMakk0OHRQbGFLU01yOG1hdlM2V1FjTmhjekh6ajZIZE1TNXhJUEll?=
- =?utf-8?B?UTg0MmpJV3ozUWdOcEUyZ3V1S3NOM2dpYSs1cXMrdU9YYW5jNUFHeVFnY3g4?=
- =?utf-8?B?bWdwd0d6TTM5eVJlZG5haEQ3TGdadEVvVjlyZWdpVkZIdGhNb09lcEk5QitI?=
- =?utf-8?B?VG1BZEJaR1IrL3NMaGNoZ1B4T0tIZ284eWo5NkJEdjJCSkorSytJRk5MdGE0?=
- =?utf-8?B?RW9uVVovd3kxQTlHemhzOFFtemt6azU5bXUwYUNrQjRJc0YrMU9wSTdBPT0=?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 98b95a31-ac4e-4c89-f082-08db0877f892
-X-MS-Exchange-CrossTenant-AuthSource: DB9PR03MB9831.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2023 19:25:57.4286
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR03MB6354
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023-01-26 02:31, Jeff King wrote:
+From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-> On Fri, Jan 20, 2023 at 10:08:49PM +0000, Matthew John Cheetham via GitGitGadget wrote:
-> 
->> From: Matthew John Cheetham <mjcheetham@outlook.com>
->>
->> Read and store the HTTP WWW-Authenticate response headers made for
->> a particular request.
->>
->> This will allow us to pass important authentication challenge
->> information to credential helpers or others that would otherwise have
->> been lost.
-> 
-> Makes sense, and the code looks pretty reasonable overall.
-> 
-> A few observations:
-> 
->> @@ -115,6 +116,19 @@ struct credential {
->>  	 */
->>  	struct string_list helpers;
->>  
->> +	/**
->> +	 * A `strvec` of WWW-Authenticate header values. Each string
->> +	 * is the value of a WWW-Authenticate header in an HTTP response,
->> +	 * in the order they were received in the response.
->> +	 */
->> +	struct strvec wwwauth_headers;
->> +
->> +	/**
->> +	 * Internal use only. Used to keep track of split header fields
->> +	 * in order to fold multiple lines into one value.
->> +	 */
->> +	unsigned header_is_last_match:1;
->> +
-> 
-> Stuffing this into a "struct credential" feels a little weird, just
-> because it's specific to http parsing (especially this internal flag).
-> And the credential code is seeing full header lines, not broken down at
-> all.
-> 
-> I guess I would have expected some level of abstraction here between the
-> credential subsystem and the http subsystem, where the latter is parsing
-> and then sticking opaque data into the credential to ferry to the
-> helpers.
-> 
-> But it probably isn't that big a deal either way. Even though there are
-> non-http credentials, it's not too unreasonable for the credential
-> system to be aware of http specifically.
+Add a test showing simple anoymous HTTP access to an unprotected
+repository, that results in no credential helper invocations.
+Also add a test demonstrating simple basic authentication with
+simple credential helper support.
 
-I had considered possibly introducing an opaque property-bag style of
-'protocol-specific properties' that, for example, http.c would add the
-WWW-Authenticate headers to as something like `http.wwwauth[]`.
-Other protocols (like smtp:// or cert://) could add their own properties
-if they needed or wanted to also.
+Leverage a no-parsed headers (NPH) CGI script so that we can directly
+control the HTTP responses to simulate a multitude of good, bad and ugly
+remote server implementations around auth.
 
-Thoughts?
+Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+---
+ t/lib-httpd.sh                 |  1 +
+ t/lib-httpd/apache.conf        |  6 +++
+ t/lib-httpd/nph-custom-auth.sh | 42 +++++++++++++++++
+ t/t5563-simple-http-auth.sh    | 86 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 135 insertions(+)
+ create mode 100755 t/lib-httpd/nph-custom-auth.sh
+ create mode 100755 t/t5563-simple-http-auth.sh
 
->> +static size_t fwrite_wwwauth(char *ptr, size_t eltsize, size_t nmemb, void *p)
->> +{
->> +	size_t size = st_mult(eltsize, nmemb);
-> 
-> Here's that st_mult() again. Same comment as the previous patch. :)
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 608949ea80b..2c49569f675 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -137,6 +137,7 @@ prepare_httpd() {
+ 	install_script error-smart-http.sh
+ 	install_script error.sh
+ 	install_script apply-one-time-perl.sh
++	install_script nph-custom-auth.sh
+ 
+ 	ln -s "$LIB_HTTPD_MODULE_PATH" "$HTTPD_ROOT_PATH/modules"
+ 
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 0294739a77a..76335cdb24d 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -135,6 +135,11 @@ Alias /auth/dumb/ www/auth/dumb/
+ 	SetEnv GIT_HTTP_EXPORT_ALL
+ 	SetEnv GIT_PROTOCOL
+ </LocationMatch>
++<LocationMatch /custom_auth/>
++	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
++	SetEnv GIT_HTTP_EXPORT_ALL
++	CGIPassAuth on
++</LocationMatch>
+ ScriptAlias /smart/incomplete_length/git-upload-pack incomplete-length-upload-pack-v2-http.sh/
+ ScriptAlias /smart/incomplete_body/git-upload-pack incomplete-body-upload-pack-v2-http.sh/
+ ScriptAlias /smart/no_report/git-receive-pack error-no-report.sh/
+@@ -144,6 +149,7 @@ ScriptAlias /broken_smart/ broken-smart-http.sh/
+ ScriptAlias /error_smart/ error-smart-http.sh/
+ ScriptAlias /error/ error.sh/
+ ScriptAliasMatch /one_time_perl/(.*) apply-one-time-perl.sh/$1
++ScriptAliasMatch /custom_auth/(.*) nph-custom-auth.sh/$1
+ <Directory ${GIT_EXEC_PATH}>
+ 	Options FollowSymlinks
+ </Directory>
+diff --git a/t/lib-httpd/nph-custom-auth.sh b/t/lib-httpd/nph-custom-auth.sh
+new file mode 100755
+index 00000000000..8f851aebac4
+--- /dev/null
++++ b/t/lib-httpd/nph-custom-auth.sh
+@@ -0,0 +1,42 @@
++#!/bin/sh
++
++VALID_CREDS_FILE=custom-auth.valid
++CHALLENGE_FILE=custom-auth.challenge
++ANONYMOUS_FILE=custom-auth.anonymous
++
++#
++# If $ANONYMOUS_FILE exists in $HTTPD_ROOT_PATH, allow anonymous access.
++#
++# If $VALID_CREDS_FILE exists in $HTTPD_ROOT_PATH, consider each line as a valid
++# credential for the current request. Each line in the file is considered a
++# valid HTTP Authorization header value. For example:
++#
++# Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++#
++# If $CHALLENGE_FILE exists in $HTTPD_ROOT_PATH, output the contents as headers
++# in a 401 response if no valid authentication credentials were included in the
++# request. For example:
++#
++# WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
++# WWW-Authenticate: Basic realm="example.com"
++#
++
++if test -f "$ANONYMOUS_FILE" || (test -f "$VALID_CREDS_FILE" && \
++	grep -qi "^${HTTP_AUTHORIZATION:-nopenopnope}$" "$VALID_CREDS_FILE")
++then
++	# Note that although git-http-backend returns a status line, it
++	# does so using a CGI 'Status' header. Because this script is an
++	# No Parsed Headers (NPH) script, we must return a real HTTP
++	# status line.
++	# This is only a test script, so we don't bother to check for
++	# the actual status from git-http-backend and always return 200.
++	echo 'HTTP/1.1 200 OK'
++	exec "$GIT_EXEC_PATH"/git-http-backend
++fi
++
++echo 'HTTP/1.1 401 Authorization Required'
++if test -f "$CHALLENGE_FILE"
++then
++	cat "$CHALLENGE_FILE"
++fi
++echo
+diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
+new file mode 100755
+index 00000000000..004eac5d1ed
+--- /dev/null
++++ b/t/t5563-simple-http-auth.sh
+@@ -0,0 +1,86 @@
++#!/bin/sh
++
++test_description='test http auth header and credential helper interop'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-httpd.sh
++
++start_httpd
++
++test_expect_success 'setup_credential_helper' '
++	mkdir -p "$TRASH_DIRECTORY/bin" &&
++	PATH=$PATH:"$TRASH_DIRECTORY/bin" &&
++	export PATH &&
++
++	CREDENTIAL_HELPER="$TRASH_DIRECTORY/bin/git-credential-test-helper" &&
++	write_script "$CREDENTIAL_HELPER" <<-\EOF
++	cmd=$1
++	teefile=$cmd-query.cred
++	catfile=$cmd-reply.cred
++	sed -n -e "/^$/q" -e "p" >> $teefile
++	if test "$cmd" = "get"; then
++		cat $catfile
++	fi
++	EOF
++'
++
++set_credential_reply() {
++	cat >"$TRASH_DIRECTORY/$1-reply.cred"
++}
++
++expect_credential_query() {
++	cat >"$TRASH_DIRECTORY/$1-expect.cred" &&
++	test_cmp "$TRASH_DIRECTORY/$1-expect.cred" \
++		 "$TRASH_DIRECTORY/$1-query.cred"
++}
++
++per_test_cleanup () {
++	rm -f *.cred &&
++	rm -f "$HTTPD_ROOT_PATH"/custom-auth.*
++}
++
++test_expect_success 'setup repository' '
++	test_commit foo &&
++	git init --bare "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	git push --mirror "$HTTPD_DOCUMENT_ROOT_PATH/repo.git"
++'
++
++test_expect_success 'access anonymous no challenge' '
++	test_when_finished "per_test_cleanup" &&
++	touch "$HTTPD_ROOT_PATH/custom-auth.anonymous" &&
++	git ls-remote "$HTTPD_URL/custom_auth/repo.git"
++'
++
++test_expect_success 'access using basic auth' '
++	test_when_finished "per_test_cleanup" &&
++
++	set_credential_reply get <<-EOF &&
++	username=alice
++	password=secret-passwd
++	EOF
++
++	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
++	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
++	EOF
++
++	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
++	WWW-Authenticate: Basic realm="example.com"
++	EOF
++
++	test_config_global credential.helper test-helper &&
++	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
++
++	expect_credential_query get <<-EOF &&
++	protocol=http
++	host=$HTTPD_DEST
++	EOF
++
++	expect_credential_query store <<-EOF
++	protocol=http
++	host=$HTTPD_DEST
++	username=alice
++	password=secret-passwd
++	EOF
++'
++
++test_done
+-- 
+gitgitgadget
 
-Yeah I'm gonna drop this. Your arguments make sense; it's not going to be a
-problem in reality :-)
-
->> +	/*
->> +	 * Header lines may not come NULL-terminated from libcurl so we must
->> +	 * limit all scans to the maximum length of the header line, or leverage
->> +	 * strbufs for all operations.
->> +	 *
->> +	 * In addition, it is possible that header values can be split over
->> +	 * multiple lines as per RFC 2616 (even though this has since been
->> +	 * deprecated in RFC 7230). A continuation header field value is
->> +	 * identified as starting with a space or horizontal tab.
->> +	 *
->> +	 * The formal definition of a header field as given in RFC 2616 is:
->> +	 *
->> +	 *   message-header = field-name ":" [ field-value ]
->> +	 *   field-name     = token
->> +	 *   field-value    = *( field-content | LWS )
->> +	 *   field-content  = <the OCTETs making up the field-value
->> +	 *                    and consisting of either *TEXT or combinations
->> +	 *                    of token, separators, and quoted-string>
->> +	 */
->> +
->> +	strbuf_add(&buf, ptr, size);
-> 
-> OK, so we just copy the buffer. I don't think it would be too hard to
-> handle the buffer as-is, but this does make things a bit easier.  Given
-> that we're going to immediately throw away the copy for anything except
-> www-authenticate, we could perhaps wait until we've matched it.  That
-> does mean trimming the CRLF ourselves and using skip_prefix_mem() to
-> match the start (you'd want skip_iprefix_mem(), of course, but it
-> doesn't yet exist; I'll leave that as an exercise).
-
-Fair point! I can replace most of these with operations over the curl ptr.
-
-> Maybe not worth it to save a few allocations, as an http request is
-> already pretty heavyweight. Mostly I flagged it because this is going to
-> run for every header of every request, even though most requests won't
-> trigger it at all.
-> 
->> +	/* Strip the CRLF that should be present at the end of each field */
->> +	strbuf_trim_trailing_newline(&buf);
->> +
->> +	/* Start of a new WWW-Authenticate header */
->> +	if (skip_iprefix(buf.buf, "www-authenticate:", &val)) {
->> +		while (isspace(*val))
->> +			val++;
->> +
->> +		strvec_push(values, val);
->> +		http_auth.header_is_last_match = 1;
->> +		goto exit;
->> +	}
-> 
-> OK, this looks correct from my knowledge of the RFCs. I saw something
-> about isspace() matching newlines, etc, in an earlier thread, but I
-> think we'd never see a newline here, as we're expecting curl to be
-> splitting on our behalf.
-> 
->> +	/*
->> +	 * This line could be a continuation of the previously matched header
->> +	 * field. If this is the case then we should append this value to the
->> +	 * end of the previously consumed value.
->> +	 * Continuation lines start with at least one whitespace, maybe more,
->> +	 * so we should collapse these down to a single SP (valid per the spec).
->> +	 */
->> +	if (http_auth.header_is_last_match && isspace(*buf.buf)) {
->> +		/* Trim leading whitespace from this continuation hdr line. */
->> +		strbuf_ltrim(&buf);
-> 
-> OK, makes sense. This will memmove(), which is needlessly inefficient
-> (we could just advance a pointer), but probably not a big deal in
-> practice. Using the strbuf functions is a nice simplification.
-> 
->> +		/*
->> +		 * At this point we should always have at least one existing
->> +		 * value, even if it is empty. Do not bother appending the new
->> +		 * value if this continuation header is itself empty.
->> +		 */
->> +		if (!values->nr) {
->> +			BUG("should have at least one existing header value");
->> +		} else if (buf.len) {
->> +			char *prev = xstrdup(values->v[values->nr - 1]);
->> +
->> +			/* Join two non-empty values with a single space. */
->> +			const char *const sp = *prev ? " " : "";
->> +
->> +			strvec_pop(values);
->> +			strvec_pushf(values, "%s%s%s", prev, sp, buf.buf);
->> +			free(prev);
->> +		}
-> 
-> Likewise here we end up with an extra allocation of "prev", just because
-> we can't pop/push in the right order. But that's probably OK in
-> practice, as this is triggering only for the header we care about.
-> 
-> The concatenation itself makes the whole thing quadratic, but unless we
-> are worried about a malicious server DoS-ing us with a billion
-> www-authenticate continuations, I think we can disregard that.
-> 
-> -Peff
