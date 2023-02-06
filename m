@@ -2,105 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACAB1C636D3
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 21:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E54F7C05027
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 21:36:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229958AbjBFVcf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 16:32:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49492 "EHLO
+        id S229780AbjBFVgG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 16:36:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229792AbjBFVcd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 16:32:33 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772431BF4
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 13:32:32 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id sa10so7766322ejc.9
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 13:32:32 -0800 (PST)
+        with ESMTP id S229498AbjBFVgE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 16:36:04 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 112A9193E9
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 13:36:03 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id mf7so38202770ejc.6
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 13:36:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0qhAR9LezjAx6D9BBqV840BQkhtVCs2fe1c0c9eczE4=;
-        b=SogCR6qHXYaK3hGheVft9A7KS6CU0/ngpCXpKMKj0BaSWphIMvrLeYr6601gsneeA0
-         ZiuAowAe++1esCBmszlJRMB7ZlyvEnRBRfgIT5dT3IDf1AIdXMaeu/uHoocJIKDAYTes
-         tNqKXGxVl02NCMOiHsmCGWS7K1XzoFejMnUioPHh8cvbiG/fQYkkSYxH9vOxp8nlYDrs
-         1p7N16W7qwbLeCugZ2AidhepElMhbf+rSRYSrTglwriblEvfxCn4RYsvwDkxiuhS4VGT
-         tMz/dCB/n/t3Tt25mQXLSW+ZSm1Iw9oCmPZcy3AYIsbRWF+W9BWdfnap7sBd8UJFY8dS
-         XvrA==
+        bh=tt9uXmVuhIdHgic8BRfu98E9yhrIBciSWATt3alLviA=;
+        b=R3JtON3wN0EY8V7xYHicTKORgADUL4joXjXsV0/GNq23NMdw+ev4j/uxYmSR/Vu10D
+         19Tx51tr61e4LUMojowA8dF3TXqN/soN4loGpB++lScQMUo4Ih01YRXJFP0zeAMx0k49
+         I02d5u/3I9UOqTdPGnfXn+JE0aqQRvfnv6RSJHlMCnywMZOpsVTchfxmgWutfPV7CBkw
+         oXBdz4cUaMz7w/6PboEmlSbGcBT7CHwHpVRpsaFXBnEgwULtMrAmbLAZV2smXpedeGQH
+         ujEA7TwZQTF5WlUhUWpXbY7QTKgFibl1i2lKBKzkE4aTnXbCxEqqt8VAOvQRWVODvdYs
+         WEaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0qhAR9LezjAx6D9BBqV840BQkhtVCs2fe1c0c9eczE4=;
-        b=3vsQli2yzXuHIbuJ3qOiHMV5LxZoEL10+DCvwhTiX4VMiblLDmiGnadoOsz9x4hhm4
-         8tEokLRcTbkkbqbkgA0NiSB6M+Qj/KKF2v/KpGXJWpCJyFg6Chh8PN3KGZqieqcbvE2b
-         upB/UTga5bsuXOtk5GeigiQbpx9eRrsLOuszYK//uzeojMsMtNAc9c21/slOHzu44CY1
-         twoL5quqTsRPuUc/Sg7IzekAAEUiuh0PtAAKs4jNvIGuGinD/XVOxUBEbZhixllDhmaI
-         kZc+zNv4Mx+pFhrvTBSTsJuJgFjhPwdQd1lmeyHVkKSkIEIbqifJlqZOA6fArmhbeCTg
-         8cow==
-X-Gm-Message-State: AO0yUKVAc12dguXDcBeBPHAfCoDTqWr2zGAlGs2VaUZZorYdaysuu3RW
-        /Wwj5SHQPnT7WyuSg4ZGuJArZxZD06VYUqGi
-X-Google-Smtp-Source: AK7set+sDMp2VinOx6BI246AqEV6K59KZVuB6lc7xNy36NC2j7YlHgCAdiewl3UHcXL5LtdJiuuTMA==
-X-Received: by 2002:a17:906:746:b0:854:6e3:2388 with SMTP id z6-20020a170906074600b0085406e32388mr920431ejb.12.1675719150674;
-        Mon, 06 Feb 2023 13:32:30 -0800 (PST)
-Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id uz12-20020a170907118c00b0084cb4d37b8csm6002749ejb.141.2023.02.06.13.32.29
+        bh=tt9uXmVuhIdHgic8BRfu98E9yhrIBciSWATt3alLviA=;
+        b=Hmy4ZT32OARBcl3AtTxq7fpvov82TV8jiI0hYMkwQQT8Dv04IjzgzdKwgc29mCxv63
+         n+8nYGWWuviWU5akIvSKZCYRywofqsC6zGLWpu7UCEGfAcOIT2gkujVtp6M2hEMDaBVG
+         GaoV9itRlVnQGELsc3xfmbdLr745fALGx+vcaH0NOSzVyOKvk/+opYBi+fnUwAIEiyt3
+         tdT8Oykla4jXlOX1CXfWHhiJjX/IGl/AEeI3tXyiiuJWoldSvSygP3fZyRVfocaEcPs8
+         Xvc4FbqHqTologr1VoBolUGJis12gix/lM8B3qge6LpcIvMMbe2N7JfapHZ+DtlLzTfO
+         bheQ==
+X-Gm-Message-State: AO0yUKWZuHoGuMaNdfEdYPcOo5nvKhT2uzhonshscwY3POAawqpZxf0X
+        OwR/FOlx/B6CdzpNekU36pNyhkVNGlKmtw==
+X-Google-Smtp-Source: AK7set+IgSyhyxys5mkxJzqW8S3AVSJ5g8MHVVi/yluraxkFMN83EcGWvLN5KNYu3UEhpEkwBVb/Jg==
+X-Received: by 2002:a17:906:595a:b0:88c:f7f6:bf59 with SMTP id g26-20020a170906595a00b0088cf7f6bf59mr867927ejr.17.1675719361121;
+        Mon, 06 Feb 2023 13:36:01 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id es26-20020a056402381a00b00488117821ffsm5628542edb.31.2023.02.06.13.35.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 13:32:29 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pP96D-000WzL-0M;
-        Mon, 06 Feb 2023 22:32:29 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Glen Choo <chooglen@google.com>,
-        Victoria Dye <vdye@github.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Matthew John Cheetham <mjcheetham@outlook.com>
-Subject: Re: [PATCH v8 0/3] Enhance credential helper protocol to include
- auth headers
-Date:   Mon, 06 Feb 2023 21:59:24 +0100
-References: <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
- <pull.1352.v8.git.1675711789.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <pull.1352.v8.git.1675711789.gitgitgadget@gmail.com>
-Message-ID: <230206.86357i5vki.gmgdl@evledraar.gmail.com>
+        Mon, 06 Feb 2023 13:36:00 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2023, #01; Thu, 2)
+References: <xmqqr0v7o0pp.fsf@gitster.g> <871qn5pyez.fsf@osv.gnss.ru>
+        <xmqqedr28wwb.fsf@gitster.g>
+Date:   Tue, 07 Feb 2023 00:35:59 +0300
+In-Reply-To: <xmqqedr28wwb.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        06 Feb 2023 10:35:32 -0800")
+Message-ID: <87357ischs.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Mon, Feb 06 2023, Matthew John Cheetham via GitGitGadget wrote:
-
-> Updates in v8
-> =============
+> Sergey Organov <sorganov@gmail.com> writes:
 >
->  * Drop custom HTTP test helper tool in favour of using a CGI shell script
->    and Apache; avoiding the need to implement an HTTP server.
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>
+>>> * so/diff-merges-more (2022-12-18) 5 commits
+>>>  - diff-merges: improve --diff-merges documentation
+>>>  - diff-merges: issue warning on lone '-m' option
+>>>  - diff-merges: support list of values for --diff-merges
+>>>  - diff-merges: implement log.diffMerges-m-imply-p config
+>>>  - diff-merges: implement [no-]hide option and log.diffMergesHide config
+>>>
+>>>  Assorted updates to "--diff-merges=X" option.
+>>>
+>>>  May want to discard.  Breaking compatibility does not seem worth it.
+>>>  source: <20221217132955.108542-1-sorganov@gmail.com>
+>>
+>> Hi Junio,
+>>
+>> This does not break any compatibility, as far as me and I believe
+>> reviewers of these series are aware.
 >
->  * Avoid allocations in header reading callback unless we have a header we
->    care about; act on the char* from libcurl directly rather than create a
->    strbuf for each header.
+> The last paragraphs in the review two months ago still describe what
+> this series does fairly accurately, I think.
 >
->  * Drop st_mult overflow guarding function in curl callback functions; we're
->    not allocating memory based on the resulting value and just adds to
->    potential confusion in the future.
+>     These patches do look like a good approach to solve the first point
+>     among the "two problems" in the previous round. Thanks for working
+>     on it.
+>
+>     IIRC, the previous round (why is this round marked as v1, by the
+>     way?) was reviewed by some folks, so lets wait to hear from them
+>     how this round does better.
+>
+>     Unfortunately, I do not think of any "solution" that would avoid
+>     breaking folks, if its end goal is to flip the default, either by
+>     hardcoding or with a configuration variable.  IOW, the other one
+>     among the "two problems" in the previous round sounds unsolvable.
+>     We should question if it was really an "issue" worth "resolving",
+>     though.
 
-I just had some nit-y and other trivial comments spotted on a
-read-through, but with the caveat that I'm not too familiar with the
-credential infrastructure this looks good to me.
+Well, we may end up flipping or not flipping the default (even though
+I'd prefer we indeed do), the series are still valid either way, as they
+allow *me* (or anybody else who prefers more useful '-m' behavior) to
+flip the switch for myself, locally.
 
-I'm rather neutral on the whole question of whether we eventually ship a
-httpd in-tree, but I think the v7 to v8 clearly demonstrates that
-whatever we do there, this topic is much improved by having that
-question un-tangled from the credential improvements here.
+Also, the only patch that got some resistance from reviewers has been
+removed from the series, so I don't see anything left that'd prevent
+this from being merged.
 
-Thanks!
+From my POV the only remotely questionable patch is:
 
+- diff-merges: issue warning on lone '-m' option
+
+and I hereby agree to remove it if it feels wrong to you.
+
+Let me state it cleanly: once these are accepted, I'll turn
+log.diffMerges-m-imply-p on for myself, and will suggest it to others
+who already asked about '-m' inconsistency, or will ask in the future.
+
+Thanks,
+-- Sergey Organov
