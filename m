@@ -2,69 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72CBEC61DA4
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 22:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 435D6C61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 22:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230132AbjBFWpF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 17:45:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56570 "EHLO
+        id S230214AbjBFW7l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 17:59:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230176AbjBFWox (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 17:44:53 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17132303F7
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 14:44:50 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id az4-20020a05600c600400b003dff767a1f1so4840243wmb.2
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 14:44:50 -0800 (PST)
+        with ESMTP id S230211AbjBFW72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 17:59:28 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A7F230E91
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 14:59:06 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id d14so11912916wrr.9
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 14:59:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yBdJUEUwtxIbnrrIC1NS1tGLrjG7T6CDEOPSFLIpltA=;
-        b=nHPgTOL6RRl9lRYBWxIZ2O1zLY6EnJlGpWBaNFfaHBvC+gaf/nPVddMvXwUSXEcYyH
-         Qr8+EZE7chT2KeIbcQgOcfsNucDVhMXZW6jWyQ5NHJtdOvsJzFIanGrgHnhyWKomwQfB
-         kmjA7tE0vrcl7G1V9/LJl2UxLz0FR06T0ra1jA4rwH3jsVRtUAqsGGftCsvEkt1pffyx
-         p+tUPoZQWddwa85EGu84XVFiOY6qPNRsvDTfNHKmqaLibTkRwFRiklyFjlFlx+bPmA0L
-         5wxHrT8ih4MhD8yMi3zRbsTb85PLP7Hknna+IfgPNG5OnP979tTNzRc19cGKw38RG3lR
-         tQWw==
+        bh=f1BRMSt25SeOLWoL4w5aQXzasJQqv73qcMwtwFQZeVU=;
+        b=i6QIXJD3ku4/6Y6eqBdke/6iROoF0y0weZxal++iNAfWrcfWYBhMD1XReXUGQfYK1T
+         aWC7r5FLBjhSfTkDsBw6Irc41SE2DO2Df9Ttsepdf4iLUILEH69Sj67fpG03F0Rpe2nT
+         fcJK/7zATMS/PHuMxJOoxZZSJuXzziH1c+ZJmclMSBt2qUFt8LguUxlGXiOD8AgkxRET
+         mkq4+oZ+jxU5Fi5kS23e3T5pWZmaxwbXMbtE4xT1sOrV4OCEhYclri8XjRmy434umRSG
+         LiUlKIkSqiS4XGfKgK6eGipQRTl1Srz04pBluqLnaQW4BCWZB6QSWHeh7kGRYW4ypkgJ
+         pRCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yBdJUEUwtxIbnrrIC1NS1tGLrjG7T6CDEOPSFLIpltA=;
-        b=QsOhGsy8D5u5edgvE1UENrQNM4TnheHBjeeU8iKFd9smiOIIRDE+9Hyrnpe8ACAs6W
-         UJPg+Y5tBpJn9OMGmHqUKJNXFwptQ1rNepT/VHzcR2BBLZ40OEpy01q+ZPpUr7+KBHkD
-         mH2L/e5j+HHlXwfmZMWWZg0IAOsn7ywok8cLRXYfJRaRF4G2/eXmzPhd4trumQ61IpJl
-         F/tw7ogFNhraguKMvbiDS/j/GLna+B5NlawQAsG6qA6kTFQMLRfw469h+vKYdN5dDFrA
-         pg7OqFHmPiVHvwwgZNcprNzctAZirfmDfVMtnuw2C2lPu9tqwL0a7lfaAK2wG80GcwWX
-         8+0w==
-X-Gm-Message-State: AO0yUKWuZnbAyDwC6d258zUE3idDJGYnsOKEL7xwdUzKSbGQJAssnnLd
-        z5I8DqMV+vlZkErGrlmP8728JxoJKSztl2P0
-X-Google-Smtp-Source: AK7set9V0UnHIfJXTAseFlkG9Oxnlh7QR08d4nFdimaJ5ixL8llPNp1+xHYuVxxfGEXindiImuLzOg==
-X-Received: by 2002:a05:600c:4d17:b0:3e0:b1:c118 with SMTP id u23-20020a05600c4d1700b003e000b1c118mr1191470wmp.5.1675723488753;
-        Mon, 06 Feb 2023 14:44:48 -0800 (PST)
+        bh=f1BRMSt25SeOLWoL4w5aQXzasJQqv73qcMwtwFQZeVU=;
+        b=xoWjODCBNaU1N5r7mCO1D+fPihhagSwffwp7SNF6DrvkfKbRxL0Co7MKUnIDqaA6IC
+         A02H6FFmW5ZYFffPTPxd+i/1FNiVheE1VelSJ7BzNWbTyWewAcciaIaFfZZDvJGKR1dy
+         T9EZXgd6IhREUWJp0MwpwMxDnRnFjEO3SMM9B1QAbyz1a4zHQv47ZKycBgIQ8S86GH62
+         yDT0eC5WYyUF66iuz1/82O/lpJwr37OwbJlX0hVGCfoPmhWFbTlL3kDLEEGL57BDA1Rl
+         bHWc8HYpAOlxanVfF3iyhfsNlmJRZSy93obOrrfM2Lf7/Bj8d0EUCqyCBbRXpWd7hnBh
+         +ceg==
+X-Gm-Message-State: AO0yUKUtDd6EvFUeLxzYKjFBey8KuxOSrwZWd+e+phKO2CeI1rSOYr1k
+        nlJ2r57a8VVtq1dxmVsmnJAd9LKy1gDEyjNH
+X-Google-Smtp-Source: AK7set+NZpKOoW7CZnT4XaMbhMyZWf9pnIC3fGimywAhHhqY1UanmwSkNszCSWCOMoo6XXhQSXAODw==
+X-Received: by 2002:a05:6000:12cb:b0:2c3:4ef0:343e with SMTP id l11-20020a05600012cb00b002c34ef0343emr525815wrx.5.1675724344136;
+        Mon, 06 Feb 2023 14:59:04 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id f7-20020a056000128700b002c3df9279f5sm6657643wrx.48.2023.02.06.14.44.47
+        by smtp.gmail.com with ESMTPSA id y17-20020adfd091000000b002c3ea68c58asm3170055wrh.1.2023.02.06.14.59.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 14:44:48 -0800 (PST)
+        Mon, 06 Feb 2023 14:59:03 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        =?UTF-8?q?Slavica=20=C4=90uki=C4=87?= <slawica92@hotmail.com>,
+        Jeff King <peff@peff.net>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 6/6] tests: don't lose misc "git" exit codes
-Date:   Mon,  6 Feb 2023 23:44:33 +0100
-Message-Id: <patch-v5-6.6-e7f10c0641a-20230206T224200Z-avarab@gmail.com>
+Subject: [PATCH v2 0/3] add: remove Perl version of "git add -[pi]"
+Date:   Mon,  6 Feb 2023 23:58:55 +0100
+Message-Id: <cover-v2-0.3-00000000000-20230206T225639Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1425.gac85d95d48c
-In-Reply-To: <cover-v5-0.6-00000000000-20230206T224200Z-avarab@gmail.com>
-References: <cover-v4-0.6-00000000000-20221219T101240Z-avarab@gmail.com> <cover-v5-0.6-00000000000-20230206T224200Z-avarab@gmail.com>
+In-Reply-To: <cover-0.3-00000000000-20230203T125859Z-avarab@gmail.com>
+References: <cover-0.3-00000000000-20230203T125859Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,67 +73,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a few miscellaneous cases where:
+We've given the "git add -i" migration away from Perl to a built-in
+enough time to remove the old Perl code.
 
-- We lost the "git" exit code via "git ... | grep"
-- Likewise by having a $(git) argument to git itself
-- Used "test -z" to check that a command emitted no output, we can use
-  "test_must_be_empty" and &&-chaining instead.
+For v1, see:
+https://lore.kernel.org/git/cover-0.3-00000000000-20230203T125859Z-avarab@gmail.com/
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t1401-symbolic-ref.sh    | 3 ++-
- t/t3701-add-interactive.sh | 8 +++++---
- t/t7516-commit-races.sh    | 3 ++-
- 3 files changed, 9 insertions(+), 5 deletions(-)
+Branch & CI for this at:
+https://github.com/avar/git/tree/avar/nuke-perl-add--interactive-2
 
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index d708acdb819..5e36899d207 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -33,7 +33,8 @@ test_expect_success 'symbolic-ref refuses non-ref for HEAD' '
- reset_to_sane
- 
- test_expect_success 'symbolic-ref refuses bare sha1' '
--	test_must_fail git symbolic-ref HEAD $(git rev-parse HEAD)
-+	rev=$(git rev-parse HEAD) &&
-+	test_must_fail git symbolic-ref HEAD "$rev"
- '
- 
- reset_to_sane
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 5841f280fb2..f1fe5d60677 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -296,9 +296,11 @@ test_expect_success FILEMODE 'stage mode and hunk' '
- 	echo content >>file &&
- 	chmod +x file &&
- 	printf "y\\ny\\n" | git add -p &&
--	git diff --cached file | grep "new mode" &&
--	git diff --cached file | grep "+content" &&
--	test -z "$(git diff file)"
-+	git diff --cached file >out &&
-+	grep "new mode" out &&
-+	grep "+content" out &&
-+	git diff file >out &&
-+	test_must_be_empty out
- '
- 
- # end of tests disabled when filemode is not usable
-diff --git a/t/t7516-commit-races.sh b/t/t7516-commit-races.sh
-index f2ce14e9071..2d38a16480e 100755
---- a/t/t7516-commit-races.sh
-+++ b/t/t7516-commit-races.sh
-@@ -10,7 +10,8 @@ test_expect_success 'race to create orphan commit' '
- 	test_must_fail env EDITOR=./hare-editor git commit --allow-empty -m tortoise -e &&
- 	git show -s --pretty=format:%s >subject &&
- 	grep hare subject &&
--	test -z "$(git show -s --pretty=format:%P)"
-+	git show -s --pretty=format:%P >out &&
-+	test_must_be_empty out
- '
- 
- test_expect_success 'race to create non-orphan commit' '
+The only change from v1 is to squash in a suggested change from
+Philippe Blain, thanks!
+
+Ævar Arnfjörð Bjarmason (3):
+  add: remove "add.interactive.useBuiltin" & Perl "git add--interactive"
+  add API: remove run_add_interactive() wrapper function
+  docs & comments: replace mentions of "git-add--interactive.perl"
+
+ .gitignore                   |    1 -
+ Documentation/config/add.txt |    7 +-
+ Documentation/git-add.txt    |    6 +-
+ INSTALL                      |    2 +-
+ Makefile                     |    1 -
+ builtin/add.c                |   61 +-
+ builtin/checkout.c           |   12 +-
+ builtin/clean.c              |    2 +-
+ builtin/reset.c              |    4 +-
+ builtin/stash.c              |    3 +-
+ ci/run-build-and-tests.sh    |    1 -
+ commit.h                     |    2 -
+ git-add--interactive.perl    | 1920 ----------------------------------
+ pathspec.c                   |    2 +-
+ t/README                     |    4 -
+ t/t2016-checkout-patch.sh    |    6 -
+ t/t3701-add-interactive.sh   |   29 +-
+ t/t6132-pathspec-exclude.sh  |    6 +-
+ t/test-lib.sh                |    4 -
+ 19 files changed, 50 insertions(+), 2023 deletions(-)
+ delete mode 100755 git-add--interactive.perl
+
+Range-diff against v1:
+1:  f39dde93011 ! 1:  71c7922b25f add: remove "add.interactive.useBuiltin" & Perl "git add--interactive"
+    @@ Documentation/config/add.txt: add.ignore-errors (deprecated)::
+     +	interactive mode, which then became the default in Git
+     +	versions v2.37.0 to v2.39.0.
+     
+    + ## INSTALL ##
+    +@@ INSTALL: Issues of note:
+    + 	  for everyday use (e.g. "bisect", "request-pull").
+    + 
+    + 	- "Perl" version 5.8 or later is needed to use some of the
+    +-	  features (e.g. preparing a partial commit using "git add -i/-p",
+    ++	  features (e.g. sending patches using "git send-email",
+    + 	  interacting with svn repositories with "git svn").  If you can
+    + 	  live without these, use NO_PERL.  Note that recent releases of
+    + 	  Redhat/Fedora are reported to ship Perl binary package with some
+    +
+      ## Makefile ##
+     @@ Makefile: SCRIPT_LIB += git-mergetool--lib
+      SCRIPT_LIB += git-sh-i18n
+2:  fb0dafaf4a4 = 2:  9299f22cc2c add API: remove run_add_interactive() wrapper function
+3:  6ee56de1371 = 3:  09bece75c22 docs & comments: replace mentions of "git-add--interactive.perl"
 -- 
 2.39.1.1425.gac85d95d48c
 
