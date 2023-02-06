@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE2F5C636D3
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 23:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 673CFC64EC6
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 23:08:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbjBFXIY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 18:08:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42644 "EHLO
+        id S230165AbjBFXI3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 18:08:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229994AbjBFXIR (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230018AbjBFXIR (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 6 Feb 2023 18:08:17 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02F5040F6
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03D925FDE
         for <git@vger.kernel.org>; Mon,  6 Feb 2023 15:08:16 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id mf7so38748220ejc.6
+Received: by mail-ej1-x636.google.com with SMTP id ud5so38772892ejc.4
         for <git@vger.kernel.org>; Mon, 06 Feb 2023 15:08:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=r32YOUi3/hD2J2xHGNU5MLe3BaAzvTq1alLQHZ/oi+0=;
-        b=Y1MiG/2bTbQCXufFAyF08qjUFh/0rSuiNUbWgSY1Z9PbWrASepXIMMZTUtW3SO7UKJ
-         9LXXX0aJaXgNgbh3uM43v9Y6JZcjQrKqrciMNXuqJtD/Sr2VEOFSU5sDvCwpXELxGKSZ
-         MKRq/tWhIKXrcEVeScIKmKojpr0u0WvY5T5m8x04m6o5VdDdAk0a45Gh8vN3si3dNWz8
-         e15a3a5xfM17U3P82vlWipDvvvLSYUzSbHNaC2PgfB3bNTjV12DiuGMIDa6dLQaZzQjo
-         T4yc2spqauCBqAKpE6+VARUXxG2A1RAaNxntKo+1Qs0o37AYzfMRQtPa5GwkcA/4EsOG
-         RD1Q==
+        bh=APRbMTW3vWoQPqFf+DhkkGBK2M2T9CDlZxiMV3PEETc=;
+        b=Nl3DMqWtxOr+JkYAVTwxZMrhBF2HZZrWSo1wvsnLREcEbUAAeIKG5FWaRg6foSQF95
+         0tVdZvshquDZkoypyE65mU7UoxUaOMu4VAJCqxsFVfXYC4U7Sr2vLVQTIqIYymphT4fW
+         LHVl3/DSYvHhEqcpOulgykjP/OpgqlccvKUKuVdIL/ZX2biy8qGB0EmbB85Jw14W3nPy
+         tQkOxg9Nw+2RGG8oybTjUYtS4WKITdc6YjwlhjPCIj3emVs0lAvJI+IH7bfoDzDAGv6T
+         F1hhBwUPQj8RGPWL0pW7wBz1X4Xtiat1CD5MK06YcjC+OkuTN4GF/MsDAO96nrzaJkHo
+         rWew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=r32YOUi3/hD2J2xHGNU5MLe3BaAzvTq1alLQHZ/oi+0=;
-        b=QfGDda3+f6/ymj5yUD+/vZJuiZL9r5V9E8Y1iB2GKgvf1P6Xap1YuwThj/TxiPFWwu
-         C1VMgBbjG050L2vm67oXboA63jS+wuQyZDaQZQ/3Eim9wNokKq4dlElnoqNpuxJ7YxSS
-         UfR+XYx1UTRP93+2gq8O81MAy6sz21Qky2Z9N124MnzAdBBwAh4yLVRoE/uBhpFpU1VL
-         2bOE921QbN2pbUwqsPYGkzAaduR9v6J0HWGZIZqyLrtCVXpIVaHpqP7n0eeyQN5XJI0v
-         cIu7lufnPy6vUBNBbtgjm2dwP4WMY40+Hl7xf2KdInNs0hKUo8FKo+rdesjyyBmmmBe3
-         Bjpw==
-X-Gm-Message-State: AO0yUKV3jQXEY/mgXhyF8KmrmWqu3z1XHQtGzVwiWdf6O2Rr3gLL/lVc
-        YcH/EwKkEWJn7Vl54CPCXH5YnwWVq/fdkaKR
-X-Google-Smtp-Source: AK7set+GbmWA8ab4AB4i5GAslFJMKrJFatH1MwKt19HQe+JPsie32HvfyfOA+3erwC96ucRyCeNo5w==
-X-Received: by 2002:a17:906:a255:b0:7c4:f8fb:6a27 with SMTP id bi21-20020a170906a25500b007c4f8fb6a27mr1446193ejb.0.1675724895220;
-        Mon, 06 Feb 2023 15:08:15 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s15-20020a170906a18f00b0089d5aaf85besm2673586ejy.219.2023.02.06.15.08.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=APRbMTW3vWoQPqFf+DhkkGBK2M2T9CDlZxiMV3PEETc=;
+        b=ddB1Rnpgr73Pz89hLlnDK9+FAE7xYdJ+c0q5bn971FAielBeMyOd40qNNLU4WZlAoi
+         SE/zCEAvAPwV8d3WBdEYia70nW/ldh+lqRJaCP9gRwVZSR9Ucq8C4i5SQ+bCOTvYNctA
+         CToer6Cv29hyixC1aYswv5OO19z4Jw4brBe5360873t4RBPVdlsIteniZzVQpc0JcgeP
+         Mgs/xhrTUCLS/eNX6qG/Lt6He2EiTgJrDnYXKigjHdBZkLp8IsV0CwNM3OdvOvfRuOs4
+         KGtU+n6ZtYLJUg9+6o1WznskrGWStGnbbvB8vCW4t7rWKBcukJ5Styu/RSlQZxAeWuuT
+         AR1A==
+X-Gm-Message-State: AO0yUKVVQOBZWGcM09em2yue6o7ChNbUaIWkPtqxlZpsggpiAffxXLlM
+        1+rQYVNE+1xYK0DEXIA3XvrJZJb9DrJxRoqo
+X-Google-Smtp-Source: AK7set/Ft1/nfNuQmjxcopLZAhYWv8bvTu9iDWQn6Lnhrphega3D6ixBj3pthZbPojmcuIiMDRG9yg==
+X-Received: by 2002:a17:906:4a93:b0:88c:4f0d:85ac with SMTP id x19-20020a1709064a9300b0088c4f0d85acmr883053eju.77.1675724894044;
         Mon, 06 Feb 2023 15:08:14 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id s15-20020a170906a18f00b0089d5aaf85besm2673586ejy.219.2023.02.06.15.08.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Feb 2023 15:08:13 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v7 06/19] name-rev: don't xstrdup() an already dup'd string
-Date:   Tue,  7 Feb 2023 00:07:41 +0100
-Message-Id: <patch-v7-06.19-67b8606c529-20230206T230142Z-avarab@gmail.com>
+Subject: [PATCH v7 05/19] various: add missing clear_pathspec(), fix leaks
+Date:   Tue,  7 Feb 2023 00:07:40 +0100
+Message-Id: <patch-v7-05.19-2b5dc52039b-20230206T230142Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1425.gac85d95d48c
 In-Reply-To: <cover-v7-00.19-00000000000-20230206T230141Z-avarab@gmail.com>
 References: <cover-v6-00.19-00000000000-20230202T094704Z-avarab@gmail.com> <cover-v7-00.19-00000000000-20230206T230141Z-avarab@gmail.com>
@@ -71,69 +71,193 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When "add_to_tip_table()" is called with a non-zero
-"shorten_unambiguous" we always return an xstrdup()'d string, which
-we'd then xstrdup() again, leaking memory. See [1] and [2] for how
-this leak came about.
+Fix memory leaks resulting from a missing clear_pathspec().
 
-We could xstrdup() only if "shorten_unambiguous" wasn't true, but
-let's instead inline this code, so that information on whether we need
-to xstrdup() is contained within add_to_tip_table().
+- archive.c: Plug a leak in the "struct archiver_args", and
+  clear_pathspec() the "pathspec" member that the "parse_pathspec_arg()"
+  call in this function populates.
 
-1. 98c5c4ad015 (name-rev: allow to specify a subpath for --refs
-   option, 2013-06-18)
-2. b23e0b9353e (name-rev: allow converting the exact object name at
-   the tip of a ref, 2013-07-07)
+- builtin/clean.c: Fix a memory leak that's been with us since
+  893d839970c (clean: convert to use parse_pathspec, 2013-07-14).
+
+- builtin/reset.c: Add clear_pathspec() calls to cmd_reset(),
+  including to the codepaths where we'd return early.
+
+- builtin/stash.c: Call clear_pathspec() on the pathspec initialized
+  in push_stash().
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/name-rev.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ archive.c                       |  1 +
+ builtin/clean.c                 |  1 +
+ builtin/reset.c                 | 11 ++++++++---
+ builtin/stash.c                 |  7 +++++--
+ t/t5001-archive-attr.sh         |  1 +
+ t/t5004-archive-corner-cases.sh |  2 ++
+ t/t7105-reset-patch.sh          |  2 ++
+ t/t7106-reset-unborn-branch.sh  |  2 ++
+ t/t7107-reset-pathspec-file.sh  |  1 +
+ t/t7301-clean-interactive.sh    |  1 +
+ 10 files changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 15535e914a6..49fae523694 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -273,17 +273,6 @@ static int subpath_matches(const char *path, const char *filter)
- 	return -1;
+diff --git a/archive.c b/archive.c
+index 81ff76fce99..f2a8756d84f 100644
+--- a/archive.c
++++ b/archive.c
+@@ -710,6 +710,7 @@ int write_archive(int argc, const char **argv, const char *prefix,
+ 
+ 	string_list_clear_func(&args.extra_files, extra_file_info_clear);
+ 	free(args.refname);
++	clear_pathspec(&args.pathspec);
+ 
+ 	return rc;
+ }
+diff --git a/builtin/clean.c b/builtin/clean.c
+index b2701a28158..b15eab328b7 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -1092,5 +1092,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&buf);
+ 	string_list_clear(&del_list, 0);
+ 	string_list_clear(&exclude_list, 0);
++	clear_pathspec(&pathspec);
+ 	return (errors != 0);
+ }
+diff --git a/builtin/reset.c b/builtin/reset.c
+index fea20a9ba0b..e9c10618cd3 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -390,7 +390,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		if (reset_type != NONE)
+ 			die(_("options '%s' and '%s' cannot be used together"), "--patch", "--{hard,mixed,soft}");
+ 		trace2_cmd_mode("patch-interactive");
+-		return run_add_interactive(rev, "--patch=reset", &pathspec);
++		update_ref_status = run_add_interactive(rev, "--patch=reset", &pathspec);
++		goto cleanup;
+ 	}
+ 
+ 	/* git reset tree [--] paths... can be used to
+@@ -439,8 +440,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 				       LOCK_DIE_ON_ERROR);
+ 		if (reset_type == MIXED) {
+ 			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
+-			if (read_from_tree(&pathspec, &oid, intent_to_add))
+-				return 1;
++			if (read_from_tree(&pathspec, &oid, intent_to_add)) {
++				update_ref_status = 1;
++				goto cleanup;
++			}
+ 			the_index.updated_skipworktree = 1;
+ 			if (!no_refresh && get_git_work_tree()) {
+ 				uint64_t t_begin, t_delta_in_ms;
+@@ -488,5 +491,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 
+ 	discard_index(&the_index);
+ 
++cleanup:
++	clear_pathspec(&pathspec);
+ 	return update_ref_status;
+ }
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 839569a9803..71a4ee6b1a5 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1727,6 +1727,7 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 		OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
+ 		OPT_END()
+ 	};
++	int ret;
+ 
+ 	if (argc) {
+ 		force_assume = !strcmp(argv[0], "-p");
+@@ -1766,8 +1767,10 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 		die(_("the option '%s' requires '%s'"), "--pathspec-file-nul", "--pathspec-from-file");
+ 	}
+ 
+-	return do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
+-			     include_untracked, only_staged);
++	ret = do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
++			    include_untracked, only_staged);
++	clear_pathspec(&ps);
++	return ret;
  }
  
--static const char *name_ref_abbrev(const char *refname, int shorten_unambiguous)
--{
--	if (shorten_unambiguous)
--		refname = shorten_unambiguous_ref(refname, 0);
--	else if (skip_prefix(refname, "refs/heads/", &refname))
--		; /* refname already advanced */
--	else
--		skip_prefix(refname, "refs/", &refname);
--	return refname;
--}
--
- struct name_ref_data {
- 	int tags_only;
- 	int name_only;
-@@ -309,11 +298,19 @@ static void add_to_tip_table(const struct object_id *oid, const char *refname,
- 			     int shorten_unambiguous, struct commit *commit,
- 			     timestamp_t taggerdate, int from_tag, int deref)
- {
--	refname = name_ref_abbrev(refname, shorten_unambiguous);
-+	char *short_refname = NULL;
-+
-+	if (shorten_unambiguous)
-+		short_refname = shorten_unambiguous_ref(refname, 0);
-+	else if (skip_prefix(refname, "refs/heads/", &refname))
-+		; /* refname already advanced */
-+	else
-+		skip_prefix(refname, "refs/", &refname);
+ static int push_stash_unassumed(int argc, const char **argv, const char *prefix)
+diff --git a/t/t5001-archive-attr.sh b/t/t5001-archive-attr.sh
+index 2f6eef5e372..04d300eeda7 100755
+--- a/t/t5001-archive-attr.sh
++++ b/t/t5001-archive-attr.sh
+@@ -3,6 +3,7 @@
+ test_description='git archive attribute tests'
  
- 	ALLOC_GROW(tip_table.table, tip_table.nr + 1, tip_table.alloc);
- 	oidcpy(&tip_table.table[tip_table.nr].oid, oid);
--	tip_table.table[tip_table.nr].refname = xstrdup(refname);
-+	tip_table.table[tip_table.nr].refname = short_refname ?
-+		short_refname : xstrdup(refname);
- 	tip_table.table[tip_table.nr].commit = commit;
- 	tip_table.table[tip_table.nr].taggerdate = taggerdate;
- 	tip_table.table[tip_table.nr].from_tag = from_tag;
+ TEST_CREATE_REPO_NO_TEMPLATE=1
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ SUBSTFORMAT='%H (%h)%n'
+diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
+index ae508e21623..9f2c6da80e8 100755
+--- a/t/t5004-archive-corner-cases.sh
++++ b/t/t5004-archive-corner-cases.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='test corner cases of git-archive'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # the 10knuls.tar file is used to test for an empty git generated tar
+diff --git a/t/t7105-reset-patch.sh b/t/t7105-reset-patch.sh
+index fc2a6cf5c7a..9b46da7aaa7 100755
+--- a/t/t7105-reset-patch.sh
++++ b/t/t7105-reset-patch.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='git reset --patch'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./lib-patch-mode.sh
+ 
+ test_expect_success PERL 'setup' '
+diff --git a/t/t7106-reset-unborn-branch.sh b/t/t7106-reset-unborn-branch.sh
+index ecb85c3b823..a0b67a0b843 100755
+--- a/t/t7106-reset-unborn-branch.sh
++++ b/t/t7106-reset-unborn-branch.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='git reset should work on unborn branch'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t7107-reset-pathspec-file.sh b/t/t7107-reset-pathspec-file.sh
+index 523efbecde1..af5ea406db3 100755
+--- a/t/t7107-reset-pathspec-file.sh
++++ b/t/t7107-reset-pathspec-file.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='reset --pathspec-from-file'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_tick
+diff --git a/t/t7301-clean-interactive.sh b/t/t7301-clean-interactive.sh
+index a07e8b86de2..d82a3210a1d 100755
+--- a/t/t7301-clean-interactive.sh
++++ b/t/t7301-clean-interactive.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='git clean -i basic tests'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
+ 
 -- 
 2.39.1.1425.gac85d95d48c
 
