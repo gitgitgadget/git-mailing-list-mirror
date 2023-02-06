@@ -2,103 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EB14C05027
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 23:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FEDEC61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 23:42:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbjBFXmh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 18:42:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37536 "EHLO
+        id S229944AbjBFXm4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 18:42:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjBFXmd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 18:42:33 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCC4D2E0DF
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 15:42:32 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id bx22so10310409pjb.3
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 15:42:32 -0800 (PST)
+        with ESMTP id S229537AbjBFXmy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 18:42:54 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B2532123
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 15:42:46 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id q8so9868211wmo.5
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 15:42:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RJTj3uFJCXfS52nJooAO/pX16I8GXSwvV5kI2Giw/8o=;
-        b=hAuqdfV1PKCiY++RuOhT9BCNhfcw8LwdGmGP9Wo+ia7uOUFKj9ObIPmIR+5K9HTVBy
-         /hp4SX1ka+CGqTktNhzQhKvEGwf/wU64ts4dyFsX+CbXl7Y7/qEU1vTJgHUOoTRisOk2
-         DNHAvC9rpartzkgaGhffZt8ax8er7z44E7+AnDst8d0qgJKKWxshwYHOX1bgv4MJ5mWg
-         CZVE0qUt4yoJFLdr+4plMZlzZo0fY7QUTWXSIL+c9dLyRcPKROHP/NdjDORCFXv9Regb
-         tDLStB3rEB/sc8Q0PxAF2ZylAqBNfur/MwCkqTp2GJgxnQm56CAMVy0M1aGglxmC2CQX
-         ISjw==
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6cUyLblaLuIhGbocvIyRGwmg5BM52Hx9CCT+TUuKetk=;
+        b=ZEtqZRnIwj6EuyuY4pJPqm69d8DXqct9g158ZWBLNG6ZEuYNZbpX/terwHyRMywvCT
+         y+Gxjq01tZVfdloPEU03Myu+KylR6kvbiOCz7PlRHlTvjDHuDp5dh/V5j+jvHmo1+Sqx
+         j4S4SEQ/CKZKzs/4KnbzB0ZhVPV3TViJGSVCwT94Cgh6Ly4St1/eiXdA+x0gUL0dSjXq
+         JYRE6CgadHOLsjuu4hpO03zECNgHzmAim4rjD/JdBAkQOYstg1iEJRYoq/ewg8VGHf+a
+         KM+H99itzG4DyH/pgSo8s3hrvMzgCNRxZXTKcvdUk1HHsKbx+z+vR7JIjH1RdqM1xsoH
+         dZPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RJTj3uFJCXfS52nJooAO/pX16I8GXSwvV5kI2Giw/8o=;
-        b=Wl1DhNctyhySK51rol9Ky3xDw/CCy63vaBRGznncS/PuLlaI+5K2/o46yWqprkg+DV
-         dtkAA0uUqmONn2TVJN70RqsiuFdxZIPPkryB/+j4eSM0q2YL6tWugKgxj9zCGVjNAUXv
-         Fc3rf8Ez6rtFmDSFsBUoND01UPCNhUWfo3v5QYzvElODiQpNQiVuZqCgRU19/pW0MWyy
-         xRHqYfpXFHsmTGpAyPdRNYW0YQYhXLNp1YahdBsuebjnb8lr0OnYeYZeoC3h6n6fQfSB
-         gENIyOwZ//939mNNKguV/L3OzQ9gz6+6WQrK6qH05vig4px1cav1J7mad4438AbJKIve
-         RPfA==
-X-Gm-Message-State: AO0yUKX1rsioW8YFgIdDi7XJj3Gu576Q5DdHqKlcud64SZwdg4s+OBDX
-        selJA3nA4ZXg482Wxsrao7c=
-X-Google-Smtp-Source: AK7set8IzTv22fkoRDBnzgLDfeVhoTcAVoJ/UJQdeNiVDIyNBJ/yPy/eisboJWYSDIF6sDIXskxeKg==
-X-Received: by 2002:a17:903:244f:b0:199:a0c:1221 with SMTP id l15-20020a170903244f00b001990a0c1221mr843929pls.14.1675726952218;
-        Mon, 06 Feb 2023 15:42:32 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id t6-20020a170902b20600b0018544ad1e8esm5273630plr.238.2023.02.06.15.42.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 15:42:30 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v6 18/19] push: refactor refspec_append_mapped() for
- subsequent leak-fix
-References: <cover-v5-00.19-00000000000-20230118T120334Z-avarab@gmail.com>
-        <cover-v6-00.19-00000000000-20230202T094704Z-avarab@gmail.com>
-        <patch-v6-18.19-aa33f7e05c8-20230202T094704Z-avarab@gmail.com>
-        <xmqqk00zsoqh.fsf@gitster.g>
-        <230206.86sffi67ce.gmgdl@evledraar.gmail.com>
-Date:   Mon, 06 Feb 2023 15:42:30 -0800
-In-Reply-To: <230206.86sffi67ce.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 06 Feb 2023 18:16:21 +0100")
-Message-ID: <xmqq357i2wex.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        bh=6cUyLblaLuIhGbocvIyRGwmg5BM52Hx9CCT+TUuKetk=;
+        b=GuXlLSKzMJxazUgK2AoWeW2gmQlz+c2/Y0wtc7390ORhuITNLkd4eO8iDPo9br9mgx
+         l8URtiT14WT96rqRApvgQQxbvYQ3BL41vTHcUK9SRSjtPY36ocOP8GvGyHBHjY/3zXdW
+         gSMeD1vF9zky6GjdQHXTbRcZV74ZR3w32RktxB3G2FygsUxNQRJ3cxLGO7/Khl8FDO7n
+         fjk2fgOaujilvDlB/eNOOIEgNo3jxiXcbYycbWsayfkDptyIDYv/CwdB5Pg4eG9TSzN7
+         DrwvK7jji0tYDAMqO31T4SRcdlmvvSmzhz/WHsmGZia0GN51Qi4RAb6iqKMKoBLMqZVX
+         e9YA==
+X-Gm-Message-State: AO0yUKUMkA4+lT6FNy7kRowdAS0ZUUYojtrwvjUIbiqP0SiAKVnXQa9X
+        TJmugBZRB02MDPmNJkSEqkSIOE1qnHXpRxCQoiY77dp3zHCwQA==
+X-Google-Smtp-Source: AK7set9188w+ssvv6PLpE3+QVDlYi6I3HHRYvIQ01hXunzm5EXNp0Uy324pbriEfMndHsPny1DoSO10lt9asTeDB9og=
+X-Received: by 2002:a05:600c:444a:b0:3dc:5956:9619 with SMTP id
+ v10-20020a05600c444a00b003dc59569619mr1422251wmn.7.1675726964917; Mon, 06 Feb
+ 2023 15:42:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20230205145245.11078-1-cheskaqiqi@gmail.com> <20230206211823.8651-1-cheskaqiqi@gmail.com>
+ <20230206211823.8651-4-cheskaqiqi@gmail.com> <xmqqlela2z3p.fsf@gitster.g>
+In-Reply-To: <xmqqlela2z3p.fsf@gitster.g>
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+Date:   Mon, 6 Feb 2023 18:42:33 -0500
+Message-ID: <CAMO4yUGmQ371hLCSTODQct+CzY2mqywfLzZO6fsgqN2=1cWGrw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] t4113: put executable lines to test_expect_success
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Mon, Feb 6, 2023 at 5:44 PM Junio C Hamano <gitster@pobox.com> wrote:
 
-> I think you're mistaken, or I'm misunderstanding you. For e.g. the 29th
-> test in t4301-merge-tree-write-tree.sh where we do:
->
-> 	git push read-only side1 side2 side3
->
-> We'll only invoke "get_local_heads()" once, not once for each of the
-> refs.
+> Have you run the resulting test?
 
-Ahh.  get_local_heads() appears inside this conditional in the
-original.
+My apologies for not testing after V1. That was a major oversight on
+my part.  I'll make sure to thoroughly test before each submission to
+avoid any issues with the code in the future.
 
-	} else if (!strchr(ref, ':')) {
-		if (!remote) {
-			remote = remote_get(repo);
-			local_refs = get_local_heads();
-		}
-	        refspec_append_mapped(...);
-	} else
-		...
 
-So the original was using !remote as the switch to make both remote
-and local_refs assigned onnly once.  The rewritten code makes them
-separately "find first non-null".
+> This creates a "test-patch" file with lines 'a' and 'b' that are
+> common context lines without any whitespace before them, no?  The
+> original left the necessary single space in front of them (see the
+> line removed above).
 
-OK.
+I try to change the code to(left the necessary single space in front
+of 'a' and 'b':
+
+diff --git a/t/t4113-apply-ending.sh b/t/t4113-apply-ending.sh
+index ab5ecaab7f..ef61a3187c 100755
+--- a/t/t4113-apply-ending.sh
++++ b/t/t4113-apply-ending.sh
+@@ -14,8 +14,8 @@ test_expect_success setup '
+--- a/file
++++ b/file
+@@ -1,2 +1,3 @@
+- a
+- b
++ a
++ b
++c
+EOF
+
+Here I only show one part ,but I fix two same issue in the V4 patch
+and it still can not pass the test .
+It say :
+
+Test Summary Report
+
+-------------------
+
+t4113-apply-ending.sh (Wstat: 256 Tests: 0 Failed: 0)
+
+  Non-zero exit status: 1
+
+  Parse errors: No plan found in TAP output
+
+Files=1, Tests=0,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.05 cusr
+0.02 csys =  0.09 CPU)
+
+Result: FAIL.
+
+I'm stumped as to why it's still failing. I've tried searching for
+answers on StackOverflow, but I still can't figure it out.
+----------------
+Thanks,
+Shuqi
