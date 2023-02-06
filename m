@@ -2,241 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1BA5C636D4
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 16:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F30C2C636D3
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 16:23:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230518AbjBFQU5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 11:20:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32908 "EHLO
+        id S229523AbjBFQXx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 11:23:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231641AbjBFQUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 11:20:49 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E6FC44BB
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 08:20:30 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id r2so10900683wrv.7
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 08:20:30 -0800 (PST)
+        with ESMTP id S229509AbjBFQXw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 11:23:52 -0500
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456D96EAF
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 08:23:51 -0800 (PST)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-50fe0b4495cso120305207b3.14
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 08:23:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=r3wrU8Qyouh3D7ghXXfZssTG777hoFILE0d5k41Bekw=;
-        b=KYymMxUiQmdZwZgSBkfuoARZby6oSOd3ATbRDm5f3cYmY8sGeNRxlpYu1ISRHDpF8E
-         PH4HNbOyCn1OdmyFXoxH79XdfiAa67AkeNtGN8ew8y+lRPwYS8w1JIYkOb0hS0A989Mn
-         RKHC1qA93TH37ZHZtxg0hi8jrw9w/AOsj/zWG+cAKEdKL+jXBxZXmMC8GIgw0YefwOuC
-         gO8wLi+kQFo8EkuS8+TKxb5jSzkWY9SPIereiGirRq2ByHhd4XENRXIQKoa45IkMP9VH
-         KXME28vinWqiqRv9biX9Q23AzyO042ER3Swm2oZstm7l/YnMGunpqSyVcjtG+353fSUA
-         x+tA==
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l3MYV0zAUJYU1pjFILPYcAEWc8UUdsIehq1h1klxwv8=;
+        b=HmhpvlRJofFtwiv/JS0SaWhlMUVsqFM2/JaOplunOGKgF4aAw+vCRfkM2RKUp50BG8
+         eujYWGM17fPbndceAChBr/CpPEgO0iaYFEKbhi+idHZEyO9YKTv2cdo1+mx49BbRpSJk
+         mkbMpTyv4xf8GIUXSqbO2a/d5HrZPaZk7MDSOfp8Qqso5wVymiM3RrNh4zGprNsoVWP0
+         WmELNkp+lLsCg1nsuxA5nIclLzfVa9RoAcJ8bZUCFA8Wo3Ex5xaUnrovUpmKjF2tFZSG
+         qVO8cUxhIuNnZJGzvJemqpgvQkZ98bTiHsBbJH1DbuJGEMGyGrtfadHExrIsEEZ/yVAK
+         AhYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r3wrU8Qyouh3D7ghXXfZssTG777hoFILE0d5k41Bekw=;
-        b=sJSYDbHKmaktLVbTJFyPp/PB4te0ID/gx9A6UZUAZgFPxWsViysdFoRQZJo5mW1EP6
-         tRNEqzK8HiQJ6niu0uPlWt09w3gdbIHbjOnWAunhOwWMwkitPzWXSw3eaWSrYP4pwgPn
-         z5G+lnI2/tDVgcEkKx4wJAtMcVYc+icr97dQ/tkwpD6Ph0gEarzoaSbH7FVWTuLNLXBM
-         DQ9cRX2YqPJ9C6YOkUoNtWiQvtWyaUUI5K4PLuMA4eHMZvrrEaHgnwF03hRr23V6Uw38
-         shbpzYtrXg0bkbbPM5kE07tNE9BPfsnhEzGX7xcQHaXTdZ2Q8JQ/YvCq6zcQ4KP88h9u
-         SiOA==
-X-Gm-Message-State: AO0yUKWUBqAWqfXKfZzP0IjZfb4gjVgQpevDb2YqoVwtxhwkdn4FeyKC
-        +dykmJG3SViegCWhP3oblgVZQu2jTo0=
-X-Google-Smtp-Source: AK7set8cPzJOEUz9X7jGs33xqWdKdvEj6m5UmsV46fwVPDb3O7hgYTKC1Z2ZrB1dKzvS8ISYN1jV1w==
-X-Received: by 2002:a5d:4bce:0:b0:2c3:24f3:8b47 with SMTP id l14-20020a5d4bce000000b002c324f38b47mr18841906wrt.31.1675700429020;
-        Mon, 06 Feb 2023 08:20:29 -0800 (PST)
-Received: from [192.168.1.212] ([90.248.183.175])
-        by smtp.gmail.com with ESMTPSA id l8-20020a05600c4f0800b003dec22de1b1sm12262058wmq.10.2023.02.06.08.20.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Feb 2023 08:20:28 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <19a1c71c-d913-8118-a228-da72b5771421@dunelm.org.uk>
-Date:   Mon, 6 Feb 2023 16:20:28 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] diff: consolidate diff algorithm option parsing
-Content-Language: en-US
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>, John Cai <jcai@gitlab.com>
-References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
- <f56bd38ac3f80fb3a7e8c92cadaa57d2b0754b9f.1675568781.git.gitgitgadget@gmail.com>
-In-Reply-To: <f56bd38ac3f80fb3a7e8c92cadaa57d2b0754b9f.1675568781.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=l3MYV0zAUJYU1pjFILPYcAEWc8UUdsIehq1h1klxwv8=;
+        b=y1+B8Et4TlyZVnwbQEubPFbljSavFOgSfulgJ07rbiXweHL1/YFinxcrUiexIfqY6R
+         Ez4lxhluZLN3Exryxx4Xlo98f3XzBq4E+pDD8ZG1sybXllz/KHh/QW2msvHy0qppJnWw
+         VQ58OsnnsFN+9SJVw1fodVnIybQnmElGeeWT1NJi71gVuzrwlyNpZqEKRpgneMUAHnZQ
+         XIZ7sKfdB4c579SHrTqq1G5yzUhJ3A4qqSRvroW5pGw/zdzj8rdQ4ySq14RdjxUrqTIc
+         NWYJJWzUyC94belS0pu0Yic0ZiXWc8Am2AtIQfo+u5uPFqPzPzYqxuu4fW0pCfj57fyV
+         WGNg==
+X-Gm-Message-State: AO0yUKV4T6dOBYtWaGnML5uH1x3g61G97xRdz5musZ6s2Q2AAY2xJrea
+        52IUYHeogul9eziNCh/MHHOhf74Vg5w2XA==
+X-Google-Smtp-Source: AK7set/DyYqulbwMkNgd+y+oxiirh+A/q9ab/rJrtf6QJA7zmL4Rkxk48ExJISDm7oxwVTT9sKc2+BBi3iN3KQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a25:fe0c:0:b0:80b:69f5:3966 with SMTP id
+ k12-20020a25fe0c000000b0080b69f53966mr14176ybe.519.1675700630525; Mon, 06 Feb
+ 2023 08:23:50 -0800 (PST)
+Date:   Tue, 07 Feb 2023 00:23:42 +0800
+In-Reply-To: <230206.86edr36ki2.gmgdl@evledraar.gmail.com>
+Mime-Version: 1.0
+References: <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com>
+ <cover-v4-0.9-00000000000-20230202T131155Z-avarab@gmail.com>
+ <patch-v4-2.9-1f0f8bdcde9-20230202T131155Z-avarab@gmail.com>
+ <kl6lzg9rgjqv.fsf@chooglen-macbookpro.roam.corp.google.com> <230206.86edr36ki2.gmgdl@evledraar.gmail.com>
+Message-ID: <kl6lk00uhiep.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v4 2/9] config tests: add "NULL" tests for *_get_value_multi()
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "SZEDER =?utf-8?Q?G=C3=A1b?= =?utf-8?Q?or?=" <szeder.dev@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>, raymond@heliax.dev,
+        zweiss@equinix.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On 05/02/2023 03:46, John Cai via GitGitGadget wrote:
-> From: John Cai <jcai@gitlab.com>
-> 
-> The diff option parsing for --minimal, --patience, --histgoram can all
-> be consolidated into one function. This is a preparatory step for the
-> subsequent commit which teaches diff to keep track of whether or not a
-> diff algorithm has been set via the command line.
-> 
-> While we're at it, the logic that sets the diff algorithm in
-> diff_opt_diff_algorithm() can be refactored into a helper that will
-> allow multiple callsites to set the diff algorithm.
+> On Mon, Feb 06 2023, Glen Choo wrote:
+>
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>
+>>> +test_NULL_in_multi () {
+>>> +	local op=3D"$1" &&
+>>> +	local file=3D"$2" &&
+>>> +
+>>> +	test_expect_success "$op: NULL value in config${file:+ in $file}" '
+>>> +		config=3D"$file" &&
+>>> +		if test -z "$config"
+>>> +		then
+>>> +			config=3D.git/config &&
+>>> +			test_when_finished "mv $config.old $config" &&
+>>> +			mv "$config" "$config".old
+>>> +		fi &&
+>>> +
+>>> +		cat >"$config" <<-\EOF &&
+>>> +		[a]key=3Dx
+>>> +		[a]key
+>>> +		[a]key=3Dy
+>>> +		EOF
+>>> +		case "$op" in
+>>> +		*_multi)
+>>> +			cat >expect <<-\EOF
+>>> +			x
+>>> +			(NULL)
+>>> +			y
+>>> +			EOF
+>>> +			;;
+>>> +		*)
+>>> +			cat >expect <<-\EOF
+>>> +			y
+>>> +			EOF
+>>> +			;;
+>>> +		esac &&
+>>> +		test-tool config "$op" a.key $file >actual &&
+>>> +		test_cmp expect actual
+>>> +	'
+>>> +}
+>>> +
+>>> +test_NULL_in_multi "get_value_multi"
+>>> +test_NULL_in_multi "configset_get_value" "my.config"
+>>> +test_NULL_in_multi "configset_get_value_multi" "my.config"
+>>
+>> I frankly preferred v3's tests over this version. v3 is slightly
+>> verbose, but at least the lack of logic made it easy to read and
+>> understand. I'd be okay with it if we get a big DRY-ness benefit, but 2
+>> conditionals for 3 cases seems quite un-DRY to me.
+>
+> Note that the v3 version didn't test the get_value_multi(), adjusting
+> the v3 version with copy/paste to test that as well is why I made this a
+> function. From the CL's range-diff:
+>
+>     -    When the "t/t1308-config-set.sh" tests were added in [1] only on=
+e of
+>     -    the three "(NULL)" lines in "t/helper/test-config.c" had any tes=
+t
+>     -    coverage. This change adds tests that stress the remaining two.
+>     +    When parts of the config_set API were tested for in [1] they did=
+n't
+>     +    add coverage for 3/4 of the "(NULL)" cases handled in
+>     +    "t/helper/test-config.c". We'd test that case for "get_value", b=
+ut not
+>     +    "get_value_multi", "configset_get_value" and
+>     +    "configset_get_value_multi".
+>     +
+>     +    We now cover all of those cases, which in turn expose the detail=
+s of
+>     +    how this part of the config API works.
+>
+> Of course that wouldn't address an outstanding point that we should just
+> copy/paste these anyway, but maybe that addresses your feedback...
 
-You say "while  we're at it" but isn't it a wholly necessary change for 
-what you want to do?
-
-This patch basically looks good, I've left a couple of comments below, 
-thanks for separating it out as a preparatory step
-
-> Signed-off-by: John Cai <johncai86@gmail.com>
-> ---
->   diff.c | 87 ++++++++++++++++++++++++++++++++++++----------------------
->   1 file changed, 54 insertions(+), 33 deletions(-)
-> 
-> diff --git a/diff.c b/diff.c
-> index 329eebf16a0..a8a31c81fe7 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3437,6 +3437,22 @@ static int diff_filepair_is_phoney(struct diff_filespec *one,
->   	return !DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two);
->   }
->   
-> +static int set_diff_algorithm(struct diff_options *opts,
-> +			      const char *alg)
-> +{
-> +	long value = parse_algorithm_value(alg);
-> +
-> +	if (value < 0)
-> +		return 1;
-> +
-> +	/* clear out previous settings */
-> +	DIFF_XDL_CLR(opts, NEED_MINIMAL);
-> +	opts->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-> +	opts->xdl_opts |= value;
-> +
-> +	return 0;
-> +}
-> +
->   static void builtin_diff(const char *name_a,
->   			 const char *name_b,
->   			 struct diff_filespec *one,
-> @@ -5107,17 +5123,40 @@ static int diff_opt_diff_algorithm(const struct option *opt,
->   				   const char *arg, int unset)
->   {
->   	struct diff_options *options = opt->value;
-> -	long value = parse_algorithm_value(arg);
->   
->   	BUG_ON_OPT_NEG(unset);
-> -	if (value < 0)
-> +
-> +	if (set_diff_algorithm(options, arg))
->   		return error(_("option diff-algorithm accepts \"myers\", "
->   			       "\"minimal\", \"patience\" and \"histogram\""));
->   
-> -	/* clear out previous settings */
-> -	DIFF_XDL_CLR(options, NEED_MINIMAL);
-> -	options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-> -	options->xdl_opts |= value;
-> +	return 0;
-> +}
-> +
-> +static int diff_opt_diff_algorithm_no_arg(const struct option *opt,
-> +				   const char *arg, int unset)
-> +{
-> +	struct diff_options *options = opt->value;
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +	BUG_ON_OPT_ARG(arg);
-> +
-> +	if (!strcmp(opt->long_name, "patience")) {
-> +		int i;
-
-This is copied from the existing code but as `options->anchors_nr` is a 
-size_t it is probably worth converting `i` to a size_t here.
-
-> +		/*
-> +		 * Both --patience and --anchored use PATIENCE_DIFF
-> +		 * internally, so remove any anchors previously
-> +		 * specified.
-> +		 */
-> +		for (i = 0; i < options->anchors_nr; i++)
-> +			free(options->anchors[i]);
-> +		options->anchors_nr = 0;
-> +	}
-> +
-> +	if (set_diff_algorithm(options, opt->long_name))
-> +		return error(_("available diff algorithms include \"myers\", "
-> +			       "\"minimal\", \"patience\" and \"histogram\""));
-
-I think this should be a BUG() as it is a programming error if we reach 
-this point.
-
-Best Wishes
-
-Phillip
-
-> +
->   	return 0;
->   }
->   
-> @@ -5242,26 +5281,6 @@ static enum parse_opt_result diff_opt_output(struct parse_opt_ctx_t *ctx,
->   	return 0;
->   }
->   
-> -static int diff_opt_patience(const struct option *opt,
-> -			     const char *arg, int unset)
-> -{
-> -	struct diff_options *options = opt->value;
-> -	int i;
-> -
-> -	BUG_ON_OPT_NEG(unset);
-> -	BUG_ON_OPT_ARG(arg);
-> -	options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
-> -	/*
-> -	 * Both --patience and --anchored use PATIENCE_DIFF
-> -	 * internally, so remove any anchors previously
-> -	 * specified.
-> -	 */
-> -	for (i = 0; i < options->anchors_nr; i++)
-> -		free(options->anchors[i]);
-> -	options->anchors_nr = 0;
-> -	return 0;
-> -}
-> -
->   static int diff_opt_ignore_regex(const struct option *opt,
->   				 const char *arg, int unset)
->   {
-> @@ -5562,9 +5581,10 @@ struct option *add_diff_options(const struct option *opts,
->   			    N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
->   
->   		OPT_GROUP(N_("Diff algorithm options")),
-> -		OPT_BIT(0, "minimal", &options->xdl_opts,
-> -			N_("produce the smallest possible diff"),
-> -			XDF_NEED_MINIMAL),
-> +		OPT_CALLBACK_F(0, "minimal", options, NULL,
-> +			       N_("produce the smallest possible diff"),
-> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-> +			       diff_opt_diff_algorithm_no_arg),
->   		OPT_BIT_F('w', "ignore-all-space", &options->xdl_opts,
->   			  N_("ignore whitespace when comparing lines"),
->   			  XDF_IGNORE_WHITESPACE, PARSE_OPT_NONEG),
-> @@ -5589,10 +5609,11 @@ struct option *add_diff_options(const struct option *opts,
->   		OPT_CALLBACK_F(0, "patience", options, NULL,
->   			       N_("generate diff using the \"patience diff\" algorithm"),
->   			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-> -			       diff_opt_patience),
-> -		OPT_BITOP(0, "histogram", &options->xdl_opts,
-> -			  N_("generate diff using the \"histogram diff\" algorithm"),
-> -			  XDF_HISTOGRAM_DIFF, XDF_DIFF_ALGORITHM_MASK),
-> +			       diff_opt_diff_algorithm_no_arg),
-> +		OPT_CALLBACK_F(0, "histogram", options, NULL,
-> +			       N_("generate diff using the \"histogram diff\" algorithm"),
-> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-> +			       diff_opt_diff_algorithm_no_arg),
->   		OPT_CALLBACK_F(0, "diff-algorithm", options, N_("<algorithm>"),
->   			       N_("choose a diff algorithm"),
->   			       PARSE_OPT_NONEG, diff_opt_diff_algorithm),
+Ah, yes I noticed that (thanks for confirming), and I meant that I think
+it would be better to just copy/paste anyway.
