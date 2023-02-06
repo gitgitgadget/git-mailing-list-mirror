@@ -2,206 +2,332 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8758FC636D3
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 20:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B0E1C05027
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 20:38:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbjBFUg1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 15:36:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38450 "EHLO
+        id S230351AbjBFUiH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 15:38:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229582AbjBFUgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 15:36:25 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D17BF2A994
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 12:36:23 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id m2so37756918ejb.8
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 12:36:23 -0800 (PST)
+        with ESMTP id S230316AbjBFUiC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 15:38:02 -0500
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 545555FE4
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 12:37:55 -0800 (PST)
+Received: by mail-qt1-x835.google.com with SMTP id f10so14420101qtv.1
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 12:37:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=R4gRAjESW0PPPtoRtImGStuvtUEP9GLEDb/7GvcDXS4=;
-        b=pWSn8QVeKjeiWbfKnSklMWN45GatGwdhaHPFvX7/AFejpuVeBxsLuiRAeU2ZqCuyqu
-         054X4BmuTlsuledXVT577SH/SffepDNn6tTvr6PaHruAFlraxt13k5YMGJtACz1oXoMA
-         1KjdDijVOAD8GvWXWxwKkDLigYReGC6LkGcjQBtyeGW5JuFqt1yCxPu0wh53vx/Ii8Sg
-         FqvSK2QKFmRuY8mgzzNWnWV7mg4iQ80rgJgzlOK5jlzGTNmVlmbiftoiPted/3gvmcAM
-         xi1EWp56IEemkooTOX3pIDOi+g01QWdPYE+QVB6yoYbK5RsHu9f90MoC0yo8RWEbhMZp
-         75OA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F3iC03ScimUhaQ5QSgEgGRSSe/sXTx/+W9ebC2PVoRI=;
+        b=JX95D01Ah1gjZpmKj92PKpdbyPUK+LHszvRHvb3FfBFCEAoioHFuHzlWfHe1mZn53W
+         1YZTH8OefjF4eU7pKffEov7nMOPpbGgVGQFl0qb2C+ETUhzoyHl4X7eLtLHF81E/fmbW
+         8SCytS/XH3vzqTvZ/ZwDEwqcNiQtWlCa6VnWXS3Zs8bvldo22L56SN7EXLyZRHbrfGfJ
+         uMDMHDvfvLBWyOD4EQNI0rRhmEgm6VsBR6rNxe1jlfwi4ZR2/bCGS4xbQOT6ZHIgXIE2
+         S/apBwwanJhx1QDpwFbDXrAcM0RXin1GeQYTpxlX+QY3p6X5Y6DvYDcrZCTbgCENCJUC
+         g6Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R4gRAjESW0PPPtoRtImGStuvtUEP9GLEDb/7GvcDXS4=;
-        b=c70Wj/ODeIzFdBok+fKBunMFoWDiN6ugM0IM9NMVSCdlcmIDhn9n4QcNTRPKKdrTqj
-         m/S6JtPJgxNYmTUC9EyzKZqDQGeiRNZtUZyUir597a3Qt1cMQ8JkIiZnt5QUAJu9ZGtL
-         pTr2nVDRN9FRsm1ga8aO2rCdllj1lFcWVnknSyTqvBEfyVE7Owwa6maedZN9+HhVgIPy
-         m3Gtx0TXF4fSNUz124QqpRdYpZ1yHhFEMe8xFr4SJUQkFj9f4mLf8mrklNP0csGzH5Md
-         o+tSOwKKKO/LcPvJGvb4z99vAj9Cl95jup2NEhvV8JciWIG5QVliS5SKnQO4VMawoZ4S
-         pIrA==
-X-Gm-Message-State: AO0yUKXMl9BU5LuTxs8aZRXxhBZJ60mh5bsFIaHvuslaLDyjTIER4Viy
-        +nmWtIVexedycXeptx9CvPJHUvVUhX14DBcU
-X-Google-Smtp-Source: AK7set/y4xMuUOcWUHG2DUWL3QAD3x7bmcwNO1XVZlh2oi52h7YKFa79rC+2Q33tlxlsOo448XGqYQ==
-X-Received: by 2002:a17:906:3e56:b0:877:7789:765a with SMTP id t22-20020a1709063e5600b008777789765amr697320eji.16.1675715781962;
-        Mon, 06 Feb 2023 12:36:21 -0800 (PST)
-Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id me17-20020a170906aed100b0083f91a32131sm5890237ejb.0.2023.02.06.12.36.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 12:36:21 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pP8Ds-000VWR-1m;
-        Mon, 06 Feb 2023 21:36:20 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Glen Choo <chooglen@google.com>,
-        Victoria Dye <vdye@github.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Matthew John Cheetham <mjcheetham@outlook.com>
-Subject: Re: [PATCH v8 1/3] t5563: add tests for basic and anoymous HTTP access
-Date:   Mon, 06 Feb 2023 21:32:53 +0100
-References: <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
- <pull.1352.v8.git.1675711789.gitgitgadget@gmail.com>
- <d362f7016d34c4803adf42a88012997c66e0bde8.1675711789.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <d362f7016d34c4803adf42a88012997c66e0bde8.1675711789.git.gitgitgadget@gmail.com>
-Message-ID: <230206.86fsbi5y63.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=F3iC03ScimUhaQ5QSgEgGRSSe/sXTx/+W9ebC2PVoRI=;
+        b=a1uIQ6LvUzg4QDTYpTNYj8EoFafbXFsTf7T/wPlr+v7sXckqbUgzfn0f7GeuBoV99y
+         jwdV2TYgVj8K6Xrm2FlPqVDw+ILV63aB8PK3WGiFlV1HnlfFb5ggovBJtgKZQ/u2RiPV
+         GovFfx3Bc5TZUH0Tlh1wMNue+vFDt8AHnueB5AipwPwRRAshdkMDD87CS1SdihZAKxCf
+         UYPaSghCbAj+MMdKYiA0U1rClODhL20cMXCX3m/qIWI3uj6eb7O4uobFjFIhjA1/pNDs
+         fHfqVcA/26mypnpVNh7PqWZA5MRQYHd0rM6mmfZR4pbD9jluHT5iw/r9qmmQaX2djIUR
+         7TOA==
+X-Gm-Message-State: AO0yUKUMId9AzEGh4UVTX7my94Ku+3ZCLsUEtH35fMQfwL4iguFFYRqc
+        3VDm/ljxOcqkVkNy+XZwHCdnaVcxmXU=
+X-Google-Smtp-Source: AK7set/mxz7hasAMvCaojRyFE+YiLKnpz5Uv4x+a6ekfEgHsuFMdxQNzSy88fph1N8E4PdWCEVM8Eg==
+X-Received: by 2002:a05:622a:ce:b0:3b6:8ece:cab9 with SMTP id p14-20020a05622a00ce00b003b68ececab9mr1490544qtw.2.1675715874123;
+        Mon, 06 Feb 2023 12:37:54 -0800 (PST)
+Received: from [192.168.1.205] (pool-74-105-67-34.nwrknj.fios.verizon.net. [74.105.67.34])
+        by smtp.gmail.com with ESMTPSA id g7-20020a05620a40c700b007208a81e11esm7482860qko.41.2023.02.06.12.37.53
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 06 Feb 2023 12:37:53 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
+Date:   Mon, 06 Feb 2023 15:37:53 -0500
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
+In-Reply-To: <230206.865yce7n1w.gmgdl@evledraar.gmail.com>
+References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
+ <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
+ <230206.865yce7n1w.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi =C3=86var,
 
-On Mon, Feb 06 2023, Matthew John Cheetham via GitGitGadget wrote:
+On 6 Feb 2023, at 11:39, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> From: Matthew John Cheetham <mjcheetham@outlook.com>
+> On Sun, Feb 05 2023, John Cai via GitGitGadget wrote:
 >
-> Add a test showing simple anoymous HTTP access to an unprotected
-> repository, that results in no credential helper invocations.
-> Also add a test demonstrating simple basic authentication with
-> simple credential helper support.
+>> From: John Cai <johncai86@gmail.com>
+>> [...]
+>> +
+>> +		if (!o->xdl_opts_command_line) {
+>> +			static struct attr_check *check;
+>> +			const char *one_diff_algo;
+>> +			const char *two_diff_algo;
+>> +
+>> +			check =3D attr_check_alloc();
+>> +			attr_check_append(check, git_attr("diff-algorithm"));
+>> +
+>> +			git_check_attr(the_repository->index, NULL, one->path, check);
+>> +			one_diff_algo =3D check->items[0].value;
+>> +			git_check_attr(the_repository->index, NULL, two->path, check);
+>> +			two_diff_algo =3D check->items[0].value;
+>> +
+>> +			if (!ATTR_UNSET(one_diff_algo) && !ATTR_UNSET(two_diff_algo) &&
+>> +				!strcmp(one_diff_algo, two_diff_algo))
+>> +				set_diff_algorithm(o, one_diff_algo);
+>> +
+>> +			attr_check_free(check);
 >
-> Leverage a no-parsed headers (NPH) CGI script so that we can directly
-> control the HTTP responses to simulate a multitude of good, bad and ugly
-> remote server implementations around auth.
+> This is a bit nitpicky, but I for one would find this much easier to
+> read with some shorter variables, here just with "a" rather than
+> "one_diff_algo", "b" instead of "two_diff_algo", and splitting
+> "the_repository->index" into "istate" (untested):
+> 	=
+
+> 	+		if (!o->xdl_opts_command_line) {
+> 	+			static struct attr_check *check;
+> 	+			const char *a;
+> 	+			const char *b;
+> 	+			struct index_state *istate =3D the_repository->index;
+> 	+
+> 	+			check =3D attr_check_alloc();
+> 	+			attr_check_append(check, git_attr("diff-algorithm"));
+> 	+
+> 	+			git_check_attr(istate, NULL, one->path, check);
+> 	+			a =3D check->items[0].value;
+> 	+			git_check_attr(istate, NULL, two->path, check);
+> 	+			b =3D check->items[0].value;
+> 	+
+> 	+			if (!ATTR_UNSET(a) && !ATTR_UNSET(b) && !strcmp(a, b))
+> 	+				set_diff_algorithm(o, a);
+> 	+
+> 	+			attr_check_free(check);
+> 	+		}
 >
-> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
-> ---
->  t/lib-httpd.sh                 |  1 +
->  t/lib-httpd/apache.conf        |  6 +++
->  t/lib-httpd/nph-custom-auth.sh | 42 +++++++++++++++++
->  t/t5563-simple-http-auth.sh    | 86 ++++++++++++++++++++++++++++++++++
->  4 files changed, 135 insertions(+)
->  create mode 100755 t/lib-httpd/nph-custom-auth.sh
->  create mode 100755 t/t5563-simple-http-auth.sh
+> That also nicely keeps the line length shorter.
+
+Thanks, I think this does look better.
+
 >
-> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-> index 608949ea80b..2c49569f675 100644
-> --- a/t/lib-httpd.sh
-> +++ b/t/lib-httpd.sh
-> @@ -137,6 +137,7 @@ prepare_httpd() {
->  	install_script error-smart-http.sh
->  	install_script error.sh
->  	install_script apply-one-time-perl.sh
-> +	install_script nph-custom-auth.sh
->  
->  	ln -s "$LIB_HTTPD_MODULE_PATH" "$HTTPD_ROOT_PATH/modules"
->  
-> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-> index 0294739a77a..76335cdb24d 100644
-> --- a/t/lib-httpd/apache.conf
-> +++ b/t/lib-httpd/apache.conf
-> @@ -135,6 +135,11 @@ Alias /auth/dumb/ www/auth/dumb/
->  	SetEnv GIT_HTTP_EXPORT_ALL
->  	SetEnv GIT_PROTOCOL
->  </LocationMatch>
-> +<LocationMatch /custom_auth/>
-> +	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
-> +	SetEnv GIT_HTTP_EXPORT_ALL
-> +	CGIPassAuth on
-> +</LocationMatch>
->  ScriptAlias /smart/incomplete_length/git-upload-pack incomplete-length-upload-pack-v2-http.sh/
->  ScriptAlias /smart/incomplete_body/git-upload-pack incomplete-body-upload-pack-v2-http.sh/
->  ScriptAlias /smart/no_report/git-receive-pack error-no-report.sh/
-> @@ -144,6 +149,7 @@ ScriptAlias /broken_smart/ broken-smart-http.sh/
->  ScriptAlias /error_smart/ error-smart-http.sh/
->  ScriptAlias /error/ error.sh/
->  ScriptAliasMatch /one_time_perl/(.*) apply-one-time-perl.sh/$1
-> +ScriptAliasMatch /custom_auth/(.*) nph-custom-auth.sh/$1
->  <Directory ${GIT_EXEC_PATH}>
->  	Options FollowSymlinks
->  </Directory>
-> diff --git a/t/lib-httpd/nph-custom-auth.sh b/t/lib-httpd/nph-custom-auth.sh
-> new file mode 100755
-> index 00000000000..8f851aebac4
-> --- /dev/null
-> +++ b/t/lib-httpd/nph-custom-auth.sh
-> @@ -0,0 +1,42 @@
-> +#!/bin/sh
-> +
-> +VALID_CREDS_FILE=custom-auth.valid
-> +CHALLENGE_FILE=custom-auth.challenge
-> +ANONYMOUS_FILE=custom-auth.anonymous
-> +
-> +#
-> +# If $ANONYMOUS_FILE exists in $HTTPD_ROOT_PATH, allow anonymous access.
-> +#
-> +# If $VALID_CREDS_FILE exists in $HTTPD_ROOT_PATH, consider each line as a valid
-> +# credential for the current request. Each line in the file is considered a
-> +# valid HTTP Authorization header value. For example:
-> +#
-> +# Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-> +#
-> +# If $CHALLENGE_FILE exists in $HTTPD_ROOT_PATH, output the contents as headers
-> +# in a 401 response if no valid authentication credentials were included in the
-> +# request. For example:
-> +#
-> +# WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
-> +# WWW-Authenticate: Basic realm="example.com"
-> +#
-> +
-> +if test -f "$ANONYMOUS_FILE" || (test -f "$VALID_CREDS_FILE" && \
-> +	grep -qi "^${HTTP_AUTHORIZATION:-nopenopnope}$" "$VALID_CREDS_FILE")
+>> @@ -333,6 +333,8 @@ struct diff_options {
+>>  	int prefix_length;
+>>  	const char *stat_sep;
+>>  	int xdl_opts;
+>> +	/* If xdl_opts has been set via the command line. */
+>> +	int xdl_opts_command_line;
+>>
+>>  	/* see Documentation/diff-options.txt */
+>>  	char **anchors;
+>> diff --git a/t/lib-diff-alternative.sh b/t/lib-diff-alternative.sh
+>> index 8d1e408bb58..630c98ea65a 100644
+>> --- a/t/lib-diff-alternative.sh
+>> +++ b/t/lib-diff-alternative.sh
+>> @@ -107,8 +107,27 @@ EOF
+>>
+>>  	STRATEGY=3D$1
+>>
+>> +	test_expect_success "$STRATEGY diff from attributes" '
+>> +		echo "file* diff-algorithm=3D$STRATEGY" >.gitattributes &&
+>> +		test_must_fail git diff --no-index file1 file2 > output &&
+>> +		test_cmp expect output
+>> +	'
+>> +
+>>  	test_expect_success "$STRATEGY diff" '
+>> -		test_must_fail git diff --no-index "--$STRATEGY" file1 file2 > outp=
+ut &&
+>> +		test_must_fail git diff --no-index "--diff-algorithm=3D$STRATEGY" f=
+ile1 file2 > output &&
+>
+> Nit: The usual style is ">output", not "> output".
 
-Rather than "test -f "$f" & grep ... "$f" I think you can just use only
-"grep", if the file doesn't exist it'll give you an error.
+noted!
 
-If you don't want to see that error just pipe it to /dev/null, in case
-that's what you were trying to avoid with the "check if it exists
-first".
+>
+>> +		test_cmp expect output
+>> +	'
+>> +
+>> +	test_expect_success "$STRATEGY diff command line precedence before a=
+ttributes" '
+>> +		echo "file* diff-algorithm=3Dmeyers" >.gitattributes &&
+>> +		test_must_fail git diff --no-index "--diff-algorithm=3D$STRATEGY" f=
+ile1 file2 > output &&
+>> +		test_cmp expect output
+>> +	'
+>> +
+>> +	test_expect_success "$STRATEGY diff attributes precedence before con=
+fig" '
+>> +		git config diff.algorithm default &&
+>> +		echo "file* diff-algorithm=3D$STRATEGY" >.gitattributes &&
+>> +		test_must_fail git diff --no-index "--diff-algorithm=3D$STRATEGY" f=
+ile1 file2 > output &&
+>>  		test_cmp expect output
+>>  	'
+>>
+>> @@ -166,5 +185,11 @@ EOF
+>>  		test_must_fail git diff --no-index "--$STRATEGY" uniq1 uniq2 > outp=
+ut &&
+>>  		test_cmp expect output
+>>  	'
+>> +
+>> +	test_expect_success "$STRATEGY diff from attributes" '
+>> +		echo "file* diff-algorithm=3D$STRATEGY" >.gitattributes &&
+>> +		test_must_fail git diff --no-index uniq1 uniq2 > output &&
+>> +		test_cmp expect output
+>> +	'
+>>  }
+>
+> For some non-nitpicking, I do worry about exposing this as a DoS vector=
+,
+> e.g. here's a diff between two distant points in git.git with the
+> various algorithms:
+>
+> 	$ hyperfine -r 1 -L a patience,minimal,histogram,myers 'git diff --dif=
+f-algorithm=3D{a} v2.0.0 v2.28.0'
+> 	Benchmark 1: git diff --diff-algorithm=3Dpatience v2.0.0 v2.28.0
+> 	  Time (abs =E2=89=A1):        42.121 s               [User: 41.879 s,=
+ System: 0.144 s]
+> 	=
 
-> +echo 'HTTP/1.1 401 Authorization Required'
-> +if test -f "$CHALLENGE_FILE"
-> +then
-> +	cat "$CHALLENGE_FILE"
+> 	Benchmark 2: git diff --diff-algorithm=3Dminimal v2.0.0 v2.28.0
+> 	  Time (abs =E2=89=A1):        35.634 s               [User: 35.473 s,=
+ System: 0.160 s]
+> 	=
 
-Maybe the same here, i.e. just:
+> 	Benchmark 3: git diff --diff-algorithm=3Dhistogram v2.0.0 v2.28.0
+> 	  Time (abs =E2=89=A1):        46.912 s               [User: 46.657 s,=
+ System: 0.228 s]
+> 	=
 
-	cat "$f" 2>/dev/null
+> 	Benchmark 4: git diff --diff-algorithm=3Dmyers v2.0.0 v2.28.0
+> 	  Time (abs =E2=89=A1):        33.233 s               [User: 33.072 s,=
+ System: 0.160 s]
+> 	=
 
-> +test_expect_success 'setup_credential_helper' '
-> +	mkdir -p "$TRASH_DIRECTORY/bin" &&
+> 	Summary
+> 	  'git diff --diff-algorithm=3Dmyers v2.0.0 v2.28.0' ran
+> 	    1.07 times faster than 'git diff --diff-algorithm=3Dminimal v2.0.0=
+ v2.28.0'
+> 	    1.27 times faster than 'git diff --diff-algorithm=3Dpatience v2.0.=
+0 v2.28.0'
+> 	    1.41 times faster than 'git diff --diff-algorithm=3Dhistogram v2.0=
+=2E0 v2.28.0'
 
-The "$TRASH_DIRECTORY" is already created for you, so don't use "-p",
-unless something went wrong here..
+Thanks for this analysis. To clarify, .gitconfig's diff.algorithm setting=
+ is
+already an attack vector right? I see how this would be adding another on=
+e.
 
-> +	PATH=$PATH:"$TRASH_DIRECTORY/bin" &&
-> +	export PATH &&
-> +
-> +	CREDENTIAL_HELPER="$TRASH_DIRECTORY/bin/git-credential-test-helper" &&
-> +	write_script "$CREDENTIAL_HELPER" <<-\EOF
-> +	cmd=$1
-> +	teefile=$cmd-query.cred
-> +	catfile=$cmd-reply.cred
-> +	sed -n -e "/^$/q" -e "p" >> $teefile
+That being said, here's a separate issue. I benchmarked the usage of
+=2Egitattributes as introduced in this patch series, and indeed it does l=
+ook like
+there is additional latency:
 
-Style: ">>$f", not ">> $f"
+$ echo "* diff-algorithm=3Dpatience >> .gitattributes
+$ hyperfine -r 5 'git-bin-wrapper diff --diff-algorithm=3Dpatience v2.0.0=
+ v2.28.0'                      =E2=9C=AD
+Benchmark 1: git-bin-wrapper diff --diff-algorithm=3Dpatience v2.0.0 v2.2=
+8.0
+  Time (mean =C2=B1 =CF=83):     889.4 ms =C2=B1 113.8 ms    [User: 715.7=
+ ms, System: 65.3 ms]
+  Range (min =E2=80=A6 max):   764.1 ms =E2=80=A6 1029.3 ms    5 runs
 
-> +	if test "$cmd" = "get"; then
+$ hyperfine -r 5 'git-bin-wrapper diff v2.0.0 v2.28.0'                   =
+                             =E2=9C=AD
+Benchmark 1: git-bin-wrapper diff v2.0.0 v2.28.0
+  Time (mean =C2=B1 =CF=83):      2.146 s =C2=B1  0.368 s    [User: 0.827=
+ s, System: 0.243 s]
+  Range (min =E2=80=A6 max):    1.883 s =E2=80=A6  2.795 s    5 runs
 
-Style: We usually use "\nthen", not "; then".
+and I imagine the latency scales with the size of .gitattributes. Althoug=
+h I'm
+not familiar with other parts of the codebase and how it deals with the l=
+atency
+introduced by reading attributes files.
+
+>
+> Now, all of those are very slow overall, but some much more than
+> others. I seem to recall that the non-default ones also had some
+> pathological cases.
+>
+> Another thing to think about is that we've so far considered the diff
+> algorithm to be purely about presentation, with some notable exceptions=
+
+> such as "patch-id".
+>
+> I've advocated for us getting to the point of having an in-repo
+> .gitconfig or .gitattributes before with a whitelist of settings like
+> diff.context for certain paths, or a diff.orderFile.
+>
+> But those seem easy to promise future behavior for, v.s. an entire diff=
+
+> algorithm (which we of course had before, but now we'd have it in
+> repository data).
+>
+> Maybe that's not a distinction worth worrying about, just putting that
+> out there.
+>
+> I think if others are concerned about the above something that would
+> neatly side-step those is to have it opt-in via the .git/config somehow=
+,
+> similar to e.g. how you can commit *.gpg content, put this in
+> .gitattributes:
+>
+> 	*.gpg diff=3Dgpg
+>
+> But not have it do anything until this is in the repo's .git/config (or=
+
+> similar):
+>
+> 	[diff "gpg"]
+>         	textconv =3D gpg --no-tty --decrypt
+>
+> For that you could still keep the exact .gitattributes format you have
+> here, i.e.:
+>
+> 	file* diff-algorithm=3D$STRATEGY
+>
+> But we to pick it up we'd need either:
+>
+> 	[diff-algorithm]
+>         	histogram =3D myers
+>
+> Or:
+>
+> 	[diff-algorithm "histogram"]
+>         	allow =3D true
+
+This would help address slowness from the diff algorithm itself. I'm not =
+opposed
+to adding this config if this attack vector is concerning to people.
+
+However, it wouldn't help address the additional latency of scanning
+=2Egitattributes to find the diff algorithm.
+
+Would a separate config to allow gitattributes be helpful here?
+
+[diff-algorithm]
+	attributes =3D true
+
+>
+> The former form being one that would allow you to map the .gitattribute=
+s
+> of the repo (but maybe that would be redundant to
+> .git/info/attributes)...
