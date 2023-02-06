@@ -2,135 +2,241 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECBB4C636D3
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 15:28:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1BA5C636D4
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 16:20:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230238AbjBFP2C (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 10:28:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58944 "EHLO
+        id S230518AbjBFQU5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 11:20:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbjBFP2A (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 10:28:00 -0500
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7B635250
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 07:27:59 -0800 (PST)
-Received: by mail-qt1-x82c.google.com with SMTP id m12so13167987qth.4
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 07:27:59 -0800 (PST)
+        with ESMTP id S231641AbjBFQUt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 11:20:49 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E6FC44BB
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 08:20:30 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id r2so10900683wrv.7
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 08:20:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XEA4Q+P2iSRgROlVZN64zSdKm8K82U/EmBgu7A4EmdU=;
-        b=Y1lVwU2xGO3MCJXITR/6GTdTpvpz3J+o0wtmj5xr5ktrTpkkSqZzhfDdP4BeiGoGmh
-         oXElz2BXt16Musn8dXMeBwCF9ZyUDCGdfdIALBYrm9/VhNcceNqYerP9u4WpTxUKgzNf
-         wYHDYTYVJheIJra0DBVbvMnO+6fqE4mwp5v/9w38M4plYNW8ast8juVEfNsHg/Hkr1CI
-         S5sGjRmPnT0j+M0mdLJadR2vytQ+9VowpgnBQ1XE9VjejQwvb8tDijtTbnu00A8Og8rm
-         9UfvJUrxM/Stcio98fdqP+QK6MW7SYiGlJOeFaUmT3d6ftsgS2OuxDq3j3Z4SWw+8bqO
-         h5sQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=r3wrU8Qyouh3D7ghXXfZssTG777hoFILE0d5k41Bekw=;
+        b=KYymMxUiQmdZwZgSBkfuoARZby6oSOd3ATbRDm5f3cYmY8sGeNRxlpYu1ISRHDpF8E
+         PH4HNbOyCn1OdmyFXoxH79XdfiAa67AkeNtGN8ew8y+lRPwYS8w1JIYkOb0hS0A989Mn
+         RKHC1qA93TH37ZHZtxg0hi8jrw9w/AOsj/zWG+cAKEdKL+jXBxZXmMC8GIgw0YefwOuC
+         gO8wLi+kQFo8EkuS8+TKxb5jSzkWY9SPIereiGirRq2ByHhd4XENRXIQKoa45IkMP9VH
+         KXME28vinWqiqRv9biX9Q23AzyO042ER3Swm2oZstm7l/YnMGunpqSyVcjtG+353fSUA
+         x+tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XEA4Q+P2iSRgROlVZN64zSdKm8K82U/EmBgu7A4EmdU=;
-        b=InUIezOHXcQ2LA9vzGqbK9u2HBXioCygAvVWkRdBVZodxZsc61Go2hPSDyi7GrK/sK
-         YGumaFVudEINy7LbgW3CQuGRD6Ij2osr4T1X7FLPMyDgxAKo1Lom4Gq2HgfXMCnSZAB3
-         j+7GmdyEgEm0vGGpw64RC8xTxAcihjeJK3l2/GpnIbeFq5G7fI5zZ19IWEGfmK4k5Nh7
-         o9H5tB8rg9F1NuTqKod07Gk+xAggdFMUgXcC17kFkHCH3Cb4nJfZNHOOGeS5DLPCj4ZZ
-         UdDTxeMvqFesD7/U/B1mwghMX9RdjW3awK1/FQyXbyof9QMw3X4s7TMF5Lk/yWWsGFzb
-         hZ4g==
-X-Gm-Message-State: AO0yUKWiOZGyqzVQ90fCI6zQmjj4bTFt9z1mBvzz+pbkR7lhh62MpXps
-        SlVSohde9wBhxMbwZNYX1VwT
-X-Google-Smtp-Source: AK7set+Eih19vqreMU0AP6Y2NpFxEYadsiMPtsoCAMfa3ujt5Hf7p6luiUjjUVz9m0Gu1TUBKHeGlQ==
-X-Received: by 2002:ac8:5987:0:b0:3b6:9418:ad6f with SMTP id e7-20020ac85987000000b003b69418ad6fmr22156078qte.67.1675697278885;
-        Mon, 06 Feb 2023 07:27:58 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:e86a:4a12:4f24:ca25? ([2600:1700:e72:80a0:e86a:4a12:4f24:ca25])
-        by smtp.gmail.com with ESMTPSA id o6-20020ac85546000000b003b2ea9b76d0sm7378731qtr.34.2023.02.06.07.27.57
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r3wrU8Qyouh3D7ghXXfZssTG777hoFILE0d5k41Bekw=;
+        b=sJSYDbHKmaktLVbTJFyPp/PB4te0ID/gx9A6UZUAZgFPxWsViysdFoRQZJo5mW1EP6
+         tRNEqzK8HiQJ6niu0uPlWt09w3gdbIHbjOnWAunhOwWMwkitPzWXSw3eaWSrYP4pwgPn
+         z5G+lnI2/tDVgcEkKx4wJAtMcVYc+icr97dQ/tkwpD6Ph0gEarzoaSbH7FVWTuLNLXBM
+         DQ9cRX2YqPJ9C6YOkUoNtWiQvtWyaUUI5K4PLuMA4eHMZvrrEaHgnwF03hRr23V6Uw38
+         shbpzYtrXg0bkbbPM5kE07tNE9BPfsnhEzGX7xcQHaXTdZ2Q8JQ/YvCq6zcQ4KP88h9u
+         SiOA==
+X-Gm-Message-State: AO0yUKWUBqAWqfXKfZzP0IjZfb4gjVgQpevDb2YqoVwtxhwkdn4FeyKC
+        +dykmJG3SViegCWhP3oblgVZQu2jTo0=
+X-Google-Smtp-Source: AK7set8cPzJOEUz9X7jGs33xqWdKdvEj6m5UmsV46fwVPDb3O7hgYTKC1Z2ZrB1dKzvS8ISYN1jV1w==
+X-Received: by 2002:a5d:4bce:0:b0:2c3:24f3:8b47 with SMTP id l14-20020a5d4bce000000b002c324f38b47mr18841906wrt.31.1675700429020;
+        Mon, 06 Feb 2023 08:20:29 -0800 (PST)
+Received: from [192.168.1.212] ([90.248.183.175])
+        by smtp.gmail.com with ESMTPSA id l8-20020a05600c4f0800b003dec22de1b1sm12262058wmq.10.2023.02.06.08.20.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Feb 2023 07:27:58 -0800 (PST)
-Message-ID: <b1a3e684-26f9-0053-9446-751d73e83961@github.com>
-Date:   Mon, 6 Feb 2023 10:27:53 -0500
+        Mon, 06 Feb 2023 08:20:28 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <19a1c71c-d913-8118-a228-da72b5771421@dunelm.org.uk>
+Date:   Mon, 6 Feb 2023 16:20:28 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] cache-tree: fix strbuf growth in prime_cache_tree_rec()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye <vdye@github.com>
-References: <ff3ac119-9b00-746f-470c-8db18c9c61a1@web.de>
- <230205.86r0v37qdb.gmgdl@evledraar.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] diff: consolidate diff algorithm option parsing
 Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <230205.86r0v37qdb.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     John Cai <johncai86@gmail.com>, John Cai <jcai@gitlab.com>
+References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
+ <f56bd38ac3f80fb3a7e8c92cadaa57d2b0754b9f.1675568781.git.gitgitgadget@gmail.com>
+In-Reply-To: <f56bd38ac3f80fb3a7e8c92cadaa57d2b0754b9f.1675568781.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/5/2023 4:12 PM, Ævar Arnfjörð Bjarmason wrote:
+Hi John
+
+On 05/02/2023 03:46, John Cai via GitGitGadget wrote:
+> From: John Cai <jcai@gitlab.com>
 > 
-> On Sat, Feb 04 2023, René Scharfe wrote:
+> The diff option parsing for --minimal, --patience, --histgoram can all
+> be consolidated into one function. This is a preparatory step for the
+> subsequent commit which teaches diff to keep track of whether or not a
+> diff algorithm has been set via the command line.
 > 
->> Use size_t to store the original length of the strbuf tree_len, as
->> that's the correct type.
->>
->> Don't double the allocated size of the strbuf when adding a subdirectory
->> name.  Only extend it to fit that name and a slash.
->>
->> Signed-off-by: René Scharfe <l.s.r@web.de>
->> ---
->>  cache-tree.c | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/cache-tree.c b/cache-tree.c
->> index 9af457f47c..35f7617164 100644
->> --- a/cache-tree.c
->> +++ b/cache-tree.c
->> @@ -760,7 +760,7 @@ static void prime_cache_tree_rec(struct repository *r,
->>  	struct tree_desc desc;
->>  	struct name_entry entry;
->>  	int cnt;
->> -	int base_path_len = tree_path->len;
->> +	size_t base_path_len = tree_path->len;
->>
->>  	oidcpy(&it->oid, &tree->object.oid);
->>
->> @@ -785,7 +785,7 @@ static void prime_cache_tree_rec(struct repository *r,
->>  			 */
->>  			if (r->index->sparse_index) {
->>  				strbuf_setlen(tree_path, base_path_len);
->> -				strbuf_grow(tree_path, base_path_len + entry.pathlen + 1);
->> +				strbuf_grow(tree_path, entry.pathlen + 1);
->>  				strbuf_add(tree_path, entry.path, entry.pathlen);
->>  				strbuf_addch(tree_path, '/');
->>  			}
+> While we're at it, the logic that sets the diff algorithm in
+> diff_opt_diff_algorithm() can be refactored into a helper that will
+> allow multiple callsites to set the diff algorithm.
+
+You say "while  we're at it" but isn't it a wholly necessary change for 
+what you want to do?
+
+This patch basically looks good, I've left a couple of comments below, 
+thanks for separating it out as a preparatory step
+
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>   diff.c | 87 ++++++++++++++++++++++++++++++++++++----------------------
+>   1 file changed, 54 insertions(+), 33 deletions(-)
 > 
-> The size_t conversion is trivially correct.
+> diff --git a/diff.c b/diff.c
+> index 329eebf16a0..a8a31c81fe7 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3437,6 +3437,22 @@ static int diff_filepair_is_phoney(struct diff_filespec *one,
+>   	return !DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two);
+>   }
+>   
+> +static int set_diff_algorithm(struct diff_options *opts,
+> +			      const char *alg)
+> +{
+> +	long value = parse_algorithm_value(alg);
+> +
+> +	if (value < 0)
+> +		return 1;
+> +
+> +	/* clear out previous settings */
+> +	DIFF_XDL_CLR(opts, NEED_MINIMAL);
+> +	opts->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
+> +	opts->xdl_opts |= value;
+> +
+> +	return 0;
+> +}
+> +
+>   static void builtin_diff(const char *name_a,
+>   			 const char *name_b,
+>   			 struct diff_filespec *one,
+> @@ -5107,17 +5123,40 @@ static int diff_opt_diff_algorithm(const struct option *opt,
+>   				   const char *arg, int unset)
+>   {
+>   	struct diff_options *options = opt->value;
+> -	long value = parse_algorithm_value(arg);
+>   
+>   	BUG_ON_OPT_NEG(unset);
+> -	if (value < 0)
+> +
+> +	if (set_diff_algorithm(options, arg))
+>   		return error(_("option diff-algorithm accepts \"myers\", "
+>   			       "\"minimal\", \"patience\" and \"histogram\""));
+>   
+> -	/* clear out previous settings */
+> -	DIFF_XDL_CLR(options, NEED_MINIMAL);
+> -	options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
+> -	options->xdl_opts |= value;
+> +	return 0;
+> +}
+> +
+> +static int diff_opt_diff_algorithm_no_arg(const struct option *opt,
+> +				   const char *arg, int unset)
+> +{
+> +	struct diff_options *options = opt->value;
+> +
+> +	BUG_ON_OPT_NEG(unset);
+> +	BUG_ON_OPT_ARG(arg);
+> +
+> +	if (!strcmp(opt->long_name, "patience")) {
+> +		int i;
 
-I agree, and thanks for finding and fixing this issue.
+This is copied from the existing code but as `options->anchors_nr` is a 
+size_t it is probably worth converting `i` to a size_t here.
 
-Upon reading strbuf_grow(), I would expect it to work the same
-as ALLOC_GROW(), but its documentation clearly states a very
-different result.
+> +		/*
+> +		 * Both --patience and --anchored use PATIENCE_DIFF
+> +		 * internally, so remove any anchors previously
+> +		 * specified.
+> +		 */
+> +		for (i = 0; i < options->anchors_nr; i++)
+> +			free(options->anchors[i]);
+> +		options->anchors_nr = 0;
+> +	}
+> +
+> +	if (set_diff_algorithm(options, opt->long_name))
+> +		return error(_("available diff algorithms include \"myers\", "
+> +			       "\"minimal\", \"patience\" and \"histogram\""));
 
-> One wonders if (even for this index-related code) we really need such
-> careful management of growth, and could instead do with:
-> 
-> 	strbuf_setlen(tree_path, base_path_len);
-> 	strbuf_add(tree_path, entry.path, entry.pathlen);
-> 	strbuf_addch(tree_path, '/');
+I think this should be a BUG() as it is a programming error if we reach 
+this point.
 
-This would be my preferred way to go here.
+Best Wishes
 
-> Or even just:
-> 
-> 	strbuf_addf(tree_path, "%*.s/", (int)entry.pathlen, entry.path);
+Phillip
 
-Please do not add "addf" functions that can be run in tight loops.
-It's faster to do strbuf_add() followed by strbuf_addch().
-
-Thanks,
--Stolee
+> +
+>   	return 0;
+>   }
+>   
+> @@ -5242,26 +5281,6 @@ static enum parse_opt_result diff_opt_output(struct parse_opt_ctx_t *ctx,
+>   	return 0;
+>   }
+>   
+> -static int diff_opt_patience(const struct option *opt,
+> -			     const char *arg, int unset)
+> -{
+> -	struct diff_options *options = opt->value;
+> -	int i;
+> -
+> -	BUG_ON_OPT_NEG(unset);
+> -	BUG_ON_OPT_ARG(arg);
+> -	options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
+> -	/*
+> -	 * Both --patience and --anchored use PATIENCE_DIFF
+> -	 * internally, so remove any anchors previously
+> -	 * specified.
+> -	 */
+> -	for (i = 0; i < options->anchors_nr; i++)
+> -		free(options->anchors[i]);
+> -	options->anchors_nr = 0;
+> -	return 0;
+> -}
+> -
+>   static int diff_opt_ignore_regex(const struct option *opt,
+>   				 const char *arg, int unset)
+>   {
+> @@ -5562,9 +5581,10 @@ struct option *add_diff_options(const struct option *opts,
+>   			    N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
+>   
+>   		OPT_GROUP(N_("Diff algorithm options")),
+> -		OPT_BIT(0, "minimal", &options->xdl_opts,
+> -			N_("produce the smallest possible diff"),
+> -			XDF_NEED_MINIMAL),
+> +		OPT_CALLBACK_F(0, "minimal", options, NULL,
+> +			       N_("produce the smallest possible diff"),
+> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+> +			       diff_opt_diff_algorithm_no_arg),
+>   		OPT_BIT_F('w', "ignore-all-space", &options->xdl_opts,
+>   			  N_("ignore whitespace when comparing lines"),
+>   			  XDF_IGNORE_WHITESPACE, PARSE_OPT_NONEG),
+> @@ -5589,10 +5609,11 @@ struct option *add_diff_options(const struct option *opts,
+>   		OPT_CALLBACK_F(0, "patience", options, NULL,
+>   			       N_("generate diff using the \"patience diff\" algorithm"),
+>   			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+> -			       diff_opt_patience),
+> -		OPT_BITOP(0, "histogram", &options->xdl_opts,
+> -			  N_("generate diff using the \"histogram diff\" algorithm"),
+> -			  XDF_HISTOGRAM_DIFF, XDF_DIFF_ALGORITHM_MASK),
+> +			       diff_opt_diff_algorithm_no_arg),
+> +		OPT_CALLBACK_F(0, "histogram", options, NULL,
+> +			       N_("generate diff using the \"histogram diff\" algorithm"),
+> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+> +			       diff_opt_diff_algorithm_no_arg),
+>   		OPT_CALLBACK_F(0, "diff-algorithm", options, N_("<algorithm>"),
+>   			       N_("choose a diff algorithm"),
+>   			       PARSE_OPT_NONEG, diff_opt_diff_algorithm),
