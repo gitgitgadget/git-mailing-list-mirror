@@ -2,95 +2,221 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AC08C636D3
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 19:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F089EC636D3
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 19:08:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229647AbjBFTFC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 14:05:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37778 "EHLO
+        id S229765AbjBFTIs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 14:08:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjBFTFA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 14:05:00 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A064E22A2C
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 11:04:59 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id bg10-20020a17090b0d8a00b00230c7f312d4so2977093pjb.3
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 11:04:59 -0800 (PST)
+        with ESMTP id S229479AbjBFTIr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 14:08:47 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C1D2B091
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 11:08:45 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id bg5-20020a05600c3c8500b003e00c739ce4so1003277wmb.5
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 11:08:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3U7YUSiLezbsPh7dGqIvF/ohbx6E5EMS6G+zb2LpYq4=;
-        b=qxWVsNDyZE1LmXrXGqtp8ekzHDfSzw2vdhvwtCV1vQvK1GnymndS4PlHI1AkOpDHzM
-         u0+9a8BHVb/bbVuwTkzkezor8zU0BbVmdAMnhgEN1Gdd3o3CY3whu8ney0YisEG7jZHy
-         sCu0jFcjKk8xg0OoY3VZChx4uSis+XSinLHWKKNl6SM8wtyaVNk+bQtEoTZ5pz8eiEo1
-         zXk9a3SJcsnLRA5uDCZgx9CYpRqPrNGAI+3+ZxaB+u771MoaOV4/rV6CnDkZ6ib0FOyF
-         WqkLsmp3Pa96gZWJxsaiXE4047Mfyractm2uH2hqicOMD/JfDZSMehAkZUtVY924xugv
-         msyg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c5Wgd/gNzVP7IheqCyPKOEERfO9dhRheak+GTyyHRCI=;
+        b=BzGFfE6oO8jHFK1kGbYsfY+jw/DLdcCy526ivzjCCMTwXLDnAWMIGNrroDO34AV+v+
+         YS471pkddbpESLI/bhXK5ZEtTsYLFtxBEIZnXmIWWLAFyu0/KblmetrUJdVD3nWZEsPx
+         sSIrGG936Ox6/Y7qiNxnprV49E5tfU6jqMRkxvw74sclGCMAd52HTx9ubiHF3bC5KU2O
+         2FPw56BFzAnLOn67bLE5YbXSRsIwedjGmmgBS+rZNOJnilTYuPnseSVui/AbqHBz3exA
+         CWcW01EIvmsylTaZZK/wzfiSQDQbb8F5vF5IzYt3nA2obiRgKogrUmKSXBhmPpqCv7Fd
+         lREw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3U7YUSiLezbsPh7dGqIvF/ohbx6E5EMS6G+zb2LpYq4=;
-        b=7m1pjjdG9TPTwMcY6K57ABqXJBFXmWxVzCuuEYHjUIdO5te9kohpjzVuBYLww7ID9R
-         P8c75nQaMoHT4kNEX3NuFx3GArC0941RykMv7CqWUsDbG2leivoDA6um2zsCqmKNS2mE
-         Bg8qRbjJgd1zBwtOMXLp8B7AtobEBxEz+ogl7BRagFbUbI40Moo6JTxgwMrr9DGBBF48
-         D+UautQtT84VmFXSs+IP80OyvAeaailmBKbQadewEtrVpdMN8WsBwREVj++17gMbWBDC
-         xmlEZN9xFkiFso6fZ4nutVvvTrou7V953r+2Z5jn0f+SHReJoWmNEOl1IBYLs0kHVQZl
-         K7VQ==
-X-Gm-Message-State: AO0yUKUJj9Jr1N4lLVcO8TO9Q/SstvrrEayHqEkMrYTkr7JEXXX3QWdj
-        OwLej2gMC8xC9+5I1BK1Sa8=
-X-Google-Smtp-Source: AK7set/VG7NbLo0XoB+s1wpkgTw4UxnMiKf9ReUQh+ZfNqmAN3NsKL1OeCWBjhGRrnesER7yTHFDlQ==
-X-Received: by 2002:a17:90b:1a91:b0:230:7dcf:f094 with SMTP id ng17-20020a17090b1a9100b002307dcff094mr7921987pjb.11.1675710299018;
-        Mon, 06 Feb 2023 11:04:59 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id r19-20020a17090b051300b0022bb3ee9b68sm6755114pjz.13.2023.02.06.11.04.58
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=c5Wgd/gNzVP7IheqCyPKOEERfO9dhRheak+GTyyHRCI=;
+        b=J5OdMrizTM041svH3ifIje7ZXQtmThRSboHy8nOF5i83b0IwiJPJrdSXij3WiPCSSh
+         GOYxlZBPhVQEHtID78SKfAHE4qI6mlPJnEGrQpPh/qkHEnBhzRm9JlGlLpiqj2QL46Rt
+         LT9p8gh7JEHOZQYv1I02IQ7I8NBZMqDZEZHBeB5FsEVkvpcDJVKhkHsw2W8TfWCJMT+s
+         DD16p7pdVnUEuVNbpB81YUFP4WKgo04Xm/0sOg0f76O+jALAT0YaeNRwNpzzuZOwQ6uq
+         THuOjQASDz0GFkSZvQ8u2Lgg57vdewtkT9VOuqcy3dRxC+4YsZCzrUNKJ7TUiwyZXjO2
+         NnmA==
+X-Gm-Message-State: AO0yUKXcoCAJtZW1R7UgviJYc6rr/xcnkNaoJ18FMoTVoQDOnXKs+KGo
+        lN4jNtBPnXgnCpA+fwT11DPX3dpD/S9xSVnW
+X-Google-Smtp-Source: AK7set8eXzZd5YPAKWTASXzMs9KsE6eZEpRW+dyK9ebZUwXX2w0wH57f6jqO7W04x2jePZ/HNCoK1g==
+X-Received: by 2002:a05:600c:3ac4:b0:3dc:18de:b20d with SMTP id d4-20020a05600c3ac400b003dc18deb20dmr698217wms.33.1675710523433;
+        Mon, 06 Feb 2023 11:08:43 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id p2-20020a05600c358200b003dc4ecfc4d7sm12538595wmq.29.2023.02.06.11.08.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 11:04:58 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] bisect: fix "reset" when branch is checked out elsewhere
-References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
-        <xmqqo7qqovp1.fsf@gitster.g>
-        <0d04f8ed-6933-9354-1f64-24d827424c71@gmail.com>
-        <xmqqzga5b4yz.fsf@gitster.g>
-        <a66218a3-919d-eca2-1859-41ac02aa38e7@gmail.com>
-Date:   Mon, 06 Feb 2023 11:04:58 -0800
-In-Reply-To: <a66218a3-919d-eca2-1859-41ac02aa38e7@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Sat, 4 Feb 2023 23:46:47 +0100")
-Message-ID: <xmqqwn4u7gyt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Mon, 06 Feb 2023 11:08:42 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 0/8] sequencer API & users: fix widespread leaks
+Date:   Mon,  6 Feb 2023 20:08:05 +0100
+Message-Id: <cover-v4-0.8-00000000000-20230206T190346Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.39.1.1425.ge02fe682bd8
+In-Reply-To: <patch-v3-7.8-ee8262ab22a-20230118T160600Z-avarab@gmail.com>
+References: <patch-v3-7.8-ee8262ab22a-20230118T160600Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rubén Justo <rjusto@gmail.com> writes:
+This series fixes various widespread leaks in the sequencer and its
+users (rebase, revert, cherry-pick). As a result 18 tests become
+leak-free in their entirety.
 
-> The devil is in the details: "git branch -m", "git branch -d".
->
-> We're not ready to have BISECT_START pointing to a deleted branch, or
-> renaming a branch pointed by it.
+See the v1 for a longer general summary:
+https://lore.kernel.org/git/cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com/
 
-It indicates that the callers of find_shared_symref() to see if "is
-this branch being actively used by checked out, bisected, or
-rebased, and I shouldn't touch it?" need to know more than what
-find_shared_symref() interface gives them---namely, "can I repoint
-it to a different commit?" and "can I make it disappear?" are
-different conditions they need to be able to learn.
+Changes since v3:
 
-Until that distinction becomes expressible, I am actually OK with
-forbidding both operations, i.e. while a branch is being bisected
-elsewhere, we should be able to update its tip to point at a
-different commit, but it is OK to forbid that because we cannot
-allow the branch be renamed away or removed.
+* Rebased for newer "master", there were some conflicts due to
+  adjacent changes.
+* Addressed Phillip's commit message comments (hopefully).
 
-Thanks.
+Branch & CI for this at:
+https://github.com/avar/git/tree/avar/leak-fixes-sequencer-rebase-4
+
+Ævar Arnfjörð Bjarmason (8):
+  rebase: use "cleanup" pattern in do_interactive_rebase()
+  sequencer.c: split up sequencer_remove_state()
+  sequencer API users: fix get_replay_opts() leaks
+  builtin/revert.c: move free-ing of "revs" to replay_opts_release()
+  builtin/rebase.c: fix "options.onto_name" leak
+  sequencer.c: always free() the "msgbuf" in do_pick_commit()
+  builtin/rebase.c: free() "options.strategy_opts"
+  commit.c: free() revs.commit in get_fork_point()
+
+ builtin/rebase.c                       | 22 ++++++++------
+ builtin/revert.c                       |  8 ++---
+ commit.c                               |  1 +
+ sequencer.c                            | 42 ++++++++++++++++----------
+ sequencer.h                            |  1 +
+ t/t3405-rebase-malformed.sh            |  1 +
+ t/t3412-rebase-root.sh                 |  1 +
+ t/t3416-rebase-onto-threedots.sh       |  1 +
+ t/t3419-rebase-patch-id.sh             |  1 +
+ t/t3423-rebase-reword.sh               |  1 +
+ t/t3425-rebase-topology-merges.sh      |  2 ++
+ t/t3431-rebase-fork-point.sh           |  1 +
+ t/t3432-rebase-fast-forward.sh         |  1 +
+ t/t3437-rebase-fixup-options.sh        |  1 +
+ t/t3438-rebase-broken-files.sh         |  2 ++
+ t/t3501-revert-cherry-pick.sh          |  1 +
+ t/t3502-cherry-pick-merge.sh           |  1 +
+ t/t3503-cherry-pick-root.sh            |  1 +
+ t/t3506-cherry-pick-ff.sh              |  1 +
+ t/t3511-cherry-pick-x.sh               |  1 +
+ t/t7402-submodule-rebase.sh            |  1 +
+ t/t9106-git-svn-commit-diff-clobber.sh |  1 -
+ t/t9164-git-svn-dcommit-concurrent.sh  |  1 -
+ 23 files changed, 61 insertions(+), 33 deletions(-)
+
+Range-diff against v3:
+1:  b223429df33 ! 1:  029fc5f4b8c rebase: use "cleanup" pattern in do_interactive_rebase()
+    @@ Commit message
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## builtin/rebase.c ##
+    -@@ builtin/rebase.c: static void split_exec_commands(const char *cmd, struct string_list *commands)
+    +@@ builtin/rebase.c: static int init_basic_state(struct replay_opts *opts, const char *head_name,
+      
+      static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+      {
+    @@ builtin/rebase.c: static int do_interactive_rebase(struct rebase_options *opts,
+      	}
+      
+     +cleanup:
+    - 	string_list_clear(&commands, 0);
+      	free(revisions);
+      	free(shortrevisions);
+    + 	todo_list_release(&todo_list);
+2:  00c7f04363f = 2:  b0c9da95ca1 sequencer.c: split up sequencer_remove_state()
+3:  e4a96898a68 ! 3:  dbac0501424 rebase & sequencer API: fix get_replay_opts() leak in "rebase"
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    rebase & sequencer API: fix get_replay_opts() leak in "rebase"
+    +    sequencer API users: fix get_replay_opts() leaks
+     
+    -    Make the recently added replay_opts_release() function non-static and
+    -    use it for freeing the "struct replay_opts" constructed by the
+    -    get_replay_opts() function in "builtin/rebase.c". See [1] for the
+    -    initial addition of get_replay_opts().
+    +    Make the replay_opts_release() function added in the preceding commit
+    +    non-static, and use it for freeing the "struct replay_opts"
+    +    constructed for "rebase" and "revert".
+     
+         To safely call our new replay_opts_release() we'll need to stop
+         calling it in sequencer_remove_state(), and instead call it where we
+    @@ Commit message
+         previously called sequencer_remove_state() would be a hassle.
+     
+         Using a FREE_AND_NULL() pattern would also work, as it would be safe
+    -    replay_opts_release() repeatedly, but let's fix this properly instead,
+    -    by having the owner of the data free() it.
+    -
+    -    See [2] for the initial implementation of "sequencer_remove_state()",
+    -    which assumed that it should be removing the full (including on-disk)
+    -    rebase state as a one-off.
+    -
+    -    1. 73fdc535d26 (rebase -i: use struct rebase_options to parse args,
+    -       2019-04-17)
+    -    2. 26ae337be11 (revert: Introduce --reset to remove sequencer state,
+    -       2011-08-04)
+    +    to call replay_opts_release() repeatedly. But let's fix this properly
+    +    instead, by having the owner of the data free() it.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    @@ builtin/rebase.c: static int do_interactive_rebase(struct rebase_options *opts,
+      
+      cleanup:
+     +	replay_opts_release(&replay);
+    - 	string_list_clear(&commands, 0);
+      	free(revisions);
+      	free(shortrevisions);
+    + 	todo_list_release(&todo_list);
+     @@ builtin/rebase.c: static int run_sequencer_rebase(struct rebase_options *opts)
+      		struct replay_opts replay_opts = get_replay_opts(opts);
+      
+4:  9f72cc6e46b = 4:  6b29d7d00c2 builtin/revert.c: move free-ing of "revs" to replay_opts_release()
+5:  3d5c3152f69 ! 5:  f9c4d17fe70 builtin/rebase.c: fix "options.onto_name" leak
+    @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
+      	strbuf_release(&options.git_format_patch_opt);
+      	free(squash_onto_name);
+     +	free(keep_base_onto_name);
+    - 	string_list_clear(&exec, 0);
+      	string_list_clear(&strategy_options, 0);
+      	return !!ret;
+    + }
+     
+      ## t/t3416-rebase-onto-threedots.sh ##
+     @@ t/t3416-rebase-onto-threedots.sh: test_description='git rebase --onto A...B'
+6:  c07dc006c6d = 6:  5c2870ed2e6 sequencer.c: always free() the "msgbuf" in do_pick_commit()
+7:  ee8262ab22a ! 7:  07ab875c3e2 builtin/rebase.c: free() "options.strategy_opts"
+    @@ Commit message
+      ## builtin/rebase.c ##
+     @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix)
+      	free(options.gpg_sign_opt);
+    - 	free(options.cmd);
+    + 	string_list_clear(&options.exec, 0);
+      	free(options.strategy);
+     +	free(options.strategy_opts);
+      	strbuf_release(&options.git_format_patch_opt);
+8:  84343ea6bf6 = 8:  6ab2edcc135 commit.c: free() revs.commit in get_fork_point()
+-- 
+2.39.1.1425.ge02fe682bd8
+
