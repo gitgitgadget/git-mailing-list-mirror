@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B710DC05027
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 19:08:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FAFEC636D3
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 19:09:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230103AbjBFTIx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 14:08:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39168 "EHLO
+        id S230027AbjBFTJA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 14:09:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjBFTIv (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229873AbjBFTIv (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 6 Feb 2023 14:08:51 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E77C12B2A8
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 11:08:49 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id z13so1934618wmp.2
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 11:08:49 -0800 (PST)
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1C42A9AB
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 11:08:50 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id o36so9416470wms.1
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 11:08:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=96st8uUJULNn7PidqZM3pJY+/Zs5sHOjT2xbargMSv4=;
-        b=ORO80ollm0P9PY1CAUhJXMAhfGYNlKyHYZHS767P0DJPnxNDy4YSZuNqdPnqSlvmTS
-         b+zhMTKc+nVc2AcHsHmajpz3IqDNF6PvXNE/kaoN3IxwPzfwDKdPlH7TAtYptfDZenyk
-         LAefnVB0v+VLvsmAUSfcIqLgiGFe3X68ID2oXjcH37eTq4aQ9K4edXegLgMoxYF73kLq
-         D08IEMaU3PEgKG7Vrq7QjM+1mOrGSnPT6I66CmdbNmfWLij3hWExpRfm0Rl1K208pH98
-         juKIAww+TIGGFNZne+m4Cabq+uQkr/ew3+bb88X+TZAaew/D3jvG+caACQFFA63N+0M3
-         zeiQ==
+        bh=ClUqrbfN1lOqJ3dDeEBpj0/8tmeSGIP4zG14gW9ffek=;
+        b=SnooZAKNs2RAKHL6c0o0cdC38LVWpWSA3EVUwaaNABIAmMmb06rKLJo1vxQy6VJQAW
+         PqGzE+5WJDj9qmUa29VNpRDhRKGeDZ5ACXWaFynogxAIDPaw4jvBuAo6rb3HvzhgiNCG
+         46GZ8mWB8vowA4QtZ7a9OllxdsG5zv2v2bwNorRveMY8gaEyKBTDOuXJ0bMy7lG1DU7T
+         w8r2+Ktn444dM4+0kJO+658h0okv6rglQbPmZAmm9R9VbObH3EBODPbbT96Cu/1TAwzw
+         IQQXarQPWx4nls0xQaeny1h9o11ApPhcFUjGABqxOHpcfwY8rNTyyYhH1+0nFwykU/ZQ
+         kkzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=96st8uUJULNn7PidqZM3pJY+/Zs5sHOjT2xbargMSv4=;
-        b=hTudPg00OQUSmzGfbr8L44eB9XsyNgcJJo97J4XbUWzUh7n9dG6zYdieoT4zhSA5UO
-         4psTHMjuy8bh6rB2gVUmzPdbtOTDCBireyFIoBLAlavdeuOwcHVFgkBSI85Ns1xYPu/6
-         fLgZ7DSI+09MH55cumMRiwSB6tz8DmCqn6laB4BhCHRw5+l67kZSGh5B1bDSLkU991Lk
-         mEPqhei5LG1KLYm3UlqBdTYPxskebjlpH7Ox/p4NE7aoHbPrzS94DTWW44z+cglN0OQY
-         0TuC8m1DmEO0HT0k7fXJ6Paj/mnmXvgwqreGs6PUC7bOg6gPPpKcCPicKzLf0WqVNw3c
-         bdAQ==
-X-Gm-Message-State: AO0yUKX0bi/sI+jF4hd+BIFCGbOeiEtUGUGRmpRWDJPlYKSz7Nm5epRo
-        LCdSbwgfzZr8x2qUbiwXcirVkXi0afT3lgBS
-X-Google-Smtp-Source: AK7set/plAJerPPGdoJ45sMtioweGkd3ETiiI30j98faCDZs/7hdBuYWUtwoLrH632BtJgW6hXt2Sw==
-X-Received: by 2002:a05:600c:a294:b0:3e0:10d:f1c with SMTP id hu20-20020a05600ca29400b003e0010d0f1cmr690338wmb.37.1675710528019;
-        Mon, 06 Feb 2023 11:08:48 -0800 (PST)
+        bh=ClUqrbfN1lOqJ3dDeEBpj0/8tmeSGIP4zG14gW9ffek=;
+        b=lrZIGDC/XjDI6tkm/jIdgtR4dN4ePt/zb48QbtCKUWEAbrkXBCUi9VwIOdvK8vpacI
+         0wvqv9Svc+Hf8HUu38GwPnZDevVdmYQnpj9GEWq+74cfO21x7YwUByFOX7qCaWlXDztE
+         odsFz4TiGSFOLVD+VuiGCkUMyqWi2SepJwyFJFLA8gijcT80XVDjB3kWH1fIgOhFrL1z
+         4F5xGtTBB3hEadCQUgSui4qP4jATNESVt21tq9SQ7whRHIomMiMc1dFWi8D//AnPUAYK
+         +Wtby/SbXSWYU47krjPRaOF7m0nakSsE/eVvcUlUVFRhCKCZsPa9sAHEymRIVfzjlwkm
+         0Xjg==
+X-Gm-Message-State: AO0yUKVaV6AvfJyINj/AyYdDKRwRVBjC3aksGUuB+5ecU6CIhkcUmSeA
+        zYrCPdkvdDAIyChlCrxCjgYQQgNR4hBjj11P
+X-Google-Smtp-Source: AK7set/zZEOpMUmAmWS1yY7Ea/BJAa/f5Bw+RG9RtxWa/jMmFH0GJw6s/QAleZk7mXOe5aopwJctpw==
+X-Received: by 2002:a05:600c:43c4:b0:3dd:1b76:347f with SMTP id f4-20020a05600c43c400b003dd1b76347fmr731934wmn.18.1675710529403;
+        Mon, 06 Feb 2023 11:08:49 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p2-20020a05600c358200b003dc4ecfc4d7sm12538595wmq.29.2023.02.06.11.08.46
+        by smtp.gmail.com with ESMTPSA id p2-20020a05600c358200b003dc4ecfc4d7sm12538595wmq.29.2023.02.06.11.08.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 11:08:47 -0800 (PST)
+        Mon, 06 Feb 2023 11:08:48 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 4/8] builtin/revert.c: move free-ing of "revs" to replay_opts_release()
-Date:   Mon,  6 Feb 2023 20:08:09 +0100
-Message-Id: <patch-v4-4.8-6b29d7d00c2-20230206T190346Z-avarab@gmail.com>
+Subject: [PATCH v4 5/8] builtin/rebase.c: fix "options.onto_name" leak
+Date:   Mon,  6 Feb 2023 20:08:10 +0100
+Message-Id: <patch-v4-5.8-f9c4d17fe70-20230206T190346Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1425.ge02fe682bd8
 In-Reply-To: <cover-v4-0.8-00000000000-20230206T190346Z-avarab@gmail.com>
 References: <patch-v3-7.8-ee8262ab22a-20230118T160600Z-avarab@gmail.com> <cover-v4-0.8-00000000000-20230206T190346Z-avarab@gmail.com>
@@ -72,60 +72,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In [1] and [2] I added the code being moved here to cmd_revert() and
-cmd_cherry_pick(), now that we've got a "replay_opts_release()" for
-the "struct replay_opts" it should know how to free these "revs",
-rather than having these users reach into the struct to free its
-individual members.
+Similar to the existing "squash_onto_name" added in [1] we need to
+free() the xstrdup()'d "options.onto.name" added for "--keep-base" in
+[2]..
 
-1. d1ec656d68f (cherry-pick: free "struct replay_opts" members,
-   2022-11-08)
-2. fd74ac95ac3 (revert: free "struct replay_opts" members, 2022-07-01)
+1. 9dba809a69a (builtin rebase: support --root, 2018-09-04)
+2. 414d924beb4 (rebase: teach rebase --keep-base, 2019-08-27)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/revert.c | 6 ------
- sequencer.c      | 3 +++
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ builtin/rebase.c                 | 4 +++-
+ t/t3416-rebase-onto-threedots.sh | 1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 1cab16bf3ed..77d2035616e 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -248,9 +248,6 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- 	res = run_sequencer(argc, argv, &opts);
- 	if (res < 0)
- 		die(_("revert failed"));
--	if (opts.revs)
--		release_revisions(opts.revs);
--	free(opts.revs);
- 	replay_opts_release(&opts);
- 	return res;
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 2ec3ae0b42e..41e96f0eb5a 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1039,6 +1039,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	struct string_list strategy_options = STRING_LIST_INIT_NODUP;
+ 	struct object_id squash_onto;
+ 	char *squash_onto_name = NULL;
++	char *keep_base_onto_name = NULL;
+ 	int reschedule_failed_exec = -1;
+ 	int allow_preemptive_ff = 1;
+ 	int preserve_merges_selected = 0;
+@@ -1675,7 +1676,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		strbuf_addstr(&buf, options.upstream_name);
+ 		strbuf_addstr(&buf, "...");
+ 		strbuf_addstr(&buf, branch_name);
+-		options.onto_name = xstrdup(buf.buf);
++		options.onto_name = keep_base_onto_name = xstrdup(buf.buf);
+ 	} else if (!options.onto_name)
+ 		options.onto_name = options.upstream_name;
+ 	if (strstr(options.onto_name, "...")) {
+@@ -1851,6 +1852,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	free(options.strategy);
+ 	strbuf_release(&options.git_format_patch_opt);
+ 	free(squash_onto_name);
++	free(keep_base_onto_name);
+ 	string_list_clear(&strategy_options, 0);
+ 	return !!ret;
  }
-@@ -263,9 +260,6 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- 	opts.action = REPLAY_PICK;
- 	sequencer_init_config(&opts);
- 	res = run_sequencer(argc, argv, &opts);
--	if (opts.revs)
--		release_revisions(opts.revs);
--	free(opts.revs);
- 	if (res < 0)
- 		die(_("cherry-pick failed"));
- 	replay_opts_release(&opts);
-diff --git a/sequencer.c b/sequencer.c
-index 1547fb98597..cb4b1ce062c 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -361,6 +361,9 @@ void replay_opts_release(struct replay_opts *opts)
- 		free(opts->xopts[i]);
- 	free(opts->xopts);
- 	strbuf_release(&opts->current_fixups);
-+	if (opts->revs)
-+		release_revisions(opts->revs);
-+	free(opts->revs);
- }
+diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-threedots.sh
+index ea501f2b42b..f8c4ed78c9e 100755
+--- a/t/t3416-rebase-onto-threedots.sh
++++ b/t/t3416-rebase-onto-threedots.sh
+@@ -5,6 +5,7 @@ test_description='git rebase --onto A...B'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- int sequencer_remove_state(struct replay_opts *opts)
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-rebase.sh"
+ 
 -- 
 2.39.1.1425.ge02fe682bd8
 
