@@ -2,65 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33ACFC05027
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 20:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8758FC636D3
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 20:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230232AbjBFUaN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 15:30:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35294 "EHLO
+        id S230080AbjBFUg1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 15:36:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbjBFUaM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 15:30:12 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6A8929E2F
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 12:30:10 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id p26so37615448ejx.13
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 12:30:10 -0800 (PST)
+        with ESMTP id S229582AbjBFUgZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 15:36:25 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D17BF2A994
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 12:36:23 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id m2so37756918ejb.8
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 12:36:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pYysp2PG4ezhAyoYXiU/oSMs5qlk3buEH8qGm9ssS18=;
-        b=Tvll+B/OHBsXgbBVK/7HxqT9WYGkIbaCoGyu2YmKa+KgIYy+O+Nqx+cPQkxqGsqTZD
-         i2LcyuL01hMOCEzbmMe4tI4bGkxP1ehlbIQfcM0VOjGw3L8IDtkrplScRxI+TNGGPBwu
-         HEjX06ZvYzG65mCI0YrnPlExr4pBaAzdOpginH+0TSB3IBNlfqdG2I5GT5Qcdp28bjWY
-         JGBBroROCTSp9w6YNqTQjDWorH3DfkcLgJx1fd9zYrNyNgivAQaxW9dMPwQhkYQNdDSj
-         T/1Lg2BO28qs9WaUfPwnwQP7sNMxOwySTGO+qtRy9ReaNY/QXR7tHLX0FVNJv2kxeH4u
-         0ZzQ==
+        bh=R4gRAjESW0PPPtoRtImGStuvtUEP9GLEDb/7GvcDXS4=;
+        b=pWSn8QVeKjeiWbfKnSklMWN45GatGwdhaHPFvX7/AFejpuVeBxsLuiRAeU2ZqCuyqu
+         054X4BmuTlsuledXVT577SH/SffepDNn6tTvr6PaHruAFlraxt13k5YMGJtACz1oXoMA
+         1KjdDijVOAD8GvWXWxwKkDLigYReGC6LkGcjQBtyeGW5JuFqt1yCxPu0wh53vx/Ii8Sg
+         FqvSK2QKFmRuY8mgzzNWnWV7mg4iQ80rgJgzlOK5jlzGTNmVlmbiftoiPted/3gvmcAM
+         xi1EWp56IEemkooTOX3pIDOi+g01QWdPYE+QVB6yoYbK5RsHu9f90MoC0yo8RWEbhMZp
+         75OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pYysp2PG4ezhAyoYXiU/oSMs5qlk3buEH8qGm9ssS18=;
-        b=xa2QY9CyJEafY4Xrjt1juGtTV803kywfRGQecErrFAkHxm+1kfnmEO4BPr/zVtnWje
-         I/Gv4bx+CC5AtT8x+Ji4jRQub5J1ph15/+5mAm6wWWe5qJ8LJ16n6MTXMceScE3z/fEG
-         3jaDzNjdWyhq1Lb45C1EXGzYvymi4F0SGnsroiWMUzVdkLmLfVHfE1mv9+8lSmzGG0o3
-         zrB0rqZgxYh4fU2sLUYTGWT2rumuNX+1faa+c9Yfx77qH5LfnvLWuLwkuJUnxkTognSq
-         OegsIFW0xwMt2tI5iLATFqblkEDYVnIhQitT70hOrrlEhV3FTjE0os2g++yNpa+v7Dbo
-         vEHA==
-X-Gm-Message-State: AO0yUKWFb0cPDIqAxxE+PU4RkCtIh3q6CZ8wviGW1F85H2wYF6h8DXQJ
-        juqgDDHk03zcWgXe5XyVl8IXeUU7wuptL+O2
-X-Google-Smtp-Source: AK7set/m6eZxP636RD2Qq4zCWqrP1VCELKMvSNgXuugNxPPqb8/JozysiFAfzPAiM5f1SWqzveGgIw==
-X-Received: by 2002:a17:907:6d29:b0:7c1:6e08:4c20 with SMTP id sa41-20020a1709076d2900b007c16e084c20mr765133ejc.7.1675715409205;
-        Mon, 06 Feb 2023 12:30:09 -0800 (PST)
+        bh=R4gRAjESW0PPPtoRtImGStuvtUEP9GLEDb/7GvcDXS4=;
+        b=c70Wj/ODeIzFdBok+fKBunMFoWDiN6ugM0IM9NMVSCdlcmIDhn9n4QcNTRPKKdrTqj
+         m/S6JtPJgxNYmTUC9EyzKZqDQGeiRNZtUZyUir597a3Qt1cMQ8JkIiZnt5QUAJu9ZGtL
+         pTr2nVDRN9FRsm1ga8aO2rCdllj1lFcWVnknSyTqvBEfyVE7Owwa6maedZN9+HhVgIPy
+         m3Gtx0TXF4fSNUz124QqpRdYpZ1yHhFEMe8xFr4SJUQkFj9f4mLf8mrklNP0csGzH5Md
+         o+tSOwKKKO/LcPvJGvb4z99vAj9Cl95jup2NEhvV8JciWIG5QVliS5SKnQO4VMawoZ4S
+         pIrA==
+X-Gm-Message-State: AO0yUKXMl9BU5LuTxs8aZRXxhBZJ60mh5bsFIaHvuslaLDyjTIER4Viy
+        +nmWtIVexedycXeptx9CvPJHUvVUhX14DBcU
+X-Google-Smtp-Source: AK7set/y4xMuUOcWUHG2DUWL3QAD3x7bmcwNO1XVZlh2oi52h7YKFa79rC+2Q33tlxlsOo448XGqYQ==
+X-Received: by 2002:a17:906:3e56:b0:877:7789:765a with SMTP id t22-20020a1709063e5600b008777789765amr697320eji.16.1675715781962;
+        Mon, 06 Feb 2023 12:36:21 -0800 (PST)
 Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id gz21-20020a170907a05500b0086a2e31d1c1sm5881210ejc.28.2023.02.06.12.30.08
+        by smtp.gmail.com with ESMTPSA id me17-20020a170906aed100b0083f91a32131sm5890237ejb.0.2023.02.06.12.36.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 12:30:08 -0800 (PST)
+        Mon, 06 Feb 2023 12:36:21 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pP87r-000VK7-1k;
-        Mon, 06 Feb 2023 21:30:07 +0100
+        id 1pP8Ds-000VWR-1m;
+        Mon, 06 Feb 2023 21:36:20 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Documentation: clarify multiple pushurls vs urls
-Date:   Mon, 06 Feb 2023 21:11:51 +0100
-References: <20230206195503.3113048-1-calvinwan@google.com>
+To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Glen Choo <chooglen@google.com>,
+        Victoria Dye <vdye@github.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Matthew John Cheetham <mjcheetham@outlook.com>
+Subject: Re: [PATCH v8 1/3] t5563: add tests for basic and anoymous HTTP access
+Date:   Mon, 06 Feb 2023 21:32:53 +0100
+References: <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
+ <pull.1352.v8.git.1675711789.gitgitgadget@gmail.com>
+ <d362f7016d34c4803adf42a88012997c66e0bde8.1675711789.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <20230206195503.3113048-1-calvinwan@google.com>
-Message-ID: <230206.86k00u5ygg.gmgdl@evledraar.gmail.com>
+In-reply-to: <d362f7016d34c4803adf42a88012997c66e0bde8.1675711789.git.gitgitgadget@gmail.com>
+Message-ID: <230206.86fsbi5y63.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -68,93 +77,131 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Feb 06 2023, Calvin Wan wrote:
+On Mon, Feb 06 2023, Matthew John Cheetham via GitGitGadget wrote:
 
-> While it is possible to define multiple `url` fields in a remote to
-> push to multiple remotes at once, it is preferable to achieve this by
-> defining multiple `pushurl` fields.
-
-The idea with "url" and "pushurl" surely is to disambiguate whether you
-want the url for both push & fetch, or just push.
-
-I don't see why it's a given that it's preferrable to use "pushurl" over
-"url" yet, if your setup is e.g. 3 repos you push to, but it won't
-matter what you pull from why not use "url"? As opposed to pushing
-"pushurl" to push to read-only mirrors you yourself are updating?
-
-But let's read on...
-
-> Defining multiple `url` fields can cause confusion for users since
-> running `git config remote.<remote>.url` returns the last defined url
-> which doesn't align with the url `git fetch <remote>` uses (the first).
-
-I'm certainly confused, I had no idea it worked this way, I'd have thought it was last-set-wins like most things.
-
-From a glance fb0cc87ec0f (Allow programs to not depend on remotes
-having urls, 2009-11-18) mentions it as a known factor, but with:
-	
-	diff --git a/transport.c b/transport.c
-	index 77a61a9d7bb..06159c4184e 100644
-	--- a/transport.c
-	+++ b/transport.c
-	@@ -1115,7 +1115,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
-	 	helper = remote->foreign_vcs;
-	 
-	 	if (!url && remote->url)
-	-		url = remote->url[0];
-	+		url = remote->url[remote->url_nr - 1];
-	 	ret->url = url;
-	 
-	 	/* maybe it is a foreign URL? */
-
-All tests pass for me, and it's selecting the last URL now. I can't find
-any other mention of these semantics in the docs (but maybe I didn't
-look in the right places).
-
-So is this just some accident, does anyone rely on it, and would we be
-better off just "fixing" this, rather than steering people away from
-"url"?
-
-> Add documentation to clarify how fetch interacts with multiple urls
-> and the recommended method to push to multiple remotes.
+> From: Matthew John Cheetham <mjcheetham@outlook.com>
 >
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> Add a test showing simple anoymous HTTP access to an unprotected
+> repository, that results in no credential helper invocations.
+> Also add a test demonstrating simple basic authentication with
+> simple credential helper support.
+>
+> Leverage a no-parsed headers (NPH) CGI script so that we can directly
+> control the HTTP responses to simulate a multitude of good, bad and ugly
+> remote server implementations around auth.
+>
+> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 > ---
->  Documentation/urls-remotes.txt | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>  t/lib-httpd.sh                 |  1 +
+>  t/lib-httpd/apache.conf        |  6 +++
+>  t/lib-httpd/nph-custom-auth.sh | 42 +++++++++++++++++
+>  t/t5563-simple-http-auth.sh    | 86 ++++++++++++++++++++++++++++++++++
+>  4 files changed, 135 insertions(+)
+>  create mode 100755 t/lib-httpd/nph-custom-auth.sh
+>  create mode 100755 t/t5563-simple-http-auth.sh
 >
-> diff --git a/Documentation/urls-remotes.txt b/Documentation/urls-remotes.txt
-> index 86d0008f94..61aaded645 100644
-> --- a/Documentation/urls-remotes.txt
-> +++ b/Documentation/urls-remotes.txt
-> @@ -33,7 +33,10 @@ config file would appear like this:
->  ------------
+> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+> index 608949ea80b..2c49569f675 100644
+> --- a/t/lib-httpd.sh
+> +++ b/t/lib-httpd.sh
+> @@ -137,6 +137,7 @@ prepare_httpd() {
+>  	install_script error-smart-http.sh
+>  	install_script error.sh
+>  	install_script apply-one-time-perl.sh
+> +	install_script nph-custom-auth.sh
 >  
->  The `<pushurl>` is used for pushes only. It is optional and defaults
-> -to `<URL>`.
-> +to `<URL>`. Additional pushurls can be defined to push to multiple
-> +remotes. While multiple URLs can be defined to achieve the same
-> +outcome, this is not recommended since fetch only uses the first
-> +defined URL.
+>  	ln -s "$LIB_HTTPD_MODULE_PATH" "$HTTPD_ROOT_PATH/modules"
+>  
+> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+> index 0294739a77a..76335cdb24d 100644
+> --- a/t/lib-httpd/apache.conf
+> +++ b/t/lib-httpd/apache.conf
+> @@ -135,6 +135,11 @@ Alias /auth/dumb/ www/auth/dumb/
+>  	SetEnv GIT_HTTP_EXPORT_ALL
+>  	SetEnv GIT_PROTOCOL
+>  </LocationMatch>
+> +<LocationMatch /custom_auth/>
+> +	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
+> +	SetEnv GIT_HTTP_EXPORT_ALL
+> +	CGIPassAuth on
+> +</LocationMatch>
+>  ScriptAlias /smart/incomplete_length/git-upload-pack incomplete-length-upload-pack-v2-http.sh/
+>  ScriptAlias /smart/incomplete_body/git-upload-pack incomplete-body-upload-pack-v2-http.sh/
+>  ScriptAlias /smart/no_report/git-receive-pack error-no-report.sh/
+> @@ -144,6 +149,7 @@ ScriptAlias /broken_smart/ broken-smart-http.sh/
+>  ScriptAlias /error_smart/ error-smart-http.sh/
+>  ScriptAlias /error/ error.sh/
+>  ScriptAliasMatch /one_time_perl/(.*) apply-one-time-perl.sh/$1
+> +ScriptAliasMatch /custom_auth/(.*) nph-custom-auth.sh/$1
+>  <Directory ${GIT_EXEC_PATH}>
+>  	Options FollowSymlinks
+>  </Directory>
+> diff --git a/t/lib-httpd/nph-custom-auth.sh b/t/lib-httpd/nph-custom-auth.sh
+> new file mode 100755
+> index 00000000000..8f851aebac4
+> --- /dev/null
+> +++ b/t/lib-httpd/nph-custom-auth.sh
+> @@ -0,0 +1,42 @@
+> +#!/bin/sh
+> +
+> +VALID_CREDS_FILE=custom-auth.valid
+> +CHALLENGE_FILE=custom-auth.challenge
+> +ANONYMOUS_FILE=custom-auth.anonymous
+> +
+> +#
+> +# If $ANONYMOUS_FILE exists in $HTTPD_ROOT_PATH, allow anonymous access.
+> +#
+> +# If $VALID_CREDS_FILE exists in $HTTPD_ROOT_PATH, consider each line as a valid
+> +# credential for the current request. Each line in the file is considered a
+> +# valid HTTP Authorization header value. For example:
+> +#
+> +# Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
+> +#
+> +# If $CHALLENGE_FILE exists in $HTTPD_ROOT_PATH, output the contents as headers
+> +# in a 401 response if no valid authentication credentials were included in the
+> +# request. For example:
+> +#
+> +# WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
+> +# WWW-Authenticate: Basic realm="example.com"
+> +#
+> +
+> +if test -f "$ANONYMOUS_FILE" || (test -f "$VALID_CREDS_FILE" && \
+> +	grep -qi "^${HTTP_AUTHORIZATION:-nopenopnope}$" "$VALID_CREDS_FILE")
 
-Maybe it's just me, but I feel more confused reading this docs than
-before :)
+Rather than "test -f "$f" & grep ... "$f" I think you can just use only
+"grep", if the file doesn't exist it'll give you an error.
 
-Surely if there's confusion about the priority of the *.url config
-variable we should be documenting that explicitly where we discuss "url"
-itself (e.g. in Documentation/config/remote.txt). Just mentioning it in
-passing as we document "pushUrl" feels like the wrong place.
+If you don't want to see that error just pipe it to /dev/null, in case
+that's what you were trying to avoid with the "check if it exists
+first".
 
-But I still don't quite see the premise. "git push" has a feature to
-push to all N urls, whether that's Url or pushUrl.
+> +echo 'HTTP/1.1 401 Authorization Required'
+> +if test -f "$CHALLENGE_FILE"
+> +then
+> +	cat "$CHALLENGE_FILE"
 
-When I configure it to have multiple URLs it pushes to the first
-configured one first, if the source of the confusion was that it didn't
-prefer the last configured one first, shouldn't it be doing them in
-reverse order?
+Maybe the same here, i.e. just:
 
-I don't think that would make sense, but I also don't see how
-recommending "pushurl" over "url" un-confuses things.
+	cat "$f" 2>/dev/null
 
-So why is it confusing that "fetch" would use the same order, but due to
-the semantics of a "fetch" we'd stop after the first one?
+> +test_expect_success 'setup_credential_helper' '
+> +	mkdir -p "$TRASH_DIRECTORY/bin" &&
+
+The "$TRASH_DIRECTORY" is already created for you, so don't use "-p",
+unless something went wrong here..
+
+> +	PATH=$PATH:"$TRASH_DIRECTORY/bin" &&
+> +	export PATH &&
+> +
+> +	CREDENTIAL_HELPER="$TRASH_DIRECTORY/bin/git-credential-test-helper" &&
+> +	write_script "$CREDENTIAL_HELPER" <<-\EOF
+> +	cmd=$1
+> +	teefile=$cmd-query.cred
+> +	catfile=$cmd-reply.cred
+> +	sed -n -e "/^$/q" -e "p" >> $teefile
+
+Style: ">>$f", not ">> $f"
+
+> +	if test "$cmd" = "get"; then
+
+Style: We usually use "\nthen", not "; then".
