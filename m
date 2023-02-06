@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86D6FC636D3
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 23:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D93A7C61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 23:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230183AbjBFXIc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 18:08:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42714 "EHLO
+        id S229910AbjBFXIf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 18:08:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230037AbjBFXIU (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230039AbjBFXIU (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 6 Feb 2023 18:08:20 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 122065FDE
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA77A30EA0
         for <git@vger.kernel.org>; Mon,  6 Feb 2023 15:08:18 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id sa10so8334718ejc.9
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 15:08:17 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id e22so9426233ejb.1
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 15:08:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PVmLRxCQHtu74AnHvtfKqLTTuJHmqgO3lzJFe3ovMHk=;
-        b=la0wcpnjz3k8cWnMcbnvNgOap6AlSOfBLjIjb3PswHELPNj8c1IYqoZOtOIBe1yJKp
-         MBrtB3/+91W9JX7ERBH7d2GkLpZFuSr/SuCk2p+r+nnAH8EGXe4PZApDABNaLvyJkgnU
-         bdFEOdhpxq8VLTxmWhBJDPK1AVfHW5wBXp81NXl9QD5BG/ndnFr2mlYrU9LyB4tthsms
-         CWXB+4DSjaO1z/ugO2KaVoXZeKG381OJGlN9NDx/axFwLCFMDfQeDATB7xvKWvmfULEB
-         MsieSwp3mMIeUoS2w/UKTXuUHUfd5LYylQqR45u7U6sxiLwtJ0FcRofSVb+cd+xAApfh
-         upJA==
+        bh=A8mRbRkuojhf/gN9c7/0s8do/Iwdi7TUUbli2Iwy+Ug=;
+        b=m1SXSgAe6zv5nuWpqGvKuC5W739Cc7SM6HCHecUYXw9NofTDOi+Y282CU/r0mvOAfF
+         dhMAv1WaLSyYvNB7YeJwmamV+uQhbP/2cc2pjRSjqxyWpSH4WWV1jI5EWHMiK1ngYtXe
+         vSK+MDFYZUX9XJFIvk6kAo1mhANFjgVcOS5nJhOBpyaClU/pmxwaxxDyaXutDe+q2O0d
+         PUQAy5e8CssWub4PVB9W9oy3FwQo7C0lNYTyKYkbxmvrDa7QBmZpIDdCSjOqlb9FaUzI
+         1h7DYrEVbPuJR2K7yoL/4S3SnmpWdaJa/FHcKAQUvX0zIEiUszxJDXxsLH3lSOlrrIPz
+         8RMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PVmLRxCQHtu74AnHvtfKqLTTuJHmqgO3lzJFe3ovMHk=;
-        b=6utyRS9RbifwNF6/Yf+igg2ZUd7C3B4Is/BtjX7Y9w5SOk0DwhvrXbfykJ+NY7skvQ
-         U+qd4+ugUj/kplEMyo219JiTUxoPjdAvTnX1CDFm9m6FQIts3DtygBBIkwX0sqNVnZgU
-         S/hBmGzXafj8IrxEJKyXzpH7GT/3IWxAx/CDoVUsiL/Hhjft5mXK2gcp14+ThU23F7x6
-         f0QtonViP1/ZbZfR57LnUc/jKKb0UKYcT/o+l5X+Xm40ByizFer0Q8j2AbEbWyBmU5cv
-         Hx/goATGcxhJ/Mc4pDec+TfkkCdg/mNVcJeyN2LPQEypRfzbRTL63z0W6oJWn4yN26DW
-         QYVQ==
-X-Gm-Message-State: AO0yUKXb203fPiCow6NJJvB5Z13bA0zL3qn+7pPrf9DewGX1dIfu+jTm
-        vbNKhlDM1eSeHmMTRy5/PGwRU56TbfSwrEXf
-X-Google-Smtp-Source: AK7set+5RJr0nFo/m6ZYFXOOSqsdOO0whoAhyXzjI3T6wMtiP20NDv7zFd5b0CEvGFES5LiYP/X44g==
-X-Received: by 2002:a17:906:af6a:b0:88a:7408:384c with SMTP id os10-20020a170906af6a00b0088a7408384cmr1069783ejb.47.1675724897303;
-        Mon, 06 Feb 2023 15:08:17 -0800 (PST)
+        bh=A8mRbRkuojhf/gN9c7/0s8do/Iwdi7TUUbli2Iwy+Ug=;
+        b=hpZmuqNfrhLNB30cQH6NnHqAi6D+NIte1tPr7BCsDCLcjdoomb5qWDouONP5oG4uWu
+         kcBAdER6CpVphpPFlCGqBUqBNbp0ssp4SIDVbI6bMFar/Re/soJooVB646E5XwmiVw7Y
+         P9A1XhhZYifC/R9jrehYiJBI4vkdMvHgK5Nfb7rRow1jQgC5WEJ8KWrcdpV5423HhwyK
+         sBb9ailo/I0IUkMncLokzdrEJll5EUxgYYuvE5YgOTaZ9wd2EqBxunI/vC8e2JO4GBGX
+         qY3IG/tHSwuSiHp9tqMDkdaqpKh8z7pgpyNNWE2nQiCXVY8FvKNZ3gqFcNp5C8FTMrPQ
+         OSbQ==
+X-Gm-Message-State: AO0yUKXJahC9BF0tQYm2PoJvUzMrEulT/KVhdPpI4OjzxjuwUj7OcFak
+        1EkftNvoRruD0Nk9oKNb92+ZUngwSNFXgIhI
+X-Google-Smtp-Source: AK7set94LPC9W6Q4UMhPy7oqKWAPaXUgLgI6AIwFa4ozc8oTyKrAnevnb+PAlqukaDFDe+H+GOXO6Q==
+X-Received: by 2002:a17:906:824c:b0:859:1d78:765 with SMTP id f12-20020a170906824c00b008591d780765mr1130589ejx.11.1675724898208;
+        Mon, 06 Feb 2023 15:08:18 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id s15-20020a170906a18f00b0089d5aaf85besm2673586ejy.219.2023.02.06.15.08.16
+        by smtp.gmail.com with ESMTPSA id s15-20020a170906a18f00b0089d5aaf85besm2673586ejy.219.2023.02.06.15.08.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 15:08:16 -0800 (PST)
+        Mon, 06 Feb 2023 15:08:17 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v7 08/19] worktree: fix a trivial leak in prune_worktrees()
-Date:   Tue,  7 Feb 2023 00:07:43 +0100
-Message-Id: <patch-v7-08.19-81d97d03f42-20230206T230142Z-avarab@gmail.com>
+Subject: [PATCH v7 09/19] http-backend.c: fix "dir" and "cmd_arg" leaks in cmd_main()
+Date:   Tue,  7 Feb 2023 00:07:44 +0100
+Message-Id: <patch-v7-09.19-e657992ad14-20230206T230142Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1425.gac85d95d48c
 In-Reply-To: <cover-v7-00.19-00000000000-20230206T230141Z-avarab@gmail.com>
 References: <cover-v6-00.19-00000000000-20230202T094704Z-avarab@gmail.com> <cover-v7-00.19-00000000000-20230206T230141Z-avarab@gmail.com>
@@ -71,77 +71,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We were leaking both the "struct strbuf" in prune_worktrees(), as well
-as the "path" we got from should_prune_worktree(). Since these were
-the only two uses of the "struct string_list" let's change it to a
-"DUP" and push these to it with "string_list_append_nodup()".
+Free the "dir" variable after we're done with it. Before
+917adc03608 (http-backend: add GIT_PROJECT_ROOT environment var,
+2009-10-30) there was no leak here, as we'd get it via getenv(), but
+since 917adc03608 we've xstrdup()'d it (or the equivalent), so we need
+to free() it.
 
-For the string_list_append_nodup() we could also string_list_append()
-the main_path.buf, and then strbuf_release(&main_path) right away. But
-doing it this way avoids an allocation, as we already have the "struct
-strbuf" prepared for appending to "kept".
+We also need to free the "cmd_arg" variable, which has been leaked
+ever since it was added in 2f4038ab337 (Git-aware CGI to provide dumb
+HTTP transport, 2009-10-30).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/worktree.c         | 6 +++---
- t/t2401-worktree-prune.sh  | 1 +
- t/t2406-worktree-repair.sh | 1 +
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ http-backend.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index f51c40f1e1e..254283aa6f5 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -173,7 +173,7 @@ static void prune_worktrees(void)
- {
- 	struct strbuf reason = STRBUF_INIT;
- 	struct strbuf main_path = STRBUF_INIT;
--	struct string_list kept = STRING_LIST_INIT_NODUP;
-+	struct string_list kept = STRING_LIST_INIT_DUP;
- 	DIR *dir = opendir(git_path("worktrees"));
- 	struct dirent *d;
- 	if (!dir)
-@@ -184,14 +184,14 @@ static void prune_worktrees(void)
- 		if (should_prune_worktree(d->d_name, &reason, &path, expire))
- 			prune_worktree(d->d_name, reason.buf);
- 		else if (path)
--			string_list_append(&kept, path)->util = xstrdup(d->d_name);
-+			string_list_append_nodup(&kept, path)->util = xstrdup(d->d_name);
- 	}
- 	closedir(dir);
+diff --git a/http-backend.c b/http-backend.c
+index 6eb3b2fe51c..67819d931ce 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -786,6 +786,7 @@ int cmd_main(int argc, const char **argv)
+ 	if (!getenv("GIT_HTTP_EXPORT_ALL") &&
+ 	    access("git-daemon-export-ok", F_OK) )
+ 		not_found(&hdr, "Repository not exported: '%s'", dir);
++	free(dir);
  
- 	strbuf_add_absolute_path(&main_path, get_git_common_dir());
- 	/* massage main worktree absolute path to match 'gitdir' content */
- 	strbuf_strip_suffix(&main_path, "/.");
--	string_list_append(&kept, strbuf_detach(&main_path, NULL));
-+	string_list_append_nodup(&kept, strbuf_detach(&main_path, NULL));
- 	prune_dups(&kept);
- 	string_list_clear(&kept, 1);
+ 	http_config();
+ 	max_request_buffer = git_env_ulong("GIT_HTTP_MAX_REQUEST_BUFFER",
+@@ -795,5 +796,6 @@ int cmd_main(int argc, const char **argv)
+ 		setenv(GIT_PROTOCOL_ENVIRONMENT, proto_header, 0);
  
-diff --git a/t/t2401-worktree-prune.sh b/t/t2401-worktree-prune.sh
-index 3d28c7f06b2..568a47ec426 100755
---- a/t/t2401-worktree-prune.sh
-+++ b/t/t2401-worktree-prune.sh
-@@ -5,6 +5,7 @@ test_description='prune $GIT_DIR/worktrees'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success initialize '
-diff --git a/t/t2406-worktree-repair.sh b/t/t2406-worktree-repair.sh
-index 5c44453e1c1..8970780efcc 100755
---- a/t/t2406-worktree-repair.sh
-+++ b/t/t2406-worktree-repair.sh
-@@ -2,6 +2,7 @@
- 
- test_description='test git worktree repair'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
+ 	cmd->imp(&hdr, cmd_arg);
++	free(cmd_arg);
+ 	return 0;
+ }
 -- 
 2.39.1.1425.gac85d95d48c
 
