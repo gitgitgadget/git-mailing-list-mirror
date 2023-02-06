@@ -2,92 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ECBDC61DA4
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 21:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAA81C61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 21:42:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbjBFVlK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 16:41:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52464 "EHLO
+        id S229806AbjBFVmB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 16:42:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjBFVlI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 16:41:08 -0500
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5027510F3
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 13:41:04 -0800 (PST)
-Received: by mail-qt1-x82b.google.com with SMTP id h24so14679685qtr.0
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 13:41:04 -0800 (PST)
+        with ESMTP id S229447AbjBFVmA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 16:42:00 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAB33F741
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 13:41:57 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id k13so13682492plg.0
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 13:41:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AUvqcNAtRVgxM4PbdBsf4gKqNKBYrX7LRtU/MEx2tqc=;
-        b=LTQd1Y9pv39vdbZfifjCZA84nuNfJkWpVwPt8CitKFObTtCoHZQRZRlp5jvkk9l9Eh
-         qWsriLD77bR7GynaPdYIFeAwTFenNPojsQyRfwskWc5gcrtWKXMhU3yVzJvuXXPIdKcQ
-         AJMqRlOFuN4ZaQzw+2E7SHILP9x4oHNWG7NoU=
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/s8Jz9FnCFYezB7eiBnToO1JYoVTEkRimdiypikvHVQ=;
+        b=Ckh0wk5ew7qdN8bttZXCFCKOQMRPnFQHbeSdEHRHmOufjoAnxE65Erbf7zTDs1tiWH
+         yesDUmYefy28qMHft36b0Xgk6zmLiSxXifA4PDSbUZLiiotvDsfOYGg6RhRdAKkfB9FM
+         S7uFaa+vbHEjfC+fxBw+AsNUS7IO+DqGn7LWk1+elfU49Tx5ejlxn9aMLrktZp4UypjR
+         gQ29a6RcfScwNmeNnP0y9k7TdNd0FBcRGF6TN8iz34eQgv+vPADwIR/NrZwDqvYWY+8o
+         NARatfYNulFm6WG/AeShOcouxHD2XTePmAQBzj/bj9AM9UY/S7nQ9KIkEcs2jMdQOFjp
+         PnYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AUvqcNAtRVgxM4PbdBsf4gKqNKBYrX7LRtU/MEx2tqc=;
-        b=ixAhakBRtWE8UFOgVvP1GmNpGn9+FqpIO+dxTYsh7PKJHPvAtsBjRKdmkd2KwdFL8D
-         Wr1XAxEuv6PhyCoiQ+/ZblUTb5y4RQwbX9jEAn0sW/P0XdEut4JBP9lZdS6VpiO1SkhF
-         kx/6BtTqeh8V2vBSXWJ51JQNOfyBu51bp4uSAKUm19h22QIryyV4lvuH/yqc4qPtwAtZ
-         9xAFiuMTOTVnet+TqhuRQ/mOR4ueS2+GwqN9BMNh2s/BUil/+Q2TCmxSlPMk0K8u6gzS
-         y5vzs8n2RmXVkcK0N94SPrsAtqCAVqVPyGYZFlVmI/0/fLMDtZSPDp2wSLXMSgBeis0d
-         +Ijg==
-X-Gm-Message-State: AO0yUKW0WxA0MiT9eqScX+N1GZnxCK1MDI0ZsX3cZSLHt968bN+Pmslj
-        BN/N2YHH0Siw1uD7axjX4s/csg==
-X-Google-Smtp-Source: AK7set8jfPnZNexl4kTZ0AsHfpsFvzzCoBGS68jfXRWnbrEYCG5Y/rwV5B6gOBEyp46Ua502h8yKJQ==
-X-Received: by 2002:a05:622a:13cf:b0:3b9:a4ae:9d17 with SMTP id p15-20020a05622a13cf00b003b9a4ae9d17mr1908353qtk.3.1675719663403;
-        Mon, 06 Feb 2023 13:41:03 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id u31-20020a05622a199f00b003b0b903720esm8093366qtc.13.2023.02.06.13.41.02
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/s8Jz9FnCFYezB7eiBnToO1JYoVTEkRimdiypikvHVQ=;
+        b=b5PV2rLLxP+/mwhFTNvdw+A2yOx4HBNmVY8zC0KFLUavaW9mdS2XQuXWAmiP7J5bVp
+         XlL25QpVJGH2xA52f4yGBHIwDx74/gqA7XcIRce3cDGwQZi9RB/GqfHWKl4flv/5wb/k
+         mnll/tCmH7/OhH3ok+C8WTTkglWZKsPpVLtvvorPDUdqCf4oi2AEYnDg7rlLPCLIbm6h
+         juIPRJj83p41a8QF+Ueg047fAmYy068j+h+C9jJt+XnjoGeOg4nQ3mR1xXU/cN+YEW4F
+         JqwUCnDIq/RIOogFRmoC4J4hNUqnou1o9vuWeqI4mSG5lEyYaZyQmpy559t/vuoHa5HR
+         kKJA==
+X-Gm-Message-State: AO0yUKWeXLw8+I5+h3z41UHeloRHVMC0GYVH7FmQOxTeMkDVoP3Q527s
+        n+OoCeunaXhryRUxZXXe7obimf+VTXM=
+X-Google-Smtp-Source: AK7set/N7IhqQaHKm9yFQP1bysxpDf/LxBHLWw40EXt+49pCkU/i5V3XCS+PrFCEc1IHUL+rxgE35g==
+X-Received: by 2002:a17:902:c702:b0:194:7d25:cb78 with SMTP id p2-20020a170902c70200b001947d25cb78mr229253plp.46.1675719717208;
+        Mon, 06 Feb 2023 13:41:57 -0800 (PST)
+Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
+        by smtp.gmail.com with ESMTPSA id y15-20020a17090264cf00b001967580f60fsm7340668pli.260.2023.02.06.13.41.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 13:41:03 -0800 (PST)
-Date:   Mon, 6 Feb 2023 16:41:01 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: The sad state of git.wiki.kernel.org
-Message-ID: <20230206214101.fe6rismtfzv4k75n@meerkat.local>
-References: <20230203182255.lqla3hsme6riy4w7@meerkat.local>
- <Y95BEaOGJy9uBHkG@coredump.intra.peff.net>
- <CAP8UFD1q7-XbX4C_NjyL7A-6n6Nc4MgSbUKnzQOiRyKRMtLv_w@mail.gmail.com>
+        Mon, 06 Feb 2023 13:41:56 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        Bernhard Reiter <ockham@raz.or.at>,
+        Remi Pommarel <repk@triplefau.lt>
+Subject: Re: [PATCH v2 6/6] imap-send: correctly report "host" when using
+ "tunnel"
+References: <patch-1.1-3bea1312322-20230201T225915Z-avarab@gmail.com>
+        <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
+        <patch-v2-6.6-686febb8cdc-20230202T093706Z-avarab@gmail.com>
+        <Y91J+P5P9gV1Dygm@coredump.intra.peff.net>
+        <230203.86bkmabfjr.gmgdl@evledraar.gmail.com>
+        <Y94866yd3adoC1o9@coredump.intra.peff.net>
+Date:   Mon, 06 Feb 2023 13:41:56 -0800
+In-Reply-To: <Y94866yd3adoC1o9@coredump.intra.peff.net> (Jeff King's message
+        of "Sat, 4 Feb 2023 06:09:31 -0500")
+Message-ID: <xmqq1qn25v4r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD1q7-XbX4C_NjyL7A-6n6Nc4MgSbUKnzQOiRyKRMtLv_w@mail.gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 04, 2023 at 03:03:16PM +0100, Christian Couder wrote:
-> > > # Should it be archived as a static site?
-> > >
-> > > It's possible to turn git.wiki.kernel.org into a static site with a large
-> > > header on every page that it contains historical archival information, with a
-> > > link to https://git-scm.com/doc
-> >
-> > This would be my preference, just because some of the old content may
-> > still have value. Some pages (like old gsoc stuff) would better redirect
-> > to git.github.io, but it is probably not worth the time to even try to
-> > classify pages.
-> 
-> This would be my preference too. I agree that some old content might
-> still have some value. We could also move or redirect some old content
-> to git.github.io, but I am not sure it's worth the time either.
+Jeff King <peff@peff.net> writes:
 
-Okay, here's what I have:
+> Yes, I agree that the scenario I'm giving is contrary to what the docs
+> say. But IMHO it is worth preferring what the code does now versus what
+> the docs say. The current behavior misbehaves if you configure things
+> badly (accidentally mix and match imap.host and imap.tunnel). Your new
+> behavior misbehaves if you have two correctly-configure imap stanzas
+> (both with a host/tunnel combo). Those are both fairly unlikely
+> scenarios, and the outcomes are similar (we mix up credentials), but:
+>
+>   1. In general, all things being equal, I'd rather trust the code as
+>      the status quo. People will complain if you break their working
+>      setup. They won't if you fix the documentation.
+>
+>   2. In the current behavior, if it's doing the wrong thing, your next
+>      step is to fix your configuration (don't mix and match imap.host
+>      and imap.tunnel). In your proposed behavior, there is no fix. You
+>      are simply not allowed to use two different imap tunnels with
+>      credential helpers, because the helpers don't receive enough
+>      context to distinguish them.
+>
+>      And that is not even "two imap tunnels in the same config". It is
+>      really per user. If I have two repositories, each with
+>      "imap.tunnel" in their local config, they will still invoke the
+>      same credential helpers, and both will just see host=tunnel. The
+>      namespace for "host" really is global and should be unique (ideally
+>      across the Internet, but at the very least among the hosts that the
+>      user contacts).
 
-https://archive.kernel.org/oldwiki/git.wiki.kernel.org/
+All good points.
 
-It's just a static scrape excluding all Special: and User: pages, and carrying
-a very large "OBSOLETE CONTENT" warning.
+> Yes, there are many config schemes that would avoid this problem. If you
+> are going to tie the two together, I think it would make sense to use
+> real subsections based on the host-name, like:
+>
+>   # hostname is the subsection key; it also becomes a label when
+>   # necessary
+>   [imap "example.com"]
+>
+>   # does not even need to mention a hostname. We'll assume example.com
+>   # here.
+>   tunnel = "any-command"
+>
+>   # assumes example.com as hostname; not needed if you are using a
+>   # tunnel, of course
+>   protocol = imaps
+>
+> But I would not bother going to that work myself. IMHO imap-send is
+> somewhat of an abomination, and I'd actually be just as happy if it went
+> away. But what you are doing seems to go totally in the wrong direction
+> to me (keeping it, but breaking a rare but working use case to the
+> benefit of a rare but broken misconfiguration).
 
-The idea is that requests to git.wiki.kernel.org will be redirected to the
-archive pages and thus hopefully preserve the content for historical reasons.
-
-Unless someone objects within the next few days, I'll proceed with this plan.
-
--K
+Yup.
