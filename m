@@ -2,141 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69AE7C05027
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 13:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3784FC05027
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 14:47:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230267AbjBFNKv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 08:10:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48128 "EHLO
+        id S231424AbjBFOrB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 09:47:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229759AbjBFNKu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 08:10:50 -0500
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2492144B6
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 05:10:49 -0800 (PST)
-Received: by mail-qv1-xf33.google.com with SMTP id w11so1619206qvs.7
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 05:10:49 -0800 (PST)
+        with ESMTP id S231521AbjBFOrA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 09:47:00 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B702529C
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 06:46:59 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id y1so10611176wru.2
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 06:46:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N/m2Dlhl4PG0O0SZXURyeyx/Ve0hReVBJXfPg1ZD2IQ=;
-        b=CZoR17Z+g6DMPqGaPNFNUUr0Pm25lXou2FI6x+aSHFZ9TaxarRFhPn23OLq8A4z2Yk
-         PPqpK7CXNe3XyDNvei7Hews3AvcAETN7GMM9UPv982ln1AiUHnaF9vh/wPxECN/3IuAW
-         GFxqw9CSG1C3bVpWHnaAtdvwDstrbzd9JgtasNPXYXjCC8b8/FZoe8aIToilOwevCoiO
-         nTYJq+ehywztF1YDmxOpyxDMQYsXb+WFvtaYagWM6XNguXqrbd3zicV3norXRFAJaENq
-         awlY1JlLyVDO7CD+l5IdQOGBjDqOy4McGaFWE6rSy/vWsScwDrDFhAoWdBH72SBdtDJf
-         2tkw==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GHtCgKwASEm3QUPpV2LogvHmVxSOId2e4+K6wvM1clQ=;
+        b=g16DbV33D8aX1x0pv7y8qRXYzngV3uKLk9hEcVfzdPrviqfj7og5kEpVNiIA0hzSuN
+         YpA3TWgaLQU5iAoCHGluol+FRKXMAjaC75cThUZWVeOGurJH5Usna0TfXJugr9kfUyNc
+         o+K8/zpfdCx5MMVh7MvP694QgzurZRqkLZZCOPTad+G2rg0zBQLSxevSDSuiV43jUb1Z
+         cQVgCrXP0LMfWtoqK61CQ0EZTtEN7iMMhuQsWYCFokK0JZrio9O00RE8yNpW1yTaQxwk
+         5AR0fwRJgUKq/59me9npx5CUBpaP8mFUJvYgn1WrNo6NoMjFh5D9/WvM62fHpt4AjIlR
+         eJ+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N/m2Dlhl4PG0O0SZXURyeyx/Ve0hReVBJXfPg1ZD2IQ=;
-        b=CUIH7ihcJ07Dj0wBx84LzHoMTixnV+l2o/x9BAmXck299urb88669NUF5ecrweLy4y
-         pnmN8ptDHQMxEPJPcvygz+dHUIjalhg8r77nRuLM8kSw6gg+mKdlpdCbtzmevsYVR6ma
-         Qg2H02bTl8HVRj9jsrjCQwlVez3WyJwrUEqjotqOTtXkmdEBKwpQoxRdBH3/eKSQkynX
-         LXoeXG1sZwOC232BRwM0ictHfPsFjYVt67H0/3SRw2misEirLGN2SzDc7n2U4qegy79X
-         9jURAv9vQcUW/4dwSQSsE1bhSlbNUEZgjhJMu9oFxDzaAmbWKwwOuvr0/6CZRnFCiqw0
-         kP0g==
-X-Gm-Message-State: AO0yUKUZtnBktjN/9QBT4BZ3sulKWNnVjOzbJHHqz3me3aGGP6MUBEgC
-        4iDsbDCl/MrHfcONBNDkZGk=
-X-Google-Smtp-Source: AK7set/ruBJoISL3eyww7uzSeHWVVFYG61e+RFDr5DNWyhQjSHMTpBc+wpS0IfJX0Yj3EqdaQksVrA==
-X-Received: by 2002:ad4:4ea3:0:b0:539:aae2:8dc4 with SMTP id ed3-20020ad44ea3000000b00539aae28dc4mr34046018qvb.4.1675689048819;
-        Mon, 06 Feb 2023 05:10:48 -0800 (PST)
-Received: from [192.168.1.211] ([2600:4041:4542:c100:884c:b5e0:e532:e79b])
-        by smtp.gmail.com with ESMTPSA id k1-20020a05620a414100b007112aa42c4fsm7397478qko.135.2023.02.06.05.10.48
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Feb 2023 05:10:48 -0800 (PST)
-From:   John Cai <johncai86@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
-Date:   Mon, 06 Feb 2023 08:10:47 -0500
-X-Mailer: MailMate (1.14r5852)
-Message-ID: <52A25839-3564-45D8-AF43-866ADDED983B@gmail.com>
-In-Reply-To: <CAPig+cQNoX1-DN1=aFEX=MxEvoYhdu0NxPyhH++B4_1G2Dmp8w@mail.gmail.com>
-References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
- <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
- <CAPig+cQNoX1-DN1=aFEX=MxEvoYhdu0NxPyhH++B4_1G2Dmp8w@mail.gmail.com>
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GHtCgKwASEm3QUPpV2LogvHmVxSOId2e4+K6wvM1clQ=;
+        b=r2jZrGV22YPrtyOLqMOlQ4GqlJYDYE2gqe6vYOuwOMvmKL8YZHRwpvBCa427T/huBp
+         keKWlK6JYKiN14h8ABeq0obTzxoGEQzJKUoQF8VZtGI/E+Nvse7cDuG8ONHXcqcDXhx3
+         OQH+JBvK3RoNqyjI+AYPO853Rxh8XH0KH+8EjFnP9x3KT0ws1YpHj2BuxzunZxoql3Sj
+         eDR69el2iyg2j2OksP1Whw8u5eCQ82N6uEK8evNfzKDMBNY5xLaPCE/70EsRTrRX8iFl
+         sc/DXw8DisFnx1cywtZ768VHFfGcRHD6NHvpDstgVi+jMrULMsHQFzhVWo8ui+KKz5nZ
+         LJsA==
+X-Gm-Message-State: AO0yUKVIRjOuEGRHoKWg3xT8xchPY7LvmzUmX4KpONoOFgLMXiMsNHhq
+        cYEl5wzPQpTUji+AHqWtBlU=
+X-Google-Smtp-Source: AK7set+iii1Ey7O9f/Vh21MuJuJe2X7ObjjCyDtF5EBoUc1QRlCYzPE+O56fqIxFOG/b04PRMig8xw==
+X-Received: by 2002:a05:6000:809:b0:2bf:b710:5760 with SMTP id bt9-20020a056000080900b002bfb7105760mr10734077wrb.69.1675694817454;
+        Mon, 06 Feb 2023 06:46:57 -0800 (PST)
+Received: from [192.168.1.212] ([90.248.183.175])
+        by smtp.gmail.com with ESMTPSA id i3-20020a5d5223000000b002bfae1398bbsm9012869wra.42.2023.02.06.06.46.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Feb 2023 06:46:57 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <b24fc8ae-a9f8-868f-b281-74c256447084@dunelm.org.uk>
+Date:   Mon, 6 Feb 2023 14:46:57 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/9] git archive: use gzip again by default, document
+ output stabilty
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eli Schwartz <eschwartz93@gmail.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        =?UTF-8?Q?Michal_Such=c3=a1nek?= <msuchanek@suse.de>,
+        "Raymond E . Pasco" <ray@ameretat.dev>,
+        demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>
+References: <230131.86357rrtsg.gmgdl@evledraar.gmail.com>
+ <cover-0.9-00000000000-20230202T093212Z-avarab@gmail.com>
+ <771a98ca-9540-ad4e-dfba-9d304e1dff09@dunelm.org.uk>
+ <230203.86fsbmbzwp.gmgdl@evledraar.gmail.com>
+In-Reply-To: <230203.86fsbmbzwp.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+On 03/02/2023 13:49, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Feb 02 2023, Phillip Wood wrote: >> Reverting the change gives the misleading impression that we're making
+>> a commitment to keeping the output stable.
+> 
+> I don't see how you can conclude that from this series. It explicitly
+> states that we make no such promises, what it does is go back to
+> allowing the gzip(1) command to make its own promises.
 
-On 5 Feb 2023, at 12:50, Eric Sunshine wrote:
+This series would not be happening if we were not reverting a change to 
+the compressed output of 'git archive'. The documentation updates are 
+very welcome but I think we're undermining the message that the 
+compressed output can change by reverting that change.
 
-> On Sat, Feb 4, 2023 at 11:47 PM John Cai via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> It can be useful to specify diff algorithms per file type. For example=
-,
->> one may want to use the minimal diff algorithm for .json files, anothe=
-r
->> for .c files, etc.
->>
->> Teach the diff machinery to check attributes for a diff algorithm.
->> Enforce precedence by favoring the command line option, then looking a=
-t
->> attributes, then finally the config.
->>
->> To enforce precedence order, set the `xdl_opts_command_line` member
->> during options pasing to indicate the diff algorithm was set via comma=
-nd
->> line args.
->>
->> Signed-off-by: John Cai <johncai86@gmail.com>
->> ---
->> diff --git a/diff.c b/diff.c
->> @@ -3652,6 +3652,27 @@ static void builtin_diff(const char *name_a,
->> +               if (!o->xdl_opts_command_line) {
->> +                       static struct attr_check *check;
->
-> `check` is declared static...
->
->> +                       const char *one_diff_algo;
->> +                       const char *two_diff_algo;
->> +
->> +                       check =3D attr_check_alloc();
->
-> ... is allocated here...
->
->> +                       attr_check_append(check, git_attr("diff-algori=
-thm"));
->> +
->> +                       git_check_attr(the_repository->index, NULL, on=
-e->path, check);
->> +                       one_diff_algo =3D check->items[0].value;
->> +                       git_check_attr(the_repository->index, NULL, tw=
-o->path, check);
->> +                       two_diff_algo =3D check->items[0].value;
->> +
->> +                       if (!ATTR_UNSET(one_diff_algo) && !ATTR_UNSET(=
-two_diff_algo) &&
->> +                               !strcmp(one_diff_algo, two_diff_algo))=
+>> The focus of this thread seems to be the
+>> problems relating to github which they have already addressed.
+> 
+> Which they've addressed by reverting the change, but while they're a
+> major user of git they're not the only one. They just happened to use
+> "git archive".
+> 
+> I think it would be a mistake to conclude that everyone who's run into
+> this has already done so, or is aware of it.
 
->> +                               set_diff_algorithm(o, one_diff_algo);
->> +
->> +                       attr_check_free(check);
->
-> ... and freed here...
->
->> +               }
->
-> ... so the reason for the `static` declaration is not clear. Am I
-> missing something obvious?
+I've spent some time trying to find reports of problems caused by this 
+change and have not seen anything apart from the issue with GitHub. 
+Although it takes a while for new versions of git to get into linux 
+distributions if there is a widespread problem we normally hear about it 
+pretty quickly. This change has been in two releases now. If anyone does 
+have a problem there is an easy fix in the form of setting 
+tar.<format>.command
 
-No, you are correct. No reason for the static declaration. `check` is not=
- used outside of the scope of this
-conditional. I think this made it in from an earlier iteration and I didn=
-'t catch the oversight.
+>> I think there is general agreement that it is not practical to promise
+>> that the compressed output of "git archive" is stable so maybe it is
+>> better[...]
+> 
+> ...better than what? This seems to imply that this series is making new
+> promises about the output stability, which it isn't doing.
 
-thanks
-John
+It's better people realize they cannot rely on the output being stable 
+now when they can safely work around the problem while working on a 
+proper fix rather than waiting until the change in output is caused by a 
+security issue in gzip which means the work around is no longer safe.
 
+Best Wishes
 
+Phillip
+
+>> [...]to make that clear now while users can work around it in the
+>> short term with a config setting rather than waiting until we're faced
+>> with some security or other issue that forces a change to the output
+>> which users cannot work around so easily.
+> 
+> I think it's always been clear that you can use that setting. For ages
+> we've been saying:
+> 
+> 	The `tar.gz` and `tgz` formats are defined automatically and use the
+> 	command `gzip -cn` by default.
+> 
+> Then v2.38.0 changed it to:
+> 
+> 	[...]
+>          magic command `git archive gzip` by default
+> 
+> Which IMO was easily missed among other "Performance, Internal
+> Implementation, Development Support etc." items in the release notes,
+> which said:
+> 
+>     Teach "git archive" to (optionally and then by default) avoid
+>     spawning an external "gzip" process when creating ".tar.gz" (and
+>     ".tgz") archives.
+> 
+> But I agree that all of this is subjective. To me a 2% reduction in CPU
+> use (at the cost of ~20% increse in wallclock) & some unclear benefits
+> to teaching users that they can't rely on our "gzip" output seems
+> unclear or hypothetical.
+> 
+> Whereas the widespread breakage reported is very real,
+
+where are the reports of widespread berakage outside of GitHub?
+
+> and we should
+> consider GitHub as a canary for that, not the the stand & end of its
+> potential impact.
+> 
+> As we didn't have a strong reason to change this in the first place (and
+> as my series shows, we can have our cake & eat it too if we don't have a
+> "gzip") I think the obvious choice is to go back to using "gzip".
