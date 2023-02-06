@@ -2,129 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E54F7C05027
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 21:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ECBDC61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 21:41:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229780AbjBFVgG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 16:36:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50710 "EHLO
+        id S229731AbjBFVlK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 16:41:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbjBFVgE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 16:36:04 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 112A9193E9
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 13:36:03 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id mf7so38202770ejc.6
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 13:36:02 -0800 (PST)
+        with ESMTP id S229447AbjBFVlI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 16:41:08 -0500
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5027510F3
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 13:41:04 -0800 (PST)
+Received: by mail-qt1-x82b.google.com with SMTP id h24so14679685qtr.0
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 13:41:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tt9uXmVuhIdHgic8BRfu98E9yhrIBciSWATt3alLviA=;
-        b=R3JtON3wN0EY8V7xYHicTKORgADUL4joXjXsV0/GNq23NMdw+ev4j/uxYmSR/Vu10D
-         19Tx51tr61e4LUMojowA8dF3TXqN/soN4loGpB++lScQMUo4Ih01YRXJFP0zeAMx0k49
-         I02d5u/3I9UOqTdPGnfXn+JE0aqQRvfnv6RSJHlMCnywMZOpsVTchfxmgWutfPV7CBkw
-         oXBdz4cUaMz7w/6PboEmlSbGcBT7CHwHpVRpsaFXBnEgwULtMrAmbLAZV2smXpedeGQH
-         ujEA7TwZQTF5WlUhUWpXbY7QTKgFibl1i2lKBKzkE4aTnXbCxEqqt8VAOvQRWVODvdYs
-         WEaA==
+        d=linuxfoundation.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=AUvqcNAtRVgxM4PbdBsf4gKqNKBYrX7LRtU/MEx2tqc=;
+        b=LTQd1Y9pv39vdbZfifjCZA84nuNfJkWpVwPt8CitKFObTtCoHZQRZRlp5jvkk9l9Eh
+         qWsriLD77bR7GynaPdYIFeAwTFenNPojsQyRfwskWc5gcrtWKXMhU3yVzJvuXXPIdKcQ
+         AJMqRlOFuN4ZaQzw+2E7SHILP9x4oHNWG7NoU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tt9uXmVuhIdHgic8BRfu98E9yhrIBciSWATt3alLviA=;
-        b=Hmy4ZT32OARBcl3AtTxq7fpvov82TV8jiI0hYMkwQQT8Dv04IjzgzdKwgc29mCxv63
-         n+8nYGWWuviWU5akIvSKZCYRywofqsC6zGLWpu7UCEGfAcOIT2gkujVtp6M2hEMDaBVG
-         GaoV9itRlVnQGELsc3xfmbdLr745fALGx+vcaH0NOSzVyOKvk/+opYBi+fnUwAIEiyt3
-         tdT8Oykla4jXlOX1CXfWHhiJjX/IGl/AEeI3tXyiiuJWoldSvSygP3fZyRVfocaEcPs8
-         Xvc4FbqHqTologr1VoBolUGJis12gix/lM8B3qge6LpcIvMMbe2N7JfapHZ+DtlLzTfO
-         bheQ==
-X-Gm-Message-State: AO0yUKWZuHoGuMaNdfEdYPcOo5nvKhT2uzhonshscwY3POAawqpZxf0X
-        OwR/FOlx/B6CdzpNekU36pNyhkVNGlKmtw==
-X-Google-Smtp-Source: AK7set+IgSyhyxys5mkxJzqW8S3AVSJ5g8MHVVi/yluraxkFMN83EcGWvLN5KNYu3UEhpEkwBVb/Jg==
-X-Received: by 2002:a17:906:595a:b0:88c:f7f6:bf59 with SMTP id g26-20020a170906595a00b0088cf7f6bf59mr867927ejr.17.1675719361121;
-        Mon, 06 Feb 2023 13:36:01 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id es26-20020a056402381a00b00488117821ffsm5628542edb.31.2023.02.06.13.35.59
+        bh=AUvqcNAtRVgxM4PbdBsf4gKqNKBYrX7LRtU/MEx2tqc=;
+        b=ixAhakBRtWE8UFOgVvP1GmNpGn9+FqpIO+dxTYsh7PKJHPvAtsBjRKdmkd2KwdFL8D
+         Wr1XAxEuv6PhyCoiQ+/ZblUTb5y4RQwbX9jEAn0sW/P0XdEut4JBP9lZdS6VpiO1SkhF
+         kx/6BtTqeh8V2vBSXWJ51JQNOfyBu51bp4uSAKUm19h22QIryyV4lvuH/yqc4qPtwAtZ
+         9xAFiuMTOTVnet+TqhuRQ/mOR4ueS2+GwqN9BMNh2s/BUil/+Q2TCmxSlPMk0K8u6gzS
+         y5vzs8n2RmXVkcK0N94SPrsAtqCAVqVPyGYZFlVmI/0/fLMDtZSPDp2wSLXMSgBeis0d
+         +Ijg==
+X-Gm-Message-State: AO0yUKW0WxA0MiT9eqScX+N1GZnxCK1MDI0ZsX3cZSLHt968bN+Pmslj
+        BN/N2YHH0Siw1uD7axjX4s/csg==
+X-Google-Smtp-Source: AK7set8jfPnZNexl4kTZ0AsHfpsFvzzCoBGS68jfXRWnbrEYCG5Y/rwV5B6gOBEyp46Ua502h8yKJQ==
+X-Received: by 2002:a05:622a:13cf:b0:3b9:a4ae:9d17 with SMTP id p15-20020a05622a13cf00b003b9a4ae9d17mr1908353qtk.3.1675719663403;
+        Mon, 06 Feb 2023 13:41:03 -0800 (PST)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
+        by smtp.gmail.com with ESMTPSA id u31-20020a05622a199f00b003b0b903720esm8093366qtc.13.2023.02.06.13.41.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 13:36:00 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2023, #01; Thu, 2)
-References: <xmqqr0v7o0pp.fsf@gitster.g> <871qn5pyez.fsf@osv.gnss.ru>
-        <xmqqedr28wwb.fsf@gitster.g>
-Date:   Tue, 07 Feb 2023 00:35:59 +0300
-In-Reply-To: <xmqqedr28wwb.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        06 Feb 2023 10:35:32 -0800")
-Message-ID: <87357ischs.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        Mon, 06 Feb 2023 13:41:03 -0800 (PST)
+Date:   Mon, 6 Feb 2023 16:41:01 -0500
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: The sad state of git.wiki.kernel.org
+Message-ID: <20230206214101.fe6rismtfzv4k75n@meerkat.local>
+References: <20230203182255.lqla3hsme6riy4w7@meerkat.local>
+ <Y95BEaOGJy9uBHkG@coredump.intra.peff.net>
+ <CAP8UFD1q7-XbX4C_NjyL7A-6n6Nc4MgSbUKnzQOiRyKRMtLv_w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD1q7-XbX4C_NjyL7A-6n6Nc4MgSbUKnzQOiRyKRMtLv_w@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sat, Feb 04, 2023 at 03:03:16PM +0100, Christian Couder wrote:
+> > > # Should it be archived as a static site?
+> > >
+> > > It's possible to turn git.wiki.kernel.org into a static site with a large
+> > > header on every page that it contains historical archival information, with a
+> > > link to https://git-scm.com/doc
+> >
+> > This would be my preference, just because some of the old content may
+> > still have value. Some pages (like old gsoc stuff) would better redirect
+> > to git.github.io, but it is probably not worth the time to even try to
+> > classify pages.
+> 
+> This would be my preference too. I agree that some old content might
+> still have some value. We could also move or redirect some old content
+> to git.github.io, but I am not sure it's worth the time either.
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>
->>> * so/diff-merges-more (2022-12-18) 5 commits
->>>  - diff-merges: improve --diff-merges documentation
->>>  - diff-merges: issue warning on lone '-m' option
->>>  - diff-merges: support list of values for --diff-merges
->>>  - diff-merges: implement log.diffMerges-m-imply-p config
->>>  - diff-merges: implement [no-]hide option and log.diffMergesHide config
->>>
->>>  Assorted updates to "--diff-merges=X" option.
->>>
->>>  May want to discard.  Breaking compatibility does not seem worth it.
->>>  source: <20221217132955.108542-1-sorganov@gmail.com>
->>
->> Hi Junio,
->>
->> This does not break any compatibility, as far as me and I believe
->> reviewers of these series are aware.
->
-> The last paragraphs in the review two months ago still describe what
-> this series does fairly accurately, I think.
->
->     These patches do look like a good approach to solve the first point
->     among the "two problems" in the previous round. Thanks for working
->     on it.
->
->     IIRC, the previous round (why is this round marked as v1, by the
->     way?) was reviewed by some folks, so lets wait to hear from them
->     how this round does better.
->
->     Unfortunately, I do not think of any "solution" that would avoid
->     breaking folks, if its end goal is to flip the default, either by
->     hardcoding or with a configuration variable.  IOW, the other one
->     among the "two problems" in the previous round sounds unsolvable.
->     We should question if it was really an "issue" worth "resolving",
->     though.
+Okay, here's what I have:
 
-Well, we may end up flipping or not flipping the default (even though
-I'd prefer we indeed do), the series are still valid either way, as they
-allow *me* (or anybody else who prefers more useful '-m' behavior) to
-flip the switch for myself, locally.
+https://archive.kernel.org/oldwiki/git.wiki.kernel.org/
 
-Also, the only patch that got some resistance from reviewers has been
-removed from the series, so I don't see anything left that'd prevent
-this from being merged.
+It's just a static scrape excluding all Special: and User: pages, and carrying
+a very large "OBSOLETE CONTENT" warning.
 
-From my POV the only remotely questionable patch is:
+The idea is that requests to git.wiki.kernel.org will be redirected to the
+archive pages and thus hopefully preserve the content for historical reasons.
 
-- diff-merges: issue warning on lone '-m' option
+Unless someone objects within the next few days, I'll proceed with this plan.
 
-and I hereby agree to remove it if it feels wrong to you.
-
-Let me state it cleanly: once these are accepted, I'll turn
-log.diffMerges-m-imply-p on for myself, and will suggest it to others
-who already asked about '-m' inconsistency, or will ask in the future.
-
-Thanks,
--- Sergey Organov
+-K
