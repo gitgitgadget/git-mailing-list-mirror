@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 462FBC05027
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 19:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74340C636D4
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 19:29:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229934AbjBFT34 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 14:29:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56490 "EHLO
+        id S229973AbjBFT36 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 14:29:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbjBFT3z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 14:29:55 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C75F235A2
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 11:29:53 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id q8so9454019wmo.5
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 11:29:53 -0800 (PST)
+        with ESMTP id S229500AbjBFT35 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 14:29:57 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8B1C975F
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 11:29:54 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id k8-20020a05600c1c8800b003dc57ea0dfeso11591207wms.0
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 11:29:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=o2CKa+TP0Sfn3JluAO/UtZlHT9sZS//G8XxA1vZEuFw=;
-        b=XjdAzjLk3q5puhMxnBMwIrxhqncqtlZcffP87yfPfHcSq9/oAomLHaCD27p6+k4VMB
-         rXSuRW7dTCQLA0QATZ6EtPMKPWRFLBSZBYMtVfi4XlxHb5rAaEqYhC2fyVC4bUv+KoP0
-         wdewRaZzdKcu0h8gVjTVhH/prDdjyhtEBa4PSxPFnNWcCcwxRmGy13n1oYUnchJSTDEF
-         blTXmRb7PUisObuaskpVhoL0sgFu54g7puE7nJqEDE8bSwe0+g+1SWDxYtyfZQL1qCvn
-         FJrkFCDyTIm5KdJJe7qWTY09lcUSB3GHTdYexeu9/PsqjvzMZk1JcSFOgcvqwFoC7yMK
-         W+Hg==
+        bh=r0ljBALqLLLvUNlGtS+5r9AOup0i5vzsrw+KAteBhc4=;
+        b=blgBzk1TY6cRr7hRTAepZKjqBmZc2DVT6ALHvfg5Ssjw988yM2J2DJRfLLjo1BTyAY
+         5hsvcE0P+pnMq3hhCwzV06kzuL55z04ZIUewWZe1iZIb7rjlyl92EQa0dIowij0N5Fk4
+         B3m+bF/exwPPehJn/IRWKSzF1cHPrDNgdzmgW6NxbfvQuIocabE2wph15AFsWrLhWRvO
+         dnySi5k38fEVVzRnraZR7tvFBgvfQulek0TLa8nLuMvPSRFGpVzyb8Gd4evsh3ORJdOZ
+         4dU9f8KCBNO/4zx2On9Xc3Nj5btz1m2F6FAWUkNBWtgw2J9uop/Mmt/SvVDPB7bY78An
+         /kfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=o2CKa+TP0Sfn3JluAO/UtZlHT9sZS//G8XxA1vZEuFw=;
-        b=YSXCbvrLazKmyItOQ6TifO6ugWyuG8hSww2F9YLuizyOiTb0mtZDfzOdqCSoYqHtVj
-         bLxYR6n8a9GC90+oDkSMFXKTZpA8b1rgFuw8C9gYmkPXt1+EY+Og7MDijsZzT6eHmSPy
-         9hl9QISFr5T/i+J6v01O4WL8es3RmdOzb/X7CXGJ6L4z2Q+e18GTV7fiMi/O2NOwf840
-         dVPbCzlrWBOPnorKpJzhV1JPojVoCnZ/xtPW9B0zfxPSo0hyh7oHWm5AEprNzz2NVHVV
-         nNunq8DOtQjTh8KnXkpoY2GLBoulXWKDbWx8OIZ0GnawqP6lQ/yUOepzatPwPc18SEXI
-         bkug==
-X-Gm-Message-State: AO0yUKUIx/g63xwx9wPfiUnvc/b5CbYPf9DfNtHUFcFyoPRCUhO6GcOb
-        XBxibo+zNikEJSFoCw3Iu8hkaw6iW/A=
-X-Google-Smtp-Source: AK7set8v1ertDV8YDtC1oiZ0NKXFVWavjxrlt2rs/8X3PvcqN3bGzeQe3hro7wRUyGsMKuOh1NPYfg==
-X-Received: by 2002:a05:600c:4a8a:b0:3de:d9f:3025 with SMTP id b10-20020a05600c4a8a00b003de0d9f3025mr848711wmp.0.1675711792090;
-        Mon, 06 Feb 2023 11:29:52 -0800 (PST)
+        bh=r0ljBALqLLLvUNlGtS+5r9AOup0i5vzsrw+KAteBhc4=;
+        b=r16omYgoDfm1KD9VMXd2roHVLni4ESlhfnTIgSbXMt1PXd+wYUxO/N2zMMVgKApB+t
+         opuj8GWEP4jkRO9KmvuS1T/yR/Y21kyGu23ewg1PA/TL98FTPrlUkUXB3ms/ugfFndxH
+         XenYwF97Ih3fCdjuSnabpbjscCJeNwOf8RCcZ6qTxqvMrdvxkxX4oRe1ffPEtS6jV94S
+         SM8W0FpjzVxDTpGqzb/KelS+5+CKT+0iUFcJY+OpTDTYxWOobze8/2JR5TT9l1VOoTNd
+         puXQ6axXtK3rz9M/wRuIfMTa57ZX5ruk55ba517kOGPk32HrGz5xut/cmCSHMyMbCLzt
+         c4VQ==
+X-Gm-Message-State: AO0yUKU+hB9uGfcOztmAhsLAjJedL340cRbWs6w4q+h8hdzehi6Ddf/t
+        VCgoMd+IJ9YqsR7V2Z/jRymBmYW5PZY=
+X-Google-Smtp-Source: AK7set+0Heo6AQRJq684RZ4sZNQmBjGHipZwODM/25/m2Ena6QMsaugj49cxK+ad60hdJ3UHLQ5ykw==
+X-Received: by 2002:a05:600c:4d26:b0:3dc:50b8:67d7 with SMTP id u38-20020a05600c4d2600b003dc50b867d7mr782099wmp.11.1675711793065;
+        Mon, 06 Feb 2023 11:29:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s24-20020a05600c319800b003dfe5190376sm11171377wmp.35.2023.02.06.11.29.51
+        by smtp.gmail.com with ESMTPSA id d5-20020a1c7305000000b003dcc82ce53fsm2163438wmb.38.2023.02.06.11.29.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 11:29:51 -0800 (PST)
-Message-Id: <d362f7016d34c4803adf42a88012997c66e0bde8.1675711789.git.gitgitgadget@gmail.com>
+        Mon, 06 Feb 2023 11:29:52 -0800 (PST)
+Message-Id: <cd9a02ba94e9eb59b07d0b95140d5b880f122941.1675711789.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v8.git.1675711789.gitgitgadget@gmail.com>
 References: <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
         <pull.1352.v8.git.1675711789.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 06 Feb 2023 19:29:47 +0000
-Subject: [PATCH v8 1/3] t5563: add tests for basic and anoymous HTTP access
+Date:   Mon, 06 Feb 2023 19:29:48 +0000
+Subject: [PATCH v8 2/3] http: read HTTP WWW-Authenticate response headers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,201 +79,267 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Add a test showing simple anoymous HTTP access to an unprotected
-repository, that results in no credential helper invocations.
-Also add a test demonstrating simple basic authentication with
-simple credential helper support.
+Read and store the HTTP WWW-Authenticate response headers made for
+a particular request.
 
-Leverage a no-parsed headers (NPH) CGI script so that we can directly
-control the HTTP responses to simulate a multitude of good, bad and ugly
-remote server implementations around auth.
+This will allow us to pass important authentication challenge
+information to credential helpers or others that would otherwise have
+been lost.
+
+According to RFC2616 Section 4.2 [1], header field names are not
+case-sensitive meaning when collecting multiple values for the same
+field name, we can just use the case of the first observed instance of
+each field name and no normalisation is required.
+
+libcurl only provides us with the ability to read all headers recieved
+for a particular request, including any intermediate redirect requests
+or proxies. The lines returned by libcurl include HTTP status lines
+delinating any intermediate requests such as "HTTP/1.1 200". We use
+these lines to reset the strvec of WWW-Authenticate header values as
+we encounter them in order to only capture the final response headers.
+
+The collection of all header values matching the WWW-Authenticate
+header is complicated by the fact that it is legal for header fields to
+be continued over multiple lines, but libcurl only gives us one line at
+a time.
+
+In the future [2] we may be able to leverage functions to read headers
+from libcurl itself, but as of today we must do this ourselves.
+
+[1] https://datatracker.ietf.org/doc/html/rfc2616#section-4.2
+[2] https://daniel.haxx.se/blog/2022/03/22/a-headers-api-for-libcurl/
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- t/lib-httpd.sh                 |  1 +
- t/lib-httpd/apache.conf        |  6 +++
- t/lib-httpd/nph-custom-auth.sh | 42 +++++++++++++++++
- t/t5563-simple-http-auth.sh    | 86 ++++++++++++++++++++++++++++++++++
- 4 files changed, 135 insertions(+)
- create mode 100755 t/lib-httpd/nph-custom-auth.sh
- create mode 100755 t/t5563-simple-http-auth.sh
+ credential.c      |   1 +
+ credential.h      |  15 ++++++
+ git-compat-util.h |  22 +++++++++
+ http.c            | 120 ++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 158 insertions(+)
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 608949ea80b..2c49569f675 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -137,6 +137,7 @@ prepare_httpd() {
- 	install_script error-smart-http.sh
- 	install_script error.sh
- 	install_script apply-one-time-perl.sh
-+	install_script nph-custom-auth.sh
+diff --git a/credential.c b/credential.c
+index f6389a50684..897b4679333 100644
+--- a/credential.c
++++ b/credential.c
+@@ -22,6 +22,7 @@ void credential_clear(struct credential *c)
+ 	free(c->username);
+ 	free(c->password);
+ 	string_list_clear(&c->helpers, 0);
++	strvec_clear(&c->wwwauth_headers);
  
- 	ln -s "$LIB_HTTPD_MODULE_PATH" "$HTTPD_ROOT_PATH/modules"
+ 	credential_init(c);
+ }
+diff --git a/credential.h b/credential.h
+index f430e77fea4..6f2e5bc610b 100644
+--- a/credential.h
++++ b/credential.h
+@@ -2,6 +2,7 @@
+ #define CREDENTIAL_H
  
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 0294739a77a..76335cdb24d 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -135,6 +135,11 @@ Alias /auth/dumb/ www/auth/dumb/
- 	SetEnv GIT_HTTP_EXPORT_ALL
- 	SetEnv GIT_PROTOCOL
- </LocationMatch>
-+<LocationMatch /custom_auth/>
-+	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
-+	SetEnv GIT_HTTP_EXPORT_ALL
-+	CGIPassAuth on
-+</LocationMatch>
- ScriptAlias /smart/incomplete_length/git-upload-pack incomplete-length-upload-pack-v2-http.sh/
- ScriptAlias /smart/incomplete_body/git-upload-pack incomplete-body-upload-pack-v2-http.sh/
- ScriptAlias /smart/no_report/git-receive-pack error-no-report.sh/
-@@ -144,6 +149,7 @@ ScriptAlias /broken_smart/ broken-smart-http.sh/
- ScriptAlias /error_smart/ error-smart-http.sh/
- ScriptAlias /error/ error.sh/
- ScriptAliasMatch /one_time_perl/(.*) apply-one-time-perl.sh/$1
-+ScriptAliasMatch /custom_auth/(.*) nph-custom-auth.sh/$1
- <Directory ${GIT_EXEC_PATH}>
- 	Options FollowSymlinks
- </Directory>
-diff --git a/t/lib-httpd/nph-custom-auth.sh b/t/lib-httpd/nph-custom-auth.sh
-new file mode 100755
-index 00000000000..8f851aebac4
---- /dev/null
-+++ b/t/lib-httpd/nph-custom-auth.sh
-@@ -0,0 +1,42 @@
-+#!/bin/sh
+ #include "string-list.h"
++#include "strvec.h"
+ 
+ /**
+  * The credentials API provides an abstracted way of gathering username and
+@@ -115,6 +116,19 @@ struct credential {
+ 	 */
+ 	struct string_list helpers;
+ 
++	/**
++	 * A `strvec` of WWW-Authenticate header values. Each string
++	 * is the value of a WWW-Authenticate header in an HTTP response,
++	 * in the order they were received in the response.
++	 */
++	struct strvec wwwauth_headers;
 +
-+VALID_CREDS_FILE=custom-auth.valid
-+CHALLENGE_FILE=custom-auth.challenge
-+ANONYMOUS_FILE=custom-auth.anonymous
++	/**
++	 * Internal use only. Used to keep track of split header fields
++	 * in order to fold multiple lines into one value.
++	 */
++	unsigned header_is_last_match:1;
 +
-+#
-+# If $ANONYMOUS_FILE exists in $HTTPD_ROOT_PATH, allow anonymous access.
-+#
-+# If $VALID_CREDS_FILE exists in $HTTPD_ROOT_PATH, consider each line as a valid
-+# credential for the current request. Each line in the file is considered a
-+# valid HTTP Authorization header value. For example:
-+#
-+# Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-+#
-+# If $CHALLENGE_FILE exists in $HTTPD_ROOT_PATH, output the contents as headers
-+# in a 401 response if no valid authentication credentials were included in the
-+# request. For example:
-+#
-+# WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
-+# WWW-Authenticate: Basic realm="example.com"
-+#
+ 	unsigned approved:1,
+ 		 configured:1,
+ 		 quit:1,
+@@ -130,6 +144,7 @@ struct credential {
+ 
+ #define CREDENTIAL_INIT { \
+ 	.helpers = STRING_LIST_INIT_DUP, \
++	.wwwauth_headers = STRVEC_INIT, \
+ }
+ 
+ /* Initialize a credential structure, setting all fields to empty. */
+diff --git a/git-compat-util.h b/git-compat-util.h
+index a76d0526f79..f11c44517d7 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1266,6 +1266,28 @@ static inline int skip_iprefix(const char *str, const char *prefix,
+ 	return 0;
+ }
+ 
++/*
++ * Like skip_prefix_mem, but compare case-insensitively. Note that the
++ * comparison is done via tolower(), so it is strictly ASCII (no multi-byte
++ * characters or locale-specific conversions).
++ */
++static inline int skip_iprefix_mem(const char *buf, size_t len,
++				   const char *prefix,
++				   const char **out, size_t *outlen)
++{
++	size_t prefix_len = strlen(prefix);
++	if (len < prefix_len)
++		return 0;
 +
-+if test -f "$ANONYMOUS_FILE" || (test -f "$VALID_CREDS_FILE" && \
-+	grep -qi "^${HTTP_AUTHORIZATION:-nopenopnope}$" "$VALID_CREDS_FILE")
-+then
-+	# Note that although git-http-backend returns a status line, it
-+	# does so using a CGI 'Status' header. Because this script is an
-+	# No Parsed Headers (NPH) script, we must return a real HTTP
-+	# status line.
-+	# This is only a test script, so we don't bother to check for
-+	# the actual status from git-http-backend and always return 200.
-+	echo 'HTTP/1.1 200 OK'
-+	exec "$GIT_EXEC_PATH"/git-http-backend
-+fi
++	if (!strncasecmp(buf, prefix, prefix_len)){
++		*out = buf + prefix_len;
++		*outlen = len - prefix_len;
++		return 1;
++	}
 +
-+echo 'HTTP/1.1 401 Authorization Required'
-+if test -f "$CHALLENGE_FILE"
-+then
-+	cat "$CHALLENGE_FILE"
-+fi
-+echo
-diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
-new file mode 100755
-index 00000000000..004eac5d1ed
---- /dev/null
-+++ b/t/t5563-simple-http-auth.sh
-@@ -0,0 +1,86 @@
-+#!/bin/sh
-+
-+test_description='test http auth header and credential helper interop'
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+
-+start_httpd
-+
-+test_expect_success 'setup_credential_helper' '
-+	mkdir -p "$TRASH_DIRECTORY/bin" &&
-+	PATH=$PATH:"$TRASH_DIRECTORY/bin" &&
-+	export PATH &&
-+
-+	CREDENTIAL_HELPER="$TRASH_DIRECTORY/bin/git-credential-test-helper" &&
-+	write_script "$CREDENTIAL_HELPER" <<-\EOF
-+	cmd=$1
-+	teefile=$cmd-query.cred
-+	catfile=$cmd-reply.cred
-+	sed -n -e "/^$/q" -e "p" >> $teefile
-+	if test "$cmd" = "get"; then
-+		cat $catfile
-+	fi
-+	EOF
-+'
-+
-+set_credential_reply() {
-+	cat >"$TRASH_DIRECTORY/$1-reply.cred"
++	return 0;
 +}
 +
-+expect_credential_query() {
-+	cat >"$TRASH_DIRECTORY/$1-expect.cred" &&
-+	test_cmp "$TRASH_DIRECTORY/$1-expect.cred" \
-+		 "$TRASH_DIRECTORY/$1-query.cred"
+ static inline int strtoul_ui(char const *s, int base, unsigned int *result)
+ {
+ 	unsigned long ul;
+diff --git a/http.c b/http.c
+index 8a5ba3f4776..7a56a3db5f7 100644
+--- a/http.c
++++ b/http.c
+@@ -183,6 +183,124 @@ size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ 	return nmemb;
+ }
+ 
++/*
++ * A folded header continuation line starts with at least one single whitespace
++ * character. It is not a continuation line if the line is *just* a newline.
++ * The RFC for HTTP states that CRLF is the header field line ending, but some
++ * servers may use LF only; we accept both.
++ */
++static inline int is_hdr_continuation(const char *ptr, const size_t size)
++{
++	/* totally empty line or normal header */
++	if (!size || !isspace(*ptr))
++		return 0;
++
++	/* empty line with LF line ending */
++	if (size == 1 && ptr[0] == '\n')
++		return 0;
++
++	/* empty line with CRLF line ending */
++	if (size == 2 && ptr[0] == '\r' && ptr[1] == '\n')
++		return 0;
++
++	return 1;
 +}
 +
-+per_test_cleanup () {
-+	rm -f *.cred &&
-+	rm -f "$HTTPD_ROOT_PATH"/custom-auth.*
++static size_t fwrite_wwwauth(char *ptr, size_t eltsize, size_t nmemb, void *p)
++{
++	size_t size = eltsize * nmemb;
++	struct strvec *values = &http_auth.wwwauth_headers;
++	struct strbuf buf = STRBUF_INIT;
++	const char *val;
++	size_t val_len;
++
++	/*
++	 * Header lines may not come NULL-terminated from libcurl so we must
++	 * limit all scans to the maximum length of the header line, or leverage
++	 * strbufs for all operations.
++	 *
++	 * In addition, it is possible that header values can be split over
++	 * multiple lines as per RFC 2616 (even though this has since been
++	 * deprecated in RFC 7230). A continuation header field value is
++	 * identified as starting with a space or horizontal tab.
++	 *
++	 * The formal definition of a header field as given in RFC 2616 is:
++	 *
++	 *   message-header = field-name ":" [ field-value ]
++	 *   field-name     = token
++	 *   field-value    = *( field-content | LWS )
++	 *   field-content  = <the OCTETs making up the field-value
++	 *                    and consisting of either *TEXT or combinations
++	 *                    of token, separators, and quoted-string>
++	 */
++
++	/* Start of a new WWW-Authenticate header */
++	if (skip_iprefix_mem(ptr, size, "www-authenticate:", &val, &val_len)) {
++		strbuf_add(&buf, val, val_len);
++
++		/*
++		 * Strip the CRLF that should be present at the end of each
++		 * field as well as any trailing or leading whitespace from the
++		 * value.
++		 */
++		strbuf_trim(&buf);
++
++		strvec_push(values, buf.buf);
++		http_auth.header_is_last_match = 1;
++		goto exit;
++	}
++
++	/*
++	 * This line could be a continuation of the previously matched header
++	 * field. If this is the case then we should append this value to the
++	 * end of the previously consumed value.
++	 */
++	if (http_auth.header_is_last_match && is_hdr_continuation(ptr, size)) {
++		/*
++		 * Trim the CRLF and any leading or trailing from this line.
++		 */
++		strbuf_add(&buf, ptr, size);
++		strbuf_trim(&buf);
++
++		/*
++		 * At this point we should always have at least one existing
++		 * value, even if it is empty. Do not bother appending the new
++		 * value if this continuation header is itself empty.
++		 */
++		if (!values->nr) {
++			BUG("should have at least one existing header value");
++		} else if (buf.len) {
++			char *prev = xstrdup(values->v[values->nr - 1]);
++
++			/* Join two non-empty values with a single space. */
++			const char *const sp = *prev ? " " : "";
++
++			strvec_pop(values);
++			strvec_pushf(values, "%s%s%s", prev, sp, buf.buf);
++			free(prev);
++		}
++
++		goto exit;
++	}
++
++	/* This is the start of a new header we don't care about */
++	http_auth.header_is_last_match = 0;
++
++	/*
++	 * If this is a HTTP status line and not a header field, this signals
++	 * a different HTTP response. libcurl writes all the output of all
++	 * response headers of all responses, including redirects.
++	 * We only care about the last HTTP request response's headers so clear
++	 * the existing array.
++	 */
++	if (!strncasecmp(ptr, "http/", 5))
++		strvec_clear(values);
++
++exit:
++	strbuf_release(&buf);
++	return size;
 +}
 +
-+test_expect_success 'setup repository' '
-+	test_commit foo &&
-+	git init --bare "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-+	git push --mirror "$HTTPD_DOCUMENT_ROOT_PATH/repo.git"
-+'
+ size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
+ {
+ 	return nmemb;
+@@ -1864,6 +1982,8 @@ static int http_request(const char *url,
+ 					 fwrite_buffer);
+ 	}
+ 
++	curl_easy_setopt(slot->curl, CURLOPT_HEADERFUNCTION, fwrite_wwwauth);
 +
-+test_expect_success 'access anonymous no challenge' '
-+	test_when_finished "per_test_cleanup" &&
-+	touch "$HTTPD_ROOT_PATH/custom-auth.anonymous" &&
-+	git ls-remote "$HTTPD_URL/custom_auth/repo.git"
-+'
-+
-+test_expect_success 'access using basic auth' '
-+	test_when_finished "per_test_cleanup" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
-+	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-+	EOF
-+
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
-+	WWW-Authenticate: Basic realm="example.com"
-+	EOF
-+
-+	test_config_global credential.helper test-helper &&
-+	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HTTPD_DEST
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HTTPD_DEST
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_done
+ 	accept_language = http_get_accept_language_header();
+ 
+ 	if (accept_language)
 -- 
 gitgitgadget
 
