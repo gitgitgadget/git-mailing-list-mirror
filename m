@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E89EC61DA4
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 12:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91D04C61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 12:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbjBFMg1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 07:36:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59814 "EHLO
+        id S229889AbjBFMhN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 07:37:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229868AbjBFMg0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 07:36:26 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B1EC20054
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 04:36:22 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id l22-20020a17090aaa9600b00230aa3c1350so1112409pjq.2
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 04:36:22 -0800 (PST)
+        with ESMTP id S229664AbjBFMhM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 07:37:12 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0CBE20070
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 04:37:09 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id e11-20020a17090a77cb00b0022925dd66d3so8601695pjs.4
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 04:37:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
         bh=ajuNyV2KrVpxl7sUUqaMJVc5FDMxp+ujn6L0B2p3QSE=;
-        b=EwEcyA2b9vYmjztYXYI37xoGSvgF7/1kxvlIfYwtCNR8kQw+zCJ3urbJVNQkiwM1CP
-         hbW9I/Ypcq9rwixiNeyIQe+7HBAsYrmAGfhhobXmiQFlVk3b7EKtxWiRpangVpdrFQ6w
-         Jr+U3N5GmO8vmT37fBdHZKrhS2mRCCwiaFMxOaqXIRj0z+IAkWbNz/DeyPrn3oCiDsgq
-         DT17WW04KqXwg7iPngAbuioNj+eFIfesxsiUXYIkRrwxsh6Zv9WKqan72ldCjxOS9tTD
-         jdF7fSX8zv1rtctmJuGBUFlVcPjAajyZO+bftjKpHoyam6h0Q32VGZiVw436O8aovuga
-         0WgA==
+        b=nIuS7/aly43TYHI2IYhxSB4qgFKhlRaUa/gTx5pSxyUmfxbReep/KGiMzYmtaDVKSz
+         8yOxrzjNR4BexCFWysBTlAUFRJGG7RxVzDqx/lFHwglXuFGxdXIoZWMBU4eHQyKq4wNb
+         EsuiX5mh8pv7J1qm4iHdi1Zn5hwl4PwIHcX6pVRo/ZMJqM0YT/+W8yW4GWmImUWUm+Te
+         FhpUfcNnuGkJz2dNAU8oK5H6Gryw4JwJzNrfJZFKekzyc6De6zY+o1qNUHfKyC9q4cjL
+         aSCWaDEe+/ixML1jhU1Q5uYr0fKM4Eetb3NkJooFbYXAVz22gLtPFF6joG/4sQaRrz2E
+         G+qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
         bh=ajuNyV2KrVpxl7sUUqaMJVc5FDMxp+ujn6L0B2p3QSE=;
-        b=loaL0z0iYWVY2UOQ2WFjNS6viOiZFNApo+PqrS6T4Osavr1HMBMbGgmys7Yrnhc/H+
-         kcDDtKJrKn5h6s7zw3x3PuNmMROOEk3Xt+l9baoF7DTB1F5/8sDAi69xt7friK8fSGAG
-         ouBSbQYZ6NoyMtP1M4mBwBsMEFEg3ApDJkGvFqZkZLzTzf8L7xGVP6D0QD1x5UBs3DZz
-         VRGqeT8Qmv1frKBxF/bYAhGPGTkGEYstf050N9A+A4VuQY+1LO1rY4bK4vi0LhrHeUvl
-         WWv4aiKNpg1ZOxQ2Y/hCS7Syi8Gw0Fvgvoi+2eEEhnrqTBtaXjJ2OJpGw4ckvfoydEF9
-         kFFw==
-X-Gm-Message-State: AO0yUKWyPUZITRlAemVmM+U2llrnizaLtsN8/S3QPJcTEkIXzrRGCYJ+
-        faY4YPPwdXrcuHbs9b+KlazPB2occfIBkw==
-X-Google-Smtp-Source: AK7set/vIG25yH7tlj7AaGtIUePJBdZFXPZe0s0BfBuuujdyq5wrJg3wb5QWWXS+pzbVYdcF0NuyLXzCOhuWog==
+        b=S6yXXm3i37nMeaeuyyAgfcedpQQ0YlMuRD5uxbwm5f1UkQRiqd76ah4qWhjIohLP6X
+         WG1DwWs3f8J6+u+AIVaY/uRoF2ja7EKqXW4AIuhgGlM0zRD5jy4sq/A2CwOUmk6se2yY
+         KxiwC3Yj63ryXbCf2vsDaDW2VWDVQKqvMvILRolGErntRcvs6TGLHX6lqX1xuoQfkdx+
+         dqZc0UQCVD3/69J7RNxwNhySwAwVEiTrN+i1HfMmaneaEiYqb/VC2lfVvt98WFbOJEcZ
+         xsaik+Pf5BV7bDcFql8AqGRWklDOG6tWLmDIJV1MCMDDFRLvlRbwfHBCfXfi37zKsR5i
+         OkxQ==
+X-Gm-Message-State: AO0yUKVUCXYaHgbbI8iO+dJgiHb+mmNavZsEO4hI/1lwfBcyF1v6O0Jp
+        5jhDkhBenZom8Ou8aTQ/dOJUojgJ7+6t+g==
+X-Google-Smtp-Source: AK7set+EItuBftIiBMRIonCd3nd56yuV5yZ9YtiAN9NXNXbZ6viSF3qsYN4w8+HrShOaTVnifaJvRIPso36ylw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:902:c94c:b0:196:77f2:559d with SMTP
- id i12-20020a170902c94c00b0019677f2559dmr4386954pla.18.1675686982049; Mon, 06
- Feb 2023 04:36:22 -0800 (PST)
-Date:   Mon, 06 Feb 2023 20:36:11 +0800
+ (user=chooglen job=sendgmr) by 2002:a62:1e82:0:b0:59c:3da0:1629 with SMTP id
+ e124-20020a621e82000000b0059c3da01629mr1269600pfe.6.1675687029286; Mon, 06
+ Feb 2023 04:37:09 -0800 (PST)
+Date:   Mon, 06 Feb 2023 20:37:07 +0800
 In-Reply-To: <patch-v4-3.9-998b11ae4bc-20230202T131155Z-avarab@gmail.com>
 Mime-Version: 1.0
 References: <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com>
  <cover-v4-0.9-00000000000-20230202T131155Z-avarab@gmail.com> <patch-v4-3.9-998b11ae4bc-20230202T131155Z-avarab@gmail.com>
-Message-ID: <kl6lv8kfgedg.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <kl6lttzzgebw.fsf@chooglen-macbookpro.roam.corp.google.com>
 Subject: Re: [PATCH v4 3/9] config API: add and use a "git_config_get()"
  family of functions
 From:   Glen Choo <chooglen@google.com>
