@@ -2,133 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98591C61DA4
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 22:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EB7FC05027
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 22:31:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230079AbjBFW3z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 17:29:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45438 "EHLO
+        id S230103AbjBFWbG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 17:31:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230137AbjBFW3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 17:29:35 -0500
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EFC511EAD
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 14:29:15 -0800 (PST)
-Received: by mail-pg1-x531.google.com with SMTP id v3so9231425pgh.4
-        for <git@vger.kernel.org>; Mon, 06 Feb 2023 14:29:15 -0800 (PST)
+        with ESMTP id S230096AbjBFWav (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 17:30:51 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3784303F6
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 14:30:23 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id ml19so38708554ejb.0
+        for <git@vger.kernel.org>; Mon, 06 Feb 2023 14:30:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hfzH5eT5zoGdIoXIwKVykwTpNhHjD/vbBLM/EyZYJ8s=;
-        b=VVtn1TDC5/snFjF92GuzbO0bTuCBbJdMvW9X9P2SCyQLUzJPtWaiC/9ZjOO9+HoY7x
-         QQp85SegLDh2YIzclQbfdjQqbTng4tvbjRtYRGvFe9qgUFS6XkK0P09T4ke6YuOKbfJI
-         0HR38GrJIEaYYdTg5HeDbOv1x4qEM4itbSunPpmy20YAzF6z+E2JVYga1nTDNiEQomVZ
-         nT4lafFvf8tiyw5cnNT5kGyB7sYz9nw0FkARCI4utshqlIu62uPt7xi5XOk4DNAcI9xp
-         0jwytz+SgRJotrsEKbmucnG6GPYyCrEn6Gn+U/AdSK3J0ssZ4R2yMTREz2Q9i8DHohrr
-         6Lcg==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/qWVFlgPcosp+ARtgrp4chOWyUIGz6pEb02oARFUEDM=;
+        b=CDqT0wqD9fdQtbjZ5iWXHHqydMbnmJoFR9bTI5TPDZbQLVYdiSNOP0NpvULGFyCzx3
+         yrRQGqDnCt4PBuGr5/oUDCwhIH0nntV4ohSszmrKXsJOOnvjor0fxTtb2NgAZfEIp8+w
+         xC13kORsZsmwqWU6EyfH19jLhUnm12rWYRxFGH+Bl4wABy8pHYKoC+OfnijaNznxy8CI
+         DrPU5yA6To+2bpYHM7h6gdAyvUBz0SEFjBfRft1GCoOVC1otiQbuunqq6g0qKX1+znKh
+         PpYf6A+nJ97iVxKhgEAM/Ae8hmE3GE/f5pH/yFNxjwCKKpHB0Bbbw0SJjCjamv+uR78A
+         w45w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hfzH5eT5zoGdIoXIwKVykwTpNhHjD/vbBLM/EyZYJ8s=;
-        b=CV2awQTTv7igflbqmwMqAdRr0vyURG7B50Y1q9uVXIPy3C25SWKz+PS94GUNi/CLy8
-         IrtNrC9pw+sp3CJ3j5XAyfN/SlY0C19NV/MQtTyV5p/Ymx6wnhDHYIxFACse5H7jSBWa
-         u1nVBSNbfKrbk/9kzUKaCZG2p2zU+bYVXCLWNJ5hgKxQNdb7GM0rS89BQ0uZspRlYPNo
-         A80nX2xc1cteQUfVt66WHIypzGagAHlUgYxb93jz786pyLch+RMIrMXvKCjmOlRLZu8W
-         pSLvxBFGHobyZ3O1FvuqH0JO231rQ6wBS+Kk2Stq8Gc75MZCEeCbyo2xKKKZV4V73Lc0
-         Fvpg==
-X-Gm-Message-State: AO0yUKUXpCsZC2C+q2YUOyaA70A1DoZW+oMUDExsMZv7aJ60+z335nxN
-        9xhv4NsLsixUjNHNsTSnGto=
-X-Google-Smtp-Source: AK7set80zfLGNT3q63nQ6OaT/sas9BOBP58phsQDroeXolc66eF/8khqnGpevgzPrj320g5QJ9372g==
-X-Received: by 2002:a62:6101:0:b0:575:b783:b6b3 with SMTP id v1-20020a626101000000b00575b783b6b3mr863721pfb.28.1675722543925;
-        Mon, 06 Feb 2023 14:29:03 -0800 (PST)
-Received: from localhost (137.22.168.34.bc.googleusercontent.com. [34.168.22.137])
-        by smtp.gmail.com with ESMTPSA id z8-20020aa79e48000000b00575d1ba0ecfsm7629137pfq.133.2023.02.06.14.29.03
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/qWVFlgPcosp+ARtgrp4chOWyUIGz6pEb02oARFUEDM=;
+        b=R0VlGsx57nlBOdGHSw3xG7Im79eEKE/T/bcDdLaxw2cx3sYbkWGc4ln9ChzKjTq+ha
+         /A4vrBNcDdxIffMj6Tb+lyFtHRox17cX48i1G3FsXLckM63XAr/vb15h/Ggm+VYbVw4D
+         RttB5BHPscVaLYxL1KYvdWrxo05mB5ekp94kBBlet/8tHMcqiXW0Ao29c6QnlFYQo166
+         U7pcbT2fGg0JvjBM7LBfLAqT/B9dbBLsG9Ir/a1YSwyY4TKDmKyNTY7Fjn0xOaRp4wlI
+         Rgh7Hqz28EoccdGrfcBtBTl0S2PPpwXkz0bXFu5PzpS372/Smd3ubywod56slgrOAyyU
+         Yk3w==
+X-Gm-Message-State: AO0yUKWCw0TkTPuLUd6cujmuWLTMIN7Fcq7oH1Gyk1DylcnYOijUxs6/
+        cURbCloPHeXWXt7n7AYPY5YQeNeYMtYN9lj/
+X-Google-Smtp-Source: AK7set/IhhUdFrKIQTHjS5HSS+kaV7bC/p2xwq6lhjb91lUrSd5UJ61+2oUELhkhG+tCLfEmhLfs4Q==
+X-Received: by 2002:a17:906:c342:b0:878:7f6e:38a7 with SMTP id ci2-20020a170906c34200b008787f6e38a7mr932465ejb.44.1675722618532;
+        Mon, 06 Feb 2023 14:30:18 -0800 (PST)
+Received: from gmgdl ([81.191.238.7])
+        by smtp.gmail.com with ESMTPSA id rn26-20020a170906d93a00b008845c668408sm5978382ejb.169.2023.02.06.14.30.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Feb 2023 14:29:03 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] bisect: fix "reset" when branch is checked out
- elsewhere
-References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
-        <ada28944-6e9e-d4e7-74c9-ffadaf406e1f@gmail.com>
-Date:   Mon, 06 Feb 2023 14:29:03 -0800
-In-Reply-To: <ada28944-6e9e-d4e7-74c9-ffadaf406e1f@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Sat, 4 Feb 2023 23:57:14 +0100")
-Message-ID: <xmqqwn4u2ztc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Mon, 06 Feb 2023 14:30:17 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pPA09-000YyB-1J;
+        Mon, 06 Feb 2023 23:30:17 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Eli Schwartz <eschwartz93@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
+        "Raymond E . Pasco" <ray@ameretat.dev>,
+        demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>
+Subject: Re: [RFC PATCH 1/1] Document a fixed tar format for interoperability
+Date:   Mon, 06 Feb 2023 23:18:47 +0100
+References: <20230205221728.4179674-1-sandals@crustytoothpaste.net>
+        <20230205221728.4179674-2-sandals@crustytoothpaste.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <20230205221728.4179674-2-sandals@crustytoothpaste.net>
+Message-ID: <230206.86lela4ebq.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rubén Justo <rjusto@gmail.com> writes:
 
-> Since 1d0fa89 (checkout: add --ignore-other-wortrees, 2015-01-03) we
-> have a safety valve in checkout/switch to prevent the same branch from
-> being checked out simultaneously in multiple worktrees.
->
-> If a branch is bisected in a worktree while also being checked out in
-> another worktree; when the bisection is finished, checking out the
-> branch back in the current worktree may fail.
+On Sun, Feb 05 2023, brian m. carlson wrote:
 
-Sorry for asking possibly the same question again (which may mean
-that the phrasing of this paragraph is misleading), but isn't it a
-good thing if in this sequence:
+> +The goals for this format are that it is first and foremost reproducible, that
+> +identical trees produce identical results, that it is simple and easy to
+> +implement correctly, and that it is useful in general.  While we don't consider
+> +functionality needs beyond Git's at the moment (such as hardlinks, xattrs, or
+> +sparse files), there is intense interest in reproducible builds, and so it makes
+> +sense to design something that can see general use for software interchange.
 
- - I checkout 'main' and start bisecting (BISECT_HEAD says 'main');
+I think a goal should be to be bit-for-bit compatible with what we've
+had historically, which...
 
- - I then checkout 'main' in another worktree; I may even make a
-   commit or two, or even rename 'main' to 'master'.
+> +Object IDs are not included in this version of the format because this produces
+> +non-identical data when identical data is serialized with different hash
+> +algorithms.
 
- - I finish bisection and "bisect reset" tries to take me back to
-   'main', which may notice that 'main' is checked out in the other
-   worktree, and fail.
+...this is inherntly at odds with. I had a longer comment about why I
+think we can have our cake & eat it too at
+https://lore.kernel.org/git/230131.86tu06rkbp.gmgdl@evledraar.gmail.com/
 
-the last one failed?  After the above sequence, I now have two
-worktrees, both checking out 'main', and it is exactly the situation
-the safety valve tries to prevent from occuring, no?
+Maybe there are other changes in the proposed spec that put it at odds
+with such a goal, it's unclear to me if this is the only difference.
 
-Or is the new behaviour considered better because the third step
-would try to check out 'main' that is checked out elsewhere only if
-the second step was forced, so the person who decided to touch
-'main' in another worktree should already be aware of the risk and
-we should disable the safety valve in the third step automatically?
+But I don't see why we need bit-for-bit compatible output between SHA-1
+and SHA-256 git repos for the reasons noted in the linked-to reply, and
+removing this will remove a *really useful* aspect of our tar format,
+which is that you can grab an arbitrary tarball, and see what commit
+it's produced from.
 
-I am not sure if that is a sensible argument, but if that is the
-case, let's spell it out in the proposed log message.
+Even if you want to retain SHA-1 and SHA-256 interop as far as tar is
+concerned, an un-discussed alternative is to just stick the SHA-1 OID
+into the SHA-256 archive.
 
-Thanks.
+For repos that are migrated we envision having such a bi-directional
+mapping anyway.
 
->  builtin/bisect.c            |  5 ++++-
->  t/t6030-bisect-porcelain.sh | 23 +++++++++++++++++++++++
->  2 files changed, 27 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/bisect.c b/builtin/bisect.c
-> index 7301740267..46fba8db50 100644
-> --- a/builtin/bisect.c
-> +++ b/builtin/bisect.c
-> @@ -244,7 +244,10 @@ static int bisect_reset(const char *commit)
->  		struct child_process cmd = CHILD_PROCESS_INIT;
->  
->  		cmd.git_cmd = 1;
-> -		strvec_pushl(&cmd.args, "checkout", branch.buf, "--", NULL);
-> +		strvec_pushl(&cmd.args, "checkout", NULL);
-> +		if (!commit)
-> +			strvec_pushl(&cmd.args, "--ignore-other-worktrees", NULL);
-> +		strvec_pushl(&cmd.args, branch.buf, "--", NULL);
+And for those that started out as SHA-256, or where we no longer care
+about compatibility with old SHA-1, we can just start including the
+SHA-256 OID, as all compatibility concerns have gone away when we
+stopped bothering to maintain the mapping, no?
 
-OK, so this time around "git bisect reset" to go back to the
-original branch gets --ignore-other-worktrees but "git bisect reset
-HEAD" or other forms that names a branch still gets the safety.
-That makes the blast radius smaller, but I am not 100% sure if
-loosening the safety is a good thing.
+> +|===
+> +| Field Name | Value
+> +
+> +| `name`     | the last path component if it fits; otherwise, `path.%d`
+> +| `mode`     | `0640` (regular file), `0777` (symbolic link), `0750` (directory)
+> +| `uid`      | `0`
+> +| `gid`      | `0`
+> +| `size`     | the size of the data in bytes for regular files if it fits; otherwise, `0`
+> +| `mtime`    | `0` (the Epoch)
+> +| `chksum`   | as specified in the standard
+
+This is the nth reference to "the standard". I think this would be
+improved by linking to it, isn't it
+https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html ?
