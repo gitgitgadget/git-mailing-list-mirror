@@ -2,47 +2,47 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFD8CC05027
-	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 19:18:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2D4DC636D3
+	for <git@archiver.kernel.org>; Mon,  6 Feb 2023 19:26:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230372AbjBFTSe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Feb 2023 14:18:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48650 "EHLO
+        id S229973AbjBFT0C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Feb 2023 14:26:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229823AbjBFTS0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Feb 2023 14:18:26 -0500
-Received: from EUR04-VI1-obe.outbound.protection.outlook.com (mail-vi1eur04olkn2056.outbound.protection.outlook.com [40.92.75.56])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B48159D8
-        for <git@vger.kernel.org>; Mon,  6 Feb 2023 11:18:15 -0800 (PST)
+        with ESMTP id S229740AbjBFT0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Feb 2023 14:26:01 -0500
+Received: from EUR02-AM0-obe.outbound.protection.outlook.com (mail-am0eur02olkn2099.outbound.protection.outlook.com [40.92.49.99])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 810C31B339
+        for <git@vger.kernel.org>; Mon,  6 Feb 2023 11:25:59 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AdUuu2qfGXIkCV94KizL+Z9Or0km2BahaZaheDaVMBYh1uvu46wuXZU3yQUs+g/o5tQpKH2HizobGLOtIWhIdEY+anuUw8eVz70Zysll0FZUV2x0TyNLnqJ0DfzArtVwTO00cXjBZrmeXIhvWUqtBqR4z5XAAZVW7d7yAsgDohD6tXoADq1JPs8DNclP8PnhaJ1N/4gYODrUr7K2RSW2z2ajT7ToBpzrAX7lgUO37uqLr1pts0Eh/INzz3E8JIq7S2bwdDTr8vznTEUZgYu8tWEnsMIuyGDfh9Yldx3+60v5HXCwRZeyR1spFfEVxOtkRmoCHtd4tvdGileLSDkoAA==
+ b=ALVvAQ8lO+AGcqDfyPhhgftikPlikX3oXSHgd2wQTPaSGWMMf0k8zF6crLVGjfQsg7LkaXZSG4q1dMnaxJpLSPGsJOhWmRkgWB2OwrpCwrIk3dEoR9pIoUYchBxsy/CL9O78CNgJaOpICVyvFnK3r4L8vn5IVJQrFCD9hsORD7HoJSq1Q1xpbh9c7az/s4I06SJw834EO3gZElrLEBWFBA+tJ0lK/67CcpN4ibLkd5yoBjbIxnzQc8FK+5UXrgHiNKK1EMXniLXdM9iBYlFgrMf59vrven8NFiUXz5oP1uJh//MWz+sJkRj3ax2/eef997MlCZjQwr5zNkK74wuqkw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ypv8n+aLZc/Ux6NG1tfLl7jpQD6x1han1V9f8hq+OVg=;
- b=P8aDZWkPc/7DXTCTg5klITAIuXtcG9BIgMi3JPIA+a59v+6353hIdf+O4f25aKdwZvfulCNyico0lGOEbP31jQzm8aP5uHgNUQOtFQsaClX6xSDHjT5cEU6LIZOkFMwRqSEAdiHOdbfQf4onn2dFw655YwewHgA6cv6yFKR2iUANgnjdenROhn2n34gcyc/Rkdm6xODJPhPmdMScIacTy7+5i0tUNI/WT3ktb28RkF+iz23NKuRszU0g4FN21JK/c8pquXjRGNF5c7koa+9weRw/1Cw27c+wrVYyIRZdIxuK3UcUQbR1SXO8K9Ve1vRJSDVzmqiDkJy3jsVGZpelBA==
+ bh=kgozUPwPtJ3fToSIfXqDsoH1Jj6gT+hDA3Mtcy6I9uE=;
+ b=bqq9GG8NEPsdX9X4kjOEpE4Wcmd75rKjTdNmbJo0OgtDO5uBVLRTky1CnaKmnardeSU6J0tTKwJ3vtvdr5Im7jlxnbxNre23yJRXq81FZXgwx8eY1o35ZKTRKCugPubDzG6n6W3/xCpPiK+1c/d4i5MkvWHw0f5sXQ+YxSlGYoiiUDnn12igSx6nFpHzc0FG/g/6Ib54N6uA+V8uwx42piITkzwZZcLfMgwGbnUiIY2sny/9r8J7pS24aKbdMxQG+InE4mqcz9ubTNEoUkKNFg7LD27NQdNCo5jq4di6Z8vgUnGnOngH1fACgPPMcjjhzBUOK8i/Lyhw/FnlE8kVWw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ypv8n+aLZc/Ux6NG1tfLl7jpQD6x1han1V9f8hq+OVg=;
- b=X8hk7RtBsIAfdIaz6kfgy/+/nBTv3O6bgb7Ri24qywAn7+GjyU2SfBH+j9Ir4DOTNxzxmJKQD/MEkjL8k8LP3hw5q4ewWxgpKcciKzEju5TriWRvWWf8/+hNp3me2KjWeQEK/zEchSLZvJbAaS/5smFw2WTfrmJ6c0MFEdrrFyd6aiCdKeNphcvMA5X2+ienoqHIcPKC+LzPaZXP7H4f6EEFZEggjKTCljENurG9VpD6oloylAyrmMGyyZWgBWqjKbuFEE6I6SeBJWJmTw+dVPBVSnVclgV4NI0G0MQkMuYZjAFRzJx+nAgljdusXFmmsLDN9BU6/BSNgruIUNaWBQ==
+ bh=kgozUPwPtJ3fToSIfXqDsoH1Jj6gT+hDA3Mtcy6I9uE=;
+ b=TKB2Q8IXK1GVh/jqxT7UlFjN7Ah9zB+3NTaSLoq2+4FvvU+142hoIb6o2+vcohq2cRWHHWXajSo79iHptpkJjloCWljrgDnqcEkkqb+TsOueIkhbYgPPEiRm6RHHh9ESTvr6pPbKWwO8uSUnZbR5L9ds3hAc5Oc9WhXrU6LVoE+pXC8+yjOz1XKBLDZSIUZ5LBIuNlWkgyxFrrAjxqt56AffweIExoP4fEMyQ6O/ydPQukrYUbc4A2K4f/UHjVeSKonzz2Vbe1V3xrB3060WUJk4leB/CLQRDQzKIlgZQGgFn9kELgOSMOScL7GU+EWTwKizICP+HDLTOmj/7n6cJg==
 Received: from DB9PR03MB9831.eurprd03.prod.outlook.com (2603:10a6:10:461::15)
- by DBAPR03MB6534.eurprd03.prod.outlook.com (2603:10a6:10:19b::13) with
+ by AM7PR03MB6354.eurprd03.prod.outlook.com (2603:10a6:20b:1b0::5) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6064.35; Mon, 6 Feb
- 2023 19:18:11 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6064.34; Mon, 6 Feb
+ 2023 19:25:57 +0000
 Received: from DB9PR03MB9831.eurprd03.prod.outlook.com
  ([fe80::fc02:6831:74ff:f92a]) by DB9PR03MB9831.eurprd03.prod.outlook.com
  ([fe80::fc02:6831:74ff:f92a%7]) with mapi id 15.20.6064.032; Mon, 6 Feb 2023
- 19:18:11 +0000
-Message-ID: <DB9PR03MB9831A708EA98E198591F6632C0DA9@DB9PR03MB9831.eurprd03.prod.outlook.com>
-Date:   Mon, 6 Feb 2023 11:18:03 -0800
+ 19:25:57 +0000
+Message-ID: <DB9PR03MB983150E73B1C963C628CBE75C0DA9@DB9PR03MB9831.eurprd03.prod.outlook.com>
+Date:   Mon, 6 Feb 2023 11:25:49 -0800
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH v7 12/12] credential: add WWW-Authenticate header to cred
- requests
+Subject: Re: [PATCH v7 11/12] http: read HTTP WWW-Authenticate response
+ headers
 To:     Jeff King <peff@peff.net>,
         Matthew John Cheetham via GitGitGadget 
         <gitgitgadget@gmail.com>
@@ -56,228 +56,228 @@ Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         <avarab@gmail.com>
 References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
  <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
- <09164f77d56e8efd1450091cf1b12af2bc6cf2f5.1674252531.git.gitgitgadget@gmail.com>
- <Y9JjRfhl1H4Julv3@coredump.intra.peff.net>
+ <5f5e46038cf526714f3c5b89ffef2b895b503242.1674252531.git.gitgitgadget@gmail.com>
+ <Y9JWnQeEV0weV4yu@coredump.intra.peff.net>
 From:   Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <Y9JjRfhl1H4Julv3@coredump.intra.peff.net>
+In-Reply-To: <Y9JWnQeEV0weV4yu@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TMN:  [3ekRw2CtXDWSqjWRcBACrMzZVQZG5yBN]
-X-ClientProxiedBy: BYAPR11CA0090.namprd11.prod.outlook.com
- (2603:10b6:a03:f4::31) To DB9PR03MB9831.eurprd03.prod.outlook.com
+X-TMN:  [U2HirOWBIV3rJFDcKwSridbt2r7R2hU4]
+X-ClientProxiedBy: BY3PR04CA0026.namprd04.prod.outlook.com
+ (2603:10b6:a03:217::31) To DB9PR03MB9831.eurprd03.prod.outlook.com
  (2603:10a6:10:461::15)
-X-Microsoft-Original-Message-ID: <b8e38784-ce41-05bf-7212-73180b763358@outlook.com>
+X-Microsoft-Original-Message-ID: <e2dd1dc1-abfd-9d10-957c-901ad12e0fa6@outlook.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DB9PR03MB9831:EE_|DBAPR03MB6534:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9a14defb-d926-4947-baf5-08db0876e277
+X-MS-TrafficTypeDiagnostic: DB9PR03MB9831:EE_|AM7PR03MB6354:EE_
+X-MS-Office365-Filtering-Correlation-Id: 98b95a31-ac4e-4c89-f082-08db0877f892
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: LOwqfL2dUUwKpuWL3Jqqjhgf5uiVFDWTw120sQ2KfzybsSz7EBTjekVhUmXZCOKa14k+co4+Qwd7hcIcY8PG7bR5dvTmUe+ug5aZp66UzKzaf07asU0gxjdZCdry9ALTMnulfIv/qMsAksYIUfbZhfGUjsZEoKi0Y7SGYJ/HVrLSoiuWmctSrC8jcdKPw3L60n7kJnUAwhxOeNy6WM3248B4YwyjqhH7K7pPsWWd3L70EcUbSKhVlFxkZQCjw/5hEXtEiZFeP9p8jRpjp4PY+7+Zt6WnkuCSJ+6aoG2cqzPErpqgdIc1IgKUTIXG1qTp7uLXfuDnBOU0J/7IPoNaoH01uhNogSE3njyGe4xlA83LS3FX0ZwWEC0PxgyXdQYFfhLn6kQ1BQdppicRTI9QuCuNiKgSt75CJ2XG3stRAXtQSVJg9Le8lS6HKVGGsicgL1/qPg4iaVzscU5u2rU2Oszqym+AUkxOi4pKTZg0Gi08oIKZ235YvcMxi2EocNibkqQwzuYlrFWwDyjMskahzREtAU8s0/AyEPJ2H5vpeRGUvD0lY8kr8hZ/OCqEqJfX5rXo4CnnB3zf299GoWpD34slEoQLliK7YcJtmeTQ819+51cfyNCYDKjPH+iR1eRgffF+IyCbaUYpptcZ3uavXA==
+X-Microsoft-Antispam-Message-Info: ZRWQydyxgzITZJ97fpJd/by1OaIvtiVYuJJh/NPHZKMkNK68UYINdtlFUZIoqv0xtEIyKdLwgztNbQb1OLU1UcxYhsgWabLnLS1Nn6Ymnf0rx5MNmXYRL7HzCa0gkgkmhCnTUdlOVX551B/4ngUFZVq8PvvppEp9xp+F7Fzzt8JSQ1r6plajPw5WA4bMrgMrVXJfR4qfpxgLwssJp7dzDxHXzFJAKTLQZ0hqg3pk3/bOJ1a6GMeix+KQ+3tPFWu2tyIfyozBH6v6rhgHr29A0DnaBAak62zudowEDtl8RBEWX6JweRjuGcqtgXzevtokQrm2A9DxsPx+MMLDc7B/kh5d4VwlXEfzYMKe0QMRhRxhzmePTF05bmkxAwSXVuOSOmDJpFCqJhG7ZhTKs8g47Jc4RmGTrrYK6mg5fqAW9kaWG4/k0UdsSXG4yHmoAuUvfaohVCTMckdYrfxjxEwl6z6aIZPNANPa1dvVh19TpPuFMM6b/sEnya9KRe33fQiyLHyqm29sIK+Lqv8xsKBCQ97Nk8RZMXe/sDMUdv0w7wr42F/8kAOCbazRFXqOQrA2D/eLThrwrLhKlw8TzNEpLEapdG4gnFK59HdMftcUkbX9mnw8WU0b3Td903g7QMD0X9teNzclrIO2hK+jfEV9uw==
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?T3FoeUk0QW8yOFBLSUFKRXJPNG1rRzk5MVR1VWFvWWdJMDF0SjZuWGplcytp?=
- =?utf-8?B?ZVpKRU95blBVMWhSUGVyTGRwcHJ5dkRURGtlNEFXOUt5YnNYcFpqWGxuSkla?=
- =?utf-8?B?eXVmZU5jLzJLbDkxUVlpSDZEWWJ5U25sZ01hNkhpODlBS0FDQ3JIaUhiKzE3?=
- =?utf-8?B?dlYvM1p5MFBBUjV4YStZa3BDQU9zbi9xTWJMYzg3Yk1VNUlNY1RxeUZqSUo1?=
- =?utf-8?B?bnpNN3hKbE1EZmRZYkEvTFY3YWxpT2tvL3hrQW9zc00rUmVzUE13UHhTaS93?=
- =?utf-8?B?WWZ6YTFONnBCTmlMSGNHOWQ3N1FtVzZZYklXNm9sZ1BTSzN3eGR0Qm9DT1Vj?=
- =?utf-8?B?eUR0N05DU3k3Z1I3NW5IUUFJdmE4S0w5ejFOYWw1dWI1V3kwMy81UXBpYjRa?=
- =?utf-8?B?UENOa3VzZHhnL2lDSDBqdXQyM0k3YW83dWtnbDFITHBzdkk4eVRDTi9ianRp?=
- =?utf-8?B?dUNUNXkrYTZRWVJYRCtnV2kzeVFyaFVZQytDV055bFNFWi9XWHlhYUJmUEoy?=
- =?utf-8?B?ZmRGeG9iTFFCSWVuRW9vSGJDV0lGbHVUdEsxdUh5R0pjR2VyakplRGZLZXJl?=
- =?utf-8?B?QzQyeU12WXRlSUlUR25QeFJ0TDVpK1l0WmVJU0Z0dzFlTGJCTWU4bVY5TFJP?=
- =?utf-8?B?SkJqQndlKzY3S3hITnFUd3o2ejJ5cis0VzQvVmpkU2YvWjZMdHhkOVB6a2pQ?=
- =?utf-8?B?cENyT2JCbGlQUDdnQXJwTXIxeU9aSEh4dUtnRVBVcTF4aVFIalJJUlNxNEdS?=
- =?utf-8?B?Sm95YjEzZ09XQ2hjVHdmUjBpQVRmUnFZUEVsNVkzb040aWZNQ2hTQzIwVWJO?=
- =?utf-8?B?M1B3a2ZuQ2NiWVZoZDNtOGlGS1U0NDBtdFVjc1I4VUJmNEFMZ0dnSGoxaDQ3?=
- =?utf-8?B?dDdHcElrWlpGOXBGQ0lpbXFPVk4vSVFSVHV4RnRsTnowOFBkQk5SdkM0R3JO?=
- =?utf-8?B?SmJGYUJKQTNXQVhVMXp1TW1QeDhGcEwwWDJ0cmorUDdzTk1CUWxqZS9zNUsy?=
- =?utf-8?B?cDA5V1p6Q1FEbUozQXNhejFlbFMxNUMreXlDK0MwaEdsYTE4V1A4N3hoTVlV?=
- =?utf-8?B?dmQ2RXRPZW42MzJCWGJYaTl5YUVLcTVTNW5wN0NqMWk4NkFsZ3JQUjFsRnRN?=
- =?utf-8?B?K1VhcC9pU0psbWRUbEFEL3NzSUhWNkQ1Q1RuUG5lZFQyOVRaclJRWFA5cnhK?=
- =?utf-8?B?RHhVSDdDT2dzMXZDWHZrdFl5RkRBMGNFSDBTQXY1blNOaUZKSW5VcHBzVG9y?=
- =?utf-8?B?dUlzY2dRV0pESDhVVTdGb3dQNmlleWtmbEU0ZXFTdkRXOEltNTBrRVpya2sz?=
- =?utf-8?B?TVFRK2xpcTFTeXNxMzBISXh0L3BOZzlkL3NScmc0N2FmeUNyNGtySWFza3BP?=
- =?utf-8?B?S0w3aE5BWUhNVHY5YkVJYlFJOWxtelkvQ1NxZG1xekRGY0Q2V1U4Sys2MHln?=
- =?utf-8?B?TmtjUGFZT1U2eTNnYytzekV1Rk9BazR0b051ZUFlZ0U2N01jOUN4RnZhQVVC?=
- =?utf-8?B?UlV3dHhFUzljeEdNK01jVlo5MnU0WCtwUFV2OXY4S0d2WUdHN2VBcURFNzFo?=
- =?utf-8?B?VnpKT0xZUHdHYyt0NE4vVUFKeng3ZmhHdDJZaFdUaDFwUzVPWkluVXpsVG9p?=
- =?utf-8?B?UUxaYkZjZ3E4akw0akRoa0x5c3grcG1BbFQ4RWs5UXA0R3F4WlJIdjYvRlVP?=
- =?utf-8?B?dXBLS05TVGZaV1ZiQWhyZ0k5VERhbTNyZitGRzc0N09SNmI4ZTBjOGhnPT0=?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?U3A3ZG5FcUJsRXVPZ1JmbHhKdGVaUDBIZitRTzBrcEpIN2t0THBBTXZ1dUV3?=
+ =?utf-8?B?QVd3T29FS0s4M29NMDJnakU2cG1zVnQ0aXg1dWZZYng3a0piR1dWM1FTeWdP?=
+ =?utf-8?B?b2ZlSTVleXV5RFdJR0FZSENWdlBLZ2ZtcG90dVlrVENpdysyMlJ3QUo1c0ty?=
+ =?utf-8?B?MThraFJxK2t1bkR1QWVpMHhOdkViVDdoQlh1VVU1RURKTDdFdHYzd1FML3lm?=
+ =?utf-8?B?eC9VdWhIVU9RdmZyMi9BSjVINlNiRzZNM1JlOE5Jb0NvSlNkbFdkQTZjRng2?=
+ =?utf-8?B?SDhwRWZnUDdzQ0lDblZzbGJwSThnclpPMzgwaENSNE43VWVqS0dGUWl4anhq?=
+ =?utf-8?B?Zlp6amdaaDNsaVJiaFVtb3gvc0dJaWtNSkdJcEo0ZC9LR2NrOTkzV25NQmN4?=
+ =?utf-8?B?Qkdvc2c2Z2JqOVRmbzJQMXRwS3ArYldZS3ZyVk8wbG9GemtyWkMvUkJoMGxV?=
+ =?utf-8?B?cUxYR2Vxa1JxL09Dc3E4MExJdHpKZWx0dVlHQVMxUUhVUzRLQTF2UjR4TTE4?=
+ =?utf-8?B?dFAvY0d5Zk54aEFSSE9kK3lRMlBIOU41aDFnaW5sY3ZmcjlCM05rZGhPOTZV?=
+ =?utf-8?B?WktoWll6Qi9LakoremdNRHBQSGdDRXhzdWlnUDRKcnN3RW9XK2VlSGpuQnBa?=
+ =?utf-8?B?b3FLV084U3ArRjAwRzB0TndtZndLakU2blVzMHQ2RnlwRGZ4SjFUOER4V2x3?=
+ =?utf-8?B?MEl5dktVaVlhVTA1VlNvOTgyeHNCdXFiNDVicWx4bTdtYkVDRG1kdEpYaHNV?=
+ =?utf-8?B?bTkxdWEzSUJNZ1BIWkRIQW9Hc3FGTnNLZm4xNU5XYWpqY3RORTdRalN6QXZv?=
+ =?utf-8?B?WFlYckNnYzRPRDgvK3l4a3FJZVVaMEpia2ppeHRBYnFzZmhtemxlMjNtQjVH?=
+ =?utf-8?B?eUtvb3drMENwNnZZRnJBYmJKeE9hWmFjeFRNQU91K3NLTnA5ZStIZzNyNWFN?=
+ =?utf-8?B?SGdoMXRRVm5zRkM5RlNaRzZhUTZzQVIxQ3Q0UDRVcThHYlFLNHUyVlhqOUsw?=
+ =?utf-8?B?N1d0ZXQ1Q1pXektFdWtwU1A2Vzh6YW9GdGFEUUQ1R1p3VENGamFVejFUamtF?=
+ =?utf-8?B?SHIrS2FqVEJwMXM3QmZwYjhDMmVaYUNqN2VFV3F0bXk0QUhHRmw0QmdFRTQ2?=
+ =?utf-8?B?My96UHJoRTJiZzg2elc1NDZmQk0rcVdIZ3poc0drbnVlRGc1ZFd1Q1QvU21Q?=
+ =?utf-8?B?bGE3emlCMmpUL3pXQ2l5OXZ4dXlCQTFWWWF4OVRadGczUFo0VXJLbWJHVHZr?=
+ =?utf-8?B?SDc0MXYxSHpMNzdTNVppa3JweDJsN2huSlNlSGdpSFZBMVd3aTZlZnA1Wmxs?=
+ =?utf-8?B?aWIvbEpTVm9raGtMR3Q1Q3FrMVBJZjNGajI0STdZTkRRUHdzd0JjWFJ5alNh?=
+ =?utf-8?B?MjBUVGxZSmM2VzFqam5CT3c1VG5ualJ5bDlOKzdIQm9QRm1lTFRFSWswZGhX?=
+ =?utf-8?B?M0llVDVMakk0OHRQbGFLU01yOG1hdlM2V1FjTmhjekh6ajZIZE1TNXhJUEll?=
+ =?utf-8?B?UTg0MmpJV3ozUWdOcEUyZ3V1S3NOM2dpYSs1cXMrdU9YYW5jNUFHeVFnY3g4?=
+ =?utf-8?B?bWdwd0d6TTM5eVJlZG5haEQ3TGdadEVvVjlyZWdpVkZIdGhNb09lcEk5QitI?=
+ =?utf-8?B?VG1BZEJaR1IrL3NMaGNoZ1B4T0tIZ284eWo5NkJEdjJCSkorSytJRk5MdGE0?=
+ =?utf-8?B?RW9uVVovd3kxQTlHemhzOFFtemt6azU5bXUwYUNrQjRJc0YrMU9wSTdBPT0=?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9a14defb-d926-4947-baf5-08db0876e277
+X-MS-Exchange-CrossTenant-Network-Message-Id: 98b95a31-ac4e-4c89-f082-08db0877f892
 X-MS-Exchange-CrossTenant-AuthSource: DB9PR03MB9831.eurprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2023 19:18:11.0625
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Feb 2023 19:25:57.4286
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR03MB6534
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR03MB6354
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023-01-26 03:25, Jeff King wrote:
+On 2023-01-26 02:31, Jeff King wrote:
 
-> On Fri, Jan 20, 2023 at 10:08:50PM +0000, Matthew John Cheetham via GitGitGadget wrote:
+> On Fri, Jan 20, 2023 at 10:08:49PM +0000, Matthew John Cheetham via GitGitGadget wrote:
 > 
 >> From: Matthew John Cheetham <mjcheetham@outlook.com>
 >>
->> Add the value of the WWW-Authenticate response header to credential
->> requests. Credential helpers that understand and support HTTP
->> authentication and authorization can use this standard header (RFC 2616
->> Section 14.47 [1]) to generate valid credentials.
+>> Read and store the HTTP WWW-Authenticate response headers made for
+>> a particular request.
 >>
->> WWW-Authenticate headers can contain information pertaining to the
->> authority, authentication mechanism, or extra parameters/scopes that are
->> required.
+>> This will allow us to pass important authentication challenge
+>> information to credential helpers or others that would otherwise have
+>> been lost.
 > 
-> I'm definitely on board with sending these to the helpers. It does feel
-> a bit weird that we don't parse them at all, and just foist that on the
+> Makes sense, and the code looks pretty reasonable overall.
+> 
+> A few observations:
+> 
+>> @@ -115,6 +116,19 @@ struct credential {
+>>  	 */
+>>  	struct string_list helpers;
+>>  
+>> +	/**
+>> +	 * A `strvec` of WWW-Authenticate header values. Each string
+>> +	 * is the value of a WWW-Authenticate header in an HTTP response,
+>> +	 * in the order they were received in the response.
+>> +	 */
+>> +	struct strvec wwwauth_headers;
+>> +
+>> +	/**
+>> +	 * Internal use only. Used to keep track of split header fields
+>> +	 * in order to fold multiple lines into one value.
+>> +	 */
+>> +	unsigned header_is_last_match:1;
+>> +
+> 
+> Stuffing this into a "struct credential" feels a little weird, just
+> because it's specific to http parsing (especially this internal flag).
+> And the credential code is seeing full header lines, not broken down at
+> all.
+> 
+> I guess I would have expected some level of abstraction here between the
+> credential subsystem and the http subsystem, where the latter is parsing
+> and then sticking opaque data into the credential to ferry to the
 > helpers.
 > 
-> If I understand the RFC correctly, you can have multiple challenges per
-> header, but also multiple headers. So:
-> 
->   WWW-Authenticate: Basic realm="foo", OtherAuth realm="bar"
->   WWW-Authenticate: YetAnotherScheme some-token
+> But it probably isn't that big a deal either way. Even though there are
+> non-http credentials, it's not too unreasonable for the credential
+> system to be aware of http specifically.
 
-That is correct. It would be strange that server would respond with a mix
-of styles, but I guess it's not forbidden.
+I had considered possibly introducing an opaque property-bag style of
+'protocol-specific properties' that, for example, http.c would add the
+WWW-Authenticate headers to as something like `http.wwwauth[]`.
+Other protocols (like smtp:// or cert://) could add their own properties
+if they needed or wanted to also.
 
-> could be normalized as:
-> 
->   www-auth-challenge=Basic realm="foo"
->   www-auth-challenge=OtherAuth realm="bar"
->   www-auth-challenge=YetAnotherScheme some-token
-> 
-> which saves each helper from having to do the same work. Likewise, we
-> can do a _little_ more parsing to get:
-> 
->   www-auth-basic=realm="foo"
->   www-auth-otherauth=realm="bar"
->   www-auth-yetanotherscheme=some-token
-> 
-> I don't think we can go beyond there, though, without understanding the
-> syntax of individual schemes. Which is a shame, as one of the goals of
-> the credential format was to let the helpers do as little as possible
-> (so they can't get it wrong!). But helpers are stuck doing things like
-> handling backslashed double-quotes, soaking up extra whitespace, etc.
+Thoughts?
 
-This key format wouldn't make it obviously easier for simple helpers to
-understand. Now they no longer have well-known keys but a key prefix.
+>> +static size_t fwrite_wwwauth(char *ptr, size_t eltsize, size_t nmemb, void *p)
+>> +{
+>> +	size_t size = st_mult(eltsize, nmemb);
+> 
+> Here's that st_mult() again. Same comment as the previous patch. :)
 
-My overall goal here is to have Git know less about auth, so it treats
-all values as totally opaque. The only logic added is around reconstructing
-folded headers, which is just HTTP and not auth specific.
+Yeah I'm gonna drop this. Your arguments make sense; it's not going to be a
+problem in reality :-)
 
-> I'm not really sure what we expect to see in the real world. I guess for
-> your purposes, you are working on an already-big helper that is happy to
-> just get the raw values and process them according to the rfc. I'm just
-> wondering if there are use cases where somebody might want to do
-> something with this header, but in a quick shell script kind of way. For
-> example, my credential config is still:
+>> +	/*
+>> +	 * Header lines may not come NULL-terminated from libcurl so we must
+>> +	 * limit all scans to the maximum length of the header line, or leverage
+>> +	 * strbufs for all operations.
+>> +	 *
+>> +	 * In addition, it is possible that header values can be split over
+>> +	 * multiple lines as per RFC 2616 (even though this has since been
+>> +	 * deprecated in RFC 7230). A continuation header field value is
+>> +	 * identified as starting with a space or horizontal tab.
+>> +	 *
+>> +	 * The formal definition of a header field as given in RFC 2616 is:
+>> +	 *
+>> +	 *   message-header = field-name ":" [ field-value ]
+>> +	 *   field-name     = token
+>> +	 *   field-value    = *( field-content | LWS )
+>> +	 *   field-content  = <the OCTETs making up the field-value
+>> +	 *                    and consisting of either *TEXT or combinations
+>> +	 *                    of token, separators, and quoted-string>
+>> +	 */
+>> +
+>> +	strbuf_add(&buf, ptr, size);
 > 
->   [credential "https://github.com"]
->   username = peff
->   helper = "!f() { test $1 = get && echo password=$(pass ...); }; f"
-> 
-> That's an extreme example, but I'm wondering if there's _anything_
-> useful somebody would want to do in a similar quick-and-dirty kind of
-> way. For example, deciding which cred to use based on basic realm, like:
-> 
->   realm=foo
->   while read line; do
->     case "$line" in
->     www-auth-basic=)
->         value=${line#*=}
-> 	# oops, we're just assuming it's realm= here, and we're
-> 	# not handling quotes at all. I think it could technically be
-> 	# realm=foo or realm="foo"
-> 	realm=${value#realm=}
-> 	;;
->     esac
->   done
->   echo password=$(pass "pats-by-realm/$realm")
-> 
-> which could be made a lot easier if we did more parsing (e.g.,
-> www-auth-basic-realm or something). I dunno. Maybe that is just opening
-> up a can of worms, as we're stuffing structured data into a linearized
-> key-value list. The nice thing about your proposal is that Git does not
-> even have to know anything about these schemes; it's all the problem of
-> the helper. My biggest fear is just that we'll want to shift that later,
-> and we'll be stuck with this microformat forever.
+> OK, so we just copy the buffer. I don't think it would be too hard to
+> handle the buffer as-is, but this does make things a bit easier.  Given
+> that we're going to immediately throw away the copy for anything except
+> www-authenticate, we could perhaps wait until we've matched it.  That
+> does mean trimming the CRLF ourselves and using skip_prefix_mem() to
+> match the start (you'd want skip_iprefix_mem(), of course, but it
+> doesn't yet exist; I'll leave that as an exercise).
 
-I'm not sure there's such a continuous scale between simple and 'complex'
-helpers that would mean there'd be a simple shell script generating
-OAuth or DPoP credentials instead of a helper written in a higher-level
-language where parsing the headers is one of the simpler challenges faced.
+Fair point! I can replace most of these with operations over the curl ptr.
 
->> The current I/O format for credential helpers only allows for unique
->> names for properties/attributes, so in order to transmit multiple header
->> values (with a specific order) we introduce a new convention whereby a
->> C-style array syntax is used in the property name to denote multiple
->> ordered values for the same property.
+> Maybe not worth it to save a few allocations, as an http request is
+> already pretty heavyweight. Mostly I flagged it because this is going to
+> run for every header of every request, even though most requests won't
+> trigger it at all.
 > 
-> I don't know if this is strictly necessary. The semantics of duplicate
-> keys are not really defined anywhere, and just because the
-> implementations of current readers happen to replace duplicates for the
-> current set of keys doesn't mean everything has to. So you could just
-> define "wwwauth" to behave differently. But I don't mind having a
-> syntactic marker to indicate this new type.
-
-I had considered another model whereby we forgo the key=value line model,
-and hide another format behind the 'final' terminating new-line. However
-I thought this would be even more distuptive.
-
-> If you're at all convinced by what I said above, then we also might be
-> able to get away with having unique keys anyway.
+>> +	/* Strip the CRLF that should be present at the end of each field */
+>> +	strbuf_trim_trailing_newline(&buf);
+>> +
+>> +	/* Start of a new WWW-Authenticate header */
+>> +	if (skip_iprefix(buf.buf, "www-authenticate:", &val)) {
+>> +		while (isspace(*val))
+>> +			val++;
+>> +
+>> +		strvec_push(values, val);
+>> +		http_auth.header_is_last_match = 1;
+>> +		goto exit;
+>> +	}
 > 
->>  Documentation/git-credential.txt |  19 ++-
->>  credential.c                     |  11 ++
->>  t/lib-credential-helper.sh       |  27 ++++
->>  t/t5556-http-auth.sh             | 242 +++++++++++++++++++++++++++++++
->>  4 files changed, 298 insertions(+), 1 deletion(-)
->>  create mode 100644 t/lib-credential-helper.sh
+> OK, this looks correct from my knowledge of the RFCs. I saw something
+> about isspace() matching newlines, etc, in an earlier thread, but I
+> think we'd never see a newline here, as we're expecting curl to be
+> splitting on our behalf.
 > 
-> The patch itself looks pretty reasonable to me.
+>> +	/*
+>> +	 * This line could be a continuation of the previously matched header
+>> +	 * field. If this is the case then we should append this value to the
+>> +	 * end of the previously consumed value.
+>> +	 * Continuation lines start with at least one whitespace, maybe more,
+>> +	 * so we should collapse these down to a single SP (valid per the spec).
+>> +	 */
+>> +	if (http_auth.header_is_last_match && isspace(*buf.buf)) {
+>> +		/* Trim leading whitespace from this continuation hdr line. */
+>> +		strbuf_ltrim(&buf);
 > 
-> One small thing I noticed:
+> OK, makes sense. This will memmove(), which is needlessly inefficient
+> (we could just advance a pointer), but probably not a big deal in
+> practice. Using the strbuf functions is a nice simplification.
 > 
->> +	git -c "credential.helper=!\"$CREDENTIAL_HELPER\"" ls-remote $ORIGIN_URL &&
+>> +		/*
+>> +		 * At this point we should always have at least one existing
+>> +		 * value, even if it is empty. Do not bother appending the new
+>> +		 * value if this continuation header is itself empty.
+>> +		 */
+>> +		if (!values->nr) {
+>> +			BUG("should have at least one existing header value");
+>> +		} else if (buf.len) {
+>> +			char *prev = xstrdup(values->v[values->nr - 1]);
+>> +
+>> +			/* Join two non-empty values with a single space. */
+>> +			const char *const sp = *prev ? " " : "";
+>> +
+>> +			strvec_pop(values);
+>> +			strvec_pushf(values, "%s%s%s", prev, sp, buf.buf);
+>> +			free(prev);
+>> +		}
 > 
-> As you undoubtedly figured out, the helper path is fed to the shell, so
-> spaces in the trash directory are a problem. You've solved it here by
-> adding a layer of double quotes, which handles spaces. But you'd run
-> into problems if the absolute path that somebody is using for the test
-> suite has a backslash or a double quote in it.
+> Likewise here we end up with an extra allocation of "prev", just because
+> we can't pop/push in the right order. But that's probably OK in
+> practice, as this is triggering only for the header we care about.
 > 
-> I don't know how careful we want to be here (or how careful we already
-> are[1]), but one simple-ish solution is:
+> The concatenation itself makes the whole thing quadratic, but unless we
+> are worried about a malicious server DoS-ing us with a billion
+> www-authenticate continuations, I think we can disregard that.
 > 
->   export CREDENTIAL_HELPER
->   git -c "credential.helper=!\"\$CREDENTIAL_HELPER\"" ...
-> 
-> I.e., letting the inner shell expand the variable itself. Another option
-> is to put the helper into $TRASH_DIRECTORY/bin and add that to the
-> $PATH.
-> 
-> I also wondered if it was worth having setup_credential_helper() just
-> stick it in $TRASH_DIRECTORY/.gitconfig so that individual tests don't
-> have to keep doing that ugly "-c" invocation. Or if you really want to
-> have each test enable it, perhaps have set_credential_reply() turn it on
-> via test_config (which will auto-remove it at the end of the test).
-
-Good ideas! I shall try those.
-
 > -Peff
-> 
-> [1] Curious, I tried cloning git into this directory:
-> 
->       mkdir '/tmp/foo/"horrible \"path\"'
-> 
->     and we do indeed already fail. The first breakage I saw was recent,
->     but going further back, it looks like bin-wrappers don't correctly
->     handle this case anyway. So maybe that's evidence that nobody would
->     do something so ridiculous in practice.
