@@ -2,323 +2,230 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1AF5C636CC
-	for <git@archiver.kernel.org>; Tue,  7 Feb 2023 08:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 433C7C636CC
+	for <git@archiver.kernel.org>; Tue,  7 Feb 2023 10:19:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230429AbjBGIxV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Feb 2023 03:53:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40728 "EHLO
+        id S230498AbjBGKTw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Feb 2023 05:19:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229698AbjBGIxU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2023 03:53:20 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7AB21738
-        for <git@vger.kernel.org>; Tue,  7 Feb 2023 00:53:18 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id qw12so41350770ejc.2
-        for <git@vger.kernel.org>; Tue, 07 Feb 2023 00:53:18 -0800 (PST)
+        with ESMTP id S231477AbjBGKTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2023 05:19:51 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C43F722016
+        for <git@vger.kernel.org>; Tue,  7 Feb 2023 02:19:48 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id q8so10656469wmo.5
+        for <git@vger.kernel.org>; Tue, 07 Feb 2023 02:19:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=CEjcBCuDE4NBmF+bLn7jhjs5dQuufQk4WpUXjIydR+I=;
-        b=IKEDeaUYQtfKTlUoeEatgmdTMiBaJj68JRXJJALzQkOgrou9E5EOgN6xjRVQuJ+5zd
-         fqpNDvZzung6hIKrcIoqQCBMqFukyNQoq4lWM7GwjNiAqFYBtMpVUDnCOEOUoXsHFtEa
-         FUUmsBxJcRuX7sl1PFN2DL6k7e1iVPWUyUB5Z/5HKsTfMcjVx7neUDC/IlIve9K35+yv
-         Qox8qQxPer2zci5mpsLiK3U1bygdr5CTlek1iHGSFlMRaDvY2ifd+DnYXXOCyiDv5kB1
-         U6XZRkhjmNselNvFIVOKq087v4gAXwRQRlmaAwCxibbWE1EwlzXfBU/THXrJyXccOz8r
-         o3Bw==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iKocahA2vsmC5PIQPoNkEwGs703WecqEtX0bFeQEY6M=;
+        b=g8YyYe1k2WdnNr7Hmzfi4l6wPEzEFDR2eOYnN5qxhWF50JFdzjLzWwoQSbcBp8a5xW
+         ERrBQl3LP5oSvhsjtRIFbVeJFCY1itYd6aGBQp7UnImWLWrjPv5GydY9l1Y+87TClGpt
+         orwbiz4zrHsDSbaZZjJTR7o16UIlsCSAQJaK7VEK9YHDWRMFNLlHMWsfFciQlGm2RCle
+         e6B+mrEH73YO+nt+vwCTFFuBGuWCGfwXpRsOqddHwCHyyFJsf9VKzFnjsU4CvPACpAyR
+         9CQUFU31/JhEj3a1o2hMkW2hCIhWuEu2KX1Owd4l937vNnIg/Eyfm5vDPU2zEjrqR4bN
+         TImQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CEjcBCuDE4NBmF+bLn7jhjs5dQuufQk4WpUXjIydR+I=;
-        b=4lJVmRDWtdXVoAb4kIg5B6a547Hgh2IpXZFhXAeawQrFTUe76WBYEMYv4jN/wSGHE6
-         onG4tMMfV9hLnH5YJ6WAJT4OEpOxUwqFpARDXEualCrsHMbLJCQoEeah2GLxbBHcC4gS
-         EgCVoFUTY0cF6oEhLOiO1a7jTlPd4wOXUq7Lg0xMGHP/OJNhWLIuz3qNchly3zhzkedj
-         ib5WvbIO5vKrUlGNfHYSdYrJR8EGJwwgdem/dWLhT6pHrf+HOWgHpAtxeg0sz9juOAyf
-         2k7IY3yV/YWojoevff2uKog9KDzDWozaqPrOZnfo3vYytcMt2JjkjrKf1u8uKD+QN6g6
-         FaCw==
-X-Gm-Message-State: AO0yUKUBtQtXOFG4pCp5iNEabGqX8mYr3iO4HEAe3+4Jv14mj/cp88sG
-        4RNUTBxlR6MWzbQhzoJEUOU=
-X-Google-Smtp-Source: AK7set86EHuyc0q0zP05ScyFwWuOsmRweh3PRT2khnsAP4IlGLO3dAvUGdP7irLTP2bbgysrQpFHRw==
-X-Received: by 2002:a17:906:164a:b0:86b:9216:2ddb with SMTP id n10-20020a170906164a00b0086b92162ddbmr2642539ejd.52.1675759997223;
-        Tue, 07 Feb 2023 00:53:17 -0800 (PST)
-Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id h20-20020a1709066d9400b0088c224bf5adsm6654614ejt.147.2023.02.07.00.53.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 00:53:16 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pPJj2-000dzV-0U;
-        Tue, 07 Feb 2023 09:53:16 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/3] branch: operations on orphan branches
-Date:   Tue, 07 Feb 2023 09:33:39 +0100
-References: <ffd675e9-8a64-ae05-fc3b-36ae99092735@gmail.com>
- <34a58449-4f2e-66ef-ea01-119186aebd23@gmail.com>
- <2193a4ed-b263-068e-92f8-847dcb053f8c@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <2193a4ed-b263-068e-92f8-847dcb053f8c@gmail.com>
-Message-ID: <230207.86cz6l501v.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iKocahA2vsmC5PIQPoNkEwGs703WecqEtX0bFeQEY6M=;
+        b=ruZmAhllzemvbgcBDi8xX9Juu8UkeuAwco11DxuYi7Gzp/0SuWXKV3GiN/ZO6MyDLE
+         UqJtlzQKDGmdjzF8FguHNBDgeC4O07xtwxMF9m1cB0molr9GHylj1fP/8ZiM5psKn1R/
+         AHU+AucyzaFOs4BXoeQTpaKzSobKyIYFbeDRkTG/qNY/Lx8VBxc5Em6zNcqOlRNSZ6Tf
+         OINFJjXsUYPqJQQfuiP34IjGFlS0Ca+4Qeps9rva3+Tcdl7oWZ//3ZrsyGPSOUUuIzAH
+         QGdyVwWtYuRCh4VnzZoTYwbGCKcTWvhtOzxQt4iS+lUlJqGQiWKthHg2lhNgZ71EVqva
+         ReDg==
+X-Gm-Message-State: AO0yUKV/2jouwxKKKguePMI1KXx4/Dz6PYMVKoOs4yelHvUecq8GiWUY
+        DI01GwrLL1OcnQQbEqGRPkg=
+X-Google-Smtp-Source: AK7set9icjtHDKD8JbJuVqVNqdsvf4gNjRbX8xUziZebIHykt0To4Xm2ZOikoF2kh9ZRWsTOyQa00Q==
+X-Received: by 2002:a05:600c:3596:b0:3df:d431:cf64 with SMTP id p22-20020a05600c359600b003dfd431cf64mr2511769wmq.39.1675765187272;
+        Tue, 07 Feb 2023 02:19:47 -0800 (PST)
+Received: from [192.168.1.212] ([90.248.183.175])
+        by smtp.gmail.com with ESMTPSA id i14-20020a1c540e000000b003db03725e86sm13920981wmb.8.2023.02.07.02.19.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Feb 2023 02:19:46 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <0d7919c8-f2b5-881a-bf8c-56506ada52a5@dunelm.org.uk>
+Date:   Tue, 7 Feb 2023 10:19:47 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 0/8] sequencer API & users: fix widespread leaks
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+References: <patch-v3-7.8-ee8262ab22a-20230118T160600Z-avarab@gmail.com>
+ <cover-v4-0.8-00000000000-20230206T190346Z-avarab@gmail.com>
+In-Reply-To: <cover-v4-0.8-00000000000-20230206T190346Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ævar
 
-On Tue, Feb 07 2023, Rub=C3=A9n Justo wrote:
+On 06/02/2023 19:08, Ævar Arnfjörð Bjarmason wrote:
+> This series fixes various widespread leaks in the sequencer and its
+> users (rebase, revert, cherry-pick). As a result 18 tests become
+> leak-free in their entirety.
+> 
+> See the v1 for a longer general summary:
+> https://lore.kernel.org/git/cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com/
+> 
+> Changes since v3:
+> 
+> * Rebased for newer "master", there were some conflicts due to
+>    adjacent changes.
+> * Addressed Phillip's commit message comments (hopefully).
 
-> Avoid some confusing errors operating with orphan branches when
-> working with worktrees.
->
-> Changes from v2:
->
->  - Renamed "ishead_and_reject_rebase_or_bisect_branch()" to
->    "die_if_branch_is_being_rebased_or_bisected()"
+You have! Thanks for the re-roll this all looks good to me now
 
-Looking this over holistically, I think this is a great example of where
-factoring something out into a function is just making readbility
-worse. This function is only used in copy_or_rename_branch(), and the
-overloaded name & semantics are making things quite confusing.
+Best Wishes
 
-Whereas if we just start by pulling it into its only caller I think this
-gets much better, at the end of this message is a diff-on-top these
-three patches where I do that (I kept the "target" variable to minimize
-the diff with the move detection, but we probalby want the strbuf
-directly instead).
+Phillip
 
->    A proposed name "die_if_branch_is_is_use()" has not been used because
->    it could lead to confusion.  We don't yet support copying or renaming
->    a branch being rebased or bisected, but we do under other uses.
-
-Another thing that I think could be improved in this series is if you
-skip the refactoring-while-at-it of changing the existing
-"if/if/die/die" into a "if/die/?:".
-
-In the below diff I have that proposed change on top, but this snippet
-here shows the diff to "origin/master":
-=09
-	@@ -806,7 +806,7 @@ int cmd_branch(int argc, const char **argv, const char=
- *prefix)
-=09=20
-	 		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
-	 		if (!ref_exists(branch_ref.buf))
-	-			error((!argc || !strcmp(head, branch_name))
-	+			error((!argc || branch_checked_out(branch_ref.buf))
-	 			      ? _("No commit on branch '%s' yet.")
-	 			      : _("No branch named '%s'."),
-	 			      branch_name);
-	@@ -851,10 +851,11 @@ int cmd_branch(int argc, const char **argv, const ch=
-ar *prefix)
-	 		}
-=09=20
-	 		if (!ref_exists(branch->refname)) {
-	-			if (!argc || !strcmp(head, branch->name))
-	+			if (!argc || branch_checked_out(branch->refname))
-	 				die(_("No commit on branch '%s' yet."), branch->name);
-	 			die(_("branch '%s' does not exist"), branch->name);
-	 		}
-
-I.e. your refactoring of this in 2/3 turns out to in the end have just
-been inflating the code change, for no functional benefit.
-
-I wouldn't mind if this were in some pre-cleanup, or if it actually made
-the code easier to read, but IMO this pattern of using a ternary to
-select the format to "error" or "die" makes things worse for
-readability. It's a few bytes less code, but makes things harder to follow =
-overall.
-
-And even if you disagree with that as far as the end state is concerned,
-I think it's unarguable that it makes the 2/3 harder to follow, since
-it's sticking a refactoring that's not neede dfor the end-goal here into
-an otherwise functional change.
-
-I'm aware that some of the code in the context uses this pattern, and
-you probably changed the "if" block you modified to be consistent with
-the code above, but I think in this case it's better not to follow the
-existing style (which is used in that function, but is a rare exception
-overall in this codebase).
-
-The diff-on-top, mentioned above:
-
-=3D=3D BEGIN
-=09
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 7efda622241..dc7a3e3dde1 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -486,45 +486,16 @@ static void print_current_branch_name(void)
- 		die(_("HEAD (%s) points outside of refs/heads/"), refname);
- }
-=20
--/*
-- * Dies if the specified branch is being rebased or bisected.  Otherwise r=
-eturns
-- * 0 or, if the branch is HEAD in any worktree, returns 1. If the branch i=
-s HEAD
-- * and also orphan, returns 2.
-- */
--static int die_if_branch_is_being_rebased_or_bisected(const char *target)
--{
--	struct worktree **worktrees =3D get_worktrees();
--	int i, ret =3D 0;
--
--	for (i =3D 0; worktrees[i]; i++) {
--		struct worktree *wt =3D worktrees[i];
--
--		if (wt->head_ref && !strcmp(target, wt->head_ref))
--			ret =3D is_null_oid(&wt->head_oid) ? 2 : 1;
--
--		if (!wt->is_detached)
--			continue;
--
--		if (is_worktree_being_rebased(wt, target))
--			die(_("Branch %s is being rebased at %s"),
--			    target, wt->path);
--
--		if (is_worktree_being_bisected(wt, target))
--			die(_("Branch %s is being bisected at %s"),
--			    target, wt->path);
--	}
--
--	free_worktrees(worktrees);
--	return ret;
--}
--
- static void copy_or_rename_branch(const char *oldname, const char *newname=
-, int copy, int force)
- {
- 	struct strbuf oldref =3D STRBUF_INIT, newref =3D STRBUF_INIT, logmsg =3D =
-STRBUF_INIT;
- 	struct strbuf oldsection =3D STRBUF_INIT, newsection =3D STRBUF_INIT;
- 	const char *interpreted_oldname =3D NULL;
- 	const char *interpreted_newname =3D NULL;
--	int recovery =3D 0, oldref_is_head, oldref_is_orphan;
-+	int recovery =3D 0, oldref_is_head =3D 0, oldref_is_orphan =3D 0;
-+	struct worktree **worktrees;
-+	int i;
-+	const char *target;
-=20
- 	if (strbuf_check_branch_ref(&oldref, oldname)) {
- 		/*
-@@ -537,8 +508,29 @@ static void copy_or_rename_branch(const char *oldname,=
- const char *newname, int
- 			die(_("Invalid branch name: '%s'"), oldname);
- 	}
-=20
--	oldref_is_head =3D die_if_branch_is_being_rebased_or_bisected(oldref.buf);
--	oldref_is_orphan =3D (oldref_is_head > 1);
-+	worktrees =3D get_worktrees();
-+	target =3D oldref.buf;
-+	for (i =3D 0; worktrees[i]; i++) {
-+		struct worktree *wt =3D worktrees[i];
-+
-+		if (wt->head_ref && !strcmp(target, wt->head_ref)) {
-+			oldref_is_head =3D 1;
-+			if (is_null_oid(&wt->head_oid))
-+				oldref_is_orphan =3D 1;
-+		}
-+
-+		if (!wt->is_detached)
-+			continue;
-+
-+		if (is_worktree_being_rebased(wt, target))
-+			die(_("Branch %s is being rebased at %s"),
-+			    target, wt->path);
-+
-+		if (is_worktree_being_bisected(wt, target))
-+			die(_("Branch %s is being bisected at %s"),
-+			    target, wt->path);
-+	}
-+	free_worktrees(worktrees);
-=20
- 	if ((copy || !oldref_is_head) &&
- 	    (oldref_is_orphan || !ref_exists(oldref.buf)))
-@@ -858,10 +850,12 @@ int cmd_branch(int argc, const char **argv, const cha=
-r *prefix)
- 			die(_("no such branch '%s'"), argv[0]);
- 		}
-=20
--		if (!ref_exists(branch->refname))
--			die((!argc || branch_checked_out(branch->refname))
--			    ? _("No commit on branch '%s' yet.")
--			    : _("branch '%s' does not exist"), branch->name);
-+		if (!ref_exists(branch->refname)) {
-+			if (!argc || branch_checked_out(branch->refname))
-+				die(_("No commit on branch '%s' yet."), branch->name);
-+			die(_("branch '%s' does not exist"), branch->name);
-+		}
-+=09=09
-=20
- 		dwim_and_setup_tracking(the_repository, branch->name,
- 					new_upstream, BRANCH_TRACK_OVERRIDE,
-
-=3D=3D END
-
-P.S. if I were refactoring those ?: for style in that function I'd
-probably go for this on-top. The N_() followed by _() pattern is
-probably overdoing it, but included to show that one way out of this
-sort of thing with i18n is that you can pre-mark the string with N_(),
-then use it with _() to emit the message (right now the code uses
-"copy?" over "copy ?" instead to align them):
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index dc7a3e3dde1..e42f9bc4900 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -805,31 +805,35 @@ int cmd_branch(int argc, const char **argv, const cha=
-r *prefix)
- 		}
-=20
- 		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
--		if (!ref_exists(branch_ref.buf))
--			error((!argc || branch_checked_out(branch_ref.buf))
--			      ? _("No commit on branch '%s' yet.")
--			      : _("No branch named '%s'."),
--			      branch_name);
--		else if (!edit_branch_description(branch_name))
-+		if (!ref_exists(branch_ref.buf)) {
-+			if (!argc || branch_checked_out(branch_ref.buf))
-+				error(_("No commit on branch '%s' yet."),
-+				      branch_name);
-+			else
-+				error(_("No branch named '%s'."), branch_name);
-+		} else if (!edit_branch_description(branch_name)) {
- 			ret =3D 0; /* happy */
-+		}
-=20
- 		strbuf_release(&branch_ref);
- 		strbuf_release(&buf);
-=20
- 		return ret;
- 	} else if (copy || rename) {
-+		static const char *cannot_copy =3D N_("cannot copy the current branch wh=
-ile not on any.");
-+		static const char *cannot_rename =3D N_("cannot rename the current branc=
-h while not on any.");
- 		if (!argc)
- 			die(_("branch name required"));
- 		else if ((argc =3D=3D 1) && filter.detached)
--			die(copy? _("cannot copy the current branch while not on any.")
--				: _("cannot rename the current branch while not on any."));
-+			die("%s", copy ? _(cannot_copy) : _(cannot_rename));
- 		else if (argc =3D=3D 1)
- 			copy_or_rename_branch(head, argv[0], copy, copy + rename > 1);
- 		else if (argc =3D=3D 2)
- 			copy_or_rename_branch(argv[0], argv[1], copy, copy + rename > 1);
-+		else if (copy)
-+			die(_("too many branches for a copy operation"));
- 		else
--			die(copy? _("too many branches for a copy operation")
--				: _("too many arguments for a rename operation"));
-+			die(_("too many arguments for a rename operation"));
- 	} else if (new_upstream) {
- 		struct branch *branch;
- 		struct strbuf buf =3D STRBUF_INIT;
-=20
+> Branch & CI for this at:
+> https://github.com/avar/git/tree/avar/leak-fixes-sequencer-rebase-4
+> 
+> Ævar Arnfjörð Bjarmason (8):
+>    rebase: use "cleanup" pattern in do_interactive_rebase()
+>    sequencer.c: split up sequencer_remove_state()
+>    sequencer API users: fix get_replay_opts() leaks
+>    builtin/revert.c: move free-ing of "revs" to replay_opts_release()
+>    builtin/rebase.c: fix "options.onto_name" leak
+>    sequencer.c: always free() the "msgbuf" in do_pick_commit()
+>    builtin/rebase.c: free() "options.strategy_opts"
+>    commit.c: free() revs.commit in get_fork_point()
+> 
+>   builtin/rebase.c                       | 22 ++++++++------
+>   builtin/revert.c                       |  8 ++---
+>   commit.c                               |  1 +
+>   sequencer.c                            | 42 ++++++++++++++++----------
+>   sequencer.h                            |  1 +
+>   t/t3405-rebase-malformed.sh            |  1 +
+>   t/t3412-rebase-root.sh                 |  1 +
+>   t/t3416-rebase-onto-threedots.sh       |  1 +
+>   t/t3419-rebase-patch-id.sh             |  1 +
+>   t/t3423-rebase-reword.sh               |  1 +
+>   t/t3425-rebase-topology-merges.sh      |  2 ++
+>   t/t3431-rebase-fork-point.sh           |  1 +
+>   t/t3432-rebase-fast-forward.sh         |  1 +
+>   t/t3437-rebase-fixup-options.sh        |  1 +
+>   t/t3438-rebase-broken-files.sh         |  2 ++
+>   t/t3501-revert-cherry-pick.sh          |  1 +
+>   t/t3502-cherry-pick-merge.sh           |  1 +
+>   t/t3503-cherry-pick-root.sh            |  1 +
+>   t/t3506-cherry-pick-ff.sh              |  1 +
+>   t/t3511-cherry-pick-x.sh               |  1 +
+>   t/t7402-submodule-rebase.sh            |  1 +
+>   t/t9106-git-svn-commit-diff-clobber.sh |  1 -
+>   t/t9164-git-svn-dcommit-concurrent.sh  |  1 -
+>   23 files changed, 61 insertions(+), 33 deletions(-)
+> 
+> Range-diff against v3:
+> 1:  b223429df33 ! 1:  029fc5f4b8c rebase: use "cleanup" pattern in do_interactive_rebase()
+>      @@ Commit message
+>           Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>       
+>        ## builtin/rebase.c ##
+>      -@@ builtin/rebase.c: static void split_exec_commands(const char *cmd, struct string_list *commands)
+>      +@@ builtin/rebase.c: static int init_basic_state(struct replay_opts *opts, const char *head_name,
+>        
+>        static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+>        {
+>      @@ builtin/rebase.c: static int do_interactive_rebase(struct rebase_options *opts,
+>        	}
+>        
+>       +cleanup:
+>      - 	string_list_clear(&commands, 0);
+>        	free(revisions);
+>        	free(shortrevisions);
+>      + 	todo_list_release(&todo_list);
+> 2:  00c7f04363f = 2:  b0c9da95ca1 sequencer.c: split up sequencer_remove_state()
+> 3:  e4a96898a68 ! 3:  dbac0501424 rebase & sequencer API: fix get_replay_opts() leak in "rebase"
+>      @@ Metadata
+>       Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>       
+>        ## Commit message ##
+>      -    rebase & sequencer API: fix get_replay_opts() leak in "rebase"
+>      +    sequencer API users: fix get_replay_opts() leaks
+>       
+>      -    Make the recently added replay_opts_release() function non-static and
+>      -    use it for freeing the "struct replay_opts" constructed by the
+>      -    get_replay_opts() function in "builtin/rebase.c". See [1] for the
+>      -    initial addition of get_replay_opts().
+>      +    Make the replay_opts_release() function added in the preceding commit
+>      +    non-static, and use it for freeing the "struct replay_opts"
+>      +    constructed for "rebase" and "revert".
+>       
+>           To safely call our new replay_opts_release() we'll need to stop
+>           calling it in sequencer_remove_state(), and instead call it where we
+>      @@ Commit message
+>           previously called sequencer_remove_state() would be a hassle.
+>       
+>           Using a FREE_AND_NULL() pattern would also work, as it would be safe
+>      -    replay_opts_release() repeatedly, but let's fix this properly instead,
+>      -    by having the owner of the data free() it.
+>      -
+>      -    See [2] for the initial implementation of "sequencer_remove_state()",
+>      -    which assumed that it should be removing the full (including on-disk)
+>      -    rebase state as a one-off.
+>      -
+>      -    1. 73fdc535d26 (rebase -i: use struct rebase_options to parse args,
+>      -       2019-04-17)
+>      -    2. 26ae337be11 (revert: Introduce --reset to remove sequencer state,
+>      -       2011-08-04)
+>      +    to call replay_opts_release() repeatedly. But let's fix this properly
+>      +    instead, by having the owner of the data free() it.
+>       
+>           Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>       
+>      @@ builtin/rebase.c: static int do_interactive_rebase(struct rebase_options *opts,
+>        
+>        cleanup:
+>       +	replay_opts_release(&replay);
+>      - 	string_list_clear(&commands, 0);
+>        	free(revisions);
+>        	free(shortrevisions);
+>      + 	todo_list_release(&todo_list);
+>       @@ builtin/rebase.c: static int run_sequencer_rebase(struct rebase_options *opts)
+>        		struct replay_opts replay_opts = get_replay_opts(opts);
+>        
+> 4:  9f72cc6e46b = 4:  6b29d7d00c2 builtin/revert.c: move free-ing of "revs" to replay_opts_release()
+> 5:  3d5c3152f69 ! 5:  f9c4d17fe70 builtin/rebase.c: fix "options.onto_name" leak
+>      @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
+>        	strbuf_release(&options.git_format_patch_opt);
+>        	free(squash_onto_name);
+>       +	free(keep_base_onto_name);
+>      - 	string_list_clear(&exec, 0);
+>        	string_list_clear(&strategy_options, 0);
+>        	return !!ret;
+>      + }
+>       
+>        ## t/t3416-rebase-onto-threedots.sh ##
+>       @@ t/t3416-rebase-onto-threedots.sh: test_description='git rebase --onto A...B'
+> 6:  c07dc006c6d = 6:  5c2870ed2e6 sequencer.c: always free() the "msgbuf" in do_pick_commit()
+> 7:  ee8262ab22a ! 7:  07ab875c3e2 builtin/rebase.c: free() "options.strategy_opts"
+>      @@ Commit message
+>        ## builtin/rebase.c ##
+>       @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix)
+>        	free(options.gpg_sign_opt);
+>      - 	free(options.cmd);
+>      + 	string_list_clear(&options.exec, 0);
+>        	free(options.strategy);
+>       +	free(options.strategy_opts);
+>        	strbuf_release(&options.git_format_patch_opt);
+> 8:  84343ea6bf6 = 8:  6ab2edcc135 commit.c: free() revs.commit in get_fork_point()
