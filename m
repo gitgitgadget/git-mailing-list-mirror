@@ -2,114 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF6AAC636D3
-	for <git@archiver.kernel.org>; Tue,  7 Feb 2023 22:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3035C636CC
+	for <git@archiver.kernel.org>; Tue,  7 Feb 2023 22:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229831AbjBGWJb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Feb 2023 17:09:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53584 "EHLO
+        id S229888AbjBGWPn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Feb 2023 17:15:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229779AbjBGWJa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2023 17:09:30 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A75040E3
-        for <git@vger.kernel.org>; Tue,  7 Feb 2023 14:09:29 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id p9so538908ejj.1
-        for <git@vger.kernel.org>; Tue, 07 Feb 2023 14:09:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=CIgo+Cvoq9VVaO6UsMQ+xyEoDKj7fgOC8ZLMyCAbL7U=;
-        b=GWNfENNTTY8XMEpbx5cgEYKPo+jIyfWMj+X3AIMgAGJ8705rzskqt8JgQCLtQpRwri
-         v7Qyrb1emMIV8P1uvPoqd08DmNw7B2/NALWvMGoHVLNxroP6Fs5Cdxwh+98wPAZCw91U
-         FK8OVazY9I6vXCa4X9ABOeQTCzIWVek9SbYegQn0WyAyxUqt10CzRK6s9Q+EQQl7YMD0
-         qa4FzifROZnXIwbO8aY85hRlUlYGVkA3EwaBdGHy5WPjZEv0yQBzA02SPUlMvz4Xi5I6
-         S04wppCzZnayi3Lo/rYMD9oVJepLBmceLFpGI5CMLVdQzjxnGgiE7kGiA35kdS+Ey+t+
-         +LBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CIgo+Cvoq9VVaO6UsMQ+xyEoDKj7fgOC8ZLMyCAbL7U=;
-        b=kXRXdbDGwnO6jN7a6oeWbaaWh5N/8HPy4EDpLrYV3ISvytx/x628ulCtcLTBUVbgHm
-         LL0m7DtkAnAImyJhZLSBoXhLLhB1B6D9QitnAdpDxytc9tPD/XIZYBr/tX2KluOPU6gm
-         nFMJwyeQXsXTwOmRt7UXgmqG8c0Z75oAs+vb4NRoqTRIOWqIH3Q8/MxNZBlSkCCnJmvF
-         atff0CgKrTo/9//DMSY5wYxI2ffJ9MgBwtx2hWF4iC8742gyGSHQOymxvTdbw+YWiypo
-         DjRYKo805F8oSs2100hXy5FiN5dW/I/2eoFeXTL2Er0IntALePTUG7fnSdVD+O4ENHEu
-         DgAw==
-X-Gm-Message-State: AO0yUKWAXaY7NeIta6xdbWDkAXdFzxGfaR4YNpXFcV1J0mj9xhfX/L44
-        3Ngc0lSBoIBp6FNod0bWFfg=
-X-Google-Smtp-Source: AK7set/9/DxmZ6FNc12+8XNYhZcj7mC7kzYqbjJfAsNpukWfCKaYr3SgeJd3+a79XGYzCce+b7tsOQ==
-X-Received: by 2002:a17:906:f49:b0:887:915d:7502 with SMTP id h9-20020a1709060f4900b00887915d7502mr4501899ejj.31.1675807767529;
-        Tue, 07 Feb 2023 14:09:27 -0800 (PST)
-Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id dm1-20020a05640222c100b004a21d03155bsm6991927edb.88.2023.02.07.14.09.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 14:09:26 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pPW9W-0012TA-0R;
-        Tue, 07 Feb 2023 23:09:26 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Jiang Xin <worldhello.net@gmail.com>,
+        with ESMTP id S229731AbjBGWPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2023 17:15:42 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDC9F3C22
+        for <git@vger.kernel.org>; Tue,  7 Feb 2023 14:15:39 -0800 (PST)
+Received: (qmail 13727 invoked by uid 109); 7 Feb 2023 22:15:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Feb 2023 22:15:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25327 invoked by uid 111); 7 Feb 2023 22:15:38 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Feb 2023 17:15:38 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 7 Feb 2023 17:15:38 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
         Bernhard Reiter <ockham@raz.or.at>,
         Remi Pommarel <repk@triplefau.lt>
 Subject: Re: [PATCH v2 6/6] imap-send: correctly report "host" when using
  "tunnel"
-Date:   Tue, 07 Feb 2023 23:04:22 +0100
+Message-ID: <Y+LNitGAude1vogv@coredump.intra.peff.net>
 References: <patch-1.1-3bea1312322-20230201T225915Z-avarab@gmail.com>
-        <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
-        <patch-v2-6.6-686febb8cdc-20230202T093706Z-avarab@gmail.com>
-        <Y91J+P5P9gV1Dygm@coredump.intra.peff.net>
-        <230203.86bkmabfjr.gmgdl@evledraar.gmail.com>
-        <Y94866yd3adoC1o9@coredump.intra.peff.net>
-        <230205.86ilgf7osb.gmgdl@evledraar.gmail.com>
-        <Y+KYwsBjty0aaLes@coredump.intra.peff.net>
-        <230207.86fsbh2nqo.gmgdl@evledraar.gmail.com>
-        <xmqq8rh9yxot.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <xmqq8rh9yxot.fsf@gitster.g>
-Message-ID: <230207.86357h2kmh.gmgdl@evledraar.gmail.com>
+ <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
+ <patch-v2-6.6-686febb8cdc-20230202T093706Z-avarab@gmail.com>
+ <Y91J+P5P9gV1Dygm@coredump.intra.peff.net>
+ <230203.86bkmabfjr.gmgdl@evledraar.gmail.com>
+ <Y94866yd3adoC1o9@coredump.intra.peff.net>
+ <230205.86ilgf7osb.gmgdl@evledraar.gmail.com>
+ <Y+KYwsBjty0aaLes@coredump.intra.peff.net>
+ <230207.86fsbh2nqo.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <230207.86fsbh2nqo.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Feb 07, 2023 at 09:39:48PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-On Tue, Feb 07 2023, Junio C Hamano wrote:
+> *nod* I'll just note that you elided the part where I noted that I don't
+> really care, and will submit some re-roll that's compatible with the
+> current imap.{host,tunnel} interaction.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> I think you might be right that people might rely on this after having
->> discovered this undocumented interaction by accident.
->>
->> But I also think that the lack of questions about how to get imap-send's
->> tunnel mode to work with auth helpers (at least I couldn't find any
->> on-list), which is what you'd run into if you went by the documentation
->> & were trying to get htat ot work, is a pretty good sign that this may
->> be either entirely unused by anyone, or at best very obscure.
->
-> I actually think the misconfiguration (from documentation's point of
-> view) Peff is taking advantage of is a behaviour you would naturally
-> expect, if you do not read the documentation but are merely aware of
-> the presence of .host and .tunnel and guess what these do.  And
-> those who felt it was a natural design would probably not have asked
-> any question about it.  Documenting the current behaviour better
-> would not hurt.  Updating the behaviour and documenting the new
-> behaviour would not help anybody.
+Yeah, sorry, I should have said "yes, thank you" there. :) I wasn't
+meaning to continue arguing, but just trying to answer your "how would
+they even find this?" confusion.
 
-Sure, we don't have to belabor the point. It's moot for a re-roll of
-this topic in any case (I won't be changing this behavior).
+> I.e. if we just say that we're not going to support this use-case
+> anymore we can get rid of all of the OpenSSL reliance in-tree, except
+> for the optional (and hardly ever used) OPENSSL_SHA1, and
+> uses-only-one-API-function "HAVE_OPENSSL_CSPRNG" use.
 
-But do I take it from the non-reply to what came afterwards that you're
-not interested in a (not a part of this topic) proposal for us to say
-"if you want that, arrange for ssh to do it for you", which would allow
-for finally dropping libssl as a non-trivial direct dependency? Or just
-that you didn't get to considering that?
+Yeah, getting rid of that openssl code is a reasonable goal. And this
+may seem counter-intuitive, but I'm actually _more_ in favor of that
+than the change you proposed here, even though it potentially breaks
+more users. That's because I feel like we're buying something useful
+with it, whereas with the patch we've been discussing, the tradeoff was
+less clear to me.
+
+That said, it seems like there should be a path forward for supporting
+tunnels via curl, and then we could be getting rid of the openssl
+dependency _and_ all of the custom and rarely-run imap code. But that's
+an even bigger task, and I not only wouldn't want to work on it, I'm not
+even sure I'd want to review it. I'm slightly regretting getting
+involved here at all, because it seems like none of us actually care at
+all about imap-send, and this has turned into a big discussion. I mostly
+chimed in because it seemed like I had a perspective you didn't on how
+people might use tunnels, and it felt like I should speak up for folks
+whose use cases might be getting broken.
+
+  Side note: If somebody were proposing to add imap-send at all today,
+  I'd probably say "no, that should be a separate project, and you
+  should probably write it in some language that has a decent imap
+  library". It really has nothing at all to do with Git in terms of
+  implementation, and I suspect it's not super well maintained in
+  general. But perhaps it is too late for that.
+
+> So your example of:
+> 
+> 	[imap]
+> 	host = internal.example.com
+> 	tunnel = "ssh bastion-server nc internal.example.com 143"
+> 
+> Would instead be:
+> 
+> 	1. Arrange for the equivalent of that to run outside of
+> 	   git-imap-send, e.g.:
+> 
+> 	    ssh -N -R 1430:internal.example.com:143 bastion-server
+> 
+> 	2. Use "imap.host" to connect to that "remote" box with libcurl,
+> 	   but just use "localhost:1430"
+
+Having done something like that before, the "arrange" step is more
+finicky than you might think (because sometimes it goes away, and you
+really want to trigger it on demand).
+
+-Peff
