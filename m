@@ -2,110 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDE93C636CD
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 00:43:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3180C636CD
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 00:54:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229684AbjBHAnw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Feb 2023 19:43:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59646 "EHLO
+        id S229625AbjBHAy4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Feb 2023 19:54:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229505AbjBHAnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2023 19:43:51 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 162D03CE20
-        for <git@vger.kernel.org>; Tue,  7 Feb 2023 16:43:50 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id a2so14965183wrd.6
-        for <git@vger.kernel.org>; Tue, 07 Feb 2023 16:43:50 -0800 (PST)
+        with ESMTP id S229632AbjBHAyz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2023 19:54:55 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BD3122DDE
+        for <git@vger.kernel.org>; Tue,  7 Feb 2023 16:54:47 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id gr7so47332414ejb.5
+        for <git@vger.kernel.org>; Tue, 07 Feb 2023 16:54:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fHcjZMh8fbjnJMBdNEY4mT+YFkMDCJH7XFkcvP7dJ7c=;
-        b=d2mn50did1MuhosWRA8wwtPxtgHxuSE/fNEqDuPDvHn4URHFfnAlxA3296QNpdrDsN
-         OuVcI7ZnnCb+uH1yGCqpACtGz/WI9Di9+qSggLZBCNz7G8TqvhEw5jkyjPiCAQVVJw2R
-         srDGgoI4EKDz6CRgBmrRoWHE316eqWNTRpcw30BiqQ46P1cArIUGOhJif+kN+WC2bFzn
-         jrfMc8qm9LPCfrAMs3ANdKVwyEey/WfifpYOOTHWbG/e3Ye/n2niLmR1tI3LnguNY8Rj
-         3aTcs5wQ4i6jxDKYTJdEYNeFesK+OfdCxtf7KZwRELDQiGPVAFJJFKY+MYtXp8WT8KOk
-         H53w==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8veoeWsU5tJ2J0twA7XwflE+2PV6EKrjI16GlvpoixE=;
+        b=Cn77CFBYdizvN7lXE3v4/tDAHcpyWcRXvQz/pAe0xnfsr2vx9fOq/m7uHfYwB9MrSl
+         xjhegjQUW2zmiciDH/Fc6TiDpRIZajCcsMIpwUVbmpZsemOZNU+gb+rSW4zUagQPpMH1
+         GIItmB4TJ3s5oB48SIc81yMAE5+1J1c6CMTKwWfNqQMzafZ61nspmSAEn51SC5oW9dA3
+         CrKv7prs0efosmilC9wU8GVtnh/mcmbpIr34EDaFByQScPXj+CqcxpmGQOer4QyXIHOn
+         TqMLiF/ctarErdLCf4y1RaGDpur+NI1GNiC89jgrLFWE6wXP0lzAFcSz+QVxPopUhQ7E
+         CGgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fHcjZMh8fbjnJMBdNEY4mT+YFkMDCJH7XFkcvP7dJ7c=;
-        b=c+VvzR1eifma3BOq7F+TWrV0/ooSAwVOn0HPM2mlDHo6lapqR4ijF0h9B0arvnbpr4
-         HJ+7WSpU+p0Z5SStdRE/9qPQhG8+LjW1J9xZUKNu7GwWqaIV7sHD5+i89aDZlqN4IOOn
-         Ode4AZRC3EzCzPKe0I5wwMac0Gu1ZNQ5MpbLovq/EzL0jhfOtyerUze5IQWMFASGBjYY
-         w/r3m0yEbIhu1f5r9r6/V/lpDn4TCx3oPxZB5kwGMe53/Jq+N+puK+6sffazIpl4bXZp
-         5i0/UwUImeTUro5tayTJ+g+daHAOaZd3Desd4/C5vVvIWXyIO3LmoT35bhllqRwarmLn
-         iBCQ==
-X-Gm-Message-State: AO0yUKWpwBBy16qzcH9T6adDSUWZE9+rGlZpSvm9w13s4kVocALcKt13
-        SjIOxGmA/LNaixEg5pIQMfI=
-X-Google-Smtp-Source: AK7set8srHtLKWGjb/n9/R/En941OgtdZEGRVt295xM7/ta0w49TtZbGY1O2oqwQSuzPGvoV9VH+Fw==
-X-Received: by 2002:a5d:6791:0:b0:2c3:f00c:ebaa with SMTP id v17-20020a5d6791000000b002c3f00cebaamr4630205wru.4.1675817028654;
-        Tue, 07 Feb 2023 16:43:48 -0800 (PST)
-Received: from [192.168.2.52] (141.red-88-14-210.dynamicip.rima-tde.net. [88.14.210.141])
-        by smtp.gmail.com with ESMTPSA id j3-20020adfff83000000b002c3e167232bsm8758662wrr.92.2023.02.07.16.43.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 16:43:47 -0800 (PST)
-Subject: Re: [PATCH v3 3/4] rebase: refuse to switch to a branch already
- checked out elsewhere (test)
-To:     phillip.wood@dunelm.org.uk,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
- <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
- <02a15ebb-b927-1048-db2e-576abef9538b@gmail.com>
- <5b0d5b6e-5055-6323-1b6c-fe98137e81f6@gmail.com>
- <230206.86wn4u6859.gmgdl@evledraar.gmail.com>
- <4580b825-b117-4581-4ea2-ab30e350b6ad@gmail.com>
- <f4be3c97-eb15-790e-9746-96d0c9bbc5a7@dunelm.org.uk>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <19e3e0d9-406e-ac2f-c43a-b4e994035529@gmail.com>
-Date:   Wed, 8 Feb 2023 01:43:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8veoeWsU5tJ2J0twA7XwflE+2PV6EKrjI16GlvpoixE=;
+        b=FLHK0bPvgAmTG9vebm/PfiVxHf/pLtqqg54MrGpiTaNIV6pSpEn34P123g3GyjPzfx
+         ho2IrbNfbFHfNacdIUDHJ1IJEYs6JhD4A5b+UKg8R4tZV+PD3Yl+66BxXsYt/igxMfo+
+         VCsKF3k5lrp4Rdyo+hqid2l5y4sI1du2cKjbg1nm/4IWo31XaaRYhtwgBxKfAGuFmB4P
+         okihEPtFvhg3CF54FHagmxJa3+OJQAcC9Jx7+VPRZne+hW42GPi4YH7gbconHYM1OA1c
+         ITXNC4KBg7CHvpGZ5oqLREKkMLRwn32Bf1RuUnGESdYR11xQ9tHEuVDKxGaHWOaxf83q
+         YMww==
+X-Gm-Message-State: AO0yUKV5YnWAv38bGc8UArn/CZifYccd6i2/22eO8DwPeG4zKBu8VveQ
+        82FucFw5kjSGmuzM1Jm8Sn+ywB2b+rfYqwHk
+X-Google-Smtp-Source: AK7set9K4L9iSBC5zFIq9AigKNpbtdBVHAYdscEdtfhT/MotwcLJk7yS3Pg+dQrVB+OpxU3+glctjA==
+X-Received: by 2002:a17:906:528d:b0:8aa:8b52:5914 with SMTP id c13-20020a170906528d00b008aa8b525914mr3454951ejm.53.1675817685501;
+        Tue, 07 Feb 2023 16:54:45 -0800 (PST)
+Received: from gmgdl ([81.191.238.7])
+        by smtp.gmail.com with ESMTPSA id n5-20020a170906b30500b007aea1dc1840sm7564165ejz.111.2023.02.07.16.54.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 16:54:44 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pPYjU-00181n-0p;
+        Wed, 08 Feb 2023 01:54:44 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, chooglen@google.com, newren@gmail.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH v7 7/7] diff-lib: parallelize run_diff_files for submodules
+Date:   Wed, 08 Feb 2023 00:06:48 +0100
+References: <20230117193041.708692-1-calvinwan@google.com>
+ <20230207181706.363453-8-calvinwan@google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <20230207181706.363453-8-calvinwan@google.com>
+Message-ID: <230208.86ilgd0yej.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <f4be3c97-eb15-790e-9746-96d0c9bbc5a7@dunelm.org.uk>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07-feb-2023 10:52:39, Phillip Wood wrote:
-> Hi Rubén
-> 
-> On 06/02/2023 23:16, Rubén Justo wrote:
-> > On 06-feb-2023 17:59:11, Ævar Arnfjörð Bjarmason wrote:
-> > 
-> > > > Let's add a test to notice if this changes in the future.
-> > > 
-> > > I for one would find this series much easier to follow if you started
-> > > with this test, possibly with a test_expect_failure, and as we fix the
-> > > relevant code flip them (both this and the subsequent one) to run
-> > > successfully, and include them as part of the commit that fixes the
-> > > bug).
-> > > 
-> > > Maybe there's reasons for why that's tricky to do in this case, so
-> > > please ignore this if so.
-> > 
-> > I'll give it try, I like the idea.  Thanks.
-> 
-> Squashing the last three commits together so that the tests are introduced
-> in the same commit as the fix as Junio suggested in his comments on the
-> previous round would be very welcome.
 
-Yes, I considered that, but I think that keeping the tests in their own
-commit is reasonable.  The tests protect against a malfunction that we
-did not notice when the implementation was done.  The commits reference
-(and use similar subjects) to the original commit where we should have
-introduced the tests.  If the tests fail, I think it will be easier and
-less confusing to reach the original commit where the implementation was
-done if we keep them separated, rather than combining all three commits.
+On Tue, Feb 07 2023, Calvin Wan wrote:
 
-I'm going to reorder the commits and change to use test_expect_failure().
-This way the commit with the fix will also be linked.
+> [...]
+> +	sps->result = 1;
+> +	strbuf_addf(err,
+> +	    _(status_porcelain_start_error),
+> +	    task->path);
+> +	return 0;
+> [...]
+> +	if (retvalue) {
+> +		sps->result = 1;
+> +		strbuf_addf(err,
+> +		    _(status_porcelain_fail_error),
+> +		    task->path);
+> [...]
+
+This is nitpicky, but what's with the short lines and over-wrapping?
+
+If you change these two to (just using my macro version on top, but it's
+the same with yours):
+
+	strbuf_addf(err, _(STATUS_PORCELAIN_START_ERROR), task->path);
+
+And:
+
+	strbuf_addf(err, _(STATUS_PORCELAIN_FAIL_ERROR), task->path);
+
+Both of these are under our usual line limit at their respective
+indentation (the latter at 77, rule of thumb is to wrap at 79-80).
+
+> +	if (submodules.nr > 0) {
+
+Don't compare unsigned to >0, just use "submodules.nr".
+
+> +		int parallel_jobs;
+
+nit: add extra \n, or maybe just call this "int v", as it's clear from
+the scope what it's about...
+
+> +		if (git_config_get_int("submodule.diffjobs", &parallel_jobs))
+> +			parallel_jobs = 1;
+> +		else if (!parallel_jobs)
+> +			parallel_jobs = online_cpus();
+> +		else if (parallel_jobs < 0)
+> +			die(_("submodule.diffjobs cannot be negative"));
+
+Can't you use the "ulong" instead of "int" and have it handle this "is
+negative?" error check for you?
+
+> +
+> +		if (get_submodules_status(&submodules, parallel_jobs))
+> +			die(_("submodule status failed"));
+> +		for (size_t i = 0; i < submodules.nr; i++) {
+
+Another case that can use for_each_string_list_item().
+
+> +struct submodule_parallel_status {
+> +	size_t index_count;
+> +	int result;
+> +
+> +	struct string_list *submodule_names;
+> +
+> +	/* Pending statuses by OIDs */
+> +	struct status_task **oid_status_tasks;
+> +	int oid_status_tasks_nr, oid_status_tasks_alloc;
+
+For new structs, let's use size_t, not "int" for alloc/nr.
+
+Also, as this is 7/7 and we're not adding another such pattern for the
+forseeable future, can we just call these "size_t nr", "size_t alloc"
+and "tasks"?
+
+And having said all that, it turns out this is just dead code that can
+be removed? Blindly copied from submodule_parallel_fetch?
