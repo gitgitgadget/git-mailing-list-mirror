@@ -2,197 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8262AC636CD
-	for <git@archiver.kernel.org>; Tue,  7 Feb 2023 23:43:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02450C64EC4
+	for <git@archiver.kernel.org>; Tue,  7 Feb 2023 23:52:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229807AbjBGXnW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Feb 2023 18:43:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38298 "EHLO
+        id S229670AbjBGXws (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Feb 2023 18:52:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbjBGXnK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2023 18:43:10 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16ADB13DC1
-        for <git@vger.kernel.org>; Tue,  7 Feb 2023 15:43:09 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id eq11so18313981edb.6
-        for <git@vger.kernel.org>; Tue, 07 Feb 2023 15:43:09 -0800 (PST)
+        with ESMTP id S229517AbjBGXwq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2023 18:52:46 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4BC82C67E
+        for <git@vger.kernel.org>; Tue,  7 Feb 2023 15:52:42 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id 203so11941723pfx.6
+        for <git@vger.kernel.org>; Tue, 07 Feb 2023 15:52:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+LIWKiW7QQxRLQ9r+sdkAt5JGoFAgN4QRG4LmIfEqy0=;
-        b=f1XmQxiFOpPwnlUPgh52INwQRmqHukDphNFEIi72U1jbktjuhfBCSVbQlKhNToc/RN
-         4jN8rSL/NPBNwELk2oxislaGa1LyZzoqE2Et9jpFiHhz7fTWV+9uqz+2oUn2wgQQ7d4F
-         KAe0Ho3+ZxGGqDQUa/EELbJYPXK5x2sokMpwvt/54Pc0irxIL5p9b4zsdDJHA/MXer51
-         89rFDG1e1HYu1pVgs3KekgpLs5/8mQ08w9YRSwVWL9e2X/wih+1Pie5QMKcLib4TDzqz
-         0sN1BvcUE1yZ76W+NH5gvEudg2vmdfxe8HY5c//xwGC3L7mi2kt6GS24r/sOwmioLMv5
-         2LeQ==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hPbpiuMbdLh1g1U9z/rq4AzfvOLGPsEnctMgHTxbHNo=;
+        b=qJ5qvYpviw1oYTycHmb6wWZ7nb3WoLW+VqvrCWCD5ta4+EfTMI1vP9IytE60n7E+zX
+         qWlCFbOeQaonj/yxsJrTFmYD2Lo99SVkZwIkrMRAhK+Sl06hkS8W+uzG9Woi8jXIni4K
+         TMOTpwnA03L4caACCS9W7R1ER+oDS/Ax5ZV92QAnTjxC1HFKTa+yWKVBrmJePRWvzDJT
+         HnL3cZOurJSvG9bcjVQDgTRlloTdpEloxjwjobPrvyJnWv/xtDDZMP52vt6i/a8j8LBD
+         irzgx5n6Cg0k7bP8E+GHYIWvNkzOqDULBSBmvaNN7jetJ/s/ACzWmrq0Uf20vBb1IbU4
+         JQQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+LIWKiW7QQxRLQ9r+sdkAt5JGoFAgN4QRG4LmIfEqy0=;
-        b=TM2zKN5ghvUwBHZE7IuuNwVNr5LhiaGdbuI9d5UwxwvABjQ/3kdW/lvyEzX4FO5Cme
-         b341cbanjhUfzfb7O9xpaZo7qIFZr8OSAzyUNi//t1foQkFLInH7AoO6Bq+uOU9RFnL/
-         yVNu+6T+PJpY7xFou2rlUjWyvN9D18d/1VCnx/AmOZNfx7tcmD60++n4tg1XqvG89l4P
-         oJVpceyF7iK7M+ZwoYgVMmwrftXi97UPYxzO1sou41rdGKHE9yK6jboSmIVQC1iKTr/z
-         wC19HbnK7lBpHdGcOiitJ7GumauoWNR+QCVFmfuVBAQxmyzEIdjCXhNhuooxE1MzLFgP
-         de7Q==
-X-Gm-Message-State: AO0yUKWoUreo9s3/XLC5E5x//8SsnRfc6O/GYYq+hDRJO4zcnMhVm/CM
-        sU+nr7ZubgV1CpFalqJoDCg=
-X-Google-Smtp-Source: AK7set9YpSAs/qvMWd5RGMuLIkHT0WprNeYQqru70U5rvI9uEcY+90nJ3L0qePA0Wpn6oWmRFz106w==
-X-Received: by 2002:a50:d7cd:0:b0:4a0:af87:b3ab with SMTP id m13-20020a50d7cd000000b004a0af87b3abmr5212214edj.36.1675813387636;
-        Tue, 07 Feb 2023 15:43:07 -0800 (PST)
-Received: from titov.fritz.box ([181.214.173.18])
-        by smtp.gmail.com with ESMTPSA id x91-20020a50bae4000000b0049b58744f93sm5346198ede.81.2023.02.07.15.43.06
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hPbpiuMbdLh1g1U9z/rq4AzfvOLGPsEnctMgHTxbHNo=;
+        b=mj4Fh25pAnZLrFFygat/k99NnX4CsNW836TkISIrr9y6jzqM25c4VVwmoryQB/GElI
+         mKZ/MtGNiyB3hNq7qC/QjsGYLlNWe3DDyqyZYkIUU3Uud7e40fU/IYc2tlvhoeVo9pMI
+         kpbptHj5bEK724CvvsUXTFcDm7o9b539qkKHQc+u/0mMMMPcVigJeayry3xBHmq7KjMA
+         ystzYsXLZWBw7xH/CDS01+ADfUH9c3C2rTpXibZTgrAH2sewLfGs5XlP2fncd+XW05jz
+         Gvu1Zb+JCmcXBWVwD+cM4EGJcZQ7X9znvsK4jM5T7+KDFevh8Q8WyeiOMfTOqQzGp7JO
+         b88Q==
+X-Gm-Message-State: AO0yUKU7tf95sXiKz1P5oaXkkkS3DH0zYhwl1kigLG6XJ0syasKKZ7lW
+        5kFB4LrNxIUbR2KJaX84Jd79QUfdzro=
+X-Google-Smtp-Source: AK7set/xwE60rhsbzcQltLEi67iHBwQ7Hdh6u6x50KFsaV5d8gxIhZ0Hxn9MJih6cHBcI8qEtwJ6ag==
+X-Received: by 2002:a05:6a00:1993:b0:594:1f1c:3d30 with SMTP id d19-20020a056a00199300b005941f1c3d30mr656906pfl.5.1675813961825;
+        Tue, 07 Feb 2023 15:52:41 -0800 (PST)
+Received: from kir-rhat.redhat.com (c-76-104-243-248.hsd1.wa.comcast.net. [76.104.243.248])
+        by smtp.gmail.com with ESMTPSA id x16-20020a62fb10000000b005813f365afcsm2554863pfm.189.2023.02.07.15.52.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Feb 2023 15:43:07 -0800 (PST)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Paolo Bonzini <pbonzini@redhat.com>,
-        Tassilo Horn <tsdh@gnu.org>
-Subject: [PATCH v3 3/3] userdiff: support Java sealed classes
-Date:   Wed,  8 Feb 2023 00:42:59 +0100
-Message-Id: <20230207234259.452141-4-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230207234259.452141-1-rybak.a.v@gmail.com>
-References: <64601c4b-9ced-672f-a5fd-9a9b3b65859d@kdbg.org>
- <20230207234259.452141-1-rybak.a.v@gmail.com>
+        Tue, 07 Feb 2023 15:52:41 -0800 (PST)
+From:   Kir Kolyshkin <kolyshkin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Kir Kolyshkin <kolyshkin@gmail.com>,
+        Roman Dodin <dodin.roman@gmail.com>
+Subject: [PATCH] remote: align columns on -v
+Date:   Tue,  7 Feb 2023 15:52:38 -0800
+Message-Id: <20230207235238.1850757-1-kolyshkin@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A new kind of class was added in Java 17 -- sealed classes.[1]  This
-feature includes several new keywords that may appear in a declaration
-of a class.  New modifiers before name of the class: "sealed" and
-"non-sealed", and a clause after name of the class marked by keyword
-"permits".
+Currently, git remote -v produces a misaligned output when a remote name
+is more than 8 characters long (i.e. longer than a tab step). Here's how
+it looks like:
 
-The current set of regular expressions in userdiff.c already allows the
-modifier "sealed" and the "permits" clause, but not the modifier
-"non-sealed", which is the first hyphenated keyword in Java.[2]  Allow
-hyphen in the words that precede the name of type to match the
-"non-sealed" modifier.
+giuseppe	https://github.com/giuseppe/runc (fetch)
+giuseppe	https://github.com/giuseppe/runc (push)
+kir	git@github.com:kolyshkin/runc.git (fetch)
+kir	git@github.com:kolyshkin/runc.git (push)
+lifubang	https://github.com/lifubang/runc (fetch)
+lifubang	https://github.com/lifubang/runc (push)
+marquiz	https://github.com/marquiz/runc (fetch)
+marquiz	https://github.com/marquiz/runc (push)
 
-In new input file "java-sealed" for the test t4018-diff-funcname.sh, use
-a Java code comment for the marker "RIGHT".  This workaround is needed,
-because the name of the sealed class appears on the line of code that
-has the "ChangeMe" marker.
+Let's find the maximum width and use it for alignment.
 
-[1] Detailed description in "JEP 409: Sealed Classes"
-    https://openjdk.org/jeps/409
-[2] "JEP draft: Keyword Management for the Java Language"
-    https://openjdk.org/jeps/8223002
+While at it, let's keep the \t in case some tools depend on it
+for parsing (there will still be trailing spaces in the remote name).
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+With this change, the output is like this now:
+
+giuseppe 	https://github.com/giuseppe/runc (fetch)
+giuseppe 	https://github.com/giuseppe/runc (push)
+kir      	git@github.com:kolyshkin/runc.git (fetch)
+kir      	git@github.com:kolyshkin/runc.git (push)
+lifubang 	https://github.com/lifubang/runc (fetch)
+lifubang 	https://github.com/lifubang/runc (push)
+marquiz  	https://github.com/marquiz/runc (fetch)
+marquiz  	https://github.com/marquiz/runc (push)
+
+Reported-by: Roman Dodin <dodin.roman@gmail.com>
+Signed-off-by: Kir Kolyshkin <kolyshkin@gmail.com>
 ---
- t/t4018/java-non-sealed                                | 8 ++++++++
- t/t4018/java-sealed                                    | 7 +++++++
- t/t4018/java-sealed-permits                            | 6 ++++++
- t/t4018/java-sealed-type-parameters                    | 6 ++++++
- t/t4018/java-sealed-type-parameters-implements-permits | 6 ++++++
- t/t4018/java-sealed-type-parameters-permits            | 6 ++++++
- userdiff.c                                             | 2 +-
- 7 files changed, 40 insertions(+), 1 deletion(-)
- create mode 100644 t/t4018/java-non-sealed
- create mode 100644 t/t4018/java-sealed
- create mode 100644 t/t4018/java-sealed-permits
- create mode 100644 t/t4018/java-sealed-type-parameters
- create mode 100644 t/t4018/java-sealed-type-parameters-implements-permits
- create mode 100644 t/t4018/java-sealed-type-parameters-permits
+ builtin/remote.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4018/java-non-sealed b/t/t4018/java-non-sealed
-new file mode 100644
-index 0000000000..069087c1c6
---- /dev/null
-+++ b/t/t4018/java-non-sealed
-@@ -0,0 +1,8 @@
-+public abstract sealed class SealedClass {
-+    public static non-sealed class RIGHT extends SealedClass {
-+        static int ONE;
-+        static int TWO;
-+        static int THREE;
-+        private int ChangeMe;
-+    }
-+}
-diff --git a/t/t4018/java-sealed b/t/t4018/java-sealed
-new file mode 100644
-index 0000000000..785fbc62bc
---- /dev/null
-+++ b/t/t4018/java-sealed
-@@ -0,0 +1,7 @@
-+public abstract sealed class Sealed { // RIGHT
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    public final class ChangeMe extends Sealed {
-+    }
-+}
-diff --git a/t/t4018/java-sealed-permits b/t/t4018/java-sealed-permits
-new file mode 100644
-index 0000000000..18dd4894cf
---- /dev/null
-+++ b/t/t4018/java-sealed-permits
-@@ -0,0 +1,6 @@
-+public abstract sealed class RIGHT permits PermittedA, PermittedB {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/t/t4018/java-sealed-type-parameters b/t/t4018/java-sealed-type-parameters
-new file mode 100644
-index 0000000000..e6530c47c3
---- /dev/null
-+++ b/t/t4018/java-sealed-type-parameters
-@@ -0,0 +1,6 @@
-+public abstract sealed class RIGHT<A, B> {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/t/t4018/java-sealed-type-parameters-implements-permits b/t/t4018/java-sealed-type-parameters-implements-permits
-new file mode 100644
-index 0000000000..bd6e6d3582
---- /dev/null
-+++ b/t/t4018/java-sealed-type-parameters-implements-permits
-@@ -0,0 +1,6 @@
-+public abstract sealed class RIGHT<A, B> implements List<A> permits PermittedA, PermittedB {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/t/t4018/java-sealed-type-parameters-permits b/t/t4018/java-sealed-type-parameters-permits
-new file mode 100644
-index 0000000000..25a0da6442
---- /dev/null
-+++ b/t/t4018/java-sealed-type-parameters-permits
-@@ -0,0 +1,6 @@
-+public abstract sealed class RIGHT<A, B> permits PermittedA, PermittedB {
-+    static int ONE;
-+    static int TWO;
-+    static int THREE;
-+    private int ChangeMe;
-+}
-diff --git a/userdiff.c b/userdiff.c
-index 37ac98e177..94cca1a2a8 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -171,7 +171,7 @@ PATTERNS("html",
- PATTERNS("java",
- 	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
- 	 /* Class, enum, interface, and record declarations */
--	 "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface|record)[ \t]+.*)$\n"
-+	 "^[ \t]*(([a-z-]+[ \t]+)*(class|enum|interface|record)[ \t]+.*)$\n"
- 	 /* Method definitions; note that constructor signatures are not */
- 	 /* matched because they are indistinguishable from method calls. */
- 	 "^[ \t]*(([A-Za-z_<>&][][?&<>.,A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 729f6f3643..116417574d 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1245,13 +1245,21 @@ static int show_all(void)
+ 	result = for_each_remote(get_one_entry, &list);
+ 
+ 	if (!result) {
+-		int i;
++		int i, width = 7;
++
++		if (verbose) {
++			for (i = 0; i < list.nr; i++) {
++				int len = strlen((list.items + i)->string);
++				if (len > width)
++					width = len;
++			}
++		}
+ 
+ 		string_list_sort(&list);
+ 		for (i = 0; i < list.nr; i++) {
+ 			struct string_list_item *item = list.items + i;
+ 			if (verbose)
+-				printf("%s\t%s\n", item->string,
++				printf("%-*s\t%s\n", width, item->string,
+ 					item->util ? (const char *)item->util : "");
+ 			else {
+ 				if (i && !strcmp((item - 1)->string, item->string))
 -- 
-2.39.1
+2.39.0
 
