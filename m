@@ -2,127 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E97B2C05027
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 23:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 936E4C636D3
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 23:12:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231965AbjBHXAL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 18:00:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57974 "EHLO
+        id S229579AbjBHXMf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 18:12:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230194AbjBHXAK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 18:00:10 -0500
+        with ESMTP id S229564AbjBHXMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 18:12:33 -0500
 Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 642DB15CB5
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 15:00:09 -0800 (PST)
-Received: by mail-yb1-xb34.google.com with SMTP id x8so228012ybt.13
-        for <git@vger.kernel.org>; Wed, 08 Feb 2023 15:00:09 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C855135AE
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 15:12:32 -0800 (PST)
+Received: by mail-yb1-xb34.google.com with SMTP id o187so338642ybg.3
+        for <git@vger.kernel.org>; Wed, 08 Feb 2023 15:12:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=tnzO3j+3Q6vHUJuoe6CMOzAGlW0xNMTSkSRVWCKOVq0=;
-        b=grCv1Po65aTwtP6TxjjmH5WGSj0fU05R4hBW5PpDcFjnc3LAUvb290PgacGX65dnz3
-         ayBRiRRdfMml7RTWotP//Oo5AzGIm7S4nFQgPi/pwt3uNKV+83N1bD5CkAtU53MHhifP
-         rZsXWCSgIUvBYfmF/nYJg1kSrdoSCAuQAa/epNkH81DCcMv43GnsCsp6QR5P3Fh2AncM
-         U8PbXvdWNfn6lotemkgjJ6pDHS+n1vTRBwIkRCvJ74HBYLUjY2G6J5L5oW3exM/09Ux7
-         85JLbW8Xp5kmRj3W3vm/BIpmmAjY3tTWr8I4QSeB2PfiW8hmvjldlChMCZ0OGw9PWbG6
-         FH1A==
+        bh=jyhamTmPMkeWz88y073od9kK9Ei/eHrIhCE5do+kCkI=;
+        b=P0tEC6sggCSQuCkQ2cXg3DeNoxNj5a5u424Vfu3KXtF9dJlg7rBANHKisG0Y82RoNk
+         35PAhe8o2Q2hfwq14fb69P4RB3Gnqznw5rlpEzAAxy3aNRvR0aONtzhDVRaEynV5OGn2
+         2DTpD/PwhOgkguJ/2W7/XdZvat7hpE/pio32HUrZoFH4CG2uYrTV4Bmygmzxyq8H9maa
+         ghs+/UxNEr0dFWN6ZjZKOMceiXNpkWYF73pxrlplbPI23Xm0IyfENq6pBWPH06BSn3Vq
+         dWE/4ErYgHw1veH0+0u1daIVy7uiveTU/AEh4bjLTtJ0tUEhkncyzt/kO+DxcInRWKEk
+         JehQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=tnzO3j+3Q6vHUJuoe6CMOzAGlW0xNMTSkSRVWCKOVq0=;
-        b=hodCVDqx0Mmsg+ovYQiFoPqAA+vDQ8oWd2CxVwGDl+h4BzhRZWW+xvgrcPbSjLkgK9
-         IT5yuwJ/mgfbHmOFYWzcScYKf60Ji+XRUIIGgzvyCFNaqyG9PDCymcOqpiol8m6Lpuvk
-         oQXvs7+QRgLwQPkizdOgtRCXSRYupRiLkxF0vYnakYuV5Eaea7RsS27SqwQ6jVzMr7wl
-         UcnavrxcdmccvoRKNjXR1kirMvBUVmDZw2F5xBl8Kjjp2ScpBdDfZxTDokVxW8SSs54i
-         YWPWloWi8RL7CA+f/wQ6ceA/OpE2f7iaC/XVEkrlbZuGG6u2iXgAi4r3CzhpgPpZz1C4
-         D58Q==
-X-Gm-Message-State: AO0yUKXI6liYXyOsX9RBjiftOtE726baUvTwCV0e1oXxdISKGHb9+b6Y
-        JffCaFzjI+MCx4qNAxzzfvPLhgY/5b10fiSCCZYlZxeSaYu6Dlp5
-X-Google-Smtp-Source: AK7set/4S0gsc9hJDD1MA9QYbNSBXHffqHp8FMiLoMIohRicwQvq22fac4BdRNa6TygSWDcB/2yZv1kdy5A41YHiBxM=
+        bh=jyhamTmPMkeWz88y073od9kK9Ei/eHrIhCE5do+kCkI=;
+        b=CWa5KZtbaIQj2jr1HS/GUfLEV/llsYyCAQry1I1OtS/F/dlxugLIuugtYm7BaQeLcU
+         DQ+D8ZtYiNX6fnuajw39S+F/Ol7Dk+aWwEULB83ARetg3azSdzhRDOedU+4ylTJoZkrr
+         uTUbGAmXopz7qbQiStkvjQR//Rpw530ZQH/3ImiyJwOg1ra+p5OAWBiSLRvRyftI/1oX
+         PsZ4TjfLI4pe0toZL5WazE4ebFuZOIqvhSTXnai45vdjCoJqVfasfqp8WxotNYmVenYC
+         O13d0hBXl/0dt84JD1OWXXthrOMKa/7Epsu8NnnYA5/lhQiUicET9pP0Ib7YZm6ldu8N
+         SY8Q==
+X-Gm-Message-State: AO0yUKWg1ywCg9SfGInG+sZ2LTLQzUIcvz6LBmcFMvtSkRlIaqtB0nDg
+        9N8FfQTlAMC+uj89F9IuTnTiPmSiRvGmYQjtYFv62g==
+X-Google-Smtp-Source: AK7set9fA+9m4//0Z56wZnUfmkoCbKKPXQub9ybTVDWXr4xQqeeTWQkt7q7DdqNUn2ozrFM85SOYV/sPoUus7SblKxo=
 X-Received: by 2002:a25:9f11:0:b0:898:5cc0:66c with SMTP id
- n17-20020a259f11000000b008985cc0066cmr1111695ybq.640.1675897208368; Wed, 08
- Feb 2023 15:00:08 -0800 (PST)
+ n17-20020a259f11000000b008985cc0066cmr1116425ybq.640.1675897951915; Wed, 08
+ Feb 2023 15:12:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20230117193041.708692-1-calvinwan@google.com> <20230207181706.363453-3-calvinwan@google.com>
- <230207.86ttzx13xc.gmgdl@evledraar.gmail.com>
-In-Reply-To: <230207.86ttzx13xc.gmgdl@evledraar.gmail.com>
+References: <20230117193041.708692-1-calvinwan@google.com> <20230207181706.363453-6-calvinwan@google.com>
+ <4ae106ed-bfa8-2824-c0c7-6cde32dbe369@dunelm.org.uk>
+In-Reply-To: <4ae106ed-bfa8-2824-c0c7-6cde32dbe369@dunelm.org.uk>
 From:   Calvin Wan <calvinwan@google.com>
-Date:   Wed, 8 Feb 2023 14:59:57 -0800
-Message-ID: <CAFySSZD8OdTJjvdoT1nLaOq_Jjq=JF2rSSn_612JMXgD8+rycQ@mail.gmail.com>
-Subject: Re: [PATCH v7 2/7] submodule: strbuf variable rename
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, chooglen@google.com, newren@gmail.com,
-        jonathantanmy@google.com
+Date:   Wed, 8 Feb 2023 15:12:20 -0800
+Message-ID: <CAFySSZC31aT4zu=-y1vBBd_Z=KWWYn3-7yziLfVbeK9Foc9c3w@mail.gmail.com>
+Subject: Re: [PATCH v7 5/7] diff-lib: refactor out diff_change logic
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, avarab@gmail.com, chooglen@google.com,
+        newren@gmail.com, jonathantanmy@google.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I'll only add that we could also do this on top:
->
->         diff --git a/submodule.c b/submodule.c
->         index c7c6bfb2e26..eeb940d96a0 100644
->         --- a/submodule.c
->         +++ b/submodule.c
->         @@ -1875,7 +1875,7 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
->                 struct child_process cp = CHILD_PROCESS_INIT;
->                 struct strbuf buf = STRBUF_INIT;
->                 FILE *fp;
->         -       unsigned dirty_submodule = 0;
->         +       unsigned dirty_submodule0 = 0;
->                 const char *git_dir;
->                 int ignore_cp_exit_code = 0;
->
->         @@ -1908,10 +1908,11 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
->                 while (strbuf_getwholeline(&buf, fp, '\n') != EOF) {
->                         char *str = buf.buf;
->                         const size_t len = buf.len;
->         +               unsigned *dirty_submodule = &dirty_submodule0;
->
->                         /* regular untracked files */
->                         if (str[0] == '?')
->         -                       dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
->         +                       *dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
->
->                         if (str[0] == 'u' ||
->                             str[0] == '1' ||
->         @@ -1923,17 +1924,17 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
->
->                                 if (str[5] == 'S' && str[8] == 'U')
->                                         /* nested untracked file */
->         -                               dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
->         +                               *dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
->
->                                 if (str[0] == 'u' ||
->                                     str[0] == '2' ||
->                                     memcmp(str + 5, "S..U", 4))
->                                         /* other change */
->         -                               dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
->         +                               *dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
->                         }
->
->         -               if ((dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
->         -                   ((dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
->         +               if ((*dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
->         +                   ((*dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
->                              ignore_untracked)) {
->                                 /*
->                                  * We're not interested in any further information from
->         @@ -1949,7 +1950,7 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
->                         die(_("'git status --porcelain=2' failed in submodule %s"), path);
->
->                 strbuf_release(&buf);
->         -       return dirty_submodule;
->         +       return dirty_submodule0;
->          }
->
->          int submodule_uses_gitfile(const char *path)
->
-> Which, if we're massaging this for a subsequent smaller diff we can do
-> to make only the comment adjustment part of this be a non-moved line.
+> I worry that having three integer parameters next to each other makes it
+> very easy to mix them up with out getting any errors from the compiler
+> because the types are all compatible. Could the last two be combined
+> into a flags argument? A similar issues occurs in
+> match_stat_with_submodule() in patch 7
 
-Ah that's a neat little trick -- I'll save this one for the next time I do a
-refactor like this :)
+I'm not sure how much more I want to engineer a static helper function
+that is only being called in one other place. I also don't understand what
+you mean by combining the last two into paramters a flags argument.
