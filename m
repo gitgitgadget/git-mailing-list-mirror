@@ -2,129 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B1C4C636CC
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 05:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EB53C05027
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 07:20:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230025AbjBHFoY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 00:44:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38272 "EHLO
+        id S230132AbjBHHU1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 02:20:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229805AbjBHFoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 00:44:23 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A05C93DE
-        for <git@vger.kernel.org>; Tue,  7 Feb 2023 21:44:22 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id y1so15641179wru.2
-        for <git@vger.kernel.org>; Tue, 07 Feb 2023 21:44:22 -0800 (PST)
+        with ESMTP id S230259AbjBHHUZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 02:20:25 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 492E2658D
+        for <git@vger.kernel.org>; Tue,  7 Feb 2023 23:20:24 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id o13so17544315pjg.2
+        for <git@vger.kernel.org>; Tue, 07 Feb 2023 23:20:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T/uTTebA+nuxlsnOS1T4WLdoDWSm/wRqMcQEWKzLeWk=;
-        b=IjpMxpGn9cjNTb/WeI90TLhMX1B6w8K65ZTrof52CRsy/sbo7l9JWsyjSLXC9ShfWI
-         q8trby4rNB2sIFwe00EFua3BrmOt9Jsjq2vNx87PP2J13gbXdoepT3Awxdjv36nv2qSs
-         d2xFgmhjR2HWWEQIJ/cdhkHUNQhBYNby8OdbCo3mYyPyI6VkMFW5Kkg4uJN4W8QpzdmR
-         U39f8YdpJLuxBK0ZThgcauu0U1HwY1iI34hKfErrwq9YEHQcFZgM/cFpNq5ialAEXAAv
-         tLKNhp5SvUczOJ4sck2YaeSewr+Oo2Jods7blzBZXN/yKKfiQgpp7yus3SSGvHV6HyIl
-         MqgQ==
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=bhdy9snYdJyZlQ+fuS/VXmx4Osl+/wEFPQFhTWCi8B4=;
+        b=pPD+upc6CorvJgKGnNspddogFR/wKHfeM+jOYtXN6U7J0kK6TYZueoY6wWa1ACtANS
+         dkG3giwGEhvL9gXMuyNiUMEoPmDkrMR1kILxrP0OgXbpQKzJ06dCHTXWWf+H09MKAe1d
+         IE5guDUuvgpjE9Jo3Fk2q15SPed9Dle7aJ1qNN6eBemD57k+Vqw/1+mlsk9EQpnW/kA1
+         tjkt0/3UcV7bfcygg47s28DmWmD9Vj+zDFr5D4p+LOWF8sfR7W7ELPNyS3dTwvhBnsrz
+         mUz9TqlwbVG54GVC7ZYZay82WhhLfOEZ4X/WtB7LVel4PXSxeatExC3CVrqjqYNDwk9a
+         sK/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T/uTTebA+nuxlsnOS1T4WLdoDWSm/wRqMcQEWKzLeWk=;
-        b=7acIpaFW6yL2DXAauDox0qKrAL9EBibpgIDudDwibxSBZqLM13U+RkRiMcOGbIPNfs
-         bdUFZ0OkvKg3KMJ5Y2cGWRPQAau/gZJns7dM3Z+QW/dHK97mCzJIP7yHnXvSX+16otq3
-         uuMFN14+NTynwutUQfluf7Xip2xm4WIq4wTCsUuCxS3OpCxzUYWcmMlzxhn1fJR5CmBO
-         wBtBD9Ok4WU9hLYN0LnLvgrR+RHBYWaKyK28YKAU46/0lCQ2ozbpCzgFPOtVAmkD0mlO
-         D24KjTOfpXDOk2wOSOxqLnMZS/6qbeEWeXeZrbsIZlShkpoQobnZoDEWmpFhyqhxO+xW
-         r9gA==
-X-Gm-Message-State: AO0yUKW7PvoNmggEIin4UNharGJdSVlc6COBbPup4c5bhdii1BjWkZeW
-        E3zhCL0CIpQ69extGzL+YvUCRA0pwFLhp3J4v5Q=
-X-Google-Smtp-Source: AK7set/A5gc2eRcD6MLc9RsMzSsmgZuyFTZwa9k3QIAO/ENWUUbzJWJCod5KEC+4JByXVNwRKVIncm1p0dDly6pNAvk=
-X-Received: by 2002:adf:f490:0:b0:2c3:ed5b:cb67 with SMTP id
- l16-20020adff490000000b002c3ed5bcb67mr318981wro.275.1675835060852; Tue, 07
- Feb 2023 21:44:20 -0800 (PST)
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bhdy9snYdJyZlQ+fuS/VXmx4Osl+/wEFPQFhTWCi8B4=;
+        b=GHO18C5OE2aUqH1HBn7/nfZpksBpf8oXgSVh1XFlfpybxiuB9YWf+Lt2s51ER+drCz
+         Yug2gwaxZfwYChkzko29V5dbOE+G6SFk3QjEOC4zBedlezmBDfzvzTUTJ/yutmLMdUre
+         oEs6Lv4E3xAkgxViY2tHBTKtjqRgIC+bhA0bGqmN6r1dyLzvMBQiA/+aX+xT7Immy/sY
+         7y2fn6a+52v+KAx/wwmyd6DVyKOUjd6UDzJXv3xQ8FEBbZRAKeznCbwRhPGi8CDXJ9ek
+         EE2knXrITbv0J5KUTpauE/bb4jCxi11VPvEfBMXLj7rpodqZ5TS6TgN3lnjFSo4ZDxvI
+         xTNA==
+X-Gm-Message-State: AO0yUKVNvpWPnPf1LGyN+OTd/28QIG732VfTtiNkP6YCZ+K2IOJ+HG6m
+        E6PVg39fJeACC7y+Q25eA2Y=
+X-Google-Smtp-Source: AK7set8nwIIHz94TqjFC3mgDe4e6NMyFSusiytWAWtDkxjULArnPGONSY/KP90bEREY+Yr57MnLqTQ==
+X-Received: by 2002:a17:903:120c:b0:193:e89:f5ff with SMTP id l12-20020a170903120c00b001930e89f5ffmr1501384plh.28.1675840823584;
+        Tue, 07 Feb 2023 23:20:23 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id t18-20020a170902d21200b00194caf3e975sm10110849ply.208.2023.02.07.23.20.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 23:20:22 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     William Blevins <wblevins001@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Unexpected (bug-like) behavior in `git ls-remote` matching.
+References: <CALJHx121C+=mAmfWxko0PUy1QBjfezM4ft6uE1+cyiH3gaLQ2w@mail.gmail.com>
+Date:   Tue, 07 Feb 2023 23:20:22 -0800
+Message-ID: <xmqqedr0vd1l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20230205145245.11078-1-cheskaqiqi@gmail.com> <20230206211823.8651-1-cheskaqiqi@gmail.com>
- <20230206211823.8651-4-cheskaqiqi@gmail.com> <xmqqlela2z3p.fsf@gitster.g>
- <CAMO4yUGmQ371hLCSTODQct+CzY2mqywfLzZO6fsgqN2=1cWGrw@mail.gmail.com> <230207.86h6vx51x3.gmgdl@evledraar.gmail.com>
-In-Reply-To: <230207.86h6vx51x3.gmgdl@evledraar.gmail.com>
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-Date:   Wed, 8 Feb 2023 00:44:08 -0500
-Message-ID: <CAMO4yUEcweeGZDCBm-y51TQ0fgze_geKr95RXBpEEpH4AyYJuQ@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] t4113: put executable lines to test_expect_success
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi =C3=86var,
+William Blevins <wblevins001@gmail.com> writes:
 
-On Tue, Feb 7, 2023 at 3:12 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
+> What is totally unexpected.... is the most simple search for ABC-1...
+> ```
+> $ git ls-remote --heads git@github.com:owner/repo.git ABC-1
+> <ref>    refs/head/ABC-1
+> <ref>    refs/head/feature/ABC-1
+> ```
 
-> But this is almost certainly that you're trying to insert leading
-> whitespace into a line that's in a <<-EOF here-doc, the "-" part of that
-> means that your leading whitespace is being stripped.
->
-> A typical idiom for that is have a marker for the start of line, and
-> strip the whitespace with "sed". See this for existing examples:
->
->         git grep 'sed.*\^.*>.*EOF'
-
-
-I try to use Z as the marker in front of 'a' and 'b' and use sed -e
-"s/Z/ /g" in order to replace Z with white space but it still can not
-pass the test.
-
-Then I realize even if I don't add tab in front of the line but with
-space in front of 'a' and 'b' like the original test script. It still
-says it can't read "b" and "c=E2=80=9D =EF=BC=9A
-
-test_expect_success 'apply at the beginning' '
-cat >test-patch<<\EOF &&
-diff a/file b/file
---- a/file
-+++ b/file
-@@ -1,2 +1,3 @@
-+a
- b
- c
-EOF
-
-echo >file 'a
-b
-c'&&
-git update-index file&&
-test_must_fail git apply --index test-patch
-'
-Maybe the error is not caused by whitespace?
-
-Then I try to change:
-
-echo >file 'a
-b
-c'
-
-To:
-echo >file "a
-b
-c"
-
-Then everything passes the test. I think double quotes allow for
-variable substitution and command substitution, while single quotes
-preserve the literal value of all characters within the quotes. In
-this case, the string contains no variables or commands, so either
-type of quote would work. Is there something wrong with my idea? Is it
-good to modify code like that?
-
-Looking forward to your reply!
-
-------
-Shuqi
+Sorry, but I cannot see what is surprising about the above.  If you
+have these branches locally, you should also see these refs in the
+output of "git show-ref ABC-1".  Refname hierarchies work just like
+pathnames with directories, and without glob in the pattern, tail
+matching that honors path component boundary is very much the norm
+in the oldest part of Git, i.e. ABC-1 matches refs/heads/ABC-1 but
+not refs/heads/XABC-1.
