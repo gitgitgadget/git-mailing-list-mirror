@@ -2,101 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6831C636D3
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 22:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BDDEC05027
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 22:50:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232305AbjBHWJg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 17:09:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40266 "EHLO
+        id S232495AbjBHWu0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 17:50:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232300AbjBHWJe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 17:09:34 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E4A92FCCE
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 14:09:33 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id bg26so232442wmb.0
-        for <git@vger.kernel.org>; Wed, 08 Feb 2023 14:09:33 -0800 (PST)
+        with ESMTP id S232161AbjBHWuY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 17:50:24 -0500
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60393C20
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 14:50:23 -0800 (PST)
+Received: by mail-yb1-xb2c.google.com with SMTP id q4so239465ybu.7
+        for <git@vger.kernel.org>; Wed, 08 Feb 2023 14:50:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ACJZZBRZFCHSYgtR9mLWXKkY1BKUq/Tz0EdNMneMCp8=;
-        b=i4BQVGJqLxW8xXJi4QglintkcIbiU1kV4bSNf0ziNhuK4EKfHKOJzUfN52apnoH+M7
-         VMVYMQXvSck4lfEi5FoSGymwAHuQUP+bLjza9m5LY72OgsrlEIbHdHmqPG7+mhqdvfXZ
-         xjJiOSCH3qNYbmm64s0mQ+vhdv0swb2PjqfEbT4q5qrrK+6zEnLQzH8Y6rrK8bhAgeaK
-         oEqHyADhNpyUVdwE4pECfsDokUJZSh136/ph90PC4nRDh6cwXh5LwE5Tasqd5fru91js
-         +rrONljAXRVml/NOgZIKIMN0APNjx8vHHt8ecBbv3yZyXLmLZ5AzSXsXindBUCauEiuZ
-         rXkA==
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z9avpVgVTP/m2GNdSk2zcxqwi9ehR4dcdDN93r2utwY=;
+        b=qkpJe+M3smv9n21zwD9gImQ5PGP4HRIM9cSh2qEj0vd9AX4fZoQH3QwtySfrGfqcNF
+         vmAcgcbgs8S/36tUxwCRUOuGfxSQ75++Q8vc5VzuD02CD3VbNSrHSWQzHKCSjtonxvVu
+         DQgDAAvdp6ezasbNPEDCrB+4EKoi8tAGqXUciH8h0l8XPIYeKW1sLpc+g8LQzLj4V8JG
+         FINNIAW+QYGjpn3vL8qfZ58vM9eNVQWSIGhs8diBygxuHTUfajJ3YDtcyYYFHgFgeboe
+         MFCHuOFGKYRllodqzO7FBdiEPXGOuwAgHmUXhQQHXNLUY1CHXyb8wDH4ssgTfb12hgMd
+         F0ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ACJZZBRZFCHSYgtR9mLWXKkY1BKUq/Tz0EdNMneMCp8=;
-        b=u5MFXs5onIJevgy2+9C9eYU88qV/hgaTKJsC0QPGMK2nIJ7YpJJsr4W9jgt/U3zEfn
-         WxGIGGPr5QmlJ17DuPCt1Ta6mMO2nxfXqKFv27WQqPMg2Ju7ZX193huxnYPzcsxsXIPS
-         IHBGnSVLdGhWyNtOMmQNwXUhoBsg/q3wBxTJSs9jsgKYI4xBa+afgbYE8y04St3sqYdg
-         eo7qXo1umsKay5xcYS+/sxVP6uAEyH5VPe6fzLZlWJo1fOI+aJoLun2Qz/BYEuEgdEcN
-         17kFinMlDz+dhvmPs3cr8vG3p1cxi9C20c63eUuGi3JEtbFrq3OvjrEfrWXl9FQXpwPH
-         sqVQ==
-X-Gm-Message-State: AO0yUKXvwCTGBFMVS9tbL4SikzM0AQKxHheIarsmX/ELhhCfQZgF8+Eh
-        cOzWJ/1y4PDyDtpk3zBPXql3l/K/Ovk=
-X-Google-Smtp-Source: AK7set/0MpYXyOjOVpT6WsxhMZjWLWb7pTCB5pg8VmLIazJBy21/R2dq6P2WqIdH3sgsHzEtwQtWJg==
-X-Received: by 2002:a05:600c:4383:b0:3df:f7f1:4fbe with SMTP id e3-20020a05600c438300b003dff7f14fbemr7889767wmn.1.1675894171751;
-        Wed, 08 Feb 2023 14:09:31 -0800 (PST)
-Received: from [192.168.2.52] (141.red-88-14-210.dynamicip.rima-tde.net. [88.14.210.141])
-        by smtp.gmail.com with ESMTPSA id bg23-20020a05600c3c9700b003dd1bd66e0dsm45236wmb.3.2023.02.08.14.09.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Feb 2023 14:09:31 -0800 (PST)
-Subject: Re: [PATCH v3 3/4] rebase: refuse to switch to a branch already
- checked out elsewhere (test)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     phillip.wood@dunelm.org.uk,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, Git List <git@vger.kernel.org>
-References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
- <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
- <02a15ebb-b927-1048-db2e-576abef9538b@gmail.com>
- <5b0d5b6e-5055-6323-1b6c-fe98137e81f6@gmail.com>
- <230206.86wn4u6859.gmgdl@evledraar.gmail.com>
- <4580b825-b117-4581-4ea2-ab30e350b6ad@gmail.com>
- <f4be3c97-eb15-790e-9746-96d0c9bbc5a7@dunelm.org.uk>
- <19e3e0d9-406e-ac2f-c43a-b4e994035529@gmail.com> <xmqqk00svimy.fsf@gitster.g>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <c1b3dc07-f3d3-273e-6486-9aa709b1c269@gmail.com>
-Date:   Wed, 8 Feb 2023 23:09:29 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z9avpVgVTP/m2GNdSk2zcxqwi9ehR4dcdDN93r2utwY=;
+        b=xBwu0865T+cFYg5+wZzUCgPomdkF9DQN5cRDWkzd/a3/72sNs32IxRXHAOEX2/iLyw
+         lnyrSdAIVwiwegkZ7G3i+ES130ko7kyQujzivy8qjFgIt9SrwL/27Jc5NG3SO9VoCNNP
+         hRWLcHnC7Tgl87O3yj2CRZhJnt7GMdI7bRqYEEojc0zTYneqoAoVEnct1utRrwZd2hj+
+         XPV2T/Q0VVF3kwhudVuXLnanOad+VMcnAhRAtxQXM3fvLkEEE/qxPXeU7qIi+HZIsWAe
+         V0GK9icBnWAvJtFrQo2WGIm2mU2E0E+iY3zpkpfZ8013SfSo8eujJBG6fAGezspP9A1Z
+         d2jg==
+X-Gm-Message-State: AO0yUKV1poJX9PwWan3j9sP/4XAzuWRLvhJ06dQ7KnsnIBz2x+hY0r38
+        4vEB7fd97GNN6cHhCFhkuiutt8oLzFdSvhnVcMXowg==
+X-Google-Smtp-Source: AK7set8QptmcEeRNohO3ZZR5RleXSfIKU3dAiJQ7/B0gONJmOnPKpGvH2M2DK5vHjot/gEfJXhmsQuvrkd1B4tqEDLI=
+X-Received: by 2002:a5b:bcf:0:b0:86f:ccf1:bf7a with SMTP id
+ c15-20020a5b0bcf000000b0086fccf1bf7amr953078ybr.392.1675896622721; Wed, 08
+ Feb 2023 14:50:22 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqk00svimy.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20230117193041.708692-1-calvinwan@google.com> <20230207181706.363453-2-calvinwan@google.com>
+ <230207.86y1p914ci.gmgdl@evledraar.gmail.com>
+In-Reply-To: <230207.86y1p914ci.gmgdl@evledraar.gmail.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Wed, 8 Feb 2023 14:50:11 -0800
+Message-ID: <CAFySSZCX=tySZf1xSd59GH0qS9PWtUC6ekLB1bWtZR3c09+ttw@mail.gmail.com>
+Subject: Re: [PATCH v7 1/7] run-command: add duplicate_output_fn to run_processes_parallel_opts
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, chooglen@google.com, newren@gmail.com,
+        jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07-feb-2023 21:19:33, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> > ...  If the tests fail, I think it will be easier and
-> > less confusing to reach the original commit where the implementation was
-> > done if we keep them separated, rather than combining all three commits.
-> 
-> No, if the test were in the same commit as the implementation, then
-> upon a future test breakage it is easier to see what code the test
-> was meant to protect, exactly because it is part of the same commit.
+> But would ou mind if this addition of yours were instead:
+>
+>         if (opts->ungroup) {
+>                 if (opts->duplicate_output)
+>                         BUG("duplicate_output and ungroup are incompatible with each other")
+>         }
 
-Yes, but my reasoning was that those tests protect what we did in 8d9fdd7
-(worktree.c: check whether branch is rebased in another worktree, 2016-04-22)
-and in b5cabb4a9 (rebase: refuse to switch to branch already checked out
-elsewhere, 2020-02-23), not die_if_checked_out().
+I don't see why not -- will change.
 
-> > I'm going to reorder the commits and change to use test_expect_failure().
-> 
-> Do not do that.  Adding a failing test and flipping the
-> expect_failure to expect_success is a sure way to make the series
-> harder to review.
+> > @@ -1645,14 +1648,21 @@ static void pp_buffer_stderr(struct parallel_processes *pp,
+> >       for (size_t i = 0; i < opts->processes; i++) {
+> >               if (pp->children[i].state == GIT_CP_WORKING &&
+> >                   pp->pfd[i].revents & (POLLIN | POLLHUP)) {
+> > -                     int n = strbuf_read_once(&pp->children[i].err,
+> > -                                              pp->children[i].process.err, 0);
+> > +                     ssize_t n = strbuf_read_once(&pp->children[i].err,
+> > +                                                  pp->children[i].process.err, 0);
+>
+> This s/int/ssize_t/ change is a good on, but not mentioned in the commit
+> message. Maybe worth splitting out?
 
-Hmm
+I'll call this and the style change out in the commit message instead of
+splitting it out.
+
+> And why is this thing that wants to prove to us that we're capturing the
+> output wanting to strip successive newlines?
+
+I added it as a sanity check originally, but you're right that this is
+unnecessary. Thanks for your comments on the other stylistic nits. I've
+gone ahead and fixed them all.
