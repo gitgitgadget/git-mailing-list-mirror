@@ -2,67 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE17EC636D7
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 17:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11D4AC636D3
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 17:56:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231874AbjBHRsM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 12:48:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55286 "EHLO
+        id S231465AbjBHR4U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 12:56:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231736AbjBHRrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 12:47:53 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 915965FE3
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 09:47:03 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id rm7-20020a17090b3ec700b0022c05558d22so3077306pjb.5
-        for <git@vger.kernel.org>; Wed, 08 Feb 2023 09:47:03 -0800 (PST)
+        with ESMTP id S231474AbjBHR4S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 12:56:18 -0500
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0180459E2
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 09:56:18 -0800 (PST)
+Received: by mail-pg1-x536.google.com with SMTP id u75so6584239pgc.10
+        for <git@vger.kernel.org>; Wed, 08 Feb 2023 09:56:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vAhVeSycQ3apIDQHmvxT4vaHv348ntv3koMA+er0G0I=;
-        b=FOKXPfpLIsg2xMSz0u/K7zgXAyPvhM2pSfLSydumB6BHmpYNSEUwWm08YLbmDJdlVE
-         Ibo3IE591+7/evN3V2F14YVRCj7YI9h0MdNGRfG6GbXm2IOIPIWs96O5SvShJWwi9pjv
-         g9SW7MLPKb+lhLThKnZ0Uwh08FuljBGnN3KfQYHj8WriNpM5cn49696DdPQuyKBf9LSW
-         Kq9Iw9eN7d9xMseCti4ghr5iqDiCbWnJA/T3GSb2ByPRw/ZQi31iSLI55RiLi4r2bxdl
-         p73A4n/z0QiEBVDW1hA6Krh7/MAteLyW79HJcfuwMMj5ncZsa1x3bwY09/KuhsX5/GtD
-         FOUw==
+        bh=FUaDB5Q6BBVKCfrEiqbSYXsJ+7ow1Sp0b65KkDuRjqg=;
+        b=Qe5Buhfp0D3yknVEbziGb/619yXcEmuhEL6GO9OEULOpuoxxMNfybhwgkdvUIJNWJO
+         J35nn/WItj/0+rmvj1z/9DxpkqKoeaw1+uJmlas7inEBCbLtiXBOXjVu5EgwFL8ibkuV
+         3yaHgoggu8WMNRY7XrWLpbqjN+YVSSRpcD3KaYeo8oi2hcyU2n4hRVYCe73JJWJRDmhR
+         uExmdS2Fkl26ule+pRpCiE82nEPIPBxgNjB2utm90AffrT9QQ37xrB/SIuFQcTUsiXEf
+         AdbqGPLl0fxvExsKLDOq+DQYE2hl8ONBpir4o6zWByruHTDQ62GizM6UopkYhx97tzSy
+         mP+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=vAhVeSycQ3apIDQHmvxT4vaHv348ntv3koMA+er0G0I=;
-        b=a9oTbOcVDGq7gzVySRfDtQAjpzxqFirea6rmxM4VbuQ+L2UPB/agGs0feiAwD34Xc0
-         P2z3KeQrXc/CmxFW+a1Q59rndquj7qJd35UDKFIHcKYmTJVXSkMZnQeYMdrSD1tjRlCi
-         RwU19FGZxZ+wlGyX+TkI8UYbm6QYzaP+SpRqjl/BGQGKYh2CB/QiEYFbPrt7vm1bJ1yW
-         SMGJ1q8IWGfqw//gRHtrZW8b/C1L2bC9jK/KAN2Hplpr8Q8pMplif3A9K3Ls6zFyT3SG
-         GjaLRksTRe9bDo2Lb17fBamaQfIG+Fu2r9VfgLvL0iKSoDOe2gk2m43ZwlybBs4JxwTG
-         yKJQ==
-X-Gm-Message-State: AO0yUKXLgRQyEK3QgejSC79ye5YhNtDHe0zfXdi805coSe4buziC+SEQ
-        fEKRwo6AbviqxZ0gIonAU1Q=
-X-Google-Smtp-Source: AK7set/f6pFfPOiN75UmiCjhgJGYQlDufaT3xwz4Ksui2ejyJ2YSem3tCHRjqLLP9ouWuuXdw2eeLw==
-X-Received: by 2002:a17:902:c111:b0:194:91eb:5b84 with SMTP id 17-20020a170902c11100b0019491eb5b84mr7073747pli.22.1675878421082;
-        Wed, 08 Feb 2023 09:47:01 -0800 (PST)
+        bh=FUaDB5Q6BBVKCfrEiqbSYXsJ+7ow1Sp0b65KkDuRjqg=;
+        b=Yj43QXEsAhnFWa3X48y6JaD6nNzGgnkY1vTSKzFhdPXaC7TtxHSunZOnQS5TzWyX3t
+         T/9krFBUZ00im+DB49p5cwpIYVwSWmJkCRTJm7+cYb+xhXu7MbOHcbKI4VlN+zkdPDyL
+         fsJ99YkMSKg9eJ21HEBmKF67r/ddFXSjH9QpGUzy/FlCr0Q2mZzGDxKqbwUiWaPF5ipY
+         AUTIkvuGmBUW513Gimac+1Kf4htvCL5/h8UU39BHQXPsRylpTEDOMUOAVQOR5mApv15B
+         tC1Inni2eFUWat4nijgvQtC4siggi7iPnnMIEVyLXky/0XVLyxiOC5C7YZIyvg5rPCkt
+         4ZwQ==
+X-Gm-Message-State: AO0yUKURRsEKIcl5kpVniw/5H0OJzQZ4psZRyaFVaVLGP3v8WYfTcn4k
+        PFujPD05/wks3Lf55ui/rSI=
+X-Google-Smtp-Source: AK7set/xnFb0Jas1i5TkAlpDPFQcSMlJ+qTyymXbEsRpDWNnUsms3wJ+4ZMVknU8GV6ooLaxcVvl+A==
+X-Received: by 2002:a62:1e86:0:b0:593:b13a:c4f5 with SMTP id e128-20020a621e86000000b00593b13ac4f5mr7042398pfe.29.1675878977400;
+        Wed, 08 Feb 2023 09:56:17 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id i13-20020a170902eb4d00b00186b7443082sm11318962pli.195.2023.02.08.09.47.00
+        by smtp.gmail.com with ESMTPSA id j23-20020a62e917000000b005a817f72c21sm2138817pfh.131.2023.02.08.09.56.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 09:47:00 -0800 (PST)
+        Wed, 08 Feb 2023 09:56:16 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     William Blevins <wblevins001@gmail.com>, git@vger.kernel.org
-Subject: Re: Unexpected (bug-like) behavior in `git ls-remote` matching.
-References: <CALJHx121C+=mAmfWxko0PUy1QBjfezM4ft6uE1+cyiH3gaLQ2w@mail.gmail.com>
-        <xmqqedr0vd1l.fsf@gitster.g>
-        <CALJHx12DetwZ=+aMEG6Ss4P3fMTeLN2styXuPw93C5N6yg98NA@mail.gmail.com>
-        <Y+POCxHMzrZj2bwz@coredump.intra.peff.net>
-        <Y+POvZLrtfm/qQwp@coredump.intra.peff.net>
-Date:   Wed, 08 Feb 2023 09:46:59 -0800
-In-Reply-To: <Y+POvZLrtfm/qQwp@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 8 Feb 2023 11:33:01 -0500")
-Message-ID: <xmqqv8kcrqwc.fsf@gitster.g>
+Cc:     Max Gautier <max.gautier@redhat.com>, git@vger.kernel.org
+Subject: Re: git rev-list fails to verify ssh-signed commits (but git log
+ works)
+References: <Y+PGRaiTTaZ/DtlJ@work-laptop-max>
+        <Y+PRTYtFDoE73XEM@coredump.intra.peff.net>
+Date:   Wed, 08 Feb 2023 09:56:16 -0800
+In-Reply-To: <Y+PRTYtFDoE73XEM@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 8 Feb 2023 11:43:57 -0500")
+Message-ID: <xmqqmt5orqgv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,21 +70,40 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> Oh, and I forgot to mention: the documentation for ls-remote is quite
-> weak here, and simply says "matching" without defining it. So the most
-> obvious improvement is fixing that documentation to describe the current
-> rules (which AFAIK is basically matching the pattern as a glob, but with
-> an implicit "/" anchor, but somebody should double check the code before
-> writing a documentation patch).
+> +	/*
+> +	 * yikes, this needs to come early in the function because it
+> +	 * also handles user.signingkey, which would otherwise get
+> +	 * shunted to git_ident_config() below
+> +	 */
+> +	if (git_gpg_config(var, value, cb) < 0)
+> +		return -1;
 
-Very much.  
+Indeed.
 
-On the pattern side we add */ in front of the given pattern (so,
-'master' becomes "*/master", and 'refs/heads/master' becomes
-'*/refs/heads/master), and run wildmatch() against refs prefixed
-with '/' (so 'refs/heads/master' becomes '/refs/heads/master' and
-matches '*/master', and it also matches '*/refs/heads/master').
+>  	if (starts_with(var, "user.") ||
+>  	    starts_with(var, "author.") ||
+>  	    starts_with(var, "committer."))
+>
+> but it would need a bit more work:
+>
+>   1. Somebody would need to dig into the reasons, if any, for not
+>      calling git_gpg_config() everywhere. It might be fine, but there
+>      may be a good reason which we're now violating. Digging in the
+>      history and looking at the code might yield some hints.
 
-THanks.
+Hmph, I didn't consider calling gpg_config unconditionally.  It may
+do a bit more than what a typical config callback does (i.e. as
+opposed to just store the string values it gets, it tries table
+look-ups and stuff) but it is not too bad.
 
+>   2. The individual calls to git_gpg_config() in other programs should
+>      go away.
 
+Naturally.
+
+>   3. It's possible some refactoring may let us avoid the "yikes" comment
+>      above (e.g., should user.signingkey just go into the normal ident
+>      config handler?).
+
+Hindsight is golden---if this were called gpg.signingkey we wouldn't
+be having this discussion X-<.
