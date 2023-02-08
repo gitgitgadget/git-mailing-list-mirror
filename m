@@ -2,77 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38F0AC636CC
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 14:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B1DEC678D5
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 15:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231578AbjBHOvX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 09:51:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58604 "EHLO
+        id S231147AbjBHPyW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 10:54:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231515AbjBHOvR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 09:51:17 -0500
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E61EA303E7
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 06:51:13 -0800 (PST)
-Received: from host-2-103-194-72.as13285.net ([2.103.194.72] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1pPlmx-0003Dc-C9;
-        Wed, 08 Feb 2023 14:51:12 +0000
-Message-ID: <1e073897-162d-e1e6-bab2-b424b21e1015@iee.email>
-Date:   Wed, 8 Feb 2023 14:51:09 +0000
+        with ESMTP id S231680AbjBHPyB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 10:54:01 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FD852413E
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 07:53:56 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id m2so19773519plg.4
+        for <git@vger.kernel.org>; Wed, 08 Feb 2023 07:53:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m4gnfRDCy9PljzatagcQmJhC/I1jP4qMSVYNEbHAiJM=;
+        b=Wz/O0RIFNCFCyHgTDQHvbaYoxZHxTEhUzl4tTyUqLTFxnm5QC6jy7D8noVBuennhJ3
+         A7DASjvO/K4an2zJ7xrKGry1BKGn44qM4FbdjR8p4CjTywCg07Wt2SxuAQykd2e9+FFp
+         Q9NJzdnjIiaLJxBknYYGe4nd4+kNYzk6frlaFFLs7SlMKqhB+lVgb46jQ3ocuozo+dCl
+         u2lZo/iOKoLe1w1DGZjiSzVvjRbUX1RoszbfzvZ7wuK8YMQRId6T3oEJ/y45xmvW92+q
+         61X83OvWY3ULKzXiH7OWJlxOq0RzYb8uGtAjCTCwyGunMiFTqDQkeCVukhVTrsyiyhWo
+         791w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=m4gnfRDCy9PljzatagcQmJhC/I1jP4qMSVYNEbHAiJM=;
+        b=ZsE6HAto9yrTwPg5807hlHgLF1RVe46K+cDD904ixvqwD79/wulhEo1IiDzGBCxs9i
+         o6BLslaxXzL2yhveSeAMuQ2T2J+YAHi1BUu44H8igYwKmx2xoktoSRsc8tQhmco8WBji
+         Q6DboW5OoenfKDh0HUZYLvzir8geuZ3X5P7FAdDVUOVaYQ1X9PiqYtf1v2l7zvuvl0JH
+         S3Lh2gAa2c7792fDTSzTxCsq156B4aTbcHy4e6/Gakact8E1FPL2nNbDbQIm7lW+gJHz
+         pSatPOSEObBSVHOC1J2d01RFD4AGiedtJhOcIrD2AWyeWOZ+MK9ucgRL6Ssep0kqMNkZ
+         +RYQ==
+X-Gm-Message-State: AO0yUKVVE+bMDoq6wdodgu+KcQMnPdZMC856/tVsNE/93yCYYShHhCC7
+        LTIjmMESv4oo8RZFRI5b+F0TI1cLi0e+CKKW
+X-Google-Smtp-Source: AK7set+ud25L8wA+Xx1JIhnBG3DoOsCO9QSemrQF/ulPDaGA/LDYNg04TylmbyJipKFHHkq9evA+HQ==
+X-Received: by 2002:a05:6a20:12cc:b0:bc:f665:8655 with SMTP id v12-20020a056a2012cc00b000bcf6658655mr9856695pzg.53.1675871635575;
+        Wed, 08 Feb 2023 07:53:55 -0800 (PST)
+Received: from fivlite-virtual-machine.localdomain ([49.37.149.188])
+        by smtp.gmail.com with ESMTPSA id v2-20020a622f02000000b0059261bd5bacsm11237749pfv.202.2023.02.08.07.53.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Feb 2023 07:53:55 -0800 (PST)
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     avarab@gmail.com
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [GSoC][PATCH] commit: warn the usage of reverse_commit_list() helper
+Date:   Wed,  8 Feb 2023 21:23:50 +0530
+Message-Id: <20230208155350.186187-1-five231003@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <230207.86o7q52vxu.gmgdl@evledraar.gmail.com>
+References: <230207.86o7q52vxu.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: Unexpected (bug-like) behavior in `git ls-remote` matching.
-To:     William Blevins <wblevins001@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <CALJHx121C+=mAmfWxko0PUy1QBjfezM4ft6uE1+cyiH3gaLQ2w@mail.gmail.com>
- <xmqqedr0vd1l.fsf@gitster.g>
- <CALJHx12DetwZ=+aMEG6Ss4P3fMTeLN2styXuPw93C5N6yg98NA@mail.gmail.com>
-Content-Language: en-GB
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <CALJHx12DetwZ=+aMEG6Ss4P3fMTeLN2styXuPw93C5N6yg98NA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/02/2023 13:49, William Blevins wrote:
-> This still feels "weird" to me. Other pattern matching tools like grep
-> and sed don't have exceptions to their behavior like this.
+On Tue, 7 Feb 2023 at 23:35, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
 >
-> Can you reference the unit tests that verifies this specific behavior?
-
-As someone who also trips up over the *nix command line, Is this a bash
-(glob) expansion issue?
-So there is a two step 'expansion', first by bash, and then by git's
-pattern match. Even plain text could be "expanded" if there's a suitable
-expansion
-
-a quick search suggested
-https://superuser.com/questions/861077/is-it-possible-to-print-out-the-shell-expansion
-which has some tipe I wasn't aware of.
-
-Philip
-
+>[...]
 >
-> On Wed, Feb 8, 2023 at 2:20 AM Junio C Hamano <gitster@pobox.com> wrote:
->> William Blevins <wblevins001@gmail.com> writes:
->>
->>> What is totally unexpected.... is the most simple search for ABC-1...
->>> ```
->>> $ git ls-remote --heads git@github.com:owner/repo.git ABC-1
->>> <ref>    refs/head/ABC-1
->>> <ref>    refs/head/feature/ABC-1
->>> ```
->> Sorry, but I cannot see what is surprising about the above.  If you
->> have these branches locally, you should also see these refs in the
->> output of "git show-ref ABC-1".  Refname hierarchies work just like
->> pathnames with directories, and without glob in the pattern, tail
->> matching that honors path component boundary is very much the norm
->> in the oldest part of Git, i.e. ABC-1 matches refs/heads/ABC-1 but
->> not refs/heads/XABC-1.
+> Having said that, I think the existing version is fine, and we could
+> just ascribe the issue that prompted this to a one-off mistake :)
 
+I understand it now. Thanks.
+
+> I think if you want to pursue this, a much better improvement here would
+> be to show what the user *should* do.
+>
+> E.g. show one code example of using the API in-place, and then the
+> preferred pattern if one wants to produce a new reversed commit list,
+> while retaining the original (presumably just copy_commit_list()
+> followed by reverse_commit_list()).
+
+Following the response by Junio, I think it's better off that I leave
+it this way?
+
+Thanks,
+Kousik
