@@ -2,91 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D297FC05027
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 03:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A79C8C05027
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 05:17:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjBHDeD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Feb 2023 22:34:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46078 "EHLO
+        id S229589AbjBHFRF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 00:17:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbjBHDeB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2023 22:34:01 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E082558C
-        for <git@vger.kernel.org>; Tue,  7 Feb 2023 19:33:59 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id bi36so25291111lfb.8
-        for <git@vger.kernel.org>; Tue, 07 Feb 2023 19:33:59 -0800 (PST)
+        with ESMTP id S229457AbjBHFRD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 00:17:03 -0500
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DFC515C91
+        for <git@vger.kernel.org>; Tue,  7 Feb 2023 21:17:01 -0800 (PST)
+Received: by mail-pl1-x62d.google.com with SMTP id z1so18048253plg.6
+        for <git@vger.kernel.org>; Tue, 07 Feb 2023 21:17:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4ilqt0DIp77pq4xBZSXUYSIA4vnl5HsYddkiVSLlmX0=;
-        b=HsMNzr6LClnNwAAEgnocnFF9h2FY0OXHB2QR3D01mPj12AY0tIUZgp3TryZUdshENR
-         Z4kTzcnXG3u7L2+E1rRXXoK7nVJmzQAwoual+NOZT16pA+/gC7EOYiCEWEqNWgNAPDkD
-         5NxJ3gXxc31BpjiHIF4NkYnNldJwpzBd1UuNHbmdOliN4daUd4tQhQxwBi4WighpuuMT
-         2puZapP3uWDguTFPimkpsr/DrgqzNfWOGC6UqbzZlgv6SsYoP983ivNsc0hfitzMjLKv
-         QT4Be8jmw9XvWlLi9JmSj4QKlIL9YSzGOUdadt2df8umW3tiksXJTDHABz0JXhXLvXLY
-         UNow==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Qwoc6+q71Zy3urrKs7ZPu5UUuSlXtVv7E5j4IBFWS00=;
+        b=eIs9KlqrJPKXC2EIRMA1n4GhVJDOdCIo6bX3LT843gLHT2bbFef2JxOMVpAn8XQThI
+         KABsLSHYev4KvVdidzys0sRzgGGMOD1VFPhNdS9yPE1ZZjXVQRrO1pIwrxnALJ+djd6m
+         bpGNvHFcF+OXDEDn9RV8rpS7Z0UA+1MlxzPyB9NmxNTG9MwtoCJcLgGMceCKtRLR8ruz
+         nkBphWFY8xY2678pXroEN5eDiDTdAM4SDNmiQUz4cCcI6pG+ypvughsxUMmmhqUgN2Ew
+         hOmC7pv2Uh+7zNvGMsNq4czzeTyAMtHVe0qqhmV9mSXiKKZsnfgdAVlDT1n7VpjUgRfq
+         aoog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4ilqt0DIp77pq4xBZSXUYSIA4vnl5HsYddkiVSLlmX0=;
-        b=t/MxdjRitolRS/XoKiXXhwyEYs69LWxHdKNUM7d6+Vk4qH/s7FnYJ1MBCVHUWzdLhy
-         BB5Ho/KKtqMhJ+j7GNgLBAxbnVJXWXjBfh+GCqCT8+ASzsxF1GHTTQONsE2ZjwaCr8EH
-         XVb0vFaWks0g4/s5kfgS/q/dIPryH1cJCwM4l9rZw+tZ6slHxeomzN+BbqwPurfOnlOK
-         50KV1wnBR6lSws4hd4KYQNA7UOYsHlaFzIVOyChNurxLG559sXBBA39DpgecUyHF8kvq
-         CM9bLWYsRmMlj3ThxtGSIgBtZSdhIKKJi/UnjhqwB/xo+4B+zPgJ0qPFXV2tDTr6KdMX
-         gndw==
-X-Gm-Message-State: AO0yUKV1QQPA997Xt+IuLKcdmWnlP5UsjjGJpjb/59DDmSsL6V/WsH2e
-        pYU8xlosivX9zQpZZV9r2KAqW7Fighu1y2O3+vQ=
-X-Google-Smtp-Source: AK7set+7yMQhNAY9RcDTyp2EnL37wqM+v5nb0ZYOleW/VnAJiLCGH1OCdkcbbc2CPZCrUMGdVfAvXi+D/f4eyfTm118=
-X-Received: by 2002:ac2:4255:0:b0:4d1:3e32:6417 with SMTP id
- m21-20020ac24255000000b004d13e326417mr1030541lfl.61.1675827237163; Tue, 07
- Feb 2023 19:33:57 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qwoc6+q71Zy3urrKs7ZPu5UUuSlXtVv7E5j4IBFWS00=;
+        b=QZMTZePFOz1MkkxDN7p0v4Nc2rapptPBFGzgS11g+UCQQ1CR/16deO/HJvvflZzWKk
+         C/V1e1LLutwUdoSJYz/Z87GyIT8AypxstjycfvO5637JZU8S6GJoZDLQ1GJMT7zCGSZj
+         V0ZhmY1oOFwvzNzdgIlPGrtwf8czk8G0IhKKzSdpCPKkYTz/jyc3nQWwpmaIgi/CASqj
+         FKNnOQKgGQxl2n5foUgb5WY95W3uc/GUqyZ6pMtYmg4wF613th0+1XexFl8uHiruPkh3
+         sRX/Uq177cMo+tehLRsrBhFK70rT2NqSo4RctZWhM5knSNnoP2CzY0MS6Ag2NFlQxHsP
+         AMCA==
+X-Gm-Message-State: AO0yUKUObyxx1uqUws6yBWvQWysLEFh5Rl6r1U/kk98BkW4iPvXrA6zX
+        2LTgz12HbtV/Q1l8I/h4Y1w=
+X-Google-Smtp-Source: AK7set/dGg01BnAb/ewc0jiOtkGuX4nqk30PX7A1k/V753dD6HBK2pV4ufAgV0UqEUEXuLGXsnhZow==
+X-Received: by 2002:a17:90b:380e:b0:22b:e5b9:43e9 with SMTP id mq14-20020a17090b380e00b0022be5b943e9mr7057357pjb.25.1675833420583;
+        Tue, 07 Feb 2023 21:17:00 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id m14-20020a17090a34ce00b002311c4596f6sm39105pjf.54.2023.02.07.21.16.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 21:16:59 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2] bisect: fix "reset" when branch is checked out
+ elsewhere
+References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
+        <ada28944-6e9e-d4e7-74c9-ffadaf406e1f@gmail.com>
+        <xmqqwn4u2ztc.fsf@gitster.g>
+        <eb086063-9e47-9fdb-3644-77a843733dcf@gmail.com>
+Date:   Tue, 07 Feb 2023 21:16:59 -0800
+In-Reply-To: <eb086063-9e47-9fdb-3644-77a843733dcf@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+        message of "Wed, 8 Feb 2023 01:30:28 +0100")
+Message-ID: <xmqqo7q4vir8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1468.v2.git.1675751527365.gitgitgadget@gmail.com> <20230207193407.394971-1-calvinwan@google.com>
-In-Reply-To: <20230207193407.394971-1-calvinwan@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 7 Feb 2023 19:33:45 -0800
-Message-ID: <CABPp-BHbqQtws3cg4-udC4XixeFk+BTp43xA48G-ok9tfcZcVg@mail.gmail.com>
-Subject: Re: [PATCH v2] name-rev: fix names by dropping taggerdate workaround
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 7, 2023 at 11:34 AM Calvin Wan <calvinwan@google.com> wrote:
+Rubén Justo <rjusto@gmail.com> writes:
+
+> No problem.  I am sorry because I don't understand what's worrying you.
 >
-> Are there any cases where a taggerdate heuristic would be useful now?
-> I'm having a hard time coming up with an example of such, so this
-> change looks very reasonable to me. Even if there existed such a case,
-> I would imagine it would be better solved using other heuristics rather
-> than checking the taggerdate since that was a very loose heuristic to
-> begin with.
-
-I'm currently only aware of cases where the heuristic hurts and none
-where it helps.  I know it historically helped, but that was just a
-workaround to the algorithm being suboptimal.  Since the algorithm has
-been fixed, I think the workaround can be shelved.
-
-> > diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> > index 15535e914a6..df50abcdeb9 100644
-> > --- a/builtin/name-rev.c
-> > +++ b/builtin/name-rev.c
-> > @@ -113,9 +113,7 @@ static int is_better_name(struct rev_name *name,
-> >        * based on the older tag, even if it is farther away.
-> >        */
-> >       if (from_tag && name->from_tag)
-> > -             return (name->taggerdate > taggerdate ||
-> > -                     (name->taggerdate == taggerdate &&
-> > -                      name_distance > new_distance));
-> > +             return name_distance > new_distance;
+>> that the phrasing of this paragraph is misleading), but isn't it a
+>> good thing if in this sequence:
+>> 
+>>  - I checkout 'main' and start bisecting (BISECT_HEAD says 'main');
+>> 
+>>  - I then checkout 'main' in another worktree; I may even make a
+>>    commit or two, or even rename 'main' to 'master'.
+>> 
+>>  - I finish bisection and "bisect reset" tries to take me back to
+>>    'main', which may notice that 'main' is checked out in the other
+>>    worktree, and fail.
+>> 
+>> the last one failed?  After the above sequence, I now have two
+>> worktrees, both checking out 'main', and it is exactly the situation
+>> the safety valve tries to prevent from occuring, no?
 >
-> Comment above this block should be updated to match the new logic.
+> We are considering the initial branch (BISECT_START) as a branch checked
+> out _implicitly_ in the worktree that is bisecting.  Doesn't that
+> provide us and the user enough safety?
 
-Good catch; will fix.
+If that is a question, then the answer is no.  If that is
+rhetorical, then I just do not see how it gives us any safety.
+
+In the end, if you allow "bisect reset" to check out 'main' in the
+worktree you used to run bisection, the 'main' branch is checked out
+twice, once there, and another checkout in the other worktree.  That
+is exactly what "git checkout 'main'" in one worktree while 'main'
+is already checked out in another would prevent from happening, no?
