@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1290FC05027
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 17:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE17EC636D7
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 17:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231874AbjBHRni (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 12:43:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47828 "EHLO
+        id S231874AbjBHRsM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 12:48:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230185AbjBHRnW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 12:43:22 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB065455A
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 09:41:23 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id a23so13141376pga.13
-        for <git@vger.kernel.org>; Wed, 08 Feb 2023 09:41:23 -0800 (PST)
+        with ESMTP id S231736AbjBHRrx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 12:47:53 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 915965FE3
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 09:47:03 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id rm7-20020a17090b3ec700b0022c05558d22so3077306pjb.5
+        for <git@vger.kernel.org>; Wed, 08 Feb 2023 09:47:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=gpPZeSUa486A8AZj+eQPz82Pir6WlSfChNCPGgR+UbQ=;
-        b=TKP3D+aYM/1EK2i/jJkEyoJ+aErziVsPEIc2yavZMnD9AhLac21Qbn7chMnVPPq8rs
-         +8olJMJYMIUBFZ6C7VhIDlVpW7DbM6Q36AWkmU6y3vmPt6LB8epXslNwP/KzMdCoDCBx
-         Cgxlqab39tac3Zc6bgetwX+RO5BPKLLe5HtbHDke7spvmV1F10V+H9fwawq2OE1ELJpt
-         ALop5nZAX6zWNnkbiWGfo6hctst3lrLAht7X5tFfExM8Cc6zeNuqtaPlSeLp0R68aTod
-         GE4aJiIJNFlZHx1QjJjF7wOF1imJRq0VIvoptYG1nM79+iIwp8LCXohaAwYAq+wjwIKD
-         Af3g==
+        bh=vAhVeSycQ3apIDQHmvxT4vaHv348ntv3koMA+er0G0I=;
+        b=FOKXPfpLIsg2xMSz0u/K7zgXAyPvhM2pSfLSydumB6BHmpYNSEUwWm08YLbmDJdlVE
+         Ibo3IE591+7/evN3V2F14YVRCj7YI9h0MdNGRfG6GbXm2IOIPIWs96O5SvShJWwi9pjv
+         g9SW7MLPKb+lhLThKnZ0Uwh08FuljBGnN3KfQYHj8WriNpM5cn49696DdPQuyKBf9LSW
+         Kq9Iw9eN7d9xMseCti4ghr5iqDiCbWnJA/T3GSb2ByPRw/ZQi31iSLI55RiLi4r2bxdl
+         p73A4n/z0QiEBVDW1hA6Krh7/MAteLyW79HJcfuwMMj5ncZsa1x3bwY09/KuhsX5/GtD
+         FOUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=gpPZeSUa486A8AZj+eQPz82Pir6WlSfChNCPGgR+UbQ=;
-        b=YjMIDDjXOEufU8rtu3UDOGlxzcTy4R4nTeG5SYTbbnfASN/X833qiGpRL4L72p2KYI
-         TKhItND9Lnj00jkJfKVfOFSIwfanPsywYB6rVQk7qt5GFUtMn27OSedvKcQe0OfgHr1K
-         ht+DC55mmTlVipUOsDrcqa6N9VAaft6BCFsr3g5vCHbDRT3lX6Arg8mnMZH4p1k9zx81
-         bmVoJ6i8LXO64MOOySA97MjHc4Sd3XI6NfKcAI8aASaZEhthkIY21z68VywaoxXCvmIX
-         aPIxfxCDvGUzNQG+Z1i7qzqDX8lg4pCGmzo1V5KmRBqYY8uMtHAxnpgDGzo2VRB//S9w
-         eZ/Q==
-X-Gm-Message-State: AO0yUKV561tp+sT+QwhGAMycY2/cdnTzpKrCVdLHbwg7Wjpd/cwbNzml
-        69cMBWtZtAR9/rbre5ibSPM=
-X-Google-Smtp-Source: AK7set8qynAZOpOEP/ANgmXHUuLqwALHqgfBgiXFyfksJBygavMKP1niTL9ibg7ePt8oC5wHwvndfA==
-X-Received: by 2002:a62:502:0:b0:5a8:499f:8689 with SMTP id 2-20020a620502000000b005a8499f8689mr1616596pff.23.1675878007654;
-        Wed, 08 Feb 2023 09:40:07 -0800 (PST)
+        bh=vAhVeSycQ3apIDQHmvxT4vaHv348ntv3koMA+er0G0I=;
+        b=a9oTbOcVDGq7gzVySRfDtQAjpzxqFirea6rmxM4VbuQ+L2UPB/agGs0feiAwD34Xc0
+         P2z3KeQrXc/CmxFW+a1Q59rndquj7qJd35UDKFIHcKYmTJVXSkMZnQeYMdrSD1tjRlCi
+         RwU19FGZxZ+wlGyX+TkI8UYbm6QYzaP+SpRqjl/BGQGKYh2CB/QiEYFbPrt7vm1bJ1yW
+         SMGJ1q8IWGfqw//gRHtrZW8b/C1L2bC9jK/KAN2Hplpr8Q8pMplif3A9K3Ls6zFyT3SG
+         GjaLRksTRe9bDo2Lb17fBamaQfIG+Fu2r9VfgLvL0iKSoDOe2gk2m43ZwlybBs4JxwTG
+         yKJQ==
+X-Gm-Message-State: AO0yUKXLgRQyEK3QgejSC79ye5YhNtDHe0zfXdi805coSe4buziC+SEQ
+        fEKRwo6AbviqxZ0gIonAU1Q=
+X-Google-Smtp-Source: AK7set/f6pFfPOiN75UmiCjhgJGYQlDufaT3xwz4Ksui2ejyJ2YSem3tCHRjqLLP9ouWuuXdw2eeLw==
+X-Received: by 2002:a17:902:c111:b0:194:91eb:5b84 with SMTP id 17-20020a170902c11100b0019491eb5b84mr7073747pli.22.1675878421082;
+        Wed, 08 Feb 2023 09:47:01 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id h21-20020aa796d5000000b0056bb36c047asm11487098pfq.105.2023.02.08.09.40.06
+        by smtp.gmail.com with ESMTPSA id i13-20020a170902eb4d00b00186b7443082sm11318962pli.195.2023.02.08.09.47.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 09:40:06 -0800 (PST)
+        Wed, 08 Feb 2023 09:47:00 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
@@ -58,10 +58,11 @@ References: <CALJHx121C+=mAmfWxko0PUy1QBjfezM4ft6uE1+cyiH3gaLQ2w@mail.gmail.com>
         <xmqqedr0vd1l.fsf@gitster.g>
         <CALJHx12DetwZ=+aMEG6Ss4P3fMTeLN2styXuPw93C5N6yg98NA@mail.gmail.com>
         <Y+POCxHMzrZj2bwz@coredump.intra.peff.net>
-Date:   Wed, 08 Feb 2023 09:40:06 -0800
-In-Reply-To: <Y+POCxHMzrZj2bwz@coredump.intra.peff.net> (Jeff King's message
-        of "Wed, 8 Feb 2023 11:30:03 -0500")
-Message-ID: <xmqq357gt5s9.fsf@gitster.g>
+        <Y+POvZLrtfm/qQwp@coredump.intra.peff.net>
+Date:   Wed, 08 Feb 2023 09:46:59 -0800
+In-Reply-To: <Y+POvZLrtfm/qQwp@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 8 Feb 2023 11:33:01 -0500")
+Message-ID: <xmqqv8kcrqwc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,34 +72,21 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> I think the tail-matching behavior is not what we would probably choose
-> today, but that is how it has behaved since 2005, and we are not going
-> to break backwards compatibility in a plumbing tool like ls-remote.
+> Oh, and I forgot to mention: the documentation for ls-remote is quite
+> weak here, and simply says "matching" without defining it. So the most
+> obvious improvement is fixing that documentation to describe the current
+> rules (which AFAIK is basically matching the pattern as a glob, but with
+> an implicit "/" anchor, but somebody should double check the code before
+> writing a documentation patch).
 
-The tail-matching behaviour that was Linus's preference (his
-show-ref behaves the same way) has one interesting feature---looking
-for all 'master' branches in different hierarchies is trivial.
+Very much.  
 
-In today's world, it would be tremendously benefitial if "ls-remote"
-can trim not just the communication between the repositories but
-also the enumeration of the ref namespace at the source repository
-using the pattern, and tail-matching would not contribute to it at
-all (unless if your server side adds special index).  If we used
-prefix matching, our refs API can take advantage of it in reducing
-the cost to enumerate refs, and on-the-wire protocol has ref-prefix
-capability to help it.
+On the pattern side we add */ in front of the given pattern (so,
+'master' becomes "*/master", and 'refs/heads/master' becomes
+'*/refs/heads/master), and run wildmatch() against refs prefixed
+with '/' (so 'refs/heads/master' becomes '/refs/heads/master' and
+matches '*/master', and it also matches '*/refs/heads/master').
 
-> Likewise, something more elaborate like full-path globbing or even
-> regex matching would be possible, but would need to be activated by an
-> option.
+THanks.
 
-True.  We should be able to do a bit better than just tail-matching
-with an option.
 
-I would not recommend sending over regex as protocol capability the
-same way as ref-prefix works, unless we adopt something that can
-match linear-time like re2 and use it everywhere, as you can send a
-pattern that is deliberately made inefficient to inconvenience the
-other side.
-
-Thanks.
