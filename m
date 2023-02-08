@@ -2,68 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2682BC636D3
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 21:55:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6831C636D3
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 22:09:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232035AbjBHVzA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 16:55:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60902 "EHLO
+        id S232305AbjBHWJg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 17:09:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231367AbjBHVy6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 16:54:58 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A05D28D26
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 13:54:56 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so2579487wma.1
-        for <git@vger.kernel.org>; Wed, 08 Feb 2023 13:54:56 -0800 (PST)
+        with ESMTP id S232300AbjBHWJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 17:09:34 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E4A92FCCE
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 14:09:33 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id bg26so232442wmb.0
+        for <git@vger.kernel.org>; Wed, 08 Feb 2023 14:09:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EQbKd8oR4v0KVf0iA8u2b1Z9HxaadwwWk33r1uIQdHE=;
-        b=bUEC8MWkmw/Z9MiDe2xSNCybCCywgl6moa6QRokTH+bY1aJGSHo2qSefu4gtwjbA8w
-         LghV2NkoTB+2x12rfSqUkC8/++HBTY5lDgwO3leAlXrQzrWhGt0KLyDdOSeiR/8k3+B8
-         vFoWym8KxFNu9yc4TWiZVchCnmajqRDVmSf+BOEjbJcR8Tsna4Lq8UozctxJHek9zBDW
-         dSJEjSLJDtvTgrODWZl5SgdLU4TdTc/g/8mqn12KVw51cjcoJcfBiD0xoqjG1DXm1+8z
-         INED9j+42qwrnlknNR5Gn4oiXq+Oxds330I0SONRvA8Be8ZeZXdsdoEK/yC/Y/zGcQRg
-         yCcg==
+        bh=ACJZZBRZFCHSYgtR9mLWXKkY1BKUq/Tz0EdNMneMCp8=;
+        b=i4BQVGJqLxW8xXJi4QglintkcIbiU1kV4bSNf0ziNhuK4EKfHKOJzUfN52apnoH+M7
+         VMVYMQXvSck4lfEi5FoSGymwAHuQUP+bLjza9m5LY72OgsrlEIbHdHmqPG7+mhqdvfXZ
+         xjJiOSCH3qNYbmm64s0mQ+vhdv0swb2PjqfEbT4q5qrrK+6zEnLQzH8Y6rrK8bhAgeaK
+         oEqHyADhNpyUVdwE4pECfsDokUJZSh136/ph90PC4nRDh6cwXh5LwE5Tasqd5fru91js
+         +rrONljAXRVml/NOgZIKIMN0APNjx8vHHt8ecBbv3yZyXLmLZ5AzSXsXindBUCauEiuZ
+         rXkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EQbKd8oR4v0KVf0iA8u2b1Z9HxaadwwWk33r1uIQdHE=;
-        b=uSkd/i5CcgY3RPtHAidnetwJRy5IG76wJgRsmOQykX7k+11Or4WoVy7nmTlyFnb1Yz
-         G9vjdlsGfze+mmmWDQuyX5R06IT6RZ8cFw77t2tphD6qJVpgeOfbnWNHmklxS1vXJwli
-         Uxc8OmxH6qcvso7s1HXhmjxpMavWwDAzI+Xt1ont66jZvq64S3X3p1gfCB5Iqams4mHF
-         0MjxAo5SrCbwArpX7qCDwIL4fp5ZbU899TOg5Mr2grx1sk1FedpcAGZlNfEP13SHit8U
-         sse1sw4zXj/FnBb+39PVVBh3+u0g8+fI+RruyUo/pT6UuCklZ3X61Ta8o+gLDPhOAvIi
-         c9XQ==
-X-Gm-Message-State: AO0yUKWvXyARG/+1p0T05A42N6/F0rvg87OO1tvlhhSAa39y4l72L1Ic
-        vFTCzBG3nUJSf0sL1+mCicE=
-X-Google-Smtp-Source: AK7set9wRBm6JySB7zGeGDs/PjhYXCk4KZ98DVgDZpo+FbHQOyrGbA+vqdNnjH1a98DKZJfeWt5WiQ==
-X-Received: by 2002:a05:600c:30d3:b0:3dc:19d1:3c1f with SMTP id h19-20020a05600c30d300b003dc19d13c1fmr7966302wmn.30.1675893295476;
-        Wed, 08 Feb 2023 13:54:55 -0800 (PST)
+        bh=ACJZZBRZFCHSYgtR9mLWXKkY1BKUq/Tz0EdNMneMCp8=;
+        b=u5MFXs5onIJevgy2+9C9eYU88qV/hgaTKJsC0QPGMK2nIJ7YpJJsr4W9jgt/U3zEfn
+         WxGIGGPr5QmlJ17DuPCt1Ta6mMO2nxfXqKFv27WQqPMg2Ju7ZX193huxnYPzcsxsXIPS
+         IHBGnSVLdGhWyNtOMmQNwXUhoBsg/q3wBxTJSs9jsgKYI4xBa+afgbYE8y04St3sqYdg
+         eo7qXo1umsKay5xcYS+/sxVP6uAEyH5VPe6fzLZlWJo1fOI+aJoLun2Qz/BYEuEgdEcN
+         17kFinMlDz+dhvmPs3cr8vG3p1cxi9C20c63eUuGi3JEtbFrq3OvjrEfrWXl9FQXpwPH
+         sqVQ==
+X-Gm-Message-State: AO0yUKXvwCTGBFMVS9tbL4SikzM0AQKxHheIarsmX/ELhhCfQZgF8+Eh
+        cOzWJ/1y4PDyDtpk3zBPXql3l/K/Ovk=
+X-Google-Smtp-Source: AK7set/0MpYXyOjOVpT6WsxhMZjWLWb7pTCB5pg8VmLIazJBy21/R2dq6P2WqIdH3sgsHzEtwQtWJg==
+X-Received: by 2002:a05:600c:4383:b0:3df:f7f1:4fbe with SMTP id e3-20020a05600c438300b003dff7f14fbemr7889767wmn.1.1675894171751;
+        Wed, 08 Feb 2023 14:09:31 -0800 (PST)
 Received: from [192.168.2.52] (141.red-88-14-210.dynamicip.rima-tde.net. [88.14.210.141])
-        by smtp.gmail.com with ESMTPSA id o27-20020a05600c511b00b003e0238d9101sm3510735wms.31.2023.02.08.13.54.54
+        by smtp.gmail.com with ESMTPSA id bg23-20020a05600c3c9700b003dd1bd66e0dsm45236wmb.3.2023.02.08.14.09.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Feb 2023 13:54:55 -0800 (PST)
-Subject: Re: [PATCH v2] bisect: fix "reset" when branch is checked out
- elsewhere
+        Wed, 08 Feb 2023 14:09:31 -0800 (PST)
+Subject: Re: [PATCH v3 3/4] rebase: refuse to switch to a branch already
+ checked out elsewhere (test)
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
- <ada28944-6e9e-d4e7-74c9-ffadaf406e1f@gmail.com> <xmqqwn4u2ztc.fsf@gitster.g>
- <eb086063-9e47-9fdb-3644-77a843733dcf@gmail.com> <xmqqo7q4vir8.fsf@gitster.g>
+Cc:     phillip.wood@dunelm.org.uk,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>, Git List <git@vger.kernel.org>
+References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
+ <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com>
+ <02a15ebb-b927-1048-db2e-576abef9538b@gmail.com>
+ <5b0d5b6e-5055-6323-1b6c-fe98137e81f6@gmail.com>
+ <230206.86wn4u6859.gmgdl@evledraar.gmail.com>
+ <4580b825-b117-4581-4ea2-ab30e350b6ad@gmail.com>
+ <f4be3c97-eb15-790e-9746-96d0c9bbc5a7@dunelm.org.uk>
+ <19e3e0d9-406e-ac2f-c43a-b4e994035529@gmail.com> <xmqqk00svimy.fsf@gitster.g>
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <d95d9505-db32-ebe6-1f23-05f7f00c2922@gmail.com>
-Date:   Wed, 8 Feb 2023 22:54:53 +0100
+Message-ID: <c1b3dc07-f3d3-273e-6486-9aa709b1c269@gmail.com>
+Date:   Wed, 8 Feb 2023 23:09:29 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqo7q4vir8.fsf@gitster.g>
+In-Reply-To: <xmqqk00svimy.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -71,56 +77,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On 07-feb-2023 21:16:59, Junio C Hamano wrote:
+On 07-feb-2023 21:19:33, Junio C Hamano wrote:
 > Rubén Justo <rjusto@gmail.com> writes:
 > 
-> > No problem.  I am sorry because I don't understand what's worrying you.
-> >
-> >> that the phrasing of this paragraph is misleading), but isn't it a
-> >> good thing if in this sequence:
-> >> 
-> >>  - I checkout 'main' and start bisecting (BISECT_HEAD says 'main');
-> >> 
-> >>  - I then checkout 'main' in another worktree; I may even make a
-> >>    commit or two, or even rename 'main' to 'master'.
-> >> 
-> >>  - I finish bisection and "bisect reset" tries to take me back to
-> >>    'main', which may notice that 'main' is checked out in the other
-> >>    worktree, and fail.
-> >> 
-> >> the last one failed?  After the above sequence, I now have two
-> >> worktrees, both checking out 'main', and it is exactly the situation
-> >> the safety valve tries to prevent from occuring, no?
-> >
-> > We are considering the initial branch (BISECT_START) as a branch checked
-> > out _implicitly_ in the worktree that is bisecting.  Doesn't that
-> > provide us and the user enough safety?
+> > ...  If the tests fail, I think it will be easier and
+> > less confusing to reach the original commit where the implementation was
+> > done if we keep them separated, rather than combining all three commits.
 > 
-> If that is a question, then the answer is no.  If that is
-> rhetorical, then I just do not see how it gives us any safety.
+> No, if the test were in the same commit as the implementation, then
+> upon a future test breakage it is easier to see what code the test
+> was meant to protect, exactly because it is part of the same commit.
+
+Yes, but my reasoning was that those tests protect what we did in 8d9fdd7
+(worktree.c: check whether branch is rebased in another worktree, 2016-04-22)
+and in b5cabb4a9 (rebase: refuse to switch to branch already checked out
+elsewhere, 2020-02-23), not die_if_checked_out().
+
+> > I'm going to reorder the commits and change to use test_expect_failure().
 > 
-> In the end, if you allow "bisect reset" to check out 'main' in the
-> worktree you used to run bisection, the 'main' branch is checked out
-> twice, once there, and another checkout in the other worktree.  That
-> is exactly what "git checkout 'main'" in one worktree while 'main'
-> is already checked out in another would prevent from happening, no?
+> Do not do that.  Adding a failing test and flipping the
+> expect_failure to expect_success is a sure way to make the series
+> harder to review.
 
-Yes, but I still don't understand what you are worried about.
-
-If we compare with "rebase": "git rebase --abort" does checkout back to
-the original branch too.  But as "git rebase" is in a more evolved
-"builtin transition", and uses reset_head() instead of spawing a new Git
-with "checkout", it avoids the "--ignore-other-worktrees".
-
-The safety I'm considering with "git bisect reset" is that while a
-branch is being bisected in a worktree, that branch cannot be (without
-forcing): checked out in another worktree, deleted or renamed.
-
-And this safety is enough, to me, to alleviate the user from having to
-"git bisect reset" to a "safe" place and then "git checkout
---ignore-other-worktrees" to have the BISECT_START branch checked out
-again.
-
-Also, note that the aim of this patch is not to introduce a new behavior, but
-fix how "git bisect reset" works with multiple worktrees.
+Hmm
