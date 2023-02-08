@@ -2,105 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5C08C05027
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 16:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37203C636CC
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 16:44:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231599AbjBHQlE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 11:41:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48420 "EHLO
+        id S231770AbjBHQof (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 11:44:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231651AbjBHQkh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 11:40:37 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A99F4DE16
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 08:40:33 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id v10so21248705edi.8
-        for <git@vger.kernel.org>; Wed, 08 Feb 2023 08:40:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Pcdn8LwWM1jNcZQjW5HxaSh77h/a6SA8ZMEaVj11/I0=;
-        b=Dheokah2JvHDcXifKo6P8l2+vVEgFKnbg0EOQyUQXf6Pnw8StHy3ZJeKYhg6mOUGB7
-         QIafoMTIcNrVCWm//rn0RI7F7Pc1yCjrFuPIHeV0It4nBNkeOLq99aSM8Zf4mRyKJrMr
-         s7Tkkg+MYwfwEZdWGDuR3+1kMuE8yasRbbQ2/7hfPtk4YKY4MWx9UJNC0VqX6crn7ZP9
-         vyTPKvNCuAf8yqqbAf0Lg55IblRZ6z3KvZZKaGqVS4SBBQLxrDJ5BmccFrijD45qvWjm
-         AWw2JuaFUcODm76hxnLHzPyggwzau1UFIOT3Tybt6LUVElAaIaivhbSbVW1ffjc1+vpd
-         QO8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Pcdn8LwWM1jNcZQjW5HxaSh77h/a6SA8ZMEaVj11/I0=;
-        b=4v4OwM/sfaOCbx6Reo7gwwD0wBr6MfeavRaxYRHKcFDgaaWz+g2SQ4FZSJOat9zoWx
-         kHPuZrAJB1CSC/rPe7w+aY8IANcSM9NK/m1vQNGFrUN7DCth9AtVFcWBJ9I2KonNiyBM
-         hIkYOpKWiurGTzPB057iKTWAGW23MwMt0tKqQ7aXEVkuYq8OUHZhx2fKbI7WXJg44loK
-         mXAnNMt81evuYYd3JHRWL1UUqFRBP3iacD0zl0f1JplX0yFo1/PqyE87h6lEMqs+unOP
-         Dk/STsR+FoYE+wevBdsIG1XD/aoQRUdtjQcI19Ne/Jo1slVK3FzBUqHYQECzvFZsAZv/
-         Xy4g==
-X-Gm-Message-State: AO0yUKWLcA//gSySYx+bskMo6X+OjY/zm9fuKyy0nLQamQXtmfqyMJT+
-        qimZHmXyouhxKUrCKRoXZwCk7o+/M0I=
-X-Google-Smtp-Source: AK7set8vEhtSDQ9bEuyWnVcYpyUtta0IVzBHdl8gP21au3X3XYxdQTadbrfoNa0I25tFOYGrSNQr+Q==
-X-Received: by 2002:a50:d61b:0:b0:4aa:a6a9:3736 with SMTP id x27-20020a50d61b000000b004aaa6a93736mr8801388edi.18.1675874431830;
-        Wed, 08 Feb 2023 08:40:31 -0800 (PST)
-Received: from [193.171.177.145] (miladpc.ai.meduniwien.ac.at. [193.171.177.145])
-        by smtp.gmail.com with ESMTPSA id h23-20020aa7c957000000b00487fc51c532sm8103416edt.33.2023.02.08.08.40.30
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Feb 2023 08:40:31 -0800 (PST)
-Message-ID: <8b445d23-245d-d6c4-b4a2-d6f3de9051a7@gmail.com>
-Date:   Wed, 8 Feb 2023 17:40:30 +0100
+        with ESMTP id S231697AbjBHQo0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 11:44:26 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B151835A0
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 08:44:11 -0800 (PST)
+Received: (qmail 25203 invoked by uid 109); 8 Feb 2023 16:43:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 08 Feb 2023 16:43:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 746 invoked by uid 111); 8 Feb 2023 16:43:57 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Feb 2023 11:43:57 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 8 Feb 2023 11:43:57 -0500
+From:   Jeff King <peff@peff.net>
+To:     Max Gautier <max.gautier@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git rev-list fails to verify ssh-signed commits (but git log
+ works)
+Message-ID: <Y+PRTYtFDoE73XEM@coredump.intra.peff.net>
+References: <Y+PGRaiTTaZ/DtlJ@work-laptop-max>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Content-Language: en-US
-To:     git@vger.kernel.org
-From:   Konstantin Hebenstreit <konstantin.hebenstreit@gmail.com>
-Subject: Bug Report git worktree
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y+PGRaiTTaZ/DtlJ@work-laptop-max>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear git developer community!
+On Wed, Feb 08, 2023 at 04:56:53PM +0100, Max Gautier wrote:
 
-I'll just do a very simple small bug report.
+> I was trying to implement a pre-push hook to verify my commits are
+> properly signed before pushing them, and stumbled upon the following
+> output (which looks like a bug to me):
+> 
+> $ git rev-list @{u}..HEAD --format='%G? %H'
+> commit 9497d347b048dbea7f527624f815f7926594c4bc
+> error: gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification
+>
+> [...]
+>
+> While git log works and is able to retrieve the signatures
 
-I tried to use the git worktree command in vscode today.
-vscode version: updated
-git version 2.34.1
+Yeah, I think this is a bug. The issue is that not every command loads
+the config callback for every config option. This is how we
+traditionally implemented the split between porcelain and plumbing
+(e.g., user-facing "git diff" will parse and respect "color.diff", but
+the scriptable "git diff-files" would not).
 
-I created a worktree inside vscode, inside the extension gitlens by 
-right clicking on another brach and selecting worktree.
-This was not working immideately, so I first created a new folder 
-(../new_folder) where I then linked the worktree to.
-This was working fine. git worktree list showed both locations with 
-their respective two branches.
+In this case, the gpg config has been pushed to its own handler, and a
+few specific commands (like git-log) call it. I don't know if there is a
+good reason to avoid loading the config in plumbing, or if it was simply
+cargo-culted.
 
-Then I switched to the new_folder, using 'pushd'.
+I didn't test, but I suspect the patch below would fix your problem:
 
-Bug 1)
-In the Explorer field of vscode I did still see the files as they were 
-before changing directory. Even if I reloaded it.
-But in the shell of vscode I saw the files as they should be (as they 
-are on the branch which is tied to the new_folder).
+diff --git a/config.c b/config.c
+index 00090a32fc..7ac9f1f5bc 100644
+--- a/config.c
++++ b/config.c
+@@ -1881,6 +1881,14 @@ int git_default_config(const char *var, const char *value, void *cb)
+ 	if (starts_with(var, "core."))
+ 		return git_default_core_config(var, value, cb);
+ 
++	/*
++	 * yikes, this needs to come early in the function because it
++	 * also handles user.signingkey, which would otherwise get
++	 * shunted to git_ident_config() below
++	 */
++	if (git_gpg_config(var, value, cb) < 0)
++		return -1;
++
+ 	if (starts_with(var, "user.") ||
+ 	    starts_with(var, "author.") ||
+ 	    starts_with(var, "committer."))
 
-Bug 2) more problematic
-worktree overwrote my settings.json file.
-file:  .vscode/settings.json (not tracked by git)
-Could be because the Extension 'cSpell' overwrote it. I was adding two 
-new words to its dictionary, which is saved inside the settings json.
-What I am left now is a settings.json that contains only the 
-cSpell.words dict with two words in it. My original settings.json is gone...
+but it would need a bit more work:
 
-Not that much of a problem, but inconvenient, as a cannot get it back, 
-since git did not track it...
+  1. Somebody would need to dig into the reasons, if any, for not
+     calling git_gpg_config() everywhere. It might be fine, but there
+     may be a good reason which we're now violating. Digging in the
+     history and looking at the code might yield some hints.
 
-Hope this helps in some way!
+  2. The individual calls to git_gpg_config() in other programs should
+     go away.
 
-Best,
-Konstantin
+  3. It's possible some refactoring may let us avoid the "yikes" comment
+     above (e.g., should user.signingkey just go into the normal ident
+     config handler?).
 
+-Peff
