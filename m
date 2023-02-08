@@ -2,139 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A7EFC636CD
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 00:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19D1BC636CC
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 00:30:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229559AbjBHAEe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Feb 2023 19:04:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44834 "EHLO
+        id S229726AbjBHAag (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Feb 2023 19:30:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjBHAEd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Feb 2023 19:04:33 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A4E227B6
-        for <git@vger.kernel.org>; Tue,  7 Feb 2023 16:04:32 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id a10so11289139edu.9
-        for <git@vger.kernel.org>; Tue, 07 Feb 2023 16:04:32 -0800 (PST)
+        with ESMTP id S229649AbjBHAae (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Feb 2023 19:30:34 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 909633AAC
+        for <git@vger.kernel.org>; Tue,  7 Feb 2023 16:30:33 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id r2so15217107wrv.7
+        for <git@vger.kernel.org>; Tue, 07 Feb 2023 16:30:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JHzaDV1t8GJm+GQRBIUGYOCKzRnl1l8IMZcevxCaHyM=;
-        b=YzJn/w8vNkaSqS3Cqv5lcpyI4hfp5471D5J1skbkZJepNrza6Ax71w2TTilC6LmA5i
-         qODMv5YlTWPBqcHxH8TB6g4E8/Cx/9ILp7CuASamldM9tcaasweO4Z2e7A09lM02+gHq
-         WPFb/RVUPwt3swMV0fWkLk/XYdqKC9NKRLNJtbU3SkGs686FMq4WjB9Et8dmm6dfp6tN
-         0aNbiHot3N3TWeh8zCPjYtQvyf7pjQ/XYROocwprmwCYH2adqxq3WXqMl+hTO6EAltwQ
-         w6JkF/b41BDncAXkr39F2XBjqydhiR8blU0LO/wuiWsOJM3+/QrteEUgAOd/YlRgV3fO
-         e/sw==
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wADX7rxaUybiZcrdUj8SK/6kSssBNLDng9Wp/qsgmGM=;
+        b=p4OZKMXsYZ3f3QKRKKcXid503v3TrqRGqHvFhX1Ab7DCUxeCiZpE43H01de9EKyShc
+         83gm9UXVarV7Jdr7fJcTW7arOyKrNSUBAFyWnzd6aznZPvmS8oDT4nA7/kEexQYRH2iT
+         iiJRP9DQI4fsripY6rCUU6Iv+Xs6Aljab9mzYf7jr3bpKytZEftevzcjdjZhR0pnEiqQ
+         7yI7hNCEw5+JMEUJRLTu9C2iM1R8qv2wyBv2NcN3w1jvEv7gGOM2X0DNmp9rv1Htkxx9
+         dsic6XGDxfLzIZjTuBj/xPCtBI9ZbrpfYwphthBrcWf3h8X7I4Dpi2rSzsknpZ3E/875
+         xcHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JHzaDV1t8GJm+GQRBIUGYOCKzRnl1l8IMZcevxCaHyM=;
-        b=Dc3PoroSgQRU6xMo1xAWYX8zuOhVFylxeDlNeJpRuWb7GWIqdwZRJbvFYznSWPC2qG
-         9Nnjv2Lk86rg6JqkMJIqOA8jb59wBk4HrynZ/oVmU85bigzWI2GkKLdmcKn3qGjxY+Nb
-         v4M/+vyy+gq/kBAWqyNcwmEWH1OQ0cLeDBIy00k8Hor/wFUOmbwbeFZC1kdrcbsgmd6k
-         w01gd5ouPs4iUGgzpEIuVNjmeMx5td80UkKW7mu9C9RwG8ra5sm+QO0qKpT5qZC4452E
-         c+G1yeRkPcREpPGoBpkhyUZ6PjMmuo/vDklw8zFTLftwlf8PCeNmWS8sdtnr5jPq8AEN
-         ovcw==
-X-Gm-Message-State: AO0yUKUAB0znCpTkxsnKcBBYxZ8H6jOQ+VORDb0LpDoKA8DAOQJxVBxm
-        WZikGTQ2htc8+jN/ZBHjsnY=
-X-Google-Smtp-Source: AK7set9qft0bBRpnweFgoPchJZrqEo0DsfajruuUT3ff4xpjzG41xGtapdnVYyHtZ7HWy01mmZuwuQ==
-X-Received: by 2002:a50:a451:0:b0:4aa:c186:56e1 with SMTP id v17-20020a50a451000000b004aac18656e1mr5835516edb.14.1675814670589;
-        Tue, 07 Feb 2023 16:04:30 -0800 (PST)
-Received: from [10.16.18.213] ([181.214.173.18])
-        by smtp.gmail.com with ESMTPSA id y22-20020a1709064b1600b008786675d086sm7487592eju.29.2023.02.07.16.04.29
+        bh=wADX7rxaUybiZcrdUj8SK/6kSssBNLDng9Wp/qsgmGM=;
+        b=aKs+oIHjKPxWg71qwWUGgC4tY1XNE+WIUP4vX8k7F+dujF1fJ8YgXi3PqLFP8JRoqR
+         TNeOcnHBnVbVU/vSXMNRv8NqaFJX+TNtPI+pi+OKF3yXwOaSSRksyV26D9t18boLwVqn
+         yu2nIf+EybNPGRMkUwmiZB/2VMu0HVPIdxrsXpRtJBqkXwPfzY6ChFbjmK0TYQA+JXwI
+         vUX/1DLeaUDAeFbApPdZZZYPVuymr5tIVabJOidEd8YDPp0tAKaL8X96eQRCUyIaWn89
+         24Rt10LdWbAXdPrPBN20l/QcW3nn/O+hBHxz4HOxD/GpREG9pd46dew7wEZM4dH4us9t
+         +jlA==
+X-Gm-Message-State: AO0yUKUkLJfIeZBEvdgk7Fc0zEaUAHLJWSOweWaHaIVxB7uosPnLVez5
+        hCt08BV87pnXCWjl+PWGbnI=
+X-Google-Smtp-Source: AK7set/shSWfv452dEcueoeuH0m0kXhl0UdbJtN+To8b+TJnC+STFU9t5bmhbXX1lW2Bd5aUcCX5CA==
+X-Received: by 2002:adf:e749:0:b0:2c3:e5f5:9faa with SMTP id c9-20020adfe749000000b002c3e5f59faamr5263602wrn.58.1675816231998;
+        Tue, 07 Feb 2023 16:30:31 -0800 (PST)
+Received: from [192.168.2.52] (141.red-88-14-210.dynamicip.rima-tde.net. [88.14.210.141])
+        by smtp.gmail.com with ESMTPSA id bv20-20020a0560001f1400b002bc8130cca7sm12231055wrb.23.2023.02.07.16.30.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 16:04:30 -0800 (PST)
-Message-ID: <152251b7-79a1-9ea9-01de-61a68b729196@gmail.com>
-Date:   Wed, 8 Feb 2023 01:04:26 +0100
+        Tue, 07 Feb 2023 16:30:30 -0800 (PST)
+Subject: Re: [PATCH v2] bisect: fix "reset" when branch is checked out
+ elsewhere
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
+ <ada28944-6e9e-d4e7-74c9-ffadaf406e1f@gmail.com> <xmqqwn4u2ztc.fsf@gitster.g>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <eb086063-9e47-9fdb-3644-77a843733dcf@gmail.com>
+Date:   Wed, 8 Feb 2023 01:30:28 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Subject: Re: [PATCH v3 1/3] userdiff: support Java type parameters
-To:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Paolo Bonzini <pbonzini@redhat.com>,
-        Tassilo Horn <tsdh@gnu.org>
-References: <64601c4b-9ced-672f-a5fd-9a9b3b65859d@kdbg.org>
- <20230207234259.452141-1-rybak.a.v@gmail.com>
- <20230207234259.452141-2-rybak.a.v@gmail.com>
+In-Reply-To: <xmqqwn4u2ztc.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-In-Reply-To: <20230207234259.452141-2-rybak.a.v@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023-02-08T00:42, Andrei Rybak wrote:
-> A class or interface in Java can have type parameters following the name
-> in the declared type, surrounded by angle brackets (paired less than and
-> greater than signs).[2]   The type parameters -- `A` and `B` in the
-> examples -- may follow the class name immediately:
+On 06-feb-2023 14:29:03, Junio C Hamano wrote:
+> Rubén Justo <rjusto@gmail.com> writes:
 > 
->      public class ParameterizedClass<A, B> {
->      }
+> > Since 1d0fa89 (checkout: add --ignore-other-wortrees, 2015-01-03) we
+> > have a safety valve in checkout/switch to prevent the same branch from
+> > being checked out simultaneously in multiple worktrees.
+> >
+> > If a branch is bisected in a worktree while also being checked out in
+> > another worktree; when the bisection is finished, checking out the
+> > branch back in the current worktree may fail.
 > 
-> or may be separated by whitespace:
-> 
->      public class SpaceBeforeTypeParameters <A, B> {
->      }
-> 
-> A part of the builtin userdiff pattern for Java matches declarations of
-> classes, enums, and interfaces.  The regular expression requires at
-> least one whitespace character after the name of the declared type.
-> This disallows matching for opening angle bracket of type parameters
-> immediately after the name of the type.  Mandatory whitespace after the
-> name of the type also disallows using the pattern in repositories with a
-> fairly common code style that puts braces for the body of a class on
-> separate lines:
-> 
->      class WithLineBreakBeforeOpeningBrace
->      {
->      }
-> 
-> Support matching Java code in more diverse code styles and declarations
-> of classes and interfaces with type parameters immediately following the
-> name of the type in the builtin userdiff pattern for Java.  Do so by
-> just matching anything until the end of the line after the keywords for
-> the kind of type being declared.
+> Sorry for asking possibly the same question again (which may mean
 
-The above explains why removing the mandatory matching for whitespace
-after the class name is needed, but it doesn't explain why removing
-the part of the regex that matches the class name itself is OK.
-Perhaps, something like this could be added:
+No problem.  I am sorry because I don't understand what's worrying you.
 
-     An possible approach could be to keep matching the name of the
-     type: "...[ \t]+[A-Za-z][A-Za-z0-9_$]*.*)$\n", but without matching
-     mandatory whitespace after the name of the type, matching the name
-     itself separately isn't useful for our purposes.
-
-?
-
-> [1] Since Java 5 released in 2004.
-> [2] Detailed description is available in the Java Language
->      Specification, sections "Type Variables" and "Parameterized Types":
->      https://docs.oracle.com/javase/specs/jls/se17/html/jls-4.html#jls-4.4
+> that the phrasing of this paragraph is misleading), but isn't it a
+> good thing if in this sequence:
 > 
-> Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
-> ---
+>  - I checkout 'main' and start bisecting (BISECT_HEAD says 'main');
+> 
+>  - I then checkout 'main' in another worktree; I may even make a
+>    commit or two, or even rename 'main' to 'master'.
+> 
+>  - I finish bisection and "bisect reset" tries to take me back to
+>    'main', which may notice that 'main' is checked out in the other
+>    worktree, and fail.
+> 
+> the last one failed?  After the above sequence, I now have two
+> worktrees, both checking out 'main', and it is exactly the situation
+> the safety valve tries to prevent from occuring, no?
 
-[...]
-
-> diff --git a/userdiff.c b/userdiff.c
-> index d71b82feb7..bc5f3ed4c3 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -171,7 +171,7 @@ PATTERNS("html",
->   PATTERNS("java",
->   	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
->   	 /* Class, enum, and interface declarations */
-> -	 "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+[A-Za-z][A-Za-z0-9_$]*[ \t]+.*)$\n"
-> +	 "^[ \t]*(([a-z]+[ \t]+)*(class|enum|interface)[ \t]+.*)$\n"
->   	 /* Method definitions; note that constructor signatures are not */
->   	 /* matched because they are indistinguishable from method calls. */
->   	 "^[ \t]*(([A-Za-z_<>&][][?&<>.,A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
+We are considering the initial branch (BISECT_START) as a branch checked
+out _implicitly_ in the worktree that is bisecting.  Doesn't that
+provide us and the user enough safety?  And is this not enough safety
+for us to allow "git bisect reset"?  Just "git bisect reset", without
+any other argument.
