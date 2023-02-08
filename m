@@ -2,97 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A3A9C6379F
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 12:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DAA6C636CC
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 13:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231273AbjBHMGg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 07:06:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50460 "EHLO
+        id S231237AbjBHNuO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 08:50:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231218AbjBHMGe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 07:06:34 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68B8C49436
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 04:06:33 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id hx15so50551206ejc.11
-        for <git@vger.kernel.org>; Wed, 08 Feb 2023 04:06:33 -0800 (PST)
+        with ESMTP id S231232AbjBHNuN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 08:50:13 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BB45358F
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 05:50:11 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id f34so27108916lfv.10
+        for <git@vger.kernel.org>; Wed, 08 Feb 2023 05:50:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bcvLVIHISfNK+uzA+N8gL2x6FNhhL/ZJjP0B3AFRGd8=;
-        b=OlemV6391Jz1HXwseHvFNEe2+n2VmYJtcnG4JB7CwoLHW1iTTeKr8MB6ldFT7AjbOt
-         inqcVDWGVtZlS3Sim7Yin2jihxaDEKbfT9oGtzV+xAYI+Mxm1qatNAN3KaJt5kLstKVV
-         5+omYzve4g5gODuvindJh88St1mWOnEXP7Kx9MPfOFKxzAHwiTi9cIwh61K2/HhUDQME
-         HPxcNhxPC37DHHZYQxFpceefRd2/+KOTgfD3HFSzclh9OFJsYaMr+1eLR7KAYRoqGWo+
-         ILiXzWMwixuRg7gPa5CJKxsZAdSG65zq5b/Oi/pxl74NZzK1Aax23EzLCbLw9gWTTJMl
-         PWdQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9S7tvARXNA4k0HA9JAIQ4GJ4WZKP88rvZBgl/HH8Ew0=;
+        b=WUlPg9nm5+i1plauyx9SNqpNY/JgZDU8AjL4WJmZnvVKi52BGasY/UNDus8EpI1dfZ
+         SICES53910YhH4dY9u0lNc/dQ+j64sDgc7BE7+nJP4JLziOJiYsGOrDlS1eC6bC10Yqi
+         +JyHZpjXKU13TN18OimRowFEr9xjny/42Z1YZ6lPKisSZws1Zy3SGHoMpQHh7xpn+Yq3
+         O7MIaLEAK+QxQnFAuxsx/sCZCisX1DhVsbvXeFIvC+NfhT3k4FXUvZFezmj0o0+FH7+F
+         G+6lryehRW19hUwpXoxDjeYhOjGLpIU7SAuA/1TFTPpR5iz3u+JqRt5uvO2qZSm1RpkW
+         Whjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bcvLVIHISfNK+uzA+N8gL2x6FNhhL/ZJjP0B3AFRGd8=;
-        b=KrNEuFmNJETwp85XQIxVK/VuwXwGSjQhkw3ZNReGkbNmSdiRZYwbzfqlEIjrKJhBDb
-         nYK4NtbigUYjrw4D//Cyrg2E7tp1MlovTZdHOCAZKUlx2GnDR9HYmilrJ6+IyBSyAcbg
-         g3L4pMpDM/HCpBVf6gnoby/FOlMZAEnf4KxoW7H/hsh3oov8EJ/drwCkKFEo1Au3D+QA
-         /6G1GP06/I8zEodVnTRUeosjyESZBAjybc7XbvBsy+sQIVTfm/R5QrlqsVeTJgsC2ScY
-         ccJMUjMAYZqtJvZYhLgdCegT4Uvf/xA1aP8C7WvpK4kcfUSLzKQUPvvFAmIxP9alQ/KK
-         bafA==
-X-Gm-Message-State: AO0yUKXyg5cKfYcLuVZROu5zYxZOZSGuiE+90KzyeEvXLNFlYsqUwNsj
-        hRNWd7PmRfUWT6goOa7SGAH5Zy0j3UXVhjiP
-X-Google-Smtp-Source: AK7set/KqahkEZgNZvcxNe7F6SNOGlhzTyg99BLswANKaLjO79TerlblFqd5MKSNplySW/XAH6ZgCw==
-X-Received: by 2002:a17:906:903:b0:88c:3a48:716c with SMTP id i3-20020a170906090300b0088c3a48716cmr7426588ejd.58.1675857991787;
-        Wed, 08 Feb 2023 04:06:31 -0800 (PST)
-Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id h10-20020a1709070b0a00b0087758f5ecd1sm8170415ejl.194.2023.02.08.04.06.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 04:06:31 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pPjDa-001Ixf-20;
-        Wed, 08 Feb 2023 13:06:30 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Ilya Kantor <iliakan@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <junio@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: CMakeLists.txt from contrib/buildsystems fails to build on Mac
-Date:   Wed, 08 Feb 2023 12:57:35 +0100
-References: <BFC8139A-0A9A-4E84-BC0B-D6EE5F469F82@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <BFC8139A-0A9A-4E84-BC0B-D6EE5F469F82@gmail.com>
-Message-ID: <230208.86sffgz7i1.gmgdl@evledraar.gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9S7tvARXNA4k0HA9JAIQ4GJ4WZKP88rvZBgl/HH8Ew0=;
+        b=QziGCPA/c0Wxnm6YTnnZmhwlX7JhCRgmml+ZIxg/kmqJQmPnvT/jsiEvBpXF6RbHkS
+         ueTEglmjaYIli4Z2SXneWIzE1hEDHZKVK9QWoamY0VPXqAHMBrId//xdZD0T2WEtVwCO
+         uMcQA2b8Cyqs7u8wJUsm/3SNAjQKFS1aMFasyJtlzY8gRBQA5iR4bPHQaBK6ZMUuQzW8
+         Hd8c+66mzz4Ty0X60V7kma+gX8XWX47HpIatTGY/x4JVhMW/IDdgtdaG2Ni2lBOveeYs
+         D5/7mmcXhJM6roF21hW/oIjdWKJ/gHqYpNcwPQv2PlnuninoxuEnWHVw4lo88ezJkSTN
+         pTOg==
+X-Gm-Message-State: AO0yUKVEL5iXlgsvE9zvVvHoGUDtheKyKOWcT7mMx5ewiw0PJjYuKOIX
+        dP2ajZH+qJi+gSAl037qKvquMIRXbDtsHPncf/AogbVW
+X-Google-Smtp-Source: AK7set/Ztdmol3ryvASjdRvNU69JLT8Yor30JdyV5UA7+/F4KjwTTwEB/Kg3N7JHcRkEP0QT06lemXixtZBQoqjkrGU=
+X-Received: by 2002:a05:6512:924:b0:4d8:20fa:51c9 with SMTP id
+ f4-20020a056512092400b004d820fa51c9mr1737759lft.59.1675864209455; Wed, 08 Feb
+ 2023 05:50:09 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CALJHx121C+=mAmfWxko0PUy1QBjfezM4ft6uE1+cyiH3gaLQ2w@mail.gmail.com>
+ <xmqqedr0vd1l.fsf@gitster.g>
+In-Reply-To: <xmqqedr0vd1l.fsf@gitster.g>
+From:   William Blevins <wblevins001@gmail.com>
+Date:   Wed, 8 Feb 2023 08:49:57 -0500
+Message-ID: <CALJHx12DetwZ=+aMEG6Ss4P3fMTeLN2styXuPw93C5N6yg98NA@mail.gmail.com>
+Subject: Re: Unexpected (bug-like) behavior in `git ls-remote` matching.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This still feels "weird" to me. Other pattern matching tools like grep
+and sed don't have exceptions to their behavior like this.
 
-On Wed, Feb 08 2023, Ilya Kantor wrote:
+Can you reference the unit tests that verifies this specific behavior?
 
-> May that be because of some changes in MacOs Ventura? 
-> Or is the CMakeLists.txt "dead and forgotten"? ;)
+On Wed, Feb 8, 2023 at 2:20 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> P.S. The regular "make" route works.
-
-You should just use "make", the "cmake" build method is currently in
-some limbo. See my
-https://lore.kernel.org/git/221227.86pmc4vrk3.gmgdl@evledraar.gmail.com/
-for a recent overview/questions about it.
-
-Since I wrote that 0949eba7fd0 (diagnose: another dup2() leak,
-2022-12-06) landed on git.git's master, so we don't run it ourselves in
-CI, even for Windows (which it was intended for).
-
-As noted in previous exchanges I wouldn't mind fixing it up to work on
-more platforms, but Junio wasn't enthusiastic about those patches &
-dropped them.
-
-Alternatively I think the best thing to do is to "git rm" it from
-git.git, and leave it to git-for-windows. From what I understood from
-Johannes he preferred that plan.
-
-Or rather, that GFW would be fixing it up, but then I don't see why it
-should be in git.git, which as your message shows just leads to
-confusion about why this component is in git.git's tree.
+> William Blevins <wblevins001@gmail.com> writes:
+>
+> > What is totally unexpected.... is the most simple search for ABC-1...
+> > ```
+> > $ git ls-remote --heads git@github.com:owner/repo.git ABC-1
+> > <ref>    refs/head/ABC-1
+> > <ref>    refs/head/feature/ABC-1
+> > ```
+>
+> Sorry, but I cannot see what is surprising about the above.  If you
+> have these branches locally, you should also see these refs in the
+> output of "git show-ref ABC-1".  Refname hierarchies work just like
+> pathnames with directories, and without glob in the pattern, tail
+> matching that honors path component boundary is very much the norm
+> in the oldest part of Git, i.e. ABC-1 matches refs/heads/ABC-1 but
+> not refs/heads/XABC-1.
