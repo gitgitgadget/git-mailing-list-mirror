@@ -2,73 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3095BC636CC
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 16:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B848C05027
+	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 16:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230356AbjBHQAU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 11:00:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45152 "EHLO
+        id S230503AbjBHQM2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 11:12:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229617AbjBHQAT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 11:00:19 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 073C4449E
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 08:00:18 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id m2-20020a17090a414200b00231173c006fso2189199pjg.5
-        for <git@vger.kernel.org>; Wed, 08 Feb 2023 08:00:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Rt6/JZAbSEB1lSSaqLrZ4VZK86AyIv42u7xWfrpkciY=;
-        b=TiGj2roRlghyRn/cbpJQp556JmnLTiF1oq3+gCp2gd6r9AYZ3IqWTjGUEKMT9YwDME
-         wy1Nx/Ju9sSondMnmUZriJBWllqpuNtDJJJYhdmOOyeGgdsxolbvwpA3r2lGjVmTzADP
-         74DPwzZfWcDvky2P3SPak0nXmGdMlPisNeq0tod9ZlXRtV1o7nlMzSsx9eW5WzjgZEa/
-         1WRkL6O6z4TLc+fkQVWk0MaEqG7W9gwa6MxtCFuUhMWBucGEmg5F6wSmNF0F9DVYAyfP
-         AHVpMf5BdA6Opxo7F6TXo2xbHx/NxFpaakmDsGeq6KcaWFuh7y4kfDJc/LW+WomVK/kA
-         urzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Rt6/JZAbSEB1lSSaqLrZ4VZK86AyIv42u7xWfrpkciY=;
-        b=jI/Qg+mxqz4frvxjQoqVpPBxa1xzmjUbnKPp29IqUDbDWvoS8Q5ci402BxOsU0HQk+
-         +WVQy155F8BIVJ6iuQlLLT2RIH8KPl3yZogT1u6kYiMiuYckhMomu9KkSEekNkIn6OUs
-         zC+iSNEdqdMo9PDqhRUmG8E3k+XCzxA5NU1VS1kLXcNvGhpbi0TmGx4Ej9pQ02ltB5+s
-         cxvN2tw8dJKKOf4Pdx1k/vcoWKF3vLeJcPVqVhnjjyvQNuGZaG1YepSQCusUY472JnNm
-         d/ofVSqeBiRNieUE/NoS2vfFiOtwpnivQAh6gUcK4TdzaEHyKr5NBfw7fdxUzzmz6PoL
-         2s4w==
-X-Gm-Message-State: AO0yUKXsAe1e3HEG1iI6Wr1LuQkpHk4XQVatf6hVjk92K1HNx825c6nm
-        GPdKFH0g+tHznylS05NRfnA=
-X-Google-Smtp-Source: AK7set8keSNiAkVG+skQmklLyfPSo7gmDghy6wPYWhY5eE4dn1csOHHuvjLaMVQfHxHR559wC5Ap2g==
-X-Received: by 2002:a17:902:db11:b0:199:2e77:fe56 with SMTP id m17-20020a170902db1100b001992e77fe56mr8864052plx.52.1675872018149;
-        Wed, 08 Feb 2023 08:00:18 -0800 (PST)
-Received: from fivlite-virtual-machine.localdomain ([49.37.149.188])
-        by smtp.gmail.com with ESMTPSA id d7-20020a170902b70700b001869b988d93sm11200571pls.187.2023.02.08.08.00.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 08:00:17 -0800 (PST)
-From:   Kousik Sanagavarapu <five231003@gmail.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, git@vger.kernel.org
-Subject: Re: [GSoC][PATCH] commit: warn the usage of reverse_commit_list() helper
-Date:   Wed,  8 Feb 2023 21:30:13 +0530
-Message-Id: <20230208160013.186288-1-five231003@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <xmqqk00tz4rt.fsf@gitster.g>
-References: <xmqqk00tz4rt.fsf@gitster.g>
+        with ESMTP id S230445AbjBHQM1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 11:12:27 -0500
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2AF648A09
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 08:12:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1675872743; bh=/0fK8HFZVlC95RB8RFlHEYkC73VIaxKQQXA0LmhY+9c=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=eTQZSEsYFWw9SXW7//tyVezjfyRphNGTFid7ifjNh004y/Qfb7bRfM/FlpD3Q65h1
+         /JUG/KnsR0uYADzf2qlm233VSg1iNmkH6NITgVOaJUdbboAZ7DczcQxIR4McQpFkNM
+         t+aispXX6MO2kDLRe+YFjYMJbd9FFD+nhw4aoN2D1HWj/Vi2aPH5RBSICACoWyLTaq
+         2eLY+99ouIvYvR2FzRL5h5kTKLTlMW5jIMk7Boh/oVhmKqK906UfOJV979ZekC3o5o
+         nQhzlc+PF2G8hNGL2Trn2m+kLybejw48fSXJSkp/lTToX/x8FShnjIY4YqxquVC1Cu
+         nP0SsdJEpggJQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N2SL5-1oSUcz3jDj-013xfI; Wed, 08
+ Feb 2023 17:12:22 +0100
+Date:   Wed, 8 Feb 2023 17:12:22 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Kir Kolyshkin <kolyshkin@gmail.com>
+Cc:     git@vger.kernel.org, Roman Dodin <dodin.roman@gmail.com>
+Subject: Re: [PATCH] remote: align columns on -v
+Message-ID: <20230208161222.guqqwlceqiy3jq7e@tb-raspi4>
+References: <20230207235238.1850757-1-kolyshkin@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230207235238.1850757-1-kolyshkin@gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:BBJs/OQ+ltemA0Odyu/YL4jhmFVXMqLTQ9XdcOGZzVKTl9tT2HN
+ iKu70Z16YoN5+jDgAAv1pxQVX26K6xj55uKTlFgu5+Oks5z2+JmZT8X4PAi9R0o7XtW1AmZ
+ b/Mw8welkqERCAajPtt4yFUZB+NBtQ4MOBWQvUYaZ71qedCMkhQeGpNzqf8pnTJSWfeuwCa
+ Odje/D75HFrEyuFg3RKGQ==
+UI-OutboundReport: notjunk:1;M01:P0:S9yUISWU+8I=;3DXk0FCAbfxlrq3yNqiTy8+6dtD
+ bJV/abIABuDW5+IEZwGPzklSuvgPbqlmeWrlZaz1ELr+bOL3NRMDdkv0aal1r9oLUZTwa/J+a
+ hJdhnWuzQj5f4XxSXElWE1q95PmdJ38DhnLcKgz2xWneyvzPE7sVphQi3MF2HLPB23F/TVA3l
+ fc/KhEbI7Nefhw2Uy0pMUGkbRC3uNqcOswbUhFER+mY/dFwJ3gW6J9W/ToL2ZlDyLOvkjcW0Y
+ VBPtSm9pqsEAKK0KFipj3O+rs4yYuBWrBfAc2CNN1GL8ixVCU6QJzPnfSgfgFStAfue0iDpQd
+ LMPUOOfGQZa5TfA8CfTIMxXX4JOOqb1yiz/io2YqtO3iPB+8GHtDZhtX+VysJ+IcOOLJuvfst
+ vJdSd/cRe0cz6711VwfAGCE1yqzeSrh+u1UMnFYpgwOJVsv1hRg+6j3Dl6lYg7wThyZqWymHq
+ ykMNGjvA3ccqj5eSPvH5zz9yO+5zP7WOE5y4zsinEv/2zE11y42ZokpoS4TLGm2eN/d40LSC2
+ QvQ8SqWDQOj4yDarGrKbDj3aj+iNo74oejXR7ah4gc82gv1Mo4PEU5Kw9q1yp5UKiR1m4nxYI
+ bZGw2nksAGS8yKdZWKaoIU9O/8l1tbhq60BllF/XWBn7ixTHIkYaonw2QYv0MOBnttnBT0fYV
+ HdMV8q5Hcicg1rHLaLTPkDmChFOW/NFOoCmD3fV8yKTHmP2g9akcbv8su2jA5UmGkCn0HCHvi
+ 8s36o9QDLr8BTue369qpSPXCWMtcnetZWzKAyRQx/w/vErdtbKBnPN7g6i75Zbk2cl85/ZSNC
+ f+TfL8C7q0FW1ywRs18EtOD4d1XONfPPRUYdYH12tecwOK7G7n+2K/ns4ZQFPlsDnFg97D4Ad
+ ra5qMXayniKrV12IbRzpZF211vo/Y1l5gz9RMl4xiZwKft9D7XBKK+Jp5V9PSi2jWx+N00o1/
+ O/hRtKHt+UYykvzfM5WKITL0oGI=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 8 Feb 2023 at 00:23, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Feb 07, 2023 at 03:52:38PM -0800, Kir Kolyshkin wrote:
+> Currently, git remote -v produces a misaligned output when a remote name
+> is more than 8 characters long (i.e. longer than a tab step). Here's how
+> it looks like:
 >
-> After re-reading the original, I realize that "in-place" is good
-> enough clue to say that this is destructive.
+> giuseppe	https://github.com/giuseppe/runc (fetch)
+> giuseppe	https://github.com/giuseppe/runc (push)
+> kir	git@github.com:kolyshkin/runc.git (fetch)
+> kir	git@github.com:kolyshkin/runc.git (push)
+> lifubang	https://github.com/lifubang/runc (fetch)
+> lifubang	https://github.com/lifubang/runc (push)
+> marquiz	https://github.com/marquiz/runc (fetch)
+> marquiz	https://github.com/marquiz/runc (push)
+>
+> Let's find the maximum width and use it for alignment.
+>
+> While at it, let's keep the \t in case some tools depend on it
+> for parsing (there will still be trailing spaces in the remote name).
+>
+> With this change, the output is like this now:
+>
+> giuseppe 	https://github.com/giuseppe/runc (fetch)
+> giuseppe 	https://github.com/giuseppe/runc (push)
+> kir      	git@github.com:kolyshkin/runc.git (fetch)
+> kir      	git@github.com:kolyshkin/runc.git (push)
+> lifubang 	https://github.com/lifubang/runc (fetch)
+> lifubang 	https://github.com/lifubang/runc (push)
+> marquiz  	https://github.com/marquiz/runc (fetch)
+> marquiz  	https://github.com/marquiz/runc (push)
+>
 
-I see. Thanks for the review.
+Thanks for working on that  - I had the same wish as well.
+However, I am tempted to comment on some details here.
+Especially, what happens if a remote is named with a non-ASCII
+character (unicode code point would be a better term) ?
+To determine the width on screen for aligment, strlen()
+does the wrong thing here.
+This has been done at other place (being UTF-8 aware),
+you may want to have a look at this change:
 
-Kousik
+  commit 12fc4ad89e23af642a8614371ff80bc67cb3315d
+  Author: Torsten B=F6gershausen <tboegi@web.de>
+  Date:   Wed Sep 14 17:13:33 2022 +0200
+
+      diff.c: use utf8_strwidth() to count display width
+
+
+
+> Reported-by: Roman Dodin <dodin.roman@gmail.com>
+> Signed-off-by: Kir Kolyshkin <kolyshkin@gmail.com>
+> ---
+>  builtin/remote.c | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 729f6f3643..116417574d 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -1245,13 +1245,21 @@ static int show_all(void)
+>  	result =3D for_each_remote(get_one_entry, &list);
+>
+>  	if (!result) {
+> -		int i;
+> +		int i, width =3D 7;
+> +
+> +		if (verbose) {
+> +			for (i =3D 0; i < list.nr; i++) {
+> +				int len =3D strlen((list.items + i)->string);
+> +				if (len > width)
+> +					width =3D len;
+> +			}
+> +		}
+>
+>  		string_list_sort(&list);
+>  		for (i =3D 0; i < list.nr; i++) {
+>  			struct string_list_item *item =3D list.items + i;
+>  			if (verbose)
+> -				printf("%s\t%s\n", item->string,
+> +				printf("%-*s\t%s\n", width, item->string,
+>  					item->util ? (const char *)item->util : "");
+>  			else {
+>  				if (i && !strcmp((item - 1)->string, item->string))
+> --
+> 2.39.0
+>
