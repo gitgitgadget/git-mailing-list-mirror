@@ -2,126 +2,219 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65201C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 09:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44634C05027
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 09:12:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229527AbjBIJJ5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 04:09:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43680 "EHLO
+        id S229943AbjBIJL7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 04:11:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229912AbjBIJJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 04:09:48 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A03B59E73
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 01:09:45 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id br9so2298447lfb.4
-        for <git@vger.kernel.org>; Thu, 09 Feb 2023 01:09:45 -0800 (PST)
+        with ESMTP id S229520AbjBIJL5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 04:11:57 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8D36901F
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 01:11:49 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id f47-20020a05600c492f00b003dc584a7b7eso3363291wmp.3
+        for <git@vger.kernel.org>; Thu, 09 Feb 2023 01:11:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zxK06NL26LZudWnTFVjiz+icg+c+o180Ji7d6gedUZ0=;
-        b=lF83r9cYenKaJruNrvi5BTNipQoDuQHcuyRFgb92fZoiPFDTIXbmaZ8nNW7ZU3gE65
-         c/xD7cGHfpH4Bc++kpTW8e/LMKT39FY5sONA0nuxSiWDA+wuGkYUgG9TIBvAMApbPMX4
-         SZ6rdDcbKtNnvEIWEgCn2CliboMIC3yPz+FuEyR7zyDPn9ox243psXp8Yg/gYZ/uarUe
-         dxA65XC1rQ0nPxLbXBSwwUAyUONKhgft05mQeKAt0d9KmhC1YIfxs9NEd5OBOjz5TdfW
-         ofmYMiYQjAyQJHAMUXrQb0QNRplqMSK58pZYGw6oxGQ5LcfyijLMR+fSgbr7zGsoL/Gs
-         DbWQ==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WMyOflcTy8Au55J81iHSedrF5MKB4fkfHAUW0A7V1Sk=;
+        b=kCZ+8RvnGH0hUcrpc7glXtND17qzcJccdzvSTadJa6Y5/brvDGd0G6CmNNY/PtZTyj
+         l0tpR1lSwgJrun35iWr00yPGfQNfAQBrloxeTJFzTp1P/evqSpMs3NwUSAMjqsiymS1S
+         1LTUY4kd2wu5CN8cTFF4qneOnkIvStUll86OCOXg9w+sbgWkH8n1ohM1zFtRww95JUxg
+         RvAce/ZlLTJ68wLkNUrz9iK4ZFO5Cnmk1sBlyxDSu7P9DYUj5sVBK2ICbgCj39cVE7f7
+         mSfPXoWs2GI16muBZWTQRKFi7T1NEvyjL/ni6vKEx+ZS2tGKBzB0G+GOzgiWAmSsLPfW
+         +kBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zxK06NL26LZudWnTFVjiz+icg+c+o180Ji7d6gedUZ0=;
-        b=rO3Vfab8biEAIMONZ4HTQvw3HJepLWmZhfi+dIpdOA/WCtavKzBMR+IDzUPDXNacVz
-         0g7L51vhSortR0tifDH4babPKXoDo1YNMzTY/LS74NxMySmywAbDuLXFjGVK9LkWm3Zj
-         fYxLKQRJKF0kuxShafRO7mKp5psmcxWxzMuN2sJzhO5yIwW0SFJuKdV7W16Gx9Jme6DS
-         0McKcWksJnv+OJXneEaHpJAEgEsrZCKhBU86Jd8TmvK+wfYqxpwY8Dmdhf9EDlJot11U
-         +rDHkLujwvTN2YEVfCfxxJgdg0IP0nPTL0GCfJMJKmAJFBo8e1Z9lpfXOUTKdqXf6EAh
-         aWPQ==
-X-Gm-Message-State: AO0yUKXQBBV9UP7KRZ4KKSPZ/TNLK1N1ikgMnaONkukkpf4SU5n1qjLM
-        sBkFdOdO9YnC6JTIIRIFm5A+4ipQdLsw06G1wJuimn4S+P4=
-X-Google-Smtp-Source: AK7set9CX+f5kDz2qW3YCqXzvdxuvdj1+uAiUqCzXzSkwaFzF3PDpvMkfncrgvqKvx/v6GTMU6lgNhKfJleb0H/EiqE=
-X-Received: by 2002:ac2:5a0b:0:b0:4d2:381c:87dc with SMTP id
- q11-20020ac25a0b000000b004d2381c87dcmr1656768lfn.124.1675933783421; Thu, 09
- Feb 2023 01:09:43 -0800 (PST)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WMyOflcTy8Au55J81iHSedrF5MKB4fkfHAUW0A7V1Sk=;
+        b=WtFJ1Md+DEAy7NXzzEOdBoFe5vD7W0g2w14/YD04JiodJy6Wjn0sU0EFoMi2kk0DME
+         6k8UOmIpDPrh0Tb+1TSTHe912Gt62Fc1bijsZsBSNAY8xh6BIKOZZrOcT2Q2t0FzGH6z
+         52zpfE+GIfKAmTNLyYGQoSsKlP3tGBM6RD2Kle1Btdd/OTaa+otRtx4qQvandO8HacDS
+         o+FButUjZ2RHxi2Y24FKIfnHdCGPXBBd2g9qpTtQdYFYwERovLvXbqsCuvR7bsf1Ql2n
+         yXRrlJjJ8aoF6ccusK885fdKLFI1mABRMk2hSGnWXeLTMu9NTGLhq0IkhlDIZOC18oL/
+         2pWg==
+X-Gm-Message-State: AO0yUKW1R9QZrhO0AQDLfmncSsRRU3uRlLqjyeKCZ8AY3FtF0CknTKpt
+        kGLPVyBeHJQ2ESy521J0e6j8/oQmDcs=
+X-Google-Smtp-Source: AK7set8aIs1ie4+B4UIIHZo5a+Os5d78ZrXl8yWZOKzr6aH2wFqYr0OfSWBWZgMEC8E870PqYh5SWw==
+X-Received: by 2002:a05:600c:4da2:b0:3df:e1d1:e14c with SMTP id v34-20020a05600c4da200b003dfe1d1e14cmr12611926wmp.20.1675933907902;
+        Thu, 09 Feb 2023 01:11:47 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id iv12-20020a05600c548c00b003dc521f336esm1354024wmb.14.2023.02.09.01.11.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Feb 2023 01:11:47 -0800 (PST)
+Message-Id: <pull.1468.v3.git.1675933906906.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1468.v2.git.1675751527365.gitgitgadget@gmail.com>
+References: <pull.1468.v2.git.1675751527365.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 09 Feb 2023 09:11:46 +0000
+Subject: [PATCH v3] name-rev: fix names by dropping taggerdate workaround
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
- <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
- <230206.865yce7n1w.gmgdl@evledraar.gmail.com> <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
- <d18a5c32-2f15-93ad-ccbf-e8f048edb311@dunelm.org.uk> <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
-In-Reply-To: <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 9 Feb 2023 01:09:30 -0800
-Message-ID: <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com>
-Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
-To:     John Cai <johncai86@gmail.com>
-Cc:     phillip.wood@dunelm.org.uk,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Calvin Wan <calvinwan@google.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John and Phillip,
+From: Elijah Newren <newren@gmail.com>
 
-On Tue, Feb 7, 2023 at 9:05 AM John Cai <johncai86@gmail.com> wrote:
->
-[...]
-> > Perhaps I'm over simplifying but having read the issue you linked to I couldn't help feeling that the majority of users might be satisfied by just changing gitlab to use the patience algorithm when generating diffs.
->
-> Right, I recognize this is a judgment call that may be best left up to the list.
->
-> We don't have a way in GitLab to change the diff algorithm currently. Of course
-> that can be implemented outside of Git,
+Commit 7550424804 ("name-rev: include taggerdate in considering the best
+name", 2016-04-22) introduced the idea of using taggerdate in the
+criteria for selecting the best name.  At the time, a certain commit in
+linux.git -- namely, aed06b9cfcab -- was being named by name-rev as
+    v4.6-rc1~9^2~792
+which, while correct, was very suboptimal.  Some investigation found
+that tweaking the MERGE_TRAVERSAL_WEIGHT to lower it could give
+alternate answers such as
+    v3.13-rc7~9^2~14^2~42
+or
+    v3.13~5^2~4^2~2^2~1^2~42
+A manual solution involving looking at tagger dates came up with
+    v3.13-rc1~65^2^2~42
+which is much nicer.  That workaround was then implemented in name-rev.
 
-Well, the below doesn't allow users to make diffs better for
-*individual* files of interest, but if you agree with me that we
-should just make diffs better for all users automatically, it's a
-two-line change in git.git that I'd love to eventually convince the
-project to take (though obviously doing that would also require some
-documentation changes and some good messaging in release notes and
-whatnot).  I've used it for a good long while, and had a few dozen
-users using this patch too, all without complaint:
+Unfortunately, the taggerdate heuristic is causing bugs.  I was pointed
+to a case in a private repository where name-rev reports a name of the
+form
+    v2022.10.02~86
+when users expected to see one of the form
+    v2022.10.01~2
+(I've modified the names and numbers a bit from the real testcase.)  As
+you can probably guess, v2022.10.01 was created after v2022.10.02 (by a
+few hours), even though it pointed to an older commit.  While the
+condition is unusual even in the repository in question, it is not the
+only problematic set of tags in that repository.  The taggerdate logic
+is causing problems.
 
-diff --git a/diff.c b/diff.c
-index 329eebf16a..77a46d5b7d 100644
---- a/diff.c
-+++ b/diff.c
-@@ -55,7 +55,7 @@ static int diff_relative;
- static int diff_stat_graph_width;
- static int diff_dirstat_permille_default = 30;
- static struct diff_options default_diff_options;
--static long diff_algorithm;
-+static long diff_algorithm = XDF_HISTOGRAM_DIFF;
- static unsigned ws_error_highlight_default = WSEH_NEW;
+Further, it turns out that this taggerdate heuristic isn't even helping
+anymore.  Due to the fix to naming logic in 3656f84278 ("name-rev:
+prefer shorter names over following merges", 2021-12-04), we get
+improved names without the taggerdate heuristic.  For the original
+commit of interest in linux.git, a modern git without the taggerdate
+heuristic still provides the same optimal answer of interest, namely:
+    v3.13-rc1~65^2^2~42
 
- static char diff_colors[][COLOR_MAXLEN] = {
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index b298f220e0..2f663eab72 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -1549,7 +1549,7 @@ test_expect_success 'short lines of opposite
-sign do not get marked as moved' '
-        this line should be marked as oldMoved newMoved
-        unchanged 4
-        EOF
--       test_expect_code 1 git diff --no-index --color --color-moved=zebra \
-+       test_expect_code 1 git diff --diff-algorithm=myers --no-index
---color --color-moved=zebra \
-                old.txt new.txt >output && cat output &&
-        grep -v index output | test_decode_color >actual &&
-        cat >expect <<-\EOF &&
+So, the taggerdate is no longer providing benefit, and it is causing
+problems.  Simply get rid of it.
+
+However, note that "taggerdate" as a variable is used to store things
+besides a taggerdate these days.  Ever since commit ef1e74065c
+("name-rev: favor describing with tags and use committer date to
+tiebreak", 2017-03-29), this has been used to store committer dates and
+there it is used as a fallback tiebreaker (as opposed to a primary
+criteria overriding effective distance calculations).  We do not want to
+remove that fallback tiebreaker, so not all instances of "taggerdate"
+are removed in this change.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    name-rev: fix names by dropping taggerdate workaround
+    
+    Changes since v2: Fixed nearby comments based on code changes
+    
+    Changes since v1: Slight tweaks to the commit message
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1468%2Fnewren%2Ffix-name-rev-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1468/newren/fix-name-rev-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1468
+
+Range-diff vs v2:
+
+ 1:  206726fc954 ! 1:  ff57b1583b1 name-rev: fix names by dropping taggerdate workaround
+     @@ Commit message
+      
+       ## builtin/name-rev.c ##
+      @@ builtin/name-rev.c: static int is_better_name(struct rev_name *name,
+     - 	 * based on the older tag, even if it is farther away.
+     - 	 */
+     + 	int name_distance = effective_distance(name->distance, name->generation);
+     + 	int new_distance = effective_distance(distance, generation);
+     + 
+     +-	/*
+     +-	 * When comparing names based on tags, prefer names
+     +-	 * based on the older tag, even if it is farther away.
+     +-	 */
+     ++	/* If both are tags, we prefer the nearer one. */
+       	if (from_tag && name->from_tag)
+      -		return (name->taggerdate > taggerdate ||
+      -			(name->taggerdate == taggerdate &&
+      -			 name_distance > new_distance));
+      +		return name_distance > new_distance;
+       
+     - 	/*
+     - 	 * We know that at least one of them is a non-tag at this point.
+     +-	/*
+     +-	 * We know that at least one of them is a non-tag at this point.
+     +-	 * favor a tag over a non-tag.
+     +-	 */
+     ++	/* Favor a tag over a non-tag. */
+     + 	if (name->from_tag != from_tag)
+     + 		return from_tag;
+     + 
+      
+       ## t/t6120-describe.sh ##
+      @@ t/t6120-describe.sh: test_expect_success 'setup: describe commits with disjoint bases 2' '
 
 
-I used histogram above rather than patience, since (a) it's what git's
-merge backend uses, (b) it produces roughly similar results to
-patience from a user perspective, (c) past testing has shown it to be
-somewhat faster than patience, and (d) we've potentially got some
-leads in how to speed up our histogram implementation from the README
-over at https://github.com/pascalkuthe/imara-diff.  But, if you really
-wanted to use patience as the default, it'd also be an easy tweak.
+ builtin/name-rev.c  | 14 +++-----------
+ t/t6120-describe.sh |  6 ++++++
+ 2 files changed, 9 insertions(+), 11 deletions(-)
 
-Anyway, just some food for thought.
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 15535e914a6..0ebf06fad5a 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -108,19 +108,11 @@ static int is_better_name(struct rev_name *name,
+ 	int name_distance = effective_distance(name->distance, name->generation);
+ 	int new_distance = effective_distance(distance, generation);
+ 
+-	/*
+-	 * When comparing names based on tags, prefer names
+-	 * based on the older tag, even if it is farther away.
+-	 */
++	/* If both are tags, we prefer the nearer one. */
+ 	if (from_tag && name->from_tag)
+-		return (name->taggerdate > taggerdate ||
+-			(name->taggerdate == taggerdate &&
+-			 name_distance > new_distance));
++		return name_distance > new_distance;
+ 
+-	/*
+-	 * We know that at least one of them is a non-tag at this point.
+-	 * favor a tag over a non-tag.
+-	 */
++	/* Favor a tag over a non-tag. */
+ 	if (name->from_tag != from_tag)
+ 		return from_tag;
+ 
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 9a35e783a75..c9afcef2018 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -657,4 +657,10 @@ test_expect_success 'setup: describe commits with disjoint bases 2' '
+ 
+ check_describe -C disjoint2 "B-3-gHASH" HEAD
+ 
++test_expect_success 'setup misleading taggerdates' '
++	GIT_COMMITTER_DATE="2006-12-12 12:31" git tag -a -m "another tag" newer-tag-older-commit unique-file~1
++'
++
++check_describe newer-tag-older-commit~1 --contains unique-file~2
++
+ test_done
+
+base-commit: 221222b278e713054e65cbbbcb2b1ac85483ea89
+-- 
+gitgitgadget
