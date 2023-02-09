@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2591C05027
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 14:35:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41A73C61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 14:35:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230523AbjBIOfQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 09:35:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57720 "EHLO
+        id S230457AbjBIOfS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 09:35:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231138AbjBIOfO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 09:35:14 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 559EB366AD
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 06:35:12 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id r2so1963083wrv.7
-        for <git@vger.kernel.org>; Thu, 09 Feb 2023 06:35:12 -0800 (PST)
+        with ESMTP id S230401AbjBIOfP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 09:35:15 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99F9F1F5C9
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 06:35:13 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id h16so1943226wrz.12
+        for <git@vger.kernel.org>; Thu, 09 Feb 2023 06:35:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oyM6qpM0Bnn2LUpOXrqzACk8oZTK+FyytgxrawmbsAk=;
-        b=WYOXR/BHoHl4tlDx4zBmaz5895kHctS3/9hDcgU0S6S4IxiYCGdsvHY7LBsKPVtbST
-         3blLig8tGzqGyLmrj8LP6OShqNbfp2obgSbKjD9PHFk2SLofKpMC1Yz0Z4S+y0HhDlaT
-         lmrZX2yhlV3e1bDZ2AOvw/G85tDSYjGkZqmBywhD/wBy6k+iiWLwXNI0PwjrBsnknM3H
-         FrkeIDiZHI1eXGONUVvH6hIIqiUrwGgqPkkUXE0WFNlRoWyaNAKkayd1kdW8v9swLVf2
-         QMk6UrpN46/Z35C9YIj84y4jV57FfVWHZxxe6YJYaB10L+YCOBSQwvsVFzHzJkuSz/kc
-         Od6w==
+        bh=LvPUo3Q3otPmAondEiTJrOMXcBD72bDr0YvXmo9Bu9k=;
+        b=nkcBkpAnU7OEeYH+omBKqWQmi01Cp7VZq7AVPWanajEC/zX1pNjwdHvTiF2ZI7vfTp
+         qeDi1sabb1cTkJSnpPovBotlqi6gdksMEzeWUMdM+7x9KMRx5ypZAMUaOxCyUrjlNhkR
+         7442jbBdfRmrGNmFagNCU6rJO9e5GqgamBk9uostfFIDx2W+kSaKdtH+TB7in7twx5UA
+         PZahP/NPtlLx6uLTIpK4RjI1pt1IpiiSMXPxnzXuGZnJFnNMQXsfn7zUzAzTDgvwbM7z
+         R9qQEqC59iPidgCJDN2xpzPT7445TZx9MrQZ7CrcZwcjvNFMRM7vFFIF8zbDLq30O1bx
+         h1oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oyM6qpM0Bnn2LUpOXrqzACk8oZTK+FyytgxrawmbsAk=;
-        b=pqlefwTKPHFqr2R3phaKCWJ8rQ0m5+hjs4E5mGmkoZ4L2xoLrwO3QYa/hhqWuzxEDk
-         W9mbcc3wlRDpq3zWSVobFfAUc2rPms60wZkuLKyjCoCZxXDpVClBa0mCTBHYK5tIRDCm
-         qcwisAGb0wUX45wHHBYC7nwYB5WeOkzdYx4dkAZQ1Mja5nynGFLpyhMt3+n+4u8ZEi/N
-         ZFGJnuOb9XqNk2+JzkeK6PmY7CZXpcPEO1Z81CZIkyIip04eJlM0/vv+BrWXAUTyNLHD
-         PZl7XztC3UwOIAo6Q/cFaJANly5qjX+iYOIbRMBoYdJ0q7FZR8uyYsJBG64q5oKXn/or
-         tvzw==
-X-Gm-Message-State: AO0yUKUxgoSljPIoSDphch3m4r65pIaXgIWutydRe4YKU9+huM2THswr
-        Q74ZnB5/ngJP/6qO4/ynU76RIPvPfLLpTLIu
-X-Google-Smtp-Source: AK7set8e0tcIto8zzWc4mCuim5Kqj61hHjmvAOkEySkjkjGme6a86GKqSf/brfeDNyvnpQbM7ibuUQ==
-X-Received: by 2002:adf:dc92:0:b0:2c4:3c6e:be32 with SMTP id r18-20020adfdc92000000b002c43c6ebe32mr2240018wrj.27.1675953310670;
-        Thu, 09 Feb 2023 06:35:10 -0800 (PST)
+        bh=LvPUo3Q3otPmAondEiTJrOMXcBD72bDr0YvXmo9Bu9k=;
+        b=tyo2i7pNOZIKlWaYU+ltAda/Me/SFTmO9yMS6NxQozRhiIW+j5LODeaiZErErGQiqK
+         ZNIkuPLnxoZALlX8JzQyVvko3uNDhP18y2ep6JI2P/4SLbNiyN8CuAclrZMOFUiBTn/v
+         p+Lt1f9Mket67k2uJPvRqlmJzY3xVT2/Iz3+yLulQclgasvjBgFdhjATFAjYVoE6OKxS
+         sh+CrP6Y44FMc7EWFxYhUw4xqtllWyk12braBlgimXvpl7b2NfoeMbhb/7JU0DcSAftm
+         sKz1e3jm4dmiWxJIjEGRN1cQIuC7y0mO1vjm6elHRUK6Eip3j8ekxbLcrpQRhcYseo0/
+         vBbQ==
+X-Gm-Message-State: AO0yUKWVwgiftwiA2kCnRvyifXls0f0XXrKKXG0UH8+RHcpY56gh4u+F
+        8/ku3OAcANI/AaudHFQ94WYGx3wVMpWmxiFv
+X-Google-Smtp-Source: AK7set+Vr6NVuXnrDSCfvB0CshS2LqgPyE2biH5gK7tcUOtQVkmejJ9CBtB0MWaHpVPFV2NSxU6Qig==
+X-Received: by 2002:a5d:4350:0:b0:2bf:d137:9945 with SMTP id u16-20020a5d4350000000b002bfd1379945mr9973147wrr.51.1675953311770;
+        Thu, 09 Feb 2023 06:35:11 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k10-20020a056000004a00b002c3d814cc63sm1391477wrx.76.2023.02.09.06.35.09
+        by smtp.gmail.com with ESMTPSA id k10-20020a056000004a00b002c3d814cc63sm1391477wrx.76.2023.02.09.06.35.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Feb 2023 06:35:09 -0800 (PST)
+        Thu, 09 Feb 2023 06:35:11 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Max Gautier <max.gautier@redhat.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/2] {am,commit-tree,verify-{commit,tag}}: refactor away config wrapper
-Date:   Thu,  9 Feb 2023 15:35:05 +0100
-Message-Id: <patch-1.2-d93c160dcbc-20230209T142225Z-avarab@gmail.com>
+Subject: [PATCH 2/2] gpg-interface.c: lazily get GPG config variables on demand
+Date:   Thu,  9 Feb 2023 15:35:06 +0100
+Message-Id: <patch-2.2-c099d48b4bf-20230209T142225Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1475.gc2542cdc5ef
 In-Reply-To: <cover-0.2-00000000000-20230209T142225Z-avarab@gmail.com>
 References: <+TqEM21o+3TGx6D@coredump.intra.peff.net> <cover-0.2-00000000000-20230209T142225Z-avarab@gmail.com>
@@ -69,117 +69,203 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the preceding commit these config functions became mere wrappers
-for git_default_config(), so let's invoke it directly instead.
+In the preceding commit we started calling gpg_interface_lazy_init()
+when the interface is used, in order to lazily init config.
+
+Parts of the git_gpg_config() we were left with then are going to be
+harder to convert to the configset API. E.g. in the case of
+"configured_signing_key" the set_signing_key() and get_signing_key()
+will modify our global variable, assigning either the config to it, a
+user-supplied key (see "keyid" in builtin/tag.c). To avoid the global
+we'd need to pass that "keyid" all the way down to the callbacks in
+"struct gpg_format".
+
+But in the cases being changed here we can move the reading of the
+config variable to be adjacent to its use.
+
+As with the preceding change this isn't without its downsides, just as
+in the preceding commit this stopped being an immediate error, and
+instead depends on whether we'll reach something that lazily inits the
+GPG config:
+
+	git -c gpg.mintrustlevel=bad show --show-signature
+
+This change likewise defers our initialization of these variables even
+further. But this should be OK, it's the common pattern for most other
+config we read.
+
+At this point we could remove gpg_interface_lazy_init() from
+check_signature(), as it only uses gpg.minTrustLevel, and calls
+functions that don't need the lazy config, but let's keep to
+future-proof changes to the API that may need the initialization at a
+distance.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/am.c            | 7 +------
- builtin/commit-tree.c   | 7 +------
- builtin/verify-commit.c | 7 +------
- builtin/verify-tag.c    | 7 +------
- 4 files changed, 4 insertions(+), 24 deletions(-)
+ gpg-interface.c | 66 +++++++++++++++++++------------------------------
+ 1 file changed, 25 insertions(+), 41 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 40126b59c54..fccf40f8ee7 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2312,11 +2312,6 @@ static int parse_opt_show_current_patch(const struct option *opt, const char *ar
- 	return 0;
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 404d4cccf34..ab24ed3c57b 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -22,8 +22,6 @@ static void gpg_interface_lazy_init(void)
  }
  
--static int git_am_config(const char *k, const char *v, void *cb UNUSED)
--{
--	return git_default_config(k, v, NULL);
--}
--
- int cmd_am(int argc, const char **argv, const char *prefix)
- {
- 	struct am_state state;
-@@ -2440,7 +2435,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(usage, options);
+ static char *configured_signing_key;
+-static const char *ssh_default_key_command, *ssh_allowed_signers, *ssh_revocation_file;
+-static enum signature_trust_level configured_min_trust_level = TRUST_UNDEFINED;
  
--	git_config(git_am_config, NULL);
-+	git_config(git_default_config, NULL);
+ struct gpg_format {
+ 	const char *name;
+@@ -453,6 +451,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 	struct strbuf ssh_keygen_out = STRBUF_INIT;
+ 	struct strbuf ssh_keygen_err = STRBUF_INIT;
+ 	struct strbuf verify_time = STRBUF_INIT;
++	char *ssh_allowed_signers;
+ 	const struct date_mode verify_date_mode = {
+ 		.type = DATE_STRFTIME,
+ 		.strftime_fmt = "%Y%m%d%H%M%S",
+@@ -460,7 +459,8 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 		.local = 1,
+ 	};
  
- 	am_state_init(&state);
+-	if (!ssh_allowed_signers) {
++	if (git_config_get_string("gpg.ssh.allowedsignersfile",
++				  &ssh_allowed_signers)) {
+ 		error(_("gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification"));
+ 		return -1;
+ 	}
+@@ -520,6 +520,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 		     *line;
+ 		     line = next) {
+ 			const char *end_of_text;
++			char *ssh_revocation_file;
  
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index f6a099d601c..c0bbe9373d0 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -37,11 +37,6 @@ static void new_parent(struct commit *parent, struct commit_list **parents_p)
- 	commit_list_insert(parent, parents_p);
+ 			next = end_of_text = strchrnul(line, '\n');
+ 
+@@ -556,7 +557,8 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 				     verify_time.buf,
+ 				     NULL);
+ 
+-			if (ssh_revocation_file) {
++			if (!git_config_get_pathname("gpg.ssh.revocationfile",
++						     (const char **)&ssh_revocation_file)) {
+ 				if (file_exists(ssh_revocation_file)) {
+ 					strvec_pushl(&ssh_keygen.args, "-r",
+ 						     ssh_revocation_file, NULL);
+@@ -564,6 +566,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 					warning(_("ssh signing revocation file configured but not found: %s"),
+ 						ssh_revocation_file);
+ 				}
++				free(ssh_revocation_file);
+ 			}
+ 
+ 			sigchain_push(SIGPIPE, SIG_IGN);
+@@ -599,6 +602,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
+ 	strbuf_release(&ssh_keygen_out);
+ 	strbuf_release(&ssh_keygen_err);
+ 	strbuf_release(&verify_time);
++	free(ssh_allowed_signers);
+ 
+ 	return ret;
  }
- 
--static int commit_tree_config(const char *var, const char *value, void *cb)
--{
--	return git_default_config(var, value, cb);
--}
--
- static int parse_parent_arg_callback(const struct option *opt,
- 		const char *arg, int unset)
+@@ -643,6 +647,8 @@ int check_signature(struct signature_check *sigc,
  {
-@@ -118,7 +113,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
+ 	struct gpg_format *fmt;
+ 	int status;
++	static enum signature_trust_level configured_min_trust_level = TRUST_UNDEFINED;
++	const char *value;
  
--	git_config(commit_tree_config, NULL);
-+	git_config(git_default_config, NULL);
+ 	gpg_interface_lazy_init();
  
- 	if (argc < 2 || !strcmp(argv[1], "-h"))
- 		usage_with_options(commit_tree_usage, options);
-diff --git a/builtin/verify-commit.c b/builtin/verify-commit.c
-index 3c5d0b024c9..7aedf10e856 100644
---- a/builtin/verify-commit.c
-+++ b/builtin/verify-commit.c
-@@ -52,11 +52,6 @@ static int verify_commit(const char *name, unsigned flags)
- 	return run_gpg_verify((struct commit *)obj, flags);
- }
+@@ -661,6 +667,19 @@ int check_signature(struct signature_check *sigc,
+ 	if (status && !sigc->output)
+ 		return !!status;
  
--static int git_verify_commit_config(const char *var, const char *value, void *cb)
--{
--	return git_default_config(var, value, cb);
--}
--
- int cmd_verify_commit(int argc, const char **argv, const char *prefix)
++	if (!git_config_get_string_tmp("gpg.mintrustlevel", &value)) {
++		char *trust;
++		int ret;
++
++		trust = xstrdup_toupper(value);
++		ret = parse_gpg_trust_level(trust, &configured_min_trust_level);
++		free(trust);
++
++		if (ret)
++			return error(_("invalid value for '%s': '%s'"),
++				     "gpg.mintrustlevel", value);
++	}
++
+ 	status |= sigc->result != 'G';
+ 	status |= sigc->trust_level < configured_min_trust_level;
+ 
+@@ -719,8 +738,6 @@ static int git_gpg_config(const char *var, const char *value, void *cb UNUSED)
  {
- 	int i = 1, verbose = 0, had_error = 0;
-@@ -67,7 +62,7 @@ int cmd_verify_commit(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
+ 	struct gpg_format *fmt = NULL;
+ 	char *fmtname = NULL;
+-	char *trust;
+-	int ret;
  
--	git_config(git_verify_commit_config, NULL);
-+	git_config(git_default_config, NULL);
+ 	if (!strcmp(var, "user.signingkey")) {
+ 		if (!value)
+@@ -740,38 +757,6 @@ static int git_gpg_config(const char *var, const char *value, void *cb UNUSED)
+ 		return 0;
+ 	}
  
- 	argc = parse_options(argc, argv, prefix, verify_commit_options,
- 			     verify_commit_usage, PARSE_OPT_KEEP_ARGV0);
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index ecffb069bf1..5c00b0b0f77 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -19,11 +19,6 @@ static const char * const verify_tag_usage[] = {
- 		NULL
- };
- 
--static int git_verify_tag_config(const char *var, const char *value, void *cb)
--{
--	return git_default_config(var, value, cb);
--}
+-	if (!strcmp(var, "gpg.mintrustlevel")) {
+-		if (!value)
+-			return config_error_nonbool(var);
 -
- int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- {
- 	int i = 1, verbose = 0, had_error = 0;
-@@ -36,7 +31,7 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
+-		trust = xstrdup_toupper(value);
+-		ret = parse_gpg_trust_level(trust, &configured_min_trust_level);
+-		free(trust);
+-
+-		if (ret)
+-			return error(_("invalid value for '%s': '%s'"),
+-				     var, value);
+-		return 0;
+-	}
+-
+-	if (!strcmp(var, "gpg.ssh.defaultkeycommand")) {
+-		if (!value)
+-			return config_error_nonbool(var);
+-		return git_config_string(&ssh_default_key_command, var, value);
+-	}
+-
+-	if (!strcmp(var, "gpg.ssh.allowedsignersfile")) {
+-		if (!value)
+-			return config_error_nonbool(var);
+-		return git_config_pathname(&ssh_allowed_signers, var, value);
+-	}
+-
+-	if (!strcmp(var, "gpg.ssh.revocationfile")) {
+-		if (!value)
+-			return config_error_nonbool(var);
+-		return git_config_pathname(&ssh_revocation_file, var, value);
+-	}
+-
+ 	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
+ 		fmtname = "openpgp";
  
--	git_config(git_verify_tag_config, NULL);
-+	git_config(git_default_config, NULL);
+@@ -851,16 +836,15 @@ static const char *get_default_ssh_signing_key(void)
+ 	int ret = -1;
+ 	struct strbuf key_stdout = STRBUF_INIT, key_stderr = STRBUF_INIT;
+ 	struct strbuf **keys;
+-	char *key_command = NULL;
++	char *key_command;
+ 	const char **argv;
+ 	int n;
+ 	char *default_key = NULL;
+ 	const char *literal_key = NULL;
  
- 	argc = parse_options(argc, argv, prefix, verify_tag_options,
- 			     verify_tag_usage, PARSE_OPT_KEEP_ARGV0);
+-	if (!ssh_default_key_command)
++	if (git_config_get_string("gpg.ssh.defaultkeycommand", &key_command))
+ 		die(_("either user.signingkey or gpg.ssh.defaultKeyCommand needs to be configured"));
+ 
+-	key_command = xstrdup(ssh_default_key_command);
+ 	n = split_cmdline(key_command, &argv);
+ 
+ 	if (n < 0)
 -- 
 2.39.1.1475.gc2542cdc5ef
 
