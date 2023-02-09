@@ -2,97 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D4B1C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 20:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AD1EC61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 21:27:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229689AbjBIUxV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 15:53:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46790 "EHLO
+        id S230292AbjBIV1H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 16:27:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjBIUxT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 15:53:19 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18FC76EAD
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 12:53:19 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id n28-20020a05600c3b9c00b003ddca7a2bcbso2561752wms.3
-        for <git@vger.kernel.org>; Thu, 09 Feb 2023 12:53:19 -0800 (PST)
+        with ESMTP id S230212AbjBIV1G (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 16:27:06 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B10A56EE5
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 13:27:05 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id j1so3368384pjd.0
+        for <git@vger.kernel.org>; Thu, 09 Feb 2023 13:27:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tR95oFsTE4mbuGme/qkqUw2cvoV0pD0IhGRs3DPOLkQ=;
-        b=n9qoYaW9JYIOnsriv8grqz/sm7/FXKUz5WITUg6qYsRox1BLVaCO61XQw767DKnf0b
-         bFdnZZ2RTUkC+PtjdFXZr+JhVgcaiw0RHNYgFnMEUwduvQpqtrrdUy/YK3nLQUNfHPqf
-         WM76zwTUgOOa6CcFfgauF/2beiz9VldUTikbTvHAB7TcFCybJHr7O9paqWG3ykQvx1wN
-         VDtcOD2HAzQ08qCHOUoMDarXBkybHpApLSP93wzIRF7OH2jn1TNGc5bqkPpUT1KAA/nE
-         XnOss2tQiy1bAJbLTr+pwrdvMkdo+WwiFOQxL701DJ004rlgGHj5wn4mDisbQYuBT3wY
-         Cmuw==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VSHKPUkUjIholy+qli0imO0kE+4asIOPryXuhtGzA3k=;
+        b=VrHCfgjdi3exCLU+TZqHL2nDwmp4fQ0ubzU6HNpmz2WnO/Xpi+mpSoVBAQbccx37x0
+         QKn6kh6xpVZbyo12yyYE4Cv6DdZmrNb0l3owoMaFN1kW/mIsModBFKCS5nM7o5LpGkpf
+         tRuLjRez1PHzOkwQxx23CASFCbUk+OuwORSWfpc9LdgD5cHZA7s6o31JuUu71tnUIiPE
+         jNqBLsD5T6H52aRcC+4HnyjVjIFHzIXQrk0kEWAP4pxvp+T3WN3C9vYTRJzs+jyUnGIA
+         PMqK8vzCZ+TD+9hunJAOThIDgzWuGGKY1Wy+XENC5RIxZo4KBNRFlmJJhkJrVnfvmjlm
+         jREw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tR95oFsTE4mbuGme/qkqUw2cvoV0pD0IhGRs3DPOLkQ=;
-        b=Id1h4CUVvmbf9g6tJZq7I+rhTKkAWa4GSrKPZbbaaXsspQZe8sfM6oOC0Qfw0WzOjF
-         n4dIve6izPiLxosGuVCtTJDGReabHqBTyovlGlHPM93OuBmHBBnemvWRAlhMO7+1jhoJ
-         /bJ920UJ9cpsWignMeUiSQK6q2DMW385V+1J41SNvMGkRGkyAJSTIwE1QjBDJhrH99oD
-         zKKe2WyHu1RmQzTZ0d6qdRzB35mmoJtlRgk5KP/xJtx6O7qTb5Sg6xDL+4Yaq+6jpwBa
-         NldelAduCLQLJCcN5U7NR0Hvm03mWFrA5xXblvYkY11m8Qs3C5qCN8sgj8u8urHGI7s8
-         q2xg==
-X-Gm-Message-State: AO0yUKVU3+WWbl726+xL4kB8wUqFXGoSIbc8sB8bjlsfx7pLd2VIOQda
-        tJjWMGjt/VsT3wcTS6zTZGw=
-X-Google-Smtp-Source: AK7set9eQ1gsUdCi4NsEstvfzfjduiRX9aOQC9VBdRZZENgeij3BiASiPlP/83jiY3XUnmeETHcOFA==
-X-Received: by 2002:a05:600c:1c9b:b0:3df:9858:c037 with SMTP id k27-20020a05600c1c9b00b003df9858c037mr7580507wms.12.1675975997725;
-        Thu, 09 Feb 2023 12:53:17 -0800 (PST)
-Received: from [192.168.1.212] ([90.248.183.175])
-        by smtp.gmail.com with ESMTPSA id l16-20020a05600c2cd000b003daffc2ecdesm6363275wmc.13.2023.02.09.12.53.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Feb 2023 12:53:17 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <4a09db46-5c45-c953-d3ff-383499ab0e21@dunelm.org.uk>
-Date:   Thu, 9 Feb 2023 20:53:16 +0000
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VSHKPUkUjIholy+qli0imO0kE+4asIOPryXuhtGzA3k=;
+        b=SfJBq8Kbg3nh5Z2XiRtNK7Yw2jWDQ/k38GD2mwlEb6PX9ahryJ/f4pKYSOhTJpq2OG
+         11PvMHWXM6ToAmQugTuyC+ogc2PJk6qLkVPbyEk5euVVmKCB9QM8NU2M6yJO2RJWFW5z
+         GTrQfX8jt6ttb+EKLM0x3b7lKoOqURN3IPxwC5Q7mGcUmeXrABzoSPSusdOVErUVldNk
+         oNEbET3PUoHot8CoamwsIxuhQQ8U6QtBmdjFC9AUpeUnTTwviAZzptOJLOJegCXEsFA+
+         A77EmLuW7l2BKKRRcDdVbFRGu1wBS2i9jo5XuyV4YqP4DBgpLsrGj608/e8qDf1kYMDA
+         e+DQ==
+X-Gm-Message-State: AO0yUKWsXtrxI5/1yg9ByjqI2KYQOx5QMofRs8fgKEScYs5kKbORxIMt
+        dl2e7qOmrgdIkGzCycB77A4=
+X-Google-Smtp-Source: AK7set8uXcE8E2K/QGUT8ZSwY417M1XSwyBRACMIqSLndoaNIyuVeADrLlxfZVkpjkXYjlXU0c7oRg==
+X-Received: by 2002:a17:90a:195e:b0:230:7079:aeb7 with SMTP id 30-20020a17090a195e00b002307079aeb7mr13946945pjh.46.1675978024444;
+        Thu, 09 Feb 2023 13:27:04 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id in23-20020a17090b439700b00229f7376247sm1746051pjb.57.2023.02.09.13.27.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Feb 2023 13:27:03 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Max Gautier <max.gautier@redhat.com>
+Subject: Re: [PATCH 0/2] gpg-interface: cleanup + convert low hanging fruit
+ to configset API
+References: <+TqEM21o+3TGx6D@coredump.intra.peff.net>
+        <cover-0.2-00000000000-20230209T142225Z-avarab@gmail.com>
+Date:   Thu, 09 Feb 2023 13:27:03 -0800
+In-Reply-To: <cover-0.2-00000000000-20230209T142225Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 9 Feb
+ 2023 15:35:04 +0100")
+Message-ID: <xmqqlel6mswo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v7 5/7] diff-lib: refactor out diff_change logic
-Content-Language: en-US
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, chooglen@google.com,
-        newren@gmail.com, jonathantanmy@google.com
-References: <20230117193041.708692-1-calvinwan@google.com>
- <20230207181706.363453-6-calvinwan@google.com>
- <4ae106ed-bfa8-2824-c0c7-6cde32dbe369@dunelm.org.uk>
- <CAFySSZC31aT4zu=-y1vBBd_Z=KWWYn3-7yziLfVbeK9Foc9c3w@mail.gmail.com>
-In-Reply-To: <CAFySSZC31aT4zu=-y1vBBd_Z=KWWYn3-7yziLfVbeK9Foc9c3w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Calvin
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-On 08/02/2023 23:12, Calvin Wan wrote:
->> I worry that having three integer parameters next to each other makes it
->> very easy to mix them up with out getting any errors from the compiler
->> because the types are all compatible. Could the last two be combined
->> into a flags argument? A similar issues occurs in
->> match_stat_with_submodule() in patch 7
-> 
-> I'm not sure how much more I want to engineer a static helper function
-> that is only being called in one other place. I also don't understand what
-> you mean by combining the last two into paramters a flags argument.
+> On Thu, Feb 09 2023, Jeff King wrote:
+>
+>> If the gpg code used git_config_get_string(), etc, then they could just
+>> access each key on demand (efficiently, from an internal hash table),
+>> which reduces the risk of "oops, we forgot to initialize the config
+>> here". It does probably mean restructuring the code a little, though
+>> (since you'd often have an accessor function to get "foo.bar" rather
+>> than assuming "foo.bar" was parsed into an enum already, etc). That may
+>> not be worth the effort (and risk of regression) to convert.
+>
+> I'd already played around with that a bit as part of reviewing Junio's
+> change, this goes on top of that.
 
-Are `dirty_submodule` and `changed` booleans? If so then you can have a 
-single bit flags argument made up of
+What's your intention of sending these?  I think we are already in
+agreement that the churn may not be worth the risk, so if these are
+"and here is the churn would look like, not for application", I
+would understand it and appreciate it.  But did you mean that these
+patches are for application?  I am not sure...
 
-#define SUBMODULE_DIRTY 1
-#define SUBMODULE_CHANGED 2
-
-Best Wishes
-
-Phillip
+Thanks.
