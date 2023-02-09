@@ -2,100 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD0BCC61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 12:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2FBCC61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 13:09:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229780AbjBIMt3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 07:49:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55146 "EHLO
+        id S229665AbjBINJC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 08:09:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbjBIMt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 07:49:28 -0500
+        with ESMTP id S229517AbjBINJC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 08:09:02 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99EEF5DC25
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 04:49:27 -0800 (PST)
-Received: (qmail 561 invoked by uid 109); 9 Feb 2023 12:49:27 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BF75EA28
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 05:09:00 -0800 (PST)
+Received: (qmail 605 invoked by uid 109); 9 Feb 2023 13:09:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Feb 2023 12:49:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Feb 2023 13:09:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12707 invoked by uid 111); 9 Feb 2023 12:49:26 -0000
+Received: (qmail 12836 invoked by uid 111); 9 Feb 2023 13:08:59 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Feb 2023 07:49:26 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Feb 2023 08:08:59 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 9 Feb 2023 07:49:26 -0500
+Date:   Thu, 9 Feb 2023 08:08:59 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Max Gautier <max.gautier@redhat.com>
-Subject: Re: [PATCH] gpg-interface: lazily initialize and read the
- configuration
-Message-ID: <Y+Tr1g+HTn45rsTq@coredump.intra.peff.net>
-References: <Y+PGRaiTTaZ/DtlJ@work-laptop-max>
- <Y+PRTYtFDoE73XEM@coredump.intra.peff.net>
- <xmqqmt5orqgv.fsf@gitster.g>
- <xmqqh6vwrpce.fsf@gitster.g>
- <xmqqlel7rj9z.fsf_-_@gitster.g>
+To:     Matthew John Cheetham <mjcheetham@outlook.com>
+Cc:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Glen Choo <chooglen@google.com>,
+        Victoria Dye <vdye@github.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v7 12/12] credential: add WWW-Authenticate header to cred
+ requests
+Message-ID: <Y+Twa22Gw2nzV8sG@coredump.intra.peff.net>
+References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com>
+ <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com>
+ <09164f77d56e8efd1450091cf1b12af2bc6cf2f5.1674252531.git.gitgitgadget@gmail.com>
+ <Y9JjRfhl1H4Julv3@coredump.intra.peff.net>
+ <DB9PR03MB9831A708EA98E198591F6632C0DA9@DB9PR03MB9831.eurprd03.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqlel7rj9z.fsf_-_@gitster.g>
+In-Reply-To: <DB9PR03MB9831A708EA98E198591F6632C0DA9@DB9PR03MB9831.eurprd03.prod.outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 08, 2023 at 12:31:36PM -0800, Junio C Hamano wrote:
+On Mon, Feb 06, 2023 at 11:18:03AM -0800, Matthew John Cheetham wrote:
 
-> > I wonder if gpg-interface functions can and should be taught to
-> > initialize themselves lazily without relying on the usual
-> > git_config(git_gpg_config) sequence.  I.e. the first call to
-> > sign_buffer(), check_signature(), get_signing_key_id(), etc.
-> > would internally make a git_config(git_gpg_config) call, with the
-> > current callers of git_config(git_gpg_config) removed.
+> > could be normalized as:
+> > 
+> >   www-auth-challenge=Basic realm="foo"
+> >   www-auth-challenge=OtherAuth realm="bar"
+> >   www-auth-challenge=YetAnotherScheme some-token
+> > 
+> > which saves each helper from having to do the same work. Likewise, we
+> > can do a _little_ more parsing to get:
+> > 
+> >   www-auth-basic=realm="foo"
+> >   www-auth-otherauth=realm="bar"
+> >   www-auth-yetanotherscheme=some-token
+> > 
+> > I don't think we can go beyond there, though, without understanding the
+> > syntax of individual schemes. Which is a shame, as one of the goals of
+> > the credential format was to let the helpers do as little as possible
+> > (so they can't get it wrong!). But helpers are stuck doing things like
+> > handling backslashed double-quotes, soaking up extra whitespace, etc.
 > 
-> So here is such a change.  I only checked that it passed t/ tests
-> locally (and I do not run some tests like svn and p4).
+> This key format wouldn't make it obviously easier for simple helpers to
+> understand. Now they no longer have well-known keys but a key prefix.
 
-I think the tests tell us two things:
+Yes, though I don't think that's particularly complicated to parse.
+Either way we're just flattening a tuple of (a, b, c) from "a=b c" to
+"a-b=c". The value is in normalizing the syntax, so that helpers don't
+have to deal with both "a=b c d e" and ("a=b c", "a=d e") themselves.
 
-  - you didn't miss a spot where config needed to be initialized lazily
-    here. The risk here is that many tests will be using defaults, not
-    configured values, so coverage is not as good as you might hope.
+Another way to do that normalization would be to have Git convert:
 
-  - there isn't a case where initializing the config all the time is a
-    problem (i.e., the plumbing/porcelain thing discussed earlier). My
-    "yikes" patch from upthread likewise passed, so that gives us a
-    little confidence (though again, it's not clear that the plumbing
-    cases which didn't _expect_ to read config would have test
-    coverage).
+  WWW-Authenticate: Basic realm="foo" OtherAuth realm="bar"
 
-    That said, having manually reviewed what the function is doing, I
-    think it's probably OK (see my other response).
+into:
 
->  builtin/am.c            |  6 ------
->  builtin/commit-tree.c   |  3 ---
->  builtin/commit.c        |  4 ----
->  builtin/log.c           |  2 --
->  builtin/merge.c         |  3 ---
->  builtin/pull.c          |  6 ------
->  builtin/push.c          |  5 -----
->  builtin/receive-pack.c  |  4 ----
->  builtin/send-pack.c     |  2 --
->  builtin/tag.c           |  5 -----
->  builtin/verify-commit.c |  3 ---
->  builtin/verify-tag.c    |  3 ---
->  fmt-merge-msg.c         |  5 -----
->  gpg-interface.c         | 24 +++++++++++++++++++++++-
->  gpg-interface.h         |  1 -
->  sequencer.c             |  4 ----
+ WWW-Authenticate: Basic realm="foo"
+ WWW-Authenticate: OtherAuth realm="bar"
 
-This all looks fairly sensible to me. I think we'd really want to see a
-"rev-list --format" test, too. One, because that's the immediate goal of
-this change. But two, because I think we are only guessing that loading
-the config is sufficient here. We've had bug with other subsystems where
-they expected to be initialized but plumbing callers didn't (e.g., the
-lazy init of notes-refs, etc).
+which then becomes (at the credential level):
 
-I _think_ we're probably good here. Just looking at "git log" (where we
-know --format, etc, works), it doesn't seem to do anything beyond
-initializing the config.
+  www-auth[]=Basic realm="foo"
+  www-auth[]=OtherAuth realm="bar"
+
+And likewise to normalize whitespace, etc, so each individual helper
+doesn't have to (or risk getting confused/exploited). That said...
+
+> My overall goal here is to have Git know less about auth, so it treats
+> all values as totally opaque. The only logic added is around reconstructing
+> folded headers, which is just HTTP and not auth specific.
+
+Yeah, in general I agree with the notion that Git is mostly just passing
+around opaque tokens. We do have to understand some syntax (like
+folding!) at the HTTP level, so I think some syntactic normalization /
+simplification is reasonable.
+
+BUT. I think you are right that embedding it into the schema of the
+helper protocol is probably bad. If the point is that the two forms of
+my Basic / OtherAuth example are semantically equivalent, then we can
+always decide later to convert between one and the other as a favor to
+helpers. Whereas baking it into the schema is a promise for Git to
+always parse and understand the headers.
+
+So let me retract my suggestion, and we can leave "maybe normalize
+headers to save helpers some work" as a possible topic for later (if
+indeed it ever even becomes a problem in practice).
+
+> >   realm=foo
+> >   while read line; do
+> >     case "$line" in
+> >     www-auth-basic=)
+> >         value=${line#*=}
+> > 	# oops, we're just assuming it's realm= here, and we're
+> > 	# not handling quotes at all. I think it could technically be
+> > 	# realm=foo or realm="foo"
+> > 	realm=${value#realm=}
+> > 	;;
+> >     esac
+> >   done
+> >   echo password=$(pass "pats-by-realm/$realm")
+> > 
+> > which could be made a lot easier if we did more parsing (e.g.,
+> > www-auth-basic-realm or something). I dunno. Maybe that is just opening
+> > up a can of worms, as we're stuffing structured data into a linearized
+> > key-value list. The nice thing about your proposal is that Git does not
+> > even have to know anything about these schemes; it's all the problem of
+> > the helper. My biggest fear is just that we'll want to shift that later,
+> > and we'll be stuck with this microformat forever.
+> 
+> I'm not sure there's such a continuous scale between simple and 'complex'
+> helpers that would mean there'd be a simple shell script generating
+> OAuth or DPoP credentials instead of a helper written in a higher-level
+> language where parsing the headers is one of the simpler challenges faced.
+
+For the most part, yeah. I tried to form the above example as something
+that was really just relying on "basic", but taking in more information
+/ context than we currently provide (and that your patch would provide).
+I admit it's a stretch, though. Are there any servers which actually use
+a Basic realm to distinguish between two credential's you'd want to
+provide? I don't think I've seen one.
+
+(Not to mention that people scripting helpers like this is probably
+pretty rare; I do, but you can probably consider me a special case. And
+if things got more complicated I'd just turn to Perl anyway. ;) ).
+
+> I had considered another model whereby we forgo the key=value line model,
+> and hide another format behind the 'final' terminating new-line. However
+> I thought this would be even more distuptive.
+
+Yeah, if we can shoe-horn this into the existing key/value model, that's
+much better. The original intent with the final newline is that you
+could read multiple credentials in a list, though in the end I don't
+recall that we ever used that feature anyway.
 
 -Peff
