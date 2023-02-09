@@ -2,71 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20C77C636D3
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 21:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03F41C61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 22:16:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230060AbjBIVwo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 16:52:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45194 "EHLO
+        id S230088AbjBIWQU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 17:16:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229563AbjBIVwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 16:52:43 -0500
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14DFC6310B
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 13:52:43 -0800 (PST)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-501c3a414acso43780777b3.7
-        for <git@vger.kernel.org>; Thu, 09 Feb 2023 13:52:43 -0800 (PST)
+        with ESMTP id S229954AbjBIWQS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 17:16:18 -0500
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BD1D9747
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 14:16:17 -0800 (PST)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-15f97c478a8so4414114fac.13
+        for <git@vger.kernel.org>; Thu, 09 Feb 2023 14:16:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hqz4AOOTWQVmhs7a4+RgyCOHBlNhOJAW34bR6iqd4vc=;
-        b=sl7HxhK9NZQeqZ0r/CTR/FlsAbckg2wOqe+fWam+AfRJlUYD7n3eRfiRvYjt1ozmbh
-         BKjw8uUBvIik6ZInsa+wHmn3F8Si9nL3lYJ7yCsMBVM9MmNKiVa54Ae9PHg5HquLdBdO
-         9UOUHpBR8uFCKqw/kdCU9T6a/GsrMoMmY725wN80DbnOMXj7DBK5YihIL7/Lm5+ivzoA
-         za8mLqMUAz0ZMAdZTcNewJByV0jj4CKmkwEiaembSK93s12cJUoXOQOB3QJtvfJTIdrh
-         NiLms8hsMJic8nYgg8pvNq7FtUwHcZvjpwWfQkN9pTvtbkfYtvRR6qrNekAW8ibL+/4n
-         3GuA==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=FqiZds0tFVHJ2DG7CrtBKb2z8nU7A5zYaSFRARmqHY4=;
+        b=SJmYUofxVfzfEyOL75NGUIKGnhbXc68Nx518doPKKeTWoZKroVURA+TGZzFUGtj9Lk
+         7AbWsOGibSpQypwe862/YFrV1212+tpUcKgPjp8R9pgQvh/HNXHKW1yJyLX6YmDEYN4H
+         hEvQMvjXFcwb3MH8cABau6pNZIuDNFzoIRYZDIe+tBwKWg61lx0wky3rH3N62InAg5eo
+         MYhBc9msdjDZOIVFfmwvsXvNXxyC0wO5Wve6CTwyjAsp9ryDrxVcE51ws2zJRpZNAp1d
+         YikocBj3yTBNu6yyba54xvfaWti8NUJCb49CpcFvEZ7PSXbGjtH4QHyU9dBZVjhSUp+y
+         HNdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Hqz4AOOTWQVmhs7a4+RgyCOHBlNhOJAW34bR6iqd4vc=;
-        b=L+PWek6C9Woat5c2Ok/FAuW6Nr5kDxaIX0qVSV0V9G1gfcjTKpGsrMbqu8Zs7lMpep
-         59ZsrLLKZOwH8s7fizrKFZGpuicnIhH3H6ieN6FR4p8JER1TvHCa6UTE7BIqcwOPikxn
-         jvDIpCxo4HSYtZtsTw/MNqyt3y7r97nzKDLcvlXFgjOqspiwBQGO0UklUPjzaMuUBuWt
-         Tbf6N5PJS5Uwm6Ou/0h55SrGSutwWMi4hzenfGfceoKEd89K5GQYbDXFGtl9i1PpFFC6
-         8fbjorzcVAocf/Gzql26hhuXOW0myu6xwvmFXsUKBFDYv5ouoAaB5WIKcC9LjFB7AHqZ
-         Mopg==
-X-Gm-Message-State: AO0yUKUeLDPXdfFQe4D3GbawYzce843LbOyOaC9aUew7oL1HL2emF6K7
-        dvg5lpgF3g1pX1AsCBExvjizUtjB4DW+rkBmEn4La/xTXpV26ymj
-X-Google-Smtp-Source: AK7set+xhuLBckMM4f9C2+pAranEy6bJXli9msuB6/6qNwCdfD3W5HgfhZLDlmIl3nYfK6ynBaKu7+NrUAhgu15EZZE=
-X-Received: by 2002:a81:5e43:0:b0:4e3:f87:8c24 with SMTP id
- s64-20020a815e43000000b004e30f878c24mr1521525ywb.248.1675979562100; Thu, 09
- Feb 2023 13:52:42 -0800 (PST)
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FqiZds0tFVHJ2DG7CrtBKb2z8nU7A5zYaSFRARmqHY4=;
+        b=KcV3Q1N+dYSAxOych+L1BziMWQizLDzSbCPCANSg4zp3S0XyPRNt9ZBvNl2l2h0EjS
+         vAVFd9bYoxXk510+kgPI3rHBgo6YsuOq1fh7Vgoh2TA9g/qnY2rTXnMul6eKazuqqEpe
+         WHghLGlK9GRycC8sJoYmxMBrQI6XQsvbR27HedC2F4EtIkkbIxlxmpqHWxw0UVGmmdQW
+         uT/5CmwFdOWZBN+4bJkVofJcLUlxFzDocOFVHjW6b0T1MmD4DwvFWav77X9gFLlaTdfT
+         LcmmYIJ/MC9Jy685BQDhXK9JhJX6EBGnsvlXVrfC2/0uyErmlTVgROxg5VmO0OokQznH
+         qcwg==
+X-Gm-Message-State: AO0yUKV6Xf0gcn89X6SiSSGRtR9MDKNlcLolNpFo3vGUXKK9Ca8RqOzI
+        54xhKtGAYf9cFlD+oiNnH+c37pju5nYdhWksZW9XO8XC1Pk=
+X-Google-Smtp-Source: AK7set+o6RV8/+cKgpxqSSAfxprPRiowUxQ8DZcCJEZK1GsyilUUN3i/5ExKEjrRHNbbkF4tSXdr+atOASGv+BIZGUM=
+X-Received: by 2002:a05:6870:9688:b0:163:4ba0:fc7c with SMTP id
+ o8-20020a056870968800b001634ba0fc7cmr1471681oaq.244.1675980976411; Thu, 09
+ Feb 2023 14:16:16 -0800 (PST)
 MIME-Version: 1.0
-References: <20230207181706.363453-1-calvinwan@google.com> <20230209000212.1892457-1-calvinwan@google.com>
- <xmqqwn4qmxds.fsf@gitster.g>
-In-Reply-To: <xmqqwn4qmxds.fsf@gitster.g>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Thu, 9 Feb 2023 13:52:31 -0800
-Message-ID: <CAFySSZAy=k+hgvg9r2NmroUs=BviZjS_KMW_+yO2nPs1dUsc-A@mail.gmail.com>
-Subject: Re: [PATCH v8 0/6] submodule: parallelize diff
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, chooglen@google.com,
-        newren@gmail.com, jonathantanmy@google.com,
-        phillip.wood123@gmail.com
+From:   Michael Rienstra <mrienstra@gmail.com>
+Date:   Thu, 9 Feb 2023 14:15:59 -0800
+Message-ID: <CABBAUF+acoMScQfHFQGooPx9eng2FBeb-Z2619DsnCt5QmhQPQ@mail.gmail.com>
+Subject: Markdown release notes
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> By the way, how are you driving send-email when sending a
-> multi-patch series with a cover letter?  It seems that all
-> messages in this series including its cover are marked as if they
-> are replies to the cover letter of the previous round, which is a
-> bit harder to follow than making only [v8 0/6] as a reply to [v7 0/X]
-> and all [v8 n/6] (n > 0) to be replies to [v8 0/6].
+Release notes are currently plain text files -- and that option should
+surely remain for backwards compatibility -- but it would be nice to
+have them in a format that facilitates cross-linking.
 
-I'll do that from now on -- didn't realize that make it harder to follow
+For example, https://git-scm.com/ currently shows:
+
+> Latest source Release
+> 2.39.1
+> Release Notes (2022-12-13)
+
+
+Which links to:
+
+> Git v2.39.1 Release Notes
+> =========================
+>
+>
+> This release merges the security fix that appears in v2.30.7; see
+>
+> the release notes for that version for details.
+
+-- https://raw.github.com/git/git/master/Documentation/RelNotes/2.39.1.txt
+
+Navigating to the release notes for v2.30.7 is not convenient. Some
+users will simply modify the URL, which will do the trick. Others may
+find their way to
+https://github.com/git/git/tree/master/Documentation/RelNotes & search
+for "2.39.1", which also works, but isn't particularly friendly.
+
+Markdown alternative POC for the v2.39.1 release notes:
+https://github.com/mrienstra/git/blob/markdown-release-notes-poc/Documentation/RelNotes/2.39.1.md
+
+Now "the security fix that appears in v2.30.7" can be easily followed to:
+https://github.com/mrienstra/git/blob/markdown-release-notes-poc/Documentation/RelNotes/2.30.7.md
+
+Along the same lines, CVE IDs could be linked out in Markdown release
+notes, I did that in a few cases as part of this POC. For example, in
+the v2.30.7 release notes (last link above) there is now a link to:
+https://nvd.nist.gov/vuln/detail/CVE-2022-41903
+
+(nvd.nist.gov seemed to be preferred over cve.org, based on a search
+of http://public-inbox.org/git)
+
+I used regex search & replace to add these links, sundry details are
+in commit messages here:
+https://github.com/git/git/compare/master...mrienstra:git:markdown-release-notes-poc
+
+This seems like a simple change with no obvious side effects. I
+suppose the Markdown files could be placed in a subfolder to prevent a
+jump from 464 files to 928 in one directory.
+
+Thoughts?
