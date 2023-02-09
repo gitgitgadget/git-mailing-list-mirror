@@ -2,67 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77B06C636D3
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 02:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4AE0C636D3
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 02:30:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231774AbjBICTo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 21:19:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51578 "EHLO
+        id S231961AbjBICax (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 21:30:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231159AbjBICTm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 21:19:42 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 341D31C325
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 18:19:41 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id dr8so2294497ejc.12
-        for <git@vger.kernel.org>; Wed, 08 Feb 2023 18:19:41 -0800 (PST)
+        with ESMTP id S231936AbjBICaT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 21:30:19 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 130792942E
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 18:30:18 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id a10so856291edu.9
+        for <git@vger.kernel.org>; Wed, 08 Feb 2023 18:30:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=n0ajWVHB/2QfC3Jgdtt82zuLCXEVJ9nSmq/5D9kwjl4=;
-        b=p6cIWXi4eIhHqVLcKLzDI+exQ8p2c+52WNudWk4bF37MBLImFAbAoduFvhC2uC/xgw
-         SRcY9WQRCMclkDY0kgxY6iz+VFAe2pRYOThohrj+BEqZ5hs+nk2LrGik9LE1J5Iy12dS
-         mS3df5H6rfBU5RosUHqrOD4+MNq+ldc3t672emUeB98YtUQCf6hY/MqoBFOHDr5XA95M
-         pSKIDZwgPwCY+C5H74QTgJRE32Rv0ByIo/1GdjSsOySoKK9jRRb1VzlJL5ToqC8or9yV
-         kT4kAXmMqwI/fphc/3gtAOCr5YHuXxWZ28NWVNHWGJ5jtJOy/Zh92xAkp+tTX4888muH
-         J0KQ==
+        bh=P9AfsO3qIlzg1SAYQbMj5xqZgnLWkTP5npb5f7wC1zg=;
+        b=p7kZN4xm9Ga4lgTnanGHtXeyHndkRq2jZSTm0QAzwmOhgbabEYBhw08mI/od0DaoFl
+         OYRBPMfDKUcf5dmLeAIimmHHXOt5FFdipBANC5lb80lVLCkPzsKHIeLsH4A2/fpbZLDb
+         9naDU0NAnSHPhxdS2Lmz1g1VtpK6r7ipBxYBFplR/rXrkaR0DScAJ6I54VSnuqo1pbyU
+         tQPRViaFCzPFeCFvwlwaRkTwzS4Xtph/WayRub8D2/gbmcy8woOAyCNNxFQo3LvOegxx
+         dxXYUwPvleOKFNO5TvbLi1S3OdWcUiuIU6DmgrEGBjvvbi287wxyqJVN34CggdZIBb7T
+         ILYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=n0ajWVHB/2QfC3Jgdtt82zuLCXEVJ9nSmq/5D9kwjl4=;
-        b=huY9xAXrVhdQujXRuwoqg7f/Ni0SMHQaS7KZIKV2hRUNQzk2qrxL1mLGAe3OOm0xyt
-         4MiXQOdAuE9xNOS9OkPTkxNivf1RXaJh0HGE5GXcQj/eNkCHqdeGymtZBphck+mFDfog
-         AgTeftBqdvKs96cnlgxAMjP7x1ClHoRHA1EMNKa8KEMgxbTsPsOmBbd7dNsE/CSIkYtO
-         XwFNsIlJicjFFyeJoJi6kRlsQ1gXDiTlLsh/mfrNDeFLclKZsApPgdudCyzl2QxCAbWk
-         acXg0s7Fbj1pasWeb0a2/VtBmXS3pSWRl1fvUD9y7EVSDxY0DkOUwPUH1kbxEnHXaMr4
-         iO/Q==
-X-Gm-Message-State: AO0yUKUbFwhla6nRdjq/gCgKAYYjiaXz+TQ4eV4OeIR0esyrA4IPD3cM
-        PVxEIvYPfiigXNB3HRV4pNn80TrZqAthy6cI
-X-Google-Smtp-Source: AK7set8VNGDWCobWmGYTQvqBWoAqHqX+g4jTRztP2+hCd+8h7TzLGQReeoZQ3mq5ltLmAE1HAlQiOw==
-X-Received: by 2002:a17:906:a287:b0:877:573d:e919 with SMTP id i7-20020a170906a28700b00877573de919mr9999035ejz.20.1675909179736;
-        Wed, 08 Feb 2023 18:19:39 -0800 (PST)
+        bh=P9AfsO3qIlzg1SAYQbMj5xqZgnLWkTP5npb5f7wC1zg=;
+        b=7KsINWvbox8paTF7UB7wRiKLfxiLrQlYGgUD7Qmp/zPBI9arafJDxCSVHtwr0BEPBZ
+         T89IkSPYpJ/gEfnqjl3UFwQGr9r8TbCEHd6Tp7R/n/z+8Y6QKnLLX/kUAWXl6SS4zaPg
+         yMY2xPOs75dS+jh3t0VucwoLq6xwl5wXM8E8G6sn96KqMLV2qIiB0TkrckweX2erHxeZ
+         e03tsSwiQWxgj6C3VDxA9cTqjDzHKpjkhu4yY5wZ8U1hjVFhUUSrW39r4AuGwjME5+HC
+         8WPOVBVJeVPU5de2h77mzbS3IBrYiUEH6N9mPfCFJzHeTaNCtAObIuvK010qQJl9u83g
+         ca1A==
+X-Gm-Message-State: AO0yUKU7LmHvI/GHITLQiYIIIv4o5Z/plcJSgRAMGGXq3z5Fq/Q6vuWf
+        b7M6B/ELo1G8HiGR/4Dh5w7bZw9zUZs9m8D5
+X-Google-Smtp-Source: AK7set+C8UccXcEt4wC6iPocztWX2igP9Vp3ozRIlB097Avsh1rXfepmc7aP4tfSh0VuwmI/yHnYmw==
+X-Received: by 2002:a50:d692:0:b0:4a2:51db:c7c6 with SMTP id r18-20020a50d692000000b004a251dbc7c6mr10407676edi.8.1675909816610;
+        Wed, 08 Feb 2023 18:30:16 -0800 (PST)
 Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id p3-20020a1709060dc300b0088f132432cdsm227536eji.61.2023.02.08.18.19.39
+        by smtp.gmail.com with ESMTPSA id j26-20020a508a9a000000b004aac83d6554sm128647edj.47.2023.02.08.18.30.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Feb 2023 18:19:39 -0800 (PST)
+        Wed, 08 Feb 2023 18:30:16 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pPwXC-001bq4-1o;
-        Thu, 09 Feb 2023 03:19:38 +0100
+        id 1pPwhT-001c8N-1S;
+        Thu, 09 Feb 2023 03:30:15 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] test: make SYMLINKS prerequisite more robust
-Date:   Thu, 09 Feb 2023 03:15:07 +0100
-References: <xmqqwn4sq73f.fsf@gitster.g>
- <230209.86k00rzqsz.gmgdl@evledraar.gmail.com> <xmqqbkm3ppn8.fsf@gitster.g>
+Cc:     git@vger.kernel.org, Max Gautier <max.gautier@redhat.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] gpg-interface: lazily initialize and read the
+ configuration
+Date:   Thu, 09 Feb 2023 03:24:31 +0100
+References: <Y+PGRaiTTaZ/DtlJ@work-laptop-max>
+ <Y+PRTYtFDoE73XEM@coredump.intra.peff.net> <xmqqmt5orqgv.fsf@gitster.g>
+ <xmqqh6vwrpce.fsf@gitster.g> <xmqqlel7rj9z.fsf_-_@gitster.g>
+ <230209.86fsbfznot.gmgdl@evledraar.gmail.com> <xmqq5ycbpp8a.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <xmqqbkm3ppn8.fsf@gitster.g>
-Message-ID: <230209.86ttzvy405.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqq5ycbpp8a.fsf@gitster.g>
+Message-ID: <230209.86pmajy3ig.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -75,66 +79,87 @@ On Wed, Feb 08 2023, Junio C Hamano wrote:
 
 > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
->>> I wonder if something like this is in order?
+>> One thing left un-noted here is that this will defer any errors in the
+>> config now until use (or lazy init), so e.g.:
 >>
->> I don't have much to contribute on that front, but this is really
->> missing some "why", this worked before, why is it failing now? Do we
->> have any idea.
+>> 	git -c gpg.mintrustlevel=3Dbad show --show-signature
+>>
+>> Used to exit with code 128 and an error, but will now (at least for me)
+>> proceed to run show successfully.
 >
-> Your guess is as good as mine.  I do not do Windows.
+> That one is probably a good thing.  We shouldn't interrupt users for
+> a misspelt configuration value that the user is not using.
+
+*nod*, just noting it.
+
+>>> @@ -632,6 +644,8 @@ int check_signature(struct signature_check *sigc,
+>>>  	struct gpg_format *fmt;
+>>>  	int status;
+>>>=20=20
+>>> +	gpg_interface_lazy_init();
+>>> +
+>>>  	sigc->result =3D 'N';
+>>>  	sigc->trust_level =3D -1;
+>>
+>> This is needed, because we need "configured_min_trust_level" populated.
 >
-> Thanks for independently noticing the uninitialized strbuf.  What I
-> have queued has it fixed already locally but there isn't much point
-> to send another copy out to the list ;-).
+> I specifically did not want anybody to start doing this line of
+> analysis, because it will add unnecessary bugs, and also introduce
+> maintenance problems.  You may be able to grab the current state of
+> the code, but that will get stale and won't be a good guide to keep
+> our code robust.
 >
->> All in all a simple helper, but isn't this redundant to "test_readlink"?
+>>> @@ -695,11 +709,13 @@ int parse_signature(const char *buf, size_t size,=
+ struct strbuf *payload, struct
+>>>=20=20
+>>>  void set_signing_key(const char *key)
+>>>  {
+>>> +	gpg_interface_lazy_init();
+>>> +
+>>>  	free(configured_signing_key);
+>>>  	configured_signing_key =3D xstrdup(key);
+>>>  }
+>>
+>> But this is not, we could say that we're doing it for good measure, but
+>> it's hard to imagine a scenario where we would end up actually needing
+>> lazy init here. we'll just set a variable here, which...
 >
-> Not at all.  We need to avoid the Perl one for this purpose.  What
-> matters is whether "git" considers if symlink is working.
+> And especially this one, we must have init or we'll be incorrect, I
+> think.  There is a direct set_signing_key() caller (I think in "git
+> tag") that does not come from the git_config() callback route.
+> Without the lazy initialization, we'd get configured_signing_key
+> from the config because early in the start-up sequence of the
+> command we would do git_gpg_config() via git_config(), and then try
+> to process "-u keyid" by calling this one again.
 >
-> Perhaps our readlink(3) emulation we have in compat/ may hardcode
-> our "knowledge" that symlink is not available in Windows, which may
-> not match what the POSIX XCU emulation in our Windows environment
-> offers, which apparently ran "ln -s x y && test -h y" successfully,
-> and who knows what test_readlink that is written in Perl thinks?
+> If you forget to lazily initialize here, configured_signing_key gets
+> the keyid obtained via "-u keyid", and then when control reaches the
+> real signing function, we'd realize that we still haven't
+> initialized ourselves.  And we call lazy init, which finds
+> configured keyID, which is very likely different from "-u keyid"
+> (the user would not be passing "-u keyid" from the command line to
+> override, if that is the same as the configured one), and clobber
+> it.
 
-Yeah that's fair, I wonder why we haven't replaced this already...
+Yeah, I take your general point that it's good to sprinkle the
+gpg_interface_lazy_init().
 
-FWIW I think this is what perl will dispatch to on Windows, so it makes
-your point, it has its own NIH Windows emulation layer:
-https://github.com/Perl/perl5/blob/blead/win32/win32.c#L1983-L2026
+In this case I think we'll just barely do the right thing, the only
+external caller is tag.c, which first does:
 
-> We
-> are testing "git" with the test suite, so even if with some magic
-> that is still unknown to compat/mingw.h it knows how to read what
-> "ln -s x y" left in "y", until compat/mingw.h::readlink() learns the
-> same trick, asking Perl to decide SYMLINKS prerequisite would not
-> help our test scripts at all.
+	set_signing_key(keyid);
 
-We could always see if they return the same answer :) But not worth
-pursuing in this case.
+And then:
 
->> If you're trying to avoid leaving litter or cleaning up that's not
->> needed anymore with these lazy prereqs for a while now (they get their
->> throw-away temporary directory).
->
-> Indeed, I just did not want to add another cruft, but 'x' and 'y'
-> are already such crufts, so I could have just done
->
-> 	ln -s x y &&
-> 	test -h y &&
-> 	test-tool readlink y >x &&
-> 	test $(cat x) =3D x
->
-> to use one of them ;-)
+	sign_buffer(buffer, buffer, get_signing_key());
 
-Yeah, I mean you don't need to avoid cruft, because the whole directory
-is about to be rm -rf'd
+So we'll (I think):
 
-Now that I've dug it up I see you implemented that in 04083f278d1 (test:
-allow prerequisite to be evaluated lazily, 2012-07-26).
+	1. Get the non-config'd key from before
+	2. Call sign_buffer()
+	3. Promptly clobber that key
+	4. It won't matter because at that point we'll be passing a key
+	   as a parma, which overrides the "config"
 
-I was recalling 53ff3b96a87 (tests: make sure nested lazy prereqs work
-reliably, 2020-11-18) as the more recent change, but that just solved a
-nested prereq edge case.
-
+But yeah, dropping it would mean we end up with the wrong key in the
+variable afterwards, which even if it's not used is nasty.
