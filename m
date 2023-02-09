@@ -2,79 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D8C7C636D3
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 21:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 873A6C636D3
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 21:45:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230309AbjBIVbX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 16:31:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38492 "EHLO
+        id S230245AbjBIVpO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 16:45:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230265AbjBIVbW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 16:31:22 -0500
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89A0E5ACC1
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 13:31:21 -0800 (PST)
-Received: by mail-qt1-x82f.google.com with SMTP id ch10so2598842qtb.11
-        for <git@vger.kernel.org>; Thu, 09 Feb 2023 13:31:21 -0800 (PST)
+        with ESMTP id S229482AbjBIVpN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 16:45:13 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45B315EF9F
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 13:45:12 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id s8so2462421pgg.11
+        for <git@vger.kernel.org>; Thu, 09 Feb 2023 13:45:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lkauYITKBLV7Xn1IvfWFezy7dcbe+gLsib9HRx3M0ms=;
-        b=X+/txNQY647ILjKHS6lP1chKylN9iMNYRUTa5oulR99r4F9V1X5ia4BIbpi+OIzgUt
-         qr1lDer7krL0Kzyh0hqiFg+OVahV10bBfptz5Waj8vCrLtGNIpg25xUEUatMkxAZyEGl
-         uI8810yXcOIFskp+Jxc3OVEhBx3vdq3VpRnQE=
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nchmfCfn0+IQYkFnBxNRLNIqwbOaqiUIoabzvYRtTcI=;
+        b=Skk2Nfq6mlaJ6tlXvQBKO4SwGX46ITVQCV2dCcoD5P3Ax4gwv9EneqxnyTIHk77HtC
+         8j2j6WyzTS0l1dBAzutYJbYGPiZLpeC8L+4K/3sOs+MN7xqY52xUR/VwBoCiP6cjzllR
+         pOLUop6F4VFJDj5+aT6SpIfQG+oarJjfXtmGuHxywPFZ5bLCXA1+P0vD8Z+POMTpXSyN
+         N50BldOf2kMeDk3aprt+MQ8MHe1zLayG8unY3PmljrmKKP5a36y4AgMblt6kvJLKvqsB
+         lJ9Bdo2z0P8U94UWQVHg3yeXdHVVgJ8ZxXmASmJqSIn7I5q9Brpm4y/Espd/eLP+jSfh
+         u39Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lkauYITKBLV7Xn1IvfWFezy7dcbe+gLsib9HRx3M0ms=;
-        b=lYwb91gLVxF/rJVUs91T0vkBdwRZToTUSy5iEuYVC+2tIZ0S40wK4/UOKEvJJvvzx1
-         fCxIJwykdvTZNEdk3wQzQO1ypSs4oupA5Ic/vDrprgT8Rk+Zc+DKH9FrjFEE7HqG8y1X
-         NrvBCsDHS2CIuNx8srtgZiX5kSJQD6cy9BTw2qfp7an7nJOpA7TuPMI/kVHwKxvUPHZ6
-         pXgE9Egs+asHjWS2w0G7k00mNfEVa74tC6Pw8utXc8cvS26S/1Yut03uvKMSHaoPAkDB
-         O+oY0ydVXKkurB0BWIyCFsdxaROSnY/2Vd2xEeca2g21XNL1bZ0Pyck3CdkjB3nrLhGK
-         31Qg==
-X-Gm-Message-State: AO0yUKXHRSzmY716ELkj0P0ziNfFRsX/nUx9hBevB6woi35C20ZYB2UO
-        nQs2qM1TFfSSv6Lbt+q/45d5xtxDHEANHiUk
-X-Google-Smtp-Source: AK7set/UOnj9nJ6B/huEl7WJX47UtTXDThSV18DxIbjewJKfm6gLGmQ/3FaElkYNWd8u5Uh34i8atQ==
-X-Received: by 2002:a05:622a:60f:b0:3b9:a754:30db with SMTP id z15-20020a05622a060f00b003b9a75430dbmr23327047qta.13.1675978280644;
-        Thu, 09 Feb 2023 13:31:20 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id y10-20020ac8128a000000b003b68ea3d5c8sm2025905qti.41.2023.02.09.13.31.19
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nchmfCfn0+IQYkFnBxNRLNIqwbOaqiUIoabzvYRtTcI=;
+        b=2emIaft3ESwrsT51ZXcPU6BbvTZrDTGiwLAB3aCkla/ETvcjfkuNLhSw6gzIHeogjW
+         xmlDIuQAkwwJlrwWfRkWESoRCSrgHLbIq8+eNvDkwE4b4HUX2e423Jeo7CXU5+uU4uXm
+         hRbGVklWYPGDQK4vMU7dCv+sgZS8NVXwPJs4wp3262qyA2Roi5nohVBXOIGQJHtiJKen
+         DqcttNM7kWfmv46xJRsVSjZeZKFq573XByiNmiNwEU0qRhYm+dYzYcHMHAvFbSzaA9Ly
+         ouHwwUbU5ciFkg563tT+jjibVd5cpxv1q+EGONSkur+2mO+Zw18Z+VGYiwg/jsadKjzz
+         ddyA==
+X-Gm-Message-State: AO0yUKXLIF2qTlQWIpRTh+74ynrz34bsQLDIFIYH0QgSqLRDkB8iFUFU
+        Dy8drb7jKbwXVz+DapDb900=
+X-Google-Smtp-Source: AK7set/H5OjXipizoOPAvk4z7Ey/i7k4oqWSIx7keB5T/aahC81kgv3954wi0aRlU1g+x7+l74q1Tw==
+X-Received: by 2002:aa7:96d1:0:b0:592:6313:20fb with SMTP id h17-20020aa796d1000000b00592631320fbmr10960874pfq.30.1675979111662;
+        Thu, 09 Feb 2023 13:45:11 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id x7-20020aa79187000000b005a84ef49c63sm1884256pfa.214.2023.02.09.13.45.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Feb 2023 13:31:19 -0800 (PST)
-Date:   Thu, 9 Feb 2023 16:31:18 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+        Thu, 09 Feb 2023 13:45:11 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Subject: Re: The sad state of git.wiki.kernel.org
-Message-ID: <20230209213118.lhyjdndhs5ouk36w@meerkat.local>
-References: <20230203182255.lqla3hsme6riy4w7@meerkat.local>
- <Y95BEaOGJy9uBHkG@coredump.intra.peff.net>
- <CAP8UFD1q7-XbX4C_NjyL7A-6n6Nc4MgSbUKnzQOiRyKRMtLv_w@mail.gmail.com>
- <20230206214101.fe6rismtfzv4k75n@meerkat.local>
- <Y+KT9pHivnUyyu0K@coredump.intra.peff.net>
+Cc:     Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
+Subject: Re: t5559 breaks with apache 2.4.55
+References: <Y8ztIqYgVCPILJlO@coredump.intra.peff.net>
+        <Y81lQwG85+Skujja@pobox.com>
+        <Y9Jmfg/jlSszVep4@coredump.intra.peff.net>
+        <Y9YTsF4a8lL7uHm+@coredump.intra.peff.net>
+Date:   Thu, 09 Feb 2023 13:45:10 -0800
+In-Reply-To: <Y9YTsF4a8lL7uHm+@coredump.intra.peff.net> (Jeff King's message
+        of "Sun, 29 Jan 2023 01:35:28 -0500")
+Message-ID: <xmqq357ems2h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y+KT9pHivnUyyu0K@coredump.intra.peff.net>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 07, 2023 at 01:09:58PM -0500, Jeff King wrote:
-> > Okay, here's what I have:
-> > 
-> > https://archive.kernel.org/oldwiki/git.wiki.kernel.org/
-> > 
-> > It's just a static scrape excluding all Special: and User: pages, and carrying
-> > a very large "OBSOLETE CONTENT" warning.
-> 
-> That looks just fine to me. Thanks for taking care of this!
+Jeff King <peff@peff.net> writes:
 
-This is now done. Thank you, everyone.
-The git.wiki.kernel.org site is now permanently archived.
+> ...
+> But that does at least give me more confidence that the bug is in
+> mod_http2, and isn't, say, some intentional behavior change there that
+> happens to trigger a bug in curl.
+>
+> I opened an issue here: https://github.com/icing/mod_h2/issues/243
+>
+> So we'll see if that helps.
 
--Konstantin
+Thanks.  I've seen that the above issue may have redirected the
+investigation to cURL, and over time, I expect taht this will start
+to trigger in more environments (as Apache 2.4.55 and mod_h2 2.0.10
+propagates) before it fixes itself (as fixed versions of these
+things we use in our tests percolates down).
+
+In the meantime, perhaps we should punt with a patch like this?
+
+
+------------ >8 ------------
+Subject: [PATCH] t5559: skip a known-to-be-broken test
+
+t5559 runs the same set of tests as t5551 under HTTP/2 but one of
+them started failing with Apache 2.4.55 and mod_h2 2.0.10 (but not
+with HTTP/1.1).  Newer mod_h2 is known to have fixed the issue.
+
+In the meantime, skip the test.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t5551-http-fetch-smart.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git c/t/t5551-http-fetch-smart.sh w/t/t5551-http-fetch-smart.sh
+index bc0719a4fc..52159e8b6f 100755
+--- c/t/t5551-http-fetch-smart.sh
++++ w/t/t5551-http-fetch-smart.sh
+@@ -350,7 +350,8 @@ test_expect_success CMDLINE_LIMIT \
+ 	)
+ '
+ 
+-test_expect_success 'large fetch-pack requests can be sent using chunked encoding' '
++# https://github.com/icing/mod_h2/issues/243
++test_expect_success !HTTP2 'large fetch-pack requests can be sent using chunked encoding' '
+ 	GIT_TRACE_CURL=true git -c http.postbuffer=65536 \
+ 		clone --bare "$HTTPD_URL/smart/repo.git" split.git 2>err &&
+ 	{
+
