@@ -2,184 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80C89C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 08:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7068FC05027
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 08:27:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229632AbjBIIYZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 03:24:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40394 "EHLO
+        id S229648AbjBII1C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 03:27:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbjBIIYY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 03:24:24 -0500
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34E6E37F39
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 00:24:23 -0800 (PST)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-4cddba76f55so12098877b3.23
-        for <git@vger.kernel.org>; Thu, 09 Feb 2023 00:24:23 -0800 (PST)
+        with ESMTP id S229632AbjBII1B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 03:27:01 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33914126D1
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 00:26:59 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id bi36so2141870lfb.8
+        for <git@vger.kernel.org>; Thu, 09 Feb 2023 00:26:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i1x8T0TzokkgREqSXiL75ScWOzqyXsIIRrVvRLquF0A=;
-        b=De4LEXjsok+yGfoXpvIziJExQnFKVQSUw+0p22xvzxl5zyE6JK9MHj99nRRevO7NlS
-         3WkgJS7dtCf5IClN1kMEwHE9Whj3FnVUR5hBG1wdb77+KytQr4k5q/uSXLhvzmyXENxL
-         AM+QOc4GDXFj6W4q3ba6+AbXc96Aat50wAnskf5qimlJ0LoY6n4jciU+sgh2gYevhD/x
-         TCPaJHN0PTpU3q0E7JQFMVJM2rzSzTbCxbEMdEfK4SGVClSPvAQFYCS2liizbuJzn41t
-         6mrYpg1fU4+HZOnTope9gE9+Yd892FsgcRMnYKajpu+NLGL8jF9o+Lr5KDp+KeiGDYKq
-         fd4Q==
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kJ5j7KmgHdtauIkDkSIR3xO8ODjOuoCyXxa5INP/Clk=;
+        b=CHx6rE/kA34I/Smh8ZnjGJC2Q+nn1oNuYiYsccV/sRAF9dXMHQohsq3WgoRwmKwuV/
+         /H516PQLqFAR1d2gNfE9yHubUFpvE1VK4NaWeJJiJRsJpDPp7wqqWAzAhsuWefzrKVY5
+         fKvxrIKg5Z4ku8U+r/9lN5Uo9kR3YU3nhpymWa4Dg/rZ6hgamq8AP0SgQJmCXFLU1+Xf
+         n2flgkie0ThLtIEpZQHwuv5VomGrMTnqVx6p2p6Frw60jej4txc34pGiJhTI1R8X0hXs
+         zTz9EAgg8BEPnxywpT6QkzzeeKy6kzPLxC5RKeWZn4GSSQO5zKh2h6Hz/8ol9hHvo8w6
+         D4fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=i1x8T0TzokkgREqSXiL75ScWOzqyXsIIRrVvRLquF0A=;
-        b=Amm6QLGw1UsiAXwxybKlKwtNyjWIEdBx6Z8y1fPdMXPiPhYkQSZzw/FhUS+UPvgr2n
-         GaqgNANbUPfAMNMNRbUP7js3pYjHLCjNHiRclAbR/OvvVBk8IBdIlzYiX1yRyT6tRGpI
-         1Qxkbp0noyDEkVKnrf+ylrOzCInQ4qkmIDx5wfq1IczwWQH54aZmf6kO8lnhg7tf9jDc
-         wbtoAJ8LBrlE41AcuiTtizNz6Bg519SO6YzA8k9+h6nRTRbLTkT4Oo9PjI6RZcok3ymL
-         f2gZUSxQ2l15xp4edi3dy/YmqCSN6uc8NcOIF/H0V2ODxY7O30yYq0VmdjDsOp0ywfxm
-         IuPQ==
-X-Gm-Message-State: AO0yUKWXHFLKAnsCI4o7W9PIe249AiN7bzrXSA9zNDsUMWaRre69I7lc
-        BxHpj1xSlFB4geJ7jWnyCPct4hizvkrSpA==
-X-Google-Smtp-Source: AK7set+KZKiRw1FK3WqJRlzH3KGkffyqwFmMNWWVEG7Cler49Yc69HJlzFtI/D/imOotW75pj1CZc+MC/W38Aw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a05:6902:1c2:b0:89c:b633:73a6 with SMTP
- id u2-20020a05690201c200b0089cb63373a6mr1039484ybh.365.1675931062398; Thu, 09
- Feb 2023 00:24:22 -0800 (PST)
-Date:   Thu, 09 Feb 2023 16:24:14 +0800
-In-Reply-To: <patch-v5-03.10-4a73151abde-20230207T154000Z-avarab@gmail.com>
-Mime-Version: 1.0
-References: <cover-v4-0.9-00000000000-20230202T131155Z-avarab@gmail.com>
- <cover-v5-00.10-00000000000-20230207T154000Z-avarab@gmail.com> <patch-v5-03.10-4a73151abde-20230207T154000Z-avarab@gmail.com>
-Message-ID: <kl6lttzvw8k1.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v5 03/10] config API: add and use a "git_config_get()"
- family of functions
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kJ5j7KmgHdtauIkDkSIR3xO8ODjOuoCyXxa5INP/Clk=;
+        b=G5bS75SoisZwEHZ2V0rp+LIDP6PIhyVWgLDvm9em6rigF6WofPTs18tYyrpggtxUvc
+         4lKPyHw20fSrQOta09aG/6/0WOaIkn+F4ESrBoNJgBU1I73OgLU1CkK8X5LhEpE8fM2E
+         CiPcygh/Vwb+J+ARs2HKB8dr4HV57WwH/DRCZctHFDf2XV4qEtgXBRtKmDSfEoAr9Im9
+         hHimtjvK9D7jyHN7Rcf1YuF3gT6Ipuhp2gT04lS5H7JI00S47vM4YKcm6KWa3n3gh/lq
+         oARNI30kJI2jqFeGH9JhmKf1wtXejGRfKy+G7JKfc4wl7nL2U5psJzR6DNPYwWlyeScq
+         M1cA==
+X-Gm-Message-State: AO0yUKWCZHECHV+34W+vLUFk5lADtEF+k34Lf5ksnX3/ToBtLeZwf77A
+        ZavttVKJ2cTpPA9P71uF9iVdpDBtECGZSeOeCFfa3wCGIvI=
+X-Google-Smtp-Source: AK7set9T8vqYcNsX7WNWRz5LR7IIabubxOMHty/KO9/iNeuDx1tEJLOeKH1xuMXk/07uFLox5UsN7f3iF67Q4RxfNd8=
+X-Received: by 2002:ac2:519a:0:b0:4b5:3f7f:f9ed with SMTP id
+ u26-20020ac2519a000000b004b53f7ff9edmr1933716lfi.177.1675931217277; Thu, 09
+ Feb 2023 00:26:57 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
+ <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
+ <19f6b40b-d8e8-e86c-5a9a-b35f42909118@dunelm.org.uk> <7852AC7B-7A4E-4DD0-ADEA-CFFD5D16C595@gmail.com>
+In-Reply-To: <7852AC7B-7A4E-4DD0-ADEA-CFFD5D16C595@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 9 Feb 2023 00:26:44 -0800
+Message-ID: <CABPp-BGhuTyq_hrpMc+Ky3yt1UgO7DcAsgcYH15FK--QLdCsQw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
+To:     John Cai <johncai86@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        "SZEDER =?utf-8?Q?G=C3=A1b?= =?utf-8?Q?or?=" <szeder.dev@gmail.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>, raymond@heliax.dev,
-        zweiss@equinix.com,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Hi John,
 
-> We could have changed git_configset_get_value_multi() (and then
-> git_config_get_value() etc.) to accept a "NULL" as a "dest" for all
-> callers, but let's avoid changing the behavior of existing API
-> users. Having an "unused" value that we throw away internal to
-> config.c is cheap.
+On Mon, Feb 6, 2023 at 12:02 PM John Cai <johncai86@gmail.com> wrote:
 >
-> A "NULL as optional dest" pattern is also more fragile, as the intent
-> of the caller might be misinterpreted if he were to accidentally pass
-> "NULL", e.g. when "dest" is passed in from another function.
-
-Okay, I think I can buy this argument. In other words,
-git_config_get_value() is only used to put the value in "*dest", so
-"dest =3D NULL" is an error. This is by design, because it defends against
-callers who are using it wrongly. If it accepted "NULL" to mean 'dest
-will be ignored', we're creating possible hard-to-spot bugs because we
-no longer error out early.
-
-> This still leaves various inconsistencies and clobbering or ignoring
-> of the return value in place. E.g here we're modifying
-> configset_add_value(), but ever since it was added in [2] we've been
-> ignoring its "int" return value, but as we're changing the
-> configset_find_element() it uses, let's have it faithfully ferry that
-> "ret" along.
+> Hi Phillip,
 >
-> Let's also use the "RESULT_MUST_BE_USED" macro introduced in [3] to
-> assert that we're checking the return value of
-> configset_find_element().
+> On 6 Feb 2023, at 11:27, Phillip Wood wrote:
 >
-> We're leaving the same change to configset_add_value() for some future
-> series. Once we start paying attention to its return value we'd need
-> to ferry it up as deep as do_config_from(), and would need to make
-> least read_{,very_}early_config() and git_protected_config() return an
-> "int" instead of "void". Let's leave that for now, and focus on
-> the *_get_*() functions.
+> > Hi John
+> >
+> > On 05/02/2023 03:46, John Cai via GitGitGadget wrote:
+> >> From: John Cai <johncai86@gmail.com>
+> >>
+> >> It can be useful to specify diff algorithms per file type. For example,
+> >> one may want to use the minimal diff algorithm for .json files, another
+> >> for .c files, etc.
+> >
+> > Have you got any examples of why this is useful? I find myself occasionally changing the algorithm when the default gives a sub-optimal diff but I've not really noticed any pattern with respect to file types.
 >
-> In a subsequent commit we'll fix the other *_get_*() functions to so
-> that they'll ferry our underlying "ret" along, rather than normalizing
-> it to a "return 1". But as an intermediate step to that we'll need to
-> fix git_configset_get_value_multi() to return "int", and that change
-> itself is smaller because of this change to migrate some callers away
-> from the *_value_multi() API.
+> At $DAYJOB, there has been a discussion and request for a feature like this [1].
+> One use case that came up was to be able to set a different diff algorithm for
+> .json files.
+>
+> 1. https://gitlab.com/gitlab-org/gitaly/-/issues/2591
 
-I haven't read ahead, but on first impression this sounds like it might
-be too intrusive for a series whose goal is to clean up
-*_get_value_multi().
+A couple points:
 
-> diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-> index 4be1ab1147c..7def7053e1c 100755
-> --- a/t/t1308-config-set.sh
-> +++ b/t/t1308-config-set.sh
-> @@ -58,6 +58,8 @@ test_expect_success 'setup default config' '
->  		skin =3D false
->  		nose =3D 1
->  		horns
-> +	[value]
-> +		less
->  	EOF
->  '
-> =20
-> @@ -116,6 +118,45 @@ test_expect_success 'find value with the highest pri=
-ority' '
->  	check_config get_value case.baz "hask"
->  '
-> =20
-> +test_expect_success 'return value for an existing key' '
-> +	test-tool config get lamb.chop >out 2>err &&
-> +	test_must_be_empty out &&
-> +	test_must_be_empty err
-> +'
-> +
-> +test_expect_success 'return value for value-less key' '
-> +	test-tool config get value.less >out 2>err &&
-> +	test_must_be_empty out &&
-> +	test_must_be_empty err
-> +'
-> +
-> +test_expect_success 'return value for a missing key' '
-> +	cat >expect <<-\EOF &&
-> +	Value not found for "missing.key"
-> +	EOF
-> +	test_expect_code 1 test-tool config get missing.key >actual 2>err &&
-> +	test_cmp actual expect &&
-> +	test_must_be_empty err
-> +'
-> +
-> +test_expect_success 'return value for a bad key: CONFIG_INVALID_KEY' '
-> +	cat >expect <<-\EOF &&
-> +	Key "fails.iskeychar.-" is invalid
-> +	EOF
-> +	test_expect_code 1 test-tool config get fails.iskeychar.- >actual 2>err=
- &&
-> +	test_cmp actual expect &&
-> +	test_must_be_empty out
-> +'
-> +
-> +test_expect_success 'return value for a bad key: CONFIG_NO_SECTION_OR_NA=
-ME' '
-> +	cat >expect <<-\EOF &&
-> +	Key "keynosection" has no section
-> +	EOF
-> +	test_expect_code 1 test-tool config get keynosection >actual 2>err &&
-> +	test_cmp actual expect &&
-> +	test_must_be_empty out
-> +'
-> +
+First, there seems to be a misunderstanding in that issue.  In
+particular, the merge algorithm does call into the xdiff library to do
+the three-way content merge of individual files, and when it does so,
+it has to specify the diff algorithm (or take the default, currently
+myers).  merge-recursive allows the diff algorithm to be specified by
+the user (there are
+-Xdiff-algorithm={histogram,minimal,patience,myers} flags to
+merge/rebase for it), while merge-ort uses histogram (though it uses
+the same parser as merge-recursive and thus gets the variables set
+from the -Xdiff-algorithm flag, it just ignores those values and
+hardcodes histogram).
 
-No real comments on the changes themselves. The added test coverage in
-this version is quite nice.
+Second, I also think the user request got converted to a particular
+solution without looking at the wider problem space:  The idea seemed
+to assume "myers" is default for a good reason, and thus asked for an
+option to use something else.  I'm not sure the assumption is valid; I
+think "myers" is default for historical reasons and histogram is
+better not just for special Salesforce xml files, but code files too.
+The output makes more sense to users.  So much so that even though my
+simple testing suggested it had a 2% performance penalty compared to
+myers, I forced ort to use it[1] even though I designed  everything
+else in that algorithm around eking out maximum performance.  Others
+who have tested the diff algorithms have also found histogram has very
+similar performance to myers, and oftentimes even beats it[2][3].
+Also, worries about invalidating rerere caches[4] was real, but we
+already paid that price when we switched to ort.  And if performance
+is still a worry, [3] gives me reason to believe we can make our
+histogram implementation faster.  Finally, for the period of time when
+Palantir was letting me make an internal git distribution (mostly for
+testing ort), I also carried a patch that changed the default diff
+algorithm to histogram (not just for ort, but for diff/log/etc. as
+well).  Never had any complaints from the users from it.  Perhaps you
+could do the same in your local version of git used by gitaly?
+
+[1] See c8017176ac ("merge-ort: use histogram diff", 2020-12-13)
+[2] From 85551232b5 ("perf: compare diff algorithms", 2012-03-06):
+"This does indeed show that histogram diff slightly beats Myers, while
+patience is much slower than the others."
+[3] https://github.com/pascalkuthe/imara-diff
+[4] https://lore.kernel.org/git/20120307114714.GA14990@sigill.intra.peff.net/
