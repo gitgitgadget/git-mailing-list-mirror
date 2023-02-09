@@ -2,83 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9F8AC61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 12:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36BC5C05027
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 12:41:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229760AbjBIM3P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 07:29:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39320 "EHLO
+        id S229853AbjBIMl6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 07:41:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229918AbjBIM27 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 07:28:59 -0500
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B00B186AD
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 04:28:58 -0800 (PST)
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id CAB121F5A0;
-        Thu,  9 Feb 2023 12:28:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-        s=selector1; t=1675945738;
-        bh=Vu9/Af9hZ/H0i8fMT8OafYf8nkn/ExLo774YB72gbkk=;
-        h=Date:From:To:Cc:Subject:From;
-        b=3fqvQgOMjOtJexicoHm5iR1xJr9UM8f28p5Vh5RB5qKjjouToCbpSPl1VyCE4n+IW
-         C/dbvGw4u8X3ojvyZ+K53xU5rOmHzQ59mKNPH3GMt9ggCJ3ntvvd9G+EEYq40gbYps
-         mmdBI7DuH2ccksy/KAfQT0b4ZEJ/M+T+8Fqzc7Tg=
-Date:   Thu, 9 Feb 2023 12:28:57 +0000
-From:   Eric Wong <e@80x24.org>
-To:     git@vger.kernel.org
-Cc:     Patrick Steinhardt <ps@pks.im>
-Subject: [RFC] fetch: support hideRefs to speed up connectivity checks
-Message-ID: <20230209122857.M669733@dcvr>
+        with ESMTP id S229694AbjBIMl5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 07:41:57 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83A4F5ACD3
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 04:41:55 -0800 (PST)
+Received: (qmail 550 invoked by uid 109); 9 Feb 2023 12:41:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Feb 2023 12:41:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12581 invoked by uid 111); 9 Feb 2023 12:41:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Feb 2023 07:41:52 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 9 Feb 2023 07:41:52 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Max Gautier <max.gautier@redhat.com>, git@vger.kernel.org
+Subject: Re: git rev-list fails to verify ssh-signed commits (but git log
+ works)
+Message-ID: <Y+TqEM21o+3TGx6D@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <xmqqh6vwrpce.fsf@gitster.g>
+ <xmqqmt5orqgv.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Not sure if this is the right way to go about this...
-If it's close, maybe --exclude-hidden=fetch can be supported.
-I'm using `receive' for now to minimize the change.
+On Wed, Feb 08, 2023 at 09:56:16AM -0800, Junio C Hamano wrote:
 
-With roughly 800 remotes all fetching to their own refs/remotes/$REMOTE/*
-island, the connectivity check[1] gets expensive for each fetch.
+> >   1. Somebody would need to dig into the reasons, if any, for not
+> >      calling git_gpg_config() everywhere. It might be fine, but there
+> >      may be a good reason which we're now violating. Digging in the
+> >      history and looking at the code might yield some hints.
+> 
+> Hmph, I didn't consider calling gpg_config unconditionally.  It may
+> do a bit more than what a typical config callback does (i.e. as
+> opposed to just store the string values it gets, it tries table
+> look-ups and stuff) but it is not too bad.
 
-To do a no-op fetch on one $REMOTE out of hundreds, hideRefs now
-allows the no-op fetch to take ~30 seconds instead of ~20 minutes
-on a noisy, RAM-constrained machine (localhost, so no network latency):
+It all looks pretty typical for config parsing to me. Matching in a
+constant-sized list of strings happens in lots of places (e.g.,
+push.default). Performance-wise it's probably fine.
 
-   git -c transfer.hideRefs=refs \
-	-c transfer.hideRefs='!refs/remotes/$REMOTE/' \
-	fetch $REMOTE
+I'd be more worried about correctness (command "foo" must not parse
+option "bar" because it is plumbing and must use the default). But
+looking over the options, I really don't see anything like that. The one
+I'd expect (or worry most about) is "we do/do not bother to enable
+signatures at all based on config" but I don't think that is the case.
+We default use_format to &gpg_format[0], so there is always a signature
+format defined, even if the config is skipped.
 
-I initially considered passing --negotiation-tip OIDs, but this seems
-like an easier solution as I'm not yet familiar with this code
-and prefer to avoid writing too much C.
+The original split comes from your 2f47eae2a1 (Split GPG interface into
+its own helper library, 2011-09-07), where it was just moving bits out
+of the git-tag config. So I think we just grew into this situation
+organically.
 
-[1] `git rev-list --objects --stdin --not --all --quiet --alternate-refs'
-    gets painful w/o enough RAM to cache the repo, even on a SATA-2 SSD.
----
- builtin/fetch.c | 2 ++
- 1 file changed, 2 insertions(+)
+> I wonder if gpg-interface functions can and should be taught to
+> initialize themselves lazily without relying on the usual
+> git_config(git_gpg_config) sequence.  I.e. the first call to
+> sign_buffer(), check_signature(), get_signing_key_id(), etc.
+> would internally make a git_config(git_gpg_config) call, with the
+> current callers of git_config(git_gpg_config) removed.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 12978622d5..473d99fd26 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1131,6 +1131,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 	if (!connectivity_checked) {
- 		struct check_connected_options opt = CHECK_CONNECTED_INIT;
- 
-+		opt.exclude_hidden_refs_section = "receive";
- 		rm = ref_map;
- 		if (check_connected(iterate_ref_map, &rm, &opt)) {
- 			rc = error(_("%s did not send all necessary objects\n"), url);
-@@ -1324,6 +1325,7 @@ static int check_exist_and_connected(struct ref *ref_map)
- 	}
- 
- 	opt.quiet = 1;
-+	opt.exclude_hidden_refs_section = "receive";
- 	return check_connected(iterate_ref_map, &rm, &opt);
- }
- 
+If the gpg code used git_config_get_string(), etc, then they could just
+access each key on demand (efficiently, from an internal hash table),
+which reduces the risk of "oops, we forgot to initialize the config
+here". It does probably mean restructuring the code a little, though
+(since you'd often have an accessor function to get "foo.bar" rather
+than assuming "foo.bar" was parsed into an enum already, etc). That may
+not be worth the effort (and risk of regression) to convert.
+
+-Peff
