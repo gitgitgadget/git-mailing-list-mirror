@@ -2,104 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92800C636CC
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 01:12:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1C00C636CC
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 01:12:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231267AbjBIBMP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 20:12:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49088 "EHLO
+        id S231240AbjBIBMc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 20:12:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231250AbjBIBMG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 20:12:06 -0500
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 298651C7E2
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 17:11:53 -0800 (PST)
-Received: by mail-yb1-xb36.google.com with SMTP id x4so637347ybp.1
-        for <git@vger.kernel.org>; Wed, 08 Feb 2023 17:11:53 -0800 (PST)
+        with ESMTP id S231278AbjBIBMW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 20:12:22 -0500
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE2ADC175
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 17:12:12 -0800 (PST)
+Received: by mail-pl1-x62c.google.com with SMTP id g13so1180469ple.10
+        for <git@vger.kernel.org>; Wed, 08 Feb 2023 17:12:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nhe/dorzD+k2h+2YC9KAxcylszzP7dnxLuR+WiFgUwk=;
-        b=WKvfuPVCIK7qap2IDvCoqaBiS6dCCA3/lXIihYSXj41ydcuBUzciSUO4JVRAfIuCtR
-         /8CRa0qWKCQCqeZnIOshhI5fvLhDDZX4QyA/Je21IWrPW84bv68QbRtWNgF5H8Y1PHfr
-         7dWPMrPlBn5korqGcuSku6yDGlDAlOrRg0GcaEuewW+wMiIXDc5Qy+0guByd8y1O/LCt
-         1UQURue6bQJ2O9uliD04l1008myA4xadW28puyQLRswE5dQIosgWHIWMXz00ur4IfVAZ
-         bfbydPVxhpoXgTmr0EzfnMM+V1EKWMY8OTLilfXHtiFUy26LnuVeqk/+0q9TWvlft0zp
-         5yMQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CLz1kN1SFxcFfl/UiDqft2nNXXwHoPH+fqEEB0lGUUg=;
+        b=FjDyWCtx+2yfbyzFC+5S2VnIAeXc6y7wgRmZlMo4ujizKctK49OCK8XeG9KmZhhbJF
+         QVmJHvUcNN1zy04Xu/ba+Y3uMLXNjrauJcQ5rcRheUoP6rpS3r0Iq2kKyv8SvFynk1PC
+         Hav8kngtCk+/bwz/5XAETShKgkvnXmFQl63+GOy93wUlJeOPC5dUkOBHW0nhKM+6An+K
+         +hiVA25/JCd4P7COfZz2XGMYEh/hdZ/SnpG3iKk6Om37zvz6UfS81YfRxi7gQKhKBzd0
+         oMZ19vJjhlF/4WlcFVetJzPxzd7gq9PStT8jh4TXATNpji/7yenFKsRJqICxDJp6rGdt
+         aBNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Nhe/dorzD+k2h+2YC9KAxcylszzP7dnxLuR+WiFgUwk=;
-        b=iyIsGJLZ4fkxenN7H0KLPbouPe4N11l3Sj3Ebtm4dNfxX1bCBzGA/ODu07DfAm0czX
-         mWDylw4HZLUyk6cu+2lPZN1UikGPh5T/kl6Z7g6FxG1Latpb1bT0Jin2Z+d+fTllQXV7
-         uNtsPN/BURrm89i7d6/uhFTbV8R8LGswVUUbQrAvzz9NC31b1oQdtWhtrKqjvTLpNZgw
-         B7t7cHzRgSR+mVxvmrxnYSuACaTVA6pVDI+n0CTOJmS/5+qrb3lCVRDY0XL7yEa9Sq9m
-         G204lt/IJJrnHtoPCdmj2Fem4i7iQznx8eGOtwgLgTiE7g9B22h9HaPzZK/zhN2777wa
-         t/gw==
-X-Gm-Message-State: AO0yUKVu3NLTA8P+pay6W/oTxavQravq40V/nvF26MaLR6HrDuFfgbhy
-        vcU3K+aU3VnihLxE2ginqZtBK0wEHwA2/zRViu8=
-X-Google-Smtp-Source: AK7set+jIY6lV7Qer8/H5/6ZzRCP4fXaFWxmvNDm9ppawEuvN809AzSL0XRg3BPViX00CqWGr4Hm2HRbtpFdsrAImZ4=
-X-Received: by 2002:a5b:bcf:0:b0:80b:65d0:424a with SMTP id
- c15-20020a5b0bcf000000b0080b65d0424amr1185300ybr.386.1675905112235; Wed, 08
- Feb 2023 17:11:52 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CLz1kN1SFxcFfl/UiDqft2nNXXwHoPH+fqEEB0lGUUg=;
+        b=lu+PI0II0XX5se23w7eOpdaZ/uBtcHgFWfpCLNVmH9PY+QHooN6d4jEdRQ982tTsXR
+         R0/1+KG1rLVTS42mDr3Mgs2oh2hU3Eszr+Xj1IIDt4I0dkz1Zx/ojYeSUAjxZr8kJEYX
+         QzQHwCnLvAjBp5edqBAQi/0zdSYQjsgFTaKDJvttIz36YzyxeGpfp71Uwu9nveqztSbp
+         OXPPC8hPsd4Kzr196Lfiy2uuSxd2Mic0FuJ40iu6vrJWT4oyEjC1sBU7ifez4gIRg/uB
+         PRYkXfpuzIf8I3txovWlPeIbFVGBmOUgQG5YIi2bytn6PT9PCzuK6cw1hORw+K7R4nvR
+         rOHg==
+X-Gm-Message-State: AO0yUKXZgeleFwKtQ9gXR7/cLcbBZ8omud/aEWa8QLexPBuYDeHOLdOX
+        YX3YCiPq/GokWS1p88R8rmCzdUlytBvrXw==
+X-Google-Smtp-Source: AK7set+yywdTxvUrObsu7Pskl8D0vpNK+tTTmgPu3CvN5Y6YA0fL4G/LEoML0dIKnJpgjQRTRP3m+w==
+X-Received: by 2002:a17:902:e411:b0:192:c36c:f115 with SMTP id m17-20020a170902e41100b00192c36cf115mr6727644ple.66.1675905131978;
+        Wed, 08 Feb 2023 17:12:11 -0800 (PST)
+Received: from kir-rhat.redhat.com (c-76-104-243-248.hsd1.wa.comcast.net. [76.104.243.248])
+        by smtp.gmail.com with ESMTPSA id x8-20020a170902a38800b00198e6257921sm73965pla.269.2023.02.08.17.12.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Feb 2023 17:12:11 -0800 (PST)
+From:   Kir Kolyshkin <kolyshkin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
+        Kir Kolyshkin <kolyshkin@gmail.com>,
+        Roman Dodin <dodin.roman@gmail.com>
+Subject: [PATCH] remote: align columns on -v
+Date:   Wed,  8 Feb 2023 17:12:01 -0800
+Message-Id: <20230209011201.1974721-1-kolyshkin@gmail.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230207235238.1850757-1-kolyshkin@gmail.com>
+References: <20230207235238.1850757-1-kolyshkin@gmail.com>
 MIME-Version: 1.0
-References: <20230207235238.1850757-1-kolyshkin@gmail.com> <xmqq5yccuo2s.fsf@gitster.g>
-In-Reply-To: <xmqq5yccuo2s.fsf@gitster.g>
-From:   Kirill Kolyshkin <kolyshkin@gmail.com>
-Date:   Wed, 8 Feb 2023 17:11:40 -0800
-Message-ID: <CAGmPdrxcb+ztx96=aF2+ok7DgOkEnZ+znSrG4D=AE_nQ57A17w@mail.gmail.com>
-Subject: Re: [PATCH] remote: align columns on -v
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Roman Dodin <dodin.roman@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 8, 2023 at 8:19 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Kir Kolyshkin <kolyshkin@gmail.com> writes:
->
-> > Currently, git remote -v produces a misaligned output when a remote name
-> > is more than 8 characters long (i.e. longer than a tab step). Here's how
-> > it looks like:
->
-> The condition under which URLs do not align is not when they are
-> more than 8 characters long.  If all of your remotes have
-> 10-character names, their URLs would perfectly align, no?  The
-> description may need to be tightened if we really wanted to do this.
->
-> But I am skeptical, even without my devil's advocate hat on.
->
-> > giuseppe      https://github.com/giuseppe/runc (fetch)
-> > giuseppe      https://github.com/giuseppe/runc (push)
-> > kir   git@github.com:kolyshkin/runc.git (fetch)
-> > ...
->
-> The current output allows programs to post-process by splitting each
-> line with a tab, but this change will break such practice and force
-> those who use such practice to do something different (like "split
-> at the first run of whitespaces or tabs").
->
-> > While at it, let's keep the \t in case some tools depend on it
-> > for parsing (there will still be trailing spaces in the remote name).
->
-> That will not help avoid breaking the behaviour for existing
-> practice (they did not need to strip the whitespaces, but now they
-> are forced to).  It only make the output uglier by putting mixture
-> of whitespaces and tabs.
->
-> So, I dunno.
+Currently, git remote -v produces a misaligned output when some remote
+names are shorter and some are longer than a tab step. For example:
 
-Yes, I agree that this can break someone's scripts, and adding \t was
-not a bright idea either, as having it may hide the issue (of
-incorrect splitting)
-rather than break things entirely (and thus urging to fix it).
+giuseppe	https://github.com/giuseppe/runc (fetch)
+giuseppe	https://github.com/giuseppe/runc (push)
+kir	git@github.com:kolyshkin/runc.git (fetch)
+kir	git@github.com:kolyshkin/runc.git (push)
+lifubang	https://github.com/lifubang/runc (fetch)
+lifubang	https://github.com/lifubang/runc (push)
+marquiz	https://github.com/marquiz/runc (fetch)
+marquiz	https://github.com/marquiz/runc (push)
 
-I assume that any decent script would split by "any whitespace", plus
-the output of git remote -v is mostly for the user's eyes, not scripts.
+Let's find the maximum width of remote and use it for alignment.
+With this change in place, the output looks like this now:
 
-Please take a look at v2 which I am sending now.
+giuseppe  https://github.com/giuseppe/runc (fetch)
+giuseppe  https://github.com/giuseppe/runc (push)
+kir       git@github.com:kolyshkin/runc.git (fetch)
+kir       git@github.com:kolyshkin/runc.git (push)
+lifubang  https://github.com/lifubang/runc (fetch)
+lifubang  https://github.com/lifubang/runc (push)
+marquiz   https://github.com/marquiz/runc (fetch)
+marquiz   https://github.com/marquiz/runc (push)
+
+[v2: use utf8_strwidth and padding, fix description]
+
+Reported-by: Roman Dodin <dodin.roman@gmail.com>
+Signed-off-by: Kir Kolyshkin <kolyshkin@gmail.com>
+---
+ builtin/remote.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 729f6f3643..654472a87c 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -13,6 +13,7 @@
+ #include "strvec.h"
+ #include "commit-reach.h"
+ #include "progress.h"
++#include "utf8.h"
+ 
+ static const char * const builtin_remote_usage[] = {
+ 	"git remote [-v | --verbose]",
+@@ -1245,14 +1246,26 @@ static int show_all(void)
+ 	result = for_each_remote(get_one_entry, &list);
+ 
+ 	if (!result) {
+-		int i;
++		int i, width = 7;
++
++		if (verbose) {
++			for (i = 0; i < list.nr; i++) {
++				int w = utf8_strwidth((list.items + i)->string);
++				if (w > width)
++					width = w;
++			}
++		}
+ 
+ 		string_list_sort(&list);
+ 		for (i = 0; i < list.nr; i++) {
+ 			struct string_list_item *item = list.items + i;
+-			if (verbose)
+-				printf("%s\t%s\n", item->string,
++			if (verbose) {
++				int padding = width - utf8_strwidth(item->string);
++				if (padding < 0)
++					padding = 0;
++				printf("%*s%s %s\n", padding, "", item->string,
+ 					item->util ? (const char *)item->util : "");
++			}
+ 			else {
+ 				if (i && !strcmp((item - 1)->string, item->string))
+ 					continue;
+-- 
+2.39.0
+
