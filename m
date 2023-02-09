@@ -2,297 +2,351 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C90AEC05027
-	for <git@archiver.kernel.org>; Wed,  8 Feb 2023 23:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D6A4C636D3
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 00:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230083AbjBHXwh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Feb 2023 18:52:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42678 "EHLO
+        id S229540AbjBIACZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Feb 2023 19:02:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230014AbjBHXwf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Feb 2023 18:52:35 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA6F14EB5
-        for <git@vger.kernel.org>; Wed,  8 Feb 2023 15:52:34 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 0ABA55A1E1;
-        Wed,  8 Feb 2023 23:52:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1675900353;
-        bh=/ejNQHkOv6wLs4f9YWFHMCgM0mCen6oblZFo3Xz2Zps=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=VfZfkXeR52RbHlvaQiqo2KCR0AwRjhgW5kCBaOLbWQ2O6RUoh2mjisWJdUO/j2t5z
-         cpAoHeB04NiqmZydZux+7RF2qRET2qJ/HbLxKaWaD9wMMmlS3ZOPHOL6vdEEc8NYlO
-         RnEXrfKvUUB0/YcgbOdo14OZDxTihyjJ+nhRslKRjU8ZnhF0sbSS5m3BwMfEjHqfuK
-         OKRB4lLmK1JR94YOgfyp+xxapSBRvry2cD68L+OPe3e+ThwpEQL8KdaRinHzGFOKWw
-         FQF0oZ2QE8bd7PlOhCNEN08zs4NSJjjq+c0NYzcWBg+3hlokDbooRm3ybvEicTO1uk
-         u4CC3bNZrIS+Rx0L5+iFus3Y5zFFwYgmr4RULS5Qxu33r62E7Vc1TIbmN653yEtdru
-         SQZbiReCt71El/bStlrehqgNL387HnkEDunsGRJDQnj+VkknAAkBi9Gyyfiy2CXqCo
-         7zWk0frNkvi/zvv+jvThIX84RCClvTov2tQB0zz0cRUL6L5GUMb
-Date:   Wed, 8 Feb 2023 23:52:31 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Eli Schwartz <eschwartz93@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
-        "Raymond E . Pasco" <ray@ameretat.dev>,
-        demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>
-Subject: Re: [RFC PATCH 1/1] Document a fixed tar format for interoperability
-Message-ID: <Y+Q1v/PM6n93xvqu@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Eli Schwartz <eschwartz93@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
-        "Raymond E . Pasco" <ray@ameretat.dev>,
-        demerphq <demerphq@gmail.com>, Theodore Ts'o <tytso@mit.edu>
-References: <20230205221728.4179674-1-sandals@crustytoothpaste.net>
- <20230205221728.4179674-2-sandals@crustytoothpaste.net>
- <230206.86lela4ebq.gmgdl@evledraar.gmail.com>
- <Y+LYQYMS7ruvRbNW@tapette.crustytoothpaste.net>
- <230208.86wn4sz8a3.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="BejDgDWXhhwk+B+6"
-Content-Disposition: inline
-In-Reply-To: <230208.86wn4sz8a3.gmgdl@evledraar.gmail.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+        with ESMTP id S229523AbjBIACW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Feb 2023 19:02:22 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C3F21F5DD
+        for <git@vger.kernel.org>; Wed,  8 Feb 2023 16:02:18 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id y9-20020a1709027c8900b00195e237dc8bso292251pll.13
+        for <git@vger.kernel.org>; Wed, 08 Feb 2023 16:02:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YFP0aSRb8QO7e5C8ah4pkbqhcruo5YVuU+piiZE7QCs=;
+        b=DOqCXEAIOtIRRbcfvj+TVb61qIpK0VdM3wDlRbyvqV4KdxbMygbvWCBRnFNLw7vVbK
+         OHyMB+L3bFU1t29f1eWrNTWj3WPuahW0UCj0ux4oppBINleovQ6iUyfU3R6ZnTt+iwFr
+         m9IQ/rrZ3QmlpYMTlTVhkNAhJBHlW8NYuFkg279f6nkbUirWabVsWrDiB3A5lm+mC75l
+         KU2xUBqHmYXMJKLT8KQJUa6hI/+FsXl4/MQqgy5GJnVg4tAKkuHbX93hvlio4c++n9SX
+         QBt8CbsJkOa1iQv00Q3Oo1XV6mzaCbOOvkNHJQBg95dd02uQAxxNL6S/V8zlBNcVDHxY
+         24hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YFP0aSRb8QO7e5C8ah4pkbqhcruo5YVuU+piiZE7QCs=;
+        b=ZJZAFD5+DTwFORRd77WH1Ve3iDGm6bui2q/yAAslyJlTUpb8OqebVuTBBnr19iXZZD
+         oL+dVOPG5qZmoloYtBV1hAVbCd9XJTXZ1Gn2nFNdMgcYVkZ80vf3oRbn8ODrVbIixhff
+         MLaoMJS//kDaRPUwSqZzc3yD9s1T1ffIybCgjc6Suxo4MkuOgMULOpzVe2+iQSAdKLav
+         n/K0QK/vh2+O3Bhy4XMpeuX5e4Sy391gTaOCr5XO0oD4/MOC7AJM9W/ONFCorvYiZ8cw
+         7IjNoj8tATUgGjT69vLg7uvlcfTJ3jNxRw2s3/jdPksTD0qyWaHyB5nYsSpISioihSlz
+         uDHA==
+X-Gm-Message-State: AO0yUKXuvimhFbgGDMilnDO3s1khCXRXjt4wK3kYCYarMXThMLEDSrFO
+        45n42D7ZhoKiep+d0PA+AEalsjg+zMVTflrKchc/XhltWXqcGS9ycVEdGs6WpKy8UnjZy4bW+Lv
+        zHe2QJ6CFe/0vkm6YPSlZGT9vMC+e9VzB336IEMpeP2tgm1hRrS+tQXhdNFlAWYdlfA==
+X-Google-Smtp-Source: AK7set+wyUXA2Ygk2Rd6RuzqtISkN72i6dRJejy2a+tyrmMFkd/Nm2QrWbU/1ekBDWLDTH4+k+yVgX9iHqLhwN0=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a17:90a:9104:b0:225:eaa2:3f5d with SMTP
+ id k4-20020a17090a910400b00225eaa23f5dmr123545pjo.2.1675900937140; Wed, 08
+ Feb 2023 16:02:17 -0800 (PST)
+Date:   Thu,  9 Feb 2023 00:02:06 +0000
+In-Reply-To: <20230207181706.363453-1-calvinwan@google.com>
+Mime-Version: 1.0
+References: <20230207181706.363453-1-calvinwan@google.com>
+X-Mailer: git-send-email 2.39.1.519.gcb327c4b5f-goog
+Message-ID: <20230209000212.1892457-1-calvinwan@google.com>
+Subject: [PATCH v8 0/6] submodule: parallelize diff
+From:   Calvin Wan <calvinwan@google.com>
+To:     git@vger.kernel.org
+Cc:     Calvin Wan <calvinwan@google.com>, avarab@gmail.com,
+        chooglen@google.com, newren@gmail.com, jonathantanmy@google.com,
+        phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Original cover letter for context:
+https://lore.kernel.org/git/20221011232604.839941-1-calvinwan@google.com/
 
---BejDgDWXhhwk+B+6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This reroll contains stylistic changes suggested by Avar and Phillip,
+and includes a range-diff below.
 
-On 2023-02-08 at 11:07:44, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->=20
-> On Tue, Feb 07 2023, brian m. carlson wrote:
->=20
-> > [[PGP Signed Part:Undecided]]
-> > On 2023-02-06 at 22:18:47, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> Maybe there are other changes in the proposed spec that put it at odds
-> >> with such a goal, it's unclear to me if this is the only difference.
-> >
-> > As mentioned in the description, that doesn't address trees, which have
-> > never been consistent traditionally.
->=20
-> You mention "[...]it produces identical results for identical trees,
-> regardless of hash algorithm". I'm not familiar with how we encode trees
-> differently based on the hash algorithm. Do we stick the tree OID in
-> there somewhere, or is it something else?
+Calvin Wan (6):
+  run-command: add duplicate_output_fn to run_processes_parallel_opts
+  submodule: strbuf variable rename
+  submodule: move status parsing into function
+  submodule: refactor is_submodule_modified()
+  diff-lib: refactor out diff_change logic
+  diff-lib: parallelize run_diff_files for submodules
 
-If you pass a commit or tag on the command line, you get the timestamp
-of the commit or tag.  If you pass a tree, you get the current
-timestamp.  Thus, whether the output is reproducible depends on the type
-of object you specify.
+ Documentation/config/submodule.txt |  12 ++
+ diff-lib.c                         | 133 +++++++++++----
+ run-command.c                      |  16 +-
+ run-command.h                      |  25 +++
+ submodule.c                        | 266 ++++++++++++++++++++++++-----
+ submodule.h                        |   9 +
+ t/helper/test-run-command.c        |  20 +++
+ t/t0061-run-command.sh             |  39 +++++
+ t/t4027-diff-submodule.sh          |  31 ++++
+ t/t7506-status-submodule.sh        |  25 +++
+ 10 files changed, 497 insertions(+), 79 deletions(-)
 
-> IOW do these trees vary within the same hash algorithm, or is it another
-> special-case where we now produce a different tarball with SHA-1 and
-> SHA-256 with commits, but also with trees?
+Range-diff against v7:
+1:  311b1abfbe ! 1:  5d51250c67 run-command: add duplicate_output_fn to run_processes_parallel_opts
+    @@ run-command.c: static void pp_init(struct parallel_processes *pp,
+      	if (!opts->get_next_task)
+      		BUG("you need to specify a get_next_task function");
+      
+    -+	if (opts->duplicate_output && opts->ungroup)
+    -+		BUG("duplicate_output and ungroup are incompatible with each other");
+    ++	if (opts->ungroup) {
+    ++		if (opts->duplicate_output)
+    ++			BUG("duplicate_output and ungroup are incompatible with each other");
+    ++	}
+     +
+      	CALLOC_ARRAY(pp->children, n);
+      	if (!opts->ungroup)
+    @@ run-command.c: static void pp_buffer_stderr(struct parallel_processes *pp,
+     +			} else if (n < 0) {
+      				if (errno != EAGAIN)
+      					die_errno("read");
+    -+			} else {
+    -+				if (opts->duplicate_output)
+    -+					opts->duplicate_output(&pp->children[i].err,
+    -+					       strlen(pp->children[i].err.buf) - n,
+    -+					       opts->data,
+    -+					       pp->children[i].data);
+    ++			} else if (opts->duplicate_output) {
+    ++				opts->duplicate_output(&pp->children[i].err,
+    ++					pp->children[i].err.len - n,
+    ++					opts->data, pp->children[i].data);
+     +			}
+      		}
+      	}
+    @@ run-command.h: typedef int (*start_failure_fn)(struct strbuf *out,
+     + *
+     + * This function is incompatible with "ungroup"
+     + */
+    -+typedef void (*duplicate_output_fn)(struct strbuf *out,
+    -+				    size_t offset,
+    -+				    void *pp_cb,
+    -+				    void *pp_task_cb);
+    ++typedef void (*duplicate_output_fn)(struct strbuf *out, size_t offset,
+    ++				    void *pp_cb, void *pp_task_cb);
+     +
+      /**
+       * This callback is called on every child process that finished processing.
+    @@ run-command.h: struct run_process_parallel_opts
+      	start_failure_fn start_failure;
+      
+     +	/**
+    -+	 * duplicate_output: See duplicate_output_fn() above. This should be
+    -+	 * NULL unless process specific output is needed
+    ++	 * duplicate_output: See duplicate_output_fn() above. Unless you need
+    ++	 * to capture output from child processes, leave this as NULL.
+     +	 */
+     +	duplicate_output_fn duplicate_output;
+     +
+    @@ t/helper/test-run-command.c: static int no_job(struct child_process *cp,
+     +			void *pp_task_cb UNUSED)
+     +{
+     +	struct string_list list = STRING_LIST_INIT_DUP;
+    ++	struct string_list_item *item;
+     +
+     +	string_list_split(&list, out->buf + offset, '\n', -1);
+    -+	for (size_t i = 0; i < list.nr; i++) {
+    -+		if (strlen(list.items[i].string) > 0)
+    -+			fprintf(stderr, "duplicate_output: %s\n", list.items[i].string);
+    -+	}
+    ++	for_each_string_list_item(item, &list)
+    ++		fprintf(stderr, "duplicate_output: %s\n", item->string);
+     +	string_list_clear(&list, 0);
+     +}
+     +
+    @@ t/t0061-run-command.sh: test_expect_success 'run_command runs in parallel with m
+     +	test_must_be_empty out &&
+     +	test 4 = $(grep -c "duplicate_output: Hello" err) &&
+     +	test 4 = $(grep -c "duplicate_output: World" err) &&
+    -+	sed "/duplicate_output/d" err > err1 &&
+    ++	sed "/duplicate_output/d" err >err1 &&
+     +	test_cmp expect err1
+     +'
+     +
+    @@ t/t0061-run-command.sh: test_expect_success 'run_command runs in parallel with a
+     +	test_must_be_empty out &&
+     +	test 4 = $(grep -c "duplicate_output: Hello" err) &&
+     +	test 4 = $(grep -c "duplicate_output: World" err) &&
+    -+	sed "/duplicate_output/d" err > err1 &&
+    ++	sed "/duplicate_output/d" err >err1 &&
+     +	test_cmp expect err1
+     +'
+     +
+    @@ t/t0061-run-command.sh: test_expect_success 'run_command runs in parallel with m
+     +	test_must_be_empty out &&
+     +	test 4 = $(grep -c "duplicate_output: Hello" err) &&
+     +	test 4 = $(grep -c "duplicate_output: World" err) &&
+    -+	sed "/duplicate_output/d" err > err1 &&
+    ++	sed "/duplicate_output/d" err >err1 &&
+     +	test_cmp expect err1
+     +'
+     +
+2:  d00a18dd84 = 2:  6ded5b6788 submodule: strbuf variable rename
+3:  dcda518922 = 3:  0c71cea8cd submodule: move status parsing into function
+4:  c6fc5ba13b ! 4:  5c8cc93f9f submodule: refactor is_submodule_modified()
+    @@ submodule.c: static int config_update_recurse_submodules = RECURSE_SUBMODULES_OF
+      static int initialized_fetch_ref_tips;
+      static struct oid_array ref_tips_before_fetch;
+      static struct oid_array ref_tips_after_fetch;
+    -+static const char *status_porcelain_start_error =
+    -+	N_("could not run 'git status --porcelain=2' in submodule %s");
+    -+static const char *status_porcelain_fail_error =
+    -+	N_("'git status --porcelain=2' failed in submodule %s");
+    ++#define STATUS_PORCELAIN_START_ERROR \
+    ++	N_("could not run 'git status --porcelain=2' in submodule %s")
+    ++#define STATUS_PORCELAIN_FAIL_ERROR \
+    ++	N_("'git status --porcelain=2' failed in submodule %s")
+      
+      /*
+       * Check if the .gitmodules file is unmerged. Parsing of the .gitmodules file
+    @@ submodule.c: unsigned is_submodule_modified(const char *path, int ignore_untrack
+     +	prepare_status_porcelain(&cp, path, ignore_untracked);
+      	if (start_command(&cp))
+     -		die(_("Could not run 'git status --porcelain=2' in submodule %s"), path);
+    -+		die(_(status_porcelain_start_error), path);
+    ++		die(_(STATUS_PORCELAIN_START_ERROR), path);
+      
+      	fp = xfdopen(cp.out, "r");
+      	while (strbuf_getwholeline(&buf, fp, '\n') != EOF) {
+    @@ submodule.c: unsigned is_submodule_modified(const char *path, int ignore_untrack
+      
+      	if (finish_command(&cp) && !ignore_cp_exit_code)
+     -		die(_("'git status --porcelain=2' failed in submodule %s"), path);
+    -+		die(_(status_porcelain_fail_error), path);
+    ++		die(_(STATUS_PORCELAIN_FAIL_ERROR), path);
+      
+      	strbuf_release(&buf);
+      	return dirty_submodule;
+5:  1ea8eae9c9 = 5:  6c2b62abc8 diff-lib: refactor out diff_change logic
+6:  0d35fcc38d < -:  ---------- diff-lib: refactor match_stat_with_submodule
+7:  fd1eec974d ! 6:  bb25dadbe5 diff-lib: parallelize run_diff_files for submodules
+    @@ diff-lib.c: static int check_removed(const struct index_state *istate, const str
+     +				     unsigned *ignore_untracked)
+      {
+      	int changed = ie_match_stat(diffopt->repo->index, ce, st, ce_option);
+    - 	struct diff_flags orig_flags;
+    +-	if (S_ISGITLINK(ce->ce_mode)) {
+    +-		struct diff_flags orig_flags = diffopt->flags;
+    +-		if (!diffopt->flags.override_submodule_config)
+    +-			set_diffopt_flags_from_submodule_config(diffopt, ce->name);
+    +-		if (diffopt->flags.ignore_submodules)
+    +-			changed = 0;
+    +-		else if (!diffopt->flags.ignore_dirty_submodules &&
+    +-			 (!changed || diffopt->flags.dirty_submodules))
+    ++	struct diff_flags orig_flags;
+     +	int defer = 0;
+    - 
+    - 	if (!S_ISGITLINK(ce->ce_mode))
+    --		return changed;
+    ++
+    ++	if (!S_ISGITLINK(ce->ce_mode))
+     +		goto ret;
+    - 
+    - 	orig_flags = diffopt->flags;
+    - 	if (!diffopt->flags.override_submodule_config)
+    -@@ diff-lib.c: static int match_stat_with_submodule(struct diff_options *diffopt,
+    - 		goto cleanup;
+    - 	}
+    - 	if (!diffopt->flags.ignore_dirty_submodules &&
+    --	    (!changed || diffopt->flags.dirty_submodules))
+    --		*dirty_submodule = is_submodule_modified(ce->name,
+    ++
+    ++	orig_flags = diffopt->flags;
+    ++	if (!diffopt->flags.override_submodule_config)
+    ++		set_diffopt_flags_from_submodule_config(diffopt, ce->name);
+    ++	if (diffopt->flags.ignore_submodules) {
+    ++		changed = 0;
+    ++		goto cleanup;
+    ++	}
+    ++	if (!diffopt->flags.ignore_dirty_submodules &&
+     +	    (!changed || diffopt->flags.dirty_submodules)) {
+     +		if (defer_submodule_status && *defer_submodule_status) {
+     +			defer = 1;
+     +			*ignore_untracked = diffopt->flags.ignore_untracked_in_submodules;
+     +		} else {
+    -+			*dirty_submodule = is_submodule_modified(ce->name,
+    - 					 diffopt->flags.ignore_untracked_in_submodules);
+    + 			*dirty_submodule = is_submodule_modified(ce->name,
+    +-								 diffopt->flags.ignore_untracked_in_submodules);
+    +-		diffopt->flags = orig_flags;
+    ++					 diffopt->flags.ignore_untracked_in_submodules);
+     +		}
+    -+	}
+    - cleanup:
+    - 	diffopt->flags = orig_flags;
+    + 	}
+    ++cleanup:
+    ++	diffopt->flags = orig_flags;
+     +ret:
+     +	if (defer_submodule_status)
+     +		*defer_submodule_status = defer;
+    @@ diff-lib.c: int run_diff_files(struct rev_info *revs, unsigned int option)
+      				       changed, istate, ce))
+      			continue;
+      	}
+    -+	if (submodules.nr > 0) {
+    -+		int parallel_jobs;
+    -+		if (git_config_get_int("submodule.diffjobs", &parallel_jobs))
+    ++	if (submodules.nr) {
+    ++		unsigned long parallel_jobs;
+    ++		struct string_list_item *item;
+    ++
+    ++		if (git_config_get_ulong("submodule.diffjobs", &parallel_jobs))
+     +			parallel_jobs = 1;
+     +		else if (!parallel_jobs)
+     +			parallel_jobs = online_cpus();
+    -+		else if (parallel_jobs < 0)
+    -+			die(_("submodule.diffjobs cannot be negative"));
+     +
+     +		if (get_submodules_status(&submodules, parallel_jobs))
+     +			die(_("submodule status failed"));
+    -+		for (size_t i = 0; i < submodules.nr; i++) {
+    -+			struct submodule_status_util *util = submodules.items[i].util;
+    ++		for_each_string_list_item(item, &submodules) {
+    ++			struct submodule_status_util *util = item->util;
+     +
+     +			if (diff_change_helper(&revs->diffopt, util->newmode,
+     +				       util->dirty_submodule, util->changed,
+    @@ submodule.c: int submodule_touches_in_range(struct repository *r,
+     +	int result;
+     +
+     +	struct string_list *submodule_names;
+    -+
+    -+	/* Pending statuses by OIDs */
+    -+	struct status_task **oid_status_tasks;
+    -+	int oid_status_tasks_nr, oid_status_tasks_alloc;
+     +};
+     +
+      struct submodule_parallel_fetch {
+    @@ submodule.c: unsigned is_submodule_modified(const char *path, int ignore_untrack
+     +	struct status_task *task = task_cb;
+     +
+     +	sps->result = 1;
+    -+	strbuf_addf(err,
+    -+	    _(status_porcelain_start_error),
+    -+	    task->path);
+    ++	strbuf_addf(err, _(STATUS_PORCELAIN_START_ERROR), task->path);
+     +	return 0;
+     +}
+     +
+    @@ submodule.c: unsigned is_submodule_modified(const char *path, int ignore_untrack
+     +
+     +	if (retvalue) {
+     +		sps->result = 1;
+    -+		strbuf_addf(err,
+    -+		    _(status_porcelain_fail_error),
+    -+		    task->path);
+    ++		strbuf_addf(err, _(STATUS_PORCELAIN_FAIL_ERROR), task->path);
+     +	}
+     +
+     +	parse_status_porcelain_strbuf(&task->out,
+-- 
+2.39.1.519.gcb327c4b5f-goog
 
-When we write an archive, we embed a comment with the commit object ID
-(see next response).  That's using the hash algorithm in the repository.
-If we write an archive for a tree, no object ID is embedded.
-
-> B.t.w. are there some options to tar(1) to make it dump these headers
-> you're describing? I coludn't find anything when looking, it looks like
-> libtar might support it, but I was hoping for something more compatible
-> with my lazyness :)
-
-I don't think so.  However, you can see them with `git archive --format=3Dt=
-ar HEAD | env -u LESSOPEN less -R`.
-
-The body of the global header looks like this (my indentation):
-
-  52 comment=3D7ff60001dae72ac39783ca536a4b673862b28587
-
-If you want to see what GNU tar produces, you can run `tar -cf - --posix --=
-exclude .git . | env -u LESSOPEN less -R`:
-
-  30 mtime=3D1675633909.844009705
-  30 atime=3D1675895555.716075364
-  30 ctime=3D1675633909.844009705
-
-> I'm concerned that you're expanding the scope of a "stable" tar format
-> to necessarily include one-off fixing various things we've regretted
-> over the years.
-
-Well, yes, because if we're specifying a stable format, we should make it
-something we want to support long term.  Right now, we don't guarantee
-anything; if we find something unsatisfactory, we just fix it.
-
-> Then a v1/v2 is just this pseudocode, isn't it?
->=20
->  	switch (version) {
-> 	case 1:
-> 		break; /* warts and all */
-> 	case 2:
-> 		include_oid =3D 0;
-> 		satanic_permissions =3D 0;
-> 		no_timestamps =3D 1;
-> 		break;
-> 	}
-
-As I mentioned in the doc, there are multiple ways to encode various
-things like lengths and the order of headers.  It's not immediately
-obvious from the code how our length encoding works, and that's the kind
-of code that could easily have a small refactor or bug fix break things
-really badly.
-
-Additionally, we, like most other pax implementations, just encode
-headers in whatever order we thought was most expedient when
-implementing, and sometimes they're emitted and sometimes they're not.
-That's a really great recipe for behaviour that is extremely hard to
-test and extremely hard to reproduce.  For example, we'd have to test
-the interaction with long paths and symlinks, long paths and large
-files, and several other sets of variants to make sure that a minor
-refactor doesn't change output.  The current logic of the code is very
-subtle.
-
-> Now that you've done the work to specify it, it turns out that a
-> proposed format you'd like going forward is almost identical to what we
-> currently emit, to the point that supporting that as a v1 seems rather
-> trivial (but again, I may still be missing something).
-
-It's relatively similar.  The format I'm proposing is much stricter and
-more regular than what we do now.
-
-I'm thinking that the changes will be limited to writing three or four
-functions.  It's not terribly invasive, but there will be some departure
-=66rom the existing code.
-
-> We have a huge long-tail of users in the wild, forcing those users to go
-> through a one-time breakage of their existing archives if we could avoid
-> that by making v1 the current format seems entirely unnecessary.
-
-Because right now, the current code is not amenable to producing or
-testing reproducible output.  Any significant refactor of the existing
-code will result in an output change unless the author is extremely
-careful, and I'm not comfortable guaranteeing the current format with
-that caveat.  The reason the data hasn't changed is because such a
-refactor hasn't happened yet.
-
-I'm specifically thinking about the length calculation in
-`strbuf_append_ext_header`, which is extremely magical, and the path
-splitting in `get_path_prefix`.  Those are both extremely subtle and
-logical places to perform a refactor or adjustment that might change
-output in a very minor way for a tiny subset of files.
-
-> When producing a release archive, or packing up a given commit that's
-> therefore going to be stable, even between SHA-1 and SHA-256, although
-> those two would differ if the OID is put in the header, but that's
-> another matter.
->=20
-> If I understand you correctly here you seem to be in pursuit of another
-> goal entirely, which is that you'd like the same output for different
-> commits if they're TREESAME.
->=20
-> Or, if you have a bunch of release archives a very nice attribute of
-> this is that with a bunch of similar archives on the same FS you could
-> e.g. benefit more from block-level deduplication.
->=20
-> All of which is cool, but I don't see why it needs to be a hard
-> requirement in the design.
-
-I think it's valuable to have the same input data produce the same
-output.  That means that I can use Git to produce the archive, or some
-other tool implementing the same format, and it just works.  If GNU tar,
-libgit2, or libarchive implemented the same format with an option,
-people would also be able to produce an identical archive as long as
-they excluded the files in `.gitignore` and `.git`.  That approach is
-very valuable if you need to slightly modify the contents of the archive
-that Git produced in a way not supported by --add-file (and Junio used
-to do that himself for Git releases before --add-file).
-
-> But related to that is setting everything to epoch:0, doesn't that mean
-> that when you unpack say a release archive that in common filesystem
-> browsers all of the files will be dated in the 70s, as opposed to the
-> time of release as it is now?
-
-Yes.  That's also the case for current Rust crates and lots of other
-reproducible archives.  I've heard exactly zero complaints about that
-behaviour since I implemented it in Cargo.  Looking back at the history,
-apparently there's some broken behaviour with the actual Epoch and lldb
-(because 0 is a sentinel), but the change is just to switch to a
-timestamp of 1 instead of 0, which I can do in the next version of my
-patch.  No other problems seem to have come up with using a fixed
-timestamp.
-
-The only place where I could imagine this being a problem is if you used
-Make in a directory after unpacking a new archive over the old one, but
-that is a terrible idea in the first place since that leaves now-removed
-files from the old version behind which will probably cause your build
-to fail at some point.  In any event, because almost everyone uses
-`--prefix` with the version number for their archives, it's difficult to
-even perform that extraction over top anyway, and so it's unlikely that
-anyone actually does such a thing.
-
-Otherwise, there's typically no functional difference.
-
-> Okey, so I might have to take back much of what I said about, so you're
-> not opposed to supporting the current format as a "v1" or whatever,
-> you'd just like this propsoed "v2" (or "vstable", or whatever) to have
-> some "blessed" status.
-
-No, I'm not opposed to supporting both.  There's "default" (v0 if you
-like) and "v1".  If you say, "I'd like a tarball", you get what we
-produce now (or what it changes to in the future).  If you say, "I want
-bit-for-bit compatibility", then you get v1.
-
-> I just don't get why we wouldn't support both, if the delta is as small
-> as seems to be the case. If that's right this "v2" is less "extremely
-> restricted" to our current "v1", and more "almost identical", just "a
-> bit less wart-y".
-
-Right, I think it's very easy to do.
-
-> I just don't see the target audience for that. As the issues that
-> prompted these on-list discussions show we have people in the wild who
-> deeply care about the current format.
->=20
-> They probably care enough about that that we're likely to try to support
-> that forever, at least I don't see any currently proposed change to the
-> format that seems worth breaking things for those users.
-
-I don't think there's any purpose in guaranteeing the current format,
-given what I've said above about testability and the risk of breakage
-during a refactor with the current code, and I don't think the project
-should do that.  However, downstream users, including various forges, may
-wish to do so, and if so I wish them all the best.
-
-> If you're going to switch to some stable format surely that would either
-> need to involve massive one-off breakage, or you'd have some "flag day",
-> from today all new archives are produced with the new "stable" method.
-
-Nope.  There's simply a new option to produce v1 archives and people
-switch over as part of their normal build system maintenance, and
-eventually nobody cares about the ancient versions depending on the old
-format.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---BejDgDWXhhwk+B+6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY+Q1vwAKCRB8DEliiIei
-gfgIAQDo+VnMwtOuS0AVRbR2y3wkGJyYW/XxkO5DqBrXDV0ZlAD+MNS2oexzuwrF
-g1tu9v1pNDYzFgdRvyRSm4yB/50KyQ4=
-=WuBD
------END PGP SIGNATURE-----
-
---BejDgDWXhhwk+B+6--
