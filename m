@@ -2,112 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A92EC61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 22:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED853C61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 23:05:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230328AbjBIWzD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 17:55:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52342 "EHLO
+        id S230450AbjBIXF1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 18:05:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230455AbjBIWyw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 17:54:52 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948BC5B76B
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 14:54:47 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id b5so4619554plz.5
-        for <git@vger.kernel.org>; Thu, 09 Feb 2023 14:54:47 -0800 (PST)
+        with ESMTP id S230198AbjBIXFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 18:05:22 -0500
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96D505EBE3
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 15:05:21 -0800 (PST)
+Received: by mail-pg1-x52e.google.com with SMTP id 141so2637910pgc.0
+        for <git@vger.kernel.org>; Thu, 09 Feb 2023 15:05:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tYHsRYRRHn6noN538WC1RHGgsWBB6Xd+u+lYGCILxRs=;
-        b=gvxjvvg3NvCjOCSGTv93xIx+SvrZN3PcFs9booCqt9L7we6lJrOjLs5CxpNUgVJX0F
-         SmvCwz5Qq8VtzZ1uRSwomPvYfhzoo+pf/eHQFLfbjlAyugsJBeHJicSb/IzgG2n1z9AS
-         qaj1qnwktr51IeJWEFCdJbQaT8sAMTART9vu8cZ2a6x6Go5cZybjeQ86PHCkPzsKdpKo
-         ovdgvcCs9RDEfaNUVfobG2WycbwVMiZuT2ODhy2j0Bb9eINHVM7h7mYELes0HphI2UjY
-         wji+ViQeLz2Je1IenOx3NFHRuAeZohsNWTJRfSlwIVOawLg91oBci1RSsXep8tZg674C
-         Afaw==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=f5GxIuRLnGfghHM/Yaigj7aShtoa7Ir4FsscU6VmGIc=;
+        b=pGGdAOo4N2xDOaMnTZ4dUSY1rF8e63/g3urUwlC6Q/c8Fhc4i7T6cmyKWVJjnDb9dq
+         PJprWy/5SrmJnw4GKHhGno+MpW6HaKT5gw+BfuR/nJJ3UY9tbyvFezPw9vOGDXxe9LsK
+         JGygA6FLgX3z0ghQEysvlLncS3D1jn68hnQJ+VmPP/wXXLthiaXrBAre1VrkPXvxH2K1
+         SaEfdVqgfVgdpHxQg3X6XiVaqj5naOvZRWs4FWw4Vx7loYqcI0Ql+Y36yFfuECTNSPxY
+         ieqFoYEql/SB3+U7NrUciLuQhYq8LzMhywAt7LgRGoYagTwD+W9A3idVN2A+3Kp6U0k1
+         /gDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tYHsRYRRHn6noN538WC1RHGgsWBB6Xd+u+lYGCILxRs=;
-        b=AigwWILR4aePgqXaKQFXdZyCkhOt2uqZQHQO60Uovtp3LkOzPQfDZ2zHGnNO2Em/YH
-         lUb0NwEdbprNB+6q+WEESo34XGRmTLW36i65jGEDOUT14xctT8hOo/dYIgFanpSEazzk
-         A7jKVJxdNfWxzzlyG09YWcqCXmfdya2BPmQm4AoCzVE6r9Kw1w0TumvmlPSXv80afbas
-         N8jjyhxpxB89zlBc01pYNth+08XF+mNwxdRbr+vPCSN3F5vkRq0AnWD3VgePXhxJZ8qL
-         ss7VhmPhV7k0Oh35+m8IpKEa8tf1a4YAHX2m9r+UNWmq6z5wjuf3QBjuU6WhBth3p5k1
-         MlgQ==
-X-Gm-Message-State: AO0yUKXla4bbOUNCuGje75XM0tYFZ8AcvSMcJZ1Cl+N+w42W6SQSBVlP
-        pCqF/Y6mLXN4Gj9q6aUAZtY=
-X-Google-Smtp-Source: AK7set/LaX+b6qX1Y2j3OhpRY1FCsileYnF2UPiI85V61ueIQB/e7Vln0RrgwXFr0KSGj53d+90noQ==
-X-Received: by 2002:a17:90a:199:b0:230:ac58:4fa2 with SMTP id 25-20020a17090a019900b00230ac584fa2mr41492pjc.12.1675983286931;
-        Thu, 09 Feb 2023 14:54:46 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=f5GxIuRLnGfghHM/Yaigj7aShtoa7Ir4FsscU6VmGIc=;
+        b=auefKXAzgV7dSWqTJTAGLNU3DMq+Q5BM6P07Qdi0aVbz5cgWSxPn5j2ch3r/JmBRrl
+         Cy2PeJiLwtI5qi3wJ2EaFnX0TKy+Gvr93VgIMajXlTgCTjpgZJyT/E7OL5atTcn1x3Y3
+         HOUx+h3s+rNVUa6HM4SsO73NvCJyp+veOiwqa2S5vKkYHlm63L3eNFZTnV0o1ZlWS+RM
+         wnBdM7xi28Hlys9eVVAc5XKLi46af5jHG0KNNGAYNQNJUF3+6x1yp2meq7yHYm2kt4wu
+         bA+iA0otyJ9Daib/F/cPcASXzoTpo21UQ+s0MCSW3vR1lvh95U+SZxDb4T/9GE8H6s65
+         40Eg==
+X-Gm-Message-State: AO0yUKUn0wm2dYJ2rxlSOf4wqUqgEqdgZ52cDAftTEl5e3pKFe0orqsu
+        V3CNT3/tqQFZ9R32B9qMHA0=
+X-Google-Smtp-Source: AK7set/CDjc+68O2O6Q8cLMO/5nzjeovxjQvSDb5xPhGardUcUvpdsXlTGsP8cF45Jzpa86wUG/eww==
+X-Received: by 2002:aa7:9edc:0:b0:5a8:4eef:4dc5 with SMTP id r28-20020aa79edc000000b005a84eef4dc5mr4457142pfq.10.1675983920966;
+        Thu, 09 Feb 2023 15:05:20 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id s89-20020a17090a2f6200b0022bfcf5d297sm3931065pjd.9.2023.02.09.14.54.46
+        by smtp.gmail.com with ESMTPSA id t25-20020aa79399000000b0058bba6f06c5sm1978149pfe.8.2023.02.09.15.05.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Feb 2023 14:54:46 -0800 (PST)
+        Thu, 09 Feb 2023 15:05:20 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Daniel Abrecht <git-git@nodmarc.danielabrecht.ch>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] test: make SYMLINKS prerequisite more robust
-References: <xmqqwn4sq73f.fsf@gitster.g>
-        <230209.86k00rzqsz.gmgdl@evledraar.gmail.com>
-        <xmqqbkm3ppn8.fsf@gitster.g>
-        <230209.86ttzvy405.gmgdl@evledraar.gmail.com>
-Date:   Thu, 09 Feb 2023 14:54:46 -0800
-In-Reply-To: <230209.86ttzvy405.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 09 Feb 2023 03:15:07 +0100")
-Message-ID: <xmqqlel6laa1.fsf@gitster.g>
+Subject: Re: [PATCH v2] gitweb: fix base url set if PATH_INFO is used, add a
+ / at the end
+References: <20230209222648.z-sqdvWiK7xa-NLagt3B_X_4bFQJBsA8cA06YvgXqWQ@z>
+Date:   Thu, 09 Feb 2023 15:05:20 -0800
+In-Reply-To: <20230209222648.z-sqdvWiK7xa-NLagt3B_X_4bFQJBsA8cA06YvgXqWQ@z>
+        (Daniel Abrecht's message of "Thu, 09 Feb 2023 23:26:48 +0100")
+Message-ID: <xmqqfsbel9sf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Daniel Abrecht <git-git@nodmarc.danielabrecht.ch> writes:
 
->> We
->> are testing "git" with the test suite, so even if with some magic
->> that is still unknown to compat/mingw.h it knows how to read what
->> "ln -s x y" left in "y", until compat/mingw.h::readlink() learns the
->> same trick, asking Perl to decide SYMLINKS prerequisite would not
->> help our test scripts at all.
+> In HTML, if there is a base tag like `<base href="/a/b">`, a relative
+> URL like
+> `c/d` will be resolved by the browser as `a/c/d` and not as
+> `a/b/c/d`. But with
+> a base tag like `<base href="/a/b/">` it will result in `a/b/c/d`.
 >
-> We could always see if they return the same answer :) But not worth
-> pursuing in this case.
+> Signed-off-by: Daniel Abrecht <public@danielabrecht.ch>
+> ---
+>  gitweb/gitweb.perl | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index e66eb3d9ba..edcee1652c 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -74,6 +74,11 @@ sub evaluate_uri {
+>  		}
+>  	}
+>
+> +	# $base_url is later used in the <base> tag as a URL, if it
+> doesn't end in a /
 
-Actually we probably should test if "git" can create a symbolic
-link, because that is what matters more than what "ln -s" can or
-cannot do.  We also are interested in the "symbolic link" does
-behave as a symbolic link, i.e. writing into it should modify the
-contents of the target of the link.
+It seems an overlog line was wrapped around and broke the patch.
 
-In any case, here is what I have in mind.  There is only a symbolic
-link 'y' without 'x' (because this happens in a new and empty
-directory for evaluating the lazy prerequisite), redirecting output
-from the command, which should be 'x', into 'y' will vivify file 'x'
-with contents also 'x', and reading 'y' should yield 'x' because it
-points at 'x'.
+> +	# the browser will strip away the last component for relative URLs.
+> +	# Add the / if it's missing.
 
-diff --git c/t/test-lib.sh w/t/test-lib.sh
-index 6db377f68b..3fb5957bd2 100644
---- c/t/test-lib.sh
-+++ w/t/test-lib.sh
-@@ -1773,7 +1773,9 @@ test_lazy_prereq PIPE '
- 
- test_lazy_prereq SYMLINKS '
- 	# test whether the filesystem supports symbolic links
--	ln -s x y && test -h y
-+	ln -s x y && test -h y && test-tool readlink y >y &&
-+	test "$(cat y)" = x &&
-+	test "$(cat x)" = x
- '
- 
- test_lazy_prereq SYMLINKS_WINDOWS '
+The above is not an incorrect statement per-se, but if $base were
+pointing at the document, we would likely break if we add an extra
+slash.  Don't we want to say something like 
+
+	# $base_url at this point points at a directory, not a
+        # single document, and later is used in the <base> tag.
+        # Make sure it ends in a '/'.  Otherwise, we'd lose the last
+        # component when forming a relative URL.
+
+perhaps?
+
+> +	$base_url .= '/' if not $base_url =~ /\/$/;
+> +
+>  	# target of the home link on top of all pages
+>  	our $home_link = $my_uri || "/";
+>  }
