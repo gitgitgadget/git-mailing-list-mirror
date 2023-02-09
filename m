@@ -2,270 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41A73C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 14:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DD8AC61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 14:44:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230457AbjBIOfS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 09:35:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57718 "EHLO
+        id S230224AbjBIOoV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 09:44:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230401AbjBIOfP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 09:35:15 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99F9F1F5C9
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 06:35:13 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id h16so1943226wrz.12
-        for <git@vger.kernel.org>; Thu, 09 Feb 2023 06:35:13 -0800 (PST)
+        with ESMTP id S229978AbjBIOoT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 09:44:19 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7982B36FE7
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 06:44:18 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id d14so1981947wrr.9
+        for <git@vger.kernel.org>; Thu, 09 Feb 2023 06:44:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LvPUo3Q3otPmAondEiTJrOMXcBD72bDr0YvXmo9Bu9k=;
-        b=nkcBkpAnU7OEeYH+omBKqWQmi01Cp7VZq7AVPWanajEC/zX1pNjwdHvTiF2ZI7vfTp
-         qeDi1sabb1cTkJSnpPovBotlqi6gdksMEzeWUMdM+7x9KMRx5ypZAMUaOxCyUrjlNhkR
-         7442jbBdfRmrGNmFagNCU6rJO9e5GqgamBk9uostfFIDx2W+kSaKdtH+TB7in7twx5UA
-         PZahP/NPtlLx6uLTIpK4RjI1pt1IpiiSMXPxnzXuGZnJFnNMQXsfn7zUzAzTDgvwbM7z
-         R9qQEqC59iPidgCJDN2xpzPT7445TZx9MrQZ7CrcZwcjvNFMRM7vFFIF8zbDLq30O1bx
-         h1oQ==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SC3oyKQOPaf0CvcFQz3nUDo+v2dvSpQtxty3ASCefmk=;
+        b=aVBP72iCtHg0gF9hA4ZsRz7IATQFAOv7e4TRc7MdFhVWt4vwhNL920qGVrJOPHA7cv
+         eyPlRK9dgkIdFhHHGTUlZu8Hr+Hk+TR3cN/okfrMXai+3FmQojQfEglLWirSJcdobT7+
+         Aai+adOzvb1I5DtsfFbKDzYdDmxf4uBlI6QqgpSN6tDm9C6pXZ6H9myQPcs5XG6Y97IH
+         fIX6Tu+y5zJxMS2qfJpQTE91yyY1Yl5bMRtkogAkbK3NmduiFWFzCOwX7isMicO93OWt
+         72M4ORj8vvZx4ako5HhCHF1caPff/SES59Vkv2SqLqL4CPN0j3PfkNnr84UMVx2IULbD
+         aMWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LvPUo3Q3otPmAondEiTJrOMXcBD72bDr0YvXmo9Bu9k=;
-        b=tyo2i7pNOZIKlWaYU+ltAda/Me/SFTmO9yMS6NxQozRhiIW+j5LODeaiZErErGQiqK
-         ZNIkuPLnxoZALlX8JzQyVvko3uNDhP18y2ep6JI2P/4SLbNiyN8CuAclrZMOFUiBTn/v
-         p+Lt1f9Mket67k2uJPvRqlmJzY3xVT2/Iz3+yLulQclgasvjBgFdhjATFAjYVoE6OKxS
-         sh+CrP6Y44FMc7EWFxYhUw4xqtllWyk12braBlgimXvpl7b2NfoeMbhb/7JU0DcSAftm
-         sKz1e3jm4dmiWxJIjEGRN1cQIuC7y0mO1vjm6elHRUK6Eip3j8ekxbLcrpQRhcYseo0/
-         vBbQ==
-X-Gm-Message-State: AO0yUKWVwgiftwiA2kCnRvyifXls0f0XXrKKXG0UH8+RHcpY56gh4u+F
-        8/ku3OAcANI/AaudHFQ94WYGx3wVMpWmxiFv
-X-Google-Smtp-Source: AK7set+Vr6NVuXnrDSCfvB0CshS2LqgPyE2biH5gK7tcUOtQVkmejJ9CBtB0MWaHpVPFV2NSxU6Qig==
-X-Received: by 2002:a5d:4350:0:b0:2bf:d137:9945 with SMTP id u16-20020a5d4350000000b002bfd1379945mr9973147wrr.51.1675953311770;
-        Thu, 09 Feb 2023 06:35:11 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k10-20020a056000004a00b002c3d814cc63sm1391477wrx.76.2023.02.09.06.35.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Feb 2023 06:35:11 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Max Gautier <max.gautier@redhat.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 2/2] gpg-interface.c: lazily get GPG config variables on demand
-Date:   Thu,  9 Feb 2023 15:35:06 +0100
-Message-Id: <patch-2.2-c099d48b4bf-20230209T142225Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.39.1.1475.gc2542cdc5ef
-In-Reply-To: <cover-0.2-00000000000-20230209T142225Z-avarab@gmail.com>
-References: <+TqEM21o+3TGx6D@coredump.intra.peff.net> <cover-0.2-00000000000-20230209T142225Z-avarab@gmail.com>
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SC3oyKQOPaf0CvcFQz3nUDo+v2dvSpQtxty3ASCefmk=;
+        b=giKe2Fpvj0KoacmaszPXsNdUnDfJzzQTRQkgCDOyVnNmjt3DBxsGF9RMs4p/FwoFwx
+         ysqsxqCA154tC3r4WJx8OK9sDBIoMoBcBJjKo5r5aRW5sn4ObKleqvjNFDcmwyo/LWwm
+         CsN8fq+NZUPvl60WoQ0/ucg/6kJBS9h5c4LXv+7RYeSIm2W7e9XLs3Yf3dd5/Z/VfREU
+         7O6WLzDTvCJ5bx1z6uj1UmvS30D/j5Hl0F+4IMLhCs+JpxgHuwA6sZpmTHpagrMTQ41/
+         6wR1CpS0UfiB6abVkJxatdxj46HUlyxyBLCL7OzVTVdJDcU7OZrkUPBLRdIz5jUqGv+2
+         oCJQ==
+X-Gm-Message-State: AO0yUKWmwlfQQ5EWK4YTj5SPHN0dobVaux8I62MI12af5NaWgivwXPHw
+        /HYdzjWRJqyrlMEh8VzCprcfMoRWXGY=
+X-Google-Smtp-Source: AK7set/3mYpOFt9KRVXZpHGpy34PhYPqv9qN1gGHc36fAURG7E071VglPtsiQ/67vzHeTOp/V2ayeA==
+X-Received: by 2002:a5d:56c3:0:b0:2bc:846a:8ead with SMTP id m3-20020a5d56c3000000b002bc846a8eadmr10929421wrw.37.1675953856933;
+        Thu, 09 Feb 2023 06:44:16 -0800 (PST)
+Received: from [192.168.1.212] ([90.248.183.175])
+        by smtp.gmail.com with ESMTPSA id n16-20020a1c7210000000b003dc1d668866sm4995295wmc.10.2023.02.09.06.44.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Feb 2023 06:44:16 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <1ddac91b-7552-3e1e-9888-9e21e808104d@dunelm.org.uk>
+Date:   Thu, 9 Feb 2023 14:44:15 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>, John Cai <johncai86@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
+ <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
+ <230206.865yce7n1w.gmgdl@evledraar.gmail.com>
+ <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
+ <d18a5c32-2f15-93ad-ccbf-e8f048edb311@dunelm.org.uk>
+ <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
+ <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com>
+In-Reply-To: <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the preceding commit we started calling gpg_interface_lazy_init()
-when the interface is used, in order to lazily init config.
+Hi Elijah
 
-Parts of the git_gpg_config() we were left with then are going to be
-harder to convert to the configset API. E.g. in the case of
-"configured_signing_key" the set_signing_key() and get_signing_key()
-will modify our global variable, assigning either the config to it, a
-user-supplied key (see "keyid" in builtin/tag.c). To avoid the global
-we'd need to pass that "keyid" all the way down to the callbacks in
-"struct gpg_format".
+On 09/02/2023 09:09, Elijah Newren wrote:
+> Hi John and Phillip,
+> 
+> On Tue, Feb 7, 2023 at 9:05 AM John Cai <johncai86@gmail.com> wrote:
+>>
+> [...]
+>>> Perhaps I'm over simplifying but having read the issue you linked to I couldn't help feeling that the majority of users might be satisfied by just changing gitlab to use the patience algorithm when generating diffs.
+>>
+>> Right, I recognize this is a judgment call that may be best left up to the list.
+>>
+>> We don't have a way in GitLab to change the diff algorithm currently. Of course
+>> that can be implemented outside of Git,
+> 
+> Well, the below doesn't allow users to make diffs better for
+> *individual* files of interest, but if you agree with me that we
+> should just make diffs better for all users automatically, it's a
+> two-line change in git.git that I'd love to eventually convince the
+> project to take (though obviously doing that would also require some
+> documentation changes and some good messaging in release notes and
+> whatnot).  I've used it for a good long while, and had a few dozen
+> users using this patch too, all without complaint:
 
-But in the cases being changed here we can move the reading of the
-config variable to be adjacent to its use.
+I'd support a change to either patience or histogram as the default 
+algorithm. My personal preference would be for the patience algorithm as 
+I think it generally gives nicer diffs in the cases that the two 
+disagree (see below, I've tried changing diff.algorithm to histogram a 
+few times and I always end up changing it back to patience pretty 
+quickly). However I can see there is an advantage in having "diff" and 
+"merge" use the same algorithm as users who diffing either side to the 
+merge base will see the same diff that the merge is using. The histogram 
+algorithm is known to produce sub-optimal diffs in certain cases[1] but 
+I'm not sure how much worse it is in that respect than any of the other 
+algorithms.
 
-As with the preceding change this isn't without its downsides, just as
-in the preceding commit this stopped being an immediate error, and
-instead depends on whether we'll reach something that lazily inits the
-GPG config:
+To see the differences between the output of patience and histogram 
+algorithms I diffed the output of "git log -p --no-merges 
+--diff-algorithm=patience" and "git log -p --no-merges 
+--diff-algorithm=histogram". The first three differences are
 
-	git -c gpg.mintrustlevel=bad show --show-signature
+- 6c065f72b8 (http: support CURLOPT_PROTOCOLS_STR, 2023-01-16)
+   In get_curl_allowed_protocols() the patience algorithm shows the
+   change in the return statement more clearly
 
-This change likewise defers our initialization of these variables even
-further. But this should be OK, it's the common pattern for most other
-config we read.
+- 47cfc9bd7d (attr: add flag `--source` to work with tree-ish, 2023-01-14)
+    The histogram algorithm shows read_attr_from_index() being moved
+    whereas the patience algorithm does not making the diff easier to
+    follow.
 
-At this point we could remove gpg_interface_lazy_init() from
-check_signature(), as it only uses gpg.minTrustLevel, and calls
-functions that don't need the lazy config, but let's keep to
-future-proof changes to the API that may need the initialization at a
-distance.
+- b0226007f0 (fsmonitor: eliminate call to deprecated FSEventStream 
+function, 2022-12-14)
+   In fsm_listen__stop_async() the histogram algorithm shows
+   data->shutdown_style = SHUTDOWN_EVENT;
+   being moved, which is not as clear as the patience output which
+   shows it as a context line.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- gpg-interface.c | 66 +++++++++++++++++++------------------------------
- 1 file changed, 25 insertions(+), 41 deletions(-)
+I think there is a degree of personal preference when it comes to which 
+out of patience or histogram is best and the user can easily select 
+their preferred algorithm so I'd be happy with either.
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 404d4cccf34..ab24ed3c57b 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -22,8 +22,6 @@ static void gpg_interface_lazy_init(void)
- }
- 
- static char *configured_signing_key;
--static const char *ssh_default_key_command, *ssh_allowed_signers, *ssh_revocation_file;
--static enum signature_trust_level configured_min_trust_level = TRUST_UNDEFINED;
- 
- struct gpg_format {
- 	const char *name;
-@@ -453,6 +451,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 	struct strbuf ssh_keygen_out = STRBUF_INIT;
- 	struct strbuf ssh_keygen_err = STRBUF_INIT;
- 	struct strbuf verify_time = STRBUF_INIT;
-+	char *ssh_allowed_signers;
- 	const struct date_mode verify_date_mode = {
- 		.type = DATE_STRFTIME,
- 		.strftime_fmt = "%Y%m%d%H%M%S",
-@@ -460,7 +459,8 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 		.local = 1,
- 	};
- 
--	if (!ssh_allowed_signers) {
-+	if (git_config_get_string("gpg.ssh.allowedsignersfile",
-+				  &ssh_allowed_signers)) {
- 		error(_("gpg.ssh.allowedSignersFile needs to be configured and exist for ssh signature verification"));
- 		return -1;
- 	}
-@@ -520,6 +520,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 		     *line;
- 		     line = next) {
- 			const char *end_of_text;
-+			char *ssh_revocation_file;
- 
- 			next = end_of_text = strchrnul(line, '\n');
- 
-@@ -556,7 +557,8 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 				     verify_time.buf,
- 				     NULL);
- 
--			if (ssh_revocation_file) {
-+			if (!git_config_get_pathname("gpg.ssh.revocationfile",
-+						     (const char **)&ssh_revocation_file)) {
- 				if (file_exists(ssh_revocation_file)) {
- 					strvec_pushl(&ssh_keygen.args, "-r",
- 						     ssh_revocation_file, NULL);
-@@ -564,6 +566,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 					warning(_("ssh signing revocation file configured but not found: %s"),
- 						ssh_revocation_file);
- 				}
-+				free(ssh_revocation_file);
- 			}
- 
- 			sigchain_push(SIGPIPE, SIG_IGN);
-@@ -599,6 +602,7 @@ static int verify_ssh_signed_buffer(struct signature_check *sigc,
- 	strbuf_release(&ssh_keygen_out);
- 	strbuf_release(&ssh_keygen_err);
- 	strbuf_release(&verify_time);
-+	free(ssh_allowed_signers);
- 
- 	return ret;
- }
-@@ -643,6 +647,8 @@ int check_signature(struct signature_check *sigc,
- {
- 	struct gpg_format *fmt;
- 	int status;
-+	static enum signature_trust_level configured_min_trust_level = TRUST_UNDEFINED;
-+	const char *value;
- 
- 	gpg_interface_lazy_init();
- 
-@@ -661,6 +667,19 @@ int check_signature(struct signature_check *sigc,
- 	if (status && !sigc->output)
- 		return !!status;
- 
-+	if (!git_config_get_string_tmp("gpg.mintrustlevel", &value)) {
-+		char *trust;
-+		int ret;
-+
-+		trust = xstrdup_toupper(value);
-+		ret = parse_gpg_trust_level(trust, &configured_min_trust_level);
-+		free(trust);
-+
-+		if (ret)
-+			return error(_("invalid value for '%s': '%s'"),
-+				     "gpg.mintrustlevel", value);
-+	}
-+
- 	status |= sigc->result != 'G';
- 	status |= sigc->trust_level < configured_min_trust_level;
- 
-@@ -719,8 +738,6 @@ static int git_gpg_config(const char *var, const char *value, void *cb UNUSED)
- {
- 	struct gpg_format *fmt = NULL;
- 	char *fmtname = NULL;
--	char *trust;
--	int ret;
- 
- 	if (!strcmp(var, "user.signingkey")) {
- 		if (!value)
-@@ -740,38 +757,6 @@ static int git_gpg_config(const char *var, const char *value, void *cb UNUSED)
- 		return 0;
- 	}
- 
--	if (!strcmp(var, "gpg.mintrustlevel")) {
--		if (!value)
--			return config_error_nonbool(var);
--
--		trust = xstrdup_toupper(value);
--		ret = parse_gpg_trust_level(trust, &configured_min_trust_level);
--		free(trust);
--
--		if (ret)
--			return error(_("invalid value for '%s': '%s'"),
--				     var, value);
--		return 0;
--	}
--
--	if (!strcmp(var, "gpg.ssh.defaultkeycommand")) {
--		if (!value)
--			return config_error_nonbool(var);
--		return git_config_string(&ssh_default_key_command, var, value);
--	}
--
--	if (!strcmp(var, "gpg.ssh.allowedsignersfile")) {
--		if (!value)
--			return config_error_nonbool(var);
--		return git_config_pathname(&ssh_allowed_signers, var, value);
--	}
--
--	if (!strcmp(var, "gpg.ssh.revocationfile")) {
--		if (!value)
--			return config_error_nonbool(var);
--		return git_config_pathname(&ssh_revocation_file, var, value);
--	}
--
- 	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
- 		fmtname = "openpgp";
- 
-@@ -851,16 +836,15 @@ static const char *get_default_ssh_signing_key(void)
- 	int ret = -1;
- 	struct strbuf key_stdout = STRBUF_INIT, key_stderr = STRBUF_INIT;
- 	struct strbuf **keys;
--	char *key_command = NULL;
-+	char *key_command;
- 	const char **argv;
- 	int n;
- 	char *default_key = NULL;
- 	const char *literal_key = NULL;
- 
--	if (!ssh_default_key_command)
-+	if (git_config_get_string("gpg.ssh.defaultkeycommand", &key_command))
- 		die(_("either user.signingkey or gpg.ssh.defaultKeyCommand needs to be configured"));
- 
--	key_command = xstrdup(ssh_default_key_command);
- 	n = split_cmdline(key_command, &argv);
- 
- 	if (n < 0)
--- 
-2.39.1.1475.gc2542cdc5ef
+Best Wishes
 
+Phillip
+
+[1] 
+https://lore.kernel.org/git/CAGZ79kZYO6hHiAM8Sfp3J=VX11c=0-7YDSx3_EAKt5-uvvt-Ew@mail.gmail.com/
+
+> diff --git a/diff.c b/diff.c
+> index 329eebf16a..77a46d5b7d 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -55,7 +55,7 @@ static int diff_relative;
+>   static int diff_stat_graph_width;
+>   static int diff_dirstat_permille_default = 30;
+>   static struct diff_options default_diff_options;
+> -static long diff_algorithm;
+> +static long diff_algorithm = XDF_HISTOGRAM_DIFF;
+>   static unsigned ws_error_highlight_default = WSEH_NEW;
+> 
+>   static char diff_colors[][COLOR_MAXLEN] = {
+> diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+> index b298f220e0..2f663eab72 100755
+> --- a/t/t4015-diff-whitespace.sh
+> +++ b/t/t4015-diff-whitespace.sh
+> @@ -1549,7 +1549,7 @@ test_expect_success 'short lines of opposite
+> sign do not get marked as moved' '
+>          this line should be marked as oldMoved newMoved
+>          unchanged 4
+>          EOF
+> -       test_expect_code 1 git diff --no-index --color --color-moved=zebra \
+> +       test_expect_code 1 git diff --diff-algorithm=myers --no-index
+> --color --color-moved=zebra \
+>                  old.txt new.txt >output && cat output &&
+>          grep -v index output | test_decode_color >actual &&
+>          cat >expect <<-\EOF &&
+> 
+> 
+> I used histogram above rather than patience, since (a) it's what git's
+> merge backend uses, (b) it produces roughly similar results to
+> patience from a user perspective, (c) past testing has shown it to be
+> somewhat faster than patience, and (d) we've potentially got some
+> leads in how to speed up our histogram implementation from the README
+> over at https://github.com/pascalkuthe/imara-diff.  But, if you really
+> wanted to use patience as the default, it'd also be an easy tweak.
+> 
+> Anyway, just some food for thought.
