@@ -2,138 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D8E7C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 08:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65201C61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Feb 2023 09:09:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbjBIIoT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Feb 2023 03:44:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54988 "EHLO
+        id S229527AbjBIJJ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Feb 2023 04:09:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbjBIIoQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Feb 2023 03:44:16 -0500
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8F702C67D
-        for <git@vger.kernel.org>; Thu,  9 Feb 2023 00:44:14 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id l3so1243752ljo.5
-        for <git@vger.kernel.org>; Thu, 09 Feb 2023 00:44:14 -0800 (PST)
+        with ESMTP id S229912AbjBIJJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Feb 2023 04:09:48 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A03B59E73
+        for <git@vger.kernel.org>; Thu,  9 Feb 2023 01:09:45 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id br9so2298447lfb.4
+        for <git@vger.kernel.org>; Thu, 09 Feb 2023 01:09:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ynD9gn03QTywF5Oe67mybFtruPY0z3BPPkJvQSujflA=;
-        b=iNZZtGVbxCZLTuePBSyQMz3kMQMIGcpx4HGFvC1CO9WTLYa9/VF28PMwQRXxbS9CLP
-         gE1Du9ezTt/aFUOozFc1OZmPNPKL+fP5msLwZbfN1UZS+vuU21Sjk8rXnslA6R8Is9DH
-         Cq/aoTpKZSjWWtJO+PlXo7+1+akhG/EHwrIwTDMbdtcvgkdyvanmpyzipcunTO/qpbJ8
-         4CB48joPpqoZWG7zZR8UslNNHwty4Mb6f1XvYpOkcenrwZz95s6HZnHoSA6StT2MYAe9
-         2rzyca0+FTZeP36l4cIDYMOxZDScxZ76wMBuETxFc/83rIITOZiXSe1lNfephYanklgK
-         IxPQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=zxK06NL26LZudWnTFVjiz+icg+c+o180Ji7d6gedUZ0=;
+        b=lF83r9cYenKaJruNrvi5BTNipQoDuQHcuyRFgb92fZoiPFDTIXbmaZ8nNW7ZU3gE65
+         c/xD7cGHfpH4Bc++kpTW8e/LMKT39FY5sONA0nuxSiWDA+wuGkYUgG9TIBvAMApbPMX4
+         SZ6rdDcbKtNnvEIWEgCn2CliboMIC3yPz+FuEyR7zyDPn9ox243psXp8Yg/gYZ/uarUe
+         dxA65XC1rQ0nPxLbXBSwwUAyUONKhgft05mQeKAt0d9KmhC1YIfxs9NEd5OBOjz5TdfW
+         ofmYMiYQjAyQJHAMUXrQb0QNRplqMSK58pZYGw6oxGQ5LcfyijLMR+fSgbr7zGsoL/Gs
+         DbWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ynD9gn03QTywF5Oe67mybFtruPY0z3BPPkJvQSujflA=;
-        b=UoBVAMUIvCXbfr5g40s/DD3+mQTtSVZpW3KDCR3s5CivI7soIlyK/GIvUaDiNPb/O9
-         ss/tl5+x0LMfi2edQr7ZEGCR4NmUet7WuDb93p0vF3Lb6oQTaRE9vy9ghMvs/PL1FPjo
-         p84CvoBeFJPn+Mc6cYvXRQ2DtZ23AStI70S7OERUzysKoggXc5t52pRkP815hjA8s/3D
-         Z45jnnrhfw4PE5nuXFX9gvsEPse25/Ss/Z/36BVr5870OEijvoCDLvYab3Krys9JMjFf
-         0U1UBVEsGIpXlJF29KBqmQcv3FRcb+xUb97ScpFV0DdhVB1nZh/HCliLb8OtL10bX3OP
-         aKQg==
-X-Gm-Message-State: AO0yUKV/8B5swvNIvYWIjg7ra4Mi73CH6d0hPMCui5p0Y3Bq8KWHgBvD
-        MfJaIG6TQfCI+iFgi073fHajTr4ZlDDhOnCRZXQ=
-X-Google-Smtp-Source: AK7set/wLzGmM7ZQYC5CLqDP5XAZiId+22/fOnfrr74xfQQijN/wJ0jT/h3tJ83xYUSY0og0MgrXt0UsityZI0LgUQs=
-X-Received: by 2002:a2e:380a:0:b0:282:9ddb:546e with SMTP id
- f10-20020a2e380a000000b002829ddb546emr1707176lja.6.1675932253086; Thu, 09 Feb
- 2023 00:44:13 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zxK06NL26LZudWnTFVjiz+icg+c+o180Ji7d6gedUZ0=;
+        b=rO3Vfab8biEAIMONZ4HTQvw3HJepLWmZhfi+dIpdOA/WCtavKzBMR+IDzUPDXNacVz
+         0g7L51vhSortR0tifDH4babPKXoDo1YNMzTY/LS74NxMySmywAbDuLXFjGVK9LkWm3Zj
+         fYxLKQRJKF0kuxShafRO7mKp5psmcxWxzMuN2sJzhO5yIwW0SFJuKdV7W16Gx9Jme6DS
+         0McKcWksJnv+OJXneEaHpJAEgEsrZCKhBU86Jd8TmvK+wfYqxpwY8Dmdhf9EDlJot11U
+         +rDHkLujwvTN2YEVfCfxxJgdg0IP0nPTL0GCfJMJKmAJFBo8e1Z9lpfXOUTKdqXf6EAh
+         aWPQ==
+X-Gm-Message-State: AO0yUKXQBBV9UP7KRZ4KKSPZ/TNLK1N1ikgMnaONkukkpf4SU5n1qjLM
+        sBkFdOdO9YnC6JTIIRIFm5A+4ipQdLsw06G1wJuimn4S+P4=
+X-Google-Smtp-Source: AK7set9CX+f5kDz2qW3YCqXzvdxuvdj1+uAiUqCzXzSkwaFzF3PDpvMkfncrgvqKvx/v6GTMU6lgNhKfJleb0H/EiqE=
+X-Received: by 2002:ac2:5a0b:0:b0:4d2:381c:87dc with SMTP id
+ q11-20020ac25a0b000000b004d2381c87dcmr1656768lfn.124.1675933783421; Thu, 09
+ Feb 2023 01:09:43 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
  <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
  <230206.865yce7n1w.gmgdl@evledraar.gmail.com> <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
-In-Reply-To: <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
+ <d18a5c32-2f15-93ad-ccbf-e8f048edb311@dunelm.org.uk> <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
+In-Reply-To: <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 9 Feb 2023 00:44:00 -0800
-Message-ID: <CABPp-BFKQXe-EJOd9z1TrisL64NuV9A132rf9MwV_7w79QQ9YQ@mail.gmail.com>
+Date:   Thu, 9 Feb 2023 01:09:30 -0800
+Message-ID: <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com>
 Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
 To:     John Cai <johncai86@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+Cc:     phillip.wood@dunelm.org.uk,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
+        git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John,
+Hi John and Phillip,
 
-On Mon, Feb 6, 2023 at 12:47 PM John Cai <johncai86@gmail.com> wrote:
+On Tue, Feb 7, 2023 at 9:05 AM John Cai <johncai86@gmail.com> wrote:
 >
 [...]
-> That being said, here's a separate issue. I benchmarked the usage of
-> .gitattributes as introduced in this patch series, and indeed it does loo=
-k like
-> there is additional latency:
+> > Perhaps I'm over simplifying but having read the issue you linked to I couldn't help feeling that the majority of users might be satisfied by just changing gitlab to use the patience algorithm when generating diffs.
 >
-> $ echo "* diff-algorithm=3Dpatience >> .gitattributes
-> $ hyperfine -r 5 'git-bin-wrapper diff --diff-algorithm=3Dpatience v2.0.0=
- v2.28.0'                      =E2=9C=AD
-> Benchmark 1: git-bin-wrapper diff --diff-algorithm=3Dpatience v2.0.0 v2.2=
-8.0
->   Time (mean =C2=B1 =CF=83):     889.4 ms =C2=B1 113.8 ms    [User: 715.7=
- ms, System: 65.3 ms]
->   Range (min =E2=80=A6 max):   764.1 ms =E2=80=A6 1029.3 ms    5 runs
+> Right, I recognize this is a judgment call that may be best left up to the list.
 >
-> $ hyperfine -r 5 'git-bin-wrapper diff v2.0.0 v2.28.0'                   =
-                             =E2=9C=AD
-> Benchmark 1: git-bin-wrapper diff v2.0.0 v2.28.0
->   Time (mean =C2=B1 =CF=83):      2.146 s =C2=B1  0.368 s    [User: 0.827=
- s, System: 0.243 s]
->   Range (min =E2=80=A6 max):    1.883 s =E2=80=A6  2.795 s    5 runs
->
-> and I imagine the latency scales with the size of .gitattributes. Althoug=
-h I'm
-> not familiar with other parts of the codebase and how it deals with the l=
-atency
-> introduced by reading attributes files.
+> We don't have a way in GitLab to change the diff algorithm currently. Of course
+> that can be implemented outside of Git,
 
-Yeah, that seems like a large relative performance penalty.  I had the
-feeling that histogram wasn't made the default over myers mostly due
-to inertia and due to a potential 2% loss in performance (since
-potentially corrected by Phillip's 663c5ad035 ("diff histogram: intern
-strings", 2021-11-17)).  If we had changed the default diff algorithm
-to histogram, I suspect folks wouldn't have been asking for per-file
-knobs to use a better diff algorithm.  And the performance penalty for
-this alternative is clearly much larger than 2%, which makes me think
-we might want to just revisit the default instead of allowing per-file
-tweaks.
+Well, the below doesn't allow users to make diffs better for
+*individual* files of interest, but if you agree with me that we
+should just make diffs better for all users automatically, it's a
+two-line change in git.git that I'd love to eventually convince the
+project to take (though obviously doing that would also require some
+documentation changes and some good messaging in release notes and
+whatnot).  I've used it for a good long while, and had a few dozen
+users using this patch too, all without complaint:
 
-And on a separate note...
+diff --git a/diff.c b/diff.c
+index 329eebf16a..77a46d5b7d 100644
+--- a/diff.c
++++ b/diff.c
+@@ -55,7 +55,7 @@ static int diff_relative;
+ static int diff_stat_graph_width;
+ static int diff_dirstat_permille_default = 30;
+ static struct diff_options default_diff_options;
+-static long diff_algorithm;
++static long diff_algorithm = XDF_HISTOGRAM_DIFF;
+ static unsigned ws_error_highlight_default = WSEH_NEW;
 
-There's another set of considerations we might need to include here as
-well that I haven't seen anyone else in this thread talk about:
-
-* When trying to diff files, do we read the .gitattributes file from
-the current checkout to determine the diff algorithm(s)?  Or the
-index?  Or the commit we are diffing against?
-* If we use the current checkout or index, what about bare clones or
-diffing between two different commits?
-* If diffing between two different commits, and the .gitattributes has
-changed between those commits, which .gitattributes file wins?
-* If diffing between two different commits, and the .gitattributes has
-NOT changed, BUT a file has been renamed and the old and new names
-have different rules, which rule wins?
-
-* If per-file diff algorithms are adopted widely enough, will we be
-forced to change the merge algorithm to also pay attention to them?
-If it does, more complicated rename cases occur and we need rules for
-how to handle those.
-* If the merge algorithm has to pay attention to .gitattributes for
-this too, we'll have even more corner cases around what happens if
-there are merge conflicts in .gitattributes itself (which is already
-kind of ugly and kludged)
+ static char diff_colors[][COLOR_MAXLEN] = {
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index b298f220e0..2f663eab72 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -1549,7 +1549,7 @@ test_expect_success 'short lines of opposite
+sign do not get marked as moved' '
+        this line should be marked as oldMoved newMoved
+        unchanged 4
+        EOF
+-       test_expect_code 1 git diff --no-index --color --color-moved=zebra \
++       test_expect_code 1 git diff --diff-algorithm=myers --no-index
+--color --color-moved=zebra \
+                old.txt new.txt >output && cat output &&
+        grep -v index output | test_decode_color >actual &&
+        cat >expect <<-\EOF &&
 
 
-Anyway, I know I'm a bit animated and biased in this area, and I
-apologize if I'm a bit too much so.  Even if I am, hopefully my
-comments at least provide some useful context.
+I used histogram above rather than patience, since (a) it's what git's
+merge backend uses, (b) it produces roughly similar results to
+patience from a user perspective, (c) past testing has shown it to be
+somewhat faster than patience, and (d) we've potentially got some
+leads in how to speed up our histogram implementation from the README
+over at https://github.com/pascalkuthe/imara-diff.  But, if you really
+wanted to use patience as the default, it'd also be an easy tweak.
+
+Anyway, just some food for thought.
