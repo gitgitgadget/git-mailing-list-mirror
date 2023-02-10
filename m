@@ -2,175 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AD4FC636D4
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 21:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71874C05027
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 21:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233284AbjBJVce (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 16:32:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50442 "EHLO
+        id S233915AbjBJVt7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 16:49:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233131AbjBJVcd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 16:32:33 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A74F1BAF1
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 13:32:32 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id d2so6560842pjd.5
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 13:32:32 -0800 (PST)
+        with ESMTP id S233898AbjBJVt6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 16:49:58 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A2F63E0A1
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 13:49:57 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id bj12-20020a056a02018c00b004fac0fa0f9eso3090393pgb.19
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 13:49:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=uber.com; s=google; t=1676064751;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=v0JeeUJ3aVQTyS2OxeofYQOw7HHr8EDqYhOoFR6mtgs=;
-        b=IB22GMcqxSKD4BTnh5/0SpLU6ymsKfL4ErYRyVAghFDQ6MTD4I2En7sy35TfAlKwUC
-         9V1jC+IPp9KS/UmhSSlFbWnSTCshPf4txwWulUhnY2E/y1WbHn/nqq7sWDx2cxEi08fQ
-         bWuVZXVYKKTAR3ZK90J0zXi4GQoWuMwjfuUOE=
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+QwM7GduAPXFYEtHHPmSlDOZLmfSnbsFw9QCLqecW6I=;
+        b=C6E6YulIcghiXPc0iaRxdTvlVjBmWj5HtyVyiRG4M0wldTfJskNsGdXOb1QYy9ImN9
+         fenJopPjnFK04no0jbqDYbktIvt2Yn0z9GWaEz3GPNXdhgSzVkvdxwB+HV0FAuEIB0Ii
+         +CGX1etFLRKxfpcAMxPrIyYMu+nqLU8hfGr2UbEDcg0Hf+WOmpLrb0K6lw0w3IOR6Olm
+         vuoaMj+f0wPGIPBLE0OyVfHqk7IsAJEjU6IeQ0Vm7Xr4BT+ihosJu5iJgJAKPbIKA6s5
+         JfhhAM3jCDFYvw11ABTUg7MbFEjtQ4TVrZ7YEAnXqFeljr2mdUg/g//X9jZrKXDmzROy
+         45Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1676064751;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=v0JeeUJ3aVQTyS2OxeofYQOw7HHr8EDqYhOoFR6mtgs=;
-        b=SywGPEScG1VNVz7ixD1PnlviV2hoyHaPUmK1O6GOgsJlR2v04y6EqWwrjNmuIqBRNi
-         sHIiaax5pCjZFLr+isSxKTMYtb5ZZxGcFEaY/4rVJj5gskUt4jaFLYWZ2AnXUqeLuq/v
-         pm+TAXhCkFevbzUcdgYLuVG1jJ1O1dUb/vq36SOZ6U5lxl3CxuuNDFR//xIe61iwZxwG
-         TBP3K+ifX/M5qVzTS61V+jnfPFymhH4tIdD5s00ZCwbFTLBMNDfjo7XSax6v284LDpFO
-         2qiPCqJGpclpzFKdxADGdlpfyaMgJ3ptYXF1Txc1QaIABWd8EbFvAvgRsdDb4S7CXg2w
-         /KQA==
-X-Gm-Message-State: AO0yUKUdGh/Fxed/FOR26YURRRHO8e1DDuIDGmv24XsLVGH1um/abp3S
-        hR30fsAe08iLn8hj8CmbNUYeiuSCcsbRV/NFpZDpsd7B2A5qCtq0
-X-Google-Smtp-Source: AK7set9RGM4+G4wFY/J5JRb5YOYOINSJRI5qThHOspefIgJ6tNqYSDgeOxzKCnSSJrV8hGVFycpMsysbjObE0FApna8=
-X-Received: by 2002:a17:903:41c9:b0:199:642:1c2c with SMTP id
- u9-20020a17090341c900b0019906421c2cmr4094301ple.33.1676064750937; Fri, 10 Feb
- 2023 13:32:30 -0800 (PST)
-MIME-Version: 1.0
-From:   Andrew Wansink <wansink@uber.com>
-Date:   Fri, 10 Feb 2023 13:31:54 -0800
-Message-ID: <CA+tAvojz0u7AbcNnY1qyy3VznKhYTiAO1dL+rfOD3O6mOtsa8A@mail.gmail.com>
-Subject: Subject: [RFC PATCH] upload_pack.c: make deepen-not more tree-ish
-To:     git@vger.kernel.org
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+QwM7GduAPXFYEtHHPmSlDOZLmfSnbsFw9QCLqecW6I=;
+        b=C3Zi0CC2MOI1XuNITg5e3L7lP5QCMG+zZEbQk6Dl6N2zEISoq7hGptKNTzp1W3vOVs
+         Di5xGLGDt8vhUH6aaBN/y/eRWO/hGxk/QxLfRZm9u9Y6YBVly2t6mDLmO9+TtDKnFIPn
+         ZQqE7PqZrerO3+XhTDkWsqIdnSvCYr8cwD6KEvtC9WiGrnPTjBDZHhazbNm20w/IO+Fa
+         ddSr8JErmd2LRT1XQXrwDLEZIbSkG72mhmQVF2JOOJUXMEHJafvWmCgtv0DEP5L/7j44
+         GMa5ZvA1gpUBqB5Pcnq1ninVZTTkNSkg5jVWKbG7YyJisDjeVKoXlG3VPkKAYL8zhykr
+         RG2Q==
+X-Gm-Message-State: AO0yUKXu4HvboDYkB/ntCrVVtEs3nWYxuGhJJtLC/N5jrInC0lgasVr3
+        TOC8/RjV/kB10YWNgC/bDWwO4NHk+JnTcTkCMdXi
+X-Google-Smtp-Source: AK7set8hQXv4LMffRnfzXs1sEZuzso852NQFjX8+IUuIqi8+0nwSX03t9Uvjyn+1UfCALBGgvKcafNuur2tiDoV3Jcjx
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a63:b25e:0:b0:4fa:85f4:f9a with SMTP
+ id t30-20020a63b25e000000b004fa85f40f9amr3246355pgo.121.1676065796857; Fri,
+ 10 Feb 2023 13:49:56 -0800 (PST)
+Date:   Fri, 10 Feb 2023 13:49:51 -0800
+In-Reply-To: <20230209122857.M669733@dcvr>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.39.1.581.gbfd45094c4-goog
+Message-ID: <20230210214951.684909-1-jonathantanmy@google.com>
+Subject: Re: [RFC] fetch: support hideRefs to speed up connectivity checks
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This unlocks `git clone --shallow-exclude=<commit-sha1>`
+Eric Wong <e@80x24.org> writes:
+>    git -c transfer.hideRefs=refs \
+> 	-c transfer.hideRefs='!refs/remotes/$REMOTE/' \
+> 	fetch $REMOTE
+> 
+> I initially considered passing --negotiation-tip OIDs, but this seems
+> like an easier solution as I'm not yet familiar with this code
+> and prefer to avoid writing too much C.
 
-git-clone only accepts --shallow-excude arguments where
-the argument is a branch or tag because upload_pack only
-searches deepen-not arguments for branches and tags.
-
-Make process_deepen_not search for commit objects if no
-branch or tag is found then add them to the deepen_not
-list.
-
-Signed-off-by: Andrew Wansink <wansink@uber.com>
----
-
-At Uber we have a lot of patches in CI simultaneously,
-the CI jobs will frequently clone the monorepo multiple
-times for each patch.  They do this to calculate diffs
-between a patch and its parent commit.
-
-One optimisation in this flow is to clone only to a specific
-depth, this may or may not work, depending on how old the
-patch is.  In this case we have to --unshallow or discard
-the shallow clone and fully clone the repo.
-
-This patch would allow us to clone to exactly the depth we
-need to find a patch's parent commit.
-
- t/t5500-fetch-pack.sh | 30 ++++++++++++++++++++++++++++++
- upload-pack.c         | 35 +++++++++++++++++++++++++++++++----
- 2 files changed, 61 insertions(+), 4 deletions(-)
-
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index d18f2823d86..8d5045cc1b9 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -899,6 +899,36 @@ test_expect_success 'shallow clone exclude tag two' '
-  )
- '
-
-+test_expect_success 'shallow clone exclude commit' '
-+ test_create_repo shallow-exclude-commit &&
-+ (
-+ cd shallow-exclude-commit &&
-+ test_commit one &&
-+ test_commit two &&
-+ test_commit three &&
-+ commit_two_sha1=$(git log -n 1 --pretty=tformat:%h HEAD^) &&
-+ git clone --shallow-exclude=${commit_two_sha1} "file://$(pwd)/."
-../shallow3-by-commit &&
-+ git -C ../shallow3-by-commit log --pretty=tformat:%s HEAD >actual &&
-+ git log -n 1 --pretty=tformat:%s HEAD >expected &&
-+ test_cmp expected actual
-+ )
-+'
-+
-+test_expect_success 'shallow clone exclude commit^' '
-+ test_create_repo shallow-exclude-commit-carat &&
-+ (
-+ cd shallow-exclude-commit-carat &&
-+ test_commit one &&
-+ test_commit two &&
-+ test_commit three &&
-+ commit_two_sha1=$(git log -n 1 --pretty=tformat:%h HEAD^) &&
-+ git clone --shallow-exclude=${commit_two_sha1}^ "file://$(pwd)/."
-../shallow23-by-commit &&
-+ git -C ../shallow23-by-commit log --pretty=tformat:%s HEAD >actual &&
-+ git log -n 2 --pretty=tformat:%s HEAD >expected &&
-+ test_cmp expected actual
-+ )
-+'
-+
- test_expect_success 'fetch exclude tag one' '
-  git -C shallow12 fetch --shallow-exclude one origin &&
-  git -C shallow12 log --pretty=tformat:%s origin/main >actual &&
-diff --git a/upload-pack.c b/upload-pack.c
-index 551f22ffa5d..0c8594f4744 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -985,10 +985,37 @@ static int process_deepen_not(const char *line,
-struct string_list *deepen_not,
-  if (skip_prefix(line, "deepen-not ", &arg)) {
-  char *ref = NULL;
-  struct object_id oid;
-- if (expand_ref(the_repository, arg, strlen(arg), &oid, &ref) != 1)
-- die("git upload-pack: ambiguous deepen-not: %s", line);
-- string_list_append(deepen_not, ref);
-- free(ref);
-+
-+ switch (expand_ref(the_repository, arg, strlen(arg), &oid, &ref)) {
-+ case 1:
-+ // tag or branch matching arg found
-+ string_list_append(deepen_not, ref);
-+ free(ref);
-+ break;
-+ case 0: {
-+ // no tags or branches matching arg
-+ struct object *obj = NULL;
-+ struct commit *commit = NULL;
-+
-+ if (get_oid(arg, &oid))
-+ die("git upload-pack: deepen-not: no ref or object %s", arg);
-+
-+ obj = parse_object(the_repository, &oid);
-+ if (!obj)
-+ die("git upload-pack: deepen-not: object could not be parsed: %s", arg);
-+
-+ commit = (struct commit *)peel_to_type(arg, 0, obj, OBJ_COMMIT);
-+ if (!commit)
-+ die("git upload-pack: deepen-not: object not a commit: %s", arg);
-+
-+ string_list_append(deepen_not, oid_to_hex(&commit->object.oid));
-+ break;
-+ }
-+ default:
-+ // more than 1 tag or branch matches arg
-+ die("git upload-pack: ambiguous deepen-not: %s", arg);
-+ }
-+
-  *deepen_rev_list = 1;
-  return 1;
-  }
--- 
-2.39.1
+--negotiation-tip supports ref name globs too. Would that be sufficient
+for your purposes?
+ 
