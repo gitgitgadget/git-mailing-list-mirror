@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90951C636CD
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 10:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3705C6379F
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 10:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232042AbjBJK3B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 05:29:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44614 "EHLO
+        id S232047AbjBJK3C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 05:29:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232020AbjBJK24 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 05:28:56 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 081A642BE6
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 02:28:53 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id o18so4597908wrj.3
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 02:28:53 -0800 (PST)
+        with ESMTP id S232025AbjBJK25 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 05:28:57 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2895F6E542
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 02:28:55 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id by3so3269220wrb.10
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 02:28:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9+lIjCE3jh7jHy0hXF4Z5ItT3qtfTITHLgxTi4d9C4Y=;
-        b=OT/jBWazUf99yq8E1JmRDQa4js7deR64tcf13rg8/uBhSnWgTUIrKglqoLs5WGR0lH
-         B8MRe3cYD65So7ip/cdK+Q5BuT6yTKA6uH/XWe+ZzUHPal5qOpfVyb8gok18VAS3s+la
-         pQDdRxO1kDMXOqgRoz7LR4YfR5gqOTd/khdTUXhOZOSFbEp0kasCEwZJAJiYAmUfXSYW
-         xHkGmUKht3vR5pTiQItTn932e2Y5qN/N3PkZySUPr44retmuRHDM/G6j9YjKWhse7cnW
-         bwowtCm07pZ1gxVFhtDZRUR4YGKHht0ugzEl5Nk9TvJdZmCSbzfJ2IGCpjeQI9jDWhlw
-         oZcg==
+        bh=j5QV+iTrSMDoxuiLHawSlz3sCsUGoJxLZmxxbYK5Lkw=;
+        b=jK++3tDbTy+T3wy5jXU85mFCcFy7J6CqcUm3xdzw2ypNY9Fk2Ekr6JcjRc5u2t5tVq
+         BHVjSLvTLx2NyVKjQIwBe4a6J5p3HWkRiKA7+W5V6cCm+UlsRadcZFGjHGQzf5sZBwoP
+         LIexSRCgdluz2gp4ky3l1d6axjshv4U288Kuj4UzaiMfpMJvssLmp+KmljcbbGCGTdBl
+         ZrZKAricRHNHcpt04QB5R8ifBCbcBDG5oy73tOd5wHgSfNC6+OzAug33CeQ6lsTH4sQt
+         2W2huXuOX8dTNdzxxG9soQvUVh7oz3LpxXuUgIbHGzMF0G2yH+VEwdUlOJuNmZkaF9/J
+         mz0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9+lIjCE3jh7jHy0hXF4Z5ItT3qtfTITHLgxTi4d9C4Y=;
-        b=fUy5dJO8cdqTpPdkNLwy4ydy/29DTVKw7JEKga0AkwcHqVJ9x/ms0gdOzVpF5F71G8
-         xC5WnZ0ArDJTsNix9KhEiLWe2JpIYhSVLpRRHe+UAU3zDisRQGxV2mJlVQsK1bdjfJDc
-         yprtYcdxILbP++gk+dodOk+he2/nPWNLk/08eykKLW7qbSqUxN+X4L8jO9lXRiBZjwfg
-         PziWe3hvoMthTZatKwuXNwD9FDs31pA99JFsCCauC9UrCekXks8yY+sbzhS6mcVbz3Rw
-         jY4u9YGWdbl7BIxUuFaOqASPvLWeD5VZzKBBQSVoCDrNlDF3A3dH6/Bc2bJK1ZEV11JV
-         IBBw==
-X-Gm-Message-State: AO0yUKU1IqWlh8YLQwnOZBL6scdxwICMtL2SwP86aeeoidll4rglaO7w
-        xC4Xt4XdhzRVozCv8smsxSIjA7KS4ihdLH4R
-X-Google-Smtp-Source: AK7set8Pe2114/4h2hD/lGE2rJLfSp20cUWeivkUzRlzHiwW8lEz1/3Mm1L+fZi+XmyQSKOCn3QGDw==
-X-Received: by 2002:adf:d0c2:0:b0:2bb:f88b:43b6 with SMTP id z2-20020adfd0c2000000b002bbf88b43b6mr15007019wrh.3.1676024932133;
-        Fri, 10 Feb 2023 02:28:52 -0800 (PST)
+        bh=j5QV+iTrSMDoxuiLHawSlz3sCsUGoJxLZmxxbYK5Lkw=;
+        b=NSmq19DLFnZmuAyPpAIvrwLbMzsrMXmx5sE+jW7HIkt8OCIjjB+VXp+4BMTreVKPBT
+         fi12RSXe27XX02Jpu9awcCCxFKl+3rdbkKaG9hUTwC+WnrXcrTAj7CLw3PVLGoALIpJo
+         1lCW+gQNK0DyX3APe62gBnRm8pCeL0Ij9r6jB5u2sh+6uo/3QmIC7FYgupCWWw1dwri2
+         AXt2gCAT/cqlratFCCkjoQOE/twwCrIZjkjvjSd9+4bH5j+NH+sRn8MOUXYm/1EmNCBR
+         I1wWgAv6XqmQ40J9qTF+B+0gZIOqUMyDeCDAom2jB/3EspAcSJx8S3ZpjNosl3kTWt5e
+         C68w==
+X-Gm-Message-State: AO0yUKXMg5j9uhm3ppQZSfC/aMiSr+NaJ6TIAldTjOVmP/mjctY4QyqW
+        HytShS3CUlf2W7ByH6lyDsKXhxyQ+iS74qi3
+X-Google-Smtp-Source: AK7set/7Hhpmh6tAkJqILsfiDQUXonkrsOc15NWvg3Xa2KBUkCXvipvlRY8c3srMV0VbPybRIdKi7A==
+X-Received: by 2002:adf:e0c6:0:b0:2c3:f026:9085 with SMTP id m6-20020adfe0c6000000b002c3f0269085mr13635998wri.13.1676024933211;
+        Fri, 10 Feb 2023 02:28:53 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id u13-20020a5d514d000000b002c3f50228afsm3244792wrt.3.2023.02.10.02.28.50
+        by smtp.gmail.com with ESMTPSA id u13-20020a5d514d000000b002c3f50228afsm3244792wrt.3.2023.02.10.02.28.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 02:28:51 -0800 (PST)
+        Fri, 10 Feb 2023 02:28:52 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/6] cocci & cache.h: apply pending "index_cache_pos" rule
-Date:   Fri, 10 Feb 2023 11:28:36 +0100
-Message-Id: <patch-v2-3.6-3e9d97dbff2-20230210T102114Z-avarab@gmail.com>
+Subject: [PATCH v2 4/6] cocci & cache-tree.h: migrate "write_cache_as_tree" to "*_index_*"
+Date:   Fri, 10 Feb 2023 11:28:37 +0100
+Message-Id: <patch-v2-4.6-e36a0ae562f-20230210T102114Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.1.1475.gc2542cdc5ef
 In-Reply-To: <cover-v2-0.6-00000000000-20230210T102114Z-avarab@gmail.com>
 References: <cover-0.6-00000000000-20221215T095335Z-avarab@gmail.com> <cover-v2-0.6-00000000000-20230210T102114Z-avarab@gmail.com>
@@ -70,122 +70,179 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apply the rule added in [1] to change "cache_name_pos" to
-"index_name_pos", which allows us to get rid of another
-"USE_THE_INDEX_COMPATIBILITY_MACROS" macro.
+Add a trivial rule for "write_cache_as_tree" to
+"index-compatibility.cocci", and apply it. This was left out of the
+rules added in 0e6550a2c63 (cocci: add a
+index-compatibility.pending.cocci, 2022-11-19) because this
+compatibility wrapper lived in "cache-tree.h", not "cache.h"
+
+But it's like the other "USE_THE_INDEX_COMPATIBILITY_MACROS", so let's
+migrate it too.
 
 The replacement of "USE_THE_INDEX_COMPATIBILITY_MACROS" here with
 "USE_THE_INDEX_VARIABLE" is a manual change on top, now that these
 files only use "&the_index", and don't need any compatibility
 macros (or functions).
 
-1. 0e6550a2c63 (cocci: add a index-compatibility.pending.cocci,
-   2022-11-19)
+The wrapping of some argument lists is likewise manual, as coccinelle
+would otherwise give us overly long argument lists.
+
+The reason for putting the "O" in the cocci rule on the "-" and "+"
+lines is because I couldn't get correct whitespacing otherwise,
+i.e. I'd end up with "oid,&the_index", not "oid, &the_index".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/mv.c                                         | 8 +++++---
- builtin/update-index.c                               | 4 ++--
- cache.h                                              | 1 -
- contrib/coccinelle/index-compatibility.cocci         | 3 +++
- contrib/coccinelle/index-compatibility.pending.cocci | 3 ---
- 5 files changed, 10 insertions(+), 9 deletions(-)
+ builtin/am.c                                 |  6 +++---
+ builtin/merge.c                              |  2 +-
+ builtin/stash.c                              | 11 +++++++----
+ builtin/write-tree.c                         |  5 +++--
+ cache-tree.h                                 |  5 -----
+ contrib/coccinelle/index-compatibility.cocci | 11 +++++++++++
+ 6 files changed, 25 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 19790ce38fa..edd7b931fdb 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
+diff --git a/builtin/am.c b/builtin/am.c
+index 82a41cbfc4e..8b3dcb66f08 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
 @@ -3,7 +3,7 @@
   *
-  * Copyright (C) 2006 Johannes Schindelin
+  * Based on git-am.sh by Junio C Hamano.
   */
+-#define USE_THE_INDEX_COMPATIBILITY_MACROS
++#define USE_THE_INDEX_VARIABLE
+ #include "cache.h"
+ #include "config.h"
+ #include "builtin.h"
+@@ -1655,7 +1655,7 @@ static void do_commit(const struct am_state *state)
+ 	if (!state->no_verify && run_hooks("pre-applypatch"))
+ 		exit(1);
+ 
+-	if (write_cache_as_tree(&tree, 0, NULL))
++	if (write_index_as_tree(&tree, &the_index, get_index_file(), 0, NULL))
+ 		die(_("git write-tree failed to write a tree"));
+ 
+ 	if (!get_oid_commit("HEAD", &parent)) {
+@@ -2063,7 +2063,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
+ 	if (fast_forward_to(head_tree, head_tree, 1))
+ 		return -1;
+ 
+-	if (write_cache_as_tree(&index, 0, NULL))
++	if (write_index_as_tree(&index, &the_index, get_index_file(), 0, NULL))
+ 		return -1;
+ 
+ 	index_tree = parse_tree_indirect(&index);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 74de2ebd2b3..d7cc8dc8aed 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -706,7 +706,7 @@ static int read_tree_trivial(struct object_id *common, struct object_id *head,
+ 
+ static void write_tree_trivial(struct object_id *oid)
+ {
+-	if (write_cache_as_tree(oid, 0, NULL))
++	if (write_index_as_tree(oid, &the_index, get_index_file(), 0, NULL))
+ 		die(_("git write-tree failed to write a tree"));
+ }
+ 
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 839569a9803..78d69da8cf7 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1,4 +1,4 @@
 -#define USE_THE_INDEX_COMPATIBILITY_MACROS
 +#define USE_THE_INDEX_VARIABLE
  #include "builtin.h"
  #include "config.h"
- #include "pathspec.h"
-@@ -489,7 +489,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 			if ((mode & SPARSE) &&
- 			    path_in_sparse_checkout(dst, &the_index)) {
- 				/* from out-of-cone to in-cone */
--				int dst_pos = cache_name_pos(dst, strlen(dst));
-+				int dst_pos = index_name_pos(&the_index, dst,
-+							     strlen(dst));
- 				struct cache_entry *dst_ce = the_index.cache[dst_pos];
+ #include "parse-options.h"
+@@ -528,7 +528,8 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+ 					 NULL, NULL, NULL))
+ 		return -1;
  
- 				dst_ce->ce_flags &= ~CE_SKIP_WORKTREE;
-@@ -500,7 +501,8 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 				   !(mode & SPARSE) &&
- 				   !path_in_sparse_checkout(dst, &the_index)) {
- 				/* from in-cone to out-of-cone */
--				int dst_pos = cache_name_pos(dst, strlen(dst));
-+				int dst_pos = index_name_pos(&the_index, dst,
-+							     strlen(dst));
- 				struct cache_entry *dst_ce = the_index.cache[dst_pos];
+-	if (write_cache_as_tree(&c_tree, 0, NULL))
++	if (write_index_as_tree(&c_tree, &the_index, get_index_file(), 0,
++				NULL))
+ 		return error(_("cannot apply a stash in the middle of a merge"));
  
- 				/*
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 82d5902cc8b..bf38885d546 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
+ 	if (index) {
+@@ -552,7 +553,8 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+ 
+ 			discard_index(&the_index);
+ 			repo_read_index(the_repository);
+-			if (write_cache_as_tree(&index_tree, 0, NULL))
++			if (write_index_as_tree(&index_tree, &the_index,
++						get_index_file(), 0, NULL))
+ 				return error(_("could not save index tree"));
+ 
+ 			reset_head();
+@@ -1377,7 +1379,8 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 
+ 	strbuf_addf(&commit_tree_label, "index on %s\n", msg.buf);
+ 	commit_list_insert(head_commit, &parents);
+-	if (write_cache_as_tree(&info->i_tree, 0, NULL) ||
++	if (write_index_as_tree(&info->i_tree, &the_index, get_index_file(), 0,
++				NULL) ||
+ 	    commit_tree(commit_tree_label.buf, commit_tree_label.len,
+ 			&info->i_tree, parents, &info->i_commit, NULL, NULL)) {
+ 		if (!quiet)
+diff --git a/builtin/write-tree.c b/builtin/write-tree.c
+index 45d61707e7d..078010315f0 100644
+--- a/builtin/write-tree.c
++++ b/builtin/write-tree.c
 @@ -3,7 +3,7 @@
   *
   * Copyright (C) Linus Torvalds, 2005
   */
 -#define USE_THE_INDEX_COMPATIBILITY_MACROS
 +#define USE_THE_INDEX_VARIABLE
+ #include "builtin.h"
  #include "cache.h"
- #include "bulk-checkin.h"
  #include "config.h"
-@@ -381,7 +381,7 @@ static int process_path(const char *path, struct stat *st, int stat_errno)
- 	if (has_symlink_leading_path(path, len))
- 		return error("'%s' is beyond a symbolic link", path);
+@@ -38,7 +38,8 @@ int cmd_write_tree(int argc, const char **argv, const char *cmd_prefix)
+ 	argc = parse_options(argc, argv, cmd_prefix, write_tree_options,
+ 			     write_tree_usage, 0);
  
--	pos = cache_name_pos(path, len);
-+	pos = index_name_pos(&the_index, path, len);
- 	ce = pos < 0 ? NULL : the_index.cache[pos];
- 	if (ce && ce_skip_worktree(ce)) {
- 		/*
-diff --git a/cache.h b/cache.h
-index b0bbecf35ef..c44aef1af7c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -456,7 +456,6 @@ extern struct index_state the_index;
+-	ret = write_cache_as_tree(&oid, flags, tree_prefix);
++	ret = write_index_as_tree(&oid, &the_index, get_index_file(), flags,
++				  tree_prefix);
+ 	switch (ret) {
+ 	case 0:
+ 		printf("%s\n", oid_to_hex(&oid));
+diff --git a/cache-tree.h b/cache-tree.h
+index 8efeccebfc9..84890c9ff32 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -55,11 +55,6 @@ void prime_cache_tree(struct repository *, struct index_state *, struct tree *);
+ int cache_tree_matches_traversal(struct cache_tree *, struct name_entry *ent, struct traverse_info *info);
+ 
  #ifdef USE_THE_INDEX_COMPATIBILITY_MACROS
- #define read_cache() repo_read_index(the_repository)
- #define discard_cache() discard_index(&the_index)
--#define cache_name_pos(name, namelen) index_name_pos(&the_index,(name),(namelen))
- #endif
- #endif
- #endif
+-static inline int write_cache_as_tree(struct object_id *oid, int flags, const char *prefix)
+-{
+-	return write_index_as_tree(oid, &the_index, get_index_file(), flags, prefix);
+-}
+-
+ static inline int update_main_cache_tree(int flags)
+ {
+ 	if (!the_index.cache_tree)
 diff --git a/contrib/coccinelle/index-compatibility.cocci b/contrib/coccinelle/index-compatibility.cocci
-index 028ff53354a..1d37546fdbd 100644
+index 1d37546fdbd..e245d805dcd 100644
 --- a/contrib/coccinelle/index-compatibility.cocci
 +++ b/contrib/coccinelle/index-compatibility.cocci
-@@ -91,6 +91,9 @@ identifier ACT = active_cache_tree;
- |
- - resolve_undo_clear
- + resolve_undo_clear_index
-+|
-+- cache_name_pos
-++ index_name_pos
- )
-   (
- + &the_index,
-diff --git a/contrib/coccinelle/index-compatibility.pending.cocci b/contrib/coccinelle/index-compatibility.pending.cocci
-index 01f875d0060..ecf3b45deca 100644
---- a/contrib/coccinelle/index-compatibility.pending.cocci
-+++ b/contrib/coccinelle/index-compatibility.pending.cocci
-@@ -15,9 +15,6 @@
- (
- - discard_cache
- + discard_index
--|
--- cache_name_pos
--+ index_name_pos
- )
-   (
- + &the_index,
+@@ -135,3 +135,14 @@ identifier ACT = active_cache_tree;
+   ...
+ + , NULL, NULL, NULL
+   )
++
++@@
++expression O;
++@@
++- write_cache_as_tree
+++ write_index_as_tree
++  (
++- O,
+++ O, &the_index, get_index_file(),
++  ...
++  )
 -- 
 2.39.1.1475.gc2542cdc5ef
 
