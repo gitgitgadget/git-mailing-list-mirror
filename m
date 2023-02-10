@@ -2,150 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1C9EC05027
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 16:58:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7ABCAC636D4
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 16:59:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232842AbjBJQ6U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 11:58:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39674 "EHLO
+        id S232902AbjBJQ67 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 11:58:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232860AbjBJQ6M (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 11:58:12 -0500
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86CA9BB87
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 08:57:54 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by ams.source.kernel.org (Postfix) with ESMTPS id DDDFCB82596
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 16:57:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E958C433EF
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 16:57:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676048245;
-        bh=rtLuRe3wqhv00EDW3Ix90qjIZN+9Ni5tH6nC1iSFXlw=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=F0gHdNJfUe6P+/Vhq6WUEklJA9g9PyAXpk8wfygMcQEnvJtL/Ap3VO+jMFlseSKWw
-         97k2YMRbdrGiilgWwERL4tmRhizQFUvIZAIY3j0DLdVsPUWcl5Gsqa9qhjccksqdt/
-         IJs03hDXmkV24gKRcL47iM54Nm8i/c+asdQXQNntIBCMFNUVIL8pT21p3ksnfUkosk
-         9I6qNwhT8oLSf+ogWiQODowoRC3OqDFRdFLvcUlNDA6UBwuqQOcnWIJ+1gX3MTrSa1
-         FheK+AT34/jCZi0PlJwsfkvfBTUJndbHJkJwPENPQC82BgBSarwjtyclaQxBXXbHU0
-         zprzqqQUYMp7A==
-Received: by mail-oi1-f170.google.com with SMTP id bx13so4905215oib.13
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 08:57:25 -0800 (PST)
-X-Gm-Message-State: AO0yUKWZPbj/CLOVuH5peOkw6Lqvi+Z3/DZn4JzeSxBhfAhYWw5mPIUj
-        R4ENMqOGeqpknqe1c0bZeb0bKxov5fUtQvTQSiM=
-X-Google-Smtp-Source: AK7set9969wO2KxiQxuh8DVDwMlHoqnDGwWJTeMYlK021vL7xsfJ2UoBVYJE+FPL17vOdilar28ozERo+iIEVI/Da0o=
-X-Received: by 2002:aca:210c:0:b0:35e:7c55:b015 with SMTP id
- 12-20020aca210c000000b0035e7c55b015mr1335802oiz.287.1676048244884; Fri, 10
- Feb 2023 08:57:24 -0800 (PST)
+        with ESMTP id S232915AbjBJQ6w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 11:58:52 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB29D795E4
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 08:58:48 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id a8-20020a17090a6d8800b002336b48f653so4370706pjk.3
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 08:58:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sQc2+H91ybtTZ7ssIeEuMnufTRnosALrO/UydSHzabg=;
+        b=H9rXRxrx5qzEBPFYurnnsWPsPgTiRsZRyrByYVl/dKTCQoIj/ANtgVZRn3jZpIe/Jp
+         zpCVO7cUDd1kdQ8kzDfEOFsK8rDu5vvDMBb+Goe6dCi4Xsj24TKFa3nvwTMwVVl6avDn
+         +7P/SQWCXTwCsb2DUU2P3eS85nQ/L4bXTnIl5CYrRgQNkGh9sa1P6F0YZqGDHjwhHRJS
+         XRjNwOXAs3Edq+ivYofAAPWkDoZ9sc5iNh5J1ZWeR0pAwfS1bUOe5YxRRzGE1al0C60E
+         z0l2dQnZy3qsbT6gX9V1MrreLfbd9Lffa/yKkGCoKdbstVw8eY89/TgWbrAzJPE2VIMB
+         pCOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=sQc2+H91ybtTZ7ssIeEuMnufTRnosALrO/UydSHzabg=;
+        b=t/TX6vD1THHlGUWeBOUHje+UZHUdSnSfCdMVtgIVgBCjBy9EETq1PHVhA3GotQd3gF
+         U1A1ZWBhTIeq0by35vnPAMQcFGvxl7qxSRVIRMDuVpDc53T6l5eIGPtkf+P2fFzNFgkz
+         ae0aZmRaZPt+4bVts0Oe1ZaKulJapjy1x3L5+mNZ7V5Tftrh+9fYBpwY9GGC78QF2Eme
+         pJojY9oZMsX3Cvnu0YnYHtdfRfElUcii4Oh5S9IjNvGAaa4XdgwKlI2Xd+DyZbMp5Q5K
+         IEuhsOWdi1GeIFNvZw45opmMfteEO0bSg804LxhQ6t3EefnlXhJMjWgz7uNM6yiHmLAE
+         o5+Q==
+X-Gm-Message-State: AO0yUKXu0ty1HW0Fe3jHZCx1fOKCV6XPXuNfxaoWyB62Cq0G1VfMmza+
+        RY6R18FzBF6WZCgAzdE8xT+lTDlYmdc=
+X-Google-Smtp-Source: AK7set8AmZx9s7LkHZstIcYLFUqF9OgLLfSrRDMnOmzoJr5xKmcQofFKYpajqav2BzTJ0MiRD3x30g==
+X-Received: by 2002:a17:90b:3a8b:b0:230:9b7b:20fd with SMTP id om11-20020a17090b3a8b00b002309b7b20fdmr17364687pjb.5.1676048328208;
+        Fri, 10 Feb 2023 08:58:48 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id g7-20020a17090a290700b002262dd8a39bsm5364827pjd.49.2023.02.10.08.58.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Feb 2023 08:58:47 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Gwyneth Morgan <gwymor@tilde.club>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] signature-format.txt: Note SSH and X.509 signature
+ delimiters
+References: <20220120053223.221667-1-gwymor@tilde.club>
+        <xmqq7daui4s8.fsf@gitster.g> <Y+XhPeh76D6/Uz6C@tilde.club>
+Date:   Fri, 10 Feb 2023 08:58:47 -0800
+In-Reply-To: <Y+XhPeh76D6/Uz6C@tilde.club> (Gwyneth Morgan's message of "Fri,
+        10 Feb 2023 06:16:39 +0000")
+Message-ID: <xmqqwn4pjw3c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20230210075939.44949-1-masahiroy@kernel.org> <20230210075939.44949-2-masahiroy@kernel.org>
- <230210.861qmxwtbz.gmgdl@evledraar.gmail.com>
-In-Reply-To: <230210.861qmxwtbz.gmgdl@evledraar.gmail.com>
-From:   Masahiro Yamada <masahiroy@kernel.org>
-Date:   Sat, 11 Feb 2023 01:56:48 +0900
-X-Gmail-Original-Message-ID: <CAK7LNASLR6VLoX+Mf5MTemAMbts81kqf=dM5Bzne1QdZpT7tgQ@mail.gmail.com>
-Message-ID: <CAK7LNASLR6VLoX+Mf5MTemAMbts81kqf=dM5Bzne1QdZpT7tgQ@mail.gmail.com>
-Subject: Re: [PATCH 1/5] git-compat-util: add isblank() and isgraph()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 10, 2023 at 10:20 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+Gwyneth Morgan <gwymor@tilde.club> writes:
+
+> I believe the existing language is referring to the
+> "-----BEGIN PGP MESSAGE-----" format GPG outputs in RFC 1991 mode,
+> rather than the "-----BEGIN SIGNED MESSAGE-----" that X.509 uses.
+
+The paragraph came from 76f9d8ba (Documentation/technical: describe
+signature formats, 2016-06-17) that started the documentation, and
+predates x509 support by two years (and ssh came even later), so
+you're right.  It couldn't possibly have meant anything newer.
+
+Thanks.
+
+> OpenSSH's signature format documentation says:
 >
 >
-> On Fri, Feb 10 2023, Masahiro Yamada wrote:
+> 	The Armored SSH signatures consist of a header, a base64
+> 	encoded blob, and a footer.
 >
-> > git-compat-util.h implements most of is*() macros.
-> >
-> > Add isblank() and isgraph(), which are useful to clean up wildmatch.c
-> > in a consistent way (in this and later commits).
+> 	The header is the string "-----BEGIN SSH SIGNATURE-----"
+> 	followed by a newline. The footer is the string
+> 	"-----END SSH SIGNATURE-----" immediately after a newline.
 >
-> You are on a journey to fix wildmatch.c, so...
->
-> > The same issue already exists for isspace().
-> >
-> > Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-> > ---
-> > [...]
-> > -#ifdef isblank
-> > -# define ISBLANK(c) (ISASCII(c) && isblank(c))
-> > -#else
-> > -# define ISBLANK(c) ((c) =3D=3D ' ' || (c) =3D=3D '\t')
-> > -#endif
-> > -
-> > -#ifdef isgraph
-> > -# define ISGRAPH(c) (ISASCII(c) && isgraph(c))
-> > -#else
-> > -# define ISGRAPH(c) (ISASCII(c) && isprint(c) && !isspace(c))
-> > -#endif
-> > -
-> > +#define ISBLANK(c) (ISASCII(c) && isblank(c))
-> > +#define ISGRAPH(c) (ISASCII(c) && isgraph(c))
-> >  #define ISPRINT(c) (ISASCII(c) && isprint(c))
-> >  #define ISDIGIT(c) (ISASCII(c) && isdigit(c))
-> >  #define ISALNUM(c) (ISASCII(c) && isalnum(c))
->
-> You make this change, but not others in tree.
->
-> Personally I wouldn't mind seeing this expanded to fix the various other
+> This is sufficiently similar to the nomenclature in RFC 4880 to call
+> these "Armor Header Line and Tail Line" without any misunderstanding (or
+> "footer line" if that's preferred). I did not find documentation on what
+> X.509 calls these.
 
+Sounds good.  Thanks for due dilligence; it would make sure our
+nomenclature would not go out of line without a good reason.
 
-I wouldn't mind seeing somebody use this for tree-wide cleanups.
-I do not see any reason to do that in this patch set, either.
-
-
-
-
-
-> trivially convertable cases in-tree, e.g.:
->
->         $ git -P grep -n "(' '|'\\\t').*\|\|.*(' '|'\\\t')"
->         builtin/am.c:602:               if (*sb.buf =3D=3D '\t' || *sb.bu=
-f =3D=3D ' ')
->         compat/regex/regex_internal.h:60:# define isblank(ch) ((ch) =3D=
-=3D ' ' || (ch) =3D=3D '\t')
->         compat/regex/regex_internal.h:73:   return (c =3D=3D ' ' || c =3D=
-=3D '\t');
->         config.c:893:   while (c =3D=3D ' ' || c =3D=3D '\t')
->         fsck.c:837:     while (*p =3D=3D ' ' || *p =3D=3D '\t')
->         mailinfo.c:749:     (line->buf[0] =3D=3D ' ' || line->buf[0] =3D=
-=3D '\t')) {
->         sequencer.c:2476:                (*p =3D=3D ' ' || *p =3D=3D '\t'=
- || *p =3D=3D '\n' || *p =3D=3D '\r' || !*p) &&
->         sequencer.c:2536:                  (*bol =3D=3D ' ' || *bol =3D=
-=3D '\t')) {
->         sequencer.c:2540:                                 (*bol =3D=3D ' =
-' || *bol =3D=3D '\t')) {
->         sequencer.c:2594:       if (is_command(TODO_PICK, &bol) && (*bol =
-=3D=3D ' ' || *bol =3D=3D '\t'))
->         sequencer.c:2597:                (*bol =3D=3D ' ' || *bol =3D=3D =
-'\t'))
->         t/helper/test-json-writer.c:443:                if (c =3D=3D '\n'=
- || c =3D=3D '\r' || c =3D=3D ' ' || c =3D=3D '\t')
->         t/helper/test-json-writer.c:449:        while (*buf =3D=3D ' ' ||=
- *buf =3D=3D '\t')
->         t/t4256/1/mailinfo.c:737:           (line->buf[0] =3D=3D ' ' || l=
-ine->buf[0] =3D=3D '\t')) {
->         t/t4256/1/mailinfo.c.orig:726:      (line->buf[0] =3D=3D ' ' || l=
-ine->buf[0] =3D=3D '\t')) {
->         trailer.c:630:          if (c !=3D line && (*c =3D=3D ' ' || *c =
-=3D=3D '\t')) {
->         wildmatch.c:34:# define ISBLANK(c) ((c) =3D=3D ' ' || (c) =3D=3D =
-'\t')
->
-> Some of those are false positves, but most are not.
-
-
-
---
-Best Regards
-Masahiro Yamada
