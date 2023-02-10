@@ -2,120 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35014C05027
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 19:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADDAAC636D4
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 19:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233295AbjBJTZt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 14:25:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60276 "EHLO
+        id S232946AbjBJT3h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 14:29:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233176AbjBJTZs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 14:25:48 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 762547D899
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:25:47 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 1106E61E00
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 19:25:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778D3C433D2
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 19:25:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1676057146;
-        bh=ZzYqv3GYHJ9eTQlKyZ17xzIWB+D/wQPKFdZ40GMHxe8=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=ZVG94G5UaJ+osCoDv/vYc3pITpncvOe7O3MKYr4AbRygeSGApTZ+CM/8c5Mg6XClP
-         P+eYFOXuIKyyyn7pwq9HvWq60pdlnrzZtunVWTRUeSmiG6OMIEMT3s7EbYUbakBkMY
-         RLai0nFwUieXF1Z/J5Oz5O4EdeeiLBdRg0M/trRK+75PfUgNbrbCrDYU+STPbVqIcz
-         LHEgyzch7n7ifO5gD5KJReTCs6OOYmU6bKO+elka1Ej1ibCaRWrB3PcyvZis5LaK7Y
-         hjAtOf9owVDUu/I5meO/cbBrM6npORAzWB0K189wjjXzE7RvqZuu+gCy6jk4hDxA69
-         Sa5Qg40x8gTbw==
-Received: by mail-oi1-f180.google.com with SMTP id cz14so5283683oib.12
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:25:46 -0800 (PST)
-X-Gm-Message-State: AO0yUKVTtIo2ZqGbyvxLxmO6I5Qn0J2Lbuu6UO/DSb3MLqvS/4IIJDaS
-        8XfgX2w/AnY7Rf1zS6XZD5jgMfyPqzxdElPEpuA=
-X-Google-Smtp-Source: AK7set9ArOgshk0nNBV/hzHnbvUk2roCbaXQgcrf4zRruhAM41jWZ5SuWT9bqS4b7gOudcH9mE0pO3N4dWesE3+u2Mo=
-X-Received: by 2002:aca:210c:0:b0:35e:7c55:b015 with SMTP id
- 12-20020aca210c000000b0035e7c55b015mr1422291oiz.287.1676057145753; Fri, 10
- Feb 2023 11:25:45 -0800 (PST)
+        with ESMTP id S232598AbjBJT3g (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 14:29:36 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AE7963109
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:29:35 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id nn4-20020a17090b38c400b00233a6f118d0so3923822pjb.2
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:29:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ik9tqsJI1ucKryRz2B9QD8fTeXD+yihLVf8ONhqf9LQ=;
+        b=NKFyZC43atT8ujl8h+d878yea2yunjr/J40OOwfCi3SqUmXJMSHVHbs6K3FtrfjUO6
+         UPL9nqxkZ5EQpMIelXDydXhuiizDDpVxSH8erMRSGXMh2G73igGgx1IMRZnGAygzNXDD
+         0I4HyD0SCDhmKA3PrnoLsn55qDoGb+jZ7Po2SkGWo7Ot5jX0nMZ/BCvf6SpgXD31tw0V
+         JrQ9AjrrgCHyXxEBjz6HIGM1ZJgqbKISYCt6BNt+ycCJutaXKN3ZT/yayxX2IXclVv+1
+         X8Wda25n4ZTHOKTP4tNl8dJfYkrEaum5tKjRSk4VWZJ35XIjJ/2/dY0RdZZr5QokDi+H
+         TybA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ik9tqsJI1ucKryRz2B9QD8fTeXD+yihLVf8ONhqf9LQ=;
+        b=jFFW2JzOvfSNAPkdkK16k5HRF4xNq1R9Xr8RLoEVzvwmn2YusCLlC/pAoh/6jr4Mk+
+         kFSAFzZtiu8ycg7zBNaolC2OMWO5ME6KpfLywO7cTqIn29/9NvnOrRC7DNwkw2Zq6NXF
+         tiRVJ69FBTOsQFL7ttdpvU9DcqGiGxmUsjdr3nlgVQNU2qr6lAZnlWCRp2E182o5VNfu
+         ynI/uHgDRkdoIz1Az7y+3u7/DTj0sWZOLDRRrLokvsQ65izWRfmQHfLW1F3XlgoyDWNP
+         /KF7Anpeb4ad4x5jGsSA+9UtkjAGdTG+7xgtdb4xQ8PHgxAl/+sNqYt4RX5Pj/IO0TGh
+         6RFg==
+X-Gm-Message-State: AO0yUKURpbOtfW4q76TKPcRSggaOttomxPkmx+hqH+Nk3TG39+lre9h+
+        r406BfVSbaFX/gD0gJKK0bkbOVkkFNM=
+X-Google-Smtp-Source: AK7set/Nxgz1J80A5bKDeoSJDPDN0uQ410OFU5wvhb1btHwyzI1rp+gMnt8N/ZowCCcv+dSktbWNLg==
+X-Received: by 2002:a05:6a21:7890:b0:c2:4719:45c8 with SMTP id bf16-20020a056a21789000b000c2471945c8mr18813259pzc.27.1676057375077;
+        Fri, 10 Feb 2023 11:29:35 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id g6-20020a63b146000000b0042988a04bfdsm3380566pgp.9.2023.02.10.11.29.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Feb 2023 11:29:34 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 1/6] builtin/rm.c: use narrower "USE_THE_INDEX_VARIABLE"
+References: <cover-0.6-00000000000-20221215T095335Z-avarab@gmail.com>
+        <cover-v2-0.6-00000000000-20230210T102114Z-avarab@gmail.com>
+        <patch-v2-1.6-916761cb50f-20230210T102114Z-avarab@gmail.com>
+Date:   Fri, 10 Feb 2023 11:29:34 -0800
+In-Reply-To: <patch-v2-1.6-916761cb50f-20230210T102114Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 10 Feb
+ 2023 11:28:34
+        +0100")
+Message-ID: <xmqqbkm1iajl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20230210075939.44949-1-masahiroy@kernel.org> <20230210075939.44949-2-masahiroy@kernel.org>
- <xmqqo7q1ibek.fsf@gitster.g>
-In-Reply-To: <xmqqo7q1ibek.fsf@gitster.g>
-From:   Masahiro Yamada <masahiroy@kernel.org>
-Date:   Sat, 11 Feb 2023 04:25:09 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAQM6tGmZvy9jVWy099dsOte_=P-Ro3CuAqAc5akiakyoQ@mail.gmail.com>
-Message-ID: <CAK7LNAQM6tGmZvy9jVWy099dsOte_=P-Ro3CuAqAc5akiakyoQ@mail.gmail.com>
-Subject: Re: [PATCH 1/5] git-compat-util: add isblank() and isgraph()
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 11, 2023 at 4:11 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Masahiro Yamada <masahiroy@kernel.org> writes:
->
-> > Use them with care because they are not robust against the pointer
-> > increment, like isblank(*s++).
-> >
-> > The same issue already exists for isspace().
->
-> Does it?
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
+> Replace the "USE_THE_INDEX_COMPATIBILITY_MACROS" define with the
+> narrower "USE_THE_INDEX_VARIABLE". This could have been done in
+> 07047d68294 (cocci: apply "pending" index-compatibility to some
+> "builtin/*.c", 2022-11-19), but I missed it at the time.
 
-Sorry, I meant:
+It's a minor thing but can we stop saying "I did X" or "I didn't do
+X".  It is not just your fault that this was missed.  Reviewers also
+failed to spot it but we are not in the blame passing game.  "but it
+was forgotten", "but it was missed", or "but nobody noticed it"
+would suffice.
 
- "The same issue already exists for isprint()"
+The patch is of course good.  For this kind of change, if it
+compiles, it cannot be incorrect ;-)
 
-
-
-
-   #define isprint(x) ((x) >= 0x20 && (x) <= 0x7e)
-
-
-is not robust against pointer increment.
-
-
-
-
->
-> >  #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
-> >  #define isascii(x) (((x) & ~0x7f) == 0)
-> >  #define isspace(x) sane_istest(x,GIT_SPACE)
->
-> sane_istest() evaluates x and mask only once, and isspace evaluates
-> x only once, no?
->
->         isspace(*x++)
->         ->
->         sane_istest(*x++,GIT_SPACE)
->         ->
->         ((sane_ctype[(unsigned char)(*x++)] & GIT_SPACE) != 0)
->
-> > +#define isblank(x) (isspace(x) || (x) == '\t')
-> > +#define isgraph(x) (isprint(x) && !isspace(x))
->
-> Given that all the other tests are implemented with just picking an
-> integer from the table and checking bit(s), the above two look
-> somewhat out of place.  The fact, as you noted, that they cannot be
-> used safely does not help, either.
->
->
-
-
-At first, I hesitated to move these to git-compat-util.h
-for this reason, but I noticed isprint() was in the same situation.
-
-So, I decided to go.
-
-
-
--- 
-Best Regards
-Masahiro Yamada
+Thanks.
