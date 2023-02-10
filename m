@@ -2,122 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8008C636D7
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 20:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 935E3C05027
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 20:33:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233786AbjBJUVk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 15:21:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53578 "EHLO
+        id S233344AbjBJUdH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 15:33:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233608AbjBJUVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 15:21:25 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88A1381285
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 12:20:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1676060420; bh=/XBjXQj38CPMUPAsvJ3KFy7un0YbYlEvXcm0I2hlzB0=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=ulvjKKKuxv90girnB4K4cri1ISN+S7lgYNsKSBFbfdf8+vFEfH4r4cV8TC0Tlptgv
-         Z4ZYVyegCdkVVjgMS2BAwLEO3JGWJ2TUx53gT4YoBluF721nwZYrjSksFfMW6d+dbA
-         u0KkHuTe/jq3Rd6jdijUZuHKqZVOm/bNVvoITpcUEzeherbK/UUC3Xw/7/cf7muIXo
-         a+Cb16dTT6qGyQGV53mqw2u+n3aHMTcBmP96jaQ6waZmh50ClB1Irv0kalh/VOaVRD
-         ugiOI67dJBTLd/Bt0+OQQqWlEaoIrJaQgjHp/DmM3Ena8MVAqEWsn3ICaAu1BPjQKd
-         WGnli1U0bmlDA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.21.51]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mcpqo-1oqgtd3jWc-00ZwdG; Fri, 10
- Feb 2023 21:20:19 +0100
-Message-ID: <850c94d5-973a-335e-903f-e0ab7e52f37e@web.de>
-Date:   Fri, 10 Feb 2023 21:20:19 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.2
+        with ESMTP id S233294AbjBJUdF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 15:33:05 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C56E33A0A3
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 12:33:01 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id s89-20020a17090a2f6200b0023125ebb4b1so6644023pjd.3
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 12:33:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jTPwK63PZyGBt+xGScPd+P0i9UHyC+uFwig4kukGl4c=;
+        b=R7wyIvtAkcjqT2OoWEEpmVWiSrvl1yChAWJXyasgrFrKCVY3lWtvSv7YSj2x9QWYnz
+         kqCHqUOfd7o1DDRKG8VrDlWv2/fykkzbQ6hte5OQqBPaoDFrLfGnnt0I5GsO5/+fkWPQ
+         CNqNZBglA+fVKAcPhRA+OnF5hvUSh34qkNlXVqQnbSDVMTLJbjxUB2Rf2V7/SLk/tvCo
+         u4GYpey71btZS/tSb02XMK+cnfHg/BEYRVrEZwMuZoaYu/THn+MPNFl1asgIQ5rGjKSW
+         3HNH07UP58LxUR0uOXYmPw9Qn5O+R5INkM1aF6eS605o2fMMcYr5nE6FKyKy171C9pKk
+         AU/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jTPwK63PZyGBt+xGScPd+P0i9UHyC+uFwig4kukGl4c=;
+        b=rqRWNbXtY3rq2YNxoCuCHGUB+Em27wNwD2JxJ7sCzCl/KF/dS0erlRZ4ueB/dZP1dD
+         LIvnfZlghtxokhjPxZg7zKDV0o/jVywB0kgWqpg/6poP7FLY2r0Gn9n8hSyjzXeZU+zX
+         zINtV90aoLRj1lHFYMQb/9qZVFIDrGclgpLJRNLQribdU7bcxRp4hvkGWEaWYxGnctAu
+         XdZT+mQx2farSPDKBAfJYfqPbYh6P2dCZTnY4bLaO0d1/ukRukzeYM/7TnBGi6U6/cIc
+         PsNqRqZAkLp+iIDApPQ3aFBipGAvJVk+owUtAeq9Dw74FD7TkzRxksUzkP5qTbOpnHyT
+         lV3Q==
+X-Gm-Message-State: AO0yUKUsU/uszKg+eL3BqyxXMz5ydzA87nmfrTiLTUCspWI41yKw3qQM
+        C0HP0Tz+Ufl9jYWK9D28hAZMYjgyWpA=
+X-Google-Smtp-Source: AK7set+kL67eKBQaq331VrCQC80zGBtM5GQ16woDavX44BealWqRLj/YbYpoUJ9mIfjw+BigJcylVg==
+X-Received: by 2002:a17:903:2407:b0:198:adc4:229d with SMTP id e7-20020a170903240700b00198adc4229dmr8683118plo.24.1676061181206;
+        Fri, 10 Feb 2023 12:33:01 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id z19-20020a170902ee1300b0019a7d58e595sm512039plb.143.2023.02.10.12.33.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Feb 2023 12:33:00 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>, Victoria Dye <vdye@github.com>
 Subject: Re: [PATCH] cache-tree: fix strbuf growth in prime_cache_tree_rec()
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye <vdye@github.com>
 References: <ff3ac119-9b00-746f-470c-8db18c9c61a1@web.de>
- <230205.86r0v37qdb.gmgdl@evledraar.gmail.com>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <230205.86r0v37qdb.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:jXx8v+4d38m18QrQAHV2RRjAqHkzivL+A1Xgv5wQXr6Kyh0I4Ne
- S26DC9xhxgs2J5hISg6MPRZHyu7usNRc5fkOBSozpp+JR34Iad0JwkmHimklKydSWrwIEFA
- NYsxzjNOgUMaa9+Y14CgpB9rRMdkN+Wn+NscFAW4b4iTDYuAVDfGFqqzXb0jRRuvQQG/YGR
- 6UMNfyDQywXw2+gowCoAg==
-UI-OutboundReport: notjunk:1;M01:P0:qFkr99EAdMo=;THEkvlwumX8oc2cuc4rfcL7D2MG
- iGkByhlssPyZZzDMncKrLItm1vjwyF4q3CMphfreRlvZHp/BTn6VP5MhB+BmGq3h4x3+BRtRR
- PUW/YXq48iNMbBRvxAXeupF8hXju28shjZ9IWr/42i4SEzn2kVQ1m+Iajqi7ABhRTkCwVP5Md
- W1hQqsOS7e9YFgpBRf1jYm9O1Js39Acfw4pNDnWRT0OmoQiNywSkJUHP2hIzT3THlg7jrOJIr
- QKJw1X4IIWbADNVl0GchDR0TtJBdk269uFExMkMca8sRbFqhBAvkZNKzFuFSQ6F2wFA5Bt/0N
- unVlTRTKffNAu77qWUPcLta4LmhDzxQLvFUyzz/5ofRo3kKW5NH0gzc1KoO9HYH+Ze9JIN23u
- dOEzTW93jaK9+zITs39IGOInmUYzcOGSOq5ofBUuM5ue3ZFA9n2FLpp9jI1dLI8KY+ZGvHAdk
- cVJfBADOhwiuOX9SNtR+Yxaiv7uu/Zfm8rRctNWWMMaud8ChZeErjwvDF8m6VQH7hnbV1Z3Jv
- HbsFIxTgKLD1x6qLGZgtrTGtH2rZq3qilalYohX6bJQUz3mvU4EbKk8Pn44PHEPx6EFPWK3Qn
- MRxiA9QVyMKHPTXO1hIKCPeF/HIj+/M+cb7UThjL53tDJ4Pim2L+jjP+yTYJNHYIwtKrUk3F8
- QFtGgTE2POF7NW7+ai3DEsTOWHONMLRTFP4F0/+uD6NVJmT1mwuZitcd6KRo4tglDPMi5V/Ne
- b8s5yq4qEbieQ7uYS/Ut47SxZfKK3lMiwTSCJx98JPFw/9HrHHfahQKv6pn5Br0mRsfshkjkO
- ++Z0Munq4Estjx3/J4L02pgvko1u6mWnZhKLMx7VTnAm26ShKHb8p9QWX6SMTqCixJblDIWY8
- BA4JZW0hW3C33McUZRrEokaKsFAlweVOBOi/O2bgJb6se0VWfhgK0wNe1c/NN0IODbNN1BHN0
- 2tPVL3BvtJDCc5QiW+AokBvaEpY=
+        <230205.86r0v37qdb.gmgdl@evledraar.gmail.com>
+        <850c94d5-973a-335e-903f-e0ab7e52f37e@web.de>
+Date:   Fri, 10 Feb 2023 12:33:00 -0800
+In-Reply-To: <850c94d5-973a-335e-903f-e0ab7e52f37e@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 10 Feb 2023 21:20:19 +0100")
+Message-ID: <xmqqwn4pgt1f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.02.23 um 22:12 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Sat, Feb 04 2023, Ren=C3=A9 Scharfe wrote:
->
->> Use size_t to store the original length of the strbuf tree_len, as
->> that's the correct type.
->>
->> Don't double the allocated size of the strbuf when adding a subdirector=
-y
->> name.  Only extend it to fit that name and a slash.
->>
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->> ---
->>  cache-tree.c | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/cache-tree.c b/cache-tree.c
->> index 9af457f47c..35f7617164 100644
->> --- a/cache-tree.c
->> +++ b/cache-tree.c
->> @@ -760,7 +760,7 @@ static void prime_cache_tree_rec(struct repository =
-*r,
->>  	struct tree_desc desc;
->>  	struct name_entry entry;
->>  	int cnt;
->> -	int base_path_len =3D tree_path->len;
->> +	size_t base_path_len =3D tree_path->len;
->>
->>  	oidcpy(&it->oid, &tree->object.oid);
->>
->> @@ -785,7 +785,7 @@ static void prime_cache_tree_rec(struct repository =
-*r,
->>  			 */
->>  			if (r->index->sparse_index) {
->>  				strbuf_setlen(tree_path, base_path_len);
->> -				strbuf_grow(tree_path, base_path_len + entry.pathlen + 1);
->> +				strbuf_grow(tree_path, entry.pathlen + 1);
->>  				strbuf_add(tree_path, entry.path, entry.pathlen);
->>  				strbuf_addch(tree_path, '/');
->>  			}
->
-> The size_t conversion is trivially correct.
->
-> But what do you mean with "don't double the[...]"? Do you mean that this
-> manages to evade growing these to 24 etc?
+René Scharfe <l.s.r@web.de> writes:
 
-strbuf_setlen() truncates the string to the directory name.  strbuf_grow()=
- then
-makes enough room to add that directory name again (that's what I mean wit=
-h
-"double") plus the entry path.  We don't add the directory name a second t=
-ime,
-so we don't need to make room for it.
+>>> -				strbuf_grow(tree_path, base_path_len + entry.pathlen + 1);
+>>> +				strbuf_grow(tree_path, entry.pathlen + 1);
+>>>  				strbuf_add(tree_path, entry.path, entry.pathlen);
+>>>  				strbuf_addch(tree_path, '/');
+>>>  			}
+>>
+>> The size_t conversion is trivially correct.
+>>
+>> But what do you mean with "don't double the[...]"? Do you mean that this
+>> manages to evade growing these to 24 etc?
+>
+> strbuf_setlen() truncates the string to the directory name.  strbuf_grow() then
+> makes enough room to add that directory name again (that's what I mean with
+> "double") plus the entry path.  We don't add the directory name a second time,
+> so we don't need to make room for it.
 
-Ren=C3=A9
+Yeah, I think I made the same mistake number of years ago, thinking
+that strbuf_grow() was to grow the buffer to the given size, but in
+reality it is to grow the buffer by the given size, which felt a bit
+unnatural, at least to me.  I do not feel it too strongly but we
+might want to rename _grow() to _grow_by() and make _grow() call it
+while giving deprecation warning X-<.
+
+There are ~45 calls to strbuf_grow() in C files other than strbuf.c;
+I suspect probably a half or more of them can and should be removed
+to reduce the resulting code size without hurting anything.
+
