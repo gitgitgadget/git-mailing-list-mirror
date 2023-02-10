@@ -2,100 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98DE8C636D4
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 19:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31998C636D4
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 19:13:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233250AbjBJTLJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 14:11:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53822 "EHLO
+        id S232831AbjBJTNI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 14:13:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233165AbjBJTLD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 14:11:03 -0500
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AF682136
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:11:01 -0800 (PST)
-Received: by mail-pl1-x636.google.com with SMTP id u9so7445601plr.9
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:11:01 -0800 (PST)
+        with ESMTP id S229495AbjBJTNG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 14:13:06 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55D8078D5B
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:13:02 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id w5so7448427plg.8
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:13:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5DOSui1yVRGbeTEdQR3z9cZroFuBvMeuz+mPOPLl81s=;
-        b=FDbwKmwwRX61NV5PqHa2Oqz9aLYz3/uceYI38OtUmRir0B0ki/rM9QJ8/ldtBxozhF
-         Ob3IPvxHcVpjr6uTTe7jIGIGqqYwwL3IPa3hzNn353+Dv0bG8hkHAaplnDfdFxDGlKIo
-         Xj81nUuX4KrXgeo1RPL14Fi4Nlj41chKFQl7E8Vuenp4w12CzUUvetIaidlaPUAMij1O
-         TiqiHVZDfAn3JMNUlbXNAYaJQsGca1izjhhMy+NVL2j36XI14vsQg84WN29fIBgghEj5
-         YqICf+N8kjYMYAKT6fSSuCdp2XNV4CVNaBOaBs5hcLnbhN21WQvjvoNfON7TTdKOvF+u
-         BhqA==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9+XpL8fP7q2tOYwTnPrrfALidE2wD64oLyfN2G+dA04=;
+        b=PVIjySHHfqa+kWipY0P841DsmrXN1x15cKYYFjBxcb+NWExIS2qbKyuUOJ3ldoNuVh
+         1r6YcLIAAvyM595MW8YX0AJ7pCzDPEtXet+bClL/nNeniJi2JzVPYXcfDVKvbZYkm/rM
+         bkNByCWrnmW0DBNn91fy8D2zb7Mj5d0fJLx6k2kIqPpcw7I7GzKCDqFzm0l20jt+fYwT
+         dTVrkQQ8yKrqluKRQg80l4Ulcu+sSBMM2jfQcgx63QkFbNmYmk3+cojvytg+bBJo1fr+
+         9beBfsShyS8N+hhgU7VSwD4xjid9zW1ZyD5pWuR0fSkh4uQ4f6BTgeeVtbou2h3PG5UO
+         pIgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5DOSui1yVRGbeTEdQR3z9cZroFuBvMeuz+mPOPLl81s=;
-        b=T0hiceMagutV4qdEK6Fy/V3ayOLIiCsEvfrMDcbp+ZnPyvYct7tp+OiI+H22Eu1mO9
-         EHfoW4XhTqQJyql5AHxtba774mvbHXLf8fwPXKi/KlNkLTQG6jfcFi/kGBMsZCD7YdMT
-         Y7R8XfNWxfQb/5afjHzFNNcXkvUwzG0NryW0xnQfKmCFBDbPHvur21btc7KAtDzoE7UV
-         te2rk+xcGx07wBi4hONtKo5fasZP2pAbNI2zOSqgIF/8MCejQvWfTQkxNZoD7WkbJ8GF
-         FwIsxaiuHOKATEqNqFAAgmneH0eJtIBmD0Jz+hlXGYXknBoc4WHxvEkACqB2XQBGBjh3
-         dh4g==
-X-Gm-Message-State: AO0yUKXs4mwcMgPD69/f8h0zHPOcJx4owBwS2p5RB9im5oA64cifTaUM
-        z1IsOgInILdNg6nFVHM4VdM=
-X-Google-Smtp-Source: AK7set99+BoeecM8b4R5JdwE+7P1Lq/JMImiPwSJWUuemL3pntayDyc3SljpzsxtvMqTKPmETmsOkQ==
-X-Received: by 2002:a17:902:e3c2:b0:198:f907:2a9b with SMTP id r2-20020a170902e3c200b00198f9072a9bmr11649578ple.37.1676056260671;
-        Fri, 10 Feb 2023 11:11:00 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9+XpL8fP7q2tOYwTnPrrfALidE2wD64oLyfN2G+dA04=;
+        b=kyurPfBYKFwiUUqeJScUfmmh7HvY3S5LIEVgTxOh1izaKb5thEqC06N5Oz+smaalSY
+         Gxdkgs+t5kkqV/N+HfJRBe0McqRUiAruKmMLQjdVi0xVa/Ympx/fBuTbBgnczmTtCkIa
+         L4xhbNiCcE7RCEMTmGpRvKYJYxSbIXbiiMviBtC2wqJNO0KpBL+WN+U3WLsjYob6xs6f
+         3sxrw1UFFImtsQTm/gy3XWrpkMpgMAtX9pcdp+xTd6KuCOz/RNQG8BbPDNn43Y/IypCt
+         v49+9WzoPnXWWgH4OwW7wVj+TV5H5MUJPSK4xKrBFVdtyqEgy+2SyaTtwvfDAFlDAoMb
+         TdoA==
+X-Gm-Message-State: AO0yUKX06nrzyCH5c2Wb0N7wrg9ULODuShNGUGm4LdZd4yQ/GozZvfeb
+        w2w/WCERXrEpiJPs/ZDF7CU=
+X-Google-Smtp-Source: AK7set868C5szQMDuc5o4469RdzWzYsVAD5VkQnrwNLjTrLs+AzIzw88S+1WXWHaTuoZKhbIUFPGow==
+X-Received: by 2002:a17:90b:1811:b0:230:dd10:b2ca with SMTP id lw17-20020a17090b181100b00230dd10b2camr17810030pjb.32.1676056381674;
+        Fri, 10 Feb 2023 11:13:01 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id ix12-20020a170902f80c00b00198df32b41csm3720465plb.29.2023.02.10.11.10.59
+        by smtp.gmail.com with ESMTPSA id fv15-20020a17090b0e8f00b0022c9eddaf9dsm3434699pjb.0.2023.02.10.11.13.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 11:11:00 -0800 (PST)
+        Fri, 10 Feb 2023 11:13:00 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Masahiro Yamada <masahiroy@kernel.org>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/5] git-compat-util: add isblank() and isgraph()
-References: <20230210075939.44949-1-masahiroy@kernel.org>
-        <20230210075939.44949-2-masahiroy@kernel.org>
-Date:   Fri, 10 Feb 2023 11:10:59 -0800
-In-Reply-To: <20230210075939.44949-2-masahiroy@kernel.org> (Masahiro Yamada's
-        message of "Fri, 10 Feb 2023 16:59:35 +0900")
-Message-ID: <xmqqo7q1ibek.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 0/6] remove USE_THE_INDEX_COMPATIBILITY_MACROS
+References: <cover-0.6-00000000000-20221215T095335Z-avarab@gmail.com>
+        <cover-v2-0.6-00000000000-20230210T102114Z-avarab@gmail.com>
+Date:   Fri, 10 Feb 2023 11:12:59 -0800
+In-Reply-To: <cover-v2-0.6-00000000000-20230210T102114Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 10 Feb
+ 2023 11:28:33
+        +0100")
+Message-ID: <xmqqk00pibb8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Masahiro Yamada <masahiroy@kernel.org> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Use them with care because they are not robust against the pointer
-> increment, like isblank(*s++).
+> Most of our use of these compatibility macros went away with
+> 041df69edd3 (Merge branch 'ab/fewer-the-index-macros', 2022-11-28) ,
+> which was part of v2.39.0.
 >
-> The same issue already exists for isspace().
+> That topic left out these stragglers, as some of this would have
+> conflicted with in-flight topics, and I'd skipped the cache-tree.h
+> cases altogether.
+>
+> The update in v2 is trivial, just to rebase the series for changes on
+> "master". There are no semantic or textual conflicts with "seen"
+> either, so finishing this migration before we get another user of them
+> would be nice.
 
-Does it?
+Yay.
 
->  #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
->  #define isascii(x) (((x) & ~0x7f) == 0)
->  #define isspace(x) sane_istest(x,GIT_SPACE)
-
-sane_istest() evaluates x and mask only once, and isspace evaluates
-x only once, no?
-
-	isspace(*x++)
-	->
-	sane_istest(*x++,GIT_SPACE)
-	->
-	((sane_ctype[(unsigned char)(*x++)] & GIT_SPACE) != 0)
-
-> +#define isblank(x) (isspace(x) || (x) == '\t')
-> +#define isgraph(x) (isprint(x) && !isspace(x))
-
-Given that all the other tests are implemented with just picking an
-integer from the table and checking bit(s), the above two look
-somewhat out of place.  The fact, as you noted, that they cannot be
-used safely does not help, either.
-
-
+Thanks.
