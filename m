@@ -2,99 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AAA1C6379F
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 19:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57A68C636D4
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 19:50:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233517AbjBJTpI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 14:45:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54178 "EHLO
+        id S232495AbjBJTuc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 14:50:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233523AbjBJToc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 14:44:32 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAAE5FF2B
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:43:39 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id r8so7579222pls.2
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:43:39 -0800 (PST)
+        with ESMTP id S233060AbjBJTub (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 14:50:31 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34AFFFF2B
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:50:03 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id p26so18564360ejx.13
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:50:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8HE6nRbGaDGOM4GvRU44amWQ5/0dc8ljv/JNX6nWREQ=;
-        b=T3bPdBUzTNIFSLsrBcOAXO+aYUCZ91V5Nq/Zded8N8bGAVs2kpubmW7901MQiZUrWD
-         HXnEm7II4L5mwMwTHhbb8PjPFK3GPRYnLvli743Si5jtcc0xukBZdbWaw6OPAjtdatdh
-         8ivv43QWzw6SxcWi4Pc8a2UJQ/IP/z736I3A0YYdiIib56/DlVgM+jPX2YA04y5btYmL
-         Rs1Risl+m3wdwO5nfBacjgAyTwGacOHGshpCcQrN5NYd6iJdKRA6PsyVGQoXLcqlpXKa
-         PXWCj7Yb5OIVU66U6swUJ995ggcGyp896gT4O0OCMzOGclOhnN5DMmyh3nd4RFF3cBwl
-         rTHA==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OAQ1ebVnxrxLpmq8vtAe2HLJX+oflGhLoZBvgv1oQkk=;
+        b=mp7BP5URDeWEsEgCYWCXLp1fpyIhuKzTGWyxwH7IUK+BzUpj2xafUBeQ6qThuqevlT
+         M3IAhps8BpEVfQW+C3+GddGmlT7m0Av6Holn34wnDyzDF7GdSczKKP0shAJTa4gfk9kF
+         AiFAvslrMaoJ8SMgNi0iFiJNguygJ8p74HVWtnOWMcSmF7Oxf8Keny50snogTFNm0DwV
+         8dAlXEg4DVsL3wqO/mi+VBFilD3RVW0hd7rTG4XXfvdKUWlpP7c05GvQryVGMHjAkuYK
+         E0Fc/L/cZHB1ULlv9cbTwDsAoQOuXohLBC9eWPjS5oq7PH2wXX9cWNY1NHSV6ZxYVIcx
+         /N4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8HE6nRbGaDGOM4GvRU44amWQ5/0dc8ljv/JNX6nWREQ=;
-        b=JaeNB4hht7sFXPxZHiE7Ps8pyc98m0L3PAWn1N4HhNElLxo1wamtZhfaHowmpsZf49
-         vorSuUMSGMC0DoIpS5LJ7C6ThVEChP6U5C3ewsnOXvb+0wprZZcUjVw8mH0QRI0WH8Dm
-         /kdCA0pkAb7f9uPfVyjR4/QA22B0dYQJe7zsTDviqwvdYyyV/o84Lo79pk0lTk8BGcay
-         xvpuc6hvG/I3wdkuhr9DzKei7gcUJfBDtk/HesBtYb3EcHh8NGQib16wj5+60vjfJgnH
-         AgVo80CvXEyGNLIeFrZT8jxIkAJu45bXk2YTjIVd5eFYDu9FNXRWoElwc2hFfTdzwczu
-         BThw==
-X-Gm-Message-State: AO0yUKWNI/Jrsen1KPtQu1ktWcHCd5XS17ia5GKIyfm3oXK/aSOGybZn
-        qrffwdlJr6qN7zee9BA87H4=
-X-Google-Smtp-Source: AK7set/w5ixl7uD5tGWqGcBN/ekKYZEhMfbKZeHRoyPb3wmbcILWa/qccW1D25BQPvrC936fhV+p0Q==
-X-Received: by 2002:a17:90a:7f98:b0:230:f874:3600 with SMTP id m24-20020a17090a7f9800b00230f8743600mr15652540pjl.28.1676058162989;
-        Fri, 10 Feb 2023 11:42:42 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id z14-20020a17090a1fce00b002311a83e333sm5026237pjz.44.2023.02.10.11.42.42
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OAQ1ebVnxrxLpmq8vtAe2HLJX+oflGhLoZBvgv1oQkk=;
+        b=jdnA8ZCKt20U5yK8xlZln4L5Lkr3ol82kYmR+OD3iX0SHO0Qp+cahfT5fP4xvE5Oxw
+         HJe3StLyFgquD1fI/aLeCP/DNn9xitvcvh6tKCZd3CNGMtBodGUUm3afxh+fDfgggPtE
+         W4m8AsroY+zrfb/ezdVfToxlIBUssWbOIjAX3le3y9vLT0Cp0CHccRIfnYNaPeONsPt9
+         DBCVHwC7n1c6zlRd9O2PQkWm3osUC6LdFEXlwZkknTB41aTOOqwTrsCdIupVncF81ItM
+         kBH86YtSLMrpWgGe+wqgLAwbfhFS9mgpV/ntIUKn58K/HzxTo6Bo8FXlzSKvDA0SL4tx
+         Thqw==
+X-Gm-Message-State: AO0yUKVTiAkxdRIt1gjrtHUffxbHzHtsysb2aq1EPvog9sIHvVN1eGxR
+        rvemPwiQAnmMhidMnqr+26bdCeW2iYdveZys
+X-Google-Smtp-Source: AK7set+8rTXgVlryzbD80KZziowr6GoaC7OK4jNQu1O6dtXI3TRm8WOotJI46WgNvtlv5MTc/O5SZQ==
+X-Received: by 2002:a17:906:3a8e:b0:881:ad59:97f5 with SMTP id y14-20020a1709063a8e00b00881ad5997f5mr19895722ejd.2.1676058554241;
+        Fri, 10 Feb 2023 11:49:14 -0800 (PST)
+Received: from gmgdl ([81.191.238.7])
+        by smtp.gmail.com with ESMTPSA id mv9-20020a170907838900b0087bd2ebe474sm2771859ejc.208.2023.02.10.11.49.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 11:42:42 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 6/6] cocci & cache.h: remove
- "USE_THE_INDEX_COMPATIBILITY_MACROS"
-References: <cover-0.6-00000000000-20221215T095335Z-avarab@gmail.com>
-        <cover-v2-0.6-00000000000-20230210T102114Z-avarab@gmail.com>
-        <patch-v2-6.6-77c30cfe455-20230210T102114Z-avarab@gmail.com>
-Date:   Fri, 10 Feb 2023 11:42:41 -0800
-In-Reply-To: <patch-v2-6.6-77c30cfe455-20230210T102114Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 10 Feb
- 2023 11:28:39
-        +0100")
-Message-ID: <xmqq1qmxi9xq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Fri, 10 Feb 2023 11:49:13 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pQZOT-00251h-0o;
+        Fri, 10 Feb 2023 20:49:13 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] test: make SYMLINKS prerequisite more robust
+Date:   Fri, 10 Feb 2023 20:39:11 +0100
+References: <xmqqwn4sq73f.fsf@gitster.g>
+ <230209.86k00rzqsz.gmgdl@evledraar.gmail.com> <xmqqbkm3ppn8.fsf@gitster.g>
+ <xmqqk00pjuli.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <xmqqk00pjuli.fsf@gitster.g>
+Message-ID: <230210.86o7q1uwqu.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Have the last users of "USE_THE_INDEX_COMPATIBILITY_MACROS" use the
-> underlying *_index() variants instead. Now all previous users of
-> "USE_THE_INDEX_COMPATIBILITY_MACROS" have been migrated away from the
-> wrapper macros, and if applicable to use the "USE_THE_INDEX_VARIABLE"
-> added in [1].
+On Fri, Feb 10 2023, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Let's leave the "index-compatibility.cocci" in place, even though it
-> won't be doing anything on "master". It will benefit any out-of-tree
-> code that need to use these compatibility macros. We can eventually
-> remove it.
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>
+>>>> I wonder if something like this is in order?
+>>>
+>>> I don't have much to contribute on that front, but this is really
+>>> missing some "why", this worked before, why is it failing now? Do we
+>>> have any idea.
+>>
+>> Your guess is as good as mine.  I do not do Windows.
+>
+> This morning, I notice that those CI jobs I ran last night that
+> failed with "whoa, windows tests are somehow reporting that symlinks
+> are available but not really" issue the patch in this thread were
+> attempting to address has passed even for branches like 'master' and
+> 'next' that do not yet have it, and it seems to be because you
+> re-run these failed jobs.
+>
+> Whatever magic you used to fix these failing tests, thanks.
+>
+> Do you have an insight on why and how these were failing?  The patch
+> in this thread was a band-aid without knowing why all of a sudden
+> "ln -s x y && test -h y" started passing (while compat/mingw.c still
+> says readlink() is not supported).  If we know that such a breakage
+> is not expected, we can drop this workaroun, which would be great.
 
-When I saw 2/6 I thought it funny that discard_cache() and
-read_cache() was left there.  So three clean-ups (the other one is
-the .active_nr member) were done across two patches, which looks a
-bit funny.
+I'm not Johannes :) But as I noted upthread this failed when we went from:
 
-Shouldn't 2/6 and 6/6 combined into one and/or split into three?
+	Download action repository
+	'git-for-windows/setup-git-for-windows-sdk@v1'
+	(SHA:cbe017cd7ae39629bf4e34fce8b1ccd211fec009)
 
-The end result is that we need to write our reliance to either
-the_index or the_repository more explicitly, which may be what some
-folks want.
+To:
 
-Will queue.
+	Download action repository
+	'git-for-windows/setup-git-for-windows-sdk@v1'
+	(SHA:848609620edfa4c2fc64838b85fbe19e534236ee)
+
+And now our passing "next" has:
+
+	Download action repository
+	'git-for-windows/setup-git-for-windows-sdk@v1'
+	(SHA:a8e2a23eb07129d628ff6f9d5f11047b0662aeba)
+
+If you then look at that range in that repository you'll find the
+release includes:
+
+	https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/595
+        https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/5=
+96
+	https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/597
+
+The release notes for the last of those then has:
+
+	"Fix issue with symlink restoration on windows".
+
+Which from some looking around seems like it might be the issue we've
+been seeing, it's this commit & PR:
+
+	https://github.com/actions/toolkit/commit/b2d865f18051b214475dae41766e9970=
+fd68ca12
+	https://github.com/actions/toolkit/pull/1291
+
+And following that rabbit hole leads to Johannes noting that this (or a
+related change) was breaking GFW:
+
+	https://github.com/actions/toolkit/pull/1291/commits/2867e318d4d0de11b10a2=
+887fb29dcf713559a71#r1098571737
+
+So I think we can drop the workaround, at least as far as fixing the CI
+breakages goes.
