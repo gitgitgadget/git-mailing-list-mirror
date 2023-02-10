@@ -2,175 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6636C05027
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 10:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A0B3C636CD
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 10:49:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231937AbjBJKpu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 05:45:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59670 "EHLO
+        id S232035AbjBJKtC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 05:49:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231578AbjBJKpt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 05:45:49 -0500
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CB446BA92
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 02:45:47 -0800 (PST)
-Received: by mail-pl1-f177.google.com with SMTP id z1so6042469plg.6
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 02:45:47 -0800 (PST)
+        with ESMTP id S231819AbjBJKtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 05:49:01 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF313125A0
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 02:48:59 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id q19so4428961edd.2
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 02:48:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=emfHuuLnMIuiKVCSe+gNib1569uhkOfaOnp9SceOE5g=;
+        b=SQjvF7lZRLa0+V2/QbCgV0Fhnhzgu1L836VZ0yU12ywW7eZoaebUX767xb2fOvohGB
+         mhMPSuk44/wOLKeFFqdiZZ4oppr1WkYqqGPHpc0U6QRoPN3pAcbZbE7egvGQMJRdTW7T
+         Qo9OaVnnhtObNMSpAu4mN6r8Soc1zuucmwNn4RLzSKzXe9BcYaWWPReteL2zNv2RuHRK
+         akXcl1iQomzLscqTGfrhBownqY3YieJA0vqNJVYLVdQOEUzfTlSufp+Ad9/7xl/8Vkug
+         lkwkNNAupCaoacySqmqYhtXTEJDcO90Z2ylK4QoDp/qBGz6Z0BG8wMPlXgUlIQ2XUZz7
+         IRaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0ylDlohEZf1Ap5x+h8djV1dOLrINkBsrUR5+4Q36iiE=;
-        b=M29qCnsYNBBZRrBRNweq/Yry/kyuMta/PYmB/nekpHR2sN/k1k6HGqBSSKFHcwgDvC
-         AmG63dudQX3qIp0p5+BmYFJJTMCE4EHNXZHt/salaOWIoS+A9euRm6bN0zkYkPbF7P0D
-         Ph2Y5JoETjp9i6lV6NbVzrbsdhZraEWVmpcHWQPoHUk7bsdoNses93tMWWjd69v/iZj8
-         MlXl7DFuaXqyt18nA3PcYwnOEQpAvWe1G638QdQlWGu+NHr47oIwcNcOfTcQ3zCi4qEZ
-         JPufnTwU+g+LO/Qp7hyr0iAoTbsRztZKTmA+bWLudl5qlqyU6LwhvOxSQr7+GuQSF27F
-         dC/Q==
-X-Gm-Message-State: AO0yUKUp+pZldnsEKfl/gB2bNg0+5lk3xdpequc2vDnfvq+aXVfrmgSB
-        6LGhQ261TSewknD7Yo3b22AlwDkO2gJTBDyHsgiRZXWI1tA=
-X-Google-Smtp-Source: AK7set8+NvjOoJD+ShXShwgIfohrzV6iPYmY/eSXd0RNV+df6dMfrGp6J0OIIsd2NecJVhmsN0/nUVOyxEhbI+niceE=
-X-Received: by 2002:a17:90a:a786:b0:230:7861:1897 with SMTP id
- f6-20020a17090aa78600b0023078611897mr2103935pjq.134.1676025946563; Fri, 10
- Feb 2023 02:45:46 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=emfHuuLnMIuiKVCSe+gNib1569uhkOfaOnp9SceOE5g=;
+        b=A4ziCYFMiWs4bL30G27Gq5ux2hRmbSXj1ctNZvzZvUaoFNoMGCBkhcBBjMiK57a6LD
+         9gikEb466NDOEKVMPxXXVeg6OdbQhJLiybd8OeKMmAPoFvSyRGSB45xc1+AIPRVPYe+c
+         Zrw1G3DxlVb5haIvQBYh2jw5hSA1uZwsXMHfKAtBJo/lDXAHWFNepzxoXeu73pOzytZV
+         Nz35QgMM8aYiSSo95b23L8YRS6xI6b4PapcHOLHLJuXk0DAbNQNOuouUccP9Qc+zUDNz
+         APv39eQAhU2R7J3LmU9Y9/6H+09/lXwPmeaC8G/GLExKjnPRFHfT34STAuJoJPL8qfx6
+         TTzA==
+X-Gm-Message-State: AO0yUKW3RfJLKmUKEsXIc4iMhkpxqNyWTTWJrM8CWXUX1+AdtG1+aMKK
+        TL2/naVLBiliREiFItVOcuE=
+X-Google-Smtp-Source: AK7set9Ei0jxCyRTl1MlYZghWSmgCtQLBYPsiXwQnCNSqq5oT+WiM59xcbAX8iD0PSFY7jw6THJPnw==
+X-Received: by 2002:a50:8e12:0:b0:4aa:a4f7:fa17 with SMTP id 18-20020a508e12000000b004aaa4f7fa17mr15807719edw.11.1676026138381;
+        Fri, 10 Feb 2023 02:48:58 -0800 (PST)
+Received: from gmgdl ([81.191.238.7])
+        by smtp.gmail.com with ESMTPSA id k2-20020a508ac2000000b00499b6b50419sm2002073edk.11.2023.02.10.02.48.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Feb 2023 02:48:57 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pQQxd-001rPS-13;
+        Fri, 10 Feb 2023 11:48:57 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Max Gautier <max.gautier@redhat.com>
+Subject: Re: [PATCH 0/2] gpg-interface: cleanup + convert low hanging fruit
+ to configset API
+Date:   Fri, 10 Feb 2023 11:29:31 +0100
+References: <+TqEM21o+3TGx6D@coredump.intra.peff.net>
+ <cover-0.2-00000000000-20230209T142225Z-avarab@gmail.com>
+ <xmqqlel6mswo.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <xmqqlel6mswo.fsf@gitster.g>
+Message-ID: <230210.86mt5lx0bq.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20230209164552.8971-1-vinayakdev.sci@gmail.com>
-In-Reply-To: <20230209164552.8971-1-vinayakdev.sci@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 10 Feb 2023 05:45:35 -0500
-Message-ID: <CAPig+cT1EtPO2FLvTsw3SjgCgk=ovNwY77hsX6p7ETKiq8aNog@mail.gmail.com>
-Subject: Re: [GSoC][PATCH] {apply,alias}: convert pre-processor macros to enums
-To:     Vinayak Dev <vinayakdev.sci@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 9, 2023 at 12:00 PM Vinayak Dev <vinayakdev.sci@gmail.com> wrote:
-> {apply,alias}: convert pre-processor macros to enums
 
-Thanks for submitting a GSoC microproject. Let's take a look...
+On Thu, Feb 09 2023, Junio C Hamano wrote:
 
-> Groups related #define macros into enums in apply.c and alias.c .
-
-s/Groups/Group/
-
-> The changed #define macros are related constants, so it makes sense to group them.
-
-They already have a common prefix and are grouped textually, so it's
-obvious to readers that they are related, thus this isn't necessarily
-a good selling point for such a change.
-
-> This also makes debugging easier, as modern debuggers can identify enum constants and list them accordingly.
-
-This is a much better selling point for why such a change would be
-desirable. Unfortunately, though, the real situation is more
-complicated. The stated argument is only true if these enum values are
-assigned to variables of the enum type. However, this patch only
-defines the new enumeration type but never actually uses it to declare
-variables, so the benefit for the debugger is never seen. For
-instance, this patch defines:
-
-  enum binary_type_deflated {
-    BINARY_DELTA_DEFLATED = 1,
-    BINARY_LITERAL_DEFLATED
-  };
-
-but then the code only ever assigns the enum value to an 'int' variable:
-
-  int patch_method;
-  ...
-  patch_method = BINARY_DELTA_DEFLATED;
-
-at which point the enum value's type is lost; it's an `int` and that's
-how the debugger sees it, just as an `int`, so the debugger
-can't/won't show it as an actual enum value.
-
-To fix this, the patch would need to change the variable declaration, as well:
-
-  enum binary_type_deflated enum binary_type_deflated;
-
-Finally, please wrap the commit message so it fits in 72 columns.
-
-> Signed-off-by: Vinayak Dev <vinayakdev.sci@gmail.com>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
-> vinayakdsci (1):
->   Change #define to enum in apply.c and alias.c
+>> On Thu, Feb 09 2023, Jeff King wrote:
+>>
+>>> If the gpg code used git_config_get_string(), etc, then they could just
+>>> access each key on demand (efficiently, from an internal hash table),
+>>> which reduces the risk of "oops, we forgot to initialize the config
+>>> here". It does probably mean restructuring the code a little, though
+>>> (since you'd often have an accessor function to get "foo.bar" rather
+>>> than assuming "foo.bar" was parsed into an enum already, etc). That may
+>>> not be worth the effort (and risk of regression) to convert.
+>>
+>> I'd already played around with that a bit as part of reviewing Junio's
+>> change, this goes on top of that.
+>
+> What's your intention of sending these?
 
-There should be a "---" line just below your sign-off to tell git-am
-where the patch's commit message ends, but the "---" line is missing
-for some reason. If you didn't remove the "---" line manually, then
-you may need to adjust your patch-sending tool to not strip it out.
+For them to be picked up on top of your jc/gpg-lazy-init.
 
-> diff --git a/alias.c b/alias.c
-> @@ -44,9 +44,15 @@ void list_aliases(struct string_list *list)
-> -#define SPLIT_CMDLINE_BAD_ENDING 1
-> -#define SPLIT_CMDLINE_UNCLOSED_QUOTE 2
-> -#define SPLIT_CMDLINE_ARGC_OVERFLOW 3
-> +/* #define SPLIT_CMDLINE_BAD_ENDING 1 */
-> +/* #define SPLIT_CMDLINE_UNCLOSED_QUOTE 2 */
-> +/* #define SPLIT_CMDLINE_ARGC_OVERFLOW 3 */
-> +enum split_cmdline_error {
-> +       SPLIT_CMDLINE_BAD_ENDING = 1,
-> +       SPLIT_CMDLINE_UNCLOSED_QUOTE,
-> +       SPLIT_CMDLINE_ARGC_OVERFLOW
-> +};
+> I think we are already in
+> agreement that the churn may not be worth the risk, so if these are
+> "and here is the churn would look like, not for application", I
+> would understand it and appreciate it.  But did you mean that these
+> patches are for application?  I am not sure...
 
-Retaining the #define lines as comments serves no purpose once you
-have introduced the enum. It's confusing for readers, and there is a
-good chance that the commented-out #defines and enum values will drift
-out of sync over time.
+I understood your "I specifically did not want anybody to start doing
+this line of analysis" in [1] to mean that you didn't want to have the
+sort of change that the last paragraph of 2/2 notes that we're
+deliberately not doing.
 
-If we look at the code which utilizes these values, we see several
-instances like this:
+I.e. that we'd like to keep the gpg_interface_lazy_init() boilerplate,
+even though we might carefully reason that a specific API entry point
+won't need to initialize the file-scoped config variables right now.
 
-  return -SPLIT_CMDLINE_BAD_ENDING;
+I then took your "it is vastly preferred not to do such a change in this
+step" in [2] as a note that it was deliberate that the change in 1/2
+here wasn't part of your jc/gpg-lazy-init, but not that we shouldn't
+follow-up with such a clean-up.
 
-which means that the value being returned from the function is not a
-valid enum value since it has been negated. Thus, in this case,
-converting the #defines to an enum makes the code less valid and less
-clear. Moreover, these constants are only used in `return` statements
-from the function, are always negated, and are always returned as the
-exit code of the program itself; they are never stored in variables.
-Thus, the debugger-related benefit mentioned in the commit message can
-never materialize.
+The "on top once the dust settled" in [2] can then be addressed by
+graduating your jc/gpg-lazy-init soon, and keeping this in "seen" for a
+bit, although I think the changes here (and in particular 1/2) are
+trivial enough to graduate soon thereafter.
 
-So, all in all, I'd say that this is one of those unfortunate cases in
-which conversion from #define to enum is unwanted since it makes the
-code less clear and less valid, and provides no benefit. If you reroll
-the patch, I'd suggest dropping these modifications to "alias.c".
+Given that I had mixed feelings about submitting this now, but Jeff's
+[3] convinced me. I.e. the change in 2/2 'reduces the risk of "oops, we
+forgot to initialize the config here"' in the future.
 
-> diff --git a/apply.c b/apply.c
-> @@ -205,8 +205,13 @@ struct fragment {
-> -#define BINARY_DELTA_DEFLATED  1
-> -#define BINARY_LITERAL_DEFLATED 2
-> +/* #define BINARY_DELTA_DEFLATED   1 */
-> +/* #define BINARY_LITERAL_DEFLATED 2 */
-> +
-> +enum binary_type_deflated {
-> +       BINARY_DELTA_DEFLATED = 1,
-> +       BINARY_LITERAL_DEFLATED
-> +};
+But obviously it's up to you whether you pick this up, and you don't
+seem especially keen on doing so, so if not I guess we'll just drop
+this, but I'd be happy if you did.
 
-As above, omit the commented-out #define lines. They serve no purpose.
+I do think that the 2/2 here has the added benefit of making your change
+easier to review, and that's why I wrote it initially. I was poking at
+your patch to see what behavior changes, logic errors or bugs I could
+find in it.
 
-> @@ -918,8 +923,14 @@ static int gitdiff_hdrend(struct gitdiff_data *state UNUSED,
-> -#define DIFF_OLD_NAME 0
-> -#define DIFF_NEW_NAME 1
-> +
-> +/* #define DIFF_OLD_NAME 0 */
-> +/* #define DIFF_NEW_NAME 1 */
-> +
-> +enum diff_name {
-> +       DIFF_OLD_NAME = 0,
-> +       DIFF_NEW_NAME
-> +};
+I.e. your end state is that we're reading 7 config variables (I'm
+counting the *.program ones as one variable). The 2/2 here brings that
+down to just 3. Thus the surface area of potential issues where we don't
+call gpg_interface_lazy_init() before accessing the values is reduced.
 
-Unlike the change to "alias.c", these changes don't seem to be
-harmful, thus they may make sense. However, as mentioned above, they
-are not helpful to the debugger as-is. You would also have to change
-the variable declarations from `int` to `binary_type_deflated` and
-`diff_name`, respectively, for the debugger to benefit from the
-change.
+Which is also I why I opted to send this sooner than later, having that
+as a review aid helps others now, and not in a few months.
+
+1. https://lore.kernel.org/git/xmqq5ycbpp8a.fsf@gitster.g/
+2. https://lore.kernel.org/git/xmqqpmaimvtd.fsf_-_@gitster.g/
+3. https://lore.kernel.org/git/Y+TqEM21o+3TGx6D@coredump.intra.peff.net/
