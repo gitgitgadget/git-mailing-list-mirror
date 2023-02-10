@@ -2,123 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13427C05027
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 19:25:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35014C05027
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 19:25:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233284AbjBJTZe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 14:25:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60186 "EHLO
+        id S233295AbjBJTZt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 14:25:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233176AbjBJTZd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 14:25:33 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB7247D899
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:25:32 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id k13so7567536plg.0
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:25:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7S3RMKSX9WcJuoU8w50EWV3fmggYfPXmB3pOrtErh+4=;
-        b=SbWviz53hYs7p45ygY5dreASADIxX5lT5y7nHantOB+zyyQ82czIPE0JRBHApdB8fR
-         GghaW5BmVXTy3CF+9jgxfVR71fhZ3XeG5kdb/k87lBxOxBY5AKZK3C1/0yNkF/eCIRgc
-         wYlqc0qzhyfTIA1oAfPf/+/5NQJA+e59GivIFo1ViVK2HNrStCabFKgVstC0bOFxNXBN
-         yEt4p73IGMoNgBIy1ZE3SKmKpPzabTaTQ+cKO5SLyOPEIiWpSEc82Jc3I7xh5o7rOEqC
-         FkaJwJJXjMhwmMY5BtgG+UjR66wmz5GzwhHjMWwj9yLoPHMVffTBAKJWJ+mmrOi8Bfyy
-         4awg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7S3RMKSX9WcJuoU8w50EWV3fmggYfPXmB3pOrtErh+4=;
-        b=pXW1x1JXaiglPSqo6nj3UeMj/R8wwbxyTjNHcYUu0X7XGq1FBlyXBoThniKrmbdLdl
-         Fzii+SQoxB+yPPLSlijkmrvyjmHAtt5Komwfk3uEQEe8JZJak71kLddjzLVH9YNfvy5U
-         FQkYfeU1R4zqncS8gEZV8C8eiCkG8E1SkMaZKkMcrQNk4MOroWsbkh3OsXXNSfTBJyja
-         yAdJYDrTh9gxyIoyLwejl5Y8P3MTRXwexh2do6jPabvtNWJfNq+JIrzPZspgVyvNNwXK
-         ubVOwmptPqc+EFi3OQf7LrbYqmFv0FfX2FJ4lpeDChbDKpA3xOoJ/S5r51TrK78RVHe5
-         Bqwg==
-X-Gm-Message-State: AO0yUKWLhAfoKqFA4i8OoUYLSt1czBSw2LWjMEkMJo7jVz8IowtojC0j
-        2MRS+dIYjdQSqGXm2L4B2qt2FIn98ro=
-X-Google-Smtp-Source: AK7set/nIYyHRfOENK/3daRD6OAlvQiHqdY9xwADUwxwcXZIRORZvmsmY8FaImqd1IABYTWQbD7lBw==
-X-Received: by 2002:a17:902:f0cb:b0:199:3f31:8611 with SMTP id v11-20020a170902f0cb00b001993f318611mr8727830pla.39.1676057132073;
-        Fri, 10 Feb 2023 11:25:32 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id f3-20020a170902ab8300b0019607aeda8bsm3723856plr.73.2023.02.10.11.25.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 11:25:31 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Gwyneth Morgan <gwymor@tilde.club>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] signature-format.txt: note SSH and X.509 signature
- delimiters
-References: <20220120053223.221667-1-gwymor@tilde.club>
-        <20230210061611.124932-1-gwymor@tilde.club>
-Date:   Fri, 10 Feb 2023 11:25:30 -0800
-In-Reply-To: <20230210061611.124932-1-gwymor@tilde.club> (Gwyneth Morgan's
-        message of "Fri, 10 Feb 2023 06:16:11 +0000")
-Message-ID: <xmqqfsbdiaqd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S233176AbjBJTZs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 14:25:48 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 762547D899
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:25:47 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1106E61E00
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 19:25:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778D3C433D2
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 19:25:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1676057146;
+        bh=ZzYqv3GYHJ9eTQlKyZ17xzIWB+D/wQPKFdZ40GMHxe8=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ZVG94G5UaJ+osCoDv/vYc3pITpncvOe7O3MKYr4AbRygeSGApTZ+CM/8c5Mg6XClP
+         P+eYFOXuIKyyyn7pwq9HvWq60pdlnrzZtunVWTRUeSmiG6OMIEMT3s7EbYUbakBkMY
+         RLai0nFwUieXF1Z/J5Oz5O4EdeeiLBdRg0M/trRK+75PfUgNbrbCrDYU+STPbVqIcz
+         LHEgyzch7n7ifO5gD5KJReTCs6OOYmU6bKO+elka1Ej1ibCaRWrB3PcyvZis5LaK7Y
+         hjAtOf9owVDUu/I5meO/cbBrM6npORAzWB0K189wjjXzE7RvqZuu+gCy6jk4hDxA69
+         Sa5Qg40x8gTbw==
+Received: by mail-oi1-f180.google.com with SMTP id cz14so5283683oib.12
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:25:46 -0800 (PST)
+X-Gm-Message-State: AO0yUKVTtIo2ZqGbyvxLxmO6I5Qn0J2Lbuu6UO/DSb3MLqvS/4IIJDaS
+        8XfgX2w/AnY7Rf1zS6XZD5jgMfyPqzxdElPEpuA=
+X-Google-Smtp-Source: AK7set9ArOgshk0nNBV/hzHnbvUk2roCbaXQgcrf4zRruhAM41jWZ5SuWT9bqS4b7gOudcH9mE0pO3N4dWesE3+u2Mo=
+X-Received: by 2002:aca:210c:0:b0:35e:7c55:b015 with SMTP id
+ 12-20020aca210c000000b0035e7c55b015mr1422291oiz.287.1676057145753; Fri, 10
+ Feb 2023 11:25:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20230210075939.44949-1-masahiroy@kernel.org> <20230210075939.44949-2-masahiroy@kernel.org>
+ <xmqqo7q1ibek.fsf@gitster.g>
+In-Reply-To: <xmqqo7q1ibek.fsf@gitster.g>
+From:   Masahiro Yamada <masahiroy@kernel.org>
+Date:   Sat, 11 Feb 2023 04:25:09 +0900
+X-Gmail-Original-Message-ID: <CAK7LNAQM6tGmZvy9jVWy099dsOte_=P-Ro3CuAqAc5akiakyoQ@mail.gmail.com>
+Message-ID: <CAK7LNAQM6tGmZvy9jVWy099dsOte_=P-Ro3CuAqAc5akiakyoQ@mail.gmail.com>
+Subject: Re: [PATCH 1/5] git-compat-util: add isblank() and isgraph()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Gwyneth Morgan <gwymor@tilde.club> writes:
-
-> This document only explained PGP signatures, but Git now supports X.509
-> and SSH signatures.
+On Sat, Feb 11, 2023 at 4:11 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Signed-off-by: Gwyneth Morgan <gwymor@tilde.club>
-> ---
->  Documentation/gitformat-signature.txt | 26 ++++++++++++++++++++------
->  1 file changed, 20 insertions(+), 6 deletions(-)
+> Masahiro Yamada <masahiroy@kernel.org> writes:
 >
-> diff --git a/Documentation/gitformat-signature.txt b/Documentation/gitformat-signature.txt
-> index d8e3eb1bac..5f0c9202e3 100644
-> --- a/Documentation/gitformat-signature.txt
-> +++ b/Documentation/gitformat-signature.txt
-> @@ -17,12 +17,26 @@ DESCRIPTION
->  Git uses cryptographic signatures in various places, currently objects (tags,
->  commits, mergetags) and transactions (pushes). In every case, the command which
->  is about to create an object or transaction determines a payload from that,
-> +calls an external program to obtain a detached signature for the payload
-> +(`gpg -bsa` in the case of PGP signatures), and embeds the signature into the
-> +object or transaction.
-> +
-> +Signatures begin with an ASCII Armor header line and end with a tail line,
-> +which differ depending on signature type.
+> > Use them with care because they are not robust against the pointer
+> > increment, like isblank(*s++).
+> >
+> > The same issue already exists for isspace().
+>
+> Does it?
 
-OK, we used to say "begin with <<something PGP>>" that was not
-generic, so we borrow the "ascii armor header/tail line" term the
-crypto folks use.  Then ...
 
-> +PGP::
-> +	Signatures begin with `-----BEGIN PGP SIGNATURE-----` and end
-> +	with `-----END PGP SIGNATURE-----`, unless gpg is told to
+Sorry, I meant:
 
-... it may be easier to understand if the paragraph somehow made it
-clear that "ascii armore header" is "-----BEGIN PGP SIGNATURE-----"
-and "tail" is "---END PGP SIGNATURE-----" for the format being
-described.
+ "The same issue already exists for isprint()"
 
-Alternatively, if we are going to repeat "... begin with X, and end
-with Y" for each format, then we may not even need to have the
-previous paragraph that says these formats follow the same pattern
-(i.e. header then contents then tail, but header and tail are
-different depending on the format).
 
-> +	produce RFC1991 signatures which use `MESSAGE` instead of
-> +	`SIGNATURE`.
-> +
-> +SSH::
-> +	Signatures begin with `-----BEGIN SSH SIGNATURE-----` and end
-> +	with `-----END SSH SIGNATURE-----`.
-> +
-> +X.509::
-> +	Signatures begin with `-----BEGIN SIGNED MESSAGE-----` and end
-> +	with `-----END SIGNED MESSAGE-----`.
+
+
+   #define isprint(x) ((x) >= 0x20 && (x) <= 0x7e)
+
+
+is not robust against pointer increment.
+
+
+
+
+>
+> >  #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
+> >  #define isascii(x) (((x) & ~0x7f) == 0)
+> >  #define isspace(x) sane_istest(x,GIT_SPACE)
+>
+> sane_istest() evaluates x and mask only once, and isspace evaluates
+> x only once, no?
+>
+>         isspace(*x++)
+>         ->
+>         sane_istest(*x++,GIT_SPACE)
+>         ->
+>         ((sane_ctype[(unsigned char)(*x++)] & GIT_SPACE) != 0)
+>
+> > +#define isblank(x) (isspace(x) || (x) == '\t')
+> > +#define isgraph(x) (isprint(x) && !isspace(x))
+>
+> Given that all the other tests are implemented with just picking an
+> integer from the table and checking bit(s), the above two look
+> somewhat out of place.  The fact, as you noted, that they cannot be
+> used safely does not help, either.
+>
+>
+
+
+At first, I hesitated to move these to git-compat-util.h
+for this reason, but I noticed isprint() was in the same situation.
+
+So, I decided to go.
+
+
+
+-- 
+Best Regards
+Masahiro Yamada
