@@ -2,148 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57A68C636D4
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 19:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD039C05027
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 20:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232495AbjBJTuc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 14:50:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33252 "EHLO
+        id S233782AbjBJUVi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 15:21:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233060AbjBJTub (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 14:50:31 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34AFFFF2B
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:50:03 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id p26so18564360ejx.13
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 11:50:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=OAQ1ebVnxrxLpmq8vtAe2HLJX+oflGhLoZBvgv1oQkk=;
-        b=mp7BP5URDeWEsEgCYWCXLp1fpyIhuKzTGWyxwH7IUK+BzUpj2xafUBeQ6qThuqevlT
-         M3IAhps8BpEVfQW+C3+GddGmlT7m0Av6Holn34wnDyzDF7GdSczKKP0shAJTa4gfk9kF
-         AiFAvslrMaoJ8SMgNi0iFiJNguygJ8p74HVWtnOWMcSmF7Oxf8Keny50snogTFNm0DwV
-         8dAlXEg4DVsL3wqO/mi+VBFilD3RVW0hd7rTG4XXfvdKUWlpP7c05GvQryVGMHjAkuYK
-         E0Fc/L/cZHB1ULlv9cbTwDsAoQOuXohLBC9eWPjS5oq7PH2wXX9cWNY1NHSV6ZxYVIcx
-         /N4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OAQ1ebVnxrxLpmq8vtAe2HLJX+oflGhLoZBvgv1oQkk=;
-        b=jdnA8ZCKt20U5yK8xlZln4L5Lkr3ol82kYmR+OD3iX0SHO0Qp+cahfT5fP4xvE5Oxw
-         HJe3StLyFgquD1fI/aLeCP/DNn9xitvcvh6tKCZd3CNGMtBodGUUm3afxh+fDfgggPtE
-         W4m8AsroY+zrfb/ezdVfToxlIBUssWbOIjAX3le3y9vLT0Cp0CHccRIfnYNaPeONsPt9
-         DBCVHwC7n1c6zlRd9O2PQkWm3osUC6LdFEXlwZkknTB41aTOOqwTrsCdIupVncF81ItM
-         kBH86YtSLMrpWgGe+wqgLAwbfhFS9mgpV/ntIUKn58K/HzxTo6Bo8FXlzSKvDA0SL4tx
-         Thqw==
-X-Gm-Message-State: AO0yUKVTiAkxdRIt1gjrtHUffxbHzHtsysb2aq1EPvog9sIHvVN1eGxR
-        rvemPwiQAnmMhidMnqr+26bdCeW2iYdveZys
-X-Google-Smtp-Source: AK7set+8rTXgVlryzbD80KZziowr6GoaC7OK4jNQu1O6dtXI3TRm8WOotJI46WgNvtlv5MTc/O5SZQ==
-X-Received: by 2002:a17:906:3a8e:b0:881:ad59:97f5 with SMTP id y14-20020a1709063a8e00b00881ad5997f5mr19895722ejd.2.1676058554241;
-        Fri, 10 Feb 2023 11:49:14 -0800 (PST)
-Received: from gmgdl ([81.191.238.7])
-        by smtp.gmail.com with ESMTPSA id mv9-20020a170907838900b0087bd2ebe474sm2771859ejc.208.2023.02.10.11.49.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 11:49:13 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pQZOT-00251h-0o;
-        Fri, 10 Feb 2023 20:49:13 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] test: make SYMLINKS prerequisite more robust
-Date:   Fri, 10 Feb 2023 20:39:11 +0100
-References: <xmqqwn4sq73f.fsf@gitster.g>
- <230209.86k00rzqsz.gmgdl@evledraar.gmail.com> <xmqqbkm3ppn8.fsf@gitster.g>
- <xmqqk00pjuli.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <xmqqk00pjuli.fsf@gitster.g>
-Message-ID: <230210.86o7q1uwqu.gmgdl@evledraar.gmail.com>
+        with ESMTP id S233786AbjBJUV1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 15:21:27 -0500
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52CE47290
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 12:20:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1676060430; bh=VXghr297Iv6rReBLa/HGo/BmBvBUU8OUBubZdySPKjU=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=NwKYEi4HyUMxfbo93vmRiTMvS05U58LZ7DfTa+aAdZRaFbhVhQve4PneJjZxsDKgl
+         w1Iv++KnGaGw7tYhMuY+Pdrg5oOFZt2BOiRKX7k1wpaEHaoqb8VXlCVbEivWmSWVl4
+         NSbP4fTQqKJYt5nxgcmqnCGEfZzufg4OKcJMHfRhQ7/kagtrncViWOn6shmJzqcypI
+         AGe7QP6CFgwsl+bCC4Xm/ueB9NGR1dIkj4yEmVYmBTxIohk8X3UkWsRkxCrQ0lyaRX
+         ELKujPAXXXxASrHYoZgWR5fxDiZIDqkki5RJ7sDPvEec6zxBh954eHL08d4q8TA+K2
+         SJj9LikEZjRSw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.21.51]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MvKbd-1oZzGJ3RlB-00rKyo; Fri, 10
+ Feb 2023 21:20:30 +0100
+Message-ID: <a37623c8-d2fb-aec6-3423-2d402d717959@web.de>
+Date:   Fri, 10 Feb 2023 21:20:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.7.2
+Subject: [PATCH v2] cache-tree: fix strbuf growth in prime_cache_tree_rec()
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+References: <ff3ac119-9b00-746f-470c-8db18c9c61a1@web.de>
+In-Reply-To: <ff3ac119-9b00-746f-470c-8db18c9c61a1@web.de>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:pAsgtzBb46vP62yHLPg3jd6sI7C5uCv7YLp1LnTQ0cot8MH07rM
+ QuXaoeqJax4SC6cQhiZ/fJ9hCpIlOKh2So0Pfi7Ge/CbfYtFrJEuSDZmeGoFG6WylyeDmwj
+ WSFUvlrNw6hYRRbaIEElJF/q0kIkPqx7f2dSPywEl11ISkoeMrILh+axKu4osUWNMGf9Ogc
+ RKnpOfsGFd57e33sle6Jg==
+UI-OutboundReport: notjunk:1;M01:P0:V1CJUH+dx4g=;IwlwqKztTwzm0GKdhORciqg9FoM
+ i/7zJMhKAylxnGWLW5cMxME7dGkShvVyb0TM8jI4+jA/5PEgFHZxH23SBBe4YmDdGsQqWtWEO
+ foUntxWE8psDkrORtraofUlPNILNPKXtA3nuY6Vco3tUVF96Ea1FV+/HFZhl7z760TSNivL9u
+ OLAjNeZ6H50yOcQWvxvc6Uj7aTS14Nw235TPZtTw03lApSMYsRHyh9XtPus3tAszOuWBam44+
+ /vlY1ujzcEU2CA1QA8VqYJQcRrVhOJp9NUqoCqYDcfIz9bsN0g133KPY3LnSXpcwQ4qDLJn+u
+ T4sIjk08W/mOe6JSBhOctiHVt6M3VhU2tlTy6GmjRw/aG44HWQGQEPKLNgh2VvApV3JqRojWW
+ f6Wufe8plslCgx3bXsmyYPWk32+xvQh2DvOxc8pGHg5tcDszNQGg29CWw/ZlBhtRrhNwAqwXd
+ nFIgr+SPbz+AyIg1Ow4Xlw0iBF6VF2j40OBos/JlIjCmQ7lg55Op16ztngLgHupQBjqlXg71v
+ +fpal2rMr8aeP6uPh2NV+CS1MgxyM7QQOJDWUZmKYbAF3Hjejz2pWPfMnuHrBd+0MStlbiJF9
+ 0xPD6ibmp5THUaxVf9xf3KkKi9cC6wkKph/Zj0vgkQJK/c8Qb0fvitCgkz0Yt2ZR/m6pnisDl
+ R9mMYD/IRVR6ur2qbcI/WZr9BD5/VwK9pb8vabtP59CdVUtbG6k7+gPqqVYjRQU+S+GVvi4ON
+ St+tMCDzBPV3ZnLfbAmriGN1nwLyMqSfwdllOrkQP1OP49/YoqGR+hXboaa3S9yAB27+EouS6
+ T7D4gWYfXZbvn3EpOLRU+Gw125dmkZISgmUj5FPjuoofT6xs1LNplowwKQFPn+rPZFQgzJXbx
+ sITceXFzLbOQl/k/LRd3dJadqshqwXOgzVIlaNvyHfhGZbyvv5z0tMfoagbHDrVQLIZmN2gAb
+ 0FDJ2A==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Use size_t to store the original length of the strbuf tree_len, as
+that's the correct type.
 
-On Fri, Feb 10 2023, Junio C Hamano wrote:
+Don't double the allocated size of the strbuf when adding a subdirectory
+name.  And the chance of the trailing slash fitting in the slack left by
+strbuf_add() is very high, so stop pre-growing the strbuf at all.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>
->>>> I wonder if something like this is in order?
->>>
->>> I don't have much to contribute on that front, but this is really
->>> missing some "why", this worked before, why is it failing now? Do we
->>> have any idea.
->>
->> Your guess is as good as mine.  I do not do Windows.
->
-> This morning, I notice that those CI jobs I ran last night that
-> failed with "whoa, windows tests are somehow reporting that symlinks
-> are available but not really" issue the patch in this thread were
-> attempting to address has passed even for branches like 'master' and
-> 'next' that do not yet have it, and it seems to be because you
-> re-run these failed jobs.
->
-> Whatever magic you used to fix these failing tests, thanks.
->
-> Do you have an insight on why and how these were failing?  The patch
-> in this thread was a band-aid without knowing why all of a sudden
-> "ln -s x y && test -h y" started passing (while compat/mingw.c still
-> says readlink() is not supported).  If we know that such a breakage
-> is not expected, we can drop this workaroun, which would be great.
+Suggested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Changes since v1: Remove strbuf_grow() call
 
-I'm not Johannes :) But as I noted upthread this failed when we went from:
+ cache-tree.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-	Download action repository
-	'git-for-windows/setup-git-for-windows-sdk@v1'
-	(SHA:cbe017cd7ae39629bf4e34fce8b1ccd211fec009)
+diff --git a/cache-tree.c b/cache-tree.c
+index 9af457f47c..88c2c04f87 100644
+=2D-- a/cache-tree.c
++++ b/cache-tree.c
+@@ -760,7 +760,7 @@ static void prime_cache_tree_rec(struct repository *r,
+ 	struct tree_desc desc;
+ 	struct name_entry entry;
+ 	int cnt;
+-	int base_path_len =3D tree_path->len;
++	size_t base_path_len =3D tree_path->len;
 
-To:
+ 	oidcpy(&it->oid, &tree->object.oid);
 
-	Download action repository
-	'git-for-windows/setup-git-for-windows-sdk@v1'
-	(SHA:848609620edfa4c2fc64838b85fbe19e534236ee)
-
-And now our passing "next" has:
-
-	Download action repository
-	'git-for-windows/setup-git-for-windows-sdk@v1'
-	(SHA:a8e2a23eb07129d628ff6f9d5f11047b0662aeba)
-
-If you then look at that range in that repository you'll find the
-release includes:
-
-	https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/595
-        https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/5=
-96
-	https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/597
-
-The release notes for the last of those then has:
-
-	"Fix issue with symlink restoration on windows".
-
-Which from some looking around seems like it might be the issue we've
-been seeing, it's this commit & PR:
-
-	https://github.com/actions/toolkit/commit/b2d865f18051b214475dae41766e9970=
-fd68ca12
-	https://github.com/actions/toolkit/pull/1291
-
-And following that rabbit hole leads to Johannes noting that this (or a
-related change) was breaking GFW:
-
-	https://github.com/actions/toolkit/pull/1291/commits/2867e318d4d0de11b10a2=
-887fb29dcf713559a71#r1098571737
-
-So I think we can drop the workaround, at least as far as fixing the CI
-breakages goes.
+@@ -785,7 +785,6 @@ static void prime_cache_tree_rec(struct repository *r,
+ 			 */
+ 			if (r->index->sparse_index) {
+ 				strbuf_setlen(tree_path, base_path_len);
+-				strbuf_grow(tree_path, base_path_len + entry.pathlen + 1);
+ 				strbuf_add(tree_path, entry.path, entry.pathlen);
+ 				strbuf_addch(tree_path, '/');
+ 			}
+=2D-
+2.39.1
