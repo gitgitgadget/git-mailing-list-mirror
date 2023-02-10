@@ -2,146 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95C86C636CD
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 09:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7879FC05027
+	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 10:28:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231705AbjBJJ6O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 04:58:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49618 "EHLO
+        id S232017AbjBJK25 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 05:28:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231913AbjBJJ6L (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 04:58:11 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BEB677171
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 01:58:08 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id b3so7486893lfv.2
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 01:58:08 -0800 (PST)
+        with ESMTP id S229740AbjBJK2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 05:28:51 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43CC16C7F8
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 02:28:50 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id ba1so4583502wrb.5
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 02:28:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PqlFQ7L1ydsjUXKJwUxv8gn4TCaNx3GV9xjd0kNjBB8=;
-        b=Q8lgyPD58yV9I4Kbi6GJUKaH2ZXMRT+JIDL5R4bWiYWYWEb5ikX+GbL+Hg1ddEpBj5
-         v+qitDblNV35Cwj5Xj0nZunHNzqO7tZ2L4yW8e3mdSCWNWsunw+r099SprUMAzt7AbVt
-         iOLQITVnXnfx4sR38TQGyIdyQWzf1bjkyZ6GrStOdVF4Q83SD0buk3/yY2Jispl4MWTN
-         +iQIk75kZHOQqQCm4Mv+eK2dLh02u1sJ9XFNNGV06hK748/uPxw3faLdVFLz6VZwANsp
-         OSUfxzzidwHiCbDFR5Qc0mPj5YgwLkRjpopaD3iCy36QQfuYStslU38gf1M1zNhU0FT2
-         9h4Q==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WD0W18k/H5+IC2GSkC5IjZ9XpSoFx/9PC/fJg95P2FQ=;
+        b=nTFQIi5lea0Ku9lbW1zAcZEhcFqp2IrHPu1pw7uevi2+2GKteHPB3+zKdKd/TTV6dn
+         TXrJKIa10/1XX9gCaa1Cl5isKYgmUW0VjPFTHItj56hF/K3xKm/KDI70Oue3Py6J09hj
+         EOYGshuFD6gJTULfBbRLJapWJPv7TvNX9+ekk2SZXlqKUhn31yBbWovFQSMt7USsKuJz
+         T4RBao/cFPhQS38KpSHoJW+IGBJ1GhgQJzba7UFoUgNt5T7dDXqDI4NmmG8U3xD1B5iA
+         xFxzR7A2s7o7dPemwJsPcXJudcQV6AC3SuBsTzrhnoZUUUFttyHxU+vb/MCr3QR6iLQ7
+         Znxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PqlFQ7L1ydsjUXKJwUxv8gn4TCaNx3GV9xjd0kNjBB8=;
-        b=wjniyv/WUu+qAF26Qy28C/bZ9FhHbPIWdRCZ7DGZCOMDSjXczf/phkUqHDCLvIZ0RZ
-         NgvZEkE3CZLiK2AP1161VvCoAXK7ULcFgtsATGqpWB0yL8c0eKdSJPE7yOgtRhSEdWCf
-         w8NvR/ruDdaQe+wneuIWeCwhHtrBUYGQD7VlFTg5M7F9vDGSk6HdWwBxt/dDW054E4wI
-         nz3rTTPdiH+VqpjazbufeXKJIalCdxVUk5LL07a+9IpcgH5UszSprS8l18WRcBVJu0E4
-         gDfbjGiMi8FLthihY/AMChJbqQJRzzliJEaOZsHCLNA6RF61iDTo2fH6gb+aOMTDp8H/
-         KFBQ==
-X-Gm-Message-State: AO0yUKV7cJbYpeZL61L0V2a/PMKLe6+p97D5XmfRIIqWbixoWFe25bg3
-        VLckMJdPohpM49fz0/xM2biC+7nUaxhUC46HWPaSQEX4q4Y=
-X-Google-Smtp-Source: AK7set/jtSDKhB5LdD10ss4mURiXtfjgR+CzsvGr1OuChn85kVDZvhDMm4U4L4wsbx9+RB2ByxFYNy9IFlOkKlVgrTY=
-X-Received: by 2002:ac2:5a0b:0:b0:4d2:381c:87dc with SMTP id
- q11-20020ac25a0b000000b004d2381c87dcmr2388079lfn.124.1676023086658; Fri, 10
- Feb 2023 01:58:06 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WD0W18k/H5+IC2GSkC5IjZ9XpSoFx/9PC/fJg95P2FQ=;
+        b=tRq5Vh5DGi66/AXFoJO/o0si5y6smyxMki++ctgzie+/8UfXphLihiuBTSAB895rym
+         p8/AXUEap4I2bIx0ns0pQ3gF2H4KzZkMNXSFJ6na2GPsEOQpv0y8ytahdhL3/s+CjfkH
+         eJGAPjBiAxrT1bxkSkLAkj3QB2en2vmTp8MQedS+SAJcKUnxKeeR1xNibjgqcgr1XldI
+         k6zD3b8o3WjHRj4+NM0j1rR417Yg3KjH4/J+lnZsKKBK4Bk+vbjLEJ/JFm/n79za6Tzh
+         IPvNAdv7YWH0xQyJVbBLebwpn8LX4e4aR/NN1g5ooZOvYQJDB34H/SuVc1v/9wOPkdUb
+         zpjg==
+X-Gm-Message-State: AO0yUKXB1ddUf/Z0JsV2lQVfGzxBVP9Ba6a5obC4lbtEBp/wp6fA9j0P
+        TJkqJ4r2RgWCD9qLMvzxAasL7SXVov6PuyN2
+X-Google-Smtp-Source: AK7set+6ztpfZzvXiee+S/3UcO0lLm/P9PeguK4o+1emArIp0dEGlbwr0C0aQT44Xaga1xPbkvGFmw==
+X-Received: by 2002:adf:f34d:0:b0:2c5:3fcb:681e with SMTP id e13-20020adff34d000000b002c53fcb681emr3784266wrp.4.1676024928301;
+        Fri, 10 Feb 2023 02:28:48 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id u13-20020a5d514d000000b002c3f50228afsm3244792wrt.3.2023.02.10.02.28.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Feb 2023 02:28:47 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/6] remove USE_THE_INDEX_COMPATIBILITY_MACROS
+Date:   Fri, 10 Feb 2023 11:28:33 +0100
+Message-Id: <cover-v2-0.6-00000000000-20230210T102114Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.39.1.1475.gc2542cdc5ef
+In-Reply-To: <cover-0.6-00000000000-20221215T095335Z-avarab@gmail.com>
+References: <cover-0.6-00000000000-20221215T095335Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
- <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
- <230206.865yce7n1w.gmgdl@evledraar.gmail.com> <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
- <d18a5c32-2f15-93ad-ccbf-e8f048edb311@dunelm.org.uk> <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
- <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com> <1ddac91b-7552-3e1e-9888-9e21e808104d@dunelm.org.uk>
-In-Reply-To: <1ddac91b-7552-3e1e-9888-9e21e808104d@dunelm.org.uk>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 10 Feb 2023 01:57:53 -0800
-Message-ID: <CABPp-BHQDS+AzWXtk9WV4HY2QZ8UdXrWJJDr-y6VPoLB6HuAfw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
-To:     phillip.wood@dunelm.org.uk
-Cc:     John Cai <johncai86@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Most of our use of these compatibility macros went away with
+041df69edd3 (Merge branch 'ab/fewer-the-index-macros', 2022-11-28) ,
+which was part of v2.39.0.
 
-On Thu, Feb 9, 2023 at 6:44 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->
-> Hi Elijah
->
-> On 09/02/2023 09:09, Elijah Newren wrote:
-> > Hi John and Phillip,
-> >
-> > On Tue, Feb 7, 2023 at 9:05 AM John Cai <johncai86@gmail.com> wrote:
-> >>
-> > [...]
-> >>> Perhaps I'm over simplifying but having read the issue you linked to I couldn't help feeling that the majority of users might be satisfied by just changing gitlab to use the patience algorithm when generating diffs.
-> >>
-> >> Right, I recognize this is a judgment call that may be best left up to the list.
-> >>
-> >> We don't have a way in GitLab to change the diff algorithm currently. Of course
-> >> that can be implemented outside of Git,
-> >
-> > Well, the below doesn't allow users to make diffs better for
-> > *individual* files of interest, but if you agree with me that we
-> > should just make diffs better for all users automatically, it's a
-> > two-line change in git.git that I'd love to eventually convince the
-> > project to take (though obviously doing that would also require some
-> > documentation changes and some good messaging in release notes and
-> > whatnot).  I've used it for a good long while, and had a few dozen
-> > users using this patch too, all without complaint:
->
-> I'd support a change to either patience or histogram as the default
-> algorithm. My personal preference would be for the patience algorithm as
-> I think it generally gives nicer diffs in the cases that the two
-> disagree (see below, I've tried changing diff.algorithm to histogram a
-> few times and I always end up changing it back to patience pretty
-> quickly). However I can see there is an advantage in having "diff" and
-> "merge" use the same algorithm as users who diffing either side to the
-> merge base will see the same diff that the merge is using. The histogram
-> algorithm is known to produce sub-optimal diffs in certain cases[1] but
-> I'm not sure how much worse it is in that respect than any of the other
-> algorithms.
-[...]
-> [1]
-> https://lore.kernel.org/git/CAGZ79kZYO6hHiAM8Sfp3J=VX11c=0-7YDSx3_EAKt5-uvvt-Ew@mail.gmail.com/
+That topic left out these stragglers, as some of this would have
+conflicted with in-flight topics, and I'd skipped the cache-tree.h
+cases altogether.
 
-Thanks, I might have a fix, though I'm a bit worried my tweaks might
-trigger issues elsewhere or cost a bit of performance; I'll need to
-test.  Are there any other good known testcases where histogram
-produces sub-optimal diffs?
+The update in v2 is trivial, just to rebase the series for changes on
+"master". There are no semantic or textual conflicts with "seen"
+either, so finishing this migration before we get another user of them
+would be nice.
 
-> To see the differences between the output of patience and histogram
-> algorithms I diffed the output of "git log -p --no-merges
-> --diff-algorithm=patience" and "git log -p --no-merges
-> --diff-algorithm=histogram". The first three differences are
->
-> - 6c065f72b8 (http: support CURLOPT_PROTOCOLS_STR, 2023-01-16)
->    In get_curl_allowed_protocols() the patience algorithm shows the
->    change in the return statement more clearly
->
-> - 47cfc9bd7d (attr: add flag `--source` to work with tree-ish, 2023-01-14)
->     The histogram algorithm shows read_attr_from_index() being moved
->     whereas the patience algorithm does not making the diff easier to
->     follow.
->
-> - b0226007f0 (fsmonitor: eliminate call to deprecated FSEventStream
-> function, 2022-12-14)
->    In fsm_listen__stop_async() the histogram algorithm shows
->    data->shutdown_style = SHUTDOWN_EVENT;
->    being moved, which is not as clear as the patience output which
->    shows it as a context line.
+The v1 had a side discussion that didn't need resolving here. The
+question was what a series like this might do if we needed to convert
+library code to make new use of "the_index" (as opposed to converting
+the functions themselves to take it from their callers).
 
-If my current changes are "good", then they also remove the
-differences between patience and histogram for the second and third
-commits above.  (And the differences between the two algorithms for
-the first commit look really minor.)
+That's an interesting question, but irrelevant to this topic, as
+there's no such library users to deal with, and this migration closes
+the door on that hypothetical question needing to be addressed in the
+future.
 
-> I think there is a degree of personal preference when it comes to which
-> out of patience or histogram is best and the user can easily select
-> their preferred algorithm so I'd be happy with either.
+Ævar Arnfjörð Bjarmason (6):
+  builtin/rm.c: use narrower "USE_THE_INDEX_VARIABLE"
+  cocci & cache.h: fully apply "active_nr" part of index-compatibility
+  cocci & cache.h: apply pending "index_cache_pos" rule
+  cocci & cache-tree.h: migrate "write_cache_as_tree" to "*_index_*"
+  cache-tree API: remove redundant update_main_cache_tree()
+  cocci & cache.h: remove "USE_THE_INDEX_COMPATIBILITY_MACROS"
 
-:-)
+ builtin/am.c                                  |  6 ++--
+ builtin/commit.c                              | 18 +++++-----
+ builtin/merge.c                               |  8 ++---
+ builtin/mv.c                                  |  8 +++--
+ builtin/rm.c                                  |  2 +-
+ builtin/stash.c                               | 11 +++---
+ builtin/update-index.c                        |  4 +--
+ builtin/write-tree.c                          |  5 +--
+ cache-tree.h                                  | 15 --------
+ cache.h                                       | 12 +------
+ contrib/coccinelle/index-compatibility.cocci  | 36 ++++++++++++++-----
+ .../index-compatibility.pending.cocci         | 24 -------------
+ 12 files changed, 62 insertions(+), 87 deletions(-)
+ delete mode 100644 contrib/coccinelle/index-compatibility.pending.cocci
+
+Range-diff against v1:
+1:  3517389f732 = 1:  916761cb50f builtin/rm.c: use narrower "USE_THE_INDEX_VARIABLE"
+2:  03c6e404367 = 2:  6040edad622 cocci & cache.h: fully apply "active_nr" part of index-compatibility
+3:  2dbe4f45363 = 3:  3e9d97dbff2 cocci & cache.h: apply pending "index_cache_pos" rule
+4:  679ddc857c1 ! 4:  e36a0ae562f cocci & cache-tree.h: migrate "write_cache_as_tree" to "*_index_*"
+    @@ builtin/am.c
+      #include "config.h"
+      #include "builtin.h"
+     @@ builtin/am.c: static void do_commit(const struct am_state *state)
+    - 	if (run_hooks("pre-applypatch"))
+    + 	if (!state->no_verify && run_hooks("pre-applypatch"))
+      		exit(1);
+      
+     -	if (write_cache_as_tree(&tree, 0, NULL))
+5:  7f956fd8b75 = 5:  ab8794da29c cache-tree API: remove redundant update_main_cache_tree()
+6:  4807a3fe8ff = 6:  77c30cfe455 cocci & cache.h: remove "USE_THE_INDEX_COMPATIBILITY_MACROS"
+-- 
+2.39.1.1475.gc2542cdc5ef
+
