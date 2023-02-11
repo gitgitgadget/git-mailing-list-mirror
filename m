@@ -2,149 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8082FC636CC
-	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 14:12:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25573C636CC
+	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 17:39:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229802AbjBKOMA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Feb 2023 09:12:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60040 "EHLO
+        id S229564AbjBKRjp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Feb 2023 12:39:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbjBKOL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Feb 2023 09:11:58 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8E1E196AC
-        for <git@vger.kernel.org>; Sat, 11 Feb 2023 06:11:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1676124709; bh=7arafviy4Pkz8Mrf8+2ssokiQgAoegH4eP3sD/y2XUU=;
-        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=bZP4tTPAlQnwIVucO8IgLZs5VngcbilJKmDuYSFBx1yyM+kvuq27QTcQVfirrSPDi
-         zYNhNVv5I35VBCNZwkzjaQ5fynTCqoqsTIR+nHTu56gBF67w8fm2wTHEi4az5+ljtw
-         7I4AkdIq+LExw0E9iebJsesTjenBvUMpYyG9q4/XqMe8f26kbtGTL04gDLp430EAth
-         svlDGKQO+Pdg60RkR1M+uzg7kq/VPS/C26UkuTx261alVqaRugKttrSOdRXfAV7SVW
-         C+MNQVydx8jiyWOl0LlzBN8hk8BgxDvmMyCErKtBU8YsHw+Zf2THffrkLvZAVFZ2n4
-         AI3ZZ8itMcOXA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.21.51]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N5UkQ-1oXDqR3Xpq-0170ds; Sat, 11
- Feb 2023 15:11:49 +0100
-Message-ID: <ef13e409-aa57-f1c8-d3bf-0b2f1f0ecdc0@web.de>
-Date:   Sat, 11 Feb 2023 15:11:49 +0100
+        with ESMTP id S229480AbjBKRjo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Feb 2023 12:39:44 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 074E22712
+        for <git@vger.kernel.org>; Sat, 11 Feb 2023 09:39:42 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id co8so4471502wrb.1
+        for <git@vger.kernel.org>; Sat, 11 Feb 2023 09:39:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iNDTc/z81WDbzOAKWboDNietqvaL3zbvUmC5KF/br9Q=;
+        b=nXcUDncWW2SXn0Z9PGeAlZRUxef/08lHc0gIp3NcOezBQ81UbmE50aERYJ7SF7Q3jZ
+         jFBd42EGhwn8WALlQb0lRAc75gLrYBxVefxhDhYbmkTIULGCusbnQcSQ5Pz4wNxCAxAH
+         3Rrif9gK0ZbHVr1hMKiCYbRrUh0XV6p9jGZWcX+vV/+XepiQVN4YLf3yIeg/qxOPhU+o
+         hYc3hl+hJRmr/vCID/AnRmw8ulbFkarF0GuzayvETGLK3UCvIF4CzD/4WHFxSuPHArUU
+         hdBYMw5b3dJp/RZB2/RDmNnk+t/Z1ShFucYisY+5wANZCnP6XJtK+5YQMorua2+rq0Gd
+         IDuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iNDTc/z81WDbzOAKWboDNietqvaL3zbvUmC5KF/br9Q=;
+        b=AXEnu0p2c12WFyPX54btwCZN3Rql292OzoMAcvgOTuvmEg3HMf08l0VuXWoYNhp/ee
+         2mXHBvLOtQqgYXnPCov/Nn2fh0RuRBQEBdus37VAxGuKL/e+3vuc6qoAv9I9vQPkxauI
+         XOiG/1U/u4UAAeWmnQdk40MYsd75WjQHugJeQ0gYTsUYZq1k/vs6sMuM8ApvSSaIGOI3
+         fa92Rz99vOFUki3ONGuUt2K15vsCCkQDYsafa2sTisj9+WE8zGq/SvwsN11ZycGvPX2J
+         IULfjgmKBfbvk+/vVs0+qXYdpvjnM1aYyuUUSkU0gefLIIY7aq+3GV5gKlwndJgnf4Jd
+         wf9w==
+X-Gm-Message-State: AO0yUKXAOMOd/DxbuDE/nOF5ieIfQPgOidWM/jRqusslFu2SlvEnyzy8
+        3gDudRfELr7N2CbVQ9k4vhg=
+X-Google-Smtp-Source: AK7set+hHnN6X81N6dKvCCjECHkepxEOCqRyDklypw2wTqsJXhLzlEHDaLXsWIjBaC3tg4G+NttV9A==
+X-Received: by 2002:a05:6000:12cb:b0:2bf:c9e2:770a with SMTP id l11-20020a05600012cb00b002bfc9e2770amr18423960wrx.2.1676137180473;
+        Sat, 11 Feb 2023 09:39:40 -0800 (PST)
+Received: from [192.168.1.212] ([90.248.183.175])
+        by smtp.gmail.com with ESMTPSA id p18-20020a5d68d2000000b0029100e8dedasm6509938wrw.28.2023.02.11.09.39.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 11 Feb 2023 09:39:39 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <37a89e67-23f0-83f7-aaa5-0199d5db3adb@dunelm.org.uk>
+Date:   Sat, 11 Feb 2023 17:39:38 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.2
-Subject: Re: [PATCH 1/5] git-compat-util: add isblank() and isgraph()
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
 Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Masahiro Yamada <masahiroy@kernel.org>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-References: <20230210075939.44949-1-masahiroy@kernel.org>
- <20230210075939.44949-2-masahiroy@kernel.org>
- <654092a2-6d3e-7ab4-a747-1ce36daad03d@web.de>
- <CAK7LNATHnjNe0Bagd4HOkNKXS_-5C5oU0cgQ-rFT6sgF33G+1A@mail.gmail.com>
- <b9406c64-5a0e-83ab-7dfa-8effacc2a7e5@web.de>
-In-Reply-To: <b9406c64-5a0e-83ab-7dfa-8effacc2a7e5@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:aAgYTSh2EM9qXkebX/s9DHra5uUSzvdwQGDgfyRGxoGh29MkFwx
- uGCLugFkRcS0P2HtmnHO4lyq9WidJ6yCG0QTRrEX03xB+tMSdUS50fE15w11d/UKvBo1EiQ
- Hw5iPVlrkwr5AIjIbnbTcz59rxePfJz3o7oqEXdyAObBoBNRBuTH/scaFMgqEI/hY48ArAQ
- +WKeKfYlq/dCDeaUyG5Jg==
-UI-OutboundReport: notjunk:1;M01:P0:QkiZC44RvkA=;/kTFyk/8I4263RORgMRXgPujJ/M
- 1jsXGz1s6PPacNC06DJ1+jIcTkJ+awc9Uuf4MrpLrMCHlHu65M7lcmMqnExW96IDOag+dR+wv
- rfVAF6cjQUQGVe4f6FJcZ3QsN7YEBEb8PmPqv+Xid4Uq04LDNk9R9lt1uwpLHa07DKK4K0Us+
- Lf2C7iYAoqhToCKQUgq1wW7tS5bMv/MEcXUX8YRLEZR2svaqgp3/J/MZQCY58RnPQ9m7zaAnn
- Smji7FuJIXt7yLtn4IU0P5h7E2BX3pL79dcaddtysZX7EkbuqjBKeTF0iC8TtOzrpiYEt8Xon
- SmUvxZBdm8oorjEww3zhhNyyYsP9VEnQwo/sGA/iRAiacwMgC2bEQdoWmdrHwTZriimWl6pBi
- xMKQJINhwQEELT1s6WD+6VBnrREDHXlyj5DVx5oiuMX3YdJ6gl1yEZv5kJFMviD/AC4gO4WCg
- LhYRZKoih8Rq+okIXB/YNH3C2EZX0eWnCAXaKifjlhSs6nhxQ5SsWdhu6Lb8+MMv09gImktMX
- yiDHoomex+VZ3AdvJMWSkmAltmRyyXXAAF5Cwmgjkl/Vok+6FR3NTnAZgc4CnutGFFntwAGNs
- a1XtkHOh5YWHq2Yy814oKGSlqV2qmgRRb/cXY7IwKfngVkrCbySV/shKTymOhLGOlwGP/TFLH
- OHKyNwJY+NDvc75gTcF+ZgifL3HJfcySrLVWwhILT9N3n9A4+rtWnkJKaQsIns/nqN0bMEv7+
- 9G4AKDeztUoEEPnXqBCd6ZccXx1eu+MxoN7/cWl8hKoFTxuR9RUKJEKC2bMbPbS9dcj8BDZL3
- qrG4Fi4CBkWskUb+yp4OIFKcSJJzlVp8E2CQ4Ukpqu3sx3v4WKuPTrOCBPXfQLaTe86JfEakt
- fyVLy/d0MMHAj2fn6g+f6f67udvomgk8PA5yhbCNez/+VGRx9UvEdmBOWa0+CyNp7+NWWqsRa
- gudB4+/jr6tR0p29UzQuMW2eFps=
+To:     Elijah Newren <newren@gmail.com>
+Cc:     John Cai <johncai86@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
+ <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
+ <230206.865yce7n1w.gmgdl@evledraar.gmail.com>
+ <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
+ <d18a5c32-2f15-93ad-ccbf-e8f048edb311@dunelm.org.uk>
+ <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
+ <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com>
+ <1ddac91b-7552-3e1e-9888-9e21e808104d@dunelm.org.uk>
+ <CABPp-BHQDS+AzWXtk9WV4HY2QZ8UdXrWJJDr-y6VPoLB6HuAfw@mail.gmail.com>
+In-Reply-To: <CABPp-BHQDS+AzWXtk9WV4HY2QZ8UdXrWJJDr-y6VPoLB6HuAfw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 11.02.23 um 14:48 schrieb Ren=C3=A9 Scharfe:
-> Am 11.02.23 um 08:01 schrieb Masahiro Yamada:
->> On Sat, Feb 11, 2023 at 7:03 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->>>
->>> We already use eight bits for the lookup table values in sane_ctype.
->>> Perhaps it's time to move GIT_GLOB_SPECIAL, GIT_REGEX_SPECIAL,
->>> GIT_PATHSPEC_MAGIC and GIT_PUNCT to their own table to make room for
->>> flags for isprint(), isgraph() and isblank().
->>
->>
->>
->> I think that is a good idea.
->>
->> If we can have more room for isupper() and islower(),
->> we will be able to delete sane_iscase().
->>
->>
->> (I was thinking 'unsigned short', but having two tables is OK.)
->>
->>
->>
->> So, how can I proceed with this patchset?
->>
->>
->>
->> [A] After somebody refactors ctype.c table,
->>     I will rebase this series on top of that.
->>
->> [B] keep isblank() and isgraph() local to wildmatch.c
->>     until that happens, so I can proceed without
->>     depending on the ctype.c refactoring.
->>
->>     Apparently, wildmatch.c is not using a pointer
->>     increment with isblank() or isgraph().
->>
->> [C] If 'somebody' in [A] is supposed to me,
->>     my v2 will include ctype refactoring.
->
-> [D] We need more tests first. :)  I sent patches to test the current
-> classifiers separately.  A similar test for isblank would have helped
-> you detect the mismatch quickly.  Full test coverage also gives
-> confidence when tinkering with the existing classifiers.
->
-> 1c149ab2dd (ctype: support iscntrl, ispunct, isxdigit and isprint,
-> 2012-10-15) added an implementation of isprint that evaluated its
-> argument only once, by the way, but the one from 0fcec2ce54
-> (format-patch: make rfc2047 encoding more strict, 2012-10-18)
-> replaced it.
->
-> Widening the element type of the lookup table would work, but might
-> impact performance.  I guess it would be slower, but perhaps we'd
-> have to measure it to be sure.  Splitting the table into unrelated
-> subsets would avoid that.
->
-> Deciding which flags to move requires knowing the full target set,
-> I think.  The punctuation-related flags looked to me like good
-> candidates until I saw the original isprint implementation which
-> uses them and several of the others.  So I'm not so sure anymore,
-> but here's a patch that moves them out:
+Hi Elijah
 
-Perhaps:
+On 10/02/2023 09:57, Elijah Newren wrote:
+> Hi Phillip,
+> 
+> On Thu, Feb 9, 2023 at 6:44 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>> Hi Elijah
+>>
+>> On 09/02/2023 09:09, Elijah Newren wrote:
+>> I'd support a change to either patience or histogram as the default
+>> algorithm. My personal preference would be for the patience algorithm as
+>> I think it generally gives nicer diffs in the cases that the two
+>> disagree (see below, I've tried changing diff.algorithm to histogram a
+>> few times and I always end up changing it back to patience pretty
+>> quickly). However I can see there is an advantage in having "diff" and
+>> "merge" use the same algorithm as users who diffing either side to the
+>> merge base will see the same diff that the merge is using. The histogram
+>> algorithm is known to produce sub-optimal diffs in certain cases[1] but
+>> I'm not sure how much worse it is in that respect than any of the other
+>> algorithms.
+> [...]
+>> [1]
+>> https://lore.kernel.org/git/CAGZ79kZYO6hHiAM8Sfp3J=VX11c=0-7YDSx3_EAKt5-uvvt-Ew@mail.gmail.com/
+> 
+> Thanks, I might have a fix, though I'm a bit worried my tweaks might
+> trigger issues elsewhere or cost a bit of performance; I'll need to
+> test.  Are there any other good known testcases where histogram
+> produces sub-optimal diffs?
 
-[E] Implement isblank and isgraph as inline functions and leave the
-lookup table integration for later:
+Not that I'm aware of (I've a feeling there might have been something on 
+the JGit mailing list but I only managed to find a copy of Stefan's 
+message). Loosely related is [1] which talks about hash collisions and 
+I've never found the time to look at properly. I suspect any hash 
+collision problem is more likely to affect xdl_classify_record() which 
+is used by all the algorithms.
 
-   #undef isblank
-   #define isblank(x) sane_isblank(x)
-   static inline int sane_isblank(int c) {return c =3D=3D ' ' || c =3D=3D =
-'\t';}
+>> To see the differences between the output of patience and histogram
+>> algorithms I diffed the output of "git log -p --no-merges
+>> --diff-algorithm=patience" and "git log -p --no-merges
+>> --diff-algorithm=histogram". The first three differences are
+>>
+>> - 6c065f72b8 (http: support CURLOPT_PROTOCOLS_STR, 2023-01-16)
+>>     In get_curl_allowed_protocols() the patience algorithm shows the
+>>     change in the return statement more clearly
+>>
+>> - 47cfc9bd7d (attr: add flag `--source` to work with tree-ish, 2023-01-14)
+>>      The histogram algorithm shows read_attr_from_index() being moved
+>>      whereas the patience algorithm does not making the diff easier to
+>>      follow.
+>>
+>> - b0226007f0 (fsmonitor: eliminate call to deprecated FSEventStream
+>> function, 2022-12-14)
+>>     In fsm_listen__stop_async() the histogram algorithm shows
+>>     data->shutdown_style = SHUTDOWN_EVENT;
+>>     being moved, which is not as clear as the patience output which
+>>     shows it as a context line.
+> 
+> If my current changes are "good", then they also remove the
+> differences between patience and histogram for the second and third
+> commits above.  (And the differences between the two algorithms for
+> the first commit look really minor.)
 
-   #undef isgraph
-   #define isgraph(x) sane_isgraph(x)
-   static inline int sane_isgraph(int c) {return isprint(c) && c !=3D ' ';=
-}
+Interesting. I agree the differences for the first commit are small. 
+Interestingly I think they come from patience algorithm falling back to 
+the myers implementation because it cannot find any unique context lines 
+(I have a patch that removes the fallback[2] and it gives the same 
+result as the histogram implementation).
 
-The Lazy Way=E2=84=A2 ;)
+Best Wishes
 
-Ren=C3=A9
+Phillip
+
+[1] 
+https://lore.kernel.org/git/4e0eff48-4a3e-4f0e-9ed2-d01ec38442a5@www.fastmail.com/
+
+[2] https://github.com/phillipwood/git/commits/pure-patience-diff
