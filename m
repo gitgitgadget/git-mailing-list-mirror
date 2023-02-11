@@ -2,121 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFCADC636CC
-	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 04:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFFE9C61DA4
+	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 04:53:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbjBKEQw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 23:16:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35648 "EHLO
+        id S229477AbjBKExA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 23:53:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjBKEQu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 23:16:50 -0500
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FEF84EFE
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 20:16:47 -0800 (PST)
-Received: by mail-pl1-x649.google.com with SMTP id g12-20020a170902868c00b00199148d00f2so3945688plo.17
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 20:16:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JzY0sZY4/wtdd44G1l6IiWuKB7sS8YiGMT4o8voQMBI=;
-        b=XsEL1Ep15dcaZlNsy9C2Pus9DxtNiZJhVYKZiGhQn4KwTbg8KgyURX32rjH8bXs4jP
-         7RSeL5EGE93eJYwFZdQxoLCjjDbWaBGTUUq0906N74wrmwaay9fpYIL6pUQRQSUwjvk+
-         OjUYvoD/zWWaJwb5kwKgdFUjjxE801B44VIp+DScNDB0juHuD1Fs0LtDujJrxhcIJldU
-         zAiLNMle0IKARzW/0LebJIUTPUXLQXlhqi8Rxr7C9mIlyOKc3tETTEsiu2Fap/0C5aAa
-         M62RKtF14x0CQyUffbRRefuSXyPgZileT0N14XS1kUe40AR4vJ+C6qCh0VhxFNgGQEf6
-         +vUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=JzY0sZY4/wtdd44G1l6IiWuKB7sS8YiGMT4o8voQMBI=;
-        b=BvDrZmpLeFrBb0+0+mwR3Fr09UzhefRRDz07TimI3g4e6DeQQQhyTLUAVRPoU6LlJE
-         uM90hn5uVVDNWOLxFsKzduUFcLj2xRKPYz/VJGqKLlxhjCagq19i0vqdFhEyhuhCdjOI
-         P/eovjHc4IgoTyuvOgaUoS3ZDNJfx7sxMt/ARxTtGR4LOeGVzkDhohE9pOpRvuc57Cyp
-         CmawBnYaDkNaaCF7D1GngkOLyU6OBVyQOBK8BHmfkt4JXExOfvNztktpMV0q7QdUNhG8
-         NAUXPvJWu73KKt3RdDKvIkuPrUhkxF76EWusiQLHaLLMdwSz2QaM+rOc5eaXldlI6OtK
-         zgTg==
-X-Gm-Message-State: AO0yUKXaQ0C2SX4mekuFTt32Df9hQRx/Wm1ZKRPgpLxpfCySNNlNRn9f
-        j5GVML79DDQYbvDKzTbWONSHIIibnzz0dl5H3YUT
-X-Google-Smtp-Source: AK7set+xJwBnVmNymwv/wdN6pgXO0rJK73uqvXLH0aqGzMNQFDrEjB+XqGdK+bnMSPqbK3sWn4HgS87Ge5233sYZ6j8B
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a63:ae04:0:b0:4de:7028:d2fb with
- SMTP id q4-20020a63ae04000000b004de7028d2fbmr3328523pgf.111.1676089006988;
- Fri, 10 Feb 2023 20:16:46 -0800 (PST)
-Date:   Fri, 10 Feb 2023 20:16:44 -0800
-In-Reply-To: <f284e163-5476-0c38-106c-094080340f71@gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.39.1.581.gbfd45094c4-goog
-Message-ID: <20230211041644.1848341-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v3 1/3] branch: avoid unnecessary worktrees traversals
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     "=?UTF-8?q?Rub=C3=A9n=20Justo?=" <rjusto@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229447AbjBKEw7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 23:52:59 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED4D55EBCD
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 20:52:57 -0800 (PST)
+Received: (qmail 23264 invoked by uid 109); 11 Feb 2023 04:52:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Feb 2023 04:52:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31780 invoked by uid 111); 11 Feb 2023 04:52:56 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Feb 2023 23:52:56 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 10 Feb 2023 23:52:56 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     William Blevins <wblevins001@gmail.com>, git@vger.kernel.org
+Subject: [PATCH v2 2/2] doc/ls-remote: clarify pattern format
+Message-ID: <Y+cfKFz2rXLLVkjs@coredump.intra.peff.net>
+References: <Y+cAdZTs5y0yiTkM@coredump.intra.peff.net>
+ <Y+cBFF0OPSq8DGnA@coredump.intra.peff.net>
+ <xmqq5yc8gbec.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq5yc8gbec.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
-> "reject_rebase_or_bisect_branch()" was introduced [1] to prevent a
-> branch under bisect or rebase from being renamed or copied.  It
-> traverses all worktrees in the repository and dies if the specified
-> branch is being rebased or bisected in any of them.
->=20
-> "replace_each_worktree_head_symref()" was introduced [2] to adjust the
-> HEAD in all worktrees after a branch rename succeeded.  It traverses all
-> worktrees in the repository and if any of them have their HEAD pointing
-> to the renamed ref, it adjusts it.
+On Fri, Feb 10, 2023 at 06:54:03PM -0800, Junio C Hamano wrote:
 
-Thanks for the references to why these were introduced!
+> >  'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
+> >  	      [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]
+> > -	      [--symref] [<repository> [<refs>...]]
+> > +	      [--symref] [<repository> [<patterns>...]]
+> 
+> Micronit.
+> 
+> builtin/ls-remote.c::ls_remote_usage[] needs a matching update.
 
-> If we could know in advance if the renamed branch is not HEAD in any
-> worktree we could avoid calling "replace_each_worktree_head_symref()",
-> and so avoid that unnecessary second traversing.
+Good catch. It is more than a micronit, as it causes t0450 to fail (I
+did not even think to run the tests, since it was just a doc change).
 
-When I first read this paragraph, I thought that the traversing involved
-was just a loop through an in-memory data structure, which is not that
-costly. It turns out that a travesal involves not only constructing
-said data structure but also reading from disk to get the necessary
-information, which indeed is very costly. I would include that in the
-commit message, but won't insist on that (perhaps it's clear to others
-what is meant by traversal).
+> > -<refs>...::
+> > +<patterns>...::
+> >  	When unspecified, all references, after filtering done
+> > -	with --heads and --tags, are shown.  When <refs>... are
+> > -	specified, only references matching the given patterns
+> > -	are displayed.
+> > +	with --heads and --tags, are shown.  When <patterns>... are
+> > +	specified, only references matching one or more of the given
+> > +	patterns are displayed. Each pattern is interpreted as a glob
+> > +	(see `glob` in linkgit:gitglossary[7]) which is matched against
+> > +	the "tail" of a ref, starting from a slash separator (so `bar`
+> > +	matches `refs/heads/bar` but not `refs/heads/foobar`).
+> 
+> Good.  Is it too obvious that the pattern `refs/heads/bar` matches
+> the ref `refs/heads/bar`, even though it becomes fuzzy what
+> "starting from a slash separator" means in such a scenario?
 
-> Let's rename "reject_rebase_or_bisect_branch()" to a more meaningful
-> name "die_if_branch_is_being_rebased_or_bisected()" and make it return,
-> if it does not die(), if the specified branch is HEAD in any worktree.
-> Use this new information to avoid unnecessary calls to
-> "replace_each_worktree_head_symref()".
+Ah, thank you for bringing that up. I actually meant to call attention
+to that case, as when I tried "git ls-remote . refs/heads/master", it
+did not match anything, which seemed to me like a bug. But in fact it is
+because I don't have a master branch in my repo (I only keep my feature
+branches, plus an integration branch, and always refer to yours as
+origin/master), and my experiment was buggy. :)
 
-In later patches, I see that the return value can also indicate that a
-branch is an orphan, and that for the sake of code clarity, the calling
-function had to have a variable assignment of the form oldref_is_orphan
-=3D (oldref_is_head > 1). If this is so, it is probably better to have
-this function return something with names. So something like
+I do think it's worth mentioning (and thankfully there is no bug to
+fix).
 
-  #define IS_HEAD 4
-  #define IS_ORPHAN 8
-  int get_branch_usage_in_worktrees(...) {...}
+Here's a re-roll with both changes.
 
-and then the caller can use these constants whenever it needs to know
-what kind of branch this is.
+-- >8 --
+Subject: [PATCH] doc/ls-remote: clarify pattern format
 
-I also see in patch 2 that we're changing what the user sees under
-certain inputs. That can be avoided if we move the dying to the caller,
-and have this function merely return when the branch is being rebased
-or bisected.
+We document that you can specify "refs" to ls-remote, but we don't
+explain any further than that they are "matched" as patterns. Since this
+can be interpreted in a lot of ways, let's clarify that they are
+tail-matched globs.
 
-  #define IS_BISECTED 1
-  #define IS_REBASED 2
+Likewise, let's use the word "patterns" to refer to them consistently,
+rather than "refs" (both here and in the quick "-h" help), and mention
+more explicitly that only one pattern needs to be matched (though there
+is also an example already that shows this in action).
 
-or something like that. I would prefer if user-visible behavior didn't
-change unnecessarily, and this does not seem like a necessary case.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-ls-remote.txt | 15 ++++++++++-----
+ builtin/ls-remote.c             |  2 +-
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-Other than that, everything looks good.
+diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
+index f17567945f..ff3da547dd 100644
+--- a/Documentation/git-ls-remote.txt
++++ b/Documentation/git-ls-remote.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
+ 	      [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]
+-	      [--symref] [<repository> [<refs>...]]
++	      [--symref] [<repository> [<patterns>...]]
+ 
+ DESCRIPTION
+ -----------
+@@ -85,11 +85,16 @@ OPTIONS
+ 	either a URL or the name of a remote (see the GIT URLS and
+ 	REMOTES sections of linkgit:git-fetch[1]).
+ 
+-<refs>...::
++<patterns>...::
+ 	When unspecified, all references, after filtering done
+-	with --heads and --tags, are shown.  When <refs>... are
+-	specified, only references matching the given patterns
+-	are displayed.
++	with --heads and --tags, are shown.  When <patterns>... are
++	specified, only references matching one or more of the given
++	patterns are displayed. Each pattern is interpreted as a glob
++	(see `glob` in linkgit:gitglossary[7]) which is matched against
++	the "tail" of a ref, starting either from the start of the ref
++	(so a full name like `refs/heads/foo` matches) or from a slash
++	separator (so `bar` matches `refs/heads/bar` but not
++	`refs/heads/foobar`).
+ 
+ EXAMPLES
+ --------
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index 5d5ac03871..6516177348 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -8,7 +8,7 @@
+ static const char * const ls_remote_usage[] = {
+ 	N_("git ls-remote [--heads] [--tags] [--refs] [--upload-pack=<exec>]\n"
+ 	   "              [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]\n"
+-	   "              [--symref] [<repository> [<refs>...]]"),
++	   "              [--symref] [<repository> [<patterns>...]]"),
+ 	NULL
+ };
+ 
+-- 
+2.39.1.795.g4b3688ded9
+
