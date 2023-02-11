@@ -2,144 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1DD2C61DA4
-	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 19:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3735C61DA4
+	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 22:28:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229631AbjBKTsX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Feb 2023 14:48:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60602 "EHLO
+        id S229638AbjBKWYA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Feb 2023 17:24:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbjBKTsV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Feb 2023 14:48:21 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 802D9EB54
-        for <git@vger.kernel.org>; Sat, 11 Feb 2023 11:48:20 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id d8so8693255plr.10
-        for <git@vger.kernel.org>; Sat, 11 Feb 2023 11:48:20 -0800 (PST)
+        with ESMTP id S229447AbjBKWX7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Feb 2023 17:23:59 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61DBC16AD8
+        for <git@vger.kernel.org>; Sat, 11 Feb 2023 14:23:58 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id r17so5732732pff.9
+        for <git@vger.kernel.org>; Sat, 11 Feb 2023 14:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pqspB92OfJQ75nrQDWwawLEKQ03k+yqWZgFSpK7wx5c=;
-        b=Nr7+/D5QvDbIRmH/jckbmvQsi+HMu7zD8xsjd10/M724HELpVnTcUFj4aT1G0L6Fz7
-         I+6paYwQ/liXl9fiQVyOzZWWSBe6zhGeTDbRrkQZiNrWf9Gi6lXMLFTJQQw3lSMtDsR3
-         AHqF279xrfahCIFkx4C8DMtAv8b+o3KWnRx/ypuADuwe5/dA+bRPrxB1f6WJ6+UTt5bJ
-         KjYpl8Fa2oI7RbSTi8LnkH3lZ8Yj8dyj30uliyyhAxxC8nmtI7fRUU7zbeiVuYjbEjN7
-         kSjO4oxq0yuaW9sXOhhDTmEQU1V1TWzM8CgulX2H42i4Jv8gvWfYvtQMaXxR+iY3MQsB
-         1t+w==
+        d=halogix-com.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=AJvaZd2Or5Rh0X/D87gR7GQvAmwTr1S5kMNq3i+82VA=;
+        b=3c5mHzyyCQgpomEX6ioYQjFu7Ufput+2DreY7JPNm2JGBOvSlzSmxtpXy7MdI23q+t
+         AutZF6vFSqkNRkDTf7y+BWGcatTP2TLgFwBVZ5xjp6/glzl/6c84oDVcqvOtvqgnGKSn
+         kFMobfUqDVXByyx6BWYbAWa3+m9KWMM7aTvHYy7Vk1RpqhRGzEEpxJ3KKAjVk3grjwnK
+         DTUTu3ld8q6bFqGGd8kmfWFc1ZiH1U2GxkMJ0HJYm0zInrbtObsBd5zuD0gk3i4mcp2T
+         A+ijXNRG+fElTmL3d3q1p7FH3OuIQAJ5MnaebxykwZbWdYfMn8DxEAno6vqwu0Op/lW1
+         9ZsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pqspB92OfJQ75nrQDWwawLEKQ03k+yqWZgFSpK7wx5c=;
-        b=tjQONjY4GlFujcKjQmLHCdXVzVXc1G1aDfeWLsdnn20sbSN1hlrDmJtAqg0WywzEUT
-         +GuAqijVAoNt3sqeU4GIPGE1EnQuL/PFT3kXn2MByhDov48R4rMHO7SIcd8LQ0ZFmBH0
-         JrFMTbULDUXrg5P3GIZsjrqX4dQkS8fOHH25UNhOBQQ1BGxv0O6WHQN08lDnueSIX2+E
-         Xf868yX3HRpd4x9gn+xgo/9YKmDsSTG6unTsTa+IHYESBI7pnjs4m0hcOi1d83P5y8xE
-         cAml6/3uXepn+68tPhYH3IhKbHKJ1Lc1nccWigzmgbkRX+b99m9195ppwX+tsPNP1gf+
-         /+tQ==
-X-Gm-Message-State: AO0yUKUKF6PCF+p4NDE9VnEtVDngWMu2CCVwKXfYO6Hd7ISrv1QODDmo
-        Eu3yzjZszs+xVeICloQ3Dbg=
-X-Google-Smtp-Source: AK7set/FGLQ8wmidZfUCHzpQLY1LWgIK1Z/1hqgGuCzEgiTwq1FZpkIKFoZSGtgOhiXgkvq+vCauow==
-X-Received: by 2002:a17:903:32ca:b0:19a:8398:3362 with SMTP id i10-20020a17090332ca00b0019a83983362mr3219856plr.13.1676144899518;
-        Sat, 11 Feb 2023 11:48:19 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id u6-20020a170902a60600b00198fcb1b2c2sm5299576plq.218.2023.02.11.11.48.18
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AJvaZd2Or5Rh0X/D87gR7GQvAmwTr1S5kMNq3i+82VA=;
+        b=kQKDuEgneXbWZJgxfVcJVeYZb75boHPwPUG1iXuCQpFXTm0Ba5gm7eXPLMCz6t4dSl
+         AlwB8bt55rOzZOnIHmHUgIGpDGyIPEoC2cjLf9BHZEODPop6gDXorD1MuQ1u2LQtfxV2
+         3nyCmnJHzU5waWv5aljLQ3UAQGYmk73K+iROi8gn8xdTN6q+iYxZr186t5ksIuqPFz+X
+         V1uvGWWetgN7pvstZ4EjYWofNZ4p2EuPGk4p7AFJD4R+1Y5Qy+Ki4h/+aaWZZgLmusd8
+         AC8kbvA2+dH1C486+Wi7cKk5+xwIcbeZHD51irBAO4Pz9/n0VxEsEQWZS/H46wEkAy7s
+         OBhA==
+X-Gm-Message-State: AO0yUKWWpm2pPnL5IF1xJAIxp86zdE46gcPkZai29s+Figmw41HPRy2M
+        Yq6axjXCtDuioTHhmqnClXIu7cc70Nm2T7ojxB0=
+X-Google-Smtp-Source: AK7set81SgCf/iaVndeKnLk/IOiLvkWk0xq040ANmlqloIiNrGYiIB6/f5/pJBc3EbqF8dP1wbEmFw==
+X-Received: by 2002:a62:d458:0:b0:5a8:44d6:f5e5 with SMTP id u24-20020a62d458000000b005a844d6f5e5mr11493714pfl.0.1676154237630;
+        Sat, 11 Feb 2023 14:23:57 -0800 (PST)
+Received: from wansink.devpod.svc.cluster.local (248.200.82.34.bc.googleusercontent.com. [34.82.200.248])
+        by smtp.gmail.com with ESMTPSA id v24-20020aa78518000000b005a8a5be96b2sm735707pfn.104.2023.02.11.14.23.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Feb 2023 11:48:19 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Masahiro Yamada <masahiroy@kernel.org>
-Subject: Re: [PATCH 1/3] test-ctype: test isascii
-References: <06da58d6-6aae-7b1d-6ce6-f07d27f05d97@web.de>
-        <21f316ab-714a-58f6-a8d2-466d738b4ed3@web.de>
-Date:   Sat, 11 Feb 2023 11:48:18 -0800
-In-Reply-To: <21f316ab-714a-58f6-a8d2-466d738b4ed3@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sat, 11 Feb 2023 14:12:49 +0100")
-Message-ID: <xmqqr0uwdlvh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Sat, 11 Feb 2023 14:23:57 -0800 (PST)
+From:   Andrew Wansink <andy@halogix.com>
+To:     git@vger.kernel.org
+Cc:     Andrew Wansink <wansink@uber.com>
+Subject: [RFC PATCH] upload_pack.c: make deepen-not more tree-ish
+Date:   Sat, 11 Feb 2023 14:23:53 -0800
+Message-Id: <20230211222353.1984150-1-andy@halogix.com>
+X-Mailer: git-send-email 2.39.1.434.ge4127a26028
+In-Reply-To: <CA+tAvojz0u7AbcNnY1qyy3VznKhYTiAO1dL+rfOD3O6mOtsa8A@mail.gmail.com>
+References: <CA+tAvojz0u7AbcNnY1qyy3VznKhYTiAO1dL+rfOD3O6mOtsa8A@mail.gmail.com>
+Reply-To: wansink@uber.com
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+This unlocks `git clone --shallow-exclude=<commit-sha1>`
 
-> Test the character classifier added by c2e9364a06 (cleanup: add
-> isascii(), 2009-03-07).  It returns 1 for NUL as well, which requires
-> special treatment, as our string-based tester can't find it with
-> strcmp(3).  Allow NUL to be given as the first character in a class
-> specification string.  This has the downside of no longer supporting
-> the empty string, but that's OK since we are not interested in testing
-> character classes with no members.
+git-clone only accepts --shallow-excude arguments where
+the argument is a branch or tag because upload_pack only
+searches deepen-not arguments for branches and tags.
 
-I wonder how effective a test we can have by checking a table we use
-in production (i.e. ctype.c::sane_ctype[]) against another table we
-use only for testing (i.e. string literals in test-ctype.c), but
-that is not something new in this series.
+Make process_deepen_not search for commit objects if no
+branch or tag is found then add them to the deepen_not
+list.
 
-I do not offhand know if the string literal prefixed with NUL is
-safe against clever compilers; my gut feeling says it should
-(i.e. allowing such an "optimization" does not seem to have much
-merit), but my gut has been wrong many times in this area, so...
+Signed-off-by: Andrew Wansink <wansink@uber.com>
+---
 
->
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
->  t/helper/test-ctype.c | 19 +++++++++++++++++--
->  1 file changed, 17 insertions(+), 2 deletions(-)
->
-> diff --git a/t/helper/test-ctype.c b/t/helper/test-ctype.c
-> index 92c4c2313e..caf586649f 100644
-> --- a/t/helper/test-ctype.c
-> +++ b/t/helper/test-ctype.c
-> @@ -11,9 +11,14 @@ static void report_error(const char *class, int ch)
->
->  static int is_in(const char *s, int ch)
->  {
-> -	/* We can't find NUL using strchr.  It's classless anyway. */
-> +	/*
-> +	 * We can't find NUL using strchr. Accept it as the first
-> +	 * character in the spec -- there are no empty classes.
-> +	 */
->  	if (ch == '\0')
-> -		return 0;
-> +		return ch == *s;
-> +	if (*s == '\0')
-> +		s++;
->  	return !!strchr(s, ch);
->  }
->
-> @@ -28,6 +33,15 @@ static int is_in(const char *s, int ch)
->  #define DIGIT "0123456789"
->  #define LOWER "abcdefghijklmnopqrstuvwxyz"
->  #define UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-> +#define ASCII \
-> +	"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f" \
-> +	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
-> +	"\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f" \
-> +	"\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f" \
-> +	"\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f" \
-> +	"\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f" \
-> +	"\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f" \
-> +	"\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f"
->
->  int cmd__ctype(int argc, const char **argv)
->  {
-> @@ -38,6 +52,7 @@ int cmd__ctype(int argc, const char **argv)
->  	TEST_CLASS(is_glob_special, "*?[\\");
->  	TEST_CLASS(is_regex_special, "$()*+.?[\\^{|");
->  	TEST_CLASS(is_pathspec_magic, "!\"#%&',-/:;<=>@_`~");
-> +	TEST_CLASS(isascii, ASCII);
->
->  	return rc;
->  }
-> --
-> 2.39.1
+At Uber we have a lot of patches in CI simultaneously,
+the CI jobs will frequently clone the monorepo multiple
+times for each patch.  They do this to calculate diffs
+between a patch and its parent commit.
+
+One optimisation in this flow is to clone only to a specific
+depth, this may or may not work, depending on how old the 
+patch is.  In this case we have to --unshallow or discard
+the shallow clone and fully clone the repo.
+
+This patch would allow us to clone to exactly the depth we
+need to find a patch's parent commit.
+
+ t/t5500-fetch-pack.sh | 30 ++++++++++++++++++++++++++++++
+ upload-pack.c         | 35 +++++++++++++++++++++++++++++++----
+ 2 files changed, 61 insertions(+), 4 deletions(-)
+
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index d18f2823d86..8d5045cc1b9 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -899,6 +899,36 @@ test_expect_success 'shallow clone exclude tag two' '
+ 	)
+ '
+ 
++test_expect_success 'shallow clone exclude commit' '
++	test_create_repo shallow-exclude-commit &&
++	(
++	cd shallow-exclude-commit &&
++	test_commit one &&
++	test_commit two &&
++	test_commit three &&
++	commit_two_sha1=$(git log -n 1 --pretty=tformat:%h HEAD^) &&
++	git clone --shallow-exclude=${commit_two_sha1} "file://$(pwd)/." ../shallow3-by-commit &&
++	git -C ../shallow3-by-commit log --pretty=tformat:%s HEAD >actual &&
++	git log -n 1 --pretty=tformat:%s HEAD >expected &&
++	test_cmp expected actual
++	)
++'
++
++test_expect_success 'shallow clone exclude commit^' '
++	test_create_repo shallow-exclude-commit-carat &&
++	(
++	cd shallow-exclude-commit-carat &&
++	test_commit one &&
++	test_commit two &&
++	test_commit three &&
++	commit_two_sha1=$(git log -n 1 --pretty=tformat:%h HEAD^) &&
++	git clone --shallow-exclude=${commit_two_sha1}^ "file://$(pwd)/." ../shallow23-by-commit &&
++	git -C ../shallow23-by-commit log --pretty=tformat:%s HEAD >actual &&
++	git log -n 2 --pretty=tformat:%s HEAD >expected &&
++	test_cmp expected actual
++	)
++'
++
+ test_expect_success 'fetch exclude tag one' '
+ 	git -C shallow12 fetch --shallow-exclude one origin &&
+ 	git -C shallow12 log --pretty=tformat:%s origin/main >actual &&
+diff --git a/upload-pack.c b/upload-pack.c
+index 551f22ffa5d..0c8594f4744 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -985,10 +985,37 @@ static int process_deepen_not(const char *line, struct string_list *deepen_not,
+ 	if (skip_prefix(line, "deepen-not ", &arg)) {
+ 		char *ref = NULL;
+ 		struct object_id oid;
+-		if (expand_ref(the_repository, arg, strlen(arg), &oid, &ref) != 1)
+-			die("git upload-pack: ambiguous deepen-not: %s", line);
+-		string_list_append(deepen_not, ref);
+-		free(ref);
++
++		switch (expand_ref(the_repository, arg, strlen(arg), &oid, &ref)) {
++		case 1:
++			// tag or branch matching arg found
++			string_list_append(deepen_not, ref);
++			free(ref);
++			break;
++		case 0: {
++			// no tags or branches matching arg
++			struct object *obj = NULL;
++			struct commit *commit = NULL;
++
++			if (get_oid(arg, &oid))
++				die("git upload-pack: deepen-not: no ref or object %s", arg);
++
++			obj = parse_object(the_repository, &oid);
++			if (!obj)
++				die("git upload-pack: deepen-not: object could not be parsed: %s", arg);
++
++			commit = (struct commit *)peel_to_type(arg, 0, obj, OBJ_COMMIT);
++			if (!commit)
++				die("git upload-pack: deepen-not: object not a commit: %s", arg);
++
++			string_list_append(deepen_not, oid_to_hex(&commit->object.oid));
++			break;
++		}
++		default:
++			// more than 1 tag or branch matches arg
++			die("git upload-pack: ambiguous deepen-not: %s", arg);
++		}
++
+ 		*deepen_rev_list = 1;
+ 		return 1;
+ 	}
+-- 
+2.39.1
+
