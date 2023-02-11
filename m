@@ -2,105 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FA0CC636D4
-	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 00:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC36AC05027
+	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 01:33:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229653AbjBKAjb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 19:39:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59540 "EHLO
+        id S229889AbjBKBd6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 20:33:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjBKAja (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 19:39:30 -0500
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3850D2
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 16:39:28 -0800 (PST)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-16ab8581837so8747020fac.4
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 16:39:28 -0800 (PST)
+        with ESMTP id S229447AbjBKBd5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 20:33:57 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8486B7D3EB
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 17:33:54 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id rm7-20020a17090b3ec700b0022c05558d22so7406451pjb.5
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 17:33:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jade-fyi.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bSZXXwqWMtveLojT0dZvh8PVKTS+zertbWVF8w2A5Jg=;
-        b=XaJOvzm0DWfQav4YCkGlVw9HIZOuBgaJibXmfroPnRqUgrjg6PaX3gpzm3rgPDW/ld
-         8NLEuKwROWc/ju/vbrCq+TSZpJOWvmMpETmS44mm6IV8JUacHnrYFLNrnImFU5uFIByb
-         QuR5UHDAoFcY0sCHdQWacOgJXpVdJKfKGqfStt4DHM6DTQBVdLQzbzAtKx2ohsC8cYXH
-         7v9k7YK9Zu2ZJQ+fYI4UcnyiG7t29Nrh8iryK0nFIkZB4sonrIUKbWotHCjVsoXFxRAR
-         7W6Hu6iS+VbvEvB+XlNxIZ1yiY7v3Ivl5b9F+YYC+K0OiK3jN9G0PgqkQhqy0BxaPZ1V
-         wzdQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TxiwYaZdA2ulSnMtFpY6/u9l1VfFI722xQFGFHVNer8=;
+        b=hON9kWItGAMjNHh2RC7op2iE1Lj+5QIIpOId9FWJzWf6OgaOeuLszX1lFJlaWaYUwr
+         yjyJMrO/lkNl7vNS4CJdgzLJbffuzRazzAdvL+zsUYUBgVNy3zLXiJTB3H6DkKEspJbs
+         zNVnl7dlbfeG+H8+4+lX/U1/rAh52LWQXHzR33dOhhxMjRvI9z5YSy8U96FlMmN8z0gV
+         A1f+NOZLzB+6y1jVAtEaIYqEukj0kGqS7Qb1EzV/o2FwcTFYygTO5YskTYlCh1DhJl3X
+         C/gb3Kra83OQQfvkyrioM5QgtWLvUC/pOKSePAk3M48rkxub8Qsq7Z5NkIH4YohqZwZU
+         /Mdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bSZXXwqWMtveLojT0dZvh8PVKTS+zertbWVF8w2A5Jg=;
-        b=i0OxuI303NrDNfR8SCqnZijvcW0fYnRn+lQCG7EikiMV1mnmzUGXMidnljQf8As+Yd
-         4muMc8sA6DbVsitDU8AYp09wi5LshE9h3cduNdg+B/o5GwNT/Wf19sD8NtJ5AGslIJGe
-         KUVGE6+V9eAnt5DDeNb97oOySLRv4rvRNunVLrf9z836bqhqkZq6ZmLhzRAfd0p4ELqj
-         b0P3BaKGPE5AMiL4q25T4/Zs5Ct1My/yArHh2XLjp34H9vHTkZheAWX701l4/xHOiN0n
-         nW+gQDeny+VVLXUhRDhA8qZOEnEdAIv/FMZDhEVscyApTtUFBNsrBxRXgCKg97zACclB
-         nbRw==
-X-Gm-Message-State: AO0yUKXcpAf8hrdyrhS3LUhTughsyFprSrc07DMfsR5gB1ByybhIpk9j
-        KxQr/QmCDsu4J2BRtAx3HPKSWHvuua6xZ7dJQ94PKqIEP16+KqYCLkr8Jg==
-X-Google-Smtp-Source: AK7set9O/MZv/GSFBmpUeUgqhcnvUaQOKbjf4P09G24K6colaEZcu/ss72ppZobwPA7OJXZxuGCKHxipDS0ALs9m9+M=
-X-Received: by 2002:a05:6871:721:b0:16a:941e:d2fe with SMTP id
- f33-20020a056871072100b0016a941ed2femr1100108oap.171.1676075967977; Fri, 10
- Feb 2023 16:39:27 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TxiwYaZdA2ulSnMtFpY6/u9l1VfFI722xQFGFHVNer8=;
+        b=y0x4aaXjYjan8tTv04YUemrXy0C+lTEp+woBettqBcMdGl1fjwQVmy9ZO+FR0ApuAG
+         ENMbPX75kfS5ow8QZbgy51e1hqvRXXMJdGPl+BGGbT3mlxgYUEjxxEjFsRrbC6cHNutm
+         lpmvdMNgfrHkexhDmm+5TEYMSwxQi9mmvqAmCu86unfTkoI41WrRaBeM+ZajauxoOsh6
+         D6JR8HIlPRm6CK0vILrYUo2Zz0bhYOh8y76Hu4ULps774xYunKfYumGbSIb0g0XqiEOk
+         xf91VuOoa4W+YLkA6/PQAH7PAes0iCWih7PFl1JsqG2k4aQSwhANXcvUrKCfEj1wRf5t
+         7c2w==
+X-Gm-Message-State: AO0yUKUNVDjVWmv6j1TFEUhJZthdNQd2wUPCUjSDHTCpm6SugCncAUVQ
+        JfA+TPUBZFUxjkXu5jENh3A=
+X-Google-Smtp-Source: AK7set9x2LaKm81sUud6YbQv3tQt/hKzZuvbV2Fli+7N04BXwiVP8hVobP1QwX6QuMlG64UM/trKnw==
+X-Received: by 2002:a17:902:ec90:b0:198:dae9:5f58 with SMTP id x16-20020a170902ec9000b00198dae95f58mr11301710plg.14.1676079233887;
+        Fri, 10 Feb 2023 17:33:53 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id d5-20020a170902c18500b00186b69157ecsm127847pld.202.2023.02.10.17.33.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Feb 2023 17:33:53 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jade Lovelace <lists@jade.fyi>
+Cc:     git@vger.kernel.org
+Subject: Re: BUG: git config --global --get ITEM ignores
+ ~/.config/git/config when ~/.gitconfig is present
+References: <CAFA9we-QLQRzJdGMMCPatmfrk1oHeiUu9msMRXXk1MLE5HRxBQ@mail.gmail.com>
+Date:   Fri, 10 Feb 2023 17:33:53 -0800
+In-Reply-To: <CAFA9we-QLQRzJdGMMCPatmfrk1oHeiUu9msMRXXk1MLE5HRxBQ@mail.gmail.com>
+        (Jade Lovelace's message of "Fri, 10 Feb 2023 16:39:17 -0800")
+Message-ID: <xmqqsffdf0ji.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Jade Lovelace <lists@jade.fyi>
-Date:   Fri, 10 Feb 2023 16:39:17 -0800
-Message-ID: <CAFA9we-QLQRzJdGMMCPatmfrk1oHeiUu9msMRXXk1MLE5HRxBQ@mail.gmail.com>
-Subject: BUG: git config --global --get ITEM ignores ~/.config/git/config when
- ~/.gitconfig is present
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear maintainers,
+Jade Lovelace <lists@jade.fyi> writes:
 
-I have found what I think is a bug or at least a documentation flaw in
-git-config: when both ~/.gitconfig and ~/.config/git/config exist,
-`git config` can retrieve items set in the latter, but not with the
-`--global` flag set. For context, I use ~/.gitconfig as a
-non-checked-in machine-specific config, and ~/.config/git/config as my
-checked-in all-machines configuration file.
-
-The documentation states:
-> When reading, the values are read from the system, global and repository =
-local configuration files by default, and options --system, --global, --loc=
-al, --worktree and --file can be used to tell the command to read from only=
- that location (see the section called =E2=80=9CFILES=E2=80=9D).
-
-> FILES
->        $XDG_CONFIG_HOME/git/config, ~/.gitconfig
->           User-specific configuration files. When the XDG_CONFIG_HOME env=
-ironment variable is not set or empty, $HOME/.config/ is used as $XDG_CONFI=
-G_HOME.
+> Then:
 >
->           These are also called "global" configuration files. If both fil=
-es exist, both files are read in the order given above.
+>  » git config --global --get user.name
+>  » git config --show-scope --show-origin --get user.name
+> global  file:/home/jade/.config/git/config      Jade Lovelace
 
-Based on this documentation, I would expect `--global` to consider
-both global configuration files, but it does not.
+With "--get" replaced with "--get-all", what do you see?
 
-Reproduction:
-
-Set some setting in ~/.config/git/config, say:
-[pull]
-ff =3D only
-
-Ensure that ~/.gitconfig exists.
-
-Then:
-
- =C2=BB git config --global --get user.name
- =C2=BB git config --show-scope --show-origin --get user.name
-global  file:/home/jade/.config/git/config      Jade Lovelace
-
-=C2=BB git --version
-git version 2.39.1
-
-Regards,
-Jade
