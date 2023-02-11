@@ -2,72 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B53EC05027
-	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 02:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47BF1C636D3
+	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 02:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229516AbjBKCEV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 21:04:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38464 "EHLO
+        id S229482AbjBKCPn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 21:15:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjBKCEU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 21:04:20 -0500
+        with ESMTP id S229437AbjBKCPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 21:15:42 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 922787358A
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 18:04:19 -0800 (PST)
-Received: (qmail 21304 invoked by uid 109); 11 Feb 2023 02:04:19 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA1B474990
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 18:15:41 -0800 (PST)
+Received: (qmail 21451 invoked by uid 109); 11 Feb 2023 02:15:41 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Feb 2023 02:04:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Feb 2023 02:15:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30266 invoked by uid 111); 11 Feb 2023 02:04:18 -0000
+Received: (qmail 30368 invoked by uid 111); 11 Feb 2023 02:15:40 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Feb 2023 21:04:18 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Feb 2023 21:15:40 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 10 Feb 2023 21:04:18 -0500
+Date:   Fri, 10 Feb 2023 21:15:40 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
-Message-ID: <Y+b3opa1xgnGM+VN@coredump.intra.peff.net>
-References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
- <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
- <230206.865yce7n1w.gmgdl@evledraar.gmail.com>
- <CABPp-BGdKjnChEp4zeCcz24wiEJVJb9Tp40MTWn1m0LRZu+M+Q@mail.gmail.com>
- <230209.86lel7xi8l.gmgdl@evledraar.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>, Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH] cache-tree: fix strbuf growth in prime_cache_tree_rec()
+Message-ID: <Y+b6TAmxel48QHJa@coredump.intra.peff.net>
+References: <ff3ac119-9b00-746f-470c-8db18c9c61a1@web.de>
+ <230205.86r0v37qdb.gmgdl@evledraar.gmail.com>
+ <850c94d5-973a-335e-903f-e0ab7e52f37e@web.de>
+ <xmqqwn4pgt1f.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <230209.86lel7xi8l.gmgdl@evledraar.gmail.com>
+In-Reply-To: <xmqqwn4pgt1f.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 09, 2023 at 10:41:33AM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Fri, Feb 10, 2023 at 12:33:00PM -0800, Junio C Hamano wrote:
 
-> > If you run with more than 1 run, are your numbers even repeatable?
+> > strbuf_setlen() truncates the string to the directory name.  strbuf_grow() then
+> > makes enough room to add that directory name again (that's what I mean with
+> > "double") plus the entry path.  We don't add the directory name a second time,
+> > so we don't need to make room for it.
 > 
-> Yes, but tl;dr it's diff.colorMoved=true, sorry, see below.
+> Yeah, I think I made the same mistake number of years ago, thinking
+> that strbuf_grow() was to grow the buffer to the given size, but in
+> reality it is to grow the buffer by the given size, which felt a bit
+> unnatural, at least to me.  I do not feel it too strongly but we
+> might want to rename _grow() to _grow_by() and make _grow() call it
+> while giving deprecation warning X-<.
 
-Wow, that's really slow. I was slightly surprised, because I also use
-colorMoved. But I set it to "plain", which is way faster:
+Having been confused by that myself, I would be happy to see such a
+name change.
 
-  $ time git diff --color-moved=default v2.0.0 v2.28.0 >/dev/null
-  real	0m18.492s
-  user	0m18.411s
-  sys	0m0.081s
+> There are ~45 calls to strbuf_grow() in C files other than strbuf.c;
+> I suspect probably a half or more of them can and should be removed
+> to reduce the resulting code size without hurting anything.
 
-  $ time git diff --color-moved=plain v2.0.0 v2.28.0 >/dev/null
-  real	0m0.942s
-  user	0m0.841s
-  sys	0m0.101s
+My gut feeling is that your suspicion is giving strbuf_grow() users too
+much credit. ;) And having looked at the first 7 grep hits, every single
+one of them seemed pointless to me.
 
-I didn't dig into why, but it's possible there's some low-hanging fruit
-in the zebra/block code.
-
-I also have a mild feeling of deja vu that we may have discussed this
-before, but a quick search in the archive didn't yield anything. So I'll
-leave it for somebody to investigate further if they're interested.
+I wonder if these would make a good #leftoverbits / micro-project
+candidate.
 
 -Peff
