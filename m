@@ -2,87 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C06C5C636D3
-	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 02:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05109C05027
+	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 02:46:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229506AbjBKCoj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 21:44:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52398 "EHLO
+        id S229516AbjBKCqK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 21:46:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjBKCoi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 21:44:38 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E056F29424
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 18:44:37 -0800 (PST)
-Received: (qmail 21936 invoked by uid 109); 11 Feb 2023 02:44:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Feb 2023 02:44:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30587 invoked by uid 111); 11 Feb 2023 02:44:36 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Feb 2023 21:44:36 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 10 Feb 2023 21:44:36 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     William Blevins <wblevins001@gmail.com>, git@vger.kernel.org
-Subject: [PATCH 2/2] doc/ls-remote: clarify pattern format
-Message-ID: <Y+cBFF0OPSq8DGnA@coredump.intra.peff.net>
-References: <Y+cAdZTs5y0yiTkM@coredump.intra.peff.net>
+        with ESMTP id S229437AbjBKCqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 21:46:09 -0500
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6208329424
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 18:46:08 -0800 (PST)
+Received: by mail-pl1-x62d.google.com with SMTP id k13so8635241plg.0
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 18:46:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pGbrSpMgPT9lcoI6ILwc8AgVIOHW90QS51rMMM34yL0=;
+        b=fihue6247y+ooonb9ZGa73IG2EckA29RMtaFTFHgUohNu3tlIukRl+tGGoDK8WOWlA
+         idbg+SkEaeOJw4hH6cJSjDZFgQSA7lDIQiWOQRKENS75zW759I/6UE02B+e+vRbc1tf2
+         U1p2cZhBt9sVM13Sa3Bm7XYMx2qoH/aiUCM3rJTaXXWIBzONKtWu/9/edNyawJ/gd8ru
+         vGP1l/HU56F7AgeeztO4apGWoDxMhz/Ma2/rXOylno9QPg+OV0SrygTFIjJQBFfPQ7XA
+         6LaoFUG6aqFchU+9bDJi1oZjAlHAaeUoAJ4TsnzqnkhVtaQgSEB/s47+C/GApzwoYJDL
+         xlKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=pGbrSpMgPT9lcoI6ILwc8AgVIOHW90QS51rMMM34yL0=;
+        b=RnBI/vm+z6cUtxQzUTPAcnhVMRFM8TFBSerabwSEInRn9EKRuh7EftvkeAW+0ePmbr
+         7h30I386OXGEkHl72dzkivGn23Kl8SxA7DvOUGeH1uYLFpYxYoERbu6CbULQxzB0DksZ
+         mG1NnBNz+TvtYwvfCshtokDV8Gvp+93UioDwNpdWiSiinbcRykFi+MuBbP6DAD1DswCU
+         fys0Y7z/A2bLhgmhdH7jnUXeBofo4NMu7GThQ1i+0r49lG+4WuiaB1/5MM87q90SyjGA
+         zaHoyOnzDAaSOsdAbBOzKpfpP4qvS46Vu8DTXz2uRYY3IGQkYe25iTSlP1grWCB+CL8Z
+         Gt2A==
+X-Gm-Message-State: AO0yUKUREFFtb8469POIzPqR4fGAiw1i53n1IwlsKX0ClSJshou09d8D
+        Ijv4i4O4xvaUJF7qrb7BJ3U=
+X-Google-Smtp-Source: AK7set/xMdkSmVoLvNNXsQSlBWAsd3WGf7+a0zSJJdcaU+i7+/zLm0Q+8jdPj4GNO+OPYyTVX80IvA==
+X-Received: by 2002:a17:90b:4a81:b0:230:acb2:e3e8 with SMTP id lp1-20020a17090b4a8100b00230acb2e3e8mr599247pjb.23.1676083567783;
+        Fri, 10 Feb 2023 18:46:07 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id k6-20020a17090a4c8600b002339195a47bsm2186626pjh.53.2023.02.10.18.46.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Feb 2023 18:46:07 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Git List <git@vger.kernel.org>,
+        Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH] cache-tree: fix strbuf growth in prime_cache_tree_rec()
+References: <ff3ac119-9b00-746f-470c-8db18c9c61a1@web.de>
+        <230205.86r0v37qdb.gmgdl@evledraar.gmail.com>
+        <850c94d5-973a-335e-903f-e0ab7e52f37e@web.de>
+        <xmqqwn4pgt1f.fsf@gitster.g>
+        <Y+b6TAmxel48QHJa@coredump.intra.peff.net>
+Date:   Fri, 10 Feb 2023 18:46:06 -0800
+In-Reply-To: <Y+b6TAmxel48QHJa@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 10 Feb 2023 21:15:40 -0500")
+Message-ID: <xmqqa61kgbrl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y+cAdZTs5y0yiTkM@coredump.intra.peff.net>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We document that you can specify "refs" to ls-remote, but we don't
-explain any further than that they are "matched" as patterns. Since this
-can be interpreted in a lot of ways, let's clarify that they are
-tail-matched globs.
+Jeff King <peff@peff.net> writes:
 
-Likewise, let's use the word "patterns" to refer to them consistently,
-rather than "refs", and mention more explicitly that only one pattern
-needs to be matched (though there is also an example already that shows
-this in action).
+>> ...  I do not feel it too strongly but we
+>> might want to rename _grow() to _grow_by() and make _grow() call it
+>> while giving deprecation warning X-<.
+>
+> Having been confused by that myself, I would be happy to see such a
+> name change.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-ls-remote.txt | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+If we did not know how useless explicit growth control is, we would
+likely have a pair of helpers, _grow_by() and _grow_to(), but given
+that ...
 
-diff --git a/Documentation/git-ls-remote.txt b/Documentation/git-ls-remote.txt
-index f17567945f..2a941292a4 100644
---- a/Documentation/git-ls-remote.txt
-+++ b/Documentation/git-ls-remote.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git ls-remote' [--heads] [--tags] [--refs] [--upload-pack=<exec>]
- 	      [-q | --quiet] [--exit-code] [--get-url] [--sort=<key>]
--	      [--symref] [<repository> [<refs>...]]
-+	      [--symref] [<repository> [<patterns>...]]
- 
- DESCRIPTION
- -----------
-@@ -85,11 +85,14 @@ OPTIONS
- 	either a URL or the name of a remote (see the GIT URLS and
- 	REMOTES sections of linkgit:git-fetch[1]).
- 
--<refs>...::
-+<patterns>...::
- 	When unspecified, all references, after filtering done
--	with --heads and --tags, are shown.  When <refs>... are
--	specified, only references matching the given patterns
--	are displayed.
-+	with --heads and --tags, are shown.  When <patterns>... are
-+	specified, only references matching one or more of the given
-+	patterns are displayed. Each pattern is interpreted as a glob
-+	(see `glob` in linkgit:gitglossary[7]) which is matched against
-+	the "tail" of a ref, starting from a slash separator (so `bar`
-+	matches `refs/heads/bar` but not `refs/heads/foobar`).
- 
- EXAMPLES
- --------
--- 
-2.39.1.795.g4b3688ded9
+>> There are ~45 calls to strbuf_grow() in C files other than strbuf.c;
+>> I suspect probably a half or more of them can and should be removed
+>> to reduce the resulting code size without hurting anything.
+>
+> My gut feeling is that your suspicion is giving strbuf_grow() users too
+> much credit. ;) And having looked at the first 7 grep hits, every single
+> one of them seemed pointless to me.
+
+... we'd only have a very limited number of callers for which the
+helper makes sense, I am not sure if it is even worth the renaming.
+
+Or just rename it to _grow_to() while fixing what it does, as
+grow_to() is what programmers would expect naturally?
+
+> I wonder if these would make a good #leftoverbits / micro-project
+> candidate.
+
+The task is to pick one or two from these 45 hits, analyze what
+would happen if we remove the _grow() calls.  For many of them, the
+result of such analysis would say the calls are pointless, but for
+some, there hopefully are solid reasons why explicit sizing makes
+sense.  The former will be just removed, while the latter will be
+kept with a new in-code comment to record why it is worth having the
+call.  The parameter may need to be updated for them at the same
+time.
+
+It can be done extremely poorly without breaking anything in the
+test suite, or it can be done expertly.  Unless the result are
+reviewed competently, it may make a rather poor micro-project
+experience.
+
+So, I dunno.
