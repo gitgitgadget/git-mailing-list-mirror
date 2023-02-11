@@ -2,88 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADAAEC64EC7
-	for <git@archiver.kernel.org>; Fri, 10 Feb 2023 22:56:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FA0CC636D4
+	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 00:39:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229520AbjBJW43 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 17:56:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48140 "EHLO
+        id S229653AbjBKAjb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 19:39:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbjBJW42 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 17:56:28 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA27426586
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 14:56:27 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id z1so8142365plg.6
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 14:56:27 -0800 (PST)
+        with ESMTP id S229447AbjBKAja (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 19:39:30 -0500
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3850D2
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 16:39:28 -0800 (PST)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-16ab8581837so8747020fac.4
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 16:39:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j+705lqn8JG6cpg3OZgz8IPNzi5HylsMoaynpTyB+go=;
-        b=aewRC09qITVhSzjTRj9xJo90mqbUAXR+FmtkSI6bfQKuVlDCW0x3sBhXnjKvnfZyzx
-         64IZeBsFDbZTODLlfbv/x+pVlC8YbrgMPxxOL+5JweRzR6jeAstDoQWBnadiWWP90WgR
-         VKqgMJcu7uP9Zo6AKiwRGzf6xHUoRH3rGcomuaMWdWRaHVfWEsECadgithShmwHfIRy/
-         +P+pJD/q31Ip4os//hrbZdCCWb6/PgrtQQGzvAIzriNy/6KS8L+tYn0R54SXOq0t1uK2
-         PLmYcYtB44GM19Fxl4bGRz6WHxFDZHqGsgg8dGNQ+gL7rmrt8GpNZknu/mzpXdKiPm9B
-         R2vw==
+        d=jade-fyi.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bSZXXwqWMtveLojT0dZvh8PVKTS+zertbWVF8w2A5Jg=;
+        b=XaJOvzm0DWfQav4YCkGlVw9HIZOuBgaJibXmfroPnRqUgrjg6PaX3gpzm3rgPDW/ld
+         8NLEuKwROWc/ju/vbrCq+TSZpJOWvmMpETmS44mm6IV8JUacHnrYFLNrnImFU5uFIByb
+         QuR5UHDAoFcY0sCHdQWacOgJXpVdJKfKGqfStt4DHM6DTQBVdLQzbzAtKx2ohsC8cYXH
+         7v9k7YK9Zu2ZJQ+fYI4UcnyiG7t29Nrh8iryK0nFIkZB4sonrIUKbWotHCjVsoXFxRAR
+         7W6Hu6iS+VbvEvB+XlNxIZ1yiY7v3Ivl5b9F+YYC+K0OiK3jN9G0PgqkQhqy0BxaPZ1V
+         wzdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=j+705lqn8JG6cpg3OZgz8IPNzi5HylsMoaynpTyB+go=;
-        b=diAymLoFtg66TDC3OK5/K+AVjy9XZNwHaFE/IHW8uCgMxEij30aIlkQeoO+xDQ3Tfq
-         2YK32Rb1wzCL6U8vwzSALZpj+U5jkcndrlvnHGCJ0CqXWLJdfVRhbnlMxCTV25poUJaC
-         SKYAbItavng3uKQ1VFuQlpR0YFwZrsyKwfsBwAjCkqfj6+EGRd6Gas1e8cbjdaxkadhw
-         XOdqxkqQPDosIEIiJT8/fk6DSPiWlfmHMdQwsByfRrDewaThmZx0wNJ2jgvunIJBdtyp
-         PTJzCvJN+LlQZTxqASUzkI+po+803vP10LCftLi5oAx1FPAn8KtEDmp896+8P2WwGlwP
-         jxsg==
-X-Gm-Message-State: AO0yUKVs3T/4UQ2++kaQ0H+DCnx/W4rYcmdNkxoqYYwxSgN6P4OVA7jd
-        0B5sjLT68+tOoI3OTtuwU9AYRuBMaWI=
-X-Google-Smtp-Source: AK7set8Hf7A6gwo26Ub33/Io9nP4AwmM3JtdF9s3Rn6c0iDPphoS2eNASTNGi+aJ0Dj+e3pBfp/e9Q==
-X-Received: by 2002:a17:902:db0a:b0:199:15bb:8320 with SMTP id m10-20020a170902db0a00b0019915bb8320mr18143939plx.31.1676069787213;
-        Fri, 10 Feb 2023 14:56:27 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id y14-20020a1709029b8e00b00198e6409d17sm3831350plp.116.2023.02.10.14.56.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 14:56:26 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [RFC] fetch: support hideRefs to speed up connectivity checks
-References: <20230209122857.M669733@dcvr>
-Date:   Fri, 10 Feb 2023 14:56:26 -0800
-In-Reply-To: <20230209122857.M669733@dcvr> (Eric Wong's message of "Thu, 9 Feb
-        2023 12:28:57 +0000")
-Message-ID: <xmqq1qmxgmed.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bSZXXwqWMtveLojT0dZvh8PVKTS+zertbWVF8w2A5Jg=;
+        b=i0OxuI303NrDNfR8SCqnZijvcW0fYnRn+lQCG7EikiMV1mnmzUGXMidnljQf8As+Yd
+         4muMc8sA6DbVsitDU8AYp09wi5LshE9h3cduNdg+B/o5GwNT/Wf19sD8NtJ5AGslIJGe
+         KUVGE6+V9eAnt5DDeNb97oOySLRv4rvRNunVLrf9z836bqhqkZq6ZmLhzRAfd0p4ELqj
+         b0P3BaKGPE5AMiL4q25T4/Zs5Ct1My/yArHh2XLjp34H9vHTkZheAWX701l4/xHOiN0n
+         nW+gQDeny+VVLXUhRDhA8qZOEnEdAIv/FMZDhEVscyApTtUFBNsrBxRXgCKg97zACclB
+         nbRw==
+X-Gm-Message-State: AO0yUKXcpAf8hrdyrhS3LUhTughsyFprSrc07DMfsR5gB1ByybhIpk9j
+        KxQr/QmCDsu4J2BRtAx3HPKSWHvuua6xZ7dJQ94PKqIEP16+KqYCLkr8Jg==
+X-Google-Smtp-Source: AK7set9O/MZv/GSFBmpUeUgqhcnvUaQOKbjf4P09G24K6colaEZcu/ss72ppZobwPA7OJXZxuGCKHxipDS0ALs9m9+M=
+X-Received: by 2002:a05:6871:721:b0:16a:941e:d2fe with SMTP id
+ f33-20020a056871072100b0016a941ed2femr1100108oap.171.1676075967977; Fri, 10
+ Feb 2023 16:39:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Jade Lovelace <lists@jade.fyi>
+Date:   Fri, 10 Feb 2023 16:39:17 -0800
+Message-ID: <CAFA9we-QLQRzJdGMMCPatmfrk1oHeiUu9msMRXXk1MLE5HRxBQ@mail.gmail.com>
+Subject: BUG: git config --global --get ITEM ignores ~/.config/git/config when
+ ~/.gitconfig is present
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+Dear maintainers,
 
-> Not sure if this is the right way to go about this...
-> If it's close, maybe --exclude-hidden=fetch can be supported.
+I have found what I think is a bug or at least a documentation flaw in
+git-config: when both ~/.gitconfig and ~/.config/git/config exist,
+`git config` can retrieve items set in the latter, but not with the
+`--global` flag set. For context, I use ~/.gitconfig as a
+non-checked-in machine-specific config, and ~/.config/git/config as my
+checked-in all-machines configuration file.
 
-Yeah, why not.
+The documentation states:
+> When reading, the values are read from the system, global and repository =
+local configuration files by default, and options --system, --global, --loc=
+al, --worktree and --file can be used to tell the command to read from only=
+ that location (see the section called =E2=80=9CFILES=E2=80=9D).
 
-I however notice error handling in the codepath that deals with
-"--exclude-hidden" is  a bit sloppy.
+> FILES
+>        $XDG_CONFIG_HOME/git/config, ~/.gitconfig
+>           User-specific configuration files. When the XDG_CONFIG_HOME env=
+ironment variable is not set or empty, $HOME/.config/ is used as $XDG_CONFI=
+G_HOME.
+>
+>           These are also called "global" configuration files. If both fil=
+es exist, both files are read in the order given above.
 
-refs.c::parse_hide_refs_config() is nice enough to diagnose a
-malformed transfer.hiderefs configuration as an error by returning
--1, and revision.c::hide_refs_config() propagates such an error up,
-but revision.c::exclude_hidden_refs() ignores the error from
-git_config(), and revision.c::handle_revision_pseudo_opt() ignores
-any error from exclude_hidden_refs() anyway.
+Based on this documentation, I would expect `--global` to consider
+both global configuration files, but it does not.
 
-We may want to tighten it a bit before (ab)using the option in more
-contexts.
+Reproduction:
 
-Thanks.
+Set some setting in ~/.config/git/config, say:
+[pull]
+ff =3D only
+
+Ensure that ~/.gitconfig exists.
+
+Then:
+
+ =C2=BB git config --global --get user.name
+ =C2=BB git config --show-scope --show-origin --get user.name
+global  file:/home/jade/.config/git/config      Jade Lovelace
+
+=C2=BB git --version
+git version 2.39.1
+
+Regards,
+Jade
