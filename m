@@ -2,112 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5443C05027
-	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 03:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ED5FC636CC
+	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 04:01:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229532AbjBKDLB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 22:11:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57288 "EHLO
+        id S229604AbjBKEA5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 23:00:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjBKDLA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 22:11:00 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73D4A5A9F2
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 19:10:59 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id o75so4726972pfg.12
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 19:10:59 -0800 (PST)
+        with ESMTP id S229587AbjBKEAz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 23:00:55 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45DA37FEF6
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 20:00:53 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id b3so11358676lfv.2
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 20:00:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6c4nK1Ij3SCP6eSjw+YnW2X5Gpivc33787125RfSuqo=;
-        b=JjgC3bAmboeHAlkcSQsY3c3E5FfZNz92xERvQnQBAqxeu9UdHOoYH2sCV6k2txT4LU
-         S8Wlrj0DivbK63mUACGCqhyzSujKxOTguDEvhx6JKRGRrUKcc1SX0gr48kEQ61yb+Yhd
-         DOZLHNDs8vAKQ4smoH0gcoxBoowExr8/T25E8Q8pdM8sqBpdW1oZS+lPoW4M8MvM1NHH
-         IFbY8vTElviV2dk8GOlL4ETwJr5XxJw+QZd0Abdr39XW2yPsvjR2sOpwIKtknnFSE9Qk
-         IuVNyzBKY3dAYM4EIzsUlzPLQmDcRV1daFavTzYhKR+4Frya2p600ptTNO0n8OvMEFcI
-         QiJQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=phQocdMxgwIOHdqcve3e4YOx8iu8aVyTuOTooc2c6/I=;
+        b=XInbWGRfNa3QXPm0femqqNX/d2KU0e1aH6Q1Gqx8px5bgKO8LKrEx/4CYJaovypwmz
+         msU6Rvf6HdKG1NWUjonLqz8u5bcGO/lr6IJmfzZcla90HTh2ltBnTCP0CDNamU8VlRUL
+         FGduqlOBFc9QcPD0QjT4vM/ejguvNSc8nZChKihOAsvPodEbmSUzQDJVfzc2qXyAT4+2
+         As+sGJAys99U3IgCUmzgHDL4zYvSjGWNrvrEMxh8CyOTBildajbrVtB4OKCq7iwrXL6V
+         SJEbifmTPGSyv8uLpqp+zSw+7sBMivJ0t9lo63Y2lTur0IzCk0DJn4jJTnLnQY8RWZBD
+         QXWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6c4nK1Ij3SCP6eSjw+YnW2X5Gpivc33787125RfSuqo=;
-        b=AV8cPoBOnCLIrAb5tifFwdlg3qC4IsTkXojkpY89uvrEcxA4TRFhXExW/WM6/qlX8Q
-         16v8B5Cbq/1VGCpgSTsjPSY4f4U3+plkoHQJA3Yhif+LOQTfWJIvYEAH7Mo8whPQzrIc
-         3UkDjQGVsc/7MSlbaxuON1To/Hi5zm3l7vRJRKsINcYMCQfrcFZLs7dYBCnV3fqK3igA
-         SdODC+VxgCU8VyFlL/OFsQOTREIA1VJRSYjNHC2xqokdzvl41XV4gWDEN6UNY3KbfJDT
-         vr1Dfl2FF/sGhAdiv9LMsXTWbOwyZLedUpGmUv7JKGb4IuTm0hTWGV33uMgrfSPVlqqt
-         0+3Q==
-X-Gm-Message-State: AO0yUKUVOCmEZG8AODbCBz3+oSfSoiPWxSYawkkfQ8PQywyMR5p6DLJ/
-        qFZOLdXH5jOx9shP+ntFR5MEWp8KvG8=
-X-Google-Smtp-Source: AK7set/9FS+2ZLzWFKQhF+uPpWE33+eHUBD6BggciI653R7SWEXKtuDmeMNWdwCkH+qJkWx6zU7dkA==
-X-Received: by 2002:a62:3347:0:b0:5a8:482f:c32e with SMTP id z68-20020a623347000000b005a8482fc32emr8855403pfz.27.1676085058510;
-        Fri, 10 Feb 2023 19:10:58 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id t20-20020aa79394000000b005921c46cbadsm4000953pfe.99.2023.02.10.19.10.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 19:10:58 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Jade Lovelace <lists@jade.fyi>
-Subject: Re: BUG: git config --global --get ITEM ignores
- ~/.config/git/config when ~/.gitconfig is present
-References: <CAFA9we-QLQRzJdGMMCPatmfrk1oHeiUu9msMRXXk1MLE5HRxBQ@mail.gmail.com>
-        <xmqqsffdf0ji.fsf@gitster.g> <xmqqmt5lezi3.fsf@gitster.g>
-Date:   Fri, 10 Feb 2023 19:10:57 -0800
-In-Reply-To: <xmqqmt5lezi3.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        10 Feb 2023 17:56:20 -0800")
-Message-ID: <xmqqzg9kew1q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=phQocdMxgwIOHdqcve3e4YOx8iu8aVyTuOTooc2c6/I=;
+        b=YfMjPA3BBPRUt/Deu6yDob/A/AtCKdbhCAa1Jbr9pVws/D8vvUhZ98q0NK+FFWD+VJ
+         +nph8E//K9Bal0xFz7mtBrbCTjXHTtxmIp7ML555Glv+r7hA6uTcLmqUqCxPR6R8+0FT
+         Ozq6oMuvKC1c5oJXaVNH1CBG98+GIN/bffbjG4uXwQKKA8fu5y4p90ICZ26cLLg8DvKT
+         eoOGDlR7jkrdmR4FbOhcOG9A4fBe+D+z75yxYDXSnwjN+BaZeYqKOrZzj2PNwl2OmP5C
+         bzdqoKbSNst2I5LKNC5oGoadNtvW7Z//q/NWn6QAR/FRgC6p1g1rydL5ZaCCR9L5LaV9
+         Je7g==
+X-Gm-Message-State: AO0yUKUAIcOKMuhcEne+s2eEVhAfFmuSUTwP+5NPe2LGYzR5iHjk/vFG
+        6NOeO17y4FmW7T6A1IcrRRwbiOqcqRvgjdKsW4c6HhrJ9as=
+X-Google-Smtp-Source: AK7set9/oe+pghUt2ifjFqt+cy574W7G4DnZhwSwGpRtZ/uEJGrNfHeNtaxSc/f+mwm0YSVHCMNMWputZdQ8u2GVSC8=
+X-Received: by 2002:a05:6512:41a:b0:4db:2ac3:a51a with SMTP id
+ u26-20020a056512041a00b004db2ac3a51amr567985lfk.29.1676088051493; Fri, 10 Feb
+ 2023 20:00:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20230210171338.81906-1-vinayakdev.sci@gmail.com> <xmqq8rh5gox7.fsf@gitster.g>
+In-Reply-To: <xmqq8rh5gox7.fsf@gitster.g>
+From:   Vinayak Dev <vinayakdev.sci@gmail.com>
+Date:   Sat, 11 Feb 2023 09:30:39 +0530
+Message-ID: <CADE8NaqvP1JbLL89prOCu2Qo-ZVJTTN_CZjk7bJwzMctV9Z2Bw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] {apply,alias}: convert pre-processor macros to enums
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     sunshine@sunshineco.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sat, 11 Feb 2023 at 03:31, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Vinayak Dev <vinayakdev.sci@gmail.com> writes:
+>
+> > Revert changes to alias.c, and change variable types in apply.c
+>
+> When you send out a rerolled series, you do not have to show your
+> past mistakes.  This [v2] is structured as a three patch series
+> whose first one makes a similar mess as what [v1] did, the second
+> one and the third one then revert some parts of that earlier mess.
+>
+> That is not what you want to show your reviewers, and more
+> importantly, that is not what we want to record in our history.
+> Rerolling a series is your chance to pretend that you are much
+> better programmer than you who wrote the [v1] patch.  The review
+> exchange is to help you do that.  Please take advantage of that.
+>
+> You may find "git rebase -i" is a useful tool to help you pretend
+> that you got to the ideal end result without these "I tried this
+> first, which was wrong in these points, which I correct in a
+> subsequent step" steps.
+>
+> Thanks.
 
-> My gut feeling is that this is merely a bug that we can fix without
-> worrying too much about users screaming at us complaining that they
-> relied on the current behaviour.  Without --global we do read from
-> both, so with with "--global" the behaviour is inconsistent.
+OK, I will keep that in mind before sending subsequent patches.
+Should I re-send [v2] after making corrections for this mistake?
+That would make the corrections more obvious and the mistakes less.
 
-So, here is what I think happens, if anybody wants to get their
-hands dirty.
-
-builtin/config.c::cmd_config() notices "--global", and
-tries to choose between user_config and xdg_config and
-picks one.
-
-The choice is stored in given_config_source.file
-
-Eventually, "--get", "--get-all", etc. are handled by calling
-builtin/config.c::get_value() and that function eventually calls
-config.c::config_with_options().
-
-config.c::config_with_options(), when config_source.file exists,
-uses only that file.  There is no facility to say "read from this
-one, and also that one".
-
-When the command is called without "--global",
-given_config_source.file is not set and in that case,
-config.c::config_with_options() does the "config sequence".
-This is implemented in config.c::do_git_config_sequence().
-
-What is disturbing about this function is that it knows about two
-global configuration files, and finds out about these two files by
-calling the same git_global_config() helper function
-builtin/config.c::cmd_config() uses.  However, the logic used to
-decide if the file(s) are actually attempted to be read (e.g.  it is
-not a configuration error to lack ~/.gitconfig) is slightly
-different.  Ideally, it would be very nice if the high level caller
-in cmd_config() loses the duplicated logic and instead just sets a
-single "we are dealing with --global" bit in given_config_source
-structure, and config_with_options() is taught to reuse the "we need
-to read both of them" logic in do_git_config_sequence() when the bit
-is set.
-
-
+Thanks a lot!
+Vinayak
