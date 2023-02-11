@@ -2,100 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6F50C636D4
-	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 01:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1B3BC636D4
+	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 01:59:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229447AbjBKB4Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Feb 2023 20:56:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35546 "EHLO
+        id S229508AbjBKB7y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Feb 2023 20:59:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbjBKB4X (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Feb 2023 20:56:23 -0500
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49BAE3B3D4
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 17:56:22 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id c29so853868pgm.5
-        for <git@vger.kernel.org>; Fri, 10 Feb 2023 17:56:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VfvWAiRKuOJctu4OYkxgjHdMbOFrfW64YL6K74x+1zw=;
-        b=npt+sYRGDdPftEBQHRRS4MOkQma+Dhbk/6rmbVnEodVLgX1zrNAn8tr1zNkNoT4hII
-         dfi7Bsk8QPNf9eycYKWUhaNbAElzSssswPrANnO+RNPhTJbdv6QS9PgujwKBgak8cpCP
-         Lui4veiHvsiAZyJdiLiVJH+jeRZ86isB0THt2JESPnyVHj2/u0ivPcHqmWnHVsQ+ga4p
-         mJdlXals35ZRrdwqiLJEDnYdonA5Jk31OWv5NngDcuPpCwiDDviD0X2bhGIpCwmHZYi9
-         Lvp+YXkhpGeNLSZ85oWOYtYauf1RQlqpuMcZCQue0jOPci8BhgmaJTTtKeWUF9bbBZeW
-         vJQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VfvWAiRKuOJctu4OYkxgjHdMbOFrfW64YL6K74x+1zw=;
-        b=Y3aZBhycIbnJN4ERoVSGHJ4pzRNbSHZQjJLKWxrvqFBL0LRByAqmyWRTHu6rucyQRF
-         upbnXfMhj7exOvUxDkmdEEVA4UtJRxxubs5TvNriHSWXMwqZTbGADU5L5H8Uur6walx/
-         1991tibgymgSEnAtAoERs0G/GpnsNHUCuAyiBS6Xk+jsQraB3S0Kc2zj1a8vhJegVYAP
-         K7k6ClEBDyyk9cVbVDIwZ+WMHioz884+zWBD7v22qaPtzjf3LvnWa265sqKMeA0Ge+Ms
-         swVrz8jURA9AEjf2r2OqMEDYSTGvt7rAWRM259jAAdm+M4NrXBHhznZTc8hKey1GlHVw
-         dH+w==
-X-Gm-Message-State: AO0yUKUAt6rM91NCYx8wRH7mlakxtCTq0+ptVu0VTpcxQlXu/2r7ezBz
-        R1a8cSBbhMEoWrfm6P1WhkHwramVTPY=
-X-Google-Smtp-Source: AK7set9jIz7T38GJaVPAhaPLB5WFiqSg+z24A7DspWswUz7sHiKYhLCZeBQmQbCkwEDDC0LQX2iQ6Q==
-X-Received: by 2002:a62:14d0:0:b0:5a8:5dcb:b775 with SMTP id 199-20020a6214d0000000b005a85dcbb775mr5893828pfu.14.1676080581522;
-        Fri, 10 Feb 2023 17:56:21 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id j14-20020aa7928e000000b0058d8db0e4adsm3952852pfa.171.2023.02.10.17.56.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Feb 2023 17:56:21 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jade Lovelace <lists@jade.fyi>
-Cc:     git@vger.kernel.org
-Subject: Re: BUG: git config --global --get ITEM ignores
- ~/.config/git/config when ~/.gitconfig is present
-References: <CAFA9we-QLQRzJdGMMCPatmfrk1oHeiUu9msMRXXk1MLE5HRxBQ@mail.gmail.com>
-        <xmqqsffdf0ji.fsf@gitster.g>
-Date:   Fri, 10 Feb 2023 17:56:20 -0800
-In-Reply-To: <xmqqsffdf0ji.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        10 Feb 2023 17:33:53 -0800")
-Message-ID: <xmqqmt5lezi3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229437AbjBKB7x (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Feb 2023 20:59:53 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89CC46C7C3
+        for <git@vger.kernel.org>; Fri, 10 Feb 2023 17:59:52 -0800 (PST)
+Received: (qmail 21232 invoked by uid 109); 11 Feb 2023 01:59:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 11 Feb 2023 01:59:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30210 invoked by uid 111); 11 Feb 2023 01:59:51 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Feb 2023 20:59:51 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 10 Feb 2023 20:59:51 -0500
+From:   Jeff King <peff@peff.net>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Elijah Newren <newren@gmail.com>, John Cai <johncai86@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
+Message-ID: <Y+b2l4Le2gTxGwO8@coredump.intra.peff.net>
+References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
+ <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
+ <230206.865yce7n1w.gmgdl@evledraar.gmail.com>
+ <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
+ <d18a5c32-2f15-93ad-ccbf-e8f048edb311@dunelm.org.uk>
+ <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
+ <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com>
+ <1ddac91b-7552-3e1e-9888-9e21e808104d@dunelm.org.uk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <1ddac91b-7552-3e1e-9888-9e21e808104d@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Feb 09, 2023 at 02:44:15PM +0000, Phillip Wood wrote:
 
-> Jade Lovelace <lists@jade.fyi> writes:
->
->> Then:
->>
->>  » git config --global --get user.name
->>  » git config --show-scope --show-origin --get user.name
->> global  file:/home/jade/.config/git/config      Jade Lovelace
->
-> With "--get" replaced with "--get-all", what do you see?
+> To see the differences between the output of patience and histogram
+> algorithms I diffed the output of "git log -p --no-merges
+> --diff-algorithm=patience" and "git log -p --no-merges
+> --diff-algorithm=histogram". The first three differences are
+> 
+> - 6c065f72b8 (http: support CURLOPT_PROTOCOLS_STR, 2023-01-16)
+>   In get_curl_allowed_protocols() the patience algorithm shows the
+>   change in the return statement more clearly
+> 
+> - 47cfc9bd7d (attr: add flag `--source` to work with tree-ish, 2023-01-14)
+>    The histogram algorithm shows read_attr_from_index() being moved
+>    whereas the patience algorithm does not making the diff easier to
+>    follow.
+> 
+> - b0226007f0 (fsmonitor: eliminate call to deprecated FSEventStream
+> function, 2022-12-14)
+>   In fsm_listen__stop_async() the histogram algorithm shows
+>   data->shutdown_style = SHUTDOWN_EVENT;
+>   being moved, which is not as clear as the patience output which
+>   shows it as a context line.
 
-Ah, nevermind.  With "--global", we seem to read from only one,
-giving the ~/.gitconfig precedence over $XDG/git/config, even though
-without "--global", we will read from both.
+Just a small counter-point, since I happened to be looking at myers vs
+patience for something elsewhere in the thread, but:
 
-The code has been behaving like so since its inception at 21cf3227
-(config: read (but not write) from $XDG_CONFIG_HOME/git/config file,
-2012-06-22).  I am not sure if this was designed to behave like so
-for a reason (which unfortunately is not clear in the log message of
-the commit), or a bug that was caused by the authors who were too
-focused on the writing side of the equation (which must pick just
-one file to write to).
+  git show 35bd13fcd2caa4185bf3729655ca20b6a5fe9b6f builtin/add.c
 
-My gut feeling is that this is merely a bug that we can fix without
-worrying too much about users screaming at us complaining that they
-relied on the current behaviour.  Without --global we do read from
-both, so with with "--global" the behaviour is inconsistent.
+looks slightly better to me with myers, even though it is 2 lines
+longer. The issue is that patience and histogram are very eager to use
+blank lines as anchor points, so a diff like:
 
-Thanks for a report.
+  -some words
+  -
+  -and some more
+  +unrelated content
+  +
+  +but it happens to also be two paragraphs
+
+in myers becomes:
+
+  -some words
+  +unrelated content
+  
+  -and some more
+  +but it happens to also be two paragraphs
+
+in patience (here I'm using single lines, but in practice these may be
+paragraphs, or stanzas of code). I think that's also the _strength_ of
+patience in many cases, but it really depends on the content. Replacing
+a multi-stanza block with another one may be the best explanation for
+what happened. Or the two stanzas may be independent, and showing the
+change for each one may be better.
+
+I'm not sure which one happens more often. And you'd probably want to
+weight it by how good/bad the change is. In the example I showed I don't
+find patience very much worse, since it's already a pretty ugly diff.
+But in cases where patience shines, it may be making things
+significantly more readable.
+
+I don't have a super strong opinion, but I just wanted to chime in that
+it is not clear to me that patience/histogram is always a win over myers
+(yes, I know your examples were comparing patience vs histogram, but the
+larger thread is discussing the other).
+
+-Peff
