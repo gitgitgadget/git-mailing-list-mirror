@@ -2,164 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9C41C636CC
-	for <git@archiver.kernel.org>; Sat, 11 Feb 2023 22:43:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B481C636D3
+	for <git@archiver.kernel.org>; Sun, 12 Feb 2023 09:04:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229505AbjBKWnV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Feb 2023 17:43:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35766 "EHLO
+        id S229641AbjBLJEb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Feb 2023 04:04:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjBKWnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Feb 2023 17:43:20 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61BD218B11
-        for <git@vger.kernel.org>; Sat, 11 Feb 2023 14:43:19 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id nn4-20020a17090b38c400b00233a6f118d0so6603256pjb.2
-        for <git@vger.kernel.org>; Sat, 11 Feb 2023 14:43:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EtqTpR2pEYrHmCtkXLL2yTv4Cpq/cfonyNLrlQ1EonU=;
-        b=askzOwYqOdlJnf/JQSsk2k0W1/lupN2sb1F4Kd/OdhUf2YypT45nv/Pn0gz+tMX7TI
-         LkAPTvHJm9laeTJ8g1j4lEVh7QqA+KYkBpk6dMKDGlC/rzGnvE42HRlokb0c64co6myq
-         BP/gN9ucJyPO/+W8NSO8y6WnFlOZWZWYS55ZO6Y4JwZZn4SoMMLN7ibmi4YEJnprs0ji
-         legcqLk3XzSaKR6a3+PFKhVG/llkob9l2JXEj5CDtghUYQzHdfU4+B/32ZyneY53ywqT
-         1KHyq+zVHW352o/zbgnYMe1fLhBUkw7TdyrQyTl84ObrUDa8I3J48nVSFx36AC0qYAEc
-         sfEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=EtqTpR2pEYrHmCtkXLL2yTv4Cpq/cfonyNLrlQ1EonU=;
-        b=s8558qn6MFFaGe5lLcOCWUgE3OxW3kYeVTqmn417N1ZMnoEWLpYH8FnRA7rSRWLcFX
-         MrAiizH1qmfE1afFhxhiCZIMPuchrxEvHtlt/vfXb8ULBQ1nSsX58H9ljjhnnrXXRmt9
-         zmrnZ2X//A88+1A9i0q57fe2lNj/IVTe0DRlOmttg9kZnLr0Tb8b+/LVXzqQ5fmKifGT
-         88A4F7yOLkdpV5csm0/oRSqzTte1FErOord/FtBiAhYLgF7EjNX13gYQU3m61NFDYuxZ
-         UX0Yx8o/O7Zlrq+n2sqlwoWoMqUDyng3z6R7jrhK9d1bfezI4hqm3is/EppT9QPdvQx7
-         sa/A==
-X-Gm-Message-State: AO0yUKVv5vRqZP8/9SdtnKa1P5QrA/BiVFGAjxIjogLwtXcEDCkDv9Ix
-        cgJe+kszZ5bfvUeZhfG9GgY=
-X-Google-Smtp-Source: AK7set9h2ugk0ZfhdA+vsSyae2a+POgdK41Tp6Yuw+yUl3K44Zs8u3xdH2cKoBX3zLfjq1PNOIXB8g==
-X-Received: by 2002:a17:90a:760c:b0:233:bd59:5719 with SMTP id s12-20020a17090a760c00b00233bd595719mr3577358pjk.0.1676155398644;
-        Sat, 11 Feb 2023 14:43:18 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id q94-20020a17090a1b6700b00233567a978csm3868788pjq.42.2023.02.11.14.43.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Feb 2023 14:43:18 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] commit-reach: avoid NULL dereference
-References: <20230211111526.2028178-1-e@80x24.org>
-Date:   Sat, 11 Feb 2023 14:43:17 -0800
-In-Reply-To: <20230211111526.2028178-1-e@80x24.org> (Eric Wong's message of
-        "Sat, 11 Feb 2023 11:15:26 +0000")
-Message-ID: <xmqqcz6fesca.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229547AbjBLJE2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Feb 2023 04:04:28 -0500
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B301286A
+        for <git@vger.kernel.org>; Sun, 12 Feb 2023 01:04:27 -0800 (PST)
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 4D4DA1F5A0;
+        Sun, 12 Feb 2023 09:04:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+        s=selector1; t=1676192667;
+        bh=P4HRtZiEGcgorv+zuQqmHpxnQ9dirF0iYYu47nFBJik=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=4ElUNXg6QhTryMPA9JtsTQNnVxtP7sZukVZt5l1s6ZWmAzfEsccmGioLJcToIaawr
+         U5oDWyOUw0uxjPeHg9EwYKQUwLqhR57Q8t0dKQl7BEjl5mvrb3qWs4ly9Ixo3/x+me
+         TfoUIEzOO82LsFmjYGS51hHhKEZY2RhkRPe05VPg=
+Date:   Sun, 12 Feb 2023 09:04:26 +0000
+From:   Eric Wong <e@80x24.org>
+To:     git@vger.kernel.org
+Cc:     Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2] fetch: support hideRefs to speed up connectivity checks
+Message-ID: <20230212090426.M558990@dcvr>
+References: <20230209122857.M669733@dcvr>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230209122857.M669733@dcvr>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+With roughly 800 remotes all fetching into their own
+refs/remotes/$REMOTE/* island, the connectivity check[1] gets
+expensive for each fetch on systems which lack sufficient RAM to
+cache objects.
 
->  Not sure if somebody who understands the code better can come
->  up with a good standalone test case.  I figure using the top
->  loop as reference is sufficient evidence that this fix is needed.
+To do a no-op fetch on one $REMOTE out of hundreds, hideRefs now
+allows the no-op fetch to take ~30 seconds instead of ~20 minutes
+on a noisy, RAM-constrained machine (localhost, so no network latency):
 
-Good comment.
+   git -c fetch.hideRefs=refs \
+	-c fetch.hideRefs='!refs/remotes/$REMOTE/' \
+	fetch $REMOTE
 
->  commit-reach.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/commit-reach.c b/commit-reach.c
-> index 2e33c599a82..1d7056338b7 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -807,8 +807,12 @@ int can_all_from_reach_with_flag(struct object_array *from,
->  	clear_commit_marks_many(nr_commits, list, RESULT | assign_flag);
->  	free(list);
->  
-> -	for (i = 0; i < from->nr; i++)
-> -		from->objects[i].item->flags &= ~assign_flag;
-> +	for (i = 0; i < from->nr; i++) {
-> +		struct object *from_one = from->objects[i].item;
-> +
-> +		if (from_one)
-> +			from_one->flags &= ~assign_flag;
-> +	}
+[1] `git rev-list --objects --stdin --not --all --quiet --alternate-refs'
 
-The flag clearing rule of this function smells somewhat iffy.  There
-are three primary callers of the function:
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ Sidenote: I'm curious about the reason $(pwd) is used in some
+ places while $PWD seems fine in others, so it doesn't seem to be
+ a portability problem.  I chose $PWD since it's faster.
 
- * commit-reach.c::can_all_from_reach() calls the function, but it
-   has its own loop to clear the flag it asked the function to add.
-   If the function uses the flag as a temporary mark and is designed
-   to clear it from all the objects, as 4067a646 (commit-reach: fix
-   memory and flag leaks, 2018-09-21) states, why should the caller
-   have a separate loop to clear them?
+ Documentation/git-rev-parse.txt    | 9 +++++----
+ Documentation/rev-list-options.txt | 9 +++++----
+ builtin/fetch.c                    | 2 ++
+ builtin/rev-list.c                 | 2 +-
+ revision.c                         | 3 ++-
+ t/t5510-fetch.sh                   | 9 +++++++++
+ t/t6018-rev-list-glob.sh           | 2 +-
+ t/t6021-rev-list-exclude-hidden.sh | 2 +-
+ 8 files changed, 26 insertions(+), 12 deletions(-)
 
- * fetch-pack.c::negotiate_using_fetch() calls this function in a
-   loop, so it does depend on it to clear the flag upon returning.
-
- * upload-pack.c::ok_to_give_up() is a thin wrapper around this
-   function and none callers of it have any logic to clear flag, so
-   it clearly depends on the function to clear the flag.
-
-The above seems to indicate that the expectation by callers is a bit
-uneven.  Shouldn't the first onetrust the callee to clear the flag?
-
-Even before 4067a646 (commit-reach: fix memory and flag leaks,
-2018-09-21), the function had a call to clear_commit_marks() to
-clear two bits it used temporarily.  The reason why 4067a646 needed
-to add this additional flag clearing, whose NULL-dereference bug is
-being fixed with the patch in this thread, is because it marks any
-incoming object that peels to a non-commit (e.g. a blob, a tree, or
-a tag that points at a non-commit) with the flag bit, but such a
-non-commit object is not added to the list[] of commits to be
-processed, before the main processing of this function.
-
-		from_one = deref_tag(the_repository, from_one,
-				     "a from object", 0);
-		if (!from_one || from_one->type != OBJ_COMMIT) {
-			/*
-			 * no way to tell if this is reachable by
-			 * looking at the ancestry chain alone, so
-			 * leave a note to ourselves not to worry about
-			 * this object anymore.
-			 */
-			from->objects[i].item->flags |= assign_flag;
-			continue;
-		}
-
-		list[nr_commits] = (struct commit *)from_one;
-
-But I am not sure if it is even necessary to smudge the flag for the
-object that was a non-commit (or the tag that peeled down to a
-non-commit).  The main process of this function is a history
-traversal that stops when the "assign_flag" bit is already set on
-the found object, but the object that was part of the incoming
-objects (i.e. in from->objects[] array) that turned out not to be a
-non-commit would not be discovered during this history walk, would
-it?  In other words, if we walk from list[] that is an array or
-commits to the parents (but not its trees and blobs), we won't
-encounter anything but commit.  What does it help to smudge an
-object that peeled down to a non-commit in the incoming set of
-objects, if it would not appear in the walk from list[]?  It would
-not stop the traversal by having the flag.
-
-So I wonder if we can just stop smudging the assign_flag bit for
-these objects in from->objects[] that do not make it into list[]
-as a simpler fix?  Wouldn't that make the follow-up cleaning loop
-added by 4067a646 (commit-reach: fix memory and flag leaks,
-2018-09-21) unneeded?
-
-
-
-
-
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index bcd80692870..f26a7591e37 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -197,10 +197,11 @@ respectively, and they must begin with `refs/` when applied to `--glob`
+ or `--all`. If a trailing '/{asterisk}' is intended, it must be given
+ explicitly.
+ 
+---exclude-hidden=[receive|uploadpack]::
+-	Do not include refs that would be hidden by `git-receive-pack` or
+-	`git-upload-pack` by consulting the appropriate `receive.hideRefs` or
+-	`uploadpack.hideRefs` configuration along with `transfer.hideRefs` (see
++--exclude-hidden=[fetch|receive|uploadpack]::
++	Do not include refs that would be hidden by `git-fetch`,
++	`git-receive-pack` or `git-upload-pack` by consulting the appropriate
++	`fetch.hideRefs`, `receive.hideRefs` or `uploadpack.hideRefs`
++	configuration along with `transfer.hideRefs` (see
+ 	linkgit:git-config[1]). This option affects the next pseudo-ref option
+ 	`--all` or `--glob` and is cleared after processing them.
+ 
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index ff68e484069..5e7f3c51792 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -195,10 +195,11 @@ respectively, and they must begin with `refs/` when applied to `--glob`
+ or `--all`. If a trailing '/{asterisk}' is intended, it must be given
+ explicitly.
+ 
+---exclude-hidden=[receive|uploadpack]::
+-	Do not include refs that would be hidden by `git-receive-pack` or
+-	`git-upload-pack` by consulting the appropriate `receive.hideRefs` or
+-	`uploadpack.hideRefs` configuration along with `transfer.hideRefs` (see
++--exclude-hidden=[fetch|receive|uploadpack]::
++	Do not include refs that would be hidden by `git-fetch`,
++	`git-receive-pack` or `git-upload-pack` by consulting the appropriate
++	`fetch.hideRefs`, `receive.hideRefs` or `uploadpack.hideRefs`
++	configuration along with `transfer.hideRefs` (see
+ 	linkgit:git-config[1]). This option affects the next pseudo-ref option
+ 	`--all` or `--glob` and is cleared after processing them.
+ 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 12978622d51..2763dd969bb 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1131,6 +1131,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 	if (!connectivity_checked) {
+ 		struct check_connected_options opt = CHECK_CONNECTED_INIT;
+ 
++		opt.exclude_hidden_refs_section = "fetch";
+ 		rm = ref_map;
+ 		if (check_connected(iterate_ref_map, &rm, &opt)) {
+ 			rc = error(_("%s did not send all necessary objects\n"), url);
+@@ -1324,6 +1325,7 @@ static int check_exist_and_connected(struct ref *ref_map)
+ 	}
+ 
+ 	opt.quiet = 1;
++	opt.exclude_hidden_refs_section = "fetch";
+ 	return check_connected(iterate_ref_map, &rm, &opt);
+ }
+ 
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index d42db0b0cc9..2ab3efd233b 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -38,7 +38,7 @@ static const char rev_list_usage[] =
+ "    --tags\n"
+ "    --remotes\n"
+ "    --stdin\n"
+-"    --exclude-hidden=[receive|uploadpack]\n"
++"    --exclude-hidden=[fetch|receive|uploadpack]\n"
+ "    --quiet\n"
+ "  ordering output:\n"
+ "    --topo-order\n"
+diff --git a/revision.c b/revision.c
+index 21f5f572c22..50940699e4a 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1574,7 +1574,8 @@ void exclude_hidden_refs(struct ref_exclusions *exclusions, const char *section)
+ {
+ 	struct exclude_hidden_refs_cb cb;
+ 
+-	if (strcmp(section, "receive") && strcmp(section, "uploadpack"))
++	if (strcmp(section, "fetch") && strcmp(section, "receive") &&
++			strcmp(section, "uploadpack"))
+ 		die(_("unsupported section for hidden refs: %s"), section);
+ 
+ 	if (exclusions->hidden_refs_configured)
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index c0b745e33b8..287d6c3a8af 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -1163,6 +1163,15 @@ test_expect_success '--no-show-forced-updates' '
+ 	)
+ '
+ 
++for section in fetch transfer
++do
++	test_expect_success "$section.hideRefs affects connectivity check" '
++		GIT_TRACE="$PWD"/trace git -c $section.hideRefs=refs -c \
++			$section.hideRefs="!refs/tags/" fetch &&
++		grep "git rev-list .*--exclude-hidden=fetch" trace
++	'
++done
++
+ setup_negotiation_tip () {
+ 	SERVER="$1"
+ 	URL="$2"
+diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
+index aabf590dda6..67d523d4057 100755
+--- a/t/t6018-rev-list-glob.sh
++++ b/t/t6018-rev-list-glob.sh
+@@ -187,7 +187,7 @@ test_expect_success 'rev-parse --exclude=ref with --remotes=glob' '
+ 	compare rev-parse "--exclude=upstream/x --remotes=upstream/*" "upstream/one upstream/two"
+ '
+ 
+-for section in receive uploadpack
++for section in fetch receive uploadpack
+ do
+ 	test_expect_success "rev-parse --exclude-hidden=$section with --all" '
+ 		compare "-c transfer.hideRefs=refs/remotes/ rev-parse" "--branches --tags" "--exclude-hidden=$section --all"
+diff --git a/t/t6021-rev-list-exclude-hidden.sh b/t/t6021-rev-list-exclude-hidden.sh
+index 32b2b094138..e219ac86738 100755
+--- a/t/t6021-rev-list-exclude-hidden.sh
++++ b/t/t6021-rev-list-exclude-hidden.sh
+@@ -21,7 +21,7 @@ test_expect_success 'invalid section' '
+ 	test_cmp expected err
+ '
+ 
+-for section in receive uploadpack
++for section in fetch receive uploadpack
+ do
+ 	test_expect_success "$section: passed multiple times" '
+ 		echo "fatal: --exclude-hidden= passed more than once" >expected &&
