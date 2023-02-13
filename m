@@ -2,37 +2,37 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D845C636CC
-	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 21:10:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E945C636CC
+	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 21:10:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229916AbjBMVKK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Feb 2023 16:10:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35500 "EHLO
+        id S229992AbjBMVK4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Feb 2023 16:10:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbjBMVKJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2023 16:10:09 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73E32F76C
-        for <git@vger.kernel.org>; Mon, 13 Feb 2023 13:10:07 -0800 (PST)
+        with ESMTP id S229810AbjBMVKz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2023 16:10:55 -0500
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 851FDF76C
+        for <git@vger.kernel.org>; Mon, 13 Feb 2023 13:10:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1676322599; bh=zMin3KHULZT7qzyTMP6HegCQeHJ4kzRGt88VkudGSTk=;
+        t=1676322646; bh=Xf3NLivsPKxkA9WSNkn8ELP5dt02eEU0ID+bFAFOdSM=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=UyO/uAMSMIbvCGN6ObfYmXQxV15B/7PYmB8t/rvsse7vZRWzxxUQaHlEnTBmawjGC
-         Kx1KGCNzjrkDopNchg4OR66WKMJOQfWBAnpJL04kdk5yuX62neEsW+pDML5yVEmiJH
-         oJRbaH7aT5spyPOWtW3qn+uvcK38YiljW0L2eFYRHuKsp0pm9fHE0B/Rf3xvBD7l6i
-         2NXWBBLSPhPScfmEmzeso/hckV7DemMpxstevJWQs+8rSHQU/tn917sgFf2+Jnzznv
-         1uPhGr/fyYe3o1KuxkGYPbMeiU1Oc1tktOJwlRHER0Jc2SwaeDOFDL2fH+N0ltXYAK
-         iZFIvDIFwEvnQ==
+        b=w3yiVERWDgC/D09YxC2iKgQwQAUr4ioAWzEJU9PivNvVHgUTuBO7JzpKrbjvfra1t
+         lnZuJLz5JEctpC8O764R/ExLtwyAzhJTVPrOoVZ052QE64Ek6KMBx79jkBA8VSmTvx
+         vUbvhu8f2Q96dvbqFT63+lJzzaeFlucw7xYIUrR7TNMCjC4YuOo44ys9XrB1k3lzXI
+         tOJ52kgtdJe8oWv1gf0N+VZzr1LCuHUDMlAuxTeqzieFItEHWChER4dCeiObIPNx+j
+         jYT/fYakKzORm1Dnab1P7nO/+V+ugpdykJEqRD1qkms4GXROuujgm4CobSJIwcSRaI
+         L29gxHB2MBcOw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([79.203.21.51]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MFJjZ-1pLLME08Cn-00FjSZ; Mon, 13
- Feb 2023 22:09:59 +0100
-Message-ID: <c740cbc6-d9db-88df-b10f-904bdd5e2e06@web.de>
-Date:   Mon, 13 Feb 2023 22:09:58 +0100
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MnG2C-1okbaM1jWu-00jHD2; Mon, 13
+ Feb 2023 22:10:46 +0100
+Message-ID: <ed877364-51a6-187d-8d37-17e82677c0ff@web.de>
+Date:   Mon, 13 Feb 2023 22:10:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.7.2
-Subject: [PATCH v2 1/3] test-ctype: test isascii
+Subject: [PATCH v2 2/3] test-ctype: test islower and isupper
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
@@ -43,84 +43,47 @@ References: <06da58d6-6aae-7b1d-6ce6-f07d27f05d97@web.de>
 In-Reply-To: <81eee04b-598e-dfe1-f954-3105bcbcb2f2@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ibm0WEnIMb9ABymj/144aiD625RLUqdcxNbnZw04G0Rp0NUJnGz
- 0YoFt3HDBlnRQhaBEGzuK1n6lFymD9c2g6aavA8v4g51r0VcD9DFF13gMz79P0QuZRsVwkU
- BYrrBYmgO8p8WYzBt70y8WaZBG2xdHMcmShaNEnGIYHwUgpIAspzf0r6+tff266fozoxude
- Gip59MNyewjB2CmPzDffQ==
-UI-OutboundReport: notjunk:1;M01:P0:gfVh0ZaGH/Q=;j701dWx8KowSpUCLDMeHLn1rxDk
- FbDF67c7QVe4G9gdWMl6nwroQC0BMM4KgwgrBPgTvd7DvssB6H1BsjHPOO+MB9FXl2nQe0Auo
- HxxAik24pe+hGLTT+EESf2O9gEbqdluC2rQKWrF3Ao21BeWgRmCu1u5H6DMn3dr0dIivNzaEw
- 7bc+k70XVx6bIvlWEX/m5/RhsORLk31NybXhRfXVd5vpYEPozZVk8db14oSB7RUMTOT1/4g4w
- le2lYZsb5vberBf0mALC1RK8ZDUeLlEF+COEcGA6fBjW92TM4IJt02y0NYP0Ht6xyDKREelQs
- s+BBTd1/nPFYuw/BltdRRm+iS4USyiz9Ygw459B5JjqOxYyWdzY/XAy4EI8gF6XLiOdmNjGE5
- 5cgIzDYkzCKJ8oQWDcJcZB4JhWkAYxbjt6XKBENY1dADQh5V5sjIPX7kr8jT1eRmPrGdtINA7
- zV2MgiLODgPdu14sntb0BBftB87wYV3EnFycTMqQfLOJAzcz9YO1idoRDBzKLkpyquf7oy8u3
- Sr7j9VbCnPBZmIIQUrzyR8nIllXVQ30ZgEAcMPMB8YAjxmJzIiPbc50Li/kT+VXlObBmNbyp+
- l+5Zext72y6lJpXqkuuzs9CEWOONVJF0uaImlIFxUchO+PLLc6kgE17P04JMyLJEgEx2BWhqE
- W4/F7HfvdLJaWV6ibTdl5N2KMgd9lHOTnMY8TRiblap5atm6fy+ubSPuPgMjU6dP3CjHXgXjt
- AW1RBu0IT+oKeAM6x8GKwis2PHwVf6Ee+8WmY9iw9oFt2bFjOTYwX85z/PzgTUu7owHeybLfU
- bmRR8Rzj04v0jZG1EjmfeedyBALM5PLd5mhNG+c+n+62xVVsXqy6Y/tgHUArDvqNwNpsI380B
- ScIqetL3/1aRVLRBVxYEOISaWQz0AJ4xLHpeE5swyF2kpmZSgOMP4DuOAjiq30x4RxaEtNmNH
- KRiwvw==
+X-Provags-ID: V03:K1:T7y9IAi8Cq0D1q3u3Zb+33VAUawBDAy7p3CrLOoe8U70zlXIXPE
+ oVup8wND86uqRdGR6Y9Tte83iVVVi7PuDSeH6elc+ns0n8VV84CmxPZLb+uYxUa6WffpJvo
+ CC5rqVvZ9p795kHme9yk2tY/+PP9TmNOMkgfuaqka5bgWZKCsJw7BQa5QpnjekaRaqMj/fK
+ ACZLuRjuRJuAh5kWGqBTQ==
+UI-OutboundReport: notjunk:1;M01:P0:qvM/XzdD/Gc=;ec1ggVPMLpevEbMXd8uvIge01WV
+ HbbwP8mIMrtU34IhKXAyjJJkisIxuDlzqraMXftNaEbLeSZp+Mxyt6dnbgC9pfOe6aBAzcVE+
+ O41f4o8IP5KG7mri+rddeRlN0sXz+BUOO7GjO0O1tIug1coPry5bgy5PIxylfhm4C1jR/jlC1
+ y4cQgcIAzVn8k9stAjUnDMyEt3Nng3a7kvp2RrqmFiFwLjbrxnhylt/iTHrlZBMs4YwJjn/HS
+ SfW5X+WmhppqFFSHUNUw7GfKC9cXsagXPn55i3wV3zQJihN88MosRhvuqEpbejEkfU9N/34Z6
+ ajlL0z5T9ybb60eGg/hyufqhQVrma5V/P/8ob+BGoLyy1FIlgFd9VC+fYOZ68m/Zu8wNa01Qm
+ 0USl9ZOGTtxNQFp3Qb3X5B5gbF45O54XwXqcWdAqAO8tWhgVz0kxHU3ZC93nW0F0OaqbAQVbu
+ tSbzMs8lQAtWH5opCc/j0cTltsx4wcviU1+LbDlwJU3oLITo5E4oeyvMFBbiWJhhFTaDgCkId
+ a8O0s1CbPak3BWKZWy+3WNCZCTiUepc5JBrgAkhc+7l3+hkJg6aa+5Q6CAyrI1Y+AB867CxL9
+ F7Iv28JIB2TjXafD+Rpyk2mlWKAFpv4536uoXKDMqKbM1VQUsiQ4ujJZxju22AtoJTIzaxw/M
+ 5Q6McVvp431UAJKhmQuZJPJjc6F4x2uZHJp+fHezQoHktNhCflYrgVy6J8D6AQBDJi6hHfdQh
+ iE+Km4J1SrvMi66j2D/0ojM1r2t5qQYaHg7hEhy7nN4leJ3UpRnGR1k4YKTQWuRXwzlaCSjzY
+ HPcZ8qWEVIY6DNRtyvuH7bMYyunooDjltlyfBOelG/5hEUEWIZb/o8EpbH2/CYBDSLbpFpg8D
+ PQKWpky+WBrRenH7BJP5Q8rPADlHm5zZ46Uebs/sv/M2jRaXQSomrpEbl5f+OoWcXaO8PPMDK
+ QuNkPaVp4mBb0nvaZJPnOnQrIcA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Test the character classifier added by c2e9364a06 (cleanup: add
-isascii(), 2009-03-07).  It returns 1 for NUL as well, which requires
-special treatment, as our string-based tester can't find it with
-strcmp(3).  Allow NUL to be given as the first character in a class
-specification string.  This has the downside of no longer supporting
-the empty string, but that's OK since we are not interested in testing
-character classes with no members.
+Test the character classifiers added by 43ccdf56ec (ctype: implement
+islower/isupper macro, 2012-02-10).
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/helper/test-ctype.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ t/helper/test-ctype.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/t/helper/test-ctype.c b/t/helper/test-ctype.c
-index 92c4c2313e..caf586649f 100644
+index caf586649f..8ac76e93e4 100644
 =2D-- a/t/helper/test-ctype.c
 +++ b/t/helper/test-ctype.c
-@@ -11,9 +11,14 @@ static void report_error(const char *class, int ch)
-
- static int is_in(const char *s, int ch)
- {
--	/* We can't find NUL using strchr.  It's classless anyway. */
-+	/*
-+	 * We can't find NUL using strchr. Accept it as the first
-+	 * character in the spec -- there are no empty classes.
-+	 */
- 	if (ch =3D=3D '\0')
--		return 0;
-+		return ch =3D=3D *s;
-+	if (*s =3D=3D '\0')
-+		s++;
- 	return !!strchr(s, ch);
- }
-
-@@ -28,6 +33,15 @@ static int is_in(const char *s, int ch)
- #define DIGIT "0123456789"
- #define LOWER "abcdefghijklmnopqrstuvwxyz"
- #define UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-+#define ASCII \
-+	"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f" \
-+	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
-+	"\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f" \
-+	"\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f" \
-+	"\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f" \
-+	"\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f" \
-+	"\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f" \
-+	"\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f"
-
- int cmd__ctype(int argc, const char **argv)
- {
-@@ -38,6 +52,7 @@ int cmd__ctype(int argc, const char **argv)
- 	TEST_CLASS(is_glob_special, "*?[\\");
+@@ -53,6 +53,8 @@ int cmd__ctype(int argc, const char **argv)
  	TEST_CLASS(is_regex_special, "$()*+.?[\\^{|");
  	TEST_CLASS(is_pathspec_magic, "!\"#%&',-/:;<=3D>@_`~");
-+	TEST_CLASS(isascii, ASCII);
+ 	TEST_CLASS(isascii, ASCII);
++	TEST_CLASS(islower, LOWER);
++	TEST_CLASS(isupper, UPPER);
 
  	return rc;
  }
