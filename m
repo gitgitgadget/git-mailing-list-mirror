@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF2F0C636D4
-	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 18:22:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A93C636CC
+	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 18:22:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231310AbjBMSWl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Feb 2023 13:22:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42034 "EHLO
+        id S230241AbjBMSWq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Feb 2023 13:22:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231320AbjBMSW0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2023 13:22:26 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26108206B2
-        for <git@vger.kernel.org>; Mon, 13 Feb 2023 10:22:14 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id pj9-20020a17090b4f4900b00232cca91108so5011319pjb.7
-        for <git@vger.kernel.org>; Mon, 13 Feb 2023 10:22:14 -0800 (PST)
+        with ESMTP id S229941AbjBMSWR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2023 13:22:17 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6140D1A96E
+        for <git@vger.kernel.org>; Mon, 13 Feb 2023 10:22:02 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id u18-20020a62ed12000000b00593cc641da4so6593235pfh.0
+        for <git@vger.kernel.org>; Mon, 13 Feb 2023 10:22:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1676312533;
+        d=google.com; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ggoJOO2GA5Q5f8At6jIma7siMSH6HvKvh/4fysEYNoM=;
-        b=Emcr6FeD2p7kr2bH9TEdXi4kRMyHWcpTKAr8r9dpa9rxtRBMWZageiRRDAogDq4and
-         1EibYRPz0hGCbnIagjOxqRt5DuD1V9rcoW5SXEp6bb+t7Qg6fr4gAlGynbtQ2BWDfgiJ
-         yUquvKsUpN1z8mzhD9WRlODC932HNSjHxqhoWwtjU+pCNJeAytvrpETES+JWUVdcEmsL
-         m4hPC9t33czy7nSmOhPW5hd4kUvx2lvlLMh5IA3XZED0Trovk+cjfzp0OLuH9Hf0wkhl
-         5IsJ1XXFejKpJhCtZPnYiUBcyyF7ZoasROEPjpFYhULejQQh5LReMC9qz5jFH23w1E+b
-         mZLw==
+        bh=3pAvTQVWuv+/Z8mP2TbPKDUkmBy5TW9DXOvSb/zWsYc=;
+        b=cUVgrKjh9A9W0g94C84aaz9EN21aMVnf9l7gRc4fWHFL7AyaaY7vrZvSD6oV1lu8Xn
+         /7N2mVZJmIyyliEWN1+3FvdLO4Ui1RddIfVPANYZpjEDZ7B80RFTWFVBWNt3o2sf1WCU
+         SSCuLvVxnT2TXEkC6j3+8E7x/pPdtctNiZl7vG8I+7Inqu/5vglpeGpjK7QVJ0kkOs58
+         ddeKZJTFyJ6jI7swkxY4KaIT9l3PAZuOwCDD4GYEbZoz2SH4W+VLz4q+SYTO6O9+gGoq
+         QWlpoiAduUbNAhASxzcj0Q+kICSel9YsLpPEIdgjVeIxZtaMW0Zrr/eaRkqZyQXsxZE7
+         ciKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1676312533;
+        d=1e100.net; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ggoJOO2GA5Q5f8At6jIma7siMSH6HvKvh/4fysEYNoM=;
-        b=Y1QXbUg+XsWvmAHTK/GCEHp/OS7FZfLl8zQis7raZu/P6LHYglI4z9awLKxbDCZYrn
-         bTMKdlE/yx30JJX0az5F6vXif92Hwo1nl0MRA2O3S9XRIZMzwQ+Rg1OGgy5wFWKmLtZi
-         yJgQ5RQZ/gsQha82/B/IQLAjzS1qQulgt0arEdV4fZpmmaCP4jJJUD1Pv4LOOVmyoo08
-         dGATGnLs/mdR2U3n8EqrmuWlD7Gne9HSDBQFYvIP3wKam45bi2pZpWG6n8k7+jZCw3dY
-         Dwn4Rcn90le+IBDu3TkVABAVr/8trBcf4vGAPEE/bwqQ8eKR5/8AW8TEOrO9aCm7CRMI
-         eZ7A==
-X-Gm-Message-State: AO0yUKWFsyVnQ21E329sNCilGKBPgvCwe3SYTHP+eGFdhJXJ/w2PTVBC
-        z6dVSW2CxeSDNOpZ+GxAEOzr1ErnHJcCxw+yxnToHfCCInRaN7ecevSoBLPIeWI5HYPALTvLEFs
-        7PpYYmjJEvSFi9jLc4+wUwZEvWJ0loqYNd2/YrNO2ICj55Hd8sXVqPT+8P1xcSLgg/w==
-X-Google-Smtp-Source: AK7set/RY9vFz/r8wB0N/V/CdPkGxzMExke4C24D01Dhz6JdlIQ6Tt71AyaonzAnfRlQFpz8arM6e/MXpfgCP5s=
+        bh=3pAvTQVWuv+/Z8mP2TbPKDUkmBy5TW9DXOvSb/zWsYc=;
+        b=br2bm8uv84rCcqqR6qkf2ZcaPk6skqQG/DBs3EAryLZtoYodMBgvxcOEmmpJVcGvqz
+         si0eyJdhsKdexdYYzg46CQhDN1saMM025nFkG+rAmR352J6l6MdXg6HEC593dFzCkGge
+         8FYX2eVJvNQwwAn5OCA/GgRSktvUJmAgwxl3xczF7yHGHr/zISsD+YCRrm/GGMdPmkFi
+         pm+JH9E2KhWLGrgqfP9P3kHYmOHxFY6C7ptVZbIATi8QveGrZGCG77yPxpT89UablT8Y
+         VuNQLTVz/oPO2gztaHbsdgdGRDKEpwKAJDuVopTqb+9GqE4XOwkrsSOJ5Kn5J941+evO
+         GErw==
+X-Gm-Message-State: AO0yUKXE52eux5z93kFKtZvfOFeTCBtUdkHVyW7EfsnMUiYP9MdhVBc4
+        sfUhw+whOkvV/4s84CHSwLsL4pBs4R52FdmINR5riF/7K4g3hPDUH8vS98w+ahOJggP+eOwhH4y
+        UlkimGrWPelMjcO3gCYZ4otMdrrq5H+njSRXeQE/PWxiGw8zH9q98d95iOKSMMJiFhw==
+X-Google-Smtp-Source: AK7set+R8/T77/Rhy5DhstWdw/gDGgY+LcYC7MRrxuXqSdscUJcwl44J8I6aB9vzxGkL7UTcXjlXsLmD6ZObDeU=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a62:4ed7:0:b0:5a8:b6e2:a3fe with SMTP id
- c206-20020a624ed7000000b005a8b6e2a3femr983368pfb.41.1676312533521; Mon, 13
- Feb 2023 10:22:13 -0800 (PST)
-Date:   Mon, 13 Feb 2023 18:21:34 +0000
+ (user=calvinwan job=sendgmr) by 2002:a17:90a:51c3:b0:233:af25:85f6 with SMTP
+ id u61-20020a17090a51c300b00233af2585f6mr301359pjh.1.1676312521338; Mon, 13
+ Feb 2023 10:22:01 -0800 (PST)
+Date:   Mon, 13 Feb 2023 18:21:30 +0000
 In-Reply-To: <20230213182134.2173280-1-calvinwan@google.com>
 Mime-Version: 1.0
 References: <20230213182134.2173280-1-calvinwan@google.com>
 X-Mailer: git-send-email 2.39.1.581.gbfd45094c4-goog
-Message-ID: <20230213182134.2173280-7-calvinwan@google.com>
-Subject: [RFC PATCH 6/6] add: reject nested repositories
+Message-ID: <20230213182134.2173280-3-calvinwan@google.com>
+Subject: [RFC PATCH 2/6] t4041, t4060: modernize test style
 From:   Calvin Wan <calvinwan@google.com>
 To:     git@vger.kernel.org
 Cc:     Josh Steadmon <steadmon@google.com>,
@@ -64,223 +64,446 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Josh Steadmon <steadmon@google.com>
 
-As noted in 532139940c (add: warn when adding an embedded repository,
-2017-06-14), adding embedded repositories results in subpar experience
-compared to submodules, due to the lack of a corresponding .gitmodules
-entry, which means later clones of the top-level repository cannot
-locate the embedded repo. We expect that this situation is usually
-unintentional, which is why 532139940c added a warning message and
-advice when users attempt to add an embedded repo.
+In preparation for later changes, move setup code into test_expect
+blocks. Smaller sections are moved into existing blocks, while larger
+sections with a standalone purpose are given their own new blocks.
 
-At $dayjob, we have found that even this advice is insufficient to stop
-users from committing unclonable embedded repos in shared projects.
-This causes toil for the owners of the top-level project repository as
-they must clean up the resulting gitlinks. Additionally, these mistakes
-are often made by partners outside of $dayjob, which means that a simple
-organization-wide change to the default Git config would be insufficient
-to prevent these mistakes.
-
-Due to this experience, we believe that Git's default behavior should be
-changed to disallow adding embedded repositories. This commit changes
-the existing warning into a fatal error while preserving the
-`--no-warn-embedded-repo` flag as a way to bypass this check.
+This makes sure that later changes that may break the test setup are
+easier to diagnose, because errors will caught immediately rather than
+in later unrelated test_expect blocks.
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 ---
- Documentation/git-add.txt          |  7 ++++---
- builtin/add.c                      | 28 ++++++++++++++++++++--------
- t/t7400-submodule-basic.sh         |  4 ++--
- t/t7412-submodule-absorbgitdirs.sh |  2 +-
- t/t7414-submodule-mistakes.sh      | 21 ++++++++++-----------
- t/t7450-bad-git-dotfiles.sh        |  2 +-
- 6 files changed, 38 insertions(+), 26 deletions(-)
+ t/t4041-diff-submodule-option.sh             | 75 +++++++--------
+ t/t4060-diff-submodule-option-diff-format.sh | 99 ++++++++++----------
+ 2 files changed, 87 insertions(+), 87 deletions(-)
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index a030d33c6e..b7fb95b061 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -177,10 +177,11 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
- 	tree or not.
- 
- --no-warn-embedded-repo::
--	By default, `git add` will warn when adding an embedded
-+	By default, `git add` will error out when adding an embedded
- 	repository to the index without using `git submodule add` to
--	create an entry in `.gitmodules`. This option will suppress the
--	warning (e.g., if you are manually performing operations on
-+	create an entry in `.gitmodules`. This option will allow the
-+	embedded repository to be added and suppress the error.
-+	(e.g., if you are manually performing operations on
- 	submodules).
- 
- --renormalize::
-diff --git a/builtin/add.c b/builtin/add.c
-index 76277df326..795d9251b9 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -421,36 +421,45 @@ static const char embedded_advice[] = N_(
- "\n"
- "	git rm --cached %s\n"
- "\n"
--"See \"git help submodule\" for more information."
-+"See \"git help submodule\" for more information.\n"
-+"\n"
-+"If you cannot use submodules, you may bypass this check with:\n"
-+"\n"
-+"	git add --no-warn-embedded-repo %s\n"
- );
- 
--static void check_embedded_repo(const char *path)
-+static int check_embedded_repo(const char *path)
- {
-+	int ret = 0;
- 	struct strbuf name = STRBUF_INIT;
- 	static int adviced_on_embedded_repo = 0;
- 
- 	if (!warn_on_embedded_repo)
--		return;
-+		goto cleanup;
- 	if (!ends_with(path, "/"))
--		return;
-+		goto cleanup;
-+
-+	ret = 1;
- 
- 	/* Drop trailing slash for aesthetics */
- 	strbuf_addstr(&name, path);
- 	strbuf_strip_suffix(&name, "/");
- 
--	warning(_("adding embedded git repository: %s"), name.buf);
-+	error(_("cannot add embedded git repository: %s"), name.buf);
- 	if (!adviced_on_embedded_repo &&
- 	    advice_enabled(ADVICE_ADD_EMBEDDED_REPO)) {
--		advise(embedded_advice, name.buf, name.buf);
-+		advise(embedded_advice, name.buf, name.buf, name.buf);
- 		adviced_on_embedded_repo = 1;
- 	}
- 
-+cleanup:
- 	strbuf_release(&name);
-+	return ret;
+diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
+index 0c1502d4b0..556682b18b 100755
+--- a/t/t4041-diff-submodule-option.sh
++++ b/t/t4041-diff-submodule-option.sh
+@@ -42,11 +42,12 @@ commit_file () {
+ 	git commit "$@" -m "Commit $*" >/dev/null
  }
  
- static int add_files(struct dir_struct *dir, int flags)
- {
--	int i, exit_status = 0;
-+	int i, exit_status = 0, embedded_repo = 0;
- 	struct string_list matched_sparse_paths = STRING_LIST_INIT_NODUP;
+-test_create_repo sm1 &&
+-add_file . foo >/dev/null
+-
+-head1=$(add_file sm1 foo1 foo2)
+-fullhead1=$(cd sm1; git rev-parse --verify HEAD)
++test_expect_success 'setup' '
++	test_create_repo sm1 &&
++	add_file . foo >/dev/null &&
++	head1=$(add_file sm1 foo1 foo2) &&
++	fullhead1=$(cd sm1 && git rev-parse --verify HEAD)
++'
  
- 	if (dir->ignored_nr) {
-@@ -476,10 +485,13 @@ static int add_files(struct dir_struct *dir, int flags)
- 				die(_("adding files failed"));
- 			exit_status = 1;
- 		} else {
--			check_embedded_repo(dir->entries[i]->name);
-+			embedded_repo |= check_embedded_repo(dir->entries[i]->name);
- 		}
- 	}
- 
-+	if (embedded_repo)
-+		die(_("refusing to add embedded git repositories"));
-+
- 	if (matched_sparse_paths.nr) {
- 		advise_on_updating_sparse_paths(&matched_sparse_paths);
- 		exit_status = 1;
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index eae6a46ef3..e0bcecba6e 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -118,7 +118,7 @@ test_expect_success 'setup - repository in init subdirectory' '
- test_expect_success 'setup - commit with gitlink' '
- 	echo a >a &&
- 	echo z >z &&
--	git add a init z &&
-+	git add --no-warn-embedded-repo a init z &&
- 	git commit -m "super commit 1"
+ test_expect_success 'added submodule' '
+ 	git add sm1 &&
+@@ -99,10 +100,9 @@ test_expect_success 'diff.submodule does not affect plumbing' '
+ 	test_cmp expected actual
  '
  
-@@ -771,7 +771,7 @@ test_expect_success 'set up for relative path tests' '
- 			git init &&
- 			test_commit foo
- 		) &&
--		git add sub &&
-+		git add --no-warn-embedded-repo sub &&
- 		git config -f .gitmodules submodule.sub.path sub &&
- 		git config -f .gitmodules submodule.sub.url ../subrepo &&
- 		cp .git/config pristine-.git-config &&
-diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
-index 2859695c6d..365953b558 100755
---- a/t/t7412-submodule-absorbgitdirs.sh
-+++ b/t/t7412-submodule-absorbgitdirs.sh
-@@ -100,7 +100,7 @@ test_expect_success 'absorb the git dir in a nested submodule' '
- test_expect_success 'setup a gitlink with missing .gitmodules entry' '
- 	git init sub2 &&
- 	test_commit -C sub2 first &&
--	git add sub2 &&
-+	git add --no-warn-embedded-repo sub2 &&
- 	git commit -m superproject
+-commit_file sm1 &&
+-head2=$(add_file sm1 foo3)
+-
+ test_expect_success 'modified submodule(forward)' '
++	commit_file sm1 &&
++	head2=$(add_file sm1 foo3) &&
+ 	git diff-index -p --submodule=log HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head1..$head2:
+@@ -129,8 +129,8 @@ test_expect_success 'modified submodule(forward) --submodule' '
+ 	test_cmp expected actual
  '
  
-diff --git a/t/t7414-submodule-mistakes.sh b/t/t7414-submodule-mistakes.sh
-index 101afff30f..dbdcbe909d 100755
---- a/t/t7414-submodule-mistakes.sh
-+++ b/t/t7414-submodule-mistakes.sh
-@@ -10,31 +10,30 @@ test_expect_success 'create embedded repository' '
- 	test_commit -C embed one
+-fullhead2=$(cd sm1; git rev-parse --verify HEAD)
+ test_expect_success 'modified submodule(forward) --submodule=short' '
++	fullhead2=$(cd sm1 && git rev-parse --verify HEAD) &&
+ 	git diff --submodule=short >actual &&
+ 	cat >expected <<-EOF &&
+ 	diff --git a/sm1 b/sm1
+@@ -144,14 +144,14 @@ test_expect_success 'modified submodule(forward) --submodule=short' '
+ 	test_cmp expected actual
  '
  
--test_expect_success 'git-add on embedded repository warns' '
--	test_when_finished "git rm --cached -f embed" &&
--	git add embed 2>stderr &&
--	test_i18ngrep warning stderr
-+test_expect_success 'git-add on embedded repository dies' '
-+	test_must_fail git add embed 2>stderr &&
-+	test_i18ngrep fatal stderr
+-commit_file sm1 &&
+-head3=$(
+-	cd sm1 &&
+-	git reset --hard HEAD~2 >/dev/null &&
+-	git rev-parse --short --verify HEAD
+-)
+ 
+ test_expect_success 'modified submodule(backward)' '
++	commit_file sm1 &&
++	head3=$(
++		cd sm1 &&
++		git reset --hard HEAD~2 >/dev/null &&
++		git rev-parse --short --verify HEAD
++	) &&
+ 	git diff-index -p --submodule=log HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head2..$head3 (rewind):
+@@ -161,8 +161,8 @@ test_expect_success 'modified submodule(backward)' '
+ 	test_cmp expected actual
  '
  
--test_expect_success '--no-warn-embedded-repo suppresses warning' '
-+test_expect_success '--no-warn-embedded-repo suppresses error message' '
- 	test_when_finished "git rm --cached -f embed" &&
- 	git add --no-warn-embedded-repo embed 2>stderr &&
--	test_i18ngrep ! warning stderr
-+	test_i18ngrep ! fatal stderr
+-head4=$(add_file sm1 foo4 foo5)
+ test_expect_success 'modified submodule(backward and forward)' '
++	head4=$(add_file sm1 foo4 foo5) &&
+ 	git diff-index -p --submodule=log HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head2...$head4:
+@@ -174,13 +174,15 @@ test_expect_success 'modified submodule(backward and forward)' '
+ 	test_cmp expected actual
  '
  
--test_expect_success 'no warning when updating entry' '
-+test_expect_success 'no error message when updating entry' '
- 	test_when_finished "git rm --cached -f embed" &&
--	git add embed &&
-+	git add --no-warn-embedded-repo embed &&
- 	git -C embed commit --allow-empty -m two &&
- 	git add embed 2>stderr &&
--	test_i18ngrep ! warning stderr
-+	test_i18ngrep ! fatal stderr
+-commit_file sm1 &&
+-mv sm1 sm1-bak &&
+-echo sm1 >sm1 &&
+-head5=$(git hash-object sm1 | cut -c1-7) &&
+-git add sm1 &&
+-rm -f sm1 &&
+-mv sm1-bak sm1
++test_expect_success 'setup - change sm1 to a blob' '
++	commit_file sm1 &&
++	mv sm1 sm1-bak &&
++	echo sm1 >sm1 &&
++	head5=$(git hash-object sm1 | cut -c1-7) &&
++	git add sm1 &&
++	rm -f sm1 &&
++	mv sm1-bak sm1
++'
+ 
+ test_expect_success 'typechanged submodule(submodule->blob), --cached' '
+ 	git diff --submodule=log --cached >actual &&
+@@ -212,9 +214,9 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
+ 	test_cmp expected actual
  '
  
--test_expect_success 'submodule add does not warn' '
-+test_expect_success 'submodule add does not issue error message' '
- 	test_when_finished "git rm -rf submodule .gitmodules" &&
- 	git -c protocol.file.allow=always \
- 		submodule add ./embed submodule 2>stderr &&
--	test_i18ngrep ! warning stderr
-+	test_i18ngrep ! fatal stderr
+-rm -rf sm1 &&
+-git checkout-index sm1
+ test_expect_success 'typechanged submodule(submodule->blob)' '
++	rm -rf sm1 &&
++	git checkout-index sm1 &&
+ 	git diff-index -p --submodule=log HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head4...0000000 (submodule deleted)
+@@ -229,11 +231,11 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
+ 	test_cmp expected actual
  '
+ 
+-rm -f sm1 &&
+-test_create_repo sm1 &&
+-head6=$(add_file sm1 foo6 foo7)
+-fullhead6=$(cd sm1; git rev-parse --verify HEAD)
+ test_expect_success 'nonexistent commit' '
++	rm -f sm1 &&
++	test_create_repo sm1 &&
++	head6=$(add_file sm1 foo6 foo7) &&
++	fullhead6=$(cd sm1 && git rev-parse --verify HEAD) &&
+ 	git diff-index -p --submodule=log HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head4...$head6 (commits not present)
+@@ -241,8 +243,8 @@ test_expect_success 'nonexistent commit' '
+ 	test_cmp expected actual
+ '
+ 
+-commit_file
+ test_expect_success 'typechanged submodule(blob->submodule)' '
++	commit_file &&
+ 	git diff-index -p --submodule=log HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	diff --git a/sm1 b/sm1
+@@ -257,8 +259,8 @@ test_expect_success 'typechanged submodule(blob->submodule)' '
+ 	test_cmp expected actual
+ '
+ 
+-commit_file sm1 &&
+ test_expect_success 'submodule is up to date' '
++	commit_file sm1 &&
+ 	git diff-index -p --submodule=log HEAD >actual &&
+ 	test_must_be_empty actual
+ '
+@@ -327,9 +329,9 @@ test_expect_success 'submodule contains modified content' '
+ 	test_cmp expected actual
+ '
+ 
+-(cd sm1; git commit -mchange foo6 >/dev/null) &&
+-head8=$(cd sm1; git rev-parse --short --verify HEAD) &&
+ test_expect_success 'submodule is modified' '
++	(cd sm1 && git commit -mchange foo6 >/dev/null) &&
++	head8=$(cd sm1 && git rev-parse --short --verify HEAD) &&
+ 	git diff-index -p --submodule=log HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head6..$head8:
+@@ -422,8 +424,8 @@ test_expect_success 'modified submodule contains modified content' '
+ 	test_cmp expected actual
+ '
+ 
+-rm -rf sm1
+ test_expect_success 'deleted submodule' '
++	rm -rf sm1 &&
+ 	git diff-index -p --submodule=log HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head6...0000000 (submodule deleted)
+@@ -454,8 +456,8 @@ test_expect_success 'path filter' '
+ 	test_cmp expected actual
+ '
+ 
+-commit_file sm2
+ test_expect_success 'given commit' '
++	commit_file sm2 &&
+ 	git diff-index -p --submodule=log HEAD^ >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head6...0000000 (submodule deleted)
+@@ -473,9 +475,8 @@ test_expect_success 'given commit --submodule' '
+ 	test_cmp expected actual
+ '
+ 
+-fullhead7=$(cd sm2; git rev-parse --verify HEAD)
+-
+ test_expect_success 'given commit --submodule=short' '
++	fullhead7=$(cd sm2 && git rev-parse --verify HEAD) &&
+ 	git diff-index -p --submodule=short HEAD^ >actual &&
+ 	cat >expected <<-EOF &&
+ 	diff --git a/sm1 b/sm1
+diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
+index 97c6424cd5..3cda8ffd14 100755
+--- a/t/t4060-diff-submodule-option-diff-format.sh
++++ b/t/t4060-diff-submodule-option-diff-format.sh
+@@ -138,10 +138,9 @@ test_expect_success 'diff.submodule does not affect plumbing' '
+ 	diff_cmp expected actual
+ '
+ 
+-commit_file sm1 &&
+-head2=$(add_file sm1 foo3)
+-
+ test_expect_success 'modified submodule(forward)' '
++	commit_file sm1 &&
++	head2=$(add_file sm1 foo3) &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head1..$head2:
+@@ -180,8 +179,8 @@ test_expect_success 'modified submodule(forward) --submodule' '
+ 	diff_cmp expected actual
+ '
+ 
+-fullhead2=$(cd sm1; git rev-parse --verify HEAD)
+ test_expect_success 'modified submodule(forward) --submodule=short' '
++	fullhead2=$(cd sm1 && git rev-parse --verify HEAD) &&
+ 	git diff --submodule=short >actual &&
+ 	cat >expected <<-EOF &&
+ 	diff --git a/sm1 b/sm1
+@@ -195,14 +194,13 @@ test_expect_success 'modified submodule(forward) --submodule=short' '
+ 	diff_cmp expected actual
+ '
+ 
+-commit_file sm1 &&
+-head3=$(
+-	cd sm1 &&
+-	git reset --hard HEAD~2 >/dev/null &&
+-	git rev-parse --short --verify HEAD
+-)
+-
+ test_expect_success 'modified submodule(backward)' '
++	commit_file sm1 &&
++	head3=$(
++		cd sm1 &&
++		git reset --hard HEAD~2 >/dev/null &&
++		git rev-parse --short --verify HEAD
++	) &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head2..$head3 (rewind):
+@@ -224,8 +222,8 @@ test_expect_success 'modified submodule(backward)' '
+ 	diff_cmp expected actual
+ '
+ 
+-head4=$(add_file sm1 foo4 foo5)
+ test_expect_success 'modified submodule(backward and forward)' '
++	head4=$(add_file sm1 foo4 foo5) &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head2...$head4:
+@@ -261,13 +259,15 @@ test_expect_success 'modified submodule(backward and forward)' '
+ 	diff_cmp expected actual
+ '
+ 
+-commit_file sm1 &&
+-mv sm1 sm1-bak &&
+-echo sm1 >sm1 &&
+-head5=$(git hash-object sm1 | cut -c1-7) &&
+-git add sm1 &&
+-rm -f sm1 &&
+-mv sm1-bak sm1
++test_expect_success 'setup - change sm1 to a blob' '
++	commit_file sm1 &&
++	mv sm1 sm1-bak &&
++	echo sm1 >sm1 &&
++	head5=$(git hash-object sm1 | cut -c1-7) &&
++	git add sm1 &&
++	rm -f sm1 &&
++	mv sm1-bak sm1
++'
+ 
+ test_expect_success 'typechanged submodule(submodule->blob), --cached' '
+ 	git diff --submodule=diff --cached >actual &&
+@@ -341,9 +341,9 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
+ 	diff_cmp expected actual
+ '
+ 
+-rm -rf sm1 &&
+-git checkout-index sm1
+ test_expect_success 'typechanged submodule(submodule->blob)' '
++	rm -rf sm1 &&
++	git checkout-index sm1 &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head4...0000000 (submodule deleted)
+@@ -358,10 +358,10 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
+ 	diff_cmp expected actual
+ '
+ 
+-rm -f sm1 &&
+-test_create_repo sm1 &&
+-head6=$(add_file sm1 foo6 foo7)
+ test_expect_success 'nonexistent commit' '
++	rm -f sm1 &&
++	test_create_repo sm1 &&
++	head6=$(add_file sm1 foo6 foo7) &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head4...$head6 (commits not present)
+@@ -369,8 +369,8 @@ test_expect_success 'nonexistent commit' '
+ 	diff_cmp expected actual
+ '
+ 
+-commit_file
+ test_expect_success 'typechanged submodule(blob->submodule)' '
++	commit_file &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	diff --git a/sm1 b/sm1
+@@ -399,8 +399,8 @@ test_expect_success 'typechanged submodule(blob->submodule)' '
+ 	diff_cmp expected actual
+ '
+ 
+-commit_file sm1 &&
+ test_expect_success 'submodule is up to date' '
++	commit_file sm1 &&
+ 	head7=$(git -C sm1 rev-parse --short --verify HEAD) &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	test_must_be_empty actual
+@@ -492,9 +492,9 @@ test_expect_success 'submodule contains modified content' '
+ 	diff_cmp expected actual
+ '
+ 
+-(cd sm1; git commit -mchange foo6 >/dev/null) &&
+-head8=$(cd sm1; git rev-parse --short --verify HEAD) &&
+ test_expect_success 'submodule is modified' '
++	(cd sm1 && git commit -mchange foo6 >/dev/null) &&
++	head8=$(cd sm1 && git rev-parse --short --verify HEAD) &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head7..$head8:
+@@ -643,8 +643,8 @@ test_expect_success 'modified submodule contains modified content' '
+ 	diff_cmp expected actual
+ '
+ 
+-rm -rf sm1
+ test_expect_success 'deleted submodule' '
++	rm -rf sm1 &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head7...0000000 (submodule deleted)
+@@ -703,13 +703,15 @@ test_expect_success 'path filter' '
+ 	diff_cmp expected actual
+ '
+ 
+-cat >.gitmodules <<-EOF
+-[submodule "sm2"]
+-	path = sm2
+-	url = bogus_url
+-EOF
+-git add .gitmodules
+-commit_file sm2 .gitmodules
++test_expect_success 'setup - construct .gitmodules' '
++	cat >.gitmodules <<-EOF &&
++	[submodule "sm2"]
++		path = sm2
++		url = bogus_url
++	EOF
++	git add .gitmodules &&
++	commit_file sm2 .gitmodules
++'
+ 
+ test_expect_success 'given commit' '
+ 	git diff-index -p --submodule=diff HEAD^ >actual &&
+@@ -779,9 +781,8 @@ test_expect_success 'diff --submodule=diff with .git file' '
+ 	diff_cmp expected actual
+ '
+ 
+-mv sm2 sm2-bak
+-
+ test_expect_success 'deleted submodule with .git file' '
++	mv sm2 sm2-bak &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head7...0000000 (submodule deleted)
+@@ -804,9 +805,8 @@ test_expect_success 'deleted submodule with .git file' '
+ 	diff_cmp expected actual
+ '
+ 
+-echo submodule-to-blob>sm2
+-
+ test_expect_success 'typechanged(submodule->blob) submodule with .git file' '
++	echo submodule-to-blob>sm2 &&
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head7...0000000 (submodule deleted)
+@@ -836,10 +836,9 @@ test_expect_success 'typechanged(submodule->blob) submodule with .git file' '
+ 	diff_cmp expected actual
+ '
+ 
+-rm sm2
+-mv sm2-bak sm2
+-
+ test_expect_success 'setup nested submodule' '
++	rm sm2 &&
++	mv sm2-bak sm2 &&
+ 	git -c protocol.file.allow=always -C sm2 submodule add ../sm2 nested &&
+ 	git -C sm2 commit -a -m "nested sub" &&
+ 	head10=$(git -C sm2 rev-parse --short --verify HEAD)
+@@ -910,13 +909,11 @@ test_expect_success 'diff --submodule=diff recurses into nested submodules' '
+ 	diff_cmp expected actual
+ '
+ 
+-(cd sm2; commit_file nested)
+-commit_file sm2
+-head12=$(cd sm2; git rev-parse --short --verify HEAD)
+-
+-mv sm2 sm2-bak
+-
+ test_expect_success 'diff --submodule=diff recurses into deleted nested submodules' '
++	(cd sm2 && commit_file nested) &&
++	commit_file sm2 &&
++	head12=$(cd sm2 && git rev-parse --short --verify HEAD) &&
++	mv sm2 sm2-bak &&
+ 	cat >expected <<-EOF &&
+ 	Submodule sm1 $head7...0000000 (submodule deleted)
+ 	Submodule sm2 $head12...0000000 (submodule deleted)
+@@ -971,6 +968,8 @@ test_expect_success 'diff --submodule=diff recurses into deleted nested submodul
+ 	diff_cmp expected actual
+ '
+ 
+-mv sm2-bak sm2
++test_expect_success 'submodule cleanup' '
++	mv sm2-bak sm2
++'
  
  test_done
-diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-index ba1f569bcb..6fbcf36ae9 100755
---- a/t/t7450-bad-git-dotfiles.sh
-+++ b/t/t7450-bad-git-dotfiles.sh
-@@ -307,7 +307,7 @@ test_expect_success 'git dirs of sibling submodules must not be nested' '
- 		EOF
- 		git clone . thing1 &&
- 		git clone . thing2 &&
--		git add .gitmodules thing1 thing2 &&
-+		git add --no-warn-embedded-repo .gitmodules thing1 thing2 &&
- 		test_tick &&
- 		git commit -m nested
- 	) &&
 -- 
 2.39.1.581.gbfd45094c4-goog
 
