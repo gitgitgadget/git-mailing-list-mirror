@@ -2,81 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09CF2C636D4
-	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 21:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0B20C636CC
+	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 22:58:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbjBMV7K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Feb 2023 16:59:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47966 "EHLO
+        id S229648AbjBMW6U convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 13 Feb 2023 17:58:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbjBMV7J (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2023 16:59:09 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD801166C6
-        for <git@vger.kernel.org>; Mon, 13 Feb 2023 13:59:07 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id i18so6598703pli.3
-        for <git@vger.kernel.org>; Mon, 13 Feb 2023 13:59:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a3fcDglVS/eZF78iYYqhiL7gXX6TsUuluu87L77I7+M=;
-        b=QIu5xIkG9l4y7mClolJQ/aTe83SrlNVwj1PXqIn11p+XlGAwqcT2kER6tziq1NsNNc
-         L0hGZP9+6ZYV1lLe+5JK8/8Bj9a43BssF70Ra3EXDZ2H5lDIi1+hZF6PgUfsXsjS7bgj
-         JId8DZlq1nrmtizcbO2WUxld2YuW55TRTrYsW0t6FCiAxv8LQ8BFL/bhjizRFSmht4Bg
-         FuY8xGgxKBKEiOkiV4nDlC2Oz5E9AZk5cvAXPWjhsYYDY+F0oYPexn9ByNEo0k6fxR3w
-         I+i45/0v3438eUykhk4AIUvNznplN7v84jkyo10QJ7lIj5bLojVQGewQMwYaW2/q6n1Q
-         gjNQ==
+        with ESMTP id S229558AbjBMW6T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2023 17:58:19 -0500
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DABBBDCD
+        for <git@vger.kernel.org>; Mon, 13 Feb 2023 14:58:18 -0800 (PST)
+Received: by mail-pj1-f45.google.com with SMTP id fu4-20020a17090ad18400b002341fadc370so1770784pjb.1
+        for <git@vger.kernel.org>; Mon, 13 Feb 2023 14:58:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a3fcDglVS/eZF78iYYqhiL7gXX6TsUuluu87L77I7+M=;
-        b=DIzl0DO+E6wfqUolEBmvVYl8P3ZiOCotGZhN5jF/nZhHxIjJIMndxRb/aL9m6FNGBw
-         pqVI1cCc7aL69h74YowmUWcSc5+At0SKgoDTvo52S7vAR8BCKLR5o5osa7G1XAs1coGm
-         mIPcy1hbebHj6uOA5blxTwWA063eZvgJj+z7FeR7kH7x2TLADJKXHpF64uJRyZO5Frlb
-         3dV4x832YqV4nfs/mojbBlYRlgs3YEKtz/0DfhEm8kQeKG86ahe8tHWcOqg5T8pEQazt
-         Fdxz6o4qPfSgLKVDcFiFqH39EinwWsC7cLdXCq1W4k/fKhDY8YidYcpdLthUs/0uD7W9
-         HjDQ==
-X-Gm-Message-State: AO0yUKVn2JMgWsH7CBNRaHIdcxn3VlZdVbYl3vPlm3J6l7aV8nmwDWnn
-        JEG85XbOyzsKdFxW+GjpFsPxk6HpB/w=
-X-Google-Smtp-Source: AK7set9L9U5s2ZivatKz/jnLITd+MprO65wZNh29/ZXjDW/C4n5AS3ki8aY/V7tgERTwviKjtHPj9Q==
-X-Received: by 2002:a17:902:ce89:b0:19a:a9d8:e48a with SMTP id f9-20020a170902ce8900b0019aa9d8e48amr479901plg.22.1676325547176;
-        Mon, 13 Feb 2023 13:59:07 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id z11-20020a170902ee0b00b00198b0fd363bsm2824433plb.45.2023.02.13.13.59.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Feb 2023 13:59:06 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        Masahiro Yamada <masahiroy@kernel.org>
-Subject: Re: [PATCH v2 0/3] test-ctype: test all classifiers
-References: <06da58d6-6aae-7b1d-6ce6-f07d27f05d97@web.de>
-        <81eee04b-598e-dfe1-f954-3105bcbcb2f2@web.de>
-Date:   Mon, 13 Feb 2023 13:59:06 -0800
-In-Reply-To: <81eee04b-598e-dfe1-f954-3105bcbcb2f2@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Mon, 13 Feb 2023 22:08:12 +0100")
-Message-ID: <xmqqa61h9qhh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JfFH1DhP8xu6PaaRkaYciLlMQGynnqKAvpyMf7D9F7k=;
+        b=j4WdQ7FrP7SvFC5KV/QOrLlOjiN7mrnkDm2rLMvYfzLd8DSgsGpx5Jte33Azg0hMlX
+         8O6/Qq7T0gQNxcadoKXqP0JiR/gjX/JXtuCM8j3JGJrRMQVHjCL+fswPEi11rLImSoPs
+         9KNtadwvISYLwZrLSl63vfeCSCeHJEdO6uzOi3NvnYTg5SIfF0RBOd7Q+DY2qsdODh+y
+         dWS/dBg1bwqU+15OT3NFVLeEpdh92ka9EEFQ+InJWiHnkL1z+OzydqB3QLwNWcuJXOo0
+         KP22qGbUttb7KPyopPqf96KxD4D1CnWUmUhn8qt7SaG7ulWSc6vlhTgI6Se12Zpwnvt6
+         Ie4Q==
+X-Gm-Message-State: AO0yUKXr5RNrudshF82Xut5q6xFfdB9aOzv3Peo9S7JUm7Hj1JY2G/TV
+        ziW8OE6EuqWzo4SRUlPCLLpQmNDZ1vgfB6DtRAc=
+X-Google-Smtp-Source: AK7set8TL4s3kHRo1C2hT48th6H7kLTssUcJDQrqFqQbLC1o3r/Olz37IyONMzk/wPb6R+ECfXSkW7jlEICFJ0sgLuc=
+X-Received: by 2002:a17:90a:670f:b0:233:d1eb:de8b with SMTP id
+ n15-20020a17090a670f00b00233d1ebde8bmr1667135pjj.130.1676329097660; Mon, 13
+ Feb 2023 14:58:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CAGF3oAcCi+fG12j-1U0hcrWwkF5K_9WhOi6ZPHBzUUzfkrZDxA@mail.gmail.com>
+ <Y+qbFN+PhHVuWT2T@coredump.intra.peff.net>
+In-Reply-To: <Y+qbFN+PhHVuWT2T@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 13 Feb 2023 17:58:06 -0500
+Message-ID: <CAPig+cQ9f0aW0TcP9A5WrKmYcQsEZvPOiPrgmzsy1frWkHd34w@mail.gmail.com>
+Subject: Re: bug report: symbolic-ref --short command echos the wrong text
+ while use Chinese language
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?B?5a2f5a2Q5piT?= <mengziyi540841@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
-
-> Add tests to cover the remaining character class test functions.
+On Mon, Feb 13, 2023 at 3:49 PM Jeff King <peff@peff.net> wrote:
+> On Mon, Feb 13, 2023 at 02:38:08PM +0800, 孟子易 wrote:
+> > System: Mac Os (Ventura 13.2)
+> > Language: Chinese simplified
+> > Preconditions:
+> > # git checkout -b 测试-加-增加-加-增加
+> > # git symbolic-ref --short HEAD
+> > Wrong Echo (Current Echo):
+> > 测试-�
+> > Correct Echo:
+> > // I Don't know, may be "测试-加" ?
 >
-> Changes since v1:
-> - More compact and readable isprint() test string specification by
->   reusing the one for ispunct().
+> Hmm, I can't reproduce here on Linux:
+>
+>   $ git init
+>   $ git commit --allow-empty -m foo
+>   $ git checkout -b 测试-加-增加-加-增加
+>   $ git symbolic-ref --short HEAD
+>   测试-加-增加-加-增加
 
-Very nice.  Thanks.
+I am able to reproduce the broken behavior on maOS 10.13.
 
+> I wonder if it is related to using macOS. The refs are stored as
+> individual files in the filesystem, and HFS+ will do some unicode
+> normalization. So I get:
+>
+>   $ ls .git/refs/heads/ | xxd
+>   00000000: 6d61 696e 0ae6 b58b e8af 952d e58a a02d  main.......-...-
+>   00000010: e5a2 9ee5 8aa0 2de5 8aa0 2de5 a29e e58a  ......-...-.....
+>   00000020: a00a
+>
+> Are your on-disk bytes different?
+
+I get the exact same results (on HFS+) as you show:
+
+  $ ls .git/refs/heads/ | xxd
+  00000000: 6d61 696e 0ae6 b58b e8af 952d e58a a02d  main.......-...-
+  00000010: e5a2 9ee5 8aa0 2de5 8aa0 2de5 a29e e58a  ......-...-.....
+  00000020: a00a                                     ..
