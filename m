@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44426C636CC
-	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 23:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2F58C636D4
+	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 23:19:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229891AbjBMXHQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Feb 2023 18:07:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56474 "EHLO
+        id S230340AbjBMXTV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Feb 2023 18:19:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbjBMXHO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2023 18:07:14 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5E461C5BB
-        for <git@vger.kernel.org>; Mon, 13 Feb 2023 15:07:13 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id nh19-20020a17090b365300b00233ceae8407so6197362pjb.3
-        for <git@vger.kernel.org>; Mon, 13 Feb 2023 15:07:13 -0800 (PST)
+        with ESMTP id S230336AbjBMXTU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2023 18:19:20 -0500
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E95C220543
+        for <git@vger.kernel.org>; Mon, 13 Feb 2023 15:19:15 -0800 (PST)
+Received: by mail-pf1-x434.google.com with SMTP id h7so3934961pfc.11
+        for <git@vger.kernel.org>; Mon, 13 Feb 2023 15:19:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bHFP06LjQCHtEnm3HWAV15Lb+VKlhOOyEhxzkRen7Uw=;
-        b=lQkDRojzNiv5HZxq9hvGlHqX7LwdbXzRTlBU+96tfXv3YSWaq199tkb0umj68ZpuvX
-         a4m90e3d2Yc1COqGbNFaIw2t1UvDbPo5B1GpYxYCCoUDUI95FTyqtcZlO4ciPIsVITIN
-         yRppJ4TrzFJ3DZ3CDoQWczWbx7M+UHAhj+Hv1UkLhNm7iswCq3X9xS4Wqyr4D/hpqSug
-         9Q8BdJ/dtd41NcvvF/eJd/ppVjSuXOVnmEEB8zh5sVINbMaCAu1iS6Phzi6ddcG6now1
-         py73yMa8CpvkWMPKYlpEeLhPJkZjXdDGI75ntxq6tIbOLUgCxDqipF6HkJa/hxqB/mxW
-         7TDQ==
+        bh=fo6Oizg5GUn2rnKH0uGyuTXgERdxu7Bw9/UcyJLSmyg=;
+        b=H4JaJTICSFTGNmBPoub4YdauUYjLXs9ZLYYnvsAXUDVJeWK+jABvzrxUQOd50kzuJ6
+         cRN1EIBMWXUKYE2Qgg5bJckhbnZ1w9XMo10PAH3Og+4i5mohEvptxSXHwbdGVPJl95YJ
+         X4520T2C2NOxd9ECgi6wsva+bvq3duD13R6w2WkyeQPKicdJuqZzypI+sEbYe7PTY+rb
+         Zj9l6oVaETnswTcEAAKbiQi9Sr1mPxdB6cmXoe5sz66sP+82H2jeePZD5z538iDj75ax
+         CJyc1vYpQ8SSPLqF8VDSj8onqK2Eqocbd2/87pJmAk/gespO3GMUFzHXKmUguXFHfga1
+         FqEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=bHFP06LjQCHtEnm3HWAV15Lb+VKlhOOyEhxzkRen7Uw=;
-        b=qLFJOxQZRqk82TKK19ReOZu+vV6h9gm7ttF1sFVJU28rVcWk4blPk6JzzoToXBns6R
-         TDmrQAX2S3xXcFyuizi8Xh13+wTnwT4LjeztL+CVoWvlm/Ma7CPJ4ezTmQM8Lo85kdS8
-         7wlaQoVWNDm1al+4IJJDT4FuS3C+KKlBUSYw7pKS8/mYNtjK95+hMZbUfg4JfNphIUM0
-         YqTLIWWdWtaRTlxPh6snngdjqPRg1tr26EbqBZHECDYGG2QqBor/xoOmg3oMljOT+qsM
-         I9mzRRG8uMyJIdwfz6McKozAfsxZ4yl29EXb3ffAjz3TqV/P8IbnqS+I4IC1bedI38/Y
-         dTUw==
-X-Gm-Message-State: AO0yUKVE0sYyZ2b5Mu1sYMTQOhJz1OiIHHq1+DMza3fCS2oG2o7Vz0Ln
-        Mz5gr17YgpsFtu0+MhYlhldHk0tirtg=
-X-Google-Smtp-Source: AK7set/jfyRmUbGadpGY3Em83zI4YoeMcPYrzyonlSvXQZuaN1alxMLFH4l1WZmey0O83khLG8qlcw==
-X-Received: by 2002:a17:902:c408:b0:19a:9610:b237 with SMTP id k8-20020a170902c40800b0019a9610b237mr656305plk.45.1676329633307;
-        Mon, 13 Feb 2023 15:07:13 -0800 (PST)
+        bh=fo6Oizg5GUn2rnKH0uGyuTXgERdxu7Bw9/UcyJLSmyg=;
+        b=bud0GDsgGr22r2KR11W2FCUArfmLR8mc5oIcW0tYCI88sltnz3yLsKM6duumfAoUxq
+         xIFpU8t4No1CXs2oZF97T0hTjqOp/gMnZ2CTMmeVRBwiUw+whK5GczEccDhcuYtEvWfE
+         Gl7Y2U6emrf5cxPiJAAnwYpC7e3Vrxub8bArs+mSqUf45uHqjZKW1DGOs8WvsfoqPv5P
+         iwiUcQJN0/soBeVZElcV3eR55UjKhj75SJAKsVTZXo0Uy1CGtPdmkmQjPcxRP8lxFNq/
+         XJa2qZrAaiwRMvjXweVebDnurKPOlB9pTb5/1zydpXZnUBmhRZ0Z77s09FgATI9bHmrD
+         QBzA==
+X-Gm-Message-State: AO0yUKWQppEtigG10buYZK5zmrxwYGGxx2fx5udBpP3LUlwpUqg22QSz
+        x3RGe1lAczjMypw38SBy6KQ=
+X-Google-Smtp-Source: AK7set//cHy2Byfrl5/KhTIVD1VaMuNHHff8BnLmu5JCnBibjUe3BYDuordE69XYV/t5Qg2/RuGjpg==
+X-Received: by 2002:aa7:8f37:0:b0:5a8:bd67:156d with SMTP id y23-20020aa78f37000000b005a8bd67156dmr186815pfr.6.1676330355225;
+        Mon, 13 Feb 2023 15:19:15 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id iw3-20020a170903044300b0019ab3308554sm477945plb.85.2023.02.13.15.07.12
+        by smtp.gmail.com with ESMTPSA id c17-20020aa78e11000000b005813f365afcsm6915195pfr.189.2023.02.13.15.19.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Feb 2023 15:07:12 -0800 (PST)
+        Mon, 13 Feb 2023 15:19:14 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Calvin Wan <calvinwan@google.com>
@@ -57,10 +57,11 @@ Subject: Re: [RFC PATCH 4/6] tests: use `git submodule add` and fix expected
  diffs
 References: <20230213182134.2173280-1-calvinwan@google.com>
         <20230213182134.2173280-5-calvinwan@google.com>
-Date:   Mon, 13 Feb 2023 15:07:12 -0800
-In-Reply-To: <20230213182134.2173280-5-calvinwan@google.com> (Calvin Wan's
-        message of "Mon, 13 Feb 2023 18:21:32 +0000")
-Message-ID: <xmqqy1p188rj.fsf@gitster.g>
+        <xmqqy1p188rj.fsf@gitster.g>
+Date:   Mon, 13 Feb 2023 15:19:14 -0800
+In-Reply-To: <xmqqy1p188rj.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        13 Feb 2023 15:07:12 -0800")
+Message-ID: <xmqqttzp887h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,35 +69,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Josh Steadmon <steadmon@google.com>
+> Calvin Wan <calvinwan@google.com> writes:
 >
-> This commit continues the previous work of updating the test suite to
-> use `git submodule add` to create submodules instead of using `git add`
-> to include embedded repositories. Specifically, in this commit we update
-> test cases where expected diffs must change due to the presence of a
-> .gitmodules file.
+>> From: Josh Steadmon <steadmon@google.com>
+>>
+>> This commit continues the previous work of updating the test suite to
+>> use `git submodule add` to create submodules instead of using `git add`
+>> to include embedded repositories. Specifically, in this commit we update
+>> test cases where expected diffs must change due to the presence of a
+>> .gitmodules file.
+>
+> Good that these "same" tasks are split into two steps, ones that
+> don't notice the additional presence of .gitmodules (i.e. the
+> previous step) and the result that do.
+>
+> Strictly speaking, gitlink support in the index and trees does not
+> have to be used to record submodules, and changing all "git add" to
+> "git submodule add" is somewhat a sad change that closes the door to
+> those folks who want to use the mechanism for implementing "better
+> submodules" that do not depend on a separate .gitmodules files, for
+> example.  To leave the door open, "git add" may need to learn an
+> overriding mechanism allow adding a gitlink to the index without
+> anything else.  And then this step could use "git add -f" (or
+> whategver the overriding mechanism) instead of "git submodule add",
+> without changing the expected diff output.
+>
+> Would such a tweak make this step better?  I dunno.
 
-Good that these "same" tasks are split into two steps, ones that
-don't notice the additional presence of .gitmodules (i.e. the
-previous step) and the result that do.
+The other side of the coin is that the tests that were touched by
+the previous step were not testing half of what "submodule add" is
+doing.  Not all the "let's add submodule here" test may not have to
+verify the resulting .gitmodules file (e.g. ones that want to see
+the low-level diff machinery works correctly by taking output from
+"git diff --cached --raw" would be primarily interested in what
+happens to the index and not to .gitmodules at all), but some of
+them should.  A rough rule of thumb might be that the tests that are
+about "submodules" should care what ".gitmodules" has, while the
+tests tare are about "gitlink" should not.  It might even make sense
+to use "add -f" (or whatever override to allow adding a gitlink only
+to the index without touching .gitmodules and other things), not
+"submodule add", for the latter class of tests.
 
-Strictly speaking, gitlink support in the index and trees does not
-have to be used to record submodules, and changing all "git add" to
-"git submodule add" is somewhat a sad change that closes the door to
-those folks who want to use the mechanism for implementing "better
-submodules" that do not depend on a separate .gitmodules files, for
-example.  To leave the door open, "git add" may need to learn an
-overriding mechanism allow adding a gitlink to the index without
-anything else.  And then this step could use "git add -f" (or
-whategver the overriding mechanism) instead of "git submodule add",
-without changing the expected diff output.
+Thanks.
 
-Would such a tweak make this step better?  I dunno.
 
->  t/t3040-subprojects-basic.sh                 |   3 +-
->  t/t4041-diff-submodule-option.sh             | 153 ++++++++++++++++++-
->  t/t4060-diff-submodule-option-diff-format.sh | 125 +++++++++++++--
->  t/t7506-status-submodule.sh                  |  15 +-
->  4 files changed, 278 insertions(+), 18 deletions(-)
