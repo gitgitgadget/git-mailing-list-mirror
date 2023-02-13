@@ -2,116 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03F28C636CC
-	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 06:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7581C636CC
+	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 06:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229812AbjBMGfB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Feb 2023 01:35:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39298 "EHLO
+        id S229557AbjBMGiX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Feb 2023 01:38:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229598AbjBMGfA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2023 01:35:00 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760DE9010
-        for <git@vger.kernel.org>; Sun, 12 Feb 2023 22:34:59 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id ds10-20020a056a004aca00b0059c8629c220so5853113pfb.23
-        for <git@vger.kernel.org>; Sun, 12 Feb 2023 22:34:59 -0800 (PST)
+        with ESMTP id S229484AbjBMGiW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2023 01:38:22 -0500
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70CFCEB7B
+        for <git@vger.kernel.org>; Sun, 12 Feb 2023 22:38:21 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id bt8so5633215edb.12
+        for <git@vger.kernel.org>; Sun, 12 Feb 2023 22:38:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hlQ2YU96GAEnnLHdexHmLQ63MXFWOHK3Uc+z08r4nBU=;
-        b=mTcJiCjP8eog/F9tNLIkESC7iPjCmajJ8BbW4m8Px71wMljqe5csNr+vkxUigee6gc
-         VB+M5eH715c1v89H1pKbScD7ZqSfKeLUshsHssduYVhycI/eiWqQOBaCV2WzpsHytGIt
-         qizdUwWO8/y6YXKXVY/9tBwzcRU7V0SQqtb7w/lxXUtyxua4RmBeeS79CWA/yWBDU/OK
-         TDu17JcSoab6g1N1h/xAOpgLKN78WxPnCv4tz8pKEoeMRBtHcsc8u6Qc2XYg0OsYR3WV
-         X5QDoapx//ji+KGdkqfk6fwLlJJkZ61RoyA6G5rvuSHNBLYHi87AXclwMYf0THR9feBo
-         JnPQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=urElr+e4c2kE45YYEv6ot6OvL/o4S9tTGVYBljx+MRY=;
+        b=H3c9nLVRz/FH6P3mr33FH1+o+rBpIYHjHoesN/vW96IPgYNR+8LN5WGMhvNtWNYTzP
+         /m4oK5W9aUvqCxHXgM/8ZG2GmcOAK7U5h568NMLcp4qbxQS2J1QtU7kQ8OR0LdrpALcl
+         JKmHM6qp2pPJqaqIh9ZN5QRZLcgxSTUa4ckVRsHZvUHxxJwm/CwlnkMCRinUZjlsS6qk
+         DRcn9nuRsci7yFAMCYdKULeQMDwNN9oJsvrOT+0yXEaRM0ilLUJblVdf87U6wvUNn93J
+         wAiIFSASNBvjvOuWgmtfgpCsbbJs8NBgMJgs6TPjofMoFE0FkXsUGCAE6M0XWf5LVDTi
+         9Ylw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hlQ2YU96GAEnnLHdexHmLQ63MXFWOHK3Uc+z08r4nBU=;
-        b=jsRz7lEvnEZFIvq/i/6X/c4lbGGv+RDU67866pOqNYtFVY200JiTbhH7kUwfoyG5Pz
-         XweiYCis6YnwzAxTkvyX3BCaYc9Ade34EIgcSmjG+oL1hXWygkYN5oXa8//FrUpNiA/v
-         MN1nrSozlTn51sFJ87jfnvkTqbIN6WQtnAiDK5ieXDHKcytfntmJGKNRepTZE3JrKhXa
-         D4+s9/l1EC5Nzr+AjmCq/x5TRUvlGirGNHX3g6FPlccX5bUOFRbbBB/anjmAuMaoCIi6
-         Eq4zPMKV7PU86fbWqZaywZxwTeBrNHwXKWO4AsROc+DvPSCkQUmb0Pd5F6YHg2Xx1Vux
-         bJ4A==
-X-Gm-Message-State: AO0yUKWES2x2jDum3yw2g9hMuRgiRPgIN+WhS1AkFH2Cby7jYfv8xa3X
-        ScXaSNd6501spT4vqwnTsfAtoo9N2p4CRg==
-X-Google-Smtp-Source: AK7set+lrt/pY56B5KCiorMMplQpxIMUIlCgTtxNiMtpOQAc8acHVZxdW+QchS5rFqH6wzl/OJ4wDq1IQGWmLw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:902:c950:b0:19a:9b8c:279f with SMTP
- id i16-20020a170902c95000b0019a9b8c279fmr621078pla.26.1676270098802; Sun, 12
- Feb 2023 22:34:58 -0800 (PST)
-Date:   Mon, 13 Feb 2023 14:34:57 +0800
-In-Reply-To: <20230209000212.1892457-2-calvinwan@google.com>
-Mime-Version: 1.0
-References: <20230207181706.363453-1-calvinwan@google.com> <20230209000212.1892457-2-calvinwan@google.com>
-Message-ID: <kl6lo7pyax9q.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v8 1/6] run-command: add duplicate_output_fn to run_processes_parallel_opts
-From:   Glen Choo <chooglen@google.com>
-To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
-Cc:     Calvin Wan <calvinwan@google.com>, avarab@gmail.com,
-        newren@gmail.com, jonathantanmy@google.com,
-        phillip.wood123@gmail.com
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=urElr+e4c2kE45YYEv6ot6OvL/o4S9tTGVYBljx+MRY=;
+        b=7cQQmdLrfuwxy2/DZw9TMiAcCBmZpL2l8EOjTnKrNltZKpnmsGQZhuIIQXuEJ8KLzm
+         nrY55Qa/YbeW/YrdhuckkVNDJduHm26cz6PW7TMaKPpoQ2I6hX0Y3RFmOQ3NcJVer3nw
+         bJN0eXmdPmCuVse2OjhJ8Ubo2yJ8NOYs5TMTpieO00Liok55To10J0y+XyqSaUQhTAf9
+         AQQ7yoCQQq2mKYb6nhIjTlKyk0n7pto8nA7ErrGE3HxEof7J/4i1FyH+DpYLqSHqBxV6
+         chOWu5NVaTwHALcfSa+y8fUXiSBqFozLngrhJgbozBx7bxIoA14HeG0zSulXAfWIht2l
+         KCuA==
+X-Gm-Message-State: AO0yUKUycF0G9bACcJlqGwMwa9I9d4Kmh7Lih2koZMAR+2T28/aQu/CY
+        LbAy0j76jltkBow1XVae59Ipuhzhv0yvRUSExaQ8JsQgnO1yoW0jFKg=
+X-Google-Smtp-Source: AK7set+FEUkRGdw2WeCUYsjwLvr+Du8Tnt+nYDGtKM/Y2YalGFEl4mQZ/BUNXGu6VVlVUjYC+3pDEV8He5B1nV5rtGc=
+X-Received: by 2002:a50:ce59:0:b0:4ac:b8e1:7410 with SMTP id
+ k25-20020a50ce59000000b004acb8e17410mr2320258edj.6.1676270299734; Sun, 12 Feb
+ 2023 22:38:19 -0800 (PST)
+MIME-Version: 1.0
+From:   =?UTF-8?B?5a2f5a2Q5piT?= <mengziyi540841@gmail.com>
+Date:   Mon, 13 Feb 2023 14:38:08 +0800
+Message-ID: <CAGF3oAcCi+fG12j-1U0hcrWwkF5K_9WhOi6ZPHBzUUzfkrZDxA@mail.gmail.com>
+Subject: bug report: symbolic-ref --short command echos the wrong text while
+ use Chinese language
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
+System: Mac Os (Ventura 13.2)
+Language: Chinese simplified
+Preconditions:
+# git checkout -b =E6=B5=8B=E8=AF=95-=E5=8A=A0-=E5=A2=9E=E5=8A=A0-=E5=8A=A0=
+-=E5=A2=9E=E5=8A=A0
+# git symbolic-ref --short HEAD
+Wrong Echo (Current Echo):
+=E6=B5=8B=E8=AF=95-=EF=BF=BD
+Correct Echo:
+// I Don't know, may be "=E6=B5=8B=E8=AF=95-=E5=8A=A0" ?
 
-> @@ -1645,14 +1650,19 @@ static void pp_buffer_stderr(struct parallel_processes *pp,
->  	for (size_t i = 0; i < opts->processes; i++) {
->  		if (pp->children[i].state == GIT_CP_WORKING &&
->  		    pp->pfd[i].revents & (POLLIN | POLLHUP)) {
-> -			int n = strbuf_read_once(&pp->children[i].err,
-> -						 pp->children[i].process.err, 0);
-> +			ssize_t n = strbuf_read_once(&pp->children[i].err,
-> +						     pp->children[i].process.err, 0);
->  			if (n == 0) {
->  				close(pp->children[i].process.err);
->  				pp->children[i].state = GIT_CP_WAIT_CLEANUP;
-> -			} else if (n < 0)
-> +			} else if (n < 0) {
->  				if (errno != EAGAIN)
->  					die_errno("read");
-> +			} else if (opts->duplicate_output) {
-> +				opts->duplicate_output(&pp->children[i].err,
-> +					pp->children[i].err.len - n,
-> +					opts->data, pp->children[i].data);
-> +			}
->  		}
->  	}
->  }
-
-What do we think of the name "duplicate_output"? IMO it made sense in
-earlier versions when we were copying the output to a separate buffer (I
-believe it was renamed in response to [1]), but now that we're just
-calling a callback on the main buffer, it seems misleading. Maybe
-"output_buffered" would be better?
-
-Sidenote: One convention from JS that I like is to name such event
-listeners as "on_<event_name>", e.g. "on_output_buffered". This makes
-naming a lot easier sometimes because you don't have to worry about
-having your event listener being mistaken for something else. It
-wouldn't be idiomatic for Git today, but I wonder what others think
-about adopting this.
-
-[1] https://lore.kernel.org/git/xmqq4jvxpw46.fsf@gitster.g/
-
-> +/**
-> + * This callback is called whenever output from a child process is buffered
-> + * 
-> + * See run_processes_parallel() below for a discussion of the "struct
-> + * strbuf *out" parameter.
-> + * 
-> + * The offset refers to the number of bytes originally in "out" before
-> + * the output from the child process was buffered. Therefore, the buffer
-> + * range, "out + buf" to the end of "out", would contain the buffer of
-> + * the child process output.
-
-Looks like there's extra whitespace on the 'blank' lines.
-
+Tip:
+not all Chinese words can cause this bug.
+"=E5=8A=A0" is one of them, but not the only one.
