@@ -2,91 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34D6DC636D4
-	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 13:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 315DEC636CC
+	for <git@archiver.kernel.org>; Mon, 13 Feb 2023 13:45:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230045AbjBMNhk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Feb 2023 08:37:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42738 "EHLO
+        id S230022AbjBMNpc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Feb 2023 08:45:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230183AbjBMNhj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Feb 2023 08:37:39 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D229F59C2
-        for <git@vger.kernel.org>; Mon, 13 Feb 2023 05:37:38 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id v24-20020a05683011d800b0068bdd29b160so3702416otq.13
-        for <git@vger.kernel.org>; Mon, 13 Feb 2023 05:37:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GWkfqN/5MGq7TsO49gs3IUGasnTjUWZXNux+eGkZTZs=;
-        b=eJRBrlwrxhOw9eHPmzVhOXzmj0FmNUbWVSQHwxpKdX60EijLEk9VCds2kAvMLv7eTd
-         o+etFduKgtVhoGr3JNLLY44lMvh4jxMJy2xDZMxnYJf3xqXKGRrnDF4/L2+NslBJUV4b
-         B3x5CxW6D123nFlcxDfu7lm42xHgenJLu6eWS6o9ssajVVzcd+d1chfPHTaQ24hcXP3y
-         X782mThcZuDdSLAKyyDMOt5OT+oB5S/jTrsCFwpoigCH5IwirsYQvCiXOw0FhtH7zjmJ
-         EtEJbQv6q5kYwVdXH9Z0kLGsnl0Oq28QRp+d6G0vWYGR5iWOiDxEFTbGac11eS03MJ6Q
-         A5Zg==
+        with ESMTP id S229705AbjBMNpb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Feb 2023 08:45:31 -0500
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 957DE83D3
+        for <git@vger.kernel.org>; Mon, 13 Feb 2023 05:45:27 -0800 (PST)
+Received: by mail-pl1-f182.google.com with SMTP id m2so13540748plg.4
+        for <git@vger.kernel.org>; Mon, 13 Feb 2023 05:45:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GWkfqN/5MGq7TsO49gs3IUGasnTjUWZXNux+eGkZTZs=;
-        b=qh+bc8wdR8deqWXmHTj1jS+g7nZZJRREkXKcr13TN6YRmtL22qQFN1CwAKssx6z0Un
-         w3cNxqno9rIobsEEGALHwDHITAjTeuxThwd8z66ceyhMCsqO5NvqnHGW/RX89G3zsCiU
-         8SBs3CnMpmDxL8O5il50Oc4jaJkbZkz07I9FxmXvjXSVW0MLL20ZrRuDGKEiijgDxpwJ
-         ERoskYvc7uuV7pt1CU8ncDoDRvfX53tzyXpw8M/cjWbsdLpkqdy5hIJgKt4EDY/AzsIs
-         M6mWHGlyhJaJVK4d7l5VJ3EKOxb0bWhF7RWHdn6WvKiDBLpdsxDSHW50Z2tH0yOjUjrm
-         Foyg==
-X-Gm-Message-State: AO0yUKVcrlQRGhoUM/7fOOBjMYAv3WeFXA8gpA04vD/pnVe3CSVy9jI3
-        0pMrI24GmdLpC0suJ2t09b8e
-X-Google-Smtp-Source: AK7set/oCABUB0YhksXXz9IS0G9lGV450fsPmtzblG+T2YW6kutcvv/ZmImadq39Jicq+Y7LlCLrtw==
-X-Received: by 2002:a05:6830:1f57:b0:68b:d0bf:99ec with SMTP id u23-20020a0568301f5700b0068bd0bf99ecmr14543619oth.31.1676295458150;
-        Mon, 13 Feb 2023 05:37:38 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:71cb:950b:48ab:5f9? ([2600:1700:e72:80a0:71cb:950b:48ab:5f9])
-        by smtp.gmail.com with ESMTPSA id di14-20020a0568303a0e00b0068bd922a244sm5271625otb.20.2023.02.13.05.37.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Feb 2023 05:37:37 -0800 (PST)
-Message-ID: <7c8b6420-fe69-a190-9197-0ddbb3e4a964@github.com>
-Date:   Mon, 13 Feb 2023 08:37:36 -0500
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=t7w5ZUJlLBxpNwVlyrAnNUxwm7sBuhVGlkAtDTqOp98=;
+        b=LgxmYxKzwP8iG9+lNTDYHB7n0Gd599zGXUmHn7XIzuaLiRESBd1t5xlsRTlUJ/IkTx
+         P5ZKe5pWsowvVDnVe98wW5cecK3vIeChPCy1SiDUUSBCZQi3vaSx93UxFeQ3cyrgLbgK
+         4v3L5SOSBUEDNDzStkcDojx7GU3X4F1YLGNMf6BuRcboKjKj+3VHzY1EW8l+/3zSdzOu
+         7/60VzUm2cFRQMdl6qbdJmmtaKDRxBLhqXCqLdhnR+Cv3j8eazXpMKzlTfkJQYfg4f77
+         1RoXk8++1iSwdCWwyhyFCUrMV+vC/nDnNixafhfxNZIZAZpuiv0d9klWro1B50huxOmu
+         eNkw==
+X-Gm-Message-State: AO0yUKUFuonyGnQnBlIGCfebCYEJTDQC2nvhneeNqA3Q2Lfz5rcLSiCy
+        ouj5rmhsYnCDtsbFm8E7/zucIkNXXFEi/wAcEuJunPxcP/M=
+X-Google-Smtp-Source: AK7set8KUAMmgvEvmvGgjQZFL2ccAEovcKlauj4OYMrh6ADD5o87DqgyjF96ytbJv01bjjXLdXVtBCQIe5GwO9G02qY=
+X-Received: by 2002:a17:90b:a56:b0:234:190f:87e6 with SMTP id
+ gw22-20020a17090b0a5600b00234190f87e6mr203290pjb.8.1676295927020; Mon, 13 Feb
+ 2023 05:45:27 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2] cache-tree: fix strbuf growth in
- prime_cache_tree_rec()
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-References: <ff3ac119-9b00-746f-470c-8db18c9c61a1@web.de>
- <a37623c8-d2fb-aec6-3423-2d402d717959@web.de>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <a37623c8-d2fb-aec6-3423-2d402d717959@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <623b0b8a-a5b3-408c-b924-9f88d9763b0e@app.fastmail.com>
+In-Reply-To: <623b0b8a-a5b3-408c-b924-9f88d9763b0e@app.fastmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 13 Feb 2023 08:45:15 -0500
+Message-ID: <CAPig+cRotsJZHnRMUqWaYz=nw1sBRsW5ms7WWuApviG2be2GTQ@mail.gmail.com>
+Subject: Re: [PATCH] Use correct default remote for fetching in submodule.
+To:     Mara <mara@marabos.nl>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/10/2023 3:20 PM, René Scharfe wrote:
-> Use size_t to store the original length of the strbuf tree_len, as
-> that's the correct type.
-> 
-> Don't double the allocated size of the strbuf when adding a subdirectory
-> name.  And the chance of the trailing slash fitting in the slack left by
-> strbuf_add() is very high, so stop pre-growing the strbuf at all.
+On Mon, Feb 13, 2023 at 8:31 AM Mara <mara@marabos.nl> wrote:
+> "git submodule update" first tries a regular "git fetch"
+> to fetch the commit, but when that doesn't retrieve the commit
+> it wants, it tries "git fetch <remote> <commit>".
+> For <remote>, it used the wrong default remote: the default
+> remote of the outer repository, rather than the default remote
+> of the submodule.
+>
+> Signed-off-by: Mara Bos <mara@marabos.nl>
+> ---
 
-> -	int base_path_len = tree_path->len;
-> +	size_t base_path_len = tree_path->len;
+I'm not a submodule user and I don't have any particular familiarity
+with this code, so I may be wrong, but...
 
->  				strbuf_setlen(tree_path, base_path_len);
-> -				strbuf_grow(tree_path, base_path_len + entry.pathlen + 1);
->  				strbuf_add(tree_path, entry.path, entry.pathlen);
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 4c173d8b37..50b96e0b9d 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2225,7 +2225,10 @@ static int fetch_in_submodule(const char *module_path, int depth, int quiet,
+> -               char *remote = get_default_remote();
+> +               char *remote;
+> +               int code = get_default_remote_submodule(module_path, &remote);
+> +               if (code)
+> +                       return code;
+>                 strvec_pushl(&cp.args, remote, hex, NULL);
+>                 free(remote);
 
-Excellent. LGTM.
+... it looks like this change may introduce a memory leak. Digging
+down through get_default_remote_submodule() and the functions it
+calls, it appears that repo_get_default_remote() can return a non-zero
+code _after_ it has allocated memory for `remote`. If I'm reading this
+correctly, then the above should probably be:
 
--Stolee
+    char *remote = NULL;
+    int code = get_default_remote_submodule(module_path, &remote);
+    if (code) {
+        free(remote);
+        return code;
+    }
+
+Also, if possible, add a new test, perhaps to
+t/t7406-submodule-update.sh, demonstrating that this change fixes the
+problem and to ensure that it doesn't get broken again. If you have a
+minimal-reproduction recipe which exhibits the problem, then you may
+be able to turn it into an actual test.
