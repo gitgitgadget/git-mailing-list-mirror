@@ -2,130 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1267C61DA4
-	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 21:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BADF6C61DA4
+	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 21:55:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230054AbjBNVtA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 16:49:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41550 "EHLO
+        id S231714AbjBNVzv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 16:55:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjBNVs7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 16:48:59 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D54EB24C89
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:48:58 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id n20-20020a17090aab9400b00229ca6a4636so156709pjq.0
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:48:58 -0800 (PST)
+        with ESMTP id S231476AbjBNVzt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 16:55:49 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ACC31F494
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:55:47 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id hg24-20020a05600c539800b003e1f5f2a29cso121264wmb.4
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:55:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=F0T0HptDgJ+GH0ewI+USBMMt6jskjrd1xd0gV/jgbSI=;
-        b=GWX+ih2VatH/LYsYZ5WZZhxyFlOsU1wcY2oOvJMbV385imDbqZHyOqKjs63fLjPDRh
-         EHB4AYpfXDcjt+3fy7nX3RK1cOr1GghRXTt7GPVVm2SyrT02y66d1GXHmOcRe+HPpX4Y
-         v4EUfD6J4YeidDFLh5olphmOd5Ukvvv6aTPkgAPqfp4GvR60X6+0QAuiDQqoTjN+u4HI
-         mgz+gqwM2tQyX9yCLttbyGSG1r8VT07GqOqyNImBKMI5yn3xLq7bJPAIb9In0Czxj0o4
-         oQNNPXTpQcbfZcpqto7IiVeelLL8/in9uPo6lqAg53iChBb7SOIMhiD8PrJVRqPFFtD3
-         XFVw==
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tOzVUXlR/e/9lAEwV6rS1LbOSKoLFL0RpouIm/q5aVQ=;
+        b=RXS9wEAF2NQKOzdnxULsGNf6U+DRKOQZDtBNXjTwhEx5HhtLxUhibYcTOiRxxwF0dq
+         M5D+lOGFBS6lZBDaYj9lsVThGZGF2RTYP3EAA3tJIffQhZ/SWVo1QMFyIKnLL7UW0ajx
+         Gjac+4S5ln4ZsupTCMEdUxS5wkwTD97iXN8rw3LnQ0b+XrK7kXCf3gNYBgaOj4AnIAMt
+         AAfqWSrHufO3khnuETRRuAw/G/gHiMw4YwKluJkNTNOfOmlSLvhI/XhOo7XFIXJL/1zz
+         oMzXiHxzSLHx7y5DA0sDJb0UoRv5UlujGXoxV01nHt+Nfme2asYglcWo/MVDyH2jn3Hm
+         8XXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=F0T0HptDgJ+GH0ewI+USBMMt6jskjrd1xd0gV/jgbSI=;
-        b=nu7uTw4KLUQBT2PikeGzoI3goFFoUcTtxDpFFhSoJF8OUFrUxHuVdaZ1oW/FpD5L/0
-         JWYaFiiHY2QpXAmy6SRi2IXHRTVn3haFtNQiZKmMGulUb8jfCb0Kvv7sCpYH7TB0Q+W1
-         NHt2nG1iYt3tKKjInLm9gl4Vqd0Y4WRsotwnFBkoQrV69o/m4lwvJ+T3hwLYUfa5a/54
-         JV8nVgY3O4uSFLeFjUNbgFyeEdULIcctHMbovJavDVRypT1QMSeh5QNa0reYyLyce1/K
-         kHMmHjixRMI4Vb8DC5pM4ALodxZlP5YBE1s7AsyEv6g23rnbmR64mFlzRXIXtsRjCMlg
-         OssA==
-X-Gm-Message-State: AO0yUKUwrW5Q93Ppb/PdFRZFMuTE5TA3x+//ZSrgYKDJwclnoIpLYR9G
-        Icnz0NdMeKSStpTzyxqj4pY=
-X-Google-Smtp-Source: AK7set82bxbeoIcZWu2NcSgLOtxjNN2vI65LmdhoooPSlW55h21h4kLPLnypfRLvpZJQeFkXCHbYZA==
-X-Received: by 2002:a05:6a20:7291:b0:bf:f8a:330b with SMTP id o17-20020a056a20729100b000bf0f8a330bmr436797pzk.10.1676411338214;
-        Tue, 14 Feb 2023 13:48:58 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id g17-20020aa78751000000b00592d16e9a12sm4001172pfo.135.2023.02.14.13.48.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 13:48:57 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?5a2f5a2Q5piT?= <mengziyi540841@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 3/3] shorten_unambiguous_ref(): avoid sscanf()
-References: <Y+vVFFCRem6t4IGM@coredump.intra.peff.net>
-        <Y+vV8Ifkj1QV7KF0@coredump.intra.peff.net>
-Date:   Tue, 14 Feb 2023 13:48:57 -0800
-In-Reply-To: <Y+vV8Ifkj1QV7KF0@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 14 Feb 2023 13:41:52 -0500")
-Message-ID: <xmqqmt5f535i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tOzVUXlR/e/9lAEwV6rS1LbOSKoLFL0RpouIm/q5aVQ=;
+        b=71uTYfzuOCAo0sDTuvpn/Fhio9xMXFDkYgkYFeJbG1jZ2PmyvFX/7kWuiWiQ0llUBQ
+         zvpYWMdIgcZDKHraTGExj/xTREfbl2bOI05OiZs7V6OVaY7PrSy+UEv0O/YavnCRMugq
+         RRfD7SvUFkY0STs9uIVA1N+7iNj1XPoOpTUzx+Cfn6hwCyW7ncIQhAljyqJL3JUTg15p
+         NfVIyHAMBxJEUc+FIMSWGfTTCG7bCfjejJnAo01iMRCA2zmO63e28krBqvnGqR6C68Ja
+         gikGw64To6XzzI/xthrxG9V28Iy0MSPenjfFFzE0esoaUOqqi0RFqvXHt6+5eaelQjI2
+         LzCw==
+X-Gm-Message-State: AO0yUKXENst+h7fL9Q6GO2xO7krKdjrGJY730UIpLfBjfsCLdnNYtoW4
+        dQ6KnGZt+GUiaGxqpUeHjK14ZEtPFDcYV2HewYNCTOEdwZk=
+X-Google-Smtp-Source: AK7set+nQEow+spMfLq26hSC+DooJUTmoT+lEqBBuQDfhvaQESip+ajkOmcIO+SwWylSlsNi4E6ae/VesSn7rYSrpEg=
+X-Received: by 2002:a05:600c:3d06:b0:3df:ee65:9c44 with SMTP id
+ bh6-20020a05600c3d0600b003dfee659c44mr31369wmb.197.1676411745887; Tue, 14 Feb
+ 2023 13:55:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20230214032534.507628-1-cheskaqiqi@gmail.com> <xmqqbklw95in.fsf@gitster.g>
+In-Reply-To: <xmqqbklw95in.fsf@gitster.g>
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+Date:   Tue, 14 Feb 2023 16:55:33 -0500
+Message-ID: <CAMO4yUHWJGB1SiqMK5dwb6q84DuavNWBx1JVjGk2f3_bqYYioA@mail.gmail.com>
+Subject: Re: [GSoC][PATCH] builtin/clean.c: fix error message usage typo
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi Junio
 
-> +/*
-> + * Check that the string refname matches a rule of the form
-> + * "{prefix}%.*s{suffix}". So "foo/bar/baz" would match the rule
-> + * "foo/%.*s/baz", and return the string "bar".
-> + */
-> +static const char *match_parse_rule(const char *refname, const char *rule,
-> +				    size_t *len)
-> +{
-> +	/*
-> +	 * Check that rule matches refname up to the first percent
-> +	 * in the rule. This is basically skip_prefix(), but
-> +	 * ending at percent in the prefix, rather than end-of-string.
-> +	 */
-> +	do {
-> +		if (!*rule)
-> +			BUG("rev-parse rule did not have percent");
-> +		if (*rule == '%')
-> +			break;
-> +	} while (*refname++ == *rule++);
+On Tue, Feb 14, 2023 at 12:32 AM Junio C Hamano <gitster@pobox.com> wrote:
 
-So, if we have refname="refs/heads/frotz" and rule="refs/%.*s", then
-we'll scan refname and rule to skip over their "refs/" prefix, and
-the next iteration, where post-increment moved the pointers to point
-at 'h' (at the beginning of "heads/frotz") on the refname side and
-'%' on the rule side, we iterate once more, notice *rule is '%', and
-break out of the loop.  We have refname="heads/frotz" and rule="%.*s"
 
-If we have refname="refsXheads/frotz" and rule="refs/%.*s", after
-skipping over "refs", refname points at 'X' while rule points at '/'
-and the loop needs to break.  Both pointers are post-incremented,
-and now we have refname="heads/frotz" and rule="%.*s".
+> I think the "do not caplitalize" rule is about the sentence after
+> "fatal:", "error:", "warning:", and "info:" labels.
 
-Am I reading the loop correctly?  I wanted the bogus refname not to
-match the rule, but without peeking back refname[-1], I cannot tell
-the two cases apart at this point.
+Thanks, sorry for misunderstanding the "error message ". Will go and
+find another that meets the requirements.
+-------------------
+Thanks
 
-> +	/*
-> +	 * Check that we matched all the way to the "%" placeholder,
-> +	 * and skip past it within the rule string. If so, "refname" at
-> +	 * this point is the beginning of a potential match.
-> +	 */
-> +	if (!skip_prefix(rule, "%.*s", &rule))
-> +		return NULL;
 
-And we now have rule pointing at "" (i.e. "refs/%.*s" has been fully
-consumed).  refname points at "heads/frotz".
-
-> +	/*
-> +	 * And now check that our suffix (if any) matches.
-> +	 */
-> +	if (!strip_suffix(refname, rule, len))
-> +		return NULL;
-> +
-> +	return refname; /* len set by strip_suffix() */
-> +}
-
-And the suffix "" is stripped and we yield "heads/frotz".
-
+Shuqi
