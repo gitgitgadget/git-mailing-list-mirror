@@ -2,332 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B79BC61DA4
-	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 21:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4C1DC61DA4
+	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 21:45:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232761AbjBNVkj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 16:40:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37128 "EHLO
+        id S231881AbjBNVpa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 16:45:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232355AbjBNVke (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 16:40:34 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 021632943A
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:40:24 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id a2so17187333wrd.6
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:40:23 -0800 (PST)
+        with ESMTP id S231714AbjBNVp2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 16:45:28 -0500
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BD8429400
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:45:27 -0800 (PST)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-530b85f118cso98997b3.9
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:45:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lHSruV1/LrYZ1piYSzOvRpovFm29NEa57/Dw90cROe0=;
-        b=EtOwqHGrMMwBdeFvOZKfPJ06NjcVo6zYs1uuh1yQm4pta071JR8Y4fjxgz/F3n+4zs
-         ZariiIVj4HpYOlhV4jDzJys9X6Fkxlbkj86JA3HLM31j5TDGwoAmG+ZkgQQTVuY4prTa
-         mGmvMkAj4Zio7yks//3/o8h2P/ZgBPocuODJFoJ4rBIv+ls4CvxWFrUeL0BncA7O7BTO
-         eMkRwtfV9op6RFpLKKJUQQqeFhy1ZvR6rg7uSOXjAgEgf04F3XJkbYiLQbhmlSxfzAdi
-         XLXimKZHfOG+DzYKlhjTnE8jbo1BucKFBas3237XrqdhFQ19yp7PGeO804IhB+hw410V
-         jgeQ==
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yFNXYo++t5qVEQSgtr+ZIaf3/b2RF6oNBQGXZFwRZog=;
+        b=VhlOILmpP0wykswpzdOTM/qnR7AExGgVQqd3nUA2aikqbphqmQYsEzkRlk6cy7i0JO
+         H315VdQcwux9s0CP0DTapfoEmMvbn7E3r+E+5BI1Q0iaZuM5A43WscYL9FYXttmEyVux
+         JHpw/Pn8C2lZxi6yvJhLmt9h2GYg3nRGkqh4T/3m/wTyGqP2EDVvQesrYMEjE66R/51A
+         BbkCZgAfjb3T83n42LCqz69oZCIEyz1pMGvAgbyENvQA5buPsWN0tc41P9KQ4GEJy1/+
+         mYrtS8P+PoM0C4CbavDRHH6PMdjiR3c/Yde/pCa4bT14+u8MXuQb/mB6yqJ6+12ikpo4
+         cU6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lHSruV1/LrYZ1piYSzOvRpovFm29NEa57/Dw90cROe0=;
-        b=pyACihe/ntzuR/J8+7rvOpQ+TVdkCkGHJYEjTYDPjeNEoBSAZnTAhmHEaPLI0zcno5
-         HKR8iOrT8wP4tpglzAXlJXFS/mz2mcMCdpfv3SEKiolRpGAW8Q3PlcRJ5O3zCToYvLip
-         MwtoI3/PbDaxfz9N5gL5OUCe7NKX2L0gnx4kUDFwPqgOQNwkZkw3PuLfjjYm+KTN5MRN
-         ZCYJ5gr526TkKFj0KODKr5vhhd09n3Kti1FBJFScLEZ7kzm234WMYPXrzL90HglSudxK
-         /lH34BaozthYHfRtqC2io2zcmqCPG9pItH+CPLTvIP5obRiGoQw0cCA3PfPkkCfC7+iC
-         Tl8g==
-X-Gm-Message-State: AO0yUKWeNg0ivGai1E0KKzGJZTMpjuhOM3MtJZnEl4pYlNrLmZTw5T8H
-        Xx2g8QwPO7VfnT2rAsXZPI6M74UDivQ=
-X-Google-Smtp-Source: AK7set//Kw+0zUasyT7hPapGOPSiu3XEgwY223iFp2x1Yv0xTNhJfQio5IzZj4m8pYToz7bXx6ICgA==
-X-Received: by 2002:adf:e686:0:b0:2c5:4dbb:678d with SMTP id r6-20020adfe686000000b002c54dbb678dmr2986688wrm.40.1676410822191;
-        Tue, 14 Feb 2023 13:40:22 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f6-20020a5d58e6000000b002c54c7153f0sm11072075wrd.1.2023.02.14.13.40.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 13:40:21 -0800 (PST)
-Message-Id: <cb0305631496eb4c2d51e5b586ac0ca8580c7dc1.1676410819.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
-References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
-        <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Feb 2023 21:40:19 +0000
-Subject: [PATCH v2 2/2] diff: teach diff to read gitattribute diff-algorithm
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yFNXYo++t5qVEQSgtr+ZIaf3/b2RF6oNBQGXZFwRZog=;
+        b=m5n7TzKw+zcgoRmh97DfbJj7w2jzQJSDSAsKTs0YwR9llkrXc7eq+mrm5UVZ3BUZVz
+         sDXLX/kMYNpmocalT+Xdr8UdVXdgkbjYJFZGSV2R92fKIykQSeo8CtVw8W8KIE2JJYrn
+         PNI8qqNikotgOFrX5P9pELy/TmBQzL9igcZVNXoheN06V4PrhL2Qr9jwdXSA5+3uI+jH
+         R0ePWIDm2fAC8f+eyZD2GtSu9uh95OdIxyAdmgTp1fRCVNU3kFDj3/BURM+B80FEOYyY
+         6edlACy1IBWj562WSXdvLizF21qcBCdSzll4Gd+em+KgJJ27W5ojdnRl8gGeSvvP4QC/
+         evTQ==
+X-Gm-Message-State: AO0yUKXQXOCYxdtwsI6AdrtKOrE/TzW8zE9VbcOy1sw5eRHyGlMgrKEG
+        Q7UykxFGJJ7UwqzD06B7Mk2p0M0kGHH+4OJXgr5A7zaBjYbrXDos
+X-Google-Smtp-Source: AK7set+EijbT/MzdhYLZgQE7Wyph5Dnvot/XHwvvwJntk0PrRS2LsdAMjyYOoQa7uVPuzE+6Kn3Twv+UhmBIT2Fke/A=
+X-Received: by 2002:a0d:c187:0:b0:50a:87fe:1e45 with SMTP id
+ c129-20020a0dc187000000b0050a87fe1e45mr5358ywd.338.1676411126160; Tue, 14 Feb
+ 2023 13:45:26 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>,
-        Elijah Newren <newren@gmail.com>,
-        John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+References: <20230213182134.2173280-1-calvinwan@google.com>
+ <20230213182134.2173280-7-calvinwan@google.com> <Y+qgwHx52DSAfsEb@coredump.intra.peff.net>
+ <xmqqilg57zxq.fsf@gitster.g> <Y+ux3DEd/p5emFWs@coredump.intra.peff.net> <xmqqr0us6we1.fsf@gitster.g>
+In-Reply-To: <xmqqr0us6we1.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Tue, 14 Feb 2023 13:45:15 -0800
+Message-ID: <CAFySSZDU0NG5Bod=5soNKXfiN08y2jCKYwdVO2Feo2bDGQU2gQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 6/6] add: reject nested repositories
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Josh Steadmon <steadmon@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+On Tue, Feb 14, 2023 at 8:32 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Jeff King <peff@peff.net> writes:
+>
+> >> If we are keeping the escape hatch, it would make sense to actually
+> >> use that escape hatch to protect existing "git add" with that,
+> >> instead of turning them into "git submodule add" and then adjust the
+> >> tests for the consequences (i.e. "submodule add" does more than what
+> >> "git add [--no-warn-embedded-repo]" would), at least for these tests
+> >> in [3,4,5/6].
+> >
+> > Good point. I did not really look at the test modifications, but
+> > anywhere that is triggering the current warning is arguably a good spot
+> > to be using --no-warn-embedded-repo already. It is simply that the test
+> > did not bother to look at their noisy stderr. And such a modification is
+> > obviously correct, as there are no further implications for the test.
+>
+> I did not mean that no "git add" that create a gitlink in existing
+> tests should be made into "git submodule add".  The ones that
+> clearly wanted to set up tests to see what happens in a top-level
+> with a subproject may become more realistic tests by switching to
+> "git submodule add" and updating the expected "git diff HEAD" output
+> to include a newly created .gitmodules file.  But some of the tests
+> are merely to see what happens with an index with a gitlink in it,
+> and "add --no-warn" would be more appropriate for them.
 
-It can be useful to specify diff algorithms per file type. For example,
-one may want to use the minimal diff algorithm for .json files, another
-for .c files, etc.
+I'll take another pass into the modified tests from previous patches
+and pick out ones that are not specifically submodule related tests.
 
-Teach the diff machinery to check attributes for a diff driver. Also
-teach the diff driver parser a new type "algorithm" to look for in the
-config, which will be used if a driver has been specified through the
-attributes.
+> >> Also I do not think it is too late for a more natural UI, e.g.
+> >> "--allow-embedded-repo=[yes/no/warn]", to deprecate the
+> >> "--[no-]warn-*" option.
+> >
+> > True. We have to keep the existing form for backwards compatibility, but
+> > we can certainly add a new one.
+> >
+> > I kind of doubt that --allow-embedded-repo=warn is useful, though. If a
+> > caller knows what it is doing is OK, then it would say "yes". And
+> > otherwise, you'd want "no". There is no situation where a caller is
+> > unsure.
+>
+> Yeah, if the default becomes "no", then there isn't much point,
+> other than just for completeness, to have "warn" as a choice.
 
-Enforce precedence of diff algorithm by favoring the command line option,
-then looking at the driver attributes & config combination, then finally
-the diff.algorithm config.
-
-To enforce precedence order, use the `xdl_opts_command_line` member
-during options pasing to indicate the diff algorithm was set via command
-line args.
-
-Signed-off-by: John Cai <johncai86@gmail.com>
----
- Documentation/gitattributes.txt | 41 ++++++++++++++++++++++++++++++++-
- diff.c                          | 25 +++++++++++++-------
- diff.h                          |  2 ++
- t/lib-diff-alternative.sh       | 38 +++++++++++++++++++++++++++++-
- userdiff.c                      |  4 +++-
- userdiff.h                      |  1 +
- 6 files changed, 100 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index c19e64ea0ef..7e69f509d0a 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -736,7 +736,6 @@ String::
- 	by the configuration variables in the "diff.foo" section of the
- 	Git config file.
- 
--
- Defining an external diff driver
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
-@@ -758,6 +757,46 @@ with the above configuration, i.e. `j-c-diff`, with 7
- parameters, just like `GIT_EXTERNAL_DIFF` program is called.
- See linkgit:git[1] for details.
- 
-+Setting the internal diff algorithm
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The diff algorithm can be set through the `diff.algorithm` config key, but
-+sometimes it may be helpful to set the diff algorithm by path. For example, one
-+might wish to set a diff algorithm automatically for all `.json` files such that
-+the user would not need to pass in a separate command line `--diff-algorithm` flag each
-+time.
-+
-+First, in `.gitattributes`, you would assign the `diff` attribute for paths.
-+
-+*Git attributes*
-+------------------------
-+*.json diff=<name>
-+------------------------
-+
-+Then, you would define a "diff.<name>.algorithm" configuration to specify the
-+diff algorithm, choosing from `meyers`, `patience`, `minimal`, and `histogram`.
-+
-+*Git config*
-+
-+----------------------------------------------------------------
-+[diff "<name>"]
-+  algorithm = histogram
-+----------------------------------------------------------------
-+
-+This diff algorithm applies to git-diff(1), including the `--stat` output.
-+
-+NOTE: If the `command` key also exists, then Git will treat this as an external
-+diff and attempt to use the value set for `command` as an external program. For
-+instance, the following config, combined with the above `.gitattributes` file,
-+will result in `command` favored over `algorithm`.
-+
-+*Git config*
-+
-+----------------------------------------------------------------
-+[diff "<name>"]
-+  command = j-c-diff
-+  algorithm = histogram
-+----------------------------------------------------------------
- 
- Defining a custom hunk-header
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-diff --git a/diff.c b/diff.c
-index 92a0eab942e..24da439e56f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4456,15 +4456,11 @@ static void run_diff_cmd(const char *pgm,
- 	const char *xfrm_msg = NULL;
- 	int complete_rewrite = (p->status == DIFF_STATUS_MODIFIED) && p->score;
- 	int must_show_header = 0;
-+	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, attr_path);
- 
--
--	if (o->flags.allow_external) {
--		struct userdiff_driver *drv;
--
--		drv = userdiff_find_by_path(o->repo->index, attr_path);
-+	if (o->flags.allow_external)
- 		if (drv && drv->external)
- 			pgm = drv->external;
--	}
- 
- 	if (msg) {
- 		/*
-@@ -4481,12 +4477,17 @@ static void run_diff_cmd(const char *pgm,
- 		run_external_diff(pgm, name, other, one, two, xfrm_msg, o);
- 		return;
- 	}
--	if (one && two)
-+	if (one && two) {
-+		if (!o->xdl_opts_command_line)
-+			if (drv && drv->algorithm)
-+				set_diff_algorithm(o, drv->algorithm);
-+
- 		builtin_diff(name, other ? other : name,
- 			     one, two, xfrm_msg, must_show_header,
- 			     o, complete_rewrite);
--	else
-+	} else {
- 		fprintf(o->file, "* Unmerged path %s\n", name);
-+	}
- }
- 
- static void diff_fill_oid_info(struct diff_filespec *one, struct index_state *istate)
-@@ -4583,6 +4584,10 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
- 	const char *name;
- 	const char *other;
- 
-+	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, p->one->path);
-+	if (drv && drv->algorithm)
-+		set_diff_algorithm(o, drv->algorithm);
-+
- 	if (DIFF_PAIR_UNMERGED(p)) {
- 		/* unmerged */
- 		builtin_diffstat(p->one->path, NULL, NULL, NULL,
-@@ -5130,6 +5135,8 @@ static int diff_opt_diff_algorithm(const struct option *opt,
- 		return error(_("option diff-algorithm accepts \"myers\", "
- 			       "\"minimal\", \"patience\" and \"histogram\""));
- 
-+	options->xdl_opts_command_line = 1;
-+
- 	return 0;
- }
- 
-@@ -5157,6 +5164,8 @@ static int diff_opt_diff_algorithm_no_arg(const struct option *opt,
- 		BUG("available diff algorithms include \"myers\", "
- 			       "\"minimal\", \"patience\" and \"histogram\"");
- 
-+	options->xdl_opts_command_line = 1;
-+
- 	return 0;
- }
- 
-diff --git a/diff.h b/diff.h
-index 41eb2c3d428..46b565abfd4 100644
---- a/diff.h
-+++ b/diff.h
-@@ -333,6 +333,8 @@ struct diff_options {
- 	int prefix_length;
- 	const char *stat_sep;
- 	int xdl_opts;
-+	/* If xdl_opts has been set via the command line. */
-+	int xdl_opts_command_line;
- 
- 	/* see Documentation/diff-options.txt */
- 	char **anchors;
-diff --git a/t/lib-diff-alternative.sh b/t/lib-diff-alternative.sh
-index 8d1e408bb58..2dc02bca873 100644
---- a/t/lib-diff-alternative.sh
-+++ b/t/lib-diff-alternative.sh
-@@ -105,10 +105,46 @@ index $file1..$file2 100644
-  }
- EOF
- 
-+	cat >expect_diffstat <<EOF
-+ file1 => file2 | 21 ++++++++++-----------
-+ 1 file changed, 10 insertions(+), 11 deletions(-)
-+EOF
-+
- 	STRATEGY=$1
- 
-+	test_expect_success "$STRATEGY diff from attributes" '
-+		echo "file* diff=driver" >.gitattributes &&
-+		git config diff.driver.algorithm "$STRATEGY" &&
-+		test_must_fail git diff --no-index file1 file2 > output &&
-+		cat expect &&
-+		cat output &&
-+		test_cmp expect output
-+	'
-+
-+	test_expect_success "$STRATEGY diff from attributes has valid diffstat" '
-+		echo "file* diff=driver" >.gitattributes &&
-+		git config diff.driver.algorithm "$STRATEGY" &&
-+		test_must_fail git diff --stat --no-index file1 file2 > output &&
-+		test_cmp expect_diffstat output
-+	'
-+
- 	test_expect_success "$STRATEGY diff" '
--		test_must_fail git diff --no-index "--$STRATEGY" file1 file2 > output &&
-+		test_must_fail git diff --no-index "--diff-algorithm=$STRATEGY" file1 file2 > output &&
-+		test_cmp expect output
-+	'
-+
-+	test_expect_success "$STRATEGY diff command line precedence before attributes" '
-+		echo "file* diff=driver" >.gitattributes &&
-+		git config diff.driver.algorithm meyers &&
-+		test_must_fail git diff --no-index "--diff-algorithm=$STRATEGY" file1 file2 > output &&
-+		test_cmp expect output
-+	'
-+
-+	test_expect_success "$STRATEGY diff attributes precedence before config" '
-+		git config diff.algorithm default &&
-+		echo "file* diff=driver" >.gitattributes &&
-+		git config diff.driver.algorithm "$STRATEGY" &&
-+		test_must_fail git diff --no-index file1 file2 > output &&
- 		test_cmp expect output
- 	'
- 
-diff --git a/userdiff.c b/userdiff.c
-index d71b82feb74..ff25cfc4b4c 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -293,7 +293,7 @@ PATTERNS("scheme",
- 	 "|([^][)(}{[ \t])+"),
- PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
- 	 "\\\\[a-zA-Z@]+|\\\\.|[a-zA-Z0-9\x80-\xff]+"),
--{ "default", NULL, -1, { NULL, 0 } },
-+{ "default", NULL, NULL, -1, { NULL, 0 } },
- };
- #undef PATTERNS
- #undef IPATTERN
-@@ -394,6 +394,8 @@ int userdiff_config(const char *k, const char *v)
- 		return parse_bool(&drv->textconv_want_cache, k, v);
- 	if (!strcmp(type, "wordregex"))
- 		return git_config_string(&drv->word_regex, k, v);
-+	if (!strcmp(type, "algorithm"))
-+		return git_config_string(&drv->algorithm, k, v);
- 
- 	return 0;
- }
-diff --git a/userdiff.h b/userdiff.h
-index aee91bc77e6..24419db6973 100644
---- a/userdiff.h
-+++ b/userdiff.h
-@@ -14,6 +14,7 @@ struct userdiff_funcname {
- struct userdiff_driver {
- 	const char *name;
- 	const char *external;
-+	const char *algorithm;
- 	int binary;
- 	struct userdiff_funcname funcname;
- 	const char *word_regex;
--- 
-gitgitgadget
+I don't see a point for "warn" as well. The default "no" case should
+carry over part of the deprecated warning from before.
