@@ -2,108 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9460AC61DA4
-	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 18:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D4AFC05027
+	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 19:57:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233352AbjBNSx6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 13:53:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48518 "EHLO
+        id S230192AbjBNT5E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 14:57:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232297AbjBNSx5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 13:53:57 -0500
-X-Greylist: delayed 626 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 14 Feb 2023 10:53:42 PST
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32F1EAD06;
-        Tue, 14 Feb 2023 10:53:42 -0800 (PST)
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 31EIgeDb2023818
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 14 Feb 2023 18:42:41 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-Cc:     "'Linux Kernel'" <linux-kernel@vger.kernel.org>,
-        <git-packagers@googlegroups.com>,
-        <oss-security@lists.openwall.com>, <git-security@googlegroups.com>
-References: <xmqqr0us5dio.fsf@gitster.g>
-In-Reply-To: <xmqqr0us5dio.fsf@gitster.g>
-Subject: RE: [Announce] Git 2.39.2 and friends
-Date:   Tue, 14 Feb 2023 13:42:52 -0500
-Organization: Nexbridge Inc.
-Message-ID: <004a01d940a4$289e56a0$79db03e0$@nexbridge.com>
+        with ESMTP id S229519AbjBNT5C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 14:57:02 -0500
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3C9A2BF15
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 11:57:01 -0800 (PST)
+Received: by mail-yb1-xb2a.google.com with SMTP id s203so14414914ybc.11
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 11:57:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=dCVRHibJPk8E2uDHWD3mAqBvsLFaqLOITGHfwt5s0tk=;
+        b=OomyeCX8uRGdOHNGK7vj0xkQdWR7nDFIv5oMnXJKwnVZRGyv12HvAemZYeYwPtc+c5
+         l6MwcEjkwJCaPmSwuslzYeXc4zBH4IvcV13/a596gTiEjjteBHrw1oRpAzDWgqUjyQNC
+         mqG1fVPYCxZ8NuGDjAMnqncYq5Yat3QxovqPGiTxYXQnc55+1vovPfSIaoUhPIiXmPxi
+         y26nOADjzF98yyVZovTizkBdwYXDoqso9v+WdMrvjeSsvJSrdn7iFpR+1MNG8xr+80yr
+         VwRblkszHo1D5aa0Fn2VCMvrDNE2fNve7wmv8LNjaPF6qgs2fjwqnrcwbFkEMY3Dqq0h
+         d66w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dCVRHibJPk8E2uDHWD3mAqBvsLFaqLOITGHfwt5s0tk=;
+        b=X/RFLtqxOx+lPpUwWHwhngQNejug0XBYv9KSSbZTGuv9Jfk0IO9FZDh3w1JAlAtrt0
+         YYF8h3ACoLiEoXpuxnaQuH1IoUeazAR7mBt35/ZTP0KK+bohgQDCMASJuNdtMJXLK34x
+         QVpaN/IEHbrNUtsQdNxD1zu0IPN46n6TgtudvMuTX58BJ6fccg31U8cENDZjpDs3cx3R
+         qSwLW+QCrR0KEcL4HFQfQmZSWU4NX/nFcuPdJFBjybgZJ8TzAu7/lP7qCAJ/YjmS1ul1
+         pZgTzskeZNr/RifL+URPrpsj+JQ9pX1xWs6kXErV5Q9bZwUYBizgHlCSLc1WIQo2OZki
+         kaGQ==
+X-Gm-Message-State: AO0yUKVrDuImj6jkW8SXvOv9tIbYhb+90aWX1V5m/u7pDSoISUju0jzp
+        E+Pn5DSImvZE/IVwWhFNBviFOCwPTyaSnqFfAM/t+Q==
+X-Google-Smtp-Source: AK7set8qV9QpMrXD00hvhPxyDYRKKqHZDHL1e0HumhxoyyUSN2AQpfLYfFXKzLbgtlVnHPTrYhApuj2h4sS1HNL5mR0=
+X-Received: by 2002:a5b:103:0:b0:918:3e8f:5e70 with SMTP id
+ 3-20020a5b0103000000b009183e8f5e70mr395034ybx.573.1676404621020; Tue, 14 Feb
+ 2023 11:57:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQGU4w09QxSlSb1LTh2rkB44/hmSy69XgIqw
+References: <20230213182134.2173280-1-calvinwan@google.com>
+ <20230213182134.2173280-2-calvinwan@google.com> <xmqqk00lbc8k.fsf@gitster.g>
+In-Reply-To: <xmqqk00lbc8k.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Tue, 14 Feb 2023 11:56:50 -0800
+Message-ID: <CAFySSZBAXCGTEhTK+rpLaZz4_RhdEDV5e5QewUwN-LHgSOTe2g@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/6] leak fix: cache_put_path
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On February 14, 2023 1:05 PM, Junio C Hamano wrote:
->A maintenance release Git v2.39.2, together with releases for older
-maintenance
->tracks v2.38.4, v2.37.6, v2.36.5, v2.35.7, v2.34.7, v2.33.7, v2.32.6,
-v2.31.7, and
->v2.30.8, are now available at the usual places.
+On Mon, Feb 13, 2023 at 11:23 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
->These maintenance releases are to address two security issues identified as
-CVE-
->2023-22490 and CVE-2023-23946.  They both affect ranges of existing
-versions and
->users are strongly encouraged to upgrade.
+> Calvin Wan <calvinwan@google.com> writes:
 >
->The tarballs are found at:
+> > hashmap_put returns a pointer if the key was found and subsequently
+> > replaced. Free this pointer so it isn't leaked.
+> >
+> > Signed-off-by: Calvin Wan <calvinwan@google.com>
+> > ---
+> >  submodule-config.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/submodule-config.c b/submodule-config.c
+> > index 4dc61b3a78..90cab34568 100644
+> > --- a/submodule-config.c
+> > +++ b/submodule-config.c
+> > @@ -128,9 +128,11 @@ static void cache_put_path(struct submodule_cache *cache,
+> >       unsigned int hash = hash_oid_string(&submodule->gitmodules_oid,
+> >                                           submodule->path);
+> >       struct submodule_entry *e = xmalloc(sizeof(*e));
+> > +     struct hashmap_entry *replaced;
+> >       hashmap_entry_init(&e->ent, hash);
+> >       e->config = submodule;
+> > -     hashmap_put(&cache->for_path, &e->ent);
+> > +     replaced = hashmap_put(&cache->for_path, &e->ent);
+> > +     free(replaced);
+> >  }
 >
->    https://www.kernel.org/pub/software/scm/git/
+> Out of curiosity, I've checked all the grep hits from hashmap_put()
+> in the codebase and this seems to be the only one.  Everybody else
+> either calls hashmap_put() only after hashmap_get() sees that there
+> is no existing one, or unconditionally calls hashmap_put() and dies
+> if an earlier registration is found.
 >
->The following public repositories all have a copy of the 'v2.39.2'
->tag, as well as the tags for older maintenance tracks listed above.
+> The callers of oidmap_put() in sequencer.c I didn't check.  There
+> might be similar leaks there, or they may be safe---I dunno.  But
+> all other callers of oidmap_put() also seem to be safe.
 >
->  url = https://git.kernel.org/pub/scm/git/git
->  url = https://kernel.googlesource.com/pub/scm/git/git
->  url = git://repo.or.cz/alt-git.git
->  url = https://github.com/gitster/git
+> Back to the patch itself.  The only caller of this function does
 >
->The addressed issues are:
+>         if (submodule->path) {
+>                 cache_remove_path(me->cache, submodule);
+>                 free(submodule->path);
+>         }
+>         submodule->path = xstrdup(value);
+>         cache_put_path(me->cache, submodule);
 >
-> * CVE-2023-22490:
+> It is curious how the same submodule->path is occupied by more than
+> one submodule?  Isn't that a configuration error we want to report
+> to the user somehow (not necessarily error/die), instead of silently
+> replacing with the "last one wins" precedence?
 >
->   Using a specially-crafted repository, Git can be tricked into using
->   its local clone optimization even when using a non-local transport.
->   Though Git will abort local clones whose source $GIT_DIR/objects
->   directory contains symbolic links (c.f., CVE-2022-39253), the objects
->   directory itself may still be a symbolic link.
->
->   These two may be combined to include arbitrary files based on known
->   paths on the victim's filesystem within the malicious repository's
->   working copy, allowing for data exfiltration in a similar manner as
->   CVE-2022-39253.
->
-> * CVE-2023-23946:
->
->   By feeding a crafted input to "git apply", a path outside the
->   working tree can be overwritten as the user who is running "git
->   apply".
->
->Credit for finding CVE-2023-22490 goes to yvvdwf, and the fix was developed
-by
->Taylor Blau, with additional help from others on the Git security mailing
-list.
->
->Credit for finding CVE-2023-23946 goes to Joern Schneeweisz, and the fix
-was
->developed by Patrick Steinhardt.
->
->Johannes Schindelin helped greatly in packaging the whole thing and
-proofreading
->the result.
+> Assuming that the "last one wins" is the sensible thing to do, the
+> change proposed by this patch does seem reasonable way to plug the
+> leak.
 
-NonStop build/test/package cycle has started for 2.39.2. If anyone needs one
-of the friends built for this platform, please let me know.
---Randall
+Swapping this functionality to "first one wins" or erroring out breaks many
+tests that are setup improperly. If we continue with the "last one wins"
+precedence, then a warning and documentation should be added. We
+definitely should not swap it to "first one wins" -- one doesn't make sense
+than the other, but "last one wins" at least has precedence. If we choose
+to error out during config parsing when duplicated submodule paths are
+detected, then those respective tests will also need to be updated.
 
+I'm leaning towards leaving the functionality as is since a user would
+have to manually edit the .gitmodules file to get into the state and is
+protected from it with `git submodule add`. What do you think about
+adding a warning and possibly documentation?
