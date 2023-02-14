@@ -2,81 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91801C61DA4
-	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 22:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8848C05027
+	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 22:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229578AbjBNWkH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 17:40:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50926 "EHLO
+        id S229765AbjBNWkV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 17:40:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbjBNWkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 17:40:06 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 949F5305C5
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 14:40:05 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id gd1so5713893pjb.1
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 14:40:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7lSk8ABNz1vMfgrv5QJ06EDBRS7ytha6BKY201TXXRA=;
-        b=aJYJk7IgE9KIPDHsZO0G4UbfliDtsgxtuVUF2A6NU7XigjV8RM+Fan0z1KFhbi6a8o
-         BpVEzj6kBsKjTjDI4CavmYaWXoSEM+qI2igcnMzRzqQFQ6ejuKpw0H1jigPwJmY54aT7
-         DF6UW8iSj5U6CTYPU491iWe6RYUfj/+/4sHoXbTrOsa43YtHyypohrkyVfHSiHqvraEf
-         GjfsX8Qv1vpW8s0Lkz7IUourkMcVcCb4RIUolUwlmShuCCcaCh++mSXwr09qxSjxOr4l
-         afR6x8iE34t/um3zB1hN3TDaxMFhshcm6HUD49OXhzCJsI4ztGIZ6v0Pd06AfG2zzvLL
-         KjWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7lSk8ABNz1vMfgrv5QJ06EDBRS7ytha6BKY201TXXRA=;
-        b=KC5geTHx28t/P5Pxf+DfdoP7RU5ylWNnWwidkZDyynobQzrnfS2a4K8z2bXBG5dsZM
-         WCu9JCOxCoJRpmGo1EXDo9me/uV0fCvt+x59qNljyq+lOK9UrbEAkgkTE25jiyp4Fh5h
-         NkrXQxUASrvj/fVbGhA7v2mizIpUBKrUchDnxTt0p3sYTupjIGCInH5dvZBlzCzbZc3x
-         sIYH4qsYMqRQT78x0LOyCuUfh4lP4HTYnVSuL9osyivj943n9nf7zdqqYQlqzkxRkBF8
-         xtuIzDXepTPSik59IDhxByKdR8AcWFWrsX29ntVuHbB+rPrVMjFLB7IC/1Xt4Eus8rb7
-         5dyA==
-X-Gm-Message-State: AO0yUKXSO38YTPlXR2toBq2FOx/gCFvTvXvUd9mgDPBpvj6gkpENmot+
-        ucET+KNi5zR1NWjvX1uC0pjvjiz2w7ceQBK/n307gAyBtKA=
-X-Google-Smtp-Source: AK7set+f1caZFSh+YgH2hueoMTjbGA/hfYZbT/nSBAvkFkw7p/oUkdOOJGWimYETMu4UfjiZYDxVbMuacv7RJZEcRI0=
-X-Received: by 2002:a17:903:234c:b0:199:4362:93f1 with SMTP id
- c12-20020a170903234c00b00199436293f1mr67389plh.8.1676414404773; Tue, 14 Feb
- 2023 14:40:04 -0800 (PST)
+        with ESMTP id S229496AbjBNWkU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 17:40:20 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51314305C9
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 14:40:19 -0800 (PST)
+Received: (qmail 3486 invoked by uid 109); 14 Feb 2023 22:40:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Feb 2023 22:40:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6939 invoked by uid 111); 14 Feb 2023 22:40:18 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Feb 2023 17:40:18 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 14 Feb 2023 17:40:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?5a2f5a2Q5piT?= <mengziyi540841@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] shorten_unambiguous_ref(): avoid sscanf()
+Message-ID: <Y+wN0agVK9ZQU/sT@coredump.intra.peff.net>
+References: <Y+vVFFCRem6t4IGM@coredump.intra.peff.net>
+ <Y+vV8Ifkj1QV7KF0@coredump.intra.peff.net>
+ <xmqqmt5f535i.fsf@gitster.g>
+ <Y+wLoFKXhlugxrh1@coredump.intra.peff.net>
+ <xmqqwn4j3mhy.fsf@gitster.g>
 MIME-Version: 1.0
-References: <CAFySSZBMtLSmGHrqb2KQ+QLZXGKQgQx=p+xAmYxE-oTzrYD9+Q@mail.gmail.com>
-In-Reply-To: <CAFySSZBMtLSmGHrqb2KQ+QLZXGKQgQx=p+xAmYxE-oTzrYD9+Q@mail.gmail.com>
-From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Tue, 14 Feb 2023 22:39:29 +0000
-Message-ID: <CAGJzqskPCy7n2nvu_eFq=Xa19JSSoMADCcy4JVumGiaAff0nSg@mail.gmail.com>
-Subject: Re: Join us for Review Club!
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, mirth.hickford@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqwn4j3mhy.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 14 Feb 2023 at 20:44, Calvin Wan <calvinwan@google.com> wrote:
->
-> Hi everyone!
->
-> Review Club is happening this Wednesday at 14:00 Pacific time (UTC-8).
-> You can find more info at [1] and on gitcal [2]. We run a session every
-> other week, and you can find the full schedule on gitcal.
->
-> This week, we'll be discussing Mirth Hickford's new attribute flag for
-> git-credentials [3]. Let me know if you're interested and would
-> like to join (off-list is fine), and I'll send you an invite :)
->
-> See you there!
->
-> [1] https://lore.kernel.org/git/Yfl1%2FZN%2FtaYwfGD0@google.com/
-> [2] http://tinyurl.com/gitcal
-> [3] https://lore.kernel.org/all/pull.1443.v3.git.git.1675545372271.gitgitgadget@gmail.com/
+On Tue, Feb 14, 2023 at 02:34:01PM -0800, Junio C Hamano wrote:
 
-Thanks Calvin for the invitation. I'd love to join, but 10pm here is
-past my bedtime. Send me the link, I'll join if I can, or at least add
-some background to the doc.
+> Jeff King <peff@peff.net> writes:
+> 
+> > but I have a feeling that it gets more readable if we flip the break
+> > conditional and the loop condition.
+> 
+> Yeah, the somewhoat unusual loop structure was what motivated me to
+> look at its corner case.  Flipping the logic around may make it more
+> straight forward.
+
+It does indeed. I pulled the logic from skip_prefix(), thinking that by
+relying on it I would avoid making a stupid mistake. Oh well. :)
+
+Doing it like this is much more readable:
+
+diff --git a/refs.c b/refs.c
+index d8ce7e9ee1..725adafcd8 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1323,12 +1323,12 @@ static const char *match_parse_rule(const char *refname, const char *rule,
+ 	 * in the rule. This is basically skip_prefix(), but
+ 	 * ending at percent in the prefix, rather than end-of-string.
+ 	 */
+-	do {
++	while (*rule != '%') {
+ 		if (!*rule)
+ 			BUG("rev-parse rule did not have percent");
+-		if (*rule == '%')
+-			break;
+-	} while (*refname++ == *rule++);
++		if (*refname++ != *rule++)
++			return 0;
++	}
+ 
+ 	/*
+ 	 * Check that we matched all the way to the "%" placeholder,
+
+I'll hold on to that (plus an adjustment to the comment below to match,
+and perhaps a test for this negative-match case) for a day or so to give
+anybody else a chance to comment, and then send out a v2 tomorrow.
+
+-Peff
