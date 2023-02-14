@@ -2,92 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB81BC6379F
-	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 22:36:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91801C61DA4
+	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 22:40:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232034AbjBNWgn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 17:36:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48710 "EHLO
+        id S229578AbjBNWkH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 17:40:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232031AbjBNWgi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 17:36:38 -0500
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA9C305EB
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 14:36:37 -0800 (PST)
-Received: by mail-pg1-x52f.google.com with SMTP id u75so11251087pgc.10
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 14:36:37 -0800 (PST)
+        with ESMTP id S229496AbjBNWkG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 17:40:06 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 949F5305C5
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 14:40:05 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id gd1so5713893pjb.1
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 14:40:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=jOwzXFdgED1iiCAEF9yTJFihF9OhJw7KajDjHlOjwn0=;
-        b=Q6cZuCbkDhYdvOnDFspzGhzicE5z8B331yATERBVoAMLY2usKI+ZrlxXB1lU+/mayD
-         6m7NmIzb2L9TG4WSOXRPKb6vuIYqKFDNAYRWbeqFHdYHC1kEerh/VMAoya4lDRtn/OMD
-         3yAHz42ihGB60nqOxejYkv7AGzC170IPtAlnifdnKi/sFROJmZmB+9rXwCCrr7bgo6nT
-         1HDjlFwfZNq7rANSALWw1WP/VuwE/F+2QIIQRf5as6v+3BtuZCbn7MjEcsscLBan1Tfb
-         EWvqkHssKbkqGQdifzqjPCvmMgBzPOxU8Lg4LZqqzgqb/l+vUTWbzuFPKRWtD/OHabyj
-         bvXA==
+        bh=7lSk8ABNz1vMfgrv5QJ06EDBRS7ytha6BKY201TXXRA=;
+        b=aJYJk7IgE9KIPDHsZO0G4UbfliDtsgxtuVUF2A6NU7XigjV8RM+Fan0z1KFhbi6a8o
+         BpVEzj6kBsKjTjDI4CavmYaWXoSEM+qI2igcnMzRzqQFQ6ejuKpw0H1jigPwJmY54aT7
+         DF6UW8iSj5U6CTYPU491iWe6RYUfj/+/4sHoXbTrOsa43YtHyypohrkyVfHSiHqvraEf
+         GjfsX8Qv1vpW8s0Lkz7IUourkMcVcCb4RIUolUwlmShuCCcaCh++mSXwr09qxSjxOr4l
+         afR6x8iE34t/um3zB1hN3TDaxMFhshcm6HUD49OXhzCJsI4ztGIZ6v0Pd06AfG2zzvLL
+         KjWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jOwzXFdgED1iiCAEF9yTJFihF9OhJw7KajDjHlOjwn0=;
-        b=zX3TvHh+TPnAVpUDc9kExRHVNZavQWyLxYSetb8lXRChUq582lGvutb2lniMOxrpLH
-         vxnIcdiIXzfMUtkKcdlhDBygZ2K7IXutevNb9/ucqFO9EWem525WDfEpZ+/rWLtXRoFE
-         GMRWTwPTP9Sm1hvkCIWQWPkgv542s1DuWnDK9vQlqqJeKhMyx3BsE9UeHkXPaKGkdPNP
-         aL0jNcXLPuOZbuCcP7dkjkfins2MdQvm2CGEB/5ZSKxMy5nhF0SUt1ZYvN0grqs5z6HE
-         kchJ/VP3RW6fFNC51KWMbOLYQFC2Vm3D2pQ35dD3h+TF+NQZ+qCjABj4MV5CELMOXTP/
-         rlxQ==
-X-Gm-Message-State: AO0yUKWM7eqOH2O4kwRC7YG3vB/rADGPEiMH0XOkRWQD4T5KPyXdurcZ
-        2vCrPqGbI4bXgyDJANIhg3ng4YKHpCUX5HCm0QI=
-X-Google-Smtp-Source: AK7set8nqp3SSWNNGgZIdsd4NDlt2JcKaIwogtmN4a1bL28M24ef/v8s/2hx/W95omQ607c6D6rMn/97wf2Hiev0zQk=
-X-Received: by 2002:a62:1d57:0:b0:5a8:bf27:74c8 with SMTP id
- d84-20020a621d57000000b005a8bf2774c8mr748472pfd.28.1676414197146; Tue, 14 Feb
- 2023 14:36:37 -0800 (PST)
+        bh=7lSk8ABNz1vMfgrv5QJ06EDBRS7ytha6BKY201TXXRA=;
+        b=KC5geTHx28t/P5Pxf+DfdoP7RU5ylWNnWwidkZDyynobQzrnfS2a4K8z2bXBG5dsZM
+         WCu9JCOxCoJRpmGo1EXDo9me/uV0fCvt+x59qNljyq+lOK9UrbEAkgkTE25jiyp4Fh5h
+         NkrXQxUASrvj/fVbGhA7v2mizIpUBKrUchDnxTt0p3sYTupjIGCInH5dvZBlzCzbZc3x
+         sIYH4qsYMqRQT78x0LOyCuUfh4lP4HTYnVSuL9osyivj943n9nf7zdqqYQlqzkxRkBF8
+         xtuIzDXepTPSik59IDhxByKdR8AcWFWrsX29ntVuHbB+rPrVMjFLB7IC/1Xt4Eus8rb7
+         5dyA==
+X-Gm-Message-State: AO0yUKXSO38YTPlXR2toBq2FOx/gCFvTvXvUd9mgDPBpvj6gkpENmot+
+        ucET+KNi5zR1NWjvX1uC0pjvjiz2w7ceQBK/n307gAyBtKA=
+X-Google-Smtp-Source: AK7set+f1caZFSh+YgH2hueoMTjbGA/hfYZbT/nSBAvkFkw7p/oUkdOOJGWimYETMu4UfjiZYDxVbMuacv7RJZEcRI0=
+X-Received: by 2002:a17:903:234c:b0:199:4362:93f1 with SMTP id
+ c12-20020a170903234c00b00199436293f1mr67389plh.8.1676414404773; Tue, 14 Feb
+ 2023 14:40:04 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1443.v2.git.git.1675244392025.gitgitgadget@gmail.com>
- <pull.1443.v3.git.git.1675545372271.gitgitgadget@gmail.com> <xmqqmt5h80s8.fsf@gitster.g>
-In-Reply-To: <xmqqmt5h80s8.fsf@gitster.g>
+References: <CAFySSZBMtLSmGHrqb2KQ+QLZXGKQgQx=p+xAmYxE-oTzrYD9+Q@mail.gmail.com>
+In-Reply-To: <CAFySSZBMtLSmGHrqb2KQ+QLZXGKQgQx=p+xAmYxE-oTzrYD9+Q@mail.gmail.com>
 From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Tue, 14 Feb 2023 22:36:01 +0000
-Message-ID: <CAGJzqs=t7k2zRKKq9xN-Avbo2uXgqsg7i0Utfv-ee6yZ2CWNDA@mail.gmail.com>
-Subject: Re: [PATCH v3] credential: new attribute password_expiry_utc
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>, Cheetham <mjcheetham@outlook.com>,
-        Dennington <lessleydennington@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
+Date:   Tue, 14 Feb 2023 22:39:29 +0000
+Message-ID: <CAGJzqskPCy7n2nvu_eFq=Xa19JSSoMADCcy4JVumGiaAff0nSg@mail.gmail.com>
+Subject: Re: Join us for Review Club!
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, mirth.hickford@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 14 Feb 2023 at 01:59, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, 14 Feb 2023 at 20:44, Calvin Wan <calvinwan@google.com> wrote:
 >
-> "M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> Hi everyone!
 >
-> > From: M Hickford <mirth.hickford@gmail.com>
-> >
-> > Some passwords have an expiry date known at generation. This may be
-> > years away for a personal access token or hours for an OAuth access
-> > token.
-> > ...
-> >  t/t0300-credentials.sh             | 94 ++++++++++++++++++++++++++++++
+> Review Club is happening this Wednesday at 14:00 Pacific time (UTC-8).
+> You can find more info at [1] and on gitcal [2]. We run a session every
+> other week, and you can find the full schedule on gitcal.
 >
-> https://github.com/git/git/actions/runs/4169057114/jobs/7217377625
+> This week, we'll be discussing Mirth Hickford's new attribute flag for
+> git-credentials [3]. Let me know if you're interested and would
+> like to join (off-list is fine), and I'll send you an invite :)
 >
-> Other platforms seem to be OK, but Windows test seems to be unhappy
-> with it when this topic gets merged to 'seen'.
+> See you there!
+>
+> [1] https://lore.kernel.org/git/Yfl1%2FZN%2FtaYwfGD0@google.com/
+> [2] http://tinyurl.com/gitcal
+> [3] https://lore.kernel.org/all/pull.1443.v3.git.git.1675545372271.gitgitgadget@gmail.com/
 
-Curious, let me take a look. I see that the tests failed on freebsd too.
-
-I don't have a Windows machine to debug. If anyone reading has a
-hypothesis, please share.
-
-I shall try changing the default value for a password without expiry
-from TIME_MAX to 0, see if that works any better [2].
-
-[1] https://github.com/git/git/pull/1443/checks?check_run_id=11112315291
-[2] https://github.com/git/git/pull/1443/checks?check_run_id=11343677685
+Thanks Calvin for the invitation. I'd love to join, but 10pm here is
+past my bedtime. Send me the link, I'll join if I can, or at least add
+some background to the doc.
