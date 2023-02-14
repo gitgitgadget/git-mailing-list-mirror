@@ -2,85 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C5DFC05027
-	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 22:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FFFEC05027
+	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 22:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232770AbjBNW3e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 17:29:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45328 "EHLO
+        id S229650AbjBNWbA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 17:31:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232778AbjBNW3d (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 17:29:33 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAF412CC6B
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 14:29:24 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id n20-20020a17090aab9400b00229ca6a4636so258460pjq.0
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 14:29:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rmVp45hORN02+xTimqOWptfu90ugM83uHoWzsPS75HM=;
-        b=P7N07Qkd82szdiD03EnVdwzP32PHJOJn+4g77nsexUl078KBlakuwdoGebrBvyFPss
-         lL8dDjEDbQYhpRKUEX9LwTs1o2zI5nfG3ZUNzqDYtBI3rD+0l8/GEFoKSCMAzz8oR4V0
-         U0YFBJI/3Mf1h6RQMAXaMKx1guMlE7xaPdsNg2dIzzkGXLKwQYKoKj2tkrucx6PY7q4I
-         zVt7gZbIHqGDwSLXQzA6jqP7Gfv6Bbjur+WUd+5xQZcy+n8viNK6ij2zHD+ijPE7s3xZ
-         idJaBdKrBncO/AWm1c7mNjpWq9Capqnu3WrZnvq0yaC4sP1Brgx6oy5Ssgu63NAJd3tP
-         x64Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=rmVp45hORN02+xTimqOWptfu90ugM83uHoWzsPS75HM=;
-        b=aRrhJLV7Sn0OGO6ZWxL7h4tcDJ8uNbbw/ueKpvfc7+Rp3FW9VIhNPC0lsm5SVzMLAs
-         gU+Sh2jJESWysURYkQXsUx9KjwRE9sqFnxCPXpsdcTtK5vt8Syg8VAkCDG6XtWXAOPkf
-         PYtTZrt7VDUn9JiDV4nm4w8qbbzVjC9moXoC9bHa/7rf43gc30Y5IUpJTf2bPackdSPP
-         mEAzSrwrxuwe8nbb6cDSZsyjndr1wZoCgwF6qt9/EgeKORt5csVrH2oaSwY6jO49pYKc
-         k6P1iOQOefuAagt0DJpr1M/I/fbzC7ao6WIfgCupDJexwP8gxXFsj+ggtZYFv0sV3MPk
-         CVJQ==
-X-Gm-Message-State: AO0yUKW9IbBnCFj2RzIudC/2kydL+MRuGppVc5XyDIedc+M0L1OtSllE
-        ynfQOlEY8KmZiqTDHmQ2lE99F312f7k=
-X-Google-Smtp-Source: AK7set/QeZ6ZebCH40SC8NkMjhj5QRp6iDzRctwjKwCFz/i/u0sDM0PsqLbp4Qx/FbE4lIFHGaNp9w==
-X-Received: by 2002:a17:902:f68b:b0:196:64bf:ed86 with SMTP id l11-20020a170902f68b00b0019664bfed86mr260390plg.62.1676413764276;
-        Tue, 14 Feb 2023 14:29:24 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id iz17-20020a170902ef9100b00196025a34b9sm1869597plb.159.2023.02.14.14.29.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 14:29:23 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shuqi Liang <cheskaqiqi@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 3/3] t4113: put executable lines to test_expect_success
-References: <20230205145245.11078-1-cheskaqiqi@gmail.com>
-        <20230206211823.8651-1-cheskaqiqi@gmail.com>
-        <20230206211823.8651-4-cheskaqiqi@gmail.com>
-        <xmqqlela2z3p.fsf@gitster.g>
-        <CAMO4yUHqogcHaQa8=LCFyze=dZTtrPPKdcscQHMvaNRX8w7i2w@mail.gmail.com>
-Date:   Tue, 14 Feb 2023 14:29:23 -0800
-In-Reply-To: <CAMO4yUHqogcHaQa8=LCFyze=dZTtrPPKdcscQHMvaNRX8w7i2w@mail.gmail.com>
-        (Shuqi Liang's message of "Tue, 14 Feb 2023 17:17:36 -0500")
-Message-ID: <xmqq1qmr51a4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229563AbjBNWa6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 17:30:58 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE8CC26CCB
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 14:30:57 -0800 (PST)
+Received: (qmail 3381 invoked by uid 109); 14 Feb 2023 22:30:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Feb 2023 22:30:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6842 invoked by uid 111); 14 Feb 2023 22:30:56 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Feb 2023 17:30:56 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 14 Feb 2023 17:30:56 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?5a2f5a2Q5piT?= <mengziyi540841@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] shorten_unambiguous_ref(): avoid sscanf()
+Message-ID: <Y+wLoFKXhlugxrh1@coredump.intra.peff.net>
+References: <Y+vVFFCRem6t4IGM@coredump.intra.peff.net>
+ <Y+vV8Ifkj1QV7KF0@coredump.intra.peff.net>
+ <xmqqmt5f535i.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqmt5f535i.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang <cheskaqiqi@gmail.com> writes:
+On Tue, Feb 14, 2023 at 01:48:57PM -0800, Junio C Hamano wrote:
 
-> I didn't see this change in " What's cooking in git.git". I'm not sure
-> if the V5 patch is overlooked. I didn't receive any review after V5.
-> Is there anything wrong in V5 that needs to be corrected?
+> > +	do {
+> > +		if (!*rule)
+> > +			BUG("rev-parse rule did not have percent");
+> > +		if (*rule == '%')
+> > +			break;
+> > +	} while (*refname++ == *rule++);
+> 
+> So, if we have refname="refs/heads/frotz" and rule="refs/%.*s", then
+> we'll scan refname and rule to skip over their "refs/" prefix, and
+> the next iteration, where post-increment moved the pointers to point
+> at 'h' (at the beginning of "heads/frotz") on the refname side and
+> '%' on the rule side, we iterate once more, notice *rule is '%', and
+> break out of the loop.  We have refname="heads/frotz" and rule="%.*s"
+> 
+> If we have refname="refsXheads/frotz" and rule="refs/%.*s", after
+> skipping over "refs", refname points at 'X' while rule points at '/'
+> and the loop needs to break.  Both pointers are post-incremented,
+> and now we have refname="heads/frotz" and rule="%.*s".
 
-I dunno (yet).  These days a day did not have enough time to be
-looking at all the patches on the list, and patches that are more
-about practice than fixing real bugs or adding real features tend to
-be placed on the back burner.
+Thanks for being careful. I had originally detected a match by setting a
+flag in the loop when we see the "%", but then thought it wasn't needed.
+And it's not for the matching case, but it is for the non-match.
 
-THanks for pinging.
+This would fix it:
 
+diff --git a/refs.c b/refs.c
+index d8ce7e9ee1..2c26cf02d3 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1318,6 +1318,8 @@ int update_ref(const char *msg, const char *refname,
+ static const char *match_parse_rule(const char *refname, const char *rule,
+ 				    size_t *len)
+ {
++	int matched = 0;
++
+ 	/*
+ 	 * Check that rule matches refname up to the first percent
+ 	 * in the rule. This is basically skip_prefix(), but
+@@ -1326,10 +1328,15 @@ static const char *match_parse_rule(const char *refname, const char *rule,
+ 	do {
+ 		if (!*rule)
+ 			BUG("rev-parse rule did not have percent");
+-		if (*rule == '%')
++		if (*rule == '%') {
++			matched = 1;
+ 			break;
++		}
+ 	} while (*refname++ == *rule++);
+ 
++	if (!matched)
++		return 0;
++
+ 	/*
+ 	 * Check that we matched all the way to the "%" placeholder,
+ 	 * and skip past it within the rule string. If so, "refname" at
 
+but I have a feeling that it gets more readable if we flip the break
+conditional and the loop condition.
+
+I had also imagined this as a skip_prefix_to_percent() helper, which
+makes the logic nicer, but we actually need to advance in both the
+refname and the prefix, which makes for a weird interface.
+
+-Peff
