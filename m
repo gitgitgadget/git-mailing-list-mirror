@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A5B2C61DA4
-	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 21:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B79BC61DA4
+	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 21:40:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232746AbjBNVka (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 16:40:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36962 "EHLO
+        id S232761AbjBNVkj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 16:40:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232761AbjBNVk2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 16:40:28 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E98D30193
+        with ESMTP id S232355AbjBNVke (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 16:40:34 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 021632943A
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:40:24 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id a2so17187333wrd.6
         for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:40:23 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id l2so553036wry.0
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 13:40:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zC9Lz3W+wPjIoeflnVod6IDOM/pZtd24CxLkiuJf1aM=;
-        b=j9bs/Zh4UNtanh6g4gxT1/NqUrafUD/aan/9UM/4rCNTYacroVc/akRJUuZTmP8V/O
-         Ee5/2+pZuxjCwLHfQ3RLT6XMfBW3TCT70E8/8J1pw405Zu+NqEXrWfLL6faagWs95jK9
-         DFjxam5WPuheSG/yvxUOshGjD+6b9MvGN9PzFbGuv7XOEjW/4be2tdF0tQNdyn49J9lC
-         iU4AX9REzYdgkE7uT50mVp+QlFXo0X276mNVAwlLuBJFBUm/3fZsHKqx/XCEH4LtiV3D
-         hBIIEp0piq+y6U0BalqKTZ0FHYzApCVRhD836sGSxvYW+Pg5hQ7kpPWSb5B80CiqPLad
-         fSUg==
+        bh=lHSruV1/LrYZ1piYSzOvRpovFm29NEa57/Dw90cROe0=;
+        b=EtOwqHGrMMwBdeFvOZKfPJ06NjcVo6zYs1uuh1yQm4pta071JR8Y4fjxgz/F3n+4zs
+         ZariiIVj4HpYOlhV4jDzJys9X6Fkxlbkj86JA3HLM31j5TDGwoAmG+ZkgQQTVuY4prTa
+         mGmvMkAj4Zio7yks//3/o8h2P/ZgBPocuODJFoJ4rBIv+ls4CvxWFrUeL0BncA7O7BTO
+         eMkRwtfV9op6RFpLKKJUQQqeFhy1ZvR6rg7uSOXjAgEgf04F3XJkbYiLQbhmlSxfzAdi
+         XLXimKZHfOG+DzYKlhjTnE8jbo1BucKFBas3237XrqdhFQ19yp7PGeO804IhB+hw410V
+         jgeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zC9Lz3W+wPjIoeflnVod6IDOM/pZtd24CxLkiuJf1aM=;
-        b=MDa0DKaJakjMyEWykZaaaL8ZELt9z3pRR2nKUSLdGR8KtBt801VeQuSetAnaMDFJ/4
-         5JUJIR0nFgzsm5iMBmeQVT2H5IPrPCR174oiTeB84S1f4UV/sGLM7dBrtWHbfoy0mRFq
-         0i7YKAnF17gcjkd0ZxC1OmHPgbsOWFb6o822gfn9IbhBmC/mN6m0aWr8OWUpnOg8ORPu
-         w6rvYLK9EMEgS+TPvk4kQzQ+iiMp0pR/CF9gwufZEfzjn4qJXJoDavjhBhcBwCaP+weW
-         d67Xv0PyOaQ2hfP2N0bdIYnThY7wZSehs+zfzBlrEZ1P6trVH6Gb1/J05wUqfLMMzpIO
-         ZlGA==
-X-Gm-Message-State: AO0yUKWfjItyirp9h6qHqt3DlH4W5BLwFUW/VZLiTIXgJ9cOcF1tGYUA
-        dDvYKSwZLz3d+oRExR0oLCAjLOOoQ9c=
-X-Google-Smtp-Source: AK7set9HpCSNSl26tfPzvRACNgtu7oh8m6yl7uEpBQQiQeiZH66QXai/d2yS6PwGGFa6pfXZNKR14g==
-X-Received: by 2002:a5d:5345:0:b0:2c5:5bc0:e7b1 with SMTP id t5-20020a5d5345000000b002c55bc0e7b1mr2985512wrv.1.1676410821459;
-        Tue, 14 Feb 2023 13:40:21 -0800 (PST)
+        bh=lHSruV1/LrYZ1piYSzOvRpovFm29NEa57/Dw90cROe0=;
+        b=pyACihe/ntzuR/J8+7rvOpQ+TVdkCkGHJYEjTYDPjeNEoBSAZnTAhmHEaPLI0zcno5
+         HKR8iOrT8wP4tpglzAXlJXFS/mz2mcMCdpfv3SEKiolRpGAW8Q3PlcRJ5O3zCToYvLip
+         MwtoI3/PbDaxfz9N5gL5OUCe7NKX2L0gnx4kUDFwPqgOQNwkZkw3PuLfjjYm+KTN5MRN
+         ZCYJ5gr526TkKFj0KODKr5vhhd09n3Kti1FBJFScLEZ7kzm234WMYPXrzL90HglSudxK
+         /lH34BaozthYHfRtqC2io2zcmqCPG9pItH+CPLTvIP5obRiGoQw0cCA3PfPkkCfC7+iC
+         Tl8g==
+X-Gm-Message-State: AO0yUKWeNg0ivGai1E0KKzGJZTMpjuhOM3MtJZnEl4pYlNrLmZTw5T8H
+        Xx2g8QwPO7VfnT2rAsXZPI6M74UDivQ=
+X-Google-Smtp-Source: AK7set//Kw+0zUasyT7hPapGOPSiu3XEgwY223iFp2x1Yv0xTNhJfQio5IzZj4m8pYToz7bXx6ICgA==
+X-Received: by 2002:adf:e686:0:b0:2c5:4dbb:678d with SMTP id r6-20020adfe686000000b002c54dbb678dmr2986688wrm.40.1676410822191;
+        Tue, 14 Feb 2023 13:40:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e12-20020a05600c218c00b003de8a1b06c0sm82782wme.7.2023.02.14.13.40.21
+        by smtp.gmail.com with ESMTPSA id f6-20020a5d58e6000000b002c54c7153f0sm11072075wrd.1.2023.02.14.13.40.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 14 Feb 2023 13:40:21 -0800 (PST)
-Message-Id: <0c5e1fc6c2651e39bcefa27ee0976c9519671969.1676410819.git.gitgitgadget@gmail.com>
+Message-Id: <cb0305631496eb4c2d51e5b586ac0ca8580c7dc1.1676410819.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
 References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
         <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
 From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Feb 2023 21:40:18 +0000
-Subject: [PATCH v2 1/2] diff: consolidate diff algorithm option parsing
+Date:   Tue, 14 Feb 2023 21:40:19 +0000
+Subject: [PATCH v2 2/2] diff: teach diff to read gitattribute diff-algorithm
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,151 +73,261 @@ X-Mailing-List: git@vger.kernel.org
 
 From: John Cai <johncai86@gmail.com>
 
-The diff option parsing for --minimal, --patience, --histgoram can all
-be consolidated into one function. This is a preparatory step for the
-subsequent commit which teaches diff to keep track of whether or not a
-diff algorithm has been set via the command line.
+It can be useful to specify diff algorithms per file type. For example,
+one may want to use the minimal diff algorithm for .json files, another
+for .c files, etc.
 
-Additionally, the logic that sets the diff algorithm in
-diff_opt_diff_algorithm() can  be refactored into a helper that will
-allow multiple callsites to set the diff algorithm.
+Teach the diff machinery to check attributes for a diff driver. Also
+teach the diff driver parser a new type "algorithm" to look for in the
+config, which will be used if a driver has been specified through the
+attributes.
+
+Enforce precedence of diff algorithm by favoring the command line option,
+then looking at the driver attributes & config combination, then finally
+the diff.algorithm config.
+
+To enforce precedence order, use the `xdl_opts_command_line` member
+during options pasing to indicate the diff algorithm was set via command
+line args.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- diff.c | 87 ++++++++++++++++++++++++++++++++++++----------------------
- 1 file changed, 54 insertions(+), 33 deletions(-)
+ Documentation/gitattributes.txt | 41 ++++++++++++++++++++++++++++++++-
+ diff.c                          | 25 +++++++++++++-------
+ diff.h                          |  2 ++
+ t/lib-diff-alternative.sh       | 38 +++++++++++++++++++++++++++++-
+ userdiff.c                      |  4 +++-
+ userdiff.h                      |  1 +
+ 6 files changed, 100 insertions(+), 11 deletions(-)
 
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index c19e64ea0ef..7e69f509d0a 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -736,7 +736,6 @@ String::
+ 	by the configuration variables in the "diff.foo" section of the
+ 	Git config file.
+ 
+-
+ Defining an external diff driver
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+@@ -758,6 +757,46 @@ with the above configuration, i.e. `j-c-diff`, with 7
+ parameters, just like `GIT_EXTERNAL_DIFF` program is called.
+ See linkgit:git[1] for details.
+ 
++Setting the internal diff algorithm
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The diff algorithm can be set through the `diff.algorithm` config key, but
++sometimes it may be helpful to set the diff algorithm by path. For example, one
++might wish to set a diff algorithm automatically for all `.json` files such that
++the user would not need to pass in a separate command line `--diff-algorithm` flag each
++time.
++
++First, in `.gitattributes`, you would assign the `diff` attribute for paths.
++
++*Git attributes*
++------------------------
++*.json diff=<name>
++------------------------
++
++Then, you would define a "diff.<name>.algorithm" configuration to specify the
++diff algorithm, choosing from `meyers`, `patience`, `minimal`, and `histogram`.
++
++*Git config*
++
++----------------------------------------------------------------
++[diff "<name>"]
++  algorithm = histogram
++----------------------------------------------------------------
++
++This diff algorithm applies to git-diff(1), including the `--stat` output.
++
++NOTE: If the `command` key also exists, then Git will treat this as an external
++diff and attempt to use the value set for `command` as an external program. For
++instance, the following config, combined with the above `.gitattributes` file,
++will result in `command` favored over `algorithm`.
++
++*Git config*
++
++----------------------------------------------------------------
++[diff "<name>"]
++  command = j-c-diff
++  algorithm = histogram
++----------------------------------------------------------------
+ 
+ Defining a custom hunk-header
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 diff --git a/diff.c b/diff.c
-index 329eebf16a0..92a0eab942e 100644
+index 92a0eab942e..24da439e56f 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -3437,6 +3437,22 @@ static int diff_filepair_is_phoney(struct diff_filespec *one,
- 	return !DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two);
+@@ -4456,15 +4456,11 @@ static void run_diff_cmd(const char *pgm,
+ 	const char *xfrm_msg = NULL;
+ 	int complete_rewrite = (p->status == DIFF_STATUS_MODIFIED) && p->score;
+ 	int must_show_header = 0;
++	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, attr_path);
+ 
+-
+-	if (o->flags.allow_external) {
+-		struct userdiff_driver *drv;
+-
+-		drv = userdiff_find_by_path(o->repo->index, attr_path);
++	if (o->flags.allow_external)
+ 		if (drv && drv->external)
+ 			pgm = drv->external;
+-	}
+ 
+ 	if (msg) {
+ 		/*
+@@ -4481,12 +4477,17 @@ static void run_diff_cmd(const char *pgm,
+ 		run_external_diff(pgm, name, other, one, two, xfrm_msg, o);
+ 		return;
+ 	}
+-	if (one && two)
++	if (one && two) {
++		if (!o->xdl_opts_command_line)
++			if (drv && drv->algorithm)
++				set_diff_algorithm(o, drv->algorithm);
++
+ 		builtin_diff(name, other ? other : name,
+ 			     one, two, xfrm_msg, must_show_header,
+ 			     o, complete_rewrite);
+-	else
++	} else {
+ 		fprintf(o->file, "* Unmerged path %s\n", name);
++	}
  }
  
-+static int set_diff_algorithm(struct diff_options *opts,
-+			      const char *alg)
-+{
-+	long value = parse_algorithm_value(alg);
-+
-+	if (value < 0)
-+		return 1;
-+
-+	/* clear out previous settings */
-+	DIFF_XDL_CLR(opts, NEED_MINIMAL);
-+	opts->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-+	opts->xdl_opts |= value;
-+
-+	return 0;
-+}
-+
- static void builtin_diff(const char *name_a,
- 			 const char *name_b,
- 			 struct diff_filespec *one,
-@@ -5107,17 +5123,40 @@ static int diff_opt_diff_algorithm(const struct option *opt,
- 				   const char *arg, int unset)
- {
- 	struct diff_options *options = opt->value;
--	long value = parse_algorithm_value(arg);
+ static void diff_fill_oid_info(struct diff_filespec *one, struct index_state *istate)
+@@ -4583,6 +4584,10 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
+ 	const char *name;
+ 	const char *other;
  
- 	BUG_ON_OPT_NEG(unset);
--	if (value < 0)
++	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, p->one->path);
++	if (drv && drv->algorithm)
++		set_diff_algorithm(o, drv->algorithm);
 +
-+	if (set_diff_algorithm(options, arg))
+ 	if (DIFF_PAIR_UNMERGED(p)) {
+ 		/* unmerged */
+ 		builtin_diffstat(p->one->path, NULL, NULL, NULL,
+@@ -5130,6 +5135,8 @@ static int diff_opt_diff_algorithm(const struct option *opt,
  		return error(_("option diff-algorithm accepts \"myers\", "
  			       "\"minimal\", \"patience\" and \"histogram\""));
  
--	/* clear out previous settings */
--	DIFF_XDL_CLR(options, NEED_MINIMAL);
--	options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
--	options->xdl_opts |= value;
-+	return 0;
-+}
-+
-+static int diff_opt_diff_algorithm_no_arg(const struct option *opt,
-+				   const char *arg, int unset)
-+{
-+	struct diff_options *options = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(arg);
-+
-+	if (!strcmp(opt->long_name, "patience")) {
-+		size_t i;
-+		/*
-+		 * Both --patience and --anchored use PATIENCE_DIFF
-+		 * internally, so remove any anchors previously
-+		 * specified.
-+		 */
-+		for (i = 0; i < options->anchors_nr; i++)
-+			free(options->anchors[i]);
-+		options->anchors_nr = 0;
-+	}
-+
-+	if (set_diff_algorithm(options, opt->long_name))
-+		BUG("available diff algorithms include \"myers\", "
-+			       "\"minimal\", \"patience\" and \"histogram\"");
++	options->xdl_opts_command_line = 1;
 +
  	return 0;
  }
  
-@@ -5242,26 +5281,6 @@ static enum parse_opt_result diff_opt_output(struct parse_opt_ctx_t *ctx,
+@@ -5157,6 +5164,8 @@ static int diff_opt_diff_algorithm_no_arg(const struct option *opt,
+ 		BUG("available diff algorithms include \"myers\", "
+ 			       "\"minimal\", \"patience\" and \"histogram\"");
+ 
++	options->xdl_opts_command_line = 1;
++
  	return 0;
  }
  
--static int diff_opt_patience(const struct option *opt,
--			     const char *arg, int unset)
--{
--	struct diff_options *options = opt->value;
--	int i;
--
--	BUG_ON_OPT_NEG(unset);
--	BUG_ON_OPT_ARG(arg);
--	options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
--	/*
--	 * Both --patience and --anchored use PATIENCE_DIFF
--	 * internally, so remove any anchors previously
--	 * specified.
--	 */
--	for (i = 0; i < options->anchors_nr; i++)
--		free(options->anchors[i]);
--	options->anchors_nr = 0;
--	return 0;
--}
--
- static int diff_opt_ignore_regex(const struct option *opt,
- 				 const char *arg, int unset)
- {
-@@ -5562,9 +5581,10 @@ struct option *add_diff_options(const struct option *opts,
- 			    N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
+diff --git a/diff.h b/diff.h
+index 41eb2c3d428..46b565abfd4 100644
+--- a/diff.h
++++ b/diff.h
+@@ -333,6 +333,8 @@ struct diff_options {
+ 	int prefix_length;
+ 	const char *stat_sep;
+ 	int xdl_opts;
++	/* If xdl_opts has been set via the command line. */
++	int xdl_opts_command_line;
  
- 		OPT_GROUP(N_("Diff algorithm options")),
--		OPT_BIT(0, "minimal", &options->xdl_opts,
--			N_("produce the smallest possible diff"),
--			XDF_NEED_MINIMAL),
-+		OPT_CALLBACK_F(0, "minimal", options, NULL,
-+			       N_("produce the smallest possible diff"),
-+			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-+			       diff_opt_diff_algorithm_no_arg),
- 		OPT_BIT_F('w', "ignore-all-space", &options->xdl_opts,
- 			  N_("ignore whitespace when comparing lines"),
- 			  XDF_IGNORE_WHITESPACE, PARSE_OPT_NONEG),
-@@ -5589,10 +5609,11 @@ struct option *add_diff_options(const struct option *opts,
- 		OPT_CALLBACK_F(0, "patience", options, NULL,
- 			       N_("generate diff using the \"patience diff\" algorithm"),
- 			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
--			       diff_opt_patience),
--		OPT_BITOP(0, "histogram", &options->xdl_opts,
--			  N_("generate diff using the \"histogram diff\" algorithm"),
--			  XDF_HISTOGRAM_DIFF, XDF_DIFF_ALGORITHM_MASK),
-+			       diff_opt_diff_algorithm_no_arg),
-+		OPT_CALLBACK_F(0, "histogram", options, NULL,
-+			       N_("generate diff using the \"histogram diff\" algorithm"),
-+			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-+			       diff_opt_diff_algorithm_no_arg),
- 		OPT_CALLBACK_F(0, "diff-algorithm", options, N_("<algorithm>"),
- 			       N_("choose a diff algorithm"),
- 			       PARSE_OPT_NONEG, diff_opt_diff_algorithm),
+ 	/* see Documentation/diff-options.txt */
+ 	char **anchors;
+diff --git a/t/lib-diff-alternative.sh b/t/lib-diff-alternative.sh
+index 8d1e408bb58..2dc02bca873 100644
+--- a/t/lib-diff-alternative.sh
++++ b/t/lib-diff-alternative.sh
+@@ -105,10 +105,46 @@ index $file1..$file2 100644
+  }
+ EOF
+ 
++	cat >expect_diffstat <<EOF
++ file1 => file2 | 21 ++++++++++-----------
++ 1 file changed, 10 insertions(+), 11 deletions(-)
++EOF
++
+ 	STRATEGY=$1
+ 
++	test_expect_success "$STRATEGY diff from attributes" '
++		echo "file* diff=driver" >.gitattributes &&
++		git config diff.driver.algorithm "$STRATEGY" &&
++		test_must_fail git diff --no-index file1 file2 > output &&
++		cat expect &&
++		cat output &&
++		test_cmp expect output
++	'
++
++	test_expect_success "$STRATEGY diff from attributes has valid diffstat" '
++		echo "file* diff=driver" >.gitattributes &&
++		git config diff.driver.algorithm "$STRATEGY" &&
++		test_must_fail git diff --stat --no-index file1 file2 > output &&
++		test_cmp expect_diffstat output
++	'
++
+ 	test_expect_success "$STRATEGY diff" '
+-		test_must_fail git diff --no-index "--$STRATEGY" file1 file2 > output &&
++		test_must_fail git diff --no-index "--diff-algorithm=$STRATEGY" file1 file2 > output &&
++		test_cmp expect output
++	'
++
++	test_expect_success "$STRATEGY diff command line precedence before attributes" '
++		echo "file* diff=driver" >.gitattributes &&
++		git config diff.driver.algorithm meyers &&
++		test_must_fail git diff --no-index "--diff-algorithm=$STRATEGY" file1 file2 > output &&
++		test_cmp expect output
++	'
++
++	test_expect_success "$STRATEGY diff attributes precedence before config" '
++		git config diff.algorithm default &&
++		echo "file* diff=driver" >.gitattributes &&
++		git config diff.driver.algorithm "$STRATEGY" &&
++		test_must_fail git diff --no-index file1 file2 > output &&
+ 		test_cmp expect output
+ 	'
+ 
+diff --git a/userdiff.c b/userdiff.c
+index d71b82feb74..ff25cfc4b4c 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -293,7 +293,7 @@ PATTERNS("scheme",
+ 	 "|([^][)(}{[ \t])+"),
+ PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
+ 	 "\\\\[a-zA-Z@]+|\\\\.|[a-zA-Z0-9\x80-\xff]+"),
+-{ "default", NULL, -1, { NULL, 0 } },
++{ "default", NULL, NULL, -1, { NULL, 0 } },
+ };
+ #undef PATTERNS
+ #undef IPATTERN
+@@ -394,6 +394,8 @@ int userdiff_config(const char *k, const char *v)
+ 		return parse_bool(&drv->textconv_want_cache, k, v);
+ 	if (!strcmp(type, "wordregex"))
+ 		return git_config_string(&drv->word_regex, k, v);
++	if (!strcmp(type, "algorithm"))
++		return git_config_string(&drv->algorithm, k, v);
+ 
+ 	return 0;
+ }
+diff --git a/userdiff.h b/userdiff.h
+index aee91bc77e6..24419db6973 100644
+--- a/userdiff.h
++++ b/userdiff.h
+@@ -14,6 +14,7 @@ struct userdiff_funcname {
+ struct userdiff_driver {
+ 	const char *name;
+ 	const char *external;
++	const char *algorithm;
+ 	int binary;
+ 	struct userdiff_funcname funcname;
+ 	const char *word_regex;
 -- 
 gitgitgadget
-
