@@ -2,78 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3842AC61DA4
-	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 08:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49482C05027
+	for <git@archiver.kernel.org>; Tue, 14 Feb 2023 10:15:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231812AbjBNIEk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 03:04:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38976 "EHLO
+        id S231485AbjBNKPy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 05:15:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231821AbjBNIEP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 03:04:15 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D19F95261
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 00:04:08 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id s20so9631507pfe.2
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 00:04:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=58ZnfirMuNCOz2EYOiKScWUjZE5Jk3tVaI+rtyuf/FQ=;
-        b=Vl7UHi6Y3Hi8hXcGxf5/CtgHFWhHAHB3EBvXXYPBxRNS//3njUT3Y0yWil5n1aibTW
-         QJqqd/pXb9zy+w6jXYB8po/QNXybCJvAJMNI/WHvMi0dW7JvHMfSYUEQtzRx+DbZNEzs
-         dHumkTbyClr0ZWtht69+6YLr86/NQBNp0SJCQ8XqtwbQN2j7Ry1x6Gw1Lm6lfJXRZK1a
-         cT38w/x9OKpcZho66KBjvxi3upBx/8BQAYXo4wR4etAdjJh7CdSPyiz6gWFzuk+glBsr
-         keYe3qNg3p73NXuwiGKL1868IFNaYA4IzSqp9EbMghg+JkNr+gEV7bNxD/tCbKx85Kkd
-         jlfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=58ZnfirMuNCOz2EYOiKScWUjZE5Jk3tVaI+rtyuf/FQ=;
-        b=Ge/6oz5FCD3Jw/94tUj9s+l4g2qfuUxeFggcCum4G2YdJGM0+PINgGrycDOqKK4Aiu
-         jMALyhKBDGakVDuJ7I7/aaedHOHdElxc82ObkPD09o+gc5s2eL/zp93RQbZnW1Oy7NDv
-         ejQMEK07XxLD04JighULGAHVmmm8sohaczESyZCnp+x5C3L76xI/3hSxqh2yS021XC7n
-         1ZKGlBh4yaLSXRELE/tt/Wn3HnQ1/0tfykfK4vcqvewBjvarLLIiBeTddSytRAhoG0cs
-         +a5TrvKyJpHO+Kzj4yZSPHHy/Hi+WgnkIrW6c2txEBUvOdrYji9cbhvBDzBDqFae1THW
-         YcYA==
-X-Gm-Message-State: AO0yUKWtIJLLW3tHO4MQGfTLdOMKc1jxWTQ191z8UASxO3zVROpNqY1Z
-        /4LkXQD595j571lDIp6XBxPl0WaEIKMJPEhUcxA=
-X-Google-Smtp-Source: AK7set8Coe+voalRwdcyToTMraglbE4NRq9cP4whl8CzOGrSZJOQT93p4w09JzBjHz6FHcjrmfck0QY2O0VPi07FP78=
-X-Received: by 2002:a63:7a08:0:b0:480:ae27:c7ae with SMTP id
- v8-20020a637a08000000b00480ae27c7aemr167553pgc.24.1676361848214; Tue, 14 Feb
- 2023 00:04:08 -0800 (PST)
+        with ESMTP id S229609AbjBNKPw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 05:15:52 -0500
+Received: from abrecht.li (75-128-16-94.static.cable.fcom.ch [94.16.128.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53F4E15CA2
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 02:15:50 -0800 (PST)
+Received: from toucan.dmz.abrecht.li (unknown [IPv6:fc00:4::a3c:111])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by abrecht.li (Postfix) with ESMTPSA id 74C6036C029E;
+        Tue, 14 Feb 2023 10:15:45 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 abrecht.li 74C6036C029E
 MIME-Version: 1.0
-References: <pull.1443.v2.git.git.1675244392025.gitgitgadget@gmail.com> <pull.1443.v3.git.git.1675545372271.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1443.v3.git.git.1675545372271.gitgitgadget@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 14 Feb 2023 09:03:56 +0100
-Message-ID: <CAN0heSq8OSOyX=FpRd2SPvyb6EBbju-5gbTQGxHre0wkwB=tkQ@mail.gmail.com>
-Subject: Re: [PATCH v3] credential: new attribute password_expiry_utc
-To:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>, Cheetham <mjcheetham@outlook.com>,
-        Dennington <lessleydennington@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Date:   Tue, 14 Feb 2023 11:15:44 +0100
+From:   Daniel Abrecht <git-git@nodmarc.danielabrecht.ch>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] gitweb: fix base url set if PATH_INFO is used, add a /
+ at the end
+In-Reply-To: <xmqqfsbel9sf.fsf@gitster.g>
+References: <20230209222648.z-sqdvWiK7xa-NLagt3B_X_4bFQJBsA8cA06YvgXqWQ@z>
+ <xmqqfsbel9sf.fsf@gitster.g>
+User-Agent: Roundcube Webmail/1.4.13
+Message-ID: <522571c427c937ef52bb69b88cb3dea1@nodmarc.danielabrecht.ch>
+X-Sender: git-git@nodmarc.danielabrecht.ch
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 4 Feb 2023 at 23:03, M Hickford via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+Am 2023-02-10 00:05, schrieb Junio C Hamano:
+> Daniel Abrecht <git-git@nodmarc.danielabrecht.ch> writes:
+>> +	# the browser will strip away the last component for relative URLs.
+>> +	# Add the / if it's missing.
+> 
+> The above is not an incorrect statement per-se, but if $base were
+> pointing at the document, we would likely break if we add an extra
+> slash.  Don't we want to say something like
+> 
+> 	# $base_url at this point points at a directory, not a
+>         # single document, and later is used in the <base> tag.
+>         # Make sure it ends in a '/'.  Otherwise, we'd lose the last
+>         # component when forming a relative URL.
+> 
+> perhaps?
 
-> --- a/Documentation/gitcredentials.txt
-> +++ b/Documentation/gitcredentials.txt
-> @@ -167,7 +167,7 @@ helper::
->  If there are multiple instances of the `credential.helper` configuration
->  variable, each helper will be tried in turn, and may provide a username,
->  password, or nothing. Once Git has acquired both a username and a
-> -password, no more helpers will be tried.
-> +unexpired password, no more helpers will be tried.
+After thinking about this for a while, I realized that this isn't as 
+simple as I thought.
 
-s/a unexpired/an unexpired/ (or "a non-expired", perhaps)
+I'm currently using apache and some rewrite rules so I can access 
+projects at /git/myproject.git/ (See my config below).
+So in my case, $base_url is /git at this point, and I need to add a /.
 
-Martin
+But if I didn't have those rewrite rules, I could instead access the 
+repos using /git/gitweb.cgi/myproject.git/ .
+In that case, $base_url would be /git/gitweb.cgi at this point, so it 
+does refer to the script / document.
+The assets are still at /git/ and not at /git/gitweb.cgi/, so links are 
+relative to /git/gitweb.cgi/ but assets are
+relative to /git/. It seams relative URLs are only used for assets, so 
+the $base_url should really be /git/gitweb.cgi
+or alternatively just /git/ there, and just adding a slash would be 
+wrong in that case.
+
+Given this, I no longer think I should change the way it currently is.
+I will just override $base_url in my config file instead.
+
+
+
+<Macro gitweb $location>
+   SetEnv GITWEB_CONFIG /etc/gitweb.conf
+   SetEnv GIT_HTTP_EXPORT_ALL
+   ScriptAliasMatch \
+   "(?x)^/.*/(.*\.git/(HEAD | \
+       info/refs | \
+       objects/(info/[^/]+ | \
+          [0-9a-f]{2}/[0-9a-f]{38} | \
+          pack/pack-[0-9a-f]{40}\.(pack|idx)) | \
+       git-(upload|receive)-pack))$" \
+   /usr/lib/git-core/git-http-backend/$1
+   Alias $location/ /usr/share/gitweb/
+   RewriteRule 
+^$location/.*\.git/(HEAD|info|objects|refs|git-(upload|receive)-pack) - 
+[E=GIT_PROJECT_ROOT:%{DOCUMENT_ROOT}$location/,PT,END]
+   RewriteRule ^$location/(.*\.git(/.*)?)?$ $location/gitweb.cgi/$1 
+[E=GIT_PROJECT_ROOT:%{DOCUMENT_ROOT}$location/,L,PT]
+   <Location $location>
+     Require all granted
+     AllowOverride None
+   </Location>
+   <Directory /usr/share/gitweb/>
+     Options +FollowSymLinks +ExecCGI
+     AddHandler cgi-script .cgi
+   </Directory>
+</Macro>
+
+<VirtualHost *:443>
+   Use VHostSSL projects.dpa.li
+   DocumentRoot /var/www/projects.dpa.li/
+   Use gitweb /git
+</VirtualHost>
