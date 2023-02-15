@@ -2,89 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FB84C636D4
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 08:19:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30D85C636D4
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 09:20:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233741AbjBOIT4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Feb 2023 03:19:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52774 "EHLO
+        id S233816AbjBOJUJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Feb 2023 04:20:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233342AbjBOITy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2023 03:19:54 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55AE636469
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 00:19:27 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id br9so26625639lfb.4
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 00:19:27 -0800 (PST)
+        with ESMTP id S230510AbjBOJUI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2023 04:20:08 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2451A7A9F
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 01:20:07 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id e17so10792502plg.12
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 01:20:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=SndVgn9f2EVRdt0XkKR2CmIyowqxXFFdNRGCt9YXlOQ=;
-        b=Ivlv3kLnBvowjshy8Wi0KhAbYMuRcDd28d3NJVkaVj4fkKPEOMHk0qfo31/DDCiP53
-         RSYnOLD1822HycRvxL8crnvC4OpAJiLrmIQuAw2nLTsr/jhSHZGtkzZ3EOub8FYKc4dF
-         8MAJy96cQ98KgRDZwMlopJjLXf6NDTMvbyzhygTrKHTVtqn5FIyxjXENFoi+lFwyLVl0
-         5MzpznxxHSELqzjXuDrHiZusnQR64kbDzVX1A41+r6PFkYrMDEeXYW+VU8OzFy12r4GJ
-         z7xL3RE2Sd7Dk5Q8YbXmjaKMgDrCOz3UaSIAaAz7PfnLwYMv4TaVzkjifKfoxkaaUwwX
-         KqFw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=09+zVySE65qy+wqfstTAxf51lBtz+vARHutbbOw7Zsc=;
+        b=PNp0tAiUAYNTQhXq/DYR9vx9jKKlsAVgaRztkHEG7QgFwDkKyFYdAYPPZLDzij0+Rr
+         mIXuNEBBSDIf4ZeV84BuAmV/pg93vj+VU6BuwYcB4OaDloyfeHBKNArRaOsApZlJsxe4
+         yy/cQRjf/2HQAJ/a5Dindr5jdTBZto8jPo7H1LwGklU8YeJT6XyBkXS88poFmNbiZczW
+         FNraG84QtujouyJglr3jtwQUS1ZrDUlPLIUhIXQptiqQW/5kNBo63KCVCVTeVJ36hwxR
+         SY+ze9FTVc78bfkvMjWb1gVyqe3kLwcz73QVZACSU8ANxLqccCabspOc23eo1tGtsMnc
+         dqkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SndVgn9f2EVRdt0XkKR2CmIyowqxXFFdNRGCt9YXlOQ=;
-        b=081/k+nR7aw5SR6sRNIDpAcQT2QR5Vdab33T+rm+E9iEE6V7FIRMpUvgiU3dZ8Cu5N
-         logP59BorP8vaIDMhAdb4zeSBz+PJf1Hzei0wMf1E6QiRlk7/IbiS53xoy8/arxi5D3/
-         CnMSDwMl4X7Q2XvSx/aWxVZgCITfuMKMOId5I1wOnnw8vWr5m0gZ7o4oEt5JVz5utoHP
-         HQn74jzvzQjddnR7id1QvDKpBVWv/ESAkY9+4oJrt02vIyU2TUW5MWH8kjcHo7ckN6tg
-         rogeFA8IJzooDgz+3/IZbyWjzUq1MpkJMY1hk6zwsbi3IkrflOAX6U6r21YVAjca1Qp/
-         FP+g==
-X-Gm-Message-State: AO0yUKUSAZzLnY0Tf71Fhy+mya/cQ30ZB4b+ZQ7s8c60LmnmBYyOOCKe
-        3N8b6xiwe45w6trTvyTSMQ5xjZyfn90lZiLhYNdpm774+3c=
-X-Google-Smtp-Source: AK7set8OAbxJ7xalu5wGnivLYu9OHyg0lIVwozsiiupm640fmQRB7FsjCUdTtORYHgGRKoN2zLcNZ1yIlBmlOXtZWHI=
-X-Received: by 2002:ac2:5296:0:b0:4d8:5037:6da0 with SMTP id
- q22-20020ac25296000000b004d850376da0mr283303lfm.8.1676449165549; Wed, 15 Feb
- 2023 00:19:25 -0800 (PST)
-MIME-Version: 1.0
-References: <20230210171338.81906-1-vinayakdev.sci@gmail.com>
- <xmqq8rh5gox7.fsf@gitster.g> <CADE8NaqvP1JbLL89prOCu2Qo-ZVJTTN_CZjk7bJwzMctV9Z2Bw@mail.gmail.com>
- <CAPig+cT98gscoD=Fh-QzJxruxdZmjGKW3gy95cA3xAokV7J4rw@mail.gmail.com>
-In-Reply-To: <CAPig+cT98gscoD=Fh-QzJxruxdZmjGKW3gy95cA3xAokV7J4rw@mail.gmail.com>
+        bh=09+zVySE65qy+wqfstTAxf51lBtz+vARHutbbOw7Zsc=;
+        b=k7hMfMkw53ByQI/wEhibU6yH/KfMnEv8Bv5EXav8NYhMhVcmGI1lWe77w7UgptNlC5
+         g57Z4kbvMD2mm2+/FrTpz2cy7V7SeS1VcEEE9+FP9Fl3jLypLIJGrnkz8g40y3SxCn7Q
+         eXvLsy/U43Zhq7tIZd1lzzVtRRKgwC/FTGOGaplvObhMqlOThmgd2WOx4c/DwekkeTZz
+         FaOL8wq+aD7sgCbuoAnFHpLQfJV78D6+dl1IqnEcEBpY4qIf+K6Wp0Z4iZkQjQc2QA9o
+         oS1GbJnQJQRpWFJI0+1h5MrlESxwXnghPUxyQb+iU7233m7m+JIsBucNKxRWw9LNpYPD
+         zc5A==
+X-Gm-Message-State: AO0yUKU5fwZOjaXF3YMulQ5ArHNwPIKdWuojq67Tewz/z+fdTuCx6QR+
+        9vm5ITkpo/SIR4bj0YC3lKo=
+X-Google-Smtp-Source: AK7set8dSlZ7HR94L9reBCpUAmd4T1AM40gxzVbR/vFKtRNIuoyLLiGbD5ekghPcPSqr7gqMFxudEw==
+X-Received: by 2002:a17:902:db0b:b0:19a:8636:9e2c with SMTP id m11-20020a170902db0b00b0019a86369e2cmr2103140plx.57.1676452806591;
+        Wed, 15 Feb 2023 01:20:06 -0800 (PST)
+Received: from localhost.localdomain ([2405:201:6805:205a:4159:d923:bb7e:2173])
+        by smtp.gmail.com with ESMTPSA id w14-20020a170902d70e00b0019956488546sm5057165ply.277.2023.02.15.01.20.04
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 15 Feb 2023 01:20:06 -0800 (PST)
 From:   Vinayak Dev <vinayakdev.sci@gmail.com>
-Date:   Wed, 15 Feb 2023 13:49:13 +0530
-Message-ID: <CADE8NaquOppesW5v9LMNE=TAu5J=bS9uCgkhkbu4QZ9JpoSLxg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] {apply,alias}: convert pre-processor macros to enums
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     vinayakdev.sci@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
+Subject: [GSoC][PATCH v3] apply: Change #define to enum and variable types from int to enum
+Date:   Wed, 15 Feb 2023 14:49:50 +0530
+Message-Id: <20230215091950.2976-1-vinayakdev.sci@gmail.com>
+X-Mailer: git-send-email 2.39.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 15 Feb 2023 at 05:34, Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> On Fri, Feb 10, 2023 at 11:00 PM Vinayak Dev <vinayakdev.sci@gmail.com> wrote:
+From: vinayakdsci <vinayakdev.sci@gmail.com>
 
-> > Should I re-send [v2] after making corrections for this mistake?
-> > That would make the corrections more obvious and the mistakes less.
->
-> You should send a v3 which completely replaces v1 and v2.
->
-> To prepare v3, use the "squash" (or "fixup") command of `git rebase
-> -i` to squash all three patches from v2 into a single patch, so that
-> v3 consists of just one patch. The squashed patch should contain only
-> changes to "apply.c"; specifically, changing #define to `enum`, and
-> changing the variable declarations from `int` to `enum`.
->
-> You can also update the commit message of the squashed patch so that
-> it explains the reason for the patch: specifically, the debugger will
-> display the values symbolically rather than as mere numbers.
->
-> Finally, proofread the commit message and the patch itself, and resubmit as v3.
+Change #define constants to enum and variable types from int to enum
+in apply.c
 
-Ok! I have absolutely understood your points. I will roll out v3 with
-appropriate
-changes, as you suggest.
+Enum constants have an advantage over #define macro constants in that
+modern debuggers are able to report them symbolically instead of just
+as simple numbers. This makes debugging and catching undercover errors
+easier, and can many a times save quite some time and inconvenience.
 
-Thanks a lot!
- Vinayak
+Signed-off-by: Vinayak Dev <vinayakdev.sci@gmail.com>
+
+---
+ apply.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
+
+diff --git a/apply.c b/apply.c
+index 5cc5479c9c..b2a03d9fc3 100644
+--- a/apply.c
++++ b/apply.c
+@@ -205,8 +205,10 @@ struct fragment {
+  * or deflated "literal".
+  */
+ #define binary_patch_method leading
+-#define BINARY_DELTA_DEFLATED	1
+-#define BINARY_LITERAL_DEFLATED 2
++enum binary_type_deflated {
++	BINARY_DELTA_DEFLATED = 1,
++	BINARY_LITERAL_DEFLATED
++};
+ 
+ static void free_fragment_list(struct fragment *list)
+ {
+@@ -918,14 +920,17 @@ static int gitdiff_hdrend(struct gitdiff_data *state UNUSED,
+  * their names against any previous information, just
+  * to make sure..
+  */
+-#define DIFF_OLD_NAME 0
+-#define DIFF_NEW_NAME 1
++
++enum diff_name {
++	DIFF_OLD_NAME = 0,
++	DIFF_NEW_NAME
++};
+ 
+ static int gitdiff_verify_name(struct gitdiff_data *state,
+ 			       const char *line,
+ 			       int isnull,
+ 			       char **name,
+-			       int side)
++			       enum diff_name side)
+ {
+ 	if (!*name && !isnull) {
+ 		*name = find_name(state->root, line, NULL, state->p_value, TERM_TAB);
+@@ -1910,7 +1915,7 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
+ 	int llen, used;
+ 	unsigned long size = *sz_p;
+ 	char *buffer = *buf_p;
+-	int patch_method;
++	enum binary_type_deflated patch_method;
+ 	unsigned long origlen;
+ 	char *data = NULL;
+ 	int hunk_size = 0;
+
+base-commit: b1485644f936ee83a995ec24d23f713f4230a1ae
+-- 
+2.39.1
+
