@@ -2,72 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9360C61DA4
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 00:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A524FC05027
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 00:26:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231236AbjBOASt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 19:18:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57190 "EHLO
+        id S232022AbjBOA0t convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 14 Feb 2023 19:26:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230379AbjBOASp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 19:18:45 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 444F826CD1
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 16:18:44 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id y1so17485490wru.2
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 16:18:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=s99xbf3CzwngxESJFGC0cc6yY19J5mdkYkNrND2CLJ8=;
-        b=C2JinHZBKADLJjBPO6HguZ+c7OYbnwASWyBfvjxTY4/oJIORn/1pCf5HWImakQAWlD
-         okGDusTTwE1lwpm8jywzvJ4bPw1lol8c1kq1LIVvMQ9qxCZcdJZxFqopU5a6aHQq7Lc2
-         ETPQI3/9aSlygAyeqYtrDLyxfSgAomgfsr0EF5PVBczSCJmrVp8UV+aSSyovjdvbQskm
-         LG/rMbC8rAmO87Z1iMNLfFi7Guj06wY2ah3SPA+9mSwc7erONEUatgy+sC53zVCcs/on
-         AIu6BGqbfVO6CS2ST8v89Dzb1//XZcErwKONNiHgAnfM3LtswwiZIyA0drJUKZoh/teH
-         2N9g==
+        with ESMTP id S229595AbjBOA0r (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 19:26:47 -0500
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B34B2F7A2
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 16:26:46 -0800 (PST)
+Received: by mail-pj1-f54.google.com with SMTP id r9-20020a17090a2e8900b00233ba727724so2430194pjd.1
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 16:26:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s99xbf3CzwngxESJFGC0cc6yY19J5mdkYkNrND2CLJ8=;
-        b=cpFGxj50B8uxMUEgu8IxzL3Hq1X40aQESnnXBNvhKqFR9IA31JFWWe6N2mZwc127ay
-         kSv+fWHwBqQO6GGNu6P7H48MxY7BGRyCV2BChUa0NiAxq2YK7dNqL7SSfbr9MLq+bRpp
-         Dgo2wEbaDQJHMJt6knWhThe2GX2HxutSLU7Ur+4GTBz6i+n5gAquEEvbTEHE6EMTNRI8
-         IJrfBDIwkA3IhE3VYpetbFkyqu8okL91QtuTXA/6GoPenjPI4NbFLOKnmN9KbW2Tm1ka
-         hBNrkgPJUbqzbseEog+US9IiAujsHKOevZKFMQxvG/D6znqduHTNt9Qxk3VXI5AGHT7l
-         uiSg==
-X-Gm-Message-State: AO0yUKUCgywJOuEJrnKpolexpHf8kBv4WvHjlzda1j0lMG8xvjOGZaQl
-        5karN+h9Hd8ACURo9L/v/ZQUfuSrdVsRHcbHArYhOut9HKM8Bw==
-X-Google-Smtp-Source: AK7set/rp3ztgZjXfXJgp93U1hAUKf9muC6r0R6DAIaZMOEph89LNLF261UZNNWnDV2qw3kFSYwkObXAycCFJLPSOuo=
-X-Received: by 2002:adf:f851:0:b0:2c5:452d:5a27 with SMTP id
- d17-20020adff851000000b002c5452d5a27mr666wrq.410.1676420322734; Tue, 14 Feb
- 2023 16:18:42 -0800 (PST)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QebsE+a8rxMI5pogGn2o6WfPj/kbKwXNCitl6XDOOiQ=;
+        b=ndEEp/aKM84Wx8wwMPpwiOa5YSmkzWxRH3BXNwxmk2Y3eTvOCqXy2xPUX3nNg5CNjt
+         sEi0eQxt1tkL+Q12IGWj7Rasbn2ZTb5EFeC6O4h6JsTNt95LPbnlUIwXr4H9rSdBNvRY
+         jark9p/vGWWIQKPLttBtD+QyZjV7oqnzSYZCd9/wyZe9MjTR0ecERQVwKC9WPsau3MpX
+         iChh3j75S+0ofO5yBVPhM7aP1wNFOWykzzEBCGxLRrk9av5tBQrnFZXDNTfFMDorBhgn
+         3zbQC03t3hZCSfp+uRWuiA1OchJy303eKtPPm7XWQ+d0F7KOTTTcpArd0yPmGKzkK8vG
+         EUbg==
+X-Gm-Message-State: AO0yUKU6Lffi6pEYdDAZPZXTbSuogaIfaQuSRed8b0EGY2mKapbzjOe7
+        dfWNo6x4e7EmRbNb3lIxkGN9zPHyqWyy8/L0teW200IG
+X-Google-Smtp-Source: AK7set8ROUG+fmlTH95Qczh85QwKJBabtAzN31yPZ+pmw1R3cABR3X+rSnRzhTpwzZYcuj5YMxnCsG4HWuaiMssoNj8=
+X-Received: by 2002:a17:90a:4107:b0:234:190f:87e6 with SMTP id
+ u7-20020a17090a410700b00234190f87e6mr301319pjf.8.1676420805774; Tue, 14 Feb
+ 2023 16:26:45 -0800 (PST)
 MIME-Version: 1.0
-References: <20230206211823.8651-1-cheskaqiqi@gmail.com> <20230209154417.10763-1-cheskaqiqi@gmail.com>
- <20230209154417.10763-3-cheskaqiqi@gmail.com> <CAPig+cR9pjxnr6PzyTiPULVvKW6Rc+GMeMTGKKp4F8+cWuZdgg@mail.gmail.com>
-In-Reply-To: <CAPig+cR9pjxnr6PzyTiPULVvKW6Rc+GMeMTGKKp4F8+cWuZdgg@mail.gmail.com>
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-Date:   Tue, 14 Feb 2023 19:18:30 -0500
-Message-ID: <CAMO4yUEAQ9FQu1j4E7hzHtVap25UySOOnvvJyox1Tptr0bK3ZA@mail.gmail.com>
-Subject: Re: [PATCH v5 2/3] t4113: indent with tab
-To:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
+References: <20230205145245.11078-1-cheskaqiqi@gmail.com> <20230206211823.8651-1-cheskaqiqi@gmail.com>
+ <20230206211823.8651-4-cheskaqiqi@gmail.com> <xmqqlela2z3p.fsf@gitster.g>
+ <CAMO4yUGmQ371hLCSTODQct+CzY2mqywfLzZO6fsgqN2=1cWGrw@mail.gmail.com> <230207.86h6vx51x3.gmgdl@evledraar.gmail.com>
+In-Reply-To: <230207.86h6vx51x3.gmgdl@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 14 Feb 2023 19:26:34 -0500
+Message-ID: <CAPig+cTCd4kTM5xVpZv7joiXS+QZfLKVprY_1cpjg9T1_N6Pmw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] t4113: put executable lines to test_expect_success
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Eric
+On Tue, Feb 7, 2023 at 3:19 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> On Mon, Feb 06 2023, Shuqi Liang wrote:
+> > On Mon, Feb 6, 2023 at 5:44 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >> This creates a "test-patch" file with lines 'a' and 'b' that are
+> >> common context lines without any whitespace before them, no?  The
+> >> original left the necessary single space in front of them (see the
+> >> line removed above).
+> >
+> > I try to change the code to(left the necessary single space in front
+> > of 'a' and 'b':
+> >
+> > @@ -1,2 +1,3 @@
+> > - a
+> > - b
+> > + a
+> > + b
+> > +c
+> > EOF
+> >
+> > t4113-apply-ending.sh (Wstat: 256 Tests: 0 Failed: 0)
+> > Result: FAIL.
+> >
+> > I'm stumped as to why it's still failing. I've tried searching for
+> > answers on StackOverflow, but I still can't figure it out.
+>
+> But this is almost certainly that you're trying to insert leading
+> whitespace into a line that's in a <<-EOF here-doc, the "-" part of that
+> means that your leading whitespace is being stripped.
 
-On Tue, Feb 14, 2023 at 7:11 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-
-> The patch itself looks fine.
-
-Thank you for your recognition!
-
-
-------
-Thanks
-Shuqi
+Almost. The `<<-` operator actually only strips leading TABs; other
+whitespace following the TABs is left intact.
