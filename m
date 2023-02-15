@@ -2,277 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70B69C636D4
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 15:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C7E7C636D4
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 16:20:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230149AbjBOPQm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Feb 2023 10:16:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43546 "EHLO
+        id S230175AbjBOQUI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Feb 2023 11:20:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230135AbjBOPQc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2023 10:16:32 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A423B3B0F2
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 07:16:22 -0800 (PST)
-Received: (qmail 11698 invoked by uid 109); 15 Feb 2023 15:16:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Feb 2023 15:16:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14352 invoked by uid 111); 15 Feb 2023 15:16:21 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Feb 2023 10:16:21 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 15 Feb 2023 10:16:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?5a2f5a2Q5piT?= <mengziyi540841@gmail.com>,
-        git@vger.kernel.org
-Subject: [PATCH v2 3/3] shorten_unambiguous_ref(): avoid sscanf()
-Message-ID: <Y+z3RfhAxW/2iNYP@coredump.intra.peff.net>
-References: <Y+z3MtgayoXsxaHA@coredump.intra.peff.net>
+        with ESMTP id S230172AbjBOQT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2023 11:19:57 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0D013BD9B
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 08:19:06 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id 78so12922162pgb.8
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 08:19:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Xqb0M5XDT/UJeH/wqNojCYiHuzG7F3t54vzd5mh+wPU=;
+        b=ACXFqvntKJGaoEmgCfG4HTGj0fofC8mypHFvsrJ6ePtdEhisAjHDzqVKFoncUokfNS
+         2BQRWheiO6y9YySFy9HL5wvEhvLe9fs5nb0SY4jFE/YU2HB8gKkBHRObKXxVRpxfYjAT
+         0eW2crIR3KL8a+hlk9as0WUSNTheJlQzyEJGW7sju7svZ08PHNFLveYgQcUA5N25SXSw
+         oKMsJM95uE3Z8+1N8WF/fujGaDg+/rtEE5Gnlh8kZZ/p3u4ZJ8MitniUeMILVWCl5g8N
+         cFeurwTSS73ppgWgmbvC+DtKzekr6gQU+uYDEK4yc4gpTTVhchU4kBvR0eY1qmVF/BRQ
+         tfUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Xqb0M5XDT/UJeH/wqNojCYiHuzG7F3t54vzd5mh+wPU=;
+        b=qxfgNvbSq3MnqlJpvFmfpPz6rAP2fCDpZk28eVKU0aHh2kLzBhsykLQZra0/Y1Qk8s
+         R87m6tRx/oh/t72RZNrtsrnYh11218aP7COmImz3/fBdIwOGu9RoORSigS+xRl0WVuwE
+         2NE93NeWQs/0DeyH/eVlAFLTwnbV3iwDhHQYuy/FQW6eiv2um/8W2srgxhYT9FeAAlwJ
+         ZFaAY+SyoRy/oEy/ez7miKs1XWX/PX1y6kDY8/O/zUDVmf6vLrcvPUDQhewuvW1TFF/X
+         7pLCwyhmM50QAaA96b8Xe8YiDQTppmdOCyAv+9+D386G7PsaiOME80CO7jSwTXIKGmXr
+         TIkQ==
+X-Gm-Message-State: AO0yUKXvxT+obWy1YGLTj2TvwDSyUc9q/9TTBu89ekXrj/gtkShjzI5d
+        Plk+2JAHXoaGoq33t115umc=
+X-Google-Smtp-Source: AK7set/J44Wb8Efty2q8uhc9mnAOYN2T4Nwya+S4KgcB960kfBG43MlHQVAwFmRoQU59CHUpbJekNw==
+X-Received: by 2002:a62:1d05:0:b0:5a8:9f70:18c5 with SMTP id d5-20020a621d05000000b005a89f7018c5mr1835347pfd.25.1676477946193;
+        Wed, 15 Feb 2023 08:19:06 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id u24-20020a62ed18000000b0058b9c9def36sm11858239pfh.139.2023.02.15.08.19.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Feb 2023 08:19:05 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Jade Lovelace <lists@jade.fyi>
+Subject: Re: BUG: git config --global --get ITEM ignores
+ ~/.config/git/config when ~/.gitconfig is present
+References: <CAFA9we-QLQRzJdGMMCPatmfrk1oHeiUu9msMRXXk1MLE5HRxBQ@mail.gmail.com>
+        <xmqqsffdf0ji.fsf@gitster.g> <xmqqmt5lezi3.fsf@gitster.g>
+        <xmqqzg9kew1q.fsf@gitster.g>
+        <kl6ly1oze7wb.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Wed, 15 Feb 2023 08:19:05 -0800
+In-Reply-To: <kl6ly1oze7wb.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Wed, 15 Feb 2023 14:53:56 +0800")
+Message-ID: <xmqqedqq296u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y+z3MtgayoXsxaHA@coredump.intra.peff.net>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To shorten a fully qualified ref (e.g., taking "refs/heads/foo" to just
-"foo"), we munge the usual lookup rules ("refs/heads/%.*s", etc) to drop
-the ".*" modifier (so "refs/heads/%s"), and then use sscanf() to match
-that against the refname, pulling the "%s" content into a separate
-buffer.
+Glen Choo <chooglen@google.com> writes:
 
-This has a few downsides:
+> I mostly agree, except that I think we should leverage the existing
+> "ignore" flags in "config_options".
 
-  - sscanf("%s") reportedly misbehaves on macOS with some input and
-    locale combinations, returning a partial or garbled string. See
-    this thread:
+Excellent.
 
-      https://lore.kernel.org/git/CAGF3oAcCi+fG12j-1U0hcrWwkF5K_9WhOi6ZPHBzUUzfkrZDxA@mail.gmail.com/
+The option, e.g. --system, does not have to translate to "let's see
+which file does the option mean, OK, it is /etc/gitconfig so do the
+same thing as --file /etc/gitconfig".  Instead, we can treat it as
+"do the usual config sequence but ignore everything but the system
+config".  And that would handle a class like --global that can have
+more than one input source in a lot more natural way.
 
-  - scanf's matching of "%s" is greedy. So the "refs/remotes/%s/HEAD"
-    rule would never pull "origin" out of "refs/remotes/origin/HEAD".
-    Instead it always produced "origin/HEAD", which is redundant with
-    the "refs/remotes/%s" rule.
-
-  - scanf in general is an error-prone interface. For example, scanning
-    for "%s" will copy bytes into a destination string, which must have
-    been correctly sized ahead of time to avoid a buffer overflow. In
-    this case, the code is OK (the buffer is pessimistically sized to
-    match the original string, which should give us a maximum). But in
-    general, we do not want to encourage people to use scanf at all.
-
-So instead, let's note that our lookup rules are not arbitrary format
-strings, but all contain exactly one "%.*s" placeholder. We already rely
-on this, both for lookup (we feed the lookup format along with exactly
-one int/ptr combo to snprintf, etc) and for shortening (we munge "%.*s"
-to "%s", and then insist that sscanf() finds exactly one result).
-
-We can parse this manually by just matching the bytes that occur before
-and after the "%.*s" placeholder. While we have a few extra lines of
-parsing code, the result is arguably simpler, as can skip the
-preprocessing step and its tricky memory management entirely.
-
-The in-code comments should explain the parsing strategy, but there's
-one subtle change here. The original code allocated a single buffer, and
-then overwrote it in each loop iteration, since that's the only option
-sscanf() gives us. But our parser can actually return a ptr/len combo
-for the matched string, which is all we need (since we just feed it back
-to the lookup rules with "%.*s"), and then copy it only when returning
-to the caller.
-
-There are a few new tests here, all using symbolic-ref (the code can be
-triggered in many ways, but symrefs are convenient in that we don't need
-to create a real ref, which avoids any complications from the filesystem
-munging the name):
-
-  - the first covers the real-world case which misbehaved on macOS.
-    Setting LC_ALL is required to trigger the problem there (since
-    otherwise our tests use LC_ALL=C), and hopefully is at worst simply
-    ignored on other systems (and doesn't cause libc to complain, etc,
-    on systems without that locale).
-
-  - the second covers the "origin/HEAD" case as discussed above, which
-    is now fixed
-
-  - the remainder are for "weird" cases that work both before and after
-    this patch, but would be easy to get wrong with off-by-one problems
-    in the parsing (and came out of discussions and earlier iterations
-    of the patch that did get them wrong).
-
-  - absent here are tests of boring, expected-to-work cases like
-    "refs/heads/foo", etc. Those are covered all over the test suite
-    both explicitly (for-each-ref's refname:short) and implicitly (in
-    the output of git-status, etc).
-
-Reported-by: 孟子易 <mengziyi540841@gmail.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- refs.c                  | 78 +++++++++++++++++++++++------------------
- t/t1401-symbolic-ref.sh | 34 ++++++++++++++++++
- 2 files changed, 77 insertions(+), 35 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 84f344d8af..aeae31c972 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1310,53 +1310,62 @@ int update_ref(const char *msg, const char *refname,
- 			       old_oid, flags, onerr);
- }
- 
--char *refs_shorten_unambiguous_ref(struct ref_store *refs,
--				   const char *refname, int strict)
-+/*
-+ * Check that the string refname matches a rule of the form
-+ * "{prefix}%.*s{suffix}". So "foo/bar/baz" would match the rule
-+ * "foo/%.*s/baz", and return the string "bar".
-+ */
-+static const char *match_parse_rule(const char *refname, const char *rule,
-+				    size_t *len)
- {
--	int i;
--	static char **scanf_fmts;
--	char *short_name;
--	struct strbuf resolved_buf = STRBUF_INIT;
--
--	if (!scanf_fmts) {
--		/*
--		 * Pre-generate scanf formats from ref_rev_parse_rules[].
--		 * Generate a format suitable for scanf from a
--		 * ref_rev_parse_rules rule by interpolating "%s" at the
--		 * location of the "%.*s".
--		 */
--		size_t total_len = 0;
--		size_t offset = 0;
-+	/*
-+	 * Check that rule matches refname up to the first percent in the rule.
-+	 * We can bail immediately if not, but otherwise we leave "rule" at the
-+	 * %-placeholder, and "refname" at the start of the potential matched
-+	 * name.
-+	 */
-+	while (*rule != '%') {
-+		if (!*rule)
-+			BUG("rev-parse rule did not have percent");
-+		if (*refname++ != *rule++)
-+			return NULL;
-+	}
- 
--		for (i = 0; i < NUM_REV_PARSE_RULES; i++)
--			/* -2 for strlen("%.*s") - strlen("%s"); +1 for NUL */
--			total_len += strlen(ref_rev_parse_rules[i]) - 2 + 1;
-+	/*
-+	 * Check that our "%" is the expected placeholder. This assumes there
-+	 * are no other percents (placeholder or quoted) in the string, but
-+	 * that is sufficient for our rev-parse rules.
-+	 */
-+	if (!skip_prefix(rule, "%.*s", &rule))
-+		return NULL;
- 
--		scanf_fmts = xmalloc(st_add(st_mult(sizeof(char *), NUM_REV_PARSE_RULES), total_len));
-+	/*
-+	 * And now check that our suffix (if any) matches.
-+	 */
-+	if (!strip_suffix(refname, rule, len))
-+		return NULL;
- 
--		offset = 0;
--		for (i = 0; i < NUM_REV_PARSE_RULES; i++) {
--			assert(offset < total_len);
--			scanf_fmts[i] = (char *)&scanf_fmts[NUM_REV_PARSE_RULES] + offset;
--			offset += xsnprintf(scanf_fmts[i], total_len - offset,
--					    ref_rev_parse_rules[i], 2, "%s") + 1;
--		}
--	}
-+	return refname; /* len set by strip_suffix() */
-+}
- 
--	/* buffer for scanf result, at most refname must fit */
--	short_name = xstrdup(refname);
-+char *refs_shorten_unambiguous_ref(struct ref_store *refs,
-+				   const char *refname, int strict)
-+{
-+	int i;
-+	struct strbuf resolved_buf = STRBUF_INIT;
- 
- 	/* skip first rule, it will always match */
- 	for (i = NUM_REV_PARSE_RULES - 1; i > 0 ; --i) {
- 		int j;
- 		int rules_to_fail = i;
-+		const char *short_name;
- 		size_t short_name_len;
- 
--		if (1 != sscanf(refname, scanf_fmts[i], short_name))
-+		short_name = match_parse_rule(refname, ref_rev_parse_rules[i],
-+					      &short_name_len);
-+		if (!short_name)
- 			continue;
- 
--		short_name_len = strlen(short_name);
--
- 		/*
- 		 * in strict mode, all (except the matched one) rules
- 		 * must fail to resolve to a valid non-ambiguous ref
-@@ -1394,12 +1403,11 @@ char *refs_shorten_unambiguous_ref(struct ref_store *refs,
- 		 */
- 		if (j == rules_to_fail) {
- 			strbuf_release(&resolved_buf);
--			return short_name;
-+			return xmemdupz(short_name, short_name_len);
- 		}
- 	}
- 
- 	strbuf_release(&resolved_buf);
--	free(short_name);
- 	return xstrdup(refname);
- }
- 
-diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
-index d708acdb81..be23be30c7 100755
---- a/t/t1401-symbolic-ref.sh
-+++ b/t/t1401-symbolic-ref.sh
-@@ -189,4 +189,38 @@ test_expect_success 'symbolic-ref pointing at another' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'symbolic-ref --short handles complex utf8 case' '
-+	name="测试-加-增加-加-增加" &&
-+	git symbolic-ref TEST_SYMREF "refs/heads/$name" &&
-+	# In the real world, we saw problems with this case only
-+	# when the locale includes UTF-8. Set it here to try to make things as
-+	# hard as possible for us to pass, but in practice we should do the
-+	# right thing regardless (and of course some platforms may not even
-+	# have this locale).
-+	LC_ALL=en_US.UTF-8 git symbolic-ref --short TEST_SYMREF >actual &&
-+	echo "$name" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'symbolic-ref --short handles name with suffix' '
-+	git symbolic-ref TEST_SYMREF "refs/remotes/origin/HEAD" &&
-+	git symbolic-ref --short TEST_SYMREF >actual &&
-+	echo "origin" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'symbolic-ref --short handles almost-matching name' '
-+	git symbolic-ref TEST_SYMREF "refs/headsXfoo" &&
-+	git symbolic-ref --short TEST_SYMREF >actual &&
-+	echo "headsXfoo" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'symbolic-ref --short handles name with percent' '
-+	git symbolic-ref TEST_SYMREF "refs/heads/%foo" &&
-+	git symbolic-ref --short TEST_SYMREF >actual &&
-+	echo "%foo" >expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.39.2.881.gb6410a20aa
+Very good.
