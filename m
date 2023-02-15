@@ -2,159 +2,243 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31258C61DA4
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 02:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F2E4C05027
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 02:56:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232972AbjBOCk4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 21:40:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32974 "EHLO
+        id S232374AbjBOC4o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 21:56:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232124AbjBOCkv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 21:40:51 -0500
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C87ED28239
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:40:50 -0800 (PST)
-Received: by mail-qt1-x830.google.com with SMTP id c2so20504293qtw.5
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:40:50 -0800 (PST)
+        with ESMTP id S229515AbjBOC4n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 21:56:43 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C9FA2CFD0
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:56:42 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id r3so6235759pfh.4
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:56:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=35iftTChXhbYCh3E5Wk4+TdQiuf6+npXGgVuS6deYQI=;
-        b=AWrn08OzcUkfPamIxPcSLm9SLa6Z/pHfNCcuzgQ9pCHBkyaei+SXdARyulklxaWVv6
-         XD3tjqgBBPz9/WhcGnFWW4feCCamH+kY2k/lHC4WoHW5WwZPWk0vCr6XeXYwoDy7Fs+E
-         e2Gj9APGHJskF5baXM30ijcPd8HG3D6D/bF4AF2Pr9GdzX0a4ntax06/o+BKjfoFHP6L
-         SMrOEpaS+Kk1zlYiEceoNXgMUkfmzWS/sOXcwbY4I0Xmi6pcTNSJDFZOsKej7dL6HrG3
-         MKYATZCHjR42yTmEsKs9ES5xG+o3gnUYwIcfgnIxUb4KZNS/+4Mxrg4xoJ3AUs22EIhI
-         gOwA==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DDNFxhk5kIsNqBWneYjrV7FpebGjtWv3Z5cg3sNHNSo=;
+        b=D9+hBUjRs9IfnloipTQwWkou2dSo4fr9+XePF/KsK6yxN+iOsNktHOd+MVIAEuq7Oq
+         8lYMoPu/DT6MCUC9fGMX9+YE+BGJlaUksDTbHxKdbAaKw42grvCISIguow3RPgoT0LYm
+         dieXVhybiobeaYMzjZ4D5Z/GxFcHNrYGC6C61t9V+byrFzFjR92omz/nBIk2c207ZrXB
+         XWgb2mKX2+94g1GzLgEVXnyV02GKhjVwMK0lfFaw34rXCXLqvLBmSYkaNrN2IHQ2q/0m
+         hhvgm05TwYS+sSpNGZUMJXSWtAjItm3PCWDYBMK7BuASo88WOKgXbUMgbgtPcqFLZOIY
+         Lm3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=35iftTChXhbYCh3E5Wk4+TdQiuf6+npXGgVuS6deYQI=;
-        b=Z4PVh9vDN77JrGRmMjZ9KHUPr3+N1xq7fOvokD0651r4JwOnmf9Jqocr9w3/DRfve8
-         Aw+yqQNyyG3E56lDy7226Xbwz4ZySAzPx/aG/X/oZHLfYCAcxR4OOX1LlPt17ynq3Ayk
-         bVRuiQIOapPnlChnTb0XKNFWQvUvg6dzrpnGaZ/RtXhRsx+EJF4ggVIAaN7HNTBzU+E9
-         IJiKZCOuYeJlmHujb/MjzGgcHFN0zBeDvCVgKdbecBagKxpnF9pkg1DealmvNH7/j6vt
-         5f0AQNjBdbcQM9nbRIoIHP2e7NkO9/9n0qGOla27iHRTEgrpgQXe3XdmMJ1G1/5eB/VC
-         BiTQ==
-X-Gm-Message-State: AO0yUKXs/ZscpQ4Ru9LDuaP0DEqzM7OvTA7zQcNvCNQ/y1E0UxT14keb
-        aWbxzkoWnaLGtmI2A1Y9VUqPvXRvbNl8lQ==
-X-Google-Smtp-Source: AK7set+I3+HAMstc/+EjgBNFTyogjTV1WS5EBay8wRJk94O0vC7+Zyur6PMv4TFmv9XcwDAEJ62iGw==
-X-Received: by 2002:a05:622a:a028:b0:3b9:bc8c:c209 with SMTP id jt40-20020a05622aa02800b003b9bc8cc209mr2458034qtb.20.1676428849447;
-        Tue, 14 Feb 2023 18:40:49 -0800 (PST)
-Received: from cheska.uwo-x-22.wireless.uwo.pri (eclipse-22.wireless.uwo.ca. [129.100.255.37])
-        by smtp.googlemail.com with ESMTPSA id e184-20020a3769c1000000b0073b69922cfesm1069734qkc.85.2023.02.14.18.40.46
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DDNFxhk5kIsNqBWneYjrV7FpebGjtWv3Z5cg3sNHNSo=;
+        b=vSpnsKJx996rAB59m3Q4f+Rf8KHMQnXHgfxeQuzzibKpRMUOiPxJy3oXPnSvGNoLeC
+         9mZpRQs3wLOs25d3u0MtJzIWeph8n42szLv+gJCFmzI1f3SBhpLZdOVFPVfrQTrLJ/xC
+         eVNj6qJPLhcxrq8MW17VW7zGznKNqO0RwnvS7y2fnZFaOhfe+eShPIFy06anKE5BROeM
+         Zal+7UyuJBgdrx6nekiVjNWGFa+1OV2MAmFnmKEiac8ZGUS/VQ6VCMcqMbJJIgfzj3mA
+         ePNJ1WTZb1NbWNhKcvdj4Dmjj4S38/K9H+fJ17OL+B0l6j10fJbzqBjf+g0iRVRo7YgO
+         4jOQ==
+X-Gm-Message-State: AO0yUKVqPN1ZIqHg42uiiCQulC1VChMw3fPFenLDE0KGnVZzNKDXh9oX
+        yJ8peE2cwmCbumJxeb8iBdI=
+X-Google-Smtp-Source: AK7set9wAVlUob0hGA3CKBpQgtPSqihkzr1THoApZWtqUz5zvREUvHVePz4J0EzkRrQxH3qQMwhYXQ==
+X-Received: by 2002:a62:1b52:0:b0:583:9b05:d1f0 with SMTP id b79-20020a621b52000000b005839b05d1f0mr294287pfb.33.1676429801697;
+        Tue, 14 Feb 2023 18:56:41 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id v25-20020a62a519000000b005809d382016sm10417896pfm.74.2023.02.14.18.56.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 18:40:47 -0800 (PST)
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>
-Subject: [PATCH v6 3/3] t4113: put executable lines to test_expect_success
-Date:   Tue, 14 Feb 2023 21:39:53 -0500
-Message-Id: <20230215023953.11880-4-cheskaqiqi@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230215023953.11880-1-cheskaqiqi@gmail.com>
-References: <20230209154417.10763-1-cheskaqiqi@gmail.com>
- <20230215023953.11880-1-cheskaqiqi@gmail.com>
+        Tue, 14 Feb 2023 18:56:41 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 2/2] diff: teach diff to read gitattribute
+ diff-algorithm
+References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
+        <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
+        <cb0305631496eb4c2d51e5b586ac0ca8580c7dc1.1676410819.git.gitgitgadget@gmail.com>
+Date:   Tue, 14 Feb 2023 18:56:40 -0800
+In-Reply-To: <cb0305631496eb4c2d51e5b586ac0ca8580c7dc1.1676410819.git.gitgitgadget@gmail.com>
+        (John Cai via GitGitGadget's message of "Tue, 14 Feb 2023 21:40:19
+        +0000")
+Message-ID: <xmqq4jrn3ac7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As t/README says, put all code inside test_expect_success and
-other assertions. This old test scripts have setup code
-outside of tests. This is problematic since any failures of the
-setup code will go unnoticed. Therefore, move setup code into the tests
-themselves so that failures are properly flagged. t/README also says,
-use "<<-" instead of "<<" to strip leading TABs used for indentation.
-Fix it. We should chain test assertions(t/README). Therefore,Chain
-this test assertions with &&. What's more,take advantage of modern
-style. Use test_write_lines instead.
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
----
- t/t4113-apply-ending.sh | 55 ++++++++++++++++++-----------------------
- 1 file changed, 24 insertions(+), 31 deletions(-)
+> From: John Cai <johncai86@gmail.com>
+>
+> It can be useful to specify diff algorithms per file type. For example,
+> one may want to use the minimal diff algorithm for .json files, another
+> for .c files, etc.
+>
+> Teach the diff machinery to check attributes for a diff driver. Also
+> teach the diff driver parser a new type "algorithm" to look for in the
+> config, which will be used if a driver has been specified through the
+> attributes.
+>
+> Enforce precedence of diff algorithm by favoring the command line option,
+> then looking at the driver attributes & config combination, then finally
+> the diff.algorithm config.
+>
+> To enforce precedence order, use the `xdl_opts_command_line` member
+> during options pasing to indicate the diff algorithm was set via command
+> line args.
+>
+> Signed-off-by: John Cai <johncai86@gmail.com>
+> ---
+>  Documentation/gitattributes.txt | 41 ++++++++++++++++++++++++++++++++-
+>  diff.c                          | 25 +++++++++++++-------
+>  diff.h                          |  2 ++
+>  t/lib-diff-alternative.sh       | 38 +++++++++++++++++++++++++++++-
+>  userdiff.c                      |  4 +++-
+>  userdiff.h                      |  1 +
+>  6 files changed, 100 insertions(+), 11 deletions(-)
+>
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+> index c19e64ea0ef..7e69f509d0a 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -736,7 +736,6 @@ String::
+>  	by the configuration variables in the "diff.foo" section of the
+>  	Git config file.
+>  
+> -
+>  Defining an external diff driver
+>  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-diff --git a/t/t4113-apply-ending.sh b/t/t4113-apply-ending.sh
-index a470c9ce7b..56fc2f436b 100755
---- a/t/t4113-apply-ending.sh
-+++ b/t/t4113-apply-ending.sh
-@@ -8,46 +8,39 @@ test_description='git apply trying to add an ending line.
- '
- . ./test-lib.sh
- 
--# setup
--
--cat >test-patch <<\EOF
--diff --git a/file b/file
----- a/file
--+++ b/file
--@@ -1,2 +1,3 @@
-- a
-- b
--+c
--EOF
--
--echo 'a' >file
--echo 'b' >>file
--echo 'c' >>file
--
- test_expect_success setup '
-+	cat >test-patch <<-\EOF &&
-+	diff --git a/file b/file
-+	--- a/file
-+	+++ b/file
-+	@@ -1,2 +1,3 @@
-+	 a
-+	 b
-+	+c
-+	EOF
-+
-+	test_write_lines a b c >file &&
- 	git update-index --add file
- '
--# test
- 
- test_expect_success 'apply at the end' '
- 	test_must_fail git apply --index test-patch
- '
--cat >test-patch <<\EOF
--diff a/file b/file
----- a/file
--+++ b/file
--@@ -1,2 +1,3 @@
--+a
-- b
-- c
--EOF
--
--echo >file 'a
--b
--c'
--git update-index file
- 
- test_expect_success 'apply at the beginning' '
-+	cat >test-patch <<-\EOF &&
-+	diff a/file b/file
-+	--- a/file
-+	+++ b/file
-+	@@ -1,2 +1,3 @@
-+	+a
-+	 b
-+	 c
-+	EOF
-+
-+	test_write_lines a b c >file &&
-+	git update-index file &&
- 	test_must_fail git apply --index test-patch
- '
-+
- test_done
--- 
-2.39.0
+Unrelated change?  Wider paragraph gap between two sections than
+other inter-paragraph gaps inside a single section is what original
+had, and I think that is a reasonable thing to keep.
 
+> @@ -758,6 +757,46 @@ with the above configuration, i.e. `j-c-diff`, with 7
+>  parameters, just like `GIT_EXTERNAL_DIFF` program is called.
+>  See linkgit:git[1] for details.
+
+In other words, this new section wants another blank line before to match.
+
+>  
+> +Setting the internal diff algorithm
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +
+> +The diff algorithm can be set through the `diff.algorithm` config key, but
+> +sometimes it may be helpful to set the diff algorithm by path. For example, one
+> +might wish to set a diff algorithm automatically for all `.json` files such that
+> +the user would not need to pass in a separate command line `--diff-algorithm` flag each
+> +time.
+
+That's an overly wide paragraph.
+
+> +
+> +First, in `.gitattributes`, you would assign the `diff` attribute for paths.
+> +
+> +*Git attributes*
+
+Discard this line (mimic an existing section, like "Defining a
+custom hunk-header").
+
+> +------------------------
+> +*.json diff=<name>
+> +------------------------
+> +
+> +Then, you would define a "diff.<name>.algorithm" configuration to specify the
+> +diff algorithm, choosing from `meyers`, `patience`, `minimal`, and `histogram`.
+> +
+> +*Git config*
+
+Likewise, discard this line (I won't repeat but the next hunk has
+the same issue).
+
+> diff --git a/diff.c b/diff.c
+> index 92a0eab942e..24da439e56f 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4456,15 +4456,11 @@ static void run_diff_cmd(const char *pgm,
+>  	const char *xfrm_msg = NULL;
+>  	int complete_rewrite = (p->status == DIFF_STATUS_MODIFIED) && p->score;
+>  	int must_show_header = 0;
+> +	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, attr_path);
+
+Do we run this look-up unconditionally, even when .allow_external
+bit is not set?  Why?
+
+> -
+> -	if (o->flags.allow_external) {
+> -		struct userdiff_driver *drv;
+> -
+> -		drv = userdiff_find_by_path(o->repo->index, attr_path);
+> +	if (o->flags.allow_external)
+>  		if (drv && drv->external)
+>  			pgm = drv->external;
+> -	}
+>  
+>  	if (msg) {
+>  		/*
+> @@ -4481,12 +4477,17 @@ static void run_diff_cmd(const char *pgm,
+>  		run_external_diff(pgm, name, other, one, two, xfrm_msg, o);
+>  		return;
+>  	}
+> -	if (one && two)
+> +	if (one && two) {
+> +		if (!o->xdl_opts_command_line)
+> +			if (drv && drv->algorithm)
+> +				set_diff_algorithm(o, drv->algorithm);
+
+The idea here seems to be "if there is no explicit instruction, and
+if the diff driver specifies an algorithm, then use that one", which
+is very straightforward and sensible.  Can we reliably tell if we
+had an explicit instruction to override the driver?  That should
+probably appear in other parts of the code, I guess.
+
+>  		builtin_diff(name, other ? other : name,
+>  			     one, two, xfrm_msg, must_show_header,
+>  			     o, complete_rewrite);
+> -	else
+> +	} else {
+>  		fprintf(o->file, "* Unmerged path %s\n", name);
+> +	}
+>  }
+
+
+
+> @@ -4583,6 +4584,10 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
+>  	const char *name;
+>  	const char *other;
+>  
+> +	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, p->one->path);
+> +	if (drv && drv->algorithm)
+> +		set_diff_algorithm(o, drv->algorithm);
+
+Interesting.  Does external diff play a role, like in run_diff_cmd()
+we saw earlier?
+
+> @@ -5130,6 +5135,8 @@ static int diff_opt_diff_algorithm(const struct option *opt,
+>  		return error(_("option diff-algorithm accepts \"myers\", "
+>  			       "\"minimal\", \"patience\" and \"histogram\""));
+>  
+> +	options->xdl_opts_command_line = 1;
+
+OK, calling this member "xdl_" anything is highly misleading, as it
+has nothing to do with the xdiff machinery.  How about calling it
+after what it does, i.e. allowing the attribute driven diff driver
+to specify the algorithm?  options.ignore_driver_algorithm or
+something?  The options coming _from_ the command line may happen to
+be the condition to trigger this behaviour in this current
+implementation, but it does not have to stay that way forever.
+Losing "command line" from the name of the flag would make it
+clearer what is essential (i.e. this controls if the diff driver is
+allowed to affect the choice of the algorithm) and what is not (i.e.
+we happen to let it decided based on the presence or absense of
+command line choice).
+
+Thanks.
