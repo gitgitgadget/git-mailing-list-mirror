@@ -2,154 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 408C8C61DA4
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 03:20:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6596C636CC
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 03:42:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231549AbjBODUM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 22:20:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48738 "EHLO
+        id S229988AbjBODmD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 22:42:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229526AbjBODUL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 22:20:11 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC02241D6
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 19:20:10 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id kk7-20020a17090b4a0700b00234463de251so760159pjb.3
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 19:20:10 -0800 (PST)
+        with ESMTP id S229454AbjBODmC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 22:42:02 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 270272ED57
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 19:42:01 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id bi36so26052356lfb.8
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 19:42:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aeeoUgM70vzt2zOWxwQAVBUO1HHhlcZ7YIMKVG1Aohs=;
-        b=pNxVLBcz3EBy4ALx5QlEde0CGe1mg9W6TUh5/KVHKliO2wu4UWZeeVMyXSQRwCnUCp
-         o8Hwd/o/p1scL+2tlWEZEv5GL8T21wxC8WlKHo8z3y9ap/K0xpFeqkcTc6FWerA25m7I
-         ekYMZ5Tn+mAC2zlWTsYgi4z+OmL+9RB86y8mWB3/fMffQ68HA7uu4yQmMPmr4w0R2doa
-         Fr3BJlIZkNrweEe1DgpvgvzrfgzqiYRgnjTwBXrjx0FJJGCiDKhR3bjxBrGmvVty8fd6
-         ccTQCFqNL1XYQLQT0vM/wRgp+oN0gnBZnCEFFGa2V6nyFZjOj54OOs62eFS7KpAK1nHZ
-         YJPA==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q4FNMaykJd49HJEXccMNal2voT2OqySsDgMFwumrYls=;
+        b=l78LxH9ajMJy4V4g17DL9cPsDnKTy9cheJxXrhi4OyFSJsL/bZqi12MEdykTbNCjjM
+         LM7JTLHzUPnocRee2gP2cAGj2v60Ya0Xzf9cFMagc1gzL3TuvyRvZXRncjCNSDUv3EOT
+         2uLpSqonKzukwjlsCPt0FNltB6x0K3AwitdMpX8uX9v4wlf4MxXWtaglwcJIw6xzOxwv
+         HueIdvWdZgPMezw1CmX4dT7jjDNH5fAvOyDJlsb/syv82ybF6/hk+CzOaP0m+EEXLkb4
+         CKQQUJ489kIUckCEM6CTER883tMNgRY5rUGtPV8lt2F/U/XdNQu7CCkVhuTmv1j+6rxx
+         sFnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=aeeoUgM70vzt2zOWxwQAVBUO1HHhlcZ7YIMKVG1Aohs=;
-        b=uaWVyLrlUx7jX3nvCx7h2fy0KvKnUz3gwywdi6Ucx2mMdGouHmfirU3h9dXgOWIBzt
-         Easm3fFsZBZu7k+5XLemY/vKfkKcH9QMcebjdY4hRAmquB6n4QVCHs+D5vtH9TxUO5h3
-         ZlEe7uWwBM/VUjPHS+g7DNY0Lj1ZsXdDBa16EEr9SGkSnMEG1x2HLmKvyb8ZLYtVJ6mc
-         RHPizWyAm7IsWo/FULhO/46gyqndwhZJInRJNwghlfERUGiYs21YNkNpDjXkcaIhxBna
-         OvGuZp90SJQKlZr0tPxJvwNmSMsLDvcBT9shan4iQ0GCf9R24aC+PI8Rxf8ix/ewNCgn
-         5t6A==
-X-Gm-Message-State: AO0yUKUcjDS9vdkpfQotaNCfGpJnMLIpiFwKQ4aApWN3GDFrdLs0yfPa
-        yX6dQTKQZn264e+e76IPNRyI8MSZwH0=
-X-Google-Smtp-Source: AK7set826xOtChDbOmc+S2HiXOZmoPxAnzsggDHjNWlVnNuULAISsRYKDGfJmF93S2QLFzoEQKEfow==
-X-Received: by 2002:a17:903:200a:b0:198:fc0a:192b with SMTP id s10-20020a170903200a00b00198fc0a192bmr668179pla.64.1676431209489;
-        Tue, 14 Feb 2023 19:20:09 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id v22-20020a170902e8d600b001949f21e1d2sm7311312plg.308.2023.02.14.19.20.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 19:20:09 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 2/2] diff: teach diff to read gitattribute
- diff-algorithm
-References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
-        <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
-        <cb0305631496eb4c2d51e5b586ac0ca8580c7dc1.1676410819.git.gitgitgadget@gmail.com>
-        <xmqq4jrn3ac7.fsf@gitster.g>
-Date:   Tue, 14 Feb 2023 19:20:08 -0800
-In-Reply-To: <xmqq4jrn3ac7.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        14 Feb 2023 18:56:40 -0800")
-Message-ID: <xmqqwn4j1uon.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q4FNMaykJd49HJEXccMNal2voT2OqySsDgMFwumrYls=;
+        b=xtdse4F/TWZ7o7L6y1ad3wsMg4+kdH3ORKDidm03FJvhlVw+hOzE+49CoiKgUgb8uS
+         1c08E2s6QoAs3p47xD0uLZas+C53yhcCqWtzyfXxwRWd7MkK1at9GDrn+Xjwdc2icwmB
+         bMsvF3tcL70fZGaR8otXtA97qfWDZ/RPM70fBICIeHbA9/RsjPSkOWD5Fg9vU/Xye0kP
+         YG2Ww1h8GTTfsxHuVNVxSjukN+vfhHtR1dHTELIA/5X3huk44eweXcjDUlv4cGKIP2r5
+         Wq1Ai3AiI9Pjx6DoaXS/nfv2a0bm29uKNL/uJOJ0BSFZsFrqcwWOLRcCJv+yXEi+J90K
+         XOvA==
+X-Gm-Message-State: AO0yUKVvSGddSSvcr7KD0V+TmRqj4s4wM7bQHypM3PmmUJ5Y3fqgG4uM
+        dGNvGRNyRyRCdiFUq4gdyNZ5ngBb/pXrfcr7wB2JEvtxE63/PA==
+X-Google-Smtp-Source: AK7set8HiWbmbEVRecc950nr9YxKvmOvavGtFPD5z5FGzjxgEVc/zbAg0+SSG7UjwpqQXiVdW+RROn8nDl/dMRjzTzw=
+X-Received: by 2002:ac2:54b8:0:b0:4d8:50e1:8ba7 with SMTP id
+ w24-20020ac254b8000000b004d850e18ba7mr111500lfk.2.1676432519029; Tue, 14 Feb
+ 2023 19:41:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
+ <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
+ <230206.865yce7n1w.gmgdl@evledraar.gmail.com> <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
+ <CABPp-BFKQXe-EJOd9z1TrisL64NuV9A132rf9MwV_7w79QQ9YQ@mail.gmail.com> <AF5092D2-A561-4B56-8FB8-25DCFA28F32C@gmail.com>
+In-Reply-To: <AF5092D2-A561-4B56-8FB8-25DCFA28F32C@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 14 Feb 2023 19:41:00 -0800
+Message-ID: <CABPp-BGmFemkiD1OFrrOdaJt9PjGRp+QHoV_azPqvTtx6CdD9Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
+To:     John Cai <johncai86@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi John!
 
->> diff --git a/diff.c b/diff.c
->> index 92a0eab942e..24da439e56f 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -4456,15 +4456,11 @@ static void run_diff_cmd(const char *pgm,
->>  	const char *xfrm_msg = NULL;
->>  	int complete_rewrite = (p->status == DIFF_STATUS_MODIFIED) && p->score;
->>  	int must_show_header = 0;
->> +	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, attr_path);
+On Tue, Feb 14, 2023 at 1:16 PM John Cai <johncai86@gmail.com> wrote:
+> On 9 Feb 2023, at 3:44, Elijah Newren wrote:
+> > On Mon, Feb 6, 2023 at 12:47 PM John Cai <johncai86@gmail.com> wrote:
+> >>
+[...]
+> It seems like the performance penalty was because I was adding calls to p=
+arse
+> attribute files. Piggy backing off of the attribute parsing in userdiff.h=
+ will
+> allow us to not incur this performance penalty:
 >
-> Do we run this look-up unconditionally, even when .allow_external
-> bit is not set?  Why?
-
-Ah, this is perfectly fine.  It used to be that this codepath can
-tell that there is no need to check the diff driver when it is told
-never to use any external diff driver.  Now, even when it is computing
-the diff internally, it needs to check the diff driver to find out
-the favoured algorithm for the path.
-
-Strictly speaking, if we are told NOT to use external diff driver,
-and if we are told NOT to pay attention to algorithm given by the
-diff driver, then we know we can skip the overhead of attribute
-look-up.  I.e. we could do this to avoid attribute look-up:
-
-	struct userdiff_driver *drv = NULL;
-
-	if (o->flags.allow_external || !o->ignore_driver_algorithm)
-		drv = userdiff_find_by_path(...);
-
-	if (drv && o->flags.allow_external && drv->external)
-		pgm = drv->external;
-	...
-	if (pgm)
-		... do the external diff thing ...
-	if (one && two) {
-		if (drv && !o->ignore_driver_algorithm && drv->algorithm)
-			set_diff_algo(...)
-
-I was not sure if it would be worth it before writing the above
-down, but the resulting flow does not look _too_ bad.
-
->> @@ -4583,6 +4584,10 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
->>  	const char *name;
->>  	const char *other;
->>  
->> +	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, p->one->path);
->> +	if (drv && drv->algorithm)
->> +		set_diff_algorithm(o, drv->algorithm);
+> $ hyperfine -r 5 -L a bin-wrappers/git,git '{a} diff v2.0.0 v2.28.0'
+> Benchmark 1: git-bin-wrapper diff v2.0.0 v2.28.0
+>   Time (mean =C2=B1 =CF=83):      1.072 s =C2=B1  0.289 s    [User: 0.626=
+ s, System: 0.081 s]
+>   Range (min =E2=80=A6 max):    0.772 s =E2=80=A6  1.537 s    5 runs
 >
-> Interesting.  Does external diff play a role, like in run_diff_cmd()
-> we saw earlier?
+> Benchmark 2: git diff v2.0.0 v2.28.0
+>   Time (mean =C2=B1 =CF=83):      1.003 s =C2=B1  0.065 s    [User: 0.684=
+ s, System: 0.067 s]
+>   Range (min =E2=80=A6 max):    0.914 s =E2=80=A6  1.091 s    5 runs
+>
+> Summary
+>   'git diff v2.0.0 v2.28.0' ran
+>     1.07 =C2=B1 0.30 times faster than 'git-bin-wrapper diff v2.0.0 v2.28=
+.0'
 
-As whoever wrote "diffstat" did not think of counting output from
-external diff driver, of course in this codepath external diff would
-not appear.  So what we see is very much expected.
+Yaay!  Much better.  :-)
 
-Just move the blank line we see before these new lines one line
-down, so that the variable decls are grouped together, with a blank
-line before the first executable statement.  I.e.
+I'm curious, though, whether you are showing here a 7% slowdown (which
+would still be bad), or just that the feature is correctly choosing a
+different (but slower) algorithm for some files, or some kind of mix.
 
-	const char *name;
-	const char *other;
-+       struct userdiff_driver *drv;
-+
-+	drv = userdiff_find_by_path(...);
-+	if (drv && drv->algorithm)
-+		set_diff_algorithm(o, drv->algorithm);
+What is the performance difference if you have this feature included,
+but don't have any directives in .gitattributes selecting a different
+diff algorithm for any files?
 
-Shouldn't this function refrain from setting algorithm from the
-driver when the algorithm was given elsewhere?  E.g.
+> > And on a separate note...
+> >
+> > There's another set of considerations we might need to include here as
+> > well that I haven't seen anyone else in this thread talk about:
+>
+> These are some great questions. I'll do my best to answer them.
+> >
+> > * When trying to diff files, do we read the .gitattributes file from
+> > the current checkout to determine the diff algorithm(s)?  Or the
+> > index?  Or the commit we are diffing against?
+> > * If we use the current checkout or index, what about bare clones or
+> > diffing between two different commits?
+> > * If diffing between two different commits, and the .gitattributes has
+> > changed between those commits, which .gitattributes file wins?
+> > * If diffing between two different commits, and the .gitattributes has
+> > NOT changed, BUT a file has been renamed and the old and new names
+> > have different rules, which rule wins?
+>
+> In the next version I plan on using Peff's suggestion of utilizing the ex=
+isting
+> diff driver scheme [1]. I believe these four questions are addressed if w=
+e use
+> the existing userdiff.h API, which in turn calls the attr.h API. We check=
+ the
+> worktree, then fallback to the index.
 
-	$ git show --histogram --stat
-	
-or something?  IOW, shouldn't it also pay attention to
-o->ignore_driver_algorithm bit, just like run_diff_cmd() did?
+So...it sounds like we're just ignoring all the special cases listed
+above, and living with bugs related to them?  That's not a criticism;
+in fact, it might be okay -- after all, that's exactly what the
+existing .gitattributes handling does and you are just hooking into
+it.
 
+I am a bit concerned, though, that we're increasing the visibility of
+the interactions of .gitattributes with respect to these kinds of
+cases.  I think external drivers are probably much less used than what
+your feature might be, so folks are more likely to stumble into these
+cases and complain.  Perhaps those cases are rare enough that we don't
+care, but it might be at least worth documenting the issues (both to
+manage user expectations and to give people a heads up about the
+potential issues.)
 
+(Also, it may be worth mentioning that I tend to focus on unusual
+cases for anything that might touch merging; Junio once named one of
+my patchsets "en/t6042-insane-merge-rename-testcases".  It's possible
+I worry about corner cases more than is justified given their real
+world likelihood.)
+
+> By using the userdiff.h API, the behavior will match what users already e=
+xpect
+> when they for instance set an external driver.
+
+s/already expect/already get/
+
+The bugs also affect external drivers; I just suspect external drivers
+aren't used enough that users have complained very loudly (yet?).
+
+> 1. https://lore.kernel.org/git/Y+KQtqNPews3vBS8@coredump.intra.peff.net/
+>
+> >
+> > * If per-file diff algorithms are adopted widely enough, will we be
+> > forced to change the merge algorithm to also pay attention to them?
+> > If it does, more complicated rename cases occur and we need rules for
+> > how to handle those.
+> > * If the merge algorithm has to pay attention to .gitattributes for
+> > this too, we'll have even more corner cases around what happens if
+> > there are merge conflicts in .gitattributes itself (which is already
+> > kind of ugly and kludged)
+>
+> I see this feature as a user-experience type convenience feature, so I do=
+n't
+> believe there's need for the merge machinery to also pay attention to the=
+ diff
+> algorithm set through gitattrbutes. We can clarify this in the documentat=
+ion.
+
+That would be awesome; *please* do this.  This is my primary concern
+with this patchset.
+
+I've spent an awful lot of time dealing with weird corner cases in the
+merge machinery, and this appears to open a big can of worms to me.
+It'd be a huge relief if we just agreed that the .gitattributes
+handling here is only meant for user-facing diffs and will not be
+consulted by the merge machinery.
+
+> > Anyway, I know I'm a bit animated and biased in this area, and I
+> > apologize if I'm a bit too much so.  Even if I am, hopefully my
+> > comments at least provide some useful context.
+>
+> No problem! thanks for raising these issues.
+>
+> thanks
+> John
