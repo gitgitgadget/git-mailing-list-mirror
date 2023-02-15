@@ -2,90 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0097EC636CC
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 17:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99936C636D4
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 17:24:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbjBORUx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Feb 2023 12:20:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56412 "EHLO
+        id S229705AbjBORYp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Feb 2023 12:24:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59238 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230042AbjBORUu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2023 12:20:50 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3FCA38643
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 09:20:48 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id mg23so12256921pjb.0
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 09:20:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZzKd4o8zaIxopG5No1I8DH5CC026C4czQfccMfruNnY=;
-        b=bhXQzOxofHTMErmWmH5fg5HZKup8Y1JO21ciCpG1Fab95o7i56sBFdIc0KNH5XPpmE
-         ZyOBSaf1gvfOt71C/ZGdUIB0HE6ixWT3WNjagqiKvlJzfu0MpkOGNkV05hRjgq1aWu2M
-         Ua+TV4S+jSW16ORvk9lFnL+dHsfmbKg/Y8Nn6IWAvi0gSWRSDAqTuxKl8Y22QSxRBzq2
-         dCIfz1A0EESXsm/ODqcGPhAV/sd3Hqiiy7bvbN96ZDV5NC3nDDLYlwl0bgiofsgMe3lp
-         +zAZb7Jd8gDUSs+C23pbVaSlgXrLn7Hr42gVPdcAMUEmvl9c7vg6NttLhLvZNVAaOqyO
-         evmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ZzKd4o8zaIxopG5No1I8DH5CC026C4czQfccMfruNnY=;
-        b=ue2W3G91FJTmZ9BYXankIzDN/OserrOr12ALYtZCzeWHa/mJ/hteHXLXWQOceRD0LG
-         3OgHcbQfMjh9UVEs5DD7zJ6jOIRgKjwzmJMLUpTjsk2ePBz7oio78k9IrYOTXPAZkk/q
-         C/F/WxaHI1GoHIWEdLKz65ILmNGjqPDJJCS2g/Oyj+veON7o8jQiYtaFlCakXBUTjw+k
-         7DCrxqBFK0z1OYOVuYG5pR+TjzhAmRq76/Ug8enxhPzQOZq6Es29271mOHiG6VzhLoeu
-         nhOXFI+cEffefOqT8wVS0fUVW5ShzmDx5DRE6T90wye7sz2sjHQYexZ3eNmORItFnn5H
-         GYLQ==
-X-Gm-Message-State: AO0yUKWO+zd0ZqkIWT0a0SgWG/3VXeYyjWIiT+C3N/A74lcjdRSYnyE0
-        eKmVe0f3/f6xSrDmbvPKLw4=
-X-Google-Smtp-Source: AK7set+SwMOJEPZZzkH5WUbA0tm2p6/AcV7lxlonJwArfLDi+34cjlzG693CKAb4vGjf8ZdfCU8WXQ==
-X-Received: by 2002:a17:90a:e7c5:b0:234:118d:b1b1 with SMTP id kb5-20020a17090ae7c500b00234118db1b1mr3543271pjb.48.1676481648086;
-        Wed, 15 Feb 2023 09:20:48 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id fs24-20020a17090af29800b002340d317f3esm1706797pjb.52.2023.02.15.09.20.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Feb 2023 09:20:47 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] gpg: do show gpg's error message upon failure
-References: <pull.1480.git.1676440714.gitgitgadget@gmail.com>
-        <ead90d343b1f4f4ce8998b2f31558fd30d7d2675.1676440714.git.gitgitgadget@gmail.com>
-Date:   Wed, 15 Feb 2023 09:20:47 -0800
-In-Reply-To: <ead90d343b1f4f4ce8998b2f31558fd30d7d2675.1676440714.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Wed, 15 Feb 2023
-        05:58:34 +0000")
-Message-ID: <xmqqzg9ezvyo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229593AbjBORYn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2023 12:24:43 -0500
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1B2BAD31
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 09:24:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1676481881; i=tboegi@web.de;
+        bh=1gnpwond+n5Ui1gJ7AXy30eSEeskpheWlQTyuAqCxc8=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=v1Jhsp+AXfSF9Aa0E/2omNjtwXIZNQsQqmSDQeIEtldqE1JuaaAmokuHGBg9/X0js
+         Mx1I/IvpFEisJqBoumCRmnN3aqsc0h+Juycva5vTtH8x9Urlk0pyO0Iyhu5TJgBAlx
+         TByhVMagNq8P0tSCo4Gv9Pvg3FLQoCWPl93SJr3UjY9UgOIKAwYx8vhhGvonvb3acq
+         u8jwIKTbGUhwksQC4SdgHrdopOPMLV6GzaA1ZXTqYplSwKQdHiB1UJfbcA8nGpXQ0l
+         6E/CpkfNZdtSliIeWoyZN78a39F27bZtliNizTb1E8hULwfD/ZXtgxmRM133hWX1Rc
+         32BtNSHCh8L5w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mhnw2-1oxfRt0E9g-00dgzc; Wed, 15
+ Feb 2023 18:19:25 +0100
+Date:   Wed, 15 Feb 2023 18:19:24 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?utf-8?B?5a2f5a2Q5piT?= <mengziyi540841@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: bug report: symbolic-ref --short command echos the wrong text
+ while use Chinese language
+Message-ID: <20230215171924.6dutxlsi64h4upkg@tb-raspi4>
+References: <CAGF3oAcCi+fG12j-1U0hcrWwkF5K_9WhOi6ZPHBzUUzfkrZDxA@mail.gmail.com>
+ <Y+qbFN+PhHVuWT2T@coredump.intra.peff.net>
+ <20230215162648.py7diaasrymezntl@tb-raspi4>
+ <CAPig+cRmgGssbN=dDmeDeNeBJhcjvtzxg6O_ZNX5U9kWY0jfZg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAPig+cRmgGssbN=dDmeDeNeBJhcjvtzxg6O_ZNX5U9kWY0jfZg@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:PkdmIUqMx2A1oNtlEwe82vuM3IvFSYhEzxGxJ+gVweMq8Js/6go
+ FPfGU49umytjdxPSl7QxpAISCTmVhZHYdEF5fe2HNViaE7IjGkJqFRoLPkTsTMinttyPwti
+ YFL74rbxeahzvZbzqU1n9o9EzlfIEewzqxBP6WNpTlKF0NjAybQNkRjX+WoSrcUTdOlMQeI
+ VZoa5ci5JuuALwbwv15dg==
+UI-OutboundReport: notjunk:1;M01:P0:lAYIp+ob47Y=;yFtF13VdokJKNdvTfbjASYTWTXp
+ yJHiWGtEPZ7AVdransKFPGW5he4tu96ciMGde2E/KRRHoe8D644bXNvQCRh0Llc4bqUvTFh8R
+ 8ao4t20R2TUvUZVqBV4CjoTwr0uKBV1WuwcdCnT4t/tdg9nJEGl8EwmoPHRMKcmv11vkwqK5A
+ L6tiJBC5D/OBwpd6EQHgEyVxjaP2D3YZmc2sZLEqW52n1HB7J6yQrSPWF84Pp3MDRCMvB3asl
+ DE0qy7NrHZKYDZ3idHGTdi9OUROBLTlkhnNLJn2Z6Ina0xL+BjhVl1Z+/MFqKzy1+9LlUTqsP
+ vHslf2pOaQfRoM//Ms4wbiS8h4QGEEayCeZAaWwtpHzD1h9MPyQtFZ2LJmVStfJioEfUB0PXS
+ +43bVgsXJlKQOyrL2n334wm2eZqH2snqajrSSHo5oVNZ8x19ENFQSPx9AHhY2qzyRGFCEJ8Ul
+ hMbkUo6NI91L6PRGilMhgakGbbw7uEcxPFdW+j8oxdFLPIMSLor0zwxzBPyPlrcNkPVPOccOm
+ cMwFWl1FS5JP39O27Ptosxc/Jvp1KwxPWEK6o8dkwrY9iIPvWGg/XNbeUc2+nA0tBoSDsLW7n
+ eO8SwPsW9MH6Jtb+YPRV2EMo27kWeDaTyksjKUdSfyw1CAclL421wwdonZlqcfRL1qwnJ/YWL
+ DCe6pKNO01BCt8lID5fL3BueYUw3tCs/wIp3jUerdBySjYbuiLnnGuxCvzR0iKT2+X/cIvhVI
+ 5cIxNsyA+wMfyM/GB722ww9pzC6XiOoQMOLc+/HKMWikgqHLmauVpIERIMoKe6npg+SgQPAyj
+ zJb8N0KD8l5FrOpg4bbY41068UxMjH/tAqcn/EODySmQTddzYkhkzfIv79hbRJm16ICnnTbKB
+ Xfh24sNSBbOe5AQjeWwJkrrbWMY0z6+tqlt+JwbSUD/IfXLL2tC/gZU27YyP6YyNdlm/STOCf
+ PDOVKQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Wed, Feb 15, 2023 at 11:37:11AM -0500, Eric Sunshine wrote:
+> On Wed, Feb 15, 2023 at 11:33 AM Torsten B=F6gershausen <tboegi@web.de> =
+wrote:
+> > It would be helpful, to pipe the result into xxd:
+> > git symbolic-ref --short HEAD | xxd
+> > And then see, if there is any garbling inside or outside of Git ?
+>
+> Here's what I get:
+>
+>   $ git symbolic-ref --short HEAD | xxd
+>   00000000: e6b5 8be8 af95 2de5 8a0a                 ......-...
+>   $ LANG=3DC git symbolic-ref --short HEAD | xxd
+>   00000000: e6b5 8be8 af95 2de5 8aa0 2de5 a29e e58a  ......-...-.....
+>   00000010: a02d e58a a02d e5a2 9ee5 8aa0 0a         .-...-.......
 
->  	ret |= !cp;
-> +	if (ret) {
-> +		error(_("gpg failed to sign the data:\n%s"),
-> +		      gpg_status.len ? gpg_status.buf : "(no gpg output)");
-> +		strbuf_release(&gpg_status);
-> +		return -1;
-> +	}
->  	strbuf_release(&gpg_status);
-> -	if (ret)
-> -		return error(_("gpg failed to sign the data"));
+Interesting.
+I just saw that there are already fixes going on:
+Is the fix from Peff helping here ?
 
-Good.  As we are worried about error messages that are too terse,
-dumping everything to the output would be a vast improvement.
-Hopefully gpg_status.len would to be thousands of bytes long, and
-this is not a codepath that is triggered remotely anyway.
+And what do you see on disk ?
 
-Will queue.  Thanks.
