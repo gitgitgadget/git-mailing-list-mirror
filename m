@@ -2,127 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F594C64ED6
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 04:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4CB7C636D4
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 04:21:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229721AbjBOEU0 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 14 Feb 2023 23:20:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48256 "EHLO
+        id S229881AbjBOEVb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 23:21:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233263AbjBOETs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 23:19:48 -0500
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 930796A5E
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 20:17:55 -0800 (PST)
-Received: by mail-pg1-f182.google.com with SMTP id 24so11672660pgt.7
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 20:17:55 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1676434673;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mZWxx+NFaa0z70a26LlBt4qB1LhETQpwaxWhE25fNNk=;
-        b=Ekcj9PPp+aGscmpxtQw93peExNUuHCK0P0w2F4+lobPyEdYHXw06bCme6jANk30c+d
-         BAWPPBQ5vLXkZael24ZYC0NRW07f43LipowK/5FMUToAi0qIhVQNQAg4E1yJ4OoQ6vQ+
-         L/DOQKyfUsN+iBl6wUlQ1AWZFHuBt0C2msmj/kIt++wi06g+TzkjZRsZniy4Q93q5S3w
-         bpEhkLnKgLkvPiL0BW2psbNU5Qr3YBsVtZSWsf0WihGTiaqoUae/SVjyDFWUypOOe17Y
-         u0Zaq00Qb0CU3F2/280w7gMrdSc1LctWpsZLaiuab7Gwnyi+583rMKvKKJkE00kGcsnW
-         qZNg==
-X-Gm-Message-State: AO0yUKXxDGWDhceutJfUmghJkWov0S+SUs8AsA0CIdHHM+nm947ElDHm
-        uwijVwsYxHOr5tqUPqB3xRrCEe4vQf390p1zqgkcncRB
-X-Google-Smtp-Source: AK7set+PxGEsoXM5flUN6mkY+/NyBEUx1r2qI2ZVOCWL8JKfhGOevkspdQNlIcqJ9d4W3DJdX2fj1Ef+w0yhNxiXyDs=
-X-Received: by 2002:aa7:8eca:0:b0:5a8:c0e0:3b2 with SMTP id
- b10-20020aa78eca000000b005a8c0e003b2mr94013pfr.45.1676434673269; Tue, 14 Feb
- 2023 20:17:53 -0800 (PST)
+        with ESMTP id S231276AbjBOEVY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 23:21:24 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07429359F
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 20:21:18 -0800 (PST)
+Received: (qmail 5753 invoked by uid 109); 15 Feb 2023 04:21:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Feb 2023 04:21:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9684 invoked by uid 111); 15 Feb 2023 04:21:17 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Feb 2023 23:21:17 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 14 Feb 2023 23:21:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk, John Cai <johncai86@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
+Message-ID: <Y+xdvck3ZKZCewim@coredump.intra.peff.net>
+References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
+ <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
+ <230206.865yce7n1w.gmgdl@evledraar.gmail.com>
+ <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
+ <d18a5c32-2f15-93ad-ccbf-e8f048edb311@dunelm.org.uk>
+ <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
+ <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com>
+ <1ddac91b-7552-3e1e-9888-9e21e808104d@dunelm.org.uk>
+ <Y+b2l4Le2gTxGwO8@coredump.intra.peff.net>
+ <CABPp-BFnCzWH6Aai0ZYv1fR7GMfXqiAE3n8q1Gcrhh-Zv_wTjA@mail.gmail.com>
 MIME-Version: 1.0
-References: <eeb0c778-af0a-235c-f009-bca3abafdb15@gmail.com>
- <f7f45f54-9261-45ea-3399-8ba8dee6832b@gmail.com> <02a15ebb-b927-1048-db2e-576abef9538b@gmail.com>
- <b18a5710-2791-f892-8460-dda7ea41d88a@gmail.com>
-In-Reply-To: <b18a5710-2791-f892-8460-dda7ea41d88a@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 14 Feb 2023 23:17:42 -0500
-Message-ID: <CAPig+cQpizjmhmDKb=HPrcYqqRq7JpvC-NZvY7B9eBbG+NrfKw@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] switch: reject if the branch is already checked
- out elsewhere (test)
-To:     =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BFnCzWH6Aai0ZYv1fR7GMfXqiAE3n8q1Gcrhh-Zv_wTjA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 4, 2023 at 6:33 PM Rubén Justo <rjusto@gmail.com> wrote:
-> Since 5883034 (checkout: reject if the branch is already checked out
-> elsewhere) in normal use, we do not allow multiple worktrees having the
-> same checked out branch.
->
-> A bug has recently been fixed that caused this to not work as expected.
->
-> Let's add a test to notice if this changes in the future.
->
-> Signed-off-by: Rubén Justo <rjusto@gmail.com>
-> ---
-> diff --git a/t/t2060-switch.sh b/t/t2060-switch.sh
-> @@ -146,4 +146,33 @@ test_expect_success 'tracking info copied with autoSetupMerge=inherit' '
-> +test_expect_success 'switch back when temporarily detached and checked out elsewhere ' '
-> +       test_when_finished "
-> +               git worktree remove wt1 &&
-> +               git worktree remove wt2 &&
-> +               git branch -d shared
-> +               git checkout -
-> +       " &&
-> +       git checkout -b shared &&
+On Tue, Feb 14, 2023 at 06:35:00PM -0800, Elijah Newren wrote:
 
-A few comments...
+> > Just a small counter-point, since I happened to be looking at myers vs
+> > patience for something elsewhere in the thread, but:
+> >
+> >   git show 35bd13fcd2caa4185bf3729655ca20b6a5fe9b6f builtin/add.c
+> 
+> "fatal: bad object 35bd13fcd2caa4185bf3729655ca20b6a5fe9b6f"
+> 
+> Is that a local commit of yours?
 
-The test_when_finished() call has an odd mix of &&-chain and missing &&-chain.
+Oh, sorry. It's not my commit, but it may have been something I picked
+up off the list. The version from Junio is 20b813d7d3d.
 
-If you do use &&-chaining inside test_when_finished(), you have to be
-careful that _none_ of the cleanup commands fail, otherwise
-test_when_finished() itself will fail, making the entire test fail,
-_even if_ the test body succeeded. So, &&-chaining the commands in
-this test_when_finished() is undesirable since any of the `git
-worktree remove` and `git branch -d` commands could potentially fail.
-Better would be to drop the &&-chain and ensure that the final command
-succeeds.
+>    * They had two people annotating the diffs and independently
+> scoring them, and then checked for agreement between their answers
+> afterwards.  (No, they didn't always agree, but they did have
+> substantial agreement.)
 
-It may be a good idea to use `||:` at the end of each command as
-documentation for readers that any of the cleanup commands might fail,
-which could happen if something in the body of the test fails.
+Kind of a weird methodology. I'd think you'd do better to put those
+diffs in front of a lot of people to get a consensus. But OK...
 
-The `git branch -d shared` cleanup command fails unconditionally
-because it's still the checked-out branch in the directory. You need
-to swap the `git branch -d shared` and `git checkout -` commands.
+> For the (again, non-identical) diffs modifying non-code, they found
+> (see table 11) that:
+>    * 14.9% of the myers diffs are better
+>    * 13.4% of the histogram diffs are better
+>    * 71.6% of the diffs have equal quality
+> 
+> For the (non-identical) diffs modifying code, they found (again, see
+> table 11) that:
+>    * 16.9% of the myers diffs are better
+>    * 62.6% of the histogram diffs are better
+>    * 20.6% of the diffs have equal quality
+> 
+> A ratio of 4 to 1 for histogram being better on code diffs is pretty
+> weighty to me.
 
-Taking all the above points into account, a possible rewrite would be:
+Interesting. They do slightly worse on non-code, but probably not enough
+to worry about.
 
-  test_when_finished "
-    git worktree remove wt1 ||:
-    git worktree remove wt2 ||:
-    git checkout - ||:
-    git branch -d shared ||:
-  " &&
-  git checkout -b shared &&
+Despite my complaint above, I do find those results compelling. Or at
+least, it is much closer to being real data than anything I have seen
+before, so it seems like the best guide we have. :)
 
-> +       test_commit shared-first &&
-> +       HASH1=$(git rev-parse --verify HEAD) &&
-> +       test_commit shared-second &&
-> +       test_commit shared-third &&
-> +       HASH2=$(git rev-parse --verify HEAD) &&
-> +       git worktree add wt1 -f shared &&
-> +       git -C wt1 bisect start &&
-> +       git -C wt1 bisect good $HASH1 &&
-> +       git -C wt1 bisect bad $HASH2 &&
-> +       git worktree add wt2 -f shared &&
-> +       git -C wt2 bisect start &&
-> +       git -C wt2 bisect good $HASH1 &&
-> +       git -C wt2 bisect bad $HASH2 &&
-> +       # we test in both worktrees to ensure that works
-> +       # as expected with "first" and "next" worktrees
-> +       test_must_fail git -C wt1 switch shared &&
-> +       git -C wt1 switch --ignore-other-worktrees shared &&
-> +       test_must_fail git -C wt2 switch shared &&
-> +       git -C wt2 switch --ignore-other-worktrees shared
-> +'
+Like I said, I don't have a very strong opinion myself. Mostly I wanted
+to note that while it is easy for us to remember the times we saw a
+Myers diff, said "yuck", and tried patience and it was better, most of
+us may be blind to the opposite case. If patience is not the default,
+most of us would not have hit "yuck" case for it at all.
+
+FWIW, I coincidentally hit this case earlier today where patience does a
+_much_ better job than myers:
+
+  https://lore.kernel.org/git/Y+vV8Ifkj1QV7KF0@coredump.intra.peff.net/
+
+So don't count me as an objection, but just a curious observer. ;)
+
+-Peff
