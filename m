@@ -2,125 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98648C636CC
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 22:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0163C636CC
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 22:22:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229595AbjBOWU2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Feb 2023 17:20:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56276 "EHLO
+        id S229595AbjBOWWE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Feb 2023 17:22:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjBOWU0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2023 17:20:26 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67BDB360A1
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 14:20:22 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id o36so215613wms.1
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 14:20:22 -0800 (PST)
+        with ESMTP id S229493AbjBOWWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2023 17:22:01 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7129E2ED74
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 14:21:59 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id h4so145884pll.9
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 14:21:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tueHF1db1hl0RclGG+F+ToT1LvYa0rjUYtJ6g0hwzB0=;
-        b=lSiewmyTo5d/WVJ1RyIM4bPF4ZCtaoHggwJ0XF02QYqP4HH9lzDKGesf1TpFY6+/0x
-         LwBA0fNTmaEumscUmj6M4D2H2AshxFi6AV/okC+Txi6zjoa2/LLSYo0rEIlNt9/gywgy
-         az/T8oMN6Uyx6tak57g3mMW7UaaUwmDcsKFG7WGuVwIaw+LcXH2wzsfoHP22gIEsJwa5
-         8wepqbfAsHyXjJKWV7IJS8wZP748s/RzU1jGsSW1goAtNIDMQmWQIrGrKpDsqoH15khE
-         MQhigYEV2j31WZc9yn8WzVXnWv9mFt2SGGmrZUyIu6TtmCgpHI7o+mSwXNAHmlg3wnl4
-         xG+g==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8PGMwddVvwjXIwMH9qKINE/WblqyQumRQzE8zXVeWUc=;
+        b=bGTT0W91WIsr3IcRbMWsT+PnvvRCaGiPonqYRz3sjg+1VhaU7pxQQLlA02SrqmL9oF
+         AYLb+7hdZdrpx1hXA/f9Fiwvalh6oWuvMc+JUzNxM6STwlS9mHgikcfMKu4ujgG1e3pI
+         7+qNV6HMrvsZ3uiF0wA/KyHK29KSygGPoW7GW1HWkWg6zbP8tCvRt+pvtkXclBNS6OAi
+         7JyVKgEtMuzIa04mlUIye4butIEO3ldVXMJxECNZAKPIkETD+5W002fzw1lrd+HApeYA
+         CB8YCbi3XUDYOyaYPT9s2yqbm4Riyu3ccUYwpL0+vtjYO0P93NCAB460R85WKbxzmYNv
+         1Jhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tueHF1db1hl0RclGG+F+ToT1LvYa0rjUYtJ6g0hwzB0=;
-        b=BFhIDUeCzMA/xCcEQIWguNu30noaF2eQgfokTscqqo5HeIOB2a3z6LCTcGcuWzKfoC
-         wPZ9BxgAegdJhqhNlqBpsfsFzh5KjkilTLZpJ7O5AeHANG9zcfMbQWZm7zvfn2EnLKX8
-         cMOUwlrQRRQUwHvdxfcckYHm3L7pNHmFkVKLMpcuTCKLXaLPmgQh6ChOsJCypmCOw8+x
-         cAWHy4PkbyKNxZ32Xy4D5eskeP9vYGE5aeabDe383zoeUAWrS84lZ3RvzzRpY1W1ttgT
-         K0TYqGJCjFhW3hxB2pFJ0Lbt8bdvXlc2HDi1moXWSzaK+kBlSh3VpkzQiiLQ8LQGwOxw
-         X8jA==
-X-Gm-Message-State: AO0yUKX8ridjbPWXddYECNkIV2UF7j15FwIDIUc8lbJBzaEcnqAoam+Z
-        nqLUNImq/UTEB8aYKyD0HQc=
-X-Google-Smtp-Source: AK7set/KImrjUvvZ7dMz0nHCWnOR4Tr1ZQr8ETCyDdBVhXPRhQT8DylkXMliNrSEPr6Kjj8VIloP0w==
-X-Received: by 2002:a05:600c:2b0f:b0:3dc:1054:3acd with SMTP id y15-20020a05600c2b0f00b003dc10543acdmr2954703wme.17.1676499620857;
-        Wed, 15 Feb 2023 14:20:20 -0800 (PST)
-Received: from [192.168.2.52] (59.red-88-14-203.dynamicip.rima-tde.net. [88.14.203.59])
-        by smtp.gmail.com with ESMTPSA id m17-20020a05600c3b1100b003dd1bd0b915sm3557364wms.22.2023.02.15.14.20.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Feb 2023 14:20:20 -0800 (PST)
-Subject: Re: [PATCH v2] bisect: fix "reset" when branch is checked out
- elsewhere
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
- <ada28944-6e9e-d4e7-74c9-ffadaf406e1f@gmail.com>
- <CAPig+cQPVMKui=AiXBHEfNWY5e4fMbxixdnzvZmXsSkW9ZMLyg@mail.gmail.com>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <1008f790-d2af-3b1f-50a3-6ce27f3b3df4@gmail.com>
-Date:   Wed, 15 Feb 2023 23:20:16 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8PGMwddVvwjXIwMH9qKINE/WblqyQumRQzE8zXVeWUc=;
+        b=FIk2hFUVlhfXtRRHelwZ8sbzy4fSdwJGx4RY6pfO3sc/qzjNzgzmj8WaXEvQgAIzuS
+         UXsxxIUePFa6I72g5N4Pl6uhCDBU6Zioo6buZQQr/n9rmaRF5awl3M/1/GrPLb7U/jcB
+         ic4tSyz+ul28RtcqH3Bq5FUDrP+U2Dz0BtFmnq0oS57704+Olo2zynQhACmgnijUQj6/
+         25e8bjB6wnEy5IWDEZpMkawsdH43o/+rv4oivhZ4BD3S603IKnuPdQjYBg+6GKW0ioVR
+         Fqg6nY0+UziwsIVzVelfZJeSBb5Gr3WKW+bJBl2ik4UNkB/hK8XqEn5aUOp7HmBvkZL0
+         dsHw==
+X-Gm-Message-State: AO0yUKWjUKH1ZXvF+ofy3RREfTVzp+d5edi7bIYYyacbDkeQXcMTHQmQ
+        sV1Sfp9wDlpqV2+HUpaSaOir63gdb50=
+X-Google-Smtp-Source: AK7set9s46FsXasQRYlV8X8JA82jq+LNphLyykgJk+ddkfcYb6OI2z9A0491c4X9RPczLZGweVTScA==
+X-Received: by 2002:a17:902:fa8c:b0:19a:8284:83a2 with SMTP id lc12-20020a170902fa8c00b0019a828483a2mr2939739plb.10.1676499718835;
+        Wed, 15 Feb 2023 14:21:58 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id w2-20020a170902a70200b001965f761e6dsm12606712plq.182.2023.02.15.14.21.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Feb 2023 14:21:58 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brian Inglis <Brian.Inglis@Shaw.ca>
+Cc:     git@vger.kernel.org
+Subject: Re: manual option --inline --no-attach override required for
+ format.attach
+References: <20230215215112.62559-1-Brian.Inglis@Shaw.ca>
+Date:   Wed, 15 Feb 2023 14:21:58 -0800
+In-Reply-To: <20230215215112.62559-1-Brian.Inglis@Shaw.ca> (Brian Inglis's
+        message of "Wed, 15 Feb 2023 14:51:13 -0700")
+Message-ID: <xmqqr0uqwovt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cQPVMKui=AiXBHEfNWY5e4fMbxixdnzvZmXsSkW9ZMLyg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14-feb-2023 23:52:08, Eric Sunshine wrote:
-> On Sat, Feb 4, 2023 at 6:02 PM Rubén Justo <rjusto@gmail.com> wrote:
-> > Since 1d0fa89 (checkout: add --ignore-other-wortrees, 2015-01-03) we
-> > have a safety valve in checkout/switch to prevent the same branch from
-> > being checked out simultaneously in multiple worktrees.
-> >
-> > If a branch is bisected in a worktree while also being checked out in
-> > another worktree; when the bisection is finished, checking out the
-> > branch back in the current worktree may fail.
-> >
-> > Let's teach bisect to use the "--ignore-other-worktrees" flag.
-> >
-> > Signed-off-by: Rubén Justo <rjusto@gmail.com>
-> > ---
-> > diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-> > @@ -122,6 +122,29 @@ test_expect_success 'bisect start without -- takes unknown arg as pathspec' '
-> > +test_expect_success 'bisect reset: back in a branch checked out also elsewhere' '
-> > +       echo "shared" > branch.expect &&
-> > +       test_bisect_reset() {
-> > +               git -C $1 bisect start &&
-> > +               git -C $1 bisect good $HASH1 &&
-> > +               git -C $1 bisect bad $HASH3 &&
-> > +               git -C $1 bisect reset &&
-> > +               git -C $1 branch --show-current > branch.output &&
-> > +               cmp branch.expect branch.output
-> > +       } &&
-> > +       test_when_finished "
-> > +               git worktree remove wt1 &&
-> > +               git worktree remove wt2 &&
-> > +               git branch -d shared
-> > +       " &&
-> 
-> As mentioned in my review[1] of one of your other patches, &&-chaining
-> within the argument to test_when_finished() is probably undesirable in
-> this case since failure of any cleanup command would cause
-> test_when_finish() to fail, which would cause the test to fail
-> overall.
+Brian Inglis <Brian.Inglis@Shaw.ca> writes:
 
-As I said in my other response, if there is no argument against this
-change, I'll reroll with it.
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> git format-patch --inline ... --to=linux-man@vger.kernel.org
 
-Thanks.
+This is documented to use multipart/mixed attachement with
+"Content-Disposition: inline".
 
-> 
-> [1]: https://lore.kernel.org/git/CAPig+cQpizjmhmDKb=HPrcYqqRq7JpvC-NZvY7B9eBbG+NrfKw@mail.gmail.com/
-> 
-> > +       git worktree add wt1 -b shared &&
-> > +       git worktree add wt2 -f shared &&
-> > +       # we test in both worktrees to ensure that works
-> > +       # as expected with "first" and "next" worktrees
-> > +       test_bisect_reset wt1 &&
-> > +       test_bisect_reset wt2
-> > +'
+> git format-patch --no-attach ... --to=linux-man@vger.kernel.org
+
+This should be the default, text/plain patch contained inline in the
+message.
+
+> git send-email ... --to=linux-man@vger.kernel.org
+
+It is unclera what ... hides on this command line, but if you sent
+output from both of the above two format-patch invocations, then the
+output from the first invocation of format-patch with --inline would
+be MIME multipart messages, so it is understandable if the recipient
+sees such messages.
+
