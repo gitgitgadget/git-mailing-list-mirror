@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F2E4C05027
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 02:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 408C8C61DA4
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 03:20:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232374AbjBOC4o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 21:56:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39646 "EHLO
+        id S231549AbjBODUM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 22:20:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbjBOC4n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 21:56:43 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C9FA2CFD0
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:56:42 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id r3so6235759pfh.4
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:56:42 -0800 (PST)
+        with ESMTP id S229526AbjBODUL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 22:20:11 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC02241D6
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 19:20:10 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id kk7-20020a17090b4a0700b00234463de251so760159pjb.3
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 19:20:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=DDNFxhk5kIsNqBWneYjrV7FpebGjtWv3Z5cg3sNHNSo=;
-        b=D9+hBUjRs9IfnloipTQwWkou2dSo4fr9+XePF/KsK6yxN+iOsNktHOd+MVIAEuq7Oq
-         8lYMoPu/DT6MCUC9fGMX9+YE+BGJlaUksDTbHxKdbAaKw42grvCISIguow3RPgoT0LYm
-         dieXVhybiobeaYMzjZ4D5Z/GxFcHNrYGC6C61t9V+byrFzFjR92omz/nBIk2c207ZrXB
-         XWgb2mKX2+94g1GzLgEVXnyV02GKhjVwMK0lfFaw34rXCXLqvLBmSYkaNrN2IHQ2q/0m
-         hhvgm05TwYS+sSpNGZUMJXSWtAjItm3PCWDYBMK7BuASo88WOKgXbUMgbgtPcqFLZOIY
-         Lm3Q==
+        bh=aeeoUgM70vzt2zOWxwQAVBUO1HHhlcZ7YIMKVG1Aohs=;
+        b=pNxVLBcz3EBy4ALx5QlEde0CGe1mg9W6TUh5/KVHKliO2wu4UWZeeVMyXSQRwCnUCp
+         o8Hwd/o/p1scL+2tlWEZEv5GL8T21wxC8WlKHo8z3y9ap/K0xpFeqkcTc6FWerA25m7I
+         ekYMZ5Tn+mAC2zlWTsYgi4z+OmL+9RB86y8mWB3/fMffQ68HA7uu4yQmMPmr4w0R2doa
+         Fr3BJlIZkNrweEe1DgpvgvzrfgzqiYRgnjTwBXrjx0FJJGCiDKhR3bjxBrGmvVty8fd6
+         ccTQCFqNL1XYQLQT0vM/wRgp+oN0gnBZnCEFFGa2V6nyFZjOj54OOs62eFS7KpAK1nHZ
+         YJPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=DDNFxhk5kIsNqBWneYjrV7FpebGjtWv3Z5cg3sNHNSo=;
-        b=vSpnsKJx996rAB59m3Q4f+Rf8KHMQnXHgfxeQuzzibKpRMUOiPxJy3oXPnSvGNoLeC
-         9mZpRQs3wLOs25d3u0MtJzIWeph8n42szLv+gJCFmzI1f3SBhpLZdOVFPVfrQTrLJ/xC
-         eVNj6qJPLhcxrq8MW17VW7zGznKNqO0RwnvS7y2fnZFaOhfe+eShPIFy06anKE5BROeM
-         Zal+7UyuJBgdrx6nekiVjNWGFa+1OV2MAmFnmKEiac8ZGUS/VQ6VCMcqMbJJIgfzj3mA
-         ePNJ1WTZb1NbWNhKcvdj4Dmjj4S38/K9H+fJ17OL+B0l6j10fJbzqBjf+g0iRVRo7YgO
-         4jOQ==
-X-Gm-Message-State: AO0yUKVqPN1ZIqHg42uiiCQulC1VChMw3fPFenLDE0KGnVZzNKDXh9oX
-        yJ8peE2cwmCbumJxeb8iBdI=
-X-Google-Smtp-Source: AK7set9wAVlUob0hGA3CKBpQgtPSqihkzr1THoApZWtqUz5zvREUvHVePz4J0EzkRrQxH3qQMwhYXQ==
-X-Received: by 2002:a62:1b52:0:b0:583:9b05:d1f0 with SMTP id b79-20020a621b52000000b005839b05d1f0mr294287pfb.33.1676429801697;
-        Tue, 14 Feb 2023 18:56:41 -0800 (PST)
+        bh=aeeoUgM70vzt2zOWxwQAVBUO1HHhlcZ7YIMKVG1Aohs=;
+        b=uaWVyLrlUx7jX3nvCx7h2fy0KvKnUz3gwywdi6Ucx2mMdGouHmfirU3h9dXgOWIBzt
+         Easm3fFsZBZu7k+5XLemY/vKfkKcH9QMcebjdY4hRAmquB6n4QVCHs+D5vtH9TxUO5h3
+         ZlEe7uWwBM/VUjPHS+g7DNY0Lj1ZsXdDBa16EEr9SGkSnMEG1x2HLmKvyb8ZLYtVJ6mc
+         RHPizWyAm7IsWo/FULhO/46gyqndwhZJInRJNwghlfERUGiYs21YNkNpDjXkcaIhxBna
+         OvGuZp90SJQKlZr0tPxJvwNmSMsLDvcBT9shan4iQ0GCf9R24aC+PI8Rxf8ix/ewNCgn
+         5t6A==
+X-Gm-Message-State: AO0yUKUcjDS9vdkpfQotaNCfGpJnMLIpiFwKQ4aApWN3GDFrdLs0yfPa
+        yX6dQTKQZn264e+e76IPNRyI8MSZwH0=
+X-Google-Smtp-Source: AK7set826xOtChDbOmc+S2HiXOZmoPxAnzsggDHjNWlVnNuULAISsRYKDGfJmF93S2QLFzoEQKEfow==
+X-Received: by 2002:a17:903:200a:b0:198:fc0a:192b with SMTP id s10-20020a170903200a00b00198fc0a192bmr668179pla.64.1676431209489;
+        Tue, 14 Feb 2023 19:20:09 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id v25-20020a62a519000000b005809d382016sm10417896pfm.74.2023.02.14.18.56.41
+        by smtp.gmail.com with ESMTPSA id v22-20020a170902e8d600b001949f21e1d2sm7311312plg.308.2023.02.14.19.20.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 18:56:41 -0800 (PST)
+        Tue, 14 Feb 2023 19:20:09 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
@@ -62,11 +62,11 @@ Subject: Re: [PATCH v2 2/2] diff: teach diff to read gitattribute
 References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
         <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
         <cb0305631496eb4c2d51e5b586ac0ca8580c7dc1.1676410819.git.gitgitgadget@gmail.com>
-Date:   Tue, 14 Feb 2023 18:56:40 -0800
-In-Reply-To: <cb0305631496eb4c2d51e5b586ac0ca8580c7dc1.1676410819.git.gitgitgadget@gmail.com>
-        (John Cai via GitGitGadget's message of "Tue, 14 Feb 2023 21:40:19
-        +0000")
-Message-ID: <xmqq4jrn3ac7.fsf@gitster.g>
+        <xmqq4jrn3ac7.fsf@gitster.g>
+Date:   Tue, 14 Feb 2023 19:20:08 -0800
+In-Reply-To: <xmqq4jrn3ac7.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        14 Feb 2023 18:56:40 -0800")
+Message-ID: <xmqqwn4j1uon.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,171 +74,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: John Cai <johncai86@gmail.com>
+>> diff --git a/diff.c b/diff.c
+>> index 92a0eab942e..24da439e56f 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -4456,15 +4456,11 @@ static void run_diff_cmd(const char *pgm,
+>>  	const char *xfrm_msg = NULL;
+>>  	int complete_rewrite = (p->status == DIFF_STATUS_MODIFIED) && p->score;
+>>  	int must_show_header = 0;
+>> +	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, attr_path);
 >
-> It can be useful to specify diff algorithms per file type. For example,
-> one may want to use the minimal diff algorithm for .json files, another
-> for .c files, etc.
+> Do we run this look-up unconditionally, even when .allow_external
+> bit is not set?  Why?
+
+Ah, this is perfectly fine.  It used to be that this codepath can
+tell that there is no need to check the diff driver when it is told
+never to use any external diff driver.  Now, even when it is computing
+the diff internally, it needs to check the diff driver to find out
+the favoured algorithm for the path.
+
+Strictly speaking, if we are told NOT to use external diff driver,
+and if we are told NOT to pay attention to algorithm given by the
+diff driver, then we know we can skip the overhead of attribute
+look-up.  I.e. we could do this to avoid attribute look-up:
+
+	struct userdiff_driver *drv = NULL;
+
+	if (o->flags.allow_external || !o->ignore_driver_algorithm)
+		drv = userdiff_find_by_path(...);
+
+	if (drv && o->flags.allow_external && drv->external)
+		pgm = drv->external;
+	...
+	if (pgm)
+		... do the external diff thing ...
+	if (one && two) {
+		if (drv && !o->ignore_driver_algorithm && drv->algorithm)
+			set_diff_algo(...)
+
+I was not sure if it would be worth it before writing the above
+down, but the resulting flow does not look _too_ bad.
+
+>> @@ -4583,6 +4584,10 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
+>>  	const char *name;
+>>  	const char *other;
+>>  
+>> +	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, p->one->path);
+>> +	if (drv && drv->algorithm)
+>> +		set_diff_algorithm(o, drv->algorithm);
 >
-> Teach the diff machinery to check attributes for a diff driver. Also
-> teach the diff driver parser a new type "algorithm" to look for in the
-> config, which will be used if a driver has been specified through the
-> attributes.
->
-> Enforce precedence of diff algorithm by favoring the command line option,
-> then looking at the driver attributes & config combination, then finally
-> the diff.algorithm config.
->
-> To enforce precedence order, use the `xdl_opts_command_line` member
-> during options pasing to indicate the diff algorithm was set via command
-> line args.
->
-> Signed-off-by: John Cai <johncai86@gmail.com>
-> ---
->  Documentation/gitattributes.txt | 41 ++++++++++++++++++++++++++++++++-
->  diff.c                          | 25 +++++++++++++-------
->  diff.h                          |  2 ++
->  t/lib-diff-alternative.sh       | 38 +++++++++++++++++++++++++++++-
->  userdiff.c                      |  4 +++-
->  userdiff.h                      |  1 +
->  6 files changed, 100 insertions(+), 11 deletions(-)
->
-> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-> index c19e64ea0ef..7e69f509d0a 100644
-> --- a/Documentation/gitattributes.txt
-> +++ b/Documentation/gitattributes.txt
-> @@ -736,7 +736,6 @@ String::
->  	by the configuration variables in the "diff.foo" section of the
->  	Git config file.
->  
-> -
->  Defining an external diff driver
->  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> Interesting.  Does external diff play a role, like in run_diff_cmd()
+> we saw earlier?
 
-Unrelated change?  Wider paragraph gap between two sections than
-other inter-paragraph gaps inside a single section is what original
-had, and I think that is a reasonable thing to keep.
+As whoever wrote "diffstat" did not think of counting output from
+external diff driver, of course in this codepath external diff would
+not appear.  So what we see is very much expected.
 
-> @@ -758,6 +757,46 @@ with the above configuration, i.e. `j-c-diff`, with 7
->  parameters, just like `GIT_EXTERNAL_DIFF` program is called.
->  See linkgit:git[1] for details.
+Just move the blank line we see before these new lines one line
+down, so that the variable decls are grouped together, with a blank
+line before the first executable statement.  I.e.
 
-In other words, this new section wants another blank line before to match.
+	const char *name;
+	const char *other;
++       struct userdiff_driver *drv;
++
++	drv = userdiff_find_by_path(...);
++	if (drv && drv->algorithm)
++		set_diff_algorithm(o, drv->algorithm);
 
->  
-> +Setting the internal diff algorithm
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +The diff algorithm can be set through the `diff.algorithm` config key, but
-> +sometimes it may be helpful to set the diff algorithm by path. For example, one
-> +might wish to set a diff algorithm automatically for all `.json` files such that
-> +the user would not need to pass in a separate command line `--diff-algorithm` flag each
-> +time.
+Shouldn't this function refrain from setting algorithm from the
+driver when the algorithm was given elsewhere?  E.g.
 
-That's an overly wide paragraph.
-
-> +
-> +First, in `.gitattributes`, you would assign the `diff` attribute for paths.
-> +
-> +*Git attributes*
-
-Discard this line (mimic an existing section, like "Defining a
-custom hunk-header").
-
-> +------------------------
-> +*.json diff=<name>
-> +------------------------
-> +
-> +Then, you would define a "diff.<name>.algorithm" configuration to specify the
-> +diff algorithm, choosing from `meyers`, `patience`, `minimal`, and `histogram`.
-> +
-> +*Git config*
-
-Likewise, discard this line (I won't repeat but the next hunk has
-the same issue).
-
-> diff --git a/diff.c b/diff.c
-> index 92a0eab942e..24da439e56f 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -4456,15 +4456,11 @@ static void run_diff_cmd(const char *pgm,
->  	const char *xfrm_msg = NULL;
->  	int complete_rewrite = (p->status == DIFF_STATUS_MODIFIED) && p->score;
->  	int must_show_header = 0;
-> +	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, attr_path);
-
-Do we run this look-up unconditionally, even when .allow_external
-bit is not set?  Why?
-
-> -
-> -	if (o->flags.allow_external) {
-> -		struct userdiff_driver *drv;
-> -
-> -		drv = userdiff_find_by_path(o->repo->index, attr_path);
-> +	if (o->flags.allow_external)
->  		if (drv && drv->external)
->  			pgm = drv->external;
-> -	}
->  
->  	if (msg) {
->  		/*
-> @@ -4481,12 +4477,17 @@ static void run_diff_cmd(const char *pgm,
->  		run_external_diff(pgm, name, other, one, two, xfrm_msg, o);
->  		return;
->  	}
-> -	if (one && two)
-> +	if (one && two) {
-> +		if (!o->xdl_opts_command_line)
-> +			if (drv && drv->algorithm)
-> +				set_diff_algorithm(o, drv->algorithm);
-
-The idea here seems to be "if there is no explicit instruction, and
-if the diff driver specifies an algorithm, then use that one", which
-is very straightforward and sensible.  Can we reliably tell if we
-had an explicit instruction to override the driver?  That should
-probably appear in other parts of the code, I guess.
-
->  		builtin_diff(name, other ? other : name,
->  			     one, two, xfrm_msg, must_show_header,
->  			     o, complete_rewrite);
-> -	else
-> +	} else {
->  		fprintf(o->file, "* Unmerged path %s\n", name);
-> +	}
->  }
+	$ git show --histogram --stat
+	
+or something?  IOW, shouldn't it also pay attention to
+o->ignore_driver_algorithm bit, just like run_diff_cmd() did?
 
 
-
-> @@ -4583,6 +4584,10 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
->  	const char *name;
->  	const char *other;
->  
-> +	struct userdiff_driver *drv = userdiff_find_by_path(o->repo->index, p->one->path);
-> +	if (drv && drv->algorithm)
-> +		set_diff_algorithm(o, drv->algorithm);
-
-Interesting.  Does external diff play a role, like in run_diff_cmd()
-we saw earlier?
-
-> @@ -5130,6 +5135,8 @@ static int diff_opt_diff_algorithm(const struct option *opt,
->  		return error(_("option diff-algorithm accepts \"myers\", "
->  			       "\"minimal\", \"patience\" and \"histogram\""));
->  
-> +	options->xdl_opts_command_line = 1;
-
-OK, calling this member "xdl_" anything is highly misleading, as it
-has nothing to do with the xdiff machinery.  How about calling it
-after what it does, i.e. allowing the attribute driven diff driver
-to specify the algorithm?  options.ignore_driver_algorithm or
-something?  The options coming _from_ the command line may happen to
-be the condition to trigger this behaviour in this current
-implementation, but it does not have to stay that way forever.
-Losing "command line" from the name of the flag would make it
-clearer what is essential (i.e. this controls if the diff driver is
-allowed to affect the choice of the algorithm) and what is not (i.e.
-we happen to let it decided based on the presence or absense of
-command line choice).
-
-Thanks.
