@@ -2,88 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A438AC636D4
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 17:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0097EC636CC
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 17:20:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229573AbjBORRi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Feb 2023 12:17:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53526 "EHLO
+        id S229888AbjBORUx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Feb 2023 12:20:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbjBORRg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2023 12:17:36 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20FD83770C
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 09:17:29 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id az4-20020a05600c600400b003dff767a1f1so2072634wmb.2
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 09:17:29 -0800 (PST)
+        with ESMTP id S230042AbjBORUu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2023 12:20:50 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3FCA38643
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 09:20:48 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id mg23so12256921pjb.0
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 09:20:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/ggyN+QIXsKZUDDey3uOrEoxYgN+zSTipnAPkT/rVMg=;
-        b=MovBDqkowEUqnau2C61lloCSrcwhTiNVbZJnqTwbKasqDuv30p51hwflSHjL8PguV0
-         6XqvChc70g4ZYb57ZFDjJf/AjyR7TSi1Dw3bMo8+S43DkLUWZEWdQ32pDa1kTblLe8MS
-         FKzNwgiba56r9RSZLEk5UrmoA82vHS8x6IRXI1Ig+EJ77hkJbuBm9D7pNuvXgWEGesrC
-         pTwA0EP/WJAVHRmDZO94dYPYiUW9sw/Sn4ePZVVmqWu/JSAprWr4nQrzsuJrWkcLD3vi
-         9gOigRUZSIxIgvCASlOuFSJFGQbIux7pVT3q5H1xdacfTddhWvtu226FIe9QvILoYO3g
-         MgAg==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZzKd4o8zaIxopG5No1I8DH5CC026C4czQfccMfruNnY=;
+        b=bhXQzOxofHTMErmWmH5fg5HZKup8Y1JO21ciCpG1Fab95o7i56sBFdIc0KNH5XPpmE
+         ZyOBSaf1gvfOt71C/ZGdUIB0HE6ixWT3WNjagqiKvlJzfu0MpkOGNkV05hRjgq1aWu2M
+         Ua+TV4S+jSW16ORvk9lFnL+dHsfmbKg/Y8Nn6IWAvi0gSWRSDAqTuxKl8Y22QSxRBzq2
+         dCIfz1A0EESXsm/ODqcGPhAV/sd3Hqiiy7bvbN96ZDV5NC3nDDLYlwl0bgiofsgMe3lp
+         +zAZb7Jd8gDUSs+C23pbVaSlgXrLn7Hr42gVPdcAMUEmvl9c7vg6NttLhLvZNVAaOqyO
+         evmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/ggyN+QIXsKZUDDey3uOrEoxYgN+zSTipnAPkT/rVMg=;
-        b=ELtT+lEgkDLzMG3uNyTP1sdw9ajGTmEhEFO7qq4S058cWmmyt1KLegowObWdOfGzPF
-         gbB8uQoQXgXaoqTPaCGm6JcO8PzWxekoMkpfhjGXiMetxXjucEdz2QsCt9pktyL1zv3z
-         Oa3CHR84Exg59o0vx0+epM1wga/pt0TIrjq5ZdSn87Kv8taWNrLVTzuZDnd7pX+ZmaD3
-         gSxZEVnVXUFM4wVaRRW0eyeDVymdf5nq5A6+vHJmxdxjE4sZ8bvQbUjAkhTTHtzzGdXi
-         7U0bi2ve10By/HaTy0NlAEdie1oTDVvG7PCWnQIoELZ4fjTu4eawLpRmLhLGiXRFqqu0
-         NPGA==
-X-Gm-Message-State: AO0yUKXh/+C40UiTqzG9SMed44VTSxaroL016WmmTVh50dTk/8z5YfrG
-        I/ftciSAG7wqLpH954/AKdYrQweV0QOjidjc8BWBCPhogFZyHw==
-X-Google-Smtp-Source: AK7set/4/zG+IzlJ44MKEWxHOhUTgcv/UuEbKF46IDaBq0j4zsZRf8A9tCciwShu5NIXNkb2yP4dy/vDBynG2wKBu7I=
-X-Received: by 2002:a05:600c:1908:b0:3dc:5614:91a7 with SMTP id
- j8-20020a05600c190800b003dc561491a7mr12343wmq.104.1676481447130; Wed, 15 Feb
- 2023 09:17:27 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ZzKd4o8zaIxopG5No1I8DH5CC026C4czQfccMfruNnY=;
+        b=ue2W3G91FJTmZ9BYXankIzDN/OserrOr12ALYtZCzeWHa/mJ/hteHXLXWQOceRD0LG
+         3OgHcbQfMjh9UVEs5DD7zJ6jOIRgKjwzmJMLUpTjsk2ePBz7oio78k9IrYOTXPAZkk/q
+         C/F/WxaHI1GoHIWEdLKz65ILmNGjqPDJJCS2g/Oyj+veON7o8jQiYtaFlCakXBUTjw+k
+         7DCrxqBFK0z1OYOVuYG5pR+TjzhAmRq76/Ug8enxhPzQOZq6Es29271mOHiG6VzhLoeu
+         nhOXFI+cEffefOqT8wVS0fUVW5ShzmDx5DRE6T90wye7sz2sjHQYexZ3eNmORItFnn5H
+         GYLQ==
+X-Gm-Message-State: AO0yUKWO+zd0ZqkIWT0a0SgWG/3VXeYyjWIiT+C3N/A74lcjdRSYnyE0
+        eKmVe0f3/f6xSrDmbvPKLw4=
+X-Google-Smtp-Source: AK7set+SwMOJEPZZzkH5WUbA0tm2p6/AcV7lxlonJwArfLDi+34cjlzG693CKAb4vGjf8ZdfCU8WXQ==
+X-Received: by 2002:a17:90a:e7c5:b0:234:118d:b1b1 with SMTP id kb5-20020a17090ae7c500b00234118db1b1mr3543271pjb.48.1676481648086;
+        Wed, 15 Feb 2023 09:20:48 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id fs24-20020a17090af29800b002340d317f3esm1706797pjb.52.2023.02.15.09.20.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Feb 2023 09:20:47 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] gpg: do show gpg's error message upon failure
+References: <pull.1480.git.1676440714.gitgitgadget@gmail.com>
+        <ead90d343b1f4f4ce8998b2f31558fd30d7d2675.1676440714.git.gitgitgadget@gmail.com>
+Date:   Wed, 15 Feb 2023 09:20:47 -0800
+In-Reply-To: <ead90d343b1f4f4ce8998b2f31558fd30d7d2675.1676440714.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Wed, 15 Feb 2023
+        05:58:34 +0000")
+Message-ID: <xmqqzg9ezvyo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-Date:   Wed, 15 Feb 2023 12:17:14 -0500
-Message-ID: <CAMO4yUECbDFD3OxGU2u5QQzXYbej-N+=-=ODjskO12MXmFdYUA@mail.gmail.com>
-Subject: Re:[PATCH 1/1] [gsoc][patch] trace.c, git.c: removed unnecessary
- parameter to trace_repo_setup
-To:     git@vger.kernel.org, 20230215104246.8919-2-mcsm224@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello  Idriss,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-I have some suggestions=EF=BC=9A
+>  	ret |= !cp;
+> +	if (ret) {
+> +		error(_("gpg failed to sign the data:\n%s"),
+> +		      gpg_status.len ? gpg_status.buf : "(no gpg output)");
+> +		strbuf_release(&gpg_status);
+> +		return -1;
+> +	}
+>  	strbuf_release(&gpg_status);
+> -	if (ret)
+> -		return error(_("gpg failed to sign the data"));
 
-Seen like you didn't describe the existing problem and how you fix it
-in the commit message. You can start with a description of the
-existing problem in the present tense in your commit message. Also,
-you should use the imperative mood to describe the change you make.
+Good.  As we are worried about error messages that are too terse,
+dumping everything to the output would be a vast improvement.
+Hopefully gpg_status.len would to be thousands of bytes long, and
+this is not a codepath that is triggered remotely anyway.
 
-Maybe you can write something like the below in your commit message
-after you use git commit -s.
----------------------------------------------------------------------------=
--------------
-trace.c, git.c: removed unnecessary parameter to trace_repo_setup
-
-your description of the existing problem.............
-
-Fix them.
-
-Signed-off-by: ...
----------------------------------------------------------------------------=
-----------------
-
-
-
-
-
-Regards,
-Shuqi
+Will queue.  Thanks.
