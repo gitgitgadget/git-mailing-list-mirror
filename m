@@ -2,67 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB70FC636D4
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 14:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6CFDC636D4
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 14:48:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229864AbjBOOpH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Feb 2023 09:45:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41686 "EHLO
+        id S229805AbjBOOsY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Feb 2023 09:48:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229806AbjBOOpF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2023 09:45:05 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3155114EAC
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 06:45:03 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id j29-20020a05600c1c1d00b003dc52fed235so1718547wms.1
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 06:45:03 -0800 (PST)
+        with ESMTP id S229929AbjBOOr6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2023 09:47:58 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EDA676B9
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 06:47:54 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id bu23so19389005wrb.8
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 06:47:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6xellQ7XP56jnpu2i00fZBi7YpaKv5AqDpnXNDmq7io=;
-        b=LgJJRNf5QW9c6NFeSkx1S7ly8yhVDLOPsbORPHf2WxPbJwhBz0cN0wxH3crnsHMm4A
-         r5Gn55DZmTEPVw5X6wrdRze8B/Xmwxmu/jZ5YMiXuMdchUW/fS5F273VlXRSYF6pe7Tp
-         jKWB4IpfqAIA6SDrU/jUIb7uWIvx3ewaSCnHUkKIT6+B047ZTbzTfl4t4OBX/dWKjEEu
-         qq77EfQG3beypaV8KkdZHOY9Bzv1QfDC53hLdJy16Tvn64QoU/naJ8a9X5ZrLJppc20H
-         R+HpkpZJ6ukJiroPn6rQ5w+KUClIbm2aY0QeLNAseVRY2U99fc6LC/wclZYxx0y5xcWL
-         HbGQ==
+        bh=eHf7L5Tvq5TP82XNdXrWsrB7eJt4BZ0FfnfzSUVnsDg=;
+        b=oyyM4E2t/kEhY5Y+23ImFZLaTscQDLD0dth/4HjrtOU3wjxDzJKwMIIrYVxi6sOWwo
+         qHXs/MRImIKs5tHxksepzl3xDY9AUt1/ZCz3F5IV0JsRr+n3p3iA/fZYE/DXF1NEStu6
+         af8pJqbkZWNznDYLNVRKNAvVYyuwG3Qp2zysN4KyWK/MVF/SC4RrcLVZCkKG0V3W+VLG
+         3vW+QJSXatljMWVqvme8HOPaLdylEu/swPAYkeo8cN0dKvvrL4b9EIVws2C8xMiwKzEI
+         p9Kl2/gJ2ytyMBQ5SK4ijZOHltn2mAk4NUTvbPF+DoAtmqcomqCSxE5dCl0caJ5kELoH
+         kw6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6xellQ7XP56jnpu2i00fZBi7YpaKv5AqDpnXNDmq7io=;
-        b=g0Vsp1KF0P9rAq2DKDUQLIlIafLL//bnhW1yu/e21/B6CH8HFIH4ZxOJ47LN6ha3TZ
-         4ynm8LO5fbhcv26+KyOvteQFnY8DlV71hD1iUGMhsOp7jVxP/ci3oeqIkNpl7Utd5wS2
-         HzuMuAFDeqdpH3Sl3XPjY5SdBXZx/ejJ2GElaW6/514HUPT2FAvSQBEg8/b2fwP1aF28
-         C32Fh9jPdZBuKYJckoQLB8TD/ZY2bIPU1uyDXDH/z2AztBijX4xPdXAcMlB77BSTlP/B
-         X2J5hvHzS/SwnNIAlv+40zgtS2XDeib8r+NGlOUYbYcFDrp7bMDWa14naPV7drUMpy+m
-         OhRg==
-X-Gm-Message-State: AO0yUKVC8WB3pAl1P9PPNORSYeePlyJ9ECAWwn3Hkvc1osy7NziFyaDv
-        ejnUOVcbzirvTuhjUgBA034=
-X-Google-Smtp-Source: AK7set/tA93Gp5SseEVRdnDA1MhBuV0JpWLhQoN4GEiqF0g3JBBtU+0RGFGu7fQbjRfP67JOp8jX3Q==
-X-Received: by 2002:a05:600c:1c95:b0:3e2:5f6:3647 with SMTP id k21-20020a05600c1c9500b003e205f63647mr1580559wms.16.1676472301597;
-        Wed, 15 Feb 2023 06:45:01 -0800 (PST)
+        bh=eHf7L5Tvq5TP82XNdXrWsrB7eJt4BZ0FfnfzSUVnsDg=;
+        b=6K2g6y20OhFidlfixFjg6m4LH+tNrU2X8PZtuCPF+A9D8YcY9doKlEuedFeghtNAel
+         iIESLaJUMACyiwQMgStS+7GxwhGEqPc8EbMICfeDyWSZZG7o7zUK71IIervAUuDn4U0U
+         vjStteO+RRWT+4kkpusTWogR77ltFLZ7/UmK0gtH40Tq3KilrCI354BWp+zZdTWmVifO
+         iEqWNxt/MqwEwNpFTn+4GFCzOhQ3Ptx+3nMH8URGT8bl/b2ItnYyvYBWpv+R5sIqmdFS
+         NKbcoYK57eoFw8ZZ4DnCHWFiTza+ecvJYAmlYeW95iCWAXePqLL5nGw/AMX83+6vqVY9
+         +esA==
+X-Gm-Message-State: AO0yUKXq4WinAKkHBA0y1JFZ87olpWaBHZUydIbKwBEkBT9IrLU4Ao1D
+        0MqJ/5vzNGiC+fxewinX97pVjOurN3Y=
+X-Google-Smtp-Source: AK7set/o3ntuprnvUiDJ4cnH+uDHpt/ER70D7g5wixt7fT8RGqZSKzydIDAjtvY+vpOGxQ/Gdda3CA==
+X-Received: by 2002:a5d:69c7:0:b0:2c5:5ed8:77d4 with SMTP id s7-20020a5d69c7000000b002c55ed877d4mr1660327wrw.57.1676472472593;
+        Wed, 15 Feb 2023 06:47:52 -0800 (PST)
 Received: from [192.168.1.212] ([90.248.183.175])
-        by smtp.gmail.com with ESMTPSA id m9-20020a7bca49000000b003c6bbe910fdsm2396825wml.9.2023.02.15.06.45.00
+        by smtp.gmail.com with ESMTPSA id c13-20020adffb4d000000b002c573a6216fsm805704wrs.37.2023.02.15.06.47.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Feb 2023 06:45:01 -0800 (PST)
+        Wed, 15 Feb 2023 06:47:52 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <2ca47f26-f10a-1fae-c879-f9479f7acdb1@dunelm.org.uk>
-Date:   Wed, 15 Feb 2023 14:44:59 +0000
+Message-ID: <159f09b1-8a69-f662-637d-8e883c31d0ec@dunelm.org.uk>
+Date:   Wed, 15 Feb 2023 14:47:51 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
 Content-Language: en-US
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>, John Cai <johncai86@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     John Cai <johncai86@gmail.com>,
         John Cai via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
 References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
@@ -70,92 +69,52 @@ References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
  <230206.865yce7n1w.gmgdl@evledraar.gmail.com>
  <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
  <d18a5c32-2f15-93ad-ccbf-e8f048edb311@dunelm.org.uk>
- <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
- <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com>
- <1ddac91b-7552-3e1e-9888-9e21e808104d@dunelm.org.uk>
- <Y+b2l4Le2gTxGwO8@coredump.intra.peff.net>
-In-Reply-To: <Y+b2l4Le2gTxGwO8@coredump.intra.peff.net>
+ <230207.86sffh2xcu.gmgdl@evledraar.gmail.com>
+In-Reply-To: <230207.86sffh2xcu.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff
+Hi Ævar
 
-Thanks for the counter example
-
-On 11/02/2023 01:59, Jeff King wrote:
-> Just a small counter-point, since I happened to be looking at myers vs
-> patience for something elsewhere in the thread, but:
+On 07/02/2023 17:27, Ævar Arnfjörð Bjarmason wrote:
 > 
->    git show 35bd13fcd2caa4185bf3729655ca20b6a5fe9b6f builtin/add.c
+> On Tue, Feb 07 2023, Phillip Wood wrote:
 > 
-> looks slightly better to me with myers, even though it is 2 lines
-> longer. The issue is that patience and histogram are very eager to use
-> blank lines as anchor points, so a diff like:
+>> This is slightly off topic but one thing I'd really like is a way to
+>> tell diff use automatically use --diff-words on some files
+>> (e.g. Documentation/*)
 > 
->    -some words
->    -
->    -and some more
->    +unrelated content
->    +
->    +but it happens to also be two paragraphs
+> Unlike changing the algorithm, -U options, diff.orderFile etc. doing
+> that would give you a diff that can't be applied with "git apply" or
+> other tools that expect a valid unified diff.
+
+That's a good point, we'd probably would want to guard it by checking if 
+the output is going to a tty.
+
+> So I can imagine that it would be neat in some contexts, but such a
+> change would have much wider implications than options that tweak how a
+> valid unified diff looks, or is generated.
 > 
-> in myers becomes:
+> We'd need some way to mark a diff as "for ad-hoc viewing only".
 > 
->    -some words
->    +unrelated content
->    
->    -and some more
->    +but it happens to also be two paragraphs
-> 
-> in patience (here I'm using single lines, but in practice these may be
-> paragraphs, or stanzas of code). I think that's also the _strength_ of
-> patience in many cases, but it really depends on the content.
+> But as it sounds like you want this for git.git the
+> Documentation/doc-diff script is much better than anything word-diff
+> could spew out, as it diffs the resulting generated docs.
 
-Indeed. Ironically as there are no unique context lines in that example 
-the blank lines are being matched by patience implementation falling 
-back to the myers algorithm. Normally the myers implementation tries to 
-avoid matching common context lines between two blocks of changed lines 
-but I think because in this case it is only called on a small part of 
-the file the blank lines are not common enough to trigger that 
-heuristic. I've got a patch[1] that stops the patience implementation 
-falling back to the myers algorithm and just trims any leading and 
-trailing context. On the whole it I think it gives more readable diffs 
-but I've not got any systematic data to back that up. I also suspect 
-there are pathological cases such as each line in the file being 
-duplicated where the falling back to the myers algorithm gives a much 
-better result.
-
-> Replacing
-> a multi-stanza block with another one may be the best explanation for
-> what happened. Or the two stanzas may be independent, and showing the
-> change for each one may be better.
- >
-> I'm not sure which one happens more often. And you'd probably want to
-> weight it by how good/bad the change is. In the example I showed I don't
-> find patience very much worse, since it's already a pretty ugly diff.
-> But in cases where patience shines, it may be making things
-> significantly more readable.
-
-I agree that having some data would be useful if we're going to change 
-the default but collecting it would entail quite a bit of work and as 
-the scoring is subjective we'd want a few people doing it. It's great 
-that someone has done that for the histogram algorithm in the paper 
-Elijah cited.
-
-> I don't have a super strong opinion, but I just wanted to chime in that
-> it is not clear to me that patience/histogram is always a win over myers
-> (yes, I know your examples were comparing patience vs histogram, but the
-> larger thread is discussing the other).
-
-Agreed, there are definitely cases where myers gives more readable 
-diffs, I think if we're going to change the default the question we need 
-to answer is which algorithm gives the best result most of the time.
+It's true that I should look at the doc-diff script for git, but it is a 
+wider wish for text files in other projects as well.
 
 Best Wishes
 
 Phillip
 
-[1] https://github.com/phillipwood/git/commits/pure-patience-diff
+> I wonder (but haven't tried) whether you can't "diff" that using the
+> same method that can be used to diff binary files using a custom driver.
+> 
+> Hrm, except that in that case (with includes etc) there isn't really a
+> 1=1 mapping between files within Documentation/ and generated docs (due
+> to includes etc.). But I suppose it could be used only for those files
+> that 1=1 correspond to the generated manpages.
