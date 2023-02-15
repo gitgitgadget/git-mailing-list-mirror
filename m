@@ -2,70 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA8CC636CC
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 05:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5439FC636D4
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 05:20:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233142AbjBOFKJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Feb 2023 00:10:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42760 "EHLO
+        id S232750AbjBOFUr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Feb 2023 00:20:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231966AbjBOFKH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2023 00:10:07 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AF5A1D905
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 21:10:06 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id jk14so577991plb.8
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 21:10:06 -0800 (PST)
+        with ESMTP id S231147AbjBOFUq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2023 00:20:46 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09E2632528
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 21:20:45 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id v6-20020a17090ad58600b00229eec90a7fso3106696pju.0
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 21:20:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Jr+LUOCXBRv/QWByuLy3K5QWdTp4njBjzU//TfPo18g=;
-        b=IN9bbr9CrdYOLraw+8em3DY2R9JMXPWAVNBgitXT/UkTglYw7ikcJPj8A4HZI1F8i5
-         2X2Hza5JlxjnMKv+M6ZfdyfSfPHPmNAx6xGxBLyJkHYE9/IVf0awpDrYQr09ZkDFaqMn
-         aWRahErU5ExjcMKlFCsjdzfWKiRztutASZ3/wP37A2yJPkCSFJUlk+oAMYlBEkgddcvE
-         7tSzRqacs/PVyvgjMuEJd10ICHBPsXTpJwR8Rcp0i6t0+QIxi6srzWrZmmf/4loQUwB5
-         B3PNETTLghTAjkypNuNkRXtg3GdlqBkv32f1H5BqwUkYPQjm569NOLVNJONr2eswgl+D
-         F3Bg==
+        bh=MA/Iz9D7DpYNZmg5eWlYHqSEJPyS1rLXZmy5XotUxtY=;
+        b=fXfbY47/nN+ksksfTTUnuD/g6N0apitR3G40aMQOrVYSawDFnORjxmdrCZJ3XARiEE
+         zfXXqFsM+zErgcAueEM8ZWZx/Xfe55FVFv0yGWY/9Yts1w9ijQtuhgbBltvo3hQxwIQc
+         dzsI8Vr8zlbqjBBhzSONP98R0293CAOSb7vRo7gVsIyFKL7lnzpYuhMUEHz82iAtjmcG
+         bJ3gP4n4CtSPFdSoJzNmUwb/i1fOyTnPaYfxyLgELFmL7OzlNqbfzSVbPBtLyqqxSbiN
+         m/Z2yF9hVIxE4KhjFVTQzQ4kO8sUfJPxnh3eUoyZWvxRNCkT2iX8hCrl0KvzIdVpxvV4
+         TLGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Jr+LUOCXBRv/QWByuLy3K5QWdTp4njBjzU//TfPo18g=;
-        b=tqf+HuDLVFaacyP+8Fj+mk5O1oVSztDPUxZJS4Jq01QoXbpj6cAwnVLTW4CqGDreZ/
-         Mu4Um/Z3noPmjEGZUxeBgW9opD5SJ7c9+F25ZfhCbKOFs07hG9/ZN4VcCJGZiNB+x8/M
-         dbjXVHXrqB+XFGJHoO7vZuX6LQDahLlfM8fYe3KS5xbidgCKDu/UyQXuK0fMkKHChabv
-         0+qjW8QNBhgbXuNS98TowrEeM7o2YEBNV41btIOmuYEbgcOlwoLYglL7LnWBRyf5594b
-         L1Jwcm7M4q8DBazA+TbjP3BsgMsAUXPHWQmLfkaTRKeJfPnIjDsrQXj+tla28NBGx7HO
-         MpHg==
-X-Gm-Message-State: AO0yUKXw7NqwrY8gLQ+z9fWHypRSGRfPAmFIx5uB3A8VQof4YOJjBw/z
-        4LAHaxvp7JHKaja0eDyiEnBmLxWWaHA=
-X-Google-Smtp-Source: AK7set9gcn3IUMuI6U8DRB13zuv9pS3x+kgtSDcImhTbAijckFnEkR6r8pFnm6wcJsrZhTyvbp6fSg==
-X-Received: by 2002:a17:90b:4a4a:b0:234:e3f:f53b with SMTP id lb10-20020a17090b4a4a00b002340e3ff53bmr1446614pjb.21.1676437805674;
-        Tue, 14 Feb 2023 21:10:05 -0800 (PST)
+        bh=MA/Iz9D7DpYNZmg5eWlYHqSEJPyS1rLXZmy5XotUxtY=;
+        b=Yan74H0V/QMhQgydY7o5fO+1+DD3w1IZTb/bUsfiZcTpcOGYfFJOeTXEqXooTuT/Vq
+         GQU8vmivuNs+RDT5jmV3WU3TVr4xqGY7TN2fM2NSGQ3Zji2vYrd3bCGaiJiDHV8iv8fg
+         hkUl10dG1P+QAO3ALQovoFdxgu/oIuM/y4lSRAhtjYPWjPBICcUaaVal3LkK0jXg96Cl
+         LvUtkjMhOdPZrnf6MY41nhNGcFF3f+BhPvqxupEUnk3ot5aPWojHk8MJqAxypT1zsPcM
+         j64i801HTWwwVtFevrndsmb2rrLbt1krLS2gD9puR4SWomgTVZ+ak6dP7v4UYasFpUry
+         iKrg==
+X-Gm-Message-State: AO0yUKXXq1HXqQz71xuSEnkUfN76L32FeVU9hHNA+YUSN7+p8aexxKsb
+        iGjqUqRfXt9MlUN6rVHMnXM=
+X-Google-Smtp-Source: AK7set8h/hYey6ymP+QDodwe6FPsDoMqCR16/59kDobNX8U1+iYGm/hreWDbOuMiV/qpbLIpOf9lBw==
+X-Received: by 2002:a05:6a20:8e0f:b0:b8:7d27:2cbd with SMTP id y15-20020a056a208e0f00b000b87d272cbdmr801149pzj.43.1676438444336;
+        Tue, 14 Feb 2023 21:20:44 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id l2-20020a17090aec0200b00233b5d6b4b5sm459282pjy.16.2023.02.14.21.10.04
+        by smtp.gmail.com with ESMTPSA id e9-20020aa78249000000b00588e0d5124asm10633878pfn.160.2023.02.14.21.20.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 21:10:04 -0800 (PST)
+        Tue, 14 Feb 2023 21:20:43 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?5a2f5a2Q5piT?= <mengziyi540841@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 3/3] shorten_unambiguous_ref(): avoid sscanf()
-References: <Y+vVFFCRem6t4IGM@coredump.intra.peff.net>
-        <Y+vV8Ifkj1QV7KF0@coredump.intra.peff.net>
-        <xmqqmt5f535i.fsf@gitster.g>
-        <Y+wLoFKXhlugxrh1@coredump.intra.peff.net>
-        <xmqqwn4j3mhy.fsf@gitster.g>
-        <Y+wN0agVK9ZQU/sT@coredump.intra.peff.net>
-Date:   Tue, 14 Feb 2023 21:10:04 -0800
-In-Reply-To: <Y+wN0agVK9ZQU/sT@coredump.intra.peff.net> (Jeff King's message
-        of "Tue, 14 Feb 2023 17:40:17 -0500")
-Message-ID: <xmqqsff71plf.fsf@gitster.g>
+Cc:     Elijah Newren <newren@gmail.com>, phillip.wood@dunelm.org.uk,
+        John Cai <johncai86@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
+References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
+        <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
+        <230206.865yce7n1w.gmgdl@evledraar.gmail.com>
+        <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
+        <d18a5c32-2f15-93ad-ccbf-e8f048edb311@dunelm.org.uk>
+        <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
+        <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com>
+        <1ddac91b-7552-3e1e-9888-9e21e808104d@dunelm.org.uk>
+        <Y+b2l4Le2gTxGwO8@coredump.intra.peff.net>
+        <CABPp-BFnCzWH6Aai0ZYv1fR7GMfXqiAE3n8q1Gcrhh-Zv_wTjA@mail.gmail.com>
+        <Y+xdvck3ZKZCewim@coredump.intra.peff.net>
+Date:   Tue, 14 Feb 2023 21:20:43 -0800
+In-Reply-To: <Y+xdvck3ZKZCewim@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 14 Feb 2023 23:21:17 -0500")
+Message-ID: <xmqqo7pv1p3o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,21 +82,26 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> It does indeed. I pulled the logic from skip_prefix(), thinking that by
-> relying on it I would avoid making a stupid mistake. Oh well. :)
+>> >   git show 35bd13fcd2caa4185bf3729655ca20b6a5fe9b6f builtin/add.c
+>> 
+>> "fatal: bad object 35bd13fcd2caa4185bf3729655ca20b6a5fe9b6f"
+>> 
+>> Is that a local commit of yours?
 >
-> Doing it like this is much more readable:
-> ...
-> I'll hold on to that (plus an adjustment to the comment below to match,
-> and perhaps a test for this negative-match case) for a day or so to give
-> anybody else a chance to comment, and then send out a v2 tomorrow.
+> Oh, sorry. It's not my commit, but it may have been something I picked
+> up off the list. The version from Junio is 20b813d7d3d.
 
-Thanks, and surely that is very readable.
+$ git show -s --notes=amlog --format='%N %s' 20b813d7d3d
+Message-Id: <patch-v2-1.3-71c7922b25f-20230206T225639Z-avarab@gmail.com>
+ add: remove "add.interactive.useBuiltin" & Perl "git add--interactive"
 
-Alternatively, I think you can just compare refname and rule until
-they diverge, without doing any special casing for per-cent on the
-rule side inside the loop.
+> FWIW, I coincidentally hit this case earlier today where patience does a
+> _much_ better job than myers:
+>
+>   https://lore.kernel.org/git/Y+vV8Ifkj1QV7KF0@coredump.intra.peff.net/
+>
+> So don't count me as an objection, but just a curious observer. ;)
 
-If you do not find any difference, or the byte that differ is not
-the per-cent at the beginning of "%.*s" on the rule side, they they
-do not match.
+Yeah, I know some people consider that Patience is the best thing
+since sliced bread, and it does produce more readable diffs often.
+I haven't used it often enough to cite/remember a bad case, though.
