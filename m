@@ -2,188 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AE06C05027
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 02:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81760C6379F
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 02:38:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232579AbjBOCgY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 21:36:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57418 "EHLO
+        id S232972AbjBOCi0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 21:38:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbjBOCgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 21:36:23 -0500
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BD7730E9F
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:36:22 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id w11so25906580lfu.11
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:36:22 -0800 (PST)
+        with ESMTP id S232959AbjBOCiX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 21:38:23 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 087653251B
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:38:22 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id gd1so6119047pjb.1
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:38:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=D6t2ykmmBRcHLLMkqB3fzKtsJ52BbmNOVnHopN+6LZ4=;
-        b=Gz9J2lGRoH3HZ2Q8xCTOAwMw58bmL/71h4lu60bjfHqA9NCD/PW0PHSIrM6RwQvI2L
-         eI4BpMUnml2BmUmVwwo1A4foLb6T5+i2EJ8NGvCWx4Ap77ck3o0HzDjUC5e+WKkEYC1V
-         lFuiHcGiJOXr/HBU1KhTRZAGkoTcgK975xcrRp/lLH0jOn3fXI/mbY7emt14PxLM0c2O
-         7oNsGH6GLuU/enoUf4DkXPdXohurC87VRyYGX1mPsXf4UGgo2A95M1pg4cE5fFiG7i6Y
-         9I6YBWPMd1ISq4maNNo+SSZAu/H0ZiPBMwt3jiJFsMY8C+/Mq8kKYEOjFGAIM/z0vNEa
-         dmAA==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q4rbeqqVNs7FSrRm34vFPO1jSwvfOz7/FaSqO9j8AOw=;
+        b=Y+h5SIkNIQ7sIsZJfNR4J6lqI8qg1tIdGANpLx/MnMem7lDY36jzTMsjey9oemIhWw
+         kYihIZO+fIe5Qx+GbKVcnkRGDajRpvP/EB+/9tdAcbI0+tevstVoTVzDWZ/4c4mVGmtV
+         o2G5mex3Cd4uWocPr0eTbKeBD5fBY/sRIdVEPxFd2jr8bkPw4JJ2JyC674LamNCKmG3c
+         DYlvI+81H+ZFRTK0yBDeRqM+tOEjj092yiDyI3Sn9ZIXx7k+2oOaP2XrC9Xf1sH+XvbH
+         Aux+BCtPKlNeHJ3u7rkTFJ1tuwc2ete18153kHhvQ9LiJN7Yxi6KaJQZL8DK9IR8V1S4
+         Ukew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=D6t2ykmmBRcHLLMkqB3fzKtsJ52BbmNOVnHopN+6LZ4=;
-        b=5yw4Sc/S546igaQfZkjD7/8v0rlWHXNKqmabv48OS/CEsr6VVdbJFGnQUY1vY8Prl0
-         Tf8QRrxbZScJEBlu8n4GNGYyhVtGwR580WDbjzwPSY/jMQrEncAsryKtRLPhgYKTM3W+
-         haXmWetJTQ7oHBomBE7i0K7D75qkZryobmWUXaOT0QdhYFL6oqSLsOOP+BPVFQbV+Nls
-         cWyqb0C2PRcVmg07Us9bftReMrTOvSPE2zv9WHPC1gEpXS0UBkqtR4eVqzgPPg36GomH
-         Qpci8r2iZkUoPZZ1yG8LRycgBg/Q/MWiu6BGl00S43EC8wISqlbSy0BESw2krs6ALtk8
-         VOVw==
-X-Gm-Message-State: AO0yUKUX905Fe/8vNPV9NpP7P9QsCgSg2hlg4MXTc2pzar1qyjDrhxWG
-        8JqD95lkCR9OaPuPR1WfHjdJgcglGlYKqfFpPeA=
-X-Google-Smtp-Source: AK7set8hLTJvG2liHcKOWi7FSIl7WOaJlZ3b0aHr+ugIGyE+neI7dR34kdTXllOZA4zKkTwMBr+MaVouZTOhjPTMMOA=
-X-Received: by 2002:ac2:5382:0:b0:4d5:ca32:7bbb with SMTP id
- g2-20020ac25382000000b004d5ca327bbbmr73673lfh.2.1676428579985; Tue, 14 Feb
- 2023 18:36:19 -0800 (PST)
-MIME-Version: 1.0
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=q4rbeqqVNs7FSrRm34vFPO1jSwvfOz7/FaSqO9j8AOw=;
+        b=MszQLtiqDiJd/nY5YrYnxobLmzMgLI69xWpKg8Qg6Tt2KQITV/1QK157oGyDtEOkEB
+         4T7FjTHaEoASSUcfqesPNtW3S1Je1QMcCJp3+38qu3sPxAnUl0Z8NOA9wMRWCmGG+dB5
+         cSqjw4Ng9B24Zg6FBG5sXZYQ+SNUgiiNabrEowceYDwI+NIKiHITjUYyU6jrHhFgDXNS
+         pxDD4dLsnzbUZs5KUkl5YBDEZVbWhaMKuGy2PEJedTPHzInhdTjPqGA1XPVGTuFSfOAe
+         R9b4/EWBytdpgYQw7QxiEd1dhsnNogHJqTpNYM6q7NiXQmgr7P0eLcJeL5QQLJZ7E2/g
+         2myA==
+X-Gm-Message-State: AO0yUKUh7YBgceTHjdsnPCZ2XuPQBM1RYKTQB1VydcPwKCbnJrU+5YH0
+        onZJuR/WC+LBE3kvhWaWC1c=
+X-Google-Smtp-Source: AK7set8plF2Mvw6RJTAsV+1Y2vay744VWqRVFVlTuOyasVVFu8FQ0OLhW5wUrH3ST4S0aTrYEhpmHg==
+X-Received: by 2002:a17:903:1c6:b0:199:30c3:b3f0 with SMTP id e6-20020a17090301c600b0019930c3b3f0mr802184plh.11.1676428701258;
+        Tue, 14 Feb 2023 18:38:21 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id e18-20020a170902ed9200b0019904abc93dsm10883581plj.250.2023.02.14.18.38.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Feb 2023 18:38:20 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 1/2] diff: consolidate diff algorithm option parsing
 References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
- <8e73793b0db3e84366a9c6441cc0fdc04f9614a5.1675568781.git.gitgitgadget@gmail.com>
- <230206.865yce7n1w.gmgdl@evledraar.gmail.com> <B544D9E8-13C4-4682-9BDA-D6E19B51C91D@gmail.com>
- <d18a5c32-2f15-93ad-ccbf-e8f048edb311@dunelm.org.uk> <65129323-326F-4E4A-B6F8-06DC3BBE7B58@gmail.com>
- <CABPp-BHhhUhRqn=kKcDiV3EMckBSk2EE8TKZ-PoeqTsKWuvAng@mail.gmail.com>
- <1ddac91b-7552-3e1e-9888-9e21e808104d@dunelm.org.uk> <Y+b2l4Le2gTxGwO8@coredump.intra.peff.net>
-In-Reply-To: <Y+b2l4Le2gTxGwO8@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 14 Feb 2023 18:35:00 -0800
-Message-ID: <CABPp-BFnCzWH6Aai0ZYv1fR7GMfXqiAE3n8q1Gcrhh-Zv_wTjA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] diff: teach diff to read gitattribute diff-algorithm
-To:     Jeff King <peff@peff.net>
-Cc:     phillip.wood@dunelm.org.uk, John Cai <johncai86@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+        <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
+        <0c5e1fc6c2651e39bcefa27ee0976c9519671969.1676410819.git.gitgitgadget@gmail.com>
+Date:   Tue, 14 Feb 2023 18:38:20 -0800
+In-Reply-To: <0c5e1fc6c2651e39bcefa27ee0976c9519671969.1676410819.git.gitgitgadget@gmail.com>
+        (John Cai via GitGitGadget's message of "Tue, 14 Feb 2023 21:40:18
+        +0000")
+Message-ID: <xmqqk00j3b6r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 10, 2023 at 5:59 PM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Feb 09, 2023 at 02:44:15PM +0000, Phillip Wood wrote:
->
-> > To see the differences between the output of patience and histogram
-> > algorithms I diffed the output of "git log -p --no-merges
-> > --diff-algorithm=patience" and "git log -p --no-merges
-> > --diff-algorithm=histogram". The first three differences are
-> >
-> > - 6c065f72b8 (http: support CURLOPT_PROTOCOLS_STR, 2023-01-16)
-> >   In get_curl_allowed_protocols() the patience algorithm shows the
-> >   change in the return statement more clearly
-> >
-> > - 47cfc9bd7d (attr: add flag `--source` to work with tree-ish, 2023-01-14)
-> >    The histogram algorithm shows read_attr_from_index() being moved
-> >    whereas the patience algorithm does not making the diff easier to
-> >    follow.
-> >
-> > - b0226007f0 (fsmonitor: eliminate call to deprecated FSEventStream
-> > function, 2022-12-14)
-> >   In fsm_listen__stop_async() the histogram algorithm shows
-> >   data->shutdown_style = SHUTDOWN_EVENT;
-> >   being moved, which is not as clear as the patience output which
-> >   shows it as a context line.
->
-> Just a small counter-point, since I happened to be looking at myers vs
-> patience for something elsewhere in the thread, but:
->
->   git show 35bd13fcd2caa4185bf3729655ca20b6a5fe9b6f builtin/add.c
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-"fatal: bad object 35bd13fcd2caa4185bf3729655ca20b6a5fe9b6f"
-
-Is that a local commit of yours?
-
-> looks slightly better to me with myers, even though it is 2 lines
-> longer. The issue is that patience and histogram are very eager to use
-> blank lines as anchor points, so a diff like:
+> From: John Cai <johncai86@gmail.com>
 >
->   -some words
->   -
->   -and some more
->   +unrelated content
->   +
->   +but it happens to also be two paragraphs
->
-> in myers becomes:
->
->   -some words
->   +unrelated content
->
->   -and some more
->   +but it happens to also be two paragraphs
->
-> in patience (here I'm using single lines, but in practice these may be
-> paragraphs, or stanzas of code). I think that's also the _strength_ of
-> patience in many cases, but it really depends on the content. Replacing
-> a multi-stanza block with another one may be the best explanation for
-> what happened. Or the two stanzas may be independent, and showing the
-> change for each one may be better.
->
-> I'm not sure which one happens more often. And you'd probably want to
-> weight it by how good/bad the change is. In the example I showed I don't
-> find patience very much worse, since it's already a pretty ugly diff.
-> But in cases where patience shines, it may be making things
-> significantly more readable.
->
-> I don't have a super strong opinion, but I just wanted to chime in that
-> it is not clear to me that patience/histogram is always a win over myers
-> (yes, I know your examples were comparing patience vs histogram, but the
-> larger thread is discussing the other).
+> The diff option parsing for --minimal, --patience, --histgoram can all
+> be consolidated into one function. This is a preparatory step for the
+> subsequent commit which teaches diff to keep track of whether or not a
+> diff algorithm has been set via the command line.
 
-Oh, I agree histogram is not always a win over myers.  I just feel it
-is the majority of the time.  But if you want more than "feels",
-here's some solid data to back that up...
+Everybody other than patience used to be just a bit-op but now
+everybody is a callback?
 
-I found a study on the subject over at
-https://link.springer.com/article/10.1007/s10664-019-09772-z.  They
-were particularly interested in whether other academic studies could
-have been affected by git's different diff algorithms, and came away
-with the answer that it did.  They looked at a few hundred thousand
-commits across two dozen different repositories and found (note that
-they only looked at myers and histogram, ignoring patience and
-minimal):
+> diff --git a/diff.c b/diff.c
+> index 329eebf16a0..92a0eab942e 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3437,6 +3437,22 @@ static int diff_filepair_is_phoney(struct diff_filespec *one,
+>  	return !DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two);
+>  }
+>  
+> +static int set_diff_algorithm(struct diff_options *opts,
+> +			      const char *alg)
+> +{
+> +	long value = parse_algorithm_value(alg);
+> +
+> +	if (value < 0)
+> +		return 1;
+> +
+> +	/* clear out previous settings */
+> +	DIFF_XDL_CLR(opts, NEED_MINIMAL);
+> +	opts->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
+> +	opts->xdl_opts |= value;
+> +
+> +	return 0;
+> +}
 
-   * 92.4% - 98.6% of the diffs (depending on repo) are identical
-whether you use myers or histogram
-   * 93.8% - 99.2% of the diffs (depending on repo) have the same
-number of added/deleted lines with myers and histogram
-   * Of the >20k diffs that were not the identical, they selected a
-random sample of 377 diffs (taking care to make sure they were
-statistically representative)
-   * They divided the 377 diffs into "code" and "non-code" diffs, i.e.
-those modifying source code and those modifying other textual files
-   * They had two people annotating the diffs and independently
-scoring them, and then checked for agreement between their answers
-afterwards.  (No, they didn't always agree, but they did have
-substantial agreement.)
+The above is a faithful copy of diff_opt_diff_algorithm(), except
+that it returns 1 (not -1) on failure, which is unexpected in this
+codebase, and should be corrected if this patch gets rerolled.
 
-For the (again, non-identical) diffs modifying non-code, they found
-(see table 11) that:
-   * 14.9% of the myers diffs are better
-   * 13.4% of the histogram diffs are better
-   * 71.6% of the diffs have equal quality
+>  static void builtin_diff(const char *name_a,
+>  			 const char *name_b,
+>  			 struct diff_filespec *one,
+> @@ -5107,17 +5123,40 @@ static int diff_opt_diff_algorithm(const struct option *opt,
+>  				   const char *arg, int unset)
+>  {
+>  	struct diff_options *options = opt->value;
+> -	long value = parse_algorithm_value(arg);
+>  
+>  	BUG_ON_OPT_NEG(unset);
+> -	if (value < 0)
+> +
+> +	if (set_diff_algorithm(options, arg))
+>  		return error(_("option diff-algorithm accepts \"myers\", "
+>  			       "\"minimal\", \"patience\" and \"histogram\""));
+>  
+> -	/* clear out previous settings */
+> -	DIFF_XDL_CLR(options, NEED_MINIMAL);
+> -	options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
+> -	options->xdl_opts |= value;
+> +	return 0;
+> +}
 
-For the (non-identical) diffs modifying code, they found (again, see
-table 11) that:
-   * 16.9% of the myers diffs are better
-   * 62.6% of the histogram diffs are better
-   * 20.6% of the diffs have equal quality
+This version of diff_opt_diff_algorithm() behaves identically from
+the version before this patch, which is excellent.
 
-A ratio of 4 to 1 for histogram being better on code diffs is pretty
-weighty to me.
+> +static int diff_opt_diff_algorithm_no_arg(const struct option *opt,
+> +				   const char *arg, int unset)
+> +{
+> +	struct diff_options *options = opt->value;
+> +
+> +	BUG_ON_OPT_NEG(unset);
+> +	BUG_ON_OPT_ARG(arg);
+> +
+> +	if (!strcmp(opt->long_name, "patience")) {
+> +		size_t i;
+> +		/*
+> +		 * Both --patience and --anchored use PATIENCE_DIFF
+> +		 * internally, so remove any anchors previously
+> +		 * specified.
+> +		 */
+> +		for (i = 0; i < options->anchors_nr; i++)
+> +			free(options->anchors[i]);
+> +		options->anchors_nr = 0;
+> +	}
+> +
+> +	if (set_diff_algorithm(options, opt->long_name))
+> +		BUG("available diff algorithms include \"myers\", "
+> +			       "\"minimal\", \"patience\" and \"histogram\"");
+> +
+>  	return 0;
+>  }
 
-It's possible these results would have been even better were it not
-for a couple of bugs in the histogram code (ported from the original
-in jgit).  Phillip pointed me to a problematic testcase that Stefan
-Beller found, and in attempting to fix it (I'm on fix #4 or so), I
-believe I found another issue.  However, I don't want to go into too
-much detail yet, as I found problems with some of my previous fixes
-and already invalidated things I told Phillip just last week.
+Calling this instead of diff_opt_patience() would make "--patience"
+parsed identically as before without this patch, which is excellent.
+
+> @@ -5562,9 +5581,10 @@ struct option *add_diff_options(const struct option *opts,
+>  			    N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
+>  
+>  		OPT_GROUP(N_("Diff algorithm options")),
+> -		OPT_BIT(0, "minimal", &options->xdl_opts,
+> -			N_("produce the smallest possible diff"),
+> -			XDF_NEED_MINIMAL),
+> +		OPT_CALLBACK_F(0, "minimal", options, NULL,
+> +			       N_("produce the smallest possible diff"),
+> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+> +			       diff_opt_diff_algorithm_no_arg),
+
+I offhand cannot say that these two are equivalent, even though they
+ought to be (otherwise this patch would break things).  The callback
+seems to do much more than just a simple "flip the NEED_MINIMAL bit
+on".
+
+> -		OPT_BITOP(0, "histogram", &options->xdl_opts,
+> -			  N_("generate diff using the \"histogram diff\" algorithm"),
+> -			  XDF_HISTOGRAM_DIFF, XDF_DIFF_ALGORITHM_MASK),
+> +			       diff_opt_diff_algorithm_no_arg),
+> +		OPT_CALLBACK_F(0, "histogram", options, NULL,
+> +			       N_("generate diff using the \"histogram diff\" algorithm"),
+> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
+> +			       diff_opt_diff_algorithm_no_arg),
+
+Likewise.
+
+By nature, patience (and anchored) needs to do much more than
+everybody else, so it almost feels that it is OK (and preferable,
+even) to leave it a special case to make the distinction stand out.
+Consolidating everybody else who are much simpler to share the
+more complex callback does not look like a good change to me, at
+least at the first glance.
+
+Thanks.
