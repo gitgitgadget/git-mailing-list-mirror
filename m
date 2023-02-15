@@ -2,85 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6968C636CC
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 21:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4AA1FC636D6
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 22:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbjBOVxR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Feb 2023 16:53:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43388 "EHLO
+        id S229990AbjBOWAv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Feb 2023 17:00:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbjBOVxQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2023 16:53:16 -0500
-X-Greylist: delayed 90 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 15 Feb 2023 13:53:15 PST
-Received: from omta002.cacentral1.a.cloudfilter.net (omta002.cacentral1.a.cloudfilter.net [3.97.99.33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8226252B2
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 13:53:15 -0800 (PST)
-Received: from shw-obgw-4002a.ext.cloudfilter.net ([10.228.9.250])
-        by cmsmtp with ESMTP
-        id SPRqpBdETl2xSSPgmp0UBv; Wed, 15 Feb 2023 21:51:44 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=shaw.ca; s=s20180605;
-        t=1676497904; bh=jiddagA5agCOfKDG05u5vbwkF3ss54wjAhmEC715bJQ=;
-        h=From:To:Subject:Date;
-        b=byYYvQXzJFILCzi8pihZ3pgj65GfW1mVWM6NNwEBq5DT9D1vn1H6Bf0RF/kqm7DMm
-         W7YPh11npgspGJrMLU0uda1w00W9cUd5cHk0UCyIKVOFhju+fHFH+WI4CjHFv/9ssz
-         kT/EbSi6p43ekojl0RXikfHiT4+2Goz9HGeLbs5gzFlxy8In8X5jnzdd4LgKSczdHx
-         ZqqUIEVKhYFLsa+pm061+9hacfX/8pXXp/LkGxQQXAUX/E/WKXY0KXJIXihxnZG6oe
-         jr1xu7s4Z2kfenVJPucY2KdK3BBXNfl09K6uMqNx4j0x8MTYPRonny8M1EDazi4JTU
-         /nM3AHwxhu+dw==
-Received: from localhost.localdomain ([184.64.102.149])
-        by cmsmtp with ESMTP
-        id SPglp0hBRyAOeSPglpcJON; Wed, 15 Feb 2023 21:51:44 +0000
-X-Authority-Analysis: v=2.4 cv=e5oV9Il/ c=1 sm=1 tr=0 ts=63ed53f0
- a=DxHlV3/gbUaP7LOF0QAmaA==:117 a=DxHlV3/gbUaP7LOF0QAmaA==:17 a=VwQbUJbxAAAA:8
- a=c8w18QBM2t2KRHc8AScA:9 a=rQFNUccIKK0A:10 a=AjGcO6oz07-iQ99wixmX:22
-From:   Brian Inglis <Brian.Inglis@Shaw.ca>
-To:     git@vger.kernel.org
-Subject: manual option --inline --no-attach override required for format.attach
-Date:   Wed, 15 Feb 2023 14:51:13 -0700
-Message-Id: <20230215215112.62559-1-Brian.Inglis@Shaw.ca>
-X-Mailer: git-send-email 2.39.0
+        with ESMTP id S229537AbjBOWAu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2023 17:00:50 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09547BDF0
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 14:00:49 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id l2so164837wry.0
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 14:00:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hEToGMvihj1D6kKpdQIq4Bpa9RqV0OpOfmzeDfNDCBQ=;
+        b=pAlScQNlQuZCobVW5xe/UY3Fv9fMqwUejBSFO1pxdy35wj7wPCxjRseO7Xhqw9i5v+
+         PA+4Tgjg731ba3H+4yjGg3usOwSoPIAPIGvihJ7Tz7D4jmv5nKNK+yg2aaj4QPK65RUS
+         9pJOOFsJU+En7sXl5ws4vZ3YGD5DbxDMbyVfOVGzde/lcpnRvZU3CwlducLhhqhFxfPG
+         sWIRKfxjr4/hgLxWGOSVBxs15YqnIIbzQkYZ8e8dCUYg4qPfO9svehpH6Znm2Pz3c5sX
+         B+h3jbEUb+Zo0hQGqd7DPbYTq8TOD31b68/pfiTw5x/okyc5ckCNktHTXuU90PqwEgaB
+         zINg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hEToGMvihj1D6kKpdQIq4Bpa9RqV0OpOfmzeDfNDCBQ=;
+        b=51I11SmM5biVmIDfkyMDVLvUqJCplewv7f19mJyNEf4mg1gEIAvovJoZVL+s/2/dC6
+         i67maZjpb/wPv2+Bb5KoKPL1aBrfpjkT6nHCcFKssGcLYklK4qGzjeu1i/7syLAMtPfQ
+         U2+hItgmhUgfVqgroMv42U5/zXHoWGrJVWklgpCpmyOjKBkHSn8+2E8rIGlOl+OtP/H8
+         DEyPXtd5E6LdJyjGYdZ8mtJfnORTVrA5R+4WXcF4oB5E3ZxxGbSULuwD2KqNbgtrGDaS
+         uhK7wz09i8nat2tocSNQjIVHkttRhq/3M8zep7AtdJgMHpCh6n++pR4+EiVJ8oyQ3m4P
+         BE6A==
+X-Gm-Message-State: AO0yUKUwZ530sJ0wz81lQB09xNht4MI+bPVkNVGvxtV05uqG5FRCVmqV
+        mb45oE/U/1geqObt2gEi34g=
+X-Google-Smtp-Source: AK7set8ows9N3xXycOrp2zAO9i6Bw1+202WzjjH2kXCykHT4ja+LMg45bUfNY74fU7YMe33UGi6bAQ==
+X-Received: by 2002:a5d:4090:0:b0:2c4:71d:244c with SMTP id o16-20020a5d4090000000b002c4071d244cmr2814498wrp.25.1676498447521;
+        Wed, 15 Feb 2023 14:00:47 -0800 (PST)
+Received: from [192.168.2.52] (59.red-88-14-203.dynamicip.rima-tde.net. [88.14.203.59])
+        by smtp.gmail.com with ESMTPSA id l5-20020a05600c1d0500b003dc41a9836esm3759352wms.43.2023.02.15.14.00.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Feb 2023 14:00:47 -0800 (PST)
+Subject: Re: [PATCH v3 1/3] branch: avoid unnecessary worktrees traversals
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <20230211041644.1848341-1-jonathantanmy@google.com>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <b9464970-1ba5-e2f3-58c6-145ca45b1095@gmail.com>
+Date:   Wed, 15 Feb 2023 23:00:39 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfMkfqrVOFnrpR2lhLnA1CBSnOYAF7f/pZOkiiffPiKw68FTQaJc0pP2w+cccuk3V9a8TNYTBChjl5z0VVb7UY/udVukixd1yTaVtqEjdH2+8pdwvdoBa
- oXB3aDyz3L7299Ntwh1G1KHPCNZzS4FfR7sZEzvCeHJgvlru4ndWoAxYRvBaDFews59RjynTYuKYqIXhTX9CHpHlqyx4pkVPomH0pyQ/7KLRVR7bEy30s3fU
- 3HI0n+fIGDudfC9fQOc4tA==
+In-Reply-To: <20230211041644.1848341-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-git format-patch --inline ... --to=linux-man@vger.kernel.org
-git format-patch --no-attach ... --to=linux-man@vger.kernel.org
-git send-email ... --to=linux-man@vger.kernel.org
+On 10-feb-2023 20:16:44, Jonathan Tan wrote:
 
-What did you expect to happen? (Expected behavior)
-linux-man maintainer would get patches inline not in attachments as expected
+> > If we could know in advance if the renamed branch is not HEAD in any
+> > worktree we could avoid calling "replace_each_worktree_head_symref()",
+> > and so avoid that unnecessary second traversing.
+> 
+> When I first read this paragraph, I thought that the traversing involved
+> was just a loop through an in-memory data structure, which is not that
+> costly. It turns out that a travesal involves not only constructing
+> said data structure but also reading from disk to get the necessary
+> information, which indeed is very costly. I would include that in the
+> commit message, but won't insist on that (perhaps it's clear to others
+> what is meant by traversal).
 
-What happened instead? (Actual behavior)
-linux-man maintainer got patches in MIME attachments which he could not use
+Sorry, I should have included details about why it's costly.  I'll
+include some in the message.
 
-What's different between what you expected and what actually happened?
-using format-patch either --inline or --no-attach would send patches inline
-need to remember to specify format-patch --inline --no-attach for every patch
-there is no way to set config format.inline format.attach=no
+> 
+> > Let's rename "reject_rebase_or_bisect_branch()" to a more meaningful
+> > name "die_if_branch_is_being_rebased_or_bisected()" and make it return,
+> > if it does not die(), if the specified branch is HEAD in any worktree.
+> > Use this new information to avoid unnecessary calls to
+> > "replace_each_worktree_head_symref()".
+> 
+> In later patches, I see that the return value can also indicate that a
+> branch is an orphan, and that for the sake of code clarity, the calling
+> function had to have a variable assignment of the form oldref_is_orphan
+> = (oldref_is_head > 1). If this is so, it is probably better to have
+> this function return something with names. So something like
+> 
+>   #define IS_HEAD 4
+>   #define IS_ORPHAN 8
 
-Anything else you want to add:
-initially found format.attach set in /etc/gitconfig and no way to override
-would be great if linux-man maintainer could set repo config format.inline format.attach=no
+OK.  I'll use names.
 
+>   int get_branch_usage_in_worktrees(...) {...}
+> 
+> and then the caller can use these constants whenever it needs to know
+> what kind of branch this is.
+> 
+> I also see in patch 2 that we're changing what the user sees under
+> certain inputs. That can be avoided if we move the dying to the caller,
+> and have this function merely return when the branch is being rebased
+> or bisected.
+> 
+>   #define IS_BISECTED 1
+>   #define IS_REBASED 2
+> 
+> or something like that. I would prefer if user-visible behavior didn't
+> change unnecessarily, and this does not seem like a necessary case.
 
-[System Info]
-git version:
-git version 2.39.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: CYGWIN_NT-10.0-19044 3.4.6-1.x86_64 2023-02-14 13:23 UTC x86_64
-compiler info: gnuc: 11.3
-libc info: newlib 4.3.0
-$SHELL (typically, interactive shell): /bin/bash
+OK.
 
+> 
+> Other than that, everything looks good.
 
-[Enabled Hooks]
+Thanks for your review and suggestions!
