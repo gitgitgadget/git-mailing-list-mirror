@@ -2,206 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81760C6379F
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 02:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B5C5C61DA4
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 02:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232972AbjBOCi0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Feb 2023 21:38:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59326 "EHLO
+        id S229793AbjBOCjz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Feb 2023 21:39:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232959AbjBOCiX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Feb 2023 21:38:23 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 087653251B
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:38:22 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id gd1so6119047pjb.1
-        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:38:22 -0800 (PST)
+        with ESMTP id S229527AbjBOCjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Feb 2023 21:39:52 -0500
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30292234D0
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:39:51 -0800 (PST)
+Received: by mail-qt1-x82f.google.com with SMTP id c2so20502684qtw.5
+        for <git@vger.kernel.org>; Tue, 14 Feb 2023 18:39:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q4rbeqqVNs7FSrRm34vFPO1jSwvfOz7/FaSqO9j8AOw=;
-        b=Y+h5SIkNIQ7sIsZJfNR4J6lqI8qg1tIdGANpLx/MnMem7lDY36jzTMsjey9oemIhWw
-         kYihIZO+fIe5Qx+GbKVcnkRGDajRpvP/EB+/9tdAcbI0+tevstVoTVzDWZ/4c4mVGmtV
-         o2G5mex3Cd4uWocPr0eTbKeBD5fBY/sRIdVEPxFd2jr8bkPw4JJ2JyC674LamNCKmG3c
-         DYlvI+81H+ZFRTK0yBDeRqM+tOEjj092yiDyI3Sn9ZIXx7k+2oOaP2XrC9Xf1sH+XvbH
-         Aux+BCtPKlNeHJ3u7rkTFJ1tuwc2ete18153kHhvQ9LiJN7Yxi6KaJQZL8DK9IR8V1S4
-         Ukew==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+Q7tdXt6dDDWV7wL4N2Xt76V3tOuDw396GDpWKvHpFs=;
+        b=LpwuuRswov4IG3WE40OICHMqBExm6i+XPUKsFz8QBWJXfdQuElwy6tRvQBLJ2veRLa
+         bPsTKDXue1Bf71zco5Se0Dr59VWeZUDsqoQmSIy0OyRU2YE2HeG4Va2+DYnZ0QZzAMYh
+         3V2IdcIhve5Q9dWcs4dOPG5tDjh/dWXFWwrjhhEEr+SvIZvav1aeooC+LmQASZyTCSen
+         fSUrfeafgLAwCK4jPKzFBWI/kU6nhAaW1ZeWmlGZSvqxcoXGrPkWjvpPixmfdhO6zRLl
+         tsZ7yDWqa/F8nL/86k5iZsaJegmNS1RfUSEHIfqwiB57v2v3/NlSNidLKX5oDkLC8F48
+         lCIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=q4rbeqqVNs7FSrRm34vFPO1jSwvfOz7/FaSqO9j8AOw=;
-        b=MszQLtiqDiJd/nY5YrYnxobLmzMgLI69xWpKg8Qg6Tt2KQITV/1QK157oGyDtEOkEB
-         4T7FjTHaEoASSUcfqesPNtW3S1Je1QMcCJp3+38qu3sPxAnUl0Z8NOA9wMRWCmGG+dB5
-         cSqjw4Ng9B24Zg6FBG5sXZYQ+SNUgiiNabrEowceYDwI+NIKiHITjUYyU6jrHhFgDXNS
-         pxDD4dLsnzbUZs5KUkl5YBDEZVbWhaMKuGy2PEJedTPHzInhdTjPqGA1XPVGTuFSfOAe
-         R9b4/EWBytdpgYQw7QxiEd1dhsnNogHJqTpNYM6q7NiXQmgr7P0eLcJeL5QQLJZ7E2/g
-         2myA==
-X-Gm-Message-State: AO0yUKUh7YBgceTHjdsnPCZ2XuPQBM1RYKTQB1VydcPwKCbnJrU+5YH0
-        onZJuR/WC+LBE3kvhWaWC1c=
-X-Google-Smtp-Source: AK7set8plF2Mvw6RJTAsV+1Y2vay744VWqRVFVlTuOyasVVFu8FQ0OLhW5wUrH3ST4S0aTrYEhpmHg==
-X-Received: by 2002:a17:903:1c6:b0:199:30c3:b3f0 with SMTP id e6-20020a17090301c600b0019930c3b3f0mr802184plh.11.1676428701258;
-        Tue, 14 Feb 2023 18:38:21 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id e18-20020a170902ed9200b0019904abc93dsm10883581plj.250.2023.02.14.18.38.20
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+Q7tdXt6dDDWV7wL4N2Xt76V3tOuDw396GDpWKvHpFs=;
+        b=2FE1p9tA/urrRdaUoKlghqj3ugmbDhXGVdS7ofMkusB61P7ZfPeJ9OZoZ5zfVPeee9
+         NirnA+yagaz4PAsbooRv2wLvzXd7Y/0cqOALBAXxR9ZWTT0ksJ3xe8XSNycW1SpWz2n/
+         b8ExSH5ng03KEOsL62qJFNCqMOWcda2NCDCUCZ1GFFMVlEBiqXkee3HPNISA+nGCchFI
+         Qu6jTPRNPgA2uaj9E+YZtPC+6O+o3qB/FxTAVtYGn1osQ58cFfUbwFZCcDYrAhxJom7g
+         0gyPaUoK6v1yYRzA8PR/xVqOQV8/c8dEGIFDnRR36+/RzCpYVvW+wNG6PUpXam4aZCy/
+         1AVA==
+X-Gm-Message-State: AO0yUKVJgDVz9/lMMOOoUgANCU5lsnfW0CNVBGd3sAMuey0wEsre3aGn
+        +ivSOL24fIlAfn6NlB6yIa9uwjKZycw+oQ==
+X-Google-Smtp-Source: AK7set8H28sKrWzwH79fL/LPVNxSVVAFIZDbCQwSRwwQIRsPtKYogYZs9jmtjWyUfxtZgoXHw+YGzQ==
+X-Received: by 2002:a05:622a:5d3:b0:3b6:3a16:a19 with SMTP id d19-20020a05622a05d300b003b63a160a19mr647355qtb.54.1676428789895;
+        Tue, 14 Feb 2023 18:39:49 -0800 (PST)
+Received: from cheska.uwo-x-22.wireless.uwo.pri (eclipse-22.wireless.uwo.ca. [129.100.255.37])
+        by smtp.googlemail.com with ESMTPSA id o73-20020a37414c000000b0072b5242bd0bsm12978425qka.77.2023.02.14.18.39.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Feb 2023 18:38:20 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 1/2] diff: consolidate diff algorithm option parsing
-References: <pull.1452.git.git.1675568781.gitgitgadget@gmail.com>
-        <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
-        <0c5e1fc6c2651e39bcefa27ee0976c9519671969.1676410819.git.gitgitgadget@gmail.com>
-Date:   Tue, 14 Feb 2023 18:38:20 -0800
-In-Reply-To: <0c5e1fc6c2651e39bcefa27ee0976c9519671969.1676410819.git.gitgitgadget@gmail.com>
-        (John Cai via GitGitGadget's message of "Tue, 14 Feb 2023 21:40:18
-        +0000")
-Message-ID: <xmqqk00j3b6r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Tue, 14 Feb 2023 18:39:35 -0800 (PST)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>
+Subject: [PATCH v6 0/3] t4113: modernize style
+Date:   Tue, 14 Feb 2023 21:38:57 -0500
+Message-Id: <20230215023900.11854-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230209154417.10763-1-cheskaqiqi@gmail.com>
+References: <20230209154417.10763-1-cheskaqiqi@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+different with 5 :
 
-> From: John Cai <johncai86@gmail.com>
->
-> The diff option parsing for --minimal, --patience, --histgoram can all
-> be consolidated into one function. This is a preparatory step for the
-> subsequent commit which teaches diff to keep track of whether or not a
-> diff algorithm has been set via the command line.
+1.change the commit message to be more succinct.
 
-Everybody other than patience used to be just a bit-op but now
-everybody is a callback?
+2.
+use  
 
-> diff --git a/diff.c b/diff.c
-> index 329eebf16a0..92a0eab942e 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3437,6 +3437,22 @@ static int diff_filepair_is_phoney(struct diff_filespec *one,
->  	return !DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two);
->  }
->  
-> +static int set_diff_algorithm(struct diff_options *opts,
-> +			      const char *alg)
-> +{
-> +	long value = parse_algorithm_value(alg);
-> +
-> +	if (value < 0)
-> +		return 1;
-> +
-> +	/* clear out previous settings */
-> +	DIFF_XDL_CLR(opts, NEED_MINIMAL);
-> +	opts->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-> +	opts->xdl_opts |= value;
-> +
-> +	return 0;
-> +}
+test_write_lines a b c >file && 
 
-The above is a faithful copy of diff_opt_diff_algorithm(), except
-that it returns 1 (not -1) on failure, which is unexpected in this
-codebase, and should be corrected if this patch gets rerolled.
+instead of :
+ 
+{
+    echo a &&
+    echo b &&
+    echo c
+} >file &&
 
->  static void builtin_diff(const char *name_a,
->  			 const char *name_b,
->  			 struct diff_filespec *one,
-> @@ -5107,17 +5123,40 @@ static int diff_opt_diff_algorithm(const struct option *opt,
->  				   const char *arg, int unset)
->  {
->  	struct diff_options *options = opt->value;
-> -	long value = parse_algorithm_value(arg);
->  
->  	BUG_ON_OPT_NEG(unset);
-> -	if (value < 0)
-> +
-> +	if (set_diff_algorithm(options, arg))
->  		return error(_("option diff-algorithm accepts \"myers\", "
->  			       "\"minimal\", \"patience\" and \"histogram\""));
->  
-> -	/* clear out previous settings */
-> -	DIFF_XDL_CLR(options, NEED_MINIMAL);
-> -	options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-> -	options->xdl_opts |= value;
-> +	return 0;
-> +}
 
-This version of diff_opt_diff_algorithm() behaves identically from
-the version before this patch, which is excellent.
 
-> +static int diff_opt_diff_algorithm_no_arg(const struct option *opt,
-> +				   const char *arg, int unset)
-> +{
-> +	struct diff_options *options = opt->value;
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +	BUG_ON_OPT_ARG(arg);
-> +
-> +	if (!strcmp(opt->long_name, "patience")) {
-> +		size_t i;
-> +		/*
-> +		 * Both --patience and --anchored use PATIENCE_DIFF
-> +		 * internally, so remove any anchors previously
-> +		 * specified.
-> +		 */
-> +		for (i = 0; i < options->anchors_nr; i++)
-> +			free(options->anchors[i]);
-> +		options->anchors_nr = 0;
-> +	}
-> +
-> +	if (set_diff_algorithm(options, opt->long_name))
-> +		BUG("available diff algorithms include \"myers\", "
-> +			       "\"minimal\", \"patience\" and \"histogram\"");
-> +
->  	return 0;
->  }
 
-Calling this instead of diff_opt_patience() would make "--patience"
-parsed identically as before without this patch, which is excellent.
+Shuqi Liang (3):
+  t4113: modernize test script
+  t4113: indent with tab
+  t4113: put executable lines to test_expect_success
 
-> @@ -5562,9 +5581,10 @@ struct option *add_diff_options(const struct option *opts,
->  			    N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
->  
->  		OPT_GROUP(N_("Diff algorithm options")),
-> -		OPT_BIT(0, "minimal", &options->xdl_opts,
-> -			N_("produce the smallest possible diff"),
-> -			XDF_NEED_MINIMAL),
-> +		OPT_CALLBACK_F(0, "minimal", options, NULL,
-> +			       N_("produce the smallest possible diff"),
-> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-> +			       diff_opt_diff_algorithm_no_arg),
+ t/t4113-apply-ending.sh | 75 +++++++++++++++++++----------------------
+ 1 file changed, 34 insertions(+), 41 deletions(-)
 
-I offhand cannot say that these two are equivalent, even though they
-ought to be (otherwise this patch would break things).  The callback
-seems to do much more than just a simple "flip the NEED_MINIMAL bit
-on".
+Range-diff against v5:
+1:  4d55e522a6 ! 1:  cb29da5d42 t4113: modernize test script
+    @@ Commit message
+         where the test_expect_success command and test title are written on
+         separate lines. Change the old style to modern style.
+     
+    -    for example :
+    -    -test_expect_success setup \
+    -    -    'git update-index --add file'
+    -    -
+    -    +test_expect_success setup '
+    -    +    git update-index --add file
+    -    +'
+    -
+         Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+     
+      ## t/t4113-apply-ending.sh ##
+2:  cb997bc422 = 2:  09efa23ba4 t4113: indent with tab
+3:  726d2fcb47 ! 3:  0169cbd402 t4113: put executable lines to test_expect_success
+    @@ Commit message
+         t4113: put executable lines to test_expect_success
+     
+         As t/README says, put all code inside test_expect_success and
+    -    other assertions. This script is written in old style,where there are
+    -    some executable lines outside test_expect_success. Put the executable
+    -    lines inside the test_expect_success.
+    -
+    -    As t/README says,use "<<-" instead of "<<"
+    -    to strip leading TABs used for indentation. Change the "<<" to "<<-"
+    -
+    -    for example:
+    -    -cat >test-patch <<\EOF
+    -    -diff a/file b/file
+    -
+    -     test_expect_success 'apply at the beginning' '
+    -    +       cat >test-patch <<-\EOF
+    -    +       diff a/file b/file
+    -    +       --- a/file
+    -
+    -    As t/README says,chain test assertions.Chain this test assertions
+    -    with &&.
+    -
+    -    For example:
+    -
+    -    -cat >test-patch <<\EOF
+    -    -diff --git a/file b/file
+    -
+    -    + cat >test-patch <<-\EOF &&
+    -    + diff --git a/file b/file
+    -
+    -    This script is written in old style,where there are something like
+    -
+    -            echo x >file &&
+    -            echo y >>file &&
+    -            echo z >>file
+    -
+    -      Change it to this stlye :
+    -            {
+    -            echo x &&
+    -            echo y &&
+    -            echo z
+    -            } >file
+    -
+    -    In order to escape for executable lines inside the test_expect_success.
+    -    Change ' in executable lines to '\'' in order to escape.
+    +    other assertions. This old test scripts have setup code
+    +    outside of tests. This is problematic since any failures of the
+    +    setup code will go unnoticed. Therefore, move setup code into the tests
+    +    themselves so that failures are properly flagged. t/README also says,
+    +    use "<<-" instead of "<<" to strip leading TABs used for indentation.
+    +    Fix it. We should chain test assertions(t/README). Therefore,Chain
+    +    this test assertions with &&. What's more,take advantage of modern
+    +    style. Use test_write_lines instead.
+     
+         Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
+     
+    @@ -1,2 +1,3 @@
+     +	+c
+     +	EOF
+     +
+    -+	{
+    -+	echo '\''a'\'' &&
+    -+	echo '\''b'\'' &&
+    -+	echo '\''c'\''
+    -+	} >file &&
+    ++	test_write_lines a b c >file &&
+      	git update-index --add file
+      '
+     -# test
+    @@ -1,2 +1,3 @@
+     +	 c
+     +	EOF
+     +
+    -+	echo >file '\''a
+    -+	b
+    -+	c'\'' &&
+    ++	test_write_lines a b c >file &&
+     +	git update-index file &&
+      	test_must_fail git apply --index test-patch
+      '
+-- 
+2.39.0
 
-> -		OPT_BITOP(0, "histogram", &options->xdl_opts,
-> -			  N_("generate diff using the \"histogram diff\" algorithm"),
-> -			  XDF_HISTOGRAM_DIFF, XDF_DIFF_ALGORITHM_MASK),
-> +			       diff_opt_diff_algorithm_no_arg),
-> +		OPT_CALLBACK_F(0, "histogram", options, NULL,
-> +			       N_("generate diff using the \"histogram diff\" algorithm"),
-> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-> +			       diff_opt_diff_algorithm_no_arg),
-
-Likewise.
-
-By nature, patience (and anchored) needs to do much more than
-everybody else, so it almost feels that it is OK (and preferable,
-even) to leave it a special case to make the distinction stand out.
-Consolidating everybody else who are much simpler to share the
-more complex callback does not look like a good change to me, at
-least at the first glance.
-
-Thanks.
