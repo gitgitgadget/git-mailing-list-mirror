@@ -2,215 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3686AC636D4
-	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 13:29:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8732FC636CC
+	for <git@archiver.kernel.org>; Wed, 15 Feb 2023 14:30:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232084AbjBON3W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Feb 2023 08:29:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44280 "EHLO
+        id S229629AbjBOOau (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Feb 2023 09:30:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231716AbjBON3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Feb 2023 08:29:14 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F852BED7
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 05:28:50 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id hx15so48118059ejc.11
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 05:28:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=y3xwznWxgyJaYu6sWIQ8lYhRKBxYQ9PBSj2xVdlJSOM=;
-        b=mTYBmG7qaOwRwbiWLkV17znEYFrkrt54hThuEzSWJnECpuh6E9p/l7MYDlPNVYNvvh
-         lZmSngFYgoyVYGVZU+qvEJD+5Pi9atuMoBJBJKTtdSy0e2Khiz0iYq/mxoM+cNlUVtNK
-         U1I+za5uQQHLUpV2/Sy5x8QZRjygMPL105TdC4kbbUkGQoxeROuEtiRDa0vTd91i9ezB
-         hARxwsr4JhOWeXxu+wX+X/NPvW0fHHhAn5ImuyYsYeLOsTQ4a9rxIElVjnFUwCySWx+l
-         v9sxRzdGOfe0mroP9yn/bnyTJPtpFrN8jO3EJmvQibHmuLJPoNS0JM/R1HtukpOCs+kU
-         SYuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=y3xwznWxgyJaYu6sWIQ8lYhRKBxYQ9PBSj2xVdlJSOM=;
-        b=0ArEvIssk+iXp6lf9W4vcOT8hHKaq+iI5cKZDRfmX6NEaVVO9umriTfkgKJjE3ECvK
-         x/H51tJtdRLdgTS1szhFXisZBIDe+HTWWPjI81oLDsSQHli5vjgiqg1ilWFbj0+YWZia
-         xnPuPOjNmagKGV4Wx6Zsg1EgQZbSaUXmXQjlPr7WRcdHKDFPU6lWpTAlf1rSfu7bAfmU
-         tUZz3GIlSkvX4tNvd/Yan/zfe1Yhh5EEoOQDWMGzaV76raD8FCHW5C0pOoFGpCQ9+le5
-         YrIz6AgWoBb1zrY4MtjAqsLDdFs55X0s5spFIIsrtVBzbDdVDWaoC1GGDhK+NuFQhqyW
-         Veuw==
-X-Gm-Message-State: AO0yUKVcS5pK8zvblWvDV0cvhsfDsRVs5ZudurvHdq4nYB70dNtqQE+Y
-        nouK5ugCtZEWu5Q17NG/vGaElHGMjGZlwyAxvxz/61Dqnsgop0MT
-X-Google-Smtp-Source: AK7set+AIwNVQFP/so0R3dS1Xbqk8GNER7H4m3FuzZz0MZN47kCFCg7lvDxas5CtH4xhcCK5Z1od6YVNxJRH0+NTKX0=
-X-Received: by 2002:a17:907:2cd2:b0:895:58be:963 with SMTP id
- hg18-20020a1709072cd200b0089558be0963mr1064763ejc.3.1676467729002; Wed, 15
- Feb 2023 05:28:49 -0800 (PST)
+        with ESMTP id S229592AbjBOOat (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Feb 2023 09:30:49 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69CE33756F
+        for <git@vger.kernel.org>; Wed, 15 Feb 2023 06:30:48 -0800 (PST)
+Received: (qmail 11390 invoked by uid 109); 15 Feb 2023 14:30:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Feb 2023 14:30:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14029 invoked by uid 111); 15 Feb 2023 14:30:47 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Feb 2023 09:30:47 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 15 Feb 2023 09:30:46 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?5a2f5a2Q5piT?= <mengziyi540841@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] shorten_unambiguous_ref(): avoid sscanf()
+Message-ID: <Y+zslp55nmAQ5Fvi@coredump.intra.peff.net>
+References: <Y+vVFFCRem6t4IGM@coredump.intra.peff.net>
+ <Y+vV8Ifkj1QV7KF0@coredump.intra.peff.net>
+ <xmqqmt5f535i.fsf@gitster.g>
+ <Y+wLoFKXhlugxrh1@coredump.intra.peff.net>
+ <xmqqwn4j3mhy.fsf@gitster.g>
+ <Y+wN0agVK9ZQU/sT@coredump.intra.peff.net>
+ <xmqqsff71plf.fsf@gitster.g>
 MIME-Version: 1.0
-References: <CAAR1xzQwhbHNFFyTJQvkSVLJyJz_Gj5_FQ_udJrjM=ou+3GB3w@mail.gmail.com>
-In-Reply-To: <CAAR1xzQwhbHNFFyTJQvkSVLJyJz_Gj5_FQ_udJrjM=ou+3GB3w@mail.gmail.com>
-From:   Patakreyp Chandler <patakreyp.chandler@gmail.com>
-Date:   Wed, 15 Feb 2023 14:28:38 +0100
-Message-ID: <CAAR1xzR9Vu8we4kBkd7rM2NAC63frxZs7Zr4wYNj3beNHtw0Mg@mail.gmail.com>
-Subject: Git oddities with case of branch names on Windows
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqsff71plf.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Tue, Feb 14, 2023 at 09:10:04PM -0800, Junio C Hamano wrote:
 
-Here is a scenario for some oddities (bugs?) for case of branch names
-(at least with git version 2.37.3.windows.1).
+> Jeff King <peff@peff.net> writes:
+> 
+> > It does indeed. I pulled the logic from skip_prefix(), thinking that by
+> > relying on it I would avoid making a stupid mistake. Oh well. :)
+> >
+> > Doing it like this is much more readable:
+> > ...
+> > I'll hold on to that (plus an adjustment to the comment below to match,
+> > and perhaps a test for this negative-match case) for a day or so to give
+> > anybody else a chance to comment, and then send out a v2 tomorrow.
+> 
+> Thanks, and surely that is very readable.
+> 
+> Alternatively, I think you can just compare refname and rule until
+> they diverge, without doing any special casing for per-cent on the
+> rule side inside the loop.
+> 
+> If you do not find any difference, or the byte that differ is not
+> the per-cent at the beginning of "%.*s" on the rule side, they they
+> do not match.
 
-First, we have created an empty git repository on our internal GitHub
-server and we clone this repository
-    $ git clone git@github.mycompany.com:ID123456/test_branches.git ppppppp
-    Cloning into 'ppppppp'...
-    warning: You appear to have cloned an empty repository.
+I had a similar thought, but I think it is fooled by "refs/heads/%foo".
+The correct shortening there is "%foo".  But we'd parse the
+"refs/heads/%.*s" rule up to the ".", and then complain that they do not
+match.
 
-Then we create an object in this repository on main branch, we add,
-commit and push it:
-    $ cd ppppppp/
-    $ echo foo > foo
-    $ git add foo
-     warning: in the working copy of 'foo', LF will be replaced by
-CRLF the next time Git touches it
-    $ git commit -m 'foo'
-     [main (root-commit) 51789b0] foo
-     1 file changed, 1 insertion(+)
-     create mode 100644 foo
-    $ git push
-     Enumerating objects: 3, done.
-     Counting objects: 100% (3/3), done.
-     Writing objects: 100% (3/3), 869 bytes | 869.00 KiB/s, done.
-     Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-     To github.mycompany.com:ID123456/test_branches.git
-     * [new branch]      main -> main
-
-We create a new branch in this repository and switch to it:
-    $ git checkout -b gggg
-     Switched to a new branch 'gggg'
-
-We create an object in this repository on the new branch, we add,
-commit and push it:
-    $ echo bar > bar
-    $ git add bar
-     warning: in the working copy of 'bar', LF will be replaced by
-CRLF the next time Git touches it
-    $ git commit -m 'bar'
-     [gggg 8f2fdd0] bar
-     1 file changed, 1 insertion(+)
-     create mode 100644 bar
-    $ git push --set-upstream origin gggg
-     Enumerating objects: 4, done.
-     Counting objects: 100% (4/4), done.
-     Delta compression using up to 4 threads
-     Compressing objects: 100% (2/2), done.
-     Writing objects: 100% (3/3), 929 bytes | 929.00 KiB/s, done.
-     Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-     remote:
-     remote: Create a pull request for 'gggg' on GitHub by visiting:
-     remote:
-https://github.mycompany.com/ID123456/test_branches/pull/new/gggg
-     remote:
-     To github.mycompany.com:ID123456/test_branches.git
-     * [new branch]      gggg -> gggg
-     branch 'gggg' set up to track 'origin/gggg'.
-
-If we look at the local branches, everything is normal:
-    $ git branch -vv
-     * gggg 8f2fdd0 [origin/gggg] bar
-       main 51789b0 [origin/main] foo
-
-Now we =E2=80=9Cswitch=E2=80=9D to the exact same branch but with a typo (h=
-ere, 'GGGG'
-instead of 'gggg') in the case of branch name (this does not work with
-git on Linux "error: pathspec 'GGGG' did not match any file(s) known
-to git."):
-    $ git checkout GGGG
-     Switched to branch 'GGGG'
-
-We create an object in this repository on the (not really) new branch
-(with faulty case name), we add, commit and (try to) push it:
-    $ echo foobar > foobar
-    $ git add foobar
-     warning: in the working copy of 'foobar', LF will be replaced by
-CRLF the next time Git touches it
-    $ git commit -m 'foobar'
-     [GGGG 2ed967b] foobar
-     1 file changed, 1 insertion(+)
-     create mode 100644 foobar
-    $ git push
-    fatal: The current branch GGGG has no upstream branch.
-    To push the current branch and set the remote as upstream, use
-            git push --set-upstream origin GGGG
-    To have this happen automatically for branches without a tracking
-    upstream, see 'push.autoSetupRemote' in 'git help config'.
-
-Pushing actually fails because git says "The current branch GGGG has
-no upstream branch ", and if we check this badly cased branch ("GGGG")
-has no upstream tracked branch, but is still the same correctly cased
-branch ("gggg"):
-    $ git branch -vv
-     * GGGG 2ed967b foobar
-        main 51789b0 [origin/main] foo
-    $ git branch -a
-     * GGGG
-       main
-       remotes/origin/gggg
-       remotes/origin/main
-
-Switching back to the correctly cased branch does not seem to put back
-everything in order (list of branches is broken), but "git push"
-works, at least:
-    $ git checkout -
-     Switched to branch 'gggg'
-       Your branch is ahead of 'origin/gggg' by 1 commit.
-       (use "git push" to publish your local commits)
-    $ git branch -vv
-     GGGG 2ed967b foobar
-     main 51789b0 [origin/main] foo
-    $ git push
-     Enumerating objects: 4, done.
-     Counting objects: 100% (4/4), done.
-     Delta compression using up to 4 threads
-     Compressing objects: 100% (2/2), done.
-     Writing objects: 100% (3/3), 962 bytes | 962.00 KiB/s, done.
-     Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-     To github.mycompany.com:ID123456/test_branches.git
-     8f2fdd0..2ed967b  gggg -> gggg
-
-Even trying to switch to other branches, still does not correct this situat=
-ion:
-    $ git branch -vv
-      GGGG 2ed967b foobar
-      main 51789b0 [origin/main] foo
-    $ git checkout main
-     Switched to branch 'main'
-     Your branch is up to date with 'origin/main'.
-    $ git branch -vv
-       GGGG 2ed967b foobar
-     * main 51789b0 [origin/main] foo
-    $ git checkout gggg
-     Switched to branch 'gggg'
-     Your branch is up to date with 'origin/gggg'.
-    $ git branch -vv
-      GGGG 2ed967b foobar
-      main 51789b0 [origin/main] foo
-   $ git branch -a
-      GGGG
-      main
-     remotes/origin/gggg
-     remotes/origin/main
-    $ git checkout Gggg
-     Switched to branch 'Gggg'
-    $ git branch -a
-      GGGG
-      main
-      remotes/origin/gggg
-      remotes/origin/main
-
- Any idea of what's going on? And how to fix it?
+-Peff
