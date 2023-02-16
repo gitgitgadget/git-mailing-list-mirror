@@ -2,66 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B398C61DA4
-	for <git@archiver.kernel.org>; Thu, 16 Feb 2023 16:15:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0993C636D7
+	for <git@archiver.kernel.org>; Thu, 16 Feb 2023 16:29:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229686AbjBPQPP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Feb 2023 11:15:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44532 "EHLO
+        id S229918AbjBPQ3k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Feb 2023 11:29:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjBPQPO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2023 11:15:14 -0500
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9D0E4C13
-        for <git@vger.kernel.org>; Thu, 16 Feb 2023 08:15:12 -0800 (PST)
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 31GGEgVS2541985
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 16 Feb 2023 16:14:43 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Jeff King'" <peff@peff.net>
-Cc:     "'Git List'" <git@vger.kernel.org>
-References: <000001d94165$3d1cf2f0$b756d8d0$@nexbridge.com>     <Y+0eIlsIxRr+1RYp@coredump.intra.peff.net>      <000801d9416e$4bf844b0$e3e8ce10$@nexbridge.com> <xmqqwn4iycbt.fsf@gitster.g>    <Y+05tTHdj2Jzenge@coredump.intra.peff.net>      <xmqqwn4itmb1.fsf@gitster.g> <xmqqo7putj1t.fsf_-_@gitster.g>    <Y+2ycMAkVd8rh50q@coredump.intra.peff.net> <xmqq8rgxtwvm.fsf@gitster.g>
-In-Reply-To: <xmqq8rgxtwvm.fsf@gitster.g>
-Subject: RE: [PATCH] test-genzeros: avoid raw write(2)
-Date:   Thu, 16 Feb 2023 11:14:55 -0500
-Organization: Nexbridge Inc.
-Message-ID: <002e01d94221$d2127800$76376800$@nexbridge.com>
+        with ESMTP id S229523AbjBPQ3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2023 11:29:35 -0500
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7B265354C
+        for <git@vger.kernel.org>; Thu, 16 Feb 2023 08:29:26 -0800 (PST)
+Received: by mail-pg1-x529.google.com with SMTP id a23so1611637pga.13
+        for <git@vger.kernel.org>; Thu, 16 Feb 2023 08:29:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=oadnHLopr9hhxfSvJJ8qLWTr8LWBcZ3H9bi8BJffQF4=;
+        b=WjKQHez8hEyQBe93uDfP/vAAB4+lmhrk4HttfN4x+KGaB0i5xIKdtUMs6JvvDkpJRW
+         wfI7P1FEQqtH8vtKCWoHFmhjXiaVs6wVjsDY9Cgrompjdb0OERLt/in+b6aPKvlIy2v5
+         mhlaYgyTngg2mBm3LWTmrgZ4hcG3cWCFRCXfZVby4dhPO2M92TyrWSVPQoYte85TcTgv
+         ALmssbN/DBjA6BAf0NAW1B4Z/iVvbBV8tyJGmXK2K8DyJxKNnopUFKom4aO73m1Lo/Bj
+         K6j3A2gyEo/iDLqOAnslykHK2FKDOvM1IOkj/VdAzVzly18fz/Zv3tbgKPWHdmAwClfL
+         dphA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:to:from:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oadnHLopr9hhxfSvJJ8qLWTr8LWBcZ3H9bi8BJffQF4=;
+        b=patzldjd56i1bzaiDu+cWXkrKpWZKgSxQLtCHXLPJb/ZW6iqglCPv/p8ETklkfOJxO
+         cqeaidXMfqxp+IPq7NCUM87m9s7L53tb/WxWp3BumeYG0Jnk9ZZKDZaOaFHFM3hIZtux
+         rdkTdo1qTu2M26jTf8eVF0jjtB7M7EOu+M37ovTSVfe+nsCMeE+3YtdVd4qS1PkDgq3d
+         vs1J/geeQ4lyEz841lZ7w6SsRBmcKHXBntmrbphvMJUrHM19F532Msq37mLxX3kwqpeS
+         mMoFPgBTGrcn+HkOsN+E8quNgAUNg5aEgFOV3jpmpWHsEeYaoIAcYKetqaotdnh4lIKq
+         xJog==
+X-Gm-Message-State: AO0yUKV5gViKsREHOg2GjO2Yhr8NnC+fb9OZ21ZJ3ZWdUSWeWZBW/o5M
+        G8N30n60hmXfmu2TZkKKdVqIE8QEsqs=
+X-Google-Smtp-Source: AK7set+RS1CTNPdIZ/4T34zhTs24ri2JGpkEcbwucOoH1655sUZ2h3Bv81GLGpVN+8E0I90QYGLpkQ==
+X-Received: by 2002:aa7:9581:0:b0:5a8:65e4:aba9 with SMTP id z1-20020aa79581000000b005a865e4aba9mr5255225pfj.18.1676564966030;
+        Thu, 16 Feb 2023 08:29:26 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id j9-20020a62e909000000b005a87d636c66sm1497764pfh.136.2023.02.16.08.29.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Feb 2023 08:29:25 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH v3] rev-list: clarify git-log default date format
+References: <20230201155712.86577-1-rafael@dulfer.be>
+        <xmqq5ycl1c6h.fsf@gitster.g>
+        <230201.864js5q9sv.gmgdl@evledraar.gmail.com>
+        <xmqqy1phxabi.fsf@gitster.g>
+        <d9fc8688-bbf1-96c2-07bf-a12fe38625a9@dulfer.be>
+        <xmqqfsbovy7u.fsf@gitster.g> <xmqqsffouhys.fsf@gitster.g>
+        <xmqqcz6av3ta.fsf_-_@gitster.g>
+Date:   Thu, 16 Feb 2023 08:29:25 -0800
+In-Reply-To: <xmqqcz6av3ta.fsf_-_@gitster.g> (Junio C. Hamano's message of
+        "Wed, 15 Feb 2023 16:42:25 -0800")
+Message-ID: <xmqqzg9dshei.fsf_-_@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFlBHy1D1yynoWJMXR7ix1CE7kV4gGiJvNtAetN2VwCaLwQ1wJ9R7EbAVy6mb0Cv5xKswJGWfwoAate09ivNi4FAA==
-Content-Language: en-ca
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday, February 16, 2023 11:10 AM, Junio C Hamano wrote:
->Jeff King <peff@peff.net> writes:
->
->>>     I ended up avoiding write_or_die() primarily because there is
->>>     nothing "Git" about this helper, which is a poor-man's emulation
->>>     of "dd if=/dev/zero".  It felt a bit too much to pull cache.h in
->>>     as dependency for it.
->>
->> I don't find it any more "Git" than xwrite() or die_errno(), really,
->> but I am quite happy with what you have here.
->
->True.  I view "git-compat-util.h" as "projects, not limited to Git, would
-benefit by its
->help to use POSIX api more sensibly", while "cache.h" is "things that are
-about Git".
->write_or_die() is certainly in the former category, but is not available
-without
->"cache.h" X-<.
+The documentation mistakenly said that the default format was
+similar to RFC 2822 format and tried to specify it by enumerating
+differences, which had two problems:
 
-I remember by first time in there, and thought why can't we use gnulib or
-libc and then realized that those dependencies don't port well either (no
-gcc on box). I am grateful for the existence of git-compat-util.
+ * There are some more differences from the 2822 format that are not
+   mentioned; worse yet
+
+ * The default format is not modeled after RFC 2822 format at all.
+   As can be seen in f80cd783 (date.c: add "show_date()" function.,
+   2005-05-06), it is a derivative of ctime(3) format.
+
+Stop saying that it is similar to RFC 2822, and rewrite the
+description to explain the format without requiring the reader to
+know any other format.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * The same text as the previous one; only to correct the lack of
+   "--" at the end in v2 that broke the formatting toolchain.
+
+ Documentation/rev-list-options.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index ff68e48406..0d90d5b154 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -1100,12 +1100,12 @@ preferred format.  See the `strftime` manual for a complete list of
+ format placeholders. When using `-local`, the correct syntax is
+ `--date=format-local:...`.
+ 
+-`--date=default` is the default format, and is similar to
+-`--date=rfc2822`, with a few exceptions:
++`--date=default` is the default format, and is based on ctime(3)
++output.  It shows a single line with three-letter day of the week,
++three-letter month, day-of-month, hour-minute-seconds in "HH:MM:SS"
++format, followed by 4-digit year, plus timezone information, unless
++the local time zone is used, e.g. `Thu Jan 1 00:00:00 1970 +0000`.
+ --
+-	- there is no comma after the day-of-week
+-
+-	- the time zone is omitted when the local time zone is used
+ 
+ ifdef::git-rev-list[]
+ --header::
+-- 
+2.39.2-501-gd9d677b2d8
+
 
