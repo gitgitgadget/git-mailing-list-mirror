@@ -2,258 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2B5AC636CC
-	for <git@archiver.kernel.org>; Thu, 16 Feb 2023 07:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D835C636CC
+	for <git@archiver.kernel.org>; Thu, 16 Feb 2023 10:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229549AbjBPHDy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Feb 2023 02:03:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32850 "EHLO
+        id S230018AbjBPKaR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Feb 2023 05:30:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjBPHDx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2023 02:03:53 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85DBF11EBA
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 23:03:51 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id 10so2112871ejc.10
-        for <git@vger.kernel.org>; Wed, 15 Feb 2023 23:03:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8fT7DqC+4epNNUcjxq7VUKBUULAdN6xphMc5SV4Y0Tk=;
-        b=h3JQvQkk33JpX/SaSaZ/VHHmUc3QuJsJUfs1rvssrDgmLGbjWBLdc9L1vyUM/G5mjr
-         1JQcXI8voDzhwn7wclorQQLUi6f9y5quEoNMRCkEUR+9uWcnm0IypTyMDzQkCNj0WVqP
-         g++LKD70t03Dau8elcwCd9emEDz46D/WE35nudKUhdz+lf0XxDDy3s2WcNY68jY4fVM5
-         pqPAFcH+SUA3qXkJETDvjat4GhF1jXwfQbEWvuzcoGzKcD0jQiIcOUBKX2HP0xLRzGQM
-         IbILuo1GOffJl4i7VZ14bBeAZtXIMg4N2uMX+731DYy/PXASoRIPy9J4ZZOhrq8ptAnZ
-         mBHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8fT7DqC+4epNNUcjxq7VUKBUULAdN6xphMc5SV4Y0Tk=;
-        b=2Dc3DAkDgu2xBnbDcLRY9IfnhMtbXpdHrMOXD9/CGUdpp+mjV4co33cPIkj6eq4CBL
-         EuqjYC1Vw0++ZHkFafd6OAVp8lV0ZGq/mb0zulCDEMgyR0ftmh5XI46321SYj1iyawIJ
-         p61EL6aerbgiS9XdFfp7EC1vBjCSOmc5HAghZkysnT0tkxhzY5BPU7NyBcOAW7Jcb5V6
-         CdIlhtpRd1jyXPqBzcKGGauoVne7MMeTCwNgCGxUFMVBUzrvuGCkqW715fUJVJMppNYp
-         3T4prKwrg/M6h24QugoNEodpEyVEkoJ7Uqek2SFL0VX1gt+ZdLJDkvyfxRW8XXii3e69
-         bW6Q==
-X-Gm-Message-State: AO0yUKXeg6wKaiQWAu4nbw99M4uWuttYFK2cYPVz1ZjL5saPtXbbsAlk
-        vUCY+ocwYjGBeaL+g2HAeDo40+SclNVwQxjLK7u3Ggqr
-X-Google-Smtp-Source: AK7set9rA2HeJS6aljpZFGEQxBK2JeBETpAhcPbTeD9XW3atmuR0hfvQP08NHBHJMyHkcVcW3tO/bXg7yoglkgKriuA=
-X-Received: by 2002:a17:907:6c14:b0:8ae:cb48:3c80 with SMTP id
- rl20-20020a1709076c1400b008aecb483c80mr874676ejc.7.1676531029959; Wed, 15 Feb
- 2023 23:03:49 -0800 (PST)
-MIME-Version: 1.0
-References: <CAAR1xzQwhbHNFFyTJQvkSVLJyJz_Gj5_FQ_udJrjM=ou+3GB3w@mail.gmail.com>
- <CAAR1xzR9Vu8we4kBkd7rM2NAC63frxZs7Zr4wYNj3beNHtw0Mg@mail.gmail.com> <20230215165337.kq3d6xx6gbiamfsg@tb-raspi4>
-In-Reply-To: <20230215165337.kq3d6xx6gbiamfsg@tb-raspi4>
-From:   Patakreyp Chandler <patakreyp.chandler@gmail.com>
-Date:   Thu, 16 Feb 2023 08:03:39 +0100
-Message-ID: <CAAR1xzQ3KfPacrF7tNnVtcwYrnF7woCOgnw_bYDCxsVtHYRmcQ@mail.gmail.com>
-Subject: Re: Git oddities with case of branch names on Windows
+        with ESMTP id S229803AbjBPKaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2023 05:30:16 -0500
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2BD4521F7
+        for <git@vger.kernel.org>; Thu, 16 Feb 2023 02:29:58 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id A635E5C023F
+        for <git@vger.kernel.org>; Thu, 16 Feb 2023 05:29:56 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Thu, 16 Feb 2023 05:29:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+        :content-type:date:date:from:from:in-reply-to:message-id
+        :mime-version:reply-to:sender:subject:subject:to:to; s=fm1; t=
+        1676543396; x=1676629796; bh=W2fc7Kl87R187HOWz9kCdbeZbQFLYjRG2jw
+        Pg435crM=; b=VweVTBNQCJK1NNNft8FW5U0Zb4Fzo/LAhfXtsVYwTjx2+xK013v
+        6KP6VP110wcRqVPmgKfFy3Y82ATKA+BdZ2ilOnMSDgVmMSptR+FzxKNDuyxaae40
+        2fTv8cVQ/AxithoNaS9KMZoxaVKch7WAG/DCLhQbsReH5MuFYHTN4kCSrmG0rvAz
+        KAOTnyssEr+k554DKUJM+aLOuUHgVZop+8W5ADsMv/iCJ7C6vHfHAXBNL9Ch3nSj
+        FTwNTEolKjyO+Rz+BGSGi8tA90L60p/zRk9pj/MIBHzd3MU4lU/4ZnBQMCyBGj3A
+        YgvUvWRdlW7uhYBPPeozrCLWhlIHox/c/Kg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:message-id:mime-version
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1676543396; x=
+        1676629796; bh=W2fc7Kl87R187HOWz9kCdbeZbQFLYjRG2jwPg435crM=; b=T
+        xrkMXQibCnGzllR4CXSz9kPYrkKLNXJ+B9YVFY0gN47dhCiMOAP9ZzP0zpDVIDsb
+        e7JPmRDIVRd0f19E5vJHI0gxl80tieimwOIN6aVSZpjoV8ecKBCuCQ7VzWA+4wkM
+        /pdmvnkbvPO49eeTElztjaD48Te1LMTfg6FyoIUnoYBqjtiIoYRW0IXcAhOVhW0C
+        y7Xr0ngNPDVmGXlXrnCTEPcUczCgfC/6KE5rX3J1p9UgRE1O0ZbeIj/WkVzZD9E0
+        XDEMO0Pl97Tk+ywwdoSVsuVVzUFX3bN4sOoS3UjB99GHpn+PbY9/3EtbKZSWE2kk
+        j7YXxjJxRnwTO5k1gKxsQ==
+X-ME-Sender: <xms:pAXuY_HSmtw4_j7664IlMMturKy-owc1uWFuYQ-eLnLr7Pn9Elb1UQ>
+    <xme:pAXuY8VyksMFL_z_nZL0hRNlHICsgZnOj63OeNSjbBMXWhMmDJ3TRO4DYlOAdfyyA
+    PtZojb1sbAkzF4YqA>
+X-ME-Received: <xmr:pAXuYxI0dHOkwAenI3Msx9L1HzGkn4EKuhCqg7v5aPE1UukoW_b8ZouaD1jY6uk02U6uoiW-DgeuFzalbWAWHsLzWraBhbqQupBLy5n508nS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudeijedgudehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:pAXuY9HDvXD_DicH3ifrRqTZ8iE38r-iCd7PkL0qULf1l6Cmpgjnmw>
+    <xmx:pAXuY1XqqX172lADN5Hl5aChdRYG5CJNrPrsTqFZxu6SilnGp89TYw>
+    <xmx:pAXuY4PAI2czkYGjhdJO3jEGoqTCitJDHgIzWCBtYgXjoO1nVZoNpA>
+    <xmx:pAXuY0BZZoyH_d6LuL1ve2lxeHq3Tp7zsSS7jqb-UkLYnetInsP4Fg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Thu, 16 Feb 2023 05:29:55 -0500 (EST)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id f881798b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        for <git@vger.kernel.org>;
+        Thu, 16 Feb 2023 10:29:32 +0000 (UTC)
+Date:   Thu, 16 Feb 2023 11:29:48 +0100
+From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: [PATCH] delta-islands: fix segfault when freeing island marks
+Message-ID: <61e490595b80b34c55fd640e093e021ff6fa9591.1676542973.git.ps@pks.im>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="wRdN/+pAeCWLrKYS"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le mer. 15 f=C3=A9vr. 2023 =C3=A0 17:53, Torsten B=C3=B6gershausen <tboegi@=
-web.de> a =C3=A9crit :
->
-> On Wed, Feb 15, 2023 at 02:28:38PM +0100, Patakreyp Chandler wrote:
-> > Hello,
-> >
-> > Here is a scenario for some oddities (bugs?) for case of branch names
-> > (at least with git version 2.37.3.windows.1).
-> >
-> > First, we have created an empty git repository on our internal GitHub
-> > server and we clone this repository
-> >     $ git clone git@github.mycompany.com:ID123456/test_branches.git ppp=
-pppp
-> >     Cloning into 'ppppppp'...
-> >     warning: You appear to have cloned an empty repository.
-> >
-> > Then we create an object in this repository on main branch, we add,
-> > commit and push it:
-> >     $ cd ppppppp/
-> >     $ echo foo > foo
-> >     $ git add foo
-> >      warning: in the working copy of 'foo', LF will be replaced by
-> > CRLF the next time Git touches it
-> >     $ git commit -m 'foo'
-> >      [main (root-commit) 51789b0] foo
-> >      1 file changed, 1 insertion(+)
-> >      create mode 100644 foo
-> >     $ git push
-> >      Enumerating objects: 3, done.
-> >      Counting objects: 100% (3/3), done.
-> >      Writing objects: 100% (3/3), 869 bytes | 869.00 KiB/s, done.
-> >      Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-> >      To github.mycompany.com:ID123456/test_branches.git
-> >      * [new branch]      main -> main
-> >
-> > We create a new branch in this repository and switch to it:
-> >     $ git checkout -b gggg
-> >      Switched to a new branch 'gggg'
-> >
-> > We create an object in this repository on the new branch, we add,
-> > commit and push it:
-> >     $ echo bar > bar
-> >     $ git add bar
-> >      warning: in the working copy of 'bar', LF will be replaced by
-> > CRLF the next time Git touches it
-> >     $ git commit -m 'bar'
-> >      [gggg 8f2fdd0] bar
-> >      1 file changed, 1 insertion(+)
-> >      create mode 100644 bar
-> >     $ git push --set-upstream origin gggg
-> >      Enumerating objects: 4, done.
-> >      Counting objects: 100% (4/4), done.
-> >      Delta compression using up to 4 threads
-> >      Compressing objects: 100% (2/2), done.
-> >      Writing objects: 100% (3/3), 929 bytes | 929.00 KiB/s, done.
-> >      Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-> >      remote:
-> >      remote: Create a pull request for 'gggg' on GitHub by visiting:
-> >      remote:
-> > https://github.mycompany.com/ID123456/test_branches/pull/new/gggg
-> >      remote:
-> >      To github.mycompany.com:ID123456/test_branches.git
-> >      * [new branch]      gggg -> gggg
-> >      branch 'gggg' set up to track 'origin/gggg'.
-> >
-> > If we look at the local branches, everything is normal:
-> >     $ git branch -vv
-> >      * gggg 8f2fdd0 [origin/gggg] bar
-> >        main 51789b0 [origin/main] foo
-> >
-> > Now we =E2=80=9Cswitch=E2=80=9D to the exact same branch but with a typ=
-o (here, 'GGGG'
-> > instead of 'gggg') in the case of branch name (this does not work with
-> > git on Linux "error: pathspec 'GGGG' did not match any file(s) known
-> > to git."):
-> >     $ git checkout GGGG
-> >      Switched to branch 'GGGG'
-> >
-> > We create an object in this repository on the (not really) new branch
-> > (with faulty case name), we add, commit and (try to) push it:
-> >     $ echo foobar > foobar
-> >     $ git add foobar
-> >      warning: in the working copy of 'foobar', LF will be replaced by
-> > CRLF the next time Git touches it
-> >     $ git commit -m 'foobar'
-> >      [GGGG 2ed967b] foobar
-> >      1 file changed, 1 insertion(+)
-> >      create mode 100644 foobar
-> >     $ git push
-> >     fatal: The current branch GGGG has no upstream branch.
-> >     To push the current branch and set the remote as upstream, use
-> >             git push --set-upstream origin GGGG
-> >     To have this happen automatically for branches without a tracking
-> >     upstream, see 'push.autoSetupRemote' in 'git help config'.
-> >
-> > Pushing actually fails because git says "The current branch GGGG has
-> > no upstream branch ", and if we check this badly cased branch ("GGGG")
-> > has no upstream tracked branch, but is still the same correctly cased
-> > branch ("gggg"):
-> >     $ git branch -vv
-> >      * GGGG 2ed967b foobar
-> >         main 51789b0 [origin/main] foo
-> >     $ git branch -a
-> >      * GGGG
-> >        main
-> >        remotes/origin/gggg
-> >        remotes/origin/main
-> >
-> > Switching back to the correctly cased branch does not seem to put back
-> > everything in order (list of branches is broken), but "git push"
-> > works, at least:
-> >     $ git checkout -
-> >      Switched to branch 'gggg'
-> >        Your branch is ahead of 'origin/gggg' by 1 commit.
-> >        (use "git push" to publish your local commits)
-> >     $ git branch -vv
-> >      GGGG 2ed967b foobar
-> >      main 51789b0 [origin/main] foo
-> >     $ git push
-> >      Enumerating objects: 4, done.
-> >      Counting objects: 100% (4/4), done.
-> >      Delta compression using up to 4 threads
-> >      Compressing objects: 100% (2/2), done.
-> >      Writing objects: 100% (3/3), 962 bytes | 962.00 KiB/s, done.
-> >      Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
-> >      To github.mycompany.com:ID123456/test_branches.git
-> >      8f2fdd0..2ed967b  gggg -> gggg
-> >
-> > Even trying to switch to other branches, still does not correct this si=
-tuation:
-> >     $ git branch -vv
-> >       GGGG 2ed967b foobar
-> >       main 51789b0 [origin/main] foo
-> >     $ git checkout main
-> >      Switched to branch 'main'
-> >      Your branch is up to date with 'origin/main'.
-> >     $ git branch -vv
-> >        GGGG 2ed967b foobar
-> >      * main 51789b0 [origin/main] foo
-> >     $ git checkout gggg
-> >      Switched to branch 'gggg'
-> >      Your branch is up to date with 'origin/gggg'.
-> >     $ git branch -vv
-> >       GGGG 2ed967b foobar
-> >       main 51789b0 [origin/main] foo
-> >    $ git branch -a
-> >       GGGG
-> >       main
-> >      remotes/origin/gggg
-> >      remotes/origin/main
-> >     $ git checkout Gggg
-> >      Switched to branch 'Gggg'
-> >     $ git branch -a
-> >       GGGG
-> >       main
-> >       remotes/origin/gggg
-> >       remotes/origin/main
-> >
-> >  Any idea of what's going on? And how to fix it?
->
-> Thanks for the extensive written report,
-> very much appreciated to see a reproducable example.
-> For a longer discussion, see below.
->
-> If you want to get rid of the GGGG branch, I would suggest something
-> in tis style:
->
-> git checkout -b tmpbranch
-> git branch -d GGGG
-> git checkout -b gggg
-> git branch -d tmpbranch
->
-> Is there a better solution ?
-> The problem is that your file system treats GGGG as gggg
->
-> Running `git pack-refs` could help. But there may be disadvantages
-> for people having many many branches.
-> (And then there had been some efforts to write a new backend for refs,
-> but I didn't follow that up).
->
-> My suggestion is to use lowercase for branch names only.
->
-> https://git.vger.kernel.narkive.com/PrwMfgXR/branch-name-case-sensitivity
 
-Thanks for the quick answer and I agree that branch names should be lowerca=
-se.
+--wRdN/+pAeCWLrKYS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-But my biggest concern is that, in my example, the 'GGGG' (or 'Gggg',
-'gGgg' or whatever combination) branch does not really behaves as the
-original 'gggg' branch.
+In 647982bb71 (delta-islands: free island_marks and bitmaps, 2023-02-03)
+we have introduced logic to free `island_marks` in order to reduce heap
+memory usage in git-pack-objects(1). This commit is causing segfaults in
+the case where this Git command does not load delta islands at all, e.g.
+when reading object IDs from standard input. One such crash can be hit
+when using repacking multi-pack-indices with delta islands enabled.
 
-'GGGG' has no tracked branch, instead of 'rorigin/gggg', causing 'git
-push' to fail.
+The root cause of this bug is that we unconditionally dereference the
+`island_marks` variable even in the case where it is a `NULL` pointer,
+which is fixed by making it conditional. Note that we still leave the
+logic in place to set the pointer to `-1` to detect use-after-free bugs
+even when there are no loaded island marks at all.
+---
 
-If branch 'gggg' could be written with every letters in any case, it
-should behave identically whatever the cases, IMHO.
+An easy way to reproduce the segfault is:
+
+    $ git pack-objects .git/objects/pack/pack --delta-islands </dev/null
+
+I didn't add a test for git-pack-objects(1) directly though, mostly
+because I didn't find any location to put it. I'm happy to do so though
+in case we want that.
+
+ delta-islands.c             | 12 +++++++-----
+ t/t5319-multi-pack-index.sh | 16 ++++++++++++++++
+ 2 files changed, 23 insertions(+), 5 deletions(-)
+
+diff --git a/delta-islands.c b/delta-islands.c
+index 8b234cb85b..afdec0a878 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -517,11 +517,13 @@ void free_island_marks(void)
+ {
+ 	struct island_bitmap *bitmap;
+=20
+-	kh_foreach_value(island_marks, bitmap, {
+-		if (!--bitmap->refcount)
+-			free(bitmap);
+-	});
+-	kh_destroy_oid_map(island_marks);
++	if (island_marks) {
++		kh_foreach_value(island_marks, bitmap, {
++			if (!--bitmap->refcount)
++				free(bitmap);
++		});
++		kh_destroy_oid_map(island_marks);
++	}
+=20
+ 	/* detect use-after-free with a an address which is never valid: */
+ 	island_marks =3D (void *)-1;
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index b5f9b10922..499d5d4c78 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -1015,4 +1015,20 @@ test_expect_success 'complains when run outside of a=
+ repository' '
+ 	grep "not a git repository" err
+ '
+=20
++test_expect_success 'repack with delta islands' '
++	git init repo &&
++	test_when_finished "rm -fr repo" &&
++	(
++		cd repo &&
++
++		test_commit first &&
++		git repack &&
++		test_commit second &&
++		git repack &&
++
++		git multi-pack-index write &&
++		git -c repack.useDeltaIslands=3Dtrue multi-pack-index repack
++	)
++'
++
+ test_done
+--=20
+2.39.2
+
+
+--wRdN/+pAeCWLrKYS
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmPuBZsACgkQVbJhu7ck
+PpSq3g//agFpsB68ayzh7KqFbwwz7ycsriy7f/jEHR4PIYuGzrGef3DKfXNyr0ue
+ssHaWyXj6/7buF6uwTVq2gr878pTFvKNRLuoOZXHk0mEqTcQ14hEpxc8ursCHJ28
++qx54i7HkC405nqSytyOtSF4JaBrkNeOlXs8gd8F/UbWOhtrnh+fbqTDxMJMI/f9
+uwIdsYIbL7BXSInSEnLyO+4RR8+gcteoTcMB0FhlN4hE7DTekcYGDbqH0Aq9PG+j
+3cUGu4fzk4rS9BZ/crGAtBK8PR0WOyWF0KE+QSiBUzmFwKQrNTRR8cmbYUjQy1qO
+GDu92h8YFoqxPYmb7dmaDKbpkwtlqL9iRFWpMW9eCtOQboz16iOI1JZrXqlOHdEg
+zGKEQ235wVwJoUdWi/bMYJuIhIAYZOMxg1NhsFz1ZLN+OMcQae8WR3SnOLvuueEM
+cay/jec+PphqMkz7PoxZ6ftQuG8rmAkes4nlfTLk6a/CszQFvp5pc7PZXB1fEZtb
+kw2nMe7O60jHmxxFRJ4nkUPkGleZyNtvIO+3iqI5b4JRludxU9jdkJpJyjDkBxsw
+3x8L18TNVfmJKBiLwSfm0PjsoTQJoKRwLz3rD/dF3AsbSa+wYaKbwP34qU97/yOR
+th+XfUSJYwruQCHY3kznxOxyyyuZMCPuPeH2YDWbRrTAi3cGZJ0=
+=grqm
+-----END PGP SIGNATURE-----
+
+--wRdN/+pAeCWLrKYS--
