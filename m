@@ -2,287 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CFF0C61DA4
-	for <git@archiver.kernel.org>; Thu, 16 Feb 2023 13:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62835C61DA4
+	for <git@archiver.kernel.org>; Thu, 16 Feb 2023 14:05:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230165AbjBPNFc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Feb 2023 08:05:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49042 "EHLO
+        id S229830AbjBPOFB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Feb 2023 09:05:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230183AbjBPNF3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2023 08:05:29 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44D5648E3C
-        for <git@vger.kernel.org>; Thu, 16 Feb 2023 05:05:21 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id z14-20020a17090abd8e00b00233bb9d6bdcso2060641pjr.4
-        for <git@vger.kernel.org>; Thu, 16 Feb 2023 05:05:21 -0800 (PST)
+        with ESMTP id S229700AbjBPOFA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2023 09:05:00 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD581CDE9
+        for <git@vger.kernel.org>; Thu, 16 Feb 2023 06:04:58 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id w11so2862699lfu.11
+        for <git@vger.kernel.org>; Thu, 16 Feb 2023 06:04:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=H8Q7ScmnU0VyqPLRyJ9osRe5bKrAOzvf+/pkHVqEimw=;
-        b=mZcXi3b2049HtkJPu2vypkVqMDEpEeZc2mZCNgcpWYNxpdadiF3nY7kbFqSEj0BIPB
-         fFvmSJ5yh79oGtslNOgHerbHgqajz993BpStH3w0pHjzpeMYHNiqEMkrt6ATh0VeSywl
-         oX2//U1jAcGTzI5VsdG9TMUPRJFKEeetKLKpF2qhhQycXXfSaFmS/wwKbk6yUjQ3hSwY
-         A+Dwbwf7lqFMCPXYt5elpuO6JHpOq0l4VeBDGJFAi15uQlblX49gnJYDWmshm99u6Clq
-         EPVSQkd+1xJ4xgqD8oNQtbkHWIPkySdF7aHonycIsbh2fw1YxKPHTUl6kTpCKroMaYjV
-         xKnQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7ZTbxKhrEwxaiTbDr3WV3gjj8aIUdAcLJjppl+dTvt8=;
+        b=kfsCFFLHdLtEhh9uS4mxDB10sM+IZ62Bfr+/ByVI0uqDwX47bGagsannJx/aRwzr5w
+         /tJC88fzWJhwc8Z2TWiQOvScz9YroJRrwfKSl4KDlLX8+wptNBhz9up7OZIHIYurNltS
+         Y9HD6W++Y0lQ4X/K/T+4iRm/gQ92zpCBWcRid7eKAuqQFmskJkWkaZADbAG9w/hIQOMw
+         5wTccx56vRfP0JIZUq3lc2P2vuOV+7NuaBCYc6FIBj3j/XJCir5Fj1mL3/f51WEnonNY
+         Sy4NSvI2j+7qDETwZXmPdqwxKwkX00kBNqRzpowFGcsSazvHexHA6uqq1CS6OAarA8nW
+         BoUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=H8Q7ScmnU0VyqPLRyJ9osRe5bKrAOzvf+/pkHVqEimw=;
-        b=iEUqCYv3nVw9TvQxolRH5lg0TXOQEAuUU4SEEz52lZ6RrXLF6zqHP74ZNvqMniogcg
-         JpV2RLf08ox/kiDqJH1KUe5FfhtXlWbskeWVS4M+u5VIvwuCAxyn5x66SR7TM0RCqWPM
-         Nd522xUVXXS2d9/wfycPJzrYBEnK38Vsm62Cb964msU22ieJDfJro9ElBKMTBTDsYeop
-         aFXHiQcsp8sck7QZio/oS1miPt3QzOUWLZmR9XKsZ7Bhuxz3fP0VHlDKYGnNtYv+2FW7
-         EhweBLYJVYRijjAt1WPTDKLFspV3kODJGVLW6ktdW/dAiVkVWSxNcbRWYcbpIruwpBzi
-         RA0A==
-X-Gm-Message-State: AO0yUKWRdSNF5Zciv/9yS6bBLd+LagsBKvvEZ6DkMbJJHWDy5KcuPIyI
-        gVWa2A+7M06znFY6/ItcfqfVYANZfLfagQ==
-X-Google-Smtp-Source: AK7set+XbPAa881oRcC+yigav0hVeexFg2Sid8Xr2M7xAatqVkTWm9FWCVAlhNBJjGaIpVl1q21IaA==
-X-Received: by 2002:a17:903:120e:b0:197:35fc:6a5d with SMTP id l14-20020a170903120e00b0019735fc6a5dmr6619215plh.30.1676552720686;
-        Thu, 16 Feb 2023 05:05:20 -0800 (PST)
-Received: from localhost.localdomain ([47.246.101.52])
-        by smtp.gmail.com with ESMTPSA id jk3-20020a170903330300b0019a75ea08e5sm1274581plb.33.2023.02.16.05.05.18
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Feb 2023 05:05:20 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     dyroneteng@gmail.com
-Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
-        tenglong.tl@alibaba-inc.com
-Subject: [PATCH v5 3/3] notes.c: introduce "--separator" option
-Date:   Thu, 16 Feb 2023 21:05:05 +0800
-Message-Id: <a74c96d6dd23f2f1df6d3492093f3fd27451e24c.1676551077.git.dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.39.2.459.g31d98a8e.dirty
-In-Reply-To: <cover.1676551077.git.dyroneteng@gmail.com>
-References: <cover.1676551077.git.dyroneteng@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7ZTbxKhrEwxaiTbDr3WV3gjj8aIUdAcLJjppl+dTvt8=;
+        b=erHv2Mn5+rnh+BeHNHR9Wu+WmlAjKr/TwWayu83VehXiIdBsbv/4lzkADJF8v/LFrJ
+         5ZBlQWCMqFseimqz/sq90Gi8Q9/VfGx0Te1tCbk4UDGV7edXU6ntXxCrj8givrjY8HnW
+         scuH9qbiQgReWUkSOtjn09WzCAJtWVCFVo9+trTRQcEmfP4buVvXTaX5/2OfofRamMaD
+         9qpoqOAs9BY13156OxHygUdRZs6nT1xQSBN6rdfV4opoQjqOBtO3i6jCTah9AON2nrf1
+         2FAZwRNIxnZkced/yM2qS6zJJHmOwB7s/j32PaOxWkEDfv2pvd4C9aJAoB/gh3QPJaUd
+         5WJA==
+X-Gm-Message-State: AO0yUKUYaqPQWYtWuBLGl0r+yNvoRBfsJ8crde5/tPB7OtWXXm6Y7MfP
+        /puduFHw+T4BxNgl64BL4qrJk0PztU5xEqfTw1IvCv2VAtg=
+X-Google-Smtp-Source: AK7set9C7jsnNwoBpZ8sr97V6iItbfXeAEWmEJw1CvFyOLwTl999QCj2QYI5hGz6nmpStyziGuIElZbq3Pug8k5C9dE=
+X-Received: by 2002:a19:f501:0:b0:4d8:5f47:e4d3 with SMTP id
+ j1-20020a19f501000000b004d85f47e4d3mr1674268lfb.8.1676556296811; Thu, 16 Feb
+ 2023 06:04:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230215091950.2976-1-vinayakdev.sci@gmail.com> <xmqqmt5ezun0.fsf@gitster.g>
+In-Reply-To: <xmqqmt5ezun0.fsf@gitster.g>
+From:   Vinayak Dev <vinayakdev.sci@gmail.com>
+Date:   Thu, 16 Feb 2023 19:34:44 +0530
+Message-ID: <CADE8Nao=ZrF7_0+G=jB8=j5Aji4ndCLfMp-xjbSpc1HKmmFM7w@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v3] apply: Change #define to enum and variable types
+ from int to enum
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When appending to a given notes object and the appended note is not
-empty too, we will insert a blank line at first which separates the
-existing note and the appended one, which as the separator.
+On Wed, 15 Feb 2023 at 23:19, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Vinayak Dev <vinayakdev.sci@gmail.com> writes:
+>
+> > diff --git a/apply.c b/apply.c
+> > index 5cc5479c9c..b2a03d9fc3 100644
+> > --- a/apply.c
+> > +++ b/apply.c
+> > @@ -205,8 +205,10 @@ struct fragment {
+> >   * or deflated "literal".
+> >   */
+> >  #define binary_patch_method leading
+>
+> Notice and explain what this line is doing, perhaps?
 
-Sometimes, we want to use a specified <separator> as the separator. For
-example, if we specify as:
+It does appear that the macro binary_patch_method actually refers to
+an unsigned long.
+I think leading represents the number of leading context lines in a
+hunk/fragment,
+and the variable is reused to store the type for a binary fragment.
 
-    * --separator='------': we will insert "------\n" as the separator,
-    because user do not provide the line break char at last, we will add
-    the trailing '\n' compatibly.
+> > -#define BINARY_DELTA_DEFLATED        1
+> > -#define BINARY_LITERAL_DEFLATED 2
+> > +enum binary_type_deflated {
+> > +     BINARY_DELTA_DEFLATED = 1,
+> > +     BINARY_LITERAL_DEFLATED
+> > +};
+>
+> These days, we not just allow but encourage enum definitions to have
+> a trailing comma after the last item, UNLESS we want to signal that
+> the one at the end right now MUST stay to be the last one (e.g. a
+> sentinel at the end).
 
-    * --separator='------\n': we will insert as-is because it contains
-    the line break at last.
+> A patch that adds a new item to, removes an existing item from, or
+> shuffles existing items in the list can be free of unnecessary patch
+> noise to omit the last comma.
 
-    * not specified --separator option: will use '\n' as the separator
-    when do appending and this is the default behavour.
+Ok. Point noted.
 
-    * --separator='': we specify an empty separator which has the same
-    behavour with --separator='\n' and or not specified the option.
+> As a faithful rewrite, forcing the same values to be given as before
+> by saying that "_DEFLATED must be 1" is a good thing to do, but once
+> the dust settled from the patch, it would be a good idea to go back
+> to the code and see if the values MUST be these, or if it is fine to
+> use any value as long as they are distinct.  If it is the latter,
+> then it would make a good follow-up patch to remove "= 1", with an
+> explanation why it is a safe thing to do.
 
-In addition, if a user specifies multple "-m" with "--separator", the
-separator should be inserted between the messages too, so we use
-OPT_STRING_LIST instead of OPT_CALLBACK_F to parse "-m" option, make
-sure the option value of "--separator" been parsed already when we need
-it.
+Removing the 1 _may_ be a safe thing to do, because the value
+fragment->patch_method
+is finally used in a switch statement, which makes it apparent that
+the difference in the values
+is actually necessary, and maybe not the actual value they hold (Also,
+random but distinct
+values still pass the test cases).
 
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
- Documentation/git-notes.txt | 12 ++++++--
- builtin/notes.c             | 31 +++++++++++++++++---
- t/t3301-notes.sh            | 58 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 95 insertions(+), 6 deletions(-)
+> >  static void free_fragment_list(struct fragment *list)
+> >  {
+> > @@ -918,14 +920,17 @@ static int gitdiff_hdrend(struct gitdiff_data *state UNUSED,
+> >   * their names against any previous information, just
+> >   * to make sure..
+> >   */
+> > -#define DIFF_OLD_NAME 0
+> > -#define DIFF_NEW_NAME 1
+> > +
+> > +enum diff_name {
+> > +     DIFF_OLD_NAME = 0,
+> > +     DIFF_NEW_NAME
+> > +};
+>
+> Ditto.
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index efbc10f0..5abe6092 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- 'git notes' [list [<object>]]
- 'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
- 'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
--'git notes' append [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-+'git notes' append [--allow-empty] [--separator] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
- 'git notes' edit [--allow-empty] [<object>]
- 'git notes' show [<object>]
- 'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
-@@ -86,7 +86,9 @@ the command can read the input given to the `post-rewrite` hook.)
- 
- append::
- 	Append to the notes of an existing object (defaults to HEAD).
--	Creates a new notes object if needed.
-+	Creates a new notes object if needed. If the note and the
-+	message are not empty, "\n" will be inserted between them.
-+	Use the `--separator` option to insert other delimiters.
- 
- edit::
- 	Edit the notes for a given object (defaults to HEAD).
-@@ -159,6 +161,12 @@ OPTIONS
- 	Allow an empty note object to be stored. The default behavior is
- 	to automatically remove empty notes.
- 
-+--separator <separator>::
-+	The '<separator>' inserted between the note and message
-+	by 'append', "\n" by default. A custom separator can be
-+	provided, if it doesn't end in a "\n", one will be added
-+	implicitly .
-+
- --ref <ref>::
- 	Manipulate the notes tree in <ref>.  This overrides
- 	`GIT_NOTES_REF` and the "core.notesRef" configuration.  The ref
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 553ae2bd..524976fe 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -24,6 +24,7 @@
- #include "notes-utils.h"
- #include "worktree.h"
- 
-+static char *separator = NULL;
- static const char * const git_notes_usage[] = {
- 	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
- 	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-@@ -209,6 +210,16 @@ static void write_note_data(struct note_data *d, struct object_id *oid)
- 	}
- }
- 
-+static void insert_separator(struct strbuf *message, size_t pos)
-+{
-+	if (!separator)
-+		strbuf_insertstr(message, pos, "\n");
-+	else if (separator[strlen(separator) - 1] == '\n')
-+		strbuf_insertstr(message, pos, separator);
-+	else
-+		strbuf_insertf(message, pos, "%s%s", separator, "\n");
-+}
-+
- static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
- {
- 	struct note_data *d = opt->value;
-@@ -567,11 +578,12 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 	const struct object_id *note;
- 	char *logmsg;
- 	const char * const *usage;
-+	size_t message_idx;
- 	struct note_data d = { .buf = STRBUF_INIT };
-+	struct string_list message = STRING_LIST_INIT_DUP;
- 	struct option options[] = {
--		OPT_CALLBACK_F('m', "message", &d, N_("message"),
--			N_("note contents as a string"), PARSE_OPT_NONEG,
--			parse_msg_arg),
-+		OPT_STRING_LIST('m', "message", &message, N_("message"),
-+			N_("note contents as a string")),
- 		OPT_CALLBACK_F('F', "file", &d, N_("file"),
- 			N_("note contents in a file"), PARSE_OPT_NONEG,
- 			parse_file_arg),
-@@ -583,6 +595,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 			parse_reuse_arg),
- 		OPT_BOOL(0, "allow-empty", &allow_empty,
- 			N_("allow storing empty note")),
-+		OPT_STRING(0, "separator", &separator, N_("separator"),
-+			N_("insert <separator> as separator before appending a message")),
- 		OPT_END()
- 	};
- 	int edit = !strcmp(argv[0], "edit");
-@@ -596,6 +610,15 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 		usage_with_options(usage, options);
- 	}
- 
-+	for (message_idx = 0; message_idx < message.nr; message_idx++) {
-+		if (d.buf.len)
-+			insert_separator(&d.buf, d.buf.len);
-+		strbuf_insertstr(&d.buf, d.buf.len,
-+				 message.items[message_idx].string);
-+		strbuf_stripspace(&d.buf, 0);
-+		d.given = 1;
-+	}
-+
- 	if (d.given && edit)
- 		fprintf(stderr, _("The -m/-F/-c/-C options have been deprecated "
- 			"for the 'edit' subcommand.\n"
-@@ -618,7 +641,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 		char *prev_buf = read_object_file(note, &type, &size);
- 
- 		if (d.buf.len && prev_buf && size)
--			strbuf_insertstr(&d.buf, 0, "\n");
-+			insert_separator(&d.buf, 0);
- 		if (prev_buf && size)
- 			strbuf_insert(&d.buf, 0, prev_buf, size);
- 		free(prev_buf);
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 3288aaec..fe00497b 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -521,6 +521,64 @@ test_expect_success 'listing non-existing notes fails' '
- 	test_must_be_empty actual
- '
- 
-+test_expect_success 'append: specify an empty separator' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="" -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify separatoro with line break' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+	-------
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="-------$LF" -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify separator without line break' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+	-------
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="-------" -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify separator with multiple messages' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+	-------
-+	notes-2
-+	-------
-+	notes-3
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="-------" -m "notes-2" -m "notes-3" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'append to existing note with "git notes append"' '
- 	cat >expect <<-EOF &&
- 		Initial set of notes
--- 
-2.39.2.459.g31d98a8e.dirty
+I think that since enums start with zero by default, you are right in
+saying that the '=0' here can be removed.
+I will do so.
 
+> >  static int gitdiff_verify_name(struct gitdiff_data *state,
+> >                              const char *line,
+> >                              int isnull,
+> >                              char **name,
+> > -                            int side)
+> > +                            enum diff_name side)
+> >  {
+> >       if (!*name && !isnull) {
+> >               *name = find_name(state->root, line, NULL, state->p_value, TERM_TAB);
+> > @@ -1910,7 +1915,7 @@ static struct fragment *parse_binary_hunk(struct apply_state *state,
+> >       int llen, used;
+> >       unsigned long size = *sz_p;
+> >       char *buffer = *buf_p;
+> > -     int patch_method;
+> > +     enum binary_type_deflated patch_method;
+>
+> This is not quite sufficient to achieve the goal of helping "modern
+> debuggers" that was stated in the proposed log message, is it?
+> parse_binary_hunk() copies the value from this local variable to a
+> member in the fragment being parsed, like so:
+>
+>         frag->binary_patch_method = patch_method;
+>
+> but the thing is, as we have seen earlier, a compiler macro is used
+> to (ab)use the "leading" member and call it "binary_patch_method".
+> The type of that member is "unsigned long".
+>
+> Now if our ultimate goal were to use enum instead of macro, then an
+> obvious "solution" would be to stop abusing "leading".  Instead, you
+> would add "enum binary_type_deflated binary_patch_method" member to
+> the fragment struct and use the enum throughout.
+
+It does appear to be so. Introducing a new enum binary_type_deflated
+binary_patch_method inside of
+struct fragment would indeed be a solution.
+This could be plausible, because struct fragment does not appear outside of
+apply.c. Your suggestion appears to be the only right way to do it, so
+as to achieve the
+goal of this patch series.
+
+> But is it worth it?
+>
+> Using enum instead of macro is *NOT* a goal.  If doing so makes our
+> code better, we may do so---which tells us that use of enum is not a
+> goal but a means to make our code better.  Is adding an extra member
+> that is used only for binary patches improve our code?  I dunno.
+
+apply.c actually seemed to be the best place to start such a change, because the
+macros in the file suit such a change the best for a start. It would
+have brought
+unnecessary overhead in many other files, specifically those which
+would affect a _lot_ of
+the source code. It is just that the changes appear contained enough
+to not cause a lot of
+noise.
+Your suggestions are very correct, I will make sure to keep them in
+mind in the future.
+
+Thanks a lot!
+Vinayak
