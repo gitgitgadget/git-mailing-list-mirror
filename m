@@ -2,83 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9825C636CC
-	for <git@archiver.kernel.org>; Thu, 16 Feb 2023 19:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29CEAC636CC
+	for <git@archiver.kernel.org>; Thu, 16 Feb 2023 19:41:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229580AbjBPTQu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Feb 2023 14:16:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37234 "EHLO
+        id S229580AbjBPTlq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Feb 2023 14:41:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229583AbjBPTQt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Feb 2023 14:16:49 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52AF24ECDC
-        for <git@vger.kernel.org>; Thu, 16 Feb 2023 11:16:48 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id y4-20020a17090a2b4400b002310ecae757so3261281pjc.1
-        for <git@vger.kernel.org>; Thu, 16 Feb 2023 11:16:48 -0800 (PST)
+        with ESMTP id S229492AbjBPTlp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Feb 2023 14:41:45 -0500
+Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3503442FB
+        for <git@vger.kernel.org>; Thu, 16 Feb 2023 11:41:44 -0800 (PST)
+Received: by mail-il1-x130.google.com with SMTP id i6so1181734ilk.5
+        for <git@vger.kernel.org>; Thu, 16 Feb 2023 11:41:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=y8kAn3tFg2O4a0PCAYe+SLUXQAzOXtkxhXTjilvnjM8=;
-        b=j/uE7cbqN3yPBAUCzlS5brt+mTigzwjuzpKxRjjS3dHrxwKTF/gqgXhjOsr/a4I5oJ
-         4zGs+dXC+3m5rxLSP7M3GiRtM/ZamBzd4NUZUiJu/RQYGJr70NNcz77OZpcQUYH4PSZG
-         o45RgQc+OnqyV06rwVcSIIDz5M58mKw1fdEuY4+vgmk7d8Jz3g+kgM3N9aCvzGwh/mmd
-         ru3+GF64LW2WYN/Psuw2BSX5KoM0bly9yEnd7AZFALd7NTLaan3Ssix4qitEOJxx3z6Y
-         3fqyktqUIs+4sHnbpd/iVwjDPEXKefhMCXFVK26wikb8C/F6e5ivcehFe/Itzu99rXec
-         MnKQ==
+        d=chromium.org; s=google;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SriWLh0eFm0ELzFlzIvrYzS4SnvRLTmwnPriDVrNQOQ=;
+        b=T11rQT4w0tYzlxsd7Er9Cc90EIEQj3O/RNdtE5z/5lzzErSGfFvMv+f+rQiAp3C/sE
+         9CMugj5nQM0WL2oHCKq3b5KEK1g5NN2P2rX+SqMquzbWw1hzhMPMIMKHF932YinzrepI
+         7+RW4tu/KOdGnbFTf6ox0JpfMp67upjZGJcEA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+        h=content-disposition:mime-version:message-id:subject:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y8kAn3tFg2O4a0PCAYe+SLUXQAzOXtkxhXTjilvnjM8=;
-        b=WNBgDH8GM+fkX5TVNiR1kH4epVUSrUWWePoAxuPrOAGYDbbYZRKL8h0qqN5TbHw75C
-         hu5mxMxtp9h4G+LzbdD5B8VnCrshBruL3O7zU3uZ+evQ54UTtYXfMV1Ul7GRrYsuEUqC
-         fAMJEMwa5qdpA9uRdCO+1QYPQmFO2rK83M/BXag47wZ4LRnPPIPBIToFsPYLA+oMXMqd
-         ZfWdA3gvAX3SMOlSrmnasJ9l8YOKiIj9DkIVyXyaeZJcFkBy89XUm78JK9TDA/KA6HUy
-         OM2e1Aghpj85IZEnw/6JM/IE0DRNN8YbuaxEf3il0YjhSb4saDYCTOpzUHQa4L0YJY8k
-         oGnA==
-X-Gm-Message-State: AO0yUKWVJlx6pg8RDdsFihL4VtB7PTdmHoVzQGeNPn+LEJX3073sMxVB
-        bzwe1xTbwlOG728jwzihLlaOIqwCxd+1stk=
-X-Google-Smtp-Source: AK7set9Ohf53pKjQ9yqXS03knYeR7MegcTllQOvIFZp9Vuf9oD8fQhlt/tteDs6DW6CQhYSgGGqaFmIi1WOiMVg=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a63:3c42:0:b0:4fc:27c2:840d with SMTP id
- i2-20020a633c42000000b004fc27c2840dmr185825pgn.12.1676575007604; Thu, 16 Feb
- 2023 11:16:47 -0800 (PST)
-Date:   Thu, 16 Feb 2023 19:16:43 +0000
-In-Reply-To: <pull.1443.v3.git.git.1675545372271.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.39.2.637.g21b0678d19-goog
-Message-ID: <20230216191644.315615-1-calvinwan@google.com>
-Subject: Re: [PATCH v3] credential: new attribute password_expiry_utc
-From:   Calvin Wan <calvinwan@google.com>
-To:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>, Cheetham <mjcheetham@outlook.com>,
-        Dennington <lessleydennington@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        bh=SriWLh0eFm0ELzFlzIvrYzS4SnvRLTmwnPriDVrNQOQ=;
+        b=shO7IIdBDy8h+Y/CVRqIfWsCcFwXi7cHINv2vA55r6hVLL1o6rnJkkSdxsq9YMWLk+
+         u5nq9l241mLWD506NfjsgqHTytXJhcpVN7c8j/rDFbSWF0Lw+cK3kq9H4tAS6lsZqaJp
+         W7aaLwh5QqzhfqNU1Bj2WYY+Bg4icZr62SJr3cbm8igEBE4UOjsrZQYPy8VeWs1dnbGb
+         9WaF4yxukSwGiq/cjCPjoqRmK4ESL8RKtgsKRDXwCPdDElS1rJJvPCUIfX9mLsapWUiG
+         ip6HXkxRUfov+iEKuIBFsE/cjDHSYWqywIw16lVJGJXeVJfFKe7SOHo1De/eaaa7sed0
+         gA8A==
+X-Gm-Message-State: AO0yUKVdsFOiE02IRA2RX4wKXOL5n2IjtZ02gtV9pwrw4ugJGoYz5NiV
+        vK7qxVybvHGINclMvZhjPxYYUazrV3qOAlrT
+X-Google-Smtp-Source: AK7set9ep7qkVhjJl5jwOYVQDhJ5/v0XClA+qVjhXED3d1xRdRvI1ETuBNEODQpSW7o6/o2gVP0hjQ==
+X-Received: by 2002:a92:9404:0:b0:310:c6f7:c1e9 with SMTP id c4-20020a929404000000b00310c6f7c1e9mr4681731ili.5.1676576504117;
+        Thu, 16 Feb 2023 11:41:44 -0800 (PST)
+Received: from google.com (h24-56-189-219.arvdco.broadband.dynamic.tds.net. [24.56.189.219])
+        by smtp.gmail.com with ESMTPSA id r7-20020a92d987000000b00313ca4be5e1sm706962iln.12.2023.02.16.11.41.43
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Feb 2023 11:41:43 -0800 (PST)
+Date:   Thu, 16 Feb 2023 12:41:42 -0700
+From:   Raul E Rangel <rrangel@chromium.org>
+To:     git@vger.kernel.org
+Subject: Feature request: Add --mtime option to git archive
+Message-ID: <Y+6G9n6cWRT9EKyl@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  static int run_credential_helper(struct credential *c,
-> @@ -342,6 +352,10 @@ void credential_fill(struct credential *c)
->  
->  	for (i = 0; i < c->helpers.nr; i++) {
->  		credential_do(c, c->helpers.items[i].string, "get");
-> +		if (c->password_expiry_utc < time(NULL)) {
-> +			FREE_AND_NULL(c->password);
-> +			c->password_expiry_utc = TIME_MAX;
-> +		}
->  		if (c->username && c->password)
->  			return;
->  		if (c->quit)
+When generating a tarball with `git archive <tree>`, `git archive` will
+use the current time as the mtime. This results in a non-hermetic
+tarball. Could we should add a --mtime option that allows passing in
+the time? 
 
-I see you null out c->password in the expiry if block so that the
-following c->password check in the following if statement fails.
-While I think it's neat little trick, I wonder if others on list
-think it's better to be more explicit with how the logic should
-work (eg. adding the c->passowrd_expiry_utc check as an inner
-block inside of the c->username && c->password block).
+Thanks!
