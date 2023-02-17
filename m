@@ -2,130 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68553C05027
-	for <git@archiver.kernel.org>; Fri, 17 Feb 2023 11:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25DE2C05027
+	for <git@archiver.kernel.org>; Fri, 17 Feb 2023 11:12:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229614AbjBQLAR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Feb 2023 06:00:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37844 "EHLO
+        id S229851AbjBQLMJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Feb 2023 06:12:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229679AbjBQK7v (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2023 05:59:51 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560085E586
-        for <git@vger.kernel.org>; Fri, 17 Feb 2023 02:59:47 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id ee31so4292458edb.3
-        for <git@vger.kernel.org>; Fri, 17 Feb 2023 02:59:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+Cs1EgrhzYdZEVCJVb+9NlQRtDMosA2SHo6ocCloafU=;
-        b=WXRO7Ahg3bc8J6rD0PuqZlztfKqMzoFY0xN+kTdhWboPXSTBb1TcZ3URwgDTHOXHPL
-         TRZp4AquXPOidtgqLmWK988U6ngx+XvGvGcTvIfOAB/6EM7weqwu1X5Jgdvp9zkpJpr8
-         Sb3x2NnLVgjA4EwgNm8bVwXYgxLbqW7Cs3Sw4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+Cs1EgrhzYdZEVCJVb+9NlQRtDMosA2SHo6ocCloafU=;
-        b=LJImPHKMS86rSLE1/AnUnygJ/zHdWouhIpGRUY96UVhVQNSUca0YJepylOLyywsdhJ
-         UxAqWZDVhD9i/qrH3Or5JGhJs6elSemCP5/yAuZDizrPufUYZg6SGfh1uC0kviOVBuST
-         xMTu5Al8E78lmd4eROma2gRfUcbIkx/vFya9rP6KnugeGicv88g+eo1vqbDK2ADVvXc8
-         XPyNVPecPhlS4Tn6fFBqUc6tCytr5xmUcaVX2em7j4fMBrb5ePgUhnQnb4JmqbLLdgua
-         pTgp3fANoHG9EfzGHJ2k2zzhOJ3iEnCEp3ESpkZAREtBfrTqoO4eSxFP3gC2Etf8i97o
-         5q6w==
-X-Gm-Message-State: AO0yUKXqSBnBcB6qysp51wSmzK4i64KfyUBWeb1Hh23x18voF426t1AF
-        nJAM2hd2wLGVsJ4+M3ofPTNHEKFEoDPAvfGFwRrCeQ==
-X-Google-Smtp-Source: AK7set9WErXDDLwLFDpc2GSAiHYRnWOcB8tektONMW0gdwNQuryDz5syjL0beVyQDvJTs4N5VR8Py3losKyJcXLIBPE=
-X-Received: by 2002:a17:907:d94:b0:8b1:28c1:6b9c with SMTP id
- go20-20020a1709070d9400b008b128c16b9cmr3884827ejc.4.1676631585848; Fri, 17
- Feb 2023 02:59:45 -0800 (PST)
+        with ESMTP id S229436AbjBQLMD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2023 06:12:03 -0500
+X-Greylist: delayed 56341 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 17 Feb 2023 03:11:15 PST
+Received: from smtp53.i.mail.ru (smtp53.i.mail.ru [95.163.41.90])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 347E465359
+        for <git@vger.kernel.org>; Fri, 17 Feb 2023 03:11:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=Qaadr1cRq1x3IaaH4maowPGpJ2iGCESLG3SrsLjMa2g=;
+        t=1676632275;x=1676722275; 
+        b=yk86F6XeeIg0xhcUCzWLjyBrVRCNn0LsTEUlXasDffuMXBtvrBLn3eQnzKnPhtGbEjQyLtRAfIe10Sq3ozpWA1lZqGQMc1NlxekkGXkMGeom7bQzZ7PbBGlRu9ACVVojyM+KVHTP8tKm3jyde9Rxmt9CfvmCXgr8AGwvqRLyDC4=;
+Received: by smtp53.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1pSydR-00B8kc-4K
+        for git@vger.kernel.org; Fri, 17 Feb 2023 14:10:37 +0300
+Date:   Fri, 17 Feb 2023 14:10:36 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     git@vger.kernel.org
+Subject: Re: [PATCH] branch: introduce --(no-)has-upstream and --(no-)gone
+ options
+Message-ID: <20230217111036.yupfv4t6xn4xteah@carbon>
+Mail-Followup-To: git@vger.kernel.org
+References: <20230216193210.6yj24zhhdhoozpr3@carbon>
+ <xmqq1qmpp7bh.fsf@gitster.g>
+ <CAMMLpeQgxPCTsWGr58rutSDnRuGAGcTXTvHLcgWAfzZjZGxakg@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.1381.v2.git.1665734440009.gitgitgadget@gmail.com> <pull.1381.v3.git.1666076086910.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1381.v3.git.1666076086910.gitgitgadget@gmail.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Fri, 17 Feb 2023 11:59:34 +0100
-Message-ID: <CAPMMpoi8mbqSAYMbhgYRj0UTjxHnGy50Z3HKP6fOaDj7AcQ=mA@mail.gmail.com>
-Subject: Re: [PATCH v3] RFC: mergetool: new config guiDefault supports
- auto-toggling gui by DISPLAY
-To:     Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMMLpeQgxPCTsWGr58rutSDnRuGAGcTXTvHLcgWAfzZjZGxakg@mail.gmail.com>
+Authentication-Results: smtp53.i.mail.ru; auth=pass smtp.auth=kostix@bswap.ru smtp.mailfrom=kostix@bswap.ru
+X-Mailru-Src: smtp
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 4F1203BC0FB41BD94A31EA4B0797EF2EE50B5111BED4E5A0F9C3BE6961C3C823182A05F5380850404C228DA9ACA6FE27AEC11ACB40B7B93F24D7FDDB1A6C563A718EE5BB137C1EBE8C0D03C56FB9B46D
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7370F4F695FFFC24BEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F790063745D431239A8C7DA08638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8359C46A004E1A337A471ABC88CC6294D117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC28EC0646CDFC9FDDA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F4460429728776938767073520599709FD55CB46A628451B159A507268D2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EE902A1BE408319B294D0DA9BD313A0613D8FC6C240DEA7642DBF02ECDB25306B2B78CF848AE20165D0A6AB1C7CE11FEE367F1C1C3ABB44F3A6E0066C2D8992A16C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947CB11811A4A51E3B096D1867E19FE1407959CC434672EE6371089D37D7C0E48F6C8AA50765F7900637F765F39FA4E70FFE43847C11F186F3C59DAA53EE0834AAEE
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D34B5900AD87B4159A42587019403841E4F5E5504534C91D5D90E48E2B6A6E29EC2D03A1AF28C0DA1451D7E09C32AA3244C8CBB7E80768F1CF4CC862761400563F555E75C8D0ED9F6EE3EB3F6AD6EA9203E
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojezPZE63HafhXD9K+91b9rA==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD1389EDEF2066472334ED1793038B8D551FC68345D57491366C813BA5AC085B0DF3CFD8FF98A8691EE7BAAB64A3C2C77197FCA12F3F80FA6A2FFE7D80B0F635B57EC5FEEDEB644C299C0ED14614B50AE0675
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 18, 2022 at 8:54 AM Tao Klerks via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Tao Klerks <tao@klerks.biz>
->
-> When no merge.tool or diff.tool is configured or manually selected, the
-> selection of a default tool is sensitive to the DISPLAY variable; in a
-> GUI session a gui-specific tool will be proposed if found, and
-> otherwise a terminal-based one. This "GUI-optimizing" behavior is
-> important because a GUI can make a huge difference to a user's ability
-> to understand and correctly complete a non-trivial conflicting merge.
->
-> Some time ago the merge.guitool and diff.guitool config options were
-> introduced to enable users to configure both a GUI tool, and a non-GUI
-> tool (with fallback if no GUI tool configured), in the same environment.
->
-> Unfortunately, the --gui argument introduced to support the selection of
-> the guitool is still explicit. When using configured tools, there is no
-> equivalent of the no-tool-configured "propose a GUI tool if we are in a GUI
-> environment" behavior.
->
-> As proposed in <xmqqmtb8jsej.fsf@gitster.g>, introduce new configuration
-> options, difftool.guiDefault and mergetool.guiDefault, supporting a special
-> value "auto" which causes the corresponding tool or guitool to be selected
-> depending on the presence of a non-empty DISPLAY value. Also support "true"
-> to say "default to the guitool (unless --no-gui is passed on the
-> commandline)", and "false" as the previous default behavior when these new
-> configuration options are not specified.
->
-> Signed-off-by: Tao Klerks <tao@klerks.biz>
-> ---
->     RFC: mergetool: new config guiDefault supports auto-toggling gui by
->     DISPLAY
->
->     I'm reasonably comfortable that with this patch we do the right thing,
->     but I'm not sure about yet another remaining implementation detail:
->
->      * After implementing Junio's recommended "fail if defaulting config is
->        consulted and is invalid" flow, there now needs to be a distinction
->        between subshell exit code 1, which was used before and indicates
->        "tool not found or broken; falling back to default" and other
->        (higher) exit codes, which newly mean "something went wrong, stop!".
->        The resulting code looks awkward, I can't tell whether I'm missing a
->        code or even commenting pattern that would make it clearer.
->
->     V3:
->
->      * Simplify C code to use OPT_BOOL with an int rather than a custom
->        option-parsing function with an enum
->      * Fix doc to more extensively use backticks for config keys / values /
->        args
->      * Fix more shell script formatting issues
->      * Change error-handling in mergetool and difftool helpers to exit if
->        defaulting config is invalid
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1381%2FTaoK%2Ftao-mergetool-autogui-v3
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1381/TaoK/tao-mergetool-autogui-v3
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1381
+On Thu, Feb 16, 2023 at 08:12:08PM -0700, Alex Henrie wrote:
 
 
-Hi folks, this v3 never got any feedback - the only reason I had left
-it as an RFC was that the error-handling looked a bit awkward, as I
-noted above.
+> > >> GitHub and GitLab have features to create a branch using the web
+> > >> interface, then delete the branch after it is merged. That results in a
+> > >> lot of "gone" branches in my local clone, and I frequently find myself
+> > >> typing `git branch -v | grep gone`. I don't want `git branch --merged`
+> > >> because that would include branches that have been created for future
+> > >> work but do not yet have any commits.
+> > >
+> > > Possibly a rather silly remark, but you could make a habit of periodically
+> > > running
+> > >
+> > >   git remote prune <remotename>
+> > >
+> > > or fetching with "--prune".
+> >
+> > Likely to be a silly question, but isn't doing that, to actively
+> > remove the remote tracking branches that correspond to branches that
+> > no longer exist at the remote, exactly what gives Alex many local
+> > branches that are marked as "gone" (i.e. forked from some upstream
+> > sometime in the past, but the upstream no longer exists)?
+> 
+> Yes, the branches are marked [gone] precisely because I configured
+> fetch.prune to true. So fetching automatically deletes the local
+> copies of the upstream branches, but the local branches that track
+> them are still there.
 
-Should I resubmit this without the RFC prefix?
+Ah, thanks, I see now.
 
-Are there any concerns about the change here to better support mixed
-GUI/console-only environments?
+I have a habit of always checking out remote branches directly when doing any
+work on them (they end up in a detached HEAD state), so I have sort of
+automagically evaded your problem not being aware of the fact.
 
-Thanks,
-Tao
