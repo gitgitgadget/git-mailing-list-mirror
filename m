@@ -2,151 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 939EBC05027
-	for <git@archiver.kernel.org>; Fri, 17 Feb 2023 20:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41141C636D6
+	for <git@archiver.kernel.org>; Fri, 17 Feb 2023 20:50:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229684AbjBQUmN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Feb 2023 15:42:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37250 "EHLO
+        id S229580AbjBQUug (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Feb 2023 15:50:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229853AbjBQUmM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2023 15:42:12 -0500
+        with ESMTP id S229541AbjBQUuf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2023 15:50:35 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A6325F838
-        for <git@vger.kernel.org>; Fri, 17 Feb 2023 12:42:07 -0800 (PST)
-Received: (qmail 14795 invoked by uid 109); 17 Feb 2023 20:42:07 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 772D560A41
+        for <git@vger.kernel.org>; Fri, 17 Feb 2023 12:50:32 -0800 (PST)
+Received: (qmail 14882 invoked by uid 109); 17 Feb 2023 20:50:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 17 Feb 2023 20:42:07 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 17 Feb 2023 20:50:31 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23194 invoked by uid 111); 17 Feb 2023 20:42:06 -0000
+Received: (qmail 23401 invoked by uid 111); 17 Feb 2023 20:50:30 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 17 Feb 2023 15:42:06 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 17 Feb 2023 15:50:30 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 17 Feb 2023 15:42:06 -0500
+Date:   Fri, 17 Feb 2023 15:50:30 -0500
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] blame-tree: add library and tests via "test-tool
- blame-tree"
-Message-ID: <Y+/mnnJUz75yfWCN@coredump.intra.peff.net>
-References: <patch-1.1-0ea849d900b-20230205T204104Z-avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jiang Xin <worldhello.net@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Bernhard Reiter <ockham@raz.or.at>,
+        Remi Pommarel <repk@triplefau.lt>
+Subject: Re: [PATCH v2 6/6] imap-send: correctly report "host" when using
+ "tunnel"
+Message-ID: <Y+/olg2szMxLIkXp@coredump.intra.peff.net>
+References: <cover-v2-0.6-00000000000-20230202T093706Z-avarab@gmail.com>
+ <patch-v2-6.6-686febb8cdc-20230202T093706Z-avarab@gmail.com>
+ <Y91J+P5P9gV1Dygm@coredump.intra.peff.net>
+ <230203.86bkmabfjr.gmgdl@evledraar.gmail.com>
+ <Y94866yd3adoC1o9@coredump.intra.peff.net>
+ <230205.86ilgf7osb.gmgdl@evledraar.gmail.com>
+ <Y+KYwsBjty0aaLes@coredump.intra.peff.net>
+ <230207.86fsbh2nqo.gmgdl@evledraar.gmail.com>
+ <Y+LNitGAude1vogv@coredump.intra.peff.net>
+ <230208.86a61p0x9n.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-1.1-0ea849d900b-20230205T204104Z-avarab@gmail.com>
+In-Reply-To: <230208.86a61p0x9n.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 05, 2023 at 09:47:03PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Wed, Feb 08, 2023 at 02:06:55AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> From: Jeff King <peff@peff.net>
-
-I appreciate being credited, of course, but at some point I think this
-becomes "Based-on-a-patch-by". And we may have crossed the line here.
-
-> The "blame-tree" library allows for finding the most recent
-> modification to paths in a tree. It does so by expanding the tree at a
-> given commit, taking note of the current state of each path, and then
-> walking backwards through history looking for commits where each path
-> changed into its final sha1.
+> >   Side note: If somebody were proposing to add imap-send at all today,
+> >   I'd probably say "no, that should be a separate project, and you
+> >   should probably write it in some language that has a decent imap
+> >   library". It really has nothing at all to do with Git in terms of
+> >   implementation, and I suspect it's not super well maintained in
+> >   general. But perhaps it is too late for that.
 > 
-> The "git blame-tree" command was first noted on the ML 2011[1], and
-> over the years there have been mentions of it[2][3], and whether it
-> could be upstreamed. The sources have been available at [4]'s
-> "jk/blame-tree-wip" and "jk/faster-blame-tree-wip" branches.
-
-Sort of. jk/blame-tree-wip probably matches what I sent to the list in
-2011 (and that probably matches what was deployed at GitHub at the
-time). And like all of my branches, I continually rebase it on git.git's
-master branch. But like all branches in my repo with "-wip" in them, it
-is not part of my daily driver, and I generally do not even build it
-(and I would not be surprised if it does not build at all, or one of
-those rebases introduced a horrible bug).
-
-The jk/faster-blame-tree-wip was an experiment from 2014 to narrow the
-pathspec as we found answers. But it was never deployed anywhere, and
-likewise may or may not even build now. I think the general idea there
-is sound (make pathspec lookups faster by using a trie, and then narrow
-it), but I suspect it's not a full solution. In particular, I don't
-think it does anything clever with merges. Since we are narrowing the
-pathspec as we traverse, we can't rely on the usual pruning of side
-branches that happens via limit_list(), as that is all up-front. So it
-probably needs to look at each merge as we traverse and cull parents
-based on TREESAME.
-
-I believe GitHub later had patches to do that, but they didn't use the
-pathspec machinery (because without the tries, it becomes accidentally
-quadratic in the number of paths). I didn't work on those patches,
-though (Stolee and Taylor did), and they're not anywhere in my
-repository (and I no longer have access to the private github repo).
-
-> This change attempts to start upstreaming this command, but rather
-> than adding a command whose interface & semantics may be controversial
-> starts by exposing & testing the core of its library through a new
-> test helper.
+> I think it's a reasonable feature, but in hindsight our mistake was to
+> think that we should be perma-forking isync, which has since moved
+> on. I've used isync's "mbsync" extensively for IMAP in other contexts,
+> and it works well for that.
 > 
-> An eventual "git blame-tree" command, or e.g. a new format for "git
-> ls-tree" to show what a path "blames" to can then be implemented with
-> this library.
-
-OK. It's a little weird, as I do think the interface and semantics are
-the more interesting part, but this certainly isn't hurting anybody to
-go this route.
-
-> * Removing the "--max-depth" changes to the diff code. We'll need
->   those eventually, but it's not required for a blame of a given list
->   of paths.
+> So if we were going back to the drawing board a "git-imap-sync" really
+> should just be something in our mail tooling that can produce a Maildir,
+> and if we wanted an IMAP helper it could invoke mbsync, offlineimap or
+> various other "maildir to IMAP" bidirectional syncing utilities to
+> "send" via IMAP.
 > 
->   As has been noted in previous on-list discussions the semantics of
->   the "max-depth" changes might be controversial, so it's worthwhile
->   to split those out so that they can be reviewed separately.
+> So, just some hook support for format-patch with some documented
+> examples should do it, but I won't be working on that task...
 
-That's probably reasonable. The only two interesting "depths" are really
-"recurse" and "don't recurse" (where "recurse" is probably what you'd
-put in a user-facing tool, and "don't recurse" is what a site like
-GitHub uses to do the blame for a single level of tree it's showing).
-And that narrows the problem space quite a bit.
+Yes, I think format-patch plus a sync program would be good. I did
+briefly look at the state of imap sync programs and was a bit
+disappointed. Many older recommendations are for software that is no
+longer packaged, or hard to find. And none of the ones I looked at do
+something as simple as "copy these messages to this imap server".
+They're all very interested in bidirectional sync, incremental updates,
+and so on. But I do think one could make mbsync or offlineimap work, if
+you used a dedicated folder on the server as the destination.
 
-> * Made the "blame-tree" helper take "--" before any revision options,
->   for clarity. An eventual built-in command (if any) probably doesn't
->   want to enforce this, but it makes it clearer in the test helper
->   what's an argument for "blame-tree" itself, and what's an argument for
->   the revision machinery.
+But yeah, I don't think you or I needs to come up with a solution there.
+I was more proposing along the lines of: let's drop imap-send, and
+interested people can then make a solution based on other tools, or even
+spin off imap-send into its own repository.
 
-OK. Since this is just a test-helper, we don't care too much either way.
-
-> * Minor updates for using C99 syntax, and "size_t" instead of "int"
->   when we're iterating over types whose "nr" is that size.
-
-Reasonable.
-
-> * Avoid sub-shelling in the tests, use "test-tool -C .." instead.
-
-Yeah, the original code probably predates "-C". ;)
-
-> The range-diff here is to peff's jk/blame-tree-wip. As noted above
-> this is far from the full thing, but hopefully getting the basic bits
-> of the library (sans the max-depth question) will make the review of
-> subsequent bits easier.
-
-I doubt this range-diff is useful to anybody. I'm probably the person
-most likely to make sense of it, and it means nothing to me. It probably
-makes sense conceptually to just treat this as a new topic that happens
-to be based on older work.
-
-But if you did want to base it on something, you probably ought to do so
-on what GitHub is currently running in production (and again, talk to
-Taylor or Stolee for that). Unless the intent is to use this as a base
-for showing their changes. Though even then, I'm not sure the
-intermediate state is all that interesting.
-
-> [oodles of patch]
-
-TBH, I didn't really look at this closely. It's been a decade, so even
-for me reviewing this would basically be looking at it from scratch. And
-as my Git time is a bit limited these days, I can't really promise
-timely review of a big topic.
+But I get that even that is some work, and it may mean complaining
+users.
 
 -Peff
