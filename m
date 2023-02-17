@@ -2,117 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64097C636D6
-	for <git@archiver.kernel.org>; Fri, 17 Feb 2023 22:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A860C636D6
+	for <git@archiver.kernel.org>; Fri, 17 Feb 2023 22:58:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbjBQWuJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Feb 2023 17:50:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42150 "EHLO
+        id S229906AbjBQW6W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Feb 2023 17:58:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbjBQWuH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2023 17:50:07 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991095FD7
-        for <git@vger.kernel.org>; Fri, 17 Feb 2023 14:50:05 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id cn2so9820107edb.4
-        for <git@vger.kernel.org>; Fri, 17 Feb 2023 14:50:05 -0800 (PST)
+        with ESMTP id S229916AbjBQW6O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2023 17:58:14 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A59DC6A073
+        for <git@vger.kernel.org>; Fri, 17 Feb 2023 14:57:31 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id e14so836033plg.8
+        for <git@vger.kernel.org>; Fri, 17 Feb 2023 14:57:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3O6IwTirF/wOT1jNbPRrNutIiOwCJmvNz/X17D23vJM=;
-        b=rUCdwkC1rdYIAgNFrTJxRLZT64URdhL0o0ztTyaePTGR8N6Pz2Pgyo55kqXhkKkxnm
-         iAMrPj2a7C3q2z6sehr7Z8GYkk43KzocG7PMzNCPk33d3SLZap4m9omDhDXBXiVLxov+
-         N2hLWAiTCLD1WeeYbeKXcijWUx5TqOYpwj0fJdfjboK2rt8SS26/7EiF2fikoJU453pz
-         5gvDG7avrFWUKZ+ul9fV2CO4tIP7leQn5ld5qqU7fNjNvckifhkEIeYFBqyYxP1sk4nL
-         p+Q0hDYJ1IsNDjBZi7YJ2f2KnN5v1oaCx/3WKYgt/9rjJmKVyIYSThaY6zIEgZb/63tN
-         9MZg==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kBDlAtaHDtUgGLFNvd+wLdT+TIwEOi51hFXaGysnQhc=;
+        b=XgvgXTtR683K/XArTTNnlJQYm5xsHXPJCOsnrBintaNkZ/t/MjnV/X2VX91OmRHNyG
+         nKLPMXEasmbbsJDe97hehlvjyJnM55XFyjSXdK349ZjDZ8Nd/l/tC0kihSqod4tcwuG2
+         uGKERE7KSnDWMC5bqn1cxlVJe7oS8Mu1B3hLOpO9MKTAVDv5ZdjbSgeYKc3JG2blRwI3
+         /OX77n7dJiiEDe/afZXGT90xuOI+EmMPZPv0cGhrGr/YlYqX4bOGM3aIN5x6C2QE69Fy
+         QiqqZq3W6ikk/Zra0H80FDmcHYyLFfSUF0Iizl9b/V9nEosX4qHbqhNYaKtOdxTi2hdt
+         d9ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3O6IwTirF/wOT1jNbPRrNutIiOwCJmvNz/X17D23vJM=;
-        b=PUNkwP36q5cBcq30FGQL4UDkOF8O/7ydHNETT+dob2CTXV44HsDb34TKsYNOtsTY21
-         GU01n4cSoUo7vUwX1Ouv+//q+wF1r2s6ARCcJJ+vbXVfR+ozV8HMAA8nILwitj4xDahV
-         HHt+fk+u94vclHuC+054F2pZAUbYSufS8KwlpJS+yravuY8D84AvSQznCaFQjAlwQIPB
-         PCXIY0nTlRpovOYUcYKqoAQQs1CmL0CPQPorRYp+Za3xhDKCIeWUZi7OQ0mlJ505n5k8
-         AoEWn5HtglxWYTpYlmluYHHSwE982UR+Ulqx91U5P+Dwecyf2zB1YLzPoXbNBw0KqsCt
-         P+ag==
-X-Gm-Message-State: AO0yUKV+66Jx6MSA517gafJjs0ChtzdsBIESaQN1STuYbSgJW1HrX/UU
-        RLhHGOcwWIDYkQXEkObAzRFNr5NqplmqrehjuVFGW73vJO8TdgAc
-X-Google-Smtp-Source: AK7set9qsHAbBAyBfuhxgXMSKzEUstU98PU/lQyirtUKtflGiC9mboj6A/5edKIFmAJi5tm10GiNzmbxw/WCo6g9DjU=
-X-Received: by 2002:a17:906:4f0a:b0:8b1:30eb:9dba with SMTP id
- t10-20020a1709064f0a00b008b130eb9dbamr1192078eju.6.1676674203883; Fri, 17 Feb
- 2023 14:50:03 -0800 (PST)
-MIME-Version: 1.0
-References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
- <Y+/v15TyCbSYzlVg@tapette.crustytoothpaste.net> <CAJoAoZmMQ-ROdCp0=4oaFa836-PqxwYntnRSBSzzJc5chp16eQ@mail.gmail.com>
- <Y/ACqlhtLMjfgJFQ@tapette.crustytoothpaste.net>
-In-Reply-To: <Y/ACqlhtLMjfgJFQ@tapette.crustytoothpaste.net>
-From:   Emily Shaffer <nasamuffin@google.com>
-Date:   Fri, 17 Feb 2023 14:49:51 -0800
-Message-ID: <CAJoAoZkMR9Acy7thVs-_e=Fz8wwjoDGDKb46wmwn8yxk0ODGow@mail.gmail.com>
-Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrn@google.com>,
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=kBDlAtaHDtUgGLFNvd+wLdT+TIwEOi51hFXaGysnQhc=;
+        b=rGizlBrUqXGPGJwZXddHRvRUBqekDR8sdaE8/E3imM3F4VcW0rF+AlQ/DqLZqpGdBQ
+         ExBGrk56ok7QNmhWQfBOsb5fZWyc7xxMFblbduWG0rlTZl1TgtiW7WT4A3OO/0zsMOwN
+         ankEmGEGEdva57/HIkcfC6UHjq8tYv6FxSOqraX/m/pOJmT1cGpOfCfpsFTtogXWs7Q3
+         gikdBO3yxYCxEyHN+JxW67Gf/adQ/pfNELU1HeCfQMp/Blj0sowi/r0GA9xgDYlSiRHn
+         IJvHr/ImvqlUcfFdPFj1J5EFWS+xAHIC+M3CSlKoD4oK2fmc/mqOUF5Bt2x4IzCoGXqq
+         HtZg==
+X-Gm-Message-State: AO0yUKU8psUSObFa7/ewlylxa+Z3/xlJZkFEhxz9cGXlP+DqoLSdJtqS
+        TXjhkRV2nkIYrlxPeGvVktE=
+X-Google-Smtp-Source: AK7set+ZDIVEJzSbFQqxMTQvg3KvnuU4+qNK78s7cC6z1IIjidrbWNNKZKwK1VT4Xu3U6/h1Q0X9xA==
+X-Received: by 2002:a17:90b:1810:b0:236:73e8:f4c with SMTP id lw16-20020a17090b181000b0023673e80f4cmr3462121pjb.2.1676674650927;
+        Fri, 17 Feb 2023 14:57:30 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id i20-20020a17090aee9400b002339491ead6sm1336381pjz.5.2023.02.17.14.57.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Feb 2023 14:57:30 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <nasamuffin@google.com>
+Cc:     Git List <git@vger.kernel.org>, Jonathan Nieder <jrn@google.com>,
         Jose Lopes <jabolopes@google.com>,
         Aleksandr Mikhailov <avmikhailov@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
+References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
+Date:   Fri, 17 Feb 2023 14:57:30 -0800
+In-Reply-To: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
+        (Emily Shaffer's message of "Fri, 17 Feb 2023 13:12:23 -0800")
+Message-ID: <xmqq3573lx2d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 17, 2023 at 2:41 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2023-02-17 at 21:38:34, Emily Shaffer wrote:
-> > For example, I seem to remember you saying during the SHA-256 series
-> > that the next hashing algorithm would also be painful to implement;
-> > would that still be true if the hashing algorithm is encapsulated well
-> > by a library interface? Or is it for a different reason?
->
-> Right now, most of the code for a future hash algorithm wouldn't be too
-> difficult to implement, I'd think, because we can already support two of
-> them.  If we decide, say, to implement SHA-3-512, we basically just add
-> that algorithm, update all the entries in the tests (which is kind of a
-> pain since there's a lot of them, but not really difficult), and then
-> move on with our lives.
->
-> The difficulty is dealing with interop work, which is basically
-> switching from dealing with just one algorithm to rewriting things
-> between the two on the fly.  I think _that_ work would be made easier by
-> library work because sometimes it involves working with submodules, such
-> as when updating the submodule commit, and being able to deal with both
-> object stores more easily at the same time would be very helpful in that
-> regard.
+Emily Shaffer <nasamuffin@google.com> writes:
 
-Ooh, I see what you mean. Thanks for the extra context here.
+> Basically, if this effort turns out not to be fruitful as a whole, I'd
+> like for us to still have left a positive impact on the codebase.
+> ...
+> So what's next? Naturally, I'm looking forward to a spirited
+> discussion about this topic - I'd like to know which concerns haven't
+> been addressed and figure out whether we can find a way around them,
+> and generally build awareness of this effort with the community.
 
-> I can imagine there are other things that would be easier as well, and I
-> can also imagine that we'll have better control over memory allocations
-> and leak less, which would be nice.  If we can get leaks low enough, we
-> could even add CI jobs to catch them and fail, which I think would be
-> super valuable, especially since I find even after over two decades of C
-> that I'm still not very good about catching all the leaks (which is one
-> of the reasons I've mostly switched to Rust).  We might also be able to
-> make nicer steps on multithreading our code as well.
->
-> Personally, I'd like to see some sort of standard error type (whether
-> integral or not) that would let us do more bubbling up of errors and
-> less die().  I don't know if that's in the cards, but I thought I'd
-> suggest it in case other folks are interested.
+On of the gravest concerns is that the devil is in the details.
 
-Yes!!! We have talked about this a lot internally - but this is one
-thing that will be difficult to introduce into Git without making
-parts of the codebase a little uglier. Since obviously C doesn't have
-an intrinsic to do this, we'll have to roll our own, which means that
-manipulating it consistently at function exits might end up pretty
-ugly. So hearing that there's interest outside of my team to come up
-with such a type makes me optimistic that we can figure out a
-neat-enough solution.
+For example, "die() is inconvenient to callers, let's propagate
+errors up the callchain" is an easy thing to say, but it would take
+much more than "let's propagate errors up" to libify something like
+check_connected() to do the same thing without spawning a separate
+process that is expected to exit with failure.
 
-> --
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
+It is not clear if we can start small, work on a subset of the
+things and still reap the benefit of libification.  Is there an
+existing example that we have successfully modularlized the API into
+one subsystem?  Offhand, I suspect that the refs API with its two
+implementations may be reasonably close, but is the inteface into
+that subsystem the granularity of the library interface you guys
+have in mind?
+
