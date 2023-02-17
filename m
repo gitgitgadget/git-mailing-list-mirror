@@ -2,104 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5573BC636D6
-	for <git@archiver.kernel.org>; Fri, 17 Feb 2023 22:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64097C636D6
+	for <git@archiver.kernel.org>; Fri, 17 Feb 2023 22:50:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbjBQWtB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Feb 2023 17:49:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41924 "EHLO
+        id S229555AbjBQWuJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Feb 2023 17:50:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229558AbjBQWtA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2023 17:49:00 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8C2061AF
-        for <git@vger.kernel.org>; Fri, 17 Feb 2023 14:48:58 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 6B8EF5A1E1;
-        Fri, 17 Feb 2023 22:48:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1676674137;
-        bh=RTg6J3wAfrl7FBH4OI5Lt5I23YwBUpYtlqZH7Kud3M4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=tdJxz0ISGiZ50WvbheOOjD5avC7qtKWMAyVnq68ziFv2eAs6DyPWjCqsR3EqfPqFb
-         ty/GM42oEXDyFr6mkdMfN69jFOlabBKH6VHHml9TCJVg+GSyyQDsVd0YXAIpjVi9+U
-         tx9enNGmNv2q1MdwY7lPca7lEmWjcVeSWeW/2J37IvZZbv1j9TEWthZ68b56et86le
-         2aq3cHES0ba1gNlCmRHOw8Dl0PMgOC80/dxqN5QlIMYCR1UY+m6UdGj3rYobiBlEDp
-         xcVOSWuRbVljHXOl4c/e8IcrCNrehKDqqPNKhJ5ad0lRixlz5dTKo1IjKYD41xUz0V
-         Wz5fZInMqS2Qu1IWxCfKTS0mmBfV8RJVcauf6TSP2hY/bmZn8ODILudwZDtNaur1ZE
-         Jv0I3ASC5akCEkFIiHrKJJejNP5HQ4ybfOs5FJfjErLbZTNdWxG5GTianIzq2x9an1
-         OvjYZhbUHBE/R2y+q5VE6RPUQosaEIUrErh//NZUsSR8T9M2+XX
-Date:   Fri, 17 Feb 2023 22:48:56 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     rsbecker@nexbridge.com
-Cc:     'Emily Shaffer' <nasamuffin@google.com>,
-        'Git List' <git@vger.kernel.org>,
-        'Jonathan Nieder' <jrn@google.com>,
-        'Jose Lopes' <jabolopes@google.com>,
-        'Aleksandr Mikhailov' <avmikhailov@google.com>
-Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
-Message-ID: <Y/AEWHTJtzBArGNv@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        rsbecker@nexbridge.com, 'Emily Shaffer' <nasamuffin@google.com>,
-        'Git List' <git@vger.kernel.org>,
-        'Jonathan Nieder' <jrn@google.com>,
-        'Jose Lopes' <jabolopes@google.com>,
-        'Aleksandr Mikhailov' <avmikhailov@google.com>
-References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
- <Y+/v15TyCbSYzlVg@tapette.crustytoothpaste.net>
- <00b401d9431b$cc3c4460$64b4cd20$@nexbridge.com>
+        with ESMTP id S229530AbjBQWuH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2023 17:50:07 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991095FD7
+        for <git@vger.kernel.org>; Fri, 17 Feb 2023 14:50:05 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id cn2so9820107edb.4
+        for <git@vger.kernel.org>; Fri, 17 Feb 2023 14:50:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3O6IwTirF/wOT1jNbPRrNutIiOwCJmvNz/X17D23vJM=;
+        b=rUCdwkC1rdYIAgNFrTJxRLZT64URdhL0o0ztTyaePTGR8N6Pz2Pgyo55kqXhkKkxnm
+         iAMrPj2a7C3q2z6sehr7Z8GYkk43KzocG7PMzNCPk33d3SLZap4m9omDhDXBXiVLxov+
+         N2hLWAiTCLD1WeeYbeKXcijWUx5TqOYpwj0fJdfjboK2rt8SS26/7EiF2fikoJU453pz
+         5gvDG7avrFWUKZ+ul9fV2CO4tIP7leQn5ld5qqU7fNjNvckifhkEIeYFBqyYxP1sk4nL
+         p+Q0hDYJ1IsNDjBZi7YJ2f2KnN5v1oaCx/3WKYgt/9rjJmKVyIYSThaY6zIEgZb/63tN
+         9MZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3O6IwTirF/wOT1jNbPRrNutIiOwCJmvNz/X17D23vJM=;
+        b=PUNkwP36q5cBcq30FGQL4UDkOF8O/7ydHNETT+dob2CTXV44HsDb34TKsYNOtsTY21
+         GU01n4cSoUo7vUwX1Ouv+//q+wF1r2s6ARCcJJ+vbXVfR+ozV8HMAA8nILwitj4xDahV
+         HHt+fk+u94vclHuC+054F2pZAUbYSufS8KwlpJS+yravuY8D84AvSQznCaFQjAlwQIPB
+         PCXIY0nTlRpovOYUcYKqoAQQs1CmL0CPQPorRYp+Za3xhDKCIeWUZi7OQ0mlJ505n5k8
+         AoEWn5HtglxWYTpYlmluYHHSwE982UR+Ulqx91U5P+Dwecyf2zB1YLzPoXbNBw0KqsCt
+         P+ag==
+X-Gm-Message-State: AO0yUKV+66Jx6MSA517gafJjs0ChtzdsBIESaQN1STuYbSgJW1HrX/UU
+        RLhHGOcwWIDYkQXEkObAzRFNr5NqplmqrehjuVFGW73vJO8TdgAc
+X-Google-Smtp-Source: AK7set9qsHAbBAyBfuhxgXMSKzEUstU98PU/lQyirtUKtflGiC9mboj6A/5edKIFmAJi5tm10GiNzmbxw/WCo6g9DjU=
+X-Received: by 2002:a17:906:4f0a:b0:8b1:30eb:9dba with SMTP id
+ t10-20020a1709064f0a00b008b130eb9dbamr1192078eju.6.1676674203883; Fri, 17 Feb
+ 2023 14:50:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="DV4cIX/uqr8yvddI"
-Content-Disposition: inline
-In-Reply-To: <00b401d9431b$cc3c4460$64b4cd20$@nexbridge.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
+ <Y+/v15TyCbSYzlVg@tapette.crustytoothpaste.net> <CAJoAoZmMQ-ROdCp0=4oaFa836-PqxwYntnRSBSzzJc5chp16eQ@mail.gmail.com>
+ <Y/ACqlhtLMjfgJFQ@tapette.crustytoothpaste.net>
+In-Reply-To: <Y/ACqlhtLMjfgJFQ@tapette.crustytoothpaste.net>
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Fri, 17 Feb 2023 14:49:51 -0800
+Message-ID: <CAJoAoZkMR9Acy7thVs-_e=Fz8wwjoDGDKb46wmwn8yxk0ODGow@mail.gmail.com>
+Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Emily Shaffer <nasamuffin@google.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrn@google.com>,
+        Jose Lopes <jabolopes@google.com>,
+        Aleksandr Mikhailov <avmikhailov@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Feb 17, 2023 at 2:41 PM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2023-02-17 at 21:38:34, Emily Shaffer wrote:
+> > For example, I seem to remember you saying during the SHA-256 series
+> > that the next hashing algorithm would also be painful to implement;
+> > would that still be true if the hashing algorithm is encapsulated well
+> > by a library interface? Or is it for a different reason?
+>
+> Right now, most of the code for a future hash algorithm wouldn't be too
+> difficult to implement, I'd think, because we can already support two of
+> them.  If we decide, say, to implement SHA-3-512, we basically just add
+> that algorithm, update all the entries in the tests (which is kind of a
+> pain since there's a lot of them, but not really difficult), and then
+> move on with our lives.
+>
+> The difficulty is dealing with interop work, which is basically
+> switching from dealing with just one algorithm to rewriting things
+> between the two on the fly.  I think _that_ work would be made easier by
+> library work because sometimes it involves working with submodules, such
+> as when updating the submodule commit, and being able to deal with both
+> object stores more easily at the same time would be very helpful in that
+> regard.
 
---DV4cIX/uqr8yvddI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ooh, I see what you mean. Thanks for the extra context here.
 
-On 2023-02-17 at 22:04:19, rsbecker@nexbridge.com wrote:
-> I am uncertain about this, from a licensing standpoint. Typically,
-> when one links in a library from one project, the license from that
-> project may inherit into your own project. AFAIK, GPLv3 has this
-> implied provision - I do not think it is explicit, but the implication
-> seems to be there. Making git libraries has the potential to cause
-> git's license rights to be incorporated into other products. I am
-> suggesting that we would need to tread carefully in this area. Using
-> someone else's DLL is not so bad, as the code is not bound together,
-> but may also cause ambiguities depending on whether the licenses are
-> conflicting or not. I am not suggesting that this is a bad idea, just
-> one that should be handled carefully.
+> I can imagine there are other things that would be easier as well, and I
+> can also imagine that we'll have better control over memory allocations
+> and leak less, which would be nice.  If we can get leaks low enough, we
+> could even add CI jobs to catch them and fail, which I think would be
+> super valuable, especially since I find even after over two decades of C
+> that I'm still not very good about catching all the leaks (which is one
+> of the reasons I've mostly switched to Rust).  We might also be able to
+> make nicer steps on multithreading our code as well.
+>
+> Personally, I'd like to see some sort of standard error type (whether
+> integral or not) that would let us do more bubbling up of errors and
+> less die().  I don't know if that's in the cards, but I thought I'd
+> suggest it in case other folks are interested.
 
-I think it's pretty clear that if software used Git's libraries, that
-the result would be GPLv2.  That might be fine for some projects, and
-for others, libgit2 would be more appealing.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Yes!!! We have talked about this a lot internally - but this is one
+thing that will be difficult to introduce into Git without making
+parts of the codebase a little uglier. Since obviously C doesn't have
+an intrinsic to do this, we'll have to roll our own, which means that
+manipulating it consistently at function exits might end up pretty
+ugly. So hearing that there's interest outside of my team to come up
+with such a type makes me optimistic that we can figure out a
+neat-enough solution.
 
---DV4cIX/uqr8yvddI
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY/AEWAAKCRB8DEliiIei
-gWUhAQCqAjq6VWZO0mWLT3UL9GI2goHCFHkG6ZWN+4ipHsRNUgD/TpvAXghRVB72
-p7RTAzbs5UXPsN7LQumfGCZUM1HjcA0=
-=qdhs
------END PGP SIGNATURE-----
-
---DV4cIX/uqr8yvddI--
+> --
+> brian m. carlson (he/him or they/them)
+> Toronto, Ontario, CA
