@@ -2,132 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04A1DC05027
-	for <git@archiver.kernel.org>; Fri, 17 Feb 2023 20:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 939EBC05027
+	for <git@archiver.kernel.org>; Fri, 17 Feb 2023 20:42:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbjBQUcM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Feb 2023 15:32:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59088 "EHLO
+        id S229684AbjBQUmN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Feb 2023 15:42:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbjBQUcL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2023 15:32:11 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13AA442BE5
-        for <git@vger.kernel.org>; Fri, 17 Feb 2023 12:32:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1676665907; i=l.s.r@web.de;
-        bh=u5+/4TWu9ssGJfJMaKJkOwF4oromP2eiC/xBfdzMKk0=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=Nuw75KuQ7MvYB3GcvuRVAQVE2olRZ2fVqRbNT+FJH/Zogvcz5YrOcmt7XkQVw0M8N
-         lVcrKZs2fx8EwMLFtgQJmE/xKuCHSHA6BdapY1gcTGQjraQGcnxKxGNTtCTnplG2WN
-         umz3aaBrf4TJFCRZmhwzQBZ1+hBIJ72prAavZ+hQOa8P2+3HVRfix7V1QTbSbyfNrP
-         Oum7xbe8ie/jXE9KEg/pI45T4tiJzpxp3+h3xCsWlFg2Uv+NMEfuYmlAipCnjlWWwB
-         p0f9LS5Ye+S9a4ki/Vs+OF9EaTO14idyluXvoynPjfvAwVWNOhtWRh6Zph4KwzL9RV
-         mxpXfXJPkxj3w==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.21.51]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M91Pe-1pVsoP26Gk-006SII; Fri, 17
- Feb 2023 21:31:47 +0100
-Message-ID: <83635ee4-02a2-dea7-38fa-c7b65c30c897@web.de>
-Date:   Fri, 17 Feb 2023 21:31:45 +0100
+        with ESMTP id S229853AbjBQUmM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2023 15:42:12 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A6325F838
+        for <git@vger.kernel.org>; Fri, 17 Feb 2023 12:42:07 -0800 (PST)
+Received: (qmail 14795 invoked by uid 109); 17 Feb 2023 20:42:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 17 Feb 2023 20:42:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23194 invoked by uid 111); 17 Feb 2023 20:42:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 17 Feb 2023 15:42:06 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 17 Feb 2023 15:42:06 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] blame-tree: add library and tests via "test-tool
+ blame-tree"
+Message-ID: <Y+/mnnJUz75yfWCN@coredump.intra.peff.net>
+References: <patch-1.1-0ea849d900b-20230205T204104Z-avarab@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.2
-Subject: Re: Feature request: Add --mtime option to git archive
-Content-Language: en-US
-To:     Raul Rangel <rrangel@chromium.org>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-References: <Y+6G9n6cWRT9EKyl@google.com>
- <Y+6akicTFG9n0eZy@coredump.intra.peff.net> <xmqq5yc1p7yn.fsf@gitster.g>
- <Y+7PcqpYhF5ZuApG@coredump.intra.peff.net> <xmqqpma9m4i1.fsf@gitster.g>
- <CAHQZ30Dq1_vdJj_hakqXKFUbuqn9ysNsw-zzN83RmUVbibA3Gw@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CAHQZ30Dq1_vdJj_hakqXKFUbuqn9ysNsw-zzN83RmUVbibA3Gw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:HIoTGB58yJgfL41+SB276wZpT41LHf77y9FCPczgClFgGCVq4Wu
- VO6NHo3GY6wAxiukiuSEpHcWeZR8EdDhWaAjYghgn/Gijdi5vD3IPdYzMbhvjSPSmcl2Mxs
- 7K3GED3IVec1I+OHhyPC1HNOX1AKogBKc54a7ee2XDYO3BTEH3gowabD4CwlhMHKYWilnFn
- hjW2brFHQMKOykPYX3WMw==
-UI-OutboundReport: notjunk:1;M01:P0:VVKMXidMjrQ=;ogLQcfUfWi1wRe9bxF5hIgT2GBp
- oBISOYRoIjoFlLrAyPNmccbKf/UYSKsTf1pKOqq5FhwnsqCPPI/ZXQKzS6m3MxAe+2gqw3pln
- mH4hLC6OBS6tCjvxbt0XILUZ243TI6OOurqbSZrP5SW2msMSQ4KHsyk9S3PmC38LqHMeATYRd
- guSJEy2x5/4kDfHG4wZteKYVHIHo4mWU0bud+lb41hA70jIDuoYuuggMkG0dFCKx3JdTDUL+0
- LlaS12lJ5whMIyIrdD1OLhuBNMb7sc3pJcP7hKHz2K7IsDcpCBgMetWvYNtPjzWXh9SnSAg1z
- d1lNVht9AaygJ7J0pi4HisEZA8GjACrGLo5Ju9FXBx3/P+F43uHsjmlf58poxOHnw7BjnVOqz
- 9YTEg8NmJ2w80X/FznFQkq1REWVn4V9BeT0XwUY1ziMJ+RurxL086Hd9Be6cfIkvtyV2CPd+5
- ojU10jH9dTPCg/CQ9zbX2Hsibglw4zcwHijqnoasi8Yp8TP/VI3KEGTswI0diixgCtjrPUeRw
- yXbqr7847sx1b6f4wHqMQcI4tF+tZZhyTPFjAhfNVkLnmByCUmW9TCjRxC12Mcwy7FDdtjXcC
- KWZLLlhtQE3quqxXXe5/h36Sxwr2IWf/ErilSN5nKCcgZbWmbz9tcfTQ/ssHTP3+J1wkXXIf0
- ODN9nqig5/gkpVdqmURKiZWKjbhjajbReXSmFa6FQJadG4R5jLjym0Mfrc/4VjRpEMi1KssUp
- kzYuvUmxKyT9n/Cc3/9jpJupEWR1bVzvIGUPVWi1b7PLC4+RNrwFVX2wp1h/q9CADkFBxSMPt
- 8bh95XPqeEOzwSHo8HUGxuPFZKHnIQaqndZWuIqjyD2j0jhNYQaxlOx4MumQNTZMqhcQ15pvZ
- P7MaoI+RTy9GL71fosXYWzAjtssuDFNzAAzNX4d/fvowYVswWaCuCzldQQ5xCVMpDgzodNjEC
- vKRPUowe7QcHn9ryP24bNsPC0gw=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-1.1-0ea849d900b-20230205T204104Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.02.23 um 16:43 schrieb Raul Rangel:
-> On Thu, Feb 16, 2023 at 7:04 PM Junio C Hamano <gitster@pobox.com> wrote=
-:
->>
->> Jeff King <peff@peff.net> writes:
->>
->>> A similar option in is to simply start using "0" in the meantime, like=
-:
->>>
->>> diff --git a/archive.c b/archive.c
->>> index 81ff76fce9..48d89785c3 100644
->>> --- a/archive.c
->>> +++ b/archive.c
->>> @@ -470,7 +470,7 @@ static void parse_treeish_arg(const char **argv,
->>>               archive_time =3D commit->date;
->>>       } else {
->>>               commit_oid =3D NULL;
->>> -             archive_time =3D time(NULL);
->>> +             archive_time =3D 0;
->>>       }
->>>
->>>       tree =3D parse_tree_indirect(&oid);
->>>
->>> Nobody will complain about changing the byte-for-byte format, since by=
- definition it
->>> was already changing once per second (cue somebody complaining that th=
-ey
->>> have been using LD_PRELOAD tricks to simulate --mtime).
+On Sun, Feb 05, 2023 at 09:47:03PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-And how are you now going to tell the current time on a remote git
-server? ;)
+> From: Jeff King <peff@peff.net>
 
->>> I do wonder if people would complain (both with the patch above and wi=
-th
->>> brian's proposal) that the resulting tarballs extract everything with =
-a
->>> date in 1970. That's not functionally a problem, but it looks kind of
->>> weird in "ls -l".
+I appreciate being credited, of course, but at some point I think this
+becomes "Based-on-a-patch-by". And we may have crossed the line here.
 
-Yes, 21st century artifacts being sent back in time looks a bit strange.
-GNU tar and bsdtar provide option -m to ignore mtimes when extracting.
+> The "blame-tree" library allows for finding the most recent
+> modification to paths in a tree. It does so by expanding the tree at a
+> given commit, taking note of the current state of each path, and then
+> walking backwards through history looking for commits where each path
+> changed into its final sha1.
+> 
+> The "git blame-tree" command was first noted on the ML 2011[1], and
+> over the years there have been mentions of it[2][3], and whether it
+> could be upstreamed. The sources have been available at [4]'s
+> "jk/blame-tree-wip" and "jk/faster-blame-tree-wip" branches.
 
->> And owned by root:root ;-)
->
-> I fully support both of those easy changes. Only reason I proposed
-> --mtime was that https://reproducible-builds.org/docs/archives/
-> recommends setting SOURCE_DATE_EPOCH, but honestly for my purposes I
-> would always use 0 and root:root.
+Sort of. jk/blame-tree-wip probably matches what I sent to the list in
+2011 (and that probably matches what was deployed at GitHub at the
+time). And like all of my branches, I continually rebase it on git.git's
+master branch. But like all branches in my repo with "-wip" in them, it
+is not part of my daily driver, and I generally do not even build it
+(and I would not be surprised if it does not build at all, or one of
+those rebases introduced a horrible bug).
 
-git archive already records root as user and group.
+The jk/faster-blame-tree-wip was an experiment from 2014 to narrow the
+pathspec as we found answers. But it was never deployed anywhere, and
+likewise may or may not even build now. I think the general idea there
+is sound (make pathspec lookups faster by using a trie, and then narrow
+it), but I suspect it's not a full solution. In particular, I don't
+think it does anything clever with merges. Since we are narrowing the
+pathspec as we traverse, we can't rely on the usual pruning of side
+branches that happens via limit_list(), as that is all up-front. So it
+probably needs to look at each merge as we traverse and cull parents
+based on TREESAME.
 
->> I am sure people would complain.  What matters is if these
->> complaints have merit, and in this case, I doubt it.  I especially
->> like your "it has been already changing once per second" reasoning
->> for this change.
+I believe GitHub later had patches to do that, but they didn't use the
+pathspec machinery (because without the tries, it becomes accidentally
+quadratic in the number of paths). I didn't work on those patches,
+though (Stolee and Taylor did), and they're not anywhere in my
+repository (and I no longer have access to the private github repo).
 
-I find it quite convincing as well.
+> This change attempts to start upstreaming this command, but rather
+> than adding a command whose interface & semantics may be controversial
+> starts by exposing & testing the core of its library through a new
+> test helper.
+> 
+> An eventual "git blame-tree" command, or e.g. a new format for "git
+> ls-tree" to show what a path "blames" to can then be implemented with
+> this library.
 
-Ren=C3=A9
+OK. It's a little weird, as I do think the interface and semantics are
+the more interesting part, but this certainly isn't hurting anybody to
+go this route.
 
+> * Removing the "--max-depth" changes to the diff code. We'll need
+>   those eventually, but it's not required for a blame of a given list
+>   of paths.
+> 
+>   As has been noted in previous on-list discussions the semantics of
+>   the "max-depth" changes might be controversial, so it's worthwhile
+>   to split those out so that they can be reviewed separately.
+
+That's probably reasonable. The only two interesting "depths" are really
+"recurse" and "don't recurse" (where "recurse" is probably what you'd
+put in a user-facing tool, and "don't recurse" is what a site like
+GitHub uses to do the blame for a single level of tree it's showing).
+And that narrows the problem space quite a bit.
+
+> * Made the "blame-tree" helper take "--" before any revision options,
+>   for clarity. An eventual built-in command (if any) probably doesn't
+>   want to enforce this, but it makes it clearer in the test helper
+>   what's an argument for "blame-tree" itself, and what's an argument for
+>   the revision machinery.
+
+OK. Since this is just a test-helper, we don't care too much either way.
+
+> * Minor updates for using C99 syntax, and "size_t" instead of "int"
+>   when we're iterating over types whose "nr" is that size.
+
+Reasonable.
+
+> * Avoid sub-shelling in the tests, use "test-tool -C .." instead.
+
+Yeah, the original code probably predates "-C". ;)
+
+> The range-diff here is to peff's jk/blame-tree-wip. As noted above
+> this is far from the full thing, but hopefully getting the basic bits
+> of the library (sans the max-depth question) will make the review of
+> subsequent bits easier.
+
+I doubt this range-diff is useful to anybody. I'm probably the person
+most likely to make sense of it, and it means nothing to me. It probably
+makes sense conceptually to just treat this as a new topic that happens
+to be based on older work.
+
+But if you did want to base it on something, you probably ought to do so
+on what GitHub is currently running in production (and again, talk to
+Taylor or Stolee for that). Unless the intent is to use this as a base
+for showing their changes. Though even then, I'm not sure the
+intermediate state is all that interesting.
+
+> [oodles of patch]
+
+TBH, I didn't really look at this closely. It's been a decade, so even
+for me reviewing this would basically be looking at it from scratch. And
+as my Git time is a bit limited these days, I can't really promise
+timely review of a big topic.
+
+-Peff
