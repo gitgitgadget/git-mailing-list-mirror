@@ -2,117 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDF60C61DA4
-	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 17:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7F33C61DA4
+	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 17:11:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229678AbjBRRIc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Feb 2023 12:08:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41124 "EHLO
+        id S229759AbjBRRLM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Feb 2023 12:11:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjBRRIb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Feb 2023 12:08:31 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A36F126F7
-        for <git@vger.kernel.org>; Sat, 18 Feb 2023 09:08:30 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id CC5375A1A8;
-        Sat, 18 Feb 2023 17:08:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1676740109;
-        bh=BArvDLNO1pMfL2v5KfCF3UAa276u5hVzp804xyhfsKU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Vgefl3oPU83BHzPMQ0TIa2k2W2AXbssO7HJSuav2+84lpzkHRfbrKdzxVD9YSuMAE
-         5ba7TW8G8wVhe04fuU6v9WXnc1Fc+rIKPh3N+1s1NFinaC6o5VFzVWAbYuf0brf6aH
-         7s8czDaIPF1r0Ov2evMEWyh4PON/wLAivS0AumerSxKGvb1UTO3WyQJlIEYlEG3Lkq
-         hXRhwAt1F0+0/Q2wfjUWgFIlg39uWSxP7gQhDpk+dVbl5M3QKXriGoEnTSiGZwC5aS
-         aSpxw6H5CGsXHCD6sYxjzYFMb+oSvwtpg5aSlAfraXEo+rKThXcFA6jqJ/aj/3uyyP
-         FeTR9wqoMMMoN8WFRXZwny7AcA6vbAJDOf35BHZswU3sKxqFKDn6ye2TncUnypADW5
-         vsryxmQaZLVxOn+IcatfhLUDpkptZifdIdMSOp8EOXpUGj+swN5lfthW5v0LYd2JKE
-         Ek4pRbM3uJeH5VmPThdjYY7Bme/RfLi8k7v1Z09dwvRCA11JeqU
-Date:   Sat, 18 Feb 2023 17:08:28 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     demerphq <demerphq@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Raul E Rangel <rrangel@chromium.org>, git@vger.kernel.org
-Subject: Re: Feature request: Add --mtime option to git archive
-Message-ID: <Y/EFfxe0GGqnipvL@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        demerphq <demerphq@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Raul E Rangel <rrangel@chromium.org>,
-        git@vger.kernel.org
-References: <Y+6G9n6cWRT9EKyl@google.com>
- <Y+6akicTFG9n0eZy@coredump.intra.peff.net>
- <xmqq5yc1p7yn.fsf@gitster.g>
- <Y+7PcqpYhF5ZuApG@coredump.intra.peff.net>
- <xmqqpma9m4i1.fsf@gitster.g>
- <CANgJU+VaF7-SJgGPqYGEV5VcJd_nTt2SMOQ5u9mNZ_wsArKT6g@mail.gmail.com>
+        with ESMTP id S229506AbjBRRLK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2023 12:11:10 -0500
+Received: from omta001.cacentral1.a.cloudfilter.net (omta001.cacentral1.a.cloudfilter.net [3.97.99.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFB0B1716C
+        for <git@vger.kernel.org>; Sat, 18 Feb 2023 09:11:04 -0800 (PST)
+Received: from shw-obgw-4001a.ext.cloudfilter.net ([10.228.9.142])
+        by cmsmtp with ESMTP
+        id T5FDpQbZkuZMSTQjnpgFgo; Sat, 18 Feb 2023 17:11:03 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=shaw.ca; s=s20180605;
+        t=1676740263; bh=/aUAoHlBBtXRg9I9gW/fG36fWSJ2ZMpKAnMTbZ16mFc=;
+        h=Date:Reply-To:Subject:To:References:Cc:From:In-Reply-To;
+        b=D96Fi6xo1IjXSBkkNMm3LxPwKmNUCpObHbr81OxxQsXxoJyn1Hh7IETJ8jOmg7NOb
+         Az0bHK/Vn10Dd8RTXAZal9VPMeTlTDe2CLBfdInMgnxp+jghndunHD82thj0LsRWDg
+         swI0e/UayCgwFGEZNxsdSXFjFPVvTnOtZYc1jA7E4xYkksJQs8bQXlzJfXDWDl4w+6
+         BpOKwusd5aNqU21z81v0j4d+NObeJ8u5sPpziG48uuyNvINlrRKZw/ivddFgwHvjC/
+         9+YSVId+dvyLKaegNL+aw5wuWacvfpX6IZKYrRKu77CaHkGT52ykIY+/5cPp9ItZcK
+         PJ/krabUl+53Q==
+Received: from [10.0.0.5] ([184.64.102.149])
+        by cmsmtp with ESMTP
+        id TQjnppC4nHFsOTQjnpZSaa; Sat, 18 Feb 2023 17:11:03 +0000
+X-Authority-Analysis: v=2.4 cv=XZqaca15 c=1 sm=1 tr=0 ts=63f106a7
+ a=DxHlV3/gbUaP7LOF0QAmaA==:117 a=DxHlV3/gbUaP7LOF0QAmaA==:17
+ a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=lrZlElB6y-Ld5Czf_sYA:9 a=QEXdDO2ut3YA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22
+Message-ID: <b2866322-5654-15d0-df83-a87926a01815@Shaw.ca>
+Date:   Sat, 18 Feb 2023 10:11:02 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="C8m3uuobZquCJB84"
-Content-Disposition: inline
-In-Reply-To: <CANgJU+VaF7-SJgGPqYGEV5VcJd_nTt2SMOQ5u9mNZ_wsArKT6g@mail.gmail.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Reply-To: Brian.Inglis@Shaw.ca
+Subject: Re: [PATCH] format.attach: allow empty value to disable multi-part
+ messages
+Content-Language: en-CA
+To:     Junio C Hamano <gitster@pobox.com>
+References: <xmqqwn4fkgtq.fsf@gitster.g>
+Cc:     git@vger.kernel.org
+From:   Brian Inglis <Brian.Inglis@Shaw.ca>
+Organization: Inglis
+In-Reply-To: <xmqqwn4fkgtq.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfEvBLnA14H5b6+9NX/96VG58cJ/QkO6f2aKasJWzt8L19dS+kBmE/F2XlOxupizDo+/beBMZT5yCtBYyixU0JxT81xBVGozTgJIrbqeJGAcXAe2uMuWB
+ nR3VSLafa8rqiG6CVGfi+RHFqg4PHUGbHSvUaPTkij3KpmQseQVgM0BSd0YIA8k7UoBjyreyOVfgmDPwXbrnmZH2lpYtK/EL9Ng=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks Junio,
 
---C8m3uuobZquCJB84
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'll hope and watch for it to get added, and test if/when released.
 
-On 2023-02-18 at 03:04:12, demerphq wrote:
-> I could understand this position if letting the user set the --mtime
-> implied some harm that must be mitigated, but it seems like an odd
-> choice if there is none.  Especially given it would also future proof
-> git against people coming up with a good reason not to use the 0 epoch
-> in the future that you haven't thought of right now. It is not like
-> epoch's and unix time have a totally uncontroversial and stable
-> history. 0 has meant multiple dates over time, and the current
-> definition of 1 Jan 1970, 00:00:00 UTC is problematic as UTC didn't
-> exist until 1972!  Given it clearly wouldn't be hard to allow users to
-> select the epoch in these archives then why not do so?
+-- 
+Take care. Thanks, Brian Inglis			Calgary, Alberta, Canada
 
-If folks want such an option, they're welcome to send a patch to do
-that.  My approach is providing a stable tar format that doesn't change,
-and for people who want to use that format, it has fixed timestamps for
-trees (so it's completely rigid).  If people want to use the default
-format with an arbitrary timestamp, that's fine, and we can support
-that, but we won't guarantee that that format won't change its
-serialization in the future.
+La perfection est atteinte			Perfection is achieved
+non pas lorsqu'il n'y a plus rien à ajouter	not when there is no more to add
+mais lorsqu'il n'y a plus rien à retirer	but when there is no more to cut
+			-- Antoine de Saint-Exupéry
 
-> I have seen devs have issues with stuff like this in the past.
-> Unpacking an archive on one machine showing a different date than one
-> another, or other weird artifacts. Mac used to use a different 0 epoch
-> than windows and linux as I recall, etc etc.  I dont remember the gory
-> details, but i have definitely seen people gnash their teeth over
-> these kind of decisions before. Why not side-step that if you can and
-> let people choose their own defaults?
 
-The ustar format is defined by POSIX and uses the Unix epoch, just like
-the zip format has its own epoch.  If you're processing a tar archive,
-you need to use the Unix epoch.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---C8m3uuobZquCJB84
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY/EGDAAKCRB8DEliiIei
-gY4wAPwKOtnsYQlKruCYypd5iWcUgVNBRXXYlTAB8wjG4ptJxgEAxZCYQkFpxVYN
-QfpGyn+jI3bxa8zTLAtRITUn/Pj/Mgc=
-=6y59
------END PGP SIGNATURE-----
-
---C8m3uuobZquCJB84--
+On 2023-02-17 16:33, Junio C Hamano wrote:
+> When a lower precedence configuration file (e.g. /etc/gitconfig)
+> defines format.attach in any way, there was no way to disable it in
+> a more specific configuration file (e.g. $HOME/.gitconfig).
+> 
+> Change the behaviour of setting it to an empty string.  It used to
+> mean that the result is still a multipart message with only dashes
+> used as a multi-part separator, but now it resets the setting to
+> the default (which would be to give an inline patch, unless other
+> command line options are in effect).
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> 
+>   * This is a backward incompatible change, so we may not take it in the
+>     end.  We'll see.
+> 
+>   Documentation/config/format.txt |  3 ++-
+>   builtin/log.c                   |  2 ++
+>   t/t4014-format-patch.sh         | 18 ++++++++++++++++++
+>   3 files changed, 22 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
+> index 3bd78269e2..73678d88a1 100644
+> --- a/Documentation/config/format.txt
+> +++ b/Documentation/config/format.txt
+> @@ -3,7 +3,8 @@ format.attach::
+>   	'format-patch'.  The value can also be a double quoted string
+>   	which will enable attachments as the default and set the
+>   	value as the boundary.  See the --attach option in
+> -	linkgit:git-format-patch[1].
+> +	linkgit:git-format-patch[1].  To countermand an earlier
+> +	value, set it to an empty string.
+>   
+>   format.from::
+>   	Provides the default value for the `--from` option to format-patch.
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 04412dd9c9..a70fba198f 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1007,6 +1007,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
+>   	if (!strcmp(var, "format.attach")) {
+>   		if (value && *value)
+>   			default_attach = xstrdup(value);
+> +		else if (value && !*value)
+> +			FREE_AND_NULL(default_attach);
+>   		else
+>   			default_attach = xstrdup(git_version_string);
+>   		return 0;
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index 012f155e10..f3313b8c58 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -2281,6 +2281,24 @@ test_expect_success 'format-patch --attach cover-letter only is non-multipart' '
+>   	test_line_count = 1 output
+>   '
+>   
+> +test_expect_success 'format-patch with format.attach' '
+> +	test_when_finished "rm -fr patches" &&
+> +	separator=attachment-separator &&
+> +	test_config format.attach "$separator" &&
+> +	filename=$(git format-patch -o patches -1) &&
+> +	grep "^Content-Type: multipart/.*$separator" "$filename"
+> +'
+> +
+> +test_expect_success 'format-patch with format.attach=disabled' '
+> +	test_when_finished "rm -fr patches" &&
+> +	separator=attachment-separator &&
+> +	test_config_global format.attach "$separator" &&
+> +	test_config format.attach "" &&
+> +	filename=$(git format-patch -o patches -1) &&
+> +	# The output should not even declare content type for text/plain.
+> +	! grep "^Content-Type: multipart/" "$filename"
+> +'
+> +
+>   test_expect_success '-c format.mboxrd format-patch' '
+>   	sp=" " &&
+>   	cat >msg <<-INPUT_END &&
