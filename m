@@ -2,148 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7F33C61DA4
-	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 17:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73CDDC636CC
+	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 17:25:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229759AbjBRRLM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Feb 2023 12:11:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42186 "EHLO
+        id S229539AbjBRRZI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Feb 2023 12:25:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjBRRLK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Feb 2023 12:11:10 -0500
-Received: from omta001.cacentral1.a.cloudfilter.net (omta001.cacentral1.a.cloudfilter.net [3.97.99.32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFB0B1716C
-        for <git@vger.kernel.org>; Sat, 18 Feb 2023 09:11:04 -0800 (PST)
-Received: from shw-obgw-4001a.ext.cloudfilter.net ([10.228.9.142])
-        by cmsmtp with ESMTP
-        id T5FDpQbZkuZMSTQjnpgFgo; Sat, 18 Feb 2023 17:11:03 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=shaw.ca; s=s20180605;
-        t=1676740263; bh=/aUAoHlBBtXRg9I9gW/fG36fWSJ2ZMpKAnMTbZ16mFc=;
-        h=Date:Reply-To:Subject:To:References:Cc:From:In-Reply-To;
-        b=D96Fi6xo1IjXSBkkNMm3LxPwKmNUCpObHbr81OxxQsXxoJyn1Hh7IETJ8jOmg7NOb
-         Az0bHK/Vn10Dd8RTXAZal9VPMeTlTDe2CLBfdInMgnxp+jghndunHD82thj0LsRWDg
-         swI0e/UayCgwFGEZNxsdSXFjFPVvTnOtZYc1jA7E4xYkksJQs8bQXlzJfXDWDl4w+6
-         BpOKwusd5aNqU21z81v0j4d+NObeJ8u5sPpziG48uuyNvINlrRKZw/ivddFgwHvjC/
-         9+YSVId+dvyLKaegNL+aw5wuWacvfpX6IZKYrRKu77CaHkGT52ykIY+/5cPp9ItZcK
-         PJ/krabUl+53Q==
-Received: from [10.0.0.5] ([184.64.102.149])
-        by cmsmtp with ESMTP
-        id TQjnppC4nHFsOTQjnpZSaa; Sat, 18 Feb 2023 17:11:03 +0000
-X-Authority-Analysis: v=2.4 cv=XZqaca15 c=1 sm=1 tr=0 ts=63f106a7
- a=DxHlV3/gbUaP7LOF0QAmaA==:117 a=DxHlV3/gbUaP7LOF0QAmaA==:17
- a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=lrZlElB6y-Ld5Czf_sYA:9 a=QEXdDO2ut3YA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22
-Message-ID: <b2866322-5654-15d0-df83-a87926a01815@Shaw.ca>
-Date:   Sat, 18 Feb 2023 10:11:02 -0700
+        with ESMTP id S229475AbjBRRZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2023 12:25:07 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAA8915CBC
+        for <git@vger.kernel.org>; Sat, 18 Feb 2023 09:25:05 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id w9-20020a17090a028900b00236679bc70cso1834069pja.4
+        for <git@vger.kernel.org>; Sat, 18 Feb 2023 09:25:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rLqAROrdYNOjP+o0VzuJa+DgXpQ7khkgdzlWJr/vPaI=;
+        b=KPfwFNfktmQp+o8FgVjjktQTJtV0n0LJgaRujGtfPuPVfYxkhHpWisa3RvJYRaX1CH
+         c/92KoaM5jX0IVteX9nF3/NO5KUW69GO+LtJEAv8GfB/prXZTUFnx7toSePk9VChhoLZ
+         QV3LfDynkgJ4Qf34BAnOopON07YzqZ8B9k8OUAjy7SAzikdlCp3j2SA/Oqv5DvfVKk94
+         BUc1BexinPIkSX/W7Qp35N0MpLxQuhloSMXrZT9akUu+XYgm6lBMDJf/BNQ/utIOVfun
+         VJZKNuHfQ3tgp3J4LlYAyYl6JKMaj+mC56TzplMmSKHIYVT5/5d5iJP3hBsdfxcBw6r6
+         KJzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rLqAROrdYNOjP+o0VzuJa+DgXpQ7khkgdzlWJr/vPaI=;
+        b=vtf/cgYe70IPIgvfbiFobWaI0aLmKxsMhZ6b0OS62flnMrg6QiVyurnHv0Fkn6yvnc
+         +gA/5J2iHj47cT4y4/VUug1CQFY6bEiX+DoZXMTywYe6vBD5JKXxhYk0nBFYI+mMCOCn
+         DBRKq8WvSnDi/yW9sMQO/BLxWTlgsDrFK6zldZZoMdDoFf6DNAJiSKR8+0xUGl0tR1Zv
+         C8CgRMmBs4VZz91mbhxsx+p+kDeqq//aQkQ2mmMrDnks8oVnWqOEjDZ0WKvBfiDkX0Vc
+         y2ye7mWyLvs0V2HLpvRWFbnK5bCEsvhMnCfRmJeut16g6pS/Tvz653ns53noaO8So31u
+         uBWw==
+X-Gm-Message-State: AO0yUKXhn78bvsrqdB9lb0VtkzdZZitpM85OuYJ7ve4elxHvlPBPuWLY
+        Owv+9+Dtq+V0d7I+HiXopMM=
+X-Google-Smtp-Source: AK7set8Vu+weM6cVKYmTYW7CDs7lEsfjVI+3oXS73vJcny22FM1tIBgI+faaUjBO2QMM7OEh3k4xSw==
+X-Received: by 2002:a17:903:2806:b0:196:1c45:6fc8 with SMTP id kp6-20020a170903280600b001961c456fc8mr2580754plb.60.1676741105089;
+        Sat, 18 Feb 2023 09:25:05 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id 13-20020a170902ee4d00b001965f761e6dsm4936388plo.182.2023.02.18.09.25.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Feb 2023 09:25:04 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Raul E Rangel <rrangel@chromium.org>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, demerphq <demerphq@gmail.com>
+Subject: Re: [PATCH] archive: add --mtime
+References: <Y+6G9n6cWRT9EKyl@google.com>
+        <91a73f5d-ca3e-6cb0-4ba3-38d703074ee6@web.de>
+Date:   Sat, 18 Feb 2023 09:25:04 -0800
+In-Reply-To: <91a73f5d-ca3e-6cb0-4ba3-38d703074ee6@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sat, 18 Feb 2023 09:36:23 +0100")
+Message-ID: <xmqqilfykhsf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Reply-To: Brian.Inglis@Shaw.ca
-Subject: Re: [PATCH] format.attach: allow empty value to disable multi-part
- messages
-Content-Language: en-CA
-To:     Junio C Hamano <gitster@pobox.com>
-References: <xmqqwn4fkgtq.fsf@gitster.g>
-Cc:     git@vger.kernel.org
-From:   Brian Inglis <Brian.Inglis@Shaw.ca>
-Organization: Inglis
-In-Reply-To: <xmqqwn4fkgtq.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfEvBLnA14H5b6+9NX/96VG58cJ/QkO6f2aKasJWzt8L19dS+kBmE/F2XlOxupizDo+/beBMZT5yCtBYyixU0JxT81xBVGozTgJIrbqeJGAcXAe2uMuWB
- nR3VSLafa8rqiG6CVGfi+RHFqg4PHUGbHSvUaPTkij3KpmQseQVgM0BSd0YIA8k7UoBjyreyOVfgmDPwXbrnmZH2lpYtK/EL9Ng=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Junio,
+René Scharfe <l.s.r@web.de> writes:
 
-I'll hope and watch for it to get added, and test if/when released.
-
--- 
-Take care. Thanks, Brian Inglis			Calgary, Alberta, Canada
-
-La perfection est atteinte			Perfection is achieved
-non pas lorsqu'il n'y a plus rien à ajouter	not when there is no more to add
-mais lorsqu'il n'y a plus rien à retirer	but when there is no more to cut
-			-- Antoine de Saint-Exupéry
-
-
-On 2023-02-17 16:33, Junio C Hamano wrote:
-> When a lower precedence configuration file (e.g. /etc/gitconfig)
-> defines format.attach in any way, there was no way to disable it in
-> a more specific configuration file (e.g. $HOME/.gitconfig).
-> 
-> Change the behaviour of setting it to an empty string.  It used to
-> mean that the result is still a multipart message with only dashes
-> used as a multi-part separator, but now it resets the setting to
-> the default (which would be to give an inline patch, unless other
-> command line options are in effect).
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->   * This is a backward incompatible change, so we may not take it in the
->     end.  We'll see.
-> 
->   Documentation/config/format.txt |  3 ++-
->   builtin/log.c                   |  2 ++
->   t/t4014-format-patch.sh         | 18 ++++++++++++++++++
->   3 files changed, 22 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-> index 3bd78269e2..73678d88a1 100644
-> --- a/Documentation/config/format.txt
-> +++ b/Documentation/config/format.txt
-> @@ -3,7 +3,8 @@ format.attach::
->   	'format-patch'.  The value can also be a double quoted string
->   	which will enable attachments as the default and set the
->   	value as the boundary.  See the --attach option in
-> -	linkgit:git-format-patch[1].
-> +	linkgit:git-format-patch[1].  To countermand an earlier
-> +	value, set it to an empty string.
->   
->   format.from::
->   	Provides the default value for the `--from` option to format-patch.
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 04412dd9c9..a70fba198f 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1007,6 +1007,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
->   	if (!strcmp(var, "format.attach")) {
->   		if (value && *value)
->   			default_attach = xstrdup(value);
-> +		else if (value && !*value)
-> +			FREE_AND_NULL(default_attach);
->   		else
->   			default_attach = xstrdup(git_version_string);
->   		return 0;
-> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-> index 012f155e10..f3313b8c58 100755
-> --- a/t/t4014-format-patch.sh
-> +++ b/t/t4014-format-patch.sh
-> @@ -2281,6 +2281,24 @@ test_expect_success 'format-patch --attach cover-letter only is non-multipart' '
->   	test_line_count = 1 output
->   '
->   
-> +test_expect_success 'format-patch with format.attach' '
-> +	test_when_finished "rm -fr patches" &&
-> +	separator=attachment-separator &&
-> +	test_config format.attach "$separator" &&
-> +	filename=$(git format-patch -o patches -1) &&
-> +	grep "^Content-Type: multipart/.*$separator" "$filename"
-> +'
+> +--mtime=<time>::
+> +	Set modification time of archive entries.  Without this option
+> +	the committer time is used if `<tree-ish>` is a commit or tag,
+> +	and the current time if it is a tree.
 > +
-> +test_expect_success 'format-patch with format.attach=disabled' '
-> +	test_when_finished "rm -fr patches" &&
-> +	separator=attachment-separator &&
-> +	test_config_global format.attach "$separator" &&
-> +	test_config format.attach "" &&
-> +	filename=$(git format-patch -o patches -1) &&
-> +	# The output should not even declare content type for text/plain.
-> +	! grep "^Content-Type: multipart/" "$filename"
-> +'
-> +
->   test_expect_success '-c format.mboxrd format-patch' '
->   	sp=" " &&
->   	cat >msg <<-INPUT_END &&
+>  <extra>::
+>  	This can be any options that the archiver backend understands.
+>  	See next section.
+> diff --git a/archive.c b/archive.c
+> index 81ff76fce9..122860b39d 100644
+> --- a/archive.c
+> +++ b/archive.c
+> @@ -472,6 +472,8 @@ static void parse_treeish_arg(const char **argv,
+>  		commit_oid = NULL;
+>  		archive_time = time(NULL);
+>  	}
+> +	if (ar_args->mtime_option)
+> +		archive_time = approxidate(ar_args->mtime_option);
+
+This is the solution with least damage, letting the existing code to
+set archive_time and then discard the result and overwrite with the
+command line option.
+
+I wonder if we want to use approxidate_careful() to deal with bogus
+input?  The code is perfectly serviceable without it (users who feed
+bogus input deserve what they get), but some folks might prefer to
+be "nicer" than necessary ;-)
+
+Other than that, looks very good.  Thanks.
