@@ -2,200 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30A0AC05027
-	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 01:36:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BADA9C05027
+	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 02:00:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229561AbjBRBg6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Feb 2023 20:36:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42492 "EHLO
+        id S229557AbjBRCAF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Feb 2023 21:00:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjBRBg4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Feb 2023 20:36:56 -0500
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48E7E656A2
-        for <git@vger.kernel.org>; Fri, 17 Feb 2023 17:36:55 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id o3so3793030lfo.3
-        for <git@vger.kernel.org>; Fri, 17 Feb 2023 17:36:55 -0800 (PST)
+        with ESMTP id S229445AbjBRCAE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Feb 2023 21:00:04 -0500
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4641C6ABF0
+        for <git@vger.kernel.org>; Fri, 17 Feb 2023 18:00:03 -0800 (PST)
+Received: by mail-qk1-x72d.google.com with SMTP id t1so435509qkt.3
+        for <git@vger.kernel.org>; Fri, 17 Feb 2023 18:00:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1etCIQeKqZUo2WuXBMgJBS4I3N5/M0YLGruJ9g2IDjo=;
-        b=iBGJ58R4fd6xVxGoD/wQ6nKww8zosoHMtbt5L9GOW/ItZ+KM6uE26n7kHlbDmAFvCY
-         gvS7v0fxm+r2Y5h3k1P7DwSDbICYPzMkxQagswWf9hzXGEY3U0d40NZqsRyt6g6q8FRQ
-         71zL+ie+VxwgOb4YZuqkSHtPu/67j0RezqtR9opbN/KRR3ttcyX/+/2gYuVKHB1OilJG
-         87kXvpsQ+eMeUntI3PwHndqT+uemzxi6VK7qOzXCLUsHv3RF/zLs0B2V7avMJcWB8KTS
-         nAZU5lLOtMEp4ZXdKe2JRxXUdXrTb9vmH0bC/MkZO/vsJ4Deebl6JqmAFd0XFdWvnR72
-         BYfw==
+        bh=0QnULE6r9VF4Vx0kx9J37jhsF490ZfiBZ4QTmEcJzLo=;
+        b=VdU04aYoyUSbMpWXIL2ggPyrZCl+I3i4jV4KfCDCCz6JprieEaFVTsC0ZMXFpqteRc
+         lzMH/YQfxUXhzFn2wxyVxrg42pQjCfcXuwBXDpwPX983/okHD1hkZ0yHKw/IgKD2Hf3T
+         Tw5qJ2uq2aZnaZk9GUfGTvJsOWSAezXCQnOs2BSoozeJ/b0maO+4QxLKBc49SWkRSiuM
+         wv7V45lKfnTaXYq1B0UO3CJhBL2mrUqwF+dlZ7UFLYkKRgJmvOvymTPwRY7n6ebnBcOD
+         VnQIVNb3Io/qGhXS2uKIS3ckVV/NP0tmv50xmhRyF91OyqkHvqSpzZrYUEECV3z3vWzQ
+         neBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1etCIQeKqZUo2WuXBMgJBS4I3N5/M0YLGruJ9g2IDjo=;
-        b=oo7OeQ1gd7yz7JDQEHJKBu83ewH7KEjSmqd7UWHcUBAv1siwAlq6J9NqDZIK3s75kB
-         RGHz2vnI/aRsJtu8Ft2f2vN2Zj9UPkyaKu8kjL12dqZvTCnVSgNk5shSoV0fQ+aVBibC
-         3WKSiTqcjwP5gVIFNTNdCkBEUH+jIv0P7rxQgqh9HRydhmuqTSbcZ5iIu4VgWce25OLF
-         2hckxVsc498Il6ahZEqma/bv94qwSNXU0ECh1SsjW7HIhY4KzvCmowcmPrNRuEikdNrM
-         Di63z4BRArHwADPJurQ6cQmh17KbAzN0iWN0Bxd3wrzdIpWh1t7JUoQQyeM+JUXRcGEn
-         rxgw==
-X-Gm-Message-State: AO0yUKX8FJ/VC3qaFPOwMcmywWrzogORHBwI+jnxK/6YC3UYRql+c+ID
-        nZKyWOXsXVKhs4Hv8PNCXPni3qd4W6sF2DzKVIE=
-X-Google-Smtp-Source: AK7set97fUpSV78TF5QMZo/1kK4MNWL14xhVnZAyiirI7kzDWvL0Bc4/ArHTLy7Yfsuc+T6JqA3ZQdGP3AZuu/ZLFGY=
-X-Received: by 2002:ac2:55a1:0:b0:4d5:ca32:9bd6 with SMTP id
- y1-20020ac255a1000000b004d5ca329bd6mr1028869lfg.2.1676684213322; Fri, 17 Feb
- 2023 17:36:53 -0800 (PST)
+        bh=0QnULE6r9VF4Vx0kx9J37jhsF490ZfiBZ4QTmEcJzLo=;
+        b=4aVERoJM6cWwteqgfyLPTyhx75kNFXwXgKr52v/cnSa3BKiOjgn6W7JPrFnY4W3uOB
+         0rzgPxVGrvhQNMlgVvL6dhozqoUAPpywDkfo3AFMv9sXMLC+sWnFKwRiicVhAZf7lcGj
+         fpKS5MDDTO3JA4V2GVBJo0r9D1HSzJUTqKaRO4pf+s7SZH0s51jnhJJFzBCxxVoEOhaQ
+         YKBEk4nRRR86KYbtFUflarEF//rkQRiT7Pu8Wgh+ByY14SPYdbunjeekr0MAwXKpFkAT
+         /urEIZz85LsmJfmcb3dEWvm2HE86eoZDEk3zQBP1Z8NFJ1iUV9LDizZHfj8hGAfrMliA
+         BDIA==
+X-Gm-Message-State: AO0yUKX64ItIY2PDTYryJ0+7wIIXoWrjBW19z6h8MzABUNfyfKLaawsF
+        asz/SxSm7WLAHIn8vjG+Fh020CX9fQlyKcPxq8rP5Lnty3Z7GQ==
+X-Google-Smtp-Source: AK7set9pyWegPCJPPwnmo3p5rp1+DjK5tLxVVtj6o3zx2mSZiDOsIA1BC0ceiwhkrPr5Is/wJ+r4FJwiouM7O3ZKWiY=
+X-Received: by 2002:a05:620a:151c:b0:73b:a5c3:7e8b with SMTP id
+ i28-20020a05620a151c00b0073ba5c37e8bmr697765qkk.7.1676685602320; Fri, 17 Feb
+ 2023 18:00:02 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
- <pull.1452.v3.git.git.1676665285.gitgitgadget@gmail.com> <816c47aa414586e99aa762604396bd8be4fb11f4.1676665285.git.gitgitgadget@gmail.com>
-In-Reply-To: <816c47aa414586e99aa762604396bd8be4fb11f4.1676665285.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 17 Feb 2023 17:36:00 -0800
-Message-ID: <CABPp-BFv+=b0WN3rELib4snOnczveRcwb1b7hVJXh851BKWkvg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] diff: consolidate diff algorithm option parsing
-To:     John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, John Cai <johncai86@gmail.com>
+References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
+ <xmqq3573lx2d.fsf@gitster.g>
+In-Reply-To: <xmqq3573lx2d.fsf@gitster.g>
+From:   demerphq <demerphq@gmail.com>
+Date:   Sat, 18 Feb 2023 02:59:51 +0100
+Message-ID: <CANgJU+XoT42u91WP7-p4V41w7q-UVhutL2LUfNkp3_BRCOn-FQ@mail.gmail.com>
+Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Emily Shaffer <nasamuffin@google.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrn@google.com>,
+        Jose Lopes <jabolopes@google.com>,
+        Aleksandr Mikhailov <avmikhailov@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 17, 2023 at 12:21 PM John Cai via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Sat, 18 Feb 2023 at 00:24, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> From: John Cai <johncai86@gmail.com>
+> Emily Shaffer <nasamuffin@google.com> writes:
 >
-> A subsequent commit will need the ability to tell if the diff algorithm
-> was set through the command line through setting a new member of
-> diff_options. While this logic can be added to the
-> diff_opt_diff_algorithm() callback, the `--minimal` and `--histogram`
-> options are handled via OPT_BIT without a callback.
+> > Basically, if this effort turns out not to be fruitful as a whole, I'd
+> > like for us to still have left a positive impact on the codebase.
+> > ...
+> > So what's next? Naturally, I'm looking forward to a spirited
+> > discussion about this topic - I'd like to know which concerns haven't
+> > been addressed and figure out whether we can find a way around them,
+> > and generally build awareness of this effort with the community.
 >
-> Remedy this by consolidating the options parsing logic for --minimal and
-> --histogram into one callback. This way we can modify `diff_options` in
-> that function.
+> On of the gravest concerns is that the devil is in the details.
 >
-> As an additional refactor, the logic that sets the diff algorithm in
-> diff_opt_diff_algorithm() can be refactored into a helper that will
-> allow multiple callsites to set the diff algorithm.
->
-> Signed-off-by: John Cai <johncai86@gmail.com>
-> ---
->  diff.c | 57 +++++++++++++++++++++++++++++++++++++++++++--------------
->  1 file changed, 43 insertions(+), 14 deletions(-)
->
-> diff --git a/diff.c b/diff.c
-> index 329eebf16a0..5efc22ca06b 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3437,6 +3437,22 @@ static int diff_filepair_is_phoney(struct diff_filespec *one,
->         return !DIFF_FILE_VALID(one) && !DIFF_FILE_VALID(two);
->  }
->
-> +static int set_diff_algorithm(struct diff_options *opts,
-> +                             const char *alg)
-> +{
-> +       long value = parse_algorithm_value(alg);
-> +
-> +       if (value < 0)
-> +               return -1;
-> +
-> +       /* clear out previous settings */
-> +       DIFF_XDL_CLR(opts, NEED_MINIMAL);
-> +       opts->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-> +       opts->xdl_opts |= value;
-> +
-> +       return 0;
-> +}
-> +
->  static void builtin_diff(const char *name_a,
->                          const char *name_b,
->                          struct diff_filespec *one,
-> @@ -5107,17 +5123,28 @@ static int diff_opt_diff_algorithm(const struct option *opt,
->                                    const char *arg, int unset)
->  {
->         struct diff_options *options = opt->value;
-> -       long value = parse_algorithm_value(arg);
->
->         BUG_ON_OPT_NEG(unset);
-> -       if (value < 0)
-> +
-> +       if (set_diff_algorithm(options, arg))
->                 return error(_("option diff-algorithm accepts \"myers\", "
->                                "\"minimal\", \"patience\" and \"histogram\""));
->
-> -       /* clear out previous settings */
-> -       DIFF_XDL_CLR(options, NEED_MINIMAL);
-> -       options->xdl_opts &= ~XDF_DIFF_ALGORITHM_MASK;
-> -       options->xdl_opts |= value;
-> +       return 0;
-> +}
-> +
-> +static int diff_opt_diff_algorithm_no_arg(const struct option *opt,
-> +                                  const char *arg, int unset)
-> +{
-> +       struct diff_options *options = opt->value;
-> +
-> +       BUG_ON_OPT_NEG(unset);
-> +       BUG_ON_OPT_ARG(arg);
-> +
-> +       if (set_diff_algorithm(options, opt->long_name))
-> +               BUG("available diff algorithms include \"myers\", "
-> +                              "\"minimal\", \"patience\" and \"histogram\"");
-> +
->         return 0;
->  }
->
-> @@ -5250,7 +5277,6 @@ static int diff_opt_patience(const struct option *opt,
->
->         BUG_ON_OPT_NEG(unset);
->         BUG_ON_OPT_ARG(arg);
-> -       options->xdl_opts = DIFF_WITH_ALG(options, PATIENCE_DIFF);
->         /*
->          * Both --patience and --anchored use PATIENCE_DIFF
->          * internally, so remove any anchors previously
-> @@ -5259,7 +5285,8 @@ static int diff_opt_patience(const struct option *opt,
->         for (i = 0; i < options->anchors_nr; i++)
->                 free(options->anchors[i]);
->         options->anchors_nr = 0;
-> -       return 0;
-> +
-> +       return set_diff_algorithm(options, "patience");
->  }
->
->  static int diff_opt_ignore_regex(const struct option *opt,
-> @@ -5562,9 +5589,10 @@ struct option *add_diff_options(const struct option *opts,
->                             N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
->
->                 OPT_GROUP(N_("Diff algorithm options")),
-> -               OPT_BIT(0, "minimal", &options->xdl_opts,
-> -                       N_("produce the smallest possible diff"),
-> -                       XDF_NEED_MINIMAL),
-> +               OPT_CALLBACK_F(0, "minimal", options, NULL,
-> +                              N_("produce the smallest possible diff"),
-> +                              PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-> +                              diff_opt_diff_algorithm_no_arg),
->                 OPT_BIT_F('w', "ignore-all-space", &options->xdl_opts,
->                           N_("ignore whitespace when comparing lines"),
->                           XDF_IGNORE_WHITESPACE, PARSE_OPT_NONEG),
-> @@ -5590,9 +5618,10 @@ struct option *add_diff_options(const struct option *opts,
->                                N_("generate diff using the \"patience diff\" algorithm"),
->                                PARSE_OPT_NONEG | PARSE_OPT_NOARG,
->                                diff_opt_patience),
-> -               OPT_BITOP(0, "histogram", &options->xdl_opts,
-> -                         N_("generate diff using the \"histogram diff\" algorithm"),
-> -                         XDF_HISTOGRAM_DIFF, XDF_DIFF_ALGORITHM_MASK),
-> +               OPT_CALLBACK_F(0, "histogram", options, NULL,
-> +                              N_("generate diff using the \"histogram diff\" algorithm"),
-> +                              PARSE_OPT_NONEG | PARSE_OPT_NOARG,
-> +                              diff_opt_diff_algorithm_no_arg),
->                 OPT_CALLBACK_F(0, "diff-algorithm", options, N_("<algorithm>"),
->                                N_("choose a diff algorithm"),
->                                PARSE_OPT_NONEG, diff_opt_diff_algorithm),
-> --
-> gitgitgadget
+> For example, "die() is inconvenient to callers, let's propagate
+> errors up the callchain" is an easy thing to say, but it would take
+> much more than "let's propagate errors up" to libify something like
+> check_connected() to do the same thing without spawning a separate
+> process that is expected to exit with failure.
 
-This patch looks good to me.
+
+What does "propagate errors up the callchain" mean?  One
+interpretation I can think of seems quite horrible, but another seems
+quite doable and reasonable and likely not even very invasive of the
+existing code:
+
+You can use setjmp/longjmp to implement a form of "try", so that
+errors dont have to be *explicitly* returned *in* the call chain. And
+you could probably do so without changing very much of the existing
+code at all, and maintain a high level of conceptual alignment with
+the current code strategy.
+
+To do this you need to set up a globally available linked list of
+jmp_env data (see `man setjmp` for jmp_env), and a global error
+object, and make the existing "die" functions populate the global
+error object, and then pop the most recent jmp_env data and longjmp to
+it.
+
+At the top of any git invocation you would set up the topmost jmp_env
+"frame". Any code that wants to "try" existing logic pushes a new
+jmp_env (using a wrapper around setjmp), and prepares to be longjmp'ed
+to. If the code does not die then it pops the jmp_env it just pushed
+and returns as normal, if it is longjmp'ed to you can detect this and
+do some other behavior to handle the exception (by reading the global
+error object). If the code that died *really* wants to exit, then it
+returns the appropriate code as part of the longjmp, and the try
+handler longjmps again propagating up the chain. Eventually you either
+have an error that "propagates to the top" which results in an exit
+with an appropriate error message, or you have an error that is
+trapped and the code does something else, and then eventually returns
+normally.
+
+FWIW, this is essentially a loose description of how Perl handles the
+execution part of "eval" and supports exception handling internally.
+Most of the perl internals do not know anything about exceptions, they
+just call functions similar to gits die functions if they need to,
+which then call into Perl_die_unwind(). which then calls the
+JUMPENV_JUMP() macro which does the "pop and longjmp" dance.
+
+Seems to me that it wouldn't be very difficult nor particularly
+invasive to implement this in git. Much of the logic in the perl
+project to do this is at the top of cop.h,  see the macros
+JMPENV_PUSH(), JMPENV_POP(), JMPENV_JUMP(). Obviously this code
+contains a bunch of perl specific logic, but the general gist of it
+should be easily understood and easily converted to a more git like
+context:
+
+struct jmpenv: https://github.com/Perl/perl5/blob/blead/cop.h#L32
+JMPENV_BOOTSTRAP: https://github.com/Perl/perl5/blob/blead/cop.h#L66
+JMPENV_PUSH: https://github.com/Perl/perl5/blob/blead/cop.h#L113
+JMPENV_POP: https://github.com/Perl/perl5/blob/blead/cop.h#L147
+JMPENV_JUMP: https://github.com/Perl/perl5/blob/blead/cop.h#L159
+
+Perl_die_unwind: https://github.com/Perl/perl5/blob/blead/pp_ctl.c#L1741
+Where Perl_die_unwind() calls JMPENV_JUMP:
+https://github.com/Perl/perl5/blob/blead/pp_ctl.c#L1865
+
+You can also grep for functions of the form S_try_ in the perl code
+base to find examples where the C code explicitly sets up an "eval
+frame" to interoperate with the functionality above.
+
+git grep -nP '^S_try_'
+pp_ctl.c:3548:S_try_yyparse(pTHX_ int gramtype, OP *caller_op)
+pp_ctl.c:3604:S_try_run_unitcheck(pTHX_ OP* caller_op)
+pp_sys.c:3120:S_try_amagic_ftest(pTHX_ char chr) {
+
+Seems to me that this gives enough prior art to convert git to use the
+same strategy, and that doing so would not actually be that big a
+change to the existing code.  Both environments are fairly similar if
+you look at them from the right perspective. Both are C, and both have
+a lot of global state, and both have lots of functions which you
+really dont want to have to change to understand about exception
+objects..
+
+Here is an example of how a C function might be written to use this
+kind of infrastructure to "try" functionality that might call die. In
+this case there is no need for the code to inspect the global error
+object, but the basic pattern is consistent. The "default" case below
+handles the situation where the "tried" function is signalling an
+"untrappable error" that needs to be rethrown to ultimately unwind the
+entire try/catch chain and exit the program. It is derived and
+simplified from S_try_yyparse mentioned above. This function handles
+the "compile the code" part of an `eval EXPR`, and traps exceptions
+from the parser so that they can be handled properly and distinctly
+from errors trapped during execution of the compiled code. [ I am
+assuming that given the historical relationship between git and perl
+these concepts are not alien to everybody on this list. ]
+
+/* S_try_yyparse():
+ *
+ * Run yyparse() in a setjmp wrapper. Returns:
+ *   0: yyparse() successful
+ *   1: yyparse() failed
+ *   3: yyparse() died
+ *
+ * ...
+ */
+STATIC int
+S_try_yyparse(pTHX_ int gramtype, ...)
+{
+    dJMPENV;
+
+    JMPENV_PUSH(ret);
+    switch (ret) {
+    case 0:
+        ret = yyparse(gramtype) ? 1 : 0;
+        break;
+    case 3:
+        /* yyparse() died and we trapped the error. */
+        ....
+        break;
+    default:
+        JMPENV_POP;          /* remove our own setjmp data */
+        JMPENV_JUMP(ret); /* RETHROW */
+    }
+    JMPENV_POP;
+    return ret;
+}
+
+-- 
+perl -Mre=debug -e "/just|another|perl|hacker/"
