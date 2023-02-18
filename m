@@ -2,162 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE96AC636CC
-	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 16:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C728C61DA4
+	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 16:41:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229602AbjBRQjr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Feb 2023 11:39:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58292 "EHLO
+        id S229668AbjBRQle (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Feb 2023 11:41:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbjBRQjq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Feb 2023 11:39:46 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 376DD16306
-        for <git@vger.kernel.org>; Sat, 18 Feb 2023 08:39:45 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id w18so652263wrv.11
-        for <git@vger.kernel.org>; Sat, 18 Feb 2023 08:39:45 -0800 (PST)
+        with ESMTP id S229496AbjBRQlc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2023 11:41:32 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8F5812F1B
+        for <git@vger.kernel.org>; Sat, 18 Feb 2023 08:41:31 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id bg7-20020a05600c3c8700b003dc57ea0dfeso784184wmb.0
+        for <git@vger.kernel.org>; Sat, 18 Feb 2023 08:41:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8cE9qPC/+EzK5WCgFt3fpTrq3wn5Ogg4q3nV/66XoNs=;
-        b=c7CwaVd7fqYJjx5/TIzX8yALDbuvmq8KAi2AyKLJC61zz/uJacQ1Q/b5O3BJ4sq+jZ
-         WG/CBGPvzTu7LorEj+kTaOlgmAD7SOIZOGw5nnExevbvD3yCEZVyJKw/KEMjYE38xn8f
-         TkZxwVUtxaqNSDTh0bU6olgZz2qEalEL6Hjpce18DOf9SO9pd4zQ46QX4pr8HUiRYafn
-         6hq2UbUlpZuqjjJaTa9lf8VczWFU4ZS7qSQpKboZc5f/Xq4kjqojZ+qH6tMUknqu3v6S
-         N3OqG3UUDOrEkV50E//NCNkvMvvM8iCGmnhLJf22cBU2qa543ldfuFvHUkQ6ieLGeZE7
-         e1Qw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VBfg4n8SOC7bp+8SGmeykcAgJwAkFgCMlki4P7OXbxM=;
+        b=pQUl3zwtP2DSWRD00TAzJNeN+SIIwv/9acy3DDTNinYquQ6kdoHXUSErZsPfLawKe5
+         A2TRIp0XgJlyciU1CHWeUARWnXKYHE7HSANT8sozttaN3QwGn9Pk8IeF9mMkFXOXDg/i
+         Jblt3/9bUU3X82t+C6NGQwtP9GL8CzBNj1IOz2kVUnevpvn6B5EUJKrIyqOtkAlGZZ9k
+         98y/rpa1r2wYiC5saNMfIgVV2JIgY0jjALL+TJhxATqBlEd2KP4dd0EEmfv6UNNRZ92+
+         cLQ9S5f4dAd+b6mEKwsLeYAjlPpc96jEUzaBaWUZ7IBVV+aOfdUuwaQRuRfsDAtasmr1
+         DuTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8cE9qPC/+EzK5WCgFt3fpTrq3wn5Ogg4q3nV/66XoNs=;
-        b=dHJKRDNEPX1D09DfPsvRbt0YjNuNG4SYxKqdFiOQRsn3hGslalP/DsOOKNt/hIrnFn
-         AuEqSMPO7jsB7oVo2EmJ7x8zO/IFJqAf6eJ2QjLf36B8OCBENGCe0E+KxvHEVt4TXVz5
-         LXtGyR3EL3axqU880mBrWPMpGyFVBQFXADYMbp/EIloDbthLbRBNU3LZ095Rw7agx3e3
-         9jB9E5JGP2RQ4f8AUoTW4kY1NRRy7Yem15AvLmwGAA/UZMsrGLYBEOyQolASgnmh4c8v
-         Fkgk+gsDTBG9Y30RA/jgf4Rt5bVRrnk0ql09cscinGQobr6SK7pCClVU5fsRijUD7BhD
-         Knqg==
-X-Gm-Message-State: AO0yUKUx4IyydSNHdYUj7zBwx8uX4gFICD15NnO/M1XPUFZAfQsOdXvZ
-        yXL/5hO7PO3H9HSD1kaDssiLlg4P0xs=
-X-Google-Smtp-Source: AK7set99rvCKVkubVqoMTNW6wg2+91AdjaxNeotF2lRUxBbpG4/MB1eOlr2xOqxbV38aYJh/mZk/QA==
-X-Received: by 2002:a5d:6e03:0:b0:2c5:4c6f:27cc with SMTP id h3-20020a5d6e03000000b002c54c6f27ccmr3210215wrz.44.1676738383537;
-        Sat, 18 Feb 2023 08:39:43 -0800 (PST)
-Received: from [192.168.1.212] ([90.248.183.175])
-        by smtp.gmail.com with ESMTPSA id m11-20020a5d6a0b000000b002c55ec7f661sm7280640wru.5.2023.02.18.08.39.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Feb 2023 08:39:43 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <c3ef69e0-c37a-01fe-a40a-c2940e329793@dunelm.org.uk>
-Date:   Sat, 18 Feb 2023 16:39:40 +0000
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VBfg4n8SOC7bp+8SGmeykcAgJwAkFgCMlki4P7OXbxM=;
+        b=z+jlhBgOfRSR9DqhEedB5SU6k8UL9Qp4B6vIUGKYIMMGXOyTOOk4ygQj7WH8h1vj6T
+         lI26YaJ7+wzBMHP6h35Dc2DNnj92DK/XtZI4LbX4wI0+oMl2F1krJmiS6JzRF6Pj3qFR
+         glHv+F7f4A8yU+munva0pEl5NorudaEDpRSFj4SXWNfqB5q1YcnbosT3uAg5jzE7OaFU
+         9J4S56qJpt3EobjFoxyQn+5J7QSLB2KAva8fQlH9lShcOZC+6lmJ2NYIR1CGjSsPD/Uf
+         5whyNRRRQoeJxUk/nfYdl0NtYheQlA32+xsoaZuRU0Dy4G9G7ONLNiWPlC69dQC5Xbt4
+         3xxg==
+X-Gm-Message-State: AO0yUKUx/5YYcLkTGUXRkOSZ2/rgQeBSBFZsIB1/KWox8/Y3lRwEjkH4
+        UQ4uXnljfFz0iUZvdA/mp0Dsi7MPeQE=
+X-Google-Smtp-Source: AK7set+M3+fPX4r+ihy1BT76EjUtY0kbe0/Pht0ejCU7XkQU0GO2QHM+Y+aayo0mt9ETPwS99SPgQQ==
+X-Received: by 2002:a05:600c:746:b0:3de:d52:2cd2 with SMTP id j6-20020a05600c074600b003de0d522cd2mr2768227wmn.4.1676738490063;
+        Sat, 18 Feb 2023 08:41:30 -0800 (PST)
+Received: from localhost.localdomain (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
+        by smtp.gmail.com with ESMTPSA id k37-20020a05600c1ca500b003db06224953sm9490178wms.41.2023.02.18.08.41.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Feb 2023 08:41:29 -0800 (PST)
+From:   Andy Koppe <andy.koppe@gmail.com>
+To:     git@vger.kernel.org
+Cc:     pclouds@gmail.com, Andy Koppe <andy.koppe@gmail.com>
+Subject: [PATCH] restore: fault --staged --worktree with merge opts
+Date:   Sat, 18 Feb 2023 16:39:36 +0000
+Message-Id: <20230218163936.980-1-andy.koppe@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] pull: conflict hint pull.rebase suggestion should offer
- "merges" vs "true"
-Content-Language: en-US
-To:     Elijah Newren <newren@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>
-Cc:     Tao Klerks <tao@klerks.biz>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <pull.1474.git.1675614276549.gitgitgadget@gmail.com>
- <CAMMLpeTPEoKVTbfc17w+Y9qn7jOGmQi_Ux0Y3sFW5QTgGWJ=SA@mail.gmail.com>
- <CAPMMpogFAR6cvcR8T5fx+AoytAJ7TsPpSeOjHNzW4Gmkuq7FLQ@mail.gmail.com>
- <CAMMLpeTQ1RpsvwRdZ0G3wdvH1+LXE5tw=7Cs6Q+HxMcRU0qj5Q@mail.gmail.com>
- <CABPp-BFxGYQ_JTC5c4_S_gOK3GxWKuZ=KfvycpkBjPGyKzCJ+g@mail.gmail.com>
-In-Reply-To: <CABPp-BFxGYQ_JTC5c4_S_gOK3GxWKuZ=KfvycpkBjPGyKzCJ+g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18/02/2023 03:17, Elijah Newren wrote:
-> On Thu, Feb 16, 2023 at 8:02 PM Alex Henrie <alexhenrie24@gmail.com> wrote:
->>
->> On Thu, Feb 16, 2023 at 5:31 AM Tao Klerks <tao@klerks.biz> wrote:
->>>
->>> If there's an appetite for it, I would love to contribute to a
->>> multi-year adventure to change git's behavior, little by little, until
->>> the behavior of "rebase=merges" is the default, and the old behavior
->>> becomes a different option like
->>> "rebase=copy-merged-commits-to-flatten"
->>
->> I know you had a lot to say in your last email, but I'd like to focus
->> on this point. I would be OK with the proposed patch if it were part
->> of a larger effort to make --rebase-merges the default behavior of
->> `git rebase`. That seems like an achievable goal, and I don't think it
->> would take multiple years, maybe one year at the most. The process
->> would look something like this:
->>
->> 1. Add a --no-rebase-merges option to `git rebase`.
->>
->> 2. Add a rebase.merges config option.
->>
->> 3. Add a warning to `git rebase` that appears if rebase.merges is
->> unset and neither --rebase-merges nor --no-rebase-merges is given. The
->> warning would advise the user that the default behavior of `git
->> rebase` will change in a future release and suggest setting
->> rebase.merges=no-rebase-cousins to get the new behavior now.
->>
->> 4. Change the `git pull` advice to recommend --rebase=merges and
->> pull.rebase=merges.
->>
->> 5. Wait a couple of releases.
->>
->> 6. Change the default behavior of `git rebase` to `git rebase
->> --rebase-merges` and the default behavior of `git pull --rebase` to
->> `git pull --rebase=merges`. At the same time, remove the warning from
->> `git rebase`. The old `git pull` behavior would still be available as
->> `git pull --rebase=true`.
->>
->> 7. Change the `git pull` advice to recommend the short and simple
->> --rebase option again (leaving the recommendation of
->> pull.rebase=merges for the config option).
->>
->> Does that sound reasonable? I think I could lend a hand with steps 1-3.
-> 
-> One concern I have is that "--rebase-merges" itself has negative user
-> surprises in store.  In particular, "--rebase-merges", despite its
-> name, does not rebase merges.  It uses the existing author & commit
-> message info, but otherwise just discards the existing merge and
-> creates a new one.  Any information it contained about fixing
-> conflicts, or making adjustments to make the two branches work
-> together, is summarily and silently discarded.
+The 'restore' command already rejects the --merge, --conflict, --ours
+and --theirs options when combined with --staged, but accepts them when
+--worktree is added as well.
 
-That's a good point. Another potentially surprising behavior is that 
-when I'm rebasing an integration branch with -rno-rebase-cousins then if 
-one of the topic branches merged into the integration branch happens to 
-share the same base as the integration branch itself the topic branch 
-gets rebased as well. -rno-rebase-cousins is also slower that it needs 
-to be because it creates a todo list that contains all the commits on 
-the topic branches merged into the integration branch rather than just 
-the merges. The commits on the topic branches are fast-forwarded rather 
-than rewritten so long as they don't share the same base as the 
-integration branch but it noticeably slower than using a todo list with 
-just the merge commands.
+Unfortunately that doesn't appear to do anything useful. The --ours and
+--theirs options seem to be ignored when both --staged and --worktree
+are given, whereas with --merge or --conflict, the command has the same
+effect as if the --staged option wasn't present.
 
-> My personal opinion would be adding such a capability should be step
-> 2.5 in your list, though I suspect that would make Tao unhappy (it's a
-> non-trivial amount of work, unlike the other steps in your list).
+So reject those options with '--staged --worktree' as well, using
+opts->accept_ref to distinguish restore from checkout.
 
-I've got a couple of patches[1] that cherry-pick the merge if only one 
-of the parents has changed. I've never tried upstreaming them as it is 
-only a partial solution to the problem of rebasing merges but that 
-approach should work well with "git pull --rebase=merges" as only the 
-upstream side will have changed (when rebasing my git integration branch 
-with that patch the merges are cherry-picked). They might make a useful 
-starting point if anyone wants to try and improve the rebasing of merges.
+Add tests for both --staged and '--staged --worktree'.
 
-Best Wishes
+Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
+---
 
-Phillip
+CI run: https://github.com/ak2/git/actions/runs/4210823089
 
-[1] https://github.com/phillipwood/git/commits/rebase-cherry-pick-merges
+Some more explanation: when finding that 'restore --staged --worktree'
+with --ours or --theirs was accepted, I assumed that it would do the
+equivalent of 'restore --ours/--theirs <paths> && add --update <paths>'.
+As it doesn't do that, I think it's better to raise the same error as
+without --worktree.
+
+ builtin/checkout.c |  6 ++----
+ t/t2070-restore.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 24 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index a5155cf55c..b09322f7c8 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -489,13 +489,11 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 		die(_("'%s' must be used when '%s' is not specified"),
+ 		    "--worktree", "--source");
+ 
+-	if (opts->checkout_index && !opts->checkout_worktree &&
+-	    opts->writeout_stage)
++	if (!opts->accept_ref && opts->checkout_index && opts->writeout_stage)
+ 		die(_("'%s' or '%s' cannot be used with %s"),
+ 		    "--ours", "--theirs", "--staged");
+ 
+-	if (opts->checkout_index && !opts->checkout_worktree &&
+-	    opts->merge)
++	if (!opts->accept_ref && opts->checkout_index && opts->merge)
+ 		die(_("'%s' or '%s' cannot be used with %s"),
+ 		    "--merge", "--conflict", "--staged");
+ 
+diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
+index 7c43ddf1d9..373dc1657e 100755
+--- a/t/t2070-restore.sh
++++ b/t/t2070-restore.sh
+@@ -137,4 +137,26 @@ test_expect_success 'restore --staged invalidates cache tree for deletions' '
+ 	test_must_fail git rev-parse HEAD:new1
+ '
+ 
++test_expect_success 'restore with merge options rejects --staged' '
++	test_must_fail git restore --staged --merge . -- 2>err1 &&
++	test_i18ngrep "cannot be used with" err1 &&
++	test_must_fail git restore --staged --conflict=diff3 . -- 2>err2 &&
++	test_i18ngrep "cannot be used with" err2 &&
++	test_must_fail git restore --staged --ours . -- 2>err3 &&
++	test_i18ngrep "cannot be used with" err3 &&
++	test_must_fail git restore --staged --theirs . -- 2>err4 &&
++	test_i18ngrep "cannot be used with" err4
++'
++
++test_expect_success 'restore with merge options rejects --staged --worktree' '
++	test_must_fail git restore --staged --worktree --merge . -- 2>err1 &&
++	test_i18ngrep "cannot be used with" err1 &&
++	test_must_fail git restore --staged --worktree --conflict=diff3 . -- 2>err2 &&
++	test_i18ngrep "cannot be used with" err2 &&
++	test_must_fail git restore --staged --worktree --ours . -- 2>err3 &&
++	test_i18ngrep "cannot be used with" err3 &&
++	test_must_fail git restore --staged --worktree --theirs . -- 2>err4 &&
++	test_i18ngrep "cannot be used with" err4
++'
++
+ test_done
+-- 
+2.39.0
+
