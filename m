@@ -2,81 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC1C8C636CC
-	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 17:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E463AC61DA4
+	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 18:35:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229622AbjBRReP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Feb 2023 12:34:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49802 "EHLO
+        id S229658AbjBRSfi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Feb 2023 13:35:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbjBRReO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Feb 2023 12:34:14 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 261B61717E
-        for <git@vger.kernel.org>; Sat, 18 Feb 2023 09:34:14 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id w3so1192198pjb.4
-        for <git@vger.kernel.org>; Sat, 18 Feb 2023 09:34:14 -0800 (PST)
+        with ESMTP id S229605AbjBRSfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2023 13:35:37 -0500
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A046CDFF
+        for <git@vger.kernel.org>; Sat, 18 Feb 2023 10:35:36 -0800 (PST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-53687ec9de9so9780227b3.5
+        for <git@vger.kernel.org>; Sat, 18 Feb 2023 10:35:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B7mBI+iX1x48vccJxMzFLo6NWwZiWwBQFunGere717Y=;
-        b=NhhQ3P8QM/TPU9L3lEvcYegSLe2IPYu/NCHt8lE0nQPlyYFXNs54MqpZvEeUbunEQ7
-         07z1Aol09+pk+Job42DxiOlM5Abgh/ka3ykthoZI5cDu8XTrz9U5j817qVZwXtRlfQ9G
-         +1kOmQ7EP9MkwL6EFjiRAPTXJQ2r5v0UBlk/jnsOK7z2JRuPVsa0or85/9OPobknKNQU
-         NxuIfzfbvP206zA+v3ATgrnDH2FRQxFzBjnouoxOFrq2W2C8Z/S8N9hbdsSYongmPIYx
-         VvbMDVQeZDW/fC4LKuutQ1S6P/XSEHC6+usAgFMpp9awn7XoPEjkgwwu+IimYz078K9Y
-         NNlA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PMpVa9ePDpfikhLQvZc0d+eoRj4RiH8WsAFdLk4Ze4g=;
+        b=NQO06eF0hCvrSb68s+8ZyAWecHJzyxBiL5uvXRhTf5zhDvjI6TT+KjK+8VeU9tf7KD
+         9gRrbJJMTWPvsDW3n0LVDPZTH+MfIZELTQWs7azGL6pAhWmVcUpN611jUi6Hi4w2N0Uw
+         i+OP6Z+Eo1I9hlQBAy0loZ+ZQWMOzF9/z0+B2dO67ITGjJut5GBCKtk1fu7YKWKIh/YT
+         1MBDec9sIoK0TtgRee75RuwQvsOroDCkCGkNS83CYScwmLy7I/JXr+xktx2VRW9GZ2ML
+         6EudiCEVRxotP6kmtWmRc1SdBAkT6Q9Inna/i3oAzTiscsrYN1I7aL5u0VpbEQRbcCz4
+         ABzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=B7mBI+iX1x48vccJxMzFLo6NWwZiWwBQFunGere717Y=;
-        b=CmBkl5O2q+qOn4jOQiO760xm/3LjociEz754rd06MRGUAJ8I+jyjnyHd3rkPWit5Wk
-         v3v+qnkn/F9fs49e8/ug3DH0e79eOTKgh40ZpxNKVkjbpWXud4AV7zmzLQJhXsC2MAlU
-         8Mt6EYKVPyW0Es1+CXpeUBRnY+Ug2mmirQvMbLPMwQQZH/8SnX6/YHo5N1QFbGN0e3zy
-         TWJxjXUSwqybMA9Fa5sQ9qNGweh31eMjYdrVo0n7c+nXN14f0WiT5lowdF0cFuRQ0LYy
-         6al2bPye273BPEqei9GgL+z60WllA3URyJ5/Ve61+9zT277zqv4LXKV2eTXWv9N7iIA6
-         r7iA==
-X-Gm-Message-State: AO0yUKXbwX5Vm4cd6qIukf2RlWx0A+2I6P0A2nxXTAf+ODnuQvy2MS04
-        6bvtZissTC3iJE6eus+/PcU=
-X-Google-Smtp-Source: AK7set+mwsSdvtcOjKKRs+0ZRJokiV/xsJx4XatbFGhHDWKqGwKLO9s5tPlQi/z0AriRRIMN2UqLzg==
-X-Received: by 2002:a17:902:eb4d:b0:19a:9691:196d with SMTP id i13-20020a170902eb4d00b0019a9691196dmr863426pli.29.1676741653495;
-        Sat, 18 Feb 2023 09:34:13 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id h2-20020a170902f7c200b0019608291564sm4950947plw.134.2023.02.18.09.34.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Feb 2023 09:34:12 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brian Inglis <Brian.Inglis@Shaw.ca>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] format.attach: allow empty value to disable multi-part
- messages
-References: <xmqqwn4fkgtq.fsf@gitster.g>
-        <b2866322-5654-15d0-df83-a87926a01815@Shaw.ca>
-Date:   Sat, 18 Feb 2023 09:34:12 -0800
-In-Reply-To: <b2866322-5654-15d0-df83-a87926a01815@Shaw.ca> (Brian Inglis's
-        message of "Sat, 18 Feb 2023 10:11:02 -0700")
-Message-ID: <xmqqedqmkhd7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PMpVa9ePDpfikhLQvZc0d+eoRj4RiH8WsAFdLk4Ze4g=;
+        b=PcDxZn//aQZaf9A+TLZ1OgUKa67lKs7NXQO9YsHk8n6SmFghPqOVfGiQwHlKcFjCXT
+         srXzztdw3whWNHDmCagSP5YhCv86s3/8W6UZa8stzrePAN2xZPLoiPPjTy1b9ynJRJpp
+         fgY8bq7TVDo7L0fEI2w4ILg/Z/Ht9l0jIrlvAjOrQkoGrPxyh9vNAAlN3B3RZkwdlpt0
+         cDgyWJ6rKFJV6Cyv7i87BldN7rZ40GztUJxOAJCl2z6yw2k5Ihv/1Xf0mXqYGqMyN99L
+         pXeETQBa69MrF5lgWeLtw24p7wjnesLtS1ydJhFwBw4hLBXpqxSk/KYks0NuNJaA8u57
+         lGkA==
+X-Gm-Message-State: AO0yUKWxAqO+bbqso7GwqWD5l4AS4S3qavLUlcM5ldz9pho4/rOT5grg
+        T9XhKeeY7fLWHLyuAtdLLNqRlG0lhOYRKk1s944=
+X-Google-Smtp-Source: AK7set/w2l/0JcxG18vzMrvHhFAlgoRJMzxRNtvQ1ZBCxwK92IWF/rKlD881B6WyLyT8YViM8v/CowgZ9+/Ix7RXD78=
+X-Received: by 2002:a81:4a02:0:b0:52e:e6ed:3097 with SMTP id
+ x2-20020a814a02000000b0052ee6ed3097mr439090ywa.535.1676745335482; Sat, 18 Feb
+ 2023 10:35:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20230215104246.8919-1-mcsm224@gmail.com> <20230215231428.68040-1-mcsm224@gmail.com>
+In-Reply-To: <20230215231428.68040-1-mcsm224@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 18 Feb 2023 19:35:24 +0100
+Message-ID: <CAP8UFD2=6CarUN1v-vavEJza0PyzZLt3xjVS0BubYUD9=fy46w@mail.gmail.com>
+Subject: Re: [PATCH 1/1] trace.c, git.c: remove unnecessary parameter to trace_repo_setup
+To:     Idriss Fekir <mcsm224@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, cheskaqiqi@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brian Inglis <Brian.Inglis@Shaw.ca> writes:
-
-> Thanks Junio,
+On Thu, Feb 16, 2023 at 12:36 AM Idriss Fekir <mcsm224@gmail.com> wrote:
 >
-> I'll hope and watch for it to get added, and test if/when released.
+> From: idriss fekir <mcsm224@gmail.com>
 
-That won't be very helpful as reviewing and testing is to prevent
-nonsense patches to be added to the released version.  Once it is
-released, testing becomes much less valuable, as it is too late to
-catch nonsense bugs in the added code.
+I think the subject could be improved a bit more, and it looks like
+it's the second version of the patch, so something like the following
+might have been better:
 
-Thanks.
+[PATCH v2 1/1] trace: remove unnecessary parameter to trace_repo_setup()
+
+(Please use "v3" if you resend it with some changes.)
+
+> trace_repo_setup of trace.c is called with the argument 'prefix' from
+> only one location, run_builtin of git.c, which sets 'prefix' to
+> the return value of setup_git_directory or setup_git_directory_gently
+> (a wrapper of the former).
+
+It might be a bit easier to read when functions names have "()" after
+them like "trace_repo_setup()" instead of "trace_repo_setup".
+
+Otherwise your patch looks good to me. Thanks!
