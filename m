@@ -2,158 +2,229 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 730B3C636D7
-	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 09:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 643DDC636D7
+	for <git@archiver.kernel.org>; Sat, 18 Feb 2023 10:36:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229541AbjBRJik (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Feb 2023 04:38:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41128 "EHLO
+        id S229904AbjBRKg5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Feb 2023 05:36:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjBRJij (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Feb 2023 04:38:39 -0500
-Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93D9D31E1C
-        for <git@vger.kernel.org>; Sat, 18 Feb 2023 01:38:37 -0800 (PST)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4PJkBy1VcJz5tlD
-        for <git@vger.kernel.org>; Sat, 18 Feb 2023 10:38:33 +0100 (CET)
-Content-Type: multipart/mixed; boundary="------------Y0x6Zb5YMgeEl0sunWLQPSd1"
-Message-ID: <c6246ed5-bffc-7af9-1540-4e2071eff5dc@kdbg.org>
-Date:   Sat, 18 Feb 2023 10:38:33 +0100
+        with ESMTP id S229841AbjBRKg4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Feb 2023 05:36:56 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87D033C04
+        for <git@vger.kernel.org>; Sat, 18 Feb 2023 02:36:54 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id w18so95441wrv.11
+        for <git@vger.kernel.org>; Sat, 18 Feb 2023 02:36:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=O2E1+JfpLB7nJZFTrbcowunylnep0khv+4LbgB85iZw=;
+        b=g59u105S0p9n+6LkwPvaxN+YA4OitqpCJ1YBoI54lo+DMYKG8dVfztz3zXrtg5curs
+         tW/uI1mja8/CPrn2rqkcOh0vr2pWMbXg8LNpwsvq0D3zm0AZD6qbLFP5jUndTEfOn3xb
+         xS9Gv7amBKaCS/BdlbDnMOf5a6Ct0gJjh0eymdrlT4tM9fWm4AmZ1vYQsP1K8N4+Jirf
+         +gBR1sAiJbm2KX+HCvi1TOs6X3nR2y33RqcEWAjndDyInCYOCeUAkAqAEc14J8I391zW
+         0VNDuq4jX3E5fNAjsIKdiUpL/qIKbe4GDT4B1v/bAFr97t7ic0l1U1i1IzudlKLk+nQO
+         wb/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O2E1+JfpLB7nJZFTrbcowunylnep0khv+4LbgB85iZw=;
+        b=uS5Q8R7v6inDEAOTtCLP1/ixGg22Cx21JQHCC1vvV1hZ6+Vwq6o6bvpyTS+CGec8o9
+         y/50sh3W3bc4YeBIT3LpFys+iQkmmnNsZIq0+yKlx1SKfEBC8Jeb/5iaCrWvWDI0/3wU
+         Rpu3FC5zuWTwawuK0CAOMKmKVJRargvw0zzB12u5QIwlr2HGBhpU6OC6ggMXnYohXzX7
+         xFsfW5mPswBMkjSnTKRjeDm9PXbp04E9RizTyCdQ59l+/LEZSlsTMBblkly9TjJTMqv7
+         W5APE+MtsA3tgAPNLRpnOaCVt/yCLnPQ5ic9ub1xoZRXxPBNPT+FOdUuvzHmuGuzi19U
+         Yx8A==
+X-Gm-Message-State: AO0yUKVeJ1oM1MdZwIHTb3JTjcI/iYznlHaeG7fEIFI0V8iD78fw3R1m
+        QGwIph6owMO+a8Y8lOOwfjA=
+X-Google-Smtp-Source: AK7set/dRgd1PjPSQ3W+uWhylvMLpL10P865QhNSrNo69bjlzAemKx4QpQbX0/Yq4iseyJPcs8144A==
+X-Received: by 2002:a05:6000:1191:b0:2bd:d34e:5355 with SMTP id g17-20020a056000119100b002bdd34e5355mr312569wrx.20.1676716612906;
+        Sat, 18 Feb 2023 02:36:52 -0800 (PST)
+Received: from [192.168.1.212] ([90.248.183.175])
+        by smtp.gmail.com with ESMTPSA id a4-20020a056000100400b002c557f82e27sm6511947wrx.99.2023.02.18.02.36.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 Feb 2023 02:36:52 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <4222af90-bd6b-d970-2829-1ddfaeb770bf@dunelm.org.uk>
+Date:   Sat, 18 Feb 2023 10:36:52 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
+ Thunderbird/102.7.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
 Content-Language: en-US
-To:     Git Mailing List <git@vger.kernel.org>
-From:   Johannes Sixt <j6t@kdbg.org>
-Subject: Bug: fsck and repack don't agree when a worktree index extension is
- "broken"
+To:     demerphq <demerphq@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Emily Shaffer <nasamuffin@google.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrn@google.com>,
+        Jose Lopes <jabolopes@google.com>,
+        Aleksandr Mikhailov <avmikhailov@google.com>
+References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
+ <xmqq3573lx2d.fsf@gitster.g>
+ <CANgJU+XoT42u91WP7-p4V41w7q-UVhutL2LUfNkp3_BRCOn-FQ@mail.gmail.com>
+In-Reply-To: <CANgJU+XoT42u91WP7-p4V41w7q-UVhutL2LUfNkp3_BRCOn-FQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------Y0x6Zb5YMgeEl0sunWLQPSd1
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+On 18/02/2023 01:59, demerphq wrote:
+> On Sat, 18 Feb 2023 at 00:24, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Emily Shaffer <nasamuffin@google.com> writes:
+>>
+>>> Basically, if this effort turns out not to be fruitful as a whole, I'd
+>>> like for us to still have left a positive impact on the codebase.
+>>> ...
+>>> So what's next? Naturally, I'm looking forward to a spirited
+>>> discussion about this topic - I'd like to know which concerns haven't
+>>> been addressed and figure out whether we can find a way around them,
+>>> and generally build awareness of this effort with the community.
+>>
+>> On of the gravest concerns is that the devil is in the details.
+>>
+>> For example, "die() is inconvenient to callers, let's propagate
+>> errors up the callchain" is an easy thing to say, but it would take
+>> much more than "let's propagate errors up" to libify something like
+>> check_connected() to do the same thing without spawning a separate
+>> process that is expected to exit with failure.
+> 
+> 
+> What does "propagate errors up the callchain" mean?  One
+> interpretation I can think of seems quite horrible, but another seems
+> quite doable and reasonable and likely not even very invasive of the
+> existing code:
+> 
+> You can use setjmp/longjmp to implement a form of "try", so that
+> errors dont have to be *explicitly* returned *in* the call chain. And
+> you could probably do so without changing very much of the existing
+> code at all, and maintain a high level of conceptual alignment with
+> the current code strategy.
 
-I came into a situation where a worktree index contains an invalid
-object ID in an extension. This causes git gc to abort half-way:
+Using setjmp/longjmp is an interesting suggestion, I think lua does 
+something similar to what you describe for perl. However I think both of 
+those use a allocator with garbage collection. I worry that using 
+longjmp in git would be more invasive (or result in more memory leaks) 
+as we'd need to to guard each allocation with some code to clean it up 
+and then propagate the error. That means we're back to manually 
+propagating errors up the call chain in many cases.
 
-$ git gc
-Enumerating objects: 6, done.
-Counting objects: 100% (6/6), done.
-fatal: unable to read d3e1a3edd7d7851bbf811064090e03475d62fd44
-fatal: failed to run repack
+Best Wishes
 
-However, fsck does not find any problem:
+Phillip
 
-$ git fsck
-Checking object directories: 100% (256/256), done.
-
-The problem is an invalid object ID that occurs in a worktree index. If
-I copy the index to the main worktree, fsck does find the culprit:
-
-$ cp .git/worktrees/wt/index .git/index
-$ git fsck
-Checking object directories: 100% (256/256), done.
-error: d3e1a3edd7d7851bbf811064090e03475d62fd44: invalid sha1 pointer in
-resolve-undo
-error: 4b40bf1072d6dfeebc09b11ee4d4f22ca2ce3109: invalid sha1 pointer in
-resolve-undo
-error: 5a494fd3a2182795e0723300ab1ac75c0797be5b: invalid sha1 pointer in
-resolve-undo
-
-and git gc fails in the same way as before (of course).
-
-I see three problems here:
-
-- git fsck should detect the problem (if it really is one) in the
-worktree index. It seems that it is just an index extension that is
-affected. Perhaps it should be just a warning, not an error.
-
-- If the objects mentioned in the index extension are precious, they
-should not have been garbage-collected in earlier rounds of git gc
-(which I certainly did at some point).
-
-- I can't git gc the repository now, which is particularly annoying when
-auto-gc is attempted after almost every git command. Of course, I know
-how to get out of the situation, but it took some time to identify the
-worktree index as the culprit. Not something that a beginner would be
-able to do easily.
-
-The repository I use for the above commands is attached. I hope vger
-doesn't strip it away.
-
--- Hannes
---------------Y0x6Zb5YMgeEl0sunWLQPSd1
-Content-Type: application/gzip; name="git-bug-gc-w-worktree-index.tar.gz"
-Content-Disposition: attachment; filename="git-bug-gc-w-worktree-index.tar.gz"
-Content-Transfer-Encoding: base64
-
-H4sIAAAAAAAAA+2df4wcZRnH91oNuZNg0YigwUxstFR6c+/vd+a0SNOWthRSLBATCpHZ3dm7
-bW93jt057ioEwUiIwcQQJaDGP0A0/kBQMYEYfiiJIiSQEJASTMoPCSEEoUETJMbEmbktNzuz
-3ZnZnX2Xu30+Tbu9m5t7b+7d7/O8z/O+7/PqUxdZS7ttq2w3mlMzVXeyuDAzOVOarNbL9lIh
-H5CHYCx49Yi+IkxxATMqGcYMYVHwPkGYKGh5td+VhaZrNbwfRUVbH0Ao0mputWZvxUIKibHJ
-kY4EYpIITCeIqVntV4kuhMGRNOiEd2vpxLcO+8GAVEQlPzWANnyNS879Vyz5su7xij0IbEG7
-/hmTuKDxAfwsMY7r/2CzuuR2/TrPQna5HjVuq4RY/4fcge5dzKONZPtP3u9/LAL7LwUG+6+C
-iP0niDNdIm4YnJumb+KttqvC0IlpIGFiKqIOIHLvsJ8MSENM/77oc3YCWez/sv45ZQjsvwo6
-93/ICRQbVr00a3d79CSS7D+SzO9/ITgRgkm//7mQYP9VELHwmCPfwjNGDISN2BDfG9zrUviX
-KCNg4dcAnfV/XPT5OIKU9j+kf+k5ArD/Kki0/7t3btvRZxuZ7D+nfvzHvctg/xUQtf/YxDoN
-wnBCGdj/NU9n/ecg+hAh/Xe2/4RH9M+lJAVNiSZH3P437Mq05v3TnJr1DH5zqmZV6yDs0SHR
-/1frFafPNjLk/whB/viPSQTzP0qIzv+0e3iIDtc6nfXviz6/JGCG/F9L/4IIDvGfCrr0f8gJ
-2EuluYWy3WMbyfEfjcT/gvr9D/Z/8ERn+AkRusEEx0iCgR8Buui/P9GHSIr/qIjl/4SA+E8J
-GzWvv7W55mSlOmc3tclJx531HtT7T6v7JysNp7Y19q6Y2KhdUK17d7izlqv5v0NXW6y6s9qm
-jZs0q2FrJadWs+tuU/e+8jynoVnafMM5aJdcreY03bnDWrWubd/i3W5rFWduzlms1me0RWdh
-rqwVbe+rZxynrDVtV3Mq3ndotarNW65rN+pN7ayFeqsF/1vUtGpFO+wsaIuW/wlH83or+Pzm
-ae/mL+gHHOsK/z/XgdGKkBj/OUW/0/qZ/ssS/1G2PP/LMAP/r4Jo/Ccp06kwOZNyOcJrGx1I
-hnRheMMzyjiJDQ/a7x32kwFp6Kz/luhzCgEzxH8t/QvphQQQ/ymge//nkwdMjv+i6z+8+A/y
-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
-ErL6/+T5X/D/q4kU+u9N9CES/X+H9V8c6n8rAc5/Gm2y+f/gSzK3kej/iYzs/5Gcw/pvJXTd
-/xMp/x27CNt/Vj0p9N+b6EMk+X//sN/2/T8Y+fO/4P8Hz449+7d7L+u8v2OlY7efsv7IXw4c
-f/U+ZxTe2f6RQuGGuwqF9a97H5f9e1778Ss/+t3Tz23fe/PmexYve/7RV79z8S2FD9u1efdw
-8D0v2b9zp/dyRgFraGLbtWN/PXwZf+B1fur0jT/9458e+8bMf/fvvNRv9PKGXVyozpX15mwB
-L79F2l+eefkn/zxy5MZPP3LDhvL4Ket3XVH834695z6yofHci289OP7bz7z67Dtb7nwKj1+2
-Z98zd56+6daXGrTwq089dvlJtz18YOyBL1951b1n3H/J+j+/WDv9DuftLcU7hvQ7/iCTWP+h
-b/Vni/+xCOq/Ign1H5QQif8J4kyXiBsGb83wW12vlk58ddhPBqShs/5zEH2IJP9PMI7oX1DB
-wP+roN3/3/qPiQ3Xf9R7vei0r26aLAT+f9t7ufv/m7ZYJVZ949Xq0R9+/nvN04xPPHHTQ8P6
-BYw4Mf2HXP9Kj/ZHsv9fOf+LE+Sf/0Hg/C81xM7/ZIbu9YSBEcM0dv4XNqV/OjQyJeWx9D81
-uY6F5/0px+D+Vwkx/ecl+hCJ+f+V9d8t/XNOBfh/FXSz//1V/Vwhg/1vzf9SzmD+Vwnd53+7
-JoBh+ncN0KneQ95t+BrPVv+PY0Jh/48KOvV/yAX42YC+28iS/2ud/8cQjP+VAPUfRpsT1fvJ
-s43E8b+kUfsvEdR/UMJyca9pLbEOVGxeGAS+Fkjw/7lkA3rw/xLB+V9KgPW/o00n/eedAsyQ
-/zt+/gOWUP8RAAAAAAAAAAAgV/4PlXIMPAAYAQA=
-
---------------Y0x6Zb5YMgeEl0sunWLQPSd1--
+> To do this you need to set up a globally available linked list of
+> jmp_env data (see `man setjmp` for jmp_env), and a global error
+> object, and make the existing "die" functions populate the global
+> error object, and then pop the most recent jmp_env data and longjmp to
+> it.
+> 
+> At the top of any git invocation you would set up the topmost jmp_env
+> "frame". Any code that wants to "try" existing logic pushes a new
+> jmp_env (using a wrapper around setjmp), and prepares to be longjmp'ed
+> to. If the code does not die then it pops the jmp_env it just pushed
+> and returns as normal, if it is longjmp'ed to you can detect this and
+> do some other behavior to handle the exception (by reading the global
+> error object). If the code that died *really* wants to exit, then it
+> returns the appropriate code as part of the longjmp, and the try
+> handler longjmps again propagating up the chain. Eventually you either
+> have an error that "propagates to the top" which results in an exit
+> with an appropriate error message, or you have an error that is
+> trapped and the code does something else, and then eventually returns
+> normally.
+> 
+> FWIW, this is essentially a loose description of how Perl handles the
+> execution part of "eval" and supports exception handling internally.
+> Most of the perl internals do not know anything about exceptions, they
+> just call functions similar to gits die functions if they need to,
+> which then call into Perl_die_unwind(). which then calls the
+> JUMPENV_JUMP() macro which does the "pop and longjmp" dance.
+> 
+> Seems to me that it wouldn't be very difficult nor particularly
+> invasive to implement this in git. Much of the logic in the perl
+> project to do this is at the top of cop.h,  see the macros
+> JMPENV_PUSH(), JMPENV_POP(), JMPENV_JUMP(). Obviously this code
+> contains a bunch of perl specific logic, but the general gist of it
+> should be easily understood and easily converted to a more git like
+> context:
+> 
+> struct jmpenv: https://github.com/Perl/perl5/blob/blead/cop.h#L32
+> JMPENV_BOOTSTRAP: https://github.com/Perl/perl5/blob/blead/cop.h#L66
+> JMPENV_PUSH: https://github.com/Perl/perl5/blob/blead/cop.h#L113
+> JMPENV_POP: https://github.com/Perl/perl5/blob/blead/cop.h#L147
+> JMPENV_JUMP: https://github.com/Perl/perl5/blob/blead/cop.h#L159
+> 
+> Perl_die_unwind: https://github.com/Perl/perl5/blob/blead/pp_ctl.c#L1741
+> Where Perl_die_unwind() calls JMPENV_JUMP:
+> https://github.com/Perl/perl5/blob/blead/pp_ctl.c#L1865
+> 
+> You can also grep for functions of the form S_try_ in the perl code
+> base to find examples where the C code explicitly sets up an "eval
+> frame" to interoperate with the functionality above.
+> 
+> git grep -nP '^S_try_'
+> pp_ctl.c:3548:S_try_yyparse(pTHX_ int gramtype, OP *caller_op)
+> pp_ctl.c:3604:S_try_run_unitcheck(pTHX_ OP* caller_op)
+> pp_sys.c:3120:S_try_amagic_ftest(pTHX_ char chr) {
+> 
+> Seems to me that this gives enough prior art to convert git to use the
+> same strategy, and that doing so would not actually be that big a
+> change to the existing code.  Both environments are fairly similar if
+> you look at them from the right perspective. Both are C, and both have
+> a lot of global state, and both have lots of functions which you
+> really dont want to have to change to understand about exception
+> objects..
+> 
+> Here is an example of how a C function might be written to use this
+> kind of infrastructure to "try" functionality that might call die. In
+> this case there is no need for the code to inspect the global error
+> object, but the basic pattern is consistent. The "default" case below
+> handles the situation where the "tried" function is signalling an
+> "untrappable error" that needs to be rethrown to ultimately unwind the
+> entire try/catch chain and exit the program. It is derived and
+> simplified from S_try_yyparse mentioned above. This function handles
+> the "compile the code" part of an `eval EXPR`, and traps exceptions
+> from the parser so that they can be handled properly and distinctly
+> from errors trapped during execution of the compiled code. [ I am
+> assuming that given the historical relationship between git and perl
+> these concepts are not alien to everybody on this list. ]
+> 
+> /* S_try_yyparse():
+>   *
+>   * Run yyparse() in a setjmp wrapper. Returns:
+>   *   0: yyparse() successful
+>   *   1: yyparse() failed
+>   *   3: yyparse() died
+>   *
+>   * ...
+>   */
+> STATIC int
+> S_try_yyparse(pTHX_ int gramtype, ...)
+> {
+>      dJMPENV;
+> 
+>      JMPENV_PUSH(ret);
+>      switch (ret) {
+>      case 0:
+>          ret = yyparse(gramtype) ? 1 : 0;
+>          break;
+>      case 3:
+>          /* yyparse() died and we trapped the error. */
+>          ....
+>          break;
+>      default:
+>          JMPENV_POP;          /* remove our own setjmp data */
+>          JMPENV_JUMP(ret); /* RETHROW */
+>      }
+>      JMPENV_POP;
+>      return ret;
+> }
+> 
