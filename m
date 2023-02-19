@@ -2,145 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07FB8C05027
-	for <git@archiver.kernel.org>; Sun, 19 Feb 2023 10:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E476AC61DA4
+	for <git@archiver.kernel.org>; Sun, 19 Feb 2023 14:13:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230037AbjBSKpO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Feb 2023 05:45:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42016 "EHLO
+        id S229851AbjBSONN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Feb 2023 09:13:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjBSKpN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Feb 2023 05:45:13 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6638611153
-        for <git@vger.kernel.org>; Sun, 19 Feb 2023 02:45:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1676803479; i=l.s.r@web.de;
-        bh=MrWUBbRZsc2OLLc/lqk4RUw1ph5laQjQN31VUyDZPwI=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=c9IOXOOaasDIJ2yjSOO1pbbFV8XPRW/Yjroy/ZeqEishA8tZ1fW4LS8RXRvCISAVl
-         7RvWs2+GOisUtqSYezN5yn+le2eh+rZU0kNQxAMDskgfUUAZHzMvbNgU2hBMyTvVnq
-         X1lxycGqFInmcwV2b/xaM/j1V1M5jL+m239xFgwsDjpD+A352pfcjbBdM+nL9+Xmj1
-         iDo77zbV+EfTVkn11lEuUIgjQh50N9MmLOR2VRhiXaduj4YrYNlcO0AGMPHUjt8Tpt
-         HMABv1kX2BPs4r3NTOTSrL5wK+0Qv0YAdfiVhAY6pDAsIAUwRE60P7l9Fm7ceG/3aD
-         niwn3mU1Ib+xw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.21.51]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M608n-1pRkJ347bf-007f1J; Sun, 19
- Feb 2023 11:44:39 +0100
-Message-ID: <57b6643a-b9ff-3ea4-d60d-1a434d9ea75e@web.de>
-Date:   Sun, 19 Feb 2023 11:44:38 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.8.0
-Subject: Re: [PATCH] archive: add --mtime
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Raul E Rangel <rrangel@chromium.org>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, demerphq <demerphq@gmail.com>
-References: <Y+6G9n6cWRT9EKyl@google.com>
- <91a73f5d-ca3e-6cb0-4ba3-38d703074ee6@web.de> <xmqqilfykhsf.fsf@gitster.g>
+        with ESMTP id S229781AbjBSONL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Feb 2023 09:13:11 -0500
+Received: from IND01-BMX-obe.outbound.protection.outlook.com (mail-bmxind01olkn2039.outbound.protection.outlook.com [40.92.103.39])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F18829026
+        for <git@vger.kernel.org>; Sun, 19 Feb 2023 06:13:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VbENF+5K11B2IJlbo3wQbVIRT9o3a8oBzH5bvDEgWl0SYUvUzuG9VkNjGjahkFGdHKZvs2xKobK/7qhLwUurSJWUR18UvkMR0hHmPcOxblF5XlUHxRQqVm/zFkBJE8Mlwwkn8bEADruqydko2HFrkdt2CrzelwPPzdFtfEB6g5+UVDrmY18sum+fmkGW+w+433HCyas3No5oX4XP91z3b1/5JtWLdQT6BBPGfnDXGNg7DP6bzijXXdp9X2Zf2ko6mgrMFrxu6nEGzIOmYe33kjDjIR7ayieXtow3Sti3pBqRvQ5UP5LIltObTH96PwGn32l7duIZwNQbuU/QAsvPmg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IOZ5w5qF+iPBgddsuj+QZBJkg6aySWwHeGi87vFW9JA=;
+ b=XXwbx9/utbaFs85r/5Xm/o7WmWiP+MN5GbBxdPAw+0l9xoDHipu8nuNi76wlhSAtq5B5mWXDYHxP6P4U78Hm8eZMlJVYi64r8KDX7u0tblsWEA71T6IRvMkR6jxFwN9U97xnMaA0Ei6qHCykTRX44PoCpPR0XRDOxhI2Z8IINsv24Eor+5mVjRaZ8gDQvtn4irvbvqdAISD/jleAa0/2EG+PTdWa5hL5fjEBzZlyL6x2Fz3XaqlQH4ZWkrhF+/W+zNujrq+sF+ibARBbTFm2AjDIlv/8YBjFqaLHN2v15ok1j9OG5Kf1BPrrt5CgX8kAiQJDb9Y9WGmue7qqAxKqCQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IOZ5w5qF+iPBgddsuj+QZBJkg6aySWwHeGi87vFW9JA=;
+ b=syH3KrDjE4bm4RNNUBu5HUH8S845spE6Fv1s8WMgz6rx2OAbetxRjFV1y0zY1aKGZKzL221A24Qv9DD875a3zDuG6pgx7b7JcoXkl+dDdiVdAQnMlIuZy2V+TQeHftXYonHZ3r6iuuzGq+1yJdfURdo4bAZPKGj1wishqGmENFLBjBkVGU6G+fvGUxT6GBZaUrzbNK+h2xopkwR8BeSWGr+35GrGXyv3z0GJ+UR9cHldIc9l6xHimWOPp6d7t+5MSPwJLaphiz1vIRqQGWZPT48/GGKihq5TR4m0wQIEXMR0j8nlg7G86N2ozBRMDOBXC9PDebeZ3DRlhELce1Cm9Q==
+Received: from BM1PR01MB3139.INDPRD01.PROD.OUTLOOK.COM (2603:1096:b00:6a::13)
+ by MA0PR01MB5895.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:48::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6134.15; Sun, 19 Feb
+ 2023 14:13:06 +0000
+Received: from BM1PR01MB3139.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::e5e:d4d4:dc64:b9db]) by BM1PR01MB3139.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::e5e:d4d4:dc64:b9db%7]) with mapi id 15.20.6134.015; Sun, 19 Feb 2023
+ 14:13:06 +0000
+From:   Divyanshu Agrawal <agrawal-d@outlook.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: How to find places where I can contribute?
+Thread-Topic: How to find places where I can contribute?
+Thread-Index: AQHZRGspipq0JtEgf0aUQdsXKp9A+w==
+Date:   Sun, 19 Feb 2023 14:13:06 +0000
+Message-ID: <BM1PR01MB3139C97DD4B99D3024847874FEA79@BM1PR01MB3139.INDPRD01.PROD.OUTLOOK.COM>
+Accept-Language: en-US
 Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqilfykhsf.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-tmn:  [aTSMIZCx2mBcqUCBkMtqUoU+6I7SEvF/bkOq1dNQupMz+F1y72a8tc4PoPVWZXc2]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BM1PR01MB3139:EE_|MA0PR01MB5895:EE_
+x-ms-office365-filtering-correlation-id: b084277c-b2cc-4107-8a54-08db12836bc0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 3+Z2yWmIgOUlLvs+cDE9nuTkcPhzGAYK2dRC+i5WuTQyT6UF7xzz6S8L315Y8W8P4YXRiqCBM45d16eLI8U/n3eLygSmEtfLlIhr8Q0cwm66DXN2rrhE8Rid8UAIGUvtwdIobtGLdF17eJNyD1nhpSHmKGNQz3ASlnnd+d39KtwFRGnKRp0BWCtFewDilYNVUkdqWO8IzkHH+EOv5NmcjLCg4te8AJ/lCo5ZMr/gJFcdp9ryq2T9eWZv8R3jDF49pkRgRkKtRIMGiH65u7PlsAPupX2VK/Q7kDwwcoZItsQO0XniSPwssisJMbMihkomI2kLM5m1HV4gOaGwhxPt1BuDOmoPGwZ6aH8f6xxKIcj5VlThHPT0p+YvXrdVUtsRnQV2UuB2+7lvvtMyAFpLHUJwLvvY1gg2UcEgP19BEBnCJlkLEvR2jNOyQbhu0m72opANkn+79sKcum4jzd4CnWY87Xrag9t8oKCy5DdbkygsXtJ2Rf4hGWxIPlwx1L8U+TCFtdXD7pDY9TRVeCvzWbZdxL121xAIECHOZFUoqMM6uEiErlx0YPvNEeDRrC3hcbSOZI4JpyIkmLc1By5uwvtPRhWgNjUSAf6u6VRjoj0=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?CrEAktNcl+cacXQdEa5iZJY5P4G2UaqA0JncwHEzRQPERXVgxrphswWkpb?=
+ =?iso-8859-1?Q?f4GtPkDA5EYtisbauDtT5RTtJKq4xpU3bNObJBUH9hqI9kREKu6Ty+G2G3?=
+ =?iso-8859-1?Q?NWHb7tBKVS+xD61BAaGHOioMuRy46TW7fA2e9crFsT+wN/l8hgQNy3bkoh?=
+ =?iso-8859-1?Q?3gr1uNjIeSAAzCfdUy+RRPs0YCdzWpMN5xLTvrMIfFFYUqIh9IHp1vzngC?=
+ =?iso-8859-1?Q?7Ohv36E2qjKvcLiFs1qYJZMVAMyZdXhmrFVGvjIhHF3RCG7dxScbjGG24K?=
+ =?iso-8859-1?Q?W8jrSBi3lWstVzQFTKk2BeZsvWvlSQO8dxe9y+FMWSwZKZjodFRRDpQHp+?=
+ =?iso-8859-1?Q?5mIkGvRh/Z67zZNV2ZZ0rX/jnVpEYBgK/Qe29LViThh+ulwoEbn69/xi8K?=
+ =?iso-8859-1?Q?5ovTgMym94VGCDjWRc8tFvMqBYtCTuh+ShVPIvdEMJKbIlWBcnYWaA7OsT?=
+ =?iso-8859-1?Q?BkObX+YkGfBrG6bWlb4rUVDFrnLXUXfNaXKqS+i1h4D0igEDuaNQNLMZ4S?=
+ =?iso-8859-1?Q?2Tgr4EI0bdGeKlicD0IwdrtMQuapgIXeEXnTBiVONE3/spKv16rfRYzPe1?=
+ =?iso-8859-1?Q?NXvDRMyJIPPOHI1s6R6lGONvVsUdlO0N3lwY+wqAeinoy7nY+WCWfCpvAm?=
+ =?iso-8859-1?Q?f2rb8j9wurOByM+wQO35WftMt/qaFPpH9g6Fuy8FiorAjHg+YAyz2h7LLM?=
+ =?iso-8859-1?Q?MNSzaK0P1rg8QNy+F8cdTWVxuSTM1wqiWX7c+yle9d1tnG7/HDD+aDNS1i?=
+ =?iso-8859-1?Q?Cqq4y07bPG7mBWjuhMZul95SDIIualGRIIj8p62UrAwQcC5RBGvw5gj9Z7?=
+ =?iso-8859-1?Q?SID9sCulY6ro6uYq8zwuzkd/0guVkclQLZ2sf8xGMFCMqJ1jt4RwEe6Xqi?=
+ =?iso-8859-1?Q?Qyj+BI9KXm80PKQdjCMGmGuboxl7J2BRikvPUTDmEyqslw07/g/ltTV2Yf?=
+ =?iso-8859-1?Q?bPsstkiuDV3ZoTEopzrGdqOW6dBVHl6qKJUvp2OhMa5m3YKhoTlgl23dLJ?=
+ =?iso-8859-1?Q?vFgZn/aasiN3sgprkOv4+xKmSWR9FZmPcrrkgH3fZKHKaTwKa7ZoLv6W/w?=
+ =?iso-8859-1?Q?LTYVUlfu6i1AIa9az+xkYCexhlpQHDJ4HRAGm0RHgY/i41/A/MguKGI2bd?=
+ =?iso-8859-1?Q?Hay0vSU7dC2BuE1r2WNP81NfGQp914hpgHaeOIzuMidWZoE3nDdxA6wlpz?=
+ =?iso-8859-1?Q?op9HsqG3D0n5LZVQFk20KQurD1WyES8nbP8L7vPztzfe8MbB1EH+3b/5Vr?=
+ =?iso-8859-1?Q?YCDcYITfBJi1ehtSSi9LEyjjMu80WVDVRrKsFvQwJU8BDVKqGTpYuSzOWe?=
+ =?iso-8859-1?Q?KuwlfVAearWhf+vVG0Yfokuc8vDhdN1rDaoluSqAIDQxqBx8WxswdmCSYQ?=
+ =?iso-8859-1?Q?IeQjqhJ/RMkgXqdTklbuAPRy5Pz7rmsA=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:mp7D399jSXTzC3Kv/BHx2oBvz9+qTyK3x8xT2TrrGgFlO6R3noL
- gd0qqLHn4n69Qj6sF8WCKr10j1coskY5mJoT2ePAigLoSwtDaObOpmsiZcGMMAaCit9/BOJ
- f91tGhdYqVbn7vn3gSwzVAbIq0VSCa4lT5kZNHhD0/ghpOlbYDSMJAGHcRSxQ4bXcqITT4U
- AuKIJvkU9I1WUcKgH4uYg==
-UI-OutboundReport: notjunk:1;M01:P0:O3DqhxcqKS4=;zQIUnSM5CKKFaEis1YjnGnIe2Jw
- dLu244dB8TaZ907YUi7Gp3nEfmu48rnUUWUrewehAVle6FF9oTKnZqMqsr309c9pm0Wz1Lkhs
- b26/xT7ED9PVblmcEYJkekwACx8QU+Lq4qjoI05qvwNyv56fTHPccdnDkDukQ8SErvt514UEf
- KbsvcE1AVEl1dydZwj3OcuVxxu1327ByfczRlulW6aMr7LxXMBJlGWwwFUxZjXKaMXTmCpLTu
- 0KUndxPZvKkSFsENMegoWpAA/iIFNAdAXCop67V/QhGRHRrTyC8jd0ztPJ7QzhRzlUbi9JHKe
- kLeI+cDpJ0zhbO+JD/FQYxVOcddAd++XGvD7gYhH4D03Qgo7Z1TGdicua66fqzZR0MA5A2hIk
- oiHosTv1OSjCanDGhgdnsntgvscShSOftvAMbArTk5eOKbg7MYYKlkBe586OaJ5WkhTczocHu
- iOpXP/XPGyI3kuL6FaIlqJiJl0yY9Iluja/p0kagtaxqCrAV2Cv41yd4PNSZArmBsoNv33+03
- clDiTH9ImzzEYkpymSkMYLN+FYJvAyGjstfBb04XNnlw0eb9baVuuQc1ert7v9PCg06vmgsZY
- mARB7Gr7xr+rzCWyiHu8SLlWvhnhZ9ulkBAyYq2wFY27fvcYXxVuiV67wyAKZ4j0rj7z9sMa2
- YDAkP9Oqln0phOTXfkB6j9LQq5elod4dbXZJCgsrsI45t2R30Q5OdqTMfmgKLhrpdiHuAxfV+
- P0hraHmsT6zpfPZ/Zzo32IxEIHhfGfv+IQlmTQ8gRh16yIoDJ4eOMES7NySArVlNIS0nYiCBJ
- vP576bx/kiPPMfg281VbEyleh8G05EH9ZeWNc99gJiXp4DeB8dBOVMSW1HC7g+xN5LNIRF1ig
- I6KB+rkGvrk4ghWCxauA20vrCxT/3nfHEUBboLF2vwmKto3oxcANUYESYc3+ADjcjCcN7ETwu
- e1SMug==
+MIME-Version: 1.0
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BM1PR01MB3139.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: b084277c-b2cc-4107-8a54-08db12836bc0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Feb 2023 14:13:06.0697
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB5895
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 18.02.23 um 18:25 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> +--mtime=3D<time>::
->> +	Set modification time of archive entries.  Without this option
->> +	the committer time is used if `<tree-ish>` is a commit or tag,
->> +	and the current time if it is a tree.
->> +
->>  <extra>::
->>  	This can be any options that the archiver backend understands.
->>  	See next section.
->> diff --git a/archive.c b/archive.c
->> index 81ff76fce9..122860b39d 100644
->> --- a/archive.c
->> +++ b/archive.c
->> @@ -472,6 +472,8 @@ static void parse_treeish_arg(const char **argv,
->>  		commit_oid =3D NULL;
->>  		archive_time =3D time(NULL);
->>  	}
->> +	if (ar_args->mtime_option)
->> +		archive_time =3D approxidate(ar_args->mtime_option);
->
-> This is the solution with least damage, letting the existing code to
-> set archive_time and then discard the result and overwrite with the
-> command line option.
-
-I actually like Peff's solution more, because it's short and solves the
-specific problem of non-deterministic timestamps for tree archives.  The
-downside of spreading ancient timestamps seems only cosmetic to me.  It
-would be ideal if there was a way to specify a NULL timestamp or none at
-all.  The --mtime option on the other hand mimics GNU tar, so it is more
-familiar and proven, though.
-
-> I wonder if we want to use approxidate_careful() to deal with bogus
-> input?  The code is perfectly serviceable without it (users who feed
-> bogus input deserve what they get), but some folks might prefer to
-> be "nicer" than necessary ;-)
-
-It isn't all that careful, but you're right that we should do what we
-can.  Like this on top?  The message string is borrowed from commit's
-handling of --date.
-
-=2D--
- archive.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/archive.c b/archive.c
-index 122860b39d..871d80ee79 100644
-=2D-- a/archive.c
-+++ b/archive.c
-@@ -438,6 +438,15 @@ static void parse_pathspec_arg(const char **pathspec,
- 	}
- }
-
-+static timestamp_t approxidate_or_die(const char *date_str)
-+{
-+	int errors =3D 0;
-+	timestamp_t date =3D approxidate_careful(date_str, &errors);
-+	if (errors)
-+		die(_("invalid date format: %s"), date_str);
-+	return date;
-+}
-+
- static void parse_treeish_arg(const char **argv,
- 		struct archiver_args *ar_args, const char *prefix,
- 		int remote)
-@@ -473,7 +482,7 @@ static void parse_treeish_arg(const char **argv,
- 		archive_time =3D time(NULL);
- 	}
- 	if (ar_args->mtime_option)
--		archive_time =3D approxidate(ar_args->mtime_option);
-+		archive_time =3D approxidate_or_die(ar_args->mtime_option);
-
- 	tree =3D parse_tree_indirect(&oid);
- 	if (!tree)
-=2D-
-2.39.2
+Hi!=0A=
+I want to contribute to the Git project. However, I'm not sure what I can=
+=0A=
+contribute to.=0A=
+=0A=
+I'm used to the GitHub workflow, where I would look at the "Issues" section=
+ of=0A=
+a GitHub repository, and try to tackle bugs / features I think I will be ab=
+le=0A=
+to work on.=0A=
+=0A=
+=0A=
+1. What is the equivalent for the Git project? How can I find issues/featur=
+es=0A=
+that I can work on?=0A=
+=0A=
+2. Is there a way I can find bugs/issues that are likely easy for a new=0A=
+contributor to pick up? Similar to a "good-first-issue" label on GitHub?=0A=
+=0A=
+Based on your responses, I can also update the documentation, so that other=
+s=0A=
+like me can get started quickly!=0A=
+=0A=
+Thanks!=0A=
+=0A=
+Divyanshu Agrawal=0A=
