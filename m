@@ -2,126 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E476AC61DA4
-	for <git@archiver.kernel.org>; Sun, 19 Feb 2023 14:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15838C05027
+	for <git@archiver.kernel.org>; Sun, 19 Feb 2023 17:50:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229851AbjBSONN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Feb 2023 09:13:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56370 "EHLO
+        id S231139AbjBSRuw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Feb 2023 12:50:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbjBSONL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Feb 2023 09:13:11 -0500
-Received: from IND01-BMX-obe.outbound.protection.outlook.com (mail-bmxind01olkn2039.outbound.protection.outlook.com [40.92.103.39])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F18829026
-        for <git@vger.kernel.org>; Sun, 19 Feb 2023 06:13:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VbENF+5K11B2IJlbo3wQbVIRT9o3a8oBzH5bvDEgWl0SYUvUzuG9VkNjGjahkFGdHKZvs2xKobK/7qhLwUurSJWUR18UvkMR0hHmPcOxblF5XlUHxRQqVm/zFkBJE8Mlwwkn8bEADruqydko2HFrkdt2CrzelwPPzdFtfEB6g5+UVDrmY18sum+fmkGW+w+433HCyas3No5oX4XP91z3b1/5JtWLdQT6BBPGfnDXGNg7DP6bzijXXdp9X2Zf2ko6mgrMFrxu6nEGzIOmYe33kjDjIR7ayieXtow3Sti3pBqRvQ5UP5LIltObTH96PwGn32l7duIZwNQbuU/QAsvPmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IOZ5w5qF+iPBgddsuj+QZBJkg6aySWwHeGi87vFW9JA=;
- b=XXwbx9/utbaFs85r/5Xm/o7WmWiP+MN5GbBxdPAw+0l9xoDHipu8nuNi76wlhSAtq5B5mWXDYHxP6P4U78Hm8eZMlJVYi64r8KDX7u0tblsWEA71T6IRvMkR6jxFwN9U97xnMaA0Ei6qHCykTRX44PoCpPR0XRDOxhI2Z8IINsv24Eor+5mVjRaZ8gDQvtn4irvbvqdAISD/jleAa0/2EG+PTdWa5hL5fjEBzZlyL6x2Fz3XaqlQH4ZWkrhF+/W+zNujrq+sF+ibARBbTFm2AjDIlv/8YBjFqaLHN2v15ok1j9OG5Kf1BPrrt5CgX8kAiQJDb9Y9WGmue7qqAxKqCQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IOZ5w5qF+iPBgddsuj+QZBJkg6aySWwHeGi87vFW9JA=;
- b=syH3KrDjE4bm4RNNUBu5HUH8S845spE6Fv1s8WMgz6rx2OAbetxRjFV1y0zY1aKGZKzL221A24Qv9DD875a3zDuG6pgx7b7JcoXkl+dDdiVdAQnMlIuZy2V+TQeHftXYonHZ3r6iuuzGq+1yJdfURdo4bAZPKGj1wishqGmENFLBjBkVGU6G+fvGUxT6GBZaUrzbNK+h2xopkwR8BeSWGr+35GrGXyv3z0GJ+UR9cHldIc9l6xHimWOPp6d7t+5MSPwJLaphiz1vIRqQGWZPT48/GGKihq5TR4m0wQIEXMR0j8nlg7G86N2ozBRMDOBXC9PDebeZ3DRlhELce1Cm9Q==
-Received: from BM1PR01MB3139.INDPRD01.PROD.OUTLOOK.COM (2603:1096:b00:6a::13)
- by MA0PR01MB5895.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:48::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6134.15; Sun, 19 Feb
- 2023 14:13:06 +0000
-Received: from BM1PR01MB3139.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::e5e:d4d4:dc64:b9db]) by BM1PR01MB3139.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::e5e:d4d4:dc64:b9db%7]) with mapi id 15.20.6134.015; Sun, 19 Feb 2023
- 14:13:06 +0000
-From:   Divyanshu Agrawal <agrawal-d@outlook.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: How to find places where I can contribute?
-Thread-Topic: How to find places where I can contribute?
-Thread-Index: AQHZRGspipq0JtEgf0aUQdsXKp9A+w==
-Date:   Sun, 19 Feb 2023 14:13:06 +0000
-Message-ID: <BM1PR01MB3139C97DD4B99D3024847874FEA79@BM1PR01MB3139.INDPRD01.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn:  [aTSMIZCx2mBcqUCBkMtqUoU+6I7SEvF/bkOq1dNQupMz+F1y72a8tc4PoPVWZXc2]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BM1PR01MB3139:EE_|MA0PR01MB5895:EE_
-x-ms-office365-filtering-correlation-id: b084277c-b2cc-4107-8a54-08db12836bc0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 3+Z2yWmIgOUlLvs+cDE9nuTkcPhzGAYK2dRC+i5WuTQyT6UF7xzz6S8L315Y8W8P4YXRiqCBM45d16eLI8U/n3eLygSmEtfLlIhr8Q0cwm66DXN2rrhE8Rid8UAIGUvtwdIobtGLdF17eJNyD1nhpSHmKGNQz3ASlnnd+d39KtwFRGnKRp0BWCtFewDilYNVUkdqWO8IzkHH+EOv5NmcjLCg4te8AJ/lCo5ZMr/gJFcdp9ryq2T9eWZv8R3jDF49pkRgRkKtRIMGiH65u7PlsAPupX2VK/Q7kDwwcoZItsQO0XniSPwssisJMbMihkomI2kLM5m1HV4gOaGwhxPt1BuDOmoPGwZ6aH8f6xxKIcj5VlThHPT0p+YvXrdVUtsRnQV2UuB2+7lvvtMyAFpLHUJwLvvY1gg2UcEgP19BEBnCJlkLEvR2jNOyQbhu0m72opANkn+79sKcum4jzd4CnWY87Xrag9t8oKCy5DdbkygsXtJ2Rf4hGWxIPlwx1L8U+TCFtdXD7pDY9TRVeCvzWbZdxL121xAIECHOZFUoqMM6uEiErlx0YPvNEeDRrC3hcbSOZI4JpyIkmLc1By5uwvtPRhWgNjUSAf6u6VRjoj0=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?CrEAktNcl+cacXQdEa5iZJY5P4G2UaqA0JncwHEzRQPERXVgxrphswWkpb?=
- =?iso-8859-1?Q?f4GtPkDA5EYtisbauDtT5RTtJKq4xpU3bNObJBUH9hqI9kREKu6Ty+G2G3?=
- =?iso-8859-1?Q?NWHb7tBKVS+xD61BAaGHOioMuRy46TW7fA2e9crFsT+wN/l8hgQNy3bkoh?=
- =?iso-8859-1?Q?3gr1uNjIeSAAzCfdUy+RRPs0YCdzWpMN5xLTvrMIfFFYUqIh9IHp1vzngC?=
- =?iso-8859-1?Q?7Ohv36E2qjKvcLiFs1qYJZMVAMyZdXhmrFVGvjIhHF3RCG7dxScbjGG24K?=
- =?iso-8859-1?Q?W8jrSBi3lWstVzQFTKk2BeZsvWvlSQO8dxe9y+FMWSwZKZjodFRRDpQHp+?=
- =?iso-8859-1?Q?5mIkGvRh/Z67zZNV2ZZ0rX/jnVpEYBgK/Qe29LViThh+ulwoEbn69/xi8K?=
- =?iso-8859-1?Q?5ovTgMym94VGCDjWRc8tFvMqBYtCTuh+ShVPIvdEMJKbIlWBcnYWaA7OsT?=
- =?iso-8859-1?Q?BkObX+YkGfBrG6bWlb4rUVDFrnLXUXfNaXKqS+i1h4D0igEDuaNQNLMZ4S?=
- =?iso-8859-1?Q?2Tgr4EI0bdGeKlicD0IwdrtMQuapgIXeEXnTBiVONE3/spKv16rfRYzPe1?=
- =?iso-8859-1?Q?NXvDRMyJIPPOHI1s6R6lGONvVsUdlO0N3lwY+wqAeinoy7nY+WCWfCpvAm?=
- =?iso-8859-1?Q?f2rb8j9wurOByM+wQO35WftMt/qaFPpH9g6Fuy8FiorAjHg+YAyz2h7LLM?=
- =?iso-8859-1?Q?MNSzaK0P1rg8QNy+F8cdTWVxuSTM1wqiWX7c+yle9d1tnG7/HDD+aDNS1i?=
- =?iso-8859-1?Q?Cqq4y07bPG7mBWjuhMZul95SDIIualGRIIj8p62UrAwQcC5RBGvw5gj9Z7?=
- =?iso-8859-1?Q?SID9sCulY6ro6uYq8zwuzkd/0guVkclQLZ2sf8xGMFCMqJ1jt4RwEe6Xqi?=
- =?iso-8859-1?Q?Qyj+BI9KXm80PKQdjCMGmGuboxl7J2BRikvPUTDmEyqslw07/g/ltTV2Yf?=
- =?iso-8859-1?Q?bPsstkiuDV3ZoTEopzrGdqOW6dBVHl6qKJUvp2OhMa5m3YKhoTlgl23dLJ?=
- =?iso-8859-1?Q?vFgZn/aasiN3sgprkOv4+xKmSWR9FZmPcrrkgH3fZKHKaTwKa7ZoLv6W/w?=
- =?iso-8859-1?Q?LTYVUlfu6i1AIa9az+xkYCexhlpQHDJ4HRAGm0RHgY/i41/A/MguKGI2bd?=
- =?iso-8859-1?Q?Hay0vSU7dC2BuE1r2WNP81NfGQp914hpgHaeOIzuMidWZoE3nDdxA6wlpz?=
- =?iso-8859-1?Q?op9HsqG3D0n5LZVQFk20KQurD1WyES8nbP8L7vPztzfe8MbB1EH+3b/5Vr?=
- =?iso-8859-1?Q?YCDcYITfBJi1ehtSSi9LEyjjMu80WVDVRrKsFvQwJU8BDVKqGTpYuSzOWe?=
- =?iso-8859-1?Q?KuwlfVAearWhf+vVG0Yfokuc8vDhdN1rDaoluSqAIDQxqBx8WxswdmCSYQ?=
- =?iso-8859-1?Q?IeQjqhJ/RMkgXqdTklbuAPRy5Pz7rmsA=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S230512AbjBSRuu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Feb 2023 12:50:50 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 285601351A
+        for <git@vger.kernel.org>; Sun, 19 Feb 2023 09:50:49 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id i5-20020a05600c354500b003e1f5f2a29cso760961wmq.4
+        for <git@vger.kernel.org>; Sun, 19 Feb 2023 09:50:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BMPliqJtRgbFhn01sbL/LMH+fP3bPfX0mETjx0mnirw=;
+        b=mvNCziLn1NClbZDIZ0/4QFAuppYeIJmAz18VNtye6a5UX1HX1JzudG9FUzOiXZABjr
+         8vz7BbWYso+VnL+Id3o6788a89efbMJQ88Yf+6NvVu+Xj0lrB+JH6bwIR5YtEX/pE/sp
+         kMMItskoCPK5ydFYRdzXcbJ3IkMHk4rQc+rfAkCixKf167/p92RLWgNOsA3S0XSOi8cQ
+         IQpietgTw+1aEHQ/zvIFJTmTQxmr4BsFUkgR3qZcMUA31H5JvUcWm2PwCu1apphYJ+3s
+         sMJyd4juBe/0PWFm60PglapyLpPu4DlJWCYjy1/HPJFQhqFp5J8Dtvk2jeqHTqAAun7Q
+         lfJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BMPliqJtRgbFhn01sbL/LMH+fP3bPfX0mETjx0mnirw=;
+        b=fNZQJjKjbttO6x3ePvpJhR69vxjMl3KDx/mC4a25ndxu226dqixPTPxsdw2WRliSUr
+         jRUi2oqNYZ4LEgph+Kj1BNnBmK2biGbMG+XXYDdacCvwSFUAG40IM4hWO63TES6dkU0V
+         2+uXcbQBz1vaVbFhqH9L5iyeR/vUyqY9ELEBHxduurHPuLPxLZ7Q40XszfmOm5YKzbvY
+         a1sbQSsjHARbPVoKhfl1hHqulxF4cov9UwNs/2ib26anzvI2/mJPqT9whwwvhRqJ0JMF
+         vdaunhHns3kyayn15rOh+iTHlOo06vz8IVeHrbjpW8rtx7wJchmMGsGY3ZhBVIUvbXo5
+         7hbA==
+X-Gm-Message-State: AO0yUKXAOnk3zCd7c10CoabXjXVSrBHVgjzaEFe/9KqKaii4VMkyRBLL
+        Y9hbMlSI39TbYJeqvIFlMEXcVIrbutI=
+X-Google-Smtp-Source: AK7set+F1Tvd6oiVJBYqdW4A0ZUU7XJkLkfT8NnVzSkSfqIdIKOjHS1PkgHbxJZuGlHqTWRYhJ59Pw==
+X-Received: by 2002:a05:600c:4da3:b0:3e2:19b0:887d with SMTP id v35-20020a05600c4da300b003e219b0887dmr8528277wmp.25.1676829047527;
+        Sun, 19 Feb 2023 09:50:47 -0800 (PST)
+Received: from localhost.localdomain (cpc105060-sgyl40-2-0-cust995.18-2.cable.virginm.net. [81.111.15.228])
+        by smtp.gmail.com with ESMTPSA id l37-20020a05600c1d2500b003db0ad636d1sm9126159wms.28.2023.02.19.09.50.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 19 Feb 2023 09:50:47 -0800 (PST)
+From:   Andy Koppe <andy.koppe@gmail.com>
+To:     git@vger.kernel.org
+Cc:     pclouds@gmail.com, Andy Koppe <andy.koppe@gmail.com>
+Subject: [PATCH] log: omit tag prefix for color decoration
+Date:   Sun, 19 Feb 2023 17:46:30 +0000
+Message-Id: <20230219174631.1040-1-andy.koppe@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BM1PR01MB3139.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: b084277c-b2cc-4107-8a54-08db12836bc0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Feb 2023 14:13:06.0697
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB5895
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!=0A=
-I want to contribute to the Git project. However, I'm not sure what I can=
-=0A=
-contribute to.=0A=
-=0A=
-I'm used to the GitHub workflow, where I would look at the "Issues" section=
- of=0A=
-a GitHub repository, and try to tackle bugs / features I think I will be ab=
-le=0A=
-to work on.=0A=
-=0A=
-=0A=
-1. What is the equivalent for the Git project? How can I find issues/featur=
-es=0A=
-that I can work on?=0A=
-=0A=
-2. Is there a way I can find bugs/issues that are likely easy for a new=0A=
-contributor to pick up? Similar to a "good-first-issue" label on GitHub?=0A=
-=0A=
-Based on your responses, I can also update the documentation, so that other=
-s=0A=
-like me can get started quickly!=0A=
-=0A=
-Thanks!=0A=
-=0A=
-Divyanshu Agrawal=0A=
+Omit the "tag: " prefix for tags in commit decorations when coloring is
+enabled. The prefix isn't necessary as such when tags are distinguished
+by color already, and omitting it saves a bit of space and visual noise.
+
+It also avoids a problem: when the %d or %D placeholders are used while
+a %w wrapping specifier is in force in a format string, lines can be
+broken between the prefix and the tag name. In that case, the prefix
+gets colored correctly, but the tag name gets the default color instead.
+
+Also remove the tag prefix from test t4207 for color decorations, and
+add --no-color to a test t6002 check of the output of rev-list --bisect
+that expects tag prefixes to be present.
+
+Signed-off-by: Andy Koppe <andy.koppe@gmail.com>
+---
+
+CI run: https://github.com/ak2/git/actions/runs/4211957381
+
+ log-tree.c                       |  3 ++-
+ t/t4207-log-decoration-colors.sh | 22 +++++++++++-----------
+ t/t6002-rev-list-bisect.sh       |  2 +-
+ 3 files changed, 14 insertions(+), 13 deletions(-)
+
+diff --git a/log-tree.c b/log-tree.c
+index 1dd5fcbf7b..64ea15e0a0 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -324,7 +324,8 @@ void format_decorations_extended(struct strbuf *sb,
+ 			strbuf_addstr(sb, prefix);
+ 			strbuf_addstr(sb, color_reset);
+ 			strbuf_addstr(sb, decorate_get_color(use_color, decoration->type));
+-			if (decoration->type == DECORATION_REF_TAG)
++			if (!use_color &&
++			    decoration->type == DECORATION_REF_TAG)
+ 				strbuf_addstr(sb, "tag: ");
+ 
+ 			show_name(sb, decoration);
+diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
+index ded33a82e2..a5ee7b19d7 100755
+--- a/t/t4207-log-decoration-colors.sh
++++ b/t/t4207-log-decoration-colors.sh
+@@ -55,13 +55,13 @@ test_expect_success 'commit decorations colored correctly' '
+ 	cat >expect <<-EOF &&
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD -> \
+ ${c_reset}${c_branch}main${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: v1.0${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: B${c_reset}${c_commit})${c_reset} B
+-${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A1${c_reset}${c_commit}, \
++${c_reset}${c_tag}v1.0${c_reset}${c_commit}, \
++${c_reset}${c_tag}B${c_reset}${c_commit})${c_reset} B
++${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}A1${c_reset}${c_commit}, \
+ ${c_reset}${c_remoteBranch}other/main${c_reset}${c_commit})${c_reset} A1
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_stash}refs/stash${c_reset}${c_commit})${c_reset} \
+ On main: Changes to A.t
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+ 	EOF
+ 
+ 	git log --first-parent --no-abbrev --decorate --oneline --color=always --all >actual &&
+@@ -78,10 +78,10 @@ test_expect_success 'test coloring with replace-objects' '
+ 	cat >expect <<-EOF &&
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD -> \
+ ${c_reset}${c_branch}main${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: D${c_reset}${c_commit})${c_reset} D
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: C${c_reset}${c_commit}, \
++${c_reset}${c_tag}D${c_reset}${c_commit})${c_reset} D
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}C${c_reset}${c_commit}, \
+ ${c_reset}${c_grafted}replaced${c_reset}${c_commit})${c_reset} B
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+ EOF
+ 
+ 	git log --first-parent --no-abbrev --decorate --oneline --color=always HEAD >actual &&
+@@ -102,11 +102,11 @@ test_expect_success 'test coloring with grafted commit' '
+ 	cat >expect <<-EOF &&
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_HEAD}HEAD -> \
+ ${c_reset}${c_branch}main${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: D${c_reset}${c_commit}, \
++${c_reset}${c_tag}D${c_reset}${c_commit}, \
+ ${c_reset}${c_grafted}replaced${c_reset}${c_commit})${c_reset} D
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: v1.0${c_reset}${c_commit}, \
+-${c_reset}${c_tag}tag: B${c_reset}${c_commit})${c_reset} B
+-	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}v1.0${c_reset}${c_commit}, \
++${c_reset}${c_tag}B${c_reset}${c_commit})${c_reset} B
++	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}A${c_reset}${c_commit})${c_reset} A
+ 	EOF
+ 
+ 	git log --first-parent --no-abbrev --decorate --oneline --color=always HEAD >actual &&
+diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+index 162cf50778..924923afaa 100755
+--- a/t/t6002-rev-list-bisect.sh
++++ b/t/t6002-rev-list-bisect.sh
+@@ -305,7 +305,7 @@ test_expect_success '--bisect-all --first-parent' '
+ 	# expect results to be ordered by distance (descending),
+ 	# commit hash (ascending)
+ 	sort -k4,4r -k1,1 expect.unsorted >expect &&
+-	git rev-list --bisect-all --first-parent E ^F >actual &&
++	git rev-list --bisect-all --first-parent --no-color E ^F >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-- 
+2.39.0
+
