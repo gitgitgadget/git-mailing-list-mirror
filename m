@@ -2,149 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F81EC636D6
-	for <git@archiver.kernel.org>; Mon, 20 Feb 2023 16:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34333C05027
+	for <git@archiver.kernel.org>; Mon, 20 Feb 2023 16:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231823AbjBTQrm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Feb 2023 11:47:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32798 "EHLO
+        id S232360AbjBTQtN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Feb 2023 11:49:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232257AbjBTQrl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Feb 2023 11:47:41 -0500
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AA01206AF
-        for <git@vger.kernel.org>; Mon, 20 Feb 2023 08:47:13 -0800 (PST)
-Received: by mail-pl1-x636.google.com with SMTP id bh1so2136110plb.11
-        for <git@vger.kernel.org>; Mon, 20 Feb 2023 08:47:13 -0800 (PST)
+        with ESMTP id S232271AbjBTQtM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Feb 2023 11:49:12 -0500
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D156140E8
+        for <git@vger.kernel.org>; Mon, 20 Feb 2023 08:49:10 -0800 (PST)
+Received: by mail-qt1-x82f.google.com with SMTP id ay9so1152758qtb.9
+        for <git@vger.kernel.org>; Mon, 20 Feb 2023 08:49:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9Uf3W9qq+yHqyAGFuA6Ntx0PHExt4RDiwjg3boXF6Ak=;
-        b=LXwy6uPhgCitmJ7H4mvza/4OatkDj0baWC4khBXvWel7KFsyCVOk73xmuGkzVXfzNf
-         M+aeQzBEuLG/j55YbBs48JHRRmruFr3xIEL0jbHAXrS048X3CugWZXQy2Wz01VJFYgm0
-         gni4T8bevRmtz3fGNLkmUg2utt1BaEQEFnY2Kk5p4pzEIpoy7SKNUViPBdxIv4DesAt7
-         PQ7h0h/0Vaw0BVZc92XBNrZ/d8rj9yiW5RiZ4V/2HOXS93tEtaoL0783pJ54CQ0/SVh+
-         3FFEcRgPRrGo7j4JB2TzYYdZJ0kPi1yjHb0iQlUM1Pb/5Z+o/qZnL1UvlsemRdrzpbrD
-         eJ3A==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OTMUmldb8WNr/I4zYS6fdLuYsyOdwbKWArcNE6JLBJw=;
+        b=Ib9F0/rPmQNF0coaLlOu4KC+DrGfUpwYHxcppPFQHs+pP6pdhB5MfyBlYjNS54HsKf
+         uXLMDCtAUcdTgWVZHFD4kO4YJkbT2WuiZKDV2xRUujTWqESdaSKEFuIsaU3Wt5OEZGE2
+         rsFYSYIWDWSvWYNZzeEc9OC91bvlk2Yb5GC99BYXcR4RIOI8edxRN/IiofI2rIVtvM61
+         iNWKZpkwZCH1pLBA80Rnk8/YwlJv7JVqj00XlUoyUiXM6PyG5WClGWwT1ffhSnllVF8m
+         E2rPYDHRFF66xd9ICJxHMc5DuGYxYdlgTPBxKU2sMACAcOuzI1DSuUZPn0l1Gd6rxLoo
+         bSiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9Uf3W9qq+yHqyAGFuA6Ntx0PHExt4RDiwjg3boXF6Ak=;
-        b=aBMwSs0lAhUBC6RDG1xexzcHAsuNYmn7UIf1a7q6P0zlaWYRwv7ESTPuMG8LeVKu/m
-         qLBM1Ce7OtxMgPhGcrH0tteNao1lES553vex2DyelF3MZpdJ4SmZr8jql+VwXRnRDNpt
-         /Ui8v37jpyQHv3BbddY7tUSlCGYaymdnZotcfNNncrK5OmJN6I3r/4mgYURVjr3HSRJ4
-         flaIMZrmJxIk4dIWiDY0eaP4egiynG9FTx1YM/ZWSfRJLZlSTK/Yy3HWBMMcUhaxKENY
-         MAF9mwWegGhRa6mdLp/UVybIfTZ36A8QVtH0m5ZrqG/Hk0e1XrYp0pK4zzfwx1h/w46+
-         D2+w==
-X-Gm-Message-State: AO0yUKXfAZC/hgP8KTmUeMNseOEKisAaSOvLndrEUYdyCQz/yZo5nfuG
-        W26c6flaMWI36u/Hin1j20ELlEML+inro3WuZeo=
-X-Google-Smtp-Source: AK7set/CRJONnDWkl4P2/sDRF1/1VTPYDCyi1Xcie2eBm5ucEA18sn2oUX1RdWURvgyrvqPd9CoZBzUflWL/lRkk2qw=
-X-Received: by 2002:a17:90b:3ecd:b0:231:2896:597b with SMTP id
- rm13-20020a17090b3ecd00b002312896597bmr705971pjb.89.1676911607163; Mon, 20
- Feb 2023 08:46:47 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OTMUmldb8WNr/I4zYS6fdLuYsyOdwbKWArcNE6JLBJw=;
+        b=fzgWoUYjHRwyKltPM7+/m+wsXxtPl64lk9+ntqqJEXpnYqSEJR9t4gonGIb6s/zj3b
+         E+Am+NH7E1S/GfW64jSd1/J0K0/O5Sf+DMbaYXEiubJ9y2FeoEjeZ4WhfalTCarCuBuS
+         Jm+qDmPvK5CspdHb9KqPhicM1xjeORm2gbj/OA5MuiRqwFS30Kojd/fbGiQw8rdqXb2+
+         qE5QSW4mxAldW7FrwWe9F00EbUnq/diEfrONjpccQLrdldkzcVzgik6KKC8KNzedctlO
+         H5z8ku//HF2kfJP9HbR72vMnNkgybkS6O7oUrCMDIj8gf4BXRaUZ8qdattZcY5JO8YCC
+         A7Bw==
+X-Gm-Message-State: AO0yUKUxTWMMEeQfGxM064sUtL/MHfg+dAFtGQO4OjlOzYZJhmQY/NBc
+        K2qaucbQeMiuwqStiF6xmXAiYv84FlQ=
+X-Google-Smtp-Source: AK7set/x4BbEwAy8sIEAT2DEW4dYELwh+82h3vBHvaHPw6gmiW8yavve8tzjA7dEmPr7KnxpZ6V+jQ==
+X-Received: by 2002:a05:622a:1713:b0:3b5:87db:f979 with SMTP id h19-20020a05622a171300b003b587dbf979mr4094947qtk.5.1676911749729;
+        Mon, 20 Feb 2023 08:49:09 -0800 (PST)
+Received: from [192.168.1.211] ([2600:4041:4542:c100:8905:dad0:53aa:3ab7])
+        by smtp.gmail.com with ESMTPSA id hf22-20020a05622a609600b003b85ed59fa2sm8987924qtb.50.2023.02.20.08.49.08
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 Feb 2023 08:49:09 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 2/2] diff: teach diff to read algorithm from diff driver
+Date:   Mon, 20 Feb 2023 11:49:08 -0500
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <47981D9E-9DC7-4C23-911D-13BA52A27040@gmail.com>
+In-Reply-To: <CABPp-BGDi1VQXFdGw_Y8i0ZDBOoHJe9039fh4mO44qJ-nJE1ig@mail.gmail.com>
+References: <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
+ <pull.1452.v3.git.git.1676665285.gitgitgadget@gmail.com>
+ <b330222ce83bdf03c20085ff10fcff8a090474d5.1676665285.git.gitgitgadget@gmail.com>
+ <CABPp-BFCMpA=nHtb5RuQL7ACbkhSEKtvmRxKwMuktcf24uQJtQ@mail.gmail.com>
+ <EE7565DF-BE70-4C45-AF0B-95C85050DFA4@gmail.com>
+ <CABPp-BGDi1VQXFdGw_Y8i0ZDBOoHJe9039fh4mO44qJ-nJE1ig@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.1474.git.1675614276549.gitgitgadget@gmail.com>
- <CAMMLpeTPEoKVTbfc17w+Y9qn7jOGmQi_Ux0Y3sFW5QTgGWJ=SA@mail.gmail.com>
- <CAPMMpogFAR6cvcR8T5fx+AoytAJ7TsPpSeOjHNzW4Gmkuq7FLQ@mail.gmail.com>
- <CAMMLpeTQ1RpsvwRdZ0G3wdvH1+LXE5tw=7Cs6Q+HxMcRU0qj5Q@mail.gmail.com>
- <CABPp-BFxGYQ_JTC5c4_S_gOK3GxWKuZ=KfvycpkBjPGyKzCJ+g@mail.gmail.com> <c3ef69e0-c37a-01fe-a40a-c2940e329793@dunelm.org.uk>
-In-Reply-To: <c3ef69e0-c37a-01fe-a40a-c2940e329793@dunelm.org.uk>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 20 Feb 2023 08:46:32 -0800
-Message-ID: <CABPp-BEAqP7maTVw82Qr8mn-sxPzXmHnE_mTKf2pg6hVYAJSUw@mail.gmail.com>
-Subject: Re: [PATCH] pull: conflict hint pull.rebase suggestion should offer
- "merges" vs "true"
-To:     phillip.wood@dunelm.org.uk
-Cc:     Alex Henrie <alexhenrie24@gmail.com>, Tao Klerks <tao@klerks.biz>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Hi Elijah,
 
-On Sat, Feb 18, 2023 at 8:39 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+On 20 Feb 2023, at 11:21, Elijah Newren wrote:
+
+> On Mon, Feb 20, 2023 at 7:32 AM John Cai <johncai86@gmail.com> wrote:
+> [...]
+>>> I'm still curious if this should this also include warnings/caveats, =
+such as:
+>>>   * The diff attribute specified in .gitattributes will be ignored in=
+
+>>> a bare clone
+>>>   * The diff attribute specified in .gitattributes will be ignored if=
+
+>>> it is only specified in another branch (e.g. on a branch "special-fil=
+e
+>>> diff=3Dpatience" recorded in .gitattributes, then checkout master but=
+
+>>> run `git log -1 -p $branch`)
+>>>   * When a file is renamed, the diff attribute for the pre-image name=
+
+>>> is the only one the system pays attention to (thus adding "-R" can
+>>> flip which diff algorithm is run for the renamed file).
+>>
+>> I would be fine with adding that--though originally I was thinking tha=
+t these
+>> can be inferred from the way that gitattributes are documented in [1].=
+ Calling
+>> these out would make it more clear though, so I could go either way.
+>>
+>>>
+>>> Also, since I tested the three items above to verify they are valid
+>>> warnings, I'm a bit confused.  I thought your intent was to use this
+>>> server-side[1], so isn't the bare clone aspect a deal-breaker for you=
+r
+>>> intended usecase?
+>>>
+>>> [1] https://lore.kernel.org/git/7852AC7B-7A4E-4DD0-ADEA-CFFD5D16C595@=
+gmail.com/
+>>
+>> yes, indeed. I was planning on adding bare repository support in a sep=
+arate
+>> patch series, since the additions in [2] allows .gitattributes to be r=
+ead from a
+>> bare repository.
+>>
+>> 1. https://git-scm.com/docs/gitattributes
+>> 2. https://lore.kernel.org/git/0ca8b2458921fc40269b0c43b5ec86eba77d6b5=
+4.1673684790.git.karthik.188@gmail.com/
+>>
+>> thanks!
+>> John
 >
-> On 18/02/2023 03:17, Elijah Newren wrote:
-> >
-> > One concern I have is that "--rebase-merges" itself has negative user
-> > surprises in store.  In particular, "--rebase-merges", despite its
-> > name, does not rebase merges.  It uses the existing author & commit
-> > message info, but otherwise just discards the existing merge and
-> > creates a new one.  Any information it contained about fixing
-> > conflicts, or making adjustments to make the two branches work
-> > together, is summarily and silently discarded.
+> Oh, interesting, I didn't know about [2].  So, is the plan to take the
+> --source option from that series and add it to diff (perhaps with a
+> different name, since log tends to consume diff options and --source
+> is already taken)?
+
+Yep, that would be the general idea
+
 >
-> That's a good point. Another potentially surprising behavior is that
-> when I'm rebasing an integration branch with -rno-rebase-cousins then if
-> one of the topic branches merged into the integration branch happens to
-> share the same base as the integration branch itself the topic branch
-> gets rebased as well. -rno-rebase-cousins is also slower that it needs
-> to be because it creates a todo list that contains all the commits on
-> the topic branches merged into the integration branch rather than just
-> the merges. The commits on the topic branches are fast-forwarded rather
-> than rewritten so long as they don't share the same base as the
-> integration branch but it noticeably slower than using a todo list with
-> just the merge commands.
+> And do you expect to get the tree-ish from the two the users are
+> already specifying to diff?  If so, which one do you use (the two
+> commits being diffed might have differing .gitattributes files)?  If
+> not, what does that mean for users of e.g. the GitLab UI who have to
+> specify a third tree when diffing?
 
-Yeah, modifying rebase to accept a general range expression (instead
-of assuming upstream..HEAD) would really help.  Then, to get just the
-parts you are interested in, you could use a range with extra commit
-exclusions and additional qualifiers like --ancestry-path=<commit> and
---first-parent.  In fact, you could also list multiple branches (none
-of which necessarily fully contains any of the others) to replay
-multiple branches at a time.  (See [2] for where I discuss this
-more, though focusing on the --ancestry-path=<commit> part of it.).
+Good question! Since it seems that when `git-diff(1)` considers diff.<dri=
+ver>,
+it goes with the path of the first one. (might need some confirmation her=
+e)
 
-But, it'd also fundamentally break existing workflows, so it might
-have to be a new command, perhaps `git replay`.  However, there's
-multiple other improvements needed in rebase (such as not wasting time
-updating the working tree or index or reflog for every commit, or
-wasting time writing N control files when we could move to 1 control
-file, and allowing working on branches that aren't checked out) that I
-think would likely also break compatibility, so maybe another command
-is a good idea anyway[3].
+in diff.c:
 
-[2] https://lore.kernel.org/git/CABPp-BHmj+QCBFDrH77iNfEU41V=UDu7nhBYkAbCsbXhshJzzw@mail.gmail.com/
-[3] https://github.com/newren/git/blob/e84f5f3585fd770ed21f398d2ae5f96e90a51b1e/replay-design-notes.txt
 
-> > My personal opinion would be adding such a capability should be step
-> > 2.5 in your list, though I suspect that would make Tao unhappy (it's a
-> > non-trivial amount of work, unlike the other steps in your list).
->
-> I've got a couple of patches[1] that cherry-pick the merge if only one
-> of the parents has changed. I've never tried upstreaming them as it is
-> only a partial solution to the problem of rebasing merges but that
-> approach should work well with "git pull --rebase=merges" as only the
-> upstream side will have changed (when rebasing my git integration branch
-> with that patch the merges are cherry-picked). They might make a useful
-> starting point if anyone wants to try and improve the rebasing of merges.
+static void run_diff(struct diff_filepair *p, struct diff_options *o)
+{
+	const char *pgm =3D external_diff();
+	struct strbuf msg;
+	struct diff_filespec *one =3D p->one;
+	struct diff_filespec *two =3D p->two;
+	const char *name;
+	const char *other;
+	const char *attr_path;
 
-I've actually put quite a bit of time into this problem.  I have
-outlined what I think is a full solution to the rebasing of merges
-problem space at [4], which expands on my earlier discussion with
-Johannes on-list over at [5] (which in turn was a follow-up to
-previous discussions that you, Johannes, and several others had years
-ago).  If you're interested and have any thoughts on my plans for this
-problem space, I'd love to hear it.  You tend to have very strong
-insights on everything xdiff, sequencer, and rebasing related.  My
-"replay" branch contains a partial implementation, but it's not really
-usable for anything rebase-merges-related yet, so you'd mostly have to
-go with my writeups.
+	name  =3D one->path;
+	other =3D (strcmp(name, two->path) ? two->path : NULL);
+	attr_path =3D name;
+	if (o->prefix_length)
 
-A warning, though, that I won't be able to respond to feedback on this
-topic very soon.  I will definitely get back to working on it, but
-it's been much more challenging with more limited git time these days.
-Unfortunately, the current economic environment reduces the number of
-ways possible to extend the amount of time available for working on
-Git, but one way or another I'll eventually get back to this problem
-and implement my ideas, unless someone beats me to it.
+I was thinking we would just use the tree-ish of the first one
 
-[4] https://github.com/newren/git/blob/e84f5f3585fd770ed21f398d2ae5f96e90a51b1e/replay-design-notes.txt#L264-L341
-[5] https://lore.kernel.org/git/CABPp-BHWVO5VRhr1-Ou60F1wjKzJZ1e_dC01Mmzs+qB9kGayww@mail.gmail.com/
+thanks
+John
