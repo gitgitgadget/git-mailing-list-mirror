@@ -2,157 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1792EC636CC
-	for <git@archiver.kernel.org>; Mon, 20 Feb 2023 17:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB8AEC636CC
+	for <git@archiver.kernel.org>; Mon, 20 Feb 2023 17:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231881AbjBTRVF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Feb 2023 12:21:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56692 "EHLO
+        id S230384AbjBTRdN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Feb 2023 12:33:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230428AbjBTRVE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Feb 2023 12:21:04 -0500
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAE4D17144
-        for <git@vger.kernel.org>; Mon, 20 Feb 2023 09:21:02 -0800 (PST)
-Received: by mail-pl1-x636.google.com with SMTP id q11so2593632plx.5
-        for <git@vger.kernel.org>; Mon, 20 Feb 2023 09:21:02 -0800 (PST)
+        with ESMTP id S229869AbjBTRdK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Feb 2023 12:33:10 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA29955B7
+        for <git@vger.kernel.org>; Mon, 20 Feb 2023 09:33:08 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id r27so481065lfe.10
+        for <git@vger.kernel.org>; Mon, 20 Feb 2023 09:33:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=k2JkvXVpi0Dq/Xt4/LHci37tOKZaq0p9tAEZWsH9VDw=;
-        b=lIwrNnvXCWu4V0w+HuEk3y81WcQPaGNAgaX5Z6ggmMQOXomfJ971DC71d36IsnqQ5K
-         Z2Q8OV2zClfo/dzPJ9yZ/+rrLw+opBvfmtmPjIsFjU7Kgh0Zwrm2HEwiu3d4pVytv1y0
-         cvCYess3nWIcK3iMYizC3DTX81TS3BxPMQ7PvAEkzxzM2dyMJ/Yxm5+4SwxP6OvV5VyW
-         vVecGyhWd7M2kBa/o4ZraMSP+9gBNDByj3/W2AC9LmcbnjV6C7JjWhrQs1zFg3pXDASc
-         cJKjGOBPqFvhR8XtgA1EIMfvQqOqwTAxanMtRjmYFfu5QZur14US0tz76b5RjxGYoc4u
-         PTIQ==
+        bh=pY2Eqqa9cjIs/xMlnew3mx9OjcsRTtGI5MXlGoWGa1E=;
+        b=VYfrpecz8793ZxixqvqfUADBwgmUWdTe0kcxoFPjuj6NpGv3ztE3q6JaA7y2cWple4
+         Hl6zPBAaTEwcp1A9utPGDeTGIoAY3YQXH4A/OpUQe2K2wDoPaX8MbxrOZKNFk4TmQfFU
+         /DYECNFwcKKSwPfjcDlJYdohHWsyLZB0/Ar1RHs+F/kz3esnpF3+p5aG7oXvfGIJc/90
+         M+lpN7P/vdPTcoKc6GrKTP/a/iig5WGbDbnqXOQlPKGECuGbvkGTKALTRtvs+Wh2s/To
+         /+J+lRqCJrr5130QibDa2VcbcdwsTpSGn5ieYTWX1WDhAsUiW4bS/AOfnqpQdK0cwj2L
+         FYQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=k2JkvXVpi0Dq/Xt4/LHci37tOKZaq0p9tAEZWsH9VDw=;
-        b=krO9Ux7Yo/Q1IAxKk3GFA/o1JJOSobDcCAV7ZwM6QHq/GFFQUrwJ7o7AyQCmfh814O
-         rIHMr0h1PZOGOSN4j8scwaLxSpT6odRWDdHuWAs6Ht/ilZrwWp7zIT1UeA1uuxoknifQ
-         KdK2whYMOW4K62jxa8MfVBc8wUGF7lPWednUn68C03PBPm4PFIopmv5GB/sx8Eo6s3HL
-         LpXJdJ/spp8NgnZZ8/snzb5QGJY5T0PIl9BOLCac4PGspJGY7+E1EuP6p3pHQs2f93PN
-         WL5cn5TcNYauSydIJjJTqzlTC337I+HABFdaXRLoZpolF0wSalEFQIMLi6/oR1GJPFMC
-         zZSg==
-X-Gm-Message-State: AO0yUKU0eLkDXyvNHJOWgozXsIyZo2t2nE4oB9D0zYB0BP8CQ4P3JsQ+
-        QtxtjIgejl1g9oK4ocBt5I5B1i2c1+KtkLC9kMU=
-X-Google-Smtp-Source: AK7set9DsMCk6dSxAbAvDJQaAVyJL9+MGPL4cCZiXFsFeVsQbUHTCNtV872+bcHqniEZ5RvOPNeQuYdR4F4xnSunsLo=
-X-Received: by 2002:a17:90b:3ecd:b0:231:2896:597b with SMTP id
- rm13-20020a17090b3ecd00b002312896597bmr726646pjb.89.1676913662277; Mon, 20
- Feb 2023 09:21:02 -0800 (PST)
+        bh=pY2Eqqa9cjIs/xMlnew3mx9OjcsRTtGI5MXlGoWGa1E=;
+        b=ZQyqp2AVKWe9QY/GQqchF55JWnuUtB/A6zW40mnJf4UhCX1BhO+zIyJK6U2U8roC/0
+         FbDK0q4KnLQ4XLG+vaPaliAUnpVDGaJZQpG9squnrM/6kfmipm2H8/Gh0oWcfDbdAf2z
+         z49ngBf8MfKagS9fi4dOnYxhyQ/rZ7dXiOr5RLtFDEsqM1bWYKh0KUEN2iecAIzii9iY
+         4NMUsGnL1gKxLJpLvHG06CUSvuTLkHd2rS+YCSYOID+IAbH+J9dNJiMgPAM4GLBHPCyj
+         IUuYxjQao4IcvdV9IBdSmDWlKWve+Ou9RWAjxkGHdkBRiUjyd97VnZclTwCUGfp4rLlN
+         5J5g==
+X-Gm-Message-State: AO0yUKUkbFjhOmLAEXJYwfW2qyk3DGF3kyvuecWgyTvVCPObTBo1QqxO
+        eFa5quOVTzxWoMRwTfOo1sjkN34tTvRFBN7tIXTDIxafck8=
+X-Google-Smtp-Source: AK7set/2mlUnfRwQwqwivcHXkXgK4LrtKdLoRcKu8Wc4gytXaiTBOkUyt8snl2jSBhJCX6PDYj5OIahtc2sCh64NPgE=
+X-Received: by 2002:ac2:44a8:0:b0:4d8:6fd3:b8bf with SMTP id
+ c8-20020ac244a8000000b004d86fd3b8bfmr851926lfm.7.1676914386892; Mon, 20 Feb
+ 2023 09:33:06 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1474.git.1675614276549.gitgitgadget@gmail.com>
- <CAMMLpeTPEoKVTbfc17w+Y9qn7jOGmQi_Ux0Y3sFW5QTgGWJ=SA@mail.gmail.com>
- <CAPMMpogFAR6cvcR8T5fx+AoytAJ7TsPpSeOjHNzW4Gmkuq7FLQ@mail.gmail.com>
- <CAMMLpeTQ1RpsvwRdZ0G3wdvH1+LXE5tw=7Cs6Q+HxMcRU0qj5Q@mail.gmail.com>
- <CABPp-BFxGYQ_JTC5c4_S_gOK3GxWKuZ=KfvycpkBjPGyKzCJ+g@mail.gmail.com> <CAPMMpojCYAwwu6_BE+myFaUy6fLqVSWAyiRWr_dGAmMqqUF12Q@mail.gmail.com>
-In-Reply-To: <CAPMMpojCYAwwu6_BE+myFaUy6fLqVSWAyiRWr_dGAmMqqUF12Q@mail.gmail.com>
+References: <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
+ <pull.1452.v3.git.git.1676665285.gitgitgadget@gmail.com> <b330222ce83bdf03c20085ff10fcff8a090474d5.1676665285.git.gitgitgadget@gmail.com>
+ <CABPp-BFCMpA=nHtb5RuQL7ACbkhSEKtvmRxKwMuktcf24uQJtQ@mail.gmail.com>
+ <EE7565DF-BE70-4C45-AF0B-95C85050DFA4@gmail.com> <CABPp-BGDi1VQXFdGw_Y8i0ZDBOoHJe9039fh4mO44qJ-nJE1ig@mail.gmail.com>
+ <47981D9E-9DC7-4C23-911D-13BA52A27040@gmail.com>
+In-Reply-To: <47981D9E-9DC7-4C23-911D-13BA52A27040@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 20 Feb 2023 09:20:47 -0800
-Message-ID: <CABPp-BEtXf9ja7Ec1fZ=BZwFDa+50zSAhtm3nN_=k+Nc2c=RXw@mail.gmail.com>
-Subject: Re: [PATCH] pull: conflict hint pull.rebase suggestion should offer
- "merges" vs "true"
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Mon, 20 Feb 2023 09:32:52 -0800
+Message-ID: <CABPp-BHQn0sjAMwJ+r6uenO=nGLG1HvfnhS6tG8mu1BWt4bdOw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] diff: teach diff to read algorithm from diff driver
+To:     John Cai <johncai86@gmail.com>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 19, 2023 at 10:01 PM Tao Klerks <tao@klerks.biz> wrote:
+On Mon, Feb 20, 2023 at 8:49 AM John Cai <johncai86@gmail.com> wrote:
 >
-> On Sat, Feb 18, 2023 at 4:17 AM Elijah Newren <newren@gmail.com> wrote:
+> Hi Elijah,
+>
+> On 20 Feb 2023, at 11:21, Elijah Newren wrote:
+>
+> > On Mon, Feb 20, 2023 at 7:32 AM John Cai <johncai86@gmail.com> wrote:
+> > [...]
+> >>> I'm still curious if this should this also include warnings/caveats, such as:
+> >>>   * The diff attribute specified in .gitattributes will be ignored in
+> >>> a bare clone
+> >>>   * The diff attribute specified in .gitattributes will be ignored if
+> >>> it is only specified in another branch (e.g. on a branch "special-file
+> >>> diff=patience" recorded in .gitattributes, then checkout master but
+> >>> run `git log -1 -p $branch`)
+> >>>   * When a file is renamed, the diff attribute for the pre-image name
+> >>> is the only one the system pays attention to (thus adding "-R" can
+> >>> flip which diff algorithm is run for the renamed file).
+> >>
+> >> I would be fine with adding that--though originally I was thinking that these
+> >> can be inferred from the way that gitattributes are documented in [1]. Calling
+> >> these out would make it more clear though, so I could go either way.
+> >>
+> >>>
+> >>> Also, since I tested the three items above to verify they are valid
+> >>> warnings, I'm a bit confused.  I thought your intent was to use this
+> >>> server-side[1], so isn't the bare clone aspect a deal-breaker for your
+> >>> intended usecase?
+> >>>
+> >>> [1] https://lore.kernel.org/git/7852AC7B-7A4E-4DD0-ADEA-CFFD5D16C595@gmail.com/
+> >>
+> >> yes, indeed. I was planning on adding bare repository support in a separate
+> >> patch series, since the additions in [2] allows .gitattributes to be read from a
+> >> bare repository.
+> >>
+> >> 1. https://git-scm.com/docs/gitattributes
+> >> 2. https://lore.kernel.org/git/0ca8b2458921fc40269b0c43b5ec86eba77d6b54.1673684790.git.karthik.188@gmail.com/
+> >>
+> >> thanks!
+> >> John
 > >
-> > On Thu, Feb 16, 2023 at 8:02 PM Alex Henrie <alexhenrie24@gmail.com> wrote:
-> > >
-> > > On Thu, Feb 16, 2023 at 5:31 AM Tao Klerks <tao@klerks.biz> wrote:
-> > > >
-> > > > If there's an appetite for it, I would love to contribute to a
-> > > > multi-year adventure to change git's behavior, little by little, until
-> > > > the behavior of "rebase=merges" is the default, and the old behavior
-> > > > becomes a different option like
-> > > > "rebase=copy-merged-commits-to-flatten"
-> > >
-> > > I know you had a lot to say in your last email, but I'd like to focus
-> > > on this point. I would be OK with the proposed patch if it were part
-> > > of a larger effort to make --rebase-merges the default behavior of
-> > > `git rebase`. That seems like an achievable goal, and I don't think it
-> > > would take multiple years, maybe one year at the most. The process
-> > > would look something like this:
-> > >
-> <SNIP>
-> > >
-> > > Does that sound reasonable? I think I could lend a hand with steps 1-3.
+> > Oh, interesting, I didn't know about [2].  So, is the plan to take the
+> > --source option from that series and add it to diff (perhaps with a
+> > different name, since log tends to consume diff options and --source
+> > is already taken)?
+>
+> Yep, that would be the general idea
+>
 > >
-> > One concern I have is that "--rebase-merges" itself has negative user
-> > surprises in store.  In particular, "--rebase-merges", despite its
-> > name, does not rebase merges.  It uses the existing author & commit
-> > message info, but otherwise just discards the existing merge and
-> > creates a new one.  Any information it contained about fixing
-> > conflicts, or making adjustments to make the two branches work
-> > together, is summarily and silently discarded.
-> >
-> > My personal opinion would be adding such a capability should be step
-> > 2.5 in your list, though I suspect that would make Tao unhappy (it's a
-> > non-trivial amount of work, unlike the other steps in your list).
+> > And do you expect to get the tree-ish from the two the users are
+> > already specifying to diff?  If so, which one do you use (the two
+> > commits being diffed might have differing .gitattributes files)?  If
+> > not, what does that mean for users of e.g. the GitLab UI who have to
+> > specify a third tree when diffing?
 >
-> I apologize for my ignorance here, but I'm not sure how this "does not
-> rebase merges" concern overlaps with the "pull.rebase" context I'm
-> most specifically concerned about.
+> Good question! Since it seems that when `git-diff(1)` considers diff.<driver>,
+> it goes with the path of the first one. (might need some confirmation here)
 >
-> I would have assumed that when merge commits are "dropped", as results
-> from the current "pull.rebase=true" option in the pull conflict
-> advice, any merge resolution information is *also* dropped - so there
-> is no loss to the user here in advising the use of
-> "pull.rebase=merges" instead.
+> in diff.c:
 >
-> Is your concern about the "pull.rebase=merges" advice change, or more
-> about the broader "let's encourage users to more explicitly choose
-> between traditional merge-dropping rebase and rebase-merges" change
-> Alex is advocating for as a precondition to "my" change :) ?
+>
+> static void run_diff(struct diff_filepair *p, struct diff_options *o)
+> {
+>         const char *pgm = external_diff();
+>         struct strbuf msg;
+>         struct diff_filespec *one = p->one;
+>         struct diff_filespec *two = p->two;
+>         const char *name;
+>         const char *other;
+>         const char *attr_path;
+>
+>         name  = one->path;
+>         other = (strcmp(name, two->path) ? two->path : NULL);
+>         attr_path = name;
+>         if (o->prefix_length)
+>
+> I was thinking we would just use the tree-ish of the first one
 
-When we teach new folks about git, and get to rebasing, there is a
-simple and easy rule to tell users: don't mix merges and rebases.
-(There's a minor exception there in that merges with the upstream
-branch are fine and rebasing can let you get rid of those otherwise
-ugly-and-frequent back-merges that users sometimes make.)
+That would certainly simplify, but it'd be pretty important to
+document.  (Incidentally, this kind of decision was my reason for
+asking about all those special cases earlier, i.e. how to handle diff
+between different commits, how to handle renames, how to handle bare
+repositories, etc.)
 
-Obviously, your users are ignoring that advice, and feeling pain.  To
-be fair, the "RECOVERING FROM UPSTREAM REBASE" section of the rebase
-manual isn't that prominent, and perhaps your users didn't have more
-seasoned developers sharing this don't-mix-merges-and-rebases advice
-with them.  (It seemed to me to be shared pretty widely and commonly,
-but perhaps we are relying on education from others too much and
-education is never uniform if not coming from the tool itself.)  I
-understand you want to make it easier for users to avoid accidentally
-getting into this state.  That's a valid concern and desire.  I think
-we should improve the situation.
+This kind of decision probably also means you'd need a variety of
+testcases where .gitattributes is different in every commit & the
+index & the working tree, and then you start testing several of the
+possible pairings to make sure the right .gitattributes file is used
+(e.g. (commit, commit), (commit, index), (index, commit), (worktree,
+index), etc.)
 
-However, on what timetable and at what cost to others?
-
-You're advocating we start advertising an alternate option, one which
-has some caveats and gotchas that are not going to be so easy to
-explain to users -- neither to new users, nor to folks who have been
-using Git for years.  We could just bite the bullet and start
-explaining, but these caveats and gotchas are completely incidental to
-the implementation, and are in no-wise fundamental to the desired
-operation.  I believe that switching to this new option is going to
-generate an awful lot of questions and surprises by users.  It seems
-to me to be a really sad state of affairs to be recommending an option
-with known defects when (IMO) the solution is known.  Can't we fix it
-first, then recommend it?
-
-Granted, this is a trade-off.  You have users experiencing real pain.
-You want a solution now.  I want to not recommend features with known
-implementation shortcomings and known solutions, until those solutions
-are implemented, and I know that will take a while.  What to do here
-is a judgement call, and I was merely giving my opinion on the call to
-make.  Other folks on the list might see things differently than I do.
+However, I'm curious again.  You brought this up because you want to
+use it in GitLab, yet configuration of using this option as it appears
+in this series requires changing _both_ .gitattributes and
+.git/config.  How will users of the GitLab UI do the configuration
+necessary for the git-config side to take effect?
