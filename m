@@ -2,91 +2,274 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D792C636D6
-	for <git@archiver.kernel.org>; Mon, 20 Feb 2023 21:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC509C61DA3
+	for <git@archiver.kernel.org>; Mon, 20 Feb 2023 22:53:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232445AbjBTVmG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Feb 2023 16:42:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45830 "EHLO
+        id S232643AbjBTWxU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Feb 2023 17:53:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232005AbjBTVmF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Feb 2023 16:42:05 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D78D1F91D
-        for <git@vger.kernel.org>; Mon, 20 Feb 2023 13:42:04 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id n20so1278488pfu.12
-        for <git@vger.kernel.org>; Mon, 20 Feb 2023 13:42:04 -0800 (PST)
+        with ESMTP id S232513AbjBTWxS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Feb 2023 17:53:18 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07C382129
+        for <git@vger.kernel.org>; Mon, 20 Feb 2023 14:53:09 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id p8so2756207wrt.12
+        for <git@vger.kernel.org>; Mon, 20 Feb 2023 14:53:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mxbT4djABpwSo20guAxUdHWfW0qXg6cd1TAkRHnMt6M=;
-        b=HKh/z6b1UggqxWHEEf1wwnkqeW3Yr9CcxGAzzObsosVDJru58ioocp+McY+kf6GW4F
-         ltzNH4OycszmvZMY0r1Gjot1oI692hIG5P3yvwL0FbSEuQo5d88rL89Npe98F9pJ+XeP
-         HkxbUviK4BkAI9hIQi7cB8NNVQei9pyvOOK+PYHSfZyGsq6HApsYtEzp/D5XueN35pzC
-         jyChr3EQCqQX8C9M/Ag00RXyeyl4xJyLH5CWqGPg/07V2VZ1ySmyv2BO/OdF/+bZbwXp
-         N3c4XuqED9GzyNgxq927y2zxMbekTNvJTEZ+VoRKyplnpSHYgKwt/JBQWZA6c47UjNDl
-         lHhQ==
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t32XK3Vo/pZbsdQG9ihgoPMbadsex90uXyzzef2YSts=;
+        b=Oh5wJLLZCp9XGLnY25Hviqo9CPBZK/q/BO4zy5PWiXHYap1HAtnSpqrEYA0pQX5GZ/
+         wXQo9Q/6b1LCCJMcZ8Jd7cilpVpuXYiXTlDXunieWWSvQxBQncpDiAF008WrSL7gg7LX
+         GQaAnSsnyv6wocEFyVRC3IccbD1Q7tnxi0i67yxWmmHNZ3c9zf2QK1kVKfI40NZiFjHI
+         kEnfMFlaR4Dpwkpp1bFtikaHR78GaFblVMqica65YL9cBUZjLrhGjOuyuu1AZYmpn0TK
+         heh4FKIDiPYOW3YNzXSYHXXG36Kl+xES+rJaqNf45s3LOslZ4a9gZ/JubKAxWIbXBglA
+         30mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mxbT4djABpwSo20guAxUdHWfW0qXg6cd1TAkRHnMt6M=;
-        b=ZwLLRsPgw3I82pVvDdZLxY33iFMIs2TlyLP/YuJItBY4nXkPSWFYVtgWakZFp+iFL0
-         2KdbHt/KsvVGoIR1iJcw7qoNCSIFsSanEUR1ImRFBXLR4AgtiQeUihbLwkE5We5fxwyR
-         fwbyeMhr5Qj3O7oQ9xkAHe3/dSbimreC4cLm0lP7Yf16fH7GXSEcIy495/tzbxoaR7nP
-         0qkZNJU6ngU/6pFMFVGpTAQ+ByQ7EoAMpebEX+TRFkE+AG4lQKKx+F0WT7ozHimHgU8I
-         br0uz397KLr4p9pxRRNgslyHicpOQjStWmni8YIkKbEuT4AQIsJBl5KPyo3JsYJAi5RJ
-         rwlA==
-X-Gm-Message-State: AO0yUKWP81e8DT7u3M+N/tigZmrY9xcbulKQLvTjVrp17DDxO17jGSIX
-        l6L22vLW5gy36j3GUCWjdit6Sc3E9lo=
-X-Google-Smtp-Source: AK7set9gjsyNcsyZ69EI+8/P75LL6HONf1qKHBgTWjybCQP6RLvUgr9GFoqYXcD5MRBSfZ6dEB0AEw==
-X-Received: by 2002:a62:1952:0:b0:5a8:4b70:885f with SMTP id 79-20020a621952000000b005a84b70885fmr3184951pfz.18.1676929323986;
-        Mon, 20 Feb 2023 13:42:03 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id y26-20020aa7855a000000b005941ff79428sm8363453pfn.90.2023.02.20.13.42.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Feb 2023 13:42:03 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     git@vger.kernel.org, tao@klerks.biz, newren@gmail.com,
-        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH 1/2] rebase: add a --rebase-merges=drop option
-References: <20230220033224.10400-1-alexhenrie24@gmail.com>
-Date:   Mon, 20 Feb 2023 13:42:02 -0800
-In-Reply-To: <20230220033224.10400-1-alexhenrie24@gmail.com> (Alex Henrie's
-        message of "Sun, 19 Feb 2023 20:32:23 -0700")
-Message-ID: <xmqqr0ukggk5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:references:cc:to:from:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=t32XK3Vo/pZbsdQG9ihgoPMbadsex90uXyzzef2YSts=;
+        b=I2FBF1qqtmAiSz9xAD9ncKB1qRcfqHeHXhRGgfJfuy1zaV8/bSXVlPxyp/GPHjr4of
+         rdz4z22XukAiCVLvs6yNYhrMTxMG1nln/8I/IbG2Gc6LT+T4Vm8knNgHWI+Vm6LZKAga
+         mOsiM04NTg27aLu1P4lRg27e+PLs1CuEhcIKxiOEfbPggAOEBrRa+vE4Hg5BO6AL/Tf7
+         SHCuUh4hpUUXRaHLFIcctp6MO3aHMFmHmBbaG64MaPfsmgpRxF3AV2ET8VzK5Zw+4cf0
+         WzPvPqTEYSpfdaDDF9HafA52ixvKqSyjNvOIjVvF+Ze/ktbWs/lS159+UxynJTsSmL0W
+         6qVQ==
+X-Gm-Message-State: AO0yUKWs2BHY6xD2faGESSRlJfvCDVekDTpF5ZOlsZBKR22CrlO9Zahx
+        BcRMTTaYlpge7YhQHU88cfeepAPf4YA=
+X-Google-Smtp-Source: AK7set8mo3wsvxjFQheso+5RS0ACoQBgWfwLle4ogiZLuwkBGXBreqzQ4DYDuXDWpaC7lCZuIO7G7g==
+X-Received: by 2002:a5d:6b4d:0:b0:2c6:67eb:a9d7 with SMTP id x13-20020a5d6b4d000000b002c667eba9d7mr2647935wrw.27.1676933587346;
+        Mon, 20 Feb 2023 14:53:07 -0800 (PST)
+Received: from [192.168.2.52] (59.red-88-14-203.dynamicip.rima-tde.net. [88.14.203.59])
+        by smtp.gmail.com with ESMTPSA id s5-20020adfeb05000000b002c54c0a5aa9sm13634716wrn.74.2023.02.20.14.53.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Feb 2023 14:53:06 -0800 (PST)
+Subject: [PATCH v3] bisect: fix "reset" when branch is checked out elsewhere
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Eric Sunshine <sunshine@sunshineco.com>
+References: <1c36c334-9f10-3859-c92f-3d889e226769@gmail.com>
+ <ada28944-6e9e-d4e7-74c9-ffadaf406e1f@gmail.com>
+Message-ID: <6d70ba66-11b1-d596-ab0a-8643d6fc23a4@gmail.com>
+Date:   Mon, 20 Feb 2023 23:53:04 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <ada28944-6e9e-d4e7-74c9-ffadaf406e1f@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+When the user starts a bisection in a worktree, we save the branch
+currently checked out in that worktree (BISECT_START) to allow the user
+to go back to that branch later on.
 
-> Name the new option "drop" intead of "no" or "false" to avoid confusion
+From that moment and until the bisection ends, the branch is no longer
+checked out in that worktree, but we give it the same consideration as
+if it was checked out, which means that we prevent:
+ - deleting that branch and
+ - checking out that branch in another worktree, unless the user force
+   the ckeck out.
 
-This is traditionally called "flattening the history".  Don't we
-confuse uesrs by introducing a new phrase?
+"bisect" was introduced as a helper script in 8cc6a08 ([PATCH] Making it
+easier to find which change introduced a bug, 2005-07-30), and
+originally based its functioning in Git builtin commands.  Although
+"bisect" is now itself a builtin command, it still spawns Git
+sub-processes to use other builtin commands, like "checkout".
 
-rebase-merges is about transplanting the history without flattening,
-i.e. keeping the mergy commit graph topology.  If there are only two
-kinds of rebase (i.e. keeping the topology which is rebase-merges
-and the other "flattening" kind) operation, shouldn't the option be
-called "--no-rebase-merges" instead?  --rebase-merges=no is also
-understandable.
+Since 1d0fa89 (checkout: add --ignore-other-worktrees, 2015-01-03) we
+have a safety valve in "checkout" and "switch" commands to prevent the
+user from normally checking out simultaneously the same branch in
+multiple worktrees.
 
-> in the future if --rebase-merges grows the ability to truly "rebase"
-> merge commits by reusing the conflict resolution information from the
-> original merge commit, and we want to add an option to ignore the
-> conflict resolution information.
+If the user, using "--ignore-other-worktrees", checks out a branch
+before or while bisecting that same branch in another worktree, we may
+fail when the user ends the bisection using "git bisect reset":
 
-I am not sure why such a change "in the future" is not merely a
-bugfix of the current "--rebase-merges", though.  Once it is fixed,
-is there a reason to make the fixed behaviour only available behind
-an option?
+   $ git worktree add work ../work/
+   $ git checkout --ignore-other-worktrees work
+   $ git -C ../work bisect start HEAD HEAD~3
+   ... the user inspects some commits ...
+   $ git -C ../work bisect reset
+   fatal: 'work' is already checked out at ...
+   error: could not check out original HEAD 'work'. Try 'git bisect reset <commit>'.
+
+Thanks to the special consideration we give to the branch while being
+bisected, and the safety valve introduced in 1d0fa89, we can assume the
+user is aware and responsible of the "multiple checked out branch"
+situation.  This makes sensible to allow the user to go back to the
+original branch using "git bisect reset" and avoid him a somewhat less
+intuitive sequence like: "git bisect reset work~0 && git checkout
+--ignore-other-worktree work".
+
+Let's teach "bisect" to use the "--ignore-other-worktrees" when the user
+wants to end the bisection.
+
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+
+Changes since v2
+
+ - Reworded the message to be more descriptive.
+ - Using "||:" to chain commands in the test_when_finished block,
+   suggested by Eric.
+
+This series started because of a bug, being fixed in another series,
+allowed "git bisect reset" to work in certain cases where multiple
+branches were checked out.  Once the bug is fixed, "git bisect reset"
+will no longer work in those scenarios.  Which is not bad, but taking
+into account the different scenarios and the fact that some users may
+rely on this bug as a feature, I think that the current patch proposes a
+sensible and convenient change for the user.
+
+Range-diff against v2:
+1:  0fe0bc70dd ! 1:  3b2ac1aa8f bisect: fix "reset" when branch is checked out elsewhere
+    @@ Metadata
+      ## Commit message ##
+         bisect: fix "reset" when branch is checked out elsewhere
+     
+    -    Since 1d0fa89 (checkout: add --ignore-other-wortrees, 2015-01-03) we
+    -    have a safety valve in checkout/switch to prevent the same branch from
+    -    being checked out simultaneously in multiple worktrees.
+    +    When the user starts a bisection in a worktree, we save the branch
+    +    currently checked out in that worktree (BISECT_START) to allow the user
+    +    to go back to that branch later on.
+     
+    -    If a branch is bisected in a worktree while also being checked out in
+    -    another worktree; when the bisection is finished, checking out the
+    -    branch back in the current worktree may fail.
+    +    From that moment and until the bisection ends, the branch is no longer
+    +    checked out in that worktree, but we give it the same consideration as
+    +    if it was checked out, which means that we prevent:
+    +     - deleting that branch and
+    +     - checking out that branch in another worktree, unless the user force
+    +       the ckeck out.
+     
+    -    Let's teach bisect to use the "--ignore-other-worktrees" flag.
+    +    "bisect" was introduced as a helper script in 8cc6a08 ([PATCH] Making it
+    +    easier to find which change introduced a bug, 2005-07-30), and
+    +    originally based its functioning in Git builtin commands.  Although
+    +    "bisect" is now itself a builtin command, it still spawns Git
+    +    sub-processes to use other builtin commands, like "checkout".
+    +
+    +    Since 1d0fa89 (checkout: add --ignore-other-worktrees, 2015-01-03) we
+    +    have a safety valve in "checkout" and "switch" commands to prevent the
+    +    user from normally checking out simultaneously the same branch in
+    +    multiple worktrees.
+    +
+    +    If the user, using "--ignore-other-worktrees", checks out a branch
+    +    before or while bisecting that same branch in another worktree, we may
+    +    fail when the user ends the bisection using "git bisect reset":
+    +
+    +       $ git worktree add work ../work/
+    +       $ git checkout --ignore-other-worktrees work
+    +       $ git -C ../work bisect start HEAD HEAD~3
+    +       ... the user inspects some commits ...
+    +       $ git -C ../work bisect reset
+    +       fatal: 'work' is already checked out at ...
+    +       error: could not check out original HEAD 'work'. Try 'git bisect reset <commit>'.
+    +
+    +    Thanks to the special consideration we give to the branch while being
+    +    bisected, and the safety valve introduced in 1d0fa89, we can assume the
+    +    user is aware and responsible of the "multiple checked out branch"
+    +    situation.  This makes sensible to allow the user to go back to the
+    +    original branch using "git bisect reset" and avoid him a somewhat less
+    +    intuitive sequence like: "git bisect reset work~0 && git checkout
+    +    --ignore-other-worktree work".
+    +
+    +    Let's teach "bisect" to use the "--ignore-other-worktrees" when the user
+    +    wants to end the bisection.
+     
+         Signed-off-by: Rubén Justo <rjusto@gmail.com>
+     
+    @@ builtin/bisect.c: static int bisect_reset(const char *commit)
+     -		strvec_pushl(&cmd.args, "checkout", branch.buf, "--", NULL);
+     +		strvec_pushl(&cmd.args, "checkout", NULL);
+     +		if (!commit)
+    -+			strvec_pushl(&cmd.args, "--ignore-other-worktrees", NULL);
+    ++			strvec_pushl(&cmd.args, "--ignore-other-worktrees",
+    ++				     NULL);
+     +		strvec_pushl(&cmd.args, branch.buf, "--", NULL);
+      		if (run_command(&cmd)) {
+      			error(_("could not check out original"
+    @@ t/t6030-bisect-porcelain.sh: test_expect_success 'bisect start without -- takes
+     +		cmp branch.expect branch.output
+     +	} &&
+     +	test_when_finished "
+    -+		git worktree remove wt1 &&
+    -+		git worktree remove wt2 &&
+    -+		git branch -d shared
+    ++		git worktree remove wt1 ||:
+    ++		git worktree remove wt2 ||:
+    ++		git branch -d shared ||:
+     +	" &&
+     +	git worktree add wt1 -b shared &&
+     +	git worktree add wt2 -f shared &&
+
+ builtin/bisect.c            |  6 +++++-
+ t/t6030-bisect-porcelain.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/bisect.c b/builtin/bisect.c
+index 7301740267..011f674b08 100644
+--- a/builtin/bisect.c
++++ b/builtin/bisect.c
+@@ -244,7 +244,11 @@ static int bisect_reset(const char *commit)
+ 		struct child_process cmd = CHILD_PROCESS_INIT;
+ 
+ 		cmd.git_cmd = 1;
+-		strvec_pushl(&cmd.args, "checkout", branch.buf, "--", NULL);
++		strvec_pushl(&cmd.args, "checkout", NULL);
++		if (!commit)
++			strvec_pushl(&cmd.args, "--ignore-other-worktrees",
++				     NULL);
++		strvec_pushl(&cmd.args, branch.buf, "--", NULL);
+ 		if (run_command(&cmd)) {
+ 			error(_("could not check out original"
+ 				" HEAD '%s'. Try 'git bisect"
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 3ba4fdf615..1d047f1c1a 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -122,6 +122,29 @@ test_expect_success 'bisect start without -- takes unknown arg as pathspec' '
+ 	grep bar ".git/BISECT_NAMES"
+ '
+ 
++test_expect_success 'bisect reset: back in a branch checked out also elsewhere' '
++	echo "shared" > branch.expect &&
++	test_bisect_reset() {
++		git -C $1 bisect start &&
++		git -C $1 bisect good $HASH1 &&
++		git -C $1 bisect bad $HASH3 &&
++		git -C $1 bisect reset &&
++		git -C $1 branch --show-current > branch.output &&
++		cmp branch.expect branch.output
++	} &&
++	test_when_finished "
++		git worktree remove wt1 ||:
++		git worktree remove wt2 ||:
++		git branch -d shared ||:
++	" &&
++	git worktree add wt1 -b shared &&
++	git worktree add wt2 -f shared &&
++	# we test in both worktrees to ensure that works
++	# as expected with "first" and "next" worktrees
++	test_bisect_reset wt1 &&
++	test_bisect_reset wt2
++'
++
+ test_expect_success 'bisect reset: back in the main branch' '
+ 	git bisect reset &&
+ 	echo "* main" > branch.expect &&
+-- 
+2.34.1
