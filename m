@@ -2,257 +2,342 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB57BC05027
-	for <git@archiver.kernel.org>; Mon, 20 Feb 2023 14:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 509E9C05027
+	for <git@archiver.kernel.org>; Mon, 20 Feb 2023 14:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232806AbjBTOBX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Feb 2023 09:01:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54176 "EHLO
+        id S231466AbjBTOTk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Feb 2023 09:19:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232788AbjBTOBV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Feb 2023 09:01:21 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D60F1E9E3
-        for <git@vger.kernel.org>; Mon, 20 Feb 2023 06:00:56 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id bh1so1458159plb.11
-        for <git@vger.kernel.org>; Mon, 20 Feb 2023 06:00:56 -0800 (PST)
+        with ESMTP id S229690AbjBTOTi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Feb 2023 09:19:38 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB1315573
+        for <git@vger.kernel.org>; Mon, 20 Feb 2023 06:19:37 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id z8so1108292wrm.8
+        for <git@vger.kernel.org>; Mon, 20 Feb 2023 06:19:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=V1P6PwJWIaVWokxt9UVRRrQ4vaOT0E1yeoOCf4QCvZg=;
-        b=RH4JSqr52dZobdDdA+3nF3HEzvs4SUxbCb1Un3qWEEkMYxO4xrg6dFBDESn/hxhxtJ
-         bbFU+zcmhlXQ/Zzo52kh0CEAX511v/bePRsGXg5xokf1Z1VHMI5b+fnTmXNf+rT8SdHi
-         HwG2/FnufoxP+jqK9lu2yK8Iu2s6tClf1hv/iXRb4CFlxjL7nzf2+Y1Sf7be+cYffz5V
-         NiKMaGlQcQEhDXph2PP1p+Bp8FkuLJoNDN2ZEHSjHXO72vJ+5IQm9iumudFgM7E83dQv
-         t44pl8k2DcAdg4fIOE4NMYE/4Ic9Zyz/F0xTxtsph0ZnzMULvVvtYUaGuGrZ019dBTlb
-         Qihw==
+        bh=0c+DR4idj084DOUFSN6uuDmQT2Zd8m1Lg2KqOk4IJ0s=;
+        b=p4yj+uKpubl/WR7ynguQhGJ0tVn/V7WU0yfcnW6qFS+G0IHj45RGgKXUWFn8RUkRCw
+         FbIzM3+PTdTDrbfkrRXUOyRKMcNi1WoMagZxHLbVyTv67mAURb54EVyM5enkZ/5Z8Bi/
+         +D2EvveEljruL32ktrmnPJekTe7O30K51m7+0PpGzZwbgcH7Rytb3PohxclDNv3gW2IR
+         r+58c2HyJwE/E17e0xJuXimpQlrMG8lKLm1bCO1XL4CqA4OcOaTNbAMI2CtbYoFd23sD
+         ydbKmMtvCkF/LBxPoMmiSfk/PrXxMGnGfyHXBV1oen2iOuR/zBv8y5irLPCjxKTHbXsf
+         6bBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=V1P6PwJWIaVWokxt9UVRRrQ4vaOT0E1yeoOCf4QCvZg=;
-        b=NKG9dVykoPcz7Ds7AoNBOj5L8Als2fGylzTU9eXd+7Ir6bc3tHtcHi2hmWa8Se/j30
-         6Pg2/lDp8Mj00nuoYPDCt36OXx0x5bnGmOxZ4H3jzENOFbEfcFSu5OZjNItwlC0CbEoH
-         A4eHhkTLgBSmJZbrZyrwnOOpi9WUzwOGWEOaX7bYT4w34rHOmfCNXM2ypa9YuXqfKSBJ
-         K3xQM20YNufvk1hziyZ5Wh6GGN7xATiJ/8kDYibiHM40Eio8yPPUFFmtI08MWZ46U2bw
-         d8PQIPNWWd5QJvfcQYFgAvM6kkH0ATnESPsryUzKfX0kwPXTCvisDIKhypJ3NG5oAJvH
-         Q/yQ==
-X-Gm-Message-State: AO0yUKUrFLYsEIS8WlvvdWYVLrqiI/knWRbUr2X/HDO5AzozCHUD/vH0
-        rCTRRELeU53Esg5KONxVyCU=
-X-Google-Smtp-Source: AK7set+D1bxvhBDGnrVsVjNtOES19oZ3kk9i+QIlpr6pmXu996ZbDGUp5EnYOEpBauRdIGOo2w61rA==
-X-Received: by 2002:a17:903:18e:b0:19a:5933:936e with SMTP id z14-20020a170903018e00b0019a5933936emr4321786plg.38.1676901654294;
-        Mon, 20 Feb 2023 06:00:54 -0800 (PST)
-Received: from localhost.localdomain ([47.246.101.53])
-        by smtp.gmail.com with ESMTPSA id bi12-20020a170902bf0c00b00194c1281ca9sm7945267plb.166.2023.02.20.06.00.51
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Feb 2023 06:00:52 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
-        sunshine@sunshineco.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v5 3/3] notes.c: introduce "--separator" option
-Date:   Mon, 20 Feb 2023 22:00:46 +0800
-Message-Id: <20230220140046.16986-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.39.2.459.g1d9d282d
-In-Reply-To: <xmqq7cwhnql3.fsf@gitster.g>
-References: <xmqq7cwhnql3.fsf@gitster.g>
-MIME-Version: 1.0
+        bh=0c+DR4idj084DOUFSN6uuDmQT2Zd8m1Lg2KqOk4IJ0s=;
+        b=XmO33ij1rmxzYH7W0NXP+ULuLAeE3XZm2f7B55KHOqUxK39gQ8ACG8OZcgB3hG7E9b
+         nk+ge/ZM3SBFFp4i2v746pvs5bjFfgZFLqg4mHGkhhwOlvwVil8MpNHDdVqlzmGG18xL
+         nYCFhJ/ggFL17oM0qBxQfrxFtxMMsJw39OGvf0VZBwYDorGoPKZ63oysWP+tOY9T3aug
+         yWmlzzoa3iKoNRhQRAdd5yn5iKEsFSJpXU5q3daYfw2OYBXvypg8A4OZYGxKUGrhZsOi
+         BTRSRR3KL1/cYIczpgjRVIRuTXyVexpoB/p/vT8Ssiwp9l1y0PIXin0do1U6TxFmHGr0
+         Q/eA==
+X-Gm-Message-State: AO0yUKWmP6/9xVAlR5H6A6xA9e/D4RnAnGEdC8tR9L4CRKH4LEt+rR2r
+        AQRVrlsTEgp6XsPD2HaPSD9hcnJhbcI=
+X-Google-Smtp-Source: AK7set9UC1hnNCHqw4M7miq/1IqbOeCZAaJjCl5N6BFfPT+RfUwyzgZ+aPXeBHm06dmkmF5WB8HSYA==
+X-Received: by 2002:adf:dbd2:0:b0:2c3:e6b8:8cec with SMTP id e18-20020adfdbd2000000b002c3e6b88cecmr1762305wrj.49.1676902775583;
+        Mon, 20 Feb 2023 06:19:35 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a9-20020a5d5709000000b002be099f78c0sm2136362wrv.69.2023.02.20.06.19.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Feb 2023 06:19:35 -0800 (PST)
+Message-Id: <pull.1482.v2.git.1676902774366.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1482.git.1676644675638.gitgitgadget@gmail.com>
+References: <pull.1482.git.1676644675638.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 20 Feb 2023 14:19:34 +0000
+Subject: [PATCH v2] rebase -i: check labels and refs when parsing todo list
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> wrote on Thu, 16 Feb 2023 15:22:16 -0800:
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-> > When appending to a given notes object and the appended note is not
-> > empty too, we will insert a blank line at first which separates the
-> > existing note and the appended one, which as the separator.
->
-> ", which as the separator" does not sound grammatically correct.
-> Without that part, the above is a perfectly readable description of
-> the current behaviour.
+Check that the argument to the "label" and "update-ref" commands is a
+valid refname when the todo list is parsed rather than waiting until the
+command is executed. This means that the user can deal with any errors
+at the beginning of the rebase rather than having it stop halfway
+through due to a typo in a label name. The "update-ref" command is
+changed to reject single level refs as it is all to easy to type
+"update-ref branch" which is incorrect rather than "update-ref
+refs/heads/branch"
 
-OK, I will remove ", which as the separator".
+Note that it is not straight forward to check the arguments to "reset"
+and "merge" commands as they may be any revision, not just a refname and
+we do not have an equivalent of check_refname_format() for revisions.
 
-> > Sometimes, we want to use a specified <separator> as the separator. For
-> > example, if we specify as:
-> >
-> >     * --separator='------': we will insert "------\n" as the separator,
-> >     because user do not provide the line break char at last, we will add
-> >     the trailing '\n' compatibly.
->
-> In a way compatible to what?  I think s/compatibly// would be even
-> easier to read.  I think you are doing that for convenience.
+Helped-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+    rebase -i: check labels and refs when parsing todo list
+    
+    Hopefully detecting these errors when the user edits the todo list will
+    give a better experience.
+    
+    Thanks to Stolee for his comments on V1, I've updated the patch based on
+    those, there are no functional changes but the code is hopefully
+    clearer.
 
-My bad, I think I use a wrong word, maybe s/compatibly/automatically
-and I look back and think the representation of "------\n" is not
-correct, because "\n" is two characters here and will not treat
-as a newline. So, after modification, maybe like:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1482%2Fphillipwood%2Frebase-check-labels-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1482/phillipwood/rebase-check-labels-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1482
 
-   * --separator='------': we will insert "------" and a trailing
-   newline character, because if no newline specified at the end,
-   one will be added automatically.
+Range-diff vs v1:
 
-> >     * --separator='------\n': we will insert as-is because it contains
-> >     the line break at last.
->
-> If this behaviour gets spelled out like this, it needs to be
-> justified.
->
-> After seeing that "------" gives the user these dashes on its own
-> single line, wouldn't a natural expectation by the user be to see a
-> line with dashes, followed by a blank line, if you give "------\n"?
-> How do you justify removal of that newline in a way that is easy to
-> understand to readers?
->
-> I am not saying that you should allow --separator="---\n\n\n" to
-> give three blank lines between paragraphs. I think it makes sense to
-> keep the stripspace in the code after a paragraph gets added. I just
-> prefer to see it done as our design choice, not "because there is
-> stripspace that removes them", i.e. what the code happens to do.
+ 1:  5a31d880064 ! 1:  2cc62fe5986 rebase -i: check labels and refs when parsing todo list
+     @@ Commit message
+          and "merge" commands as they may be any revision, not just a refname and
+          we do not have an equivalent of check_refname_format() for revisions.
+      
+     +    Helped-by: Derrick Stolee <derrickstolee@github.com>
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+       ## sequencer.c ##
+     @@ sequencer.c: static int is_command(enum todo_command command, const char **bol)
+       
+      +static int check_label_or_ref_arg(enum todo_command command, const char *arg)
+      +{
+     -+	int allow_onelevel =
+     -+		command == TODO_LABEL ? REFNAME_ALLOW_ONELEVEL : 0;
+     ++	switch (command) {
+     ++	case TODO_LABEL:
+     ++	  /*
+     ++	   * '#' is not a valid label as the merge command uses it to
+     ++	   * separate merge parents from the commit subject.
+     ++	   */
+     ++	  if (!strcmp(arg, "#") ||
+     ++		    check_refname_format(arg, REFNAME_ALLOW_ONELEVEL))
+     ++			return error(_("'%s' is not a valid label"), arg);
+     ++		break;
+      +
+     -+	if ((command == TODO_LABEL && !strcmp(arg, "#")) ||
+     -+	    check_refname_format(arg, allow_onelevel)) {
+     -+		if (command == TODO_LABEL)
+     -+			error(_("'%s' is not a valid label"), arg);
+     -+		else if (check_refname_format(arg, REFNAME_ALLOW_ONELEVEL))
+     -+			error(_("'%s' is not a valid refname"), arg);
+     -+		else
+     -+			error(_("update-ref requires a fully qualified refname e.g. refs/heads/%s"),
+     -+			      arg);
+     -+		return -1;
+     ++	case TODO_UPDATE_REF:
+     ++		if (check_refname_format(arg, REFNAME_ALLOW_ONELEVEL))
+     ++			return error(_("'%s' is not a valid refname"), arg);
+     ++		if (check_refname_format(arg, 0))
+     ++			return error(_("update-ref requires a fully qualified "
+     ++				       "refname e.g. refs/heads/%s"), arg);
+     ++		break;
+     ++
+     ++	default:
+     ++		BUG("unexpected todo_command");
+      +	}
+      +
+      +	return 0;
+     @@ sequencer.c: static int is_command(enum todo_command command, const char **bol)
+       			   const char *buf, const char *bol, char *eol)
+       {
+      @@ sequencer.c: static int parse_insn_line(struct repository *r, struct todo_item *item,
+     - 		return error(_("missing arguments for %s"),
+     - 			     command_to_string(item->command));
+       
+     --	if (item->command == TODO_EXEC || item->command == TODO_LABEL ||
+     -+	if (item->command == TODO_LABEL ||
+     + 	if (item->command == TODO_EXEC || item->command == TODO_LABEL ||
+       	    item->command == TODO_RESET || item->command == TODO_UPDATE_REF) {
+      +		int ret = 0;
+      +
+     -+		item->commit = NULL;
+     -+		item->arg_offset = bol - buf;
+     -+		item->arg_len = (int)(eol - bol);
+     -+		if (item->command != TODO_RESET) {
+     + 		item->commit = NULL;
+     + 		item->arg_offset = bol - buf;
+     + 		item->arg_len = (int)(eol - bol);
+     +-		return 0;
+     ++		if (item->command == TODO_LABEL ||
+     ++		    item->command == TODO_UPDATE_REF) {
+      +			saved = *eol;
+      +			*eol = '\0';
+      +			ret = check_label_or_ref_arg(item->command, bol);
+      +			*eol = saved;
+      +		}
+      +		return ret;
+     -+	}
+     -+
+     -+	if (item->command == TODO_EXEC) {
+     - 		item->commit = NULL;
+     - 		item->arg_offset = bol - buf;
+     - 		item->arg_len = (int)(eol - bol);
+     + 	}
+     + 
+     + 	if (item->command == TODO_FIXUP) {
+      
+       ## t/t3404-rebase-interactive.sh ##
+     +@@ t/t3404-rebase-interactive.sh: test_expect_success '--update-refs: --edit-todo with no update-ref lines' '
+     + '
+     + 
+     + test_expect_success '--update-refs: check failed ref update' '
+     ++	test_when_finished "test_might_fail git rebase --abort" &&
+     + 	git checkout -B update-refs-error no-conflict-branch &&
+     + 	git branch -f base HEAD~4 &&
+     + 	git branch -f first HEAD~3 &&
+      @@ t/t3404-rebase-interactive.sh: test_expect_success '--update-refs: check failed ref update' '
+     - 	tail -n 6 err >err.last &&
+     - 	sed -e "s/Rebasing.*Successfully/Successfully/g" -e "s/^\t//g" \
+     - 		<err.last >err.trimmed &&
+     --	test_cmp expect err.trimmed
+     -+	test_cmp expect err.trimmed &&
+     -+	git rebase --abort
+     -+'
+     -+
+     + 	test_cmp expect err.trimmed
+     + '
+     + 
+      +test_expect_success 'bad labels and refs rejected when parsing todo list' '
+     ++	test_when_finished "test_might_fail git rebase --abort" &&
+      +	cat >todo <<-\EOF &&
+      +	exec >execed
+      +	label #
+     @@ t/t3404-rebase-interactive.sh: test_expect_success '--update-refs: check failed
+      +	grep "'\'':bad'\'' is not a valid refname" err &&
+      +	grep "update-ref requires a fully qualified refname e.g. refs/heads/topic" \
+      +		err &&
+     -+	test_path_is_missing execed &&
+     -+	git rebase --abort
+     - '
+     - 
+     ++	test_path_is_missing execed
+     ++'
+     ++
+       # This must be the last test in this file
+     + test_expect_success '$EDITOR and friends are unchanged' '
+     + 	test_editor_unchanged
 
-Firstly, like the problem I talked above, please let me figure out that
-"------\n" is not represent as "------" and a blank line, but only
-as "------\n" verbatim because "\n" will be treated as two characters
-but not a blank line while parsing. If the user wants to specify a
-blank line in the value of the option, they can pass "CTRL+v CTRL+j".
 
-Then, I think I did get some interference from old logic. Returning
-to the user scenario, I think about what the user needs and what is
-my original idea is: consistent behavior
+ sequencer.c                   | 39 ++++++++++++++++++++++++++++++++++-
+ t/t3404-rebase-interactive.sh | 23 +++++++++++++++++++++
+ 2 files changed, 61 insertions(+), 1 deletion(-)
 
-   * behavior 1: What the user enters is used as the delimiter itself
-   without any special processing.
+diff --git a/sequencer.c b/sequencer.c
+index 3e4a1972897..33bdc8bca43 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2477,6 +2477,34 @@ static int is_command(enum todo_command command, const char **bol)
+ 		 (*bol = p));
+ }
+ 
++static int check_label_or_ref_arg(enum todo_command command, const char *arg)
++{
++	switch (command) {
++	case TODO_LABEL:
++	  /*
++	   * '#' is not a valid label as the merge command uses it to
++	   * separate merge parents from the commit subject.
++	   */
++	  if (!strcmp(arg, "#") ||
++		    check_refname_format(arg, REFNAME_ALLOW_ONELEVEL))
++			return error(_("'%s' is not a valid label"), arg);
++		break;
++
++	case TODO_UPDATE_REF:
++		if (check_refname_format(arg, REFNAME_ALLOW_ONELEVEL))
++			return error(_("'%s' is not a valid refname"), arg);
++		if (check_refname_format(arg, 0))
++			return error(_("update-ref requires a fully qualified "
++				       "refname e.g. refs/heads/%s"), arg);
++		break;
++
++	default:
++		BUG("unexpected todo_command");
++	}
++
++	return 0;
++}
++
+ static int parse_insn_line(struct repository *r, struct todo_item *item,
+ 			   const char *buf, const char *bol, char *eol)
+ {
+@@ -2525,10 +2553,19 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+ 
+ 	if (item->command == TODO_EXEC || item->command == TODO_LABEL ||
+ 	    item->command == TODO_RESET || item->command == TODO_UPDATE_REF) {
++		int ret = 0;
++
+ 		item->commit = NULL;
+ 		item->arg_offset = bol - buf;
+ 		item->arg_len = (int)(eol - bol);
+-		return 0;
++		if (item->command == TODO_LABEL ||
++		    item->command == TODO_UPDATE_REF) {
++			saved = *eol;
++			*eol = '\0';
++			ret = check_label_or_ref_arg(item->command, bol);
++			*eol = saved;
++		}
++		return ret;
+ 	}
+ 
+ 	if (item->command == TODO_FIXUP) {
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 462cefd25df..efeb74ad50a 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -2072,6 +2072,7 @@ test_expect_success '--update-refs: --edit-todo with no update-ref lines' '
+ '
+ 
+ test_expect_success '--update-refs: check failed ref update' '
++	test_when_finished "test_might_fail git rebase --abort" &&
+ 	git checkout -B update-refs-error no-conflict-branch &&
+ 	git branch -f base HEAD~4 &&
+ 	git branch -f first HEAD~3 &&
+@@ -2123,6 +2124,28 @@ test_expect_success '--update-refs: check failed ref update' '
+ 	test_cmp expect err.trimmed
+ '
+ 
++test_expect_success 'bad labels and refs rejected when parsing todo list' '
++	test_when_finished "test_might_fail git rebase --abort" &&
++	cat >todo <<-\EOF &&
++	exec >execed
++	label #
++	label :invalid
++	update-ref :bad
++	update-ref topic
++	EOF
++	rm -f execed &&
++	(
++		set_replace_editor todo &&
++		test_must_fail git rebase -i HEAD 2>err
++	) &&
++	grep "'\''#'\'' is not a valid label" err &&
++	grep "'\'':invalid'\'' is not a valid label" err &&
++	grep "'\'':bad'\'' is not a valid refname" err &&
++	grep "update-ref requires a fully qualified refname e.g. refs/heads/topic" \
++		err &&
++	test_path_is_missing execed
++'
++
+ # This must be the last test in this file
+ test_expect_success '$EDITOR and friends are unchanged' '
+ 	test_editor_unchanged
 
-   * behavior 2: No matter what the user enters, we always add a
-   newline at the end or other logic like stripspace, etc.
-
-I prefer the first one, sometimes users want to be next to the previous
-note, then:
-
-   git notes append -m foo -m bar --separator=""
-
-and they can also choose to add as many line breaks as they want, then:
-
-    export LF="
-    "
-    git notes append -m foo -m bar --separator="$LF$LF$LF"
-
-We didn't help users make choices but I have to say it may be a little
-inconvenient to enter a newline character in the terminal, but I still
-prefer this way.
-
-> >     * not specified --separator option: will use '\n' as the separator
-> >     when do appending and this is the default behavour.
->
-> s/not specified --separator option/no --separator option/; the way
-> you phrased can be misread for
->
-Will apply as:
-
-        * no --separator option: will use '\n' as the separator when
-        do appending and this is the default behavour.
-
-> 	git notes --separator -m foo -m bar
->
-> i.e. any additional specifics is not given but --separator is still
-> on the command line.  But I do not think you meant that---rather
-> this entry is what happens by default, i.e. a blank line separates
-> each paragraph.
-
-Yes, only separate the messages(-m), but not each paragraph in it.
-
-> >     * --separator='': we specify an empty separator which has the same
-> >     behavour with --separator='\n' and or not specified the option.
->
-> I do not quite see why it is necessary to spell this out.  Isn't
-> this a natural consequence of the first one (i.e. "six dashes
-> without any terminating LF gets a line with dashes plus LF"
-> naturally extends to "0 dashes without any terminating LF gets a
-> blank line")?
-
-Agree.. will remove.
-
-> > In addition, if a user specifies multple "-m" with "--separator", the
-> > separator should be inserted between the messages too, so we use
-> > OPT_STRING_LIST instead of OPT_CALLBACK_F to parse "-m" option, make
-> > sure the option value of "--separator" been parsed already when we need
-> > it.
->
-> This is hard to grok.  Is it an instruction to whoever is
-> implementing this new feature, or is it an instruct to end-users
-> telling that they need to give --separator before they start giving
-> -m <msg>, -F <file>, -c <object>, etc.?
-
-No, it's not the order of the user give, but the backend we deal.
-
-We use "parse_msg_arg" as a callback when parsing "-m " by OPT_CALLBACK_F,
-so if we have to read the separator before we parse it, so we could insert
-it correctly between the messages, So I use OPT_STRING_LIST instead.
-
-
-> > diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-> > index efbc10f0..5abe6092 100644
-> > --- a/Documentation/git-notes.txt
-> > +++ b/Documentation/git-notes.txt
-> > @@ -11,7 +11,7 @@ SYNOPSIS
-> >  'git notes' [list [<object>]]
-> >  'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
->
-> Doesn't add allow you to say
->
-> 	$ git notes add -m foo -m bar
->
-> Shouldn't it also honor --separator to specify an alternate
-> paragraph break?
-
-Agree, you also mentioned me that, does git-notes-add need to be implies by
-this option too? I think it needs too.
-
-> > @@ -86,7 +86,9 @@ the command can read the input given to the `post-rewrite` hook.)
-> >
-> >  append::
-> >  	Append to the notes of an existing object (defaults to HEAD).
-> > -	Creates a new notes object if needed.
-> > +	Creates a new notes object if needed. If the note and the
-> > +	message are not empty, "\n" will be inserted between them.
-> > +	Use the `--separator` option to insert other delimiters.
->
-> "\n" is so, ... programmer lingo?  "A blank line" is inserted
-> between these paragraphs.
-
-Will apply.
-
-> > +--separator <separator>::
-> > +	The '<separator>' inserted between the note and message
-> > +	by 'append', "\n" by default. A custom separator can be
->
-> I see no reason to single out 'append'; "add -m <msg> -m <msg>"
-> follows exactly the same paragraph concatenation logic in the
-> current code, no?  If we allow customized paragraph separators,
-> we should use the same logic there as well.
-
-Agree, as I replied above, I think it will be done in next patch.
-
-> It probably is simpler to explain if you treat the "current note in
-> 'append'" as if the text were just "earlier paragraphs", to which
-> more paragraphs taken from each -m <msg> and -F <file> are
-> concatenated, with paragraph break before each of them.  In the case
-> of 'add', there happens to be zero "earlier paragraphs", but
-> everything else gets concatenated the same way, no?
-
-Yes, they are the same way, you are right, so we should let add and append
-both be implied by the option.
-
-> > +	provided, if it doesn't end in a "\n", one will be added
-> > +	implicitly .
->
-> Funny punctuation.
-
-My bad, will fix.
-
-Thanks very much for your detailed review.
+base-commit: b1485644f936ee83a995ec24d23f713f4230a1ae
+-- 
+gitgitgadget
