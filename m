@@ -2,101 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0AC4C636D7
-	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 19:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A33BC636D7
+	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 19:36:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229939AbjBUTK1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Feb 2023 14:10:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33834 "EHLO
+        id S229839AbjBUTgl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Feb 2023 14:36:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230098AbjBUTKT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2023 14:10:19 -0500
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A3202FCE9
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 11:10:10 -0800 (PST)
-Received: by mail-il1-x12e.google.com with SMTP id y3so2322447ilb.6
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 11:10:10 -0800 (PST)
+        with ESMTP id S229545AbjBUTgk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2023 14:36:40 -0500
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9775305F4
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 11:36:15 -0800 (PST)
+Received: by mail-qt1-x82b.google.com with SMTP id l12so5381807qtr.0
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 11:36:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4QF7e12DXjcpgmPRZLI/9IyxlLK+VkwefbsU1mD9UWo=;
-        b=iIbqia2VgH2DkgmqwJ8VTwSCGWr67GmbE0dPefgDp88sGF5jjzsNGZjsBuvc3pvy/l
-         8aKrk8lOvjp0uUaLDrhT2FSVlcm8GvMArsjl75hkDcFemWog4pFZl3XY4kLaZAtm1mfq
-         IXydKH5EopwbglfC5nBP/wGGf7egAmKa4HmLyyWryGwTYzeZAUdv/EpMB4Qu9vsDvjJZ
-         x1FIhgd2OdL9nEWU2kkyeU0Hb5Ef4iR0y8NkQt/DTlYWXGMQQlrMSemJr4+j7mAEzZpZ
-         FXLdEG3QcJva+wEasxF4XBHVn1azIJdvTjLmw4AIWqEhkXvaM3eGHiW2lbAoqvW/p4vH
-         y8Hg==
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/5duZIeZPW/JPp6vGd5HNCJBTcRe4M8QIaaEazDeFks=;
+        b=Yzx5ZqEZmYCqgR1926MkWT2EuVGOCvsd3AtQCl5uoj5HkHYdzIdUywDz2b/o+vGA/I
+         CaXsW1KPUWsmoTdUA3WLRKmW2/ucgEShPfrmRFAZI9DjiuDiAdBwaHCk+AfLSPQVLTNu
+         CMSAyGk7ZyZMpUClXt9YRLGlWnBzByrk1b16eYDA/iaCiezTqP2Jp79p/EDi22OZ/vau
+         i98sYOwQW2Vy5J5fjuUiganfphKQbZVkJSzxqdFbitqixr8aoYjN2iFbHti+7g1D0YCW
+         oyl8fk1foChz3N495Fm5F0efErcCx6iKlMBOTfmWOuOmNWM8WTaxRJaoP2vneBmVdlLQ
+         T9VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4QF7e12DXjcpgmPRZLI/9IyxlLK+VkwefbsU1mD9UWo=;
-        b=58bVO6av7Htkw2YAG/Acz7JwCD0IoN3RcGipFbIYv/1UW7cuNRDAzqm4rMBBeJRoKJ
-         Tr0eJyx9XVngfFpdnF+gfLPPXxJ4YVyUIJRk79curwjAkNN7iu+rwN0jU3+iObM+fqjn
-         QKeDQg6h6sxr4g2s4mLT4wa3jT9zOumVjSV72OM3golYUTi/w4qpxH1bqAfjtAud11PN
-         bkB0p+CgvW0sabR318izYX/72zy1EgOzH28OLNl8pAbZvctjZOwjRMBl5Ihg1lqzX6sT
-         XMx4LJPkkbLj/medlrwtOyNVMFhqaVkGjtQOb5g9P6fDfl1nbGS08MmPUembhmp22pF6
-         hX7A==
-X-Gm-Message-State: AO0yUKXUgntY2SlFYuEqqWAjNw5tgdSFlxoNwYSv0xRYQgitFfW4I7lc
-        o07RmTMc6P3Bc/i142dnXrm+pA==
-X-Google-Smtp-Source: AK7set/D2amsUdpJfQw6I1qSN5DI/LSnJghI8mP06AAikhRbV3dPbP8VFLVU3rp+z95NP/1a4gqqaw==
-X-Received: by 2002:a05:6e02:1a08:b0:315:554e:e73b with SMTP id s8-20020a056e021a0800b00315554ee73bmr6441640ild.21.1677006609806;
-        Tue, 21 Feb 2023 11:10:09 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g3-20020a0566380bc300b003c4d71489aasm1563147jad.6.2023.02.21.11.10.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Feb 2023 11:10:08 -0800 (PST)
-Date:   Tue, 21 Feb 2023 14:09:59 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Emily Shaffer <nasamuffin@google.com>
-Cc:     Git List <git@vger.kernel.org>, Jonathan Nieder <jrn@google.com>,
-        Jose Lopes <jabolopes@google.com>,
-        Aleksandr Mikhailov <avmikhailov@google.com>
-Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
-Message-ID: <Y/UXBw3Y9YnXUBIN@nand.local>
-References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
+        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/5duZIeZPW/JPp6vGd5HNCJBTcRe4M8QIaaEazDeFks=;
+        b=qE9pbN7AkiwOoXtU+3F75HxeUACOij55XNpSEQFNwsV/kaqjyTVw0OPGvJNDip4x2s
+         VOkQTK291hpGVB4T0iNgEUKSmLVhZpPwlPxdRYPX+mOBAdgDg42yl0fw/qPyBTsbPOZp
+         gPd1hJC3bk11Z8tzb0gwCR79Ms8v2/wOzIrHCuZX1wtp8TUEr3f72+k2BKIXa2mzwO/v
+         CoMgf6K3MMbxIWAvvhbSjmEvGBGLrrfAFeECWClVzZk1zALZTro0GQeR5YDpWoyUrWRW
+         ywzjBZgaJbXTJV4PBHiz2TPqBGyS+YJyWzIsE64XQOiAdvXYN82raZAP5IS3dF+1FoTn
+         XyFg==
+X-Gm-Message-State: AO0yUKWBXWxmeIW6w5ohSFnb+GEtmH1UBpRM5TQzeTKsqM1lytOu1Eco
+        d3fNJCtq1DHQXU15JtE+6Mk=
+X-Google-Smtp-Source: AK7set9eHagcmHwIy/Vo/RvuJkzoDBuqCvNv9tIFpq2HBWc8M3oIZkPCgXCCHJh9MA9u7qrb66TDrQ==
+X-Received: by 2002:a05:622a:1387:b0:3b6:8ece:cab9 with SMTP id o7-20020a05622a138700b003b68ececab9mr12660555qtk.2.1677008174764;
+        Tue, 21 Feb 2023 11:36:14 -0800 (PST)
+Received: from [192.168.1.160] (pool-74-105-67-34.nwrknj.fios.verizon.net. [74.105.67.34])
+        by smtp.gmail.com with ESMTPSA id 18-20020a370312000000b0071b1fe18746sm11588615qkd.63.2023.02.21.11.36.13
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Feb 2023 11:36:14 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 0/2] Teach diff to honor diff algorithms set through git attributes
+Date:   Tue, 21 Feb 2023 14:36:12 -0500
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <3F1016EE-07BD-4F7C-9C75-6995A1EB211F@gmail.com>
+In-Reply-To: <xmqq1qmig8c4.fsf@gitster.g>
+References: <pull.1452.v3.git.git.1676665285.gitgitgadget@gmail.com>
+ <pull.1452.v4.git.git.1676927082.gitgitgadget@gmail.com>
+ <xmqq5ybuhqhc.fsf@gitster.g>
+ <CABPp-BEAB6jKXeo=DHiimQUDj=5i7U5MQPXTEsAagLVAuk7FOQ@mail.gmail.com>
+ <xmqq1qmig8c4.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 17, 2023 at 01:12:23PM -0800, Emily Shaffer wrote:
-> This turned out pretty long-winded, so a quick summary before I dive in:
+
+
+On 21 Feb 2023, at 13:51, Junio C Hamano wrote:
+
+> Elijah Newren <newren@gmail.com> writes:
 >
-> - We want to compile parts of Git as independent libraries
-> - We want to do it by making incremental code quality improvements to Git
-> - Let's avoid promising stability of the interfaces of those libraries
-> - We think it'll let Git do cool stuff like unit tests and allowing
->   purpose-built plugins
-> - Hopefully by example we can convince the rest of the project to join
->   in the effort
+>> I'll leave that up to you and John, but are we risking merging code
+>> that could go unused or that we need to fundamentally change?  I don't
+>> see how to handle the issues over at
+>> https://lore.kernel.org/git/647D3D49-B85B-4B66-A857-695CFF9685EE@gmail.com/
+>
+> If this is useful enough for desktop users already, then that is a
+> good enough reason to take it, I would say.
+>
+> GitLab can easily add WebUI that says "You can define what diff
+> algorithm is used for files with which suffix" to allow you to
+> configure a table like this:
+>
+> 	json | histogram
+> 	c    | patience
+> 	*    | myers
+>
+> and populate the server-side equivalent of .git/info/attributes and
+> .git/config based on that, and without anything further than the
+> posted patches, the result should just work, no?
 
-Like others, I am less interested in the VFS-specific components you
-mention here, but I suspect that is just one particular instance of
-something that would be benefited by making git internals exposed via a
-linkable library.
+Yes, that is my thinking too. The goal was to make this user friendly for
+everyone on the Git command line, and then GitLab can hook into this accordingly
+to make it ussable with the GitLab UI.
 
-I don't have objections to things like reducing our usage of globals,
-making fewer internal functions die() when they encounter an error, and
-so on. But like Junio, I suspect that this is definitely an instance of
-a "devil's in the details" kind of problem.
-
-That's definitely my main concern: that this turns out to be much more
-complicated than imagined and that we leave the codebase in a worse
-state without much to show. A lesser version of that outcome would be
-that we cause a lot of churn in the tree with not much to show either.
-
-So I think we'd want to see some more concrete examples with clear
-benefits to gauge whether this is a worthwhile direction. I think that
-strbuf.h is too trivial an example to demonstrate anything useful. Being
-able to extract config.h into its own library so that another non-Git
-program could link against it and implement 'git config'-like
-functionality would be much more interesting.
-
-Thanks,
-Taylor
+thanks
+John
