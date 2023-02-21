@@ -2,130 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77E85C61DA3
-	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 05:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B595C61DA3
+	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 06:01:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233035AbjBUFhY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Feb 2023 00:37:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47860 "EHLO
+        id S232640AbjBUGBj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Feb 2023 01:01:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232324AbjBUFhV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2023 00:37:21 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D793323861
-        for <git@vger.kernel.org>; Mon, 20 Feb 2023 21:37:19 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id o16so3622667pjp.3
-        for <git@vger.kernel.org>; Mon, 20 Feb 2023 21:37:19 -0800 (PST)
+        with ESMTP id S231806AbjBUGBh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2023 01:01:37 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09E0C2332A
+        for <git@vger.kernel.org>; Mon, 20 Feb 2023 22:01:37 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id x34so148245pjj.0
+        for <git@vger.kernel.org>; Mon, 20 Feb 2023 22:01:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=z4zBD7OXKsAyjSJ1+4AuTU2fsDAYMSZX0pQ/UJvfdFw=;
-        b=eAd/SE0CuaZTXjr2Rg7j+GdHE8DreFEn/tkXQDSWxejfJ1XVIpvTP4kmNBYHDFRfOR
-         Kl4VmiFookPlWB+dE/b/JE1cuLnZUV2YPmZ7xCMGXL12+h8YXfJXvTKL1/kt8FyKDKcZ
-         3uvpB8wSIZPaEmNzHCkCG2L8ZSgoz0XXYGEt9u99EMeVYke6+TsbDHMz3VaGctCoqBw2
-         sQVCs/Gf6aowMMlhlOJLr3kuNST96KITj18WpOowiKYF1r7UCmqJrFCDoSC9b7F9KQ1/
-         hgrm/lDX+sx9RY80XVtOesNakM6ZoTZVdN3EjLavZRDBe8QTnWPqib5I2g6s/SVlDoJG
-         LrNg==
+        bh=ADukaVmIG09urodJnbM4fEZpqZ3Ja9EWOmzSGxV3A0U=;
+        b=cArSxQ13kbDARqvNwql3PXmm5QA6R8sExGQSvVQIMH+8BlpK9WKzLHniNuwiYb7q0E
+         JkYLR/Hlu4D5ATpR5UEovTvhX9aFIumGPmifr8VSW5OF/xs7TYsr5R0Irou3aIw0n8iF
+         MyUG4xESZgvWqAtvcd/YhILkgzYYiYOUXWCdQ/v9+SccIEtX9j4K/qAorbyQFJDoLW1E
+         IktfRIoJwWj5zRqlVjWJrCu8NrUZro7CRsGApW2PsdZZnp0FncrXzphlWxbS0iihO+YG
+         B6MWRuFPj7tmG6zLT18GcBjzmOopVZ5Cc8FMHY9eMBJ8k7SFgM/gtKfBm2QqU4lbp14N
+         qBeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=z4zBD7OXKsAyjSJ1+4AuTU2fsDAYMSZX0pQ/UJvfdFw=;
-        b=L91V2uD94+JNAhQfd0CCXIShLnXbIwEdnO93YEm3InKwAkeHNMevC54yt/nuGdpEzA
-         XEqtPpEYFOnYRjseybZWOMzg1lBDv38xvUD+PmY/a3QLuUP8rAeievkPEcrDUUDS/hdj
-         MlDaOkf8a89g6U+/W8As34OaJSeY8LoQjB+EnyESu5ElNQ+8axhZh403Pm5IBhJAyQnu
-         VCD5sh8k/8U1nNQpwCUCXbF+Qa3PElfn2HzJ45zNaOYfT3INKHidi+Dpw7GgWE/E80+3
-         wU5q84PXREmzku0bfq6PD1IVDdKO2sptsKkQ5Kxj4IdRGLCsTcNtcpTApSrqcChRuumR
-         m8IQ==
-X-Gm-Message-State: AO0yUKUbXT7fMudSb2vI7ZtCvbQ3nXJmH/eyW8mZbFWgVY3kJsqKKMCV
-        5Mv9WYc0Pqeyaj86/rWZXu0=
-X-Google-Smtp-Source: AK7set+8yM5SEzyaBSOG6cbdnE5WUMPiL2nVsDON3mjMjhoQnmUUleLJGoWjhx0fOlj1pVYfJVWpGQ==
-X-Received: by 2002:a17:90b:1806:b0:234:a9df:db96 with SMTP id lw6-20020a17090b180600b00234a9dfdb96mr5416771pjb.33.1676957839178;
-        Mon, 20 Feb 2023 21:37:19 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id t18-20020a632252000000b004f25fc5b490sm2295358pgm.5.2023.02.20.21.37.18
+        bh=ADukaVmIG09urodJnbM4fEZpqZ3Ja9EWOmzSGxV3A0U=;
+        b=hkkkehQFtjFPcOO0SKX8JAXNMxpeI8/ldL5JTAToL+4ozAs875zQ7Gmq6us/ZZTq1N
+         rsKYN+G76a3Ni6PmxaPwG0Gf8fbebDUqsPqZxC8CLx5tN2XCSYr8Y4CjfBJ9qfgd0a1V
+         yWsg2tIgBgYfzyhl5gFHIo1zWijp6LAiK+QMRObMKCdi1fZ+brchvKq0pFaUW8MHNdL0
+         ++xiGJfog+PFc+hVPZzAU5vcAVkv4RAmrqXd19k5oAAxyWsxzPe9BTHYruHJIn4c3AzE
+         IOVbeUn2KHJBTCV5+v69eT8Ty/PAmPBalgA0afEo1WcbYAq0lGwwScfZ62T07XjOeGZ1
+         GpdA==
+X-Gm-Message-State: AO0yUKVQuKF00SiGPJs8ZWSZa9Nkvxv869MF1jEIUzWUfqIJOs1wcTGx
+        nPC70IZsZJFYYwAWCjKligG4FN6hNt8=
+X-Google-Smtp-Source: AK7set/sDhSuUneIn/lI5DTyG25f7SzgdBZvKotX5I8MLZo4Y6M5t+nv15NCPVgvEmGpfgoidob8aA==
+X-Received: by 2002:a17:90a:7522:b0:22c:6bb1:55a4 with SMTP id q31-20020a17090a752200b0022c6bb155a4mr3878329pjk.45.1676959296198;
+        Mon, 20 Feb 2023 22:01:36 -0800 (PST)
+Received: from xavier.lan ([2607:fa18:92fe:92b::2a2])
+        by smtp.gmail.com with ESMTPSA id mv14-20020a17090b198e00b002308e6e645bsm993905pjb.49.2023.02.20.22.01.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Feb 2023 21:37:18 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Raul E Rangel <rrangel@chromium.org>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, demerphq <demerphq@gmail.com>
-Subject: Re: [PATCH] archive: add --mtime
-References: <Y+6G9n6cWRT9EKyl@google.com>
-        <91a73f5d-ca3e-6cb0-4ba3-38d703074ee6@web.de>
-        <xmqqilfykhsf.fsf@gitster.g>
-        <57b6643a-b9ff-3ea4-d60d-1a434d9ea75e@web.de>
-Date:   Mon, 20 Feb 2023 21:37:18 -0800
-Message-ID: <xmqqlekrh94h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Mon, 20 Feb 2023 22:01:35 -0800 (PST)
+From:   Alex Henrie <alexhenrie24@gmail.com>
+To:     git@vger.kernel.org, tao@klerks.biz, gitster@pobox.com,
+        newren@gmail.com, phillip.wood123@gmail.com,
+        Johannes.Schindelin@gmx.de
+Cc:     Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH v2 2/4] rebase: add tests for --no-rebase-merges
+Date:   Mon, 20 Feb 2023 22:58:03 -0700
+Message-Id: <20230221055805.210951-2-alexhenrie24@gmail.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230221055805.210951-1-alexhenrie24@gmail.com>
+References: <20230221055805.210951-1-alexhenrie24@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ t/t3430-rebase-merges.sh | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
->> This is the solution with least damage, letting the existing code to
->> set archive_time and then discard the result and overwrite with the
->> command line option.
->
-> I actually like Peff's solution more, because it's short and solves the
-> specific problem of non-deterministic timestamps for tree archives.
+diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+index fa2a06c19f..e0d910c229 100755
+--- a/t/t3430-rebase-merges.sh
++++ b/t/t3430-rebase-merges.sh
+@@ -250,6 +250,31 @@ test_expect_success 'with a branch tip that was cherry-picked already' '
+ 	EOF
+ '
+ 
++test_expect_success 'do not rebase merges unless asked to' '
++	git checkout -b rebase-merges-default E &&
++	before="$(git rev-parse --verify HEAD)" &&
++	test_tick &&
++	git rebase --rebase-merges C &&
++	test_cmp_rev HEAD $before &&
++	test_tick &&
++	git rebase C &&
++	test_cmp_graph C.. <<-\EOF
++	* B
++	* D
++	o C
++	EOF
++'
++
++test_expect_success '--no-rebase-merges countermands --rebase-merges' '
++	git checkout -b no-rebase-merges E &&
++	git rebase --rebase-merges --no-rebase-merges C &&
++	test_cmp_graph C.. <<-\EOF
++	* B
++	* D
++	o C
++	EOF
++'
++
+ test_expect_success 'do not rebase cousins unless asked for' '
+ 	git checkout -b cousins main &&
+ 	before="$(git rev-parse --verify HEAD)" &&
+-- 
+2.39.2
 
-Yes.  That would be my preference as well.  Without any UI to
-educate users about.
-
-> The --mtime option on the other hand mimics GNU tar, so it is more
-> familiar and proven, though.
-
-And that gives us the second best option ;-)
-
-> It isn't all that careful, but you're right that we should do what we
-> can.  Like this on top?  The message string is borrowed from commit's
-> handling of --date.
-
-Yeah, something like that, I would think.
-
-Thanks.
-
-> ---
->  archive.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
->
-> diff --git a/archive.c b/archive.c
-> index 122860b39d..871d80ee79 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -438,6 +438,15 @@ static void parse_pathspec_arg(const char **pathspec,
->  	}
->  }
->
-> +static timestamp_t approxidate_or_die(const char *date_str)
-> +{
-> +	int errors = 0;
-> +	timestamp_t date = approxidate_careful(date_str, &errors);
-> +	if (errors)
-> +		die(_("invalid date format: %s"), date_str);
-> +	return date;
-> +}
-> +
->  static void parse_treeish_arg(const char **argv,
->  		struct archiver_args *ar_args, const char *prefix,
->  		int remote)
-> @@ -473,7 +482,7 @@ static void parse_treeish_arg(const char **argv,
->  		archive_time = time(NULL);
->  	}
->  	if (ar_args->mtime_option)
-> -		archive_time = approxidate(ar_args->mtime_option);
-> +		archive_time = approxidate_or_die(ar_args->mtime_option);
->
->  	tree = parse_tree_indirect(&oid);
->  	if (!tree)
-> --
-> 2.39.2
