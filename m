@@ -2,127 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C7C7C61DA3
-	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 17:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A845BC64EC7
+	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 18:06:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233564AbjBURqH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Feb 2023 12:46:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59054 "EHLO
+        id S229925AbjBUSGI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Feb 2023 13:06:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234701AbjBURps (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2023 12:45:48 -0500
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FAC927983
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 09:45:31 -0800 (PST)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-172334d5c8aso2689466fac.8
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 09:45:31 -0800 (PST)
+        with ESMTP id S229796AbjBUSGH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2023 13:06:07 -0500
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 694592FCEB
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 10:06:04 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id s22so6748154lfi.9
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 10:06:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vtwEY60IrTbnwczxuJfYXzr+WdXPx2lj8kHF9fe2P4E=;
-        b=Zr8vq85L/OL6IGKZsAWGzugjW/UuKypkXKnx7azwLVHSSjVhj5gAtPM4HBDxH4dQdX
-         GzPL4wmR0Fl3mK8jzuR2TytCuDVDwPSLGex724JkiVjoXV+Pv566r4kdsJwr2Otv+Gbu
-         wLbAdosXGv2YOYpB9piy9CHrehmlvjvTsVOPrf63+ulpCdWqciemeCkHzZXOsIW2ZEon
-         82IkWLAFL/g9/o4d/ohLhPKXH1yvvKvqiA+aUuY0v9S1s3z0C542/tRPiHnMUyiwXGD2
-         sa8XSq9E+yb3TY5Mdw7YENrL6HXA+QyOupPwmdtuM9JIFPK2F7ECObBC0kgL9IZM4Uwv
-         ttiA==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e67VL4YznTMDHdfA+IsnTAP4pR3uCwOt+L2v2RxYUhw=;
+        b=MAg+oH1XHVTZiIfIeKub626BGDJbNsJ1EPABe9rRlila8qnqSeQvUR0leLt7J+GPbS
+         n5of9JBlo5ckRefBc7MmHa7Jsky7xnV+DA9jvZs3Fs8uZIqEoduXLSpIgWFCl+fEbV80
+         BBvkkUrqGi3rYywkXzepAkvprluEgUGWXwhD9/xxdqbovQUOATZWIHFVj9xSHPyZAyAZ
+         +aK80AjedGX4XWCq9b9YDS5W/e9N6ViwaTxprtA5wwD5bLy9GwEYQNdZ9MbXeO1vXmL+
+         qkEluhzESXs+LUC+BxqIhlstl5vFrtYFyiSWV9NDnjSYGTEuLnPeS+IQYJQ/agdu8aS+
+         ynKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vtwEY60IrTbnwczxuJfYXzr+WdXPx2lj8kHF9fe2P4E=;
-        b=oqYKPflCANlgkM2glH8KfVh/LJW1SkkR7z7m2nb2DAw4FugzP1wAxNtQ1GKvDZNsib
-         mlbqnnnaWZdk/gni5Xe9bMz5M0rJZ6yTKm3S2vN41CWhBmhOjrB+4ks7YbCocHEp23pV
-         4w+6ZXVB/dWW1HRLeIO+p+kBw3RF+gyVePFZ3cI7fbonU+ieFbAs0tMj63W+Z03Tktd5
-         k7yOt0LH1YhnNc8SDd+2lmYk8JOEObceMinUGoDYnZdWibwi88fIG/Sp9yKGN1sqLzuQ
-         MRq9NFZcHTAvXPS1CYOgA2JCRiNEg5nP1e3t6l+E8iN6sOA3xdODJCOSwz7Cl0Q8TMrG
-         Rr1w==
-X-Gm-Message-State: AO0yUKXSvrKWwXStcR1WZVa4wH1xVOn+zQtDQ6NxHQRTmWC4Wg2VE4zy
-        65xMjSi0EgX7Y+BEhepKO8cH2qgnTrn8h8daaFw=
-X-Google-Smtp-Source: AK7set/CR0WevkfvM2ebqqk7L+ymet27jQySnTY/OPQ5wJy45+L0XYAl90o0aI5I7ZnXAaFR8ZVopIWoizKNUkme4n4=
-X-Received: by 2002:a05:6870:1d06:b0:16e:902e:39df with SMTP id
- pa6-20020a0568701d0600b0016e902e39dfmr1182493oab.154.1677001530265; Tue, 21
- Feb 2023 09:45:30 -0800 (PST)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=e67VL4YznTMDHdfA+IsnTAP4pR3uCwOt+L2v2RxYUhw=;
+        b=uHk0nWceXG1P9KG2PpLO2LwppxrEfUySpreTEdzgk3/GijaUXQOzsHmrW+nqUKAx2G
+         JcEv1M2eHXi+QCI0ArHOuUW26lOxNFJ7LAkXedj0yVxSRnp6Us1+osTrio7TZNQHqTUN
+         r9EVmUL1HOyeCNZllHZTC2ghF3lUxe9dQvvo8Rr2M5KGFUhdDOCLvb8DYKRDt0T8KGpT
+         ysRZ+4Ug1Y/Zp9/chEfdyvxE+mRHFv63mj91Qz92nhioXEyrKVVOX9JolPMwG2ZZtXvu
+         EnPxxl97OFKihvJzMiJ3fkg3Efd6eGSk7+bgsYO2p3uecxYmuYhBh6mzy+NQNeLJ/IL3
+         laew==
+X-Gm-Message-State: AO0yUKVWdd/Bxb+7t/9+/Vg6CF6ALAH6gsz97WCARpfQh2y7iVnpTkdH
+        /bTwm0HtkhvW40JL2G7ZMDQutoFS8Jw8c7xAWwA=
+X-Google-Smtp-Source: AK7set/ttMjsulvcABO0i45G/6KMNgzjr9yrvsDeFi9Bj1NxbqEiG0n21BukIuFiT4Z2NYf1NDqiAkf1XtMVCFjGq5s=
+X-Received: by 2002:a19:5207:0:b0:4db:1326:79b2 with SMTP id
+ m7-20020a195207000000b004db132679b2mr1987086lfb.2.1677002762619; Tue, 21 Feb
+ 2023 10:06:02 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1474.git.1675614276549.gitgitgadget@gmail.com>
- <CAMMLpeTPEoKVTbfc17w+Y9qn7jOGmQi_Ux0Y3sFW5QTgGWJ=SA@mail.gmail.com>
- <CAPMMpogFAR6cvcR8T5fx+AoytAJ7TsPpSeOjHNzW4Gmkuq7FLQ@mail.gmail.com>
- <CAMMLpeTQ1RpsvwRdZ0G3wdvH1+LXE5tw=7Cs6Q+HxMcRU0qj5Q@mail.gmail.com>
- <CABPp-BFxGYQ_JTC5c4_S_gOK3GxWKuZ=KfvycpkBjPGyKzCJ+g@mail.gmail.com>
- <CAPMMpojCYAwwu6_BE+myFaUy6fLqVSWAyiRWr_dGAmMqqUF12Q@mail.gmail.com>
- <CABPp-BEtXf9ja7Ec1fZ=BZwFDa+50zSAhtm3nN_=k+Nc2c=RXw@mail.gmail.com>
- <CAMMLpeSZs8DqrN6_F9-eg7fcbjV-O5+3V+hUsOhyd0x10xsCaQ@mail.gmail.com> <CAPMMpohfF5Cwgxt_G+Gp4rNPGTJZcQfmgEoJcFi_Kzbv2XGuog@mail.gmail.com>
-In-Reply-To: <CAPMMpohfF5Cwgxt_G+Gp4rNPGTJZcQfmgEoJcFi_Kzbv2XGuog@mail.gmail.com>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Tue, 21 Feb 2023 10:45:19 -0700
-Message-ID: <CAMMLpeR0Z1Ay_ubHuGVz4f5RfxhhmoKsNq=OsaL5TB3WHXfJvA@mail.gmail.com>
-Subject: Re: [PATCH] pull: conflict hint pull.rebase suggestion should offer
- "merges" vs "true"
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <pull.1452.v3.git.git.1676665285.gitgitgadget@gmail.com>
+ <pull.1452.v4.git.git.1676927082.gitgitgadget@gmail.com> <xmqq5ybuhqhc.fsf@gitster.g>
+In-Reply-To: <xmqq5ybuhqhc.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 21 Feb 2023 10:05:50 -0800
+Message-ID: <CABPp-BEAB6jKXeo=DHiimQUDj=5i7U5MQPXTEsAagLVAuk7FOQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/2] Teach diff to honor diff algorithms set through
+ git attributes
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>, John Cai <johncai86@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 21, 2023 at 8:40 AM Tao Klerks <tao@klerks.biz> wrote:
+On Tue, Feb 21, 2023 at 9:34 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> 2. The fact that the commit history of non-expert git users (those who
-> should not be using rebase, especially in teams) are so often...
-> spidery... is why the "Squash" option of pull requests / merge
-> requests is so popular in centralized workflows (GitHub, GitLab,
-> BitBucket, etc).
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> If your project follows a "merge down, squash up" strategy with a
-> well-CI-guarded evergreen trunk on a central server, there's simply no
-> reason to *require* your users to become rebasing experts - you can
-> let them use simple merge-based workflows, keep your trunk clean by
-> squashing away their complex commit graphs, let them merge down
-> whenever they need or want to, etc.
+> > When a repository contains different kinds of files, it may be desirabl=
+e to
+> > use different algorithms based on file type. This is currently not feas=
+ible
+> > through the command line or using git configs. However, we can leverage=
+ the
+> > fact that gitattributes are path aware.
+> > ...
+> > To address some of the performance concerns in the previous series, a
+> > benchmark shows that now only a minor performance penalty is incurred, =
+now
+> > that we are no longer adding an additional attributes parsing call:
+> >
+> > $ echo "*.[ch] diff=3Dother" >> .gitattributes $ hyperfine -r 10 -L a
+> > git-bin-wrapper,git '{a} -c diff.other.algorithm=3Dmyers diff v2.0.0 v2=
+.28.0'
+> > Benchmark 1: git-bin-wrapper -c diff.other.algorithm=3Dmyers diff v2.0.=
+0
+> > v2.28.0 Time (mean =C2=B1 =CF=83): 716.3 ms =C2=B1 3.8 ms [User: 660.2 =
+ms, System: 50.8 ms]
+> > Range (min =E2=80=A6 max): 709.8 ms =E2=80=A6 720.6 ms 10 runs
+> >
+> > Benchmark 2: git -c diff.other.algorithm=3Dmyers diff v2.0.0 v2.28.0 Ti=
+me
+> > (mean =C2=B1 =CF=83): 704.3 ms =C2=B1 2.9 ms [User: 656.6 ms, System: 4=
+4.3 ms] Range (min =E2=80=A6
+> > max): 700.1 ms =E2=80=A6 708.6 ms 10 runs
+> >
+> > Summary 'git -c diff.other.algorithm=3Dmyers diff v2.0.0 v2.28.0' ran 1=
+.02 =C2=B1
+> > 0.01 times faster than 'git-bin-wrapper -c diff.other.algorithm=3Dmyers=
+ diff
+> > v2.0.0 v2.28.0'
+>
+> Hopefully this round can immediately be merged down to 'next'?
+> Thanks.
 
-The advantage to that workflow is that you don't have to teach users
-how to rebase. (Whether the actual process of merging or rebasing is
-easier, assuming that the user knows how to do both, is debatable and
-likely depends a lot on the particular situation.) The disadvantage is
-that even merge requests that seem like they only need one commit
-often turn into multiple commits, and squashing all of those commits
-together indiscriminately both makes it harder for the reviewer to
-follow the progression of steps the developer took and decreases the
-usefulness of tools like `git blame` and `git bisect`. For example,
-the patch series that I sent to add a rebase.merges option will be 3
-or 4 commits in the end, and other developers have good reasons to ask
-me to keep those commits separate instead of squashing them all into a
-single patch. On top of that, if your developers get the impression
-that all projects on GitHub/GitLab/whatever use the same workflow,
-they are likely to cause headaches when they present spidery merge
-requests to other projects. If you are OK with those tradeoffs then
-that's fine, Git will support you. My point is simply that every
-workflow has its advantages and disadvantages, and there's no workflow
-that solves every problem.
-
-> Do we have any analysis/understanding of how common workflows like
-> that of the git or linux projects are, vs github-style fork-based
-> projects, vs straight-up single central server projects?
-
-I don't have any statistics (although I would love to see them if they
-exist), but I do know that all of these workflows are common enough
-that `git pull` can't assume what the user wants. The warning exists
-to try to prevent the user from shooting themself in the foot.
-
-> I'm not sure what you mean by "unusual", but I don't think "avoid
-> rebase unless you really know what you're doing, merge down at will,
-> we will squash your contribution in the pull/merge request at the end
-> anyway" is an unusual flow at all nowadays.
-
-The unusual cases are the ones where you mix merge and rebase on your
-own topic branch. Your developers did that accidentally (despite `git
-pull` trying to warn them) and suffered because of it, because it
-isn't well supported right now. I think we all agree that it should be
-better supported, we just disagree on how to get there.
-
--Alex
+I'll leave that up to you and John, but are we risking merging code
+that could go unused or that we need to fundamentally change?  I don't
+see how to handle the issues over at
+https://lore.kernel.org/git/647D3D49-B85B-4B66-A857-695CFF9685EE@gmail.com/
+(not that I've spent much thought on it besides asking how things are
+going to work), and would be worried that we'd end up needing to
+change the mechanism somehow to cover the things John ultimately
+wants.
