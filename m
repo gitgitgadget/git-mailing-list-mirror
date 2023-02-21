@@ -2,102 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CEA4C636D7
-	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 17:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8AF5C61DA3
+	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 17:34:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234589AbjBURde (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Feb 2023 12:33:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49252 "EHLO
+        id S234186AbjBURen (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Feb 2023 12:34:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233278AbjBURdd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2023 12:33:33 -0500
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7992F13DCD
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 09:33:31 -0800 (PST)
-Received: by mail-il1-x130.google.com with SMTP id i24so2085026ila.7
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 09:33:31 -0800 (PST)
+        with ESMTP id S233278AbjBURem (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2023 12:34:42 -0500
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 103C71CF7D
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 09:34:41 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id z20-20020a17090a8b9400b002372d7f823eso1754491pjn.4
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 09:34:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GKu46Icb5qRpCWDdrOtzc1Aw0VihqI5Zub3gCfYqcMQ=;
-        b=FWt1ktHdoBsLz7nVI3Vyg1sHxbrNqTY98Mg1y2vXKdM0R6OOWG2aBYA6wx/RrwcjfD
-         2iTIV8mKotqX0abwGdMAs6+ywgfQTUgdMKlECNv5Pi7K0EEsClenMuB2heofzbC9ltMh
-         mw2Wg8+JnJG0LWAgWM0n8OQQp7oOmW0eAaJqg=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=k/vCz162e34uVY1UTRbdBk69Y+wMbFZsT7Y/CDleOjA=;
+        b=W+TSHoW3f+OxJRZVbieCnxV2eBn5cOYTv8F1eMbCU1UuL7svUYI318T+I0nx6vak+w
+         ZnITsGYlXyiGs+SNEGT9BxiMaxztM3OohGDoKFEOTCuitl52121ItXtAHzek2E7iIKkm
+         nplkrk3N3rpk2L1c9ShglKSxO+xOcEKkpyd2gDAJ6FjPFR6VwW9wGPAeQgjZ6LwLCVMW
+         BTn6harIGpBMVDUhb5IH1uF/SXeTWdpqUQ2T0UYItXWbdJOhe49kA+xKrxvERLEFqjWu
+         DlbbGRtrrxsrMZl45araXWoRbHvAH8hcDxzAdbUpF4VIYM/Lt6j8MJJm/sUnkF9bCVek
+         LdFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GKu46Icb5qRpCWDdrOtzc1Aw0VihqI5Zub3gCfYqcMQ=;
-        b=EMmu2BRZnjGy38aMhzH5HU7M4YLNuu4xcwe9jF8rnYePvcpijJxvpn0ANv1UBGJ9Be
-         W5d6ZbEBWxWUtaIjNTw9JBEwrm6Q6yi5E7qzVlrhI3OQLUuUNKEHMKYEwWNbXj4N5zPC
-         S0oRSkZ5y4GilYDh5LLQpWANZLlRieF0TYMxMj7RbaY/tUClW403DtxW7UrmserteHzy
-         Myf/kXTn/2pXK8hM5a7roEYlZSqaU+x4o8ki5u+Ci+fti5s8y0YMaMGf4YSd+w5PQ3y5
-         NZFlJJ12tZytAxh9CUBaFf92z1/BTu4+r4RHGyRl3wKXC4Xw/otl4+8jSYIpW2XSnZb1
-         UAHg==
-X-Gm-Message-State: AO0yUKWYApO2UvrjBrURuzFjWLtucdSfGtpE3qs00JnFtbcvukwAoQd3
-        LpNNURpKDAy6E8/O5N65BEca/IVy+EeU05vj
-X-Google-Smtp-Source: AK7set8eLoN6q5ldUox6evIS7Y3cPttbItOQmXnljvEZwNcvRGw5kxIVTICn5nlUkHVs0oAsxw8Utg==
-X-Received: by 2002:a05:6e02:164b:b0:316:4d84:1d0 with SMTP id v11-20020a056e02164b00b003164d8401d0mr3562846ilu.12.1677000810576;
-        Tue, 21 Feb 2023 09:33:30 -0800 (PST)
-Received: from google.com (h24-56-189-219.arvdco.broadband.dynamic.tds.net. [24.56.189.219])
-        by smtp.gmail.com with ESMTPSA id g14-20020a056e021a2e00b00313d86cd988sm1704678ile.49.2023.02.21.09.33.29
-        for <git@vger.kernel.org>
+        bh=k/vCz162e34uVY1UTRbdBk69Y+wMbFZsT7Y/CDleOjA=;
+        b=OlOzda2ny9VTwP5pFkCfcnu1QKYFOAYsTuKLEi6NTH+zi3c9Rmo776yWm3lOi8mIRE
+         Njg52f04Z+eDbTyEa7PY2qh0Ikd8LP+fuS7Jeh525f3ik9xfbueptuJoS2vxPp4yIQW8
+         gPwn/3hPJdV0A9qFNd6WPBiKnq7wj4Jjiwn7IrdPxqP2fQLKVaiol1y8nTPwmD1zUI1k
+         X6RUPSLJyIpGuUwBI1J6XmFaCTbWmcvHXJNNa68zK0KXr6IurMU3y0XabQd5kWOwJJCX
+         xxiHzkwuXk9yqI6D8A+WNdOJHWWo2zXPtlLyzRyjMMDNNEDP2Jlnwx7gzxF7Eq0ZHGiM
+         L75w==
+X-Gm-Message-State: AO0yUKW0Xc9qVFrQGNgeOxOW9jCBKUt8kuabsVmclH/fKNAdmPOpS6ly
+        YU/cdvm7GW2DFRlkig8Tl024S0ZACRs=
+X-Google-Smtp-Source: AK7set8DLrzWD5Swv3cmV9kBqz3cm8KdviyoFpbdVZrNaINsy8cUFyRWWKKtxczH6L1hEInDRCR9HQ==
+X-Received: by 2002:a17:902:e5d2:b0:19a:80b2:e94b with SMTP id u18-20020a170902e5d200b0019a80b2e94bmr9544084plf.33.1677000880383;
+        Tue, 21 Feb 2023 09:34:40 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id s9-20020a170902a50900b0019a7363e752sm10097400plq.276.2023.02.21.09.34.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Feb 2023 09:33:30 -0800 (PST)
-Date:   Tue, 21 Feb 2023 10:33:28 -0700
-From:   Raul E Rangel <rrangel@chromium.org>
-To:     git@vger.kernel.org
-Subject: Parallel worktree checkouts result in index.lock exists
-Message-ID: <Y/UAaC4oBPIby4kV@google.com>
+        Tue, 21 Feb 2023 09:34:39 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v4 0/2] Teach diff to honor diff algorithms set through
+ git attributes
+References: <pull.1452.v3.git.git.1676665285.gitgitgadget@gmail.com>
+        <pull.1452.v4.git.git.1676927082.gitgitgadget@gmail.com>
+Date:   Tue, 21 Feb 2023 09:34:39 -0800
+In-Reply-To: <pull.1452.v4.git.git.1676927082.gitgitgadget@gmail.com> (John
+        Cai via GitGitGadget's message of "Mon, 20 Feb 2023 21:04:40 +0000")
+Message-ID: <xmqq5ybuhqhc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-I'm trying to extract multiple trees in parallel so I can create a
-tarball of the trees. I can't use `git archive` since it doesn't
-currently produce hermetic output, and I need to support older git
-versions.
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-In essence what I'm trying to do is:
+> When a repository contains different kinds of files, it may be desirable to
+> use different algorithms based on file type. This is currently not feasible
+> through the command line or using git configs. However, we can leverage the
+> fact that gitattributes are path aware.
+> ...
+> To address some of the performance concerns in the previous series, a
+> benchmark shows that now only a minor performance penalty is incurred, now
+> that we are no longer adding an additional attributes parsing call:
+>
+> $ echo "*.[ch] diff=other" >> .gitattributes $ hyperfine -r 10 -L a
+> git-bin-wrapper,git '{a} -c diff.other.algorithm=myers diff v2.0.0 v2.28.0'
+> Benchmark 1: git-bin-wrapper -c diff.other.algorithm=myers diff v2.0.0
+> v2.28.0 Time (mean ± σ): 716.3 ms ± 3.8 ms [User: 660.2 ms, System: 50.8 ms]
+> Range (min … max): 709.8 ms … 720.6 ms 10 runs
+>
+> Benchmark 2: git -c diff.other.algorithm=myers diff v2.0.0 v2.28.0 Time
+> (mean ± σ): 704.3 ms ± 2.9 ms [User: 656.6 ms, System: 44.3 ms] Range (min …
+> max): 700.1 ms … 708.6 ms 10 runs
+>
+> Summary 'git -c diff.other.algorithm=myers diff v2.0.0 v2.28.0' ran 1.02 ±
+> 0.01 times faster than 'git-bin-wrapper -c diff.other.algorithm=myers diff
+> v2.0.0 v2.28.0'
 
-    git --work-tree ~/tmp/bob1 checkout ff27f5415797ead8bc775518a08f3a4ab24abd53 -- . &
-    git --work-tree ~/tmp/bob2 checkout e70ebd7c76b9f9ad44b59e3002a5c57be5b9dc12 -- . &
+Hopefully this round can immediately be merged down to 'next'?
+Thanks.
 
-When I do this though, I get the following error:
-    [1] 4027482
-    [2] 4027483
-    fatal: Unable to create '/home/rrangel/cros-bazel/.repo/project-objects/chromiumos/platform/vboot_reference.git/./index.lock': File exists.
-    
-    Another git process seems to be running in this repository, e.g.
-    an editor opened by 'git commit'. Please make sure all processes
-    are terminated then try again. If it still fails, a git process
-    may have crashed in this repository earlier:
-    remove the file manually to continue.
-
-Is this expected? I'm not sure why the index is coming into play here.
-Is there another method I should be using to extract a tree into a
-directory?
-
-If the index.lock isn't actually protecting me from anything, I was
-thinking of creating a symlink clone of the .git directory for each
-parallel invocation. This way the each index.lock gets written to its
-own directory:
-
-    mkdir ../vboot_reference.git.1
-    find . -mindepth 1 -maxdepth 1 -exec echo ln -s '../vboot_reference.git/{}' ../vboot_reference.git.1/ \;
-    
-    mkdir ../vboot_reference.git.r2
-    find . -mindepth 1 -maxdepth 1 -exec echo ln -s '../vboot_reference.git/{}' ../vboot_reference.git.2/ \;
-
-    git -C ../vboot_reference.git.1 --work-tree ~/tmp/bob1 checkout ff27f5415797ead8bc775518a08f3a4ab24abd53 -- . &
-    git -C ../vboot_reference.git.2 --work-tree ~/tmp/bob2 checkout e70ebd7c76b9f9ad44b59e3002a5c57be5b9dc12 -- . &
-
-Though if there is another way to handle this it would be great.
-
-Thanks,
-Raul
