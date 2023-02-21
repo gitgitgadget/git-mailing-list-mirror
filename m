@@ -2,75 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B007BC636D7
-	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 22:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D262C6379F
+	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 23:03:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230302AbjBUWeu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Feb 2023 17:34:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57438 "EHLO
+        id S230141AbjBUXDF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Feb 2023 18:03:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230324AbjBUWet (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2023 17:34:49 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 892E531E11
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 14:34:47 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id cq23so22947176edb.1
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 14:34:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RKKnm9GRI1y1f4cPuTYT/cDf0xurPFsaY+fbi7ctY/Y=;
-        b=AR7Bb/8cPwnGU+sTt5brixWHqQVrmIB66ZltxA+WpZl82s8Yz82nbhmohTuMIxlSQ9
-         9fp4ODWfpeTRYbKlWu9ldoY9mmgfDhqgpRCEjEWpX8lGhR9VXguBE9kX5REopkbhV76i
-         fhiWTTi1oR1M0CXeO3KasrqgkPeNiM9s+E6ENy4Q/ltVfFYrcyhg2e05imkcZHWnCv5U
-         hoFDkWJhU2/GAq1EXlDpzyCqI0Ei2v4uETMmjhx8ZBpy/NmFevAmuh1KnO+/tTdC2Zi8
-         pb6SKHmd3009EawAbnEXSy831ZjGOzfoTRM7XAbvpCBDpJFd1T2IQtuazZOoTitECBa3
-         WOrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RKKnm9GRI1y1f4cPuTYT/cDf0xurPFsaY+fbi7ctY/Y=;
-        b=ACQupb8EbheaTXxEicSfQ/D2Tkf/VZYLevoqPG9XKvN2oVLV8UJSd6thQj++mF8nSA
-         +e3bhh+yCbMNj0ORL4ePmpolSIwJMCBOb1Ec2DQ26T3gSnTCXkL3EtErccWdzH2qpsaa
-         DVzf3kyAxZdbMUJfU+lJJk608MispzBTCVXoAEuzhXM+T5vKBag+cCoM2C7sue/MayxC
-         NauGkYtYnENex8Uyd21fE98Bu+hrUvxIs6zqOujHEWUuyLaJeDmSyFITDfRgqRdYqEnY
-         wDV+QbvFvOzXd0+3hWjpYUfVXZvjbZzOjeGB3p5AfGsRO8wn06D6BCpu6QPWx+BziZLB
-         j5cA==
-X-Gm-Message-State: AO0yUKWSI6bT4ZDsYC1nabj6n0x67Q1Q0XlbDBV9YQHLT3XcwBFiWW3d
-        UjRFuUW/JTW2+H9mrXqk/BfUXHbXeZbc4WvdwNyzP4855hU=
-X-Google-Smtp-Source: AK7set/mAscjO8Qy6ZAwaPkiDIWCCon4uww8k3p4+IygjhI+fgNFFNPFxYFc+fm63rqMBpHr8k0f9lsrFAdRs7GpACk=
-X-Received: by 2002:a17:906:a96:b0:8b2:d30:e728 with SMTP id
- y22-20020a1709060a9600b008b20d30e728mr7224067ejf.1.1677018885929; Tue, 21 Feb
- 2023 14:34:45 -0800 (PST)
+        with ESMTP id S229566AbjBUXCj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2023 18:02:39 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61FC0311C2
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 15:02:37 -0800 (PST)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id E55075A460;
+        Tue, 21 Feb 2023 23:02:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1677020555;
+        bh=BOyP2AA/wa9QMRC8D6vBWEEEneMjJTGTwVuCsI2JaEc=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=vV7EXyiQrBMr3BaW7zsV94CEwH/NUchhGpXBPQ59/Pbv14vdouUC28fTcA6NpSCB3
+         DEI+CsL0iGsqm7T8xMBGIcFR2rtnq99ZJmzacLSt3ho4CNROfLStI4WOrt/xDFgIWe
+         MQxfx597igTkyYf8G1E4hBVJgbj5Z0SmtW3CqwsLYojbz6g0u+ZvP0ECIABsGQx16i
+         OCNn6sGl4tcaI9OwVDQ+HhEJHhGboJYQihyb+Ao6yYaY/w+a1N/LzRjTFSY0AOmPAR
+         WxZkkxQ0qUX9fex2rWxsp5hlyUuqQnLfB7SMQU2dkqnpCsMW5YSZfFHgBdcfcUSw3S
+         pLLyAuH+jBQ3SxMuMWRc95o4Far5I4zudNmQ3J+Vx3oLXzpuIQcHLsmDomvk6s86oI
+         GY+G4M6nLcqqI7XpZfDdPrcsmS1pB9TIyTtNHrLD4lrjtG3XODdpYHrNu5ZCS6mDsS
+         4g/9PPhgPHUWRqcueAkKPklhRQxkK7k+3oAGZW0rpnaihg2KEHB
+Date:   Tue, 21 Feb 2023 23:02:34 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Sean Allred <allred.sean@gmail.com>
+Cc:     Sean Allred <sallred@epic.com>,
+        Kyle VandeWalle <kvandewa@epic.com>, git <git@vger.kernel.org>
+Subject: Re: [BUGREPORT] Why is git-push fetching content?
+Message-ID: <Y/VNiuI7OZ2YiXx8@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Sean Allred <allred.sean@gmail.com>, Sean Allred <sallred@epic.com>,
+        Kyle VandeWalle <kvandewa@epic.com>, git <git@vger.kernel.org>
+References: <m0ttze4qzl.fsf@epic96565.epic.com>
 MIME-Version: 1.0
-References: <20230220235121.34375-1-gvivan6@gmail.com> <20230221214653.85830-1-gvivan6@gmail.com>
- <20230221214653.85830-2-gvivan6@gmail.com> <77734da5-e711-f653-b022-ba3b26823701@github.com>
-In-Reply-To: <77734da5-e711-f653-b022-ba3b26823701@github.com>
-From:   Vivan Garg <v.garg.work@gmail.com>
-Date:   Tue, 21 Feb 2023 15:34:34 -0700
-Message-ID: <CADupsJMGgOzrd7L+Et=5t0a9vXNpZqhT4qzFi_7YbHwMMR6KWg@mail.gmail.com>
-Subject: Re: [GSOC][PATCH v2 1/1] t4121: modernize test style
-To:     Victoria Dye <vdye@github.com>
-Cc:     Vivan Garg <gvivan6@gmail.com>, git@vger.kernel.org,
-        christian.couder@gmail.com, hariom18599@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="sMUoDbrajXt7yg/f"
+Content-Disposition: inline
+In-Reply-To: <m0ttze4qzl.fsf@epic96565.epic.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 21, 2023 at 3:17 PM Victoria Dye <vdye@github.com> wrote:
 
-> The new commit message is sufficiently descriptive, thanks for updating. In
-> terms of readability, it is a bit of a run-on sentence (the comma after
-> "lines" could be a period, i.e. "...separate lines. Therefore, update
-> the..."). I don't think it needs to be updated, but it's something to keep
-> in mind for future contributions. :)
+--sMUoDbrajXt7yg/f
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I've taken note of it. Thanks!
+On 2023-02-21 at 22:01:04, Sean Allred wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>=20
+>     # in a new directory,
+>     cd $(mktemp -d)
+>=20
+>     # initialize a new repository
+>     git init
+>=20
+>     # fetch a single commit from a remote
+>     git fetch --filter=3Dtree:0 --depth=3D1 $REMOTE $COMMIT_OID
+>=20
+>     # create a ref on that remote
+>     git push --no-verify $REMOTE $COMMIT_OID:$REFNAME
+>=20
+> What did you expect to happen? (Expected behavior)
+>=20
+>     I expected this process to complete very, very quickly. We believe
+>     the version where it had been doing so was ~2.37.
+>=20
+> What happened instead? (Actual behavior)
+>=20
+>     The fetch completes nearly instantly as expected. We receive ~200B
+>     from the remote for the commit object itself. What's truly bizarre
+>     is what happens during the push. It starts receiving objects from
+>     the remote! By the end of this process, the local repository is a
+>     whopping ~700MB -- though interestingly only about a tenth of the
+>     full repository size.
+>=20
+>     This result in particular is strange in context. I would expect to
+>     either see 'almost all' the repository content, 'about half' (we
+>     have two trunks and fetching a single commit would at most fetch one
+>     of them), or 'virtual none at all'. There isn't a straightforward
+>     explanation for why 'one tenth' would make sense.
 
-> Whitespace looks good here. I think this is ready-to-merge; thanks!
+It's hard to know for certain what's going on here, but it depends on
+your history.  You did a partial clone with no trees, so you've likely
+received a single commit object and no trees or blobs.
 
-Thanks again for the review!
+However, when you push a commit, that necessitates pushing the trees and
+blobs as well, and you don't have those.  If the remote said that it
+already had the commit, then it might push no objects at all (which I've
+seen before) and thus just update the references.  However, if it pushes
+even one commit, it may need to walk the history and find common
+commits, which will necessitate fetching objects, and it will have to
+push any trees and blobs as well, which also will require objects to be
+fetched.
+
+My guess is that this is probably made worse by the fact that this is
+shallow, and that necessitates certain additional computations, which
+means more objects are fetched. However, I'm not super sure how that
+code works, so I think it may be helpful for someone else to chime in
+who's more familiar with this.
+
+If you want to see what's going on, you can run with
+`GIT_TRACE=3D1 GIT_TRACE_PACKET=3D1`, which may show interesting information
+about the negotiation.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--sMUoDbrajXt7yg/f
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY/VNigAKCRB8DEliiIei
+gQ8CAQDsroafKF1zcpKys+2emy5Wu16kJ2mCP+XGXu8Dabe5sAEAvlKlk2mEaZa5
+mjiYO0mmKyr2onVFgVtSrT5PQcgmwgQ=
+=npVW
+-----END PGP SIGNATURE-----
+
+--sMUoDbrajXt7yg/f--
