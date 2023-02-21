@@ -2,98 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CA3CC61DA3
-	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 21:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9171C636D7
+	for <git@archiver.kernel.org>; Tue, 21 Feb 2023 21:30:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229589AbjBUV3K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Feb 2023 16:29:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33268 "EHLO
+        id S229757AbjBUVaL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Feb 2023 16:30:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbjBUV3I (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2023 16:29:08 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E53E92006F
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 13:28:39 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id s26so22644729edw.11
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 13:28:39 -0800 (PST)
+        with ESMTP id S229762AbjBUVaJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2023 16:30:09 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D674B11644
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 13:30:05 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id s5so6482292plg.0
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 13:30:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=38y0YWrt6umdR+u74IbWFJOOKgf2bYjuQ2Vr0LLAPVc=;
-        b=cwJmetJ+JB4kyrg/8gkSLSBm6/CVHi3oCY7yGqxo9brWjlkF/ey1iwrlL2xsfdLN5I
-         zKWTkSPDNP5w6003tOe14jVuhYyhsws1gF6wzEW+etLoFnBCP9dr5XaI356/Mb8J/GL1
-         Eo7ms5wlaML0imJZqYvXJt12CEppLGlEm6R4bLsGwqo9d+Yq3/06kAN2YXCQvMdyI5jL
-         iBxkXq0I601aaneYGYCeAzFm73BJ6+6fTl+vzfaahWhwVgSWV4UOGMDWrglsZdVCe/9Y
-         OREYjQwpFFCCbdRQPo4xpvo6O5Vau7AfpfMbuyLL3CGgeXGw623l0nJI297kqWLTOHSx
-         w7Gg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7DnJVS/msx9n1mG5wF/VTp4VhvTV/wnRa34wTOFb/bg=;
+        b=B3YBGgosnupc+fI5VqHYFSr3Up2shPTaAksYExCv1X5Lc30YhwRuYXOmjObNDRBZnd
+         OE08sfYeLoDiSYRcFGeq2HFeHzOu0/bfvveJNwY9m7LTWHxf0/sLVl1owXrxQlZlv1oL
+         dl3a7ruZMew3/WaBgbLSeuoYjnee93Jbufv44bJtyJYHcWMGwesmBVAbWSkwrxuxBQEu
+         eqCe7R/wMk3cr10/9sXtDAq1rTHIJiP2THRW1xrXIeRENuBPU0z5ZjQOQyK9YHN6BwJ3
+         tVcG3f+yvIVqA6tAnAthvhl155LPCGrbkmLstmb5iO0ZDlBcQJwByuulrbvpNITLT3Qj
+         11vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=38y0YWrt6umdR+u74IbWFJOOKgf2bYjuQ2Vr0LLAPVc=;
-        b=f10u73jK7IAi6ND2tbBHrXs4Y+WTGV9F8nnUf68P8uluXC2MI66IbmjKFognY02bOa
-         5+GlbtwFc1XJowc6qzIVFUXQseMtk8Qrl4ky7/oiVJLlynD0YTjhfuJnmMVwycWzz8Y5
-         RSBEXZxzSG6XkUDvyjkef3q7GhQIVfST+1SwEfTT6RTUHjVOZ3gJTzueQvcnwOQqt9ao
-         hkeZK355YAWkmoMRM7jNLvUZC6/hrlqyk9xYLZGRYQYya/HU8P3/HFEgjBO3QSp5PLWo
-         QDHlWcmUlWvVl9uDQuNADlVlmRbErmgNtrQKr7001MDhP6gwVtV6qoH4cEkXHdqUBr61
-         HT7g==
-X-Gm-Message-State: AO0yUKUOeptbDs7N5hzmPjsCzxkP8PNfb+oqZpoPp6T8wf/5KjUG6Z/j
-        nB4i9YMxlieaK/lYg/WZ1jdE78Unh+sHXd/s5H+E4GOA
-X-Google-Smtp-Source: AK7set8rN9217Fdfs2+FBUvMfs0oKjE/4/dWKxREWBSpQA6iZsGmhG/uNxalx56WlfqAQBZDiJlIBRvE0zJizQBU4Nk=
-X-Received: by 2002:a50:baa4:0:b0:4ac:20b:96b0 with SMTP id
- x33-20020a50baa4000000b004ac020b96b0mr2694491ede.3.1677014917426; Tue, 21 Feb
- 2023 13:28:37 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7DnJVS/msx9n1mG5wF/VTp4VhvTV/wnRa34wTOFb/bg=;
+        b=wSAdcdjSBSQmOVOIUHMUol14TEIZCtgHEk51YrMIkHuzeRLtx9LL/Umq2V0/FnCRaJ
+         0v+5ct9YPj1ijKxOKI0jSHQQ/EC4gWsT7uOuPjKv6wRQb3f7oBjAoynSHKNqUJvjNUni
+         K2exKU/ONFZ1i1R9fRRk/vwACWKYTc52xSOL6KLLrVM4r2P8WSCbJfRU385SNUQvyCyo
+         rThbWX8ooRbYSpYwCQfI7ge2alsBFT7opVL5Ckz7cUm7rRxWeFrLIaLC1fMEApiW/IcZ
+         875wLTGMxVvsH1aqKwz4o+mC8YO8OofjukIry391f/FZRV1Nvao4PidWUSLzxUvXSsyb
+         WFMA==
+X-Gm-Message-State: AO0yUKWnNxmouQNLTMJknfrd0fOHbT2/NlWfz82EN0zfmBWj/Q/JzJ9T
+        Tpqj6FUn7hPGPAvmsSsVlXXacUoMxvRTDQ==
+X-Google-Smtp-Source: AK7set9/xc1HGRo3zpR3kkvXatcmhb2lk/ces1tACoEZJGkeznGH7ApudS1HbTCmt6pFoabIYWq36A==
+X-Received: by 2002:a05:6a20:69a3:b0:cb:af96:ace7 with SMTP id t35-20020a056a2069a300b000cbaf96ace7mr1935163pzk.46.1677015004893;
+        Tue, 21 Feb 2023 13:30:04 -0800 (PST)
+Received: from Vivans-MBP.lan (node-1w7jr9y92i5dg56d59ey2wgev.ipv6.telus.net. [2001:56a:740f:7b00:548b:6839:29d0:4517])
+        by smtp.gmail.com with ESMTPSA id n24-20020aa79058000000b00592591d1634sm3637086pfo.97.2023.02.21.13.30.04
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 21 Feb 2023 13:30:04 -0800 (PST)
+From:   Vivan Garg <gvivan6@gmail.com>
+To:     git@vger.kernel.org, vdye@github.com
+Cc:     christian.couder@gmail.com, hariom18599@gmail.com,
+        Vivan Garg <gvivan6@gmail.com>
+Subject: [GSOC][PATCH v2 1/1] t4121: modernize test style
+Date:   Tue, 21 Feb 2023 14:27:53 -0700
+Message-Id: <20230221212753.85371-2-gvivan6@gmail.com>
+X-Mailer: git-send-email 2.37.0 (Apple Git-136)
+In-Reply-To: <20230221212753.85371-1-gvivan6@gmail.com>
+References: <xmqq8rgqeplt.fsf@gitster.g>
+ <20230221212753.85371-1-gvivan6@gmail.com>
 MIME-Version: 1.0
-References: <20230219174631.1040-1-andy.koppe@gmail.com> <xmqqv8jwggsp.fsf@gitster.g>
-In-Reply-To: <xmqqv8jwggsp.fsf@gitster.g>
-From:   Andy Koppe <andy.koppe@gmail.com>
-Date:   Tue, 21 Feb 2023 21:28:25 +0000
-Message-ID: <CAHWeT-bqnwUxcaGOK7XD0wmmc6BaW2x6Gqhu107vZeU=U6Rm8g@mail.gmail.com>
-Subject: Re: [PATCH] log: omit tag prefix for color decoration
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, pclouds@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 20 Feb 2023 at 21:36, Junio C Hamano wrote:
->
-> Andy Koppe writes:
->
-> > Omit the "tag: " prefix for tags in commit decorations when coloring is
-> > enabled. The prefix isn't necessary as such when tags are distinguished
-> > by color already, and omitting it saves a bit of space and visual noise.
->
-> As somebody whose color perception is weaker than other people, I am
-> torn about this line of changes.  Accessibiilty folks often warn us
-> against designing UI that differentiates two things only by painting
-> them in two different colors "to be inclusive", and the above goes
-> directly against their guidelines.
->
-> The only saving grace in this case is that I expect that tags are
-> named very differently from topics in well managed projects, and
-> users can tell withotu "tag:" prefix even in the output without
-> colors, and that si why I said "I am torn", not I am not outright
-> 100% negative, but still I doubt that the upside of shortening 4
-> display spaces is worth going directly against inclusion advocates.
+Test scripts in file t4121-apply-diffs.sh are written in old style,
+where the test_expect_success command and test title are written on
+separate lines, therefore update the tests to adhere to the new
+style.
 
-I can't argue with that, particularly when changing default behavior.
+Signed-off-by: Vivan Garg <gvivan6@gmail.com>
+---
+ t/t4121-apply-diffs.sh | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-Would you welcome a patch instead that implements a new %r pretty
-format placeholder alongside %d and %D that lists the refs separated
-by spaces only, i.e. without parentheses, commas or tag prefixes?
+diff --git a/t/t4121-apply-diffs.sh b/t/t4121-apply-diffs.sh
+index a80cec9d11..f1cc42ff71 100755
+--- a/t/t4121-apply-diffs.sh
++++ b/t/t4121-apply-diffs.sh
+@@ -16,8 +16,8 @@ echo '1
+ 7
+ 8' >file
+ 
+-test_expect_success 'setup' \
+-	'git add file &&
++test_expect_success 'setup' '
++	git add file &&
+ 	git commit -q -m 1 &&
+ 	git checkout -b test &&
+ 	mv file file.tmp &&
+@@ -27,10 +27,11 @@ test_expect_success 'setup' \
+ 	git commit -a -q -m 2 &&
+ 	echo 9 >>file &&
+ 	git commit -a -q -m 3 &&
+-	git checkout main'
++	git checkout main
++'
+ 
+-test_expect_success \
+-	'check if contextually independent diffs for the same file apply' \
+-	'( git diff test~2 test~1 && git diff test~1 test~0 )| git apply'
++test_expect_success 'check if contextually independent diffs for the same file apply' '
++	( git diff test~2 test~1 && git diff test~1 test~0 ) | git apply
++'
+ 
+ test_done
+-- 
+2.37.0 (Apple Git-136)
 
-               %d
-                   ref names, like the --decorate option of git-log(1)
-
-               %D
-                   ref names without the " (", ")" wrapping.
-
-               %r
-                   ref names only
-
-(Having looked at the relevant code, I think it should still be a
-fairly small change.)
