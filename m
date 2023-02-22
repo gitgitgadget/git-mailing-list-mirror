@@ -2,168 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0487FC636D6
-	for <git@archiver.kernel.org>; Wed, 22 Feb 2023 14:27:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F18FDC61DA4
+	for <git@archiver.kernel.org>; Wed, 22 Feb 2023 14:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231494AbjBVO1W (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Feb 2023 09:27:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40416 "EHLO
+        id S232161AbjBVOsS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Feb 2023 09:48:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229749AbjBVO1V (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2023 09:27:21 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1243839CE8
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 06:27:19 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id z5so7999738ljc.8
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 06:27:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=T0FLCyNgNYQtEW6P76gKg+9AfTZ9yVhdIVdp1AQ/3Ws=;
-        b=RvOvkKx8oK9FoihwY5wLbXFACYY4FjAxiUM/aa5zr8cE1P2yNlIAJOLVOETyM3A/jL
-         ZFLbgPFZpIc4+8wzk2NifTVmQBlhkbqjhYfiOhcd4ephmGI7AiND9MuwEjNGFWnEbOJL
-         29JuvMfRhia2mF270ElWXvxIKfOcxpNMS3qmlN+yUp/uQLlYOdR1iUNM1IdZ0R22t91C
-         jqZQzt8WErfyKfaoUdnyG4BBRBjPgWGV+9kqIkN1rfAgLA05IgwflawCpWOYSOws7zPF
-         D+RzjNFUOvUsbuPGu1R0GY/MxBtJhwfpy+DCFx64x45YEJzaVHpz1BCur7q/KW00dBJL
-         0XRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=T0FLCyNgNYQtEW6P76gKg+9AfTZ9yVhdIVdp1AQ/3Ws=;
-        b=HS+dVteLB5MRbrL48qNlqpPbBb9jX1geHyKjmX7g+/QwCNkW/FIXRLtC4UAzKeZpE6
-         gptRYKtSGWlJko6xUSOJ43vX4sjtxeDOrsSSawLXeBcPsM37q/H0K3eOgcuyWmq0zDoi
-         Iq7xTnXLB/B8/WX/usEQX4L1SmxfLSUXIRR1QHt9961ai1G/7Y5pR4zPQVlDqVc3/y9u
-         2GrqWaeC/fgWW6z+hUif41BOD47xWK2dlPyvq1r58RJjPt+RPyjHCH/Fn4VxJjnBCxdI
-         CK4OvfTnTrK8STVNXL71JSnJ8rS0p30q1kyrRvGp/8mWmFuW+kjQYzM9Tq1Jzp2SRpRT
-         BGqg==
-X-Gm-Message-State: AO0yUKWYAN2DwcxKTdmnYpJFwlxjdX6ZZstc2jRpDJmxiFMHP08L3ZK0
-        zNEwf8KI9nH2FENCGysYSMA=
-X-Google-Smtp-Source: AK7set8GiwiT0Q4lLb0MSTgAjNavjVJUCLJdolQU0V2pyBzueDRHdS0SDBSQfm0VZeBmAKz6poOu+Q==
-X-Received: by 2002:a05:651c:a0e:b0:293:4cfe:ad31 with SMTP id k14-20020a05651c0a0e00b002934cfead31mr6101845ljq.14.1677076037149;
-        Wed, 22 Feb 2023 06:27:17 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id j16-20020a2e3c10000000b0029352e4ba6esm810518lja.90.2023.02.22.06.27.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Feb 2023 06:27:16 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     phillip.wood@dunelm.org.uk, Elijah Newren <newren@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] pull: conflict hint pull.rebase suggestion should offer
- "merges" vs "true"
-References: <pull.1474.git.1675614276549.gitgitgadget@gmail.com>
-        <CAMMLpeTPEoKVTbfc17w+Y9qn7jOGmQi_Ux0Y3sFW5QTgGWJ=SA@mail.gmail.com>
-        <CAPMMpogFAR6cvcR8T5fx+AoytAJ7TsPpSeOjHNzW4Gmkuq7FLQ@mail.gmail.com>
-        <CAMMLpeTQ1RpsvwRdZ0G3wdvH1+LXE5tw=7Cs6Q+HxMcRU0qj5Q@mail.gmail.com>
-        <CABPp-BFxGYQ_JTC5c4_S_gOK3GxWKuZ=KfvycpkBjPGyKzCJ+g@mail.gmail.com>
-        <c3ef69e0-c37a-01fe-a40a-c2940e329793@dunelm.org.uk>
-        <CAPMMpogi_QoGKD824JW+85v_Sgaf5d3TAd_P55YyT5NF6AUJ=w@mail.gmail.com>
-Date:   Wed, 22 Feb 2023 17:27:15 +0300
-Message-ID: <87a615vkqk.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S232179AbjBVOr4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2023 09:47:56 -0500
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1B423C79B
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 06:47:28 -0800 (PST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 9799D32007BE;
+        Wed, 22 Feb 2023 09:47:21 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 22 Feb 2023 09:47:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emailplus.org;
+         h=cc:cc:content-transfer-encoding:content-type:date:date:from
+        :from:in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to; s=fm1; t=1677077241; x=
+        1677163641; bh=b2Fi4CvthBQszjauOdTo0GebBuOimqvhPxdR8ss78UE=; b=1
+        yxfUgdCfoQiRlo5TdLy6D5P1BtUdrkne1VZPVSxY3V8XmuEmt+yw+HpD3U3Yow2B
+        f2al86dS+HDREpb+5kuSYex6yH+Rh9r3xjd4nkLk0dJO08Ouj+vj5YmzgG9/Hl1v
+        1M+kDByGzIx2CTaPCuuEVdkHEkdsZrvVEDrWQ6BaAKGWgGSlvNLEnq3ffzEsKKNi
+        Z4XsoAa2mmSWUO/MlcrqU0Ai+2qb9H5k59QeYcsZJx908aLlkuNxU5bAHRtrxpM+
+        2Gzom0NFUGVCW1jaKxcPtvIs3QkMeXLhtPDLq8MpdrdbdPKTUy18iw3ZLzojgQdL
+        FuNUyRvHb8xbi+LfjtUDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:date:date:feedback-id:feedback-id:from:from
+        :in-reply-to:in-reply-to:message-id:mime-version:references
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1677077241; x=
+        1677163641; bh=b2Fi4CvthBQszjauOdTo0GebBuOimqvhPxdR8ss78UE=; b=P
+        ygCZnt8GysLYsQaKmFJinbs9rtaTwNF8vEJrpmozDsqtVHxI2H0boLrgGTwBS9Q0
+        Rrm/TDHc4/YpWobP0jWekV4xQ2hcCtrTvRzO9ss3YXsufkw3ZZcrjCEP37eEqh3m
+        /d7wajXspbw973Vn/LeLy9iZ1JYnemOARhyWxQhyBtbIK6XLX/tG5ctlRquGBrbI
+        2RmplpyQtAhOUNQYP279J710p4xyvHYJr0TCgN/45LJFC1rJzpGtWJCBh4Zsqp65
+        qDe5Kyw5I5jfaIII9HEmGA6M6qlVO31nvU6/Ts9KrKzxtg4/xlYKsIy8pnSAqWbf
+        G0/n27euyf5294vAX/GnA==
+X-ME-Sender: <xms:-Cr2Y7od-K-LMn9IPpRLZkenKeTIT3-Gyj__cGbeNKTfWzvixdrQyQ>
+    <xme:-Cr2Y1rgx9I5bFN9cPJ_FM_PG8acV1yybXad6qiyXbKXhs-9AfpzyuWC5fJiDOMUl
+    qRKvQqcgS1hpHUc>
+X-ME-Received: <xmr:-Cr2Y4O6AykfSyfIkmRgd681ZY_9eBLBqNrzlpIQzCa_SB89SNeaqyoDVydfCdFgzgA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudejledgieejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    goufhushhpvggtthffohhmrghinhculdegledmnecujfgurhepkfffgggfuffvvehfhfgj
+    tgfgsehtkeertddtfeejnecuhfhrohhmpeeuvghnshhonhcuofhuihhtvgcuoegsvghnsh
+    honhgpmhhuihhtvgesvghmrghilhhplhhushdrohhrgheqnecuggftrfgrthhtvghrnhep
+    gedtleevvdduveelffdtveeffedutdehleehgfehhfeileejveffhfeuudfgudegnecuff
+    homhgrihhnpehrugdrnhhtthdpnhhtthdrtghordhjphdpnhhtthgurghtrgdqtghhuhhg
+    ohhkuhdrtghomhdpghhoohhglhgvrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepsggvnhhsohhnpghmuhhithgvsegvmhgrihhlphhl
+    uhhsrdhorhhg
+X-ME-Proxy: <xmx:-Cr2Y-6Hz5_g6YYooduTa-2bhwl5NhBMU0ciD7R1Wb4jFqAbFU-SZA>
+    <xmx:-Cr2Y654KG9OLwVN4jf_pbmpwgx2Az6q_Q6oVeCnQM5jXpSwAKGSog>
+    <xmx:-Cr2Y2hS9lWGxBTgqNDySUTjMVMfkqaOzjmm9R9CNhlbK5LnLUJJjA>
+    <xmx:-Sr2Y6GtHLejw5PVSV95tsDe64Qb4I8xOWRWgSrOtdwgEer-1nckoA>
+Feedback-ID: ic1e8415a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Feb 2023 09:47:18 -0500 (EST)
+Message-ID: <c7274d1c-0b26-cb5d-34da-51062ac8a93e@emailplus.org>
+Date:   Wed, 22 Feb 2023 17:47:10 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: =?UTF-8?B?UmU6IOOAkGlucXVpcnnjgJFFQ0NO?=
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Sora.Ueno.bp@nttdata.com
+Cc:     Yuichi.Watanabe@nttdata.com, git@vger.kernel.org
+References: <OSBPR01MB5223CD2469D1F8A8A5DE2E3CF3A59@OSBPR01MB5223.jpnprd01.prod.outlook.com>
+ <5377cd67-3191-3758-69a9-ff39fbddac12@gmx.de>
+Content-Language: en-US
+From:   Benson Muite <benson_muite@emailplus.org>
+In-Reply-To: <5377cd67-3191-3758-69a9-ff39fbddac12@gmx.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tao Klerks <tao@klerks.biz> writes:
+Perhaps check with NTT open source office on their recommended
+procedures, they maybe able to advise on your use case.
+https://www.rd.ntt/e/sic/oss/
+http://www.oss.ecl.ntt.co.jp/ossc/
 
-> On Sat, Feb 18, 2023 at 5:39 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+On 2/22/23 16:44, Johannes Schindelin wrote:
+> Hi,
+> 
+> Git is not a product, and the Git project is not a company. You won't find
+> any joy in trying to get anybody in this project to provide you with such
+> a Classification Number. It is highly unlikely that you will get this kind
+> of support from volunteers who are not paid to provide that kind of
+> support.
+> 
+> Also, insisting on a reply on the same day seems to have the adverse
+> effect of what you intended. This is an Open Source project, not a
+> contractor you offer money in return for such immediate demands.
+> 
+> To top it off, sending such a request that has nothing to do with security
+> or vulnerabilities to the git-security mailing list can only elicit
+> responses that you don't want, trust me on that.
+> 
+> I hope you can find what you need elsewhere.
+> 
+> Ciao,
+> Johannes
+> 
+> On Tue, 21 Feb 2023, Sora.Ueno.bp@nttdata.com wrote:
+> 
+>> (外部送信のため渡辺課長をCCに入れています(外部送信する理由：輸出申請に必要な情報を得るため))
 >>
->> On 18/02/2023 03:17, Elijah Newren wrote:
-
-[...]
-
->> > My personal opinion would be adding such a capability should be step
->> > 2.5 in your list, though I suspect that would make Tao unhappy (it's a
->> > non-trivial amount of work, unlike the other steps in your list).
+>> In order to complete the necessary export process,
+>> I need the ECCN(Export Control Classifcation Number) of
 >>
->> I've got a couple of patches[1] that cherry-pick the merge if only one
->> of the parents has changed. I've never tried upstreaming them as it is
->> only a partial solution to the problem of rebasing merges but that
->> approach should work well with "git pull --rebase=merges" as only the
->> upstream side will have changed (when rebasing my git integration branch
->> with that patch the merges are cherry-picked). They might make a useful
->> starting point if anyone wants to try and improve the rebasing of merges.
+>> ・Git version 2.17.1.2
 >>
->
-> This is awesome!
->
-> It feels like the first step towards the general strategy that was (I
-> believe) best described by Buga at
-> https://public-inbox.org/git/a0cc88d2-bfed-ce7b-1b3f-3c447d2b32da@gmail.com/
-> !
-
-Being the provoker of all the fuss then, as well as the author of basic
-original method, I agree Buga has summarized and described all the ideas
-in existence at that time extremely well.
-
->
-> (unless I'm missing something, the result of this is exactly the same
-> as the result of that strategy, in these "simple" cases where it kicks
-> in)
->
-> The one concern I have with this is that, *if I understand correctly*,
-> it sometimes throws away the existing merge information, and sometimes
-> doesn't, and there's no easy way to know which it is at runtime.
-
-As far as I'm aware, it's not the case. The originally described method
-indeed misbehaved, but this simple mistake has been quickly fixed, and
-the description by Buga you've referenced already discusses updated
-version.
-
-> Would adding a warning on stderr when a both-parents merge is
-> encountered (and any merge resolutions or related changes are still
-> discarded) be enough to make this shippable?
-
-Even if there are in fact such corner cases, we could make ourselves
-very cautious and stop even after non-conflicting rebase, if we detect
-that U1' and U2' don't match, and let user decide if the result is
-acceptable (similar to what rerere does on successful application of
-replayed resolutions).
-
-I also agree (in particular with Buga) that from the POV of user
-experience the method suggested by Phillip should be superior, as it
-emphasizes the natural dominance of the "current branch", as opposed to
-originally described symmetric method that is more suitable for formal
-analysis than for actual convenient implementation. Yet creating U1' and
-U2' from the original method could be useful for the purpose of checking
-for possible problems with automatic rebase that the user may need to be
-aware of.
-
-The biggest problem here, as I see it, is designing UI that'd make sense
-in the case of conflicts in multiple stages of the suggested algorithms,
-but I think we can simplify it for now by stopping and suggesting blind
-re-merge in case of any conflict but that on rebasing of changes to the
-first parent. Even this would be a huge step forward compared to silent
-drop of merge commits and blindly re-merging of updated parents.
-
->
-> Are there *any* circumstances where the new cherry-picking behavior
-> introduced here wouldn't be the right thing to have happen?
-
-None that I'm aware off, but I admit I'm not familiar with later Elijah
-work on the subject, so I could be mistaken. I only got a sketchy look
-at what Elijah did, and it looks like advanced material to me. I'd
-incline to rather get solid implementation of basics first, probably
-using Phillip method, then consider advanced methods if practice reveals
-demands for further improvements.
-
-I'm afraid that there is no ideal general solution for the problem of
-rebasing merge commits, so we need to limit ourselves and get a
-practical one that has already been described.
-
-Overall, I'd love to finally have reliable Git behavior when rebasing
-merge commits, even though I've already got a habit to perform all the
-merges in 2 steps: auto-merge resolving textual conflicts only (if any),
-followed by a fixup for semantics conflicts (if any).
-
-Thanks,
--- Sergey Organov
+>> Please tell me.
+>>
+>> Please reply today.
+>>
+>> 上野　空 | 株式会社NTTデータ中国
+>> Sora.Ueno.bp@jp.nttdata.com<mailto:Sora.Ueno.bp@jp.nttdata.com> | 050-5546-8996
+>> 108－8505　東京都港区港南1-9-1（B） ＮＴＴ品川TWINSアネックス3Ｆ
+>> www.nttdata-chugoku.com/jp/ja/<http://www.nttdata-chugoku.com/jp/ja/>
+>>
+>> --
+>> You received this message because you are subscribed to the Google Groups "Git Security" group.
+>> To unsubscribe from this group and stop receiving emails from it, send an email to git-security+unsubscribe@googlegroups.com.
+>> To view this discussion on the web visit https://groups.google.com/d/msgid/git-security/OSBPR01MB5223CD2469D1F8A8A5DE2E3CF3A59%40OSBPR01MB5223.jpnprd01.prod.outlook.com.
+>>
 
