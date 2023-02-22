@@ -2,122 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75A6FC61DA3
-	for <git@archiver.kernel.org>; Wed, 22 Feb 2023 00:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A2E5C636D7
+	for <git@archiver.kernel.org>; Wed, 22 Feb 2023 00:22:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230116AbjBVAGL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Feb 2023 19:06:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48634 "EHLO
+        id S230301AbjBVAWY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Feb 2023 19:22:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbjBVAGK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Feb 2023 19:06:10 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17B012FCE9
-        for <git@vger.kernel.org>; Tue, 21 Feb 2023 16:06:06 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 34CE75A1A8;
-        Wed, 22 Feb 2023 00:06:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1677024366;
-        bh=5kRrBAAdFmFlHsx6sEEnuT3WV2MLbob51xjXWYxEw9Q=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=UzIIseoK1zP+MeTpi9oi62EccFdkA/gI40byCRySZziIHVQEN7mRyoMB5vGPbY1dU
-         +hP5Q9RBWNyyY1lyMFh0SJzRuFYjdEHrFoYxWxINYVKjEs2P2QyputmKGnWQxF4HQy
-         PSPBBbiOw//1CeTDou7pCbl6wA8fQrZPVwzFhfF69e+1oPggYKUAneR6IrS5vIBPyV
-         QR3XxcOEbHm2YofykodF5Z6o9EXbmebnGBsYBUqZkqrzHf5BHL3mfM8L0nLdhR3Pvw
-         olVtY1znKNj37TE6C4WkPrKlehzXGfz2hL+PUKMMzPQ+wX1Wh+JRtXBVW1L/xsg5hX
-         Lb5qLrkK5fYNVM8aUy59WwnKguFBHkUbXjPnapNCeDsjjXU1UcmMyP8XU3IzH5NBzH
-         sWqmOzJ+IkaNLmTDej1HCZeX3/3pBkCzbBc6QHmieS9B3YCRXzP86p3jyCDYPnH0MU
-         15IRmp4aHFBl1Y/7T9HCaNWrQqK1me1v9n/EV6KZw2B3rfq+SLO
-Date:   Wed, 22 Feb 2023 00:06:05 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Raul E Rangel <rrangel@chromium.org>
-Cc:     git@vger.kernel.org
-Subject: Re: Parallel worktree checkouts result in index.lock exists
-Message-ID: <Y/VcbWogtHrpXU8Z@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Raul E Rangel <rrangel@chromium.org>, git@vger.kernel.org
-References: <Y/UAaC4oBPIby4kV@google.com>
+        with ESMTP id S229448AbjBVAWX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Feb 2023 19:22:23 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AEBF303D4
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 16:22:22 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id z2so7102199plf.12
+        for <git@vger.kernel.org>; Tue, 21 Feb 2023 16:22:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=N2Ybdu/ipZc/Xpv+jIzY5se4a6GftEnNc0fZyY7JIJI=;
+        b=ZTyakMxiLJHIQPo5Bv0dKZqKU7/U2+5GsVnKkuXZUCWMU0GqAhtl67QiY8+zIC4s78
+         IxtlBPzDdMNwPPPKqXSndNjY6fEXop8iiUq7SufcZ2Goke6QKdQtaNcbL+L3SUUYqvQp
+         LLMo4pq9NcNdIEVXKNJUHmzKbRghQPhv9xsMUOXeZ9KVX9gqe8quoZl0MS6hban1MHVM
+         5KBUwjrx0Fj8VnRDfXFeGlIN1cy3m4ff5sbUZGcOZoGGCKOhbTFrUJtrkkwiQon/pcct
+         K1A9WPw6BtdwQLqxM2pIMIoN6hmuU2tPh9n/d432yErzRpWN89mq8NlLVegvONAeSHia
+         /PYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N2Ybdu/ipZc/Xpv+jIzY5se4a6GftEnNc0fZyY7JIJI=;
+        b=Odm3mN00IbK7h/eksGxnFhAFF/b41hGx0w5FUDM33pH7sf0uKLBIXhWz3UCyn2ugkz
+         3fqh8jtYl1iDG9MJpFjh1NzypyfnIvocKJXvJf4N21R1VJxkQ9hn227mIB0K91vRLlMA
+         dWazIh270IA+IYgv1PziWDCM7NnsYWqvVQuUGKU+qSXEzFL8YPIV89UZHoFytw2SQh0n
+         4VKDNsTgHdwoC60hpskV3K66grAm4LxP+ohG2slqF0OhkK3LuKttETMMmUU4OLTzBVVL
+         5iHn+iredzSfWMcVBK1lGlNWhkiZfBCO/rzka+v66baqeSYhlwZ2x+uG65E1sJebVeD0
+         mWZA==
+X-Gm-Message-State: AO0yUKW7w9STzUOBUjLUm+3e7zkdfL2SFZRlw4LYknjKtKv8Mit2tQ5R
+        xRD/Ivg4jnBvVA5EOK9X7H1+4vTqnRQ=
+X-Google-Smtp-Source: AK7set+PbrUU4sRk8jwdvL1kmwfVqVkVrGKXP/Y8sWXCNd3SHlezd20EQlwzXeHpZOViBUb+F2GHjw==
+X-Received: by 2002:a17:903:124c:b0:19c:a5dd:fadb with SMTP id u12-20020a170903124c00b0019ca5ddfadbmr1429295plh.54.1677025341807;
+        Tue, 21 Feb 2023 16:22:21 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id y9-20020a170902ed4900b0019c91d3bdb4sm2100630plb.304.2023.02.21.16.22.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Feb 2023 16:22:21 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <nasamuffin@google.com>
+Cc:     Git List <git@vger.kernel.org>, Jonathan Nieder <jrn@google.com>,
+        Jose Lopes <jabolopes@google.com>,
+        Aleksandr Mikhailov <avmikhailov@google.com>
+Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
+References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
+        <xmqq3573lx2d.fsf@gitster.g>
+        <CAJoAoZn7Nt37Eh17dpLDK+YX2BaEaAaii2rJPXO3L0BmQQkcgQ@mail.gmail.com>
+Date:   Tue, 21 Feb 2023 16:22:20 -0800
+Message-ID: <xmqqk00aczwj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Q1+YjFp4ZLQsk40l"
-Content-Disposition: inline
-In-Reply-To: <Y/UAaC4oBPIby4kV@google.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Emily Shaffer <nasamuffin@google.com> writes:
 
---Q1+YjFp4ZLQsk40l
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> For example, "die() is inconvenient to callers, let's propagate
+>> errors up the callchain" is an easy thing to say, but it would take
+>> much more than "let's propagate errors up" to libify something like
+>> check_connected() to do the same thing without spawning a separate
+>> process that is expected to exit with failure.
+>
+> Because the error propagation path is complicated, you mean? Or
+> because the cleanup is painful?
 
-On 2023-02-21 at 17:33:28, Raul E Rangel wrote:
-> Hello,
-> I'm trying to extract multiple trees in parallel so I can create a
-> tarball of the trees. I can't use `git archive` since it doesn't
-> currently produce hermetic output, and I need to support older git
-> versions.
->=20
-> In essence what I'm trying to do is:
->=20
->     git --work-tree ~/tmp/bob1 checkout ff27f5415797ead8bc775518a08f3a4ab=
-24abd53 -- . &
->     git --work-tree ~/tmp/bob2 checkout e70ebd7c76b9f9ad44b59e3002a5c57be=
-5b9dc12 -- . &
->=20
-> When I do this though, I get the following error:
->     [1] 4027482
->     [2] 4027483
->     fatal: Unable to create '/home/rrangel/cros-bazel/.repo/project-objec=
-ts/chromiumos/platform/vboot_reference.git/./index.lock': File exists.
->    =20
->     Another git process seems to be running in this repository, e.g.
->     an editor opened by 'git commit'. Please make sure all processes
->     are terminated then try again. If it still fails, a git process
->     may have crashed in this repository earlier:
->     remove the file manually to continue.
->=20
-> Is this expected? I'm not sure why the index is coming into play here.
-> Is there another method I should be using to extract a tree into a
-> directory?
+Both.
 
-This is expected because when you do a checkout, the timestamps and
-other metadata of the files are written into the index.  This is what
-makes `git status` work quickly: if the metadata of the files hasn't
-changed, Git doesn't have to re-read them to verify their contents.  You
-definitely don't want to delete that because you'll likely end up with
-corrupt data.
+The amount of data the caller may want to learn about an error may
+not be uneven, depending on the caller even for a single function.
+And yes, cleaning up of shared resources like object flag bits after
+a traversal, especially a failed one, would be very painful unless
+the processing is designed from day one to allow it (and the
+revision traversal codepath is not).
 
-If you want to create multiple worktrees, use `git worktree add`, which
-can create multiple worktrees that each have their own index, but share
-the object store.  When you're done with it, run `git worktree remove`,
-and everything will be cleaned up.
+> ... is it reasonable to consider, for example, further
+> cleanup of cache.h as part of this effort? Is it reasonable to rework
+> an ugly circular dependency between two headers as a prerequisite to
+> doing library work around one of them?
 
-Note that with worktrees, you can have at most one worktree with a given
-branch (or detached head) checked out at a time.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---Q1+YjFp4ZLQsk40l
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY/VcbAAKCRB8DEliiIei
-gf52AP9SAGVzI82FldDlguDE2qsDstSUIj09d/44PZWx1VaA9QEA1OgPajurEETJ
-Vtz81oVCeMzprsdoCujf0zPCNcJdSAE=
-=UbkR
------END PGP SIGNATURE-----
-
---Q1+YjFp4ZLQsk40l--
+I am not sure about which two headers you are talking about, but if
+there is circular dependency that can be untangled, it would be a
+reasonable preliminary clean-up work.  I am not sure if that is
+"prerequisite"---it is up to folks who want to design how the
+"libification" work goes.
