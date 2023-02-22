@@ -2,54 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FD29C61DA4
-	for <git@archiver.kernel.org>; Wed, 22 Feb 2023 22:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9ABCC636D6
+	for <git@archiver.kernel.org>; Wed, 22 Feb 2023 22:56:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233035AbjBVWzQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Feb 2023 17:55:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46928 "EHLO
+        id S232947AbjBVW4h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Feb 2023 17:56:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233067AbjBVWzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2023 17:55:09 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD41837F0C
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 14:55:05 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id j2so9114064wrh.9
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 14:55:05 -0800 (PST)
+        with ESMTP id S232357AbjBVW4g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2023 17:56:36 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A69E43756E
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 14:56:34 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id h14so626943wru.4
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 14:56:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gZfD72psNc7r/O2lYEdvk62TmCEzOtjgiek7bbfbN6s=;
-        b=LFvkHvIKP+Q/hvLqW+X1U9Psznzi3HSDwoQwP7cm6McIn5/CTRIIz/WoPkXvJoapW7
-         NXKPbFJJeioLwpTOkndvt5qBS5hEcXviz8U4fSOgcCj6tQqo36yC52w04w57jHt1Q/+b
-         QHLHT8kOFZLMBaQvjIFtVpAMULEPQQrfbj9GZlhBAkwQ8z+5hCBQXT7PFYqRLi86XWfm
-         JbzQNHIYBgwbvb+p9VC9HqTHJ+QAcrytV2BJ0O8lc+EPcSFMqfY159A7MV1iz2lrD35F
-         EUwbSb93v9rmYXejKbG9bgCUpysHMtvxDBemEsjrdRY/w70wJRj1wuQTGnYo0w2T61cw
-         mi5A==
+        bh=rDYA90/4tNivTK3xW/SiitYTOAREbNwsnL8z2zg/Ims=;
+        b=iyrzoSaOnEgu0zgUoijv7MFK67Bb2FG0b/HHnL1HYQVb+R4QLDN+bk4o6bty1Kj+2K
+         hcvX/YHgE6i0SqtezpXCjVpnk4fP4WOBYGKGPTkbqpwihZG72H1pS3+rIQ3Cg4OELJci
+         w4A2S+4NoTAErLaE8vZTz9nLUQ39Tqq/3OD52KtUoZ24WNKf+oKUz7makoHGrAYAxsOI
+         5J6GFJ3g8IQhzCQ1k5zd1VRz0HWTwrvlu0itoG+iLOBZ8PSpYDoB+TidObR0agiYg6sb
+         WLE43g6PvyCG0pGsLnF9FXvNcO/NHbpsgLFDfeHEIlOceEGxg9p6WnLIONNUDG5Jqths
+         Q4KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gZfD72psNc7r/O2lYEdvk62TmCEzOtjgiek7bbfbN6s=;
-        b=4bJUy4qJ2n2VBstw6znQTTzB3YQcCQ4COeW+2igZQ/pcoo0IARonzwFHBCQkg0GG41
-         Qv1jgwYnuxVbWIqvIRHk73HIhN6CyR9SWfxCeSkjKoyLc+ut3IpkHqb19rBllUIoZG7R
-         leNhoXUztTGC1awZqG1+8f4FuFnQRI0p/XYgHlmNuLOlrsjQ0gVViFfDAq9BBCMKqaI0
-         wzYp12bpkHyq53DyzQTtchiZhVbbgyqno7C2m3T+Hw7P4XdQpL4zPjN6fjv96HOottH5
-         mnmPYmBtU7iN66QxHDbRO6S1av07gUY7o5st65w+jBjjKs6PSab9DZ1/cMLct/qUjupn
-         1VuQ==
-X-Gm-Message-State: AO0yUKXHtTTwcgFwZDSiL/o308d6zSVoI1C/dRT0NPwkaC8oTFuKzAbu
-        7q+CWSudO2yY92N3KBuoxuQ=
-X-Google-Smtp-Source: AK7set/8u8UX47JMqbK5XkhyXsp6AqoYBUWOmHp3NaDiZ74gymB44ceGrfRGUTpcnuQ/EUCzu0pSbw==
-X-Received: by 2002:a05:6000:79a:b0:2bf:dcbc:c442 with SMTP id bu26-20020a056000079a00b002bfdcbcc442mr8287872wrb.24.1677106504316;
-        Wed, 22 Feb 2023 14:55:04 -0800 (PST)
+        bh=rDYA90/4tNivTK3xW/SiitYTOAREbNwsnL8z2zg/Ims=;
+        b=d9adxmZp05oKtHvD1vacPB4Pn6d1PhD69CAR3g3Fiz2PvvV1fida/m7C7phh7IOCV7
+         7acbDDBviXPoDwzqhfVIlSfYoGfyqe1m26G4PdIDGXTGzshcF7IJ3wn2xKy+PNp4rmas
+         ZGoKameaKJC4YNGGkUCN4WLSnWtKoORh18vlmi3hIkSJfrDXDy67csqYLPpLgvKecfie
+         5+0oH7D7sYiYbsiuiW5C+8ycpdEZ+/D8OjOvw+QNnbL5XjvFZEwervlPZoay6j3uPj+p
+         wcYl6wFlqSJb6ZoSixMikOa7SsiOMydNP5B+0DTkrYyhWnT02yRv4JbnXbe2/WB2Qy4X
+         4v8w==
+X-Gm-Message-State: AO0yUKWmcae3c9QkDSZi7+I3jC6M0tv2cIW9KVS2nWmsWiTActHbkEGh
+        s46DtcJP5Aez6wtt+87DgAE=
+X-Google-Smtp-Source: AK7set+GFjdBu45597XQdggZGXvmfZbE7NhiivHnUkk6dbwWoUpYjYMSa5WT+ejxwQuvCchTOeYOng==
+X-Received: by 2002:a5d:6190:0:b0:2c7:a0b:e8d2 with SMTP id j16-20020a5d6190000000b002c70a0be8d2mr3677303wru.19.1677106593211;
+        Wed, 22 Feb 2023 14:56:33 -0800 (PST)
 Received: from [192.168.2.52] (59.red-88-14-203.dynamicip.rima-tde.net. [88.14.203.59])
-        by smtp.gmail.com with ESMTPSA id e7-20020adffc47000000b002c70f5627d5sm624961wrs.63.2023.02.22.14.55.03
+        by smtp.gmail.com with ESMTPSA id n11-20020a5d51cb000000b002c5804b6afasm5366108wrv.67.2023.02.22.14.56.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 14:55:03 -0800 (PST)
-Subject: [PATCH v4 2/3] branch: description for orphan branch errors
+        Wed, 22 Feb 2023 14:56:32 -0800 (PST)
+Subject: [PATCH v4 3/3] branch: rename orphan branches in any worktree
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -59,8 +59,8 @@ References: <ffd675e9-8a64-ae05-fc3b-36ae99092735@gmail.com>
  <34a58449-4f2e-66ef-ea01-119186aebd23@gmail.com>
  <2193a4ed-b263-068e-92f8-847dcb053f8c@gmail.com>
  <139555f1-21ab-d987-a58e-c7f04ce222d3@gmail.com>
-Message-ID: <76bac570-147e-7c74-c18c-1da88bc3d342@gmail.com>
-Date:   Wed, 22 Feb 2023 23:55:02 +0100
+Message-ID: <3d567892-bdd0-9ad9-a30e-1a67e7face11@gmail.com>
+Date:   Wed, 22 Feb 2023 23:56:31 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -72,160 +72,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In bcfc82bd48 (branch: description for non-existent branch errors,
-2022-10-08) we checked the current HEAD to detect if the branch to
-operate with is an orphan branch, so as to avoid the confusing error:
-"No branch named...".
+In cfaff3aac (branch -m: allow renaming a yet-unborn branch, 2020-12-13)
+we added support for renaming an orphan branch, skipping rename_ref() if
+the branch being renamed is an orphan branch; checking the current HEAD.
 
-If we are asked to operate with an orphan branch in a different working
-tree than the current one, we need to check the HEAD in that different
-working tree.
+However the branch to be renamed can be an orphan branch in a different
+worktree than the current one, i.e. not the current HEAD.
 
-Let's extend the check we did in bcfc82bd48, to all HEADs in the
-repository, using the helper introduced in 31ad6b61bd (branch: add
-branch_checked_out() helper, 2022-06-15)
-
-We are already traversing all worktrees in "copy_or_rename_branch()"
-checking if the branch to be copied or renamed is being bisected or
-rebased.  Let's include also a check for being HEAD, and use this
-information within the function rather than the helper.  This implies
-doing the worktrees iteration earlier in the function; to keep the
-user-visible behavior unchanged lets maintain the die("Branch foo is
-being rebased/bisected...") in the same position within the function. 
+In "copy_or_rename_branch()" we are traversing the worktrees checking if
+the branch to be renamed is HEAD in any worktree.  Let's include also a
+check for HEAD being NULL, which is the indication of an orphan branch,
+and use it to extend what we did in cfaff3aac, to all HEADs in the
+repository.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- builtin/branch.c       | 53 ++++++++++++++++++++++++++++--------------
- t/t3202-show-branch.sh | 18 ++++++++++++++
- 2 files changed, 53 insertions(+), 18 deletions(-)
+ builtin/branch.c  | 16 ++++++++++------
+ t/t3200-branch.sh | 14 ++++++++++++++
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index a32ae64006..aecf009993 100644
+index aecf009993..24cd66bae7 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -486,6 +486,9 @@ static void print_current_branch_name(void)
- 		die(_("HEAD (%s) points outside of refs/heads/"), refname);
- }
- 
-+#define IS_BISECTED 1
-+#define IS_REBASED 2
-+#define IS_HEAD 4
+@@ -489,6 +489,7 @@ static void print_current_branch_name(void)
+ #define IS_BISECTED 1
+ #define IS_REBASED 2
+ #define IS_HEAD 4
++#define IS_ORPHAN 8
  
  static void copy_or_rename_branch(const char *oldname, const char *newname, int copy, int force)
  {
-@@ -493,8 +496,9 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 	struct strbuf oldsection = STRBUF_INIT, newsection = STRBUF_INIT;
- 	const char *interpreted_oldname = NULL;
- 	const char *interpreted_newname = NULL;
--	int recovery = 0;
-+	int recovery = 0, oldref_usage = 0;
- 	struct worktree **worktrees = get_worktrees();
-+	struct worktree *oldref_wt = NULL;
+@@ -514,8 +515,11 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 	for (int i = 0; worktrees[i]; i++) {
+ 		struct worktree *wt = worktrees[i];
  
- 	if (strbuf_check_branch_ref(&oldref, oldname)) {
- 		/*
-@@ -507,8 +511,28 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 			die(_("Invalid branch name: '%s'"), oldname);
+-		if (wt->head_ref && !strcmp(oldref.buf, wt->head_ref))
++		if (wt->head_ref && !strcmp(oldref.buf, wt->head_ref)) {
+ 			oldref_usage |= IS_HEAD;
++			if (is_null_oid(&wt->head_oid))
++				oldref_usage |= IS_ORPHAN;
++		}
+ 
+ 		if (!wt->is_detached)
+ 			continue;
+@@ -531,8 +535,9 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 		}
  	}
  
--	if ((copy || strcmp(head, oldname)) && !ref_exists(oldref.buf)) {
--		if (copy && !strcmp(head, oldname))
-+	for (int i = 0; worktrees[i]; i++) {
-+		struct worktree *wt = worktrees[i];
-+
-+		if (wt->head_ref && !strcmp(oldref.buf, wt->head_ref))
-+			oldref_usage |= IS_HEAD;
-+
-+		if (!wt->is_detached)
-+			continue;
-+
-+		if (is_worktree_being_rebased(wt, oldref.buf)) {
-+			oldref_usage |= IS_REBASED;
-+			oldref_wt = wt;
-+		}
-+
-+		if (is_worktree_being_bisected(wt, oldref.buf)) {
-+			oldref_usage |= IS_BISECTED;
-+			oldref_wt = wt;
-+		}
-+	}
-+
-+	if ((copy || !(oldref_usage & IS_HEAD)) && !ref_exists(oldref.buf)) {
-+		if (oldref_usage & IS_HEAD)
+-	if ((copy || !(oldref_usage & IS_HEAD)) && !ref_exists(oldref.buf)) {
+-		if (oldref_usage & IS_HEAD)
++	if ((copy || !(oldref_usage & IS_HEAD)) &&
++	    ((oldref_usage & IS_ORPHAN) || !ref_exists(oldref.buf))) {
++		if (oldref_usage & IS_ORPHAN)
  			die(_("No commit on branch '%s' yet."), oldname);
  		else
  			die(_("No branch named '%s'."), oldname);
-@@ -523,20 +547,13 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 	else
- 		validate_new_branchname(newname, &newref, force);
+@@ -567,8 +572,7 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 		strbuf_addf(&logmsg, "Branch: renamed %s to %s",
+ 			    oldref.buf, newref.buf);
  
--	for (int i = 0; worktrees[i]; i++) {
--		struct worktree *wt = worktrees[i];
-+	if (oldref_usage & IS_BISECTED)
-+		die(_("Branch %s is being rebased at %s"),
-+		    oldref.buf, oldref_wt->path);
+-	if (!copy &&
+-	    (!head || strcmp(oldname, head) || !is_null_oid(&head_oid)) &&
++	if (!copy && !(oldref_usage & IS_ORPHAN) &&
+ 	    rename_ref(oldref.buf, newref.buf, logmsg.buf))
+ 		die(_("Branch rename failed"));
+ 	if (copy && copy_existing_ref(oldref.buf, newref.buf, logmsg.buf))
+@@ -583,7 +587,7 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 				interpreted_oldname);
+ 	}
  
--		if (!wt->is_detached)
--			continue;
--
--		if (is_worktree_being_rebased(wt, oldref.buf))
--			die(_("Branch %s is being rebased at %s"),
--			    oldref.buf, wt->path);
--
--		if (is_worktree_being_bisected(wt, oldref.buf))
--			die(_("Branch %s is being bisected at %s"),
--			    oldref.buf, wt->path);
--	}
-+	if (oldref_usage & IS_REBASED)
-+		die(_("Branch %s is being bisected at %s"),
-+		    oldref.buf, oldref_wt->path);
- 
- 	if (!skip_prefix(oldref.buf, "refs/heads/", &interpreted_oldname) ||
- 	    !skip_prefix(newref.buf, "refs/heads/", &interpreted_newname)) {
-@@ -818,7 +835,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 
- 		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
- 		if (!ref_exists(branch_ref.buf))
--			error((!argc || !strcmp(head, branch_name))
-+			error((!argc || branch_checked_out(branch_ref.buf))
- 			      ? _("No commit on branch '%s' yet.")
- 			      : _("No branch named '%s'."),
- 			      branch_name);
-@@ -863,7 +880,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		}
- 
- 		if (!ref_exists(branch->refname)) {
--			if (!argc || !strcmp(head, branch->name))
-+			if (!argc || branch_checked_out(branch->refname))
- 				die(_("No commit on branch '%s' yet."), branch->name);
- 			die(_("branch '%s' does not exist"), branch->name);
- 		}
-diff --git a/t/t3202-show-branch.sh b/t/t3202-show-branch.sh
-index ea7cfd1951..be20ebe1d5 100755
---- a/t/t3202-show-branch.sh
-+++ b/t/t3202-show-branch.sh
-@@ -221,4 +221,22 @@ test_expect_success 'fatal descriptions on non-existent branch' '
- 	test_cmp expect actual
+-	if (!copy) {
++	if (!copy && (oldref_usage & IS_HEAD)) {
+ 		/*
+ 		 * Update all per-worktree HEADs pointing at the old ref to
+ 		 * point the new ref.
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 5a169b68d6..5aef00efde 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -279,6 +279,20 @@ test_expect_success 'git branch -M and -C fail on detached HEAD' '
+ 	test_cmp expect err
  '
  
-+test_expect_success 'error descriptions on orphan branch' '
++test_expect_success 'git branch -m should work with orphan branches' '
++	test_when_finished git checkout - &&
 +	test_when_finished git worktree remove -f wt &&
 +	git worktree add wt --detach &&
-+	git -C wt checkout --orphan orphan-branch &&
-+	test_branch_op_in_wt() {
-+		test_orphan_error() {
-+			test_must_fail git $* 2>actual &&
-+			test_i18ngrep "No commit on branch .orphan-branch. yet.$" actual
-+		} &&
-+		test_orphan_error -C wt branch $1 $2 &&                # implicit branch
-+		test_orphan_error -C wt branch $1 orphan-branch $2 &&  # explicit branch
-+		test_orphan_error branch $1 orphan-branch $2           # different worktree
-+	} &&
-+	test_branch_op_in_wt --edit-description &&
-+	test_branch_op_in_wt --set-upstream-to=ne &&
-+	test_branch_op_in_wt -c new-branch
++	# rename orphan in another worktreee
++	git -C wt checkout --orphan orphan-foo-wt &&
++	git branch -m orphan-foo-wt orphan-bar-wt &&
++	test orphan-bar-wt=$(git -C orphan-worktree branch --show-current) &&
++	# rename orphan in the current worktree
++	git checkout --orphan orphan-foo &&
++	git branch -m orphan-foo orphan-bar &&
++	test orphan-bar=$(git branch --show-current)
 +'
 +
- test_done
+ test_expect_success 'git branch -d on orphan HEAD (merged)' '
+ 	test_when_finished git checkout main &&
+ 	git checkout --orphan orphan &&
 -- 
 2.34.1
