@@ -2,102 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79245C61DA4
-	for <git@archiver.kernel.org>; Wed, 22 Feb 2023 23:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93A27C636D6
+	for <git@archiver.kernel.org>; Wed, 22 Feb 2023 23:56:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232420AbjBVXdm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Feb 2023 18:33:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46612 "EHLO
+        id S232357AbjBVX4w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Feb 2023 18:56:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232125AbjBVXdl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2023 18:33:41 -0500
-Received: from mail-oa1-x2b.google.com (mail-oa1-x2b.google.com [IPv6:2001:4860:4864:20::2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 302B8C654
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 15:33:34 -0800 (PST)
-Received: by mail-oa1-x2b.google.com with SMTP id 586e51a60fabf-1720433ba75so12222975fac.5
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 15:33:34 -0800 (PST)
+        with ESMTP id S229795AbjBVX4v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2023 18:56:51 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D6B843475
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 15:56:50 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id e9so5836757plh.2
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 15:56:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GgorQTHhTufpsRt+nLLEspo6ZGwk+9GFbYZJHXQvxMc=;
-        b=orlFEdYGI7B+xxCSMJjC0NyydhcaZLYoGhk5qO13IXmeheIfGNj0bWF+VaSPQMYesJ
-         ZoYOkY1t9nwT5nN95ty9FqEppPtqjctgdDSGR1C8hWRJJP1TgmZD37bGGdKiY8XzVox8
-         QD/82xdhcBKLGmTHq71+wDRNzv0NLa2VxiLUu7xnrwzcRuIs8EmXhSInaBYWoSgkeO8P
-         ND3nEExp82LHAN4VnJjjGC4W9Y6xLfK8zQ1vHGNvteguBrcWcYfWsWTVILaixxDsDpGf
-         MnKdVFFYij5UL/YeRtAGuVB9oDpNdiqNIROxlozBXi1xQrTSdqD5+0Ns2Jn84LkYb0az
-         lvcw==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YS7fN9vUY5+QoxTIt2c8uI2XAb8fGKH8ey7zfvF5Rr0=;
+        b=ll1m752Lag9wdKIour29JWkf3AjhnYPSfrWKF7pSdCt1ixD6xoY3aI368iOANX3jer
+         pZLYAg9oS1BhZPO2WjZehTB9QFxjz4kCreW6gFWVViuVYSs+R3rmsVMr+k37SFKxA3TJ
+         VDYVuE9DrgyhsqNObIP8gMNr1cSI2a3GOuGT0stnYOEL0JJcX2m3RFEe+TLUelziI9Tm
+         WVUG+aMsvv0XLQbRvJQF13NhJK/VvSJda/MxdzNIIYUFxzuLjt6dmUJGfQKNkJjtF7re
+         FtTjZYPWZhK1WxwySNzmYG2on+HeoXBzVocngO6KcrPFgvW9G8711DLKf8ZznjS0bQiU
+         Wh1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GgorQTHhTufpsRt+nLLEspo6ZGwk+9GFbYZJHXQvxMc=;
-        b=fsdLvUdJIXFCqjN0GYT37ow53o98Hpr2y2Mey3bK/s3gez4137QzyWaohh/0q/Rxay
-         7QAJdz5MRyQw00wQbiNycerRlixLhhwNdaENbVTvi1DTFDajPKbM5LDpil4TxoNPeNX7
-         L+vOCXJavSb7h2niTwxamT9dMPmTBtUm8nFP1fIS9YjPdc+jxT44S4nYs1ln87RlQoHn
-         8clCbxXIBQIwJy3KcZatl3fRHSzcRmpW4tCQVvNlmrqlMmgygytT0y+Z5hYNGKA5D6Ca
-         HVTi5ek3yken/kJPb2nKE5lnrDmRv7JEe8B1in1Wl0umwy/tqujSoi5TCoX/j12WN/wS
-         OvDA==
-X-Gm-Message-State: AO0yUKXCpnPrjQYAK0tklfgSxEIdcLq9IFxK/2iAjU1oOezlXfJAWh9U
-        fkRKizTh406qUSRwto1Vlz91P3WrGDS4F2jidwY=
-X-Google-Smtp-Source: AK7set8mP/6QtX0/+ka78dJ7hS6SxcjmwgikP1Nb++pXZa7b+KuFXYsyckY0gLPu5wzAAawiNedCVOQ8kNeQZhM/Bo8=
-X-Received: by 2002:a05:6870:75c5:b0:16e:4b62:df20 with SMTP id
- de5-20020a05687075c500b0016e4b62df20mr950312oab.141.1677108813457; Wed, 22
- Feb 2023 15:33:33 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=YS7fN9vUY5+QoxTIt2c8uI2XAb8fGKH8ey7zfvF5Rr0=;
+        b=76s1DgrfxnBoS9NBGALuFKsWXg8kOqm2M7J/DBt8lNUeKsim3+Eajb0zGfFD7E6ahN
+         yeaajq1hAMnGjtdSqkYzMbMCFcNq0h3LJYsWaMsytzoEU+hC3lAFjP7O63oBZCS2vwGQ
+         /4U7TDJFUuR1affHgCeQDDaV7jZBSv1nYMKs9NyUVcwxq1kYywH1E7CYmHEtGQ+Q6aGK
+         0tHsJ59Q3GjN/uACPE/J4ZZeu06umu85M4hsgaslG2bvNT8OxgUkBCUc/5JjYfZLH5de
+         EBiS8dhq3jn9o1nMCVh8drcwzZgQibNN3ivg6ihaZPv3G3JMsLncTZZVWDxON3ge3byn
+         pCJg==
+X-Gm-Message-State: AO0yUKX+hga27xPqiyRTFcvdVE2lkLP6MGSiBb3HnMzdjEJAQELl8oxQ
+        JjNwM5GaC8Ab+lhEssTA+yU=
+X-Google-Smtp-Source: AK7set8QLhTuHSJDos7aG/IlQUkthldxPN3CgElrPpOSQXoO5EYnbfhzAVsv5aIdmojGMonKB9SK2w==
+X-Received: by 2002:a17:902:fac6:b0:198:f145:504f with SMTP id ld6-20020a170902fac600b00198f145504fmr8330280plb.30.1677110209725;
+        Wed, 22 Feb 2023 15:56:49 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id l8-20020a17090270c800b0019cb4166266sm846267plt.83.2023.02.22.15.56.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Feb 2023 15:56:48 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     git@vger.kernel.org, tao@klerks.biz, newren@gmail.com,
+        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v3 2/3] rebase: stop accepting --rebase-merges=""
+References: <20230222051709.464275-1-alexhenrie24@gmail.com>
+        <20230222051709.464275-2-alexhenrie24@gmail.com>
+Date:   Wed, 22 Feb 2023 15:56:48 -0800
+In-Reply-To: <20230222051709.464275-2-alexhenrie24@gmail.com> (Alex Henrie's
+        message of "Tue, 21 Feb 2023 22:17:08 -0700")
+Message-ID: <xmqqlekpb6f3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20230221055805.210951-1-alexhenrie24@gmail.com>
- <20230221055805.210951-3-alexhenrie24@gmail.com> <852c6efd-49a7-f6f0-dd6a-b28cb0909784@dunelm.org.uk>
- <CAMMLpeQ9gEKNX5VtGCgLL_Qzk59ZYji57u-SPy-XeSRPuF2NwA@mail.gmail.com>
- <f0d0a3fb-d7eb-84d6-7852-0d30eb38af63@dunelm.org.uk> <xmqq8rgpcn8l.fsf@gitster.g>
-In-Reply-To: <xmqq8rgpcn8l.fsf@gitster.g>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Wed, 22 Feb 2023 16:33:21 -0700
-Message-ID: <CAMMLpeRXYm-Qtr6556fZxmND+stku9cK+aBGr7h7ezw+Mrg=-g@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] rebase: stop accepting --rebase-merges=""
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-        tao@klerks.biz, newren@gmail.com, Johannes.Schindelin@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Feb 22, 2023 at 3:18 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->
-> On 22/02/2023 01:38, Alex Henrie wrote:
-> > On Tue, Feb 21, 2023 at 3:55 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> >>
-> >> Is there a particular reason you decided to redo the option parsing
-> >> rather than just calling parse_merges_value() from the existing "if
-> >> (rebase_merges)" block? I don't think it really matters, I'm just curious.
-> >
-> > Without a parse_opt_merges callback, how could we know whether the
-> > user passed --no-rebase-merges as opposed to passing nothing at all?
-> > const char *rebase_merges would be NULL in either case. It's an
-> > important distinction to make because --no-rebase-merges overrides
-> > rebase.merges but the absence of a command-line argument does not.
->
-> The usual way we handle that is to set the value of rebase_merges from
-> the config before calling parse_options(). However your solution is fine.
+Alex Henrie <alexhenrie24@gmail.com> writes:
 
-On Wed, Feb 22, 2023 at 4:08 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Is it?  If it is not too much to ask, I'd prefer to have code that
-> does not surprise people, and "the usual way" you mentioned is what
-> readers around here expect to see.  I didn't check and think about
-> the patch in quetion, and especially the existing code that the
-> patch needs to touch, too deeply, so if it is too convoluted already
-> that it would be a lot of work to make it work in "the usual way",
-> it may be OK, but otherwise, the solution may not be fine.
+> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+> index e0d910c229..b8ba323dbc 100755
+> --- a/t/t3430-rebase-merges.sh
+> +++ b/t/t3430-rebase-merges.sh
+> @@ -293,6 +293,12 @@ test_expect_success 'do not rebase cousins unless asked for' '
+>  	EOF
+>  '
+>  
+> +test_expect_success '--rebase-merges="" is invalid syntax' '
+> +	echo "fatal: Unknown mode: " >expect &&
+> +	! git rebase --rebase-merges="" HEAD^ 2>actual &&
 
-There was a const char *rebase_merges in cmd_rebase and an int
-rebase_merges in struct rebase_options. I deleted const char
-*rebase_merges, leaving only int rebase_merges. int rebase_merges is
-set from rebase_config before it is set from parse_options.
+"!" takes any non-zero exit, even a segfaulting "git".  Let's use
+test_must_fail to make sure it dies in a controlled way, i.e.
 
-Do you want me to add back const char *rebase_merges? If so, where
-should it be declared so that it can be set from both rebase_config
-and parse_options?
+	test_must_fail git rebase --rebase-merges="" HEAD^ 2>actual &&
 
--Alex
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'refs/rewritten/* is worktree-local' '
+>  	git worktree add wt &&
+>  	cat >wt/script-from-scratch <<-\EOF &&
+
+Other than that, looking good.
+
+Thanks.
