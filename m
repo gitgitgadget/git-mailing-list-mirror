@@ -2,87 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B639CC636D6
-	for <git@archiver.kernel.org>; Wed, 22 Feb 2023 19:22:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB0FCC636D6
+	for <git@archiver.kernel.org>; Wed, 22 Feb 2023 19:26:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231219AbjBVTWR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Feb 2023 14:22:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53084 "EHLO
+        id S232575AbjBVT0b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Feb 2023 14:26:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229907AbjBVTWQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2023 14:22:16 -0500
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D06F13C7B7
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 11:22:14 -0800 (PST)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-536b7ffdd34so136058587b3.6
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 11:22:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RF2YMicF6YlLgEJXPHjJRlw93NG2JDVSyQTbHRQb5tE=;
-        b=PPZxh1L0A5vyzwrpQ8Hfq74zFXPDRJCFbcRnK/ASElhgIp018ONr20jP894Hci7Zgt
-         Q8D5cw3G7LTbef7kBQwF6ow9nOYGuIxEzYF/d9f8/6JkqHIO4xFHkxUm3VZNlPdRyfV6
-         xFArlvMxOMrvDD7B2gYtvFj4o3nJK0sloG3bDaSJOAufygbuOOpGKcaqn49UAPJ5g4UD
-         QcTAt8fbNA5RAlcdjIG/eM5h/Zjte4FHxzjMwf0QpuJ9nu1V0rP7tVPJ2lico2S1QZf3
-         PvyFGwhwVkSLQ11YbFvRj2++srxuxHAcD4e15xzWVWi36Jsf4DZz8uhnNoMf3wttnF2B
-         QyMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RF2YMicF6YlLgEJXPHjJRlw93NG2JDVSyQTbHRQb5tE=;
-        b=p7jswhZpKUnFzxBq0fAxn+II/OVJ4XwcxAPlvW7ysWOvaWD8BwmFUi8HuUTcNJ0IJg
-         +eoWBfyt+z/Tbib0wrDRYhgz++Q56LLV7X2PzyLUe+8oCpKgNAl60BPcP0/QPsDMpVsH
-         Xc0Ekwaw9WY/QQYzXpBU/xtSo2JZH5K0sRSces8o12FPyfUu35zzaNLyvGh0gh72NOTQ
-         GObhA6dYZbdHtPCEMXpL/mo6e2lPOQxHNLUNneVjdgS58H2Ob9uCz7HN349VFD1cFc+q
-         xqq0YA90NI6UpHS9Fpo7x07tDIuTkWHd729ac7It+5nRUb7Q+D0K8W+hJyrtdY4Qua28
-         k1UQ==
-X-Gm-Message-State: AO0yUKUhx1tG8wXWLudZkyyuYtYSXlWaKM2qID/3bt9vBxSCnXEF2Rpo
-        vQmwgandIJXQBVDpdwzA3T8DJptXCtVftHPL1vFNdw==
-X-Google-Smtp-Source: AK7set8tXxWkbV1pUSQrjGMBO//+THzf46rUfFbO/erE8/m3iZmjGRjtUkJPNWJehzBXO42JnYbM3xbKW2nMIrYyuu4=
-X-Received: by 2002:a25:8e0b:0:b0:86f:211e:5e74 with SMTP id
- p11-20020a258e0b000000b0086f211e5e74mr801155ybl.3.1677093733884; Wed, 22 Feb
- 2023 11:22:13 -0800 (PST)
+        with ESMTP id S230434AbjBVT02 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2023 14:26:28 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDBB138654
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 11:25:59 -0800 (PST)
+Received: (qmail 14636 invoked by uid 109); 22 Feb 2023 19:25:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 22 Feb 2023 19:25:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10465 invoked by uid 111); 22 Feb 2023 19:25:10 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Feb 2023 14:25:10 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 22 Feb 2023 14:25:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     Emily Shaffer <nasamuffin@google.com>
+Cc:     Elijah Newren <newren@gmail.com>, Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrn@google.com>,
+        Jose Lopes <jabolopes@google.com>,
+        Aleksandr Mikhailov <avmikhailov@google.com>
+Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
+Message-ID: <Y/ZsFuTKyfR+AQy5@coredump.intra.peff.net>
+References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
+ <CABPp-BE6EA+vXLXJtn8CHO9pHJgLH_uh7_t7AYBRN2gAAA5C+Q@mail.gmail.com>
+ <CAJoAoZm+TkCL0Jpg_qFgKottxbtiG2QOiY0qGrz3-uQy+=waPg@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.1443.v3.git.git.1675545372271.gitgitgadget@gmail.com> <pull.1443.v4.git.git.1676701977347.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1443.v4.git.git.1676701977347.gitgitgadget@gmail.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Wed, 22 Feb 2023 11:22:02 -0800
-Message-ID: <CAFySSZA-f+Qgs2bT_Vkj79PvXqGarBLtqeyEN3vWCj44no6Eig@mail.gmail.com>
-Subject: Re: [PATCH v4] credential: new attribute password_expiry_utc
-To:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>, Cheetham <mjcheetham@outlook.com>,
-        Dennington <lessleydennington@gmail.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJoAoZm+TkCL0Jpg_qFgKottxbtiG2QOiY0qGrz3-uQy+=waPg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  static int run_credential_helper(struct credential *c,
-> @@ -342,6 +353,12 @@ void credential_fill(struct credential *c)
->
->         for (i = 0; i < c->helpers.nr; i++) {
->                 credential_do(c, c->helpers.items[i].string, "get");
-> +               if (c->password_expiry_utc < time(NULL)) {
-> +                       /* Discard expired password */
-> +                       FREE_AND_NULL(c->password);
-> +                       /* Reset expiry to maintain consistency */
-> +                       c->password_expiry_utc = TIME_MAX;
-> +               }
->                 if (c->username && c->password)
->                         return;
->                 if (c->quit)
+On Tue, Feb 21, 2023 at 02:06:55PM -0800, Emily Shaffer wrote:
 
-Thanks for clarifying this block!
+> > Does removing memory leaks also mean converting UNLEAK to free()?
+> 
+> I suspect so - as I understand it, UNLEAK is a macro that resolves to
+> "don't complain to me, compiler, I meant not to free it."
 
-Overall, this patch is additive and shouldn't cause any
-regressions for current users of credential/credential-helper
-so I'm all for adding an expiry attribute to alleviate the
-use case pains you described above.
+Correct. It is supposed to be used sparingly at the outermost level to
+say "I'm about to exit, so yes, we are leaking this, but no, it does not
+matter".
 
-Reviewed-by: Calvin Wan <calvinwan@google.com>
+So...
+
+> > Thinking of things in a library context probably pushes us in that
+> > direction (though, alternatively, it might just highlight the question
+> > of what is considered "low-level" instead).
+> 
+> I'm not sure whether use of UNLEAK has so much to do with "low-level"
+> or not. In cases when Git is being called as an ephemeral single-run
+> process, UNLEAK makes a lot of sense. In cases when Git is being
+> called in a long-lived process, UNLEAK is just a sign that says
+> "there's a leak here".  So I think the distinction is not low-level or
+> high-level, but more simply, within a library or not.
+
+I'd take "low-level" here to mean "far down in the call stack". That is,
+code which is called potentially from a lot of places, and can't know
+what is going to happen afterwards.
+
+In that case, such code calling UNLEAK() is already doing the wrong
+thing. And such code is a likely candidate for being called in a
+lib-ified long-running process, which means that ignoring the leaks is
+likely to be more noticeable. :)
+
+There are probably cases where code that is currently high-level becomes
+more low-level, and will need to be adapted. For example, if cmd_diff()
+has a static-local helper function for "diff these two blobs", and it
+knows it will run it exactly once, it is OK to UNLEAK() from there now.
+But that may be a reasonable API to expose more widely, at which point
+it needs to stop UNLEAK()-ing and really free.
+
+Just my two cents as the originator of UNLEAK(). :)
+
+-Peff
