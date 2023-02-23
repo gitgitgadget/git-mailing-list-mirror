@@ -2,89 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04886C636D7
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 08:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8634C61DA4
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 08:28:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233445AbjBWIGc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 03:06:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60848 "EHLO
+        id S233404AbjBWI2c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 03:28:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233428AbjBWIF7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 03:05:59 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FDBD4C6D7
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:37 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id j3so5872797wms.2
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:37 -0800 (PST)
+        with ESMTP id S232802AbjBWI2b (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 03:28:31 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C4D21F4B2
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:28:30 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id pt11so12634889pjb.1
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:28:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=L9qzaDFEfBqpAh2RNG3iSiFMBaiPM1J9KlsUGohgR0g=;
-        b=SelKdOkd5ubMuoJuCSS5cQspkRozeobFKHXbuZWzZg9aq9u7G3L1C9XsfHPvq7CBfZ
-         /GoeWmRjwf0j6X7XVLiyRmdllnjXx2Ydzuha81T1kvTaDdzOvTK459V5iF43rYSNL52A
-         HttHwH1G/ldFq+fjLBYqOnjBpaDjvgtJwLd8u67zDay4BHqukCPLVsT9SyWc4BkdA5ML
-         es42Ws7OOHC8WeFl9v8UpVHXDYNzTbVxBUPOP4mGhMT1N/P5Y673xu0tJoXc78zt6y/0
-         l0sDi0cGHwOiS55lB22s8kPhVpnPFzhoUZKWZb/twOznFUi5YwIqPhIkn9NSkeazYzcr
-         HG6A==
+        bh=/UBAO8ASu3lTklaXQ8Q/7MKGA5QHcdcfDE20PT3NYgg=;
+        b=Jaw8a6W206AqSDbjolSYOeSLDy7fgsDPYDeq7esthFzsTf8oiVthj3pWKpcwQ6xuop
+         ZPlDZ+nxCsxmAWyqOMEGci40Yss5oKKhBZ1fyNetp5nB1Uw4WwqiBDSlscy3ES72gM7P
+         V/ZQIivcr3STuzp8QvdMw55f6BJv5S1ZVV46E1GIM1/J5wnGyuGHR53OYnU5SUPrFxs6
+         H7KAzvlyINu8stwJBlmU/XA28lZm0+FmjBzTW4YnbFsOykVc1MM+jf1hsdoZJpPjx/Pz
+         ubQMRbdzB2WC0gWz2puitWB/NvREPHbD8rVmt0YyB6sm4DBY9JLbICTvONpkRENi90QU
+         k8Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=L9qzaDFEfBqpAh2RNG3iSiFMBaiPM1J9KlsUGohgR0g=;
-        b=PZ6dYLXsIWQ/1WWfqFTDzhH/Xzq0/Zfmx6HLl9LrPibUKLMByXh7khtpVPC6700n4S
-         LfZUScosO1l+BQy0F0ndUEHwJaMKpjY+ZEnGjkZF7e/ZSmXwcIBq2aRq+RJIHyvFS5ly
-         bFARjg4pC5FNNNeR48G4vKtMLMlpY1XkgUQ+PfAnlTIRIXv1mueE3tD7txKG2WJlhhBS
-         /NintQrNNrxim+ZI/52MTO5dCBrS/jxPTmJsG7QJ2QSTGy5mWpyIepIuJ7z6SRyx/ssE
-         JZuCKn8GXWwA6/1vUNqsI31ScrHAZYDLcFVX2bQIR6/2R2RYisO3kRMtDFb5rqrWK5Pz
-         IXrg==
-X-Gm-Message-State: AO0yUKUzu3Z4lUbctSTOLS0dWYfmJOQ4BsjIb38ik7Q/kXDPIdJA/qWe
-        0DsQqTzze+xFbRMn6K2K2EGBjzADEgs=
-X-Google-Smtp-Source: AK7set+UvICq4NQvKJrvFO6yXfSzfoypIe8qZTO/2qMTtdnzvworTaitRiwyw6uMBi5c0KDaZfzIcQ==
-X-Received: by 2002:a05:600c:755:b0:3da:fd07:1e3 with SMTP id j21-20020a05600c075500b003dafd0701e3mr2804168wmn.22.1677139535282;
-        Thu, 23 Feb 2023 00:05:35 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z20-20020a7bc7d4000000b003e6efc0f91csm8807094wmk.42.2023.02.23.00.05.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 00:05:35 -0800 (PST)
-Message-Id: <faeb191198a3f8771fb9a6492dfb2434ea8b878f.1677139522.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
-References: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Feb 2023 08:05:21 +0000
-Subject: [PATCH 16/16] diff.h: remove unnecessary include of object.h
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        bh=/UBAO8ASu3lTklaXQ8Q/7MKGA5QHcdcfDE20PT3NYgg=;
+        b=UYyXEkTzzvH78a11DB++Y6+p5PpPR8EqUZPJRX50NiTNdHoT8wW1v/IPdpB8LZ6ius
+         OBOAw0zK6SmBmq0Sl3+kAtISCx8Vwql3WmbTORtpL3cCDFvCKjl9dcHhUS1Q1syD59JB
+         /wdey9NggjbXBB3Ga4TP99kkZCBEX6yFmeEpOETLJIaPtso6GrmHDE4IM/SZWivBaQLr
+         QgX4/qOvI2aZqE4nHTjPrxRHs0DlkQykTbuIDRUgQbUuVBYpLdEEWWl+Gfz/sraiwqdM
+         ksZ2tStoKbMCs17MeMSXCh0tzSr4+G8LHQEWC/NuCwLAu4GUNyxLRg/ZHiIAexiv8r0K
+         W8hQ==
+X-Gm-Message-State: AO0yUKVys/kzDWePVee78haCDR+jGrsUfZlXs0DbfWjHbUDnLBg9H5Ik
+        7m2qnWSv042kv5+eAAdXcUthg8MO+DI=
+X-Google-Smtp-Source: AK7set/p41TJRGK1GOtXJD7krlUfbOq/3lLbdIWBB8cvDsn+BKLPwyuL1uECZHyL2t5tGIztcH0IAg==
+X-Received: by 2002:a05:6a20:3ca0:b0:be:e0c3:5012 with SMTP id b32-20020a056a203ca000b000bee0c35012mr11062553pzj.1.1677140909806;
+        Thu, 23 Feb 2023 00:28:29 -0800 (PST)
+Received: from Vivans-MBP.lan (node-1w7jr9y92i5dgt19tzyticxhd.ipv6.telus.net. [2001:56a:740f:7b00:8020:1c0:b10e:fa81])
+        by smtp.gmail.com with ESMTPSA id c17-20020aa78c11000000b0056d7cc80ea4sm6513908pfd.110.2023.02.23.00.28.28
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 23 Feb 2023 00:28:29 -0800 (PST)
+From:   Vivan Garg <gvivan6@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <nasamuffin@google.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Cc:     vdye@github.com, nasamuffin@google.com,
+        Vivan Garg <gvivan6@gmail.com>
+Subject: [PATCH v3] MyFirstContribution: add note about SMTP server config
+Date:   Thu, 23 Feb 2023 01:27:59 -0700
+Message-Id: <20230223082759.36021-1-gvivan6@gmail.com>
+X-Mailer: git-send-email 2.37.0 (Apple Git-136)
+In-Reply-To: <20230222011317.97943-1-gvivan6@gmail.com>
+References: <20230222011317.97943-1-gvivan6@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+The documentation on using git-send-email previously mentioned the need
+to configure git for your operating system and email provider, but did
+not provide specific details on the relevant configuration settings.
+This commit adds a note specifying that the relevant settings can be
+found under the 'sendemail' section of Git's configuration file, with a
+link to the relevant documentation. The aim is to provide users with a
+more complete understanding of the configuration process and help them
+avoid potential roadblocks in setting up git-send-email.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Vivan Garg <gvivan6@gmail.com>
 ---
- diff.h | 1 -
- 1 file changed, 1 deletion(-)
+ Documentation/MyFirstContribution.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+ 
+Range-diff against v2:
+1:  d295b4d913 ! 1:  8710c50b1d MyFirstContribution: add note about SMTP server config
+    @@ Metadata
+      ## Commit message ##
+         MyFirstContribution: add note about SMTP server config
+     
+    -    In the documentation on using git-send-email, it was noted that the configuration
+    -    for sending email can vary based on your operating system and email provider.
+    -    However, it was not explicitly stated that you will need to set up your SMTP
+    -    server details in git's configuration file under the 'sendemail' section. This
+    -    information is critical for users who are new to using git-send-email and may
+    -    not be familiar with the additional setup required to use their SMTP server. By
+    -    adding this note to the documentation, the aim is to provide users with a more
+    -    complete understanding of the configuration process and help them avoid
+    -    potential roadblocks in setting up git-send-email.
+    +    The documentation on using git-send-email previously mentioned the need
+    +    to configure git for your operating system and email provider, but did
+    +    not provide specific details on the relevant configuration settings.
+    +    This commit adds a note specifying that the relevant settings can be
+    +    found under the 'sendemail' section of Git's configuration file, with a
+    +    link to the relevant documentation. The aim is to provide users with a
+    +    more complete understanding of the configuration process and help them
+    +    avoid potential roadblocks in setting up git-send-email.
+     
+         Signed-off-by: Vivan Garg <gvivan6@gmail.com>
+     
+    @@ Documentation/MyFirstContribution.txt: typical `git` install. You may need to in
+      determine the right way to configure it to use your SMTP server; again, as this
+      configuration can change significantly based on your system and email setup, it
+     -is out of scope for the context of this tutorial.
+    -+is out of scope for the context of this tutorial. Additionally, note that you 
+    -+will need to set up your SMTP server details in git's configuration file. The 
+    -+relevant settings can be found under the 'sendemail' section (see 
+    ++is out of scope for the context of this tutorial. The relevant settings can be 
+    ++found under the 'sendemail' section of Git's configuration file. (see 
+     +linkgit:git-config[1]).
 
-diff --git a/diff.h b/diff.h
-index b90036f5294..f80bd297ca5 100644
---- a/diff.h
-+++ b/diff.h
-@@ -6,7 +6,6 @@
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index ccfd0cb5f3..0430434822 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -1001,7 +1001,9 @@ typical `git` install. You may need to install this additional package; there
+ are a number of resources online to help you do so. You will also need to
+ determine the right way to configure it to use your SMTP server; again, as this
+ configuration can change significantly based on your system and email setup, it
+-is out of scope for the context of this tutorial.
++is out of scope for the context of this tutorial. The relevant settings can be 
++found under the 'sendemail' section of Git's configuration file. (see 
++linkgit:git-config[1]).
  
- #include "tree-walk.h"
- #include "pathspec.h"
--#include "object.h"
- #include "oidset.h"
- #include "strbuf.h"
- 
+ [[format-patch]]
+ === Preparing Initial Patchset
 -- 
-gitgitgadget
+2.37.0 (Apple Git-136)
+
