@@ -2,98 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1284C64ED8
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 20:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1CDFC64ED8
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 20:55:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229538AbjBWUfZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 15:35:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53618 "EHLO
+        id S229572AbjBWUzH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 15:55:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbjBWUfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 15:35:22 -0500
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CD0952DD3
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 12:35:17 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id by8so7165305ljb.7
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 12:35:17 -0800 (PST)
+        with ESMTP id S229491AbjBWUzG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 15:55:06 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF53030192
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 12:55:04 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id t25-20020a1c7719000000b003eb052cc5ccso42672wmi.4
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 12:55:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=86MkxP9XJqqU8msIaqlm8ez71plnudzOnlsH0W/x2aA=;
-        b=Z4YXOVEInStf/llbx/jjb8dh16SDs+MaJPDcnDkfVUAhCjEwgXb+D8GDp9GX3UHTDz
-         54LNVXBnjRhTABQdfRjYtnupYaNjXB1wqlOfupYTeY9jfj77PgxzdQbjYY6Ro1+K8SFF
-         BDTXPVAm04fkkILlXkt/bJVfAo8u6hnXXMX4W2aefvnR90XN66vkUbEWB0eoJql++YKZ
-         Q0PkiesnxW0NexZWG23L/OxuRriTy1YXJ+XNZNlnYDN88As4h5OkA0aPZ/pX0FCxLGam
-         cpRjEHzIEiQ8pLpSjQHSTjcNhWQXwntLRNZcJTUVGgh1KeqB0cTeNdwEsHYu67zUObKV
-         6M8w==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hQF1VWuzInHRFjjQHHJ9QmzTSXN2bNK5UEQBaXeSCTw=;
+        b=axNKv3ah3lNFBGzWq/yg6WtTuXiVfZOBANFR9zdmqNEQQbmu+Mb90IdEQwCuY2Wlk3
+         QW6ZGIme9Mm6fXlUK/rUXo9mYjyEYyfD82v3z+d+r8unU1fdCx+Zdv4oDqAQZoJjcoRy
+         obVSOkXBoc7GhwclJnJ4AzPAyu+n7GNweXewDEZ8Jvm7dUgWtrPFZgUWa8V56jIZ2i3e
+         n5D15hjTMwl29b8hRF6tS98O3GLSmLwAZMkX8zx30NAi7/FtiX7Cx6Xz4QiZLTW4YTD0
+         srBYWlcBoBi+yo8q84LREmuUQ8MN9LxfH6ylRbeMuHwdxD7A2cwh8DAX9U6WE5SvtwGF
+         6J7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=86MkxP9XJqqU8msIaqlm8ez71plnudzOnlsH0W/x2aA=;
-        b=S9jCVPEuKkVsFxkcOI2f1/EgclJ3LA/7dbMr7OfbJRM9EgqP4AB761qtH8S0uUZT9X
-         UXIgjFlR913jdqwRDTFBTo62Tb0eOQeoo9MFQhOpnSKcCkUyl2P08+CVWU8SUnIfgVAP
-         rPDwP8O5zm6eXef55ofoXaCljtdy18A1rRMFPIzOyiSoPh+P9N6JdE0CKBBliAJkH8nV
-         1SgJJ4mGjqy2JMkhS9xumlRNJCP0w4lme3WyF353qSZJG3O3b7LPARIPdtxvn67ImPY0
-         nqRFwZxNLGql2bT7na5aNq3bKvbXyixddjipZMMMYV8zFzx3gsE02nClnog2rReNzd1A
-         E4Fw==
-X-Gm-Message-State: AO0yUKXb2ODF7jgmiM0QB1Dk8ZTe6rJVamQVxQ8yUV9XH87Me+WPby97
-        FxL39kCpSgJj1bQQX5QuST25D7hEoC7Eo5FK6avXTOLAWHw=
-X-Google-Smtp-Source: AK7set+FpoUBxK7d+iRjgnCLpe7/VoO7YCsmVa8G202a3QNBPs8MxNlmQ2FoyC9DsrnGBEWuzpbKMZxIzm8aGcIWKn8=
-X-Received: by 2002:a05:651c:3dd:b0:293:47b3:474a with SMTP id
- f29-20020a05651c03dd00b0029347b3474amr4194465ljp.6.1677184515305; Thu, 23 Feb
- 2023 12:35:15 -0800 (PST)
+        bh=hQF1VWuzInHRFjjQHHJ9QmzTSXN2bNK5UEQBaXeSCTw=;
+        b=RLC84ZNNBojx1p6+j83Nim8pTcqZV72FPYjZ6TtGnEmUpqhp2a3jVq23Vtf270znT5
+         wrRBOyfgDbOx5Z95d2Ozs9HTDm3wZflKRP3v0eLDal5oqo2tczddWS2sCZ/phGEoKzLg
+         0ayooOgaP38vWLcy+4Xt35EtkwvALi6NyPDZ+TNZaJGRaV5K42LstOe2cl/FXdl+iZtb
+         lfBhT1HLkDPrsO3wBjxeWyfU4GWI98gpc6f3oExS+KefcyBGhaShdhluGyl/GQJVdjje
+         jpXwjYwjM8Sp9YZycLcnFdm6VG4HB6XFqwkh2ONl4eDcOXUgBKvsOyGDEymw6s6K6IeN
+         gTzQ==
+X-Gm-Message-State: AO0yUKXDCd4JdFLWH74boQ6wwMfhsj0v+hjdQAxdtf3WVxIV//4WvCUN
+        d/Wb3XZuQsEZbr16G1kXjHcjnvOF8fA=
+X-Google-Smtp-Source: AK7set+/hQoVK3admomTEDtdDDAPiUTIre6ggEOT5IaHHAcDLI/PfPH7ViGsgUA6TREyPlDhOg+I+g==
+X-Received: by 2002:a05:600c:5126:b0:3e9:f4c2:b604 with SMTP id o38-20020a05600c512600b003e9f4c2b604mr3803484wms.24.1677185702922;
+        Thu, 23 Feb 2023 12:55:02 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c63-20020a1c3542000000b003dc1a525f22sm436847wma.25.2023.02.23.12.55.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Feb 2023 12:55:02 -0800 (PST)
+Message-Id: <pull.1486.git.1677185701.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 23 Feb 2023 20:54:59 +0000
+Subject: [PATCH 0/2] sequencer parsing fixes
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
- <16ff5069-0408-21cd-995c-8b47afb9810d@github.com> <73d694c5-f2d9-c05b-c880-8d5650f36797@github.com>
-In-Reply-To: <73d694c5-f2d9-c05b-c880-8d5650f36797@github.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 23 Feb 2023 12:35:01 -0800
-Message-ID: <CABPp-BGu8DKBcKCxLnBMBbPvo+DdFyad_iqTt1sbyRSm5tKH5Q@mail.gmail.com>
-Subject: Re: [PATCH 00/11] Clarify API for dir.[ch] and unpack-trees.[ch] --
- mark relevant fields as internal
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 23, 2023 at 7:26 AM Derrick Stolee <derrickstolee@github.com> wrote:
->
-> On 2/23/2023 10:18 AM, Derrick Stolee wrote:
-> > On 2/23/2023 4:14 AM, Elijah Newren via GitGitGadget wrote:
-> >> This patch is primarily about moving internal-only fields within these two
-> >> structs into an embedded internal struct. Patch breakdown:
-> >>
-> >>  * Patches 1-3: Restructuring dir_struct
-> >>    * Patch 1: Splitting off internal-use-only fields
-> >>    * Patch 2: Add important usage note to avoid accidentally using
-> >>      deprecated API
-> >>    * Patch 3: Mark output-only fields as such
-> >>  * Patches 4-11: Restructuring unpack_trees_options
-> >>    * Patches 4-6: Preparatory cleanup
-> >>    * Patches 7-10: Splitting off internal-use-only fields
-> >>    * Patch 11: Mark output-only field as such
-> ...
-> > The best news is that your existing series makes it easier to flip
-> > to the internal pointer method in the future, since we can shift
-> > the 'd->internal.member" uses into "d->internal->member" in a
-> > mechanical way. Thus, the change you are proposing does not lock us
-> > into this approach if we change our minds later.
->
-> And now that I've read the series in its entirety, I think it is
-> well organized and does not need any updates. It creates a better
-> situation than what we already have, and any changes to split the
-> internal structs to be anonymous to callers can be done as a
-> follow-up.
+Fix a couple of small bugs in the parsing of todo lists
 
-Wow, I was a bit worried pushing a couple dozen patches last night
-that it'd be weeks before anyone took a look, and perhaps even that
-I'd again get comments that I was pushing too many to the list.  You
-read and reviewed all of them across both series, including some
-comments showing you read pretty carefully, all before I had even
-woken up.  Very cool; thanks.
+Phillip Wood (2):
+  rebase -i: match whole word in is_command()
+  rebase -i: fix parsing of "fixup -C<commit>"
+
+ sequencer.c                     | 18 ++++++++----------
+ t/lib-rebase.sh                 | 10 +++++++---
+ t/t3404-rebase-interactive.sh   | 12 +++++++-----
+ t/t3437-rebase-fixup-options.sh | 26 ++++++++++++++++++++++++++
+ t/test-lib-functions.sh         |  8 ++++++++
+ 5 files changed, 56 insertions(+), 18 deletions(-)
+
+
+base-commit: 06dd2baa8da4a73421b959ec026a43711b9d77f9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1486%2Fphillipwood%2Fsequencer-parsing-fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1486/phillipwood/sequencer-parsing-fixes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1486
+-- 
+gitgitgadget
