@@ -2,100 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C62E8C636D6
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 15:26:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20A3CC61DA4
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 17:15:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234373AbjBWP0T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 10:26:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36810 "EHLO
+        id S229690AbjBWRPO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 12:15:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjBWP0S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 10:26:18 -0500
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 870B257D11
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 07:26:17 -0800 (PST)
-Received: by mail-qv1-xf35.google.com with SMTP id ff4so11374472qvb.2
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 07:26:17 -0800 (PST)
+        with ESMTP id S229576AbjBWRPM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 12:15:12 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FBAF4FABF
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 09:14:41 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id z20-20020a17090a8b9400b002372d7f823eso9824282pjn.4
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 09:14:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ooSjVj4Ymure1INHdNTVwNnc+sXp/L2Xu78nANBvnRc=;
-        b=jToyR1zPMhlRS0ZIavbkWt7+iQsx3z5C/ddpaiedmvhnOmKZYxSnWqVJV2ODQMoHk6
-         PZvsRnoZsZ9XpcBzMBZkCooo2foSYA1W9dkfPQkFPLdyenUm4v7ZPOvxSvv7HGSLbYSt
-         DDvT9bk/mc9+Lk43CUNL6KO7YLtJ/2m98yea9BmNH7gq4T4CoQHhNjCBBLbWtm19S3ab
-         XWydctIy/f93xf267sgEJSLzPmC/Sj7mH3N+CnCpCmRJs43Xl0496KbXf2lRutyswY7N
-         agre/+TqEM5aYU4ZWSjNbefZwuf+AwCVa/vwljXCTPbZItQ6w5Dq+RAnxL9IWYmM1XM+
-         AlPA==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+xaiuMcgwQkdGUuPQk0mdOsYiy3jHXr8IK+jxvjuosU=;
+        b=UAyJFAaAITI6xGiqcMmSzOqupQcE9gbxWSqvUfSlwdqJMpo+ACBXRx7gir9tl/uEmn
+         DsMw2NBIyJeamk3+N5LuIWL9vMFWY/rwmpJZaqiXiDtZga7bi7M7JbSoFyuIfZxBrqGY
+         WAUv3r6YrnRHXAPYyotHKkTCgXwUrB8q6dGMxcpLrNlpObTqOjMpv7BVNJxW0bIYPm4f
+         HSHqcaLHdUh/V0KVx0pFYRbMryCgKLcCKvJ70y8Ey8EazYMrolFDJiqnUjyGS8GgJcXa
+         P71JvwmlGjQdofgkduE544mxS8ad8QAQKZIojh5Lg8mPgVwE1He7Le1CLCFKESb7Ovda
+         E9Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ooSjVj4Ymure1INHdNTVwNnc+sXp/L2Xu78nANBvnRc=;
-        b=idBDZ5wzm+ELCx9/seTr94arnhKE3OaoyoGviot4zUzWm1gNfkB/eYY8d2p/J64rpX
-         4oKDcVzM4cc9/cx/N8Tp4xFFruKpmdsyfPMumbTNLRo9S7ViFZ0O/jeWpZw4V+jFVDcm
-         L7n0ar1CUiuaf0BOcWMHYTbDxndoGwnd9w+R2ayilLU00wrF6ZekjJLCrXPJQiExMD7E
-         qi8RAe4i1PCFBB4P67cDrss3a6p1vn3jIge2osp7594W/jD75N/Tf7o78Kd5pnETBJgz
-         tbpaSUI6CQWrFXQx6qVfIlYuTsAxMaVfHLN8iaV0krU0c9z1gbdDuruCX5XVwwnE0D+n
-         /evQ==
-X-Gm-Message-State: AO0yUKUEx/2oS95U7/if+KvW038hxaKfCtycjEy5mGLyeP2uZnsR31Mh
-        QTkRONni2gpDidn1HSZB5IRA
-X-Google-Smtp-Source: AK7set9yeIUPvUP7kHPSMhuHDND5SyNyGyiaJYruQTNAY2uWD+iwmxx2o7nxh+jOeTgt+/rdbCLaFg==
-X-Received: by 2002:a05:6214:ccb:b0:570:bf43:475 with SMTP id 11-20020a0562140ccb00b00570bf430475mr19996519qvx.22.1677165976607;
-        Thu, 23 Feb 2023 07:26:16 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:e099:82d3:1307:6825? ([2600:1700:e72:80a0:e099:82d3:1307:6825])
-        by smtp.gmail.com with ESMTPSA id e8-20020a05620a014800b0073b399700adsm6391290qkn.3.2023.02.23.07.26.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 07:26:16 -0800 (PST)
-Message-ID: <73d694c5-f2d9-c05b-c880-8d5650f36797@github.com>
-Date:   Thu, 23 Feb 2023 10:26:15 -0500
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+xaiuMcgwQkdGUuPQk0mdOsYiy3jHXr8IK+jxvjuosU=;
+        b=3ruSmfdbaFaPRLp439+QvOL8gIfo9LRW6doj69Xw9T6vT52tMRiMKRa8ptv7wjYsiD
+         m4isg7RutyKueDNUgPEBcAQmtO5tBLLXnP89YL0A6BOAqJRc0xh1zheLfhD4yFKynkbm
+         dcsyiEqeegAp+RGKjvtJVajYqNF9tKvAIOLd3TinLXAIiUGZj9tw9zrGtCXHrcl0Y8e4
+         PqW49krnq0dAgY9QLnYJL5u1AYZRDKA0CIaPMSlT7+rAkeIek7efWaXQFPBVxR/CqYpA
+         kW3b4Q3mnssCMeV1HcwNRxGaBQOI6zYvmjdk7MzBwpsxxvojw33eeDCMz3ciTG/ZByKM
+         m8rg==
+X-Gm-Message-State: AO0yUKWYKb4t4UfW6/PJjBx5kCmdC3iTI2U2Mii54s81ExE2L1IA2qw4
+        +++lm1pNK3MIT3xtgLHyF20G2zOEJic=
+X-Google-Smtp-Source: AK7set+loeIrW02Q6OpUAYCdhh/rHHGmZSugwEAcDgb0yRjZsy6fy/KAIyYfYg8qc08E1yhMMI1BMw==
+X-Received: by 2002:a17:903:2345:b0:19b:5f88:797b with SMTP id c5-20020a170903234500b0019b5f88797bmr15176567plh.28.1677172479269;
+        Thu, 23 Feb 2023 09:14:39 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id b10-20020a170902bd4a00b0019c2cf12d15sm9263119plx.116.2023.02.23.09.14.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Feb 2023 09:14:38 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ronan Pigott <ronan@rjp.ie>
+Cc:     git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH] update-ref: add forward command to safely fast-forward
+ refs
+References: <20230223011530.47477-1-ronan@rjp.ie>
+Date:   Thu, 23 Feb 2023 09:14:38 -0800
+In-Reply-To: <20230223011530.47477-1-ronan@rjp.ie> (Ronan Pigott's message of
+        "Wed, 22 Feb 2023 18:15:30 -0700")
+Message-ID: <xmqqpma09udd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 00/11] Clarify API for dir.[ch] and unpack-trees.[ch] --
- mark relevant fields as internal
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-References: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
- <16ff5069-0408-21cd-995c-8b47afb9810d@github.com>
-In-Reply-To: <16ff5069-0408-21cd-995c-8b47afb9810d@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/23/2023 10:18 AM, Derrick Stolee wrote:
-> On 2/23/2023 4:14 AM, Elijah Newren via GitGitGadget wrote:
->> This patch is primarily about moving internal-only fields within these two
->> structs into an embedded internal struct. Patch breakdown:
->>
->>  * Patches 1-3: Restructuring dir_struct
->>    * Patch 1: Splitting off internal-use-only fields
->>    * Patch 2: Add important usage note to avoid accidentally using
->>      deprecated API
->>    * Patch 3: Mark output-only fields as such
->>  * Patches 4-11: Restructuring unpack_trees_options
->>    * Patches 4-6: Preparatory cleanup
->>    * Patches 7-10: Splitting off internal-use-only fields
->>    * Patch 11: Mark output-only field as such
-...
-> The best news is that your existing series makes it easier to flip
-> to the internal pointer method in the future, since we can shift
-> the 'd->internal.member" uses into "d->internal->member" in a
-> mechanical way. Thus, the change you are proposing does not lock us
-> into this approach if we change our minds later.
+Ronan Pigott <ronan@rjp.ie> writes:
 
-And now that I've read the series in its entirety, I think it is
-well organized and does not need any updates. It creates a better
-situation than what we already have, and any changes to split the
-internal structs to be anonymous to callers can be done as a
-follow-up.
+> forward is an update-ref command that behaves similarly to update, but
+> takes an additional argument, <ancestor>, and verifies that the new
+> value is a descendent of ancestor before updating. This is useful for
+> fast-forwarding prefetched refs.
 
-Thanks,
--Stolee
+Why is this necessary?
+
+ * Do you expect that you may not know the ancestry relationship
+   between the <newvalue> and <ancestor> values when you need to
+   compute them, in order to formulate the 'forward' command?
+
+ * Is there a case where the relationship between <newvalue> and
+   <ancestor> that was fast-forward when you formulated the
+   'forward' command changes by the time the 'forward' command gets
+   executed?
+
+I do not see the reason why this new command is needed, unless one
+or both of the above is what you are trying to address.
+
+For example, existing "delete SP <ref> SP <oldvalue>" is to protect
+the ref you want to delete, that used to have the oldvalue back when
+you created the 'delete' command, from getting deleted when somebody
+else changed it from the sidelines.  We can do
+
+	oldvalue=$(git rev-parse refs/to/be/deleted^{object})
+	echo delete refs/to/be/deleted $oldvalue | ...
+
+and let the command notice if somebody else changed
+refs/to/be/deleted in between.  It is similar to the second one
+between the two I cited above, to make sure that your command does
+not overwrite what somebody else did.
+
+
+
+It may make some sense if the new <ancestor> thing is to replace the
+<oldvalue> thing, though.  That is, if there were a three-commit chain
+
+	A---B---C
+
+where the ref you are trying to update currently points at A and you
+want to update it to C.  You would observe that the current value is
+A, and formulate the command line:
+
+	update ref/to/be/updated C A
+
+with the current system, and updating the ref is allowed only when
+nobody touched the ref in the meantime.  It is _conceivable_ to say
+that we are OK as long as the ref points at a decendant of A
+(instead of pointing exactly at A), and is an ancestor of C (the
+value we are updating to), with
+
+	fast-forward ref/to/be/fast-forwarded C A
+
+Then somebody else _could_ update the ref to B from the sideline,
+but we notice that it is a descendant of A and an ancestor of C, and
+we are still allowed to update it to C.
+
+Even in that case, I am not sure how useful it would be, but at
+least that use case I can see why it may make sense.
+
+If you can write <newvalue> and <ancestor> on the command line, you
+certainly should be able to compute "git merge-base".  And because
+the commits are immutable, it won't change in the middle.
+
+So, I am not very impressed.  Unless I am missing something, this
+does not seem to be adding anything we cannot already do.
+
+I wonder if
+
+    git fetch . "+refs/prefetch/remotes/origin/*:refs/remotes/origin/*"
+
+(with or without the '+' prefix, depending) what you are really
+going after, though.
