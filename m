@@ -2,78 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86316C61DA4
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 11:08:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51513C61DA4
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 13:52:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234007AbjBWLIp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 06:08:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46228 "EHLO
+        id S234496AbjBWNwz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 08:52:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233941AbjBWLIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 06:08:44 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F16E3755A
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 03:08:42 -0800 (PST)
-Received: (qmail 25113 invoked by uid 109); 23 Feb 2023 11:08:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 23 Feb 2023 11:08:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20291 invoked by uid 111); 23 Feb 2023 11:08:41 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 Feb 2023 06:08:41 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 23 Feb 2023 06:08:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH 16/16] t5559: make SSL/TLS the default
-Message-ID: <Y/dJOa2k6HEIq6oD@coredump.intra.peff.net>
-References: <Y/dEYYWKy/o96vBG@coredump.intra.peff.net>
+        with ESMTP id S234474AbjBWNwx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 08:52:53 -0500
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22E4C270F
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 05:52:49 -0800 (PST)
+Received: by mail-qt1-x836.google.com with SMTP id b6so4568792qtb.1
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 05:52:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9+pDYIG+tpxzjL3hn571/RmQvLs7yGeN0CT/8V9UBNs=;
+        b=cnqBl417Lj1pLukix+tIrQ0ItLTU6jPLNo5n4MVso+TKjp29eVdtu/FTWr1z0jR9oJ
+         AeWEWTqvJBeVvUVTp4XdwfrjCmtlGZxvem8JIwREY26Fh0tMZbXkBNRrECD9o/JFJymO
+         J3NPWLBHLjwguiobl9BLlbrQUJpqQUfMJeeaai7gy4cRLirNZMkb9pOHSsQwHYUz2ArM
+         Il+0YVnt15ydeP7lj7ClBo+aQfoCLowFjFE9MzNkhyWZea6/BljZbIG9fWIDGH1Fvciu
+         X+h0QWfCvaTmSer8R5OGz++D75OTN4p8Yx9hWLr92uDhLRVGmxmhBjFLDTuLen/k7byh
+         02cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9+pDYIG+tpxzjL3hn571/RmQvLs7yGeN0CT/8V9UBNs=;
+        b=NAbfFhEZvqM7Jj1NwczZ0Ja54zx7JisbMLox+KgkzaEp25WzrXrZxSEtWbTPQ+CSXm
+         DbJGVP9/k87DucNQ1sbhSwBo0usVLZHsTskWO+0baaNYJ5DrASH1sV4iGeKLq4NWhDaO
+         FysSFaSATFEYUcf7nW1mJARI1a/uede9xPwlX+QkKSoJNArZ3JFwJipnn96n66va6r/m
+         FZHf8CSBVV++Kf8tkQQmczGkWoGS0zcjq2MDLR17grV9numRJF744XKIRhsR4frtgfGG
+         nG2MM25/gLIdy+IlUk3NuG10D5q03zujDDWdLE2LZjjznRQuAL516Tq22W+lI+/t8G/z
+         6xjg==
+X-Gm-Message-State: AO0yUKXzXZjThUTNzsR4EzONxGopEa7+7mi6uM1bR5KX6R4e7bBKt+l8
+        kID1MOO3tzJ0MU5Gaf4m1t1y
+X-Google-Smtp-Source: AK7set/zjc188OIl2L0njf3+ySTc4JO1QFeeBQJXf/KowLVLx6CyjyMxQO1lBoW6wh2VxNzl8jP8xg==
+X-Received: by 2002:ac8:7d03:0:b0:3b8:6cb3:e54a with SMTP id g3-20020ac87d03000000b003b86cb3e54amr10518708qtb.5.1677160368183;
+        Thu, 23 Feb 2023 05:52:48 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:e099:82d3:1307:6825? ([2600:1700:e72:80a0:e099:82d3:1307:6825])
+        by smtp.gmail.com with ESMTPSA id 1-20020a370b01000000b006fcb77f3bd6sm4169799qkl.98.2023.02.23.05.52.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Feb 2023 05:52:47 -0800 (PST)
+Message-ID: <14c2e90d-e68b-d0ad-f8d4-1842663b33c9@github.com>
+Date:   Thu, 23 Feb 2023 08:52:46 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y/dEYYWKy/o96vBG@coredump.intra.peff.net>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 02/16] treewide: remove unnecessary git-compat-util.h
+ includes in headers
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Emily Shaffer <nasamuffin@google.com>,
+        Elijah Newren <newren@gmail.com>
+References: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
+ <adafa655432dd13d1c727522377ac9a4b515b76a.1677139521.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <adafa655432dd13d1c727522377ac9a4b515b76a.1677139521.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The point of t5559 is run the regular t5551 tests with HTTP/2. But it
-does so with the "h2c" protocol, which uses cleartext upgrades from
-HTTP/1.1 to HTTP/2 (rather than learning about HTTP/2 support during the
-TLS negotiation).
+On 2/23/2023 3:05 AM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> Since git-compat-util.h needs to be included first in C files, having it
+> appear in header files is unnecessary.  More importantly, having it
+> included in header files seems to lead to folks leaving it out of C
+> files, which makes it harder to verify that the rule is being followed.
+> Remove it from header files, other than the ones that have been approved
+> as alternate first includes.
+...
+>  compat/fsmonitor/fsm-ipc-win32.c       | 1 +
+>  compat/fsmonitor/fsm-settings-darwin.c | 1 +
 
-This has a few problems:
+It looks like you have a couple .c files here that belong in the
+previous patch.
 
- - it's not very indicative of the real world. In practice, most servers
-   that support HTTP/2 will also support TLS.
-
- - support for upgrading does not seem as robust. In particular, we've
-   run into bugs in some versions of Apache's mod_http2 that trigger
-   only with the upgrade mode. See:
-
-     https://lore.kernel.org/git/Y8ztIqYgVCPILJlO@coredump.intra.peff.net/
-
-So the upside is that this change makes our HTTP/2 tests more robust and
-more realistic. The downside is that if we can't set up SSL for any
-reason, we'll skip the tests (even though you _might_ have been able to
-run the HTTP/2 tests the old way). We could probably have a conditional
-fallback, but it would be complicated for little gain, and it's not even
-clear it would help (i.e., would any test environment even have HTTP/2
-but not SSL support?).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t5559-http-fetch-smart-http2.sh | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/t5559-http-fetch-smart-http2.sh b/t/t5559-http-fetch-smart-http2.sh
-index 9eece71c2c..54aa9d3bff 100755
---- a/t/t5559-http-fetch-smart-http2.sh
-+++ b/t/t5559-http-fetch-smart-http2.sh
-@@ -1,4 +1,5 @@
- #!/bin/sh
- 
- HTTP_PROTO=HTTP/2
-+LIB_HTTPD_SSL=1
- . ./t5551-http-fetch-smart.sh
--- 
-2.39.2.981.g6157336f25
+Thanks,
+-Stolee
