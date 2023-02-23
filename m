@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A42F7C64ED8
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 09:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 280F8C636D7
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 09:15:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233875AbjBWJPL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 04:15:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43272 "EHLO
+        id S233858AbjBWJPN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 04:15:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233858AbjBWJPG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 04:15:06 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A9EF42BEA
+        with ESMTP id S229502AbjBWJPH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 04:15:07 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE22442BF4
         for <git@vger.kernel.org>; Thu, 23 Feb 2023 01:15:05 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id bt28so3405897wrb.8
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 01:15:04 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id p8so10196126wrt.12
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 01:15:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NJhOI5pH2/X7Uqaz8J/86RgsSNzaLLs6qLmjlPTEmeM=;
-        b=X7Ir4n20kTHvkI5fNizfmnd4FXlleAmoisqFkD/Ho6924KfTkZjQKIUJzXHqWi6B2/
-         XfUtuqZj12AVR2n4x/HUruYGXDA/bQHDTYP1YmXaAdRVJAWvx+feFS73wCoICeyrQj6R
-         nPc2CbApRkoNwgj8MrcdEip5C8jicelYwa8bkOAZ9aA+WxJcz5pe2g86oSgw0+gbTMfc
-         QcO2fn2ACcCBgorhvEhM0f4a+JsjA73b7OO8fHHPY5G8FKtxqUfhG/FBuekTsyblQqXP
-         L1uq1fCULVRMCp0RPdyDJ+T+J+3Uv7sLzEoI2DcKCPXVnAkkIjSJA+itWQaj8zrXfpAe
-         mwFg==
+        bh=54dRuSmDoDZRSvOtTbEmZzMk9W9OyB/i/B/eNUPRFMY=;
+        b=dkZpLd1YLsKv1ccTzr3LUF8i7AjQwIwO3/CnsAhJiIE1PzQrZxLZpHNoFUBWN2rmAF
+         0/UqJG/oWCd4OLMl+JL5NwiHbh7s62Hnj7FQZZsPVqTFHAwNUL2AsgZyf+JhYiXl1w+T
+         ci/I3ZFkwvd0Fv9jZDujRDu1pikMFZUyz4jMVlLbV+Ep107toR7ONUiTQmqHZG+Znqgt
+         T7Hj41wQiYfAQ31h6LxhudejUWy+1NM1Tsf8KUOihxhNP7HbMk7fmZlrzOWDhtLgasZ/
+         cmZ+J7Zv7HrIIqpEVsRJobcrNEDdrGiq4bKVeKpBM1aREvMYtmllpk9mQi/+IrebqJSI
+         4Ltg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NJhOI5pH2/X7Uqaz8J/86RgsSNzaLLs6qLmjlPTEmeM=;
-        b=e/eZ89eEEGmwYvyV/hi4TzMesftxflyVdc5xUZbKjew3BFxX+5mOhmAMphjnxZjPwX
-         bC/HOqeJ0KduyaK5/uwll3R1HKKwVLMQzEHsojw4wvdE0qeobc3mrkRg/OUnQExo0WUG
-         Glxt45een1BmbvvqpUrU7Naryd5tIoJUV/8QIH3qXh7lGhXOGFgl1dtBwDUau3tkEt+D
-         hR08r43c/YkQgCsl8d6AhHbDw6QyKCIgwU3t6fwWXNHIizlWpw/iU+Sfrcr0jb17xU2Z
-         gq1tzMpO/CciWV6B5Jm5VQBMQFhtZgwp/P8+8MX+OB/WrTq+qaQxbqpJ9s+g+KVv0HmM
-         837Q==
-X-Gm-Message-State: AO0yUKXoJOq4yHngYWEQUo2VPM/5TS3sI09Up/g90KR9wnFBiAwrrz1I
-        PIC/ZsGwbxvC1jjCE4TnlrcMWGPcG4A=
-X-Google-Smtp-Source: AK7set/mVBeEoQh+CJ0NsxbG2/H0aIZDiYBodG6J+V/rAPTQMiGTq4Z8zGut5B2CCPZIyFjAZ3q5uw==
-X-Received: by 2002:a5d:6808:0:b0:2c5:53e1:7417 with SMTP id w8-20020a5d6808000000b002c553e17417mr10116338wru.23.1677143703476;
-        Thu, 23 Feb 2023 01:15:03 -0800 (PST)
+        bh=54dRuSmDoDZRSvOtTbEmZzMk9W9OyB/i/B/eNUPRFMY=;
+        b=03Il4L+hB3cfCJm/dDB17i8Ra3HuanswANHnwJYEr8IcyvGRlc9eZuNu617e2qE3x+
+         6Ef44k7XFqclv5dU7Htf96aDLEIHAutVUw3ULgvnWWnM9Nsm9N2Ip7Dsu/Gko7ZIrwqr
+         JQvNRYQEVSTWBEsBY1iI/+e16RHrBVXyzvIK8FpoAYAx9pdJgmPqd7ylNr2qErYZl+zN
+         kyshHOs/PpFPU3yfwDyo060C2VX8hhENPDgsXCSFpxDW0/DMjpMWh5F6g1nAWu8y1j/i
+         tavfbnCOdtynNS2sg4INKo6Jlo8q31AdtuGEUIgT+AHDXn2jeudC8vBfgH+p+TA4mWeh
+         YtMg==
+X-Gm-Message-State: AO0yUKVXgB+5OmQ9ZugoWAxKAycyAr2Bv5pW0+wAxKyz0hEqVXon9qJJ
+        20JDC4Kn95cQg9Z3uUKI8onF5UI88uU=
+X-Google-Smtp-Source: AK7set/Roqe5k9ERcLKDuFZHQrDJ082YxHAIrJcXGeiQf/e1J8Hsxze/FmDJr1/Rmixs/PE854MZjg==
+X-Received: by 2002:a5d:68d2:0:b0:2c7:156c:beb3 with SMTP id p18-20020a5d68d2000000b002c7156cbeb3mr487963wrw.69.1677143704134;
+        Thu, 23 Feb 2023 01:15:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 3-20020a05600c024300b003daf7721bb3sm10550816wmj.12.2023.02.23.01.15.02
+        by smtp.gmail.com with ESMTPSA id r13-20020adfdc8d000000b002c557f82e27sm7836274wrj.99.2023.02.23.01.15.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 23 Feb 2023 01:15:03 -0800 (PST)
-Message-Id: <b8aa14350d3411f63d6f02c2e2a857fd342cd8ff.1677143700.git.gitgitgadget@gmail.com>
+Message-Id: <f5a58123034a708b49aac7076197ad2ccdd3cba1.1677143700.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
 References: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Feb 2023 09:14:52 +0000
-Subject: [PATCH 03/11] dir: mark output only fields of dir_struct as such
+Date:   Thu, 23 Feb 2023 09:14:53 +0000
+Subject: [PATCH 04/11] unpack-trees: clean up some flow control
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,53 +67,70 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-While at it, also group these fields together for convenience.
+The update_sparsity() function was introduced in commit 7af7a25853
+("unpack-trees: add a new update_sparsity() function", 2020-03-27).
+Prior to that, unpack_trees() was used, but that had a few bugs because
+the needs of the caller were different, and different enough that
+unpack_trees() could not easily be modified to handle both usecases.
+
+The implementation detail that update_sparsity() was written by copying
+unpack_trees() and then streamlining it, and then modifying it in the
+needed ways still shows through in that there are leftover vestiges in
+both functions that are no longer needed.  Clean them up.  In
+particular:
+
+  * update_sparsity() allows a pattern list to be passed in, but
+    unpack_trees() never should use a different pattern list.  Add a
+    check and a BUG() if this gets violated.
+  * update_sparsity() has a check early on that will BUG() if
+    o->skip_sparse_checkout is set; as such, there's no need to check
+    for that condition again later in the code.  We can simply remove
+    the check and its corresponding goto label.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.h | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ unpack-trees.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/dir.h b/dir.h
-index 2196e12630c..e8106e1ecac 100644
---- a/dir.h
-+++ b/dir.h
-@@ -212,12 +212,6 @@ struct untracked_cache {
-  */
- struct dir_struct {
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 3d05e45a279..0887d157df4 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1873,6 +1873,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
+ 	if (o->dir)
+ 		BUG("o->dir is for internal use only");
++	if (o->pl)
++		BUG("o->pl is for internal use only");
  
--	/* The number of members in `entries[]` array. */
--	int nr;
--
--	/* The number of members in `ignored[]` array. */
--	int ignored_nr;
--
- 	/* bit-field of options */
- 	enum {
+ 	trace_performance_enter();
+ 	trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
+@@ -1899,7 +1901,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
  
-@@ -282,14 +276,20 @@ struct dir_struct {
- 		DIR_SKIP_NESTED_GIT = 1<<9
- 	} flags;
+ 	if (!core_apply_sparse_checkout || !o->update)
+ 		o->skip_sparse_checkout = 1;
+-	if (!o->skip_sparse_checkout && !o->pl) {
++	if (!o->skip_sparse_checkout) {
+ 		memset(&pl, 0, sizeof(pl));
+ 		free_pattern_list = 1;
+ 		populate_from_existing_patterns(o, &pl);
+@@ -2113,8 +2115,6 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
+ 		memset(&pl, 0, sizeof(pl));
+ 		free_pattern_list = 1;
+ 		populate_from_existing_patterns(o, &pl);
+-		if (o->skip_sparse_checkout)
+-			goto skip_sparse_checkout;
+ 	}
  
-+	/* The number of members in `entries[]` array. */
-+	int nr; /* output only */
-+
-+	/* The number of members in `ignored[]` array. */
-+	int ignored_nr; /* output only */
-+
- 	/* An array of `struct dir_entry`, each element of which describes a path. */
--	struct dir_entry **entries;
-+	struct dir_entry **entries; /* output only */
+ 	/* Expand sparse directories as needed */
+@@ -2142,7 +2142,6 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
+ 			ret = UPDATE_SPARSITY_WARNINGS;
+ 	}
  
- 	/**
- 	 * used for ignored paths with the `DIR_SHOW_IGNORED_TOO` and
- 	 * `DIR_COLLECT_IGNORED` flags.
- 	 */
--	struct dir_entry **ignored;
-+	struct dir_entry **ignored; /* output only */
+-skip_sparse_checkout:
+ 	if (check_updates(o, o->src_index))
+ 		ret = UPDATE_SPARSITY_WORKTREE_UPDATE_FAILURES;
  
- 	/* Enable/update untracked file cache if set */
- 	struct untracked_cache *untracked;
 -- 
 gitgitgadget
 
