@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF166C61DA4
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 09:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3419C61DA4
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 09:15:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233903AbjBWJP3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 04:15:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43404 "EHLO
+        id S233917AbjBWJPb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 04:15:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233872AbjBWJPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 04:15:10 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC6C548E2C
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 01:15:08 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id az11-20020a05600c600b00b003dc4fd6e61dso9351821wmb.5
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 01:15:08 -0800 (PST)
+        with ESMTP id S233867AbjBWJPT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 04:15:19 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 236024C6F5
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 01:15:10 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id d41-20020a05600c4c2900b003e9e066550fso2153254wmp.4
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 01:15:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Zlfj0vbfKh4f3TIVx9h2XfDPBA9IxoqqKBFHsZHXlIs=;
-        b=XVKAJnu3YsL+jVFvj1UkYEuZaNtZyCQLg8+V9fbeXolhscKBxaAtssEQ790gZLH9nL
-         2oh7AaDloaLcSdbJ/R64sFegCJBkLhZlKwHLcSG/93pQJOSu50u7uUFgMtzT9/WHasnm
-         WP7O9/zTl1iC2zP3LoQMQS/TNrpctownA9EkDm7E1T6bAcCyBIgIelY0voAssP0Dyxcp
-         IArwa4In1uiqSCIaZ12vQLedjxqauAERa+FL2fyDu8j0+rdSnASPnAawvwZWaaE+fvTB
-         Q1IvPnM/bDv1u/eY6c9pfgESRAS+8Cud7HH46tiTBqHAFiQnqzm3LqYP61x5LzW4yeIx
-         RaEA==
+        bh=pq/pwwFu2jHN6wkvRR/mMGXfOikuvtWzqzg/eIEyRck=;
+        b=P+s2ro1Anu1NDfEUgMySSeIf6moN4h5DyprVjihCFWT5pZb9MBuHPHDnDn6ruWz8Nq
+         E1VYAD5DSSX5fkojeRsNg+ed/kipMnZ8NTxeCEcv+RcKbwk2csWVSzpebii7M+7qvBLR
+         uT+mqF5khVBoNcqQybUtOKChawQzNR/6pl1rwR9t3hxq03dHjlga+aGDruaugBEWRrIY
+         jXO8Q0PhKDxS4nT//xj65YjdC/Z9/rQVVBjB8cmn+4CzBGLaNZupDDb9wmLyj1AQfAYB
+         IhY2y6ZzxctdeOdr5HdujoGMidvBbCs4pLsLi/oi/NhFB+8mXqWw2WxAP5SVKfv6Bi6c
+         f7RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Zlfj0vbfKh4f3TIVx9h2XfDPBA9IxoqqKBFHsZHXlIs=;
-        b=Y5e5SnRwuDlOpxljY8cpXepVjMVHNeORKvFAqwTPEH65VqmZAUvYgXIvizAz0x41Xe
-         X/PHRrqrn5zzDxkp30prQMZHx7/e8wycwoSlSj/hqgb6LYir04uDytf9YFAwY284rU4r
-         Lc5VugEVpyLYSgKrVdU6N3GYsPWoGWeeZEx8PUE2I4od3Dgm3eLvCD0HFOpbdfcWmQpy
-         6a0GALdf1dhxrcs2o6vqTAtbC9NYz7gYKlYEFgo47Yi2NNEtWKQLJwM27QDFELyjW0Mh
-         wiuO3h4l3tGyuhF+3p3sGoSXbx6FsXwNkRxpKkqSiQAACsn6L9FQcTQELg+m9pkJg71V
-         V4PQ==
-X-Gm-Message-State: AO0yUKV9Tq+8OKBYsY0OIpfQ/lcOZMT4I0FA5I1wX0Pbmw8qhGbFmgTi
-        Yccl9fK6cBV3ma5eYqz+XCJEhqnZjak=
-X-Google-Smtp-Source: AK7set82k7jkkuIwVPtOMQiyJomIShqPkyMmd2Y855CkHqtpfj8KsUP5QcAtaV+xTTEPREG+sUfweQ==
-X-Received: by 2002:a05:600c:4591:b0:3e0:481:c897 with SMTP id r17-20020a05600c459100b003e00481c897mr8744187wmo.37.1677143707057;
-        Thu, 23 Feb 2023 01:15:07 -0800 (PST)
+        bh=pq/pwwFu2jHN6wkvRR/mMGXfOikuvtWzqzg/eIEyRck=;
+        b=AEdWqd25coZs2f/VXgPsJOIUA4QT6AuPOtdx0jF7tkj7AUDw0jJXcJYzVqBy0uhzo/
+         HNZBoufN8QwKOPYfFwUwFTBSr6KIcJdD8SCDis0TpsUF3XLLghhvRx7vvpQ5uHJ4s8V/
+         Jc0fZP74bj2YW+kwp23sA1uJAXs/r1WGDue1nJ7SMCxraFfwWV0G0U36WkWGU8LsLJj7
+         6/tVtTlW9nViLCDHzVR01iDR12Pf16lPxTlIweJavNIWZwRvrjFGNTsAr3y1CKmVjVbB
+         KihrnRacSYQzayw7TO3weU76PoBcgKHr0Sdloy8/oaxbMe98IHP61FL1BK9KDhhRAmOO
+         pBpg==
+X-Gm-Message-State: AO0yUKXq2Yjat5zLtrGVodlMz+YkTjOJiX1omUjkv86g7euG4AS9zkbi
+        9l/MfObRgiGM6mVDoqFB4ybP5W9WsWg=
+X-Google-Smtp-Source: AK7set+r89/T0LJa3iBjTIZ1iHAWP+PtMDIoHcXPZSlzZ1X1rLhEOMzJ1YPLNLaLrrhwP7BR8bQUSw==
+X-Received: by 2002:a05:600c:319a:b0:3dc:4fd7:31f7 with SMTP id s26-20020a05600c319a00b003dc4fd731f7mr7925931wmp.41.1677143708468;
+        Thu, 23 Feb 2023 01:15:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 18-20020a05600c231200b003e20fa01a86sm9883137wmo.13.2023.02.23.01.15.06
+        by smtp.gmail.com with ESMTPSA id o10-20020a1c750a000000b003e7c89b3514sm7456228wmc.23.2023.02.23.01.15.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 01:15:06 -0800 (PST)
-Message-Id: <63ee57478edfd731d4f257777ef5aec4c7a02f63.1677143700.git.gitgitgadget@gmail.com>
+        Thu, 23 Feb 2023 01:15:08 -0800 (PST)
+Message-Id: <f492ab27b19748a29cfcda88ea098797c512777a.1677143700.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
 References: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Feb 2023 09:14:56 +0000
-Subject: [PATCH 07/11] unpack_trees: start splitting internal fields from
- public API
+Date:   Thu, 23 Feb 2023 09:14:58 +0000
+Subject: [PATCH 09/11] unpack-trees: rewrap a few overlong lines from previous
+ patch
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,148 +68,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This just splits the two fields already marked as internal-only into a
-separate internal struct.  Future commits will add more fields that
-were meant to be internal-only but were not explicitly marked as such
-to the same struct.
+The previous patch made many lines a little longer, resulting in four
+becoming a bit too long.  They were left as-is for the previous patch
+to facilitate reviewers verifying that we were just adding "internal."
+in a bunch of places, but rewrap them now.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- unpack-trees.c | 40 ++++++++++++++++++++--------------------
- unpack-trees.h |  7 +++++--
- 2 files changed, 25 insertions(+), 22 deletions(-)
+ unpack-trees.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/unpack-trees.c b/unpack-trees.c
-index d9c9f330233..e6b5fb980cb 100644
+index d89eb3d8bf0..fa186a27ccc 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -1809,7 +1809,7 @@ static void populate_from_existing_patterns(struct unpack_trees_options *o,
- 	if (get_sparse_checkout_patterns(pl) < 0)
- 		o->skip_sparse_checkout = 1;
- 	else
--		o->pl = pl;
-+		o->internal.pl = pl;
- }
- 
- static void update_sparsity_for_prefix(const char *prefix,
-@@ -1871,10 +1871,10 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 
- 	if (len > MAX_UNPACK_TREES)
- 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
--	if (o->dir)
--		BUG("o->dir is for internal use only");
--	if (o->pl)
--		BUG("o->pl is for internal use only");
-+	if (o->internal.dir)
-+		BUG("o->internal.dir is for internal use only");
-+	if (o->internal.pl)
-+		BUG("o->internal.pl is for internal use only");
- 
- 	trace_performance_enter();
- 	trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
-@@ -1891,9 +1891,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		BUG("UNPACK_RESET_OVERWRITE_UNTRACKED incompatible with preserved ignored files");
- 
- 	if (!o->preserve_ignored) {
--		o->dir = &dir;
--		o->dir->flags |= DIR_SHOW_IGNORED;
--		setup_standard_excludes(o->dir);
-+		o->internal.dir = &dir;
-+		o->internal.dir->flags |= DIR_SHOW_IGNORED;
-+		setup_standard_excludes(o->internal.dir);
- 	}
- 
- 	if (o->prefix)
-@@ -1943,7 +1943,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	 * Sparse checkout loop #1: set NEW_SKIP_WORKTREE on existing entries
- 	 */
- 	if (!o->skip_sparse_checkout)
--		mark_new_skip_worktree(o->pl, o->src_index, 0,
-+		mark_new_skip_worktree(o->internal.pl, o->src_index, 0,
- 				       CE_NEW_SKIP_WORKTREE, o->verbose_update);
- 
- 	if (!dfc)
-@@ -2009,7 +2009,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		 * If they will have NEW_SKIP_WORKTREE, also set CE_SKIP_WORKTREE
- 		 * so apply_sparse_checkout() won't attempt to remove it from worktree
+@@ -1213,8 +1213,8 @@ static int unpack_single_entry(int n, unsigned long mask,
+ 		 * cache entry from the index aware logic.
  		 */
--		mark_new_skip_worktree(o->pl, &o->result,
-+		mark_new_skip_worktree(o->internal.pl, &o->result,
- 				       CE_ADDED, CE_SKIP_WORKTREE | CE_NEW_SKIP_WORKTREE,
- 				       o->verbose_update);
- 
-@@ -2067,9 +2067,9 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- done:
- 	if (free_pattern_list)
- 		clear_pattern_list(&pl);
--	if (o->dir) {
--		dir_clear(o->dir);
--		o->dir = NULL;
-+	if (o->internal.dir) {
-+		dir_clear(o->internal.dir);
-+		o->internal.dir = NULL;
+ 		src[i + o->merge] = create_ce_entry(info, names + i, stage,
+-						    &o->internal.result, o->merge,
+-						    bit & dirmask);
++						    &o->internal.result,
++						    o->merge, bit & dirmask);
  	}
- 	trace2_region_leave("unpack_trees", "unpack_trees", the_repository);
- 	trace_performance_leave("unpack_trees");
-@@ -2116,14 +2116,14 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o,
- 		pl = xcalloc(1, sizeof(*pl));
- 		populate_from_existing_patterns(o, pl);
- 	}
--	o->pl = pl;
-+	o->internal.pl = pl;
  
- 	/* Expand sparse directories as needed */
--	expand_index(o->src_index, o->pl);
-+	expand_index(o->src_index, o->internal.pl);
- 
- 	/* Set NEW_SKIP_WORKTREE on existing entries. */
- 	mark_all_ce_unused(o->src_index);
--	mark_new_skip_worktree(o->pl, o->src_index, 0,
-+	mark_new_skip_worktree(o->internal.pl, o->src_index, 0,
- 			       CE_NEW_SKIP_WORKTREE, o->verbose_update);
- 
- 	/* Then loop over entries and update/remove as needed */
-@@ -2338,8 +2338,8 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
- 	pathbuf = xstrfmt("%.*s/", namelen, ce->name);
- 
- 	memset(&d, 0, sizeof(d));
--	if (o->dir)
--		d.exclude_per_dir = o->dir->exclude_per_dir;
-+	if (o->internal.dir)
-+		d.exclude_per_dir = o->internal.dir->exclude_per_dir;
- 	i = read_directory(&d, o->src_index, pathbuf, namelen+1, NULL);
- 	dir_clear(&d);
- 	free(pathbuf);
-@@ -2393,8 +2393,8 @@ static int check_ok_to_remove(const char *name, int len, int dtype,
- 	if (ignore_case && icase_exists(o, name, len, st))
- 		return 0;
- 
--	if (o->dir &&
--	    is_excluded(o->dir, o->src_index, name, &dtype))
-+	if (o->internal.dir &&
-+	    is_excluded(o->internal.dir, o->src_index, name, &dtype))
+ 	if (o->merge) {
+@@ -1918,14 +1918,15 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 	} else if (o->src_index == o->dst_index) {
  		/*
- 		 * ce->name is explicitly excluded, so it is Ok to
- 		 * overwrite it.
-diff --git a/unpack-trees.h b/unpack-trees.h
-index f3a6e4f90ef..5c1a9314a06 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -97,9 +97,12 @@ struct unpack_trees_options {
- 	struct index_state *src_index;
- 	struct index_state result;
- 
--	struct pattern_list *pl; /* for internal use */
--	struct dir_struct *dir; /* for internal use only */
- 	struct checkout_metadata meta;
-+
-+	struct unpack_trees_options_internal {
-+		struct pattern_list *pl;
-+		struct dir_struct *dir;
-+	} internal;
- };
- 
- int unpack_trees(unsigned n, struct tree_desc *t,
+ 		 * o->dst_index (and thus o->src_index) will be discarded
+-		 * and overwritten with o->internal.result at the end of this function,
+-		 * so just use src_index's split_index to avoid having to
+-		 * create a new one.
++		 * and overwritten with o->internal.result at the end of
++		 * this function, so just use src_index's split_index to
++		 * avoid having to create a new one.
+ 		 */
+ 		o->internal.result.split_index = o->src_index->split_index;
+ 		o->internal.result.split_index->refcount++;
+ 	} else {
+-		o->internal.result.split_index = init_split_index(&o->internal.result);
++		o->internal.result.split_index =
++			init_split_index(&o->internal.result);
+ 	}
+ 	oidcpy(&o->internal.result.oid, &o->src_index->oid);
+ 	o->merge_size = len;
+@@ -2049,7 +2050,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		move_index_extensions(&o->internal.result, o->src_index);
+ 		if (!ret) {
+ 			if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
+-				cache_tree_verify(the_repository, &o->internal.result);
++				cache_tree_verify(the_repository,
++						  &o->internal.result);
+ 			if (!o->skip_cache_tree_update &&
+ 			    !cache_tree_fully_valid(o->internal.result.cache_tree))
+ 				cache_tree_update(&o->internal.result,
 -- 
 gitgitgadget
 
