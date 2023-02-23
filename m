@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAC60C61DA4
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 08:05:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF003C636D7
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 08:05:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232110AbjBWIFd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 03:05:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59656 "EHLO
+        id S233338AbjBWIFl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 03:05:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233018AbjBWIFa (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233249AbjBWIFa (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 23 Feb 2023 03:05:30 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E24FD3D0A6
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:26 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id i11so3745332wrp.5
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:26 -0800 (PST)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0CAA34C2D
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:27 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id p26so7816921wmc.4
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OahwylFSuFVh75SWtV1jtNAo8uK09U25UM+V+A1RSbI=;
-        b=p3BOSy6cBb9ansZEHNBYgwZrQe1GVoEXFyAyzELeh7D6P5YQaZnZE06Wvqz+dD31Nn
-         FFIiF040m/JeA4qkukqIzVFqxJVtwIup07C51ViyPBU+uPK8gWjwQqZqkEgAqeLsb5J/
-         WjmE+fhAhEuiZY7TbDsGiVyBazVGAlMbiQv9k2N/XbLRx5Z5CBrJWmHj/d5qfjlN9Yxf
-         OXkAYm67w07ljt/dwdG4SBNcHG3+Gw2eDWUdjje91j2T3qSAz8Aa4BeY39X4Nf4CpHtI
-         6ZKDUSnlyzEgZuE12KduSAJzxbDXMSRJhmG6+pgmBo/FqVJ90inzXFcEtd1bFGJtpxIn
-         M7EQ==
+        bh=8QwkNxqQ1aAfiwPys3A2H/JpmCw/ma/puEdHmDE3g0c=;
+        b=SaSod6TRyPAg/wBmSFVJAaJyxdr3Eu2hppHrFZjLCIBRguqYQjFceIrg3NVC6hQwO5
+         UdWcR9dnFTXlNOQpA3IUNy8Tgg+bUcayXqwnLOFaEr9a4C/Ybdgy00HpdHzgX8wDWcsH
+         /LJ32rBvaNqbfc0yE/HdlYcDOi8xjtIhwRc1tVfa7CnUwM4SooDx38jQoUU0bTUsruIa
+         soozKKOWJeA6707zYvLV0vK8yX+cVLPwTwOSBu+JcSLVLtb1zw5Fakt5BpVR2l5ufNMJ
+         PfMkUfrFdZk24KkxgAfb2+OBOvIH5JtVF3xm+BtoYnoJD7gu31bO/GEAAtTK+mmhKu+N
+         puaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OahwylFSuFVh75SWtV1jtNAo8uK09U25UM+V+A1RSbI=;
-        b=eQgLTUloI/R4Q7RLJKn0aXjc8ll6K2W9kVMZr+B/8jWCVRrjiAuqBIhH5jTFO0OJZm
-         rToYl0pvAyvBPziVxrz1B9mfhb8Zh8ZLJ9AMtZ2E0XfO/46t/UgxZUhvC2+4ezc2GvDr
-         JD6SsRnAwVCs0qdRQchkovZEyX2K33ZCRhKCnTBpR9Uqt5Kb7TAXztQ1Wh60+Y+2zpDs
-         rpaSw8QAyzxDZjqoZMe7K1HNr4TTGo6IIK7jNAaWuzUFWv5d9HxZsM8I6zALa3UYUItX
-         X2B5HbWA5EWKyne9H8LqZlBum6GkN0rffTQS3hbYkkhl2x1b1CswA7HR0MbuPlCmYlSp
-         i6sA==
-X-Gm-Message-State: AO0yUKUi43GpPX0DCFRa/s4eSIjPMU/sWfiJTyG/sFI6qUq05VfNA4uT
-        XLSoKrCyypPRMu8G/Lkixqp0t4X2FCc=
-X-Google-Smtp-Source: AK7set8j8oxsLadNCmJMRGrs+8YTVgN5mBq06YyQabaV23UdOM4p7vpn/fMRVwxSaam8lR5rK0F8Nw==
-X-Received: by 2002:a05:6000:1cd:b0:2c5:8575:c37 with SMTP id t13-20020a05600001cd00b002c585750c37mr9779469wrx.66.1677139525168;
+        bh=8QwkNxqQ1aAfiwPys3A2H/JpmCw/ma/puEdHmDE3g0c=;
+        b=i/YisDDEFyySs/i29nB4A+lRuW43SKS6u6YP7oT64e02rnFn4Q2TXDiZIPmZb4I4dO
+         +QFxvVnhhgAyRFgPxkr6QScY/kFoRS3cKwh1SS7JcpxY9qm9iixW/jxqj00hUlo/k07z
+         gCBA2mfPLDFNwIbYVgxTe9IgJRMyCODlhpsNSgZ6ifWv46D80MQw1xkivY0AsCuAkKSY
+         hHvWH+3ITQCSCed7mkTVypaIhCLqcdWf/YFBcMd+5vEQg+1RllANkQtAZRQ7e9cnHSzv
+         ySRFFrqBXV1d4MQ6GuDlvlp0PsqQErVwgXOd5JUdkKzm63DUgq0npuwc+4y1LhsBYYNt
+         2ZwQ==
+X-Gm-Message-State: AO0yUKXXyBa7RAtg9UOAjqyQJDFNlR1r6esB/Dlz/glS29sZWDwnscfq
+        9lpNvhqxXCOC3GXAOGmX6m0j30xIc+4=
+X-Google-Smtp-Source: AK7set9xE/jzJwvtS9d7PmKNkyp0xdBuVR3fSSHUCuxBVKIiiqF1+p9bqWGpdFU3HGfMVvvqqkLDZw==
+X-Received: by 2002:a05:600c:b97:b0:3e2:22f9:c4b9 with SMTP id fl23-20020a05600c0b9700b003e222f9c4b9mr10122464wmb.4.1677139525852;
         Thu, 23 Feb 2023 00:05:25 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a22-20020a05600c225600b003e2058a7109sm10601092wmm.14.2023.02.23.00.05.24
+        by smtp.gmail.com with ESMTPSA id i16-20020adfefd0000000b002c552c6c8c2sm7163775wrp.87.2023.02.23.00.05.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 00:05:24 -0800 (PST)
-Message-Id: <adafa655432dd13d1c727522377ac9a4b515b76a.1677139521.git.gitgitgadget@gmail.com>
+        Thu, 23 Feb 2023 00:05:25 -0800 (PST)
+Message-Id: <73d012f631a8a5f93ab0c016a759f03d92a9c96d.1677139521.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
 References: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Feb 2023 08:05:07 +0000
-Subject: [PATCH 02/16] treewide: remove unnecessary git-compat-util.h includes
- in headers
+Date:   Thu, 23 Feb 2023 08:05:08 +0000
+Subject: [PATCH 03/16] treewide: remove unnecessary cache.h includes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,184 +69,170 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Since git-compat-util.h needs to be included first in C files, having it
-appear in header files is unnecessary.  More importantly, having it
-included in header files seems to lead to folks leaving it out of C
-files, which makes it harder to verify that the rule is being followed.
-Remove it from header files, other than the ones that have been approved
-as alternate first includes.
+We had several header files include cache.h unnecessarily.  Remove
+those.  These have all been verified via both ensuring that
+    gcc -E $HEADER | grep '"cache.h"'
+found no hits and that
+    cat >temp.c <<EOF &&
+    #include "git-compat-util.h"
+    #include "$HEADER"
+    int main() {}
+    EOF
+    gcc -c temp.c
+successfully compiles without warnings.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- advice.h                               | 2 --
- cbtree.h                               | 2 --
- chunk-format.h                         | 1 -
- commit-graph.h                         | 1 -
- commit-slab-impl.h                     | 2 --
- compat/fsmonitor/fsm-ipc-win32.c       | 1 +
- compat/fsmonitor/fsm-settings-darwin.c | 1 +
- hash.h                                 | 1 -
- pack-mtimes.h                          | 2 --
- pkt-line.h                             | 1 -
- repository.h                           | 1 -
- sub-process.h                          | 1 -
- trace.h                                | 1 -
- 13 files changed, 2 insertions(+), 15 deletions(-)
+ checkout.h           | 2 +-
+ entry.h              | 4 +++-
+ khash.h              | 1 -
+ oidmap.h             | 1 -
+ pretty.h             | 2 +-
+ reflog-walk.h        | 2 --
+ refs/refs-internal.h | 1 -
+ remote.h             | 1 -
+ sequencer.h          | 2 +-
+ xdiff-interface.h    | 2 +-
+ 10 files changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/advice.h b/advice.h
-index 07e0f76833e..3e1b48bf68d 100644
---- a/advice.h
-+++ b/advice.h
-@@ -1,8 +1,6 @@
- #ifndef ADVICE_H
- #define ADVICE_H
+diff --git a/checkout.h b/checkout.h
+index 1152133bd77..1917f3b3230 100644
+--- a/checkout.h
++++ b/checkout.h
+@@ -1,7 +1,7 @@
+ #ifndef CHECKOUT_H
+ #define CHECKOUT_H
  
--#include "git-compat-util.h"
--
- struct string_list;
+-#include "cache.h"
++#include "hash.h"
  
  /*
-diff --git a/cbtree.h b/cbtree.h
-index 0be14fb7ee4..43193abdda2 100644
---- a/cbtree.h
-+++ b/cbtree.h
-@@ -14,8 +14,6 @@
- #ifndef CBTREE_H
- #define CBTREE_H
+  * Check if the branch name uniquely matches a branch name on a remote
+diff --git a/entry.h b/entry.h
+index 2d4fbb88c8f..7329f918a97 100644
+--- a/entry.h
++++ b/entry.h
+@@ -1,9 +1,11 @@
+ #ifndef ENTRY_H
+ #define ENTRY_H
  
--#include "git-compat-util.h"
--
- struct cb_node;
- struct cb_node {
- 	struct cb_node *child[2];
-diff --git a/chunk-format.h b/chunk-format.h
-index 7885aa08487..025c38f938e 100644
---- a/chunk-format.h
-+++ b/chunk-format.h
-@@ -1,7 +1,6 @@
- #ifndef CHUNK_FORMAT_H
- #define CHUNK_FORMAT_H
+-#include "cache.h"
+ #include "convert.h"
  
--#include "git-compat-util.h"
- #include "hash.h"
++struct cache_entry;
++struct index_state;
++
+ struct checkout {
+ 	struct index_state *istate;
+ 	const char *base_dir;
+diff --git a/khash.h b/khash.h
+index cb79bf88567..85362718c56 100644
+--- a/khash.h
++++ b/khash.h
+@@ -26,7 +26,6 @@
+ #ifndef __AC_KHASH_H
+ #define __AC_KHASH_H
  
- struct hashfile;
-diff --git a/commit-graph.h b/commit-graph.h
-index 37faee6b66d..bb88bec7aa3 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -1,7 +1,6 @@
- #ifndef COMMIT_GRAPH_H
- #define COMMIT_GRAPH_H
- 
--#include "git-compat-util.h"
- #include "object-store.h"
- #include "oidset.h"
- 
-diff --git a/commit-slab-impl.h b/commit-slab-impl.h
-index 557738df271..4a414ee905d 100644
---- a/commit-slab-impl.h
-+++ b/commit-slab-impl.h
-@@ -1,8 +1,6 @@
- #ifndef COMMIT_SLAB_IMPL_H
- #define COMMIT_SLAB_IMPL_H
- 
--#include "git-compat-util.h"
--
- #define implement_static_commit_slab(slabname, elemtype) \
- 	implement_commit_slab(slabname, elemtype, MAYBE_UNUSED static)
- 
-diff --git a/compat/fsmonitor/fsm-ipc-win32.c b/compat/fsmonitor/fsm-ipc-win32.c
-index e08c505c148..c9536dfb666 100644
---- a/compat/fsmonitor/fsm-ipc-win32.c
-+++ b/compat/fsmonitor/fsm-ipc-win32.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "config.h"
- #include "fsmonitor-ipc.h"
- 
-diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
-index 6abbc7af3ab..58b623fbb9a 100644
---- a/compat/fsmonitor/fsm-settings-darwin.c
-+++ b/compat/fsmonitor/fsm-settings-darwin.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "config.h"
- #include "fsmonitor.h"
- #include "fsmonitor-ipc.h"
-diff --git a/hash.h b/hash.h
-index 36b64165fc9..351afc2ce3b 100644
---- a/hash.h
-+++ b/hash.h
-@@ -1,7 +1,6 @@
- #ifndef HASH_H
- #define HASH_H
- 
--#include "git-compat-util.h"
- #include "repository.h"
- 
- #if defined(SHA1_APPLE)
-diff --git a/pack-mtimes.h b/pack-mtimes.h
-index cc957b3e852..107327cec0b 100644
---- a/pack-mtimes.h
-+++ b/pack-mtimes.h
-@@ -1,8 +1,6 @@
- #ifndef PACK_MTIMES_H
- #define PACK_MTIMES_H
- 
--#include "git-compat-util.h"
--
- #define MTIMES_SIGNATURE 0x4d544d45 /* "MTME" */
- #define MTIMES_VERSION 1
- 
-diff --git a/pkt-line.h b/pkt-line.h
-index 79c538b99e4..8e9846f3151 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -1,7 +1,6 @@
- #ifndef PKTLINE_H
- #define PKTLINE_H
- 
--#include "git-compat-util.h"
- #include "strbuf.h"
- #include "sideband.h"
- 
-diff --git a/repository.h b/repository.h
-index e8c67ffe165..15a8afc5fb5 100644
---- a/repository.h
-+++ b/repository.h
-@@ -1,7 +1,6 @@
- #ifndef REPOSITORY_H
- #define REPOSITORY_H
- 
--#include "git-compat-util.h"
- #include "path.h"
- 
- struct config_set;
-diff --git a/sub-process.h b/sub-process.h
-index e85f21fa1a7..6a61638a8ac 100644
---- a/sub-process.h
-+++ b/sub-process.h
-@@ -1,7 +1,6 @@
- #ifndef SUBPROCESS_H
- #define SUBPROCESS_H
- 
--#include "git-compat-util.h"
+-#include "cache.h"
  #include "hashmap.h"
- #include "run-command.h"
  
-diff --git a/trace.h b/trace.h
-index 4e771f86ac2..1a75824b15e 100644
---- a/trace.h
-+++ b/trace.h
+ #define AC_VERSION_KHASH_H "0.2.8"
+diff --git a/oidmap.h b/oidmap.h
+index c66a83ab1d6..c1642927fa6 100644
+--- a/oidmap.h
++++ b/oidmap.h
 @@ -1,7 +1,6 @@
- #ifndef TRACE_H
- #define TRACE_H
+ #ifndef OIDMAP_H
+ #define OIDMAP_H
  
--#include "git-compat-util.h"
+-#include "cache.h"
+ #include "hashmap.h"
+ 
+ /*
+diff --git a/pretty.h b/pretty.h
+index f34e24c53a4..9508c22f030 100644
+--- a/pretty.h
++++ b/pretty.h
+@@ -1,11 +1,11 @@
+ #ifndef PRETTY_H
+ #define PRETTY_H
+ 
+-#include "cache.h"
+ #include "date.h"
+ #include "string-list.h"
+ 
+ struct commit;
++struct repository;
+ struct strbuf;
+ struct process_trailer_options;
+ 
+diff --git a/reflog-walk.h b/reflog-walk.h
+index 8076f10d9fb..4d93a269571 100644
+--- a/reflog-walk.h
++++ b/reflog-walk.h
+@@ -1,8 +1,6 @@
+ #ifndef REFLOG_WALK_H
+ #define REFLOG_WALK_H
+ 
+-#include "cache.h"
+-
+ struct commit;
+ struct reflog_walk_info;
+ struct date_mode;
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 69f93b0e2ac..a85d113123c 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -1,7 +1,6 @@
+ #ifndef REFS_REFS_INTERNAL_H
+ #define REFS_REFS_INTERNAL_H
+ 
+-#include "cache.h"
+ #include "refs.h"
+ #include "iterator.h"
+ 
+diff --git a/remote.h b/remote.h
+index 1ebbe42792e..5b38ee20b84 100644
+--- a/remote.h
++++ b/remote.h
+@@ -1,7 +1,6 @@
+ #ifndef REMOTE_H
+ #define REMOTE_H
+ 
+-#include "cache.h"
+ #include "parse-options.h"
+ #include "hashmap.h"
+ #include "refspec.h"
+diff --git a/sequencer.h b/sequencer.h
+index 3bcdfa1b586..33dbaf5b66d 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -1,11 +1,11 @@
+ #ifndef SEQUENCER_H
+ #define SEQUENCER_H
+ 
+-#include "cache.h"
  #include "strbuf.h"
+ #include "wt-status.h"
  
- /**
+ struct commit;
++struct index_state;
+ struct repository;
+ 
+ const char *git_path_commit_editmsg(void);
+diff --git a/xdiff-interface.h b/xdiff-interface.h
+index 4301a7eef27..3750794afe9 100644
+--- a/xdiff-interface.h
++++ b/xdiff-interface.h
+@@ -1,7 +1,7 @@
+ #ifndef XDIFF_INTERFACE_H
+ #define XDIFF_INTERFACE_H
+ 
+-#include "cache.h"
++#include "hash.h"
+ #include "xdiff/xdiff.h"
+ 
+ /*
 -- 
 gitgitgadget
 
