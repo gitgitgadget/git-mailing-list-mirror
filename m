@@ -2,85 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1619C636D7
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 06:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 311CBC636D7
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 06:46:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233365AbjBWGYW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 01:24:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52494 "EHLO
+        id S233407AbjBWGqo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 01:46:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbjBWGYV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 01:24:21 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99C3538003
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 22:24:20 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id m3-20020a17090ade0300b00229eec90a7fso3489573pjv.0
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 22:24:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W7Fz+jKn71vQ/Nl2b2Ludd7FyT+CW9jwQUaLNsxs5wo=;
-        b=KP0iBoRE3dHyK/YX6qBvukOcxkRV8dtahpRViDk4hk/AoDDne7UQytD3px2P/JSvlO
-         JXfh/5O9Aa8b6tJl4sCfiy1lmbTYq7LnfRshEjQcX5VGCkDRXT5zvWT0J3mZJMH1+faf
-         Z4lSAfoHoc6KCaIBBA6AwNuMK19bc6KeX5fxPDJIMo6jyJTFmOdYYpdAuGKY6PUC1rJP
-         4rjPJPMR2bFUnySXwrI8UZe2cD0mArhQtv441MAXXqZkoIVtVJEFqInr2AzSX3+iKrSd
-         Ofv7/UtpgDun8zoxnbNuVB0ZdNUrV2pVtHWhzpybKTo7y5J3e0OKp3e3QFYUEm8Un0pB
-         E8cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W7Fz+jKn71vQ/Nl2b2Ludd7FyT+CW9jwQUaLNsxs5wo=;
-        b=rVk+OCJ+0PnB3ivLXQspKBzJqZlg7TiKJRjG59g1dmbFwJ7pUYIfENWM6K89aHXSIP
-         rNbGBk/RQ8JqanFj4IvTHerGgVrjLEyd3S5iginQRMIKv/UVaFnnjGCjHjzHV+FbFbGU
-         jgVx6JtJ0XXni28PKjmHmeSiL3PyMH8/cds7w10ClDK80olvb9s6LWFf63vpaBdfM5FH
-         dpnBWp6j5FPdMFD8KpQC7W3TRf9iWS6CCznc/h274lw5VeEsX7R5612MF8S39fz1PJ+j
-         UXG+ZxHMOYjlMB2xstPxhMsYhc24/rWWXqwhH9GpA2xQNSAmg0+uBmg0EKZa5UqMf5yi
-         sEVw==
-X-Gm-Message-State: AO0yUKWjyLHoKM8sTYpg7dmoDUmUcWmgydeSyweZWOAqWJuFViQo/l6H
-        TCmW6eRZ9ZIfZbRMuD1VP9Pz
-X-Google-Smtp-Source: AK7set8ug1k4hjCDar7rR8zfFw7Oi8OLSp8qGCzMRt2emBRd0HL0ig5VxQhdpCf+hkLj18dqQJWK0Q==
-X-Received: by 2002:a17:90b:1041:b0:236:6e2d:7d47 with SMTP id gq1-20020a17090b104100b002366e2d7d47mr12484818pjb.27.1677133460115;
-        Wed, 22 Feb 2023 22:24:20 -0800 (PST)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id w9-20020a17090a1b8900b0023440af7aafsm5633685pjc.9.2023.02.22.22.24.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 22:24:19 -0800 (PST)
-Message-ID: <be5fbb48-4599-f6d0-e7c3-cf0470ce8bbd@github.com>
-Date:   Wed, 22 Feb 2023 22:24:18 -0800
+        with ESMTP id S232056AbjBWGqm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 01:46:42 -0500
+Received: from pijkaqwt.kolliers.com (pijkaqwt.kolliers.com [92.52.217.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FD2D1E1D6
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 22:46:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; s=dkim; d=kolliers.com;
+ h=Reply-To:From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding; i=bara@kolliers.com;
+ bh=NubmEKWhEpiRcIVGIdqMuRkCyHY=;
+ b=BNm+Eu8GZC59oXGRmJJvakL0O/mnU/KrW1McHX/wShFCkXnLTXDy2AFvjSzNA1UwCcIMxdVY5/9p
+   5C9qVlXtt3Ngk2Nzt2ELkYif4P8TNGhfmDMPK2NKITOxO6qRDF/7b8CyBSpv5D5bVrqQZTptcIXf
+   19GfWtrteJklh4HG79S+Tyvs8e6Ugnmzqjc6yNr7c0KGJzZR/iv4KDlTKVKzXTup6QmWksFMhOBY
+   7Tm26AhlekYbusfkztJClay+21TUPkvG/zqqVExF9pA4PGkCos3f/JW3iS/rLUOcVg7y/W7FCCjP
+   BteVRMs/5yf5l1mnQbBfSeR+day9umwqHrWWcg==
+DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns; s=dkim; d=kolliers.com;
+ b=Xchy6LNHo/7b9SHhcujdk4cR7ukr0qi0pHpPPZA+GkvhxU3euSU2Y3iKqMcw4ryuGsmPrBxOcav7
+   uGBcDh44J2w6XYeajmLi7hvmDnyPQNwHAeDJYshQIMKpbGRFFbYW+HUgvdGE99qxV+zVQ/A7K8JZ
+   MEvSxQdnE/V2zVXRtWiyX+XTpes1XFr8fsp/Xvz1krKrH9wdUDFz1Tz/JSSZEhvUdgGYlnucarYL
+   gf+rxdNxSQKn4J6GP2teRsd4e2AtB+AHuuSfH1rAtRsLlegPMBytJ5JM/TLOwPaSEKDjrRngg+CS
+   YLllKqzEcJG59G8zanT5GcXXeZkYVJXXlH19rA==;
+Reply-To: esq.mustafaa@gmail.com
+From:   Mustafa Ayvaz <bara@kolliers.com>
+To:     git@vger.kernel.org
+Subject: git@vger.kernel.org
+Date:   22 Feb 2023 22:46:38 -0800
+Message-ID: <20230222224638.D8B54688A4EE50D3@kolliers.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.2
-Subject: Re: [PATCH v2 0/1] MyFirstContribution: add note about SMTP server
- config
-Content-Language: en-US
-To:     Vivan Garg <gvivan6@gmail.com>, git@vger.kernel.org
-Cc:     nasamuffin@google.com
-References: <20230222011317.97943-1-gvivan6@gmail.com>
- <20230223054040.30088-1-gvivan6@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230223054040.30088-1-gvivan6@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vivan Garg wrote:
-> Vivan Garg (1):
->   MyFirstContribution: add note about SMTP server config
-> 
->  Documentation/MyFirstContribution.txt | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> Range-diff against v1:
-> 1:  bd9bc70307 < -:  ---------- Documentation/MyFirstContribution: add setup template for git send-email
-> -:  ---------- > 1:  d295b4d913 MyFirstContribution: add note about SMTP server config
+Bom dia git,
 
-Since you also did this in your microproject, it's worth pointing out: you
-don't need a cover letter for a single-patch submission (see "Bonus Chapter:
-One-Patch Changes" in MyFirstContribution). You can include the range-diff
-below the '---' line (i.e., below the commit message) in your patch.
+Sou o advogado Mustafa Ayvaz, advogado pessoal do falecido Sr.=20
+Robert, que perdeu a vida devido ao coronav=C3=ADrus, contra=C3=ADdo=20
+durante sua viagem de neg=C3=B3cios =C3=A0 China. Entrei em contato com=20
+voc=C3=AA para trabalhar comigo na transfer=C3=AAncia de um fundo:=20
+$4,420,000.00 (quatro milh=C3=B5es, quatrocentos e vinte mil d=C3=B3lares)=
+=20
+legado deixado por ele.
+
+Procurei minuciosamente o parente mais pr=C3=B3ximo de meu cliente=20
+falecido, mas falhei porque n=C3=A3o tenho sua resid=C3=AAncia atual e=20
+detalhes de contato. Enquanto pesquisava, encontrei seu perfil=20
+com o mesmo sobrenome e na mesma localidade com o parente mais=20
+pr=C3=B3ximo. Decidi entrar em contato com voc=C3=AA e us=C3=A1-lo como par=
+ente=20
+genu=C3=ADno.
+
+Solicito seu consentimento para apresent=C3=A1-lo como parente mais=20
+pr=C3=B3ximo de meu falecido cliente, j=C3=A1 que ambos t=C3=AAm o mesmo=20=
+
+sobrenome. Os fundos ser=C3=A3o ent=C3=A3o transferidos para voc=C3=AA como=
+=20
+benefici=C3=A1rio e compartilhados de acordo com um padr=C3=A3o/propor=C3=
+=A7=C3=A3o=20
+de compartilhamento proposto de 60:40, ou seja, 60% para mim e=20
+40% para voc=C3=AA. Por favor, entre em contato comigo imediatamente=20
+para obter mais informa=C3=A7=C3=B5es.
+
+Cumprimentos
+Mustaf=C3=A1 Ayvaz
