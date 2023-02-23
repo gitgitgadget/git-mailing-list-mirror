@@ -2,72 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86FE0C636D6
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 03:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8C2BC61DA4
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 04:10:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232867AbjBWDUI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Feb 2023 22:20:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33100 "EHLO
+        id S232770AbjBWEKB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Feb 2023 23:10:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230114AbjBWDUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Feb 2023 22:20:05 -0500
-Received: from smtp16.i.mail.ru (smtp16.i.mail.ru [95.163.41.69])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8090231E30
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 19:20:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail4;
-        h=Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:To:Message-ID:Reply-To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=bivggzPj/64qGm+9huC7/55+dmOeUi+8WoxkhGUbCf0=;
-        t=1677122400;x=1677212400; 
-        b=qZOIKFf+0S+vpLKKgxCAaTWvTuZiIZD8Ip15Fu1l2BCxUgwAWyikmoVmWDJZyJqnzjvnoR1NWTgCm3/cr0aNT/3U2fa0wfsKcxwepqkpqnzlGIs/CLZyCbww12EXPZeO+YfMO9zWrFi0Wg7kr3iaufc9B4CAkyl41gc/N3TQ/cmAml9vi05dAYn9SXl3o5WPdiyilPFBFZKNEov8WSfS3ru8UuRz2JcqDcTHMtKSmLrjdqAa4/BNlS6WWUwwPAJYzZAI9hsZHABbJmtt9nFwtEDG+kHGJy4CzuQtWTsbimDU2qj46NwwVcv8OtiGx/zrpZ8JJ9IxzM2kRycNd5vEcw==;
-Received: by smtp16.i.mail.ru with esmtpa (envelope-from <andry@inbox.ru>)
-        id 1pV29E-009ad5-V8
-        for git@vger.kernel.org; Thu, 23 Feb 2023 06:19:57 +0300
-Date:   Thu, 23 Feb 2023 06:21:01 +0300
-From:   Andry <andry@inbox.ru>
-Reply-To: Andry <andry@inbox.ru>
-Message-ID: <942870379.20230223062101@inbox.ru>
-To:     git@vger.kernel.org
-Subject: Get rid of `warning: refs/remotes/origin/master usually tracks 
-  refs/heads/master, not refs/remotes/origin/master`
+        with ESMTP id S232995AbjBWEJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Feb 2023 23:09:59 -0500
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCB6F4346F
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 20:09:58 -0800 (PST)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-17211366c6aso12464853fac.13
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 20:09:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hugsJn4mH2NhdJl/Xfnor4JNOeUm44FUXk0iNfS7G/c=;
+        b=BK/jlRAuzxVp5QvqlMOhHslZkDexrowOgKbc12loWaIEWz5Wj8cqUomdX+FoBHS0jQ
+         KLp6zz+nfbMjzalwOoXqhYN+WoTVaAa84ZHizY7HLUPIh7LnRqizGQ/G7gc5b9l7gG2k
+         9XIWrJqQ7VWsV3HlsQFuvcro3CqCv4GEcVl9luMF3W+Oepqlk6POjb3k8WLXUmbn6fiN
+         MFKaDGiXQm90fqCBF3UTNwz2MgBeayIjHrawOAH7ZZ06dYt8naJLcZq3Zd4C8dN/8pSW
+         7i3y2iIkR2h1GHr+abMM2t2CHEXjhNEpos6JuhYhyR/ZwZA4aev/UH7EXbq7rKbkTie0
+         LNFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hugsJn4mH2NhdJl/Xfnor4JNOeUm44FUXk0iNfS7G/c=;
+        b=Vw512PV/3fpzr+DWKmXqILOytGIEtN6udhoOGCg9c967n75gXK76dwU4j3y05/fzOu
+         7qf3tld43LgVWXpULS/55vCfIn2WIsx+CLAhVWnz3ifbIcN6bcdYc+RU/m5RcPT07h1q
+         gH2CAZIIctWSROuwHLzV27y4Xcn/xqMn1JAaDmWpF+h9+OZaxfu48GbFM1beNDm/T+/v
+         9hceZyzI70pdCdmLzpoeKbez/LfC+eFBlm/dU9E8CBORwMzxl2D4WSXgLuLqso6y6Bv7
+         oqmmkx1Rtlg0e2add00Mtk1fFpTp6YXi9DU+Zq8ZpuSNpFPOu8eb2P1XCDNJAZUbtZ0Q
+         J0kQ==
+X-Gm-Message-State: AO0yUKVMypf0N/Yklc00E3izohEnWTBChgIxzQsciAkKKsZw99gsNAtu
+        9A08SxKV6m7aPQ6poS1+CyZTh1esN5K2LeW2DjUNgn1JGPg=
+X-Google-Smtp-Source: AK7set+oaPMnxa3YI8WDc1rQdD6dOILZQQyRJZJ5yqP9TxbsJ7Ln6lgYaeWjey17CAHfUPVY4PyPcsl/hWwYLu5F8+0=
+X-Received: by 2002:a05:6870:414b:b0:163:ce19:4435 with SMTP id
+ r11-20020a056870414b00b00163ce194435mr2688329oad.229.1677125398026; Wed, 22
+ Feb 2023 20:09:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Authentication-Results: smtp16.i.mail.ru; auth=pass smtp.auth=andry@inbox.ru smtp.mailfrom=andry@inbox.ru
-X-Mailru-Src: smtp
-X-7564579A: 78E4E2B564C1792B
-X-77F55803: 4F1203BC0FB41BD9806C989EC2150E33C13C456498AA74328729F4FEF7F411FF182A05F538085040FEF8086DA0A194B646304ADED9E0A50AAE46356B713B88A64082BD11F6E1FF0A
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE72F22E6DC541F75D9EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006375448D590B04CE87D8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D89342F3AFD5E3E3DA10CB685C5EC079F06F9789CCF6C18C3F8528715B7D10C86878DA827A17800CE78C592797616C97AB9FA2833FD35BB23D9E625A9149C048EEC8105B04EFE076286FD1C55BDD38FC3FD2E47CDBA5A96583BD4B6F7A4D31EC0BC014FD901B82EE079FA2833FD35BB23D27C277FBC8AE2E8BF9A01DE6F10AE89AA471835C12D1D977C4224003CC836476EB9C4185024447017B076A6E789B0E975F5C1EE8F4F765FC3B9A64F0CD80A8333AA81AA40904B5D9CF19DD082D7633A078D18283394535A93AA81AA40904B5D98AA50765F79006375908BCD2CB23604ED81D268191BDAD3D3666184CF4C3C14F3FC91FA280E0CE3D1A620F70A64A45A98AA50765F79006372E808ACE2090B5E1725E5C173C3A84C3C5EA940A35A165FF2DBA43225CD8A89F890A246B268E114E42539A7722CA490CB5C8C57E37DE458BEDA766A37F9254B7
-X-C1DE0DAB: 0D63561A33F958A59BF989632FC4DC818DDA5F708276A55E3D34361A363287CB4EAF44D9B582CE87C8A4C02DF684249C2E763F503762DF50375C7842B4748C21
-X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D3441661D6226BE8C317A3613A770DE38B05A26026E72A354A9A8494D159FEEC2FF9DACA88A0298A1CE1D7E09C32AA3244C53472296C22FE35B88E559205DDDDAC63C6EB905E3A8056B3EB3F6AD6EA9203E
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojbL9S8ysBdXiy5l4lFtfQQ73pR38zstB4
-X-Mailru-Sender: DC3EB4EBD01594E4BED89F5F1533D14ECC84A2B3D8F0749B46304ADED9E0A50AAB37CED9C72D1F6058EE59803C9A990DFB559BB5D741EB96FE679880309AA8C36F53C80213D1719C67EA787935ED9F1B
-X-Mras: Ok
+References: <20230222011317.97943-1-gvivan6@gmail.com> <a6b0cf3b-af44-3d35-3de1-62aaf65f1543@github.com>
+In-Reply-To: <a6b0cf3b-af44-3d35-3de1-62aaf65f1543@github.com>
+From:   Vivan Garg <v.garg.work@gmail.com>
+Date:   Wed, 22 Feb 2023 21:09:46 -0700
+Message-ID: <CADupsJNVV+GqV9+On6rWiDfVE4ryCvtwzcLAN_GuDcysKXyACQ@mail.gmail.com>
+Subject: Re: [PATCH] Documentation/MyFirstContribution: add setup template for
+ git send-email
+To:     Victoria Dye <vdye@github.com>
+Cc:     Vivan Garg <gvivan6@gmail.com>, git@vger.kernel.org,
+        Emily Shaffer <nasamuffin@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Git,
+> It's generally good practice to CC contributors that have been recently
+> and/or heavily involved in the code you're changing. Given that, I've CC'd
+> Emily Shaffer (original author of the doc, including the section you'd like
+> to change).
 
-Found this issue and could find a solution.
+I see, will do in the future.
 
-Repro steps:
+> Earlier commits related to this file start with just "MyFirstContribution:",
+> so you can leave out the "Documentation/" prefix to stay under the 50
+> character width.
 
-1. create a simple repo with only the master branch.
-2. `git pull origin *:*` to allocate all refs (no warnings)
+Noted.
 
-If try to mirror the repo into the same remote:
+> The section you're replacing explicitly states that providing example
+> configuration is out of scope for this document. That's for good reason; the
+> example config you've provided isn't universal to all developer setups. It
+> would be more confusing to a new contributor if we recommended a config
+> that's incompatible with their setup than if we left it open-ended as it is
+> now.
 
-1. `git push origin --mirror`
+Oh, I thought you had to set these parameters, i.e. smtpServer, smtpServerPort,
+smtpEncryption, smtpUser, and smtpPass in gitConfig regardless of the setup (I
+did some googling as well). However, I'll take your word for it that it may be
+incompatible with some setups. Thanks for pointing that out!
 
-Then the remote counter part falls into the mirror state and reports the warning:
+> However, if you still want to make the guidance in this section more
+> specific, you could add a 'linkgit:git-config' link and note that the
+> relevant SMTP configs are under the 'sendemail' section.
 
-1. `git pull origin *:*`
-
-```
-warning: refs/remotes/origin/master usually tracks refs/heads/master, not refs/remotes/origin/master
-Already up to date.
-```
-
-Tried to delete all refs in the local and remote. But didn't work. Somehow the remove remember the state.
-
-Is there a way to unmirror the remote repository back?
-
+That sounds like a good addition! I'll do it then. Thanks!
