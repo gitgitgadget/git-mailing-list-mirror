@@ -2,61 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82CDBC61DA4
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 23:37:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11171C61DA4
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 23:37:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbjBWXhD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 18:37:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54532 "EHLO
+        id S229576AbjBWXhJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 18:37:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbjBWXhC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 18:37:02 -0500
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D605A60113
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 15:36:54 -0800 (PST)
-Received: by mail-pl1-x636.google.com with SMTP id z2so15052124plf.12
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 15:36:54 -0800 (PST)
+        with ESMTP id S229567AbjBWXhH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 18:37:07 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 444A95BB80
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 15:37:03 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id oe18-20020a17090b395200b00236a0d55d3aso953663pjb.3
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 15:37:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=lHuzniYQbW+KsfMMFtEqrrW20NoIOvymn8NRhcCniNM=;
-        b=BiZXvInzw0Yu5KhXftv7OV7O1o8R4fbv6DIZ2r6ggB9pyMjz7mWyP6G6c7cINWGMWz
-         EF4CGw+cX0xEyBGybONk31bYa/LVUd5lFqvkVKu4VMpnpf4t63qtcXMGIbOS6n1zPkwK
-         4MiSYGOo+RGTc8mXXyH+r6f1xf2FSzvUfE9jiQxy5HNJn4SYt6zHzbS0aKGIVwdT7wbw
-         34vm807c9i/PQ0pA3dvEvKG8zwYj8h60pxNf6R+Mp3fNIpBcWq6TwJmxJoYJCn7CR//s
-         PWIQVbm6BRWxVtVMotS844olMO6nsb1xnzjxYJXQPiIfDTppQQmhYrMHqpDJWx1j2MVA
-         2bLw==
+        bh=j6T+4PO053fjpK2nl2IducfqbHtbFVEA2UFUYV1m98c=;
+        b=NYjNavFszMOh6NCbZadO9wNeE1Ab4EoQ9sJBQXK7BQdFISKEzYtnJDEpJ0oEavm7Du
+         fz/v4kETGct+7ZTYd9LtHUpNrMZssgS8gK6VuacjXACc36E2U9Mk1n01uPbIoUHwcHtM
+         Unz+ERdi1haWev+uULuhLZWgE5Tvpnan43VUgIRWSuUrZbuK3GtkUdiU1aqXRdAiaP7J
+         tJeHmOCwGSS7Pz0W/rN+v47D8fJ4LKDk0kE6FFLdxVtgSa/VBLqrD8m3rjEkFjwoGkQf
+         UIgvqRh848SRWuHBaQfAvPew71kryeBOEJceybrcIE7dCAoB4HzpTIH8Smd0DJDpcTyT
+         tasA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lHuzniYQbW+KsfMMFtEqrrW20NoIOvymn8NRhcCniNM=;
-        b=66ZtgAOQx8QbsgGD8rweoEReZBN63vQ42nUsj3bYuOV0fFYhRz/59JppHWhh1cbtUM
-         Bpi2fYCzneaiV5uhWr45LDTWB99Y2tva/EcWL/a2dyzlYz+jBt2qc5SBkm1UFE6Wtmt6
-         6630huK8jcFOZw/VuEkgVk8MNiJiLxJgr27wtylrMecgw4IDOpdUV4mBq4busb7FDtfP
-         9B/veQ82avlyqw3Dk/s8IHhe/wIdcYfX567r+fOuyw0eEZwU1rmU4ACLvhQRNVL7g0tk
-         G/G9RA7vTplNLGn0+oyciqpDlOvg4XhkF/NPnlWfveLnrp3RXR3SWCriibytLszb5BpC
-         v6qw==
-X-Gm-Message-State: AO0yUKXq5lNY79jv9R4Ula/7GLiIBajU9qN0QMl+bWcfuKkgzhoQINtx
-        Pb3cqScISWRj29DeqNuKK04=
-X-Google-Smtp-Source: AK7set+JrVFNrrMqO1LPi1SP6L3Le8fP88qlmaRm0ELrKDga1xdGRKbtk3JT4IwUoVUAfX3C1do0Ow==
-X-Received: by 2002:a17:902:d482:b0:19c:356f:e98f with SMTP id c2-20020a170902d48200b0019c356fe98fmr16360717plg.60.1677195413737;
-        Thu, 23 Feb 2023 15:36:53 -0800 (PST)
+        bh=j6T+4PO053fjpK2nl2IducfqbHtbFVEA2UFUYV1m98c=;
+        b=eWkD7TsjAsNU2HY0RDpoN63Wd6Ea+xl+K05UWQ5fngUsajrLUYU3w7LWX7S3T+lnMA
+         MylO4ciybctiCDoCoTBy4zkjkolqFPsVphtt+DEb0WOUXW+qU9ve9lkNx1SYu/xVUsen
+         xzjLO1iczZp1Hnu7E4Mdy4RJZRrVID4hYD7Qwgd1uXMz4i2WPybp2BBN7dn98jPkWQDx
+         qfLUcrrsHSt8WCKRPAA2IWTRb4i0RRtmEeJWX9T0ixyqOw6j+dkFFr5SiApRIcRAVViN
+         ueBTLG8HJlThWUu5gWR3mYfzc7VaYOsWQTSclYw7P0pPbDTICAznEAsLBNJkjy9FjxNu
+         YWFA==
+X-Gm-Message-State: AO0yUKUHemQ/v4fHyV9GCZx+F8IJTXnFkrTVtGkwsPlrjreP5Sh27P/c
+        bevdBInM+8j+kcl2Bnzj8qs=
+X-Google-Smtp-Source: AK7set8tgnA6Hjc/PQzHZTYezaJzToUV1zKECdsX6onbocUN+G7DpJA9npdoxB7XqKL9XFzr6qbsqA==
+X-Received: by 2002:a05:6a20:3d22:b0:bc:96bd:d701 with SMTP id y34-20020a056a203d2200b000bc96bdd701mr17190529pzi.13.1677195422644;
+        Thu, 23 Feb 2023 15:37:02 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id 2-20020a170902c10200b00189743ed3b6sm3858657pli.64.2023.02.23.15.36.53
+        by smtp.gmail.com with ESMTPSA id c17-20020aa781d1000000b005a8aab9ae7esm2103590pfn.216.2023.02.23.15.37.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 15:36:53 -0800 (PST)
+        Thu, 23 Feb 2023 15:37:02 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 04/16] t5551: drop redundant grep for Accept-Language
+Subject: Re: [PATCH 14/16] t/lib-httpd: enable HTTP/2 "h2" protocol, not
+ just h2c
 References: <Y/dEYYWKy/o96vBG@coredump.intra.peff.net>
-        <Y/dFWqzaCeCbmGUs@coredump.intra.peff.net>
-Date:   Thu, 23 Feb 2023 15:36:53 -0800
-Message-ID: <xmqqmt543qei.fsf@gitster.g>
+        <Y/dIxHI9iB5KGOR5@coredump.intra.peff.net>
+Date:   Thu, 23 Feb 2023 15:37:01 -0800
+Message-ID: <xmqqfsaw3qea.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,43 +67,37 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> Commit b0c4adcdd7 (remote-curl: send Accept-Language header to server,
-> 2022-07-11) added tests to make sure the header is sent via HTTP.
-> However, it checks in two places:
+> Commit 73c49a4474 (t: run t5551 tests with both HTTP and HTTP/2,
+> 2022-11-11) added Apache config to enable HTTP/2. However, it only
+> enabled the "h2c" protocol, which allows cleartext HTTP/2 (generally
+> based on an upgrade header during an HTTP/1.1 request). This is what
+> t5559 is generally testing, since by default we don't set up SSL/TLS.
 >
->   1. In the expected trace output, we check verbatim for the header and
->      its value.
->
->   2. Afterwards, we grep for the header again in the trace file.
->
-> This (2) is probably cargo-culted from the earlier grep for
-> Accept-Encoding. It is needed for the encoding because we smudge the
-> value of that header when doing the verbatim check; see 1a53e692af
-> (remote-curl: accept all encodings supported by curl, 2018-05-22).
->
-> But we don't do so for the language header, so any problem that the
-> "grep" would catch in (2) would already have been caught by (1).
+> However, it should be possible to run t5559 with LIB_HTTPD_SSL set. In
+> that case, Apache will advertise support for HTTP/2 via ALPN during the
+> TLS handshake. But we need to tell it support "h2" (the non-cleartext
+> version) to do so. Without that, then curl does not even try to do the
+> HTTP/1.1 upgrade (presumably because after seeing that we did TLS but
+> didn't get the ALPN indicator, it assumes it would be fruitless).
 
-Makes sense.
+Wow, that is tricky.  Nicely found and fixed.
 
 >
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  t/t5551-http-fetch-smart.sh | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
+>  t/lib-httpd/apache.conf | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index 10b7e7cda2..29d489768e 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -103,10 +103,7 @@ test_expect_success 'clone http repository' '
->  		test_cmp exp actual.smudged &&
+> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+> index 51a4fbcf62..693b75e0ae 100644
+> --- a/t/lib-httpd/apache.conf
+> +++ b/t/lib-httpd/apache.conf
+> @@ -31,7 +31,7 @@ ErrorLog error.log
 >  
->  		grep "Accept-Encoding:.*gzip" actual >actual.gzip &&
-> -		test_line_count = 2 actual.gzip &&
-> -
-> -		grep "Accept-Language: ko-KR, *" actual >actual.language &&
-> -		test_line_count = 2 actual.language
-> +		test_line_count = 2 actual.gzip
->  	fi
->  '
+>  <IfDefine HTTP2>
+>  LoadModule http2_module modules/mod_http2.so
+> -Protocols h2c
+> +Protocols h2 h2c
+>  </IfDefine>
+>  
+>  <IfModule !mod_auth_basic.c>
