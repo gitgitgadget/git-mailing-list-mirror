@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A330DC61DA4
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 08:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B79AC6379F
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 08:06:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233504AbjBWIGI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 03:06:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59678 "EHLO
+        id S233509AbjBWIGK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 03:06:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232470AbjBWIFn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 03:05:43 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD24A46179
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:33 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id j3so5872541wms.2
+        with ESMTP id S231493AbjBWIFp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 03:05:45 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 320CB497C9
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:34 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id l7-20020a05600c4f0700b003e79fa98ce1so5424608wmq.2
         for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nWH+lbvYbZJRfMscZUM14OjSDoGZkbcyJPYWEsglvgs=;
-        b=oK4EC0gtOXu7+QwRQmmUB0a3UJ1ri3uEFSUbvoxaOrlviStBlqYcFrAnePT6rZ+miF
-         +2p6ir12NctwMpC080Qqwoxb3UlMds7fZZkiUnL18pppFf8t+UGm8dHA9SMEw5kUswvV
-         tqVmtAmXxxTdxFIIwDZNWBcEzF7boQ6CpD/g/Z8jJf+ZCM4SZeWY/12NuCbFJndWjph4
-         O8MWiy5r2l4UVL/ZhI3WIcr3y70iNSjD1hbIU1SJjjMhLm3tFpqxm6d+UIqUwU4X4uSw
-         FRLxpV//ckmcNHsvnJ2pLinXsFxPOQ33T8PKYSx7Eldjr+2evZcJO6dHGBYZrk8rfXjE
-         IQnA==
+        bh=0J5ag7W8Qc7Fj5Xtx5vyk+neaYs5Q6+VWJ09EaED+KU=;
+        b=fQvFwyCaO7CgB9XOUfvXQBLZw3HqLZitPXT4+m0pm8SI018udrpkBWoZT+QCFE+48V
+         hvhQctqXl0Jy999d4uoYPMhyPwzmKTKKTmh1NTEjXwKocEIoWffrVb/nwWU3rFetX1oP
+         L5hMd+mR1dr6eiaAexWfTKPidmItFDbktF2cFg13tLBYUSCZHTdB5iLScKx2Hwswf7ij
+         mxTGs/cW3tL5wRB3zzHLsLKmtk9kceNGwuLD09fVd7NnjRfOSFaaFENkiJej4aGMtiGF
+         IykH/cp1Hx4mSSjwPLIenwVrz0bkM6bHlZMopk/8GXe44JnBR28/+I2NS9F7ZNuBlOiW
+         FUfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nWH+lbvYbZJRfMscZUM14OjSDoGZkbcyJPYWEsglvgs=;
-        b=bak3dT45r85oUBL4mmOUhOPPTKwsOnkoEodBt/m0W0FVda5V4ltXdwd2u87MF+BiCF
-         4sBVTI5jr3TMl8AOKpGzu0NV64NNu9NEwj5U0KseF3T8qKYk2DAQmwKKn0rO9E+AIeLm
-         UnsYp2fNrVcfOQfvLT5a1wQQE5wl+LQAQ5xFH+WOqCcwjrjOnnBq5CjarJd7wXe6UcrP
-         K6IJEPv+QDMK4rlUztUFCDQA4icnBx/ZZQxQ8PyK1Wb3jbtiNK9aEmrfkOHjbvS4L+if
-         25Scl5wqpbH7TJDxy9WdheLJe/GZ3IasaUou/AIVBTCV1Nqvn+Y7ZTOWuX0oHUMksu94
-         27pQ==
-X-Gm-Message-State: AO0yUKV1wf4IjWtkeWXmdNb3c8rJu7RePZm8lTJxPpW8ovw/2oqAijnt
-        u+4idVvikvFG6Ikg0ghkzuR7IYVW9eU=
-X-Google-Smtp-Source: AK7set8n6JvEWFZ04eS+UR04Zwj2aCHDT8IEOlYFJxKNc2pBd9P1E5/C5zn3B1/Oid+3bgIga2YScA==
-X-Received: by 2002:a05:600c:a695:b0:3df:f7db:9cdf with SMTP id ip21-20020a05600ca69500b003dff7db9cdfmr8354875wmb.0.1677139531682;
-        Thu, 23 Feb 2023 00:05:31 -0800 (PST)
+        bh=0J5ag7W8Qc7Fj5Xtx5vyk+neaYs5Q6+VWJ09EaED+KU=;
+        b=oiwEM12r2mFf82bLQBnkxKwUV5sLl9/GlkharHfuT7yZqcsKOSc6GfrRnq6qRlGvEW
+         SdwJl6Bqqp3ZBE8OQHttGpeJYmta+8CQRo0Jo/MYpTeWaY8x3EcSNbhD7RrJOHYbmJo1
+         Hp8UWunCJSblhBsf086uWlLA/27OgkPjTeoll7K6mCUCVqgpfKSr0F+vprWf73Qbb1ZK
+         XujhBrG+AA3+SqUMMGmi0GMy+iK4So0qikfjsKztpdpaMOgWE8uxgQsEaIZhSFlD+2+I
+         XTZK+MibSlXxFiNty1kTPbETCp27da6KQ+uu6kKEQGSzd1PjIG4L/0CHi0x4i9FRMkaC
+         TPuQ==
+X-Gm-Message-State: AO0yUKU6BIA6hrRrSWUYNbabaTF5oMHYpSd8DHthi2tOs9klAVpBBHjp
+        S5+UhVvrAvAoIwdEy2hJ9dfwlz4KXxQ=
+X-Google-Smtp-Source: AK7set+0oXNemmuIPvYcpg8N+IYk6B85Rh8EAKB+jcZtL+/G3g0uDEHDKymF39xW8psithjXN6xF3w==
+X-Received: by 2002:a05:600c:44c5:b0:3e2:cf0:4087 with SMTP id f5-20020a05600c44c500b003e20cf04087mr6571054wmo.32.1677139532449;
+        Thu, 23 Feb 2023 00:05:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a5-20020a05600c224500b003dc1a525f22sm7669589wmm.25.2023.02.23.00.05.31
+        by smtp.gmail.com with ESMTPSA id 1-20020a05600c274100b003dfe549da4fsm10916366wmw.18.2023.02.23.00.05.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 00:05:31 -0800 (PST)
-Message-Id: <0446ab61d6f1b72969aa6a5ee7fbbac4aee331cd.1677139522.git.gitgitgadget@gmail.com>
+        Thu, 23 Feb 2023 00:05:32 -0800 (PST)
+Message-Id: <c42261483cff903c8742fd8e1423ac0b14c65099.1677139522.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
 References: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Feb 2023 08:05:16 +0000
-Subject: [PATCH 11/16] dir.h: refactor to no longer need to include cache.h
+Date:   Thu, 23 Feb 2023 08:05:17 +0000
+Subject: [PATCH 12/16] object-store.h: move struct object_info from cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,177 +69,204 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Moving a few functions around allows us to make dir.h no longer need to
-include cache.h.  This commit is best viewed with:
-    git log -1 -p --color-moved
+Move struct object_info, and a few related #define's from cache.h to
+object-store.h.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- cache.h             | 31 +++++++++++--------------------
- dir.h               | 16 ++--------------
- pathspec.h          |  5 +++++
- statinfo.h          | 24 ++++++++++++++++++++++++
- trace2/tr2_sysenv.c |  2 +-
- 5 files changed, 43 insertions(+), 35 deletions(-)
- create mode 100644 statinfo.h
+ merge-blobs.c    |   2 +-
+ object-store.h   | 128 +++++++++++++++++++++++------------------------
+ protocol-caps.c  |   1 +
+ replace-object.h |   1 +
+ 4 files changed, 67 insertions(+), 65 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index af15701b063..774d8c6bdfd 100644
---- a/cache.h
-+++ b/cache.h
-@@ -15,9 +15,11 @@
- #include "hash.h"
- #include "hex.h"
- #include "path.h"
-+#include "pathspec.h"
- #include "object.h"
- #include "oid-array.h"
- #include "repository.h"
-+#include "statinfo.h"
- #include "mem-pool.h"
- 
- typedef struct git_zstream {
-@@ -120,26 +122,6 @@ struct cache_header {
- #define INDEX_FORMAT_LB 2
- #define INDEX_FORMAT_UB 4
- 
--/*
-- * The "cache_time" is just the low 32 bits of the
-- * time. It doesn't matter if it overflows - we only
-- * check it for equality in the 32 bits we save.
-- */
--struct cache_time {
--	uint32_t sec;
--	uint32_t nsec;
--};
--
--struct stat_data {
--	struct cache_time sd_ctime;
--	struct cache_time sd_mtime;
--	unsigned int sd_dev;
--	unsigned int sd_ino;
--	unsigned int sd_uid;
--	unsigned int sd_gid;
--	unsigned int sd_size;
--};
--
- struct cache_entry {
- 	struct hashmap_entry ent;
- 	struct stat_data ce_stat_data;
-@@ -295,6 +277,15 @@ static inline unsigned int canon_mode(unsigned int mode)
- 	return S_IFGITLINK;
- }
- 
-+static inline int ce_path_match(struct index_state *istate,
-+				const struct cache_entry *ce,
-+				const struct pathspec *pathspec,
-+				char *seen)
-+{
-+	return match_pathspec(istate, pathspec, ce->name, ce_namelen(ce), 0, seen,
-+			      S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
-+}
-+
- #define cache_entry_size(len) (offsetof(struct cache_entry,name) + (len) + 1)
- 
- #define SOMETHING_CHANGED	(1 << 0) /* unclassified changes go here */
-diff --git a/dir.h b/dir.h
-index 8acfc044181..fc4386ae50e 100644
---- a/dir.h
-+++ b/dir.h
-@@ -1,8 +1,9 @@
- #ifndef DIR_H
- #define DIR_H
- 
--#include "cache.h"
- #include "hashmap.h"
-+#include "pathspec.h"
-+#include "statinfo.h"
- #include "strbuf.h"
- 
- /**
-@@ -363,10 +364,6 @@ int count_slashes(const char *s);
- int simple_length(const char *match);
- int no_wildcard(const char *string);
- char *common_prefix(const struct pathspec *pathspec);
--int match_pathspec(struct index_state *istate,
--		   const struct pathspec *pathspec,
--		   const char *name, int namelen,
--		   int prefix, char *seen, int is_dir);
- int report_path_error(const char *ps_matched, const struct pathspec *pathspec);
- int within_depth(const char *name, int namelen, int depth, int max_depth);
- 
-@@ -533,15 +530,6 @@ int submodule_path_match(struct index_state *istate,
- 			 const char *submodule_name,
- 			 char *seen);
- 
--static inline int ce_path_match(struct index_state *istate,
--				const struct cache_entry *ce,
--				const struct pathspec *pathspec,
--				char *seen)
--{
--	return match_pathspec(istate, pathspec, ce->name, ce_namelen(ce), 0, seen,
--			      S_ISDIR(ce->ce_mode) || S_ISGITLINK(ce->ce_mode));
--}
--
- static inline int dir_path_match(struct index_state *istate,
- 				 const struct dir_entry *ent,
- 				 const struct pathspec *pathspec,
-diff --git a/pathspec.h b/pathspec.h
-index 41f6adfbb42..a5b38e0907a 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -171,6 +171,11 @@ int match_pathspec_attrs(struct index_state *istate,
- 			 const char *name, int namelen,
- 			 const struct pathspec_item *item);
- 
-+int match_pathspec(struct index_state *istate,
-+		   const struct pathspec *pathspec,
-+		   const char *name, int namelen,
-+		   int prefix, char *seen, int is_dir);
-+
- /*
-  * Determine whether a pathspec will match only entire index entries (non-sparse
-  * files and/or entire sparse directories). If the pathspec has the potential to
-diff --git a/statinfo.h b/statinfo.h
-new file mode 100644
-index 00000000000..e49e3054eaa
---- /dev/null
-+++ b/statinfo.h
-@@ -0,0 +1,24 @@
-+#ifndef STATINFO_H
-+#define STATINFO_H
-+
-+/*
-+ * The "cache_time" is just the low 32 bits of the
-+ * time. It doesn't matter if it overflows - we only
-+ * check it for equality in the 32 bits we save.
-+ */
-+struct cache_time {
-+	uint32_t sec;
-+	uint32_t nsec;
-+};
-+
-+struct stat_data {
-+	struct cache_time sd_ctime;
-+	struct cache_time sd_mtime;
-+	unsigned int sd_dev;
-+	unsigned int sd_ino;
-+	unsigned int sd_uid;
-+	unsigned int sd_gid;
-+	unsigned int sd_size;
-+};
-+
-+#endif
-diff --git a/trace2/tr2_sysenv.c b/trace2/tr2_sysenv.c
-index a380dcf9105..069786cb927 100644
---- a/trace2/tr2_sysenv.c
-+++ b/trace2/tr2_sysenv.c
+diff --git a/merge-blobs.c b/merge-blobs.c
+index 8138090f81c..aedcab81138 100644
+--- a/merge-blobs.c
++++ b/merge-blobs.c
 @@ -1,4 +1,4 @@
 -#include "cache.h"
 +#include "git-compat-util.h"
- #include "config.h"
- #include "dir.h"
- #include "tr2_sysenv.h"
+ #include "run-command.h"
+ #include "xdiff-interface.h"
+ #include "ll-merge.h"
+diff --git a/object-store.h b/object-store.h
+index 1a713d89d7c..82201ec3e7b 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -1,7 +1,7 @@
+ #ifndef OBJECT_STORE_H
+ #define OBJECT_STORE_H
+ 
+-#include "cache.h"
++#include "object.h"
+ #include "oidmap.h"
+ #include "list.h"
+ #include "oid-array.h"
+@@ -284,6 +284,69 @@ int pretend_object_file(void *, unsigned long, enum object_type,
+ 
+ int force_object_loose(const struct object_id *oid, time_t mtime);
+ 
++struct object_info {
++	/* Request */
++	enum object_type *typep;
++	unsigned long *sizep;
++	off_t *disk_sizep;
++	struct object_id *delta_base_oid;
++	struct strbuf *type_name;
++	void **contentp;
++
++	/* Response */
++	enum {
++		OI_CACHED,
++		OI_LOOSE,
++		OI_PACKED,
++		OI_DBCACHED
++	} whence;
++	union {
++		/*
++		 * struct {
++		 * 	... Nothing to expose in this case
++		 * } cached;
++		 * struct {
++		 * 	... Nothing to expose in this case
++		 * } loose;
++		 */
++		struct {
++			struct packed_git *pack;
++			off_t offset;
++			unsigned int is_delta;
++		} packed;
++	} u;
++};
++
++/*
++ * Initializer for a "struct object_info" that wants no items. You may
++ * also memset() the memory to all-zeroes.
++ */
++#define OBJECT_INFO_INIT { 0 }
++
++/* Invoke lookup_replace_object() on the given hash */
++#define OBJECT_INFO_LOOKUP_REPLACE 1
++/* Allow reading from a loose object file of unknown/bogus type */
++#define OBJECT_INFO_ALLOW_UNKNOWN_TYPE 2
++/* Do not retry packed storage after checking packed and loose storage */
++#define OBJECT_INFO_QUICK 8
++/*
++ * Do not attempt to fetch the object if missing (even if fetch_is_missing is
++ * nonzero).
++ */
++#define OBJECT_INFO_SKIP_FETCH_OBJECT 16
++/*
++ * This is meant for bulk prefetching of missing blobs in a partial
++ * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK
++ */
++#define OBJECT_INFO_FOR_PREFETCH (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK)
++
++/* Die if object corruption (not just an object being missing) was detected. */
++#define OBJECT_INFO_DIE_IF_CORRUPT 32
++
++int oid_object_info_extended(struct repository *r,
++			     const struct object_id *,
++			     struct object_info *, unsigned flags);
++
+ /*
+  * Open the loose object at path, check its hash, and return the contents,
+  * use the "oi" argument to assert things about the object, or e.g. populate its
+@@ -381,69 +444,6 @@ static inline void obj_read_unlock(void)
+ 		pthread_mutex_unlock(&obj_read_mutex);
+ }
+ 
+-struct object_info {
+-	/* Request */
+-	enum object_type *typep;
+-	unsigned long *sizep;
+-	off_t *disk_sizep;
+-	struct object_id *delta_base_oid;
+-	struct strbuf *type_name;
+-	void **contentp;
+-
+-	/* Response */
+-	enum {
+-		OI_CACHED,
+-		OI_LOOSE,
+-		OI_PACKED,
+-		OI_DBCACHED
+-	} whence;
+-	union {
+-		/*
+-		 * struct {
+-		 * 	... Nothing to expose in this case
+-		 * } cached;
+-		 * struct {
+-		 * 	... Nothing to expose in this case
+-		 * } loose;
+-		 */
+-		struct {
+-			struct packed_git *pack;
+-			off_t offset;
+-			unsigned int is_delta;
+-		} packed;
+-	} u;
+-};
+-
+-/*
+- * Initializer for a "struct object_info" that wants no items. You may
+- * also memset() the memory to all-zeroes.
+- */
+-#define OBJECT_INFO_INIT { 0 }
+-
+-/* Invoke lookup_replace_object() on the given hash */
+-#define OBJECT_INFO_LOOKUP_REPLACE 1
+-/* Allow reading from a loose object file of unknown/bogus type */
+-#define OBJECT_INFO_ALLOW_UNKNOWN_TYPE 2
+-/* Do not retry packed storage after checking packed and loose storage */
+-#define OBJECT_INFO_QUICK 8
+-/*
+- * Do not attempt to fetch the object if missing (even if fetch_is_missing is
+- * nonzero).
+- */
+-#define OBJECT_INFO_SKIP_FETCH_OBJECT 16
+-/*
+- * This is meant for bulk prefetching of missing blobs in a partial
+- * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK
+- */
+-#define OBJECT_INFO_FOR_PREFETCH (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK)
+-
+-/* Die if object corruption (not just an object being missing) was detected. */
+-#define OBJECT_INFO_DIE_IF_CORRUPT 32
+-
+-int oid_object_info_extended(struct repository *r,
+-			     const struct object_id *,
+-			     struct object_info *, unsigned flags);
+-
+ /*
+  * Iterate over the files in the loose-object parts of the object
+  * directory "path", triggering the following callbacks:
+diff --git a/protocol-caps.c b/protocol-caps.c
+index bbde91810ac..29a5bc07bbe 100644
+--- a/protocol-caps.c
++++ b/protocol-caps.c
+@@ -4,6 +4,7 @@
+ #include "pkt-line.h"
+ #include "strvec.h"
+ #include "hash.h"
++#include "hex.h"
+ #include "object.h"
+ #include "object-store.h"
+ #include "string-list.h"
+diff --git a/replace-object.h b/replace-object.h
+index 3fbc32eb7b7..3c92ae94610 100644
+--- a/replace-object.h
++++ b/replace-object.h
+@@ -1,6 +1,7 @@
+ #ifndef REPLACE_OBJECT_H
+ #define REPLACE_OBJECT_H
+ 
++#include "cache.h"
+ #include "oidmap.h"
+ #include "repository.h"
+ #include "object-store.h"
 -- 
 gitgitgadget
 
