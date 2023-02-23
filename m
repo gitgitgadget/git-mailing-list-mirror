@@ -2,66 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7686C61DA4
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 19:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8286FC64ED8
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 19:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229915AbjBWTje (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 14:39:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33282 "EHLO
+        id S229589AbjBWTkW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 14:40:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbjBWTjd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 14:39:33 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C6FC1633A
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 11:39:27 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id n2so806675pfo.12
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 11:39:27 -0800 (PST)
+        with ESMTP id S229540AbjBWTkV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 14:40:21 -0500
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C713459E7A
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 11:40:18 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id e9so9287640plh.2
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 11:40:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uNcnHvtplhCuOhPqeph2IpkT92jFqmjvqvHXWTXTZIY=;
-        b=ZSAYY7NgYEFoZKCNvN3BNcpGeldxsGwn992Pf3JmW3lUbsPoQnhBE2S+3PhgZPTDMN
-         0CCQEed17KubaqBNWgMx6u4bXcejvh1FIKXsDpKcIyUI2y4vFWcaniqHcJ9ePfHhdmXH
-         WErg2tuDhIahYDMYrvR42bgLnljtM+pIJXb/Nbu0dYiP8Hbi2f+15P/yhha8zs4P1zG0
-         AwdAf04b73mjSFr9zDWHdtRsExqYex01fD3UUsjpvdN+rfnLoXuOpqWyE3hygnkZhvlp
-         usfBVEP5uGYNDN0zxL3Kq/1pYmz7WIyvjq2WwkaVBBqvibGB0Fgt51JmmhnuBCL3L9U/
-         rxTg==
+        bh=tnOo2Hi25//nqgejJw2vxlGboilIfgcHOUNUCrsvuGQ=;
+        b=QKyJGA7+aDvWvB9wqcFN65ii6vwxkwf+lmxcIpqEkY7INUIb/ZguhrFV0cAmK2D6tR
+         tpR34Pq4+qeZ00pf54edqk22IpYfNxEFJKT1QxXObRQ3TIjsn5uro2QNMJspnha1zkKz
+         rSbTVM95m4NnotlTYbJ5qaGqQyM2APCDVmeKJGILyQjXrz++L/m/I51kkuqhCw1Bg9Jt
+         nBhS0XD37/53YMzBBuvG2edAIfzLAWCLXVlV8nDIaPsMiHuK+9nvkBr7nvQ+JSMwe3LK
+         xYIFgQOugBKVJU3J2VFck/EtjTzQe9JRqI18Jl8l7FEA54J5q20WWgWMDvdjrXipUINi
+         DbRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=uNcnHvtplhCuOhPqeph2IpkT92jFqmjvqvHXWTXTZIY=;
-        b=YW4Q3Uer45FBLpxCsbSDSRwvQYwPqSYf6PteJa3rfdA7sVv19CwDcY/ZDLV+OvS9/J
-         1CBX8HHcbhOmGjI3PBjo8q74oR50b6ZXrLQUcaQ52N6MMItv3ES2b/5uBmKRWdy/SyzS
-         JqpWXoaDoDLU/CIiA3r8EJ1wSEKlbpbEgWk29EBOCxw+PhjgvzOirto8zkrk+9qN1gaA
-         7pggR4wb1ZRgum/mCpqSutqAS7DJWWE4X6Sw2JYQ1cj7oHptPmLEJuyS0DsFicMtvE+c
-         nIt6LLwIN5fl0CvbwXEAVHmhfix6igyHD8eVelK5V6EYjlH9GLLLn7HxtSTV/8EwmIeI
-         b7NA==
-X-Gm-Message-State: AO0yUKViy86R/R80b9JRe89lIFlqloBFliLwGkcOl83/lccS+FQSR5Nt
-        7eeC36r6PzoWNuV7r6xEwSg=
-X-Google-Smtp-Source: AK7set98+paYurb+nTOZO1vrTt7Q1y0NnYWmD1iCZFwUhhSQIVWFdNIf3VnarVM36F0qtIdV64vvLg==
-X-Received: by 2002:a62:7bd8:0:b0:5ab:c004:5fc9 with SMTP id w207-20020a627bd8000000b005abc0045fc9mr11597434pfc.17.1677181166674;
-        Thu, 23 Feb 2023 11:39:26 -0800 (PST)
+        bh=tnOo2Hi25//nqgejJw2vxlGboilIfgcHOUNUCrsvuGQ=;
+        b=gij07L451mG+Pt9xZNYTeAuzckKDLDtr357xLTEPE/m8F+dvUaJSm38nxLpHUXyqiU
+         J6JfO+ucpG5ftjMgafOHDcUFPSvBGVkTEtVcypBRvSUEVzM12P2NkWAj1QkduxxPuISm
+         gZLum6U2r6++p61DrWZlkHtzdNW+lenCbIbqz8KMuVKFemvL7ZhR8UsEzH347qz57PX8
+         KBzSQds3othUCjuKrbUGOpu7A2ex7Gp+568WIue8GR+JfDRHAme11v04sO4xSnElKA0p
+         S/j+U8+u2Jomin0GIqsQCmOR9d0RUAZSdowQAqbsxkRlSnbkzEklib9xCJKcPTNJBZn9
+         mLYA==
+X-Gm-Message-State: AO0yUKUN8ueR4gH5PSL/CTL6zyGWvhGVtZHC++V8SEchRMQMQUDvUl4r
+        mH/y8ZPEvhEdf9F3lcICvUQ=
+X-Google-Smtp-Source: AK7set8kWrk6rI2OVfjSlmXQkpL3PKg/vkjg/CxvG0T61LDDGIUw+4T32S2F3CHbgD87SMQC3iVY/g==
+X-Received: by 2002:a17:90b:1808:b0:236:6dea:8795 with SMTP id lw8-20020a17090b180800b002366dea8795mr12785797pjb.14.1677181218102;
+        Thu, 23 Feb 2023 11:40:18 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id q15-20020a62ae0f000000b005a9131b6668sm2446695pff.2.2023.02.23.11.39.26
+        by smtp.gmail.com with ESMTPSA id x2-20020a17090a9dc200b0023493354f37sm79149pjv.26.2023.02.23.11.40.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 11:39:26 -0800 (PST)
+        Thu, 23 Feb 2023 11:40:17 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>,
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>,
         Elijah Newren <newren@gmail.com>
 Subject: Re: [PATCH 05/16] alloc.h: move ALLOC_GROW() functions from cache.h
 References: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
         <ec6f2518b9dddbaaaf101b0f87a2db377fef3c6b.1677139522.git.gitgitgadget@gmail.com>
-Date:   Thu, 23 Feb 2023 11:39:25 -0800
-In-Reply-To: <ec6f2518b9dddbaaaf101b0f87a2db377fef3c6b.1677139522.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Thu, 23 Feb 2023
-        08:05:10 +0000")
-Message-ID: <xmqqwn486uj6.fsf@gitster.g>
+        <536338b8-2189-04f3-7ed6-dbe640c73c9f@github.com>
+Date:   Thu, 23 Feb 2023 11:40:17 -0800
+In-Reply-To: <536338b8-2189-04f3-7ed6-dbe640c73c9f@github.com> (Derrick
+        Stolee's message of "Thu, 23 Feb 2023 09:06:06 -0500")
+Message-ID: <xmqqsfew6uhq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,17 +70,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Derrick Stolee <derrickstolee@github.com> writes:
 
-> From: Elijah Newren <newren@gmail.com>
+> On 2/23/2023 3:05 AM, Elijah Newren via GitGitGadget wrote:
+>> From: Elijah Newren <newren@gmail.com>
+>> 
+>> This allows us to replace includes of cache.h with includes
+>> of the much smaller alloc.h in many places.
 >
-> This allows us to replace includes of cache.h with includes
-> of the much smaller alloc.h in many places.
+>> diff --git a/add-patch.c b/add-patch.c
+>> index a86a92e1646..7fe6b66d866 100644
+>> --- a/add-patch.c
+>> +++ b/add-patch.c
+>> @@ -1,5 +1,7 @@
+>>  #include "cache.h"
+>>  #include "add-interactive.h"
+>> +#include "alloc.h"
+>> +#include "gettext.h"
+>
+> I see here that you are not dropping cache.h, but are also adding
+> gettext.h, too? Did you mean to replace cache.h with git-compat-util.h
+> here, or will I see that change happen in a future patch?
 
-Yes!  This is a very logical thing to do.  Allocation and
-reallocation, especially in the modern world where "memory is tight,
-let's unmap some packfiles" no longer happens, does not have to be
-very "git" specific operation and should not have to depend on the
-rest of "git".  Having to include "cache.h" is one trait I consider
-anything is part of the implementation of "git" that has to be
-intimate with its internal.
+Thanks for reading very carefully.
+
+>> diff --git a/attr.c b/attr.c
+>> index 1053dfcd4b6..657ee52229e 100644
+>> --- a/attr.c
+>> +++ b/attr.c
+>> @@ -7,6 +7,7 @@
+>>   */
+>>  
+>>  #include "cache.h"
+>> +#include "alloc.h"
+>
+> (Here's another example. Makes it more likely that this is on
+> purpose in preparation for a full swap in the future. I'll
+> stop mentioning this when I see it.)
+>
+> I also manually verified that the macros are an exact move
+> from cache.h to alloc.h.
+>
+> Thanks,
+> -Stolee
