@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D5E3C636D7
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 08:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAC60C61DA4
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 08:05:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233291AbjBWIFb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 03:05:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59684 "EHLO
+        id S232110AbjBWIFd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 03:05:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233241AbjBWIF2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 03:05:28 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CAFF43467
+        with ESMTP id S233018AbjBWIFa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 03:05:30 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E24FD3D0A6
         for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:26 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id l2-20020a05600c1d0200b003e1f6dff952so8943857wms.1
+Received: by mail-wr1-x42c.google.com with SMTP id i11so3745332wrp.5
         for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KzX04it5y4U5u1z7dnjykdrOr76kSmwW89WHbeh+wac=;
-        b=cMgHQYlp931Dos0YlA6aKkma8yXGlEQmHInOdXuWAqesaiaXvRch2BNxncjQ9/jhYh
-         r4aXYK46s3Z8kJnqEdo2yvVIog7vDWLO0xwYUEs1fxQWSQ2EOy2SUaQXUxVfc6vyuObJ
-         cm+Pkf+pyoYLYBLOYbu4xhBEHegQgvap22lV0q9RCt4+FGCzKFsqMOkMjssUYqW+ivBi
-         RwN3Z2b44T9sic3NNM+CyyfcI2iSaiiWCoDGGhRA03XMkM5In9UNPW4tl1RpPr+GUxmw
-         r3hpNgvGU546pVY7cR9kNcZxIonaTKIW8OPmCtUVrtSPWuwCjjCzjE8JW7JeDQCaGFvc
-         49wQ==
+        bh=OahwylFSuFVh75SWtV1jtNAo8uK09U25UM+V+A1RSbI=;
+        b=p3BOSy6cBb9ansZEHNBYgwZrQe1GVoEXFyAyzELeh7D6P5YQaZnZE06Wvqz+dD31Nn
+         FFIiF040m/JeA4qkukqIzVFqxJVtwIup07C51ViyPBU+uPK8gWjwQqZqkEgAqeLsb5J/
+         WjmE+fhAhEuiZY7TbDsGiVyBazVGAlMbiQv9k2N/XbLRx5Z5CBrJWmHj/d5qfjlN9Yxf
+         OXkAYm67w07ljt/dwdG4SBNcHG3+Gw2eDWUdjje91j2T3qSAz8Aa4BeY39X4Nf4CpHtI
+         6ZKDUSnlyzEgZuE12KduSAJzxbDXMSRJhmG6+pgmBo/FqVJ90inzXFcEtd1bFGJtpxIn
+         M7EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KzX04it5y4U5u1z7dnjykdrOr76kSmwW89WHbeh+wac=;
-        b=5yFL+O7TOAhUBtaougPF+BvFlNjpqOWO6RvPmkgOrLWmCVHeSFS6uZoawb7oIuKyND
-         3ImxvEGpD9FxjFvXqnBRScSIMWxlFmfKhOHcRT253rW6IQ5z8ruefNRs8xjLSIwcV81q
-         xOIlKuB4YE6WY/abCgs+mIEt8mXu2y/itqm6Rz30Dir4QR7KsH74nClD+alETzGw2YOT
-         B+MufStD1fyDQA552HplmrmXKPhTjor3bFuazZYmu0aI5j1Ac6JSVR8EUDgP29HHtoNR
-         7w89TxgKSe42CtGrK3nIWXWfx1+iOuwmr0qQCAcD3OVADROQHREi+xhJ0M/sWClwCbD5
-         gGUg==
-X-Gm-Message-State: AO0yUKWgcxJ2rOVj4QxA7XZXUU18I2BEm5gXEh3f1Ed+gzRpw6ivsGfN
-        oYKlLeBkG+viP1OnrYO8SSo399Lb1TI=
-X-Google-Smtp-Source: AK7set/dxqeyun4qdrUZc60JSKQagcEFb0X+pW7clyBai+8iGsLkGNxBIIQjocvoEwZf+K3pq1J0Pw==
-X-Received: by 2002:a05:600c:1693:b0:3e2:1f00:bd02 with SMTP id k19-20020a05600c169300b003e21f00bd02mr4266426wmn.5.1677139524458;
-        Thu, 23 Feb 2023 00:05:24 -0800 (PST)
+        bh=OahwylFSuFVh75SWtV1jtNAo8uK09U25UM+V+A1RSbI=;
+        b=eQgLTUloI/R4Q7RLJKn0aXjc8ll6K2W9kVMZr+B/8jWCVRrjiAuqBIhH5jTFO0OJZm
+         rToYl0pvAyvBPziVxrz1B9mfhb8Zh8ZLJ9AMtZ2E0XfO/46t/UgxZUhvC2+4ezc2GvDr
+         JD6SsRnAwVCs0qdRQchkovZEyX2K33ZCRhKCnTBpR9Uqt5Kb7TAXztQ1Wh60+Y+2zpDs
+         rpaSw8QAyzxDZjqoZMe7K1HNr4TTGo6IIK7jNAaWuzUFWv5d9HxZsM8I6zALa3UYUItX
+         X2B5HbWA5EWKyne9H8LqZlBum6GkN0rffTQS3hbYkkhl2x1b1CswA7HR0MbuPlCmYlSp
+         i6sA==
+X-Gm-Message-State: AO0yUKUi43GpPX0DCFRa/s4eSIjPMU/sWfiJTyG/sFI6qUq05VfNA4uT
+        XLSoKrCyypPRMu8G/Lkixqp0t4X2FCc=
+X-Google-Smtp-Source: AK7set8j8oxsLadNCmJMRGrs+8YTVgN5mBq06YyQabaV23UdOM4p7vpn/fMRVwxSaam8lR5rK0F8Nw==
+X-Received: by 2002:a05:6000:1cd:b0:2c5:8575:c37 with SMTP id t13-20020a05600001cd00b002c585750c37mr9779469wrx.66.1677139525168;
+        Thu, 23 Feb 2023 00:05:25 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r8-20020a05600c458800b003db01178b62sm4022196wmo.40.2023.02.23.00.05.23
+        by smtp.gmail.com with ESMTPSA id a22-20020a05600c225600b003e2058a7109sm10601092wmm.14.2023.02.23.00.05.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 23 Feb 2023 00:05:24 -0800 (PST)
-Message-Id: <a143d62472422e11537b68ab6e87cfafdc8e0c7c.1677139521.git.gitgitgadget@gmail.com>
+Message-Id: <adafa655432dd13d1c727522377ac9a4b515b76a.1677139521.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
 References: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Feb 2023 08:05:06 +0000
-Subject: [PATCH 01/16] treewide: ensure one of the appropriate headers is
- sourced first
+Date:   Thu, 23 Feb 2023 08:05:07 +0000
+Subject: [PATCH 02/16] treewide: remove unnecessary git-compat-util.h includes
+ in headers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,166 +70,184 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-We had several C files ignoring the rule to include one of the
-appropriate headers first; fix that.
-
-While at it, the rule in Documentation/CodingGuidelines about which
-header to include has also fallen out of sync, so update the wording to
-mention other allowed headers.
-
-Unfortunately, C files in reftable/ don't actually follow the previous
-or updated rule.  If you follow the #include chain in its C files,
-reftable/system.h _tends_ to be first (i.e. record.c first includes
-record.h, which first includes basics.h, which first includees
-system.h), but not always (e.g. publicbasics.c includes another header
-first that does not include system.h).  However, I'm going to punt on
-making actual changes to the C files in reftable/ since I do not want to
-risk bringing it out-of-sync with any version being used externally.
+Since git-compat-util.h needs to be included first in C files, having it
+appear in header files is unnecessary.  More importantly, having it
+included in header files seems to lead to folks leaving it out of C
+files, which makes it harder to verify that the rule is being followed.
+Remove it from header files, other than the ones that have been approved
+as alternate first includes.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/CodingGuidelines | 8 ++++++--
- cbtree.c                       | 1 +
- diff-merges.c                  | 1 +
- fmt-merge-msg.c                | 1 +
- oidtree.c                      | 1 +
- oss-fuzz/fuzz-commit-graph.c   | 1 +
- oss-fuzz/fuzz-pack-headers.c   | 1 +
- oss-fuzz/fuzz-pack-idx.c       | 1 +
- prune-packed.c                 | 1 +
- rebase.c                       | 1 +
- refs/debug.c                   | 2 +-
- sub-process.c                  | 1 +
- 12 files changed, 17 insertions(+), 3 deletions(-)
+ advice.h                               | 2 --
+ cbtree.h                               | 2 --
+ chunk-format.h                         | 1 -
+ commit-graph.h                         | 1 -
+ commit-slab-impl.h                     | 2 --
+ compat/fsmonitor/fsm-ipc-win32.c       | 1 +
+ compat/fsmonitor/fsm-settings-darwin.c | 1 +
+ hash.h                                 | 1 -
+ pack-mtimes.h                          | 2 --
+ pkt-line.h                             | 1 -
+ repository.h                           | 1 -
+ sub-process.h                          | 1 -
+ trace.h                                | 1 -
+ 13 files changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 9d5c27807a4..003393ed161 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -442,8 +442,12 @@ For C programs:
-    detail.
+diff --git a/advice.h b/advice.h
+index 07e0f76833e..3e1b48bf68d 100644
+--- a/advice.h
++++ b/advice.h
+@@ -1,8 +1,6 @@
+ #ifndef ADVICE_H
+ #define ADVICE_H
  
-  - The first #include in C files, except in platform specific compat/
--   implementations, must be either "git-compat-util.h", "cache.h" or
--   "builtin.h".  You do not have to include more than one of these.
-+   implementations and sha1dc/, must be either "git-compat-util.h" or
-+   one of the approved headers that includes it first for you.  (The
-+   approved headers currently include "cache.h", "builtin.h",
-+   "t/helper/test-tool.h", "xdiff/xinclude.h", or
-+   "reftable/system.h").  You do not have to include more than one of
-+   these.
+-#include "git-compat-util.h"
+-
+ struct string_list;
  
-  - A C file must directly include the header files that declare the
-    functions and the types it uses, except for the functions and types
-diff --git a/cbtree.c b/cbtree.c
-index 336e46dbba5..c1cc30a5dc7 100644
---- a/cbtree.c
-+++ b/cbtree.c
-@@ -4,6 +4,7 @@
-  * Based on Adam Langley's adaptation of Dan Bernstein's public domain code
-  * git clone https://github.com/agl/critbit.git
-  */
-+#include "git-compat-util.h"
- #include "cbtree.h"
+ /*
+diff --git a/cbtree.h b/cbtree.h
+index 0be14fb7ee4..43193abdda2 100644
+--- a/cbtree.h
++++ b/cbtree.h
+@@ -14,8 +14,6 @@
+ #ifndef CBTREE_H
+ #define CBTREE_H
  
- static struct cb_node *cb_node_of(const void *p)
-diff --git a/diff-merges.c b/diff-merges.c
-index 85cbefa5afd..faa7bc73a34 100644
---- a/diff-merges.c
-+++ b/diff-merges.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "diff-merges.h"
+-#include "git-compat-util.h"
+-
+ struct cb_node;
+ struct cb_node {
+ 	struct cb_node *child[2];
+diff --git a/chunk-format.h b/chunk-format.h
+index 7885aa08487..025c38f938e 100644
+--- a/chunk-format.h
++++ b/chunk-format.h
+@@ -1,7 +1,6 @@
+ #ifndef CHUNK_FORMAT_H
+ #define CHUNK_FORMAT_H
  
- #include "revision.h"
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index f48f44f9cd1..f317f129904 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
+-#include "git-compat-util.h"
+ #include "hash.h"
+ 
+ struct hashfile;
+diff --git a/commit-graph.h b/commit-graph.h
+index 37faee6b66d..bb88bec7aa3 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -1,7 +1,6 @@
+ #ifndef COMMIT_GRAPH_H
+ #define COMMIT_GRAPH_H
+ 
+-#include "git-compat-util.h"
+ #include "object-store.h"
+ #include "oidset.h"
+ 
+diff --git a/commit-slab-impl.h b/commit-slab-impl.h
+index 557738df271..4a414ee905d 100644
+--- a/commit-slab-impl.h
++++ b/commit-slab-impl.h
+@@ -1,8 +1,6 @@
+ #ifndef COMMIT_SLAB_IMPL_H
+ #define COMMIT_SLAB_IMPL_H
+ 
+-#include "git-compat-util.h"
+-
+ #define implement_static_commit_slab(slabname, elemtype) \
+ 	implement_commit_slab(slabname, elemtype, MAYBE_UNUSED static)
+ 
+diff --git a/compat/fsmonitor/fsm-ipc-win32.c b/compat/fsmonitor/fsm-ipc-win32.c
+index e08c505c148..c9536dfb666 100644
+--- a/compat/fsmonitor/fsm-ipc-win32.c
++++ b/compat/fsmonitor/fsm-ipc-win32.c
 @@ -1,3 +1,4 @@
 +#include "git-compat-util.h"
  #include "config.h"
- #include "refs.h"
- #include "object-store.h"
-diff --git a/oidtree.c b/oidtree.c
-index 0d39389bee2..7d57b7b19e3 100644
---- a/oidtree.c
-+++ b/oidtree.c
-@@ -2,6 +2,7 @@
-  * A wrapper around cbtree which stores oids
-  * May be used to replace oid-array for prefix (abbreviation) matches
-  */
-+#include "git-compat-util.h"
- #include "oidtree.h"
- #include "alloc.h"
- #include "hash.h"
-diff --git a/oss-fuzz/fuzz-commit-graph.c b/oss-fuzz/fuzz-commit-graph.c
-index 914026f5d80..2992079dd97 100644
---- a/oss-fuzz/fuzz-commit-graph.c
-+++ b/oss-fuzz/fuzz-commit-graph.c
+ #include "fsmonitor-ipc.h"
+ 
+diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
+index 6abbc7af3ab..58b623fbb9a 100644
+--- a/compat/fsmonitor/fsm-settings-darwin.c
++++ b/compat/fsmonitor/fsm-settings-darwin.c
 @@ -1,3 +1,4 @@
 +#include "git-compat-util.h"
- #include "commit-graph.h"
+ #include "config.h"
+ #include "fsmonitor.h"
+ #include "fsmonitor-ipc.h"
+diff --git a/hash.h b/hash.h
+index 36b64165fc9..351afc2ce3b 100644
+--- a/hash.h
++++ b/hash.h
+@@ -1,7 +1,6 @@
+ #ifndef HASH_H
+ #define HASH_H
+ 
+-#include "git-compat-util.h"
  #include "repository.h"
  
-diff --git a/oss-fuzz/fuzz-pack-headers.c b/oss-fuzz/fuzz-pack-headers.c
-index 99da1d0fd38..150c0f5fa2d 100644
---- a/oss-fuzz/fuzz-pack-headers.c
-+++ b/oss-fuzz/fuzz-pack-headers.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "packfile.h"
+ #if defined(SHA1_APPLE)
+diff --git a/pack-mtimes.h b/pack-mtimes.h
+index cc957b3e852..107327cec0b 100644
+--- a/pack-mtimes.h
++++ b/pack-mtimes.h
+@@ -1,8 +1,6 @@
+ #ifndef PACK_MTIMES_H
+ #define PACK_MTIMES_H
  
- int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
-diff --git a/oss-fuzz/fuzz-pack-idx.c b/oss-fuzz/fuzz-pack-idx.c
-index 0c3d777aac8..609a343ee3e 100644
---- a/oss-fuzz/fuzz-pack-idx.c
-+++ b/oss-fuzz/fuzz-pack-idx.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "object-store.h"
- #include "packfile.h"
- 
-diff --git a/prune-packed.c b/prune-packed.c
-index 261520b472c..d2813f6a405 100644
---- a/prune-packed.c
-+++ b/prune-packed.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "object-store.h"
- #include "packfile.h"
- #include "progress.h"
-diff --git a/rebase.c b/rebase.c
-index 6775cddb284..17a570f1ff9 100644
---- a/rebase.c
-+++ b/rebase.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "rebase.h"
- #include "config.h"
- #include "gettext.h"
-diff --git a/refs/debug.c b/refs/debug.c
-index eed8bc94b04..ff7766bc636 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
 -
-+#include "git-compat-util.h"
- #include "refs-internal.h"
- #include "trace.h"
+ #define MTIMES_SIGNATURE 0x4d544d45 /* "MTME" */
+ #define MTIMES_VERSION 1
  
-diff --git a/sub-process.c b/sub-process.c
-index 6d4232294db..1daf5a97525 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -1,6 +1,7 @@
- /*
-  * Generic implementation of background process infrastructure.
-  */
-+#include "git-compat-util.h"
- #include "sub-process.h"
- #include "sigchain.h"
- #include "pkt-line.h"
+diff --git a/pkt-line.h b/pkt-line.h
+index 79c538b99e4..8e9846f3151 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -1,7 +1,6 @@
+ #ifndef PKTLINE_H
+ #define PKTLINE_H
+ 
+-#include "git-compat-util.h"
+ #include "strbuf.h"
+ #include "sideband.h"
+ 
+diff --git a/repository.h b/repository.h
+index e8c67ffe165..15a8afc5fb5 100644
+--- a/repository.h
++++ b/repository.h
+@@ -1,7 +1,6 @@
+ #ifndef REPOSITORY_H
+ #define REPOSITORY_H
+ 
+-#include "git-compat-util.h"
+ #include "path.h"
+ 
+ struct config_set;
+diff --git a/sub-process.h b/sub-process.h
+index e85f21fa1a7..6a61638a8ac 100644
+--- a/sub-process.h
++++ b/sub-process.h
+@@ -1,7 +1,6 @@
+ #ifndef SUBPROCESS_H
+ #define SUBPROCESS_H
+ 
+-#include "git-compat-util.h"
+ #include "hashmap.h"
+ #include "run-command.h"
+ 
+diff --git a/trace.h b/trace.h
+index 4e771f86ac2..1a75824b15e 100644
+--- a/trace.h
++++ b/trace.h
+@@ -1,7 +1,6 @@
+ #ifndef TRACE_H
+ #define TRACE_H
+ 
+-#include "git-compat-util.h"
+ #include "strbuf.h"
+ 
+ /**
 -- 
 gitgitgadget
 
