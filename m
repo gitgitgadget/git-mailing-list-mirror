@@ -2,453 +2,341 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20B34C6379F
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 07:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2737C61DA4
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 08:05:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233493AbjBWHaH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 02:30:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39224 "EHLO
+        id S233253AbjBWIF3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 03:05:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233276AbjBWHaD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 02:30:03 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55F2032E41
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 23:30:01 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id f11so5713560pfe.2
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 23:30:01 -0800 (PST)
+        with ESMTP id S233018AbjBWIF2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 03:05:28 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F7F2CFE2
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:25 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id h14so1246171wru.4
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 00:05:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lTmQ2D0GYskHZINr9pdOOdredVXz+J37y162csW7Lkk=;
-        b=QtXskS+0DKatCUhBuCGW2dnsM8a0Jqg5Z3pozhIwGnXJ70zKa691EtPsRWpgofssEx
-         ZyQrWaUVqRB8XCTJ7VMrDLWyaHpBFnOerHibO/tbLjmz3f0GNLt/Gf3g/wvS9UCt5IKz
-         MpTo/wVd/U1pGCo3D3GYNU/jvCqhf1IEV1q1Rfgo/VMJXK1OyHh8KuLT2Yn38zkm0u6U
-         B4LVTRjaKAcXapZeuW1OG3dOkl8GasOHfncSEy09DRNqhn1IvDIKDbeIp0bSSPeYKjyC
-         Thuc9n7rM8yI1YWRYpjCt5iXgg7TvubBPRwuUD2UjTXuMS6fDbyF8TFOA8qJ0QzRSDYQ
-         THuw==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=FKFuKOw785PtQFFY/uBeNFk09xSF+xdA9Ie/xZMG3F4=;
+        b=NTcT42Wf7uwmmc/Oj/2ukPnk6OzZ+8mkdGllaYt7eCqvQS77Cb+9o8c20D9EaFiDWr
+         hp70U9PZFP9jsYZ9SF0DY3+tj1Ar0RUzILe5yDii85RuOoNCFCJN+jaRfxTiO8RUPm43
+         g83DRV8fBm/9/VcSuxB8tn7AHlcs+wTfa9sBZDiTwl4q/VpFC4zqoZ2cIchjHbe8Z55o
+         Ruyfja3nf3EBXbt/Wz75DX41U/KPJ6iCE+4OWmv0YBxYhpJA8mOL2sU87o2lusknaLfa
+         ubcsxMBxX/hoFnElijy0THMi/qrnIBET6RShEIpEpBSMm1vX4vVieixiIerWMfpYxbMP
+         g3Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lTmQ2D0GYskHZINr9pdOOdredVXz+J37y162csW7Lkk=;
-        b=LAZk7gv8USSvZ6I1qmiIScITyGQrNzV3QibwkadQn4G91/HjHKdHIKvZpNaI/EAyvv
-         n/VMlHz/NITU/pzOdwaG+AmXb3IXag8RYlnyeA37KFNWoF0IWQ/om/Su/vCu06cMR+jC
-         37gmGyxACUcU62tJkQ2AcxzGqW+CJtijm01+QiT8YxswScK1M8erC8B0+c1ANOtAun2L
-         d+tjd9eO8nasjy/5+eYzxNj5ww2pPlsepxPoXQfKLejyZFxWO3xJpZYynxrGOghk77i0
-         EtJIYCx4expvbM4waGQ081S+ad476Pz93gq2EXAX/9S0T+5TUSgJ04Bw18xh6cy9/MMT
-         IwxA==
-X-Gm-Message-State: AO0yUKW0BVyGk4z4fs6gq2cuMPWI8igVZNt1p51FvRmo69LI/UPM0tL8
-        j7+akM1vvBrH4SXXxOQ8uwk=
-X-Google-Smtp-Source: AK7set9LuohTgl6c1GkSJCkQz4Z6wzU/m3d7l+owbRE9NAFbFh2Gx5Bqv+cIVTgn5z0OxIDw1uWpAA==
-X-Received: by 2002:a62:17c1:0:b0:593:c9b6:dc5d with SMTP id 184-20020a6217c1000000b00593c9b6dc5dmr10494371pfx.0.1677137400177;
-        Wed, 22 Feb 2023 23:30:00 -0800 (PST)
-Received: from localhost.localdomain ([47.246.101.50])
-        by smtp.gmail.com with ESMTPSA id u20-20020a62ed14000000b0059085684b54sm5570364pfh.140.2023.02.22.23.29.58
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Feb 2023 23:29:59 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     dyroneteng@gmail.com
-Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
-        tenglong.tl@alibaba-inc.com, gitster@pobox.com
-Subject: [PATCH v6 3/3] notes.c: introduce '--separator=<paragraph-break>' option
-Date:   Thu, 23 Feb 2023 15:29:47 +0800
-Message-Id: <d5a6c74792c15e2f83c2ed0758fb99eac11a8174.1677136319.git.dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.39.2.459.gd5a6c747
-In-Reply-To: <cover.1677136319.git.dyroneteng@gmail.com>
-References: <cover.1677136319.git.dyroneteng@gmail.com>
-MIME-Version: 1.0
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FKFuKOw785PtQFFY/uBeNFk09xSF+xdA9Ie/xZMG3F4=;
+        b=vsow0hyqbUBvpYZBu/PBhSWlKfXbPkxjpLmd4/Mpg2dvimu9bN3Wcw9E796k00G/p8
+         W/8KgT/1cmIFpPCqxf/S4/BQ5BAXKLQ+zfNI6pZtRIb/IuPS6ECdviV+JD1Sx5TdrKIV
+         +DdrPlhWUpdwfVGNg+OfwXUDcWfb01nDCV5pdeevwd4Q7BAcr3or3kpCM9oJmE7cFQQk
+         FgZ1exXad0BELhDhef2HaBtrdScWhzpYBhpT7tldoAOZcTbH+J3Rhqx2ewSgf92NGOK9
+         AfwaAZWyS00rO8EPQedY/YPIJP+AmSOGLylN9CVJ8lRIrMg2z657ukk8Yswb6Ok1d6vk
+         4Nkw==
+X-Gm-Message-State: AO0yUKXTj57SvnTPsc0uDlTUQLhkFea6FCgFSms+9FIeEUKDCIzA1Y38
+        77rnynhaeFjskyyxeLHyel+MvowmbWk=
+X-Google-Smtp-Source: AK7set9ELYKoMZbEYg28ely+0ZldjF1ZloV0MNX546oHzWNriCTzpTt6yhykkNN1Ouk+glJuMeFLiw==
+X-Received: by 2002:a5d:55c7:0:b0:2c5:81a4:1f63 with SMTP id i7-20020a5d55c7000000b002c581a41f63mr9842054wrw.40.1677139523620;
+        Thu, 23 Feb 2023 00:05:23 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x8-20020adfdd88000000b002c58ca558b6sm8880163wrl.88.2023.02.23.00.05.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Feb 2023 00:05:23 -0800 (PST)
+Message-Id: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 23 Feb 2023 08:05:05 +0000
+Subject: [PATCH 00/16] Header cleanups
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <nasamuffin@google.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Teng Long <dyroneteng@gmail.com>
+Maintainer note: This series cleanly merges with next, but has a minor
+conflict with ed/fsmonitor-inotify. The correct resolution is to take
+ed/fsmonitor-inotify's copy of compat/fsmonitor/fsm-settings-darwin.c, but
+to add a #include "git-compat-util.h" line at the top of
+compat/fsmonitor/fsm-settings-unix.c.
 
-When adding new notes or appending to an existing notes, we will
-insert a blank line between the paragraphs, like:
+This series cleans up headers a bit, trying to remove excessive dependency
+on "cache.h". I created this series a while ago, but decided to clean it up
+and submit it due to Emily's recent thread and suggestion that this might be
+helpful to their efforts[1].
 
-     $ git notes add -m foo -m bar
-     $ git notes show HEAD | cat
-     foo
+There are many more cleanups I could do in this area, but the series is
+already a good size.
 
-     bar
+Notes:
 
-The default behavour sometimes is not enough, the user may want
-to use a custom delimiter between paragraphs, like when
-specifiy one or more '-m' or '-F' options. So this commit
-introduces a new '--separator' option for 'git-notes-add' and
-'git-notes-append', for example when execute:
+ * Big props to Dscho for gitgitgadget; being able to test on a bunch of
+   platforms with a variety of configurations easily is a big win in general
+   but especially for series like this one.
+ * I used the scripts at
+   https://github.com/newren/git/commit/db81c8d7fb554b3edf04320e218bddeb98bb6194,
+   and some tweaks thereof, repeatedly while making this series (though they
+   are prone to produce both false positive and false negatives, so if you
+   use them, only use them to generate hints about which files to look at).
 
-    $ git notes add -m foo -m bar --separator="-"
-    $ git notes show HEAD | cat
-    foo
-    -
-    bar
+[1] Search for "Extremely yes" in
+https://lore.kernel.org/git/CAJoAoZm+TkCL0Jpg_qFgKottxbtiG2QOiY0qGrz3-uQy+=waPg@mail.gmail.com/
 
-We will check the option value and if the value doesn't contail
-a trailing '\n', will add it automatically, so execute
+Elijah Newren (16):
+  treewide: ensure one of the appropriate headers is sourced first
+  treewide: remove unnecessary git-compat-util.h includes in headers
+  treewide: remove unnecessary cache.h includes
+  treewide: remove unnecessary cache.h includes in source files
+  alloc.h: move ALLOC_GROW() functions from cache.h
+  hash.h: move some oid-related declarations from cache.h
+  hex.h: move some hex-related declarations from cache.h
+  pretty.h: move has_non_ascii() declaration from commit.h
+  ident.h: move ident-related declarations out of cache.h
+  object.h: stop depending on cache.h; make cache.h depend on object.h
+  dir.h: refactor to no longer need to include cache.h
+  object-store.h: move struct object_info from cache.h
+  replace-object.h: move read_replace_refs declaration from cache.h to
+    here
+  treewide: replace cache.h with more direct headers, where possible
+  Remove unnecessary includes of builtin.h
+  diff.h: remove unnecessary include of object.h
 
-      $ git notes add -m foo -m bar --separator="-"
-and
-      $ export LF="
-      "
-      $ git notes add -m foo -m bar --separator="-$LF"
+ Documentation/CodingGuidelines               |   8 +-
+ add-patch.c                                  |   2 +
+ advice.c                                     |   4 +-
+ advice.h                                     |   2 -
+ alias.c                                      |   4 +-
+ alloc.c                                      |   2 +-
+ alloc.h                                      |  75 +++++
+ apply.c                                      |   1 +
+ archive-tar.c                                |   3 +-
+ archive.c                                    |   3 +-
+ attr.c                                       |   1 +
+ blame.h                                      |   1 -
+ blob.c                                       |   2 +-
+ builtin/blame.c                              |   3 +-
+ builtin/cat-file.c                           |   3 +
+ builtin/check-mailmap.c                      |   1 +
+ builtin/checkout--worker.c                   |   1 +
+ builtin/commit-graph.c                       |   1 +
+ builtin/config.c                             |   3 +-
+ builtin/credential-cache--daemon.c           |   1 +
+ builtin/fetch-pack.c                         |   1 +
+ builtin/fsck.c                               |   1 +
+ builtin/fsmonitor--daemon.c                  |   1 +
+ builtin/grep.c                               |   1 +
+ builtin/index-pack.c                         |   2 +
+ builtin/log.c                                |   3 +-
+ builtin/merge.c                              |   1 +
+ builtin/mktree.c                             |   1 +
+ builtin/mv.c                                 |   1 +
+ builtin/name-rev.c                           |   2 +-
+ builtin/pack-objects.c                       |   3 +-
+ builtin/prune.c                              |   1 +
+ builtin/repack.c                             |   2 +-
+ builtin/replace.c                            |   1 +
+ builtin/rev-parse.c                          |   1 +
+ builtin/revert.c                             |   3 +-
+ builtin/rm.c                                 |   1 +
+ builtin/submodule--helper.c                  |   1 +
+ builtin/unpack-objects.c                     |   1 +
+ builtin/upload-pack.c                        |   1 +
+ builtin/var.c                                |   1 +
+ bulk-checkin.c                               |   3 +-
+ cache-tree.c                                 |   3 +-
+ cache-tree.h                                 |   1 -
+ cache.h                                      | 306 +------------------
+ cbtree.c                                     |   1 +
+ cbtree.h                                     |   2 -
+ checkout.h                                   |   2 +-
+ chunk-format.c                               |   3 +-
+ chunk-format.h                               |   1 -
+ commit-graph.h                               |   1 -
+ commit-reach.c                               |   3 +-
+ commit-slab-impl.h                           |   2 -
+ commit.h                                     |   1 -
+ compat/fsmonitor/fsm-ipc-win32.c             |   1 +
+ compat/fsmonitor/fsm-settings-darwin.c       |   1 +
+ compat/mingw.c                               |   1 +
+ config.c                                     |   5 +-
+ daemon.c                                     |   1 +
+ decorate.c                                   |   3 +-
+ delta-islands.c                              |   3 +-
+ diff-merges.c                                |   2 +
+ diff-no-index.c                              |   1 -
+ diff.c                                       |   1 +
+ diff.h                                       |   3 +-
+ diffcore-delta.c                             |   2 +-
+ diffcore-order.c                             |   3 +-
+ diffcore-pickaxe.c                           |   4 +-
+ diffcore-rename.c                            |   7 +-
+ diffcore-rotate.c                            |   3 +-
+ diffcore.h                                   |   4 +-
+ dir-iterator.c                               |   3 +-
+ dir.c                                        |   3 +-
+ dir.h                                        |  16 +-
+ entry.h                                      |   4 +-
+ environment.c                                |   1 +
+ ewah/bitmap.c                                |   3 +-
+ ewah/ewah_bitmap.c                           |   2 +-
+ fetch-pack.c                                 |   3 +-
+ fmt-merge-msg.c                              |   2 +
+ fsck.c                                       |   3 +-
+ fsck.h                                       |   1 +
+ fsmonitor-settings.c                         |   3 +-
+ git-compat-util.h                            |   1 +
+ git.c                                        |   1 +
+ gpg-interface.c                              |   1 +
+ graph.c                                      |   3 +-
+ hash.h                                       |  35 ++-
+ hashmap.c                                    |   2 +-
+ help.c                                       |   4 +-
+ hex.c                                        |   3 +-
+ hex.h                                        |  84 +++++
+ hook.c                                       |   5 +-
+ http-backend.c                               |   3 +-
+ ident.c                                      |   5 +-
+ ident.h                                      |  67 ++++
+ imap-send.c                                  |   2 +-
+ json-writer.c                                |   2 +-
+ khash.h                                      |   1 -
+ kwset.c                                      |   2 +-
+ levenshtein.c                                |   2 +-
+ line-log.c                                   |   1 +
+ line-log.h                                   |   1 +
+ linear-assignment.c                          |   2 +-
+ list-objects-filter-options.c                |   4 +-
+ list-objects-filter-options.h                |   3 +-
+ list-objects-filter.c                        |   1 +
+ log-tree.c                                   |   1 +
+ mailinfo.c                                   |   4 +-
+ mem-pool.c                                   |   2 +-
+ merge-blobs.c                                |   2 +-
+ merge-recursive.c                            |   1 -
+ midx.c                                       |   3 +-
+ negotiator/noop.c                            |   2 +-
+ object-file.c                                |   3 +-
+ object-store.h                               | 128 ++++----
+ object.h                                     |  22 +-
+ oid-array.c                                  |   3 +-
+ oidmap.c                                     |   2 +-
+ oidmap.h                                     |   1 -
+ oidset.c                                     |   4 +-
+ oidtree.c                                    |   1 +
+ oss-fuzz/fuzz-commit-graph.c                 |   1 +
+ oss-fuzz/fuzz-pack-headers.c                 |   1 +
+ oss-fuzz/fuzz-pack-idx.c                     |   1 +
+ pack-bitmap-write.c                          |   3 +-
+ pack-bitmap.c                                |   3 +-
+ pack-mtimes.h                                |   2 -
+ pack-objects.c                               |   3 +-
+ packfile.c                                   |   3 +-
+ parallel-checkout.c                          |   1 +
+ pathspec.h                                   |   5 +
+ pkt-line.h                                   |   1 -
+ pretty.c                                     |   1 +
+ pretty.h                                     |   4 +-
+ prio-queue.c                                 |   3 +-
+ protocol-caps.c                              |   1 +
+ prune-packed.c                               |   1 +
+ quote.c                                      |   2 +
+ read-cache.c                                 |   1 +
+ rebase.c                                     |   1 +
+ ref-filter.c                                 |   5 +-
+ reflog-walk.c                                |   3 +-
+ reflog-walk.h                                |   2 -
+ refs.c                                       |   3 +-
+ refs/debug.c                                 |   2 +-
+ refs/files-backend.c                         |   1 +
+ refs/packed-backend.c                        |   3 +-
+ refs/ref-cache.c                             |   3 +-
+ refs/refs-internal.h                         |   1 -
+ refspec.c                                    |   3 +-
+ remote-curl.c                                |   3 +-
+ remote.c                                     |   3 +-
+ remote.h                                     |   1 -
+ replace-object.h                             |   8 +
+ repo-settings.c                              |   2 +-
+ repository.h                                 |   1 -
+ rerere.c                                     |   3 +-
+ revision.c                                   |   3 +-
+ revision.h                                   |   1 +
+ send-pack.c                                  |   2 +-
+ sequencer.c                                  |   1 +
+ sequencer.h                                  |   2 +-
+ serve.c                                      |   3 +-
+ server-info.c                                |   3 +-
+ sha1dc_git.c                                 |   4 +-
+ shallow.c                                    |   3 +-
+ shallow.h                                    |   2 +
+ shell.c                                      |   2 +-
+ sigchain.c                                   |   3 +-
+ sparse-index.c                               |   1 +
+ split-index.c                                |   1 +
+ statinfo.h                                   |  24 ++
+ strbuf.c                                     |   3 +-
+ string-list.c                                |   3 +-
+ strvec.c                                     |   3 +-
+ sub-process.c                                |   1 +
+ sub-process.h                                |   1 -
+ submodule-config.c                           |   1 +
+ submodule-config.h                           |   1 -
+ submodule.c                                  |   4 +-
+ t/helper/test-bloom.c                        |   2 +-
+ t/helper/test-crontab.c                      |   1 -
+ t/helper/test-ctype.c                        |   1 -
+ t/helper/test-example-decorate.c             |   2 +-
+ t/helper/test-json-writer.c                  |   1 -
+ t/helper/test-pcre2-config.c                 |   1 -
+ t/helper/test-prio-queue.c                   |   1 -
+ t/helper/test-reach.c                        |   2 +-
+ t/helper/test-run-command.c                  |   2 -
+ t/helper/test-sigchain.c                     |   1 -
+ t/helper/test-simple-ipc.c                   |   3 +-
+ t/helper/test-submodule-nested-repo-config.c |   1 +
+ t/helper/test-wildmatch.c                    |   1 -
+ thread-utils.c                               |   2 +-
+ trace.h                                      |   1 -
+ trace2.c                                     |   3 +-
+ trace2/tr2_ctr.c                             |   2 +-
+ trace2/tr2_sysenv.c                          |   2 +-
+ trace2/tr2_tbuf.c                            |   2 +-
+ trace2/tr2_tgt_event.c                       |   2 +-
+ trace2/tr2_tgt_normal.c                      |   2 +-
+ trace2/tr2_tgt_perf.c                        |   2 +-
+ trace2/tr2_tls.c                             |   4 +-
+ trace2/tr2_tmr.c                             |   3 +-
+ trailer.c                                    |   1 +
+ transport.c                                  |   4 +-
+ tree-walk.c                                  |   1 +
+ tree-walk.h                                  |   4 +-
+ unix-socket.c                                |   3 +-
+ unix-stream-server.c                         |   2 +-
+ url.c                                        |   4 +-
+ urlmatch.c                                   |   5 +-
+ userdiff.c                                   |   4 +-
+ wildmatch.c                                  |   2 +-
+ worktree.c                                   |   3 +-
+ worktree.h                                   |   1 -
+ xdiff-interface.h                            |   2 +-
+ 218 files changed, 691 insertions(+), 529 deletions(-)
+ create mode 100644 hex.h
+ create mode 100644 ident.h
+ create mode 100644 statinfo.h
 
-have the same behavour.
 
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
- Documentation/git-notes.txt |  20 ++++++--
- builtin/notes.c             |  72 ++++++++++++++++++--------
- t/t3301-notes.sh            | 100 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 166 insertions(+), 26 deletions(-)
-
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index efbc10f0..53d63888 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -9,9 +9,9 @@ SYNOPSIS
- --------
- [verse]
- 'git notes' [list [<object>]]
--'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-+'git notes' add [-f] [--allow-empty] [--separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
- 'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
--'git notes' append [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-+'git notes' append [--allow-empty] [--separator=<paragraph-break>] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
- 'git notes' edit [--allow-empty] [<object>]
- 'git notes' show [<object>]
- 'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
-@@ -65,7 +65,9 @@ add::
- 	However, if you're using `add` interactively (using an editor
- 	to supply the notes contents), then - instead of aborting -
- 	the existing notes will be opened in the editor (like the `edit`
--	subcommand).
-+	subcommand). If you specify multiple `-m` and `-F`, a blank
-+	line will be inserted between the messages. Use the `--separator`
-+	option to insert other delimiters. 
- 
- copy::
- 	Copy the notes for the first object onto the second object (defaults to
-@@ -86,7 +88,13 @@ the command can read the input given to the `post-rewrite` hook.)
- 
- append::
- 	Append to the notes of an existing object (defaults to HEAD).
--	Creates a new notes object if needed.
-+	Creates a new notes object if needed. 
-+	The default delimiter is a blank line, use the `--separator`
-+	option to insert other delimiters. More specifically, if the
-+	note and the message are not empty, the delimiter will be
-+	inserted between them. If you specify multiple `-m` and `-F`
-+	options, the delimiter will be inserted between the messages
-+	too.
- 
- edit::
- 	Edit the notes for a given object (defaults to HEAD).
-@@ -159,6 +167,10 @@ OPTIONS
- 	Allow an empty note object to be stored. The default behavior is
- 	to automatically remove empty notes.
- 
-+--separator <paragraph-break>::
-+	The '<paragraph-break>' inserted between paragraphs.
-+	A blank line by default.
-+
- --ref <ref>::
- 	Manipulate the notes tree in <ref>.  This overrides
- 	`GIT_NOTES_REF` and the "core.notesRef" configuration.  The ref
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 553ae2bd..e0ada862 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -24,11 +24,12 @@
- #include "notes-utils.h"
- #include "worktree.h"
- 
-+static char *separator = NULL;
- static const char * const git_notes_usage[] = {
- 	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
--	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-+	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
- 	N_("git notes [--ref <notes-ref>] copy [-f] <from-object> <to-object>"),
--	N_("git notes [--ref <notes-ref>] append [--allow-empty] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-+	N_("git notes [--ref <notes-ref>] append [--allow-empty] [--separator=<paragraph-break>] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
- 	N_("git notes [--ref <notes-ref>] edit [--allow-empty] [<object>]"),
- 	N_("git notes [--ref <notes-ref>] show [<object>]"),
- 	N_("git notes [--ref <notes-ref>] merge [-v | -q] [-s <strategy>] <notes-ref>"),
-@@ -209,37 +210,55 @@ static void write_note_data(struct note_data *d, struct object_id *oid)
- 	}
- }
- 
-+static void insert_separator(struct strbuf *message, size_t pos)
-+{
-+	if (!separator)
-+		strbuf_insertstr(message, pos, "\n");
-+	else if (separator[strlen(separator) - 1] == '\n')
-+		strbuf_insertstr(message, pos, separator);
-+	else
-+		strbuf_insertf(message, pos, "%s%s", separator, "\n");
-+}
-+
-+static void parse_messages(struct string_list *messages, struct note_data *d)
-+{
-+	size_t i;
-+	for (i = 0; i < messages->nr; i++) {
-+		if (d->buf.len)
-+			insert_separator(&d->buf, d->buf.len);
-+		strbuf_insertstr(&d->buf, d->buf.len,
-+				 messages->items[i].string);
-+		strbuf_stripspace(&d->buf, 0);
-+		d->given = 1;
-+	}
-+}
-+
- static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
- {
--	struct note_data *d = opt->value;
-+	struct string_list *msg = opt->value;
- 
- 	BUG_ON_OPT_NEG(unset);
- 
--	if (d->buf.len)
--		strbuf_addch(&d->buf, '\n');
--	strbuf_addstr(&d->buf, arg);
--	strbuf_stripspace(&d->buf, 0);
--
--	d->given = 1;
-+	string_list_append(msg, arg);
- 	return 0;
- }
- 
-+
- static int parse_file_arg(const struct option *opt, const char *arg, int unset)
- {
--	struct note_data *d = opt->value;
-+	struct string_list *msg = opt->value;
-+	struct strbuf buf = STRBUF_INIT;
- 
- 	BUG_ON_OPT_NEG(unset);
- 
--	if (d->buf.len)
--		strbuf_addch(&d->buf, '\n');
- 	if (!strcmp(arg, "-")) {
--		if (strbuf_read(&d->buf, 0, 1024) < 0)
-+		if (strbuf_read(&buf, 0, 1024) < 0)
- 			die_errno(_("cannot read '%s'"), arg);
--	} else if (strbuf_read_file(&d->buf, arg, 1024) < 0)
-+	} else if (strbuf_read_file(&buf, arg, 1024) < 0)
- 		die_errno(_("could not open or read '%s'"), arg);
--	strbuf_stripspace(&d->buf, 0);
- 
--	d->given = 1;
-+	string_list_append(msg, buf.buf);
-+	strbuf_release(&buf);
- 	return 0;
- }
- 
-@@ -402,11 +421,12 @@ static int add(int argc, const char **argv, const char *prefix)
- 	struct object_id object, new_note;
- 	const struct object_id *note;
- 	struct note_data d = { .buf = STRBUF_INIT };
-+	struct string_list messages = STRING_LIST_INIT_DUP;
- 	struct option options[] = {
--		OPT_CALLBACK_F('m', "message", &d, N_("message"),
-+		OPT_CALLBACK_F('m', "message", &messages, N_("message"),
- 			N_("note contents as a string"), PARSE_OPT_NONEG,
- 			parse_msg_arg),
--		OPT_CALLBACK_F('F', "file", &d, N_("file"),
-+		OPT_CALLBACK_F('F', "file", &messages, N_("file"),
- 			N_("note contents in a file"), PARSE_OPT_NONEG,
- 			parse_file_arg),
- 		OPT_CALLBACK_F('c', "reedit-message", &d, N_("object"),
-@@ -418,6 +438,8 @@ static int add(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "allow-empty", &allow_empty,
- 			N_("allow storing empty note")),
- 		OPT__FORCE(&force, N_("replace existing notes"), PARSE_OPT_NOCOMPLETE),
-+		OPT_STRING(0, "separator", &separator, N_("separator"),
-+			N_("insert <paragraph-break> between paragraphs")),
- 		OPT_END()
- 	};
- 
-@@ -429,6 +451,7 @@ static int add(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_notes_add_usage, options);
- 	}
- 
-+	parse_messages(&messages, &d);
- 	object_ref = argc > 1 ? argv[1] : "HEAD";
- 
- 	if (get_oid(object_ref, &object))
-@@ -568,11 +591,12 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 	char *logmsg;
- 	const char * const *usage;
- 	struct note_data d = { .buf = STRBUF_INIT };
-+	struct string_list messages = STRING_LIST_INIT_DUP;
- 	struct option options[] = {
--		OPT_CALLBACK_F('m', "message", &d, N_("message"),
--			N_("note contents as a string"), PARSE_OPT_NONEG,
-+		OPT_CALLBACK_F('m', "message", &messages, N_("message"),
-+			N_("note contents as a string"), PARSE_OPT_NONEG, 
- 			parse_msg_arg),
--		OPT_CALLBACK_F('F', "file", &d, N_("file"),
-+		OPT_CALLBACK_F('F', "file", &messages, N_("file"),
- 			N_("note contents in a file"), PARSE_OPT_NONEG,
- 			parse_file_arg),
- 		OPT_CALLBACK_F('c', "reedit-message", &d, N_("object"),
-@@ -583,6 +607,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 			parse_reuse_arg),
- 		OPT_BOOL(0, "allow-empty", &allow_empty,
- 			N_("allow storing empty note")),
-+		OPT_STRING(0, "separator", &separator, N_("separator"),
-+			N_("insert <paragraph-break> between paragraphs")),
- 		OPT_END()
- 	};
- 	int edit = !strcmp(argv[0], "edit");
-@@ -596,6 +622,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 		usage_with_options(usage, options);
- 	}
- 
-+	parse_messages(&messages, &d);
-+
- 	if (d.given && edit)
- 		fprintf(stderr, _("The -m/-F/-c/-C options have been deprecated "
- 			"for the 'edit' subcommand.\n"
-@@ -618,7 +646,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 		char *prev_buf = read_object_file(note, &type, &size);
- 
- 		if (d.buf.len && prev_buf && size)
--			strbuf_insertstr(&d.buf, 0, "\n");
-+			insert_separator(&d.buf, 0);
- 		if (prev_buf && size)
- 			strbuf_insert(&d.buf, 0, prev_buf, size);
- 		free(prev_buf);
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 3288aaec..c2c09f32 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -362,6 +362,7 @@ test_expect_success 'do not create empty note with -m ""' '
- '
- 
- test_expect_success 'create note with combination of -m and -F' '
-+	test_when_finished git notes remove HEAD &&
- 	cat >expect-combine_m_and_F <<-EOF &&
- 		foo
- 
-@@ -380,6 +381,26 @@ test_expect_success 'create note with combination of -m and -F' '
- 	test_cmp expect-combine_m_and_F actual
- '
- 
-+test_expect_success 'create note with combination of -m and -F and --separator' '
-+	cat >expect-combine_m_and_F <<-\EOF &&
-+	foo
-+	-------
-+	xyzzy
-+	-------
-+	bar
-+	-------
-+	zyxxy
-+	-------
-+	baz
-+	EOF
-+	echo "xyzzy" >note_a &&
-+	echo "zyxxy" >note_b &&
-+	git notes add -m "foo" -F note_a -m "bar" -F note_b -m "baz" --separator "-------" &&
-+	git notes show >actual &&
-+	test_cmp expect-combine_m_and_F actual
-+	
-+'
-+
- test_expect_success 'remove note with "git notes remove"' '
- 	git notes remove HEAD^ &&
- 	git notes remove &&
-@@ -521,6 +542,85 @@ test_expect_success 'listing non-existing notes fails' '
- 	test_must_be_empty actual
- '
- 
-+test_expect_success 'append: specify an empty separator' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="" -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify separator with line break' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+	-------
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="-------$LF" -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify separator without line break' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+	-------
-+	notes-2
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="-------" -m "notes-2" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append: specify separator with multiple messages' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+	notes-1
-+	-------
-+	notes-2
-+	-------
-+	notes-3
-+	EOF
-+
-+	git notes add -m "notes-1" &&
-+	git notes append --separator="-------" -m "notes-2" -m "notes-3" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'append note with combination of -m and -F and --separator' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect-combine_m_and_F <<-\EOF &&
-+	m-notes-1
-+	-------
-+	f-notes-1
-+	-------
-+	m-notes-2
-+	-------
-+	f-notes-2
-+	-------
-+	m-notes-3
-+	EOF
-+
-+	echo "f-notes-1" >note_a &&
-+	echo "f-notes-2" >note_b &&
-+	git notes append -m "m-notes-1" -F note_a -m "m-notes-2" -F note_b -m "m-notes-3" --separator "-------" &&
-+	git notes show >actual &&
-+	test_cmp expect-combine_m_and_F actual
-+'
-+
- test_expect_success 'append to existing note with "git notes append"' '
- 	cat >expect <<-EOF &&
- 		Initial set of notes
+base-commit: 06dd2baa8da4a73421b959ec026a43711b9d77f9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1485%2Fnewren%2Fheader-cleanups-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1485/newren/header-cleanups-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1485
 -- 
-2.39.2.459.gd5a6c747
-
+gitgitgadget
