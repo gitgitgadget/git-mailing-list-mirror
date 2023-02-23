@@ -2,100 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B193C61DA4
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 10:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B7A6C61DA4
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 10:48:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233964AbjBWKhq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 05:37:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43290 "EHLO
+        id S233695AbjBWKsG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 05:48:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233851AbjBWKh3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 05:37:29 -0500
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AC055A395
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 02:37:17 -0800 (PST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 7256A3200893;
-        Thu, 23 Feb 2023 05:37:16 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Thu, 23 Feb 2023 05:37:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emailplus.org;
-         h=cc:cc:content-transfer-encoding:content-type:date:date:from
-        :from:in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm1; t=1677148636; x=
-        1677235036; bh=YnXmHdHeP6mPFd7Y2SgiqeVukfmoYYLklPkqkq/4RmU=; b=3
-        0kmMs2iJ5McIKQ/MzujYtKJ2Fhf1SM/LYH1jYCOKkrqlr74i7PnYLxlUEeK4sOXe
-        8tHZnTofOOAEl565ollHU1ygX5+YIm3NuaGtdR77Re9jHkHD3Z/WX98xh2gLUZ4r
-        L+HE4ZsMkQzj1mIxe79Ugks6MZXsCObbsa02U8XWV1op2NrEZtWZYzfghxHgZuOR
-        D6YLI+QbX3wbgH0K+zQ3mk99a3vvNORK7nYhw26xxXIAvwO/4+yWhAkwCMQobKir
-        v0mStulVEQTzQZUxDSlD6EtDpgruVNAODRiNo75DS9OyNswz8OS7R3AjwsEYIc5R
-        1o7WlOBJ22BFBtruuHIiQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:date:date:feedback-id:feedback-id:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1677148636; x=
-        1677235036; bh=YnXmHdHeP6mPFd7Y2SgiqeVukfmoYYLklPkqkq/4RmU=; b=M
-        /pvQ/zaC56sQMVgS1Q1mWjSkd8OKSfJm0I/1XZtKXg9DERde6ynLh8Kr8UwPtZPq
-        F1rXoUKZuFpd88iy6NOn3VLraO9SEpcSvK9H7vkaXecrTi7U63oB/nnbDA4L2CbS
-        6yEM9nn0N1o0x2rwsXi9DF+Q0c6tbTzBTOLs+R9s3LeR3zd6VIqvlGYWDQ/kSeAs
-        GGzeDNlKL8+zuAwHgSwJAU5lZN8tdP9r0lA0TSsUZZFBxeGwo2tAxmAcV6PsNACN
-        EQKSgmkKGjULd2ebpy1+DV/etLGtXQdZVh+vzkDexarPbNdZ7luF/rsJ0o2Ka/EK
-        2d8vu5HP2b1qpyI+8/Xkg==
-X-ME-Sender: <xms:20H3Y59UjyoA54IGbZSjN48CwmzeRcUDkYzXqTBZ8r8JFPCRcDcsqQ>
-    <xme:20H3Y9v9lxFzanX8ve4XljVHtoTHnRQ_2-Tajp0FhxhtnrQXJsJr3YdY-rqR06P5Q
-    6g7PhSjeUzXzJ4T>
-X-ME-Received: <xmr:20H3Y3AwDvPJow44UgkXW_q00vNNdaElEFZW2L1PW1pkmMDp3INpR4LN2LvHsONlHLk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudekuddgudejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkfffgggfvfevfhfhufgjtgfgsehtjeertddtfeejnecuhfhrohhmpeeuvghn
-    shhonhcuofhuihhtvgcuoegsvghnshhonhgpmhhuihhtvgesvghmrghilhhplhhushdroh
-    hrgheqnecuggftrfgrthhtvghrnhephfekkeegteekjeeufeelgeelvddukeejheevtdff
-    kefhfeduledvgfffueffuedvnecuffhomhgrihhnpehgihhtqdhsvghnugdqvghmrghilh
-    drihhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    sggvnhhsohhnpghmuhhithgvsegvmhgrihhlphhluhhsrdhorhhg
-X-ME-Proxy: <xmx:20H3Y9erskgaGbctnOEwx4oY3_CGnY5Vhw-UXnU_5o3Qd2VOdJPbcw>
-    <xmx:20H3Y-MY7pIA2QrB3n4fo-4LnBy_dcqQOYuGd5NjqqquDR3RvCT87w>
-    <xmx:20H3Y_km58WdHLPt3U7xZdJa46nQar5wXprTqhfbQyf-ue2yHKjSDg>
-    <xmx:3EH3Y4XrZt1gPM8i-rBeNuBUgjmZFYJtImVkICjnXQqXcLZMDiSFvw>
-Feedback-ID: ic1e8415a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 23 Feb 2023 05:37:11 -0500 (EST)
-Message-ID: <a191c829-dfd4-a180-114d-147787d88aed@emailplus.org>
-Date:   Thu, 23 Feb 2023 13:37:02 +0300
+        with ESMTP id S233253AbjBWKsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 05:48:04 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E7B15572
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 02:48:02 -0800 (PST)
+Received: (qmail 24706 invoked by uid 109); 23 Feb 2023 10:48:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 23 Feb 2023 10:48:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20062 invoked by uid 111); 23 Feb 2023 10:48:01 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 Feb 2023 05:48:01 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 23 Feb 2023 05:48:01 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/16] http test bug potpourri
+Message-ID: <Y/dEYYWKy/o96vBG@coredump.intra.peff.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Content-Language: en-US
-To:     Vivan Garg <gvivan6@gmail.com>
-Cc:     git@vger.kernel.org
-References: <20230222011317.97943-1-gvivan6@gmail.com>
- <20230223082759.36021-1-gvivan6@gmail.com>
- <4de72b33-fb1a-ab8d-11b8-9e89554fa8ad@emailplus.org>
- <CACzddJqv=CX8LC55_RHVi46GOUuVqY7C0iMLHaFn24uNHzPf9w@mail.gmail.com>
-From:   Benson Muite <benson_muite@emailplus.org>
-Subject: Re: [PATCH v3] MyFirstContribution: add note about SMTP server config
-In-Reply-To: <CACzddJqv=CX8LC55_RHVi46GOUuVqY7C0iMLHaFn24uNHzPf9w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/23/23 12:20, Vivan Garg wrote:
->> Maybe https://git-send-email.io/ is also helpful.
-> If you look at v1 of this patch, you'll notice that I added a template with
-> instructions that are nearly identical to the generic ones in the link.
-> I was told that it doesn't work for all setups. Although there are instructions
-> for a few different setups, they most likely do not cover all of them? Perhaps
-> it's best to leave it up to the contributor to decide what to do. Also, I'm not
-> sure how credible the configuration settings for the other setups are.
-> However, if the other setups are correct, I also believe it may be beneficial.
-> What are your thoughts? I suppose I'd like to hear what other people think
-> as well? Thanks!
-Have not tested all of the setups in https://git-send-email.io/ The
-Fedora instructions seem fine.  It can be updated through Git, so
-contributions for other setups are possible. There is a nice way to test:
-https://git-send-email.io/#step-3
+So all I wanted to do was this one-liner:
+
+diff --git a/t/t5559-http-fetch-smart-http2.sh b/t/t5559-http-fetch-smart-http2.sh
+index 9eece71c2c..54aa9d3bff 100755
+--- a/t/t5559-http-fetch-smart-http2.sh
++++ b/t/t5559-http-fetch-smart-http2.sh
+@@ -1,4 +1,5 @@
+ #!/bin/sh
+ 
+ HTTP_PROTO=HTTP/2
++LIB_HTTPD_SSL=1
+ . ./t5551-http-fetch-smart.sh
+
+but somehow I'm 16 patches deep. Let me back up.
+
+I got bit once again by the "oops, HTTP/2 tests in t5559 are sometimes
+flaky" bug. One thing that came up in earlier discussion is that HTTP/2
+over TLS should be much more reliable, because it doesn't have to go
+through the funny HTTP-upgrade path.
+
+Hence the patch above, which is also patch 16 here. And it does make the
+consistent failure of t5551.30 go away. And it even makes --stress work
+longer before a racy failure, though it still fails for me pretty
+consistently within a few dozen runs.
+
+But in doing so, I found out all sorts of neat things, like:
+
+  - when I tested with HTTP/2 and TLS before, I was accidentally not
+    using HTTP/2!
+
+  - we even have a test that should detect which version is used, but
+    it's a silent noop unless you set GIT_TEST_PROTOCOL_VERSION=0, which
+    clearly nobody does
+
+  - it turns out there are a bunch of tests which are skipped (some of
+    which even fail!) unless you set that variable
+
+So this series fixes the broken tests, adapts them to work with both v0
+and v2 Git protocol, makes them work with HTTP/2 when needed, sprinkles
+in a couple other fixes, and then finally does that one-liner.
+
+I'm actually not sure if the final patch is a good idea or not, but
+certainly all of the fixes leading up to it are worth doing.
+
+  [01/16]: t5541: run "used receive-pack service" test earlier
+  [02/16]: t5541: stop marking "used receive-pack service" test as v0 only
+  [03/16]: t5541: simplify and move "no empty path components" test
+  [04/16]: t5551: drop redundant grep for Accept-Language
+  [05/16]: t5551: lower-case headers in expected curl trace
+  [06/16]: t5551: handle HTTP/2 when checking curl trace
+  [07/16]: t5551: stop forcing clone to run with v0 protocol
+  [08/16]: t5551: handle v2 protocol when checking curl trace
+  [09/16]: t5551: handle v2 protocol in upload-pack service test
+  [10/16]: t5551: simplify expected cookie file
+  [11/16]: t5551: handle v2 protocol in cookie test
+  [12/16]: t5551: drop curl trace lines without headers
+  [13/16]: t/lib-httpd: respect $HTTPD_PROTO in expect_askpass()
+  [14/16]: t/lib-httpd: enable HTTP/2 "h2" protocol, not just h2c
+  [15/16]: t5559: fix test failures with LIB_HTTPD_SSL
+  [16/16]: t5559: make SSL/TLS the default
+
+ t/lib-httpd.sh                    |   6 +-
+ t/lib-httpd/apache.conf           |   2 +-
+ t/t5541-http-push-smart.sh        |  57 +++-------
+ t/t5551-http-fetch-smart.sh       | 170 ++++++++++++++++++------------
+ t/t5559-http-fetch-smart-http2.sh |   1 +
+ 5 files changed, 122 insertions(+), 114 deletions(-)
+
+-Peff
