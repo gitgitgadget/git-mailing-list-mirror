@@ -2,67 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EF74C64ED6
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 22:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F5B8C64ED6
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 22:58:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229610AbjBWWfw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 17:35:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37120 "EHLO
+        id S229596AbjBWW6D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 17:58:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjBWWfv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 17:35:51 -0500
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0308018B0C
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 14:35:51 -0800 (PST)
-Received: by mail-pf1-x42c.google.com with SMTP id d7so6877368pfu.4
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 14:35:50 -0800 (PST)
+        with ESMTP id S229553AbjBWW6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 17:58:00 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB4291630D
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 14:57:58 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id q11so15148980plx.5
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 14:57:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Wq4ZVkr73hug5qGD0l2V5k5gBDUK1EaGMeVI0tmtrNI=;
-        b=kWkSTqCsyoPIWA4pZ6pPbLd9NXqhO7jkJsqDQk+I/brSlN3TpaW2zqXS0RXo/k+faj
-         o2OVor1xzSQlQvxg2zbOyvhpJ8wJLmiJVu3JigcrT8UOrdyDUf4by3kUlQUhBgJi7ADT
-         h5jrJZufkI0Z8bjhKAzcgAZly+JJai4OH601eNzKPBgh6E4wHuwcLGdtEJgaOVG4qjX0
-         xWBz1ITLy7k9MDiu5erxDaAg/yFvwNUSzn5gFWdrg3baNVL4EQdRSyjY855rGWRDznzf
-         q+NE5VT/kklhK16kn3c4vH3z5QQ8TbvCCvXbbvli7QEOsgvXc8pz3Uls3QFzW2A9D0Kh
-         pieQ==
+        bh=iud4g/afUxTKgn87Vdj1fCbvL2XPfFapL1M92pPT8Qo=;
+        b=hKYRVGKQs1ZVvWFr+gsl/MmnhAtY3oxHCiwKfScX0R671YFDXKqFntIOSNB4sleZwb
+         ukTmxmccF4yLwa66FrD0VT9L+c/UNd6Z8MpfvSecGsEftljO9vvm42O588SNLR8Bb+cx
+         Q8AQS9dOxzYkA02Owf86hoKdIbVIWpZOjXdgUvGiCcaLdMWyOwINfGpXPF70kPNyHssp
+         nUS8oGxh9VZ0gfVwlxcPYceT8cEfD+ADXBwD+/FDWtxDu5E7IKLjoNUfIsI4Wp9u9ZcS
+         8zrKayFfHq7DF+JDedoVPUswSpg8tbN7zow+PuRgAOgj+HALGwSqYaRBJfDvDUDcHls3
+         DZ5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Wq4ZVkr73hug5qGD0l2V5k5gBDUK1EaGMeVI0tmtrNI=;
-        b=0cFzvT/n4BnOL8KFHgE9S3SpvxFmwJwPpRq5cz4yzsSay/5bvYLBY5ATWJK6t6Nbs/
-         kC5Fwq5gSYMk1118dRPRnAWOPugqs1SaViRaxb0agLTCLFC2uw+R25laKJSCCGECrd6x
-         gknKxYrQvMiA1olLLd9rdxZ+Lwokzbo9Ir6L/jwK9SXetPAcOZck38j616iJn1Og8zuB
-         rCUYcCYuI6mliHKO6oefnsoRVEug/73r1d3b7ShCKF9Y+S2GHdRDKzwwCvKa3wjgYqWp
-         qitXBKZpbw1HsDRIUzwVGFmtyhvKLx0BjQjkx3sKC5QWy0YQ/BFe/lxg0kscs7ymNJ+/
-         hTQg==
-X-Gm-Message-State: AO0yUKWUp9WiJvf2tDId16ygxCT3B/OEPvNPgBuovRvpY2my3e2kw+Uz
-        0bDFZ/8E8xa4Qr4KbfBSonQdc6SN0EU=
-X-Google-Smtp-Source: AK7set+FSRhW5MaXVV1cSmZRGRcxZISjUq+ny7XkNdFZoMrAzqTFbnASiIBLai8wVmx6151pSsfVJQ==
-X-Received: by 2002:aa7:8ecc:0:b0:5a8:bcf2:125 with SMTP id b12-20020aa78ecc000000b005a8bcf20125mr10670948pfr.21.1677191750362;
-        Thu, 23 Feb 2023 14:35:50 -0800 (PST)
+        bh=iud4g/afUxTKgn87Vdj1fCbvL2XPfFapL1M92pPT8Qo=;
+        b=c+jZTXDSbliccErCAUyUB6x1mDsBn3MEE0WdImloCTswp9VkgLngs/Tk3vRZ7pPM+0
+         hfZcHNdl1R00yAm35R1lwg18yQnW8FQUeGksGCjfHTZ9dGBW9xRVqTOChWM0MThR3U25
+         M+2qaTKf1IGkxlXIWvtN/ArggWgSoGdAGzT8B7LgdBLkfzbYmDJN2BYfBpJLc+gYTKLj
+         42KcOn/rjpUv/i72iKk8aF1dxI0zAxpP3vRxV/FkTL+HF7wNT00a6LV0W2dptHmAioEr
+         51OIEaNALBR3RVioKTGyjbGDVmTlfpeMVhyvlz1UWjwJHrYT2rrlXaFMCWcGKTKUkCvc
+         pVow==
+X-Gm-Message-State: AO0yUKXogNECVKL7PuhI/4XJHYkfAqr+aPuLTVvQssgKxvs5BB+G2CdJ
+        I45BwZMMB23wT703N5VQVGY=
+X-Google-Smtp-Source: AK7set+4IyvDBiFx7sBJCOpGubHKeh609cJ6SR0PmvwygTLSk77Ass8iMKLvfwrTS7DhQAjhSce1PQ==
+X-Received: by 2002:a05:6a21:6d81:b0:be:da0c:fc62 with SMTP id wl1-20020a056a216d8100b000beda0cfc62mr14689603pzb.38.1677193078028;
+        Thu, 23 Feb 2023 14:57:58 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id t10-20020a62ea0a000000b005d3901948d8sm4045392pfh.44.2023.02.23.14.35.49
+        by smtp.gmail.com with ESMTPSA id 10-20020aa7914a000000b0058bacd6c4e8sm1972548pfi.207.2023.02.23.14.57.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 14:35:49 -0800 (PST)
+        Thu, 23 Feb 2023 14:57:57 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 2/2] rebase -i: fix parsing of "fixup -C<commit>"
-References: <pull.1486.git.1677185701.gitgitgadget@gmail.com>
-        <d670e284c175db67337ca7ce774ecd9afb089736.1677185702.git.gitgitgadget@gmail.com>
-Date:   Thu, 23 Feb 2023 14:35:49 -0800
-In-Reply-To: <d670e284c175db67337ca7ce774ecd9afb089736.1677185702.git.gitgitgadget@gmail.com>
-        (Phillip Wood via GitGitGadget's message of "Thu, 23 Feb 2023 20:55:01
-        +0000")
-Message-ID: <xmqq1qmg6md6.fsf@gitster.g>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: ab/config-multi-and-nonbool (was Re: What's cooking in git.git
+ (Feb 2023, #04; Wed, 22))
+References: <xmqqbkllaxd7.fsf@gitster.g>
+        <kl6lfsaw84vo.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Thu, 23 Feb 2023 14:57:57 -0800
+In-Reply-To: <kl6lfsaw84vo.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Thu, 23 Feb 2023 13:10:35 -0800")
+Message-ID: <xmqqa61456ru.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,35 +68,208 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Glen Choo <chooglen@google.com> writes:
 
->  	if (item->command == TODO_FIXUP) {
-> -		if (skip_prefix(bol, "-C", &bol) &&
-> -		   (*bol == ' ' || *bol == '\t')) {
-> +		if (skip_prefix(bol, "-C", &bol)) {
->  			bol += strspn(bol, " \t");
->  			item->flags |= TODO_REPLACE_FIXUP_MSG;
+> I would prefer to eject 06/10 [1] for now and leave it in for a future
+> cleanup series. I haven't confirmed whether it's safe (the practical
+> effect of that patch is that the *_get() functions can now return -1
+> instead of 1, so the patch is safe if all callers only check if the
+> return value is zero, and not whether it has a particular sign), and I
+> don't think 06/10 is absolutely necessary to the series.
 
-OK.  An explicit check followed by strspn() is an odd way to write
-this even if it meant to require at least one whitespace, but I
-agree that this one probably did not even mean to require a
-whitespace there, and the updated code looks much easier to read.
+If somebody wants to help auditing potential breakage the patch in
+question causes, "are callers happy to declare an error upon
+non-zero return?" is not exactly sufficient.  While all of these
+functions return 0 upon success, some of them return 1 on certain
+cases while error() on other cases, and we need to ensure that the
+callers are not behaving differently upon these values.
 
-> diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-> index 1d2f0429aea..7ca5b918f04 100644
-> --- a/t/lib-rebase.sh
-> +++ b/t/lib-rebase.sh
-> ...
-> +test_expect_success 'fixup -[Cc]<commit> works' '
-> +	test_when_finished "test_might_fail git rebase --abort" &&
-> +	cat >todo <<-\EOF &&
-> +	pick A
-> +	fixup -CA1
-> +	pick B
-> +	fixup -cA2
-> +	EOF
+So let's see how many functions does the patch in question touch.
 
-By the way, this is much easier to follow, than the todo file written
-in the ugly FAKE_LINES language, to see what is being tested.
+> diff --git a/config.c b/config.c
+> index 1f654daf6f..74d453f5f9 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -2449,86 +2449,93 @@ int git_configset_get(struct config_set *cs, const char *key)
+>  int git_configset_get_string(struct config_set *cs, const char *key, char **dest)
+>  {
+>  	const char *value;
+> -	if (!git_configset_get_value(cs, key, &value))
+> -		return git_config_string((const char **)dest, key, value);
+> -	else
+> -		return 1;
+> +	int ret;
+> +
+> +	if ((ret = git_configset_get_value(cs, key, &value)))
+> +		return ret;
+> +	return git_config_string((const char **)dest, key, value);
+>  }
 
-Will queue.  Thanks.
+This used to return 1 when there is no such value, and get whatever
+error signal git_config_string() gave if git_config_string() failed.
+
+Luckily, git_configset_get_value() returns 1 when there is no such
+value, so I think this hunk is an expensive-to-audit no-op.
+
+>  static int git_configset_get_string_tmp(struct config_set *cs, const char *key,
+>  					const char **dest)
+>  {
+>  	const char *value;
+> -	if (!git_configset_get_value(cs, key, &value)) {
+> -		if (!value)
+> -			return config_error_nonbool(key);
+> -		*dest = value;
+> -		return 0;
+> -	} else {
+> -		return 1;
+> -	}
+> +	int ret;
+> +
+> +	if ((ret = git_configset_get_value(cs, key, &value)))
+> +		return ret;
+> +	if (!value)
+> +		return config_error_nonbool(key);
+> +	*dest = value;
+> +	return 0;
+>  }
+
+Ditto.
+
+>  int git_configset_get_int(struct config_set *cs, const char *key, int *dest)
+>  {
+>  	const char *value;
+> -	if (!git_configset_get_value(cs, key, &value)) {
+> -		*dest = git_config_int(key, value);
+> -		return 0;
+> -	} else
+> -		return 1;
+> +	int ret;
+> +
+> +	if ((ret = git_configset_get_value(cs, key, &value)))
+> +		return ret;
+> +	*dest = git_config_int(key, value);
+> +	return 0;
+>  }
+
+Ditto.
+
+>  int git_configset_get_ulong(struct config_set *cs, const char *key, unsigned long *dest)
+>  {
+>  	const char *value;
+> -	if (!git_configset_get_value(cs, key, &value)) {
+> -		*dest = git_config_ulong(key, value);
+> -		return 0;
+> -	} else
+> -		return 1;
+> +	int ret;
+> +
+> +	if ((ret = git_configset_get_value(cs, key, &value)))
+> +		return ret;
+> +	*dest = git_config_ulong(key, value);
+> +	return 0;
+>  }
+
+Ditto.
+
+>  int git_configset_get_bool(struct config_set *cs, const char *key, int *dest)
+>  {
+>  	const char *value;
+> -	if (!git_configset_get_value(cs, key, &value)) {
+> -		*dest = git_config_bool(key, value);
+> -		return 0;
+> -	} else
+> -		return 1;
+> +	int ret;
+> +
+> +	if ((ret = git_configset_get_value(cs, key, &value)))
+> +		return ret;
+> +	*dest = git_config_bool(key, value);
+> +	return 0;
+>  }
+
+Ditto.
+
+>  int git_configset_get_bool_or_int(struct config_set *cs, const char *key,
+>  				int *is_bool, int *dest)
+>  {
+>  	const char *value;
+> -	if (!git_configset_get_value(cs, key, &value)) {
+> -		*dest = git_config_bool_or_int(key, value, is_bool);
+> -		return 0;
+> -	} else
+> -		return 1;
+> +	int ret;
+> +
+> +	if ((ret = git_configset_get_value(cs, key, &value)))
+> +		return ret;
+> +	*dest = git_config_bool_or_int(key, value, is_bool);
+> +	return 0;
+>  }
+
+Ditto.
+
+>  int git_configset_get_maybe_bool(struct config_set *cs, const char *key, int *dest)
+>  {
+>  	const char *value;
+> -	if (!git_configset_get_value(cs, key, &value)) {
+> -		*dest = git_parse_maybe_bool(value);
+> -		if (*dest == -1)
+> -			return -1;
+> -		return 0;
+> -	} else
+> -		return 1;
+> +	int ret;
+> +
+> +	if ((ret = git_configset_get_value(cs, key, &value)))
+> +		return ret;
+> +	*dest = git_parse_maybe_bool(value);
+> +	if (*dest == -1)
+> +		return -1;
+> +	return 0;
+>  }
+
+Ditto.
+
+>  int git_configset_get_pathname(struct config_set *cs, const char *key, const char **dest)
+>  {
+>  	const char *value;
+> -	if (!git_configset_get_value(cs, key, &value))
+> -		return git_config_pathname(dest, key, value);
+> -	else
+> -		return 1;
+> +	int ret;
+> +
+> +	if ((ret = git_configset_get_value(cs, key, &value)))
+> +		return ret;
+> +	return git_config_pathname(dest, key, value);
+>  }
+
+Ditto.
+
+> @@ -2775,9 +2782,11 @@ int git_config_get_expiry_in_days(const char *key, timestamp_t *expiry, timestam
+>  	const char *expiry_string;
+>  	intmax_t days;
+>  	timestamp_t when;
+> +	int ret;
+>  
+> -	if (git_config_get_string_tmp(key, &expiry_string))
+> -		return 1; /* no such thing */
+> +	if ((ret = git_config_get_string_tmp(key, &expiry_string)))
+> +		/* no such thing, or git_config_parse_key() failure etc. */
+> +		return ret;
+
+This was returning -1 for an error (at the end of the function), as
+well as 1 for "no such thing".  Now, this is a breaking change if
+any callers wanted to tell between -1 and 1.
+
+Luckily, I think its two callers discard the error return; they
+initialize expiry to some reasonable default and rely on the fact
+that the expiry is not updated when these configuration API calls
+did not find anything interesting.
+
+> @@ -2827,15 +2837,14 @@ int git_config_get_index_threads(int *dest)
+
+You can easily find output in "git grep git_config_get_index_threads"
+that all four callers only care if they get 0 or not, so this one
+should be safe.
+
