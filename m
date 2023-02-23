@@ -2,86 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62253C61DA4
-	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 05:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F0B0C636D7
+	for <git@archiver.kernel.org>; Thu, 23 Feb 2023 06:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233213AbjBWFvd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 00:51:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33744 "EHLO
+        id S233363AbjBWGXy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 01:23:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232470AbjBWFvb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 00:51:31 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B38AD498AB
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 21:51:30 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id gi3-20020a17090b110300b0023762f642dcso798008pjb.4
-        for <git@vger.kernel.org>; Wed, 22 Feb 2023 21:51:30 -0800 (PST)
+        with ESMTP id S230356AbjBWGXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 01:23:53 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EB5C2B28E
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 22:23:52 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id c1so11858463plg.4
+        for <git@vger.kernel.org>; Wed, 22 Feb 2023 22:23:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8ht0lk8DFUjah6Y6nDdX9Eq0icx2Aj1Rk4D77AtzY9c=;
-        b=d/8QG2CIyNoqRwTWjMxQSeoXwIBVgcfcUG4X0L1vl9+GdTU6hQhJxqXq2OoMADOEkf
-         3M2GTYkdHhpxOVgQ/neC6dsztsoUaCydG0mo3VtTMs8NtTW4VJGbTxf3N+8BmldQogC+
-         hIa/4HTOrlzLLzjzoXW44SFLKYQywrCUXK2RDwbu6lHb08rpKVqL1LT9IAJwNi9I1PDi
-         IrMDuQZNkZjGUMvHQKZtikICrslG7w3Ezid0SljDw4qo6wBasoiWjrwPlDXc9DOTYfY9
-         jrF05iA7BX6KGVls87YJXolyEmsM+iKmSD4cl+Fll7423CLHy2uULMveuQuLkzyuA26U
-         7hhg==
+        bh=5v3yJ0FCHJLWch+KrcBOrSFC0ckRl4hNdzX7kEbRo/0=;
+        b=HJBaYjQK35yivirh9Mq4322c+I4rjYWIr14Et9Kei7dMrzKWJvQ/CntFnk63iu9ZmZ
+         kn0PW6RAZH4PpBJDzvrqhdU4fE9jhI2/cqurH+sgXDxljj25ILa006ZlAEuht80cu4wj
+         3adWEMkrj4k9mG3cQIXtKF6jyi5n7imXFPbRidkapNgjmf+Rq/U2eenb2SnU5ba317fu
+         YY0zEVDB50csnWheI2h+hbQbReo8VLouB9PKIvxrTRmpvBAu+UxAVVqoTFVuahP/zZyD
+         Q6qfh7k0EBueQ7bKToksxJzwUWnAriSpijb3i0RIHqz/wMIlicO9t0xjof4rUpTW/K1k
+         t26A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8ht0lk8DFUjah6Y6nDdX9Eq0icx2Aj1Rk4D77AtzY9c=;
-        b=5qKG0b3fO9GMcw4SjRu6v715DTbAoA7BxU1kMcOb4atmNi6yTL+0M0uZlumh3qhlBe
-         homPOrACSCf+Cjkwh0kTqTRZ1pzTqS7BH06ap/CvhYE9xEXQo/ptvsT22kASPCtKlUTq
-         ZFmbKI1qdekLSckQYAmwRQ6quHXzMYDWxECZobFd2RDDMzLdyeGbSwn2/zxt1YTN4i1e
-         wMg9gO/E7pkwlgP9VKwQxYMLZ+QskazPFIvrfl4sy49S6hsqpWGnZrpH2MV6oiaulz2V
-         YGpu2JvEXNlbELhHUJbFaJImI+Lo2vtbyn6UD0GQvtQU2MOQUGKrgYOOQQdrCxW+ZUHC
-         r2wQ==
-X-Gm-Message-State: AO0yUKUjSRZL4piW7h2ygv4Fb02aBrODmm9PwHXYwTISfhMw+Bzmyn1S
-        S/48jXaIjVLaj4YXOz6JgBJ1thCObFv/hXg=
-X-Google-Smtp-Source: AK7set+g661n+PogDJyi1b46BzoaKFxCrZEW3WzQee3+vnx9n81peGZqZ0ktWAFEihMBVESve63XcQ==
-X-Received: by 2002:a17:902:f98d:b0:19a:ac93:64a with SMTP id ky13-20020a170902f98d00b0019aac93064amr10020481plb.18.1677131490181;
-        Wed, 22 Feb 2023 21:51:30 -0800 (PST)
+        bh=5v3yJ0FCHJLWch+KrcBOrSFC0ckRl4hNdzX7kEbRo/0=;
+        b=rOBzQgontjPD/o8lbyxEusln5FeVuYqkP98Cf3EDWsYdLcvKUE9tadZUxSr7o1hVc4
+         O3KUX8Zq79lhsHczCkd73B3+KeNu6T0kUe5EIrzqMqvoQzQG5fD9CqwDZNBdcCaQ6iGf
+         ktK+cPh0JYkUyT/6Y7RIeSYzlKdWtzmCf/mzDAFyczac0nz55TvKjwnk5bCPsr/IORmu
+         PN8i5rEIZtTLU54r7GIhhSZnPJhOaivFM3HG7mHHO7fy9fgup2c5CGDwkgHrb/aypeZ9
+         c955kE7InToygJIwQL/Ec1DOA4VBcC0cl280HJF/Z0CuhN/NkDJ3mkh4lylJ5LmlM5Xs
+         zS9A==
+X-Gm-Message-State: AO0yUKWnODrlHfZzfsd0xAb2RWOrjfPxqY7yQkgzJqFPp7CzUHTRfsm5
+        0oWQk5yz+sU4JO+/QextPAMPKoPIuCgLOog=
+X-Google-Smtp-Source: AK7set/caZfOVPEPL10LZyhEMHwHb5S4Q/bEkKpR/Kbm1VEwxo7tnobV9ehM3n0XEjpREBlzC9NvYg==
+X-Received: by 2002:a05:6a20:1585:b0:c7:5ba5:440e with SMTP id h5-20020a056a20158500b000c75ba5440emr9996782pzj.11.1677133431893;
+        Wed, 22 Feb 2023 22:23:51 -0800 (PST)
 Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id r18-20020a170902be1200b0019cad2de870sm1992362pls.211.2023.02.22.21.51.29
+        by smtp.gmail.com with ESMTPSA id b17-20020a639311000000b00502f86b2069sm386656pge.65.2023.02.22.22.23.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Feb 2023 21:51:29 -0800 (PST)
-Message-ID: <3ab86863-fa15-a5c5-08c8-73ad775e04c8@github.com>
-Date:   Wed, 22 Feb 2023 21:51:28 -0800
+        Wed, 22 Feb 2023 22:23:51 -0800 (PST)
+Message-ID: <cb69979d-a0f1-d4dc-6e94-2d1652ec69ea@github.com>
+Date:   Wed, 22 Feb 2023 22:23:49 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.7.2
-Subject: mc/credential-helper-www-authenticate (Re: What's cooking in git.git
- (Feb 2023, #04; Wed, 22))
+Subject: Re: [PATCH v2 1/1] MyFirstContribution: add note about SMTP server
+ config
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-References: <xmqqbkllaxd7.fsf@gitster.g>
+To:     Vivan Garg <gvivan6@gmail.com>, git@vger.kernel.org
+Cc:     nasamuffin@google.com
+References: <20230222011317.97943-1-gvivan6@gmail.com>
+ <20230223054040.30088-1-gvivan6@gmail.com>
+ <20230223054040.30088-2-gvivan6@gmail.com>
 From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <xmqqbkllaxd7.fsf@gitster.g>
+In-Reply-To: <20230223054040.30088-2-gvivan6@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> * mc/credential-helper-www-authenticate (2023-02-16) 3 commits
->  - credential: add WWW-Authenticate header to cred requests
->  - http: read HTTP WWW-Authenticate response headers
->  - t5563: add tests for basic and anoymous HTTP access
-> 
->  Allow information carried on the WWW-AUthenticate header to be
->  passed to the credential helpers.
-> 
->  Will merge to 'next'?
->  source: <pull.1352.v10.git.1676586881.gitgitgadget@gmail.com>
+Vivan Garg wrote:
+> In the documentation on using git-send-email, it was noted that the configuration
+> for sending email can vary based on your operating system and email provider.
+> However, it was not explicitly stated that you will need to set up your SMTP
+> server details in git's configuration file under the 'sendemail' section. 
 
-Aside from some relatively minor touch-ups, this has been fairly stable
-since v8. I'm happy with it at this point, but I'm also curious to hear
-Peff's thoughts (since it was his review that prompted the switch to Apache
-for the test helper, among other changes).
+This is a bit of an overstatement of the issue. The existing documentation
+*does* say that you need to configure Git for your SMTP server:
+
+> You will also need to determine the right way to configure it to use your
+> SMTP server; again, as this configuration can change significantly based
+> on your system and email setup, it is out of scope for the context of this
+> tutorial.
+
+The only thing it could use is a bit more specificity around which options
+need configuring. With that in mind...
+
+> This information is critical for users who are new to using git-send-email and may
+> not be familiar with the additional setup required to use their SMTP server. By
+> adding this note to the documentation, the aim is to provide users with a more
+> complete understanding of the configuration process and help them avoid
+> potential roadblocks in setting up git-send-email.
+> 
+> Signed-off-by: Vivan Garg <gvivan6@gmail.com>
+> ---
+>  Documentation/MyFirstContribution.txt | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+> index ccfd0cb5f3..ca095283d3 100644
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -1001,7 +1001,10 @@ typical `git` install. You may need to install this additional package; there
+>  are a number of resources online to help you do so. You will also need to
+>  determine the right way to configure it to use your SMTP server; again, as this
+>  configuration can change significantly based on your system and email setup, it
+> -is out of scope for the context of this tutorial.
+> +is out of scope for the context of this tutorial. Additionally, note that you 
+> +will need to set up your SMTP server details in git's configuration file. The 
+
+...this sentence seems to ignore the one that precedes it. The documentation
+just finishes telling the reader "you'll need to configure Git for SMTP",
+which you now follow with "also, you need to configure Git for SMTP" -
+basically saying the same thing twice. If you drop the sentence starting
+with "Additionally, ...", though, the sentence after (starting with "The
+relevant settings...") flows nicely from the existing paragraph while still
+adding specificity to the SMTP configuration guidance.
+
+> +relevant settings can be found under the 'sendemail' section (see 
+
+super-nit: "the 'sendemail' section" could be clearer about the fact that
+it's the a section *of the '.gitconfig'* - how about something like "the
+'sendemail' section of the Git config file"?
+
+> +linkgit:git-config[1]).
+>  
+>  [[format-patch]]
+>  === Preparing Initial Patchset
 
