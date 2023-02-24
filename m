@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43182C61DA4
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 00:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18A80C64ED6
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 00:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229741AbjBXAKR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 19:10:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48502 "EHLO
+        id S229711AbjBXAKS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 19:10:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbjBXAJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229703AbjBXAJ5 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 23 Feb 2023 19:09:57 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75FC019F13
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:51 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id c12so12328210wrw.1
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:51 -0800 (PST)
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D44BC2C665
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:52 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id j2so12146007wrh.9
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Z/xn+HgvYrS95jt13hJGU0co0KYRBMbn2u24VFc0FfQ=;
-        b=hND76v3RFTMK4Vrn1nzMIPBB4+tpXdyneecV5d+QAcYm29o3JIcO/c/vPEIwB8PdYv
-         vO9d4EOrOTDSR9gGZrG7Hi+x3UWXcZyp0uVufOHbi9/uM1KjKogoHrxZEH5v0aSiGFoJ
-         R/xs8dzJJZ2MhsvozmJIPKOOxLUwVTLdbDBUau8ILUxUGOVbRNuRSFrOf8Iw9w7gsNoO
-         GM9z3FY31YMuu6PhWWAbrGIxFel/1MhVA4V7XsA4pwfRYsHjm5KypGeWBXdCFtVDvflV
-         yg+LsPCLWEeNtmlMYSunpuGZObPsqgiQhIETXwQ2OimCq5ntLFUztWG8G+pjmfS4rgu6
-         o2Xw==
+        bh=/exVLOfyJ821kcaMlsfzPXkBPgu2DlOOQJ132O2GD98=;
+        b=RT/RBJVbQPqRuQWia64fGD0FwwGlgDonryjz8fEDUEqOtQzCotHknfZQAK7tSWk+Vr
+         O66h5PXQLhmacHn4Ch+BO+i/Olu/Xsr3oSIWwzfyVNrlnlUhONsw1uH73rRhI5Mt8OfO
+         aDOs+B8Ljq9rlEI2xhr8FU17CJn4NsNA7YlBv/7Q3JDsvRo4UK84drQ+aR/BbCHlkMBw
+         t403by4XucJgAR7qw0gWSojmGirS5E1DQRrv8GqsqZDW/I3K+fmHIa4kp7W8uwzHx8su
+         CW0nDpHuC5P1DPdJBRCLoAzvnpfCYk2vTDBWXthuPc1Sp97EmKadVV3RvhXZO61IqOrU
+         0KOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Z/xn+HgvYrS95jt13hJGU0co0KYRBMbn2u24VFc0FfQ=;
-        b=vUaS8BolLjRgX/opU0C8/vx/B2PgBHLFmCAUJ2kuuO86nN/bUqw8UvbQRkwa+UgCym
-         BE/ld9kPYYP1W2w63F88uYMEbu1NWhgxgJUiPYooImc99f41UE34NK+wm4YSKXILPEMQ
-         uqYI0AWDaaYOBAGxfYag2DJgr6/nFRb752v7Ws+Spn1xAnuGcr3LXEtzkw0yikl5Dm5Q
-         0MSWHxxTw3ohFdC1IphPRCNPmJyG3I38uhUT51oOndDzVdWCwobOQ3DkGpRkXmzMHY9t
-         Sr0GAAvtkjmMTSPTyiv8fD/GSvwONcyocnmB9vrgMQgExKzxyLfptVtXqSz80J06Mcmz
-         f4BQ==
-X-Gm-Message-State: AO0yUKXpTPholrN5sMNTCsKFtOibldP1znZA4TxzFIV+ItWVp102jjNS
-        XBhCqFyCLdfGXYlCJcjkhr+h5HztK08=
-X-Google-Smtp-Source: AK7set97jS84ANFqlwN5kcv3HH8KLQBOzMTOb13WZVYCmEHrTAMhnDva1cynB+pB24jNnsEHQNN2GA==
-X-Received: by 2002:adf:f010:0:b0:2c7:5ad:9c69 with SMTP id j16-20020adff010000000b002c705ad9c69mr8664909wro.71.1677197390791;
-        Thu, 23 Feb 2023 16:09:50 -0800 (PST)
+        bh=/exVLOfyJ821kcaMlsfzPXkBPgu2DlOOQJ132O2GD98=;
+        b=bn3NCL4G8Lm/iJJ4C3REl9WplCgQcgZuyfxbj1LUBLNSjJfgYIozvnTtbf1hIve2kd
+         P9Asv7eUL0Sbke+Jg9oeaox/YHCytISsnn4AKZwye4LzvDQ0ZbhaEXD2inkNQGth8HbS
+         6qaHP1y7qYZjJ9f9sWUfqJdo3VJFqz50xLBH+PCQRgq2HiX4H71TP7Bi31eLDUQkRwL1
+         uSYfaFvZIUi4UFywq8q4mVHmcQBtF1upUD9rj5UfOQRyCEUR9vPAbIhmTa6l2iKYgUYx
+         119C/Z6opqvZgvxx+ZICLUSPr3PUPfEi4fT3p+EFAI/dHcA/qeBQehuoURgE2IfUf/uQ
+         RR4Q==
+X-Gm-Message-State: AO0yUKU67ZBUzaDF0xPH0/WjkC/B40z3H6dqYQ8PJQhuWEORwvPYc+ni
+        aETJ5igXwyM0LAPtTkvaxCg/Hr2ynTs=
+X-Google-Smtp-Source: AK7set9wfRy9w4cIFafxD5w4TBRI6Jv4mV2I0C2l36iKtjzYUnUGacZxgFN/4SPDs6w15/ENMg7/cg==
+X-Received: by 2002:a5d:6645:0:b0:2c3:db87:977c with SMTP id f5-20020a5d6645000000b002c3db87977cmr10493261wrw.12.1677197392208;
+        Thu, 23 Feb 2023 16:09:52 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t8-20020a0560001a4800b002c54e26bca5sm1586324wry.49.2023.02.23.16.09.50
+        by smtp.gmail.com with ESMTPSA id q2-20020adff502000000b002c573a6216fsm9788665wro.37.2023.02.23.16.09.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 16:09:50 -0800 (PST)
-Message-Id: <12eb68b1ba36fcdcb5d97c6119db5581477a742c.1677197378.git.gitgitgadget@gmail.com>
+        Thu, 23 Feb 2023 16:09:51 -0800 (PST)
+Message-Id: <814d60ec94ef56071becb4ea03d2524e088a75f7.1677197378.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1485.v2.git.1677197376.gitgitgadget@gmail.com>
 References: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
         <pull.1485.v2.git.1677197376.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Feb 2023 00:09:32 +0000
-Subject: [PATCH v2 13/17] object-store.h: move struct object_info from cache.h
+Date:   Fri, 24 Feb 2023 00:09:34 +0000
+Subject: [PATCH v2 15/17] treewide: replace cache.h with more direct headers,
+ where possible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,210 +73,189 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Move struct object_info, and a few related #define's from cache.h to
-object-store.h.
-
-A surprising effect of this change is that replace-object.h, which
-includes object-store.h, now needs to directly include cache.h since
-that is where read_replace_refs is declared and that variable is used
-in one of its inline functions.  The next commit will move that
-declaration and fix that unfortunate new direct inclusion of cache.h.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-blobs.c    |   2 +-
- object-store.h   | 128 +++++++++++++++++++++++------------------------
- protocol-caps.c  |   1 +
- replace-object.h |   1 +
- 4 files changed, 67 insertions(+), 65 deletions(-)
+ advice.c          | 4 +++-
+ decorate.c        | 3 ++-
+ diffcore-order.c  | 3 ++-
+ diffcore-rename.c | 6 +++++-
+ diffcore-rotate.c | 3 ++-
+ graph.c           | 3 ++-
+ hook.c            | 5 ++++-
+ quote.c           | 1 +
+ sha1dc_git.c      | 3 ++-
+ unix-socket.c     | 3 ++-
+ url.c             | 3 ++-
+ urlmatch.c        | 4 +++-
+ 12 files changed, 30 insertions(+), 11 deletions(-)
 
-diff --git a/merge-blobs.c b/merge-blobs.c
-index 8138090f81c..aedcab81138 100644
---- a/merge-blobs.c
-+++ b/merge-blobs.c
-@@ -1,4 +1,4 @@
+diff --git a/advice.c b/advice.c
+index fd189689437..a5ea460ab86 100644
+--- a/advice.c
++++ b/advice.c
+@@ -1,6 +1,8 @@
 -#include "cache.h"
 +#include "git-compat-util.h"
- #include "run-command.h"
- #include "xdiff-interface.h"
- #include "ll-merge.h"
-diff --git a/object-store.h b/object-store.h
-index 1a713d89d7c..82201ec3e7b 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -1,7 +1,7 @@
- #ifndef OBJECT_STORE_H
- #define OBJECT_STORE_H
- 
--#include "cache.h"
-+#include "object.h"
- #include "oidmap.h"
- #include "list.h"
- #include "oid-array.h"
-@@ -284,6 +284,69 @@ int pretend_object_file(void *, unsigned long, enum object_type,
- 
- int force_object_loose(const struct object_id *oid, time_t mtime);
- 
-+struct object_info {
-+	/* Request */
-+	enum object_type *typep;
-+	unsigned long *sizep;
-+	off_t *disk_sizep;
-+	struct object_id *delta_base_oid;
-+	struct strbuf *type_name;
-+	void **contentp;
-+
-+	/* Response */
-+	enum {
-+		OI_CACHED,
-+		OI_LOOSE,
-+		OI_PACKED,
-+		OI_DBCACHED
-+	} whence;
-+	union {
-+		/*
-+		 * struct {
-+		 * 	... Nothing to expose in this case
-+		 * } cached;
-+		 * struct {
-+		 * 	... Nothing to expose in this case
-+		 * } loose;
-+		 */
-+		struct {
-+			struct packed_git *pack;
-+			off_t offset;
-+			unsigned int is_delta;
-+		} packed;
-+	} u;
-+};
-+
-+/*
-+ * Initializer for a "struct object_info" that wants no items. You may
-+ * also memset() the memory to all-zeroes.
-+ */
-+#define OBJECT_INFO_INIT { 0 }
-+
-+/* Invoke lookup_replace_object() on the given hash */
-+#define OBJECT_INFO_LOOKUP_REPLACE 1
-+/* Allow reading from a loose object file of unknown/bogus type */
-+#define OBJECT_INFO_ALLOW_UNKNOWN_TYPE 2
-+/* Do not retry packed storage after checking packed and loose storage */
-+#define OBJECT_INFO_QUICK 8
-+/*
-+ * Do not attempt to fetch the object if missing (even if fetch_is_missing is
-+ * nonzero).
-+ */
-+#define OBJECT_INFO_SKIP_FETCH_OBJECT 16
-+/*
-+ * This is meant for bulk prefetching of missing blobs in a partial
-+ * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK
-+ */
-+#define OBJECT_INFO_FOR_PREFETCH (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK)
-+
-+/* Die if object corruption (not just an object being missing) was detected. */
-+#define OBJECT_INFO_DIE_IF_CORRUPT 32
-+
-+int oid_object_info_extended(struct repository *r,
-+			     const struct object_id *,
-+			     struct object_info *, unsigned flags);
-+
- /*
-  * Open the loose object at path, check its hash, and return the contents,
-  * use the "oi" argument to assert things about the object, or e.g. populate its
-@@ -381,69 +444,6 @@ static inline void obj_read_unlock(void)
- 		pthread_mutex_unlock(&obj_read_mutex);
- }
- 
--struct object_info {
--	/* Request */
--	enum object_type *typep;
--	unsigned long *sizep;
--	off_t *disk_sizep;
--	struct object_id *delta_base_oid;
--	struct strbuf *type_name;
--	void **contentp;
--
--	/* Response */
--	enum {
--		OI_CACHED,
--		OI_LOOSE,
--		OI_PACKED,
--		OI_DBCACHED
--	} whence;
--	union {
--		/*
--		 * struct {
--		 * 	... Nothing to expose in this case
--		 * } cached;
--		 * struct {
--		 * 	... Nothing to expose in this case
--		 * } loose;
--		 */
--		struct {
--			struct packed_git *pack;
--			off_t offset;
--			unsigned int is_delta;
--		} packed;
--	} u;
--};
--
--/*
-- * Initializer for a "struct object_info" that wants no items. You may
-- * also memset() the memory to all-zeroes.
-- */
--#define OBJECT_INFO_INIT { 0 }
--
--/* Invoke lookup_replace_object() on the given hash */
--#define OBJECT_INFO_LOOKUP_REPLACE 1
--/* Allow reading from a loose object file of unknown/bogus type */
--#define OBJECT_INFO_ALLOW_UNKNOWN_TYPE 2
--/* Do not retry packed storage after checking packed and loose storage */
--#define OBJECT_INFO_QUICK 8
--/*
-- * Do not attempt to fetch the object if missing (even if fetch_is_missing is
-- * nonzero).
-- */
--#define OBJECT_INFO_SKIP_FETCH_OBJECT 16
--/*
-- * This is meant for bulk prefetching of missing blobs in a partial
-- * clone. Implies OBJECT_INFO_SKIP_FETCH_OBJECT and OBJECT_INFO_QUICK
-- */
--#define OBJECT_INFO_FOR_PREFETCH (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK)
--
--/* Die if object corruption (not just an object being missing) was detected. */
--#define OBJECT_INFO_DIE_IF_CORRUPT 32
--
--int oid_object_info_extended(struct repository *r,
--			     const struct object_id *,
--			     struct object_info *, unsigned flags);
--
- /*
-  * Iterate over the files in the loose-object parts of the object
-  * directory "path", triggering the following callbacks:
-diff --git a/protocol-caps.c b/protocol-caps.c
-index f9bc2a8b90b..874bc815b4f 100644
---- a/protocol-caps.c
-+++ b/protocol-caps.c
-@@ -5,6 +5,7 @@
- #include "pkt-line.h"
- #include "strvec.h"
- #include "hash.h"
-+#include "hex.h"
- #include "object.h"
- #include "object-store.h"
++#include "advice.h"
+ #include "config.h"
+ #include "color.h"
++#include "gettext.h"
+ #include "help.h"
  #include "string-list.h"
-diff --git a/replace-object.h b/replace-object.h
-index 3fbc32eb7b7..3c92ae94610 100644
---- a/replace-object.h
-+++ b/replace-object.h
-@@ -1,6 +1,7 @@
- #ifndef REPLACE_OBJECT_H
- #define REPLACE_OBJECT_H
  
-+#include "cache.h"
- #include "oidmap.h"
- #include "repository.h"
+diff --git a/decorate.c b/decorate.c
+index 2036d159671..71e79daa825 100644
+--- a/decorate.c
++++ b/decorate.c
+@@ -2,7 +2,8 @@
+  * decorate.c - decorate a git object with some arbitrary
+  * data.
+  */
+-#include "cache.h"
++#include "git-compat-util.h"
++#include "hashmap.h"
+ #include "object.h"
+ #include "decorate.h"
+ 
+diff --git a/diffcore-order.c b/diffcore-order.c
+index 19e73311f9c..57ccab28464 100644
+--- a/diffcore-order.c
++++ b/diffcore-order.c
+@@ -1,7 +1,8 @@
+ /*
+  * Copyright (C) 2005 Junio C Hamano
+  */
+-#include "cache.h"
++#include "git-compat-util.h"
++#include "gettext.h"
+ #include "diff.h"
+ #include "diffcore.h"
+ 
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 62c0299984e..7e9ff96d435 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -2,15 +2,19 @@
+  *
+  * Copyright (C) 2005 Junio C Hamano
+  */
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "alloc.h"
+ #include "diff.h"
+ #include "diffcore.h"
  #include "object-store.h"
+ #include "hashmap.h"
++#include "mem-pool.h"
++#include "oid-array.h"
+ #include "progress.h"
+ #include "promisor-remote.h"
++#include "string-list.h"
+ #include "strmap.h"
++#include "trace2.h"
+ 
+ /* Table of rename/copy destinations */
+ 
+diff --git a/diffcore-rotate.c b/diffcore-rotate.c
+index 445f060ab00..533986cf632 100644
+--- a/diffcore-rotate.c
++++ b/diffcore-rotate.c
+@@ -2,7 +2,8 @@
+  * Copyright (C) 2021, Google LLC.
+  * Based on diffcore-order.c, which is Copyright (C) 2005, Junio C Hamano
+  */
+-#include "cache.h"
++#include "git-compat-util.h"
++#include "gettext.h"
+ #include "diff.h"
+ #include "diffcore.h"
+ 
+diff --git a/graph.c b/graph.c
+index 568b6e7cd41..2a9dc430fae 100644
+--- a/graph.c
++++ b/graph.c
+@@ -1,4 +1,5 @@
+-#include "cache.h"
++#include "git-compat-util.h"
++#include "gettext.h"
+ #include "config.h"
+ #include "commit.h"
+ #include "color.h"
+diff --git a/hook.c b/hook.c
+index 1a848318634..f6ddd790988 100644
+--- a/hook.c
++++ b/hook.c
+@@ -1,7 +1,10 @@
+-#include "cache.h"
++#include "git-compat-util.h"
++#include "advice.h"
++#include "gettext.h"
+ #include "hook.h"
+ #include "run-command.h"
+ #include "config.h"
++#include "strbuf.h"
+ 
+ const char *find_hook(const char *name)
+ {
+diff --git a/quote.c b/quote.c
+index 2453397fbbd..7ccb5a06cd1 100644
+--- a/quote.c
++++ b/quote.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "alloc.h"
+ #include "quote.h"
++#include "strbuf.h"
+ #include "strvec.h"
+ 
+ int quote_path_fully = 1;
+diff --git a/sha1dc_git.c b/sha1dc_git.c
+index 72709606fdf..9b675a046ee 100644
+--- a/sha1dc_git.c
++++ b/sha1dc_git.c
+@@ -1,4 +1,5 @@
+-#include "cache.h"
++#include "git-compat-util.h"
++#include "sha1dc_git.h"
+ #include "hex.h"
+ 
+ #ifdef DC_SHA1_EXTERNAL
+diff --git a/unix-socket.c b/unix-socket.c
+index e0be1badb58..79800d80636 100644
+--- a/unix-socket.c
++++ b/unix-socket.c
+@@ -1,4 +1,5 @@
+-#include "cache.h"
++#include "git-compat-util.h"
++#include "strbuf.h"
+ #include "unix-socket.h"
+ 
+ #define DEFAULT_UNIX_STREAM_LISTEN_BACKLOG (5)
+diff --git a/url.c b/url.c
+index bf318c05205..2e1a9f6feec 100644
+--- a/url.c
++++ b/url.c
+@@ -1,5 +1,6 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "hex.h"
++#include "strbuf.h"
+ #include "url.h"
+ 
+ int is_urlschemechar(int first_flag, int ch)
+diff --git a/urlmatch.c b/urlmatch.c
+index 2965cbe774f..eba0bdd77fe 100644
+--- a/urlmatch.c
++++ b/urlmatch.c
+@@ -1,5 +1,7 @@
+-#include "cache.h"
++#include "git-compat-util.h"
++#include "gettext.h"
+ #include "hex.h"
++#include "strbuf.h"
+ #include "urlmatch.h"
+ 
+ #define URL_ALPHA "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 -- 
 gitgitgadget
 
