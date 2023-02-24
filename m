@@ -2,123 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 397C2C7EE23
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 19:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9316DC6FA8E
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 19:56:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229500AbjBXTYx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Feb 2023 14:24:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52696 "EHLO
+        id S229578AbjBXT4d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Feb 2023 14:56:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229789AbjBXTYv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2023 14:24:51 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A179F168A0
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 11:24:47 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id fm20-20020a05600c0c1400b003ead37e6588so2889286wmb.5
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 11:24:47 -0800 (PST)
+        with ESMTP id S229503AbjBXT4c (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2023 14:56:32 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D7C16AC3
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 11:56:31 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id be35so206231oib.4
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 11:56:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FdgPT+VUswNUGUZyUg9cevQyY/H9Pmm8xJApyyPhPB0=;
-        b=IlEs/Kulz6m/z19ORsdtR8DFvMjTW9ZGjhafHjWQwgsyoCsFtNhTksh1Pwp3oQMxhs
-         7LL9mTntmAdJ3DHTlZdsXKujnrmwubZ2rFM6RayM/j65oi42izAUQE1btim97wTkEVc1
-         C0wVybXFbvqqL1S710u3QGA1/yk6og7hViWr/aUAfgYfVqbdmNRN3rdEbFvP8mLQvxfJ
-         dD6xNQgZayMx/FrbC+Kdr7JOnYsbHNT9uBUcHb4Sa+4cafDrmhYohxEPJnVr7Qnl3q/B
-         BbZasAQU+1tC6cfqSzJwyALd5BouZeUI++IG21S3qLtVStB+xdPJCt9hJAFxtgEMTNxV
-         32QA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=E4IfdZhxXtpsHLKQAMe3FU1OuarMbq+fePVCIgkvlOs=;
+        b=YCPpsaQ5Sw82pRIGmZ4sQLsjCmjOCqYMoY5IEHYnctDXqHkThkAcgwae3DsZjr5T+Q
+         t5MZrjXh9SUuOb5XoCWalhprnkMsRV1pO4YhbPKRSVWWpcqOdBmhXaA7ZbZggvoWWrwf
+         rvXcskPQMfdqyrh0Y0UC1rN1DcmMxHxMLwgzW5RJr67UzQ6QoCQ/BNARtXkAq+EUyZgz
+         ebmPNG0V1js0z2mc4gBsOU6KXDgU2K1TVZKTzt4f95lSQ0ELUAXsc4XCo9s2B6GBQevb
+         iERjyFpYgjxnIFz1l20YGTHGJSj3qb5NLMnvZEAD2wy8Rsc8jIxExQCuO5GT5aCu5rKN
+         pQsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FdgPT+VUswNUGUZyUg9cevQyY/H9Pmm8xJApyyPhPB0=;
-        b=b2z60Tm3KbWkG1vLtu8BjDoQuh+CiJ9ysTv3r3Wr+7GHkK0K0GWexmuQ0PHs/F0Pay
-         YAyW5gjhNY4NT/WaCChB18a5yo+MvhOYbgdL3L5S990vCJKdDLJPEtWxLsL2SkiGCU8E
-         hNW/2LJUMXfGD5uLpwYyK+CPxBgLm9QZzuPN2V85NfkhMR70KDdBYaz6BnTYMwOTBHvp
-         SbfV9jG8VrgA9SoM2YB2e3oyIhhzqmyjUAyFUKbvLptdDMI+Pp6X1POqEph6FBNo9YBQ
-         GuEkeIfmNdKwlIypvtLIHdzWHGT9y4+RMfd/EIxIU2Vp+o5uMBBcInjdw118RagMY1gb
-         qguw==
-X-Gm-Message-State: AO0yUKVjyIB5ghevPyvX91lxgupXx5Ia06Nk8ihmHujEYc8ae30Ose9K
-        7HPYU56M1zx7jc2SlvMFVCo=
-X-Google-Smtp-Source: AK7set/AjnyOs7UibnjTZ4r4TvyRtk35jozEaM8y6XjvPYmlLC8jacJ2HCQukaYWCOh0sC2FuzB+EQ==
-X-Received: by 2002:a05:600c:4f04:b0:3e2:1dac:b071 with SMTP id l4-20020a05600c4f0400b003e21dacb071mr604915wmq.13.1677266686090;
-        Fri, 24 Feb 2023 11:24:46 -0800 (PST)
-Received: from [192.168.1.212] ([90.248.183.175])
-        by smtp.gmail.com with ESMTPSA id n4-20020a7bcbc4000000b003dc3f3d77e3sm158362wmi.7.2023.02.24.11.24.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Feb 2023 11:24:45 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <2b28155d-f82d-06b8-2df9-135608c6bf63@dunelm.org.uk>
-Date:   Fri, 24 Feb 2023 19:24:42 +0000
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E4IfdZhxXtpsHLKQAMe3FU1OuarMbq+fePVCIgkvlOs=;
+        b=XKB/dEZza/FrNaeieU5s6nCLM9yIMhyqhMdKD8WIQXUwyevp0WHSVQFZmecS03Ih4B
+         nwCQ653a/G0t2Yxsvf9n/GIEaFC6buYoEb5Y3QeYIsPUGvQ4IPWbqRBzpDZJnREP7mLi
+         OfV28mFknxNIo3rdbD9I/RgWRYMl8UOMxHvU7sdpQMKlz/oHpHBVuWoKR1wmh08jlY7A
+         WQ3AzHcoWdn1cgcqj0IN1zOG/fZV7ySf/owiZ01CBg/jQF4Ue3CZ5ih/+zDhHFal60I9
+         MGVbfjV3ttxatQQP4XZwsMxtvPMAZGB2ruo4YSXy0rRFYXeDdgMQUx5QUFpBGRcNZGYy
+         IR1A==
+X-Gm-Message-State: AO0yUKWhBrWAEGBYIxmerc0Jl00GQHnRjkh1Kq9mUmo6Q4rnA5AeH9nI
+        KZweKs/cQFvGC+iM6Cq39CQL375Z69oFpI0zq9E=
+X-Google-Smtp-Source: AK7set8uaSn1q1y66ckwMJDpfFHxEqRW7VbOTrBHJPCOAGTHYlnLex6eIyEJdDq7cpZ/YS2CmSrIevqms5jSfjRovWM=
+X-Received: by 2002:a05:6808:abc:b0:378:30dc:ae5b with SMTP id
+ r28-20020a0568080abc00b0037830dcae5bmr1510718oij.5.1677268591148; Fri, 24 Feb
+ 2023 11:56:31 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Reply-To: phillip.wood@dunelm.org.uk
+References: <20230223053410.644503-1-alexhenrie24@gmail.com>
+ <20230223053410.644503-2-alexhenrie24@gmail.com> <b4be9cb3-c24b-4377-bab3-5d53035efdf8@gmx.de>
+ <xmqqy1on0yla.fsf@gitster.g> <CAMMLpeQKJeZn4rcTJzFR-ixQXKQMT7t-BKvJqXV4o_4VM=tHYg@mail.gmail.com>
+ <xmqqcz5z0wdb.fsf@gitster.g> <CAMMLpeSH1itopDuON=7ms_7Li7Qk+9dhzKjT5f7UE11posKK=g@mail.gmail.com>
+ <xmqq8rgm29fw.fsf@gitster.g> <CAMMLpeTvyYgGNBQWtRBg3ZNuXeCMxiem-5LAdu0ex7XCuf0wAA@mail.gmail.com>
+ <xmqqpm9yzxky.fsf@gitster.g> <2b28155d-f82d-06b8-2df9-135608c6bf63@dunelm.org.uk>
+In-Reply-To: <2b28155d-f82d-06b8-2df9-135608c6bf63@dunelm.org.uk>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Fri, 24 Feb 2023 12:56:14 -0700
+Message-ID: <CAMMLpeQgY5Noyu4HMsi0LDOBktSURpZHybqwbFnqf5sGwmD=9g@mail.gmail.com>
 Subject: Re: [PATCH v4 2/3] rebase: stop accepting --rebase-merges=""
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Alex Henrie <alexhenrie24@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org, tao@klerks.biz, newren@gmail.com,
         phillip.wood123@gmail.com, sorganov@gmail.com
-References: <20230223053410.644503-1-alexhenrie24@gmail.com>
- <20230223053410.644503-2-alexhenrie24@gmail.com>
- <b4be9cb3-c24b-4377-bab3-5d53035efdf8@gmx.de> <xmqqy1on0yla.fsf@gitster.g>
- <CAMMLpeQKJeZn4rcTJzFR-ixQXKQMT7t-BKvJqXV4o_4VM=tHYg@mail.gmail.com>
- <xmqqcz5z0wdb.fsf@gitster.g>
- <CAMMLpeSH1itopDuON=7ms_7Li7Qk+9dhzKjT5f7UE11posKK=g@mail.gmail.com>
- <xmqq8rgm29fw.fsf@gitster.g>
- <CAMMLpeTvyYgGNBQWtRBg3ZNuXeCMxiem-5LAdu0ex7XCuf0wAA@mail.gmail.com>
- <xmqqpm9yzxky.fsf@gitster.g>
-In-Reply-To: <xmqqpm9yzxky.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/02/2023 19:13, Junio C Hamano wrote:
-> Alex Henrie <alexhenrie24@gmail.com> writes:
-> 
->> Phillip is concerned about people and scripts assuming that
->> --rebase-merges is equivalent to --rebase-merges=no-rebase-cousins,
->> see [1].
-> 
-> Isn't that already broken when you introduce rebase.merges
-> configuration?
+On Fri, Feb 24, 2023 at 12:24 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>
+> On 24/02/2023 19:13, Junio C Hamano wrote:
+> > Alex Henrie <alexhenrie24@gmail.com> writes:
+> >
+> >> Phillip is concerned about people and scripts assuming that
+> >> --rebase-merges is equivalent to --rebase-merges=no-rebase-cousins,
+> >> see [1].
+> >
+> > Isn't that already broken when you introduce rebase.merges
+> > configuration?
+>
+> Scripts using --rebase-merges are not broken by the introduction of
+> rebase.merges so long as we follow our usual convention of always
+> allowing the commandline to override the config (i.e. --rebase-merges is
+> always equivalent to --rebase-merges=no-rebase-cousins). I don't really
+> understand why Alex is suggesting splitting the config into two based on
+> my comments.
 
-Scripts using --rebase-merges are not broken by the introduction of 
-rebase.merges so long as we follow our usual convention of always 
-allowing the commandline to override the config (i.e. --rebase-merges is 
-always equivalent to --rebase-merges=no-rebase-cousins). I don't really 
-understand why Alex is suggesting splitting the config into two based on 
-my comments.
+I was thinking that it would be less surprising to users if the option
+that broke the no-rebase-cousins assumption had "cousins" in its name.
+I should have stopped to think that that wouldn't really address your
+concern because regardless of what the option is named, it could still
+result in surprising behavior. I apologize for the unhelpful
+suggestion.
 
-> People and scripts are already relying on the lack
-> of rebase-merges to flatten, and script writers will be surprised to
-> receive a "bug report" complaining that their script does not work
-> when the users set rebase.merges to anything but no.
+> > People and scripts are already relying on the lack
+> > of rebase-merges to flatten, and script writers will be surprised to
+> > receive a "bug report" complaining that their script does not work
+> > when the users set rebase.merges to anything but no.
+>
+> That is true.
 
-That is true.
+In addition to specifying --no-rebase-merges rather than assuming it,
+shouldn't the "usual convention" for writing scripts also include
+being explicit about --rebase-merges=rebase-cousins or
+--rebase-merges=no-rebase-cousins? And if that is the case, is it
+really much of a loss to let rebase.merges=rebase-cousins override
+--rebase-merges without an argument?
 
-Best Wishes
-
-Phillip
-
->> Tao and others are probably not going to like it if --rebase-merges
->> without an argument undoes a rebase.merges=rebase-cousins
->> configuration.
-> 
-> That is why I suggested to keep --rebase-merges= (with no value or
-> an empty string) only for those who came from the world where it
-> defaults to no-rebase-cousins and there was no rebase.merges
-> configuration.  If --rebase-merges= is given from the command line
-> without value *and* rebase.merges configuration is there (which is
-> Tao's concern?), the command line option can error out asking for an
-> explicit value to countermand whatever value is configured.
-> 
-> Wouldn't that work for folks from both camps?
+-Alex
