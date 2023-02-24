@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC9FC61DA4
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 00:10:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E3A2C64ED8
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 00:10:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229534AbjBXAKD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 19:10:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48360 "EHLO
+        id S229685AbjBXAKE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 19:10:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229698AbjBXAJw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 19:09:52 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 504661CAD5
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:47 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id j2so12145846wrh.9
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:47 -0800 (PST)
+        with ESMTP id S229632AbjBXAJx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 19:09:53 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 413C61CAF7
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:48 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id h14so3657425wru.4
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/oTd4oGYUWNeX1XfriPfzFZ4g6Fr/Lz3jalhXGhBz3I=;
-        b=F/pIX9yu9A7ztEG+R94RBc7/KQnkAap4WPLDyLKK7qEVO3kCMiO7GCcAXGmLCa+X9e
-         VZHm7n2VSuPGsurz1uqGeDkXTZgnxBJ/Ql7r39JmgYSIfmXBX57e74ARYscRD2Vl3wZO
-         7bE6ZnXi7dp0mbZTvHOtO97GtY+qclSnElLvpM8jBk+s/qD2EWqmhHMcVrheBJLxuNtq
-         uOfol5KBi/4CA5W5JE7vM3vF7/f+Jo/tyqoOOhgyujS29ZZ9sh7z4CTUcXOFEXnegSch
-         kxi9rERXXQD17i5FHEfwY+EsRkNMlc9vlzND9o63QRNzr6CIOl1SOMWQxlI6vr5y91cV
-         jUOw==
+        bh=i+s0sHRFvNx18kn/Si3oEhtnyEV23sFKqpYR+O4c4J4=;
+        b=idv/60gIFnjh104ckxvxX9Vj4T7IAx+ddLcQBD+eiuiluVTOGZX9qK7vy+bQh/LTfY
+         hPBjyssOonlm496xFPOxjmd0qQtmHMBIEvjhKAA3mVq4vyfuGRdtpcvRxt2DXjjjt8Df
+         oj6leWxYnycxvOx2sqxa9fEOl2xXcTnFzVIK0X/BZs7b6tyfZA42+3WS578NGHaPF/ot
+         s59XKiwq3DcisgSFbyIcor0nyi72CyyyDkFguZd6hLUjCo3REeZqvtKBhttd8c8OG30A
+         TvB2+SBvAxuOUgQ+KjS/kabuGXPvmQNE6nZQJQgK5dttM38/EZNxCK6Ko2PtUqzQ+w6Q
+         bCjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/oTd4oGYUWNeX1XfriPfzFZ4g6Fr/Lz3jalhXGhBz3I=;
-        b=RlOzewcDeI5LVJmuQZamJJ2X+6A8W43V9LbJFJrlw0e2DejTa86V0zUgc3MaI39wwa
-         0ybsCDZQhnhIm1YKrJLCD0REsh8J8eT5tuLV58lrCxNbsUxpbdGOjMpQ3IJ6ADixZrY2
-         JqLd8FT/SNr+dACJfr8LKbHJxaMj0xhq9prWJIy3dz48xnSdeTuB3FpRL2PEcNYYvYBv
-         /TEIzWMv9f8qqrKBy24twYtJ9DrX+QN+vKnhgfN0dnpu/4Uk2rDv8unGKLO4bqEKprte
-         XIvByJGZJ1kZX9IiRV6rGDUt86NfxDVKUDXd8HEWV3f0OgDLPhBnkGnhnAG85exrUpof
-         ke6w==
-X-Gm-Message-State: AO0yUKU8Fd7RtlFSLY+OGk/n4eRRF5QXcN9M/TqtG2KTVPyDYSk027va
-        QdNYZOmd5Xto9Zzdhqj9mXT0JfoO0Fc=
-X-Google-Smtp-Source: AK7set/bYoOAtko/5oSKVbBbBP9wucvaRcVXqz7nrM5hAnMdJrqPFI7XSELsOiozTkTzhEHIZOShBg==
-X-Received: by 2002:adf:fc84:0:b0:2c7:1c08:121a with SMTP id g4-20020adffc84000000b002c71c08121amr596433wrr.68.1677197385637;
-        Thu, 23 Feb 2023 16:09:45 -0800 (PST)
+        bh=i+s0sHRFvNx18kn/Si3oEhtnyEV23sFKqpYR+O4c4J4=;
+        b=jcRw9Eh0oYH2meTnjxbvkG1DD/aIBMddh9wBrgKQ6//9Z8Gs32K7rR37WbNR3+Btfm
+         gFxT9INp3R/aubV1m1SY2zMb13kxEQgPtn1rwE6W7aB2n+bDF2xFBqbHiU7SMjix1O1W
+         U9FyNyhG7VFkmRTBJYLP46Rqx/WBCI2Ha/lf0z07rBo0coQfg8Uo7dqLjvDEBO4xRVi6
+         KtLdD3DMEmnMF4ezbUfVlpaM75NCWnNFSPYpA2bUpUFZP7khJ/Zlk8bO3TYvjTkA6dUq
+         WKgz0dFeXUhLRuhFPQmZIXqDhS+u7vsbdr8Hhs6c2YQn2fhuOjQj0szSiEiGWxp/MhRn
+         6W3A==
+X-Gm-Message-State: AO0yUKXNdwfD4m7Wcpb4wDz+JTt7reG1mne1sNye+tuccJ+AJHRaLbnP
+        eHhINhFayYjHqBRhSEFAu/T9gqYckaw=
+X-Google-Smtp-Source: AK7set/C+QoSCOGc7ifECfQ4F8Ht6OMtNFQBX5OVyrA1oCPNnj+sz5u2yBuJsnjjPlLfE46sybr2AQ==
+X-Received: by 2002:a05:6000:1f83:b0:2c3:f79a:7319 with SMTP id bw3-20020a0560001f8300b002c3f79a7319mr8899669wrb.17.1677197386338;
+        Thu, 23 Feb 2023 16:09:46 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 13-20020a05600c020d00b003dc1d668866sm852969wmi.10.2023.02.23.16.09.45
+        by smtp.gmail.com with ESMTPSA id w6-20020adff9c6000000b002c5493a17efsm8229225wrr.25.2023.02.23.16.09.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 23 Feb 2023 16:09:45 -0800 (PST)
-Message-Id: <b5046b7aaa684b8de6d2971be49cf5cba27eac08.1677197377.git.gitgitgadget@gmail.com>
+Message-Id: <6d5c13c4693f4436dc8fc69d7a3fad00cdb08c59.1677197377.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1485.v2.git.1677197376.gitgitgadget@gmail.com>
 References: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
         <pull.1485.v2.git.1677197376.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Feb 2023 00:09:25 +0000
-Subject: [PATCH v2 06/17] hash.h: move some oid-related declarations from
+Date:   Fri, 24 Feb 2023 00:09:26 +0000
+Subject: [PATCH v2 07/17] hex.h: move some hex-related declarations from
  cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
@@ -73,184 +73,290 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-These defines and enum are all oid-related and as such seem to make
-more sense being included in hash.h.  Further, moving them there
-allows us to remove some includes of cache.h in other files.
+hex.c contains code for hex-related functions, but for some reason these
+functions were declared in the catch-all cache.h.  Move the function
+declarations into a hex.h header instead.
 
-The change to line-log.h might look unrelated, but line-log.h includes
-diffcore.h, which previously included cache.h, which included the
-kitchen sink.  Since this patch makes diffcore.h no longer include
-cache.h, the compiler complains about the 'struct string_list *'
-function parameter.  Add a forward declaration for struct string_list to
-address this.
+This also allows us to remove includes of cache.h from a few C files.
+For now, we make cache.h include hex.h, so that it is easier to review
+the direct changes being made by this patch.  In the next patch, we will
+remove that, and add the necessary direct '#include "hex.h"' in the
+hundreds of C files that need it.
+
+Note that reviewing the header changes in this commit might be
+simplified via
+    git log --no-walk -p --color-moved $COMMIT -- '*.h'`
+In particular, it highlights the simple movement of code in .h files
+rather nicely.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- cache.h                                      | 34 --------------------
- diffcore.h                                   |  4 ++-
- hash.h                                       | 34 ++++++++++++++++++++
- line-log.h                                   |  1 +
- submodule-config.h                           |  1 -
- t/helper/test-submodule-nested-repo-config.c |  1 +
- tree-walk.h                                  |  4 ++-
- 7 files changed, 42 insertions(+), 37 deletions(-)
+ cache.h           | 79 +-------------------------------------------
+ git-compat-util.h |  1 +
+ hex.c             |  3 +-
+ hex.h             | 84 +++++++++++++++++++++++++++++++++++++++++++++++
+ mailinfo.c        |  4 ++-
+ oidset.c          |  4 ++-
+ wildmatch.c       |  2 +-
+ 7 files changed, 95 insertions(+), 82 deletions(-)
+ create mode 100644 hex.h
 
 diff --git a/cache.h b/cache.h
-index 0f1f9dde56b..daf6150bb3c 100644
+index daf6150bb3c..d0619ce2e63 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1363,40 +1363,6 @@ struct object_context {
- 	char *path;
- };
+@@ -13,6 +13,7 @@
+ #include "string-list.h"
+ #include "pack-revindex.h"
+ #include "hash.h"
++#include "hex.h"
+ #include "path.h"
+ #include "oid-array.h"
+ #include "repository.h"
+@@ -1325,22 +1326,6 @@ int finalize_object_file(const char *tmpfile, const char *filename);
+ /* Helper to check and "touch" a file */
+ int check_and_freshen_file(const char *fn, int freshen);
  
--#define GET_OID_QUIETLY           01
--#define GET_OID_COMMIT            02
--#define GET_OID_COMMITTISH        04
--#define GET_OID_TREE             010
--#define GET_OID_TREEISH          020
--#define GET_OID_BLOB             040
--#define GET_OID_FOLLOW_SYMLINKS 0100
--#define GET_OID_RECORD_PATH     0200
--#define GET_OID_ONLY_TO_DIE    04000
--#define GET_OID_REQUIRE_PATH  010000
+-extern const signed char hexval_table[256];
+-static inline unsigned int hexval(unsigned char c)
+-{
+-	return hexval_table[c];
+-}
 -
--#define GET_OID_DISAMBIGUATORS \
--	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
--	GET_OID_TREE | GET_OID_TREEISH | \
--	GET_OID_BLOB)
+-/*
+- * Convert two consecutive hexadecimal digits into a char.  Return a
+- * negative value on error.  Don't run over the end of short strings.
+- */
+-static inline int hex2chr(const char *s)
+-{
+-	unsigned int val = hexval(s[0]);
+-	return (val & ~0xf) ? val : (val << 4) | hexval(s[1]);
+-}
 -
--enum get_oid_result {
--	FOUND = 0,
--	MISSING_OBJECT = -1, /* The requested object is missing */
--	SHORT_NAME_AMBIGUOUS = -2,
--	/* The following only apply when symlinks are followed */
--	DANGLING_SYMLINK = -4, /*
--				* The initial symlink is there, but
--				* (transitively) points to a missing
--				* in-tree file
--				*/
--	SYMLINK_LOOP = -5,
--	NOT_DIR = -6, /*
--		       * Somewhere along the symlink chain, a path is
--		       * requested which contains a file as a
--		       * non-final element.
--		       */
--};
+ /* Convert to/from hex/sha1 representation */
+ #define MINIMUM_ABBREV minimum_abbrev
+ #define DEFAULT_ABBREV default_abbrev
+@@ -1393,68 +1378,6 @@ int repo_for_each_abbrev(struct repository *r, const char *prefix, each_abbrev_f
+ 
+ int set_disambiguate_hint_config(const char *var, const char *value);
+ 
+-/*
+- * Try to read a SHA1 in hexadecimal format from the 40 characters
+- * starting at hex.  Write the 20-byte result to sha1 in binary form.
+- * Return 0 on success.  Reading stops if a NUL is encountered in the
+- * input, so it is safe to pass this function an arbitrary
+- * null-terminated string.
+- */
+-int get_sha1_hex(const char *hex, unsigned char *sha1);
+-int get_oid_hex(const char *hex, struct object_id *sha1);
 -
- int repo_get_oid(struct repository *r, const char *str, struct object_id *oid);
- __attribute__((format (printf, 2, 3)))
- int get_oidf(struct object_id *oid, const char *fmt, ...);
-diff --git a/diffcore.h b/diffcore.h
-index 9b588a1ee15..1701ed50b9c 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -4,9 +4,11 @@
- #ifndef DIFFCORE_H
- #define DIFFCORE_H
+-/* Like get_oid_hex, but for an arbitrary hash algorithm. */
+-int get_oid_hex_algop(const char *hex, struct object_id *oid, const struct git_hash_algo *algop);
+-
+-/*
+- * Read `len` pairs of hexadecimal digits from `hex` and write the
+- * values to `binary` as `len` bytes. Return 0 on success, or -1 if
+- * the input does not consist of hex digits).
+- */
+-int hex_to_bytes(unsigned char *binary, const char *hex, size_t len);
+-
+-/*
+- * Convert a binary hash in "unsigned char []" or an object name in
+- * "struct object_id *" to its hex equivalent. The `_r` variant is reentrant,
+- * and writes the NUL-terminated output to the buffer `out`, which must be at
+- * least `GIT_MAX_HEXSZ + 1` bytes, and returns a pointer to out for
+- * convenience.
+- *
+- * The non-`_r` variant returns a static buffer, but uses a ring of 4
+- * buffers, making it safe to make multiple calls for a single statement, like:
+- *
+- *   printf("%s -> %s", hash_to_hex(one), hash_to_hex(two));
+- *   printf("%s -> %s", oid_to_hex(one), oid_to_hex(two));
+- */
+-char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash, const struct git_hash_algo *);
+-char *oid_to_hex_r(char *out, const struct object_id *oid);
+-char *hash_to_hex_algop(const unsigned char *hash, const struct git_hash_algo *);	/* static buffer result! */
+-char *hash_to_hex(const unsigned char *hash);						/* same static buffer */
+-char *oid_to_hex(const struct object_id *oid);						/* same static buffer */
+-
+-/*
+- * Parse a 40-character hexadecimal object ID starting from hex, updating the
+- * pointer specified by end when parsing stops.  The resulting object ID is
+- * stored in oid.  Returns 0 on success.  Parsing will stop on the first NUL or
+- * other invalid character.  end is only updated on success; otherwise, it is
+- * unmodified.
+- */
+-int parse_oid_hex(const char *hex, struct object_id *oid, const char **end);
+-
+-/* Like parse_oid_hex, but for an arbitrary hash algorithm. */
+-int parse_oid_hex_algop(const char *hex, struct object_id *oid, const char **end,
+-			const struct git_hash_algo *algo);
+-
+-
+-/*
+- * These functions work like get_oid_hex and parse_oid_hex, but they will parse
+- * a hex value for any algorithm. The algorithm is detected based on the length
+- * and the algorithm in use is returned. If this is not a hex object ID in any
+- * algorithm, returns GIT_HASH_UNKNOWN.
+- */
+-int get_oid_hex_any(const char *hex, struct object_id *oid);
+-int parse_oid_hex_any(const char *hex, struct object_id *oid, const char **end);
+-
+ /*
+  * This reads short-hand syntax that not only evaluates to a commit
+  * object name, but also can act as if the end user spelled the name
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 4f0028ce60c..f77f986fbf1 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1225,6 +1225,7 @@ extern const unsigned char tolower_trans_tbl[256];
+ #undef isxdigit
  
--#include "cache.h"
-+#include "hash.h"
- 
- struct diff_options;
-+struct mem_pool;
-+struct oid_array;
- struct repository;
- struct strintmap;
- struct strmap;
-diff --git a/hash.h b/hash.h
-index 351afc2ce3b..d39f73618cb 100644
---- a/hash.h
-+++ b/hash.h
-@@ -123,6 +123,40 @@ struct object_id {
- 	int algo;	/* XXX requires 4-byte alignment */
- };
- 
-+#define GET_OID_QUIETLY           01
-+#define GET_OID_COMMIT            02
-+#define GET_OID_COMMITTISH        04
-+#define GET_OID_TREE             010
-+#define GET_OID_TREEISH          020
-+#define GET_OID_BLOB             040
-+#define GET_OID_FOLLOW_SYMLINKS 0100
-+#define GET_OID_RECORD_PATH     0200
-+#define GET_OID_ONLY_TO_DIE    04000
-+#define GET_OID_REQUIRE_PATH  010000
-+
-+#define GET_OID_DISAMBIGUATORS \
-+	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
-+	GET_OID_TREE | GET_OID_TREEISH | \
-+	GET_OID_BLOB)
-+
-+enum get_oid_result {
-+	FOUND = 0,
-+	MISSING_OBJECT = -1, /* The requested object is missing */
-+	SHORT_NAME_AMBIGUOUS = -2,
-+	/* The following only apply when symlinks are followed */
-+	DANGLING_SYMLINK = -4, /*
-+				* The initial symlink is there, but
-+				* (transitively) points to a missing
-+				* in-tree file
-+				*/
-+	SYMLINK_LOOP = -5,
-+	NOT_DIR = -6, /*
-+		       * Somewhere along the symlink chain, a path is
-+		       * requested which contains a file as a
-+		       * non-final element.
-+		       */
-+};
-+
- /* A suitably aligned type for stack allocations of hash contexts. */
- union git_hash_ctx {
- 	git_SHA_CTX sha1;
-diff --git a/line-log.h b/line-log.h
-index 82ae8d98a40..adff361b1bc 100644
---- a/line-log.h
-+++ b/line-log.h
-@@ -5,6 +5,7 @@
- 
- struct rev_info;
- struct commit;
-+struct string_list;
- 
- /* A range [start,end].  Lines are numbered starting at 0, and the
-  * ranges include start but exclude end. */
-diff --git a/submodule-config.h b/submodule-config.h
-index 28a8ca6bf46..c2045875bbb 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -1,7 +1,6 @@
- #ifndef SUBMODULE_CONFIG_CACHE_H
- #define SUBMODULE_CONFIG_CACHE_H
- 
--#include "cache.h"
- #include "config.h"
- #include "hashmap.h"
- #include "submodule.h"
-diff --git a/t/helper/test-submodule-nested-repo-config.c b/t/helper/test-submodule-nested-repo-config.c
-index dc1c14bde37..a3848a8b668 100644
---- a/t/helper/test-submodule-nested-repo-config.c
-+++ b/t/helper/test-submodule-nested-repo-config.c
+ extern const unsigned char sane_ctype[256];
++extern const signed char hexval_table[256];
+ #define GIT_SPACE 0x01
+ #define GIT_DIGIT 0x02
+ #define GIT_ALPHA 0x04
+diff --git a/hex.c b/hex.c
+index 4f64d346963..0a1bddc1284 100644
+--- a/hex.c
++++ b/hex.c
 @@ -1,4 +1,5 @@
- #include "test-tool.h"
-+#include "cache.h"
- #include "submodule-config.h"
- 
- static void die_usage(const char **argv, const char *msg)
-diff --git a/tree-walk.h b/tree-walk.h
-index 6305d531503..25fe27e3529 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -1,7 +1,9 @@
- #ifndef TREE_WALK_H
- #define TREE_WALK_H
- 
 -#include "cache.h"
++#include "git-compat-util.h"
++#include "hex.h"
+ 
+ const signed char hexval_table[256] = {
+ 	 -1, -1, -1, -1, -1, -1, -1, -1,		/* 00-07 */
+diff --git a/hex.h b/hex.h
+new file mode 100644
+index 00000000000..e2abfc56fae
+--- /dev/null
++++ b/hex.h
+@@ -0,0 +1,84 @@
++#ifndef HEX_H
++#define HEX_H
++
 +#include "hash.h"
 +
-+struct index_state;
++extern const signed char hexval_table[256];
++static inline unsigned int hexval(unsigned char c)
++{
++	return hexval_table[c];
++}
++
++/*
++ * Convert two consecutive hexadecimal digits into a char.  Return a
++ * negative value on error.  Don't run over the end of short strings.
++ */
++static inline int hex2chr(const char *s)
++{
++	unsigned int val = hexval(s[0]);
++	return (val & ~0xf) ? val : (val << 4) | hexval(s[1]);
++}
++
++/*
++ * Try to read a SHA1 in hexadecimal format from the 40 characters
++ * starting at hex.  Write the 20-byte result to sha1 in binary form.
++ * Return 0 on success.  Reading stops if a NUL is encountered in the
++ * input, so it is safe to pass this function an arbitrary
++ * null-terminated string.
++ */
++int get_sha1_hex(const char *hex, unsigned char *sha1);
++int get_oid_hex(const char *hex, struct object_id *sha1);
++
++/* Like get_oid_hex, but for an arbitrary hash algorithm. */
++int get_oid_hex_algop(const char *hex, struct object_id *oid, const struct git_hash_algo *algop);
++
++/*
++ * Read `len` pairs of hexadecimal digits from `hex` and write the
++ * values to `binary` as `len` bytes. Return 0 on success, or -1 if
++ * the input does not consist of hex digits).
++ */
++int hex_to_bytes(unsigned char *binary, const char *hex, size_t len);
++
++/*
++ * Convert a binary hash in "unsigned char []" or an object name in
++ * "struct object_id *" to its hex equivalent. The `_r` variant is reentrant,
++ * and writes the NUL-terminated output to the buffer `out`, which must be at
++ * least `GIT_MAX_HEXSZ + 1` bytes, and returns a pointer to out for
++ * convenience.
++ *
++ * The non-`_r` variant returns a static buffer, but uses a ring of 4
++ * buffers, making it safe to make multiple calls for a single statement, like:
++ *
++ *   printf("%s -> %s", hash_to_hex(one), hash_to_hex(two));
++ *   printf("%s -> %s", oid_to_hex(one), oid_to_hex(two));
++ */
++char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash, const struct git_hash_algo *);
++char *oid_to_hex_r(char *out, const struct object_id *oid);
++char *hash_to_hex_algop(const unsigned char *hash, const struct git_hash_algo *);	/* static buffer result! */
++char *hash_to_hex(const unsigned char *hash);						/* same static buffer */
++char *oid_to_hex(const struct object_id *oid);						/* same static buffer */
++
++/*
++ * Parse a 40-character hexadecimal object ID starting from hex, updating the
++ * pointer specified by end when parsing stops.  The resulting object ID is
++ * stored in oid.  Returns 0 on success.  Parsing will stop on the first NUL or
++ * other invalid character.  end is only updated on success; otherwise, it is
++ * unmodified.
++ */
++int parse_oid_hex(const char *hex, struct object_id *oid, const char **end);
++
++/* Like parse_oid_hex, but for an arbitrary hash algorithm. */
++int parse_oid_hex_algop(const char *hex, struct object_id *oid, const char **end,
++			const struct git_hash_algo *algo);
++
++
++/*
++ * These functions work like get_oid_hex and parse_oid_hex, but they will parse
++ * a hex value for any algorithm. The algorithm is detected based on the length
++ * and the algorithm in use is returned. If this is not a hex object ID in any
++ * algorithm, returns GIT_HASH_UNKNOWN.
++ */
++int get_oid_hex_any(const char *hex, struct object_id *oid);
++int parse_oid_hex_any(const char *hex, struct object_id *oid, const char **end);
++
++#endif
+diff --git a/mailinfo.c b/mailinfo.c
+index 833d28612f7..9f1495ddcf1 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -1,5 +1,7 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "config.h"
++#include "gettext.h"
++#include "hex.h"
+ #include "utf8.h"
+ #include "strbuf.h"
+ #include "mailinfo.h"
+diff --git a/oidset.c b/oidset.c
+index b36a2bae864..d1e5376316e 100644
+--- a/oidset.c
++++ b/oidset.c
+@@ -1,5 +1,7 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "oidset.h"
++#include "hex.h"
++#include "strbuf.h"
  
- #define MAX_TRAVERSE_TREES 8
+ void oidset_init(struct oidset *set, size_t initial_size)
+ {
+diff --git a/wildmatch.c b/wildmatch.c
+index 7e5a7ea1eaa..42e38e34590 100644
+--- a/wildmatch.c
++++ b/wildmatch.c
+@@ -9,7 +9,7 @@
+ **  work differently than '*', and to fix the character-class code.
+ */
  
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "wildmatch.h"
+ 
+ typedef unsigned char uchar;
 -- 
 gitgitgadget
 
