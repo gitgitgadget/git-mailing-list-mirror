@@ -2,104 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A464BC64ED6
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 01:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FDEBC64ED6
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 01:37:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229527AbjBXBYH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 20:24:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60434 "EHLO
+        id S229911AbjBXBg7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 20:36:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbjBXBYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 20:24:05 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA80C1C33D
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 17:24:04 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id pt11so15569252pjb.1
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 17:24:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oqzeqvC4zOIYhAuuFiwFrMSEKQcvXyweaLjrwLbLBBo=;
-        b=Wd/kceoXuAH92Hb+pAD0XApU5yLwmYOQm0IrlPML2CSMRs2/QzsDnu6gi/AsHHf6va
-         c1zX4B6oeV1JKnla94fKsddpMqvEnI0fJMBtVUvhUEz1kPMYurfRfDV+F76ibhqnTto4
-         kOxQYvkLOMEAfENf/V805DPeuy/dNaWxEaPJAxO4zfmaq9lK9YfoPhzM1NKPmO22FeUj
-         wRhnPqOSPhL3q4i2dW8kee87AguhWvc9fJM5eFSSz7pXPESRW6Nfaj0R1uEhLPK8rmZm
-         BldHCcO9J85OyegtR5QwA3osUUWfeIRauIV9nz59Ew/9z4Jc00D6ksfoIvCmsbuFOShP
-         i5qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oqzeqvC4zOIYhAuuFiwFrMSEKQcvXyweaLjrwLbLBBo=;
-        b=8Jn3KuHRssNqV/vlUNsdZb6SsEDqKFdC0n7gK0FugdsYU6s8HPLcKuGu6RhGKPlNbs
-         axFNxDTfMWLyICYG8A76o4/45BbquOK9nHOc84rkTz92BhGgGJj8bP8ax0tYLIyiK+fi
-         Za4ldyQVc3gVk8Dk+lKk5c2EkrAvM6Y1B8c0oFY6KtNe1tADZdZ31hI8p/ZeS+SvUDed
-         2FgdPiWCknkUT2k2D9rDzEUcqsyAVVnuJtIwfuOzo7lLBgBR3rUQLmeymp7rwsO2glwo
-         aEn3WWNNfmBRMgZrVFMtRuM/Idw9S/vdQ/xK448yXHq5QfBdei+yQVQhga//9vvkynCC
-         uI7g==
-X-Gm-Message-State: AO0yUKX8uHo+qo5x6MyfinSBkPzbLMCQCUluW1ykbqmce5gWgVSZ68LH
-        Xtw8aqcb6mDIs66KsrekGjA=
-X-Google-Smtp-Source: AK7set8Wubji9X2Y4aprnS3gUXTw8EsdhNAcaLYUWU+10ahZf5Sil79spF+kgNQKU1WNWnFzidIUMw==
-X-Received: by 2002:a17:903:22cc:b0:19a:a6ec:6721 with SMTP id y12-20020a17090322cc00b0019aa6ec6721mr16987155plg.16.1677201844261;
-        Thu, 23 Feb 2023 17:24:04 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id iz17-20020a170902ef9100b001962858f990sm7591199plb.164.2023.02.23.17.24.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 17:24:03 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 00/11] Clarify API for dir.[ch] and unpack-trees.[ch] --
- mark relevant fields as internal
-References: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
-        <16ff5069-0408-21cd-995c-8b47afb9810d@github.com>
-Date:   Thu, 23 Feb 2023 17:24:03 -0800
-In-Reply-To: <16ff5069-0408-21cd-995c-8b47afb9810d@github.com> (Derrick
-        Stolee's message of "Thu, 23 Feb 2023 10:18:45 -0500")
-Message-ID: <xmqqzg933lfw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229688AbjBXBg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 20:36:57 -0500
+Received: from m12.mail.163.com (m12.mail.163.com [123.126.96.234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 085F43B229
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 17:36:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=yzGoY
+        X8aGnZtDofS+6dTix6zv6tdxD1/A3vnYgqLApg=; b=Hhius7c/Z63IZ7gHBGxGL
+        L9hlD65YdsRP0n7LlMTtEe6zd4ElOyu9RkNTG8NLo4xf0Py4YNdpefUhSaViehQ2
+        xdFW52uqCuKxPtmOeuwQs8xxWZiZBR6GlDKeUKPcghnUWnAZ48P1gGlJ061pvoZ7
+        FFYpaVpDOvCz/ZXZd8+Gxg=
+Received: from zy-X550VX.. (unknown [183.255.48.209])
+        by smtp19 (Coremail) with SMTP id R9xpCgB3LvuyFPhj_w4HFQ--.50957S4;
+        Fri, 24 Feb 2023 09:36:52 +0800 (CST)
+From:   Zhang Yi <18994118902@163.com>
+To:     git@vger.kernel.org
+Cc:     v.garg.work@gmail.com, Zhang Yi <18994118902@163.com>
+Subject: [GSOC] [PATCH v2 0/3] t9700:moderizen test scripts
+Date:   Fri, 24 Feb 2023 09:34:10 +0800
+Message-Id: <20230224013413.1969003-1-18994118902@163.com>
+X-Mailer: git-send-email 2.29.0-rc0
+In-Reply-To: <CADupsJPpZnjA=Pu_RZZZXy7Titj3UD7ppww48KvcHHHbrGx=rw@mail.gmail.com>
+References: <CADupsJPpZnjA=Pu_RZZZXy7Titj3UD7ppww48KvcHHHbrGx=rw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: R9xpCgB3LvuyFPhj_w4HFQ--.50957S4
+X-Coremail-Antispam: 1Uf129KBjvdXoW7Xw48tryUCw1UCFW7KF4DJwb_yoWxCrb_Ga
+        97tFyDCrWUJF18tFyfCrs0qFWUJ3yDCFy7JF1Utw4UZ34fXF1rCFyDGrWfZF10qF1kZ34F
+        yw1kAr18JwsYqjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7VUbzuWDUUUUU==
+X-Originating-IP: [183.255.48.209]
+X-CM-SenderInfo: zprymmqurrmmmqsbiqqrwthudrp/1tbiYxQg-laEN1oiyQAAs9
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+The style of t9700-perl-git.sh is old.There are 3 things need improve:
+* A title is not on the same line with test_expect_success command.Need to combine them.
+* A test body is indented by whitespaces.Need to replace whitespaces by TAB
+* There are whitespaces after redirect operators.Need to delete whitespaces.
 
-> The major downside to this pointer approach is that the internal
-> struct needs to be initialized within API calls and somehow cleared
-> by all callers. The internal data could be initialized by the common
-> initializers read_directory() or fill_directory(). There is a
-> dir_clear() that _should_ be called by all callers (but I notice we
-> are leaking the struct in at least one place in add-interactive.c,
-> and likely others).
->
-> This alternative adds some complexity to the structure, but
-> provides compiler-level guarantees that these internals are not used
-> outside of dir.c. I thought it worth exploring, even if we decide
-> that the complexity is not worth those guarantees.
+---
+Thanks for all suggestions.Here are so many interesting things to learn.
 
-I actually think the current structure may be a good place to stop
-at.  Or we could use the original flat structure, but with members
-that are supposed to be private prefixed with a longer prefix that
-is very specific to the dir.c file, say "private_to_dir_c_".
+Zhang Yi (3):
+  t9700:fix title style
+  t9700:change indents to TAB
+  t9700:delete whitespaces after redirect operators
 
-Then have a block of #define
+ t/t9700-perl-git.sh | 61 ++++++++++++++++++++++-----------------------
+ 1 file changed, 30 insertions(+), 31 deletions(-)
 
-	#define alloc private_to_dir_c_alloc
-	#define ignored_alloc private_to_dir_c_ignored_alloc
-	...
-	#define visited_directories private_to_dir_c_visited_directories
-
-at the beginning dir.c to hide the cruft out of the implementation.
-"git grep private_to_dir_c ':!dir.c'" would catch any outsider
-peeking into the part of the struct that they shouldn't be touching.
-
-
-
+-- 
+2.29.0-rc0
 
