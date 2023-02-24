@@ -2,72 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF592C61DA4
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 14:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDF44C61DA4
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 14:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229751AbjBXODG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Feb 2023 09:03:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53012 "EHLO
+        id S229760AbjBXODP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Feb 2023 09:03:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbjBXODF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2023 09:03:05 -0500
+        with ESMTP id S229759AbjBXODO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2023 09:03:14 -0500
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C16D83D0
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 06:03:03 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EEA02CC71
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 06:03:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1677247333; i=johannes.schindelin@gmx.de;
-        bh=u4egKLlmvXWgu7hZeEPy3vI3kCRG62d4hUWp+sb4jY4=;
+        t=1677247388; i=johannes.schindelin@gmx.de;
+        bh=EMAVfSZGA5qchwfg8B2E0voeigl51nn7s6SUyZ72mNQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FwxtTbnkEmRJFoHY35wKj2wtYBYDO7KfW/F4V3VIYHPwnxdm2HN1ORROsMC22Pq1X
-         Y+bd3j5yJ7pW2alaOoYm0yETjc4KWFVSiGrImKipoRCDnjY3iWOTOUL6hxMFKcsWC0
-         rwu4p3Fy2Tb68qNi3qKXpAwMcmsnrboJks/FQnlG/+8V+UQtGBTzNmYjBmamWo/I+U
-         Cq7ZX6x+gfMiW8VBPI0uYATarA7H94smyjvbcTVx/HUOnF6ULhunrDEHcDF2oWc4Ly
-         JZFifp+NWyYKnc4v9IogVLNvlnJSs0Fw2Rqz3Z8lP0Y5j2hRKkQmtxdkMtnJx5KykF
-         ZyLNec94Zg1ig==
+        b=iVpSYsecuyJt4jElRwEvr72ys1hZEx8vg63jDAv07HWeSD74RkDw387IJZEnHb9pq
+         FAxXX9pIkkgmMu70HW5DKTcPv4wMwt0wPPB8JybiEf/SxuvuCwQdVycdMKoNck6Xxe
+         x2MIcKtje5aOR7amAqOHsSNwkswza+E87iqJFjmu5vxLrIo5W8s7WLK+x60HLgRiSZ
+         DLS7Tuv8vBuMZnHVJFta7v2T598gd2TA4jl/t0jr8e55g7dKpQMPDgFTFXSxJUdVJN
+         NVROcD4tAjq96JvGgf3Vyf4cmh26QCKxlPtCHYBCncxlxMvzw4tiS4/1dAB8kcgD2b
+         acg6s6r1ExCZg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.30.113.48] ([213.196.212.111]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MtfNf-1oeI2c04ul-00v8sx; Fri, 24
- Feb 2023 15:02:13 +0100
-Date:   Fri, 24 Feb 2023 15:02:11 +0100 (CET)
+Received: from [172.30.113.48] ([213.196.212.111]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAfYm-1pKbNU02XY-00B5fu; Fri, 24
+ Feb 2023 15:03:08 +0100
+Date:   Fri, 24 Feb 2023 15:03:06 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 0/2] sequencer parsing fixes
-In-Reply-To: <pull.1486.git.1677185701.gitgitgadget@gmail.com>
-Message-ID: <7fd72747-e076-3741-adb4-954bd4c7e9e5@gmx.de>
-References: <pull.1486.git.1677185701.gitgitgadget@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 00/17] Header cleanups
+In-Reply-To: <pull.1485.v2.git.1677197376.gitgitgadget@gmail.com>
+Message-ID: <2e357002-fc59-e7dd-97f5-9d77de6480af@gmx.de>
+References: <pull.1485.git.1677139521.gitgitgadget@gmail.com> <pull.1485.v2.git.1677197376.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:yUw6xRDRpgqv9etOEmD1kNCTUvjD8zyRMbJ+jVk8Bj1F2Ts/9RY
- Vktkd9otooi0gAfr1bwxdWwFftf77RiiCsEjwzPDqn3tiPnHmapaLEJDk7rXJJSwBJh1P3B
- AcoCRCUwL2LmhyrV/q5sL+5xe09Xz4sbsAbBHj5NGoPzphJ5+yLx4cXLRnXvtF47gImPB6t
- Tv1kLELeRWUTJPRmVgOgA==
-UI-OutboundReport: notjunk:1;M01:P0:9Qt6jqZ98R8=;FoSliPuUsUxBxRN74bOjg6yGg8K
- G7fJE6WYY5NP6FR9XbXfr+SzKhva1fB5WGafFoNOtKMmqKyEyYsEoJ1IL9nchtZ3hKab20S3J
- tQfEVAPd7oMLInEZcbM7VyG/HoBO9d0aUeswgkH4A7tLoZW8ApNURh0Esc55d4AYrMAP5hpDd
- mpcBwiOSuCfbHrtX4yiMJ/OLKQ55ZXGPWwXitDoWxpntjWtPNiYGrmx+McZPns0CB8cJRUfyC
- 9iSdQAnOQobfRMXyUNYWqO1lnK928b38nRnJJ049UZR8ZjpD/rpofm8ot9YPW2mTUvIvxtks9
- pTH0W3DPiNo3Sjuuidt5EJH9y5n5hlKN9ueDtloQWdjLbQmx934VhYLhZVLI4i7xXqptC4lJi
- P0CgRpqp2L2m7tYm8bVd2z7cTS1mTWkoMzd9FB50FeaqrsBEVy50r8CIafVrCKdxKTPuz8Tj5
- +vBQSVG9+U3FPuJxrwihx0iKEwj22F/ZEuQjJQzo4xdNAFlsc8fE76qW40+stGjRW+8R1Q5Bv
- bkigzp7uavsiLiOTM6MaLb1CCb9g/GppQEKHd4hpQT6VTbn9tkrvsfEGelIuEyT4+/ZJBskSX
- tVHCGHH9i0RCJMowV7DKMAPqO2SHFeYvyEAl14D3b/nAUdxQCxFEweLLAuHus6bVyInMRRPoq
- //WI9yIqpAxBxM4TJ8pSnypHrsK+/ieBJimL58/0TTsxCLQSlV6m3iKxdlCnX6wjPyVCSUrhV
- 6V+0cJuVIM9ID4nInX1Re2vRv6Zse5MPtsHF5Y7bwFuLKhszvG8CpGlE126LQGTrCGFD3o8+T
- 0U73Mjn3n0D/moFBKuDH5owm4hTqNyPxbg8zoC3j5UKakPcsKVr1aYfq/pRbjvnI9vt9jK/zG
- YztEW6666fNAzVkTQrgsjAk7SkTH3ozq5GwoGE6mYRs8nl0U9SnjFQLrxQIGCOYAsnXytyXH4
- S1uv350fkCCO96OfXEErxj8/TDA=
+X-Provags-ID: V03:K1:/fzKbn1a7HQZPdyolkMgDGiYTfepX8VMd3EOzP8nJkG6OKMvOfG
+ Aqt/jJnZRcO3qTds98jsjVP2f+pTpBpSUHYBx2z1ZyU0T10fR7BaHlIEnuXm0UGMh2QkICW
+ CAQIQYdprjuHEfJLSWUr8dzg7nhvBskMF/Vafn9OKhYuli0Te+jgGMWru0olJcVpCm55yXS
+ McsCbbsAJ2YkmK/3aYPtg==
+UI-OutboundReport: notjunk:1;M01:P0:ar948vOg6+M=;q4m9BUmBrvs4EnsWCGhS/QJ6WqV
+ BCgPAFvOYn7YsH2GQzuigFWrX772x9qJEsH9KqYbKHogaGL6Cv+gt+ANUYTbJZCV3wyv5+4ER
+ a/ebUVrVxjkVvNoGPnaZtynxoxUtSKb83YGAagGAfq41b24Kf26VSRpQQmTKI3ljEtAMsWQ02
+ rdwKSCHyoO5tA3vcul6aPxHiCn9VaSPZgyqJ9yaCc6Pl9lMmp/n3zJgdw/yDw4eov/uQmQeMM
+ YUiAYXYJz/fQLOkyMco8KGhTG5ZCtWIe8S1D9skpn3ddUb9RoLhAS5oZc3UVbtg5BhcW6AsTX
+ wYh8dLBffcQZMshlfkw8eX+AYVuP/Ue0vCcGRNn+LgMPOme0g4H82OURMDZeiZLzAXNrAjdvM
+ U+F9BEnexDWjU0n9IFaN1HU08FZBUbBmzPbUjILrdWG3TRmQ92S7cMURetGhQmSYm+fS2YkXn
+ fRq//8xG5HxhBOBwteve09GVOtJw++ZJLtUGwHFLjQvBrv33e9jsM6F53TYROckFw7dSal7T0
+ 16NRN4yPEIALSo6n0ZdfQyqM18NUvbA4gvII6T8jD/NwN+AgzIL3rrkOAFO5yKORAvEDA8H29
+ y1LZaB12BAyU2s1XpHpYwVRFfVII9HmdZwlHAwhVL199H1woO7r/NFs69Dzy9C95bAfXprLlc
+ UY6dEh0eY6T7/SyNAYYAR1zqonJa6LGyCb6fqmVBocd59kDlXelQSpFxKXSwfXogQQeRB2N+W
+ niVYNkRAEsdzs1WKc7CFaSSPKmgnKlmtFz/Mm03MidsKj6E2YeUD9Mxpiozo1IG6vB9El0EYU
+ E5nDualiHVXCG3iQRvKxtmAF1gRL2KeIr7e7UhRdCge4hw321CLNRvCuSiPIFTkboLDiqe710
+ aamfo3hqRJ7FqShwAfN8Qgs+EN/n9SI1XimACjjzQScT/a1aZq7L/Cty0Tj7jEqJlER23zL95
+ veVT3Q==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Hi Elijah,
 
-On Thu, 23 Feb 2023, Phillip Wood via GitGitGadget wrote:
+On Fri, 24 Feb 2023, Elijah Newren via GitGitGadget wrote:
 
-> Fix a couple of small bugs in the parsing of todo lists
+>  * Big props to Dscho for gitgitgadget; being able to test on a bunch of
+>    platforms with a variety of configurations easily is a big win in general
+>    but especially for series like this one.
 
-Thank you, those fixes look quite good to me.
+Thank you so much! It is gratifying to see my hard work bring benefit to
+this project and its contributors.
 
 Ciao,
 Johannes
