@@ -2,103 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30863C64ED8
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 22:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57FE3C6FA8E
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 23:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229668AbjBXW7V (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Feb 2023 17:59:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37956 "EHLO
+        id S229602AbjBXXXC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Feb 2023 18:23:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbjBXW7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2023 17:59:20 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EEF363DD8
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 14:59:19 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id ko13so995094plb.13
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 14:59:19 -0800 (PST)
+        with ESMTP id S229532AbjBXXXA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2023 18:23:00 -0500
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93F8A1D903
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 15:22:59 -0800 (PST)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-53865bdc1b1so13988287b3.16
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 15:22:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W2BhaPQmfeMVNlD/73b07MYkpSbEhwJIMNgjDj8VzWk=;
-        b=LZMld6LjHK7gN1dVQLG4FWW7k5D2pj8HC6vFOZ3Sg1xEtv+clfdeDjXBtEPJDxXN4k
-         IVEJuRDl3/CYlAAYN//XsN25ijq+SZhD7UfcJITt4w9VmHE8PJ6AnumCoG/TSEpDLbDQ
-         ly+xrLigrg7Bvej3aDV8puynr1e3fkKlyYg/DQMbbgI9gB75GHNbhRCGfaLj0J1/0AWy
-         JbadmLQm5u7KpMBW/zqRsL8QRaXvcbZiwLNvXL5SmoQl8+VemW+c6cFkvyg5as4StoC5
-         x23mYUIsAuUJWZRVC5AukBNckP+Tgou+pZGfqqSfFu9cgDCE4oaP1QoHk0rk1dfj3c7g
-         psMQ==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=yQ8QPIRZn2d2beGlY1LEj2TM7jNQzdKf3PokzJQ8Vtw=;
+        b=quhYGWIg8y14K5hLpw7y0ub8OakCgbLICCzdaqVXy1b3oTmT58BgHHDr7xSLMJyUbs
+         a4IegqXReN67rIfKTom4EM1e4cZMfcH5tYI0X8VVYkmnEZ0xyADxezwh0J46h920UkFe
+         zYm3rJEeWPpryqC4mhJeErhv0YEZHgCexWKUYoP7py06HmszpTEV7rg8atMtR7qFO3GJ
+         +X7wejENRgDwUI0w6KpnAz74sTXdX61wqsgcGnWXq1zpqw0l/D5Zjv+KaWiLFswhguBD
+         ZQwxy5rSOgtArEhhsOb5CpKnthdTmSXmsjtivpnaQXVKbJNuMy8q/gT31/KfnvCatIpb
+         BsUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=W2BhaPQmfeMVNlD/73b07MYkpSbEhwJIMNgjDj8VzWk=;
-        b=2sKnKJW/Nms4P82+zqQ1iwftSXnhSz0bm3LKSPsWxKhkyJhBREfyE/4Psmk0HK9zW8
-         iNIO8uk+MVGD7BdxKalxlhMcU7NMUnd12xJW/TXQQSZ1oe/myujKV1U4AusRBZQT8wh6
-         ab9h9TVpusAvbUgVtBhFOoH/1bhC11dAjHii6b/I12+M3mQQwdFWltju0YAxpZarxrid
-         s5me3+ngf8mGO2ZLThnzNLTRNiQAeR6E8ylnSLn7M2qmaz5otxcfsqOqGCwfRxQTTgNG
-         7wCc/5zC2za/VvINYuggWWvnXQtQJomQWgd5RhVCjGd5rNs+6W7xIOKldvQAGXpPDnd5
-         Tv1A==
-X-Gm-Message-State: AO0yUKWGf3z0/6m/gaFW5472pfxPN2hyaLAejgJqO64AbiYwW5tVibnB
-        Idho/K2lvIexYKY22Hy122Q=
-X-Google-Smtp-Source: AK7set8QZDeQl8mMjS9Mi8+DiEIbC7LtLLCZqkG6CTO7S8fgsDlcxiWeKQrcklz6SUAWJm3MFWizMQ==
-X-Received: by 2002:a17:902:e5c4:b0:19a:95ab:6b37 with SMTP id u4-20020a170902e5c400b0019a95ab6b37mr19893624plf.66.1677279558552;
-        Fri, 24 Feb 2023 14:59:18 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id f15-20020a170902684f00b0019a70a42b0asm23188pln.169.2023.02.24.14.59.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Feb 2023 14:59:18 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <nasamuffin@google.com>
-Cc:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrn@google.com>,
-        Jose Lopes <jabolopes@google.com>,
-        Aleksandr Mikhailov <avmikhailov@google.com>
-Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
-References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
-        <Y+/v15TyCbSYzlVg@tapette.crustytoothpaste.net>
-        <CAJoAoZmMQ-ROdCp0=4oaFa836-PqxwYntnRSBSzzJc5chp16eQ@mail.gmail.com>
-        <Y/ACqlhtLMjfgJFQ@tapette.crustytoothpaste.net>
-        <CAJoAoZkMR9Acy7thVs-_e=Fz8wwjoDGDKb46wmwn8yxk0ODGow@mail.gmail.com>
-        <Y/ZuR9zs3peUfO0g@coredump.intra.peff.net>
-        <CAJoAoZknYizS4peYgR4Zy5KUMEpFUbj5eREZoC_K5vUDXnAhng@mail.gmail.com>
-Date:   Fri, 24 Feb 2023 14:59:17 -0800
-In-Reply-To: <CAJoAoZknYizS4peYgR4Zy5KUMEpFUbj5eREZoC_K5vUDXnAhng@mail.gmail.com>
-        (Emily Shaffer's message of "Fri, 24 Feb 2023 12:31:16 -0800")
-Message-ID: <xmqqbkliwtyy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yQ8QPIRZn2d2beGlY1LEj2TM7jNQzdKf3PokzJQ8Vtw=;
+        b=A380N/tvd7cBR10PN4sC4S0y+/aJOs0yCuhA2FbXRCBT/SWXSIZnThPZlfcvlh2tJW
+         ZwlHS8uragiPfnGpSRLAQjNtcezCOYxUw9gIfo5yCWWaqff4ocwlmHqZGz2V2cUH++cG
+         liRXjGaLkBi1FcvBpCGCnt9x4ipxlu83UUT4mSwkUabwycCgNCyRe9Hu1aZlD0PESRx+
+         IcFUFQqH+r5mxzrWnzXfXfeB4d0zjMvlbto/9F7u/BwnTtvfp4/EYArA2CJyvcY1KsbK
+         ZS1fSZf9gg1aMkG2kJCH30Ax/yW2PlzOJZaNGBbmHU4qkbwZdOuSoaeTWhilw4z5SUEq
+         T8Jw==
+X-Gm-Message-State: AO0yUKWAtBxc3Z2ACr8K5LX5EA2mOP5cjJTX4pBVeeSWTKTDSaUJ2vE5
+        4nDjWG4wUPgrfhc92vaoayMsuPpoDDf6YLATf+N6
+X-Google-Smtp-Source: AK7set84Ajuk8z/D8T2NYDSGxScNvIIPyLM9M+f9Q49d+nrbPUFuHrD5n90dQXIbc6lsDJfkhBPBpzAtuBsAQkP2obkD
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:60fb:bc56:6979:1f96])
+ (user=jonathantanmy job=sendgmr) by 2002:a5b:ac9:0:b0:a06:55b5:3cdf with SMTP
+ id a9-20020a5b0ac9000000b00a0655b53cdfmr4050678ybr.3.1677280978701; Fri, 24
+ Feb 2023 15:22:58 -0800 (PST)
+Date:   Fri, 24 Feb 2023 15:22:56 -0800
+In-Reply-To: <8955b45e35474e5feb826101423470d0b51e5470.1677143700.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.39.2.637.g21b0678d19-goog
+Message-ID: <20230224232256.2038749-1-jonathantanmy@google.com>
+Subject: Re: [PATCH 06/11] sparse-checkout: avoid using internal API of
+ unpack-trees, take 2
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <nasamuffin@google.com> writes:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> Commit 2f6b1eb794 ("cache API: add a "INDEX_STATE_INIT" macro/function,
+> add release_index()", 2023-01-12) mistakenly added some initialization
+> of a member of unpack_trees_options that was intended to be
+> internal-only.  Further, it served no purpose as it simply duplicated
+> the initialization that unpack-trees.c code was already doing.
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  builtin/sparse-checkout.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index 4b7390ce367..8d5ae6f2a60 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -217,7 +217,6 @@ static int update_working_directory(struct pattern_list *pl)
+>  	o.head_idx = -1;
+>  	o.src_index = r->index;
+>  	o.dst_index = r->index;
+> -	index_state_init(&o.result, r);
+>  	o.skip_sparse_checkout = 0;
+>  
+>  	setup_work_tree();
 
-> Is there a reason not to use this kind of struct and provide
-> library-specific error code enums, though, I wonder? You're right that
-> parsing the error string is really bad for the caller, for anything
-> besides just logging it. But it seems somewhat reasonable to expect
-> that any call from config library returning an integer error code is
-> referring to enum config_errors...
+The commit message seems to imply that in this code path, there is some
+code in unpack-trees.c that runs index_state_init(), but that doesn't
+seem to be the case. memset-ting the result field with a junk value
+causes valgrind to fail with the following trace:
 
-In addition to what Peff already said, I think the harder part of it
-is to parametralize the errors in a machine readable way.  A part of
-a library may say (with an enum) that it is returning "Ref cannot be
-read" error, with a parameter that says "The ref that caused this
-error was 'refs/heads/next'" which makes "Ref cannot be read" error
-has one parameter.  "Ref cannot be renamed" may have two (old and
-new name).  Other errors from some library functions may not even be
-of type "string".
+  ==2035705== Invalid read of size 8
+  ==2035705==    at 0x30D982: lazy_init_name_hash (name-hash.c:602)
+  ==2035705==    by 0x30DDDA: index_file_exists (name-hash.c:721)
+  ==2035705==    by 0x3F71A8: check_ok_to_remove (unpack-trees.c:2430)
+  ==2035705==    by 0x3F74EE: verify_absent_1 (unpack-trees.c:2495)
+  ==2035705==    by 0x3F75C6: verify_absent_sparse (unpack-trees.c:2523)
+  ==2035705==    by 0x3F2A15: apply_sparse_checkout (unpack-trees.c:566)
+  ==2035705==    by 0x3F6849: update_sparsity (unpack-trees.c:2147)
+  ==2035705==    by 0x1FC105: update_working_directory (sparse-checkout.c:228)
 
-Coming up with the enums to cover the error conditions (which Peff
-covered well) is already a lot of work.  Making sure each of them
-take sufficient parameters to describe the error usefully adds more
-on top.  And the code to pass these variable number of parameters of
-variable types would be, eh, fun---it would be error prone without
-compiler help.
-
+so it might be better to move the init invocation to update_sparsity()
+instead of only removing it.
