@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1066C64ED6
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 00:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EC9FC61DA4
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 00:10:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229720AbjBXAKA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 19:10:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48348 "EHLO
+        id S229534AbjBXAKD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 19:10:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229694AbjBXAJv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 19:09:51 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D064319F26
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:45 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id l1so12041296wry.10
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:45 -0800 (PST)
+        with ESMTP id S229698AbjBXAJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 19:09:52 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 504661CAD5
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:47 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id j2so12145846wrh.9
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=66yT4IR/Kh5UEh3Fpk/pth6pxmHxbTQb/Jp9GIuHxMA=;
-        b=coPmoXLspFaU84IJ8OPd/w/0nquGi4RGrnv7a97XnLtrZHtnDql22rv+X5v1Pn7ZtF
-         BFX4bAZMlH4gSQu8568NSURkHru+zGADmxA0ibrNqIPoFi1kL3jP5nTquMkgoj9WGySP
-         6Ak6M3z8ZDy5sRpUHaNJwK5BCKVc2EGEmh2/pFWEMqcBsV2pAP5skIqdZTisqvg9xJ0v
-         nRm7sQ+MjwjdN+9pZPnw4xZMHMbZ6Kr7kSwFiPUj9V8Pyl0SLV3iIeXqbRTHZ1vEFzNy
-         ONZkX+HPTItQNzcCmNmdiERl0gW32JPBY6djPXbU6iH1yP3QbEev+J1x2a4uag3cRf3j
-         rrVg==
+        bh=/oTd4oGYUWNeX1XfriPfzFZ4g6Fr/Lz3jalhXGhBz3I=;
+        b=F/pIX9yu9A7ztEG+R94RBc7/KQnkAap4WPLDyLKK7qEVO3kCMiO7GCcAXGmLCa+X9e
+         VZHm7n2VSuPGsurz1uqGeDkXTZgnxBJ/Ql7r39JmgYSIfmXBX57e74ARYscRD2Vl3wZO
+         7bE6ZnXi7dp0mbZTvHOtO97GtY+qclSnElLvpM8jBk+s/qD2EWqmhHMcVrheBJLxuNtq
+         uOfol5KBi/4CA5W5JE7vM3vF7/f+Jo/tyqoOOhgyujS29ZZ9sh7z4CTUcXOFEXnegSch
+         kxi9rERXXQD17i5FHEfwY+EsRkNMlc9vlzND9o63QRNzr6CIOl1SOMWQxlI6vr5y91cV
+         jUOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=66yT4IR/Kh5UEh3Fpk/pth6pxmHxbTQb/Jp9GIuHxMA=;
-        b=b1sT1SjYee7y9O9ZfIvIp3+dyp4SbsIaMAsLjULZi1ZQbotcdJyTDAmMm9cuVTR/0t
-         fP/QITdstpHoEOMd/RmQOuLRVQcKzWSguwvCp0dTtfMa6Za8npXO7oIdYo4QXkiLq/J6
-         WPoKV/t3Z7XA7GFmOdbEeuU9RgzVDhsxQRAJeFje1sCnZ6JrLIbt5IKCAtSzf84ao8ml
-         253Et23PePBX+LSe9Th7PTN8AfQcvVP+uy+TZ2BfjCmQcH6gmMxW48XHANVnZnwg4KFf
-         9s2XEOQb7j2ylkSd8eadGWt0+eZmEJYXuxygDa+5Dcv93h9TNTPrHatIksppC2pfbtVx
-         ondw==
-X-Gm-Message-State: AO0yUKX0iIoZrwjykwv/S3qHXTKOtVBRXmJD1pm3byBJnegz3q98Cq9y
-        3WsAzel+T3HNkXvxZ+QnIy+xuDzcFlA=
-X-Google-Smtp-Source: AK7set+hcfmSYtJQSj4JgRZasq8XiifyD9Tvx7sEpD7QycMK0cRJzUs76ifh68LdqG1I6epKokqcPg==
-X-Received: by 2002:a5d:4105:0:b0:2c5:5eff:5c81 with SMTP id l5-20020a5d4105000000b002c55eff5c81mr11481160wrp.38.1677197384117;
-        Thu, 23 Feb 2023 16:09:44 -0800 (PST)
+        bh=/oTd4oGYUWNeX1XfriPfzFZ4g6Fr/Lz3jalhXGhBz3I=;
+        b=RlOzewcDeI5LVJmuQZamJJ2X+6A8W43V9LbJFJrlw0e2DejTa86V0zUgc3MaI39wwa
+         0ybsCDZQhnhIm1YKrJLCD0REsh8J8eT5tuLV58lrCxNbsUxpbdGOjMpQ3IJ6ADixZrY2
+         JqLd8FT/SNr+dACJfr8LKbHJxaMj0xhq9prWJIy3dz48xnSdeTuB3FpRL2PEcNYYvYBv
+         /TEIzWMv9f8qqrKBy24twYtJ9DrX+QN+vKnhgfN0dnpu/4Uk2rDv8unGKLO4bqEKprte
+         XIvByJGZJ1kZX9IiRV6rGDUt86NfxDVKUDXd8HEWV3f0OgDLPhBnkGnhnAG85exrUpof
+         ke6w==
+X-Gm-Message-State: AO0yUKU8Fd7RtlFSLY+OGk/n4eRRF5QXcN9M/TqtG2KTVPyDYSk027va
+        QdNYZOmd5Xto9Zzdhqj9mXT0JfoO0Fc=
+X-Google-Smtp-Source: AK7set/bYoOAtko/5oSKVbBbBP9wucvaRcVXqz7nrM5hAnMdJrqPFI7XSELsOiozTkTzhEHIZOShBg==
+X-Received: by 2002:adf:fc84:0:b0:2c7:1c08:121a with SMTP id g4-20020adffc84000000b002c71c08121amr596433wrr.68.1677197385637;
+        Thu, 23 Feb 2023 16:09:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d9-20020a056000114900b002c5584d0e3dsm11368779wrx.24.2023.02.23.16.09.43
+        by smtp.gmail.com with ESMTPSA id 13-20020a05600c020d00b003dc1d668866sm852969wmi.10.2023.02.23.16.09.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 16:09:43 -0800 (PST)
-Message-Id: <00dceb5b4679ada9570a68e8a13ea154f5475979.1677197377.git.gitgitgadget@gmail.com>
+        Thu, 23 Feb 2023 16:09:45 -0800 (PST)
+Message-Id: <b5046b7aaa684b8de6d2971be49cf5cba27eac08.1677197377.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1485.v2.git.1677197376.gitgitgadget@gmail.com>
 References: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
         <pull.1485.v2.git.1677197376.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Feb 2023 00:09:23 +0000
-Subject: [PATCH v2 04/17] treewide: remove unnecessary cache.h includes in
- source files
+Date:   Fri, 24 Feb 2023 00:09:25 +0000
+Subject: [PATCH v2 06/17] hash.h: move some oid-related declarations from
+ cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,386 +73,184 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-We had several C files include cache.h unnecessarily.  Replace those
-with an include of "git-compat-util.h" instead.  Much like the previous
-commit, these have all been verified via both ensuring that
-    gcc -E $SOURCE_FILE | grep '"cache.h"'
-found no hits and that
-    make DEVELOPER=1 ${OBJECT_FILE_FOR_SOURCE_FILE}
-successfully compiles without warnings.
+These defines and enum are all oid-related and as such seem to make
+more sense being included in hash.h.  Further, moving them there
+allows us to remove some includes of cache.h in other files.
+
+The change to line-log.h might look unrelated, but line-log.h includes
+diffcore.h, which previously included cache.h, which included the
+kitchen sink.  Since this patch makes diffcore.h no longer include
+cache.h, the compiler complains about the 'struct string_list *'
+function parameter.  Add a forward declaration for struct string_list to
+address this.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- hashmap.c                    | 2 +-
- imap-send.c                  | 2 +-
- json-writer.c                | 2 +-
- kwset.c                      | 2 +-
- levenshtein.c                | 2 +-
- linear-assignment.c          | 2 +-
- mem-pool.c                   | 2 +-
- oidmap.c                     | 2 +-
- repo-settings.c              | 2 +-
- serve.c                      | 3 ++-
- shell.c                      | 2 +-
- t/helper/test-crontab.c      | 1 -
- t/helper/test-ctype.c        | 1 -
- t/helper/test-json-writer.c  | 1 -
- t/helper/test-pcre2-config.c | 1 -
- t/helper/test-prio-queue.c   | 1 -
- t/helper/test-run-command.c  | 2 --
- t/helper/test-sigchain.c     | 1 -
- t/helper/test-simple-ipc.c   | 3 ++-
- t/helper/test-wildmatch.c    | 1 -
- thread-utils.c               | 2 +-
- trace2.c                     | 3 ++-
- trace2/tr2_ctr.c             | 2 +-
- trace2/tr2_tbuf.c            | 2 +-
- trace2/tr2_tgt_event.c       | 2 +-
- trace2/tr2_tgt_normal.c      | 2 +-
- trace2/tr2_tgt_perf.c        | 2 +-
- trace2/tr2_tmr.c             | 3 ++-
- unix-stream-server.c         | 2 +-
- 29 files changed, 25 insertions(+), 30 deletions(-)
+ cache.h                                      | 34 --------------------
+ diffcore.h                                   |  4 ++-
+ hash.h                                       | 34 ++++++++++++++++++++
+ line-log.h                                   |  1 +
+ submodule-config.h                           |  1 -
+ t/helper/test-submodule-nested-repo-config.c |  1 +
+ tree-walk.h                                  |  4 ++-
+ 7 files changed, 42 insertions(+), 37 deletions(-)
 
-diff --git a/hashmap.c b/hashmap.c
-index cf5fea87eb0..ee45ef00852 100644
---- a/hashmap.c
-+++ b/hashmap.c
-@@ -1,7 +1,7 @@
- /*
-  * Generic implementation of hash-based key value mappings.
-  */
+diff --git a/cache.h b/cache.h
+index 0f1f9dde56b..daf6150bb3c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1363,40 +1363,6 @@ struct object_context {
+ 	char *path;
+ };
+ 
+-#define GET_OID_QUIETLY           01
+-#define GET_OID_COMMIT            02
+-#define GET_OID_COMMITTISH        04
+-#define GET_OID_TREE             010
+-#define GET_OID_TREEISH          020
+-#define GET_OID_BLOB             040
+-#define GET_OID_FOLLOW_SYMLINKS 0100
+-#define GET_OID_RECORD_PATH     0200
+-#define GET_OID_ONLY_TO_DIE    04000
+-#define GET_OID_REQUIRE_PATH  010000
+-
+-#define GET_OID_DISAMBIGUATORS \
+-	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
+-	GET_OID_TREE | GET_OID_TREEISH | \
+-	GET_OID_BLOB)
+-
+-enum get_oid_result {
+-	FOUND = 0,
+-	MISSING_OBJECT = -1, /* The requested object is missing */
+-	SHORT_NAME_AMBIGUOUS = -2,
+-	/* The following only apply when symlinks are followed */
+-	DANGLING_SYMLINK = -4, /*
+-				* The initial symlink is there, but
+-				* (transitively) points to a missing
+-				* in-tree file
+-				*/
+-	SYMLINK_LOOP = -5,
+-	NOT_DIR = -6, /*
+-		       * Somewhere along the symlink chain, a path is
+-		       * requested which contains a file as a
+-		       * non-final element.
+-		       */
+-};
+-
+ int repo_get_oid(struct repository *r, const char *str, struct object_id *oid);
+ __attribute__((format (printf, 2, 3)))
+ int get_oidf(struct object_id *oid, const char *fmt, ...);
+diff --git a/diffcore.h b/diffcore.h
+index 9b588a1ee15..1701ed50b9c 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -4,9 +4,11 @@
+ #ifndef DIFFCORE_H
+ #define DIFFCORE_H
+ 
 -#include "cache.h"
-+#include "git-compat-util.h"
++#include "hash.h"
+ 
+ struct diff_options;
++struct mem_pool;
++struct oid_array;
+ struct repository;
+ struct strintmap;
+ struct strmap;
+diff --git a/hash.h b/hash.h
+index 351afc2ce3b..d39f73618cb 100644
+--- a/hash.h
++++ b/hash.h
+@@ -123,6 +123,40 @@ struct object_id {
+ 	int algo;	/* XXX requires 4-byte alignment */
+ };
+ 
++#define GET_OID_QUIETLY           01
++#define GET_OID_COMMIT            02
++#define GET_OID_COMMITTISH        04
++#define GET_OID_TREE             010
++#define GET_OID_TREEISH          020
++#define GET_OID_BLOB             040
++#define GET_OID_FOLLOW_SYMLINKS 0100
++#define GET_OID_RECORD_PATH     0200
++#define GET_OID_ONLY_TO_DIE    04000
++#define GET_OID_REQUIRE_PATH  010000
++
++#define GET_OID_DISAMBIGUATORS \
++	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
++	GET_OID_TREE | GET_OID_TREEISH | \
++	GET_OID_BLOB)
++
++enum get_oid_result {
++	FOUND = 0,
++	MISSING_OBJECT = -1, /* The requested object is missing */
++	SHORT_NAME_AMBIGUOUS = -2,
++	/* The following only apply when symlinks are followed */
++	DANGLING_SYMLINK = -4, /*
++				* The initial symlink is there, but
++				* (transitively) points to a missing
++				* in-tree file
++				*/
++	SYMLINK_LOOP = -5,
++	NOT_DIR = -6, /*
++		       * Somewhere along the symlink chain, a path is
++		       * requested which contains a file as a
++		       * non-final element.
++		       */
++};
++
+ /* A suitably aligned type for stack allocations of hash contexts. */
+ union git_hash_ctx {
+ 	git_SHA_CTX sha1;
+diff --git a/line-log.h b/line-log.h
+index 82ae8d98a40..adff361b1bc 100644
+--- a/line-log.h
++++ b/line-log.h
+@@ -5,6 +5,7 @@
+ 
+ struct rev_info;
+ struct commit;
++struct string_list;
+ 
+ /* A range [start,end].  Lines are numbered starting at 0, and the
+  * ranges include start but exclude end. */
+diff --git a/submodule-config.h b/submodule-config.h
+index 28a8ca6bf46..c2045875bbb 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -1,7 +1,6 @@
+ #ifndef SUBMODULE_CONFIG_CACHE_H
+ #define SUBMODULE_CONFIG_CACHE_H
+ 
+-#include "cache.h"
+ #include "config.h"
  #include "hashmap.h"
- 
- #define FNV32_BASE ((unsigned int) 0x811c9dc5)
-diff --git a/imap-send.c b/imap-send.c
-index a50af56b827..93e9018439c 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -21,7 +21,7 @@
-  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-  */
- 
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "config.h"
- #include "credential.h"
- #include "exec-cmd.h"
-diff --git a/json-writer.c b/json-writer.c
-index f1cfd8fa8c6..005c820aa42 100644
---- a/json-writer.c
-+++ b/json-writer.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "json-writer.h"
- 
- void jw_init(struct json_writer *jw)
-diff --git a/kwset.c b/kwset.c
-index 08aadf03117..4b14d4f86b8 100644
---- a/kwset.c
-+++ b/kwset.c
-@@ -32,7 +32,7 @@
-    String Matching:  An Aid to Bibliographic Search," CACM June 1975,
-    Vol. 18, No. 6, which describes the failure function used below. */
- 
--#include "cache.h"
-+#include "git-compat-util.h"
- 
- #include "kwset.h"
- #include "compat/obstack.h"
-diff --git a/levenshtein.c b/levenshtein.c
-index d2632690d51..fd8026fe201 100644
---- a/levenshtein.c
-+++ b/levenshtein.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "levenshtein.h"
- 
- /*
-diff --git a/linear-assignment.c b/linear-assignment.c
-index ecffc09be6e..5416cbcf409 100644
---- a/linear-assignment.c
-+++ b/linear-assignment.c
-@@ -3,7 +3,7 @@
-  * algorithm for dense and sparse linear assignment problems</i>. Computing,
-  * 38(4), 325-340.
-  */
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "linear-assignment.h"
- 
- #define COST(column, row) cost[(column) + column_count * (row)]
-diff --git a/mem-pool.c b/mem-pool.c
-index 599d8e895f8..c34846d176c 100644
---- a/mem-pool.c
-+++ b/mem-pool.c
-@@ -2,7 +2,7 @@
-  * Memory Pool implementation logic.
-  */
- 
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "mem-pool.h"
- 
- #define BLOCK_GROWTH_SIZE (1024 * 1024 - sizeof(struct mp_block))
-diff --git a/oidmap.c b/oidmap.c
-index 49965fe8568..8c1a139c974 100644
---- a/oidmap.c
-+++ b/oidmap.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "oidmap.h"
- 
- static int oidmap_neq(const void *hashmap_cmp_fn_data UNUSED,
-diff --git a/repo-settings.c b/repo-settings.c
-index 3dbd3f0e2ec..0a6c0b381fe 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "config.h"
- #include "repository.h"
- #include "midx.h"
-diff --git a/serve.c b/serve.c
-index cbf4a143cfe..d128822347d 100644
---- a/serve.c
-+++ b/serve.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "repository.h"
- #include "config.h"
- #include "pkt-line.h"
-@@ -8,6 +8,7 @@
- #include "serve.h"
- #include "upload-pack.h"
- #include "bundle-uri.h"
-+#include "trace2.h"
- 
- static int advertise_sid = -1;
- static int client_hash_algo = GIT_HASH_SHA1;
-diff --git a/shell.c b/shell.c
-index af0d7c734f8..5c67e7bd97e 100644
---- a/shell.c
-+++ b/shell.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "quote.h"
- #include "exec-cmd.h"
- #include "strbuf.h"
-diff --git a/t/helper/test-crontab.c b/t/helper/test-crontab.c
-index e6c1b1e22bb..597027a96e9 100644
---- a/t/helper/test-crontab.c
-+++ b/t/helper/test-crontab.c
-@@ -1,5 +1,4 @@
+ #include "submodule.h"
+diff --git a/t/helper/test-submodule-nested-repo-config.c b/t/helper/test-submodule-nested-repo-config.c
+index dc1c14bde37..a3848a8b668 100644
+--- a/t/helper/test-submodule-nested-repo-config.c
++++ b/t/helper/test-submodule-nested-repo-config.c
+@@ -1,4 +1,5 @@
  #include "test-tool.h"
--#include "cache.h"
++#include "cache.h"
+ #include "submodule-config.h"
  
- /*
-  * Usage: test-tool crontab <file> -l|<input>
-diff --git a/t/helper/test-ctype.c b/t/helper/test-ctype.c
-index 92c4c2313e7..d6c1a2ed09c 100644
---- a/t/helper/test-ctype.c
-+++ b/t/helper/test-ctype.c
-@@ -1,5 +1,4 @@
- #include "test-tool.h"
--#include "cache.h"
+ static void die_usage(const char **argv, const char *msg)
+diff --git a/tree-walk.h b/tree-walk.h
+index 6305d531503..25fe27e3529 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -1,7 +1,9 @@
+ #ifndef TREE_WALK_H
+ #define TREE_WALK_H
  
- static int rc;
+-#include "cache.h"
++#include "hash.h"
++
++struct index_state;
  
-diff --git a/t/helper/test-json-writer.c b/t/helper/test-json-writer.c
-index 8c3edacc000..86887f53203 100644
---- a/t/helper/test-json-writer.c
-+++ b/t/helper/test-json-writer.c
-@@ -1,5 +1,4 @@
- #include "test-tool.h"
--#include "cache.h"
- #include "json-writer.h"
+ #define MAX_TRAVERSE_TREES 8
  
- static const char *expect_obj1 = "{\"a\":\"abc\",\"b\":42,\"c\":true}";
-diff --git a/t/helper/test-pcre2-config.c b/t/helper/test-pcre2-config.c
-index 5258fdddba0..5d0b2a2e10f 100644
---- a/t/helper/test-pcre2-config.c
-+++ b/t/helper/test-pcre2-config.c
-@@ -1,5 +1,4 @@
- #include "test-tool.h"
--#include "cache.h"
- #include "grep.h"
- 
- int cmd__pcre2_config(int argc, const char **argv)
-diff --git a/t/helper/test-prio-queue.c b/t/helper/test-prio-queue.c
-index 133b5e6f4ae..ac4c65d7056 100644
---- a/t/helper/test-prio-queue.c
-+++ b/t/helper/test-prio-queue.c
-@@ -1,5 +1,4 @@
- #include "test-tool.h"
--#include "cache.h"
- #include "prio-queue.h"
- 
- static int intcmp(const void *va, const void *vb, void *data)
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index 3ecb830f4a8..67b42ef50eb 100644
---- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -9,8 +9,6 @@
-  */
- 
- #include "test-tool.h"
--#include "git-compat-util.h"
--#include "cache.h"
- #include "run-command.h"
- #include "strvec.h"
- #include "strbuf.h"
-diff --git a/t/helper/test-sigchain.c b/t/helper/test-sigchain.c
-index d013bccddae..d1cf7377b7c 100644
---- a/t/helper/test-sigchain.c
-+++ b/t/helper/test-sigchain.c
-@@ -1,5 +1,4 @@
- #include "test-tool.h"
--#include "cache.h"
- #include "sigchain.h"
- 
- #define X(f) \
-diff --git a/t/helper/test-simple-ipc.c b/t/helper/test-simple-ipc.c
-index 28365ff85b6..3d1436da598 100644
---- a/t/helper/test-simple-ipc.c
-+++ b/t/helper/test-simple-ipc.c
-@@ -3,13 +3,14 @@
-  */
- 
- #include "test-tool.h"
--#include "cache.h"
-+#include "gettext.h"
- #include "strbuf.h"
- #include "simple-ipc.h"
- #include "parse-options.h"
- #include "thread-utils.h"
- #include "strvec.h"
- #include "run-command.h"
-+#include "trace2.h"
- 
- #ifndef SUPPORTS_SIMPLE_IPC
- int cmd__simple_ipc(int argc, const char **argv)
-diff --git a/t/helper/test-wildmatch.c b/t/helper/test-wildmatch.c
-index 2c103d1824c..a95bb4da9b1 100644
---- a/t/helper/test-wildmatch.c
-+++ b/t/helper/test-wildmatch.c
-@@ -1,5 +1,4 @@
- #include "test-tool.h"
--#include "cache.h"
- 
- int cmd__wildmatch(int argc, const char **argv)
- {
-diff --git a/thread-utils.c b/thread-utils.c
-index 53298456913..1f89ffab4c3 100644
---- a/thread-utils.c
-+++ b/thread-utils.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "thread-utils.h"
- 
- #if defined(hpux) || defined(__hpux) || defined(_hpux)
-diff --git a/trace2.c b/trace2.c
-index 279bddf53b4..e8ba62c0c3d 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "config.h"
- #include "json-writer.h"
- #include "quote.h"
-@@ -6,6 +6,7 @@
- #include "sigchain.h"
- #include "thread-utils.h"
- #include "version.h"
-+#include "trace.h"
- #include "trace2/tr2_cfg.h"
- #include "trace2/tr2_cmd_name.h"
- #include "trace2/tr2_ctr.h"
-diff --git a/trace2/tr2_ctr.c b/trace2/tr2_ctr.c
-index 483ca7c308f..b342d3b1a3c 100644
---- a/trace2/tr2_ctr.c
-+++ b/trace2/tr2_ctr.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "thread-utils.h"
- #include "trace2/tr2_tgt.h"
- #include "trace2/tr2_tls.h"
-diff --git a/trace2/tr2_tbuf.c b/trace2/tr2_tbuf.c
-index 2498482d9ad..c3b3822ed7e 100644
---- a/trace2/tr2_tbuf.c
-+++ b/trace2/tr2_tbuf.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "tr2_tbuf.h"
- 
- void tr2_tbuf_local_time(struct tr2_tbuf *tb)
-diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-index 16f6332755e..9e7aab6d510 100644
---- a/trace2/tr2_tgt_event.c
-+++ b/trace2/tr2_tgt_event.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "config.h"
- #include "json-writer.h"
- #include "run-command.h"
-diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-index fbbef68dfc0..8672c2c2d04 100644
---- a/trace2/tr2_tgt_normal.c
-+++ b/trace2/tr2_tgt_normal.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "config.h"
- #include "run-command.h"
- #include "quote.h"
-diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index adae8032639..3f2b2d53118 100644
---- a/trace2/tr2_tgt_perf.c
-+++ b/trace2/tr2_tgt_perf.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "config.h"
- #include "run-command.h"
- #include "quote.h"
-diff --git a/trace2/tr2_tmr.c b/trace2/tr2_tmr.c
-index 786762dfd26..31d0e4d1bd1 100644
---- a/trace2/tr2_tmr.c
-+++ b/trace2/tr2_tmr.c
-@@ -1,8 +1,9 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "thread-utils.h"
- #include "trace2/tr2_tgt.h"
- #include "trace2/tr2_tls.h"
- #include "trace2/tr2_tmr.h"
-+#include "trace.h"
- 
- #define MY_MAX(a, b) ((a) > (b) ? (a) : (b))
- #define MY_MIN(a, b) ((a) < (b) ? (a) : (b))
-diff --git a/unix-stream-server.c b/unix-stream-server.c
-index efa2a207abc..22ac2373e07 100644
---- a/unix-stream-server.c
-+++ b/unix-stream-server.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "lockfile.h"
- #include "unix-socket.h"
- #include "unix-stream-server.h"
 -- 
 gitgitgadget
 
