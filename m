@@ -2,86 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A11F6C7EE23
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 17:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20174C6FA8E
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 17:53:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229538AbjBXRvv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Feb 2023 12:51:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47986 "EHLO
+        id S229641AbjBXRxc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Feb 2023 12:53:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjBXRvu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2023 12:51:50 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CED671FE6
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 09:51:49 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id bm20so16023468oib.7
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 09:51:49 -0800 (PST)
+        with ESMTP id S229555AbjBXRxa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2023 12:53:30 -0500
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32D1E15166
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 09:53:30 -0800 (PST)
+Received: by mail-pg1-x52a.google.com with SMTP id 130so2365pgg.3
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 09:53:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=J+cc0kw/F9okQcIaB4TBOEZMclg/VcUBHH8ghrqmNiQ=;
-        b=Ng5p2vWOyoQOiRmvibr2ZFd7Xe+NKvmETGzmvkK8pBDqdlaZ5CiITEfoHpPJtE04Ye
-         ksaQqiujOqvAltbF/aRO4EPEeVMv1CfIqDT4739V1+e+L+7r/CYyzifQ9Dh7q0+75Asq
-         IamFlFZUPPqq02J74DMBVTDbIruOY+yr6lAFU5l0+gUmD8AXgYZaUxOVmbHhJU7SWKsg
-         VJWYymZRk0VuNh1mkRl59HvD6UiTt1U5wmL+LlENhmunktIAVQtMz/5+XrOhDmPYA96x
-         A3I1ii6E+hca/bAjCLhcfededCdmYWeQP4y0igtitFTmHdKOJQEAFnlIQSgNU2tYEvWs
-         SKtQ==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yh9uQgZs9xrAyvkXOi418HqzGAPIug7dlk8fErjJYXA=;
+        b=Pf9L4oKI7avh5/Q5KsXInyhvx9/Oko68PiG6Jkuzz9lAfAK80Y4ZfSYanv2ud6fvox
+         be0gZLVgSb22GlHJSJtE22LgMIOBvBhuzUS/IJCRyU179Yh/GXrY1RACmpUZTTNvkfGs
+         hZPdy4gbzIZ4fRNy5ztRRZqpcp8/RXIsECqWkW0GJWPKNn2tytkcZQ/OHBJqtAddip3U
+         Ce8u4W7pVTR4iwSFP1OEN4SgaW1NJIInM4IsG40cOyDGnSfKB0IECWO++2mTkYwkPlJF
+         X9Eo7O+cbAAmsFP82/hKST20i8DTA/5rfDw/KMBej8/hUi/Etjmk/CQjDRPg7cGnizjd
+         kUTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=J+cc0kw/F9okQcIaB4TBOEZMclg/VcUBHH8ghrqmNiQ=;
-        b=Iq64YUwuJc0uDNIdZ4iRt8BzvlTnwH1EjCFsObwPuj2VGy//PBGAwEAxy6eVWmcaoC
-         /dsEBTEuzSRxMeX5h8M1YH5wE8YQg3vHIeUcdeFMTtoJWuXSb1qEWC80YZ6DgGZLZCVD
-         FfPnHayDwsj9SSpaiQ45r806vHTb+HulniiKrKyS/oLVDeiiCQk6iaZ1+BBhGb56Rh2T
-         IvdO8FDYzE6PUKiidVI2pbKU6DngoLr7zJuIdhvm7tMHOmUx68c+WmsbpA7kx8f5kUL/
-         4/Ox6SQ6jInsksGHNnb2ypawiAWbIO+Zf/TvYqmofqMcBhtdl+JcWwIhmcL8uk2aWFVC
-         qbDQ==
-X-Gm-Message-State: AO0yUKVGQV0wcSLwGnho1oiTqCsmZUUuhXlIBQBygHVmbf7+FKg4gaJr
-        /uCzOXsIhOquj3/z4q971gv3uAK9QpT2FqxDjkg=
-X-Google-Smtp-Source: AK7set+y2ZfDh69HeS7rZzdoOWE0jpAJAhGOytYrBSGg72GsZgnLvXYZxF3NLPx8DBgSgZw6EqHN+7cwNlhCMCmqgOY=
-X-Received: by 2002:a05:6808:2a03:b0:36e:f6f5:5cf2 with SMTP id
- ez3-20020a0568082a0300b0036ef6f55cf2mr1055698oib.5.1677261109104; Fri, 24 Feb
- 2023 09:51:49 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=yh9uQgZs9xrAyvkXOi418HqzGAPIug7dlk8fErjJYXA=;
+        b=HtnDDeN+k+D3q9aKbEVg/qPgBRd7+PintwNHGap6/OKAKNShIP53aEwBOR4kzdNRpi
+         lON2wQEwzKBvUR63/CPCXCmeijS/bpm1aeQzVNmolgQbHV1m0NYxUt5BH+Fh0o1XhdbG
+         ToSyYLvkOJe/gglNILj+yAbhQqt6iRewL5GtIZsRY625u0Mooo29PV9phh1R/e9nhpsv
+         Z3MJgRoqQn24Dt9XuvGaumPhATayjPxKF3vknFv/aXyW7FBFksAKl+t7kDeu4g4bJRc7
+         bOx93VlQDCs+jD8fDYDmsdTG1dhK5dpS1tMfBdItuZ0h4h6plGD8+o1prwASf2rqnRGv
+         BXMA==
+X-Gm-Message-State: AO0yUKVaakVlUA0oXOKatHjwwXqpc0jSv/yzYxGbuns4OpMPSdTYEhGk
+        bCwNdhMC3n15IEkeCVs9F7s=
+X-Google-Smtp-Source: AK7set9Nu5tWj6nliygB+oxuHfj9uQhKx1qXBR6LA8p//OSeWjjuu0PrVr+OHdAiK1IhUp9q4nExrA==
+X-Received: by 2002:a62:cf45:0:b0:5a8:ecb1:bf1 with SMTP id b66-20020a62cf45000000b005a8ecb10bf1mr13286018pfg.19.1677261209302;
+        Fri, 24 Feb 2023 09:53:29 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id e1-20020a62ee01000000b00594235980e4sm7911665pfi.181.2023.02.24.09.53.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Feb 2023 09:53:28 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 01/21] ref-filter: drop unused atom parameter from
+ get_worktree_path()
+References: <Y/habYJxDRJQg/kJ@coredump.intra.peff.net>
+        <Y/hahKMhm4EYz3Pf@coredump.intra.peff.net>
+Date:   Fri, 24 Feb 2023 09:53:28 -0800
+In-Reply-To: <Y/hahKMhm4EYz3Pf@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 24 Feb 2023 01:34:44 -0500")
+Message-ID: <xmqqmt530x2f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20230223053410.644503-1-alexhenrie24@gmail.com>
- <20230223053410.644503-3-alexhenrie24@gmail.com> <7ba8a92d-8c94-5226-5416-6ed3a8e2e389@dunelm.org.uk>
-In-Reply-To: <7ba8a92d-8c94-5226-5416-6ed3a8e2e389@dunelm.org.uk>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Fri, 24 Feb 2023 10:51:37 -0700
-Message-ID: <CAMMLpeQ98BTCGE2tcVdZ99eU6cLh4Rd_hc8C_PmKvsBkjXUWPw@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] rebase: add a config option for --rebase-merges
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, tao@klerks.biz, gitster@pobox.com,
-        newren@gmail.com, phillip.wood123@gmail.com,
-        Johannes.Schindelin@gmx.de, sorganov@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Feb 24, 2023 at 7:55 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+Jeff King <peff@peff.net> writes:
 
-> Thanks for updating this, it is much clearer what the different settings
-> mean now.
+> The get_worktree_path() function is used to populate the %(worktreepath)
+> value, but it has never used its "atom" parameter since it was added in
+> 2582083fa1 (ref-filter: add worktreepath atom, 2019-04-28).
+>
+> Normally we'd use the atom struct to cache any work we do, but in this
+> case there's a global hashmap that does that caching already. So we can
+> just drop the unused parameter.
 
-Happy to help. Thanks for the feedback.
+If this were part of a codepath that were more table-driven, we
+might have needed to use uniform function signature across these
+helper functions, but it is not the case, and this solution indeed
+is much nicer than marking it UNUSED.
 
-> I not sure if having the config setting override the default
-> when the user passes --rebase-merges without an argument is a good idea.
 
-> I think this behavior is confusing for users and will break scripts that
-> quite reasonably assume --rebase-merges is equivalent to
-> --rebase-merges=no-rebase-cousins
 
-In that case, we're going to need two config options: A rebase.merges
-boolean for whether --rebase-merges should be on by default and a
-rebase.cousins boolean for whether rebase-cousins or no-rebase-cousins
-is the default.
-
-I will try to incorporate that change and the others that you and
-Johannes suggested in v5.
-
--Alex
+> diff --git a/ref-filter.c b/ref-filter.c
+> index f8203c6b05..434a28c830 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -1822,7 +1822,7 @@ static void lazy_init_worktree_map(void)
+>  	populate_worktree_map(&(ref_to_worktree_map.map), ref_to_worktree_map.worktrees);
+>  }
+>  
+> -static char *get_worktree_path(const struct used_atom *atom, const struct ref_array_item *ref)
+> +static char *get_worktree_path(const struct ref_array_item *ref)
+>  {
+>  	struct hashmap_entry entry, *e;
+>  	struct ref_to_worktree_entry *lookup_result;
+> @@ -1881,7 +1881,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+>  			refname = get_refname(atom, ref);
+>  		else if (atom_type == ATOM_WORKTREEPATH) {
+>  			if (ref->kind == FILTER_REFS_BRANCHES)
+> -				v->s = get_worktree_path(atom, ref);
+> +				v->s = get_worktree_path(ref);
+>  			else
+>  				v->s = xstrdup("");
+>  			continue;
