@@ -2,93 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED9DDC7EE23
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 17:30:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07C4BC7EE23
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 17:44:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229595AbjBXRar (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Feb 2023 12:30:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56506 "EHLO
+        id S229750AbjBXRo4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Feb 2023 12:44:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjBXRaq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2023 12:30:46 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE92341B4F
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 09:30:45 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id m8-20020a17090a4d8800b002377bced051so3631790pjh.0
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 09:30:45 -0800 (PST)
+        with ESMTP id S229481AbjBXRoy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2023 12:44:54 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB4AD13529
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 09:44:49 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id d7so124525qtr.12
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 09:44:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5f8G+arqASIwj5hBWPyMBSUKo/mLtEZdsGjIx9+2ZYk=;
-        b=kCEz+bD3YmWuQbHx+cSLFPPGugPY4pLp0VLTQJcq81sg8r3RSrYG1CBGXGneMsHPDk
-         jabtCycNcuyGadK58wsUr6CTvmgJmu7ouDiINZ8rOWi3U9oV5WAbxYmU7/s7q2qQI0l0
-         lETyc9vfzqT1CBJZGSU7APVz0sxG2d21QRCgl1+CzBvfswNUW1LvPJRfYaPpZRcHLvd+
-         vF6Z8AufzHfVsoETchPWweUNdzltbagnXy3nzXXmWVek7s4JHMzFK1OYUlpIXYcO2yDW
-         4NcY49Gqvhv5ZeeJ7xVbwrHEK2qUZ+X1UcPzGcJxLuLFrkq+ZLPwgUyq7cdqCv3x4/sb
-         KkPw==
+        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6uxuErITjEh6An/fkXW9FmqMiJDJhKZ0Ehx22AYjWc0=;
+        b=jGr+4CvpaJLFzMEndd5NCrXf2CQMo1XELiUQK3ZzEdEi74s3SB07j7rFoB7ZqShwTl
+         pm/cuAweMV8KdoW6NAY+ApoAlJB+9Ax41Yv29hCTTFhBm9LrXZ53P1TTw4cP6lqxbTqo
+         AA9uA1/qrtBE4UQW8p+tteWM3IM88bJJbt8dnlx+dWzBr6VDby2ToLe3AeyFH1uMskpf
+         Q+YCijDUQpC8R8z7OX7M6/siIp59YZQ8rE1x3UvyNEcIGbxgzK3QgQg7FiSVg2ml3Qwh
+         zrZMr3SDS46K8eqXwHGZ/rt/SwFZjF2jdbfhxXlpb0VvWCmMMj4xB2uFzNH9SlKC+CXa
+         4hmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5f8G+arqASIwj5hBWPyMBSUKo/mLtEZdsGjIx9+2ZYk=;
-        b=8MvPh4uNUDrEjQg/CwFwbGmNoOhyFOa0OkKRU2sD4iymSbgfeSFhmsDbnhHKh2VOeb
-         HGhfT2o4GpT71jqg12GdUodgZoYP+xnYyCZ9sqyub6XkSx6vrTRk+qOXUFr3lrACoJzI
-         yfZju5bfjBRHWu4x7ZtGjL37qgYSTUvOxBkmzy7lGh0kAp1+I7SC5/9NrxyWcolitx33
-         4sSh1lhBF4IYpmzv1Yn8cqX91kCgvsSO4JHFgfOPe4fHkODWDYo40b+akATos3THRJ9d
-         nlc1ugHrLRTvbuX1dA1y5VjkNgkWSQYj9rkcoKT0phV66QfOM9vV8c2EjJmdqCtta7BK
-         3C1w==
-X-Gm-Message-State: AO0yUKX2b6ufMeg6gEq7MzFs3jg24F8RWfoi9uHJmhbuVm8jOcI8wxZd
-        3IPfaM7yj+lrJeJ9BMqDld0=
-X-Google-Smtp-Source: AK7set8Q3fLpDA1Ncuo7LqZU+TvR8pkOV4DBlF/9WPBhu9fTzY2O5whX6cgQmHPtoQoKdba3x1OxOA==
-X-Received: by 2002:a05:6a20:7345:b0:cb:ac6c:13d3 with SMTP id v5-20020a056a20734500b000cbac6c13d3mr444277pzc.21.1677259845120;
-        Fri, 24 Feb 2023 09:30:45 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id d28-20020a63735c000000b004f2c088328bsm7820439pgn.43.2023.02.24.09.30.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Feb 2023 09:30:44 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
+        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6uxuErITjEh6An/fkXW9FmqMiJDJhKZ0Ehx22AYjWc0=;
+        b=R9YYFjuxIdvHZBXEAF8DBhArXw8+OqJt4zGiMeMrmjBnbIPZQouzTazivE2pC1YlG5
+         kx3dGmQY11dQf2t9DRS0wf2/TeZpR/ZJiOcD4DmEgXHFybl/v3NP1V2iFndDr0GUpMOr
+         JnwkH/2w3HpvcdMO3VCfDZOP9eP9xJFDqdH9ykoT95+FlukchdZKNHmyDUip0t8yGPfV
+         jCE4NeA5WPvNd+pEyBEGHQ5rojFL94+xPgIqSA5qcsu4JnKR2YvUQJ02AtXBInOUmHlo
+         3U53STJTx1t8zoQ6stMp3DBrPpJRNCGoaUldTeB0queqYbzNHPHQkYH6Kg2FBy4URNxE
+         GOBw==
+X-Gm-Message-State: AO0yUKVJe9lx/JZqn6J47h8DArhTJBE7X1U/rZKhqOBq/Z98Tg1/mzly
+        fjO4T98e+L/vXKGwOtFv9pRLf61+Cx33hQ==
+X-Google-Smtp-Source: AK7set8Y9jl9nxu8gboQ8gVwd1MnM6yLfi5fCoVru00F1OEy1Ol1Fd4ImZaqnuORMX6OhzXqRh5xYA==
+X-Received: by 2002:a05:622a:1a92:b0:3b6:309e:dfe1 with SMTP id s18-20020a05622a1a9200b003b6309edfe1mr34338918qtc.3.1677260688969;
+        Fri, 24 Feb 2023 09:44:48 -0800 (PST)
+Received: from [192.168.1.211] ([2600:4041:4542:c100:903c:2f5b:93be:1591])
+        by smtp.gmail.com with ESMTPSA id s128-20020a374586000000b007426b8eed51sm2128588qka.118.2023.02.24.09.44.48
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 Feb 2023 09:44:48 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] fsck index files from all worktrees
-References: <c6246ed5-bffc-7af9-1540-4e2071eff5dc@kdbg.org>
-        <Y/hv0MXAyBY3HEo9@coredump.intra.peff.net>
-Date:   Fri, 24 Feb 2023 09:30:44 -0800
-In-Reply-To: <Y/hv0MXAyBY3HEo9@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 24 Feb 2023 03:05:36 -0500")
-Message-ID: <xmqqr0uf0y4b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+Cc:     Elijah Newren <newren@gmail.com>,
+        John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?b?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 2/2] diff: teach diff to read algorithm from diff driver
+Date:   Fri, 24 Feb 2023 12:44:47 -0500
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <95D30379-4B31-4197-8D2F-71369E72514D@gmail.com>
+In-Reply-To: <Y/ZxT2ByET4BxGVt@coredump.intra.peff.net>
+References: <pull.1452.v2.git.git.1676410819.gitgitgadget@gmail.com>
+ <pull.1452.v3.git.git.1676665285.gitgitgadget@gmail.com>
+ <b330222ce83bdf03c20085ff10fcff8a090474d5.1676665285.git.gitgitgadget@gmail.com>
+ <CABPp-BFCMpA=nHtb5RuQL7ACbkhSEKtvmRxKwMuktcf24uQJtQ@mail.gmail.com>
+ <EE7565DF-BE70-4C45-AF0B-95C85050DFA4@gmail.com>
+ <CABPp-BGDi1VQXFdGw_Y8i0ZDBOoHJe9039fh4mO44qJ-nJE1ig@mail.gmail.com>
+ <47981D9E-9DC7-4C23-911D-13BA52A27040@gmail.com>
+ <CABPp-BHQn0sjAMwJ+r6uenO=nGLG1HvfnhS6tG8mu1BWt4bdOw@mail.gmail.com>
+ <Y/ZxT2ByET4BxGVt@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hey Peff,
 
-> We do fsck the resolve-undo extension, but I think fsck just doesn't
-> know anything about worktrees. That should be easy enough to fix.
-> Patches below.
-> ...
-> Thanks, it was nice to have a test case. I ended up writing a separate
-> test with a missing blob, just because that's simpler to do. It looks
-> like we don't test fsck_resolve_undo() or fsck_cache_tree() at all. That
-> might be a nice addition, but I punted for now to stay focused on the
-> worktree aspects.
+On 22 Feb 2023, at 14:47, Jeff King wrote:
 
-So we had a separate worktree with its index pointing at an object
-by its resolve-undo (or cache-tree) extension, but somehow lost that
-object to gc (I agree with your assessment that it should no longer
-happen since 2017).  gc these days knows about looking at the index
-of all worktrees, finds the issue, and stops for safety.  fsck that
-is run in the primary worktree may not have noticed but fsck run
-from that worktree would notice the issue.
+> On Mon, Feb 20, 2023 at 09:32:52AM -0800, Elijah Newren wrote:
+>
+>>> I was thinking we would just use the tree-ish of the first one
+>>
+>> That would certainly simplify, but it'd be pretty important to
+>> document.  (Incidentally, this kind of decision was my reason for
+>> asking about all those special cases earlier, i.e. how to handle diff
+>> between different commits, how to handle renames, how to handle bare
+>> repositories, etc.)
+>>
+>> This kind of decision probably also means you'd need a variety of
+>> testcases where .gitattributes is different in every commit & the
+>> index & the working tree, and then you start testing several of the
+>> possible pairings to make sure the right .gitattributes file is used
+>> (e.g. (commit, commit), (commit, index), (index, commit), (worktree,
+>> index), etc.)
+>
+> There may be some prior art here in how we handle mailmaps in a bare
+> repository. In that case, we pull them from HEAD (or really any commit
+> of your choosing, but the default is HEAD). That may seem a bit weird,
+> but it matches how non-bare repositories work, which read the mailmap
+> from the working tree.
+>
+> So likewise, even looking at an old commit like "git show HEAD~1000", in
+> a non-bare repository we will read .gitattributes from the working tree,
+> which means it is (roughly) coming from HEAD. In some ways that is good
+> (there may be improvements to the attributes) and in some ways it is
+> weird and confusing (the meaning of the attributes may have been
+> different back then, or the two histories may even be somewhat
+> unrelated!). So I think you can make an argument either way on what is
+> useful, but harmonizing the non-bare and bare cases seems like the best
+> place to start.
 
-Sounds like a frustrating one.  
+Thanks for the historical context and suggestion here
+>
+> And then that machinery would probably be enough to let people ask for
+> specific things on top (like "git show --attributes-from=HEAD~1000
+> HEAD~1000" if they really wanted).
 
-Thanks, both, for finding and fixing.
+Makes sense to me
 
+thanks
+John
+
+>
+> -Peff
