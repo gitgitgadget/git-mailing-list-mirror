@@ -2,96 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FDB6C7EE23
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 18:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F425C7EE23
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 18:55:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229661AbjBXSkz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Feb 2023 13:40:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40790 "EHLO
+        id S229915AbjBXSzu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Feb 2023 13:55:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjBXSky (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2023 13:40:54 -0500
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBDEC20555
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 10:40:52 -0800 (PST)
-Received: by mail-pg1-x531.google.com with SMTP id p6so111700pga.0
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 10:40:52 -0800 (PST)
+        with ESMTP id S229462AbjBXSzt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2023 13:55:49 -0500
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0455193F3
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 10:55:48 -0800 (PST)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-1723ab0375eso561649fac.1
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 10:55:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oxi20DBFqbtrJDhiQcbntPLfirgswhpcAzCCoZlZJgY=;
-        b=iuof+Jn7NVF/CG2vbMIemREVHiRxLR1AFIF4grAGzU2tQ95pua8XsHvpOa68pShqm+
-         9thNnWjUAnMoG6hnD+Vh+q4zTT4Q3Uw4VE1x5s+aGLlcYzCKhuyPiH6ol4UZPxyjf8mT
-         pMDf3D+9bNuaPWr+cHz9luSMt5NjcXV5IMFIFzPmn0EqutGkWHV/xTwXpQ2bQqrYPo50
-         1MiY/38o23ATgbVMn6qR600x6PFsyBUBvRoyuV9IDqsbRW8sLHE074/ZbSc03Yh2gWNJ
-         tLtJybgfhQv1s6E4/UuEH46x2Yr3B0jioLdyPmOUZpbg6Bw884r1lR0HcJMoaswIDJA7
-         Ti+A==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7S5Uc2QgfMg5F+ZXAV1/ha8pfXrdLla39lwVqzc9by8=;
+        b=gkyYkLJx4JG82vg2XVEnlIddcZmy8FJmi4rfnr+Lxz0jpDCY44SuZjgvIMhBSyaQ1W
+         AohP3YEMwFeDM72EdHCDr6O+2uABFPsec9gzLKb7ZAOKihHcLuNKa4zsS83NG6YtjjhL
+         Xe70BzO3G9g57GpT6qJwdIv1QngV2Fmye5AeNTQiYFQCZ8p2B4RUqvEvPAoqdkaM9NkR
+         Cs9oPYGgUHHyH75CGIfuUXqfjdG6VeXXGWhtB5luBbnUO1zLOn/C/wHjd7V1rtyQyGuu
+         zZlhwyaU08Kxlq3qR1V/SQUxa5pMocNL51b4V5Vdx0gI8gLjc8IguiopuVfOZAe+qmIy
+         6VMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oxi20DBFqbtrJDhiQcbntPLfirgswhpcAzCCoZlZJgY=;
-        b=6ete/WpAXkshVGqqoi5ZNBLInjjYFuve3j9QWb7yVatWzs07JxF96AdDUNmKxrKan1
-         k/cqdfzCoh88BJNISBxME07jle8RPw2nqZ9dIHTYNSzprnu4b5WjLuwvjzCl8RzjmcIM
-         T9otITr2cVw+uOMMUgLUrI/Vko4blzi05K99yoRoEuDnBHIX6xhvOrl3A45Ky4ODdtLm
-         MdjT9Vh4g+eTZNuqFQlAy0ATPgnaHjNE5RnnnY0Uyxtj2BM9wfkYBLTOWHld2WhxafGN
-         dT7WGOvkrFrsaYp+lzC1ccn9KvIP8OG9cPaPYmpQKJfoP+9u0CYEC4oBGgBsyA2VTkP9
-         6yZA==
-X-Gm-Message-State: AO0yUKXla+FFLWh3lEuHSTOH5y84GRSGie60Vn/yoBBQQ/dziXXOCGcb
-        KtM3x9g0wYBjEPWmD5+vrJM=
-X-Google-Smtp-Source: AK7set/HWqPfOhcu87HblwOqEiUpMisr/i1jiYxzNs60weRaYbTRF2gK3tcoNPP/VyuXLEVDye4Olg==
-X-Received: by 2002:a62:1aca:0:b0:5a8:d407:60f9 with SMTP id a193-20020a621aca000000b005a8d40760f9mr13983535pfa.29.1677264052230;
-        Fri, 24 Feb 2023 10:40:52 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id m11-20020aa7900b000000b0056be1581126sm9180788pfo.143.2023.02.24.10.40.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Feb 2023 10:40:51 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7S5Uc2QgfMg5F+ZXAV1/ha8pfXrdLla39lwVqzc9by8=;
+        b=YKyQrh83LkD/m9o1z1H7YivPghk6jAt4wg1ru0k7KqPNU5yzqeLsLONWKYxHV/VqjJ
+         5NW1DoEUX4MpOk96yJl29pVCUjei5oLGrx8kLkpnJzXL1Kzc8OsPTCI/L9o6lI+PayQ3
+         v9GvskFi1xKVUWVMXtfx00e53scwx4675AdcjkqiiX4K+E+Rer3JtAksZj/RGa9i7ZQQ
+         kzgpXwBoT58wN0wIxbIiYtoJW0brNkXwyzRJIKjxqGnjKHF4ADBT/5cbiaSSZTxKxwoa
+         qUL4Sd2KYGNmWGc6otBbxJgHcX0ae6ecctOHFFed5r0BFU7ElpDPFmAM3I4zM4PTEaO0
+         Y8Zw==
+X-Gm-Message-State: AO0yUKURCDfN3+b+i5kWJ7iRrRowX7UuwjoDnxSXmsvhx/ilIQ9RvV3U
+        zJ66EuNRUKs6ZnwBAhDcEt27Zz+3ENJ6vh/Kl4c=
+X-Google-Smtp-Source: AK7set/z8OGeJ94tYTdEGag9Czvyrv1W4TEy39vuSHIRApvvOb7dAwD/IcluAtwpw50VVdDQtsX9R/Ptxg0ThWQ3SRk=
+X-Received: by 2002:a05:6870:955e:b0:16a:1d37:78dd with SMTP id
+ v30-20020a056870955e00b0016a1d3778ddmr1090948oal.5.1677264947707; Fri, 24 Feb
+ 2023 10:55:47 -0800 (PST)
+MIME-Version: 1.0
+References: <20230223053410.644503-1-alexhenrie24@gmail.com>
+ <20230223053410.644503-2-alexhenrie24@gmail.com> <b4be9cb3-c24b-4377-bab3-5d53035efdf8@gmx.de>
+ <xmqqy1on0yla.fsf@gitster.g> <CAMMLpeQKJeZn4rcTJzFR-ixQXKQMT7t-BKvJqXV4o_4VM=tHYg@mail.gmail.com>
+ <xmqqcz5z0wdb.fsf@gitster.g> <CAMMLpeSH1itopDuON=7ms_7Li7Qk+9dhzKjT5f7UE11posKK=g@mail.gmail.com>
+ <xmqq8rgm29fw.fsf@gitster.g>
+In-Reply-To: <xmqq8rgm29fw.fsf@gitster.g>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Fri, 24 Feb 2023 11:55:31 -0700
+Message-ID: <CAMMLpeTvyYgGNBQWtRBg3ZNuXeCMxiem-5LAdu0ex7XCuf0wAA@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] rebase: stop accepting --rebase-merges=""
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org, tao@klerks.biz, newren@gmail.com,
         phillip.wood123@gmail.com, sorganov@gmail.com
-Subject: Re: [PATCH v4 2/3] rebase: stop accepting --rebase-merges=""
-References: <20230223053410.644503-1-alexhenrie24@gmail.com>
-        <20230223053410.644503-2-alexhenrie24@gmail.com>
-        <b4be9cb3-c24b-4377-bab3-5d53035efdf8@gmx.de>
-        <xmqqy1on0yla.fsf@gitster.g>
-        <CAMMLpeQKJeZn4rcTJzFR-ixQXKQMT7t-BKvJqXV4o_4VM=tHYg@mail.gmail.com>
-        <xmqqcz5z0wdb.fsf@gitster.g>
-        <CAMMLpeSH1itopDuON=7ms_7Li7Qk+9dhzKjT5f7UE11posKK=g@mail.gmail.com>
-Date:   Fri, 24 Feb 2023 10:40:51 -0800
-In-Reply-To: <CAMMLpeSH1itopDuON=7ms_7Li7Qk+9dhzKjT5f7UE11posKK=g@mail.gmail.com>
-        (Alex Henrie's message of "Fri, 24 Feb 2023 11:23:49 -0700")
-Message-ID: <xmqq8rgm29fw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+On Fri, Feb 24, 2023 at 11:40 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+> > The only way to truly make "[rebase] merges =" invalid is to print an
+> > error message and die with that configuration. I think that would be
+> > confusing too, especially since it's now looking like rebase.merges
+> > needs to be a pure boolean and an independent rebase.cousins boolean
+> > option is needed as well.
+>
+> Oh, I wasn't aware of that direction.
+>
+> I do not know why rebase.cousins, which would only be meaningful
+> when rebase.merges is true, is a better design than rebase.merges
+> that is an enum of "don't do the merges stuff" plus "do the merges
+> stuff with cousins", "without cousins" (which may allow us to gain
+> more different ways to do "merges stuff" later), but that is what
+> gained consensus on the list, then "[rebase]merges=" would become a
+> problem.
+>
+> But --rebase-merges from the command line is not a pure Boolean
+> already, so what does "[rebase]merges" that is a pure Boolean aim to
+> help?
 
-> The only way to truly make "[rebase] merges =" invalid is to print an
-> error message and die with that configuration. I think that would be
-> confusing too, especially since it's now looking like rebase.merges
-> needs to be a pure boolean and an independent rebase.cousins boolean
-> option is needed as well.
+Phillip is concerned about people and scripts assuming that
+--rebase-merges is equivalent to --rebase-merges=no-rebase-cousins,
+see [1].
 
-Oh, I wasn't aware of that direction.
+Tao and others are probably not going to like it if --rebase-merges
+without an argument undoes a rebase.merges=rebase-cousins
+configuration.
 
-I do not know why rebase.cousins, which would only be meaningful
-when rebase.merges is true, is a better design than rebase.merges
-that is an enum of "don't do the merges stuff" plus "do the merges
-stuff with cousins", "without cousins" (which may allow us to gain
-more different ways to do "merges stuff" later), but that is what
-gained consensus on the list, then "[rebase]merges=" would become a
-problem.
+It seems to me that the only way to make everyone happy is to have
+separate rebase.merges and rebase.cousins options. You have a point
+that separating the options could cause problems if --rebase-merges
+starts accepting more arguments in the future, but if that happens we
+could deal with it by adding more possible values to rebase.cousins or
+introducing a third config option.
 
-But --rebase-merges from the command line is not a pure Boolean
-already, so what does "[rebase]merges" that is a pure Boolean aim to
-help?
+-Alex
+
+[1] https://lore.kernel.org/git/CAMMLpeQ98BTCGE2tcVdZ99eU6cLh4Rd_hc8C_PmKvsBkjXUWPw@mail.gmail.com/
