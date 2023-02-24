@@ -2,92 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D51C64ED6
-	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 00:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A464BC64ED6
+	for <git@archiver.kernel.org>; Fri, 24 Feb 2023 01:24:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229775AbjBXAKs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Feb 2023 19:10:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49400 "EHLO
+        id S229527AbjBXBYH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Feb 2023 20:24:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229731AbjBXAKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Feb 2023 19:10:14 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FA194614D
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:55 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id j2so12146031wrh.9
-        for <git@vger.kernel.org>; Thu, 23 Feb 2023 16:09:54 -0800 (PST)
+        with ESMTP id S229471AbjBXBYF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Feb 2023 20:24:05 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA80C1C33D
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 17:24:04 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id pt11so15569252pjb.1
+        for <git@vger.kernel.org>; Thu, 23 Feb 2023 17:24:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L9qzaDFEfBqpAh2RNG3iSiFMBaiPM1J9KlsUGohgR0g=;
-        b=RvznWZKBCa76p4i2hyaUqC8KKMcaXD979tN1OAkNNniCMMIzl9SL7ORlFVPAPhmA/7
-         81SSp3l4B2Z6u6CebVBiGPKSclcbWXg3KB9ntiq+h4M5zWVcMXt/r24q/nxbS32OGk2+
-         //pk6L/WkOIlucbrfGsC1bm+OeFzNJ1FUwRei1XRxRTfhc/wotl7Twz4zdmbYi8BFiUJ
-         TTpKCQUXr/SrO+wBAEGIWAmV7TnjDSCBKIBnZlWczsnCtpCuAioxTlTp8k5Vhrr9nkhS
-         9CgmwyRRh9KNPs+eX400rB2tEDhNeizGUB2Wn3FyBBoRouEO8Z2MdNioYjLU6HzDnSm4
-         eqCw==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oqzeqvC4zOIYhAuuFiwFrMSEKQcvXyweaLjrwLbLBBo=;
+        b=Wd/kceoXuAH92Hb+pAD0XApU5yLwmYOQm0IrlPML2CSMRs2/QzsDnu6gi/AsHHf6va
+         c1zX4B6oeV1JKnla94fKsddpMqvEnI0fJMBtVUvhUEz1kPMYurfRfDV+F76ibhqnTto4
+         kOxQYvkLOMEAfENf/V805DPeuy/dNaWxEaPJAxO4zfmaq9lK9YfoPhzM1NKPmO22FeUj
+         wRhnPqOSPhL3q4i2dW8kee87AguhWvc9fJM5eFSSz7pXPESRW6Nfaj0R1uEhLPK8rmZm
+         BldHCcO9J85OyegtR5QwA3osUUWfeIRauIV9nz59Ew/9z4Jc00D6ksfoIvCmsbuFOShP
+         i5qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L9qzaDFEfBqpAh2RNG3iSiFMBaiPM1J9KlsUGohgR0g=;
-        b=Jm0eKu4Gvj3XAq7zf+rCVnvvforMPQ7oVfLzpVJ7F0qCWjaR4VhLz2KTD5NJGTFuUM
-         mnuTeJmUbI9lvmGc/aYywZ78WkTk+rzYzoRplAYHiWGAv1RnpwoisdVNGxGuUbaGzHFE
-         IFFKkgUWNhkPEs5ZAaALiSJWK9kROMMxOS7tdlm19gxPs/g8eDCxtEEL9R/PtqUQFqsa
-         3W32DYOlGnM8Q2ZQsd6CV9rUXH1jwzJKKAX/PEWBxJ4iKga+JeouLk1IIw/rn9b1U31V
-         mNK/eXZ+k1LeHjIAEf7XA8CO2o8JIzIZrY51UnHqbTfPuV5+HulcGTmTLt2bYOG2Behl
-         isew==
-X-Gm-Message-State: AO0yUKWIcDzi0xF4rMNbTFekROlMwebOhSjb9/ucAukSFtv/Ekeo7nna
-        QyI2A9bktohHYu6lRzYTKyK1/NLRhrc=
-X-Google-Smtp-Source: AK7set8QBJZMwMLtLQKYhv3yRqMzQQOiOSWqR/mqyMeW32gQMZbkv3iyVfg/2jyDoHACS54jsFxmnw==
-X-Received: by 2002:a5d:440c:0:b0:2c7:778:5da6 with SMTP id z12-20020a5d440c000000b002c707785da6mr8312110wrq.42.1677197393482;
-        Thu, 23 Feb 2023 16:09:53 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g2-20020a5d4882000000b002c55521903bsm14546972wrq.51.2023.02.23.16.09.53
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=oqzeqvC4zOIYhAuuFiwFrMSEKQcvXyweaLjrwLbLBBo=;
+        b=8Jn3KuHRssNqV/vlUNsdZb6SsEDqKFdC0n7gK0FugdsYU6s8HPLcKuGu6RhGKPlNbs
+         axFNxDTfMWLyICYG8A76o4/45BbquOK9nHOc84rkTz92BhGgGJj8bP8ax0tYLIyiK+fi
+         Za4ldyQVc3gVk8Dk+lKk5c2EkrAvM6Y1B8c0oFY6KtNe1tADZdZ31hI8p/ZeS+SvUDed
+         2FgdPiWCknkUT2k2D9rDzEUcqsyAVVnuJtIwfuOzo7lLBgBR3rUQLmeymp7rwsO2glwo
+         aEn3WWNNfmBRMgZrVFMtRuM/Idw9S/vdQ/xK448yXHq5QfBdei+yQVQhga//9vvkynCC
+         uI7g==
+X-Gm-Message-State: AO0yUKX8uHo+qo5x6MyfinSBkPzbLMCQCUluW1ykbqmce5gWgVSZ68LH
+        Xtw8aqcb6mDIs66KsrekGjA=
+X-Google-Smtp-Source: AK7set8Wubji9X2Y4aprnS3gUXTw8EsdhNAcaLYUWU+10ahZf5Sil79spF+kgNQKU1WNWnFzidIUMw==
+X-Received: by 2002:a17:903:22cc:b0:19a:a6ec:6721 with SMTP id y12-20020a17090322cc00b0019aa6ec6721mr16987155plg.16.1677201844261;
+        Thu, 23 Feb 2023 17:24:04 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id iz17-20020a170902ef9100b001962858f990sm7591199plb.164.2023.02.23.17.24.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Feb 2023 16:09:53 -0800 (PST)
-Message-Id: <a172801bbf032465126f043ae86b6f0ee7bfe8a8.1677197378.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1485.v2.git.1677197376.gitgitgadget@gmail.com>
-References: <pull.1485.git.1677139521.gitgitgadget@gmail.com>
-        <pull.1485.v2.git.1677197376.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Feb 2023 00:09:36 +0000
-Subject: [PATCH v2 17/17] diff.h: remove unnecessary include of object.h
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 23 Feb 2023 17:24:03 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 00/11] Clarify API for dir.[ch] and unpack-trees.[ch] --
+ mark relevant fields as internal
+References: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
+        <16ff5069-0408-21cd-995c-8b47afb9810d@github.com>
+Date:   Thu, 23 Feb 2023 17:24:03 -0800
+In-Reply-To: <16ff5069-0408-21cd-995c-8b47afb9810d@github.com> (Derrick
+        Stolee's message of "Thu, 23 Feb 2023 10:18:45 -0500")
+Message-ID: <xmqqzg933lfw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <nasamuffin@google.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Derrick Stolee <derrickstolee@github.com> writes:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- diff.h | 1 -
- 1 file changed, 1 deletion(-)
+> The major downside to this pointer approach is that the internal
+> struct needs to be initialized within API calls and somehow cleared
+> by all callers. The internal data could be initialized by the common
+> initializers read_directory() or fill_directory(). There is a
+> dir_clear() that _should_ be called by all callers (but I notice we
+> are leaking the struct in at least one place in add-interactive.c,
+> and likely others).
+>
+> This alternative adds some complexity to the structure, but
+> provides compiler-level guarantees that these internals are not used
+> outside of dir.c. I thought it worth exploring, even if we decide
+> that the complexity is not worth those guarantees.
 
-diff --git a/diff.h b/diff.h
-index b90036f5294..f80bd297ca5 100644
---- a/diff.h
-+++ b/diff.h
-@@ -6,7 +6,6 @@
- 
- #include "tree-walk.h"
- #include "pathspec.h"
--#include "object.h"
- #include "oidset.h"
- #include "strbuf.h"
- 
--- 
-gitgitgadget
+I actually think the current structure may be a good place to stop
+at.  Or we could use the original flat structure, but with members
+that are supposed to be private prefixed with a longer prefix that
+is very specific to the dir.c file, say "private_to_dir_c_".
+
+Then have a block of #define
+
+	#define alloc private_to_dir_c_alloc
+	#define ignored_alloc private_to_dir_c_ignored_alloc
+	...
+	#define visited_directories private_to_dir_c_visited_directories
+
+at the beginning dir.c to hide the cruft out of the implementation.
+"git grep private_to_dir_c ':!dir.c'" would catch any outsider
+peeking into the part of the struct that they shouldn't be touching.
+
+
+
+
