@@ -2,67 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14372C7EE2D
-	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 08:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B943C64EC7
+	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 13:05:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229584AbjBYIrH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Feb 2023 03:47:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46984 "EHLO
+        id S229577AbjBYNFS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Feb 2023 08:05:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjBYIrG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2023 03:47:06 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD4331A945
-        for <git@vger.kernel.org>; Sat, 25 Feb 2023 00:47:02 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id l1so1455478wry.10
-        for <git@vger.kernel.org>; Sat, 25 Feb 2023 00:47:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:message-id:subject:date:mime-version:from
-         :content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LIRaVD0tlpjvEmAzwEgO32ZLQt8DrnNEMX1GYovcqf4=;
-        b=Slam0UWFMApo4lQ0UAzom/92dojiQ75CE3xRq1GBzNf1ESYZS8fwFT7ybHBJxtrpym
-         /Oo2fpAoZC+eBX4kMmLwzVFWI7/DovDbWnFS9cQqyJWjLEiO1Wl09C1JP7bMNOosghTn
-         yrXzC+SciJq4VEU5oEriQx6BWIz+X1SbxtHoUO3NT88+8OJJZM+j1HX01o9z4G82fDf2
-         d1bchlSEuZ33saaGcJQvibh4ntTwkXJM3824VZwj06lWy2mLLHAVe1gvX5AgTZEXHE3L
-         s6xFOxqscqvOf4mH4Pm98KVlTIihvULh6eVPoBG6nZnXPgBpZdspf3lekwVFkaJEoZXd
-         +geA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:message-id:subject:date:mime-version:from
-         :content-transfer-encoding:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=LIRaVD0tlpjvEmAzwEgO32ZLQt8DrnNEMX1GYovcqf4=;
-        b=Dn9qidL/DvXUYY82nyY3/mBZM/uYmiIT2gJAm50afRX3WEIk2jkMsN138OmXRUU+lU
-         uKXBPdanyL+tcZLxillZoEPhdcdJkO2VdmILnowwQ+A0WxKAB6EUsOiKp1uuENhQBABX
-         oFh2jsypn1z4eMOGI1p11GrkshlhDANmmpc9Fx0+XGXZo5D3fGSlFcjWAMA8frnLfJ3A
-         amArMLd14BcYsyn3uRkeCJzviQBKU1yKAF/2f3LF1njY7IR8HicLxvSgqVXgOQ47SSgk
-         nTSu846i0xVPiedgo2guimX+MTutBMSI3WQPTk5CeBp3sI+ybL2AvSeHzGTVMDcGvPFR
-         7Q0w==
-X-Gm-Message-State: AO0yUKXqwUAWOc+mzeoVIwInrvcs5QuOMqIb6/s0D4TQztl2gxI+yaJx
-        bdj/buJpoZTD6c7ctNkc4vQZLEJZP8X+lQ==
-X-Google-Smtp-Source: AK7set/1680ZtbuzxdlV+m18VLe1iY+vBtE3KOpA+0iWWoSg4hDpBrKkbXJdYs0BOKxrvVEIXCIEcg==
-X-Received: by 2002:adf:ce0b:0:b0:2c6:e827:21c1 with SMTP id p11-20020adfce0b000000b002c6e82721c1mr14073591wrn.50.1677314820841;
-        Sat, 25 Feb 2023 00:47:00 -0800 (PST)
-Received: from smtpclient.apple ([2a00:23c5:7d13:4701:84c:6654:4326:8535])
-        by smtp.gmail.com with ESMTPSA id e9-20020a5d5309000000b002c70d269b4esm1127986wrv.91.2023.02.25.00.47.00
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Feb 2023 00:47:00 -0800 (PST)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From:   Evaldas Kazlauskas <muncikas112@gmail.com>
-Mime-Version: 1.0 (1.0)
-Date:   Sat, 25 Feb 2023 08:46:59 +0000
-Subject: =?utf-8?Q?Do_you_want_to_get_free_shares_worth_up_to_=C2=A3100=3F?=
-Message-Id: <89E59949-E060-46B6-ACEC-CDB614A99BE0@gmail.com>
+        with ESMTP id S229379AbjBYNFR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2023 08:05:17 -0500
+X-Greylist: delayed 401 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 25 Feb 2023 05:05:15 PST
+Received: from smtp1.phpwebhosting.com (smtp1.phpwebhosting.com [184.154.71.7])
+        by lindbergh.monkeyblade.net (Postfix) with SMTP id 55EC117CF5
+        for <git@vger.kernel.org>; Sat, 25 Feb 2023 05:05:15 -0800 (PST)
+Received: (qmail 19583 invoked from network); 25 Feb 2023 12:58:36 -0000
+Received: from unknown (HELO mailman.drmikehenry.com) (drmikehenry@drmikehenry.com@96.244.102.80)
+        by smtp1.phpwebhosting.com with SMTP; Sat, 25 Feb 2023 07:58:36 -0500
+Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
+        by mailman.drmikehenry.com (Postfix) with ESMTP id 788B51A010C
+        for <git@vger.kernel.org>; Sat, 25 Feb 2023 07:58:33 -0500 (EST)
+Message-ID: <80beb487-cd93-06ed-88cf-87a96a829ff6@drmikehenry.com>
+Date:   Sat, 25 Feb 2023 07:58:33 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Content-Language: en-US
 To:     git@vger.kernel.org
-X-Mailer: iPhone Mail (19H307)
+From:   Michael Henry <git@drmikehenry.com>
+Subject: `git bundle create -` may not write to `stdout`
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Join Trading 212 Invest with my link, and we will both get free shares.
+All,
 
-https://www.trading212.com/invite/12ih0NOChe
+I've encountered some unexpected behavior with `git bundle create -`.
+
+Summary
+=======
+
+Using `-` to create a bundle file on `stdout` works only when the current
+working directory is at the root of the repository; when in a
+subdirectory, `-`
+is treated as the name of a file instead.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+========================================================================
+
+The below steps are using Git's `next` branch (cloned today) to demonstrate.
+
+- Bundle creation to `stdout` works in the repository root:
+
+      $ ./git bundle create -q - HEAD ^HEAD~ > head.bundle
+      $ ./git bundle list-heads head.bundle
+      a93b1961839a603a8ac2df08fd80c48bd140fe02 HEAD
+
+- From the `Documentation` directory, `-` is treated like a filename:
+
+      $ cd Documentation/
+      $ ../git bundle create -q - HEAD ^HEAD~ > head.bundle
+      $ ../git bundle list-heads head.bundle
+      error: 'Documentation/head.bundle' does not look like a v2 or v3
+bundle file
+      $ ../git bundle list-heads ./-
+      a93b1961839a603a8ac2df08fd80c48bd140fe02 HEAD
+
+- Consider this patch to display the bundle file path:
+
+      diff --git a/bundle.c b/bundle.c
+      index 6ab6cd7378..05be3ed520 100644
+      --- a/bundle.c
+      +++ b/bundle.c
+      @@ -524,6 +524,7 @@ int create_bundle(struct repository *r, const
+char *path,
+                      goto err;
+              }
+       
+      +    fprintf(stderr, "create_bundle(): path=\"%s\"\n", path);
+              bundle_to_stdout = !strcmp(path, "-");
+              if (bundle_to_stdout)
+                      bundle_fd = 1;
+
+  When in a subdirectory, it seems that the current working directory is
+being
+  changed to the root, and the bundle file's path is being adjusted
+accordingly:
+
+      $ ../git bundle create -q - HEAD ^HEAD~ > head.bundle
+      create_bundle(): path="Documentation/-"
+
+What did you expect to happen? (Expected behavior)
+==================================================
+
+I expected `-` to be treated as `stdout` in subdirectories as well as in the
+repository root directory.
+
+What happened instead? (Actual behavior)
+========================================
+
+When in a subdirectory `some/subdir`, `-` is converted to
+`some/subdir/-` and
+treated like a regular file instead of `stdout`.
+
+What's different between what you expected and what actually happened?
+======================================================================
+
+I expected the bundle file to appear on `stdout`; instead, it was
+written to a
+file named `-` in the current directory.
+
+Anything else you want to add:
+==============================
+
+It's unclear to me whether creating a bundle file to `stdout` is documented
+behavior.  I can't find direct mention of it in
+`Documentation/git-bundle.txt`,
+though that document does have this text:
+
+    --all-progress::
+            When --stdout is specified then progress report is
+            displayed during the object count and compression phases
+            but inhibited during the write-out phase. The reason is
+            that in some cases the output stream is directly linked
+            to another command which may wish to display progress
+            status of its own as it processes incoming pack data.
+            This flag is like --progress except that it forces progress
+            report for the write-out phase as well even if --stdout is
+            used.
+
+The switch `--stdout` doesn't seem to exist, though; perhaps it was a past
+feature that got removed but the documentation hung around?
+
+I find the ability to create a bundle to `stdout` a useful feature, though a
+niche use case: I'm post-processing the bundle file's contents before
+writing to
+a file, and bundling to `stdout` saves the creation of a potentially large
+temporary file.  I'm currently using the temporary file approach, however,
+because I'm not sure that bundling to `stdout` is intended as a supported
+feature; I'll leave that for you to determine.
+
+Thanks,
+Michael Henry
+
+==============================================================================
+
+[System Info]
+git version:
+git version 2.40.0.rc0.245.ga93b196183
+cpu: x86_64
+built from commit: a93b1961839a603a8ac2df08fd80c48bd140fe02
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.15.0-52-generic #58-Ubuntu SMP Thu Oct 13 08:03:55 UTC
+2022 x86_64
+compiler info: gnuc: 11.3
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
