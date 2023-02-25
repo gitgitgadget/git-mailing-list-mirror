@@ -2,61 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D52B6C7EE2D
-	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 22:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C248CC7EE2D
+	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 23:30:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229567AbjBYWuP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Feb 2023 17:50:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53500 "EHLO
+        id S229577AbjBYXaL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Feb 2023 18:30:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbjBYWuM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2023 17:50:12 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3723B14480
-        for <git@vger.kernel.org>; Sat, 25 Feb 2023 14:50:10 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id qi12-20020a17090b274c00b002341621377cso6507976pjb.2
-        for <git@vger.kernel.org>; Sat, 25 Feb 2023 14:50:10 -0800 (PST)
+        with ESMTP id S229520AbjBYXaK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2023 18:30:10 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 420C1FF09
+        for <git@vger.kernel.org>; Sat, 25 Feb 2023 15:30:09 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id cp7-20020a17090afb8700b0023756229427so6569111pjb.1
+        for <git@vger.kernel.org>; Sat, 25 Feb 2023 15:30:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=lOoAZrXJNmn09ocagHe4UEW8JVrjSRrPAhkEUX/ZrlA=;
-        b=p6KLCpyae2We9TtBejt98PQpYljSAZXTkABL1WAAsPQbPXg6uZRYETB5up53UVSbWt
-         67RbO18NwusNxJoFqr7J14ogEUCIL8xglbh/seL+buFvdEAIyb/KAYPFJe9NMrKMCTxU
-         vpaobx73orsB0FOvNRcJDuMG6bLRkrA/a6QZks7SHwjX4V28N5qO2mGolPqgtNJnJDSE
-         4jO4wi+CLIE+5aokoE3Oy/t3EH9IK7iX/MeWKV4TFVry/fBdNjvSqqdHnXjqvrnXGakX
-         HUlmzFOFDhWBGFWI4mJVLiVJGSqwKtw0VNUUUtJPO2wbGHd8In1AJABt/qkORvHDqUw9
-         oZ2Q==
+        bh=mWESqnCWDCDfEKV1OGWc2pZbWHMHFDM6EZajPORcLls=;
+        b=hK0OpqkLkmS9hMWAewUcOKk5MwSWXy4VCu/sRdrTlSJFt4fOqDPHsMEAYMrcOTFy91
+         Fdzn1E3VCt23K/TOeL+e0TtQA0pAWW3LMMd26PhG4Q0TisIxgENjsQ22bsDbaf0I3DC9
+         E9J85VSUFlLCX5dyZXIU8FVqRdkokSVI2W5z0WtG7oB/bOpZerBYUsKpu4pJ88tq2Il8
+         0XgRdvgUGa//sDw4djiXw+Xi5C8dpHV3jklGWX1tH3UcMSgJaORdkRijRxgf1EZZWOKo
+         CRmjrejsUTAzQvzdGJS2qbknI6gKxAPXE71HaBQnOVixoAjXbXFahubHZUgkWZjYlaCN
+         xwmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:date:references:subject:cc:to
          :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lOoAZrXJNmn09ocagHe4UEW8JVrjSRrPAhkEUX/ZrlA=;
-        b=J0+iWXEl4b25nFmyDXvk5SDbpF+DmZ+bkBzHiZgVOQCg5Cf5pnAe66w4ybSHh8Z2wZ
-         q2Xil0edDwjgAjqSBLz6qDMvim3MvVxTGrDxtqUXfZvIC0yPbbWpqy7q/AQUG3x6iZH0
-         CK7pehmqRe35mPuUOFFGVXR8zM0V3Enycg8EzzaXLoobUxtgercS4pv7QRY9wz/ClokE
-         yoV7ZYghtXTpTAbIx2l4h8jXX3TgTknLCbh6HHu/zEohtUxf/Y+X32Yb5tCz8NagRTue
-         Q+EHDL2pwWcq4qNVjRodZSUjDNvHN5Fiv5Qmv4AVBVGHZzTZiZE3m4eH6Tz2ac5BsWql
-         t9WQ==
-X-Gm-Message-State: AO0yUKWmtB6z88jImKvMYKbdG1T2V43bxCvmEco4CWLHPztcuSeDS74N
-        DyafiU57UeUaRK/fGRePpVM=
-X-Google-Smtp-Source: AK7set+NEY2ON6ZQXrX6KwDoUL1xyQ5MA/zTXFYVKRThbYw8jNFhkYxJ20+6PYwzpBS4wEsPN4QFaw==
-X-Received: by 2002:a05:6a20:a110:b0:cc:63c6:8d3a with SMTP id q16-20020a056a20a11000b000cc63c68d3amr8590701pzk.41.1677365409597;
-        Sat, 25 Feb 2023 14:50:09 -0800 (PST)
+        bh=mWESqnCWDCDfEKV1OGWc2pZbWHMHFDM6EZajPORcLls=;
+        b=6Vij1EQLTMNsV+frxDmNJHtnislSNC3lAEnNk4feHqbff61qxoqi2/YsWDRpvAvDP/
+         GtIRffP/E76jPHY3obf10kAa0Zn+W2IGAlGVpDbViSgOXLocYol5Ahzx/RKSI3GUc9yQ
+         +PTVevTkB4YsaWvNbEFU0sdVoPBp8Psf7qpfIDg5qvIVNS6ROwYQoGubkXyD+BUmRTPH
+         4uvUAu2cBDCM3wYa4An4KdZo/Pz0aU4/XSk5o1ZTsiJXMVPnhUtRN9PI2VAkk37WEyUg
+         2EemesC3QC9Uz5AeXV6R9sIjfmHOnNUIAlbq8A1kw2RPCinDD2bGR4m7kfcEme1oJKJQ
+         5NtA==
+X-Gm-Message-State: AO0yUKWJswZDTTHqpNC88TMoC+AbK08lpazi6/JA9rRc4a3jOMr9TChW
+        8dSM/AbWSE+TIt/CvQWj4+U=
+X-Google-Smtp-Source: AK7set9y8+3R6+vnVHhTuOLJo4U7M7jIFbL0Y8wFljF0dA5fffeywkFauDq9BS5mHbYj2u9/k8SbmQ==
+X-Received: by 2002:a17:902:c941:b0:19d:14c:e58c with SMTP id i1-20020a170902c94100b0019d014ce58cmr1274367pla.65.1677367808611;
+        Sat, 25 Feb 2023 15:30:08 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id t20-20020a62ea14000000b005a91d570972sm1634715pfh.41.2023.02.25.14.50.08
+        by smtp.gmail.com with ESMTPSA id s7-20020a170902988700b00195f242d0a0sm1735678plp.194.2023.02.25.15.30.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Feb 2023 14:50:08 -0800 (PST)
+        Sat, 25 Feb 2023 15:30:08 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH v2] test-lib: drop comment about test_description
-References: <20230221232245.155960-1-rybak.a.v@gmail.com>
-        <20230225190526.21780-1-rybak.a.v@gmail.com>
-Date:   Sat, 25 Feb 2023 14:50:08 -0800
-Message-ID: <xmqq5ybpuzq7.fsf@gitster.g>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2 00/11] Clarify API for dir.[ch] and unpack-trees.[ch]
+ -- mark relevant fields as internal
+References: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
+        <pull.1149.v2.git.1677291960.gitgitgadget@gmail.com>
+Date:   Sat, 25 Feb 2023 15:30:07 -0800
+Message-ID: <xmqqzg91tjb4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -64,42 +68,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andrei Rybak <rybak.a.v@gmail.com> writes:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> ...  The assignment
-> of "test_description" and the process of writing tests in general are
-> described in detail in "t/README".  So drop the obsolete comment.
-
-Sounds sensible.
-
-> An alternative solution is to move the comment down to the usage of
-> variable "test_description".
-
-Or at the beginning, as the comment is about "how you can use this
-test-lib.sh test library in your tests".
-
-I have no strong preference.  Just dropping it sounds easier, as a
-more readable description already exists elsewhere.
-
-
-
->  t/test-lib.sh | 6 ------
->  1 file changed, 6 deletions(-)
+> Changes since v1 (thanks to Jonathan Tan for the careful reviews!)
 >
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index d272cca008..62136caee5 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -645,12 +645,6 @@ u200c=$(printf '\342\200\214')
->  
->  export _x05 _x35 LF u200c EMPTY_TREE EMPTY_BLOB ZERO_OID OID_REGEX
->  
-> -# Each test should start with something like this, after copyright notices:
-> -#
-> -# test_description='Description of this test...
-> -# This test checks if command xyzzy does the right thing...
-> -# '
-> -# . ./test-lib.sh
->  test "x$TERM" != "xdumb" && (
->  		test -t 1 &&
->  		tput bold >/dev/null 2>&1 &&
+>  * Clear o->pl when freeing pl, to avoid risking use-after-free.
+>  * Initialize o->result in update_sparsity() since it is actually used (by
+>    check_ok_to_remove()).
+>
+> Some time ago, I noticed that struct dir_struct and struct
+> unpack_trees_options both have numerous fields meant for internal use only,
+> most of which are not marked as such. This has resulted in callers
+> accidentally trying to initialize some of these fields, and in at least one
+> case required a fair amount of review to verify other changes were okay --
+> review that would have been simplified with the apriori knowledge that a
+> combination of multiple fields were internal-only[1]. Looking closer, I
+> found that only 6 out of 18 fields in dir_struct were actually meant to be
+> public[2], and noted that unpack_trees_options also had 11 internal-only
+> fields (out of 36).
+
+Nice.
+
+Will queue.
+
+Thanks.
