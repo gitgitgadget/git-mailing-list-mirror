@@ -2,139 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77E1BC7EE23
-	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 21:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01E9DC64EC7
+	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 21:46:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229557AbjBYVae (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Feb 2023 16:30:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45180 "EHLO
+        id S229606AbjBYVqT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Feb 2023 16:46:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjBYVad (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2023 16:30:33 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6D1CA19
-        for <git@vger.kernel.org>; Sat, 25 Feb 2023 13:30:32 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id n6so1675034plf.5
-        for <git@vger.kernel.org>; Sat, 25 Feb 2023 13:30:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=1M52T5e9ZEACJIFlZbsz31LCbU4RrD4jj/uZmv6qUPA=;
-        b=eUIwS73S28fZ9nSF0fqU4QNp0c38OELIq9s+obwgUU/tDLmSUPJOidnHmD1SjqlfXA
-         JhP5JcJB228/aKQs/CbgrezflpIpJ8mb1PvVk0kTfdX7rolxRcykEoK02p1T50abdcbd
-         2pJfYAwu+RGvzEzcbwHaRtSMqwJ62/br8P1j5L+OHiVkfUSU2qKS4mizuasfgl7Q37QY
-         2FJ+CdCW6xrmyPtz5cN0pN5hcgsg3Pg83/DmaV/lQebvtRsL6M/NutFIAFOmdTo9pwXQ
-         pUs3+Kg0nDYVkb5EqCWMU5W5PpaO3/4aa4ZMev6u+m/XX0VjedV7+wm2/gThWc9JzK/2
-         lcuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1M52T5e9ZEACJIFlZbsz31LCbU4RrD4jj/uZmv6qUPA=;
-        b=7w6eAIvl1ZKe0XSFzIUjy64iRd6R5WZB6tfgNnwUri4h1HEX1b3W1eFo5XTx33y+ZW
-         Jq2sY2O0ZjszlUUfP6CfMv6NJlBLelcW/wH5vnO3XV3pI2pX7DLxWoVNOB8W4FUmyBNw
-         bSknfzPIrs7kwuL/AliZJ6d/8V+GIFZbWkRhYSkvDi3zeTqOoaGs4MGfsg5lieO/QvdD
-         IB+RLzKfJoa2ICHi3XZA5gHKFSHLhGalkdbk18wM/ouI7Ye3TtiKxf/zOtO824ECy3Rn
-         wJgixVhMGYF0wrEm3fenHFIyML97636bzuutYQGZj9O+xVhrzCY9GzszmfWnMxjDiQj0
-         vpzA==
-X-Gm-Message-State: AO0yUKUNXnD75/Qkw5ttbrjjC5OENIY3cDK+7XIBQXfIF0ChnsogfmOq
-        yZWIp+lWpYPnfdwO1g4Nbze3qbwLPjw=
-X-Google-Smtp-Source: AK7set8aztKIinT3kCgtPpZ1N2g1OAGyl0cX5//1ZW8synSAdY4AStd2z27/vYIcZicqp3Xn84HXhQ==
-X-Received: by 2002:a17:903:1247:b0:19c:be03:d18b with SMTP id u7-20020a170903124700b0019cbe03d18bmr10032321plh.22.1677360631845;
-        Sat, 25 Feb 2023 13:30:31 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id ja17-20020a170902efd100b00196025a34b9sm1684317plb.159.2023.02.25.13.30.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Feb 2023 13:30:31 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v6 3/3] notes.c: introduce
- '--separator=<paragraph-break>' option
-References: <cover.1677136319.git.dyroneteng@gmail.com>
-        <d5a6c74792c15e2f83c2ed0758fb99eac11a8174.1677136319.git.dyroneteng@gmail.com>
-Date:   Sat, 25 Feb 2023 13:30:30 -0800
-Message-ID: <xmqqk005v3ex.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229558AbjBYVqS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2023 16:46:18 -0500
+Received: from smtp30.i.mail.ru (smtp30.i.mail.ru [95.163.41.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E78C15547
+        for <git@vger.kernel.org>; Sat, 25 Feb 2023 13:46:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=inbox.ru; s=mail4;
+        h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:To:Message-ID:Reply-To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=vdTEVKlCVQBgORgRH5SCW7WQZN4sc6309sx63ztE1OY=;
+        t=1677361576;x=1677451576; 
+        b=rKcILcanwiYMANZJX21OuSwuFFvXSaqfjmf3BqEfBfxlXUGwkK0K1jqI0Q62OWXRSxo7eUNX/OVZTfGz8kuH3/y9KKPWa0a5iZuq4n5DiL0AFrMExMmkKyWKaOwpPGDF2KREf0MakaSJszcy4s5B5OIKelOb9Vx4deCxs/NkBrXyMS3plKNsLoCfszxvWt7GCBjZhukR3LJt/3Te8tGyxIBurE610pNtcHB8F5i+k74IBWYWzL+7fuaxEqvzE2FK595Do3ieeBoaBXUPvHCgk34xX5prN43TyShZxDiRgB215Fmh0WkdCpNvuvm38Beve0PwX5b7OB9pemKNBoMOtw==;
+Received: by smtp30.i.mail.ru with esmtpa (envelope-from <andry@inbox.ru>)
+        id 1pW2Mv-006sM6-Gk
+        for git@vger.kernel.org; Sun, 26 Feb 2023 00:46:13 +0300
+Date:   Sun, 26 Feb 2023 00:48:08 +0300
+From:   Andry <andry@inbox.ru>
+Reply-To: Andry <andry@inbox.ru>
+Message-ID: <1212192063.20230226004808@inbox.ru>
+To:     git@vger.kernel.org
+Subject: Re: Get rid of `warning: refs/remotes/origin/master usually tracks  
+  refs/heads/master, not refs/remotes/origin/master`
+In-Reply-To: <942870379.20230223062101@inbox.ru>
+References: <942870379.20230223062101@inbox.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Authentication-Results: smtp30.i.mail.ru; auth=pass smtp.auth=andry@inbox.ru smtp.mailfrom=andry@inbox.ru
+X-Mailru-Src: smtp
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 4F1203BC0FB41BD94A31EA4B0797EF2EE50B5111BED4E5A0F9C3BE6961C3C823182A05F5380850404C228DA9ACA6FE27DD2EA45544DD3DC8C46B6DB6D1ABAC466B8F247CA0C61165C67594D95E288F56
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE728F774C865CF4B07EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637EF59B520676799BC8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D859039F385DCE88C6608F18DCB6C785296F9789CCF6C18C3F8528715B7D10C86878DA827A17800CE75A64D9A1E9CA65708941B15DA834481FA18204E546F3947C36C7B98ACBF5D372F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F790063776E46105EEFD4098389733CBF5DBD5E9B5C8C57E37DE458BD9DD9810294C998ED8FC6C240DEA76428AA50765F79006370897606EBF572EC9D81D268191BDAD3DBD4B6F7A4D31EC0BEA7A3FFF5B025636D81D268191BDAD3D78DA827A17800CE7A87E5801AFC99F00EC76A7562686271ED91E3A1F190DE8FD2E808ACE2090B5E14AD6D5ED66289B5259CC434672EE63711DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C35D1D84EF68E022EA35872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-C8649E89: 4E36BF7865823D7055A7F0CF078B5EC49A30900B95165D344EF254DC71474AA3ED5042160BB45F970F0F698CED880D2BD539B8C376CBE902A4FDC0986AD573381D7E09C32AA3244C80ABA148A303BB3C5D9CB7AB7BB5970E259227199D06760A3EB3F6AD6EA9203E
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojEITt8lw84mfaF6rFA4zw9g==
+X-Mailru-Sender: DC3EB4EBD01594E4BED89F5F1533D14E9A7165082F1B7689C46B6DB6D1ABAC463375B3D8D59482FA58EE59803C9A990DFB559BB5D741EB96FE679880309AA8C36F53C80213D1719C67EA787935ED9F1B
+X-Mras: Ok
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+Hello Git,
 
-> +static void parse_messages(struct string_list *messages, struct note_data *d)
-> +{
-> +	size_t i;
-> +	for (i = 0; i < messages->nr; i++) {
-> +		if (d->buf.len)
-> +			insert_separator(&d->buf, d->buf.len);
-> +		strbuf_insertstr(&d->buf, d->buf.len,
-> +				 messages->items[i].string);
-> +		strbuf_stripspace(&d->buf, 0);
-> +		d->given = 1;
-> +	}
-> +}
 
-The two callers of this function prepares the string_list, and have
-this function consume it by concatenating its contents to d->buf.
-After calling this function, neither of them talks about messages,
-which means we are leaking the strings kept in the string_list.
 
-I could eject the topic from today's integration run (because the
-topic is not ready to be merged to 'next' as-is; "-C/-c" codepaths
-need to be adjusted, at least), but as I took a look already, I'll
-queue this fix-up on top of the topic for now.  Feel free to squash
-it in (or address the leaks in your own way) when sending in an
-update.
+Thursday, February 23, 2023, 6:21:01 AM, you wrote:
 
-Thanks.
+A> Found this issue and could find a solution.
 
- builtin/notes.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+A> ...
 
-diff --git c/builtin/notes.c w/builtin/notes.c
-index 97c18fc02f..cd7af76e2f 100644
---- c/builtin/notes.c
-+++ w/builtin/notes.c
-@@ -220,7 +220,8 @@ static void insert_separator(struct strbuf *message, size_t pos)
- 		strbuf_insertf(message, pos, "%s%s", separator, "\n");
- }
- 
--static void parse_messages(struct string_list *messages, struct note_data *d)
-+/* Consume messages and append them into d->buf */
-+static void concat_messages(struct string_list *messages, struct note_data *d)
- {
- 	size_t i;
- 	for (i = 0; i < messages->nr; i++) {
-@@ -231,6 +232,7 @@ static void parse_messages(struct string_list *messages, struct note_data *d)
- 		strbuf_stripspace(&d->buf, 0);
- 		d->given = 1;
- 	}
-+	string_list_clear(messages, 0);
- }
- 
- static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
-@@ -451,7 +453,7 @@ static int add(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_notes_add_usage, options);
- 	}
- 
--	parse_messages(&messages, &d);
-+	concat_messages(&messages, &d);
- 	object_ref = argc > 1 ? argv[1] : "HEAD";
- 
- 	if (get_oid(object_ref, &object))
-@@ -622,7 +624,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 		usage_with_options(usage, options);
- 	}
- 
--	parse_messages(&messages, &d);
-+	concat_messages(&messages, &d);
- 
- 	if (d.given && edit)
- 		fprintf(stderr, _("The -m/-F/-c/-C options have been deprecated "
+A> Is there a way to unmirror the remote repository back?
+
+Seems the problem was in the logic of the push algorithm.
+
+There was 2 fors (pseudocode):
+
+```python
+for remote in remotes:
+  for branch in branches:
+    git_push([remote, ':refs/remotes/' + remote + '/' + branch])
+```
+
+Instead of 3 fors:
+
+```python
+for remote in remotes:
+  for ref_remote in remotes:
+    for branch in branches:
+      git_push([remote, ':refs/remotes/' + ref_remote + '/' + branch])
+```
+
+Because each remote has `num(refs) = num(branches) x num(remotes)` after the mirror.
+
