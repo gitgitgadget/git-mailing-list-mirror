@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 211E7C64ED8
-	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 02:26:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 717F5C6FA8E
+	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 02:26:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229539AbjBYC0Q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Feb 2023 21:26:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41484 "EHLO
+        id S229542AbjBYC0S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Feb 2023 21:26:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbjBYC0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Feb 2023 21:26:09 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9FA219F2D
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 18:26:07 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id bg16-20020a05600c3c9000b003eb34e21bdfso117867wmb.0
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 18:26:07 -0800 (PST)
+        with ESMTP id S229515AbjBYC0K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Feb 2023 21:26:10 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CD923D0BA
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 18:26:08 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id 6so1023250wrb.11
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 18:26:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=54dRuSmDoDZRSvOtTbEmZzMk9W9OyB/i/B/eNUPRFMY=;
-        b=F/t4QXvy8Cbukt8eL87PwPurGA4DhDwfAYQ1GnrhB1LpUh4MQg+30bxdfjQ34KVRgv
-         wKfj4XliAvLCb1A6ro/Mmwi2lqNzBtq1rK+R5rh4hfzL6meMDYsUDOiM3bTrn39oKxkn
-         PrGvDYDbd3rP4a1l0d2aBW6RGgICM1StvBaw1rWWmRYpEmHpnREHxGKCD512dDiiaHKi
-         URUGf22euFdjfvsTu4mMN4sB6yiVfVpKT8XdMQG2jDjeYjTvwzWHEMmK0OlAOO3/QgA2
-         Fc4JJTLIvlxxZmyXpWvqOwQJMulWNqQ/yhMwoh33ossHhdKanzVooX78s4Xb/ibGCOFe
-         F4XA==
+        bh=qbPFkOGqLJfYTC+AoVHTpIIVdv5YX0IKK3PurL7z8Jk=;
+        b=IDLlxuikVoezf18Agr0XSLx328Tx6wv4ZT1xfnXeZhtGaf8RC9xuDKV6mnHpephpPt
+         WEpLbQtOAONUo9VxW67ZDIBGZM2Kj8FaeSKOUCYY+F/g0dsxk7kwZ6SuPD6QoVOKDHwF
+         FMoNqunranyJGErWCw52fx0rNBpmK8cawgRvH1+g0vgwhjP/Qb2ForzlDmGWVR4xDJw/
+         G0KvhIAgWyi6osErS6TOjG+SFfXFHuaDgYHCkiUvYrQa4+Eqtdo8brQdDQWLMxfbHq7j
+         R6pHwoPGPkGbImVRfazFUsVwnsV9wPZzHTdBc+KGffgeDL8H0dxU9wGhhSD4lFiCbgT6
+         tx2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=54dRuSmDoDZRSvOtTbEmZzMk9W9OyB/i/B/eNUPRFMY=;
-        b=xmBQDTV+upOQivgHkX+KqU+unSr4S2gXVV6NK8zo2MQrzbOwo349S7WUZg9kS0EVXi
-         XGLMxsXRiuH7co/Lb7zn/1y63vGab3yeCE4QjoSPv40gvYdpervYHIxbpQ+gkvfjSdqJ
-         lPcuatUIINLfiC36SOCmkUYztiEwjqJG/Yn+hsASmWxZte/fBtSvlWp4CGwnD5om+vsz
-         64Zb+AF2aR6VNCMYA4UOIJS5loR8mZ7BPHg+U/uLyG0WW5KF76DGDxhrWrc6hikdsXz4
-         GvUwn5AZb/VnLZjZzoPWk8He9qY+0yXzJB1qH06xOT0VIWJPLhMzZZskqb0YXVjUD3gi
-         7uAw==
-X-Gm-Message-State: AO0yUKUJmKXMGFWj86ptChirM75BHH1N+No92GJoP7s1NFjh2U+hTVSa
-        SM2o3qf0wJvDYun3/7EbVO0rlB8iuuo=
-X-Google-Smtp-Source: AK7set8J8vMtZ8bN4o0GkBrJpgqlQt2aEsaN/X5mXGCfFPonuXNiO2/1jSJyUp2qNs/Pa3dtpU4HRA==
-X-Received: by 2002:a05:600c:34cb:b0:3eb:a4e:a2b2 with SMTP id d11-20020a05600c34cb00b003eb0a4ea2b2mr3733435wmq.4.1677291966267;
+        bh=qbPFkOGqLJfYTC+AoVHTpIIVdv5YX0IKK3PurL7z8Jk=;
+        b=dUOcqORMlalstuc85FrUbXvB+J5jstafyRcO7oZxe4UlBHURxPdszwFCb+vXazYsfQ
+         i0N4sFUAQGZu41WDVySi/EeUrWBIbFwdEFeOS4JM2+1qbV+2bcVAKnI/QK8JTKlo9+Hw
+         Rp3/ccwBTVhJ8u0T4WbkNefzpk09N2uk4cyan0co1v8hFtMftODbM6mpbOl4exLaYkYI
+         KkcIODdD6+x+yqUxsUoGvWVG5zFr96e1C7SWaaS8PTaBj/tJBY4U5ihvVVxcQzuISh72
+         3a2MgMxv4OEwbE1ctv7CNMYibjOvjURW1Y6IUZhOoRwTkWCTYPg2uqWvBo2x2GLipMFQ
+         Hwow==
+X-Gm-Message-State: AO0yUKVg40qhs6bkKdRixF/kyhniXVRq+PDzzOumDCWUGAFEtNZ++QOb
+        tzBO9joRCILQOsH8mAGugxr8nUqwxnY=
+X-Google-Smtp-Source: AK7set8maj3tdMRycn3WPqnHKBqFJPpsnjt50Y68a1SfYXOTR71sDUFHQ5n7k6LHKGo2Qw/fuTMzjg==
+X-Received: by 2002:adf:f208:0:b0:2c8:4bca:7fc6 with SMTP id p8-20020adff208000000b002c84bca7fc6mr1564459wro.62.1677291966921;
         Fri, 24 Feb 2023 18:26:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s8-20020a5d4ec8000000b002c704271b05sm381992wrv.66.2023.02.24.18.26.05
+        by smtp.gmail.com with ESMTPSA id fl13-20020a05600c0b8d00b003eafc47eb09sm918174wmb.43.2023.02.24.18.26.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Feb 2023 18:26:05 -0800 (PST)
-Message-Id: <f5a58123034a708b49aac7076197ad2ccdd3cba1.1677291961.git.gitgitgadget@gmail.com>
+        Fri, 24 Feb 2023 18:26:06 -0800 (PST)
+Message-Id: <975dec0f0ebaf72f0e5f5b5379f3d1b761045d2f.1677291961.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1149.v2.git.1677291960.gitgitgadget@gmail.com>
 References: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
         <pull.1149.v2.git.1677291960.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 25 Feb 2023 02:25:53 +0000
-Subject: [PATCH v2 04/11] unpack-trees: clean up some flow control
+Date:   Sat, 25 Feb 2023 02:25:54 +0000
+Subject: [PATCH v2 05/11] sparse-checkout: avoid using internal API of
+ unpack-trees
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,70 +74,108 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The update_sparsity() function was introduced in commit 7af7a25853
-("unpack-trees: add a new update_sparsity() function", 2020-03-27).
-Prior to that, unpack_trees() was used, but that had a few bugs because
-the needs of the caller were different, and different enough that
-unpack_trees() could not easily be modified to handle both usecases.
+struct unpack_trees_options has the following field and comment:
 
-The implementation detail that update_sparsity() was written by copying
-unpack_trees() and then streamlining it, and then modifying it in the
-needed ways still shows through in that there are leftover vestiges in
-both functions that are no longer needed.  Clean them up.  In
-particular:
+	struct pattern_list *pl; /* for internal use */
 
-  * update_sparsity() allows a pattern list to be passed in, but
-    unpack_trees() never should use a different pattern list.  Add a
-    check and a BUG() if this gets violated.
-  * update_sparsity() has a check early on that will BUG() if
-    o->skip_sparse_checkout is set; as such, there's no need to check
-    for that condition again later in the code.  We can simply remove
-    the check and its corresponding goto label.
+Despite the internal-use comment, commit e091228e17 ("sparse-checkout:
+update working directory in-process", 2019-11-21) starting setting this
+field from an external caller.  At the time, the only way around that
+would have been to modify unpack_trees() to take an extra pattern_list
+argument, and there's a lot of callers of that function.  However, when
+we split update_sparsity() off as a separate function, with
+sparse-checkout being the sole caller, the need to update other callers
+went away.  Fix this API problem by adding a pattern_list argument to
+update_sparsity() and stop setting the internal o.pl field directly.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- unpack-trees.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ builtin/sparse-checkout.c |  3 +--
+ unpack-trees.c            | 18 +++++++++++-------
+ unpack-trees.h            |  3 ++-
+ 3 files changed, 14 insertions(+), 10 deletions(-)
 
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index c3738154918..4b7390ce367 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -219,14 +219,13 @@ static int update_working_directory(struct pattern_list *pl)
+ 	o.dst_index = r->index;
+ 	index_state_init(&o.result, r);
+ 	o.skip_sparse_checkout = 0;
+-	o.pl = pl;
+ 
+ 	setup_work_tree();
+ 
+ 	repo_hold_locked_index(r, &lock_file, LOCK_DIE_ON_ERROR);
+ 
+ 	setup_unpack_trees_porcelain(&o, "sparse-checkout");
+-	result = update_sparsity(&o);
++	result = update_sparsity(&o, pl);
+ 	clear_unpack_trees_porcelain(&o);
+ 
+ 	if (result == UPDATE_SPARSITY_WARNINGS)
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 3d05e45a279..0887d157df4 100644
+index 0887d157df4..639e48cc6bb 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -1873,6 +1873,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		die("unpack_trees takes at most %d trees", MAX_UNPACK_TREES);
- 	if (o->dir)
- 		BUG("o->dir is for internal use only");
-+	if (o->pl)
-+		BUG("o->pl is for internal use only");
- 
+@@ -2091,10 +2091,10 @@ return_failed:
+  *
+  * CE_NEW_SKIP_WORKTREE is used internally.
+  */
+-enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
++enum update_sparsity_result update_sparsity(struct unpack_trees_options *o,
++					    struct pattern_list *pl)
+ {
+ 	enum update_sparsity_result ret = UPDATE_SPARSITY_SUCCESS;
+-	struct pattern_list pl;
+ 	int i;
+ 	unsigned old_show_all_errors;
+ 	int free_pattern_list = 0;
+@@ -2111,11 +2111,12 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
  	trace_performance_enter();
- 	trace2_region_enter("unpack_trees", "unpack_trees", the_repository);
-@@ -1899,7 +1901,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
  
- 	if (!core_apply_sparse_checkout || !o->update)
- 		o->skip_sparse_checkout = 1;
--	if (!o->skip_sparse_checkout && !o->pl) {
-+	if (!o->skip_sparse_checkout) {
- 		memset(&pl, 0, sizeof(pl));
+ 	/* If we weren't given patterns, use the recorded ones */
+-	if (!o->pl) {
+-		memset(&pl, 0, sizeof(pl));
++	if (!pl) {
  		free_pattern_list = 1;
- 		populate_from_existing_patterns(o, &pl);
-@@ -2113,8 +2115,6 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
- 		memset(&pl, 0, sizeof(pl));
- 		free_pattern_list = 1;
- 		populate_from_existing_patterns(o, &pl);
--		if (o->skip_sparse_checkout)
--			goto skip_sparse_checkout;
+-		populate_from_existing_patterns(o, &pl);
++		pl = xcalloc(1, sizeof(*pl));
++		populate_from_existing_patterns(o, pl);
  	}
++	o->pl = pl;
  
  	/* Expand sparse directories as needed */
-@@ -2142,7 +2142,6 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
- 			ret = UPDATE_SPARSITY_WARNINGS;
- 	}
+ 	expand_index(o->src_index, o->pl);
+@@ -2147,8 +2148,11 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o)
  
--skip_sparse_checkout:
- 	if (check_updates(o, o->src_index))
- 		ret = UPDATE_SPARSITY_WORKTREE_UPDATE_FAILURES;
+ 	display_warning_msgs(o);
+ 	o->show_all_errors = old_show_all_errors;
+-	if (free_pattern_list)
+-		clear_pattern_list(&pl);
++	if (free_pattern_list) {
++		clear_pattern_list(pl);
++		free(pl);
++		o->pl = NULL;
++	}
+ 	trace_performance_leave("update_sparsity");
+ 	return ret;
+ }
+diff --git a/unpack-trees.h b/unpack-trees.h
+index 3a7b3e5f007..f3a6e4f90ef 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -112,7 +112,8 @@ enum update_sparsity_result {
+ 	UPDATE_SPARSITY_WORKTREE_UPDATE_FAILURES = -2
+ };
  
+-enum update_sparsity_result update_sparsity(struct unpack_trees_options *options);
++enum update_sparsity_result update_sparsity(struct unpack_trees_options *options,
++					    struct pattern_list *pl);
+ 
+ int verify_uptodate(const struct cache_entry *ce,
+ 		    struct unpack_trees_options *o);
 -- 
 gitgitgadget
 
