@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B65FC7EE23
-	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 18:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48162C64EC7
+	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 18:04:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbjBYSE4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Feb 2023 13:04:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47088 "EHLO
+        id S229563AbjBYSE6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Feb 2023 13:04:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjBYSEy (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229543AbjBYSEy (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 25 Feb 2023 13:04:54 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51CCE136E9
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F104A136EB
         for <git@vger.kernel.org>; Sat, 25 Feb 2023 10:04:53 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id fd25so1311699pfb.1
+Received: by mail-pl1-x62e.google.com with SMTP id i5so1027531pla.2
         for <git@vger.kernel.org>; Sat, 25 Feb 2023 10:04:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GHTt+xM4pLLZG/70hEfCPK1rPwktY7yMt7HIUXYsp9E=;
-        b=WzlZ54KsorEeSOk8XY33/U3sTS0sG+XBwj4ADcKYd6P4DuvOjdkpDN/5/nTudwDe+r
-         dctcgQOk6bN2uvQMDAk86wCbf8OCGqqPOhrjbPDi6HMDqMsMWrn3LlW6/Uf44b5TnL8Z
-         8vycpYxsBNRiljICkqjX6xIkffml47X/OZ++/q8ntG1qU0FgHSqfUs5poJP5vgon+VY7
-         1YB8WK83eL2xjQmWsK3C/Fg/kaR+tofbfrNgLX7FYRaGWXjLRcUrPZvxLD+mmUHilssS
-         SLUe3dojaw4nOSFA0smwFM5raDTq+UzGp1qqjdEDMuCzyxhQR8Z4QoZK/+0r8ASsh3Wg
-         9A/A==
+        bh=66u6kFxLGyKurqX98ZqIv2PYO2DTt643b9/RS1J4zvQ=;
+        b=UCVMCtLFCBOZlGcgfTVncRSznfcr75xYngT5Nl+JyJq2ZF3w/k3OSqnpLTA0V6q/A/
+         PQ05RB7pKX/9suVX341smcQke+PTyqOwchaGHyV8p6aRszKhMVtXfnFgjlus/9ESbaVP
+         LMrSfPHVxR4AmQTg+P2lS2qWudSTyWAq7NEg3MhXouSr9rcUN+rnKSEoSYOiol9nmjUc
+         NIWMqmVzcSZtnEGtQjZcSIWdG38Dh7AIzh1+uhMeoRJ9kKCp1cRDwGkSzRlW7aSMWSIO
+         9a909X/v/XpaGhS/wbY8Rs9DdSJLrq9h3ZWHTS8rWe9TxlhtiAtjOpFqbVElquV3G5T0
+         DSGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GHTt+xM4pLLZG/70hEfCPK1rPwktY7yMt7HIUXYsp9E=;
-        b=0leze/A8GB9xNoHAXnwk0F35DU9EXZcot3vpEi56bmDa+ydm79++9lGKwnqzljhx1l
-         nBVT7HiF35L1Ccj6lvRpnKo79D7rXaP2sMuZgLCWsk629U7lJ4S6Ben23qfhnWqBDlYw
-         +Gog16ADGsawZ2s0P2ZToyt+o2ZGBA44x4E2p5CRVIMywCQ9LUeZcOwPVNg1ecEakytw
-         K+CpntxarDkR9fgGwP36sKGUO85Z8zIUzaFocnW8zE2oMz4jb+LjGO7dEdiHX/4AqUFA
-         3M8B2u2qnTPmCzK7VxVo6sG81Ydp44STrGlPIvsTa6fx+u62SarTxna5gwC661LyoCk8
-         6l1w==
-X-Gm-Message-State: AO0yUKUzmNvY/BpMa28S5JJBi3o/2QLMnfj3L1+rIWJmUQNtKwpItCWF
-        XNWPrlbSwJoT2n3unph55gy9vUxTFIw=
-X-Google-Smtp-Source: AK7set/zzmGr2DR8wrhLt/tHibA4L2hE+HN5rixtSBEaPGmb7b45KX2Zn1K7ftTvz7RtiN6MiqRWFQ==
-X-Received: by 2002:aa7:96a3:0:b0:5d4:e4c8:23ac with SMTP id g3-20020aa796a3000000b005d4e4c823acmr11765255pfk.21.1677348291980;
-        Sat, 25 Feb 2023 10:04:51 -0800 (PST)
+        bh=66u6kFxLGyKurqX98ZqIv2PYO2DTt643b9/RS1J4zvQ=;
+        b=C9Osy7hXueZ2Ju1G54VGs1OUbSxfJmLI2VrzbmQKFNUQyKZtE4oimdHT3t16Kkh1Cu
+         BX7ILORLsiHCNI5hRVmFxUWgNhz8Ky9NCK7hqHERBT0sm8BZac9QUdZ0syMyXwI4/w+D
+         ETrrZjBwU8+FvtFiNFMTeSo9XqEyZH7XnefLmznSGeR4mK3G3GuYlLo3GLxuUkDVtahd
+         al7FemNqTfv6Vgu0Mehk7XLldyxPBmCWdFdDZZR/F5mIjt8o+Kt9I0SWQxzF7sIG9M5d
+         7nWw7+rdX1vXnjamcX1xBoNYccEEfnOoU7fl4rXT1am+IuvJ94xYSz21m20MWg0efW7W
+         76cw==
+X-Gm-Message-State: AO0yUKWmb8Pj54nfdlwEgRCtgYNfyLcJA0xi0gh0fYTz0PFYwUADOYCp
+        Hftl1ej/J0spe7kudt3wJkBfA6Ma91w=
+X-Google-Smtp-Source: AK7set84qJu84pM9XJwxH1297aVK9oyOoEsc20ybauWdsvqSKr2vBVug/q2H2k5OS7NpIiPLmYp2WQ==
+X-Received: by 2002:a05:6a20:7f94:b0:cb:86be:d504 with SMTP id d20-20020a056a207f9400b000cb86bed504mr18883809pzj.39.1677348293152;
+        Sat, 25 Feb 2023 10:04:53 -0800 (PST)
 Received: from xavier.lan ([2607:fa18:92fe:92b::2a2])
-        by smtp.gmail.com with ESMTPSA id x18-20020a62fb12000000b005cd17607358sm1473547pfm.87.2023.02.25.10.04.50
+        by smtp.gmail.com with ESMTPSA id x18-20020a62fb12000000b005cd17607358sm1473547pfm.87.2023.02.25.10.04.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Feb 2023 10:04:51 -0800 (PST)
+        Sat, 25 Feb 2023 10:04:52 -0800 (PST)
 From:   Alex Henrie <alexhenrie24@gmail.com>
 To:     git@vger.kernel.org, tao@klerks.biz, gitster@pobox.com,
         newren@gmail.com, phillip.wood123@gmail.com,
         Johannes.Schindelin@gmx.de, sorganov@gmail.com
 Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v5 1/3] rebase: add documentation and test for --no-rebase-merges
-Date:   Sat, 25 Feb 2023 11:03:23 -0700
-Message-Id: <20230225180325.796624-2-alexhenrie24@gmail.com>
+Subject: [PATCH v5 2/3] rebase: deprecate --rebase-merges=""
+Date:   Sat, 25 Feb 2023 11:03:24 -0700
+Message-Id: <20230225180325.796624-3-alexhenrie24@gmail.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230225180325.796624-1-alexhenrie24@gmail.com>
 References: <20230223053410.644503-1-alexhenrie24@gmail.com>
@@ -67,54 +67,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The unusual syntax --rebase-merges="" (that is, --rebase-merges with an
+empty string argument) has been an undocumented synonym of
+--rebase-merges=no-rebase-cousins. Deprecate that syntax to avoid
+confusion when a rebase.merges config option is introduced, where
+rebase.merges="" will be equivalent to --no-rebase-merges.
+
 Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
 ---
- Documentation/git-rebase.txt |  4 +++-
- t/t3430-rebase-merges.sh     | 10 ++++++++++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ builtin/rebase.c         | 8 ++++++--
+ t/t3430-rebase-merges.sh | 5 +++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 9a295bcee4..c98784a0d2 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -529,13 +529,15 @@ See also INCOMPATIBLE OPTIONS below.
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 6635f10d52..ccc13200b5 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1140,7 +1140,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		{OPTION_STRING, 'r', "rebase-merges", &rebase_merges,
+ 			N_("mode"),
+ 			N_("try to rebase merges instead of skipping them"),
+-			PARSE_OPT_OPTARG, NULL, (intptr_t)""},
++			PARSE_OPT_OPTARG, NULL, (intptr_t)"no-rebase-cousins"},
+ 		OPT_BOOL(0, "fork-point", &options.fork_point,
+ 			 N_("use 'merge-base --fork-point' to refine upstream")),
+ 		OPT_STRING('s', "strategy", &options.strategy,
+@@ -1438,7 +1438,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  
- -r::
- --rebase-merges[=(rebase-cousins|no-rebase-cousins)]::
-+--no-rebase-merges::
- 	By default, a rebase will simply drop merge commits from the todo
- 	list, and put the rebased commits into a single, linear branch.
- 	With `--rebase-merges`, the rebase will instead try to preserve
- 	the branching structure within the commits that are to be rebased,
- 	by recreating the merge commits. Any resolved merge conflicts or
- 	manual amendments in these merge commits will have to be
--	resolved/re-applied manually.
-+	resolved/re-applied manually. `--no-rebase-merges` can be used to
-+	countermand a previous `--rebase-merges`.
- +
- By default, or when `no-rebase-cousins` was specified, commits which do not
- have `<upstream>` as direct ancestor will keep their original branch point,
+ 	if (rebase_merges) {
+ 		if (!*rebase_merges)
+-			; /* default mode; do nothing */
++			warning(_("--rebase-merges with an empty string "
++				  "argument is deprecated and will stop "
++				  "working in a future version of Git. Use "
++				  "--rebase-merges=no-rebase-cousins "
++				  "instead."));
+ 		else if (!strcmp("rebase-cousins", rebase_merges))
+ 			options.rebase_cousins = 1;
+ 		else if (strcmp("no-rebase-cousins", rebase_merges))
 diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index fa2a06c19f..d46d9545f2 100755
+index d46d9545f2..f50fbf1390 100755
 --- a/t/t3430-rebase-merges.sh
 +++ b/t/t3430-rebase-merges.sh
-@@ -250,6 +250,16 @@ test_expect_success 'with a branch tip that was cherry-picked already' '
+@@ -278,6 +278,11 @@ test_expect_success 'do not rebase cousins unless asked for' '
  	EOF
  '
  
-+test_expect_success '--no-rebase-merges countermands --rebase-merges' '
-+	git checkout -b no-rebase-merges E &&
-+	git rebase --rebase-merges --no-rebase-merges C &&
-+	test_cmp_graph C.. <<-\EOF
-+	* B
-+	* D
-+	o C
-+	EOF
++test_expect_success '--rebase-merges="" is deprecated' '
++	git rebase --rebase-merges="" HEAD^ 2>actual &&
++	grep deprecated actual
 +'
 +
- test_expect_success 'do not rebase cousins unless asked for' '
- 	git checkout -b cousins main &&
- 	before="$(git rev-parse --verify HEAD)" &&
+ test_expect_success 'refs/rewritten/* is worktree-local' '
+ 	git worktree add wt &&
+ 	cat >wt/script-from-scratch <<-\EOF &&
 -- 
 2.39.2
 
