@@ -2,167 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F263C64EC7
-	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 05:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF965C6FA8E
+	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 05:25:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229510AbjBYFWH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Feb 2023 00:22:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52158 "EHLO
+        id S229522AbjBYFZH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Feb 2023 00:25:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbjBYFWG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2023 00:22:06 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E716D6013D
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 21:22:03 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id l15so1616792pls.1
-        for <git@vger.kernel.org>; Fri, 24 Feb 2023 21:22:03 -0800 (PST)
+        with ESMTP id S229379AbjBYFZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2023 00:25:06 -0500
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90E5A10EF
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 21:25:04 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id u14so1588755ple.7
+        for <git@vger.kernel.org>; Fri, 24 Feb 2023 21:25:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=t4yNiKVNIXVKdlLLJCJWFvgDNjsH952QjF2u/fpg8kg=;
-        b=HM8lY1aiYnR5iSR1N802O9EJlS8R2K6fKDFdnzXy+mzhoJ4dsEgaXp0iUMizjH2k+c
-         3AbnJ1tJ0QEm2wrjUlYmxB9oam9MAXkrsxB9PeUxo02kdIsAcFIGgsZt4uJYAvUlWNXh
-         y0GuzOw5HJyKCTN9ftf3OyPlZzrJjpnYwar6eFoqoheg8B8PirBIqQXyhmW7JIWd/sJa
-         DwnwYyUp/ex7uxHf+Dz46ZkAqNu/5J6x0EWJXG66GowGVP7vB+dlYjTKLmsbTY0cLXVQ
-         iyya0b/+ivf/XniLjP2aMnQe+LubaSjjbUVYB9kSenqp85ADltVnxCfzVM2Xue3LF9fF
-         UU6A==
+        bh=SPOm0VqitLwV7GAbVrtB8mbVPJWO66FsDo2U7QgXiQY=;
+        b=n86W9alQ6Wtis+DXRTlHwSWxJkZLGA/GhrBPUsMW1dlsksiwc9TIRxP+4SyL02NBEc
+         gc+Dao46iq2n42H/Bl/90Cdcm+yYxf/NNZUR27saY96D7fafv2A2FJMLt/GZjgLI/MmN
+         jlCGpANtgxbNjvbc6QR2Lxh5wmwr9t2ML5BP7sWJgAQB1hZlH3lRI08XLgBlmKok9IA5
+         yM86xOQ+LCKm8Zx/82xT+MzTrT5i8d59cxHQalUiuUikhRMbWdYLPtMsonlPsMOMAOHV
+         OrAUuKMF/X1DQcJO66YWJqv3uPgJBIW/3YeFdPvJCIam+SmKcMdL8E+lOFONTLKtHGa2
+         fYRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=t4yNiKVNIXVKdlLLJCJWFvgDNjsH952QjF2u/fpg8kg=;
-        b=0W1TS3Yh3+yqyLj7qbwbmmbo2LY6Kvs7CWBmfw505aFvAjmqlqUa8wTHDlAxpvDRvf
-         QDsnMxyLFqxLT+svYnomwp9+g8RyzBaz8zXOppGZMHHsiXEKw7iILilnotrIuHcNhPhD
-         iTtel43BGKssaM9+PPfusxoJI4PrDkvTnhy6zWykhRwf0wzk3QVBXhMemUUmsU2A5bng
-         rnajEx4ih05KmeZK8IdBSyJEoqW5as028dZgZxqxQDdzFddAX8TGR57/W901auDLg7aE
-         R3XvV7d7V0O/eTDfMbhnJjv39gldVhR8S8geWL1grk0SVcV5Jbg2PNCqxg/ehp5dryZf
-         +3qQ==
-X-Gm-Message-State: AO0yUKXzdK9qkDHHqMrD+0WNZ1Cuzokct30YImUoUPrvveQnD+Nza+yp
-        j7vUrNpBg9Hq78s7wxUTjn1Vt+ZMKP0=
-X-Google-Smtp-Source: AK7set9Nai7UBCUNaqQZ2A6pgL7aPrgPH1XNVzN9JHZMgabuKdbz/lJb+iT/tDbLKiTRJSxYQkKxcA==
-X-Received: by 2002:a17:902:ce8a:b0:19a:a650:ac55 with SMTP id f10-20020a170902ce8a00b0019aa650ac55mr1885868plg.23.1677302523124;
-        Fri, 24 Feb 2023 21:22:03 -0800 (PST)
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id b18-20020a170902b61200b0019956488546sm344533pls.277.2023.02.24.21.22.01
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Feb 2023 21:22:02 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Gwan-gyeong Mun <elongbug@gmail.com>, Arusekk <arek_koz@o2.pl>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Emir SARI <bitigchi@me.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Fangyi Zhou <me@fangyi.io>,
-        Yi-Jyun Pan <pan93412@gmail.com>,
-        Git l10n discussion group <git-l10n@googlegroups.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff for Git 2.40.0 round #1
-Date:   Sat, 25 Feb 2023 13:21:59 +0800
-Message-Id: <20230225052159.16855-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
+        bh=SPOm0VqitLwV7GAbVrtB8mbVPJWO66FsDo2U7QgXiQY=;
+        b=gfbcNhSQr4it38tCq4D8ZfVkUXsKKNRWdJLkiy+5mn3sXhKYoWU5kHH2fsKaGMgUX1
+         FUUFD8/qx3lHFqCyDJnaE9xK5RR0KJyPqgyM5fSEAavmhAqJZHmt4QyOHd/mdiAkLKwr
+         30shzCa6qtfv6VwXbBYfSJhD4tsi7TWDg0TRlhakZRqN9GkN2fh2qpoTrTk5ofw8CkK4
+         EvwofL/7pVyyE+KJT91xXzQud+EQbU08yhSci2/nSvdNehph66LiQs8nbF+avNTLzCba
+         +3fnKAGMHuCks48VRcRTCjD7nMbghDWRTU40uADtHxlE4BPjrSjhwlMNYe62QhcBvD34
+         0dYw==
+X-Gm-Message-State: AO0yUKU8NLKkDL1X491kXqpaJW0hC0Ma8TZr75cnd6siCeDfpuCg3bqE
+        AGHfG36NuDX88agxSrG5ivnat1cLhWg=
+X-Google-Smtp-Source: AK7set+8a6VngKDcCEvZTQQim7iHamhepXWhdj8pGJnXMDqoYQZvtZywJXo0zkfDhzfrqTN1V500gw==
+X-Received: by 2002:a17:90a:e7cc:b0:233:eba7:10c0 with SMTP id kb12-20020a17090ae7cc00b00233eba710c0mr17413075pjb.1.1677302703378;
+        Fri, 24 Feb 2023 21:25:03 -0800 (PST)
+Received: from fivlite-virtual-machine.localdomain ([49.37.144.88])
+        by smtp.gmail.com with ESMTPSA id p2-20020a17090a348200b00233567a978csm2338748pjb.42.2023.02.24.21.25.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Feb 2023 21:25:02 -0800 (PST)
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     git@vger.kernel.org
+Cc:     jonathantanmy@google.com, five231003@gmail.com
+Subject: [PATCH] index-pack: remove fetch_if_missing=0
+Date:   Sat, 25 Feb 2023 10:54:39 +0530
+Message-Id: <20230225052439.27096-1-five231003@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+A collision test is triggered in sha1_object(), whenever there is an
+object file in our repo. If our repo is a partial clone, then checking
+for this file existence has the behavior of lazy-fetching the object
+because we have one or more promisor remotes.
 
-Git v2.40.0-rc0 has been released, and it's time to start new round of
-git l10n.  This time there are 60 updated messages need to be translated
-since last release. Please send your pull request to the l10n coordinator's
-repository below before this update window closes on Sun, 12 Mar 2023. 
+This behavior is controlled by setting fetch_if_missing to 0, but this
+global was added in the first place as a temporary measure to suppress
+the fetching of missing objects and can be removed once the commands
+have been taught to handle these cases.
 
-    https://github.com/git-l10n/git-po/
+Hence, use has_object() to check for the existence of an object, which
+has the default behavior of not lazy-fetching in a partial clone.
 
-Since git 2.37, we (git l10n contributors) have a new l10n workflow. The
-following description of the new l10n workflow is from the "po/README.md"
-file.
+Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
+---
+ builtin/index-pack.c     | 11 +----------
+ t/t5616-partial-clone.sh | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 6648f2daef..8c0f36a49e 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -800,8 +800,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 
+ 	if (startup_info->have_repository) {
+ 		read_lock();
+-		collision_test_needed =
+-			has_object_file_with_flags(oid, OBJECT_INFO_QUICK);
++		collision_test_needed = has_object(the_repository, oid, 0);
+ 		read_unlock();
+ 	}
+ 
+@@ -1728,14 +1727,6 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 	int report_end_of_input = 0;
+ 	int hash_algo = 0;
+ 
+-	/*
+-	 * index-pack never needs to fetch missing objects except when
+-	 * REF_DELTA bases are missing (which are explicitly handled). It only
+-	 * accesses the repo to do hash collision checks and to check which
+-	 * REF_DELTA bases need to be fetched.
+-	 */
+-	fetch_if_missing = 0;
+-
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage(index_pack_usage);
+ 
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 037941b95d..4658ce0866 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -644,6 +644,34 @@ test_expect_success 'repack does not loosen promisor objects' '
+ 	grep "loosen_unused_packed_objects/loosened:0" trace
+ '
+ 
++test_expect_success 'index-pack does not lazy-fetch when checking for sha1 collisions' '
++	rm -rf server promisor-remote client &&
++	rm -rf object-count &&
++
++	git init server &&
++	for i in 1 2 3 4
++	do
++		echo $i >$(pwd)/server/file$i &&
++		git -C server add file$i &&
++		git -C server commit -am "Commit $i" || return 1
++	done &&
++	git -C server config --local uploadpack.allowFilter 1 &&
++	git -C server config --local uploadpack.allowAnySha1InWant 1 &&
++	HASH=$(git -C server hash-object file3) &&
++
++	git init promisor-remote &&
++	git -C promisor-remote fetch --keep "file://$(pwd)/server" $HASH &&
++
++	git clone --no-checkout --filter=blob:none "file://$(pwd)/server" client &&
++	git -C client remote set-url origin "file://$(pwd)/promisor-remote" &&
++	git -C client config extensions.partialClone 1 &&
++	git -C client config remote.origin.promisor 1 &&
++
++	# make sure that index-pack is run from within the repository
++	git -C client index-pack $(pwd)/client/.git/objects/pack/*.pack &&
++	test_path_is_missing $(pwd)/client/file3
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
+-- 
+2.25.1
 
-## The "po/git.pot" file is a generated file, no longer in the repository
-
-The l10n coordinator does not need to generate the "po/git.pot" file every
-time to start a new l10n workflow, and there is no "po/git.pot" file at all.
-
-Everyone can generate the "po/git.pot" file with the command below:
-
-    make po/git.pot
-
-But we can also forget about it. By updating our corresponding "po/XX.po"
-file, the "po/git.pot" file is automatically generated.
-
-
-## Update the "po/XX.po" file, and start to translate
-
-Before updating the "po/XX.po" file, l10n contributors should pull the latest
-commits from the master branch of "git.git". E.g.:
-
-    git pull --rebase git@github.com:git/git.git master
-
-Then update the cooresponding "po/XX.po" file using the following command:
-
-    make po-update PO_FILE=po/XX.po
-
-Translate the uptodate "po/XX.po" file, and create a new commit.
-
-
-## Refine your commits, send pull requests
-
-In the "po/XX.po" file, there are location lines in comments like below:
-
-    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
-    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
-    #: builtin/rebase.c:1671
-
-These comments with file locations are useful for l10n contributors to locate
-the context easily during translation. But these file locations introduce a
-lot of noise and will consume a lot of repository storage. Therefore, we
-should remove these file locations from the "po/XX.po" file.
-
-To remove file locations in the "po/XX.po" file, you can use one of the
-following two ways, but don't switch back and forth.
-
- * Keep the filenames, only remove locations (need gettext 0.19 and above):
-
-        msgcat --add-location=file po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
- * Remove both filenames and locations:
-
-        msgcat --no-location po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
-After squashing trivial commits and removing file locations in the "po/XX.po"
-file, send pull request to the l10n coordinator's repository below:
-
-    https://github.com/git-l10n/git-po/
-
-
-## Resolve errors found by the l10n CI pipeline for the pull request
-
-A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
-help git l10n coordinator and git l10n contributors to check the conventions
-of git l10n contributions, and it is also used in GitHub actions as l10n CI
-pipeline to validate each pull request in the "git-l10n/git-po" repository.
-Please fix the issues found by the helper program.
-
-
-** Please note: The update window will close on Sun, 12 Mar 2023. **
-
-
---
-Jiang Xin
