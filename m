@@ -2,164 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D9ECC64ED6
-	for <git@archiver.kernel.org>; Sun, 26 Feb 2023 23:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12235C7EE23
+	for <git@archiver.kernel.org>; Sun, 26 Feb 2023 23:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbjBZXQM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Feb 2023 18:16:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53998 "EHLO
+        id S229601AbjBZXSc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Feb 2023 18:18:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbjBZXQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Feb 2023 18:16:10 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6865712859
-        for <git@vger.kernel.org>; Sun, 26 Feb 2023 15:16:07 -0800 (PST)
-Received: (qmail 2225 invoked by uid 109); 26 Feb 2023 23:16:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 26 Feb 2023 23:16:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9994 invoked by uid 111); 26 Feb 2023 23:16:06 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 26 Feb 2023 18:16:06 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 26 Feb 2023 18:16:06 -0500
-From:   Jeff King <peff@peff.net>
-To:     Michael Henry <git@drmikehenry.com>
-Cc:     git@vger.kernel.org
-Subject: Re: `git bundle create -` may not write to `stdout`
-Message-ID: <Y/voNv1OQ1Cf/N5a@coredump.intra.peff.net>
-References: <80beb487-cd93-06ed-88cf-87a96a829ff6@drmikehenry.com>
+        with ESMTP id S229470AbjBZXSa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Feb 2023 18:18:30 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58FE79744
+        for <git@vger.kernel.org>; Sun, 26 Feb 2023 15:18:28 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id ee7so18972530edb.2
+        for <git@vger.kernel.org>; Sun, 26 Feb 2023 15:18:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=zLdVf+WxX5w/38iUUqKkiBnn3sxQrF0RoDPr7WVmIz0=;
+        b=Ut3pklFt5C+ux+3TSIOkXekkAqQzioYrvwPjsyNv5mf4UEqCg1a8OE6hJnGacdTG/M
+         6+sFOWIRRVuSyAsVni4HXU3CeASADszcOkkibd+AwykpyIEd2dXGnj9tM72j3WIVmyA5
+         E8Js1UE9juvgNIlDBosgvT92i9RkZENsKVedJP1GSykREVJAsHeSTP3P6uC7AuMu2XNl
+         YR6iKCKYCktzbCcfoHHzHPIEtbRgApxC+8Z9uv18asggnWfXn2or6FiYPLdyWZKqpBtj
+         xOt0hfmT3OFaf83SwUsgm2SsfF7+Dsxsqj3h/4du9zbb8T64fzHsHP+PolTYD2HNxMjO
+         jlDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zLdVf+WxX5w/38iUUqKkiBnn3sxQrF0RoDPr7WVmIz0=;
+        b=O1ao/eJHS798ubanP1wqjZTXSP8ArD+TbaQw+g6fJSBLeIBtRFBUlpabSlcYL+5sw2
+         ahBH9KSmOu0LGiCj2HMYaXrU/l/6S2pMD6nCj0aOdIkS9AbYhSh87bmHqT4laefLEKyq
+         FUdp4wvH1nfHadYKkqo2T78w9SBRRb1+KAJ0BAnwxYFZS9bluFiWHRRajrUvLvSDOwC3
+         cKuoQ5g4OnU7VBTRHmhh28SvvQj8dQZtHS6OScwJlOc2y8zdTTY/PchaTurnLRCsa6PM
+         qPMcJmAqeGo0IoOS4glCg3FvQPaUD2miubIlRWSl2Yw2mkil+O7ch70unrvpoILB8Jhm
+         ZXqw==
+X-Gm-Message-State: AO0yUKUFFlcugBCQ84FlJaQjDykKPzbcQN1lAlJvNyKnzodLmvnvirq9
+        9TeCPRCTdS1MdKqgwE0EoGOdKRYBiXx82pBpDXiWaJSQYZ20zshw
+X-Google-Smtp-Source: AK7set9UWhm7o8hb0he8iIItB9PC50bWtUBmkXDa+A0nYY+l79QIlCZqvmaOS2F44F7cgng7IGfAuhHZZVqpDAajxNE=
+X-Received: by 2002:a50:a6d7:0:b0:49d:9a8c:f857 with SMTP id
+ f23-20020a50a6d7000000b0049d9a8cf857mr10654639edc.1.1677453506773; Sun, 26
+ Feb 2023 15:18:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <80beb487-cd93-06ed-88cf-87a96a829ff6@drmikehenry.com>
+References: <20230226083347.80519-1-gvivan6@gmail.com> <CACmM78QTptLOvNHs9oE2NNareSNDb+ydGFKr0VHuboCBWSZbSw@mail.gmail.com>
+In-Reply-To: <CACmM78QTptLOvNHs9oE2NNareSNDb+ydGFKr0VHuboCBWSZbSw@mail.gmail.com>
+From:   Vivan Garg <v.garg.work@gmail.com>
+Date:   Sun, 26 Feb 2023 16:18:15 -0700
+Message-ID: <CADupsJNfiW5ep-kfoGNqK8p-ppUG6POnPa1Q3sJBFDQcQ9OdHg@mail.gmail.com>
+Subject: Re: [RFC][PATCH] GSoC 2023 proposal: more sparse index integration
+To:     Ashutosh Pandey <ashutosh.pandeyhlr007@gmail.com>
+Cc:     Vivan Garg <gvivan6@gmail.com>, git@vger.kernel.org,
+        vdye@github.com, christian.couder@gmail.com, hariom18599@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Feb 25, 2023 at 07:58:33AM -0500, Michael Henry wrote:
+> you should include a link here to Junio's what's cooking in git where
+> your contribution is mentioned.
 
-> Summary
-> =======
-> 
-> Using `-` to create a bundle file on `stdout` works only when the
-> current working directory is at the root of the repository; when in a
-> subdirectory, `-` is treated as the name of a file instead.
-
-Hmm, yeah. The problem is that we call prefix_filename() to accommodate
-the fact that we'll have changed directory to the root of the working
-tree, and it has no knowledge that "-" is special for bundle creation.
-
-The most directed fix is this:
-
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index acceef6200..145b814f48 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -59,7 +59,9 @@ static int parse_options_cmd_bundle(int argc,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
- 	if (!argc)
- 		usage_msg_opt(_("need a <file> argument"), usagestr, options);
--	*bundle_file = prefix_filename(prefix, argv[0]);
-+	*bundle_file = strcmp(argv[0], "-") ?
-+		       prefix_filename(prefix, argv[0]) :
-+		       xstrdup(argv[0]);
- 	return argc;
- }
- 
-
-though I wonder if there are similar cases for other commands,
-especially ones where the call to prefix_filename() is lurking behind an
-OPT_FILENAME() option.
-
-It's tempting to treat this name as special at that level, like:
-
-diff --git a/abspath.c b/abspath.c
-index 39e06b5848..e89697c85f 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -269,7 +269,7 @@ char *prefix_filename(const char *pfx, const char *arg)
- 
- 	if (!pfx_len)
- 		; /* nothing to prefix */
--	else if (is_absolute_path(arg))
-+	else if (is_absolute_path(arg) || !strcmp(arg, "-"))
- 		pfx_len = 0;
- 	else
- 		strbuf_add(&path, pfx, pfx_len);
-
-but I suspect that may bite us in the long run. Something like:
-
-  git mv -- foo -
-
-should treat "-" literally, and not as some special token (stdout does
-not even make sense in this context).
-
-> Anything else you want to add:
-> ==============================
-> 
-> It's unclear to me whether creating a bundle file to `stdout` is documented
-> behavior.  I can't find direct mention of it in
-> `Documentation/git-bundle.txt`,
-> though that document does have this text:
-> 
->     --all-progress::
->             When --stdout is specified then progress report is
->             displayed during the object count and compression phases
->             but inhibited during the write-out phase. The reason is
->             that in some cases the output stream is directly linked
->             to another command which may wish to display progress
->             status of its own as it processes incoming pack data.
->             This flag is like --progress except that it forces progress
->             report for the write-out phase as well even if --stdout is
->             used.
-> 
-> The switch `--stdout` doesn't seem to exist, though; perhaps it was a past
-> feature that got removed but the documentation hung around?
-
-It comes from 79862b6b77 (bundle-create: progress output control,
-2019-11-10), which I think was trying to copy the explanation from the
-similar options in pack-objects (which underlies git-bundle, and we just
-forward those options to it).
-
-Every reference to "--stdout" there should probably be replaced with
-"when writing a bundle to stdout" (or alternatively, these should
-perhaps just be pointers to the pack-objects equivalents).
-
-And yes, we should document "-" (probably when discussing <file> in the
-"create" section of OPTIONS), as I don't see any mention of it. Its
-behavior is intentional (it goes all the way back to 2e0afafebd (Add
-git-bundle: move objects and references by archive, 2007-02-22)).
-
-I think having "--stdout" would have been a nicer choice to avoid this
-ambiguity, but at this point it is probably not worth going through
-deprecation dance to get rid of it.
-
-> I find the ability to create a bundle to `stdout` a useful feature,
-> though a niche use case: I'm post-processing the bundle file's
-> contents before writing to a file, and bundling to `stdout` saves the
-> creation of a potentially large temporary file.  I'm currently using
-> the temporary file approach, however, because I'm not sure that
-> bundling to `stdout` is intended as a supported feature; I'll leave
-> that for you to determine.
-
-I think bundling to stdout is perfectly reasonable. Even without
-post-processing, if you need to use a command to get it to its ultimate
-storage spot (e.g., by piping into a network command like "nc" or
-something), it's nice to avoid the temporary file because it could
-potentially be huge.
-
-So it seems like we'd want a three-patch series:
-
-  1. The first hunk I showed above, along with a test to demonstrate the
-     fix.
-
-  2. Remove bogus references to --stdout in the docs.
-
-  3. Document "-".
-
-Do you want to try your hand at that? (It's OK if not, but I like to
-trick^W give opportunities to new folks to contribute).
-
--Peff
+That's something I've already considered. I didn't do it yet because the
+status might change by the time I submit my proposal, so I just put
+a placeholder there for now. Thanks though!
