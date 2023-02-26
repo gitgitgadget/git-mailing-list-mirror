@@ -2,93 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C248CC7EE2D
-	for <git@archiver.kernel.org>; Sat, 25 Feb 2023 23:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D78FC6FA8E
+	for <git@archiver.kernel.org>; Sun, 26 Feb 2023 00:49:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229577AbjBYXaL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Feb 2023 18:30:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46330 "EHLO
+        id S229504AbjBZAtp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Feb 2023 19:49:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbjBYXaK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Feb 2023 18:30:10 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 420C1FF09
-        for <git@vger.kernel.org>; Sat, 25 Feb 2023 15:30:09 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id cp7-20020a17090afb8700b0023756229427so6569111pjb.1
-        for <git@vger.kernel.org>; Sat, 25 Feb 2023 15:30:09 -0800 (PST)
+        with ESMTP id S229482AbjBZAto (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Feb 2023 19:49:44 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49A0CCC1C
+        for <git@vger.kernel.org>; Sat, 25 Feb 2023 16:49:42 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id cy6so12020258edb.5
+        for <git@vger.kernel.org>; Sat, 25 Feb 2023 16:49:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=mWESqnCWDCDfEKV1OGWc2pZbWHMHFDM6EZajPORcLls=;
-        b=hK0OpqkLkmS9hMWAewUcOKk5MwSWXy4VCu/sRdrTlSJFt4fOqDPHsMEAYMrcOTFy91
-         Fdzn1E3VCt23K/TOeL+e0TtQA0pAWW3LMMd26PhG4Q0TisIxgENjsQ22bsDbaf0I3DC9
-         E9J85VSUFlLCX5dyZXIU8FVqRdkokSVI2W5z0WtG7oB/bOpZerBYUsKpu4pJ88tq2Il8
-         0XgRdvgUGa//sDw4djiXw+Xi5C8dpHV3jklGWX1tH3UcMSgJaORdkRijRxgf1EZZWOKo
-         CRmjrejsUTAzQvzdGJS2qbknI6gKxAPXE71HaBQnOVixoAjXbXFahubHZUgkWZjYlaCN
-         xwmQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+2rwRipVYrRtgWIjzBTKU500RYT6MB8bUasAcvy8u1o=;
+        b=e66sfHCEwszggHSNPtgJSLAFEoZ3eVdRqJOpQ9iWZ8WYTYdPptUscB24VBXiqXcQx+
+         7JpWW3/0IoJHcnknvlfNHyV6mlg25AtYTp+g6EqwJ9B9eevLZzRyceHU01kwDDEzBeyr
+         X34vPoVfrlLX+IDqi0gsEGEzfdnjz/rkjBk7KYXOPjIdC2aVsKdZoEhrJkKEAiJrd1AA
+         MCoHcHnnW6J1rJ9kP/BOhAS0Hh0M0lZloq2O/SeCHecbCDNCrA3oWk4ePX6zGt4/MjhW
+         LA8K9P1/GsHocJgqms/dp5p3Gdww2jOGMZaJs2CZtc//3abArg1wYMf+QtJH3hmNAyvR
+         IfGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mWESqnCWDCDfEKV1OGWc2pZbWHMHFDM6EZajPORcLls=;
-        b=6Vij1EQLTMNsV+frxDmNJHtnislSNC3lAEnNk4feHqbff61qxoqi2/YsWDRpvAvDP/
-         GtIRffP/E76jPHY3obf10kAa0Zn+W2IGAlGVpDbViSgOXLocYol5Ahzx/RKSI3GUc9yQ
-         +PTVevTkB4YsaWvNbEFU0sdVoPBp8Psf7qpfIDg5qvIVNS6ROwYQoGubkXyD+BUmRTPH
-         4uvUAu2cBDCM3wYa4An4KdZo/Pz0aU4/XSk5o1ZTsiJXMVPnhUtRN9PI2VAkk37WEyUg
-         2EemesC3QC9Uz5AeXV6R9sIjfmHOnNUIAlbq8A1kw2RPCinDD2bGR4m7kfcEme1oJKJQ
-         5NtA==
-X-Gm-Message-State: AO0yUKWJswZDTTHqpNC88TMoC+AbK08lpazi6/JA9rRc4a3jOMr9TChW
-        8dSM/AbWSE+TIt/CvQWj4+U=
-X-Google-Smtp-Source: AK7set9y8+3R6+vnVHhTuOLJo4U7M7jIFbL0Y8wFljF0dA5fffeywkFauDq9BS5mHbYj2u9/k8SbmQ==
-X-Received: by 2002:a17:902:c941:b0:19d:14c:e58c with SMTP id i1-20020a170902c94100b0019d014ce58cmr1274367pla.65.1677367808611;
-        Sat, 25 Feb 2023 15:30:08 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id s7-20020a170902988700b00195f242d0a0sm1735678plp.194.2023.02.25.15.30.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Feb 2023 15:30:08 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2 00/11] Clarify API for dir.[ch] and unpack-trees.[ch]
- -- mark relevant fields as internal
-References: <pull.1149.git.1677143700.gitgitgadget@gmail.com>
-        <pull.1149.v2.git.1677291960.gitgitgadget@gmail.com>
-Date:   Sat, 25 Feb 2023 15:30:07 -0800
-Message-ID: <xmqqzg91tjb4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        bh=+2rwRipVYrRtgWIjzBTKU500RYT6MB8bUasAcvy8u1o=;
+        b=cvlItQC5zb/To3GTCGDk461nzie31ocEhXWoRV7nY5bZbzshfdlvF0kWFAGahm+p/G
+         Al9y2Q9FXRvqPK+qyeMN+Y4Yx+hugiKN4sDmXixN9zjF4Caj53k8RUDDUc/l8lrKKl1Q
+         Jz7Cqj4nvSfCCbvJPjfHjOHiitDv76/fkne4JrAVNHQPzqJGzEMvGaX0jVDO5FS4WIzi
+         psPpAKMQveUDdWTm3mNcxPt/kAsoIhfEGhDt6thg/HeJt+OYggjNGbcpIGLGRqzHmQlZ
+         dSZZgWuXSKISEap4ftH4G9Org7GVETy5C/Ia2d5dofjMKGbKeb7nlDTtgIOPImJSbtpK
+         ocsA==
+X-Gm-Message-State: AO0yUKWh8WfTzpQkdJ38gb2XoBQvGGM8phWJ/i9k5wkIgXWvqrvzcyiu
+        6p1Q0L6jM4bRw/6PNFhv+yelEstyZGghVrn53ij2mG6M4yJeZQ==
+X-Google-Smtp-Source: AK7set+jyZKGx2i8wXW5pyxfyfOZcnB2utwi7W8DY7uOjGf/VIJiwx+zLYrdB6zs+u1Kbs+Kzpx3r5FkwleFDENuXnw=
+X-Received: by 2002:a17:906:6d0:b0:87b:da7a:f202 with SMTP id
+ v16-20020a17090606d000b0087bda7af202mr12605213ejb.1.1677372580654; Sat, 25
+ Feb 2023 16:49:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20230222011317.97943-1-gvivan6@gmail.com> <20230223082759.36021-1-gvivan6@gmail.com>
+ <4de72b33-fb1a-ab8d-11b8-9e89554fa8ad@emailplus.org> <CACzddJqv=CX8LC55_RHVi46GOUuVqY7C0iMLHaFn24uNHzPf9w@mail.gmail.com>
+ <a191c829-dfd4-a180-114d-147787d88aed@emailplus.org>
+In-Reply-To: <a191c829-dfd4-a180-114d-147787d88aed@emailplus.org>
+From:   Vivan Garg <v.garg.work@gmail.com>
+Date:   Sat, 25 Feb 2023 17:49:29 -0700
+Message-ID: <CADupsJPw1GrTJDdyckUkmBfNLs4TTuGFGfV-uUOZJDOvgPCryw@mail.gmail.com>
+Subject: Re: [PATCH v3] MyFirstContribution: add note about SMTP server config
+To:     Benson Muite <benson_muite@emailplus.org>
+Cc:     Vivan Garg <gvivan6@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> Have not tested all of the setups in https://git-send-email.io/ The
+> Fedora instructions seem fine.  It can be updated through Git, so
+> contributions for other setups are possible. There is a nice way to test:
+> https://git-send-email.io/#step-3
 
-> Changes since v1 (thanks to Jonathan Tan for the careful reviews!)
->
->  * Clear o->pl when freeing pl, to avoid risking use-after-free.
->  * Initialize o->result in update_sparsity() since it is actually used (by
->    check_ok_to_remove()).
->
-> Some time ago, I noticed that struct dir_struct and struct
-> unpack_trees_options both have numerous fields meant for internal use only,
-> most of which are not marked as such. This has resulted in callers
-> accidentally trying to initialize some of these fields, and in at least one
-> case required a fair amount of review to verify other changes were okay --
-> review that would have been simplified with the apriori knowledge that a
-> combination of multiple fields were internal-only[1]. Looking closer, I
-> found that only 6 out of 18 fields in dir_struct were actually meant to be
-> public[2], and noted that unpack_trees_options also had 11 internal-only
-> fields (out of 36).
-
-Nice.
-
-Will queue.
-
-Thanks.
+I am waiting for someone else to offer their input on the matter. However,
+I appreciate your suggestion nonetheless.
