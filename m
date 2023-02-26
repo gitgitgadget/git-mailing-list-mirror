@@ -2,206 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF5ADC7EE2D
-	for <git@archiver.kernel.org>; Sun, 26 Feb 2023 22:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 865B8C64ED6
+	for <git@archiver.kernel.org>; Sun, 26 Feb 2023 23:03:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbjBZWku (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Feb 2023 17:40:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53458 "EHLO
+        id S229798AbjBZXDq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Feb 2023 18:03:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbjBZWkt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Feb 2023 17:40:49 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F30C1F96B
-        for <git@vger.kernel.org>; Sun, 26 Feb 2023 14:40:47 -0800 (PST)
-Received: (qmail 1961 invoked by uid 109); 26 Feb 2023 22:40:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 26 Feb 2023 22:40:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9678 invoked by uid 111); 26 Feb 2023 22:40:46 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 26 Feb 2023 17:40:46 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 26 Feb 2023 17:40:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] gpg-interface: lazily initialize and read the
- configuration
-Message-ID: <Y/vf7n2+LN/3Nddi@coredump.intra.peff.net>
-References: <Y+PGRaiTTaZ/DtlJ@work-laptop-max>
- <Y+PRTYtFDoE73XEM@coredump.intra.peff.net>
- <xmqqmt5orqgv.fsf@gitster.g>
- <xmqqh6vwrpce.fsf@gitster.g>
- <xmqqlel7rj9z.fsf_-_@gitster.g>
- <Y+Tr1g+HTn45rsTq@coredump.intra.peff.net>
- <xmqqwn4qokug.fsf@gitster.g>
- <xmqqpmaimvtd.fsf_-_@gitster.g>
+        with ESMTP id S229826AbjBZXDm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Feb 2023 18:03:42 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D0C5EFA5
+        for <git@vger.kernel.org>; Sun, 26 Feb 2023 15:03:10 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id me6-20020a17090b17c600b0023816b0c7ceso325669pjb.2
+        for <git@vger.kernel.org>; Sun, 26 Feb 2023 15:03:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=V2iCx8wFR5LvrL6FsPP/rXqOpIC62la7qyz6rCYDjPo=;
+        b=FsqOEbzbP3mtGss1ZmCRQUWNk9BZtZi1ZNFl+XfcBCl2I7YADOYsW6d/kFDe1O9m39
+         nac9AACpb/9/DMNkNMWEDbTsRbTI8Swr0qdcf4MGo8g5/oAW9hnGLeOZf8Na8FfI+YS5
+         85Yr0MzepNuZ/O0Ji+8x3RKeNIzR7J7RehI9IMtuEsuuqCdvQawCsXNl3UVMb3nEfNfL
+         +rDwqcHMyTvocKUdy7iC+S1Lhrubz7EfUV5H726oYHt8X+YpwkZ42AyOWANOlZc1hsRD
+         KUDYo+vSboR9Trf22C/f2oCA1wcR7AGK4Y5wi5cdEEheUilHC+V4rTGBzVpDQ8Kxs3Jz
+         KmMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=V2iCx8wFR5LvrL6FsPP/rXqOpIC62la7qyz6rCYDjPo=;
+        b=ehIC8TfNulwkUN92KZWNTuscAnMiuJXTRh9e1N1HMwSHswbmXr1GjmHLtT9PTEpdF4
+         QF+3M95YGbi0eV8ZIZTpbnAwdtjnrdp2jDcBDgUanPu8QMW17CrpD1JSZyzvK0fswLYr
+         GhUkqv0YL6INvrTRt6Qf+GVLAy8NS+6vH4Aa8mAFJ/EQI+LV7YcM3DloErsQ7VXZyJNL
+         uYcqFoSOOVwLQkFQFO4ToYPg60XWE5vSrY8SObQ3cuQgFD6H96mSI2sLS9cGXr6q3Tvh
+         b+JtLky4rg3PmyyS031ggid4l2zkcN/zZT0/rLXJGjWPna2mFgqKkDTal4ndNhgSIw8X
+         dlEA==
+X-Gm-Message-State: AO0yUKWQMJyGe6sf41OHE1ToD91IrtTunFMqQ1i4MrwcsYt33exINoej
+        K1WeRipYhUAgRM8rnVLjle7c
+X-Google-Smtp-Source: AK7set8EguJyQwppUyJoTfFmAh2OLsMXF+r7Yre4duBZZqb/m0K1VpP3/So2ahmeTwM5uOQC630cVA==
+X-Received: by 2002:a17:90b:1b08:b0:237:a50e:1781 with SMTP id nu8-20020a17090b1b0800b00237a50e1781mr8839776pjb.24.1677452582419;
+        Sun, 26 Feb 2023 15:03:02 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id j13-20020a17090a318d00b00230c8484fbfsm2952486pjb.55.2023.02.26.15.03.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 26 Feb 2023 15:03:01 -0800 (PST)
+Message-ID: <5575804f-0918-fa7c-7af1-da2f4cf073f7@github.com>
+Date:   Sun, 26 Feb 2023 15:03:00 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpmaimvtd.fsf_-_@gitster.g>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.7.2
+Subject: Re: [RFC][PATCH] GSoC 2023 proposal: more sparse index integration
+Content-Language: en-US
+To:     Vivan Garg <gvivan6@gmail.com>, git@vger.kernel.org
+Cc:     christian.couder@gmail.com, hariom18599@gmail.com
+References: <20230226083347.80519-1-gvivan6@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <20230226083347.80519-1-gvivan6@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 09, 2023 at 12:24:14PM -0800, Junio C Hamano wrote:
+Vivan Garg wrote:
+> ## Synopsis
 
-> Instead of forcing the porcelain commands to always read the
-> configuration variables related to the signing and verifying
-> signatures, lazily initialize the necessary subsystem on demand upon
-> the first use.
+Please wrap your text to 72 (or up to 80) characters; doing that will make
+this much easier for reviewers to format their emails. I've re-wrapped lines
+I'm commenting on below.
+
+> Git 2.25.0 introduced a new experimental `git sparse-checkout` command,
+> which simplified the existing feature and improved performance for large
+> repositories. It allows users to restrict their working directory to only
+> the files they care about, allowing them to ensure the developer workflow
+> is as fast as possible while maintaining all the benefits of a monorepo. 
+> (Bring your monorepo down to size with sparse-checkout, Stolee).
+
+References to other sources (e.g. web links) are usually made with [<N>]
+footnotes. In this case, that might look something like:
+
+"
+Git 2.25.0 introduced a new experimental `git sparse-checkout` command,
+which simplified the existing feature and improved performance for large
+repositories. It allows users to restrict their working directory to only
+the files they care about, allowing them to ensure the developer workflow is
+as fast as possible while maintaining all the benefits of a monorepo. [1]
+ 
+[1]: https://github.blog/2020-01-17-bring-your-monorepo-down-to-size-with-sparse-checkout/
+"
+
+Same goes for the other references you've included.
+> +## Microproject
+> +
+> +t4121: modernize test style
+> +Status: ready to merge
+
+To expand on the point made by Ashutosh [1], this microproject is not yet
+tracked by Junio's "What's cooking" emails (most recent here: [2]), so it is
+not "ready to merge." "Under review" would be a more appropriate
+description. 
+
+[1] https://lore.kernel.org/git/CACmM78QTptLOvNHs9oE2NNareSNDb+ydGFKr0VHuboCBWSZbSw@mail.gmail.com/
+[2] https://lore.kernel.org/git/xmqq1qmeyfps.fsf@gitster.g/
+
+> Integration with “mv”
+> Integration with “reset”
+> Integration with “sparse-checkout”
+> Integration with “clean”
+> Integration with “blame”
+
+Please include mailing list archive links to these series.
+
+> During my discussion with Victoria, she informed me that given my
+> commitment of 175 hours, it is expected that I will be able to fully
+> integrate two commands with sparse index during the GSOC program. My plan
+> is to evenly distribute the work for each command over the course of the
+> program. I am confident that I can start the project early as I have
+> already established communication with my mentors and familiarized myself
+> with the related documentation, although my understanding may not be
+> comprehensive.
+
+"Two commands per 175 hours" is what I characterized as "rough
+expectations," but the actual number of commands integrated for the project
+will vary based on the complexity of the commands chosen. In a proposal, I
+would expect an applicant present their own, more detailed reasoning around
+how long various parts of the project will take, rather than simply quoting
+my high-level estimate.
+
+> ## Availability
 > 
-> This hopefully would make it more future-proof as we do not have to
-> think and decide whether we should call git_gpg_config() in the
-> git_config() callback for each command.
+> I will respond to all communication daily and will be available throughout
+> the duration of the program. Although I will be taking some summer courses
+> at my university, I will not be enrolled in a typical full course load. As
+> part of GSOC, I plan to commit to 175 hours. I have experience managing my
+> time effectively while taking courses and working full-time internships in
+> the past. My semester ends on August 15th, and I have no commitments for
+> the following month, which allows me to continue working beyond the end of
+> the semester. With the flexibility to extend the timeline of GSOC, I am
+> confident that I will have ample time to complete the project. I have
+> already discussed this with Victoria, the mentor for the project, and she
+> has agreed to extend the deadline until October 2nd, if necessary. After
+> August 15th, I will be able to work at least 8 hours per day, totaling
+> ~360 hours of work until the October 2nd deadline. 
+I said that "I'd be willing to extend as far as Oct 2 (four weeks) if
+needed", but that's a general statement about my own availability and does
+not mean that I think such an extension is necessary in this case. The ~360
+hours you mention is too large a margin over the 175 hours allocated for the
+project to properly understand your planned availability. I would prefer a
+more precise breakdown of the time you actually intend to spend on the
+project.
 
-Sorry, I seem to have missed this when you originally posted it. And I
-saw it marked as "will merge to next?" in the latest what's cooking. It
-looks good to me, and I think we can proceed with it (though of course
-it is not urgent and can probably wait until post-2.40).
+> # Some Credits to Myself
+> 
 
-> A few git_config() callback functions that used to be custom
-> callbacks are now just a thin wrapper around git_default_config().
-> We could further remove, git_FOO_config and replace calls to
-> git_config(git_FOO_config) with git_config(git_default_config), but
-> to make it clear which ones are affected and the effect is only the
-> removal of git_gpg_config(), it is vastly preferred not to do such a
-> change in this step (they can be done on top once the dust settled).
+[...]
 
-Yes, I think it is good not to do so in this patch. If we want to do it
-now on top, here's a patch. Though I could also see the argument for
-just leaving them.
+> Victoria mentioned that I was the first person to express interest in the
+> project this year, either directly or via the mailing list. 
 
--- >8 --
-Subject: [PATCH] drop pure pass-through config callbacks
+I want to be extremely clear on this point: while you were the first to
+reach out to me, I do not consider that a weighting factor as to who is
+ultimately selected for the project. The application deadline is April 4
+[3], and I acknowledge that not every potential applicant has the time
+available right now to get an early start on preparing their application.
+Most importantly, I _absolutely do not_ want your comment to discourage
+others from applying.
 
-Commit fd2d4c135e (gpg-interface: lazily initialize and read the
-configuration, 2023-02-09) shrunk a few custom config callbacks so that
-they are just one-liners of:
-
-  return git_default_config(...);
-
-We can drop them entirely and replace them direct calls of
-git_default_config() intead. This makes the code a little shorter and
-easier to understand (with the downside being that if they do grow
-custom options again later, we'll have to recreate the functions).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I looked over the output of:
-
-  git grep --function-context 'return git_default_config'
-
-to see if there were other cases, not caused by fd2d4c135e. But I didn't
-see any.
-
- builtin/am.c            | 7 +------
- builtin/commit-tree.c   | 7 +------
- builtin/verify-commit.c | 7 +------
- builtin/verify-tag.c    | 7 +------
- 4 files changed, 4 insertions(+), 24 deletions(-)
-
-diff --git a/builtin/am.c b/builtin/am.c
-index 40126b59c5..fccf40f8ee 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2312,11 +2312,6 @@ static int parse_opt_show_current_patch(const struct option *opt, const char *ar
- 	return 0;
- }
- 
--static int git_am_config(const char *k, const char *v, void *cb UNUSED)
--{
--	return git_default_config(k, v, NULL);
--}
--
- int cmd_am(int argc, const char **argv, const char *prefix)
- {
- 	struct am_state state;
-@@ -2440,7 +2435,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage_with_options(usage, options);
- 
--	git_config(git_am_config, NULL);
-+	git_config(git_default_config, NULL);
- 
- 	am_state_init(&state);
- 
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index f6a099d601..c0bbe9373d 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -37,11 +37,6 @@ static void new_parent(struct commit *parent, struct commit_list **parents_p)
- 	commit_list_insert(parent, parents_p);
- }
- 
--static int commit_tree_config(const char *var, const char *value, void *cb)
--{
--	return git_default_config(var, value, cb);
--}
--
- static int parse_parent_arg_callback(const struct option *opt,
- 		const char *arg, int unset)
- {
-@@ -118,7 +113,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	git_config(commit_tree_config, NULL);
-+	git_config(git_default_config, NULL);
- 
- 	if (argc < 2 || !strcmp(argv[1], "-h"))
- 		usage_with_options(commit_tree_usage, options);
-diff --git a/builtin/verify-commit.c b/builtin/verify-commit.c
-index 3c5d0b024c..7aedf10e85 100644
---- a/builtin/verify-commit.c
-+++ b/builtin/verify-commit.c
-@@ -52,11 +52,6 @@ static int verify_commit(const char *name, unsigned flags)
- 	return run_gpg_verify((struct commit *)obj, flags);
- }
- 
--static int git_verify_commit_config(const char *var, const char *value, void *cb)
--{
--	return git_default_config(var, value, cb);
--}
--
- int cmd_verify_commit(int argc, const char **argv, const char *prefix)
- {
- 	int i = 1, verbose = 0, had_error = 0;
-@@ -67,7 +62,7 @@ int cmd_verify_commit(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	git_config(git_verify_commit_config, NULL);
-+	git_config(git_default_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix, verify_commit_options,
- 			     verify_commit_usage, PARSE_OPT_KEEP_ARGV0);
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index ecffb069bf..5c00b0b0f7 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -19,11 +19,6 @@ static const char * const verify_tag_usage[] = {
- 		NULL
- };
- 
--static int git_verify_tag_config(const char *var, const char *value, void *cb)
--{
--	return git_default_config(var, value, cb);
--}
--
- int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- {
- 	int i = 1, verbose = 0, had_error = 0;
-@@ -36,7 +31,7 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	git_config(git_verify_tag_config, NULL);
-+	git_config(git_default_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix, verify_tag_options,
- 			     verify_tag_usage, PARSE_OPT_KEEP_ARGV0);
--- 
-2.40.0.rc0.479.g8b3a13b6b0
+[3] https://developers.google.com/open-source/gsoc/timeline
 
