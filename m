@@ -2,160 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09078C6FA8E
-	for <git@archiver.kernel.org>; Sun, 26 Feb 2023 11:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 741ACC64ED6
+	for <git@archiver.kernel.org>; Sun, 26 Feb 2023 12:26:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229582AbjBZLvD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Feb 2023 06:51:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33658 "EHLO
+        id S229527AbjBZM0O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Feb 2023 07:26:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229554AbjBZLu7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Feb 2023 06:50:59 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC69FE06D
-        for <git@vger.kernel.org>; Sun, 26 Feb 2023 03:50:57 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 88E3260BDC
-        for <git@vger.kernel.org>; Sun, 26 Feb 2023 11:50:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E79CC4339E;
-        Sun, 26 Feb 2023 11:50:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1677412257;
-        bh=d2802xxHWrXl/CAyafx2bugdRTBTuXVTqf9FtrOF1/Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=eoIfNyU70+HZKdOoDgnN/w0v14YVZmJ6PU/UZClxguv1S6Iq6NCRiVU/MgtgfifZj
-         qB76NFK5XguonCHaAxWlV1agBN2GNzuQmZAj+1yJ5APKHzgskjS5xXzYj8FwL7f6SX
-         FbawH3ltbYkaf3CSz+gPHwySoTgFMurRmgYg8sp4+Fdf6nK6vh0p/roueipyGo1VOk
-         PZGzKAYG6WaQezeFPmAPFKnPp+uKHXskBFYoLJBX/1waH04J29fzV4ll9AM66m/ApB
-         6Y4wbXlY0cB5QXtRdctLsKKJUXyE63l3Q6/aVjUy3yLVjSSCpYRahto/JjjZGJ7/1G
-         i1UOQWuJEoJWg==
-From:   Masahiro Yamada <masahiroy@kernel.org>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH v2 4/5] wildmatch: use char instead of uchar
-Date:   Sun, 26 Feb 2023 20:50:20 +0900
-Message-Id: <20230226115021.1681834-5-masahiroy@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230226115021.1681834-1-masahiroy@kernel.org>
-References: <20230226115021.1681834-1-masahiroy@kernel.org>
+        with ESMTP id S229445AbjBZM0N (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Feb 2023 07:26:13 -0500
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B60ED1164B
+        for <git@vger.kernel.org>; Sun, 26 Feb 2023 04:26:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
+        s=2023022100; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+        References:To:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID; bh=ZadiCC7k3Sf8vIewy/vEmvuSUOH0cJWwjCzYW8N7geY=; b=BaOB2Z
+        c1pc1uux4WL0zd2th6TU04Egxmzyz10hEnXAimSKTwKjWdmvssN+ZNY1OfhfiLhBOsYuMJmJ00bz9
+        9TwXRO2Ro1kSjSMOvMO/ZTTC2rFOzHLRZtyRXiVZ2QMuCfoKNSoRYGLZk6J4VpOyi1AzwGfhFelsk
+        JsaGZmIUDQY=;
+Received: from host-2-103-194-72.as13285.net ([2.103.194.72] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1pWG6T-000BIJ-57;
+        Sun, 26 Feb 2023 12:26:09 +0000
+Message-ID: <3f11a4d5-6774-ddd9-060e-3e95acb84c69@iee.email>
+Date:   Sun, 26 Feb 2023 12:26:08 +0000
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: Gitk : When the number of commits is small, you can roll up
+ excessively
+To:     "L2750558108@outlook.com" <L2750558108@outlook.com>,
+        git <git@vger.kernel.org>
+References: <BY5PR14MB3560879E6CBDD493C873DB18B1A29@BY5PR14MB3560.namprd14.prod.outlook.com>
+Content-Language: en-GB
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <BY5PR14MB3560879E6CBDD493C873DB18B1A29@BY5PR14MB3560.namprd14.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-dowild() casts (char *) and (uchar *) back-and-forth, which is
-ugly.
+A bit of a late response..
+On 14/02/2023 06:02, L2750558108@outlook.com wrote:
+> Gitk : When the number of commits is small, you can roll up excessively
+>
+> Reduce :
+>
+> 1.Create a new respository
+> 2.Make 2 Commit
+> 3.Go to Gitk to see them
+> 4.Scroll up in the commit list and you can see the error
+I cannot replicate this problem (on Git-for-Windows git version
+2.39.2.windows.1).
 
-This file was imported from rsync, which started to use (unsigned char)
-since the following commit:
+What OS, Git and gitk versions are you on?
 
- | commit e11c42511903adc6d27cf1671cc76fa711ea37e5
- | Author: Wayne Davison <wayned@samba.org>
- | Date:   Sun Jul 6 04:33:54 2003 +0000
- |
- |     - Added [:class:] handling to the character-class code.
- |     - Use explicit unsigned characters for proper set checks.
- |     - Made the character-class code honor backslash escapes.
- |     - Accept '^' as a class-negation character in addition to '!'.
+I created the repo with the commands
+phili@Philip-Win10 MINGW64 /c/git-sdk-64/usr/src (main)
+$ git init gitkfault
+$ cd gitkfault/
+$ echo test>file;git add file;git commit -mfirst
+$ echo test2>file;git add file;git commit -msecond
+$ gitk &
+[1] 1021
 
-Perhaps, it was needed because rsync relies on is*() from <ctypes.h>.
+I was visualising the commits (lower gitk window) with the "Diff" and
+"Patch" settings.
+ 
+At your step 4, I tried 'scrolling up' both by mouse clicking on the two
+commits in the top left window that displays the history, and by using
+the left/right arrows displayed just right of the "SHA1 ID" value. No
+errors were shown.
 
-GIT has its own implementations, so the behavior is clear.
+(those sha1 arrows are distinct from the 'Find' selection and navigation
+capability immediately below the "SHA1 ID" line.
 
-In fact, commit 4546738b58a0 ("Unlocalized isspace and friends")
-says one of the motivations is "we want the right signed behaviour".
+What were the exact errors shown at your step 4?
 
-sane_istest() casts the given character to (unsigned char) anyway
-before sane_ctype[] table lookup, so dowild() can use 'char'.
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
----
-
-(no changes since v1)
-
- wildmatch.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
-
-diff --git a/wildmatch.c b/wildmatch.c
-index 93800b8eac..7dffd783cb 100644
---- a/wildmatch.c
-+++ b/wildmatch.c
-@@ -12,21 +12,19 @@
- #include "cache.h"
- #include "wildmatch.h"
- 
--typedef unsigned char uchar;
--
- #define CC_EQ(class, len, litmatch) ((len) == sizeof (litmatch)-1 \
- 				    && *(class) == *(litmatch) \
--				    && strncmp((char*)class, litmatch, len) == 0)
-+				    && strncmp(class, litmatch, len) == 0)
- 
- /* Match pattern "p" against "text" */
--static int dowild(const uchar *p, const uchar *text, unsigned int flags)
-+static int dowild(const char *p, const char *text, unsigned int flags)
- {
--	uchar p_ch;
--	const uchar *pattern = p;
-+	char p_ch;
-+	const char *pattern = p;
- 
- 	for ( ; (p_ch = *p) != '\0'; text++, p++) {
- 		int matched, match_slash, negated;
--		uchar t_ch, prev_ch;
-+		char t_ch, prev_ch;
- 		if ((t_ch = *text) == '\0' && p_ch != '*')
- 			return WM_ABORT_ALL;
- 		if ((flags & WM_CASEFOLD) && isupper(t_ch))
-@@ -50,7 +48,7 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
- 			continue;
- 		case '*':
- 			if (*++p == '*') {
--				const uchar *prev_p = p - 2;
-+				const char *prev_p = p - 2;
- 				while (*++p == '*') {}
- 				if (!(flags & WM_PATHNAME))
- 					/* without WM_PATHNAME, '*' == '**' */
-@@ -90,10 +88,10 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
- 				 * with WM_PATHNAME matches the next
- 				 * directory
- 				 */
--				const char *slash = strchr((char*)text, '/');
-+				const char *slash = strchr(text, '/');
- 				if (!slash)
- 					return WM_NOMATCH;
--				text = (const uchar*)slash;
-+				text = slash;
- 				/* the slash is consumed by the top-level for loop */
- 				break;
- 			}
-@@ -160,13 +158,13 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
- 					if (t_ch <= p_ch && t_ch >= prev_ch)
- 						matched = 1;
- 					else if ((flags & WM_CASEFOLD) && islower(t_ch)) {
--						uchar t_ch_upper = toupper(t_ch);
-+						char t_ch_upper = toupper(t_ch);
- 						if (t_ch_upper <= p_ch && t_ch_upper >= prev_ch)
- 							matched = 1;
- 					}
- 					p_ch = 0; /* This makes "prev_ch" get set to 0. */
- 				} else if (p_ch == '[' && p[1] == ':') {
--					const uchar *s;
-+					const char *s;
- 					int i;
- 					for (s = p += 2; (p_ch = *p) && p_ch != ']'; p++) {} /*SHARED ITERATOR*/
- 					if (!p_ch)
-@@ -237,5 +235,5 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
- /* Match the "pattern" against the "text" string. */
- int wildmatch(const char *pattern, const char *text, unsigned int flags)
- {
--	return dowild((const uchar*)pattern, (const uchar*)text, flags);
-+	return dowild(pattern, text, flags);
- }
--- 
-2.34.1
-
+--
+Philip
