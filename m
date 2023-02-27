@@ -2,419 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81341C64ED8
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 17:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20AD2C64ED6
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 17:57:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230132AbjB0RUn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 12:20:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58666 "EHLO
+        id S230040AbjB0R5i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Feb 2023 12:57:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229955AbjB0RUa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2023 12:20:30 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB2F231D7
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:20:27 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id bt28so7022040wrb.8
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:20:27 -0800 (PST)
+        with ESMTP id S230002AbjB0R5g (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2023 12:57:36 -0500
+Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A7BF23D8E
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:57:35 -0800 (PST)
+Received: by mail-qt1-x832.google.com with SMTP id z6so7693554qtv.0
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:57:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6TdGOn2qYoUQP6nUI/3/lP6ZrWrbbccy9NnfMmJwvJY=;
-        b=I45xYcAJuD160NczdKw4ZUmqzaIRWqX+a4R8cy0ymg7BwqYFr2Fb2aSAj/8iYOqso3
-         vUyAeGgNI87e+C/4zFv2yKgHTykTB11iOho60/oiGrE84BrPyNUrzcFmICHl1iQkJj4T
-         Jlk2E9OcYKulb/UctAwQfIL02V6n0xkNMWhVDyJJ+ggl4btk1q/nlhlebt+l9rjhhxu8
-         wY5XIX7dObmLlnsgrwDbZm0322QnGqDYuvjGStu7h6+zQ1Ep/o8+61YUhr+qG8Q+/LUM
-         3WTinv9cMe/HDn5GOgR+VQcHdsU+GWC97wK1k9EgaU7ek5jRkksO3wc1oISnxTL2Ul9I
-         1ZmA==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=xXxvCaBn87YyV/IjQzyBxPWSdgozNhgA3QLEON3VZlM=;
+        b=YzMq/QR+2E5QqOCih7NPyQJz+G1aFPoyPof2vi/K1sJnmPIBnUNCOFsiQY8n90q1ys
+         3SO3a0KZUIz2ogkydLH2nXq8ovmb3pKFdzi4MQuNK0a4gAgpeAi7vYVehY8JR53XOxtk
+         MSHLyLCofO4RN/kGTKYhu3MP9d31W6M55iuZ8eHTDQxVAmcX7M+YmarYmHrzxSRUUjXB
+         xAv9dX7rX6X7Wsmz8thDDdUwLYzUW5WWy4BkHb0UUPzvVX5lXI9S+ZhxYsPPsD2oyXTk
+         ZAfOTWs3QMg6MFUqb98hdZy4ouEm11Inb5/NpkjtF2lm3bnMlCZNswcPCmMWxPquWK1q
+         IA6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6TdGOn2qYoUQP6nUI/3/lP6ZrWrbbccy9NnfMmJwvJY=;
-        b=yQaO9Ylu/dqjZW2mhwWFDai/JAH5KDR+ruYz//gzSuECraDH7neYGnLU3KXWUD6NA5
-         YIlgPb3YWLcvSZ0BuJPwJneTuViIVPqTYzV2/r5xFsVZ7DE7dJHlux1sYZ7cQZiXfTKO
-         PLdQsbXP4FeYpXiZjywA4PbWTuGOvdGJrsqqO1czfptVloRk6hLG8AJnJnPMPu5nBbTg
-         tbPTN5C6RY7FfCQKODc7p4bfERn6TcfHeHIGtj4Fbcwdcs1g2O/zG9kHCy/qoyTEuivW
-         FSJg99TgSrwq5e/SVHoc+kQIQBqnbZNzFgEcrrRRn4lJUYRi+68L1+N+mbfv+jQtG7zF
-         gUjg==
-X-Gm-Message-State: AO0yUKWk0GhrPfDQpVOUi1alonFmf2f47S8NtkpUpNHg3VXLPZP3HKXw
-        YCnRQ3LGfCIxr/0K1thewbhJ+QdfHz0=
-X-Google-Smtp-Source: AK7set/D/tD+f7cVKolnigdWPyhZOPy8KKpM1lDp6SNFBB5AuefgxIli44Oz3ptyKP7bRKKfXZBGmw==
-X-Received: by 2002:a05:6000:502:b0:2cb:d8f1:1d31 with SMTP id a2-20020a056000050200b002cbd8f11d31mr2631357wrf.18.1677518425053;
-        Mon, 27 Feb 2023 09:20:25 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n33-20020a05600c502100b003e8dc7a03basm13800493wmr.41.2023.02.27.09.20.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Feb 2023 09:20:24 -0800 (PST)
-Message-Id: <b774acf3896c4c1818f48776b1daba0ca6f74df8.1677518420.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1352.v11.git.1677518420.gitgitgadget@gmail.com>
-References: <pull.1352.v10.git.1676586881.gitgitgadget@gmail.com>
-        <pull.1352.v11.git.1677518420.gitgitgadget@gmail.com>
-From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Feb 2023 17:20:20 +0000
-Subject: [PATCH v11 3/3] credential: add WWW-Authenticate header to cred
- requests
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xXxvCaBn87YyV/IjQzyBxPWSdgozNhgA3QLEON3VZlM=;
+        b=gVKqZdKWuZU524SpyKs6sqNV4+SOvJ/stmH9zbIDaobU62J38M2VMAAlzHs+l4/XML
+         cKthKIjxuNV3P6XRYK1Ym8YRpsoZ+gkpYb/Gr8tTQhH6+O5Rkiyh2tCmf3G9MS2VuanU
+         0Xr9CvCUohMTSZu41gAuLNsaeM+77MXwrpIhH32FBArH2EQcmpiZFzTGbrz77WnvBCM9
+         Nt073Pnv3Sx+ySER2ywi8R9zStZcnY9viciiTx+GSe/NxF7ONgbaC26sd6zxvQ5jkixK
+         V1CgTu81OUoIZiSkgR4V8LEcCp+MoxnHCrAfICHoNF6At13NEcwKf5XUN21vfBka1hfJ
+         zQCg==
+X-Gm-Message-State: AO0yUKWOctrPvCUxxPntgChKrSFXtbhFoHUe5aVOk0mxbMo+NAPPKTiJ
+        oVurW2Uw0ZB7EoLbWKS0ZYi4VEkZsQaMcyU=
+X-Google-Smtp-Source: AK7set89vB94vvlaEfv08ETcGnHyjvRp2w8zTnRFXpoE9SdxZMHjtpRb9iUOEYB23Q5pDiwO0xt+9Q==
+X-Received: by 2002:a05:622a:138b:b0:3bd:efe:9a09 with SMTP id o11-20020a05622a138b00b003bd0efe9a09mr17020114qtk.28.1677520654384;
+        Mon, 27 Feb 2023 09:57:34 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:c838:390d:932c:3ee6? ([2600:1700:e72:80a0:c838:390d:932c:3ee6])
+        by smtp.gmail.com with ESMTPSA id q27-20020a05620a025b00b0073b575f3603sm5224606qkn.101.2023.02.27.09.57.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Feb 2023 09:57:33 -0800 (PST)
+Message-ID: <cd7b9a2f-4f52-9da8-19c3-2c5cda7b8160@github.com>
+Date:   Mon, 27 Feb 2023 12:57:32 -0500
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
-        M Hickford <mirth.hickford@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Glen Choo <chooglen@google.com>,
-        Victoria Dye <vdye@github.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [RFC PATCH 1/1] check-attr: integrate with sparse-index
+To:     Victoria Dye <vdye@github.com>, Shuqi Liang <cheskaqiqi@gmail.com>,
+        git@vger.kernel.org
+References: <20230227050543.218294-1-cheskaqiqi@gmail.com>
+ <20230227050543.218294-2-cheskaqiqi@gmail.com>
+ <315e70e0-ac1f-2f19-f1cc-6b8b24ffb1fc@github.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <315e70e0-ac1f-2f19-f1cc-6b8b24ffb1fc@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Matthew John Cheetham <mjcheetham@outlook.com>
+On 2/27/2023 12:18 PM, Victoria Dye wrote:
+> Shuqi Liang wrote:
 
-Add the value of the WWW-Authenticate response header to credential
-requests. Credential helpers that understand and support HTTP
-authentication and authorization can use this standard header (RFC 2616
-Section 14.47 [1]) to generate valid credentials.
+>> +	prepare_repo_settings(the_repository);
+>> +	the_repository->settings.command_requires_full_index = 0;
+> 
+> The test below doesn't do anything special related to the sparse index, so
+> this change is unnecessary (and, as far as I can tell, will break in some
+> usage of 'git check-attr'). If you're only looking for feedback on testing,
+> it'd better to leave this out.
 
-WWW-Authenticate headers can contain information pertaining to the
-authority, authentication mechanism, or extra parameters/scopes that are
-required.
+This change is part of the performance improvements given by sparse index,
+but the correctness test you've added only ensures that the end result is
+correct, not fast.
 
-The current I/O format for credential helpers only allows for unique
-names for properties/attributes, so in order to transmit multiple header
-values (with a specific order) we introduce a new convention whereby a
-C-style array syntax is used in the property name to denote multiple
-ordered values for the same property.
+It's possible that even with this change we hit an ensure_full_index() call
+somewhere in the call stack. To test that the sparse-index stays sparse
+throughout the process lifetime (when possible) create a test that uses the
+ensure_not_expanded helper. There are several examples in t1092 to use as
+a starting point.
 
-In this case we send multiple `wwwauth[]` properties where the order
-that the repeated attributes appear in the conversation reflects the
-order that the WWW-Authenticate headers appeared in the HTTP response.
+Victoria is right that it is helpful to first establish test coverage of
+the builtin for correctness reasons before making this change. It helps to
+add tests for cases that would require expanding the sparse index, such as
+checking the attributes for paths outside of the sparse-checkout cone.
 
-Add a set of tests to exercise the HTTP authentication header parsing
-and the interop with credential helpers. Credential helpers will receive
-WWW-Authenticate information in credential requests.
+Once the correctness tests are in place, you can then make this change to
+the builtin and add the tests that check ensure_not_expanded, since the
+change at that point is _only_ that we are allowing the builtin to
+operate upon the sparse index without expanding it immediately after read.
 
-[1] https://datatracker.ietf.org/doc/html/rfc2616#section-14.47
+A good example of this "final step" is [1], which updates the builtin for
+'git diff' as well as adding _only_ the ensure_not_expanded tests.
 
-Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
----
- Documentation/git-credential.txt |  19 ++-
- credential.c                     |   3 +
- t/t5563-simple-http-auth.sh      | 242 +++++++++++++++++++++++++++++++
- 3 files changed, 263 insertions(+), 1 deletion(-)
+[1] https://lore.kernel.org/git/897611682af64ba6bd0d2dfcfeae56cfe953c45e.1638806161.git.gitgitgadget@gmail.com/
+    [PATCH v6 6/7] diff: enable and test the sparse index
 
-diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-index ac2818b9f66..50759153ef1 100644
---- a/Documentation/git-credential.txt
-+++ b/Documentation/git-credential.txt
-@@ -113,7 +113,13 @@ separated by an `=` (equals) sign, followed by a newline.
- The key may contain any bytes except `=`, newline, or NUL. The value may
- contain any bytes except newline or NUL.
- 
--In both cases, all bytes are treated as-is (i.e., there is no quoting,
-+Attributes with keys that end with C-style array brackets `[]` can have
-+multiple values. Each instance of a multi-valued attribute forms an
-+ordered list of values - the order of the repeated attributes defines
-+the order of the values. An empty multi-valued attribute (`key[]=\n`)
-+acts to clear any previous entries and reset the list.
-+
-+In all cases, all bytes are treated as-is (i.e., there is no quoting,
- and one cannot transmit a value with newline or NUL in it). The list of
- attributes is terminated by a blank line or end-of-file.
- 
-@@ -160,6 +166,17 @@ empty string.
- Components which are missing from the URL (e.g., there is no
- username in the example above) will be left unset.
- 
-+`wwwauth[]`::
-+
-+	When an HTTP response is received by Git that includes one or more
-+	'WWW-Authenticate' authentication headers, these will be passed by Git
-+	to credential helpers.
-++
-+Each 'WWW-Authenticate' header value is passed as a multi-valued
-+attribute 'wwwauth[]', where the order of the attributes is the same as
-+they appear in the HTTP response. This attribute is 'one-way' from Git
-+to pass additional information to credential helpers.
-+
- Unrecognised attributes are silently discarded.
- 
- GIT
-diff --git a/credential.c b/credential.c
-index 897b4679333..f566c8ab195 100644
---- a/credential.c
-+++ b/credential.c
-@@ -270,6 +270,9 @@ void credential_write(const struct credential *c, FILE *fp)
- 	credential_write_item(fp, "path", c->path, 0);
- 	credential_write_item(fp, "username", c->username, 0);
- 	credential_write_item(fp, "password", c->password, 0);
-+	for (size_t i = 0; i < c->wwwauth_headers.nr; i++)
-+		credential_write_item(fp, "wwwauth[]", c->wwwauth_headers.v[i],
-+				      0);
- }
- 
- static int run_credential_helper(struct credential *c,
-diff --git a/t/t5563-simple-http-auth.sh b/t/t5563-simple-http-auth.sh
-index bc880bf80f9..ccf7e54b073 100755
---- a/t/t5563-simple-http-auth.sh
-+++ b/t/t5563-simple-http-auth.sh
-@@ -70,6 +70,248 @@ test_expect_success 'access using basic auth' '
- 	expect_credential_query get <<-EOF &&
- 	protocol=http
- 	host=$HTTPD_DEST
-+	wwwauth[]=Basic realm="example.com"
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HTTPD_DEST
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_expect_success 'access using basic auth invalid credentials' '
-+	test_when_finished "per_test_cleanup" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	username=baduser
-+	password=wrong-passwd
-+	EOF
-+
-+	# Basic base64(alice:secret-passwd)
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
-+	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-+	EOF
-+
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
-+	WWW-Authenticate: Basic realm="example.com"
-+	EOF
-+
-+	test_config_global credential.helper test-helper &&
-+	test_must_fail git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HTTPD_DEST
-+	wwwauth[]=Basic realm="example.com"
-+	EOF
-+
-+	expect_credential_query erase <<-EOF
-+	protocol=http
-+	host=$HTTPD_DEST
-+	username=baduser
-+	password=wrong-passwd
-+	wwwauth[]=Basic realm="example.com"
-+	EOF
-+'
-+
-+test_expect_success 'access using basic auth with extra challenges' '
-+	test_when_finished "per_test_cleanup" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	# Basic base64(alice:secret-passwd)
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
-+	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-+	EOF
-+
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
-+	WWW-Authenticate: FooBar param1="value1" param2="value2"
-+	WWW-Authenticate: Bearer authorize_uri="id.example.com" p=1 q=0
-+	WWW-Authenticate: Basic realm="example.com"
-+	EOF
-+
-+	test_config_global credential.helper test-helper &&
-+	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HTTPD_DEST
-+	wwwauth[]=FooBar param1="value1" param2="value2"
-+	wwwauth[]=Bearer authorize_uri="id.example.com" p=1 q=0
-+	wwwauth[]=Basic realm="example.com"
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HTTPD_DEST
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_expect_success 'access using basic auth mixed-case wwwauth header name' '
-+	test_when_finished "per_test_cleanup" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	# Basic base64(alice:secret-passwd)
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
-+	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-+	EOF
-+
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
-+	www-authenticate: foobar param1="value1" param2="value2"
-+	WWW-AUTHENTICATE: BEARER authorize_uri="id.example.com" p=1 q=0
-+	WwW-aUtHeNtIcAtE: baSiC realm="example.com"
-+	EOF
-+
-+	test_config_global credential.helper test-helper &&
-+	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HTTPD_DEST
-+	wwwauth[]=foobar param1="value1" param2="value2"
-+	wwwauth[]=BEARER authorize_uri="id.example.com" p=1 q=0
-+	wwwauth[]=baSiC realm="example.com"
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HTTPD_DEST
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_expect_success 'access using basic auth with wwwauth header continuations' '
-+	test_when_finished "per_test_cleanup" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	# Basic base64(alice:secret-passwd)
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
-+	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-+	EOF
-+
-+	# Note that leading and trailing whitespace is important to correctly
-+	# simulate a continuation/folded header.
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.challenge" <<-EOF &&
-+	WWW-Authenticate: FooBar param1="value1"
-+	 param2="value2"
-+	WWW-Authenticate: Bearer authorize_uri="id.example.com"
-+	 p=1
-+	 q=0
-+	WWW-Authenticate: Basic realm="example.com"
-+	EOF
-+
-+	test_config_global credential.helper test-helper &&
-+	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HTTPD_DEST
-+	wwwauth[]=FooBar param1="value1" param2="value2"
-+	wwwauth[]=Bearer authorize_uri="id.example.com" p=1 q=0
-+	wwwauth[]=Basic realm="example.com"
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HTTPD_DEST
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_expect_success 'access using basic auth with wwwauth header empty continuations' '
-+	test_when_finished "per_test_cleanup" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	# Basic base64(alice:secret-passwd)
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
-+	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-+	EOF
-+
-+	CHALLENGE="$HTTPD_ROOT_PATH/custom-auth.challenge" &&
-+
-+	# Note that leading and trailing whitespace is important to correctly
-+	# simulate a continuation/folded header.
-+	printf "">$CHALLENGE &&
-+	printf "WWW-Authenticate: FooBar param1=\"value1\"\r\n" >$CHALLENGE &&
-+	printf " \r\n" >>$CHALLENGE &&
-+	printf " param2=\"value2\"\r\n" >>$CHALLENGE &&
-+	printf "WWW-Authenticate: Bearer authorize_uri=\"id.example.com\"\r\n" >>$CHALLENGE &&
-+	printf " p=1\r\n" >>$CHALLENGE &&
-+	printf " \r\n" >>$CHALLENGE &&
-+	printf " q=0\r\n" >>$CHALLENGE &&
-+	printf "WWW-Authenticate: Basic realm=\"example.com\"\r\n" >>$CHALLENGE &&
-+
-+	test_config_global credential.helper test-helper &&
-+	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HTTPD_DEST
-+	wwwauth[]=FooBar param1="value1" param2="value2"
-+	wwwauth[]=Bearer authorize_uri="id.example.com" p=1 q=0
-+	wwwauth[]=Basic realm="example.com"
-+	EOF
-+
-+	expect_credential_query store <<-EOF
-+	protocol=http
-+	host=$HTTPD_DEST
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+'
-+
-+test_expect_success 'access using basic auth with wwwauth header mixed line-endings' '
-+	test_when_finished "per_test_cleanup" &&
-+
-+	set_credential_reply get <<-EOF &&
-+	username=alice
-+	password=secret-passwd
-+	EOF
-+
-+	# Basic base64(alice:secret-passwd)
-+	cat >"$HTTPD_ROOT_PATH/custom-auth.valid" <<-EOF &&
-+	Basic YWxpY2U6c2VjcmV0LXBhc3N3ZA==
-+	EOF
-+
-+	CHALLENGE="$HTTPD_ROOT_PATH/custom-auth.challenge" &&
-+
-+	# Note that leading and trailing whitespace is important to correctly
-+	# simulate a continuation/folded header.
-+	printf "">$CHALLENGE &&
-+	printf "WWW-Authenticate: FooBar param1=\"value1\"\r\n" >$CHALLENGE &&
-+	printf " \r\n" >>$CHALLENGE &&
-+	printf "\tparam2=\"value2\"\r\n" >>$CHALLENGE &&
-+	printf "WWW-Authenticate: Basic realm=\"example.com\"" >>$CHALLENGE &&
-+
-+	test_config_global credential.helper test-helper &&
-+	git ls-remote "$HTTPD_URL/custom_auth/repo.git" &&
-+
-+	expect_credential_query get <<-EOF &&
-+	protocol=http
-+	host=$HTTPD_DEST
-+	wwwauth[]=FooBar param1="value1" param2="value2"
-+	wwwauth[]=Basic realm="example.com"
- 	EOF
- 
- 	expect_credential_query store <<-EOF
--- 
-gitgitgadget
+You can look at the surrounding patches for other ideas, but it should be
+noted that both 'git diff' and 'git blame' in that series had previous
+correctness tests in t1092 that only needed _edits_, instead of being
+created from scratch.
+
+Thanks,
+-Stolee
