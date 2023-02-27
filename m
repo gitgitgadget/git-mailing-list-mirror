@@ -2,80 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA409C64ED8
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 23:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0808EC64ED8
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 23:21:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230152AbjB0XPW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 18:15:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59416 "EHLO
+        id S229668AbjB0XU4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Feb 2023 18:20:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230136AbjB0XPT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2023 18:15:19 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87940DBE7
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 15:15:14 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id ky4so8558456plb.3
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 15:15:14 -0800 (PST)
+        with ESMTP id S229540AbjB0XUy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2023 18:20:54 -0500
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBED820680
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 15:20:50 -0800 (PST)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-536c8bcae3bso172247807b3.2
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 15:20:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W+hwKJYMyJGx3nksgiXB4uB9hWHSU+xZGq5u+zV5ySE=;
-        b=OhVydg/spCh7pURUhmV859e6K4ECkITqPxscphJgoaCDrBLfWriZkVJZrVfqfudi3l
-         X+uCtmJYC0OSpqcfvIeJ0syCdMPDySehmoGnaP8lYvpQKBlHe7kBjbrMYqsF2jhZPgcd
-         BZLODEJ7CMO7ceoIor/Gkia0iqp6buhwgyYVjfetVoODzqL8nHj5QxxLgJO/Oet+S7wZ
-         ATJBBMhwSPLVDaxJ31+Lej8xJCAIoENWZ8IoihJXwI27CUPzj4VYaBsV4T5o/uGECZqu
-         iqn5GZxRRV1WM4ihbB6gD/H7Uc357ZBzQWCEQYDT4ZLOoskElYrp/Z8OxUebOywgAdfK
-         ixJg==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=HI9pTaiyEdgIeWaFJdguJiLkwY+JUDt28+EdhLcniY0=;
+        b=ZUVgv5bSOXHfyDtqQnsAyvPigc+E2iE/jOBobpQCT8jHMUcwviF5lMDedApQLC2fTx
+         Hwx98OE6CYgFZdO4eHiuAt4FrRV2u++DUQTbyxTFK8+a8gp8ru2LN6b1ACgt75EcQlL/
+         qbHk92ygco5xrm/VzRBbIsU7YY4KyizwJpB7AqF3QT8ddER3VBwEjkSEYBD4mmJItBW6
+         7R1ww5Tq4CNgxxvsJ9LOi8HsWi9XpnZtbdx4XwV5oObpbHneXJ0F4J+jWt5Zavh3Jo0g
+         WCqqQsvwOECP8R2qh4df1C40O5HKCGQS1lJE6vTGrDT4mx0tzKqLqbTy1Fk65nU4tYVY
+         0GcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=W+hwKJYMyJGx3nksgiXB4uB9hWHSU+xZGq5u+zV5ySE=;
-        b=5J/V/vwrEm7ISAhrxP5oE/I3u0H/UwEDwo0w+aNE9Kspvduxg6JTnLJxXpyv7ZZ5m7
-         5KHWaQrun+Y1QAG+PvY0n3J9M4EJ2+ZS+F/kEHnZxtBm+ukJnqOSqgwrewegD9NjOzk6
-         GHx7+sZ3qGBRfSdRHw9jIjKC4n0jvOe/jI4B1cjheFUsR5CzWQBoSX5qu109uOx757bu
-         SScwZk00ktzj1rsEQJv8D6m8GGhjx/kUvJM3tBofNkZU5y0yd99QjBYFH4DkTvrTaDzr
-         keiM7vUywXhAiy2Eca9/8tZeUeAxrMZo8xTmlvqLsaItVF3IuhGYQutLSZlTYDni6MUJ
-         j6HQ==
-X-Gm-Message-State: AO0yUKU5Tb7tZ3/48Vu6zPQlKsuJOSduZyjVEfD9ww3/omsURPi87ug0
-        WeYuKAdLMZ/ESsMmIcA7P1HPX06WnUc=
-X-Google-Smtp-Source: AK7set9Zkqrh7yB0BGt0lxFsaWZRyziyJy0QbqA4bStq8mRkULbEDxKucOk5RdHfD1yrw5HHEsmnJQ==
-X-Received: by 2002:a17:902:da8c:b0:19c:d3e0:1eea with SMTP id j12-20020a170902da8c00b0019cd3e01eeamr817167plx.6.1677539713825;
-        Mon, 27 Feb 2023 15:15:13 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id g24-20020a170902fe1800b001943d58268csm5104059plj.55.2023.02.27.15.15.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Feb 2023 15:15:13 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     <rsbecker@nexbridge.com>
-Cc:     "'Git List'" <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Problems with CSPRNG in wrapper.c
-References: <003d01d94b00$16abc7a0$440356e0$@nexbridge.com>
-Date:   Mon, 27 Feb 2023 15:15:12 -0800
-In-Reply-To: <003d01d94b00$16abc7a0$440356e0$@nexbridge.com>
-        (rsbecker@nexbridge.com's message of "Mon, 27 Feb 2023 18:06:07
-        -0500")
-Message-ID: <xmqqv8jmr98f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HI9pTaiyEdgIeWaFJdguJiLkwY+JUDt28+EdhLcniY0=;
+        b=zDTVfLT+eEfwTSoFvXDGipfBPGM8QWvzcYr+WJEyJ2YrS4WLOHzA1kcWcQ114Ne2kx
+         GdUb1XhMFmJU78jop+NjokRXh1PwFufZ4uc0Sz/r8EzR4Fv5uYcHoNfN7KNGOaPdfbXy
+         PPPtlNEMQm38a61HvqWJc1TqkUI7Ti0f5QJrTStKt8is/elj40cYHRaOZH6HMx22hDo6
+         tDM46d/CI5HDjcs71oburLneJH3jWmqQ9kcMP4yUubvqeCzLMJcjUzoG6aBZRXp3I92u
+         DIHZsU/hNKjQBTkn5OLVoKluCuXTE0zZkR4iq3hiZf8vQFoD7zZd6VbQTbW5oPHhdjpb
+         aRDA==
+X-Gm-Message-State: AO0yUKVTh/JuW5lCRmhuyUDL4gEaQkXB0w28bVpnkBIeZMMIIrCEAyg/
+        ghKk3kCmtHeHdWK8fwI8tAdmv6qBbzox81NENO7m
+X-Google-Smtp-Source: AK7set8WgurfpHb6oZKaZb65Cp0oNRmzjdhW0KULLAXOQhUyL5gtp7ntJQsZrDFoiRHRqUk3V7VjkXXDYiTJwnP8erel
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:aadd:81fd:fdd5:bee5])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6902:158c:b0:8bd:4ab5:18f4 with
+ SMTP id k12-20020a056902158c00b008bd4ab518f4mr8735644ybu.6.1677540050039;
+ Mon, 27 Feb 2023 15:20:50 -0800 (PST)
+Date:   Mon, 27 Feb 2023 15:20:47 -0800
+In-Reply-To: <8ffdb6c8a8a3b162c898ba759137d41bbfd44b39.1677511700.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.39.2.722.g9855ee24e9-goog
+Message-ID: <20230227232047.2441760-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v3 02/13] unpack-trees: heed requests to overwrite ignored files
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<rsbecker@nexbridge.com> writes:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 3d05e45a279..4518d33ed99 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -2337,7 +2337,7 @@ static int verify_clean_subdirectory(const struct cache_entry *ce,
+>  
+>  	memset(&d, 0, sizeof(d));
+>  	if (o->dir)
+> -		d.exclude_per_dir = o->dir->exclude_per_dir;
+> +		setup_standard_excludes(&d);
+>  	i = read_directory(&d, o->src_index, pathbuf, namelen+1, NULL);
+>  	dir_clear(&d);
+>  	free(pathbuf);
 
-> First, I was not aware that csprng was a git dependency ...
+Thanks to the later patches in this patch set, I only needed to look at
+unpack-trees.c to see how o->dir (later, o->internal.dir) is set. The
+only place it is set is in unpack_trees(), in which a flag is set and
+setup_standard_excludes() is called. So the RHS of the diff here does
+effectively the same thing as the LHS. (As for the flag, it is not set
+in the RHS, but it was not set in the LHS in the first place, so that's
+fine.)
 
-You can choose from implementations that depend on common external
-libraries and system functions, but we have a fallback internal
-implementation that only requires /dev/urandom.
-
-See description for CSPRNG_METHOD in Makefile and 05cd988d (wrapper:
-add a helper to generate numbers from a CSPRNG, 2022-01-17) for
-additional background.
+Thanks - all 13 patches in this patch set look good.
