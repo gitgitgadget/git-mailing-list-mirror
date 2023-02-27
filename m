@@ -2,163 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45ED9C7EE23
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 17:18:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84F60C64ED6
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 17:19:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229781AbjB0RSu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 12:18:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56606 "EHLO
+        id S230036AbjB0RT2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Feb 2023 12:19:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230152AbjB0RSr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2023 12:18:47 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B7E41F934
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:18:42 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id m8-20020a17090a4d8800b002377bced051so10876877pjh.0
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:18:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DN1sH5QsZZ3daHhsQk2wbhl3IJxWPtVtVBW0N3l5qSw=;
-        b=J3kXS9cyTrUf4HnJMEl6PNOuoHd4nxMaBUkRhOq4TJ+iH+zEdsw8paICyEoMxbS5tf
-         nXJU/QqLHXOVdsGVYFuG8VVyr9VFmyyOEDjCxb4wvi88m3QtXZxgF2WfKqxufmTldZhw
-         E+2CJGO+kE3ox2LobxF1PFEXAXu6zaKZsQV2ECGe4uR5LS4TQkqde70Ab2xe1Ov7b/bt
-         Amx2TllHV05ba4IJKR1DtsW2c5iYy7mY136CEqO+bIYpH37I0DkWyIkhC1UtSCphqSJZ
-         bY485SjdN8cpRxB8CQ6YkQlHcRV3zTa5o9RT6OA42NE3gUftpQitGuKWSwBVx7s6yjFX
-         w8jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DN1sH5QsZZ3daHhsQk2wbhl3IJxWPtVtVBW0N3l5qSw=;
-        b=VQiM155pg2Wbkav+y0+WX4gPo7nk0UNgeDuykxFxqhvv1VyR9CBfsawYWa2lhdNAJS
-         hpz+hFCE5w6IxKbLA4XfP1C9JqiAdCDYF4Bxt+mIYB6o5/hIyKRmyvUNzqaP2zrFBB9v
-         5Jw07Nv4vijOI1MEq6BcD6whc3D1DzPU3p/ZfZydqaLRpUmSrCW4WXDMsT2c3MaTr1B/
-         1Na9/dzmzXs9zRDF/+6xvsxo4CbGd0vOaMuYv1aGc+Djn7x70GMNmcPXhaB0ODm6DL48
-         UdVR3++ThLeJ17mnGgw0Nv3QsGcQD/05C0bnr2r2H1SKfVGF9JWXySko3Q2ypGIZLc5S
-         aVPw==
-X-Gm-Message-State: AO0yUKUZKcIL7nHgejjj13a5Z5PyfClgh4CJt/297rRZ2SIfBztl2dH4
-        eCXayiRvyfUXp+bykh8C5VhnaoOObQYzYDE=
-X-Google-Smtp-Source: AK7set9P0L3S4GTWDASEg5wTZkj99jt+MxtIDNXzcb1cfVHHN/XO14cfPs+Pf8TnJhLdMknUc7GA/Q==
-X-Received: by 2002:a17:903:783:b0:19c:d537:754 with SMTP id kn3-20020a170903078300b0019cd5370754mr10138241plb.56.1677518321899;
-        Mon, 27 Feb 2023 09:18:41 -0800 (PST)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id y4-20020a170902ed4400b0019324fbec59sm4848024plb.41.2023.02.27.09.18.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Feb 2023 09:18:41 -0800 (PST)
-Message-ID: <315e70e0-ac1f-2f19-f1cc-6b8b24ffb1fc@github.com>
-Date:   Mon, 27 Feb 2023 09:18:40 -0800
-MIME-Version: 1.0
+        with ESMTP id S229917AbjB0RT0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2023 12:19:26 -0500
+Received: from EUR04-HE1-obe.outbound.protection.outlook.com (mail-he1eur04olkn2073.outbound.protection.outlook.com [40.92.73.73])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D04566EB0
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:19:24 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=PynF9JTY9LgUcyGLS6ylV/PdUyG1Fkh258hVbfRPj8V0eb3CLnGb8prC04rr+5ufd9j8a7AFXFn+MA7vGvlczfttPSuiuWdFlzG2vhtn1gTTjHda2mxg9cwrWHUrexynYamYhXl+i1v6O/tEb/R3r3JxG2o42PdIgQDasWujbVhAy9SLtGrvMH6IZ+CFTE7MRTCP3ZcBsUQCNUmbRGseFZd2RGwG6Bul7yxvuNiECD++9VK3pv9Ty41iVp+aQupsf0gFGnY23TgOu+nFRNash3h4nKbO9lIwB4CgvmU4XUNpYDr3XssxfJH5AIa7XLVeeP4xrG8dtE8nVA0Xw4SEww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QPHIzUqEyqlvpKC7udnjTTIMIBu9tfGnc1PBlNEMT5Q=;
+ b=nS0wogRmOxaSqqKFvCmr30JSDSLoe5lznxUMOy6GO8SJrcqIfqoUF6XUIf2jIRnr9WI7MIVWDcrU0OVL5iCN+1gXgL284Tp1ToNso4CohXJKG7isKdrhPl3Fr4beZtxClsVtcwLHP1+ZJIjnR6wYy8ARE/RLO6N7Hv1Cfn0etE/KpzuCx4rnzFzwmUrtxWQ9rE+/CmRrnOkmNQ8yXkShAJdLTkfSHNkjaGrvXeL0qqhe8ZY/V8piDphnamyy+DNDxmCQtz7zmVJvMe2KW/F0joO68moHjB9achhTMzNWNu6GQPo14leo9J6F7Vxgmk+yYdEZgauJhwrhz4A5lUUY/Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QPHIzUqEyqlvpKC7udnjTTIMIBu9tfGnc1PBlNEMT5Q=;
+ b=uTWnUiAxgTf2MWDCQBxZYQMK73b3PH1DLjdj3lvc1pH0ErCG3mdBBoF0K4NZCW6KVvldoDAcN5bFJrJLkPA5gER3x99q+wfKXc+jAuWz4JaHzUxXR74PWdmoyYg7jL7B9tcgnxHc5bnwXisxn5++OiI6xT0nt/T8QKsOTlSe7QNpiVGKRLjgiN6T2VYW40LtEZVhy+wPhFJxubmLNi8I4nLmIQF1xVDx/wsqS6HsIO0vvYCwB8PuMi/zdFCCDCqkWtH8TL4JVYi6jQxNQwFkf6038Mx7kwE3xV1qhqrq27/kciQKh/W20Lmy2+hxe0nQj9ZGpvyKcVjzEg12+kxjIg==
+Received: from AS2PR03MB9815.eurprd03.prod.outlook.com (2603:10a6:20b:609::16)
+ by AM9PR03MB7728.eurprd03.prod.outlook.com (2603:10a6:20b:3dd::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6134.29; Mon, 27 Feb
+ 2023 17:19:22 +0000
+Received: from AS2PR03MB9815.eurprd03.prod.outlook.com
+ ([fe80::7674:1fe5:785:a469]) by AS2PR03MB9815.eurprd03.prod.outlook.com
+ ([fe80::7674:1fe5:785:a469%7]) with mapi id 15.20.6134.029; Mon, 27 Feb 2023
+ 17:19:22 +0000
+Message-ID: <AS2PR03MB98156E464D1FCEDA59348504C0AF9@AS2PR03MB9815.eurprd03.prod.outlook.com>
+Date:   Mon, 27 Feb 2023 09:19:15 -0800
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.7.2
-Subject: Re: [RFC PATCH 1/1] check-attr: integrate with sparse-index
-Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-References: <20230227050543.218294-1-cheskaqiqi@gmail.com>
- <20230227050543.218294-2-cheskaqiqi@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230227050543.218294-2-cheskaqiqi@gmail.com>
+Subject: Re: mc/credential-helper-www-authenticate (Re: What's cooking in
+ git.git (Feb 2023, #04; Wed, 22))
+To:     Jeff King <peff@peff.net>, Victoria Dye <vdye@github.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqbkllaxd7.fsf@gitster.g>
+ <3ab86863-fa15-a5c5-08c8-73ad775e04c8@github.com>
+ <Y/c2dQTohGsN+3Me@coredump.intra.peff.net>
+From:   Matthew John Cheetham <mjcheetham@outlook.com>
+In-Reply-To: <Y/c2dQTohGsN+3Me@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-TMN:  [+3CbFM6S4k9LtLXnRNE9JMfaKoOmzHZLJngrfWRcLV+eRAe1yAAzBKX7PTO2B8sB]
+X-ClientProxiedBy: BYAPR06CA0033.namprd06.prod.outlook.com
+ (2603:10b6:a03:d4::46) To AS2PR03MB9815.eurprd03.prod.outlook.com
+ (2603:10a6:20b:609::16)
+X-Microsoft-Original-Message-ID: <dd5278da-4967-78cc-ff00-56f78c24611f@outlook.com>
+MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS2PR03MB9815:EE_|AM9PR03MB7728:EE_
+X-MS-Office365-Filtering-Correlation-Id: b14a7fb1-79f5-48b6-0504-08db18e6c466
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: VlEygVTwNCNsUcFa/eFMp/7b8dlOh0iuLChIYEzu/qUPujthlBieWqvcx/7ba8KmYaSpTN++/0OPGAbdwkepcxlIp12xitFbMkXgGZ0ftl0QQDxq3pX13h5s71XAHU9MlZyQyOZ58qY6UMsCHk2nCm+BT2efJGzXyrb0VAJfwIlYxzUcsnZPb7uoUTy+EFp4rwbI+cc/6o7nJiqzHbv/cme6mypT73apCSMwSbV9TQZXgdc3iELUYwDeVxMNU+pCLoDRcVQWOPitzbYy+JzvRXrOSSUOnImbmYmhllbPphwtUEFSLl0ADQ/f/5uNCobjW6o35MRcBOpXp2jQloMj/SCRfZ8p55MHRqXYC5DVgzc+GCRf+hu2/6EvjDnWrXtCEjWfztp+xDuUdipWxk7s27xwdEPtVAF4YcsG2duUBm4PSNFS/jrU3eLmHpA10I7VtcG4eS5Ic/pgCv1uczLGyCo4HKe7L2QaaayATzE01nF2PhIWjo6W37Fpah08A6kxKrWu6C6pJ3D1P+K22w9bu7zCLzmcbkZ74sPn8Ex4IXC1qS1XaQTIgXhKB+icNiuAhw7ABo1ZfrMZMhCW9PWzj9qFTxYYONwoxEenavz6m866xfEVJQg47xF3Ew+E/rXOFdEIA3a3Z9rWgHpsvIILAg==
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q1FYSGwxVGZCeHMxUzYzeDIwa010Rmdlai81MmEvMUZVcnJxWnAvbnZqVm9K?=
+ =?utf-8?B?UGUrMnRqc21GYjQwOXZwY3lQUDVmLzVnYTZ5YXJPeHo5ZmpJdGllSklGNm1q?=
+ =?utf-8?B?Umt0UDIyWENnbWt5ZGlVeUE3Z3dxVFc4VWRST1I1L3JrbFFZKytVYjRqVisv?=
+ =?utf-8?B?d1FVZkdXVmtPbE5EZEJzUDlDaUNxME5iYmJmc3FPdGkvVlNSVGNMbjBTWTJI?=
+ =?utf-8?B?ZDR0TFYzWGFGaElTY1VudERsTVdsQVpsN3ZvSnk2dmdaSjBBMWlzaThDQmRF?=
+ =?utf-8?B?ZXVmdjI3VklSRkdpc1FUbmxPTGpNVkY0SEdDTzV3QWk5QVoyRkU3UDFOVTNZ?=
+ =?utf-8?B?TFFCcWQ2ODlnc29hNDVWNXkzR0RjWklzZVR0OU9OTjF4RXZNdmN3WmFNVktl?=
+ =?utf-8?B?MEpyckJhNitiWlRYTlBiaDVSbFFJV0hvMkZIYVlJR2NIZFBFY1R6dHFLcmls?=
+ =?utf-8?B?MzBJckhqMHlPL2RXb0RqOFZkV09hNUtaYnFUakxTN3UxOUJkZUE1Wktqb2k4?=
+ =?utf-8?B?aDFlUlNoWGJ4eFNEMWx4a0dKMkJlTm96QVhGZXRDSUNRT0N3Mmt5NXRZa3NY?=
+ =?utf-8?B?aHVtcHBHM0QvZ2pIWERDT0g5blBmc0tkZ1MvdXFIb3RDZFlJWW9TVWNZY3Ix?=
+ =?utf-8?B?OTBpb3J2R0lsMXludFlVRitFVXZIL1loOWt4aWZxWVdwd2VObUlXM2JBRTJz?=
+ =?utf-8?B?YVhFVXoraHhZK3Z1QmJ2KzRyRnFtWW5IS1ZycS9NWmh6bVJaYUpjNm9Ib1Ax?=
+ =?utf-8?B?eS9NbUhONG12RElWTm05b1k0YkMvdzJ0WStIZEtHb0tHajdrdElxZWNNY24r?=
+ =?utf-8?B?T01xZ3R0TmZxYzA5V29rVWwzeGpsaW1za09Dd2dPeUZPcmRrQUFEeVBHTWtx?=
+ =?utf-8?B?bmxKN3hsdXhScHZuVjdlMm1jTFpWZkpOU1NPUXI1cHN5NUlJU3FhRm1GQjlM?=
+ =?utf-8?B?REFSZWhKSWR1ckwvVTBZT21LeXppbzlCU3U0V1JDWUZjUGwwb3pPb1JRdUow?=
+ =?utf-8?B?WnhDQ2FMdVpacmcrdTgwYjRweFVvdHRJTyszZXlvcUprT0F4NnRqQWF4RFY0?=
+ =?utf-8?B?a3o4R0E1TEJlSEk4Tm91N2JsS3pZQjRaV2xFaU42enBkMFB2cXZRMnBoa1VT?=
+ =?utf-8?B?NGpReURyYktRa1kxajh2NkJyZitTRWJvNXVJcndzZkhXeEN4OUUvU1FSckpO?=
+ =?utf-8?B?NVBkeFYzNllyNlBVdmh5b0I1TlR2bDlpWDFlc1lmZEFIeno4UlBvOEpiWnpI?=
+ =?utf-8?B?UDh1N0RkTGdDbXJJUEJLMHAraGZCVS8zSzZXbWloYkl5Rm00elZHaUR2REd0?=
+ =?utf-8?B?YVNtWHlpeWllVzVzZ29aazdnM09XT0NkMUk0NXVveUhlYXFPMDg4MVNrREpv?=
+ =?utf-8?B?UkM5eXc0Wk9oSmhmNUdxUmVtbkEvMGt0RUZiZkRJM2g5YXh6d0FscGNwdVpy?=
+ =?utf-8?B?RlNaNUo2eHo4cTZ1Uy81ZFNUY2xYQ28weUV5WWRPWXJoZFhJMXo2YjloMkFB?=
+ =?utf-8?B?c0RjUG5GRWg5RXVINVBTV2RkNHFvTERyOHJtaXE4bUNmOEUxZjd6a1Y0M0xr?=
+ =?utf-8?B?MVpxQUtxZWxYZ2I0eEJPbFZZVUgzOStOR3B1SkdQdXZHOHo5MDgxTTRMYTlk?=
+ =?utf-8?B?Y1ZCZk9NZFpjcGJ1ZHZMR0xsS3N0V3dOZlhpeDdBd3RLUGFTUlc2dXArTmUz?=
+ =?utf-8?B?QmJYRUhXM1YzVHprWkdYM2FtQjEyUUEzQzhlV0dtN2R0MHVuc0xXbGI0a0R4?=
+ =?utf-8?B?M3kydXZGOFBIbjhNMGZKNmF3QVRWNUxRUkdBT0ZYVE5lcU5mcU1ES3htUTdJ?=
+ =?utf-8?B?UWxEUWFVR0lrOFVEYWhDUT09?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b14a7fb1-79f5-48b6-0504-08db18e6c466
+X-MS-Exchange-CrossTenant-AuthSource: AS2PR03MB9815.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2023 17:19:22.4466
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR03MB7728
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
+On 2023-02-23 01:48, Jeff King wrote:
 
-Just a heads-up, I was CC'd only on the cover letter (and not this patch). 
-
-> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-
-Even in an RFC (or maybe *especially* in an RFC?), it's important to provide
-some context around what you're doing in a patch/why you're doing it. It
-seems like you provided that information in your cover letter [1], though,
-so I think this "series" would be better off submitted as a single patch,
-with the cover letter contents...
-
-> ---
-
-...right here! That is, below the '---' line but before the diff summary.
-
-[1] https://lore.kernel.org/git/20230227050543.218294-1-cheskaqiqi@gmail.com/
-
->  builtin/check-attr.c                     |  3 +++
->  t/t1092-sparse-checkout-compatibility.sh | 19 +++++++++++++++++++
->  2 files changed, 22 insertions(+)
+> On Wed, Feb 22, 2023 at 09:51:28PM -0800, Victoria Dye wrote:
 > 
-> diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-> index 0fef10eb6b..f85b91ebba 100644
-> --- a/builtin/check-attr.c
-> +++ b/builtin/check-attr.c
-> @@ -112,6 +112,9 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
->  
->  	git_config(git_default_config, NULL);
->  
-> +	prepare_repo_settings(the_repository);
-> +	the_repository->settings.command_requires_full_index = 0;
+>> Junio C Hamano wrote:
+>>> * mc/credential-helper-www-authenticate (2023-02-16) 3 commits
+>>>  - credential: add WWW-Authenticate header to cred requests
+>>>  - http: read HTTP WWW-Authenticate response headers
+>>>  - t5563: add tests for basic and anoymous HTTP access
+>>>
+>>>  Allow information carried on the WWW-AUthenticate header to be
+>>>  passed to the credential helpers.
+>>>
+>>>  Will merge to 'next'?
+>>>  source: <pull.1352.v10.git.1676586881.gitgitgadget@gmail.com>
+>>
+>> Aside from some relatively minor touch-ups, this has been fairly stable
+>> since v8. I'm happy with it at this point, but I'm also curious to hear
+>> Peff's thoughts (since it was his review that prompted the switch to Apache
+>> for the test helper, among other changes).
+> 
+> I just gave v10 a careful read. It looks quite nice to me, though there
+> were a few tiny nits that I think are worth a re-roll (the most
+> important being the strcasecmp buffer over-read).
 
-The test below doesn't do anything special related to the sparse index, so
-this change is unnecessary (and, as far as I can tell, will break in some
-usage of 'git check-attr'). If you're only looking for feedback on testing,
-it'd better to leave this out.
+Thanks for the thorough review all :)
 
-> +	
->  	argc = parse_options(argc, argv, prefix, check_attr_options,
->  			     check_attr_usage, PARSE_OPT_KEEP_DASHDASH);
->  
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 801919009e..b28010aa5c 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -2055,4 +2055,23 @@ test_expect_success 'grep sparse directory within submodules' '
->  	test_cmp actual expect
->  '
->  
-> +test_expect_success 'check-attr pathspec inside sparse definition' '
-> +	init_repos &&
-> +
-> +	run_on_all touch deep/test.c &&
-> +	echo "*.c diff=cpp -crlf myAttr" >>.gitattributes &&
-
-Is there a specific reason you wanted to create a new file, rather than use
-something in the existing structure (e.g. 'deep/a'?). If not, I'd recommend
-using the existing file structure setup by the test in the 'setup' test at
-the beginning of the file.
-
-> +	run_on_all cp ../.gitattributes . &&
-> +	test_all_match git add .gitattributes &&
-> +	test_all_match git commit -m "add .gitattributes" &&
-> +	
-> +	run_on_all git reset --hard &&
-
-Unless I'm missing something, there's nothing to 'reset' here? Same for the
-other 'reset's you have below. If they're not needed, they should be
-removed.
-
-> +	test_all_match echo "deep/test.c" | git check-attr --stdin  -a &&
-
-In addition to testing that all of them match, it would be helpful to see
-*which* attributes are reported. The test 'ls-files' demonstrates one way of
-doing that sort of test.
-
-> +
-> +	run_on_all git reset --hard &&
-> +	test_all_match git check-attr -a  deep/test.c &&
-
-Besides the things already noted in my earlier comments, these scenarios
-seem reasonable.
-
-> +
-> +	run_on_all git reset --hard &&
-> +	test_all_match git check-attr -a  --cached deep/test.c 
-
-'deep/test.c' isn't in the index, so AFAICT this should return nothing.
-While the case of an untracked file is interesting, I think that would be
-*in addition to* a test on a file that exists in the index, e.g. 'deep/a'.
-
-> +'> +
->  test_done
-
+> -Peff
