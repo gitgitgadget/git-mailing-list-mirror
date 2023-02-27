@@ -2,122 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3FE1C64ED6
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 10:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57C7DC64ED6
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 12:09:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229955AbjB0KAz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 05:00:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42356 "EHLO
+        id S229754AbjB0MJ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Feb 2023 07:09:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbjB0KAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2023 05:00:54 -0500
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F03D01E299
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 02:00:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=iee.email;
-        s=2023022100; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-        References:To:Subject:MIME-Version:Date:Message-ID:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID; bh=Dpfm8GTCnPv0ySQNVvsIfMsqSeUipQ6LEU7hQJ1yqg0=; b=Si3Mrr
-        0QfwEuqC+yBpT6UBBwPs5L6apqgC/U4kB8y/o/6I+kuEE032DDSboK6Cs5J3nqk0BzqaG+E1E7QCQ
-        JoATBOY0r9XPmwBTXrwMq3bsHtditbZY8CkRlpgCZQKYOX7Qww7SNcfgHHU51WkaZ9YAnBTO5TgF7
-        +x2YIPJg180=;
-Received: from host-2-103-194-72.as13285.net ([2.103.194.72] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1pWaJP-00021z-3w;
-        Mon, 27 Feb 2023 10:00:51 +0000
-Message-ID: <15d5c6c5-091a-63b1-979a-5aaa64c9e717@iee.email>
-Date:   Mon, 27 Feb 2023 10:00:45 +0000
+        with ESMTP id S229535AbjB0MJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2023 07:09:26 -0500
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9734C7A80
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 04:09:21 -0800 (PST)
+Received: by mail-qt1-x834.google.com with SMTP id cf14so6183901qtb.10
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 04:09:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jb78BnAyuPhp1o2tvNVpr0jl3j/tp6gv/yHJhyqwKCI=;
+        b=FQ36Tov8NlZvQXOjuDtFdGWF40G9O3ub32sLVVEiZZw+cR1ZiTsC+MfR1BJwfGtCQf
+         GJrtaUnp+fWJzbqGqVSrOALjTqSNVlr91FAWWLzmFn8pWA/T1jrwMxByMnDw76S5j2iQ
+         dg4s16rDlw5FjUnuyQyvH1AUclecBERZzspoOfr7Q1CGzxLZDIg+45IGb+w+S6O7vg40
+         3UHuON7oqmuu1H4/1FFGyh+GFr4Lrr+swn9nh1VVK88ZIZjiJAsJuRg7fOf0mYhxwm6O
+         JnCP94jRimTSF7rf1Xhymy+8yOhmq+5+sq3CgVA7VHVXtnfIf+2YS/0LT7U3QKLm9NW9
+         I6uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jb78BnAyuPhp1o2tvNVpr0jl3j/tp6gv/yHJhyqwKCI=;
+        b=WRnKKFZLo/jwAmK3XEg8dVI2o7q+IsbKVmnim26FkQ7Pc6Tz7Cca4KcEVa1rKCF8J4
+         E4spnTuM2kp0Icd3mAtDiOnSlmXYVO4YcBNHzk99Q7vSq1ssV4vl+c15Wi74PqGRV/04
+         Ek2+c4uN5ur1cznEQ+7AHN37K4iZWDTdONBaGPWyJgGY2b9xUC+Aw5OWCtIZ0vbIp5BX
+         eg9GPbm9qvAVS3gly8vgfi2hAgiIK/8KtGWNZxWLU4kfT5umFl+QUl5NLlikG96C1vHv
+         Jt+8yeu9VmXNl/iyYFPiKjEkRQLhFbW0KZtk3Z6T4bflkhvoz598jdmf2Eb28ZNe7BnT
+         tzZA==
+X-Gm-Message-State: AO0yUKVGssWc6JCh/A9wUTyGePYpMvLqbTER64ClrnPcfRJMHjAX7mnR
+        9W4HecqlN1ie6x/2hR/rP+T8q2W2Xc503yE=
+X-Google-Smtp-Source: AK7set+rsPHNG2kBBglNiHyry5tXYsCXtg6GgcYdXoSyQ9paHALD7zWQCY39ZU+SoV6pgXsWYOZy9Q==
+X-Received: by 2002:ac8:58d2:0:b0:3bf:e05a:f2f2 with SMTP id u18-20020ac858d2000000b003bfe05af2f2mr1255922qta.31.1677499760526;
+        Mon, 27 Feb 2023 04:09:20 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:cb8:323e:d144:f6b9? ([2600:1700:e72:80a0:cb8:323e:d144:f6b9])
+        by smtp.gmail.com with ESMTPSA id x21-20020a376315000000b007419eb86df0sm4798141qkb.127.2023.02.27.04.09.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Feb 2023 04:09:19 -0800 (PST)
+Message-ID: <c6c82351-4d41-990f-0cdd-565bf2955100@github.com>
+Date:   Mon, 27 Feb 2023 07:09:18 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: Gitk : When the number of commits is small, you can roll up
- excessively
-To:     "L2750558108@outlook.com" <L2750558108@outlook.com>,
-        git <git@vger.kernel.org>
-References: <BY5PR14MB3560879E6CBDD493C873DB18B1A29@BY5PR14MB3560.namprd14.prod.outlook.com>
- <3f11a4d5-6774-ddd9-060e-3e95acb84c69@iee.email>
- <CH2PR14MB35637B8C5593D5F17076E7EEB1AF9@CH2PR14MB3563.namprd14.prod.outlook.com>
-Content-Language: en-GB
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <CH2PR14MB35637B8C5593D5F17076E7EEB1AF9@CH2PR14MB3563.namprd14.prod.outlook.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH 4/3] fsck: check even zero-entry index files
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
+References: <c6246ed5-bffc-7af9-1540-4e2071eff5dc@kdbg.org>
+ <Y/hv0MXAyBY3HEo9@coredump.intra.peff.net> <xmqqr0uf0y4b.fsf@gitster.g>
+ <Y/vdV4bjorvRYoaR@coredump.intra.peff.net>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <Y/vdV4bjorvRYoaR@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27/02/2023 05:01, L2750558108@outlook.com wrote:
-> You can scroll up via the scroll wheel or the right column button and
-> see the white space in front of the first row, and in this case, the
-> collision box for each row is misaligned, which prevents me from
-> selecting the commit by clicking. If you stll not understand, I can
-> send a picture or video to show the situation I am experiencing,
+On 2/26/23 5:29 PM, Jeff King wrote:
+> On Fri, Feb 24, 2023 at 09:30:44AM -0800, Junio C Hamano wrote:
+> 
+>> So we had a separate worktree with its index pointing at an object
+>> by its resolve-undo (or cache-tree) extension, but somehow lost that
+>> object to gc (I agree with your assessment that it should no longer
+>> happen since 2017).  gc these days knows about looking at the index
+>> of all worktrees, finds the issue, and stops for safety.  fsck that
+>> is run in the primary worktree may not have noticed but fsck run
+>> from that worktree would notice the issue.
+>>
+>> Sounds like a frustrating one.  
+>>
+>> Thanks, both, for finding and fixing.
+> 
+> I saw that this hit next, but I had a few fixups that I had planned to
+> squash in. I saw you got the leak-fix one, but I have one more. Since
+> this is the end of the cycle, we _could_ just squash it in when we
+> rewind next. But having now written it as a patch on top, I think the
+> explanation kind of merits its own commit.
 
-I see the space above (which I guess is for 'uncommitted changes',
-should they exist) and a small space below when scrolling.
-I'm unsure what the 'collision box' refers to as I don't see any
-'misalignment'. But I maybe just too familiar with gitk's quirks.
+I just read all four (and a half) patches and agree that this
+is a valuable change. Thanks for working on it.
 
-> but I don't know where to put them
->
-
-The https://groups.google.com/g/git-users does allow (If I remember
-correctly) the inclusion of photos. Please do annotate/label the screen
-shots. Plain text doesn't always carry the expected nuances...
->  
-> ------------------------------------------------------------------------
-> L2750558108@outlook.com
->
->      
->     From: Philip Oakley <mailto:philipoakley@iee.email>
->     Date: 2023-02-26 20:26
->     To: L2750558108@outlook.com; git <mailto:git@vger.kernel.org>
->     Subject: Re: Gitk : When the number of commits is small, you can
->     roll up excessively
->     A bit of a late response..
->     On 14/02/2023 06:02, L2750558108@outlook.com wrote:
->     > Gitk : When the number of commits is small, you can roll up
->     excessively
->     >
->     > Reduce :
->     >
->     > 1.Create a new respository
->     > 2.Make 2 Commit
->     > 3.Go to Gitk to see them
->     > 4.Scroll up in the commit list and you can see the error
->     I cannot replicate this problem (on Git-for-Windows git version
->     2.39.2.windows.1).
->
->     What OS, Git and gitk versions are you on?
->
->     I created the repo with the commands
->     phili@Philip-Win10 MINGW64 /c/git-sdk-64/usr/src (main)
->     $ git init gitkfault
->     $ cd gitkfault/
->     $ echo test>file;git add file;git commit -mfirst
->     $ echo test2>file;git add file;git commit -msecond
->     $ gitk &
->     [1] 1021
->
->     I was visualising the commits (lower gitk window) with the "Diff" and
->     "Patch" settings.
->      
->     At your step 4, I tried 'scrolling up' both by mouse clicking on
->     the two
->     commits in the top left window that displays the history, and by
->     using
->     the left/right arrows displayed just right of the "SHA1 ID" value. No
->     errors were shown.
->
->     (those sha1 arrows are distinct from the 'Find' selection and
->     navigation
->     capability immediately below the "SHA1 ID" line.
->
->     What were the exact errors shown at your step 4?
->
->     -- 
->     Philip
->
-
+-Stolee
