@@ -2,131 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB180C64ED6
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 19:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5AF1C64ED8
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 19:40:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229852AbjB0Tjb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 14:39:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47192 "EHLO
+        id S230045AbjB0TkM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Feb 2023 14:40:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229886AbjB0Tj3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2023 14:39:29 -0500
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85C6226CC3
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 11:38:49 -0800 (PST)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-536c6ce8d74so159338777b3.9
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 11:38:49 -0800 (PST)
+        with ESMTP id S230033AbjB0TkK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2023 14:40:10 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E187327991
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 11:39:46 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id bh1so7900810plb.11
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 11:39:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kdJZ/mDkNOxIzFMKHrfXjduh6F1wLwRvDGDlMoOchUk=;
-        b=YmqOvd4MLVH8F+wGqMCV80T5Ydf38gzwCTEBPxIk6K2S49WcFHBZS8TX1dT+tZXTg5
-         K2iRV0HZEt8qen4nqOIP1vs4dIGHPXj3fOpO6i5ExwM5hsW7VUSqilD5WefmQiSl7BfH
-         T724fHFUEtFbaN0Ip+LlligYgWe4MlO5feHwSUH6CD5+zuXwjQFbh/FObg779FoXvMMX
-         RADRW2kSOwOXbLSQFDsRyyL0A6YsDZMhCe2fSAfjY5f0Z0am5I6dAo7laB43TNBU9Uro
-         75OUpD/zQSD1oordPQ6/K8NTArjxtxDKdZJJhZnxuVUk34afVum+Hm0wHSGMrbamz90K
-         rIWA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7Ri8ni3TfpD8BOZ8fdHkWSp9/wt82bzgQ+wd5KKYWGs=;
+        b=QIRj3nZGX2Lja9BZac28AnJHom3ha5kJwFo57+UrDieZvDJvlfZ13ga+0KmobEltIr
+         XayWe00VHM7Weupklv/I2HZrZUinrnEni6qLJzkguAuDzm1Lmno1dopU7k8I8osOZ2x3
+         pSO3Fz8i9qVErAUINUR8xP18yHPtPn8ZBwPshtzeeXvZmulhkWmqVKsEa5ImrLsyEsI7
+         OThjzjJuDrj6Q6KeDukB5t5U58rD1SRoC9U/e3G38O+c3dalUMRBwPnsaku8zmaPU8Gs
+         wdVPVs1hJyrV1BeSD0OFZnFUdEu7a9OHkwT96xW0VBbAeDz2ZwYn4CB2mEgCSB9Vr+mw
+         rxbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kdJZ/mDkNOxIzFMKHrfXjduh6F1wLwRvDGDlMoOchUk=;
-        b=keSSZkQwT1pHrv8aUUJ7pVAYlQXmTqfc0eJ1YLyxy3ZGM2547MbtVjI65MTtr05Hls
-         oOV2h9Xt29C1pIM+/TmBX08I+xER92jAwBL4+M6taF/pnrxqP+fhMY+/Hz0oK+7iCqiR
-         r69wuhlYErCsB/kaR82loZ51Hr7u1AxYlvba/H7G3A0p5br3Ji0y3GPdrvSYdo0hX74U
-         8VCSNRUdeJmOfJ82AVXG/hSJaPzO8BppIrN8u1NqRXVPIOrsX4b4CN77z/4BtH8YjhBQ
-         IJeDo4+aliEfouX02eYSR7oJscJ4ELB2eK0eFABBHtUjgJA2n7IMRcYwY32PYE8C6Jw6
-         neAg==
-X-Gm-Message-State: AO0yUKVk1ZlZWdxgIDy72yFqot9zjNITB98SpvcdCFykec9FZ3qySmU7
-        mCIBN1foSz1TRLIR9SeysYv2tG3fGAglrg7iZey6
-X-Google-Smtp-Source: AK7set+B4q/kzexqe7VnUcPlWw2n0tsdsueuKleUvBfSfExiq5Da+7dreEt16CxGkp7GJRVY9IQAG1vkg+7fow2nsIxa
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:e547:b66a:7a19:4376])
- (user=jonathantanmy job=sendgmr) by 2002:a25:8284:0:b0:a4b:a813:46de with
- SMTP id r4-20020a258284000000b00a4ba81346demr5368883ybk.4.1677526721312; Mon,
- 27 Feb 2023 11:38:41 -0800 (PST)
-Date:   Mon, 27 Feb 2023 11:38:39 -0800
-In-Reply-To: <76bac570-147e-7c74-c18c-1da88bc3d342@gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.39.2.722.g9855ee24e9-goog
-Message-ID: <20230227193839.2416545-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v4 2/3] branch: description for orphan branch errors
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     "=?UTF-8?q?Rub=C3=A9n=20Justo?=" <rjusto@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7Ri8ni3TfpD8BOZ8fdHkWSp9/wt82bzgQ+wd5KKYWGs=;
+        b=QS6Nq4JRbu2qVDbZiorz7k6KpMx/9HBUqfTmLFQAu1VgwFKsC7d6RawfWckbV5OxAq
+         VpryzIjlRzmp590AUrgFPU4xpoRsSrt+Cvg2eN4i/axgAiSvZGthwVcRUo3fiwGtNJYT
+         t8P4hjuNFksOpRfjIPDnyTtrciGnEWClznyagf+U3OgqXr3aUbGydWm6OOzeAeZZ3Bvb
+         D58TY79V158Z4vDGFbH2bDuGqS34KfpZ8jNKPf5QykAKYzH2GQXoVEYW8GP9eW+80GnI
+         me+RhXpr/ZA3hMXw3wg2Hc6d9+P+euSmP+4tBdVmIHIKFzzs4S0cWz29H0wEDLeywQFf
+         HjNw==
+X-Gm-Message-State: AO0yUKX0IV/VCmMynVTKb4GjKX8Yid78jpDO+h6FrpVNWCGWn3Jy8OOG
+        gNuaaRTgbBjQ3xuLC96a+f+P2TWDh6E=
+X-Google-Smtp-Source: AK7set9mywOkVTjRQ0OMGyJdSLgcvslo8ozSUNkFELbxBCPrV+XVC5p4RNTRaTkLgm/8DLe7Uu5j+w==
+X-Received: by 2002:a17:903:138d:b0:19a:d7d8:a080 with SMTP id jx13-20020a170903138d00b0019ad7d8a080mr60760plb.22.1677526785057;
+        Mon, 27 Feb 2023 11:39:45 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id v9-20020a1709029a0900b001992e74d058sm4984360plp.7.2023.02.27.11.39.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Feb 2023 11:39:44 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Masahiro Yamada <masahiroy@kernel.org>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2 1/5] git-compat-util: add isblank() and isgraph()
+References: <20230226115021.1681834-1-masahiroy@kernel.org>
+        <20230226115021.1681834-2-masahiroy@kernel.org>
+        <36cd059e-c676-2aa2-68d9-41a7b0db57f0@web.de>
+Date:   Mon, 27 Feb 2023 11:39:44 -0800
+In-Reply-To: <36cd059e-c676-2aa2-68d9-41a7b0db57f0@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 26 Feb 2023 19:45:22 +0100")
+Message-ID: <xmqqpm9usxrz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Firstly, the subject could be more precise. Maybe "branch: check all
-worktrees for orphan branches" (47 characters) or something like that.
+René Scharfe <l.s.r@web.de> writes:
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
-> In bcfc82bd48 (branch: description for non-existent branch errors,
-> 2022-10-08) we checked the current HEAD
+>> In the previous submission, I just moved isblank() and isgraph() as
+>> implemented in wildmatch.c. I knew they were not robust against the
+>> pointer increment like isblank(*s++), but I thought it was the same
+>> pattern as isprint(), which has the same issue. Unfortunately, it was
+>> more controversial than I had expected...
+>
+> Not sure we need that story in the commit message,...
 
-Probably clearer to say "HEAD in the current worktree" instead of
-"current HEAD".
+Usually we encourage people to write as if there were no "previous
+iterations".  Describe how to reach the best end-result without any
+detour, using the experience gained from failed attempts.
 
-> to detect if the branch to
-> operate with is an orphan branch, so as to avoid the confusing error:
-> "No branch named...".
->=20
-> If we are asked to operate with an orphan branch in a different working
-> tree than the current one, we need to check the HEAD in that different
-> working tree.
+> ... but it gave me an idea:
 
-Probably clearer to just say "But there might be orphan branches in
-other worktrees".
+;-)
 
-> Let's extend the check we did in bcfc82bd48, to all HEADs in the
-> repository, using the helper introduced in 31ad6b61bd (branch: add
-> branch_checked_out() helper, 2022-06-15)
+> ...  So it's not so
+> easy, however, ...
+>
+>> This version implements them as inline functions because we ran out
+>> all bits in the sane_ctype[] table. This is the same pattern as
+>> islower() and isupper().
+>
+> ... if you remove GIT_SPACE from the definition above you get a
+> macro version of isgraph() that uses a single table lookup.
+>
+> If we're out of bits then isblank() is a good choice to implement
+> without a table lookup, as this class only contains two characters
+> and two comparisons should be quite fast.
 
-s/HEADs/worktrees/
+Implementing sane_isblank() plus sane_isgraph() as static inlines is
+already not too bad, but if one of them can be made into a simple
+table look-up, that indeed is better ;-)
 
-> @@ -493,8 +496,9 @@ static void copy_or_rename_branch(const char *oldname=
-, const char *newname, int
->  	struct strbuf oldsection =3D STRBUF_INIT, newsection =3D STRBUF_INIT;
->  	const char *interpreted_oldname =3D NULL;
->  	const char *interpreted_newname =3D NULL;
-> -	int recovery =3D 0;
-> +	int recovery =3D 0, oldref_usage =3D 0;
->  	struct worktree **worktrees =3D get_worktrees();
-> +	struct worktree *oldref_wt =3D NULL;
+> Stepping back a bit: Is using the unlocalized is* macros in
+> wildmatch() safe, i.e. do we get the same results as before
+> regardless of locale?  Junio's remark in
+> https://lore.kernel.org/git/xmqq3579crsd.fsf@gitster.g/ sounds
+> convincing to me if we don't care about single-byte code pages
+> and require plain ASCII or UTF-8.  I think it's a good idea to
+> address that point in the commit message.
 
-Better to have 2 variables (one for rebased, and one for bisected) to
-avoid the situation in which the last problematic worktree seen was a
-bisected one, but a prior one was a rebased one.
+True.  To be honest, I wasn't thinking about non-UTF-8 single-byte
+"code pages".  In the context of wildmatch, the strings we deal with
+mostly interact with the paths on the filesystem.  If you interact
+with your filesystem in latin-1 that may pose an issue, and even if
+(or rather, especially if) we are to declare that it does not matter,
+we should document it in the proposed log message.
+>
+> And adding tests to t/helper/test-ctype.c would be nice.
 
-> @@ -818,7 +835,7 @@ int cmd_branch(int argc, const char **argv, const cha=
-r *prefix)
-> =20
->  		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
->  		if (!ref_exists(branch_ref.buf))
-> -			error((!argc || !strcmp(head, branch_name))
-> +			error((!argc || branch_checked_out(branch_ref.buf))
->  			      ? _("No commit on branch '%s' yet.")
->  			      : _("No branch named '%s'."),
->  			      branch_name);
-> @@ -863,7 +880,7 @@ int cmd_branch(int argc, const char **argv, const cha=
-r *prefix)
->  		}
-> =20
->  		if (!ref_exists(branch->refname)) {
-> -			if (!argc || !strcmp(head, branch->name))
-> +			if (!argc || branch_checked_out(branch->refname))
->  				die(_("No commit on branch '%s' yet."), branch->name);
->  			die(_("branch '%s' does not exist"), branch->name);
->  		}
+Very true.
 
-What is the relevance of these changes?
-
+>> +#define isblank(x) sane_isblank(x)
+>> +#define isgraph(x) sane_isgraph(x)
+>> @@ -1270,6 +1274,16 @@ static inline int sane_iscase(int x, int is_lower)
+>>  		return (x & 0x20) == 0;
+>>  }
+>>
+>> +static inline int sane_isblank(int c)
+>> +{
+>> +	return c == ' ' || c == '\t';
+>> +}
+>> +
+>> +static inline int sane_isgraph(int c)
+>> +{
+>> +	return isprint(c) && !isspace(c);
+>> +}
