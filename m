@@ -2,152 +2,256 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93D73C64ED8
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 15:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B412AC64ED8
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 15:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230148AbjB0PVQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 10:21:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37528 "EHLO
+        id S229592AbjB0P2a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Feb 2023 10:28:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229972AbjB0PVP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2023 10:21:15 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D376222A3C
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 07:21:09 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id bi9so9047099lfb.2
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 07:21:09 -0800 (PST)
+        with ESMTP id S230159AbjB0P20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2023 10:28:26 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF2630E2
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 07:28:23 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id t25-20020a1c7719000000b003eb052cc5ccso7029176wmi.4
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 07:28:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QRpaw0EC/OH5QhxximgV2sF41DOeskiyCoYCx1iBG8o=;
-        b=dKZMEJfvSGl23A37pcjvjfaxl+EHraeAheVs3u5IT5w9drRreC/lGt0ha7XBbKNhis
-         1f+Coxcu+F9y72EeNBNGynZLoS4goZR36tk2NiQ/d8ENxfdOk2hN8953LBiB4N6asx+u
-         5NPoA+xLeyMR9Hew269jP5Ls0dmZxCHKIH6WCrSuGqr+OnA06tpghQAXLAtzOKva3xHR
-         cfq32DeZVFiClqllm/J8+ATk4BwLodcIoYLn6R3UtHPpdGi+Fq2ZuQ5isYrFtR7phqql
-         6tWK0PHKp32b9mPQEwcgvwMMaG/3Hy3Mn5upq4ZAUz5M6qONSUgmi4FWYwwG7k8Rjjsa
-         42zQ==
+        bh=jM1AKE45jlTSYxQ9N+zdTWslW60uWlU16QvGMmKs9Rw=;
+        b=RkOtK7xcELttVq+wsVQTlcuZ/MLqmKc/wxt0CR66xXcCmXfrMt5Earz1v5CjxqdMZC
+         foS4NIjI+HchUGxLkD19PA+7oKJtA4raKPrprDRnGOq2JijFQWkeu2IxQH3O01hEXWWJ
+         65RzfZ594PTMoScMmQC3Aj9TEpwzRE0ifc+soiHVXxV8Ncg2f8Y67zCXVXhOArVjzBHq
+         RmSYxU5bm0LOX9VO3uCSD7QL87CWLj1alIFEsB3Sjl/n+kSDpF+yFT007p3X6TFdTOFI
+         TijFHuH/9YPLkXcNh/PFlR6NxYiq4JhRs/q4fmTchIcaTnsEyybkaNgbjQA0HkAsdiiZ
+         6+ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QRpaw0EC/OH5QhxximgV2sF41DOeskiyCoYCx1iBG8o=;
-        b=YglPf2Oex8U8OAFCSTWbbMzw6fqc1YNGGOf9PnYClE742B/rPxac6YdT6bS17JswiU
-         SX1whX8zHpWD8lTLJZQNAsxexoV5+RfzGmqo5Sr+A7CLf2zUtfosQGH/BQyO9fHDpH7e
-         dJ74wJ3yPD2C3f/s4TD0MK+VD014Lr3mR9DxmAsRNUdyPGlfoLHELzp1m2coCH1tvCGR
-         DJ7FokQMjB3f5hVgYFWl6quejLlL0RINESK48tKz/GeZwJKMNY/XOhpnZ+xKN+U4KbkE
-         XmG09OxdXwacFtu52bpStTxQ+NHg0byKV1bNrLVWl3pL8sSAIHlhWm7zwl2iGTzYByZU
-         ykiw==
-X-Gm-Message-State: AO0yUKV63EoD54T65cCKMi8kH3F5HCB7q3vwANcM53Q4Cd34xv3NiDPq
-        KTIuIpk1gBHaUj6j6rFRVFEZ2J2g3dTjDFgGy37eR17fvBs=
-X-Google-Smtp-Source: AK7set+9wA8Ox/HAYgAl3BGIRtuj16642iH2c5JQcCBPwWfAYvfEQJkQv0qZmeWEgWC0xg36g+8XzO8mJxlJhNF36wU=
-X-Received: by 2002:a19:7417:0:b0:4e1:f70a:3b11 with SMTP id
- v23-20020a197417000000b004e1f70a3b11mr50202lfe.2.1677511267936; Mon, 27 Feb
- 2023 07:21:07 -0800 (PST)
+        bh=jM1AKE45jlTSYxQ9N+zdTWslW60uWlU16QvGMmKs9Rw=;
+        b=S5l3x5U6bar+YUDa9Zi5TdUwvN59wMdmmJNgOV/sUXvWMRAHfbJnRkXc5s0NyyxFgW
+         PJJqZ3hDbxpJvSpmGs1DxoGATBmtd8rYOBjSBh2ZGgA0m2Ed5skHjX4LiH16zpmS2kle
+         rSJP+kzUYAKkyoFYFRUXLxI/GzbS4uqiKJYOzZ//raKd0oyb4eXZU/sybZGDglgRCO36
+         LnmB3/1lhZ8UtMhX1+Pr9byr8VCZro3MKVuWMRqL/LDnPKsu40eqRtp/sGeB80vJap+v
+         jo+/55KJV/srxdEnt8nw5Eobdw9Cz2sNdXzgPp0IEyG+ZGBpdTumGHJzkeAT4RMosPS6
+         KDEg==
+X-Gm-Message-State: AO0yUKWSPrHfydqDu+qFxB9QP1GG0Jo5ag/IcFrxxI83fGldeqUBsPML
+        0BdEb44dGrEz9hvG56+Pqi4Nc7NmnnQ=
+X-Google-Smtp-Source: AK7set8/WQImvse48sCCVe3Gh+7L8jDXfQAAwh3779JUZuiOqechqUH3mFqm+nUxvxblFUz3X1gPzA==
+X-Received: by 2002:a05:600c:3318:b0:3ea:dc39:e8b1 with SMTP id q24-20020a05600c331800b003eadc39e8b1mr10044208wmp.12.1677511701656;
+        Mon, 27 Feb 2023 07:28:21 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f7-20020adffcc7000000b002c7163660a9sm7558250wrs.105.2023.02.27.07.28.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Feb 2023 07:28:21 -0800 (PST)
+Message-Id: <pull.1149.v3.git.1677511700.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1149.v2.git.1677291960.gitgitgadget@gmail.com>
+References: <pull.1149.v2.git.1677291960.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 27 Feb 2023 15:28:07 +0000
+Subject: [PATCH v3 00/13] Clarify API for dir.[ch] and unpack-trees.[ch] -- mark relevant fields as
+ internal
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1474.git.1675614276549.gitgitgadget@gmail.com>
- <CAMMLpeTPEoKVTbfc17w+Y9qn7jOGmQi_Ux0Y3sFW5QTgGWJ=SA@mail.gmail.com>
- <CAPMMpogFAR6cvcR8T5fx+AoytAJ7TsPpSeOjHNzW4Gmkuq7FLQ@mail.gmail.com>
- <CAMMLpeTQ1RpsvwRdZ0G3wdvH1+LXE5tw=7Cs6Q+HxMcRU0qj5Q@mail.gmail.com>
- <CABPp-BFxGYQ_JTC5c4_S_gOK3GxWKuZ=KfvycpkBjPGyKzCJ+g@mail.gmail.com>
- <c3ef69e0-c37a-01fe-a40a-c2940e329793@dunelm.org.uk> <CAPMMpogi_QoGKD824JW+85v_Sgaf5d3TAd_P55YyT5NF6AUJ=w@mail.gmail.com>
- <87a615vkqk.fsf@osv.gnss.ru> <CABPp-BH2XPB4BN5Oo=VnLav_wvAGGUAyZC4HRHRRmES5k75P1Q@mail.gmail.com>
- <87bklilnvp.fsf@osv.gnss.ru> <CABPp-BHRbKG_cXdwaPT0-Rj6QTkkJRcT4N0f45==i7oAqiTC+w@mail.gmail.com>
- <87fsatixnn.fsf@osv.gnss.ru> <CABPp-BF3JUg4jThS8Y_3v-tOEey55V_9KpXRZ3HvfaC3S2m=GQ@mail.gmail.com>
- <87lekklqpi.fsf@osv.gnss.ru>
-In-Reply-To: <87lekklqpi.fsf@osv.gnss.ru>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 27 Feb 2023 07:20:54 -0800
-Message-ID: <CABPp-BGJ+jdwizBNyYr-st58F6BPbyrJ+DwRX81_0NjgU6LhzA@mail.gmail.com>
-Subject: Re: [PATCH] pull: conflict hint pull.rebase suggestion should offer
- "merges" vs "true"
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Tao Klerks <tao@klerks.biz>, phillip.wood@dunelm.org.uk,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Feb 26, 2023 at 1:29=E2=80=AFAM Sergey Organov <sorganov@gmail.com>=
- wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Sat, Feb 25, 2023 at 7:15 AM Sergey Organov <sorganov@gmail.com> wro=
-te:
-> >>
-> >> Elijah Newren <newren@gmail.com> writes:
-> >>
-> >> > On Fri, Feb 24, 2023 at 2:06 PM Sergey Organov <sorganov@gmail.com> =
-wrote:
-> >> >>
-> >> >> Elijah Newren <newren@gmail.com> writes:
-> >>
-> >> [...]
-> >>
-> >> > Please, go read at least [1] to see Johannes comments about how the
-> >> > prior proposals don't work beyond simple cases.
-> >>
-> >> It's exactly handling of simple cases that we need most. We can get
-> >> fancy afterwards, if feasible.
-> >
-> > If we can handle just the simple cases without making common cases
-> > significantly worse, that'd be a potential path forward.  Any proposal
-> > involving the diff between a merge commit and either of its parents
-> > (or an equivalent such as a three-way merge involving the merge commit
-> > and one of its parents) doesn't achieve that, IMO.
->
-> Except the method discussed does achieve exactly that according to the
-> evidence gathered at the time of debates, and here is confirmation (from
-> Johannes himself) from the reference you provided:
+Changes since v2:
 
-I'm glad you read it.  :-)
+ * Two new patches:
+   * one patch (2nd in the series) that fixes a bug in unpack-trees due to
+     the code never having been updated to setup_standard_excludes() + adds
+     a test to avoid regressing that bug it
+   * a preliminary patch that fixes a separate latent issue in the modified
+     testfile referenced above, so that the new test listed above will
+     actually work on all platforms.
 
-> "This strategy, while it performed well in my initial tests (and in
-> Buga's initial tests, too), *does* involve more than one 3-way merge,
-> and therefore it risks something very, very nasty: *nested* merge
-> conflicts."
->
-> So, overall, the method performs well in general,
+Changes since v1 (thanks to Jonathan Tan for the careful reviews!)
 
-Jumping from "performed well on initial tests" to "performs well in
-general" seems to me to be quite a large and unwarranted logical leap.
+ * Clear o->pl when freeing pl, to avoid risking use-after-free.
+ * Initialize o->result in update_sparsity() since it is actually used (by
+   check_ok_to_remove()).
 
-> and we just need to
-> avoid driving ourselves into nested merge conflicts
+Some time ago, I noticed that struct dir_struct and struct
+unpack_trees_options both have numerous fields meant for internal use only,
+most of which are not marked as such. This has resulted in callers
+accidentally trying to initialize some of these fields, and in at least one
+case required a fair amount of review to verify other changes were okay --
+review that would have been simplified with the apriori knowledge that a
+combination of multiple fields were internal-only[1]. Looking closer, I
+found that only 6 out of 18 fields in dir_struct were actually meant to be
+public[2], and noted that unpack_trees_options also had 11 internal-only
+fields (out of 36).
 
-I'm glad you're discussing a disadvantage and how to address it, but I
-don't understand how you can jump to the implication that this is the
-only one.
+This patch is primarily about moving internal-only fields within these two
+structs into an embedded internal struct. Patch breakdown:
 
-> Setting this back into perspective, in comparison to blind re-merge,
-> that fails to keep user changes even when no conflicts at all exist, and
-> even when it's applied at the same place in the history, the discussed
-> method is a *huge* step forward, especially if re-merge is kept as a
-> fallback strategy.
+ * Patches 1-3: Restructuring dir_struct
+   * Patch 1: Splitting off internal-use-only fields
+   * Patch 2: Add important usage note to avoid accidentally using
+     deprecated API
+   * Patch 3: Mark output-only fields as such
+ * Patches 4-11: Restructuring unpack_trees_options
+   * Patches 4-6: Preparatory cleanup
+   * Patches 7-10: Splitting off internal-use-only fields
+   * Patch 11: Mark output-only field as such
 
-The use of superlatives and asterisks doesn't change my opinion; I'm
-still skeptical that the given strategy is overall a step forward, let
-alone a large one.
+To make the benefit more clear, here are compressed versions of dir_struct
+both before and after the changes. First, before:
 
-(I do agree we have a huge problem and thus that a huge step forward
-theoretically could be taken, I just don't see this as it.)
+struct dir_struct {
+    int nr;
+    int alloc;
+    int ignored_nr;
+    int ignored_alloc;
+    enum [...] flags;
+    struct dir_entry **entries;
+    struct dir_entry **ignored;
+    const char *exclude_per_dir;
+#define EXC_CMDL 0
+#define EXC_DIRS 1
+#define EXC_FILE 2
+    struct exclude_list_group exclude_list_group[3];
+    struct exclude_stack *exclude_stack;
+    struct path_pattern *pattern;
+    struct strbuf basebuf;
+    struct untracked_cache *untracked;
+    struct oid_stat ss_info_exclude;
+    struct oid_stat ss_excludes_file;
+    unsigned unmanaged_exclude_files;
+    unsigned visited_paths;
+    unsigned visited_directories;
+};
 
-> P.S. BTW, where this hate for using of diffs with respect to parents
-> come from, I wonder, provided we do use them all the time anyway?
 
-I have no hate for such diffs; I just firmly believe they are
-inappropriate as a solution for the particular problem space being
-discussed.
+And after the changes:
 
-But I've stated that more than enough, and no one is producing patches
-on this topic right now, so I'll drop out of this thread.  I still
-believe in my proposed solution, and I'll implement it as I get time
-for it.
+struct dir_struct {
+    enum [...] flags;
+    int nr; /* output only */
+    int ignored_nr; /* output only */
+    struct dir_entry **entries; /* output only */
+    struct dir_entry **ignored; /* output only */
+    struct untracked_cache *untracked;
+    const char *exclude_per_dir; /* deprecated */
+    struct dir_struct_internal {
+        int alloc;
+        int ignored_alloc;
+#define EXC_CMDL 0
+#define EXC_DIRS 1
+#define EXC_FILE 2
+        struct exclude_list_group exclude_list_group[3];
+        struct exclude_stack *exclude_stack;
+        struct path_pattern *pattern;
+        struct strbuf basebuf;
+        struct oid_stat ss_info_exclude;
+        struct oid_stat ss_excludes_file;
+        unsigned unmanaged_exclude_files;
+        unsigned visited_paths;
+        unsigned visited_directories;
+    } internal;
+};
+
+
+The former version has 18 fields (and 3 magic constants) which API users
+will have to figure out. The latter makes it clear there are only at most 2
+fields you should be setting upon input, and at most 4 which you read at
+output, and the rest (including all the magic constants) you can ignore.
+
+[0] Search for "Extremely yes" in
+https://lore.kernel.org/git/CAJoAoZm+TkCL0Jpg_qFgKottxbtiG2QOiY0qGrz3-uQy+=waPg@mail.gmail.com/
+[1]
+https://lore.kernel.org/git/CABPp-BFSFN3WM6q7KzkD5mhrwsz--St_-ej5LbaY8Yr2sZzj=w@mail.gmail.com/
+[2]
+https://lore.kernel.org/git/CABPp-BHgot=CPNyK_xNfog_SqsNPNoCGfiSb-gZoS2sn_741dQ@mail.gmail.com/
+
+Elijah Newren (13):
+  t2021: fix platform-specific leftover cruft
+  unpack-trees: heed requests to overwrite ignored files
+  dir: separate public from internal portion of dir_struct
+  dir: add a usage note to exclude_per_dir
+  dir: mark output only fields of dir_struct as such
+  unpack-trees: clean up some flow control
+  sparse-checkout: avoid using internal API of unpack-trees
+  sparse-checkout: avoid using internal API of unpack-trees, take 2
+  unpack_trees: start splitting internal fields from public API
+  unpack-trees: mark fields only used internally as internal
+  unpack-trees: rewrap a few overlong lines from previous patch
+  unpack-trees: special case read-tree debugging as internal usage
+  unpack-trees: add usage notices around df_conflict_entry
+
+ builtin/read-tree.c           |  10 +-
+ builtin/sparse-checkout.c     |   4 +-
+ dir.c                         | 114 ++++++++--------
+ dir.h                         | 110 ++++++++-------
+ t/t2021-checkout-overwrite.sh |  16 ++-
+ unpack-trees.c                | 247 ++++++++++++++++++----------------
+ unpack-trees.h                |  42 +++---
+ 7 files changed, 292 insertions(+), 251 deletions(-)
+
+
+base-commit: 06dd2baa8da4a73421b959ec026a43711b9d77f9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1149%2Fnewren%2Fclarify-api-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1149/newren/clarify-api-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1149
+
+Range-diff vs v2:
+
+  -:  ----------- >  1:  7bbc4577a57 t2021: fix platform-specific leftover cruft
+  -:  ----------- >  2:  8ffdb6c8a8a unpack-trees: heed requests to overwrite ignored files
+  1:  7f59ad548d0 =  3:  879a93ac2d7 dir: separate public from internal portion of dir_struct
+  2:  239b10e1181 !  4:  4ce9fae5e7f dir: add a usage note to exclude_per_dir
+     @@ Metadata
+       ## Commit message ##
+          dir: add a usage note to exclude_per_dir
+      
+     +    As evidenced by the fix a couple commits ago, places in the code using
+     +    exclude_per_dir are likely buggy and should be adapted to call
+     +    setup_standard_excludes() instead.  Unfortunately, the usage of
+     +    exclude_per_dir has been hardcoded into the arguments ls-files accepts,
+     +    so we cannot actually remove it.  Add a note that it is deprecated and
+     +    no other callers should use it directly.
+     +
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       ## dir.h ##
+  3:  b8aa14350d3 =  5:  12344400fa0 dir: mark output only fields of dir_struct as such
+  4:  f5a58123034 =  6:  4e86e39506c unpack-trees: clean up some flow control
+  5:  975dec0f0eb =  7:  cd3d4894afb sparse-checkout: avoid using internal API of unpack-trees
+  6:  429f195dcfe =  8:  09140cb2ac5 sparse-checkout: avoid using internal API of unpack-trees, take 2
+  7:  993da584dbb !  9:  27f2d477116 unpack_trees: start splitting internal fields from public API
+     @@ unpack-trees.c: static int verify_clean_subdirectory(const struct cache_entry *c
+       
+       	memset(&d, 0, sizeof(d));
+      -	if (o->dir)
+     --		d.exclude_per_dir = o->dir->exclude_per_dir;
+      +	if (o->internal.dir)
+     -+		d.exclude_per_dir = o->internal.dir->exclude_per_dir;
+     + 		setup_standard_excludes(&d);
+       	i = read_directory(&d, o->src_index, pathbuf, namelen+1, NULL);
+       	dir_clear(&d);
+     - 	free(pathbuf);
+      @@ unpack-trees.c: static int check_ok_to_remove(const char *name, int len, int dtype,
+       	if (ignore_case && icase_exists(o, name, len, st))
+       		return 0;
+  8:  8ecb24a45f0 = 10:  4236c0d80c7 unpack-trees: mark fields only used internally as internal
+  9:  36ca49c3624 = 11:  76f4a544e4b unpack-trees: rewrap a few overlong lines from previous patch
+ 10:  5af04d7fe23 = 12:  ee36935adb5 unpack-trees: special case read-tree debugging as internal usage
+ 11:  c4f31237634 = 13:  6575c007577 unpack-trees: add usage notices around df_conflict_entry
+
+-- 
+gitgitgadget
