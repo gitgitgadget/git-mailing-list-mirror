@@ -2,59 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32EF0C64ED6
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 17:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41D9AC64ED8
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 17:20:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229906AbjB0RU3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 12:20:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58492 "EHLO
+        id S229995AbjB0RUc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Feb 2023 12:20:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229903AbjB0RU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229917AbjB0RU1 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 27 Feb 2023 12:20:27 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7D8021962
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:20:23 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id q16so7045243wrw.2
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:20:23 -0800 (PST)
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1030B1ACCA
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:20:26 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id j19-20020a05600c191300b003eb3e1eb0caso3085551wmq.1
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:20:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SuJL/gahBgdQVx2xI8VPe0KEhDCXempdt5qTAA7UXiw=;
-        b=XkDhjUVtSA2O85oMU6iz7jFNdJUiqkZyVBPYn23VrQCE9XfMv2ki52iPjNbrzUpSnR
-         cdnwus/9i64ZdtZdc+GP9L8veeTkKXmRfs/XtHpyWbgX4Xbv7FQYLAoYHUq5yXRXuKj/
-         Pk+hwxFLkpNQZSWLuYyHB8ICxEPR8dSqzPNWEHmpGGMUfawUDd2WvThytafVNJplLGp8
-         yD4y6w4bYP+iboPhf0Zh/WzPmh7Tc6khu/asI9pSel0v9PmbItEYUVsqzZr178CJ2m6A
-         Un1v2fZ1hVFFHfWTbKBPnNuXoOCIFKT2dXMi47TtbAccE7X2qQA62wIIO2vqqLknBAJZ
-         Ym6A==
+        bh=D++1xyZyEj/TrAs4EOZkMKAoHLMKjsJGokElP0vCZvM=;
+        b=RFavIeRjeUWvKfU+pPNJyjzIkXOnbfVxm1KxDhsXPQ5/MtmotyL82hzvrPJmM0skyy
+         7O95lV/ZiqMQd8TpcfkefFpjW9Fc2qyO5g1e4WEwIBkmxpLPjbPRMqG96F+P3wHIuc9y
+         04uZy7bTsdeR886WiT74gGwxiUDYZ26IlJZ4P2fbudTorDzjub28ejrmspVcsvxohx8J
+         AlVgmuIcCYc1qLebjL3WWwirqppCh80HPdI3N0aPNHRsl4AFdhIyqRCZm4g8r+s4maoZ
+         W+NEYLjJbyX05LYz+Qf18Jp7ngUQ9DAlDGPYRWwMt22ZqCjR6Y+6gl0UZzqAzW5SR0Lz
+         bitg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SuJL/gahBgdQVx2xI8VPe0KEhDCXempdt5qTAA7UXiw=;
-        b=E31796/3ZEuxj39k1rfVirduOQ/RCLsj94JNbFQQvmmmXBmjYmGDH8odBxZCQppHW6
-         +zKp0BN1eUkm/ohkI+DR+xr11AmT2GfET+jKkIZO2Gh6zN7vw3hTpKDT2USh2/VtRYrv
-         AQHIMl2YgOpY6kKcNR8yhExHYkU57+kTc4n0AezfflDfZ4dQj/Jeypi0Shg6MltKphkr
-         AE96vsfI/ulXgcozo3ypvOHQ00exL6Eoi6xsXNUeuqGcIHyPOMPKNHhPRqybVNU9egJp
-         wEdV4oQdXzAAkdkf0vkkjfViADcAlA39q91pgdieGE/FlefI97LQtJrTXDpfmRFkpLXY
-         ORlQ==
-X-Gm-Message-State: AO0yUKXf/q7wEqQBdyoiNxKVuVFjcgtC9cVGYPtkQ/nM6cGb5jSxOVBz
-        gL/qiOBXU2UkTOe+o09B3Ywwgy0dU7Q=
-X-Google-Smtp-Source: AK7set+5p3hTcPmgBteoZwMhAN+fEn+heIyW5B4yc/gjCsiiZGaMP4BhesSvmm6jIJPDxWwUyjMVPQ==
-X-Received: by 2002:adf:fd84:0:b0:2c8:c440:cb05 with SMTP id d4-20020adffd84000000b002c8c440cb05mr7792867wrr.55.1677518421770;
-        Mon, 27 Feb 2023 09:20:21 -0800 (PST)
+        bh=D++1xyZyEj/TrAs4EOZkMKAoHLMKjsJGokElP0vCZvM=;
+        b=XHDj+JotWsQ2PqrT/iZjw5JmcJGPMuTXUvvuUasGSIHysd2ZnxeUsHQ2ou8UlmpxoL
+         fNN9sUgx0WokvVZsQRJzQYss33QUgC0Rd9zJGaFeE60Urst70d7yatrIXyLMi/89kh8N
+         Y4Kqnw2djoFJtDWjn6dIeTVN7VI4BA3Z8wq4rpWuWDQ9nxcgTuWwsob60SOBbeuXXEvU
+         7md8UTiqUeM2fVZASu/t89pvd9PbJ+rnHRVac1s0ZvIfHjE8hGTGAKhXkZBA/D5rHwc0
+         L7CvIjdlokqLG8QYZSpuLEXLpBcFYCjpBF4XppC7C98kiRPOIK2dBQA67pDa3kx7Z8af
+         maOg==
+X-Gm-Message-State: AO0yUKUSQciEQ6kvJfO49KbZ+hX6Ft6lyrqinEe1HsDEZkdyykFpcryH
+        dG5lnkzqUmqm6b+WxCqa2LBospcaSZA=
+X-Google-Smtp-Source: AK7set85zrNDwqC1Qt91shTl9bnD0/uZok0cWUuT3ihSEqGWgd8XGfybmN4v6DrjwTXIg34JJO5WRA==
+X-Received: by 2002:a05:600c:1c14:b0:3ea:ea3e:2d36 with SMTP id j20-20020a05600c1c1400b003eaea3e2d36mr10458049wms.24.1677518423967;
+        Mon, 27 Feb 2023 09:20:23 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z5-20020a5d6545000000b002c5501a5803sm7616809wrv.65.2023.02.27.09.20.21
+        by smtp.gmail.com with ESMTPSA id 2-20020a05600c028200b003e9ded91c27sm13301025wmk.4.2023.02.27.09.20.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Feb 2023 09:20:21 -0800 (PST)
-Message-Id: <pull.1352.v11.git.1677518420.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1352.v10.git.1676586881.gitgitgadget@gmail.com>
+        Mon, 27 Feb 2023 09:20:23 -0800 (PST)
+Message-Id: <3cca9ea0736b6b58065ec03c052ff5acd1349dcc.1677518420.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1352.v11.git.1677518420.gitgitgadget@gmail.com>
 References: <pull.1352.v10.git.1676586881.gitgitgadget@gmail.com>
+        <pull.1352.v11.git.1677518420.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Feb 2023 17:20:17 +0000
-Subject: [PATCH v11 0/3] Enhance credential helper protocol to include auth headers
+Date:   Mon, 27 Feb 2023 17:20:19 +0000
+Subject: [PATCH v11 2/3] http: read HTTP WWW-Authenticate response headers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,627 +71,261 @@ Cc:     Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
         Matthew John Cheetham <mjcheetham@outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Following from my original RFC submission [0], this submission is considered
-ready for full review. This patch series is now based on top of current
-master (9c32cfb49c60fa8173b9666db02efe3b45a8522f) that includes my now
-separately submitted patches [1] to fix up the other credential helpers'
-behaviour.
-
-In this patch series I update the existing credential helper design in order
-to allow for some new scenarios, and future evolution of auth methods that
-Git hosts may wish to provide. I outline the background, summary of changes
-and some challenges below.
-
-Testing these new additions, I use a small CGI shell script that acts as a
-frontend to git-http-backend; simple authentication is configurable by
-files.
-
-
-Background
-==========
-
-Git uses a variety of protocols [2]: local, Smart HTTP, Dumb HTTP, SSH, and
-Git. Here I focus on the Smart HTTP protocol, and attempt to enhance the
-authentication capabilities of this protocol to address limitations (see
-below).
-
-The Smart HTTP protocol in Git supports a few different types of HTTP
-authentication - Basic and Digest (RFC 2617) [3], and Negotiate (RFC 2478)
-[4]. Git uses a extensible model where credential helpers can provide
-credentials for protocols [5]. Several helpers support alternatives such as
-OAuth authentication (RFC 6749) [6], but this is typically done as an
-extension. For example, a helper might use basic auth and set the password
-to an OAuth Bearer access token. Git uses standard input and output to
-communicate with credential helpers.
-
-After a HTTP 401 response, Git would call a credential helper with the
-following over standard input:
-
-protocol=https
-host=example.com
-
-
-And then a credential helper would return over standard output:
-
-protocol=https
-host=example.com
-username=bob@id.example.com
-password=<BEARER-TOKEN>
-
-
-Git then the following request to the remote, including the standard HTTP
-Authorization header (RFC 7235 Section 4.2) [7]:
-
-GET /info/refs?service=git-upload-pack HTTP/1.1
-Host: git.example
-Git-Protocol: version=2
-Authorization: Basic base64(bob@id.example.com:<BEARER-TOKEN>)
-
-
-Credential helpers are encouraged (see gitcredentials.txt) to return the
-minimum information necessary.
-
-
-Limitations
-===========
-
-Because this credential model was built mostly for password based
-authentication systems, it's somewhat limited. In particular:
-
- 1. To generate valid credentials, additional information about the request
-    (or indeed the requestee and their device) may be required. For example,
-    OAuth is based around scopes. A scope, like "git.read", might be
-    required to read data from the remote. However, the remote cannot tell
-    the credential helper what scope is required for this request.
-
- 2. This system is not fully extensible. Each time a new type of
-    authentication (like OAuth Bearer) is invented, Git needs updates before
-    credential helpers can take advantage of it (or leverage a new
-    capability in libcurl).
-
-
-Goals
-=====
-
- * As a user with multiple federated cloud identities:
-   
-   * Reach out to a remote and have my credential helper automatically
-     prompt me for the correct identity.
-   * Allow credential helpers to differentiate between different authorities
-     or authentication/authorization challenge types, even from the same DNS
-     hostname (and without needing to use credential.useHttpPath).
-   * Leverage existing authentication systems built-in to many operating
-     systems and devices to boost security and reduce reliance on passwords.
-
- * As a Git host and/or cloud identity provider:
-   
-   * Enforce security policies (like requiring two-factor authentication)
-     dynamically.
-   * Allow integration with third party standard based identity providers in
-     enterprises allowing customers to have a single plane of control for
-     critical identities with access to source code.
-
-
-Design Principles
-=================
-
- * Use the existing infrastructure. Git credential helpers are an
-   already-working model.
- * Follow widely-adopted time-proven open standards, avoid net new ideas in
-   the authentication space.
- * Minimize knowledge of authentication in Git; maintain modularity and
-   extensibility.
-
-
-Proposed Changes
-================
-
- 1. Teach Git to read HTTP response headers, specifically the standard
-    WWW-Authenticate (RFC 7235 Section 4.1) headers.
-
- 2. Teach Git to include extra information about HTTP responses that require
-    authentication when calling credential helpers. Specifically the
-    WWW-Authenticate header information.
-    
-    Because the extra information forms an ordered list, and the existing
-    credential helper I/O format only provides for simple key=value pairs,
-    we introduce a new convention for transmitting an ordered list of
-    values. Key names that are suffixed with a C-style array syntax should
-    have values considered to form an order list, i.e. key[]=value, where
-    the order of the key=value pairs in the stream specifies the order.
-    
-    For the WWW-Authenticate header values we opt to use the key wwwauth[].
-
-
-Handling the WWW-Authenticate header in detail
-==============================================
-
-RFC 6750 [8] envisions that OAuth Bearer resource servers would give
-responses that include WWW-Authenticate headers, for example:
-
-HTTP/1.1 401 Unauthorized
-WWW-Authenticate: Bearer realm="login.example", scope="git.readwrite"
-WWW-Authenticate: Basic realm="login.example"
-
-
-Specifically, a WWW-Authenticate header consists of a scheme and arbitrary
-attributes, depending on the scheme. This pattern enables generic OAuth or
-OpenID Connect [9] authorities. Note that it is possible to have several
-WWW-Authenticate challenges in a response.
-
-First Git attempts to make a request, unauthenticated, which fails with a
-401 response and includes WWW-Authenticate header(s).
-
-Next, Git invokes a credential helper which may prompt the user. If the user
-approves, a credential helper can generate a token (or any auth challenge
-response) to be used for that request.
-
-For example: with a remote that supports bearer tokens from an OpenID
-Connect [9] authority, a credential helper can use OpenID Connect's
-Discovery [10] and Dynamic Client Registration [11] to register a client and
-make a request with the correct permissions to access the remote. In this
-manner, a user can be dynamically sent to the right federated identity
-provider for a remote without any up-front configuration or manual
-processes.
-
-Following from the principle of keeping authentication knowledge in Git to a
-minimum, we modify Git to add all WWW-Authenticate values to the credential
-helper call.
-
-Git sends over standard input:
-
-protocol=https
-host=example.com
-wwwauth[]=Bearer realm="login.example", scope="git.readwrite"
-wwwauth[]=Basic realm="login.example"
-
-
-A credential helper that understands the extra wwwauth[n] property can
-decide on the "best" or correct authentication scheme, generate credentials
-for the request, and interact with the user.
-
-The credential helper would then return over standard output:
-
-protocol=https
-host=example.com
-path=foo.git
-username=bob@identity.example
-password=<BEARER-TOKEN>
-
-
-Note that WWW-Authenticate supports multiple challenges, either in one
-header:
-
-HTTP/1.1 401 Unauthorized
-WWW-Authenticate: Bearer realm="login.example", scope="git.readwrite", Basic realm="login.example"
-
-
-or in multiple headers:
-
-HTTP/1.1 401 Unauthorized
-WWW-Authenticate: Bearer realm="login.example", scope="git.readwrite"
-WWW-Authenticate: Basic realm="login.example"
-
-
-These have equivalent meaning (RFC 2616 Section 4.2 [12]). To simplify the
-implementation, Git will not merge or split up any of these WWW-Authenticate
-headers, and instead pass each header line as one credential helper
-property. The credential helper is responsible for splitting, merging, and
-otherwise parsing these header values.
-
-An alternative option to sending the header fields individually would be to
-merge the header values in to one key=value property, for example:
-
-...
-wwwauth=Bearer realm="login.example", scope="git.readwrite", Basic realm="login.example"
-
-
-
-Future work
-===========
-
-In the future we can further expand the protocol to allow credential helpers
-decide the best authentication scheme. Today credential helpers are still
-only expected to return a username/password pair to Git, meaning the other
-authentication schemes that may be offered still need challenge responses
-sent via a Basic Authorization header. The changes outlined above still
-permit helpers to select and configure an available authentication mode, but
-require the remote for example to unpack a bearer token from a basic
-challenge.
-
-More careful consideration is required in the handling of custom
-authentication schemes which may not have a username, or may require
-arbitrary additional request header values be set.
-
-For example imagine a new "FooBar" authentication scheme that is surfaced in
-the following response:
-
-HTTP/1.1 401 Unauthorized
-WWW-Authenticate: FooBar realm="login.example", algs="ES256 PS256"
-
-
-With support for arbitrary authentication schemes, Git would call credential
-helpers with the following over standard input:
-
-protocol=https
-host=example.com
-wwwauth[]=FooBar realm="login.example", algs="ES256 PS256", nonce="abc123"
-
-
-And then an enlightened credential helper could return over standard output:
-
-protocol=https
-host=example.com
-authtype=FooBar
-username=bob@id.example.com
-password=<FooBar credential>
-header[]=X-FooBar: 12345
-header[]=X-FooBar-Alt: ABCDEF
-
-
-Git would be expected to attach this authorization header to the next
-request:
-
-GET /info/refs?service=git-upload-pack HTTP/1.1
-Host: git.example
-Git-Protocol: version=2
-Authorization: FooBar <FooBar credential>
-X-FooBar: 12345
-X-FooBar-Alt: ABCDEF
-
-
-
-Why not SSH?
-============
-
-There's nothing wrong with SSH. However, Git's Smart HTTP transport is
-widely used, often with OAuth Bearer tokens. Git's Smart HTTP transport
-sometimes requires less client setup than SSH transport, and works in
-environments when SSH ports may be blocked. As long as Git supports HTTP
-transport, it should support common and popular HTTP authentication methods.
-
-
-References
-==========
-
- * [0] [PATCH 0/8] [RFC] Enhance credential helper protocol to include auth
-   headers
-   https://lore.kernel.org/git/pull.1352.git.1663097156.gitgitgadget@gmail.com/
-
- * [1] [PATCH 0/3] Correct credential helper discrepancies handling input
-   https://lore.kernel.org/git/pull.1363.git.1663865974.gitgitgadget@gmail.com/
-
- * [2] Git on the Server - The Protocols
-   https://git-scm.com/book/en/v2/Git-on-the-Server-The-Protocols
-
- * [3] HTTP Authentication: Basic and Digest Access Authentication
-   https://datatracker.ietf.org/doc/html/rfc2617
-
- * [4] The Simple and Protected GSS-API Negotiation Mechanism
-   https://datatracker.ietf.org/doc/html/rfc2478
-
- * [5] Git Credentials - Custom Helpers
-   https://git-scm.com/docs/gitcredentials#_custom_helpers
-
- * [6] The OAuth 2.0 Authorization Framework
-   https://datatracker.ietf.org/doc/html/rfc6749
-
- * [7] Hypertext Transfer Protocol (HTTP/1.1): Authentication
-   https://datatracker.ietf.org/doc/html/rfc7235
-
- * [8] The OAuth 2.0 Authorization Framework: Bearer Token Usage
-   https://datatracker.ietf.org/doc/html/rfc6750
-
- * [9] OpenID Connect Core 1.0
-   https://openid.net/specs/openid-connect-core-1_0.html
-
- * [10] OpenID Connect Discovery 1.0
-   https://openid.net/specs/openid-connect-discovery-1_0.html
-
- * [11] OpenID Connect Dynamic Client Registration 1.0
-   https://openid.net/specs/openid-connect-registration-1_0.html
-
- * [12] Hypertext Transfer Protocol (HTTP/1.1)
-   https://datatracker.ietf.org/doc/html/rfc2616
-
-
-Updates from RFC
-================
-
- * Submitted first three patches as separate submission:
-   https://lore.kernel.org/git/pull.1363.git.1663865974.gitgitgadget@gmail.com/
-
- * Various style fixes and updates to- and addition of comments.
-
- * Drop the explicit integer index in new 'array' style credential helper
-   attrbiutes ("key[n]=value" becomes just "key[]=value").
-
- * Added test helper; a mini HTTP server, and several tests.
-
-
-Updates in v3
-=============
-
- * Split final patch that added the test-http-server in to several, easier
-   to review patches.
-
- * Updated wording in git-credential.txt to clarify which side of the
-   credential helper protocol is sending/receiving the new wwwauth and
-   authtype attributes.
-
-
-Updates in v4
-=============
-
- * Drop authentication scheme selection authtype attribute patches to
-   greatly simplify the series; auth scheme selection is punted to a future
-   series. This series still allows credential helpers to generate
-   credentials and intelligently select correct identities for a given auth
-   challenge.
-
-
-Updates in v5
-=============
-
- * Libify parts of daemon.c and share implementation with test-http-server.
-
- * Clarify test-http-server Git request regex pattern and auth logic
-   comments.
-
- * Use STD*_FILENO in place of 'magic' file descriptor numbers.
-
- * Use strbuf_* functions in continuation header parsing.
-
- * Use configuration file to configure auth for test-http-server rather than
-   command-line arguments. Add ability to specify arbitrary extra headers
-   that is useful for testing 'malformed' server responses.
-
- * Use st_mult over unchecked multiplication in http.c curl callback
-   functions.
-
- * Fix some documentation line break issues.
-
- * Reorder some commits to bring in the tests and test-http-server helper
-   first and, then the WWW-Authentication changes, alongside tests to cover.
-
- * Expose previously static strvec_push_nodup function.
-
- * Merge the two timeout args for test-http-server (--timeout and
-   --init-timeout) that were a hang-over from the original daemon.c but are
-   no longer required here.
-
- * Be more careful around continuation headers where they may be empty
-   strings. Add more tests to cover these header types.
-
- * Include standard trace2 tracing calls at start of test-http-server
-   helper.
-
-
-Updates in v6
-=============
-
- * Clarify the change to make logging optional in the check_dead_children()
-   function during libification of daemon.c.
-
- * Fix missing pointer dereference bugs identified in libification of child
-   process handling functions for daemon.c.
-
- * Add doc comments to child process handling function declarations in the
-   daemon-utils.h header.
-
- * Align function parameter names with variable names at callsites for
-   libified daemon functions.
-
- * Re-split out the test-http-server test helper commits in to smaller
-   patches: error response handling, request parsing, http-backend
-   pass-through, simple authentication, arbitrary header support.
-
- * Call out auth configuration file format for test-http-server test helper
-   and supported options in commit messages, as well as a test to exercise
-   and demonstrate these options.
-
- * Permit auth.token and auth.challenge to appear in any order; create the
-   struct auth_module just-in-time as options for that scheme are read. This
-   simplifies the configuration authoring of the test-http-server test
-   helper.
-
- * Update tests to use auth.allowAnoymous in the patch that introduces the
-   new test helper option.
-
- * Drop the strvec_push_nodup() commit and update the implementation of HTTP
-   request header line folding to use xstrdup and strvec_pop and _pushf.
-
- * Use size_t instead of int in credential.c when iterating over the struct
-   strvec credential members. Also drop the not required const and cast from
-   the full_key definition and free.
-
- * Replace in-tree test-credential-helper-reply.sh test cred helper script
-   with the lib-credential-helper.sh reusable 'lib' test script and shell
-   functions to configure the helper behaviour.
-
- * Leverage sed over the while read $line loop in the test credential helper
-   script.
-
-
-Updates in v7
-=============
-
- * Address several whitespace and arg/param list alignment issues.
-
- * Rethink the test-http-helper worker-mode error and result enum to be more
-   simple and more informative to the nature of the error.
-
- * Use uintmax_t to store the Content-Length of a request in the helper
-   test-http-server. Maintain a bit flag to store if we received such a
-   header.
-
- * Return a "400 Bad Request" HTTP response if we fail to parse the request
-   in the test-http-server.
-
- * Add test case to cover request message parsing in test-http-server.
-
- * Use size_t and ALLOC_ARRAY over int and CALLOC_ARRAY respectively in
-   get_auth_module.
-
- * Correctly free the split strbufs created in the header parsing loop in
-   test-http-server.
-
- * Avoid needless comparison > 0 for unsigned types.
-
- * Always set optional outputs to NULL if not present in test helper config
-   value handling.
-
- * Remove an accidentally commented-out test cleanup line for one test case
-   in t5556.
-
-
-Updates in v8
-=============
-
- * Drop custom HTTP test helper tool in favour of using a CGI shell script
-   and Apache; avoiding the need to implement an HTTP server.
-
- * Avoid allocations in header reading callback unless we have a header we
-   care about; act on the char* from libcurl directly rather than create a
-   strbuf for each header.
-
- * Drop st_mult overflow guarding function in curl callback functions; we're
-   not allocating memory based on the resulting value and just adds to
-   potential confusion in the future.
-
-
-Updates in v9
-=============
-
- * Drop anoynmous auth tests as these cases are already covered by all other
-   tests that perform HTTP interactions with a remote today.
-
- * In the custom auth CGI script, avoid the empty-substitution in favour of
-   testing explicitly for an empty string. Also simplify some other
-   conditional expressions.
-
- * Avoid an allocation on each wwwauth[] credential helper key-value pair
-   write.
-
- * Various style fixups.
-
-
-Updates in v10
-==============
-
- * Style fixups.
-
- * Only consider space (SP ' ') and horizontal tab (HTAB '\t') when
-   detecting a header continuation line, as per the latest RFC on the
-   matter.
-
- * Update references to old HTTP specs and formal grammars of header fields
-   in comments.
-
- * Rewording of commit messages to remove confusing comment about the case
-   sensitivity of header field names - this is not relevant with the current
-   iteration of the header parsing code. Also update the message around
-   libcurl header support to clarify that physical header lines are
-   returned, but not 'logical' header lines.
-
- * Reword struct credential member doc comment to clarify the purpose of
-   header_is_last_match is for re-folding lines of the WWW-Authenticate
-   header.
-
- * Reintroduce helpful comments in tests to show the origin of the 'magic'
-   base64 basic auth value.
-
- * Use grep -F to ensure we don't do regex matching; avoid interpreting
-   special characters. Remove erronous insensitive comparison flag.
-
-
-Updates in v11
-==============
-
- * Delete custom-auth.valid and .challenge explicitly in test cleanup.
-
- * Use tolower over strncasecmp in implementation of skip_iprefix_mem.
-
- * Use skip_iprefix_mem to match "HTTP/" header lines.
-
-Matthew John Cheetham (3):
-  t5563: add tests for basic and anoymous HTTP access
-  http: read HTTP WWW-Authenticate response headers
-  credential: add WWW-Authenticate header to cred requests
-
- Documentation/git-credential.txt |  19 +-
- credential.c                     |   4 +
- credential.h                     |  16 ++
- git-compat-util.h                |  19 ++
- http.c                           | 111 +++++++++++
- t/lib-httpd.sh                   |   1 +
- t/lib-httpd/apache.conf          |   6 +
- t/lib-httpd/nph-custom-auth.sh   |  39 ++++
- t/t5563-simple-http-auth.sh      | 325 +++++++++++++++++++++++++++++++
- 9 files changed, 539 insertions(+), 1 deletion(-)
- create mode 100644 t/lib-httpd/nph-custom-auth.sh
- create mode 100755 t/t5563-simple-http-auth.sh
-
-
-base-commit: c48035d29b4e524aed3a32f0403676f0d9128863
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1352%2Fmjcheetham%2Femu-v11
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1352/mjcheetham/emu-v11
-Pull-Request: https://github.com/gitgitgadget/git/pull/1352
-
-Range-diff vs v10:
-
- 1:  f3ccc53055a ! 1:  f7b234c4038 t5563: add tests for basic and anoymous HTTP access
-     @@ t/t5563-simple-http-auth.sh (new)
-      +
-      +per_test_cleanup () {
-      +	rm -f *.cred &&
-     -+	rm -f "$HTTPD_ROOT_PATH"/custom-auth.*
-     ++	rm -f "$HTTPD_ROOT_PATH"/custom-auth.valid \
-     ++	      "$HTTPD_ROOT_PATH"/custom-auth.challenge
-      +}
-      +
-      +test_expect_success 'setup repository' '
- 2:  703ac15222f ! 2:  3cca9ea0736 http: read HTTP WWW-Authenticate response headers
-     @@ git-compat-util.h: static inline int skip_iprefix(const char *str, const char *p
-      +				   const char *prefix,
-      +				   const char **out, size_t *outlen)
-      +{
-     -+	size_t prefix_len = strlen(prefix);
-     -+
-     -+	if (len < prefix_len)
-     -+		return 0;
-     -+
-     -+	if (!strncasecmp(buf, prefix, prefix_len)) {
-     -+		*out = buf + prefix_len;
-     -+		*outlen = len - prefix_len;
-     -+		return 1;
-     -+	}
-     -+
-     ++	do {
-     ++		if (!*prefix) {
-     ++			*out = buf;
-     ++			*outlen = len;
-     ++			return 1;
-     ++		}
-     ++	} while (len-- > 0 && tolower(*buf++) == tolower(*prefix++));
-      +	return 0;
-      +}
-      +
-     @@ http.c: size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buff
-      +	 * We only care about the last HTTP request response's headers so clear
-      +	 * the existing array.
-      +	 */
-     -+	if (!strncasecmp(ptr, "http/", 5))
-     ++	if (skip_iprefix_mem(ptr, size, "http/", &val, &val_len))
-      +		strvec_clear(values);
-      +
-      +exit:
- 3:  186da54fd3b = 3:  b774acf3896 credential: add WWW-Authenticate header to cred requests
-
+From: Matthew John Cheetham <mjcheetham@outlook.com>
+
+Read and store the HTTP WWW-Authenticate response headers made for
+a particular request.
+
+This will allow us to pass important authentication challenge
+information to credential helpers or others that would otherwise have
+been lost.
+
+libcurl only provides us with the ability to read all headers recieved
+for a particular request, including any intermediate redirect requests
+or proxies. The lines returned by libcurl include HTTP status lines
+delinating any intermediate requests such as "HTTP/1.1 200". We use
+these lines to reset the strvec of WWW-Authenticate header values as
+we encounter them in order to only capture the final response headers.
+
+The collection of all header values matching the WWW-Authenticate
+header is complicated by the fact that it is legal for header fields to
+be continued over multiple lines, but libcurl only gives us each
+physical line a time, not each logical header. This line folding feature
+is deprecated in RFC 7230 [1] but older servers may still emit them, so
+we need to handle them.
+
+In the future [2] we may be able to leverage functions to read headers
+from libcurl itself, but as of today we must do this ourselves.
+
+[1] https://www.rfc-editor.org/rfc/rfc7230#section-3.2
+[2] https://daniel.haxx.se/blog/2022/03/22/a-headers-api-for-libcurl/
+
+Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+---
+ credential.c      |   1 +
+ credential.h      |  16 +++++++
+ git-compat-util.h |  19 ++++++++
+ http.c            | 111 ++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 147 insertions(+)
+
+diff --git a/credential.c b/credential.c
+index f6389a50684..897b4679333 100644
+--- a/credential.c
++++ b/credential.c
+@@ -22,6 +22,7 @@ void credential_clear(struct credential *c)
+ 	free(c->username);
+ 	free(c->password);
+ 	string_list_clear(&c->helpers, 0);
++	strvec_clear(&c->wwwauth_headers);
+ 
+ 	credential_init(c);
+ }
+diff --git a/credential.h b/credential.h
+index f430e77fea4..3756a54c74d 100644
+--- a/credential.h
++++ b/credential.h
+@@ -2,6 +2,7 @@
+ #define CREDENTIAL_H
+ 
+ #include "string-list.h"
++#include "strvec.h"
+ 
+ /**
+  * The credentials API provides an abstracted way of gathering username and
+@@ -115,6 +116,20 @@ struct credential {
+ 	 */
+ 	struct string_list helpers;
+ 
++	/**
++	 * A `strvec` of WWW-Authenticate header values. Each string
++	 * is the value of a WWW-Authenticate header in an HTTP response,
++	 * in the order they were received in the response.
++	 */
++	struct strvec wwwauth_headers;
++
++	/**
++	 * Internal use only. Keeps track of if we previously matched against a
++	 * WWW-Authenticate header line in order to re-fold future continuation
++	 * lines into one value.
++	 */
++	unsigned header_is_last_match:1;
++
+ 	unsigned approved:1,
+ 		 configured:1,
+ 		 quit:1,
+@@ -130,6 +145,7 @@ struct credential {
+ 
+ #define CREDENTIAL_INIT { \
+ 	.helpers = STRING_LIST_INIT_DUP, \
++	.wwwauth_headers = STRVEC_INIT, \
+ }
+ 
+ /* Initialize a credential structure, setting all fields to empty. */
+diff --git a/git-compat-util.h b/git-compat-util.h
+index a76d0526f79..62747bf6676 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1266,6 +1266,25 @@ static inline int skip_iprefix(const char *str, const char *prefix,
+ 	return 0;
+ }
+ 
++/*
++ * Like skip_prefix_mem, but compare case-insensitively. Note that the
++ * comparison is done via tolower(), so it is strictly ASCII (no multi-byte
++ * characters or locale-specific conversions).
++ */
++static inline int skip_iprefix_mem(const char *buf, size_t len,
++				   const char *prefix,
++				   const char **out, size_t *outlen)
++{
++	do {
++		if (!*prefix) {
++			*out = buf;
++			*outlen = len;
++			return 1;
++		}
++	} while (len-- > 0 && tolower(*buf++) == tolower(*prefix++));
++	return 0;
++}
++
+ static inline int strtoul_ui(char const *s, int base, unsigned int *result)
+ {
+ 	unsigned long ul;
+diff --git a/http.c b/http.c
+index 8a5ba3f4776..677266afff1 100644
+--- a/http.c
++++ b/http.c
+@@ -183,6 +183,115 @@ size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ 	return nmemb;
+ }
+ 
++/*
++ * A folded header continuation line starts with any number of spaces or
++ * horizontal tab characters (SP or HTAB) as per RFC 7230 section 3.2.
++ * It is not a continuation line if the line starts with any other character.
++ */
++static inline int is_hdr_continuation(const char *ptr, const size_t size)
++{
++	return size && (*ptr == ' ' || *ptr == '\t');
++}
++
++static size_t fwrite_wwwauth(char *ptr, size_t eltsize, size_t nmemb, void *p)
++{
++	size_t size = eltsize * nmemb;
++	struct strvec *values = &http_auth.wwwauth_headers;
++	struct strbuf buf = STRBUF_INIT;
++	const char *val;
++	size_t val_len;
++
++	/*
++	 * Header lines may not come NULL-terminated from libcurl so we must
++	 * limit all scans to the maximum length of the header line, or leverage
++	 * strbufs for all operations.
++	 *
++	 * In addition, it is possible that header values can be split over
++	 * multiple lines as per RFC 7230. 'Line folding' has been deprecated
++	 * but older servers may still emit them. A continuation header field
++	 * value is identified as starting with a space or horizontal tab.
++	 *
++	 * The formal definition of a header field as given in RFC 7230 is:
++	 *
++	 * header-field   = field-name ":" OWS field-value OWS
++	 *
++	 * field-name     = token
++	 * field-value    = *( field-content / obs-fold )
++	 * field-content  = field-vchar [ 1*( SP / HTAB ) field-vchar ]
++	 * field-vchar    = VCHAR / obs-text
++	 *
++	 * obs-fold       = CRLF 1*( SP / HTAB )
++	 *                ; obsolete line folding
++	 *                ; see Section 3.2.4
++	 */
++
++	/* Start of a new WWW-Authenticate header */
++	if (skip_iprefix_mem(ptr, size, "www-authenticate:", &val, &val_len)) {
++		strbuf_add(&buf, val, val_len);
++
++		/*
++		 * Strip the CRLF that should be present at the end of each
++		 * field as well as any trailing or leading whitespace from the
++		 * value.
++		 */
++		strbuf_trim(&buf);
++
++		strvec_push(values, buf.buf);
++		http_auth.header_is_last_match = 1;
++		goto exit;
++	}
++
++	/*
++	 * This line could be a continuation of the previously matched header
++	 * field. If this is the case then we should append this value to the
++	 * end of the previously consumed value.
++	 */
++	if (http_auth.header_is_last_match && is_hdr_continuation(ptr, size)) {
++		/*
++		 * Trim the CRLF and any leading or trailing from this line.
++		 */
++		strbuf_add(&buf, ptr, size);
++		strbuf_trim(&buf);
++
++		/*
++		 * At this point we should always have at least one existing
++		 * value, even if it is empty. Do not bother appending the new
++		 * value if this continuation header is itself empty.
++		 */
++		if (!values->nr) {
++			BUG("should have at least one existing header value");
++		} else if (buf.len) {
++			char *prev = xstrdup(values->v[values->nr - 1]);
++
++			/* Join two non-empty values with a single space. */
++			const char *const sp = *prev ? " " : "";
++
++			strvec_pop(values);
++			strvec_pushf(values, "%s%s%s", prev, sp, buf.buf);
++			free(prev);
++		}
++
++		goto exit;
++	}
++
++	/* Not a continuation of a previously matched auth header line. */
++	http_auth.header_is_last_match = 0;
++
++	/*
++	 * If this is a HTTP status line and not a header field, this signals
++	 * a different HTTP response. libcurl writes all the output of all
++	 * response headers of all responses, including redirects.
++	 * We only care about the last HTTP request response's headers so clear
++	 * the existing array.
++	 */
++	if (skip_iprefix_mem(ptr, size, "http/", &val, &val_len))
++		strvec_clear(values);
++
++exit:
++	strbuf_release(&buf);
++	return size;
++}
++
+ size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
+ {
+ 	return nmemb;
+@@ -1864,6 +1973,8 @@ static int http_request(const char *url,
+ 					 fwrite_buffer);
+ 	}
+ 
++	curl_easy_setopt(slot->curl, CURLOPT_HEADERFUNCTION, fwrite_wwwauth);
++
+ 	accept_language = http_get_accept_language_header();
+ 
+ 	if (accept_language)
 -- 
 gitgitgadget
+
