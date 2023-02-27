@@ -2,126 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7448AC64ED6
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 20:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBD27C64ED8
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 20:26:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230434AbjB0UH2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 15:07:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55166 "EHLO
+        id S229679AbjB0U0a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Feb 2023 15:26:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230436AbjB0UHZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2023 15:07:25 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDBFB2914B
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 12:07:14 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id x20-20020a17090a8a9400b00233ba727724so12142460pjn.1
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 12:07:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wei25lxJ1TUz75+ycVLSoBOvy3zqn8JhPimMlT22cZ4=;
-        b=XCiJ+rjPwZHoxy5uZrKJTn3X8UMaJdrcGnXpLZDS1cA22ueGEG/ScRc4h/wf3BYMqz
-         jhJDpKtsSoOclFGjZjJ/LJe+7U9h5r7aQ+6pKoAYL+3rloxsZotyUpwCOdBwNejzsHqu
-         dYuEJiXRoYyPSJ4Z32okYpmFDzUbxdR9s2gAmxsGH2JzJM/93oeP5GM1UKPPQ76tc5VE
-         tOEMnMuq2XEoq1j3KrfWpm3Hq9U/dQa9i63fNiBCvUPHXFpIo5SlCKmGH7DeGS0IMQGN
-         Zg1aefpCBIkGeZWH2kL6M7nDG47vkgTwKXJxyAeEWSqrq5K99euaMtkpnBGRRU3YgR3B
-         UW3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=wei25lxJ1TUz75+ycVLSoBOvy3zqn8JhPimMlT22cZ4=;
-        b=TEC9DYs+iNrmVn8bG64fFm+9aiAv+qUlF4uloFBOetXBwlcx1at4JMiwxAKqdegsM2
-         LNU3tEdcJIRee4yR6Nz9d+d3iQii2Ax+VNYfuatg6upKiHpAs+OkMTzvztx1WBcOn2H4
-         So29ChMguHKGi8eusiAcVOWSmgyN2lB+tqC6nx5zU9CdMEOC+8nuBl+qhSI8//evJryh
-         jUswn6dl7Cz/xPouP1CYjtgbujA5DLfyCMaurpachO9DApALozO5Z44CcOgrZnrnhDxx
-         HEHcJBcTMhvrzNG/fFniIO7FjuBJcJeBYs3FwgqnsAtLA7CHfWQGrmlpQCR2Xm3lQ93I
-         wTVw==
-X-Gm-Message-State: AO0yUKWOVw9jnhoNoCYC8Llfx9t7+bo1kAvsZMkEk79iCMbHBAq4oc6l
-        l5Cuusj6PEUd6Grshqnq5mLT/EqkaMA=
-X-Google-Smtp-Source: AK7set80NHOxOT5zlRnjM/5t4oWhYxzonLpucYMxF7T6Nt+OKyxXaSS2pb9+ob0a6Xksbw9zp9WBQw==
-X-Received: by 2002:a17:90b:1804:b0:234:8950:6d1f with SMTP id lw4-20020a17090b180400b0023489506d1fmr504655pjb.11.1677528434101;
-        Mon, 27 Feb 2023 12:07:14 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id l20-20020a639854000000b0050301521335sm4325295pgo.11.2023.02.27.12.07.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Feb 2023 12:07:13 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Masahiro Yamada <masahiroy@kernel.org>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2 4/5] wildmatch: use char instead of uchar
-References: <20230226115021.1681834-1-masahiroy@kernel.org>
-        <20230226115021.1681834-5-masahiroy@kernel.org>
-Date:   Mon, 27 Feb 2023 12:07:13 -0800
-In-Reply-To: <20230226115021.1681834-5-masahiroy@kernel.org> (Masahiro
-        Yamada's message of "Sun, 26 Feb 2023 20:50:20 +0900")
-Message-ID: <xmqqh6v6swi6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229511AbjB0U02 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2023 15:26:28 -0500
+Received: from tilde.club (tilde.club [142.44.150.184])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61C621D91A
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 12:26:23 -0800 (PST)
+Received: from tilde.club (unknown [103.251.167.10])
+        by tilde.club (Postfix) with ESMTPSA id 5EB1D2210D613;
+        Mon, 27 Feb 2023 20:26:11 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 tilde.club 5EB1D2210D613
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tilde.club; s=mail;
+        t=1677529573; bh=/hJQcDkA3gRTQ4eJLuITdqEGBITrm08jmp4tp83TaYU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Z8rFplrBIx6A+65DIqV1C7qhhx87hV+G04v+2HKKyhqKohruVXgJxQVMKJlmvvpaE
+         3Fjd/WMl0eMkiVvAwHswH63GhiX0G/0wP797VHMTtLr/55uXYe5YZX5wJ6aBBnHv3A
+         TiPEvmQhmKI/j81uzvB529QwOIKpvgAUdvSowJj4=
+Date:   Mon, 27 Feb 2023 20:26:06 +0000
+From:   Gwyneth Morgan <gwymor@tilde.club>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] signature-format.txt: note SSH and X.509 signature
+ delimiters
+Message-ID: <Y/0R3lDyJrtd4gIZ@tilde.club>
+References: <20220120053223.221667-1-gwymor@tilde.club>
+ <20230210061611.124932-1-gwymor@tilde.club>
+ <230210.86ilg9wzho.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <230210.86ilg9wzho.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Masahiro Yamada <masahiroy@kernel.org> writes:
+On 2023-02-10 11:52:42+0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Feb 10 2023, Gwyneth Morgan wrote:
+> 
+> > This document only explained PGP signatures, but Git now supports X.509
+> > and SSH signatures.
+> 
+> To elaborate a bit, in 1e7adb97566 (gpg-interface: introduce new
+> signature format "x509" using gpgsm, 2018-07-17) we added X.509, and in
+> 29b315778e9 (ssh signing: add ssh key format and signing code,
+> 2021-09-10) we added "ssh", but our docs were never updated.
+> 
+> Your commit message says as much in briefer terms, but maybe if you
+> re-roll having those references would help put this change in context.>
 
-> GIT has its own implementations, so the behavior is clear.
->
-> In fact, commit 4546738b58a0 ("Unlocalized isspace and friends")
-> says one of the motivations is "we want the right signed behaviour".
->
-> sane_istest() casts the given character to (unsigned char) anyway
-> before sane_ctype[] table lookup, so dowild() can use 'char'.
+I'll reference those commits in v3.
 
-Use of values taken from a char/uchar in sane_istest() is designed
-to be safe, and between using char*/uchar* to scan pieces of memory
-would not make much difference, so changes like ...
+> > +Signatures begin with an ASCII Armor header line and end with a tail line,
+> > +which differ depending on signature type.
+> 
+> Does the "ASCII Armor header" really add something here, or just confuse
+> the user with a reference that's not followed-up or explained here?
+> Maybe we should point out OpenPGP's '--armor' option in passing, to note
+> to the reader that this isn't some git-specific concept.
 
->  		case '*':
->  			if (*++p == '*') {
-> -				const uchar *prev_p = p - 2;
-> +				const char *prev_p = p - 2;
+I think having a relevant term to search for online and in manpages is
+helpful. Mentioning the specific command-line option seems unnecessary,
+but I'll put the term "ASCII Armor" in quotes to make it clearer that
+this is not a git-specific concept.
 
-... this is safe, and so is ...
+> I wonder if structuring it like this wouldn't help make this easier to
+> read, and reduce the repetition, as well as making the circular
+> references between this & 'gpg.format' more obvious:
+> 
+> 	The signature start and end marker comes on its own line, and
+> 	differs based on the signature type (as selected by
+> 	'gpg.format', see linkgit:git-config[1]).
+> 
+>         Those are, for values of 'gpg.format':
+> 
+>         gpg: `-----BEGIN PGP SIGNATURE-----` and `-----END PGP
+>              SIGNATURE-----`. Or, if GPG has been asked to produce
+>              RFC1991 signatures: `-----BEGIN PGP MESSAGE-----` and
+>              `-----END PGP MESSAGE-----`
+> 
+>         x509: `-----BEGIN SIGNED MESSAGE-----` `-----END SIGNED MESSAGE-----`
+> 	ssh:`-----BEGIN SSH SIGNATURE-----` and `-----END SSH SIGNATURE-----`
 
-> -				const char *slash = strchr((char*)text, '/');
-> +				const char *slash = strchr(text, '/');
+Looks good. I'll do this in v3. I'll reference these by the gpg.format
+value, as well as a parenthetical proper name, like "gpg (PGP)"; these
+are basically the same the other two formats, but I want it to be clear
+that `gpg` signatures don't have to be from the gpg program but could be
+from any PGP-supporting program.
 
-... this.
+> Then for gpg.format in Documentation/config/gpg.txt we could add e.g.:
+> 
+> 	See linkgit:gitformat-signature[5] for the signature format,
+> 	which differs based on the selected 'gpg.format'.
 
-But does the comparison between t_ch_upper and prev_ch behave the
-same with and without this patch?
+OK.
 
-> -						uchar t_ch_upper = toupper(t_ch);
-> +						char t_ch_upper = toupper(t_ch);
->  						if (t_ch_upper <= p_ch && t_ch_upper >= prev_ch)
-
-Here t_ch is already known to pass islower(), so t_ch_upper would be
-within a reasonable range and "char" should be able to store it
-safely without its value wrapping around to negative.  Do we have a
-similar guarantee on prev_ch, or can it be more than 128, which
-would have caused the original to say "t_ch_upper is smaller than
-prev_ch" but now because prev_ch can wrap around to a negative
-value, leading the conditional to behave differently, or something?
-
->  							matched = 1;
->  					}
->  					p_ch = 0; /* This makes "prev_ch" get set to 0. */
->  				} else if (p_ch == '[' && p[1] == ':') {
-> -					const uchar *s;
-> +					const char *s;
->  					int i;
->  					for (s = p += 2; (p_ch = *p) && p_ch != ']'; p++) {} /*SHARED ITERATOR*/
->  					if (!p_ch)
-> @@ -237,5 +235,5 @@ static int dowild(const uchar *p, const uchar *text, unsigned int flags)
->  /* Match the "pattern" against the "text" string. */
->  int wildmatch(const char *pattern, const char *text, unsigned int flags)
->  {
-> -	return dowild((const uchar*)pattern, (const uchar*)text, flags);
-> +	return dowild(pattern, text, flags);
->  }
+Thanks.
