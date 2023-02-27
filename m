@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ADABC6FA8E
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 01:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68EB3C64ED6
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 01:57:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbjB0B5J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Feb 2023 20:57:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48384 "EHLO
+        id S229671AbjB0B5K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Feb 2023 20:57:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbjB0B5H (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229486AbjB0B5H (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 26 Feb 2023 20:57:07 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F58C12F1B
-        for <git@vger.kernel.org>; Sun, 26 Feb 2023 17:57:06 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id bt28so4624859wrb.8
-        for <git@vger.kernel.org>; Sun, 26 Feb 2023 17:57:06 -0800 (PST)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CAE412F17
+        for <git@vger.kernel.org>; Sun, 26 Feb 2023 17:57:05 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id h14so4634591wru.4
+        for <git@vger.kernel.org>; Sun, 26 Feb 2023 17:57:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Qysv65G1RU+ff6CVcJ5vqaT1N+Mc2CX4rV7gRf1A/bA=;
-        b=IBsn36qWPa5pgv1rcz00SQ7GpCxwMJ7R+zKEWhvc8aDa7vCWhueDaPRb37jJli0RGw
-         BJduWpuWx73AoS4ntAijBBbS62RYYPHTU4aaH0siBP09U9SyzOJajjXS3O6QdflGtH0K
-         9RijwOrcjH5fsMmzuizQEEWyH2F6gHgtLCb6pu2YO5LDxGu35a3uAAGj5Ypp1OQPnmgD
-         bfOs8Ewn9a1TYskcbj8o3UZFWCAWgMVwEfBpcTj4Ay8gcoyMRRiJFYeUJ90abFV1J+ra
-         /CHIQqgOr4xUqUKHTm4qGYaGLNPb6TkJWXT8Nx6z2Pql2QDhDTCranrTupT55hYoRvYA
-         ceRw==
+        bh=pRoI7wKXk2DDeWintRwAthVRGvW5ruIe/TNWpaYDzcU=;
+        b=j1TUbIrsJY6PPpVZI8uJXzIMbiP9fvpkMC6A9VU3QfhVQ2sZc0txrLONcLbTP3ptzk
+         g+WS1z7wm41BcLkAaBfyN/nTwy/aK7DAjpgZlTFyrlmB6u7VeQQ6q7KLgJGW3MDXZBPr
+         KUVXQTS8C9ITIaJHpsi8kyp7RRp8XY8aHAenCcv/FhkIRdnPWcOXxKN3ekHRDbA2Hg5Q
+         HCBo3oiIUBT5XYRs3jvlKltymzUThwolqX3HNAtw+7gxaUoGN7OzkNYBYQ31hZ0dq7kF
+         ZehpsmjA9JKIzsJRWZStCil/vfpvGZKueQkn2D5szG3PRr3MM6o85ZguJGC5O/qMUGJr
+         AJYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Qysv65G1RU+ff6CVcJ5vqaT1N+Mc2CX4rV7gRf1A/bA=;
-        b=Gx3MQVqa7EyFAkPHzKmOUBgP4TnjN+rSbl0nRJ609kpwHTZT7RpA6N9VLBFqTrvHuX
-         69Q6/62e9QotU1/1CfzLs/iqVAe0yD2pGqxja+gy/JiTRK+nxQm9fhRkGW44lQcxbkZl
-         BWmqeiPNA9006wmLtZByU0tZaRQe5pWKDPzCIXhclqoK7ncowx7IkQYrJ7J3wa7TLWsX
-         eZpgjwhSgBLWfsr8bdBz8CcGmdd80b5JR1HtA0s9dPBsb14ud2FW4yOaYaB+8BO2W+Jz
-         tDP5xUazFX/mT0fmCBFu8yUAgQQigje4BAASCt/uVCfGPmKxKMKZIWNW6dq/gXYQE4H5
-         pLmw==
-X-Gm-Message-State: AO0yUKWRbgDAQivHY1wbxy6JolcJ/MaBzXyWr++mio4ke7jQ5M2q5ymY
-        H0kmCAY7POIq7cM8hSy3Kd1T40Tkw9Q=
-X-Google-Smtp-Source: AK7set+D9XNch8JJ/iY/DGY9bX4PIwLbMEbdLa/yP5jKPMZN6oSYsDbOHgfYQakquQDUI1Zxnahz2w==
-X-Received: by 2002:adf:ec11:0:b0:2c5:98f2:5b16 with SMTP id x17-20020adfec11000000b002c598f25b16mr19205844wrn.1.1677463024628;
-        Sun, 26 Feb 2023 17:57:04 -0800 (PST)
+        bh=pRoI7wKXk2DDeWintRwAthVRGvW5ruIe/TNWpaYDzcU=;
+        b=NdztmoZpjdzDp3/H5C9nhpBHkbEpL3CxkM9vSXbHSrdHwdEe+XbWWxZGLiJrF2OgYT
+         FE1vJFKCha9K/F3+jxegRnKCiimSgCP40z9j0/TfDLK3VPQwtB/MkEiR1Di4mn56b9GJ
+         OViMQh2dIaJwEJcpCnpGqAxFYZdg+thX8Hkry3stnE87MgLdJl1VA/nAV628dQu4XkUg
+         v8WdgzJHkpsJxvTldGbCDHozN0lDei5FtLbmD7j30sMBJID9we8w8RAlpnXtJxW/9TrJ
+         Q0y9LP5iT/Ferr4cm6MyWyQS7sxt9YjlDlhpIxrRr/NXxEqduo2W8LIYRFN/VugSJ4UO
+         KsSg==
+X-Gm-Message-State: AO0yUKVGY/17pJuT78ekl9Ce68QfNRDRI+giIb+Z+xuP7lScQYQqAYD4
+        ATwsh2C1WPHaiPKTN+g0G9S5FZt4qC4=
+X-Google-Smtp-Source: AK7set/NPCmlerj2GxmOuwtHCeDVuW8EWeqMqp3k9A1o9RU5MKvNHE/emIJxLghOlaCKBB/oACWEvg==
+X-Received: by 2002:a5d:4b03:0:b0:2c9:3f36:73e3 with SMTP id v3-20020a5d4b03000000b002c93f3673e3mr4722470wrq.17.1677463023754;
+        Sun, 26 Feb 2023 17:57:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m7-20020adfe947000000b002c70f5627d5sm5579943wrn.63.2023.02.26.17.57.03
+        by smtp.gmail.com with ESMTPSA id m9-20020a05600c4f4900b003dec22de1b1sm7852000wmq.10.2023.02.26.17.57.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Feb 2023 17:57:04 -0800 (PST)
-Message-Id: <857d2435caf6211cd5a1baa6c9d77311ce7ba745.1677463022.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1465.v3.git.1677463022.gitgitgadget@gmail.com>
+        Sun, 26 Feb 2023 17:57:03 -0800 (PST)
+Message-Id: <pull.1465.v3.git.1677463022.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1465.v2.git.1675529298.gitgitgadget@gmail.com>
 References: <pull.1465.v2.git.1675529298.gitgitgadget@gmail.com>
-        <pull.1465.v3.git.1677463022.gitgitgadget@gmail.com>
 From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Feb 2023 01:57:01 +0000
-Subject: [PATCH v3 1/2] receive-pack: fix funny ref error messsage
+Date:   Mon, 27 Feb 2023 01:57:00 +0000
+Subject: [PATCH v3 0/2] [RFC] push: allow delete one level ref
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,56 +66,120 @@ Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason
         Elijah Newren <newren@gmail.com>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
+        Jeff King <peff@peff.net>, ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ZheNing Hu <adlternative@gmail.com>
+This might be an odd request: allow git push to delete one level refs like
+"ref/foo".
 
-When the user deletes the remote one level branch through
-"git push origin -d refs/foo", remote will return an error:
-"refusing to create funny ref 'refs/foo' remotely", here we
-are not creating "refs/foo" instead wants to delete it, so a
-better error description here would be: "refusing to update
-funny ref 'refs/foo' remotely".
+Some users on my side often push "refs/for/master" to the remote for code
+review, but due to a user's typo, "refs/master" is pushed to the remote.
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
- builtin/receive-pack.c | 2 +-
- t/t5516-fetch-push.sh  | 5 +++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+Pushing a one level ref like "refs/foo" should not have been successful, but
+since my server side directly updated the ref during the proc-receive-hook
+phase of git receive-pack, "refs/foo" was mistakenly left at on the server.
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index cd5c7a28eff..c24616a3ac6 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1464,7 +1464,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 
- 	/* only refs/... are allowed */
- 	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
--		rp_error("refusing to create funny ref '%s' remotely", name);
-+		rp_error("refusing to update funny ref '%s' remotely", name);
- 		ret = "funny refname";
- 		goto out;
- 	}
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 98a27a2948b..f37861efc40 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -401,6 +401,11 @@ test_expect_success 'push with ambiguity' '
- 
- '
- 
-+test_expect_success 'push with onelevel ref' '
-+	mk_test testrepo heads/main &&
-+	test_must_fail git push testrepo HEAD:refs/onelevel
-+'
-+
- test_expect_success 'push with colon-less refspec (1)' '
- 
- 	mk_test testrepo heads/frotz tags/frotz &&
+But for some reasons, users cannot delete this special branch through "git
+push -d".
+
+First, I executed git update-ref --stdin inside my proc-receive-hook to
+delete the branch. As a result, update-ref reported an error: "cannot lock
+ref 'refs/foo': reference already exists".
+
+So I tried GIT_TRACKET_PACKET to debug and found that git push did not seem
+to pass the correct ref old-oid, which is why update-ref reported an error.
+
+"18:13:41.214872 pkt-line.c:80           packet: receive-pack< 0000000000000000000000000000000000000000 0000000000000000000000000000000000000000 refs/foo\0 report-status-v2 side-band-64k object-format=sha1 agent=git/2.39.0.227.g262c45b6a1"
+
+
+Tracing it back, the check_ref() in the git push link didn't record the
+old-oid for the remote "refs/foo".
+
+At the same time, the server update() process will reject the one level ref
+by default and return a "funny refname" error.
+
+It is worth mentioning that since I deleted the branch, the error message
+returned here is "refusing to create funny ref 'refs/foo' remotely", which
+is also worth fixing.
+
+So this patch series do:
+
+v1.
+
+ 1. fix funny refname error message from "create" to "update".
+ 2. let server allow delete one level ref.
+ 3. let client pass correct one level ref old-oid.
+
+v2.
+
+ 1. fix code style.
+
+v3.
+
+ 1. clarify in the docs why single-level refs are allowed to be deleted but
+    not created/updated.
+
+ZheNing Hu (2):
+  receive-pack: fix funny ref error messsage
+  [RFC] push: allow delete single-level ref
+
+ builtin/receive-pack.c |  6 ++++--
+ connect.c              |  3 ++-
+ t/t5516-fetch-push.sh  | 12 ++++++++++++
+ 3 files changed, 18 insertions(+), 3 deletions(-)
+
+
+base-commit: dadc8e6dacb629f46aee39bde90b6f09b73722eb
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1465%2Fadlternative%2Fzh%2Fdelete-one-level-ref-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1465/adlternative/zh/delete-one-level-ref-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1465
+
+Range-diff vs v2:
+
+ 1:  214a2b662e3 = 1:  857d2435caf receive-pack: fix funny ref error messsage
+ 2:  966cb49c388 ! 2:  4dc75f5b961 [RFC] push: allow delete one level ref
+     @@ Metadata
+      Author: ZheNing Hu <adlternative@gmail.com>
+      
+       ## Commit message ##
+     -    [RFC] push: allow delete one level ref
+     +    [RFC] push: allow delete single-level ref
+      
+     -    Git will reject the deletion of one level refs e,g. "refs/foo"
+     -    through "git push -d", however, some users want to be able to
+     -    clean up these branches that were created unexpectedly on the
+     -    remote.
+     +    We discourage the creation/update of single-level refs
+     +    because some upper-layer applications only work in specified
+     +    reference namespaces, such as "refs/heads/*" or "refs/tags/*",
+     +    these single-level refnames may not be recognized. However,
+     +    we still hope users can delete them which have been created
+     +    by mistake.
+      
+          Therefore, when updating branches on the server with
+          "git receive-pack", by checking whether it is a branch deletion
+          operation, it will determine whether to allow the update of
+     -    one level refs. This avoids creating/updating such one level
+     -    branches, but allows them to be deleted.
+     +    a single-level refs. This avoids creating/updating such
+     +    single-level refs, but allows them to be deleted.
+      
+          On the client side, "git push" also does not properly fill in
+     -    the old-oid of one level refs, which causes the server-side
+     +    the old-oid of single-level refs, which causes the server-side
+          "git receive-pack" to think that the ref's old-oid has changed
+     -    when deleting one level refs, this causes the push to be rejected.
+     -
+     -    So the solution is to fix the client to be able to delete
+     -    one level refs by properly filling old-oid.
+     +    when deleting single-level refs, this causes the push to be
+     +    rejected. So the solution is to fix the client to be able to
+     +    delete single-level refs by properly filling old-oid.
+      
+          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+      
+
 -- 
 gitgitgadget
-
