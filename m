@@ -2,60 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 702FDC64ED6
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 00:35:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FC1AC7EE23
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 00:46:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbjB0Afa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Feb 2023 19:35:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35958 "EHLO
+        id S229686AbjB0AqL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Feb 2023 19:46:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229556AbjB0Af2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Feb 2023 19:35:28 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41CEA136E5
-        for <git@vger.kernel.org>; Sun, 26 Feb 2023 16:35:26 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id n6so3681447plf.5
-        for <git@vger.kernel.org>; Sun, 26 Feb 2023 16:35:26 -0800 (PST)
+        with ESMTP id S229550AbjB0AqK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Feb 2023 19:46:10 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D5B310278
+        for <git@vger.kernel.org>; Sun, 26 Feb 2023 16:46:08 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id u5so1679660plq.7
+        for <git@vger.kernel.org>; Sun, 26 Feb 2023 16:46:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
         bh=huZEH2ZK9BCwC1GbbU4H0kD7+NySCNoN7htNKReb6Qk=;
-        b=Bb89tA/lpmbl+YmMyRu2Z7govivK8QjjBR9twGkk6pt2H/oxROrGzjU+wX7hgOg8s3
-         14Ez7j5aT2orB5dPWila6xN842xP3HDbvCLVTvaBV+ZWU7zgqHPZ6fYPG07/oYvjXp2e
-         o2MRySuq9RdS5W5OcjbgDqqh4NaxxOw+/zaXG8GLVF7CzyPydF7ugWbkKDjyfpzJ1ixZ
-         Cp6OcY0cew+D5bCZBbHzWPZ+j+M0+3MIOz2VC1tAQRQOXx3e5yPZdGEMLaJB7pXec2xu
-         uVFpwRDf4sSxutkyl6fJrIhmZAwVkGBMUzms3NQw9S93vK2qIWe0UfpyfK/2MLsCK2UB
-         K5rw==
+        b=WjqnjwFsUWgjnqJZvV6JnN9L+/N5tnxnCAigCoy2GzAtoh31GWg8W/089CNhKl79ST
+         dxybJfG94myDEqnPGN0DrxavPkiV0KGyzKOXxcKp1SZjF4ZOmz1RBx3gTKbk30QeYDxu
+         FF1G7b7S1E4KcyetCR+qe2HevN/OqjniUNi2O7KucYL2rGxS0EZwPJ0yiS2dWEzleCeK
+         J1+knVzsm7uOmth5iG2kMSZLTaq+8cPgI+XBMxB/8J62vpFqbIOtJVmMmvO8y85hdbNR
+         TDb8xDwQj1TmhoBWufugOWISr+PSR9lCJ7sw+vojQP55rFsNzLj13f65jWhJIFxlbA4u
+         6YwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
         bh=huZEH2ZK9BCwC1GbbU4H0kD7+NySCNoN7htNKReb6Qk=;
-        b=SajxqwB2qVVNcfPYqO4sO3DhBN7w8ELc9PbNx91BQm+XeqyeHOcZzVS8nMnrAVsQ4z
-         QNufp74RxrqBBPnGG3fTa9KjL4ub4FgkMyyAdtB30ORMcYNlXBYDTwkKrlEIWTN+2PKx
-         hr1d/BYzPBCEe+b2N/TrynRr+KgjaTkcolhlYt+weB6Od6vKYG/kkeTH3inLaYWdkgdN
-         3tPX1/DFYrpEo3r9vkWw35SQNaBS+8qm/xGVl4u7RNXERsuEZi88D3U5IiJcVKFgP1HX
-         MPU2zWszlR87HxbyaoCj0lkjHQvIEENqpp/7Ajje1l5eqijQ0UkgHAudKd+YGsRcXBpp
-         ZFgw==
-X-Gm-Message-State: AO0yUKXfuNJTPGz/dgl0Cb5ZcqCS42LUroZ+ybuJL6fAfvxEzLjnooO7
-        lv7r5mTtZ1BEuFXwZgfCy9k4Pz0qjdbQ7Q==
-X-Google-Smtp-Source: AK7set8FiXlTORAqoN5gZDgltPn3WuRK1FXIvboeLzXHNblaiv7NGDcTHywOy8qrGotOIbp3o7smjA==
-X-Received: by 2002:a05:6a20:3d8d:b0:bc:f0d2:e268 with SMTP id s13-20020a056a203d8d00b000bcf0d2e268mr19707595pzi.29.1677458125297;
-        Sun, 26 Feb 2023 16:35:25 -0800 (PST)
+        b=vsQq8yIArwfPwMCHv24+bRi+YEWB7F+vdrNSrROg/vG1+b0aMDN5E/oJ+ClQY2DiGT
+         dNxeAaCfy+VyF1JWhLexKBflg2k/7aGRUwFJU2j4AapCUpgGAXSgPYYxAujmfEYY1moi
+         1mYdIe8YnjEcKW0GyiPYdU67KvSYo848HBm5FF5gM+Z1nJQBWRQn4Lx8h5QAg/MmH3go
+         GYLBybaP8yXEsO9aRyIcXCH+pt9YcGJFNThIOKlGKt9k9hklwfeCbaqGLG3rnELM+OmL
+         LtgLAMSj5LtPHGXj+Wjtjw6zgUz3zQ0HReWPKOsxO+nABnCcpg87UjKw9KElx4/O1NhM
+         94pw==
+X-Gm-Message-State: AO0yUKV7j4LJUHQ0EcuTbpdz6ZpkhyTR9qq2TwX8+cGKHgfrEuiQ3b3y
+        KTKxUDazGW6DPWtH73DaOfXn7hCejkUQuw==
+X-Google-Smtp-Source: AK7set/6oILLZwv9EuOsiC9K7sxjYZbJFp0R5Ij8DRy1sCe85fjBzsDk7o06HfJ7ZefW+ct2IGAkig==
+X-Received: by 2002:a17:902:ecd0:b0:19b:2332:18cb with SMTP id a16-20020a170902ecd000b0019b233218cbmr28133289plh.1.1677458767369;
+        Sun, 26 Feb 2023 16:46:07 -0800 (PST)
 Received: from Vivans-MBP.lan (node-1w7jr9y92i5dh93m88fd8xd4n.ipv6.telus.net. [2001:56a:740f:7b00:9d78:4915:e473:cb7])
-        by smtp.gmail.com with ESMTPSA id e13-20020aa78c4d000000b005a75d85c0c7sm2992474pfd.51.2023.02.26.16.35.24
+        by smtp.gmail.com with ESMTPSA id x18-20020a170902ea9200b00198fde9178csm3187932plb.197.2023.02.26.16.46.06
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 26 Feb 2023 16:35:24 -0800 (PST)
+        Sun, 26 Feb 2023 16:46:07 -0800 (PST)
 From:   Vivan Garg <gvivan6@gmail.com>
 To:     git@vger.kernel.org, vdye@github.com
 Cc:     christian.couder@gmail.com, hariom18599@gmail.com,
         Vivan Garg <gvivan6@gmail.com>
 Subject: [RFC][PATCH v2] GSoC 2023 proposal: more sparse index integration
-Date:   Sun, 26 Feb 2023 17:35:17 -0700
-Message-Id: <20230227003517.88254-1-gvivan6@gmail.com>
+Date:   Sun, 26 Feb 2023 17:46:03 -0700
+Message-Id: <20230227004603.88393-1-gvivan6@gmail.com>
 X-Mailer: git-send-email 2.37.0 (Apple Git-136)
+In-Reply-To: <20230226083347.80519-1-gvivan6@gmail.com>
+References: <20230226083347.80519-1-gvivan6@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
