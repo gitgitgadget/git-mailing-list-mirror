@@ -2,114 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20AD2C64ED6
-	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 17:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DBC6C64ED6
+	for <git@archiver.kernel.org>; Mon, 27 Feb 2023 18:51:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230040AbjB0R5i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 12:57:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46976 "EHLO
+        id S229900AbjB0SvP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Feb 2023 13:51:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230002AbjB0R5g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2023 12:57:36 -0500
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A7BF23D8E
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:57:35 -0800 (PST)
-Received: by mail-qt1-x832.google.com with SMTP id z6so7693554qtv.0
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 09:57:35 -0800 (PST)
+        with ESMTP id S229595AbjB0SvO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2023 13:51:14 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56EF1241D2
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 10:51:13 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id m8-20020a17090a4d8800b002377bced051so11155555pjh.0
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 10:51:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xXxvCaBn87YyV/IjQzyBxPWSdgozNhgA3QLEON3VZlM=;
-        b=YzMq/QR+2E5QqOCih7NPyQJz+G1aFPoyPof2vi/K1sJnmPIBnUNCOFsiQY8n90q1ys
-         3SO3a0KZUIz2ogkydLH2nXq8ovmb3pKFdzi4MQuNK0a4gAgpeAi7vYVehY8JR53XOxtk
-         MSHLyLCofO4RN/kGTKYhu3MP9d31W6M55iuZ8eHTDQxVAmcX7M+YmarYmHrzxSRUUjXB
-         xAv9dX7rX6X7Wsmz8thDDdUwLYzUW5WWy4BkHb0UUPzvVX5lXI9S+ZhxYsPPsD2oyXTk
-         ZAfOTWs3QMg6MFUqb98hdZy4ouEm11Inb5/NpkjtF2lm3bnMlCZNswcPCmMWxPquWK1q
-         IA6A==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wOrVFewkPKt8hjq1jPvSrYzOCQ+brusyEHGX1hu5pGk=;
+        b=IYBGyM8ojmj2KUvxBfkY5GxZ8KBmM3TZVYcvkIjrLJi3gpKLsY5jOxSGcVUPe/F/7k
+         u1sHXNwfgZq6HOGnwSseGAaeWDHYmKkckf9f1xXqqGjJ7JQ0uEzLBW9pKeVfCnsD5Mp8
+         8ELN/Kpk7Uf/ScNmzEU1YwqOlaXKlKev7Ox0uwT4u4kgjFUEw4ltr3axuly1kiupD7D3
+         cYS9rA86g8ZHXywYkhcxXIdaUn6SflhUHOA18uyDhbQutf3jMysvuucd+XhVotofeejk
+         xoZIjNGLJLF2ifrn6OWV3mRZ2oV7UyDYzVu26J+NJPDuaKEm0sb/vzVn+iq3fs3ECYW9
+         fbXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xXxvCaBn87YyV/IjQzyBxPWSdgozNhgA3QLEON3VZlM=;
-        b=gVKqZdKWuZU524SpyKs6sqNV4+SOvJ/stmH9zbIDaobU62J38M2VMAAlzHs+l4/XML
-         cKthKIjxuNV3P6XRYK1Ym8YRpsoZ+gkpYb/Gr8tTQhH6+O5Rkiyh2tCmf3G9MS2VuanU
-         0Xr9CvCUohMTSZu41gAuLNsaeM+77MXwrpIhH32FBArH2EQcmpiZFzTGbrz77WnvBCM9
-         Nt073Pnv3Sx+ySER2ywi8R9zStZcnY9viciiTx+GSe/NxF7ONgbaC26sd6zxvQ5jkixK
-         V1CgTu81OUoIZiSkgR4V8LEcCp+MoxnHCrAfICHoNF6At13NEcwKf5XUN21vfBka1hfJ
-         zQCg==
-X-Gm-Message-State: AO0yUKWOctrPvCUxxPntgChKrSFXtbhFoHUe5aVOk0mxbMo+NAPPKTiJ
-        oVurW2Uw0ZB7EoLbWKS0ZYi4VEkZsQaMcyU=
-X-Google-Smtp-Source: AK7set89vB94vvlaEfv08ETcGnHyjvRp2w8zTnRFXpoE9SdxZMHjtpRb9iUOEYB23Q5pDiwO0xt+9Q==
-X-Received: by 2002:a05:622a:138b:b0:3bd:efe:9a09 with SMTP id o11-20020a05622a138b00b003bd0efe9a09mr17020114qtk.28.1677520654384;
-        Mon, 27 Feb 2023 09:57:34 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:c838:390d:932c:3ee6? ([2600:1700:e72:80a0:c838:390d:932c:3ee6])
-        by smtp.gmail.com with ESMTPSA id q27-20020a05620a025b00b0073b575f3603sm5224606qkn.101.2023.02.27.09.57.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Feb 2023 09:57:33 -0800 (PST)
-Message-ID: <cd7b9a2f-4f52-9da8-19c3-2c5cda7b8160@github.com>
-Date:   Mon, 27 Feb 2023 12:57:32 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [RFC PATCH 1/1] check-attr: integrate with sparse-index
-To:     Victoria Dye <vdye@github.com>, Shuqi Liang <cheskaqiqi@gmail.com>,
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=wOrVFewkPKt8hjq1jPvSrYzOCQ+brusyEHGX1hu5pGk=;
+        b=yhgUu3SWPrruiYy7s7Me6+QXB1KpucwNb7sipDzR/raCuU31cNWZHAOKiStBjNnULZ
+         kFa2gwVF3ydrd1p7UAGtWuhzwgV+7fiukmopHlQmL+r7yCQ8ZVmuSYfFEBdMtXWQDEms
+         gzImfdNtWJqIJ9orCFzhqwB+XEl+xMvpxBs8kCutZI03l4qdTxXMYxQ3yfocfxuoMYd6
+         Cr+/Y0GULZK+PiHeg4hGutD5AuDUOKmZxh0Oe2dntDRbDOiq9PYLwB6WYfEGMXDv5QY3
+         cMqehn8Z9JW1J25fUK03z9TlCfex1K6BWptL5PlqJWzahkenF911UHQ1p/Pxn7nsdQx0
+         JnjA==
+X-Gm-Message-State: AO0yUKXe3AB8mClnZqaFPyMkNStSfoSjKwvfCXxt5rYj8+6dLbEPybCf
+        ftuC7JGNkj2WpLNua8H0sbk=
+X-Google-Smtp-Source: AK7set+RWWw5IKKdAll1jJahLb0VXWqpmkzIERUMhQWJydgedj0PY91rUcYziZ7qSm6XnMqrb9RAXQ==
+X-Received: by 2002:a17:902:d4c4:b0:19b:dbf7:f9ca with SMTP id o4-20020a170902d4c400b0019bdbf7f9camr44947plg.0.1677523872750;
+        Mon, 27 Feb 2023 10:51:12 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id a7-20020a170902b58700b0019c2b1c4db1sm4920750pls.239.2023.02.27.10.51.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Feb 2023 10:51:12 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Victoria Dye <vdye@github.com>, Shuqi Liang <cheskaqiqi@gmail.com>,
         git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/1] check-attr: integrate with sparse-index
 References: <20230227050543.218294-1-cheskaqiqi@gmail.com>
- <20230227050543.218294-2-cheskaqiqi@gmail.com>
- <315e70e0-ac1f-2f19-f1cc-6b8b24ffb1fc@github.com>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <315e70e0-ac1f-2f19-f1cc-6b8b24ffb1fc@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        <20230227050543.218294-2-cheskaqiqi@gmail.com>
+        <315e70e0-ac1f-2f19-f1cc-6b8b24ffb1fc@github.com>
+        <cd7b9a2f-4f52-9da8-19c3-2c5cda7b8160@github.com>
+Date:   Mon, 27 Feb 2023 10:51:12 -0800
+In-Reply-To: <cd7b9a2f-4f52-9da8-19c3-2c5cda7b8160@github.com> (Derrick
+        Stolee's message of "Mon, 27 Feb 2023 12:57:32 -0500")
+Message-ID: <xmqqedqbt00v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/27/2023 12:18 PM, Victoria Dye wrote:
-> Shuqi Liang wrote:
+Derrick Stolee <derrickstolee@github.com> writes:
 
->> +	prepare_repo_settings(the_repository);
->> +	the_repository->settings.command_requires_full_index = 0;
-> 
-> The test below doesn't do anything special related to the sparse index, so
-> this change is unnecessary (and, as far as I can tell, will break in some
-> usage of 'git check-attr'). If you're only looking for feedback on testing,
-> it'd better to leave this out.
+> Victoria is right that it is helpful to first establish test coverage of
+> the builtin for correctness reasons before making this change. It helps to
+> add tests for cases that would require expanding the sparse index, such as
+> checking the attributes for paths outside of the sparse-checkout cone.
+>
+> Once the correctness tests are in place, you can then make this change to
+> the builtin and add the tests that check ensure_not_expanded, since the
+> change at that point is _only_ that we are allowing the builtin to
+> operate upon the sparse index without expanding it immediately after read.
+>
+> A good example of this "final step" is [1], which updates the builtin for
+> 'git diff' as well as adding _only_ the ensure_not_expanded tests.
 
-This change is part of the performance improvements given by sparse index,
-but the correctness test you've added only ensures that the end result is
-correct, not fast.
-
-It's possible that even with this change we hit an ensure_full_index() call
-somewhere in the call stack. To test that the sparse-index stays sparse
-throughout the process lifetime (when possible) create a test that uses the
-ensure_not_expanded helper. There are several examples in t1092 to use as
-a starting point.
-
-Victoria is right that it is helpful to first establish test coverage of
-the builtin for correctness reasons before making this change. It helps to
-add tests for cases that would require expanding the sparse index, such as
-checking the attributes for paths outside of the sparse-checkout cone.
-
-Once the correctness tests are in place, you can then make this change to
-the builtin and add the tests that check ensure_not_expanded, since the
-change at that point is _only_ that we are allowing the builtin to
-operate upon the sparse index without expanding it immediately after read.
-
-A good example of this "final step" is [1], which updates the builtin for
-'git diff' as well as adding _only_ the ensure_not_expanded tests.
-
-[1] https://lore.kernel.org/git/897611682af64ba6bd0d2dfcfeae56cfe953c45e.1638806161.git.gitgitgadget@gmail.com/
-    [PATCH v6 6/7] diff: enable and test the sparse index
-
-You can look at the surrounding patches for other ideas, but it should be
-noted that both 'git diff' and 'git blame' in that series had previous
-correctness tests in t1092 that only needed _edits_, instead of being
-created from scratch.
-
-Thanks,
--Stolee
+Thanks for a detailed help.
