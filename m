@@ -2,121 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D506C64EC7
-	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 14:13:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A326C64EC7
+	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 14:14:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229800AbjB1ONa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Feb 2023 09:13:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42486 "EHLO
+        id S229610AbjB1OO2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Feb 2023 09:14:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjB1ON2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2023 09:13:28 -0500
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2095E22DF3
-        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:13:27 -0800 (PST)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-536c02eea4dso276631787b3.4
-        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:13:27 -0800 (PST)
+        with ESMTP id S229501AbjB1OO1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2023 09:14:27 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1612723D93
+        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:14:26 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id m8-20020a17090a4d8800b002377bced051so13879463pjh.0
+        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:14:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1677593665;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pIvaCxpba8HtF7s5+NCKQb9jtos0GkvlDjTFJHVAtLY=;
-        b=G+jQPn+r8uu4LCXGORLu4Swar1UG1Tkte9NmLR7aiai93wr9GTuL+l1ont7DVRbpmq
-         m4aXTO79Obt/FwBKBSseP8j006gS4khqHsC8wEi19gYEfROrRKfCkV03X5Nz4C3VQNX/
-         +VA4JakLfbFEWgsmGG+Hh+700IjL2RhjH0cd89uxJ6IZulGc/WSpYruegpM5UXPFoJOk
-         ByvOwy0YL7AthJk9i40m1WK9KsZXuGl/giU4poFsj2mbFmXupNiqqyrH5FHX293TizaV
-         W+lSAgRD8IhFbVRrgNNDOVISyk1MKeLQTmaKgB+9WX48uSVTW/NxJZB/noVZbu/hyeOn
-         Qu0g==
+        bh=bWDDz1H09hS+qZ8Mzjt3niQedh0uKiefAG3RK2IVUIQ=;
+        b=BNtR9HfZmzukcav0YgvjrRz9TxyXRbYUVd0uaaFwNz/RmqB7yYZzTsbzqJvWbAK3Y1
+         M7Hppa8nqh6MEIjdUUWARx+7WW1TfPm6q/27LfY2frdVlVovIqauorMZMC/4cfsjeREx
+         3GHgLPQ302LkYRWZs0VBDv6QBFo4qtWByC7I9J3uIRVigGkhxooPnK8ochgJHkICz8bX
+         CiyC2HPhM7YpUIp+K+URYqRAbV3YbKyex3PajKvOexAuk11FfuDV6DW6P1dzClvG6ZQl
+         p2HPu7y5+BSSrPeKtA2UT6P+QCCPzqZgERngoKxiRBh074vVfeRW54BL2raYimS4n/RD
+         wNMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1677593665;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pIvaCxpba8HtF7s5+NCKQb9jtos0GkvlDjTFJHVAtLY=;
-        b=24b90vbxabBsJp+grRPGpH0Z/L8uKw3n2TxDSOuZlXKomSMQFOYKToZCuEIqI5Orq9
-         EjUoQnUkuKwPDxivVH+uPsJzEcrsomskVJbQbDZnEbmQHl/o1hsVvytfwi2mj17fNyN8
-         UGS2xaKG33VzN9kdUHH9Ezw7CCvHJHDyPuDiHgsW1yD1NgO0Xuq3p25M/g00Qws0kgDf
-         xr5TaORvvoj9ePM6pYt1xIr+SN8A13xH7nlqqD/skbEDRROblJe2qCCHxI53PJRYtbGW
-         eGArR/opIeh9qlTS4RLZ2rWiKXIXDKOT02m4/6dB2be5+LFmDBMZHBX7OxqY8zIS0RI7
-         ioCQ==
-X-Gm-Message-State: AO0yUKUC811FTU4oSUgJAM8dIUwDFEIZfe0W9MyqMaQx6EO8gnzt7JDD
-        yX7gfNokiHOg9/e1YIPtlI9KodtHdM35Vnt42hB5KM+Px1w=
-X-Google-Smtp-Source: AK7set9N8D8eSgQYWbr443ABLe/Lsdqbh3dPVDZNJcHVjPC7BEzDsA2MOHViWQj0HV3MhIPe/2FzE47zIE/H3O7fiyU=
-X-Received: by 2002:a81:4523:0:b0:52e:ee55:a81e with SMTP id
- s35-20020a814523000000b0052eee55a81emr1737576ywa.7.1677593606241; Tue, 28 Feb
- 2023 06:13:26 -0800 (PST)
+        bh=bWDDz1H09hS+qZ8Mzjt3niQedh0uKiefAG3RK2IVUIQ=;
+        b=hJFInwLMB1Q2W1Ei43x70BXSt+eKMzHXeoqyoV5x45yqZveAXtOxjKWnLGOhwRsSBB
+         EF7WPVmwUgF5ABk2oQIaV95B0vwfS350N5VBwHcXCQhS8PSsiy+atoT21CdjfFEQbqkP
+         BSOX09yghXCXUqnE3v7mGN3WLVeFNYTWkP1XMU/Qim5JnJroxuZsdZNP/rK77b1v3ePV
+         4Rxfx2X4vICWNSbbxIJRNKZgIdNChIzxr3G89rnociHw63geus+NNUSIrMtEjry5Hoj9
+         eNZZqf7aKujVGGEhnBfl8l0PR0Kh+NZeMBC4jleLshcEyK3THkl0nn2EPZUKH/WlOhep
+         cneg==
+X-Gm-Message-State: AO0yUKWDSVhJGxaAGehvmqWuL8eecUmRgEMzDzbLhJnCkndCqq3PzLBH
+        ubvAGnAv+z5prrSivKNMlQSySxYHkZTtDZ9s
+X-Google-Smtp-Source: AK7set9YYKr3qbKPhZ2O/0+3DO1BJmm3jXAGTLXH/ZzPIQUTsWYtaNF59odevXR6tlrkNS6wj5+KLg==
+X-Received: by 2002:a17:903:249:b0:19a:debb:58f7 with SMTP id j9-20020a170903024900b0019adebb58f7mr3259321plh.13.1677593665490;
+        Tue, 28 Feb 2023 06:14:25 -0800 (PST)
+Received: from localhost.localdomain ([47.246.101.61])
+        by smtp.gmail.com with ESMTPSA id e12-20020a170902744c00b001993411d66bsm6601029plt.272.2023.02.28.06.14.23
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Feb 2023 06:14:25 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     gitster@pobox.com
+Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
+        sunshine@sunshineco.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v6 3/3] notes.c: introduce '--separator=<paragraph-break>' option
+Date:   Tue, 28 Feb 2023 22:14:19 +0800
+Message-Id: <20230228141419.47430-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.39.2.459.gd58159df.dirty
+In-Reply-To: <xmqqk005v3ex.fsf@gitster.g>
+References: <xmqqk005v3ex.fsf@gitster.g>
 MIME-Version: 1.0
-References: <pull.1474.git.1675614276549.gitgitgadget@gmail.com>
- <CAMMLpeTPEoKVTbfc17w+Y9qn7jOGmQi_Ux0Y3sFW5QTgGWJ=SA@mail.gmail.com> <CAPMMpogFAR6cvcR8T5fx+AoytAJ7TsPpSeOjHNzW4Gmkuq7FLQ@mail.gmail.com>
-In-Reply-To: <CAPMMpogFAR6cvcR8T5fx+AoytAJ7TsPpSeOjHNzW4Gmkuq7FLQ@mail.gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Tue, 28 Feb 2023 08:13:14 -0600
-Message-ID: <CAMP44s1_Oy8GzoALnvQMJEVRkDB3EBmn4drTyY6T+9BatRpjUA@mail.gmail.com>
-Subject: Re: [PATCH] pull: conflict hint pull.rebase suggestion should offer
- "merges" vs "true"
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     Alex Henrie <alexhenrie24@gmail.com>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Feb 16, 2023 at 7:33=E2=80=AFAM Tao Klerks <tao@klerks.biz> wrote:
-> On Thu, Feb 16, 2023 at 4:22 AM Alex Henrie <alexhenrie24@gmail.com> wrot=
-e:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > Now, this is not to say that there's no room for improvement. I like
-> > the rebase=3Dmerges option and I wish everyone knew about it because
-> > there are situations where it really is the best option. I suggest
-> > leaving the existing text alone, but adding an additional paragraph,
-> > something like:
-> >
-> > Note that --rebase or pull.rebase=3Dtrue will drop existing merge
-> > commits and rebase all of the commits from all of the merged branches.
-> > If you want to rebase but preserve existing merge commits, use
-> > --rebase=3Dmerges or pull.rebase=3Dmerges instead.
+> The two callers of this function prepares the string_list, and have
+> this function consume it by concatenating its contents to d->buf.
+> After calling this function, neither of them talks about messages,
+> which means we are leaking the strings kept in the string_list.
 >
-> My primary motivation with this pull request is to reduce the
-> incidences, out there in the world, of people copy-pasting "git config
-> pull.rebase true" into their command-line, and causing themselves
-> major headaches days or weeks later. The "--rebase=3Dinteractive" part
-> is secondary (to my concerns), because it's much less copy-pastable.
+> I could eject the topic from today's integration run (because the
+> topic is not ready to be merged to 'next' as-is; "-C/-c" codepaths
+> need to be adjusted, at least), but as I took a look already, I'll
+> queue this fix-up on top of the topic for now.  Feel free to squash
+> it in (or address the leaks in your own way) when sending in an
+> update.
+>
+> Thanks.
+>
+>  builtin/notes.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+>
+> diff --git c/builtin/notes.c w/builtin/notes.c
+> index 97c18fc02f..cd7af76e2f 100644
+> --- c/builtin/notes.c
+> +++ w/builtin/notes.c
+> @@ -220,7 +220,8 @@ static void insert_separator(struct strbuf *message, size_t pos)
+>  		strbuf_insertf(message, pos, "%s%s", separator, "\n");
+>  }
+>
+> -static void parse_messages(struct string_list *messages, struct note_data *d)
+> +/* Consume messages and append them into d->buf */
+> +static void concat_messages(struct string_list *messages, struct note_data *d)
+>  {
+>  	size_t i;
+>  	for (i = 0; i < messages->nr; i++) {
+> @@ -231,6 +232,7 @@ static void parse_messages(struct string_list *messages, struct note_data *d)
+>  		strbuf_stripspace(&d->buf, 0);
+>  		d->given = 1;
+>  	}
+> +	string_list_clear(messages, 0);
+>  }
+>
+>  static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
+> @@ -451,7 +453,7 @@ static int add(int argc, const char **argv, const char *prefix)
+>  		usage_with_options(git_notes_add_usage, options);
+>  	}
+>
+> -	parse_messages(&messages, &d);
+> +	concat_messages(&messages, &d);
+>  	object_ref = argc > 1 ? argv[1] : "HEAD";
+>
+>  	if (get_oid(object_ref, &object))
+> @@ -622,7 +624,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+>  		usage_with_options(usage, options);
+>  	}
+>
+> -	parse_messages(&messages, &d);
+> +	concat_messages(&messages, &d);
+>
+>  	if (d.given && edit)
+>  		fprintf(stderr, _("The -m/-F/-c/-C options have been deprecated "
 
-That's because the whole approach to the pull.rebase configuration is
-wrong. I explained why multiple times in countless discussions and git
-developers did not listen.
-
-What we need is a pull.mode configuration that is *orthogonal* to
-pull.rebase, then everything just works.
-
-For example, you could have this configuration.
-
-    git config pull.mode merge
-    git config pull.rebase merges
-
-Then doing `git pull --rebase` would do a merges rebase.
-
-This is not possible with the current approach, which I objected to.
-
-Then there's no problem with telling the users to do pull.mode=3Drebase
-(or whatever), since that doesn't override pull.rebase=3Dmerges.
-
-I programmed and explained this precise interaction with rebase=3Dmerges
-more than two years ago [1], but nobody listened. For an example of
-how such configuration would look like, see the patches I just sent
-[2].
-
-Cheers.
-
-[1] https://lore.kernel.org/git/20201218211026.1937168-14-felipe.contreras@=
-gmail.com/
-[2] https://lore.kernel.org/git/20230228140236.4175835-1-felipe.contreras@g=
-mail.com/T/#t
-
---=20
-Felipe Contreras
+Thanks, will apply in next patch.
