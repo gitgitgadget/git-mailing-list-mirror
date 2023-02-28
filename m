@@ -2,85 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 069A0C64ED6
-	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 00:24:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5105AC7EE2E
+	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 00:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229983AbjB1AYD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 19:24:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52100 "EHLO
+        id S229632AbjB1AwO convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 27 Feb 2023 19:52:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbjB1AX7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2023 19:23:59 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8FA520570
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 16:23:57 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id r18so8050105wrx.1
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 16:23:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1677543836;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CjxWvCsik/JAZeyvca5SeJpzarjz+4fKMi53kRir1ys=;
-        b=iKzi6QUGx1OqH9076oRbqZdzPpwapTUpUbtRnkRSf1VuwlenSEtvaW6u9y0hIhK4Eh
-         Oz6SDxg1r59kAyhxPZjN5FruD1BsKUqj2tFTxkt5H18GAVQzzKd1koEYcvxFwlh6jvd/
-         Qv7c+Z0DkgjBJOcwUDPSmisGkoxGRqoNsOwLGYFLD1qLZsaDb99XEsXUA5PoLV5KpCNU
-         xC00hfyoyjJsYeky38Aa72rQXE//Hi+rhjdr+a8XvHvoqthJbEiyD1qROyLbn6u6G1W7
-         4nMOw5gcp/N/lQmUZAlWtbMlSLhKdk8AHSgwnfiZtQOwCIGdYmfv3fX7sZrLeTbAcXrd
-         5Yxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677543836;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CjxWvCsik/JAZeyvca5SeJpzarjz+4fKMi53kRir1ys=;
-        b=bgNQhXaLaft5wCtExZfhP8BcccfoyKM/72FqKgmiCPF7n0RiaSWRkuRX2JJyXS3syw
-         JlrvCC1Q7KjhDuIRiEMJHGrRdKhAECOhzFEwF1MUfhu9/GT3yse70QzIUbrKq/FH2ShO
-         d0eItHfK4YVzpn2dSlVLqceIBBHpHJuRjchO1xSKNBd2X7DLpCr6m7LLDIUyQUnxoiuP
-         Kr73Lo0yIKTndeoohR4I84MkY0EFumG6tqhg9JvD4rCBvPaepQMmP3uStXZiRjKiw8Fe
-         ixMaHlucFhm+oH3c8xbhLMcn4v1fn/GlkXMre0nkDfCOr70TwQz2e/zXO/7TBqrYunVS
-         p9bw==
-X-Gm-Message-State: AO0yUKV0vHOGh8LnxYM4rFUCs8HyIazaF4Xcowpkp333BC1JnUu18abE
-        7oml/CDOLjriJk9jxVvdn65ft4adp3M=
-X-Google-Smtp-Source: AK7set9skreSHa+G0DMmWyaNxmAcxk5ak9PZL0ngo51kiKuoVTviWcDD4CqCJQ8H2WhkZ32WnwdZZg==
-X-Received: by 2002:a5d:6542:0:b0:2c7:434e:9a5a with SMTP id z2-20020a5d6542000000b002c7434e9a5amr665328wrv.65.1677543836330;
-        Mon, 27 Feb 2023 16:23:56 -0800 (PST)
-Received: from [192.168.2.52] (59.red-88-14-203.dynamicip.rima-tde.net. [88.14.203.59])
-        by smtp.gmail.com with ESMTPSA id k22-20020a7bc416000000b003dc521f336esm10305671wmi.14.2023.02.27.16.23.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Feb 2023 16:23:56 -0800 (PST)
-Subject: Re: [PATCH v4 3/3] branch: rename orphan branches in any worktree
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20230227194116.2417165-1-jonathantanmy@google.com>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <fc3a5058-134a-3fcc-a59a-cd072f2d0258@gmail.com>
-Date:   Tue, 28 Feb 2023 01:23:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        with ESMTP id S229627AbjB1AwM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2023 19:52:12 -0500
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 247A628849
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 16:52:10 -0800 (PST)
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+        (authenticated bits=0)
+        by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 31S0pZ1o1102105
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 28 Feb 2023 00:51:36 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Git List'" <git@vger.kernel.org>
+References: <003d01d94b00$16abc7a0$440356e0$@nexbridge.com> <xmqqv8jmr98f.fsf@gitster.g> <003e01d94b02$877c2c20$96748460$@nexbridge.com> <Y/1GpjnMHLAqFV5x@tapette.crustytoothpaste.net>
+In-Reply-To: <Y/1GpjnMHLAqFV5x@tapette.crustytoothpaste.net>
+Subject: RE: Problems with CSPRNG in wrapper.c
+Date:   Mon, 27 Feb 2023 19:51:56 -0500
+Organization: Nexbridge Inc.
+Message-ID: <004d01d94b0e$ded4e5a0$9c7eb0e0$@nexbridge.com>
 MIME-Version: 1.0
-In-Reply-To: <20230227194116.2417165-1-jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGBLd+J4rsGAdm8C27f2wNf7SMANAMTgfZsAtbHIHwB4bTK6K9VWEvA
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27/2/23 20:41, Jonathan Tan wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
->> @@ -583,7 +587,7 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
->>  				interpreted_oldname);
->>  	}
->>  
->> -	if (!copy) {
->> +	if (!copy && (oldref_usage & IS_HEAD)) {
->>  		/*
->>  		 * Update all per-worktree HEADs pointing at the old ref to
->>  		 * point the new ref.
-> 
-> What is the relevance of this change?
-> 
+On Monday, February 27, 2023 7:12 PM, brian m. carlson wrote:
+>On 2023-02-27 at 23:23:36, rsbecker@nexbridge.com wrote:
+>> I have already been down that path, but not successfully. /dev/urandom
+>> is not available on the platform - never has, never will to my
+>> knowledge. This does appear to work if PRNGD is correctly running, but
+>> I can't seem to get that to work on this site. The config.mak.uname for NonStop
+>does specify:
+>>
+>> CSPRNG_METHOD = openssl
+>>
+>> which should use OPENSSL_random(), shouldn't it? OpenSSL 3.0 uses the
+>> _rdrand() builtin so should ever go to PRNGD, but it seems like this
+>> is anyway. Debugging isn't possible as this is not on my own systems -
+>> and things work here. Is there any kind of tracing I can do?
+>
+>It actually uses RAND_bytes.  I've confirmed on my Debian sid/amd64 system that
+>compiling with "make -j8 CSPRNG_METHOD=openssl" results in the binary having a
+>dependency on RAND_bytes.  (I used "nm -D".)
+>
+>Does your system have an nm binary that you could use to verify the linkage?
+>(OpenBSD says it has existed since Version 1 Unix, but that doesn't mean it exists
+>everywhere.)  Once you can verify the linkage, you'll know whether the problem is
+>OpenSSL not producing CSPRNG data or whether the CSPRNG_METHOD is incorrect.
 
-Maybe this change makes more sense in 2/3?
+I can confirm:
+Called Procedures
+    Calling Procedures
+----------------------------------------------------------------------
+ RAND_bytes
+    csprng_bytes
+
+So that's something good. I'm wondering why this problem is showing up because my x86 OpenSSL build passes FIPS which would not if it depended on PRNGD. Both platforms call git_mkstemps_mode from csprng_bytes, but that is expected. I have opened a separate case with OpenSSL, but all tests are passing there. It seems like git is ending up in the hardware randomizer code works if PRNGD is running but fails if PRNGD is not running. I am perplexed.
+
