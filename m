@@ -2,105 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13B58C64ED6
-	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 00:12:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A92FC7EE2E
+	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 00:12:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229753AbjB1AMA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Feb 2023 19:12:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44608 "EHLO
+        id S229481AbjB1AMT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Feb 2023 19:12:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229754AbjB1AL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Feb 2023 19:11:58 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 322762A6F0
-        for <git@vger.kernel.org>; Mon, 27 Feb 2023 16:11:35 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 9F3F65A1A8;
-        Tue, 28 Feb 2023 00:11:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1677543093;
-        bh=+aOGKFhN8WpM6KLk6I4haSBa3wvZQdJ0xNXMB44lb9I=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=luc8jiK7vzz9uq6YP31t5AJNRlGb5FmMuLNWNqkUJSf50x8lCzlR24lBDAf+yN1yD
-         eYC6Mm346Kxi+eeRaQbREaLve/7bJa7E4/VEOEgctpPp4c2Qf56JCoSS6MBauNJRyC
-         NN4DywMV511x/HCervACsvaZSKBqXjDbkaNDw3FtJOYAJyToicKif89z0iXg2KV5ZZ
-         rm5kEmt58nEipa06rC/5eoXjkQ9k08UE3qehaJMF/lQ2EA8GQ5EZo6ndJ4wnd10UKy
-         Pz5ORcSMNF7eXU97Vn9KlOxYKHwzQS4RoFS1LuHUuyL40dFY4T0z0w9ndn7sJesTI+
-         NMyJyMqDhk8IiycQEwnqdA2nUUfzVTL0mOjx+TjsEehRuD7j/yS3Emm6V3enX2k1N4
-         Siosg9J1vrMAvV1yts6nimJ3lc9m3PSWupWepysFAfqR5DesYmIm9o4XgzYzhw76qS
-         ECeDm08Xk/36AiuNCO4vCTaFwlxOFbNoCalWjcCjvG1vDppZU5C
-Date:   Tue, 28 Feb 2023 00:11:32 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     rsbecker@nexbridge.com
-Cc:     'Junio C Hamano' <gitster@pobox.com>,
-        'Git List' <git@vger.kernel.org>
-Subject: Re: Problems with CSPRNG in wrapper.c
-Message-ID: <Y/1GpjnMHLAqFV5x@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        rsbecker@nexbridge.com, 'Junio C Hamano' <gitster@pobox.com>,
-        'Git List' <git@vger.kernel.org>
-References: <003d01d94b00$16abc7a0$440356e0$@nexbridge.com>
- <xmqqv8jmr98f.fsf@gitster.g>
- <003e01d94b02$877c2c20$96748460$@nexbridge.com>
+        with ESMTP id S229491AbjB1AMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Feb 2023 19:12:17 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 895373C17
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 16:11:55 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id bx12so4852257wrb.11
+        for <git@vger.kernel.org>; Mon, 27 Feb 2023 16:11:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1677543114;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QP7XrF0on/+ytvdHo1l4Rtfbi5vPk7NmyjMG5ny6Zwo=;
+        b=Js5s/fLxQgQ6V8lQMcjBh0qT9BQa/mhq6LYBjX71CtvVlTfp/ud4wGJ6ARDX57zoVc
+         FPgL53LvPm+qr3fW6Kxl0ux6zMB6EAyaxqxFDTFJLACNBiyaQTlP5cO0qHmIjIRr7rUT
+         /aUZ4Fy8SLOsUX7PLWZ8AMEm3T40NqtVSRNOrnCxUtlOUomNe8APoU4FyTimc4OmIWEs
+         c5kB/lbf8NIkPZTsNQcDR1WHb3dJe5jA5CYZxtaW4Tb2SMRbnr/538Ut/qQyPZrkXLEB
+         qGUeF4Y2/zeoLOOoJpws0syBStTBjlOfWI9nQwYGym3yl2l1JuhB6Dh8F20UPJXGpnM9
+         wGXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677543114;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QP7XrF0on/+ytvdHo1l4Rtfbi5vPk7NmyjMG5ny6Zwo=;
+        b=CjWdsuwpQ94fESXhY5AOgUcpNK3HCshOeTA0s7dlxjatHA5MPaOkJ1fGMWkG4XlTRA
+         qKuoKNzTHLhK3he9Mq8fSLxxc5CXf4olvL9iUGU95IgeniRRHdIJurieQwM8XLsLtGyG
+         T1OM8GGevM3swLGNT+B4InlBafeEltQ7atdxhkC0SJjLB82Z4T7mD9iZMcDrKoze/z3F
+         /PGOxX3BhMA4r0H0u1AY7/ubPTjy8nZ2xkVH/mTfd/JG/jcD86DU72CJqO8XyoF28EFu
+         Y6ZNKPoicrO1oQEIPjqyvW8vBh9IQUpxxL1ThBl7F6G1i2azCZluQGYxxxMY/PmHx+I8
+         ER/w==
+X-Gm-Message-State: AO0yUKUU1Kp+PltIizW6hT6yFKTnqfuJzLTfEHeTnjiJW59/QNxjT45m
+        R3DA5O963AiU9Atgq8832Bg=
+X-Google-Smtp-Source: AK7set+CjjQTAiTzpUnZT8eLjE3SO5Fc5I4WaAkJQU79NgNf7MtgjZ3ddRgyqQxQYDqPB9iILTf3eQ==
+X-Received: by 2002:a5d:6187:0:b0:2ca:e8c2:6d25 with SMTP id j7-20020a5d6187000000b002cae8c26d25mr692860wru.60.1677543113870;
+        Mon, 27 Feb 2023 16:11:53 -0800 (PST)
+Received: from [192.168.2.52] (59.red-88-14-203.dynamicip.rima-tde.net. [88.14.203.59])
+        by smtp.gmail.com with ESMTPSA id l4-20020a5d4804000000b002c59c6abc10sm8218898wrq.115.2023.02.27.16.11.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Feb 2023 16:11:53 -0800 (PST)
+Subject: Re: [PATCH v4 1/3] branch: avoid unnecessary worktrees traversals
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20230227193012.2410973-1-jonathantanmy@google.com>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <dee6ca9e-af3b-bc79-a09c-6bc0f0245017@gmail.com>
+Date:   Tue, 28 Feb 2023 01:11:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="BMfop8QBbDKt04fl"
-Content-Disposition: inline
-In-Reply-To: <003e01d94b02$877c2c20$96748460$@nexbridge.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+In-Reply-To: <20230227193012.2410973-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 27/2/23 20:30, Jonathan Tan wrote:
+> Rubén Justo <rjusto@gmail.com> writes:
+>> Reviewing this, I noticed I made a mistake here.  The original code
+>> doesn't stop iterating whenever refs_create_symref() fails; it continues
+>> trying to update the remaining worktrees.  When the iteration ends, if
+>> any of the updates failed, then die().  Also, the error message "HEAD of
+>> working tree %s is not updated" is lost.  
+> 
+> Ah yes, I noticed this too.
 
---BMfop8QBbDKt04fl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'll re-roll with the fix in the next iteration.
 
-On 2023-02-27 at 23:23:36, rsbecker@nexbridge.com wrote:
-> I have already been down that path, but not successfully. /dev/urandom is
-> not available on the platform - never has, never will to my knowledge. Th=
-is
-> does appear to work if PRNGD is correctly running, but I can't seem to get
-> that to work on this site. The config.mak.uname for NonStop does specify:
->=20
-> CSPRNG_METHOD =3D openssl
->=20
-> which should use OPENSSL_random(), shouldn't it? OpenSSL 3.0 uses the
-> _rdrand() builtin so should ever go to PRNGD, but it seems like this is
-> anyway. Debugging isn't possible as this is not on my own systems - and
-> things work here. Is there any kind of tracing I can do?
+Thank you for reading carefully.
 
-It actually uses RAND_bytes.  I've confirmed on my Debian sid/amd64
-system that compiling with "make -j8 CSPRNG_METHOD=3Dopenssl" results in
-the binary having a dependency on RAND_bytes.  (I used "nm -D".)
+> 
+> Besides that, a reviewer, upon reading the commit message, might ask:
+> why not take the worktrees as a parameter then, if we're so worried
+> about performance? I think that the real reason for inlining is that the
+> code being inlined needs to communicate more information to its calling
+> function in subsequent patches; the performance improvement is only a
+> beneficial side effect.
+> 
 
-Does your system have an nm binary that you could use to verify the
-linkage?  (OpenBSD says it has existed since Version 1 Unix, but that
-doesn't mean it exists everywhere.)  Once you can verify the linkage,
-you'll know whether the problem is OpenSSL not producing CSPRNG data or
-whether the CSPRNG_METHOD is incorrect.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Certainly, that's a way to see the modification within this series.
+Actually, this modification wasn't present in v1, but once it was
+introduced in v2, it made sense on its own: to eliminate the redundant
+traversals of worktrees when renaming a branch, even if the branch isn't
+HEAD in any worktree.
 
---BMfop8QBbDKt04fl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY/1GtAAKCRB8DEliiIei
-gbm9AP4+9oCCGNiqdVB0Y7Bh0iBAYV4Yrid4mXRboAKlNkerOQD/ThYxtgBR962a
-HDSuvSJVXEMgFO42Xy16kn+9uBMvKgI=
-=B9iT
------END PGP SIGNATURE-----
-
---BMfop8QBbDKt04fl--
+Therefore, I think the change can also be seen in another way: the
+increased ease in the next modifications is a beneficial side effect
+of this patch.
