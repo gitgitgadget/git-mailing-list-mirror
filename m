@@ -2,128 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A326C64EC7
-	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 14:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 393A9C6FA8E
+	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 14:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229610AbjB1OO2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Feb 2023 09:14:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43116 "EHLO
+        id S229870AbjB1O7p (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Feb 2023 09:59:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjB1OO1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2023 09:14:27 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1612723D93
-        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:14:26 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id m8-20020a17090a4d8800b002377bced051so13879463pjh.0
-        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:14:26 -0800 (PST)
+        with ESMTP id S229834AbjB1O7m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2023 09:59:42 -0500
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1957D166C6
+        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:59:37 -0800 (PST)
+Received: by mail-oi1-x22b.google.com with SMTP id bm20so8231270oib.7
+        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:59:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1677593665;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bWDDz1H09hS+qZ8Mzjt3niQedh0uKiefAG3RK2IVUIQ=;
-        b=BNtR9HfZmzukcav0YgvjrRz9TxyXRbYUVd0uaaFwNz/RmqB7yYZzTsbzqJvWbAK3Y1
-         M7Hppa8nqh6MEIjdUUWARx+7WW1TfPm6q/27LfY2frdVlVovIqauorMZMC/4cfsjeREx
-         3GHgLPQ302LkYRWZs0VBDv6QBFo4qtWByC7I9J3uIRVigGkhxooPnK8ochgJHkICz8bX
-         CiyC2HPhM7YpUIp+K+URYqRAbV3YbKyex3PajKvOexAuk11FfuDV6DW6P1dzClvG6ZQl
-         p2HPu7y5+BSSrPeKtA2UT6P+QCCPzqZgERngoKxiRBh074vVfeRW54BL2raYimS4n/RD
-         wNMA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EUVlhejAkM4GoHflnTRD/iN8RZs1JbTpaTwnS6iblz0=;
+        b=BVIwbuHc33Dp10Z/Lq/MBSCdT3rKq4t70y8wFgv1e6tM7cCefMGf0J91b22wA5J+jQ
+         rJ+yy2N2x8rQxrVRchTmGmKLPKEbUUrPK6BqsA4L8QVS1nNq1YwEWHFMuEyjgrh4i5sx
+         r+vUOlrnWd/upuXn0Obj7KFDXhsdaxwiXMIn5Eday7jW4QhiOOc2IW+QbMYKYwqljYrt
+         rTWYPEtXkEA9jgL/C2OydCG6Hb1CIQzKf7Ceye9zwj/bi92IOWS4SJLj9HdALAyCwSDH
+         PXEo5FRzsYNjCxLZ2YRKo06WBS5G2FKQdHXNyL9yUrxodFvlNbY81KPdQC4g87yLJ9AD
+         9riQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677593665;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bWDDz1H09hS+qZ8Mzjt3niQedh0uKiefAG3RK2IVUIQ=;
-        b=hJFInwLMB1Q2W1Ei43x70BXSt+eKMzHXeoqyoV5x45yqZveAXtOxjKWnLGOhwRsSBB
-         EF7WPVmwUgF5ABk2oQIaV95B0vwfS350N5VBwHcXCQhS8PSsiy+atoT21CdjfFEQbqkP
-         BSOX09yghXCXUqnE3v7mGN3WLVeFNYTWkP1XMU/Qim5JnJroxuZsdZNP/rK77b1v3ePV
-         4Rxfx2X4vICWNSbbxIJRNKZgIdNChIzxr3G89rnociHw63geus+NNUSIrMtEjry5Hoj9
-         eNZZqf7aKujVGGEhnBfl8l0PR0Kh+NZeMBC4jleLshcEyK3THkl0nn2EPZUKH/WlOhep
-         cneg==
-X-Gm-Message-State: AO0yUKWDSVhJGxaAGehvmqWuL8eecUmRgEMzDzbLhJnCkndCqq3PzLBH
-        ubvAGnAv+z5prrSivKNMlQSySxYHkZTtDZ9s
-X-Google-Smtp-Source: AK7set9YYKr3qbKPhZ2O/0+3DO1BJmm3jXAGTLXH/ZzPIQUTsWYtaNF59odevXR6tlrkNS6wj5+KLg==
-X-Received: by 2002:a17:903:249:b0:19a:debb:58f7 with SMTP id j9-20020a170903024900b0019adebb58f7mr3259321plh.13.1677593665490;
-        Tue, 28 Feb 2023 06:14:25 -0800 (PST)
-Received: from localhost.localdomain ([47.246.101.61])
-        by smtp.gmail.com with ESMTPSA id e12-20020a170902744c00b001993411d66bsm6601029plt.272.2023.02.28.06.14.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Feb 2023 06:14:25 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
-        sunshine@sunshineco.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v6 3/3] notes.c: introduce '--separator=<paragraph-break>' option
-Date:   Tue, 28 Feb 2023 22:14:19 +0800
-Message-Id: <20230228141419.47430-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.39.2.459.gd58159df.dirty
-In-Reply-To: <xmqqk005v3ex.fsf@gitster.g>
-References: <xmqqk005v3ex.fsf@gitster.g>
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EUVlhejAkM4GoHflnTRD/iN8RZs1JbTpaTwnS6iblz0=;
+        b=vJwp7MU6TDxyHXi3gQb/T4y1i9p1gUV4qBba+RjO0UTTDnNUAOMhjpkXMY2Wd3K+oL
+         qN54COKS4Rcuw0UZ2sOWR61rHzBVHkXoXJf+duEbok1i/j1brlRdc3UsVaXj1LtUJ7Gn
+         svUGACI5zIPPt8+KG3gL3PU92dG1Gnr3DmV8J6AQ2oVb74MT/NcEJV4Fi9TjtdmNpiLp
+         RhZjByDLeVIU9LwMS/vyqTkHa9fyB1xc/JMFL9UF6zCym4lmHr3FTnMDy7kGcR4M8Rks
+         edO2+gmMzu21G9I/nrGyHWl1Awp7JRdrBd0NkoN1zigtLfNJ85kWhKJ2w98utoVAqhUw
+         WYoQ==
+X-Gm-Message-State: AO0yUKXWwVEnssTVMeSXKxicoRHf0ZL9RJlzAJVpmtP5W9/tPMPpMFZs
+        AddZmBCNEaLSgW3kofwjGymP3sDJKbU=
+X-Google-Smtp-Source: AK7set/0MWGh0RuSWwu2elgcilMhOQSOb4Lf1Sy4gq5YfJUpZqiVonUycyhdHp5JIvRw072UpL3TRQ==
+X-Received: by 2002:aca:1c03:0:b0:383:f55f:76d9 with SMTP id c3-20020aca1c03000000b00383f55f76d9mr1200957oic.31.1677596376073;
+        Tue, 28 Feb 2023 06:59:36 -0800 (PST)
+Received: from localhost ([2806:2f0:4060:3465:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id w129-20020aca6287000000b00383bfd8a184sm4486611oib.25.2023.02.28.06.59.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Feb 2023 06:59:35 -0800 (PST)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Justin Donnelly <justinrdonnelly@gmail.com>,
+        Joakim Petersen <joak-pet@online.no>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH try2] completion: prompt: use generic colors
+Date:   Tue, 28 Feb 2023 08:59:34 -0600
+Message-Id: <20230228145934.4182166-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+When the prompt command mode was introduced in 1bfc51ac81 (Allow
+__git_ps1 to be used in PROMPT_COMMAND, 2012-10-10) the assumption was
+that it was necessary in order to properly add colors to PS1 in bash,
+but this wasn't true.
 
-> The two callers of this function prepares the string_list, and have
-> this function consume it by concatenating its contents to d->buf.
-> After calling this function, neither of them talks about messages,
-> which means we are leaking the strings kept in the string_list.
->
-> I could eject the topic from today's integration run (because the
-> topic is not ready to be merged to 'next' as-is; "-C/-c" codepaths
-> need to be adjusted, at least), but as I took a look already, I'll
-> queue this fix-up on top of the topic for now.  Feel free to squash
-> it in (or address the leaks in your own way) when sending in an
-> update.
->
-> Thanks.
->
->  builtin/notes.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git c/builtin/notes.c w/builtin/notes.c
-> index 97c18fc02f..cd7af76e2f 100644
-> --- c/builtin/notes.c
-> +++ w/builtin/notes.c
-> @@ -220,7 +220,8 @@ static void insert_separator(struct strbuf *message, size_t pos)
->  		strbuf_insertf(message, pos, "%s%s", separator, "\n");
->  }
->
-> -static void parse_messages(struct string_list *messages, struct note_data *d)
-> +/* Consume messages and append them into d->buf */
-> +static void concat_messages(struct string_list *messages, struct note_data *d)
->  {
->  	size_t i;
->  	for (i = 0; i < messages->nr; i++) {
-> @@ -231,6 +232,7 @@ static void parse_messages(struct string_list *messages, struct note_data *d)
->  		strbuf_stripspace(&d->buf, 0);
->  		d->given = 1;
->  	}
-> +	string_list_clear(messages, 0);
->  }
->
->  static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
-> @@ -451,7 +453,7 @@ static int add(int argc, const char **argv, const char *prefix)
->  		usage_with_options(git_notes_add_usage, options);
->  	}
->
-> -	parse_messages(&messages, &d);
-> +	concat_messages(&messages, &d);
->  	object_ref = argc > 1 ? argv[1] : "HEAD";
->
->  	if (get_oid(object_ref, &object))
-> @@ -622,7 +624,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
->  		usage_with_options(usage, options);
->  	}
->
-> -	parse_messages(&messages, &d);
-> +	concat_messages(&messages, &d);
->
->  	if (d.given && edit)
->  		fprintf(stderr, _("The -m/-F/-c/-C options have been deprecated "
+It's true that the \[ \] markers add the information needed to properly
+calculate the width of the prompt, and they have to be added directly to
+PS1, a function returning them doesn't work.
 
-Thanks, will apply in next patch.
+But that is because bash coverts the \[ \] markers in PS1 to \001 \002,
+which is what readline ultimately needs in order to calculate the width.
+
+We don't need bash to do this conversion, we can use \001 \002
+ourselves, and then the prompt command mode is not necessary to display
+colors.
+
+This is what functions returning colors are supposed to do [1].
+
+[1] http://mywiki.wooledge.org/BashFAQ/053
+
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ contrib/completion/git-prompt.sh | 19 +++++++------------
+ t/t9903-bash-prompt.sh           |  8 ++++----
+ 2 files changed, 11 insertions(+), 16 deletions(-)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 57972c2845..76ee4ab1e5 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -100,9 +100,7 @@
+ #
+ # If you would like a colored hint about the current dirty state, set
+ # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
+-# the colored output of "git status -sb" and are available only when
+-# using __git_ps1 for PROMPT_COMMAND or precmd in Bash,
+-# but always available in Zsh.
++# the colored output of "git status -sb".
+ #
+ # If you would like __git_ps1 to do nothing in the case when the current
+ # directory is set up to be ignored by git, then set
+@@ -259,12 +257,12 @@ __git_ps1_colorize_gitstring ()
+ 		local c_lblue='%F{blue}'
+ 		local c_clear='%f'
+ 	else
+-		# Using \[ and \] around colors is necessary to prevent
++		# Using \001 and \002 around colors is necessary to prevent
+ 		# issues with command line editing/browsing/completion!
+-		local c_red='\[\e[31m\]'
+-		local c_green='\[\e[32m\]'
+-		local c_lblue='\[\e[1;34m\]'
+-		local c_clear='\[\e[0m\]'
++		local c_red=$'\001\e[31m\002'
++		local c_green=$'\001\e[32m\002'
++		local c_lblue=$'\001\e[1;34m\002'
++		local c_clear=$'\001\e[0m\002'
+ 	fi
+ 	local bad_color=$c_red
+ 	local ok_color=$c_green
+@@ -574,11 +572,8 @@ __git_ps1 ()
+ 		b="\${__git_ps1_branch_name}"
+ 	fi
+ 
+-	# NO color option unless in PROMPT_COMMAND mode or it's Zsh
+ 	if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
+-		if [ $pcmode = yes ] || [ -n "${ZSH_VERSION-}" ]; then
+-			__git_ps1_colorize_gitstring
+-		fi
++		__git_ps1_colorize_gitstring
+ 	fi
+ 
+ 	local f="$h$w$i$s$u$p"
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index d459fae655..d667dda654 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -13,10 +13,10 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ . "$GIT_BUILD_DIR/contrib/completion/git-prompt.sh"
+ 
+ actual="$TRASH_DIRECTORY/actual"
+-c_red='\\[\\e[31m\\]'
+-c_green='\\[\\e[32m\\]'
+-c_lblue='\\[\\e[1;34m\\]'
+-c_clear='\\[\\e[0m\\]'
++c_red='\001\e[31m\002'
++c_green='\001\e[32m\002'
++c_lblue='\001\e[1;34m\002'
++c_clear='\001\e[0m\002'
+ 
+ test_expect_success 'setup for prompt tests' '
+ 	git init otherrepo &&
+-- 
+2.39.2
+
