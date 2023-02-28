@@ -2,246 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0BDEC64EC7
-	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 14:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D506C64EC7
+	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 14:13:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229789AbjB1OLP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Feb 2023 09:11:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41356 "EHLO
+        id S229800AbjB1ONa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Feb 2023 09:13:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229608AbjB1OLN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2023 09:11:13 -0500
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09D52FCFA
-        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:11:11 -0800 (PST)
-Received: by mail-pl1-x62f.google.com with SMTP id v11so7031371plz.8
-        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:11:11 -0800 (PST)
+        with ESMTP id S229501AbjB1ON2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2023 09:13:28 -0500
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2095E22DF3
+        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:13:27 -0800 (PST)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-536c02eea4dso276631787b3.4
+        for <git@vger.kernel.org>; Tue, 28 Feb 2023 06:13:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1677593471;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Pj+uQrHHSx5V9g2T/Fa8xXLrQAQXLLQDbnKBM2Jjak0=;
-        b=o4dSCXguqUswDuDDOXtKlMkbi1K7MpO0vNUzYLk5NhSfJJvpMJDiw2ONBylHafkjcs
-         PuPxi+tzG5elA4/eOzsO94Eq9WAPXxePhzhs1qy94V7iDXAvdFEJTmW4pZfKVHvqgga+
-         f31NN7KofpaDa+q8SuFSSB2o65FRvEPPtu/+k+02P3NJWw9utPqb+CX2eVohY76Y9tQx
-         CumqlFCyofOBkEkhsWS8LQOwZyGB5XA1LzX6GN9CaRE3UMROWKkWTAq1bcpQGOqxuxKg
-         oHERZQBUoSNsuOCEDw2SwlwdWMbD3omtLFjgeaG742zP+VM1sZ1xvAwxfDGlq3SayucU
-         OYeQ==
+        bh=pIvaCxpba8HtF7s5+NCKQb9jtos0GkvlDjTFJHVAtLY=;
+        b=G+jQPn+r8uu4LCXGORLu4Swar1UG1Tkte9NmLR7aiai93wr9GTuL+l1ont7DVRbpmq
+         m4aXTO79Obt/FwBKBSseP8j006gS4khqHsC8wEi19gYEfROrRKfCkV03X5Nz4C3VQNX/
+         +VA4JakLfbFEWgsmGG+Hh+700IjL2RhjH0cd89uxJ6IZulGc/WSpYruegpM5UXPFoJOk
+         ByvOwy0YL7AthJk9i40m1WK9KsZXuGl/giU4poFsj2mbFmXupNiqqyrH5FHX293TizaV
+         W+lSAgRD8IhFbVRrgNNDOVISyk1MKeLQTmaKgB+9WX48uSVTW/NxJZB/noVZbu/hyeOn
+         Qu0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677593471;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Pj+uQrHHSx5V9g2T/Fa8xXLrQAQXLLQDbnKBM2Jjak0=;
-        b=x6t2prYuW6HEBD6Edr7fOEpyw6RgP+RBmFw6lE4a85+63MFW5wJ8w5HAGbeoaBNbMW
-         peTp3giUSqmVniqxoIIGPieHkTPgxjzkjeuJWXBF3V4GwfQGl20OuqLvb5DA1oeP5Y+B
-         H6cB88P0Ue7yEddis2SY+2b6/Nm+6nDkO2BCchpa2N+fMPnwyINJPwyUMs7PKsXDzhQC
-         imuffm5eSOJBbt5j6EKNrQ3wi+74loEqUm+2KM2TaZjl5ZvDTNFFSgOpCVgqrXhDDeU8
-         pHDm+OGjDQEhNPy5zXgruZgocvHj18sWy3nF8X+yq3+MsN0X9tkd+4cB6tPsjYLLg51a
-         l6gg==
-X-Gm-Message-State: AO0yUKWRmpme/BTkIxQKsx/5zUvwgBEBzBLNa2ZYyvFae5gON0YUTPjW
-        awNMOgqCViVqobvmoRUB/vcApj6ON1XGZnsB
-X-Google-Smtp-Source: AK7set/l7JyYYC8i+ShxG8Qt7glc9G2ahs2Z03BA2y7r4SBt1kxtFH4tzp+XrFOoZurYS/cReDDCuA==
-X-Received: by 2002:a17:90b:1bc8:b0:233:d854:2701 with SMTP id oa8-20020a17090b1bc800b00233d8542701mr3615795pjb.41.1677593470980;
-        Tue, 28 Feb 2023 06:11:10 -0800 (PST)
-Received: from localhost.localdomain ([47.246.101.61])
-        by smtp.gmail.com with ESMTPSA id u6-20020a17090a1d4600b0023739b75710sm6198263pju.10.2023.02.28.06.11.08
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Feb 2023 06:11:10 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     gitster@pobox.com
-Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
-        sunshine@sunshineco.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v6 3/3] notes.c: introduce '--separator=<paragraph-break>' option
-Date:   Tue, 28 Feb 2023 22:11:03 +0800
-Message-Id: <20230228141103.47275-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.39.2.459.gd58159df.dirty
-In-Reply-To: <xmqqcz608cpk.fsf@gitster.g>
-References: <xmqqcz608cpk.fsf@gitster.g>
+        bh=pIvaCxpba8HtF7s5+NCKQb9jtos0GkvlDjTFJHVAtLY=;
+        b=24b90vbxabBsJp+grRPGpH0Z/L8uKw3n2TxDSOuZlXKomSMQFOYKToZCuEIqI5Orq9
+         EjUoQnUkuKwPDxivVH+uPsJzEcrsomskVJbQbDZnEbmQHl/o1hsVvytfwi2mj17fNyN8
+         UGS2xaKG33VzN9kdUHH9Ezw7CCvHJHDyPuDiHgsW1yD1NgO0Xuq3p25M/g00Qws0kgDf
+         xr5TaORvvoj9ePM6pYt1xIr+SN8A13xH7nlqqD/skbEDRROblJe2qCCHxI53PJRYtbGW
+         eGArR/opIeh9qlTS4RLZ2rWiKXIXDKOT02m4/6dB2be5+LFmDBMZHBX7OxqY8zIS0RI7
+         ioCQ==
+X-Gm-Message-State: AO0yUKUC811FTU4oSUgJAM8dIUwDFEIZfe0W9MyqMaQx6EO8gnzt7JDD
+        yX7gfNokiHOg9/e1YIPtlI9KodtHdM35Vnt42hB5KM+Px1w=
+X-Google-Smtp-Source: AK7set9N8D8eSgQYWbr443ABLe/Lsdqbh3dPVDZNJcHVjPC7BEzDsA2MOHViWQj0HV3MhIPe/2FzE47zIE/H3O7fiyU=
+X-Received: by 2002:a81:4523:0:b0:52e:ee55:a81e with SMTP id
+ s35-20020a814523000000b0052eee55a81emr1737576ywa.7.1677593606241; Tue, 28 Feb
+ 2023 06:13:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.1474.git.1675614276549.gitgitgadget@gmail.com>
+ <CAMMLpeTPEoKVTbfc17w+Y9qn7jOGmQi_Ux0Y3sFW5QTgGWJ=SA@mail.gmail.com> <CAPMMpogFAR6cvcR8T5fx+AoytAJ7TsPpSeOjHNzW4Gmkuq7FLQ@mail.gmail.com>
+In-Reply-To: <CAPMMpogFAR6cvcR8T5fx+AoytAJ7TsPpSeOjHNzW4Gmkuq7FLQ@mail.gmail.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Tue, 28 Feb 2023 08:13:14 -0600
+Message-ID: <CAMP44s1_Oy8GzoALnvQMJEVRkDB3EBmn4drTyY6T+9BatRpjUA@mail.gmail.com>
+Subject: Re: [PATCH] pull: conflict hint pull.rebase suggestion should offer
+ "merges" vs "true"
+To:     Tao Klerks <tao@klerks.biz>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com>:
+On Thu, Feb 16, 2023 at 7:33=E2=80=AFAM Tao Klerks <tao@klerks.biz> wrote:
+> On Thu, Feb 16, 2023 at 4:22 AM Alex Henrie <alexhenrie24@gmail.com> wrot=
+e:
 
-> > So this commit
-> > introduces a new '--separator' option for 'git-notes-add' and
-> > 'git-notes-append', for example when execute:
->
->     Introduce a new '--separator' option for 'git notes add' and
->     'git notes append'.
-
-Thanks, I will avoid this like 'git-subcommand' expression in the future.
-
-> > We will check the option value and if the value doesn't contail
-> > a trailing '\n', will add it automatically,
->
-> contail?
-
-"contain", sorry.
-
-> 	A newline is added to the value given to --separator if it
-> 	does not end with one already.
-
-Will apply.
-
-> > so execute
-> >       $ git notes add -m foo -m bar --separator="-"
-> > and
-> >       $ export LF="
-> >       "
-> >       $ git notes add -m foo -m bar --separator="-$LF"
+> > Now, this is not to say that there's no room for improvement. I like
+> > the rebase=3Dmerges option and I wish everyone knew about it because
+> > there are situations where it really is the best option. I suggest
+> > leaving the existing text alone, but adding an additional paragraph,
+> > something like:
 > >
-> > have the same behavour.
+> > Note that --rebase or pull.rebase=3Dtrue will drop existing merge
+> > commits and rebase all of the commits from all of the merged branches.
+> > If you want to rebase but preserve existing merge commits, use
+> > --rebase=3Dmerges or pull.rebase=3Dmerges instead.
 >
-> 	Running A and B produces the same result.
+> My primary motivation with this pull request is to reduce the
+> incidences, out there in the world, of people copy-pasting "git config
+> pull.rebase true" into their command-line, and causing themselves
+> major headaches days or weeks later. The "--rebase=3Dinteractive" part
+> is secondary (to my concerns), because it's much less copy-pastable.
 
-Will s/Running A and B produces the same result/have the same behavour
+That's because the whole approach to the pull.rebase configuration is
+wrong. I explained why multiple times in countless discussions and git
+developers did not listen.
 
->  - The default delimiter?  Delimiter for what?  I am puzzled.
->
-> at the third step, gets puzzled.  The command takes the existing
-> note's contents, adds a delimiter and then appends the new material
-> given by the user, but because that is not clear after reading the
-> first two lines, the sudden appearance of "delimiter" would confuse
-> readers.
->
-> > +	option to insert other delimiters. More specifically, if the
-> > +	note and the message are not empty, the delimiter will be
-> > +	inserted between them. If you specify multiple `-m` and `-F`
->
-> Again, the order of presentation is somewhat backwards and that is
-> why we need to say "More specifically" here.
->
-> > +	options, the delimiter will be inserted between the messages
-> > +	too.
->
-> 	Append new message(s) given by `-m` or `-F` options to an
-> 	existing note, or add them as a new note if one does not
-> 	exist, for the object (defaults to HEAD).  When appending to
-> 	an existing note, a blank line is added before each new
-> 	message as an inter-paragraph separator.  The separator can
-> 	be customized with the `--separator` option.
+What we need is a pull.mode configuration that is *orthogonal* to
+pull.rebase, then everything just works.
 
-Will apply.
+For example, you could have this configuration.
 
-> Here is where you need to say about promoting incomplete line
-> separator more than the proposed log message.
->
-> 	Specify a string used as a custom inter-paragraph separator
-> 	(a newline is added at the end as needed).  Defaults to a
-> 	blank line.
+    git config pull.mode merge
+    git config pull.rebase merges
 
-Will apply.
+Then doing `git pull --rebase` would do a merges rebase.
 
-> > +static void insert_separator(struct strbuf *message, size_t pos)
-> > +{
-> > +	if (!separator)
-> > +		strbuf_insertstr(message, pos, "\n");
-> > +	else if (separator[strlen(separator) - 1] == '\n')
-> > +		strbuf_insertstr(message, pos, separator);
-> > +	else
-> > +		strbuf_insertf(message, pos, "%s%s", separator, "\n");
-> > +}
->
-> It looks like you are very fond of "insert", but aren't we always
-> appending with the latest control flow?  In other words, is it worth
-> carrying 'pos' around?
+This is not possible with the current approach, which I objected to.
 
-Actually I can't find a more suitable verb. I think it worth, but I'm
-not sure whether there is a better way, that is, when we add separator which
-use to contact messages like multiple '-m' and '-F', the 'pos' is at the end.
-When we add separator which use to contact the prev_notes and the new notes
-, the 'pos' is at the head.
+Then there's no problem with telling the users to do pull.mode=3Drebase
+(or whatever), since that doesn't override pull.rebase=3Dmerges.
 
-> > +static void parse_messages(struct string_list *messages, struct note_data *d)
-> > +{
-> > +	size_t i;
-> > +	for (i = 0; i < messages->nr; i++) {
-> > +		if (d->buf.len)
-> > +			insert_separator(&d->buf, d->buf.len);
-> > +		strbuf_insertstr(&d->buf, d->buf.len,
-> > +				 messages->items[i].string);
-> > +		strbuf_stripspace(&d->buf, 0);
->
-> This is not a new problem, but if we get three 100-byte messages, we
->
->  - add the first 100-byte message to d->buf and then run
->    stripspace() over that 100-byte.
->
->  - add separator and then the second 100-byte message to d->buf, and
->    then run stripspace() over that 200-plus-byte.
->
->  - add separator and then the third 100-byte message to d->buf, and
->    then run stripspace() over that 300-plus-byte.
->
-> Shouldn't we be doing better?
+I programmed and explained this precise interaction with rebase=3Dmerges
+more than two years ago [1], but nobody listened. For an example of
+how such configuration would look like, see the patches I just sent
+[2].
 
-After I read the comments of 'strbuf_stripspace', it does :
+Cheers.
 
-1. remove empty lines from beginning and end.
-2. turn multiple empty lines between paragraphs into just one empty line.
-3. if the input has only empty lines and spaces, no output will be produced.
-4. if the last line doesn't have a newline at the end, one is added.
-5. skip every commentted line if skip_comments is enabled.
+[1] https://lore.kernel.org/git/20201218211026.1937168-14-felipe.contreras@=
+gmail.com/
+[2] https://lore.kernel.org/git/20230228140236.4175835-1-felipe.contreras@g=
+mail.com/T/#t
 
-I think above the five functions in 'strbuf_stripspace', we may just care about
-the fourth, the others just like the logic when we edit the commit message when
-doing 'git commit' or 'git merge', etc. My opinion is a "commit note" and a
-"commit message" maybe not be the same, and sometimes the user might want a
-blank line or something at the beginning of the notes. But after I read the
-tests I think they are just the same. So, let me just fix this by stripspace
-the message individually, thanks.
-
-> Do we understand what d->given flag represents?  My understanding is
-> that it becomes true only when any of the -m/-F/-c/-C options are given
-> to tell the command what message to use, so that we can automatically
-> open the editor to ask for the message when nothing is given.
-> 
-> So, I suspect that
-> 
-> 	d->given = !!messages->nr;
-> 
-> at the beginning of the function, or
-> 
-> 	d->given = !!d->buf.len;
-> 
-> may be equivalent[*], instead of setting it once every iteration?
-> 
-> 	Side note: The latter is slightly more strict, as giving a
-> 	run of empty strings with the default separator would result
-> 	in an empty d->buf and d->given will become false.
-
-I agree, we should choose the latter and move "d->given = !!d->buf.len;"
-behind the place where we concat the messages.
-
-
-> Now d->given is set in parse_reuse_arg() and parse_reedit_arg(),
-> because -c/-C is another source of a paragraph.  Shouldn't the
-> paragraph taken by these options go in the message list to be
-> concatenated together with other messages, or are -c/-C incompatible
-> with -m/-F and we are OK with two separate and distinct behaviour?
-
-Yes, my bad. -c/-C should be considered as well and dealing them with the same
-messages-contacting logic, I will fix these two place in next patch.
-
-> I wonder why separator is not a parameter into the helper function?
-
-In my opinion, your proposal is probably similar to the current approach, but
-your solution may be a bit more readable. I will consider changing it in the
-next patch.
-
-> other remaining "strbuf_addch(&d->buf, '\n')" in parse_reuse_arg().
-> I am inclined to say that that codepath should behave the same way,
-> but I didn't think it as deeply as you did, so...?
-
-You really have a good eye, I didn't noticed them. There are two place remained,
-the first one is "parse_reuse_arg", second one is "prepare_note_data" it's made
-for separate the note and the commented lines (note template), I think they
-should both be replaced/impacted by "--separator".
-
-Thanks.
+--=20
+Felipe Contreras
