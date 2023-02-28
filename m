@@ -2,111 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DBE6C64EC4
-	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 23:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A339C64EC7
+	for <git@archiver.kernel.org>; Tue, 28 Feb 2023 23:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229806AbjB1Xo6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Feb 2023 18:44:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59054 "EHLO
+        id S229732AbjB1X7E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Feb 2023 18:59:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbjB1Xo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Feb 2023 18:44:56 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF7F1367E8
-        for <git@vger.kernel.org>; Tue, 28 Feb 2023 15:44:55 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id oj5so7573316pjb.5
-        for <git@vger.kernel.org>; Tue, 28 Feb 2023 15:44:55 -0800 (PST)
+        with ESMTP id S229565AbjB1X7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Feb 2023 18:59:02 -0500
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B604A31E06
+        for <git@vger.kernel.org>; Tue, 28 Feb 2023 15:59:01 -0800 (PST)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-536bf92b55cso320268717b3.12
+        for <git@vger.kernel.org>; Tue, 28 Feb 2023 15:59:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gQLfpJ79+yWBTLSVxk8TB8Q8coakQgFCOkqbjTnRWP8=;
-        b=MxTJNde6GpDVxccWbZwP2XSMT0KZwsFOKW+osvVwmoGL99osLy8ldhCZHhl3qrTZTh
-         KWkJBOabKjoyRfAqu7zFGa+aT/jtkjwuHqQovGnBFB5lOal+OKIlqd7s5lHh01BQG/vL
-         5ExjFP3ggWulFS4H/Qbww1HZJ573Lr7poYNDUn982YNRrD0Sj8V0EP7fj7kmIzr6WdKc
-         O7Gr7LRx7bnDeFMo+QAo12JIIs/0g9l8vhThiXyGLjVXEmhNWBJIzB2Hg/SAp3js2h0r
-         SIX/+HQs7P/J5ce+OyfT9gAJijTLKM//ByMU43hQdylUpZuOG8EX+t/r9Fvw8OFIAFIa
-         JIaQ==
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=yuFDTfZXdhNJCTadVl6xrIMFZX3mDIHMFMjZDQWBp1U=;
+        b=kc6R6TSl9L7ybti7krThNlMMEOTfk8WODtlUuUHmf7Q4Wxm/VqJxEuNX7gqrLWz4Eq
+         CTkZrGWpICWLgKevC6hBO8E+yJ06bt2D+wz13t140b7YTQqysi/SGNeI0zrtMY9L0oVb
+         z2I5Yd0Xnpp2L7/7hU+nFBKwnubyuzcV8E5tNczwYybGm5zMTfP0s7Zz0zRgklRp6fuN
+         9osoqzQ5A8Mfp2Q8jzjjySX2TW0aNBgOISjjPVP3AbhceWrOrcGLCSP6GA/5P2YKsx+J
+         32V8mPzgZHNJEaAMHWSE5Uv4Uy1lTU+JHLHZxxwL2f4ssUG6kmryX0XVylgxl8Gp9ht9
+         EbGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gQLfpJ79+yWBTLSVxk8TB8Q8coakQgFCOkqbjTnRWP8=;
-        b=MwlQjBI259bPih+0qerUEZSSFfXxmdwbqspmn5svGRK+yIXsoRKPuGc5PEUF2/MicC
-         IwwWODaRUQ6CCw4aGKNAYf+cMsKWJOQwJE9kaIjgbT8pciytxe+Bzxt+2w5IxQn41LZz
-         1dmt1gTQxpFQq6qelH2wKVQ0ScyrTYdHON/iVf/vYMpEKaWUWexquOgsFzcdQKW/6IDM
-         AvtuA/FekVnvXazx9dfpW0BW9naXR3IPX/wegAQMNiWxekYcYKvEkP3bOaB6FCYUAcYM
-         aYVoyTf6YpcWiZL7ZctrIxAFEPLbIIaRFokLT+NPMMACV0NatfwbVmm2U5Op1Y706zxh
-         ZqzA==
-X-Gm-Message-State: AO0yUKUwN8juOyp+ALxWYTkrELtthmN++PBRhiu+hZ03+k6jGhqarm63
-        sCfWGG2X4GTqIFW0/HwFUL4=
-X-Google-Smtp-Source: AK7set9KTKpAxlhFC2Gc9CMnn3d6Rp46yPpKHzp0VnkSLNcqfOH/v0ZTqYKMOi3dbCTMxHYPial0aA==
-X-Received: by 2002:a17:90b:4d04:b0:234:d42:1628 with SMTP id mw4-20020a17090b4d0400b002340d421628mr4930074pjb.10.1677627895163;
-        Tue, 28 Feb 2023 15:44:55 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id h1-20020a17090adb8100b002348bfd3799sm8448334pjv.39.2023.02.28.15.44.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Feb 2023 15:44:54 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
-        avarab@gmail.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH] range-diff: avoid compiler warning when char is unsigned
-References: <20230220142444.18739-1-tenglong.tl@alibaba-inc.com>
-        <20230220142444.18739-2-tenglong.tl@alibaba-inc.com>
-        <1156586e-9dbe-335e-7e33-74eea7913e86@web.de>
-Date:   Tue, 28 Feb 2023 15:44:54 -0800
-In-Reply-To: <1156586e-9dbe-335e-7e33-74eea7913e86@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 28 Feb 2023 17:13:27 +0100")
-Message-ID: <xmqqh6v5pd6x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yuFDTfZXdhNJCTadVl6xrIMFZX3mDIHMFMjZDQWBp1U=;
+        b=zNkIzNxFh3z8/lrfmkdyfb/QcI3gDAgYzCtjkkPgSJRp2jkfjumLglvlZUqsto2tae
+         KCvwhoauzSKUXgm8Lpldxy8az/X8sq1dByCYzpeaJlfrVqAGVoMTO3J89GKEbj3xey+g
+         8CWa9+xlwxMhRc6fBya59hfW4H4Z8zws0XukrdlbVY4hNV4dbl6A9GDJd90MQCg8CAM1
+         5A8/dln/KsOTrE3aJKye/L5UJAnEz2D7yWAmkMLaxxoMsIihgidvTbijtHwMo/N3rT9H
+         eAM5b24g0rc0QJHUMICEbcnv/2mBNmF4iJawen6Lmh0yiC5jODbc4pos9ZkznpF72wgp
+         nyiQ==
+X-Gm-Message-State: AO0yUKU4X/U+VSNFlNtGwj1aIVVc5jtE4f6kSMIYUYaAMYBUCJbwz6La
+        n6E679LLBO5mOpJ5D6B/93ww2zy8HwCumryckzj8n/D6vao=
+X-Google-Smtp-Source: AK7set97PFn8C/UooT5hw97hkGWWdpjr3ldTVuGbwt19xSuqkA1FYw3ye7WUE7MqpXUwNgqxlIWMqirFENu9ljr+nBI=
+X-Received: by 2002:a25:900d:0:b0:a1e:de8e:76b with SMTP id
+ s13-20020a25900d000000b00a1ede8e076bmr2393028ybl.1.1677628740701; Tue, 28 Feb
+ 2023 15:59:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 1 Mar 2023 00:58:49 +0100
+Message-ID: <CAP8UFD2UsPXffkWtgvVYE_1ZQvYnMkqRcXjAFHrC_vtBC8-FWA@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 96
+To:     git <git@vger.kernel.org>
+Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Erik Cervin Edin <erik@cervined.in>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Bruno Brito <bruno@git-tower.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Hi everyone,
 
-> Since 2b15969f61 (range-diff: let '--abbrev' option takes effect,
-> 2023-02-20), GCC 11.3 on Ubuntu 22.04 on aarch64 warns (and errors
-> out if the make variable DEVELOPER is set):
->
-> range-diff.c: In function ‘output_pair_header’:
-> range-diff.c:388:20: error: comparison is always false due to limited range of data type [-Werror=type-limits]
->   388 |         if (abbrev < 0)
->       |                    ^
-> cc1: all warnings being treated as errors
->
-> That's because char is unsigned on that platform.  Use int instead, just
-> like in struct diff_options, to copy the value faithfully.
->
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
->  range-diff.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+The 96th edition of Git Rev News is now published:
 
-Very clearly explained.  The patch does make sense.
+  https://git.github.io/rev_news/2023/02/28/edition-96/
 
-Thanks.
+Thanks a lot to Bruno Brito who helped this month!
 
-> diff --git a/range-diff.c b/range-diff.c
-> index 086365dffb..4bd65ab749 100644
-> --- a/range-diff.c
-> +++ b/range-diff.c
-> @@ -383,7 +383,7 @@ static void output_pair_header(struct diff_options *diffopt,
->  	const char *color_new = diff_get_color_opt(diffopt, DIFF_FILE_NEW);
->  	const char *color_commit = diff_get_color_opt(diffopt, DIFF_COMMIT);
->  	const char *color;
-> -	char abbrev = diffopt->abbrev;
-> +	int abbrev = diffopt->abbrev;
->
->  	if (abbrev < 0)
->  		abbrev = DEFAULT_ABBREV;
-> --
-> 2.34.1
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
+
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+
+  https://github.com/git/git.github.io/issues/631
