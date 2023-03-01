@@ -2,56 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F3F5FC7EE36
-	for <git@archiver.kernel.org>; Wed,  1 Mar 2023 23:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52449C678D4
+	for <git@archiver.kernel.org>; Wed,  1 Mar 2023 23:46:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229510AbjCAXoR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Mar 2023 18:44:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44700 "EHLO
+        id S229817AbjCAXqp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Mar 2023 18:46:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbjCAXoP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2023 18:44:15 -0500
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FFE7F742
-        for <git@vger.kernel.org>; Wed,  1 Mar 2023 15:43:42 -0800 (PST)
-Received: by mail-pl1-x64a.google.com with SMTP id l10-20020a17090270ca00b0019caa6e6bd1so7664369plt.2
-        for <git@vger.kernel.org>; Wed, 01 Mar 2023 15:43:42 -0800 (PST)
+        with ESMTP id S229810AbjCAXqn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2023 18:46:43 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAF1F51FA2
+        for <git@vger.kernel.org>; Wed,  1 Mar 2023 15:46:14 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id cl18-20020a17090af69200b0023470d96ae6so1231472pjb.1
+        for <git@vger.kernel.org>; Wed, 01 Mar 2023 15:46:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1677714192;
+        d=google.com; s=20210112; t=1677714362;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yOKH7PGHgq8OmJmCbKWT+Ts8VVip/isMSSPRT8WAhE0=;
-        b=NTKE23B9X7Lp86bBPtKGZuF2zbIZCJCcTUjjp46M1I0mfL+hu14e5EdqnIP9+nwAqn
-         11c/KvxnsCgdRYJvPNub/RBQzQs36KbC0p27J0hN60KpF138qk2y8jQ4L1ay3fnmr0c0
-         o3/0Z3rrogV98V6O4Kr+VdIQBMZ6tbgbBnLmOYLjKIN67b3DX6yytQjatXj4UJ55AiCY
-         aDB3y0DgNHlfsOIh6uzX6+jEg8pkjyMGikbiMBUV6uMzC0jblaZ9bh+GJ9v+a5CwDFs9
-         UhBzsoPIPOwX72/n8HzuwIUvE8Y48r0B5F4uNnuOMZ8I2b4+tIxn9Cn+R/gE8DLLZGP0
-         lqtg==
+        bh=40brvOkCscjNrHnUeDgqVv82gvYQy+4kd5sr0JPvdqw=;
+        b=dE/k7ZzcANysG60kxbFlPLbxDaUNTJNjIzi2WgQFFZjLnZH3RXUwJXdt1v/KpjfpOv
+         elye8wUVVwQEyTo7rAY2jxViByFBkNinERDiav4bZNnDoEDLmd1gF9TG+v2HK1qlqUnK
+         AcKV4qPJZLYkivflrGelgUy/lY0bqKfktO8P0DWfg47/HgdO1LGMlYeLx5mNd6jQ8bh8
+         pEh1jmSlJ+KkpSxwVlzH6VmKXUgdkc0dHe7tUQc3uRUFIgOpHyPAGUtOXKE06g36v3w2
+         YE5g6nhNYg3yl9SMY9JarNvzg286HLWzysLoSwX85lcyqt6LuzQ2cFGVJQaLON4LWGg9
+         evng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677714192;
+        d=1e100.net; s=20210112; t=1677714362;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yOKH7PGHgq8OmJmCbKWT+Ts8VVip/isMSSPRT8WAhE0=;
-        b=bNi58ko9aYGwq5O7vNp3VTDUXwuAg8VOcf5eMIuK3cjPpGv8IGGksOy4RAmru6zPIK
-         xzWUL7ykN0ojgXFeN9vZYUkVqFMm5ygFf5c/RRon5fZVmHIlZaLgse+8YlWkKy5gLZu4
-         M7k6herRUhCV745FkBsdTwyFM8P5mEY/PwyhuC5aKa17ZQ7e/3o+0a5fSQifGN0CADWK
-         r1+/pF8X460ZcuJeBaoNkVg18Rti24sGQlR+AFlkGf48kG0+Pja0zUIHaSpb9wF/eY10
-         9i/1bSkNW6vjsULdq3g6zHvZ+TkQqmayYpZgSbTiN+/P/xCHOIkpq3NPoZZGW4YqzET8
-         xUtQ==
-X-Gm-Message-State: AO0yUKWUv/30G/In7ZWWdGmXXlpg/YG+/1w6qseWAdd1Hr4XoXkGowZV
-        4giNLcaPR1iniGoMtIRSB0s6Xf3iqZVq8w==
-X-Google-Smtp-Source: AK7set+4mFFKRD5mVF19YiDWAUKyRPqtzvRID+yCda+r1x5ctsrxUKibHtJnmIbUE4brLlVtVliQI3g0FGo/Ng==
+        bh=40brvOkCscjNrHnUeDgqVv82gvYQy+4kd5sr0JPvdqw=;
+        b=kJeEjE9ZYZkZaVx7MWhumrD/APg8gQ6xBri+dgfQw9OLBu1QO8s+0MIGyYXDL8TvjS
+         SuKzMsJ+lDhRu2Aa8RVTh2YOn1vYrYJi2YjF6b3aA7VbnOZpU4egkcUMPlkX5pKWPb7D
+         LOnvr5DEffel1fYIceFQZosgDYK/XY8aVti83VOCkaWtOgD57aZGpO0nNbmejIL4Sprm
+         B6SDpaEDAFD0Db1Zv1We/nyMHyRJrLI7FNGw1a4MceW6zxZlbpqbTjalB0/tSrtqGDD9
+         Fjw4wZ3ypTIvwsTHQ0vvlXhaXZNpfc10Hwd2dLvVo09iknPQAUrqMTA+NhhYDQKB2t2o
+         Ag/Q==
+X-Gm-Message-State: AO0yUKW/a+eceaSF5cj2tpg0q5s7IZERmCfQyE1JQjKs3wWToiTBBWgD
+        ukNEw5O2zMfScBIUCKcPpr0LJjrdbl5SBw==
+X-Google-Smtp-Source: AK7set+yaQoN5uDdT3cv/RkKR7b2AA7gqq2YPyIup65LPcvFV2wuM1dTPl2N5mP/YTU6aWTFiZKg64Vq2QyAwg==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:3247:b0:590:3183:60ea with SMTP
- id bn7-20020a056a00324700b00590318360eamr3020671pfb.2.1677714192251; Wed, 01
- Mar 2023 15:43:12 -0800 (PST)
-Date:   Wed, 01 Mar 2023 15:43:10 -0800
-In-Reply-To: <20230225180325.796624-4-alexhenrie24@gmail.com>
+ (user=chooglen job=sendgmr) by 2002:a62:d44c:0:b0:592:5eb2:84ea with SMTP id
+ u12-20020a62d44c000000b005925eb284eamr3120894pfl.4.1677714362093; Wed, 01 Mar
+ 2023 15:46:02 -0800 (PST)
+Date:   Wed, 01 Mar 2023 15:46:00 -0800
+In-Reply-To: <20230225180325.796624-3-alexhenrie24@gmail.com>
 Mime-Version: 1.0
 References: <20230223053410.644503-1-alexhenrie24@gmail.com>
- <20230225180325.796624-1-alexhenrie24@gmail.com> <20230225180325.796624-4-alexhenrie24@gmail.com>
-Message-ID: <kl6lpm9s3unl.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v5 3/3] rebase: add a config option for --rebase-merges
+ <20230225180325.796624-1-alexhenrie24@gmail.com> <20230225180325.796624-3-alexhenrie24@gmail.com>
+Message-ID: <kl6lmt4w3uiv.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v5 2/3] rebase: deprecate --rebase-merges=""
 From:   Glen Choo <chooglen@google.com>
 To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
         tao@klerks.biz, gitster@pobox.com, newren@gmail.com,
@@ -65,55 +65,26 @@ X-Mailing-List: git@vger.kernel.org
 
 Alex Henrie <alexhenrie24@gmail.com> writes:
 
-> +rebase.merges::
+> The unusual syntax --rebase-merges="" (that is, --rebase-merges with an
+> empty string argument) has been an undocumented synonym of
+> --rebase-merges=no-rebase-cousins.
 
-As far as I can tell, when a config option is meant to be a stand in for
-a CLI option, we have typically named it <subcommand>.<camelcase
-option>, e.g. grep.fullName, log.diffMerges, push.followTags. This
-probably matters more if we aren't specifying the subcommand that this
-flag is more (like in this patch).
+[...]
 
-By this convention, the config option would be rebase.rebaseMerges,
-which _does_ feel redundant and it's unlikely for "git rebase" to learn
-a "--merges" flag, so I don't have a strong opinion either way. Though
-as you mentioned in review club, this consistency might make it easier
-for users to read custom configs that use the "rebase." section.
+>  	if (rebase_merges) {
+>  		if (!*rebase_merges)
+> -			; /* default mode; do nothing */
+> +			warning(_("--rebase-merges with an empty string "
+> +				  "argument is deprecated and will stop "
+> +				  "working in a future version of Git. Use "
+> +				  "--rebase-merges=no-rebase-cousins "
+> +				  "instead."));
+>  		else if (!strcmp("rebase-cousins", rebase_merges))
+>  			options.rebase_cousins = 1;
+>  		else if (strcmp("no-rebase-cousins", rebase_merges))
 
-> +	Whether and how to set the `--rebase-merges` option by default. Can
-> +	be `rebase-cousins`, `no-rebase-cousins`, or a boolean. Setting to
-> +	true is equivalent to `--rebase-merges` without an argument, setting to
-> +	`rebase-cousins` or `no-rebase-cousins` is equivalent to
-> +	`--rebase-merges` with that value as its argument, and setting to false
-> +	is equivalent to `--no-rebase-merges`. Passing `--rebase-merges` on the
-> +	command line without an argument overrides a `rebase.merges=false`
-> +	configuration but does not override other values of `rebase.merge`.
-
-With the explanation here, I think having "--rebase-merges" _not_
-override "rebase.merge=rebase-cousins" is quite confusing.
-
-I think there are two possibilities forward:
-
-- Be very consistent that "--rebase-merges" is just a synonym of
-  "--rebase-merges=no-rebase-cousins". Then, have any value of
-  "--rebase-merges" override any config value.
-
-  I think this the easiest UX to understand, but I don't think we should
-  be commiting to a default, especially since we may add a more sensible
-  default (like rebasing 'evil merges') in the future.
-
-- Keep the existing behavior, but reword the docs to indicate that the
-  "no value" form means "I want the default but don't care what it is",
-  and an explicit value means "I want to use a particular mode and the
-  rules of config vs CLI specificity should apply". Perhaps something
-  like:
-
-    When rebasing merges, there are two modes: `no-rebase-cousins` and
-    `rebase-cousins`. If no mode is specified in either the config or
-    CLI, it defaults to `no-rebase-cousins`.
-
-   which I think is clearer that "rebase.merges=some-val" will win out
-   over "--rebase-merges". What's nice is that we don't commit to a
-   default value, so we can change it without having to update much of
-   the wording here.
-
-The code looks good, no real comments there.
+As I mentioned in my review of patch 3/3, I think we might be better
+served by saying that --rebase-merges="" is a synonym of --rebase-merges
+(aka give me a sane default) instead of giving a specific value like
+"no-rebase-cousins". This would be give us leeway to change the default
+behavior in the future.
