@@ -2,166 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6B25C7EE23
-	for <git@archiver.kernel.org>; Wed,  1 Mar 2023 19:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C480C678D4
+	for <git@archiver.kernel.org>; Wed,  1 Mar 2023 19:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229737AbjCATez (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Mar 2023 14:34:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40122 "EHLO
+        id S229758AbjCAThU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Mar 2023 14:37:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbjCATey (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2023 14:34:54 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 160F5392A9
-        for <git@vger.kernel.org>; Wed,  1 Mar 2023 11:34:47 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id l1so14446134pjt.2
-        for <git@vger.kernel.org>; Wed, 01 Mar 2023 11:34:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=bvA8+a7yHJKxu4qR1OFXGAdde5cIDehj8QOyF+QJp1I=;
-        b=AZmK/4H0F6fFZIQns8UOOhzJZ9qc+GAYgYx7Z7sTXa9TM7khHSKej67/e+Ay04UjJU
-         t4j+3sAmz4UXRM0EYdFfRrMHgJnAqrZpk5Gky1Kabg2tL4BzdGX3X1chGjk/s9Km0ZJv
-         RBsi8nkBwZ/HNTdWiYnxVf9+9JOO9dsSr4yvUMsBUcltlZ22aPJauHcJD2qbxJH3/nZI
-         EqeY4u7NcH1Flly9EvNPeQTVRwLNfAEldYRiLmOIKEtq/7q4bXDmP/sDb7bSOfIndnqT
-         pqp+VX3wO50aheIJvD1+A5sDmjfT+F8pDYH8eoXpPUcoVtYU+htdHAR67mpUdmirQeQK
-         916Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bvA8+a7yHJKxu4qR1OFXGAdde5cIDehj8QOyF+QJp1I=;
-        b=wOl/QfHWZIF2i4/wyERu1Ln6gBTee8QeoCNy60FxqXcno2bYMsmwOgU307in9IuWrK
-         ICyD6Ukc+W7j81c4gOseNqnoWXWcgmp3fkfFJsPrJfNDhokSW0RjAfJxQl8TbwYizMDF
-         /eC4MFA7Ef33MKsJaoGKQM7UZ5918Ymwi4sYU6NhocXos/11LLYk/06Kp8JFaIvsaMJu
-         IBMYnmkMd51FBHGg3F6O9DCTHMoYe8L4BCaei2DBP5lBP3JYCQqP6dVHp6LP9n3USg+D
-         70WBVzatNmWvH/fDv+IBVMqJTHXYphY1fUt/KIJYV82I6/h+4e3mIvCgEpZ7Rp3LymHy
-         xLyw==
-X-Gm-Message-State: AO0yUKWwp65bnuyWAOheEimS2ZhzEK3ztRs6x2n2E0dbK+364oGSeKXb
-        b93Usv4aEhHUCaEpbI6UtsKNAA6f5+A=
-X-Google-Smtp-Source: AK7set9Vzd4IxAY/Ytv8ufJMg8icwlPCSxL+jrRZPEPOC1GOhVJkOAE6nqUdARrpFvWCt/W+ICXbZQ==
-X-Received: by 2002:a17:903:284d:b0:19c:d420:9bc9 with SMTP id kq13-20020a170903284d00b0019cd4209bc9mr6865586plb.8.1677699286174;
-        Wed, 01 Mar 2023 11:34:46 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id b21-20020a170902d31500b001994a0f3380sm8695939plc.265.2023.03.01.11.34.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Mar 2023 11:34:45 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
+        with ESMTP id S229754AbjCAThT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2023 14:37:19 -0500
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E2764DE22
+        for <git@vger.kernel.org>; Wed,  1 Mar 2023 11:37:18 -0800 (PST)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C8F5F183A2A;
+        Wed,  1 Mar 2023 14:37:14 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
+        :to:cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=KJc4eNuOTeIpFFTIjikQPSCvdgGekRlrHdpgkxA
+        o1A4=; b=Tk0/5rr0HEpek0sHiFo6Ss4PNV/0ErX7hMDShHWz0U48o+3tBRkbDgT
+        0usk5GaiXgm9genChUOC12RveZnLnnoo7iyqbZslbnWuZvSPT9vS4Jlfs8jwh7/d
+        ifG79Lbaomjn6ocW5ZqLeFhSz9Q2znyqSsdnTCQKWP7DadaSK3oE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C1128183A29;
+        Wed,  1 Mar 2023 14:37:14 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [108.15.224.39])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1571D183A28;
+        Wed,  1 Mar 2023 14:37:14 -0500 (EST)
+        (envelope-from tmz@pobox.com)
+Date:   Wed, 1 Mar 2023 14:37:12 -0500
+From:   Todd Zullinger <tmz@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Justin Donnelly <justinrdonnelly@gmail.com>,
-        Joakim Petersen <joak-pet@online.no>
-Subject: Re: [PATCH try2] completion: prompt: use generic colors
-References: <20230228145934.4182166-1-felipe.contreras@gmail.com>
-Date:   Wed, 01 Mar 2023 11:34:45 -0800
-Message-ID: <xmqq4jr4nu3u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: t3206-range-diff failures on non x86 arches (was: [ANNOUNCE] Git
+ v2.40.0-rc1)
+Message-ID: <Y/+paI8WGSmEbv/w@pobox.com>
+References: <xmqqilfknzen.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqilfknzen.fsf@gitster.g>
+X-Pobox-Relay-ID: 779E82F2-B868-11ED-B9B6-2AEEC5D8090B-09356542!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano wrote:
+> A release candidate Git v2.40.0-rc1 is now available for testing at
+> the usual places.  It is comprised of 458 non-merge commits since
+> v2.39.0, contributed by 78 people, 30 of which are new faces [*].
 
-> When the prompt command mode was introduced in 1bfc51ac81 (Allow
-> __git_ps1 to be used in PROMPT_COMMAND, 2012-10-10) the assumption was
-> that it was necessary in order to properly add colors to PS1 in bash,
-> but this wasn't true.
->
-> It's true that the \[ \] markers add the information needed to properly
-> calculate the width of the prompt, and they have to be added directly to
-> PS1, a function returning them doesn't work.
->
-> But that is because bash coverts the \[ \] markers in PS1 to \001 \002,
-> which is what readline ultimately needs in order to calculate the width.
->
-> We don't need bash to do this conversion, we can use \001 \002
-> ourselves, and then the prompt command mode is not necessary to display
-> colors.
->
-> This is what functions returning colors are supposed to do [1].
->
-> [1] http://mywiki.wooledge.org/BashFAQ/053
->
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  contrib/completion/git-prompt.sh | 19 +++++++------------
->  t/t9903-bash-prompt.sh           |  8 ++++----
->  2 files changed, 11 insertions(+), 16 deletions(-)
+On Fedora, rc1 fails most tests in t3206-range-diff.sh on 3
+of the 5 supported architectures: aarch64, ppc64le, and
+s390x.  These tests succeed on i686 and x86_64.  They passed
+on all arches with rc0.
 
-Comments from those who use colored prompt and who are familiar with
-the mechansim used to implement this?  As I do not use the feature
-at all and haven't been following it, seeing independent support
-would help the topic.
+Here's a snipptet from the test summary and a common failure
+from the tests:
 
-Thanks.
+t3206-range-diff.sh                              (Wstat: 256 (exited 1) Tests: 42 Failed: 23)
+  Failed tests:  2-4, 6, 8-19, 21-22, 32-34, 40, 42
 
-> diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-> index 57972c2845..76ee4ab1e5 100644
-> --- a/contrib/completion/git-prompt.sh
-> +++ b/contrib/completion/git-prompt.sh
-> @@ -100,9 +100,7 @@
->  #
->  # If you would like a colored hint about the current dirty state, set
->  # GIT_PS1_SHOWCOLORHINTS to a nonempty value. The colors are based on
-> -# the colored output of "git status -sb" and are available only when
-> -# using __git_ps1 for PROMPT_COMMAND or precmd in Bash,
-> -# but always available in Zsh.
-> +# the colored output of "git status -sb".
->  #
->  # If you would like __git_ps1 to do nothing in the case when the current
->  # directory is set up to be ignored by git, then set
-> @@ -259,12 +257,12 @@ __git_ps1_colorize_gitstring ()
->  		local c_lblue='%F{blue}'
->  		local c_clear='%f'
->  	else
-> -		# Using \[ and \] around colors is necessary to prevent
-> +		# Using \001 and \002 around colors is necessary to prevent
->  		# issues with command line editing/browsing/completion!
-> -		local c_red='\[\e[31m\]'
-> -		local c_green='\[\e[32m\]'
-> -		local c_lblue='\[\e[1;34m\]'
-> -		local c_clear='\[\e[0m\]'
-> +		local c_red=$'\001\e[31m\002'
-> +		local c_green=$'\001\e[32m\002'
-> +		local c_lblue=$'\001\e[1;34m\002'
-> +		local c_clear=$'\001\e[0m\002'
->  	fi
->  	local bad_color=$c_red
->  	local ok_color=$c_green
-> @@ -574,11 +572,8 @@ __git_ps1 ()
->  		b="\${__git_ps1_branch_name}"
->  	fi
->  
-> -	# NO color option unless in PROMPT_COMMAND mode or it's Zsh
->  	if [ -n "${GIT_PS1_SHOWCOLORHINTS-}" ]; then
-> -		if [ $pcmode = yes ] || [ -n "${ZSH_VERSION-}" ]; then
-> -			__git_ps1_colorize_gitstring
-> -		fi
-> +		__git_ps1_colorize_gitstring
->  	fi
->  
->  	local f="$h$w$i$s$u$p"
-> diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-> index d459fae655..d667dda654 100755
-> --- a/t/t9903-bash-prompt.sh
-> +++ b/t/t9903-bash-prompt.sh
-> @@ -13,10 +13,10 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  . "$GIT_BUILD_DIR/contrib/completion/git-prompt.sh"
->  
->  actual="$TRASH_DIRECTORY/actual"
-> -c_red='\\[\\e[31m\\]'
-> -c_green='\\[\\e[32m\\]'
-> -c_lblue='\\[\\e[1;34m\\]'
-> -c_clear='\\[\\e[0m\\]'
-> +c_red='\001\e[31m\002'
-> +c_green='\001\e[32m\002'
-> +c_lblue='\001\e[1;34m\002'
-> +c_clear='\001\e[0m\002'
->  
->  test_expect_success 'setup for prompt tests' '
->  	git init otherrepo &&
++++ diff -u expect actual
+--- expect	2023-03-01 18:23:20.689515509 +0000
++++ actual	2023-03-01 18:23:20.679515420 +0000
+@@ -1,4 +1,4 @@
+-1:  4de457d = 1:  35b9b25 s/5/A/
+-2:  fccce22 = 2:  de345ab s/4/A/
+-3:  147e64e = 3:  9af6654 s/11/B/
+-4:  a63e992 = 4:  2901f77 s/12/B/
++1:  4de457d2c0d218f48d66f45f9b30f3aa62562105 = 1:  35b9b25f76d404d09a23e6c8efa96c3ce19e19aa s/5/A/
++2:  fccce22f8c95220a7283f047ecc6f042a54ad902 = 2:  de345ab3de2b56a1e208e46197bb77829a6e1f3a s/4/A/
++3:  147e64ef5365f843f378dcfd60c4b8115146a35a = 3:  9af6654000a6c3235196f874c6fa58c970fcf233 s/11/B/
++4:  a63e992599e14e34a5664fe3f213fa8ad8977fe1 = 4:  2901f773f3f322646e189b37ffe99a47ad6d456a s/12/B/
+error: last command exited with $?=1
+not ok 2 - simple A..B A..C (unmodified)
+
+I can share the full build log if it will help, though it's
+rather large.  It includes the test-results and trash
+directory, which can be extracted.  I've found that helpful
+when I run into failures only on architectures for which I
+don't have easy access.
+
+Without bistecting, I'm guessing this is likely to be
+related to this change?
+
+>  * sscanf(3) used in "git symbolic-ref --short" implementation found
+>    to be not working reliably on macOS in UTF-8 locales.  Rewrite the
+>    code to avoid sscanf() altogether to work it around.
+>    (merge 613bef56b8 jk/shorten-unambiguous-ref-wo-sscanf later to maint).
+
+If it's not somewhat obvious to others, I can try to dig
+more out of the build output later today.
+
+-- 
+Todd
