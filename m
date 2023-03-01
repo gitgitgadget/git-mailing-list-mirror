@@ -2,89 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C727C7EE23
-	for <git@archiver.kernel.org>; Wed,  1 Mar 2023 19:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45442C7EE23
+	for <git@archiver.kernel.org>; Wed,  1 Mar 2023 20:02:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229632AbjCATwS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Mar 2023 14:52:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54076 "EHLO
+        id S229481AbjCAUCC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Mar 2023 15:02:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbjCATwR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Mar 2023 14:52:17 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E3DD13D67
-        for <git@vger.kernel.org>; Wed,  1 Mar 2023 11:52:16 -0800 (PST)
-Received: (qmail 12009 invoked by uid 109); 1 Mar 2023 19:52:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Mar 2023 19:52:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8709 invoked by uid 111); 1 Mar 2023 19:52:15 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Mar 2023 14:52:15 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 1 Mar 2023 14:52:15 -0500
-From:   Jeff King <peff@peff.net>
+        with ESMTP id S229445AbjCAUCB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Mar 2023 15:02:01 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B645A4DE31
+        for <git@vger.kernel.org>; Wed,  1 Mar 2023 12:01:59 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id q31-20020a17090a17a200b0023750b69614so401886pja.5
+        for <git@vger.kernel.org>; Wed, 01 Mar 2023 12:01:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=24/QoXk+gX9CJE0U+OnuQdIj7DNd49x5Z0XLTKFr+b0=;
+        b=deYU1a0CjFKYJqZHW1fQESm0wIuTa4eC0Qb3Tf+A/gOOuhM9bO5ChPk4LZVthPSaZv
+         NExSqQ9ctNWlRwp3xHT+XFOJaGLoPsQXfPdpCwFk5POejRXIFmAPuWOQSy18zXGBTEdr
+         sd+X0Y7oatHH1P2efSwmFzg5kukVpQuSXcYqdG/FEYbwjUM+YFGrMaQYEcPnuBl56av8
+         SdpOlxbVajDnzSMKiCZMZ4FUDxv1kXCg/VlYP66Asy1hCTQnEW+0kV44rbv8+xysLTQC
+         JsMA447Rp1eVibK5PpvRidcfVFaQqRW2QLGGcjcwcRO4tEZB3thyKrVUNAyY42sLEt9X
+         HWsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=24/QoXk+gX9CJE0U+OnuQdIj7DNd49x5Z0XLTKFr+b0=;
+        b=Hk/+c5v8eM4px7FHJ5dXr75EtjOurGhVYlgKvV9AG/GRpPwhwsC5WXgfkl2bJqdXl3
+         EC6u4CbsmYv9gIk1e5LczkbXmm8Cbo854clkN25AhrTCA165xawFAz0CGqAxaS7WEN0A
+         HGEghjmQAGIwhuFNIqVSDcljPfGPklQten3QkGdmyi8yHBdvwG3wq+/AvcIryhV0aHUm
+         iEBPpxRreObrdS8J+x/gT3j+a6FURI73vqjd5k9+ISJ7sVcfOEhdXYQZZ/18j7tXK2rn
+         aHJhQ9mF0rQk2BqkhflxTWtAqgbe3SoEZvQwUR6so7xe8IzyZnBAIsxns5PySfuc/0Sm
+         MBrA==
+X-Gm-Message-State: AO0yUKX9Oy4Ury28yMdbV6nLOQbykh10G9jLHmbUNo2Nd/Cgh9qqPniO
+        uP79hkfLk5T5f7OYui5ZP3ko6w78NhM=
+X-Google-Smtp-Source: AK7set8kudZ8kthGMVhAFyYjN8gi3i8SihlOGnYtU5ITe62V3Tesadgfvhb2O0tHPu4mxLrnXhe3OQ==
+X-Received: by 2002:a17:902:f650:b0:19c:fd9e:f88c with SMTP id m16-20020a170902f65000b0019cfd9ef88cmr7542379plg.18.1677700918950;
+        Wed, 01 Mar 2023 12:01:58 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id ja15-20020a170902efcf00b0019a97f180fcsm8887793plb.37.2023.03.01.12.01.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Mar 2023 12:01:58 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Todd Zullinger <tmz@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: t3206-range-diff failures on non x86 arches (was: [ANNOUNCE] Git
- v2.40.0-rc1)
-Message-ID: <Y/+s7yeWYUYu0SQ+@coredump.intra.peff.net>
-References: <xmqqilfknzen.fsf@gitster.g>
- <Y/+paI8WGSmEbv/w@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: t3206-range-diff failures on non x86 arches
+References: <xmqqilfknzen.fsf@gitster.g> <Y/+paI8WGSmEbv/w@pobox.com>
+Date:   Wed, 01 Mar 2023 12:01:58 -0800
+In-Reply-To: <Y/+paI8WGSmEbv/w@pobox.com> (Todd Zullinger's message of "Wed, 1
+        Mar 2023 14:37:12 -0500")
+Message-ID: <xmqqv8jkmea1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y/+paI8WGSmEbv/w@pobox.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 01, 2023 at 02:37:12PM -0500, Todd Zullinger wrote:
+Todd Zullinger <tmz@pobox.com> writes:
 
-> Here's a snipptet from the test summary and a common failure
-> from the tests:
-> 
-> t3206-range-diff.sh                              (Wstat: 256 (exited 1) Tests: 42 Failed: 23)
->   Failed tests:  2-4, 6, 8-19, 21-22, 32-34, 40, 42
-> 
-> +++ diff -u expect actual
-> --- expect	2023-03-01 18:23:20.689515509 +0000
-> +++ actual	2023-03-01 18:23:20.679515420 +0000
-> @@ -1,4 +1,4 @@
-> -1:  4de457d = 1:  35b9b25 s/5/A/
-> -2:  fccce22 = 2:  de345ab s/4/A/
-> -3:  147e64e = 3:  9af6654 s/11/B/
-> -4:  a63e992 = 4:  2901f77 s/12/B/
-> +1:  4de457d2c0d218f48d66f45f9b30f3aa62562105 = 1:  35b9b25f76d404d09a23e6c8efa96c3ce19e19aa s/5/A/
-> +2:  fccce22f8c95220a7283f047ecc6f042a54ad902 = 2:  de345ab3de2b56a1e208e46197bb77829a6e1f3a s/4/A/
-> +3:  147e64ef5365f843f378dcfd60c4b8115146a35a = 3:  9af6654000a6c3235196f874c6fa58c970fcf233 s/11/B/
-> +4:  a63e992599e14e34a5664fe3f213fa8ad8977fe1 = 4:  2901f773f3f322646e189b37ffe99a47ad6d456a s/12/B/
-> error: last command exited with $?=1
-> not ok 2 - simple A..B A..C (unmodified)
+> Junio C Hamano wrote:
+>> A release candidate Git v2.40.0-rc1 is now available for testing at
+>> the usual places.  It is comprised of 458 non-merge commits since
+>> v2.39.0, contributed by 78 people, 30 of which are new faces [*].
+>
+> On Fedora, rc1 fails most tests in t3206-range-diff.sh on 3
+> of the 5 supported architectures: aarch64, ppc64le, and
+> s390x.  These tests succeed on i686 and x86_64.  They passed
+> on all arches with rc0.
 
-So it looks like there's a problem with oid shortening...
+Sounds like something d9165bef (range-diff: avoid compiler warning
+when char is unsigned, 2023-02-28) may fix.  Can you try merging it
+to rc1 yourself and see how the result does?
 
-> Without bistecting, I'm guessing this is likely to be
-> related to this change?
-> 
-> >  * sscanf(3) used in "git symbolic-ref --short" implementation found
-> >    to be not working reliably on macOS in UTF-8 locales.  Rewrite the
-> >    code to avoid sscanf() altogether to work it around.
-> >    (merge 613bef56b8 jk/shorten-unambiguous-ref-wo-sscanf later to maint).
+Thanks.
 
-...but this topic is about ref shortening ("refs/heads/foo" to "foo").
-Which doesn't absolve it, but I'm not sure how it would be related.
 
-> If it's not somewhat obvious to others, I can try to dig
-> more out of the build output later today.
-
-Seems like 2b15969f61 (range-diff: let '--abbrev' option takes effect,
-2023-02-20) is a more likely area to poke at. Given the architecture
-dependence, perhaps d9165bef58 (range-diff: avoid compiler warning when
-char is unsigned, 2023-02-28) would help?
-
-It's in 'next' but not -rc1.
-
--Peff
