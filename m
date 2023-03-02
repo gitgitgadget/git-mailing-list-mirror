@@ -2,138 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A03CC6FA8E
-	for <git@archiver.kernel.org>; Thu,  2 Mar 2023 15:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FDACC678D4
+	for <git@archiver.kernel.org>; Thu,  2 Mar 2023 16:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229867AbjCBPfs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Mar 2023 10:35:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36474 "EHLO
+        id S229816AbjCBQPn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Mar 2023 11:15:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229778AbjCBPfr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2023 10:35:47 -0500
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A692ED7B
-        for <git@vger.kernel.org>; Thu,  2 Mar 2023 07:35:46 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id f18so22666940lfa.3
-        for <git@vger.kernel.org>; Thu, 02 Mar 2023 07:35:46 -0800 (PST)
+        with ESMTP id S229812AbjCBQPl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2023 11:15:41 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BB9555078
+        for <git@vger.kernel.org>; Thu,  2 Mar 2023 08:15:31 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id m20-20020a17090ab79400b00239d8e182efso3284533pjr.5
+        for <git@vger.kernel.org>; Thu, 02 Mar 2023 08:15:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1677771344;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hCBjZo+FrLeyhMeWMicUQfI2GzyzExY2zV5IJ8ZgVI0=;
-        b=PaAidgzL8TOXLP/nXeaIJadeuPxhmUoEWbirFEFON18sc2DKv49IjK/KSDY4Ot1KaS
-         CfKpLntJpWlYGpIBSJl0cemxERZS/LXnkS/vhLM2qoI30y2JijLUnztLmD4PLTkBLVKH
-         xuwBPs5+kz8g9EmoBthx4tqIWE/fpdf+sZhYMx1o9bUjukj3edANWabAManedsrzfn9L
-         i19z/fO2HBtQ8O8vhY/fJLCjyhZAA0fBjOz7qxWBpq2IHg2Q1kxtCH73pgC207gBmCNx
-         PzzQtAMWfSlQWyDId6hzkHwUAOCqxBj4AUXG5e6xVxPf6yYIwB0y4XmVTwi3QXnQtsEO
-         nIKg==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VNGl4TYgjvHO8cszCbcNhW38rwZ/AmZUg+zUl8gofb4=;
+        b=gqnSX43+lL/2FFYnxw5sEfgfbLwfIC/c2v2w/aSaL+/MSihtP80zqVDS78hDBpnakJ
+         TdCwrcntZ3SfnLcxzNA2r4rvNFa9Hyols9/6MOgNc4Zgyl15I91vFRk31CXm60wOz44k
+         ohj2Ncm9WwesB/Y80uG65P7MdS0/K1rXIAbikm6rlTLbgaGIAUtUXDKbaB0biX9uzmvx
+         8Xnm2c/UMaYqhInKLL8cmAcB2pMKxuLssbDsT6IkdItO0kavcF7NuL0PJu18a+I4yaXi
+         fgNULjTlI9WpDeAsgvbkU+mf/7z84aIk5s/f+6jN3gucMHgMcxGSbp0quBsVWWWXhinQ
+         mCtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677771344;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hCBjZo+FrLeyhMeWMicUQfI2GzyzExY2zV5IJ8ZgVI0=;
-        b=Ukq9paI3RzICwIGUni2MwSZsCndszC6bnwL7Vy1Fr005BXGjITbolmeh1qXN6ggyRk
-         XxzRem2it+8d1nG7xHJzPDZ7m1U+bC+tbhQA8QVhNCAH2D1i51c5bIC3o+VJmYl1wL2L
-         sBUTb3XUzwGXdJzRdASrdDqrMn5pyai81GlR6yVrhxzkb5AAfXbcBc6+t9SlyFmYy9li
-         mrbWq6Kmqs8wGRYEacXatF2MLn8YyGREwvV1gh+y7OO9bboNpK60Vm+sXLXoJioc810Q
-         JsPI6pO8/IhJPkilRo8pMZw0HGBkQpNwKY0Yujm//AiRNoZghqXmiEwDkLOx7R1RGUn7
-         wwyw==
-X-Gm-Message-State: AO0yUKWhyw56s21GqkzSiMtGybWuUG3F2/Fy5elPAq6JX3Wp/ZALgJ44
-        CYgiu3CrzF1q2w7JqOCxbsMBQDO2Tx116hxGWsA=
-X-Google-Smtp-Source: AK7set9jCFCbzixjxg3foZvG/6Px0RvGfBhGiLNRLZwuKiJxudx2M4GGuWW3Pl137GpFQmwmwJfYFfSxylsAWBawoh0=
-X-Received: by 2002:ac2:539a:0:b0:4d5:ca32:7bbb with SMTP id
- g26-20020ac2539a000000b004d5ca327bbbmr3113545lfh.2.1677771344307; Thu, 02 Mar
- 2023 07:35:44 -0800 (PST)
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VNGl4TYgjvHO8cszCbcNhW38rwZ/AmZUg+zUl8gofb4=;
+        b=sTaXOx9BwRMKLwmvQpzD/KyOKotU05BO1u3TnH6CI0n0hRfX1h/Bnku8+FOgnpkQb/
+         RyCVQ1ViNFUiUSwF/DYcNHpQ8XnXHPO6UCccAn8RGpJCqcinrfn9esJ+PMEFrZoJ+pEo
+         CqI0tAsZ3pDoSXz0TTGgQtClI+3iml+Srb7342xm42OF164CVm9MfZ6FMIxRm3okLPll
+         QodBoeX7+zxV8whRmmmitv46nSCx1EKiPasSDe+d471yH3AxoWrkYCFjJ/QI2X8XG/q1
+         0hmln9zXQYX92BMTRhQTWSTbO6GG5AwswelCTB/b68KnUGg6NuEUpFX7T0JwpMGFglLy
+         PwEg==
+X-Gm-Message-State: AO0yUKUAxyuEGNLQ+ZRLz4lJ5hqoxCMjmh2KsFlub2NJpJcvlWLF6vcD
+        NbMOUzyLY5vwFfx8Ub+J43k=
+X-Google-Smtp-Source: AK7set/FwzoaPsWwktfxSpTsgV2YAP7cDKhhpltgS6udJT3y10U5IFFCWzl+1VltOAc7VvabB8TTTg==
+X-Received: by 2002:a17:90b:1e4f:b0:237:161d:f5ac with SMTP id pi15-20020a17090b1e4f00b00237161df5acmr12491793pjb.36.1677773730379;
+        Thu, 02 Mar 2023 08:15:30 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id bj22-20020a17090b089600b0023739b104f8sm1801884pjb.50.2023.03.02.08.15.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Mar 2023 08:15:29 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org
+Subject: Re: so/diff-merges-more (was Re: What's cooking in git.git (Feb
+ 2023, #01; Thu, 2))
+References: <xmqqr0v7o0pp.fsf@gitster.g> <871qn5pyez.fsf@osv.gnss.ru>
+        <kl6lr0v2i0gn.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <87wn4tej2f.fsf@osv.gnss.ru>
+        <kl6lh6v43s4g.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Thu, 02 Mar 2023 08:15:28 -0800
+In-Reply-To: <kl6lh6v43s4g.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Wed, 01 Mar 2023 16:37:51 -0800")
+Message-ID: <xmqqr0u7ku3j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
- <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com> <887967c1f3fd6f03cf1d0bb3c19ed16819541092.1658391391.git.gitgitgadget@gmail.com>
- <xmqq35eul95b.fsf@gitster.g> <ZABNceY3cSWNb75u@F407C5W6RY.office.atlassian.com>
-In-Reply-To: <ZABNceY3cSWNb75u@F407C5W6RY.office.atlassian.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 2 Mar 2023 07:35:30 -0800
-Message-ID: <CABPp-BEJmnAB4QX_HMnNaZ9vEh_mKiqka_uZRm_E_LNuOBiFsg@mail.gmail.com>
-Subject: Re: [PATCH v3 6/7] merge: ensure we can actually restore pre-merge state
-To:     Ben Humphreys <behumphreys@atlassian.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ben,
+Glen Choo <chooglen@google.com> writes:
 
-On Wed, Mar 1, 2023 at 11:17=E2=80=AFPM Ben Humphreys <behumphreys@atlassia=
-n.com> wrote:
+>> Finally, event without "log.diffMerges-m-imply-p", the rest of the
+>> series still makes sense, so if the conclusion is to remove it, let's
+>> still merge the rest, please! Let me know, and I'll then remove the
+>> patch and will change documentation accordingly.
 >
-> Hi Junio / Elijah,
+> Oops. Sorry, I missed this the first time I read this message. This
+> alone should have warranted a response.
+
+Hmph.  I agreed with you that the last step to add the configuration
+would not make sense unless we are planning to break users later,
+but I have been under the impression that the remainder were OK
+clean-ups.  Perhaps it is mostly because I read them so long ago and
+forgot the details X-<.
+
+> I'm not convinced that the series makes sense without
+> "log.diffMerges-m-imply-p":
 >
-> On Thu, Jul 21, 2022 at 09:31:44AM -0700, Junio C Hamano wrote:
-> > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> > > diff --git a/builtin/merge.c b/builtin/merge.c
-> > > index f807bf335bd..11bb4bab0a1 100644
-> > > --- a/builtin/merge.c
-> > > +++ b/builtin/merge.c
-> > > @@ -1686,12 +1686,12 @@ int cmd_merge(int argc, const char **argv, co=
-nst char *prefix)
-> > >      * tree in the index -- this means that the index must be in
-> > >      * sync with the head commit.  The strategies are responsible
-> > >      * to ensure this.
-> > > +    *
-> > > +    * Stash away the local changes so that we can try more than one
-> > > +    * and/or recover from merge strategies bailing while leaving the
-> > > +    * index and working tree polluted.
-> > >      */
-> >
-> > Makes sense.  We may want to special-case strategies that are known
-> > not to have the buggy "leave contaminated tree when bailing out"
-> > behaviour to avoid waste.  I expect that more than 99.99% of the
-> > time people are feeding a single other commit to ort or recursive,
-> > and if these are known to be safe, a lot will be saved by not saving
-> > "just in case".  But that can be left for later, after the series
-> > solidifies.
+> * The main patch is
 >
-> This may stretch your memory a bit since the above was many months ago,
-> but I'm wondering if you know of any effort since to build the above
-> described optimisations?
+>     diff-merges: implement [no-]hide option and log.diffMergesHide config
 >
-> We've seen when Git 2.38.0 (which introduced this change) is used with
-> Bitbucket Server it results in a severe performance regression due to an
-> sharp increase in disk and CPU load. Our code that tests the mergeability
-> of a pull request is one such affected codepath.
+>   which gives us a way to redefine "-m" as "--diff-merges=hide
+>   --diff-merges=on". However, we haven't seen any compelling reasons to
+>   use --diff-merges=hide [1]. I'm also fairly convinced that if we go
+>   back in time, "-m" wouldn't have the semantics of 'do nothing unless
+>   -p is also given', and I don't think we should immortalize a mistake
+>   by giving it an explicit option.
 >
-> If there isn't any existing efforts to build the optimisations you
-> mention above I will have a shot at it.
+>   All the other patches in their current form are dependent on this
+>   patch going in.
+>
+> * diff-merges: support list of values for --diff-merges
+>
+>   This only makes sense if we want to accept multiple values, which we
+>   don't without the main patch.
 
-I've got bad news for you and great news for you.
+Now you mention it (and show example in the previous bullet point),
+I have to agree that we would not want this, not because we do not
+want to have --diff-merges with multiple values, but because it
+introduces an odd-man-out option that is not "last one wins" that is
+not used anywhere else in the UI.
 
-The bad news: there have not yet been any efforts to build these
-optimizations mentioned above.
+No response does not necessarily mean an agreement, but it indeed
+helped in this case to be explicit.
 
-The great news: the fact that this affects you means you are using
-non-bare clones in your mergeability checks, and being forced with
-every merge to first checkout the appropriate branch, and pay for the
-penalty of updating both the index and the working tree both in that
-checkout and during the merge (and perhaps in doing a hard reset
-afterwards) in your mergeability check, despite the fact that a
-mergeability check really only needs a boolean: "does it merge
-cleanly?".  Doing a full worktree-tied merge like this is really
-expensive, and while the above Git changes may have made it even more
-expensive for you, the real savings comes from switching to a bare
-clone and not writing any working tree files or the index.  That's
-available via running `git merge-tree`; see the documentation for the
---write-tree option in particular.  GitHub switched over to it last
-year and GitLab should be switching soon (or may have already
-completed it; I haven't checked in a bit).
-
-You are, of course, more than welcome to build the optimizations Junio
-alludes to.  It'd help out various end users.  But for improving
-server side operations, I think switching to `git merge-tree` would
-provide you _much_ bigger benefits.
-
-
-Hope that helps,
-Elijah
+Thanks for the clarification.  
