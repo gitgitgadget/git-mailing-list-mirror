@@ -2,87 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D24A0C6FA8E
-	for <git@archiver.kernel.org>; Thu,  2 Mar 2023 23:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3468EC678D4
+	for <git@archiver.kernel.org>; Thu,  2 Mar 2023 23:47:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229560AbjCBXKI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Mar 2023 18:10:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52870 "EHLO
+        id S230037AbjCBXr6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Mar 2023 18:47:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbjCBXKH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2023 18:10:07 -0500
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C133A16AD8
-        for <git@vger.kernel.org>; Thu,  2 Mar 2023 15:10:06 -0800 (PST)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-53916ab0c6bso10709377b3.7
-        for <git@vger.kernel.org>; Thu, 02 Mar 2023 15:10:06 -0800 (PST)
+        with ESMTP id S229971AbjCBXr4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2023 18:47:56 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD2A5590
+        for <git@vger.kernel.org>; Thu,  2 Mar 2023 15:47:55 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id u3-20020a17090a450300b00239db6d7d47so607718pjg.4
+        for <git@vger.kernel.org>; Thu, 02 Mar 2023 15:47:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u8FelYPByQzJt1nrMn8N6bhdjJ/JMPOdU5HkbSBosmk=;
-        b=EuJM3Do8MQSJwasJI5z6RyDT3wTjadpPha13KHQIV5Qe1IRVQ8AoVvyHlpCwF46g8S
-         hX/wzwqfNA4U6bZhuBRDW0A45Hbxntz6X8IRLMQlPUpwkqPswN4s5D+W5Phx0m0G3Sxp
-         jb5WcoOTgzOP9etxBwxkFSQelumeWZkM1d19WyeQooJhTiw0MhbHBfKqlS6+CZagQw6n
-         PA/0b6i9/bisJ6AF9MKJ0UisFXLIHRGCVy+BqJu/QkqrnaXBACgdHjppwslBy9txPxrT
-         zZJQXxohmj5TTUETIHB/m69HRS1PH98qCnveTSxdtP6T/BgfCAHy2SI0pmYAto/4J9q6
-         M1xQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+9rW3rFSJU9QlTvvghjufi8a5H1R/bIIV5jN6w6t3ko=;
+        b=M6jd7BDtwLY8v/PUQQQ8nVBO8kKvOu7DWEGPduACLC0sqWxjRU2rAaZ+BzugO80AuR
+         4SYl88wD9wWUVB1TMmoWUsAHO7VX58dVZ02zMlHGdecFMUEh3Cp1mjK6Spx10jerBysk
+         hQCO94Pm0E/pWRZLjF6xZWlX4i5XevfkZxi9vvT0LoFJnc9fl7KOnawcWm3l89+Y3VX8
+         OfmL1oLcmoG/HEGsIrSY4/36YYLk9F68wp/lXWGhd+Kbyb7edAABGrxiWhiLL0MaujIi
+         DuhmMb9cfbty9zoCW9DD+82ey7T3Mu1pE6WBM7yGX20ZxMJQf/d9OLLtPltERVpp/qh/
+         kwaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u8FelYPByQzJt1nrMn8N6bhdjJ/JMPOdU5HkbSBosmk=;
-        b=usGwcsyG+dW3UvMF17yZVltbf/7Rbce3wtS3NwFQ9n44lTP5fr9lOsHV8BuwPZJbKb
-         dNxPvExyfdwwjZJb/iXZ2TyfDzgH+Urypw9slts/j3Fo4/pqml3dF7mNBU1Wj1XATg7E
-         andMkR2ja5/4whcAiNo2PZHo5Ufc9V+5HeiI5l9AMobMb+zpIVyV/x6o4Z8YW3cKI7YA
-         z/9xoetUtFePJqyeFzor/ZxrKYaK52bgjY0l+3xx7qW1uytVXN0BiPjqYt6GdXMjUl/Y
-         XATR+TODHwBYroUDElG+dpcR1542eILnqRO/yVtJDhMBPuW1MJ7Da6SrUgjdsxX/BFNc
-         Uzog==
-X-Gm-Message-State: AO0yUKVB7ICWz5nuanbZNwRwOgB771lQKVx+RKvdFbntlMKvwqnfZl8V
-        CpfamAXMAwYsrTfUoc9OJVWS4d//NH16dYEchdA2iA==
-X-Google-Smtp-Source: AK7set8pOym/RP/EarYAwRH8LD2Qsuwo4JlALtwYClk040X+CFO0LajwUKSuFgsF/N8PZLCy8zI6xdsABSCe7qS3xEs=
-X-Received: by 2002:a81:b664:0:b0:52e:cea7:f6e3 with SMTP id
- h36-20020a81b664000000b0052ecea7f6e3mr7251253ywk.10.1677798605881; Thu, 02
- Mar 2023 15:10:05 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+9rW3rFSJU9QlTvvghjufi8a5H1R/bIIV5jN6w6t3ko=;
+        b=k49capQ2eJhK+KPyUp2YherrCDbZ7LEXjkDZQZXsF8AifQLFQtTqFLFW/aHin5gtWM
+         YwKEYXOZLL915vVJTyWw/YZgOk56AIEh6OchEG3kmt1sElraa48MK+ifcjlc49v8oSqP
+         dyzfILhSiXPq4yq7p19gfQWhXYHc8k3QJwgfm8pAmjUhCDhg7fK6LozbnlQuAi12LXiD
+         DP3FKmwsh6049ELc5K7yqTl4Sv8sbhK0bVhnCjm5oOxP2O+3CZVdRXUao0mHFPyeHtxR
+         x4tZSUaAzb0L6KzWEn6rtag6yPqrmCOy0P+KjsdF8jGKsnrtC1ueHajMLBeST1ku5ZIk
+         pD9A==
+X-Gm-Message-State: AO0yUKW8ZIzZfSGxQbbia1xtSnIxzU1x9QRUY60A8UMpKsanW3Ww4uDn
+        njEVhQrOrnzfow7J4Bpc1Dce+QGcz6E=
+X-Google-Smtp-Source: AK7set+H/WFkkdjMsDrOC0k3kx4M5GjM/YZ0MMYXZf4muB1StSymkSfK1ms5Oz11rHOpI9rNg4uW7g==
+X-Received: by 2002:a17:903:190:b0:19d:2542:96a4 with SMTP id z16-20020a170903019000b0019d254296a4mr96239plg.4.1677800874813;
+        Thu, 02 Mar 2023 15:47:54 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id kf5-20020a17090305c500b0019b06263bdasm222017plb.69.2023.03.02.15.47.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Mar 2023 15:47:54 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Dinesh Dharmawardena <dinesh_dh@outlook.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Let us not call it git blame
+References: <SY6P282MB3782FD975E6F39951C5A43DA92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
+        <SY6P282MB378273980F5BC9084EEF74EF92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
+        <ZAEgRDelTlNZRJ5J@tapette.crustytoothpaste.net>
+Date:   Thu, 02 Mar 2023 15:47:53 -0800
+In-Reply-To: <ZAEgRDelTlNZRJ5J@tapette.crustytoothpaste.net> (brian
+        m. carlson's message of "Thu, 2 Mar 2023 22:16:36 +0000")
+Message-ID: <xmqqfsamiul2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20230213182134.2173280-1-calvinwan@google.com>
- <20230228185642.2357806-5-calvinwan@google.com> <xmqqpm9tpdmw.fsf@gitster.g>
-In-Reply-To: <xmqqpm9tpdmw.fsf@gitster.g>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Thu, 2 Mar 2023 15:09:54 -0800
-Message-ID: <CAFySSZBqN+a-mP=+epz4rELYH_aLnrTC+VRFFTvib0W0nUBQ2Q@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] tests: remove duplicate .gitmodules path
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, steadmon@google.com, peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 28, 2023 at 3:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Calvin Wan <calvinwan@google.com> writes:
->
-> > Swapping `git add <submodule>` to `git submodule add <submodule>`
-> > in a previous patch created a .gitmodules file with multiple
-> > submodules pointing to the same path in certain tests. Fix tests
-> > so that they are run on the original added submodule rather than
-> > a separate manually configured submodule.
->
-> Doesn't "git submodule add" have a way to give a specific name other
-> than the default taken from the path?  If "git add sub" is converted
-> to "git submodule add --name subname ./sub", wouldn't these changes
-> become unnecessary?
->
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-If we converted to "git submodule add --name subname ./sub", we would
-instead have a different set of problems. For example, instances of
-git config --add -f .gitmodules submodule.subname.path sub
-git config -f .gitmodules submodule.subname.path sub
-and other similar lines would still need to be removed to prevent duplicate
-paths. That, however, seems like a better alternative than my current
-patch which replaces those removals with different ones.
+> On 2023-03-02 at 22:00:59, Dinesh Dharmawardena wrote:
+>> 
+>> I am writing to you to request that the term blame in git blame
+>> be replaced with something that does not sound so blameful. I’m
+>> an SRE and we actively try promote a blameless culture as such
+>> industry tooling should also follow suit imo. Progressively
+>> phasing this term out with a better alias would be great.
+
+I actually do not think "git blame" is incompatible with blameless
+culture at all, unless you blindly say "this word is bad, that word
+is not" without thinking.  Blameless culture is about not blaming
+the _person_ who made an earlier mistake, but "git blame" is not
+about finding a person who contributed the badness to the codebase.
+
+It is all about which _commit_ contributed badness to the current
+codebase (i.e. "these commits are to be blamed for the current
+breakage that made us lose $XM") and it is up to the users how to
+interpret the story behind these found commits.  It often would not
+be the "fault" of the author alone, and striving for blameless
+culture is to find out what led to the mistakes in these commits.
+
+> I believe there's already an alias for it, git annotate, if you'd
+> prefer to use that.  The name "blame" came in with CVS, with the
+> synonym "annotate", so it's well understood, but you can use
+> whichever alias you prefer.
+>
+> I do think there may some differences in the defaults between git
+> annotate and git blame, but if someone wanted to send in a patch for an
+> option to make annotate produce identical output to blame, then I think
+> it could be a full replacement.
+
+At that point we can retire "git blame" and make it a built-in alias
+to "git annotate --behave-like-git-blame".  Then we will come full
+circle ;-)
+
+Thanks.
