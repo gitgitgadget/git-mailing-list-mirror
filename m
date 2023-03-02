@@ -2,119 +2,220 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61DCCC678D4
-	for <git@archiver.kernel.org>; Thu,  2 Mar 2023 07:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7155FC678D4
+	for <git@archiver.kernel.org>; Thu,  2 Mar 2023 09:37:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229827AbjCBHRP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Mar 2023 02:17:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35260 "EHLO
+        id S229758AbjCBJhS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Mar 2023 04:37:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229679AbjCBHRO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Mar 2023 02:17:14 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27FCE3B648
-        for <git@vger.kernel.org>; Wed,  1 Mar 2023 23:17:13 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id x34so15980236pjj.0
-        for <git@vger.kernel.org>; Wed, 01 Mar 2023 23:17:13 -0800 (PST)
+        with ESMTP id S229971AbjCBJhO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Mar 2023 04:37:14 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48F363B3D1
+        for <git@vger.kernel.org>; Thu,  2 Mar 2023 01:37:09 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id p23-20020a05600c1d9700b003ead4835046so1825000wms.0
+        for <git@vger.kernel.org>; Thu, 02 Mar 2023 01:37:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian.com; s=google; t=1677741432;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HQhBPOaUFNA5D0HDlis871DL5+SHdOw9iDDiW+MI18w=;
-        b=Md9v2MS6bW5zxDnci9Jtp0RKoTqYIlEjmXtduBaeECLLrGeeOHZnazreYAkVApGZLq
-         Mto+azBNHrePL2FyKrfZNdjw6Ti7J+2IYW5s9t+MA0HpmRHhABClrXMR50Rj4cns2AdU
-         ZpPS3DdO6HMk0Oup8WFGHL7LCTh9g+3e/5zuplGF7BIBFy8JJgVcNJt0Lde+smEYVnDa
-         uLv2cWjAst21k/QmML9QAjs/qIYR5LumAyoFqkFtJ9AQRv1CZPk5CiGE5XCMfiPckYa8
-         DSaqW70n/95tOAj/aZcPSEefw7IugTY15JcLoA/GQecYGB96koY1hvey/Pjf1UxXvG2z
-         Zuxw==
+        d=gmail.com; s=20210112; t=1677749828;
+        h=content-transfer-encoding:in-reply-to:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=97y4Hl3v3VcYMtm+XFW1S3vugYLBECN1CRSzBG8ylR0=;
+        b=Vd5zLxfix2Xbnp+GAypkEDr9Z7KPBzNRE1ESHxDm0VjQONd158TI2tESscm/pQzQz5
+         Hd6hkAISbYPVTLiL7z+VOBSiDN6Ia8EATwgB+tT3kHEwW1hL5dLfmRN9j9+dhFx6TIlt
+         c4al5up2e0Gy09dItE5t8LWPXFUbar7F6R+bfNuxbN9DyZe1GJIfHGQFkFl9VIooV0Er
+         S0egWMUtj79v2tU4o6DDcbc1imUgpNkWPtQ6bc5UpW799TbVQamGOH88O4AnEWf5VQ2Q
+         iQhklFgFF/qQN4gDCFFHiwwQeERqqQrwT1EpP6FM/aqFuJZ6us4Rf7919Vc9T2VGqvlE
+         qhxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677741432;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20210112; t=1677749828;
+        h=content-transfer-encoding:in-reply-to:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HQhBPOaUFNA5D0HDlis871DL5+SHdOw9iDDiW+MI18w=;
-        b=WPpe51Foht4OgUtvdxhFDJs9/9sgXyk8zDy/5zjQDfwFNiLyxmI5zxKq/k2J5u7Q/f
-         bI8RXxlEWzuYKS35j5FWHJLNAqCDb2cS9bJ5wXfkgBDLCzrx00LJvlhZ6gwnKZTREggh
-         eRqdcSASD5k25/91oNsIs3GcJYHUdPUop2p8f5IAutE1zo95PGB2gGZVbeEeo2FDRI9X
-         pEt1/WowX/TWEbc6c7N/aHlbSvjA87yXrcqedDe2zWEd4qHWnVGPblTCXP23E7nCMBuy
-         Lk5T2Q//fY6bNukcbGE/ypUWbvkvyLTYcPoQM+V6ctaJ45U1+88ovQKiMAAohqoHoEFa
-         RLLg==
-X-Gm-Message-State: AO0yUKVvhouS5fZKW8O326YLwDPrMo2eAaePsY7DNsWMweNKKJoZQY4j
-        ycsVhztXvL1eda7GKW0u6VbudgMiZp2EOIZ+Z3c=
-X-Google-Smtp-Source: AK7set98o8B+0NJYfZL0PDX34Wc8anlfekLI6SeauH/iDtxFkgfNwJFcC13wNGxVueMfE1BnT/UXRg==
-X-Received: by 2002:a05:6a20:2d8a:b0:cd:5334:e249 with SMTP id bf10-20020a056a202d8a00b000cd5334e249mr10305760pzb.18.1677741432501;
-        Wed, 01 Mar 2023 23:17:12 -0800 (PST)
-Received: from F407C5W6RY.office.atlassian.com ([123.103.201.174])
-        by smtp.gmail.com with ESMTPSA id n2-20020a62e502000000b005dc70330d9bsm9013845pff.26.2023.03.01.23.17.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Mar 2023 23:17:11 -0800 (PST)
-Date:   Thu, 2 Mar 2023 18:17:05 +1100
-From:   Ben Humphreys <behumphreys@atlassian.com>
-To:     Junio C Hamano <gitster@pobox.com>, newren@gmail.com
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 6/7] merge: ensure we can actually restore pre-merge
- state
-Message-ID: <ZABNceY3cSWNb75u@F407C5W6RY.office.atlassian.com>
-References: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
- <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
- <887967c1f3fd6f03cf1d0bb3c19ed16819541092.1658391391.git.gitgitgadget@gmail.com>
- <xmqq35eul95b.fsf@gitster.g>
+        bh=97y4Hl3v3VcYMtm+XFW1S3vugYLBECN1CRSzBG8ylR0=;
+        b=nSsKyO0bPHQzhKzGwPG/xB1RskhyLDhaTwBJKNunGnuU1NRRYiJ119SFX68XpHhB/w
+         gV58cp0AlY+j1EgUlJ9oXGEjF+ctyLUeYhsYQBrPBJkUy17NbhOl4ZlKMSxE0+JWjgrL
+         FnBf0sh7rP5F5aOcshGdOBBM/MmckoshYjNSICNZw6GCZ2LzMjHBn+K59q41D8mQx8zG
+         6azyEee5eNVUvXVWr6SPTfkbRegseChvFT1NcV5cLJ09+bhj89WWN58gRG9verP9TiwN
+         Vw2S4oSBAZdBiO6kZYxU97REXe1jPh6tak3V2ePzkg57xH+DHj+mA0a+1NiEp8zcUbl9
+         CC7g==
+X-Gm-Message-State: AO0yUKUGqUhWLyVEW2EMw1ENqNthcuTU90atLcyf3EnhqsM7zTFzxotR
+        TRlNV+zTzpARUU6vw0PqIv8=
+X-Google-Smtp-Source: AK7set8EAp2FE0oVTGSiaqHb11iE9WLzqaa/I5ol50eTrT56BzZV93KgffPqglR2N63iiPj0bLjO9w==
+X-Received: by 2002:a05:600c:70a:b0:3eb:2b79:a40 with SMTP id i10-20020a05600c070a00b003eb2b790a40mr7373374wmn.20.1677749827661;
+        Thu, 02 Mar 2023 01:37:07 -0800 (PST)
+Received: from [192.168.1.212] ([90.248.183.175])
+        by smtp.gmail.com with ESMTPSA id j40-20020a05600c1c2800b003dd1bd0b915sm2594992wms.22.2023.03.02.01.37.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Mar 2023 01:37:07 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <1021e6d0-0cd0-d92c-4cb3-45dbf2f6626e@dunelm.org.uk>
+Date:   Thu, 2 Mar 2023 09:37:02 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq35eul95b.fsf@gitster.g>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 3/3] rebase: add a config option for --rebase-merges
+Content-Language: en-US
+To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        tao@klerks.biz, gitster@pobox.com, newren@gmail.com,
+        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
+        sorganov@gmail.com, Glen Choo <chooglen@google.com>,
+        Calvin Wan <calvinwan@google.com>
+References: <20230223053410.644503-1-alexhenrie24@gmail.com>
+ <20230225180325.796624-1-alexhenrie24@gmail.com>
+ <20230225180325.796624-4-alexhenrie24@gmail.com>
+In-Reply-To: <20230225180325.796624-4-alexhenrie24@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio / Elijah,
+Hi Alex
 
-On Thu, Jul 21, 2022 at 09:31:44AM -0700, Junio C Hamano wrote:
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 25/02/2023 18:03, Alex Henrie wrote:
+> The purpose of the new option is to accommodate users who would like
+> --rebase-merges to be on by default and to facilitate possibly turning
+> on --rebase-merges by default without configuration in a future version
+> of Git.
 > 
-> > diff --git a/builtin/merge.c b/builtin/merge.c
-> > index f807bf335bd..11bb4bab0a1 100644
-> > --- a/builtin/merge.c
-> > +++ b/builtin/merge.c
-> > @@ -1686,12 +1686,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
-> >  	 * tree in the index -- this means that the index must be in
-> >  	 * sync with the head commit.  The strategies are responsible
-> >  	 * to ensure this.
-> > +	 *
-> > +	 * Stash away the local changes so that we can try more than one
-> > +	 * and/or recover from merge strategies bailing while leaving the
-> > +	 * index and working tree polluted.
-> >  	 */
+> Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+> ---
+>   Documentation/config/rebase.txt        | 10 ++++
+>   Documentation/git-rebase.txt           |  3 +-
+>   builtin/rebase.c                       | 79 ++++++++++++++++++--------
+>   t/t3422-rebase-incompatible-options.sh | 12 ++++
+>   t/t3430-rebase-merges.sh               | 63 ++++++++++++++++++++
+>   5 files changed, 143 insertions(+), 24 deletions(-)
 > 
-> Makes sense.  We may want to special-case strategies that are known
-> not to have the buggy "leave contaminated tree when bailing out"
-> behaviour to avoid waste.  I expect that more than 99.99% of the
-> time people are feeding a single other commit to ort or recursive,
-> and if these are known to be safe, a lot will be saved by not saving
-> "just in case".  But that can be left for later, after the series
-> solidifies.
+> diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
+> index f19bd0e040..308baa9dbb 100644
+> --- a/Documentation/config/rebase.txt
+> +++ b/Documentation/config/rebase.txt
+> @@ -67,3 +67,13 @@ rebase.rescheduleFailedExec::
+>   
+>   rebase.forkPoint::
+>   	If set to false set `--no-fork-point` option by default.
+> +
+> +rebase.merges::
+> +	Whether and how to set the `--rebase-merges` option by default. Can
+> +	be `rebase-cousins`, `no-rebase-cousins`, or a boolean. Setting to
+> +	true is equivalent to `--rebase-merges` without an argument, setting to
+> +	`rebase-cousins` or `no-rebase-cousins` is equivalent to
+> +	`--rebase-merges` with that value as its argument, and setting to false
+> +	is equivalent to `--no-rebase-merges`. Passing `--rebase-merges` on the
+> +	command line without an argument overrides a `rebase.merges=false`
+> +	configuration but does not override other values of `rebase.merge`.
 
-This may stretch your memory a bit since the above was many months ago,
-but I'm wondering if you know of any effort since to build the above
-described optimisations?
+I'm still not clear why the commandline doesn't override the config in 
+all cases as is our usual practice. After all if the user has set 
+rebase.merges then they don't need to pass --rebase-merges unless they 
+want to override the config.
 
-We've seen when Git 2.38.0 (which introduced this change) is used with
-Bitbucket Server it results in a severe performance regression due to an
-sharp increase in disk and CPU load. Our code that tests the mergeability
-of a pull request is one such affected codepath.
+ > [...]
+> @@ -1513,13 +1539,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   				break;
+>   
+>   		if (i >= 0 || options.type == REBASE_APPLY) {
+> -			if (is_merge(&options))
+> -				die(_("apply options and merge options "
+> -					  "cannot be used together"));
+> -			else if (options.autosquash == -1 && options.config_autosquash == 1)
+> +			if (options.autosquash == -1 && options.config_autosquash == 1)
+>   				die(_("apply options are incompatible with rebase.autosquash.  Consider adding --no-autosquash"));
+> +			else if (options.rebase_merges == -1 && options.config_rebase_merges == 1)
+> +				die(_("apply options are incompatible with rebase.merges.  Consider adding --no-rebase-merges"));
 
-If there isn't any existing efforts to build the optimisations you
-mention above I will have a shot at it.
+This is good, thanks for adding it
 
-> > -	if (use_strategies_nr == 1 ||
-> > -	    /*
-> > -	     * Stash away the local changes so that we can try more than one.
-> > -	     */
-> > -	    save_state(&stash))
-> > +	if (save_state(&stash))
-> >  		oidclr(&stash);
-> >  
-> >  	for (i = 0; !merge_was_ok && i < use_strategies_nr; i++) {
+ > [...]
+> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+> index f50fbf1390..a825a77fb4 100755
+> --- a/t/t3430-rebase-merges.sh
+> +++ b/t/t3430-rebase-merges.sh
+> @@ -283,6 +283,69 @@ test_expect_success '--rebase-merges="" is deprecated' '
+>   	grep deprecated actual
+>   '
+>   
+> +test_expect_success 'rebase.merges=rebase-cousins is equivalent to --rebase-merges=rebase-cousins' '
+> +	test_config rebase.merges rebase-cousins &&
+> +	git checkout -b config-rebase-cousins main &&
+> +	git rebase HEAD^ &&
+> +	test_cmp_graph HEAD^.. <<-\EOF
+> +	*   Merge the topic branch '\''onebranch'\''
+> +	|\
+> +	| * D
+> +	| * G
+> +	|/
+> +	o H
+> +	EOF
+> +'
+> +
+> +test_expect_success '--no-rebase-merges overrides rebase.merges=no-rebase-cousins' '
+> +	test_config rebase.merges no-rebase-cousins &&
+> +	git checkout -b override-config-no-rebase-cousins E &&
+> +	git rebase --no-rebase-merges C &&
+> +	test_cmp_graph C.. <<-\EOF
+> +	* B
+> +	* D
+> +	o C
+> +	EOF
+> +'
+> +
+> +test_expect_success '--rebase-merges=no-rebase-cousins overrides rebase.merges=rebase-cousins' '
+> +	test_config rebase.merges rebase-cousins &&
+> +	git checkout -b override-config-rebase-cousins main &&
+> +	git rebase --rebase-merges=no-rebase-cousins HEAD^ &&
+> +	test_cmp_graph HEAD^.. <<-\EOF
+> +	*   Merge the topic branch '\''onebranch'\''
+> +	|\
+> +	| * D
+> +	| * G
+> +	o | H
+> +	|/
+> +	o A
+> +	EOF
+> +'
 
-Best Regards,
-Ben Humphreys
+I'm not sure this test adds much value, it is hard to see what kind of 
+regression would allow the others to pass but not this one.
+
+> +test_expect_success '--rebase-merges overrides rebase.merges=false' '
+> +	test_config rebase.merges false &&
+> +	git checkout -b override-config-merges-false E &&
+> +	before="$(git rev-parse --verify HEAD)" &&
+> +	test_tick &&
+> +	git rebase --rebase-merges C &&
+> +	test_cmp_rev HEAD $before
+
+This test passes if the rebase does nothing, maybe pass --force and 
+check the graph?
+
+
+Best Wishes
+
+Phillip
+
+> +'
+> +
+> +test_expect_success '--rebase-merges does not override rebase.merges=rebase-cousins' '
+> +	test_config rebase.merges rebase-cousins &&
+> +	git checkout -b no-override-config-rebase-cousins main &&
+> +	git rebase --rebase-merges HEAD^ &&
+> +	test_cmp_graph HEAD^.. <<-\EOF
+> +	*   Merge the topic branch '\''onebranch'\''
+> +	|\
+> +	| * D
+> +	| * G
+> +	|/
+> +	o H
+> +	EOF
+> +'
+> +
+>   test_expect_success 'refs/rewritten/* is worktree-local' '
+>   	git worktree add wt &&
+>   	cat >wt/script-from-scratch <<-\EOF &&
