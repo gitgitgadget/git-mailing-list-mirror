@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F319AC678D4
-	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 13:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD545C64EC4
+	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 13:47:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231171AbjCCNrB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Mar 2023 08:47:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34568 "EHLO
+        id S231182AbjCCNrC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Mar 2023 08:47:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229977AbjCCNq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2023 08:46:59 -0500
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC6945507F
-        for <git@vger.kernel.org>; Fri,  3 Mar 2023 05:46:56 -0800 (PST)
-Received: by mail-pl1-x636.google.com with SMTP id n6so2706018plf.5
-        for <git@vger.kernel.org>; Fri, 03 Mar 2023 05:46:56 -0800 (PST)
+        with ESMTP id S229541AbjCCNrA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2023 08:47:00 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 952AE515E5
+        for <git@vger.kernel.org>; Fri,  3 Mar 2023 05:46:58 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id qa18-20020a17090b4fd200b0023750b675f5so6166117pjb.3
+        for <git@vger.kernel.org>; Fri, 03 Mar 2023 05:46:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WHaduuJjt5wL13miaDpxITC3g1nqWps7NMgzcDaHVM0=;
-        b=kk3NIYBMsPUc/Wb1k8xb0WGLucPSF9vBHurG9da8+Q3gAh9M96InZutGMrIfJ05hix
-         YOpctlGU4IYEJWeJ4JGUZ/xIUjaCuoFdKpKDJMspo91soVQyS4mV3qBHOPkgWB+Z9hzx
-         hW/B+1Nqm/w+cu4t7qMhte9uPsX5XcXSiaIeuuGXCeBWSQsU37AHYp0lT/81AmSEoig+
-         vPCJkrazSjqd150dqimjshcx0OEvwm9vGvFwrce88t65zFyINFB0kodOlrsYy6H3Fvi0
-         HMFZ1x/uPzDdgn43SGpT8YH2vQ48z1h+Egp32UUstAFOcxmYUPUY/fHOJDP2oqF5sVPK
-         6i/A==
+        bh=pdyCxZCYLwiorNCxFZ8Of3ERj71TksIvug6vWvmJGv8=;
+        b=Ux04Dwd+a64yc71olgCwzj+dMY2AknVtOILDgfIexQILkAvb7s34H5bknTUT2BUdwT
+         YguoxDAmCIPQpFil+wHADrMt5wUhWueSE8ainsTiRPxUV3angKYc2pTUZfgVG/xdKIeB
+         FReRRehin9epIglQnTRA1QMtjMf9iHzZcwYFYFY6Anr/Wk00RchUflj5FzsxoGK3zBUI
+         nn4Blci2gbVixqYjOvsVpr3Awtf4CDpAC3otFHp0pLqPeoOwVdx6iEQS9zNZF+i7Dkyv
+         CdEcQeTUU4o+ZVZoEpdCPpfq5qNTwK8Sf4CuK/POUwCC8FOkxa57c9TQedU6rUUJr219
+         d3tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WHaduuJjt5wL13miaDpxITC3g1nqWps7NMgzcDaHVM0=;
-        b=hX8kuxuwmBWybC8TfNs/T7ip+D4GO3YC6bKaL7m5SyR1YKpuTKXCSMj9i2yteCu9M9
-         J8009aLLj/mTpk89eCvFRDs4GWAWM3CgGWvtzaXlAF/b8J/6ZmBtC3ooutio28nt1HA1
-         U1OO74hqwbVk0i062v8SyytddLLX2dmVrsLlqacnEFe/m9FvQJw8zdKOKhX6+v6rnbVe
-         MBc5CTS5jY9a8QqjW1OD3kTYroCH9IQOizG1It/EmsNGWW/cYS50ZDjnE/7++9c/9LwS
-         4AgLrWSUkNsdtr0QHmB0O+kY7Qjc0bLtkc0Sm6XyazM9vqJaDdKFpKtiWo6BPF1Oejix
-         VZcw==
-X-Gm-Message-State: AO0yUKWxWHnIuzT8UMmWzklHs2geXmjZXXSIZ77AwGZ3xXpWRhiRm4kd
-        yxribp9jetWcxD/5tFqbqaZRj6tOhzc=
-X-Google-Smtp-Source: AK7set9MwCDuc/rO05ioojhHso8Quw1oF+e25tGC2PNjUaD1+sijGQqaXunFDC4gw4waP5+K1qDPxg==
-X-Received: by 2002:a17:90b:1d08:b0:238:e9:8994 with SMTP id on8-20020a17090b1d0800b0023800e98994mr1850428pjb.0.1677851216238;
-        Fri, 03 Mar 2023 05:46:56 -0800 (PST)
+        bh=pdyCxZCYLwiorNCxFZ8Of3ERj71TksIvug6vWvmJGv8=;
+        b=x/B+qV/LIPL82ThLibrTu9A/XKcjX0aQli/HgERbL3fogvu4dhmEOWBgdFcZMdBn56
+         uR21CEDrRa/h6CpACPL10kBUvTEknu71SOkIFjBTP6BO6Pu0ZpemBfOylMFfSeK73784
+         hAsDoyvS6NAet5ORbD1KN2w6o96DbqfMPcKXVc0VLKdllYtoxhR3WwjmqJcFQBvcRVTB
+         /jadr9X1HvvuCPLqb17k92qPv9YCqzIKmTkBf2BwzRhqt/UH0K8311JIYTZSMnBk5pIJ
+         HJFGlkLUrNTZXLebA4+gWbumU9GunNjS0Kk4/7Qyl0/GnZq8P4KCHIVveihRSiSHutqn
+         lg8w==
+X-Gm-Message-State: AO0yUKWN0dfFrZm5U6VbaqwuFjVLDbjNxZfGj2SDQf/ff+61JoIQ7C+f
+        oBAQ+v9KLRnZCa4+5HlWzxpX1+DnoSw=
+X-Google-Smtp-Source: AK7set+tTgg6nxzyJyo0kJP/lsnlQsEg+8vkdF5quYdZt+LYny3rCrkElX9+CJlKjTjoG6fMFhiqeQ==
+X-Received: by 2002:a17:90b:2353:b0:233:cea2:dac6 with SMTP id ms19-20020a17090b235300b00233cea2dac6mr1581615pjb.47.1677851217868;
+        Fri, 03 Mar 2023 05:46:57 -0800 (PST)
 Received: from localhost.localdomain ([113.172.118.59])
-        by smtp.gmail.com with ESMTPSA id m21-20020a17090aab1500b00234465cd2a7sm1536138pjq.56.2023.03.03.05.46.54
+        by smtp.gmail.com with ESMTPSA id m21-20020a17090aab1500b00234465cd2a7sm1536138pjq.56.2023.03.03.05.46.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Mar 2023 05:46:55 -0800 (PST)
+        Fri, 03 Mar 2023 05:46:57 -0800 (PST)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
-Subject: [PATCH 1/4] ci/lib.sh: remove an useless break
-Date:   Fri,  3 Mar 2023 20:46:03 +0700
-Message-Id: <c7312724f8a7ec9ccf63fb0621a996ebad3c6128.1677850518.git.congdanhqx@gmail.com>
+Subject: [PATCH 2/4] ci/install-dependencies: libify p4 and git-lfs installation
+Date:   Fri,  3 Mar 2023 20:46:04 +0700
+Message-Id: <13137839f39bdcbc56eae9e96894b5ebe4072374.1677850518.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.40.0.rc1.2.gd15644fe02
 In-Reply-To: <cover.1677850517.git.congdanhqx@gmail.com>
 References: <cover.1677850517.git.congdanhqx@gmail.com>
@@ -67,31 +67,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This statement was silently skipped for a long time.
-
-> ci/lib.sh: line 232: break: only meaningful in a `for', `while', or `until' loop
+In a later change, we will install git-lfs for CircleCI test
+environment. Let move those installations out in order to reuse them.
 
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- ci/lib.sh | 5 -----
- 1 file changed, 5 deletions(-)
+ ci/install-dependencies.sh | 38 +++++++++++++++++++++++++++++---------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index db7105e8a8..661076e70b 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -227,11 +227,6 @@ export SKIP_DASHED_BUILT_INS=YesPlease
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 4f407530d3..9a32af8968 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -6,16 +6,12 @@
+ . ${0%/*}/lib.sh
  
- case "$runs_on_pool" in
- ubuntu-*)
--	if test "$jobname" = "linux-gcc-default"
--	then
--		break
--	fi
--
- 	PYTHON_PACKAGE=python2
- 	if test "$jobname" = linux-gcc
- 	then
+ P4WHENCE=https://cdist2.perforce.com/perforce/r21.2
+-LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
++LFSWHENCE=https://github.com/github/git-lfs/releases/download
+ UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl-dev libexpat-dev
+  tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
+  libemail-valid-perl libio-socket-ssl-perl libnet-smtp-ssl-perl"
+ 
+-case "$runs_on_pool" in
+-ubuntu-*)
+-	sudo apt-get -q update
+-	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
+-		$UBUNTU_COMMON_PKGS $CC_PACKAGE $PYTHON_PACKAGE
++_install_linux_p4() {
+ 	mkdir --parents "$P4_PATH"
+ 	pushd "$P4_PATH"
+ 		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
+@@ -23,12 +19,36 @@ ubuntu-*)
+ 		chmod u+x p4d
+ 		chmod u+x p4
+ 	popd
++}
++
++_install_linux_git_lfs() {
++	local whence fname
++	whence="$1"
++	fname="$2"
+ 	mkdir --parents "$GIT_LFS_PATH"
+ 	pushd "$GIT_LFS_PATH"
+-		wget --quiet "$LFSWHENCE/git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
+-		tar --extract --gunzip --file "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
+-		cp git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs .
++		wget --quiet "$whence/$fname"
++		tar --extract --gunzip --strip-components=1 --file "$fname"
+ 	popd
++}
++
++case "$runs_on_pool" in
++ubuntu-*)
++	sudo apt-get -q update
++	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
++		$UBUNTU_COMMON_PKGS $CC_PACKAGE $PYTHON_PACKAGE
++
++	case "$(uname -m)" in
++	x86_64)
++		_install_linux_p4
++		_install_linux_git_lfs "$LFSWHENCE/v${LINUX_GIT_LFS_VERSION}" \
++			"git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
++		;;
++	*)
++		echo "Not supported architecture" >&2
++		exit 1
++		;;
++	esac
+ 	;;
+ macos-*)
+ 	export HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1
 -- 
 2.40.0.rc1.2.gd15644fe02
 
