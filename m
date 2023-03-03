@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00152C64EC4
-	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 18:02:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58C92C7EE2D
+	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 18:05:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231268AbjCCSCI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Mar 2023 13:02:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48492 "EHLO
+        id S231494AbjCCSFP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Mar 2023 13:05:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231128AbjCCSCG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2023 13:02:06 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2B845C121
-        for <git@vger.kernel.org>; Fri,  3 Mar 2023 10:02:01 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id q31-20020a17090a17a200b0023750b69614so3029789pja.5
-        for <git@vger.kernel.org>; Fri, 03 Mar 2023 10:02:01 -0800 (PST)
+        with ESMTP id S231386AbjCCSFN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2023 13:05:13 -0500
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0F25521D5
+        for <git@vger.kernel.org>; Fri,  3 Mar 2023 10:05:07 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id v11so3560074plz.8
+        for <git@vger.kernel.org>; Fri, 03 Mar 2023 10:05:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=If1xzg0uDtSsxoU6ZZo0S19LtmkTiuV/l85xcdDVDMc=;
-        b=SMlG1AoUlM34EVnyPnxqbaIOAsDX93eZ3PxK5xRXC+nV3RRMq/8PqXBjeaUIaiYkbk
-         U+u+tuqP+1gs4eVKZBwx8QgIvhR7JtYI5B3IeIO9fjeGVNmsT0F2er3IMppZNzKYZjOa
-         1+q6QFWC7p4Jr3taNtS3KaYJDUnxcKjcJWIYwMh3dypBKa02KwoiCLQ6b4WABBToXAc6
-         6eIVPFIR6mzbrIgYuSfgooSVAXwbLorAO4CnQy+Uv3RqyG+t8PAQAgh1qRxgj8HLXmUB
-         YhpuzBo9FhZP78AeUQ8tK1r86BFnOB4MNqE5IdXtBCFDFIVfTJ4pilo/6arfsLVVW6YS
-         GWrg==
+        bh=ECNF4LG65V4AFB1wpq9mv8ToxBY6hFjMCeNFLK6gur4=;
+        b=jiKTD2rTPwTBU1zzRpx3PW/oasPdhT/EitjUEeZFkHCYd1TPoSRRJnYQeRbDBZ7vj0
+         8cFaByctBLcWYsYpFZxYhsTOVodqD1p4ZGMKhNOKQliD+8FMUlVsYB2UPe+YAgKZ5mqu
+         bc1j8gQ3biXKerSxyaztLWKEjUoZ7NJMZ8qhM1TmGh9mPf7jcHjZk4Fne/LLl43hQ3mH
+         9+Fm6gop8C5OQSXZ6mwjSet7tJ6INpZTZJjnq8zl2rs8UGVCY3HFmrxCv4N9XNk4xnxL
+         raK8uhY6+4VQUZdjdcefIisq8bQOc7TZgyde2cuXs5WhuzukRy/mJXWC1txW3rEHmTQb
+         gECA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=If1xzg0uDtSsxoU6ZZo0S19LtmkTiuV/l85xcdDVDMc=;
-        b=VCE7JcSs9owV1JTwcKf6m0bYUlMuMdQrlSTUb7UmGydWPXyrTi5ZC5vXTwMfPsAE73
-         Z4rqeRhNpI3dXa1DDFz0QH/GnQPLBHVXvqEgZ5xBFRPhdocHEgoOSshwBkzWAEY9DzbT
-         aZwU6QI9cgKmITgxVeprUlYk1eCx1+Nu+tAA4ptyC6xzDJcfMsM/b9/SFfGiCquWTIfK
-         pvp70/lWYtyUo+EdKgmLm/ymjW8wq1bvyLIGLDoPq/ZgmDf8mTsmYGoOW452rqUIfXVV
-         FbAXu1gdNNOwgMueLxrKobLEslNzXATOO4VknHuHPM0XAg6EhRMTpEMFvpk1uL1kIrBi
-         Y96g==
-X-Gm-Message-State: AO0yUKXogmUPVPS6SfC1C9uqF7u+NinefTW00CiPM2KBlRLqyrLswcaM
-        cQs+ImQpKk52MghAV9KKmc0=
-X-Google-Smtp-Source: AK7set+lC0iTPR9lyRioxBdKMVA/km6bqcH9rAxw5fIaO58+Z5MgW1m9Opv/0/2Lqs0Y2VenmvRRwQ==
-X-Received: by 2002:a17:902:d4c3:b0:19c:c184:d211 with SMTP id o3-20020a170902d4c300b0019cc184d211mr3064491plg.37.1677866521232;
-        Fri, 03 Mar 2023 10:02:01 -0800 (PST)
+        bh=ECNF4LG65V4AFB1wpq9mv8ToxBY6hFjMCeNFLK6gur4=;
+        b=YYcPaLuYiplEuHc4ycGw9SA0P73wpRHy3qjINMFLJ8b3SPEQnkJ7oqeDvC6KI5ek+5
+         3n7xoII6AZMECmcUsDcJn15A925SAjsdbc7YINb9gbja03K7c4v9yaBcuUUg/qpp9sa1
+         SubCzSif5Rwp9MmFCc+VoDSSmGarUZzrYYKZ3WTcK1fjrR7Czze3H74HH6Ohh34Hzlmr
+         zQyz0F4rzbGlRK/wXm1H+8jfFX43NRVkj58btxWj3XwxEXsZAwgR5O7ZtHko315RZaAn
+         3/DIMbsUH9iaGyENLRH043OrxXYN+Nwgy+VpQT4D4qRL3NzdlqFebA2TpEcEV/oJXfic
+         DOhg==
+X-Gm-Message-State: AO0yUKWQwyp5Un27EZFnOAkhJJ6/jwf5hvemunzK5KdbiEKDtvtRSITB
+        WyaDLKnSXIbWKHSea7RuU6M=
+X-Google-Smtp-Source: AK7set9kYzb9+G92uEiaCDRe5hmKqrqxVtl3RoaFe0vkAJUlRcjV+g5M8IThWVb7gqs44yekcJAYmg==
+X-Received: by 2002:a17:903:22cc:b0:19c:d5a5:1f52 with SMTP id y12-20020a17090322cc00b0019cd5a51f52mr3525522plg.18.1677866707166;
+        Fri, 03 Mar 2023 10:05:07 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id kr14-20020a170903080e00b0019ac7319ed1sm1807105plb.126.2023.03.03.10.02.00
+        by smtp.gmail.com with ESMTPSA id c17-20020a170903235100b0019e76a99cdbsm1786229plh.243.2023.03.03.10.05.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Mar 2023 10:02:00 -0800 (PST)
+        Fri, 03 Mar 2023 10:05:06 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
@@ -57,14 +57,14 @@ Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
         Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>,
         Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH 1/6] config.c: plumb config_source through static fns
+Subject: Re: [PATCH 3/6] config.c: create config_reader and the_reader
 References: <pull.1463.git.git.1677631097.gitgitgadget@gmail.com>
-        <ad513d832d8267f9e4805db5e7a9e8915fc62a23.1677631097.git.gitgitgadget@gmail.com>
-Date:   Fri, 03 Mar 2023 10:02:00 -0800
-In-Reply-To: <ad513d832d8267f9e4805db5e7a9e8915fc62a23.1677631097.git.gitgitgadget@gmail.com>
-        (Glen Choo via GitGitGadget's message of "Wed, 01 Mar 2023 00:38:12
+        <751ce3e927d392530038006a3f1e3a9538ce2127.1677631097.git.gitgitgadget@gmail.com>
+Date:   Fri, 03 Mar 2023 10:05:06 -0800
+In-Reply-To: <751ce3e927d392530038006a3f1e3a9538ce2127.1677631097.git.gitgitgadget@gmail.com>
+        (Glen Choo via GitGitGadget's message of "Wed, 01 Mar 2023 00:38:14
         +0000")
-Message-ID: <xmqqh6v1g1d3.fsf@gitster.g>
+Message-ID: <xmqq8rgdg17x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,104 +74,14 @@ X-Mailing-List: git@vger.kernel.org
 
 "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> -static int handle_path_include(const char *path, struct config_include_data *inc)
-> +static int handle_path_include(struct config_source *cs, const char *path,
-> +			       struct config_include_data *inc)
+> A more typical approach would be to put this struct on "the_repository",
+> but that's a worse fit for this use case since config reading is not
+> scoped to a repository.
 
-Because handle_path_include() has no remaining reference to cf after
-this patch, it may make sense to name the parameter "cf", instead of
-"cs", taking advantage of the fact that it will cover/hide the global.
+Good thinking.
 
-> -static int prepare_include_condition_pattern(struct strbuf *pat)
-> +static int prepare_include_condition_pattern(struct config_source *cs,
-> +					     struct strbuf *pat)
+> We could have also replaced the references to "cf" in callback functions
+> (which are the only ones left), but we'll eventually plumb "the_reader"
+> through the callback "*data" arg,...
 
-Ditto.
-
-> -static int include_by_gitdir(const struct config_options *opts,
-> +static int include_by_gitdir(struct config_source *cs,
-> +			     const struct config_options *opts,
->  			     const char *cond, size_t cond_len, int icase)
-
-Ditto.
-
-> +static int include_condition_is_true(struct config_source *cs,
-> +				     struct config_include_data *inc,
->  				     const char *cond, size_t cond_len)
-
-Ditto.
-
-> @@ -441,16 +445,16 @@ static int git_config_include(const char *var, const char *value, void *data)
-
-Adding a member to the callback data struct to pass cf around would
-be the natural next step, I presume.  I wonder if that makes the
-result too big if it is done in this same commit.  I suspect that it
-would be easier to grok the whole picture if it were done in the
-same commit, though.
-
-If not (IOW, if we deliberately leave some use of the global in the
-callchains unfixed with this step), it may make the resulting patch
-much easier to read if you (1) rename the global to a longer name
-that stands out more, e.g. cf_global, and (2) add a new parameter
-'cf' to these helper functions and pass 'cf_global' through to the
-callchain.
-
-> -static int get_next_char(void)
-> +static int get_next_char(struct config_source *cs)
-
-Ditto for "cs" -> "cf".
-
-> -static char *parse_value(void)
-> +static char *parse_value(struct config_source *cs)
-
-Ditto.
-
-> -static int get_value(config_fn_t fn, void *data, struct strbuf *name)
-> +static int get_value(struct config_source *cs, config_fn_t fn, void *data,
-> +		     struct strbuf *name)
-
-Ditto.
-
-> -static int get_extended_base_var(struct strbuf *name, int c)
-> +static int get_extended_base_var(struct config_source *cs, struct strbuf *name,
-> +				 int c)
-
-Ditto.
-
-> -static int get_base_var(struct strbuf *name)
-> +static int get_base_var(struct config_source *cs, struct strbuf *name)
-
-Ditto.
-
-> -static int do_event(enum config_event_t type, struct parse_event_data *data)
-> +static int do_event(struct config_source *cs, enum config_event_t type,
-> +		    struct parse_event_data *data)
-
-Ditto.
-
-> -static int git_parse_source(config_fn_t fn, void *data,
-> -			    const struct config_options *opts)
-> +static int git_parse_source(struct config_source *cs, config_fn_t fn,
-> +			    void *data, const struct config_options *opts)
->  {
-
-Ditto.
-
-> -static void die_bad_number(const char *name, const char *value)
-> +static void die_bad_number(struct config_source *cs, const char *name,
-> +			   const char *value)
-
-Ditto.
-
-> @@ -1304,7 +1312,7 @@ int git_config_int(const char *name, const char *value)
->  {
->  	int ret;
->  	if (!git_parse_int(value, &ret))
-> -		die_bad_number(name, value);
-> +		die_bad_number(cf, name, value);
-
-And using a more visible name like cf_global will leave us a
-reminder here what is remaining to be converted, like this place and
-the callback function driven by config_with_options().
-
-
+Good.
