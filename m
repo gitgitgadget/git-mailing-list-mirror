@@ -2,120 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43630C61DA4
-	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 22:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89E7CC64EC4
+	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 23:03:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232892AbjCCW4E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Mar 2023 17:56:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48462 "EHLO
+        id S231715AbjCCXDj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Mar 2023 18:03:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233413AbjCCWzq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2023 17:55:46 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 548C5FB
-        for <git@vger.kernel.org>; Fri,  3 Mar 2023 14:55:19 -0800 (PST)
-Received: (qmail 5711 invoked by uid 109); 3 Mar 2023 22:54:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Mar 2023 22:54:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32013 invoked by uid 111); 3 Mar 2023 22:54:24 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Mar 2023 17:54:24 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 3 Mar 2023 17:54:24 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Michael Henry <git@drmikehenry.com>, git@vger.kernel.org
-Subject: Re: `git bundle create -` may not write to `stdout`
-Message-ID: <ZAJ6oI3clNH2O3R7@coredump.intra.peff.net>
-References: <80beb487-cd93-06ed-88cf-87a96a829ff6@drmikehenry.com>
- <Y/voNv1OQ1Cf/N5a@coredump.intra.peff.net>
- <xmqqv8jhcvrq.fsf@gitster.g>
+        with ESMTP id S230482AbjCCXDh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2023 18:03:37 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B60FC5FFD
+        for <git@vger.kernel.org>; Fri,  3 Mar 2023 15:03:27 -0800 (PST)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id C93515A1DD;
+        Fri,  3 Mar 2023 23:03:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1677884606;
+        bh=cj1VivsiS+nenTElEBrpfk8G+j6pylJmkVpQRn/LkgQ=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=wyCzw3FZna1/NcGth//XT0Wp019wKiF3N36eVsq9vFCcI47UdO/uRQRpa2hGM31n7
+         Sk54oSQaiK/76KcivqTDu3OK2MsU+KyxgXm4u51HajKg7Y4Zx3gY5vN3kd7AkNVXxO
+         +tqhhh3g0xAW7iHSroozoI06htNPs2Jcljc3hyel/i/vzBNgD+MjySQEZvjz3OtsAI
+         A44sa+ZZxUpVHkKiTKXv+SLg67n96Jek0qjcc0wicpv0IZEnLBpb4PLXq0scMRqE6b
+         42xl3yawwaqxagm/7CIX21uO0k8s2wnVNB7oozGdMbCM1zHTQIMjffFpHLFzKKNL2v
+         sa/i+S1IKQv+JVF19FpDQlqWAjIWOtIjg5QhoVQgHdTonQ4V6zmNBiJt8oQ/+WoRLy
+         wqni6QdGwU0N8VcMbiBrovDiNeCyej+FMFr4YegvOgE+7wHvKsaSUb/z2L9fX9b01K
+         WzjpjdjQdzPS7w5y/WnX6AX8EDBEnZudM+P+5O2UJ54sU8m03ti
+Date:   Fri, 3 Mar 2023 23:03:24 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Magnus Asplund <asplund.magnus@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Is xmllint no longer supported in (latest) Portable GIT 2.39.2 ?
+Message-ID: <ZAJ8vDUeLDH0CZAd@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Magnus Asplund <asplund.magnus@gmail.com>, git@vger.kernel.org
+References: <CACw=1eCKN-saQCbOmoyZ1=ydcwoC0FE0KvE5UQ5ttkkv0OeBcg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="DdL8+bD3i0godPDn"
 Content-Disposition: inline
-In-Reply-To: <xmqqv8jhcvrq.fsf@gitster.g>
+In-Reply-To: <CACw=1eCKN-saQCbOmoyZ1=ydcwoC0FE0KvE5UQ5ttkkv0OeBcg@mail.gmail.com>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 03, 2023 at 02:31:05PM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > The most directed fix is this:
-> >
-> > diff --git a/builtin/bundle.c b/builtin/bundle.c
-> > index acceef6200..145b814f48 100644
-> > --- a/builtin/bundle.c
-> > +++ b/builtin/bundle.c
-> > @@ -59,7 +59,9 @@ static int parse_options_cmd_bundle(int argc,
-> >  			     PARSE_OPT_STOP_AT_NON_OPTION);
-> >  	if (!argc)
-> >  		usage_msg_opt(_("need a <file> argument"), usagestr, options);
-> > -	*bundle_file = prefix_filename(prefix, argv[0]);
-> > +	*bundle_file = strcmp(argv[0], "-") ?
-> > +		       prefix_filename(prefix, argv[0]) :
-> > +		       xstrdup(argv[0]);
-> >  	return argc;
-> >  }
-> 
-> This fell thru cracks, it seems.
+--DdL8+bD3i0godPDn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I was waiting to give Michael a chance to respond to my offer. :)
+On 2023-03-03 at 18:10:19, Magnus Asplund wrote:
+> Hi,
 
-> OPT_FILENAME() needs to do exactly this, and has its own helper
-> function in parse-options.c::fix_filename(), but its memory
-> ownership rules is somewhat screwed (it was perfectly fine in the
-> original context of "we parse the bounded number of options the user
-> would give us from the command line, and giving more than one
-> instance of these last-one-wins option may leak but we do not
-> care---if you do not like leaking, don't give duplicates", but with
-> automated leak checking that does not care about such nuances, it
-> will trigger unnecessary errors), and cannot be reused here.
+Hey,
 
-Heh, I was worried about it kicking in for spots that "-" was not
-meaningful, but I checked only prefix_filename() itself, and didn't
-think to check OPT_FILENAME()'s full code path.
+> I have a bash script created in RHL environment (Linux). The script
+> extracts data from a great number (+100000) of XML-files and generates
+> "row-col" data as output to a CSV file.
+>=20
+> Due to limitations in both technical knowledge and
+> access/authorization restrictions of other persons than myself, I
+> decided to give Portable GIT a try in Windows 10 environment to hand
+> over the script execution to those other ppl.
+>=20
+> The script works fine using 64-bit Git for Windows Portable version 2.38.=
+1.
+> However support for 'xmllint' seems to be gone in version 2.39.2....
+> (this one: https://github.com/git-for-windows/git/releases/download/v2.39=
+=2E2.windows.1/PortableGit-2.39.2-64-bit.7z.exe)
+>=20
+> Any answers to this? Is xmllint not longer supported? Any alternative,
+> besides using to older version 2.38.1 ?
 
-(I do still think we don't want to push it down into prefix_filename(),
-because it gets used for paths and pathspecs given raw on the command
-line. It does make me wonder if there are places where OPT_FILENAME() is
-doing the wrong thing).
+The Git project doesn't ship any binaries, and it doesn't ship anything
+but Git, including xmllint.  However, Git for Windows may ship those
+things, and you'd probably want to go to their issue tracker
+(https://github.com/git-for-windows/git/issues) and talk to them about
+this.
 
-> Here is your "most directed fix" packaged into a call to a helper
-> function.  Given that we may want to slim the cache.h header, it may
-> not want to be declared there, but for now, its declaration sits
-> next to prefix_filename().
+My guess is that this was necessary to build and it isn't any longer,
+and because libxml2 has a constant stream of security vulnerabilities,
+it's not something they want to keep shipping, but you'd really have to
+talk to the Git for Windows folks to be sure.
 
-Yeah, a helper may be nice, though if this is the only spot, I'd be
-tempted not to even bother until fix_filename() is fixed. The obvious
-fix is for it to always allocate, but callers will need to be adjusted.
-I suspect it will trigger a bunch of complaints from the leak-checking
-tests (because the caller does not expect it to be allocated, so it's a
-sometimes-leak now, but it will become an always-leak).
+If you need a more complete environment on Windows, you may want to try
+a Linux distro such as Debian under the Windows Subsystem for Linux,
+which will likely provide an up-to-date version of this tool.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-> diff --git c/t/t6020-bundle-misc.sh w/t/t6020-bundle-misc.sh
-> index 7d40994991..d14f7cea91 100755
-> --- c/t/t6020-bundle-misc.sh
-> +++ w/t/t6020-bundle-misc.sh
-> @@ -606,4 +606,15 @@ test_expect_success 'verify catches unreachable, broken prerequisites' '
->  	)
->  '
->  
-> +test_expect_success 'send a bundle to standard output' '
-> +	git bundle create - --all HEAD >bundle-one &&
-> +	mkdir -p down &&
-> +	git -C down bundle create - --all HEAD >bundle-two &&
-> +	git bundle verify bundle-one &&
-> +	git bundle verify bundle-two &&
-> +	git ls-remote bundle-one >expect &&
-> +	git ls-remote bundle-two >actual &&
-> +	test_cmp expect actual
-> +'
+--DdL8+bD3i0godPDn
+Content-Type: application/pgp-signature; name="signature.asc"
 
-This test looks good to me. Let's also not forget about the doc fixes. I
-don't think there's much urgency to get this into v2.40, but I can put
-it together in the next day or three.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
 
--Peff
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZAJ8vAAKCRB8DEliiIei
+gQFWAQCSqf4RTHBS2ijZFKwT3iUU527rdBczWwyxjzDYoM/icQEA/Ds5Wpu+qFG9
+gvyrHukS7PQJoqw2DMShheCGNloPBg8=
+=ir4d
+-----END PGP SIGNATURE-----
+
+--DdL8+bD3i0godPDn--
