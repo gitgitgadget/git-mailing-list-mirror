@@ -2,86 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58C92C7EE2D
-	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 18:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 726DEC7EE2D
+	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 18:10:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231494AbjCCSFP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Mar 2023 13:05:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51438 "EHLO
+        id S231546AbjCCSKc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Mar 2023 13:10:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231386AbjCCSFN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2023 13:05:13 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0F25521D5
-        for <git@vger.kernel.org>; Fri,  3 Mar 2023 10:05:07 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id v11so3560074plz.8
-        for <git@vger.kernel.org>; Fri, 03 Mar 2023 10:05:07 -0800 (PST)
+        with ESMTP id S231542AbjCCSKb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2023 13:10:31 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC7DB5D88C
+        for <git@vger.kernel.org>; Fri,  3 Mar 2023 10:10:21 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id j19-20020a05600c1c1300b003e9b564fae9so4523523wms.2
+        for <git@vger.kernel.org>; Fri, 03 Mar 2023 10:10:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ECNF4LG65V4AFB1wpq9mv8ToxBY6hFjMCeNFLK6gur4=;
-        b=jiKTD2rTPwTBU1zzRpx3PW/oasPdhT/EitjUEeZFkHCYd1TPoSRRJnYQeRbDBZ7vj0
-         8cFaByctBLcWYsYpFZxYhsTOVodqD1p4ZGMKhNOKQliD+8FMUlVsYB2UPe+YAgKZ5mqu
-         bc1j8gQ3biXKerSxyaztLWKEjUoZ7NJMZ8qhM1TmGh9mPf7jcHjZk4Fne/LLl43hQ3mH
-         9+Fm6gop8C5OQSXZ6mwjSet7tJ6INpZTZJjnq8zl2rs8UGVCY3HFmrxCv4N9XNk4xnxL
-         raK8uhY6+4VQUZdjdcefIisq8bQOc7TZgyde2cuXs5WhuzukRy/mJXWC1txW3rEHmTQb
-         gECA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+        d=gmail.com; s=20210112; t=1677867020;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ECNF4LG65V4AFB1wpq9mv8ToxBY6hFjMCeNFLK6gur4=;
-        b=YYcPaLuYiplEuHc4ycGw9SA0P73wpRHy3qjINMFLJ8b3SPEQnkJ7oqeDvC6KI5ek+5
-         3n7xoII6AZMECmcUsDcJn15A925SAjsdbc7YINb9gbja03K7c4v9yaBcuUUg/qpp9sa1
-         SubCzSif5Rwp9MmFCc+VoDSSmGarUZzrYYKZ3WTcK1fjrR7Czze3H74HH6Ohh34Hzlmr
-         zQyz0F4rzbGlRK/wXm1H+8jfFX43NRVkj58btxWj3XwxEXsZAwgR5O7ZtHko315RZaAn
-         3/DIMbsUH9iaGyENLRH043OrxXYN+Nwgy+VpQT4D4qRL3NzdlqFebA2TpEcEV/oJXfic
-         DOhg==
-X-Gm-Message-State: AO0yUKWQwyp5Un27EZFnOAkhJJ6/jwf5hvemunzK5KdbiEKDtvtRSITB
-        WyaDLKnSXIbWKHSea7RuU6M=
-X-Google-Smtp-Source: AK7set9kYzb9+G92uEiaCDRe5hmKqrqxVtl3RoaFe0vkAJUlRcjV+g5M8IThWVb7gqs44yekcJAYmg==
-X-Received: by 2002:a17:903:22cc:b0:19c:d5a5:1f52 with SMTP id y12-20020a17090322cc00b0019cd5a51f52mr3525522plg.18.1677866707166;
-        Fri, 03 Mar 2023 10:05:07 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id c17-20020a170903235100b0019e76a99cdbsm1786229plh.243.2023.03.03.10.05.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Mar 2023 10:05:06 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH 3/6] config.c: create config_reader and the_reader
-References: <pull.1463.git.git.1677631097.gitgitgadget@gmail.com>
-        <751ce3e927d392530038006a3f1e3a9538ce2127.1677631097.git.gitgitgadget@gmail.com>
-Date:   Fri, 03 Mar 2023 10:05:06 -0800
-In-Reply-To: <751ce3e927d392530038006a3f1e3a9538ce2127.1677631097.git.gitgitgadget@gmail.com>
-        (Glen Choo via GitGitGadget's message of "Wed, 01 Mar 2023 00:38:14
-        +0000")
-Message-ID: <xmqq8rgdg17x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        bh=ODoi9URuJ12xmixKVpEo9MRH32CR6sZSM3aEQ2aR83o=;
+        b=Q7vvvPaN8N7a0ZAwTGNecZsE+CSmaselbT+vN2BzOXJUYANPKbBnBSFVb1amEldMIj
+         ISmaUa2Qe1DcKq/QqlUZX3rQNh9y51TcC2QYi5jESW9w4ioqYVxBh+hbXrHgKMLMzEIn
+         z9rEar87exfGYbsvkhurhk4qXHTOuoIemTV2S5aUfryQfgjCLK0WibWOYQUC+H3FVwni
+         9P3XrscCnST1xttUPQ+9WAoubU90PbsojSPyEeHLIyjSWSo9O1NTimiCPeMqorXP6LxH
+         Uih8Vn91gGfDABuzmO4S9jXH5PXGN3yS0uuBC6zmhMpW8tqzTEzRG/f6o/sn2+SiqLtG
+         FcxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677867020;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ODoi9URuJ12xmixKVpEo9MRH32CR6sZSM3aEQ2aR83o=;
+        b=xlYwY2ewrA3eHnxkot3kz05mlY7j/X/A0O+JDeSo08RzeQ6SjKQ4cBXifv6KHPIZuw
+         szwJeAqHNmrgTWk2HSAP/r9k23pPR7RqQB4Z+AN6rCA8Vb499hc+axCp+OgX/qno9nbz
+         CmcQi3fGunBj8KcuiU1uoq8q+tMwwRGe3peTzWqfs5xza3N8Tc+mdEqsbs2fBf5Q/dxB
+         P1llX/+VNZ8yvVUel9YqpMEvMggdrEjdWeRG41s7Wjj6d4akLDKC8isTB+jdUPkMceWT
+         Hu2r3cVP/s3XpWZ2mq8z66XoAkCJ1W0qMywTV4cp4dSVemmTz7QEkjG7v5dgYbARqHaD
+         QoPQ==
+X-Gm-Message-State: AO0yUKVmT2g5srLx84JrXkDQGdFvYtfWPmL8tBCU4tYSzv1Zrz5uK8q2
+        ZNs2m7dchbeN3EFq6m0M6fAf0a1lHp7GNxalvNOD2E8p
+X-Google-Smtp-Source: AK7set9viUMBOTz6BVbb3fIIvSTxmk43INsIj8mBnjlyV0HLJesDA/RdX75Rse6DL6vKRXwl28GOtE3CxSk0kQ/lQFI=
+X-Received: by 2002:a05:600c:1:b0:3eb:5824:f0ec with SMTP id
+ g1-20020a05600c000100b003eb5824f0ecmr639503wmc.2.1677867019853; Fri, 03 Mar
+ 2023 10:10:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a05:6020:832a:b0:261:fef4:7c90 with HTTP; Fri, 3 Mar 2023
+ 10:10:19 -0800 (PST)
+From:   Magnus Asplund <asplund.magnus@gmail.com>
+Date:   Fri, 3 Mar 2023 19:10:19 +0100
+Message-ID: <CACw=1eCKN-saQCbOmoyZ1=ydcwoC0FE0KvE5UQ5ttkkv0OeBcg@mail.gmail.com>
+Subject: Is xmllint no longer supported in (latest) Portable GIT 2.39.2 ?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi,
 
-> A more typical approach would be to put this struct on "the_repository",
-> but that's a worse fit for this use case since config reading is not
-> scoped to a repository.
+I have a bash script created in RHL environment (Linux). The script
+extracts data from a great number (+100000) of XML-files and generates
+"row-col" data as output to a CSV file.
 
-Good thinking.
+Due to limitations in both technical knowledge and
+access/authorization restrictions of other persons than myself, I
+decided to give Portable GIT a try in Windows 10 environment to hand
+over the script execution to those other ppl.
 
-> We could have also replaced the references to "cf" in callback functions
-> (which are the only ones left), but we'll eventually plumb "the_reader"
-> through the callback "*data" arg,...
+The script works fine using 64-bit Git for Windows Portable version 2.38.1.
+However support for 'xmllint' seems to be gone in version 2.39.2....
+(this one: https://github.com/git-for-windows/git/releases/download/v2.39.2.windows.1/PortableGit-2.39.2-64-bit.7z.exe)
 
-Good.
+Any answers to this? Is xmllint not longer supported? Any alternative,
+besides using to older version 2.38.1 ?
+
+Best regards.
+Magnus
+
+--
+Kontaktinfo / Contact info:
+Magnus Asplund
+asplund.magnus@gmail.com
