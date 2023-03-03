@@ -2,187 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D1FFC64EC4
-	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 11:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83B47C64EC4
+	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 13:47:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230269AbjCCLHZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Mar 2023 06:07:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49070 "EHLO
+        id S230316AbjCCNq7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Mar 2023 08:46:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229779AbjCCLHY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2023 06:07:24 -0500
-X-Greylist: delayed 2538 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 03 Mar 2023 03:07:21 PST
-Received: from tmailer.gwdg.de (tmailer.gwdg.de [134.76.10.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E82035F6DD
-        for <git@vger.kernel.org>; Fri,  3 Mar 2023 03:07:21 -0800 (PST)
-Received: from excmbx-23.um.gwdg.de ([134.76.9.233] helo=email.gwdg.de)
-        by mailer.gwdg.de with esmtp (GWDG Mailer)
-        (envelope-from <minh-cristian.le@mpsd.mpg.de>)
-        id 1pY2az-0007W2-ID
-        for git@vger.kernel.org; Fri, 03 Mar 2023 11:25:01 +0100
-Received: from [131.169.116.164] (10.250.9.199) by EXCMBX-23.um.gwdg.de
- (134.76.9.233) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P521) id 15.1.2507.21; Fri, 3
- Mar 2023 11:25:01 +0100
-Message-ID: <42f13cda-9de6-bfc6-7e81-64c94f5640db@mpsd.mpg.de>
-Date:   Fri, 3 Mar 2023 11:25:01 +0100
+        with ESMTP id S229541AbjCCNq6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2023 08:46:58 -0500
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61F8E515E5
+        for <git@vger.kernel.org>; Fri,  3 Mar 2023 05:46:55 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id n6so2705922plf.5
+        for <git@vger.kernel.org>; Fri, 03 Mar 2023 05:46:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Il/dSSRmVfD6pBTaFfcffxpDrp7pBgb+1w3voF6VJ0s=;
+        b=cGs2+4BLpbtUg47ncIC3XlYmWtdTAaPApZxeJGsTxJlJzu774y9HA6XOUR//o9p4Gp
+         lQCCla+IaBJRoNi/qkevh10q3FfftzpInStQONi2cpgfuOHMhOQN6jeg/nOky5ddjkhv
+         q62WIiM4NguHi1Wf0zHsDx3TCb6fVhMG2dsheK4PaUpn9+5N+JuHXk5oxhfT5Gtk2fUC
+         UEdDKyXj/pKF9R5jVE3/zlitkfwB2qX7qQuOooBQZhN7n1KO3giG1749GYE25ufBww6N
+         vzucHef5XUlff7hf6uKG1ydMb5JlQ91JKiI8ULcfvy9wG2IqrI1KLdyCdjDm+oSRGVo1
+         aagA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Il/dSSRmVfD6pBTaFfcffxpDrp7pBgb+1w3voF6VJ0s=;
+        b=UiAscRiMTFim1CJeBRmGnP07YB1JHE9bjOuKu96l8QFEiDua+khNz9RBjHerckYk2Z
+         O7FixU89lIr9yTKIVd/RZwNWbVKgrm5V/Uo25KdTzh1rQ5oYdLrgtmCRFGSZ6Um3Leiz
+         KwR0UnPOqsEZZjOf8VO8UP268aFQ6HswcKSzSVoirMO9qXQVEbAjjFKfE7RGRHXZUMc8
+         gL+Zl+voA4Z7VCarLNl5kaiz+F4byx7w0oQUpigHoGBLK26KxJU8c8JCcu92F9ovHYai
+         q9ABLYf2yy4UotUjnP08005WmmUCYUszQlbUrcHgSywz75UL82wzCQ5UUV5MwlURK647
+         vyAQ==
+X-Gm-Message-State: AO0yUKWHTsDjvlWS3XmpiFK63f9fvblndvVTMijW9a8iC6i7DfmlOrN/
+        6zeXsdnmNI9VvToibyC/yFRpZIOlzSs=
+X-Google-Smtp-Source: AK7set/9E/FmhU9dPRGjDJHi5/y1eT0s3/Utor3e+1WGIkAaIl11g4oVi/NVVp2/7N2sK1OAP6MvUA==
+X-Received: by 2002:a17:90b:4ac5:b0:237:dd21:c1e7 with SMTP id mh5-20020a17090b4ac500b00237dd21c1e7mr1712167pjb.35.1677851214617;
+        Fri, 03 Mar 2023 05:46:54 -0800 (PST)
+Received: from localhost.localdomain ([113.172.118.59])
+        by smtp.gmail.com with ESMTPSA id m21-20020a17090aab1500b00234465cd2a7sm1536138pjq.56.2023.03.03.05.46.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Mar 2023 05:46:54 -0800 (PST)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH 0/4] Add a CI for unsigned char system
+Date:   Fri,  3 Mar 2023 20:46:02 +0700
+Message-Id: <cover.1677850517.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.40.0.rc1.2.gd15644fe02
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-To:     <git@vger.kernel.org>
-Content-Language: en-US
-From:   Cristian Le <cristian.le@mpsd.mpg.de>
-Subject: Bug in git archive + .gitattributes + relative path
-Content-Type: multipart/signed; protocol="application/pkcs7-signature";
-        micalg=sha-256; boundary="------------ms090609040403030307090300"
-X-Originating-IP: [10.250.9.199]
-X-ClientProxiedBy: excmbx-08.um.gwdg.de (134.76.9.215) To EXCMBX-23.um.gwdg.de
- (134.76.9.233)
-X-Virus-Scanned: (clean) by clamav
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---------------ms090609040403030307090300
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Recently, we have a brokeness on system with unsigned char because most of
+people are working with x86_64 which has signed char.
 
-Using `git archive` with or without `--worktree-attributes` does not 
-properly read `.gitattributes` files if using a relative path in 
-`<tree-ish>`.
-Related github comment: 
-https://github.com/rpm-software-management/tito/pull/445#issuecomment-1450298871
-Related stackoverflow discussion: 
-https://stackoverflow.com/questions/52804334/how-to-ignore-files-directories-in-git-archive-and-only-create-an-archive-of-a
+This series tries to add a CI system for a widely used system with signed
+char, which is arm64 via circle-ci.
 
-Git version: `2.39.2`
-Mwe git repo: Two files:
-```
-# .gitattributes:
-.git_archival.txt export-subst
-```
-```
-# .git_archival.txt:
-node: $Format:%H$
-```
+In order to register for git to participate in Circle CI, you need to:
+- Create an account and login into Circle CI, (I tried login with GitHub OAuth);
+- Register a project with Circle CI, and choose which config.yml we would like
+  to be used for Circle CI
 
-Commands to reproduce and expected behaviour:
-```console
-$ git archive HEAD:./ --output=test.tar.gz
-$ tar -axf test.tar.gz .git_archival.txt -O
-node: 745ce26169fb44e04d91d40ee581cccd591c941e
-```
-Important: Notice the path `./` given after `HEAD`.
+Circle CI seems to allow 40000 (Forty thousand credits per month), in my
+testing, with resource_class: 'arm.medium', (which costs 10 credits per minute),
+it take 12m15s to finish, so that will be about 3000 run per month. I believe
+arm.large, which is also available to free accounts and cost 20 credits per
+minute, doesn't cost effective but I haven't checked out.
 
-Actual output:
-```console
-$ tar -axf test.tar.gz .git_archival.txt -O
-node: $Format:%H$
-```
+Sample run:
+- Without the fix for unsigned char:
+  https://app.circleci.com/pipelines/gh/sgn/git/12/workflows/9b39391d-0d03-4669-86e6-2796fd671c43/jobs/10
+- Normal run:
+  https://app.circleci.com/pipelines/gh/sgn/git/14/workflows/b8745f8e-8a57-4215-847e-2af66c1dd3c7/jobs/12
 
-It doesn't matter if `.gitattributes` is in a subfolder, or if I change 
-the relative path `./` to a subfolder, the files are still not properly 
-generated.
+I'm not really sure if we want the 'store_test_results', which will upload the
+test report in the 'TESTS' tab:
+https://app.circleci.com/pipelines/gh/sgn/git/14/workflows/b8745f8e-8a57-4215-847e-2af66c1dd3c7/jobs/12/tests
+and provides a test insights like this:
+https://app.circleci.com/insights/gh/sgn/git/workflows/workflow/tests?branch=circle-ci
 
-Using `--worktree-attributes` did not have any effect either.
-According to the documentation, I understand that the expected behaviour 
-with regards to `--worktree-attributes`:
-- Read the `.gitattributes` of the relative path, e.g. `./sub_dir` 
-regardless of `--worktree-attributes`. (similar behaviour as not passing 
-a relative path)
-- Include the `.gitattributes` of the top-level path if 
-`--worktree-attributes` is passed
+Đoàn Trần Công Danh (4):
+  ci/lib.sh: remove an useless break
+  ci/install-dependencies: libify p4 and git-lfs installation
+  ci/install-dependencies: install git-lfs for arm64 build
+  ci: add arm64 CI environment via CircleCI
 
-Maybe the intended behaviour is to completely ignore all 
-`.gitattributes` unless `--worktree-attributes` is provided, in which 
-case, it does not have the intended behaviour and please include a flag 
-to achieve the above behaviour.
+ .circleci/config.yml       | 17 +++++++++++++++
+ ci/install-dependencies.sh | 42 ++++++++++++++++++++++++++++++--------
+ ci/lib.sh                  | 30 ++++++++++++++++++++++-----
+ 3 files changed, 75 insertions(+), 14 deletions(-)
+ create mode 100644 .circleci/config.yml
 
+-- 
+2.40.0.rc1.2.gd15644fe02
 
---------------ms090609040403030307090300
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCC
-DTcwggZJMIIEMaADAgECAhBQUUyUuLQka6vAg7YKjGRjMA0GCSqGSIb3DQEBDAUAMEYxCzAJ
-BgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQ
-ZXJzb25hbCBDQSA0MB4XDTIyMTEwNzAwMDAwMFoXDTIzMTEwNzIzNTk1OVowgdIxDjAMBgNV
-BBETBTgwNTM5MUcwRQYDVQQKEz5NYXgtUGxhbmNrLUdlc2VsbHNjaGFmdCB6dXIgRm9lcmRl
-cnVuZyBkZXIgV2lzc2Vuc2NoYWZ0ZW4gZS5WLjEbMBkGA1UECQwSSG9mZ2FydGVuc3RyYcOf
-ZSA4MQ8wDQYDVQQIEwZCYXllcm4xCzAJBgNVBAYTAkRFMRQwEgYDVQQDEwtDcmlzdGlhbiBM
-ZTEmMCQGCSqGSIb3DQEJARYXY3Jpc3RpYW4ubGVAbXBzZC5tcGcuZGUwggEiMA0GCSqGSIb3
-DQEBAQUAA4IBDwAwggEKAoIBAQDBNitl7zpnIpfymK7IX/4MAcuFjIb4pwfLVSsO8KTbc8fo
-QrhIqsll81GPihVdJCnp9XWGQsmH3dh2L5Ky74/wxVN7nryGkGO31Yrszof8rCYABAeNAw5Q
-S32NYrIp5G6GNcH2l4dswn+9m+HZqOYmaGPWHMygXFwq+bi0hOkfBLTko/ZmvgowIgeA6y7P
-OqOiyIOlYyD4boBYinHeeFE5g9SD8Zfuq1KS8Gt5PNANxKFy31/nLlPjjmuLhf1mluulMtaY
-1MhDBWMLbbLiGjjd+jaF/PO+0wVaeOZmhCYO1hdnWHQoYTIH+C2oTVWC7cirbxsdfisTGuos
-rIri8ordAgMBAAGjggGkMIIBoDAfBgNVHSMEGDAWgBRpAKHHIVj44MUbILAK3adRvxPZ5DAd
-BgNVHQ4EFgQU2SssCWheJZFculeJMuOkytjjCkEwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB
-/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMCMD8GA1UdIAQ4MDYwNAYLKwYB
-BAGyMQECAk8wJTAjBggrBgEFBQcCARYXaHR0cHM6Ly9zZWN0aWdvLmNvbS9DUFMwQgYDVR0f
-BDswOTA3oDWgM4YxaHR0cDovL0dFQU5ULmNybC5zZWN0aWdvLmNvbS9HRUFOVFBlcnNvbmFs
-Q0E0LmNybDB4BggrBgEFBQcBAQRsMGowPQYIKwYBBQUHMAKGMWh0dHA6Ly9HRUFOVC5jcnQu
-c2VjdGlnby5jb20vR0VBTlRQZXJzb25hbENBNC5jcnQwKQYIKwYBBQUHMAGGHWh0dHA6Ly9H
-RUFOVC5vY3NwLnNlY3RpZ28uY29tMCIGA1UdEQQbMBmBF2NyaXN0aWFuLmxlQG1wc2QubXBn
-LmRlMA0GCSqGSIb3DQEBDAUAA4ICAQAm+pHsJz+lz7/XacTmlvz9m4dC4AAmaUaVohnA7dNP
-ehHs3iJ1CEpArVGJDxN7qXQUf9/vpTfMBHaphhmgjg4rwK+biO2qxkIYR9i2ln0+St89ryV5
-CiwiyBIITgrprUwpIf3NFC9oVzl07jkhXqB6lWRiVzv8vXVUQMQKPOHvn22cnQPBH9zbjNtX
-oBUC28E7MCqJAeqAtq6XK0JkQVOsqF54SDEmQX+6PIVaeUiQtM/rb8aY9gwk01Vjqyg8y+Sm
-uvnizdtdYL0XlE2XlRW/H6mq/wpVEHFmedrKbtgzm3Odyo8mb6DvVueLOj+nONeP3vrD7kJr
-4aKDJESRGlOLZP84/rdYcg0Ae8a/CjJT+6Rst4nIAr6Of5Mbwles3KFbj/oJN68RWpmOE3aB
-2nJAEmibtfHpugqRoDEe9iY/81vydwF2IpoywpHe5epJGyXa3aJxvseKyzLUwPYPrO1rAkym
-MrUIxsyYbnN2GbNb4SWhl8f74fuwsf7E0YSiRoOFV3a+F+woi18cIOZXaL+fGw9uOst570J2
-X0iTbexnHXbG4MjAneqBg0snsHaYy0/kvrM4n4qBO+a+ukfJ3OdvjD7B5PZmW0FLNwCeXIEJ
-gmiYsX1PuGgl1nu7Qw6EP4u2iYfFXjA7xkhy91LX5AcFuQib1eglspnDvD0Tlhuf4zCCBuYw
-ggTOoAMCAQICEDECcNQ1vpskmvhW0OHihUkwDQYJKoZIhvcNAQEMBQAwgYgxCzAJBgNVBAYT
-AlVTMRMwEQYDVQQIEwpOZXcgSmVyc2V5MRQwEgYDVQQHEwtKZXJzZXkgQ2l0eTEeMBwGA1UE
-ChMVVGhlIFVTRVJUUlVTVCBOZXR3b3JrMS4wLAYDVQQDEyVVU0VSVHJ1c3QgUlNBIENlcnRp
-ZmljYXRpb24gQXV0aG9yaXR5MB4XDTIwMDIxODAwMDAwMFoXDTMzMDUwMTIzNTk1OVowRjEL
-MAkGA1UEBhMCTkwxGTAXBgNVBAoTEEdFQU5UIFZlcmVuaWdpbmcxHDAaBgNVBAMTE0dFQU5U
-IFBlcnNvbmFsIENBIDQwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCzSuIiXidb
-6QRbFAQ1MiAUrrTSMUDGzVDAHqFEyq+eSmF/LZDeYpszai2kQsqWATz/cBA9gGjunvJ45G48
-ycC4D6gwZFvbBt5JotxlunBeB8K+crGar3v+RCQ4VfvToX07v+HTJ6EeEONR3IzJPTMyzgAw
-ENGsAWf9va9HePQFJiChCzXqhKpp0zen53S+8f9itEy06GS8aku7Mvyb4tMBBa9An3Y3ALIq
-Ieymg/iYs8m9WkSkMyekNtFRB1+1KlnNUpM05G8+sY9EucnQQRUIdHzYsvqjP3XlaSuB4Jj0
-ia66UGfi5Wx31mm5sKAz8Re9UGVWIqq6wKFKxkSfuO4iwYiIPJoiGEux3dqabwFLduAroDF1
-IxE40PqGIdPXzYuZ/wL6BEfFAb0xy8bfm5S9G7y/ts9mIlFpPtkLZ/nQ/iVOWdsu9ale/nK/
-uGF47xsxeW2LIvB4sH5U2+D4ad8vpNbcCrXIXXKtkBnNHgxumNNZ0R1Isq/Pz7TALCxxDzWd
-sM7AO32/Jn7R4ldtGRZmKpJyfACDn8HU1QPhOtiWsjifrMWnanJhQ6K7M/5qz8BmfPrca+MU
-rr1Y4NHZb9MrgPtWKQQyGDXy+G5F/iHGdZk7LS+F8NH+Ddolt2wZpz52JqGMTDPIH5Qok4LL
-O95wbxtn+79Tw+wQxmDTuIg+LwIDAQABo4IBizCCAYcwHwYDVR0jBBgwFoAUU3m/WqorSs9U
-gOHYm8Cd8rIDZsswHQYDVR0OBBYEFGkAocchWPjgxRsgsArdp1G/E9nkMA4GA1UdDwEB/wQE
-AwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcD
-BDA4BgNVHSAEMTAvMC0GBFUdIAAwJTAjBggrBgEFBQcCARYXaHR0cHM6Ly9zZWN0aWdvLmNv
-bS9DUFMwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2VydHJ1c3QuY29tL1VTRVJU
-cnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUFBwEBBGowaDA/Bggr
-BgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJTQUFkZFRydXN0
-Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0GCSqGSIb3
-DQEBDAUAA4ICAQAKBU57DY8fEzkA/W/sYsbD7e0XquMBzHjcP0eXXXRD4EAEAGCWSs+QRL9X
-Ixmx+52zx9wMa8YTejlR+NKejiyKPTF0q63zMxrO/z/hUwo8IDcRRLS0NSgvTW6AN2rCXJe5
-iLN5fIfYgIBB9cy1L6trPuZ/vjUJm87nQ7ExQzGqWN5F9U8MlAk0c5iLanG7GCMoNjHiF1n0
-baj6guUeG7n5qcwOQTyDS19+NEqfwjUPUGasN1ZH8h1sE6PrzvRpti+rKzWpiU+i2/k3l2b5
-fFDy+Wu9jv6R9BoBh47es/UMzwEZ2kSrIVVr4jSukk+FpmR5ZbtwiYNAV6sdb1srMGsILzXl
-rdasSE2nGHvZklk2zUdgn7b01MHq67g0mNozGmT6Dam41Kbhv25WMFs871XqwVIb4gGoT1yR
-f/VePMm1jwauqijhKJFvrNweGnebGPeipaLxIo2iEA4qdRztEg/qyzWGogXK/TFdmivg322f
-MPQWjQkMhRGMM8SCjlZN22L8x0ZOYoVA2rHJm5P25IjZe+HPyn7ikJiSJmqlqFmUeowXF3D1
-dFlCCs/5yC06RYRqI2REFu+28t2nswIvY6xCFAR0RtS8Mz2yXNld0js2MmiRUGrc7imWzdUP
-bPcv9sdUF7SsERGPIzYL8dIiHzit+YCoGCSXMg6peF37hHNp1TGCAzgwggM0AgEBMFowRjEL
-MAkGA1UEBhMCTkwxGTAXBgNVBAoTEEdFQU5UIFZlcmVuaWdpbmcxHDAaBgNVBAMTE0dFQU5U
-IFBlcnNvbmFsIENBIDQCEFBRTJS4tCRrq8CDtgqMZGMwDQYJYIZIAWUDBAIBBQCgggGvMBgG
-CSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTIzMDMwMzEwMjUwMVow
-LwYJKoZIhvcNAQkEMSIEIJlQPEtqrUj2TSupv7ndjVObGcD4Mi+wWznagmjyS2XoMGkGCSsG
-AQQBgjcQBDFcMFowRjELMAkGA1UEBhMCTkwxGTAXBgNVBAoTEEdFQU5UIFZlcmVuaWdpbmcx
-HDAaBgNVBAMTE0dFQU5UIFBlcnNvbmFsIENBIDQCEFBRTJS4tCRrq8CDtgqMZGMwawYLKoZI
-hvcNAQkQAgsxXKBaMEYxCzAJBgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBWZXJlbmlnaW5n
-MRwwGgYDVQQDExNHRUFOVCBQZXJzb25hbCBDQSA0AhBQUUyUuLQka6vAg7YKjGRjMGwGCSqG
-SIb3DQEJDzFfMF0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAOBggq
-hkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgwDQYJ
-KoZIhvcNAQEBBQAEggEAUbVA+UBiu4ShaVf55PKdl5hcJGAZyDz2PJcP13HDXqd1rhss3KTC
-3PYCN9E/o/Ywmx2JviKo5T/1100p+rEqnHIDERKJUh8BvU90YHeQnx4pADjO5esHp42O/65s
-Bqd/fw83YtRrSWZQE5SG5rH3MQFjOKKKkFMqzVLhtvqigOjmgVgY+OcFNxYnvDGUkbL7YsQc
-fZaxFzWAsgl+lR7vKuN7uQNm/t543Vw84FO6LNKbmHTvhStejIeNa9qLIXWYN1avjbem1Nw+
-d97nuwkgx1iaZtoSF/cTFz+/WV7zxfE0+cji5EtGAWs3TroAU/vseTDDqU4e0vGdBnpowI+f
-3AAAAAAAAA==
---------------ms090609040403030307090300--
