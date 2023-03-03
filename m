@@ -2,94 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CC00C678D4
-	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 08:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2AE4C7EE2F
+	for <git@archiver.kernel.org>; Fri,  3 Mar 2023 08:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230112AbjCCI3E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Mar 2023 03:29:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51048 "EHLO
+        id S230167AbjCCIzq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Mar 2023 03:55:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230140AbjCCI27 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Mar 2023 03:28:59 -0500
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 876B944BE
-        for <git@vger.kernel.org>; Fri,  3 Mar 2023 00:28:49 -0800 (PST)
-Received: by mail-qk1-x72b.google.com with SMTP id bl39so505530qkb.10
-        for <git@vger.kernel.org>; Fri, 03 Mar 2023 00:28:49 -0800 (PST)
+        with ESMTP id S229565AbjCCIzp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Mar 2023 03:55:45 -0500
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E16A71554C
+        for <git@vger.kernel.org>; Fri,  3 Mar 2023 00:55:43 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id bl39so524104qkb.10
+        for <git@vger.kernel.org>; Fri, 03 Mar 2023 00:55:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ue4aDTLafwiD0a3L+t7RbKzznvh+qbSQNnoAQcENnL8=;
-        b=A/c8CZKMIkWcMYHHbZDtsLh3d6Fq2gq7mMihhL+V5MFo3K7Wo48SoRlRVhp5Ohq1ua
-         0oygsPYq6X+jEBuZdvpNJgZ07PIkNnvRT/me/GHj+7NlHbcGS07wEONZAaElT+iMwx3G
-         FtNTzKCE/jmIvJgPl+BeC8DfPnOZLbD2BdgVzZEoIuTZumtCa00kXeFi/z71HapqA2a2
-         9fLkUfNoRgFHYgOwnavrwERyF8p9Ldt1vqg1WQRUX2Ka/Iduqto7sBXjfEVIwJrnJI/B
-         Z+0Db7j+1lZ/pHPTLKxDDdmJIiNBF1afzNQrVRH+maZEnf6MsDp2fMUO/anGL8cjiItd
-         IHRA==
+        bh=ff09F0t5+flsBPQiBs4nTtzDLCCJfUNdQvLtMwfo+vo=;
+        b=Sv+mge5o3gzET+cssuWvRfxD6Z+uGpPpvhC2QB38ZGvRNp4KC53X9Owb3DxfTFouFL
+         U6WIiHcSyYd83enB50XmiHKicgCRyeZx1qZWzIkSTNW0ipVNYgckWdRcS6lgForFboky
+         21zf39zomf0Ah1Cxx7mUg4iDyZ0ibgwgP82pfbeqI98NYNna4khaUKK965bYNOd2Ivui
+         epAtjvrwxluf4RqWoOazq4SwI9ut9WbLhW2+Pc9AqyLj08zjugGlUagZFmH+UceOOZiB
+         Ogo4l1/XPBFBBxJt/BW7SdiSuS99kLbyQS8U9RWR2/lQcBqb3EcFj1YXmn+9YD/GdOwF
+         qWxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ue4aDTLafwiD0a3L+t7RbKzznvh+qbSQNnoAQcENnL8=;
-        b=kD6dvHLnvYqee2KMsiBYOqE0vtnfGeMOfzZ+z40bZD2S+wWkn+iJb/aHYkHoRvf1G1
-         vM8CYAft1cVQbJqqD/+jmHoqlmltaU+w34WYbp6Ynr8xoiR3ru4QJ2eaFR4YZ2OrjeaZ
-         lFYtxln2u/sHsyWbyvZCeA5hQDFSK8TZYWjNeQfbb2uWxdC7iKfr6UNHzDmxiHuA4uZh
-         J5DJ66I+0rpztqBNsv6DLQv3/nbO1uLLwd5rs18oZaMozQGWO1uzNNBNgXBi0hRLadPK
-         RhT8800F60dYw6p//KsW1xP6+m6iAUY4iNipiM9a/sepMiPxAn/te63F2iI2qKVqE/P5
-         Bcgg==
-X-Gm-Message-State: AO0yUKU9O3S62LsryQaxwpgJ2AyrP76+Fu5EpOQD//gS4oUDuI1ROviV
-        ytYNWdZdB2pplK3cTEMlfRN/cSeK+BlyhaZuE0xO5jT7Vhk=
-X-Google-Smtp-Source: AK7set+yxsicxxtC70Xe4P9xHt5DB7UEWB6D6gbvlzqsE3tWIZ4cheyDtU9j7dE/p/dgtJnafo/eeo3OuY1hH+zLM7I=
-X-Received: by 2002:a37:9a89:0:b0:721:41a:f4f8 with SMTP id
- c131-20020a379a89000000b00721041af4f8mr209238qke.2.1677832128606; Fri, 03 Mar
- 2023 00:28:48 -0800 (PST)
+        bh=ff09F0t5+flsBPQiBs4nTtzDLCCJfUNdQvLtMwfo+vo=;
+        b=0ucsmMxA9RXXLhm7xwO6TeFbmx/YoIfHYffpaG4/AT+xI/E4Esd9MFwosZab2jDjF/
+         E5hsvbRttU1wkSDUMSGfVP57RtmKLFZGEQrBpZ9GG2mARzd/Cj0e+ZFDhRSmRJjciYkf
+         6ifGRAETzqAJnkptwkwbPRse3/Q3pGj3SawinXkzA2rXvCy7Z9pu33R+OKw7dRmsIEc4
+         Eyhv/MOjrLfSJV84LA460gM3ZlGaGCpWHpniSfbrHc0J314zuCQqCE5E84tvpEBbe7h4
+         jld4dL5VI5wi9glk0k3/bgsLsXDmW/11u6dEIARFYx8uisSM8x2cgEnMhEqjFqex/atH
+         l7yg==
+X-Gm-Message-State: AO0yUKVXz2DmjOPPAqI6+86/EHhQYHYGKEARnPRp6IetfBBK3mH6Q3A2
+        5FGB6KVWTUzSfhhoONKRAeaiUOAMVTkUgMmj5gvaNErj
+X-Google-Smtp-Source: AK7set8h0fiF170O1If0r7RnEnsjVr465J2Ub3fvPKplI4rM+QioqCDw3Y3Uon4dBX2NnofB9SwgxLOVFI3+Ad/e8RA=
+X-Received: by 2002:a05:620a:2154:b0:73b:aa08:79ea with SMTP id
+ m20-20020a05620a215400b0073baa0879eamr152258qkm.5.1677833742602; Fri, 03 Mar
+ 2023 00:55:42 -0800 (PST)
 MIME-Version: 1.0
 References: <SY6P282MB3782FD975E6F39951C5A43DA92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
  <SY6P282MB378273980F5BC9084EEF74EF92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
-In-Reply-To: <SY6P282MB378273980F5BC9084EEF74EF92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
+ <ZAEgRDelTlNZRJ5J@tapette.crustytoothpaste.net> <xmqqfsamiul2.fsf@gitster.g> <003201d94d64$1e732030$5b596090$@nexbridge.com>
+In-Reply-To: <003201d94d64$1e732030$5b596090$@nexbridge.com>
 From:   demerphq <demerphq@gmail.com>
-Date:   Fri, 3 Mar 2023 09:28:37 +0100
-Message-ID: <CANgJU+XT3h4b40Nr8uq_j4NyY0ka43vPghN4fJx8B=qcCHoUaA@mail.gmail.com>
+Date:   Fri, 3 Mar 2023 09:55:31 +0100
+Message-ID: <CANgJU+Vhh091E+n8B6WaMKh6K2kAG29a2M8Oqm-Zvrr8kRrTRw@mail.gmail.com>
 Subject: Re: Let us not call it git blame
-To:     Dinesh Dharmawardena <dinesh_dh@outlook.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+To:     rsbecker@nexbridge.com
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Dinesh Dharmawardena <dinesh_dh@outlook.com>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2 Mar 2023 at 23:21, Dinesh Dharmawardena <dinesh_dh@outlook.com> w=
-rote:
->
-> Hi
->
-> I am writing to you to request that the term blame in git blame be replac=
-ed with something that does not sound so blameful. I=E2=80=99m an SRE and w=
-e actively try promote a blameless culture as such industry tooling should =
-also follow suit imo. Progressively phasing this term out with a better ali=
-as would be great.
+On Fri, 3 Mar 2023 at 02:24, <rsbecker@nexbridge.com> wrote:
+> the core.user and core.email are associated with a nameless single sign o=
+n (SSO), or tokenized user, in order to be compliant from a regulatory stan=
+dpoint. This includes GDPR in Europe and the Privacy Act in Canada. In thes=
+e cases, there is no identifying information in the commit itself, but exte=
+rnally in the organization's HR and IT departments where identifying inform=
+ation is tightly controlled.
 
-Just set up an alias that maps `git credit` to `git blame`, and you are don=
-e.
+I wish git would make this a core feature.  I think it is one of the
+few oversights in the core design of git that there isn't a built
+indirection on author and committer data.  It should be possible to
+"forget" an author or committer without having to rewrite the repo.
+IMO, one day in the future this design deficiency will cause some very
+expensive remedial work in the git space, and IMO it is only a
+question of when, but sods law says it will be at some very
+inconvenient time.
 
-$ git config --global alias.credit blame
-
-I dont think there is or ever will be much traction to rename this
-command, it is short and self descriptive.
-
-Blameless culture is great, but it is about "not finger pointing", not
-about what tools you use. Your company's management and internal
-culture keepers are more important for setting this tone than the
-tools you use.  If they don't actually practice not finger pointing
-then renaming the tool won't dont anything, and if they do actually
-practice then the name of the tool won't matter either.
+It really should be technically simple to remedy as well, replacing
+author and committer data with a hash or ID which is used to indirect
+into a file of author information that is *not* version controlled
+would essentially solve it.  If someone wanted to change their name
+they would update the file, if they wanted to be forgotten they could
+simply delete that line from the file and push it.  While not a 100%
+complete solution it would go a LONG way to address most people's
+privacy concerns and other practical identity management concerns (eg,
+"my email changed"). The .mailmap support is just a bandaid, it
+doesn't actually address the core problem and in fact in some ways it
+makes it worse. If git provided support for hooking the id lookups
+then queries to resolve the ID or names could be made to a third party
+software or service, like an open source service for the public, or an
+internal service owned by HR in the corporate context. It isn't rocket
+science, it just requires recognition that names are not static
+identifiers.
 
 cheers,
 Yves
-
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
