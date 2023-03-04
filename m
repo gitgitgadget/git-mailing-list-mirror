@@ -2,125 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 268E5C678DB
-	for <git@archiver.kernel.org>; Sat,  4 Mar 2023 22:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B03F1C678DB
+	for <git@archiver.kernel.org>; Sat,  4 Mar 2023 23:24:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbjCDWVQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Mar 2023 17:21:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57570 "EHLO
+        id S229621AbjCDXYs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Mar 2023 18:24:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbjCDWVP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Mar 2023 17:21:15 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42A7812F1E
-        for <git@vger.kernel.org>; Sat,  4 Mar 2023 14:21:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1677968470; i=johannes.schindelin@gmx.de;
-        bh=UeMCSpZ5oQCDw/pW/okqD3p4Y9AooyRb3HZtUTmSJW4=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=kLPTv2ai6QTLq0BrMpQ4vko7obvsZkPUnFYL8NbPxoZSddcwzBDg+hNB/BG+v6qtn
-         NnFMWIStV7sGRsJxXugERaqNkAqF3BgHz6mVr7CXDLSu237dVyJgF0FwXkyQiFfdGv
-         fEyfDV3Ed+/exo+V5YIWGICT7/2oj8gOIXQT6ZfXioKarLWu5Y8bmd5+jDPnzK+Az8
-         yUuTJywGQQNTHlHC5r8LYK0yxBhKEiZRdGmuDIz3Obj+6B1KD366a/3M0heyQhyNY+
-         RcwTgi6YE9YBicC8szsZPEUKFm5bD2EKjJqUuNZ4U5EjiFj41Mid/qULLY2Tg3Yvwm
-         fvdyVluA3CRfQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az193-883.nrc2ynj0rd0exph0lb1os4zsqh.jx.internal.cloudapp.net
- ([104.210.132.80]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1Mlw7V-1qFemE3bPP-00iyOM; Sat, 04 Mar 2023 23:21:10 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.40.0-rc1
-Date:   Sat,  4 Mar 2023 22:21:07 +0000
-Message-Id: <20230304222107.3524-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.39.2
-Content-Type: text/plain; charset=UTF-8
+        with ESMTP id S229484AbjCDXYr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Mar 2023 18:24:47 -0500
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F7B9D33C
+        for <git@vger.kernel.org>; Sat,  4 Mar 2023 15:24:46 -0800 (PST)
+Received: by mail-oo1-xc32.google.com with SMTP id e12-20020a4ae0cc000000b00525034ca5e9so1030049oot.0
+        for <git@vger.kernel.org>; Sat, 04 Mar 2023 15:24:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1677972285;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RUFEP+1A0Hsnl2Jbf9hnBQ0QIc9c3KVDe8Z/gDZuD0g=;
+        b=gn1NtwFVd/rsthOh4o12B4Lq86ahw8SqI5yjverJG0oZt4zMkj4M6uh5xdPawGDp/6
+         SQQWhvtkGuQWDSl25U7D4IubBLCUHoZ8ayAOHafUGwjrV7PzxU8mm0czswWbb3HxdwCH
+         8mvoI1pg2Huxi8f2noLQKPCoF3gHEv3muVT3kRPZtMLe4uAUIxV3JTnPKoKyItMEg+wn
+         ZUEyP+vFC2m0ZmYwRZLbsI+N6HEN1vD5mL6nY/buCc1/Yr9Y3pdWNxxxC7JZcEUQFVfz
+         Pw0W15pe5fE454FKa0Wspq5GQNXAED1BbmZg41z2JG9X/KhfCD8t03Mc6ooMRi0KX7DK
+         FZ2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1677972285;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RUFEP+1A0Hsnl2Jbf9hnBQ0QIc9c3KVDe8Z/gDZuD0g=;
+        b=H4g5WgC2vGb5JzskQYZcjdatR3h/sa9WFCuOb8wGmJCem1rLoV8ksP7DboMcYhN2ex
+         ECd5Yj43Qvs59PV+DwXJp2hkd2VCrzqjfQ0qEPQSCa33HmOZlE977wd5SlR6qO5VTQwI
+         c5geBRcIIoDSzWNoPPvxDSMuB4tzOdv4/FykMXw8CuqGu2JkcNLU1M9/K7caPjVkSDU3
+         s5sb7LmmGui8fMv3QhsSVWz7UiPg3EFk3jlj1W+9DY39mcoG9zOSJhL2mYPpqzPYs66u
+         7gc32zvp8p5p9eWgmPec/mjiSJOmym6FXI5B8Q9i/733Zg1rl2LGt97H4kO8RTNhOM2n
+         xbIw==
+X-Gm-Message-State: AO0yUKWKKhC/wSK7QUtJhAdR+kVnlnty/7gOAiTEXsvSMI0gbPanWduQ
+        5qQowC8wBVPQ6lbHIhnZ9We+yzXLDQSu0S/G0og=
+X-Google-Smtp-Source: AK7set++kYeER3XLR4NGR2MsN90aXtDG2t0s4xS134iaZQQTliw3DNhJQk4zNxaY5mplIR7z3PfffTq5np846cQJ8Jo=
+X-Received: by 2002:a4a:d5d2:0:b0:525:54b6:dac1 with SMTP id
+ a18-20020a4ad5d2000000b0052554b6dac1mr2515093oot.1.1677972285386; Sat, 04 Mar
+ 2023 15:24:45 -0800 (PST)
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:tYVnMb2HoopN8IYpFGQDQJVYugLAHafBq3qKXd65mN56mY26K/h
- V+75nsZS0qtKuiTaeAvW5DFucZSLUXSTwyc8rNsGU9Z0XMbYikMVIFoqpSuUVv+zZn262EZ
- xRRTNBL72ZK+OyM8McCk7g2eAdUwSHJVjrnfLQwV7miMKQeBKs87zw9HCwNE0hwSYopzi9T
- FG8bbFUVl70yWSwxKfxfA==
-UI-OutboundReport: notjunk:1;M01:P0:idlK12GzQuw=;pS6H63Sjt1KOHQcwD9jF5kwcAD2
- ReDwP2ukdvUnmdY1bj7pBf4Ul0wALh9InVRk61SZv5U7ic9boU1MEl5/Ejg8YLjJOPTOWF8Nk
- Pfco0ZQOt+a1aVtGLAHiOIiTwta1XGsL3xItWNikV7JUfCb/myNqX6kwz3vUxqK796FFZ18Av
- FtyYFndf8wPHDknyps8doY9xVG6POREpt6Qv6D6fvla+p3+696FQ2HJbhUujQHTWgiF7dT1Av
- DvhSl1m9wCIiP5/evvJ6JxZQT6Ngmsr7wu9e1mG3H48b8HRqM9rU1jztWM9LqwK/+wFH0fvS/
- UW7n89ojKn+AUOnCJaGl423h7KNRMDWAWTI0Bqb6TbL8T7DHz7nYDcjaTzW4+hmna/YIf7xRw
- x/Hlcaqt/xa88uKw+twSveTOz7B5IPuDksCpZWGoOOqMFQoDd6psIJ/d3SnrT3ZZPkOKLHOjJ
- 9kNLZ5PLS7Zq55jXJBDqDDg2kXtSiWAwu1V3Bn8bbxIk4GgO5tNGmUkUGDzCBVqw5QMadbYKh
- NyeHWTldXoyrYJ27i2g1UOPSD4AB77oqXSjellaoWvanPP7FWyxRhSkBP+KhWV4j7PliFowyA
- AytQeJnpiLOQRy8ruwze6ICh2r0WTaMpXQE6odDMip3tSFVft2MFraxY6y2AAFLWth1ilxO+C
- cuiHDC9Zr/C/t9PY9Qyr1NsIoiNCNv2inFtfnTM/l4ELcuz4bAUNxtW0vzWqclH8+SgphzfTP
- UImcOT9YOQzSbL91SIxT9hczAco3Xd2BHMnVMHTEURm9e0fM3C4mDXXR8/b91PfgdJWxuMQ3K
- 2mABXnKplPqudv3jQad8URYxMkAhRZdvW2Zm1L35b475I0h57TApvlZsU494xpANec+PNK6l7
- hr5k6UWkVpW9Pk2M5nCGiG534QUSNsYM76vPsxCI1iqw56+zBoFf1u4CTBt8UA6iAP+v32tOT
- Nkl8adj0rHOwxnrjn33+xofPOg0=
+References: <20230223053410.644503-1-alexhenrie24@gmail.com>
+ <20230225180325.796624-1-alexhenrie24@gmail.com> <20230225180325.796624-4-alexhenrie24@gmail.com>
+ <1021e6d0-0cd0-d92c-4cb3-45dbf2f6626e@dunelm.org.uk>
+In-Reply-To: <1021e6d0-0cd0-d92c-4cb3-45dbf2f6626e@dunelm.org.uk>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Sat, 4 Mar 2023 16:24:03 -0700
+Message-ID: <CAMMLpeRfD+81fsEtvKFvVepPpwYm0_-AD=QHMwhoc+LtiXpavw@mail.gmail.com>
+Subject: Re: [PATCH v5 3/3] rebase: add a config option for --rebase-merges
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, tao@klerks.biz, gitster@pobox.com,
+        newren@gmail.com, phillip.wood123@gmail.com,
+        Johannes.Schindelin@gmx.de, sorganov@gmail.com,
+        Glen Choo <chooglen@google.com>,
+        Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
+On Thu, Mar 2, 2023 at 2:37=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
 
-I hereby announce that Git for Windows 2.40.0-rc1 is available from:
+> On 25/02/2023 18:03, Alex Henrie wrote:
 
-    https://github.com/git-for-windows/git/releases/tag/v2.40.0-rc1.windows.1
+> > +rebase.merges::
+> > +     Whether and how to set the `--rebase-merges` option by default. C=
+an
+> > +     be `rebase-cousins`, `no-rebase-cousins`, or a boolean. Setting t=
+o
+> > +     true is equivalent to `--rebase-merges` without an argument, sett=
+ing to
+> > +     `rebase-cousins` or `no-rebase-cousins` is equivalent to
+> > +     `--rebase-merges` with that value as its argument, and setting to=
+ false
+> > +     is equivalent to `--no-rebase-merges`. Passing `--rebase-merges` =
+on the
+> > +     command line without an argument overrides a `rebase.merges=3Dfal=
+se`
+> > +     configuration but does not override other values of `rebase.merge=
+`.
+>
+> I'm still not clear why the commandline doesn't override the config in
+> all cases as is our usual practice. After all if the user has set
+> rebase.merges then they don't need to pass --rebase-merges unless they
+> want to override the config.
 
-Changes since Git for Windows v2.39.2 (February 14th 2023)
+Given the current push to turn rebase-merges on by default, it seems
+likely that rebase-cousins will also be turned on by default at some
+point after that. There will be a warning about the default changing,
+and we'll want to let users suppress that warning by setting
+rebase.rebaseMerges=3Drebase-cousins. It would then be very confusing if
+a --rebase-merges from some old alias continued to mean
+--rebase-merges=3Dno-rebase-cousins when the user expects it to start
+behaving as though the default has already changed.
 
-As announced previously, Git for Windows will drop support for Windows
-7 and for Windows 8 in one of the next versions, following Cygwin's and
-MSYS2's lead (Git for Windows relies on MSYS2 for components such as
-Bash and Perl).
+I will rephrase the documentation in v6 to make it more clear that the
+absence of a specific value on the command line does not clobber a
+specific value set in the configuration, as Glen suggested.
 
-Also following the footsteps of the MSYS2 and Cygwin projects on which
-Git for Windows depends, the 32-bit variant of Git for Windows is
-nearing its end of support.
+> > +test_expect_success '--rebase-merges=3Dno-rebase-cousins overrides reb=
+ase.merges=3Drebase-cousins' '
+> > +     test_config rebase.merges rebase-cousins &&
+> > +     git checkout -b override-config-rebase-cousins main &&
+> > +     git rebase --rebase-merges=3Dno-rebase-cousins HEAD^ &&
+> > +     test_cmp_graph HEAD^.. <<-\EOF
+> > +     *   Merge the topic branch '\''onebranch'\''
+> > +     |\
+> > +     | * D
+> > +     | * G
+> > +     o | H
+> > +     |/
+> > +     o A
+> > +     EOF
+> > +'
+>
+> I'm not sure this test adds much value, it is hard to see what kind of
+> regression would allow the others to pass but not this one.
 
-New Features
+I was worried that I or someone else would forget to explicitly set
+rebase_cousins to 0 when no-rebase-cousins is given on the command
+line, assuming that it is already 0 because that is the default. The
+test makes me feel better, but I am happy to remove it if you still
+think it's overkill.
 
-  * Comes with Git v2.40.0-rc1.
-  * In the olden Git days, there were "dashed" Git commands (e.g.
-    git-commit instead of git commit). These haven't been supported for
-    interactive use in a really, really long time. But they still
-    worked in Git aliases and hooks ("scripts"). Since Git v1.5.4
-    (released on February 2nd, 2008), it was discouraged/deprecated to
-    use dashed Git commands even in scripts. As of this version, Git
-    for Windows no longer supports these dashed commands.
-  * Comes with tig v2.5.8.
-  * Comes with Bash v5.2 patchlevel 15.
-  * Comes with OpenSSL v1.1.1t.
-  * Comes with GNU TLS v3.8.0.
-  * Comes with cURL v7.88.1.
-  * Comes with libfido2 v1.13.0.
-  * Comes with Git Credential Manager v2.0.935.
+> > +test_expect_success '--rebase-merges overrides rebase.merges=3Dfalse' =
+'
+> > +     test_config rebase.merges false &&
+> > +     git checkout -b override-config-merges-false E &&
+> > +     before=3D"$(git rev-parse --verify HEAD)" &&
+> > +     test_tick &&
+> > +     git rebase --rebase-merges C &&
+> > +     test_cmp_rev HEAD $before
+>
+> This test passes if the rebase does nothing, maybe pass --force and
+> check the graph?
 
-Bug Fixes
+The rebase is supposed to do nothing here. Checking that the commit
+hash is the same is just a quick way to check that the entire graph is
+the same. What more would be checked by checking the graph instead of
+the hash?
 
-  * Some commands mishandled absolute paths near the drive root (e.g.
-    scalar unregister C:/foo), which has been fixed.
-  * When trying to call Cygwin (or for that matter, MSYS2) programs
-    from Git Bash, users would frequently be greeted with cryptic error
-    messages about a "cygheap" or even just an even more puzzling exit
-    code 127. Many of these calls now succeed, allowing basic
-    interactions. While it is still not possible for, say, Cygwin's
-    vim.exe to interact with the Git Bash's terminal window, it is now
-    possible for Cygwin's zstd.exe in conjuction with Git for Windows'
-    tar.exe to handle .tar.zst archives.
+Thanks for the feedback,
 
-Git-2.40.0-rc1-64-bit.exe | 69dfa0bfbec9e5836561968421adb60133ce3aaba6acc01ddb45e2e042a59d5f
-Git-2.40.0-rc1-32-bit.exe | 6cd10560bdf090d920e4a15c23070b469a5a9e35b277a0a6e6fd69e8e7be9efe
-PortableGit-2.40.0-rc1-64-bit.7z.exe | 37233d2e767c43b0d3b65bb3fb2151dd600fdf5d61db83db048bd5f6d1d6aade
-PortableGit-2.40.0-rc1-32-bit.7z.exe | fb40cfff8e435843b0fff724c03a89cac973cf5f1844b322a75718ee23d01a65
-MinGit-2.40.0-rc1-64-bit.zip | 96977c7cca2278878f155c7f50ba1b3e46102442606beab8a15d5aa813dbe762
-MinGit-2.40.0-rc1-32-bit.zip | 3ab0bee7839a1e2228c09b31229ea1da74971e76207973c1ee6151037d723207
-MinGit-2.40.0-rc1-busybox-64-bit.zip | 0f2c7622658ceda02012e0c038a762fd46135a60cef4f823b7b0ae2fc66cb58c
-MinGit-2.40.0-rc1-busybox-32-bit.zip | f98139fff494e405a125702dd6c4a3127246ecafce4db7dc85325dc0a668d8f8
-Git-2.40.0-rc1-64-bit.tar.bz2 | d22ab790bf89228e25fbd661076cd40a1ac59109f9ab7d2eb9d25eaf883a3ab5
-Git-2.40.0-rc1-32-bit.tar.bz2 | 6117a414bc1e24f3b0b995c695cbb795eb431ed40648474eef77dc83ba374eeb
-
-Ciao,
-Johannes
+-Alex
