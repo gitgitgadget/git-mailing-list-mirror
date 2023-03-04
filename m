@@ -2,287 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83589C678DB
-	for <git@archiver.kernel.org>; Sat,  4 Mar 2023 13:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E57BC678DB
+	for <git@archiver.kernel.org>; Sat,  4 Mar 2023 15:11:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229453AbjCDN6t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Mar 2023 08:58:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51484 "EHLO
+        id S229560AbjCDPLW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Mar 2023 10:11:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbjCDN6s (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Mar 2023 08:58:48 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12DEA13DD9
-        for <git@vger.kernel.org>; Sat,  4 Mar 2023 05:58:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1677938321; i=l.s.r@web.de;
-        bh=poa10+5gN72zBoxYL67R5tmBaGjAbzrzdvD5J3ru8TI=;
-        h=X-UI-Sender-Class:Date:From:Subject:To:References:In-Reply-To;
-        b=sHg39YshyNmw8k9U2XRocB5UbTfkQ5p8tkzvvERdPLHrIuQjwPH5WztZmAvvLKcuq
-         9C5H/Gf47aFrJjnKnpFUok8CGP5FzxK2aGl2QUW3geYYI7MvAG6aCRYEhE8fZBHP+U
-         LMtWXjwS/nP3Et0KNW54ZCg9/miSEVMZ50K2VYYD4hMt+VcFQoVkWTiZXlYFB5kCxF
-         TBeBdd4xdWmw6pV8SQcZAEZ/9/oW1JDm760+YGLLOO1/8bEOa14ktsIe9yrclsVjwn
-         ctmjM7avveZzQ/hV88pUjA/G/69AG9ps+cNgAcYkxpU1AxjtLO9nDvnJzp0LENiHac
-         9cKE3Q6HYVHTA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.21.51]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MjgXH-1qHzVi0Lkp-00lFPQ; Sat, 04
- Mar 2023 14:58:41 +0100
-Message-ID: <70f10864-2cc7-cb9e-f868-2ac0011cad58@web.de>
-Date:   Sat, 4 Mar 2023 14:58:40 +0100
+        with ESMTP id S229509AbjCDPLW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Mar 2023 10:11:22 -0500
+Received: from tmailer.gwdg.de (tmailer.gwdg.de [134.76.10.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90318113C1
+        for <git@vger.kernel.org>; Sat,  4 Mar 2023 07:11:18 -0800 (PST)
+Received: from excmbx-23.um.gwdg.de ([134.76.9.233] helo=email.gwdg.de)
+        by mailer.gwdg.de with esmtp (GWDG Mailer)
+        (envelope-from <minh-cristian.le@mpsd.mpg.de>)
+        id 1pYTXY-000TU2-Pf; Sat, 04 Mar 2023 16:11:16 +0100
+Received: from [10.1.1.11] (10.250.9.199) by EXCMBX-23.um.gwdg.de
+ (134.76.9.233) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P521) id 15.1.2507.21; Sat, 4
+ Mar 2023 16:11:16 +0100
+Message-ID: <566c2d09-5e18-49c9-fc7c-7b92d1d7c198@mpsd.mpg.de>
+Date:   Sat, 4 Mar 2023 16:11:15 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.8.0
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
 Subject: Re: Bug in git archive + .gitattributes + relative path
-To:     Cristian Le <cristian.le@mpsd.mpg.de>, git@vger.kernel.org
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, <git@vger.kernel.org>
 References: <42f13cda-9de6-bfc6-7e81-64c94f5640db@mpsd.mpg.de>
  <c7b21faa-68dd-8bd9-4670-2cf609741094@web.de>
  <8d04019d-511f-0f99-42cc-d0b25720cd71@mpsd.mpg.de>
+ <70f10864-2cc7-cb9e-f868-2ac0011cad58@web.de>
 Content-Language: en-US
-In-Reply-To: <8d04019d-511f-0f99-42cc-d0b25720cd71@mpsd.mpg.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:6Argg0SWGV1tRvVKVmBQvIOlRZUDwMMXBIkCr+JlCG07CWxK1xp
- 5iv9+H4wu0tEVCIIj/3lG05AHbZLz5uiM6b8l1ZCzYkBGC2kq+MeoHu0lZOyWDjfTjEu+wn
- hLLV7GMrfDQR6ngrVyLA0lfSKh71WVFO2t7S+0NX60BYF+EvCch+rzgwGi8wP37mjniCeAz
- JZ32NfNJCIG2hAqLFi9uA==
-UI-OutboundReport: notjunk:1;M01:P0:pc7OXPuEWGQ=;xqHcw4gkgkkg1Jj3gnyQSj2Dg3f
- KX6vJIHKTjVVV/MRVIi5rGNJMpr1sJtsjiNf89xf12slT0fejPXO6pXoUGO8idzzjAcnYbs9q
- Pk68TpYViLCvR5InjIBSt4jm2+N12XngI696ceyHwWBfDszqrMSX7iDYDQKC+/Dt3eZFpILqd
- dF58swyZo2EbMDS4HSExSElCt36BG1v4mJOF0SOHsc7kx2r9azGdrc1ri8WWHy9HexIgKbH5B
- 9IlyrnXRWPuudoBQ7ZbFKaw3y3L9o50sFiQ7DZx7o0WsqeYdem71aOThjZp66o8FCqG8FXTaL
- 3O3qjpGAW4lwFDAwFEzDT8YFI5fMvKGuYJjutmfAF+MEhsJwUKTrSKBsTpoW2/D934YQe/IYR
- RJtgZJG+D3GHtvI6fULOLk+hkrbChssCtAAghEUXeqJhPyqvueqOM2DpQXbMprXAKruHbgiLl
- 3PYkz47GAy3bqxFFgwJUbY2gCYkVtjWsqFJkzIg6S1wLxoLrfmJENFaynihEb4LZxL0/eirgx
- zYQC5SYgx1bOJgYijnd3KFq0WBPPimk7HQ7B/nY+ousIqhIoZrRTgaPDWXtFqDsXyCWXXnXxD
- U8wLGgWaJ6ftsQmo6o4lrXeckdH1C5u35xmpqF3TYhtimr/mUeI7kYFsAseh9g2/AjDrqqT/n
- JL2v2RaJmiuamVYvezcZAfKRq6OUByp0az2b1n0QPeTguZNF6oj0eDTR7D3bqiK0gpizYzuWx
- BnG+paHyqnYHMCjOuGpNPgkibbc4lHk25E+ArCz0IhLX47DuhdHowcm+X92uuUS3mS3NoSzoq
- s3G8/cQLyEmTmlRPTF6d/1/X5uu6EA9r0mJBBLKYdO9+QQ6jZOEd2/ktPF03LW196jtfGb12J
- EKKDCtZOp+QgJNOZQNNkjfA0Rg+wdrXJVxHHqGruAlPQZyC5lHoVm2IrTh72gfQmu6ZmQxsS3
- EfEWJw==
+From:   Cristian Le <cristian.le@mpsd.mpg.de>
+In-Reply-To: <70f10864-2cc7-cb9e-f868-2ac0011cad58@web.de>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature";
+        micalg=sha-256; boundary="------------ms050108040602040503050402"
+X-Originating-IP: [10.250.9.199]
+X-ClientProxiedBy: EXCMBX-13.um.gwdg.de (134.76.9.222) To EXCMBX-23.um.gwdg.de
+ (134.76.9.233)
+X-Virus-Scanned: (clean) by clamav
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.03.23 um 16:38 schrieb Cristian Le:
->> In your issue #444 you write that "git archive HEAD" works, but
->> "git archive HEAD:./" doesn't. Why do you need to use the latter?
->
-> Specifically we want to allow for `HEAD:./sub_dir` where `./sub_dir`
-> contains `.gitattributes` and `.git_archive.txt`.
->
-> Alternatively, it would be helpful if we can pass `--transform`
-> commands of `tar` directly so that we can change the paths.
->
-> Overall what we are doing in tito is that the source would be in
-> `./src` and outside is metadata like `./my_package.spec`. We are
-> using `git archive HEAD:./src --prefix=3Dmy_package-1.0.0` to pass the
-> appropriate form that the rpm spec file can locate. In a tar command
-> we can use `--transform=3Ds|^src/|my_package-1.0.0/|` to achieve the
-> equivalent.
+--------------ms050108040602040503050402
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-What is Tito?  https://github.com/rpm-software-management/tito says:
-"Tito is a tool for managing RPM based projects using git for their
-source code repository."  It supports Git repositories containing
-multiple projects.  I suppose that means e.g. for Git's own repo that
-Tito would allow creating a separate RPM file for e.g. git-gui.
-
-Side note: Tito features include: "Create reliable tar.gz files with
-consistent checksums from any tag."  That's achieved by compressing
-using "gzip -n -c".  Avoiding the native tgz support of git archive --
-probably only because the code predates it -- shields Tito from the
-change to use our internal gzip implementation discussed recently in
-https://lore.kernel.org/git/a812a664-67ea-c0ba-599f-cb79e2d96694@gmail.com=
-/
-
-Note, however, that the tar output of git archive is not guaranteed to
-be stable between Git versions, either.  Recently adding such a stable
-format was proposed in
-https://lore.kernel.org/git/20230205221728.4179674-1-sandals@crustytoothpa=
-ste.net/
-
-The code for calling git archive with a tree was present in Tito's
-initial commit, which says that it was taken from Spacewalk:
-https://github.com/rpm-software-management/tito/commit/e87345d7b7.
-There it was introduced along with a script that changes the mtime
-of archive entries from the current time to the commit timestamp by
-https://github.com/spacewalkproject/spacewalk/commit/34267e39d472.
-
-I don't fully understand the explanation in its commit message
-("make it possible to call make srpm even if the directory of the
-package has changed"); perhaps it requires more domain knowledge.
-But I can understand the need for archiving sub-directories in the
-context of supporting multi-project repositories.
+> I suppose that means e.g. for Git's own repo that
+> Tito would allow creating a separate RPM file for e.g. git-gui.
+Indeed, that pretty much sums the main idea of why they need sub 
+directories there. Ideally we don't want different special cases, and 
+instead use as much native behaviour as possible. The main issue here is 
+just making it work with `export-subst`, and if it can be achieved with 
+both `strip-components` and `prefix`, that might work, even though 
+`--transform` would be more flexible.
 
 > However we cannot use the `tar` directly because that would affect
 > the timestamps and permissions of the file that are set by `git
 > archive`.
+I should have explained more thoroughly, I have tried to work around by 
+doing a `git archive` and then extracting and re-compressing after 
+fixing the paths, but this does not preserve the owner and timestamp of 
+the original `git archive`, nor can I use the current implementation of 
+their tar fixer to correct these since the headers are different. I do 
+not have enough expertise to know what headers need to be set, how to 
+set the timestamps and so on. I don't know if the `gzip -n -c` could do 
+a better job at that, but we would still not be able to use it as is 
+because we would want the correctly generate `export-subst` files, for 
+example for a project built with `setuptools_scm` that injects the 
+version of the python package from the last tag:
 
-GNU tar has the options --mode and --mtime to chose permissions and
-modifications of files added to an archive.
+https://github.com/pypa/setuptools_scm#git-archives
 
-git archive is going to get an --mtime option as well in the next
-release, by the way.
+> There it was introduced along with a script that changes the mtime
+> of archive entries from the current time to the commit timestamp by
+> https://github.com/spacewalkproject/spacewalk/commit/34267e39d472.
+Thanks for pointing me to this. From your understanding, if we only use 
+the git commit directly, we would in principle not need the whole tar 
+fixer 
+(https://github.com/rpm-software-management/tito/blob/91ef962220ec5154722760dbbd982bed032ee484/src/tito/tar.py#L28-L60 
+and 
+https://github.com/rpm-software-management/tito/blob/91ef962220ec5154722760dbbd982bed032ee484/src/tito/common.py#L871-L890)? 
+If there is no crucial information in the header that is different 
+between the `git archive` and the `tar`/`gzip` with appropriate `mtime`, 
+`mode` and maybe others, maybe there is some hope in fixing this locally.
 
-> So allowing for something like `git archive HEAD
-> --transform=3Ds|^src/|my_package-1.0.0/|`, where the transform is done
-> after `.gitattributes` is performed would solve this issue.
+I'll be looking forward to `--strip-components`, but just to confirm my 
+reading of the email, the intent is to have it working with 
+`export-subst` right?
 
-GNU tar has this --transform option, bsdtar similarly has -s.  Both
-also have --strip-components (GNU tar only for extraction, though),
-which is a bit simpler and should suffice for your use case.
+Cheers and thanks for your intuitive answers.
 
-=2D-- >8 ---
-Subject: [PATCH] archive: add --strip-components
 
-Allow removing leading elements from paths of archive entries.  That's
-useful when archiving sub-directories and not wanting to keep the
-common path prefix, e.g.:
+--------------ms050108040602040503050402
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
-   $ git archive --strip-components=3D1 HEAD sha1dc | tar tf -
-   .gitattributes
-   LICENSE.txt
-   sha1.c
-   sha1.h
-   ubc_check.c
-   ubc_check.h
-
-The same can be achieved by specifying a tree instead of a commit and
-a pathspec:
-
-   $ git archive HEAD:sha1dc | tar tf -
-   .gitattributes
-   LICENSE.txt
-   sha1.c
-   sha1.h
-   ubc_check.c
-   ubc_check.h
-
-However, this doesn't support the export-subst attribute, doesn't
-include the commit hash as an archive comment and uses the current time
-instead of the commit date as mtime for archive entries.
-
-The new option is adapted from bsdtar.  GNU tar provides it as well, but
-only for extraction.
-
-The new option does not affect the paths of entries added by --add-file
-and --add-virtual-file because they are handcrafted to their desired
-values already.  Similarly, the value of --prefix is not subject to
-component stripping.
-
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- Documentation/git-archive.txt |  6 ++++++
- archive.c                     | 16 ++++++++++++++++
- archive.h                     |  1 +
- t/t5000-tar-tree.sh           | 13 +++++++++++++
- 4 files changed, 36 insertions(+)
-
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index 6bab201d37..5dad917e7b 100644
-=2D-- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -55,6 +55,12 @@ OPTIONS
- 	rightmost value is used for all tracked files.  See below which
- 	value gets used by `--add-file` and `--add-virtual-file`.
-
-+--strip-components=3D<n>::
-+	Remove the specified number of leading path elements.  Pathnames
-+	with fewer elements will be silently skipped.  Does not affect
-+	the prefix added by `--prefix`, nor entries added with
-+	`--add-file` or `--add-virtual-file`.
-+
- -o <file>::
- --output=3D<file>::
- 	Write the archive to <file> instead of stdout.
-diff --git a/archive.c b/archive.c
-index 9aeaf2bd87..8308d4d9c4 100644
-=2D-- a/archive.c
-+++ b/archive.c
-@@ -166,6 +166,18 @@ static int write_archive_entry(const struct object_id=
- *oid, const char *base,
- 		args->convert =3D check_attr_export_subst(check);
- 	}
-
-+	if (args->strip_components > 0) {
-+		size_t orig_baselen =3D baselen;
-+		for (int i =3D 0; i < args->strip_components; i++) {
-+			const char *slash =3D memchr(base, '/', baselen);
-+			if (!slash)
-+				return S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0;
-+			baselen -=3D slash - base + 1;
-+			base =3D slash + 1;
-+		}
-+		strbuf_remove(&path, args->baselen, orig_baselen - baselen);
-+	}
-+
- 	if (args->verbose)
- 		fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
-
-@@ -593,12 +605,15 @@ static int parse_archive_args(int argc, const char *=
-*argv,
- 	int verbose =3D 0;
- 	int i;
- 	int list =3D 0;
-+	int strip_components =3D 0;
- 	int worktree_attributes =3D 0;
- 	struct option opts[] =3D {
- 		OPT_GROUP(""),
- 		OPT_STRING(0, "format", &format, N_("fmt"), N_("archive format")),
- 		OPT_STRING(0, "prefix", &base, N_("prefix"),
- 			N_("prepend prefix to each pathname in the archive")),
-+		OPT_INTEGER(0, "strip-components", &strip_components,
-+			N_("remove leading path elements")),
- 		{ OPTION_CALLBACK, 0, "add-file", args, N_("file"),
- 		  N_("add untracked file to archive"), 0, add_file_cb,
- 		  (intptr_t)&base },
-@@ -675,6 +690,7 @@ static int parse_archive_args(int argc, const char **a=
-rgv,
- 	args->baselen =3D strlen(base);
- 	args->worktree_attributes =3D worktree_attributes;
- 	args->mtime_option =3D mtime_option;
-+	args->strip_components =3D strip_components;
-
- 	return argc;
- }
-diff --git a/archive.h b/archive.h
-index 7178e2a9a2..e9becbd57d 100644
-=2D-- a/archive.h
-+++ b/archive.h
-@@ -23,6 +23,7 @@ struct archiver_args {
- 	unsigned int worktree_attributes : 1;
- 	unsigned int convert : 1;
- 	int compression_level;
-+	int strip_components;
- 	struct string_list extra_files;
- 	struct pretty_print_context *pretty_ctx;
- };
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index 918a2fc7c6..629d2e78d7 100755
-=2D-- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -271,6 +271,19 @@ test_expect_success 'git get-tar-commit-id' '
- 	test_cmp expect actual
- '
-
-+test_expect_success 'git archive --strip-components' '
-+	git archive --strip-components=3D3 HEAD >strip3.tar &&
-+	(
-+		mkdir strip3 &&
-+		cd strip3 &&
-+		"$TAR" xf ../strip3.tar &&
-+		find . | grep -v "^\.\$" | sort >../strip3.lst
-+	) &&
-+	sed -ne "s-\([^/]*/\)\{3\}-./-p" a.lst >expect &&
-+	test_cmp expect strip3.lst &&
-+	diff -r a/long_path_to_a_file/long_path_to_a_file strip3
-+'
-+
- test_expect_success 'git archive with --output, override inferred format'=
- '
- 	git archive --format=3Dtar --output=3Dd4.zip HEAD &&
- 	test_cmp_bin b.tar d4.zip
-=2D-
-2.39.2
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCC
+DTcwggZJMIIEMaADAgECAhBQUUyUuLQka6vAg7YKjGRjMA0GCSqGSIb3DQEBDAUAMEYxCzAJ
+BgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQ
+ZXJzb25hbCBDQSA0MB4XDTIyMTEwNzAwMDAwMFoXDTIzMTEwNzIzNTk1OVowgdIxDjAMBgNV
+BBETBTgwNTM5MUcwRQYDVQQKEz5NYXgtUGxhbmNrLUdlc2VsbHNjaGFmdCB6dXIgRm9lcmRl
+cnVuZyBkZXIgV2lzc2Vuc2NoYWZ0ZW4gZS5WLjEbMBkGA1UECQwSSG9mZ2FydGVuc3RyYcOf
+ZSA4MQ8wDQYDVQQIEwZCYXllcm4xCzAJBgNVBAYTAkRFMRQwEgYDVQQDEwtDcmlzdGlhbiBM
+ZTEmMCQGCSqGSIb3DQEJARYXY3Jpc3RpYW4ubGVAbXBzZC5tcGcuZGUwggEiMA0GCSqGSIb3
+DQEBAQUAA4IBDwAwggEKAoIBAQDBNitl7zpnIpfymK7IX/4MAcuFjIb4pwfLVSsO8KTbc8fo
+QrhIqsll81GPihVdJCnp9XWGQsmH3dh2L5Ky74/wxVN7nryGkGO31Yrszof8rCYABAeNAw5Q
+S32NYrIp5G6GNcH2l4dswn+9m+HZqOYmaGPWHMygXFwq+bi0hOkfBLTko/ZmvgowIgeA6y7P
+OqOiyIOlYyD4boBYinHeeFE5g9SD8Zfuq1KS8Gt5PNANxKFy31/nLlPjjmuLhf1mluulMtaY
+1MhDBWMLbbLiGjjd+jaF/PO+0wVaeOZmhCYO1hdnWHQoYTIH+C2oTVWC7cirbxsdfisTGuos
+rIri8ordAgMBAAGjggGkMIIBoDAfBgNVHSMEGDAWgBRpAKHHIVj44MUbILAK3adRvxPZ5DAd
+BgNVHQ4EFgQU2SssCWheJZFculeJMuOkytjjCkEwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB
+/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMCMD8GA1UdIAQ4MDYwNAYLKwYB
+BAGyMQECAk8wJTAjBggrBgEFBQcCARYXaHR0cHM6Ly9zZWN0aWdvLmNvbS9DUFMwQgYDVR0f
+BDswOTA3oDWgM4YxaHR0cDovL0dFQU5ULmNybC5zZWN0aWdvLmNvbS9HRUFOVFBlcnNvbmFs
+Q0E0LmNybDB4BggrBgEFBQcBAQRsMGowPQYIKwYBBQUHMAKGMWh0dHA6Ly9HRUFOVC5jcnQu
+c2VjdGlnby5jb20vR0VBTlRQZXJzb25hbENBNC5jcnQwKQYIKwYBBQUHMAGGHWh0dHA6Ly9H
+RUFOVC5vY3NwLnNlY3RpZ28uY29tMCIGA1UdEQQbMBmBF2NyaXN0aWFuLmxlQG1wc2QubXBn
+LmRlMA0GCSqGSIb3DQEBDAUAA4ICAQAm+pHsJz+lz7/XacTmlvz9m4dC4AAmaUaVohnA7dNP
+ehHs3iJ1CEpArVGJDxN7qXQUf9/vpTfMBHaphhmgjg4rwK+biO2qxkIYR9i2ln0+St89ryV5
+CiwiyBIITgrprUwpIf3NFC9oVzl07jkhXqB6lWRiVzv8vXVUQMQKPOHvn22cnQPBH9zbjNtX
+oBUC28E7MCqJAeqAtq6XK0JkQVOsqF54SDEmQX+6PIVaeUiQtM/rb8aY9gwk01Vjqyg8y+Sm
+uvnizdtdYL0XlE2XlRW/H6mq/wpVEHFmedrKbtgzm3Odyo8mb6DvVueLOj+nONeP3vrD7kJr
+4aKDJESRGlOLZP84/rdYcg0Ae8a/CjJT+6Rst4nIAr6Of5Mbwles3KFbj/oJN68RWpmOE3aB
+2nJAEmibtfHpugqRoDEe9iY/81vydwF2IpoywpHe5epJGyXa3aJxvseKyzLUwPYPrO1rAkym
+MrUIxsyYbnN2GbNb4SWhl8f74fuwsf7E0YSiRoOFV3a+F+woi18cIOZXaL+fGw9uOst570J2
+X0iTbexnHXbG4MjAneqBg0snsHaYy0/kvrM4n4qBO+a+ukfJ3OdvjD7B5PZmW0FLNwCeXIEJ
+gmiYsX1PuGgl1nu7Qw6EP4u2iYfFXjA7xkhy91LX5AcFuQib1eglspnDvD0Tlhuf4zCCBuYw
+ggTOoAMCAQICEDECcNQ1vpskmvhW0OHihUkwDQYJKoZIhvcNAQEMBQAwgYgxCzAJBgNVBAYT
+AlVTMRMwEQYDVQQIEwpOZXcgSmVyc2V5MRQwEgYDVQQHEwtKZXJzZXkgQ2l0eTEeMBwGA1UE
+ChMVVGhlIFVTRVJUUlVTVCBOZXR3b3JrMS4wLAYDVQQDEyVVU0VSVHJ1c3QgUlNBIENlcnRp
+ZmljYXRpb24gQXV0aG9yaXR5MB4XDTIwMDIxODAwMDAwMFoXDTMzMDUwMTIzNTk1OVowRjEL
+MAkGA1UEBhMCTkwxGTAXBgNVBAoTEEdFQU5UIFZlcmVuaWdpbmcxHDAaBgNVBAMTE0dFQU5U
+IFBlcnNvbmFsIENBIDQwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCzSuIiXidb
+6QRbFAQ1MiAUrrTSMUDGzVDAHqFEyq+eSmF/LZDeYpszai2kQsqWATz/cBA9gGjunvJ45G48
+ycC4D6gwZFvbBt5JotxlunBeB8K+crGar3v+RCQ4VfvToX07v+HTJ6EeEONR3IzJPTMyzgAw
+ENGsAWf9va9HePQFJiChCzXqhKpp0zen53S+8f9itEy06GS8aku7Mvyb4tMBBa9An3Y3ALIq
+Ieymg/iYs8m9WkSkMyekNtFRB1+1KlnNUpM05G8+sY9EucnQQRUIdHzYsvqjP3XlaSuB4Jj0
+ia66UGfi5Wx31mm5sKAz8Re9UGVWIqq6wKFKxkSfuO4iwYiIPJoiGEux3dqabwFLduAroDF1
+IxE40PqGIdPXzYuZ/wL6BEfFAb0xy8bfm5S9G7y/ts9mIlFpPtkLZ/nQ/iVOWdsu9ale/nK/
+uGF47xsxeW2LIvB4sH5U2+D4ad8vpNbcCrXIXXKtkBnNHgxumNNZ0R1Isq/Pz7TALCxxDzWd
+sM7AO32/Jn7R4ldtGRZmKpJyfACDn8HU1QPhOtiWsjifrMWnanJhQ6K7M/5qz8BmfPrca+MU
+rr1Y4NHZb9MrgPtWKQQyGDXy+G5F/iHGdZk7LS+F8NH+Ddolt2wZpz52JqGMTDPIH5Qok4LL
+O95wbxtn+79Tw+wQxmDTuIg+LwIDAQABo4IBizCCAYcwHwYDVR0jBBgwFoAUU3m/WqorSs9U
+gOHYm8Cd8rIDZsswHQYDVR0OBBYEFGkAocchWPjgxRsgsArdp1G/E9nkMA4GA1UdDwEB/wQE
+AwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcD
+BDA4BgNVHSAEMTAvMC0GBFUdIAAwJTAjBggrBgEFBQcCARYXaHR0cHM6Ly9zZWN0aWdvLmNv
+bS9DUFMwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2VydHJ1c3QuY29tL1VTRVJU
+cnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUFBwEBBGowaDA/Bggr
+BgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJTQUFkZFRydXN0
+Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0GCSqGSIb3
+DQEBDAUAA4ICAQAKBU57DY8fEzkA/W/sYsbD7e0XquMBzHjcP0eXXXRD4EAEAGCWSs+QRL9X
+Ixmx+52zx9wMa8YTejlR+NKejiyKPTF0q63zMxrO/z/hUwo8IDcRRLS0NSgvTW6AN2rCXJe5
+iLN5fIfYgIBB9cy1L6trPuZ/vjUJm87nQ7ExQzGqWN5F9U8MlAk0c5iLanG7GCMoNjHiF1n0
+baj6guUeG7n5qcwOQTyDS19+NEqfwjUPUGasN1ZH8h1sE6PrzvRpti+rKzWpiU+i2/k3l2b5
+fFDy+Wu9jv6R9BoBh47es/UMzwEZ2kSrIVVr4jSukk+FpmR5ZbtwiYNAV6sdb1srMGsILzXl
+rdasSE2nGHvZklk2zUdgn7b01MHq67g0mNozGmT6Dam41Kbhv25WMFs871XqwVIb4gGoT1yR
+f/VePMm1jwauqijhKJFvrNweGnebGPeipaLxIo2iEA4qdRztEg/qyzWGogXK/TFdmivg322f
+MPQWjQkMhRGMM8SCjlZN22L8x0ZOYoVA2rHJm5P25IjZe+HPyn7ikJiSJmqlqFmUeowXF3D1
+dFlCCs/5yC06RYRqI2REFu+28t2nswIvY6xCFAR0RtS8Mz2yXNld0js2MmiRUGrc7imWzdUP
+bPcv9sdUF7SsERGPIzYL8dIiHzit+YCoGCSXMg6peF37hHNp1TGCAzgwggM0AgEBMFowRjEL
+MAkGA1UEBhMCTkwxGTAXBgNVBAoTEEdFQU5UIFZlcmVuaWdpbmcxHDAaBgNVBAMTE0dFQU5U
+IFBlcnNvbmFsIENBIDQCEFBRTJS4tCRrq8CDtgqMZGMwDQYJYIZIAWUDBAIBBQCgggGvMBgG
+CSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTIzMDMwNDE1MTExNVow
+LwYJKoZIhvcNAQkEMSIEIOFdi1h74ZWNfQOKI1KrOM26oTyGHQO39lMZoK352PAeMGkGCSsG
+AQQBgjcQBDFcMFowRjELMAkGA1UEBhMCTkwxGTAXBgNVBAoTEEdFQU5UIFZlcmVuaWdpbmcx
+HDAaBgNVBAMTE0dFQU5UIFBlcnNvbmFsIENBIDQCEFBRTJS4tCRrq8CDtgqMZGMwawYLKoZI
+hvcNAQkQAgsxXKBaMEYxCzAJBgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBWZXJlbmlnaW5n
+MRwwGgYDVQQDExNHRUFOVCBQZXJzb25hbCBDQSA0AhBQUUyUuLQka6vAg7YKjGRjMGwGCSqG
+SIb3DQEJDzFfMF0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzAOBggq
+hkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgwDQYJ
+KoZIhvcNAQEBBQAEggEAtqk0io7NJewgsDC6RplC1j2qNMxgq2QAYOxNwEiPR1mVRN5VgrzC
+upcWECbX/KuPZOd5PPG0915PG8S2BA1SRB8i8+ezGbp2kCuT1U6ivqMckBXKogVWeaW+Jnjw
+ajpTpGtVEmt0n5bECXj1fP6cwWDabnYRhFtQf7QGg3KMg/Lk4WswJuXlys2TMF9AmBe9DHwH
+fwHKB1NaJgH+GkqUWMVMsAdzInh+LvRZVkkDTbITwRSwzNcyHUKGIvAj3AP/2EAO6Ses7nb8
+rf4eT4OlAl6VsHlr7fFwv6BOUXx31GyJ4/EnkAp5GH1AQdp0imAKnRoBe4sabo8D7mlBjw8S
+UQAAAAAAAA==
+--------------ms050108040602040503050402--
