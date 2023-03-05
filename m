@@ -2,128 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BDAECC678DB
-	for <git@archiver.kernel.org>; Sun,  5 Mar 2023 00:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 275FDC678D5
+	for <git@archiver.kernel.org>; Sun,  5 Mar 2023 01:38:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbjCEAnn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Mar 2023 19:43:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37224 "EHLO
+        id S229570AbjCEBiG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Mar 2023 20:38:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjCEAnm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Mar 2023 19:43:42 -0500
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7EB4B451
-        for <git@vger.kernel.org>; Sat,  4 Mar 2023 16:43:33 -0800 (PST)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-536c02c9dfbso115402597b3.11
-        for <git@vger.kernel.org>; Sat, 04 Mar 2023 16:43:33 -0800 (PST)
+        with ESMTP id S229562AbjCEBiE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Mar 2023 20:38:04 -0500
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCA547A90
+        for <git@vger.kernel.org>; Sat,  4 Mar 2023 17:38:00 -0800 (PST)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-172afa7bee2so7588255fac.6
+        for <git@vger.kernel.org>; Sat, 04 Mar 2023 17:38:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7fbRZ1YZXr6vgVewfq6E9Gr7urBENBkEiRx6gIGksAQ=;
-        b=HXWZQ7LyS5gdlhwv/SvZy9ifZ4rWeMvZcNxe+yJcLghsn35Wv8QItN7E0GLxqYAySW
-         LbTQ2xwEjmfdlUq37MPwbh+Z6mSEkAAbz6FKXKPkI3dei2526roccOvicaaDx23GiKuZ
-         ZeavE4oK/NnsAix6ck9G4i1okOGSiE7xJ24QwTrQPfunxE6AyHTYeV2Dz5YKIjNgdOxo
-         7SyfVOfNSaBzJyImNBr/Ynthf7LmjfyHKIR0iOfMuBFCMQe31ZZD47cTz/KJntgZFT+D
-         ju/iBjZYqZ61vQcZkfklwqYRDWuoNpa8uX+Po3M4LtIrQjw0LovSVXtblkGN8NTdYo/f
-         pkug==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GnEHLq6BxLO334ku18dukYV3AHMSIs1aL2v7OfZ/HHM=;
+        b=NtFcczzz1b/Ai4Qsi9HV1/Ux9L3ySR2FglN87FPU4yvnPXwbSQMXY4tUti3N+317Ws
+         vqvCwn93luUwYLdG11zqHFklCH+ZjbIWf5ahm6cUsIAO3IkCltdQMFe8P9cPZYJt9yRg
+         Vwqlm7MKDqkunSfCe3yBx8TyqV+d4OYB78kFnqJAhxyix21wFLHG0nDzGTaXoBgfSRyw
+         MVg+QhAHr0JgC3dg5MfFzrzh7J+oBmELUGnQ342MQZE7H2DOKJrpZhJVGLyuWO5a2wks
+         jK9Ob4kJvFzm7vrnRQfpZkF7sdBUJMlmR1Ww826LWLnZV9HFohfLXRgn0vmQzzMskRRu
+         MSSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7fbRZ1YZXr6vgVewfq6E9Gr7urBENBkEiRx6gIGksAQ=;
-        b=6gtvvRg5kW9XCIBG/SrvV8crKGGauDoRL7JrIzAVHYeZPjcr9X/JUtzaBJ/0rV+k31
-         J12DvK90v+fc7+PnuWUIoTvjdOuk15ihmxK+xmdadIYHhDwVt1EHh50lna7bCmPYfGut
-         TwkPQQCS0+hmbI3EOcYkT1IiPz7Ikm3BXKPPvrQJ+QmbuRgoaxVz+KY/6OjYnZFX+/vN
-         dTggXIAkvtlpUoKOdh6nrNRz2CtKB7eumfo4D8Us4nKttTmSesPSmk3FuZCCWmQ2zAfI
-         BE9vROkLiA3+HCzcftR8mXgtPuBTlXifRJB2xxRUtduThSKtcCE6fkT85tzPyg1ERc9v
-         /8Aw==
-X-Gm-Message-State: AO0yUKVZHBjU3Bc+uhajyqB4Z9DL35Swu01Xsy9yP8Wvnm0xWDUtBo2M
-        CaHenzvgHv4fnX/iRa/I4JuX0N+fNvA0C2CsEkU=
-X-Google-Smtp-Source: AK7set9z06I1/PHeHOnjzyaSL+VTSmw5Y+AY0/FKxREq4AcKBjlqqzlz54ZRivY+jBLXknfNWbu+2LT+IIN6Iq1FQ8s=
-X-Received: by 2002:a81:b286:0:b0:533:9185:fc2c with SMTP id
- q128-20020a81b286000000b005339185fc2cmr3947794ywh.7.1677977013011; Sat, 04
- Mar 2023 16:43:33 -0800 (PST)
-MIME-Version: 1.0
-References: <87y1oco3i9.fsf@igel.home> <CABPp-BEEDS=v7ouOKts83OFMxDq=F0TKO1XvHEbnmXJ+Z1WELA@mail.gmail.com>
-In-Reply-To: <CABPp-BEEDS=v7ouOKts83OFMxDq=F0TKO1XvHEbnmXJ+Z1WELA@mail.gmail.com>
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GnEHLq6BxLO334ku18dukYV3AHMSIs1aL2v7OfZ/HHM=;
+        b=5U7rSf1XFPiTrQBqAnA2ZdKRutyiBDIkfsS+fLopYpgoKoCgkb5LQI1WXskef+sK4A
+         WX8HCz4BmUXzLV/MdX7fwa3l7AS7WbGiJ17MrtWbIRSNdCX2hotk0PsCkm4ilh98PjZy
+         2wyRXQILi+urQMplQoGQ4JkYtlavEUBb9kGUoUrLJBgjrivd65jl7neEyuq0xA7u82Xa
+         ULfo/fAkTwhuqWN6bJC20NL0MAQL3u8On9SK/+jHkEMP2sZoATV43wVxVSbLLGwAhhQd
+         cm9+rM1Vb7fv62OSBXiNlu3jmRhefzCTyIFHLcvBKMAEVv+j8oC0Dlh0uZnR4/cSFnwg
+         Y3kA==
+X-Gm-Message-State: AO0yUKUWmwbAdyDDWQwzB4+hWAmRWaY/oLxkJGMRXptk4PnEtwRzlG/P
+        3BMX0MLP/pbn6yjcSlrKhjafSsmszbs=
+X-Google-Smtp-Source: AK7set9mnvRJSByrNqBSb88j76UaOXAjyIhkDeLIYn6bKLIDe10L5SywCrY7FeN8B0zO7MMcTKDeHg==
+X-Received: by 2002:a05:6870:9728:b0:176:2458:56c3 with SMTP id n40-20020a056870972800b00176245856c3mr4320024oaq.6.1677980279888;
+        Sat, 04 Mar 2023 17:37:59 -0800 (PST)
+Received: from localhost ([2806:2f0:4060:3465:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id dw48-20020a056870773000b001765b2f6c53sm2566124oab.9.2023.03.04.17.37.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Mar 2023 17:37:59 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sat, 4 Mar 2023 18:43:21 -0600
-Message-ID: <CAMP44s3Kqyrdavp1OiozNbA7k4EHCj0KiQq4d2Dyg_KZSEAUuQ@mail.gmail.com>
-Subject: Re: [PATCH] git-merge-tree.txt: replace spurious HTML entity
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Matthew DeVore <matvore@google.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/2] doc: rev-list: simple cleanups
+Date:   Sat,  4 Mar 2023 19:37:56 -0600
+Message-Id: <20230305013758.344573-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 4, 2023 at 4:27=E2=80=AFPM Elijah Newren <newren@gmail.com> wro=
-te:
->
-> On Sat, Mar 4, 2023 at 9:48=E2=80=AFAM Andreas Schwab <schwab@linux-m68k.=
-org> wrote:
-> >
-> > Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
-> > ---
-> >  Documentation/git-merge-tree.txt | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge=
--tree.txt
-> > index 88ee942101..ffc4fbf7e8 100644
-> > --- a/Documentation/git-merge-tree.txt
-> > +++ b/Documentation/git-merge-tree.txt
-> > @@ -108,7 +108,7 @@ This is an integer status followed by a NUL charact=
-er.  The integer status is:
-> >
-> >       0: merge had conflicts
-> >       1: merge was clean
-> > -     &lt;0: something prevented the merge from running (e.g. access to=
- repository
-> > +     <0: something prevented the merge from running (e.g. access to re=
-pository
-> >          objects denied by filesystem)
->
-> I'm sure I'm the one who put it there, but I don't remember any
-> details.  I think it unlikely I would have jumped to '&lt;' without
-> trying '<' and hitting an error first, though maybe I really did.
-> Also, there could have been other edits since then; perhaps this was
-> only needed when other characters appeared later on the line?  Or
-> maybe the '&lt;' is only needed by asciidoc and not asciidoctor (or
-> vice versa; I have no clue which I was using)?  Should we add a
-> "lessthan" field in Documentation/asciidoc.conf under "[attributes]"
-> and use "{lessthan}"?
+Here are some simple cleanups to the asciidoc format of
+Documentation/rev-list-options.txt prompted by [1].
 
-For what it's worth I checked with both asciidoc and asciidoctor in
-multiple output formats and < works fine. I even checked an ancient
-version of asciidoc and it works fine.
+[1] https://lore.kernel.org/git/CAMP44s3Kqyrdavp1OiozNbA7k4EHCj0KiQq4d2Dyg_KZSEAUuQ@mail.gmail.com/
 
-It doesn't seem like &lt; was ever needed, and it doesn't work because
-it's a literal section.
+Felipe Contreras (2):
+  doc: rev-list: simplify escaping
+  doc: rev-list: simplify literals
 
-> Or, if this one really is spurious, should the same html entity in
-> Documentation/git-rev-list.txt be expunged as well?
+ Documentation/rev-list-options.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-<=3D is automatically replaced with =E2=87=90 as explained in the documenta=
-tion
-[1]. However, to prevent substitutions one doesn't need HTML coding,
-just doing \<=3D is enough.
+-- 
+2.39.2
 
-I don't know why people try to guess what asciidoc and asciidoctor
-should do, they both follow the same specification, and I haven't seen
-a problem in git documentation caused by either one of them not
-following the spec, only by git not following the spec.
-
-Just follow the spec.
-
-Cheers.
-
-[1] https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
-
---=20
-Felipe Contreras
