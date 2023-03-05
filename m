@@ -2,60 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 275FDC678D5
-	for <git@archiver.kernel.org>; Sun,  5 Mar 2023 01:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6AD9C678D5
+	for <git@archiver.kernel.org>; Sun,  5 Mar 2023 01:38:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229570AbjCEBiG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Mar 2023 20:38:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57652 "EHLO
+        id S229562AbjCEBiH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Mar 2023 20:38:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229562AbjCEBiE (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229563AbjCEBiE (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 4 Mar 2023 20:38:04 -0500
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCA547A90
-        for <git@vger.kernel.org>; Sat,  4 Mar 2023 17:38:00 -0800 (PST)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-172afa7bee2so7588255fac.6
-        for <git@vger.kernel.org>; Sat, 04 Mar 2023 17:38:00 -0800 (PST)
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B49B97A92
+        for <git@vger.kernel.org>; Sat,  4 Mar 2023 17:38:02 -0800 (PST)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-173435e0ec4so7545107fac.12
+        for <git@vger.kernel.org>; Sat, 04 Mar 2023 17:38:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GnEHLq6BxLO334ku18dukYV3AHMSIs1aL2v7OfZ/HHM=;
-        b=NtFcczzz1b/Ai4Qsi9HV1/Ux9L3ySR2FglN87FPU4yvnPXwbSQMXY4tUti3N+317Ws
-         vqvCwn93luUwYLdG11zqHFklCH+ZjbIWf5ahm6cUsIAO3IkCltdQMFe8P9cPZYJt9yRg
-         Vwqlm7MKDqkunSfCe3yBx8TyqV+d4OYB78kFnqJAhxyix21wFLHG0nDzGTaXoBgfSRyw
-         MVg+QhAHr0JgC3dg5MfFzrzh7J+oBmELUGnQ342MQZE7H2DOKJrpZhJVGLyuWO5a2wks
-         jK9Ob4kJvFzm7vrnRQfpZkF7sdBUJMlmR1Ww826LWLnZV9HFohfLXRgn0vmQzzMskRRu
-         MSSw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wuEF7zSLI7xOvAIzOeCnf2qj0MX2j3ak9huvskpJb3Q=;
+        b=TRpRrFFblQWcTBlrgzZRl/f1+fp6zSbmRs1WIvYbyEIErCfuD/fvYdH9WqKe2rK4F/
+         rtLkVxneTMJNntUokFC62HVOkK9isEGZkuY8Nk9wMpjSVhpu95e10KUR7nw8SssOpLRn
+         cJZhDzwtmul2O3Rp2K7Nj+N3XcrkpyaViOUxvCljua5hZSknq9WevrSfkhwughYTBbgs
+         czR3V8+aMYFEnx4CN+Ia7ZXNF4/SeQBoiWll3Qk1MJYYjBwGRhD1IeGOPf6phaw+Bf/9
+         xL6FVVPcVZrwZzj+2OVB2lTI4CbePlZ34A3Io84HlS5sGgcM3mu/tsD5vHek/IboxbVf
+         0RHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GnEHLq6BxLO334ku18dukYV3AHMSIs1aL2v7OfZ/HHM=;
-        b=5U7rSf1XFPiTrQBqAnA2ZdKRutyiBDIkfsS+fLopYpgoKoCgkb5LQI1WXskef+sK4A
-         WX8HCz4BmUXzLV/MdX7fwa3l7AS7WbGiJ17MrtWbIRSNdCX2hotk0PsCkm4ilh98PjZy
-         2wyRXQILi+urQMplQoGQ4JkYtlavEUBb9kGUoUrLJBgjrivd65jl7neEyuq0xA7u82Xa
-         ULfo/fAkTwhuqWN6bJC20NL0MAQL3u8On9SK/+jHkEMP2sZoATV43wVxVSbLLGwAhhQd
-         cm9+rM1Vb7fv62OSBXiNlu3jmRhefzCTyIFHLcvBKMAEVv+j8oC0Dlh0uZnR4/cSFnwg
-         Y3kA==
-X-Gm-Message-State: AO0yUKUWmwbAdyDDWQwzB4+hWAmRWaY/oLxkJGMRXptk4PnEtwRzlG/P
-        3BMX0MLP/pbn6yjcSlrKhjafSsmszbs=
-X-Google-Smtp-Source: AK7set9mnvRJSByrNqBSb88j76UaOXAjyIhkDeLIYn6bKLIDe10L5SywCrY7FeN8B0zO7MMcTKDeHg==
-X-Received: by 2002:a05:6870:9728:b0:176:2458:56c3 with SMTP id n40-20020a056870972800b00176245856c3mr4320024oaq.6.1677980279888;
-        Sat, 04 Mar 2023 17:37:59 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wuEF7zSLI7xOvAIzOeCnf2qj0MX2j3ak9huvskpJb3Q=;
+        b=m9g1emyFFmY9P0BswHXx9xjskOvudcT/Fur+1o2Ffa8bn7P5oaOy+gZ+TAYnzhcltv
+         kPN051Oio3G6YLB8qlacb7YwtY+zZJGQeYd15OsejOq9atFNBjwd4eYg8fEwUxdRtEC+
+         ZXXuu2pSzzKYgf/If8XpI0FF0J8X4lbb4WlDPnX0CpTFFnf9FIMnWMVHnrpVvAb7jKfX
+         2OhT2hvh/Qvk5185O74toBRTkYmYZk2WiHyrqKsamBdfUCW7sVpCi3jJK3X/GD4/duN2
+         51aSUkmfdh7ahU82N2m+3R0wB9BgGHpuqZ4Bt5/TV7OE/rSpVi6fxdB9O6qEAnVMovW3
+         Vwpg==
+X-Gm-Message-State: AO0yUKVgxNIC8owPVBW7whofP9w20UKMBQO2dl+2kMFda1JoZSEkIkZH
+        gMAjgd+2wH3qOv75Un9/uaMrc2cZ+Aw=
+X-Google-Smtp-Source: AK7set9myhIV4u81U1e8vJ3kMfATXPsWwzG6fvusjDi7SCuehK7VTCC7/EZTpiBh6VMI16j78TzPDw==
+X-Received: by 2002:a05:6871:810:b0:16e:104c:e243 with SMTP id q16-20020a056871081000b0016e104ce243mr4191173oap.21.1677980281106;
+        Sat, 04 Mar 2023 17:38:01 -0800 (PST)
 Received: from localhost ([2806:2f0:4060:3465:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id dw48-20020a056870773000b001765b2f6c53sm2566124oab.9.2023.03.04.17.37.59
+        by smtp.gmail.com with ESMTPSA id e21-20020a056870c35500b0016e8726f0d4sm2562166oak.3.2023.03.04.17.38.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Mar 2023 17:37:59 -0800 (PST)
+        Sat, 04 Mar 2023 17:38:00 -0800 (PST)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Matthew DeVore <matvore@google.com>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 0/2] doc: rev-list: simple cleanups
-Date:   Sat,  4 Mar 2023 19:37:56 -0600
-Message-Id: <20230305013758.344573-1-felipe.contreras@gmail.com>
+Subject: [PATCH 1/2] doc: rev-list: simplify escaping
+Date:   Sat,  4 Mar 2023 19:37:57 -0600
+Message-Id: <20230305013758.344573-2-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230305013758.344573-1-felipe.contreras@gmail.com>
+References: <20230305013758.344573-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,18 +66,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are some simple cleanups to the asciidoc format of
-Documentation/rev-list-options.txt prompted by [1].
+<= is substituted with the unicode ⇐, but it's not necessary to use an
+HTML escape to prevent that, we can just use a blackslash.
 
-[1] https://lore.kernel.org/git/CAMP44s3Kqyrdavp1OiozNbA7k4EHCj0KiQq4d2Dyg_KZSEAUuQ@mail.gmail.com/
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ Documentation/rev-list-options.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Felipe Contreras (2):
-  doc: rev-list: simplify escaping
-  doc: rev-list: simplify literals
-
- Documentation/rev-list-options.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 0d90d5b154..84c742aaac 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -970,7 +970,7 @@ the '--filter' flag and is usually not necessary. Filters are joined by
+ '{plus}' and individual filters are %-encoded (i.e. URL-encoded).
+ Besides the '{plus}' and '%' characters, the following characters are
+ reserved and also must be encoded: `~!@#$^&*()[]{}\;",<>?`+&#39;&#96;+
+-as well as all characters with ASCII code &lt;= `0x20`, which includes
++as well as all characters with ASCII code \<= `0x20`, which includes
+ space and newline.
+ +
+ Other arbitrary characters can also be encoded. For instance,
 -- 
 2.39.2
 
