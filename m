@@ -2,189 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 210D1C64EC4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 19:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ACD5C64EC4
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 19:59:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229928AbjCFTcV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 14:32:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58936 "EHLO
+        id S229680AbjCFT7P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 14:59:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229540AbjCFTcU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 14:32:20 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3158372037
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 11:32:19 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id 62-20020a630241000000b004fb3343142dso2353680pgc.5
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 11:32:19 -0800 (PST)
+        with ESMTP id S229638AbjCFT7N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 14:59:13 -0500
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63EE667009
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 11:58:43 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id n203-20020a25dad4000000b0091231592671so11573587ybf.1
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 11:58:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678131138;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ws62YE3FCdF2PEXkJ88qgxmCEN3OFFWke9WSwo6jGmw=;
-        b=MPBrcWiSUY8rw36POwdGUm+9t+OjtB4Fl6Xg4tPUIZ5R3cTlIxNYvrRjWW4G9hnhjI
-         KC127/qq5NUJ8PkKg8xpk0UJAuVJsL7ryvVprE5NXMY7NZqSTIVAtIPJgCeQCx5diw3X
-         IgjAyDHMggOcXygkXH5POk0LcdqEly+UiaCGuMXUqvTXTq2fWCPbtQXAAGfHvCsVSG1G
-         5yUKZNAau/Oh5OeWMORcV7vArFU9FnvS6Hzb1KB5zQYuUBviMYveDuA0s3VRSGrVlx/8
-         4rniXyqYOvUOst+IhbdxsrWeeNLF+9uVFfglXSBEg7BoF2UAKpvnjMZ3ITCRw918UmDw
-         CMiw==
+        d=google.com; s=20210112; t=1678132679;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gQqEwnSJrttmZlvSZYcCa7u2mFFyL+rjyPzdCvWLwcM=;
+        b=SdQ+8NGNLWO8F0f3jVvzBmzFqn7/m0mRUX1Cwn3r4AkUPy41idB79+ZkYIG4CWbA9y
+         mb22w9Sj+35/hp5dX7JJ3XWdIQGvjOHPKTwvmQT9PYljT9cclU6L9ADRF6hnUnC3nVQi
+         nCeFpL5O+5McT//A8lUNlvI1WeYvlJ/ftu0zGEPjE+/1Qy4nxeXtNF5Ii2nvUhWm7IiT
+         o/s5NwPbTF0WQL4vJ5jXT0JIPZuV15OYVoGDSv/NXz555tB9WSASckCasA5PmGTV7dXG
+         hFoOBW2BvUkUnn+o08Z5nqoolHBR7WEOwt7zhpcRFUd3OWrgjughwdpKgTBXKGzGylRa
+         2ZIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678131138;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ws62YE3FCdF2PEXkJ88qgxmCEN3OFFWke9WSwo6jGmw=;
-        b=uoRv52oHLTL0DUTLceS80giyr4fEX0eHTcGemd59isNCp2xE1FjoGHK3gm0zQop59H
-         XH3yZL4ZuRqzVrLXk4GgUOAid+MRnqMeSSxi+LTCC1QTkXo0u2MemlL587MSI8LSwmun
-         BFrhaGi/DYL/JtM526Tb5iHYuRb5WVo8Pfw5o24s4z5mBiaWHDrdZiqxxutU65yv5S4H
-         iVRnORc/UcYcn7Tvl/m7lfQOzWrKdGKeaMYuS83Rd39q4vDtRo7OdJ2kE1t393/Vlb4w
-         BqGLjUNpRSfEFkxmnYnw0mQE6OxF/chJxOc1MeZI0qbpdmuM6Ce+W/DvK6zvmW/lxO2m
-         Jk9A==
-X-Gm-Message-State: AO0yUKX8/Xt8RgPSXWiZgvn9FSovH1wQDKDo505Zqrc0Vf/nI2J+gvd5
-        hAp5DCXrmhi4g/QsNCcEGrH1IUuGKISuzg==
-X-Google-Smtp-Source: AK7set/8lrYQS7GryRloTCAVlb9tINkN0lDiRUZSjidlRAk5szAhpUkGbBey3SnFEeZEZx2TkWAaOVuYC5JvSQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:902:6807:b0:19c:d14b:ee20 with SMTP
- id h7-20020a170902680700b0019cd14bee20mr4766544plk.8.1678131138581; Mon, 06
- Mar 2023 11:32:18 -0800 (PST)
-Date:   Mon, 06 Mar 2023 11:32:16 -0800
-In-Reply-To: <20230228185642.2357806-1-calvinwan@google.com>
+        d=1e100.net; s=20210112; t=1678132679;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gQqEwnSJrttmZlvSZYcCa7u2mFFyL+rjyPzdCvWLwcM=;
+        b=Vw0I13tuL2YzSit26UajKNwbEzyvoSZXGTkkwIcILhg7Fe4eMu9qvWg+IwgmdN9zcG
+         4tB6Ty/ywydnj0khitQC83lGIoacEYh+n+vKM3vS4qQdtPuBF30gKgZsf2L61EYsTeaq
+         diuks0jNpUafsQ09LqoYPZ8trY3wDc7yd3VKmh80ElQNkiSKdnxxePuSYI6ObR8FxET7
+         SqQgycXGYViGKpPce2S3PiVUbSZQeuZLgJrMVOfG8+ECfNIhiwA3juzkUNo/TKPhrpAt
+         rJg9A50bUxb9BA/EyyGCSmOM03enq2Rm+WkaJEVKB4+PbYXNMGC6rEeFud4xBZusKjSP
+         4Twg==
+X-Gm-Message-State: AO0yUKXWcfA/lpno1gYwsIIUZPa/9wypTt1Bj35dSceyqCuKDVDUwoe8
+        NHVwbyocSmuSDsGupNmo5BF5Qhnqze2Bz+xfM16n
+X-Google-Smtp-Source: AK7set+1d2mzdrXu1MONtV4Wbn/KC+tFVOe90T+vzveo/Q+8LYHOrM3ow146kmhy/2OKNyUNrMYX4LF0wz5IrWSXt6PU
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:37b6:a998:138:7714])
+ (user=jonathantanmy job=sendgmr) by 2002:a81:af62:0:b0:533:9b00:dd0b with
+ SMTP id x34-20020a81af62000000b005339b00dd0bmr7831706ywj.2.1678132679079;
+ Mon, 06 Mar 2023 11:57:59 -0800 (PST)
+Date:   Mon,  6 Mar 2023 11:57:56 -0800
+In-Reply-To: <pull.1463.git.git.1677631097.gitgitgadget@gmail.com>
 Mime-Version: 1.0
-References: <20230213182134.2173280-1-calvinwan@google.com> <20230228185642.2357806-1-calvinwan@google.com>
-Message-ID: <kl6l8rg9ekvz.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2 1/6] t4041, t4060: modernize test style
-From:   Glen Choo <chooglen@google.com>
-To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
-Cc:     Josh Steadmon <steadmon@google.com>, peff@peff.net,
-        gitster@pobox.com, Calvin Wan <calvinwan@google.com>
+X-Mailer: git-send-email 2.40.0.rc0.216.gc4246ad0f0-goog
+Message-ID: <20230306195756.3399115-1-jonathantanmy@google.com>
+Subject: Re: [PATCH 0/6] [RFC] config.c: use struct for config reading state
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Emily Shaffer <nasamuffin@google.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Glen Choo <chooglen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>  * We could add "struct config_reader" to "config_fn_t", i.e.
+>    
+>    -typedef int (*config_fn_t)(const char *var, const char *val, void
+>    *data); +typedef int (*config_fn_t)(const struct config_reader *reader,
+>    const char *var, const char *val, void *data);
+>    
+>    which isn't complex at all, except that there are ~100 config_fn_t
+>    implementations [3] and a good number of them may never reference
+>    "reader". If the churn is tolerable, I think this a good way forward.
+> 
+>  * We could create a new kind of "config_fn_t" that accepts "struct
+>    config_reader", e.g.
+>    
+>    typedef int (*config_fn_t)(const char *var, const char *val, void *data);
+>    +typedef int (*config_state_fn_t)(const struct config_reader *reader,
+>    const char *var, const char *val, void *data);
+>    
+>    and only adjust the callers that would actually reference "reader". This
+>    is less churn, but I couldn't find a great way to do this kind of
+>    'switching between config callback types' elegantly.
 
-> In preparation for later changes, move setup code into test_expect
-> blocks. Smaller sections are moved into existing blocks, while larger
-> sections with a standalone purpose are given their own new blocks.
+To reduce churn, one thing that could be done alongside is to convert
+config-using code (which is...practically the rest of Git) to start
+using the configset interface (we seem to be using configsets internally
+anyway, as evidenced by repo_config()). That way, we would reduce the
+number of implementations of config_fn_t.
 
-The changes where we moved lines outside of blocks into blocks without
-changing them look good to me.
+>  * We could smuggle "struct config_reader" to callback functions in a way
+>    that interested callers could see it, but uninterested callers could
+>    ignore. One trick that Jonathan Tan came up with (though not necessarily
+>    endorsed) would be to allocate a struct for the config value + "struct
+>    config_reader", then, interested callers could use "offset_of" to recover
+>    the "struct config_reader". It's a little hacky, but it's low-churn.
 
-> While at it, have tests clean up after themselves with
-> test_when_finished
+Indeed, although we should probably use this as a last resort.
 
-I believe this came about as part of the discussion in
+> = Questions
+> 
+>  * Is this worth merging without the extra work? There are some cleanups in
+>    this series that could make it valuable, but there are also some hacks
+>    (see 4/6) that aren't so great.
 
-  https://lore.kernel.org/git/xmqqedqtbbf4.fsf@gitster.g
+I'm leaning towards merging it now, but can go either way, since the
+cost of churn is limited to one single file, but so are the benefits.
+If it was up to me to decide, I would merge it now, because this opens
+up a lot of work that other contributors could individually do (in
+particular, converting individual config code paths so that we don't
+need to reference the_reader as a global anymore).
 
-I think it's good to have tests clean up after themselves, but I'm not
-sure if that's what we're doing in all of these cases, see below.
+I don't see 4/6 as a hack. It is true that the nature of the config_fn_t
+callback could change so that passing the reader would end up being
+done in yet another different way, but firstly, I don't think that will
+happen for quite some time, and secondly, it might not happen at all
+(right now, I think what's most likely to happen is that the rest of the
+Git code moves to configsets and only a fraction of the Git code would
+need to do low-level parsing, which would not have a problem passing the
+reader through the data object since they would probably need to pass
+other context anyway).
 
-I'm leaving the diff header in place, since the two files have very
-confusingly similar tests.
+>  * Is the extra work even worth it?
 
-> diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
->  test_expect_success 'typechanged submodule(submodule->blob)' '
-> +	test_when_finished rm -rf sm1 &&
->  	git diff --submodule=log >actual &&
->  	cat >expected <<-EOF &&
->  	diff --git a/sm1 b/sm1
+Depends on which extra work, but I think that eliminating the the_reader
+global would really be useful (and, as far as I know, the whole reason
+for this effort). From the Git codebase's perspective, doing this would
+(as far as I know) eliminate the need for pushing and popping cf, and
+make multithreaded multi-repo operations less error-prone (e.g. we
+can spawn a thread operating on a submodule and that thread can itself
+read the configs of nested submodules without worrying about clobbering
+global state...well, there is thread-local storage, but as far as I know
+this is not portable).
 
-This hunk and the next...
+>  * Do any of the ideas seem more promising than the others? Are there other
+>    ideas I'm missing?
 
-> @@ -212,9 +215,9 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
->  	test_cmp expected actual
->  '
->  
-> -rm -rf sm1 &&
-> -git checkout-index sm1
->  test_expect_success 'typechanged submodule(submodule->blob)' '
-> +	test_when_finished rm -f sm1 &&
-> +	git checkout-index sm1 &&
->  	git diff-index -p --submodule=log HEAD >actual &&
->  	cat >expected <<-EOF &&
->  	Submodule sm1 $head4...0000000 (submodule deleted)
-
-were changed so that the "rm -rf" happens in the clean up phase of the
-earlier test (test 14) instead of set up phase of the later test (test
-15). But, the "rm -rf" actually results in a _different_ state from
-before 14, so it isn't actually cleaning up, it really is preparation
-for 15's git checkout-index.
-
-You can observe this by running
-
-  ./t4041-diff-submodule-option.sh --run=1-13,15
-
-which fails as expected. On the other hand, it passes if we move the "rm
--rf" into test 15.
-
-Nearly all of the other test_when_finished here have the same problem,
-where they 'clean up' state that wasn't changed in the same test body. I
-believe they will show similar dependency issues, though I didn't go
-through and test them all.
-
-> @@ -643,7 +643,6 @@ test_expect_success 'modified submodule contains modified content' '
->  	diff_cmp expected actual
->  '
->  
-> -rm -rf sm1
->  test_expect_success 'deleted submodule' '
->  	git diff-index -p --submodule=diff HEAD >actual &&
->  	cat >expected <<-EOF &&
-
-This one is fairly obvious, since the test says 'deleted submodule', but
-we no longer delete the submodule in the setup.
-
-> @@ -779,9 +780,8 @@ test_expect_success 'diff --submodule=diff with .git file' '
->  	diff_cmp expected actual
->  '
->  
-> -mv sm2 sm2-bak
-> -
->  test_expect_success 'deleted submodule with .git file' '
-> +	mv sm2 sm2-bak &&
->  	git diff-index -p --submodule=diff HEAD >actual &&
->  	cat >expected <<-EOF &&
->  	Submodule sm1 $head7...0000000 (submodule deleted)
-> @@ -804,9 +804,9 @@ test_expect_success 'deleted submodule with .git file' '
->  	diff_cmp expected actual
->  '
->  
-> -echo submodule-to-blob>sm2
-> -
->  test_expect_success 'typechanged(submodule->blob) submodule with .git file' '
-> +	test_when_finished "rm sm2 && mv sm2-bak sm2" &&
-> +	echo submodule-to-blob>sm2 &&
->  	git diff-index -p --submodule=diff HEAD >actual &&
->  	cat >expected <<-EOF &&
->  	Submodule sm1 $head7...0000000 (submodule deleted)
-> @@ -836,9 +836,6 @@ test_expect_success 'typechanged(submodule->blob) submodule with .git file' '
->  	diff_cmp expected actual
->  '
->  
-> -rm sm2
-> -mv sm2-bak sm2
-
-This is the original case that Junio flagged, which I think is an almost
-correct use of test_when_finished, since we do get back to an earlier
-state before this string of tests, but not to the state before the
-actual test with the test_when_finished.
-
-If we want to use test_when_finished here (which I think we do), we
-should add another test_when_finished to remove the dependency between
-the two tests. like so:
-
-  test_expect_success 'deleted submodule with .git file' '
-  +	test_when_finished "mv sm2-bak sm2" &&
-  	mv sm2 sm2-bak &&
-    git diff-index -p --submodule=diff HEAD >actual &&
-
-...
-
- test_expect_success 'typechanged(submodule->blob) submodule with .git file' '
-	test_when_finished "rm sm2 && mv sm2-bak sm2" &&
-+ mv sm2 sm2-bak &&
-
-Currently, they're still dependent because one creates sm2-bak and the
-other moves it back, but if we have each test restore sm2, there will be
-no more dependency.
-
+Hopefully I answered this in my answers to the other questions.
