@@ -2,209 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 164C5C61DA4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 20:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E72CC6FD1A
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 20:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbjCFUk6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 15:40:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
+        id S229901AbjCFU7j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 15:59:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbjCFUk4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 15:40:56 -0500
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 437453609D
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 12:40:55 -0800 (PST)
-Received: by mail-yb1-xb2b.google.com with SMTP id n18so9487256ybm.10
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 12:40:55 -0800 (PST)
+        with ESMTP id S229840AbjCFU7h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 15:59:37 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7833839B94
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 12:59:33 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id h11so10198254wrm.5
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 12:59:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678135254;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SY+Epk4f3ftW2/oIGWj9rE99H1mczxvqw/E70fdNg7M=;
-        b=VUWpkjofl5rDMASeYEBAY9sDmgG4unc7JoMYcv6BZ0I/BovfvWwMYuTRNzo8PZLsOp
-         u4ZSRbeefAR3rHryAoVsE4bwMZA9B42b/XCX7/1KKh8SApsZvq86mlYMZgJeVJ7Z85Pg
-         iJQyOqrVAC0Dt0WVeevu+tMkwtq/SVjcscmUw/Qc1cX1qo0+gWfWHuwcekUcIW3ftufK
-         VL7loRA0OTLCwMHEt1tYM20rfWOy/qyMW76RyrwVm0j4EL6IQTwRvSbCms3rnDOb0qLz
-         T2FSkX4VmvpFEV6+1+f17Tm/j95+Zvmbcu5qiFzp+a/9BTtPi2cp54YUzwKbZorh5vhP
-         UyrQ==
+        d=gmail.com; s=20210112; t=1678136372;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9zEvisco4ZswSbxsYJxW2xK6OZTvD3xhlMNLHM/TgkI=;
+        b=e5Qvresj3QwTlf01OQBhdqUjId/wNSUUoILtigMVwDMFKN8Rkm1CkgwUYlUwCZ3EJs
+         lAlGkoyOiPL0p2CyQ2r5NmLcltg4qk+Gcq08wepTPF0U2sbIu5wvkRaZsBN/ZWieZ1PM
+         MlV5Iv65QiW4LjhQxqorL1yefTMDdtZy4Lr91WjwHO6tnWPUoQ89VKXWAcpOrjzo4q9B
+         5Z6jcPPufm+G/V6wgPqN8DK1GVacOe2wYaquFPH89xX4AJ1gqpB9DKVqR58ZCAUewwuY
+         +a7lItZR5y0MmMrT5q6bzRbCdQ1K8meJQTaM55CEUZiMLMjG8+3fyPDJWwrn3fXffN1Y
+         B/1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678135254;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SY+Epk4f3ftW2/oIGWj9rE99H1mczxvqw/E70fdNg7M=;
-        b=v6iIXntJ3tkR78e6AK4aQadjMmxm7EMA4Sqld7AMGpTz/gMxk73QGlnYqQUQxyo6gU
-         iI9FFidAmGRjZ2br1zi8Fv6uKG43tbooViPICgHKFd3YSdS3fxgwi0FImdz3p0hte/4Q
-         ME/13rFx3qgAzZQFxw7365P2He4t+SPxncPcfvD5bNkp12bm+O7EX77TCaTlw9uD1xfX
-         Gm7BRz7viAiTBa7lrgNZAWqjVbKNiAuNO9R6nOx7PUF9GJNusPkY7/yGMgH+/eqgIGmJ
-         FcbEolokV0bBQ+nS/raUD+qqswFI80Cmh1EpQaL++kWKcz63up3iOXUEvmINyONlzDpP
-         LRPQ==
-X-Gm-Message-State: AO0yUKU+CIdtx9fH53yQOI+Q9h7fktXTG1Fla889hAz6J5E3a7H7oiG6
-        hNXeyLqN5YZnK4/Q4zXCGijfM2AVPLlenrNXaDfsQw==
-X-Google-Smtp-Source: AK7set80REsqSfGy+DgR08sjXhzuZCvYOCy7WDnSra0mjVCfJ5ZpfM0cbji8DXRlO35Y5WQKffgyc6Aqf7h2LNOd+TY=
-X-Received: by 2002:a25:9281:0:b0:b0a:7108:71e9 with SMTP id
- y1-20020a259281000000b00b0a710871e9mr3012774ybl.4.1678135254258; Mon, 06 Mar
- 2023 12:40:54 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678136372;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9zEvisco4ZswSbxsYJxW2xK6OZTvD3xhlMNLHM/TgkI=;
+        b=RxuMLvukylZ/q+YJpj2B4GZxv9wkJidyItTuNbZVVkHVFEfSnfVSkOcVg2rPeKc/FE
+         0MN9nCK/wgOyvHGdUv6dAITD9tHLBxzxy/TesCLAQz3jNNK5d2NOpFBxnCyqdq6+raDd
+         gsXn2LgfIuPiKycL9FcLf7QR59dE/cs2zKmmtLtDefYXdTTDPupctDzE3XzJnKYiZYPc
+         e+RYTloFp08g+mHtnH3LRVVi7Q91mALSz6UlaXc87Nb+kCw3/xSP3NVjKRS5h7E0v0HE
+         kCIJF0YuY4EzaoA9WOcd0COQlqGyyiLL5ZZqy3zMntUDOIbETQ+ALpHoW832tsRR37w8
+         /ORA==
+X-Gm-Message-State: AO0yUKXDP8ChpgJrvP8PcrI38MGTcEa61IsbgQW7uQ2RANqvarEX2HKC
+        B+F8YrL+cjDXig/1M1qo+nraL6HjLE8=
+X-Google-Smtp-Source: AK7set/ISkikdfF9PeDKfqpRPgxUz4kAwIPVdXw8DoKpHB1aI3qTBOImDQsShZRXHk6AV4nx4L3bBw==
+X-Received: by 2002:adf:f8d1:0:b0:2c7:1483:88d6 with SMTP id f17-20020adff8d1000000b002c7148388d6mr7166185wrq.23.1678136371609;
+        Mon, 06 Mar 2023 12:59:31 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k8-20020a5d66c8000000b002c573a6216fsm10745777wrw.37.2023.03.06.12.59.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Mar 2023 12:59:30 -0800 (PST)
+Message-Id: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 06 Mar 2023 20:59:29 +0000
+Subject: [PATCH] object-file: reprepare alternates when necessary
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20230213182134.2173280-1-calvinwan@google.com>
- <20230228185642.2357806-1-calvinwan@google.com> <kl6l8rg9ekvz.fsf@chooglen-macbookpro.roam.corp.google.com>
-In-Reply-To: <kl6l8rg9ekvz.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Mon, 6 Mar 2023 12:40:43 -0800
-Message-ID: <CAFySSZDF5V6nV2uyg0NSvVGgG_ybSpeqGPi7CPSvsyZ10KfYwA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] t4041, t4060: modernize test style
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
-        peff@peff.net, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 6, 2023 at 11:32=E2=80=AFAM Glen Choo <chooglen@google.com> wro=
-te:
->
-> Calvin Wan <calvinwan@google.com> writes:
->
-> > In preparation for later changes, move setup code into test_expect
-> > blocks. Smaller sections are moved into existing blocks, while larger
-> > sections with a standalone purpose are given their own new blocks.
->
-> The changes where we moved lines outside of blocks into blocks without
-> changing them look good to me.
->
-> > While at it, have tests clean up after themselves with
-> > test_when_finished
->
-> I believe this came about as part of the discussion in
->
->   https://lore.kernel.org/git/xmqqedqtbbf4.fsf@gitster.g
->
-> I think it's good to have tests clean up after themselves, but I'm not
-> sure if that's what we're doing in all of these cases, see below.
->
-> I'm leaving the diff header in place, since the two files have very
-> confusingly similar tests.
->
-> > diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-=
-option.sh
-> >  test_expect_success 'typechanged submodule(submodule->blob)' '
-> > +     test_when_finished rm -rf sm1 &&
-> >       git diff --submodule=3Dlog >actual &&
-> >       cat >expected <<-EOF &&
-> >       diff --git a/sm1 b/sm1
->
-> This hunk and the next...
->
-> > @@ -212,9 +215,9 @@ test_expect_success 'typechanged submodule(submodul=
-e->blob)' '
-> >       test_cmp expected actual
-> >  '
-> >
-> > -rm -rf sm1 &&
-> > -git checkout-index sm1
-> >  test_expect_success 'typechanged submodule(submodule->blob)' '
-> > +     test_when_finished rm -f sm1 &&
-> > +     git checkout-index sm1 &&
-> >       git diff-index -p --submodule=3Dlog HEAD >actual &&
-> >       cat >expected <<-EOF &&
-> >       Submodule sm1 $head4...0000000 (submodule deleted)
->
-> were changed so that the "rm -rf" happens in the clean up phase of the
-> earlier test (test 14) instead of set up phase of the later test (test
-> 15). But, the "rm -rf" actually results in a _different_ state from
-> before 14, so it isn't actually cleaning up, it really is preparation
-> for 15's git checkout-index.
->
-> You can observe this by running
->
->   ./t4041-diff-submodule-option.sh --run=3D1-13,15
->
-> which fails as expected. On the other hand, it passes if we move the "rm
-> -rf" into test 15.
->
-> Nearly all of the other test_when_finished here have the same problem,
-> where they 'clean up' state that wasn't changed in the same test body. I
-> believe they will show similar dependency issues, though I didn't go
-> through and test them all.
+From: Derrick Stolee <derrickstolee@github.com>
 
-Good catch. I'll go thru the rest of them and remove the dependency
-issues.
+When an object is not found in a repository's object store, we sometimes
+call reprepare_packed_git() to see if the object was temporarily moved
+into a new pack-file (and its old pack-file or loose object was
+deleted). This process does a scan of each pack directory within each
+odb, but does not reevaluate if the odb list needs updating.
 
->
-> > @@ -643,7 +643,6 @@ test_expect_success 'modified submodule contains mo=
-dified content' '
-> >       diff_cmp expected actual
-> >  '
-> >
-> > -rm -rf sm1
-> >  test_expect_success 'deleted submodule' '
-> >       git diff-index -p --submodule=3Ddiff HEAD >actual &&
-> >       cat >expected <<-EOF &&
->
-> This one is fairly obvious, since the test says 'deleted submodule', but
-> we no longer delete the submodule in the setup.
->
-> > @@ -779,9 +780,8 @@ test_expect_success 'diff --submodule=3Ddiff with .=
-git file' '
-> >       diff_cmp expected actual
-> >  '
-> >
-> > -mv sm2 sm2-bak
-> > -
-> >  test_expect_success 'deleted submodule with .git file' '
-> > +     mv sm2 sm2-bak &&
-> >       git diff-index -p --submodule=3Ddiff HEAD >actual &&
-> >       cat >expected <<-EOF &&
-> >       Submodule sm1 $head7...0000000 (submodule deleted)
-> > @@ -804,9 +804,9 @@ test_expect_success 'deleted submodule with .git fi=
-le' '
-> >       diff_cmp expected actual
-> >  '
-> >
-> > -echo submodule-to-blob>sm2
-> > -
-> >  test_expect_success 'typechanged(submodule->blob) submodule with .git =
-file' '
-> > +     test_when_finished "rm sm2 && mv sm2-bak sm2" &&
-> > +     echo submodule-to-blob>sm2 &&
-> >       git diff-index -p --submodule=3Ddiff HEAD >actual &&
-> >       cat >expected <<-EOF &&
-> >       Submodule sm1 $head7...0000000 (submodule deleted)
-> > @@ -836,9 +836,6 @@ test_expect_success 'typechanged(submodule->blob) s=
-ubmodule with .git file' '
-> >       diff_cmp expected actual
-> >  '
-> >
-> > -rm sm2
-> > -mv sm2-bak sm2
->
-> This is the original case that Junio flagged, which I think is an almost
-> correct use of test_when_finished, since we do get back to an earlier
-> state before this string of tests, but not to the state before the
-> actual test with the test_when_finished.
->
-> If we want to use test_when_finished here (which I think we do), we
-> should add another test_when_finished to remove the dependency between
-> the two tests. like so:
->
->   test_expect_success 'deleted submodule with .git file' '
->   +     test_when_finished "mv sm2-bak sm2" &&
->         mv sm2 sm2-bak &&
->     git diff-index -p --submodule=3Ddiff HEAD >actual &&
->
-> ...
->
->  test_expect_success 'typechanged(submodule->blob) submodule with .git fi=
-le' '
->         test_when_finished "rm sm2 && mv sm2-bak sm2" &&
-> + mv sm2 sm2-bak &&
->
-> Currently, they're still dependent because one creates sm2-bak and the
-> other moves it back, but if we have each test restore sm2, there will be
-> no more dependency.
->
+Create a new reprepare_alt_odb() method that is a similar wrapper around
+prepare_alt_odb(). Call it from reprepare_packed_git() under the object
+read lock to avoid readers from interacting with a potentially
+incomplete odb being added to the odb list.
 
-That all makes sense. Thanks for the recommendations
+prepare_alt_odb() already avoids adding duplicate odbs to the list
+during its progress, so it is safe to call it again from
+reprepare_alt_odb() without worrying about duplicate odbs.
+
+This change is specifically for concurrent changes to the repository, so
+it is difficult to create a test that guarantees this behavior is
+correct. I manually verified by introducing a reprepare_packed_git() call
+into get_revision() and stepped into that call in a debugger with a
+parent 'git log' process. Multiple runs of reprepare_alt_odb() kept
+the_repository->objects->odb as a single-item chain until I added a
+.git/objects/info/alternates file in a different process. The next run
+added the new odb to the chain and subsequent runs did not add to the
+chain.
+
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+    object-file: reprepare alternates when necessary
+    
+    This subtlety was notice by Michael Haggerty due to how alternates are
+    used server-side at $DAYJOB. Moving pack-files from a repository to the
+    alternate occasionally causes failures because processes that start
+    before the alternate exists don't know how to find that alternate at
+    run-time.
+    
+    Thanks,
+    
+     * Stolee
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1490%2Fderrickstolee%2Fstolee%2Freprepare-alternates-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1490/derrickstolee/stolee/reprepare-alternates-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1490
+
+ object-file.c  | 6 ++++++
+ object-store.h | 1 +
+ packfile.c     | 1 +
+ 3 files changed, 8 insertions(+)
+
+diff --git a/object-file.c b/object-file.c
+index 939865c1ae0..22acc7fd8e9 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -944,6 +944,12 @@ void prepare_alt_odb(struct repository *r)
+ 	r->objects->loaded_alternates = 1;
+ }
+ 
++void reprepare_alt_odb(struct repository *r)
++{
++	r->objects->loaded_alternates = 0;
++	prepare_alt_odb(r);
++}
++
+ /* Returns 1 if we have successfully freshened the file, 0 otherwise. */
+ static int freshen_file(const char *fn)
+ {
+diff --git a/object-store.h b/object-store.h
+index 1a713d89d7c..750c29daa54 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -56,6 +56,7 @@ KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
+ 	struct object_directory *, 1, fspathhash, fspatheq)
+ 
+ void prepare_alt_odb(struct repository *r);
++void reprepare_alt_odb(struct repository *r);
+ char *compute_alternate_path(const char *path, struct strbuf *err);
+ struct object_directory *find_odb(struct repository *r, const char *obj_dir);
+ typedef int alt_odb_fn(struct object_directory *, void *);
+diff --git a/packfile.c b/packfile.c
+index 79e21ab18e7..2b28918a05e 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1008,6 +1008,7 @@ void reprepare_packed_git(struct repository *r)
+ 	struct object_directory *odb;
+ 
+ 	obj_read_lock();
++	reprepare_alt_odb(r);
+ 	for (odb = r->objects->odb; odb; odb = odb->next)
+ 		odb_clear_loose_cache(odb);
+ 
+
+base-commit: d15644fe0226af7ffc874572d968598564a230dd
+-- 
+gitgitgadget
