@@ -2,107 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC2ADC678DB
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 03:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 754A9C61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 03:44:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbjCFDbX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Mar 2023 22:31:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47724 "EHLO
+        id S229710AbjCFDoR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Mar 2023 22:44:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229457AbjCFDbW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Mar 2023 22:31:22 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBEDCEF9C
-        for <git@vger.kernel.org>; Sun,  5 Mar 2023 19:31:17 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id g3so33088076eda.1
-        for <git@vger.kernel.org>; Sun, 05 Mar 2023 19:31:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678073476;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5Wc0LLD8O1lubJRjV5TyJEDsFyYo7grq/fFPeSXGMUA=;
-        b=K5kZF005/GVlXHYryMN1168C48pkpZ+sipI7TrCOoflAZWV+p8Csy5THAGE1OY2TkD
-         X12OirDTz5yr8MDuC/tuFo3BQQ8/STezilNQChwX9kKBi2dsTS21BMo99Iofct1ZgybJ
-         GPtM0FFO1DCmrLBkHrPX6NekuWHc6mJldtW7MNN11RqSIyUWjM1bqgw9MQPHjKsj6mef
-         j8dw+oa89lOHNmNMmuTSObvOOB8rLJHjjHvYq/t/aeo2ETqs2f6siznPkEZE7dbA+HSO
-         fEh1sRJDovecFnM7+OVgb48tg1hRGY3AG7C3KdGCjd3o2wlguP7Vls6sNNp0xK+HS44K
-         4OSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678073476;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5Wc0LLD8O1lubJRjV5TyJEDsFyYo7grq/fFPeSXGMUA=;
-        b=X/bRk6m5Camh9AblSL1n390dNh5Qcwwn9PernRB7dR0+8409yBjbWG3g2Y6Go9jVF/
-         PsUdKpyK6u1JxQ57MVn+GZo1YYd83rhyRr4hvaKSgcQgClypsOI/zP4S7kzGhpQHdi2q
-         EqpLpMIJzh3lFVqnSntGLh3LlKgYsVWtOPa1Byhst2sdHKRalAc5bEToC18tLZDbWCNr
-         kfdcaxBUk1KvKd7fAH2goDwrp3dL9/HzA/C+PXlax1maSX8hwmZ5JXjuPm8X9NBHcb67
-         M6tG9jG3ruRaFzEtwALxcdPvr3iuL51G9tiESHN72zxW/dWXyDvUOk9CP13oyQuxTFJD
-         u5Rw==
-X-Gm-Message-State: AO0yUKXLKJNVcap0yi394fP7Bud0CiwXdOUVfCEDnM7kFRrXLrwgVe8L
-        uvMrbunByjh+/GS1BPMUVFqLAFE0PsJtStcY3os=
-X-Google-Smtp-Source: AK7set+obVoG80UN9gZkoiY+Mqy88l1ypc0ottmv/IbEcPuT74L5PeqtbD7VqBN1ya65b3EZN0bDJ25k7K0Jn5QESnU=
-X-Received: by 2002:a50:8758:0:b0:4ab:49b9:686d with SMTP id
- 24-20020a508758000000b004ab49b9686dmr4969959edv.1.1678073476153; Sun, 05 Mar
- 2023 19:31:16 -0800 (PST)
+        with ESMTP id S229457AbjCFDoQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Mar 2023 22:44:16 -0500
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [IPv6:2001:470:ea4a:1:5054:ff:fec7:86e4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2904DEB75
+        for <git@vger.kernel.org>; Sun,  5 Mar 2023 19:44:14 -0800 (PST)
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp.gentoo.org (Postfix) with ESMTPS id 7EC6B341218
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 03:44:12 +0000 (UTC)
+Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
+        by grubbs.orbis-terrarum.net (Postfix) with ESMTP id 726E52603E6
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 03:44:11 +0000 (UTC)
+Received: (qmail 20754 invoked by uid 10000); 6 Mar 2023 03:44:11 -0000
+Date:   Mon, 6 Mar 2023 03:44:11 +0000
+From:   "Robin H. Johnson" <robbat2@gentoo.org>
+To:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "Robin H. Johnson" <robbat2@gentoo.org>,
+        Michael Henry <git@drmikehenry.com>
+Subject: Re: [RFC/PATCH] bundle: turn on --all-progress-implied by default
+Message-ID: <robbat2-20230306T033734-620860556Z@orbis-terrarum.net>
+References: <80beb487-cd93-06ed-88cf-87a96a829ff6@drmikehenry.com>
+ <Y/voNv1OQ1Cf/N5a@coredump.intra.peff.net>
+ <xmqqv8jhcvrq.fsf@gitster.g>
+ <ZAJ6oI3clNH2O3R7@coredump.intra.peff.net>
+ <xmqqpm9pcu6t.fsf@gitster.g>
+ <ZAKexHiit5vOmv7M@coredump.intra.peff.net>
+ <ZAKi8MzGWk5PZUJk@coredump.intra.peff.net>
+ <ZAMb8LSpm2gOrpeY@coredump.intra.peff.net>
+ <ZAMjkffYmp+DNmr+@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <961e68d7-5f43-c385-10fa-455b8e2f32d0@haller-berlin.de>
- <374f83c2-7bf0-38be-26ae-de28340c37d2@dunelm.org.uk> <f28bb5a7-ec68-dce2-9b63-7bfb5330c33e@haller-berlin.de>
- <c237c1e3-5cd0-503d-ff4b-96f645a659f3@haller-berlin.de> <CAPx1Gvdik+QhTw8U1vd0cW1yZ9GbgDpmW7apxnXdY=E0okLpTQ@mail.gmail.com>
- <347052f1-dd7d-dc72-6171-a858eea94747@haller-berlin.de>
-In-Reply-To: <347052f1-dd7d-dc72-6171-a858eea94747@haller-berlin.de>
-From:   Chris Torek <chris.torek@gmail.com>
-Date:   Sun, 5 Mar 2023 19:31:04 -0800
-Message-ID: <CAPx1Gvc+rBMe1bsg8XW_DyPUN9aJu9tQyhMLP0Zu-aeWCkzSGw@mail.gmail.com>
-Subject: Re: When exactly should REBASE_HEAD exist?
-To:     Stefan Haller <lists@haller-berlin.de>
-Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ti/BKzaA1nnca168"
+Content-Disposition: inline
+In-Reply-To: <ZAMjkffYmp+DNmr+@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 4, 2023 at 12:36=E2=80=AFAM Stefan Haller <lists@haller-berlin.=
-de> wrote:
-> From what I can see, the current behavior of the .git/rebase-merge/amend
-> file was done in 2.12, that would be more than good enough for me. Did I
-> miss any changes to the behavior since then?
 
-Probably not - but `git status` remains the right place to decode the
-information, since it will be updated appropriately whenever this changes.
+--ti/BKzaA1nnca168
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I'm surprised to hear that worktrees play a role in this. Do you have
-> more details about this?
+On Sat, Mar 04, 2023 at 05:55:13AM -0500, Jeff King wrote:
+=2E..
+> I'm marking it as "RFC" because it's undoing some of what Robin (cc'd)
+> did in the commit referenced below. But I remain unconvinced that it's a
+> useful direction.
+> -- >8 --
+> Subject: bundle: turn on --all-progress-implied by default
+(snip)
 
-$ git worktree add foo
-$ cd ../foo
-$ git rebase -i HEAD~2
+Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
 
-puts the rebase-todo file into
-`.git/worktrees/foo/rebase-merge/git-rebase-todo`;
-all the status files will likewise be in the `.git/worktrees/foo/`
-directory.
++1 to at least roll it into a RC.
 
->> It would be best if `git status`
->> reported all of this information directly ...
+IIRC this was a mechanical mapping to expose the pack options into the
+bundle command; and a cleanup is worthwhile.
 
-> Yes, that would be nice, but based on what state would it provide this
-> information? Are you suggesting that some new file should be added to
-> .git/rebase-merge/ to keep track of it (more reliably than the amend
-> file does today), or could the information be derived somehow from what
-> exists already?
+(snip)
+> diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+> index 7d40994991e..978c5b17ba5 100755
+> --- a/t/t6020-bundle-misc.sh
+> +++ b/t/t6020-bundle-misc.sh
+> @@ -606,4 +606,10 @@ test_expect_success 'verify catches unreachable, bro=
+ken prerequisites' '
+>  	)
+>  '
+> =20
+> +test_expect_success 'bundle progress includes write phase' '
+> +	GIT_PROGRESS_DELAY=3D0 \
+> +		git bundle create --progress out.bundle --all 2>err &&
+> +	grep 'Writing' err
+> +'
+> +
+>  test_done
 
-I don't know which parts are reliably derive-able today, but to
-the extent that `git status` *can't* provide the necessary information,
-I'd call that a bug in `gitt status`, to be fixed by saving that informatio=
-n
-somewhere. Until it exists, there's nothing you can do, but if and when
-(a) it does exist and (b) `git status` provides it, it won't matter
-whether it's in some added worktree, or moves around or changes
-form: you'll get it in a reliable fashion.
+Suggestion: How about adding a test for --quiet that ensures no other
+output?
 
-In other words, this is not helpful *yet*. :-)
+--=20
+Robin Hugh Johnson
+Gentoo Linux: Dev, Infra Lead, Foundation Treasurer
+E-Mail   : robbat2@gentoo.org
+GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
+GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
 
-Chris
+--ti/BKzaA1nnca168
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iQKTBAABCgB9FiEEveu2pS8Vb98xaNkRGTlfI8WIJsQFAmQFYYlfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEJE
+RUJCNkE1MkYxNTZGREYzMTY4RDkxMTE5Mzk1RjIzQzU4ODI2QzQACgkQGTlfI8WI
+JsQQjQ//dzbtrqJaRrGR8sQXF+1ToubTQz6jEM4qSX0KdSdys+mTjucppKAlRgiB
+UnjVb+3oojeaR5yX3basPGTkBW9B75qd/2/rCAprvdpn85ANYrRwrCSx0540YQhL
+v0Egm/BtDJGGfQPfGqJ7IPXtp0BK05gn4hdlRxLmgyvMyfGMsS80HVwjpQbkK3lz
+Dbv/aYaR4aAVlAppdPAfZxH4oLmhXlFQfSDpI1BGHOYuBU72y/ds6xY6hnisiVfH
+61lCVTv+fJGpTOawKhxp72JeQFOKRHlVFIiIYxh22HVc4JJeOdDFs8x/lqvlibnK
+PW+wMBhVlLpM1gfo6RiA2r7IBfja1nM4WaIn3KQ9TDDogoZXdSyfRrRM77dP9lDK
+n0Y0RAzIfmWz3zFPE4EJkw1oup1LPEk/W5nBc82LbJYh2BEy5rrojsy+bOYOZKYp
+b1T9b79pE841IfUEBnveA/O+Zh1Zj/pHAPPHBQAfJj2frJf73oYjOxYRD0Ayr0Ts
+rFhS50hGHnyyo5s774WGxJbITNI9nlWQR/V9IzjrcQ8ACaBGbKLNxpb648bLljD7
+OlrTKbei8FHU1+KcWksVLOSb3H4SlmsD3qdX443WSFzGnqMh6ICkCcSLzPupzNhU
+40zsB4YYa/cDkyC4w2vsoHCQfUqf8UkyriRO0+3pehmkOBA6Vt8=
+=xaSw
+-----END PGP SIGNATURE-----
+
+--ti/BKzaA1nnca168--
