@@ -2,64 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3569BC61DA4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 17:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB26FC64EC4
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 17:36:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230246AbjCFRfD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 12:35:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42542 "EHLO
+        id S230297AbjCFRgY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 12:36:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231148AbjCFRe5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 12:34:57 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE4B869232
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 09:34:25 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id i3so11234094plg.6
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 09:34:25 -0800 (PST)
+        with ESMTP id S230049AbjCFRgQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 12:36:16 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AEF76A06F
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 09:35:41 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id b20so6332964pfo.6
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 09:35:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678123955;
+        d=gmail.com; s=20210112; t=1678124077;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=85InkN064XQF/H1rT8dQ9qnx1pd7oA7w43n1ocZWNe4=;
-        b=i6L8MjI98uILMJHk8/y05jB21I55ppiE1aUyS8G1U3DB1DrfrCg/K2NVEQ4FcZQYJ2
-         3Um2H/GgrwVE/uAZiKOUoKUZqiWrN9F30cBYyQ3H4KXDWIMJQ7H7yyWz8Ct6fLNtOsG3
-         q4D+iZzOkvIX7SP5dF7Rz0IW9Cf2tCOVnYJMp3kriQw3sHDgWKCF2tPNO1vt/P4qSegL
-         T4hLmJ5YL+yhsZLozZ9jFVUqmu66KBmhtUmUoFyman5CZw9NoqE/b2Wnv8sFAgE555QV
-         a/N9ugkQppzHNj9xzZo/PfgqO48DmBJ6Hz/+xokYTiivJfn0353PnN/Jqz0/7fiWa+Y1
-         Zmkg==
+        bh=vF0zaCocFOqSQnqExP5OLYYkZTaj2i6Sfbil1IAmTHo=;
+        b=LlAgTXncUnoMVY19FPqVX7h/QUo7yhVYh6f26qIw+DD99eXIAxw0UWmJ00ChqJknLR
+         TxYEO5p52i9VjX1n4wPplaIHC2xBs5m9++MfB9IiNkJdA0jxdf4RIuWQTKbjC/Bz/zdh
+         PV3UUaLGJt4RyBJYJbeB1mC+6m9WtU+SWiHABF3NtF3XcBjmylPAv/ObN7mGwSKiaF6x
+         Gy5ozn2GGD1a6azGXYnFz+tDhf0qtHyAwo0LZxw2O9j1yzQXzU+DzZKj4jT0I4VZSkq4
+         0xOIMTEkZopebbFrQ5Szhd88QoUZxrJm5H2zzS3+tgHHd1+uHR7cEYw59TMDhhJ31cd3
+         dc6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678123955;
+        d=1e100.net; s=20210112; t=1678124077;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=85InkN064XQF/H1rT8dQ9qnx1pd7oA7w43n1ocZWNe4=;
-        b=WhEgxoaJfNxYwtBUlSYy2VOZ+933RPNi3CI1ybnZJ+/71Gf5oNrOp/exbFfsmbUFHs
-         uiymfj+NGW0iuammx0tiKXpt1yK47bVCbST87xSmMTqiXAgKBlNhly78jBQlhoAHMY9m
-         rOLliePt4/Wd1jdTkOAMfqTZlZSpl/h+hRZdMbfsamwzqvQohPadQHIihQ+5/MLxejm4
-         KIyFUmWIls9Yt102eiY/hm4vuZaDDXmEStG14pwhBOYrodXnHozLZIN5/bxgaK1VDOnw
-         wj/G58KYOol2cfglSS0663BxoKQFyqStGRcA1z22/uGYYQ/2/hg1VFK2F7fCVone3Qy2
-         B16Q==
-X-Gm-Message-State: AO0yUKX6yWVaadVXafvBYg1UKn7OJft3tydOY/lq4VOIBdB1HEu9/qee
-        x5P4D5sF3clBc1KlL+ao782EmSXgK2k=
-X-Google-Smtp-Source: AK7set9yCZCqGvANWhZpFA3cYq8FLLx7b0ntsH5DrLbwRPT+ZngKAcQu+VF78PbEZ4cXzvqN9AMfig==
-X-Received: by 2002:a17:902:aa02:b0:19e:2eb5:712d with SMTP id be2-20020a170902aa0200b0019e2eb5712dmr10826615plb.25.1678123955173;
-        Mon, 06 Mar 2023 09:32:35 -0800 (PST)
+        bh=vF0zaCocFOqSQnqExP5OLYYkZTaj2i6Sfbil1IAmTHo=;
+        b=2CsXjLAY9E8A2oGvTgRYXVhyJRfDwwDDa9w8ivpwA3UJBoxjuQC9Bakmj0dALQCDq6
+         w3LO3htouhw6WkRloh9SMDvzAmpE64CsMAVk1Uz+Qfg1wB40HMOM57jNBKndj4t+wEjK
+         YLUyZuAnqXrnHO+0aPdFLdWCjU6PQSEEvNfe+cMKwhQhnio8dfM7FAxFN6f4P2+Qgiyz
+         KMuTi+PSKSuxnJ350erb1DrRVHGks1/R2KRNHo60hGXhISK1DJjbt54ZaliE7ch6rgST
+         lOH5KoXjibyB9/x+yiQdrFttS1nzNw9d+WukrCjiC3/4Yu4wUfe96lsQYlJtvgBJpQyk
+         bx1w==
+X-Gm-Message-State: AO0yUKUwgSE0foeAwzN3DxP2usC5DLkICKbVIHXJI0sGgccqb1mv+7Qi
+        5tTg7r6Utp0azLw6CPXsL1Y4sUusSU4=
+X-Google-Smtp-Source: AK7set/BScpupKAKCoyNi5kkTOnSp0nP9ZPa1a8+I8+EW+Rt/V3mV8a+r8n3q+RrjxGrK1Zl2VGgcg==
+X-Received: by 2002:a62:1c58:0:b0:5e3:16fc:b58e with SMTP id c85-20020a621c58000000b005e316fcb58emr10271801pfc.21.1678124075823;
+        Mon, 06 Mar 2023 09:34:35 -0800 (PST)
 Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id b2-20020a170903228200b001994a0f3380sm6977186plh.265.2023.03.06.09.32.34
+        by smtp.gmail.com with ESMTPSA id a22-20020a62bd16000000b00592eb6f239fsm6454472pff.40.2023.03.06.09.34.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 09:32:34 -0800 (PST)
+        Mon, 06 Mar 2023 09:34:35 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Edmundo Carmona Antoranz <eantoranz@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] sequencer - tipped merge strategy
-References: <20230303145311.513960-1-eantoranz@gmail.com>
-        <CABPp-BGOtsjgfN5f=dSb0ZSEx8nzFs6SKrUm=2TtPPH5cKa4cA@mail.gmail.com>
-Date:   Mon, 06 Mar 2023 09:32:34 -0800
-In-Reply-To: <CABPp-BGOtsjgfN5f=dSb0ZSEx8nzFs6SKrUm=2TtPPH5cKa4cA@mail.gmail.com>
-        (Elijah Newren's message of "Sat, 4 Mar 2023 12:31:50 -0800")
-Message-ID: <xmqq8rg9bxal.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     Michael Henry <git@drmikehenry.com>, git@vger.kernel.org
+Subject: Re: `git bundle create -` may not write to `stdout`
+References: <80beb487-cd93-06ed-88cf-87a96a829ff6@drmikehenry.com>
+        <Y/voNv1OQ1Cf/N5a@coredump.intra.peff.net>
+        <xmqqv8jhcvrq.fsf@gitster.g>
+        <ZAJ6oI3clNH2O3R7@coredump.intra.peff.net>
+        <xmqqpm9pcu6t.fsf@gitster.g>
+        <ZAKexHiit5vOmv7M@coredump.intra.peff.net>
+        <ZAKi8MzGWk5PZUJk@coredump.intra.peff.net>
+Date:   Mon, 06 Mar 2023 09:34:35 -0800
+In-Reply-To: <ZAKi8MzGWk5PZUJk@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 3 Mar 2023 20:46:24 -0500")
+Message-ID: <xmqq4jqxbx78.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,25 +72,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Having read the rest of this thread, I notice you pointed out to Junio
-> that you want to amend a commit in the history of the merge,
-> suggesting you are just modifying the commit message (or maybe
-> author/committer info).  More generally, I _think_ your usecase and
-> justification for this patch could be worded something like:
->
-> """
-> We often rebase with `--rebase-merges`, `--interactive`, and
-> `--keep-base` (or equivalent command line flags) and only modify
-> commit metadata during the rebase.  Since we do not modify any files,
-> we would like the rebase to proceed without conflicts.
+> Oh, hmph. I didn't realize that both my patch and yours are touching a
+> shared options-parser that affects both reading and writing. So the
+> patch by itself is fixing "git bundle create -" but breaking "git bundle
+> verify -". We either need to teach the reading side to handle "-", or we
+> have to teach parse_options_cmd_bundle() to handle the two cases
+> differently.
 
-It makes very much sense to focus on this narrow but useful use
-case, and I view it a very natural extension to already existing "if
-we just pick without any user interaction a commit on top of its
-current base, the we do not do anything, fast-forward and just
-pretend we picked it".  IOW, shouldn't it something the sequencer
-machinery should be able to do natively without forcing the user to
-specify a new merge strategy?
+Yes.  Teaching that "-" is to read from the standard input to
+consumers would be a natural thing to do, with the well-understood
+escape hatch to use "./-" if the user really means a file.
 
+Thanks.
