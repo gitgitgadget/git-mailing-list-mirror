@@ -2,58 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ACD5C64EC4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 19:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73831C61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 20:13:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbjCFT7P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 14:59:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36476 "EHLO
+        id S229684AbjCFUM7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 15:12:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbjCFT7N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 14:59:13 -0500
+        with ESMTP id S229651AbjCFUM5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 15:12:57 -0500
 Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63EE667009
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 11:58:43 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id n203-20020a25dad4000000b0091231592671so11573587ybf.1
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 11:58:43 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0459964225
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 12:12:26 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id x64-20020a25ce43000000b00ae6d5855d78so11731189ybe.12
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 12:12:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678132679;
+        d=google.com; s=20210112; t=1678133545;
         h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=gQqEwnSJrttmZlvSZYcCa7u2mFFyL+rjyPzdCvWLwcM=;
-        b=SdQ+8NGNLWO8F0f3jVvzBmzFqn7/m0mRUX1Cwn3r4AkUPy41idB79+ZkYIG4CWbA9y
-         mb22w9Sj+35/hp5dX7JJ3XWdIQGvjOHPKTwvmQT9PYljT9cclU6L9ADRF6hnUnC3nVQi
-         nCeFpL5O+5McT//A8lUNlvI1WeYvlJ/ftu0zGEPjE+/1Qy4nxeXtNF5Ii2nvUhWm7IiT
-         o/s5NwPbTF0WQL4vJ5jXT0JIPZuV15OYVoGDSv/NXz555tB9WSASckCasA5PmGTV7dXG
-         hFoOBW2BvUkUnn+o08Z5nqoolHBR7WEOwt7zhpcRFUd3OWrgjughwdpKgTBXKGzGylRa
-         2ZIw==
+        bh=AuhkN/NYb1YPMLARrfYBK1SIPAxL1korgMazM9WYS6M=;
+        b=ha1gwB0lGmdOhYzA8YouOmoj+wixz0QRs3xLlclQdEaCmCDzfMtgPrU7Ieb02lY4TD
+         J1a8K3pYjGtcD7vP7Ho6P3gIqDD6q5cgUXnowUwuxsFVjIyvyIE6+4oOJgHtK6YHAxcz
+         xck7pCgSFNj2H8TZAofvk+c/iAvng2W+GQeHoD2TezAShKyz5clHvQ61pTW1xH7lf+nI
+         edoCl/sqI9vAPgpNQMYPgvXN+uaXRYSWoR8GnmILdBytYr/xfpPkIx4Ll27zsktfH925
+         MNUyAJ0R37wNU+g/K3p9Stz9/Hvz09dAmnqofsBifz29aC9GeT9DHhq7gyCNxiq6pZLs
+         xjDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678132679;
+        d=1e100.net; s=20210112; t=1678133545;
         h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gQqEwnSJrttmZlvSZYcCa7u2mFFyL+rjyPzdCvWLwcM=;
-        b=Vw0I13tuL2YzSit26UajKNwbEzyvoSZXGTkkwIcILhg7Fe4eMu9qvWg+IwgmdN9zcG
-         4tB6Ty/ywydnj0khitQC83lGIoacEYh+n+vKM3vS4qQdtPuBF30gKgZsf2L61EYsTeaq
-         diuks0jNpUafsQ09LqoYPZ8trY3wDc7yd3VKmh80ElQNkiSKdnxxePuSYI6ObR8FxET7
-         SqQgycXGYViGKpPce2S3PiVUbSZQeuZLgJrMVOfG8+ECfNIhiwA3juzkUNo/TKPhrpAt
-         rJg9A50bUxb9BA/EyyGCSmOM03enq2Rm+WkaJEVKB4+PbYXNMGC6rEeFud4xBZusKjSP
-         4Twg==
-X-Gm-Message-State: AO0yUKXWcfA/lpno1gYwsIIUZPa/9wypTt1Bj35dSceyqCuKDVDUwoe8
-        NHVwbyocSmuSDsGupNmo5BF5Qhnqze2Bz+xfM16n
-X-Google-Smtp-Source: AK7set+1d2mzdrXu1MONtV4Wbn/KC+tFVOe90T+vzveo/Q+8LYHOrM3ow146kmhy/2OKNyUNrMYX4LF0wz5IrWSXt6PU
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:37b6:a998:138:7714])
- (user=jonathantanmy job=sendgmr) by 2002:a81:af62:0:b0:533:9b00:dd0b with
- SMTP id x34-20020a81af62000000b005339b00dd0bmr7831706ywj.2.1678132679079;
- Mon, 06 Mar 2023 11:57:59 -0800 (PST)
-Date:   Mon,  6 Mar 2023 11:57:56 -0800
-In-Reply-To: <pull.1463.git.git.1677631097.gitgitgadget@gmail.com>
+        bh=AuhkN/NYb1YPMLARrfYBK1SIPAxL1korgMazM9WYS6M=;
+        b=sHYrvVdBPkWBcKAZea5Qi6u35Ybzc8b8QULOZoPWIgBkuZ2JDUhoXjNdQvtVWrzE1I
+         Mjt5mlpAOPw0JZE0ZRq/04KerO8adgYA0a37OZgJ8ySUbjNlx3ctKZoB4flqn5C1x2SH
+         kMJSnf1Y+sNQuqNeKfp2G6l76ffFfUjM7YRtZhc8Bc0l+WsR65uLRAh6MhoduZxD4Czv
+         FmYFU/Sw8j7ZCtXzqBn8ktqdqu1RYMiXTL32QdazPBPmGbw57FlI+cnuC4KcbyXmke4j
+         /pdcv0Po3e8hKxxp6W+1MLk+wn8tWV6tm3C/nsygowNI6bGDXfkNqde3yImu+NDyb6TT
+         XoUg==
+X-Gm-Message-State: AO0yUKUpJHW3amW+poyHRwwnQwiJXCeNqBsi/HOi0iGCkNjXxVTymRuk
+        BcYebRiywsRM0wwtgxBsXOQ20UPyNwDRUeM=
+X-Google-Smtp-Source: AK7set8Ub+W4uLZkf6epUvYPlpW92nSc+BTl3fKkmkoMWKXB+lhOfq5WhQbS7LkzBDCgxUWyXV3fxlr4XCEsGG4=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a0d:d8ce:0:b0:52f:ec4:3ad6 with SMTP id
+ a197-20020a0dd8ce000000b0052f0ec43ad6mr3ywe.304.1678133544983; Mon, 06 Mar
+ 2023 12:12:24 -0800 (PST)
+Date:   Mon,  6 Mar 2023 20:12:18 +0000
+In-Reply-To: <c05b33ab29dbce931f9d0ad968fe9eeedc653456.1677631097.git.gitgitgadget@gmail.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.40.0.rc0.216.gc4246ad0f0-goog
-Message-ID: <20230306195756.3399115-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 0/6] [RFC] config.c: use struct for config reading state
-From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <20230306201218.2834756-1-calvinwan@google.com>
+Subject: Re: [PATCH 5/6] config.c: remove current_config_kvi
+From:   Calvin Wan <calvinwan@google.com>
 To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+Cc:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org,
+        Jonathan Tan <jonathantanmy@google.com>,
         Emily Shaffer <nasamuffin@google.com>,
         Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>,
@@ -64,78 +65,265 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
->  * We could add "struct config_reader" to "config_fn_t", i.e.
->    
->    -typedef int (*config_fn_t)(const char *var, const char *val, void
->    *data); +typedef int (*config_fn_t)(const struct config_reader *reader,
->    const char *var, const char *val, void *data);
->    
->    which isn't complex at all, except that there are ~100 config_fn_t
->    implementations [3] and a good number of them may never reference
->    "reader". If the churn is tolerable, I think this a good way forward.
+> From: Glen Choo <chooglen@google.com>
 > 
->  * We could create a new kind of "config_fn_t" that accepts "struct
->    config_reader", e.g.
->    
->    typedef int (*config_fn_t)(const char *var, const char *val, void *data);
->    +typedef int (*config_state_fn_t)(const struct config_reader *reader,
->    const char *var, const char *val, void *data);
->    
->    and only adjust the callers that would actually reference "reader". This
->    is less churn, but I couldn't find a great way to do this kind of
->    'switching between config callback types' elegantly.
-
-To reduce churn, one thing that could be done alongside is to convert
-config-using code (which is...practically the rest of Git) to start
-using the configset interface (we seem to be using configsets internally
-anyway, as evidenced by repo_config()). That way, we would reduce the
-number of implementations of config_fn_t.
-
->  * We could smuggle "struct config_reader" to callback functions in a way
->    that interested callers could see it, but uninterested callers could
->    ignore. One trick that Jonathan Tan came up with (though not necessarily
->    endorsed) would be to allocate a struct for the config value + "struct
->    config_reader", then, interested callers could use "offset_of" to recover
->    the "struct config_reader". It's a little hacky, but it's low-churn.
-
-Indeed, although we should probably use this as a last resort.
-
-> = Questions
+> Add ".config_kvi" to "struct config_reader" and replace
+> "current_config_kvi" with "the_reader.config_kvi", either in-place (in
+> public functions) or by passing "the_reader" to the "*data" arg of
+> callback functions.
 > 
->  * Is this worth merging without the extra work? There are some cleanups in
->    this series that could make it valuable, but there are also some hacks
->    (see 4/6) that aren't so great.
+> Also, introduce a setter function for ".config_kvi", which allows us to
+> enforce the contraint that only one of ".source" and ".config_kvi" can
+> be set at a time (as documented in the comments). Because of this
+> constraint, we know that "populate_remote_urls()" was never touching
+> "current_config_kvi" when iterating through config files, so it doesn't
+> need to store and restore that value.
+> 
+> Signed-off-by: Glen Choo <chooglen@google.com>
+> ---
+>  config.c | 103 ++++++++++++++++++++++++++++++++-----------------------
+>  1 file changed, 61 insertions(+), 42 deletions(-)
+> 
+> diff --git a/config.c b/config.c
+> index 9676734b1b7..c7995148165 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -52,32 +52,28 @@ struct config_source {
+>  #define CONFIG_SOURCE_INIT { 0 }
+>  
+>  struct config_reader {
+> +	/*
+> +	 * These members record the "current" config source, which can be
+> +	 * accessed by parsing callbacks.
+> +	 *
+> +	 * The "source" variable will be non-NULL only when we are actually
+> +	 * parsing a real config source (file, blob, cmdline, etc).
+> +	 *
+> +	 * The "config_kvi" variable will be non-NULL only when we are feeding
+> +	 * cached config from a configset into a callback.
+> +	 *
+> +	 * They cannot be non-NULL at the same time. If they are both NULL, then
+> +	 * we aren't parsing anything (and depending on the function looking at
+> +	 * the variables, it's either a bug for it to be called in the first
+> +	 * place, or it's a function which can be reused for non-config
+> +	 * purposes, and should fall back to some sane behavior).
+> +	 */
+>  	struct config_source *source;
+> +	struct key_value_info *config_kvi;
+>  };
+>  /* Only public functions should reference the_reader. */
+>  static struct config_reader the_reader;
+>  
+> -/*
+> - * FIXME The comments are temporarily out of date since "cf" been moved to
+> - * the_reader, but not current_*.
+> - *
+> - * These variables record the "current" config source, which
+> - * can be accessed by parsing callbacks.
+> - *
+> - * The "cf" variable will be non-NULL only when we are actually parsing a real
+> - * config source (file, blob, cmdline, etc).
+> - *
+> - * The "current_config_kvi" variable will be non-NULL only when we are feeding
+> - * cached config from a configset into a callback.
+> - *
+> - * They should generally never be non-NULL at the same time. If they are both
+> - * NULL, then we aren't parsing anything (and depending on the function looking
+> - * at the variables, it's either a bug for it to be called in the first place,
+> - * or it's a function which can be reused for non-config purposes, and should
+> - * fall back to some sane behavior).
+> - */
+> -static struct key_value_info *current_config_kvi;
+> -
+>  /*
+>   * Similar to the variables above, this gives access to the "scope" of the
+>   * current value (repo, global, etc). For cached values, it can be found via
+> @@ -90,6 +86,8 @@ static enum config_scope current_parsing_scope;
+>  static inline void config_reader_push_source(struct config_reader *reader,
+>  					     struct config_source *top)
+>  {
+> +	if (reader->config_kvi)
+> +		BUG("source should only be set when parsing a config source");
+>  	if (reader->source)
+>  		top->prev = reader->source;
+>  	reader->source = top;
 
-I'm leaning towards merging it now, but can go either way, since the
-cost of churn is limited to one single file, but so are the benefits.
-If it was up to me to decide, I would merge it now, because this opens
-up a lot of work that other contributors could individually do (in
-particular, converting individual config code paths so that we don't
-need to reference the_reader as a global anymore).
+A developer who accidentally sets config_kvi probably has the right
+intention of trying to push source. I think a clearer BUG message here
+(which also doubly functions as a useful comment) would be something
+along the lines of: "configset should not be set when parsing a config
+source".
 
-I don't see 4/6 as a hack. It is true that the nature of the config_fn_t
-callback could change so that passing the reader would end up being
-done in yet another different way, but firstly, I don't think that will
-happen for quite some time, and secondly, it might not happen at all
-(right now, I think what's most likely to happen is that the rest of the
-Git code moves to configsets and only a fraction of the Git code would
-need to do low-level parsing, which would not have a problem passing the
-reader through the data object since they would probably need to pass
-other context anyway).
+> @@ -105,6 +103,14 @@ static inline struct config_source *config_reader_pop_source(struct config_reade
+>  	return ret;
+>  }
+>  
+> +static inline void config_reader_set_kvi(struct config_reader *reader,
+> +					 struct key_value_info *kvi)
+> +{
+> +	if (kvi && reader->source)
+> +		BUG("kvi should only be set when iterating through configset");
+> +	reader->config_kvi = kvi;
+> +}
+> +
 
->  * Is the extra work even worth it?
+ditto
 
-Depends on which extra work, but I think that eliminating the the_reader
-global would really be useful (and, as far as I know, the whole reason
-for this effort). From the Git codebase's perspective, doing this would
-(as far as I know) eliminate the need for pushing and popping cf, and
-make multithreaded multi-repo operations less error-prone (e.g. we
-can spawn a thread operating on a submodule and that thread can itself
-read the configs of nested submodules without worrying about clobbering
-global state...well, there is thread-local storage, but as far as I know
-this is not portable).
+>  static int pack_compression_seen;
+>  static int zlib_compression_seen;
+>  
+> @@ -373,20 +379,17 @@ static void populate_remote_urls(struct config_include_data *inc)
+>  {
+>  	struct config_options opts;
+>  
+> -	struct key_value_info *store_kvi = current_config_kvi;
+>  	enum config_scope store_scope = current_parsing_scope;
+>  
+>  	opts = *inc->opts;
+>  	opts.unconditional_remote_url = 1;
+>  
+> -	current_config_kvi = NULL;
+>  	current_parsing_scope = 0;
+>  
+>  	inc->remote_urls = xmalloc(sizeof(*inc->remote_urls));
+>  	string_list_init_dup(inc->remote_urls);
+>  	config_with_options(add_remote_url, inc->remote_urls, inc->config_source, &opts);
+>  
+> -	current_config_kvi = store_kvi;
+>  	current_parsing_scope = store_scope;
+>  }
+>  
+> @@ -2253,26 +2256,34 @@ int config_with_options(config_fn_t fn, void *data,
+>  	return ret;
+>  }
+>  
+> +struct configset_iter_data {
+> +	struct config_reader *config_reader;
+> +	void *inner;
+> +};
+> +#define CONFIGSET_ITER_INIT { 0 }
+> +
+>  static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
+>  {
+>  	int i, value_index;
+>  	struct string_list *values;
+>  	struct config_set_element *entry;
+>  	struct configset_list *list = &cs->list;
+> +	struct configset_iter_data *iter_data = data;
+>  
+>  	for (i = 0; i < list->nr; i++) {
+> +		struct key_value_info *kvi;
+>  		entry = list->items[i].e;
+>  		value_index = list->items[i].value_index;
+>  		values = &entry->value_list;
+>  
+> -		current_config_kvi = values->items[value_index].util;
+> +		kvi = values->items[value_index].util;
+> +		config_reader_set_kvi(iter_data->config_reader, kvi);
+>  
+> -		if (fn(entry->key, values->items[value_index].string, data) < 0)
+> -			git_die_config_linenr(entry->key,
+> -					      current_config_kvi->filename,
+> -					      current_config_kvi->linenr);
+> +		if (fn(entry->key, values->items[value_index].string, iter_data->inner) < 0)
+> +			git_die_config_linenr(entry->key, kvi->filename,
+> +					      kvi->linenr);
+>  
+> -		current_config_kvi = NULL;
+> +		config_reader_set_kvi(iter_data->config_reader, NULL);
+>  	}
+>  }
+>  
+> @@ -2607,10 +2618,14 @@ static void repo_config_clear(struct repository *repo)
+>  	git_configset_clear(repo->config);
+>  }
+>  
+> -void repo_config(struct repository *repo, config_fn_t fn, void *data)
+> +void repo_config(struct repository *repo, config_fn_t fn, void *data_inner)
+>  {
+> +	struct configset_iter_data data = CONFIGSET_ITER_INIT;
+> +	data.inner = data_inner;
+> +	data.config_reader = &the_reader;
+> +
+>  	git_config_check_init(repo);
+> -	configset_iter(repo->config, fn, data);
+> +	configset_iter(repo->config, fn, &data);
+>  }
 
->  * Do any of the ideas seem more promising than the others? Are there other
->    ideas I'm missing?
+I'm not sure I agree with changing *data to *data_inner. An API caller
+would be wondering why this function has a *data_inner signature vs
+*data for other functions in config. You could instead change `struct
+configset_iter_data data` to `struct configset_iter_data data_outer` to
+preserve the function signature.
 
-Hopefully I answered this in my answers to the other questions.
+>  
+>  int repo_config_get_value(struct repository *repo,
+> @@ -2712,11 +2727,15 @@ static void read_protected_config(void)
+>  	config_with_options(config_set_callback, &data, NULL, &opts);
+>  }
+>  
+> -void git_protected_config(config_fn_t fn, void *data)
+> +void git_protected_config(config_fn_t fn, void *data_inner)
+>  {
+> +	struct configset_iter_data data = CONFIGSET_ITER_INIT;
+>  	if (!protected_config.hash_initialized)
+>  		read_protected_config();
+> -	configset_iter(&protected_config, fn, data);
+> +	data.inner = data_inner;
+> +	data.config_reader = &the_reader;
+> +
+> +	configset_iter(&protected_config, fn, &data);
+>  }
+
+ditto
+
+>  
+>  /* Functions used historically to read configuration from 'the_repository' */
+> @@ -3823,8 +3842,8 @@ int parse_config_key(const char *var,
+>  const char *current_config_origin_type(void)
+>  {
+>  	int type;
+> -	if (current_config_kvi)
+> -		type = current_config_kvi->origin_type;
+> +	if (the_reader.config_kvi)
+> +		type = the_reader.config_kvi->origin_type;
+>  	else if(the_reader.source)
+>  		type = the_reader.source->origin_type;
+>  	else
+> @@ -3869,8 +3888,8 @@ const char *config_scope_name(enum config_scope scope)
+>  const char *current_config_name(void)
+>  {
+>  	const char *name;
+> -	if (current_config_kvi)
+> -		name = current_config_kvi->filename;
+> +	if (the_reader.config_kvi)
+> +		name = the_reader.config_kvi->filename;
+>  	else if (the_reader.source)
+>  		name = the_reader.source->name;
+>  	else
+> @@ -3880,16 +3899,16 @@ const char *current_config_name(void)
+>  
+>  enum config_scope current_config_scope(void)
+>  {
+> -	if (current_config_kvi)
+> -		return current_config_kvi->scope;
+> +	if (the_reader.config_kvi)
+> +		return the_reader.config_kvi->scope;
+>  	else
+>  		return current_parsing_scope;
+>  }
+>  
+>  int current_config_line(void)
+>  {
+> -	if (current_config_kvi)
+> -		return current_config_kvi->linenr;
+> +	if (the_reader.config_kvi)
+> +		return the_reader.config_kvi->linenr;
+>  	else
+>  		return the_reader.source->linenr;
+>  }
+> -- 
+> gitgitgadget
+> 
+> 
+> 
