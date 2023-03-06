@@ -2,94 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30C52C61DA4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 17:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59911C6FD19
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 17:43:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230092AbjCFRki (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 12:40:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51926 "EHLO
+        id S230005AbjCFRnI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 12:43:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbjCFRkf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 12:40:35 -0500
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 743B96A06F
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 09:39:53 -0800 (PST)
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-53d277c1834so21997007b3.10
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 09:39:53 -0800 (PST)
+        with ESMTP id S230079AbjCFRnG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 12:43:06 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FB006BC0E
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 09:42:26 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id a7so6329320pfx.10
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 09:42:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678124247;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gMjsnxkE4y0igt1AxW996OdTBsw/u9fmCel3YquC59g=;
-        b=pQqfyvbXm+msQsF/YZEyVLWZ9evGWUZ5S3S9H8TUUGOsewanqoyPVBFADrxzvqMK90
-         l0YkL8OD9NFDyMYO6NwNpERa5RHnN6fVnNY/MaT1nCTLnO4gUrkdHyaCH+o6k69AfdqX
-         ooxmPSsKdw6848QS5BdTgR5z2GIt/dvSMoFim7rMjx5RISI3EmMwFIJdZj92kH/yjela
-         TXX9FbFGLW6UJmrbBvcRTcVY81Drh8y0bKnFmyqvLwBa5jhaNO6RaVpC5Wd13QqXzqa0
-         PSlKhKw+dco/0QX1NlshhTDvmU8u9LwutWcM1MXaWEG/1JkoK1ro7QtJNsZ50U73OdI7
-         0gww==
+        d=gmail.com; s=20210112; t=1678124498;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zLjt0epniHP8D2CtPUKz4v0xY/5Lc2G1ysa/9KQREYQ=;
+        b=EsPE2Wjf6huWlDTkjQ3Fwd9XoQdkj/VKCsA5ubFru3+lZg5y85g1gY6uoMI58j0elt
+         mHrIc8kmRgjNyxlE0jZBIy1OQjUx2TMgBX8Z/PBYmBrWp2csoXISkd8XDGC9IS+OFoZY
+         SHUARBzy4O2L7uegXoacsZKD8ictfwDwz4p3QrF8imeS/Z9XHNP3p0Pzp182fPd2EnNj
+         L7z4Qp/MbkO+zWq9Sdwn8L5VSZZz6IVxt5WlVFoLEKQFaGW/e/cN77hpLNn770lwDL/T
+         K3uuGqwJE5L1Wxtbq8+0wTbeiEA+RBq9o4m1Hyyl15LRE51xiH0GZ7C+o6jJ/Kt5j4Pb
+         nCCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678124247;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gMjsnxkE4y0igt1AxW996OdTBsw/u9fmCel3YquC59g=;
-        b=7+R/g4nIqCAYUzsD/ZOKwHSdMPpmzB5OPMMYw/62zDu5BZuwqsmCCTGKDB7D+YbQbN
-         HV/WfkxRapFeuBZ8iBru/UfiwO2j2Kn6BXFiYM1Y30ijdEJHQ555qq0UiS9QXHMIwSAU
-         Wyd7HqHqxGJu/2cw6H55tJb2J0Y43a6CHODK34JFaNfJMAInKTUAW3hMW9WCKXxVPu0F
-         Qrv9sgNmsuKDkB1+v/SN+j07euUe8Uq0yIZHHC5LQzUixtOVNvHM1ZUFCEMMzCpuOBTj
-         Tj+cSMvXCsz4yfjlimVe4B6MZLql7Rco86cIjUILLmh/EDN6HT3o8GKZmhkD1kqFFKBY
-         6W9w==
-X-Gm-Message-State: AO0yUKW5o9gS9L7G1GwbX3ZGX3wfHHQXwwvUc/s01vUrKJg8tvsSWF51
-        lpHeg4qBe7/AW+E+ZGD+DkHj9O8OxU8cNOsKlvd+Rw==
-X-Google-Smtp-Source: AK7set+8Okt4zQSMvJKLtkhJ3QWclqnA7/u0kvj2xCmz5EgONP8QE0aBFMlG78e2/JHq9kmYEkQtqnEUk3QchsqCHR4=
-X-Received: by 2002:a81:7012:0:b0:533:a15a:d33e with SMTP id
- l18-20020a817012000000b00533a15ad33emr9601218ywc.5.1678124246622; Mon, 06 Mar
- 2023 09:37:26 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678124498;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zLjt0epniHP8D2CtPUKz4v0xY/5Lc2G1ysa/9KQREYQ=;
+        b=pswtQDu/CZgFdIzJvaefQn2QCiVPEK1V5vGLQ+ZdiFhr8tW2tfRg/buWkO9ga67Z6Q
+         NEBdAiT6lsbv4bYUHcDzqLeftAFo6jUu99gikHOhxkTlz0sKbFASCbmUdLd1DLl4F5TY
+         Hzo/LqHOJtcd8bN1KnnkA3B+wQ4iuWDctbvqFhYiBu5lRlbN4pJWtiyz4ndzjPqi6Vpx
+         xcyQwNXQbv92L4VaXBJbitt6R/38/wNnfNDN0KMiTcHFtVOrBnYWCGe/H9WMaQp935bD
+         QZ3okEUVEeOgufF+vUnlYkSh/SV5Jd9gA09g+xPM5r3r68uEC8HRp4LgC0xD14E/fw5Y
+         +XFw==
+X-Gm-Message-State: AO0yUKXMOBjEzsUCeUV943c3FFKhXUzlxMRIrYmhI2hZuGf4pPeDpL4l
+        E/ftxkrleAz4jO5AUjIXbxA=
+X-Google-Smtp-Source: AK7set+DRKqu9KPIWxgKYnlenvEistt/j5iWE6Mjy2sTiZAkuU21EyaE8c8p3gFZRj4BCLB5Lwz5Cw==
+X-Received: by 2002:a62:1bc3:0:b0:5a8:a751:d22 with SMTP id b186-20020a621bc3000000b005a8a7510d22mr11549346pfb.12.1678124498585;
+        Mon, 06 Mar 2023 09:41:38 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id c3-20020aa78c03000000b0058d9058fe8asm6622106pfd.103.2023.03.06.09.41.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Mar 2023 09:41:38 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "Robin H. Johnson" <robbat2@gentoo.org>,
+        Michael Henry <git@drmikehenry.com>, git@vger.kernel.org
+Subject: Re: [RFC/PATCH] bundle: turn on --all-progress-implied by default
+References: <80beb487-cd93-06ed-88cf-87a96a829ff6@drmikehenry.com>
+        <Y/voNv1OQ1Cf/N5a@coredump.intra.peff.net>
+        <xmqqv8jhcvrq.fsf@gitster.g>
+        <ZAJ6oI3clNH2O3R7@coredump.intra.peff.net>
+        <xmqqpm9pcu6t.fsf@gitster.g>
+        <ZAKexHiit5vOmv7M@coredump.intra.peff.net>
+        <ZAKi8MzGWk5PZUJk@coredump.intra.peff.net>
+        <ZAMb8LSpm2gOrpeY@coredump.intra.peff.net>
+        <ZAMjkffYmp+DNmr+@coredump.intra.peff.net>
+Date:   Mon, 06 Mar 2023 09:41:37 -0800
+In-Reply-To: <ZAMjkffYmp+DNmr+@coredump.intra.peff.net> (Jeff King's message
+        of "Sat, 4 Mar 2023 05:55:13 -0500")
+Message-ID: <xmqqzg8paib2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20230209000212.1892457-1-calvinwan@google.com>
- <20230302220251.1474923-2-calvinwan@google.com> <xmqqv8jiheao.fsf@gitster.g>
-In-Reply-To: <xmqqv8jiheao.fsf@gitster.g>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Mon, 6 Mar 2023 09:37:15 -0800
-Message-ID: <CAFySSZABteFiyBYp_S7bur7_K1GkxL3A5DiTiV47iU_t8EpWKQ@mail.gmail.com>
-Subject: Re: [PATCH v9 2/6] submodule: rename strbuf variable
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, chooglen@google.com,
-        newren@gmail.com, jonathantanmy@google.com,
-        phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 2, 2023 at 4:25=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Calvin Wan <calvinwan@google.com> writes:
->
-> > A prepatory change for a future patch that moves the status parsing
-> > logic to a separate function.
-> >
-> > Signed-off-by: Calvin Wan <calvinwan@google.com>
-> > ---
-> >  submodule.c | 23 +++++++++++++----------
-> >  1 file changed, 13 insertions(+), 10 deletions(-)
->
-> > Subject: Re: [PATCH v9 2/6] submodule: rename strbuf variable
->
-> What strbuf variable renamed to what?
->
-> I have a feeling that squashing this and 3/6 into a single patch,
-> and pass buf.buf and buf.len to the new helper function without
-> introducing an intermediate variables in the caller, would make the
-> resulting code easier to follow.
->
-> In any case, nice factoring out of a useful helper function.
->
+Jeff King <peff@peff.net> writes:
 
-A much earlier version squashed those changes together, but it was
-recommended to split those changes up; I think I am indifferent either way
-since the refactoring is clear to me whether it is split up or not.
-https://lore.kernel.org/git/221012.868rllo545.gmgdl@evledraar.gmail.com/
+> I'm actually kind of confused about what happened with 79862b6b77c. If
+> you go to the subthread linked above, you can see that I made similar
+> arguments there, and Junio seemed to agree. Then the next thing I could
+> find is the series appearing in What's cooking:
+>
+>   https://lore.kernel.org/git/xmqqftikxs4z.fsf@gitster-ct.c.googlers.com/
+>
+> marked as "will merge to master". Is there more discussion I couldn't
+> find? Was it accidentally graduated?
+
+I am stumped as well X-<.  It does look like it was merged down by
+accident.  Sorry for the confusion.
