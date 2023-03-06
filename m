@@ -2,117 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15DB1C64EC4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 21:45:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 036E7C64EC4
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 22:19:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229841AbjCFVpV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 16:45:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41908 "EHLO
+        id S229996AbjCFWTa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 17:19:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229795AbjCFVpU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 16:45:20 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D1D84390D
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 13:45:19 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id pl10-20020a17090b268a00b00239ed042afcso7015646pjb.4
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 13:45:19 -0800 (PST)
+        with ESMTP id S229758AbjCFWT2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 17:19:28 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49DB7136EB
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 14:19:27 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id a2so12139771plm.4
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 14:19:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678139118;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1hlcFvu3YenTpWWGAMh0pTGytzU8jfMSN1GVG0Gn3Ik=;
-        b=mCoI+XzirgAt+hOGWFr1l7a+JgrJmBp9umLVX68vPnsmOC4IDmcsu7emJPeMEiaC7W
-         yT19BWiP9X6iX8obQQrS2gCDVM4eHu7LAmP7QPcHpQockdgGOYZMP4v3/pORhYM8mgme
-         dpFqZyUfbWSyusltmyg5CS3MClrXj2imZDv7aYK/KxVhJ/w5xY1d6t1y7Z0mjQ8DE/TR
-         VxIMCRbhaiIJrdlhGY7BkBJ5wAi1b0eycutyq+GePittjHOG4NUDOFwlL8uD+9/ch6qB
-         l6G4J6kPS7AZ4OkHc+r6KJQigqP/kqc3w9pz/+pLRn6+S8dmgeDjPG8fmJp3sQqHbV+V
-         HXhQ==
+        d=atlassian.com; s=google; t=1678141167;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ix/wDzIkv9S4w//YFevbZmskx/vpr0l/zQNbBjyCWyU=;
+        b=hsMDs8Xfi/4byCGPvGwJpfMqe20wu1d0CQ3ShT+7AMfF5Rnc+bKaLEWDR4jQvEF3tn
+         BVaF+jJvrrRLulJMBObVSVP73NfR+IQhoXOX2PnBc8Y49uKGU93lnaWUXRnBjJb93XK9
+         mIEEu4atH11lZOzWpO0CIgzeoIFacnOjmtQD3Qfgi+YHHgmzEznrUkmnCyfR5hb9H2SR
+         4+AAP6E+/D5ceRVWOpC7C4UH+ct8SdfiNoIlm5OypxU/+c5L6H6DYA1XkWefNJKoGp6J
+         qyzJLjDD036bAYebHrrt/dwZA9OJXIpXFeA+UHqTxuFco9HUBUgsJf+EtyHHYPYAeE0d
+         7QUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678139118;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1hlcFvu3YenTpWWGAMh0pTGytzU8jfMSN1GVG0Gn3Ik=;
-        b=i5AhjDB+nX1bJckBCFWl1dE6ioiO/yYiUizgf4O4CSr/3alCJzV8o/+W30xeKp6c7n
-         3IbJYAvEn5As4v3JJvlXgbE0V0JBgWb1Bc+zFSUEmO3RSJNn0poRpBVabSMeiIf5aEe1
-         C7amI37POc+61SflhBEKGZHAf05ZcLO3jdLmndXZCgq2myqgdtarnXqY/MqC3fvc8fRT
-         3bK6M6X93GFy/tiXnVDvFgcpyTn79KTrn9eC70GZvkHUMgLHRPd5/rOxNFjntty/x1XN
-         BQ4Hg27szCp/xqghTd/Y4Sz12iP+zX5ZaXtbOEv4Cb7K9OIpZ8sjBYYC/pa7TScB6QnR
-         Vifg==
-X-Gm-Message-State: AO0yUKXsyIdK4uPZpqjjZQ2L/w16S0e1k4iSRZC5ZUZG5mxR2MfTBEGx
-        7tK1uVVcSTJyCKg6dKGsfw0s2poBIa7Paw==
-X-Google-Smtp-Source: AK7set/ewKWCw+huu65T6N3O0VOyVy971XMZXy/JL1gXii0g3dMX0m6K4KACLYuEyqVsApSgGgVeMgHJSz2JVQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:903:44e:b0:19a:f63a:47db with SMTP id
- iw14-20020a170903044e00b0019af63a47dbmr4996403plb.2.1678139118645; Mon, 06
- Mar 2023 13:45:18 -0800 (PST)
-Date:   Mon, 06 Mar 2023 13:45:16 -0800
-In-Reply-To: <20230306195756.3399115-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20230306195756.3399115-1-jonathantanmy@google.com>
-Message-ID: <kl6l356heeqb.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 0/6] [RFC] config.c: use struct for config reading state
-From:   Glen Choo <chooglen@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        Emily Shaffer <nasamuffin@google.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20210112; t=1678141167;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ix/wDzIkv9S4w//YFevbZmskx/vpr0l/zQNbBjyCWyU=;
+        b=f+og3UQxHtPyxqcjFwXDRsyx4l8ESvXmQh40Q+3rzA1GJ1G7e3FT49E/u2swgBhaF5
+         yDtkgDXZEpntChBM5Rb/q6fVe/DipvsPX9u+Gpy1Vz3liZAomxxsmS+w3Yth1EurtJ1B
+         4UHTs/aCDPF0qW6SqRBI1Pe/faWLRDnT9g9a2sh3PrTcUlB/AKIBgHEVBnuxD5eEf9+T
+         cc4Bqjen0OGc2QSkzFKYtgzuV3EPEASPuUnWxptAm/76uBqmZWqjk/V15u2PwegslIgo
+         Psy/JYeP34RSjRTTaQfzJ5NZCVzY6zy9OEVdAKsHi/hvu+hKu8tJ5ebboboC6FTWijvh
+         vsMQ==
+X-Gm-Message-State: AO0yUKXnQxqpwr600SSEYtR6E52p6qRYTeInbjn7ndYGQlG+WN21gm2I
+        vjWVOX73xNNNfn1d7sIovXBd2ngCM6IeXpDB13M=
+X-Google-Smtp-Source: AK7set9Ppc7886j6NjM5HR0ygF9Zr/XkZSKMMdKuwM/68bQ8JZMpGD/uBG5OnXLdywiYQLM1PF5xqA==
+X-Received: by 2002:a17:90a:fe07:b0:23a:8d2f:5997 with SMTP id ck7-20020a17090afe0700b0023a8d2f5997mr9561675pjb.20.1678141166593;
+        Mon, 06 Mar 2023 14:19:26 -0800 (PST)
+Received: from F407C5W6RY.office.atlassian.com ([120.156.6.104])
+        by smtp.gmail.com with ESMTPSA id gi13-20020a17090b110d00b00234ba1cfacbsm6512828pjb.17.2023.03.06.14.19.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Mar 2023 14:19:25 -0800 (PST)
+Date:   Tue, 7 Mar 2023 09:19:19 +1100
+From:   Ben Humphreys <behumphreys@atlassian.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 6/7] merge: ensure we can actually restore pre-merge
+ state
+Message-ID: <ZAZm51aZEfuTkdTm@F407C5W6RY.office.atlassian.com>
+References: <pull.1231.v2.git.1655621424.gitgitgadget@gmail.com>
+ <pull.1231.v3.git.1658391391.gitgitgadget@gmail.com>
+ <887967c1f3fd6f03cf1d0bb3c19ed16819541092.1658391391.git.gitgitgadget@gmail.com>
+ <xmqq35eul95b.fsf@gitster.g>
+ <ZABNceY3cSWNb75u@F407C5W6RY.office.atlassian.com>
+ <CABPp-BEJmnAB4QX_HMnNaZ9vEh_mKiqka_uZRm_E_LNuOBiFsg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABPp-BEJmnAB4QX_HMnNaZ9vEh_mKiqka_uZRm_E_LNuOBiFsg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Thu, Mar 02, 2023 at 07:35:30AM -0800, Elijah Newren wrote:
+> I've got bad news for you and great news for you.
+> 
+> The bad news: there have not yet been any efforts to build these
+> optimizations mentioned above.
+> 
+> The great news: the fact that this affects you means you are using
+> non-bare clones in your mergeability checks, and being forced with
+> every merge to first checkout the appropriate branch, and pay for the
+> penalty of updating both the index and the working tree both in that
+> checkout and during the merge (and perhaps in doing a hard reset
+> afterwards) in your mergeability check, despite the fact that a
+> mergeability check really only needs a boolean: "does it merge
+> cleanly?".  Doing a full worktree-tied merge like this is really
+> expensive, and while the above Git changes may have made it even more
+> expensive for you, the real savings comes from switching to a bare
+> clone and not writing any working tree files or the index.  That's
+> available via running `git merge-tree`; see the documentation for the
+> --write-tree option in particular.  GitHub switched over to it last
+> year and GitLab should be switching soon (or may have already
+> completed it; I haven't checked in a bit).
+> 
+> You are, of course, more than welcome to build the optimizations Junio
+> alludes to.  It'd help out various end users.  But for improving
+> server side operations, I think switching to `git merge-tree` would
+> provide you _much_ bigger benefits.
 
-> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>  * We could create a new kind of "config_fn_t" that accepts "struct
->>    config_reader", e.g.
->>    
->>    typedef int (*config_fn_t)(const char *var, const char *val, void *data);
->>    +typedef int (*config_state_fn_t)(const struct config_reader *reader,
->>    const char *var, const char *val, void *data);
->>    
->>    and only adjust the callers that would actually reference "reader". This
->>    is less churn, but I couldn't find a great way to do this kind of
->>    'switching between config callback types' elegantly.
->
-> To reduce churn, one thing that could be done alongside is to convert
-> config-using code (which is...practically the rest of Git) to start
-> using the configset interface (we seem to be using configsets internally
-> anyway, as evidenced by repo_config()). That way, we would reduce the
-> number of implementations of config_fn_t.
+Many thanks for the detailed reply Elijah; indeed the good news
+outweighs the bad news! I've started migrating to merge-tree and it
+looks great. Once complete I might take a look at the other
+optimizations anyway, as a fun project.
 
-By configset interface, I believe you mean the O(1) lookup functions
-like git_config_get_int() (which rely on the value being cached, but
-don't necessarily accept "struct config_set" as an arg)? I think that
-makes sense both from a performance and maintenance perspective.
+Thanks again!
 
->> = Questions
->> 
->>  * Is this worth merging without the extra work? There are some cleanups in
->>    this series that could make it valuable, but there are also some hacks
->>    (see 4/6) that aren't so great.
-> I don't see 4/6 as a hack. It is true that the nature of the config_fn_t
-> callback could change so that passing the reader would end up being
-> done in yet another different way, but firstly, I don't think that will
-> happen for quite some time, and secondly, it might not happen at all
-> (right now, I think what's most likely to happen is that the rest of the
-> Git code moves to configsets and only a fraction of the Git code would
-> need to do low-level parsing, which would not have a problem passing the
-> reader through the data object since they would probably need to pass
-> other context anyway).
-
-Given how painful it is to change the config_fn_t signature, I think it
-is important to get as right as possible the first time. After I sent
-this out, I thought of yet another possible config_fn_t signature
-(since most callbacks only need diagnostic information, we could pass
-"struct key_value_info" instead of the more privileged "struct
-config_reader"), but given how many functions we'd have to change, it
-seemed extremely difficult to even begin experimenting with this
-different signature.
-
-So I think you're right that we'd want to start by removing as many
-config_fn_t implementations as possible. Perhaps we'd also want to
-consider creating new abstractions for other situations where the key is
-not known, e.g. "remote.<name>" and "branch.<name>".
+Best Regards,
+Ben Humphreys
