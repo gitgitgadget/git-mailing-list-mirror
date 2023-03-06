@@ -2,147 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 878CDC61DA4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 20:18:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 164C5C61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 20:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbjCFUSP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 15:18:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60690 "EHLO
+        id S229787AbjCFUk6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 15:40:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjCFUSO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 15:18:14 -0500
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 584CB311E6
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 12:18:13 -0800 (PST)
-Received: by mail-qt1-x829.google.com with SMTP id z6so12088557qtv.0
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 12:18:13 -0800 (PST)
+        with ESMTP id S229490AbjCFUk4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 15:40:56 -0500
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 437453609D
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 12:40:55 -0800 (PST)
+Received: by mail-yb1-xb2b.google.com with SMTP id n18so9487256ybm.10
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 12:40:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1678133892;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=F6xnxZzTDLQA88kzKtAZLfbek8xZ6dT4FmW6N3Ahzvs=;
-        b=dn84sI/gm855oXQwKi907da/bfti8Pi3vCkJ6srfSjsrtGpxgf0gfEbvdDFW7lbiwG
-         X84NzHZsvoTkjZwECztAtv7IoO4iXGnJckqsH/ZEKqUMS5Fi6v1PnaG7LklyW5qUQL8S
-         bCww+0PUVZjQRcHYXW+A8fkY8RpcBwtpPkbW9e460ahvEXcGD6QtyvF5/wMtPLcfC+Xm
-         yvLTDTF2zaCXun5MsVheSWUdC24TTNAKe1rs4RyTK+2mCD8oYfwr+UFkhgB8w8HTgFk1
-         9EwY0jgZ6N9hQqU/Gt3KYaDUVS7YINhT+1H7mkNFr0f+8yVnm9mKv6hIvGHLiVOnrBY4
-         Etiw==
+        d=google.com; s=20210112; t=1678135254;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SY+Epk4f3ftW2/oIGWj9rE99H1mczxvqw/E70fdNg7M=;
+        b=VUWpkjofl5rDMASeYEBAY9sDmgG4unc7JoMYcv6BZ0I/BovfvWwMYuTRNzo8PZLsOp
+         u4ZSRbeefAR3rHryAoVsE4bwMZA9B42b/XCX7/1KKh8SApsZvq86mlYMZgJeVJ7Z85Pg
+         iJQyOqrVAC0Dt0WVeevu+tMkwtq/SVjcscmUw/Qc1cX1qo0+gWfWHuwcekUcIW3ftufK
+         VL7loRA0OTLCwMHEt1tYM20rfWOy/qyMW76RyrwVm0j4EL6IQTwRvSbCms3rnDOb0qLz
+         T2FSkX4VmvpFEV6+1+f17Tm/j95+Zvmbcu5qiFzp+a/9BTtPi2cp54YUzwKbZorh5vhP
+         UyrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678133892;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F6xnxZzTDLQA88kzKtAZLfbek8xZ6dT4FmW6N3Ahzvs=;
-        b=SuGbpKq+xDPLrtprFDYrMieHaUVH72OZT/yUErnmjfG/PctWHaWFyX2Dhqg63pVB/p
-         7DSKkle6+sOcy8cDwTVlvDYK3tDuorCWyvU3OEOqOtKlo7sZ/9hUxNoF6vuTv29pPKmV
-         U6bgKFbN1QVYAVdYCwBBRXpEW7mOMFqAAMQyM8kqHiyNOeDOceh46EwHvSHZjhzuX5by
-         jsipeY1qAiVJbpogrgyJesRTAyKvvqD41YuXf11eC/rF/YeqI3XMfx7lehxbsNY0EBYo
-         UaC9yuTuH+V8YIWpL/1wrshgKX4nlrpfUnIbaLPNyAKJfdCS+yUMpItUkPEm+WteqJpx
-         RglA==
-X-Gm-Message-State: AO0yUKVTkvIVWcZsebWEt8AD5A5wsiN7HhUMZ1NAwMzqR0ljBmt/08QE
-        PS3Ah5YeUnn3QXpV0LIHeTWs
-X-Google-Smtp-Source: AK7set/vFEbCp/ePN8uiqZPJm8f2ensrQayPdWzcyjfZIMEwbeK1e2N28qMpntzLYzG8o2F/qQdmEg==
-X-Received: by 2002:a05:622a:28a:b0:3bf:daa8:cad3 with SMTP id z10-20020a05622a028a00b003bfdaa8cad3mr18520267qtw.15.1678133892370;
-        Mon, 06 Mar 2023 12:18:12 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:142d:d17c:5d14:a6e9? ([2600:1700:e72:80a0:142d:d17c:5d14:a6e9])
-        by smtp.gmail.com with ESMTPSA id s144-20020a374596000000b0073bb4312842sm8041137qka.128.2023.03.06.12.18.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Mar 2023 12:18:12 -0800 (PST)
-Message-ID: <8be01cb6-8937-faed-0850-4501a2f1ef55@github.com>
-Date:   Mon, 6 Mar 2023 15:18:11 -0500
+        d=1e100.net; s=20210112; t=1678135254;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SY+Epk4f3ftW2/oIGWj9rE99H1mczxvqw/E70fdNg7M=;
+        b=v6iIXntJ3tkR78e6AK4aQadjMmxm7EMA4Sqld7AMGpTz/gMxk73QGlnYqQUQxyo6gU
+         iI9FFidAmGRjZ2br1zi8Fv6uKG43tbooViPICgHKFd3YSdS3fxgwi0FImdz3p0hte/4Q
+         ME/13rFx3qgAzZQFxw7365P2He4t+SPxncPcfvD5bNkp12bm+O7EX77TCaTlw9uD1xfX
+         Gm7BRz7viAiTBa7lrgNZAWqjVbKNiAuNO9R6nOx7PUF9GJNusPkY7/yGMgH+/eqgIGmJ
+         FcbEolokV0bBQ+nS/raUD+qqswFI80Cmh1EpQaL++kWKcz63up3iOXUEvmINyONlzDpP
+         LRPQ==
+X-Gm-Message-State: AO0yUKU+CIdtx9fH53yQOI+Q9h7fktXTG1Fla889hAz6J5E3a7H7oiG6
+        hNXeyLqN5YZnK4/Q4zXCGijfM2AVPLlenrNXaDfsQw==
+X-Google-Smtp-Source: AK7set80REsqSfGy+DgR08sjXhzuZCvYOCy7WDnSra0mjVCfJ5ZpfM0cbji8DXRlO35Y5WQKffgyc6Aqf7h2LNOd+TY=
+X-Received: by 2002:a25:9281:0:b0:b0a:7108:71e9 with SMTP id
+ y1-20020a259281000000b00b0a710871e9mr3012774ybl.4.1678135254258; Mon, 06 Mar
+ 2023 12:40:54 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 0/8] ahead-behind: new builtin for counting multiple
- commit ranges
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com
-References: <pull.1489.git.1678111598.gitgitgadget@gmail.com>
- <xmqqedq1ag8d.fsf@gitster.g>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqedq1ag8d.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20230213182134.2173280-1-calvinwan@google.com>
+ <20230228185642.2357806-1-calvinwan@google.com> <kl6l8rg9ekvz.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6l8rg9ekvz.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Mon, 6 Mar 2023 12:40:43 -0800
+Message-ID: <CAFySSZDF5V6nV2uyg0NSvVGgG_ybSpeqGPi7CPSvsyZ10KfYwA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] t4041, t4060: modernize test style
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
+        peff@peff.net, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/6/2023 1:26 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> These numbers can be computed by 'git rev-list --count B..C' and 'git
->> rev-list --count C..B', but there are common needs that benefit from having
->> the checks being done in the same process:
-> 
-> This makes readers wonder if "git rev-list --count B...C" should be
-> the end-user facing UI for this new feature, perhaps?
-> 
-> Of course if you are checking how C0, C1, C2,... relate to a single
-> B, the existing rev-list syntax would not work, and makes a totally
-> new subcommand a possibilty.
-> 
->>  2. When a branch is updated, a background job checks if any pull requests
->>     that target that branch should be closed because their branches were
->>     merged implicitly by that update. These queries can e batched into 'git
->>     ahead-behind' calls.
->>
->> In that second example, we don't need the full ahead/behind counts (although
->> it is sufficient to look for branches that are "zero commits ahead", meaning
->> they are reachable from the base), so this builtin has an extra '--contains'
->> mode that only checks reachability from the base to each of the tips. 'git
->> ahead-behind --contains' is sort of the reverse of 'git branch --contains'.
-> 
-> I thought that the reverse of "git branch --contains" was "git
-> branch --merged".  "git branch --merged maint ??/\*" is how I cull
-> topic branches that have already served their purpose.  
-> 
-> Isn't closing pull requests because they have been already merged
-> the same idea?  "git for-each-ref --merged main refs/pull/\*" or
-> something, perhaps?
+On Mon, Mar 6, 2023 at 11:32=E2=80=AFAM Glen Choo <chooglen@google.com> wro=
+te:
+>
+> Calvin Wan <calvinwan@google.com> writes:
+>
+> > In preparation for later changes, move setup code into test_expect
+> > blocks. Smaller sections are moved into existing blocks, while larger
+> > sections with a standalone purpose are given their own new blocks.
+>
+> The changes where we moved lines outside of blocks into blocks without
+> changing them look good to me.
+>
+> > While at it, have tests clean up after themselves with
+> > test_when_finished
+>
+> I believe this came about as part of the discussion in
+>
+>   https://lore.kernel.org/git/xmqqedqtbbf4.fsf@gitster.g
+>
+> I think it's good to have tests clean up after themselves, but I'm not
+> sure if that's what we're doing in all of these cases, see below.
+>
+> I'm leaving the diff header in place, since the two files have very
+> confusingly similar tests.
+>
+> > diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-=
+option.sh
+> >  test_expect_success 'typechanged submodule(submodule->blob)' '
+> > +     test_when_finished rm -rf sm1 &&
+> >       git diff --submodule=3Dlog >actual &&
+> >       cat >expected <<-EOF &&
+> >       diff --git a/sm1 b/sm1
+>
+> This hunk and the next...
+>
+> > @@ -212,9 +215,9 @@ test_expect_success 'typechanged submodule(submodul=
+e->blob)' '
+> >       test_cmp expected actual
+> >  '
+> >
+> > -rm -rf sm1 &&
+> > -git checkout-index sm1
+> >  test_expect_success 'typechanged submodule(submodule->blob)' '
+> > +     test_when_finished rm -f sm1 &&
+> > +     git checkout-index sm1 &&
+> >       git diff-index -p --submodule=3Dlog HEAD >actual &&
+> >       cat >expected <<-EOF &&
+> >       Submodule sm1 $head4...0000000 (submodule deleted)
+>
+> were changed so that the "rm -rf" happens in the clean up phase of the
+> earlier test (test 14) instead of set up phase of the later test (test
+> 15). But, the "rm -rf" actually results in a _different_ state from
+> before 14, so it isn't actually cleaning up, it really is preparation
+> for 15's git checkout-index.
+>
+> You can observe this by running
+>
+>   ./t4041-diff-submodule-option.sh --run=3D1-13,15
+>
+> which fails as expected. On the other hand, it passes if we move the "rm
+> -rf" into test 15.
+>
+> Nearly all of the other test_when_finished here have the same problem,
+> where they 'clean up' state that wasn't changed in the same test body. I
+> believe they will show similar dependency issues, though I didn't go
+> through and test them all.
 
-You are definitely on to something, and I was not aware of --merged as
-an option to either of these.
+Good catch. I'll go thru the rest of them and remove the dependency
+issues.
 
-'git branch --merged' has some limitations that tags cannot be used.
+>
+> > @@ -643,7 +643,6 @@ test_expect_success 'modified submodule contains mo=
+dified content' '
+> >       diff_cmp expected actual
+> >  '
+> >
+> > -rm -rf sm1
+> >  test_expect_success 'deleted submodule' '
+> >       git diff-index -p --submodule=3Ddiff HEAD >actual &&
+> >       cat >expected <<-EOF &&
+>
+> This one is fairly obvious, since the test says 'deleted submodule', but
+> we no longer delete the submodule in the setup.
+>
+> > @@ -779,9 +780,8 @@ test_expect_success 'diff --submodule=3Ddiff with .=
+git file' '
+> >       diff_cmp expected actual
+> >  '
+> >
+> > -mv sm2 sm2-bak
+> > -
+> >  test_expect_success 'deleted submodule with .git file' '
+> > +     mv sm2 sm2-bak &&
+> >       git diff-index -p --submodule=3Ddiff HEAD >actual &&
+> >       cat >expected <<-EOF &&
+> >       Submodule sm1 $head7...0000000 (submodule deleted)
+> > @@ -804,9 +804,9 @@ test_expect_success 'deleted submodule with .git fi=
+le' '
+> >       diff_cmp expected actual
+> >  '
+> >
+> > -echo submodule-to-blob>sm2
+> > -
+> >  test_expect_success 'typechanged(submodule->blob) submodule with .git =
+file' '
+> > +     test_when_finished "rm sm2 && mv sm2-bak sm2" &&
+> > +     echo submodule-to-blob>sm2 &&
+> >       git diff-index -p --submodule=3Ddiff HEAD >actual &&
+> >       cat >expected <<-EOF &&
+> >       Submodule sm1 $head7...0000000 (submodule deleted)
+> > @@ -836,9 +836,6 @@ test_expect_success 'typechanged(submodule->blob) s=
+ubmodule with .git file' '
+> >       diff_cmp expected actual
+> >  '
+> >
+> > -rm sm2
+> > -mv sm2-bak sm2
+>
+> This is the original case that Junio flagged, which I think is an almost
+> correct use of test_when_finished, since we do get back to an earlier
+> state before this string of tests, but not to the state before the
+> actual test with the test_when_finished.
+>
+> If we want to use test_when_finished here (which I think we do), we
+> should add another test_when_finished to remove the dependency between
+> the two tests. like so:
+>
+>   test_expect_success 'deleted submodule with .git file' '
+>   +     test_when_finished "mv sm2-bak sm2" &&
+>         mv sm2 sm2-bak &&
+>     git diff-index -p --submodule=3Ddiff HEAD >actual &&
+>
+> ...
+>
+>  test_expect_success 'typechanged(submodule->blob) submodule with .git fi=
+le' '
+>         test_when_finished "rm sm2 && mv sm2-bak sm2" &&
+> + mv sm2 sm2-bak &&
+>
+> Currently, they're still dependent because one creates sm2-bak and the
+> other moves it back, but if we have each test restore sm2, there will be
+> no more dependency.
+>
 
-'git for-each-ref --merged' is probably sufficient. The only difference
-being that it would be nice to specify the matching refs over stdin
-with --stdin to avoid long argument lists.
-
-With this in mind, I can update the performance test to look like this
-(after updating the setup step to add branches for each line in 'refs')
-
-
-test_perf 'batch reachability: git ahead-behind --contains' '
-	git ahead-behind --contains --base=HEAD --stdin <refs
-'
-
-test_perf 'batch reachability: git branch --merged' '
-	xargs git branch --merged=HEAD <branches
-'
-
-test_perf 'batch reachability: git for-each-ref --merged' '
-	xargs git for-each-ref --merged=HEAD <refs
-'
-
-And get decent results on all cases with the Linux kernel repository:
-
-Test                                                      this tree      
--------------------------------------------------------------------------
-1500.2: ahead-behind counts: git ahead-behind             0.26(0.24+0.01)
-1500.3: ahead-behind counts: git rev-list                 4.46(3.91+0.54)
-1500.4: batch reachability: git ahead-behind --contains   0.02(0.01+0.01)
-1500.5: batch reachability: git branch --merged           0.14(0.13+0.00)
-1500.6: batch reachability: git for-each-ref --merged     0.14(0.13+0.00)
-
-So, there is benefit in using this tips_reachable_from_base() method in
-the two existing 'git (branch|for-each-ref) --merged' computations. The
-API boundary selected in this series might not be the most appropriate
-for those builtins, so let's kick out patch 8 from this series for now
-and I'll revisit it separately.
-
-Thanks,
--Stolee
+That all makes sense. Thanks for the recommendations
