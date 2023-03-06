@@ -2,86 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FEF0C64EC4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 22:38:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E832C64EC4
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 22:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230075AbjCFWiU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 17:38:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39842 "EHLO
+        id S229627AbjCFWyD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 17:54:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229998AbjCFWiS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 17:38:18 -0500
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54FF2311DE
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 14:38:07 -0800 (PST)
-Received: by mail-yb1-xb49.google.com with SMTP id w192-20020a25dfc9000000b009fe14931caaso12054239ybg.7
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 14:38:07 -0800 (PST)
+        with ESMTP id S229609AbjCFWyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 17:54:02 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A32233580
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 14:54:01 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id m20-20020a17090ab79400b00239d8e182efso14709497pjr.5
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 14:54:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678142286;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+ETjqA3ffoX9iUFr4nYH+y9OxRMsNhnp2L3jE5QtpO8=;
-        b=tBY6RELty+9HMHvJ5nIx9Y33PD/pSItgOqGYP0Ao9Go8fa5mhF+h3LPFLL2E90DTOU
-         lYdraMgW+I65/XkVG+/WfU2piSn+HVQTugZw5Y8i/LDI8v99RvAQO3/O3pNmv0HW7WBr
-         jYn83NbfazJxOedq5Fvwdr3GTnt5UcT0KyTqjB/fLE9uL1iWZxUBf17AoaOPpKh/RT9a
-         4aoV4PZU9Arxovqpve/WD1qSpHMs3Zn4+ORdpAEhjON9wjOxAxTZryOajUj7vRIIG9/f
-         w+cyI+KhBCB4Ur8iX5TwslnAstzRdCMkGywdKVfbK1O1+l5G9ngIPUNKdh8RgdKrgFxD
-         ORIw==
+        d=gmail.com; s=20210112; t=1678143241;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TlRHJhwkoiEu0mIO6yNZgkvBKhPSfTEFudRMEoLY8Ak=;
+        b=gzN4CY9A5bWQDqbmaLxb+fLTcDouf+eJMJFDHp9fvPp1N/YpBz8r34ULUwfHmPLgRO
+         TyqszZy5jWW9vDHm9xn6HcUacjP1xIV07LGfKVZcrulIvUFkdNL8gd3xv1QCWe20BmX7
+         MdmMHTfW86a2aGgHuGjkuEqEiFz3VPBQoBU7FSZ+p2viaEB0gNQOj9AJ49KlICpHtxlf
+         c/HOPBecz1SUuSFOqaWKlEFBBVLrT2OLRPh9GeAs2s8Y9ew2E7RJBsJTJU40jRjW8zIG
+         ZvgC6F3Rl8fHbjWbmgjHPrWaVGGo1kJJVEdm6dynb7XWHnzERpHr+XUeNRx+deIB15Dy
+         fmWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678142286;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+ETjqA3ffoX9iUFr4nYH+y9OxRMsNhnp2L3jE5QtpO8=;
-        b=4SxOQ/aJHWev5Gr/UMjwC3MPsuHqJDu+pE1TiAEXsKW+edanmr9Z50V6IMhdx6uspC
-         iyVnw6a4WeIkRNpQ6whA4jnlm9fxii6wMKpUh5nsiRf31v2PxxPNn1fllqV5cIdnNUlI
-         aAZGs8w3wUT+J78S2nUez6hNwMVensrCh/SqsOur9d8/HBJ4Hox/duGcA+jeKWC6C53U
-         CoCFhnVwZYreF2KD9r6mxa/zt/QNY3rYwzDvhbqj/wrPgm6ZFEN4OjutPU1t6xygxlGy
-         tqc+r1kbwgWeMjCQ2J5l73g1/QiTUsoxWphK4x+Zq20gTvAQUVZsdVJ9L3JOOCw3OOlK
-         lVBw==
-X-Gm-Message-State: AO0yUKVbf6mYeEO4GtLqbt2u95eP3PfoqjpR7NG0FDGRdGsVexZYn9oN
-        hTFG3EDZXcVoMY3zFfmGGct0G2GI5tNlLDkaR+0t
-X-Google-Smtp-Source: AK7set+snEl6bFmBoeii99DJNKQoE0yuOMIS+yPBKsHc+0nQJKRPvbECRdQ//4VrB69AaC0HsaSWllCwrs1xs2mOp8Q1
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:ca0:bbfc:553e:f3c])
- (user=jonathantanmy job=sendgmr) by 2002:a81:1252:0:b0:521:daa4:d687 with
- SMTP id 79-20020a811252000000b00521daa4d687mr10144288yws.0.1678142286539;
- Mon, 06 Mar 2023 14:38:06 -0800 (PST)
-Date:   Mon,  6 Mar 2023 14:38:04 -0800
-In-Reply-To: <kl6l356heeqb.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.40.0.rc0.216.gc4246ad0f0-goog
-Message-ID: <20230306223804.3414251-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 0/6] [RFC] config.c: use struct for config reading state
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>,
-        Jeff King <peff@peff.net>,
+        d=1e100.net; s=20210112; t=1678143241;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=TlRHJhwkoiEu0mIO6yNZgkvBKhPSfTEFudRMEoLY8Ak=;
+        b=38f8cLZ9NkARFDkxhql5f/55PjZ/gTsw566KRnrKtdrMJM/0959uK8j9eO9McShwgV
+         BRluQep6UCHucgCL+VIxwBvT7/rmofVuXHHvoXMho3i+G9I9K5YLJMRH9ioB0Ee1yo8C
+         /Iu5rQMi+7TTZ0tD/hNsByMaRYHgSHzjpO/eN3noXAxmo1q97KPPLO9P4eHbszYWPE7V
+         0x0OHOzfc/d8wup9m7AL4tWE32YZavwpQ9nyuxo5bA/x6N6i1NAo9Bg2XNGQ3aBfdek9
+         poFch3dxHeP7UPDK1PwVGCdK8E8y1FVM9mfnEhrIiQavgcklpyPVxuv6pI8h3wP4VSDi
+         Hs7g==
+X-Gm-Message-State: AO0yUKVsQs5HGkNHWwzogS01+VfjtCOppuCPvpqbBjB412Bv/vPadBs2
+        MntNAohHmnhKvJRfv7LhiCA=
+X-Google-Smtp-Source: AK7set99ESOlvo0yn7QEr6BtPZcN+QDa1Jjj+SwpUILKE/cJtcIPqG1/V/7dm7J5VHRBylR65X5+Kw==
+X-Received: by 2002:a17:902:d2c7:b0:19e:8bfe:7d70 with SMTP id n7-20020a170902d2c700b0019e8bfe7d70mr16617607plc.52.1678143241064;
+        Mon, 06 Mar 2023 14:54:01 -0800 (PST)
+Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
+        by smtp.gmail.com with ESMTPSA id s2-20020a170902ea0200b0019d397b0effsm7164724plg.270.2023.03.06.14.54.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Mar 2023 14:54:00 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com,
         Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] object-file: reprepare alternates when necessary
+References: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
+Date:   Mon, 06 Mar 2023 14:54:00 -0800
+In-Reply-To: <pull.1490.git.1678136369387.gitgitgadget@gmail.com> (Derrick
+        Stolee via GitGitGadget's message of "Mon, 06 Mar 2023 20:59:29
+        +0000")
+Message-ID: <xmqqy1o97apj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-> By configset interface, I believe you mean the O(1) lookup functions
-> like git_config_get_int() (which rely on the value being cached, but
-> don't necessarily accept "struct config_set" as an arg)? I think that
-> makes sense both from a performance and maintenance perspective.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Ah, yes. (More precisely, not the one where you call something like
-repo_config(), passing a callback function that.)
+> @@ -1008,6 +1008,7 @@ void reprepare_packed_git(struct repository *r)
+>  	struct object_directory *odb;
+>  
+>  	obj_read_lock();
+> +	reprepare_alt_odb(r);
+>  	for (odb = r->objects->odb; odb; odb = odb->next)
+>  		odb_clear_loose_cache(odb);
 
-> Given how painful it is to change the config_fn_t signature, I think it
-> is important to get as right as possible the first time. After I sent
-> this out, I thought of yet another possible config_fn_t signature
-> (since most callbacks only need diagnostic information, we could pass
-> "struct key_value_info" instead of the more privileged "struct
-> config_reader"), but given how many functions we'd have to change, it
-> seemed extremely difficult to even begin experimenting with this
-> different signature.
+Hmph, if there was an old alternate ODB from which we took some
+loose object from and cached, and if that ODB no longer is on the
+updated alternate list, would we now fail to clear the loose objects
+cache for the ODB?  Or are we only prepared for seeing "more"
+alternates and assume no existing alternates go away?
 
-Yeah, the first change is the hardest. I think passing it a single
-struct (so, instead of key, value, data, reader, and then any future
-fields we would need) to which we can add fields later would mean that
-we wouldn't need any changes beyond the first, though.
+Other than that, looking quite well reasoned.
+
