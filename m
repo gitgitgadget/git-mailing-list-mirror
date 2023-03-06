@@ -2,117 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2093C61DA4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 19:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5280DC61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 19:01:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229736AbjCFTA2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 14:00:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45726 "EHLO
+        id S229586AbjCFTB1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 14:01:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjCFTA1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 14:00:27 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DEA52F791
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 10:59:59 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id b20so6505800pfo.6
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 10:59:59 -0800 (PST)
+        with ESMTP id S229576AbjCFTBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 14:01:25 -0500
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA4FD6C6A5
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 11:01:01 -0800 (PST)
+Received: by mail-yb1-xb33.google.com with SMTP id n18so9210236ybm.10
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 11:01:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678129191;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nn5EXt62BRgF3ASNKQO1QeGbNNJDVOZzm/j/Pi8l/qg=;
-        b=XKZm1boKC4nTDB+udfBjk8wQmYryZ36g3+wTeCDBCZd55jHSJKbTqCjB6auOOQAute
-         7PIeoEqojHDPD1RwgQpCgtY51Uqt0w/P6Ms6aCm4Uy7qqECMZafKsyTxXjapHxtqIXXr
-         znsReH4u3IqLMNuRFLLYm57kHLcE118LWa+Wg37kOcgh6clyxH68/7nxmxWxUptjkSGn
-         Nn4zDWvyeitwCNanjIZ7Jv7v14kfy+ki7zp2q7mWzPGlww91do85Ozx2R4YkO3SZvwAW
-         yXEHq2+21+B99ZsSkSHenhB9jPzXMwqAM/xwvo4+EcWemad8TyJnpmCqzq6d8dqd179k
-         eTlg==
+        d=google.com; s=20210112; t=1678129260;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Mvz1GJXChuQU/Snt58WSvkxiApjPxdUF4klHUbFygww=;
+        b=SuRJ26ND+Z8SWL22Hu153PzSfqbv9qja3sLLAbjEtTQ1THBi/hERx3qxJLtTyELzyN
+         z8Z3s2J0KzgdiilPpmywszba7pJRKV54vYjQWqVvKMhWsvW5fbI9N6tcoHbyIA+nBZwG
+         bQyrIJd//OZfpfP1PqV1Tl1SBIteewJzn4V/DMXCBOJh8vKNQ+awZIuQDwOHOBtyT+8N
+         wkcaNjQtE+MtwUTyr31Sr7XYtwuciZ7b7DfWswNOxn61whj91bpktWvdDl2X3kiSdt4s
+         L6rFtfc8wN4v/jnv6dloc9fXE6DdRzRYq7Q+axUiRSXAsG293deRdv/dsI1q5Vh/IQE9
+         VKqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678129191;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nn5EXt62BRgF3ASNKQO1QeGbNNJDVOZzm/j/Pi8l/qg=;
-        b=vty50LXfD9xjhwJsz5uiHXKpSv/KQAzA/xNXKTqDT7n9JggAiTGUtHDVswaoOnyN1f
-         YfQpt1kERfQ/DMQphxKHXgz6hba/MxM9ZKgC9IVeeyYFAxDvVFrhS8P+fH0KZ479fHy6
-         w77vtlKI2KDZYVOwq+cOtc3lhlRbVIdqxL0ogA35aYBEEtzvSkiHTUmp1UZNMlzb0Jsx
-         ljlI/M1mOI/VIOnpbMpnZwNwUiFHS/J5dSuFFmGJSFJ/UL4kA8EbFZ20MW6iX1pz4oUp
-         w0MJpxQleTJ0xl0UwIqVTt4ingnDnhHebyY0oOy+3jqRbTAB8mdL7s90H0GmDg3dBH7O
-         f9FA==
-X-Gm-Message-State: AO0yUKVRegzVhwLGRH5j50f7RzHRM0w65y5QG/8ziya/pBOOB1L1jpGY
-        wCUO27EleC6GUuwRjBGcPCY=
-X-Google-Smtp-Source: AK7set9PAs47AxOdWwxaCENY3tTGJDsHcvLWoF5BdpSTUmNbHaSrqCQ2fpNvHsqjfT1rx8UKSAaj4Q==
-X-Received: by 2002:aa7:970f:0:b0:5d4:e4c8:2ef5 with SMTP id a15-20020aa7970f000000b005d4e4c82ef5mr11112887pfg.33.1678129191404;
-        Mon, 06 Mar 2023 10:59:51 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id t24-20020aa79398000000b0056be1581126sm6821614pfe.143.2023.03.06.10.59.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 10:59:50 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Cristian Le <cristian.le@mpsd.mpg.de>, git@vger.kernel.org
-Subject: Re: Bug in git archive + .gitattributes + relative path
-References: <42f13cda-9de6-bfc6-7e81-64c94f5640db@mpsd.mpg.de>
-        <c7b21faa-68dd-8bd9-4670-2cf609741094@web.de>
-        <8d04019d-511f-0f99-42cc-d0b25720cd71@mpsd.mpg.de>
-        <70f10864-2cc7-cb9e-f868-2ac0011cad58@web.de>
-        <xmqqcz5lbxiq.fsf@gitster.g>
-        <d16c6a22-05d8-182c-97b4-53263d22eaa6@web.de>
-Date:   Mon, 06 Mar 2023 10:59:50 -0800
-In-Reply-To: <d16c6a22-05d8-182c-97b4-53263d22eaa6@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Mon, 6 Mar 2023 19:28:02 +0100")
-Message-ID: <xmqqo7p59049.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        d=1e100.net; s=20210112; t=1678129260;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Mvz1GJXChuQU/Snt58WSvkxiApjPxdUF4klHUbFygww=;
+        b=HnQo5cXj83oyzBv0htQGTt3ny0I8HyfjcmvIDvUr2eWMY1ydqFUGAj5dOikX3N3Q8L
+         +ektwvxbznKVn1huuiIfknQO8XOcpOct3LooIfUZe5j7QK+EzcJ4zcwHiaUlBlTZUqok
+         tWgWkdM0NsAp8QAR4z36wdXyEw+zfsZQldV5dLwLEIZ9vF/IQ+Ox2RdUoBEGffBGm8cd
+         liT+GS32crRk93e+LrhifG21fDU+XgW+WxgqHng9Yh8kO11LhpICPROza60cJb+YB/GK
+         UwugouIABibDdUlhGL3UIUmS5oMIOTPOySr/mQuPsvk6115nuYFVpR/PHKT1cGrjFriF
+         Wyjg==
+X-Gm-Message-State: AO0yUKXJMwCREDclmu9BSca6y7/UyCjrp42EBqMnlxBytjo40b4BX6E8
+        1q5MKYVPV57ukyKJVD+VTM2YYRq1ll8852+Eq2O86g==
+X-Google-Smtp-Source: AK7set861FSDMsURLcjK0YfWupzdcJa/LJkGb6fzMtY2pw4yGUBRH49uYrYvKvgao1sou/9r7OG9FFahTRs7t/+yE7A=
+X-Received: by 2002:a5b:40e:0:b0:ac2:ffe:9cc9 with SMTP id m14-20020a5b040e000000b00ac20ffe9cc9mr7077466ybp.3.1678129260364;
+ Mon, 06 Mar 2023 11:01:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20230209000212.1892457-1-calvinwan@google.com>
+ <20230302220251.1474923-2-calvinwan@google.com> <xmqqv8jiheao.fsf@gitster.g>
+ <CAFySSZABteFiyBYp_S7bur7_K1GkxL3A5DiTiV47iU_t8EpWKQ@mail.gmail.com> <xmqqa60pag10.fsf@gitster.g>
+In-Reply-To: <xmqqa60pag10.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Mon, 6 Mar 2023 11:00:49 -0800
+Message-ID: <CAFySSZDk05m6gU5-V1R+y3YnQ5PPduVW54+_gjBwD0rmacsLsw@mail.gmail.com>
+Subject: Re: [PATCH v9 2/6] submodule: rename strbuf variable
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, chooglen@google.com,
+        newren@gmail.com, jonathantanmy@google.com,
+        phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
-
->> Another way I am not sure is working as designed is
->>
->>     $ cd sha1dc && git archive HEAD . | tar tf -
->>     .gitattributes
->>     LICENSE.txt
->>     sha1.c
->>     sha1.h
->>     ubc_check.c
->>     ubc_check.hq
->>
->> I didn't check if the attribute look-up is done on the correct path
->> or export-subst kicks in in such a use, though.
+On Mon, Mar 6, 2023 at 10:30=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> export-subst is supported in that invocation because git archive has a
-> commit to work with.
+> Calvin Wan <calvinwan@google.com> writes:
 >
-> I can kinda see others preferring the directory prefix "sha1dc/" added
-> to those entries.  Perhaps it depends on what git archive is supposed to
-> archive: A commit or the files of a commit?  I'm in the latter camp, and
-> expect to see the same paths as given by git ls-files or git ls-tree.
+> > On Thu, Mar 2, 2023 at 4:25=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
+m> wrote:
+> >>
+> >> Calvin Wan <calvinwan@google.com> writes:
+> >>
+> >> > A prepatory change for a future patch that moves the status parsing
+> >> > logic to a separate function.
+> >> >
+> >> > Signed-off-by: Calvin Wan <calvinwan@google.com>
+> >> > ---
+> >> >  submodule.c | 23 +++++++++++++----------
+> >> >  1 file changed, 13 insertions(+), 10 deletions(-)
+> >>
+> >> > Subject: Re: [PATCH v9 2/6] submodule: rename strbuf variable
+> >>
+> >> What strbuf variable renamed to what?
+> >>
+> >> I have a feeling that squashing this and 3/6 into a single patch,
+> >> and pass buf.buf and buf.len to the new helper function without
+> >> introducing an intermediate variables in the caller, would make the
+> >> resulting code easier to follow.
+> >>
+> >> In any case, nice factoring out of a useful helper function.
+> >>
+> >
+> > A much earlier version squashed those changes together, but it was
+> > recommended to split those changes up; I think I am indifferent either =
+way
+> > since the refactoring is clear to me whether it is split up or not.
+> > https://lore.kernel.org/git/221012.868rllo545.gmgdl@evledraar.gmail.com=
+/
 >
-> But that invocation in a sub-directory probably has the same problem
-> with attributes as the one with a sub-tree above it, i.e. that
-> attributes are always looked up relative to the repository root.  I
-> wonder if 47cfc9bd7d (attr: add flag `--source` to work with tree-ish,
-> 2023-01-14) provided the means to fix this when it added a tree_oid
-> parameter to git_check_attr().
+> I am indifferent, either, but with or without them squashed into a
+> single patch, "rename strbuf" would not be how you would describe
+> the value of this refactoring, which is to make the interface not
+> depend on strbuf.  Some callers may have separate <ptr,len> pair
+> that is not in strbuf, and with the current interface they are
+> forced to wrap the pair in a throw-away strbuf which is not nice.
 
-It somehow feels that the use of pathspec in "git archive" is
-somewhat iffy, e.g.
-
-   $ cd sha1dc && git archive HEAD :/ | tar tf -
-
-does not compare very well with
-
-   $ cd sha1dc && git ls-tree -r HEAD :/
-
-For that matter, replacing ":/" (full tree) with ".." (we know one
-level above is the root of the working tree) has the same "why don't
-they work the same way???" confusion.
-
+I see what you mean here; will reword the commit message, thanks!
