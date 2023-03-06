@@ -2,108 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B009C64EC4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 17:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 30C52C61DA4
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 17:40:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229915AbjCFRiR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 12:38:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48644 "EHLO
+        id S230092AbjCFRki (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 12:40:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjCFRiO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 12:38:14 -0500
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E1C36783A
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 09:37:41 -0800 (PST)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-176b48a9a05so4771279fac.0
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 09:37:41 -0800 (PST)
+        with ESMTP id S230018AbjCFRkf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 12:40:35 -0500
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 743B96A06F
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 09:39:53 -0800 (PST)
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-53d277c1834so21997007b3.10
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 09:39:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678124202;
+        d=google.com; s=20210112; t=1678124247;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DgD/vwRIHohft7BtRpntvLvPbE80RuUEZcLw2Is8JUw=;
-        b=dlDIIq1cH5K4nAnZLV7sZOiMmk5SeuipkpGBTi2IOWnA1GwohyxPJVchUGwdcI8t6y
-         8FlNSO1/OHlHogzcZ/p8BHS5HglIicEJjBcE7LmwxZ2h3jFQYZiA1ErBOj8FXGmSCz7g
-         m4A9qN4PGYr74FMLETD7QdwlJ8HZ6/4PX2WdjUzuxONGRaFRqo1JfsQoZBvmETvX0Xaq
-         ed6FCJPQTyYSbuHXyWU7srr/vXUqXvojb63QKqWw0raKXhBqKWSVRzfEFkzjS9tMDp5q
-         M6tje5LU++i3zN1FaaPSfcPi48zp+cJ014gaNwsbZaOv9rlRSAUX7/IqNeeSalGPhqES
-         zv4A==
+        bh=gMjsnxkE4y0igt1AxW996OdTBsw/u9fmCel3YquC59g=;
+        b=pQqfyvbXm+msQsF/YZEyVLWZ9evGWUZ5S3S9H8TUUGOsewanqoyPVBFADrxzvqMK90
+         l0YkL8OD9NFDyMYO6NwNpERa5RHnN6fVnNY/MaT1nCTLnO4gUrkdHyaCH+o6k69AfdqX
+         ooxmPSsKdw6848QS5BdTgR5z2GIt/dvSMoFim7rMjx5RISI3EmMwFIJdZj92kH/yjela
+         TXX9FbFGLW6UJmrbBvcRTcVY81Drh8y0bKnFmyqvLwBa5jhaNO6RaVpC5Wd13QqXzqa0
+         PSlKhKw+dco/0QX1NlshhTDvmU8u9LwutWcM1MXaWEG/1JkoK1ro7QtJNsZ50U73OdI7
+         0gww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678124202;
+        d=1e100.net; s=20210112; t=1678124247;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DgD/vwRIHohft7BtRpntvLvPbE80RuUEZcLw2Is8JUw=;
-        b=B7BF1883t88ONm66OOycey6ckEvCH08NoIZfpqHPyiK3sNcp39SDHVK/F+cmhl0x6U
-         MOrQJecW3JRvCGhcvIH7F1gPGKLBskYokjlOlLSHofm7U2syIa5tw9o5qC3uyCPYAzvJ
-         x4s/GhYtFYlk3XfU4F2w8tFTLZ5q1KHre4o4g3eXG/hp1om0ONJ15DZSl1g3fi8KOI0X
-         ZlztZ+JP0dKTG7fBs0umscaWx8DATY3thOSad34hQWmgJ/90zWW8DmB0pw2IHd8BLvTW
-         ENXUxUobSsMIKKnlnie+856G8KHkMfr+34GmkD+L7XsSDEx+8gLqRPJqREObMdEQuXjB
-         Ix6g==
-X-Gm-Message-State: AO0yUKVwi9KGZWtFCiRsDWz8aOr95S8AFpZSKbMkJpaxOcyQc/OzfRtx
-        0ntdNOvAOZtL/nk23DBgAnoiNpuCARGgR4qcb1g=
-X-Google-Smtp-Source: AK7set8Bo+9wNETLmXcafe+oHgDCKc31pRtlD35GqNjSlR/vKEPAXqR9Z6daZkNrK/2ZJCH/lU2Vb1xoUN6EOddMu0c=
-X-Received: by 2002:a05:6871:6bb0:b0:176:2915:6451 with SMTP id
- zh48-20020a0568716bb000b0017629156451mr4017070oab.5.1678124201854; Mon, 06
- Mar 2023 09:36:41 -0800 (PST)
+        bh=gMjsnxkE4y0igt1AxW996OdTBsw/u9fmCel3YquC59g=;
+        b=7+R/g4nIqCAYUzsD/ZOKwHSdMPpmzB5OPMMYw/62zDu5BZuwqsmCCTGKDB7D+YbQbN
+         HV/WfkxRapFeuBZ8iBru/UfiwO2j2Kn6BXFiYM1Y30ijdEJHQ555qq0UiS9QXHMIwSAU
+         Wyd7HqHqxGJu/2cw6H55tJb2J0Y43a6CHODK34JFaNfJMAInKTUAW3hMW9WCKXxVPu0F
+         Qrv9sgNmsuKDkB1+v/SN+j07euUe8Uq0yIZHHC5LQzUixtOVNvHM1ZUFCEMMzCpuOBTj
+         Tj+cSMvXCsz4yfjlimVe4B6MZLql7Rco86cIjUILLmh/EDN6HT3o8GKZmhkD1kqFFKBY
+         6W9w==
+X-Gm-Message-State: AO0yUKW5o9gS9L7G1GwbX3ZGX3wfHHQXwwvUc/s01vUrKJg8tvsSWF51
+        lpHeg4qBe7/AW+E+ZGD+DkHj9O8OxU8cNOsKlvd+Rw==
+X-Google-Smtp-Source: AK7set+8Okt4zQSMvJKLtkhJ3QWclqnA7/u0kvj2xCmz5EgONP8QE0aBFMlG78e2/JHq9kmYEkQtqnEUk3QchsqCHR4=
+X-Received: by 2002:a81:7012:0:b0:533:a15a:d33e with SMTP id
+ l18-20020a817012000000b00533a15ad33emr9601218ywc.5.1678124246622; Mon, 06 Mar
+ 2023 09:37:26 -0800 (PST)
 MIME-Version: 1.0
-References: <20230225180325.796624-1-alexhenrie24@gmail.com>
- <20230305050709.68736-1-alexhenrie24@gmail.com> <4f313373-25c5-06d4-6d1b-89a0e595dfa1@dunelm.org.uk>
-In-Reply-To: <4f313373-25c5-06d4-6d1b-89a0e595dfa1@dunelm.org.uk>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Mon, 6 Mar 2023 10:36:05 -0700
-Message-ID: <CAMMLpeTPNoDK9r-e9KMwfYzdG+iyuVwxQGaWHUL-ngD+-r48FQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/3] rebase: document, clean up, and introduce a config
- option for --rebase-merges
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, tao@klerks.biz, gitster@pobox.com,
-        newren@gmail.com, phillip.wood123@gmail.com,
-        Johannes.Schindelin@gmx.de, sorganov@gmail.com,
-        chooglen@google.com, calvinwan@google.com, jonathantanmy@google.com
+References: <20230209000212.1892457-1-calvinwan@google.com>
+ <20230302220251.1474923-2-calvinwan@google.com> <xmqqv8jiheao.fsf@gitster.g>
+In-Reply-To: <xmqqv8jiheao.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Mon, 6 Mar 2023 09:37:15 -0800
+Message-ID: <CAFySSZABteFiyBYp_S7bur7_K1GkxL3A5DiTiV47iU_t8EpWKQ@mail.gmail.com>
+Subject: Re: [PATCH v9 2/6] submodule: rename strbuf variable
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, chooglen@google.com,
+        newren@gmail.com, jonathantanmy@google.com,
+        phillip.wood123@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 6, 2023 at 9:24=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
-com> wrote:
-
-> On 05/03/2023 05:07, Alex Henrie wrote:
-
-> > Suggestions on v5 not incorporated in v6:
+On Thu, Mar 2, 2023 at 4:25=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> Thanks for adding this, it is really helpful to see what did not change
-> as well as what did change. It is also helpful to briefly explain why
-> you disagree with the suggestions so others can understand why you
-> decided not to make these changes.
+> Calvin Wan <calvinwan@google.com> writes:
 >
-> > - Make --rebase-merges without an argument clobber the mode specified i=
-n
-> >    rebase.rebaseMerges
+> > A prepatory change for a future patch that moves the status parsing
+> > logic to a separate function.
+> >
+> > Signed-off-by: Calvin Wan <calvinwan@google.com>
+> > ---
+> >  submodule.c | 23 +++++++++++++----------
+> >  1 file changed, 13 insertions(+), 10 deletions(-)
 >
-> I'm still confused as to why we want the config value to change the
-> behavior of --rebase-merges. Is it for "git pull --rebase=3Dmerges"? If
-> that's the case then I think a better approach is for pull to parse
-> rebase.merges and pass the appropriate argument to rebase. That way we
-> don't break the expectation that command line arguments override config
-> values.
+> > Subject: Re: [PATCH v9 2/6] submodule: rename strbuf variable
 >
-> > - Remove the test for --rebase-merges=3Dno-rebase-cousins overriding
-> >    rebase.rebaseMerges=3Drebase-cousins
-> > - In the tests, check the graph itself instead of checking that the
-> >    graph has not changed by checking that the commit hash has not chang=
-ed
+> What strbuf variable renamed to what?
 >
-> I'm not sure what value the existing test has if it only checks that
-> HEAD is unchanged after the rebase. It could be unchanged because the
-> rebase fast-forwarded or because it did nothing.
+> I have a feeling that squashing this and 3/6 into a single patch,
+> and pass buf.buf and buf.len to the new helper function without
+> introducing an intermediate variables in the caller, would make the
+> resulting code easier to follow.
+>
+> In any case, nice factoring out of a useful helper function.
+>
 
-Please have a look at the email I sent before sending v6:
-https://lore.kernel.org/git/CAMMLpeRfD+81fsEtvKFvVepPpwYm0_-AD=3DQHMwhoc+Lt=
-iXpavw@mail.gmail.com/
-
-In that email I tried to explain why I didn't incorporate your three
-suggestions on v5. Please let me know if it still isn't clear.
-
--Alex
+A much earlier version squashed those changes together, but it was
+recommended to split those changes up; I think I am indifferent either way
+since the refactoring is clear to me whether it is split up or not.
+https://lore.kernel.org/git/221012.868rllo545.gmgdl@evledraar.gmail.com/
