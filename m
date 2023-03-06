@@ -2,104 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B7A1C64EC4
-	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 19:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 210D1C64EC4
+	for <git@archiver.kernel.org>; Mon,  6 Mar 2023 19:32:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229582AbjCFTIK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 14:08:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57366 "EHLO
+        id S229928AbjCFTcV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 14:32:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230187AbjCFTIJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 14:08:09 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D906305F0
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 11:08:08 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id x7so4554793pff.7
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 11:08:08 -0800 (PST)
+        with ESMTP id S229540AbjCFTcU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 14:32:20 -0500
+Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3158372037
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 11:32:19 -0800 (PST)
+Received: by mail-pg1-x549.google.com with SMTP id 62-20020a630241000000b004fb3343142dso2353680pgc.5
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 11:32:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678129687;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+ZvKV2bWF4YmZMjvDnjGl5PSSml5vQmu45OqK85vffw=;
-        b=Grkr4DSqtW68a66sDq6tD6t8aE+BwP5jcwVvKFn/VYz2EPggCQx/mQFZxgai0l1+Au
-         arPBzu1u1kapTDQ/zPu4u8fJmwASZxsqympBW3JDOgzyyax99N/ou5jfKn0yTdEeCckT
-         jOZ7vdwiARgey5EKlLSjipcBCM+/vUBZi+EeBtnFASfZaB43QtuhmJYWcUtsoZhQc9Ua
-         fUMHJX/DBITb36EOHe+k+0g5wFrwZGZEhhaonQVrqDO7WEAgxVesRB5DL54Tb7QUOV3t
-         dcWadhTxKH4VbkER/HKACxXVzlFhQacmFbSGTJxnwfIfdK/5lePsIEdXpuLpdNtU0MAi
-         TmAg==
+        d=google.com; s=20210112; t=1678131138;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ws62YE3FCdF2PEXkJ88qgxmCEN3OFFWke9WSwo6jGmw=;
+        b=MPBrcWiSUY8rw36POwdGUm+9t+OjtB4Fl6Xg4tPUIZ5R3cTlIxNYvrRjWW4G9hnhjI
+         KC127/qq5NUJ8PkKg8xpk0UJAuVJsL7ryvVprE5NXMY7NZqSTIVAtIPJgCeQCx5diw3X
+         IgjAyDHMggOcXygkXH5POk0LcdqEly+UiaCGuMXUqvTXTq2fWCPbtQXAAGfHvCsVSG1G
+         5yUKZNAau/Oh5OeWMORcV7vArFU9FnvS6Hzb1KB5zQYuUBviMYveDuA0s3VRSGrVlx/8
+         4rniXyqYOvUOst+IhbdxsrWeeNLF+9uVFfglXSBEg7BoF2UAKpvnjMZ3ITCRw918UmDw
+         CMiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678129687;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+ZvKV2bWF4YmZMjvDnjGl5PSSml5vQmu45OqK85vffw=;
-        b=0Y1z0fACqwx5eoZzOW0YoFKcYU1DGzNtNy7tYjTJArIOFDZ0J0JnQWnasR10aBNGVw
-         lJo8EnWPpapb2gqc2/JB8ZSCCOvdSBJu8nwpum9xR3Du4K3U3p8KAXczvzZ+C8NOGDLv
-         N+GT04MXjahkB6p8HXlpdA2MKpz4WvqwirOCYI2IvIMrOEiOI3tGy5Z7xj1yRIL3xXPe
-         mv4V0P6xjtyXzb4i4UyeTJeRbhkKKmEoUNNrc3AauBA5USYxsCbl7qfg+RtBPRGPUAdz
-         CEmR+C79Ji03g5IC27VHJVFwQjZMTVd/imp08avwJbGOXo8Z63PEGljIyj6cQEuBLCPt
-         Nreg==
-X-Gm-Message-State: AO0yUKXvsrAkrqiwCMe0HbuPg6GgFWYHqRmSQ4kNpMrgd77Vsh/1pctn
-        ZAgYZ62h48PWmWquRvxJlv9XPnuwbTY=
-X-Google-Smtp-Source: AK7set8t3gIZ0WohYQQZj7Hm9UbMiOo9tlvC5NMyvaO1LacqauEd7l5exmbDw7aFn9tTNHIXvlVMCw==
-X-Received: by 2002:a62:38ce:0:b0:5a8:a9bc:197 with SMTP id f197-20020a6238ce000000b005a8a9bc0197mr9518561pfa.11.1678129687506;
-        Mon, 06 Mar 2023 11:08:07 -0800 (PST)
-Received: from localhost (252.157.168.34.bc.googleusercontent.com. [34.168.157.252])
-        by smtp.gmail.com with ESMTPSA id k8-20020aa792c8000000b005a852875590sm6608660pfa.113.2023.03.06.11.08.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 11:08:06 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org,
-        tao@klerks.biz, newren@gmail.com, phillip.wood123@gmail.com,
-        Johannes.Schindelin@gmx.de, chooglen@google.com,
-        calvinwan@google.com, jonathantanmy@google.com
-Subject: Re: [PATCH v6 0/3] rebase: document, clean up, and introduce a
- config option for --rebase-merges
-References: <20230225180325.796624-1-alexhenrie24@gmail.com>
-        <20230305050709.68736-1-alexhenrie24@gmail.com>
-        <87ilff2xsl.fsf@osv.gnss.ru>
-        <CAMMLpeSowxoJgPOt84Dos8BVKU=y=M+Ph0xaGe6UTxwwE5zsXQ@mail.gmail.com>
-        <87ttyyn71f.fsf@osv.gnss.ru>
-        <CAMMLpeTUykcgdijRPEiBJHH1xz50s=aPK_hi=FJv6C3=cj4XEg@mail.gmail.com>
-Date:   Mon, 06 Mar 2023 11:08:06 -0800
-In-Reply-To: <CAMMLpeTUykcgdijRPEiBJHH1xz50s=aPK_hi=FJv6C3=cj4XEg@mail.gmail.com>
-        (Alex Henrie's message of "Sun, 5 Mar 2023 17:02:42 -0700")
-Message-ID: <xmqqh6ux8zqh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        d=1e100.net; s=20210112; t=1678131138;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ws62YE3FCdF2PEXkJ88qgxmCEN3OFFWke9WSwo6jGmw=;
+        b=uoRv52oHLTL0DUTLceS80giyr4fEX0eHTcGemd59isNCp2xE1FjoGHK3gm0zQop59H
+         XH3yZL4ZuRqzVrLXk4GgUOAid+MRnqMeSSxi+LTCC1QTkXo0u2MemlL587MSI8LSwmun
+         BFrhaGi/DYL/JtM526Tb5iHYuRb5WVo8Pfw5o24s4z5mBiaWHDrdZiqxxutU65yv5S4H
+         iVRnORc/UcYcn7Tvl/m7lfQOzWrKdGKeaMYuS83Rd39q4vDtRo7OdJ2kE1t393/Vlb4w
+         BqGLjUNpRSfEFkxmnYnw0mQE6OxF/chJxOc1MeZI0qbpdmuM6Ce+W/DvK6zvmW/lxO2m
+         Jk9A==
+X-Gm-Message-State: AO0yUKX8/Xt8RgPSXWiZgvn9FSovH1wQDKDo505Zqrc0Vf/nI2J+gvd5
+        hAp5DCXrmhi4g/QsNCcEGrH1IUuGKISuzg==
+X-Google-Smtp-Source: AK7set/8lrYQS7GryRloTCAVlb9tINkN0lDiRUZSjidlRAk5szAhpUkGbBey3SnFEeZEZx2TkWAaOVuYC5JvSQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a17:902:6807:b0:19c:d14b:ee20 with SMTP
+ id h7-20020a170902680700b0019cd14bee20mr4766544plk.8.1678131138581; Mon, 06
+ Mar 2023 11:32:18 -0800 (PST)
+Date:   Mon, 06 Mar 2023 11:32:16 -0800
+In-Reply-To: <20230228185642.2357806-1-calvinwan@google.com>
+Mime-Version: 1.0
+References: <20230213182134.2173280-1-calvinwan@google.com> <20230228185642.2357806-1-calvinwan@google.com>
+Message-ID: <kl6l8rg9ekvz.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2 1/6] t4041, t4060: modernize test style
+From:   Glen Choo <chooglen@google.com>
+To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
+Cc:     Josh Steadmon <steadmon@google.com>, peff@peff.net,
+        gitster@pobox.com, Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+Calvin Wan <calvinwan@google.com> writes:
 
-> Interesting, thank you for clarifying. I just tried it and it appears
-> that --rebase-merges requires an equals sign when it has an argument.
-> For example:
->
-> $ git rebase --rebase-merges=rebase-cousins
-> Current branch master is up to date.
->
-> $ git rebase --rebase-merges rebase-cousins
-> fatal: invalid upstream 'rebase-cousins'
->
-> So there is no ambiguity because if an argument to a flag is optional,
-> an equals sign is required.
+> In preparation for later changes, move setup code into test_expect
+> blocks. Smaller sections are moved into existing blocks, while larger
+> sections with a standalone purpose are given their own new blocks.
 
-Exactly.
+The changes where we moved lines outside of blocks into blocks without
+changing them look good to me.
 
-It is not a good excuse that users can express something
-unambiguously to the machinery once they know they need to use '=',
-when they are so accustomed to giving values to ordinary options
-without.  This is why options with optional value is considered a
-bad UI element, because the way "--opt val" is interpreted for them
-is different from everybody else.  And it burdens the users by
-forcing them to _know_ which ones are with optional value.
+> While at it, have tests clean up after themselves with
+> test_when_finished
 
-Since it is an existing UI breakage, as long as the series is not
-making it worse or harder to fix in the future, it is fine, though.
+I believe this came about as part of the discussion in
+
+  https://lore.kernel.org/git/xmqqedqtbbf4.fsf@gitster.g
+
+I think it's good to have tests clean up after themselves, but I'm not
+sure if that's what we're doing in all of these cases, see below.
+
+I'm leaving the diff header in place, since the two files have very
+confusingly similar tests.
+
+> diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
+>  test_expect_success 'typechanged submodule(submodule->blob)' '
+> +	test_when_finished rm -rf sm1 &&
+>  	git diff --submodule=log >actual &&
+>  	cat >expected <<-EOF &&
+>  	diff --git a/sm1 b/sm1
+
+This hunk and the next...
+
+> @@ -212,9 +215,9 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
+>  	test_cmp expected actual
+>  '
+>  
+> -rm -rf sm1 &&
+> -git checkout-index sm1
+>  test_expect_success 'typechanged submodule(submodule->blob)' '
+> +	test_when_finished rm -f sm1 &&
+> +	git checkout-index sm1 &&
+>  	git diff-index -p --submodule=log HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 $head4...0000000 (submodule deleted)
+
+were changed so that the "rm -rf" happens in the clean up phase of the
+earlier test (test 14) instead of set up phase of the later test (test
+15). But, the "rm -rf" actually results in a _different_ state from
+before 14, so it isn't actually cleaning up, it really is preparation
+for 15's git checkout-index.
+
+You can observe this by running
+
+  ./t4041-diff-submodule-option.sh --run=1-13,15
+
+which fails as expected. On the other hand, it passes if we move the "rm
+-rf" into test 15.
+
+Nearly all of the other test_when_finished here have the same problem,
+where they 'clean up' state that wasn't changed in the same test body. I
+believe they will show similar dependency issues, though I didn't go
+through and test them all.
+
+> @@ -643,7 +643,6 @@ test_expect_success 'modified submodule contains modified content' '
+>  	diff_cmp expected actual
+>  '
+>  
+> -rm -rf sm1
+>  test_expect_success 'deleted submodule' '
+>  	git diff-index -p --submodule=diff HEAD >actual &&
+>  	cat >expected <<-EOF &&
+
+This one is fairly obvious, since the test says 'deleted submodule', but
+we no longer delete the submodule in the setup.
+
+> @@ -779,9 +780,8 @@ test_expect_success 'diff --submodule=diff with .git file' '
+>  	diff_cmp expected actual
+>  '
+>  
+> -mv sm2 sm2-bak
+> -
+>  test_expect_success 'deleted submodule with .git file' '
+> +	mv sm2 sm2-bak &&
+>  	git diff-index -p --submodule=diff HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 $head7...0000000 (submodule deleted)
+> @@ -804,9 +804,9 @@ test_expect_success 'deleted submodule with .git file' '
+>  	diff_cmp expected actual
+>  '
+>  
+> -echo submodule-to-blob>sm2
+> -
+>  test_expect_success 'typechanged(submodule->blob) submodule with .git file' '
+> +	test_when_finished "rm sm2 && mv sm2-bak sm2" &&
+> +	echo submodule-to-blob>sm2 &&
+>  	git diff-index -p --submodule=diff HEAD >actual &&
+>  	cat >expected <<-EOF &&
+>  	Submodule sm1 $head7...0000000 (submodule deleted)
+> @@ -836,9 +836,6 @@ test_expect_success 'typechanged(submodule->blob) submodule with .git file' '
+>  	diff_cmp expected actual
+>  '
+>  
+> -rm sm2
+> -mv sm2-bak sm2
+
+This is the original case that Junio flagged, which I think is an almost
+correct use of test_when_finished, since we do get back to an earlier
+state before this string of tests, but not to the state before the
+actual test with the test_when_finished.
+
+If we want to use test_when_finished here (which I think we do), we
+should add another test_when_finished to remove the dependency between
+the two tests. like so:
+
+  test_expect_success 'deleted submodule with .git file' '
+  +	test_when_finished "mv sm2-bak sm2" &&
+  	mv sm2 sm2-bak &&
+    git diff-index -p --submodule=diff HEAD >actual &&
+
+...
+
+ test_expect_success 'typechanged(submodule->blob) submodule with .git file' '
+	test_when_finished "rm sm2 && mv sm2-bak sm2" &&
++ mv sm2 sm2-bak &&
+
+Currently, they're still dependent because one creates sm2-bak and the
+other moves it back, but if we have each test restore sm2, there will be
+no more dependency.
 
