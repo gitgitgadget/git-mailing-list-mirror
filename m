@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21D4CC678D4
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 18:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5191CC678D5
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 18:15:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232513AbjCGSPL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 13:15:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57030 "EHLO
+        id S232519AbjCGSPO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 13:15:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232366AbjCGSOg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 13:14:36 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48C11A2C3E
-        for <git@vger.kernel.org>; Tue,  7 Mar 2023 10:10:11 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id x3so55858646edb.10
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 10:10:11 -0800 (PST)
+        with ESMTP id S232530AbjCGSOh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 13:14:37 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09B8FA3B40
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 10:10:13 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id u9so56063540edd.2
+        for <git@vger.kernel.org>; Tue, 07 Mar 2023 10:10:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678212604;
+        d=gmail.com; s=20210112; t=1678212607;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HxqCilXU7sHZvAh5hjU54F+iPbGbcFkVWeztk3YTZos=;
-        b=ALpnKJlOEpgjkVbN1dy5SuGmmsm6FjG3zuMiBBCBnThMkrPQu8DmXZSzTgbhcU/F1F
-         tWOidxmGMEAbPjCh8q1l9uLrRUS7zqM8IfCknkxQy7TSQKkHFsV4Q/mRNdu/Z+YGkWN+
-         bKbNe9aob9AXOtEyHYeZtglsCoYooVbJ/VBwPsgEXNslD4tf2C0zY3jqXq9+DLIcEotV
-         U0hTVmebiIoDufu0oH/7T5OnH9UscBN3xgMiYvEgSOoZP8bArFtEHxkQ07SXZN+fRfzq
-         ifKQecGADnZTMl76sqi0xE/YJJOUYFLMCcpzxmwSurYwyQmC7NPgeDnhyQmXKTAg0hVw
-         V/mg==
+        bh=auVZI/PFWr2hfsF3kAwrJYMzsfDjJzN0fkJNVnDKTpM=;
+        b=keRqeXjJjwVIpb6bvAUjMJz+FNPIJBB049H+wzGzWxL8Ws8dWLr2xQYwXqshBCpXJy
+         oVM2TX0xvHZXnoPE9SKzm/AK/sPKa7s5xmwgpnQEAlFBrzqUQelQKp/jRTrkCZNmcpRg
+         +MqBLSXKkpzTJSZ1vdR2JWpGykmjdC2ilivFCFPCpxIistvySaYFbMRXXUWH73ts0l4e
+         yk3xNs1euKhGwwA8AbKbLh00DPL8gY5wOxvcv0TRt5icI8rPkwYpKhj1k6FxdC4mr0r9
+         TfqqTudNkJgtzlrfOUf121KbCQ+uyX7Mru+H2Uln7qjcwJouI/8AEiwQgO+Qo4eGHDl3
+         yBGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678212604;
+        d=1e100.net; s=20210112; t=1678212607;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HxqCilXU7sHZvAh5hjU54F+iPbGbcFkVWeztk3YTZos=;
-        b=Xj1404heeDv3ka6JuOHACb9pigggUL35vq2MRL5HKpKcqf6SVXnr2oxsxeb9VlV/wv
-         4LzhOYBHj3VA6AU8ajs+R7BNa91PPP+22aAdO/We/KEh8I3G3A71Y3/WmQNe7SimGsOC
-         +gJb7SQFXaKA8vTrRjidwJ+OUDJIEAZFDE6iFdDpjn4dgatKm0FMTZCvDpqWBi8GE3GX
-         kzchHi/AL9D7MoAdPfcsjaKSrBy5Iur3HKqMIrhKt4CeKA7UpGdbWhUINni+8aLtki2N
-         esEwYLCoyRA6Tu5Tb9aO9NcM9G1Hqd+WNhrFYEiGBf+Ldblme1mVAzZ6KJBU6sNxKujr
-         DoTw==
-X-Gm-Message-State: AO0yUKWzcjQfNJGi03ILPxGKMmNGviW1qwYoNS6QjYeAZ4aGI5lial9r
-        KK9Gq18Xxu9UlF1RCpqASVW3eDVvbMPtZw==
-X-Google-Smtp-Source: AK7set8qjPq0sgr0mJTyBXrk5+z45TAvcXEphmvCT9AObHc8nE62PQiiAtOYvRJs4fscsEKWNw2jcA==
-X-Received: by 2002:a17:907:20aa:b0:878:814d:bc99 with SMTP id pw10-20020a17090720aa00b00878814dbc99mr15205341ejb.66.1678212604336;
-        Tue, 07 Mar 2023 10:10:04 -0800 (PST)
+        bh=auVZI/PFWr2hfsF3kAwrJYMzsfDjJzN0fkJNVnDKTpM=;
+        b=API6ZEop+4dBqh5Xjv0ocHWJAq8psYuA06bdUOS6H6x7+iv7IVtSadaak1BUGln2gC
+         45WTs31WCt32oyfU2URwrrPcdvf31egp6dl9ZvTnExJb1RBZ6LTEKtWpEDsu9RGbYOtB
+         2r2a0Y7AOnOVKUCWRjX0X2Ttkj0w88vJYOwpBxYGzXtsYioRnDy7qmILB7Hr0i1R/fGQ
+         kSHp4jMZqs3Fb8OLEgZY2TLR9XseDHC5G0mMwBfEC4MKfPHpBNDdI8XSNztjrmgjO4ei
+         otjrqUchS55/KwOIeru6tP7uS9px4qspoo+ivabYvIYMWPXyE3HinIO8mj8+4WnvaFlj
+         Zpqg==
+X-Gm-Message-State: AO0yUKXcF/1oEoowxZo7FwODj2OCZtiWlkHj8QP5kMlaG8AtGuLVwiai
+        ybdR+0FZBpaeKydcBKO9g2yXqW/voCV2mQ==
+X-Google-Smtp-Source: AK7set9x/5bR7W8F8+JNLOmaCRQBO5OL1O0b30EYyq8V103EovV5kVNmnqLxQekevpIMJICfweEGfQ==
+X-Received: by 2002:a17:906:68c5:b0:8b1:353a:2636 with SMTP id y5-20020a17090668c500b008b1353a2636mr13763365ejr.14.1678212606737;
+        Tue, 07 Mar 2023 10:10:06 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d5-20020a1709063ec500b008b1797a53b4sm6401008ejj.215.2023.03.07.10.10.03
+        by smtp.gmail.com with ESMTPSA id d5-20020a1709063ec500b008b1797a53b4sm6401008ejj.215.2023.03.07.10.10.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 10:10:03 -0800 (PST)
+        Tue, 07 Mar 2023 10:10:06 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         zweiss@equinix.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 3/9] config API: add and use a "git_config_get()" family of functions
-Date:   Tue,  7 Mar 2023 19:09:34 +0100
-Message-Id: <patch-v6-3.9-62fe2f04e71-20230307T180516Z-avarab@gmail.com>
+Subject: [PATCH v6 5/9] config API: have *_multi() return an "int" and take a "dest"
+Date:   Tue,  7 Mar 2023 19:09:36 +0100
+Message-Id: <patch-v6-5.9-e38523267e7-20230307T180516Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.40.0.rc1.1034.g5867a1b10c5
 In-Reply-To: <cover-v6-0.9-00000000000-20230307T180516Z-avarab@gmail.com>
 References: <cover-v5-00.10-00000000000-20230207T154000Z-avarab@gmail.com> <cover-v6-0.9-00000000000-20230307T180516Z-avarab@gmail.com>
@@ -76,435 +76,336 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We already have the basic "git_config_get_value()" function and its
-"repo_*" and "configset" siblings to get a given "key" and assign the
-last key found to a provided "value".
+Have the "git_configset_get_value_multi()" function and its siblings
+return an "int" and populate a "**dest" parameter like every other
+git_configset_get_*()" in the API.
 
-But some callers don't care about that value, but just want to use the
-return value of the "get_value()" function to check whether the key
-exist (or another non-zero return value).
+As we'll take advantage of in subsequent commits, this fixes a blind
+spot in the API where it wasn't possible to tell whether a list was
+empty from whether a config key existed. For now we don't make use of
+those new return values, but faithfully convert existing API users.
 
-The immediate motivation for this is that a subsequent commit will
-need to change all callers of the "*_get_value_multi()" family of
-functions. In two cases here we (ab)used it to check whether we had
-any values for the given key, but didn't care about the return value.
+Most of this is straightforward, commentary on cases that stand out:
 
-The rest of the callers here used various other config API functions
-to do the same, all of which resolved to the same underlying functions
-to provide the answer.
+- To ensure that we'll properly use the return values of this function
+  in the future we're using the "RESULT_MUST_BE_USED" macro introduced
+  in [1].
 
-Some of these were using either git_config_get_string() or
-git_config_get_string_tmp(), see fe4c750fb13 (submodule--helper: fix a
-configure_added_submodule() leak, 2022-09-01) for a recent example. We
-can now use a helper function that doesn't require a throwaway
-variable.
+  As git_die_config() now has to handle this return value let's have
+  it BUG() if it can't find the config entry. As tested for in a
+  preceding commit we can rely on getting the config list in
+  git_die_config().
 
-We could have changed git_configset_get_value_multi() (and then
-git_config_get_value() etc.) to accept a "NULL" as a "dest" for all
-callers, but let's avoid changing the behavior of existing API
-users. Having an "unused" value that we throw away internal to
-config.c is cheap.
+- The loops after getting the "list" value in "builtin/gc.c" could
+  also make use of "unsorted_string_list_has_string()" instead of using
+  that loop, but let's leave that for now.
 
-A "NULL as optional dest" pattern is also more fragile, as the intent
-of the caller might be misinterpreted if he were to accidentally pass
-"NULL", e.g. when "dest" is passed in from another function.
+- In "versioncmp.c" we now use the return value of the functions,
+  instead of checking if the lists are still non-NULL.
 
-Another name for this function could have been
-"*_config_key_exists()", as suggested in [1]. That would work for all
-of these callers, and would currently be equivalent to this function,
-as the git_configset_get_value() API normalizes all non-zero return
-values to a "1".
-
-But adding that API would set us up to lose information, as e.g. if
-git_config_parse_key() in the underlying configset_find_element()
-fails we'd like to return -1, not 1.
-
-Let's change the underlying configset_find_element() function to
-support this use-case, we'll make further use of it in a subsequent
-commit where the git_configset_get_value_multi() function itself will
-expose this new return value.
-
-This still leaves various inconsistencies and clobbering or ignoring
-of the return value in place. E.g here we're modifying
-configset_add_value(), but ever since it was added in [2] we've been
-ignoring its "int" return value, but as we're changing the
-configset_find_element() it uses, let's have it faithfully ferry that
-"ret" along.
-
-Let's also use the "RESULT_MUST_BE_USED" macro introduced in [3] to
-assert that we're checking the return value of
-configset_find_element().
-
-We're leaving the same change to configset_add_value() for some future
-series. Once we start paying attention to its return value we'd need
-to ferry it up as deep as do_config_from(), and would need to make
-least read_{,very_}early_config() and git_protected_config() return an
-"int" instead of "void". Let's leave that for now, and focus on
-the *_get_*() functions.
-
-In a subsequent commit we'll fix the other *_get_*() functions to so
-that they'll ferry our underlying "ret" along, rather than normalizing
-it to a "return 1". But as an intermediate step to that we'll need to
-fix git_configset_get_value_multi() to return "int", and that change
-itself is smaller because of this change to migrate some callers away
-from the *_value_multi() API.
-
-1. 3c8687a73ee (add `config_set` API for caching config-like files, 2014-07-28)
-2. https://lore.kernel.org/git/xmqqczadkq9f.fsf@gitster.g/
-3. 1e8697b5c4e (submodule--helper: check repo{_submodule,}_init()
+1. 1e8697b5c4e (submodule--helper: check repo{_submodule,}_init()
    return values, 2022-09-01),
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/gc.c                |  5 +---
- builtin/submodule--helper.c |  7 +++--
- builtin/worktree.c          |  3 +--
- config.c                    | 51 ++++++++++++++++++++++++++++++++-----
- config.h                    | 18 +++++++++++++
- t/helper/test-config.c      | 22 ++++++++++++++++
- t/t1308-config-set.sh       | 43 ++++++++++++++++++++++++++++++-
- 7 files changed, 131 insertions(+), 18 deletions(-)
+ builtin/for-each-repo.c |  5 +----
+ builtin/gc.c            | 10 ++++------
+ builtin/log.c           |  6 +++---
+ config.c                | 34 ++++++++++++++++++++--------------
+ config.h                | 29 +++++++++++++++++++++--------
+ pack-bitmap.c           |  6 +++++-
+ submodule.c             |  3 +--
+ t/helper/test-config.c  |  6 ++----
+ versioncmp.c            | 11 +++++++----
+ 9 files changed, 64 insertions(+), 46 deletions(-)
 
+diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
+index 6aeac371488..fd0e7739e6a 100644
+--- a/builtin/for-each-repo.c
++++ b/builtin/for-each-repo.c
+@@ -45,14 +45,11 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
+ 	if (!config_key)
+ 		die(_("missing --config=<config>"));
+ 
+-	values = repo_config_get_value_multi(the_repository,
+-					     config_key);
+-
+ 	/*
+ 	 * Do nothing on an empty list, which is equivalent to the case
+ 	 * where the config variable does not exist at all.
+ 	 */
+-	if (!values)
++	if (repo_config_get_value_multi(the_repository, config_key, &values))
+ 		return 0;
+ 
+ 	for (i = 0; !result && i < values->nr; i++)
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 02455fdcd73..e38d1783f30 100644
+index e38d1783f30..2b3da377d52 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -1493,7 +1493,6 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
- 	};
- 	int found = 0;
- 	const char *key = "maintenance.repo";
--	char *config_value;
- 	char *maintpath = get_maintpath();
- 	struct string_list_item *item;
- 	const struct string_list *list;
-@@ -1508,9 +1507,7 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
- 	git_config_set("maintenance.auto", "false");
- 
- 	/* Set maintenance strategy, if unset */
--	if (!git_config_get_string("maintenance.strategy", &config_value))
--		free(config_value);
--	else
-+	if (git_config_get("maintenance.strategy"))
+@@ -1510,8 +1510,7 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
+ 	if (git_config_get("maintenance.strategy"))
  		git_config_set("maintenance.strategy", "incremental");
  
- 	list = git_config_get_value_multi(key);
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 4c173d8b37a..2278e8c91cb 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -557,7 +557,7 @@ static int module_init(int argc, const char **argv, const char *prefix)
- 	 * If there are no path args and submodule.active is set then,
- 	 * by default, only initialize 'active' modules.
- 	 */
--	if (!argc && git_config_get_value_multi("submodule.active"))
-+	if (!argc && !git_config_get("submodule.active"))
- 		module_list_active(&list);
+-	list = git_config_get_value_multi(key);
+-	if (list) {
++	if (!git_config_get_value_multi(key, &list)) {
+ 		for_each_string_list_item(item, list) {
+ 			if (!strcmp(maintpath, item->string)) {
+ 				found = 1;
+@@ -1577,11 +1576,10 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
+ 	if (config_file) {
+ 		git_configset_init(&cs);
+ 		git_configset_add_file(&cs, config_file);
+-		list = git_configset_get_value_multi(&cs, key);
+-	} else {
+-		list = git_config_get_value_multi(key);
+ 	}
+-	if (list) {
++	if (!(config_file
++	      ? git_configset_get_value_multi(&cs, key, &list)
++	      : git_config_get_value_multi(key, &list))) {
+ 		for_each_string_list_item(item, list) {
+ 			if (!strcmp(maintpath, item->string)) {
+ 				found = 1;
+diff --git a/builtin/log.c b/builtin/log.c
+index a70fba198f9..e43f6f9d8c1 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -182,10 +182,10 @@ static void set_default_decoration_filter(struct decoration_filter *decoration_f
+ 	int i;
+ 	char *value = NULL;
+ 	struct string_list *include = decoration_filter->include_ref_pattern;
+-	const struct string_list *config_exclude =
+-			git_config_get_value_multi("log.excludeDecoration");
++	const struct string_list *config_exclude;
  
- 	info.prefix = prefix;
-@@ -2743,7 +2743,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 		 * If there are no path args and submodule.active is set then,
- 		 * by default, only initialize 'active' modules.
- 		 */
--		if (!argc && git_config_get_value_multi("submodule.active"))
-+		if (!argc && !git_config_get("submodule.active"))
- 			module_list_active(&list);
- 
- 		info.prefix = opt.prefix;
-@@ -3140,7 +3140,6 @@ static int config_submodule_in_gitmodules(const char *name, const char *var, con
- static void configure_added_submodule(struct add_data *add_data)
- {
- 	char *key;
--	const char *val;
- 	struct child_process add_submod = CHILD_PROCESS_INIT;
- 	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
- 
-@@ -3185,7 +3184,7 @@ static void configure_added_submodule(struct add_data *add_data)
- 	 * is_submodule_active(), since that function needs to find
- 	 * out the value of "submodule.active" again anyway.
- 	 */
--	if (!git_config_get_string_tmp("submodule.active", &val)) {
-+	if (!git_config_get("submodule.active")) {
- 		/*
- 		 * If the submodule being added isn't already covered by the
- 		 * current configured pathspec, set the submodule's active flag
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 254283aa6f5..2d81965711f 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -319,7 +319,6 @@ static void copy_filtered_worktree_config(const char *worktree_git_dir)
- 
- 	if (file_exists(from_file)) {
- 		struct config_set cs = { { 0 } };
--		const char *core_worktree;
- 		int bare;
- 
- 		if (safe_create_leading_directories(to_file) ||
-@@ -338,7 +337,7 @@ static void copy_filtered_worktree_config(const char *worktree_git_dir)
- 				to_file, "core.bare", NULL, "true", 0))
- 			error(_("failed to unset '%s' in '%s'"),
- 				"core.bare", to_file);
--		if (!git_configset_get_value(&cs, "core.worktree", &core_worktree) &&
-+		if (!git_configset_get(&cs, "core.worktree") &&
- 			git_config_set_in_file_gently(to_file,
- 							"core.worktree", NULL))
- 			error(_("failed to unset '%s' in '%s'"),
+-	if (config_exclude) {
++	if (!git_config_get_value_multi("log.excludeDecoration",
++					&config_exclude)) {
+ 		struct string_list_item *item;
+ 		for_each_string_list_item(item, config_exclude)
+ 			string_list_append(decoration_filter->exclude_ref_config_pattern,
 diff --git a/config.c b/config.c
-index 00090a32fc3..d4f0e4fd619 100644
+index d4f0e4fd619..569819b4a1b 100644
 --- a/config.c
 +++ b/config.c
-@@ -2289,23 +2289,29 @@ void read_very_early_config(config_fn_t cb, void *data)
- 	config_with_options(cb, data, NULL, &opts);
- }
- 
--static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
-+RESULT_MUST_BE_USED
-+static int configset_find_element(struct config_set *cs, const char *key,
-+				  struct config_set_element **dest)
+@@ -2418,29 +2418,34 @@ int git_configset_add_file(struct config_set *cs, const char *filename)
+ int git_configset_get_value(struct config_set *cs, const char *key, const char **value)
  {
- 	struct config_set_element k;
- 	struct config_set_element *found_entry;
- 	char *normalized_key;
+ 	const struct string_list *values = NULL;
 +	int ret;
 +
  	/*
- 	 * `key` may come from the user, so normalize it before using it
- 	 * for querying entries from the hashmap.
+ 	 * Follows "last one wins" semantic, i.e., if there are multiple matches for the
+ 	 * queried key in the files of the configset, the value returned will be the last
+ 	 * value in the value list for that key.
  	 */
--	if (git_config_parse_key(key, &normalized_key, NULL))
--		return NULL;
-+	ret = git_config_parse_key(key, &normalized_key, NULL);
-+	if (ret)
+-	values = git_configset_get_value_multi(cs, key);
++	if ((ret = git_configset_get_value_multi(cs, key, &values)))
 +		return ret;
  
- 	hashmap_entry_init(&k.ent, strhash(normalized_key));
- 	k.key = normalized_key;
- 	found_entry = hashmap_get_entry(&cs->config_hash, &k, ent, NULL);
- 	free(normalized_key);
--	return found_entry;
-+	*dest = found_entry;
-+	return 0;
+-	if (!values)
+-		return 1;
+ 	assert(values->nr > 0);
+ 	*value = values->items[values->nr - 1].string;
+ 	return 0;
  }
  
- static int configset_add_value(struct config_set *cs, const char *key, const char *value)
-@@ -2314,8 +2320,11 @@ static int configset_add_value(struct config_set *cs, const char *key, const cha
- 	struct string_list_item *si;
- 	struct configset_list_item *l_item;
- 	struct key_value_info *kv_info = xmalloc(sizeof(*kv_info));
-+	int ret;
- 
--	e = configset_find_element(cs, key);
-+	ret = configset_find_element(cs, key, &e);
-+	if (ret)
-+		return ret;
- 	/*
- 	 * Since the keys are being fed by git_config*() callback mechanism, they
- 	 * are already normalized. So simply add them without any further munging.
-@@ -2425,8 +2434,25 @@ int git_configset_get_value(struct config_set *cs, const char *key, const char *
- 
- const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key)
+-const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key)
++int git_configset_get_value_multi(struct config_set *cs, const char *key,
++				  const struct string_list **dest)
  {
--	struct config_set_element *e = configset_find_element(cs, key);
--	return e ? &e->value_list : NULL;
-+	struct config_set_element *e;
-+
-+	if (configset_find_element(cs, key, &e))
-+		return NULL;
-+	else if (!e)
-+		return NULL;
-+	return &e->value_list;
-+}
-+
-+int git_configset_get(struct config_set *cs, const char *key)
-+{
-+	struct config_set_element *e;
+ 	struct config_set_element *e;
 +	int ret;
-+
+ 
+-	if (configset_find_element(cs, key, &e))
+-		return NULL;
 +	if ((ret = configset_find_element(cs, key, &e)))
 +		return ret;
-+	else if (!e)
+ 	else if (!e)
+-		return NULL;
+-	return &e->value_list;
 +		return 1;
++	*dest = &e->value_list;
++
 +	return 0;
  }
  
- int git_configset_get_string(struct config_set *cs, const char *key, char **dest)
-@@ -2565,6 +2591,12 @@ void repo_config(struct repository *repo, config_fn_t fn, void *data)
- 	configset_iter(repo->config, fn, data);
+ int git_configset_get(struct config_set *cs, const char *key)
+@@ -2604,11 +2609,11 @@ int repo_config_get_value(struct repository *repo,
+ 	return git_configset_get_value(repo->config, key, value);
  }
  
-+int repo_config_get(struct repository *repo, const char *key)
-+{
-+	git_config_check_init(repo);
-+	return git_configset_get(repo->config, key);
-+}
-+
- int repo_config_get_value(struct repository *repo,
- 			  const char *key, const char **value)
+-const struct string_list *repo_config_get_value_multi(struct repository *repo,
+-						      const char *key)
++int repo_config_get_value_multi(struct repository *repo, const char *key,
++				const struct string_list **dest)
  {
-@@ -2679,6 +2711,11 @@ void git_config_clear(void)
- 	repo_config_clear(the_repository);
+ 	git_config_check_init(repo);
+-	return git_configset_get_value_multi(repo->config, key);
++	return git_configset_get_value_multi(repo->config, key, dest);
  }
  
-+int git_config_get(const char *key)
-+{
-+	return repo_config_get(the_repository, key);
-+}
-+
- int git_config_get_value(const char *key, const char **value)
- {
+ int repo_config_get_string(struct repository *repo,
+@@ -2721,9 +2726,9 @@ int git_config_get_value(const char *key, const char **value)
  	return repo_config_get_value(the_repository, key, value);
+ }
+ 
+-const struct string_list *git_config_get_value_multi(const char *key)
++int git_config_get_value_multi(const char *key, const struct string_list **dest)
+ {
+-	return repo_config_get_value_multi(the_repository, key);
++	return repo_config_get_value_multi(the_repository, key, dest);
+ }
+ 
+ int git_config_get_string(const char *key, char **dest)
+@@ -2870,7 +2875,8 @@ void git_die_config(const char *key, const char *err, ...)
+ 		error_fn(err, params);
+ 		va_end(params);
+ 	}
+-	values = git_config_get_value_multi(key);
++	if (git_config_get_value_multi(key, &values))
++		BUG("for key '%s' we must have a value to report on", key);
+ 	kv_info = values->items[values->nr - 1].util;
+ 	git_die_config_linenr(key, kv_info->filename, kv_info->linenr);
+ }
 diff --git a/config.h b/config.h
-index 7606246531a..7dd62ca81bf 100644
+index 7dd62ca81bf..4db6b90ac20 100644
 --- a/config.h
 +++ b/config.h
-@@ -465,6 +465,9 @@ void git_configset_clear(struct config_set *cs);
-  * value in the 'dest' pointer.
+@@ -450,10 +450,18 @@ int git_configset_add_file(struct config_set *cs, const char *filename);
+ /**
+  * Finds and returns the value list, sorted in order of increasing priority
+  * for the configuration variable `key` and config set `cs`. When the
+- * configuration variable `key` is not found, returns NULL. The caller
+- * should not free or modify the returned pointer, as it is owned by the cache.
++ * configuration variable `key` is not found, returns 1 without touching
++ * `value`.
++ *
++ * The key will be parsed for validity with git_config_parse_key(), on
++ * error a negative value will be returned.
++ *
++ * The caller should not free or modify the returned pointer, as it is
++ * owned by the cache.
   */
+-const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key);
++RESULT_MUST_BE_USED
++int git_configset_get_value_multi(struct config_set *cs, const char *key,
++				  const struct string_list **dest);
  
-+RESULT_MUST_BE_USED
-+int git_configset_get(struct config_set *cs, const char *key);
-+
- /*
-  * Finds the highest-priority value for the configuration variable `key`
-  * and config set `cs`, stores the pointer to it in `value` and returns 0.
-@@ -485,6 +488,14 @@ int git_configset_get_pathname(struct config_set *cs, const char *key, const cha
- /* Functions for reading a repository's config */
- struct repository;
- void repo_config(struct repository *repo, config_fn_t fn, void *data);
-+
-+/**
-+ * Run only the discover part of the repo_config_get_*() functions
-+ * below, in addition to 1 if not found, returns negative values on
-+ * error (e.g. if the key itself is invalid).
-+ */
-+RESULT_MUST_BE_USED
-+int repo_config_get(struct repository *repo, const char *key);
+ /**
+  * Clears `config_set` structure, removes all saved variable-value pairs.
+@@ -498,8 +506,9 @@ RESULT_MUST_BE_USED
+ int repo_config_get(struct repository *repo, const char *key);
  int repo_config_get_value(struct repository *repo,
  			  const char *key, const char **value);
- const struct string_list *repo_config_get_value_multi(struct repository *repo,
-@@ -521,8 +532,15 @@ void git_protected_config(config_fn_t fn, void *data);
-  * manner, the config API provides two functions `git_config_get_value`
-  * and `git_config_get_value_multi`. They both read values from an internal
-  * cache generated previously from reading the config files.
-+ *
-+ * For those git_config_get*() functions that aren't documented,
-+ * consult the corresponding repo_config_get*() function's
-+ * documentation.
-  */
- 
+-const struct string_list *repo_config_get_value_multi(struct repository *repo,
+-						      const char *key);
 +RESULT_MUST_BE_USED
-+int git_config_get(const char *key);
-+
++int repo_config_get_value_multi(struct repository *repo, const char *key,
++				const struct string_list **dest);
+ int repo_config_get_string(struct repository *repo,
+ 			   const char *key, char **dest);
+ int repo_config_get_string_tmp(struct repository *repo,
+@@ -553,10 +562,14 @@ int git_config_get_value(const char *key, const char **value);
  /**
-  * Finds the highest-priority value for the configuration variable `key`,
-  * stores the pointer to it in `value` and returns 0. When the
+  * Finds and returns the value list, sorted in order of increasing priority
+  * for the configuration variable `key`. When the configuration variable
+- * `key` is not found, returns NULL. The caller should not free or modify
+- * the returned pointer, as it is owned by the cache.
++ * `key` is not found, returns 1 without touching `value`.
++ *
++ * The caller should not free or modify the returned pointer, as it is
++ * owned by the cache.
+  */
+-const struct string_list *git_config_get_value_multi(const char *key);
++RESULT_MUST_BE_USED
++int git_config_get_value_multi(const char *key,
++			       const struct string_list **dest);
+ 
+ /**
+  * Resets and invalidates the config cache.
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index d2a42abf28c..15c5eb507c0 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -2314,7 +2314,11 @@ int bitmap_is_midx(struct bitmap_index *bitmap_git)
+ 
+ const struct string_list *bitmap_preferred_tips(struct repository *r)
+ {
+-	return repo_config_get_value_multi(r, "pack.preferbitmaptips");
++	const struct string_list *dest;
++
++	if (!repo_config_get_value_multi(r, "pack.preferbitmaptips", &dest))
++		return dest;
++	return NULL;
+ }
+ 
+ int bitmap_is_preferred_refname(struct repository *r, const char *refname)
+diff --git a/submodule.c b/submodule.c
+index 3a0dfc417c0..4b6f5223b0c 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -274,8 +274,7 @@ int is_tree_submodule_active(struct repository *repo,
+ 	free(key);
+ 
+ 	/* submodule.active is set */
+-	sl = repo_config_get_value_multi(repo, "submodule.active");
+-	if (sl) {
++	if (!repo_config_get_value_multi(repo, "submodule.active", &sl)) {
+ 		struct pathspec ps;
+ 		struct strvec args = STRVEC_INIT;
+ 		const struct string_list_item *item;
 diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 4ba9eb65606..cbb33ae1fff 100644
+index cbb33ae1fff..6dc4c37444f 100644
 --- a/t/helper/test-config.c
 +++ b/t/helper/test-config.c
-@@ -14,6 +14,8 @@
-  * get_value_multi -> prints all values for the entered key in increasing order
-  *		     of priority
-  *
-+ * get -> print return value for the entered key
-+ *
-  * get_int -> print integer value for the entered key or die
-  *
-  * get_bool -> print bool value for the entered key or die
-@@ -109,6 +111,26 @@ int cmd__config(int argc, const char **argv)
- 			printf("Value not found for \"%s\"\n", argv[2]);
+@@ -97,8 +97,7 @@ int cmd__config(int argc, const char **argv)
  			goto exit1;
  		}
-+	} else if (argc == 3 && !strcmp(argv[1], "get")) {
-+		int ret;
-+
-+		if (!(ret = git_config_get(argv[2])))
-+			goto exit0;
-+		else if (ret == 1)
-+			printf("Value not found for \"%s\"\n", argv[2]);
-+		else if (ret == -CONFIG_INVALID_KEY)
-+			printf("Key \"%s\" is invalid\n", argv[2]);
-+		else if (ret == -CONFIG_NO_SECTION_OR_NAME)
-+			printf("Key \"%s\" has no section\n", argv[2]);
-+		else
-+			/*
-+			 * A normal caller should just check "ret <
-+			 * 0", but for our own tests let's BUG() if
-+			 * our whitelist of git_config_parse_key()
-+			 * return values isn't exhaustive.
-+			 */
-+			BUG("Key \"%s\" has unknown return %d", argv[2], ret);
-+		goto exit1;
- 	} else if (argc == 3 && !strcmp(argv[1], "get_int")) {
- 		if (!git_config_get_int(argv[2], &val)) {
- 			printf("%d\n", val);
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 4be1ab1147c..7def7053e1c 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -58,6 +58,8 @@ test_expect_success 'setup default config' '
- 		skin = false
- 		nose = 1
- 		horns
-+	[value]
-+		less
- 	EOF
- '
+ 	} else if (argc == 3 && !strcmp(argv[1], "get_value_multi")) {
+-		strptr = git_config_get_value_multi(argv[2]);
+-		if (strptr) {
++		if (!git_config_get_value_multi(argv[2], &strptr)) {
+ 			for (i = 0; i < strptr->nr; i++) {
+ 				v = strptr->items[i].string;
+ 				if (!v)
+@@ -181,8 +180,7 @@ int cmd__config(int argc, const char **argv)
+ 				goto exit2;
+ 			}
+ 		}
+-		strptr = git_configset_get_value_multi(&cs, argv[2]);
+-		if (strptr) {
++		if (!git_configset_get_value_multi(&cs, argv[2], &strptr)) {
+ 			for (i = 0; i < strptr->nr; i++) {
+ 				v = strptr->items[i].string;
+ 				if (!v)
+diff --git a/versioncmp.c b/versioncmp.c
+index 323f5d35ea8..60c3a517122 100644
+--- a/versioncmp.c
++++ b/versioncmp.c
+@@ -162,13 +162,16 @@ int versioncmp(const char *s1, const char *s2)
+ 	if (!initialized) {
+ 		const char *const newk = "versionsort.suffix";
+ 		const char *const oldk = "versionsort.prereleasesuffix";
++		const struct string_list *newl;
+ 		const struct string_list *oldl;
++		int new = git_config_get_value_multi(newk, &newl);
++		int old = git_config_get_value_multi(oldk, &oldl);
  
-@@ -116,6 +118,45 @@ test_expect_success 'find value with the highest priority' '
- 	check_config get_value case.baz "hask"
- '
+-		prereleases = git_config_get_value_multi(newk);
+-		oldl = git_config_get_value_multi(oldk);
+-		if (prereleases && oldl)
++		if (!new && !old)
+ 			warning("ignoring %s because %s is set", oldk, newk);
+-		else if (!prereleases)
++		if (!new)
++			prereleases = newl;
++		else if (!old)
+ 			prereleases = oldl;
  
-+test_expect_success 'return value for an existing key' '
-+	test-tool config get lamb.chop >out 2>err &&
-+	test_must_be_empty out &&
-+	test_must_be_empty err
-+'
-+
-+test_expect_success 'return value for value-less key' '
-+	test-tool config get value.less >out 2>err &&
-+	test_must_be_empty out &&
-+	test_must_be_empty err
-+'
-+
-+test_expect_success 'return value for a missing key' '
-+	cat >expect <<-\EOF &&
-+	Value not found for "missing.key"
-+	EOF
-+	test_expect_code 1 test-tool config get missing.key >actual 2>err &&
-+	test_cmp actual expect &&
-+	test_must_be_empty err
-+'
-+
-+test_expect_success 'return value for a bad key: CONFIG_INVALID_KEY' '
-+	cat >expect <<-\EOF &&
-+	Key "fails.iskeychar.-" is invalid
-+	EOF
-+	test_expect_code 1 test-tool config get fails.iskeychar.- >actual 2>err &&
-+	test_cmp actual expect &&
-+	test_must_be_empty out
-+'
-+
-+test_expect_success 'return value for a bad key: CONFIG_NO_SECTION_OR_NAME' '
-+	cat >expect <<-\EOF &&
-+	Key "keynosection" has no section
-+	EOF
-+	test_expect_code 1 test-tool config get keynosection >actual 2>err &&
-+	test_cmp actual expect &&
-+	test_must_be_empty out
-+'
-+
- test_expect_success 'find integer value for a key' '
- 	check_config get_int lamb.chop 65
- '
-@@ -272,7 +313,7 @@ test_expect_success 'proper error on error in default config files' '
- 	cp .git/config .git/config.old &&
- 	test_when_finished "mv .git/config.old .git/config" &&
- 	echo "[" >>.git/config &&
--	echo "fatal: bad config line 34 in file .git/config" >expect &&
-+	echo "fatal: bad config line 36 in file .git/config" >expect &&
- 	test_expect_code 128 test-tool config get_value foo.bar 2>actual &&
- 	test_cmp expect actual
- '
+ 		initialized = 1;
 -- 
 2.40.0.rc1.1034.g5867a1b10c5
 
