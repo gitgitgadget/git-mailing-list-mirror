@@ -2,92 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F154C6FA99
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 21:48:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09882C678D5
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 21:53:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231183AbjCGVs5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 16:48:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59334 "EHLO
+        id S231521AbjCGVxD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 16:53:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231596AbjCGVst (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 16:48:49 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96C209DE0C
-        for <git@vger.kernel.org>; Tue,  7 Mar 2023 13:48:34 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id p16so8695170wmq.5
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 13:48:34 -0800 (PST)
+        with ESMTP id S229823AbjCGVxB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 16:53:01 -0500
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C77581F937
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 13:52:57 -0800 (PST)
+Received: by mail-pg1-x52f.google.com with SMTP id 130so8502385pgg.3
+        for <git@vger.kernel.org>; Tue, 07 Mar 2023 13:52:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fangyi-io.20210112.gappssmtp.com; s=20210112; t=1678225713;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8lDa0V+55hZDgn1NyZp8OmTliG994nJlF0yFPG1te1c=;
-        b=KljpecQwY4v/Qvsmo2fEuyiROefdC0HrvEqdARsgvhdUFAn3YzSRgtDThMfF7uL9XF
-         tEK1LnjzvgzLe+xEOrInbFiT32NFxRK2i8EH19uOUJQ3IjDpx1rk0IrP+k9nXit4825c
-         1A3qkg658yj+Y37OfakwoXVunuQyRvNUsMyXUHLRGvpi00t14twDSBWop6J3srzAcl6m
-         AmwNjrDW7vgB6giKMw6RDtg9VNSQH0jyBL1pdLm3U7sXloNdycwCRvlwzcHuukUNt0C0
-         q8zox5OsfStFc2H665dLcHcPLVmqoFL1AcuoDtuyAlER1O1XKN86OqvK9hTLcmAm/W8p
-         9A3A==
+        d=gmail.com; s=20210112; t=1678225977;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Hy6EhBqmCTxcjXHMxxeOzvnER95fmH0KmWJdyV42QE0=;
+        b=hwz6B7kZbdwpl8ho250k27ZR8U8+enaZZ5F2FwqhoWqOEFEkKbRhh6LQAMYVmmwXqC
+         N8cQLHWT7+vaqC48Ww80rccxJ1LXNmQ4R5257W5B5zfsBJ2peMQ1s/sRr7uW+XI8C7b0
+         2usi3d58bamNZJKykMgIhli5btJrlIUAPeHamx8NizF1vjY5Poa3BLVAtYouaKGCn8DN
+         dESxB9vPBb245rgz8Mzr1exaETVTGhkGYPW+KKDFoHCF2yDb1mjxU5GqonFfeQBFAnY0
+         NmXe2jA++vXLi6UVDILJ6NLPRm/TMUc4tG+9H7W4C4XgS5WJWbuUxT5uzzP7OMRiOnWP
+         AfNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678225713;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8lDa0V+55hZDgn1NyZp8OmTliG994nJlF0yFPG1te1c=;
-        b=J2f623VHh2fotnJQAfyRK7I+FIlTFYth/HgR1mqNCE0380Do6fdgAgfHjhIn3rTIUj
-         dwOPcXbE3qjDSAmuJAD2sx7PahrzFCfyTCrED9EHnmpAmGaId6Qtbn9F7fBv+cKi8uV1
-         7EgDZ6LzKU5eE9y58sxSBmRQYCpnyR85rhDRpUzxqbB6w9exyi2fB6j7Tgn4was16gKp
-         oFv4XCUtYKHvH9Z05qTaTpLuKGOXgJzf7cYvpT0vp271Vgm4v4g011pbq77h/ftUI56X
-         M4gFf/wyvRXYVe/sz0joY4jU3T503dFEqG9HHXta2mQpBpO8iKz0vGe2df/Jn1tbjMv0
-         yvjQ==
-X-Gm-Message-State: AO0yUKXYY90iBzf1XT5+nVWp9uzxdUeroXW0VCe4NiF8uMwbfXMc6S/2
-        vAOcZnJqVxXXnCjbIuzqu13JCg==
-X-Google-Smtp-Source: AK7set+0W1gyuoiOBoaotA1+banfniJhbE6c3zJ242HQ7rL32pmU52aCJYqRM+WIMkRG92ZxxLZyLg==
-X-Received: by 2002:a05:600c:ad3:b0:3ea:e667:b1ee with SMTP id c19-20020a05600c0ad300b003eae667b1eemr13684413wmr.38.1678225712857;
-        Tue, 07 Mar 2023 13:48:32 -0800 (PST)
-Received: from [192.168.0.23] (cpc157871-brnt5-2-0-cust279.4-2.cable.virginm.net. [86.4.97.24])
-        by smtp.gmail.com with ESMTPSA id j40-20020a05600c1c2800b003dd1bd0b915sm19579753wms.22.2023.03.07.13.48.31
+        d=1e100.net; s=20210112; t=1678225977;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hy6EhBqmCTxcjXHMxxeOzvnER95fmH0KmWJdyV42QE0=;
+        b=f0Nc8fb1UPEZ7XqivcK+OeueGpBS9e8zgZsIeEYVWkT8cn8OkEBVd2NiDnJFKKC3zn
+         8z7WqTHlmaWPU7/rfTVlR8xafQpgS7+sjNEdGjUpyqtTADqx4ib/ZwyD65xL4Y1YUd/I
+         vRgm4GIgtVMpWtSsytyTOxAfnK0KjesyiLworL/Ml+6XAecPy+70oqmStC2brD8TqAsi
+         kfC5H75JBBWr04zP3Uma85v09oWpEYNjWCkPewAmezfh7KILy6Qj4ENRQ98Hxe9+Dl7M
+         3ihUc6D4qu1XcQJ9XIXDy7VQL6rfBWpRKQHW/c4iSUSE3/FmjPXpdE0MPTOfDN00PV3n
+         usXw==
+X-Gm-Message-State: AO0yUKWFgvd8tq5gLPlblwSKXHy8QRwIulirD6FDNuJiV0qODDWscM7K
+        sFzZ4bmGuEdIWNmS/yxJxqaS01Idz/c=
+X-Google-Smtp-Source: AK7set+xddw61cNYNt/F6tQpYE6dn4z8d7y6sa1XlEkGlmCBVH49mevmldkSbYIGHLR/xj1IisVtHg==
+X-Received: by 2002:a62:19d6:0:b0:5a8:be36:65a8 with SMTP id 205-20020a6219d6000000b005a8be3665a8mr14599930pfz.27.1678225977167;
+        Tue, 07 Mar 2023 13:52:57 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id e19-20020a62aa13000000b005b6f63c6cf4sm8344865pff.30.2023.03.07.13.52.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 13:48:32 -0800 (PST)
-Message-ID: <37ed877d5927c7cebba7e47769be3a069eacd6c6.camel@fangyi.io>
-Subject: Re: fz/rebase-msg-update (2023-02-27)
-From:   Fangyi Zhou <me@fangyi.io>
-To:     Junio C Hamano <gitster@pobox.com>
+        Tue, 07 Mar 2023 13:52:56 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fangyi Zhou <me@fangyi.io>
 Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Date:   Tue, 07 Mar 2023 21:48:31 +0000
-In-Reply-To: <xmqqpm9kw9no.fsf@gitster.g>
+Subject: Re: fz/rebase-msg-update (2023-02-27)
 References: <xmqqcz5snyxz.fsf@gitster.g>
-         <007e6f051381d86da6881644ce300b6eea944194.camel@fangyi.io>
-         <xmqqttyww9tl.fsf@gitster.g> <xmqqpm9kw9no.fsf@gitster.g>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4 (3.46.4-1.fc37) 
+        <007e6f051381d86da6881644ce300b6eea944194.camel@fangyi.io>
+        <xmqqttyww9tl.fsf@gitster.g> <xmqqpm9kw9no.fsf@gitster.g>
+        <37ed877d5927c7cebba7e47769be3a069eacd6c6.camel@fangyi.io>
+Date:   Tue, 07 Mar 2023 13:52:56 -0800
+In-Reply-To: <37ed877d5927c7cebba7e47769be3a069eacd6c6.camel@fangyi.io>
+        (Fangyi Zhou's message of "Tue, 07 Mar 2023 21:48:31 +0000")
+Message-ID: <xmqqa60ow7nr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 2023-03-07 at 13:09 -0800, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
-> > Fangyi Zhou <me@fangyi.io> writes:
-> >=20
-> > > This patch is actually a hotfix for a topic added in v2.40.0 RC
-> > > 2c6e5b32aa (Merge branch 'en/rebase-incompatible-opts', 2023-02-
-> > > 03),
-> > > could it be reviewed and included in the release?
-> >=20
-> > Is it?=C2=A0=20
-> >=20
-> > If a message used to say autoSquash 2.39 series and 2.40-rc2
-> > has it autosquash, then it may be a hotfix, but otherwise no.
->=20
-> Besides, localizaiton teams are already working on what has been
-> in 'master'; it disrupts their workflow to change end-user message
-> under them.
->=20
+Fangyi Zhou <me@fangyi.io> writes:
 
-The patch fixes a newly added i18n string, not the option itself,
-see
-https://github.com/git-l10n/pot-changes/blob/pot/main/2023-02-04.diff
-I found the issue while conducting the localisation for v2.40.0.
+> On Tue, 2023-03-07 at 13:09 -0800, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>> > Fangyi Zhou <me@fangyi.io> writes:
+>> > 
+>> > > This patch is actually a hotfix for a topic added in v2.40.0 RC
+>> > > 2c6e5b32aa (Merge branch 'en/rebase-incompatible-opts', 2023-02-
+>> > > 03),
+>> > > could it be reviewed and included in the release?
+>> > 
+>> > Is it?  
+>> > 
+>> > If a message used to say autoSquash 2.39 series and 2.40-rc2
+>> > has it autosquash, then it may be a hotfix, but otherwise no.
+>> 
+>> Besides, localizaiton teams are already working on what has been
+>> in 'master'; it disrupts their workflow to change end-user message
+>> under them.
+>
+> The patch fixes a newly added i18n string, not the option itself,
+> see
+> https://github.com/git-l10n/pot-changes/blob/pot/main/2023-02-04.diff
+> I found the issue while conducting the localisation for v2.40.0.
+
+Exactly.  That's not a regression.
