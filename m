@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B205C678DB
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 18:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91BE6C678D4
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 18:16:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232541AbjCGSPW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 13:15:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56384 "EHLO
+        id S232561AbjCGSQw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 13:16:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232543AbjCGSOh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 13:14:37 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7FB6A3B4B
-        for <git@vger.kernel.org>; Tue,  7 Mar 2023 10:10:13 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id k10so32046125edk.13
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 10:10:13 -0800 (PST)
+        with ESMTP id S232523AbjCGSOg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 13:14:36 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F2BBA188F
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 10:10:11 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id da10so56022696edb.3
+        for <git@vger.kernel.org>; Tue, 07 Mar 2023 10:10:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678212611;
+        d=gmail.com; s=20210112; t=1678212603;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MF0PYtt5n9HWgHVoGWzMnk9xS8YKsx0IF17BQ+px9dU=;
-        b=BK+CjjVmXRPDJUO5+yCc3GZZ9PsH0dYfKQJ4GFh3b0MT47pYbkYamGo1V+vzO9ZDkO
-         jZ3aP3vbhSXbOiZxFOMPSV/I+x1we4a69DlIEhlPfWtK/q8ccfp+HeiUtGily5ZwdRv4
-         nW0awltHYDAHgiPmdoHg5v/36OmB7mDEM+/XFnC0tioHz+1PRPCx5N2cZZeQ/eUcYh7G
-         RiswH7m8sgOUc47ZBfVjlpCgWFyS343yGqBUDQtP2RhmuuU0xtWoHgp9MUheM+MyyKfg
-         SkKD1uk9QHC5bsUclvKv7LeP9W/YaVJL9nr1Js2t+Ga7gnTbvknJFdTp7jzQgqNeaFW8
-         OSQA==
+        bh=4vhB/VvuxpEFLBgJp0BccsdhTjWfa6KSYpVrKo2IRgo=;
+        b=lsqD8iB2W3HAKReyokFm4c/imIp3WTG6gboBGesgoJEhZz8iPeP8SbmOU4wb4FQsIY
+         46pBZWX9qIKWFLsbcTVf2U2kNWap9coaE0ZRdedi9i6knX9npl/M0sJLdfWKY+VRFG7S
+         oIjLCRpKGzjy0luWo4ivN3lalVjJ9DXLBQGsCbwNDlktqi+11bnUjRGUgPdytXu3sEF7
+         pdu4jGpSDCbVjhD66eS6PvrGQ4CqNf2uv812suPh4n/2SAyZoKs3DuExD3N887G3i9Oq
+         0sbDslWshuZDELNPi5wi6RjVHibFbwiHebJPYgujVcAzxZOtOaPu0GN218eFV+D0C3VS
+         dguQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678212611;
+        d=1e100.net; s=20210112; t=1678212603;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MF0PYtt5n9HWgHVoGWzMnk9xS8YKsx0IF17BQ+px9dU=;
-        b=FhcxmINal6KRGHL2mgjpH4JDpZrwiQtTW01qInNkZJ1a74rawDxHNiHKskh1hqdP1G
-         DTNYI4+Eiis7sDnJyW9YXCA7vVR4Vsf5zL/NHdBMMLZD4vdPg73tRXJ5qB8FpZhl5T0s
-         IZWJiQhTpkQIo0xqn8v515nRvBTc+S4hTXXyDaV5NrldtYtlF+91srh8EyExSVrVAZKX
-         uTDUKNZxsuBGrC2EtMUo0tt2A+aH1RcKabUbT6oElQSwg2/d0hm4X17V3Wr03QK1QzwL
-         4Esu5SXnMztQ4omDAf6OJsY6uHRN2CFoX7tDBEYNlFIjsynQzpeHsxOqvppsP31Bk0RK
-         nqmg==
-X-Gm-Message-State: AO0yUKWm5rukEPbwYPrRawbBGHBfVaiCE5TbScMnhndEIMr25AweQjmM
-        4k0km7iDqDW4gqz2w92xrce2VXjZS1lbWw==
-X-Google-Smtp-Source: AK7set9czJJhnkmJBALtgs8ETHhKcM6dMOqZMbzJWXmR20MTT4x4TrkEaYpCVEuoB58Ogx2/KvEeRg==
-X-Received: by 2002:a17:906:35d5:b0:8f8:1501:be85 with SMTP id p21-20020a17090635d500b008f81501be85mr14422759ejb.34.1678212611284;
-        Tue, 07 Mar 2023 10:10:11 -0800 (PST)
+        bh=4vhB/VvuxpEFLBgJp0BccsdhTjWfa6KSYpVrKo2IRgo=;
+        b=MOvCN/QJvGnnduhwjlkvhMeyU69Zp35nxnopsr1HUzQ3wEZ3YwR7I0MtnTBqCiiFwL
+         ELk++dC3eG3dhmQ0d3OzdPyzgvl/jgR+BppR9LDSKezrwm1+25BLb36imSe4jUbrV7B2
+         HcyD7LedYgoLreB0rJbTkQVx+wm4wikT//FpwZch15JP6pWsfqyt2ZuKnpa+PgEsDRdv
+         ebhb/uFqpTNlzoa+KVtcVF9AUIBvDAguvkyFZCl+z9SOYfTcaaK+cTNQH0EBSuqG8bkT
+         UG+9ldqLKLghz0t1/7/mgYZmLOlBW14Ii2Dwb/EvvzDXacOojHXlGu2OPghkMUk4U7FU
+         rjMQ==
+X-Gm-Message-State: AO0yUKWO1gApLV2SWEPshJnn0RGAnlH6nUjgR0UzEq6RftYMcSpbz8Ve
+        pihatZw7+QBnjCdhsQtgfRAjLNgLfhdZ0w==
+X-Google-Smtp-Source: AK7set+KsR1oQSTH3bQWgRfZiNJ7NBNfrh8Y3nXwt/Hxm/pKlNAmpDA2PYCtXh5yC0GTNMFx5sKnSA==
+X-Received: by 2002:a17:906:b751:b0:8f7:51e5:99d1 with SMTP id fx17-20020a170906b75100b008f751e599d1mr16538754ejb.37.1678212603107;
+        Tue, 07 Mar 2023 10:10:03 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d5-20020a1709063ec500b008b1797a53b4sm6401008ejj.215.2023.03.07.10.10.10
+        by smtp.gmail.com with ESMTPSA id d5-20020a1709063ec500b008b1797a53b4sm6401008ejj.215.2023.03.07.10.10.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 10:10:10 -0800 (PST)
+        Tue, 07 Mar 2023 10:10:02 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         zweiss@equinix.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 9/9] for-each-repo: with bad config, don't conflate <path> and <cmd>
-Date:   Tue,  7 Mar 2023 19:09:40 +0100
-Message-Id: <patch-v6-9.9-627eb15a319-20230307T180516Z-avarab@gmail.com>
+Subject: [PATCH v6 2/9] config tests: add "NULL" tests for *_get_value_multi()
+Date:   Tue,  7 Mar 2023 19:09:33 +0100
+Message-Id: <patch-v6-2.9-4b0799090c9-20230307T180516Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.40.0.rc1.1034.g5867a1b10c5
 In-Reply-To: <cover-v6-0.9-00000000000-20230307T180516Z-avarab@gmail.com>
 References: <cover-v5-00.10-00000000000-20230207T154000Z-avarab@gmail.com> <cover-v6-0.9-00000000000-20230307T180516Z-avarab@gmail.com>
@@ -76,112 +76,122 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a logic error in 4950b2a2b5c (for-each-repo: run subcommands on
-configured repos, 2020-09-11). Due to assuming that elements returned
-from the repo_config_get_value_multi() call wouldn't be "NULL" we'd
-conflate the <path> and <command> part of the argument list when
-running commands.
+A less well known edge case in the config format is that keys can be
+value-less, a shorthand syntax for "true" boolean keys. I.e. these two
+are equivalent as far as "--type=bool" is concerned:
 
-As noted in the preceding commit the fix is to move to a safer
-"*_string_multi()" version of the *_multi() API. This change is
-separated from the rest because those all segfaulted. In this change
-we ended up with different behavior.
+	[a]key
+	[a]key = true
 
-When using the "--config=<config>" form we take each element of the
-list as a path to a repository. E.g. with a configuration like:
+But as far as our parser is concerned the values for these two are
+NULL, and "true". I.e. for a sequence like:
 
-	[repo] list = /some/repo
+	[a]key=x
+	[a]key
+	[a]key=y
 
-We would, with this command:
+We get a "struct string_list" with "string" members with ".string"
+values of:
 
-	git for-each-repo --config=repo.list status builtin
+	{ "x", NULL, "y" }
 
-Run a "git status" in /some/repo, as:
+This behavior goes back to the initial implementation of
+git_config_bool() in 17712991a59 (Add ".git/config" file parser,
+2005-10-10).
 
-	git -C /some/repo status builtin
+When parts of the config_set API were tested for in [1] they didn't
+add coverage for 3/4 of the "(NULL)" cases handled in
+"t/helper/test-config.c". We'd test that case for "get_value", but not
+"get_value_multi", "configset_get_value" and
+"configset_get_value_multi".
 
-I.e. ask "status" to report on the "builtin" directory. But since a
-configuration such as this would result in a "struct string_list *"
-with one element, whose "string" member is "NULL":
+We now cover all of those cases, which in turn expose the details of
+how this part of the config API works.
 
-	[repo] list
-
-We would, when constructing our command-line in
-"builtin/for-each-repo.c"...
-
-	strvec_pushl(&child.args, "-C", path, NULL);
-	for (i = 0; i < argc; i++)
-		strvec_push(&child.args, argv[i]);
-
-...have that "path" be "NULL", and as strvec_pushl() stops when it
-sees NULL we'd end with the first "argv" element as the argument to
-the "-C" option, e.g.:
-
-	git -C status builtin
-
-I.e. we'd run the command "builtin" in the "status" directory.
-
-In another context this might be an interesting security
-vulnerability, but I think that this amounts to a nothingburger on
-that front.
-
-A hypothetical attacker would need to be able to write config for the
-victim to run, if they're able to do that there's more interesting
-attack vectors. See the "safe.directory" facility added in
-8d1a7448206 (setup.c: create `safe.bareRepository`, 2022-07-14).
-
-An even more unlikely possibility would be an attacker able to
-generate the config used for "for-each-repo --config=<key>", but
-nothing else (e.g. an automated system producing that list).
-
-Even in that case the attack vector is limited to the user running
-commands whose name matches a directory that's interesting to the
-attacker (e.g. a "log" directory in a repository). The second
-argument (if any) of the command is likely to make git die without
-doing anything interesting (e.g. "-p" to "log", there being no "-p"
-built-in command to run).
+1. 4c715ebb96a (test-config: add tests for the config_set API,
+   2014-07-28)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/for-each-repo.c  |  2 +-
- t/t0068-for-each-repo.sh | 13 +++++++++++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ t/t1308-config-set.sh | 65 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
 
-diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
-index 224164addb3..ce8f7a99086 100644
---- a/builtin/for-each-repo.c
-+++ b/builtin/for-each-repo.c
-@@ -46,7 +46,7 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
- 	if (!config_key)
- 		die(_("missing --config=<config>"));
- 
--	err = repo_config_get_value_multi(the_repository, config_key, &values);
-+	err = repo_config_get_string_multi(the_repository, config_key, &values);
- 	if (err < 0)
- 		usage_msg_optf(_("got bad config --config=%s"),
- 			       for_each_repo_usage, options, config_key);
-diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
-index 6b51e00da0e..4b90b74d5d5 100755
---- a/t/t0068-for-each-repo.sh
-+++ b/t/t0068-for-each-repo.sh
-@@ -46,4 +46,17 @@ test_expect_success 'error on bad config keys' '
- 	test_expect_code 129 git for-each-repo --config="'\''.b"
+diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
+index b38e158d3b2..4be1ab1147c 100755
+--- a/t/t1308-config-set.sh
++++ b/t/t1308-config-set.sh
+@@ -146,6 +146,71 @@ test_expect_success 'find multiple values' '
+ 	check_config get_value_multi case.baz sam bat hask
  '
  
-+test_expect_success 'error on NULL value for config keys' '
-+	cat >>.git/config <<-\EOF &&
-+	[empty]
-+		key
-+	EOF
-+	cat >expect <<-\EOF &&
-+	error: missing value for '\''empty.key'\''
-+	EOF
-+	test_expect_code 129 git for-each-repo --config=empty.key 2>actual.raw &&
-+	grep ^error actual.raw >actual &&
-+	test_cmp expect actual
-+'
++test_NULL_in_multi () {
++	local op="$1" &&
++	local file="$2" &&
 +
- test_done
++	test_expect_success "$op: NULL value in config${file:+ in $file}" '
++		config="$file" &&
++		if test -z "$config"
++		then
++			config=.git/config &&
++			test_when_finished "mv $config.old $config" &&
++			mv "$config" "$config".old
++		fi &&
++
++		# Value-less in the middle of a list
++		cat >"$config" <<-\EOF &&
++		[a]key=x
++		[a]key
++		[a]key=y
++		EOF
++		case "$op" in
++		*_multi)
++			cat >expect <<-\EOF
++			x
++			(NULL)
++			y
++			EOF
++			;;
++		*)
++			cat >expect <<-\EOF
++			y
++			EOF
++			;;
++		esac &&
++		test-tool config "$op" a.key $file >actual &&
++		test_cmp expect actual &&
++
++		# Value-less at the end of a least
++		cat >"$config" <<-\EOF &&
++		[a]key=x
++		[a]key=y
++		[a]key
++		EOF
++		case "$op" in
++		*_multi)
++			cat >expect <<-\EOF
++			x
++			y
++			(NULL)
++			EOF
++			;;
++		*)
++			cat >expect <<-\EOF
++			(NULL)
++			EOF
++			;;
++		esac &&
++		test-tool config "$op" a.key $file >actual &&
++		test_cmp expect actual
++	'
++}
++
++test_NULL_in_multi "get_value_multi"
++test_NULL_in_multi "configset_get_value" "my.config"
++test_NULL_in_multi "configset_get_value_multi" "my.config"
++
+ test_expect_success 'find value from a configset' '
+ 	cat >config2 <<-\EOF &&
+ 	[case]
 -- 
 2.40.0.rc1.1034.g5867a1b10c5
 
