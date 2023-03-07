@@ -2,129 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DCD6C6FD1B
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 17:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7805AC678D4
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 17:33:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230423AbjCGRaZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 12:30:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57630 "EHLO
+        id S231765AbjCGRdy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 12:33:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230182AbjCGRaB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 12:30:01 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50CCF8C95A
-        for <git@vger.kernel.org>; Tue,  7 Mar 2023 09:25:15 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id y15-20020a17090aa40f00b00237ad8ee3a0so12563226pjp.2
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 09:25:15 -0800 (PST)
+        with ESMTP id S231438AbjCGRd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 12:33:28 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 262FE99243
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 09:29:06 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id y15-20020a17090aa40f00b00237ad8ee3a0so12573421pjp.2
+        for <git@vger.kernel.org>; Tue, 07 Mar 2023 09:29:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1678209914;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+X4rY4Po4UWozDjhLGqpN4DVXJcjTDc2Wal/Um9yLaQ=;
-        b=QjaSJIEndEbz7ujc8MUsPWYPkto+pOREbyiag/8cy9IRAdJfQXml/K9yOU18GQfQB9
-         N7yqt9B9xDS0Wch3LSXCzvwzYgziusVlpd/xU+x+TvRwl2F0TFRhofupmG0avFwrZfH/
-         140u0CuwUDKYInTgiOFlPepMMlKefJDrSZdXE=
+        d=gmail.com; s=20210112; t=1678210145;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n/VHX2KGWYFpStTUAucn+lozsEigpjJ5xWB4kNImvQI=;
+        b=MTaLadAJlgkNEhhUwSqjOWOHua3F9d+3ysxCgI1hw/45AWDj3mcPIkm6L05nvSLNBc
+         hY5+eOm8vPpBJYYVobiXtreAhSMeOAz8TimqPVSY4HISciO33t+F17wdZ0XKFWAdBGZ/
+         XCBj/5WXMUIR+I/qAziLBbe2B6spZWgFCyy9lcZ8WOeJXHkXJXKtwmQpYvod6GcecoHD
+         FV6+qDJFzVYSTBz+aEySzcR67LaN7jh/inbo0PsWsFWc+4k/sE50k513d9cYtGy/MjFh
+         Q+Lg0dMrlE5PyFqxMZISaVAdoFMjoBJnBovAxCr7jbbPdqCBBbMZnxXqe8Jl1kDLGv66
+         OaYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678209914;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+        d=1e100.net; s=20210112; t=1678210145;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+X4rY4Po4UWozDjhLGqpN4DVXJcjTDc2Wal/Um9yLaQ=;
-        b=KENeji4tFaHk0+DGjMfqcofmi78Pf2yF3MrpCjbidET025+u/nwu0LsxSeNxY90zNJ
-         5D4nofn9rCX8ouITu6XCEl0Xo9LnZbguEgepztEk22G0WG3P/vDCScOpKCcvE+Xi3qdV
-         MjlPWzD4AitK67oQsWGJbyFvNcMBWoHt0TyOufiT7NSfz4UyaE/+TS3uhY2WlR8SOPlR
-         ZUr9rN02aUJrZKR0kL85rRDOP1PuX3Hb9S7DyGaBrSsUi/UH8CbiKC/mEFwGXK6IRnlI
-         T96wN3bGka/VYerNoMXprV4TIlEeWGETvjoCoeqgX/HrRO9Tg7xxgZ0LgqrxpHMC2HE4
-         H6iQ==
-X-Gm-Message-State: AO0yUKWk02LdKlW7Zz58N6kOtPZBr6JtSjG6O36gSTgfqRfFRpJhOfcd
-        SMKNPL+XMdLISS21wYt2UamjMU29n9hRs+WX2VA=
-X-Google-Smtp-Source: AK7set/CyiKI6N4aSsGUQe2wmJ4IwftEVDFw/Uy8SEvAZwB2NpUPWq26AYC/l1iITkTCVZsi6mcupA==
-X-Received: by 2002:a17:903:230e:b0:19c:c961:ac15 with SMTP id d14-20020a170903230e00b0019cc961ac15mr17814310plh.0.1678209914420;
-        Tue, 07 Mar 2023 09:25:14 -0800 (PST)
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com. [209.85.214.177])
-        by smtp.gmail.com with ESMTPSA id kf3-20020a17090305c300b0019cb9764340sm8675237plb.225.2023.03.07.09.25.13
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Mar 2023 09:25:14 -0800 (PST)
-Received: by mail-pl1-f177.google.com with SMTP id i10so14878538plr.9
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 09:25:13 -0800 (PST)
-X-Received: by 2002:a17:903:25d2:b0:19a:ec61:98d4 with SMTP id
- jc18-20020a17090325d200b0019aec6198d4mr5980519plb.0.1678209913253; Tue, 07
- Mar 2023 09:25:13 -0800 (PST)
+        bh=n/VHX2KGWYFpStTUAucn+lozsEigpjJ5xWB4kNImvQI=;
+        b=JwG0Cgx8r6wKYvfyRtM5P/ikC6aZscgM9TiZdphbBa4x6Io9JO5i/7Osv3w8ngrYUl
+         P3moNDgiddZG4RMOYCl8TKDG5R+f8A0SymNiyRk8Ogai1z6XamfIyNdI0TjfbJcdLhpG
+         Pp0f9UxZhn11jOlaadLD6MfeSeAAkm1As3i52TxtcBhukIBhXQO3GobHDPQtzfcaqf+a
+         Elmjt5ajYtEyhOZPUhWkCBI3vcqRX3b1H5qMb5q8tFKmaau2fjMdP3qjUs4wmYIalrmx
+         j5nbGlQ3KY/D933Zihag8UwvWVYeFp+pfSA5UAirkcxsH8X/HvAwylHjQTkjBnx2pWw+
+         hnIg==
+X-Gm-Message-State: AO0yUKVJkOJ3jZ7G6EIas9E19w1aHjXljAiKg8B/XIsbiwVd6gR9Ax+x
+        qao81ksRGh3Ny1UTffQglLUrTLMItI0=
+X-Google-Smtp-Source: AK7set8MRUmDD1ee0HM63Wl7NpVf7ah+v3JNvyvAwpNVgh7PGORaAZ7N+OEhr/Lp2RtAiuYL74IupQ==
+X-Received: by 2002:a17:902:b781:b0:19c:eb9a:770d with SMTP id e1-20020a170902b78100b0019ceb9a770dmr13072568pls.53.1678210145467;
+        Tue, 07 Mar 2023 09:29:05 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id ks3-20020a170903084300b0019c901c207dsm8668570plb.177.2023.03.07.09.29.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Mar 2023 09:29:04 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH] object-file: reprepare alternates when necessary
+References: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
+        <230307.861qm0235d.gmgdl@evledraar.gmail.com>
+Date:   Tue, 07 Mar 2023 09:29:04 -0800
+In-Reply-To: <230307.861qm0235d.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 07 Mar 2023 12:28:44 +0100")
+Message-ID: <xmqqttyw1ndr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <Y/UAaC4oBPIby4kV@google.com> <Y/VcbWogtHrpXU8Z@tapette.crustytoothpaste.net>
-In-Reply-To: <Y/VcbWogtHrpXU8Z@tapette.crustytoothpaste.net>
-From:   Raul Rangel <rrangel@chromium.org>
-Date:   Tue, 7 Mar 2023 10:25:01 -0700
-X-Gmail-Original-Message-ID: <CAHQZ30BrwiW6ia3v31gto9D8oejkj2UrqK93MjPFNwBJuOBK0Q@mail.gmail.com>
-Message-ID: <CAHQZ30BrwiW6ia3v31gto9D8oejkj2UrqK93MjPFNwBJuOBK0Q@mail.gmail.com>
-Subject: Re: Parallel worktree checkouts result in index.lock exists
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Raul E Rangel <rrangel@chromium.org>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Feb 21, 2023 at 5:06 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+
+> But in fact we've been doing the locking since 6c307626f1e (grep:
+> protect packed_git [re-]initialization, 2020-01-15). So the only thing
+> that really needs justification here is that putting the alternates
+> re-reading under the same lock
 >
-> On 2023-02-21 at 17:33:28, Raul E Rangel wrote:
-> > Hello,
-> > I'm trying to extract multiple trees in parallel so I can create a
-> > tarball of the trees. I can't use `git archive` since it doesn't
-> > currently produce hermetic output, and I need to support older git
-> > versions.
-> >
-> > In essence what I'm trying to do is:
-> >
-> >     git --work-tree ~/tmp/bob1 checkout ff27f5415797ead8bc775518a08f3a4ab24abd53 -- . &
-> >     git --work-tree ~/tmp/bob2 checkout e70ebd7c76b9f9ad44b59e3002a5c57be5b9dc12 -- . &
-> >
-> > When I do this though, I get the following error:
-> >     [1] 4027482
-> >     [2] 4027483
-> >     fatal: Unable to create '/home/rrangel/cros-bazel/.repo/project-objects/chromiumos/platform/vboot_reference.git/./index.lock': File exists.
-> >
-> >     Another git process seems to be running in this repository, e.g.
-> >     an editor opened by 'git commit'. Please make sure all processes
-> >     are terminated then try again. If it still fails, a git process
-> >     may have crashed in this repository earlier:
-> >     remove the file manually to continue.
-> >
-> > Is this expected? I'm not sure why the index is coming into play here.
-> > Is there another method I should be using to extract a tree into a
-> > directory?
+> There is a really interesting potential caveat here which you're not
+> discussing, which is...
+>> ...
+>> +void reprepare_alt_odb(struct repository *r)
+>> +{
+>> +	r->objects->loaded_alternates = 0;
+>> +	prepare_alt_odb(r);
+>> +}
+>> +
+>> ...
+> This seems reasonable, but wouldn't this do the same without introducing
+> an API function just for this one use-case?
 >
-> This is expected because when you do a checkout, the timestamps and
-> other metadata of the files are written into the index.  This is what
-> makes `git status` work quickly: if the metadata of the files hasn't
-> changed, Git doesn't have to re-read them to verify their contents.  You
-> definitely don't want to delete that because you'll likely end up with
-> corrupt data.
+> That's of course a nit, and you seem to have been adding this for
+> consistency with reprepare_packed_git(), but it already "owns" the
+> "approximate_object_count_valid" and "packed_git_initialized" flags in
+> "struct raw_object_store".
 >
-> If you want to create multiple worktrees, use `git worktree add`, which
-> can create multiple worktrees that each have their own index, but share
-> the object store.  When you're done with it, run `git worktree remove`,
-> and everything will be cleaned up.
+> So as we'll only need this from reprepare_packed_git() isn't it better
+> to declare that "loaded_alternates" is another such flag?
 
-Great thanks for confirming. I ended up doing the following:
+I am not sure I got what you want to say 100%, but if you are saying
+that this "drop the 'loaded' flag and force prepare_*() function to
+redo its thing" must not be done only in reprepare_packed_git(), and
+that inlining the code there without introducing a helper function
+that anybody can casually call without thinking its consequenced
+through, then I tend to agree in principle.  But it is just as easy
+to lift two lines of code from the rewritten/inlined code to a new
+place---to ensure people follow the obj_read_lock() rule, the
+comment before it may have to be a bit stronger, I wonder?
 
-    git clone --shared --bare vboot_reference.git ~/tmp/repo-1 && git
--C ~/tmp/repo-1 --work-tree ~/tmp/bob1 checkout
-ff27f5415797ead8bc775518a08f3a4ab24abd53 -- . &
-    git clone --shared --bare vboot_reference.git ~/tmp/repo-2 && git
--C ~/tmp/repo-2 --work-tree ~/tmp/bob1 checkout
-e70ebd7c76b9f9ad44b59e3002a5c57be5b9dc12 -- . &
-
-It's a lot cleaner than my hacky `find` command. I didn't want to use
-`git worktree` since that would modify the original repo. I just
-wanted to extract the files, so the shared + bare repo works great.
-
-Thanks!
-
+> Perhaps not, but as the resulting patch is much shorter it seems worth
+> considering.
 >
-> Note that with worktrees, you can have at most one worktree with a given
-> branch (or detached head) checked out at a time.
-> --
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
+> ...but to continue the above, the *really* important thing here (and
+> correct me if I'm wrong) is that we really need to *first* prepare the
+> alternates, and *then* do the rest, as our new alternates might point to
+> new loose objects and packs.
+
+Yes, and as Derrick explained in another message, we only have to
+worry about new ones getting added, not existing ones going away.
+
+> So with both of the above (the same could be done with your new helper)
+> something like this would IMO make that much clearer:
+>
+> 	diff --git a/packfile.c b/packfile.c
+> 	index 79e21ab18e7..50cb46ca4b7 100644
+> 	--- a/packfile.c
+> 	+++ b/packfile.c
+> 	@@ -1008,6 +1008,13 @@ void reprepare_packed_git(struct repository *r)
+> 	 	struct object_directory *odb;
+> 	 
+> 	 	obj_read_lock();
+> 	+	/*
+> 	+	 * New alternates might point to new loose & pack dirs, so we
+> 	+	 * must first read those.
+> 	+	 */
+> 	+	r->objects->loaded_alternates = 0;
+> 	+	prepare_alt_odb(r);
+> 	+
+> 	 	for (odb = r->objects->odb; odb; odb = odb->next)
+> 	 		odb_clear_loose_cache(odb);
+>
+> And, I think this is an exsiting edge case, but we're only locking the
+> ODB of the "parent" repository in this case, so if we have alternates in
+> play aren't we going to racily compute the rest here, the loose objects
+> and packs of the alternates we're about to consult aren't under the same
+> lock?
