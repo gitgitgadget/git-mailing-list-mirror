@@ -2,141 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47169C678D5
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 07:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67F02C678D4
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 09:44:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231302AbjCGG7t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 01:59:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59154 "EHLO
+        id S230091AbjCGJo5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 04:44:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231272AbjCGG7X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 01:59:23 -0500
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DE7A28860
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 22:58:41 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id r16so11784199qtx.9
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 22:58:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678172308;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NgVoanw/+v39j+sy3oPGO1zc8GbPNUKjVogyHFC0Gro=;
-        b=Vp4jggabtzmyINtTkc8uLK8Cpl3+9lFYmIdKgkVjdSYvOxeMD9jOO/oR4kyVJ5G/MN
-         EiFzSqHStUT+GYuSmv351nLK5IQBaGJUpJ0qGxaLuTIHW+466kwN8LEUdQK2UzzB7yR3
-         YX8hgeA/9CeT13U/6cLLiVp9WyNAf8ms+1PBIzzC15ljj4WqJcD69jA7qJW8jZEDwcD0
-         f6htSe9jXQTFXm++saaJU0Y9hZKUEFHFbRmNPvFc8GFfSNuybJXdoyI8DFGhlH89516Z
-         HHeB6E+PDenX6XXgMu21hK4POtV4i9UBAZWRxgMjkArr66KZqAZB0h9KhCSA6KsuiE8S
-         NnXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678172308;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NgVoanw/+v39j+sy3oPGO1zc8GbPNUKjVogyHFC0Gro=;
-        b=D8OpRq8HZhQH/xBZTJ8dGCZ2Bz3E/+VWL/WYf7U9NZUDiCflsNZ1UHkNfDTu5Jx+MB
-         se5nhWifTmlw/3VxxNFlGabBQYH6oyc+sIVdtLmf16ylc1fGMo7ZLyZFoNUEZCZEa9nH
-         WoQUVhFHjA60nMDKvPiww6VdW56YxP3LCEnq254n8BLIoDnbiyia+dNCqELuTPKLUpXc
-         Qwocb8ujM6/i312T7BEBdJf2JCIWGrFqzppCnAIGIbqhxH7G/xrhjgdvBo2i5nYriYQ/
-         vE8kTpz7zs9s1lCAJ1K830DdpUgZYXfUFc9GZkWgaad8VpsGLPT9tyMiMF/JPQI8TjrS
-         Zjrg==
-X-Gm-Message-State: AO0yUKUx1UY5M/9xd0zFp9JEXkWqQkoNgUF2uTMvPVNTfz+YwUFaEnOb
-        HBjBiomh2KzHwihUl8EonHRVVGIwUEA=
-X-Google-Smtp-Source: AK7set8nrs0Tgm20/TOJiUZQVQNU+dl1zJkEBc0EOEFLhZ33QY7lA2VYvhwHa9y96K5EEZmwSWj3kA==
-X-Received: by 2002:a05:622a:d6:b0:3bf:a5fb:6d6e with SMTP id p22-20020a05622a00d600b003bfa5fb6d6emr22665637qtw.29.1678172308645;
-        Mon, 06 Mar 2023 22:58:28 -0800 (PST)
-Received: from localhost.localdomain (bras-base-london142cw-grc-20-69-158-191-243.dsl.bell.ca. [69.158.191.243])
-        by smtp.googlemail.com with ESMTPSA id l5-20020ac87245000000b003b9a426d626sm9013958qtp.22.2023.03.06.22.58.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 22:58:28 -0800 (PST)
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
-        derrickstolee@github.com
-Subject: [PATCH v2 1/2] t1092: add tests for `git diff-files`
-Date:   Tue,  7 Mar 2023 01:58:12 -0500
-Message-Id: <20230307065813.77059-2-cheskaqiqi@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230307065813.77059-1-cheskaqiqi@gmail.com>
-References: <20230304025740.107830-1-cheskaqiqi@gmail.com>
- <20230307065813.77059-1-cheskaqiqi@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S230300AbjCGJon (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 04:44:43 -0500
+X-Greylist: delayed 545 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 07 Mar 2023 01:44:32 PST
+Received: from pv50p00im-zteg10021301.me.com (pv50p00im-zteg10021301.me.com [17.58.6.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E7E5BCA3
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 01:44:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1678181726;
+        bh=cY9O6oZZ0on/ZGAv6XbPGvCwYoD1Kz6uaPu1N+peaFw=;
+        h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+        b=ARAr+BL0gJu/nWAtJRLYp83VWyeT/4qbMMDbPeZHAIj/ivcAs3ZmKCvahad/4DGtT
+         tdAxY8aI1CdDrmrMC4HOKALb2tDW/zBFHLQKXgbht6WqJjrcilhHTEphcnODceVrJD
+         /bT/UYf6+MWAKj1/t+o9tCjG0Ehcc0ZKvNHYl/4JPydIiRkp+s+k3/2C5YhmlPxsWT
+         fPCJXpvsZoI/mTshOOrLP3yA4e8ZfO7IpH14VRiXFM04gySHxRqghlC0VEqoEMJIUm
+         MZnv1U2XjsaZQTynX/2z38mzkgDquJdKtUBDIpwTakGmrLWs5e/LrzSlJpqXGWoqyd
+         1RvjRICwwq1jg==
+Received: from smtpclient.apple (pv50p00im-dlb-asmtp-mailmevip.me.com [17.56.9.10])
+        by pv50p00im-zteg10021301.me.com (Postfix) with ESMTPSA id EB1D7500468;
+        Tue,  7 Mar 2023 09:35:25 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+From:   Dannywp Wong <dannywpwong@icloud.com>
+Mime-Version: 1.0 (1.0)
+Date:   Tue, 7 Mar 2023 01:35:14 -0800
+Subject: Re: [RFC][PATCH] t1092: add tests for `git diff-files`
+Message-Id: <6781AB79-A0CC-43CD-AA7F-EFF629616D8F@icloud.com>
+Cc:     cheskaqiqi@gmail.com, git@vger.kernel.org, vdye@github.com
+To:     derrickstolee@github.com
+X-Mailer: iPhone Mail (20D67)
+X-Proofpoint-GUID: AMvrM6MAmPDm4yze2-k-j25g7IKCjeFO
+X-Proofpoint-ORIG-GUID: AMvrM6MAmPDm4yze2-k-j25g7IKCjeFO
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.517,18.0.883,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2022-06-21=5F08:2022-06-21=5F01,2022-06-21=5F08,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 adultscore=0
+ mlxlogscore=779 phishscore=0 suspectscore=0 mlxscore=0 bulkscore=0
+ malwarescore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2209130000 definitions=main-2303070086
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before integrating the 'git diff-files' builtin
-with the sparse index feature, add tests to
-t1092-sparse-checkout-compatibility.sh to ensure it currently works
-with sparse-checkout and will still work with sparse index
-after that integration.
+Pls sent me any fix it tools thanks 
 
-When adding tests against a sparse-checkout
-definition, we test two modes: all changes are
-within the sparse-checkout cone and some changes are outside
-the sparse-checkout cone.
+Regards Danny
 
-In order to have staged changes outside of
-the sparse-checkout cone, create a 'newdirectory/testfile' and
-add it to the index, while leaving it outside of
-the sparse-checkout definition.Test 'newdirectory/testfile'
-being present on-disk without modifications, then change content inside
-'newdirectory/testfile' in order to test 'newdirectory/testfile'
-being present on-disk with modifications.
 
-Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
----
- t/t1092-sparse-checkout-compatibility.sh | 38 ++++++++++++++++++++++++
- 1 file changed, 38 insertions(+)
-
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 801919009e..9382428352 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2055,4 +2055,42 @@ test_expect_success 'grep sparse directory within submodules' '
- 	test_cmp actual expect
- '
- 
-+test_expect_success 'diff-files with pathspec inside sparse definition' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+
-+	run_on_all ../edit-contents deep/a &&
-+
-+	test_all_match git diff-files  &&
-+	test_all_match git diff-files deep/a &&
-+	test_all_match git diff-files --find-object=HEAD:a
-+'
-+
-+test_expect_success 'diff-files with pathspec outside sparse definition' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>$1
-+	EOF
-+
-+	#add file to the index but outside of cone
-+	run_on_sparse mkdir newdirectory &&
-+	run_on_sparse ../edit-contents newdirectory/testfile &&
-+	test_sparse_match git add --sparse newdirectory/testfile &&
-+
-+	#file present on-disk without modifications
-+	test_sparse_match git diff-files &&
-+	test_sparse_match git diff-files newdirectory/testfile &&
-+	test_sparse_match test_must_fail git diff-files --find-object=HEAD:testfile &&
-+
-+	#file present on-disk with modifications
-+	run_on_sparse ../edit-contents newdirectory/testfile &&
-+	test_sparse_match git diff-files &&
-+	test_sparse_match git diff-files newdirectory/testfile &&
-+	test_sparse_match test_must_fail git diff-files --find-object=HEAD:testfile
-+'
-+
- test_done
--- 
-2.39.0
-
+Sent from my iPhone
