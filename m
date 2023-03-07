@@ -2,86 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFF0BC678D4
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 12:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8A6CC678D4
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 13:18:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbjCGMJZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 07:09:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50914 "EHLO
+        id S229999AbjCGNSQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 08:18:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229789AbjCGMJX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 07:09:23 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC8774DE3B
-        for <git@vger.kernel.org>; Tue,  7 Mar 2023 04:09:21 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id ay14so47580575edb.11
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 04:09:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678190960;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jtis/mXXHP/P4V6ZTfvgE5YEc3TvgVRkR+KGOZLY2qQ=;
-        b=Nxi+gG5JMusFgIcJxHu4iKsOebE+Pi9JmiPZKMhqTQKOQs5Hlz3mZmtnA1JLAHMqP5
-         zz/MKR3AkQ5jMB794GQt0q+k0+F2wlv/jNeVDX3mA5cLlkvE8/SWd85pw79Vudz4C1/T
-         txBBzslkfg0JX7v0fEaBta32KB4+o35o+ZrB52GA8P4++mr8WLoPWtQnukEIUFPAenLF
-         qEgQBP/hs/yMN7Zv6NjTsqyu51mIy6jwknEjGJHU2UoJP4++S3EY5Jq8kaC3Svo3dvqZ
-         KtpMA6yG0VwpbuBhf+DFZD48CBD5lJ6NijPEUdO3iMrqPZC/Gz3pe3cq9Vv/CBc0bRDQ
-         XtKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678190960;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jtis/mXXHP/P4V6ZTfvgE5YEc3TvgVRkR+KGOZLY2qQ=;
-        b=yWjysRA/s40dcWU1TpMVlx+M50c9GWXgm2tAjhX/php7e4eKvrTMXDVGGeKZ4drdBe
-         GjTxURNbi1Hj6c5RDzBdS3CUOOU4o5SzaS3oPx9kYmbIzU9y7aPbs3z1f2dDdewGNtuX
-         xVxS4imyiB3zU78a9d8210hkfNKMl7OEgkhvwFnGnA0/uSKq6gpST1VX+mgG/tDUieSp
-         mboeWxgEag+Q08d/IHY2BgDlm9IMkpvADsDhgCerXuHY5MDPA0ctIvKGBJgvLJLFgf1A
-         K0tYEvsTIl9M4RvTf/fOV921rD8zppwVX5WFWDZZ1vHtnH7+EPjyfGXuGa0cVhdekQSN
-         3UkQ==
-X-Gm-Message-State: AO0yUKUtMjp0f7TW6oY3xFQJItMheE6XHQy56Z5fIShvFIFJc2GFqa/n
-        bBbLoFRbwzrG0+jD6C43JOd/bUBm3ak=
-X-Google-Smtp-Source: AK7set9IaxTdtD5yE+axFPRk2/1Hb5yKfvKZIgZ1hHveE2BwXyjZb9sHNPWNri6p2eUYd3FFjLpHFg==
-X-Received: by 2002:a17:907:6eab:b0:7c0:efb9:bc0e with SMTP id sh43-20020a1709076eab00b007c0efb9bc0emr18632012ejc.62.1678190960033;
-        Tue, 07 Mar 2023 04:09:20 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id q1-20020a50c341000000b004bbb691a334sm6711796edb.2.2023.03.07.04.09.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 04:09:19 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pZW87-000hRM-0L;
-        Tue, 07 Mar 2023 13:09:19 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Dinesh Dharmawardena <dinesh_dh@outlook.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Let us not call it git blame
-Date:   Tue, 07 Mar 2023 13:08:20 +0100
-References: <SY6P282MB3782FD975E6F39951C5A43DA92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
- <SY6P282MB378273980F5BC9084EEF74EF92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <SY6P282MB378273980F5BC9084EEF74EF92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
-Message-ID: <230307.86sfegzrtc.gmgdl@evledraar.gmail.com>
+        with ESMTP id S230304AbjCGNRr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 08:17:47 -0500
+Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9976B193D1
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 05:16:53 -0800 (PST)
+Received: from [192.168.42.163] (228-48-142-46.pool.kielnet.net [46.142.48.228])
+        by dd36226.kasserver.com (Postfix) with ESMTPSA id 4260C3C0939;
+        Tue,  7 Mar 2023 14:16:49 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
+        s=kas202302241129; t=1678195009;
+        bh=Z114P+h9ORFfujshDlLFY6ZEaOwClkaL7q+fZ535pKo=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=yQKFGmv4Yl1EiQgC2tzaB531Apd+iHldvC/HVLKE4Ws5m978uPKr8jbHWyvJ2JXm3
+         tYRbF1ROxjPIYIuRyMMawkQRGdlwbg/nj/JS/ezgQ2KzJc8Ayg8mzaL82cl2JnCsY0
+         ReOHogecMZ2KaRiUNYbPed4UI3fEVUWp3LmpgS69AdQ2IM9Vwz94fXOsIvuCSLLt/W
+         MYyKw++6dzmF6EoXvGfL2rGnv+WNyKthBK3d3mLcX4/ZUZZ5SJkVWmu4mO8VsCZ+ev
+         jSp48jCGEKBdTplq86wNVWpmYp2LnZ+nlLv1it9V2HuvRXLNjBrEgFF845L45nVT72
+         v1K0hIyMEi8JA==
+Message-ID: <48f58b30-13d7-cd1d-6f7d-6cc63d2c9178@haller-berlin.de>
+Date:   Tue, 7 Mar 2023 14:16:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.8.0
+Subject: Re: When exactly should REBASE_HEAD exist?
+Content-Language: de-DE, en-US
+To:     Chris Torek <chris.torek@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+References: <961e68d7-5f43-c385-10fa-455b8e2f32d0@haller-berlin.de>
+ <374f83c2-7bf0-38be-26ae-de28340c37d2@dunelm.org.uk>
+ <f28bb5a7-ec68-dce2-9b63-7bfb5330c33e@haller-berlin.de>
+ <c237c1e3-5cd0-503d-ff4b-96f645a659f3@haller-berlin.de>
+ <CAPx1Gvdik+QhTw8U1vd0cW1yZ9GbgDpmW7apxnXdY=E0okLpTQ@mail.gmail.com>
+ <347052f1-dd7d-dc72-6171-a858eea94747@haller-berlin.de>
+ <CAPx1Gvc+rBMe1bsg8XW_DyPUN9aJu9tQyhMLP0Zu-aeWCkzSGw@mail.gmail.com>
+From:   Stefan Haller <lists@haller-berlin.de>
+In-Reply-To: <CAPx1Gvc+rBMe1bsg8XW_DyPUN9aJu9tQyhMLP0Zu-aeWCkzSGw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: /
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 06.03.23 04:31, Chris Torek wrote:
+> On Sat, Mar 4, 2023 at 12:36 AM Stefan Haller <lists@haller-berlin.de> wrote:
+>> I'm surprised to hear that worktrees play a role in this. Do you have
+>> more details about this?
+> 
+> $ git worktree add foo
+> $ cd ../foo
+> $ git rebase -i HEAD~2
+> 
+> puts the rebase-todo file into
+> `.git/worktrees/foo/rebase-merge/git-rebase-todo`;
+> all the status files will likewise be in the `.git/worktrees/foo/`
+> directory.
 
-On Thu, Mar 02 2023, Dinesh Dharmawardena wrote:
+I see. That should be taken care of by not hard-coding ".git/...", but
+using something like "git rev-parse --git-path ...". We are doing that
+already, otherwise most of lazygit's other rebase commands wouldn't work
+in worktrees.
 
-> Hi
->
-> I am writing to you to request that the term blame in git blame be
-> replaced with something that does not sound so blameful. I=E2=80=99m an S=
-RE
-> and we actively try promote a blameless culture as such industry
-> tooling should also follow suit imo. Progressively phasing this term
-> out with a better alias would be great.
+>>> It would be best if `git status`
+>>> reported all of this information directly ...
+> 
+>> Yes, that would be nice, but based on what state would it provide this
+>> information? Are you suggesting that some new file should be added to
+>> .git/rebase-merge/ to keep track of it (more reliably than the amend
+>> file does today), or could the information be derived somehow from what
+>> exists already?
+> 
+> I don't know which parts are reliably derive-able today, but to
+> the extent that `git status` *can't* provide the necessary information,
+> I'd call that a bug in `gitt status`, to be fixed by saving that information
+> somewhere. Until it exists, there's nothing you can do, but if and when
+> (a) it does exist and (b) `git status` provides it, it won't matter
+> whether it's in some added worktree, or moves around or changes
+> form: you'll get it in a reliable fashion.
+> 
+> In other words, this is not helpful *yet*. :-)
 
-You might be interested in a patch I had to address this, posted a while
-ago:
-https://lore.kernel.org/git/20190401101246.21418-1-avarab@gmail.com/
+I see, thanks for the explanation. I agree. Trouble is, I don't have the
+capacity to drive such an addition to git status, and I doubt anybody
+else would be interested in doing it for me (are you? :-), so...
+
+-Stefan
