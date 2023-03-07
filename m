@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97E9BC678DB
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 18:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAC84C678D4
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 18:15:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232525AbjCGSPR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 13:15:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56372 "EHLO
+        id S232530AbjCGSPT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 13:15:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232541AbjCGSOh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 13:14:37 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9403EA2C12
+        with ESMTP id S232374AbjCGSOi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 13:14:38 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14ACA3B46
         for <git@vger.kernel.org>; Tue,  7 Mar 2023 10:10:13 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id cy23so55815936edb.12
+Received: by mail-ed1-x529.google.com with SMTP id j11so36426674edq.4
         for <git@vger.kernel.org>; Tue, 07 Mar 2023 10:10:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678212609;
+        d=gmail.com; s=20210112; t=1678212610;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=haGEaFXC8N6H13uRobelgkXdB/bRG8I9aJEAxY5PWo8=;
-        b=i8WwBup6vFqZ9DsUSjpMr8rE0W3wQMWTNxCXMuUCHMwxsoK/2Bq56gf/XWo8cpnpzx
-         dpUiuONcOySRbBdnqMWIuTmpl3Hd2Hne8BOWcqpmf3TB3venk1PvLVCJMzIQ3vMg5g2C
-         BBNalpv1CyBTpEHyw8hnJwtvw/moVyZNzFpiuesUvwrWn7hxo6KpzFegW48Y/vtvqNPS
-         8XOz4WP1m+cAZDD7AbrF5kZNKAJORmRcoUt9mP1CulRmfMxqbS8ev2oSiRjUhsSWU/A9
-         4meo5llV7MYgnk1yvnZbqqFtEhNL6OkAjY4jHVorsxKdBTXtI/LcJSWvzvbLYQnJpguc
-         s5Mw==
+        bh=A2gzl/9erBVXLF++I+w8JZ1VhDWaU4UPE+k6lt7+N8U=;
+        b=YgskkYQTlCga4FRoBwamwRvKQ1DgHrBxMAjEhouapPiHKxeLS+JMsxNSgTgee3Ekvz
+         7bZXM9GlLdxb9wfLgEo9kjdQ5m1jUBZTycWD7+Kl6WlAplPqsSanIhlYwmGmB3uNOlAf
+         CiwlMiuCuT9TnUHOf89nIrzkrkacdJI7hdvU7kPrDrl4wulTcOSthcxTEmdZXbWChD5x
+         MTABVW+D2991j5A/rtGubSKOUJG2ksPapwaZ/pZJzWhF6b0c/5rU6AhxVke5tIT9A+EE
+         5f7U+CbtYL2TXguxIqI6Ce5cGkoQdeWub/jr9jL+IgUSSA4JDVFeE8/KWUn/52L9dFiv
+         sYOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678212609;
+        d=1e100.net; s=20210112; t=1678212610;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=haGEaFXC8N6H13uRobelgkXdB/bRG8I9aJEAxY5PWo8=;
-        b=CY82WzMHLyPArxcLLC5oShtDsxL2VtdVCKngAEIzIwJ7Y0rvdCDGWZL3BRbRXjGcIn
-         ++F+slcrO4hNRrKBZDDPtgMCcpgTCkfrJH8fap+TzG7Ms4vbZ6huFXN1h1Xn8K8kDhD3
-         HfPVSttXKiCDAHf/OoyseSnhlSupVF2WjrWBKYl1s9Wk4DFzpCsXgROuZryZvx9quA8W
-         kmFClXat3LTU9aWXARbm7YnsNbw3hyX1fYZS650iVUQsMCZKvYbqVJAzGd3okcwAj6nm
-         qc22uyGmdw3hQDLHWNQ1XjYZHwwhfpnC0Jy3zd1i9/0ddrlbiThgZ0nNcmBqUIYBDVV/
-         HOkw==
-X-Gm-Message-State: AO0yUKVGdb78oNi7c3jdC2nxIMx5sWuvH7qF1R8Agsd4rGI3CZ7D0Jie
-        rssUtsJ11xSza63UIxtEan9nf42ehHqS3w==
-X-Google-Smtp-Source: AK7set/khkH1BcDAigb1K1VgNbH4fNL41e6N51w+U9ZJx9JwZslecI6EHeA6/8zrAOi/WuVt3IeqKg==
-X-Received: by 2002:a17:906:b51:b0:8b1:3ba8:3f4d with SMTP id v17-20020a1709060b5100b008b13ba83f4dmr13734723ejg.70.1678212608913;
-        Tue, 07 Mar 2023 10:10:08 -0800 (PST)
+        bh=A2gzl/9erBVXLF++I+w8JZ1VhDWaU4UPE+k6lt7+N8U=;
+        b=GLGrhsk5HlYq/yg8CBdu/efOTUIO1DMj8RV3sJJXKsHjXqouFNL5DN2LrQACsfHk7d
+         dJMztC3msi2yPbnmSCHxsO1tcpJKTBVXtXKWFZitC6575u6pAjhX5/tqay+GJLvkbaIf
+         G+qovrWt8rgaYhcgRew0jhxnmiJsWIVyGawLxthePZ7NphtUd5n7FWpj9NqoMYyhbWHx
+         vY/nEXihjhmbijAxd2sD3fDvEKOp9m19Yz+xOO4BdULa+um3aRdLDc46v+DHueQ5vXJX
+         WhnGQJ8M8mofsbqc/LwvTfBGv+PfSmwAruAqJjy6Wl7wmmWZpEktDZQC9pv1sG4edWYT
+         OXZw==
+X-Gm-Message-State: AO0yUKUIRRi5gSzoC7tBsZd9A88AnI3YHerTe+nWgRdhq4dpABYqEIOu
+        EGTB7xjlR91FcP5tWAdBxCHDQZLzT3keqw==
+X-Google-Smtp-Source: AK7set9hBwr7qJw0APiKRz5AG7yIutCbAHX7jgEAtyto+Ecc0hnUtQXx1zmvarYR+60i5y88ewmgpA==
+X-Received: by 2002:a17:907:3e88:b0:8ae:e724:ea15 with SMTP id hs8-20020a1709073e8800b008aee724ea15mr18707796ejc.76.1678212610257;
+        Tue, 07 Mar 2023 10:10:10 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d5-20020a1709063ec500b008b1797a53b4sm6401008ejj.215.2023.03.07.10.10.07
+        by smtp.gmail.com with ESMTPSA id d5-20020a1709063ec500b008b1797a53b4sm6401008ejj.215.2023.03.07.10.10.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 10:10:08 -0800 (PST)
+        Tue, 07 Mar 2023 10:10:09 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         zweiss@equinix.com,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v6 7/9] config API users: test for *_get_value_multi() segfaults
-Date:   Tue,  7 Mar 2023 19:09:38 +0100
-Message-Id: <patch-v6-7.9-66b7060f66f-20230307T180516Z-avarab@gmail.com>
+Subject: [PATCH v6 8/9] config API: add "string" version of *_value_multi(), fix segfaults
+Date:   Tue,  7 Mar 2023 19:09:39 +0100
+Message-Id: <patch-v6-8.9-0da4cdb3f6a-20230307T180516Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.40.0.rc1.1034.g5867a1b10c5
 In-Reply-To: <cover-v6-0.9-00000000000-20230307T180516Z-avarab@gmail.com>
 References: <cover-v5-00.10-00000000000-20230207T154000Z-avarab@gmail.com> <cover-v6-0.9-00000000000-20230307T180516Z-avarab@gmail.com>
@@ -76,155 +76,413 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As we'll discuss in the subsequent commit these tests all
-show *_get_value_multi() API users unable to handle there being a
-value-less key in the config, which is represented with a "NULL" for
-that entry in the "string" member of the returned "struct
-string_list", causing a segfault.
+Fix numerous and mostly long-standing segfaults in consumers of
+the *_config_*value_multi() API. As discussed in the preceding commit
+an empty key in the config syntax yields a "NULL" string, which these
+users would give to strcmp() (or similar), resulting in segfaults.
 
-These added tests exhaustively test for that issue, as we'll see in a
-subsequent commit we'll need to change all of the API users
-of *_get_value_multi(). These cases were discovered by triggering each
-one individually, and then adding these tests.
+As this change shows, most users users of the *_config_*value_multi()
+API didn't really want such an an unsafe and low-level API, let's give
+them something with the safety of git_config_get_string() instead.
+
+This fix is similar to what the *_string() functions and others
+acquired in[1] and [2]. Namely introducing and using a safer
+"*_get_string_multi()" variant of the low-level "_*value_multi()"
+function.
+
+This fixes segfaults in code introduced in:
+
+  - d811c8e17c6 (versionsort: support reorder prerelease suffixes, 2015-02-26)
+  - c026557a373 (versioncmp: generalize version sort suffix reordering, 2016-12-08)
+  - a086f921a72 (submodule: decouple url and submodule interest, 2017-03-17)
+  - a6be5e6764a (log: add log.excludeDecoration config option, 2020-04-16)
+  - 92156291ca8 (log: add default decoration filter, 2022-08-05)
+  - 50a044f1e40 (gc: replace config subprocesses with API calls, 2022-09-27)
+
+There are now two users ofthe low-level API:
+
+- One in "builtin/for-each-repo.c", which we'll convert in a
+  subsequent commit.
+
+- The "t/helper/test-config.c" code added in [3].
+
+As seen in the preceding commit we need to give the
+"t/helper/test-config.c" caller these "NULL" entries.
+
+We could also alter the underlying git_configset_get_value_multi()
+function to be "string safe", but doing so would leave no room for
+other variants of "*_get_value_multi()" that coerce to other types.
+
+Such coercion can't be built on the string version, since as we've
+established "NULL" is a true value in the boolean context, but if we
+coerced it to "" for use in a list of strings it'll be subsequently
+coerced to "false" as a boolean.
+
+The callback pattern being used here will make it easy to introduce
+e.g. a "multi" variant which coerces its values to "bool", "int",
+"path" etc.
+
+1. 40ea4ed9032 (Add config_error_nonbool() helper function,
+   2008-02-11)
+2. 6c47d0e8f39 (config.c: guard config parser from value=NULL,
+   2008-02-11).
+3. 4c715ebb96a (test-config: add tests for the config_set API,
+   2014-07-28)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4202-log.sh                 | 11 +++++++++++
- t/t5310-pack-bitmaps.sh        | 16 ++++++++++++++++
- t/t7004-tag.sh                 | 12 ++++++++++++
- t/t7413-submodule-is-active.sh | 12 ++++++++++++
- t/t7900-maintenance.sh         | 23 +++++++++++++++++++++++
- 5 files changed, 74 insertions(+)
+ builtin/gc.c                   |  6 +++---
+ builtin/log.c                  |  4 ++--
+ config.c                       | 32 ++++++++++++++++++++++++++++++++
+ config.h                       | 19 +++++++++++++++++++
+ pack-bitmap.c                  |  2 +-
+ submodule.c                    |  2 +-
+ t/t4202-log.sh                 |  8 ++++++--
+ t/t5310-pack-bitmaps.sh        |  8 ++++++--
+ t/t7004-tag.sh                 |  9 +++++++--
+ t/t7413-submodule-is-active.sh |  8 ++++++--
+ t/t7900-maintenance.sh         | 25 ++++++++++++++++++++-----
+ versioncmp.c                   |  4 ++--
+ 12 files changed, 105 insertions(+), 22 deletions(-)
 
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 2b3da377d52..9497bdf23e4 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1510,7 +1510,7 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
+ 	if (git_config_get("maintenance.strategy"))
+ 		git_config_set("maintenance.strategy", "incremental");
+ 
+-	if (!git_config_get_value_multi(key, &list)) {
++	if (!git_config_get_string_multi(key, &list)) {
+ 		for_each_string_list_item(item, list) {
+ 			if (!strcmp(maintpath, item->string)) {
+ 				found = 1;
+@@ -1578,8 +1578,8 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
+ 		git_configset_add_file(&cs, config_file);
+ 	}
+ 	if (!(config_file
+-	      ? git_configset_get_value_multi(&cs, key, &list)
+-	      : git_config_get_value_multi(key, &list))) {
++	      ? git_configset_get_string_multi(&cs, key, &list)
++	      : git_config_get_string_multi(key, &list))) {
+ 		for_each_string_list_item(item, list) {
+ 			if (!strcmp(maintpath, item->string)) {
+ 				found = 1;
+diff --git a/builtin/log.c b/builtin/log.c
+index e43f6f9d8c1..ca847524fa4 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -184,8 +184,8 @@ static void set_default_decoration_filter(struct decoration_filter *decoration_f
+ 	struct string_list *include = decoration_filter->include_ref_pattern;
+ 	const struct string_list *config_exclude;
+ 
+-	if (!git_config_get_value_multi("log.excludeDecoration",
+-					&config_exclude)) {
++	if (!git_config_get_string_multi("log.excludeDecoration",
++					 &config_exclude)) {
+ 		struct string_list_item *item;
+ 		for_each_string_list_item(item, config_exclude)
+ 			string_list_append(decoration_filter->exclude_ref_config_pattern,
+diff --git a/config.c b/config.c
+index 569819b4a1b..c63034fb78b 100644
+--- a/config.c
++++ b/config.c
+@@ -2448,6 +2448,25 @@ int git_configset_get_value_multi(struct config_set *cs, const char *key,
+ 	return 0;
+ }
+ 
++static int check_multi_string(struct string_list_item *item, void *util)
++{
++	return item->string ? 0 : config_error_nonbool(util);
++}
++
++int git_configset_get_string_multi(struct config_set *cs, const char *key,
++				   const struct string_list **dest)
++{
++	int ret;
++
++	if ((ret = git_configset_get_value_multi(cs, key, dest)))
++		return ret;
++	if ((ret = for_each_string_list((struct string_list *)*dest,
++					check_multi_string, (void *)key)))
++		return ret;
++
++	return 0;
++}
++
+ int git_configset_get(struct config_set *cs, const char *key)
+ {
+ 	struct config_set_element *e;
+@@ -2616,6 +2635,13 @@ int repo_config_get_value_multi(struct repository *repo, const char *key,
+ 	return git_configset_get_value_multi(repo->config, key, dest);
+ }
+ 
++int repo_config_get_string_multi(struct repository *repo, const char *key,
++				 const struct string_list **dest)
++{
++	git_config_check_init(repo);
++	return git_configset_get_string_multi(repo->config, key, dest);
++}
++
+ int repo_config_get_string(struct repository *repo,
+ 			   const char *key, char **dest)
+ {
+@@ -2731,6 +2757,12 @@ int git_config_get_value_multi(const char *key, const struct string_list **dest)
+ 	return repo_config_get_value_multi(the_repository, key, dest);
+ }
+ 
++int git_config_get_string_multi(const char *key,
++				const struct string_list **dest)
++{
++	return repo_config_get_string_multi(the_repository, key, dest);
++}
++
+ int git_config_get_string(const char *key, char **dest)
+ {
+ 	return repo_config_get_string(the_repository, key, dest);
+diff --git a/config.h b/config.h
+index 4db6b90ac20..5f258e5b8df 100644
+--- a/config.h
++++ b/config.h
+@@ -463,6 +463,19 @@ RESULT_MUST_BE_USED
+ int git_configset_get_value_multi(struct config_set *cs, const char *key,
+ 				  const struct string_list **dest);
+ 
++/**
++ * A validation wrapper for git_configset_get_value_multi() which does
++ * for it what git_configset_get_string() does for
++ * git_configset_get_value().
++ *
++ * The configuration syntax allows for "[section] key", which will
++ * give us a NULL entry in the "struct string_list", as opposed to
++ * "[section] key =" which is the empty string. Most users of the API
++ * are not prepared to handle NULL in a "struct string_list".
++ */
++int git_configset_get_string_multi(struct config_set *cs, const char *key,
++				   const struct string_list **dest);
++
+ /**
+  * Clears `config_set` structure, removes all saved variable-value pairs.
+  */
+@@ -509,6 +522,9 @@ int repo_config_get_value(struct repository *repo,
+ RESULT_MUST_BE_USED
+ int repo_config_get_value_multi(struct repository *repo, const char *key,
+ 				const struct string_list **dest);
++RESULT_MUST_BE_USED
++int repo_config_get_string_multi(struct repository *repo, const char *key,
++				 const struct string_list **dest);
+ int repo_config_get_string(struct repository *repo,
+ 			   const char *key, char **dest);
+ int repo_config_get_string_tmp(struct repository *repo,
+@@ -570,6 +586,9 @@ int git_config_get_value(const char *key, const char **value);
+ RESULT_MUST_BE_USED
+ int git_config_get_value_multi(const char *key,
+ 			       const struct string_list **dest);
++RESULT_MUST_BE_USED
++int git_config_get_string_multi(const char *key,
++				const struct string_list **dest);
+ 
+ /**
+  * Resets and invalidates the config cache.
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 15c5eb507c0..d003c7e60b4 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -2316,7 +2316,7 @@ const struct string_list *bitmap_preferred_tips(struct repository *r)
+ {
+ 	const struct string_list *dest;
+ 
+-	if (!repo_config_get_value_multi(r, "pack.preferbitmaptips", &dest))
++	if (!repo_config_get_string_multi(r, "pack.preferbitmaptips", &dest))
+ 		return dest;
+ 	return NULL;
+ }
+diff --git a/submodule.c b/submodule.c
+index 4b6f5223b0c..30a103246ec 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -274,7 +274,7 @@ int is_tree_submodule_active(struct repository *repo,
+ 	free(key);
+ 
+ 	/* submodule.active is set */
+-	if (!repo_config_get_value_multi(repo, "submodule.active", &sl)) {
++	if (!repo_config_get_string_multi(repo, "submodule.active", &sl)) {
+ 		struct pathspec ps;
+ 		struct strvec args = STRVEC_INIT;
+ 		const struct string_list_item *item;
 diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 2ce2b41174d..e4f02d8208b 100755
+index e4f02d8208b..ae73aef922f 100755
 --- a/t/t4202-log.sh
 +++ b/t/t4202-log.sh
-@@ -835,6 +835,17 @@ test_expect_success 'log.decorate configuration' '
+@@ -835,7 +835,7 @@ test_expect_success 'log.decorate configuration' '
  
  '
  
-+test_expect_failure 'parse log.excludeDecoration with no value' '
-+	cp .git/config .git/config.orig &&
-+	test_when_finished mv .git/config.orig .git/config &&
-+
-+	cat >>.git/config <<-\EOF &&
-+	[log]
-+		excludeDecoration
+-test_expect_failure 'parse log.excludeDecoration with no value' '
++test_expect_success 'parse log.excludeDecoration with no value' '
+ 	cp .git/config .git/config.orig &&
+ 	test_when_finished mv .git/config.orig .git/config &&
+ 
+@@ -843,7 +843,11 @@ test_expect_failure 'parse log.excludeDecoration with no value' '
+ 	[log]
+ 		excludeDecoration
+ 	EOF
+-	git log --decorate=short
++	cat >expect <<-\EOF &&
++	error: missing value for '\''log.excludeDecoration'\''
 +	EOF
-+	git log --decorate=short
-+'
-+
++	git log --decorate=short 2>actual &&
++	test_cmp expect actual
+ '
+ 
  test_expect_success 'decorate-refs with glob' '
- 	cat >expect.decorate <<-\EOF &&
- 	Merge-tag-reach
 diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index 7d8dee41b0d..0306b399188 100755
+index 0306b399188..526a5a506eb 100755
 --- a/t/t5310-pack-bitmaps.sh
 +++ b/t/t5310-pack-bitmaps.sh
-@@ -404,6 +404,22 @@ test_bitmap_cases () {
+@@ -404,7 +404,7 @@ test_bitmap_cases () {
  		)
  	'
  
-+	test_expect_failure 'pack.preferBitmapTips' '
-+		git init repo &&
-+		test_when_finished "rm -rf repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
-+			test_commit_bulk --message="%s" 103 &&
-+
-+			cat >>.git/config <<-\EOF &&
-+			[pack]
-+				preferBitmapTips
-+			EOF
-+			git repack -adb
-+		)
-+	'
-+
- 	test_expect_success 'complains about multiple pack bitmaps' '
- 		rm -fr repo &&
+-	test_expect_failure 'pack.preferBitmapTips' '
++	test_expect_success 'pack.preferBitmapTips' '
  		git init repo &&
+ 		test_when_finished "rm -rf repo" &&
+ 		(
+@@ -416,7 +416,11 @@ test_bitmap_cases () {
+ 			[pack]
+ 				preferBitmapTips
+ 			EOF
+-			git repack -adb
++			cat >expect <<-\EOF &&
++			error: missing value for '\''pack.preferbitmaptips'\''
++			EOF
++			git repack -adb 2>actual &&
++			test_cmp expect actual
+ 		)
+ 	'
+ 
 diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 9aa1660651b..f343551a7d4 100755
+index f343551a7d4..f4a31ada79a 100755
 --- a/t/t7004-tag.sh
 +++ b/t/t7004-tag.sh
-@@ -1843,6 +1843,18 @@ test_expect_success 'invalid sort parameter in configuratoin' '
+@@ -1843,7 +1843,7 @@ test_expect_success 'invalid sort parameter in configuratoin' '
  	test_must_fail git tag -l "foo*"
  '
  
-+test_expect_failure 'version sort handles empty value for versionsort.{prereleaseSuffix,suffix}' '
-+	cp .git/config .git/config.orig &&
-+	test_when_finished mv .git/config.orig .git/config &&
-+
-+	cat >>.git/config <<-\EOF &&
-+	[versionsort]
-+		prereleaseSuffix
-+		suffix
+-test_expect_failure 'version sort handles empty value for versionsort.{prereleaseSuffix,suffix}' '
++test_expect_success 'version sort handles empty value for versionsort.{prereleaseSuffix,suffix}' '
+ 	cp .git/config .git/config.orig &&
+ 	test_when_finished mv .git/config.orig .git/config &&
+ 
+@@ -1852,7 +1852,12 @@ test_expect_failure 'version sort handles empty value for versionsort.{prereleas
+ 		prereleaseSuffix
+ 		suffix
+ 	EOF
+-	git tag -l --sort=version:refname
++	cat >expect <<-\EOF &&
++	error: missing value for '\''versionsort.suffix'\''
++	error: missing value for '\''versionsort.prereleasesuffix'\''
 +	EOF
-+	git tag -l --sort=version:refname
-+'
-+
++	git tag -l --sort=version:refname 2>actual &&
++	test_cmp expect actual
+ '
+ 
  test_expect_success 'version sort with prerelease reordering' '
- 	test_config versionsort.prereleaseSuffix -rc &&
- 	git tag foo1.6-rc1 &&
 diff --git a/t/t7413-submodule-is-active.sh b/t/t7413-submodule-is-active.sh
-index 7cdc2637649..bfe27e50732 100755
+index bfe27e50732..887d181b72e 100755
 --- a/t/t7413-submodule-is-active.sh
 +++ b/t/t7413-submodule-is-active.sh
-@@ -51,6 +51,18 @@ test_expect_success 'is-active works with submodule.<name>.active config' '
+@@ -51,7 +51,7 @@ test_expect_success 'is-active works with submodule.<name>.active config' '
  	test-tool -C super submodule is-active sub1
  '
  
-+test_expect_failure 'is-active handles submodule.active config missing a value' '
-+	cp super/.git/config super/.git/config.orig &&
-+	test_when_finished mv super/.git/config.orig super/.git/config &&
-+
-+	cat >>super/.git/config <<-\EOF &&
-+	[submodule]
-+		active
+-test_expect_failure 'is-active handles submodule.active config missing a value' '
++test_expect_success 'is-active handles submodule.active config missing a value' '
+ 	cp super/.git/config super/.git/config.orig &&
+ 	test_when_finished mv super/.git/config.orig super/.git/config &&
+ 
+@@ -60,7 +60,11 @@ test_expect_failure 'is-active handles submodule.active config missing a value'
+ 		active
+ 	EOF
+ 
+-	test-tool -C super submodule is-active sub1
++	cat >expect <<-\EOF &&
++	error: missing value for '\''submodule.active'\''
 +	EOF
-+
-+	test-tool -C super submodule is-active sub1
-+'
-+
++	test-tool -C super submodule is-active sub1 2>actual &&
++	test_cmp expect actual
+ '
+ 
  test_expect_success 'is-active works with basic submodule.active config' '
- 	test_when_finished "git -C super config submodule.sub1.URL ../sub" &&
- 	test_when_finished "git -C super config --unset-all submodule.active" &&
 diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 823331e44a0..d82eac6a471 100755
+index d82eac6a471..487e326b3fa 100755
 --- a/t/t7900-maintenance.sh
 +++ b/t/t7900-maintenance.sh
-@@ -524,6 +524,29 @@ test_expect_success 'register and unregister' '
+@@ -524,7 +524,7 @@ test_expect_success 'register and unregister' '
  	git maintenance unregister --config-file ./other --force
  '
  
-+test_expect_failure 'register with no value for maintenance.repo' '
-+	cp .git/config .git/config.orig &&
-+	test_when_finished mv .git/config.orig .git/config &&
-+
-+	cat >>.git/config <<-\EOF &&
-+	[maintenance]
-+		repo
+-test_expect_failure 'register with no value for maintenance.repo' '
++test_expect_success 'register with no value for maintenance.repo' '
+ 	cp .git/config .git/config.orig &&
+ 	test_when_finished mv .git/config.orig .git/config &&
+ 
+@@ -532,10 +532,15 @@ test_expect_failure 'register with no value for maintenance.repo' '
+ 	[maintenance]
+ 		repo
+ 	EOF
+-	git maintenance register
++	cat >expect <<-\EOF &&
++	error: missing value for '\''maintenance.repo'\''
 +	EOF
-+	git maintenance register
-+'
-+
-+test_expect_failure 'unregister with no value for maintenance.repo' '
-+	cp .git/config .git/config.orig &&
-+	test_when_finished mv .git/config.orig .git/config &&
-+
-+	cat >>.git/config <<-\EOF &&
-+	[maintenance]
-+		repo
++	git maintenance register 2>actual &&
++	test_cmp expect actual &&
++	git config maintenance.repo
+ '
+ 
+-test_expect_failure 'unregister with no value for maintenance.repo' '
++test_expect_success 'unregister with no value for maintenance.repo' '
+ 	cp .git/config .git/config.orig &&
+ 	test_when_finished mv .git/config.orig .git/config &&
+ 
+@@ -543,8 +548,18 @@ test_expect_failure 'unregister with no value for maintenance.repo' '
+ 	[maintenance]
+ 		repo
+ 	EOF
+-	git maintenance unregister &&
+-	git maintenance unregister --force
++	cat >expect <<-\EOF &&
++	error: missing value for '\''maintenance.repo'\''
 +	EOF
-+	git maintenance unregister &&
-+	git maintenance unregister --force
-+'
++	test_expect_code 128 git maintenance unregister 2>actual.raw &&
++	grep ^error actual.raw >actual &&
++	test_cmp expect actual &&
++	git config maintenance.repo &&
 +
++	git maintenance unregister --force 2>actual.raw &&
++	grep ^error actual.raw >actual &&
++	test_cmp expect actual &&
++	git config maintenance.repo
+ '
+ 
  test_expect_success !MINGW 'register and unregister with regex metacharacters' '
- 	META="a+b*c" &&
- 	git init "$META" &&
+diff --git a/versioncmp.c b/versioncmp.c
+index 60c3a517122..7498da96e0e 100644
+--- a/versioncmp.c
++++ b/versioncmp.c
+@@ -164,8 +164,8 @@ int versioncmp(const char *s1, const char *s2)
+ 		const char *const oldk = "versionsort.prereleasesuffix";
+ 		const struct string_list *newl;
+ 		const struct string_list *oldl;
+-		int new = git_config_get_value_multi(newk, &newl);
+-		int old = git_config_get_value_multi(oldk, &oldl);
++		int new = git_config_get_string_multi(newk, &newl);
++		int old = git_config_get_string_multi(oldk, &oldl);
+ 
+ 		if (!new && !old)
+ 			warning("ignoring %s because %s is set", oldk, newk);
 -- 
 2.40.0.rc1.1034.g5867a1b10c5
 
