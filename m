@@ -2,141 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B84E1C678D5
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 23:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62028C6FA99
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 23:32:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229806AbjCGXXa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 18:23:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59756 "EHLO
+        id S229795AbjCGXcV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 18:32:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229732AbjCGXX2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 18:23:28 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5092C5D474
-        for <git@vger.kernel.org>; Tue,  7 Mar 2023 15:23:27 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id me6-20020a17090b17c600b0023816b0c7ceso405663pjb.2
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 15:23:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678231407;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oRt1mUnXnUEWD8FnMWmKeT848TwPURbevtP+JawEoFo=;
-        b=mNhxNcDaq5iVf4OKWM5fLPJE+5adfPdi8OOV1oPQCZFIOtcJ7jeJKiKmZRwFvEOIYK
-         GBMZe2bEZkKvKc/+gOuNPOf7ILSWINl9KziEZSQYA7ZBLirpjnD9Y7q5MAr2eMJjXll4
-         kzxTUV3g09WOBe4Ru2pr4CgRHrGBhIJyU75mpP/GHXV2VNnmlHMSNPfEjaUewke1tYxj
-         uU115ixvOl66ReE50ZVDGVCdbYXn3tQACcr9ABynyb4O/eCj1IaDcM6SuwW+4M/N7nl8
-         /6hr127oMdXABHpLJ9KsCVgR5pd8WK1NakLkja9mmtLRUwgxWtdYt1r886ve82iVIZYQ
-         P+Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678231407;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oRt1mUnXnUEWD8FnMWmKeT848TwPURbevtP+JawEoFo=;
-        b=XqAIVxTaLIPM+Z7EnMRXaRhvwj1Nh1ZjQdOXiS1jPgXtGYJ+ciowFin0/A5RXLJC+l
-         oli3CWSAf4R0D0b3rs8nDLzfBpktx0jSjJ0p5zjh5xHkaMMDsw78Uv3AowOrjTeseNpm
-         su/GbO+Df2gCh39kpEecRn3WYniayA5VPzce23ZssOqxr02bAx+m2P6V3xHtYoTtVuks
-         QtTcDujQdzOvLUUnH0QoU5jGdYLZeRN66aZELgEPtgzfiCOrPrzAn5fVzgogXEz/dpJz
-         UIxzi1YmZTMZXr3W17+qbJHPJiiZn40c0pVZoOv0+BF/PH75/HBcwShELCfbN2//cA80
-         0G3w==
-X-Gm-Message-State: AO0yUKXkSwch5HE2ocqpdROVUQnoGQnEHu6ulp7ybDaNk4YYmlmg+nmi
-        UWBSD/5foxLzcaDsLfiDUNY=
-X-Google-Smtp-Source: AK7set+YMZ3IKtIXFfqD0MqAHVw2/me6RmCrbfogsCw+LSIbpxkPiOw0TthbBAiPGuI8WfpIGkb5PQ==
-X-Received: by 2002:a17:90b:1d0a:b0:237:9858:ebbf with SMTP id on10-20020a17090b1d0a00b002379858ebbfmr16882159pjb.30.1678231406631;
-        Tue, 07 Mar 2023 15:23:26 -0800 (PST)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id j6-20020a17090adc8600b00234b785af1dsm7936124pjv.26.2023.03.07.15.23.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 15:23:26 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] sequencer.c: fix overflow & segfault in
- parse_strategy_opts()
-References: <patch-1.1-f6a06e25cf3-20230307T182039Z-avarab@gmail.com>
-        <xmqq5ybcxs1r.fsf@gitster.g>
-Date:   Tue, 07 Mar 2023 15:23:25 -0800
-In-Reply-To: <xmqq5ybcxs1r.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-        07 Mar 2023 11:47:12 -0800")
-Message-ID: <xmqqttywuowi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229709AbjCGXcT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 18:32:19 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 396433D084
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 15:32:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1678231936; i=johannes.schindelin@gmx.de;
+        bh=9GY83F3t7f4VpY7vWn72Og2jsHpT6E4EeesISycdUkw=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=JyyPnvmisQmeNbfsoHW5m5p0B8SDe13PDkAEwlvFLKlIm2eGFgyorzgRai2pQxuHn
+         USYGIGty2XJjqVFt6GklGJT03ZtvTBONx2whfqX+CXam5jqq8MOycLeKURT6FqpKYb
+         vU+N/FWus07H0rXVC0cpLNcHUGsgR6JTb9RgwaEKx2a2irT6gamx+YIb2Je6bI0+e9
+         Vc8ITD4wnJi8LPbiioAeGWHcdO3jUNTYe0WV/E23Y+APiTvLjaL4KGXCxNwEU6RwCL
+         HHdAKqiUk+etTCUK14sYwTVZv+zXiTCLBkge6n9JzNXADVh62yhltBo69/8ObbHR51
+         N4JhrsOwmM7Yw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from
+ fv-az470-779.2lj04l1n53ee5ipyphnrpo3qcc.dx.internal.cloudapp.net
+ ([13.83.14.132]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MKKUp-1prUUC1y9v-00LmEk; Wed, 08 Mar 2023 00:32:15 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.40.0-rc2
+Date:   Tue,  7 Mar 2023 23:32:11 +0000
+Message-Id: <20230307233212.3529-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.39.2
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain
+Fcc:    Sent
+X-Provags-ID: V03:K1:1XLMXH3yT36zuCIVdMnudE7M5xJ3vXXBfU3Ex6vjD7rLqNQcB9+
+ bpws8vYYxByuVrAGNOviNJmWZ1AnlDUy4ryNNj0wpfD6g1NZv5Re0+Pa5yDbmmpsbdvxuGr
+ 3PIkRIiaBywgCFUKVTZStc5ASp5SQCAFC0jFj53Lre+AHedFVeivpV/RjRPVc5ZSiX4fn6A
+ 3pUN6Zqzt6WPxCr6uNlOQ==
+UI-OutboundReport: notjunk:1;M01:P0:S952+KhLDV8=;BpOmgH/78BPJH7/IMwU8E8amhpY
+ i024MRKF2PYels90aurfqKaTiD1ib75Uq21ot0QMCyKDDce74E7POzXaRZPLRZstg8TmtDuFZ
+ xUVJyO3j9Df4chcosM/EexNAKZOnTdJPWgOeMHBK5w2PTx4aO8y4xSprHm7UHVzyzQz8qV7XC
+ kbu6FuhxXRqBhZbTBpYExM0y0uLAgX411l6ZgZOZQm1YtLNeoDm0leUPp+5fZ4iPRi7QMkDF9
+ g7fYIYgy5yrnR/pcxzM4abkLXRxjN1gKVsZv0sdml4xYupqFxETC8m31b3NnM8M5ewbii8rKb
+ MJFrAhAkwJcFxvLmWHa23mjrLJgORW36+XDQRQ0EyBcFP51/idFlPg0+ksAoexQ1TupmnsxSA
+ r+YEN5lizGFhK9prPwzurIdBZwxfx9ZrWsfZ9V3oCrBiG0TholtGf0FESIvJx/3jSiTZI6PjL
+ YhVQ0WCes02ESfX91whfQuMoSiL6y+OZ9iXfFuyiZjlLg8lV7y1H5AWj2lORRB1/VU3K1DsHr
+ SMJ9Ss4iLL+7aU7WbsaFD+Z5bJ6TcXxFUDg4VHwcn1ouGlAn5uFNR1v1BAzhOtzEXp7Bdr4K6
+ vv5wIBqJrR8Lht//ek8LCvq5Pq0GYt9Am1u9sMhRBpYkPiwI7o+kE3bi5AT56Z1H+yLB1dj69
+ QaOvQS/Oc2y8ZbohWmLnFI3MlB3jQHvUiFUdNCF7V3vWEL/dVnhNmQU4/nCfNVhh+9AAQiCTl
+ i0Dch5zoDiVZzduTPMnWYvHmrXiFMJ48I6P0PBYY8A28AEgA9HebNhphidVuPWcQVxBtflpD5
+ lxgDVIzi8CVtb11jqWL4rgwZ8XaTSm1Zdqtv5PRsoyZFf4Q73vrjQLPfQnxc8gMkTGbYWnfQk
+ da81Fm8DhYucjXHQva9ZZch/f1tWJhFhkjNl2pinQtFQM4x+mX8zIQv6Qi+sGytHVILM48/Aq
+ 1wEOdUu33bcBAIexynrNEvMUHKE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Dear Git users,
 
-> This made me look at split_cmdline_strerror().  It is a table lookup
-> into split_cmdline_errors[] in alias.c which looks like this:
->
->     static const char *split_cmdline_errors[] = {
->             N_("cmdline ends with \\"),
->             N_("unclosed quote"),
->             N_("too many arguments"),
->     };
->
-> So the result is properly localized, but I suspect that the string
-> after : should not be enclosed within a pair of single quotes.
->
-> 	die(_("could not split '%s': %s", strategy_opts_string,
-> 		split_cmdline_strerror(count)));
->
-> Other than that, nice find.
+I hereby announce that Git for Windows 2.40.0-rc2 is available from:
 
-I'll queue this on top.
+    https://github.com/git-for-windows/git/releases/tag/v2.40.0-rc2.windows.1
 
------ >8 ---------- >8 ---------- >8 ---------- >8 -----
-Subject: [PATCH] SQUASH: no point in quoting strerror like messages
+Changes since Git for Windows v2.39.2 (February 14th 2023)
 
-The error message is taken from a limited and fixed set of strings
-and we do not usually enclose strerror(errno) inside a pair of
-single quotes.
----
- sequencer.c                    | 2 +-
- t/t3436-rebase-more-options.sh | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+As announced previously, Git for Windows will drop support for Windows
+7 and for Windows 8 in one of the next versions, following Cygwin's and
+MSYS2's lead (Git for Windows relies on MSYS2 for components such as
+Bash and Perl).
 
-diff --git a/sequencer.c b/sequencer.c
-index cc59a1c491..e4a3f0081f 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2885,7 +2885,7 @@ void parse_strategy_opts(struct replay_opts *opts, char *raw_opts)
- 	count = split_cmdline(strategy_opts_string,
- 			      (const char ***)&opts->xopts);
- 	if (count < 0)
--		die(_("could not split '%s': '%s'"), strategy_opts_string,
-+		die(_("could not split '%s': %s"), strategy_opts_string,
- 			    split_cmdline_strerror(count));
- 	opts->xopts_nr = count;
- 	for (i = 0; i < opts->xopts_nr; i++) {
-diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
-index 195ace3455..c3184c9ade 100755
---- a/t/t3436-rebase-more-options.sh
-+++ b/t/t3436-rebase-more-options.sh
-@@ -42,7 +42,7 @@ test_expect_success 'setup' '
- 
- test_expect_success 'bad -X <strategy-option> arguments: unclosed quote' '
- 	cat >expect <<-\EOF &&
--	fatal: could not split '\''--bad'\'': '\''unclosed quote'\''
-+	fatal: could not split '\''--bad'\'': unclosed quote
- 	EOF
- 	test_expect_code 128 git rebase -X"bad argument\"" side main >out 2>actual &&
- 	test_must_be_empty out &&
-@@ -51,7 +51,7 @@ test_expect_success 'bad -X <strategy-option> arguments: unclosed quote' '
- 
- test_expect_success 'bad -X <strategy-option> arguments: bad escape' '
- 	cat >expect <<-\EOF &&
--	fatal: could not split '\''--bad'\'': '\''cmdline ends with \'\''
-+	fatal: could not split '\''--bad'\'': cmdline ends with \
- 	EOF
- 	test_expect_code 128 git rebase -X"bad escape \\" side main >out 2>actual &&
- 	test_must_be_empty out &&
--- 
-2.40.0-rc2
+Also following the footsteps of the MSYS2 and Cygwin projects on which
+Git for Windows depends, the 32-bit variant of Git for Windows is
+nearing its end of support.
 
+New Features
+
+  * Comes with Git v2.40.0-rc2.
+  * In the olden Git days, there were "dashed" Git commands (e.g.
+    git-commit instead of git commit). These haven't been supported for
+    interactive use in a really, really long time. But they still
+    worked in Git aliases and hooks ("scripts"). Since Git v1.5.4
+    (released on February 2nd, 2008), it was discouraged/deprecated to
+    use dashed Git commands even in scripts. As of this version, Git
+    for Windows no longer supports these dashed commands.
+  * Comes with tig v2.5.8.
+  * Comes with Bash v5.2 patchlevel 15.
+  * Comes with OpenSSL v1.1.1t.
+  * Comes with GNU TLS v3.8.0.
+  * Comes with cURL v7.88.1.
+  * Comes with libfido2 v1.13.0.
+  * Comes with Git Credential Manager v2.0.935.
+
+Bug Fixes
+
+  * Some commands mishandled absolute paths near the drive root (e.g.
+    scalar unregister C:/foo), which has been fixed.
+  * When trying to call Cygwin (or for that matter, MSYS2) programs
+    from Git Bash, users would frequently be greeted with cryptic error
+    messages about a "cygheap" or even just an even more puzzling exit
+    code 127. Many of these calls now succeed, allowing basic
+    interactions. While it is still not possible for, say, Cygwin's
+    vim.exe to interact with the Git Bash's terminal window, it is now
+    possible for Cygwin's zstd.exe in conjuction with Git for Windows'
+    tar.exe to handle .tar.zst archives.
+
+Git-2.40.0-rc2-64-bit.exe | a9854cbbb47c826f5d0aec45d96c113dcf88c94ce70a9bf0749a2b04f1fb6b09
+Git-2.40.0-rc2-32-bit.exe | 2a4b040f7aa20d9ec996159dfc7cb566e783d4fc6722c3916b0fd61e869e8f60
+PortableGit-2.40.0-rc2-64-bit.7z.exe | 0c40e61a96ddd624b8125e3b542b8a26b6d86ff2204f8645d43782190e2f74ae
+PortableGit-2.40.0-rc2-32-bit.7z.exe | d771f24ffc9f4d960986a132bef2045af406ffc4abf78d54e3f8ac56c19668ff
+MinGit-2.40.0-rc2-64-bit.zip | de257f4ac5872a5864eca7476201a00f5b827a329933f7a7339bc67026d0bd5c
+MinGit-2.40.0-rc2-32-bit.zip | fc02caeb1502a27575ff1bbd8dcae49a76793944be451e639821b4c8bd25f954
+MinGit-2.40.0-rc2-busybox-64-bit.zip | 9cb55ff1fbb03ce81acf69408db00a103b32c54009fd4b9515d70b50bb56cc51
+MinGit-2.40.0-rc2-busybox-32-bit.zip | af2fb84fc9f0104f02bb310a44a448da9b0a85b42cd0daba67e1641d0a85bba0
+Git-2.40.0-rc2-64-bit.tar.bz2 | ee3f3a9a79eb862eeedcc06a35c2ca5e4f0903a476d0ae2d0c55add4b20065be
+Git-2.40.0-rc2-32-bit.tar.bz2 | ddd8d7654b394cc7cc2ff825f73ab086bb3e43bea38ec5996e9ab4a7405ae58a
+
+Ciao,
+Johannes
