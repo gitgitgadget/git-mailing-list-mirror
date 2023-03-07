@@ -2,204 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3965CC64EC4
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 00:15:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8450C61DA4
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 00:28:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229726AbjCGAPI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 19:15:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50412 "EHLO
+        id S229835AbjCGA2x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 19:28:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjCGAPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 19:15:07 -0500
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361C0305FD
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 16:15:06 -0800 (PST)
-Received: by mail-pf1-x44a.google.com with SMTP id h1-20020a62de01000000b005d943b97706so6223906pfg.0
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 16:15:06 -0800 (PST)
+        with ESMTP id S229742AbjCGA2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 19:28:51 -0500
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 833113ABF
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 16:28:50 -0800 (PST)
+Received: by mail-il1-x134.google.com with SMTP id 4so7596960ilz.6
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 16:28:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678148105;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sek6RHVYkjWMoh+ldEy+TX1nrHTjZmI/E1qBcV9ZNSY=;
-        b=fZAby0sUhY7d+gM8GYV4WkcRVXrfZ/ljmHxOo5FLuv0zP86e5s2Ii17jV9k2kuECMG
-         D2SX+H+/3bAAVtzLHkIK2En8uWN6BZ1UAncyOKDeJcWEglRIpksQTj/pEh9Hi2bjwPj2
-         Vq7rf/X3y/GHpdjl1KB5Pe6L530xq8OOcVdt1fE3J4p6O2Sj9zhAJoAt3alzCkAG2z50
-         uEuYUiQX0yHqZ9I2fNycRGbhZRzcjL7K6Y+9komgr9aqufR28UUOAW0I01k/gNJ/pSpW
-         m1F/RQuFIKe/JDiNTbCn2FsEA4A8EN6A2+rf0k4DiTVAKe78R5sV5Zcid8fYEYBZyxHy
-         WY7A==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1678148930;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KC2cuznGneo0VBpzQ4nWq/rZ+5QYbq2Bp3MIVd7TBvw=;
+        b=EJczsc4wjN+muGhDhsl7QoAHL8wJ+JOpu9Dl6xnwznYkruEqb4z7mrkSWKHx5S+j5y
+         g9MbtaKRtyTDvaMShE9gdsqBRhIDk2Q/SeEhE4yT3EcVNJ/udwUk98Ipi31xxs53ZqxP
+         iFsZttoIAd14PUVrhS99WY/F9OngNDmC3/Z/0mdQCq2JEyCXSxV+m12BO3LrCVduYHrI
+         NkgBxj4sfn1cF1MzE9CVZaa/1i4VJk7W1eXhP1pGJaAuvxQnXyuAe8o50bVkzYqR21Iy
+         x03jDntV7Jiyb1PgRYrEx+ei/IUnFv1NhN6q88XMxPtBr0FnuQEyf9uQo8PbdVxR+F4j
+         HuzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678148105;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sek6RHVYkjWMoh+ldEy+TX1nrHTjZmI/E1qBcV9ZNSY=;
-        b=mpBZe/XfmywDvwxQF9UheP6IQc9tAO8QH5K1IlSm1Nep3CCTKF6djGgg4+jcTe6+IS
-         f7E+rUFhNGp6h5/yJfRyiAbsxuPZeLUGWrX5kEOBDArwfTEZdQjxwC1eHszHpo82+Jhs
-         HBaNaVMtiQADBm9TB6WozBmCa901tnvbBaYGZ7+8qVtxOt6eK+05ef+zyqb8dAAmg7HP
-         fZnI0VXAW+SdxpExZ8wMRisTvAK89EuQW+6SyRn7k815Qi0UlB2ogJVZ6GGeSoVyj71V
-         bmzZmlHp/1vkWbDA8c1y+JZDTv/MuONgJ/76nVMblUg+xgSNGsY5PjwEb6WvfcZVxNuQ
-         E47Q==
-X-Gm-Message-State: AO0yUKUcMZy7BvJJI+12r09XuywpXKEu8MGyEv6IHTk1V1n7zmOSUbI7
-        JDYQuGcKttqNiMuEq/UuMtqGeQvbP74I8A==
-X-Google-Smtp-Source: AK7set+G3MznYWe7n1BjJLbvm6goUJ0UDCsOjj4HcfbeZdfA+rpFr3oXNOoYQYNYGc1sWZ5ZK3thSYYZT8K4MA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a62:834b:0:b0:5e2:c313:a660 with SMTP id
- h72-20020a62834b000000b005e2c313a660mr5422333pfe.6.1678148105718; Mon, 06 Mar
- 2023 16:15:05 -0800 (PST)
-Date:   Mon, 06 Mar 2023 16:15:04 -0800
-In-Reply-To: <20230228185642.2357806-4-calvinwan@google.com>
-Mime-Version: 1.0
-References: <20230213182134.2173280-1-calvinwan@google.com> <20230228185642.2357806-4-calvinwan@google.com>
-Message-ID: <kl6lpm9lifhz.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2 4/6] tests: use `git submodule add` and fix expected status
-From:   Glen Choo <chooglen@google.com>
-To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
-Cc:     Josh Steadmon <steadmon@google.com>, peff@peff.net,
-        gitster@pobox.com, Calvin Wan <calvinwan@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20210112; t=1678148930;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KC2cuznGneo0VBpzQ4nWq/rZ+5QYbq2Bp3MIVd7TBvw=;
+        b=tREYrc+OWtNToM+SirEHAsvvQM/JNhsJ8bbAtNmnTke3XrlbeQPQVNO0l1YMVlcJOR
+         UkLkEIV8O1m2qLaE6WzXndc9ZwBn1BumcXGTIF8fMF1/2iZ3G6hxLGFR8DUqMW+uccPj
+         zAfUIG1REpULziatTmSPWF1yomYioEGnceS5Gzjfw2AdsUkop3xHkhpzco0r32jJNXyD
+         YTH9jaO7fxMXQAHN4mC6loF8fxRvvUlNzVT+5HE0EJ12EdoFND2qTzSB+HDTr+oA+aUh
+         rggJIhmZk16VuB8aqVip2jlIeUSURoRG1S9BMPCytuNpi4PfhEfeRccdE1KBney43KrS
+         YO6g==
+X-Gm-Message-State: AO0yUKWv4jDxdB13JkiM5cQ8dDc07bjjLVeH9GI0THOKW48uWoRsaRX6
+        6OplbTN1we7KBT00pVHBA3GjgPnHutSI5ZwMmAMpCg==
+X-Google-Smtp-Source: AK7set9SS3VRZ6GOd7W5LCUUisYFny7nalEq7jWjli77ZGE9NfLtxYvpALG+9bk3IWS9ls6jTekUMA==
+X-Received: by 2002:a05:6e02:1608:b0:318:6d32:b12a with SMTP id t8-20020a056e02160800b003186d32b12amr11588576ilu.13.1678148929698;
+        Mon, 06 Mar 2023 16:28:49 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id t5-20020a02ab85000000b003c4f35c21absm3500490jan.137.2023.03.06.16.28.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Mar 2023 16:28:49 -0800 (PST)
+Date:   Mon, 6 Mar 2023 19:28:48 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH] object-file: reprepare alternates when necessary
+Message-ID: <ZAaFQJm6UGYH4YIi@nand.local>
+References: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
+ <xmqqy1o97apj.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqy1o97apj.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Calvin Wan <calvinwan@google.com> writes:
+On Mon, Mar 06, 2023 at 02:54:00PM -0800, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > @@ -1008,6 +1008,7 @@ void reprepare_packed_git(struct repository *r)
+> >  	struct object_directory *odb;
+> >
+> >  	obj_read_lock();
+> > +	reprepare_alt_odb(r);
+> >  	for (odb = r->objects->odb; odb; odb = odb->next)
+> >  		odb_clear_loose_cache(odb);
+>
+> Hmph, if there was an old alternate ODB from which we took some
+> loose object from and cached, and if that ODB no longer is on the
+> updated alternate list, would we now fail to clear the loose objects
+> cache for the ODB?  Or are we only prepared for seeing "more"
+> alternates and assume no existing alternates go away?
 
-> @@ -122,25 +123,30 @@ test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match)'
->  '
->  
->  test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match) [.gitmodules]' '
-> +	git branch pristine-gitmodules &&
->  	git config diff.ignoreSubmodules dirty &&
->  	git diff HEAD >actual &&
->  	test_must_be_empty actual &&
->  	git config --add -f .gitmodules submodule.subname.ignore none &&
->  	git config --add -f .gitmodules submodule.subname.path sub &&
-> +	git commit -m "Update .gitmodules" .gitmodules &&
->  	git diff HEAD >actual &&
->  	sed -e "1,/^@@/d" actual >actual.body &&
->  	expect_from_to >expect.body $subprev $subprev-dirty &&
->  	test_cmp expect.body actual.body &&
->  	git config -f .gitmodules submodule.subname.ignore all &&
->  	git config -f .gitmodules submodule.subname.path sub &&
-> +	git commit -m "Update .gitmodules" .gitmodules &&
->  	git diff HEAD >actual2 &&
->  	test_must_be_empty actual2 &&
->  	git config -f .gitmodules submodule.subname.ignore untracked &&
-> +	git commit -m "Update .gitmodules" .gitmodules &&
->  	git diff HEAD >actual3 &&
->  	sed -e "1,/^@@/d" actual3 >actual3.body &&
->  	expect_from_to >expect.body $subprev $subprev-dirty &&
->  	test_cmp expect.body actual3.body &&
->  	git config -f .gitmodules submodule.subname.ignore dirty &&
-> +	git commit -m "Update .gitmodules" .gitmodules &&
->  	git diff HEAD >actual4 &&
->  	test_must_be_empty actual4 &&
->  	git config submodule.subname.ignore none &&
-> @@ -152,7 +158,7 @@ test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match)
->  	git config --remove-section submodule.subname &&
->  	git config --remove-section -f .gitmodules submodule.subname &&
->  	git config --unset diff.ignoreSubmodules &&
-> -	rm .gitmodules
-> +	git reset --hard pristine-gitmodules
->  '
+Based on my understanding of the patch, we are only prepared to see
+"more" alternates, rather than some existing alternate going away.
 
-This looks like the perfect use case for test_when_finished :)
+That being said, I am not certain that is how it works. Perhaps an
+alternate "goes away", but does not actually get removed from the list
+of alternate ODBs. If that's the case, any object lookup in that
+now-missing ODB would fail, but any subsequent ODBs which were added
+after calling reprepare_alt_odb() would succeed on that object lookup.
 
-> @@ -190,12 +196,15 @@ test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match)'
->  test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match) [.gitmodules]' '
->  	git config --add -f .gitmodules submodule.subname.ignore all &&
->  	git config --add -f .gitmodules submodule.subname.path sub &&
-> +	git commit -m "Update .gitmodules" .gitmodules &&
->  	git diff HEAD >actual2 &&
->  	test_must_be_empty actual2 &&
->  	git config -f .gitmodules submodule.subname.ignore untracked &&
-> +	git commit -m "Update .gitmodules" .gitmodules &&
->  	git diff HEAD >actual3 &&
->  	test_must_be_empty actual3 &&
->  	git config -f .gitmodules submodule.subname.ignore dirty &&
-> +	git commit -m "Update .gitmodules" .gitmodules &&
->  	git diff HEAD >actual4 &&
->  	test_must_be_empty actual4 &&
->  	git config submodule.subname.ignore none &&
+So, I don't know. I don't have the implementation details of the
+alternates ODB mechanism paged in enough to say for sure. Hopefully
+Stolee can point us in the right direction.
 
-Like the previous patch, I wonder a little whether we should be diffing
-with :!.gitmodules, but at least here we are focused on diffing with
-submodules in general (and not the specific "git diff --submodule="
-behavior), so I thnk this is okay to keep.
+> Other than that, looking quite well reasoned.
 
-> @@ -206,7 +215,7 @@ test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match)
->  	test_cmp expect.body actual.body &&
->  	git config --remove-section submodule.subname &&
->  	git config --remove-section -f .gitmodules submodule.subname &&
-> -	rm .gitmodules
-> +	git reset --hard pristine-gitmodules
+Agreed.
 
-Ditto about test_when_finished.
-
->  '
->  
->  test_expect_success 'git diff between submodule commits' '
-> @@ -243,7 +252,7 @@ test_expect_success 'git diff between submodule commits [.gitmodules]' '
->  	expect_from_to >expect.body $subtip $subprev &&
->  	git config --remove-section submodule.subname &&
->  	git config --remove-section -f .gitmodules submodule.subname &&
-> -	rm .gitmodules
-> +	git reset --hard pristine-gitmodules
->  '
->  
-
-Ditto
-
-> @@ -1152,8 +1156,37 @@ test_expect_success '.gitmodules ignore=untracked suppresses submodules with unt
->  	test_cmp expect output &&
->  	git config --add -f .gitmodules submodule.subname.ignore untracked &&
->  	git config --add -f .gitmodules submodule.subname.path sm &&
-> +	cat > expect-modified-gitmodules << EOF &&
-> +On branch main
-> +Your branch and '\''upstream'\'' have diverged,
-> +and have 2 and 2 different commits each, respectively.
-> +  (use "git pull" to merge the remote branch into yours)
-> +
-> +Changes to be committed:
-> +  (use "git restore --staged <file>..." to unstage)
-> +	modified:   sm
-> +
-> +Changes not staged for commit:
-> +  (use "git add <file>..." to update what will be committed)
-> +  (use "git restore <file>..." to discard changes in working directory)
-> +	modified:   .gitmodules
-> +	modified:   dir1/modified
-> +
-> +Submodule changes to be committed:
-> +
-> +* sm $head...$new_head (1):
-> +  > Add bar
-> +
-> +Untracked files:
-> +  (use "git add <file>..." to include in what will be committed)
-> +	dir1/untracked
-> +	dir2/modified
-> +	dir2/untracked
-> +	untracked
-> +
-> +EOF
->  	git status >output &&
-> -	test_cmp expect output &&
-> +	test_cmp expect-modified-gitmodules output &&
->  	git config -f .gitmodules  --remove-section submodule.subname
->  '
-
-That another giant snapshot makes me a bit wary, since it's harder to
-tell whether the "modifed .gitmodules" and "unmodified .gitmodules" are
-really checking the same things, but there might not be a way around it.
-The following tests check various combinations of values (dirty,
-untracked, etc) and sources "--ignore-submodules", ".git/config ignore="
-and ".gitmodules ignore=". For the .gitmodules tests, we really do have
-to modify .gitmodules to test that it gives us the behavior we want.
-
-As a hack, we could preemptively modify .gitmodules, so that it's
-modified in all of the snapshots we're diffing. That feels too hacky to
-me, but maybe others think it's fine.
-
-(Side note: I recall a previous conversation with Junio about how we
-shouldn't be changing behavior based on .gitmodules. If we had that, we
-wouldn't need to worry about this right now.)
-
+Thanks,
+Taylor
