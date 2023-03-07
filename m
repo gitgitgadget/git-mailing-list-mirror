@@ -2,121 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06012C678D4
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 12:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFF0BC678D4
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 12:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231293AbjCGMFb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 07:05:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47290 "EHLO
+        id S229961AbjCGMJZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 07:09:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231264AbjCGMF3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 07:05:29 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1FD32A9A4
-        for <git@vger.kernel.org>; Tue,  7 Mar 2023 04:05:27 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id cw28so51264666edb.5
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 04:05:27 -0800 (PST)
+        with ESMTP id S229789AbjCGMJX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 07:09:23 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC8774DE3B
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 04:09:21 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id ay14so47580575edb.11
+        for <git@vger.kernel.org>; Tue, 07 Mar 2023 04:09:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678190726;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cEv62fkc9u5J5tnv0LHc1spV7ogWaiV1ZB/0h4xbjLw=;
-        b=UFrRSSS2ny3lIwNITInXj7PlL91q/VX50vLadWvzDA5zLDvpaeLy1HM/X6ym4XvRzF
-         vphHvPdnU33NZets41HPyCH8w+X7gezMjEu8tsfdaLH3jBWoH9nHFBzMnCxMM1sZi1co
-         6vT5ZATeOGmiiWa31oRTEBkIXLIwVPfqnc3AZuIZQ5eNHiToLO2EqIlilhxQt92rFmys
-         m0gLTy9bd5fAiStOKStTxbfLl9AtnWtxchHZXldLUrohad5D1oGki9ZGo3uJ2guseRHW
-         euORGqLUXI9OVEKVEBlGYCOKZO4CCiu7Uuq7JOTxbnNhnNc+G5VYJOned1OssoQAePKe
-         c4iw==
+        d=gmail.com; s=20210112; t=1678190960;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=jtis/mXXHP/P4V6ZTfvgE5YEc3TvgVRkR+KGOZLY2qQ=;
+        b=Nxi+gG5JMusFgIcJxHu4iKsOebE+Pi9JmiPZKMhqTQKOQs5Hlz3mZmtnA1JLAHMqP5
+         zz/MKR3AkQ5jMB794GQt0q+k0+F2wlv/jNeVDX3mA5cLlkvE8/SWd85pw79Vudz4C1/T
+         txBBzslkfg0JX7v0fEaBta32KB4+o35o+ZrB52GA8P4++mr8WLoPWtQnukEIUFPAenLF
+         qEgQBP/hs/yMN7Zv6NjTsqyu51mIy6jwknEjGJHU2UoJP4++S3EY5Jq8kaC3Svo3dvqZ
+         KtpMA6yG0VwpbuBhf+DFZD48CBD5lJ6NijPEUdO3iMrqPZC/Gz3pe3cq9Vv/CBc0bRDQ
+         XtKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678190726;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cEv62fkc9u5J5tnv0LHc1spV7ogWaiV1ZB/0h4xbjLw=;
-        b=cFFUzT2QGCpqNPtIHeT9YO3pT0O0vwPB4UdSQ8Tx1K6k+SLzGzoOkk/kSlge7+VszR
-         G0BE5kBhrkMHYuCftlrL9w0/pTVQg5jQcxSUpGWP2Fw9HuAjFZ2jVL/VkFn15a0yUeLD
-         AGUAE8Ww77dw8QReAyvZRQUHd5s/o66FH7nhkYgkpMIZnwyF7O0LqPlZfBV7BN23MGMm
-         F6eW90IaQIJWj9hKVUtd95RzmC7tMyejxzel6NjaReOjw4aF/YxOfpv83KH+AgkmqBZ0
-         NEMK7aNm+xMXYOUa4msYhMslhJegeQ6IpZgp6oDybX1mGLateaggIxmfvtBhXDg0WccF
-         19Bw==
-X-Gm-Message-State: AO0yUKVgjdr3SMUNR+WsJDIKr2Grftew1t8ERwoW8W5qWjFZ8xTn+GSi
-        2F77ZLx9MlEmZIi8AukH9S8=
-X-Google-Smtp-Source: AK7set+WlrHFEUsHHSHDPY1BVQwVrJ76yqqdmzSVmZGamkrOKjNMLZki/NuzC2ewKpYE0m9wne6HeQ==
-X-Received: by 2002:a17:906:7803:b0:8e3:8543:8ebe with SMTP id u3-20020a170906780300b008e385438ebemr14201910ejm.57.1678190726149;
-        Tue, 07 Mar 2023 04:05:26 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678190960;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jtis/mXXHP/P4V6ZTfvgE5YEc3TvgVRkR+KGOZLY2qQ=;
+        b=yWjysRA/s40dcWU1TpMVlx+M50c9GWXgm2tAjhX/php7e4eKvrTMXDVGGeKZ4drdBe
+         GjTxURNbi1Hj6c5RDzBdS3CUOOU4o5SzaS3oPx9kYmbIzU9y7aPbs3z1f2dDdewGNtuX
+         xVxS4imyiB3zU78a9d8210hkfNKMl7OEgkhvwFnGnA0/uSKq6gpST1VX+mgG/tDUieSp
+         mboeWxgEag+Q08d/IHY2BgDlm9IMkpvADsDhgCerXuHY5MDPA0ctIvKGBJgvLJLFgf1A
+         K0tYEvsTIl9M4RvTf/fOV921rD8zppwVX5WFWDZZ1vHtnH7+EPjyfGXuGa0cVhdekQSN
+         3UkQ==
+X-Gm-Message-State: AO0yUKUtMjp0f7TW6oY3xFQJItMheE6XHQy56Z5fIShvFIFJc2GFqa/n
+        bBbLoFRbwzrG0+jD6C43JOd/bUBm3ak=
+X-Google-Smtp-Source: AK7set9IaxTdtD5yE+axFPRk2/1Hb5yKfvKZIgZ1hHveE2BwXyjZb9sHNPWNri6p2eUYd3FFjLpHFg==
+X-Received: by 2002:a17:907:6eab:b0:7c0:efb9:bc0e with SMTP id sh43-20020a1709076eab00b007c0efb9bc0emr18632012ejc.62.1678190960033;
+        Tue, 07 Mar 2023 04:09:20 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id bn17-20020a170906c0d100b008f7f6943d1dsm5983010ejb.42.2023.03.07.04.05.25
+        by smtp.gmail.com with ESMTPSA id q1-20020a50c341000000b004bbb691a334sm6711796edb.2.2023.03.07.04.09.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 04:05:25 -0800 (PST)
+        Tue, 07 Mar 2023 04:09:19 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pZW4L-000hHZ-0I;
-        Tue, 07 Mar 2023 13:05:25 +0100
+        id 1pZW87-000hRM-0L;
+        Tue, 07 Mar 2023 13:09:19 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH 0/6] [RFC] config.c: use struct for config reading state
-Date:   Tue, 07 Mar 2023 12:57:15 +0100
-References: <pull.1463.git.git.1677631097.gitgitgadget@gmail.com>
+To:     Dinesh Dharmawardena <dinesh_dh@outlook.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Let us not call it git blame
+Date:   Tue, 07 Mar 2023 13:08:20 +0100
+References: <SY6P282MB3782FD975E6F39951C5A43DA92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
+ <SY6P282MB378273980F5BC9084EEF74EF92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <pull.1463.git.git.1677631097.gitgitgadget@gmail.com>
-Message-ID: <230307.86wn3szrzu.gmgdl@evledraar.gmail.com>
+In-reply-to: <SY6P282MB378273980F5BC9084EEF74EF92B29@SY6P282MB3782.AUSP282.PROD.OUTLOOK.COM>
+Message-ID: <230307.86sfegzrtc.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Mar 01 2023, Glen Choo via GitGitGadget wrote:
+On Thu, Mar 02 2023, Dinesh Dharmawardena wrote:
 
-> This RFC is preparation for config.[ch] to be libified as as part of the
-> libification effort that Emily described in [1]. One of the first goals is
-> to read config from a file, but the trouble with how config.c is written
-> today is that all reading operations rely on global state, so before turning
-> that into a library, we'd want to make that state non-global.
+> Hi
 >
-> This series gets us about halfway there; it does enough plumbing for a
-> workable-but-kinda-ugly library interface, but with a little bit more work,
-> I think we can get rid of global state in-tree as well. That requires a fair
-> amount of work though, so I'd like to get thoughts on that before starting
-> work.
->
-> = Description
->
-> This series extracts the global config reading state into "struct
-> config_reader" and plumbs it through the config reading machinery. It's very
-> similar to how we've plumbed "struct repository" and other 'context objects'
-> in the past, except:
->
->  * The global state (named "the_reader") for the git process lives in a
->    config.c static variable, and not on "the_repository". See 3/6 for the
->    rationale.
+> I am writing to you to request that the term blame in git blame be
+> replaced with something that does not sound so blameful. I=E2=80=99m an S=
+RE
+> and we actively try promote a blameless culture as such industry
+> tooling should also follow suit imo. Progressively phasing this term
+> out with a better alias would be great.
 
-I agree with the overall direction, but don't think that rationale in
-3/6 is sufficient to go in this "the_reader" direction, as opposed to
-sticking with and extending "the_repository" approach.
-
-For orthagonal reasons (getting rid of some of the API duplication) I've
-been carrying a patch to get rid of the "configset" part of the *public*
-API, i.e. to have API users always use the "repo_config_*()" or
-"git_config_*()" variants, that patch is at:
-https://github.com/avar/git/commit/0233297a359bbda43a902dd0213aacdca82faa34
-
-All of the rationale in your 3/6 is true now, but as that patch shows
-the reason for why we have "the_repository" is for the trivial reason
-that we want to access the repo's "config" member.
-
-It's a bit distasteful, but that change argues that just mocking up a
-"struct repository" with a "config" member pointing to a new configset
-is better than maintaining an entirely different API just for those
-cases where we need to parse a one-off file or whatever.
-
-I think that going in that direction neatly solves the issues you're
-noting here and in your 3/6, i.e. we'd always have this in the "repo"
-object, so we'd just stick the persistent "reader" variables in the
-"struct repository"'s "config" member.
+You might be interested in a patch I had to address this, posted a while
+ago:
+https://lore.kernel.org/git/20190401101246.21418-1-avarab@gmail.com/
