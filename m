@@ -2,304 +2,379 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 669C0C64EC4
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 01:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9107C64EC4
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 02:04:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229699AbjCGBFo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Mar 2023 20:05:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36694 "EHLO
+        id S229876AbjCGCEX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Mar 2023 21:04:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbjCGBFn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Mar 2023 20:05:43 -0500
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 824E05F229
-        for <git@vger.kernel.org>; Mon,  6 Mar 2023 17:05:41 -0800 (PST)
-Received: by mail-il1-x134.google.com with SMTP id i4so7667412ils.1
-        for <git@vger.kernel.org>; Mon, 06 Mar 2023 17:05:41 -0800 (PST)
+        with ESMTP id S229545AbjCGCEW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Mar 2023 21:04:22 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 343A443463
+        for <git@vger.kernel.org>; Mon,  6 Mar 2023 18:04:10 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id fa3-20020a17090af0c300b002377eefb6acso4355888pjb.3
+        for <git@vger.kernel.org>; Mon, 06 Mar 2023 18:04:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1678151141;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UB4D9RqPxbeW5K3duDaiXpUBeEN7ZEaSn3WXzhrzFxA=;
-        b=Q+KvRIRSBdrZIQYYMCapfDVqWAkCEEYAembGQ+2bCXbpR1SpgGNly5h7qTGsxB+f4m
-         Ep3bpPrxMhb///EEW1IPvkPkrozWP2tpsclwd9cni3Bun+qluhd9RyYDIdJQBXVgR3td
-         AzlthMaKVu5ilX3MwjWZyVLIcYKV0gPcGz6s+aVua6x46BgMs+FRSysajwqxT69xYrsd
-         W1FM0f7z4EvTJl3nTLHTfbIFASDRfNE4nNb4h+/RL8SZfRHPvWaVQa7WnGQ0xf9FA9mz
-         iVpU76hxNzxmbjlE57XGDqAmrs1Zijt82C+TBW4ijN/A86GA2TmMSLE4HOqsVOqXoHZS
-         /zGQ==
+        d=google.com; s=20210112; t=1678154649;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2fq2FxPJhQR2BMXOUnuYrnVNNEYzcCtt3c4V29QSrSM=;
+        b=DnsQwkGd541lIf/R5uGGztt6WdQ/Dd0m1eWPor6N/NebI3UdecsmR2M92fS4LTNjM2
+         ulT2HRCGGYw1vsSpnIMtUJD3DRD5/7wnge/FTOHmttOMe5eBqQigYl+RtWvme42ZmcDs
+         El49NH4DczhEQc6l3twt3oVuf0LR0of/4srGO2hBNzM5rCdy4Ph726Q2oIE93dNBzvTd
+         AeAePBHX/yL1y5TC1la3sMHjxdoefmf5DJMfRNixTnV+/lszJtolwWnS5crgnUSamvLF
+         DjxFzH+rZSQt3m6r4J0NRytoM8uSO7EsF4uBAR09eeZ/8OkR7b8B7s6tynnoethgU4tl
+         3rTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678151141;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UB4D9RqPxbeW5K3duDaiXpUBeEN7ZEaSn3WXzhrzFxA=;
-        b=mdiKkG9vbpRpdN+zY12XHJdOTJctb1nQfhq9jdb3OtKFxDwU/ytyziAKEPCZMOYT9r
-         DjQjDNV+X0GfMAG1dHAiDlVgiYy0a6pUye8wVzokJBTJgOhaMutY+xOzlo+AelFtsxoj
-         GqyKKEnJvc9g4bdUDu97esHplBL3Q3s4r+hJRO+Bag/kjlHHciigqc4jUraO7hh044tY
-         3XIlmAUwTtz7G+okvSTlhQpOU68u/X+iD7kTwJtEz8XWf1Xfm8noz1bds7B/w9VyX+HN
-         +vQxUFXp183U2hSme6U9janXN9c9wPi88+e1bP1JdLynPbjIAZi0+LnaNY7Ufqy41my3
-         uqHw==
-X-Gm-Message-State: AO0yUKWkaMLQDaabbWGqc7nExCM4YEnkt4exwHIfwU3Qlnx9XYpj6lxL
-        53x9VPfEBpK8aWNzZv6YktSRcQ==
-X-Google-Smtp-Source: AK7set9yjoms6CEgp+Wd2LePXR4OvptEDWbdk0w0cLl7cMNLKgaN9537Vb/Lot4HOSOpN9r152/brA==
-X-Received: by 2002:a05:6e02:144f:b0:316:e3a0:723f with SMTP id p15-20020a056e02144f00b00316e3a0723fmr11378360ilo.17.1678151140772;
-        Mon, 06 Mar 2023 17:05:40 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r22-20020a02c856000000b003e9e5e1aacasm3831826jao.143.2023.03.06.17.05.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Mar 2023 17:05:40 -0800 (PST)
-Date:   Mon, 6 Mar 2023 20:05:39 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, vdye@github.com,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 7/8] ahead-behind: implement ahead_behind() logic
-Message-ID: <ZAaN4w4kltPIeYlt@nand.local>
-References: <pull.1489.git.1678111598.gitgitgadget@gmail.com>
- <b8c55ecf88d6229f13e05e8369adaf9e70ae1de0.1678111599.git.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <b8c55ecf88d6229f13e05e8369adaf9e70ae1de0.1678111599.git.gitgitgadget@gmail.com>
+        d=1e100.net; s=20210112; t=1678154649;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2fq2FxPJhQR2BMXOUnuYrnVNNEYzcCtt3c4V29QSrSM=;
+        b=NJbMoXwQPwfCJPMZ/QnVl7upMF+Fc/yniENdUjuTw5//uRkjqQqWbUzfalN7Yd7K3z
+         idvK2zJXojVOEzdTgJDO1HShtRQpUdhIpneGHT1kRQdpJ3K0Rk6oXmQ01laCR1nMGPGz
+         04M9IfHJlKBogR81XXHrfTMgpBZxfkV197m6WcK6/+nZDy7yAB19zHb3yKkTWs40x/kx
+         5iL9KjmaDoqtQlIkxxw5AKazo5394BRvz51CJZKM95r0gIzuVAppSvF7CCgdCGGoItIl
+         3Vcw00RbSSb/E+/+oIWgpLK4UWegMH2AOkUOHJIhOZYbRWllYEKwFCI86sszyXMi6zKP
+         3AdQ==
+X-Gm-Message-State: AO0yUKWvIFxt0BugrGLpTf8xk5ZY31xg4XsvRlwTU1YKyQzwlIxG+4RW
+        Dl9Uo4B3DH14WLhAknJZxNmqdwD3izLxMg==
+X-Google-Smtp-Source: AK7set8c092FYBZL6Ehz/dKSMrM/2o7Xmz5YMPMrJTDrK4nR7j5hvMDCo7bJXReVkyVmK6k58+jjf8RGPP1yWw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a62:db86:0:b0:5a8:e8f3:bf8e with SMTP id
+ f128-20020a62db86000000b005a8e8f3bf8emr5525400pfg.2.1678154649462; Mon, 06
+ Mar 2023 18:04:09 -0800 (PST)
+Date:   Mon, 06 Mar 2023 18:04:08 -0800
+In-Reply-To: <20230228185642.2357806-6-calvinwan@google.com>
+Mime-Version: 1.0
+References: <20230213182134.2173280-1-calvinwan@google.com> <20230228185642.2357806-6-calvinwan@google.com>
+Message-ID: <kl6lilfdiag7.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2 6/6] add: reject nested repositories
+From:   Glen Choo <chooglen@google.com>
+To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
+Cc:     Josh Steadmon <steadmon@google.com>, peff@peff.net,
+        gitster@pobox.com, Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 06, 2023 at 02:06:37PM +0000, Derrick Stolee via GitGitGadget wrote:
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+Calvin Wan <calvinwan@google.com> writes:
 
-Having read and worked with this code before, I don't have a ton of
-substance to add here. But it was interesting to reread, and I left a
-few sprinklings here and there of some thing that we may want to
-consider for v2.
-
-Before that, though, IIRC we wrote most of this together, so I would be
-happy to have my:
-
-    Co-authored-by: Taylor Blau <me@ttaylorr.com>
-    Signed-off-by: Taylor Blau <me@ttaylorr.com>
-
-above your S-o-b here. But you've done so much work since we originally
-wrote this together that I don't mind being dropped here. Up to you :-).
-
-> @@ -71,5 +76,23 @@ int cmd_ahead_behind(int argc, const char **argv, const char *prefix)
->  	if (!tips.nr)
->  		return 0;
+> At $dayjob, we have found that even this advice is insufficient to stop
+> users from committing unclonable embedded repos in shared projects.
+> This causes toil for the owners of the top-level project repository as
+> they must clean up the resulting gitlinks. Additionally, these mistakes
+> are often made by partners outside of $dayjob, which means that a simple
+> organization-wide change to the default Git config would be insufficient
+> to prevent these mistakes.
 >
-> +	ALLOC_ARRAY(commits, tips.nr + 1);
-> +	ALLOC_ARRAY(counts, tips.nr);
+> Due to this experience, we believe that Git's default behavior should be
+> changed to disallow adding embedded repositories. This commit changes
+> the existing warning into a fatal error, rewrites the advice given, and
+> deprecates `--no-warn-embedded-repo` in favor of `--allow-embedded-repo`
+> to bypass the fatal error.
+
+Sounds good, thanks.
+
+> ---no-warn-embedded-repo::
+> -	By default, `git add` will warn when adding an embedded
+> +--allow-embedded-repo::
+> +	By default, `git add` will error out when adding an embedded
+>  	repository to the index without using `git submodule add` to
+> -	create an entry in `.gitmodules`. This option will suppress the
+> -	warning (e.g., if you are manually performing operations on
+> -	submodules).
+> +	create an entry in `.gitmodules`. This option will allow the
+> +	embedded repository to be added. (e.g., if you are manually
+> +	performing operations on submodules).
+
+Okay.
+
+> +--no-warn-embedded-repo::
+> +	This option is deprecated in favor of '--add-embedded-repo'.
+> +	Passing this option still suppresses advice but does not bypass
+> +	the error.
+
+Hm, why would a user want to suppress the warning but still have "git
+add" fail?
+
+If this is for backwards compatibility, i.e. users get the same behavior
+if they pass "--no-warn-embedded-repo" before and after this patch, then
+shouldn't this also allow the embedded repo to be added (i.e. it is an
+alias of --allow-embedded-repo)?
+
+> @@ -409,48 +412,53 @@ static int add_config(const char *var, const char *value, void *cb)
+>  }
+>  
+>  static const char embedded_advice[] = N_(
+> -"You've added another git repository inside your current repository.\n"
+> +"You attempted to add another git repository inside your current repository.\n"
+>  "Clones of the outer repository will not contain the contents of\n"
+>  "the embedded repository and will not know how to obtain it.\n"
+>  "If you meant to add a submodule, use:\n"
+>  "\n"
+>  "	git submodule add <url> %s\n"
+>  "\n"
+> -"If you added this path by mistake, you can remove it from the\n"
+> -"index with:\n"
+> +"See \"git help submodule\" for more information.\n"
+>  "\n"
+> -"	git rm --cached %s\n"
+> +"If you cannot use submodules, you may bypass this check with:\n"
+>  "\n"
+> -"See \"git help submodule\" for more information."
+> +"	git add --allow-embedded-repo %s\n"
+>  );
+
+Is there a particular reason you reordered the
+
+  "See \"git help submodule\" for more information.\n"
+
+line? I personally like it at the end, and if a user is already used to
+looking for it at the end, they can keep looking there.
+
+> -static void check_embedded_repo(const char *path)
+> +static int check_embedded_repo(const char *path)
+>  {
+> +	int ret = 0;
+>  	struct strbuf name = STRBUF_INIT;
+>  	static int adviced_on_embedded_repo = 0;
+>  
+> -	if (!warn_on_embedded_repo)
+> -		return;
+> +	if (allow_embedded_repo)
+> +		goto cleanup;
+>  	if (!ends_with(path, "/"))
+> -		return;
+> +		goto cleanup;
 > +
-> +	for (i = 0; i < tips.nr; i++) {
-> +		commits[i] = tips.items[i].util;
-> +		counts[i].tip_index = i;
-> +		counts[i].base_index = tips.nr;
-> +	}
-> +	commits[tips.nr] = base;
-> +
-> +	ahead_behind(commits, tips.nr + 1, counts, tips.nr);
-> +
-> +	for (i = 0; i < tips.nr; i++)
-> +		printf("%s %d %d\n", tips.items[i].string,
-> +		       counts[i].ahead, counts[i].behind);
-> +
-> +	free(counts);
-> +	free(commits);
->  	return 0;
+> +	ret = 1;
+>  
+>  	/* Drop trailing slash for aesthetics */
+>  	strbuf_addstr(&name, path);
+>  	strbuf_strip_suffix(&name, "/");
+>  
+> -	warning(_("adding embedded git repository: %s"), name.buf);
+> +	error(_("cannot add embedded git repository: %s"), name.buf);
+>  	if (!adviced_on_embedded_repo &&
+> -	    advice_enabled(ADVICE_ADD_EMBEDDED_REPO)) {
+> +		warn_on_embedded_repo &&
+> +		advice_enabled(ADVICE_ADD_EMBEDDED_REPO)) {
+>  		advise(embedded_advice, name.buf, name.buf);
+>  		adviced_on_embedded_repo = 1;
+>  	}
+>  
+> +cleanup:
+>  	strbuf_release(&name);
+> +	return ret;
 >  }
 
-I have to say, the interface looks particularly well designed when you
-see the patches come together in this fashion. The builtin is doing
-basically no work except collating the user's input, passing it off to
-ahead_behind(), and then spitting out the results.
+So we give an error message when we first encounter the embedded repo,
+okay...
 
-Very nice ;-).
-
-> diff --git a/commit-reach.c b/commit-reach.c
-> index 2e33c599a82..87ccc2cd4f5 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -8,6 +8,7 @@
->  #include "revision.h"
->  #include "tag.h"
->  #include "commit-reach.h"
-> +#include "ewah/ewok.h"
->
->  /* Remember to update object flag allocation in object.h */
-
-There is a new use of PARENT2 (which we hardcode here as bit 17) below,
-but it is already covered as part of the object flag allocation table in
-object.h. So this comment has done its job over the years ;-).
-
->  #define PARENT1		(1u<<16)
-> @@ -941,3 +942,97 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
->
->  	return found_commits;
->  }
+>  static int add_files(struct dir_struct *dir, int flags)
+>  {
+> -	int i, exit_status = 0;
+> +	int i, exit_status = 0, embedded_repo = 0;
+>  	struct string_list matched_sparse_paths = STRING_LIST_INIT_NODUP;
+>  
+>  	if (dir->ignored_nr) {
+> @@ -476,10 +484,13 @@ static int add_files(struct dir_struct *dir, int flags)
+>  				die(_("adding files failed"));
+>  			exit_status = 1;
+>  		} else {
+> -			check_embedded_repo(dir->entries[i]->name);
+> +			embedded_repo |= check_embedded_repo(dir->entries[i]->name);
+>  		}
+>  	}
+>  
+> +	if (embedded_repo)
+> +		die(_("refusing to add embedded git repositories"));
 > +
-> +define_commit_slab(bit_arrays, struct bitmap *);
-> +static struct bit_arrays bit_arrays;
-> +
-> +static void insert_no_dup(struct prio_queue *queue, struct commit *c)
-> +{
-> +	if (c->object.flags & PARENT2)
-> +		return;
-> +	prio_queue_put(queue, c);
-> +	c->object.flags |= PARENT2;
-> +}
 
-You mentioned this in the patch message, but:
+And then we die(), giving a similar message again. That feels like
+overkill, but I'm not sure if it's unidiomatic.
 
-It may be worth noting here (or in the call to repo_clear_commit_marks()
-below) that the PARENT2 flag is used to detect and avoid duplicates in
-this list.
+Is there a reason why we shouldn't just die() the first time we
+encounter the embedded repo? The difference is that in this patch, we
+actually add all of the non-submodule files before die()-ing, but I'm
+not sure if that's what users would expect. Personally at least, I'd
+expect "git add" to abort the moment it encountered something wrong.
 
-> +static struct bitmap *init_bit_array(struct commit *c, int width)
-> +{
-> +	struct bitmap **bitmap = bit_arrays_at(&bit_arrays, c);
-> +	if (!*bitmap)
-> +		*bitmap = bitmap_word_alloc(width);
-> +	return *bitmap;
-> +}
-> +
-> +static void free_bit_array(struct commit *c)
-> +{
-> +	struct bitmap **bitmap = bit_arrays_at(&bit_arrays, c);
-> +	if (!*bitmap)
-> +		return;
-> +	bitmap_free(*bitmap);
-> +	*bitmap = NULL;
-> +}
-> +
-> +void ahead_behind(struct commit **commits, size_t commits_nr,
-> +		  struct ahead_behind_count *counts, size_t counts_nr)
-> +{
-> +	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
-> +	size_t width = (commits_nr + BITS_IN_EWORD - 1) / BITS_IN_EWORD;
-> +	size_t i;
-> +
-> +	if (!commits_nr || !counts_nr)
-> +		return;
-> +
-> +	for (i = 0; i < counts_nr; i++) {
-> +		counts[i].ahead = 0;
-> +		counts[i].behind = 0;
-> +	}
-> +
-> +	ensure_generations_valid(commits, commits_nr);
-> +
-> +	init_bit_arrays(&bit_arrays);
-> +
-> +	for (i = 0; i < commits_nr; i++) {
-> +		struct commit *c = commits[i];
-> +		struct bitmap *bitmap = init_bit_array(c, width);
-> +
-> +		bitmap_set(bitmap, i);
-> +		insert_no_dup(&queue, c);
-> +	}
-> +
-> +	while (queue_has_nonstale(&queue)) {
-> +		struct commit *c = prio_queue_get(&queue);
-> +		struct commit_list *p;
-> +		struct bitmap *bitmap_c = init_bit_array(c, width);
-> +
-> +		for (i = 0; i < counts_nr; i++) {
-> +			int reach_from_tip = bitmap_get(bitmap_c, counts[i].tip_index);
-> +			int reach_from_base = bitmap_get(bitmap_c, counts[i].base_index);
+> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
+> index c70d11bc91..a53dac5931 100755
+> --- a/t/t0008-ignores.sh
+> +++ b/t/t0008-ignores.sh
+> @@ -191,7 +191,7 @@ test_expect_success 'setup' '
+>  		git add a &&
+>  		git commit -m"commit in submodule"
+>  	) &&
+> -	git add a/submodule &&
+> +	git add --allow-embedded-repo a/submodule &&
+>  	cat <<-\EOF >.gitignore &&
+>  		one
+>  		ignored-*
 
-Since we're XORing these, I'd hate to get bit by bitmap_get returning
-something other than 0 or 1. It doesn't, since the return value (for any
-"pos" for which it holds that `EWAH_BLOCKI(pos) < self->word_alloc`) is:
+Given that --allow-embedded-repo is meant to be an escape hatch, and
+we've already adjusted so many tests to avoid using it, I'd imagine that
+any uses of it in the test suite have to be quite well-justified. It
+would have been helpful to see such a justification in the comments on
+each of the changes or some general principles in the commit message.
 
-    (self->words[EWAH_BLOCK(pos)] & EWAH_MASK(pos)) != 0
+I've tried testing most of these with "git submodule add". This one
+works around a test failure in test 346 "submodule", which checks that
+ignores should fail if the path is in the submodule, like
 
-so we'll always be guaranteed to zero or one. But if we retuned instead:
+	test_check_ignore "a/submodule/one" 128 &&
+	test_stderr "fatal: Pathspec '\''a/submodule/one'\'' is in submodule '\''a/submodule'\''"
 
-    self->words[EWAH_BLOCK(pos)] & EWAH_MASK(pos)
+I don't understand why git-check-ignore should succeed on submodules but
+not an embedded repo. I'll investigate more later.
 
-...this code would break in a very annoying and hard-to-debug way ;-).
+> diff --git a/t/t2103-update-index-ignore-missing.sh b/t/t2103-update-index-ignore-missing.sh
+> index 11bc136f6e..1ce4fc49fa 100755
+> --- a/t/t2103-update-index-ignore-missing.sh
+> +++ b/t/t2103-update-index-ignore-missing.sh
+> @@ -36,7 +36,7 @@ test_expect_success basics '
+>  		git add file &&
+>  		git commit -m "sub initial"
+>  	) &&
+> -	git add ./xyzzy &&
+> +	git add --allow-embedded-repo ./xyzzy &&
+>  
+>  	test_tick &&
+>  	git commit -m initial &&
 
-I wonder if we might do a little of belt-and-suspenders here by calling
-these like:
+This seems to pass with "git submodule add", but maybe we don't want to
+introduce .gitmodules into a low level test.
 
-    int reach_from_tip  = !!(bitmap_get(bitmap_c, counts[i].tip_index));
-    int reach_from_base = !!(bitmap_get(bitmap_c, counts[i].base_index));
+> diff --git a/t/t4035-diff-quiet.sh b/t/t4035-diff-quiet.sh
+> index 76f8034c60..bfd87891f4 100755
+> --- a/t/t4035-diff-quiet.sh
+> +++ b/t/t4035-diff-quiet.sh
+> @@ -66,7 +66,7 @@ test_expect_success 'git diff-index --cached HEAD^' '
+>  test_expect_success 'git diff-index --cached HEAD^' '
+>  	echo text >>b &&
+>  	echo 3 >c &&
+> -	git add . &&
+> +	git add --allow-embedded-repo . &&
+>  	test_expect_code 1 git diff-index --quiet --cached HEAD^ >cnt &&
+>  	test_line_count = 0 cnt
+>  '
 
-where the "!!(...)" is new.
+This is also a low-level test for gitlinks in the index, so eliminating
+noise from .gitmodules also seems okay I think.
 
-> +			if (reach_from_tip ^ reach_from_base) {
-> +				if (reach_from_base)
-> +					counts[i].behind++;
-> +				else
-> +					counts[i].ahead++;
-> +			}
-> +		}
+> diff --git a/t/t6430-merge-recursive.sh b/t/t6430-merge-recursive.sh
+> index 07067bb347..ae435fa492 100755
+> --- a/t/t6430-merge-recursive.sh
+> +++ b/t/t6430-merge-recursive.sh
+> @@ -677,7 +677,7 @@ test_expect_success 'merging with triple rename across D/F conflict' '
+>  	echo content3 >sub2/file3 &&
+>  	mkdir simple &&
+>  	echo base >simple/bar &&
+> -	git add -A &&
+> +	git add -A --allow-embedded-repo &&
+>  	test_tick &&
+>  	git commit -m base &&
+>  
 
-I have gone back and forth so many times on this code :-). I think the
-XORs are fine, though.
+Similarly, this tests low-level gitlink merging, so eliminating
+.gitmodules sounds okay.
 
-> +		for (p = c->parents; p; p = p->next) {
-> +			struct bitmap *bitmap_p;
-> +
-> +			parse_commit(p->item);
-> +
-> +			bitmap_p = init_bit_array(p->item, width);
-> +			bitmap_or(bitmap_p, bitmap_c);
-> +
-> +			if (bitmap_popcount(bitmap_p) == commits_nr)
-> +				p->item->object.flags |= STALE;
-> +
-> +			insert_no_dup(&queue, p->item);
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index eae6a46ef3..18ef9141b7 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -118,7 +118,7 @@ test_expect_success 'setup - repository in init subdirectory' '
+>  test_expect_success 'setup - commit with gitlink' '
+>  	echo a >a &&
+>  	echo z >z &&
+> -	git add a init z &&
+> +	git add --allow-embedded-repo a init z &&
+>  	git commit -m "super commit 1"
+>  '
+>  
 
-Do we care about inserting p->item when the above condition is met? IOW,
-would it be OK to instead write:
+This is needed because test 38
 
-    if (bitmap_popcount(bitmap_p) == commits_nr)
-      p->item->object.flags |= STALE;
-    else
-      insert_no_dup(&queue, p->item);
+  test_expect_success 'status should fail for unmapped paths' '
+    test_must_fail git submodule status
+  '
 
-> diff --git a/commit-reach.h b/commit-reach.h
-> index 148b56fea50..1780f9317bf 100644
-> --- a/commit-reach.h
-> +++ b/commit-reach.h
-> @@ -104,4 +104,34 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
->  					 struct commit **to, int nr_to,
->  					 unsigned int reachable_flag);
->
-> +struct ahead_behind_count {
-> +	/**
-> +	 * As input, the *_index members indicate which positions in
-> +	 * the 'tips' array correspond to the tip and base of this
-> +	 * comparison.
-> +	 */
-> +	size_t tip_index;
-> +	size_t base_index;
-> +
-> +	/**
-> +	 * These values store the computed counts for each side of the
-> +	 * symmetric difference:
-> +	 *
-> +	 * 'ahead' stores the number of commits reachable from the tip
-> +	 * and not reachable from the base.
-> +	 *
-> +	 * 'behind' stores the number of commits reachable from the base
-> +	 * and not reachable from the tip.
-> +	 */
-> +	int ahead;
-> +	int behind;
-> +};
+presumably requires the submodule to not be in .gitmodules. This needs a
+comment, I think.
 
-Should these be unsigned values? I don't think we have a sensible
-interpretation for what a negative "ahead" or "behind" could would mean.
-I guess behind "behind" by "N" means you're "ahead" by "-N", but I don't
-think it's practical ;-).
+> @@ -771,7 +771,7 @@ test_expect_success 'set up for relative path tests' '
+>  			git init &&
+>  			test_commit foo
+>  		) &&
+> -		git add sub &&
+> +		git add --allow-embedded-repo sub &&
+>  		git config -f .gitmodules submodule.sub.path sub &&
+>  		git config -f .gitmodules submodule.sub.url ../subrepo &&
+>  		cp .git/config pristine-.git-config &&
 
-> +
-> +/**
+In the next test, we're checking that "git submodule init" fixes a
+gitlink without .gitmodules. Okay. Might benefit from a comment.
 
-Here and elsewhere, these kind of doc-comments are a little
-non-standard, and IIRC the opening should instead be "/*" (with one
-asterisk instead of two).
+> diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
+> index 2859695c6d..d1662aa23c 100755
+> --- a/t/t7412-submodule-absorbgitdirs.sh
+> +++ b/t/t7412-submodule-absorbgitdirs.sh
+> @@ -100,7 +100,7 @@ test_expect_success 'absorb the git dir in a nested submodule' '
+>  test_expect_success 'setup a gitlink with missing .gitmodules entry' '
+>  	git init sub2 &&
+>  	test_commit -C sub2 first &&
+> -	git add sub2 &&
+> +	git add --allow-embedded-repo sub2 &&
+>  	git commit -m superproject
+>  '
 
-Thanks,
-Taylor
+The test is literally called 'setup a gitlink with missing .gitmodules
+entry', so okay.
+
+> diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
+> index ba1f569bcb..4b3010c9e2 100755
+> --- a/t/t7450-bad-git-dotfiles.sh
+> +++ b/t/t7450-bad-git-dotfiles.sh
+> @@ -307,7 +307,7 @@ test_expect_success 'git dirs of sibling submodules must not be nested' '
+>  		EOF
+>  		git clone . thing1 &&
+>  		git clone . thing2 &&
+> -		git add .gitmodules thing1 thing2 &&
+> +		git add --allow-embedded-repo .gitmodules thing1 thing2 &&
+>  		test_tick &&
+>  		git commit -m nested
+>  	) &&
+
+This one can be adjusted. The important thing is that .gitmodules is bad
+_after_ we have "git submodule add"-ed the submodules, so this works:
+
+	git init nested &&
+	test_commit -C nested nested &&
+	(
+		cd nested &&
+		git clone . thing1 &&
+		git clone . thing2 &&
+		git submodule add ./thing1 &&
+		git submodule add ./thing2 &&
+		cat >.gitmodules <<-EOF &&
+		[submodule "hippo"]
+			url = .
+			path = thing1
+		[submodule "hippo/hooks"]
+			url = .
+			path = thing2
+		EOF
+		git add .gitmodules &&
+		test_tick &&
+		git commit -m nested
+	) &&
+	test_must_fail git clone --recurse-submodules nested clone 2>err &&
+	test_i18ngrep "is inside git dir" err
+
+> -- 
+> 2.39.2.722.g9855ee24e9-goog
