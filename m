@@ -2,170 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8278C6FD1B
-	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 18:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB238C678DB
+	for <git@archiver.kernel.org>; Tue,  7 Mar 2023 18:30:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233115AbjCGS3c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 13:29:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57478 "EHLO
+        id S233001AbjCGSaF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 13:30:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233004AbjCGS3M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 13:29:12 -0500
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27A21B04AA
-        for <git@vger.kernel.org>; Tue,  7 Mar 2023 10:22:08 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id i34so56073186eda.7
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 10:22:08 -0800 (PST)
+        with ESMTP id S233113AbjCGS3c (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 13:29:32 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EE99DBC8
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 10:22:58 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id ip3-20020a17090b314300b00237c16adf30so8460819pjb.5
+        for <git@vger.kernel.org>; Tue, 07 Mar 2023 10:22:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678213326;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uEZGWhavCn6friGrrMstoVKTk7A1i01dm9SPWNQg92I=;
-        b=AuFj8EbeBqCyxcUVJE6C97yQ7dOI6cicZ8bTlwZSz9b6iyhshMzddq0SU4aQs5uqMq
-         dBbD1jJOVUOUITxWsXTCaC4jCBgP9RcF4/PQfwE7MnPAoYcTrrvK+ZM1OoShpi4rs7/6
-         TJFVjpPUusGv7YTFaneFmP3EKEDjWHtWJvkXWxVYaR0879RPmgjA18rx4pZmlunNXhHZ
-         ImUtQacJC5sJagQlTWfCh76kJ1v/QxBeuO3RqZC4odT3qUAGTm+hY6OlA1znK7LtL61h
-         yAiCxgqoFM5VrvRANgzzOShQsDpZmopaQUTZiPIU4AteZa3t+E7AcE4IcCxQoM5IkGJm
-         VEqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678213326;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=google.com; s=20210112; t=1678213378;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uEZGWhavCn6friGrrMstoVKTk7A1i01dm9SPWNQg92I=;
-        b=Ckecr12NRcD+NYbEaSLwPqqFnvwYTBhTOFLL9kmNu7YsArEMBZxReW7eqaN3u0cKnr
-         3D3RYovhnmErjcX08pcMMj4vNFBkQbLIXA9eRW9Vf6QI0f70u3qoNDX7ioKmNVQdBmyb
-         VFZbogKgxnyWciAS+7Nq0xrvGtwPVaouToS0pC/e5x31Fkiq5Zb0PFxT6ekUBT8KkDcF
-         E3ibOcaJqENDR/DZdS0rx96buBVNWF59AEhHFD09Bg9i5esGza0qiRBUdqLhjmH7RlD3
-         9BHmouGVDVEup5TNfawcrfCaGXmJ0qubG0oc+csQL/u605H1UKaCGfkPxfXKvtKYOiOh
-         W4dQ==
-X-Gm-Message-State: AO0yUKW1L6UZIla8ov6NGRcdq5w6W8k3G2j8WlVG09p9ghNDm1BNfWSj
-        y/uytY0G3PhU1CYuyKFqdWVAjsMkcGtMlQ==
-X-Google-Smtp-Source: AK7set87j9lig59rM/3M/ZiFFqrsdX4WfB2H0Edq8+qwQAZZve/urC5UNtleq9Xy47ETPVH6Zyik1g==
-X-Received: by 2002:a17:906:5dcb:b0:8b1:7eb7:d53d with SMTP id p11-20020a1709065dcb00b008b17eb7d53dmr17251534ejv.49.1678213326275;
-        Tue, 07 Mar 2023 10:22:06 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g14-20020a170906c18e00b008b1b86bf668sm6398548ejz.4.2023.03.07.10.22.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 10:22:05 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] sequencer.c: fix overflow & segfault in parse_strategy_opts()
-Date:   Tue,  7 Mar 2023 19:21:59 +0100
-Message-Id: <patch-1.1-f6a06e25cf3-20230307T182039Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.40.0.rc1.1034.g5867a1b10c5
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=F5qrQsdEYpC0L9C9ALimTroR3jsuxHWwJEDHgsg0OEo=;
+        b=WNUq4YAZ/TbxLlgWUB30csxdLP+Tl/C0fEilj5avDEysF5rfFRipXnp6EpN1RmWJVv
+         2NS+Ru1uuDflBPdMLh6YTQQdOtREShNBoUZeVWmN9mOY45F7q1sRqoTMLjmOcM3iAcqZ
+         R+64ubaeoBm6gDYcBM5Wl3aG4MolIEsM/QGilSKgi0dRRHdTNo3uTKlrWZkJwUAKh8bU
+         pwLEBBBaFGhuepKdKsX9xZne/k5HKtyuhAkr0Wx5nplSdWZcx1abszIxTl4McFjg4Gmm
+         DOUaJskJOwIDgr4PINh1mW3P2Q2/iEAYe0CxrPg0GwHDmEyU3BgFjKL1wrBHBWowVkOo
+         IN+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678213378;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=F5qrQsdEYpC0L9C9ALimTroR3jsuxHWwJEDHgsg0OEo=;
+        b=Cy0RlUE+1KU+Hz1qIHntZn2d4bM+JjommR7bA/wHQ4+/RZiWAFJ+lfTT7IkEOgXwvm
+         rGuW1YKwTJUyoRm9dx4dacFthJcj5W4XD9ZYxCoISCQY8wVZHVVoQdR9a5GY16ZH/Jeh
+         9w0p6z0SUe3yJ7itrtBKIkvWVVjK778WJkdGnBTlqu83bj66+UA/WpCus/+FlIJxLutf
+         ztucxpwrJ5f7SMf7xk94f5Ky+IJg1cADooOATdGY8S/P1F+J1STvQZjj4e/VGD2PklZP
+         gWcXKgdIqI3RmWDp3MbczkcfSxZFQ2d/geKqpS/nhF8syi0drrFqEAyFNvIXL3cQ8xaN
+         Ky3w==
+X-Gm-Message-State: AO0yUKVpJkWb07GcBJqZGqzDL8S1KV/WuFJ4jPIauv0gDeMcXZdBgDaL
+        y3CidHuJohE4UdgAJIh/IYvlkCoGfWHZQg==
+X-Google-Smtp-Source: AK7set+an50P2UZui0NC8Vf7kS3Vk7pp2K7of81aML71YH5aZf6hnzS135M/1XWYptBOHN6LweH5hCixl/RdxQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a17:90b:46d2:b0:237:ae7c:1595 with SMTP
+ id jx18-20020a17090b46d200b00237ae7c1595mr5763920pjb.2.1678213377747; Tue, 07
+ Mar 2023 10:22:57 -0800 (PST)
+Date:   Tue, 07 Mar 2023 10:22:55 -0800
+In-Reply-To: <230307.86wn3szrzu.gmgdl@evledraar.gmail.com>
+Mime-Version: 1.0
+References: <pull.1463.git.git.1677631097.gitgitgadget@gmail.com> <230307.86wn3szrzu.gmgdl@evledraar.gmail.com>
+Message-ID: <kl6lfsagifpc.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH 0/6] [RFC] config.c: use struct for config reading state
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <nasamuffin@google.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The split_cmdline() function introduced in [1] returns an "int". If
-it's negative it signifies an error. The option parsing in [2] didn't
-account for this, and assigned the value directly to the "size_t
-xopts_nr". We'd then attempt to loop over all of these elements, and
-access uninitialized memory.
 
-There's a few things that use this for option parsing, but one way to
-trigger it is with a bad value to "-X <strategy-option>", e.g:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-	git rebase -X"bad argument\""
+> On Wed, Mar 01 2023, Glen Choo via GitGitGadget wrote:
+>
+>> This series extracts the global config reading state into "struct
+>> config_reader" and plumbs it through the config reading machinery. It's =
+very
+>> similar to how we've plumbed "struct repository" and other 'context obje=
+cts'
+>> in the past, except:
+>>
+>>  * The global state (named "the_reader") for the git process lives in a
+>>    config.c static variable, and not on "the_repository". See 3/6 for th=
+e
+>>    rationale.
+>
+> I agree with the overall direction, but don't think that rationale in
+> 3/6 is sufficient to go in this "the_reader" direction, as opposed to
+> sticking with and extending "the_repository" approach.
+>
+> For orthagonal reasons (getting rid of some of the API duplication) I've
+> been carrying a patch to get rid of the "configset" part of the *public*
+> API, i.e. to have API users always use the "repo_config_*()" or
+> "git_config_*()" variants, that patch is at:
+> https://github.com/avar/git/commit/0233297a359bbda43a902dd0213aacdca82faa=
+34
 
-In another context this might be a security issue, but in this case
-someone who's already able to inject arguments directly to our
-commands would be past other defenses, making this potential
-escalation a moot point.
+Those patches are probably worth sending, even if only as RFC. I found
+it pretty hard to draft a substantial response without effectively doing
+a full review of the patch.
 
-As the example above & test case shows the error reporting leaves
-something to be desired. The function will loop over the
-whitespace-split values, but when it encounters an error we'll only
-report the first element, which is OK, not the second "argument\""
-whose quote is unbalanced.
+> It's a bit distasteful, but that change argues that just mocking up a
+> "struct repository" with a "config" member pointing to a new configset
+> is better than maintaining an entirely different API just for those
+> cases where we need to parse a one-off file or whatever.
+>
+> I think that going in that direction neatly solves the issues you're
+> noting here and in your 3/6, i.e. we'd always have this in the "repo"
+> object, so we'd just stick the persistent "reader" variables in the
+> "struct repository"'s "config" member.
 
-This is an inherent limitation of the current API, and the issue
-affects other API users. Let's not attempt to fix that now. If and
-when that happens these tests will need to be adjusted to assert the
-new output.
+If I understand your proposal correctly, we would move the config
+variables to the_repository. Then, any time a caller would like to work
+with an individual file, it would init a new "struct repository" with a
+clean set of config members (using repo_init_repo_blank_config() or
+something) and reuse the repo_config_* API?
 
-1. 2b11e3170e9 (If you have a config containing something like this:,
-   2006-06-05)
-2. ca6c6b45dd9 (sequencer (rebase -i): respect strategy/strategy_opts
-   settings, 2017-01-02)
+It is a workable solution, e.g. that approach would work around the
+failures in test-tool and scalar that I observed. In the spirit of
+libification, this feels like a kludge, though, since we'd be reverting
+to using "struct repository" for more things instead of using more
+well-scoped interfaces. IMO a better future for the config_set API would
+be to move it into configset.c or something, where only users who want
+the low level API would use it and everyone else would just pretend it
+doesn't exist. This would be a little like libgit2's organization, where
+'general config', 'config parsing' and 'in-memory config value
+representations' are separate files, e.g.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+  https://github.com/libgit2/libgit2/blob/main/src/libgit2/config.h
+  https://github.com/libgit2/libgit2/blob/main/src/libgit2/config_parse.h
+  https://github.com/libgit2/libgit2/blob/main/src/libgit2/config_entries.h
 
-CI & branch for this at
-https://github.com/avar/git/tree/avar/sequencer-xopts-nr-overflow
-
-Not a new issue, but I figured with other discussions in this area
-kicking this out the door sooner than later was better.
-
- sequencer.c                    |  9 +++++++--
- t/t3436-rebase-more-options.sh | 18 ++++++++++++++++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 3e4a1972897..79c615193b6 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2876,13 +2876,18 @@ static int populate_opts_cb(const char *key, const char *value, void *data)
- void parse_strategy_opts(struct replay_opts *opts, char *raw_opts)
- {
- 	int i;
-+	int count;
- 	char *strategy_opts_string = raw_opts;
- 
- 	if (*strategy_opts_string == ' ')
- 		strategy_opts_string++;
- 
--	opts->xopts_nr = split_cmdline(strategy_opts_string,
--				       (const char ***)&opts->xopts);
-+	count = split_cmdline(strategy_opts_string,
-+			      (const char ***)&opts->xopts);
-+	if (count < 0)
-+		die(_("could not split '%s': '%s'"), strategy_opts_string,
-+			    split_cmdline_strerror(count));
-+	opts->xopts_nr = count;
- 	for (i = 0; i < opts->xopts_nr; i++) {
- 		const char *arg = opts->xopts[i];
- 
-diff --git a/t/t3436-rebase-more-options.sh b/t/t3436-rebase-more-options.sh
-index 94671d3c465..195ace34559 100755
---- a/t/t3436-rebase-more-options.sh
-+++ b/t/t3436-rebase-more-options.sh
-@@ -40,6 +40,24 @@ test_expect_success 'setup' '
- 	EOF
- '
- 
-+test_expect_success 'bad -X <strategy-option> arguments: unclosed quote' '
-+	cat >expect <<-\EOF &&
-+	fatal: could not split '\''--bad'\'': '\''unclosed quote'\''
-+	EOF
-+	test_expect_code 128 git rebase -X"bad argument\"" side main >out 2>actual &&
-+	test_must_be_empty out &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'bad -X <strategy-option> arguments: bad escape' '
-+	cat >expect <<-\EOF &&
-+	fatal: could not split '\''--bad'\'': '\''cmdline ends with \'\''
-+	EOF
-+	test_expect_code 128 git rebase -X"bad escape \\" side main >out 2>actual &&
-+	test_must_be_empty out &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '--ignore-whitespace works with apply backend' '
- 	test_must_fail git rebase --apply main side &&
- 	git rebase --abort &&
--- 
-2.40.0.rc1.1034.g5867a1b10c5
-
+I also hesitate to put the config variables on the_repository, because
+in the long term, I think "struct config_reader" can and should be
+purely internal to config.c. But if we start advertising its existence
+via the_repository, that might be an invitation to (ab)use that API and
+make that transition harder.
