@@ -2,109 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66B87C742A7
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 17:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 218FCC678D5
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 17:20:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229959AbjCHRNL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 12:13:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54532 "EHLO
+        id S229718AbjCHRUc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 12:20:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229718AbjCHRNI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 12:13:08 -0500
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 944C6900F
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 09:13:06 -0800 (PST)
-Received: by mail-qv1-xf31.google.com with SMTP id jo29so11582333qvb.0
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 09:13:06 -0800 (PST)
+        with ESMTP id S230045AbjCHRTd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 12:19:33 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31CB73BDA5
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 09:18:22 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id h17-20020a17090aea9100b0023739b10792so2386230pjz.1
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 09:18:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1678295585;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5K+GYd5wdYF+yKKUjOu+jdI8rUfGQdD0mOnyDcKv9zc=;
-        b=O/h6DnDzbzihZdIpn9Igtwyy1cPXCimNC/d7u5P4cha015oLDI/NGPERc5qvcLGI5v
-         g4Cv3E/jOgrUlc2wQPZPVB65duMfXdmxQ4HfyWUAAVZtFUDJeqN6TljqycAn7EqcCt5v
-         KuLMWrtdmaDt/ocbZ7tBrSbt+7wYxYWoS1Yeb0NJo5tNUrSelI/m7yccx9IZA7il+boA
-         puoB7Y/rHj9Zi+QnqJiLfZgVYBt+8SvTSu2om7hb8fcNwUX905RZlGb+6HbeC/k2JMtc
-         Uie0ukrSYfgaGe7Iyl66DSOOyhA2Dl+qEkKYlzPMq7hhVL1sRwt42LlH7PZFw5rlKWRX
-         VQsg==
+        d=gmail.com; s=20210112; t=1678295856;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ugyxlg5hUoErRCLdWc+ac8QZcWDwO5u8sodHUI0qFgo=;
+        b=P7sEIUzrFQzNx+EpPEply0SsJdcc4RpH5HHv9pFm6jf0uFsFTiavsvelP8XhgGcqzz
+         MbbeJ3kSSxoJq8HjbUbq4gBEfk6h+4PlxdqppdN4XDzqRAjrg9k0Q9X/m1/YtKWQsI4+
+         0AV7BJza9Kxhwhbhxv5zGpngLSAaAXzG5DLoChHrAnuvLr08XIu94jjNEhXVR/s5+V40
+         hprJlMZSaa0gvw0bUnpquS3lSIKslGBnuOEWpXbp4CxYzTB4wRZA62OIy1vMvb82fvDs
+         v99yemccP3QkMZHjJiubNfvAzn77MHuV7w2NNHIFuFPn/9n5ZbvdAfj9zEFJGTgj+z15
+         TkPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678295585;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5K+GYd5wdYF+yKKUjOu+jdI8rUfGQdD0mOnyDcKv9zc=;
-        b=Ac48oqmqX3IkOEqqV1uYNXsx/mhMy6B4CrsnQ6wkaDVwvH6StNcwRoqxuwlrA+T6JI
-         NYlNhMHqzMaLQNnMEM3mJpfIxxwA/Nq/s+kINAm5Y8ME5pp5LgTBBra+zt9sGie/EIs2
-         m5GbGGQ+jD6HZw2th1hl10Rnd/GqsdVHm9cuiZwJrKMFiw5VDWJ7426lm7PMwHtC5oiX
-         HIKT29zm7ynm2ksDM/Db1p0JDnxCYbVUIrUYNuBRuum24ub+r72zdajQzL67Xr2rdIrG
-         rlQoU5aNEhzCFezxk+Vhsaz7OZ6jEEC2HfvAR9luIKA59JWnej/jWkkt4cMvt1DMs3iJ
-         s9xA==
-X-Gm-Message-State: AO0yUKXB00JMhEC97uoVZ4EhsrRyHh3+fcIedtiG22Nw2eJ6ZFMBfFcU
-        j3ZrYH8OOlkAGTCMMGV51GwG
-X-Google-Smtp-Source: AK7set9jVbACQvs90zAF7OPP5B0adudm0DQHqMJru42aRSlSXiN2NWXrXTYVA6PC0coF/hwcmrm2qA==
-X-Received: by 2002:a05:6214:2a46:b0:56b:79fa:e6d9 with SMTP id jf6-20020a0562142a4600b0056b79fae6d9mr11485474qvb.31.1678295585632;
-        Wed, 08 Mar 2023 09:13:05 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:d0dc:3668:fb01:9900? ([2600:1700:e72:80a0:d0dc:3668:fb01:9900])
-        by smtp.gmail.com with ESMTPSA id r8-20020ae9d608000000b006f9f3c0c63csm11778000qkk.32.2023.03.08.09.13.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 09:13:05 -0800 (PST)
-Message-ID: <87ecf011-415f-20d8-e781-18b97bfdca44@github.com>
-Date:   Wed, 8 Mar 2023 12:13:03 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] object-file: reprepare alternates when necessary
-Content-Language: en-US
+        d=1e100.net; s=20210112; t=1678295856;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ugyxlg5hUoErRCLdWc+ac8QZcWDwO5u8sodHUI0qFgo=;
+        b=M51W1ldbVIz+Tk5JPFHksHTVkiUeNRbE4uhoCn4LJsyqxfcQpJXf+vX8qVu90z4Hup
+         JdlNphWotVScK00XLT0l/kTv2nbiQtL/HwLxMtgLzjpm+G8BpwAFfq6pwh/A0cJXFoCt
+         7HsexsaHZU+MMFH1zG0sztxGtDPBVQQPf8+Kml/lsCMe+kO0C7hcCGlTzv7PU1v2UVf0
+         bwwajY1dHGLpfALUVaV3y8OA0zaPTnVnc35iCRnOL8XCYHmiwovYKiNsnY6xUYnx/M7l
+         H0LtizetLnbDQwa8Tfcdqfr1XNv5MZmsxWAW9SLZHkMwZFaXJaOIZo/VBro2XhsrDG0L
+         qehA==
+X-Gm-Message-State: AO0yUKUtSz74+kHKaMzZqrsG4OtD/Fef0lX9c1Lqsk77xoqVEDkHaDbF
+        iHKg84uTYlI65g5Z6JwEWo0=
+X-Google-Smtp-Source: AK7set+AIEq1pl4xKJ1RvcSX+nZ2HHtUR+f9ZlxeCZu5m5gjmH+0uBHSz6eGb9f/aoWV0QdE1HL8qQ==
+X-Received: by 2002:a05:6a21:3292:b0:cd:4ad1:cffb with SMTP id yt18-20020a056a21329200b000cd4ad1cffbmr21863607pzb.51.1678295855887;
+        Wed, 08 Mar 2023 09:17:35 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id 8-20020aa79208000000b005ccbe5346ebsm9621739pfo.163.2023.03.08.09.17.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Mar 2023 09:17:35 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
- <xmqqy1o97apj.fsf@gitster.g> <ZAaFQJm6UGYH4YIi@nand.local>
- <901299ac-e543-b7e5-0a1a-c90e667a947d@github.com>
- <ZAiv2I17+/IBF8pl@nand.local>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ZAiv2I17+/IBF8pl@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Heba Waly <heba.waly@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Matheus Tavares <matheus.tavb@gmail.com>
+Subject: Re: [PATCH 0/2] advice: add diverging advice
+References: <20230308024834.1562386-1-felipe.contreras@gmail.com>
+        <ZAix68A9e6RHz69y@nand.local>
+Date:   Wed, 08 Mar 2023 09:17:35 -0800
+In-Reply-To: <ZAix68A9e6RHz69y@nand.local> (Taylor Blau's message of "Wed, 8
+        Mar 2023 11:03:55 -0500")
+Message-ID: <xmqqjzzrupqo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/8/2023 10:55 AM, Taylor Blau wrote:
-> On Tue, Mar 07, 2023 at 09:52:19AM -0500, Derrick Stolee wrote:
+Taylor Blau <me@ttaylorr.com> writes:
 
->> The prepare_alt_odb() call only _adds_ to the linked odb list. It
->> will not remove any existing ODBs. Adding this reprepare_*() method
->> makes it such that we can use the union of the alternates available
->> across the lifetime of the process.
-> 
-> Right, that matches my understanding. What I am asking is: since we only
-> add ODBs to the list, what happens if we can no longer access an
-> *existing* alternate at the time we call reprepare_alt_odb()?
-> 
-> It's clear that that now-inaccessible alternate remains in our list of
-> alternate ODBs, but do all object lookups hitting that ODB fail-over to
-> the new ODB? I believe so, but it isn't totally clear to me.
+> I don't think that splitting it into two separate patches was strictly
+> necessary. If I were queuing, I'd probably squash the two together, ...
 
-It's the same as the pack-file list: if we fail to load something
-from one, then we continue to the next one. If an alternate dir
-is completely removed during the process, then looking for pack-
-files again will fail to see any and continue without error.
+One advantage of sending a topic like this as two patches is that,
+if the review discussion leads to a consensus that the new help
+message should be given unconditionally to everybody, only [1/2] can
+be queued while dropping [2/2].  But the point of advise() is to
+serve as a training wheel that can be disabled by users who no
+longer need it, so need for such a "flexibility" may not appear in
+topics that add new advise() calls all that often, I would imagine.
 
-This is already possible by deleting an alternate directory
-while a Git process is running and might try to open files in it.
-Git already recovers from this scenario.
+I am willing to do the squashing on the receiving end.  The effect
+of two patches combined together is a good improvement, and the
+proposed log message for the first one covers why we want to do both
+of these two.
 
-If you're instead talking about the .git/objects/info/alternates
-file being modified to remove an alternate from the list, then
-Git's current behavior is to keep that alternate around for the
-life of the process, and I recommend continuing that behavior.
+Thanks, both, for writing and reviewing.
 
-There's nothing special that we are adding here that doesn't
-already exist as protections when files are removed beneath the
-Git process.
-
-Thanks,
--Stolee
