@@ -2,124 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 267A3C678D5
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 02:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B373FC64EC4
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 06:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229737AbjCHCs5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 21:48:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44010 "EHLO
+        id S229935AbjCHGhn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 01:37:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229626AbjCHCsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 21:48:39 -0500
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F01F291B66
-        for <git@vger.kernel.org>; Tue,  7 Mar 2023 18:48:38 -0800 (PST)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-176eae36feaso6659485fac.6
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 18:48:38 -0800 (PST)
+        with ESMTP id S229903AbjCHGhl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 01:37:41 -0500
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08B759F203
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 22:37:40 -0800 (PST)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-536c02c9dfbso287561937b3.11
+        for <git@vger.kernel.org>; Tue, 07 Mar 2023 22:37:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678243718;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9889KO9eTi+URkD6vLCwO1ALrLqz+PRXw+Q9gJSF6ig=;
-        b=kBbI7n1jrRtQHB/aCtiOww1IEsA0eJJRtV/C6LiG51CIx8khMvtbUPTV8FdUHRZ879
-         R9bx7qthwCONnNmCCzM82/tfo+btVWLn6Fl6Lb94bAdkfWXTM9f3PGj59zTAhHADgD0x
-         m0VMHFPI5RjvBPXMqvKbMyuuE0Jka8QnFV5OVj/AxVNf5pi5E1uRWwCrCV1QejAbymxy
-         tbmSDBfsI81A3fbvmmBcyWEdf3OmJFzDWstRpB5EovvzqeRatc701aDWzRSotfTOBgIj
-         6XtRVy+2ZFHol+qodZIEtLNHqOWj0F64YuodihP8flsfQPauYcKpov7sCqCnecEyI7kk
-         coOg==
+        d=gmail.com; s=20210112; t=1678257459;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=g+F3wHq9FHttyJ8U2FpGW9bqYTZn1wHM9WSu6LCHPn0=;
+        b=b8MTizG3huOIujA8uTV4Xk+xY9/92KhQu2ZNxmxw7HnbPdt0bU2fX48LqQxNF5DhEc
+         Vsov4DvM39lTKBbFnhvalTlpxZ7eYKXv5LVXfDkrC+M+iHaEXpgpdTx+LppycTcSl9Tg
+         L7ChWhkmGCDITC83HNG53Ky2iHp9/lr0cVh9ufELik3zCNO6xRhMNFsEflDtLQ3XKTel
+         Tuv7WM+GHFLWuiPetB6AZ2fmW1MFOMyFmkYoH5u0jNpGNFdkNNpY5TqYljVTPNEEaD+9
+         aKTeei7WdT4B2bQlH1VkhcGJuhq1zqiOVjeJbrJsUzuD1cnSjF/humUsOScvt9WgbnfS
+         oRMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678243718;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9889KO9eTi+URkD6vLCwO1ALrLqz+PRXw+Q9gJSF6ig=;
-        b=HEyJJvjnuYQOEL6qjOO73m5gyf8H5/DFahWmCPfmsk5uJoWfVj0VAO8LwgLETSJYTf
-         cUMd88IT7xtLg6IT5kbBG8V4q3/zIO0hTO8EWuEcSseOd5qM7XRQRvg+GXw4cDWUW/l5
-         YYItO8VW2bDiuIhwAvKZpOzjLVcqA3hnQqdQBC5edZehBe32j3lVrdeSXDHy/BPG043R
-         H2ZD11LqpHQHEnbaHVK4ZlcF1Tn9HZz+5UBolEATkgROa4Ewddawn6GiDZBqGuNZNgi9
-         vAMB5aRxYJQ/kGK3Y8k3f/Thjs+ulOOg7Q9jQ2hbkvM2M5fKyiUQ3vSbtXgEDvJpnZte
-         Z/Ng==
-X-Gm-Message-State: AO0yUKXrPJyDo6nlKy9mzfzS2Sc2OYBNrihSlRStYJoUrdyr/rqRIZhu
-        dSpWEJPxLygHl/J3ZbgPFSnnDpb0m8g=
-X-Google-Smtp-Source: AK7set/tkPjp9t1IwaovnQrGmCiMXZ1csDDAXoA3Zzm0TWXNT2xnk7vVwKj19wg3sHNDRtQMIvWolg==
-X-Received: by 2002:a05:6870:40c3:b0:16d:fc22:b520 with SMTP id l3-20020a05687040c300b0016dfc22b520mr11293108oal.54.1678243718015;
-        Tue, 07 Mar 2023 18:48:38 -0800 (PST)
-Received: from localhost ([2806:2f0:4060:3465:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id dx4-20020a056870768400b0017255c79736sm5716264oab.43.2023.03.07.18.48.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Mar 2023 18:48:37 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Alex Henrie <alexhenrie24@gmail.com>,
-        Heba Waly <heba.waly@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Matheus Tavares <matheus.tavb@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 2/2] advice: make diverging advice configurable
-Date:   Tue,  7 Mar 2023 20:48:34 -0600
-Message-Id: <20230308024834.1562386-3-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230308024834.1562386-1-felipe.contreras@gmail.com>
-References: <20230308024834.1562386-1-felipe.contreras@gmail.com>
+        d=1e100.net; s=20210112; t=1678257459;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=g+F3wHq9FHttyJ8U2FpGW9bqYTZn1wHM9WSu6LCHPn0=;
+        b=mQCkAUbP+VP3FFNh5e/ftTp7B5Va7qrz7CRiCpvCgzVWGth6EfZdv/VxtHGTEIBtUm
+         aXOY39FaNs3p9DPWRQ8TN0a2biggYLTQVL4QsUH8+o86v2BqacEe4rLvtESD4FS5j33d
+         yBYPXAJAZW+i+5Zlt/5M5+n+LHPfMvnO2gatqWVPdhkp87wgqLEY4Y06pHrjhBYAIi6Q
+         pIKv3hpj/2S4XsB+NZR/He4y1J7Jsz73nQvDaNHEM2/Kg0hV8sWcb8T5DtUuhz11tF1u
+         8eg3wuKopwF8IxGyusGD7NzjtUgXayJNcZ8f/3eaRxPMglzeL6INlMNbiwZtQMO7ktwz
+         SaOQ==
+X-Gm-Message-State: AO0yUKXLg5Nde2KqwO/CkjbC0YoRkBl0BMOdyRR8H5WndEcKYbwwxseM
+        tV3WN34b1NnP4rTZhpnm31tHTToNchBbJ1IQeEvk4BFUwTHTCQ==
+X-Google-Smtp-Source: AK7set/YJoAZS7OFZf/AT4h/iUuBJ1AEYa3/kTUyc/Oi7PW39Qa/yi/5eyJpBDFwiN/gszhfxgJ+JdjDeQLTTo1EvCE=
+X-Received: by 2002:a81:ac28:0:b0:536:55e5:2eaa with SMTP id
+ k40-20020a81ac28000000b0053655e52eaamr10970480ywh.3.1678257458975; Tue, 07
+ Mar 2023 22:37:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Wed, 8 Mar 2023 14:37:25 +0800
+Message-ID: <CAOLTT8TcX6Wit=AOFGNLjA4v9HAvJJxCEtt3JhgUR+3OARycNw@mail.gmail.com>
+Subject: Question: How range-diff lapjv algorithm work
+To:     Git List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, t.gummerer@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/config/advice.txt | 2 ++
- advice.c                        | 4 +++-
- advice.h                        | 1 +
- 3 files changed, 6 insertions(+), 1 deletion(-)
+I was recently reading the source code of git-range-diff.
 
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index a00d0100a8..c96b5b2e5d 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -136,4 +136,6 @@ advice.*::
- 		Advice shown when either linkgit:git-add[1] or linkgit:git-rm[1]
- 		is asked to update index entries outside the current sparse
- 		checkout.
-+	diverging::
-+		Advice shown when a fast-forward is not possible.
- --
-diff --git a/advice.c b/advice.c
-index c3fb631f93..fbc59f9c6d 100644
---- a/advice.c
-+++ b/advice.c
-@@ -44,6 +44,7 @@ static struct {
- 	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge", 1 },
- 	[ADVICE_DETACHED_HEAD]				= { "detachedHead", 1 },
- 	[ADVICE_SUGGEST_DETACHING_HEAD]			= { "suggestDetachingHead", 1 },
-+	[ADVICE_DIVERGING]				= { "diverging", 1 },
- 	[ADVICE_FETCH_SHOW_FORCED_UPDATES]		= { "fetchShowForcedUpdates", 1 },
- 	[ADVICE_GRAFT_FILE_DEPRECATED]			= { "graftFileDeprecated", 1 },
- 	[ADVICE_IGNORED_HOOK]				= { "ignoredHook", 1 },
-@@ -217,7 +218,8 @@ void NORETURN die_conclude_merge(void)
- 
- void NORETURN die_ff_impossible(void)
- {
--	advise(_("Diverging branches can't be fast-forwarded, you need to either:\n"
-+	advise_if_enabled(ADVICE_DIVERGING,
-+		_("Diverging branches can't be fast-forwarded, you need to either:\n"
- 		"\n"
- 		"\tgit merge --no-ff\n"
- 		"\n"
-diff --git a/advice.h b/advice.h
-index 07e0f76833..41b5bc127c 100644
---- a/advice.h
-+++ b/advice.h
-@@ -21,6 +21,7 @@ struct string_list;
- 	ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME,
- 	ADVICE_COMMIT_BEFORE_MERGE,
- 	ADVICE_DETACHED_HEAD,
-+	ADVICE_DIVERGING,
- 	ADVICE_SUGGEST_DETACHING_HEAD,
- 	ADVICE_FETCH_SHOW_FORCED_UPDATES,
- 	ADVICE_GRAFT_FILE_DEPRECATED,
--- 
-2.39.2
+Its Steps:
+1. Use git log <range> to generate two collections of patches for
+ranges a and b.
+2. Use the hash table on both sets to find the commit with the exact
+same patch as an "exact match".
+3. A cost matrix whose length and width are a.nr + b.br is generated.
+The cost of a completely matched item is 0, and the cost between two
+sets of patches is represented by the diffsize(a, b) of the patch.
+4. Use the LAPJV algorithm to find the best match between multiple
+patches of the two sets.
+5. Output results.
 
+My question is:
+1. In step 3, why is the matrix size (a.nr + b.br) * (a.nr + b.br)
+instead of a.nr * b.nr?
+
+2. Why the cost(x,y) which satisfies "x =E2=88=88 [a.nr, a.nr + b.nr) y =E2=
+=88=88 [0,
+b.nr) || x =E2=88=88 [0, a.nr) y =E2=88=88 [b.nr, b. The cost of nr + a.nr)=
+" is set to
+"diffsize(a or b) * creation_factor / 100 : COST_MAX"? What is the
+role of creation_factor? [1]
+
+3. How does LAPJV work here? [2]
+
+[1]: https://github.com/git/git/blob/725f57037d81e24eacfda6e59a19c60c0b4c80=
+62/range-diff.c#L310
+[2]: https://github.com/git/git/blob/725f57037d81e24eacfda6e59a19c60c0b4c80=
+62/linear-assignment.c#L15
+
+Thanks.
+--
+ZheNing Hu
