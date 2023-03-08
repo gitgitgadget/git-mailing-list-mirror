@@ -2,129 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCC9AC678D5
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 23:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80F57C64EC4
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 23:41:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230249AbjCHXSk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 18:18:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37696 "EHLO
+        id S230322AbjCHXlh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 18:41:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230261AbjCHXSd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 18:18:33 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68AC05550D
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 15:18:27 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id a10-20020a056a000c8a00b005fc6b117942so199312pfv.2
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 15:18:27 -0800 (PST)
+        with ESMTP id S230321AbjCHXlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 18:41:16 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4DD065C40
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 15:40:22 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id x34so515286pjj.0
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 15:40:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678317507;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20210112; t=1678318821;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CpYLpYbfloWBpj51vvrOBvTQcHojAND+q7/MdFm2NXQ=;
-        b=YmvyHJvnhotui35WwKn5K6dCl/jiGmwIX5H3b8YW0HS629RK1VLYXhG030CP6OGZZP
-         gdj+4T9qV1cJwl8G56/xCaapN3O30jngirlOqmxJRCPIIpHoo8+JFvJqE6q0/0JnfcIm
-         ce0+XqymAo1KrosKtDbpqZiFiBVtZU/6PnpKmuvAeiZxVkLII4IBStI+njLTLrddygjX
-         FW7irNrElRtJ8ut2HKc94Vei1VKjFHaWzqDWeH7beveie9sMoPfEN46uGrCBtYyupr/W
-         J8X94Nt/qT7MuZHAbO5OpyYTVCM+VmbROAayjHPaMPMXFXADNCxhaTx6Chmw6RGNVhgH
-         GFGA==
+        bh=HDc3+iN4j/ZCD5jl03oAkRZhfTrKG/RB16qTPCxTYws=;
+        b=p7Ylq43DyQHDXWbORjYgd4XRoWQIIpO9j7/pN5Dqqv5OwjEgF7W7jtgI9M3Qd7A+Zm
+         C1dGuhZbEu8v7qwN3qFc4YN33vL9PbGGo3tOpd8OGKvq/N6xiSGkOp6uDqaWRkCNaAq4
+         o5jJa2N3j93E8gMd4eq9o7T8E9QnEufreBmneO+9x0GPaMHxeRHy/x2H/rNjg6S5TWo5
+         6+6KSZOBHfycQDQggKH0puBO+3wkVjjgm7nI1ttd8rotAAKCBDRmP6ez8Q4wxCM3cMMF
+         oPwOpl5EAEzsUVyFGbScHzTJuwT6QD6bCliRj5SRsWB34t/BcazKUXOX1HuDCFAjHNb3
+         RpjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678317507;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+        d=1e100.net; s=20210112; t=1678318821;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=CpYLpYbfloWBpj51vvrOBvTQcHojAND+q7/MdFm2NXQ=;
-        b=7FmUWPcbfF0kkWfnIFi7bwHO3TNSHkEyh7K1NVeeuad9n61G6lrmFUavGcEjbxXSBm
-         4eQLpG7YvcyEh2HuUZNJFbX0iqUao8276bTkCEWJJmK/jfCBGyH3zWLJuPgSL8Rw9Bxw
-         XaehylQZv7kKrscOC7Cn61LS3FRbHDq1DIK5qc5trQCHkXD+enfGjlW5A6gzzJQgQI1x
-         Li5AxqlP0paqCPqw0cBrYefM/7gkoTrJkOj34jhPS3aExVuyW7GXd2HVyuXTRwlz3gQX
-         0p1MJJbJ9y/hEwZEV7W5+CRLPMwsFXr73xzQvTbrzuEvm0evbJ9sAJTHq7dGUqz9Env1
-         4FhA==
-X-Gm-Message-State: AO0yUKVAKCtR4AJ5DDezsTo8Shy1VssLn9Xa7oogxguU2F/bClXpCN6O
-        hHQkOFthQKuwrMhSBA8f1QjI4eEWOeRe3g==
-X-Google-Smtp-Source: AK7set+l2+vJCBAjOxFnRwEU1D1zWt2pQtUWPpc+H/mHoM6JCoLMsFt683b/Fzzk3HzZ+CKXWCOrOBTgRzbPWQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:902:cf46:b0:19e:f660:81d0 with SMTP
- id e6-20020a170902cf4600b0019ef66081d0mr1616542plg.12.1678317506893; Wed, 08
- Mar 2023 15:18:26 -0800 (PST)
-Date:   Wed, 08 Mar 2023 15:18:25 -0800
-In-Reply-To: <230308.867cvrziac.gmgdl@evledraar.gmail.com>
-Mime-Version: 1.0
-References: <pull.1463.git.git.1677631097.gitgitgadget@gmail.com>
- <230307.86wn3szrzu.gmgdl@evledraar.gmail.com> <kl6lfsagifpc.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqbkl4xsj2.fsf@gitster.g> <kl6lcz5ki36g.fsf@chooglen-macbookpro.roam.corp.google.com>
- <230308.867cvrziac.gmgdl@evledraar.gmail.com>
-Message-ID: <kl6lmt4mhlxa.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 0/6] [RFC] config.c: use struct for config reading state
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        bh=HDc3+iN4j/ZCD5jl03oAkRZhfTrKG/RB16qTPCxTYws=;
+        b=T65FfEIlr1ATIfZk+dmgn5IRkNFnHGXuQFtKUrVZ91ehTZPvsgfGopWav+JjztC6Ve
+         HAYdo1FRy3X9iYhGo46IR2oK7CXR+uDpmdqhhtdRvjTdfsFQ7WHNsFsqJdwlky4AIsl/
+         64XDnApMnO9bdwTMiAOspf16ucRb8xIXkAYQw23OHmL1g2I9c2LD3lM4XR30Ye0UjGZ+
+         7iZB0TEEBD9/hlRz9GNOz1ib5OIjd8wC60IbT/1g4xg50Xx376+N5V3Ps6vS+MbcT31G
+         yUbmKN6TEREcY3cf/cXL9hM0NU7f5EfQihapfBntz26adzOj/7yPyDzIk86U9nRF5yTq
+         slWw==
+X-Gm-Message-State: AO0yUKWG+IvOBteCaKCIz8/6iMWrevCZljRwE/PCdRwPuBt66HGfLGqy
+        vXSoNMkjBMwjiBdBy2mLB68=
+X-Google-Smtp-Source: AK7set95BUK5W0Jta+EgU2U3Um2z1iM6ANzNXmKF56ykK3EpJb2NLkLw4g7K/hhyf19cHrKvX0ncnA==
+X-Received: by 2002:a17:90b:3143:b0:235:31e9:e792 with SMTP id ip3-20020a17090b314300b0023531e9e792mr20696182pjb.20.1678318821556;
+        Wed, 08 Mar 2023 15:40:21 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id ei18-20020a17090ae55200b0023371cb020csm280844pjb.34.2023.03.08.15.40.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Mar 2023 15:40:21 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] fetch: pass --no-write-fetch-head to subprocesses
+References: <20230308100438.908471-1-e@80x24.org> <xmqqwn3rta2c.fsf@gitster.g>
+        <20230308222205.M679514@dcvr> <xmqqttyurg4w.fsf@gitster.g>
+Date:   Wed, 08 Mar 2023 15:40:20 -0800
+In-Reply-To: <xmqqttyurg4w.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        08 Mar 2023 15:13:19 -0800")
+Message-ID: <xmqqjzzqrevv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> Yes, exactly. Having a config_set on the repository makes sense, but I
->> don't see a good reason to have the reader on the repository.
->
-> [...]
->
-> I hadn't looked closely at this aspect of it, and just took it as a
-> given that we needed to persist this data outside of the configset
-> lifetime.
+> I think we should instead enumerate submodule repositories, instead
+> of enumerating existing .git/FETCH_HEAD files.
 
-There really isn't a need to persist the "config_reader" state, we'd
-only need it while reading the file, and as you've hinted, once we've
-cached the info in the configset, we'd just use that instead.
+Perhaps something along this line?
 
-> If that's not the case then we don't need it in the file scope, nor a
-> "struct repository" or whatever, and could just have it materialized by
-> git_config_check_init(), no? I.e. when we create the configset we'd
-> create it, and throw it away after the configset is created?
+ t/t5526-fetch-submodules.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-Yes, except that I'm proposing that we should do it even lower in the
-chain, like do_config_from().
-
-> 	The catch (aka the reason I stopped halfway through) is that I
-> 	couldn't find a way to expose "struct config_reader" state
-> 	without some fairly big changes, complexity-wise or LoC-wise[...]
->
-> I didn't look into exactly why config_fn_t would need your new "reader",
-
-Ah, this is what I was referencing in the CL here:
-
-  I believe that only config callbacks are accessing this [config
-  reader] state, e.g. because they use the low-level information (like
-  builtin/config.c printing the filename and scope of the value) or for
-  error reporting (like git_parse_int() reporting the filename and line
-  number of the value it failed to parse)
-
-> but if you accept that we could stick such a thing into "the_repository"
-> then there's no catch or need for the churn to change all those
-> callbacks.
->
-> Of course something that wants to use the API as a "real" library would
-> need to use some alternate mechanism, as you reference in adding a new
-> "config_state_fn_t". You note:
->
-> 	but I couldn't find a great way to do this kind of 'switching
-> 	between config callback types' elegantly.
->
-> So, I don't know, but I was suggesting looking into doing that based on
-> "the_repository" in play...
-
-And yes, since the primary purpose is to make git_config_from_file()
-usable by a library caller (and secondarily, prepare for a future where
-reading config is thread-safer because of less global state, as Jonathan
-discussed [1]), I'd prefer not to use the_repository.
-
-1. https://lore.kernel.org/git/20230306195756.3399115-1-jonathantanmy@googl=
-e.com
+diff --git c/t/t5526-fetch-submodules.sh w/t/t5526-fetch-submodules.sh
+index 8ffb300f2d..dcdbe26a08 100755
+--- c/t/t5526-fetch-submodules.sh
++++ w/t/t5526-fetch-submodules.sh
+@@ -170,13 +170,13 @@ test_expect_success "fetch --recurse-submodules recurses into submodules" '
+ test_expect_success "fetch --recurse-submodules honors --no-write-fetch-head" '
+ 	(
+ 		cd downstream &&
+-		fh=$(find . -name FETCH_HEAD -type f) &&
+-		rm -f $fh &&
++		git submodule foreach --recursive \
++		sh -c "cd \"\$(git rev-parse --git-dir)\" && rm -f FETCH_HEAD" &&
++
+ 		git fetch --recurse-submodules --no-write-fetch-head &&
+-		for f in $fh
+-		do
+-			test_path_is_missing $f || return 1
+-		done
++
++		git submodule foreach --recursive \
++		sh -c "cd \"\$(git rev-parse --git-dir)\" && ! test -f FETCH_HEAD"
+ 	)
+ '
+ 
