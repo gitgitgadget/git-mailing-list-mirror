@@ -2,95 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78A00C64EC4
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 12:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86F3DC678D5
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 13:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231224AbjCHMHT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 07:07:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46936 "EHLO
+        id S231134AbjCHNbK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 08:31:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231211AbjCHMHQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 07:07:16 -0500
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B735B9538
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 04:07:15 -0800 (PST)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-536be69eadfso301156227b3.1
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 04:07:15 -0800 (PST)
+        with ESMTP id S231352AbjCHNa3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 08:30:29 -0500
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE6D258B64
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 05:29:21 -0800 (PST)
+Received: by mail-qt1-x82a.google.com with SMTP id r16so16370575qtx.9
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 05:29:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678277234;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NuVAOcOMPWZRjHbpGanxXUqeXwHO2WKoA/bQfEZXRNo=;
-        b=DS1sB8E9Dm/Zs8U/AqWcfRn560Nxo/ThisMmIg20ukw2ad2ezawBuNiWlGVNrR4qzN
-         /RVhOsthfBZBDIbFG1UQs0OwOV9tWH+bpNC4pmf7/uxTD3G/uaMAIg2x7wkQbOMz4DIb
-         pZ00jD8fh2x1F/03A7/jGxnJAZNClfItkSdVqYZR4v7QgDWTU6/CH3yHkKMz/7ONidPX
-         Vclv4P7y2QyDR3ZqJrWra4gLd9yQhqhrZVPeGsJLAcBnuGK6VHr/814nId38OWwZAw8j
-         GNMtSVV4fe1z0K8txI2dlsl3vvjbEAGMP8Ja/zY42uoMddwLoOGBUYAIugLzX8chUPqC
-         USQg==
+        d=github.com; s=google; t=1678282161;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=x8xaRXw75yaoOjgFgujEdeAxiWIyIAYnnbrJdsFFL8Y=;
+        b=VJCy9Gq686EbZEem+nXV5uze8xSLUgLDjq+BnkUOeLUQIUB5qHVOlMaIk/NVdZCmJX
+         3kMzmkJewWyBWLrzLhyo3MDnlSoUBvCONMtnVyu+dYU7UzWqZ/ChwsQ42qQeimx5iQhi
+         s67Pk/9ko4kKPjQdpDsfA6jwBg9UohzkUGScto8/AcefA4slYFDrpiv4A7j79yCGrVjU
+         mCJ6ATgyYYhwscZ/pfBl2OjpxMULFVnBXOrP3PrU5y/hx78dg3uZA+PjkdSX7tCy++67
+         +gdYRLQ+b8tg1urO5iFLZLFHrTxNyKgyg/YXp/4BXL2kGJWM5zHeqS6tBLuT5P97Ba/c
+         4WcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678277234;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NuVAOcOMPWZRjHbpGanxXUqeXwHO2WKoA/bQfEZXRNo=;
-        b=ENfKri38cqqmv1cWx58x2C69+xLDdojKZmRlqFNftYptAjgvt30SN0hsJY7omdTewD
-         hmLVS5cpq0vUJVw8q0prJfKnNEJ+bNKlhGmW8rb3EuBzVLZ5Rfvj0/bUBlt3msm0Wn+m
-         6Zd4fVFW2DTeSoEJt3dQy1XIuDhiFH1zQs0p/t8ei5qCHUC4FfyR7GAZLkMm9Pjawpav
-         8opt/IYpD+/5l50zfC+5cAWONoHMF9JVT2opjk/El+mz2NH4tmXy+/v6lMEHnKKUiphQ
-         UN9zNNYe4qgKVcuADRPSBbOlsIBQP8kamVXFUDfGQlOFhL5FFR1cd9JKzcmpF1DQBQN1
-         mQYg==
-X-Gm-Message-State: AO0yUKX6wlVIzI5cpd8VBgHW5DYPxSBA3UhqVxGOrclo7MopIcBSKxPG
-        tjfMeohdyvqX7ZfLgExFjt5hu1n9af25nl+2hms=
-X-Google-Smtp-Source: AK7set+RxzLU/0bn4uobsDWwZu4+C8FAZ85tQ0hYvQ71z6JEGB2i6OnmKMJonrjjEef4VUcrvHsQnQWGNM52uDcfNUw=
-X-Received: by 2002:a81:ae4e:0:b0:52e:ac97:115f with SMTP id
- g14-20020a81ae4e000000b0052eac97115fmr11651846ywk.5.1678277234375; Wed, 08
- Mar 2023 04:07:14 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678282161;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=x8xaRXw75yaoOjgFgujEdeAxiWIyIAYnnbrJdsFFL8Y=;
+        b=RctksJc85FDgkbenOEZffLncU1hQiGpr6FN2erAWJXd/9yMps7wLsa4ZeSB1EvhXeS
+         ZeQgCp6lVR7wmRT1eYOEEzkHuOdsELqMA1M8qzR15mclxpQTRVES2epNMNo34lVbDP9b
+         Z6sY9rz9f9FbjHrFGVptSsXn2kVpfp1N2PQGB7lpQaKncS/QZPuyEzznxf4H/apeo/YN
+         vbR3TbPeJiHkrLv9HFrWHFRXP0LRhx0sNDAcSvhbWlpSEGdReeAAJMb9HYMjTXLIL252
+         g+Sy54qCsDFhyUOFgzTj3eCrj4DqBBvIv51LCEwFNRJHQ8fdNm4MZL3sFPDxuTqr8JXD
+         ZHsg==
+X-Gm-Message-State: AO0yUKWTm1QL3inTD8lcsk/RwY0R28X302+/z4C39Xj+LoNobV9AfTK/
+        kNgFP+tf20dBZFi32NAQnaiQ
+X-Google-Smtp-Source: AK7set+04bP+TMCIZ65syGkUWclxJ06Wyu6mD63ErzEi7EfgSxNgEnDY1MO7KJjSMhrcPNAkRxeVDw==
+X-Received: by 2002:ac8:5dcf:0:b0:3bf:db77:8d47 with SMTP id e15-20020ac85dcf000000b003bfdb778d47mr10043224qtx.55.1678282160693;
+        Wed, 08 Mar 2023 05:29:20 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:5ddb:559:95a7:8685? ([2600:1700:e72:80a0:5ddb:559:95a7:8685])
+        by smtp.gmail.com with ESMTPSA id x12-20020ac84a0c000000b003b62e9c82ebsm11571858qtq.48.2023.03.08.05.29.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Mar 2023 05:29:20 -0800 (PST)
+Message-ID: <64903e15-014f-a81e-26dc-83e16b632b2b@github.com>
+Date:   Wed, 8 Mar 2023 08:29:18 -0500
 MIME-Version: 1.0
-References: <20230308090536.2562917-1-felipe.contreras@gmail.com>
- <230308.86bkl3zjp3.gmgdl@evledraar.gmail.com> <CAMP44s2NJefUOzpyq=qbWSi+X-GnVTXaEgT8dM4zMPSzm29yag@mail.gmail.com>
- <230308.86ttyvxzjz.gmgdl@evledraar.gmail.com>
-In-Reply-To: <230308.86ttyvxzjz.gmgdl@evledraar.gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Wed, 8 Mar 2023 06:07:03 -0600
-Message-ID: <CAMP44s2dZmrt8SDFU+vwV7AX1BJNS3jR-nu0WZJsaEKLgTtKDg@mail.gmail.com>
-Subject: Re: [PATCH] test: simplify counts aggregation
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Fabian Stelzer <fs@gigacodes.de>,
-        Brandon Casey <drafnel@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] object-file: reprepare alternates when necessary
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com
+References: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
+ <230307.861qm0235d.gmgdl@evledraar.gmail.com> <xmqqttyw1ndr.fsf@gitster.g>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqttyw1ndr.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 8, 2023 at 5:17=E2=80=AFAM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
-on <avarab@gmail.com> wrote:
->
-> On Wed, Mar 08 2023, Felipe Contreras wrote:
+On 3/7/2023 12:29 PM, Junio C Hamano wrote:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> 
+>> But in fact we've been doing the locking since 6c307626f1e (grep:
+>> protect packed_git [re-]initialization, 2020-01-15). So the only thing
+>> that really needs justification here is that putting the alternates
+>> re-reading under the same lock
+>>
+>> There is a really interesting potential caveat here which you're not
+>> discussing, which is...
+>>> ...
+>>> +void reprepare_alt_odb(struct repository *r)
+>>> +{
+>>> +	r->objects->loaded_alternates = 0;
+>>> +	prepare_alt_odb(r);
+>>> +}
+>>> +
+>>> ...
+>> This seems reasonable, but wouldn't this do the same without introducing
+>> an API function just for this one use-case?
+>>
+>> That's of course a nit, and you seem to have been adding this for
+>> consistency with reprepare_packed_git(), but it already "owns" the
+>> "approximate_object_count_valid" and "packed_git_initialized" flags in
+>> "struct raw_object_store".
+>>
+>> So as we'll only need this from reprepare_packed_git() isn't it better
+>> to declare that "loaded_alternates" is another such flag?
+> 
+> I am not sure I got what you want to say 100%, but if you are saying
+> that this "drop the 'loaded' flag and force prepare_*() function to
+> redo its thing" must not be done only in reprepare_packed_git(), and
+> that inlining the code there without introducing a helper function
+> that anybody can casually call without thinking its consequenced
+> through, then I tend to agree in principle.  But it is just as easy
+> to lift two lines of code from the rewritten/inlined code to a new
+> place---to ensure people follow the obj_read_lock() rule, the
+> comment before it may have to be a bit stronger, I wonder?
 
-> > Or just:
-> >
-> >     for file in "${TEST_OUTPUT_DIRECTORY-.}"/test-results/t*-*.counts
-> >
-> > And don't pass anything.
->
-> Yeah, I think that would work, but at least on an ad-hoc basis I've
-> sometimes saved away the "test-results" directory
-> (e.g. "test-results.prev").
->
-> I think it would be useful if the script part of our tooling was happy
-> to accept any name for such a directory, and then examined its contents.
+The fact that we do it in a lock in reprepare_packed_git() in the
+only current caller does raise suspicion that someone could call it
+later and not realize that the lock could be helpful. Inlining the
+change within reprepare_packed_git() makes the most sense here
+instead of mimicking the pattern.
+ 
+>> Perhaps not, but as the resulting patch is much shorter it seems worth
+>> considering.
 
-That's not a problem, just pass the directory as an optional argument.
+The shortness of the patch is metric of quality, to me. The other
+reason (we might introduce a footgun) is more interesting.
 
-    default_dir=3D"${TEST_OUTPUT_DIRECTORY-.}/test-results/"
-    for file in "${1-$default_dir}"/t*-*.counts
+>> ...but to continue the above, the *really* important thing here (and
+>> correct me if I'm wrong) is that we really need to *first* prepare the
+>> alternates, and *then* do the rest, as our new alternates might point to
+>> new loose objects and packs.
+> 
+> Yes, and as Derrick explained in another message, we only have to
+> worry about new ones getting added, not existing ones going away.
 
-> But I don't feel strongly about it, and I don't use aggregate-results.sh
-> in particular (I always use "prove").
+I'll be sure to clarify that in my next version.
 
-Yeah, me neither (I also use prove).
+>> So with both of the above (the same could be done with your new helper)
+>> something like this would IMO make that much clearer:
+>>
+>> 	diff --git a/packfile.c b/packfile.c
+>> 	index 79e21ab18e7..50cb46ca4b7 100644
+>> 	--- a/packfile.c
+>> 	+++ b/packfile.c
+>> 	@@ -1008,6 +1008,13 @@ void reprepare_packed_git(struct repository *r)
+>> 	 	struct object_directory *odb;
+>> 	 
+>> 	 	obj_read_lock();
+>> 	+	/*
+>> 	+	 * New alternates might point to new loose & pack dirs, so we
+>> 	+	 * must first read those.
+>> 	+	 */
+>> 	+	r->objects->loaded_alternates = 0;
+>> 	+	prepare_alt_odb(r);
+>> 	+
+>> 	 	for (odb = r->objects->odb; odb; odb = odb->next)
+>> 	 		odb_clear_loose_cache(odb);
+>>
+>> And, I think this is an exsiting edge case, but we're only locking the
+>> ODB of the "parent" repository in this case, so if we have alternates in
+>> play aren't we going to racily compute the rest here, the loose objects
+>> and packs of the alternates we're about to consult aren't under the same
+>> lock?
 
---=20
-Felipe Contreras
+I don't understand what you are saying here. odb_read_lock() does not
+specify a repository and is instead a global lock on reading from any
+object database.
+
+Here is its implementation:
+
+extern int obj_read_use_lock;
+extern pthread_mutex_t obj_read_mutex;
+
+static inline void obj_read_lock(void)
+{
+	if(obj_read_use_lock)
+		pthread_mutex_lock(&obj_read_mutex);
+}
+
+static inline void obj_read_unlock(void)
+{
+	if(obj_read_use_lock)
+		pthread_mutex_unlock(&obj_read_mutex);
+}
+
+So I don't believe that your proposed edge case exists.
+
+Thanks,
+-Stolee
