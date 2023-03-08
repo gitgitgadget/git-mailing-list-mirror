@@ -2,84 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38239C64EC4
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 20:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F729C678D5
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 20:48:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230398AbjCHUoE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 15:44:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45730 "EHLO
+        id S230403AbjCHUsH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 15:48:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230386AbjCHUoA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 15:44:00 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B057A6A2EA
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 12:43:46 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id p3-20020a17090ad30300b0023a1cd5065fso107566pju.0
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 12:43:46 -0800 (PST)
+        with ESMTP id S229614AbjCHUsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 15:48:04 -0500
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D95AC14986
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 12:48:01 -0800 (PST)
+Received: by mail-io1-xd36.google.com with SMTP id bf15so7308638iob.7
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 12:48:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678308226;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DVLNmpOvyF6Zw9HYeO0RigKID3ZrhKss8cS0wQtcAjA=;
-        b=T0OW7oannlDgGL7I0oWeni3WojKvRRYxqcXJMvt1V1UaCJahNFfMIm7yDx4Codx0uk
-         mR5gNwqvWfxr80X2o0nMfdBLp0m5CYrvb5FcBrkzd5Nn9OCjdMaw5mMHvuG1gtEXm0Tw
-         6kLzRrcTA24RJyg/CfO6FPCoqZX1BFVBd0/fmgLdF5KobtVrdOFZcWuE73UcNoH2guBZ
-         Dfhs33yQ0bmJPx98Bk6V9qurJM1myHNAALgFbBHDdG1nufEYNzZq7CB46KYgxmAJ669j
-         aiqgBB4PW5p3SU6pB4AU2dNGbqV9vRR6V0KINCiCtyeDewK6ay1tKMamcMHPjxvJnbxn
-         0/6Q==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1678308481;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=S6GWQFf+F9JbmsLKjadC5GIMzgo241njZiYLNsiifgY=;
+        b=J78k0DwycxGuIAS7Cey4boq7tVikWUnL//eVSFynTrWvVCjxF05xWl/5QsOCiEIfwV
+         Tj19YiMcXVTmGoKJLbnXGZeSYj1i4opi0KJ3YqMJlWfS8EKt/D/GoQAUQ5i4Qz0iOE+5
+         MtTZ4/j5i0C0zYiEKof0x7IKX6/pE6jK1fM2u+K5ActuqB+xx7KrvABthT1VZDvl6hh0
+         fw/HDgc+bzSmztRRmoLVSdsSGkAAy43ZGBWTZBcAVwbc7T8H5PNaIgtWbXw53MwBwFMT
+         ChRvNvPal899OKp2Bec2KwJnVn8r1uSmUqW1StarPkY5OjmeqP1LvlfpPAqqvsk6iu0W
+         yyKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678308226;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=DVLNmpOvyF6Zw9HYeO0RigKID3ZrhKss8cS0wQtcAjA=;
-        b=0Eo3e78XDJllme+8EvItxoFMKYFYPu+J2hKu6APksaRsDXxvtfw4xjEFgLuNsdWunP
-         N89AHDZl2PPV28pw16TnyDXEPBx8DaRRQEPMfAbNK4XM0Vdo0UVIgzHAtp8syrl9rqli
-         AkA3jMMVbwM80QH4lcMUwYx9a7Y1iVQztVcn6AbxMCAGU2qLo3q8ewFVaym3uL4XG66t
-         ZdhBA4dxN1qIE3jv/gLGjEv87f2bLb9LUot0S13vt1GtWQXEviDb3+VLakUw0yv1Afpd
-         iLKj5na+SARDBdO8IOkRDru/9j34EaUDMxBKwrHzEtNuZCb9CulfYJTboWQT806sqvag
-         ppKg==
-X-Gm-Message-State: AO0yUKUEmTrH21q8OClxCOwLxLGIkJI6/V2L7Z33g+r22/G8NTZS3Mor
-        bAN8NJ7eELG8J7+3htXvG7hplJ9mY00=
-X-Google-Smtp-Source: AK7set9QOD0X9HXB1i07QFRLsUdEUAwHm7etXurftPk6dIABIA/2Xz2QcdOgfN7cwVVlaVslgjD3PQ==
-X-Received: by 2002:a05:6a21:6da6:b0:cb:e8c6:26a0 with SMTP id wl38-20020a056a216da600b000cbe8c626a0mr26766136pzb.11.1678308225916;
-        Wed, 08 Mar 2023 12:43:45 -0800 (PST)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id d25-20020aa78159000000b005cdf83e4513sm10058758pfn.145.2023.03.08.12.43.45
+        d=1e100.net; s=20210112; t=1678308481;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S6GWQFf+F9JbmsLKjadC5GIMzgo241njZiYLNsiifgY=;
+        b=t5/OfLm5fWj+1z1vvEhkZ25z0Ie1rVo5Wg8Ke4eRFpYkrwBCDzeosWaKm9U4yngpVa
+         oj71vHf8mJwJaS2dM56jU/SmuYgsfJyXOa2F0xONnpe+qdjCoquo0leVYL8nel8RtsZ3
+         PN/mBxHYV7cX8d3vKFtkb9O/GR8ATDV/uMH7RGxWb1Kibpv1w7wp4VcWJQCRy3frOBF6
+         hBI/Yd6/esJwwkLvm+vd8uGSxkvGrbioRKnDqgHxgyysF8y8bT/3hnvEQo0K3JHKMkie
+         99DmmbvplpimgIgIQfmJesAUK/BmMDGQ17IohprS9edWKxN7FCxpVw2BByN+laX5rbs2
+         3DLg==
+X-Gm-Message-State: AO0yUKXVn19cHMG1TyL3mOEYY6HMNTlO1ueQ43sixAMdvCFsLIFbwEn6
+        pvCsHMj4rAo2AgC207ZwJR2yDg==
+X-Google-Smtp-Source: AK7set+B+EbXQBOKhAicNo3pLSBEDqUwnZHXvhYOBb6svz6RC8KJboOMXk4QtN4xj/DBstbPtoApgw==
+X-Received: by 2002:a6b:6006:0:b0:734:e7c0:2058 with SMTP id r6-20020a6b6006000000b00734e7c02058mr410908iog.9.1678308480963;
+        Wed, 08 Mar 2023 12:48:00 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id y21-20020a02bb15000000b0035678e2e175sm5101171jan.50.2023.03.08.12.48.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 12:43:45 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     John Keeping <john@keeping.me.uk>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] format-patch: output header for empty commits
-References: <20230303160301.3659328-1-john@keeping.me.uk>
-        <xmqqwn3xg3m0.fsf@gitster.g> <ZAMhOehmuIov/KM8@keeping.me.uk>
-        <xmqqlek9byeb.fsf@gitster.g> <ZAjxL2MIXCNZgYj/@keeping.me.uk>
-Date:   Wed, 08 Mar 2023 12:43:45 -0800
-In-Reply-To: <ZAjxL2MIXCNZgYj/@keeping.me.uk> (John Keeping's message of "Wed,
-        8 Mar 2023 20:33:51 +0000")
-Message-ID: <xmqqo7p3rn26.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Wed, 08 Mar 2023 12:48:00 -0800 (PST)
+Date:   Wed, 8 Mar 2023 15:47:59 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2] object-file: reprepare alternates when necessary
+Message-ID: <ZAj0f906l/7xGFAl@nand.local>
+References: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
+ <pull.1490.v2.git.1678301252360.gitgitgadget@gmail.com>
+ <xmqqedpzt4t1.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqedpzt4t1.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-John Keeping <john@keeping.me.uk> writes:
-
->> Overall, if we were designing format-patch/send-email/am today with
->> today's use cases in mind without any existing users of these three
->> commands, I think these three would be designed to pass an empty
->> commit through the chain unconditionally.  But we do not live in
->> such a world, so perhaps some sort of opting in may be appropriate.
+On Wed, Mar 08, 2023 at 11:35:06AM -0800, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Does that mean you want to see format-patch die on empty commits unless
-> --allow-empty is specified?
+> > From: Derrick Stolee <derrickstolee@github.com>
+> >
+> > When an object is not found in a repository's object store, we sometimes
+> > call reprepare_packed_git() to see if the object was temporarily moved
+> > into a new pack-file (and its old pack-file or loose object was
+> > deleted). This process does a scan of each pack directory within each
+> > odb, but does not reevaluate if the odb list needs updating.
+>
+> Very well explained, except I do not know what is meant by
+> "temporarily", which to me implies what was moved is moved back
+> later.  Without "temporarily", it reads perfectly well.  While I do
+> not think of a good word to use to tell the readers that the moving
+> is done by somebody else while we are trying to find the object, if
+> there were one, that would replace "temporarily" very well.
+>
+> But other than that tiny nit that does not have to be addressed at
+> all, everything in this patch looks good.
 
-No, what I (with Devil's advocate hat on) suggested was to hide the
-"instead of leaving an empty file, fill the file with the log message"
-feature this patch adds behind --allow-empty option, and when the
-option is not given, keep the current behaviour.
+s/temporarily/concurrently?
+
+I think that concurrently conveys that another process was doing the
+moving. But I agree that it doesn't matter here to aid in the overall
+understanding of what's happening in this patch.
+
+So I'd be fine with this patch as-is, with s/temporarily/concurrently,
+or with s/temporarily//.
+
+Thanks,
+Taylor
