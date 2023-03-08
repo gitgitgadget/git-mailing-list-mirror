@@ -2,97 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58879C64EC4
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 22:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3DFFC64EC4
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 22:39:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229730AbjCHWZT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 17:25:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46154 "EHLO
+        id S229812AbjCHWjU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 17:39:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229816AbjCHWZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 17:25:17 -0500
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92AC27D57C
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 14:25:16 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id z42so18087911ljq.13
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 14:25:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678314315;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5rZ3l2vrcjdCrgZOnWl2UUlih2uetOOUa1w0hFuFucY=;
-        b=KAxKmI4sBXqoeOJSRAZ1XYL/d7w1S5ykt7gxOqZmKixN972wfP3BgJpKXG/7jqFAZM
-         1Cok0u3p2OeLrlKe9fuT9hAVeSHpRqKqmPfGe7+CY/AuwuFv8ZFh9uVcHoQm0JmGLfqc
-         ZhlR6JW64wI3OesbwTyWnlrzbOqEYLGopB9mjZTj5tKmbktLBInFPPF9h4sChJiqEbd4
-         lwyPC64hNI8mWQJXBmF4YfXgQwdkKncssiKsA1FNORFuZtyMfGPKZMSy21JgtjJdPIY2
-         yQybddDHjTo3ViV1iLJvtRMixhaLFCaXORvhaL26lsJzocTvCy1qHD+o03OB1sI/q1Ul
-         /upg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678314315;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5rZ3l2vrcjdCrgZOnWl2UUlih2uetOOUa1w0hFuFucY=;
-        b=4YL3wr+n05O1d9HTZhXDlLF+3N62o87X2fxaJ2YIkZJJwzC3zbqaOk32GvMWlg9tb6
-         cgdkwA42Ds1+tZprQRte2jxQbaWk/lZsylKdjCJtyScYgK30CJh6vNJW3NM/sHy3ZIZS
-         qIKsbkGECwwn5ZNVX8312CPwaOEEijdE5bJzs0Sbemk0+RA3IsSkpLEJS+K8eAkn3PGE
-         lzLZALXNZ32iKH7V13HZGH83XDZ1Cv2O9cq3jvaH/7b1+dNV8/u1V0pQS1WXyymngS5B
-         xH7YMGjphQ8mWWpl6197iJjxsCSreTNMlvZgtV0tEpYkk/oLXhdkg4OO/vRhodc3/W90
-         gy8Q==
-X-Gm-Message-State: AO0yUKXoXvy2FMHbyY5fuM3LIPi6tr2C8C9G3Pc6CILKPmHxQnVLTeih
-        eGpBeLGgzUim0adciRao080=
-X-Google-Smtp-Source: AK7set+2J3488chE0iAnTF2lGKDudRGgv+Cvpse/3JovSRx1ZGE+Xj+kB3wLZueSYxPgi1yWoh8/sA==
-X-Received: by 2002:a2e:be25:0:b0:295:c306:ec40 with SMTP id z37-20020a2ebe25000000b00295c306ec40mr7640449ljq.34.1678314314704;
-        Wed, 08 Mar 2023 14:25:14 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id q22-20020a2e8756000000b002986f36dd6bsm373808ljj.59.2023.03.08.14.25.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 14:25:14 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     git@vger.kernel.org, tao@klerks.biz, gitster@pobox.com,
-        newren@gmail.com, phillip.wood123@gmail.com,
-        Johannes.Schindelin@gmx.de, chooglen@google.com,
-        calvinwan@google.com, jonathantanmy@google.com
-Subject: Re: [PATCH v6 1/3] rebase: add documentation and test for
- --no-rebase-merges
-References: <20230225180325.796624-1-alexhenrie24@gmail.com>
-        <20230305050709.68736-1-alexhenrie24@gmail.com>
-        <20230305050709.68736-2-alexhenrie24@gmail.com>
-Date:   Thu, 09 Mar 2023 01:25:13 +0300
-Message-ID: <878rg6zxrq.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S229984AbjCHWjO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 17:39:14 -0500
+Received: from qproxy3-pub.mail.unifiedlayer.com (qproxy3-pub.mail.unifiedlayer.com [67.222.38.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D5D55ADF9
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 14:39:12 -0800 (PST)
+Received: from outbound-ss-820.bluehost.com (outbound-ss-820.bluehost.com [69.89.24.241])
+        by qproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id 5B8D28027BA5
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 22:39:12 +0000 (UTC)
+Received: from cmgw14.mail.unifiedlayer.com (unknown [10.0.90.129])
+        by progateway2.mail.pro1.eigbox.com (Postfix) with ESMTP id E6D71100478A7
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 22:39:11 +0000 (UTC)
+Received: from box5922.bluehost.com ([162.241.30.80])
+        by cmsmtp with ESMTP
+        id a2RDpj6FoWuSqa2RDpCcV8; Wed, 08 Mar 2023 22:39:11 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=Vqrmv86n c=1 sm=1 tr=0 ts=64090e8f
+ a=u+82WREdhvUKZ7QTvcqjvQ==:117 a=u+82WREdhvUKZ7QTvcqjvQ==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=k__wU0fu6RkA:10:nop_rcvd_month_year
+ a=3EOfIcITIxQA:10:endurance_base64_authed_username_1 a=tsIoxU2LizdRE0QKq6cA:9
+ a=QEXdDO2ut3YA:10:nop_charset_2
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=MIME-Version:Content-Transfer-Encoding:
+        Content-Type:Date:To:Reply-To:From:Subject:Message-ID:Sender:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=29+ErIzRLGbiTOgK7gC6A+NBhzJ7An30yMCJ8eN9q98=; b=Roc6qSg4x0ICaeAwOK4+SSKli2
+        Wj6L2kuSOJbQ8b5keZDi3cAJH4XNR2GND3glcru8VT9pQzpNrMF1P4gW+ECfy9ImmWzPpYcjNtfP4
+        CkCvQZ3E5eh7qmTI1l2+Cddrj;
+Received: from [160.231.0.90] (port=58308 helo=llin-psh13-dsa.dsone.3ds.com)
+        by box5922.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.95)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1pa2RD-0026zY-Il
+        for git@vger.kernel.org;
+        Wed, 08 Mar 2023 15:39:11 -0700
+Message-ID: <6215dde710670fdf0da3ba0549429eaa32db257b.camel@mad-scientist.net>
+Subject: Fetching everything in another bare repo
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     git@vger.kernel.org
+Date:   Wed, 08 Mar 2023 17:39:07 -0500
+Organization: Please remain calm--I may be mad but I am a professional!
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4 (by Flathub.org) 
 MIME-Version: 1.0
-Content-Type: text/plain
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5922.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 160.231.0.90
+X-Source-L: No
+X-Exim-ID: 1pa2RD-0026zY-Il
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (llin-psh13-dsa.dsone.3ds.com) [160.231.0.90]:58308
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+Apologies if this is the wrong list.
 
-[...]
+I have a tool that wants to preserve every commit and never garbage
+collect (there are references that need to be maintained to older
+commits/branches that have been deleted).  This tool keeps its own bare
+clone, and disables all GC and maintenance on it.
 
-> +When rebasing merges, there are two modes: `rebase-cousins` and
-> +`no-rebase-cousins`. If the mode is not specified, it defaults to
-> +`no-rebase-cousins`. In `no-rebase-cousins` mode, commits which do not have
-> +`<upstream>` as direct ancestor will keep their original branch point, i.e.
+Unfortunately a month or so ago, by accident someone re-cloned the
+primary copy of the repo that everyone else uses as this bare clone,
+which lost the old history.
 
-I realize this is in fact unchanged from the original, so is not exactly
-material of these series, but what is the meaning of "direct ancestor"?
-Is it just "parent"?
+The good news is that I have a copy of the original bare clone with all
+the history intact.
 
-> +commits that would be excluded by linkgit:git-log[1]'s `--ancestry-path`
-> +option will keep their original ancestry by default.
+So now what I want to do is fetch the old data into the current bare
+clone (since the old clone doesn't have the newest stuff).  And, I need
+to be sure that all commits are pulled, and kept, and nothing is
+cleaned up.  I would also like any deleted branches to re-appear, but I
+don't want to change the location of any existing branches in the new
+repo.
 
-Excluded when --ancestry-path is applied to what commit, exactly? To the
-commit being considered for rebase, or to the <upstream>, or to the
-'fork_point'?
+Is it sufficient to run something like this:
 
-Please notice that rebase claims to operate either on <upstream>..HEAD or
-'fork_point'..HEAD range, and --ancestry-path without arguments applies
-to the left commit of the range when used in "git log".
+  git fetch --no-auto-maintenance --no-auto-gc <path-to-old-clone>
 
-Looks like some clarifications are needed here, even though maybe not in
-these series?
+??  Are there other options I should consider?  Is it better to fetch
+the NEW clone into the OLD clone, than to fetch the old clone into the
+new clone (the new data is much more important to preserve)?
 
-Thanks,
--- Sergey Organov
+Since this is a one-off operation I don't care so much about making the
+fetch fast.
+
+Thanks!
