@@ -2,121 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C08EDC678D5
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 00:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42456C6FA99
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 02:48:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229646AbjCHAsW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Mar 2023 19:48:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50208 "EHLO
+        id S229590AbjCHCss (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Mar 2023 21:48:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbjCHAsV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Mar 2023 19:48:21 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1E2A5D45F
-        for <git@vger.kernel.org>; Tue,  7 Mar 2023 16:48:19 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id g9-20020a17090a300900b0023a8d6e327dso168176pjb.9
-        for <git@vger.kernel.org>; Tue, 07 Mar 2023 16:48:19 -0800 (PST)
+        with ESMTP id S229524AbjCHCsh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Mar 2023 21:48:37 -0500
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 804FC911F2
+        for <git@vger.kernel.org>; Tue,  7 Mar 2023 18:48:36 -0800 (PST)
+Received: by mail-oi1-x230.google.com with SMTP id y184so11203368oiy.8
+        for <git@vger.kernel.org>; Tue, 07 Mar 2023 18:48:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678236499;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zg8KF180sFfzUknfKCCzV9AGQeJAFOe6fBbrIoUflw0=;
-        b=k6YXLZ7SqHIqqe4dDuDpSe5oKhRXnTuqxhATQCU7dmSxOA2d3i0ALF6CL14xWMmW2E
-         +8aD7iKEFU20py2xH9h1qpg/RLEb08K+VsjhLqe9WtrDMaUO7WS+QRXXmlYcAzyPzRWx
-         xtdTBFdMAQQ+Y5e9RLOV2vepaRCY0MBWx9uugASmC3UFM96uRkXgVRq9+3UPR3+S2HTi
-         K7z4HkQlKhKQAtymfikrkiiLLRNuY1LhaiH5Lzxt6GEalc7K+qcrliHWugns8eESvAbl
-         /l724XS0k7t6OufNA4r4JV8BPu8VrGQqf6gt98x75imna6CC9IpOSd9WJ2Nudy1g2pRM
-         hROg==
+        d=gmail.com; s=20210112; t=1678243715;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8ByS1lCmQjZxEBOLjBKIuIyBzuaX9pGJnjpT+eVNYzM=;
+        b=Vp1YM+TreGH5j+J+9o970Y2LwCiy71MPc5DvLpYL0bbFDivNrCYM9muPL1+mhO4QOB
+         +JlHeuvEPh/2tAlsv456f1OQBsFnT50T97WfesghZHALBF1SfGJzaXB1cc67sihYiUm7
+         prEskxrZmUEt+Ndtgu5R/+Nw532unEXi2335cPfQMI9dg/NVA4KOOnmCrOvxmTykUcQd
+         oYQxotQjCXi6kl/eDCFBuDKayCQW82Wjrz85N7wEbMffcGz9OuOHPXrrVzatjWqTyddw
+         noZMqtwGKm7iWUjpz/IcK8JK4SRYPs+2vid2UWMfx7KMMRGHld3RDaDZRF9DaS3pMVpw
+         yW6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678236499;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=zg8KF180sFfzUknfKCCzV9AGQeJAFOe6fBbrIoUflw0=;
-        b=2B7QvYZrSQqnG5T+3KiIouk/W2DpwDqTyeCfLQfh7G8f7F0t520skT8AbvAaOIWcur
-         ++FoygoeSo5+4AJHRwDT3VI244QYyx3LqXkhjjGnnwhEERx5SF1C0ftsswd5eRvZoP1R
-         G0pInuCy7DXB/1bf3y3vGy0DGCB7HiObyMGjPZXSkM5YrWs33FEubw5MVExxrcXvKcAa
-         tVhylCdF8WrVdyWDk5vvH6eVLv42DxGLJUYfP5lUe/fFsuUX6pkX7PUNmUWJlbwIFEDZ
-         C6kHCXlEz1Wbl9ZOy84OuQ+AoqbXcySMdbyUz0P1bfQA1rOctxjUn2RDCQh6qLxMkMpw
-         /Xsg==
-X-Gm-Message-State: AO0yUKWyhZMHsHNSi2ILXEprZVp5PbY4xmnusuDxiSxAFK77bO5OkuSs
-        4SsHVw9XmVzmY4GSe7S+htu3zulNhuoBvw==
-X-Google-Smtp-Source: AK7set+rcSGnugYY0OfG08M5I/mmsxkxOIWDpJM99Tk4VtIqng0OJXPPeaXNvU35RfItKr1mJ3talYCUuPZAyA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a63:7242:0:b0:507:3e33:43e3 with SMTP id
- c2-20020a637242000000b005073e3343e3mr3417856pgn.7.1678236499335; Tue, 07 Mar
- 2023 16:48:19 -0800 (PST)
-Date:   Tue, 07 Mar 2023 16:48:17 -0800
-In-Reply-To: <cover-v6-0.9-00000000000-20230307T180516Z-avarab@gmail.com>
-Mime-Version: 1.0
-References: <cover-v5-00.10-00000000000-20230207T154000Z-avarab@gmail.com> <cover-v6-0.9-00000000000-20230307T180516Z-avarab@gmail.com>
-Message-ID: <kl6lwn3sgjam.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v6 0/9] config API: make "multi" safe, fix segfaults,
- propagate "ret"
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        "SZEDER =?utf-8?Q?G=C3=A1b?= =?utf-8?Q?or?=" <szeder.dev@gmail.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>, raymond@heliax.dev,
-        zweiss@equinix.com,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        d=1e100.net; s=20210112; t=1678243715;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8ByS1lCmQjZxEBOLjBKIuIyBzuaX9pGJnjpT+eVNYzM=;
+        b=xD5nRjZvB1d8xNe9nnjtiAC959necvMFb14Z+LnPY2+JZTja7P/VKEdxHCq1bbsi7u
+         8vXpf55eLsfJYhOKMmRPW7jcnHLVmexngyeWosSwCoIgQH16tjKwyhkN+a13xX1ZGAHM
+         Fs1KUUEf1F7kjpxvrQ39mo3sMfYulpNk2hhWF2P+YG4YS1RWhGtL5uVYTx4z7FnYYfVI
+         Z/Ap3MsANgkJ1DgOxZdzupiJQ+JTOedP0DPeVfjI4b1Xn2vRGi9RFm73cNXrKMF88/a9
+         8bXoB1CU5PTjAipaYKPc0qBtlHtg8tto+QpZd1/BhH7w378QftSK1tNJO2X4FH22heDx
+         A8zw==
+X-Gm-Message-State: AO0yUKWPE1p1BYrHux4OKGvtzMNH8iQPWs9fob2T/YCsqfoQyV/77PP8
+        cQtXelRiY7Zt/b2HRreQymVD3bEafM0=
+X-Google-Smtp-Source: AK7set/tCpNld+21wk6XFQpVban0qv6A4xY9KkuPvF/xhbA3ZfMRemyvBU4I1jxAEM4PYfUAgyvHvQ==
+X-Received: by 2002:a05:6808:215:b0:384:cf00:a5a0 with SMTP id l21-20020a056808021500b00384cf00a5a0mr2584730oie.43.1678243715518;
+        Tue, 07 Mar 2023 18:48:35 -0800 (PST)
+Received: from localhost ([2806:2f0:4060:3465:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id r64-20020acac143000000b0037834b1a20bsm5955509oif.0.2023.03.07.18.48.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Mar 2023 18:48:35 -0800 (PST)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Alex Henrie <alexhenrie24@gmail.com>,
+        Heba Waly <heba.waly@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Matheus Tavares <matheus.tavb@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 0/2] advice: add diverging advice
+Date:   Tue,  7 Mar 2023 20:48:32 -0600
+Message-Id: <20230308024834.1562386-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Not all our users are experts in git who understand their configurations
+perfectly, some might be stuck in a simple error:
 
-> Range-diff against v5:
->  1:  cefc4188984 =3D  1:  43fdb0cf50c config tests: cover blind spots in =
-git_die_config() tests
->  2:  91a44456327 =3D  2:  4b0799090c9 config tests: add "NULL" tests for =
-*_get_value_multi()
->  3:  4a73151abde =3D  3:  62fe2f04e71 config API: add and use a "git_conf=
-ig_get()" family of functions
->  4:  382a77ca69e =3D  4:  e36303f4d3d versioncmp.c: refactor config readi=
-ng next commit
->  5:  8f17bf8150c !  5:  e38523267e7 config API: have *_multi() return an =
-"int" and take a "dest"
->     @@ config.c: void git_die_config(const char *key, const char *err, ..=
-.)
->       }
->     =20
->       ## config.h ##
->     -@@ config.h: int git_configset_add_parameters(struct config_set *cs)=
-;
->     +@@ config.h: int git_configset_add_file(struct config_set *cs, const=
- char *filename);
->       /**
->        * Finds and returns the value list, sorted in order of increasing =
-priority
->        * for the configuration variable `key` and config set `cs`. When t=
-he
->  6:  b515ff13f9b <  -:  ----------- config API: don't lose the git_*get*(=
-) return values
->  7:  8a83c30ea78 =3D  6:  3a87b35e114 for-each-repo: error on bad --confi=
-g
->  8:  d9abc78c2be =3D  7:  66b7060f66f config API users: test for *_get_va=
-lue_multi() segfaults
->  9:  65fa91e7ce7 =3D  8:  0da4cdb3f6a config API: add "string" version of=
- *_value_multi(), fix segfaults
-> 10:  4db3c6d0ed9 =3D  9:  627eb15a319 for-each-repo: with bad config, don=
-'t conflate <path> and <cmd>
+  Not possible to fast-forward, aborting.
 
-I haven't reread the series in its totality yet (I should get to it in
-the next few days), but a small-ish thing that jumps out from
-the range-diff is that this version doesn't revert the commit message
-changes in the previous version (v5 CL [1]) that referred to the ejected
-06/10. I.e. v5 said that we were changing the return values of the
-*_get_*() functions so that the new function is not a special snowflake,
-and those commit messages haven't been changed.
+That's not very friendly.
 
-1. https://lore.kernel.org/git/cover-v5-00.10-00000000000-20230207T154000Z-=
-avarab@gmail.com/
+Let's add a bit more advice in case the user doesn't know what's going
+on.
+
+Felipe Contreras (2):
+  advice: add diverging advice for novices
+  advice: make diverging advice configurable
+
+ Documentation/config/advice.txt | 2 ++
+ advice.c                        | 9 +++++++++
+ advice.h                        | 1 +
+ 3 files changed, 12 insertions(+)
+
+-- 
+2.39.2
+
