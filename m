@@ -2,146 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC150C678D5
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 15:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D72EC74A44
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 15:50:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232050AbjCHPav (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 10:30:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47818 "EHLO
+        id S231929AbjCHPuL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 10:50:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231776AbjCHPas (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 10:30:48 -0500
-Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com [IPv6:2607:f8b0:4864:20::e34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17E1FA4B2D
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 07:30:47 -0800 (PST)
-Received: by mail-vs1-xe34.google.com with SMTP id o6so15710305vsq.10
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 07:30:47 -0800 (PST)
+        with ESMTP id S232279AbjCHPt6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 10:49:58 -0500
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D277B13DCF
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 07:49:56 -0800 (PST)
+Received: by mail-il1-x132.google.com with SMTP id l2so10652964ilg.7
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 07:49:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1678289446;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Wir3mzR3aapnA6nswqr4GsILZkMJeePq10s67ybQwB4=;
-        b=WVtmmoKDzrMp5ZKJQRAMgdUSGocHkhRODkMkNvwvR3iQ16VWRTvBHRDXKQ5YKzb7IZ
-         al98JOKBTaDU/8hrYo0zoOwheWk3Or2edZuoIDsrR6vMPRUn7ZiUQJdkF0oWyCOym3S1
-         qWoOnngGH2SKxWtQF1f9xrg62MZY+Pqn0owfh68PuKB1nvAQSH1dftB9VgHkmH9xm/Vd
-         lEphna0HZOkQC+S/iGZiEm8suKHkZGVd6UKGc06telH5XTYNFB+SHkfK2DODznhcD807
-         D2koWeHwM7Qw+89mzhZ8yZCQARjQ3u9LvWwhLVTAYnUvSVy/bfRcA0losugoevrS1AXI
-         50WA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1678290596;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=mwd5+dtphuC1kkZpxlcpYDWOWQk/WytvhiUjgQ7HD3M=;
+        b=WRHYJGaFJhw1/LfKKl6LX+uH1CArIjWKHd5DPiges+3Mz0FnA/xqOOUU1M54xChWw7
+         2haHD97pskOO/o0wo8pDky9HIHxNfLlumI6FCZVjKk2MB01YQfaShgDgJiLgZq+2f2g3
+         oF/Hx+62V7K4Y+A2tQ0vUR0Cd6weWYtu6VI//2PjsAk/CeamAcvt6GgUhqSSjIiTEr6z
+         Qk1Mzpq5sWMm91jZPWUhelJaSv/TJ8l30O6iHE2jQulSil8Nxs8F127n7OpU447etyjN
+         dhIURPrRcST+tzWhdGE1TYdtJbBkdGm9FOD/wmn6ibU3Guio1qbAh0HP9Z6l+Jxa4vay
+         k4kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678289446;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1678290596;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wir3mzR3aapnA6nswqr4GsILZkMJeePq10s67ybQwB4=;
-        b=4oWywbbwoBsVg0CzYQTaCb5eNDBNIOPd4PCpftvraifPikBq/vaEHjqkb70jGLr4cm
-         v3MNcOvUgMFw/LTd6RC6Y7jkfJlSh+zETd3SgYhmSXlC1BDdvnn/oQkJrMFmxaFZOiog
-         uqr4SXHcwntNplDDKmSDKPgGuLPCGviAGlqivorbTVgXO2xunPks9C376MCUTMkBzlzl
-         wmIHLC1ERdIkLId0+aDvp9zjmNHeGPxqk2cnQ+5Y3NOle4qVwwSOlEZzwTtaYilP6IeA
-         epqAY+AFMC+nZeazDWKfmc+47hs45OaP0k5HBqTdGQ4GKmmVhcheDbvjH13yWJejgVTX
-         WENg==
-X-Gm-Message-State: AO0yUKUVuJTZ5hFR/c5J/iIhWchPOggk3XeHutTxs1wN/AarcqK16oH3
-        lPV+z0COXkR+NiWWtPAYMYd4
-X-Google-Smtp-Source: AK7set+Mc2TmUANVD5sF91uKxudtd/s194lnuvgGa1EyfbITQ7H0ySOKQO6AWgKKByUefYKJn9T32A==
-X-Received: by 2002:a05:6102:3e23:b0:416:adb3:5caf with SMTP id j35-20020a0561023e2300b00416adb35cafmr10600643vsv.28.1678289445965;
-        Wed, 08 Mar 2023 07:30:45 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:d0dc:3668:fb01:9900? ([2600:1700:e72:80a0:d0dc:3668:fb01:9900])
-        by smtp.gmail.com with ESMTPSA id e3-20020a05620a014300b00742e61999a3sm11695447qkn.64.2023.03.08.07.30.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 07:30:45 -0800 (PST)
-Message-ID: <d102dd22-778d-add6-faf9-20bf87d107c7@github.com>
-Date:   Wed, 8 Mar 2023 10:30:43 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
+        bh=mwd5+dtphuC1kkZpxlcpYDWOWQk/WytvhiUjgQ7HD3M=;
+        b=7793iqpId+mkmq8NTfJyjRBtEADpUOR3nRUbg9Urzd48f99ixmFwQAiSWMR4rVqgGw
+         L2w2a9foIBeLGq3qXbT2chwBfrOWxv+4l31m1w877aBzAf1vuTG/l6NowFtcWo8RPlLv
+         57AdIlPHxKupkpSv3aEEb0qLf7zui1tV4Q8s34IB7gFNVZrSazn+HehVC0+9WWSnCUaa
+         V+Qjaik3vMclgt7oDws4wyAMK6um8q1sG/aPrwqPS34+9KO8zC5WWAN3ecLrssKaD++w
+         goFCXbXxsiHxIX4Ap322HmfR+je50Lt86xSE82CBDtoGbnKQ8ATdUU4BR7D8G/GN+VkX
+         x+5A==
+X-Gm-Message-State: AO0yUKUMOIPceFPuO+7zzK+hdt2QdL2QLoa/M7Tfp7up85PNAF23HB0c
+        9QpHnrWwe95vC+wMhTCPatfFFA==
+X-Google-Smtp-Source: AK7set/t4XxPXWwat57SvUlbyoIvk74oWoA44wp+lPqLUpb0obhoXr92N7ThYD/lSh1qwxK1yU0B7Q==
+X-Received: by 2002:a05:6e02:13ee:b0:319:2bf:54ad with SMTP id w14-20020a056e0213ee00b0031902bf54admr10683883ilj.14.1678290596139;
+        Wed, 08 Mar 2023 07:49:56 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id p21-20020a02c815000000b003c4e1bfbab8sm5101997jao.44.2023.03.08.07.49.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Mar 2023 07:49:55 -0800 (PST)
+Date:   Wed, 8 Mar 2023 10:49:54 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Subject: Re: [PATCH] blame-tree: add library and tests via "test-tool
  blame-tree"
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
+Message-ID: <ZAiuojxNifGo3n97@nand.local>
 References: <patch-1.1-0ea849d900b-20230205T204104Z-avarab@gmail.com>
  <4ab0b2b0-b045-2346-ccc1-19f9b23d0a02@github.com>
  <230307.86o7p4zm4s.gmgdl@evledraar.gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <230307.86o7p4zm4s.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <230307.86o7p4zm4s.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/7/2023 8:56 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Fri, Feb 10 2023, Derrick Stolee wrote:
-
->> All this is to say, that I'd like to see this API start with the smallest
->> possible surface area and with the simplest implementation, and then I'd
->> be happy to contribute those algorithms within the API boundary while the
->> CLI is handled independently.
-> 
+On Tue, Mar 07, 2023 at 02:56:29PM +0100, Ævar Arnfjörð Bjarmason wrote:
 > I hear your concern about leaving this open for optimization, and in
 > general I'd vehemently agree with it, except for needing to eventually
 > feed a command-line to setup_revisions().
-
-The most-correct way to build this, with full optimizations, does not
-involve revisions.c at all, so this "eventually" is incorrect. It's
-only something to do for the "first" implementation, as a reference.
-
-In order to do the single-walk approach for every path simultaneously,
-we _must_ have full control of the commit walk. There was a time where
-we had done a single-walk approach by letting the revision machinery
-walk all commits that changed the base tree, then looked for changes
-to the contained paths. However, this results in _incorrect_ results
-because commits that would normally be ignored by the simplified
-history walk for "<dir>/<entry>" were not ignored by the simplified
-history walk for "<dir>/" and thus that algorithm presented _incorrect
-results_.
-
-For that reason, doing a single walk that outputs the blame-tree
-results for each path must have full control over which commits are
-walked and which paths could emit a change for those commits. This
-means we must not use revision.c as a base for full control.
-
+>
 > Ideally the revision API would make what you're describing easy, but the
 > way it's currently implemented (and changing it would be a much larger
 > project) someone who'd like to pass structured options in the way you'd
 > describe will end up having to re-implement bug-for-bug compatible
 > versions of some subset of the option parsing in revision.c.
 
-The subset of option parsing is "a starting revision" and "a base tree"
-and _perhaps_ "is the diff recursive or not?" (and this last one isn't
-even in revision.c yet). That does not seem like using revision.c's
-parsing is actually helpful at all.
+I get what you are both saying here, but I think I find myself tending
+to agree with Ævar a little bit more here.
+
+In an ideal world, sure, having the blame-tree API take a single struct
+called 'blame_tree_options' would be very clean. But the crux is that we
+have to pass some arguments to setup_revisions(), and that our problems
+here stem from the leakiness of *that* API, not this one.
+
+I ran into a similar problem when looking at rewriting the bitmap
+traversal code a year or so ago (which is sadly still on my to-do list).
+
+Without getting into the details, part of that work involved calling
+limit_list() as a function of setup_revisions() to discover the
+traversal boundary. And if the caller happened to put --topo-order in
+their command-line arguments, we wouldn't end up calling limit_list() at
+all, since (as Stolee well knows ;-)) those two code paths are quite
+different.
+
+I can't recall if I either detected if '--topo-order' was passed (by
+looking to see if `revs.topo_order` was set), or grafted an extra
+`--no-topo-order` argument onto the end of the list. Either way, I think
+those two problems are more or less equivalent in this context, and that
+it seemed like a much more expedient solution to work around the
+fundamental leakiness of the setup_revision() API rather than refactor
+it.
 
 > Isn't a way to get the best of both worlds to have a small snippet of
 > code that inspects the "struct rev_info" before & after
 > setup_revisions(), and which would only implement certain optimizations
 > if certain known options are provided, but not if any unknown ones are?
-> 
-> That way those who'd like the faster happy path could use that subset of
-> options, while the general API would allow any revision options. We'd
-> then error() or BUG() out only if we fail to map our expected paths to
-> OIDs.
- 
-This option requires examining the long and ever-growing list of options
-to struct rev_info which will take much more work than parsing a starting
-ref and a path from the command-line.
+
+Yeah, I think this is basically the same as my "let's check if the caller
+passed `--topo-order` by checking the `revs.topo_order` bit" above.
 
 > I think those are all good ways forward here, and I'd much prefer those
 > to having to re-implement or pull out subsets of the current option
 > parsing logic in revision.c. What do you think?
 
-I think you are skirting over the difficult part about upstreaming the
-blame-tree command, which is the biggest reason we have not done it in
-the past. The way it is implemented in our fork started with this "just
-parse args using revision.c" because that's the easiest way to implement
-the naive implementation, but we were able to make optimizations on top
-only because we had full control over the callers not using any other
-options. We would not have been able to make the assumptions that allowed
-those performance enhancements without that control. Actually building the
-interface in a way that guarantees the behavior will be stable and
-understood is not easy, but is worth doing well.
+Same :-).
 
 Thanks,
--Stolee
+Taylor
