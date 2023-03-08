@@ -2,248 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5763C678D5
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 18:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E6602C74A4B
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 19:03:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230029AbjCHSri (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 13:47:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47056 "EHLO
+        id S230146AbjCHTDW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 14:03:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229786AbjCHSrg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 13:47:36 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4660014EA1
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 10:47:35 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id l7-20020a05600c4f0700b003e79fa98ce1so1747822wmq.2
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 10:47:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678301253;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sM5HlbXEx524DrLtoddsX64xZG9UhZU6gpESQasp31A=;
-        b=P4iDwScfBquWERaXyEz+uz+2CqjCNT/tJPhzbQTpz3Vpp8G1ixSuncsL61FosuGVLq
-         dxq4JG8GZwr7KNZhfB5ikFlrEePm/h5YJQ+gVWiQ5trQUjguvtGokK99E4A0K1TKOL2a
-         v5F7r/yE8kDl7uqyqNVJ4lyxN40sUSJHmodsj2s96k93Ecv5dZvhuIfmYAqQ3Jq1W8ho
-         bQBUsrFbKquX0tS+r6mAVShyk3EqiFpGkI4cX7oQ5O7vYp6F7B9W6tPqgyOw7BAWYIfA
-         X8evITu5bia2FD/Qfqj9GPV7Fuk/0LawWwJniStB79yYx4msGcmBsvaK61qXH+H/Gw9u
-         4awg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678301253;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sM5HlbXEx524DrLtoddsX64xZG9UhZU6gpESQasp31A=;
-        b=GSZsIpZivwAd1O0kmASXuKnlf2SBwPBgmJ36tXZ9+mV5744+3dzEtrnvyzPZH24MLy
-         zcS7AWd916Na8Jhx91dh2PV2N0EE+c2EP9xBDAXgy/sIKKRh3ni/KJncsH4uwEGJmGYX
-         yY5wwIVWkUdbsIcZHhUE18o4YzpJvg7E2x+IjRzZMcZrPoAvwoWqBtyDyQdDIC6FHOBZ
-         QjnuZ/ze9SkSfBsLy/5KkUmqWcKKFAovGV56HZPt7pz6+qBJ3RxOKMfybWvp0PJ9+05T
-         EbLe4iAGMohbEhTBJ+TOWFD0H3Etfr3A4IpvSsvfNsOnVoLzpedGK8Rgvc0JCJwerWMW
-         PJzw==
-X-Gm-Message-State: AO0yUKV+Oza7iZJJp+URthepZLvSNzUJ7IMhzTKnpOsm7bOJTEfaZDOd
-        lPK8b0YJm3G1graQBc5aHsLHFXn091M=
-X-Google-Smtp-Source: AK7set/UJ/aExPuomC2h/4dslg9qlXcz/sHGwSuh9VLw1e/WmbAYbyZ3XFoJKyN/UyepENZANeSqGg==
-X-Received: by 2002:a05:600c:3b87:b0:3e2:c67:1c7f with SMTP id n7-20020a05600c3b8700b003e20c671c7fmr17026702wms.10.1678301253397;
-        Wed, 08 Mar 2023 10:47:33 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d7-20020a05600c3ac700b003e0015c8618sm271068wms.6.2023.03.08.10.47.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 10:47:33 -0800 (PST)
-Message-Id: <pull.1490.v2.git.1678301252360.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
-References: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Mar 2023 18:47:32 +0000
-Subject: [PATCH v2] object-file: reprepare alternates when necessary
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229727AbjCHTDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 14:03:14 -0500
+Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1537ECEFBF
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 11:02:28 -0800 (PST)
+Received: from [192.168.42.163] (28-49-142-46.pool.kielnet.net [46.142.49.28])
+        by dd36226.kasserver.com (Postfix) with ESMTPSA id 3DEBC3C3BCA;
+        Wed,  8 Mar 2023 20:02:27 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
+        s=kas202302241129; t=1678302147;
+        bh=RcaVCl0JCa5eS2dFi6qV0CI6lhf4iZ1pdPyNdR0EJNU=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=Fg73arLJeTW6QiZ2fcc1X7sJTabIzksudspFCsWv5cuxJ4CDV3YM/tOmLhc55BmhG
+         4mA11VZbBugpyFRY5Bw+ruGtUXaOl+9y4YbOrfJcySW0p2hOpg9/xb8y/rWmSIQ19t
+         V2t31tpNh7Tnr01w5EUS6w4kykWUdZKBo/r9UVivXYg7B9Zz2DNhVK6SZF+ziMQWT8
+         0/6q8QMotNvjgG4lNT1D/mvL7E0Q0WwhjhzNHNbn7eNytAvzs46T8Nu3MONgcT+uXu
+         u3z5HmaRt5t7oLqKo9SpMTfzcpA4oXrKDOzK8yAd7zFXvqYlSWCeszmpNKbUisZ3x2
+         BCfPH5m+IZQOQ==
+Message-ID: <28b78355-e3db-d33a-c576-653740a4a1f3@haller-berlin.de>
+Date:   Wed, 8 Mar 2023 20:02:26 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.8.0
+Subject: Re: When exactly should REBASE_HEAD exist?
+Content-Language: de-DE, en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <961e68d7-5f43-c385-10fa-455b8e2f32d0@haller-berlin.de>
+ <xmqqo7p4zb8d.fsf@gitster.g>
+From:   Stefan Haller <lists@haller-berlin.de>
+In-Reply-To: <xmqqo7p4zb8d.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Bar: /
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+On 07.03.23 19:07, Junio C Hamano wrote:
+> Stefan Haller <lists@haller-berlin.de> writes:
+> 
+>> The reason why I am asking this is: I'm using lazygit, which, during
+>> interactive rebases, shows a combined view of the real commits that were
+>> already applied, and the remaining commits that are yet to be applied
+>> (it gets these by parsing rebase-merge/git-rebase-todo); something like
+>> this, when I set the 2nd commit to "edit":
+>>
+>>   pick   4th commit
+>>   pick   3rd commit
+>>          2nd commit  <-- YOU ARE HERE
+>>          1st commit
+>>
+>> This is great, but ...
+> 
+> Stepping a bit, how does our "git status" fare here?  It shows what
+> step in a sequence "rebase -i" the user who got control back (due to
+> "break", "exec sh", "edit" or a conflicted "pick") is in.  Or at
+> least it tries to.  Does it suffer from the same "great, but ..."?
+> 
+> If it works better than how lazygit shows, perhaps how it computes
+> the current state can be reproduced, or better yet, the current
+> state it computed can be exposed, and it can be prototyped by
+> parsing "LC_ALL=C git status -uno" output, perhaps?
 
-When an object is not found in a repository's object store, we sometimes
-call reprepare_packed_git() to see if the object was temporarily moved
-into a new pack-file (and its old pack-file or loose object was
-deleted). This process does a scan of each pack directory within each
-odb, but does not reevaluate if the odb list needs updating.
+It fares a little better, but not much, and it doesn't look like I can
+use its information to implement the behavior I want.
 
-Extend reprepare_packed_git() to also reprepate the alternate odb list
-by setting loaded_alternates to zero and calling prepare_alt_odb(). This
-will add newly-discoverd odbs to the linked list, but will not duplicate
-existing ones nor will it remove existing ones that are no longer listed
-in the alternates file. Do this under the object read lock to avoid
-readers from interacting with a potentially incomplete odb being added
-to the odb list.
+The difference to lazygit is that git status shows both the last few
+entries of the "done" file and the first few entries of the
+"git-rebase-todo" file, so at least I have a complete picture of which
+commits are involved. Lazygit doesn't show the "done" file, only the
+commits that are on the branch now, so the currently conflicting commit
+is missing.
 
-If the alternates file was edited to _remove_ some alternates during the
-course of the Git process, Git will continue to see alternates that were
-ever valid for that repository. ODBs are not removed from the list, the
-same as the existing behavior before this change. Git already has
-protections against an alternate directory disappearing from the
-filesystem during the lifetime of a process, and those are still in
-effect.
+In addition, git status shows the message "(fix conflicts and then run
+"git rebase --continue")", but only if there are unmerged files; once I
+resolve all conflicts and stage the changes, that message is no longer
+shown, and at that point I don't see any way to tell whether the last
+commit was applied successfully or not.
 
-This change is specifically for concurrent changes to the repository, so
-it is difficult to create a test that guarantees this behavior is
-correct. I manually verified by introducing a reprepare_packed_git() call
-into get_revision() and stepped into that call in a debugger with a
-parent 'git log' process. Multiple runs of prepare_alt_odb() kept
-the_repository->objects->odb as a single-item chain until I added a
-.git/objects/info/alternates file in a different process. The next run
-added the new odb to the chain and subsequent runs did not add to the
-chain.
-
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
----
-    object-file: reprepare alternates when necessary
-    
-    This subtlety was notice by Michael Haggerty due to how alternates are
-    used server-side at $DAYJOB. Moving pack-files from a repository to the
-    alternate occasionally causes failures because processes that start
-    before the alternate exists don't know how to find that alternate at
-    run-time.
-    
-    
-    Update in v2
-    ============
-    
-     * Instead of creating a new public reprepare_alt_odb() method, inline
-       its implementation inside reprepare_packed_git().
-     * Update commit message to be explicit about behavior with alternates
-       being removed from the alternates file or from disk.
-    
-    Thanks,
-    
-     * Stolee
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1490%2Fderrickstolee%2Fstolee%2Freprepare-alternates-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1490/derrickstolee/stolee/reprepare-alternates-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1490
-
-Range-diff vs v1:
-
- 1:  3f42c9cdef7 ! 1:  9a5e1d9a9da object-file: reprepare alternates when necessary
-     @@ Commit message
-          deleted). This process does a scan of each pack directory within each
-          odb, but does not reevaluate if the odb list needs updating.
-      
-     -    Create a new reprepare_alt_odb() method that is a similar wrapper around
-     -    prepare_alt_odb(). Call it from reprepare_packed_git() under the object
-     -    read lock to avoid readers from interacting with a potentially
-     -    incomplete odb being added to the odb list.
-     -
-     -    prepare_alt_odb() already avoids adding duplicate odbs to the list
-     -    during its progress, so it is safe to call it again from
-     -    reprepare_alt_odb() without worrying about duplicate odbs.
-     +    Extend reprepare_packed_git() to also reprepate the alternate odb list
-     +    by setting loaded_alternates to zero and calling prepare_alt_odb(). This
-     +    will add newly-discoverd odbs to the linked list, but will not duplicate
-     +    existing ones nor will it remove existing ones that are no longer listed
-     +    in the alternates file. Do this under the object read lock to avoid
-     +    readers from interacting with a potentially incomplete odb being added
-     +    to the odb list.
-     +
-     +    If the alternates file was edited to _remove_ some alternates during the
-     +    course of the Git process, Git will continue to see alternates that were
-     +    ever valid for that repository. ODBs are not removed from the list, the
-     +    same as the existing behavior before this change. Git already has
-     +    protections against an alternate directory disappearing from the
-     +    filesystem during the lifetime of a process, and those are still in
-     +    effect.
-      
-          This change is specifically for concurrent changes to the repository, so
-          it is difficult to create a test that guarantees this behavior is
-          correct. I manually verified by introducing a reprepare_packed_git() call
-          into get_revision() and stepped into that call in a debugger with a
-     -    parent 'git log' process. Multiple runs of reprepare_alt_odb() kept
-     +    parent 'git log' process. Multiple runs of prepare_alt_odb() kept
-          the_repository->objects->odb as a single-item chain until I added a
-          .git/objects/info/alternates file in a different process. The next run
-          added the new odb to the chain and subsequent runs did not add to the
-     @@ Commit message
-      
-          Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-      
-     - ## object-file.c ##
-     -@@ object-file.c: void prepare_alt_odb(struct repository *r)
-     - 	r->objects->loaded_alternates = 1;
-     - }
-     - 
-     -+void reprepare_alt_odb(struct repository *r)
-     -+{
-     -+	r->objects->loaded_alternates = 0;
-     -+	prepare_alt_odb(r);
-     -+}
-     -+
-     - /* Returns 1 if we have successfully freshened the file, 0 otherwise. */
-     - static int freshen_file(const char *fn)
-     - {
-     -
-     - ## object-store.h ##
-     -@@ object-store.h: KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
-     - 	struct object_directory *, 1, fspathhash, fspatheq)
-     - 
-     - void prepare_alt_odb(struct repository *r);
-     -+void reprepare_alt_odb(struct repository *r);
-     - char *compute_alternate_path(const char *path, struct strbuf *err);
-     - struct object_directory *find_odb(struct repository *r, const char *obj_dir);
-     - typedef int alt_odb_fn(struct object_directory *, void *);
-     -
-       ## packfile.c ##
-      @@ packfile.c: void reprepare_packed_git(struct repository *r)
-       	struct object_directory *odb;
-       
-       	obj_read_lock();
-     -+	reprepare_alt_odb(r);
-     ++
-     ++	/*
-     ++	 * Reprepare alt odbs, in case the alternates file was modified
-     ++	 * during the course of this process. This only _adds_ odbs to
-     ++	 * the linked list, so existing odbs will continue to exist for
-     ++	 * the lifetime of the process.
-     ++	 */
-     ++	r->objects->loaded_alternates = 0;
-     ++	prepare_alt_odb(r);
-     ++
-       	for (odb = r->objects->odb; odb; odb = odb->next)
-       		odb_clear_loose_cache(odb);
-       
-
-
- packfile.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/packfile.c b/packfile.c
-index 79e21ab18e7..06419c8e8ca 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1008,6 +1008,16 @@ void reprepare_packed_git(struct repository *r)
- 	struct object_directory *odb;
- 
- 	obj_read_lock();
-+
-+	/*
-+	 * Reprepare alt odbs, in case the alternates file was modified
-+	 * during the course of this process. This only _adds_ odbs to
-+	 * the linked list, so existing odbs will continue to exist for
-+	 * the lifetime of the process.
-+	 */
-+	r->objects->loaded_alternates = 0;
-+	prepare_alt_odb(r);
-+
- 	for (odb = r->objects->odb; odb; odb = odb->next)
- 		odb_clear_loose_cache(odb);
- 
-
-base-commit: d15644fe0226af7ffc874572d968598564a230dd
--- 
-gitgitgadget
+-Stefan
