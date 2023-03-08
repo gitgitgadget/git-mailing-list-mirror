@@ -2,132 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76710C64EC4
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 17:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AEA7C64EC4
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 18:01:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229809AbjCHRmV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 12:42:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
+        id S229919AbjCHSA6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 13:00:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229850AbjCHRmC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 12:42:02 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B051ACC3
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 09:41:33 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id i10so18374642plr.9
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 09:41:33 -0800 (PST)
+        with ESMTP id S229901AbjCHSA5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 13:00:57 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13D8C561B
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 10:00:53 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id in10-20020a17090b438a00b002376d8554eeso6909047pjb.1
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 10:00:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678297292;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+        d=google.com; s=20210112; t=1678298453;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5au5oAFOSjK32bqi5X+yjwOYy/7phs3b70ykVEm4ByQ=;
-        b=lyUmyQ+HKE/gUNxRV1H5nmq1zB2vREOV2chc+cA3/KMdIfsKfpNFY8OwjKk5QwYgj1
-         j5SCyyFvjSWFSVk4AX0FAXLAgtnJhFJfjy+rMref1FqzCx/obV4q/zKwWkQf3/wEMivm
-         uT7D3BBs5K1tyAre+47v0ssg3sckw78EYuy3hU0b4tMbCqbgowk1H1gjkrUv6qjsdrnZ
-         MG9swT89csRz0Tddb8ODFATDCW9mIUPblfLgrBmCwDLCsF/m2OZkldsO0NGVRqYoA4Gl
-         2GqvldqM9w9zZV29o86yOXGJugSrAa9X1mjue0vD+s/H1I17OBfG2qPGqJnjDhgADMt5
-         tHFw==
+        bh=bKutCFHTphQGyR0zJ2js1qZdALh8uurKupsRMSeuEu0=;
+        b=sWibEQpgLSUvQNukzk8rFgrdmc17otq6uM81qH1NN9tqXJywgitGgn2Ss4P0AyIeKq
+         ZLKXgdYqFNc8esOcmxbJ1TWeRU/G+F5jxyPakJAxA9LZGyEAcHpnSQl/s3MX7YI+AH6a
+         robg0KRugmdn8A85VILqSaZqlMoO3ItUUerPdyoQaSH8e5RiWkhWvT8n1BDatsEoYkta
+         Z5BG2vNH8yuj5Qn1bVllI9NMkK+75M4jaScwaF5rxOrJRkMn5ezAhNLeHEnqHmCzSk0c
+         uilGKLPE6E3phdETpXKjYHqoon1oRtSrDzS+zYmS6kwBF8EpSZyR8UmzIizpDgrQ8evy
+         /lmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678297292;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+        d=1e100.net; s=20210112; t=1678298453;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=5au5oAFOSjK32bqi5X+yjwOYy/7phs3b70ykVEm4ByQ=;
-        b=Z/3/2/GkFWfUpVH2LAd1KmTP83hTOs7tMra9hoGgAoIQrHf7OlGJkGz/J9R7M/dNk2
-         x+2Wa6Ui9NPDHDo/gu2PRXlvww8iypU7mJ7EF2xRkbOhTmhaaVPdqQnwcnmBdzFWCLrF
-         DXG4xnz3ShAhlrCdvlVwFs9anEJbfTSEoitCN8cxVCzDEOqHIUlP1gVdEJ+qo0ETddru
-         q5hjI177QEuwzz54hJpAdmRkEZ0pWfsHfiBuiDKYd4lUpYcMI4Ms5u6S3L9T4apsCJZS
-         ivmCpFvoT2tIc3+Uo22G7wdnepx7fcHH+arILQNHaGnynqgGc7Diqfv8QW4yhhHqMmlv
-         CIgA==
-X-Gm-Message-State: AO0yUKVpvkDGgrlVfVb9++JnS1f0BsIgRzS27J+cVvSstpM4GEoD9N98
-        vD8a+kh5rt8m+t+D5GPDsS6CISNks0I=
-X-Google-Smtp-Source: AK7set+clBilNLFd0RPu521rU2MDor7JB/GfAKTxQkCO3MsqBE+TJMVqNNo55cNe20yqcl8prlCZ1w==
-X-Received: by 2002:a17:902:e88b:b0:19a:b869:f2f8 with SMTP id w11-20020a170902e88b00b0019ab869f2f8mr25627898plg.21.1678297291957;
-        Wed, 08 Mar 2023 09:41:31 -0800 (PST)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id u7-20020a17090341c700b001992fc0a8eesm1232064ple.174.2023.03.08.09.41.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 09:41:31 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fetch: pass --no-write-fetch-head to subprocesses
-References: <20230308100438.908471-1-e@80x24.org>
-Date:   Wed, 08 Mar 2023 09:41:31 -0800
-In-Reply-To: <20230308100438.908471-1-e@80x24.org> (Eric Wong's message of
-        "Wed, 8 Mar 2023 10:04:38 +0000")
-Message-ID: <xmqqwn3rta2c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        bh=bKutCFHTphQGyR0zJ2js1qZdALh8uurKupsRMSeuEu0=;
+        b=m/QmcsWcPj9GEKj1g4oW534nMuqL8rftbc75Y4mBgbXad3TO1eZut4G40/iC4Yj911
+         SBgNJ657tfGkSetUo41AigByG8Wr1s2rtOHsWM1LFurtS6gi3lblkqr/Uw7EKaiZcLaw
+         0LyZwbAtUXp2/Bxq8Hw2JHvV35uo69ff5/EPya8EKe3s8X/YqPZwqJFW5MKO9fsHQA7N
+         pFs0ptCnMuAfr7tMn7NT4D9idpjxfn9SXVe9UkC5nsCQTl2HrY1XyAt6Jce92vz/Bnt/
+         tPbjhHs9E6jQHWjftpQI5hzG1UmBFcY1tzOKoT65Fz/tkjLz/bwdV7IqPCDeo2Z6GnO/
+         6WkA==
+X-Gm-Message-State: AO0yUKWt8Ucgf96/Y1D6yxfPkCPvyOVlWcAos+T+r3Rkaohg0ZZseNvz
+        NP6t8NCqXvzXRqUIFrf7rIr0X95tk/Sr4Q==
+X-Google-Smtp-Source: AK7set+sf00uWCRWcsKGDdwE5qVjNskuiN2T8y3VxKNdOXdQDirxz4wNoXZMg0TL2LHgiYFIt4QjXS43Aa99VQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a63:b55e:0:b0:502:e1c4:d37b with SMTP id
+ u30-20020a63b55e000000b00502e1c4d37bmr6583009pgo.12.1678298453429; Wed, 08
+ Mar 2023 10:00:53 -0800 (PST)
+Date:   Wed, 08 Mar 2023 10:00:51 -0800
+In-Reply-To: <230308.86356fzhbd.gmgdl@evledraar.gmail.com>
+Mime-Version: 1.0
+References: <pull.1463.git.git.1677631097.gitgitgadget@gmail.com>
+ <74a63fed7054da8049d4a32ecdb582726368c5a8.1677631097.git.gitgitgadget@gmail.com>
+ <230308.86356fzhbd.gmgdl@evledraar.gmail.com>
+Message-ID: <kl6lttyvgm24.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH 4/6] config.c: plumb the_reader through callbacks
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <nasamuffin@google.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Subject: Re: [PATCH] fetch: pass --no-write-fetch-head to subprocesses
+> So, there's a lot of churn in this topic from renaming "cf" to "cs" all
+> over the place, I really wish that could be avoided for the size of the
+> overall diff, but haven't looked into in detail how easy that is, but...
 
-I read the title as saying that "git fetch --recurse-submodules
---no-write-fetch-head" should propagate the latter option down to
-fetches done in submodules, but looking at the added test, you are
-addressing a different use case, aren't you?  Or are you covering
-both "fetch: honor --no-write-fetch-head when fetching from multiple
-remotes" and "fetch: pass --no-write-fetch-head down to submodules"?
+Yeah, I think it can be avoided by taking Junio's suggestion to rename
+the global "cf" to "cf_global" or something, then accepting a "cf"
+parameter.
 
-> It seems a user would expect this option would work regardless
-> of whether it's fetching from a single remote or many.
+  https://lore.kernel.org/git/xmqqh6v1g1d3.fsf@gitster.g
 
-This hints that it is only the latter, but if we are covering both
-
- (1) the title we have here may be alright.
-
- (2) the proposed log message should state the change affects both
-     (in a good way).
-
- (3) the other half may want to be tested in new test as well.
-
-Thanks.
-
-> Signed-off-by: Eric Wong <e@80x24.org>
-> ---
->  I haven't checked if there's other suitable options which could
->  go into add_options_to_argv(); hopefully someone else can check :>
+>> -static int configset_add_value(struct config_set *cs, const char *key, =
+const char *value)
+>> +static int configset_add_value(struct config_reader *reader,
+>> +			       struct config_set *cs, const char *key,
+>> +			       const char *value)
 >
->  builtin/fetch.c           | 2 ++
->  t/t5514-fetch-multiple.sh | 7 +++++++
->  2 files changed, 9 insertions(+)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index a09606b472..78513f1708 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1880,6 +1880,8 @@ static void add_options_to_argv(struct strvec *argv)
->  		strvec_push(argv, "--ipv4");
->  	else if (family == TRANSPORT_FAMILY_IPV6)
->  		strvec_push(argv, "--ipv6");
-> +	if (!write_fetch_head)
-> +		strvec_push(argv, "--no-write-fetch-head");
->  }
->  
->  /* Fetch multiple remotes in parallel */
-> diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
-> index 54f422ced3..98f034aa77 100755
-> --- a/t/t5514-fetch-multiple.sh
-> +++ b/t/t5514-fetch-multiple.sh
-> @@ -58,6 +58,13 @@ test_expect_success 'git fetch --all' '
->  	 test_cmp expect output)
->  '
->  
-> +test_expect_success 'git fetch --all --no-write-fetch-head' '
-> +	(cd test &&
-> +	rm -f .git/FETCH_HEAD &&
-> +	git fetch --all --no-write-fetch-head &&
-> +	test_path_is_missing .git/FETCH_HEAD)
-> +'
-> +
->  test_expect_success 'git fetch --all should continue if a remote has errors' '
->  	(git clone one test2 &&
->  	 cd test2 &&
+> ...this is an existing name just seen in the context, but could we in
+> this topic at least avoid having a "cs" refer to both a "struct
+> config_set" and a "struct config_source" in the end-state?
+
+Fair. This also irked me when I first saw it.
+
+As an aside, I found "struct config_source cf" to be a bit of an eyesore
+too. It's an unfortunate holdover from before 4d8dd1494e (config: make
+parsing stack struct independent from actual data source, 2013-07-12)
+when the struct was called "config_file". Unfortunately, "cs" is already
+taken by at least one parameter, so maybe we'll never be able to
+properly rename it...
