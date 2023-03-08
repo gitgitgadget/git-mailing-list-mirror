@@ -2,175 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53C20C678D5
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 16:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66B87C742A7
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 17:13:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229967AbjCHQ4z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 11:56:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50936 "EHLO
+        id S229959AbjCHRNL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 12:13:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjCHQ4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 11:56:31 -0500
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BDC5C4EB5
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 08:54:51 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 3534832000D9;
-        Wed,  8 Mar 2023 11:54:42 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 08 Mar 2023 11:54:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sebyte.me; h=cc
-        :cc:content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm1; t=1678294481; x=1678380881; bh=Wq
-        hX4vCxvzSBoJZ7HGRZf9F1Tl7NlvsZrV5WByZGhng=; b=2LRkvp7YiMSdwEIWZB
-        m7H84BgEy8izkVwq4khYF/YiQ4oowgGpQpLzHm1tuCOAcTXCxN2wQSgDnhpWuK/B
-        WN5cp6Mhjzgx4l/7xBRlj1ndfN5aXn6NUEXr+3RGQ9CaPjhSpxAThMmI4qqa4mXx
-        9Eu5CUIN9l/pQPJQslak0moJczutsB05KL1Ondk0aLobjw05Tk60beYNBK24TgbL
-        33G21RDWxRl2PoNVqEhlhC55jT+6iUN7rH+dRTp2CoGRFfj0I0EW3VR15i3T0iIZ
-        zRP3ozoyz6KWGNo/Oidqyv7krmzbRD1XZocatfJMeG2Ndf1HWCy5tp5aoL+QbKN9
-        1/Ag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1678294481; x=1678380881; bh=WqhX4vCxvzSBo
-        JZ7HGRZf9F1Tl7NlvsZrV5WByZGhng=; b=iDUC4fOzrlvaZ8V9+Kpc4RBW/lrjr
-        TcaAoplahRbh0Uw9XMCXCe0GqU6Iuz8CO4/QCwqtnMz7GYJyJfmv8TzS21rms0dp
-        +u7Wd1RvfaSDkfns0gatTFek5IuWHeQ7fUdlnkYl9mS/emwYf9GE1sCCQw+PEPu1
-        Uf7d0WH7NaBDcpj8jDCWo6s7O2IUmHXVCI3MMbltVQIxVtaLZ7PlDeunL6TwR7LI
-        nn5zKu/jWJMq5aQAiEbyMDVAmZ2kM6jwTcDPi+POY0pQu5lMGcxmriB8N1dcI1ZO
-        AtDNgHD0ErMXKEJFFTBhr7QEJmjswDdUtmkZhsirw9I1/XNhT3orkB3QA==
-X-ME-Sender: <xms:0b0IZH0IgbQcMSl4X3HbGA-1Qy1w64-tAOXEfxqeB8zTlNfMZvM7Ng>
-    <xme:0b0IZGEHw0m2cVFUbNlcKD_DWn7gxl-PRwV2U598PAZwIhOarCU_9dp6Lfa-NTyO1
-    -CM5hIGG21EK471bQ>
-X-ME-Received: <xmr:0b0IZH6id4P0zJmChIo84JTsRXHZJus8E3rCETvfVLlsrX0w14Ju0w5jjt2sNkZhJaCpk0Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvddufedggeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufhfffgjkfgfgggtsehttd
-    ertddtredtnecuhfhrohhmpefuvggsrghsthhirghnucfvvghnnhgrnhhtuceoshguthes
-    shgvsgihthgvrdhmvgeqnecuggftrfgrthhtvghrnhepveeuiefggeejtedugeegtddutd
-    ffhfeiueehudekveekkeffgfeugeeugfeijeegnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepshgvsgihthgvodhrvghtuhhrnhdqphgrthhhse
-    hfrghsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:0b0IZM3P-MpNZRyILfG6qEFC10bw0jeK_D5c7CXzyB-caVQsToQsnA>
-    <xmx:0b0IZKFs4okN3-BzPaznU5ZSZZHjJTu8Fr6n0wpQQGiDdfxf-ZUXLg>
-    <xmx:0b0IZN-CU2ackSW13tDwDLeRGZy0UoaA3ie8IMVUmVWDQGeqbzCpng>
-    <xmx:0b0IZFNR2yajIkJr_hk5_H8Hh1h8wUvdjISULF6VSp2-8suCI25bkw>
-Feedback-ID: i9e78401f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Mar 2023 11:54:41 -0500 (EST)
-Received: from sebyte by balor with local (Exim 4.94.2)
-        (envelope-from <sebyte@balor.gnukahvesi.net>)
-        id 1pZx3n-001Iim-GN; Wed, 08 Mar 2023 16:54:39 +0000
-From:   Sebastian Tennant <sdt@sebyte.me>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: How to mirror and augment a git repository
-References: <87ilfgemkb.fsf@sebyte.me>
-        <ZAWfkkmrPUqNmrtu@coredump.intra.peff.net>
-Date:   Wed, 08 Mar 2023 16:54:39 +0000
-In-Reply-To: <ZAWfkkmrPUqNmrtu@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 6 Mar 2023 03:08:50 -0500")
-Message-ID: <87fsaf9oa8.fsf@sebyte.me>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.3 (gnu/linux)
+        with ESMTP id S229718AbjCHRNI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 12:13:08 -0500
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 944C6900F
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 09:13:06 -0800 (PST)
+Received: by mail-qv1-xf31.google.com with SMTP id jo29so11582333qvb.0
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 09:13:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1678295585;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5K+GYd5wdYF+yKKUjOu+jdI8rUfGQdD0mOnyDcKv9zc=;
+        b=O/h6DnDzbzihZdIpn9Igtwyy1cPXCimNC/d7u5P4cha015oLDI/NGPERc5qvcLGI5v
+         g4Cv3E/jOgrUlc2wQPZPVB65duMfXdmxQ4HfyWUAAVZtFUDJeqN6TljqycAn7EqcCt5v
+         KuLMWrtdmaDt/ocbZ7tBrSbt+7wYxYWoS1Yeb0NJo5tNUrSelI/m7yccx9IZA7il+boA
+         puoB7Y/rHj9Zi+QnqJiLfZgVYBt+8SvTSu2om7hb8fcNwUX905RZlGb+6HbeC/k2JMtc
+         Uie0ukrSYfgaGe7Iyl66DSOOyhA2Dl+qEkKYlzPMq7hhVL1sRwt42LlH7PZFw5rlKWRX
+         VQsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678295585;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5K+GYd5wdYF+yKKUjOu+jdI8rUfGQdD0mOnyDcKv9zc=;
+        b=Ac48oqmqX3IkOEqqV1uYNXsx/mhMy6B4CrsnQ6wkaDVwvH6StNcwRoqxuwlrA+T6JI
+         NYlNhMHqzMaLQNnMEM3mJpfIxxwA/Nq/s+kINAm5Y8ME5pp5LgTBBra+zt9sGie/EIs2
+         m5GbGGQ+jD6HZw2th1hl10Rnd/GqsdVHm9cuiZwJrKMFiw5VDWJ7426lm7PMwHtC5oiX
+         HIKT29zm7ynm2ksDM/Db1p0JDnxCYbVUIrUYNuBRuum24ub+r72zdajQzL67Xr2rdIrG
+         rlQoU5aNEhzCFezxk+Vhsaz7OZ6jEEC2HfvAR9luIKA59JWnej/jWkkt4cMvt1DMs3iJ
+         s9xA==
+X-Gm-Message-State: AO0yUKXB00JMhEC97uoVZ4EhsrRyHh3+fcIedtiG22Nw2eJ6ZFMBfFcU
+        j3ZrYH8OOlkAGTCMMGV51GwG
+X-Google-Smtp-Source: AK7set9jVbACQvs90zAF7OPP5B0adudm0DQHqMJru42aRSlSXiN2NWXrXTYVA6PC0coF/hwcmrm2qA==
+X-Received: by 2002:a05:6214:2a46:b0:56b:79fa:e6d9 with SMTP id jf6-20020a0562142a4600b0056b79fae6d9mr11485474qvb.31.1678295585632;
+        Wed, 08 Mar 2023 09:13:05 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:d0dc:3668:fb01:9900? ([2600:1700:e72:80a0:d0dc:3668:fb01:9900])
+        by smtp.gmail.com with ESMTPSA id r8-20020ae9d608000000b006f9f3c0c63csm11778000qkk.32.2023.03.08.09.13.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Mar 2023 09:13:05 -0800 (PST)
+Message-ID: <87ecf011-415f-20d8-e781-18b97bfdca44@github.com>
+Date:   Wed, 8 Mar 2023 12:13:03 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] object-file: reprepare alternates when necessary
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+References: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
+ <xmqqy1o97apj.fsf@gitster.g> <ZAaFQJm6UGYH4YIi@nand.local>
+ <901299ac-e543-b7e5-0a1a-c90e667a947d@github.com>
+ <ZAiv2I17+/IBF8pl@nand.local>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <ZAiv2I17+/IBF8pl@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Jeff,
+On 3/8/2023 10:55 AM, Taylor Blau wrote:
+> On Tue, Mar 07, 2023 at 09:52:19AM -0500, Derrick Stolee wrote:
 
-Thanks for your explanation.  It's been really helpful.
+>> The prepare_alt_odb() call only _adds_ to the linked odb list. It
+>> will not remove any existing ODBs. Adding this reprepare_*() method
+>> makes it such that we can use the union of the alternates available
+>> across the lifetime of the process.
+> 
+> Right, that matches my understanding. What I am asking is: since we only
+> add ODBs to the list, what happens if we can no longer access an
+> *existing* alternate at the time we call reprepare_alt_odb()?
+> 
+> It's clear that that now-inaccessible alternate remains in our list of
+> alternate ODBs, but do all object lookups hitting that ODB fail-over to
+> the new ODB? I believe so, but it isn't totally clear to me.
 
-Quoth Jeff King <peff@peff.net>
-on Mon, 6 Mar 2023 03:08:50 -0500:
-> On Sat, Mar 04, 2023 at 12:19:16PM +0000, Sebastian Tennant wrote:
->
->>  Augmented mirror:
->>
->>    $ git clone --mirror <upstream> upstream
->>    $ cd upstream
->>    $ git remote update  # regular cron job
->
-> The problem here is that your refspec for "origin" in the mirror
-> will be "+refs/*:refs/*". So it claims to have responsibility for
-> the whole refs namespace. And because of the "+", it will happily
-> overwrite local refs when fetching, including branches pushed up by
-> the client. You noticed it most with "prune", because that deletes
-> local branches not present in upstream repo. But a similar problem
-> would happen if both a client and the upstream had a branch named
-> "foo".
+It's the same as the pack-file list: if we fail to load something
+from one, then we continue to the next one. If an alternate dir
+is completely removed during the process, then looking for pack-
+files again will fail to see any and continue without error.
 
-Understood.
+This is already possible by deleting an alternate directory
+while a Git process is running and might try to open files in it.
+Git already recovers from this scenario.
 
->> I've tried running the augmented mirror as a plain bare repo, i.e.
->>
->>    $ git config --unset remote.origin.fetch
->>    $ git config --unset remote.origin.mirror
->>
->> but then the cron job (git remote update) is no longer sufficient in
->> making all upstream activity available downstream.
->
-> Right. If you drop the fetch refspec entirely, then it will only fetch
-> HEAD during your cron jobs, which is not what you want.
+If you're instead talking about the .git/objects/info/alternates
+file being modified to remove an alternate from the list, then
+Git's current behavior is to keep that alternate around for the
+life of the process, and I recommend continuing that behavior.
 
-Precisely.
+There's nothing special that we are adding here that doesn't
+already exist as protections when files are removed beneath the
+Git process.
 
-> You want a refspec that tells Git to fetch everything, but you need
-> to divide up the "refs/" namespace into local stuff and mirrored
-> stuff.
->
-> You could use the normal "+refs/heads/*:refs/remotes/origin/*" refspec,
-> but it's awkward for the clients to access "refs/remotes/" on the
-> mirror.
-
-Indeed.  To fetch a known ref, a client (also with the normal fetch
-refspec) would have to do something like this, for example:
-
- $ git fetch origin\
-       refs/remotes/origin/<ref>:refs/remotes/upstream/<ref>
-
-Alternatively, they could add an additional fetch refspec to their
-config:
-
-[remote="origin"]
- ...
- fetch = +refs/heads/*:refs/remotes/origin/*             # normal
- fetch = +refs/remotes/origin/*:refs/remotes/upstream/*  # additional
-
-This would have the advantage of fetching all the upstream refs on the
-next update giving them a better idea of what's happening upstream.
-
-Is my understanding more or less correct?
-
-> So you probably want to keep the upstream branches in "refs/heads/",
-> but mark a special part of the namespace. Like:
->
->   cd augmented-mirror
->   git config remote.origin.fetch '+refs/heads/*:refs/heads/upstream/*'
->
-> And then "git fetch" will pull all of the remote branches into the
-> "upstream/" namespace.
-
-I see.  And creating the 'upstream' namespace under 'heads' (instead
-of under 'remotes') is crucial, since any client (with a normal fetch
-refspec) will then receive those refs automatically, i.e. without the
-additional fetch refspec I've described above.
-
-> And it's safe to prune, because it will only delete branches in
-> refs/heads/upstream/ (and you may want to just "git fetch --prune"
-> as you fetch via cron, which is a little more efficient than a
-> separate "git remote prune").
-
-Understood and noted.
-
-> Clients can name their branches whatever they like, as long as they
-> don't start with "upstream/", and that won't interfere with the
-> mirror.
-
-Got it.  Thanks again.
-
-Sebastian
+Thanks,
+-Stolee
