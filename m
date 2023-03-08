@@ -2,135 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E622C64EC4
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 20:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85ADEC64EC4
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 20:59:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230406AbjCHUvi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 15:51:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54514 "EHLO
+        id S230379AbjCHU7Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 15:59:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230300AbjCHUvg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 15:51:36 -0500
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBFAB8C0C4
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 12:51:33 -0800 (PST)
-Received: by mail-qt1-x82b.google.com with SMTP id c19so19541262qtn.13
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 12:51:33 -0800 (PST)
+        with ESMTP id S230247AbjCHU7W (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 15:59:22 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EADC6A2D8
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 12:59:13 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id n5so48431pfv.11
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 12:59:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678308693;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KGT9PB1pIOwvvh0vhf4WZr3AX9GVK6KnarNwlUBn9ak=;
-        b=nNPLs6KyobMKp/F0NoCfZOx8eVmXU1Hv7/CevjaxaZ3/+ow+pAH+uVMdF49NPs1va5
-         vE/2QXfnH/o2vDf3CbjVRyZwPQSmzf3my6GTVVbWv2SRDw5VL18KleM+LpUQ4pkREMT4
-         w4iLAOkAAc4A9iNxflSfszLz+lSOwvI29gTb0orlsYGgSSAfMG4AkMdIRrgnxkGM/Oar
-         R3H6qeQmEitelQmf5Vq6VKeEjtiCzyYN+H/kg6+eUgwUnTdiGsvOLqydsWh9YVl7SKv2
-         zKQNOeP77JhFQyQBTr9W+Z0jg/t8QwA6ZsmiGxzGfl1s+L9JOWrZB3BQZWDj2ZJiQOaG
-         cHRw==
+        d=gmail.com; s=20210112; t=1678309153;
+        h=mime-version:user-agent:message-id:in-reply-to:date:importance
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mKaLjQquxV9/T+5p5BvSahrs9ymEZ4Twg/4XYrUiaOg=;
+        b=ne7DRwdHs1cum8dQ2nN7+Uyt+Vmw1eYLLWiYRks/vQKNkw1xrn9uiD+3IluRyIGBsi
+         ZpbxJdTgotn/CxsF7lh0h7xatKic/hvH4re2dxpfbtKY7TAHbQ7r5nn1r7eyHMFv51c7
+         IOfrpmMsq7EgFCsua2YwY5ZHJh4E3h3SbKQXijGh/D8L8P8F/gajCwDZ1bfkQ6ibsKQH
+         spB7hXaiQJuNVYC00E03deRioGXN5aR+/B3s4I2FbH20emRZ6I5eSEzrA66wEvxleAz/
+         4NjB2t7TOMsf1sUGUFXfTAu4vfv9E2DocSWq/P2kO9AJADAwV15BVyzQRUDIZN2PttiG
+         wvuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678308693;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KGT9PB1pIOwvvh0vhf4WZr3AX9GVK6KnarNwlUBn9ak=;
-        b=pyd7StQ71XO5zsZ78Ocv7nhPMHhQZOIL+4AS5UDAq5LGjUamK8NMhIHyVMQKlHid8X
-         VJEAjmWwHhW8QTVvzienDsom3+aFDXfj72/kaLfKIujDmYtFXMOMD51WrRbeSwfwesZh
-         qjJODlVqXbiu9trbagE3HjoZSRKmDzsXrc1lmW2m5CghW92TW2xgtBQGb+TDn3WSpL1i
-         os8JzmX+OQX+JyXTEN3ITV6iu0bWuhUh20R5uQhdelIZcCFjlwnUpZn7XNO5y0vZo5XQ
-         zkVBw0326I4GxX0f8JOUmdyT0Qucvi10oLvBDvpkWDjJYrns0gKZBebVLSEeOmKKmiKH
-         oa+A==
-X-Gm-Message-State: AO0yUKWzPwQGTTFvTFae2udJxYoGWwba4uZb28vLEkYAexuO3JdVa1JF
-        N70hKO6ZdBj9XrAUJBcGvkbEdM6npiU=
-X-Google-Smtp-Source: AK7set8+GuxN46GU+ITws3mXO5lmefHr5nvPl4tEl/ow8qoPt7wa7vY62RaaLqFwAR2SEphlxlzHqg==
-X-Received: by 2002:a05:622a:206:b0:3b8:6b25:88bf with SMTP id b6-20020a05622a020600b003b86b2588bfmr33603223qtx.51.1678308692932;
-        Wed, 08 Mar 2023 12:51:32 -0800 (PST)
-Received: from [192.168.1.128] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id y8-20020ac85248000000b003b86b962030sm12368996qtn.72.2023.03.08.12.51.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Mar 2023 12:51:32 -0800 (PST)
-Subject: 'BUG' in builtin add -p (was :Re: [ANNOUNCE] Git v2.40.0-rc2)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <xmqqy1o8wdgi.fsf@gitster.g>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <bff58f23-6188-9b1e-b23a-fc3d94e9f72f@gmail.com>
-Date:   Wed, 8 Mar 2023 15:51:31 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        d=1e100.net; s=20210112; t=1678309153;
+        h=mime-version:user-agent:message-id:in-reply-to:date:importance
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mKaLjQquxV9/T+5p5BvSahrs9ymEZ4Twg/4XYrUiaOg=;
+        b=1t2j9Id2mSgwZ3XHXFBdeVBeIZxjRJIuyLOsMHPK4O/p7iqetDEEZykKYIIABMtpRJ
+         F78i38+gp8fmuxBhM0jFyyBB4+sy9DSVDIUInCOsf90aWkpNY5KJ93j9cVrg9RJtbeAo
+         bzsbaq44OJG6UTKhHsdSwjs6zkdCU6OfHPcfmZbPpEcUrispLU8DmjFkL9Xzrpag0zcs
+         VCglhfsa6SmLzROE7J/GnZMs8/WQTzBVWBWNzLY/OLAuNsQGRqGNKJLGt8zRghcJmbyE
+         +h+miAkjsj+Kzxp3V1uTuvqK7grUwc3MBDelHllrnkUwMWulqKbUDs0yJedN5307gnJN
+         iKog==
+X-Gm-Message-State: AO0yUKU37vjCGK0wIq8FbXy5dD/ot78HhnhNf4mkgQFrlCvzj0pGEjnp
+        rd5TGD2nwe31zaZRuaxPwTMRi2MilmM=
+X-Google-Smtp-Source: AK7set+B8C1aVftrzOZN/a/juAsF/ooJ/uKmKgMcGQQ+BFlxL9S9IYdIfOXIkRxXB/Lu3dzW2tC6FA==
+X-Received: by 2002:a62:e917:0:b0:5ee:7c9e:9afa with SMTP id j23-20020a62e917000000b005ee7c9e9afamr20039649pfh.0.1678309152663;
+        Wed, 08 Mar 2023 12:59:12 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id i8-20020aa79088000000b00594235980e4sm9788352pfa.181.2023.03.08.12.59.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Mar 2023 12:59:11 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Fangyi Zhou <me@fangyi.io>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: fz/rebase-msg-update (2023-02-27)
+References: <xmqqcz5snyxz.fsf@gitster.g>
+        <007e6f051381d86da6881644ce300b6eea944194.camel@fangyi.io>
+        <xmqqttyww9tl.fsf@gitster.g> <xmqqpm9kw9no.fsf@gitster.g>
+        <37ed877d5927c7cebba7e47769be3a069eacd6c6.camel@fangyi.io>
+        <xmqqa60ow7nr.fsf@gitster.g>
+Importance: high
+Date:   Wed, 08 Mar 2023 12:59:11 -0800
+In-Reply-To: <xmqqa60ow7nr.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        07 Mar 2023 13:52:56 -0800")
+Message-ID: <xmqqjzzrrmcg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqy1o8wdgi.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Junio C Hamano <gitster@pobox.com> writes:
 
-Le 2023-03-07 à 14:47, Junio C Hamano a écrit :
-> A release candidate Git v2.40.0-rc2 is now available for testing at
-> the usual places.  It is comprised of 461 non-merge commits since
-> v2.39.0, contributed by 78 people, 30 of which are new faces [*].
-> 
+>>> Besides, localizaiton teams are already working on what has been
+>>> in 'master'; it disrupts their workflow to change end-user message
+>>> under them.
+>>
+>> The patch fixes a newly added i18n string, not the option itself,
+>> see
+>> https://github.com/git-l10n/pot-changes/blob/pot/main/2023-02-04.diff
+>> I found the issue while conducting the localisation for v2.40.0.
+>
+> Exactly.  That's not a regression.
 
-> ----------------------------------------------------------------
-> 
-> Git v2.40 Release Notes (draft)
-> ===============================
-> 
+During -rc period is when we are supposed to concentrate on
+regression fixes, and I am not strongly inclined to merge it, but
+merging it would not be _too_ bad, either.
 
->  * Finally retire the scripted "git add -p/-i" implementation and have
->    everybody use the one reimplemented in C.
+If we ship the final without the patch, what happens to users in the
+C locale is that they may see a message that says that the
+rebase.autosquash variable is incompatible with use of 'rebase' via
+the apply backend.  If they then inspect their configuration with
+"git config rebase.autosquash", they will sure find it set, and
+nobody gets hurt.  Users in locales other than C may get the same
+message in their language, and again, there is no harm done.
 
-I just hit a 'BUG' in the builtin add -p, I'll try to write a reproducer later but
-wanted to send a heads up now in case you can reproduced easily on your own with the below info.
-Note that this is not new in 2.40-rc2, I'm still on 2.39.1.
+If we ship the final with the patch, users will see the message
+about rebase.autoSquash variable if they are in the C locale or
+locale whose translation can be updated in time, and their
+inspection of "git config rebase.autoSquash" would show that the
+configuration is there.  But it would equally well worked if they
+said "git config rebase.autosquash".  IOW, your "hotfix" may be
+fixing something that is no big deal in practice, even though it
+would have been much better if the original patch was done that way
+for consistency.  The only losers if we merge the patch in the last
+hour before the release are those users in locales whose translation
+is not adjusted in time.  They will see the message about
+rebase.autoSquash variable untranslated.
 
-Basically I have an unmerged path from a conflicted 'git checkout $branch -m'. I resolved
-the conflict, but did not run 'git add'. And then I ran (in the 'doc' directory of the repository)
-'git restore -S -p ../doc/path/to/file' and got:
+So, I dunno.  To me, merging the topic as part of the ~20 other
+topics slated for 'master' post 2.40 release looks like much better
+than hastily merging it down before the release.
 
-```
-BUG: add-patch.c:498: diff starts with unexpected line:
-* Unmerged path doc/path/to/file
-
-Aborted (core dumped)
-
-```
-
-and the backtrace from the core dump is the below:
-
-
-```
-Reading symbols from /home/me/bin/git...
-[New LWP 4172500]
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib64/libthread_db.so.1".
-Core was generated by `git restore -S -p path/to/file'.
-Program terminated with signal SIGABRT, Aborted.
-#0  0x000014d138b0b7ff in raise () from /lib64/libc.so.6
-(gdb) bt
-#0  0x000014d138b0b7ff in raise () from /lib64/libc.so.6
-#1  0x000014d138af5c35 in abort () from /lib64/libc.so.6
-#2  0x0000000000703b75 in BUG_vfl (file=0x779d41 "add-patch.c", line=498, fmt=0x779d50 "diff starts with unexpected line:\n%.*s\n", params=0x7ffdd37529f0) at usage.c:320
-#3  0x0000000000703c39 in BUG_fl (file=0x779d41 "add-patch.c", line=498, fmt=0x779d50 "diff starts with unexpected line:\n%.*s\n") at usage.c:330
-#4  0x000000000051089a in parse_diff (s=0x7ffdd3752d90, ps=0x7ffdd3753910) at add-patch.c:497
-#5  0x0000000000515339 in run_add_p (r=0xa5b3a0 <the_repo>, mode=ADD_P_RESET, revision=0xec35e0 "HEAD", ps=0x7ffdd3753910) at add-patch.c:1758
-#6  0x0000000000408511 in run_add_interactive (revision=0xec35e0 "HEAD", patch_mode=0x74119d "--patch=reset", pathspec=0x7ffdd3753910) at builtin/add.c:273
-#7  0x0000000000427f4b in checkout_paths (opts=0x7ffdd3753600, new_branch_info=0x7ffdd37533a0) at builtin/checkout.c:528
-#8  0x000000000042c24d in checkout_main (argc=1, argv=0x7ffdd3753d40, prefix=0xebe58b "doc/", opts=0x7ffdd3753600, options=0xec0d80, usagestr=0xa342c0 <restore_usage>, new_branch_info=0x7ffdd37533a0)
-    at builtin/checkout.c:1820
-#9  0x000000000042cd1e in cmd_restore (argc=4, argv=0x7ffdd3753d40, prefix=0xebe58b "doc/") at builtin/checkout.c:1953
-#10 0x0000000000406a83 in run_builtin (p=0xa371d8 <commands+2520>, argc=4, argv=0x7ffdd3753d40) at git.c:466
-#11 0x0000000000406e68 in handle_builtin (argc=4, argv=0x7ffdd3753d40) at git.c:721
-#12 0x00000000004070b6 in run_argv (argcp=0x7ffdd3753bcc, argv=0x7ffdd3753bc0) at git.c:788
-#13 0x00000000004075cf in cmd_main (argc=4, argv=0x7ffdd3753d40) at git.c:926
-#14 0x000000000050a80b in main (argc=5, argv=0x7ffdd3753d38) at common-main.c:57
-
-```
-
-Hope this helps,
-
-Philippe.
+Thanks.
