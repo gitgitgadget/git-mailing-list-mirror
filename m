@@ -2,107 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B963C678D5
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 13:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11437C64EC4
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 13:49:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229628AbjCHNt2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 08:49:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48576 "EHLO
+        id S230352AbjCHNt3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 08:49:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229624AbjCHNtU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 08:49:20 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2EB44E5FB
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 05:49:11 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id c18so9849272wmr.3
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 05:49:11 -0800 (PST)
+        with ESMTP id S230329AbjCHNtW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 08:49:22 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 486A37283
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 05:49:12 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id t15so15420893wrz.7
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 05:49:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112; t=1678283350;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=mKJZoOwlRDGGHI2keEvDIcedCrXuZGOk4OsJMYYZOQs=;
-        b=hwhko6ynnwWQQ8Qe7fHG8iuvx2z78kBgB/BPTnV4Y7R+SwAXze6zBmhRSN0IWrdALM
-         T7REdJCDFY6h5LggVBo988w3Eb8nQ8Gff6c0u/N0WXmd0cJub8CQGdbu4AEEClshsSW4
-         kDiDuKXs5noprRrdl8pYeui3IVm3Ih1wcR0q7xXSWtorweyJeCW4TJzzr3q8W42UrCIC
-         4X7SkhVNMleH1yrLC+Ha074b1203W193k2W5xyYNrO2tHbus5282lZiJ2k9J6fa2Yj0k
-         IWC4OQwdzAdarfmq7lZL9aY+UUSu+E6uzHNZkDrBhlR0dnkFzoEXxDprfTKIlF7rEgdT
-         O93Q==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wuWNRxbLYL/ICmf2/sEpOoJq+U7EQkMObU9K8rzZXc8=;
+        b=JgB8jIfPUqsRuPBgR3+71ubvBbWy/3rYk3Hh90uOZdBaYvQD5TilPPwd0t5hHTIL7H
+         Fl5WfiuyirRZcmckxE4SuYgFj8TeEarsex8+DGHswjPvW0OoXqoQXbc9Wq9x9jREgGzN
+         6Ijx8AtTVQ6AOsVGArcg/m4UihAWTsKVRCgJw60fBtl4G525Me/GkkqGO/EFfrCB+Jiz
+         ZYpujnwN6jgMLtqeLnOJt6a0UN1ft3s9L0fJygVry3kulh+a3hKp91C98Sm83pkTehKL
+         PJvWKYOrS+/4GgaZWaqmqvrYoxqvY6PhU7dtQQzHuXWv3F7NBdiVgZ0msbItFz7+iKCC
+         xLHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112; t=1678283350;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mKJZoOwlRDGGHI2keEvDIcedCrXuZGOk4OsJMYYZOQs=;
-        b=ZPwPDktJDcW+ZPeLuWnYqhdkp1n/ssYctUo4v8Sn7Szy3Q2ML9BjhPamyb6R5rg5LS
-         mr547GCqSslKsOdPQ2EAHhA54bNp1xP/29ne9JcQeUlzifHXZXFnzf3G8uu3aLvCOLQt
-         xFH+jmHQJ5AT4zCN44ZEgWztITVIdm2M+smFw54/FAUl3nQHg9x/c8OiW+8YCfqk7lnB
-         tBj696ETprx8rcRCgb2ADY6CsemDvSzYiW/hzx1TtpkSrZvjG45UIx+9Uxq1PSMvR7kz
-         uqTdUhJffXH8Qj7FSCOWFTR9Oe8Fx1Fu0lH7r78vHhJ/eqV4dN5Eg2oodHDwBx6oyFi6
-         8AcA==
-X-Gm-Message-State: AO0yUKXnt2+R9OzJUqAXtK/1X2k3Cyo8Cr0kczXRFieOBHkH+bTsdnsc
-        nBUTtV+YTXn1M3ZSbEDjmcQnsS+5yvc=
-X-Google-Smtp-Source: AK7set+1KGKiGtFniYlzSRkbuSeCZYTnZ17ZZmP88b7Xo/9qi4JNBtquhs3wdcM8TbVN9B3h3pKgmw==
-X-Received: by 2002:a05:600c:470a:b0:3eb:3843:9f31 with SMTP id v10-20020a05600c470a00b003eb38439f31mr16527387wmo.10.1678283350072;
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wuWNRxbLYL/ICmf2/sEpOoJq+U7EQkMObU9K8rzZXc8=;
+        b=feGrYR//A5+MAgCowrUXQ+tYtivKlPURphfv3+AXCj+/u7Q2hRZ1wI+4tkPY+Aivf+
+         7dtiF6fk2JXn556qsguc37GQFfshhvlH4Ux5S2LZJcLdtP2UQucwelOpiCLEjabI5vKc
+         UVZearFqPrVt8sg8XDblWmomeVXXzpvdW2z8E41duGLHyT1uyvxnOwouaCVbNYekcMCy
+         Y94yrxJAKAB0NSB6dxlt33rs8vTjA6AqCSB1ruLdJWpcQRCJvD4JXh8IyWa3gZNv9ARW
+         0uQtvW+l3NnN88YJqzQIseb0fvP1J0h3z9BHXzzjtsmtojAttiOpD5u7q6617KZLcsKA
+         +oyg==
+X-Gm-Message-State: AO0yUKVP9+/Z0M14+JoUGRuggjxkYzo5BKIJuhN3YhezTm9+J/33+8Fg
+        I6XlWZLjamFwfkuqd3me61bEiLQSmxU=
+X-Google-Smtp-Source: AK7set8Pn84uXe6yE1B9Abn3vplHd5+qjOcfeuDJbtMwAu2HqU1wwGFo6jYmaxOM/uJ2mivqUbtsyg==
+X-Received: by 2002:adf:ee4c:0:b0:2cd:8237:345b with SMTP id w12-20020adfee4c000000b002cd8237345bmr13596911wro.9.1678283350675;
         Wed, 08 Mar 2023 05:49:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d42-20020a05600c4c2a00b003e6efc0f91csm15568781wmp.42.2023.03.08.05.49.09
+        by smtp.gmail.com with ESMTPSA id h18-20020a5d4312000000b002c7107ce17fsm15455746wrq.3.2023.03.08.05.49.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 05:49:09 -0800 (PST)
-Message-Id: <pull.1488.git.1678283349.gitgitgadget@gmail.com>
+        Wed, 08 Mar 2023 05:49:10 -0800 (PST)
+Message-Id: <4b231e9beb43e4fac6457b9bf86e4c1db39c4238.1678283349.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1488.git.1678283349.gitgitgadget@gmail.com>
+References: <pull.1488.git.1678283349.gitgitgadget@gmail.com>
 From:   "William Sprent via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 08 Mar 2023 13:49:07 +0000
-Subject: [PATCH 0/2] builtin/sparse-checkout: add check-rules command
+Date:   Wed, 08 Mar 2023 13:49:08 +0000
+Subject: [PATCH 1/2] builtin/sparse-checkout: remove NEED_WORK_TREE flag
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Victoria Dye <vdye@github.com>, Elijah Newren <newren@gmail.com>,
+        William Sprent <williams@unity3d.com>,
         William Sprent <williams@unity3d.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
+From: William Sprent <williams@unity3d.com>
 
-Back in January I submitted a patch which suggested to teach 'ls-tree' to be
-able to filter its output based on sparse checkout specifications [1]. My
-main motivation for doing so was (is) to enable building more tooling on top
-of sparse checkouts, which is currently hampered a bit by the fact that git
-doesn't expose the pattern matching rules for the sparse checkouts.
+In preparation for adding a sub-command to 'sparse-checkout' that can be
+run in a bare repository, remove the 'NEED_WORK_TREE' flag from its
+entry in the 'commands' array of 'git.c'.
 
-I think the main point from that thread was that the 'ls-tree' change was
-conceptually a larger change that I had initially thought it was. It was
-suggested that perhaps it would be more straight-forward to initially add a
-command in the vein of 'git-check-ignore' before teaching all the other
-commands about sparse checkout specifics, and I think that makes sense. So I
-am proposing here a new 'check-rules' sub-command to 'sparse-checkout'. This
-exposes the sparse checkout pattern matching logic while still keeping the
-pattern specification local to the sparse-checkout command.
+To avoid that this changes any behaviour, add calls to
+'setup_work_tree()' to all of the 'sparse-checkout' sub-commands and add
+tests that verify that 'sparse-checkout <cmd>' still fail with a clear
+error message telling the user that the command needs a work tree.
 
-Since the intention is that this new behavior would not need a work tree as
-it allows the user to supply a set of rules to verify the paths against, the
-change that introduces the sub-command is preceded by one that removes the
-'NEEDS_WORK_TREE' flag for 'sparse-checkout' and replaces it with calls to
-'setup_work_tree()' to keep current behavior.
+Signed-off-by: William Sprent <williams@unity3d.com>
+---
+ builtin/sparse-checkout.c          |  6 ++++++
+ git.c                              |  2 +-
+ t/t1091-sparse-checkout-builtin.sh | 33 ++++++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+), 1 deletion(-)
 
-1:
-https://public-inbox.org/git/pull.1459.git.1673456518993.gitgitgadget@gmail.com/
-
-William Sprent (2):
-  builtin/sparse-checkout: remove NEED_WORK_TREE flag
-  builtin/sparse-checkout: add check-rules command
-
- Documentation/git-sparse-checkout.txt |  23 +++-
- builtin/sparse-checkout.c             | 132 +++++++++++++++++----
- git.c                                 |   2 +-
- t/t1091-sparse-checkout-builtin.sh    | 162 +++++++++++++++++++++++++-
- 4 files changed, 295 insertions(+), 24 deletions(-)
-
-
-base-commit: d15644fe0226af7ffc874572d968598564a230dd
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1488%2Fwilliams-unity%2Fsparse-doodle-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1488/williams-unity/sparse-doodle-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1488
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index c3738154918..5fdc3d9aab5 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -57,6 +57,7 @@ static int sparse_checkout_list(int argc, const char **argv, const char *prefix)
+ 	char *sparse_filename;
+ 	int res;
+ 
++	setup_work_tree();
+ 	if (!core_apply_sparse_checkout)
+ 		die(_("this worktree is not sparse"));
+ 
+@@ -448,6 +449,7 @@ static int sparse_checkout_init(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
+ 
++	setup_work_tree();
+ 	repo_read_index(the_repository);
+ 
+ 	init_opts.cone_mode = -1;
+@@ -760,6 +762,7 @@ static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
+ 
++	setup_work_tree();
+ 	if (!core_apply_sparse_checkout)
+ 		die(_("no sparse-checkout to add to"));
+ 
+@@ -806,6 +809,7 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+ 		OPT_END(),
+ 	};
+ 
++	setup_work_tree();
+ 	repo_read_index(the_repository);
+ 
+ 	set_opts.cone_mode = -1;
+@@ -855,6 +859,7 @@ static int sparse_checkout_reapply(int argc, const char **argv,
+ 		OPT_END(),
+ 	};
+ 
++	setup_work_tree();
+ 	if (!core_apply_sparse_checkout)
+ 		die(_("must be in a sparse-checkout to reapply sparsity patterns"));
+ 
+@@ -898,6 +903,7 @@ static int sparse_checkout_disable(int argc, const char **argv,
+ 	 * forcibly return to a dense checkout regardless of initial state.
+ 	 */
+ 
++	setup_work_tree();
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_sparse_checkout_disable_options,
+ 			     builtin_sparse_checkout_disable_usage, 0);
+diff --git a/git.c b/git.c
+index 6171fd6769d..5adc835cf10 100644
+--- a/git.c
++++ b/git.c
+@@ -583,7 +583,7 @@ static struct cmd_struct commands[] = {
+ 	{ "show-branch", cmd_show_branch, RUN_SETUP },
+ 	{ "show-index", cmd_show_index, RUN_SETUP_GENTLY },
+ 	{ "show-ref", cmd_show_ref, RUN_SETUP },
+-	{ "sparse-checkout", cmd_sparse_checkout, RUN_SETUP | NEED_WORK_TREE },
++	{ "sparse-checkout", cmd_sparse_checkout, RUN_SETUP },
+ 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "stash", cmd_stash, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index 627267be153..7216267aec7 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -882,4 +882,37 @@ test_expect_success 'by default, non-cone mode will warn on individual files' '
+ 	grep "pass a leading slash before paths.*if you want a single file" warning
+ '
+ 
++test_expect_success 'setup bare repo' '
++	git clone --bare "file://$(pwd)/repo" bare
++'
++test_expect_success 'list fails outside work tree' '
++	test_must_fail git -C bare sparse-checkout list 2>err &&
++	test_i18ngrep "this operation must be run in a work tree" err
++'
++
++test_expect_success 'add fails outside work tree' '
++	test_must_fail git -C bare sparse-checkout add deeper 2>err &&
++	test_i18ngrep "this operation must be run in a work tree" err
++'
++
++test_expect_success 'set fails outside work tree' '
++	test_must_fail git -C bare sparse-checkout set deeper 2>err &&
++	test_i18ngrep "this operation must be run in a work tree" err
++'
++
++test_expect_success 'init fails outside work tree' '
++	test_must_fail git -C bare sparse-checkout init 2>err &&
++	test_i18ngrep "this operation must be run in a work tree" err
++'
++
++test_expect_success 'reapply fails outside work tree' '
++	test_must_fail git -C bare sparse-checkout reapply 2>err &&
++	test_i18ngrep "this operation must be run in a work tree" err
++'
++
++test_expect_success 'disable fails outside work tree' '
++	test_must_fail git -C bare sparse-checkout disable 2>err &&
++	test_i18ngrep "this operation must be run in a work tree" err
++'
++
+ test_done
 -- 
 gitgitgadget
+
