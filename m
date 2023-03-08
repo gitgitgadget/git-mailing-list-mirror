@@ -2,116 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9D04C678D5
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 19:22:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65570C64EC4
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 19:28:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230110AbjCHTWC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 14:22:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41736 "EHLO
+        id S229680AbjCHT2B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 14:28:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229993AbjCHTV5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 14:21:57 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF2F9CC309
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 11:21:55 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id o38-20020a05600c512600b003e8320d1c11so2471610wms.1
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 11:21:55 -0800 (PST)
+        with ESMTP id S229468AbjCHT17 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 14:27:59 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70DF2212B
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 11:27:54 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id x11so14161568pln.12
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 11:27:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678303314;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0FbWlNZEuq+pZx1n/PRTiTJYEQ/r7ZV1yvpw1t1wQDs=;
-        b=IQBW6qWostOyjZ6jJD5McoGO+0+AYUXRGCiU5T1I8Acqu6LW5CFgkINF/c99ZbxeEK
-         HUQ1KlCKDFy5Kd3Tg5FN0nO2Oq1cMksAW/0tUR7SoP0GPky66VpA+T4LGmIp+JIyXLee
-         ggZagVpECa37nWJYhQmDB76S/Y7teqgkgtm+SSl9t2cwEMZYMEjqAPTiKIHYVCilb9uu
-         68us0eyNbQu+XhMv496LGRWZu6Wx4pcCJ6ej1EKhhFJmrsCsa2hdOOu7Xxny6DQbvbvD
-         75x00+rD6jAX68JxtE3G08XCsrXLZzrj7uz0ste6egb4YSjhmQpDLR7+7gnopX4xYefu
-         5WjQ==
+        d=gmail.com; s=20210112; t=1678303674;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RzcASvaiZq/lM6gLLdJTNryQ2ty1opHbEKOGlp2kZ8U=;
+        b=mVQkOSz2F5uydF1dcTjAl+eDit6Y2YE7W6+SF0jKUzIhhRKssB9AV3uhW75lp2OTeI
+         u+7e+DCjCuP4/yafKuhUvst5dw3FVWMnMgNTQE2lYuC2PoXn1knmTbE4ahjjieqCVUKz
+         lpzB9UWPk0dNgRKcW/HcJZ4gDqr5QsG7udmAGrIBPfKSxhxSE1FfN4btwzC5YGjXrpyD
+         GoA8TFUttiM4L8qjNGk9XfI+hMJeFmJgaZv6VhsbVZ4IE2dhT/8RVLp85a9NPaI3XFCY
+         +PwmkZIfXrCH/8f2T1871xsIAJkQDmIeJSrmwDRAKJz8JynPDtEU04C6v7zGkLaOL9z4
+         PzjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678303314;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0FbWlNZEuq+pZx1n/PRTiTJYEQ/r7ZV1yvpw1t1wQDs=;
-        b=KME+mse/vvrLzkh9cYgg8uCIGnmoSW7GcXz7banWsX6I+JYMdjmf5NHl8VzsQ0a9Fj
-         6qvPXtGTUsP/VYYqoNtwx88HGuW5ZE6gE8yYktsh5lENxjZggHqJayPaeibZ8jyy5AM3
-         epHBTH0xsGsFaeHWVyqAnXuOvCFsXdlWYxP9XYwrEZrXEcxjJD8MSp2Me9m3eEJqAVSF
-         ji7PeZE98JJMxveW8hluo4d425OjCTodsfXSUJIPNJ2PiAEPhWLqztwfGoVrha850nrP
-         mFngqxlnKAFFx66LieO+Y+4yaP1UWz2OGU6ICPdHIQIzR6p9YfsYZ/d8FWA7s91DAFYJ
-         ecgw==
-X-Gm-Message-State: AO0yUKU0KQY8ywb8HjtlDwRMobxZ7LBRHmA1Bu3/EhqAjB8Tl3HmfprZ
-        2zdsuHcRG709TJcqu0PMAUL6a67p6F06cQ==
-X-Google-Smtp-Source: AK7set/QJbtG5Y/6ZmE+95OV3zfeL4QRWV2ibAFnltJ3dGJA70eXngAlr7elW9/QvOn0HZpSOWuhfQ==
-X-Received: by 2002:a05:600c:4f13:b0:3dc:4fd7:31e9 with SMTP id l19-20020a05600c4f1300b003dc4fd731e9mr17805351wmq.7.1678303313919;
-        Wed, 08 Mar 2023 11:21:53 -0800 (PST)
-Received: from DESKTOP-FOQ07IR.localdomain ([2a00:a040:191:d233:88f:49ca:44fe:37f])
-        by smtp.gmail.com with ESMTPSA id r11-20020a05600c458b00b003e20970175dsm321455wmo.32.2023.03.08.11.21.52
+        d=1e100.net; s=20210112; t=1678303674;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=RzcASvaiZq/lM6gLLdJTNryQ2ty1opHbEKOGlp2kZ8U=;
+        b=UZuYzBvIIhZgrCPLSPh8FBYUPwpwSuJvdSIZlFPyffs069+MdWX/OjR9dcqkzRA2qH
+         b9ncHxb2lyYJzIsmxxwaLLeW4VDFTmHIY/37bbi218LWkMYR4/Pm6jrWYUvtQnWkcuub
+         1Dyoudhq/odSwYCurfgvMa4wXrNZgDKsMa9viik9A5NzEnQFRrZ4FZlFX+NZrbCmXpXu
+         nbpQYS7wuQOrnYN1InM0BynMyU1gbxFlI+OnY/32Z5ygkkuBnVqufyuORUX1l1YSZGKo
+         0/9FBWZY0q6i/SD+CjANXhBheXNnv/wzGrcJAmGHZiw1VTdgFtEJC3hy5az3tGjQH2oW
+         x2FQ==
+X-Gm-Message-State: AO0yUKWByEITqKrZuNPbOTfuKXf2zySOft5eG/evTdlDbgf0WioN7BcS
+        0F1jn8i+4qip0DxLD7hgzjI=
+X-Google-Smtp-Source: AK7set8wqPi/moqxZjJ2k7U55+dXTIKDb68DXxOGZKRrr7szXdDruhlhV2fwlh9+F32kd6Pc/TNJoQ==
+X-Received: by 2002:a17:903:2290:b0:19a:c65d:f90 with SMTP id b16-20020a170903229000b0019ac65d0f90mr24242297plh.44.1678303673845;
+        Wed, 08 Mar 2023 11:27:53 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id ks16-20020a170903085000b0019a8530c063sm10114840plb.102.2023.03.08.11.27.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 11:21:53 -0800 (PST)
-From:   Roy Eldar <royeldar0@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, jonathantanmy@google.com,
-        Roy Eldar <royeldar0@gmail.com>
-Subject: [PATCH RESEND 2/2] status: improve info for detached HEAD after clone
-Date:   Wed,  8 Mar 2023 21:20:50 +0200
-Message-Id: <20230308192050.1291-3-royeldar0@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20230308192050.1291-1-royeldar0@gmail.com>
-References: <20230308192050.1291-1-royeldar0@gmail.com>
+        Wed, 08 Mar 2023 11:27:53 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "William Sprent via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        William Sprent <williams@unity3d.com>
+Subject: Re: [PATCH 1/2] builtin/sparse-checkout: remove NEED_WORK_TREE flag
+References: <pull.1488.git.1678283349.gitgitgadget@gmail.com>
+        <4b231e9beb43e4fac6457b9bf86e4c1db39c4238.1678283349.git.gitgitgadget@gmail.com>
+        <xmqqmt4nt8k3.fsf@gitster.g>
+Date:   Wed, 08 Mar 2023 11:27:53 -0800
+In-Reply-To: <xmqqmt4nt8k3.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+        08 Mar 2023 10:14:04 -0800")
+Message-ID: <xmqqilfbt552.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a remote ref or a tag is checked out, HEAD is automatically
-detached, and "git status" says 'HEAD detached at ...', instead of
-'Not currently on any branch.'; this is done by traversing the reflog
-and parsing an entry like 'checkout: moving from ... to ...'.
+Junio C Hamano <gitster@pobox.com> writes:
 
-In certain situations, HEAD can be detached after "git clone": for
-example, when "--branch" specifies a non-branch (e.g. a tag). It is
-preferable to avoid displaying 'Not currently on any branch.', so
-'HEAD detached at $sha1' is shown instead.
+> But you did not find a place the feature you wanted to add with
+> [2/2] would fit better, perhaps, in which case, somebody else may be
+> able to suggest an alternative in their reviews of that step,
+> hopefully.
 
-Signed-off-by: Roy Eldar <royeldar0@gmail.com>
----
- t/t7508-status.sh | 2 +-
- wt-status.c       | 7 +++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+... oh, or perhaps the list would reach a consensus that mixing a
+subcommand that does not require a working tree is not all that bad,
+which I am personally OK with, too.  I didn't at all mean to say:
+"this shouldn't be a subcommand there, do it somewhere else".
 
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index d279157d28..0ab5bdc1e0 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -894,7 +894,7 @@ test_expect_success 'status shows detached HEAD properly after cloning a reposit
- 
- 	git clone -b test_tag upstream downstream &&
- 	git -C downstream status >actual &&
--	grep -E "Not currently on any branch." actual
-+	grep -E "HEAD detached at [0-9a-f]+" actual
- '
- 
- test_expect_success 'setup status submodule summary' '
-diff --git a/wt-status.c b/wt-status.c
-index 3162241a57..f0a5fb578a 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1632,6 +1632,13 @@ static int grab_1st_switch(struct object_id *ooid UNUSED,
- 	struct grab_1st_switch_cbdata *cb = cb_data;
- 	const char *target = NULL, *end;
- 
-+	if (skip_prefix(message, "clone: from ", &message)) {
-+		oidcpy(&cb->noid, noid);
-+		strbuf_reset(&cb->buf);
-+		strbuf_add_unique_abbrev(&cb->buf, noid, DEFAULT_ABBREV);
-+		return 1;
-+	}
-+
- 	if (!skip_prefix(message, "checkout: moving from ", &message))
- 		return 0;
- 	target = strstr(message, " to ");
--- 
-2.30.2
-
+Thanks.
