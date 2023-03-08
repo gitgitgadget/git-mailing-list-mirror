@@ -2,127 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EB9BC678D5
-	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 10:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE5F1C64EC4
+	for <git@archiver.kernel.org>; Wed,  8 Mar 2023 11:17:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231204AbjCHK4Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Mar 2023 05:56:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55618 "EHLO
+        id S230522AbjCHLRm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Mar 2023 06:17:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231270AbjCHK4N (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Mar 2023 05:56:13 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEE3A149A1
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 02:56:09 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id o12so63952267edb.9
-        for <git@vger.kernel.org>; Wed, 08 Mar 2023 02:56:09 -0800 (PST)
+        with ESMTP id S230525AbjCHLRh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Mar 2023 06:17:37 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4470EBA856
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 03:17:23 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id s11so64251183edy.8
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 03:17:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678272968;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6LkrMaNYY6u75jHAP5zfVy4t6eyetfa/Z1tCDz0XkAc=;
-        b=h74ZcfeeoEx8rPlKuXlikUcI89qTZ/eHwuK8J4OvL/c7BB43gf/OdjIlMmgogtFP41
-         7UKOvXFnCkurrWd2KASh7P/Rr7esworSvTEwBzpqceALt2KQ3SnTYL9sCrqo0HbuRPUj
-         zfP7GqXLZuZYBvKN9Nhq1y6Dcc0jgDGy2pGFPo8vQw537z/6mY3/2lbZskVRCH6XTMvF
-         /fMy2vZs3e3scKC1pEjoTz49Criae1oYqLRD9febvZtuBQGa2DiKyqDaW054+5z8Gcyk
-         Rt/ONDb1//bBoHlfQcQ7drdBpl3JP+6R5RaquOB2jCtchFwvJlZIZ6wEP3ZGKogeNPvl
-         VWTg==
+        d=gmail.com; s=20210112; t=1678274242;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LtkxOsMJewYO/sQwjq14QC2XTbaeS7jFWMAOqnwCh54=;
+        b=l72uOfxs1P5oAlCWEYRHaIeUZVvwkh3ANzdiXC5t078pOSMLD6yw+JClacWHhh8gxO
+         LvUE9AVSWaBbCart5WMqU/LhVWi7EgOQiCvZIdVk/y8QhKZsaV+Wl1/EQz1t6KmjAx2a
+         ZM2kw5N+jUcpBUh5iCZBr/HNxeplFXCuZ1D7qvLBh7yBf5fWhNXfGRosxJWpTEBVJ0LN
+         i1uhRwLBVLhhDvAtJaxO5E8Yy7iA5/q5YSxnuE7yL9XvGhLIJiHx9H9PBlgGo/T6rCe0
+         2Rqq7knw2r0IpVNb01UQ177R+z6FALOinaCnoUwFQE267rzfe3t8eROgGJYuQwK7nywX
+         FOog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678272968;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6LkrMaNYY6u75jHAP5zfVy4t6eyetfa/Z1tCDz0XkAc=;
-        b=TJc6WGcTwybxEz1J7hdRWkDt07qxNr84o3dgCd7VWqpDcf3kR9egVxdPkLeHNMaGN8
-         pSrQoDGwlWV+QeSB4m2he78Osu/jM4NPQnkVQ4m0rDLIwbcyEqT9rAd3ttEQyc6AQOEe
-         1udLXl8vBLCbsFJvEvf0hPxfLWdjuGLsVUbh1cPh+FgVq1E5NjlzJeQcrFYUxj7kCUi2
-         UhVItwFqa+98YDBamsSVRVOwxLX7iZ5FSGI888q3IU60CH20k5KEu85CfJPXm4kJwdeX
-         fnH9HEtxKsWi1vJFErs4K1F4HqsVUJoGthc3UrjFXwH4JJR7JAJ4VEzVTn/Wh5gdbSTz
-         G+Uw==
-X-Gm-Message-State: AO0yUKWY7dpXZNZCLKWR9jaSarZ4bezY6LHxAB0rLlSNyZFNwmpCFqn8
-        5UwwvyfCeYXYySjZLmKaudc=
-X-Google-Smtp-Source: AK7set8PZvnaSDrEY5UZ4d5svn4NMaNLqivEpZYcoJBEjLn5PFTh6lhMNy5mI6tSGPezITqQHYQDvw==
-X-Received: by 2002:a05:6402:382:b0:4ad:152b:8f69 with SMTP id o2-20020a056402038200b004ad152b8f69mr16795662edv.17.1678272968331;
-        Wed, 08 Mar 2023 02:56:08 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678274242;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LtkxOsMJewYO/sQwjq14QC2XTbaeS7jFWMAOqnwCh54=;
+        b=torKj8Lr78CrBhsUwa4X/Lb/E4/A3RE4kw4jG1mCQ/4VdmcORzvyMv4z+VLyVwag9g
+         NpkUdPs+FhC+ljNhs7Lliw1jDGVUGKB4PcY/OgpEoM/EFjJVosuxlCH4KcRaHd5km7gJ
+         /fzSHVUinnsy6LdsWLBKQtdhZ99PaKQM91C7G86W0Sls+zUkncypeXBlGIyYN7vvWgnc
+         SHcKN4Y4lLA1bNcrQaTxoZQk/jSo/2E6A1uhTJ4bh44A5e5elNQ59vYlfFCHnFrc0izT
+         018ZvsAx4cmEtNJHYShCi7NBtWd9fzHfJmvH32ZH7QRY+NF1GIQl3CX+hj2S/PwIFpw4
+         BcZQ==
+X-Gm-Message-State: AO0yUKVMqWUJBHHBhix/kUZtADt/+UygiVxeNvk6QY1xk5qvlQCvo8MU
+        payrtAsg3nOzYpjBiigQLWPQK0DZur4/IQ==
+X-Google-Smtp-Source: AK7set9XbFkDlk9mlha5ug799Ds1OP7VzVWe2hmL4eGWPOgwY3/2/OJwn33wBK7jvS6qT8Rd6M59JA==
+X-Received: by 2002:a17:906:2297:b0:8f8:1501:be60 with SMTP id p23-20020a170906229700b008f81501be60mr14860491eja.7.1678274241642;
+        Wed, 08 Mar 2023 03:17:21 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id k26-20020a508ada000000b004af6b93f00asm7934610edk.23.2023.03.08.02.56.07
+        by smtp.gmail.com with ESMTPSA id w22-20020a17090633d600b008b907006d5dsm7470503eja.173.2023.03.08.03.17.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Mar 2023 02:56:07 -0800 (PST)
+        Wed, 08 Mar 2023 03:17:21 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pZrSp-000vFr-0l;
-        Wed, 08 Mar 2023 11:56:07 +0100
+        id 1pZrnM-000vqc-2X;
+        Wed, 08 Mar 2023 12:17:20 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Glen Choo <chooglen@google.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 0/6] [RFC] config.c: use struct for config reading state
-Date:   Wed, 08 Mar 2023 11:32:16 +0100
-References: <kl6l356heeqb.fsf@chooglen-macbookpro.roam.corp.google.com>
- <20230306223804.3414251-1-jonathantanmy@google.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org, Fabian Stelzer <fs@gigacodes.de>,
+        Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH] test: simplify counts aggregation
+Date:   Wed, 08 Mar 2023 12:15:16 +0100
+References: <20230308090536.2562917-1-felipe.contreras@gmail.com>
+ <230308.86bkl3zjp3.gmgdl@evledraar.gmail.com>
+ <CAMP44s2NJefUOzpyq=qbWSi+X-GnVTXaEgT8dM4zMPSzm29yag@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <20230306223804.3414251-1-jonathantanmy@google.com>
-Message-ID: <230308.86y1o7y0jc.gmgdl@evledraar.gmail.com>
+In-reply-to: <CAMP44s2NJefUOzpyq=qbWSi+X-GnVTXaEgT8dM4zMPSzm29yag@mail.gmail.com>
+Message-ID: <230308.86ttyvxzjz.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Mar 06 2023, Jonathan Tan wrote:
+On Wed, Mar 08 2023, Felipe Contreras wrote:
 
-> Glen Choo <chooglen@google.com> writes:
->> By configset interface, I believe you mean the O(1) lookup functions
->> like git_config_get_int() (which rely on the value being cached, but
->> don't necessarily accept "struct config_set" as an arg)? I think that
->> makes sense both from a performance and maintenance perspective.
+> On Wed, Mar 8, 2023 at 3:16=E2=80=AFAM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarm=
+ason <avarab@gmail.com> wrote:
+>>
+>>
+>> On Wed, Mar 08 2023, Felipe Contreras wrote:
+>>
+>> > When the list of files as input was implemented in 6508eedf67
+>> > (t/aggregate-results: accomodate systems with small max argument list
+>> > length, 2010-06-01), a much simpler solution wasn't considered.
+>> >
+>> > Let's just pass the pattern as an argument.
+>> >
+>> > Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+>> > ---
+>> >  t/Makefile             | 4 +---
+>> >  t/aggregate-results.sh | 2 +-
+>> >  2 files changed, 2 insertions(+), 4 deletions(-)
+>> >
+>> > diff --git a/t/Makefile b/t/Makefile
+>> > index 2c2b252240..6bc878558f 100644
+>> > --- a/t/Makefile
+>> > +++ b/t/Makefile
+>> > @@ -140,9 +140,7 @@ aggregate-results-and-cleanup: $(T)
+>> >       $(MAKE) clean
+>> >
+>> >  aggregate-results:
+>> > -     for f in '$(TEST_RESULTS_DIRECTORY_SQ)'/t*-*.counts; do \
+>> > -             echo "$$f"; \
+>> > -     done | '$(SHELL_PATH_SQ)' ./aggregate-results.sh
+>> > +     '$(SHELL_PATH_SQ)' ./aggregate-results.sh '$(TEST_RESULTS_DIRECT=
+ORY_SQ)/t*-*.counts'
+>> >
+>> >  valgrind:
+>> >       $(MAKE) GIT_TEST_OPTS=3D"$(GIT_TEST_OPTS) --valgrind"
+>> > diff --git a/t/aggregate-results.sh b/t/aggregate-results.sh
+>> > index 7f2b83bdc8..2efc2c37cd 100755
+>> > --- a/t/aggregate-results.sh
+>> > +++ b/t/aggregate-results.sh
+>> > @@ -8,7 +8,7 @@ broken=3D0
+>> >  total=3D0
+>> >  missing_prereq=3D
+>> >
+>> > -while read file
+>> > +for file in $1
+>> >  do
+>> >       while read type value
+>> >       do
+>>
+>> This leaves this code in contrib presumably broken:
 >
-> Ah, yes. (More precisely, not the one where you call something like
-> repo_config(), passing a callback function that.)
+> Right, I didn't know the "contrib" code called that.
 >
->> Given how painful it is to change the config_fn_t signature, I think it
->> is important to get as right as possible the first time. After I sent
->> this out, I thought of yet another possible config_fn_t signature
->> (since most callbacks only need diagnostic information, we could pass
->> "struct key_value_info" instead of the more privileged "struct
->> config_reader"), but given how many functions we'd have to change, it
->> seemed extremely difficult to even begin experimenting with this
->> different signature.
+> Easy fix.
 >
-> Yeah, the first change is the hardest. I think passing it a single
-> struct (so, instead of key, value, data, reader, and then any future
-> fields we would need) to which we can add fields later would mean that
-> we wouldn't need any changes beyond the first, though.
+>> But overall I like this direction, if we can just change that contrib
+>> Makefile as well to use the new mode the script excepts.
+>>
+>> I think we can go even further here, and just pass the
+>> $(TEST_RESULTS_DIRECTORY_SQ) as an argument to the script, then have it
+>> do something like (untested):
+>>
+>>         results_dir=3D$1
+>>         for file in "$results_dir"/t*-*.counts
+>>
+>> Which I think is a bit more obvious, and since the only task of the
+>> script is to do exactly this, there's no reason not to have it do that
+>> search by itself.
+>
+> Or just:
+>
+>     for file in "${TEST_OUTPUT_DIRECTORY-.}"/test-results/t*-*.counts
+>
+> And don't pass anything.
 
-The more I've looked at this the more I'm convinced this is the wrong
-direction.
+Yeah, I think that would work, but at least on an ad-hoc basis I've
+sometimes saved away the "test-results" directory
+(e.g. "test-results.prev").
 
-For the configset API users we already have the line number, source
-etc. in the "util" member, i.e. when we have an error in any API user
-that uses the configset they can error about the specific line that
-config came from.
+I think it would be useful if the script part of our tooling was happy
+to accept any name for such a directory, and then examined its contents.
 
-I think this may have been conflated because e.g. for the configset to
-get the "scope" we need to go from do_git_config_sequence(), which will
-currently set "current_parsing_scope", all the way down to
-configset_add_value(), and there we'll make use of the
-"config_set_callback", which is a config_fn_t.
-
-But that's all internal "static" functions, except
-git_config_from_file() and git_config_from_file_with_options(), but
-those have only a handful of callers.
-
-But that's *different* than the user callbacks, which will be invoked
-through a loop in configset_iter(), i.e. *after* we've parsed the
-config, and are just getting the line number, scope etc. from the
-configset.
-
-There's other edge cases, e.g. current_config_line() will access the
-global, but it only has two callers (one if we exclude the test
-helper). But I think the answer there is to change the
-config_read_push_default() code, not to give every current "config_fn_t"
-implementation an extra parameter.
+But I don't feel strongly about it, and I don't use aggregate-results.sh
+in particular (I always use "prove").
