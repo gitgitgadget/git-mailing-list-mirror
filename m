@@ -2,142 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC805C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 10:39:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A95FAC61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 10:50:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230250AbjCIKjN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 05:39:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35804 "EHLO
+        id S229772AbjCIKuv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 05:50:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229989AbjCIKi6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 05:38:58 -0500
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E071F914
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 02:38:20 -0800 (PST)
-Received: by mail-yb1-xb35.google.com with SMTP id 82so1383278ybn.6
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 02:38:20 -0800 (PST)
+        with ESMTP id S229685AbjCIKut (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 05:50:49 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9DA7DF701
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 02:50:48 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id l7-20020a05600c4f0700b003e79fa98ce1so935953wmq.2
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 02:50:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678358299;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1678359047;
+        h=in-reply-to:from:content-language:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RJuHp5sbq2LShdk8ySM2Ex2ytIQ05q9OCrmA9Jm6LUU=;
-        b=I5CxXBNqu6SHv0spTO4B3rP1LTZNVbAgnp7oE4vlezQXNyGApdHAmJXGKcUw5EqSAk
-         ku5o6nGSvdXvC2L2PaML0h6KLAB3kOd1EMMnhx2t4vwuXd/7fXHi8ujxz+G9ZXdHowNw
-         DbpR396jSu3fNegb5mo4XhhQDwfVMbBXFMfrSWCFdK8XEOD3F0+Ngr1eR6T8b/joWjQX
-         MKHHhoMu/9n7YntDVKia39sZ0MDPqN+dTLj5kpW2Ty64VWMhiswX24eaeicN01A0TMXn
-         5O+DPmkDUN+Y+ej2+iu5SgQ8WXEF/h1wLZjg3jsD4L4lMz28X/sV1YcepjsVIOh+mHL5
-         bMuA==
+        bh=YMaVGgn/Jb0SPevIePkVSuLFg6ciQxzBa+HvVTI2wOg=;
+        b=Lv9cCAoLx4Imk1ByzU/EPbR/MnLGhNSJjjWYXlHSMEDD0B/zVv1MkJ9TYg05LK0+mO
+         wP2OJKsPptrxS/rjJwQ1Y7g/RyOoBvebY+MozjMPqYYj+r2vr6A09zBtSw9aajYCRtbx
+         aActPJnKMCEhwuHHPnFF/s70Hv+6Yn8jWLpnAuHb9nDRCCaQbGv7zQLAFlvUaPwulXOG
+         OCAOyMsm4LJvtpQEzHhwrxHmBh3DsreEJLpXqRzy4aGGBt1/RzXER3wrzzMnxKBRkgsW
+         PQM1JoRTWmN0trXviDw2n/qV+/Afwxxnk6epDu4YlMaA+eBfRT/gmKLcDbWLCx1r1/lT
+         cnCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678358299;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RJuHp5sbq2LShdk8ySM2Ex2ytIQ05q9OCrmA9Jm6LUU=;
-        b=gUcIJ/gC2Ta9MJHsob+CAZM0vtJsRnSYrJNR0QUdJXULo3XVVYUVAjpB35zcDKmYnr
-         sr9hnrb2V6++OQdKM/rg+eC1+Tvm8Rz05q/3l4BJhBiVzIV3VsHlsfvL2qFLW1X3b5OI
-         BYxv5L+82NG0VJnFN/+xJ3aHxxZNbrC0YjZHgwzjye4+iRdUs4Ry3ZWZugNBXpLGMbFD
-         Z5S+YhjNJty4PBAknncGz89h4d1QFD9UbK0MHrMu7sg2m9UQIiL43TSs8v6QTEVsPnJ4
-         rF9ZRKMkFdAElzHfXXathQQVVt9cYgPijKk/xGhTwwJboAAMSpTUfEZaMU27hCoWla2G
-         Pd1g==
-X-Gm-Message-State: AO0yUKU+ugF5mMZoEh+b9fCwWO0NRrWtNXMFKEWOfylb19xcgsdupc61
-        OJA5GTTy4qtN5dZ/udfT1hGeLaqIp3GhgP63BkginJ28LXsHhQ==
-X-Google-Smtp-Source: AK7set+93TUMFjKzWh2Mo71CLFHTxi2vRN5n4N9M4NgvO00bAXvsj9u0qMJGBZ4ujlTaYcJPuh/qfN12st9ms1hbvo0=
-X-Received: by 2002:a5b:647:0:b0:932:8dcd:3a13 with SMTP id
- o7-20020a5b0647000000b009328dcd3a13mr13162587ybq.5.1678358299476; Thu, 09 Mar
- 2023 02:38:19 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678359047;
+        h=in-reply-to:from:content-language:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=YMaVGgn/Jb0SPevIePkVSuLFg6ciQxzBa+HvVTI2wOg=;
+        b=emnsO6yKWAovrrBTNoqYpwhJ+vOUs11t292EmR7T6WNOj/8xJ6Ma5T4OiyyjmphwQE
+         5YC2iVMgbl90fFM1uUuYptSeLPkArmllzArb3ZCeZK2fJxGUDZYjxSYhWrFFnrA5NVwI
+         /JnRYsP2QHXsMBDv+nPoxCzuVEt2cI+BgdqkU0knckRDnv0z+TLNPnDVx51Qkcmpk5Y8
+         tFw0dnFvNIEsIx0zCRSmNLJNjtAnARQWAY95CNv6oNUgkBpbyxpP8HgUTqvMTnueic7A
+         4Lsp4BvJTCsbEN4Q4GrQeWLAEf+vF6Sz0ijmUZiqwDLRf+Kezzio2c+M1evvEvN7RXi5
+         WIDg==
+X-Gm-Message-State: AO0yUKVIErqQT8+H5WdjpkUnuYnWj+PnGHgdz0l66BJ6cH7bcigNmK8E
+        dIQMTjuTfBQOKz2tiTjXGYOzbit0SEg=
+X-Google-Smtp-Source: AK7set+/4uGGIYydznU2eNQFEJf6OfWeCtpoXOrPuKZE0CM87NXv2DPjwiFzeO9BrhzuHghq4EN82g==
+X-Received: by 2002:a05:600c:a04:b0:3e0:1a9:b1d7 with SMTP id z4-20020a05600c0a0400b003e001a9b1d7mr19446358wmp.19.1678359047041;
+        Thu, 09 Mar 2023 02:50:47 -0800 (PST)
+Received: from [192.168.0.160] ([170.253.51.134])
+        by smtp.gmail.com with ESMTPSA id h19-20020a05600c315300b003db0bb81b6asm2397058wmo.1.2023.03.09.02.50.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Mar 2023 02:50:46 -0800 (PST)
+Message-ID: <62c59063-e168-57b0-43d5-be7f007c2d37@gmail.com>
+Date:   Thu, 9 Mar 2023 11:50:37 +0100
 MIME-Version: 1.0
-References: <CAOLTT8TcX6Wit=AOFGNLjA4v9HAvJJxCEtt3JhgUR+3OARycNw@mail.gmail.com>
- <CAN0heSoVBmkuEOkW3wRNXRRjG7y8UqvORie6ocYnmQRz4jEXkg@mail.gmail.com>
-In-Reply-To: <CAN0heSoVBmkuEOkW3wRNXRRjG7y8UqvORie6ocYnmQRz4jEXkg@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 9 Mar 2023 18:38:08 +0800
-Message-ID: <CAOLTT8QAd_dzmDrkLpyVCZykb_sPzR0VzsPf_jtQqim_NpqZFg@mail.gmail.com>
-Subject: Re: Question: How range-diff lapjv algorithm work
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, t.gummerer@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 1/5] diff: factor out src/dst prefix setup
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+References: <ZAl3bHB9zxjLITgf@coredump.intra.peff.net>
+ <ZAl3iqcSL4PODx01@coredump.intra.peff.net>
+Content-Language: en-US
+From:   Alejandro Colomar <alx.manpages@gmail.com>
+In-Reply-To: <ZAl3iqcSL4PODx01@coredump.intra.peff.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------rtomisz8rlt92ruzACsUZDcO"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin =C3=85gren <martin.agren@gmail.com> =E4=BA=8E2023=E5=B9=B43=E6=9C=88=
-8=E6=97=A5=E5=91=A8=E4=B8=89 15:47=E5=86=99=E9=81=93=EF=BC=9A
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------rtomisz8rlt92ruzACsUZDcO
+Content-Type: multipart/mixed; boundary="------------SMcGL1pqXlKw4RMp0Kn8vSif";
+ protected-headers="v1"
+From: Alejandro Colomar <alx.manpages@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: Git Mailing List <git@vger.kernel.org>
+Message-ID: <62c59063-e168-57b0-43d5-be7f007c2d37@gmail.com>
+Subject: Re: [PATCH 1/5] diff: factor out src/dst prefix setup
+References: <ZAl3bHB9zxjLITgf@coredump.intra.peff.net>
+ <ZAl3iqcSL4PODx01@coredump.intra.peff.net>
+In-Reply-To: <ZAl3iqcSL4PODx01@coredump.intra.peff.net>
+
+--------------SMcGL1pqXlKw4RMp0Kn8vSif
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
 
->
-> On Wed, 8 Mar 2023 at 07:50, ZheNing Hu <adlternative@gmail.com> wrote:
-> >
-> > My question is:
-> > 1. In step 3, why is the matrix size (a.nr + b.br) * (a.nr + b.br)
-> > instead of a.nr * b.nr?
->
-> There's some explanation of that in the man page for `git range-diff`,
-> under "ALGORITHM". Look for "To explain also new commits, we introduce
-> dummy nodes on both sides:".
->
 
-Thanks, I can understand why the length of the matrix is "a.nr + b.nr" now.
-Patches in one collection may have no matching patches in the other
-collection, this mismatch situation ("o--C" in the documentation) should
-also count the cost.
+On 3/9/23 07:07, Jeff King wrote:
+> We directly manipulate diffopt's a_prefix and b_prefix to set up either=
 
-> > 2. Why the cost(x,y) which satisfies "x =E2=88=88 [a.nr, a.nr + b.nr) y=
- =E2=88=88 [0,
-> > b.nr) || x =E2=88=88 [0, a.nr) y =E2=88=88 [b.nr, b. The cost of nr + a=
-.nr)" is set to
-> > "diffsize(a or b) * creation_factor / 100 : COST_MAX"? What is the
-> > role of creation_factor? [1]
->
-> The `--creation-factor` command line option is also described in the
-> manpage.  There was a thread on the mailing list with various
-> discussions around this creation factor a while back. Maybe there's
-> something interesting there [1].
->
+> the default "a/foo" prefix or the "--no-prefix" variant. Although this
+> is only a few lines, it's worth pulling these into their own functions.=
 
-I understand it now. Because mismatch "o--C" "1--0" cost are generally
-greater than the cost of two completely different patches "1--C" "0--0".
-Use the creation-factor to reduce the cost of "0-C" "1--0" make
-"o--C", "1--0" as matching result.
+> That lets us avoid one repetition already in this patch, but will also
+> give us a cleaner interface for callers which want to tweak this
+> setting.
+>=20
+> Signed-off-by: Jeff King <peff@peff.net>
 
-> > 3. How does LAPJV work here? [2]
-> >
-> > [1]: https://github.com/git/git/blob/725f57037d81e24eacfda6e59a19c60c0b=
-4c8062/range-diff.c#L310
-> > [2]: https://github.com/git/git/blob/725f57037d81e24eacfda6e59a19c60c0b=
-4c8062/linear-assignment.c#L15
->
-> This appears to be based on work by Jonker and Volgenant. Maybe
-> searching for those names online could find something. Maybe not
-> git-specific, but even if it's just the general algorithm as such, it
-> might be possible to find different explanations of the algorithm.
->
-> I haven't really studied this algorithm, but since it's faster than the
-> Hungarian algorithm, I could imagine that either
->
->   * it's super-useful to first understand the Hungarian algorithm, then
->     understand why and how the Jonker-Volgenant algorithm does better,
->     or,
->
->   * it's completely useless to first understand the Hungarian algorithm,
->     since they're so different.
->
-> :-)
->
+Acked-by: Alejandro Colomar <alx@kernel.org>
 
-Ah, I had a look at the Hungarian algorithm earlier, because it is the most
-typical algorithm in linear assignment problem, it can still be understood.
-I didn't read that paper by Jonker and Volgenant, but I should try to read
-it later.
+> ---
+>  diff.c | 19 ++++++++++++++-----
+>  diff.h |  2 ++
+>  2 files changed, 16 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/diff.c b/diff.c
+> index 469e18aed20..750d1b1a6c3 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -3374,6 +3374,17 @@ void diff_set_mnemonic_prefix(struct diff_option=
+s *options, const char *a, const
+>  		options->b_prefix =3D b;
+>  }
+> =20
+> +void diff_set_noprefix(struct diff_options *options)
+> +{
+> +	options->a_prefix =3D options->b_prefix =3D "";
+> +}
+> +
+> +void diff_set_default_prefix(struct diff_options *options)
+> +{
+> +	options->a_prefix =3D "a/";
+> +	options->b_prefix =3D "b/";
+> +}
+> +
+>  struct userdiff_driver *get_textconv(struct repository *r,
+>  				     struct diff_filespec *one)
+>  {
+> @@ -4674,10 +4685,9 @@ void repo_diff_setup(struct repository *r, struc=
+t diff_options *options)
+>  		options->flags.ignore_untracked_in_submodules =3D 1;
+> =20
+>  	if (diff_no_prefix) {
+> -		options->a_prefix =3D options->b_prefix =3D "";
+> +		diff_set_noprefix(options);
+>  	} else if (!diff_mnemonic_prefix) {
+> -		options->a_prefix =3D "a/";
+> -		options->b_prefix =3D "b/";
+> +		diff_set_default_prefix(options);
+>  	}
+> =20
+>  	options->color_moved =3D diff_color_moved_default;
+> @@ -5261,8 +5271,7 @@ static int diff_opt_no_prefix(const struct option=
+ *opt,
+> =20
+>  	BUG_ON_OPT_NEG(unset);
+>  	BUG_ON_OPT_ARG(optarg);
+> -	options->a_prefix =3D "";
+> -	options->b_prefix =3D "";
+> +	diff_set_noprefix(options);
+>  	return 0;
+>  }
+> =20
+> diff --git a/diff.h b/diff.h
+> index 8d770b1d579..2af10bc5851 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -497,6 +497,8 @@ void diff_tree_combined(const struct object_id *oid=
+, const struct oid_array *par
+>  void diff_tree_combined_merge(const struct commit *commit, struct rev_=
+info *rev);
+> =20
+>  void diff_set_mnemonic_prefix(struct diff_options *options, const char=
+ *a, const char *b);
+> +void diff_set_noprefix(struct diff_options *options);
+> +void diff_set_default_prefix(struct diff_options *options);
+> =20
+>  int diff_can_quit_early(struct diff_options *);
+> =20
 
-> [1] https://lore.kernel.org/git/1196830250.20220726145447@yandex.ru/
->
-> Martin
+--=20
+<http://www.alejandro-colomar.es/>
+GPG key fingerprint: A9348594CE31283A826FBDD8D57633D441E25BB5
 
-Thanks for the answer!
+--------------SMcGL1pqXlKw4RMp0Kn8vSif--
 
---
-ZheNing Hu
+--------------rtomisz8rlt92ruzACsUZDcO
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmQJuf0ACgkQnowa+77/
+2zL56Q//d20mCbbY+eKAzB2qezu/bzND8g9T3M4Qiq4UVXfD3TbHkb6Z5cxA3SHJ
+cWqE+HFIRs/T8wr/OwKaxhhCA53Qwr6Wlu3hwud7NmRhSESV7n8uqdgt9kyZeVOf
+Sql9ACjdMIXNFYnmF1M4VnHxx8y8N16r78A88RkSA/rIctNXNuw3Xd0G9T5GDvzI
+zj9Yo8wu5CgrZTZVALUsHzyjgIdP6F8sRRixlMXGfyfoBL/G1rej/5Osz9o5SCQj
+wxnNxRPErQnEwrqg1cXj16n1phFQ9W4aBSOfq0+MvfGa0PB0A2VLtSY34avkGDrV
+QjGuiMOj7h4+n2dlMKl42IkqfOJyA7vWLHjkmB5q2vdrZezQw/iAK0mzAb73gq5U
+EFBVAsCdmk6MQWEvA5+zHHU0Zjw1NWSu6uPn85ldAgTUC/Z3oC0/3Kre4BDuFSK8
+ywtOHJfT503fR2hiBgTFtLCzAaP1IOsxIrsZE438dstYk9EdAQX9G41h70KbyOoT
+grFfB5VpMhHsylSuu8d9k6bMK31n1sXxpVQD1Xj2MS1db3je7f6+6Of4TdYgnV1B
+IvX8s8gUUsnABxXKqSGG2gw/Z7g/hr7rjQGpOBjMszReS6yLNCvLIUlkJG9WHNjw
++jQutb89PDYG7H8KGpYCSr8buNgDVr1q8OrdKlwMcBEJSdsK0Vc=
+=kUyT
+-----END PGP SIGNATURE-----
+
+--------------rtomisz8rlt92ruzACsUZDcO--
