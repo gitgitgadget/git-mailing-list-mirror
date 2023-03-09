@@ -2,202 +2,227 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A95FAC61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 10:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8497C64EC4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 10:51:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbjCIKuv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 05:50:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56722 "EHLO
+        id S229772AbjCIKvN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 05:51:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229685AbjCIKut (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 05:50:49 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9DA7DF701
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 02:50:48 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id l7-20020a05600c4f0700b003e79fa98ce1so935953wmq.2
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 02:50:48 -0800 (PST)
+        with ESMTP id S229685AbjCIKvL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 05:51:11 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3931E190E
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 02:51:07 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id e13so1384397wro.10
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 02:51:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678359047;
-        h=in-reply-to:from:content-language:references:cc:to:subject
+        d=gmail.com; s=20210112; t=1678359066;
+        h=in-reply-to:from:references:cc:to:content-language:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YMaVGgn/Jb0SPevIePkVSuLFg6ciQxzBa+HvVTI2wOg=;
-        b=Lv9cCAoLx4Imk1ByzU/EPbR/MnLGhNSJjjWYXlHSMEDD0B/zVv1MkJ9TYg05LK0+mO
-         wP2OJKsPptrxS/rjJwQ1Y7g/RyOoBvebY+MozjMPqYYj+r2vr6A09zBtSw9aajYCRtbx
-         aActPJnKMCEhwuHHPnFF/s70Hv+6Yn8jWLpnAuHb9nDRCCaQbGv7zQLAFlvUaPwulXOG
-         OCAOyMsm4LJvtpQEzHhwrxHmBh3DsreEJLpXqRzy4aGGBt1/RzXER3wrzzMnxKBRkgsW
-         PQM1JoRTWmN0trXviDw2n/qV+/Afwxxnk6epDu4YlMaA+eBfRT/gmKLcDbWLCx1r1/lT
-         cnCQ==
+        bh=haZIQxmnrMBQobbabaYTp38OkQQJ+yBY/HDijLxVLYM=;
+        b=W5N5nqansTbY7L7AYplZVAIYNn+43DRe7CxIJIpRlxviBEzA/lkbHNCsUiVRWQvTVJ
+         rj49CYyD9wMVxIbLjWFiLodafjkGzQ35pNJoT2LrIbXZIte/AxVNa2Fe/xNHnM6VkHOC
+         3XOwYjlkL+K3750VnRK/LCMpssDRvacT8SepJt0nnvwTfy4YJzBqNVRTdHC7UbH5NgDS
+         SIKkHLJS2+wyTJh/Ap9lYbFDmho4OGJ/Tl+eHx7AxyfYPi4YzSWLNpX95yLdYZ/GR841
+         QpJfbndlaZDrbPJ62ol5pDyIIXV54xet1DSfzLUxc8YfyzVh97+RMzCS7T4aN9JvCpFF
+         8lRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678359047;
-        h=in-reply-to:from:content-language:references:cc:to:subject
+        d=1e100.net; s=20210112; t=1678359066;
+        h=in-reply-to:from:references:cc:to:content-language:subject
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=YMaVGgn/Jb0SPevIePkVSuLFg6ciQxzBa+HvVTI2wOg=;
-        b=emnsO6yKWAovrrBTNoqYpwhJ+vOUs11t292EmR7T6WNOj/8xJ6Ma5T4OiyyjmphwQE
-         5YC2iVMgbl90fFM1uUuYptSeLPkArmllzArb3ZCeZK2fJxGUDZYjxSYhWrFFnrA5NVwI
-         /JnRYsP2QHXsMBDv+nPoxCzuVEt2cI+BgdqkU0knckRDnv0z+TLNPnDVx51Qkcmpk5Y8
-         tFw0dnFvNIEsIx0zCRSmNLJNjtAnARQWAY95CNv6oNUgkBpbyxpP8HgUTqvMTnueic7A
-         4Lsp4BvJTCsbEN4Q4GrQeWLAEf+vF6Sz0ijmUZiqwDLRf+Kezzio2c+M1evvEvN7RXi5
-         WIDg==
-X-Gm-Message-State: AO0yUKVIErqQT8+H5WdjpkUnuYnWj+PnGHgdz0l66BJ6cH7bcigNmK8E
-        dIQMTjuTfBQOKz2tiTjXGYOzbit0SEg=
-X-Google-Smtp-Source: AK7set+/4uGGIYydznU2eNQFEJf6OfWeCtpoXOrPuKZE0CM87NXv2DPjwiFzeO9BrhzuHghq4EN82g==
-X-Received: by 2002:a05:600c:a04:b0:3e0:1a9:b1d7 with SMTP id z4-20020a05600c0a0400b003e001a9b1d7mr19446358wmp.19.1678359047041;
-        Thu, 09 Mar 2023 02:50:47 -0800 (PST)
+        bh=haZIQxmnrMBQobbabaYTp38OkQQJ+yBY/HDijLxVLYM=;
+        b=XrOFz+aFmGFjEUztA7yNl2eFNZ40VfNJofwctZpPk56NrIQyWWfqw+JROQuOoJ7wrn
+         Tv8Yb3xKa7+MvgdBkVOnIL8LCHdGiFtC0rJZNPiIGdwoweDcO+srdswBdY0TwL/9tbLv
+         p/8KNilmiWZQ6QvDurT8+xmEd5VNltaN6P6by73NRq676mq+RmcSCPU2ls+w6h3MVGhQ
+         I8T89U/+b28z0T/+fOuVMfKaeNaQWb35zcO+kuxGXx0w0kcZCSca+u6DZv1hmyIxxXj4
+         uqgjtqUlFiPLPodBnKJQGXe4geIiSj3/NZZyxnBMRnVPIwN2J++GQ8lePNqRR9N8foEI
+         li6g==
+X-Gm-Message-State: AO0yUKXRHW2ZzdWbyxW0MPGj0bx05ENvVP7W+lQIosWK58H5mattrzMS
+        X6EcOBzOVpWawwh/rpLH+O+0hGHxQ+E=
+X-Google-Smtp-Source: AK7set/jZmBU7OgG0m8B4ou1wIj+EK6xljWt4ZRNODFu50BEWO9T2mQv0SDOG7yRQNyOg1Irq2Nwkw==
+X-Received: by 2002:adf:ee86:0:b0:2c5:3fcb:681e with SMTP id b6-20020adfee86000000b002c53fcb681emr14213625wro.4.1678359066428;
+        Thu, 09 Mar 2023 02:51:06 -0800 (PST)
 Received: from [192.168.0.160] ([170.253.51.134])
-        by smtp.gmail.com with ESMTPSA id h19-20020a05600c315300b003db0bb81b6asm2397058wmo.1.2023.03.09.02.50.46
+        by smtp.gmail.com with ESMTPSA id z11-20020a5d654b000000b002c70f5627d5sm17375381wrv.63.2023.03.09.02.51.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Mar 2023 02:50:46 -0800 (PST)
-Message-ID: <62c59063-e168-57b0-43d5-be7f007c2d37@gmail.com>
-Date:   Thu, 9 Mar 2023 11:50:37 +0100
+        Thu, 09 Mar 2023 02:51:06 -0800 (PST)
+Message-ID: <33be045b-0ac7-ba88-bec7-d805a90580d6@gmail.com>
+Date:   Thu, 9 Mar 2023 11:51:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 1/5] diff: factor out src/dst prefix setup
+Subject: Re: [PATCH 3/5] diff: add --default-prefix option
+Content-Language: en-US
 To:     Jeff King <peff@peff.net>
 Cc:     Git Mailing List <git@vger.kernel.org>
 References: <ZAl3bHB9zxjLITgf@coredump.intra.peff.net>
- <ZAl3iqcSL4PODx01@coredump.intra.peff.net>
-Content-Language: en-US
+ <ZAl4MkWVV8fr+3fO@coredump.intra.peff.net>
 From:   Alejandro Colomar <alx.manpages@gmail.com>
-In-Reply-To: <ZAl3iqcSL4PODx01@coredump.intra.peff.net>
+In-Reply-To: <ZAl4MkWVV8fr+3fO@coredump.intra.peff.net>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------rtomisz8rlt92ruzACsUZDcO"
+ boundary="------------hkmEGL7C41FDIFeuIYRbrLmH"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------rtomisz8rlt92ruzACsUZDcO
-Content-Type: multipart/mixed; boundary="------------SMcGL1pqXlKw4RMp0Kn8vSif";
+--------------hkmEGL7C41FDIFeuIYRbrLmH
+Content-Type: multipart/mixed; boundary="------------7L2ncFAkwLx6bc0IqmsAq2ah";
  protected-headers="v1"
 From: Alejandro Colomar <alx.manpages@gmail.com>
 To: Jeff King <peff@peff.net>
 Cc: Git Mailing List <git@vger.kernel.org>
-Message-ID: <62c59063-e168-57b0-43d5-be7f007c2d37@gmail.com>
-Subject: Re: [PATCH 1/5] diff: factor out src/dst prefix setup
+Message-ID: <33be045b-0ac7-ba88-bec7-d805a90580d6@gmail.com>
+Subject: Re: [PATCH 3/5] diff: add --default-prefix option
 References: <ZAl3bHB9zxjLITgf@coredump.intra.peff.net>
- <ZAl3iqcSL4PODx01@coredump.intra.peff.net>
-In-Reply-To: <ZAl3iqcSL4PODx01@coredump.intra.peff.net>
+ <ZAl4MkWVV8fr+3fO@coredump.intra.peff.net>
+In-Reply-To: <ZAl4MkWVV8fr+3fO@coredump.intra.peff.net>
 
---------------SMcGL1pqXlKw4RMp0Kn8vSif
+--------------7L2ncFAkwLx6bc0IqmsAq2ah
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
 
 
-On 3/9/23 07:07, Jeff King wrote:
-> We directly manipulate diffopt's a_prefix and b_prefix to set up either=
-
-> the default "a/foo" prefix or the "--no-prefix" variant. Although this
-> is only a few lines, it's worth pulling these into their own functions.=
-
-> That lets us avoid one repetition already in this patch, but will also
-> give us a cleaner interface for callers which want to tweak this
-> setting.
+On 3/9/23 07:09, Jeff King wrote:
+> You can change the output of prefixes with diff.noprefix and
+> diff.mnemonicprefix, but there's no easy way to override them from the
+> command-line. We do have "--no-prefix", but there's no way to get back
+> to the default prefix. So let's add an option to do that.
 >=20
 > Signed-off-by: Jeff King <peff@peff.net>
 
 Acked-by: Alejandro Colomar <alx@kernel.org>
 
 > ---
->  diff.c | 19 ++++++++++++++-----
->  diff.h |  2 ++
->  2 files changed, 16 insertions(+), 5 deletions(-)
+> This isn't strictly necessary for the series, but it seemed like a gap.=
+
+> You can always do:
 >=20
+>   git -c diff.noprefix=3Dfalse -c diff.mnemonicprefix=3Dfalse ...
+>=20
+> but that's rather a mouthful.
+>=20
+> Note that there isn't a command-line equivalent for mnemonicprefix,
+> either. I don't think it's worth adding unless somebody really wants it=
+=2E
+>=20
+>  Documentation/diff-options.txt |  5 +++++
+>  diff.c                         | 14 ++++++++++++++
+>  t/t4013-diff-various.sh        | 10 ++++++++++
+>  3 files changed, 29 insertions(+)
+>=20
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
+s.txt
+> index 7d73e976d99..08ab86189a7 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -852,6 +852,11 @@ endif::git-format-patch[]
+>  --no-prefix::
+>  	Do not show any source or destination prefix.
+> =20
+> +--default-prefix::
+> +	Use the default source and destination prefixes ("a/" and "b/").
+> +	This is usually the default already, but may be used to override
+> +	config such as `diff.noprefix`.
+> +
+>  --line-prefix=3D<prefix>::
+>  	Prepend an additional prefix to every line of output.
+> =20
 > diff --git a/diff.c b/diff.c
-> index 469e18aed20..750d1b1a6c3 100644
+> index 750d1b1a6c3..b322e319ff3 100644
 > --- a/diff.c
 > +++ b/diff.c
-> @@ -3374,6 +3374,17 @@ void diff_set_mnemonic_prefix(struct diff_option=
-s *options, const char *a, const
->  		options->b_prefix =3D b;
->  }
-> =20
-> +void diff_set_noprefix(struct diff_options *options)
-> +{
-> +	options->a_prefix =3D options->b_prefix =3D "";
-> +}
-> +
-> +void diff_set_default_prefix(struct diff_options *options)
-> +{
-> +	options->a_prefix =3D "a/";
-> +	options->b_prefix =3D "b/";
-> +}
-> +
->  struct userdiff_driver *get_textconv(struct repository *r,
->  				     struct diff_filespec *one)
->  {
-> @@ -4674,10 +4685,9 @@ void repo_diff_setup(struct repository *r, struc=
-t diff_options *options)
->  		options->flags.ignore_untracked_in_submodules =3D 1;
-> =20
->  	if (diff_no_prefix) {
-> -		options->a_prefix =3D options->b_prefix =3D "";
-> +		diff_set_noprefix(options);
->  	} else if (!diff_mnemonic_prefix) {
-> -		options->a_prefix =3D "a/";
-> -		options->b_prefix =3D "b/";
-> +		diff_set_default_prefix(options);
->  	}
-> =20
->  	options->color_moved =3D diff_color_moved_default;
-> @@ -5261,8 +5271,7 @@ static int diff_opt_no_prefix(const struct option=
- *opt,
-> =20
->  	BUG_ON_OPT_NEG(unset);
->  	BUG_ON_OPT_ARG(optarg);
-> -	options->a_prefix =3D "";
-> -	options->b_prefix =3D "";
-> +	diff_set_noprefix(options);
+> @@ -5275,6 +5275,17 @@ static int diff_opt_no_prefix(const struct optio=
+n *opt,
 >  	return 0;
 >  }
 > =20
-> diff --git a/diff.h b/diff.h
-> index 8d770b1d579..2af10bc5851 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -497,6 +497,8 @@ void diff_tree_combined(const struct object_id *oid=
-, const struct oid_array *par
->  void diff_tree_combined_merge(const struct commit *commit, struct rev_=
-info *rev);
+> +static int diff_opt_default_prefix(const struct option *opt,
+> +				   const char *optarg, int unset)
+> +{
+> +	struct diff_options *options =3D opt->value;
+> +
+> +	BUG_ON_OPT_NEG(unset);
+> +	BUG_ON_OPT_ARG(optarg);
+> +	diff_set_default_prefix(options);
+> +	return 0;
+> +}
+> +
+>  static enum parse_opt_result diff_opt_output(struct parse_opt_ctx_t *c=
+tx,
+>  					     const struct option *opt,
+>  					     const char *arg, int unset)
+> @@ -5564,6 +5575,9 @@ struct option *add_diff_options(const struct opti=
+on *opts,
+>  		OPT_CALLBACK_F(0, "no-prefix", options, NULL,
+>  			       N_("do not show any source or destination prefix"),
+>  			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_no_prefix),
+> +		OPT_CALLBACK_F(0, "default-prefix", options, NULL,
+> +			       N_("use default prefixes a/ and b/"),
+> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_default_prefix),=
+
+>  		OPT_INTEGER_F(0, "inter-hunk-context", &options->interhunkcontext,
+>  			      N_("show context between diff hunks up to the specified numbe=
+r of lines"),
+>  			      PARSE_OPT_NONEG),
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 0bc69579898..5de1d190759 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -643,9 +643,19 @@ test_expect_success 'diff respects diff.noprefix' =
+'
+>  	check_prefix actual file0 file0
+>  '
 > =20
->  void diff_set_mnemonic_prefix(struct diff_options *options, const char=
- *a, const char *b);
-> +void diff_set_noprefix(struct diff_options *options);
-> +void diff_set_default_prefix(struct diff_options *options);
+> +test_expect_success 'diff --default-prefix overrides diff.noprefix' '
+> +	git -c diff.noprefix diff --default-prefix >actual &&
+> +	check_prefix actual a/file0 b/file0
+> +'
+> +
+>  test_expect_success 'diff respects diff.mnemonicprefix' '
+>  	git -c diff.mnemonicprefix diff >actual &&
+>  	check_prefix actual i/file0 w/file0
+>  '
 > =20
->  int diff_can_quit_early(struct diff_options *);
-> =20
+> +test_expect_success 'diff --default-prefix overrides diff.mnemonicpref=
+ix' '
+> +	git -c diff.mnemonicprefix diff --default-prefix >actual &&
+> +	check_prefix actual a/file0 b/file0
+> +'
+> +
+>  test_done
 
 --=20
 <http://www.alejandro-colomar.es/>
 GPG key fingerprint: A9348594CE31283A826FBDD8D57633D441E25BB5
 
---------------SMcGL1pqXlKw4RMp0Kn8vSif--
+--------------7L2ncFAkwLx6bc0IqmsAq2ah--
 
---------------rtomisz8rlt92ruzACsUZDcO
+--------------hkmEGL7C41FDIFeuIYRbrLmH
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmQJuf0ACgkQnowa+77/
-2zL56Q//d20mCbbY+eKAzB2qezu/bzND8g9T3M4Qiq4UVXfD3TbHkb6Z5cxA3SHJ
-cWqE+HFIRs/T8wr/OwKaxhhCA53Qwr6Wlu3hwud7NmRhSESV7n8uqdgt9kyZeVOf
-Sql9ACjdMIXNFYnmF1M4VnHxx8y8N16r78A88RkSA/rIctNXNuw3Xd0G9T5GDvzI
-zj9Yo8wu5CgrZTZVALUsHzyjgIdP6F8sRRixlMXGfyfoBL/G1rej/5Osz9o5SCQj
-wxnNxRPErQnEwrqg1cXj16n1phFQ9W4aBSOfq0+MvfGa0PB0A2VLtSY34avkGDrV
-QjGuiMOj7h4+n2dlMKl42IkqfOJyA7vWLHjkmB5q2vdrZezQw/iAK0mzAb73gq5U
-EFBVAsCdmk6MQWEvA5+zHHU0Zjw1NWSu6uPn85ldAgTUC/Z3oC0/3Kre4BDuFSK8
-ywtOHJfT503fR2hiBgTFtLCzAaP1IOsxIrsZE438dstYk9EdAQX9G41h70KbyOoT
-grFfB5VpMhHsylSuu8d9k6bMK31n1sXxpVQD1Xj2MS1db3je7f6+6Of4TdYgnV1B
-IvX8s8gUUsnABxXKqSGG2gw/Z7g/hr7rjQGpOBjMszReS6yLNCvLIUlkJG9WHNjw
-+jQutb89PDYG7H8KGpYCSr8buNgDVr1q8OrdKlwMcBEJSdsK0Vc=
-=kUyT
+iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmQJuhkACgkQnowa+77/
+2zJz5A//WqBFwyK29qb0poCVplk49d2qn7qeiMkRTWqTPmK2UR2TWRRMyQe3cetk
+tlBlryork+4mYaw5apEmQtoIRlwFZWdkoANCjYWosb0qamlbq6ogphbrJhKL12zj
+7kSPpcZ8AuMFbQGD/lIhPfgUVsiGpVv8kMse/lno6p1goiaGI41WEY+DAixwpqD8
+Igb/5A1G6nuEyhp1JpO/ZGQmKaWt+mpTdfr79AJ0u4NgwLtj7+4mo8IrwhHGaWiU
+z5cCMlQz5c3pICU0WHHS6YzNncK/d0pUzH4oxlzhDZLEYd+gb1DWwULicYyefQQR
+5Jcs94+q9e9H5S05rZ/9EniCUmcnKsALgYm9wmBYo8mfvjhf8bygX9amlsfREHvs
+EMMp0K98Lc7NHsTJds9cwZ+z6v1aEqC1FMXjBnTqMGJpSEBsNAQYcQPDAA4G50Zk
+pQH0hM5DOUjag7udCzziBz6sKVJ6qidxt3vsnOxHpcpyByHqb5+YtrADO5TKh6uG
+YslY85ACZgZLzK/GQJBf3EaYobZYq1Kq9TMnU/wGXs9MmETE/IG1vg6OIZlvAFRS
+CZz7x7jI9qhTKsropKfr6P2hS4kRjD1ecasiTGr/U7D0bbH0yBzP3fQhvNLKG5/C
+j/D+94mqLLo+78wizWKz6WmxETlYjvbmZrFJAZCRVa9pmmHBLEQ=
+=AClN
 -----END PGP SIGNATURE-----
 
---------------rtomisz8rlt92ruzACsUZDcO--
+--------------hkmEGL7C41FDIFeuIYRbrLmH--
