@@ -2,159 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3051C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 13:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60B1BC64EC4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 13:23:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230104AbjCINJh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 08:09:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56056 "EHLO
+        id S229716AbjCINXl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 08:23:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229965AbjCINJf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 08:09:35 -0500
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1242B2449F
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 05:09:33 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 906025C011B
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 08:09:31 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 09 Mar 2023 08:09:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :message-id:mime-version:reply-to:sender:subject:subject:to:to;
-         s=fm1; t=1678367371; x=1678453771; bh=XNnIbWFj7uXrJPNbh97LFvKJZ
-        AAYggJuWibPI81hKVg=; b=YCLmWiAPkofT7tkM+GESV5ynrTzgMsErC8T57wa3Z
-        44JTlk0cU1B5DurmmuR+0+lqyPxlQoRb7mMIWkju9JMuFr4em4C8IRjXSKV9U7hK
-        430IlEOuN1kbXxSvqr4Su7OrUjQCj0eeOW/IW+dB5/u5mJ17BwiIsknyOEmUntKh
-        ahNVv+4Fm/ZIgtYHjefeeIhwDWLLDiS89Yjt3udtYNs93Q0MKqrIr6O0Qk3nXNxV
-        wSpth1XhhxicQPTiPMtRX+AW2z18jU4y0pXAU/3FPQod/4pUbqaAjKsX7DB8TgQq
-        Q5kkwFpdXRkO58YNiXqhN7UehwRIdtdwkhbHjI6shPRUg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:message-id
-        :mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-        1678367371; x=1678453771; bh=XNnIbWFj7uXrJPNbh97LFvKJZAAYggJuWib
-        PI81hKVg=; b=l3ufzN/ynBAt61IEn0WO6dmApx5cKnmMLn5o+4Iw+TKwI3qKVrC
-        N+PUylziHFbiYs/gSwzg3gDXeEF451i9+BrgNl8EHTq78WJLcpPh/5pWmjKtugYZ
-        +3PZnsTC5erQQo0HJhdPASpt0Ro0R4foBJsPTSFzaOq5wUiLErz3sswvhrWIhp1d
-        FbPuN5qyXUBM8mj44IGkqaQ69y168nskM+Ll0+16hhl6pcZqqlNnWFlbkaVL1UGQ
-        TXQVe+tOSkoQB6Tv7Bfnxn5JSITXiyz7ZqjPdV8a8Cq1bp8RtuR30kDxzBXEEwOA
-        9ibKCLthdvBdiyaS1rOm0rjKVRGIl8tTAxg==
-X-ME-Sender: <xms:i9oJZNCxnyUFjxa85PlxQYGqAiyex96uY30Q6x-RQh7hpPkEu_UcyQ>
-    <xme:i9oJZLixdRJAcvIn2SGCV3HGvJZ63IiehsdkZxO2DS35OTGWTkvT2FLJDMmBv0bw9
-    r1hYvvK7bnR5jcdFA>
-X-ME-Received: <xmr:i9oJZIlTyPa3HFqRq24Z6Alq3TicAINA6bINuqnO4Tn9lBoXw2TdM4WKbDpRU0hol7kjU67jqR2RzGCDqayW2QR5Mqs66H9TScKpwgrNZj41NsY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdduiedggeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
-    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:i9oJZHwTiCNVJphWKZKVi6hCkbZy3GRkPEH2J-z10jy3UYqxh8pizA>
-    <xmx:i9oJZCR4BR1H5LxubbX3s41GTrIG031xBRWSxDxTKZTTEVzSrldjXQ>
-    <xmx:i9oJZKYbW7_WQFrvhJmfP7Q5jg2KzR8qqQPVc01kbRqGPeZBPcwH5Q>
-    <xmx:i9oJZJNj6eFOkPBuxkIO_Rv6cI9pQ6So8q5UeJcWqkAm7tzX1lqYcg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 9 Mar 2023 08:09:30 -0500 (EST)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 081bda30 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-        for <git@vger.kernel.org>;
-        Thu, 9 Mar 2023 13:09:17 +0000 (UTC)
-Date:   Thu, 9 Mar 2023 14:09:23 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Subject: [PATCH] receive-pack: fix stale packfile locks when dying
-Message-ID: <e16bd81bf9e251aa6959fbe10a3fbc215a4a1c12.1678367338.git.ps@pks.im>
+        with ESMTP id S229532AbjCINXk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 08:23:40 -0500
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9B553C37
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 05:23:38 -0800 (PST)
+Received: by mail-yb1-xb2a.google.com with SMTP id n18so1832653ybm.10
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 05:23:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678368218;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ERtGb4/rPzVNJ6ffQ0k/tck0Xb4Gc2+VqQh0irQWHuE=;
+        b=cpTJGaN7KbRGey/Kthd6OQ+Z/+uMUKQu34XN8Hct/JrCIlWjYVnPxHeWxy+FYOgBHo
+         08HmtXqu/aCmwJD/PZUcNgD2GBdzuv003xdkteM+rL5Wwvx3ECGoFwF+ypqgV28OxM93
+         fTwLj9TEiwlwpUu5h6+y01H3lZ1o46UgdHKNFl4xpgNKaNMlruR/VhATnWTOHVPZR9Wn
+         h8IhTY0lIjBbPa/2t4Oy9Rl6yL6cqOG3UCJ39RQyy+b7zIu6xy7j/NF0oPwUiNriOsHi
+         JUzti0Z4LdD0N499QIIORgp8KS3PSBOZ3vumhRBTVYADLx7Qk8tRwv51JgSO0T8HzIc7
+         KM0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678368218;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ERtGb4/rPzVNJ6ffQ0k/tck0Xb4Gc2+VqQh0irQWHuE=;
+        b=MF+e5SoH4O/SUa5OABu78w+pVGhVvWFlR/Has1eDYtI8eukXQVKA1niNjQinU5Ojte
+         EcEuDPJ/Ynxay5b4LNMsgBQ9scePLoCd4tQ4GYTqoZdPx7fGdBCb2aB3r28ablUSAm5p
+         JsjLeeXWuO8hQEpNPITH+Cu8wwx0JGtmH3Kf9Z+0sS94Yvs1OoApK/qPvoaTUg0scFQR
+         xsHKKaaybZt6s8HycfQFzLlLms84afzx75JRWuX142bsf1C3yyJeKzh/H90A+2ZO8C6K
+         zMyWNWi7OpmkRHD0jyKYO8gAn4cKv9Zb9DyRZ/k1Ng7M3yEdpMaIuGRg91m74bEuFSfs
+         0myA==
+X-Gm-Message-State: AO0yUKVJUoUoh2/nwPgm9CqwuMCy7H4vYunms2CaGdjV1gUuGRQvV01i
+        SuXqCkglh5/KPpOQBZJm7VURQuyTBZth3VleLEwNgoIi2tA=
+X-Google-Smtp-Source: AK7set+AlqBJtILOCLb4hSbS4lef/KtbL6vK8miieozLDG4vLfU67kbO1mWeEbql9sIl1nwcAZuOs6L8jyqA/S8ywXI=
+X-Received: by 2002:a5b:5d0:0:b0:a48:6236:1be4 with SMTP id
+ w16-20020a5b05d0000000b00a4862361be4mr13340975ybp.2.1678368217992; Thu, 09
+ Mar 2023 05:23:37 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="v4NCy6+qyIPH+hXE"
-Content-Disposition: inline
+References: <CAABMjtGXGZtUnU+8KgEccNeLXRJmWnE5f24BMG8ysbZKfT-ctQ@mail.gmail.com>
+In-Reply-To: <CAABMjtGXGZtUnU+8KgEccNeLXRJmWnE5f24BMG8ysbZKfT-ctQ@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 9 Mar 2023 14:23:26 +0100
+Message-ID: <CAP8UFD2s12CLDj6tOQAE-KMhog_qPpFUnp5TXHNSZAauue-8AQ@mail.gmail.com>
+Subject: Re: [GSoC23] Working on project Idea from SOC 2011
+To:     Khalid Masum <khalid.masum.92@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---v4NCy6+qyIPH+hXE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Mar 9, 2023 at 1:15=E2=80=AFPM Khalid Masum <khalid.masum.92@gmail.=
+com> wrote:
+>
+> There is this SOC 2011 idea named "Resumable clone" here:
+>
+> https://archive.kernel.org/oldwiki/git.wiki.kernel.org/index.php/SoC2011I=
+deas.html
 
-When accepting a packfile in git-receive-pack(1), we feed that packfile
-into git-index-pack(1) to generate the packfile index. As the packfile
-would often only contain unreachable objects until the references have
-been updated, concurrently running garbage collection might be tempted
-to delete the packfile right away and thus cause corruption. To fix
-this, we ask git-index-pack(1) to create a `.keep` file before moving
-the packfile into place, which is getting deleted again once all of the
-reference updates have been processed.
+[...]
 
-Now in production systems we have observed that those `.keep` files are
-sometimes not getting deleted as expected, where the result is that
-repositories tend to grow packfiles that are never deleted over time.
-This seems to be caused by a race when git-receive-pack(1) is killed
-after we have migrated the kept packfile from the quarantine directory
-into the main object database. While this race window is typically small
-it can be extended for example by installing a `proc-receive` hook.
+> Goal: Allow Git to resume a cloning process that
+> has been aborted for any reason.
+> Languages: C
 
-Fix this race by installing an atexit(3P) handler that unlinks the keep
-file.
+> Can I work on this idea for GSoC23?
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/receive-pack.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+You would need to find (co-)mentors willing to mentor you on this project.
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index cd5c7a28ef..0a6030d775 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2186,6 +2186,12 @@ static const char *parse_pack_header(struct pack_hea=
-der *hdr)
-=20
- static const char *pack_lockfile;
-=20
-+static void unlink_pack_lockfile(void)
-+{
-+	if (pack_lockfile)
-+		unlink(pack_lockfile);
-+}
-+
- static void push_header_arg(struct strvec *args, struct pack_header *hdr)
- {
- 	strvec_pushf(args, "--pack_header=3D%"PRIu32",%"PRIu32,
-@@ -2281,6 +2287,7 @@ static const char *unpack(int err_fd, struct shallow_=
-info *si)
- 		if (status)
- 			return "index-pack fork failed";
- 		pack_lockfile =3D index_pack_lockfile(child.out, NULL);
-+		atexit(unlink_pack_lockfile);
- 		close(child.out);
- 		status =3D finish_command(&child);
- 		if (status)
---=20
-2.40.0.rc0
+I think we don't propose this kind of project anymore as we think they
+are too difficult. Some reasons are explained in the "Note about
+refactoring projects versus projects that implement new features" in
+https://git.github.io/General-Application-Information/
 
+> If so how should I get started?
 
---v4NCy6+qyIPH+hXE
-Content-Type: application/pgp-signature; name="signature.asc"
+See the section I just mentioned. There is "an applicant proposing
+something original must engage with the community strongly before and
+during the application period to get feedback and guidance to improve
+the proposal and avoid the above potential issues".
 
------BEGIN PGP SIGNATURE-----
+> I have completed one of the microprojects by the way.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQJ2oIACgkQVbJhu7ck
-PpSE5g//UoyvXcNpWsbQ2aDkeAPGCdw/ThrIPttjcG266j4NEMJfQHPEjnPXbVZX
-gZF9vLZWQi1mbgVa01uRF/40V4LnKq11NYw//cvwoLxICjzkBX0H2Y6qynJmcYJz
-hnLB7GfABqxTnlhUb4oqsBl5twWnA8KVLDA7tYlTI0IdW6EkDzCtGNP35iU4jK4A
-D2hXTDnWmq0iGrRL9NXNLYvW5bv1zdCeqvAMVVcyD6HCvJRb4eE3TzLmJgUzlyZ7
-qQXIMyl3lHr3C5NhqXPPTfak1QQvorqzNh6aa8emhGgLhUIYcwdkZQhf8WvxFpjy
-L8y9rK1vt5eEQ144RTAshALqZNRRqkVj9h6kwZIPgZyflzpY1RWscbH4sagjl7P9
-OJergYQG6cpPQobmeZ8C9CN3UvVJpUkRf9rOzocHkMK/9AqBrwPf39R/JwEl3SSZ
-TlFFjH8c98J4q91VYw1VWVR0sXAhQioNMkXIJmXVcl9GbpmRNjM42GkenLv8u4zL
-bmwkpjjfzXUItouueXEzb77y4FdvksNEZXUB4QCdqEqA5RFn3sGTpG3atX5iIBkw
-EtqnqZn0hQ0XZjYCLTllXSHmFAFMV+z4bZWLMuPvn1WRn1Z9u/MzC4R8SIVWgzRJ
-DUfcqa9WA8bTIjZdgQplAQFNJ1xyvkX48qy5k6UTxMMQ1XE9lZA=
-=dafv
------END PGP SIGNATURE-----
-
---v4NCy6+qyIPH+hXE--
+Great, thanks for your interest in working on Git!
