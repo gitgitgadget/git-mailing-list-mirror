@@ -2,118 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEC87C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 23:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11FECC64EC4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 23:23:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230052AbjCIXVU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 18:21:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45642 "EHLO
+        id S230052AbjCIXXO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 18:23:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbjCIXVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 18:21:19 -0500
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41A78F4DA9
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 15:21:18 -0800 (PST)
-Received: by mail-wr1-x435.google.com with SMTP id t15so3468861wrz.7
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 15:21:18 -0800 (PST)
+        with ESMTP id S229876AbjCIXXJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 18:23:09 -0500
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E46DC41081
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 15:23:07 -0800 (PST)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-536af432ee5so65741677b3.0
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 15:23:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678404077;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=gmail.com; s=20210112; t=1678404187;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=w1370zV1+1u4oVmEV4YVArIOZprpJLtQYIK8ykn8a5E=;
-        b=Yk3Zh8P7XeQc1gaV6jUeEM/1xWurMoiB7IB+lRwY5osCdtL90WpORNT2869NklRdzf
-         2LzkaZcLuWbv3kC4hKWFfylv3r3SffWx0INU95dbIhUCIpubBK4jDgjknaWc6rraD3Bx
-         GtkK+ZsqwihNoT40x6drRsaPsg1QhbxeK2HrTx4gcQ7cVq+rdLU3EMYw9sYDlIVAXJNY
-         U2NG9xF6S8e117irdzs+jUEYjqZo2vaEtuEzMDORtdMCx5SuqDsVV0fhvTTmJpughNOm
-         QqKsUOZM/MiDwZmXpA4QLcUW05UIEZHTFZrTUPJt2mk+5yAfmtrq9wQfXrFCreN4mPmU
-         FJng==
+        bh=ak54ip+q2w6WvrxC9VNHYgOMY6sekF1461S80aXUOr0=;
+        b=FkAQlLP9KbarCCA1TU4TrTHVO1Ly9A6niGSoV0lscYYrUPILt3E01gTrqjRzFpVfJz
+         mJfiQsTSIM9SnO6uDdXDv23Ztefey63ppdcfkSpKxtgipvI3ZXmO1WuogQOys3B2pVVL
+         jTh7x6qLefFIojesjZwILmkxKzpdRaoabftw2S5oCsxRdF2U1O/C+J8JWxmqqAUQq9us
+         bPDoMj4aEYiG15UXPsV7VOSn4XwVbvfPBthajrW+4FCnuu9htBMZhR5v1HyS25Z9ORfl
+         +WCsOtRwOt+cm/2mhx19mNsNF0cuJ6hirCaA6/6mWhmH2BReMtlaWwAcQ7RvAN6DBS/p
+         NQaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678404077;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20210112; t=1678404187;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=w1370zV1+1u4oVmEV4YVArIOZprpJLtQYIK8ykn8a5E=;
-        b=GEbYZHmc4oHgcHSPg2Gx5CLC+v33EtNw7kxQEmO5yuYqXyxpFANFgwNXPxDwRF1COk
-         q2Behx7Qdf2FEpUenwTTCnaBghFUKSSKuIUzCYRvQPoKCR+pVh9W+wkdc2t0KUY5C4Nf
-         e4AEzoDIm7O3wLxwJXH1EwqDVrmcIFN8DahrRG16aa++pCntzlIo1MWs/S9BZ/UU9c0f
-         ATX2tsJN5VBEhWX39oKNmN96ZektTJfqsb/ToiuV7xvW0awJAaih/x/vsEXxMrTabrdG
-         tlqTt4GjdolJmZELJx8uamx/M8JQb6hqKBHb+M2SMNOenZnLmLnsqS/wo3UNovPrMGlI
-         CJhQ==
-X-Gm-Message-State: AO0yUKUZm7Cg5tSJkAAuPixPYKMajBDJaCQUWn+3O377QwpBifkNaoa3
-        4MNcQLWLXvX+a7pLQ1RqtWtf+Zixnx9FmDZs3ao=
-X-Google-Smtp-Source: AK7set/rpBO91bmJ4yQXCG2oEs5EzfsUACgWwr5NWVbily7gJaRF4bu0V+m+fZexHhNrAuH8f1b8pb+z482wfOQxalU=
-X-Received: by 2002:a5d:4b83:0:b0:2c5:530c:cd36 with SMTP id
- b3-20020a5d4b83000000b002c5530ccd36mr5121144wrt.5.1678404076526; Thu, 09 Mar
- 2023 15:21:16 -0800 (PST)
+        bh=ak54ip+q2w6WvrxC9VNHYgOMY6sekF1461S80aXUOr0=;
+        b=qQR/5qCsEuswmDZAppMFsjvKe5NrHtrsaAlX/U9XSyev6o691/Zith6RtPZ3qiWXvb
+         9ePTp12W093xsFHkDTaARmA9cCq9FJ6Ye/E9b7JIIUA2oRbX1EQ7eyN5pdouoTtRqT0b
+         p8NRaXjcJcL+3aanY7xjF8+04F5WoyJjQSi1Kz9MALHQKBoG1byxAI3FOdsJSK4OEP0F
+         0+DiCc0Yzr3ZJ1FQnDhSAHX/UWkeHg5gqIfjG8nb3Es409tP0sXNsy4ifwSAhVOML1iE
+         OxlZ4vsMg+VOz03D1P/TVR1K5CSPyblQsGKyakmqPA69QC++gcbI6J8+Y6hI7tYLCWfg
+         INHg==
+X-Gm-Message-State: AO0yUKWuNUOmCg23ROyLV8lBvq+Jevh62TLPxK/bThZG1GrqNNswdr+A
+        dDSLDSmV7PJXpT2E481jcejBLqOvKqUqkNK101kG/rdaPng=
+X-Google-Smtp-Source: AK7set+DUCMb+pYA2hghGVSErCgLQ1vLpPplIiBAFY+LJsGs1SY2tjci/EG3CgGGlnwNnWimbJa21iVrgLCOqQ0rEz0=
+X-Received: by 2002:a81:ae4b:0:b0:536:5557:33a8 with SMTP id
+ g11-20020a81ae4b000000b00536555733a8mr15232423ywk.9.1678404187053; Thu, 09
+ Mar 2023 15:23:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20230309013314.119128-1-cheskaqiqi@gmail.com> <20230309063952.42362-1-cheskaqiqi@gmail.com>
- <20230309063952.42362-2-cheskaqiqi@gmail.com> <xmqqmt4lc03s.fsf@gitster.g>
-In-Reply-To: <xmqqmt4lc03s.fsf@gitster.g>
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-Date:   Thu, 9 Mar 2023 18:21:04 -0500
-Message-ID: <CAMO4yUFs5zSafO1pGFZqBU9R58G8ENhfTh5qNayeFMRPrCa+Jg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] t1092: add tests for `git diff-files`
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>, vdye@github.com,
-        git@vger.kernel.org
+References: <20230309220405.219212-1-anarcat@debian.org>
+In-Reply-To: <20230309220405.219212-1-anarcat@debian.org>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Thu, 9 Mar 2023 17:22:55 -0600
+Message-ID: <CAMP44s2=qzmF1Odc_auCaKQmTBYD53YYtaJv_LGwvoFDmTxPSA@mail.gmail.com>
+Subject: Re: [RFC PATCH] hooks--pre-push.sample: identify branch point
+To:     =?UTF-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+Hi Antoine,
 
-On Thu, Mar 9, 2023 at 12:20=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Thu, Mar 9, 2023 at 4:34=E2=80=AFPM Antoine Beaupr=C3=A9 <anarcat@debian=
+.org> wrote:
 
+> https://stackoverflow.com/a/71193866/1174784
 >
-> > +     run_on_all ../edit-contents deep/a &&
-> > +
-> > +     test_all_match git diff-files  &&
->
-> An extra space on this line.
->
-> > +     test_all_match git diff-files deep/a
->
-> And on this line.
+> There are currently a whopping twenty-five answers to that question in
+> that thread, and I'm hoping the community here will have a more
+> definitive answer to this question. I have picked the answer that uses
+> the least possible external commands, but it still uses a `tail -1`
+> which I'm somewhat unhappy about. I have thought of using
+> `--max-count` for this instead, but I understand that probably does
+> the equivalent of a `head -n` *and* it's applied before `--reverse`,
+> so there's not other way to do this.
 
-Will do !
+I spent an inordinate amount of time trying to answer that question a
+decade ago, and my conclusion after trying every possible combination
+is that it's simply not possible. Every solution at the end of the day
+will be a hack that can be broken with a corner case. It has already
+been discussed in this mailing list [1], and nobody found a solution.
 
+That's why I wrote a patch to implement a branch@{tail} helper to show
+an auxiliary ref to the beginning of the branch. I don't think I ever
+sent it to the mailing list, as my patches are rarely merged, but I'm
+sure I have it somewhere.
 
-> As output from checkout and index are known to be identical (that is
-> one of the things that test_sparse_match does), I do not think there
-> is much point checking -out from both sides.
->
-> If we know "diff-files" invocation above should never send anything
-> to the standard error, then checking that sparse-checkout-err is
-> empty may have value, though.
+The other solution I thought of was adding an update-branch hook that
+could be run every time a branch is updated, and then the hook would
+update the branch tail reference [2]. As expected, that patch wasn't
+merged either.
 
-Agree!
+It's interesting how we keep coming back to the same problems; right
+now there's a discussion in the git-users mailing list precisely about
+the same topic: how to find the branch point, in particular so `git
+name-rev` shows the correct branch a commit belongs to (which is
+otherwise just a bad guess).
 
-> > +     # file present on-disk with modifications
-> > +     run_on_sparse ../edit-contents newdirectory/testfile &&
-> > +     test_sparse_match git diff-files &&
-> > +     test_sparse_match git diff-files newdirectory/testfile
->
-> We do not care what the actual output is in this case?
+FWIW my motivation at the time was to prove Mercurial users wrong
+regarding features that they have and Git doesn't, I contended that
+Mercurial named branches (aka commit labels) were not necessary, and
+everything they achieved could be achieved in Git through different
+means. That turned out to be untrue, as there is one thing Mercurial
+can do that Git can't: show the precise point a branch started from.
 
-I wonder if the method below is good  to test the actual output for '
-file present on-disk with modifications' :
+I abandoned my efforts back then, but the topic seems inescapable, as
+that is also needed by new tools like `git range-diff`, so in my own
+tool to keep track of patch series (`git send-series`[2])I end up
+creating a ton of refs just to properly keep track of the branch
+points of my different patch series.
 
-    cat >expect  <<-EOF &&
-    :100644 100644 8e27be7d6154a1f68ea9160ef0e18691d20560dc
-0000000000000000000000000000000000000000 M newdirectory/testfile
-    EOF
+If only Git developers acknowledged the current very real limitation,
+something could be done about it.
 
-     # file present on-disk with modifications
-     run_on_sparse ../edit-contents newdirectory/testfile &&
-     test_sparse_match git diff-files &&
-     test_cmp expect sparse-checkout-out &&
-     test_sparse_match git diff-files newdirectory/testfile &&
-     test_cmp expect sparse-checkout-out
+Cheers.
 
--------------------
-Thanks,
-Shuqi
+[1] https://lore.kernel.org/git/CAMP44s0f7AJPQSTDgvy0U7vx8nxzq2a3vMhSr2Tcc6=
+1fetFkJA@mail.gmail.com/
+[2] https://lore.kernel.org/git/1398047016-21643-1-git-send-email-felipe.co=
+ntreras@gmail.com/
+[3] https://github.com/felipec/git-send-series
+
+--=20
+Felipe Contreras
