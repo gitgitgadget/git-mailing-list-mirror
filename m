@@ -2,32 +2,32 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94221C6FD1F
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 06:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F67FC6FD1F
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 06:11:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbjCIGJ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 01:09:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54176 "EHLO
+        id S229599AbjCIGLz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 01:11:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229606AbjCIGJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 01:09:56 -0500
+        with ESMTP id S229546AbjCIGLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 01:11:51 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A08D867F2
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 22:09:55 -0800 (PST)
-Received: (qmail 6267 invoked by uid 109); 9 Mar 2023 06:09:55 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBC24C78CC
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 22:11:50 -0800 (PST)
+Received: (qmail 6279 invoked by uid 109); 9 Mar 2023 06:11:50 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Mar 2023 06:09:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Mar 2023 06:11:50 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28309 invoked by uid 111); 9 Mar 2023 06:09:54 -0000
+Received: (qmail 28338 invoked by uid 111); 9 Mar 2023 06:11:49 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Mar 2023 01:09:54 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Mar 2023 01:11:49 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 9 Mar 2023 01:09:54 -0500
+Date:   Thu, 9 Mar 2023 01:11:49 -0500
 From:   Jeff King <peff@peff.net>
 To:     Alejandro Colomar <alx.manpages@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 3/5] diff: add --default-prefix option
-Message-ID: <ZAl4MkWVV8fr+3fO@coredump.intra.peff.net>
+Subject: [PATCH 4/5] format-patch: do not respect diff.noprefix
+Message-ID: <ZAl4pZV08a6Bgoip@coredump.intra.peff.net>
 References: <ZAl3bHB9zxjLITgf@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -37,97 +37,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-You can change the output of prefixes with diff.noprefix and
-diff.mnemonicprefix, but there's no easy way to override them from the
-command-line. We do have "--no-prefix", but there's no way to get back
-to the default prefix. So let's add an option to do that.
+The output of format-patch respects diff.noprefix, but this usually ends
+up being a hassle for people receiving the patch, as they have to
+manually specify "-p0" in order to apply it.
+
+I don't think there was any specific intention for it to behave this
+way. The noprefix option is handled by git_diff_ui_config(), and
+format-patch exists in a gray area between plumbing and porcelain.
+People do look at the output, and we'd expect it to colorize things,
+respect their choice of algorithm, and so on. But this particular option
+creates problems for the receiver (in theory so does diff.mnemonicprefix,
+but since we are always formatting commits, the mnemonic prefixes will
+always be "a/" and "b/").
+
+So let's disable it. The slight downsides are:
+
+  - people who have set diff.noprefix presumably like to see their
+    patches without prefixes. If they use format-patch to review their
+    series, they'll see prefixes. On the other hand, it is probably a
+    good idea for them to look at what will actually get sent out.
+
+    We could try to play games here with "is stdout a tty", as we do for
+    color. But that's not a completely reliable signal, and it's
+    probably not worth the trouble. If you want to see the patch with
+    the usual bells and whistles, then you are better off using "git
+    log" or "git show".
+
+  - if a project really does have a workflow that likes prefix-less
+    patches, and the receiver is prepared to use "-p0", then the sender
+    now has to manually say "--no-prefix" for each format-patch
+    invocation. That doesn't seem _too_ terrible given that the receiver
+    has to manually say "-p0" for each git-am invocation.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This isn't strictly necessary for the series, but it seemed like a gap.
-You can always do:
+ builtin/log.c           | 9 +++++++++
+ t/t4014-format-patch.sh | 5 +++++
+ 2 files changed, 14 insertions(+)
 
-  git -c diff.noprefix=false -c diff.mnemonicprefix=false ...
-
-but that's rather a mouthful.
-
-Note that there isn't a command-line equivalent for mnemonicprefix,
-either. I don't think it's worth adding unless somebody really wants it.
-
- Documentation/diff-options.txt |  5 +++++
- diff.c                         | 14 ++++++++++++++
- t/t4013-diff-various.sh        | 10 ++++++++++
- 3 files changed, 29 insertions(+)
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 7d73e976d99..08ab86189a7 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -852,6 +852,11 @@ endif::git-format-patch[]
- --no-prefix::
- 	Do not show any source or destination prefix.
+diff --git a/builtin/log.c b/builtin/log.c
+index a70fba198f9..eaf511aab86 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1085,6 +1085,15 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
-+--default-prefix::
-+	Use the default source and destination prefixes ("a/" and "b/").
-+	This is usually the default already, but may be used to override
-+	config such as `diff.noprefix`.
++	/*
++	 * ignore some porcelain config which would otherwise be parsed by
++	 * git_diff_ui_config(), via git_log_config(); we can't just avoid
++	 * diff_ui_config completely, because we do care about some ui options
++	 * like color.
++	 */
++	if (!strcmp(var, "diff.noprefix"))
++		return 0;
 +
- --line-prefix=<prefix>::
- 	Prepend an additional prefix to every line of output.
- 
-diff --git a/diff.c b/diff.c
-index 750d1b1a6c3..b322e319ff3 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5275,6 +5275,17 @@ static int diff_opt_no_prefix(const struct option *opt,
- 	return 0;
+ 	return git_log_config(var, value, cb);
  }
  
-+static int diff_opt_default_prefix(const struct option *opt,
-+				   const char *optarg, int unset)
-+{
-+	struct diff_options *options = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(optarg);
-+	diff_set_default_prefix(options);
-+	return 0;
-+}
-+
- static enum parse_opt_result diff_opt_output(struct parse_opt_ctx_t *ctx,
- 					     const struct option *opt,
- 					     const char *arg, int unset)
-@@ -5564,6 +5575,9 @@ struct option *add_diff_options(const struct option *opts,
- 		OPT_CALLBACK_F(0, "no-prefix", options, NULL,
- 			       N_("do not show any source or destination prefix"),
- 			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_no_prefix),
-+		OPT_CALLBACK_F(0, "default-prefix", options, NULL,
-+			       N_("use default prefixes a/ and b/"),
-+			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_default_prefix),
- 		OPT_INTEGER_F(0, "inter-hunk-context", &options->interhunkcontext,
- 			      N_("show context between diff hunks up to the specified number of lines"),
- 			      PARSE_OPT_NONEG),
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 0bc69579898..5de1d190759 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -643,9 +643,19 @@ test_expect_success 'diff respects diff.noprefix' '
- 	check_prefix actual file0 file0
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index f3313b8c58f..f5a41fd47ed 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -2386,4 +2386,9 @@ test_expect_success 'interdiff: solo-patch' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'diff --default-prefix overrides diff.noprefix' '
-+	git -c diff.noprefix diff --default-prefix >actual &&
-+	check_prefix actual a/file0 b/file0
-+'
-+
- test_expect_success 'diff respects diff.mnemonicprefix' '
- 	git -c diff.mnemonicprefix diff >actual &&
- 	check_prefix actual i/file0 w/file0
- '
- 
-+test_expect_success 'diff --default-prefix overrides diff.mnemonicprefix' '
-+	git -c diff.mnemonicprefix diff --default-prefix >actual &&
-+	check_prefix actual a/file0 b/file0
++test_expect_success 'format-patch does not respect diff.noprefix' '
++	git -c diff.noprefix format-patch -1 --stdout >actual &&
++	grep "^--- a/blorp" actual
 +'
 +
  test_done
