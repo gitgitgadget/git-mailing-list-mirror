@@ -2,111 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40EDAC61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 22:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63EB4C64EC4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 23:20:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231421AbjCIWn4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 17:43:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40962 "EHLO
+        id S231220AbjCIXUj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 18:20:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231452AbjCIWni (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 17:43:38 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 511AD38661
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 14:43:02 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 6A1E25A45F;
-        Thu,  9 Mar 2023 22:41:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1678401717;
-        bh=5epWJQkqmgpLFOK8uKoq+Gm+ciJvKE3IHqilt0sVk9s=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=bX9+3RdlRdKu6SpeoIkbGs4mDMQbvhwais7g0FxqTfdzEaeDvXoHiizfU4dmfoQqz
-         BCXrX5CT9f0Yx8bpy4Xk1Jz5dP6f/94CpQBARUJ0tZxKO/2P2KXwjX1IcwBRnHxwKu
-         HXt4AzouHD3+j+aLq2PBEXVB2LghaiSh0A5CW/DGV9v0rIDWuNxgYCv+bh+OB6l0Zp
-         bQ/ySbNW7yAGjUvK3G1mDBAQQ13bk7QBf+pAgQzl6jVXeJBBYuX5EgpTxujSYVa7MK
-         198/KklXwrrNUiLFLEqydrr0kFZJbC5VHC0WRAjO62kH3tIVAB7M0c4+6Gf8dek5y7
-         QemPklFdohCMNvIY+BwHc+gDlgp/Kq/MXoqEoN8mK/LnsRy/oqVu/I21m53mRI+QHP
-         BhDB38+oneNbUANsIIwzN1k3w3KiDIXtzh96fWSUsXQrsHzz1jVdC0SmcOlvUQfRz+
-         feSMS6wh7S34cQYlkikPNVU6nDKAWC3rePhbJNL2Y+eficto+XS
-Date:   Thu, 9 Mar 2023 22:41:56 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Emir SARI <emir_sari@icloud.com>, git@vger.kernel.org
+        with ESMTP id S229939AbjCIXU3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 18:20:29 -0500
+X-Greylist: delayed 464 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 09 Mar 2023 15:20:25 PST
+Received: from qs51p00im-qukt01071902.me.com (qs51p00im-qukt01071902.me.com [17.57.155.9])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74543F4DAD
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 15:20:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1678403559;
+        bh=kK3Jg/Z659XSSAERes/mURotL9mEBl3luHySflEG5pY=;
+        h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To;
+        b=0oHPcie27ZJPaFfx2bfp4MgtQAP5ouhpNtt5JgVb/rYd4RFPtMVJWMsykHFw3PynG
+         8dW9xmIVhoCDVY3oTXug09yVLkoPUJMuWLtjOa6zQDsQMl5ctp/dM5Iz6pd4tmb75V
+         EjReQkcqw65hS5E4rT8vGmWbj6+WR6PyPGUQpEdF44IAzisTWvwIWxAIYGOqdphkX9
+         GfFwI43LP4gNTU7cTWkyFE5Qj11QB3X0LNZCooWXH1Ve8KPJDp1ErHgU+MwTOKxUQi
+         VxcvHhHp9X/I1l/wsvn+ZWl7oCjSuO8WVx3MwesMIht7T65Gi+LQTMOZKyQksbf+9K
+         yecv4AJz+FjMA==
+Received: from smtpclient.apple (qs51p00im-dlb-asmtp-mailmevip.me.com [17.57.155.28])
+        by qs51p00im-qukt01071902.me.com (Postfix) with ESMTPSA id 7E2D65EC0644;
+        Thu,  9 Mar 2023 23:12:38 +0000 (UTC)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.400.51.1.1\))
 Subject: Re: Feature Request - Better i18n support
-Message-ID: <ZApgtJqVxkory4/B@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emir SARI <emir_sari@icloud.com>, git@vger.kernel.org
-References: <ZAnXddDN7v0AOBdm@mbp.local>
- <ZApdaAMrkmFcxarq@tapette.crustytoothpaste.net>
- <xmqq7cvp8sdu.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="UOel1KmqdQPXsA3K"
-Content-Disposition: inline
-In-Reply-To: <xmqq7cvp8sdu.fsf@gitster.g>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+From:   Emir SARI <emir_sari@icloud.com>
+In-Reply-To: <xmqqfsad8tap.fsf@gitster.g>
+Date:   Fri, 10 Mar 2023 02:12:25 +0300
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9F4F74FC-B424-4BF7-9F9D-8A821C89B442@icloud.com>
+References: <ZAnXddDN7v0AOBdm@mbp.local> <xmqqfsad8tap.fsf@gitster.g>
+To:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+X-Mailer: Apple Mail (2.3731.400.51.1.1)
+X-Proofpoint-ORIG-GUID: 5gbmdvX8ZhO524qsdo1s_gbF-tCwdGLs
+X-Proofpoint-GUID: 5gbmdvX8ZhO524qsdo1s_gbF-tCwdGLs
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.425,18.0.572,17.11.62.513.0000000_definitions?=
+ =?UTF-8?Q?=3D2022-01-11=5F01:2022-01-11=5F01,2020-02-14=5F11,2021-12-02?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 clxscore=1011
+ bulkscore=0 spamscore=0 mlxscore=0 adultscore=0 phishscore=0
+ malwarescore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2209130000 definitions=main-2303090186
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello,
 
---UOel1KmqdQPXsA3K
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thank you very much for the prompt responses.
 
-On 2023-03-09 at 22:35:57, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> Junio C Hamano <gitster@pobox.com> =C5=9Funlar=C4=B1 yazd=C4=B1 (10 =
+Mar 2023 01:16):
 >=20
-> > More specifically, I think it could be fixed for progress output, but
-> > there are a few places in diff output where it couldn't because it might
-> > be parsed.  Would you be willing to try a patch for this?  I think the
-> > code you're probably thinking about is in progress.c (search for "%%"),
-> > but there might be other places you have in mind as well.
+> These are currently not even marked with _() to be translatable, and
+> it should be just the matter of enclosing them in _().
 >=20
-> Ah, my earlier grep missed this, as it tried only to catch [fdi]%%
-> and the progress thing uses "%u%%" like so:
+> If these should be translated in the first place, that is.  I do not
+> think these are originally meant to be machine parseable (it is
+> shown as part of "git apply --summary"), but existing users may
+> already be abusing them as such.
+
+My general idea is, if the percentages appear with the translated
+strings, they should use the localised format. Otherwise if they
+only appear with some machine-output without any localised context
+it is perfectly fine to leave them as-is.
+
+> brian m. carlson <sandals@crustytoothpaste.net> =C5=9Funlar=C4=B1 =
+yazd=C4=B1 (10 Mar 2023 01:27):
 >=20
-> 		if (percent !=3D progress->last_percent || progress_update) {
-> 			progress->last_percent =3D percent;
->=20
-> 			strbuf_reset(counters_sb);
-> 			strbuf_addf(counters_sb,
-> 				    "%3u%% (%"PRIuMAX"/%"PRIuMAX")%s", percent,
-> 				    (uintmax_t)n, (uintmax_t)progress->total,
-> 				    tp);
-> 			show_update =3D 1;
-> 		}
->=20
-> With the PRIuMAX thing, it won't be as simple as enclosing the
-> entire format string inside _(), though.
+> More specifically, I think it could be fixed for progress output, but
+> there are a few places in diff output where it couldn't because it =
+might
+> be parsed.  Would you be willing to try a patch for this?  I think the
+> code you're probably thinking about is in progress.c (search for =
+"%%"),
+> but there might be other places you have in mind as well.
 
-Sure, but we can split it into two invocations of strbuf_addf, one
-localized, one not, no big deal.  This was the place that immediately
-stood out to me as the place we see lots of percentages, but I'm glad
-you mentioned a couple other places as well.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+The progress output was my biggest motivation in reporting this. It was
+rather disturbing to see translated strings with unlocalised values.
 
---UOel1KmqdQPXsA3K
-Content-Type: application/pgp-signature; name="signature.asc"
+I=E2=80=99d love to assist in testing any possible patches. Just let me =
+know of
+any possible scenarios, and I=E2=80=99ll get back to you. Being in =
+vacation, I
+have plenty of time available.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+> Can you clarify what places you're thinking about?  Is this printing
+> decimal values, or is it parsing decimal values?  If we know what
+> specifically is affected (for example, an affected command or =
+message),
+> it's a lot easier to fix this.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZApgtAAKCRB8DEliiIei
-gZrfAP975SQDTrWARq+U4co/HMdE2KJ09GgRb3tW581vI3eM0gD+PkokBtazoqcU
-qxEYek+zbptECSonz2OKSCwG2vU2agU=
-=7MFv
------END PGP SIGNATURE-----
+In general, I am not concerned with parsing, it=E2=80=99s more about =
+printing
+them. As with the percentage situation, having unlocalised content with
+localised strings is not ideal. For instance, my ideal pull output would
+look like this:
 
---UOel1KmqdQPXsA3K--
+Nesneler say=C4=B1l=C4=B1yor: %100 (12/12), bitti.
+Delta s=C4=B1k=C4=B1=C5=9Ft=C4=B1rmas=C4=B1 8 i=C5=9F par=C3=A7ac=C4=B1=C4=
+=9F=C4=B1 kullan=C4=B1yor
+Nesneler s=C4=B1k=C4=B1=C5=9Ft=C4=B1r=C4=B1l=C4=B1yor: %100 (7/7), =
+bitti.
+Nesneler yaz=C4=B1l=C4=B1yor: %100 (7/7), 3,79 KiB | 3,79 MiB/sn, bitti.
+
+As I=E2=80=99ve indicated above, I am ready to test anything you might =
+throw
+at me. :)
+
+Thank you again very much!
+
+Best regards,
+Emir (=F0=90=B0=BD=F0=90=B0=BA=F0=90=B0=8D)
+
+** E-mail needs to stay simple
+** Use plain text e-mail
+
