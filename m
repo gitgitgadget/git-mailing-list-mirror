@@ -2,88 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5C8CC6FD1C
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 12:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E02BAC64EC4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 13:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229835AbjCIMHa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 07:07:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41902 "EHLO
+        id S230417AbjCINGf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 08:06:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229720AbjCIMH3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 07:07:29 -0500
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 711F3E7ED4
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 04:07:27 -0800 (PST)
-Received: by mail-qv1-xf29.google.com with SMTP id ne1so1205942qvb.9
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 04:07:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678363646;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=NO+vCUsdhsR8ammHVW5y1SNDRTwxmnDc93VYMaG3E8I=;
-        b=H4eHMAXJ3QpsSpqw5/uX8CqJFURDJXnmYrBcEMBelOGjQdc3PQSXICcQiJy6wEFcu6
-         WKSy/MkP4O6M6OsQzMaWnoDpI6dsz9O8LaqRURRwktYjpfE5Pom9uFSX0gCI1vo0EJWG
-         Q/1DDb/82z1WEO8S2AhACdzGT4EhgUDfw2EzTa+ckiWPkTpCebkZfG5unX2+twZVJB6d
-         pNVf7UjiN5TSF/sHa8FpshaqPpZ/D8Zd1MPV+YYzH0IPkxNUgJ77G13b78EEvEtVPVjT
-         01V1Mb6OX+pQSfSwWwDgU3QoNYfhhI8UEE37l0yT2AIKGA+biR27kMccUewzs/D+NsGu
-         Rcaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678363646;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NO+vCUsdhsR8ammHVW5y1SNDRTwxmnDc93VYMaG3E8I=;
-        b=OPzTtXnGtDE+2BmHpRPUxmVVnX/+TufeaYVQPNXslqvRVhwfpzL6QUpQ85n1rMkvbz
-         ljQVlZakf/QWTJKGpTyXDcQsLGnxHeQ+ZYrFk5cwooiYkB43Rp4G4rDV0sSJWKgfITMX
-         +P7HRZdFMhqVJPNbpq7T7qXEbheQdRqFzwyGTbNe347YYIV+Tzvh/NDsDK1BpusHDPhi
-         2eplzbWN3lrlXfnrlZNqD0xxvjD/xsm/ERHke3b+Lf7Hms4RecB3R95SHY+uLpI+TTb/
-         Yf1US9SpXW52TxQY0D6TG/lOvVz2nPpEIHnujrKzoWPbtF/FxyE1i0BArrZsKPgXqltq
-         vkBQ==
-X-Gm-Message-State: AO0yUKXlQKoE0Y2ZsMhgHQFz6HfL8hQlQvkHv5Pbs1DRRCfJew/HRlMI
-        6zB0uoQKB5yncVDNFjYKj937v9TgaXqCU7bVduvDkL0oqkDLtQ==
-X-Google-Smtp-Source: AK7set8RwRweHEw0LpvSHO/CQ+U5PvxKSLq84kI0vupHb9TqrBBw3XRk/MdbP68JtVIraB2BPXh2xpbpPt6Sl/uEt2k=
-X-Received: by 2002:a05:6214:4a43:b0:56e:9ad3:ab9c with SMTP id
- ph3-20020a0562144a4300b0056e9ad3ab9cmr5297714qvb.1.1678363646270; Thu, 09 Mar
- 2023 04:07:26 -0800 (PST)
+        with ESMTP id S229895AbjCINGe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 08:06:34 -0500
+X-Greylist: delayed 533 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 09 Mar 2023 05:06:32 PST
+Received: from st43p00im-zteg10071901.me.com (st43p00im-zteg10071901.me.com [17.58.63.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2D28B718B
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 05:06:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+        s=1a1hai; t=1678366586;
+        bh=YnlWzRzX1pQRV4lD9ayhhWTBURhB7m8HYaHWG6Xe7bY=;
+        h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+        b=pmNlIm/V5Xb2KX+xg/4rPcnhnp9LfAElKCKSV5lr4mf3Z40tHepct1Rhhw/f9WEA/
+         Np25DT1WtsAeRcXMy3jzmgtzMS68kRQBrqqsPZ4zjaELsOQC23ejkhFu9VxBYXSi7K
+         5dMo1JwAMH+wzF7K9kpefpQKchMKDl+LGgiZkgKXUETgsz90eXVW2ORMTPqOUJZ5Ya
+         G0jzXsuBF2AH3gKIrSwtc4wm+OVM9CaCPRxw5BwHUapmwMC7j35fHy/oFLlsQcEIkS
+         dVLQdFG03U2Snk1FJRI2bEs9tu18TqGM1QzDo/QlSPzxv4Hoqj3gGMmB13bvZYm+IK
+         30pduB9w0j5hA==
+Received: from mbp.local (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
+        by st43p00im-zteg10071901.me.com (Postfix) with ESMTPSA id DD53B84095F
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 12:56:25 +0000 (UTC)
+Date:   Thu, 9 Mar 2023 15:56:21 +0300
+From:   Emir SARI <emir_sari@icloud.com>
+To:     git@vger.kernel.org
+Subject: Feature Request - Better i18n support
+Message-ID: <ZAnXddDN7v0AOBdm@mbp.local>
 MIME-Version: 1.0
-From:   Khalid Masum <khalid.masum.92@gmail.com>
-Date:   Thu, 9 Mar 2023 18:07:14 +0600
-Message-ID: <CAABMjtGXGZtUnU+8KgEccNeLXRJmWnE5f24BMG8ysbZKfT-ctQ@mail.gmail.com>
-Subject: [GSoC23] Working on project Idea from SOC 2011
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: ptOOB7Byx9srkoLdwWAYr7uFG-RqFd4o
+X-Proofpoint-ORIG-GUID: ptOOB7Byx9srkoLdwWAYr7uFG-RqFd4o
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.517,18.0.883,17.11.64.514.0000000_definitions?=
+ =?UTF-8?Q?=3D2022-06-21=5F08:2022-06-21=5F01,2022-06-21=5F08,2022-02-23?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ mlxlogscore=592 clxscore=1015 adultscore=0 phishscore=0 spamscore=0
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303090104
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is this SOC 2011 idea named "Resumable clone" here:
+Greetings,
 
-https://archive.kernel.org/oldwiki/git.wiki.kernel.org/index.php/SoC2011Ideas.html
+Git is translated into many languages, but as far as I can see, it does not
+take localisation formats into account nor it allows them to be translated
+into localised formats.
 
-...
-Currently cloning a remote repository has to be done in one session.
-If the process fails or is aborted for any reason any already downloaded
-data is lost and one has to start from scratch.
+For instance, in Turkish (and in French AFAIK), percentages are indicated
+in different formats. In Turkish it precedes the number like %54. However,
+all the percentages use the standard 54%. By marking these as translatable,
+we could easily provide the correct formats.
 
+Another thing is the decimal signs. In many languages, a comma (,) is used to
+indicate decimals, however Git does not allow another formats. I am not sure
+how to achieve this in C, but it would be great to have this in order to have
+an errorless professional look in Git outputs.
 
-There is also currently a bug where, after successfully loading
-all data during cloning, an failure in applying the data
-to the working directory leaves the repository in some
-unusable state. In this a normal clone
-behaves differently
-than a clone --no-checkout followed by checkout.
-Fixing this bug would also be part of this project.
+Thank you very much for your attention.
 
-
-While not necessarily being part of this project fetch
-might also benefit from a resume mechanism.
-
-Goal: Allow Git to resume a cloning process that
-has been aborted for any reason.
-Languages: C
-...
-
-Can I work on this idea for GSoC23? If so how should I get started?
-I have completed one of the microprojects by the way.
-
-Thanks,
--- Khalid Masum
+[Sistem Bilgisi]
+git sürümü:
+git version 2.39.2
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 22.3.0 Darwin Kernel Version 22.3.0: Mon Jan 30 20:42:11 PST 2023; root:xnu-8792.81.3~2/RELEASE_X86_64 x86_64
+derleyici bilgisi: clang: 14.0.0 (clang-1400.0.29.202)
+libc bilgisi: libc bilgisi yok
+$SHELL (typically, interactive shell): /bin/zsh
