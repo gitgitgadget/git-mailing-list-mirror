@@ -2,114 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B8EEC64EC4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 14:26:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7586C64EC4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 14:55:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230387AbjCIO0R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 09:26:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43274 "EHLO
+        id S232212AbjCIOzt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 09:55:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbjCIO0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 09:26:11 -0500
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07AA04FF23
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 06:26:09 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id r16so2060409qtx.9
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 06:26:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1678371968;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=KcRdhGYek3PluUQqeLaKNSGrdBvvxpxGjODqqS5dtAo=;
-        b=N1wOOgADd2KibRMEtuuTVH3UHGfxe5N1jKd0LGHybXbaY4CCA9ry0MGiKeNzTDFvIs
-         qKgYepLbkRYZBpt/h44qJFbQgajsNcivx//1XGV5R7WpJX1BbW8hT9JaVYzlEsUMPKI0
-         4d2LEuVGI4N+pPaSf5dEu+rfefJFhlB25bAK6L5oqPNP1tDtCPa5+RnoDa6U9UAz6/qy
-         V9Q7p2drhHdRg6MH70G71UCm5qCmsiQIiPXa0Mj+BTgOiF1j/0jMbwW8t/mT46YrPSkB
-         msw0rneQOKvIS54A/TV46+Nd+tBcIK4WIhcL8fsvL+P8CyR+CDykSWhugeVoYKAkDLK1
-         aedA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678371968;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KcRdhGYek3PluUQqeLaKNSGrdBvvxpxGjODqqS5dtAo=;
-        b=H65qqwXO1NxcTi3d6JqqvF0d7YdyuXTIyXV8s17EVlPgX8ljYAnBKmFKQvZ+vU/nnh
-         N4ZwOCquj7o/UgUhGcDcvTksxrs9FDwi+qqfdydtjxBoJXSvKT9fwJmNztBmVh0kXsLT
-         WS/AW+JsL2XtOkT9sRLBLwex9Fd40AWlEgrE+jghIUw6+kM82yf/bbiEZONTxdaCesty
-         z1iXbYcdCgMUnVV5Nt2IgNQNrpa9J4nSB26t+zid3MaanZzK7lX/CylLYb5WTCKqboDy
-         c3ZFgUpNXYb6IDdR82DKCJsaYYkn1Ty348+9PYfcqJNGKJnRTXIJXWjACL1wFzfHM9Ts
-         bvmQ==
-X-Gm-Message-State: AO0yUKVD93n+IfuXKEAWRk9tWDNYcld772CIzzyV/wVzQJ3c2modH08f
-        UPcM3nj3VGUj3hNYVdSpPHsb
-X-Google-Smtp-Source: AK7set/mdRosQKPnpRPR3utaKKO9HMoFBIH/Cr/MKe/xiu9qONP4LMiLO9Pv43TMvGAYwnA8e79a0g==
-X-Received: by 2002:a05:622a:48:b0:3ba:1d8d:f6d0 with SMTP id y8-20020a05622a004800b003ba1d8df6d0mr40533721qtw.23.1678371968010;
-        Thu, 09 Mar 2023 06:26:08 -0800 (PST)
-Received: from [172.16.105.140] ([204.116.190.176])
-        by smtp.gmail.com with ESMTPSA id v25-20020ac873d9000000b003c033b23a9asm6481028qtp.12.2023.03.09.06.26.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Mar 2023 06:26:07 -0800 (PST)
-Message-ID: <7097d1d6-00a1-2a82-1923-610d41f4053f@github.com>
-Date:   Thu, 9 Mar 2023 09:26:04 -0500
+        with ESMTP id S232351AbjCIOzA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 09:55:00 -0500
+Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E94F31F9
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 06:51:58 -0800 (PST)
+Received: from [192.168.42.163] (42-98-142-46.pool.kielnet.net [46.142.98.42])
+        by dd36226.kasserver.com (Postfix) with ESMTPSA id 2F2C73C0939;
+        Thu,  9 Mar 2023 15:45:04 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
+        s=kas202302241129; t=1678373104;
+        bh=w5mkS2+b0aEKiVAK0ix1PSkS8bUl34vcEQfvLOZ8Fus=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=PQIO2UBBQ3SjbZbtjW2cZfr52fklIb0K2HSfPSTGumr7hu02U10CA5lJQ/R5zdA46
+         /uKSt0RUvpqwzWEAL6H9m27qaQmilk1N7LfAaueCTDw6oc7X+jLYUkqX8jRNyysH6V
+         zYSpDuISo+rEbtHO+rhiZjKyHZ6vwAQ06IQLieDUo6NNx7ubEcasveQUUTqRvSuWbu
+         kzd84lVLxTYc//XpSR59lye1xjn5V/CXCXhBI+rAemGeI7LbY/YtVMBIrJ4W1tcKgl
+         6vqoMhegs9VEQFC7dSnyNrZTQUNiyplmjoZDaFNtPWXgLRIzFVPH6uXSQcnm1GS/QW
+         ab9/QiJwyVwpg==
+Message-ID: <7a79f579-651c-2fae-124e-66a10b4784a1@haller-berlin.de>
+Date:   Thu, 9 Mar 2023 15:45:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.8.0
-Subject: Re: [GSoC23] Working on project Idea from SOC 2011
-To:     Khalid Masum <khalid.masum.92@gmail.com>,
-        Git List <git@vger.kernel.org>
-References: <CAABMjtGXGZtUnU+8KgEccNeLXRJmWnE5f24BMG8ysbZKfT-ctQ@mail.gmail.com>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CAABMjtGXGZtUnU+8KgEccNeLXRJmWnE5f24BMG8ysbZKfT-ctQ@mail.gmail.com>
+Subject: Re: When exactly should REBASE_HEAD exist?
+Content-Language: de-DE, en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <961e68d7-5f43-c385-10fa-455b8e2f32d0@haller-berlin.de>
+ <xmqqo7p4zb8d.fsf@gitster.g>
+ <28b78355-e3db-d33a-c576-653740a4a1f3@haller-berlin.de>
+ <xmqqa60nt4jd.fsf@gitster.g>
+From:   Stefan Haller <lists@haller-berlin.de>
+In-Reply-To: <xmqqa60nt4jd.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Spamd-Bar: /
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/9/23 7:07 AM, Khalid Masum wrote:
-> There is this SOC 2011 idea named "Resumable clone" here:
+On 08.03.23 20:40, Junio C Hamano wrote:
+> Stefan Haller <lists@haller-berlin.de> writes:
 > 
-> https://archive.kernel.org/oldwiki/git.wiki.kernel.org/index.php/SoC2011Ideas.html
+>> On 07.03.23 19:07, Junio C Hamano wrote:
+>> ...
+>>> Stepping a bit, how does our "git status" fare here?  It shows what
+>>> step in a sequence "rebase -i" the user who got control back (due to
+>>> "break", "exec sh", "edit" or a conflicted "pick") is in.  Or at
+>>> least it tries to.  Does it suffer from the same "great, but ..."?
+>>> ...
+>>
+>> It fares a little better, but not much, and it doesn't look like I can
+>> use its information to implement the behavior I want.
 > 
-> ...
-> Currently cloning a remote repository has to be done in one session.
-> If the process fails or is aborted for any reason any already downloaded
-> data is lost and one has to start from scratch.
+> Thanks.  That is the kind of information I was trying to find.  It
+> means that the current "git status" does not give our users enough
+> clue as to where in their "rebase -i" session they are at, and we
+> will help more users by teaching "git status" the trick you are
+> designing.  Instead of peeking into how the implementation details
+> like REBASE_HEAD currently happen to work, making sure underlying
+> "git" knows how to present the information you want and letting it
+> perform the heavy lifting would make sure the solution will stay
+> supported across versions of future git.
 
-> Goal: Allow Git to resume a cloning process that
-> has been aborted for any reason.
-> Languages: C
+Yes; as I said over in the other branch of this thread, I agree that it
+would be great to have this in status, but I'm afraid I'm not the one to
+drive the work to get it in there. I don't have the capacity to
+contribute to yet another open source project.
 
-"for any reason" is going to be pretty difficult.
- 
-One direction that is relatively new in the Git project
-(much newer than that project idea) is the bundle URI
-standard, allowed by "git clone --bundle-uri=<X>". It
-helps bootstrap clones by fetching bundle files and using
-them to populate the object directory before finishing
-the clone with an incremental fetch to the origin server.
+If somebody else wanted to take this on, I'd be happy to join any design
+discussions, or do early testing to see if whatever is being added works
+for my use case.
 
-Since the bundles are expected to be precomputed files,
-it is much easier to use standard HTTP range queries to
-download only the "missing" portion of the file from the
-bundle server.
-
-I think one thing that would need to change on the Git
-client is the location of the temporary file being used
-to store the bundle as it is downloaded. It currently
-uses a random name, but if the name was a hash of the
-URL, then it would be predictable and could restart the
-download if the 'git clone' process was halted for any
-reason. (Resuming a download due to a network error
-noticed in-process is possibly simpler.)
-
-This might be a more focused approach that is more
-likely to have progress in a GSoC project.
-
-That said, I don't have the capacity to be a mentor,
-but I thought it worth mentioning this variant of the
-project.
-
-Thanks,
--Stolee
+-Stefan
