@@ -2,197 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8497C64EC4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 10:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ABB3C64EC4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 10:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbjCIKvN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 05:51:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57142 "EHLO
+        id S229800AbjCIKxa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 05:53:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229685AbjCIKvL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 05:51:11 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3931E190E
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 02:51:07 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id e13so1384397wro.10
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 02:51:07 -0800 (PST)
+        with ESMTP id S231137AbjCIKxO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 05:53:14 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8797450F90
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 02:53:03 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id az36so844039wmb.1
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 02:53:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678359066;
+        d=gmail.com; s=20210112; t=1678359182;
         h=in-reply-to:from:references:cc:to:content-language:subject
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=haZIQxmnrMBQobbabaYTp38OkQQJ+yBY/HDijLxVLYM=;
-        b=W5N5nqansTbY7L7AYplZVAIYNn+43DRe7CxIJIpRlxviBEzA/lkbHNCsUiVRWQvTVJ
-         rj49CYyD9wMVxIbLjWFiLodafjkGzQ35pNJoT2LrIbXZIte/AxVNa2Fe/xNHnM6VkHOC
-         3XOwYjlkL+K3750VnRK/LCMpssDRvacT8SepJt0nnvwTfy4YJzBqNVRTdHC7UbH5NgDS
-         SIKkHLJS2+wyTJh/Ap9lYbFDmho4OGJ/Tl+eHx7AxyfYPi4YzSWLNpX95yLdYZ/GR841
-         QpJfbndlaZDrbPJ62ol5pDyIIXV54xet1DSfzLUxc8YfyzVh97+RMzCS7T4aN9JvCpFF
-         8lRw==
+        bh=ca+cDi7P9Q1OXxZ4i1o22SxJmIFvwtPz8XgKGSBfQ2U=;
+        b=fsaX+KyhBA8K4g2Ydkk0UbcBCAlc3o6FfMaCZya4TWbwgMcFt5coS1YPCZAunhiYBC
+         +HUifWwAXQ8DZLd0RCDRCAX6sBvsNGFUbMg+10rsqSp7Wk6lmC5o7WBvkAruFtb6p2J6
+         yV/hH6XEfei8JYS+NH3M50ZsyzDFC2qOBGccnQz5QLaFlgUJJHeUxx0dxmZu3Wsybl0E
+         J1fttugq6kkpXuCWN07KdPwrZRqr+c8xOPy3lWm3s+pxnj8bTIgkEMao0Kt7mzEfD6I5
+         WqzjITjQtVjrMcTLXWRXDe0lzKc2fIwQjXRjE/auAsFVE3A+f9OS/KMRrDfBOruNX6rD
+         k+Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678359066;
+        d=1e100.net; s=20210112; t=1678359182;
         h=in-reply-to:from:references:cc:to:content-language:subject
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=haZIQxmnrMBQobbabaYTp38OkQQJ+yBY/HDijLxVLYM=;
-        b=XrOFz+aFmGFjEUztA7yNl2eFNZ40VfNJofwctZpPk56NrIQyWWfqw+JROQuOoJ7wrn
-         Tv8Yb3xKa7+MvgdBkVOnIL8LCHdGiFtC0rJZNPiIGdwoweDcO+srdswBdY0TwL/9tbLv
-         p/8KNilmiWZQ6QvDurT8+xmEd5VNltaN6P6by73NRq676mq+RmcSCPU2ls+w6h3MVGhQ
-         I8T89U/+b28z0T/+fOuVMfKaeNaQWb35zcO+kuxGXx0w0kcZCSca+u6DZv1hmyIxxXj4
-         uqgjtqUlFiPLPodBnKJQGXe4geIiSj3/NZZyxnBMRnVPIwN2J++GQ8lePNqRR9N8foEI
-         li6g==
-X-Gm-Message-State: AO0yUKXRHW2ZzdWbyxW0MPGj0bx05ENvVP7W+lQIosWK58H5mattrzMS
-        X6EcOBzOVpWawwh/rpLH+O+0hGHxQ+E=
-X-Google-Smtp-Source: AK7set/jZmBU7OgG0m8B4ou1wIj+EK6xljWt4ZRNODFu50BEWO9T2mQv0SDOG7yRQNyOg1Irq2Nwkw==
-X-Received: by 2002:adf:ee86:0:b0:2c5:3fcb:681e with SMTP id b6-20020adfee86000000b002c53fcb681emr14213625wro.4.1678359066428;
-        Thu, 09 Mar 2023 02:51:06 -0800 (PST)
+        bh=ca+cDi7P9Q1OXxZ4i1o22SxJmIFvwtPz8XgKGSBfQ2U=;
+        b=X1t30GuvP1K9CPbq1yicbLYVzYW6+Aq7yXYYH/9JD5knWNbSrTAL54TvCQgoG2yfDp
+         x7dgYXY9Ae16bMTSibY07BE2g808cr2BX4Whkdu3fU6TI1AbV0EjLjygnpQS7Ga2YYWO
+         CpsNFah2LHbepElz+Ssvan7PHK9+2MeF4GZKVcgn7UmtilhaPydnRkLYYNMiQbgEpMIi
+         3kCT+F36Aj+qZERAitxwJwvgKVQxArvrwXXvg5YnJHcYyrToeZ+r+EcdRG+dDpNAzaev
+         bshtX0BLMoeau3cziF81k8WnhL7xm+XMwcTuhwjmiikUDf/ZMgkabwawH2PKylOJ+fAp
+         B0Jg==
+X-Gm-Message-State: AO0yUKVS1NVa8a+F+2YUoerfKNeEgdqy5Y1EfUp/Inj9QXf0MdminoG7
+        1ihaVAlOMPYYo9Zh1h/KBXA=
+X-Google-Smtp-Source: AK7set9E/tHK9UoxEcjuzlIX2A5tn+wd53xPEMWpb2kLBmSCkNjNfPBvZuG/8hQ6gND3sYB75K4SNQ==
+X-Received: by 2002:a05:600c:3b95:b0:3eb:2da5:e19 with SMTP id n21-20020a05600c3b9500b003eb2da50e19mr19135565wms.27.1678359181837;
+        Thu, 09 Mar 2023 02:53:01 -0800 (PST)
 Received: from [192.168.0.160] ([170.253.51.134])
-        by smtp.gmail.com with ESMTPSA id z11-20020a5d654b000000b002c70f5627d5sm17375381wrv.63.2023.03.09.02.51.05
+        by smtp.gmail.com with ESMTPSA id o22-20020a05600c511600b003daf6e3bc2fsm5469658wms.1.2023.03.09.02.53.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Mar 2023 02:51:06 -0800 (PST)
-Message-ID: <33be045b-0ac7-ba88-bec7-d805a90580d6@gmail.com>
-Date:   Thu, 9 Mar 2023 11:51:05 +0100
+        Thu, 09 Mar 2023 02:53:01 -0800 (PST)
+Message-ID: <48706417-c184-fdd8-e3f4-edfd582b4358@gmail.com>
+Date:   Thu, 9 Mar 2023 11:53:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 3/5] diff: add --default-prefix option
+Subject: Re: [PATCH 4/5] format-patch: do not respect diff.noprefix
 Content-Language: en-US
 To:     Jeff King <peff@peff.net>
 Cc:     Git Mailing List <git@vger.kernel.org>
 References: <ZAl3bHB9zxjLITgf@coredump.intra.peff.net>
- <ZAl4MkWVV8fr+3fO@coredump.intra.peff.net>
+ <ZAl4pZV08a6Bgoip@coredump.intra.peff.net>
 From:   Alejandro Colomar <alx.manpages@gmail.com>
-In-Reply-To: <ZAl4MkWVV8fr+3fO@coredump.intra.peff.net>
+In-Reply-To: <ZAl4pZV08a6Bgoip@coredump.intra.peff.net>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------hkmEGL7C41FDIFeuIYRbrLmH"
+ boundary="------------Lqz7Yii2pH1nbTOmrTHjUNj1"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------hkmEGL7C41FDIFeuIYRbrLmH
-Content-Type: multipart/mixed; boundary="------------7L2ncFAkwLx6bc0IqmsAq2ah";
+--------------Lqz7Yii2pH1nbTOmrTHjUNj1
+Content-Type: multipart/mixed; boundary="------------d4OTwcPilXdPxeGKR7CwH7zt";
  protected-headers="v1"
 From: Alejandro Colomar <alx.manpages@gmail.com>
 To: Jeff King <peff@peff.net>
 Cc: Git Mailing List <git@vger.kernel.org>
-Message-ID: <33be045b-0ac7-ba88-bec7-d805a90580d6@gmail.com>
-Subject: Re: [PATCH 3/5] diff: add --default-prefix option
+Message-ID: <48706417-c184-fdd8-e3f4-edfd582b4358@gmail.com>
+Subject: Re: [PATCH 4/5] format-patch: do not respect diff.noprefix
 References: <ZAl3bHB9zxjLITgf@coredump.intra.peff.net>
- <ZAl4MkWVV8fr+3fO@coredump.intra.peff.net>
-In-Reply-To: <ZAl4MkWVV8fr+3fO@coredump.intra.peff.net>
+ <ZAl4pZV08a6Bgoip@coredump.intra.peff.net>
+In-Reply-To: <ZAl4pZV08a6Bgoip@coredump.intra.peff.net>
 
---------------7L2ncFAkwLx6bc0IqmsAq2ah
+--------------d4OTwcPilXdPxeGKR7CwH7zt
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
 
 
-On 3/9/23 07:09, Jeff King wrote:
-> You can change the output of prefixes with diff.noprefix and
-> diff.mnemonicprefix, but there's no easy way to override them from the
-> command-line. We do have "--no-prefix", but there's no way to get back
-> to the default prefix. So let's add an option to do that.
+On 3/9/23 07:11, Jeff King wrote:
+> The output of format-patch respects diff.noprefix, but this usually end=
+s
+> up being a hassle for people receiving the patch, as they have to
+> manually specify "-p0" in order to apply it.
+>=20
+> I don't think there was any specific intention for it to behave this
+> way. The noprefix option is handled by git_diff_ui_config(), and
+> format-patch exists in a gray area between plumbing and porcelain.
+> People do look at the output, and we'd expect it to colorize things,
+> respect their choice of algorithm, and so on. But this particular optio=
+n
+> creates problems for the receiver (in theory so does diff.mnemonicprefi=
+x,
+> but since we are always formatting commits, the mnemonic prefixes will
+> always be "a/" and "b/").
+>=20
+> So let's disable it. The slight downsides are:
+>=20
+>   - people who have set diff.noprefix presumably like to see their
+>     patches without prefixes. If they use format-patch to review their
+>     series, they'll see prefixes. On the other hand, it is probably a
+>     good idea for them to look at what will actually get sent out.
+>=20
+>     We could try to play games here with "is stdout a tty", as we do fo=
+r
+>     color. But that's not a completely reliable signal, and it's
+>     probably not worth the trouble. If you want to see the patch with
+>     the usual bells and whistles, then you are better off using "git
+>     log" or "git show".
+>=20
+>   - if a project really does have a workflow that likes prefix-less
+>     patches, and the receiver is prepared to use "-p0", then the sender=
+
+>     now has to manually say "--no-prefix" for each format-patch
+>     invocation. That doesn't seem _too_ terrible given that the receive=
+r
+>     has to manually say "-p0" for each git-am invocation.
 >=20
 > Signed-off-by: Jeff King <peff@peff.net>
 
 Acked-by: Alejandro Colomar <alx@kernel.org>
 
 > ---
-> This isn't strictly necessary for the series, but it seemed like a gap.=
-
-> You can always do:
+>  builtin/log.c           | 9 +++++++++
+>  t/t4014-format-patch.sh | 5 +++++
+>  2 files changed, 14 insertions(+)
 >=20
->   git -c diff.noprefix=3Dfalse -c diff.mnemonicprefix=3Dfalse ...
->=20
-> but that's rather a mouthful.
->=20
-> Note that there isn't a command-line equivalent for mnemonicprefix,
-> either. I don't think it's worth adding unless somebody really wants it=
-=2E
->=20
->  Documentation/diff-options.txt |  5 +++++
->  diff.c                         | 14 ++++++++++++++
->  t/t4013-diff-various.sh        | 10 ++++++++++
->  3 files changed, 29 insertions(+)
->=20
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
-s.txt
-> index 7d73e976d99..08ab86189a7 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -852,6 +852,11 @@ endif::git-format-patch[]
->  --no-prefix::
->  	Do not show any source or destination prefix.
+> diff --git a/builtin/log.c b/builtin/log.c
+> index a70fba198f9..eaf511aab86 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1085,6 +1085,15 @@ static int git_format_config(const char *var, co=
+nst char *value, void *cb)
+>  		return 0;
+>  	}
 > =20
-> +--default-prefix::
-> +	Use the default source and destination prefixes ("a/" and "b/").
-> +	This is usually the default already, but may be used to override
-> +	config such as `diff.noprefix`.
+> +	/*
+> +	 * ignore some porcelain config which would otherwise be parsed by
+> +	 * git_diff_ui_config(), via git_log_config(); we can't just avoid
+> +	 * diff_ui_config completely, because we do care about some ui option=
+s
+> +	 * like color.
+> +	 */
+> +	if (!strcmp(var, "diff.noprefix"))
+> +		return 0;
 > +
->  --line-prefix=3D<prefix>::
->  	Prepend an additional prefix to every line of output.
-> =20
-> diff --git a/diff.c b/diff.c
-> index 750d1b1a6c3..b322e319ff3 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -5275,6 +5275,17 @@ static int diff_opt_no_prefix(const struct optio=
-n *opt,
->  	return 0;
+>  	return git_log_config(var, value, cb);
 >  }
 > =20
-> +static int diff_opt_default_prefix(const struct option *opt,
-> +				   const char *optarg, int unset)
-> +{
-> +	struct diff_options *options =3D opt->value;
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +	BUG_ON_OPT_ARG(optarg);
-> +	diff_set_default_prefix(options);
-> +	return 0;
-> +}
-> +
->  static enum parse_opt_result diff_opt_output(struct parse_opt_ctx_t *c=
-tx,
->  					     const struct option *opt,
->  					     const char *arg, int unset)
-> @@ -5564,6 +5575,9 @@ struct option *add_diff_options(const struct opti=
-on *opts,
->  		OPT_CALLBACK_F(0, "no-prefix", options, NULL,
->  			       N_("do not show any source or destination prefix"),
->  			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_no_prefix),
-> +		OPT_CALLBACK_F(0, "default-prefix", options, NULL,
-> +			       N_("use default prefixes a/ and b/"),
-> +			       PARSE_OPT_NONEG | PARSE_OPT_NOARG, diff_opt_default_prefix),=
-
->  		OPT_INTEGER_F(0, "inter-hunk-context", &options->interhunkcontext,
->  			      N_("show context between diff hunks up to the specified numbe=
-r of lines"),
->  			      PARSE_OPT_NONEG),
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index 0bc69579898..5de1d190759 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -643,9 +643,19 @@ test_expect_success 'diff respects diff.noprefix' =
-'
->  	check_prefix actual file0 file0
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index f3313b8c58f..f5a41fd47ed 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -2386,4 +2386,9 @@ test_expect_success 'interdiff: solo-patch' '
+>  	test_cmp expect actual
 >  '
 > =20
-> +test_expect_success 'diff --default-prefix overrides diff.noprefix' '
-> +	git -c diff.noprefix diff --default-prefix >actual &&
-> +	check_prefix actual a/file0 b/file0
-> +'
-> +
->  test_expect_success 'diff respects diff.mnemonicprefix' '
->  	git -c diff.mnemonicprefix diff >actual &&
->  	check_prefix actual i/file0 w/file0
->  '
-> =20
-> +test_expect_success 'diff --default-prefix overrides diff.mnemonicpref=
-ix' '
-> +	git -c diff.mnemonicprefix diff --default-prefix >actual &&
-> +	check_prefix actual a/file0 b/file0
+> +test_expect_success 'format-patch does not respect diff.noprefix' '
+> +	git -c diff.noprefix format-patch -1 --stdout >actual &&
+> +	grep "^--- a/blorp" actual
 > +'
 > +
 >  test_done
@@ -201,28 +177,28 @@ ix' '
 <http://www.alejandro-colomar.es/>
 GPG key fingerprint: A9348594CE31283A826FBDD8D57633D441E25BB5
 
---------------7L2ncFAkwLx6bc0IqmsAq2ah--
+--------------d4OTwcPilXdPxeGKR7CwH7zt--
 
---------------hkmEGL7C41FDIFeuIYRbrLmH
+--------------Lqz7Yii2pH1nbTOmrTHjUNj1
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmQJuhkACgkQnowa+77/
-2zJz5A//WqBFwyK29qb0poCVplk49d2qn7qeiMkRTWqTPmK2UR2TWRRMyQe3cetk
-tlBlryork+4mYaw5apEmQtoIRlwFZWdkoANCjYWosb0qamlbq6ogphbrJhKL12zj
-7kSPpcZ8AuMFbQGD/lIhPfgUVsiGpVv8kMse/lno6p1goiaGI41WEY+DAixwpqD8
-Igb/5A1G6nuEyhp1JpO/ZGQmKaWt+mpTdfr79AJ0u4NgwLtj7+4mo8IrwhHGaWiU
-z5cCMlQz5c3pICU0WHHS6YzNncK/d0pUzH4oxlzhDZLEYd+gb1DWwULicYyefQQR
-5Jcs94+q9e9H5S05rZ/9EniCUmcnKsALgYm9wmBYo8mfvjhf8bygX9amlsfREHvs
-EMMp0K98Lc7NHsTJds9cwZ+z6v1aEqC1FMXjBnTqMGJpSEBsNAQYcQPDAA4G50Zk
-pQH0hM5DOUjag7udCzziBz6sKVJ6qidxt3vsnOxHpcpyByHqb5+YtrADO5TKh6uG
-YslY85ACZgZLzK/GQJBf3EaYobZYq1Kq9TMnU/wGXs9MmETE/IG1vg6OIZlvAFRS
-CZz7x7jI9qhTKsropKfr6P2hS4kRjD1ecasiTGr/U7D0bbH0yBzP3fQhvNLKG5/C
-j/D+94mqLLo+78wizWKz6WmxETlYjvbmZrFJAZCRVa9pmmHBLEQ=
-=AClN
+iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmQJuowACgkQnowa+77/
+2zIoLRAAm4BcBzv420DJWZ0wGkkeSg1DWzFK3D4bTkORmqeXCVHMkG7JOk8azECr
+5wf8y4wHIDrIzufXdj8NyRcNpzbeeeYLq+YcREy24vJlU+qOU9MCMxKhHWX3En84
+6vpjkaO6yAkUzmfrfcIiQOIYaNwrgBChK1X9aT/7UKN/8U4dTP/PeqYby5R60SJ7
+wSZ5mDxwORB2I6OWR4AjRDLr9jgOTVXzP/mu2oBpsqijsbQI9UtmMFSdxjfctFt4
+RbyyYwh1xR2NAqkhfQwbjit5ZHZMj4AEhRznsOUn3bSUpWLUuuO4wYjg9ym40Fmc
+LJsaGULeXjM+G1IlRLXANIVeOJPmL1pUuE+KKI7GUg4U7RiICIKCFQzkcX/L5/VX
+6h8flz4+usolgI5TRPwiwdFcbhrPNSwW235qo4kNranREpH4OsdEnZvtpIEfcVp5
+3JSIBlaDvu+lWfHBxZO8HqHG9rP0n/3sodNvBDklYhZu35vqDGm6H6lZv6uwc8QV
+r/dg7Z4uw8C+2k6bGu/gCcgbdYCsnK1YBa3FtW2az/s9Px4l06YGk+WwC3s/C20K
+BFvfwGADzWlp+vm/XkQG237EjzW9U6k/D0R5TM6BazEON6yKlYBOiY3hBQcWO9Mt
+6fqDoqwozoLvZIXDJ1HlsohF9Axajrl0MW+2R26BrRsKOQi4W1A=
+=bUNp
 -----END PGP SIGNATURE-----
 
---------------hkmEGL7C41FDIFeuIYRbrLmH--
+--------------Lqz7Yii2pH1nbTOmrTHjUNj1--
