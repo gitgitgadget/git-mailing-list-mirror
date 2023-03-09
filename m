@@ -2,68 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61607C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 23:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0D5EC61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 23:45:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230116AbjCIXlD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 18:41:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43250 "EHLO
+        id S231264AbjCIXo7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 18:44:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbjCIXlB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 18:41:01 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B37F9EC3
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 15:41:00 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id a2so3789395plm.4
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 15:41:00 -0800 (PST)
+        with ESMTP id S231361AbjCIXo4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 18:44:56 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11AC8FAD79
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 15:44:54 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id i5so3813501pla.2
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 15:44:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678405260;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nUC4PVHhp49JwB8s9BaUUKB6gqAl0jtTqaL91BP3sak=;
-        b=QVGnbqVQVaGPO8ntWfv9KiWRU89CSHW82SAv73UKd1lA5DFVA1SlJnmoJwjdP1TTm/
-         zqFW73wWiIN6DjiaJoitEFVQblS4l78oK7nLojZbwTEStXwtANz50G65UukHFd7fPTcs
-         /iFPcud0MrPfS+NAfhUsF6kznZcTQJ1Fv6VLj0mCW3IWvKyaTSoL/joy061uWfy3BL5Y
-         AAth2/TYJzC4DTAcFyr3rlFniqR7Q1IJMfnm3j/3HEZ8SL8hOunKooFj7Dzte9ZHfRbm
-         ytg6FafpuwQRrmj8v1LSibWIW3J5xx7IbyhSfmFSnVBBlr5HkwAlS4KhU7dhLhUb+mmZ
-         15VA==
+        d=gmail.com; s=20210112; t=1678405494;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=y5G384vmdpH14m8jgRkPRBmkCZVIescfZ3L7z4lfdhA=;
+        b=DbyNC8hR4fV5FS3rr0dgbXHmgLYZEK9mP+Vxs+AerXcoXskvIWhvifS8sHefcqT9zz
+         iMM/T1eCg8ApWDREdKG9nAVyJsOqRpYh8rokD4qnGWQkUN9/BJoUKR9wKpcc81syGMB8
+         YgJGoEuakfCcZsCcWRH2if0Q6EEE4eFP0wEsS9HRSHp1ofOgVnyPMoq5R1ZzzNTuG4/m
+         YAcdjTD76TyhBQTtE2SXrqWYjS1EoHE4VS8infSHm14EOCWwFgwa3RwAVlt9kvdh0ytq
+         DbjwjuLoXZWK4LeJSdiznNOw4yN1q9l2qCmCgS/Vou+WnwTJWlnTxeBAwpV40wAqg8fo
+         GXkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678405260;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=nUC4PVHhp49JwB8s9BaUUKB6gqAl0jtTqaL91BP3sak=;
-        b=s2x5VYSTHX0DgnmenYewMbvPVPQNTu2F/ogn8CkfcJt0DfQPrWf4vd3BU3q6v8KExd
-         waKISDK0/tr5d91ydsUIc9GPlAUzgmeoUsyLGIXytwkWtSzEzbeHCnm6XxzLIKqTbnYg
-         dfHpPaD0APzM17KfLSa8Wni2NbUKn+gLVmsYPqveIRBb7JgFv8sdDm3+c5IJOA7nC7Lq
-         l7y3c5b/LyYPUq4xU7OVLFy5B+kLDmEyPIYvQE+V0Ch0fP8NqF74a9ZWxGKd6JyvL26a
-         62edL6Wpwo9I2dqJJuT5H/TWucfOjX5Hit2Ja85ZQkqlZgd5MbQsnjk6NP7sEZunkaqG
-         kNGA==
-X-Gm-Message-State: AO0yUKXMuZRr12GZI38ydMjcGfQshkM6ss5Z1seGHS2Xxfo9cgFJy51L
-        F3rQ8rQspEGet7yE7KIOL2Q=
-X-Google-Smtp-Source: AK7set/BcQw0eg9b5EcQdqU1TKRgU1DBBO2mRjA8ZqequCjgoz/mv+QJGYurpf7moDtGCo1qvIsgtg==
-X-Received: by 2002:a17:902:7841:b0:196:d05:bac7 with SMTP id e1-20020a170902784100b001960d05bac7mr18409129pln.58.1678405259678;
-        Thu, 09 Mar 2023 15:40:59 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678405494;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y5G384vmdpH14m8jgRkPRBmkCZVIescfZ3L7z4lfdhA=;
+        b=K58w8d0vaX5TW//rkzfXpfXnCvc7kLkjKQGXzZno9SuFp8UQ+CIwz+3Mm7dmjgZ72X
+         brBOLxqcZ8kxTHeHQsERAXMvIk5rwXsH/z5e6z5qChehTTRVOOKWMMJFDz2RzzyUQ03c
+         0YbtCGgcAkFsmSg/DG5+AoVL6yTkCvxj3IQ4/22Gv3EwrC2ZdseONLk7G1ilghR1l4wJ
+         FtwgyXgGHnWoxbDaivGz6BWaXHQYl9aDWSgDOHeWuZxdpFc24h0Mt94l6wsTjw+/rrXA
+         FmeClu4Wn4aPnErfEUZLAT8EsHFZhOXLl8Nv1rwHo0OUGy8F7r99iMk7Q2vmkyWBi6Of
+         I+Cg==
+X-Gm-Message-State: AO0yUKW2+o5Ll14QUtpG+OUPeKrr8YyVBcki1CX4PuqiiU/A92v+q67f
+        0rgGrv7UCh78X7f5FwjlVOo=
+X-Google-Smtp-Source: AK7set8oBrxrEgfMeHpLmMQ9qlIgRN2YRgRd6qL4Q+CAq31UOXA87wDNIzzdUN2KtE64LRIT1xX0/A==
+X-Received: by 2002:a17:90b:3e8b:b0:234:e8e:a91d with SMTP id rj11-20020a17090b3e8b00b002340e8ea91dmr24075924pjb.7.1678405494264;
+        Thu, 09 Mar 2023 15:44:54 -0800 (PST)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id ki3-20020a170903068300b0019adfb96084sm185064plb.36.2023.03.09.15.40.59
+        by smtp.gmail.com with ESMTPSA id n10-20020a635c4a000000b00502ea3898a7sm145147pgm.31.2023.03.09.15.44.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Mar 2023 15:40:59 -0800 (PST)
+        Thu, 09 Mar 2023 15:44:53 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Shuqi Liang <cheskaqiqi@gmail.com>
-Cc:     Derrick Stolee <derrickstolee@github.com>, vdye@github.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] t1092: add tests for `git diff-files`
-References: <20230309013314.119128-1-cheskaqiqi@gmail.com>
-        <20230309063952.42362-1-cheskaqiqi@gmail.com>
-        <20230309063952.42362-2-cheskaqiqi@gmail.com>
-        <xmqqmt4lc03s.fsf@gitster.g>
-        <CAMO4yUFs5zSafO1pGFZqBU9R58G8ENhfTh5qNayeFMRPrCa+Jg@mail.gmail.com>
-Date:   Thu, 09 Mar 2023 15:40:59 -0800
-In-Reply-To: <CAMO4yUFs5zSafO1pGFZqBU9R58G8ENhfTh5qNayeFMRPrCa+Jg@mail.gmail.com>
-        (Shuqi Liang's message of "Thu, 9 Mar 2023 18:21:04 -0500")
-Message-ID: <xmqq356d8pdg.fsf@gitster.g>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Heba Waly <heba.waly@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Matheus Tavares <matheus.tavb@gmail.com>
+Subject: Re: [PATCH 0/2] advice: add diverging advice
+References: <20230308024834.1562386-1-felipe.contreras@gmail.com>
+        <ZAix68A9e6RHz69y@nand.local>
+Date:   Thu, 09 Mar 2023 15:44:53 -0800
+Message-ID: <xmqqv8j97ami.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,23 +68,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang <cheskaqiqi@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> I wonder if the method below is good  to test the actual output for '
-> file present on-disk with modifications' :
+> On Tue, Mar 07, 2023 at 08:48:32PM -0600, Felipe Contreras wrote:
+>> Not all our users are experts in git who understand their configurations
+>> perfectly, some might be stuck in a simple error:
+>>
+>>   Not possible to fast-forward, aborting.
+>>
+>> That's not very friendly.
+>>
+>> Let's add a bit more advice in case the user doesn't know what's going
+>> on.
 >
->     cat >expect  <<-EOF &&
->     :100644 100644 8e27be7d6154a1f68ea9160ef0e18691d20560dc
-> 0000000000000000000000000000000000000000 M newdirectory/testfile
->     EOF
+> Thanks for improving this case. I think the new advice() is reasonable
+> and will be helpful for users who might otherwise get stuck here.
 
-Hardcoding 8e27be assumes we only support SHA-1 but there is a CI
-test job that runs everything in SHA-256 mode, so it is likely
-to break if you wrote it like so.  Something along the lines of ...
+We may want to further tweak the advise() message depending on the
+caller [*], but that can come on top after these two patches settle.
 
-	FN=newdirectory/testfile &&
-	OID=$(git hash-object $FN) &&
-	ZERO=$(test_oid zero) &&
-	echo ":100644 100644 $OID $ZERO M new $FN" >expect
+[Footnote]
 
-... may have a better chance to be correct, but I didn't test ;-)
+* When a failed "git pull" gave the new advise() message, the user
+  may not be advanced enough to adjust the advice to run "git merge
+  --no-ff" to the given situation, for example.
+
+
