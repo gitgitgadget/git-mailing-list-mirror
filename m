@@ -2,102 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50AE4C64EC4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 18:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B856C61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 18:36:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230219AbjCIS0T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 13:26:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52676 "EHLO
+        id S230028AbjCISf7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 13:35:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230059AbjCIS0R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 13:26:17 -0500
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5A4EF6384
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 10:26:16 -0800 (PST)
-Received: by mail-io1-xd30.google.com with SMTP id b5so1080772iow.0
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 10:26:16 -0800 (PST)
+        with ESMTP id S229623AbjCISf4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 13:35:56 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 227E4F2F91
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 10:35:56 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id p6so3022624plf.0
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 10:35:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1678386376;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dSdn6GgJsnNe0jmkd/4h+f7aOnqMYaPIKLuDYxdk9KA=;
-        b=n3Ijlrp4QEk/ZnZcD4n2ZCW6YxKdCcJW/ys/fSxZlqJmuaa0BLfqrqvoiXh98EOSmh
-         5/xSh9CQ4I2r1Zv5RuHjVoNny/5VE+HonEGlCRCiU3v8e/HoGudmuqgf7G7z1oZ05x6t
-         CfoYFF/MiZNKQ+izN68AkxReHyuEocN7rIX6tv5jUjyuJMozVAcvus9NRSvjptJqLZ3T
-         S8AMjGeivTiJEzUL4WovQbBt3qtVgL/aZYijqpTvTKTCSPWAbjzOO5m/nzpUMLguclA6
-         ObNPIaEdmRuPLvycbyggEw6jTdzjeRtu/+bKD9U8DB+Hx3FQNWxuoD/C6rYbwoEkgkSy
-         dZDg==
+        d=gmail.com; s=20210112; t=1678386955;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CBNIjL1nb7M891GJaWH2ycd66UyB2S85XsTpTw6HRPw=;
+        b=GXzKsLQ9jcqeFFryp/q5SQQJEbhnJ25xCbLmOy+ech+/4vTrHNN7Q0UU3qCVAURZww
+         6Si3nJ4efaU9qnVh6oE1qJamRih02kLuAvSsMxu0ucHlKBT2f/Rfi9Y8c+O2VLFvN7qS
+         LQpT3xWc+n/WdlJJus84kufLJRxal0XS7zzVn/xXaTtHp2WnwRVereXS4Eyqj/ER0l96
+         eXhZUrJlLebd3NA6EHgvQDvwvI19mpGM/y5UN4QFKekn6yuwKMnaljUWSbFIFEyHa9xw
+         16v3wW/5KCBs+voVbTVJcgGaAAaJPcjrtDa+aQo6eNEEVA/VVZN1VqOVaHUJnLFPWKmM
+         HiZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678386376;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dSdn6GgJsnNe0jmkd/4h+f7aOnqMYaPIKLuDYxdk9KA=;
-        b=vnGcYppMjfKHInZb5RAFGTymIqCYiswvObdYiODKNXQyGuZWxyt+KvyA4QK6cvAJdI
-         WvMsdN7yUNBKm8AvSh4PQSMHV58CnBATkoh45uR3a1BE5TewBJ86nkBL2s5Lecg21kpH
-         z6/AhCNe/dW4aNO7E+hadnowlrTuCU/aQgsY+qNVeWjK1QYYqrBRxKiPYW2iFtl1Eo1Z
-         L6Rqe3iRkmvUZLOfoNF5V/ZTlamIJF+xuG+ekzYnYhgS1aziHko4YwLC8pWzv0QeL9+/
-         rWDBwbIFuoAxVQIkzStytWfloCfB7NQFKQ2CzIcfkkAs0G7PyrxGQY48JKspmBkxBkZM
-         3Czg==
-X-Gm-Message-State: AO0yUKU6bORwIk5ZLDHy1Qf89U5hzk58A77mFdYJO6Wf6/1Iiz51tgYF
-        QK+1YqGNbaFTUx23Zmkq+RyOzbH7bOXen+pD0VErbQ==
-X-Google-Smtp-Source: AK7set+mD1KrRBjoA8avyUghXdgqT/fc9RGqTc9Ul1eIApcvtpOBd8KiAsaN8hKenTmuX8heM+dThw==
-X-Received: by 2002:a6b:c993:0:b0:74c:8f72:291c with SMTP id z141-20020a6bc993000000b0074c8f72291cmr19836615iof.2.1678386376148;
-        Thu, 09 Mar 2023 10:26:16 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v12-20020a6b5b0c000000b00746cb6d90c0sm5979062ioh.14.2023.03.09.10.26.15
+        d=1e100.net; s=20210112; t=1678386955;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=CBNIjL1nb7M891GJaWH2ycd66UyB2S85XsTpTw6HRPw=;
+        b=1mj2n9+ZXD/UA0Uisqi3uRqMKIHpAH5jn/79Q69kCLchCgvoR2Z33EHiOjaw+MEsv6
+         6ki42AJsEEUkRuEAxK5/D+hVdjESIkXQSghlqg8LYU/hIBOEAyQTBv5eYUklmXWSas7W
+         TFSr0QWG+dCk6EA3kU+arrpxgli8BstcOfNKVaZhIbrv/FMgjQ9Kr4EVASsepsPkor08
+         Sqz+aALqmTjoAfw4/YQASP4CdBds138AdW2Q6Fphi3iK3j6UsoNbRyOweEU5tkSlrDL0
+         0zXfyjvbCzX+ORtF8XR4homW/e3rJ0AEWGjjXUpftBlO7cGrPoLdK/S5Vg5C2lgUu0Ls
+         mguQ==
+X-Gm-Message-State: AO0yUKXgKdqxLs5nf2Xa80UuyPK7O+CUF4PGHZjXKTMTLZs72k4N+r6T
+        Af1ovaLwbvFK5wgL/JlBfEB8blzsYgs=
+X-Google-Smtp-Source: AK7set/rdAGhNGGQWQfZ3eE2muQ1UaF/18mx2SlspKgVuGdtSwn4r/wTgu7Y1rzesWBF4GFa5Ji2RA==
+X-Received: by 2002:a05:6a20:4a22:b0:b8:a17c:75e4 with SMTP id fr34-20020a056a204a2200b000b8a17c75e4mr18188795pzb.48.1678386955452;
+        Thu, 09 Mar 2023 10:35:55 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id y8-20020a655a08000000b00502e48db9aesm11169737pgs.53.2023.03.09.10.35.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Mar 2023 10:26:15 -0800 (PST)
-Date:   Thu, 9 Mar 2023 13:26:14 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Patrick Steinhardt <ps@pks.im>
+        Thu, 09 Mar 2023 10:35:54 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ilia Pozhilov <ilyapoz@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] receive-pack: fix stale packfile locks when dying
-Message-ID: <ZAokxsXGwgdNEmDc@nand.local>
-References: <e16bd81bf9e251aa6959fbe10a3fbc215a4a1c12.1678367338.git.ps@pks.im>
+Subject: Re: Track git blame through two unrelated histories
+References: <CAAo-ADZBBRxSROeAwrA9o30Etf3QQhLCaWQJtVsChVwT-AbgTg@mail.gmail.com>
+Date:   Thu, 09 Mar 2023 10:35:54 -0800
+In-Reply-To: <CAAo-ADZBBRxSROeAwrA9o30Etf3QQhLCaWQJtVsChVwT-AbgTg@mail.gmail.com>
+        (Ilia Pozhilov's message of "Thu, 9 Mar 2023 13:05:07 +0200")
+Message-ID: <xmqqwn3pai2d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e16bd81bf9e251aa6959fbe10a3fbc215a4a1c12.1678367338.git.ps@pks.im>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 09, 2023 at 02:09:23PM +0100, Patrick Steinhardt wrote:
-> Fix this race by installing an atexit(3P) handler that unlinks the keep
-> file.
+Ilia Pozhilov <ilyapoz@gmail.com> writes:
 
-This reminded me of a discussion that I thought you and I had a few
-months ago on the list about whether or not it was safe to call unlink()
-in an async signal handler.
-
-TL;DR, it is, and the link back to that discussion is here:
-
-  https://lore.kernel.org/git/YdjBkZsnYd+zYne1@nand.local/
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/receive-pack.c | 7 +++++++
->  1 file changed, 7 insertions(+)
+> So let's say I add two remotes and fetch all the commits, but they
+> look like this:
 >
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index cd5c7a28ef..0a6030d775 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -2186,6 +2186,12 @@ static const char *parse_pack_header(struct pack_header *hdr)
+> A->B-> .... . . . -> Z    history1
 >
->  static const char *pack_lockfile;
+> 1 -> 2 -> ..... -> 0 history2
 >
-> +static void unlink_pack_lockfile(void)
-> +{
-> +	if (pack_lockfile)
-> +		unlink(pack_lockfile);
-> +}
-> +
+> and file contents in commits Z and 1 are exactly the same, but the
+> commits themselves are completely unrelated for git.
 
-...and I think that this would all work, but I agree that using the
-tempfile API here (as Peff suggests below) would probably be more
-ergonomic.
+You mean you want to pretend that history "2 -> ... -> 0" was built
+on top of Z?  Here I am assuming that time flows from left to right
+in the picture.
 
-Thanks,
-Taylor
+If so, you should be able to graft the histories together, perhaps?
+
+Totally untested but something like 
+
+	$ git replace --graft 1 Z
+
+based on my reading of "git help replace" should allow you to
+pretend that Z happened immediately before 1.
+
