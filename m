@@ -2,122 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73D7FC64EC4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 18:15:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50AE4C64EC4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 18:26:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230123AbjCISPl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 13:15:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37478 "EHLO
+        id S230219AbjCIS0T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 13:26:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229895AbjCISPj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 13:15:39 -0500
-Received: from qproxy5-pub.mail.unifiedlayer.com (qproxy5-pub.mail.unifiedlayer.com [69.89.21.30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0A37B3283
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 10:15:37 -0800 (PST)
-Received: from progateway7-pub.mail.pro1.eigbox.com (gproxy5-pub.mail.unifiedlayer.com [67.222.38.55])
-        by qproxy5.mail.unifiedlayer.com (Postfix) with ESMTP id 24DCF8025524
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 18:15:37 +0000 (UTC)
-Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
-        by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id A6E6010042D0F
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 18:15:36 +0000 (UTC)
-Received: from box5922.bluehost.com ([162.241.30.80])
-        by cmsmtp with ESMTP
-        id aKngpYgCLNX2aaKngpGADz; Thu, 09 Mar 2023 18:15:36 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=NMAQR22g c=1 sm=1 tr=0 ts=640a2248
- a=u+82WREdhvUKZ7QTvcqjvQ==:117 a=u+82WREdhvUKZ7QTvcqjvQ==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=k__wU0fu6RkA:10:nop_rcvd_month_year
- a=3EOfIcITIxQA:10:endurance_base64_authed_username_1 a=LhLT5SzZ9r9AOfd0xhUA:9
- a=QEXdDO2ut3YA:10:nop_charset_2
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.us; s=default; h=MIME-Version:Content-Transfer-Encoding:
-        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
-        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=x/F8B8jN9TS+xL31TAdLFtQAhRFZmUGY6NfNu6qrx0k=; b=QWpyhgsyPXq/Y1ykwMkIAMXgjA
-        yk9wigJejZlWq4cIuUpRzZhgDin6uD8+VGkC46UHr9WQ1IoQQh5zwud0Zaj9y74N6pO5wAatNM6pm
-        +OzkuahbYKbt0WR/ApX8zO2wW;
-Received: from [160.231.0.90] (port=17865 helo=llin-psh13-dsa.dsone.3ds.com)
-        by box5922.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.95)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1paKng-004F5d-Ag
-        for git@vger.kernel.org;
-        Thu, 09 Mar 2023 11:15:36 -0700
-Message-ID: <42ea54b4b4d74d6760faca8325a657ee71f342d7.camel@mad-scientist.net>
-Subject: Re: Fetching everything in another bare repo
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     git@vger.kernel.org
-Date:   Thu, 09 Mar 2023 13:15:33 -0500
-In-Reply-To: <ZAn80gnIFLOF4Gco@coredump.intra.peff.net>
-References: <6215dde710670fdf0da3ba0549429eaa32db257b.camel@mad-scientist.net>
-         <ZAl/lQMhaQ54BDXN@coredump.intra.peff.net>
-         <64282d0f99df59085a18585846d2086a652677e2.camel@mad-scientist.net>
-         <ZAn80gnIFLOF4Gco@coredump.intra.peff.net>
-Organization: Please remain calm--I may be mad but I am a professional!
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4 (by Flathub.org) 
+        with ESMTP id S230059AbjCIS0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 13:26:17 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5A4EF6384
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 10:26:16 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id b5so1080772iow.0
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 10:26:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1678386376;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dSdn6GgJsnNe0jmkd/4h+f7aOnqMYaPIKLuDYxdk9KA=;
+        b=n3Ijlrp4QEk/ZnZcD4n2ZCW6YxKdCcJW/ys/fSxZlqJmuaa0BLfqrqvoiXh98EOSmh
+         5/xSh9CQ4I2r1Zv5RuHjVoNny/5VE+HonEGlCRCiU3v8e/HoGudmuqgf7G7z1oZ05x6t
+         CfoYFF/MiZNKQ+izN68AkxReHyuEocN7rIX6tv5jUjyuJMozVAcvus9NRSvjptJqLZ3T
+         S8AMjGeivTiJEzUL4WovQbBt3qtVgL/aZYijqpTvTKTCSPWAbjzOO5m/nzpUMLguclA6
+         ObNPIaEdmRuPLvycbyggEw6jTdzjeRtu/+bKD9U8DB+Hx3FQNWxuoD/C6rYbwoEkgkSy
+         dZDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678386376;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dSdn6GgJsnNe0jmkd/4h+f7aOnqMYaPIKLuDYxdk9KA=;
+        b=vnGcYppMjfKHInZb5RAFGTymIqCYiswvObdYiODKNXQyGuZWxyt+KvyA4QK6cvAJdI
+         WvMsdN7yUNBKm8AvSh4PQSMHV58CnBATkoh45uR3a1BE5TewBJ86nkBL2s5Lecg21kpH
+         z6/AhCNe/dW4aNO7E+hadnowlrTuCU/aQgsY+qNVeWjK1QYYqrBRxKiPYW2iFtl1Eo1Z
+         L6Rqe3iRkmvUZLOfoNF5V/ZTlamIJF+xuG+ekzYnYhgS1aziHko4YwLC8pWzv0QeL9+/
+         rWDBwbIFuoAxVQIkzStytWfloCfB7NQFKQ2CzIcfkkAs0G7PyrxGQY48JKspmBkxBkZM
+         3Czg==
+X-Gm-Message-State: AO0yUKU6bORwIk5ZLDHy1Qf89U5hzk58A77mFdYJO6Wf6/1Iiz51tgYF
+        QK+1YqGNbaFTUx23Zmkq+RyOzbH7bOXen+pD0VErbQ==
+X-Google-Smtp-Source: AK7set+mD1KrRBjoA8avyUghXdgqT/fc9RGqTc9Ul1eIApcvtpOBd8KiAsaN8hKenTmuX8heM+dThw==
+X-Received: by 2002:a6b:c993:0:b0:74c:8f72:291c with SMTP id z141-20020a6bc993000000b0074c8f72291cmr19836615iof.2.1678386376148;
+        Thu, 09 Mar 2023 10:26:16 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id v12-20020a6b5b0c000000b00746cb6d90c0sm5979062ioh.14.2023.03.09.10.26.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Mar 2023 10:26:15 -0800 (PST)
+Date:   Thu, 9 Mar 2023 13:26:14 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] receive-pack: fix stale packfile locks when dying
+Message-ID: <ZAokxsXGwgdNEmDc@nand.local>
+References: <e16bd81bf9e251aa6959fbe10a3fbc215a4a1c12.1678367338.git.ps@pks.im>
 MIME-Version: 1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5922.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 160.231.0.90
-X-Source-L: No
-X-Exim-ID: 1paKng-004F5d-Ag
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (llin-psh13-dsa.dsone.3ds.com) [160.231.0.90]:17865
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e16bd81bf9e251aa6959fbe10a3fbc215a4a1c12.1678367338.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2023-03-09 at 10:35 -0500, Jeff King wrote:
-> > Basically, these bare clones have "gc.pruneExpire=3Dnever" set, and
-> > have never had any GC operations run so all commits are still
-> > present (when you say "unreachable" I assume you mean, not
-> > reachable through any reference).
->=20
-> Right, that's what I mean by unreachable. And no, you didn't use any
-> terminology wrong. I was just not sure if you realized that running
-> "fetch" would not get the unreachable objects. :)
+On Thu, Mar 09, 2023 at 02:09:23PM +0100, Patrick Steinhardt wrote:
+> Fix this race by installing an atexit(3P) handler that unlinks the keep
+> file.
 
-I definitely did not realize that, so good looking out :)
+This reminded me of a discussion that I thought you and I had a few
+months ago on the list about whether or not it was safe to call unlink()
+in an async signal handler.
 
-Of course in retrospect it makes perfect sense: why would you fetch
-unreachable objects (normally)?
+TL;DR, it is, and the link back to that discussion is here:
 
-> > One question: is the objects/info/packs file anything to be
-> > concerned about or will git repack (or something) take care of
-> > handling it?
->=20
-> You can ignore it.
+  https://lore.kernel.org/git/YdjBkZsnYd+zYne1@nand.local/
 
-OK thx.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/receive-pack.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index cd5c7a28ef..0a6030d775 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -2186,6 +2186,12 @@ static const char *parse_pack_header(struct pack_header *hdr)
+>
+>  static const char *pack_lockfile;
+>
+> +static void unlink_pack_lockfile(void)
+> +{
+> +	if (pack_lockfile)
+> +		unlink(pack_lockfile);
+> +}
+> +
 
-> Yeah, if you have a separate database of branch tips, etc, then the
-> refs aren't necessary. As long as you are careful not to run "gc" or
-> repack without "-k".
+...and I think that this would all work, but I agree that using the
+tempfile API here (as Peff suggests below) would probably be more
+ergonomic.
 
-It's actually a code review facility so it doesn't even care about
-branches, it's basically just storing before/after SHAs of changes to
-be reviewed.  But the historical code reviews can sometimes be gold,
-even if they're some years old, so I'd prefer to keep them available.
-
-> You may want to try the "preciousObjects" repository extension, which
-> was designed to prevent accidents for a case like this.
-
-Oh interesting, I'll take a look.
-
-Cheers!
+Thanks,
+Taylor
