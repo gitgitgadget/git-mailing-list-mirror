@@ -2,92 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3EBFC61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 21:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B7F9C61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 22:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230351AbjCIVyD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 16:54:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48310 "EHLO
+        id S229823AbjCIWKd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 17:10:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230510AbjCIVx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 16:53:59 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FCB0F16AA
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 13:53:56 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id y10so2440491pfi.8
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 13:53:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678398836;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ei/0oPxXpBUGB9eLAvIH9YqOTfx1vq11M0PFLPmi86Y=;
-        b=QA6mzyiRMMs5ZRC9/Ly9QwNYYsRn5ebGoEIBfOkfXCb/oRXqNBLrtexHKIumtWf7M2
-         bYL6jG9P67slsqgZi+ae4b+M8pvs2K4qesjKozr9CZdNwQJXdfBB58olvuXXpR8Pn6xA
-         IvsE2JqHHqxMIaLvQU4QdlXrBuwbDKve0c80PenKSIUEo0Jgnrv/HpmP8dvJffeXe3m/
-         4OSiZ2Rga88ujM8so0JwajO4FJEL4nAPnZHbMn4M2lqTN6M11QmD4SkKHY63XOfRKDZd
-         61CLPHSoGG7/KDW3UhAfQiu5pHFol/qizeyR7VcOKGPwbNzwOsDfTC/WCKA2JWCjKRWd
-         VGdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678398836;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ei/0oPxXpBUGB9eLAvIH9YqOTfx1vq11M0PFLPmi86Y=;
-        b=aRL/d95TztjC/IyQt5IKgrvro8tuLckOaxl1b2vY1yj0MxTTB5KtvxTqKVry6IKVpk
-         kOYnXdhRV6pj77axsrbPXx+pP2Pcr53Wbvt7sOBhCI8paM0PRSRtnWMyV6KlXHf3wOIA
-         8zZn7zW+mGVnqizoKat17V97boBg1ZNp8aWc2MYcNJU1YTN6wHKptvTCMmVQnLQf/Epj
-         JpOtkmIC+vGG5yvaV0K9s6tnn5Vsa2FkQqaKJULgsBsPZhmrazqQlspuXx0OmpWHIzH4
-         7yR/qEKYYx8OhmMDrSQe6WeQx54gvvGB7z+JpaPen8EiBzg+wQK8halOa7NLomFGqvrc
-         e6sA==
-X-Gm-Message-State: AO0yUKWMQfHmBcE7m+bvLs3hbzbKGzkxFc6i3GL/SB//U7WLyI9S4rr6
-        5VL2wMtIjr3WmV2JIphzxRw=
-X-Google-Smtp-Source: AK7set9UWX6G3cfWePmdiVxY97Ee6RrQTDCstjXtaABFlD9yLvOjae8q3puWUCwnvAitHJYjWrEjfQ==
-X-Received: by 2002:a62:1dc8:0:b0:5a8:a250:bc16 with SMTP id d191-20020a621dc8000000b005a8a250bc16mr17600667pfd.3.1678398836024;
-        Thu, 09 Mar 2023 13:53:56 -0800 (PST)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id j24-20020a62e918000000b005a8de0f4c76sm71367pfh.17.2023.03.09.13.53.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Mar 2023 13:53:55 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Alejandro Colomar <alx.manpages@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Better suggestions when git-am(1) fails
-References: <897c200c-afb3-ceb4-bf44-9af651f5feb4@gmail.com>
-        <ZAlPtxZ/0Z28r5tF@coredump.intra.peff.net>
-        <ZAl3bHB9zxjLITgf@coredump.intra.peff.net>
-Date:   Thu, 09 Mar 2023 13:53:55 -0800
-In-Reply-To: <ZAl3bHB9zxjLITgf@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 9 Mar 2023 01:06:36 -0500")
-Message-ID: <xmqqr0tx8ubw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229487AbjCIWKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 17:10:32 -0500
+X-Greylist: delayed 370 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 09 Mar 2023 14:10:30 PST
+Received: from marcos.anarc.at (marcos.anarc.at [64.18.183.94])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CFF8F4D9D
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 14:10:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=debian.org;
+        s=marcos-debian.anarcat.user; t=1678399457;
+        bh=jL36PwQVbzVEcBk8QVCtE08++V45EqYMEnRHW2zkTn4=;
+        h=From:To:Cc:Subject:Date:From;
+        b=ke8iWeaIghKr6K7MGhlaALXLlauviwjNXJ8yHggTQrblnP2T2PcfOiJvhUST/G6Z9
+         AjjxdJGJ8ojbmmcjqi89PCo6ywZmPHWPJx1DtiAOoBYSToE2sjWR2yuof2aQqL0mB2
+         2PqTLul3I8//pIWipWWOVTcOU4575W0XszvVZxDrFV0Egmm3iCJqru5iLE7VqPDmtz
+         D7l88h9nydNMyltrRnqCl5PZJr5pn7Xf+x+TXTdOTOJWkEzMqKBfSOsGwHRRB3MK9y
+         3FIprkSRqZGK/rhL1zud2BF2FWXoxPOL8KvvINO4q97pSh5R8gpPiGE33qzBwDA4Mi
+         o1HRLyQJ7DDEQ==
+Received: by marcos.anarc.at (Postfix, from userid 1000)
+        id 0EAF310E5DA; Thu,  9 Mar 2023 17:04:17 -0500 (EST)
+Received: by angela.localdomain (Postfix, from userid 1000)
+        id 5F816E00EE; Thu,  9 Mar 2023 17:04:16 -0500 (EST)
+From:   =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
+Subject: [RFC PATCH] hooks--pre-push.sample: identify branch point
+Date:   Thu,  9 Mar 2023 17:04:05 -0500
+Message-Id: <20230309220405.219212-1-anarcat@debian.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+The pre-push hook introduced in 87c86dd14a (Add sample pre-push hook
+script, 2013-01-13) has a pretty naive implementation that inspects
+the entirety of that branch history, regardless of previous merges.
 
-> So here's a patch series which I think should help with the sending
-> side. Most of it is just filling in gaps in the code and tests for
-> current features. Patch 4 is the actual change. Patch 5 adds an
-> equivalent option just for format-patch. I'm not convinced anybody
-> really wants it (which is why I split it out), but it's probably worth
-> doing just in case.
->
->   [1/5]: diff: factor out src/dst prefix setup
->   [2/5]: t4013: add tests for diff prefix options
->   [3/5]: diff: add --default-prefix option
->   [4/5]: format-patch: do not respect diff.noprefix
->   [5/5]: format-patch: add format.noprefix option
+In other words, if you create a topic branch from a current history,
+the entire history will be inspected by the pre-push hook. In my case,
+there was an old "WIP" commit log that broke the hook, even though
+that commit wasn't specific to the branch in question, nor was it
+introduced by the push.
 
-I've reviewed these five changes, and while I am not 100% sold to
-the idea that we should force our -p1 worldview to those who choose
-to use diff.noprefix for whatever reason, I think these patches
-describe what they want to do and implement it in a very readable
-way.
+This patch aims at fixing that problem by restricting the revisions inspected when a new branch is pushed to something that is more specific to that branch.
 
-Thanks.  Queued.
+This implementation will first attempt to find an ancestor that the
+current branch is related to (`--merged=`). This is where this
+implementation is the most questionable; normally you would put
+`master` or `main` as a base branch, but who knows what people
+actually use for this nowadays. And besides, it's fair to assume you
+could be pushing something based on a branch that already exists
+upstream that is *not* master or main... But still, that's a tricky
+bit I'm not sure of.
+
+Then we find the "branch point" which is the latest commit on the
+ancestor branch that's shared with the inspected ref. This,
+interestingly, seems to be a really tricky problem as well. I base my
+implementation off this answer on Stack Overflow (I know! at least
+it's not ChatGPT!):
+
+https://stackoverflow.com/a/71193866/1174784
+
+There are currently a whopping twenty-five answers to that question in
+that thread, and I'm hoping the community here will have a more
+definitive answer to this question. I have picked the answer that uses
+the least possible external commands, but it still uses a `tail -1`
+which I'm somewhat unhappy about. I have thought of using
+`--max-count` for this instead, but I understand that probably does
+the equivalent of a `head -n` *and* it's applied before `--reverse`,
+so there's not other way to do this.
+
+The final question to answer here is whether this is a good idea in
+the first place, and whether this is the right place to answer this
+kind of question. I happen to really like using pre-push (instead of
+pre-commit) for inspecting my work before submitting it upstream, so
+it was a natural fit for me, but this might be everyone's taste.
+
+As the subject indicates, I would very much welcome comments on
+this. I would be happy to submit a more elaborate version of
+this (e.g. with unit tests) if it's interesting for the community, or
+receive guidance on where best this could be implemented or improved.
+
+Signed-off-by: Antoine Beaupré <anarcat@debian.org>
+---
+ templates/hooks--pre-push.sample | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/templates/hooks--pre-push.sample b/templates/hooks--pre-push.sample
+index 4ce688d32b..f871b65195 100755
+--- a/templates/hooks--pre-push.sample
++++ b/templates/hooks--pre-push.sample
+@@ -33,8 +33,24 @@ do
+ 	else
+ 		if test "$remote_oid" = "$zero"
+ 		then
+-			# New branch, examine all commits
+-			range="$local_oid"
++			# new branch
++			#
++			# search for a base branch that's part of this branch, latest modified
++			#
++			# it's a better heuristic than hardcoding "master" or "main"
++			base_branch=$(git for-each-ref \
++					  --merged="$local_ref" \
++					  --no-contains="$local_ref" \
++					  --format="%(refname:strip=-1)" \
++					  --sort='-*authordate' \
++					  refs/heads )
++			# find the place where we branched off the base branch
++			branch_point=$(git rev-parse \
++					   $(git rev-list --exclude-first-parent-only \
++						 ^"$base_branch" "$local_ref"| tail -1)^ \
++                                    )
++			# examine all commits up to the branch point
++		        range="$branch_point..$local_oid"
+ 		else
+ 			# Update to existing branch, examine new commits
+ 			range="$remote_oid..$local_oid"
+-- 
+2.39.2
+
