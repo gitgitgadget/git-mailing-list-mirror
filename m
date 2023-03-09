@@ -2,124 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78B4FC61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 15:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B659C61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 16:31:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230504AbjCIP7k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 10:59:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43840 "EHLO
+        id S230337AbjCIQbM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 11:31:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231623AbjCIP7S (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 10:59:18 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02817F3670
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 07:59:13 -0800 (PST)
-Received: (qmail 10484 invoked by uid 109); 9 Mar 2023 15:59:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Mar 2023 15:59:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32533 invoked by uid 111); 9 Mar 2023 15:59:12 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Mar 2023 10:59:12 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 9 Mar 2023 10:59:12 -0500
-From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] receive-pack: fix stale packfile locks when dying
-Message-ID: <ZAoCUPsHbstSJ0+B@coredump.intra.peff.net>
-References: <e16bd81bf9e251aa6959fbe10a3fbc215a4a1c12.1678367338.git.ps@pks.im>
+        with ESMTP id S229823AbjCIQav (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 11:30:51 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 771FEF0FE6
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 08:22:40 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id y2so2600043pjg.3
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 08:22:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678378922;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XGnMsTP0gEAlBi6NQDWu1PVgPMCG8V7YHhbr+Su4F68=;
+        b=TJ/EkRIL5WEOHHVXoDLX0WX6nIXHRaOa3YpUlfxRcLc0PY+ZfNPrulm7CXUb/POBcY
+         1PBvnGCTgQfecpqT/FA+WgmKUptUf1A179J1roo7LzxX4nS74dyEnAboMlghN+we6l3S
+         wydTT6/UP8mQZ/Z+7rItKrc97My0YIoQ/NU3ke87ojBVPqdyuvwZRE2WYGPbStM42+uV
+         DosQ+cCF8urDiKTt2glJjVOHNifM0pngpntcoX1UT2ZeqE+cMtRrDxEQDlQV3T8EiKxK
+         ktgStMhKXrPZtJoLmPhESofhEYlUDw5cqncfq/7nyxdNk++LZaMjudmudN44z4xl3XFE
+         5OOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678378922;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=XGnMsTP0gEAlBi6NQDWu1PVgPMCG8V7YHhbr+Su4F68=;
+        b=QYhDBEwiDkM2kYkAcj4LcJS83CKo7BF+n/qbwSkEqkBtGUSjqgfLeNn4mJh2A7EOBd
+         A6F3DnoZgY67mxedhJHvauJpKd4Kjx4lQL8mVp2qtOQRbx11ZgiZeCgfH4LXTML1HLqZ
+         Iela6nEvNMGUC/cVFTigKG6tkeCYnYok5DKBLrr3onJWZlYSKXX27H0DRNKJrRN8HaQ6
+         SXL3ijH+wv1QUdSWcGFlhhIRfrGrR2vu0HA8tJRdLB2bOnw8cQlmZaEbH4D7hrOEhWE5
+         nDXHlXlBY2Akt905c9x4JUUWVaB8hsi0aoif7rcnYAV8qKzAk/QFcIQIsait9L+Twi+g
+         fcCw==
+X-Gm-Message-State: AO0yUKViPqiDU2wpUeVVP8r0r9rzVpghJZqpmvZpSdWGsrpTAnWnRRan
+        Bgkk559uiw7I63VNDMLG+V5FwalQAjs=
+X-Google-Smtp-Source: AK7set+7rp6gq4l+C9xEMn3oQHRxUED6htfu17+Mprr3rc+QIU6nbx3kyib1cE4FCmfhRGo3x8eV1w==
+X-Received: by 2002:a17:902:7e0c:b0:19e:2ea1:c0f5 with SMTP id b12-20020a1709027e0c00b0019e2ea1c0f5mr16836466plm.33.1678378921875;
+        Thu, 09 Mar 2023 08:22:01 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id l191-20020a6388c8000000b004fc1d91e695sm11323257pgd.79.2023.03.09.08.22.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Mar 2023 08:22:00 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Alejandro Colomar <alx.manpages@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Better suggestions when git-am(1) fails
+References: <897c200c-afb3-ceb4-bf44-9af651f5feb4@gmail.com>
+        <ZAlPtxZ/0Z28r5tF@coredump.intra.peff.net>
+Date:   Thu, 09 Mar 2023 08:22:00 -0800
+In-Reply-To: <ZAlPtxZ/0Z28r5tF@coredump.intra.peff.net> (Jeff King's message
+        of "Wed, 8 Mar 2023 22:17:11 -0500")
+Message-ID: <xmqqedpxq4if.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e16bd81bf9e251aa6959fbe10a3fbc215a4a1c12.1678367338.git.ps@pks.im>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 09, 2023 at 02:09:23PM +0100, Patrick Steinhardt wrote:
+Jeff King <peff@peff.net> writes:
 
-> Now in production systems we have observed that those `.keep` files are
-> sometimes not getting deleted as expected, where the result is that
-> repositories tend to grow packfiles that are never deleted over time.
-> This seems to be caused by a race when git-receive-pack(1) is killed
-> after we have migrated the kept packfile from the quarantine directory
-> into the main object database. While this race window is typically small
-> it can be extended for example by installing a `proc-receive` hook.
+> On Wed, Mar 08, 2023 at 09:15:53PM +0100, Alejandro Colomar wrote:
+>
+>> I had the following error already a few times, when some contributors,
+>> for some reason unknown to me, remove the leading path components from
+>> the patch.
+>
+> The reason is probably that they have set diff.noprefix in their config,
+> and git-format-patch respects that. Which is arguably a bug.
 
-That makes sense, and I think this is a good direction.
+FWIW, I've always considered it a feature to help projects that
+prefer their patches in -p0 form.  Of course, Git optimized itself
+for the usecase we consider the optimum, i.e. using a/ and b/ prefix
+on the diff generation side, while stripping them with -p1 on the
+applying side.
 
-> Fix this race by installing an atexit(3P) handler that unlinks the keep
-> file.
+I wonder apply.plevel or am.plevel would be a good way to help them
+further?
 
-This will work if we call die(), but I think you'd be better off using
-the tempfile subsystem:
-
-  - this patch doesn't handle signal death, and I don't see any reason
-    you wouldn't want to handle it there (in fact, from your
-    description, it sounds like signal death is the culprit you suspect)
-
-  - this will double-unlink in most cases; once when we intend to after
-    calling execute_commands(), and then it will try again (and
-    presumably fail) at exit. Probably not a huge deal, but kind of
-    ugly. You could set it to NULL after unlinking, but...
-
-  - as the variable is not marked as volatile, a signal that causes an
-    exit could cause the handler to see an inconsistent state if you
-    modify it after setting up the handler. The tempfile code gets this
-    right and is pretty battle-tested.
-
-I think you'd just want something like this (totally untested):
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index cd5c7a28eff..22bbce573e9 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2184,7 +2184,7 @@ static const char *parse_pack_header(struct pack_header *hdr)
- 	}
- }
- 
--static const char *pack_lockfile;
-+static struct tempfile *pack_lockfile;
- 
- static void push_header_arg(struct strvec *args, struct pack_header *hdr)
- {
-@@ -2198,6 +2198,7 @@ static const char *unpack(int err_fd, struct shallow_info *si)
- 	const char *hdr_err;
- 	int status;
- 	struct child_process child = CHILD_PROCESS_INIT;
-+	char *lockfile;
- 	int fsck_objects = (receive_fsck_objects >= 0
- 			    ? receive_fsck_objects
- 			    : transfer_fsck_objects >= 0
-@@ -2280,7 +2281,9 @@ static const char *unpack(int err_fd, struct shallow_info *si)
- 		status = start_command(&child);
- 		if (status)
- 			return "index-pack fork failed";
--		pack_lockfile = index_pack_lockfile(child.out, NULL);
-+		lockfile = index_pack_lockfile(child.out, NULL);
-+		pack_lockfile = register_tempfile(lockfile);
-+		free(lockfile);
- 		close(child.out);
- 		status = finish_command(&child);
- 		if (status)
-@@ -2568,8 +2571,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		use_keepalive = KEEPALIVE_ALWAYS;
- 		execute_commands(commands, unpack_status, &si,
- 				 &push_options);
--		if (pack_lockfile)
--			unlink_or_warn(pack_lockfile);
-+		delete_tempfile(&pack_lockfile);
- 		sigchain_push(SIGPIPE, SIG_IGN);
- 		if (report_status_v2)
- 			report_v2(commands, unpack_status);
-
-The unconditional call to delete_tempfile() should be OK. If we don't
-have a file (because we did unpack-objects instead), then it's a noop.
-
-I think one could also make an argument that index_pack_lockfile()
-should return a tempfile struct itself, but I didn't look too closely at
-the other caller on the fetch side (but it should be conceptually the
-same).
-
--Peff
+I am not sure making format-patch _ignore_ diff.src/dst_prefix is a
+good approach.  If we were wiser, we may not have introduced the
+diff.noprefix option, made sure diff.src/dstprefix to be always a
+single level, and kept -p<n> on the application side as an escape
+hatch only to deal with non-Git generated patches.  The opportunity
+to simplify the world that way however we missed 15 years ago X-<.
