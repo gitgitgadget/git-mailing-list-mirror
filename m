@@ -2,60 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C154C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 09:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65BA1C61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 09:21:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230301AbjCIJHP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 04:07:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46854 "EHLO
+        id S231197AbjCIJVV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 04:21:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229758AbjCIJGt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 04:06:49 -0500
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A011CBFD
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 01:06:08 -0800 (PST)
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 3703C1F47D;
-        Thu,  9 Mar 2023 09:06:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-        s=selector1; t=1678352768;
-        bh=O9aFb4P6zf/aP5d7xbJWvc/r8yaNjoC2mlGlOL/6VJU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WYALr7dzxRL6yHmLz8gYxtvazRCcjLIQxnEHeR1NGiqvmaF3AGYEYUOHbjsSwcTR+
-         0lfO5Z2jyd6e4UpCPP8y66DKK4QkvaEsG4K60lbRQfr8p0Vc4prcSNOW/Tei6o/VT3
-         YI3nNB+5I7y0STF6NzeidwY8ebrAq1GAcxCWJq04=
-Date:   Thu, 9 Mar 2023 09:06:08 +0000
-From:   Eric Wong <e@80x24.org>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Subject: Re: [PATCH v2] object-file: reprepare alternates when necessary
-Message-ID: <20230309090608.M92573@dcvr>
-References: <pull.1490.git.1678136369387.gitgitgadget@gmail.com>
- <pull.1490.v2.git.1678301252360.gitgitgadget@gmail.com>
- <ZAmJtnLgwimRBGTb@coredump.intra.peff.net>
+        with ESMTP id S231200AbjCIJVD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 04:21:03 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D7DD77CB1
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 01:20:54 -0800 (PST)
+Received: (qmail 7734 invoked by uid 109); 9 Mar 2023 09:20:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Mar 2023 09:20:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29329 invoked by uid 111); 9 Mar 2023 09:20:53 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Mar 2023 04:20:53 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 9 Mar 2023 04:20:53 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, vdye@github.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 0/8] ahead-behind: new builtin for counting multiple
+ commit ranges
+Message-ID: <ZAmk9V54c/jIbJ65@coredump.intra.peff.net>
+References: <pull.1489.git.1678111598.gitgitgadget@gmail.com>
+ <xmqqedq1ag8d.fsf@gitster.g>
+ <ZAaHB7XTz8HX75LD@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZAmJtnLgwimRBGTb@coredump.intra.peff.net>
+In-Reply-To: <ZAaHB7XTz8HX75LD@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> wrote:
-> The only downside might be performance. For sane cases, I think scanning
-> the new alternates is OK. I know Eric (cc'd) has some crazy
-> 100k-alternate setup (from 407532f82d, etc), but I'd expect a reprepare
-> there is already expensive (we already have to re-scan every one of
-> those directories for packfiles, and throw out any loose object caches).
+On Mon, Mar 06, 2023 at 07:36:23PM -0500, Taylor Blau wrote:
 
-I'm not sure if that 100k alternate thing is happening, yet...
-(initial specs called for ~30k, but I figured it might grow)
+> > This makes readers wonder if "git rev-list --count B...C" should be
+> > the end-user facing UI for this new feature, perhaps?
+> >
+> > Of course if you are checking how C0, C1, C2,... relate to a single
+> > B, the existing rev-list syntax would not work, and makes a totally
+> > new subcommand a possibilty.
+> 
+> Yeah. You could imagine that `rev-list --count` might do something
+> fancy like coalescing
+> 
+>     git rev-list --count B...C1 B...C2 B...C3
+> 
+> into a single walk. But I am not sure that just because `rev-list
+> --count` provides similar functionality that we should fold in the
+> proposed `ahead-behind` interface into that flag.
 
-If it does, I'm thinking about enhancing --batch-command, to support
-`add-alternate' to dynamically add alternates while running cat-file.
+It does coalesce all of that into a single walk. The problem is somewhat
+the opposite: it only has a notion of two "sides" for a symmetric
+traversal: left and right. But in your example there are many sides, and
+we have to remember which is which.
 
-Right now, my biggest use case is only 250 alternates or so.
+I think getting the answer from one walk would require an arbitrary
+number of bits to paint down each path. Certainly the ahead-behind that
+Vicent and I wrote long ago didn't do that (IIRC it mostly relied on
+doing multiple traversals in the same process, which amortized the cost
+of commit parsing; that's not really an issue these days with commit
+graphs).
+
+Peeking at patch 7 of Stolee's series...yep. That's exactly what it
+does. :)
+
+I wondered how much it would matter on top of a naive loop of
+single-traversals, now that we have commit graphs. It looks like there's
+still quite a nice speedup from the numbers in patch 7 (though the
+totally naive "loop of rev-list" is incurring extra startup overhead,
+too).
+
+> My personal feeling is that we ought to avoid (further) overloading
+> `rev-list` absent of a compelling reason to do so. But I am definitely
+> open to other thoughts here.
+
+So I think this actually is what "git rev-list --left-right --count
+old...new" does now. But extending it to multiple sets in one traversal
+means you need:
+
+  - being able to ask for individual left-right markers for each pair,
+    not treating all lefts and all rights together
+
+  - don't stop traversing when you hit an UNINTERESTING commit if there
+    are still bits to paint. In a single-pair traversal, those two are
+    the same thing (we stop at the merge base), but with multiple pairs
+    you may have to keep walking past a commit that is excluded from one
+    pair, but not another. This _might_ be doable if you assume all of
+    the left-hand bases are the same, but I didn't think hard enough to
+    feel confident in that. But even so, that only solves cases like
+    "how do these branches compare to HEAD" (which I think is what
+    GitHub does). But it doesn't allow "how do these branches compare to
+    to their respective @{upstream} refs".
+
+So I don't think it would be impossible to make this a mode of rev-list.
+And that mode might even provide flexibility for other similar
+operations, like a mass "git rev-list --cherry-mark"[1]. But it is a
+pretty big departure from the current rev-list traversal (to my mind,
+especially the "keep walking past UNINTERESTING part). I don't mind it
+as its own command.
+
+-Peff
+
+[1] The reason you might want a mass cherry-mark is basically doing
+    something like the "branches" page, but in a workflow where upstream
+    applies patches, like git.git. There you may want to ask about
+    "origin/next...$branch" for all of your branches to see which ones
+    have been merged where.
