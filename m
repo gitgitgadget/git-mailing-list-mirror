@@ -2,83 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59679C6FD1C
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 11:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5C8CC6FD1C
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 12:07:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230367AbjCILLR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 06:11:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35680 "EHLO
+        id S229835AbjCIMHa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 07:07:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230243AbjCILK5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 06:10:57 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EE6DF16BE
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 03:05:20 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id j2so1426758wrh.9
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 03:05:20 -0800 (PST)
+        with ESMTP id S229720AbjCIMH3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 07:07:29 -0500
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 711F3E7ED4
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 04:07:27 -0800 (PST)
+Received: by mail-qv1-xf29.google.com with SMTP id ne1so1205942qvb.9
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 04:07:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678359918;
+        d=gmail.com; s=20210112; t=1678363646;
         h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=vaCJjpb1KdeUVDKY6WG6AD3tox4e0T3T0OMU6dYg3NY=;
-        b=J0Jq34l2ivzhe0YG4RrhRYolXdrEYi+irQSzOReA3N9Ee/63zQDy+1YleG1ahbzfQD
-         sHmhc398my0ty+kbnEwQK+NTG5tsrJSMta9+MqLrCp9JLdtdSDJlVBupbz9EAsOHUpeI
-         8AIHWmxs+G+N5721KSPJ7ZA6M9CI2CyQM9qNs1z+Jt2xmZ2iaGZjQCjPyOFhnyoVXI+B
-         10Io2V/v9p8eyN+fNhjsw35KzdbCEcTvVNHPJB3fES5OxLdU4IMSEUMC2RwjA+3Or4ad
-         81sme/BSXU+ztEZaQKHNfH9cvQ/vq1ZXsEc4Cae8t9SPXe3TGrodRbjfTZcok5Um5asz
-         6rmQ==
+        bh=NO+vCUsdhsR8ammHVW5y1SNDRTwxmnDc93VYMaG3E8I=;
+        b=H4eHMAXJ3QpsSpqw5/uX8CqJFURDJXnmYrBcEMBelOGjQdc3PQSXICcQiJy6wEFcu6
+         WKSy/MkP4O6M6OsQzMaWnoDpI6dsz9O8LaqRURRwktYjpfE5Pom9uFSX0gCI1vo0EJWG
+         Q/1DDb/82z1WEO8S2AhACdzGT4EhgUDfw2EzTa+ckiWPkTpCebkZfG5unX2+twZVJB6d
+         pNVf7UjiN5TSF/sHa8FpshaqPpZ/D8Zd1MPV+YYzH0IPkxNUgJ77G13b78EEvEtVPVjT
+         01V1Mb6OX+pQSfSwWwDgU3QoNYfhhI8UEE37l0yT2AIKGA+biR27kMccUewzs/D+NsGu
+         Rcaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678359918;
+        d=1e100.net; s=20210112; t=1678363646;
         h=to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vaCJjpb1KdeUVDKY6WG6AD3tox4e0T3T0OMU6dYg3NY=;
-        b=qQARVdXgPETzUvl9joWdu39xQlTiCF4nN3E8gI3drA91utHdGzg3cP76TvH+e66aLW
-         vH6/apBZ8yjFVFbOnvshgx+nbL7lA1gmPHgeXpLHQu3eIiigfcGLNp+cRytdt2zkXDqy
-         JW2Z4nxS2/uNIVIIRQB9pH7DK3KiyWw+WQIJz/q06KDkL+ZcoKTZ5kw+s7e5MKt3jllT
-         JwSel/XRQMcV+HVcEOHOm8rY2/PUtatxMT+Ix4cRQ6/6jLMqF1sAS3MCr3DZc0+EB1AC
-         n4WD6sA0JJulXATbFkxpzNMPywh1Ox3GQ1gYxJgQHf10lSfIA7EZMXOOGjSkmYABOzH3
-         lNow==
-X-Gm-Message-State: AO0yUKXvWDPLOtU6QtofLzMEoSS6OkJ7MISHg8cxuoPUzHrnroXts0lw
-        Fi5W5RWyToq/JoG/KoOEKGlWa4iLwI21qHIpE635Y+WARo0=
-X-Google-Smtp-Source: AK7set+EidsatwCGN/PW1YWxjmobf5FTZpdmsl5nDMnw5iJRF/PVxm1PinQSlXgae27QP8lAJ1DoYTiUaUpmFR7+sL4=
-X-Received: by 2002:a5d:6485:0:b0:2c5:4adc:6e52 with SMTP id
- o5-20020a5d6485000000b002c54adc6e52mr5904449wri.3.1678359918188; Thu, 09 Mar
- 2023 03:05:18 -0800 (PST)
+        bh=NO+vCUsdhsR8ammHVW5y1SNDRTwxmnDc93VYMaG3E8I=;
+        b=OPzTtXnGtDE+2BmHpRPUxmVVnX/+TufeaYVQPNXslqvRVhwfpzL6QUpQ85n1rMkvbz
+         ljQVlZakf/QWTJKGpTyXDcQsLGnxHeQ+ZYrFk5cwooiYkB43Rp4G4rDV0sSJWKgfITMX
+         +P7HRZdFMhqVJPNbpq7T7qXEbheQdRqFzwyGTbNe347YYIV+Tzvh/NDsDK1BpusHDPhi
+         2eplzbWN3lrlXfnrlZNqD0xxvjD/xsm/ERHke3b+Lf7Hms4RecB3R95SHY+uLpI+TTb/
+         Yf1US9SpXW52TxQY0D6TG/lOvVz2nPpEIHnujrKzoWPbtF/FxyE1i0BArrZsKPgXqltq
+         vkBQ==
+X-Gm-Message-State: AO0yUKXlQKoE0Y2ZsMhgHQFz6HfL8hQlQvkHv5Pbs1DRRCfJew/HRlMI
+        6zB0uoQKB5yncVDNFjYKj937v9TgaXqCU7bVduvDkL0oqkDLtQ==
+X-Google-Smtp-Source: AK7set8RwRweHEw0LpvSHO/CQ+U5PvxKSLq84kI0vupHb9TqrBBw3XRk/MdbP68JtVIraB2BPXh2xpbpPt6Sl/uEt2k=
+X-Received: by 2002:a05:6214:4a43:b0:56e:9ad3:ab9c with SMTP id
+ ph3-20020a0562144a4300b0056e9ad3ab9cmr5297714qvb.1.1678363646270; Thu, 09 Mar
+ 2023 04:07:26 -0800 (PST)
 MIME-Version: 1.0
-From:   Ilia Pozhilov <ilyapoz@gmail.com>
-Date:   Thu, 9 Mar 2023 13:05:07 +0200
-Message-ID: <CAAo-ADZBBRxSROeAwrA9o30Etf3QQhLCaWQJtVsChVwT-AbgTg@mail.gmail.com>
-Subject: Track git blame through two unrelated histories
-To:     git@vger.kernel.org
+From:   Khalid Masum <khalid.masum.92@gmail.com>
+Date:   Thu, 9 Mar 2023 18:07:14 +0600
+Message-ID: <CAABMjtGXGZtUnU+8KgEccNeLXRJmWnE5f24BMG8ysbZKfT-ctQ@mail.gmail.com>
+Subject: [GSoC23] Working on project Idea from SOC 2011
+To:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello!
+There is this SOC 2011 idea named "Resumable clone" here:
 
-I have a weird use case. A repository at my company was migrated git
--> non-git vcs -> git again.
+https://archive.kernel.org/oldwiki/git.wiki.kernel.org/index.php/SoC2011Ideas.html
 
-During transition to non-git vcs the history was lost, i.e. an initial
-commit was created from some known commit from the old git repo.
+...
+Currently cloning a remote repository has to be done in one session.
+If the process fails or is aborted for any reason any already downloaded
+data is lost and one has to start from scratch.
 
-Migration to new git repo was more transparent and we have the whole history.
 
-So let's say I add two remotes and fetch all the commits, but they
-look like this:
+There is also currently a bug where, after successfully loading
+all data during cloning, an failure in applying the data
+to the working directory leaves the repository in some
+unusable state. In this a normal clone
+behaves differently
+than a clone --no-checkout followed by checkout.
+Fixing this bug would also be part of this project.
 
-A->B-> .... . . . -> Z    history1
 
-1 -> 2 -> ..... -> 0 history2
+While not necessarily being part of this project fetch
+might also benefit from a resume mechanism.
 
-and file contents in commits Z and 1 are exactly the same, but the
-commits themselves are completely unrelated for git.
+Goal: Allow Git to resume a cloning process that
+has been aborted for any reason.
+Languages: C
+...
 
-What I want to achieve is blame working across this boundary.
+Can I work on this idea for GSoC23? If so how should I get started?
+I have completed one of the microprojects by the way.
 
-What can I do? It this possible right now? Is it difficult to
-implement? Is there a good enough workaround? I don't think rewriting
-commits 1... 0 is an option, but rewriting A ... Z is an option.
-
-What do you think?
+Thanks,
+-- Khalid Masum
