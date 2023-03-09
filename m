@@ -2,132 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B7F9C61DA4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 22:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A388FC6FD1F
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 22:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229823AbjCIWKd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 17:10:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43386 "EHLO
+        id S230513AbjCIWQU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 17:16:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjCIWKc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 17:10:32 -0500
-X-Greylist: delayed 370 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 09 Mar 2023 14:10:30 PST
-Received: from marcos.anarc.at (marcos.anarc.at [64.18.183.94])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CFF8F4D9D
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 14:10:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=debian.org;
-        s=marcos-debian.anarcat.user; t=1678399457;
-        bh=jL36PwQVbzVEcBk8QVCtE08++V45EqYMEnRHW2zkTn4=;
-        h=From:To:Cc:Subject:Date:From;
-        b=ke8iWeaIghKr6K7MGhlaALXLlauviwjNXJ8yHggTQrblnP2T2PcfOiJvhUST/G6Z9
-         AjjxdJGJ8ojbmmcjqi89PCo6ywZmPHWPJx1DtiAOoBYSToE2sjWR2yuof2aQqL0mB2
-         2PqTLul3I8//pIWipWWOVTcOU4575W0XszvVZxDrFV0Egmm3iCJqru5iLE7VqPDmtz
-         D7l88h9nydNMyltrRnqCl5PZJr5pn7Xf+x+TXTdOTOJWkEzMqKBfSOsGwHRRB3MK9y
-         3FIprkSRqZGK/rhL1zud2BF2FWXoxPOL8KvvINO4q97pSh5R8gpPiGE33qzBwDA4Mi
-         o1HRLyQJ7DDEQ==
-Received: by marcos.anarc.at (Postfix, from userid 1000)
-        id 0EAF310E5DA; Thu,  9 Mar 2023 17:04:17 -0500 (EST)
-Received: by angela.localdomain (Postfix, from userid 1000)
-        id 5F816E00EE; Thu,  9 Mar 2023 17:04:16 -0500 (EST)
-From:   =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>
-Subject: [RFC PATCH] hooks--pre-push.sample: identify branch point
-Date:   Thu,  9 Mar 2023 17:04:05 -0500
-Message-Id: <20230309220405.219212-1-anarcat@debian.org>
-X-Mailer: git-send-email 2.39.2
+        with ESMTP id S230450AbjCIWQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 17:16:16 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2A5D1B314
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 14:16:15 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id qa18-20020a17090b4fd200b0023750b675f5so7762193pjb.3
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 14:16:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678400175;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+PpqHYgK6ua0cI72c9TbEtD8LO0JOYAL/VdlhjqaYAM=;
+        b=N77S7jQRDE4bw+CkZhMTJ0qEiTrYmf0l5yaB4jwLPHr4ROxV64YORWNUqQ1LMIvgOo
+         25xvk2ZWmXpkPfTeRPe64Apbjsbr0qjG3NaoV7vMCLLwD2FhNi3BuOL7Jk5AYg601ahx
+         hdQhrjzW8p8NUfdBfIv0oFm6zv2UW55erfcf/0g6YXjwJNPxMjoNRGgnapw25J1qyFQe
+         HC4YPdrcNxkjIHzeGWFLrZxcSArTW6IGg3mqrEFP9bGQKKAyMT3pVKGMW0372PKGf9jf
+         jkbHIjGATbRvKJALSuNkOCF8o5n5qogBkoPaNfvB38D2HdY7WadL2Kn8P2ryHcJwBpmV
+         XtXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678400175;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+PpqHYgK6ua0cI72c9TbEtD8LO0JOYAL/VdlhjqaYAM=;
+        b=JBUIbF7ccZ1TNE69h5I1roi3zZhz3AHEKkMqqxceY6+9LJF0q7j/CYC2p2axBEjTqp
+         WpQ3Nuhllf+1LO1iPviUQBHvWpbzlCR7RRuQrheek5KpVO8OvZVUHyo1p93ZjJda6UTm
+         F1BZUlBmqJUza7me/XAdmwuwBIQvYxsX9Xbu0egdIbUA2C1VKe69gdVH+7C4bmK5RC3+
+         yAthYUQeCCNokz54+QZjZqh9j7yhHqRThlTqQP88LH0WzDmuNe7PeXvw1qljpYjjM1UD
+         BC71FDoGyv/HBdAvaHsm4wNgfduhmtfKy47cRUtrUL6Idbu5kRHGvUfiPhaez7lOiNnY
+         es+w==
+X-Gm-Message-State: AO0yUKX2tZjX+eSyyXzKyv8FIqQIFAM53o8YiTSw5TQxP3x1S4NFNFfc
+        1dBXhhi7L1N7WPvIg6qFjbPk8X2/au0=
+X-Google-Smtp-Source: AK7set9lbs7x293UTnl9uRAk+cG2RyEprku4BNVqhAQF2wEDYOwvfVUzhZyCzydwdYj1oTlHUPJJrQ==
+X-Received: by 2002:a17:902:e746:b0:19e:6bc5:8769 with SMTP id p6-20020a170902e74600b0019e6bc58769mr30603427plf.69.1678400174998;
+        Thu, 09 Mar 2023 14:16:14 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id kf16-20020a17090305d000b00196217f1219sm132973plb.70.2023.03.09.14.16.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Mar 2023 14:16:14 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emir SARI <emir_sari@icloud.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Feature Request - Better i18n support
+References: <ZAnXddDN7v0AOBdm@mbp.local>
+Date:   Thu, 09 Mar 2023 14:16:14 -0800
+In-Reply-To: <ZAnXddDN7v0AOBdm@mbp.local> (Emir SARI's message of "Thu, 9 Mar
+        2023 15:56:21 +0300")
+Message-ID: <xmqqfsad8tap.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The pre-push hook introduced in 87c86dd14a (Add sample pre-push hook
-script, 2013-01-13) has a pretty naive implementation that inspects
-the entirety of that branch history, regardless of previous merges.
+Emir SARI <emir_sari@icloud.com> writes:
 
-In other words, if you create a topic branch from a current history,
-the entire history will be inspected by the pre-push hook. In my case,
-there was an old "WIP" commit log that broke the hook, even though
-that commit wasn't specific to the branch in question, nor was it
-introduced by the push.
+> For instance, in Turkish (and in French AFAIK), percentages are indicated
+> in different formats. In Turkish it precedes the number like %54. However,
+> all the percentages use the standard 54%. By marking these as translatable,
+> we could easily provide the correct formats.
 
-This patch aims at fixing that problem by restricting the revisions inspected when a new branch is pushed to something that is more specific to that branch.
+Interesting.  Let's take a look to see how bad it is.
 
-This implementation will first attempt to find an ancestor that the
-current branch is related to (`--merged=`). This is where this
-implementation is the most questionable; normally you would put
-`master` or `main` as a base branch, but who knows what people
-actually use for this nowadays. And besides, it's fair to assume you
-could be pushing something based on a branch that already exists
-upstream that is *not* master or main... But still, that's a tricky
-bit I'm not sure of.
+$ git grep '[fd]%%' \*.[ch] ':!compat/' ':!t/'
+apply.c:		printf(" %s %.*s{%s => %s} (%d%%)\n", renamecopy,
+apply.c:		printf(" %s %s => %s (%d%%)\n", renamecopy,
+apply.c:					printf(" rewrite %s (%d%%)\n",
 
-Then we find the "branch point" which is the latest commit on the
-ancestor branch that's shared with the inspected ref. This,
-interestingly, seems to be a really tricky problem as well. I base my
-implementation off this answer on Stack Overflow (I know! at least
-it's not ChatGPT!):
+These are currently not even marked with _() to be translatable, and
+it should be just the matter of enclosing them in _().
 
-https://stackoverflow.com/a/71193866/1174784
+If these should be translated in the first place, that is.  I do not
+think these are originally meant to be machine parseable (it is
+shown as part of "git apply --summary"), but existing users may
+already be abusing them as such.
 
-There are currently a whopping twenty-five answers to that question in
-that thread, and I'm hoping the community here will have a more
-definitive answer to this question. I have picked the answer that uses
-the least possible external commands, but it still uses a `tail -1`
-which I'm somewhat unhappy about. I have thought of using
-`--max-count` for this instead, but I understand that probably does
-the equivalent of a `head -n` *and* it's applied before `--reverse`,
-so there's not other way to do this.
+diff.c:				fprintf(opt->file, "%s%4d.%01d%% %.*s\n", line_prefix,
 
-The final question to answer here is whether this is a good idea in
-the first place, and whether this is the right place to answer this
-kind of question. I happen to really like using pre-push (instead of
-pre-commit) for inspecting my work before submitting it upstream, so
-it was a natural fit for me, but this might be everyone's taste.
+This is part of "git diff --dirstat" output.  I do not think it
+should be translated, even though it probably is not machine
+parseable.
 
-As the subject indicates, I would very much welcome comments on
-this. I would be happy to submit a more elaborate version of
-this (e.g. with unit tests) if it's interesting for the community, or
-receive guidance on where best this could be implemented or improved.
+diff.c:		strbuf_addf(msg, "%s%ssimilarity index %d%%",
+diff.c:		strbuf_addf(msg, "%s%ssimilarity index %d%%",
+diff.c:			strbuf_addf(msg, "%s%sdissimilarity index %d%%%s\n",
+diff.c:	strbuf_addf(&sb, " %s %s (%d%%)\n",
 
-Signed-off-by: Antoine Beaupré <anarcat@debian.org>
----
- templates/hooks--pre-push.sample | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+These are part of the extended diff headers (e.g. "rename A to B
+with similarity index of X%") that are very much designed to be
+machine parseable, and cannot be touched.
 
-diff --git a/templates/hooks--pre-push.sample b/templates/hooks--pre-push.sample
-index 4ce688d32b..f871b65195 100755
---- a/templates/hooks--pre-push.sample
-+++ b/templates/hooks--pre-push.sample
-@@ -33,8 +33,24 @@ do
- 	else
- 		if test "$remote_oid" = "$zero"
- 		then
--			# New branch, examine all commits
--			range="$local_oid"
-+			# new branch
-+			#
-+			# search for a base branch that's part of this branch, latest modified
-+			#
-+			# it's a better heuristic than hardcoding "master" or "main"
-+			base_branch=$(git for-each-ref \
-+					  --merged="$local_ref" \
-+					  --no-contains="$local_ref" \
-+					  --format="%(refname:strip=-1)" \
-+					  --sort='-*authordate' \
-+					  refs/heads )
-+			# find the place where we branched off the base branch
-+			branch_point=$(git rev-parse \
-+					   $(git rev-list --exclude-first-parent-only \
-+						 ^"$base_branch" "$local_ref"| tail -1)^ \
-+                                    )
-+			# examine all commits up to the branch point
-+		        range="$branch_point..$local_oid"
- 		else
- 			# Update to existing branch, examine new commits
- 			range="$remote_oid..$local_oid"
--- 
-2.39.2
+diff.c:			strbuf_addf(&sb, " (%d%%)\n", similarity_index(p));
+
+This is part of "git diff --summary" to show "rewrite", similarly to
+"rename" and "copy" that we saw earlier.
+
+wt-status.c:				_("You are in a sparse checkout with %d%% of tracked files present."),
+
+This is already marked _(translatable) and your l10n files should be
+able to do "%d%%" -> "%%%d" as needed.
 
