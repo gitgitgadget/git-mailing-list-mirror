@@ -2,128 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63EB4C64EC4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 23:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEC87C61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 23:21:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231220AbjCIXUj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 18:20:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44584 "EHLO
+        id S230052AbjCIXVU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 18:21:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229939AbjCIXU3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 18:20:29 -0500
-X-Greylist: delayed 464 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 09 Mar 2023 15:20:25 PST
-Received: from qs51p00im-qukt01071902.me.com (qs51p00im-qukt01071902.me.com [17.57.155.9])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74543F4DAD
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 15:20:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1678403559;
-        bh=kK3Jg/Z659XSSAERes/mURotL9mEBl3luHySflEG5pY=;
-        h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To;
-        b=0oHPcie27ZJPaFfx2bfp4MgtQAP5ouhpNtt5JgVb/rYd4RFPtMVJWMsykHFw3PynG
-         8dW9xmIVhoCDVY3oTXug09yVLkoPUJMuWLtjOa6zQDsQMl5ctp/dM5Iz6pd4tmb75V
-         EjReQkcqw65hS5E4rT8vGmWbj6+WR6PyPGUQpEdF44IAzisTWvwIWxAIYGOqdphkX9
-         GfFwI43LP4gNTU7cTWkyFE5Qj11QB3X0LNZCooWXH1Ve8KPJDp1ErHgU+MwTOKxUQi
-         VxcvHhHp9X/I1l/wsvn+ZWl7oCjSuO8WVx3MwesMIht7T65Gi+LQTMOZKyQksbf+9K
-         yecv4AJz+FjMA==
-Received: from smtpclient.apple (qs51p00im-dlb-asmtp-mailmevip.me.com [17.57.155.28])
-        by qs51p00im-qukt01071902.me.com (Postfix) with ESMTPSA id 7E2D65EC0644;
-        Thu,  9 Mar 2023 23:12:38 +0000 (UTC)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.400.51.1.1\))
-Subject: Re: Feature Request - Better i18n support
-From:   Emir SARI <emir_sari@icloud.com>
-In-Reply-To: <xmqqfsad8tap.fsf@gitster.g>
-Date:   Fri, 10 Mar 2023 02:12:25 +0300
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <9F4F74FC-B424-4BF7-9F9D-8A821C89B442@icloud.com>
-References: <ZAnXddDN7v0AOBdm@mbp.local> <xmqqfsad8tap.fsf@gitster.g>
+        with ESMTP id S229511AbjCIXVT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 18:21:19 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41A78F4DA9
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 15:21:18 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id t15so3468861wrz.7
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 15:21:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678404077;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w1370zV1+1u4oVmEV4YVArIOZprpJLtQYIK8ykn8a5E=;
+        b=Yk3Zh8P7XeQc1gaV6jUeEM/1xWurMoiB7IB+lRwY5osCdtL90WpORNT2869NklRdzf
+         2LzkaZcLuWbv3kC4hKWFfylv3r3SffWx0INU95dbIhUCIpubBK4jDgjknaWc6rraD3Bx
+         GtkK+ZsqwihNoT40x6drRsaPsg1QhbxeK2HrTx4gcQ7cVq+rdLU3EMYw9sYDlIVAXJNY
+         U2NG9xF6S8e117irdzs+jUEYjqZo2vaEtuEzMDORtdMCx5SuqDsVV0fhvTTmJpughNOm
+         QqKsUOZM/MiDwZmXpA4QLcUW05UIEZHTFZrTUPJt2mk+5yAfmtrq9wQfXrFCreN4mPmU
+         FJng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678404077;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=w1370zV1+1u4oVmEV4YVArIOZprpJLtQYIK8ykn8a5E=;
+        b=GEbYZHmc4oHgcHSPg2Gx5CLC+v33EtNw7kxQEmO5yuYqXyxpFANFgwNXPxDwRF1COk
+         q2Behx7Qdf2FEpUenwTTCnaBghFUKSSKuIUzCYRvQPoKCR+pVh9W+wkdc2t0KUY5C4Nf
+         e4AEzoDIm7O3wLxwJXH1EwqDVrmcIFN8DahrRG16aa++pCntzlIo1MWs/S9BZ/UU9c0f
+         ATX2tsJN5VBEhWX39oKNmN96ZektTJfqsb/ToiuV7xvW0awJAaih/x/vsEXxMrTabrdG
+         tlqTt4GjdolJmZELJx8uamx/M8JQb6hqKBHb+M2SMNOenZnLmLnsqS/wo3UNovPrMGlI
+         CJhQ==
+X-Gm-Message-State: AO0yUKUZm7Cg5tSJkAAuPixPYKMajBDJaCQUWn+3O377QwpBifkNaoa3
+        4MNcQLWLXvX+a7pLQ1RqtWtf+Zixnx9FmDZs3ao=
+X-Google-Smtp-Source: AK7set/rpBO91bmJ4yQXCG2oEs5EzfsUACgWwr5NWVbily7gJaRF4bu0V+m+fZexHhNrAuH8f1b8pb+z482wfOQxalU=
+X-Received: by 2002:a5d:4b83:0:b0:2c5:530c:cd36 with SMTP id
+ b3-20020a5d4b83000000b002c5530ccd36mr5121144wrt.5.1678404076526; Thu, 09 Mar
+ 2023 15:21:16 -0800 (PST)
+MIME-Version: 1.0
+References: <20230309013314.119128-1-cheskaqiqi@gmail.com> <20230309063952.42362-1-cheskaqiqi@gmail.com>
+ <20230309063952.42362-2-cheskaqiqi@gmail.com> <xmqqmt4lc03s.fsf@gitster.g>
+In-Reply-To: <xmqqmt4lc03s.fsf@gitster.g>
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+Date:   Thu, 9 Mar 2023 18:21:04 -0500
+Message-ID: <CAMO4yUFs5zSafO1pGFZqBU9R58G8ENhfTh5qNayeFMRPrCa+Jg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] t1092: add tests for `git diff-files`
 To:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-X-Mailer: Apple Mail (2.3731.400.51.1.1)
-X-Proofpoint-ORIG-GUID: 5gbmdvX8ZhO524qsdo1s_gbF-tCwdGLs
-X-Proofpoint-GUID: 5gbmdvX8ZhO524qsdo1s_gbF-tCwdGLs
-X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
- =?UTF-8?Q?2903e8d5c8f:6.0.425,18.0.572,17.11.62.513.0000000_definitions?=
- =?UTF-8?Q?=3D2022-01-11=5F01:2022-01-11=5F01,2020-02-14=5F11,2021-12-02?=
- =?UTF-8?Q?=5F01_signatures=3D0?=
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 clxscore=1011
- bulkscore=0 spamscore=0 mlxscore=0 adultscore=0 phishscore=0
- malwarescore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2209130000 definitions=main-2303090186
+        Derrick Stolee <derrickstolee@github.com>, vdye@github.com,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi Junio
 
-Thank you very much for the prompt responses.
+On Thu, Mar 9, 2023 at 12:20=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 
-> Junio C Hamano <gitster@pobox.com> =C5=9Funlar=C4=B1 yazd=C4=B1 (10 =
-Mar 2023 01:16):
->=20
-> These are currently not even marked with _() to be translatable, and
-> it should be just the matter of enclosing them in _().
->=20
-> If these should be translated in the first place, that is.  I do not
-> think these are originally meant to be machine parseable (it is
-> shown as part of "git apply --summary"), but existing users may
-> already be abusing them as such.
+>
+> > +     run_on_all ../edit-contents deep/a &&
+> > +
+> > +     test_all_match git diff-files  &&
+>
+> An extra space on this line.
+>
+> > +     test_all_match git diff-files deep/a
+>
+> And on this line.
 
-My general idea is, if the percentages appear with the translated
-strings, they should use the localised format. Otherwise if they
-only appear with some machine-output without any localised context
-it is perfectly fine to leave them as-is.
+Will do !
 
-> brian m. carlson <sandals@crustytoothpaste.net> =C5=9Funlar=C4=B1 =
-yazd=C4=B1 (10 Mar 2023 01:27):
->=20
-> More specifically, I think it could be fixed for progress output, but
-> there are a few places in diff output where it couldn't because it =
-might
-> be parsed.  Would you be willing to try a patch for this?  I think the
-> code you're probably thinking about is in progress.c (search for =
-"%%"),
-> but there might be other places you have in mind as well.
 
-The progress output was my biggest motivation in reporting this. It was
-rather disturbing to see translated strings with unlocalised values.
+> As output from checkout and index are known to be identical (that is
+> one of the things that test_sparse_match does), I do not think there
+> is much point checking -out from both sides.
+>
+> If we know "diff-files" invocation above should never send anything
+> to the standard error, then checking that sparse-checkout-err is
+> empty may have value, though.
 
-I=E2=80=99d love to assist in testing any possible patches. Just let me =
-know of
-any possible scenarios, and I=E2=80=99ll get back to you. Being in =
-vacation, I
-have plenty of time available.
+Agree!
 
-> Can you clarify what places you're thinking about?  Is this printing
-> decimal values, or is it parsing decimal values?  If we know what
-> specifically is affected (for example, an affected command or =
-message),
-> it's a lot easier to fix this.
+> > +     # file present on-disk with modifications
+> > +     run_on_sparse ../edit-contents newdirectory/testfile &&
+> > +     test_sparse_match git diff-files &&
+> > +     test_sparse_match git diff-files newdirectory/testfile
+>
+> We do not care what the actual output is in this case?
 
-In general, I am not concerned with parsing, it=E2=80=99s more about =
-printing
-them. As with the percentage situation, having unlocalised content with
-localised strings is not ideal. For instance, my ideal pull output would
-look like this:
+I wonder if the method below is good  to test the actual output for '
+file present on-disk with modifications' :
 
-Nesneler say=C4=B1l=C4=B1yor: %100 (12/12), bitti.
-Delta s=C4=B1k=C4=B1=C5=9Ft=C4=B1rmas=C4=B1 8 i=C5=9F par=C3=A7ac=C4=B1=C4=
-=9F=C4=B1 kullan=C4=B1yor
-Nesneler s=C4=B1k=C4=B1=C5=9Ft=C4=B1r=C4=B1l=C4=B1yor: %100 (7/7), =
-bitti.
-Nesneler yaz=C4=B1l=C4=B1yor: %100 (7/7), 3,79 KiB | 3,79 MiB/sn, bitti.
+    cat >expect  <<-EOF &&
+    :100644 100644 8e27be7d6154a1f68ea9160ef0e18691d20560dc
+0000000000000000000000000000000000000000 M newdirectory/testfile
+    EOF
 
-As I=E2=80=99ve indicated above, I am ready to test anything you might =
-throw
-at me. :)
+     # file present on-disk with modifications
+     run_on_sparse ../edit-contents newdirectory/testfile &&
+     test_sparse_match git diff-files &&
+     test_cmp expect sparse-checkout-out &&
+     test_sparse_match git diff-files newdirectory/testfile &&
+     test_cmp expect sparse-checkout-out
 
-Thank you again very much!
-
-Best regards,
-Emir (=F0=90=B0=BD=F0=90=B0=BA=F0=90=B0=8D)
-
-** E-mail needs to stay simple
-** Use plain text e-mail
-
+-------------------
+Thanks,
+Shuqi
