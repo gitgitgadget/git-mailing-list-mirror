@@ -2,121 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D30E5C64EC4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 17:20:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1854AC61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 17:21:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbjCIRUk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 12:20:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34142 "EHLO
+        id S229844AbjCIRVL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 12:21:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231381AbjCIRT7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 12:19:59 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 056D0E826C
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 09:19:37 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id bo22so2741457pjb.4
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 09:19:37 -0800 (PST)
+        with ESMTP id S230416AbjCIRVB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 12:21:01 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CBE2E8CC5
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 09:20:56 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id nn12so2742146pjb.5
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 09:20:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678382376;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=iAU87akhgAIMMrvjFTRP4ygeZOICtUO2y5mH+UjSOAI=;
-        b=UStySIV17XnR+aLc9A8SLUjUC//IzGL9q5mcZ9MTg/mQud2yOGYd4HWU8Dk4L43WeZ
-         REYhcqTLInjmSArEdLrqQGswhE9U5W6yBIQNA4iVPUeZwdlbkM8RyTYOYJZsDcpZ+1js
-         9o//Rob0c3HJP0sgcUb181Tn6tV7JwUuhiGvj+Qhj3mD0Bbk4Rpl8i+rqPqD0z+vFMBz
-         /p/5nnFObtYTfh/Ez7/G6VRdJXgSeS0oaS/2wweIHsscYYlj4mrfXHwJej0qYdU9Dqjt
-         pQo5ZpLA3cDB+WdPV34jXRoiDUuJbqLM30XJCFxVeejARTp21ieixPVDTrYcuSQNorgN
-         eiWw==
+        d=gmail.com; s=20210112; t=1678382456;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l/yOppEHazqhp27KUM4KU8/+uMXzpdz1rXddnRPky08=;
+        b=BqcsSG5Rg2+j9rlHwSDLLEtJ/sV5tnkdDWbvZN7DPxsGYrosQPAACl+pLHF7gQ8l09
+         dbP957H4v8z3zkBQyHdN18Z0GuHs4hyINLYKVbpZT2wIfaUqldtiClRbe4TZ2TP8FDse
+         HmpZtdWeEfPohWj9963g4SSSfQDa+Iy/1qqjZBKhNwmzxHXxWJ2sV6JTl72Gvc2dU13U
+         EeukkENu1Vx77jZShWsPTQsJN3I3koS9e19GLmkGDIsmL9rgApwhNjxVOis8kQ1uSEpg
+         W5cYZZ2Xhz1eX54RG/VTaV0cGl+Vws+0kgH5akCki3T341XvDosLbGcHZueHRO7RRt49
+         LTeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678382376;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iAU87akhgAIMMrvjFTRP4ygeZOICtUO2y5mH+UjSOAI=;
-        b=sN6V85XBptgoAZozjty/nQ5iojidcjIWb/1yftEVumJ4ka7jGFoj2lc6YX5vmAkuUu
-         175lUKYA5dCqzCDrjbelP4K6psFw+Bt7oPf7VgGppGdHEzCqYbD5o/Wpxb+/AATGfzl0
-         9eDMofvxy167GZzPrfDsIXrOi+fAcUEW4CKaQL9F2m0PmTCof1blwd9l38Ta6jiUIhnU
-         U9+Uk0eeiGmHUhk27OvQQORtcjfMOhnfu4dXsefviBYjbeXgWN5tTCzhKMbP/Ht7UWP+
-         wMPM+IRV5g9/tbhtkVYQ2ChGdB1NOGAI3fdUt5yD8l54mCnrphQHzRipQindZj0QX+n/
-         fh0A==
-X-Gm-Message-State: AO0yUKVX5haupe/3ulH7Bx6Kusf4/kZZ3f72ONK+aG23/esqQOaHy4fh
-        WgqTunA9ibpbKcUwlaDruVBd2gpiOuqsBA==
-X-Google-Smtp-Source: AK7set8ps1vq0yFBf+miK2bgPKT8oQyG3DFVEcmz9h6i5K7o27/XleunQFNmUdPaXAfkyQWy+XKTcg==
-X-Received: by 2002:a17:90b:3ec9:b0:237:ae7c:15b9 with SMTP id rm9-20020a17090b3ec900b00237ae7c15b9mr23637084pjb.36.1678382376381;
-        Thu, 09 Mar 2023 09:19:36 -0800 (PST)
-Received: from ?IPv6:::1? ([2401:4900:2587:68bc:87e5:83e7:3df:3f2d])
-        by smtp.gmail.com with ESMTPSA id j10-20020a63550a000000b00502e918fee3sm10969257pgb.60.2023.03.09.09.19.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Mar 2023 09:19:35 -0800 (PST)
-Date:   Thu, 09 Mar 2023 22:49:32 +0530
-From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>
-CC:     Victoria Dye <vdye@github.com>,
-        Hariom verma <hariom18599@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: GSoC 2023
-User-Agent: K-9 Mail for Android
-In-Reply-To: <CAP8UFD20=SScM3XA4mjiNs=rHJY3i_9MOcL8uxsFT-mn1-JH1A@mail.gmail.com>
-References: <CAP8UFD3jzX5zRRYKS5uES2X9vB4eKJruzT7o6+7KytqLSmmZRg@mail.gmail.com> <CAP8UFD20=SScM3XA4mjiNs=rHJY3i_9MOcL8uxsFT-mn1-JH1A@mail.gmail.com>
-Message-ID: <07423D73-8CD9-498B-89E7-7241AC6490D3@gmail.com>
+        d=1e100.net; s=20210112; t=1678382456;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=l/yOppEHazqhp27KUM4KU8/+uMXzpdz1rXddnRPky08=;
+        b=JuIi5dEPxpvPq6pbr9Feb9Wg37foX8hpV9U74YNy/LlNe9cqfKcC8mgnx8Or9b9+QC
+         K2sWgmaUnwECoezrVkQZMfi8j8Qc1RJsYkCxxooE0FVa7lRaWdJohrL5LlwO8cVj0QTB
+         LFtWija6J3p0pbReYUgtG1qIctgdCNb0/06FGaiiWWb9WfSJC5dDXOg3kY6JJ5HyEvfC
+         wzy2WsGX71Zro17bbIj2xBWkqWL4GpwOsgWi9sADbgCvLCUdBinch+mSlk5xivEHdvtQ
+         17zov7Zlp6OKCW6fYbyHs5Xu+Fo077Q4epR4dwuC958sMdW4UpAMf6/KwnLwh7SbPWVq
+         5FbQ==
+X-Gm-Message-State: AO0yUKW8N4xBqU6puPlQ8YuvdxmeX02G/HP/VVbSYceauLUWtPEahPXj
+        F1L2PQH1nYG2NylLlyS42bU=
+X-Google-Smtp-Source: AK7set9wwSCEwASdXfrURVhpj8uBp7xhOOW0BDsrH1jpPA7dCKSLkMIfr5cAxKr4PKnXgU4jH07Zvw==
+X-Received: by 2002:a17:90b:4c0a:b0:22c:aaaf:8dd9 with SMTP id na10-20020a17090b4c0a00b0022caaaf8dd9mr23184662pjb.47.1678382455866;
+        Thu, 09 Mar 2023 09:20:55 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id mp4-20020a17090b190400b00230befd3b2csm210758pjb.6.2023.03.09.09.20.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Mar 2023 09:20:55 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shuqi Liang <cheskaqiqi@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, derrickstolee@github.com
+Subject: Re: [PATCH v4 1/2] t1092: add tests for `git diff-files`
+References: <20230309013314.119128-1-cheskaqiqi@gmail.com>
+        <20230309063952.42362-1-cheskaqiqi@gmail.com>
+        <20230309063952.42362-2-cheskaqiqi@gmail.com>
+Date:   Thu, 09 Mar 2023 09:20:55 -0800
+In-Reply-To: <20230309063952.42362-2-cheskaqiqi@gmail.com> (Shuqi Liang's
+        message of "Thu, 9 Mar 2023 01:39:51 -0500")
+Message-ID: <xmqqmt4lc03s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian,
+Shuqi Liang <cheskaqiqi@gmail.com> writes:
 
+> +	run_on_all ../edit-contents deep/a &&
+> +
+> +	test_all_match git diff-files  &&
 
-On 9 March 2023 3:47:51 pm IST, Christian Couder <christian=2Ecouder@gmail=
-=2Ecom> wrote:
->
->Today is supposed to be the deadline for each project to have at least
->2 Org Admins for GSoC 2023, but it looks like I am the only one and
->cannot add a second one because of the bugs=2E
->
+An extra space on this line.
 
-I suppose you should now see me as an Org admin for the 2023 program=2E
+> +	test_all_match git diff-files deep/a 
 
-I thought I was already in as an Org Admin but I somehow have missed compl=
-eting the process=2E Sorry about that=2E
+And on this line.
 
->I have emailed gsoc-support@google=2Ecom to get support and will see what=
- happens=2E
->
->Let me know if you have ideas about this=2E
->
+No need to resend only to correct the above two, but if you are
+going to reroll to fix something else, please make sure fixing
+them.
 
-The thing is potential mentors need to login to the GSoC portal and accept=
- org member agreement and program rules=2E After you (or any Org Admin) sho=
-uld be able to add that person to the program=2E Here's the relevant snippe=
-t from Google's mail:
+> +'
+> +
+> +test_expect_success 'diff-files with pathspec outside sparse definition' '
+> +	init_repos &&
+> +
+> +	write_script edit-contents <<-\EOF &&
+> +	echo text >>"$1"
+> +	EOF
+> +
+> +	# add file to the index but outside of cone
+> +	run_on_sparse mkdir newdirectory &&
+> +	run_on_sparse ../edit-contents newdirectory/testfile &&
+> +	test_sparse_match git add --sparse newdirectory/testfile &&
+> +
+> +	# file present on-disk without modifications
+> +	test_sparse_match git diff-files &&
+> +	test_must_be_empty sparse-checkout-out &&
+> +	test_must_be_empty sparse-index-out &&
 
--- 8< --
-Trying to invite Mentor and Org Admins from GSoC 2022 to the GSoC 2023 pro=
-gram?
+As output from checkout and index are known to be identical (that is
+one of the things that test_sparse_match does), I do not think there
+is much point checking -out from both sides.
 
-If a person was a Mentor or Org Admin for your org in 2022 then they just =
-need to log in to=C2=A0g=2Eco/gsoc=C2=A0and click on the 2023 bar which wil=
-l show them the 2023 Program Rules and Org Member agreement that they need =
-to read and agree to=2E Once they have done that they will appear in the Or=
-g Admin's dropdown of folks to add to the 2023 program=2E
+If we know "diff-files" invocation above should never send anything
+to the standard error, then checking that sparse-checkout-err is
+empty may have value, though.
 
--- >8 --
+> +	test_sparse_match git diff-files newdirectory/testfile &&
+> +	test_must_be_empty sparse-checkout-out &&
+> +	test_must_be_empty sparse-index-out &&
 
-Hope this helps=2E
+Ditto.
 
-Victoria and Hariom,
+> +	# file present on-disk with modifications
+> +	run_on_sparse ../edit-contents newdirectory/testfile &&
+> +	test_sparse_match git diff-files &&
+> +	test_sparse_match git diff-files newdirectory/testfile 
 
-Do kindly log into the portal and complete the process and let us know=2E =
-Once that's done, we'll add you as mentors to the 2023 GSoC program=2E
+We do not care what the actual output is in this case?
 
---=20
-Sivaraam
+> +'
+> +
+>  test_done
 
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
+Thanks.
