@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7355BC6FD19
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 18:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E77A0C64EC4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 19:01:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231189AbjCISxX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 13:53:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36014 "EHLO
+        id S230032AbjCITBJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 14:01:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230265AbjCISxQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 13:53:16 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82BAE41B59
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 10:53:13 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id d3-20020a17090acd0300b00237659aae8dso3080610pju.1
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 10:53:13 -0800 (PST)
+        with ESMTP id S229746AbjCITBG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 14:01:06 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0A84FAFBD
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 11:01:05 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id pl10-20020a17090b268a00b00239ed042afcso3080770pjb.4
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 11:01:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1678387992;
+        d=google.com; s=20210112; t=1678388465;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=wbR18NeScvn4Vl452du50n518lIWJB7jf+nMzKwkTqg=;
-        b=hvL7mWibuvyHqYtn+AtB7tRmuiJKVb5ZrgifofUT4OeOIO7Ecn8vDUxy0O+cMN3Vvr
-         WfCmL5MO67zAGDZtkJYHHfdiA2R4meLsQluA0QTnWoK5j/pxsH2BS/CIa8UqZDEadhLA
-         NdMUsdt7lG9HdmvSFcWOUuT3/z5NiEkBuo8s6hwKEG/peIcIYLycmAeV5IXVLUD3UwMq
-         W96cnOAdvv6g7UW6vzGPRq+ALsIUSQu+P8xm2Kzi7WjRRTZ7qSoth9Hhi9nOsiPCzIBu
-         gEVQ8VLlmLUPM3dT12jsK3Qzh3eOFIM/C//CDjYA2TycCcLkUpWvc5131gef5C5LpoRR
-         Is7A==
+        bh=R1iBhxt365qwwS0yWvW363M4KHTN9td8M3h+oNj4zWI=;
+        b=j6xcApMCQ3+MlX8gpCYfKgmN8OPZ/L8U/FHD5A4z4pfXZc9PXD9pkWSisurrOATq+C
+         IheXOBDXsNSa+EjkC5xKREfBmN4xzxH/363e7c2hGEJgTuWl8oqaLiSwPhy/3YDwMJpU
+         XI1FdmEfqKiPzvZK/xMS7LfokTS5JBCV4xAQmpzoIGz0/h9k2egt87voiXugpxhfWr94
+         Ej/589kgmKvi2MZEMrCjWJRe+LJPshg4O0wpLukNYOXPduZs4Oq6+FtYg2JRUEBXE3Rc
+         tslKRHxWNIrBaxuR+vThphJa1DSe5NL8Pfp6zG/2nkQAU+HGr233H9Sq2mBKrvfu645H
+         wowg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678387992;
+        d=1e100.net; s=20210112; t=1678388465;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=wbR18NeScvn4Vl452du50n518lIWJB7jf+nMzKwkTqg=;
-        b=woK0VPhN/oiNnXvanXkzVRLpYTAD3SWVhbt7ghPx18kQU7UgRg/W0D9kugc8QeuuOT
-         X4NuJTyn8W8MaHuPaexPG+KchscAN5lWQhD8R3jjBlw/ovqCJP/NWEaLRnaVngRPMrF3
-         5SWXvmEaC4r3u6eII1IMVrrZv/BkKk2LQ3hzwc/YF56g3SfJdjyT9YyXVAsR5GnDEJSH
-         4GRMSI/U/NxB4NmtjtBaLJtvqg6Kt/hTzt8xV1t+yTCyoC4sSHww5GttMp0kzZbVM4uz
-         +m+on10S7uxzZxe338RJ3XxnQ9dPluLewghvfR41ggCnSOrv+Xxczrjut63dw1AgHNQK
-         GeAw==
-X-Gm-Message-State: AO0yUKUMgD1dCNY1aMICZYX0/mhD5tB+fbQUHlNAbBdckL3SEuztjKRg
-        imfB/CO3e+9fVddiW9Rha17oDYRHOJnmHg==
-X-Google-Smtp-Source: AK7set/pQH2l3f1gb4e6cL8eIJ1mPhvxrXUcvL64zUifiYwdn5Nnqs7Ebd7Wfn2ni9UrImJbAwL3h9fj7ij8xQ==
+        bh=R1iBhxt365qwwS0yWvW363M4KHTN9td8M3h+oNj4zWI=;
+        b=5qxxngeCQk2PkHWbDt+3sr2WJe70VtV+81K4PFUJeJkW8zv0i1Ilx+rnz1VRFYntMH
+         oXMyiP2dOZuf9gd8GFOXS/QdCUx1vx9mWQYJNIAhlK8S/APpcoGT+FDK1KkuAR83utP2
+         OmltEaYRfbQLN+LBhCe8XAx5Pmlg94hcsQpIvtzVQGtHuka22WyaEdHeTyZ43IJGEtSe
+         RXcTGqTf8Aun2TguTtXLDgHimM2Yv5FI/FYoYahpo/YOSKvVuKfSW+Sder5cB9Nqa8gY
+         /pv81bYJ3skyoKjOVPDxfATZHoXOAlbPCDaiRDtRdIazWMRC2CkF8vZMB6w2Ic4HBfJY
+         PtYA==
+X-Gm-Message-State: AO0yUKUH/Kca4XaJ28C/lPMRg8pi7lNf83DLRieiX3xiJY7/sndG42mx
+        ZTI2N2IHECRPjrstScX8Fq3X0PBAACyzIw==
+X-Google-Smtp-Source: AK7set9V7wxsItEbsjY4B2PvSAcwh/R8a2yaLcgpWVhYCIZ8iaYTbEIU8DuZ0eWACUcydCHjCnhXZaQ3Kxtlmw==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:902:edc2:b0:19a:9834:bb2c with SMTP
- id q2-20020a170902edc200b0019a9834bb2cmr9140808plk.11.1678387992634; Thu, 09
- Mar 2023 10:53:12 -0800 (PST)
-Date:   Thu, 09 Mar 2023 10:53:10 -0800
-In-Reply-To: <patch-v7-3.9-a977b7b188f-20230308T090513Z-avarab@gmail.com>
+ (user=chooglen job=sendgmr) by 2002:a63:135f:0:b0:503:130c:aca2 with SMTP id
+ 31-20020a63135f000000b00503130caca2mr8975822pgt.5.1678388465394; Thu, 09 Mar
+ 2023 11:01:05 -0800 (PST)
+Date:   Thu, 09 Mar 2023 11:01:03 -0800
+In-Reply-To: <patch-v7-5.9-dced12a40d2-20230308T090513Z-avarab@gmail.com>
 Mime-Version: 1.0
 References: <cover-v6-0.9-00000000000-20230307T180516Z-avarab@gmail.com>
- <cover-v7-0.9-00000000000-20230308T090513Z-avarab@gmail.com> <patch-v7-3.9-a977b7b188f-20230308T090513Z-avarab@gmail.com>
-Message-ID: <kl6ledpxhi3t.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v7 3/9] config API: add and use a "git_config_get()"
- family of functions
+ <cover-v7-0.9-00000000000-20230308T090513Z-avarab@gmail.com> <patch-v7-5.9-dced12a40d2-20230308T090513Z-avarab@gmail.com>
+Message-ID: <kl6lbkl1hhqo.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v7 5/9] config API: have *_multi() return an "int" and
+ take a "dest"
 From:   Glen Choo <chooglen@google.com>
 To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
         git@vger.kernel.org
@@ -75,122 +75,47 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> diff --git a/config.h b/config.h
-> index 7606246531a..7dd62ca81bf 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -465,6 +465,9 @@ void git_configset_clear(struct config_set *cs);
->   * value in the 'dest' pointer.
->   */
-> =20
-> +RESULT_MUST_BE_USED
-> +int git_configset_get(struct config_set *cs, const char *key);
+> Have the "git_configset_get_value_multi()" function and its siblings
+> return an "int" and populate a "**dest" parameter like every other
+> git_configset_get_*()" in the API.
+>
+> As we'll take advantage of in subsequent commits, this fixes a blind
+> spot in the API where it wasn't possible to tell whether a list was
+> empty from whether a config key existed. For now we don't make use of
+> those new return values, but faithfully convert existing API users.
 
-IIRC, feedback on v4 [1] mentioned that since git_configset_get() can
-return negative values, it probably shouldn't come under this comment:
+I think the commit message is fine as-is, but perhaps you intended to
+include this paragraph from v4 [1]?
 
-  /*
-  * These functions return 1 if not found, and 0 if found, leaving the foun=
-d
-  * value in the 'dest' pointer.
-  */
+    A logical follow-up to this would be to change the various "*_get_*()"
+    functions to ferry the git_configset_get_value() return value to their
+    own callers, e.g. git_configset_get_int() returns "1" rather than
+    ferrying up the "-1" that "git_configset_get_value()" might return,
+    but that's not being done in this series
 
-I think moving it to before the comment would suffice, maybe with a
-pointer to the corresponding repo_* or git_*.
+Which is nice, but the commit message reads fine without it too.
 
-1. https://lore.kernel.org/git/xmqqv8kjpqoe.fsf@gitster.g/
+1. https://lore.kernel.org/git/patch-v4-5.9-23449ff2c4e-20230202T131155Z-av=
+arab@gmail.com/
 
-
-> @@ -485,6 +488,14 @@ int git_configset_get_pathname(struct config_set *cs=
-, const char *key, const cha
->  /* Functions for reading a repository's config */
->  struct repository;
->  void repo_config(struct repository *repo, config_fn_t fn, void *data);
-> +
-> +/**
-> + * Run only the discover part of the repo_config_get_*() functions
-> + * below, in addition to 1 if not found, returns negative values on
-> + * error (e.g. if the key itself is invalid).
-> + */
-> +RESULT_MUST_BE_USED
-> +int repo_config_get(struct repository *repo, const char *key);
->  int repo_config_get_value(struct repository *repo,
->  			  const char *key, const char **value);
->  const struct string_list *repo_config_get_value_multi(struct repository =
-*repo,
-> @@ -521,8 +532,15 @@ void git_protected_config(config_fn_t fn, void *data=
-);
->   * manner, the config API provides two functions `git_config_get_value`
->   * and `git_config_get_value_multi`. They both read values from an inter=
-nal
->   * cache generated previously from reading the config files.
-> + *
-> + * For those git_config_get*() functions that aren't documented,
-> + * consult the corresponding repo_config_get*() function's
-> + * documentation.
->   */
-
-After rereading config.h, I really appreciate comments like this that
-try to control the documentation load. We have configset*, repo* and
-git*, _and_ the comments are spread out hapzardly around config.h with
-no pointers to the corresponding comments. I think we're overdue for
-reorganization, and this sort of comment helps a lot with that.
-
-As a suggestion, it seems like the git_config_get*() functions are
-actually the better documented ones - nearly all of them have comments,
-whereas the repo_config_get_*() ones typically don't, so maybe adding
-the comment to git_config_get() instead of repo_config_get() would be
-better for this series:
-
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-  diff --git a/config.h b/config.h
-  index 7dd62ca81b..aa9bdf8df4 100644
-  --- a/config.h
-  +++ b/config.h
-  @@ -489,10 +489,10 @@ int git_configset_get_pathname(struct config_set *c=
-s, const char *key, const cha
-  struct repository;
-  void repo_config(struct repository *repo, config_fn_t fn, void *data);
-
-  -/**
-  - * Run only the discover part of the repo_config_get_*() functions
-  - * below, in addition to 1 if not found, returns negative values on
-  - * error (e.g. if the key itself is invalid).
-  +/*
-  + * These repo_config_get*() functions each correspond to to a git_config=
-_get*()
-  + * function. Consult the corresponding git_config_get*() documentation f=
-or more
-  + * information.
-    */
-  RESULT_MUST_BE_USED
-  int repo_config_get(struct repository *repo, const char *key);
-  @@ -532,12 +532,13 @@ void git_protected_config(config_fn_t fn, void *dat=
-a);
-    * manner, the config API provides two functions `git_config_get_value`
-    * and `git_config_get_value_multi`. They both read values from an inter=
-nal
-    * cache generated previously from reading the config files.
-  - *
-  - * For those git_config_get*() functions that aren't documented,
-  - * consult the corresponding repo_config_get*() function's
-  - * documentation.
-    */
-
-  +/**
-  + * Run only the discover part of the repo_config_get_*() functions
-  + * below, in addition to 1 if not found, returns negative values on
-  + * error (e.g. if the key itself is invalid).
-  + */
-  RESULT_MUST_BE_USED
-  int git_config_get(const char *key);
------ >8 --------- >8 --------- >8 --------- >8 --------- >8 ----
-
-Though in the long run, I'd prefer having the docs on the more "general"
-APIs (configset_*, repo_*) instead of the more "specific" ones (git_*).
-Perhaps you had a similar intent while making this change, but I think
-this might be better left as a cleanup.
-
-As an aside, I really appreciate your effort in sticking with the config
-interface work. I think it's grown quite unruly, and it's worth trying
-to tame it.
+>
+> Most of this is straightforward, commentary on cases that stand out:
+>
+> - To ensure that we'll properly use the return values of this function
+>   in the future we're using the "RESULT_MUST_BE_USED" macro introduced
+>   in [1].
+>
+>   As git_die_config() now has to handle this return value let's have
+>   it BUG() if it can't find the config entry. As tested for in a
+>   preceding commit we can rely on getting the config list in
+>   git_die_config().
+>
+> - The loops after getting the "list" value in "builtin/gc.c" could
+>   also make use of "unsorted_string_list_has_string()" instead of using
+>   that loop, but let's leave that for now.
+>
+> - In "versioncmp.c" we now use the return value of the functions,
+>   instead of checking if the lists are still non-NULL.
+>
+> 1. 1e8697b5c4e (submodule--helper: check repo{_submodule,}_init()
+>    return values, 2022-09-01),
