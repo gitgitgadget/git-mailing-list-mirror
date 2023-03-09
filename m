@@ -2,126 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11FECC64EC4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 23:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61607C61DA4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 23:41:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230052AbjCIXXO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 18:23:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47536 "EHLO
+        id S230116AbjCIXlD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 18:41:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229876AbjCIXXJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 18:23:09 -0500
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E46DC41081
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 15:23:07 -0800 (PST)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-536af432ee5so65741677b3.0
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 15:23:07 -0800 (PST)
+        with ESMTP id S229601AbjCIXlB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 18:41:01 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B37F9EC3
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 15:41:00 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id a2so3789395plm.4
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 15:41:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678404187;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ak54ip+q2w6WvrxC9VNHYgOMY6sekF1461S80aXUOr0=;
-        b=FkAQlLP9KbarCCA1TU4TrTHVO1Ly9A6niGSoV0lscYYrUPILt3E01gTrqjRzFpVfJz
-         mJfiQsTSIM9SnO6uDdXDv23Ztefey63ppdcfkSpKxtgipvI3ZXmO1WuogQOys3B2pVVL
-         jTh7x6qLefFIojesjZwILmkxKzpdRaoabftw2S5oCsxRdF2U1O/C+J8JWxmqqAUQq9us
-         bPDoMj4aEYiG15UXPsV7VOSn4XwVbvfPBthajrW+4FCnuu9htBMZhR5v1HyS25Z9ORfl
-         +WCsOtRwOt+cm/2mhx19mNsNF0cuJ6hirCaA6/6mWhmH2BReMtlaWwAcQ7RvAN6DBS/p
-         NQaA==
+        d=gmail.com; s=20210112; t=1678405260;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nUC4PVHhp49JwB8s9BaUUKB6gqAl0jtTqaL91BP3sak=;
+        b=QVGnbqVQVaGPO8ntWfv9KiWRU89CSHW82SAv73UKd1lA5DFVA1SlJnmoJwjdP1TTm/
+         zqFW73wWiIN6DjiaJoitEFVQblS4l78oK7nLojZbwTEStXwtANz50G65UukHFd7fPTcs
+         /iFPcud0MrPfS+NAfhUsF6kznZcTQJ1Fv6VLj0mCW3IWvKyaTSoL/joy061uWfy3BL5Y
+         AAth2/TYJzC4DTAcFyr3rlFniqR7Q1IJMfnm3j/3HEZ8SL8hOunKooFj7Dzte9ZHfRbm
+         ytg6FafpuwQRrmj8v1LSibWIW3J5xx7IbyhSfmFSnVBBlr5HkwAlS4KhU7dhLhUb+mmZ
+         15VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678404187;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ak54ip+q2w6WvrxC9VNHYgOMY6sekF1461S80aXUOr0=;
-        b=qQR/5qCsEuswmDZAppMFsjvKe5NrHtrsaAlX/U9XSyev6o691/Zith6RtPZ3qiWXvb
-         9ePTp12W093xsFHkDTaARmA9cCq9FJ6Ye/E9b7JIIUA2oRbX1EQ7eyN5pdouoTtRqT0b
-         p8NRaXjcJcL+3aanY7xjF8+04F5WoyJjQSi1Kz9MALHQKBoG1byxAI3FOdsJSK4OEP0F
-         0+DiCc0Yzr3ZJ1FQnDhSAHX/UWkeHg5gqIfjG8nb3Es409tP0sXNsy4ifwSAhVOML1iE
-         OxlZ4vsMg+VOz03D1P/TVR1K5CSPyblQsGKyakmqPA69QC++gcbI6J8+Y6hI7tYLCWfg
-         INHg==
-X-Gm-Message-State: AO0yUKWuNUOmCg23ROyLV8lBvq+Jevh62TLPxK/bThZG1GrqNNswdr+A
-        dDSLDSmV7PJXpT2E481jcejBLqOvKqUqkNK101kG/rdaPng=
-X-Google-Smtp-Source: AK7set+DUCMb+pYA2hghGVSErCgLQ1vLpPplIiBAFY+LJsGs1SY2tjci/EG3CgGGlnwNnWimbJa21iVrgLCOqQ0rEz0=
-X-Received: by 2002:a81:ae4b:0:b0:536:5557:33a8 with SMTP id
- g11-20020a81ae4b000000b00536555733a8mr15232423ywk.9.1678404187053; Thu, 09
- Mar 2023 15:23:07 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678405260;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nUC4PVHhp49JwB8s9BaUUKB6gqAl0jtTqaL91BP3sak=;
+        b=s2x5VYSTHX0DgnmenYewMbvPVPQNTu2F/ogn8CkfcJt0DfQPrWf4vd3BU3q6v8KExd
+         waKISDK0/tr5d91ydsUIc9GPlAUzgmeoUsyLGIXytwkWtSzEzbeHCnm6XxzLIKqTbnYg
+         dfHpPaD0APzM17KfLSa8Wni2NbUKn+gLVmsYPqveIRBb7JgFv8sdDm3+c5IJOA7nC7Lq
+         l7y3c5b/LyYPUq4xU7OVLFy5B+kLDmEyPIYvQE+V0Ch0fP8NqF74a9ZWxGKd6JyvL26a
+         62edL6Wpwo9I2dqJJuT5H/TWucfOjX5Hit2Ja85ZQkqlZgd5MbQsnjk6NP7sEZunkaqG
+         kNGA==
+X-Gm-Message-State: AO0yUKXMuZRr12GZI38ydMjcGfQshkM6ss5Z1seGHS2Xxfo9cgFJy51L
+        F3rQ8rQspEGet7yE7KIOL2Q=
+X-Google-Smtp-Source: AK7set/BcQw0eg9b5EcQdqU1TKRgU1DBBO2mRjA8ZqequCjgoz/mv+QJGYurpf7moDtGCo1qvIsgtg==
+X-Received: by 2002:a17:902:7841:b0:196:d05:bac7 with SMTP id e1-20020a170902784100b001960d05bac7mr18409129pln.58.1678405259678;
+        Thu, 09 Mar 2023 15:40:59 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id ki3-20020a170903068300b0019adfb96084sm185064plb.36.2023.03.09.15.40.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Mar 2023 15:40:59 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shuqi Liang <cheskaqiqi@gmail.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>, vdye@github.com,
+        git@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] t1092: add tests for `git diff-files`
+References: <20230309013314.119128-1-cheskaqiqi@gmail.com>
+        <20230309063952.42362-1-cheskaqiqi@gmail.com>
+        <20230309063952.42362-2-cheskaqiqi@gmail.com>
+        <xmqqmt4lc03s.fsf@gitster.g>
+        <CAMO4yUFs5zSafO1pGFZqBU9R58G8ENhfTh5qNayeFMRPrCa+Jg@mail.gmail.com>
+Date:   Thu, 09 Mar 2023 15:40:59 -0800
+In-Reply-To: <CAMO4yUFs5zSafO1pGFZqBU9R58G8ENhfTh5qNayeFMRPrCa+Jg@mail.gmail.com>
+        (Shuqi Liang's message of "Thu, 9 Mar 2023 18:21:04 -0500")
+Message-ID: <xmqq356d8pdg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <20230309220405.219212-1-anarcat@debian.org>
-In-Reply-To: <20230309220405.219212-1-anarcat@debian.org>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Thu, 9 Mar 2023 17:22:55 -0600
-Message-ID: <CAMP44s2=qzmF1Odc_auCaKQmTBYD53YYtaJv_LGwvoFDmTxPSA@mail.gmail.com>
-Subject: Re: [RFC PATCH] hooks--pre-push.sample: identify branch point
-To:     =?UTF-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Antoine,
+Shuqi Liang <cheskaqiqi@gmail.com> writes:
 
-On Thu, Mar 9, 2023 at 4:34=E2=80=AFPM Antoine Beaupr=C3=A9 <anarcat@debian=
-.org> wrote:
-
-> https://stackoverflow.com/a/71193866/1174784
+> I wonder if the method below is good  to test the actual output for '
+> file present on-disk with modifications' :
 >
-> There are currently a whopping twenty-five answers to that question in
-> that thread, and I'm hoping the community here will have a more
-> definitive answer to this question. I have picked the answer that uses
-> the least possible external commands, but it still uses a `tail -1`
-> which I'm somewhat unhappy about. I have thought of using
-> `--max-count` for this instead, but I understand that probably does
-> the equivalent of a `head -n` *and* it's applied before `--reverse`,
-> so there's not other way to do this.
+>     cat >expect  <<-EOF &&
+>     :100644 100644 8e27be7d6154a1f68ea9160ef0e18691d20560dc
+> 0000000000000000000000000000000000000000 M newdirectory/testfile
+>     EOF
 
-I spent an inordinate amount of time trying to answer that question a
-decade ago, and my conclusion after trying every possible combination
-is that it's simply not possible. Every solution at the end of the day
-will be a hack that can be broken with a corner case. It has already
-been discussed in this mailing list [1], and nobody found a solution.
+Hardcoding 8e27be assumes we only support SHA-1 but there is a CI
+test job that runs everything in SHA-256 mode, so it is likely
+to break if you wrote it like so.  Something along the lines of ...
 
-That's why I wrote a patch to implement a branch@{tail} helper to show
-an auxiliary ref to the beginning of the branch. I don't think I ever
-sent it to the mailing list, as my patches are rarely merged, but I'm
-sure I have it somewhere.
+	FN=newdirectory/testfile &&
+	OID=$(git hash-object $FN) &&
+	ZERO=$(test_oid zero) &&
+	echo ":100644 100644 $OID $ZERO M new $FN" >expect
 
-The other solution I thought of was adding an update-branch hook that
-could be run every time a branch is updated, and then the hook would
-update the branch tail reference [2]. As expected, that patch wasn't
-merged either.
-
-It's interesting how we keep coming back to the same problems; right
-now there's a discussion in the git-users mailing list precisely about
-the same topic: how to find the branch point, in particular so `git
-name-rev` shows the correct branch a commit belongs to (which is
-otherwise just a bad guess).
-
-FWIW my motivation at the time was to prove Mercurial users wrong
-regarding features that they have and Git doesn't, I contended that
-Mercurial named branches (aka commit labels) were not necessary, and
-everything they achieved could be achieved in Git through different
-means. That turned out to be untrue, as there is one thing Mercurial
-can do that Git can't: show the precise point a branch started from.
-
-I abandoned my efforts back then, but the topic seems inescapable, as
-that is also needed by new tools like `git range-diff`, so in my own
-tool to keep track of patch series (`git send-series`[2])I end up
-creating a ton of refs just to properly keep track of the branch
-points of my different patch series.
-
-If only Git developers acknowledged the current very real limitation,
-something could be done about it.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/CAMP44s0f7AJPQSTDgvy0U7vx8nxzq2a3vMhSr2Tcc6=
-1fetFkJA@mail.gmail.com/
-[2] https://lore.kernel.org/git/1398047016-21643-1-git-send-email-felipe.co=
-ntreras@gmail.com/
-[3] https://github.com/felipec/git-send-series
-
---=20
-Felipe Contreras
+... may have a better chance to be correct, but I didn't test ;-)
