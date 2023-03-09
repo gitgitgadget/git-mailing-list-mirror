@@ -2,78 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D873C64EC4
-	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 06:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF1ECC64EC4
+	for <git@archiver.kernel.org>; Thu,  9 Mar 2023 06:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229956AbjCIGWq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Mar 2023 01:22:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44354 "EHLO
+        id S230132AbjCIGkV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Mar 2023 01:40:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230000AbjCIGWg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Mar 2023 01:22:36 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E253219C57
-        for <git@vger.kernel.org>; Wed,  8 Mar 2023 22:22:29 -0800 (PST)
-Received: (qmail 6327 invoked by uid 109); 9 Mar 2023 06:22:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Mar 2023 06:22:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28412 invoked by uid 111); 9 Mar 2023 06:22:29 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Mar 2023 01:22:29 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 9 Mar 2023 01:22:28 -0500
-From:   Jeff King <peff@peff.net>
-To:     Sudheer D <Sudheer.D@ibm.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git diff without intermediate commits
-Message-ID: <ZAl7JI3FZdUgrvkq@coredump.intra.peff.net>
-References: <MN2PR15MB3454AE2CE41E79F2B260DDD3E1B59@MN2PR15MB3454.namprd15.prod.outlook.com>
+        with ESMTP id S229634AbjCIGkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Mar 2023 01:40:19 -0500
+Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 359684FAB6
+        for <git@vger.kernel.org>; Wed,  8 Mar 2023 22:40:09 -0800 (PST)
+Received: by mail-qt1-x836.google.com with SMTP id c3so990359qtc.8
+        for <git@vger.kernel.org>; Wed, 08 Mar 2023 22:40:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678344008;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jqEjiF2UkoW6csbCl6ZH07qTkg8s+CuVt8Y60PgqhNY=;
+        b=aiFKsNxm2izD7TLYC8+/5wRfWKNIFvkVF7eT1wwebohkvH2YT/p9lkB2hduVXLuZHn
+         hYniNPlWyC5sIA0Ufupv9XJcnypIFj6dpMevgsvZhpuftYDiFODJPXQPeLDHRMoNwCvN
+         bNi2voiHd5jJJjk+8CnIYBSV9HkxKWVVEZnON6JmhxroXDQV7NZKdQcS+B+oB0/fU+uw
+         3VHj1yefxzyQBFNPnZYQrgczC1uQwo17Vwgq3ubAEjdmk0XN+uJSPdGqfvDKkHV8dKyp
+         d+NGgG0wuXB3QWDgg8lpa+jMm4igHP5gER+mTpFORi4tCaxQwdCEnfrLVNzgrmBxrWNQ
+         lxYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678344008;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jqEjiF2UkoW6csbCl6ZH07qTkg8s+CuVt8Y60PgqhNY=;
+        b=WWT35hreK2b0KqhTRaB2hziWLANNkQwx3a90NZKL3DheTbKnZOuXimiVwd+M2aBtER
+         WV/e4vas//Kz5/ewcmh0hm3Ri/bb3ikXH9ybJb+ddsruuUrLW1GUAPD03DR81Va6nYtZ
+         czongZ/IOx6j8sIXtbIG/GTlG7YFFsJot2ADjf6GY2mQZyssycZKdXMBcWmCXY8sRXN9
+         SXIq2zAWJmXFCBhDNMr55WVjVoZgh4d+oI5yswaCR0gS7UBGCyNGI0t0tyFONZz/VDGn
+         jNwkBUTXVOmdRfe/k2cmspg9VyaNr7sBEXWwqT3Ru9ZmMfFBKhjq16katfuRSrSkst+Q
+         xmYA==
+X-Gm-Message-State: AO0yUKWcJxH5XPcseAWYRlkh0bfsEGSBS4WXMYMbRdr2K5/lS1aobHJz
+        ouH4u3SuLbpsQM1/Iohbu23GU8HPJgQ=
+X-Google-Smtp-Source: AK7set8aeC1U8arv6xk4jIWgVC1DlQyutiZ7dx2VcvyyagwLo3tMnNRSpOO3dl51lGUbfW5tVEiHNA==
+X-Received: by 2002:ac8:5814:0:b0:3b8:6a92:c8d6 with SMTP id g20-20020ac85814000000b003b86a92c8d6mr35612250qtg.60.1678344007857;
+        Wed, 08 Mar 2023 22:40:07 -0800 (PST)
+Received: from localhost.localdomain (bras-base-london142cw-grc-20-69-158-191-243.dsl.bell.ca. [69.158.191.243])
+        by smtp.googlemail.com with ESMTPSA id v25-20020ac873d9000000b003c033b23a9asm5834970qtp.12.2023.03.08.22.40.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Mar 2023 22:40:07 -0800 (PST)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, gitster@pobox.com,
+        vdye@github.com, derrickstolee@github.com
+Subject: [PATCH v4 0/2] diff-files: integrate with sparse index
+Date:   Thu,  9 Mar 2023 01:39:50 -0500
+Message-Id: <20230309063952.42362-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230309013314.119128-1-cheskaqiqi@gmail.com>
+References: <20230309013314.119128-1-cheskaqiqi@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <MN2PR15MB3454AE2CE41E79F2B260DDD3E1B59@MN2PR15MB3454.namprd15.prod.outlook.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 09, 2023 at 05:52:15AM +0000, Sudheer D wrote:
+Changes since v3:
 
-> Is there a feature readily available in git that will compare just
-> commit1 & commit2 without considering the intermediate merge commits?
+1.Use 'test_must_be_empty' instead of '! test_file_not_empty'
 
-No. A diff is comparing two endpoints, without regards to the history.
-You can choose different endpoints, but I don't think that really helps
-your case (sometimes using the merge base as the preimage, which you can
-access via the three-dot "diff commit1...commit2" can help, but I don't
-think it does in your case).
+2.remove useless 'test_file_not_empty sparse-checkout-out' 
+in 'file present on-disk with modifications'
 
-> If the answer to the above question to is 'no', if I am providing a
-> patch for the same for 'git diff' & 'git difftool' probably with a new
-> command line option, would you accept it?
+Shuqi Liang (2):
+  t1092: add tests for `git diff-files`
+  diff-files: integrate with sparse index
 
-We'd never say "yes" to accepting a patch without seeing it. I'm not
-inherently against such a feature, but I have trouble seeing how it
-could even be implemented. You are really asking for a diff between the
-state of "commit2" and "commit1 as if it had been applied on top of
-those merges". But there is no guarantee that commit1 can be applied
-there. If the merges touch some of the same lines, it won't work (and
-likewise, if you try to do clever things like subtracting out bits of
-the diff that come from the intermediate merges, it won't always work).
+ builtin/diff-files.c                     |  4 ++
+ t/perf/p2000-sparse-operations.sh        |  2 +
+ t/t1092-sparse-checkout-compatibility.sh | 52 ++++++++++++++++++++++++
+ 3 files changed, 58 insertions(+)
 
-You can try something like:
 
-  # use a detached HEAD for looking around; we go
-  # the parent of commit2 here, which should be merge_commit_n
-  git checkout --detach $commit2^
+base-commit: a38d39a4c50d1275833aba54c4dbdfce9e2e9ca1
+-- 
+2.39.0
 
-  # this may fail if commit1 conflicts with any of the merges
-  git cherry-pick $commit1
-
-  # but now we can see just the differences from commit1->commit2
-  git diff HEAD $commit2
-
-which will work sometimes, but I don't think it would be a good idea to
-build a feature around it.
-
--Peff
