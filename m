@@ -2,92 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F864C64EC4
-	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 09:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73659C64EC4
+	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 09:10:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231468AbjCJJFb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Mar 2023 04:05:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41886 "EHLO
+        id S229844AbjCJJKw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Mar 2023 04:10:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231539AbjCJJEz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2023 04:04:55 -0500
+        with ESMTP id S231586AbjCJJJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2023 04:09:56 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0879AF2484
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 01:01:25 -0800 (PST)
-Received: (qmail 19159 invoked by uid 109); 10 Mar 2023 09:01:24 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BDC110BA73
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 01:04:52 -0800 (PST)
+Received: (qmail 19168 invoked by uid 109); 10 Mar 2023 09:04:19 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 Mar 2023 09:01:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 Mar 2023 09:04:19 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10368 invoked by uid 111); 10 Mar 2023 09:01:24 -0000
+Received: (qmail 10373 invoked by uid 111); 10 Mar 2023 09:04:19 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Mar 2023 04:01:24 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Mar 2023 04:04:19 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 10 Mar 2023 04:01:24 -0500
+Date:   Fri, 10 Mar 2023 04:04:19 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] gpg-interface: lazily initialize and read the
- configuration
-Message-ID: <ZArx5GvhuG8FSB3n@coredump.intra.peff.net>
-References: <xmqqmt5orqgv.fsf@gitster.g>
- <xmqqh6vwrpce.fsf@gitster.g>
- <xmqqlel7rj9z.fsf_-_@gitster.g>
- <Y+Tr1g+HTn45rsTq@coredump.intra.peff.net>
- <xmqqwn4qokug.fsf@gitster.g>
- <xmqqpmaimvtd.fsf_-_@gitster.g>
- <Y/vf7n2+LN/3Nddi@coredump.intra.peff.net>
- <230308.86fsafzllu.gmgdl@evledraar.gmail.com>
- <ZAlSUYlDn7/9d2LQ@coredump.intra.peff.net>
- <xmqq1qlxdfh4.fsf@gitster.g>
+To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc:     Paul Smith <paul@mad-scientist.net>, git@vger.kernel.org
+Subject: Re: Fetching everything in another bare repo
+Message-ID: <ZArykwkX827/Qpi3@coredump.intra.peff.net>
+References: <6215dde710670fdf0da3ba0549429eaa32db257b.camel@mad-scientist.net>
+ <ZAl/lQMhaQ54BDXN@coredump.intra.peff.net>
+ <64282d0f99df59085a18585846d2086a652677e2.camel@mad-scientist.net>
+ <ZAn80gnIFLOF4Gco@coredump.intra.peff.net>
+ <20230309175718.j5c2dbx3asphiqhu@meerkat.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq1qlxdfh4.fsf@gitster.g>
+In-Reply-To: <20230309175718.j5c2dbx3asphiqhu@meerkat.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 09, 2023 at 09:03:35AM -0800, Junio C Hamano wrote:
+On Thu, Mar 09, 2023 at 12:57:18PM -0500, Konstantin Ryabitsev wrote:
 
-> Jeff King <peff@peff.net> writes:
+> > I will also say that while I implemented this extension a while back, it
+> > never actually saw production use for my intended case. So I think it's
+> > pretty good (and certainly safer than nothing), but it's not thoroughly
+> > tested in the wild.
 > 
-> > On Wed, Mar 08, 2023 at 09:34:15AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> >
-> >> As added review: This is the same patch diff as I sent on February 9th:
-> >> https://lore.kernel.org/git/patch-1.2-d93c160dcbc-20230209T142225Z-avarab@gmail.com/;
-> >> my local range-diff to my previously submitted topic & next being:
-> >> [...]
-> >> So this LGTM.
-> >
-> > Thanks, and sorry for stealing your patch. I forgot that yours existed
-> > in that thread (and obviously I'm happy if either is applied).
-> 
-> I am not Ævar but the last time this happened what he said was that
-> he did so not because he wanted to complain that somebody else stole
-> his thunder but because he wanted to show his agreement to the patch
-> by pointing at an indenendent invention of the same thing.
-> 
-> I personally do not appreciate that tactics, exactly because it can
-> easily be misinterpreted as a complaint.  Saying "I read the patch
-> and I think it is exactly how I would solve the problem, too.
-> Looking good" would have been much safer in that regard and conveyed
-> the same agreement.
+> We use it in grokmirror for objstore repositories [1] (the super-parents of
+> all forks), as a precautionary measure against a sysadmin running any kind of
+> manual operation that may result in loose objects being deleted. I do believe
+> it works well for that purpose.
 
-I think you are being too hard on Ævar here. While I agree it can be
-interpreted as passive aggressive sniping, I'd be a little frustrated,
-too, if I had written a patch and then somebody submitted the exact same
-thing later. (Hence my response that it was "oops" and not an
-intentional slight).
-
-If two people are independently doing the same work, we're wasting
-effort, and it's worth thinking about how we can avoid that. In this
-particular case, my opinion is that Ævar's original patch was OK by
-itself, but it was coupled with an unwelcome change. Submitting the
-cleanup to the now-empty callbacks on their own would have had a greater
-chance of success. (As a maintainer, you can also split up patches after
-the fact, but there is cognitive load in doing so. Minimizing that load
-is something submitters can do to help the project scale).
+Ah, cool, thanks for letting us know. That's pretty much the same case I
+wrote it for (GitHub's shared-object-store fork repositories), but
+deployment got hung up on compatibility issues (since we used libgit2,
+as well). And then I never got around to it, and nobody seems to have
+cared too much. It's a nice safety to have, but I don't recall a single
+instance of an unintended naive gc ever destroying things. :)
 
 -Peff
