@@ -2,133 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69C96C64EC4
-	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 16:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02481C64EC4
+	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 17:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231336AbjCJQtI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Mar 2023 11:49:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55278 "EHLO
+        id S231868AbjCJRG1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Mar 2023 12:06:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231699AbjCJQr5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2023 11:47:57 -0500
-X-Greylist: delayed 614 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 10 Mar 2023 08:45:47 PST
-Received: from marcos.anarc.at (marcos.anarc.at [64.18.183.94])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31CBE1912C
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 08:45:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=debian.org;
-        s=marcos-debian.anarcat.user; t=1678465713;
-        bh=nVJw3wMoyy08AxLVxJ1ewoL5sXfqOnnbeN+TkIOw1BA=;
-        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-        b=rgf8bSIZNV50mDHi1h85DDOU/4jBYjlolg2/vbqufg9KcZ1tW53Iibv44DcrzPC90
-         2y2TcgS7zHTt4AI69r7O1KSPOod5NjpGIVXDm7V5mmBufBeQEC9VjW1ymCecWRkCRs
-         etFO+laC1rVPFk7bEQnFs6yVkaf/yVjiM5Ge0uUEF72WBe/OLfSxuBQVVLB03muU5s
-         DxrtYbQMkYrsJlnTxaY3kv7LXcYMUnxDlVfUO9vGx/JZT5Xiept3+dYveIdRuSEHoB
-         Q8xMh90jndzI5lqEVux8Ai4WT3p7bBKCvhy9b6mjd+47tfFxrkiyAqFSL8p5cRFrzH
-         UYe2BAdLFJhHg==
-Received: by marcos.anarc.at (Postfix, from userid 1000)
-        id D948910E5DF; Fri, 10 Mar 2023 11:28:33 -0500 (EST)
-Received: by angela.localdomain (Postfix, from userid 1000)
-        id 5AD59DF90E; Fri, 10 Mar 2023 11:28:33 -0500 (EST)
-From:   =?utf-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] hooks--pre-push.sample: identify branch point
-In-Reply-To: <CAMP44s2=qzmF1Odc_auCaKQmTBYD53YYtaJv_LGwvoFDmTxPSA@mail.gmail.com>
-Organization: Debian
-References: <20230309220405.219212-1-anarcat@debian.org>
- <CAMP44s2=qzmF1Odc_auCaKQmTBYD53YYtaJv_LGwvoFDmTxPSA@mail.gmail.com>
-Date:   Fri, 10 Mar 2023 11:28:33 -0500
-Message-ID: <87356ctvta.fsf@angela.anarc.at>
+        with ESMTP id S231892AbjCJRF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2023 12:05:58 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 584A912B965
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 09:04:23 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id a2so6278063plm.4
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 09:04:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678467863;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LVGxlL6nPuz1fU8ZvoMteTDnNieGct/H+mnnUJhOLk4=;
+        b=hXTQPL/uIqzQApTzJN48mJJIM3GqG+vlMtkncA/MAUvpT6v1SnB3NMCa8O/Rk3LhgA
+         L7I3YU4VyixvJnhgFJas/mp3xishZf//EyyS+Z+LP8beSfrBI4r9oVvuQTfe6D1oslOs
+         WB790K9bvGh8KaNK2DViwX+oJ9iP2TpvWXa/WlOhO4GE3ZG+U0Pqv5FL+3AjiwAQvg2n
+         ty2AIDIDmv045Lm1WCjy8cvsMMunj4OdKA3zDMlndBYUeAJ/HYFd+cAHc+skKCU9gTj5
+         Kg7kFr1fYVn08f6JtGuQb5uQalWM1zwDti2hoSGideK2/R8hlbz/XVmrQ2kuAJQ3V7g9
+         Vg0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678467863;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LVGxlL6nPuz1fU8ZvoMteTDnNieGct/H+mnnUJhOLk4=;
+        b=O3zv5xy7ZazqM93hALE/p9ZvDLXsxzB0x7vmy7F9nMORmP4FeQJvN1Hm0oKqgMgzvD
+         6iS9G+9GtLDhADo3FzpA6bG3sFmpeo47LtCx4KJ0WnEII8VUbSkyaWSvp6AZFcPoQ/UP
+         znsF9Yb1s5wOpqJCJN5wdTDhnW+ppP79/xl6V3H217+edeU+/XAclOd2l4My5FkIj4Bw
+         Jy6pE1oU+ifvRQKVQ+e7lIuCtSyRQQjtj4XbECa6COy5kBvL0zNDq6tI1H/Vjgb1DmNX
+         XnqDnMgsxq6QALXi96VCPTALrmVSgXHIFShjzSIyPxVtmmYdH2ck978dVjyX/hQ6SPq5
+         MwYA==
+X-Gm-Message-State: AO0yUKXPZCBiqCozoudEO9Kb0DCbLCbBWDr+HzJVmHXZ2nqHpiKo5HO3
+        vNUfwNb7FXP3J6pZ811pdpE=
+X-Google-Smtp-Source: AK7set+otJ8krB8LefEgaayz4LDoSMX/IArbgbvITOEhs7Q9C6YyKVeqX0s5J62mhYEEZyoyOKOi7w==
+X-Received: by 2002:a05:6a20:3d05:b0:cc:5917:c4e3 with SMTP id y5-20020a056a203d0500b000cc5917c4e3mr31529473pzi.48.1678467862695;
+        Fri, 10 Mar 2023 09:04:22 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id g4-20020a62e304000000b005a8173829d5sm75281pfh.66.2023.03.10.09.04.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Mar 2023 09:04:22 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Alejandro Colomar <alx.manpages@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/5] diff: add --default-prefix option
+References: <ZAl3bHB9zxjLITgf@coredump.intra.peff.net>
+        <ZAl4MkWVV8fr+3fO@coredump.intra.peff.net>
+        <xmqq5yb9q42e.fsf@gitster.g>
+        <ZAr7+zW+pkOXoIfL@coredump.intra.peff.net>
+Date:   Fri, 10 Mar 2023 09:04:21 -0800
+In-Reply-To: <ZAr7+zW+pkOXoIfL@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 10 Mar 2023 04:44:27 -0500")
+Message-ID: <xmqqcz5g7d2i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023-03-09 17:22:55, Felipe Contreras wrote:
-> Hi Antoine,
+Jeff King <peff@peff.net> writes:
+
+> While it is not _quite_ the same thing to say "use prefixes a/ and b/"
+> versus "countermand any config and use the default", it is close enough
+> that I am tempted to say this patch should be scrapped. I mostly just
+> wanted to have a way to counter format.noprefix, if we are going to
+> endorse it as a concept (whether by adding it, or saying "no, respecting
+> diff.noprefix is not a bug").
 >
-> On Thu, Mar 9, 2023 at 4:34=E2=80=AFPM Antoine Beaupr=C3=A9 <anarcat@debi=
-an.org> wrote:
->
->> https://stackoverflow.com/a/71193866/1174784
->>
->> There are currently a whopping twenty-five answers to that question in
->> that thread, and I'm hoping the community here will have a more
->> definitive answer to this question. I have picked the answer that uses
->> the least possible external commands, but it still uses a `tail -1`
->> which I'm somewhat unhappy about. I have thought of using
->> `--max-count` for this instead, but I understand that probably does
->> the equivalent of a `head -n` *and* it's applied before `--reverse`,
->> so there's not other way to do this.
->
-> I spent an inordinate amount of time trying to answer that question a
-> decade ago, and my conclusion after trying every possible combination
-> is that it's simply not possible. Every solution at the end of the day
-> will be a hack that can be broken with a corner case. It has already
-> been discussed in this mailing list [1], and nobody found a solution.
+> (If we do scrap it, I'd probably fold the extra tests into the previous
+> commit, but using --src-prefix, etc).
 
-That's what I have gathered from reading through that Stack Overflow
-thread as well.
+I would very much like to keep this one; if we can find a shorter
+name that would be even sweeter.
 
-> That's why I wrote a patch to implement a branch@{tail} helper to show
-> an auxiliary ref to the beginning of the branch. I don't think I ever
-> sent it to the mailing list, as my patches are rarely merged, but I'm
-> sure I have it somewhere.
+I am wondering if we can keep the current behaviour instead and send
+a message: "if you do not want your everyday diff not to have
+prefixes, fine, go set diff.noprefix, but if you do not like that
+format-patch also gives a no-prefix patches with that configuration,
+or at times you may want your 'git show' to show the standard
+prefix, you can countermand your diff.noprefix configuration".
 
-That would be interesting for the world to see, I bet, if only as a
-future reference to avoid other people trying to bang their head on the
-problem the same way. :)
-
-> The other solution I thought of was adding an update-branch hook that
-> could be run every time a branch is updated, and then the hook would
-> update the branch tail reference [2]. As expected, that patch wasn't
-> merged either.
-
-That seems like a major change in workflow though, adding basically a
-new ref for each branch, right?
-
-> It's interesting how we keep coming back to the same problems; right
-> now there's a discussion in the git-users mailing list precisely about
-> the same topic: how to find the branch point, in particular so `git
-> name-rev` shows the correct branch a commit belongs to (which is
-> otherwise just a bad guess).
-
-Well, it's a need people certainly seem to have. :)
-
-I feel we are letting perfection be the enemy of good here. No, there
-are no solutions that work for the general case, you always find a
-corner case that breaks it. But what if we could have a simple solution
-that works for *most* cases and then *fails* gracefully for the corner
-cases?
-
-In the case of the pre-push hook, specifically, we don't absolutely need
-something completely rock solid; if your branches are a mess of merges
-and cherry-picks and cross merges, yes, it might get confused but it's
-not like it's going to lose a commit or something. The worse case is
-that it's going to miss *checking* a commit and for this case it's not
-satisfying, but it's also not data loss.
-
-> FWIW my motivation at the time was to prove Mercurial users wrong
-> regarding features that they have and Git doesn't, I contended that
-> Mercurial named branches (aka commit labels) were not necessary, and
-> everything they achieved could be achieved in Git through different
-> means. That turned out to be untrue, as there is one thing Mercurial
-> can do that Git can't: show the precise point a branch started from.
-
-I have given up on Mercurial a long, long time ago. It's extremely rare
-that I find myself in such a situation and typically, there various
-hacks that answer the need without going into too much complexity.
-
-The only reason I raise the issue here is because I wasn't satisfied
-hardcoding "master" (or main, for that matter) in the hook because I
-wanted a more generic answer. I suspect many people could be perfectly
-fine with hardcoding that in their hook or, failing that, with the
-incomplete heuristic I am proposing.
-
-Or they could even have a per-branch .git/config entry to map the branch
-to an upstream branch, and *that* could even "default" to "main" or
-whatever that setting is called now. :)
-
-A.
