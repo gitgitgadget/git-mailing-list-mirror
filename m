@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0E02C64EC4
-	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 17:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1532DC64EC4
+	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 17:21:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231493AbjCJRV0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Mar 2023 12:21:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48178 "EHLO
+        id S231314AbjCJRV3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Mar 2023 12:21:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231192AbjCJRVN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2023 12:21:13 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D795D116B89
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 09:21:10 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id c18so3877450wmr.3
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 09:21:10 -0800 (PST)
+        with ESMTP id S231255AbjCJRVO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2023 12:21:14 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75C2810EA84
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 09:21:11 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id j19-20020a05600c191300b003eb3e1eb0caso6582252wmq.1
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 09:21:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678468869;
+        d=gmail.com; s=20210112; t=1678468870;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XZkfvLFEJwh7up1eEA47fYKyO/Y43htW5USVg4bs6dY=;
-        b=Fccf6zuOi11SU4VjNF7jz+wcKU4hLZr1w2qVmUtw+WN24XNh4Xgm9jnPRNLNIy5TTF
-         V0TvtrSqtBRaezmJFuyvPsFLnTl/krZLpibtF+yHvxfBzDdWjoCgbddC5kRmtDNTcEmh
-         wDPpwVFFXQXVYDuOcq7Q0JPGjGIWG0cq/VwZVNV34ntgTWgoyAHLNyCslqEWalamhoB8
-         f+Y18Xa02yKTlJznhpQsPcNf4wervrd663Mb0QoLQMMfwSoy491BGLDfurSAl8US5w0K
-         FJ7LPc2WYMDCbevJwsEqZj6khwD5K8kK7IUo1TQ3WdIANseKx4M/teKZU/bJbi4SdshR
-         yb/A==
+        bh=ue5VGo0D1r706cA0OPn9ka9nSMs1EPankJpc5Rb5XZk=;
+        b=XNq88Ouq+BmjBkCJOalM/+l/o7D0KfvFpaJ3vw2AzKX8s+iSZznhFyvX61aewN9eK8
+         j1LEuOSKGxDlU5KMe60qQIW57wWg7/6JJXA9cmPEkll+ttgbSgb8gPm3X+V33DC6Pu/Q
+         Rivk6h7i2FNNB4ojkfimImvnAjVcxjEh4Cqnynv4wVVkE0Zfgie+qxex+wqTfAVJZc17
+         EOsYcrWkDj23EDWbHgwQr89e97R8Qrj8uss34D/u1e/JUTY+RZ/IwwpjdVS/5rJRMzbZ
+         CPYCR26PKNZzxhlLdemYkso72MnYNGkmq/ulvC5+oWcpu30+dp4UNawc7QLvjSbeRDm9
+         i3AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678468869;
+        d=1e100.net; s=20210112; t=1678468870;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XZkfvLFEJwh7up1eEA47fYKyO/Y43htW5USVg4bs6dY=;
-        b=v/Zcq5/la2uTZJTirhm0A8tJuCZnMdIX50tGnoyI0Lc3ASp/sGeRt0UdESwZeY0fk7
-         pZToEFA6RgN5bpPWuT9JiFhA1Z/y2ZyPw/r6RMuEv4oWsQGzPF3P8tr3op8KXf5bU/iE
-         /+KO9nig67nCWKfREsAlg8I1ZV93MvOMhN7ECWLCArzFbKCQWFxLdXTf7mB2HkRefZeV
-         brqnnfuYy09JSec6t2tkPiiG8JswiSlr7yjNmPzxrm+lLG5f3DJW18iwOymItEWH3yX8
-         FCDIY0IeLJM5XKGsuG9N+feJoO5KlKFZFvtafxX5alcio3o5pab3yui2sFR5x1Wxipjr
-         fX8A==
-X-Gm-Message-State: AO0yUKVo8Le15SXP+8Gip7M65Hl+q/0hV1VTdJjDm3dVx5RTswoJipaX
-        7Upn7bPgdPMJi5UamrO2ZOglhywnKTs=
-X-Google-Smtp-Source: AK7set9vrwLRHaOP/jY5qCt/hVRTbeerc7nOStVIw+a8jEBfKv/xLegqeTwejSgKoetapTIryeQpUA==
-X-Received: by 2002:a1c:4c15:0:b0:3df:9858:c032 with SMTP id z21-20020a1c4c15000000b003df9858c032mr1899156wmf.7.1678468869206;
+        bh=ue5VGo0D1r706cA0OPn9ka9nSMs1EPankJpc5Rb5XZk=;
+        b=1cqTLMYD6VJU0a/O2IDqtEtgPeS1z9cwhLH/8KaNDAT7nex4d6QFbbYohV5JAtJAVf
+         dEMyNXNM1pJlG7Y963ykqSWtP9ceKYZbbkqwJh6C1QiVgtSLP7dEAxigpxrSbiaW2bvH
+         GFkg0dv/ogGUnmXCZjBXePpxra8sBRxdWSOkdHXUg0TFpkSI5DaPXFGlh8sEDg4lRrFf
+         afk/+A5ikgTc4WgHlIiXze/BqBe6+yqCUsfLqZ8aLFLlvHARXtHanFXTWbslqaPhcTNa
+         mugZqWZTFAyMtXZkOfaBK/v3SkD5Xm/SnY8Tfl6mVn4QZGxIyUIrxhGovAnfJ/7iPF8U
+         qMNw==
+X-Gm-Message-State: AO0yUKXbrUswzCbPC2QCxIdLqnBdmjYk7IhdN7T83VKiDCC1OLvvC6zH
+        BJmxm+izFGkNGf2FcXbNyXjts0be4W8=
+X-Google-Smtp-Source: AK7set9ncDBFU4u1vRiUIPexyaV8FJeGfZyna0+ltwmypTe5Su09/jNZrrAE++ABJcXRPQYZ/jm7HQ==
+X-Received: by 2002:a05:600c:1d14:b0:3eb:376e:2ba5 with SMTP id l20-20020a05600c1d1400b003eb376e2ba5mr3702362wms.3.1678468869804;
         Fri, 10 Mar 2023 09:21:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 16-20020a05600c029000b003dec22de1b1sm476002wmk.10.2023.03.10.09.21.08
+        by smtp.gmail.com with ESMTPSA id n14-20020a05600c4f8e00b003eb0d6f48f3sm533771wmq.27.2023.03.10.09.21.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Mar 2023 09:21:08 -0800 (PST)
-Message-Id: <34dffd836b1475967593e68e5f8697b260c03d16.1678468864.git.gitgitgadget@gmail.com>
+        Fri, 10 Mar 2023 09:21:09 -0800 (PST)
+Message-Id: <9831c23eadbcd990ca09628e5846056e4879ee3d.1678468864.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1489.v2.git.1678468863.gitgitgadget@gmail.com>
 References: <pull.1489.git.1678111598.gitgitgadget@gmail.com>
         <pull.1489.v2.git.1678468863.gitgitgadget@gmail.com>
-From:   "Taylor Blau via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 10 Mar 2023 17:21:00 +0000
-Subject: [PATCH v2 5/8] commit-graph: introduce `ensure_generations_valid()`
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 10 Mar 2023 17:21:01 +0000
+Subject: [PATCH v2 6/8] commit-reach: implement ahead_behind() logic
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,83 +64,248 @@ To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, vdye@github.com,
         Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Taylor Blau <me@ttaylorr.com>
+From: Derrick Stolee <derrickstolee@github.com>
 
-Use the just-introduced compute_reachable_generation_numbers_1() to
-implement a function which dynamically computes topological levels (or
-corrected commit dates) for out-of-graph commits.
+Fully implement the commit-counting logic required to determine
+ahead/behind counts for a batch of commit pairs. This is a new library
+method within commit-reach.h. This method will be linked to the
+for-each-ref builtin in the next change.
 
-This will be useful for the ahead-behind algorithm we are about to
-introduce, which needs accurate topological levels on _all_ commits
-reachable from the tips in order to avoid over-counting.
+The interface for ahead_behind() uses two arrays. The first array of
+commits contains the list of all starting points for the walk. This
+includes all tip commits _and_ base commits. The second array, using the
+new ahead_behind_count struct, indicates which commits from that initial
+array form the base/tip pair for the ahead/behind count it will store.
 
-Co-authored-by: Derrick Stolee <derrickstolee@github.com>
+This implementation of ahead_behind() allows multiple bases, if desired.
+Even with multiple bases, there is only one commit walk used for
+counting the ahead/behind values, saving time when the base/tip ranges
+overlap significantly.
+
+This interface for ahead_behind() also makes it very easy to call
+ensure_generations_valid() on the entire array of bases and tips. This
+call is necessary because it is critical that the walk that counts
+ahead/behind values never walks a commit more than once. Without
+generation numbers on every commit, there is a possibility that a
+commit date skew could cause the walk to revisit a commit and then
+double-count it. For this reason, it is strongly recommended that 'git
+ahead-behind' is only run in a repository with a commit-graph file that
+covers most of the reachable commits, storing precomputed generation
+numbers. If no commit-graph exists, this walk will be much slower as it
+must walk all reachable commits in ensure_generations_valid() before
+performing the counting logic.
+
+It is possible to detect if generation numbers are available at run time
+and redirect the implementation to another algorithm that does not
+require this property. However, that implementation requires a commit
+walk per base/tip pair _and_ can be slower due to the commit date
+heuristics required. Such an implementation could be considered in the
+future if there is a reason to include it, but most Git hosts should
+already be generating a commit-graph file as part of repository
+maintenance. Most Git clients should also be generating commit-graph
+files as part of background maintenance or automatic GCs.
+
+Now, let's discuss the ahead/behind counting algorithm.
+
+Each commit in the input commit list is associated with a bit position
+indicating "the ith commit can reach this commit". Each of these commits
+is associated with a bitmap with its position flipped on and then
+placed in a queue for walking commit history. We walk commits by popping
+the commit with maximum generation number out of the queue, guaranteeing
+that we will never walk a child of that commit in any future steps.
+
+As we walk, we load the bitmap for the current commit and perform two
+main steps. The _second_ step examines each parent of the current commit
+and adds the current commit's bitmap bits to each parent's bitmap. (We
+create a new bitmap for the parent if this is our first time seeing that
+parent.) After adding the bits to the parent's bitmap, the parent is
+added to the walk queue. Due to this passing of bits to parents, the
+current commit has a guarantee that the ith bit is enabled on its bitmap
+if and only if the ith commit can reach the current commit.
+
+The first step of the walk is to examine the bitmask on the current
+commit and decide which ranges the commit is in or not. Due to the "bit
+pushing" in the second step, we have a guarantee that the ith bit of the
+current commit's bitmap is on if and only if the ith starting commit can
+reach it. For each ahead_behind_count struct, check the base_index and
+tip_index to see if those bits are enabled on the current bitmap. If
+exactly one bit is enabled, then increment the corresponding 'ahead' or
+'behind' count.  This increment is the reason we _absolutely need_ to
+walk commits at most once.
+
+The only subtle thing to do with this walk is to check to see if a
+parent has all bits on in its bitmap, in which case it becomes "stale"
+and is marked with the STALE bit. This allows queue_has_nonstale() to be
+the terminating condition of the walk, which greatly reduces the number
+of commits walked if all of the commits are nearby in history. It avoids
+walking a large number of common commits when there is a deep history.
+We also use the helper method insert_no_dup() to add commits to the
+priority queue without adding them multiple times. This uses the PARENT2
+flag. Thus, we must clear both the STALE and PARENT2 bits of all
+commits, in case ahead_behind() is called multiple times in the same
+process.
+
+Co-authored-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- commit-graph.c | 29 +++++++++++++++++++++++++++++
- commit-graph.h |  7 +++++++
- 2 files changed, 36 insertions(+)
+ commit-reach.c | 96 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ commit-reach.h | 30 ++++++++++++++++
+ 2 files changed, 126 insertions(+)
 
-diff --git a/commit-graph.c b/commit-graph.c
-index b4da4e05067..7311d62a110 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1609,6 +1609,35 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 	stop_progress(&ctx->progress);
- }
+diff --git a/commit-reach.c b/commit-reach.c
+index 2e33c599a82..338ca8084b2 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -8,6 +8,7 @@
+ #include "revision.h"
+ #include "tag.h"
+ #include "commit-reach.h"
++#include "ewah/ewok.h"
  
-+static void set_generation_in_graph_data(struct commit *c, timestamp_t t,
-+					 void *data)
+ /* Remember to update object flag allocation in object.h */
+ #define PARENT1		(1u<<16)
+@@ -941,3 +942,98 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
+ 
+ 	return found_commits;
+ }
++
++define_commit_slab(bit_arrays, struct bitmap *);
++static struct bit_arrays bit_arrays;
++
++static void insert_no_dup(struct prio_queue *queue, struct commit *c)
 +{
-+	commit_graph_data_at(c)->generation = t;
++	if (c->object.flags & PARENT2)
++		return;
++	prio_queue_put(queue, c);
++	c->object.flags |= PARENT2;
 +}
 +
-+/*
-+ * After this method, all commits reachable from those in the given
-+ * list will have non-zero, non-infinite generation numbers.
-+ */
-+void ensure_generations_valid(struct commit **commits, size_t nr)
++static struct bitmap *init_bit_array(struct commit *c, int width)
 +{
-+	struct repository *r = the_repository;
-+	int generation_version = get_configured_generation_version(r);
-+	struct packed_commit_list list = {
-+		.list = commits,
-+		.alloc = nr,
-+		.nr = nr,
-+	};
-+	struct compute_generation_info info = {
-+		.r = r,
-+		.commits = &list,
-+		.get_generation = get_generation_from_graph_data,
-+		.set_generation = set_generation_in_graph_data,
-+	};
-+
-+	compute_reachable_generation_numbers_1(&info, generation_version);
++	struct bitmap **bitmap = bit_arrays_at(&bit_arrays, c);
++	if (!*bitmap)
++		*bitmap = bitmap_word_alloc(width);
++	return *bitmap;
 +}
 +
- static void trace2_bloom_filter_write_statistics(struct write_commit_graph_context *ctx)
- {
- 	trace2_data_intmax("commit-graph", ctx->r, "filter-computed",
-diff --git a/commit-graph.h b/commit-graph.h
-index 37faee6b66d..a529c62b518 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -190,4 +190,11 @@ struct commit_graph_data {
-  */
- timestamp_t commit_graph_generation(const struct commit *);
- uint32_t commit_graph_position(const struct commit *);
++static void free_bit_array(struct commit *c)
++{
++	struct bitmap **bitmap = bit_arrays_at(&bit_arrays, c);
++	if (!*bitmap)
++		return;
++	bitmap_free(*bitmap);
++	*bitmap = NULL;
++}
++
++void ahead_behind(struct commit **commits, size_t commits_nr,
++		  struct ahead_behind_count *counts, size_t counts_nr)
++{
++	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
++	size_t width = (commits_nr + BITS_IN_EWORD - 1) / BITS_IN_EWORD;
++	size_t i;
++
++	if (!commits_nr || !counts_nr)
++		return;
++
++	for (i = 0; i < counts_nr; i++) {
++		counts[i].ahead = 0;
++		counts[i].behind = 0;
++	}
++
++	ensure_generations_valid(commits, commits_nr);
++
++	init_bit_arrays(&bit_arrays);
++
++	for (i = 0; i < commits_nr; i++) {
++		struct commit *c = commits[i];
++		struct bitmap *bitmap = init_bit_array(c, width);
++
++		bitmap_set(bitmap, i);
++		insert_no_dup(&queue, c);
++	}
++
++	while (queue_has_nonstale(&queue)) {
++		struct commit *c = prio_queue_get(&queue);
++		struct commit_list *p;
++		struct bitmap *bitmap_c = init_bit_array(c, width);
++
++		for (i = 0; i < counts_nr; i++) {
++			int reach_from_tip = !!bitmap_get(bitmap_c, counts[i].tip_index);
++			int reach_from_base = !!bitmap_get(bitmap_c, counts[i].base_index);
++
++			if (reach_from_tip ^ reach_from_base) {
++				if (reach_from_base)
++					counts[i].behind++;
++				else
++					counts[i].ahead++;
++			}
++		}
++
++		for (p = c->parents; p; p = p->next) {
++			struct bitmap *bitmap_p;
++
++			parse_commit(p->item);
++
++			bitmap_p = init_bit_array(p->item, width);
++			bitmap_or(bitmap_p, bitmap_c);
++
++			if (bitmap_popcount(bitmap_p) == commits_nr)
++				p->item->object.flags |= STALE;
++
++			insert_no_dup(&queue, p->item);
++		}
++
++		free_bit_array(c);
++	}
++
++	/* STALE is used here, PARENT2 is used by insert_no_dup(). */
++	repo_clear_commit_marks(the_repository, PARENT2 | STALE);
++	clear_bit_arrays(&bit_arrays);
++	clear_prio_queue(&queue);
++}
+diff --git a/commit-reach.h b/commit-reach.h
+index 148b56fea50..f871b5dcce9 100644
+--- a/commit-reach.h
++++ b/commit-reach.h
+@@ -104,4 +104,34 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
+ 					 struct commit **to, int nr_to,
+ 					 unsigned int reachable_flag);
+ 
++struct ahead_behind_count {
++	/**
++	 * As input, the *_index members indicate which positions in
++	 * the 'tips' array correspond to the tip and base of this
++	 * comparison.
++	 */
++	size_t tip_index;
++	size_t base_index;
++
++	/**
++	 * These values store the computed counts for each side of the
++	 * symmetric difference:
++	 *
++	 * 'ahead' stores the number of commits reachable from the tip
++	 * and not reachable from the base.
++	 *
++	 * 'behind' stores the number of commits reachable from the base
++	 * and not reachable from the tip.
++	 */
++	unsigned int ahead;
++	unsigned int behind;
++};
 +
 +/*
-+ * After this method, all commits reachable from those in the given
-+ * list will have non-zero, non-infinite generation numbers.
++ * Given an array of commits and an array of ahead_behind_count pairs,
++ * compute the ahead/behind counts for each pair.
 + */
-+void ensure_generations_valid(struct commit **commits, size_t nr);
++void ahead_behind(struct commit **commits, size_t commits_nr,
++		  struct ahead_behind_count *counts, size_t counts_nr);
 +
  #endif
 -- 
