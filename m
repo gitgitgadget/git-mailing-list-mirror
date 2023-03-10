@@ -2,135 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41543C6FA99
-	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 21:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78EAFC6FD19
+	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 22:01:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232198AbjCJVtV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Mar 2023 16:49:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43278 "EHLO
+        id S232185AbjCJWBE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Mar 2023 17:01:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231864AbjCJVsx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2023 16:48:53 -0500
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1C2A14DA2D
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 13:45:59 -0800 (PST)
-Received: by mail-ot1-x32c.google.com with SMTP id a4-20020a056830008400b0069432af1380so3686996oto.13
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 13:45:59 -0800 (PST)
+        with ESMTP id S232053AbjCJWAp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2023 17:00:45 -0500
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85AF786BD
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 13:57:37 -0800 (PST)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-540cb2fb5b9so19307757b3.3
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 13:57:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678484723;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wtF0uqF8Lxp6HgvZFD9B2CTHDTfQGAcVmyEnYlQFxgg=;
-        b=L83pumvHM7JNNyOboVnk5lj7F1pro4bAbLDNWKmtpls7esOkN3HNA4xsBbQYLduSll
-         oJomQScA0yC4CQ8Vrvo1LeFjeJvg3wo6Uzhe+3IdnZ8EDEyki3tj8M+i7DXOCiB8bQqQ
-         I2vzCFNfuxs9IqK/HBn/ETSoUe4j3J1hQAXT/3h4wKbjr6mjT4sxpkMYMGcsjqdt3ou/
-         XrUpS+tXSNtEUDgfaBiY6V22tq+yWxeqENpMr4QEKeHCJU/tAW43ZuSDZpyedICRfZB7
-         blYVjhRxERBhRpQnQkrEyaD+Ep/SMCqzsfpaFMjRjMlNtKBfSbHlzjj1EeysNsC3d56e
-         VSfg==
+        d=gmail.com; s=20210112; t=1678485456;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=RKEViFEpVhR3I93acNz9GdtU/xskLIERNDvZ6oJiggM=;
+        b=KwXBYDkFIQ0vnqbUk2gU02nhpjSzHlxyDSPrSY6haS+bCxhk152ZEmV4IvNYILEssZ
+         b4xdQiC0mmIYBR93NCjLH8ew9zHwgMIzxjEa+EhfTYxTJAt1P6FeWunXuIUcOKVciXDg
+         Gu6Z5NOqCeQ5DhGbl73+oRQMKVYcafBdfDfdQX1DIjatsfgZRx4I2rysvi+biBCeM70B
+         7ZOMq480rU+5V5C0f/bSqLgx36lyp0QX9vtT+s/e04A7luV/1DpQE9IQeGG76c99XIf7
+         VJ3dNoSkLWtaJrC6dViortEp3pf61XthPxPNlAhJCFbwJQopH6OOAh5L1k4PI03Ha/9x
+         iKow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678484723;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wtF0uqF8Lxp6HgvZFD9B2CTHDTfQGAcVmyEnYlQFxgg=;
-        b=Teg2gKmwHy25HLwH+SMuyAVZsO9ModbPbXS2slZEGc2KdCswuscSpc2fNXEktv/zcj
-         gnNpMTJJ6acmzQCdwjtMvNHTkXGCgIUtspnmsT4dfocr/0oIQqfLT3g2vNHmPZ542YDw
-         +Bfxn/tiH1Ol2KIN62rh6BFpJWR9/dJmYKgJFe8U3FXPolzOzYlAicmZoqbvTHf5Otd2
-         TpTt49e03gKTJlX4/UeglKdZjDidKEVt8s0Ofvp5KAT5wnZFznz46+D+rYetPbmucrRr
-         VGBQkm8gjTXYH8/rCRknLalaCZfpdG+yj4cbVu811n1+uT5XiGByWJYO+hHyJ77mdrBO
-         KCOA==
-X-Gm-Message-State: AO0yUKXAJPuLFToFZzLQ3OfLGLH54ivSLckgUcBEv0f8wDqdyGSJzPW/
-        lxMp5lMlRQLtFFVMj5Kc4LozzvaWik8=
-X-Google-Smtp-Source: AK7set+qsbVLy+o+jrgztR3EOLHpdzTUIVSs4ca7wsaS3spW6NA0BZ0bL8lbvSR+ICcPjF7EHmJ8tA==
-X-Received: by 2002:a9d:2e7:0:b0:690:f7da:5390 with SMTP id 94-20020a9d02e7000000b00690f7da5390mr13931423otl.25.1678484723710;
-        Fri, 10 Mar 2023 13:45:23 -0800 (PST)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id c26-20020a9d615a000000b0068bbc9e7cc9sm509255otk.53.2023.03.10.13.45.22
+        d=1e100.net; s=20210112; t=1678485456;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RKEViFEpVhR3I93acNz9GdtU/xskLIERNDvZ6oJiggM=;
+        b=H7Jw1fqO3SDB51QclSLVWHkEZAxSdggRsxirm5GMk6GHGbtASAI9LdshMKrXfoiCr7
+         2STDW1VQJeZLwsPEgJtqkiVdAsOocAuCjFpESi/O9HMFXjJFqJq6S4TXncXzf5kRSF6+
+         t//hepW16uhRKsmbdPNQy8LBd9ByK/YjbMY+zJVrpw3tmYlvUOyLjgbBqP0zQr1L/HDT
+         DVWnWyvKahSfCoq3EPiUhQ8JV+7P1yOAUVQdRmBxN6d/lDQQAuVZ15RU7ra9KyVsGcBy
+         xU7m3JrEVYZjhCXMhtju144OTXEITg+FDFowO4qU3QSXWMyQavbBmjCS7fSf2/+RIKCu
+         TlOg==
+X-Gm-Message-State: AO0yUKVfdKkPCPqmR7d8v5Sf+MpT5C8TWOpTd2fzxL6T86wDitVs72t1
+        unnZSOGTBUA48u6LBTh8BR6geocFlnQ=
+X-Google-Smtp-Source: AK7set+8r6uWb49IPYaksmT8pzvh/f7p45vEWi+AwkBFMn3p25X/sqqMBceRKvQce7om5U1JZ021sg==
+X-Received: by 2002:a62:1850:0:b0:5dc:d34:d9f6 with SMTP id 77-20020a621850000000b005dc0d34d9f6mr20607723pfy.2.1678484844908;
+        Fri, 10 Mar 2023 13:47:24 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id d18-20020aa78e52000000b005d55225fc07sm262400pfr.73.2023.03.10.13.47.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Mar 2023 13:45:23 -0800 (PST)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Antoine=20Beaupr=C3=A9?= <anarcat@debian.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC PATCH 3/3] rebase: update branch tail after rebasing
-Date:   Fri, 10 Mar 2023 15:45:15 -0600
-Message-Id: <20230310214515.39154-4-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.40.0.rc2.1.gf652911b76.dirty
-In-Reply-To: <20230310214515.39154-1-felipe.contreras@gmail.com>
-References: <20230310214515.39154-1-felipe.contreras@gmail.com>
+        Fri, 10 Mar 2023 13:47:24 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org
+Subject: Re: so/diff-merges-more (was Re: What's cooking in git.git (Feb
+ 2023, #01; Thu, 2))
+References: <xmqqr0v7o0pp.fsf@gitster.g> <871qn5pyez.fsf@osv.gnss.ru>
+        <kl6lr0v2i0gn.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <87wn4tej2f.fsf@osv.gnss.ru>
+        <kl6lh6v43s4g.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <xmqqr0u7ku3j.fsf@gitster.g> <87wn3zqefx.fsf@osv.gnss.ru>
+        <kl6lzg8pcygl.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <878rg8j2vg.fsf@osv.gnss.ru> <xmqqzg8ozbuh.fsf@gitster.g>
+        <87jzzqzy20.fsf@osv.gnss.ru> <xmqqzg8mrgc8.fsf@gitster.g>
+        <874jquxc67.fsf@osv.gnss.ru>
+        <kl6lh6uthlc3.fsf@chooglen-macbookpro.roam.corp.google.com>
+        <878rg5vgvc.fsf@osv.gnss.ru>
+Date:   Fri, 10 Mar 2023 13:47:24 -0800
+Message-ID: <xmqqjzzo46tv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- builtin/rebase.c          | 15 +++++++++++++++
- t/t1514-rev-parse-tail.sh | 10 ++++++++++
- 2 files changed, 25 insertions(+)
+Sergey Organov <sorganov@gmail.com> writes:
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 6635f10d52..19cfb0d0e4 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -252,6 +252,16 @@ static int init_basic_state(struct replay_opts *opts, const char *head_name,
- 	return write_basic_state(opts, head_name, onto, orig_head);
- }
- 
-+static void update_tail(struct rebase_options *opts)
-+{
-+	const char *shortname = NULL;
-+	struct strbuf ref = STRBUF_INIT;
-+	skip_prefix(opts->head_name, "refs/heads/", &shortname);
-+	strbuf_addf(&ref, "refs/tails/%s", shortname);
-+	update_ref(NULL, ref.buf, &opts->onto->object.oid, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-+	strbuf_release(&ref);
-+}
-+
- static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
- {
- 	int ret = -1;
-@@ -294,6 +304,9 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
- 			shortrevisions, opts->onto_name, opts->onto,
- 			&opts->orig_head->object.oid, &opts->exec,
- 			opts->autosquash, opts->update_refs, &todo_list);
-+
-+		if (!ret)
-+			update_tail(opts);
- 	}
- 
- cleanup:
-@@ -564,6 +577,8 @@ static int finish_rebase(struct rebase_options *opts)
- 		strbuf_release(&dir);
- 	}
- 
-+	update_tail(opts);
-+
- 	return ret;
- }
- 
-diff --git a/t/t1514-rev-parse-tail.sh b/t/t1514-rev-parse-tail.sh
-index 6024b4276c..7b3482de55 100755
---- a/t/t1514-rev-parse-tail.sh
-+++ b/t/t1514-rev-parse-tail.sh
-@@ -26,4 +26,14 @@ test_expect_success 'test @{tail}' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'test rebase tail update' '
-+	git checkout -b next master &&
-+	echo three > content &&
-+	git commit -a -m three &&
-+	git rebase --onto next test@{tail} test &&
-+	git rev-parse test@{tail} > actual &&
-+	git rev-parse next > expect &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.40.0.rc2.1.gf652911b76.dirty
+> 1. The fact that -m does not imply -p is a mistake. There is no any
+>    reasons this exact behavior could be useful. As such, it does not
+>    make sense to support this exact behavior in --diff-merges. So the
+>    reject of --diff-merges=[no-]hide.
+>
+> 2. This mistake is too dangerous to fix due to subtle compatibility
+>    problems, so we can't just fix -m behavior. Thus the reject of my
+>    earlier patch "let -m imply -p".
+>
+> 3. Moving behavior change under option is not worth it, as nobody
+>    presumably needs this fixed -m behavior anyway (at least among 2
+>    persons that are actually opposing the changes). So the reject
+>    of "add diffMerges-m-imply-p configuration option" patch.
+>
+> 4. Staring in the face inconsistency between -m and the rest
+>    of short diff-merge options is not significant enough to reconsider
+>    any of the above rejects.
+
+I do not quite understand the last one (#4), and if I were to add my
+own 4., it would be that introducing --diff-merges={kind} may have
+been a mistake.  It would have been fine and better to just let
+users choose from whatever set of options we support, i.e. (-c,
+--cc, --remerge-diff, -m -p, -m --raw, ...).
+
+IOW, perhaps deprecate --diff-merges={kind} and eventually remove
+it, if we could.  We've been fine without it and we'll be fine
+without it.  Unfortunately it may be a bit too late for that,
+but it certainly is much younger than "-m".
 
