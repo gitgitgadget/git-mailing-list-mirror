@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04055C6FA99
-	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 05:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56EF6C64EC4
+	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 05:00:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229737AbjCJFAp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Mar 2023 00:00:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44784 "EHLO
+        id S229754AbjCJFAq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Mar 2023 00:00:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229727AbjCJFAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2023 00:00:42 -0500
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188B8E4D87
-        for <git@vger.kernel.org>; Thu,  9 Mar 2023 21:00:40 -0800 (PST)
-Received: by mail-io1-xd2f.google.com with SMTP id f14so1610139iow.5
-        for <git@vger.kernel.org>; Thu, 09 Mar 2023 21:00:40 -0800 (PST)
+        with ESMTP id S229659AbjCJFAn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2023 00:00:43 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28B33E682F
+        for <git@vger.kernel.org>; Thu,  9 Mar 2023 21:00:42 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id f14so1610169iow.5
+        for <git@vger.kernel.org>; Thu, 09 Mar 2023 21:00:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678424439;
+        d=gmail.com; s=20210112; t=1678424441;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VB3fsYMlnsLx8y7wTn3cWgwLPLVNtmj9u1hnm5h9Ypc=;
-        b=lB29yCKUoyXYL5WnjuYcqkc/486YIC/0WHR9fRanKURsvsjHIqXOgE6dAFb6uV7HMk
-         9q6xlXRFs1aT4iPS0Btz3kj0W30BVC8eUHDkDI9m9zQgJ1nLTQtLB5fcGty2Xg9/mlJ3
-         WySJrtFvirvebp94USkhcQ/fhvqqjBsrJH6KKC136OCn+OeOykPiRVcKFgofB+HBYjRK
-         xIkt2X6VQxub8lT2la0IHc2BMBWiPl+SljVcmHFRzLkYsn4lrdEDj50Vn7DTR2P7J+pG
-         8rUQMmg7DnhuGVB1khyg+BsOjnE4a/SlwjfXPOE5JXkKaXGKSuGcF8iMAKRTABlu2t+b
-         q/Ng==
+        bh=Y5ZGT3fTEdPbZ5yXeC1QyBWNxTTiLPsiCTP77sXSdIk=;
+        b=WjVGbdh7mpY4c1lc4lGqUtkuRgz2QnVRawperKp1YOEiOwTVBeeoeNfiWvU4CutzMu
+         zrrmcCF/RfrLtnXStD7rHsOVhIbVjDErV1Q8JS6ty4DsmC5bcSXMXDcsT3Vado3GVezq
+         BHo5BqrnOgm1G5SOcI8CPeMIf5Un66Kha8Xm44gZU8a7T2issK1RJE139qYzPuRs0r/3
+         j0GxZLTm22X9m4QrVQ02HiKfzwyL1B8tmPsFEW3dSpq+bqYiRKSnVFkscpDv/ign1usB
+         A2kJVx0mbehibHcr41dZwX5hUmzSOQ85i2ozgS5Gdd7QdFD29s34VuhsU48M+qQWJoWw
+         aiTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678424439;
+        d=1e100.net; s=20210112; t=1678424441;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VB3fsYMlnsLx8y7wTn3cWgwLPLVNtmj9u1hnm5h9Ypc=;
-        b=ERhHkVjZh6exXLHvmVjbs47O2YZHnCX84m3UBN+eFVm9FhoKq4ND14s7XgMFVwnoFb
-         FiQOwL90DuwUIJMg801ThT/q30vu6CqqEqrAJYKSCL28USkEPXUH7aFGsdkxQZlaPjAu
-         2wuBwc8T+qvdnyPSd76iNXejaOsWjiKEC1MrqTV+V37gLIUxeIM13Q99sG+easY1vQOI
-         MTnCUrr/m5ds7knhvCgxWmviKcwQcBtWtEEFaTUFSafeW8GRbCx7Oyr4ql/Hv/DKoLBR
-         OhYgKeu3Ba/IeGmuK85zWGYv47NhM49/5zoyS5gkmzNbHEGTecGeXPAJNZGwLaBCrAlU
-         0XwQ==
-X-Gm-Message-State: AO0yUKW757SJSAEpPDzh6VFRvhYq+/wU8yWhamBCO7UfUPQRhYvm/wJx
-        dFH2setdsWC2DtDyzRzAqokrvDbkp20=
-X-Google-Smtp-Source: AK7set8CVxMtEqgX1dke81b5C7WwtSJbyWCaPeQQ1a7Fs8SDSjO9o83V4GdjuO0OLKbVApBXVG3NyQ==
-X-Received: by 2002:a6b:a07:0:b0:6e5:25a2:c63d with SMTP id z7-20020a6b0a07000000b006e525a2c63dmr14166459ioi.21.1678424438805;
-        Thu, 09 Mar 2023 21:00:38 -0800 (PST)
+        bh=Y5ZGT3fTEdPbZ5yXeC1QyBWNxTTiLPsiCTP77sXSdIk=;
+        b=LZsbjGjm6E0DsTX34wx3H58ZfZKp1x63bhF35HzVo8nkmMB0Aq15yWD2wesxlU4gWt
+         nx+oec9uuWDPP0+oq+1EQxlJ/DaXNLuhMuZ+ykDyNrsnxPlHAPwmkrZEffGXT9zPZItb
+         IbBCcfFpjEGfwToAV23fOagz789qsAEWbfmTThfsVa4Vn5cqbP86BB7El80cQ3916kIL
+         YXoOWSThxxb7lqOraJMdft0Bm9exIlgoSA36v2Tme5uw2vtECmWqxy4Oq71QZIwjQqnO
+         mf8wo3BWWf7vSt+6JpeYvhUVFDimLe7pIVkVRB7Cx8wqGsmukUcoc2afVCK1hP6sFJ5J
+         pifw==
+X-Gm-Message-State: AO0yUKUlm2vCzmwpzs3vJTDfbQnxJvv8py0+CCZcuDb2/fdtHwfjQmfl
+        6IltlFlusZAVy92X0TX1OGRpvb5H2co=
+X-Google-Smtp-Source: AK7set+2U/MyZ6JQXXgSIh0XVvqro+mv7EKXI0UQxad7BUFZOwIuIbp3LmURwqiXXKM3+Sgb568D1A==
+X-Received: by 2002:a5d:9718:0:b0:74d:36ce:d68a with SMTP id h24-20020a5d9718000000b0074d36ced68amr853125iol.0.1678424441130;
+        Thu, 09 Mar 2023 21:00:41 -0800 (PST)
 Received: from localhost.localdomain (bras-base-london142cw-grc-20-69-158-191-243.dsl.bell.ca. [69.158.191.243])
-        by smtp.googlemail.com with ESMTPSA id c4-20020a6bfd04000000b00734ac8a5ef7sm323930ioi.25.2023.03.09.21.00.37
+        by smtp.googlemail.com with ESMTPSA id c4-20020a6bfd04000000b00734ac8a5ef7sm323930ioi.25.2023.03.09.21.00.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Mar 2023 21:00:38 -0800 (PST)
+        Thu, 09 Mar 2023 21:00:40 -0800 (PST)
 From:   Shuqi Liang <cheskaqiqi@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, gitster@pobox.com,
         vdye@github.com, derrickstolee@github.com
-Subject: [PATCH v5 1/2] t1092: add tests for `git diff-files`
-Date:   Fri, 10 Mar 2023 00:00:20 -0500
-Message-Id: <20230310050021.123769-2-cheskaqiqi@gmail.com>
+Subject: [PATCH v5 2/2] diff-files: integrate with sparse index
+Date:   Fri, 10 Mar 2023 00:00:21 -0500
+Message-Id: <20230310050021.123769-3-cheskaqiqi@gmail.com>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230310050021.123769-1-cheskaqiqi@gmail.com>
 References: <20230309063952.42362-1-cheskaqiqi@gmail.com>
@@ -66,39 +66,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before integrating the 'git diff-files' builtin
-with the sparse index feature, add tests to
-t1092-sparse-checkout-compatibility.sh to ensure it currently works
-with sparse-checkout and will still work with sparse index
-after that integration.
+Remove full index requirement for `git diff-files`
+and test to ensure the index is not expanded in `git diff-files`.
 
-When adding tests against a sparse-checkout
-definition, we test two modes: all changes are
-within the sparse-checkout cone and some changes are outside
-the sparse-checkout cone.
+The `p2000` tests demonstrate a ~96% execution time reduction for 'git
+diff-files' and a ~97% execution time reduction for 'git diff-files'
+for a file using a sparse index:
 
-In order to have staged changes outside of
-the sparse-checkout cone, create a 'newdirectory/testfile' and
-add it to the index, while leaving it outside of
-the sparse-checkout definition.Test 'newdirectory/testfile'
-being present on-disk without modifications, then change content inside
-'newdirectory/testfile' in order to test 'newdirectory/testfile'
-being present on-disk with modifications.
+Test                                           before  after
+-----------------------------------------------------------------
+2000.78: git diff-files (full-v3)              0.09    0.08 -11.1%
+2000.79: git diff-files (full-v4)              0.09    0.09 +0.0%
+2000.80: git diff-files (sparse-v3)            0.52    0.02 -96.2%
+2000.81: git diff-files (sparse-v4)            0.51    0.02 -96.1%
+2000.82: git diff-files f2/f4/a (full-v3)      0.06    0.07 +16.7%
+2000.83: git diff-files f2/f4/a (full-v4)      0.08    0.08 +0.0%
+2000.84: git diff-files f2/f4/a (sparse-v3)    0.46    0.01 -97.8%
+2000.85: git diff-files f2/f4/a (sparse-v4)    0.51    0.02 -96.1%
 
 Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
 ---
- t/t1092-sparse-checkout-compatibility.sh | 48 ++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
+ builtin/diff-files.c                     |  4 ++++
+ t/perf/p2000-sparse-operations.sh        |  2 ++
+ t/t1092-sparse-checkout-compatibility.sh | 13 +++++++++++++
+ 3 files changed, 19 insertions(+)
 
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index dc991f753b..360464e6ef 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -27,6 +27,10 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
+ 		usage(diff_files_usage);
+ 
+ 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
++
++	prepare_repo_settings(the_repository);
++	the_repository->settings.command_requires_full_index = 0;
++
+ 	repo_init_revisions(the_repository, &rev, prefix);
+ 	rev.abbrev = 0;
+ 
+diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
+index 3242cfe91a..82751f2ca3 100755
+--- a/t/perf/p2000-sparse-operations.sh
++++ b/t/perf/p2000-sparse-operations.sh
+@@ -125,5 +125,7 @@ test_perf_on_all git checkout-index -f --all
+ test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
+ test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
+ test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/*"
++test_perf_on_all git diff-files
++test_perf_on_all git diff-files $SPARSE_CONE/a
+ 
+ test_done
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 801919009e..9b71d7f5f9 100755
+index 9b71d7f5f9..4f582164a3 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2055,4 +2055,52 @@ test_expect_success 'grep sparse directory within submodules' '
- 	test_cmp actual expect
+@@ -2103,4 +2103,17 @@ test_expect_success 'diff-files with pathspec outside sparse definition' '
+ 	test_cmp expect sparse-checkout-out
  '
  
-+test_expect_success 'diff-files with pathspec inside sparse definition' '
++test_expect_success 'sparse index is not expanded: diff-files' '
 +	init_repos &&
 +
 +	write_script edit-contents <<-\EOF &&
@@ -107,43 +135,8 @@ index 801919009e..9b71d7f5f9 100755
 +
 +	run_on_all ../edit-contents deep/a &&
 +
-+	test_all_match git diff-files &&
-+
-+	test_all_match git diff-files deep/a 
-+
-+'
-+
-+test_expect_success 'diff-files with pathspec outside sparse definition' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>"$1"
-+	EOF
-+
-+	# add file to the index but outside of cone
-+	run_on_sparse mkdir newdirectory &&
-+	run_on_sparse ../edit-contents newdirectory/testfile &&
-+	test_sparse_match git add --sparse newdirectory/testfile &&
-+
-+	# file present on-disk without modifications
-+	test_sparse_match git diff-files &&
-+	test_must_be_empty sparse-checkout-out &&
-+	test_must_be_empty sparse-checkout-err &&
-+	test_sparse_match git diff-files newdirectory/testfile &&
-+	test_must_be_empty sparse-checkout-out &&
-+	test_must_be_empty sparse-checkout-err &&
-+
-+	# file present on-disk with modifications
-+	FN=newdirectory/testfile &&
-+	OID=$(git -C sparse-checkout hash-object $FN) &&
-+	ZERO=$(test_oid zero) &&
-+	echo ":100644 100644 $OID $ZERO M	$FN" >expect &&
-+
-+	run_on_sparse ../edit-contents newdirectory/testfile &&
-+	test_sparse_match git diff-files &&
-+	test_cmp expect sparse-checkout-out &&
-+	test_sparse_match git diff-files newdirectory/testfile &&
-+	test_cmp expect sparse-checkout-out
++	ensure_not_expanded diff-files  &&
++	ensure_not_expanded diff-files deep/a 
 +'
 +
  test_done
