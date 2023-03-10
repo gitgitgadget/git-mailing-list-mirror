@@ -2,158 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72CD8C6FD1C
-	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 17:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA343C6FA99
+	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 18:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230203AbjCJRtm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Mar 2023 12:49:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48232 "EHLO
+        id S230407AbjCJSIz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Mar 2023 13:08:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231451AbjCJRti (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2023 12:49:38 -0500
-Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 254FB2118
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 09:49:14 -0800 (PST)
-Received: from [192.168.42.163] (47-99-142-46.pool.kielnet.net [46.142.99.47])
-        by dd36226.kasserver.com (Postfix) with ESMTPSA id 382713C01C6;
-        Fri, 10 Mar 2023 18:42:04 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
-        s=kas202302241129; t=1678470124;
-        bh=P7j2bP1/atARUPIQMSVzDkNE7IuxV2SEUBgrBQvVuAg=;
-        h=Date:Subject:To:References:From:In-Reply-To:From;
-        b=YYem4ctga3rn7sSVXKLxLiwSGZpHX3n4jtfyY3THTTx8JGdgTS88NNu7LR3aAyWMq
-         q4Yws9gNk477nwuy3sZksjwIWtWZ6k1Ake5qL/CjCywNJ0xnP1xGvCCjsqJnLUEOnG
-         GzmNJtABlBUVW+IE+r3m0fgkNqfz2BZeWeS246R53Tfw9/0PsLcEZqwmXhze5ZoITK
-         m33NDWzdVxHAtqljyKyVMJGqDKVkNN4RxK9cBO4qtCvhFqwINwp3TEkOrOPm4xJyVR
-         x4+dCMFFGWJEGrovkK6t/U6zZDWLjEFCVIGiqFNrvNYZ7/FCAXtbG+CNa0EB3NKq7o
-         +2MC0Bwg8J5sQ==
-Message-ID: <805626af-b147-d3cf-5257-a5b90b7cf1d9@haller-berlin.de>
-Date:   Fri, 10 Mar 2023 18:42:03 +0100
+        with ESMTP id S230161AbjCJSIx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2023 13:08:53 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7989F62324
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 10:08:46 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id i10so6466942plr.9
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 10:08:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678471726;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3KqtW559Qfcgg0srtfbnzjkYAlM0KV3i7PB3qqJddmk=;
+        b=RpDc93k9sFxlNl301vtw5Xcd59MOSVmhtVXqP/p3yIHAyYumx3xXl4q0/zfdrCoCV4
+         SRoYwQyt0J0aoXdPp3jqL7omCdl+qZY81euIUo1FiQFGOgWSsy7fP4BSF2KJuwWgd9Bm
+         AFkJWFb+65qIyOgy6cYJo3QlpM/nIGaRrI9k7zwRFNDX7CSHkjzUGAKt7nIKEBh/8Rw+
+         ru7bPMQkEwARtOws127s4jKBsw+BL1rIjwm/3RcFfqFd/I5Ygr3vwkgZxFE7nOUbUdJf
+         yfGSlDKLIryehJRi8CHOVv/no0R/F7/nrp8nMIbzYa8bXodeSzw2A2dum73tztoT7Zeh
+         CwqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678471726;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=3KqtW559Qfcgg0srtfbnzjkYAlM0KV3i7PB3qqJddmk=;
+        b=kl4VlEbZ1tInaHHbMr3YikO/OH+F4WCL5xCjC5PW0niVChp5RAX0tVVs/BY0QRNI0d
+         AntNhaNEKu6dDBQld6PFlxynJdOB38rcZ/LC9buOL+zfSRj0SoZnccKKsPUCz7d+61Sy
+         Kt7dJkD2s+aTUN6G+flUGrhGC2mnXb3Xo6Cm5tBjNHKD5VZtTYX2QNF2UXkxyzUjPDee
+         IMWdarCxCRbdtt36h5+/TWhE9KEfIwXRR4KzzA4f1Qf4HuK6VXgkcL8IA4LwIsidOagu
+         XT3wOdWu1ibDFljqVpKP8oIiGpdO0Te2lVCSI9mfiLEsfUxs6hs5NqP1Ai9MRHHwNvx3
+         npOg==
+X-Gm-Message-State: AO0yUKV+WZomdBfrCP6Sw0x4AM7fagEMJkPi2iNgNpU2x6mngcrtU/EO
+        fHMZQhb+0HtNXw+PWGThB3M=
+X-Google-Smtp-Source: AK7set8i/G+5TKG+z7iIqvmAbDFxkQQOgVH4CDwi+GlF2mvYpQGoAKcUTdmjIjsNddwBlNx+K6Uplw==
+X-Received: by 2002:a17:902:be13:b0:19f:1871:3dcd with SMTP id r19-20020a170902be1300b0019f18713dcdmr683970pls.5.1678471725863;
+        Fri, 10 Mar 2023 10:08:45 -0800 (PST)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id q6-20020a170902788600b0019c2cf1554csm341914pll.13.2023.03.10.10.08.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Mar 2023 10:08:45 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 1/8] for-each-ref: add --stdin option
+References: <pull.1489.git.1678111598.gitgitgadget@gmail.com>
+        <pull.1489.v2.git.1678468863.gitgitgadget@gmail.com>
+        <a1d9e0f6ff6660c9264673be18bc24956f74eb9c.1678468864.git.gitgitgadget@gmail.com>
+Date:   Fri, 10 Mar 2023 10:08:45 -0800
+In-Reply-To: <a1d9e0f6ff6660c9264673be18bc24956f74eb9c.1678468864.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Fri, 10 Mar 2023
+        17:20:56 +0000")
+Message-ID: <xmqqsfec5viq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.8.0
-Subject: Re: When exactly should REBASE_HEAD exist?
-To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-References: <961e68d7-5f43-c385-10fa-455b8e2f32d0@haller-berlin.de>
- <374f83c2-7bf0-38be-26ae-de28340c37d2@dunelm.org.uk>
- <f28bb5a7-ec68-dce2-9b63-7bfb5330c33e@haller-berlin.de>
- <db9f3be7-097f-006e-927a-91be7a50360c@dunelm.org.uk>
- <3ab454f1-2bb5-d990-4cc4-4e2fde2ba294@haller-berlin.de>
- <97eec89b-6a10-434a-a9aa-54c266da7fb1@haller-berlin.de>
- <18763465-de3b-7e64-129b-1f9337ea1924@dunelm.org.uk>
- <4d13d02a-ddaf-7b8f-7a27-c7a030816523@haller-berlin.de>
- <722659e9-02ac-a9d2-b0fd-b9a2a3d85753@dunelm.org.uk>
-Content-Language: de-DE, en-US
-From:   Stefan Haller <lists@haller-berlin.de>
-In-Reply-To: <722659e9-02ac-a9d2-b0fd-b9a2a3d85753@dunelm.org.uk>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spamd-Bar: --
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10.03.23 10:56, Phillip Wood wrote:
-> Hi Stefan
-> 
-> On 08/03/2023 19:02, Stefan Haller wrote:
->> On 05.03.23 21:15, Phillip Wood wrote:
->>> Hi Stefan
->>>
->>> On 05/03/2023 19:13, Stefan Haller wrote:
->>>> On 05.03.23 17:59, Stefan Haller wrote:
->>>>> On 05.03.23 15:31, Phillip Wood wrote:
->>>>>> Hi Stefan
->>>>>>
->>>>>> On 02/03/2023 20:27, Stefan Haller wrote:
->>>>>>> On 02.03.23 11:19, Phillip Wood wrote:
->>>>>>>> On 28/02/2023 12:55, Stefan Haller wrote:
->>>>>>>>> The reason why I am asking this is: I'm using lazygit, which,
->>>>>>>>> during
->>>>>>>>> interactive rebases, shows a combined view of the real commits
->>>>>>>>> that
->>>>>>>>> were
->>>>>>>>> already applied, and the remaining commits that are yet to be
->>>>>>>>> applied
->>>>>>>>> (it gets these by parsing rebase-merge/git-rebase-todo);
->>>>>>>>> something like
->>>>>>>>> this, when I set the 2nd commit to "edit":
->>>>>>>>>
->>>>>>>>>       pick   4th commit
->>>>>>>>>       pick   3rd commit
->>>>>>>>>              2nd commit  <-- YOU ARE HERE
->>>>>>>>>              1st commit
->>>>>>>>>
->>>>>>>>> This is great, but assuming that the 2nd commit conflicted,
->>>>>>>>> currently
->>>>>>>>> the display looks like this:
->>>>>>>>>
->>>>>>>>>       pick   4th commit
->>>>>>>>>       pick   3rd commit
->>>>>>>>>              1st commit  <-- YOU ARE HERE
->>>>>>>>>
->>>>>>>>> I would like to extend this to also show a "fake entry" for the
->>>>>>>>> commit
->>>>>>>>> that conflicted, if there is one. REBASE_HEAD is perfect for this,
->>>>>>>>> except that I need a way to distinguish whether it was applied
->>>>>>>>> already
->>>>>>>>> or not.
->> OK, I see. Sounds like a possible algorithm could be:
->>
->> func commitNameToShowAsTheCurrentlyConflictingCommit() {
-> 
-> Going back to your original email, if all you want to do is show "YOU
-> ARE HERE" against the correct commit then you can get that from the last
-> entry in the "done" file irrespective of whether there were conflicts or
-> not. If you also want to show whether it was picked cleanly or not then
-> it is more complicated.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-In my first example above, I'm editing the 2nd commit and it applied
-cleanly. What I see in that case is
+> When reading from stdin, we populate the filter.name_patterns array
+> dynamically as opposed to pointing to the 'argv' array directly. This
+> requires a careful cast while freeing the individual strings,
+> conditioned on the --stdin option.
 
-pick   4th commit
-pick   3rd commit
-       2nd commit  <-- YOU ARE HERE
-       1st commit
+Indeed.  Thanks for carefully describing the concerns you had.
 
-2nd commit is the current HEAD, which corresponds to the last entry in
-the "done" file, so there's no reason to display the "done" file entry
-too in this case.
-
-Only if it wasn't applied cleanly (and wasn't rescheduled) do I want to
-show the "done" entry. This way I always see four entries in my list, no
-matter what happened (unless I drop commits, of course), which is what I
-want.
-
->>      lastDone := last command of "done" file
->>      if lastDone.command is "break" or "exec" {
->>          return nil
->>      }
->>
->>      next := first command of "git-rebase-todo" file
->>      if lastDone == next {
->>          // Command was rescheduled and shows in remaining todos already
->>          return nil
->>      }
-> 
-> I don't know what your current implementation looks like but if I was
-> starting from scratch I think it would be simpler to always use the last
-> command from "done" and then suppress the first command from
-> "git-rebase-todo" if it is the same.
-
-That would also be possible, but in lazygit it makes things harder,
-because items from "git-rebase-todo" can be interacted with (e.g. moved
-up or down, or dropped), whereas the "done" entry is only for display
-purposes and can't be interacted with. That's why I called it a "fake"
-entry above.
-
-I tried the algorithm now and seems to do exactly what I want, so thanks
-for the help with this, I'm happy now.
-
-There's a slight correction though: if a command is rescheduled, then
-git appears to re-append the last successful command to the end of the
-"done" file (it's in there twice now). So I have to check the
-second-to-last command of "done" against the first command of
-"git-rebase-todo" to find out if a command was rescheduled.
-
--Stefan
+Looking good.  I'll read on.
