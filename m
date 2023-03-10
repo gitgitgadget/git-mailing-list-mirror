@@ -2,173 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84E8FC6FA99
-	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 13:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DC6CC6FA99
+	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 16:29:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230132AbjCJNkb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Mar 2023 08:40:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36522 "EHLO
+        id S231489AbjCJQ3Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Mar 2023 11:29:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230000AbjCJNka (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2023 08:40:30 -0500
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FB7010A289
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 05:40:16 -0800 (PST)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-536bbe5f888so97776297b3.8
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 05:40:16 -0800 (PST)
+        with ESMTP id S229894AbjCJQ3F (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2023 11:29:05 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B45D1ABE1
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 08:25:38 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id fd25so4000318pfb.1
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 08:25:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678455616;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+YQflFf6IbLRiupQIGsMQqA0P01r/lIWYqj3oBx47uY=;
-        b=Z/IHSqJDayJRy4x/Qs1Hnlfr2UZomA0EX/muUICe8DY/yQSveAhbmxJw0JeffY4v1O
-         KW4TsBiPCZSWL2bscEh+I7nOoHCO/5AiHc10sYgp8x+ZDJIwqEZET7VxYVBI2cOik0a3
-         jxAIMx6/Es1c0A4eewgzWIli3iUcSpkSxYn/U4QKgXl5H2e0pOVm0+rFTnBw5aaWHE0D
-         ZfdL8RHkyRv9ksbdPFreXRVXRTmo447iEa6EXxCEFRyD6G75Fq7p4l5tdEd7aqHTsE/U
-         5cRc7lmzHPXK7L7uzCGC5GQruiEjLkaQnD3p5mUj1jcKHEW8+uVPA6AEFvIHgKcKEN4b
-         3+0A==
+        d=gmail.com; s=20210112; t=1678465538;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZFeYPQsSiFXjEy8UJcvUpD8d3Vji49bH+JP726NS4Ck=;
+        b=RaZGm1byVn3WyzVAD5WGvE82rV1ammUYspOw6oDw2JiM9lAHg6J8MMKu0RInPB2n+5
+         IJ8HuEUdXMGEPjtgDxQY2H8DQYoAutCYGy3FIgiX6tGP/KK7xe/P/ju3rw8ZDB4D2qlj
+         myRyIawnTzQOLJiA5TuqlYzWwH4qvpdmZRkVSzDcHnHpX1w+EZvE+zFvFRkzTz5lskhw
+         zAIGiEIkLYWsLOWHYHYYHR2EzuOCOxHCclotYA+m8ZmROx8yeBCJZ7g28bLuMluZqCLd
+         Yd/Ca2ztJ6GerZ7BtscLJARxrVZIbpTj0xat8Anmjp9Jr+ytAg14tC92vubUSsYkorK0
+         cBcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678455616;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+YQflFf6IbLRiupQIGsMQqA0P01r/lIWYqj3oBx47uY=;
-        b=x7iaGovLVdKUyJxWbVbMn1WMKcM/StpVR9cwzllGnbbkz6qw3JdGFU7nNTrGXtGGx4
-         uGhba3aBLasiS2OkeKusZJNWxKCmu3MIBwxE5mGSodzXRXTbey/IKXYDc4BUN8v99Zm3
-         /1fDVEi0kHaTFQpL3siCG2BEmHpoh2f/VbG0EArpmYNwpylHuojyv3VM3nASnjY2Crv+
-         yWBvgAGRHv0zmZWNVmoqsRnQdY8l8dHfiNCKjbpz/ju9bIUEYJsN7huPCr6ERwCBQP10
-         AUy575GiU0gd+T7/xlvFL9lgDrJSQlcJ1VCvjJmT6Iw0DpEgQRTlpfyBD/oESv5vhaMN
-         S71A==
-X-Gm-Message-State: AO0yUKVn92sl1q6NzHr8qW5cUmmXirlT0GJ64f8OSjL/hVVaiKXDJYti
-        WyDs2mbj44cP5pNiTYP+czhyNhRvG5EJLvq1yQU=
-X-Google-Smtp-Source: AK7set8FV6iVDQ+HUUWn+b5QHX3WyfkzMPu4q9BlieTV1dVYmCjRbGgnPVqq36fjentUNxB/HY4kfJfkgsUudlhQcs8=
-X-Received: by 2002:a81:441e:0:b0:533:99bb:c299 with SMTP id
- r30-20020a81441e000000b0053399bbc299mr16716655ywa.3.1678455615744; Fri, 10
- Mar 2023 05:40:15 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678465538;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZFeYPQsSiFXjEy8UJcvUpD8d3Vji49bH+JP726NS4Ck=;
+        b=Lp48OEWMzPCELHwWd/HGO2jo/AzxzS4E4d/ZJfVd6keGq9QXOY2dny4cP31hOs+KjA
+         H1gW1XmewySQViYVCYpviSkAUgkGgp+dsTuy+0tEgMA/Z+DtrgIXXnbRr5yqiZyxe4Ak
+         SK7GMXnNA513mQmebmTbk7Wa9XXQfsDUKixSRxmW3hPs/G5yzBqnFlo8jIwPPUufBvcG
+         /7Xo5xld/jBlg43DTvLiGN7XAs6O7yuDcqFXzppr/OFy/urI+4gsvb4PqpRyt114/Dtx
+         /9UEzjCtRWawcJJlUsagNDJBOfqzqqAsX2PgdstGH24PHYheYt+DdAVagyfqjr+MuH0W
+         uhzw==
+X-Gm-Message-State: AO0yUKXyAiU//L7nRsPcXJyui0RNuOv/69fT3emJqdyprgzlJPUUkNLj
+        EOJlkgGZ/QGer9b9Gp2Y6L3UTpa6lDmsqt+ybz4=
+X-Google-Smtp-Source: AK7set8mUIIBNm4V0rdgfOtu8ZXyRYi7pfKLzX3aQbGVBqicFjB2U9/s1Tm8Rz96SQk7+mgZgST0ikTx3AJk4IOseF0=
+X-Received: by 2002:a63:7349:0:b0:503:20b2:483c with SMTP id
+ d9-20020a637349000000b0050320b2483cmr8972048pgn.2.1678465537833; Fri, 10 Mar
+ 2023 08:25:37 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1465.git.git.1678453473484.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1465.git.git.1678453473484.gitgitgadget@gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Fri, 10 Mar 2023 21:40:04 +0800
-Message-ID: <CAOLTT8QKCoCdi8hBmrOYNchFEFKZ_MgPiOZY0N0VkE9RK07CbQ@mail.gmail.com>
-Subject: Re: [PATCH] ls-files: fix "--format" output of relative paths
-To:     Adam Johnson via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Adam Johnson <me@adamj.eu>
+References: <20230308192050.1291-1-royeldar0@gmail.com> <20230308192050.1291-3-royeldar0@gmail.com>
+ <xmqqsfefrn4q.fsf@gitster.g>
+In-Reply-To: <xmqqsfefrn4q.fsf@gitster.g>
+From:   Roy E <royeldar0@gmail.com>
+Date:   Fri, 10 Mar 2023 18:25:26 +0200
+Message-ID: <CAOfFamk5wWFuUgn4uEo0JV0siLzH=ybDB_Yr-9oL3OM4taozuA@mail.gmail.com>
+Subject: Re: [PATCH RESEND 2/2] status: improve info for detached HEAD after clone
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, jonathantanmy@google.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adam Johnson via GitGitGadget <gitgitgadget@gmail.com> =E4=BA=8E2023=E5=B9=
-=B43=E6=9C=8810=E6=97=A5=E5=91=A8=E4=BA=94 21:04=E5=86=99=E9=81=93=EF=BC=9A
->
-> From: Adam Johnson <me@adamj.eu>
->
-> Fix a bug introduced with the "--format" option in
-> ce74de931d, where relative paths were computed
-> using the output buffer, which could lead to
-> random data in the output.
->
-> Signed-off-by: Adam Johnson <me@adamj.eu>
-> ---
->     ls-files: fix "--format" output of relative paths
->
->     ce74de931d introduced with the "--format" option to ls-files. This
->     commit had a bug: using --format=3D'%(path)' with the "top" pathspec =
-from
->     within a subdirectory would lead to random memory being added to the
->     output. For example, within the Documentation/ directory in Git=E2=80=
-=99s own
->     repository:
->
->     $ git ls-files --format=3D'%(path)' ':/' | head -n 2
->     ../.cirrus.yml=EF=BF=BD=EB=BB=A4=EF=BF=BD=EF=BF=BD
->     ../.clang-format=EF=BF=BD=EB=BB=A4=EF=BF=BD=EF=BF=BD
->
->
->     This is due to reuse of a string buffer for calculating the relative
->     path. The attached patch fixes this by using a fresh buffer, the same
->     pattern used in other places where relative paths are computed.
->
+Hi,
 
-Good catch!
+First of all, thanks for the thoughtful response.
 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-146=
-5%2Fadamchainz%2Ffix-ls-files-format-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1465/a=
-damchainz/fix-ls-files-format-v1
-> Pull-Request: https://github.com/git/git/pull/1465
->
->  builtin/ls-files.c         |  5 ++++-
->  t/t3013-ls-files-format.sh | 16 ++++++++++++++++
->  2 files changed, 20 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index 4cf8a236483..02b9bbe7eb4 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -89,12 +89,15 @@ static void write_name(const char *name)
->
->  static void write_name_to_buf(struct strbuf *sb, const char *name)
->  {
-> -       const char *rel =3D relative_path(name, prefix_len ? prefix : NUL=
-L, sb);
-> +       struct strbuf buf =3D STRBUF_INIT;
-> +       const char *rel =3D relative_path(name, prefix_len ? prefix : NUL=
-L, &buf);
->
->         if (line_terminator)
->                 quote_c_style(rel, sb, NULL, 0);
->         else
->                 strbuf_addstr(sb, rel);
-> +
-> +       strbuf_release(&buf);
->  }
->
+Junio C Hamano <gitster@pobox.com> writes:
 
-Here I misused the outer strbuf.
+> - Adding new code here would mean that the result of parsing @{-1}
+>   and what wt_status_get_detached_from() will report becomes
+>   inconsistent, no?
 
->  static const char *get_tag(const struct cache_entry *ce, const char *tag=
-)
-> diff --git a/t/t3013-ls-files-format.sh b/t/t3013-ls-files-format.sh
-> index efb7450bf1e..ef6fb53f7f1 100755
-> --- a/t/t3013-ls-files-format.sh
-> +++ b/t/t3013-ls-files-format.sh
-> @@ -54,6 +54,22 @@ test_expect_success 'git ls-files --format path v.s. -=
-s' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'git ls-files --format with relative path' '
-> +       cat >expect <<-\EOF &&
-> +       ../o1.txt
-> +       ../o2.txt
-> +       ../o3.txt
-> +       ../o4.txt
-> +       ../o5.txt
-> +       ../o6.txt
-> +       EOF
-> +       mkdir sub &&
-> +       cd sub &&
-> +       git ls-files --format=3D"%(path)" ":/" >../actual &&
-> +       cd .. &&
-> +       test_cmp expect actual
-> +'
-> +
->  test_expect_success 'git ls-files --format with -m' '
->         echo change >o1.txt &&
->         cat >expect <<-\EOF &&
->
-> base-commit: 768bb238c4843bf52847773a621de4dffa6b9ab5
-> --
-> gitgitgadget
+If I understand correctly, the result of parsing @{-1} is the commit
+checked out before the current one, so grab_nth_branch_switch() gets
+the commit we've moved _from_, whereas wt-status::grab_1st_switch()
+gets the commit we've moved _to_. After a clone, there is no commit
+we've moved _from_.
 
+> Yes, the head may be detached at some object that is not a local or
+> remote branch.  But what is so bad about reporting the fact
+> faithfully, i.e., that we are not on any branch?
 
-I'm glad you caught that mistake.
+I thought that we try to avoid showing "Not currently on any branch"
+as this message is not very user-friendly (see commit b397ea4).
+Furthermore, showing "HEAD detached at X" where X is the abbreviated
+hash is more consistent with the behavior of the detached HEAD advice
+in "git clone", which says
 
-Thanks.
---
-ZheNing Hu
+        Note: switching to 'X'
+
+> I personally do not very much appreciate the extra info that is
+> given by saying "HEAD detached at X" and "HEAD detached from X",
+> compared to saying just "Not currently on any branch", especially
+> when these X are not concrete branch names or tag names but just
+> hexadecimal string that needs to be fed to "git describe" to be
+> turned into something that makes sense to humans
+
+It might be better to show "HEAD detached at X" where X is the concrete
+tag name which was cloned; but since "grab_1st_switch" digs in the
+reflog for that information, one cannot figure out the tag name that
+was used when the repository was cloned. I didn't want to complicate
+the current logic too much, and IMHO showing the abbreviated hash is
+the best thing we can do, and it is already what we do in certain cases
+(e.g. after "git checkout --detach").
