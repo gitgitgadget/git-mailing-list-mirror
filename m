@@ -2,141 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 663E6C64EC4
-	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 11:49:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECBA2C74A4B
+	for <git@archiver.kernel.org>; Fri, 10 Mar 2023 12:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbjCJLtR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Mar 2023 06:49:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55626 "EHLO
+        id S230304AbjCJMi5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Mar 2023 07:38:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229521AbjCJLtP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2023 06:49:15 -0500
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 478E0898CD
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 03:49:14 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id CD46D32005D8;
-        Fri, 10 Mar 2023 06:49:11 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Fri, 10 Mar 2023 06:49:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm1; t=1678448951; x=1678535351; bh=wG
-        Z0aOteu6b7DgndX8Fjz1G4Yu6+/+AqFk5TFJVM8R8=; b=lmRlQubZXH4wri7Idj
-        KATQau2sCoxxmgeNfLyPGjO+RHVF3uk7GxVZEhdI+hIwt5YZUDbXp+RBdsHrNe4c
-        ciA+iqaaMaslCsgxnic7EOG8ygo8RwIF/vHqRYrtFHKiPZcqw9a0k6xk8oIvJJ9T
-        4fbO2kqoqIKC1YtjIf/8L9nxOfH/HBOzbjTtIvXi8+0PKTuQMnUOYdQJB4ZLc9g7
-        BMaQTz1n2+yEF563zTT7+jjYigZ6b4yLhWV1VUivzAn15kGhu440apFd2Uug0vnk
-        Tpkj2WzlYim4p2gV69SWt4UKC0gWR3LogcjJLWU04U6uAX8xwFPge5K4elpBaZIk
-        DzLw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1678448951; x=1678535351; bh=wGZ0aOteu6b7D
-        gndX8Fjz1G4Yu6+/+AqFk5TFJVM8R8=; b=ppaWvuwpowV7QUwXhBUJ33V+JxW9M
-        vQbRbByRYWj07Uylgrx9ks+2NSVUcpK8zLRJmOaz87St+DTEXsHfb8aYILwbntEz
-        1dMyyq83MrAQyDOqCB0xBeyYs0uqSmcg7ZP0ps2toIaregNWCtN633aJakf4250w
-        50RiMiBWVCMcsUiYTBCgVR3UzLhlP7ZoMyXr8wMiXE76AQdBcY+TfQhUj0snO+B8
-        m2/lDAs7NXOyopghFRrrR30WmWTDxbA09/7aWjepFb7HB8yy7b2xcDsu+b/tb2GA
-        XZpmwM0cQComtK4YpGwLTlY1yobFHZkYHW0Ecgem2hhxWB139mmQmxf1w==
-X-ME-Sender: <xms:NxkLZDkCSaP0yC3xRIKj25Lw2QXm4WOZ0ibD-bLU-Tu9IVbSzPQlbw>
-    <xme:NxkLZG1El-BfmZkh9MUrMTEDOziRbsKvoV9aLq83K54IAj4QLZQhlk5DAasuNL9an
-    fCyr1s5W0B0QFaNSA>
-X-ME-Received: <xmr:NxkLZJpovhncuB0izP9wBh-wpaaY_5OoZaLUm4U8GdytuDqxCyU97SUI3ZV_7IFNlS7mi7dDcJtVBXqkPzfBp9GqWkBUERZYVmE8b4MESRSg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvddukedgfeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:NxkLZLlR6EYnWOB8qxn3edhTjjb_KGXgxTqoXT3ozrrV5oEAW1icoA>
-    <xmx:NxkLZB3GJusUjY1oBj24fth1Lm3IOnQ4D2NE4MtOcv0pCWFd_AgMmg>
-    <xmx:NxkLZKsEIz-XNKKDxhFzGznY3h3iybWCuZjg70Ug3_baC3F9XHyzOA>
-    <xmx:NxkLZPCZB8eX8pouczWqqye2C-bbR3ZDQQTFxM543n03KSnatKZ33Q>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Mar 2023 06:49:10 -0500 (EST)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 39ced06e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 10 Mar 2023 11:48:55 +0000 (UTC)
-Date:   Fri, 10 Mar 2023 12:49:04 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] receive-pack: fix stale packfile locks when dying
-Message-ID: <ZAsZMAhgag1iBSK5@ncase>
-References: <e16bd81bf9e251aa6959fbe10a3fbc215a4a1c12.1678367338.git.ps@pks.im>
- <e1ee1d8026a361bc58d16bc741e2b347ada7a53e.1678431076.git.ps@pks.im>
- <ZArvkVPhF4Th424Z@coredump.intra.peff.net>
+        with ESMTP id S230479AbjCJMip (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Mar 2023 07:38:45 -0500
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E34ACD66A
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 04:38:44 -0800 (PST)
+Received: by mail-yb1-xb2c.google.com with SMTP id n18so5064567ybm.10
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 04:38:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678451923;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9IX6n3R9tmypqwMPDlg11PCUPSwGvgS1BjR4qCrYIiY=;
+        b=L4j3vOssPe1CnSQlC2fZdOYOSS6HxAapGeDZ2LOl9sJrApdiai7ZkUWMTaMavkORls
+         sBCcU61iaL9n3hYH4SPnxhmoODgitCDuLdd2eZm/BTVpPzF5raeUt2cuL9YjIwEKiAyw
+         2Cp/T4rLr7miYKQs8gpEOpsh1HqI8ZJT0gjN2xvkGDAzZF7yYAisAr1zBGCY5s+28XZu
+         H24Ds/MtySROKDEblQJNRO5q7X1e7X7P22g64q+r61cdfcoZPPXMi7qcjHg+uoQ+NfLd
+         7SwRmpTUDZH3Se/AoUNxri5BL3y/sioLq0Z7b0hPw7gLr4Koqt4604EFN6eh+enNcmEq
+         qO1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678451923;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9IX6n3R9tmypqwMPDlg11PCUPSwGvgS1BjR4qCrYIiY=;
+        b=tDZugC6+jSkqTxZwnEMKaP2FcOjcDucXKbfQHYHqDr6g73bLzYF1gPJ42W9foa7hg5
+         U/L4lg1qp8Fk/vBL+iz6uBFdxIwcXWhpsujVlVoaS28BYSgzcb79TYmZG65ZseycdKCw
+         QT3RC2fDTluveqj6MtdQYCtugdy4tIXIqB82o6gChxG6sDraYJtMKSUMXVeftiAIO6Of
+         YrZiaU8TQAkLkJn7I24nozKHvYIc+TZ3K1/S6rRE4peKj9ot7zxBXnNyraWAjWtPZ3ed
+         VaXBvD8u2aouCvIRaHIPyts9DUMDYCDwLtLZxq861H+YvE5bLpGqhEBL4IgpvLbKyW04
+         E5Kg==
+X-Gm-Message-State: AO0yUKVoHypHc6PmkycHJlsALzQda3ctiCdkE+oPvvQoeTfHuRFZtwvf
+        Hx9z5SXG4+Vn8/GkKXOod2YHLjd5LbqXNLbgxIV9iUpLIAY=
+X-Google-Smtp-Source: AK7set+S3Ua8PAyB1CxKQTcJibY2phrVZejAOl8h815Kh7NHa1+jKkFagrB09BfS7bhTcrZNjPENWJoQ8JVY4jcsAug=
+X-Received: by 2002:a25:8d89:0:b0:b33:531b:3dd4 with SMTP id
+ o9-20020a258d89000000b00b33531b3dd4mr95254ybl.1.1678451923493; Fri, 10 Mar
+ 2023 04:38:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ebIoBB6Cye5pTT8I"
-Content-Disposition: inline
-In-Reply-To: <ZArvkVPhF4Th424Z@coredump.intra.peff.net>
+References: <CAP8UFD3jzX5zRRYKS5uES2X9vB4eKJruzT7o6+7KytqLSmmZRg@mail.gmail.com>
+ <CAP8UFD20=SScM3XA4mjiNs=rHJY3i_9MOcL8uxsFT-mn1-JH1A@mail.gmail.com> <07423D73-8CD9-498B-89E7-7241AC6490D3@gmail.com>
+In-Reply-To: <07423D73-8CD9-498B-89E7-7241AC6490D3@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 10 Mar 2023 13:38:32 +0100
+Message-ID: <CAP8UFD2qvvjy47=7Zu=jHOHAziG8=vLXje_MW4QrZ-Jrx_wZNA@mail.gmail.com>
+Subject: Re: GSoC 2023
+To:     Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc:     git <git@vger.kernel.org>, Victoria Dye <vdye@github.com>,
+        Hariom verma <hariom18599@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Kaartic,
 
---ebIoBB6Cye5pTT8I
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Mar 9, 2023 at 6:19=E2=80=AFPM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
 
-On Fri, Mar 10, 2023 at 03:51:29AM -0500, Jeff King wrote:
-> On Fri, Mar 10, 2023 at 07:52:10AM +0100, Patrick Steinhardt wrote:
-[snip]
-> >  builtin/receive-pack.c | 14 ++++++++++----
-> >  1 file changed, 10 insertions(+), 4 deletions(-)
->=20
-> There's no test here, and I think we _could_ make a reliable one with
-> something like:
->=20
->   1. Have a proc-receive hook that signals via fifo that it's running,
->      then pauses indefinitely.
->=20
->   2. Start a push in the background, then wait on the fifo signal.
->=20
->   3. Kill receive-pack.
->=20
-> But it's awfully complicated for little gain. I'm fine with not worrying
-> about it (and I did something similar manually to make to sure it works
-> as we expect).
+> On 9 March 2023 3:47:51 pm IST, Christian Couder <christian.couder@gmail.=
+com> wrote:
+> >
+> >Today is supposed to be the deadline for each project to have at least
+> >2 Org Admins for GSoC 2023, but it looks like I am the only one and
+> >cannot add a second one because of the bugs.
+> >
+>
+> I suppose you should now see me as an Org admin for the 2023 program.
 
-I actually tried doing exactly what you're proposing here yesterday. It
-caused hangs, lingering processes, you had to play games to not trigger
-the &&-chain linter due to the backgrounding via &, and ultimately it
-somehow just didn't work.
+Yeah, I see you as an Org Admin and Victoria and Hariom as mentors.
 
-So at some point I came to the same conclusion as you did, that it's
-just too complicated for little gain.
+> I thought I was already in as an Org Admin but I somehow have missed comp=
+leting the process. Sorry about that.
 
-Thanks.
+No worries. Thanks for doing it!
 
-Patrick
+> >I have emailed gsoc-support@google.com to get support and will see what =
+happens.
+> >
+> >Let me know if you have ideas about this.
+>
+> The thing is potential mentors need to login to the GSoC portal and accep=
+t org member agreement and program rules. After you (or any Org Admin) shou=
+ld be able to add that person to the program. Here's the relevant snippet f=
+rom Google's mail:
 
---ebIoBB6Cye5pTT8I
-Content-Type: application/pgp-signature; name="signature.asc"
+I see. Thanks for figuring that out! I guess I was too focused on the
+Firefox login bug, that I thought there were actually more bugs...
 
------BEGIN PGP SIGNATURE-----
+> Victoria and Hariom,
+>
+> Do kindly log into the portal and complete the process and let us know. O=
+nce that's done, we'll add you as mentors to the 2023 GSoC program.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQLGS8ACgkQVbJhu7ck
-PpSNRg/9FWzukSxjRMsL6RjIxwvymPfVi3VLHx7FV4DUYCQ5d3U63JuyOp4C+T7J
-Mx8lpEC6xBWWqN/0zGhMMP/y9pewXy7DrwhBL24OL/mbhztrL9LUrsX75KZI2QTw
-sTHl/GPBp/G9Sa2mKzxhOMUf6hgopGgxE1eUBBRIEjRxfQpfAwohPvFPtJQ5WdO8
-eYVe35F6uQmOzSUQJyrrQr48sbcLk3dtF2m6AxcicoKBciBgu3VzI7dm9ydPX2U2
-YrZpDnDWHFxA22CJUNHQj20oApKhqUJE2UomIn+TUYE+JusHGH39ZApL0Ib3Nkei
-9je5VpGhEtLw5ryfojEMVqnTgZ4YuAVFOCqtBb2M8/myjTF9f1Kgm4MF/m5yXYbf
-asZhh71MOM8Dkv82rKabj7wNJJwLhgJLguRIWQlA3Oomh2UzLnhqo6TrhmwFjZL7
-o6/w2jVQ8A9M/Yu190bhuJWLmrZQevg6NqZrqCRFSyb/+9dogu1W69SJ+IPwPstm
-bhIsKnkCgf/nfPoILXneG06oL8N6WC92Gg0/HIP+iCHReIdCCjrBRCacCL2DXnie
-RN1xiv1Ov9Or8NlvOXi81g+JzJaEPfIjlBIPa7Wn5KpVLwJhbgkCOUO6l/S51HGN
-wgi7FTF3+VY4KYk/oqoFeYyYXcnmdL9/MN3TGRbwv7/oraIgPvM=
-=d6jB
------END PGP SIGNATURE-----
-
---ebIoBB6Cye5pTT8I--
+Thanks Victoria and Hariom for completing the process too!
