@@ -2,264 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF941C678D5
-	for <git@archiver.kernel.org>; Sat, 11 Mar 2023 03:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA31BC61DA4
+	for <git@archiver.kernel.org>; Sat, 11 Mar 2023 06:00:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbjCKD1K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Mar 2023 22:27:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44324 "EHLO
+        id S229876AbjCKGAd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Mar 2023 01:00:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbjCKD1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Mar 2023 22:27:09 -0500
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48A56128003
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 19:27:07 -0800 (PST)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-536c02eea4dso135251617b3.4
-        for <git@vger.kernel.org>; Fri, 10 Mar 2023 19:27:07 -0800 (PST)
+        with ESMTP id S229603AbjCKGAb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Mar 2023 01:00:31 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D065D122CF1
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 22:00:29 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id 6-20020a17090a190600b00237c5b6ecd7so11985897pjg.4
+        for <git@vger.kernel.org>; Fri, 10 Mar 2023 22:00:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678505226;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1678514429;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IYsImI8uDBa8u4cdQI0LW3ZiAlNrWEAjNIAXQKyhKvk=;
-        b=L7S52vHCSh+XN0J3/VBeqI2h3HqHtv3wm8PxDgw17Fn0QGR22uUlvm9aYPlp2ALk86
-         /lGIrIYKW672JUGPa0UnryUt2L6UgMjcoA0AU2hKVhqFmp0gn0cZ7p3+M5EWMrgsI4qM
-         UF4TGxtmf+RRCFNoBLCfMINUJxZXD5Zxzud5lI232nhxLen7NqCtTwrOBQQ0zebuXCTz
-         fnCRSJbxK8EQLbK1rV+UEzfn0guly+m+fkaHdXZMMjk9AYIBQHw4mVp5C6yXr29uZ635
-         qjmdhXgNhnXDVLE0BJeDZBNlsetNVtFJbXoDoYzJVqY4KgmEiv2e7GMQKbbyPjowiAvG
-         U2lQ==
+        bh=vkk9/5VlA2DLtwOzg5hUv6DLP+hzPbxLn3xL0hS4rZA=;
+        b=gJHTJF8d8sIHZxJfZUL2RpQk5CkrIHxkt4mDR2PfsVLAija1eF/yUnokJNa7YFM2FX
+         OXil4i2f+hXrrMeMLLcUvYUU0ZxZNSVFg2nLSppjBmMcK53RMzisySii0/v+YJGkou9H
+         LjyfHLyFS9qcDtYvLO6Nme4Y3/smltbGHF1+nmp9C+OlnRfh/FifphxsTIv6oVMnvqVS
+         OYvnK5Yl3aMEzL4I7pif7w4/4zUjKIpvVW6FuyLGK6w5XyJMGrORsLCVlqUdkOgBdw1c
+         O2SrsqNsx4+/z+OzvN9mGKebDy5aRCEXFLNJu08JPcLTb8xTJR+iLFahRXpFfdIAz8uI
+         tJTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678505226;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1678514429;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IYsImI8uDBa8u4cdQI0LW3ZiAlNrWEAjNIAXQKyhKvk=;
-        b=uEHuLlXr0SQSv47SD93G2ZZMFCBHIxAfOq4h1rx6aikk3e+awxFTfTI/ykgzngtEVM
-         QTeaNfyC/G5UPwhwgdr1iRLEmoPA0ZFLpY4uMRNQCbZswCv3+u0C3s1rRMhJHdk5B53a
-         NHurRG3qAtQHhgX963EjtOCA3DmnFzl0YLgK62zvilY9Q3me6Zi75BD6GoF24MuHR5t7
-         PYR4YwguLsoYDSekVvVJJwESEtjBGzPr15IqyYoSoaoGAynQaiTXYBTGrsRPTg++7X1y
-         4yAQMxu7SzqCpJcGZJSpSrwHrBmtNCqpLhmcTEgAOEiovUq9n3qLH3/io27/4CG6Clxq
-         uA6w==
-X-Gm-Message-State: AO0yUKV4FzX21zqpUmWOsZO9xiXKStoNxvATWla+X4KFycrSwltQ7Qv9
-        GGubHaRLfiWZsjEry2U3e1AqeU4dpZkaxCYZ/5LBXRZO+H4=
-X-Google-Smtp-Source: AK7set8gZQs7Xs9r7G24gGevIR0Lig6LqoSozkl5FwFejMfXltpozf23jDl2ajObnDeHP9QweTerkLHMJ/CNFNBSRR0=
-X-Received: by 2002:a81:b288:0:b0:52e:ee55:a81e with SMTP id
- q130-20020a81b288000000b0052eee55a81emr17762285ywh.7.1678505226364; Fri, 10
- Mar 2023 19:27:06 -0800 (PST)
+        bh=vkk9/5VlA2DLtwOzg5hUv6DLP+hzPbxLn3xL0hS4rZA=;
+        b=o5A41u+bNT0GqzGAhGAeidv/tGpLD+w6x8Zug1he9e0Ton0JjRSnL29jRF3HCKUCfa
+         J+Gh9+KolCQmIk4GLzBCKl/RgQVUWgN3AyfRpHsQuakLSfmQAWPg9nLbgPl7v8csjZiU
+         uabIrPdGmxiLidYAgl9vFfIMJ8Ipg2nfbUndFUkiF+CO09Mt1xxH4eQWvtrsdOYh7ePn
+         T1ZFJUiLybxIa5bmVEfJKSDWaigiy8qIiW4ok8Fphj/RjHpOdfvX3HUKWV0d4euJW1At
+         dfSCX3tVMyWmPtNYT5v8XrFcXRX7RwmI+Bqa0LABwZGUNkqDJTGgobLxPTLYbnJHZ6uG
+         N0tA==
+X-Gm-Message-State: AO0yUKVKZuLVBSimxdu4e+IIG7r148slmFpOQT+Q1C70k+lE1d6Ex7dB
+        fDUpmcVzRAykg6hZBvHb/NM5apjqZwY=
+X-Google-Smtp-Source: AK7set8stL4HW4Oq1wm61B104Rkq0Rciy9WQ8PIp30H8fHA7HKxR7Paq+VRiR1EGThohfW0Fv758Hg==
+X-Received: by 2002:a17:902:ea11:b0:194:cc66:66f7 with SMTP id s17-20020a170902ea1100b00194cc6666f7mr34149147plg.19.1678514429141;
+        Fri, 10 Mar 2023 22:00:29 -0800 (PST)
+Received: from fivlite-virtual-machine.localdomain ([49.37.146.161])
+        by smtp.gmail.com with ESMTPSA id n12-20020a63e04c000000b004f27761a9e7sm809213pgj.12.2023.03.10.22.00.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Mar 2023 22:00:28 -0800 (PST)
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, jonathantanmy@google.com
+Subject: Re: [PATCH] index-pack: remove fetch_if_missing=0
+Date:   Sat, 11 Mar 2023 11:30:12 +0530
+Message-Id: <20230311060012.22031-1-five231003@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <xmqqzg8k4ad9.fsf@gitster.g>
+References: <xmqqzg8k4ad9.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20230310214515.39154-1-felipe.contreras@gmail.com> <xmqq7cvoywzx.fsf@gitster.g>
-In-Reply-To: <xmqq7cvoywzx.fsf@gitster.g>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Fri, 10 Mar 2023 21:26:54 -0600
-Message-ID: <CAMP44s0CBum1JZyP57NinikWSXg9KuGBKDAoozmnen1akvGMDA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/3] Support for tail (branch point) experiment
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Antoine_Beaupr=C3=A9?= <anarcat@debian.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 10, 2023 at 6:04=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Sat, 11 Mar 2023 at 02:01, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> [...]
 >
-> > This is *not* meant a serious proposal, it's just an exploration of an
-> > idea.
+> Two requests.
 >
-> It is easy to explain and understand the benefit of keeping a
-> separate pointer to the bottom [*] of the branch on top of which the
-> history leading to the commit at the tip of the branch has been
-> built, but the devil is in the details of how such a bottom pointer
-> will be maintained.
+>  * Could you substantiate this claim for future readers of "git
+>    log"?  A reference to an old mailing list discussion or a log
+>    message of the commit that added the temporary measure that says
+>    the above plan would be perfect.
 >
->     side note: below, I use "bottom" because for me it is the most
->     natural term to refer to the starting end of the range of
->     commits.  In the context of this topic, readers can replace any
->     "bottom" they see with "tail", if they prefer.
-
-Perhaps @{base} would be better (I think that was my original name).
-Mercurial has an experimental feature called "topics", and that's the
-name they use for the starting point of a topic.
-
-> In a sense, this is very similar to the idea of "notes".  It is easy
-> to explain and understand that a bag of objects, in which additional
-> data can be associated with an object name, can be used to keep
-> track of extra data on commits (and other objects) after they are
-> created without invalidating their object name.  As long as they are
-> copied/moved when a commit is used to create another copy of it.
-> The "notes" are automatically copied across "rebasing", which is one
-> of the many details that makes the "notes" usable, but cherry-pick
-> that does not honor notes.rewriteRef sometimes leads to frustration.
-
-I implemented that in 2014 [1].
-
-There's no actual reason for that to not work in 2023 if we wanted.
-
-But this is an argument in favor of @{base} (or whatever): even if
-notes are not perfect, they still can be useful in certain situations,
-and it's certainly better than not having that information. Similarly,
-@{base} doesn't have to be perfect in the first iteration, the natural
-points in which it's updated can be implemented later, by just
-existing it would provide some potentially useful information to the
-user, which is better than nothing.
-
-> Creation of a new branch with "git branch" would be an obvious point
-> to add such a bottom pointer, and "git rebase" is a good point to
-> update such a bottom pointer.  But there are many other ways that
-> people update their branches, depending on the workflow, and
-> guessing when to update the bottom pointer and trying to be complete
-> with the heuristics will lead to the same "no, we do not know all
-> users' workflows" that made approaches based on reflog parsing
-> etc. fail to solve the "where did the branch start?" puzzle.
+>  * What exactly does "once the commands have been taught"?  Which
+>    commands?  Could you clarify?
 >
-> And I think what is sketched in these RFC patches can be a good
-> starting point for a solution that strikes a good balance.  "git
-> rebase", which is the most common way to mangle branches, is taught
-> to update the bottom pointer automatically.
+
+Will do the change.
+
+> > Hence, use has_object() to check for the existence of an object, which
+> > has the default behavior of not lazy-fetching in a partial clone. It is
+> > worth mentioning that this is the only place where there is potential for
+> > lazy-fetching and all other cases are properly handled, making it safe to
+> > remove this global here.
 >
-> Giving users an explicit way to set the bottom when manipulating
-> branches would help those who mangle their branches with something
-> other than "git rebase" in the most trivial form.  I suspect that is
-> still missing in this RFC?
-
-Yes, we would want a way to update the base manually, just like with
-@{upstream}.
-
-> Of course other things on the consuming side may be missing, like
-> send-email or format-patch, but they are a lot more trivial to add and
-> will be useful.  As long as the bottom pointer is properly maintained,
-> that is.
-
-Yes, but that can be done later. If @{base} is useful and updated in a
-good enough manner, users are obviously going to want it used in tools
-like `git send-email`, but even before that, just being able to do
-`@{base}..` is useful (even if manually).
-
-> A few of the things that I often do to mangle my branches are
-> listed.  Some of them are not application of "git rebase" in the
-> trivial form:
+> This paragraph is very well explained.
 >
->  * I have a patch series (single strand of pearls).  I update on
->    top of the updated upstream:
+
+Thanks.
+
+> > @@ -1728,14 +1727,6 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+> >       int report_end_of_input = 0;
+> >       int hash_algo = 0;
+> > 
+> > -     /*
+> > -      * index-pack never needs to fetch missing objects except when
+> > -      * REF_DELTA bases are missing (which are explicitly handled). It only
+> > -      * accesses the repo to do hash collision checks and to check which
+> > -      * REF_DELTA bases need to be fetched.
+> > -      */
 >
->     $ git rebase -i --onto master @{bottom}
->     $ git range-diff @{bottom}@{1}..@{1} @{bottom}..HEAD
+> OK.  The comment describes the design choice we made to flip the
+> fetch_if_missing flag off.  The old world-view was that we would
+> notice a breakage by non-functioning index-pack when a lazy clone is
+> missing objects that we need by disabling auto-fetching, and we
+> instead explicitly handle any missing and necessary objects by lazy
+> fetching (like "when we lack REF_DELTA bases").  It does sound like
+> a conservative thing to do, compared to the opposite approach we are
+> taking with this patch, i.e. we would not fail if we tried to access
+> objects we do not need to, because we have lazy fetching enabled,
+> and we just ended up with bloated object store nobody may notice.
 >
->    No, this is not what "I often do" yet, but I hope to see become
->    doable.  Rebase the current branch from its bottom on top of the
->    master, and then take the range diff between the old branch
->    (i.e. @{bottom} refers to the bottom pointer, but because it is
->    implemented as a ref, its reflog knows what the previous value of
->    it was---@{bottom}@{1}..@{1} would be the range of commits on the
->    branch before I did the above rebase) and the new one.
-
-That would work only if the last update was a rebase. To make it work
-reliably we would need some sort of branchlog.
-
-Personally I have a similar use case, but I want to use range-diff
-mainly before sending a patch series. What my tool `git send-series`
-does is store for example `refs/sent/test-aggregate/v2` and
-`refs/sent/test-aggregate/v2-tail`. Conceptually this is v2 of the
-patch series.
-
->  * I have 7 patch series (single strand of pearls).  I only need to
->    touch the top 3.
+> To protect us from future breakage that can come from the new
+> approach, it is a very good thing that you added new tests to ensure
+> no unnecessary lazy fetching is done (I am not offhand sure if that
+> test is sufficient, though).
 >
->     $ git rebase -i HEAD~3
->     $ git range-diff @{1}...
+> > -     fetch_if_missing = 0;
 >
->    In this case, I am not updating the bottom to HEAD~3 and reducing
->    the branch into 3-patch series.  I am keeping the bottom of the
->    branch, and the commits that happen to be updated are only the
->    topmost 3.
-
-Right, maybe the base should be updated only when --onto is supplied,
-or perhaps even a new --base option so it's clear the user wants the
-new behavior.
-
->  * In the same situation, but the top 3 in the original are so bad
->    that I am better off redoing them from scratch, taking advantage
->    of new features in 'master'.
+> Looking good to me.  Jonathan, who reviewed the previous round, do
+> you have any comments?
 >
->     $ git checkout --detach master
->     ... work on detached HEAD ...
->     ... first pick the bottom commits ...
->     $ git cherry-pick master..@{-1}~3
->     ... still working on detached HEAD ...
->     ... redo the topmost commits from scratch ...
->     $ git range-diff master..@{-1} master..
->     $ git checkout -B @{-1}
+> Thanks, all.  Will queue.
 >
->    I do not mind "checkout -B" *not* learning any trick to
->    automatically update the bottom pointer for the branch to
->    'master' in this case, but I should be able to manually update
->    the bottom of the branch easily.  Something like "git checkout -B
->    @{-1} --set-bottom=3Dmaster" might be acceptable here.
 
-Yes, something like that would be needed.
+It does seem that the tests need to be changed significantly. Will do.
 
-One obvious use case for me is "show me the current branch", as in
-`git log @{base}..@`. Because `git log` is very efficient that's
-usually not necessary, but I often launch `gitk`, and it's annoying
-that it tried to load *all* the commits reachable, wasting resources
-and polluting the view, which is why I started developing a tool that
-essentially did `gitk $1@{u}..$1`, but that quickly becomes complex if
-upstream isn't configured. With my tool I can do `git vs` (show the
-current branch visually), or `git ls` (show the current branch on the
-command line).
+> > diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+> > index f519d2a87a..46af8698ce 100755
+> > --- a/t/t5616-partial-clone.sh
+> > +++ b/t/t5616-partial-clone.sh
+> > @@ -644,6 +644,41 @@ test_expect_success 'repack does not loosen promisor objects' '
+> >       grep "loosen_unused_packed_objects/loosened:0" trace
+> >  '
+> > 
+> > +test_expect_success 'index-pack does not lazy-fetch when checking for sha1 collsions' '
+> > +     rm -rf server promisor-remote client repo trace &&
+> > +
+> > +     # setup
+> > +     git init server &&
+> > +     for i in 1 2 3 4
+> > +     do
+> > +             echo $i >server/file$i &&
+> > +             git -C server add file$i &&
+> > +             git -C server commit -am "Commit $i" || return 1
+> > +     done &&
+> > +     git -C server config --local uploadpack.allowFilter 1 &&
+> > +     git -C server config --local uploadpack.allowAnySha1InWant 1 &&
+> > +     HASH=$(git -C server hash-object file3) &&
+> > +
+> > +     git init promisor-remote &&
+> > +     git -C promisor-remote fetch --keep "file://$(pwd)/server" &&
+> > +
+> > +     git clone --no-checkout --filter=blob:none "file://$(pwd)/server" client &&
+> > +     git -C client remote set-url origin "file://$(pwd)/promisor-remote" &&
+> > +     git -C client config extensions.partialClone 1 &&
+> > +     git -C client config remote.origin.promisor 1 &&
+> > +
+> > +     git init repo &&
+> > +     echo "5" >repo/file5 &&
+> > +     git -C repo config --local uploadpack.allowFilter 1 &&
+> > +     git -C repo config --local uploadpack.allowAnySha1InWant 1 &&
+> > +
+> > +     # verify that no lazy-fetching is done when fetching from another repo
+> > +     GIT_TRACE_PACKET="$(pwd)/trace" git -C client \
+> > +                                     fetch --keep "file://$(pwd)/repo" main &&
+> > +
+> > +     ! grep "want $HASH" trace
+> > +'
+> > +
+> >  test_expect_success 'lazy-fetch in submodule succeeds' '
+> >       # setup
+> >       test_config_global protocol.file.allow always &&
 
-Weirdly enough, Mercurial's new topic extension has a command that
-shows precisely that `hg stack` shows only the commits on the current
-topic (starting from a base).
-
-And this reminds me of the previous discussion: What actually is a branch? =
-[2]
-
-If we can agree that `branch@{base}..branch` semantically is
-*something* (whatever you want to call it), then it might make sense
-to have a way to refer to it, for example `branch^b` or `branch+`.
-
-Then interesting combinations immediately become obvious, for example your:
-
-    git range-diff @{bottom}@{1}..@{1} @@{bottom}..@
-
-Becomes:
-
-    git range-diff @{1}+ @+
-
-Then if we expand that we can see that @{base} should be an operation
-on @{1} (@{1}@{base}), not the other way around.
-
-> IOW, I do not mind if maintenance of the bottom of the branch is not
-> always automatic (and prone to heuristic making an incorrect guess).
-> But I think we should make sure it is easy for the user to assist
-> the tool to maintain it correctly [*].
->
->     Side note: and that is what I find "frustrating" in the "notes"
->     world.  "notes" can be copied after cherry-pick manually, but
->     that is a very tedious process, and at some point, being "merely
->     possible" stops to have much value, unless it is "easily
->     doable".
-
-Agreed. Similarly, I did not start to use @{upstream} until it was easy to =
-use.
-
-But again: @{upstream} was not easy to use at the start, and @{base}
-doesn't have to be either.
-
-I think the important thing to not forget is that this is useful
-information, and many would argue git is missing it.
-
-Cheers.
-
-[1] https://lore.kernel.org/git/1398307491-21314-13-git-send-email-felipe.c=
-ontreras@gmail.com/
-[2] https://lore.kernel.org/git/60e61bbd7a37d_3030aa2081a@natae.notmuch/
-
---=20
-Felipe Contreras
+Thanks
