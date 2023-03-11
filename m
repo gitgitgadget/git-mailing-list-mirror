@@ -2,428 +2,365 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90E93C6FD1C
-	for <git@archiver.kernel.org>; Sat, 11 Mar 2023 21:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F015C6FD1F
+	for <git@archiver.kernel.org>; Sat, 11 Mar 2023 23:42:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229614AbjCKVHF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Mar 2023 16:07:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54614 "EHLO
+        id S229473AbjCKXmp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Mar 2023 18:42:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjCKVHE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Mar 2023 16:07:04 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29163559C5
-        for <git@vger.kernel.org>; Sat, 11 Mar 2023 13:07:02 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id l7-20020a05600c4f0700b003e79fa98ce1so5545119wmq.2
-        for <git@vger.kernel.org>; Sat, 11 Mar 2023 13:07:02 -0800 (PST)
+        with ESMTP id S229515AbjCKXmn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Mar 2023 18:42:43 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D3135FEA3
+        for <git@vger.kernel.org>; Sat, 11 Mar 2023 15:42:36 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id f11so8207294wrv.8
+        for <git@vger.kernel.org>; Sat, 11 Mar 2023 15:42:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678568820;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uOEwSdUxIy+bVjcD4uYMtfp6WhKFF0NsFJ0SuI02ZUo=;
-        b=JLfF8RgjC9Z+c1yurbqGt14XgR11A4klmFyawkOuR5O5Jf00RXglG1RcBRyxIV0Wpg
-         cpZaCtKR32v1k/3VTDCT8sClA3FNV09IZyzUnIUKmcLgJEawQnkS1E4FpkeyOrvQIVkY
-         AzEhjM8+PC4EBa+8Y9lpkl24z/JqyBaNRR5AQspQoZazUpLOGxaXCc58HqYiqAQQGag8
-         dBnTsZFJ/2cGJ5cTcxSPmj4gAvp6obAlA7oOlpyPrM4NHbHdw+dztyLaCXb4EAGMo/zr
-         ES7ju747tztHWE6wUVijUCnPhplHu1Jep1e9RVeerPDDVtiy4lYDZBdwLpQK7lebSSuK
-         TU8g==
+        d=gmail.com; s=20210112; t=1678578155;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q0OZ5JEOg/cYzU6XTRzzY+FCPI+dkfKo/mn0zJvljC0=;
+        b=bc5W9UnerfcU/4IvOYQ64kIt2i6+eIu+Nwb4eC3yz76wqhstJg9STBerv2hwHziN8I
+         G7LyFb6AnImhEHmyQQthXwTnmfeEXKoWKxN9YBuRNdi6oN+xA1ermcyyw29cQ2IFA20q
+         OwBO+EvzfDVxOF1qtLK7vMZh0sHgEekDVTJezP1VlnURfFp+EwhF0NMijPrcqIw/z1az
+         pCUUla48ZgowrFFqdh2oGtX+cOVidAOJg2YtjPf2M8HNHeJGHdWhraIwf1l9KvG8wcbu
+         PCTV2l0WTbOaH8A2D7dKQrh+svvu7o21bFp7+JcBN/E/dA6MKws0noEoafJvbA7S85Zl
+         itvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678568820;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uOEwSdUxIy+bVjcD4uYMtfp6WhKFF0NsFJ0SuI02ZUo=;
-        b=1YqZWCrd2P0d867diNDUsOuuf78wycWnTA2wd4nT8nz/PIqasRqvORAMjHQZiO8Ey1
-         A4CVitZt73nDOufbQ1xqWzPbOU0nT5B5XigfUpdEZoLoUT6SyogXYSCXApX0VM1b0o4O
-         YG+xGwAlVEpdpsLv9u6U4+ZH+PLqAovm+0PWMIpHU9dWdDH8slHBDymEw7WPrOYwxfZi
-         LI3yOIq4xRSk+mtH/Bdpy3T/GuvNcGolWXMeNfiNQxoGc0j9qvHdReYQR/xu0WNaKLIZ
-         nWA8oRx1pfyTR4hf00MPSNsZvw3dsWCP5NtKMTN7VKqld+Yrb9LjZr/FcTFj2/K4gtJK
-         j9JQ==
-X-Gm-Message-State: AO0yUKXBcQmD9yqhWTZE8liEHRaFgoqY5VFR8LZreYNgqeGv0iK5sNhQ
-        fCZAwYNrptenbdwf/6q8R4fS4OOcm+zKOUGM
-X-Google-Smtp-Source: AK7set9VlmKGwMnB7co8CZrVeqj20/KBqkTh6SGMOPy7uu1TvyvcIeRSCGo8XhU/CdL+5sxguDVSyQ==
-X-Received: by 2002:a05:600c:3b11:b0:3eb:38b0:e757 with SMTP id m17-20020a05600c3b1100b003eb38b0e757mr5281510wms.10.1678568820169;
-        Sat, 11 Mar 2023 13:07:00 -0800 (PST)
-Received: from wilber4c.. ([197.239.13.29])
-        by smtp.gmail.com with ESMTPSA id w10-20020a5d608a000000b002c5493a17efsm3345137wrt.25.2023.03.11.13.06.57
+        d=1e100.net; s=20210112; t=1678578155;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q0OZ5JEOg/cYzU6XTRzzY+FCPI+dkfKo/mn0zJvljC0=;
+        b=46AFqdb/JZgwRUj5OZVuM3nNYfxAg1YqboFhueOLGlRhnLwKsut16bfIzFil0YyAIH
+         GssSRHhoPIp8KbnxnN8Tq4mqiUR82TSzWxk0gGE0f+7KnrwZyh9vGk5iIvbTbNbElB/S
+         XVITh9rXGNHDvnQUV6ge2h62xLslAybUdyST96M5sIbPr8aS7uYoGuHk15+pLiPG+84h
+         HAAd6QylBzx6CUNuuJtgNoNC1IOxQjaZwXhyo3aSGyzPFv+F2TwAwHaVmbRL0Mu4zuf7
+         BgRrC9DzzgcDRar0wry9dswo6jhLMoMd7rSXNG8fbsrbB1KsAVInCoeYhTUMcLi5TB00
+         buiw==
+X-Gm-Message-State: AO0yUKUgOHuHdMQgsDRMZD4rCjrnSfTIscd0CQ3ufMGRN1qLDt2zLoG6
+        STXDg3ipBwtwQGmwVtoAKMPCPdLDkhQ=
+X-Google-Smtp-Source: AK7set+Va8tEfZhsv45IKsOTZMENeHVAK0IJzYnizMxKaWQyrz8yHUMOwRiyhkcuOjpWW4aoCKyDMg==
+X-Received: by 2002:a5d:5582:0:b0:2ce:a162:784c with SMTP id i2-20020a5d5582000000b002cea162784cmr1984294wrv.65.1678578154697;
+        Sat, 11 Mar 2023 15:42:34 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c10-20020a056000104a00b002c70e60eb40sm3595541wrx.11.2023.03.11.15.42.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Mar 2023 13:06:59 -0800 (PST)
-From:   Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>,
-        Hariom Verma <hariom18599@gmail.com>,
-        Jaydeep Das <jaydeepjd.8914@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 1/1] ref-filter: add new "signature" atom
-Date:   Sat, 11 Mar 2023 16:06:07 -0500
-Message-Id: <20230311210607.64927-2-nsengiyumvawilberforce@gmail.com>
-X-Mailer: git-send-email 2.39.GIT
-In-Reply-To: <20230311210607.64927-1-nsengiyumvawilberforce@gmail.com>
-References: <20230116173814.11338-2-nsengiyumvawilberforce@gmail.com>
- <20230311210607.64927-1-nsengiyumvawilberforce@gmail.com>
-MIME-Version: 1.0
+        Sat, 11 Mar 2023 15:42:34 -0800 (PST)
+Message-Id: <pull.1467.git.git.1678578153640.gitgitgadget@gmail.com>
+From:   "Hugo Sales via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 11 Mar 2023 23:42:33 +0000
+Subject: [PATCH] Add `restore.defaultLocation` option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Hugo Sales <hugo@hsal.es>, Hugo Sales <hugo@hsal.es>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit duplicates the code for `signature` atom from pretty.c
-to ref-filter.c. This feature will help to get rid of current duplicate
-implementation of `signature` atom when unifying implementations by
-using ref-filter logic everywhere when ref-filter can do everything
-pretty is doing.
+From: Hugo Sales <hugo@hsal.es>
 
-Add "signature" atom with `grade`, `signer`, `key`,
-`fingerprint`, `primarykeyfingerprint`, `trustlevel` as arguments.
-This code and its documentation are inspired by how the %GG, %G?,
-%GS, %GK, %GF, %GP, and %GT pretty formats were implemented.
+This options allows control over which of `--worktree` or `--staged` is
+applied when `git restore` is invoked with neither
 
-Co-authored-by: Hariom Verma <hariom18599@gmail.com>
-Co-authored-by: Jaydeep Das <jaydeepjd.8914@gmail.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Hariom Verma <hariom18599@gmail.com>
-Signed-off-by: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+This patch is intended to reduce lost work to accidental `git restore .`
+when `git restore --staged .` was intended.
+
+Signed-off-by: Hugo Sales <hugo@hsal.es>
 ---
- Documentation/git-for-each-ref.txt |  27 ++++++
- ref-filter.c                       | 106 ++++++++++++++++++++++++
- t/t6300-for-each-ref.sh            | 128 +++++++++++++++++++++++++++++
- 3 files changed, 261 insertions(+)
+    Add restore.defaultLocation option
+    
+    This options allows control over which of --worktree or --staged is
+    applied when git restore is invoked with neither
+    
+    This patch is intended to reduce lost work to accidental git restore .
+    when git restore --staged . was intended.
+    
+    CC: Ævar Arnfjörð Bjarmason avarab@gmail.com, Jeff King peff@peff.net,
+    Victoria Dye vdye@github.com
+    
+    ------------------------------------------------------------------------
+    
+    I tried to send with git send-email, but I'm having problems. My mail
+    provider is mailbox.org and I'm getting Command unknown: 'AUTH' at
+    /usr/lib/git-core/git-send-email line 1691. Apologies if it actually
+    went through.
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 6da899c629..9a0be85368 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -212,6 +212,33 @@ symref::
- 	`:lstrip` and `:rstrip` options in the same way as `refname`
- 	above.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1467%2Fsomeonewithpc%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1467/someonewithpc/master-v1
+Pull-Request: https://github.com/git/git/pull/1467
+
+ Documentation/config.txt         |   2 +
+ Documentation/config/restore.txt |  13 ++++
+ Documentation/git-restore.txt    |  17 +++--
+ builtin/checkout.c               |  27 +++++++
+ t/t2070-restore.sh               | 124 +++++++++++++++++++++++++++++++
+ 5 files changed, 178 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/config/restore.txt
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0e93aef8626..4359c63794e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -501,6 +501,8 @@ include::config/repack.txt[]
  
-+signature::
-+	The GPG signature of a commit.
+ include::config/rerere.txt[]
+ 
++include::config/restore.txt[]
 +
-+signature:grade::
-+	Show "G" for a good (valid) signature, "B" for a bad
-+	signature, "U" for a good signature with unknown validity, "X"
-+	for a good signature that has expired, "Y" for a good
-+	signature made by an expired key, "R" for a good signature
-+	made by a revoked key, "E" if the signature cannot be
-+	checked (e.g. missing key) and "N" for no signature.
+ include::config/revert.txt[]
+ 
+ include::config/safe.txt[]
+diff --git a/Documentation/config/restore.txt b/Documentation/config/restore.txt
+new file mode 100644
+index 00000000000..479fd13ca24
+--- /dev/null
++++ b/Documentation/config/restore.txt
+@@ -0,0 +1,13 @@
++restore.defaultLocation::
++	Valid values: "worktree", "staged" or "both". Controls the default
++	behavior of `git restore` without `--worktree` or `--staged`. If
++	"worktree", `git restore` without `--worktree` or `--staged` is
++	equivalent to `git restore --worktree`. If "staged", `git restore`
++	without `--worktree` or `--staged` is equivalent to `git restore
++	--staged`. If "both", `git restore` without `--worktree` or `--staged`
++	is equivalent to `git restore --worktree --staged`. Adding an option
++	overrides the default, such that if the option is set to "staged",
++	specifying `--worktree` will only affect the worktree, not both. This
++	option can be used to prevent accidentally losing work by running `git
++	restore .` when `git restore --staged .` was intended.
++	See linkgit:git-restore[1]
+diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
+index 5964810caa4..28165861f55 100644
+--- a/Documentation/git-restore.txt
++++ b/Documentation/git-restore.txt
+@@ -14,14 +14,18 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
+-Restore specified paths in the working tree with some contents from a
++Restore specified paths in the working tree or index with some contents from a
+ restore source. If a path is tracked but does not exist in the restore
+ source, it will be removed to match the source.
+ 
+-The command can also be used to restore the content in the index with
++The command can be used to restore the content in the index with
+ `--staged`, or restore both the working tree and the index with
+ `--staged --worktree`.
+ 
++The config options `restore.defaultLocation`, which accepts values "worktree",
++"staged" or "both", can be used to control the default behavior for which
++flag(s) apply if neither `--staged` nor `--worktree` is supplied.
 +
-+signature:signer::
-+	The signer of the GPG signature of a commit.
-+
-+signature:key::
-+	The key of the GPG signature of a commit.
-+
-+signature:fingerprint::
-+	The fingerprint of the GPG signature of a commit.
-+
-+signature:primarykeyfingerprint::
-+	The Primary Key fingerprint of the GPG signature of a commit.
-+
-+signature:trustlevel::
-+	The Trust level of the GPG signature of a commit. Possible
-+	outputs are `ultimate`, `fully`, `marginal`, `never` and `undefined`.
-+
- worktreepath::
- 	The absolute path to the worktree in which the ref is checked
- 	out, if it is checked out in any linked worktree. Empty string
-diff --git a/ref-filter.c b/ref-filter.c
-index a24324123e..2a5c5e9508 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -144,6 +144,7 @@ enum atom_type {
- 	ATOM_BODY,
- 	ATOM_TRAILERS,
- 	ATOM_CONTENTS,
-+	ATOM_SIGNATURE,
- 	ATOM_RAW,
- 	ATOM_UPSTREAM,
- 	ATOM_PUSH,
-@@ -208,6 +209,10 @@ static struct used_atom {
- 		struct email_option {
- 			enum { EO_RAW, EO_TRIM, EO_LOCALPART } option;
- 		} email_option;
-+		struct {
-+			enum { S_BARE, S_GRADE, S_SIGNER, S_KEY,
-+			       S_FINGERPRINT, S_PRI_KEY_FP, S_TRUST_LEVEL} option;
-+		} signature;
- 		struct refname_atom refname;
- 		char *head;
- 	} u;
-@@ -394,6 +399,34 @@ static int subject_atom_parser(struct ref_format *format, struct used_atom *atom
- 	return 0;
+ By default, if `--staged` is given, the contents are restored from `HEAD`,
+ otherwise from the index. Use `--source` to restore from a different commit.
+ 
+@@ -59,9 +63,12 @@ all modified paths.
+ --worktree::
+ -S::
+ --staged::
+-	Specify the restore location. If neither option is specified,
+-	by default the working tree is restored. Specifying `--staged`
+-	will only restore the index. Specifying both restores both.
++	Specify the restore location. If neither option is specified, the
++	default depends on the `'restore.defaultLocation` config option, which
++	can be "worktree" (the default), "staged" or "both", to control which of
++	the two flags is assumed if none are given. Specifying `--worktree` will
++	only restore the worktree. Specifying `--staged` will only restore the
++	index. Specifying both restores both.
+ 
+ -q::
+ --quiet::
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index a5155cf55c1..5067753030b 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1922,6 +1922,30 @@ int cmd_switch(int argc, const char **argv, const char *prefix)
+ 	return ret;
  }
  
-+static int parse_signature_option(const char *arg)
++static const char *checkout_default_index_worktree;
++static int git_restore_config(const char *var, const char *value, void *cb)
 +{
-+	if (!arg)
-+		return S_BARE;
-+	else if (!strcmp(arg, "signer"))
-+		return S_SIGNER;
-+	else if (!strcmp(arg, "grade"))
-+		return S_GRADE;
-+	else if (!strcmp(arg, "key"))
-+		return S_KEY;
-+	else if (!strcmp(arg, "fingerprint"))
-+		return S_FINGERPRINT;
-+	else if (!strcmp(arg, "primarykeyfingerprint"))
-+		return S_PRI_KEY_FP;
-+	else if (!strcmp(arg, "trustlevel"))
-+		return S_TRUST_LEVEL;
-+	return -1;
-+}
++	struct checkout_opts *opts = cb;
 +
-+static int signature_atom_parser(struct ref_format *format UNUSED, struct used_atom *atom,
-+			       const char *arg, struct strbuf *err){
-+	int opt = parse_signature_option(arg);
-+	if (opt < 0)
-+		return err_bad_arg(err, "signature", arg);
-+	atom->u.signature.option = opt;
-+	return 0;
-+}
++	if (!strcmp(var, "restore.defaultlocation")) {
++		git_config_string(&checkout_default_index_worktree, var, value);
 +
- static int trailers_atom_parser(struct ref_format *format, struct used_atom *atom,
- 				const char *arg, struct strbuf *err)
- {
-@@ -631,6 +664,7 @@ static struct {
- 	[ATOM_BODY] = { "body", SOURCE_OBJ, FIELD_STR, body_atom_parser },
- 	[ATOM_TRAILERS] = { "trailers", SOURCE_OBJ, FIELD_STR, trailers_atom_parser },
- 	[ATOM_CONTENTS] = { "contents", SOURCE_OBJ, FIELD_STR, contents_atom_parser },
-+	[ATOM_SIGNATURE] = { "signature", SOURCE_OBJ, FIELD_STR, signature_atom_parser },
- 	[ATOM_RAW] = { "raw", SOURCE_OBJ, FIELD_STR, raw_atom_parser },
- 	[ATOM_UPSTREAM] = { "upstream", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
- 	[ATOM_PUSH] = { "push", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
-@@ -1362,6 +1396,77 @@ static void grab_person(const char *who, struct atom_value *val, int deref, void
- 	}
- }
- 
-+static void grab_signature(struct atom_value *val, int deref, struct object *obj)
-+{
-+	int i;
-+	struct commit *commit = (struct commit *) obj;
-+	struct signature_check sigc = { 0 };
-+	int signature_checked = 0;
-+
-+	for (i = 0; i < used_atom_cnt; i++) {
-+		struct used_atom *atom = &used_atom[i];
-+		const char *name = atom->name;
-+		struct atom_value *v = &val[i];
-+
-+		if (!!deref != (*name == '*'))
-+			continue;
-+		if (deref)
-+			name++;
-+
-+		if (!skip_prefix(name, "signature", &name) || (*name &&
-+			*name != ':'))
-+			continue;
-+		if (!*name)
-+			name = NULL;
-+		else
-+			name++;
-+		if (parse_signature_option(name) < 0)
-+			continue;
-+
-+		if (!signature_checked) {
-+			check_commit_signature(commit, &sigc);
-+			signature_checked = 1;
++		if (!strcmp(checkout_default_index_worktree, "both")) {
++			opts->checkout_index = -2;    /* default on */
++			opts->checkout_worktree = -2; /* default on */
++		} else if (!strcmp(checkout_default_index_worktree, "staged")) {
++			opts->checkout_index = -2;    /* default on */
++			opts->checkout_worktree = -1; /* default off */
++		} else {
++			opts->checkout_index = -1;    /* default off */
++			opts->checkout_worktree = -2; /* default on */
 +		}
-+
-+		if (atom->u.signature.option == S_BARE)
-+			v->s = xstrdup(sigc.output ? sigc.output: "");
-+		else if (atom->u.signature.option == S_SIGNER)
-+			v->s = xstrdup(sigc.signer ? sigc.signer : "");
-+		else if (atom->u.signature.option == S_GRADE) {
-+			switch (sigc.result) {
-+			case 'G':
-+				switch (sigc.trust_level) {
-+				case TRUST_UNDEFINED:
-+				case TRUST_NEVER:
-+					v->s = xstrfmt("%c", (char)'U');
-+					break;
-+				default:
-+					v->s = xstrfmt("%c", (char)'G');
-+					break;
-+				}
-+				break;
-+			case 'B':
-+			case 'E':
-+			case 'N':
-+			case 'X':
-+			case 'Y':
-+			case 'R':
-+				v->s = xstrfmt("%c", (char)sigc.result);
-+			}
-+		}
-+		else if (atom->u.signature.option == S_KEY)
-+			v->s = xstrdup(sigc.key ? sigc.key : "");
-+		else if (atom->u.signature.option == S_FINGERPRINT)
-+			v->s = xstrdup(sigc.fingerprint ? sigc.fingerprint : "");
-+		else if (atom->u.signature.option == S_PRI_KEY_FP)
-+			v->s = xstrdup(sigc.primary_key_fingerprint ? sigc.primary_key_fingerprint : "");
-+		else if (atom->u.signature.option == S_TRUST_LEVEL)
-+			v->s = xstrdup(gpg_trust_level_to_str(sigc.trust_level));
++		return 0;
 +	}
-+	if (signature_checked)
-+		signature_check_clear(&sigc);
++	return git_xmerge_config(var, value, NULL);
 +}
 +
- static void find_subpos(const char *buf,
- 			const char **sub, size_t *sublen,
- 			const char **body, size_t *bodylen,
-@@ -1555,6 +1660,7 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, s
- 		grab_sub_body_contents(val, deref, data);
- 		grab_person("author", val, deref, buf);
- 		grab_person("committer", val, deref, buf);
-+		grab_signature(val, deref, obj);
- 		break;
- 	case OBJ_TREE:
- 		/* grab_tree_values(val, deref, obj, buf, sz); */
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index 2ae1fc721b..c74e2ca169 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -6,6 +6,7 @@
- test_description='for-each-ref test'
++
+ int cmd_restore(int argc, const char **argv, const char *prefix)
+ {
+ 	struct checkout_opts opts;
+@@ -1942,6 +1966,7 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
+ 	struct branch_info new_branch_info = { 0 };
  
- . ./test-lib.sh
-+GNUPGHOME_NOT_USED=$GNUPGHOME
- . "$TEST_DIRECTORY"/lib-gpg.sh
- . "$TEST_DIRECTORY"/lib-terminal.sh
+ 	memset(&opts, 0, sizeof(opts));
++
+ 	opts.accept_ref = 0;
+ 	opts.accept_pathspec = 1;
+ 	opts.empty_pathspec_ok = 0;
+@@ -1950,6 +1975,8 @@ int cmd_restore(int argc, const char **argv, const char *prefix)
+ 	opts.checkout_worktree = -2; /* default on */
+ 	opts.ignore_unmerged_opt = "--ignore-unmerged";
  
-@@ -1464,4 +1465,131 @@ sig_crlf="$(printf "%s" "$sig" | append_cr; echo dummy)"
- sig_crlf=${sig_crlf%dummy}
- test_atom refs/tags/fake-sig-crlf contents:signature "$sig_crlf"
++	git_config(git_restore_config, &opts);
++
+ 	options = parse_options_dup(restore_options);
+ 	options = add_common_options(&opts, options);
+ 	options = add_checkout_path_options(&opts, options);
+diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
+index 7c43ddf1d99..6e9b06e0bf4 100755
+--- a/t/t2070-restore.sh
++++ b/t/t2070-restore.sh
+@@ -137,4 +137,128 @@ test_expect_success 'restore --staged invalidates cache tree for deletions' '
+ 	test_must_fail git rev-parse HEAD:new1
+ '
  
-+GRADE_FORMAT="%(signature:grade)%0a%(signature:key)%0a%(signature:signer)%0a%(signature:fingerprint)%0a%(signature:primarykeyfingerprint)"
-+TRUSTLEVEL_FORMAT="%(signature:trustlevel)%0a%(signature:key)%0a%(signature:signer)%0a%(signature:fingerprint)%0a%(signature:primarykeyfingerprint)"
++test_expect_success 'restore with restore.defaultLocation unset works as if --worktree given' '
++	test_when_finished git reset --hard HEAD^ &&
++	test_commit root-unset-restore.defaultLocation &&
++	test_commit unset-restore.defaultLocation one one &&
++	> one &&
 +
-+test_expect_success GPG 'test bare signature atom' '
-+	git checkout -b signed &&
-+	echo 1 >file && git add file &&
-+	test_tick && git commit -S -m initial &&
-+	git verify-commit signed 2>out_orig &&
-+	grep -v "checking the trustdb" out_orig >out &&
-+	head -3 out >expected &&
-+	tail -1 out >>expected &&
-+	echo >>expected &&
-+	git for-each-ref refs/heads/signed --format="%(signature)" >actual &&
-+	test_cmp expected actual
++	git restore one &&
++	test -z $(git status --porcelain --untracked-files=no) &&
++
++	> one &&
++	git add one &&
++	git restore one &&
++	git status --porcelain --untracked-files=no | grep "^M " &&
++
++	> one &&
++	git add one &&
++	git restore --worktree one &&
++	git status --porcelain --untracked-files=no | grep "^M " &&
++
++	git restore --staged one &&
++	git status --porcelain --untracked-files=no | grep "^ M" &&
++
++	> one &&
++	git add one &&
++	git restore --worktree --staged one &&
++	test -z $(git status --porcelain --untracked-files=no)
 +'
 +
-+test_expect_success GPG 'show good signature with custom format' '
-+	echo 2 >file && git add file &&
-+	test_tick && git commit -S -m initial &&
-+	git verify-commit signed 2>out &&
-+	cat >expect <<-\EOF &&
-+	G
-+	13B6F51ECDDE430D
-+	C O Mitter <committer@example.com>
-+	73D758744BE721698EC54E8713B6F51ECDDE430D
-+	73D758744BE721698EC54E8713B6F51ECDDE430D
-+	EOF
-+	git for-each-ref refs/heads/signed --format="$GRADE_FORMAT" >actual &&
-+	test_cmp expect actual
++test_expect_success 'restore with restore.defaultLocation set to worktree works as if --worktree given' '
++	test_when_finished git reset --hard HEAD^ &&
++	test_when_finished git config --unset restore.defaultLocation &&
++	test_commit root-worktree-restore.defaultLocation &&
++	test_commit worktree-restore.defaultLocation one one &&
++	git config restore.defaultLocation worktree &&
++	> one &&
++
++	git restore one &&
++	test -z $(git status --porcelain --untracked-files=no) &&
++
++	> one &&
++	git add one &&
++	git restore one &&
++	git status --porcelain --untracked-files=no | grep "^M " &&
++
++	> one &&
++	git add one &&
++	git restore --worktree one &&
++	git status --porcelain --untracked-files=no | grep "^M " &&
++
++	git restore --staged one &&
++	git status --porcelain --untracked-files=no | grep "^ M" &&
++
++	> one &&
++	git add one &&
++	git restore --worktree --staged one &&
++	test -z $(git status --porcelain --untracked-files=no)
 +'
 +
-+test_expect_success GPG 'test signature atom with grade option and bad signature' '
-+	git config commit.gpgsign true &&
-+	echo 3 >file && test_tick && git commit -a -m "third" --no-gpg-sign &&
-+	git tag third-unsigned &&
++test_expect_success 'restore with restore.defaultLocation set to staged works as if --staged given' '
++	test_when_finished git reset --hard HEAD^ &&
++	test_when_finished git config --unset restore.defaultLocation &&
++	test_commit root-staged-restore.defaultLocation &&
++	test_commit staged-restore.defaultLocation one one &&
++	git config restore.defaultLocation staged &&
++	> one &&
 +
-+	test_tick && git rebase -f HEAD^^ && git tag second-signed HEAD^ &&
-+	git tag third-signed &&
++	git restore one &&
++	git status --porcelain --untracked-files=no | grep "^ M" &&
 +
-+	git cat-file commit third-signed >raw &&
-+	sed -e "s/^third/3rd forged/" raw >forged1 &&
-+	FORGED1=$(git hash-object -w -t commit forged1) &&
-+	git update-ref refs/tags/third-signed "$FORGED1" &&
-+	test_must_fail git verify-commit "$FORGED1" &&
++	git restore --staged one &&
++	git status --porcelain --untracked-files=no | grep "^ M" &&
 +
-+	cat >expect <<-\EOF &&
-+	B
-+	13B6F51ECDDE430D
-+	C O Mitter <committer@example.com>
++	git add one &&
++	git restore one &&
++	git status --porcelain --untracked-files=no | grep "^ M" &&
 +
++	git add one &&
++	git restore --staged one &&
++	git status --porcelain --untracked-files=no | grep "^ M" &&
 +
-+	EOF
-+	git for-each-ref refs/tags/third-signed --format="$GRADE_FORMAT" >actual &&
-+	test_cmp expect actual
++	git restore --worktree one &&
++	test -z $(git status --porcelain --untracked-files=no) &&
++
++	> one &&
++	git add one &&
++	git restore --worktree --staged one &&
++	test -z $(git status --porcelain --untracked-files=no)
 +'
 +
-+test_expect_success GPG 'show untrusted signature with custom format' '
-+	echo 4 >file && test_tick && git commit -a -m fourth -SB7227189 &&
-+	git tag signed-fourth &&
-+	cat >expect <<-\EOF &&
-+	U
-+	65A0EEA02E30CAD7
-+	Eris Discordia <discord@example.net>
-+	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
-+	D4BE22311AD3131E5EDA29A461092E85B7227189
-+	EOF
-+	git for-each-ref refs/tags/signed-fourth --format="$GRADE_FORMAT" >actual &&
-+	test_cmp expect actual
++test_expect_success 'restore with restore.defaultLocation set to both works as if --worktree --staged given' '
++	test_when_finished git reset --hard HEAD^ &&
++	test_when_finished git config --unset restore.defaultLocation &&
++	test_commit root-both-restore.defaultLocation &&
++	test_commit both-restore.defaultLocation one one &&
++	git config restore.defaultLocation both &&
++	> one &&
++
++	git restore one &&
++	test -z $(git status --porcelain --untracked-files=no) &&
++
++	> one &&
++	git add one &&
++	git restore --staged one &&
++	git status --porcelain --untracked-files=no | grep "^ M"  &&
++
++	git add one &&
++	git restore one &&
++	test -z $(git status --porcelain --untracked-files=no) &&
++
++	> one &&
++	git add one &&
++	git restore --staged one &&
++	git status --porcelain --untracked-files=no | grep "^ M" &&
++
++	git restore --worktree one &&
++	test -z $(git status --porcelain --untracked-files=no) &&
++
++	> one &&
++	git add one &&
++	git restore --worktree --staged one &&
++	test -z $(git status --porcelain --untracked-files=no)
 +'
 +
-+test_expect_success GPG 'show untrusted signature with undefined trust level' '
-+	echo 5 >file && test_tick && git commit -a -m fifth -SB7227189 &&
-+	git tag fifth-signed &&
-+	cat >expect <<-\EOF &&
-+	undefined
-+	65A0EEA02E30CAD7
-+	Eris Discordia <discord@example.net>
-+	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
-+	D4BE22311AD3131E5EDA29A461092E85B7227189
-+	EOF
-+	git for-each-ref refs/tags/fifth-signed --format="$TRUSTLEVEL_FORMAT" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPG 'show untrusted signature with ultimate trust level' '
-+	echo 7 >file && test_tick && git commit -a -m "seventh" --no-gpg-sign &&
-+	git tag seventh-unsigned &&
-+
-+	test_tick && git rebase -f HEAD^^ && git tag sixth-signed HEAD^ &&
-+	git tag seventh-signed &&
-+	cat >expect <<-\EOF &&
-+	ultimate
-+	13B6F51ECDDE430D
-+	C O Mitter <committer@example.com>
-+	73D758744BE721698EC54E8713B6F51ECDDE430D
-+	73D758744BE721698EC54E8713B6F51ECDDE430D
-+	EOF
-+	git for-each-ref refs/tags/seventh-signed --format="$TRUSTLEVEL_FORMAT" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPG 'show unknown signature with custom format' '
-+	cat >expect <<-\EOF &&
-+	E
-+	65A0EEA02E30CAD7
-+
-+
-+
-+	EOF
-+	GNUPGHOME="$GNUPGHOME_NOT_USED" git for-each-ref refs/tags/fifth-signed --format="$GRADE_FORMAT" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success GPG 'show lack of signature with custom format' '
-+	echo 8 >file && test_tick && git commit -a -m "eigth unsigned" --no-gpg-sign &&
-+	git tag eigth-unsigned &&
-+	cat >expect <<-\EOF &&
-+	N
-+
-+
-+
-+
-+	EOF
-+	git for-each-ref refs/tags/eigth-unsigned --format="$GRADE_FORMAT" >actual &&
-+	test_cmp expect actual
-+'
 +
  test_done
--- 
-2.39.GIT
 
+base-commit: 725f57037d81e24eacfda6e59a19c60c0b4c8062
+-- 
+gitgitgadget
