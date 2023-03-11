@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAC50C61DA4
-	for <git@archiver.kernel.org>; Sat, 11 Mar 2023 10:24:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 125EAC6FD1F
+	for <git@archiver.kernel.org>; Sat, 11 Mar 2023 10:37:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229957AbjCKKYi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Mar 2023 05:24:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36696 "EHLO
+        id S229846AbjCKKeg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Mar 2023 05:34:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229932AbjCKKYf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Mar 2023 05:24:35 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38BCE122CE6
-        for <git@vger.kernel.org>; Sat, 11 Mar 2023 02:24:34 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id o11-20020a05600c4fcb00b003eb33ea29a8so4977289wmq.1
-        for <git@vger.kernel.org>; Sat, 11 Mar 2023 02:24:34 -0800 (PST)
+        with ESMTP id S229530AbjCKKeZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Mar 2023 05:34:25 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88780115DFD
+        for <git@vger.kernel.org>; Sat, 11 Mar 2023 02:34:24 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id j2so7232723wrh.9
+        for <git@vger.kernel.org>; Sat, 11 Mar 2023 02:34:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678530272;
+        d=gmail.com; s=20210112; t=1678530863;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LP5X6mZ/47/CFfAi+YRk5eLF/emXQmLgVPpmp09g9HU=;
-        b=bw+lMCsQBJlRGjCKDHnAxXNqbrIWQMOFL9qS6z5w+3pZAKBnbTh/Pb0Jh0PM57qtcn
-         sdtW0COjDF3NMvD72UwssWDhCQVpC9fTkx7wLWFa4KYOkWbYpuHYE/s9VRJYc/WzInXS
-         DDw/os62sqz+bB0OKeqlUKb22fpQaHrkCrQZMcVrQuj7FXlK+f1rHsQCIR+6XHevUvbq
-         U5wEOs4aMl/+XSaGyyRiHEzp7WC+Ej8jc5NP0kiwxeLdkdr1DknfAM5JrW1bX1oSYsGt
-         lR+gbQIhBHqoD/06VPxsZRtuN3qRzvBjlrv0G5S+sdE7y2puK3/O6GE0tLypYvYB4sxy
-         +XpA==
+        bh=4PYpupYllZqV9YAvqf6YoNpLyfVEHUrU7nDEjUf1dzc=;
+        b=hMnDrUl4cxgYGz9LUy6UTuwMHp4SA72qvs78iOCQLXRKkBK5RX8+sZUjDRqHkPKVw6
+         pmI18ZoougKIM07ScNOxFtQhFiq3UYyqqPdXtFGaa3GL98CjqgUDfcr3Gc48ZWoxajb4
+         lT4AEryZOcZw94rhjpHGIO0QoCeyMsdzOLh9qO4m8TDY22c2x840bnNOnwPWuNcKcoRO
+         ysWEyWqeCZHUCrdgLgzBf7QbVXNy1tn7lgUWVjXUU0UN9khj5f3HJhDpC/SM69qrwXx6
+         esjLdwNFqc0qBTftneu7rUIJ34ZrlTZpplZaGSO++gcwVYBVFL5XTgIqzjcAq2KsI0BA
+         i7vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678530272;
+        d=1e100.net; s=20210112; t=1678530863;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:to:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LP5X6mZ/47/CFfAi+YRk5eLF/emXQmLgVPpmp09g9HU=;
-        b=UfGMPv5aQyarGKnMQbfZyckA5DXkWDYhbuqk217R4EUYqraxTHW+ebNOPOxOXuObBW
-         5B2Y3Rr6Ki8bGu+yN0hWXKncDXapB4P1JxFIaSv74lmuZVZXMcnk6+zryHp6Su7SlNus
-         ohZOyo1A92591UdqmQKkdrz0k/PA6epoI52vldGifMOess2qlmPjGUe1Aw19cTaNwvVg
-         DR7PX95S+YPa+CvNn6vAFfUNwxY0H9l4a3EUzA39lPOadGzppJXmOVRflcC66Ee/kHjf
-         YHbpkeQhbAL2tcdU1NJxlOhhGrUbtYqvCRLrLj9ajPRHivw5gF8I8RB/FgejPeZWmRCd
-         PK7g==
-X-Gm-Message-State: AO0yUKVpuP4bJR0WcSytNQyO4UU6/nMTGCMX8ysPwJfnP7Dd5tC2EyOr
-        kQQs0syCKPLeXqlDRn3ZGeKe/834oMc=
-X-Google-Smtp-Source: AK7set+4cow1JLHs1vUUzhoAd6YdD3se5ojnbrnaO71cfOzP0FVtcQ786dQp9D09hf2k66w/eL3ZUA==
-X-Received: by 2002:a05:600c:1908:b0:3e2:1f63:4beb with SMTP id j8-20020a05600c190800b003e21f634bebmr5536422wmq.19.1678530272622;
-        Sat, 11 Mar 2023 02:24:32 -0800 (PST)
+        bh=4PYpupYllZqV9YAvqf6YoNpLyfVEHUrU7nDEjUf1dzc=;
+        b=bNkmubJ0qYHbomLOha8t7Du+XMCb4XHNvKz52JeWz4XhYBa8U/ndckwJZEdnp/I9db
+         /sLuydvFTv4cn1cQPaNltREeZIlEYO0eZdZDMvHcuenMULs9HkOo0xE5inPFE7Z9RIZ9
+         NZ1EwPjOBL7NzxzrvqxTu6bteB6k0fukFDk2POQ3DpbduON2RNeWIfQGaJ8ZLyKlaAyI
+         eqGmqc76KagO6KRCKPIQJhPVh/PBKPLNuKd+9RTkAt/TiQjXj3T9OcX5k49EnqqMt2b4
+         ahLlnx+FwLlsctoId9QVGJ0xoO6E4jZG4A6UJdENuL6lVZIOrKLtP8dYlhfbAN7aOIUo
+         fa7A==
+X-Gm-Message-State: AO0yUKXfKarllJXnkHUROER7SqUs0J5WpUA4REc/iOqFXT9FyaqLzwds
+        8VDuT9acLlHu9us7X4A2BOAAqfea1gA=
+X-Google-Smtp-Source: AK7set/fUMk9j9vbOdc659UNgdys4xZ15aJhLovm6h6Eb0ZSGez7ibOB2s23/CpM81xo4d7tVcv2Lw==
+X-Received: by 2002:adf:fbc7:0:b0:2cc:4d13:908d with SMTP id d7-20020adffbc7000000b002cc4d13908dmr18065212wrs.11.1678530862974;
+        Sat, 11 Mar 2023 02:34:22 -0800 (PST)
 Received: from [192.168.2.52] (59.red-88-14-203.dynamicip.rima-tde.net. [88.14.203.59])
-        by smtp.gmail.com with ESMTPSA id p25-20020a05600c205900b003eaf666cbe0sm2418044wmg.27.2023.03.11.02.24.31
+        by smtp.gmail.com with ESMTPSA id o4-20020a5d6844000000b002ce3b31753fsm2125543wrw.26.2023.03.11.02.34.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 11 Mar 2023 02:24:32 -0800 (PST)
-Subject: rj/bisect-already-used-branch (was Re: What's cooking in git.git (Mar
- 2023, #02; Tue, 7))
+        Sat, 11 Mar 2023 02:34:22 -0800 (PST)
+Subject: rj/branch-unborn-in-other-worktrees (was What's cooking in git.git
+ (Mar 2023, #02; Tue, 7))
 To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <xmqq4jqww660.fsf@gitster.g>
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <ce31ee34-df93-5824-d7a8-5a0e19498d77@gmail.com>
-Date:   Sat, 11 Mar 2023 11:24:29 +0100
+Message-ID: <877b6f9d-bab6-1343-42d0-3e17e3d0a9c5@gmail.com>
+Date:   Sat, 11 Mar 2023 11:34:20 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -67,17 +67,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * rj/bisect-already-used-branch (2023-01-22) 1 commit
->   (merged to 'next' on 2023-03-06 at 3508814a41)
->  + bisect: fix "reset" when branch is checked out elsewhere
+On 07-mar-2023 14:25:11, Junio C Hamano wrote:
+
+> * rj/branch-unborn-in-other-worktrees (2023-02-22) 3 commits
+>   (merged to 'next' on 2023-03-06 at 6ee0ec72ae)
+>  + branch: rename orphan branches in any worktree
+>  + branch: description for orphan branch errors
+>  + branch: avoid unnecessary worktrees traversals
 > 
->  Allow "git bisect reset [name]" to check out the named branch (or
->  the original one) even when the branch is already checked out in a
->  different worktree linked to the same repository.
+>  Error messages given when working on an unborn branch that is
+>  checked out in another worktree have been improvved.
 
-Maybe we can still adjust this to a more accurate description of the
-current state in this series, something like:
+s/improvved/improved
 
-  Allow "git bisect reset" to check out the original branch when the
-  branch is already checked out in a different worktree linked to the
-  same repository.
+> 
+>  Will cook in 'next'.
+>  source: <139555f1-21ab-d987-a58e-c7f04ce222d3@gmail.com>
+
+This series needs a re-roll, which I haven't done yet, sorry.  Some
+unwanted behaviour was introduced in the current state of the series
+which needs to be reverted.
