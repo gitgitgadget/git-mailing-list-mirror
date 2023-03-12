@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D1C6C6FD19
-	for <git@archiver.kernel.org>; Sun, 12 Mar 2023 20:16:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C723BC6FA99
+	for <git@archiver.kernel.org>; Sun, 12 Mar 2023 20:16:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231176AbjCLUQS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Mar 2023 16:16:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48160 "EHLO
+        id S231267AbjCLUQV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Mar 2023 16:16:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230219AbjCLUQJ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231160AbjCLUQJ (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 12 Mar 2023 16:16:09 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DF0E252B4
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:15:30 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id r15so13634321edq.11
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:15:30 -0700 (PDT)
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0833725947
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:15:32 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id er25so12692280edb.5
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:15:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678652128;
+        d=gmail.com; s=20210112; t=1678652130;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NzNH/lDBlykWYTnnxsAXBgRpj+TTxcLofsgIfF2z0o0=;
-        b=K9oZByQGjGY+YZHqWfM/ZOCoeFGSV4PeiMS+La9V7EY3QeMi8Uvy4CTpkWmN1FGjWh
-         PRM/VaDLmyN71NhC4z3fqkE6+aDtXwxnVFZ/shpP3niUYAf5ndEemIZq+hI7/y732jC1
-         UY4wLKKtVNRdDenn5urmlp7/cblsj1kTGWam7bn2cTLlBvPpWOppxvJsne5zP9Qsef4k
-         dZxVjRnlj7PG4ys2E0BQVO+KEg2lkh761epMz2sCG3qS7eO8XM2dpUTvvzL+SZ7VksSU
-         xO/8t9bO1dfRsQaDyz8DisRdOfOLbQvdOqQKnex5N26uDWnq8XhmPtJ2GXgsDd+WGrhS
-         t06g==
+        bh=AgSq2BEB0xF42jwRYRTu1mJl7/fw7pc2jBu5sMhfKUA=;
+        b=PzCYINe3sHJIh7b9HC6lc6zbsgyI7lW+orw6G8HpEpR8iZtvTiOQjZf+50u0brKDu6
+         s8IrRwcEsbytThSSybJ3MdySQeuaRjKE+PR7PC2WBJK8HZX+Zjm6BUeGAmH7ENQL/2lx
+         hRLjr02rO3YcN0x/VXQMC8b7/cbkBAOh1fZjdc7LxU+qQwSz6VOwndr3LqjGeLTExAVY
+         J2IsAATQjxZ3bqVzFvzqVJMoOPZzqRChusfBea44CwwkOLunC4WdBgqqenXX4rIRQoX+
+         Bx+JvvAufOPwX7ZXhNLvEN+dWMyVOxEQmMqtuUdDncW2KFEmV/Rtw4/SsyjaTX1pSO5U
+         11UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678652128;
+        d=1e100.net; s=20210112; t=1678652130;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NzNH/lDBlykWYTnnxsAXBgRpj+TTxcLofsgIfF2z0o0=;
-        b=I5g7UkLgrbGjRZMwbE0QxQsZvcVm6Wz2ckPIKehobbEJ8RdyAA4p3F2aluJhSohl6j
-         x5lnT9fakzBTvxVZWgn1XTwG3D9jAoHNAJ1ycv19HJyLRl4g6Ty1e0NNBwKz3WnDXMuy
-         PjNKNj/uQMkuOA5N/usG0K+pJy8K2EJuh6JpV3R98Sk2KvYcIHgmfhMaLIY0N3jSdtx6
-         WsCvBhWxRc+piV5Ku5/IFnMcdU1ZESlbUAwQNuVGuJWbe3aaYFcsuOb1xEbv6AsQJLbW
-         vOQ4AUwVMYxjJYQjrUSwxRMCn5ZXNPi6aAERS4WCW6jayCNg+DS3150Yeabkgs5+33m3
-         ARcA==
-X-Gm-Message-State: AO0yUKXKOZAMN4oUSdzAtctxujIxivmRVL4nIyVpQcXCvQpOmtgFfdJG
-        z1u4E+OO4F77YoENI/I9FOqvXTikwRLw0w==
-X-Google-Smtp-Source: AK7set+HIQlSehvM1wLN1o9zbY9Jl/X82TX5VkG154Z1LinE8s6zt1pATwgLAOY6/HktaUNjokOA7g==
-X-Received: by 2002:a17:907:9485:b0:922:1826:8275 with SMTP id dm5-20020a170907948500b0092218268275mr6367432ejc.11.1678652128640;
-        Sun, 12 Mar 2023 13:15:28 -0700 (PDT)
+        bh=AgSq2BEB0xF42jwRYRTu1mJl7/fw7pc2jBu5sMhfKUA=;
+        b=57YNCcu+aIOrlzEdOEmpFIll65GBcnlArquBPZbchAT4nVs+3YaHkgMdyOpWSXrIgk
+         FPwvW1p4lvFmf/lkbLbogDRYB2dS+XCIqxrAXFe0dRbBORSRemPcnnyEAnuAlIFKGves
+         s4Cxd3xATaRWo68qxC7ucQViN4gtsZD1sSEq3opIfbJuGo2+Ki93Jfb0DgF8b7rSnzcn
+         3fr2myhP+rWEeWif/BoYgpHdN+tbEYH/78gk+RyoVFT7dPuwbNvCuREFcQF+tcbxYIhM
+         Y7gfdFKXrs6wAAe08iZVhDGfmEJHL38z9dVrB9pNFHBkKhIVGFtm/0dOLbdF/BFMUSx/
+         WDmg==
+X-Gm-Message-State: AO0yUKXaUyXAnl5y7ert469lRQ7mPhDAfBi1iSI8l0R2o8vBmIeyT1Wu
+        BWMY+eWARAU3rB/Y/jm1O627xcGKe+rutg==
+X-Google-Smtp-Source: AK7set+DwAG9pXaAvQHck75XzO/V3LEOuq6kVYfITuvNjcI6+52clKFm/sCuaVosx84ZqJFJbBuEOw==
+X-Received: by 2002:a17:907:8a06:b0:889:ed81:dff7 with SMTP id sc6-20020a1709078a0600b00889ed81dff7mr40089089ejc.9.1678652130080;
+        Sun, 12 Mar 2023 13:15:30 -0700 (PDT)
 Received: from titov.fritz.box ([216.24.216.227])
-        by smtp.gmail.com with ESMTPSA id hz17-20020a1709072cf100b008dceec0fd4csm2570344ejc.73.2023.03.12.13.15.27
+        by smtp.gmail.com with ESMTPSA id hz17-20020a1709072cf100b008dceec0fd4csm2570344ejc.73.2023.03.12.13.15.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 13:15:28 -0700 (PDT)
+        Sun, 12 Mar 2023 13:15:29 -0700 (PDT)
 From:   Andrei Rybak <rybak.a.v@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Michael J Gruber <git@grubix.eu>,
         Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v1 2/7] t1006: assert error output of cat-file
-Date:   Sun, 12 Mar 2023 21:15:15 +0100
-Message-Id: <20230312201520.370234-4-rybak.a.v@gmail.com>
+Subject: [PATCH v1 3/7] t1010: assert empty output of mktree
+Date:   Sun, 12 Mar 2023 21:15:16 +0100
+Message-Id: <20230312201520.370234-5-rybak.a.v@gmail.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230312201520.370234-1-rybak.a.v@gmail.com>
 References: <20230312201520.370234-1-rybak.a.v@gmail.com>
@@ -68,35 +68,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Test "cat-file $arg1 $arg2 error on missing full OID" in
-t1006-cat-file.sh compares files "expect.err" and "err.actual" to assert
-the expected error output of "git cat-file".  A similar test in the same
-file named "cat-file $arg1 $arg2 error on missing short OID" also
-creates these two files, but doesn't use them in assertions.
+Builtin "git mktree" writes the the object name of the tree object built
+to the standard output.  Tests 'mktree refuses to read ls-tree -r output
+(1)' and 'mktree refuses to read ls-tree -r output (2)' in
+"t1010-mktree.sh" redirect output of "git mktree" to a file, but don't
+use its contents in assertions.
 
-Assert error output of "git cat-file" in test "cat-file $arg1 $arg2
-error on missing short OID" of t1006-cat-file.sh to improve test
-coverage.
+Assert that the output of "git mktree" is empty when it refuses to build
+a tree object.
 
 Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
 ---
- t/t1006-cat-file.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t1010-mktree.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 2d875b17d8..8eac74b59c 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -603,7 +603,8 @@ do
- 			fatal: Not a valid object name $(test_oid deadbeef_short)
- 			EOF
- 			test_must_fail git cat-file $arg1 $arg2 $(test_oid deadbeef_short) >out 2>err.actual &&
--			test_must_be_empty out
-+			test_must_be_empty out &&
-+			test_cmp expect.err err.actual
- 		'
+diff --git a/t/t1010-mktree.sh b/t/t1010-mktree.sh
+index 3c08194526..31ea2ec0bb 100755
+--- a/t/t1010-mktree.sh
++++ b/t/t1010-mktree.sh
+@@ -60,11 +60,13 @@ test_expect_success 'allow missing object with --missing' '
+ '
  
- 		test_expect_success "cat-file $arg1 $arg2 error on missing full OID" '
+ test_expect_success 'mktree refuses to read ls-tree -r output (1)' '
+-	test_must_fail git mktree <all >actual
++	test_must_fail git mktree <all >actual &&
++	test_must_be_empty actual
+ '
+ 
+ test_expect_success 'mktree refuses to read ls-tree -r output (2)' '
+-	test_must_fail git mktree <all.withsub >actual
++	test_must_fail git mktree <all.withsub >actual &&
++	test_must_be_empty actual
+ '
+ 
+ test_done
 -- 
 2.39.2
 
