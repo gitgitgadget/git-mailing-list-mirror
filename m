@@ -2,61 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B6BFC6FA99
-	for <git@archiver.kernel.org>; Sun, 12 Mar 2023 20:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BA94C6FD19
+	for <git@archiver.kernel.org>; Sun, 12 Mar 2023 20:09:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230274AbjCLUJa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Mar 2023 16:09:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39292 "EHLO
+        id S231143AbjCLUJe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Mar 2023 16:09:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231124AbjCLUJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2023 16:09:27 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BFBBB766
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:09:07 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-17786581fe1so4472065fac.10
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:09:07 -0700 (PDT)
+        with ESMTP id S230503AbjCLUJa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Mar 2023 16:09:30 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9304324128
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:09:10 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id bk32so8061874oib.10
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:09:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678651740;
+        d=gmail.com; s=20210112; t=1678651741;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2Y3mmcLrjJlhO1Q8g5wJPOGcGtUh0BkXk09fcnrGsmw=;
-        b=oboRg1l+rD57mAZBRYZlZqSxKY6gBZOKbOa3s4qHkHG3jSS2hS3W6PwW2RclVGRirJ
-         WXF70IREFBy8oSGE6e1G1+z7URL6d9I+8MmtmP6X8JCQlbceR6hN3TqzKuGEKw/fC7cz
-         0l2pXzH9nhoYDZRn2ZO63oRhIzTrOeMVFwf+DpFtXvr3lWlq4x0r4iIZE34xuhYvPuWP
-         hbUgERCKPYHEAAFo/GAaMVzG8aAeM8gTA/jrR5USOVWEV8mFX/U142PsyaBFMploivMO
-         CArGhleWn/4xuj2p2Uey+LaM9sMdIK1pWaTRFObwGAWslZy/pIHWMKzY8tu/rFrLms2G
-         78Gg==
+        bh=bebF08/+RDv/uLWtfqv73JX0ux1QIUq3jA8prI7QtMw=;
+        b=ABzagcSnK7OAKrSldoC+LP1TZaiK/XfH35arrjdG5EFwzFXuqBRUJ/q6Sux/NbEZ62
+         sYfWMdBHRDJqbCdSwX3D9snxe4Mc7o9T7sNnTdzprQw/t9WT0nmGOgRYFDKmaabTyr3K
+         Sg3lGZSrP4L5qkO+gQivXgwA5NRv2kaSAyXCyQDySyjEacZR/cVGL5Izq0BPiUZKRsUs
+         Zwl62BjhNIyVGilDvjpEyrskAaDpJVfeYrginhOdPQqxM1QSTJ0KlVquFS+WyAr089h4
+         JzKV7fUpcPHs0kItQ5NDfrzlJikTGJlPLdAYU1wf0sje0GIMdEEnJx1xt7SET4tXhsBM
+         KtHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678651740;
+        d=1e100.net; s=20210112; t=1678651741;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2Y3mmcLrjJlhO1Q8g5wJPOGcGtUh0BkXk09fcnrGsmw=;
-        b=2JdwUpFyuljc2TjuawTVDFqCgB+dl3hXF0LgKVcqB8nIwtMZzzBnIVPu5HIuXyW2A7
-         pnuzs6B6JG6/pVTPSeh1Lot4EhWuu02dALySLIUmQTO/akX+oPdjELAMTjlgUPwLhVBC
-         Ns4DBlMC5v50U8Csmzt/y2QAVGE6vSXWSi5ssqneGe/zirYgXAXQ87+46P7rZ4hgxnRj
-         BF7Cp+qHeKIHLfprJJ2Lx70GExLNS45QS+1bH3MbQgUnQx3iwkVPVa9ug0/5RLHxBUkG
-         b064dRkpV9ohPG1lwGZ3um5kvkKip9TKaV5bI6P0W6zpRrYlZTGGc5iQOaefPEvJNkDM
-         K40Q==
-X-Gm-Message-State: AO0yUKXbAZUo3k8Zi9CHxNRexBV9JKkCToj8qoALaT8dWogrmDPI0qKj
-        ttde3sLZ383HnfleqKL78I4XYLuvI5I=
-X-Google-Smtp-Source: AK7set/fuuZJA8Kc1vKO4NH7HnHU1RNrFWIsYIV0raRjPFeUVMHAhSF/kgk2LoDy8zmoGnu4Y/WQfA==
-X-Received: by 2002:a05:6870:45a0:b0:177:a308:8bc6 with SMTP id y32-20020a05687045a000b00177a3088bc6mr1776406oao.18.1678651740198;
-        Sun, 12 Mar 2023 13:09:00 -0700 (PDT)
+        bh=bebF08/+RDv/uLWtfqv73JX0ux1QIUq3jA8prI7QtMw=;
+        b=Drzk+K4bvwYCy7ol1Sz/vIm0qfH8DxB6CbQ+RAlZjzD5uuDFrXlDy2qJiNOlnQDaIo
+         B+UapknspGocJYexl5i8mQSkKB5QC64GTLG+jr1nJAkswtVP6zMO9AZtym2P1cMg9t09
+         ttvQEos51xTt2XDahKsGg35nBCyxG7I/pheseg9ITkLCL/3GO31kB9zYRiIbWL+ziMNL
+         ic6Eu1olHHfW1oLYtq2KWo/X8e7GUC0QWo/YKB0z+TQLZMa2ysANdIzNSyZIGj+Yq/cm
+         JBmvAshav8VgcHUK8njdmiOUGNgCZBe4kk1DMqYSgomQm0BVlP/Z1YbPWDaSA1DdPTu4
+         rNNw==
+X-Gm-Message-State: AO0yUKUf2sq9nmhUdc8f7dse0irtbbbP18Yua7nH4SXXPXfTIr5bu23m
+        TR8fFUgUw86C7trIn5WTuFtBHETOPFU=
+X-Google-Smtp-Source: AK7set+I3hHaObe57i5a9+t1/vL8tKo4QPbDlsI8n5vO7TK2Q5XXoEZPjhBiU06qUSUGidz2VPwtNQ==
+X-Received: by 2002:a05:6808:298a:b0:384:1c31:d10e with SMTP id ex10-20020a056808298a00b003841c31d10emr13997435oib.41.1678651741520;
+        Sun, 12 Mar 2023 13:09:01 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id ef49-20020a0568701ab100b001724742cfcesm2320428oab.38.2023.03.12.13.08.59
+        by smtp.gmail.com with ESMTPSA id q132-20020acac08a000000b00383b371f2a7sm2368081oif.42.2023.03.12.13.09.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 13:08:59 -0700 (PDT)
+        Sun, 12 Mar 2023 13:09:01 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
-        Neeraj Singh <neerajsi@microsoft.com>
-Subject: [PATCH 2/5] perf: grep: fix prereqs
-Date:   Sun, 12 Mar 2023 14:08:53 -0600
-Message-Id: <20230312200856.323688-3-felipe.contreras@gmail.com>
+        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 3/5] perf: grep: don't check PRCE twice
+Date:   Sun, 12 Mar 2023 14:08:54 -0600
+Message-Id: <20230312200856.323688-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.39.2.13.g1fb56cf030
 In-Reply-To: <20230312200856.323688-1-felipe.contreras@gmail.com>
 References: <20230312200856.323688-1-felipe.contreras@gmail.com>
@@ -67,36 +66,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 5dccd9155f (t/perf: add iteration setup mechanism to perf-lib,
-2022-04-04) they are in a --prereq option.
+Just set the prereq and let the testing framework check it once.
 
-Cc: Neeraj Singh <neerajsi@microsoft.com>
 Cc: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/perf/p7821-grep-engines-fixed.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/perf/p4220-log-grep-engines.sh       | 2 +-
+ t/perf/p4221-log-grep-engines-fixed.sh | 2 +-
+ t/perf/p7820-grep-engines.sh           | 2 +-
+ t/perf/p7821-grep-engines-fixed.sh     | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/t/perf/p4220-log-grep-engines.sh b/t/perf/p4220-log-grep-engines.sh
+index 03fbfbb85d..2c619a626f 100755
+--- a/t/perf/p4220-log-grep-engines.sh
++++ b/t/perf/p4220-log-grep-engines.sh
+@@ -30,7 +30,7 @@ do
+ 			# Poor man's basic -> extended converter.
+ 			pattern=$(echo $pattern | sed 's/\\//g')
+ 		fi
+-		if test $engine = "perl" && ! test_have_prereq PCRE
++		if test $engine = "perl"
+ 		then
+ 			prereq="PCRE"
+ 		else
+diff --git a/t/perf/p4221-log-grep-engines-fixed.sh b/t/perf/p4221-log-grep-engines-fixed.sh
+index 0a6d6dfc21..095c5d1765 100755
+--- a/t/perf/p4221-log-grep-engines-fixed.sh
++++ b/t/perf/p4221-log-grep-engines-fixed.sh
+@@ -20,7 +20,7 @@ for pattern in 'int' 'uncommon' 'æ'
+ do
+ 	for engine in fixed basic extended perl
+ 	do
+-		if test $engine = "perl" && ! test_have_prereq PCRE
++		if test $engine = "perl"
+ 		then
+ 			prereq="PCRE"
+ 		else
+diff --git a/t/perf/p7820-grep-engines.sh b/t/perf/p7820-grep-engines.sh
+index 9bfb86842a..336424cb00 100755
+--- a/t/perf/p7820-grep-engines.sh
++++ b/t/perf/p7820-grep-engines.sh
+@@ -41,7 +41,7 @@ do
+ 			# Poor man's basic -> extended converter.
+ 			pattern=$(echo "$pattern" | sed 's/\\//g')
+ 		fi
+-		if test $engine = "perl" && ! test_have_prereq PCRE
++		if test $engine = "perl"
+ 		then
+ 			prereq="PCRE"
+ 		else
 diff --git a/t/perf/p7821-grep-engines-fixed.sh b/t/perf/p7821-grep-engines-fixed.sh
-index 61e41b82cf..0d75240dae 100755
+index 0d75240dae..79b1b9f8b2 100755
 --- a/t/perf/p7821-grep-engines-fixed.sh
 +++ b/t/perf/p7821-grep-engines-fixed.sh
-@@ -33,13 +33,13 @@ do
- 		fi
- 		if ! test_have_prereq PERF_GREP_ENGINES_THREADS
+@@ -25,7 +25,7 @@ for pattern in 'int' 'uncommon' 'æ'
+ do
+ 	for engine in fixed basic extended perl
+ 	do
+-		if test $engine = "perl" && ! test_have_prereq PCRE
++		if test $engine = "perl"
  		then
--			test_perf $prereq "$engine grep$GIT_PERF_7821_GREP_OPTS $pattern" "
-+			test_perf "$engine grep$GIT_PERF_7821_GREP_OPTS $pattern" --prereq "$prereq" "
- 				git -c grep.patternType=$engine grep$GIT_PERF_7821_GREP_OPTS $pattern >'out.$engine' || :
- 			"
+ 			prereq="PCRE"
  		else
- 			for threads in $GIT_PERF_GREP_THREADS
- 			do
--				test_perf PTHREADS,$prereq "$engine grep$GIT_PERF_7821_GREP_OPTS $pattern with $threads threads" "
-+				test_perf "$engine grep$GIT_PERF_7821_GREP_OPTS $pattern with $threads threads" --prereq "$prereq" "
- 					git -c grep.patternType=$engine -c grep.threads=$threads grep$GIT_PERF_7821_GREP_OPTS $pattern >'out.$engine.$threads' || :
- 				"
- 			done
 -- 
 2.39.2.13.g1fb56cf030
 
