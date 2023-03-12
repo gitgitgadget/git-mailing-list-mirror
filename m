@@ -2,91 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E40AC6FA99
-	for <git@archiver.kernel.org>; Sun, 12 Mar 2023 20:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85003C74A4B
+	for <git@archiver.kernel.org>; Sun, 12 Mar 2023 20:09:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231169AbjCLUJi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Mar 2023 16:09:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39522 "EHLO
+        id S231130AbjCLUJk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Mar 2023 16:09:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230462AbjCLUJb (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230481AbjCLUJb (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 12 Mar 2023 16:09:31 -0400
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D148113DF
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:09:12 -0700 (PDT)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-1767a208b30so11816273fac.2
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:09:12 -0700 (PDT)
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B0BD25975
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:09:11 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id e21so8106402oie.1
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 13:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678651744;
+        d=gmail.com; s=20210112; t=1678651743;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VvKGP31BprEkJEt7iCJBC5GonowfTndZxQvVwml8PBE=;
-        b=FlZcLKmAt5740RkrzGaZk0ivFeUpgN+VER6egfWWlC/GJ//U/24gEr1YcD9KJIMfG4
-         I2g+i8lZvqGb3u52YIxBwB59THviMbq5X0Du53+OSPtZf1ib5UimnEpReOGfl22nIqTf
-         upTkqaOzW3OzZ8lW2y87MSE4AxNogXmTdLKvf7m3hXjZAQnMSauXwVjzO9QrhFsNN4XM
-         mSplRdx0gqaxvV5fPL4Dw0BsofElSqTbvj35+szHfBv1eN6BSeugkoAt+F/8ZLouhxXI
-         SQiJo4AcvpfbtpvXDSJKhgzMuvMQ/Xspr3ltL43dqrQcv8rM8Y0VcGBMUWkEX+QqmavO
-         cJ/A==
+        bh=uddwbV73cueW/OWJ+6VEnddoNYFBuFaamptQ2RSOxlo=;
+        b=C7Vg7Fw/bAPBIp83KueO8XifgwDUPvWcy0T37sldQ7hUXVc7cOVWHuuNYc2s+X0F0O
+         I0ooyS8BewVN/1+lTi1eLVohaX0dzLAccqe3YFUbA7+ZbHxydWHQil23dp9UfO/UCcNw
+         2wSsDk0fm/0kyT0NnC3yNdg2lP8sA71o+lK+vrH85nECkY7oyYkqdTOErYgu02gybLbg
+         4eSVp8Zle/qEx5Qk34uTgCgkGU15MZayS7LXJe/dW1vSOq0kduPGmv3OAnAD9Xr9h3ju
+         fIeq5uWbdBVMJz8sYKBrGeyKS39BqVo+Wb6y9DH+puDexeAofaXaxe9ojAOUZponmqLj
+         9vfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678651744;
+        d=1e100.net; s=20210112; t=1678651743;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VvKGP31BprEkJEt7iCJBC5GonowfTndZxQvVwml8PBE=;
-        b=gSuEYwnmAy++lNGg4hsrdskYfG1K25TxrnYKDepEOgo/o93fEOQSvaRDaiVoFHtdqa
-         Mqx5U683LmWJCDpTn9d+ZhDmEE5EJmoRARPsY7w9SA+qM8mKhlUzOybCaFbRejEKkt/W
-         RVuuS3hpBWnoFmkx7YfD2GTYYuokNuRDcZZrzH+ui6WrWnaCTiOdVVv9f5n/WFzZuMAw
-         ZwNo1P/GT4cWg9svRTl6FfvgtdNb1BXeNNTXirhxVLWpRcOQsaWB1rmZfAT68IfYzGUp
-         3GMUvxK7vOwbf8gzPuYCw5A+G0h487CCmAMqER73T1tfossprVYZ+tSqp/PuzUZ2mX/H
-         alZQ==
-X-Gm-Message-State: AO0yUKX1P7/wxaaWc4L6MEpnOSH1lsuKYIIofFRx7Q6gjnj97egZIvLM
-        1CxEBvbqpVkKVZdxI9oyVSZkHPCWAIU=
-X-Google-Smtp-Source: AK7set/g3KE0kzcf9D4XTn3f1QOlj5KmDk/Grh8rvgjzYYhD/ipGOHyTmEOxyt4cRHnhd8OCXtRqZA==
-X-Received: by 2002:a05:6870:ac06:b0:177:9c2f:cfd0 with SMTP id kw6-20020a056870ac0600b001779c2fcfd0mr2936955oab.44.1678651743948;
-        Sun, 12 Mar 2023 13:09:03 -0700 (PDT)
+        bh=uddwbV73cueW/OWJ+6VEnddoNYFBuFaamptQ2RSOxlo=;
+        b=Z5HWkJBI8R5Y6qlj20iM1r4qiM0T8tfjGdJ0TEbTG3aZxT3u8qc3kHRvxLQNQaEuT3
+         bfLnFRE7ZxFGyhRzR5dbAZ8s0GFESj6GxmVmDYFdDwBy10pZi4T9ZseIi0Lcctdp3it5
+         v4uhx6XwyFa3U5jQ3u5ClMfrYK2hwtmKwfANDxrYXmXU7DrYJXvCXELxy0G+SBI00zVH
+         MCrBbvSWZJhELssHUgEf0ZcyLNQllS0v89MdEJnFPXMloR58nG4riBrXfyHE5KCWNvVr
+         AAH4iYVRXvrWjwY8Hr0on3rS+boNeYwDMCND4Rfqhn8KgZ5YwkvJRqq6J6V+PxXsM9UQ
+         54lA==
+X-Gm-Message-State: AO0yUKUFFmE3VifGUzW5+BNPqMl+4ZqAl6jvOv9DOcX3QPTs36DPzkPM
+        oaUA9RtwQhq+7mnRryAvlQ896UPBjlY=
+X-Google-Smtp-Source: AK7set9k9c98BTPvg6eX92M0G1aNoTIoMsew6sTbQP+7vZJ3NZMtsRre782gtKZkpETajLyuxtaJkg==
+X-Received: by 2002:a05:6808:d8:b0:384:2357:dccd with SMTP id t24-20020a05680800d800b003842357dccdmr13806110oic.40.1678651742711;
+        Sun, 12 Mar 2023 13:09:02 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id ax16-20020a05687c021000b00176d49bb898sm2329391oac.44.2023.03.12.13.09.03
+        by smtp.gmail.com with ESMTPSA id k2-20020a056808068200b00383f0773beasm2356416oig.52.2023.03.12.13.09.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 13:09:03 -0700 (PDT)
+        Sun, 12 Mar 2023 13:09:02 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 5/5] perf: aggregate: check if subtest exists
-Date:   Sun, 12 Mar 2023 14:08:56 -0600
-Message-Id: <20230312200856.323688-6-felipe.contreras@gmail.com>
+        <avarab@gmail.com>, Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 4/5] perf: grep: avoid unused prereq
+Date:   Sun, 12 Mar 2023 14:08:55 -0600
+Message-Id: <20230312200856.323688-5-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.39.2.13.g1fb56cf030
 In-Reply-To: <20230312200856.323688-1-felipe.contreras@gmail.com>
 References: <20230312200856.323688-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If no tests were run, for example in p7822-grep-perl-character.sh,
-that's not a fatal error, just skip to the next one.
+There is no point in setting PERF_GREP_ENGINES_THREADS if we are going
+to check it ourselves.
 
-Cc: Christian Couder <chriscool@tuxfamily.org>
+Cc: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/perf/aggregate.perl | 1 +
- 1 file changed, 1 insertion(+)
+ t/perf/p7820-grep-engines.sh        | 9 ++-------
+ t/perf/p7821-grep-engines-fixed.sh  | 9 ++-------
+ t/perf/p7822-grep-perl-character.sh | 7 +------
+ 3 files changed, 5 insertions(+), 20 deletions(-)
 
-diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
-index 575d2000cc..a79451a0af 100755
---- a/t/perf/aggregate.perl
-+++ b/t/perf/aggregate.perl
-@@ -156,6 +156,7 @@ sub sane_backticks {
- 	$t =~ s{(?:.*/)?(p(\d+)-[^/]+)\.sh$}{$1} or die "bad test name: $t";
- 	my $n = $2;
- 	my $fname = "$resultsdir/$t.subtests";
-+	next unless (-e $fname);
- 	open my $fp, "<", $fname or die "cannot open $fname: $!";
- 	for (<$fp>) {
- 		chomp;
+diff --git a/t/perf/p7820-grep-engines.sh b/t/perf/p7820-grep-engines.sh
+index 336424cb00..f80fdcb5e2 100755
+--- a/t/perf/p7820-grep-engines.sh
++++ b/t/perf/p7820-grep-engines.sh
+@@ -22,11 +22,6 @@ etc.) we will test the patterns under those numbers of threads.
+ test_perf_large_repo
+ test_checkout_worktree
+ 
+-if test -n "$GIT_PERF_GREP_THREADS"
+-then
+-	test_set_prereq PERF_GREP_ENGINES_THREADS
+-fi
+-
+ for pattern in \
+ 	'how.to' \
+ 	'^how to' \
+@@ -47,7 +42,7 @@ do
+ 		else
+ 			prereq=""
+ 		fi
+-		if ! test_have_prereq PERF_GREP_ENGINES_THREADS
++		if test -z "$GIT_PERF_GREP_THREADS"
+ 		then
+ 			test_perf "$engine grep$GIT_PERF_7820_GREP_OPTS '$pattern'" \
+ 				--prereq "$prereq" "
+@@ -64,7 +59,7 @@ do
+ 		fi
+ 	done
+ 
+-	if ! test_have_prereq PERF_GREP_ENGINES_THREADS
++	if test -z "$GIT_PERF_GREP_THREADS"
+ 	then
+ 		test_expect_success "assert that all engines found the same for$GIT_PERF_7820_GREP_OPTS '$pattern'" '
+ 			test_cmp out.basic out.extended &&
+diff --git a/t/perf/p7821-grep-engines-fixed.sh b/t/perf/p7821-grep-engines-fixed.sh
+index 79b1b9f8b2..f25b4976ea 100755
+--- a/t/perf/p7821-grep-engines-fixed.sh
++++ b/t/perf/p7821-grep-engines-fixed.sh
+@@ -16,11 +16,6 @@ etc.) we will test the patterns under those numbers of threads.
+ test_perf_large_repo
+ test_checkout_worktree
+ 
+-if test -n "$GIT_PERF_GREP_THREADS"
+-then
+-	test_set_prereq PERF_GREP_ENGINES_THREADS
+-fi
+-
+ for pattern in 'int' 'uncommon' 'æ'
+ do
+ 	for engine in fixed basic extended perl
+@@ -31,7 +26,7 @@ do
+ 		else
+ 			prereq=""
+ 		fi
+-		if ! test_have_prereq PERF_GREP_ENGINES_THREADS
++		if test -z "$GIT_PERF_GREP_THREADS"
+ 		then
+ 			test_perf "$engine grep$GIT_PERF_7821_GREP_OPTS $pattern" --prereq "$prereq" "
+ 				git -c grep.patternType=$engine grep$GIT_PERF_7821_GREP_OPTS $pattern >'out.$engine' || :
+@@ -46,7 +41,7 @@ do
+ 		fi
+ 	done
+ 
+-	if ! test_have_prereq PERF_GREP_ENGINES_THREADS
++	if test -z "$GIT_PERF_GREP_THREADS"
+ 	then
+ 		test_expect_success "assert that all engines found the same for$GIT_PERF_7821_GREP_OPTS $pattern" '
+ 			test_cmp out.fixed out.basic &&
+diff --git a/t/perf/p7822-grep-perl-character.sh b/t/perf/p7822-grep-perl-character.sh
+index 87009c60df..2b73d41e2b 100755
+--- a/t/perf/p7822-grep-perl-character.sh
++++ b/t/perf/p7822-grep-perl-character.sh
+@@ -11,11 +11,6 @@ etc.) we will test the patterns under those numbers of threads.
+ test_perf_large_repo
+ test_checkout_worktree
+ 
+-if test -n "$GIT_PERF_GREP_THREADS"
+-then
+-	test_set_prereq PERF_GREP_ENGINES_THREADS
+-fi
+-
+ for pattern in \
+ 	'\\bhow' \
+ 	'\\bÆvar' \
+@@ -24,7 +19,7 @@ for pattern in \
+ 	'\\w{12}\\b'
+ do
+ 	echo '$pattern' >pat
+-	if ! test_have_prereq PERF_GREP_ENGINES_THREADS
++	if test -z "$GIT_PERF_GREP_THREADS"
+ 	then
+ 		test_perf "grep -P '$pattern'" --prereq PCRE "
+ 			git -P grep -f pat || :
 -- 
 2.39.2.13.g1fb56cf030
 
