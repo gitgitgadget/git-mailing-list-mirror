@@ -2,177 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F390FC6FD1F
-	for <git@archiver.kernel.org>; Sun, 12 Mar 2023 11:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 619D6C6FA99
+	for <git@archiver.kernel.org>; Sun, 12 Mar 2023 12:44:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbjCLLzX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Mar 2023 07:55:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52536 "EHLO
+        id S229641AbjCLMoj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Mar 2023 08:44:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbjCLLzW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2023 07:55:22 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D8B342BEB
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 04:55:19 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id j2so8872843wrh.9
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 04:55:19 -0700 (PDT)
+        with ESMTP id S229494AbjCLMoi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Mar 2023 08:44:38 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCA7030B3E
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 05:44:36 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id y15-20020a17090aa40f00b00237ad8ee3a0so9162367pjp.2
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 05:44:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678622117;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/ZqmFS909uKO3FSrV4MwHdB31W1Viorkni4RqiLuv6c=;
-        b=HK8XE/JjoOej2mhi9g/kh6upGXY/8fRG+fzJF7xQlvbqD/mzAHBlhzJ8H0e7qbCPWO
-         BDGefu2Svk+iPx6Y8tr0X38JGedIgykDQPP4zUPs676xT9wnXIQ30e6LIeVfjqAZe1gd
-         g/PzfBVVwKvFseQuxQ4HhnLHgGsj8UolN8P8VDah63pSJh3nRudpom/gEFmQtwXHS8af
-         mBeym7mEfXy+tpZLaINAZGLPHqOyf+0qNp4j+wYlbPgTDNiISmRnXOyzDVYdaLT2Qtg5
-         jBglKZgdjaIIQ5L+w83/JWGC6G3EJygxLSnLbfsGJXhISV7nACH7AKJVa0UiP3M/ir0O
-         RNbQ==
+        d=gmail.com; s=20210112; t=1678625076;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uduRcl2eaBx154sgTZUvAxUUW6O+KW6p2awbq36F8ZU=;
+        b=eivicKzqfs03Ez5LKIxbUpTjql/h4joA4HJHpG+0dtB/SJN8Z6Bw6I44J3dRugEj8m
+         rphvFRJoIxF98nLhnneVWi1R2onxLnxzvy6bQYQbwZDhDU4Ttl8Z4LPZFPHPDw9hghNY
+         QPOldzpgS7SZO0dFYxj8VwAzmNJ+EFDXluxJQIUCyNceaR11Do78vddcnqfXFp8Y9iAf
+         HD+Nz8kBE3Gl4waI5ybWvoxU3Kzc6f6BSJyBtLdXpAGtYBPDuToqc0CEytC4HJEzDnqN
+         ppSlQJQxrnjHXttC55HgMVtvH/o/8J/5ohjWxUsfAsOajYB2URGh7XGL1N0VHYxHCCEM
+         cpZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678622117;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/ZqmFS909uKO3FSrV4MwHdB31W1Viorkni4RqiLuv6c=;
-        b=fNHUzek6FsLuiGiewgssWNhIb9yZgcZWdqU+zrflqDd45Cr5mfW51Z6PSmI6nwAAfG
-         dn/detKp7I648s+V0WRQrNkltztjytLynWawnD6Yy7afzQbZ1XnNzCIjN1CzT0uh08/R
-         yJgt2kVIcSzSq7xzWOA5qw0ZL1ADaQdmSSTjhs2Smh9H4eBtvv21Fr1CkuBBh/VGC3xh
-         IaWhHEWfGsDhAe+zNiTTLX/tFazs6U5WpRcG1ow1AARiqQ7SbpLSSlL0g6d0zvPnGQdO
-         jE/+UQ9SiuiwPgFM/33hAMRbCEiT+5bgWABp7oZwkYG4WGdT0EomNyafCG/9Cg6bjJwp
-         dFUA==
-X-Gm-Message-State: AO0yUKWIy5FHda3ENrrc960bUtRU7ZSrUHC2sFUsg5ac/fT5Sxp1JqbF
-        2e3JdofD/0rAiWyfb603GqpqPKXTnBo=
-X-Google-Smtp-Source: AK7set9KMCiTz4bUvDvXHSNFhyP37aYmehddwpc1+pOt5ETfSwW+Hiikq8Uw3vYDpRG0pTVT6NM4kQ==
-X-Received: by 2002:adf:e8cd:0:b0:2cb:3660:44e with SMTP id k13-20020adfe8cd000000b002cb3660044emr19926625wrn.66.1678622117460;
-        Sun, 12 Mar 2023 04:55:17 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b14-20020a5d40ce000000b002c5539171d1sm4993890wrq.41.2023.03.12.04.55.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 04:55:17 -0700 (PDT)
-Message-Id: <pull.1466.v2.git.git.1678622116232.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1466.git.git.1678526355280.gitgitgadget@gmail.com>
-References: <pull.1466.git.git.1678526355280.gitgitgadget@gmail.com>
-From:   "Adam Johnson via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 12 Mar 2023 11:55:16 +0000
-Subject: [PATCH v2] ls-files: document that pathspecs are supported
-Fcc:    Sent
+        d=1e100.net; s=20210112; t=1678625076;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uduRcl2eaBx154sgTZUvAxUUW6O+KW6p2awbq36F8ZU=;
+        b=FS/kHsUlBvolKJTaF0eXSV1dZGyfTHbe3IpNFPWfU5Swm3xF4DoqqOFsqcPF1L8mIW
+         pBPPJiHmT9Tr20uyMVE4Kdy5Rqga0QVs4yZnTAkq7p/tlgWRQ7FiUN8tw8g8Q7vTOJth
+         PaGX+6srCjg2o5+MNJRQxjjOwt1T4QdK7klDkPS0kwWF9D8yr1DBxr1jLAQn7/5+vFcQ
+         kxeA8KXuRNtlWoDF2Ng1ksk1x8fAYQcScKVuBXHyOPxFTk1HzGCT5jpGHQXfDCY/HlN+
+         TFC7Uw1hGzlj1P+WuLqGnezfdVB3PXWo+GghhMi1EiW8M/z4kxCaHuKhNGNRKo7PP/yG
+         g/kg==
+X-Gm-Message-State: AO0yUKW18yXE/wtNzceHpW8CMqz3FqT+XugXHJ6tXeq+1TUedfMxvfrq
+        liG666wUzOFmtlYY/zuMYqhEVCA0P9WTGQ==
+X-Google-Smtp-Source: AK7set/WD3sN1YQ3rSLJgBjVXmyNFOMpHajT+FvJBWXxvDUZ3BzUJZz485m6QfE9fxwoqjYOnTDCog==
+X-Received: by 2002:a17:903:32cf:b0:19d:1d32:fbe with SMTP id i15-20020a17090332cf00b0019d1d320fbemr36936526plr.20.1678625076249;
+        Sun, 12 Mar 2023 05:44:36 -0700 (PDT)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id y4-20020a170902b48400b0019460ac7c6asm2756431plr.283.2023.03.12.05.44.29
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 12 Mar 2023 05:44:31 -0700 (PDT)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Git l10n discussion group <git-l10n@googlegroups.com>,
+        Alessandro Menti <alessandro.menti@alessandromenti.it>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Arusekk <arek_koz@o2.pl>, Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        Daniel Santos <dacs.git@brilhante.top>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Emir SARI <bitigchi@me.com>, Emir SARI <emir_sari@icloud.com>,
+        Fangyi Zhou <me@fangyi.io>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+        Jimmy Angelakos <vyruss@hellug.gr>,
+        Jordi Mas <jmas@softcatala.org>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
+        <vnwildman@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>
+Cc:     Jiang Xin <worldhello.net@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: [GIT PULL] l10n updates for 2.40.0 round 1
+Date:   Sun, 12 Mar 2023 20:44:19 +0800
+Message-Id: <20230312124419.31093-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>, Adam Johnson <me@adamj.eu>,
-        Adam Johnson <me@adamj.eu>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Adam Johnson <me@adamj.eu>
+Hi Junio,
 
-The command has taken pathspecs, not just filenames, since at least 56fc5108
-([PATCH] git-ls-files: generalized pathspecs, 2005-08-21).
+Please pull the following l10n updates for Git 2.40.0.
 
-Signed-off-by: Adam Johnson <me@adamj.eu>
----
-    ls-files: document that pathspecs are supported
-    
-    The command has taken pathspecs, not just filenames, since f0096c06bcd
-    (Convert read_tree{,_recursive} to support struct pathspec, 2011-03-25).
-    
-    Signed-off-by: Adam Johnson me@adamj.eu
+The following changes since commit 725f57037d81e24eacfda6e59a19c60c0b4c8062:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1466%2Fadamchainz%2Fdoc-ls-files-pathspecs-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1466/adamchainz/doc-ls-files-pathspecs-v2
-Pull-Request: https://github.com/git/git/pull/1466
+  Git 2.40-rc2 (2023-03-06 21:53:11 -0800)
 
-Range-diff vs v1:
+are available in the Git repository at:
 
- 1:  4a0417ba8e5 ! 1:  7c95f4f5a7d ls-files: document that pathspecs are supported
-     @@ Metadata
-       ## Commit message ##
-          ls-files: document that pathspecs are supported
-      
-     -    The command has taken pathspecs, not just filenames, since f0096c06bcd
-     -    (Convert read_tree{,_recursive} to support struct pathspec, 2011-03-25).
-     +    The command has taken pathspecs, not just filenames, since at least 56fc5108
-     +    ([PATCH] git-ls-files: generalized pathspecs, 2005-08-21).
-      
-          Signed-off-by: Adam Johnson <me@adamj.eu>
-      
-     @@ Documentation/git-ls-files.txt: OPTIONS
-       
-       --error-unmatch::
-      -	If any <file> does not appear in the index, treat this as an
-     -+	If any <pathspec> does not appear in the index, treat this as an
-     - 	error (return 1).
-     +-	error (return 1).
-     ++	If no path that matches <pathspec> appears in the index, treat this as
-     ++	an error (return 1).
-       
-       --with-tree=<tree-ish>::
-       	When using --error-unmatch to expand the user supplied
-     @@ Documentation/git-ls-files.txt: followed by the  ("attr/<eolattr>").
-       	Do not interpret any more arguments as options.
-       
-      -<file>::
-     +-	Files to show. If no files are given all files which match the other
-      +<pathspec>::
-     - 	Files to show. If no files are given all files which match the other
-     ++	Limits the files to show to only those that match any of the given
-     ++	pathspecs. If no pathspecs are given, all files which match the other
-       	specified criteria are shown.
-      ++
-      +For details on the <pathspec> syntax, see the 'pathspec' entry in
+  git@github.com:git-l10n/git-po.git tags/l10n-2.40.0-rnd1
 
+for you to fetch changes up to 3dbb0ff340d53cc567036b50ba1d393abfc1ffee:
 
- Documentation/git-ls-files.txt | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+  Merge branch 'fz/po-zh_CN' of github.com:fangyi-zhou/git-po (2023-03-10 22:50:14 +0800)
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 1abdd3c21c5..d69a46f8a56 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -21,7 +21,7 @@ SYNOPSIS
- 		[--exclude-standard]
- 		[--error-unmatch] [--with-tree=<tree-ish>]
- 		[--full-name] [--recurse-submodules]
--		[--abbrev[=<n>]] [--format=<format>] [--] [<file>...]
-+		[--abbrev[=<n>]] [--format=<format>] [--] [<pathspec>...]
- 
- DESCRIPTION
- -----------
-@@ -127,12 +127,12 @@ OPTIONS
- 	in each directory, and the user's global exclusion file.
- 
- --error-unmatch::
--	If any <file> does not appear in the index, treat this as an
--	error (return 1).
-+	If no path that matches <pathspec> appears in the index, treat this as
-+	an error (return 1).
- 
- --with-tree=<tree-ish>::
- 	When using --error-unmatch to expand the user supplied
--	<file> (i.e. path pattern) arguments to paths, pretend
-+	<pathspec> (i.e. path pattern) arguments to paths, pretend
- 	that paths which were removed in the index since the
- 	named <tree-ish> are still present.  Using this option
- 	with `-s` or `-u` options does not make any sense.
-@@ -225,9 +225,13 @@ followed by the  ("attr/<eolattr>").
- \--::
- 	Do not interpret any more arguments as options.
- 
--<file>::
--	Files to show. If no files are given all files which match the other
-+<pathspec>::
-+	Limits the files to show to only those that match any of the given
-+	pathspecs. If no pathspecs are given, all files which match the other
- 	specified criteria are shown.
-++
-+For details on the <pathspec> syntax, see the 'pathspec' entry in
-+linkgit:gitglossary[7].
- 
- OUTPUT
- ------
+----------------------------------------------------------------
+l10n-2.40.0-rnd1
 
-base-commit: 725f57037d81e24eacfda6e59a19c60c0b4c8062
--- 
-gitgitgadget
+----------------------------------------------------------------
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (5490t)
+
+Bagas Sanjaya (1):
+      l10n: po-id for 2.40 (round 1)
+
+Emir SARI (1):
+      l10n: tr: Update Turkish translations for v.2.40.0
+
+Fangyi Zhou (1):
+      l10n: zh_CN v2.40.0 round 1
+
+Jean-Noël Avila (3):
+      l10n: fr: fix some typos
+      l10n: fr: v2.40.0 rnd 1
+      l10n: fr: v2.40.0 rnd 2
+
+Jiang Xin (8):
+      Merge branch 'turkish' of github.com:bitigchi/git-po
+      Merge branch 'master' of github.com:alshopov/git-po
+      Merge branch 'master' of github.com:nafmo/git-l10n-sv
+      Merge branch 'fr_2.40.0_rnd1' of github.com:jnavila/git
+      Merge branch 'catalan' of github.com:Softcatala/git-po
+      Merge branch 'po-id' of github.com:bagasme/git-po
+      Merge branch 'l10n-de-2.40' of github.com:ralfth/git
+      Merge branch 'fz/po-zh_CN' of github.com:fangyi-zhou/git-po
+
+Jordi Mas (1):
+      l10n: Update Catalan translation
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation (5490t0f0u)
+
+Ralf Thielow (1):
+      l10n: update German translation
+
+ po/bg.po    |  806 +++++++++++++++------------------------
+ po/ca.po    | 1138 ++++++++++++++++++++++++++++++++-----------------------
+ po/de.po    | 1167 ++++++++++++++++++++++++++++++++------------------------
+ po/fr.po    | 1006 +++++++++++++++---------------------------------
+ po/id.po    | 1220 +++++++++++++++++++++++------------------------------------
+ po/sv.po    |  765 ++++++++++++++-----------------------
+ po/tr.po    |  771 +++++++++++++++----------------------
+ po/zh_CN.po | 1118 +++++++++++++++++++++++-------------------------------
+ 8 files changed, 3499 insertions(+), 4492 deletions(-)
+
+--
+Jiang Xin
