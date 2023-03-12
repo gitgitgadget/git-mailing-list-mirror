@@ -2,131 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2022C6FA99
-	for <git@archiver.kernel.org>; Sun, 12 Mar 2023 21:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B726AC6FA99
+	for <git@archiver.kernel.org>; Sun, 12 Mar 2023 21:32:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230502AbjCLVZp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Mar 2023 17:25:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49572 "EHLO
+        id S230304AbjCLVcn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Mar 2023 17:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229713AbjCLVZo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2023 17:25:44 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E85F82D165
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 14:25:42 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id cp7-20020a17090afb8700b0023756229427so15088287pjb.1
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 14:25:42 -0700 (PDT)
+        with ESMTP id S229616AbjCLVcl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Mar 2023 17:32:41 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55EB02FCEC
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 14:32:39 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id x20-20020a17090a8a9400b00233ba727724so11594494pjn.1
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 14:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678656342;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cOTKoU6sWEdclKKah8oZh0ITddiz6xo5KU/0LQKdzXo=;
-        b=MkdvvjWKAhYJTUERLdanGJgLQJvjQs0TAICBjOAgmY947SoEuzp6sXcaL2n7vcQ7I1
-         9EIV9QhzOuhgqbn/2sL57cpCaB3Z6fpkvgndaDLOtcjR/0SjDGe0n8ufQ8Z9dtk/qF/b
-         DDFmBTqoBNQwqX/5NEgFxFQJhEYYEvli6/5ULGdf/P8rggsMfBPQrrussn+UwWZFn0eg
-         83bsd9CufCUsrSkgxocAU3wzr7/EgwSJ2WavG8qaeOokPR5ikLVAtgeFP1cLjdepwXSU
-         ScFfuIMmxYayRdZdZPNfAqSCj6wY3jDRRtL7cukymPq0ltnkNR9pYLRN+xXQ/fG6jVP2
-         Fqmg==
+        d=gmail.com; s=20210112; t=1678656759;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kx5NzMa47m4evL2p51DZ0oEfH9ifSycMFz85/PV3Ofw=;
+        b=egWaOiU9/sdEk05/1Z0Px4G/2HywESb3Va6QlxvH4uchYlKt/WM6I61mT9u5aStkDx
+         oXJMcOAsfa98nx91EsGa0vJWGAh9CaH/XyxNADWqBaLpUsvS195hjvd4uHM1Fn85sFAx
+         EQ45gcZqV+ozAaDaIIx8iZdyxDjy/41E81ziZ0LLDX1ZRr5/eGRXKqGjbXbDdnJwGNhm
+         qEWhUeVMXv+yOXd/RgCHT/UPRYznN0SvytXOELVOYY8rIKJ/jozlBNsK5fYD6mC4c8eQ
+         c69sliwa2OckwHv6bX/jdknA5awMoP6sBM9zLMp7XENsaviE/sm5Inr7UE+pTiEvSW4V
+         jV2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678656342;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cOTKoU6sWEdclKKah8oZh0ITddiz6xo5KU/0LQKdzXo=;
-        b=F2ivu4nbvWC0IQQ4qmkTpRRXeQRgsw5fsRQb/EsvvuttGOegG4BZe/fC8FufmMW9rL
-         GIdeTEFJROvEGLIPsg/xy3uAuFgCjClOJQ43dWlPLm3iQWmLeH5Hgsy7Tjb2bFlCXz4W
-         1z+2OW+xYiE0bUJYhG3qlQDNcq14YxxtJYUzl1mzX11DF4fT5l/HculAC01NEFScdbCe
-         5J1C7aFknSHimCGDWDZpqkS1Lp5DIsEQBm0Sy/A3PW8HF70xGQMYWWahfoPrXIUzPVwP
-         1lD58s3rqxUvYnLJgZjm52Zwr8GYEI1yd2ZPFn+0c6GodD/1ND4B+VMGaH6YfkbS4bPO
-         fStA==
-X-Gm-Message-State: AO0yUKUpB6pFKmCu1NSmgQGjEpNCaRmskqPZ1uuqIJ7XqPWYOnp4grOE
-        k46K+q/bM3POkggSXwdaahY=
-X-Google-Smtp-Source: AK7set++UFS40kjXCZcjc60hwCyUWKhl9FA6DWIszeSXJgNDmg5JhDc5pXu7i/44plpsvAGnKiK2Kw==
-X-Received: by 2002:a05:6a20:a121:b0:cc:8a62:d0d4 with SMTP id q33-20020a056a20a12100b000cc8a62d0d4mr36267646pzk.38.1678656342188;
-        Sun, 12 Mar 2023 14:25:42 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1678656759;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=kx5NzMa47m4evL2p51DZ0oEfH9ifSycMFz85/PV3Ofw=;
+        b=HUhcF7okzfhzVQhUMqyiG2iDI8K50HZtrzGGiYJDwPbQ/rBEb9JNGoHyvUUbWNYQYz
+         /SRZhJa/b6SGMsPFlB1cav/DJGOu5OWB6N8Eq4zE5FQnAd+Yp29wBr6B+iNYXdTgIOdw
+         QTTYDyIIZajeaKjbRZRmCZGXWxCm4mBHi6vVCS3yzUAHDFXfRexW4RC29m4qTkNN38zO
+         8Sk8kVuA/Fm2dsDD4dJl2to+wbkVC9McPLdrHKegDZhDyIwvAnGPeXgfpkRVbqwaeqPd
+         outeqFc8ReCSrf303XcUCMrJt7LRzT7krpHdE84g/zBgX4IiRZLGQTPapyhp/Nf/kH/V
+         UQHA==
+X-Gm-Message-State: AO0yUKXTOTMBaqBOb3h/n1giNqjI+p5FiTxA03wiS26Ui/UwL2DT1kgG
+        00U4Xon6p4KtbsmOCRGHAEA=
+X-Google-Smtp-Source: AK7set/Pfz8Uc6VqO3oUTutq6EppssrwcbqQNToB2auNynuS1S6DHg+DQnu1+vS3c2//mcL9Kb1Svg==
+X-Received: by 2002:a05:6a20:4415:b0:cc:4118:75f4 with SMTP id ce21-20020a056a20441500b000cc411875f4mr9025940pzb.0.1678656758766;
+        Sun, 12 Mar 2023 14:32:38 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id n13-20020aa7904d000000b005a8512c9988sm3115592pfo.93.2023.03.12.14.25.41
+        by smtp.gmail.com with ESMTPSA id r14-20020a62e40e000000b005a8de0f4c76sm3206318pfh.17.2023.03.12.14.32.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 14:25:41 -0700 (PDT)
+        Sun, 12 Mar 2023 14:32:38 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Cristian Le <cristian.le@mpsd.mpg.de>, git@vger.kernel.org,
-        Matthias =?utf-8?Q?G=C3=B6rgens?= <matthias.goergens@gmail.com>
-Subject: Re: Bug in git archive + .gitattributes + relative path
-References: <42f13cda-9de6-bfc6-7e81-64c94f5640db@mpsd.mpg.de>
-        <c7b21faa-68dd-8bd9-4670-2cf609741094@web.de>
-        <8d04019d-511f-0f99-42cc-d0b25720cd71@mpsd.mpg.de>
-        <70f10864-2cc7-cb9e-f868-2ac0011cad58@web.de>
-        <xmqqcz5lbxiq.fsf@gitster.g>
-        <d16c6a22-05d8-182c-97b4-53263d22eaa6@web.de>
-        <xmqqo7p59049.fsf@gitster.g>
-        <3da35216-ca42-9759-d4f9-20451a44c231@web.de>
-        <xmqq4jqx8q6q.fsf@gitster.g>
-        <f7949f1b-4bad-e1bf-4754-f8b79e3ce279@web.de>
-Date:   Sun, 12 Mar 2023 14:25:41 -0700
-In-Reply-To: <f7949f1b-4bad-e1bf-4754-f8b79e3ce279@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sat, 11 Mar 2023 21:47:14 +0100")
-Message-ID: <xmqqjzzly84q.fsf@gitster.g>
+To:     "Hugo Sales via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Hugo Sales <hugo@hsal.es>
+Subject: Re: [PATCH] Add `restore.defaultLocation` option
+References: <pull.1467.git.git.1678578153640.gitgitgadget@gmail.com>
+Date:   Sun, 12 Mar 2023 14:32:38 -0700
+In-Reply-To: <pull.1467.git.git.1678578153640.gitgitgadget@gmail.com> (Hugo
+        Sales via GitGitGadget's message of "Sat, 11 Mar 2023 23:42:33 +0000")
+Message-ID: <xmqqfsa9y7t5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+"Hugo Sales via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> I offhand do not know how well it would mix with --strip-components
->> if we leave the leading "../".
+> From: Hugo Sales <hugo@hsal.es>
 >
-> Not too well when entries from $PWD are shortened and mixed with ones
-> from elsewhere that aren't.  But that seems like a strange thing to do.
+> This options allows control over which of `--worktree` or `--staged` is
+> applied when `git restore` is invoked with neither
 
-Yes, it is a strange thing to do.
+We do not want to do this.  Tutorials and documents will be written
+assuming the official default, and those users who set it to use a
+different default, only because they are told to use it before they
+know better, would waste a lot of time wondering why the procedures
+they read from tutorials and documents would not work for them.
+Even an expert who is asked to help a novice, who has this variable
+set, would end up getting confused becaue "git restore" without the
+explict options does not work as they expect.
 
-> If two sub-trees are needed then git archive should be started in a
-> shared parent directory higher up.
->
->> But it certainly would be nice if we somehow:
->>
->>  * can keep the current behaviour where "git -C sub archive" records
->>    paths relative to "sub" for backward compatibility.
->
-> Right.  That's what relative_path() provides in the patch.
->
->>  * fail loudly when "git -C sub archive <pathspec>" makes us use
->>    "../" prefix because <pathspec> goes above the $PWD for backward
->>    compatibility and sanity.
->
-> Without the patch this fails, but are there really people that depend on
-> it failing?  We could certainly forbid it, but do we need to?
-
-I dunno.  It was an obvious way to avoid having to think about
-interaction with --strip-components and "../", but there certainly
-may be other solutions for it people can think of. 
-
-Also on the receiving end, don't people get upset to see that their
-"tar xf" escapes the directory they just created only to extract the
-tarball?
-
->>  * with --some-option, make "git -C sub archive --some-option :/"
->>    act exactly like "git archive :/".
->
-> Perhaps I'm reading this too literally, but it would be easier to remove
-> "-C sub" from that command. Or to add "-C $(git rev-parse --show-cdup)".
-> We could add a shortcut for that (see patch below).
-
-More like
-
-	$ cd some/deep/place
-	... work work work
-	$ git archive --full-tree :/other :/hier :/archy
-
-is what I had in mind.  Without --full-tree, due to the first bullet
-point above, paths in our archive are relative to some/deep/place.
-
-Thanks.
+Individual users are welcome to use "[alias] ri = restore --staged"
+and this will hurt nobody.
