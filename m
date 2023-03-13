@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1567C74A4B
-	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 17:19:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA783C61DA4
+	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 17:31:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231659AbjCMRT1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Mar 2023 13:19:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42510 "EHLO
+        id S230062AbjCMRbp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Mar 2023 13:31:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231672AbjCMRSz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2023 13:18:55 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBEAC5B8A
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 10:18:03 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id fy10-20020a17090b020a00b0023b4bcf0727so4954836pjb.0
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 10:18:03 -0700 (PDT)
+        with ESMTP id S229638AbjCMRbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2023 13:31:43 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB9996F495
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 10:31:06 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id h8so13768984plf.10
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 10:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678727854;
+        d=gmail.com; s=20210112; t=1678728665;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Ee5+35NLTZAHz5EeBpKWsU/PwFfxQMFVZ4SDiCvxP4Q=;
-        b=UBGh+WlJvqbvER0UHL+46TfVnn/TRkkpjWnYJVfnYWwYRa+kttXIw8n5Ju96nVWxm+
-         l8vPXxNuj+U8sLxfUu+HDL/oK5qbN2RzvkXxnKBp851fy78Oo6Vipzo+oWSF1e/CtUQY
-         2jGmxI4nglPgHnsQJ2h1tkhFtr4oVcquTyZXclEMqND6scl/PD2AXtzkzbYbt8xcMsoG
-         vntghVZyQDdp+NPv7fN/VXcBVuN2d2dBB810H9e0DhPpueqdpalbxOp1rKtN4PzkwWmq
-         xtUiMdLQkJFTdRDjcvncYW3QV7hL3IxSjCEwzGZjwPYEDXdoN8xneX8b28CR5BQXnNXG
-         SfFw==
+        bh=OH7jXjiPdehZwunZVkccfhJtq2nqXwJsiJk/x83prXw=;
+        b=ZsaYCr8kSB/PFfTWwBeV8dlnj5TuXDzznZ8JLCh5GivLhFDiVp97g8O06haanT0W7B
+         VGC9xA9OfhyM2tX1eHSnwO7gXTuXEoynCYZFmwo6FOIoWN+WCNWWR5rrOD71f/R92baf
+         +XqLFNGyjN8sZ+AmtMZSRG/FLUwtQ2C2WyldlpOSdoMljDQbsiyuvMlBsBFDNB3G8j6F
+         0UTLLmq2dch1p23xcOCF51RgKRJP7WinmsKNEz9IQHLOvUC2CbHzjgFrO4oxte8Ehxx9
+         xjKlpeaUxgf1WuT/udPQdrHh+hE26DCIWtxO7utcd+jNeklgPGokKW9QQ8ruwTGkiC6m
+         QH1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678727854;
+        d=1e100.net; s=20210112; t=1678728665;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Ee5+35NLTZAHz5EeBpKWsU/PwFfxQMFVZ4SDiCvxP4Q=;
-        b=t83aUs6mCaEknJlmqgK972GdUGTdj5/+jAD/2ZksXVFaX3YMAAZqc0KmPkWZzfDoCU
-         avQcbSLJ6L8+G/BGPMUOtQNcdagPnEP7nK/RiB1hCjXgIW77aqsTWw/XaS58KjsCLNDm
-         +Ke7qAENI0A7alg6SMKcGApFMMoGpsC3eS1s+9ltQEyy1UWIe4YQSmaab/mHCetDKsud
-         WEofQj6fUnNVLdaZaRrYu88mSHXzqzp1NcOOMC4QZMkHFdqDXdudBGiBtZt/ndDSlWAC
-         TeD7bkoPPTnbkO2EJIynGuaLaCpaiPM90WGzvl/C9GK3Q25mQtg43/51r7WIRZUvkP0h
-         FYzw==
-X-Gm-Message-State: AO0yUKWd193zKHaCwilXAV1TtzNqVsaIC/VhcBlfHcDZeMZCdcwlpJQj
-        P5UNI5GWWCwd91Yk+LCOT5M=
-X-Google-Smtp-Source: AK7set+8WZLFVIdtGhZGk5arAwonLvfmeZ5a6SlXdDDDtYKwQGmQts+SudelpAUo1nZdp8oJJSyi/A==
-X-Received: by 2002:a17:90a:db96:b0:23d:1d5d:6e95 with SMTP id h22-20020a17090adb9600b0023d1d5d6e95mr1988699pjv.33.1678727853776;
-        Mon, 13 Mar 2023 10:17:33 -0700 (PDT)
+        bh=OH7jXjiPdehZwunZVkccfhJtq2nqXwJsiJk/x83prXw=;
+        b=mVlfzncA43m06RCLm/GuNA+im1y+ElgcZdwEoZY+LtUS1KAbDhZ++Ap9fmdZ7s2K4T
+         0y05y/Cv/jyYGNxzXG2j4rqpZkhj4RQjNTkFt0fVlxPEOmivY4U/Be7BCxUGaDUvrQg6
+         OyHi4Gk8uK4q1Wwgj1yVk5L2ZxJR6ZHys6E3zBfcFl0B/WfIDIvFbIjOPFA0tbSpE6Uv
+         ohncav5kMwJedubiL7shpYLYj4U64j0v6qbubIlWAdEJ+eQjvlvEugST4tCPQ+F9iLJ1
+         +iZiHSDgOOgkqrnU/KikL8Djk6Rmprj1Ai1CTBYuaabd1JMDUWxrfn3xT/NfAvRjxFiw
+         3Zxw==
+X-Gm-Message-State: AO0yUKXcNZcFkEeiHdTf4SNsRgevhd4sicRfan2RESbDYBj5QXKKlJKV
+        VxM4cxlBSS61WJ2fT6EWXkg=
+X-Google-Smtp-Source: AK7set9OSdperPEPLjkTdK09KxiBKfv0J8xWlRE2466JqNi/c8npkiMIB/5AQMxor7ozSLzKeCppfA==
+X-Received: by 2002:a17:90b:1b4e:b0:233:ee67:8eb3 with SMTP id nv14-20020a17090b1b4e00b00233ee678eb3mr36047868pjb.24.1678728665477;
+        Mon, 13 Mar 2023 10:31:05 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id x3-20020a17090aa38300b0023cfbe7d62esm391482pjp.1.2023.03.13.10.17.33
+        by smtp.gmail.com with ESMTPSA id kd4-20020a17090313c400b0019a773419a6sm141886plb.170.2023.03.13.10.31.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 10:17:33 -0700 (PDT)
+        Mon, 13 Mar 2023 10:31:05 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
@@ -61,10 +61,10 @@ References: <ZAl3bHB9zxjLITgf@coredump.intra.peff.net>
         <ZAr7+zW+pkOXoIfL@coredump.intra.peff.net>
         <xmqqcz5g7d2i.fsf@gitster.g>
         <ZA9SmZaUyrgbH2fb@coredump.intra.peff.net>
-Date:   Mon, 13 Mar 2023 10:17:33 -0700
+Date:   Mon, 13 Mar 2023 10:31:04 -0700
 In-Reply-To: <ZA9SmZaUyrgbH2fb@coredump.intra.peff.net> (Jeff King's message
         of "Mon, 13 Mar 2023 12:43:05 -0400")
-Message-ID: <xmqqjzzkwoya.fsf@gitster.g>
+Message-ID: <xmqqpm9cv9rb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,20 +74,29 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> Sure, but how do we send that message? I guess if we leave diff.noprefix
-> as it is and add a new format.patch (which preempts diff.noprefix only
-> for format-patch), then people will still accidentally send patches
-> without prefixes, but at least there is an "out" for the maintainer
-> receiving them to say "don't do that; please set format.patch".
+> By the way, we might also want something like this:
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index dd31d5ab91e..5b7b908b66b 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -661,7 +661,7 @@ static int run_am(struct rebase_options *opts)
+>  	format_patch.git_cmd = 1;
+>  	strvec_pushl(&format_patch.args, "format-patch", "-k", "--stdout",
+>  		     "--full-index", "--cherry-pick", "--right-only",
+> -		     "--src-prefix=a/", "--dst-prefix=b/", "--no-renames",
+> +		     "--default-prefix", "--no-renames",
+>  		     "--no-cover-letter", "--pretty=mboxrd", "--topo-order",
+>  		     "--no-base", NULL);
+>  	if (opts->git_format_patch_opt.len)
+>
+> which uses --src-prefix to (you may have guessed it!) counteract
+> diff.noprefix in the user's config. (It would still be necessary even
+> with my series because the user might have set format.patch).
 
-I actually was hoping that it would be enough if the message were
-"please unset diff.noprefix---in this project the convention is
-to use -p1 patches, so get used to seeing a/ and b/ prefixes".
+Oh, you grepped around ;-)?  Good find.
 
-Even if a project wants -p0, the same approach would almost work,
-but it would need apply.pValue support to help the receiving end.
+Of course, nothing breaks without the above one-liner so it is
+somewhere between a "Meh" and a "clean-up we should do before we
+forget".
 
-But as we already concluded, let's cook the current 5-patch series
-in 'next' and see what happens.
-
-Thanks.
