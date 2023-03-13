@@ -2,63 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15CA0C61DA4
-	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 05:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F00EEC6FD1C
+	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 05:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230019AbjCMFBv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Mar 2023 01:01:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42878 "EHLO
+        id S229861AbjCMFBy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Mar 2023 01:01:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230049AbjCMFBp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2023 01:01:45 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE72457CF
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 22:01:37 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-17671fb717cso12545958fac.8
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 22:01:37 -0700 (PDT)
+        with ESMTP id S230072AbjCMFBr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2023 01:01:47 -0400
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0CA9457F7
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 22:01:38 -0700 (PDT)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-176b90e14a9so12542059fac.9
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 22:01:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678683696;
+        d=gmail.com; s=20210112; t=1678683698;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ov841ADxrFVhWLXqGzlma61w4hvDFdv5HEnPz4oAEws=;
-        b=O09TsgepoFSHElmu5Pxz3MS5MbwL+AljPQzBUkJ4VP4wGUeIzo4jf/lc0vFhTeg41t
-         3TfSBuKktRY3frfvXLLoDsQmGW00Ku/oHw2Rena59CETJJxeCBkCT9mc+lgjeB5LIKaL
-         pVP1Sto7+yDFbewtkWjjJBAn6fGSXR9ZgyRMx6dt6C2Ph7Q7QH/uz28iwWPK9McTOS02
-         OkbYaYSdbRmKrJn9CV+Fc4tFri0mjhvJdFzn1KWV885o+9fQRtuipgnt/AygfbEeOSOa
-         0zc/FfwYwO1494OxzJzMB9TvQ6/puEAMkgVf4If1RP0cILBYjZwOxSwkbRtLFUSBDE7l
-         EVMg==
+        bh=UItSxR2bT+7IPmVLwgr5Ki2DUIBcnwajgZjOleygU24=;
+        b=f6dLYevltjLFK2FWkAU7J9qmkeskYGRR0vysUNvUaM4DA2g/n8W7PN5T7fI2m8vFKe
+         TjKT+t8EO05s64VkyvkbCyD/bixJGZ3l7p8qJ39GkMZdoFFfx8UYvgzpKdmD7yc3N3vK
+         wFcPB8Ir6cM7tdmjA1stdaN4MsIu0XnSuvkLEXZ+fBU2ro+Sur0eNu+Lj8Ji+4z4K7SM
+         LnUBZe6i4MtjPB0Jg8l2pFhZyYovNyPG4kpEpeRwygF9iZleV/maEG+XHEP1DpZc6FjC
+         LfZAcxE/FXOJPifErfJWzTEvudIfj6rKdcWoRY1GIYnQPvpdi42Q7sO4LMJ2MnQgCt5+
+         qJyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678683696;
+        d=1e100.net; s=20210112; t=1678683698;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Ov841ADxrFVhWLXqGzlma61w4hvDFdv5HEnPz4oAEws=;
-        b=KTV9uBdKBme/l2c5BLVbpaLRnA0oiIjo8WTB6rtQQu/+ZcmS2XLsBwfCtRL1yXDc0Y
-         9JuAyPgEV3Z7E3E7Qx8ujnvp1pxmjCvoRFBA1rwHyYOM2dmiVgLpQB4ZC2kcFL4awd86
-         jRIQfBueLjNhDwSf81bm1CSnm1mgSgpalKJgAIdQrjabISOwd/enaT+jEPS4hB5sKk7T
-         qFosxjN0WGgMRLtMja+J+wXxaBrARDXMM8SahMlko6CYCm2g8vTuRr30uhbSKUmMk4BW
-         8rwaFsfNScmcB2V5utb3WcFIESTRk/ZGrw0IhEwux9IsyJBA8DV8lJGslS/XC2J7+lWC
-         +3Xg==
-X-Gm-Message-State: AO0yUKUZijLgQgx1qtqI5TzIGdw5X6ZwGkssC0YtpvQ5kodCdv7i9F8m
-        8542SEzCDVGxEaUoMd/xdIXNwyqivWk=
-X-Google-Smtp-Source: AK7set/Wh+Ovzp7MXPEWIDqcAR9F2LhGGp1zWByDdUnPNs6VgS2qlFIvUCXY/l69RtUtiHMwiem8+g==
-X-Received: by 2002:a05:6870:7082:b0:177:b78b:1e39 with SMTP id v2-20020a056870708200b00177b78b1e39mr1217640oae.0.1678683696320;
-        Sun, 12 Mar 2023 22:01:36 -0700 (PDT)
+        bh=UItSxR2bT+7IPmVLwgr5Ki2DUIBcnwajgZjOleygU24=;
+        b=vgUlae0oJh2onKri6X+bOwFmIDGcxIDbYdNLbGNog28vuMSyuGwqUqy2UepQkVwnWz
+         SSY0oHKAk0zirlKmxb/ZTgvWZSIM7OzSlwt5XdT0U2g0IRFch1e3mc+dz/Q2O/okK/oA
+         Z62l3qv7x99hxzHJLpB0Z2XfpsbPqWqPC5mRY53UoQr3YtymtAuQ37NTMeDPS8BYYBEv
+         p+y73mYsLfaPerDXMXvJccm8JguWb0i7IXwiRf4T5h04s07y+iYvaRrn6MBCt7hPb9cA
+         FToi+ucwHSf+V/2Q/LlGlDg/i7MKgg/rCfLsqBOS27MNJTdvCxLvpOp6xJHE+1D6060m
+         8jsw==
+X-Gm-Message-State: AO0yUKXB5Ju4PRfJhxZRU0MMG41Tx8dCC3A3JYWNoF8N9mCRvyFC8UBx
+        Q5t3+oeJiWaFMYVSh7PQWZG50iLPKak=
+X-Google-Smtp-Source: AK7set9gI+vleNSSQHDCHZnHeCbV5ZPXlRmq2lmn/a1qzEMnbRcluS8RXK7vlteiHT3QWugY6QQMZg==
+X-Received: by 2002:a05:6870:5249:b0:176:5815:eb2d with SMTP id o9-20020a056870524900b001765815eb2dmr22002075oai.50.1678683697790;
+        Sun, 12 Mar 2023 22:01:37 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id v14-20020a056870954e00b00177ba198612sm480144oal.53.2023.03.12.22.01.35
+        by smtp.gmail.com with ESMTPSA id r7-20020a056870414700b0017703b8a5f8sm451665oad.49.2023.03.12.22.01.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 22:01:35 -0700 (PDT)
+        Sun, 12 Mar 2023 22:01:37 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Felipe Contreras <felipe.contreras@gmail.com>,
-        Thomas Rast <tr@thomasrast.ch>
-Subject: [PATCH 1/2] test: relocate test_expect_{success,failure}
-Date:   Sun, 12 Mar 2023 23:01:31 -0600
-Message-Id: <20230313050132.3464802-2-felipe.contreras@gmail.com>
+        Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH 2/2] test: relocate yes
+Date:   Sun, 12 Mar 2023 23:01:32 -0600
+Message-Id: <20230313050132.3464802-3-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.39.2.13.g1fb56cf030
 In-Reply-To: <20230313050132.3464802-1-felipe.contreras@gmail.com>
 References: <20230313050132.3464802-1-felipe.contreras@gmail.com>
@@ -68,133 +68,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Their proper place is in test-lib.sh since they aren't meant to be
-called in a subshell, except in t0000-basic.sh of course.
+This is a command meant to be called by the subshells: therefore it
+belongs in test-lib-functions.sh.
 
-The rationale behind the move (12a29b1a50 (Move the user-facing test
-library to test-lib-functions.sh, 2012-02-17)) was that the tests in
-t/perf would need test-lib-functions.sh inside the subshells, for
-example:
-
-        test_perf 'perf test' 'test_expect_success foo :'
-
-But that doesn't actually happens in any of the perf tests.
-
-So move these functions back where they belong.
-
-Cc: Thomas Rast <tr@thomasrast.ch>
+Cc: Brandon Casey <drafnel@gmail.com>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/test-lib-functions.sh | 42 -----------------------------------------
- t/test-lib.sh           | 42 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 42 insertions(+), 42 deletions(-)
+ t/test-lib-functions.sh | 21 +++++++++++++++++++++
+ t/test-lib.sh           | 21 ---------------------
+ 2 files changed, 21 insertions(+), 21 deletions(-)
 
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 999d46fafe..49a850989a 100644
+index 49a850989a..da39d98391 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -801,48 +801,6 @@ test_verify_prereq () {
- 	BUG "'$test_prereq' does not look like a prereq"
+@@ -87,6 +87,27 @@ test_decode_color () {
+ 	'
  }
  
--test_expect_failure () {
--	test_start_ "$@"
--	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
--	test "$#" = 2 ||
--	BUG "not 2 or 3 parameters to test-expect-failure"
--	test_verify_prereq
--	export test_prereq
--	if ! test_skip "$@"
--	then
--		test -n "$test_skip_test_preamble" ||
--		say >&3 "checking known breakage of $TEST_NUMBER.$test_count '$1': $2"
--		if test_run_ "$2" expecting_failure
--		then
--			test_known_broken_ok_ "$1"
--		else
--			test_known_broken_failure_ "$1"
--		fi
--	fi
--	test_finish_
--}
--
--test_expect_success () {
--	test_start_ "$@"
--	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
--	test "$#" = 2 ||
--	BUG "not 2 or 3 parameters to test-expect-success"
--	test_verify_prereq
--	export test_prereq
--	if ! test_skip "$@"
--	then
--		test -n "$test_skip_test_preamble" ||
--		say >&3 "expecting success of $TEST_NUMBER.$test_count '$1': $2"
--		if test_run_ "$2"
--		then
--			test_ok_ "$1"
--		else
--			test_failure_ "$@"
--		fi
--	fi
--	test_finish_
--}
--
- # debugging-friendly alternatives to "test [-f|-d|-e]"
- # The commands test the existence or non-existence of $1
- test_path_is_file () {
++# Provide an implementation of the 'yes' utility; the upper bound
++# limit is there to help Windows that cannot stop this loop from
++# wasting cycles when the downstream stops reading, so do not be
++# tempted to turn it into an infinite loop. cf. 6129c930 ("test-lib:
++# limit the output of the yes utility", 2016-02-02)
++yes () {
++	if test $# = 0
++	then
++		y=y
++	else
++		y="$*"
++	fi
++
++	i=0
++	while test $i -lt 99
++	do
++		echo "$y"
++		i=$(($i+1))
++	done
++}
++
+ lf_to_nul () {
+ 	perl -pe 'y/\012/\000/'
+ }
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 62136caee5..388075a6c6 100644
+index 388075a6c6..24aedc122d 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -1269,6 +1269,48 @@ check_test_results_san_file_ () {
- 	fi
- }
+@@ -1694,27 +1694,6 @@ OIDPATH_REGEX=$(test_oid_to_path $ZERO_OID | sed -e 's/0/[0-9a-f]/g')
+ EMPTY_TREE=$(test_oid empty_tree)
+ EMPTY_BLOB=$(test_oid empty_blob)
  
-+test_expect_failure () {
-+	test_start_ "$@"
-+	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
-+	test "$#" = 2 ||
-+	BUG "not 2 or 3 parameters to test-expect-failure"
-+	test_verify_prereq
-+	export test_prereq
-+	if ! test_skip "$@"
-+	then
-+		test -n "$test_skip_test_preamble" ||
-+		say >&3 "checking known breakage of $TEST_NUMBER.$test_count '$1': $2"
-+		if test_run_ "$2" expecting_failure
-+		then
-+			test_known_broken_ok_ "$1"
-+		else
-+			test_known_broken_failure_ "$1"
-+		fi
-+	fi
-+	test_finish_
-+}
-+
-+test_expect_success () {
-+	test_start_ "$@"
-+	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
-+	test "$#" = 2 ||
-+	BUG "not 2 or 3 parameters to test-expect-success"
-+	test_verify_prereq
-+	export test_prereq
-+	if ! test_skip "$@"
-+	then
-+		test -n "$test_skip_test_preamble" ||
-+		say >&3 "expecting success of $TEST_NUMBER.$test_count '$1': $2"
-+		if test_run_ "$2"
-+		then
-+			test_ok_ "$1"
-+		else
-+			test_failure_ "$@"
-+		fi
-+	fi
-+	test_finish_
-+}
-+
- test_done () {
- 	# Run the atexit commands _before_ the trash directory is
- 	# removed, so the commands can access pidfiles and socket files.
+-# Provide an implementation of the 'yes' utility; the upper bound
+-# limit is there to help Windows that cannot stop this loop from
+-# wasting cycles when the downstream stops reading, so do not be
+-# tempted to turn it into an infinite loop. cf. 6129c930 ("test-lib:
+-# limit the output of the yes utility", 2016-02-02)
+-yes () {
+-	if test $# = 0
+-	then
+-		y=y
+-	else
+-		y="$*"
+-	fi
+-
+-	i=0
+-	while test $i -lt 99
+-	do
+-		echo "$y"
+-		i=$(($i+1))
+-	done
+-}
+-
+ # The GIT_TEST_FAIL_PREREQS code hooks into test_set_prereq(), and
+ # thus needs to be set up really early, and set an internal variable
+ # for convenience so the hot test_set_prereq() codepath doesn't need
 -- 
 2.39.2.13.g1fb56cf030
 
