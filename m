@@ -2,140 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB410C6FD19
-	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 19:19:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A56B7C6FD19
+	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 19:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231391AbjCMTTX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Mar 2023 15:19:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48442 "EHLO
+        id S229929AbjCMTqb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Mar 2023 15:46:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231387AbjCMTTJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2023 15:19:09 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88A463E087
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 12:18:31 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id l9-20020a17090a3f0900b0023d32684e7fso377711pjc.1
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 12:18:31 -0700 (PDT)
+        with ESMTP id S229473AbjCMTq3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2023 15:46:29 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3776532A7
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 12:46:28 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id ja10so4546592plb.5
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 12:46:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678735098;
-        h=mime-version:message-id:date:user-agent:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=s2wXNWHYPW5vX58WOARGwLB5nk2V1zpt+5WP81X3XL0=;
-        b=CJtZxKkuGG9DgwK03nqcy7xaYYInzTNq5TZdtANevtq6rvQAzOrPQGtZg8P4B5IRLJ
-         AXHhECQ14m+/3EzMaFoJB8ZIHfhmEvgt089zgOxBv6NCCn0+uReI9qw8t3W9s02QuGTR
-         Xc+nJKn7sofAE3O8tIdBJ/WvupSKE/yQFk1Vc44ZAyApz26hEnEQN8hK2B4jNDWSceOj
-         hhZ6cmEfWGfuFJHEGEZEffDkh+OzXa6jgpFUyG2PPPYfqdsMNhUwQXXOFxQPJ7S03R0G
-         mnC1M1pOqXozygxqFXoq/3jTtYiiaEZ/62yt9/UYtTzw77skqxnrj1cxq7J/0ti+qKM/
-         QImw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678735098;
-        h=mime-version:message-id:date:user-agent:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20210112; t=1678736788;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=s2wXNWHYPW5vX58WOARGwLB5nk2V1zpt+5WP81X3XL0=;
-        b=wkgW19whwdqxqe87SVrrPl2zGvFUUT0PnQSGnFbNuMYOkhz12aQM6q+kIR/xL55FMi
-         B5XGC+mw+4UrL80RgNROcheY5JECmUYEoXOhrXH9E7Bl+HTG/MxX8haAeS6TKCGVHDaQ
-         Rd8RuluowsVSfeZcQYzRGS614umq2EGNuPzLoZLuHkHD6u02kVWogqnq50bSHUNxewFE
-         VsQBQAdgd8NUhE2Tkmer/Yojytw0dMLWuxasqpUvuwQNdHpTLtKmsFrjeLhrb2bjtInr
-         qGZ89cQDGDr4VjDiRON6ghqHQDaNhYCt3iihwAL13sFailoeieade7QUEXDs/HS/RsIY
-         OMEg==
-X-Gm-Message-State: AO0yUKX/+O1W8DBINtl4r5olzmEvUq/VSTiXv5w74n3tkMMWl+CJFVyX
-        uTWY2c5dbBRkmEPNSON4UD0=
-X-Google-Smtp-Source: AK7set+SRT2S7SGO4zGo+nrNAjKFCvatnPZtTdPiooEOn4sq8f3AfHEqG5yReYGjzjP21/FPghpixw==
-X-Received: by 2002:a17:903:514:b0:19e:68e4:859c with SMTP id jn20-20020a170903051400b0019e68e4859cmr29093406plb.36.1678735098070;
-        Mon, 13 Mar 2023 12:18:18 -0700 (PDT)
+        bh=X02+1PcF1g9Na/H9Tf148Ept9i3JHLSErsTo/xUA9Vw=;
+        b=eohHxytFKqgcnn57EoTJRqOiIvzcU4JtTrI26dzx2W/YJ60WLGodYae6Y5ze06lRGk
+         Ogxs63G60GzmsYg9SluN2zlfVIgagFG6n4aXfzB+GqORGLRzOeplq8CriM2djX8UFAkA
+         rRM2KKi+/h/xIAu2lA6U6gA7qaiZ/sVfRZqvu4JQoh48M4/83dr1wpORLzZ7JXtd+uyR
+         Tsdzk/l2RKbzTncbwuOrit6lcmXOu8TTR3SIhbqivU3jh7T8Zd0lzhfJy4v3FeNnuh8P
+         lNfencXJW6bc+5SrNGiq2f9GCljjXanopdlw9UMDLDBrA0ZdRiBYzgHGL2HQLrC4RlUE
+         3vBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678736788;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=X02+1PcF1g9Na/H9Tf148Ept9i3JHLSErsTo/xUA9Vw=;
+        b=fw3NI1eEfmWNJbxDJcK72G8HDN+XSBFt4nL10JvN55Ez00l8f78Tz0gxJWVAn26exH
+         50JzNXMpcfQGm7HxVD4MNxbKH+8bWS+m3PjDnHVEAhQGm2ixu2Pc+q+4WtlusLzm/BTg
+         VoXgQj1VGSK+LWuiFgDToNvliLoNqrF2jTxjNo6nJVsJbB0uhgs+3/DCVHl1y5DZwbAN
+         lU8ZPn12qOqCJ3o6uv9TL/G4TSf5z1Z53JOKhxMicC+5NA7WR7dCMNixWLBXuBloQEd6
+         1Q5kIkz5udbuJy8M/bIpy1R/HEm+hB5jG0mcD5S2T/OJE5wl1eK2KRvBF8J/X6yvQih8
+         1ibw==
+X-Gm-Message-State: AO0yUKUJJL5x6+3cMssA6oyK+c0VR61dlykG80uvyXUBdVj0W9qi3acd
+        fy8r4p06Pwk1Wnns11cGqOo=
+X-Google-Smtp-Source: AK7set+7l5Okt15L3E7PGgrvld5SNMaH0WHoyG13psXi/I6AZ6NJPXPerE6vKMuRPnw7fbainpS+ew==
+X-Received: by 2002:a17:902:c204:b0:19f:3e77:ab7 with SMTP id 4-20020a170902c20400b0019f3e770ab7mr5661518pll.57.1678736788417;
+        Mon, 13 Mar 2023 12:46:28 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id k5-20020a170902e90500b0019251e959b1sm195820pld.262.2023.03.13.12.18.17
+        by smtp.gmail.com with ESMTPSA id o12-20020a1709026b0c00b0019a97f180fcsm256500plk.37.2023.03.13.12.46.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 12:18:17 -0700 (PDT)
+        Mon, 13 Mar 2023 12:46:27 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Kousik Sanagavarapu <five231003@gmail.com>
-Cc:     git@vger.kernel.org, jonathanmy@google.com, fve231003@gmail.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v3] index-pack: remove fetch_if_missing=0
-References: <20230310183029.19429-1-five231003@gmail.com>
-        <20230313181518.6322-1-five231003@gmail.com>
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org, tao@klerks.biz,
+        newren@gmail.com, phillip.wood123@gmail.com,
+        Johannes.Schindelin@gmx.de, sorganov@gmail.com,
+        Glen Choo <chooglen@google.com>,
+        Calvin Wan <calvinwan@google.com>
+Subject: Re: [PATCH v5 3/3] rebase: add a config option for --rebase-merges
+References: <20230223053410.644503-1-alexhenrie24@gmail.com>
+        <20230225180325.796624-1-alexhenrie24@gmail.com>
+        <20230225180325.796624-4-alexhenrie24@gmail.com>
+        <1021e6d0-0cd0-d92c-4cb3-45dbf2f6626e@dunelm.org.uk>
+        <CAMMLpeRfD+81fsEtvKFvVepPpwYm0_-AD=QHMwhoc+LtiXpavw@mail.gmail.com>
+        <5551d67b-3021-8cfc-53b5-318f223ded6d@dunelm.org.uk>
+        <CAMMLpeTUbG+b89acan-GXGS4H=J7aQupbK8zdxwNg__U_We2dw@mail.gmail.com>
+Date:   Mon, 13 Mar 2023 12:46:27 -0700
+In-Reply-To: <CAMMLpeTUbG+b89acan-GXGS4H=J7aQupbK8zdxwNg__U_We2dw@mail.gmail.com>
+        (Alex Henrie's message of "Sun, 12 Mar 2023 14:57:28 -0600")
+Message-ID: <xmqqa60gtox8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-Date:   Mon, 13 Mar 2023 12:18:17 -0700
-Message-ID: <xmqqilf4tq86.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kousik Sanagavarapu <five231003@gmail.com> writes:
+Alex Henrie <alexhenrie24@gmail.com> writes:
 
-> A collision test is triggered in sha1_object(), whenever there is an
-> object file in our repo. If our repo is a partial clone, then checking
-> for this file existence does not lazy-fetch the object (if the object
-> is missing and if there are one or more promisor remotes) when
-> fetch_if_missing is set to 0.
-> ...
-> Hence, use has_object() to check for the existence of an object, which
-> has the default behavior of not lazy-fetching in a partial clone. It is
-> worth mentioning that this is the only place where there is potential for
-> lazy-fetching and all other cases [2] are properly handled, making it safe
-> to remove this global here.
+> What I really don't want is to paint ourselves into a corner. You're
+> right that it's unlikely that the default will ever change from
+> no-rebase-cousins to rebase-cousins; I was mistaken. However, Glen
+> thinks that in the future we might have some kind of
+> rebase-evil-merges mode as well, and that that might become the
+> default. If we don't let the rebase.rebaseMerges config value control
+> the default behavior of --rebase-merges without an argument on the
+> command line, we would have to introduce a separate config option for
+> the transition, which would be ugly.
 >
-> [1] See 8b4c0103a9 (sha1_file: support lazily fetching missing objects,
-> 		   2017-12-08)
+> More voices would be helpful here. Does anyone else have an opinion on
+> how likely it is that the default rebase-merges mode will change in
+> the future? Or on whether rebase.rebaseMerges should be allowed to
+> affect --rebase-merges in order to facilitate such a change?
 
-Thanks for the reference.
+Any such "opinion" about the future, or the belief that we can
+somehow predict one, would be wrong anyway.  So I am not sure
+soliciting more voices to look into crystal balls would help all
+that much.  Having said that...
 
-The way I read the "lazy fetching is by default not suppressed, and
-this is a temporary measure" described in the log message is quite
-opposite from where this patch wants to go, though.  
+The default rebase-merges behaviour may be improved, but changing it
+in a totally backward incompatible way _without_ a carefully prepared
+transition strategy will be very unlikely, simply because existing
+end users would not allow us to.  I do not offhand know if the
+configuration variable(s) you propose would serve as a good mechanism
+to help such transition.
 
-I think the commit envisioned the world where all the accesses to
-the object layer are aware of the characteristics of a lazy clone
-(e.g. has_object() reporting "we do not have that object locally
-(yet)" is not an immediate sign of a repository corruption) and when
-to lazily fetch and when to tolerate locally missing objects is
-controlled more tightly, and to reach that world one step at a time,
-introduced the global, so that for now everybody lazily fetches, but
-the commands individual patches concentrates to "fix" can turn off
-the "by default all missing objects are lazily fetched" so that they
-can either allow certain objects to be locally missing, or fetch
-them from promisor remotes when they need the contents of such
-objects.  By fixing each commands one by one, eventually we would be
-able to wean ourselves away from this "by default everything is
-lazily fetched" global---in other words, in the ideal endgame, the
-fetch_if_missing should be set to 0 everywhere.
-
-So, if this patch was made in reaction to the "it was a temporary
-measure" in 8b4c0103 (sha1_file: support lazily fetching missing
-objects, 2017-12-08), I think it goes in the completely opposite
-direction.  If the patch shared the cause with 8b4c0103 and wanted
-to help realize the ideal world, it instead should have left this
-command who can already work with fetch_if_missing=0 alone and fixed
-somebody else who still depends on fetch_if_missing=1, I think.
-
-Now it is a separate issue to argue if "everybody knows exactly when
-to trigger lazy fetching and fetch_if_missing is set to false
-everywhere" is really the ideal endgame.  I do not think "Future
-patches will update some commands to either tolerate missing objects
-or be more efficient in fetching them." proposed by the commit from
-late 2017 has seen that much advance recently.
-
-But for commands that need to deal with many missing objects,
-enumerating the objects that are missing locally and need fetching
-first and then requesting them in a batch should be vastly more
-efficient than the default lazy fetch logic that lets the caller
-request a single object, realize it is missing locally, make a
-connection to fetch that single object and disconnect.  So I have to
-suspect that ...
-
-> This global was added as a temporary measure to suppress the fetching
-> of missing objects [1] and can be removed once the remaining commands:
->  - fetch-pack
->  - fsck
->  - pack-objects
->  - prune
->  - rev-list
-> can handle lazy-fetching without fetch_if_missing.
-
-... this "can handle" may be a misguided direction to go in.  They
-were taught not to lazy fetch because blindly lazy fetching was bad,
-weren't they?
+Thanks.
