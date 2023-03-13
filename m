@@ -2,101 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A56F4C6FD19
-	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 12:59:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13061C6FD19
+	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 13:33:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230379AbjCMM74 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Mar 2023 08:59:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53080 "EHLO
+        id S229985AbjCMNde (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Mar 2023 09:33:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230259AbjCMM7v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2023 08:59:51 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59CDE2CFC1
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 05:59:16 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id c3so12934189qtc.8
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 05:59:16 -0700 (PDT)
+        with ESMTP id S229704AbjCMNdd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2023 09:33:33 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 905481E9FA
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 06:33:31 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id nv15so8172533qvb.7
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 06:33:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678712354;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YnG5kIxk6cjEeBURxufbWYXg93nu7NqOI1Zb+JTqrhQ=;
-        b=VmwNh9UgDgaLRmD+bwwuXSS2JmY08LgEnMGSfKzs+3xnEL3DGicLYG+AHObfcm8nCT
-         oKlFSBA2ofHe/6cZ3jxKac8OME4GpFhlqGpkqOo+3hBfVmi4MCH6y6EV4RfveQW3Bk6N
-         ON2BU1ipvEX68RBTSHtYWwlgUsjeKl06m01en+Igx8muuc90FkFMRpEtYOw5PKmFq9pY
-         xNqsaHlsPX6Z1UIdSbmOlkqk1em+LnVsQZWXkS+Xa+V0ixo0Q1MCV4anlHsZ8O1MO45k
-         J9vFpk/XlkvadEJhfDjhprvjq0Yyr/uGnk4JADxzyT6tYgqowS7IZia39quM+e+NMEzz
-         17Aw==
+        d=github.com; s=google; t=1678714410;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0PRzeTit2TNqyHF44R9k0ULuNgeQo8znWxIz0FwnEn0=;
+        b=dbLRWl4OGNS4xlCrtw96YhOHjmnuSJi4+f0ZmgCULa0mGbga2PPXpp59q5vDfwVk3t
+         FIjNaaNwuIpYrTm5CuE/lgeqvzCwk0esLVWQVVv5G2ATGYgVu+6TDoS9EBuPB+sQtLeq
+         jn798V8083dZ+56yePQAuOUvB/ZtciQerboZnc21Ta1tiUFH84M7vSwUKEigAS5euf8x
+         hYCJSX6Wc9Ojrdha00F31HRW9bxtV1XNE9HbZFykZtM7+eqkL3DJn+iG3DNNewuThn/8
+         WMFIzGydG2tUGoBhZwo1zT4JvDIBOT+Eohehxs0EI+keS9vii3IS1+AoLfIyyybnBiRv
+         CCug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678712354;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YnG5kIxk6cjEeBURxufbWYXg93nu7NqOI1Zb+JTqrhQ=;
-        b=4hHa0nTOb1T9dsQ4/Irzwxoyj9DJlKF6BE1y/l9VS2/UzIAdkPKvWL4ZmWI7fangR8
-         eTlxYtcgk094YSF/6Y96PJeX+V9bFz0SOr8acgXEihXAO3ZCCKGN3aWjZMfhGLFNoouA
-         uTE1729BtGyUgLL+rpUlyOWlneLbAG9cIWmDNyACch8Pez7Shsmgp584nJm1+HUjQNnZ
-         EaIM24TgG9nZcq2Zdw9AAQhQzZiD/jbZpsQsX1EnWUyDEt99PhFGdx4FJuX3TIU+fnTf
-         R/0lLjWNaqpuJ5Fk2RNOwd9ARRuv4n9wIg55Yyn1Dg4Sa0doSep3JosbVcgdXCUb3zI/
-         PpGQ==
-X-Gm-Message-State: AO0yUKW5CiXaGCUP/MrWWtikqORfsy41Zca8oSLjKnGpsWE7Pa7OmrlH
-        E8ImyKmPuLgV4FmNxazazaFDMBUPtxzyKne1n/BziOclav4=
-X-Google-Smtp-Source: AK7set8shVYsPV45CrRFUkkM3YBfOFJZ0l9Xg1aoUXDu63f4WhECsoc04WXPDYWUK14kk9xL8TtwNh2LJW0Ikk7WEJY=
-X-Received: by 2002:ac8:11a:0:b0:3b9:a6d6:ff2 with SMTP id e26-20020ac8011a000000b003b9a6d60ff2mr8599755qtg.0.1678712353993;
- Mon, 13 Mar 2023 05:59:13 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1678714410;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0PRzeTit2TNqyHF44R9k0ULuNgeQo8znWxIz0FwnEn0=;
+        b=ZOu1KcUPdG6po0aG1BjKPYwrY46ShpRTZ8F/i2sLdZnS3u/TE1aq4Sh9t0842dcFHm
+         opn9bA9itDBtADlv+mNq9sk1LJyAqN38tqQgKRkjbvKVH4QeyRF7iZKuSIpGpGk51cdl
+         WTeZWL/oB+Vb/wKxBtnStNBE4liyE/UMzCJEZG5nxibCcdhUEK6b5Z8y0/vvNl+tSLne
+         +yapFyMCbfnKOpNPAZgs+OFLN6lTBljAdkuoczuyvKfWrBRJl0FqN43BuWVQFBgN+nob
+         ukgEBk8r0r980cMp+nkxAGejLo8PP4wS/9OL16BbtPyvuhqLK24Jv6df1T521M5FdK6j
+         qasA==
+X-Gm-Message-State: AO0yUKXkU7CcsnwvJUX6x84MGcPxDBKw/itiJEDWZru5yxVfFxZ0lZI5
+        Kfa/IKq1Qf5S/HtrmLuiggIB
+X-Google-Smtp-Source: AK7set8i04qDMoKdfGUwhcr6GcKI7pdmJaid0xkleSJMooBYXaA0mnv0mDQmUGnGOsIbe3liZiRC9A==
+X-Received: by 2002:a05:6214:cca:b0:56e:a35b:9aaf with SMTP id 10-20020a0562140cca00b0056ea35b9aafmr14314118qvx.20.1678714410630;
+        Mon, 13 Mar 2023 06:33:30 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:9059:9f15:6c58:8869? ([2600:1700:e72:80a0:9059:9f15:6c58:8869])
+        by smtp.gmail.com with ESMTPSA id 78-20020a370c51000000b00745a55db5a3sm667793qkm.24.2023.03.13.06.33.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Mar 2023 06:33:30 -0700 (PDT)
+Message-ID: <cd61cd39-ba84-49ae-4b36-92c7be043740@github.com>
+Date:   Mon, 13 Mar 2023 09:33:29 -0400
 MIME-Version: 1.0
-References: <CAHp75VfTQZ8vFQXZKgbsedG2BOad-pv9fCVkNkX+kFAxhnhhXQ@mail.gmail.com>
-In-Reply-To: <CAHp75VfTQZ8vFQXZKgbsedG2BOad-pv9fCVkNkX+kFAxhnhhXQ@mail.gmail.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Mon, 13 Mar 2023 14:58:38 +0200
-Message-ID: <CAHp75VcZJPysc2-NXTC53XvOwbx-UfPO9SbsBJFb72JGHFyO1A@mail.gmail.com>
-Subject: Re: git rebase issue
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 1/8] for-each-ref: add --stdin option
+To:     phillip.wood@dunelm.org.uk,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, vdye@github.com,
+        Jeff King <peff@peff.net>
+References: <pull.1489.git.1678111598.gitgitgadget@gmail.com>
+ <pull.1489.v2.git.1678468863.gitgitgadget@gmail.com>
+ <a1d9e0f6ff6660c9264673be18bc24956f74eb9c.1678468864.git.gitgitgadget@gmail.com>
+ <6badb697-aa74-cc2f-ba43-0bbf54b10973@dunelm.org.uk>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <6badb697-aa74-cc2f-ba43-0bbf54b10973@dunelm.org.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 13, 2023 at 2:35=E2=80=AFPM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
->
-> Hi!
->
-> Recently Debian has updated the Git to 2.39.2 and broke my user case
-> (I believe it's a problem in the Git itself and not Debian packaging
-> or so).
+On 3/13/2023 6:31 AM, Phillip Wood wrote:
+> Hi Stolee
+> 
+> On 10/03/2023 17:20, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <derrickstolee@github.com>
+>>
+>> When a user wishes to input a large list of patterns to 'git
+>> for-each-ref' (likely a long list of exact refs) there are frequently
+>> system limits on the number of command-line arguments.
+>>
+>> Add a new --stdin option to instead read the patterns from standard
+>> input. Add tests that check that any unrecognized arguments are
+>> considered an error when --stdin is provided. Also, an empty pattern
+>> list is interpreted as the complete ref set.
+>>
+>> When reading from stdin, we populate the filter.name_patterns array
+>> dynamically as opposed to pointing to the 'argv' array directly. This
+>> requires a careful cast while freeing the individual strings,
+>> conditioned on the --stdin option.
+> 
+> I think what you've got here is fine, but if you wanted you could simplify it by using an strvec. Something like
+> 
+>     struct strvec vec = STRVEC_INIT;
+> 
+>     ...
+> 
+>     if (from_stdin) {
+>         struct strbuf buf = STRBUF_INIT;
+> 
+>         if (argv[0])
+>             die(_("unknown arguments supplied with --stdin"));
+> 
+>         while (strbuf_getline(&line, stdin) != EOF)
+>             strvec_push(&vec, buf.buf);
+> 
+>         filter.name_patters = vec.v;
+>     } else {
+>         filter.name_patterns = argv;
+>     }
+> 
+>     ...
+> 
+>     strvec_clear(&vec);
+> 
+> gets rid of the manual memory management with ALLOC_GROW() and the need to cast filter.name_patterns when free()ing. It is not immediately obvious from the name but struct strvec keeps the array NULL terminated.
 
-Forgot to add that last week it was working nicely (I don't remember
-the version, but according to Debian changelog it looks like 2.38.4
-was working fine to me.
+Thanks, Philip. I like your version a lot and will use
+it in the next version.
 
-> So, my use case is to run
->
->   git rebase --rebase-merges -X ours --onto "$newbase" "$oldbase" "$branc=
-h"
->
-> in the repository that is made out of bare + a few worktrees.
->
-> Previously everything was working (my bare repository points to one of
-> the existing branch:
-> In shell prompt: ...(BARE:netboot)]$
->
-> With the new release I have got an error
->
->   fatal: 'netboot' is already checked out at ...
->
-> To work around this I have to split the above to
->
->   git checkout --ignore-other-worktrees "$branch"
->   git rebase --rebase-merges -X ours --onto "$newbase" "$oldbase"
->
-> which makes all these too inconvenient.
->
-> Any suggestions?
-
---=20
-With Best Regards,
-Andy Shevchenko
+-Stolee
