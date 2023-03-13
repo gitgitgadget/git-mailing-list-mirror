@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5269C6FD19
-	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 19:18:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB410C6FD19
+	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 19:19:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231270AbjCMTSe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Mar 2023 15:18:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47740 "EHLO
+        id S231391AbjCMTTX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Mar 2023 15:19:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230516AbjCMTS2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2023 15:18:28 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 917367B49C
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 12:17:51 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id kb15so13098082pjb.1
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 12:17:51 -0700 (PDT)
+        with ESMTP id S231387AbjCMTTJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2023 15:19:09 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88A463E087
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 12:18:31 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id l9-20020a17090a3f0900b0023d32684e7fso377711pjc.1
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 12:18:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678735070;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+        d=gmail.com; s=20210112; t=1678735098;
+        h=mime-version:message-id:date:user-agent:references:subject:cc:to
          :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=6SC+2UXtJBkGc9nIjDrTPzQ9oGJowttVqVvj0CZWy4A=;
-        b=aksVLiq4h1tFRUqrA0doIpxZp3n/vuo2+SXxep5bqwG99/V5XKV0JQ5fqtagBZ+cdU
-         PS8lpYPve/9CdkaoFgmOmoH0JKE29ZOnAM0DDLinXe4fZw6kZxWsBcLkWDn4nlp+Crgq
-         9nphEZMo1ftpI1awiMXdA+8brLmb8GQe63ToP4u64UCVf8Kxc3NWN0c++5mppRi2Ge5O
-         qxaJuxnK4K3GtRRouY+wU/S17OFJHGcIF2pk3TSKcjWcHhYvLqoBTODlxuS+ibEUznNU
-         F6xrpcd81McTZPYZk4G2MFb2WMUwVLrnNxaKlpzW5UQl9ENl5vyr1zZE4Wc2hBF7o35p
-         VOdA==
+        bh=s2wXNWHYPW5vX58WOARGwLB5nk2V1zpt+5WP81X3XL0=;
+        b=CJtZxKkuGG9DgwK03nqcy7xaYYInzTNq5TZdtANevtq6rvQAzOrPQGtZg8P4B5IRLJ
+         AXHhECQ14m+/3EzMaFoJB8ZIHfhmEvgt089zgOxBv6NCCn0+uReI9qw8t3W9s02QuGTR
+         Xc+nJKn7sofAE3O8tIdBJ/WvupSKE/yQFk1Vc44ZAyApz26hEnEQN8hK2B4jNDWSceOj
+         hhZ6cmEfWGfuFJHEGEZEffDkh+OzXa6jgpFUyG2PPPYfqdsMNhUwQXXOFxQPJ7S03R0G
+         mnC1M1pOqXozygxqFXoq/3jTtYiiaEZ/62yt9/UYtTzw77skqxnrj1cxq7J/0ti+qKM/
+         QImw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678735070;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+        d=1e100.net; s=20210112; t=1678735098;
+        h=mime-version:message-id:date:user-agent:references:subject:cc:to
          :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=6SC+2UXtJBkGc9nIjDrTPzQ9oGJowttVqVvj0CZWy4A=;
-        b=50EppSezmMYejFE62avAy8LfHkfTElDtRf+BREfD4mIr5UPA/Fqh8zcYVKiNoRY3Mg
-         U10cEItC9NgSAFNqhtbe8Ix3cffIvqfC1FTPKEnCuNZRilB+NIb+v9sWJ5iOa84iRyda
-         MDSygJpucIan9EzdaGTaPXKb7BX4C5P5uODBYCXuGNaPvwlBA6Z1EK+nBwz0PINTW3gg
-         xpmgJbLVYKdSJPh9Tfot0mvf+nS5/FPcySL9khMQiiqlXKCsACzP8Fvxv5BJtIhB/pP6
-         V0e9RQMp4OH+2pbLnz+IBfh5RWryK/aR4dNIGgxSpJjvXrLkyRkzUmej94/+Sm96Llrn
-         L4kQ==
-X-Gm-Message-State: AO0yUKWVmPLoNjWS+IC5eOGpHcgKYy4TSL2g/tO5e2xL1WCUPif+u6E5
-        uhQ0EzTbWJMTkBFQDpnut9U=
-X-Google-Smtp-Source: AK7set/jUSreJDuhLSKciisyKyoxxTwaNn7mtX51ae1+8Ck1p3ChP4AnYEt/SOHiaqnYwrDtlcOobw==
-X-Received: by 2002:a05:6a20:840c:b0:cd:1e80:5840 with SMTP id c12-20020a056a20840c00b000cd1e805840mr47013685pzd.34.1678735069947;
-        Mon, 13 Mar 2023 12:17:49 -0700 (PDT)
+        bh=s2wXNWHYPW5vX58WOARGwLB5nk2V1zpt+5WP81X3XL0=;
+        b=wkgW19whwdqxqe87SVrrPl2zGvFUUT0PnQSGnFbNuMYOkhz12aQM6q+kIR/xL55FMi
+         B5XGC+mw+4UrL80RgNROcheY5JECmUYEoXOhrXH9E7Bl+HTG/MxX8haAeS6TKCGVHDaQ
+         Rd8RuluowsVSfeZcQYzRGS614umq2EGNuPzLoZLuHkHD6u02kVWogqnq50bSHUNxewFE
+         VsQBQAdgd8NUhE2Tkmer/Yojytw0dMLWuxasqpUvuwQNdHpTLtKmsFrjeLhrb2bjtInr
+         qGZ89cQDGDr4VjDiRON6ghqHQDaNhYCt3iihwAL13sFailoeieade7QUEXDs/HS/RsIY
+         OMEg==
+X-Gm-Message-State: AO0yUKX/+O1W8DBINtl4r5olzmEvUq/VSTiXv5w74n3tkMMWl+CJFVyX
+        uTWY2c5dbBRkmEPNSON4UD0=
+X-Google-Smtp-Source: AK7set+SRT2S7SGO4zGo+nrNAjKFCvatnPZtTdPiooEOn4sq8f3AfHEqG5yReYGjzjP21/FPghpixw==
+X-Received: by 2002:a17:903:514:b0:19e:68e4:859c with SMTP id jn20-20020a170903051400b0019e68e4859cmr29093406plb.36.1678735098070;
+        Mon, 13 Mar 2023 12:18:18 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id x5-20020a62fb05000000b006242f4a8945sm67598pfm.182.2023.03.13.12.17.49
+        by smtp.gmail.com with ESMTPSA id k5-20020a170902e90500b0019251e959b1sm195820pld.262.2023.03.13.12.18.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 12:17:49 -0700 (PDT)
+        Mon, 13 Mar 2023 12:18:17 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Kousik Sanagavarapu <five231003@gmail.com>
@@ -56,9 +56,9 @@ Cc:     git@vger.kernel.org, jonathanmy@google.com, fve231003@gmail.com,
 Subject: Re: [PATCH v3] index-pack: remove fetch_if_missing=0
 References: <20230310183029.19429-1-five231003@gmail.com>
         <20230313181518.6322-1-five231003@gmail.com>
-Date:   Mon, 13 Mar 2023 12:17:48 -0700
-Message-ID: <xmqqmt4gtq8z.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+Date:   Mon, 13 Mar 2023 12:18:17 -0700
+Message-ID: <xmqqilf4tq86.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -82,7 +82,7 @@ Kousik Sanagavarapu <five231003@gmail.com> writes:
 > [1] See 8b4c0103a9 (sha1_file: support lazily fetching missing objects,
 > 		   2017-12-08)
 
-Thanks for this reference.
+Thanks for the reference.
 
 The way I read the "lazy fetching is by default not suppressed, and
 this is a temporary measure" described in the log message is quite
