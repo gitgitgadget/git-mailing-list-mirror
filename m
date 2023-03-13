@@ -2,100 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0223C61DA4
-	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 22:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 682E5C6FD19
+	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 23:06:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbjCMWlr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Mar 2023 18:41:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35564 "EHLO
+        id S229636AbjCMXGo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Mar 2023 19:06:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229636AbjCMWlq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2023 18:41:46 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7A04132DF
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 15:41:45 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id y15-20020a17090aa40f00b00237ad8ee3a0so13259835pjp.2
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 15:41:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678747305;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=dH7VkbkX5kOVkfI1QSl7+3ndTI4EzaWU3G84UGdxWfU=;
-        b=U5jD081lzuiG5Wath9KdFa5tz1bZDfREs19ITWGCSJedZQznYNF+zNSUXUibF7GiSI
-         eSKxlrJ+aswDkuqiYj+RxEMiy2VzR5I9ke7G+nJCq4/lhPaSXDqrSHe2iMWEouDz5z54
-         dri/rgqwhBfyRLs4VEmtwqwNV+iTq+F7BAS0SpJuZClS29CRKFjk8x2RmKjyb7UFTRHg
-         fRCkwFBGcUA13T0Xn9uYms8x3FwRytYsdEO0sDk9jNTe4vrTmPmjf+bYmo7vi7BMCiqZ
-         VD5UxdfBsQBwPcxWNb4G+aF1G8GxTahX4/AWwQZmLLaPqTgjEREhdMqZm77D3ZMZgLWI
-         3Hlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678747305;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dH7VkbkX5kOVkfI1QSl7+3ndTI4EzaWU3G84UGdxWfU=;
-        b=eWKBfYD5q6cFrn+iYdFrQNmj8vKYU8IGBZxMmfzdTxXIeFauHPtYNbZlg+JTxoz9KW
-         mRAueAGF8UobuPiUqglEdx4f7ErqBDlfpc6pxb8rFJ6ahSR3l6irthfXNWS9PX1y/DKP
-         mCvsTq5c8vqT8brzpOMgy2K9PRTGYBTrPPDJDMJVuhkNhuP1Ev21qpYmm7TmtrQ8e9uH
-         /uKlNkBk91cT/nv9BfdVYtTdC3yS6OsfqpHFYOx9j98YdUJAshbPJQBZG8q0G+vAEy7a
-         IMcpPEyitPIBJEKs0po4R4Hg/k7EFPvVREZSb9St9Va/xUCDxC6+C3TlNbm7zOuVa1Eu
-         6GBQ==
-X-Gm-Message-State: AO0yUKVxL6cEVjze0EmXh5AR3BjvctY+GSvFAZhPD+fkx1XAFwdkLa/Y
-        1b3EPjjxHLAzew7hs/v1tOI=
-X-Google-Smtp-Source: AK7set9yzT9/ehrpn0XmYQf6dp85YM+bqzjqkWx9VUmu2YviMPljUzI5ii/gwx917v1AvQ1M2loKlw==
-X-Received: by 2002:a17:902:c94c:b0:19d:20a:a219 with SMTP id i12-20020a170902c94c00b0019d020aa219mr43857750pla.66.1678747305361;
-        Mon, 13 Mar 2023 15:41:45 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id o11-20020a170902d4cb00b0019f9fd5c24asm328911plg.207.2023.03.13.15.41.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Mar 2023 15:41:44 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Michael J Gruber <git@grubix.eu>, Jeff King <peff@peff.net>,
-        Patrick Steinhardt <ps@pks.im>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v1 0/7] t: fix unused files, part 1
-References: <20230312201520.370234-1-rybak.a.v@gmail.com>
-Date:   Mon, 13 Mar 2023 15:41:44 -0700
-Message-ID: <xmqq7cvks28n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229612AbjCMXGm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2023 19:06:42 -0400
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 362507B9AC
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 16:06:05 -0700 (PDT)
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id B05041F428;
+        Mon, 13 Mar 2023 22:55:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+        s=selector1; t=1678748107;
+        bh=D7AMa4T96y/Ln0jOd5BBIb8Umk4TQOGfYYxru1XAuaA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Bntdo9JdS19ZDOruDJ3E9wGLjewtIBfead5I0W+wVUQOhKV7V+BGTqOcTdck5Kanb
+         jQU25qQqY/dHqwtCwTT65TeJ1VHZjubHMWUhkM8xW4zW3t03V/XJ0qXp/Qs/ukBkp/
+         mw8pi1eCd+ZqsPybojMu0pVZt0ulzwIlKg/bk0/c=
+Date:   Mon, 13 Mar 2023 22:55:07 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: public-inbox.org/git to be downgraded
+Message-ID: <20230313225507.M626677@dcvr>
+References: <20230313215704.M573757@dcvr>
+ <xmqqcz5cs3ze.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqcz5cs3ze.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Andrei Rybak <rybak.a.v@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Wong <e@80x24.org> writes:
+> 
+> > [1] https://80x24.org/lore/ dogfoods for lore.kernel.org and has
+> >     the git.git coderepo wired up for blob construction if you
+> >     follow diff hunk header links @ https://80x24.org/lore/git/
+> >
+> >     There's more stuff coming to dogfood with coderepo
+> >     integration, too; but no guarantees it'll stay up since my
+> >     SSD has a lot of wear on it, already.
+> 
+> Are you taking donations?
 
-> Here are the fixes for the issues I've found so far -- I've gone through t0???
-> and t1???.
+It's more the principle of refusing to go along with inflation
+in the same way I refuse to go along with Moore's law.
+(I haven't upgraded my HW since before I started public-inbox
+in 2013 and have no plans to).
 
-I think it is better not to insist that a failing 'mktree' is
-silent, and I think the filename "unchanged" is understandable and
-is unfair to call it "misleading" (but the patch itself to remove
-the line that creates the unused file makes perfect sense).  Other
-than these two small nits, I found everything else in the series
-good changes.
+I also don't feel comfortable accepting donations for privacy
+reasons, either.  Of course, I've never been comfortable at all
+at setting expectations or providing guarantees for anything I
+do...  **cues up "Lowered Expectations" jingle**
 
-Thanks for a pleasant read.
+> Also, is there a plan to add that custom gmane:<number> query to
+> lore archive?  That is one and only thing I still sometimes go to
+> public-inbox.org/git
 
->
-> Andrei Rybak (7):
->   t1005: assert output of ls-files
->   t1006: assert error output of cat-file
->   t1010: assert empty output of mktree
->   t1302: don't create unused file
->   t1400: assert output of update-ref
->   t1404: don't create unused file
->   t1507: assert output of rev-parse
->
->  t/t1005-read-tree-reset.sh    | 15 ++++++++++-----
->  t/t1006-cat-file.sh           |  3 ++-
->  t/t1010-mktree.sh             |  6 ++++--
->  t/t1302-repo-version.sh       |  2 +-
->  t/t1400-update-ref.sh         |  3 +++
->  t/t1404-update-ref-errors.sh  |  1 -
->  t/t1507-rev-parse-upstream.sh |  6 ++++--
->  7 files changed, 24 insertions(+), 12 deletions(-)
+Fwiw, data's been easily downloadable for a while and documented
+in the somewhat difficult-to-find
+<https://public-inbox.org/git/_/text/config/raw>[1] config snippet:
+
+  curl -d '' https://public-inbox.org/git/gmane.sql.gz | \
+    gzip -dc
+
+(I just noticed the sqlite3 invocation is slightly wrong
+ in the generated example, will fix)
+
+
+I could figure out how to add it to the extindex-enabled[2]
+80x24.org/lore mirror I run, but lore.kernel.org is Konstantin's
+domain.
+
+
+
+[1] linked from <https://public-inbox.org/git/_/text/mirror/>,
+    which is linked from the top of every page, so hopefully
+    _/text/mirror is easy-to-find...
+
+[2] -extindex is a newish mechanism used by lore and its mirrors
+     to enable significant space and memory savings by combining
+     the search indices across multiple inboxes; but that means
+     per-inbox prefix handling like "gmane:" gets trickier...
