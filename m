@@ -2,139 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FBE5C6FD1C
-	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 11:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9FF6C61DA4
+	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 12:36:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbjCML5M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Mar 2023 07:57:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47258 "EHLO
+        id S229950AbjCMMgR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Mar 2023 08:36:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229961AbjCML4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2023 07:56:53 -0400
-X-Greylist: delayed 62 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 13 Mar 2023 04:56:27 PDT
-Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [118.143.206.88])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D724820D22
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 04:56:27 -0700 (PDT)
-X-IronPort-AV: E=Sophos;i="5.97,212,1669046400"; 
-   d="scan'208";a="49292873"
-Received: from hk-mbx13.mioffice.cn (HELO xiaomi.com) ([10.56.21.123])
-  by outboundhk.mxmail.xiaomi.com with ESMTP; 13 Mar 2023 19:54:24 +0800
-Received: from BJ-MBX14.mioffice.cn (10.237.8.134) by HK-MBX13.mioffice.cn
- (10.56.21.123) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 13 Mar
- 2023 19:54:24 +0800
-Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by BJ-MBX14.mioffice.cn
- (10.237.8.134) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 13 Mar
- 2023 19:54:23 +0800
-Received: from BJ-MBX01.mioffice.cn ([fe80::5383:3aa7:7116:8984]) by
- BJ-MBX01.mioffice.cn ([fe80::5383:3aa7:7116:8984%9]) with mapi id
- 15.02.0986.041; Mon, 13 Mar 2023 19:54:23 +0800
-From:   =?gb2312?B?s8zR8w==?= <chengyang@xiaomi.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     =?gb2312?B?vaq6xtXc?= <jianghaozhe1@xiaomi.com>
-Subject: Git fetch slow on local repository with 600k refs
-Thread-Topic: Git fetch slow on local repository with 600k refs
-Thread-Index: AdlVnmz5eH6sP45LS02lAt/3qxVL1Q==
-Date:   Mon, 13 Mar 2023 11:54:23 +0000
-Message-ID: <e28a23e8eb044d26947462b8619e88bd@xiaomi.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.237.8.11]
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+        with ESMTP id S229899AbjCMMgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2023 08:36:14 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B2929E38
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 05:35:40 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id j10so4203745qkg.12
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 05:35:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678710939;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gJjKktONJtYRj0UuJF72oeM4iJZLIXrVJLdhSHidd08=;
+        b=QlXsG1G0YiVX8l0bBYy9kV1rpSTAyRHpIzYdim3hlL5MJwcLXyG1Yh4RFv4j7anW69
+         GinDrSPkDatVk+CIdklPT53m+p3TJEFRVXRZ5FTt6IhKwBj5GsjFuczdd1hUtXXQO0Jy
+         8ZSwa2vHWrc3YNfd3VUEYiIm9MgSqAi5pN+/jnkF1IwkSDNN7VMzj9EuGz2VsLE2sg0F
+         QrO8WXlGvw907AxoVxQvx7ZYAWwCs9kxJRb1WKgVT6UBG1uqQrjPK5o+0IhpdU4N389t
+         apZTIkR/c1vD3Ptxu+BxbKIpIEehncTKBSD5tTBFi2uJw/crz0ef3FL9qKsQ1i1CbylA
+         mq+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678710939;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gJjKktONJtYRj0UuJF72oeM4iJZLIXrVJLdhSHidd08=;
+        b=2mA9lj+BlytvjPN9xbXVM8LctjBd7FokX4Ycno2/3QJlX5mt7gEwpvv89ttX4966RR
+         Tv3+rBy1Zs5FS5Uheftl3nHNBKf8YXP5llRDuwJlWPxE+rt2I1QvFqE3uH8YFGeNe8Ks
+         lxdn8jFtJNEsxeyssa1I765KwYS14IoxGec2ry7x/KFi7nbpq0v/zeU/DtIQU2j2woJP
+         mFdMIZPXpiAHlWyRQbrVM4qiiOgrNCSRX+YyjljNkH2xucRns4Lao8Q3PJkCVXPhakSX
+         shsv9Ynz0TRG06B4KZsfe0mg99mRASE/FGj/6LnYy9a83rqel4ekjY1xMKPR64jR3Yym
+         J4ig==
+X-Gm-Message-State: AO0yUKVLKUyb/eXH8xXYqB7LGwleUoVDzCqXfqojSykLn8QI15eG9mIV
+        ASv20Ey14Xw/FSMEIVDMAhE8uNB7AZX7MJEYkRQQgSomyPJ7nA==
+X-Google-Smtp-Source: AK7set8gThPvxNr7oINIr6FsJb+0FjeO878yn7pQYOcXcrILtRHJjpdcxgKqmsEg1Zj/pc36MFRZo1Odp6j6+FI0oLg=
+X-Received: by 2002:a05:620a:1011:b0:745:a78b:b32 with SMTP id
+ z17-20020a05620a101100b00745a78b0b32mr280989qkj.14.1678710939389; Mon, 13 Mar
+ 2023 05:35:39 -0700 (PDT)
 MIME-Version: 1.0
+From:   Andy Shevchenko <andy.shevchenko@gmail.com>
+Date:   Mon, 13 Mar 2023 14:35:03 +0200
+Message-ID: <CAHp75VfTQZ8vFQXZKgbsedG2BOad-pv9fCVkNkX+kFAxhnhhXQ@mail.gmail.com>
+Subject: git rebase issue
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-V2UncmUgaG9sZGluZyBhIEdlcnJpdCBzZXJ2ZXIgY2x1c3Rlci4gQW5kIHVzZXMgcHVsbC1yZXBs
-aWNhdGlvbiBwbHVnaW4gdG8gc3luYyBjaGFuZ2VzIGJldHdlZW4gbWFzdGVyIGFuZCBzbGF2ZS4N
-CldoZW4gYSBjaGFuZ2UgaXMgcHVzaGVkIHRvIG1hc3RlciwgaXQgbm90aWZ5IHRoZSBzbGF2ZSwg
-YW5kIHNsYXZlIGZldGNoIGl0IGZyb20gbWFzdGVyLg0KDQpCdXQgd2UgZm91bmQgaW4gYSBiaWcg
-cmVwb3NpdG9yeSB3aXRoIDYwMGsgcmVmcy4gRmV0Y2ggdGFrZXMgNS0xMCBzZWNvbmRzIGV2ZW4g
-aWYgZmV0Y2hpbmcgYSAxIGJ5dGUgY2hhbmdlLiBIZXJlIGlzIHRoZSBHSVRfVFJBQ0UyX1BFUkYN
-CkkgZGlkIGFuIGV4cGVyaW1lbnQgdG8gZmV0Y2ggYSByZWYgdGhhdCBteSBzbGF2ZSBhbHJlYWR5
-IGhhdmUuIEFuZCB3ZSBjYW4gZmluZCBnaXQgcmV2LWxpc3QgdGFrZXMgMiBzZWNvbmRzIHRvIHBl
-cmZvcm0uIChJIGd1ZXNzIGl0IHRyeSB0byBmaW5kIHJlbW90ZSBvYmplY3QgZnJvbSByZWFjaGFi
-bGUgb2JqZWN0cyBvZiBsb2NhbCByZWZzIG9uZSBieSBvbmUpDQpJcyB0aGVyZSBhbnl3YXkgdG8g
-b3B0aW1pemUgc3VjaCBzaXR1YXRpb24/DQoNCjE5OjEyOjU1LjkzMTE4MCBjb21tb24tbWFpbi5j
-OjQ4ICAgICAgICAgICAgIHwgZDAgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCB2ZXJzaW9u
-ICAgICAgfCAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCAyLjMz
-LjEuNTU4LmcyYmQyZjI1OGY0LmRpcnR5DQoxOToxMjo1NS45MzEyMTUgY29tbW9uLW1haW4uYzo0
-OSAgICAgICAgICAgICB8IGQwIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgc3RhcnQgICAg
-ICAgIHwgICAgIHwgIDAuMDAwMzM1IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgZ2l0IGZl
-dGNoIC0tbm8tdGFncyBnaXQ6Ly8xMC4xMy44LjEwL21pdWkvZ2Vycml0L2Jhc2UtdGVzdC5naXQg
-cmVmcy9jaGFuZ2VzLzI3LzI3NDE5MjcvMTpyZWZzL2NoYW5nZXMvMjcvMjc0MTkyNy8xDQoxOTox
-Mjo1NS45MzEzMDIgY29tcGF0L2xpbnV4L3Byb2NpbmZvLmM6MTcwICB8IGQwIHwgbWFpbiAgICAg
-ICAgICAgICAgICAgICAgIHwgY21kX2FuY2VzdHJ5IHwgICAgIHwgICAgICAgICAgIHwgICAgICAg
-ICAgIHwgICAgICAgICAgICAgIHwgYW5jZXN0cnk6W2Jhc2ggc3VkbyBiYXNoIG1pYXV0aGQgbWlh
-dXRoZCBzeXN0ZW1kXQ0KMTk6MTI6NTUuOTMxMzgxIGdpdC5jOjQ1NiAgICAgICAgICAgICAgICAg
-ICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGNtZF9uYW1lICAgICB8ICAgICB8
-ICAgICAgICAgICB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IGZldGNoIChmZXRjaCkNCjE5
-OjEyOjU1LjkzMTU2NiBidWlsdGluL2ZldGNoLmM6MTU3OSAgICAgICAgIHwgZDAgfCBtYWluICAg
-ICAgICAgICAgICAgICAgICAgfCByZWdpb25fZW50ZXIgfCByMCAgfCAgMC4wMDA2OTIgfCAgICAg
-ICAgICAgfCBmZXRjaCAgICAgICAgfCBsYWJlbDpyZW1vdGVfcmVmcw0KMTk6MTI6NTUuOTM2Nzgx
-IGNvbm5lY3QuYzoxNjcgICAgICAgICAgICAgICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAg
-ICAgICB8IGRhdGEgICAgICAgICB8ICAgICB8ICAwLjAwNTkwNyB8ICAwLjAwNTIxNSB8IHRyYW5z
-ZmVyICAgICB8IC4ubmVnb3RpYXRlZC12ZXJzaW9uOjINCjE5OjEyOjU1Ljk0MDQ0NyBidWlsdGlu
-L2ZldGNoLmM6MTU4MiAgICAgICAgIHwgZDAgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBy
-ZWdpb25fbGVhdmUgfCByMCAgfCAgMC4wMDk1NzMgfCAgMC4wMDg4ODEgfCBmZXRjaCAgICAgICAg
-fCBsYWJlbDpyZW1vdGVfcmVmcw0KMTk6MTI6NTYuMjIxMTMzIHJ1bi1jb21tYW5kLmM6NzM5ICAg
-ICAgICAgICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGNoaWxkX3N0YXJ0ICB8
-ICAgICB8ICAwLjI5MDI1MiB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IFtjaDBdIGNsYXNz
-Oj8gYXJndjpbZ2l0IHJldi1saXN0IC0tb2JqZWN0cyAtLXN0ZGluIC0tbm90IC0tYWxsIC0tcXVp
-ZXQgLS1hbHRlcm5hdGUtcmVmcyAtLXVuc29ydGVkLWlucHV0XQ0KMTk6MTI6NTguMDE0NzkyIHJ1
-bi1jb21tYW5kLmM6OTk1ICAgICAgICAgICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAg
-ICB8IGNoaWxkX2V4aXQgICB8ICAgICB8ICAyLjA4Mzg5OSB8ICAxLjc5MzY0NyB8ICAgICAgICAg
-ICAgICB8IFtjaDBdIHBpZDo4MTg2MCBjb2RlOjANCjE5OjEyOjU4LjAxNDg1NSBidWlsdGluL2Zl
-dGNoLmM6MTMyMSAgICAgICAgIHwgZDAgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCByZWdp
-b25fZW50ZXIgfCByMCAgfCAgMi4wODM5ODAgfCAgICAgICAgICAgfCBmZXRjaCAgICAgICAgfCBs
-YWJlbDpjb25zdW1lX3JlZnMNCjE5OjEyOjU4LjAxNTQxMiBidWlsdGluL2ZldGNoLmM6MTMyNiAg
-ICAgICAgIHwgZDAgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCByZWdpb25fbGVhdmUgfCBy
-MCAgfCAgMi4wODQ1MzggfCAgMC4wMDA1NTggfCBmZXRjaCAgICAgICAgfCBsYWJlbDpjb25zdW1l
-X3JlZnMNCjE5OjEyOjU4LjAxNTQ2NiBydW4tY29tbWFuZC5jOjczOSAgICAgICAgICAgIHwgZDAg
-fCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBjaGlsZF9zdGFydCAgfCAgICAgfCAgMi4wODQ1
-OTAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCBbY2gxXSBjbGFzczo/IGFyZ3Y6W2dpdCBt
-YWludGVuYW5jZSBydW4gLS1hdXRvIC0tbm8tcXVpZXRdDQoxOToxMjo1OC4wMTg4NzkgY29tbW9u
-LW1haW4uYzo0OCAgICAgICAgICAgICB8IGQxIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwg
-dmVyc2lvbiAgICAgIHwgICAgIHwgICAgICAgICAgIHwgICAgICAgICAgIHwgICAgICAgICAgICAg
-IHwgMi4zMy4xLjU1OC5nMmJkMmYyNThmNC5kaXJ0eQ0KMTk6MTI6NTguMDE4OTExIGNvbW1vbi1t
-YWluLmM6NDkgICAgICAgICAgICAgfCBkMSB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IHN0
-YXJ0ICAgICAgICB8ICAgICB8ICAwLjAwMDMyNCB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8
-IC91c3IvbGliZXhlYy9naXQtY29yZS9naXQgbWFpbnRlbmFuY2UgcnVuIC0tYXV0byAtLW5vLXF1
-aWV0DQoxOToxMjo1OC4wMTkwMTEgY29tcGF0L2xpbnV4L3Byb2NpbmZvLmM6MTcwICB8IGQxIHwg
-bWFpbiAgICAgICAgICAgICAgICAgICAgIHwgY21kX2FuY2VzdHJ5IHwgICAgIHwgICAgICAgICAg
-IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgYW5jZXN0cnk6W2dpdCBiYXNoIHN1ZG8gYmFz
-aCBtaWF1dGhkIG1pYXV0aGQgc3lzdGVtZF0NCjE5OjEyOjU4LjAxOTA4NyBnaXQuYzo0NTYgICAg
-ICAgICAgICAgICAgICAgIHwgZDEgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBjbWRfbmFt
-ZSAgICAgfCAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCBtYWlu
-dGVuYW5jZSAoZmV0Y2gvbWFpbnRlbmFuY2UpDQoxOToxMjo1OC4wMTkyNzYgZ2l0LmM6NzE0ICAg
-ICAgICAgICAgICAgICAgICB8IGQxIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgZXhpdCAg
-ICAgICAgIHwgICAgIHwgIDAuMDAwNjkwIHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgY29k
-ZTowDQoxOToxMjo1OC4wMTkyODQgdHJhY2UyL3RyMl90Z3RfcGVyZi5jOjIxMyAgICB8IGQxIHwg
-bWFpbiAgICAgICAgICAgICAgICAgICAgIHwgYXRleGl0ICAgICAgIHwgICAgIHwgIDAuMDAwNjk4
-IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgY29kZTowDQoxOToxMjo1OC4wMTkzODYgcnVu
-LWNvbW1hbmQuYzo5OTUgICAgICAgICAgICB8IGQwIHwgbWFpbiAgICAgICAgICAgICAgICAgICAg
-IHwgY2hpbGRfZXhpdCAgIHwgICAgIHwgIDIuMDg4NTA3IHwgIDAuMDAzOTE3IHwgICAgICAgICAg
-ICAgIHwgW2NoMV0gcGlkOjgxODc4IGNvZGU6MA0KMTk6MTI6NTguMDE5NDExIGdpdC5jOjcxNCAg
-ICAgICAgICAgICAgICAgICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGV4aXQg
-ICAgICAgICB8ICAgICB8ICAyLjA4ODUzOCB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IGNv
-ZGU6MA0KMTk6MTI6NTguMDE5NDE5IHRyYWNlMi90cjJfdGd0X3BlcmYuYzoyMTMgICAgfCBkMCB8
-IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGF0ZXhpdCAgICAgICB8ICAgICB8ICAyLjA4ODU0
-NSB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IGNvZGU6MA0KIy8qKioqKiqxvtPKvP68sMbk
-uL28/rqs09DQocPXuavLvrXEsaPD3NDFz6KjrL32z97T2reiy824+MnPw+a12Na31tDB0LP2tcS4
-9sjLu/LIutfpoaO9+9a5yM66zsbky/vIy9LUyM66ztDOyr3KudPDo6iw/MCotauyu8/e09rIq7K/
-u/Kyv7fWtdjQucK2oaK4tNbGoaK78smit6KjqbG+08q8/tbQtcTQxc+ioaPI57n7xPq07crVwcux
-vtPKvP6jrMfrxPrBory0tee7sLvy08q8/s2o1qq3orz+yMuyosm+s/2xvtPKvP6joSBUaGlzIGUt
-bWFpbCBhbmQgaXRzIGF0dGFjaG1lbnRzIGNvbnRhaW4gY29uZmlkZW50aWFsIGluZm9ybWF0aW9u
-IGZyb20gWElBT01JLCB3aGljaCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0aGUgcGVyc29uIG9yIGVu
-dGl0eSB3aG9zZSBhZGRyZXNzIGlzIGxpc3RlZCBhYm92ZS4gQW55IHVzZSBvZiB0aGUgaW5mb3Jt
-YXRpb24gY29udGFpbmVkIGhlcmVpbiBpbiBhbnkgd2F5IChpbmNsdWRpbmcsIGJ1dCBub3QgbGlt
-aXRlZCB0bywgdG90YWwgb3IgcGFydGlhbCBkaXNjbG9zdXJlLCByZXByb2R1Y3Rpb24sIG9yIGRp
-c3NlbWluYXRpb24pIGJ5IHBlcnNvbnMgb3RoZXIgdGhhbiB0aGUgaW50ZW5kZWQgcmVjaXBpZW50
-KHMpIGlzIHByb2hpYml0ZWQuIElmIHlvdSByZWNlaXZlIHRoaXMgZS1tYWlsIGluIGVycm9yLCBw
-bGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgYnkgcGhvbmUgb3IgZW1haWwgaW1tZWRpYXRlbHkgYW5k
-IGRlbGV0ZSBpdCEqKioqKiovIw0K
+Hi!
+
+Recently Debian has updated the Git to 2.39.2 and broke my user case
+(I believe it's a problem in the Git itself and not Debian packaging
+or so).
+
+So, my use case is to run
+
+  git rebase --rebase-merges -X ours --onto "$newbase" "$oldbase" "$branch"
+
+in the repository that is made out of bare + a few worktrees.
+
+Previously everything was working (my bare repository points to one of
+the existing branch:
+In shell prompt: ...(BARE:netboot)]$
+
+With the new release I have got an error
+
+  fatal: 'netboot' is already checked out at ...
+
+To work around this I have to split the above to
+
+  git checkout --ignore-other-worktrees "$branch"
+  git rebase --rebase-merges -X ours --onto "$newbase" "$oldbase"
+
+which makes all these too inconvenient.
+
+Any suggestions?
+
+-- 
+With Best Regards,
+Andy Shevchenko
