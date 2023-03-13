@@ -2,97 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9412C6FD19
-	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 11:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FBE5C6FD1C
+	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 11:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230155AbjCMLuT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Mar 2023 07:50:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41144 "EHLO
+        id S230018AbjCML5M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Mar 2023 07:57:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231497AbjCMLuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2023 07:50:09 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1CCE18B04
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 04:49:37 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id fm20-20020a05600c0c1400b003ead37e6588so10710051wmb.5
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 04:49:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678708175;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sm9u0xbAbvf5O1dRGmqzgZD69gqvXzJXtCD+IWI9ry0=;
-        b=niaMNt8uXt74SdStmSrRg1LWkYO7Au36wK0VvwpOn3b3CAT2BAgbjgxVnScgnNlspk
-         i9AjrJnDUd28VO+7FedBrqyx0JCwGTYGPOWdGUs9SpEAg9/ooPuuJzXHSZFa5AXSetyJ
-         vfZS/CIrLOw/MvnlU9IO3iL90I00wPyaKXV9npwhMe3Of+9ywWwga/dxt/utv+rOKAL8
-         CZaiwfvLhvUm6jzEkldKHwTlZkgCu0qiv537HHgWfON0HyWqIddufZ4m1qdW1MkTei2h
-         6xVWUXIX9ty+sA55azy2tusjj6gOeaOzpchyFHLqHITnIJFRDhRQWN1CsCu/XuVtBP7M
-         gQAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678708175;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sm9u0xbAbvf5O1dRGmqzgZD69gqvXzJXtCD+IWI9ry0=;
-        b=RLa6T1TbJ5QoZO1ieRwlDhnV23tDwwD32TSoekOHnoNjUpUfEi8XiATH1Xy8ohR3dI
-         ChbdwB/rp/PQ7u/1Fn5xYe3dr0/NZOqRbfmQz20zxP4/WtI5cL+iVQe56QiS5uyz2q3O
-         mni/t96MxzWQkiDh7a0eDVbLQFyNo0hikUKim7CtfhluGVVLCxQCUc/3X6qKWQfST6ol
-         QROcIIsVVrjQ0ziyliwA4OLzd1Fwc/Ef1r845iNhes/TJgcxUpKHfvIU48PAHbtwqtOt
-         9BBzGFQsQLD07F45iISA4P9aqNleFss5DtgNh6Xh3N9BuSf1d8DD5btYrNPTOWFjuqC4
-         nCpw==
-X-Gm-Message-State: AO0yUKUNumtgB73rLm2cpH1njlqNCwfjlspCpBpiDFfXzXMUJekiiG0F
-        zXmIGZpNDNPaIjXD3DGCB3ukKMq7ZFV6OZ3wEgQ=
-X-Google-Smtp-Source: AK7set/kIoXhzkNkE1sUM2KeggnM9S375/8yRK9hbMAMVNM3iarYQUjuurbzgaD5pfDe2QMxtcZt4mDEg0c380jcEcc=
-X-Received: by 2002:a05:600c:9:b0:3df:97b0:ba00 with SMTP id
- g9-20020a05600c000900b003df97b0ba00mr3085143wmc.1.1678708174694; Mon, 13 Mar
- 2023 04:49:34 -0700 (PDT)
+        with ESMTP id S229961AbjCML4x (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2023 07:56:53 -0400
+X-Greylist: delayed 62 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 13 Mar 2023 04:56:27 PDT
+Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [118.143.206.88])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D724820D22
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 04:56:27 -0700 (PDT)
+X-IronPort-AV: E=Sophos;i="5.97,212,1669046400"; 
+   d="scan'208";a="49292873"
+Received: from hk-mbx13.mioffice.cn (HELO xiaomi.com) ([10.56.21.123])
+  by outboundhk.mxmail.xiaomi.com with ESMTP; 13 Mar 2023 19:54:24 +0800
+Received: from BJ-MBX14.mioffice.cn (10.237.8.134) by HK-MBX13.mioffice.cn
+ (10.56.21.123) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 13 Mar
+ 2023 19:54:24 +0800
+Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by BJ-MBX14.mioffice.cn
+ (10.237.8.134) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Mon, 13 Mar
+ 2023 19:54:23 +0800
+Received: from BJ-MBX01.mioffice.cn ([fe80::5383:3aa7:7116:8984]) by
+ BJ-MBX01.mioffice.cn ([fe80::5383:3aa7:7116:8984%9]) with mapi id
+ 15.02.0986.041; Mon, 13 Mar 2023 19:54:23 +0800
+From:   =?gb2312?B?s8zR8w==?= <chengyang@xiaomi.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     =?gb2312?B?vaq6xtXc?= <jianghaozhe1@xiaomi.com>
+Subject: Git fetch slow on local repository with 600k refs
+Thread-Topic: Git fetch slow on local repository with 600k refs
+Thread-Index: AdlVnmz5eH6sP45LS02lAt/3qxVL1Q==
+Date:   Mon, 13 Mar 2023 11:54:23 +0000
+Message-ID: <e28a23e8eb044d26947462b8619e88bd@xiaomi.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.237.8.11]
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAAo-ADZBBRxSROeAwrA9o30Etf3QQhLCaWQJtVsChVwT-AbgTg@mail.gmail.com>
- <xmqqwn3pai2d.fsf@gitster.g>
-In-Reply-To: <xmqqwn3pai2d.fsf@gitster.g>
-From:   Ilia Pozhilov <ilyapoz@gmail.com>
-Date:   Mon, 13 Mar 2023 13:49:23 +0200
-Message-ID: <CAAo-ADbUf1UqSE1EFf1yOY5Mhu0R5_NQuK8agBpOn60zgpWnVQ@mail.gmail.com>
-Subject: Re: Track git blame through two unrelated histories
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you very much for this! It worked, I found the corresponding
-commits and did exactly as you suggested. Now blames just work!
-
-Now I will need to figure out if this is push'able to github, but even
-at this stage it's incredibly useful, I love blames!
-
-On Thu, Mar 9, 2023 at 8:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Ilia Pozhilov <ilyapoz@gmail.com> writes:
->
-> > So let's say I add two remotes and fetch all the commits, but they
-> > look like this:
-> >
-> > A->B-> .... . . . -> Z    history1
-> >
-> > 1 -> 2 -> ..... -> 0 history2
-> >
-> > and file contents in commits Z and 1 are exactly the same, but the
-> > commits themselves are completely unrelated for git.
->
-> You mean you want to pretend that history "2 -> ... -> 0" was built
-> on top of Z?  Here I am assuming that time flows from left to right
-> in the picture.
->
-> If so, you should be able to graft the histories together, perhaps?
->
-> Totally untested but something like
->
->         $ git replace --graft 1 Z
->
-> based on my reading of "git help replace" should allow you to
-> pretend that Z happened immediately before 1.
->
+V2UncmUgaG9sZGluZyBhIEdlcnJpdCBzZXJ2ZXIgY2x1c3Rlci4gQW5kIHVzZXMgcHVsbC1yZXBs
+aWNhdGlvbiBwbHVnaW4gdG8gc3luYyBjaGFuZ2VzIGJldHdlZW4gbWFzdGVyIGFuZCBzbGF2ZS4N
+CldoZW4gYSBjaGFuZ2UgaXMgcHVzaGVkIHRvIG1hc3RlciwgaXQgbm90aWZ5IHRoZSBzbGF2ZSwg
+YW5kIHNsYXZlIGZldGNoIGl0IGZyb20gbWFzdGVyLg0KDQpCdXQgd2UgZm91bmQgaW4gYSBiaWcg
+cmVwb3NpdG9yeSB3aXRoIDYwMGsgcmVmcy4gRmV0Y2ggdGFrZXMgNS0xMCBzZWNvbmRzIGV2ZW4g
+aWYgZmV0Y2hpbmcgYSAxIGJ5dGUgY2hhbmdlLiBIZXJlIGlzIHRoZSBHSVRfVFJBQ0UyX1BFUkYN
+CkkgZGlkIGFuIGV4cGVyaW1lbnQgdG8gZmV0Y2ggYSByZWYgdGhhdCBteSBzbGF2ZSBhbHJlYWR5
+IGhhdmUuIEFuZCB3ZSBjYW4gZmluZCBnaXQgcmV2LWxpc3QgdGFrZXMgMiBzZWNvbmRzIHRvIHBl
+cmZvcm0uIChJIGd1ZXNzIGl0IHRyeSB0byBmaW5kIHJlbW90ZSBvYmplY3QgZnJvbSByZWFjaGFi
+bGUgb2JqZWN0cyBvZiBsb2NhbCByZWZzIG9uZSBieSBvbmUpDQpJcyB0aGVyZSBhbnl3YXkgdG8g
+b3B0aW1pemUgc3VjaCBzaXR1YXRpb24/DQoNCjE5OjEyOjU1LjkzMTE4MCBjb21tb24tbWFpbi5j
+OjQ4ICAgICAgICAgICAgIHwgZDAgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCB2ZXJzaW9u
+ICAgICAgfCAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCAyLjMz
+LjEuNTU4LmcyYmQyZjI1OGY0LmRpcnR5DQoxOToxMjo1NS45MzEyMTUgY29tbW9uLW1haW4uYzo0
+OSAgICAgICAgICAgICB8IGQwIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgc3RhcnQgICAg
+ICAgIHwgICAgIHwgIDAuMDAwMzM1IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgZ2l0IGZl
+dGNoIC0tbm8tdGFncyBnaXQ6Ly8xMC4xMy44LjEwL21pdWkvZ2Vycml0L2Jhc2UtdGVzdC5naXQg
+cmVmcy9jaGFuZ2VzLzI3LzI3NDE5MjcvMTpyZWZzL2NoYW5nZXMvMjcvMjc0MTkyNy8xDQoxOTox
+Mjo1NS45MzEzMDIgY29tcGF0L2xpbnV4L3Byb2NpbmZvLmM6MTcwICB8IGQwIHwgbWFpbiAgICAg
+ICAgICAgICAgICAgICAgIHwgY21kX2FuY2VzdHJ5IHwgICAgIHwgICAgICAgICAgIHwgICAgICAg
+ICAgIHwgICAgICAgICAgICAgIHwgYW5jZXN0cnk6W2Jhc2ggc3VkbyBiYXNoIG1pYXV0aGQgbWlh
+dXRoZCBzeXN0ZW1kXQ0KMTk6MTI6NTUuOTMxMzgxIGdpdC5jOjQ1NiAgICAgICAgICAgICAgICAg
+ICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGNtZF9uYW1lICAgICB8ICAgICB8
+ICAgICAgICAgICB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IGZldGNoIChmZXRjaCkNCjE5
+OjEyOjU1LjkzMTU2NiBidWlsdGluL2ZldGNoLmM6MTU3OSAgICAgICAgIHwgZDAgfCBtYWluICAg
+ICAgICAgICAgICAgICAgICAgfCByZWdpb25fZW50ZXIgfCByMCAgfCAgMC4wMDA2OTIgfCAgICAg
+ICAgICAgfCBmZXRjaCAgICAgICAgfCBsYWJlbDpyZW1vdGVfcmVmcw0KMTk6MTI6NTUuOTM2Nzgx
+IGNvbm5lY3QuYzoxNjcgICAgICAgICAgICAgICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAg
+ICAgICB8IGRhdGEgICAgICAgICB8ICAgICB8ICAwLjAwNTkwNyB8ICAwLjAwNTIxNSB8IHRyYW5z
+ZmVyICAgICB8IC4ubmVnb3RpYXRlZC12ZXJzaW9uOjINCjE5OjEyOjU1Ljk0MDQ0NyBidWlsdGlu
+L2ZldGNoLmM6MTU4MiAgICAgICAgIHwgZDAgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBy
+ZWdpb25fbGVhdmUgfCByMCAgfCAgMC4wMDk1NzMgfCAgMC4wMDg4ODEgfCBmZXRjaCAgICAgICAg
+fCBsYWJlbDpyZW1vdGVfcmVmcw0KMTk6MTI6NTYuMjIxMTMzIHJ1bi1jb21tYW5kLmM6NzM5ICAg
+ICAgICAgICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGNoaWxkX3N0YXJ0ICB8
+ICAgICB8ICAwLjI5MDI1MiB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IFtjaDBdIGNsYXNz
+Oj8gYXJndjpbZ2l0IHJldi1saXN0IC0tb2JqZWN0cyAtLXN0ZGluIC0tbm90IC0tYWxsIC0tcXVp
+ZXQgLS1hbHRlcm5hdGUtcmVmcyAtLXVuc29ydGVkLWlucHV0XQ0KMTk6MTI6NTguMDE0NzkyIHJ1
+bi1jb21tYW5kLmM6OTk1ICAgICAgICAgICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAg
+ICB8IGNoaWxkX2V4aXQgICB8ICAgICB8ICAyLjA4Mzg5OSB8ICAxLjc5MzY0NyB8ICAgICAgICAg
+ICAgICB8IFtjaDBdIHBpZDo4MTg2MCBjb2RlOjANCjE5OjEyOjU4LjAxNDg1NSBidWlsdGluL2Zl
+dGNoLmM6MTMyMSAgICAgICAgIHwgZDAgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCByZWdp
+b25fZW50ZXIgfCByMCAgfCAgMi4wODM5ODAgfCAgICAgICAgICAgfCBmZXRjaCAgICAgICAgfCBs
+YWJlbDpjb25zdW1lX3JlZnMNCjE5OjEyOjU4LjAxNTQxMiBidWlsdGluL2ZldGNoLmM6MTMyNiAg
+ICAgICAgIHwgZDAgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCByZWdpb25fbGVhdmUgfCBy
+MCAgfCAgMi4wODQ1MzggfCAgMC4wMDA1NTggfCBmZXRjaCAgICAgICAgfCBsYWJlbDpjb25zdW1l
+X3JlZnMNCjE5OjEyOjU4LjAxNTQ2NiBydW4tY29tbWFuZC5jOjczOSAgICAgICAgICAgIHwgZDAg
+fCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBjaGlsZF9zdGFydCAgfCAgICAgfCAgMi4wODQ1
+OTAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCBbY2gxXSBjbGFzczo/IGFyZ3Y6W2dpdCBt
+YWludGVuYW5jZSBydW4gLS1hdXRvIC0tbm8tcXVpZXRdDQoxOToxMjo1OC4wMTg4NzkgY29tbW9u
+LW1haW4uYzo0OCAgICAgICAgICAgICB8IGQxIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwg
+dmVyc2lvbiAgICAgIHwgICAgIHwgICAgICAgICAgIHwgICAgICAgICAgIHwgICAgICAgICAgICAg
+IHwgMi4zMy4xLjU1OC5nMmJkMmYyNThmNC5kaXJ0eQ0KMTk6MTI6NTguMDE4OTExIGNvbW1vbi1t
+YWluLmM6NDkgICAgICAgICAgICAgfCBkMSB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IHN0
+YXJ0ICAgICAgICB8ICAgICB8ICAwLjAwMDMyNCB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8
+IC91c3IvbGliZXhlYy9naXQtY29yZS9naXQgbWFpbnRlbmFuY2UgcnVuIC0tYXV0byAtLW5vLXF1
+aWV0DQoxOToxMjo1OC4wMTkwMTEgY29tcGF0L2xpbnV4L3Byb2NpbmZvLmM6MTcwICB8IGQxIHwg
+bWFpbiAgICAgICAgICAgICAgICAgICAgIHwgY21kX2FuY2VzdHJ5IHwgICAgIHwgICAgICAgICAg
+IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgYW5jZXN0cnk6W2dpdCBiYXNoIHN1ZG8gYmFz
+aCBtaWF1dGhkIG1pYXV0aGQgc3lzdGVtZF0NCjE5OjEyOjU4LjAxOTA4NyBnaXQuYzo0NTYgICAg
+ICAgICAgICAgICAgICAgIHwgZDEgfCBtYWluICAgICAgICAgICAgICAgICAgICAgfCBjbWRfbmFt
+ZSAgICAgfCAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCBtYWlu
+dGVuYW5jZSAoZmV0Y2gvbWFpbnRlbmFuY2UpDQoxOToxMjo1OC4wMTkyNzYgZ2l0LmM6NzE0ICAg
+ICAgICAgICAgICAgICAgICB8IGQxIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgZXhpdCAg
+ICAgICAgIHwgICAgIHwgIDAuMDAwNjkwIHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgY29k
+ZTowDQoxOToxMjo1OC4wMTkyODQgdHJhY2UyL3RyMl90Z3RfcGVyZi5jOjIxMyAgICB8IGQxIHwg
+bWFpbiAgICAgICAgICAgICAgICAgICAgIHwgYXRleGl0ICAgICAgIHwgICAgIHwgIDAuMDAwNjk4
+IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgY29kZTowDQoxOToxMjo1OC4wMTkzODYgcnVu
+LWNvbW1hbmQuYzo5OTUgICAgICAgICAgICB8IGQwIHwgbWFpbiAgICAgICAgICAgICAgICAgICAg
+IHwgY2hpbGRfZXhpdCAgIHwgICAgIHwgIDIuMDg4NTA3IHwgIDAuMDAzOTE3IHwgICAgICAgICAg
+ICAgIHwgW2NoMV0gcGlkOjgxODc4IGNvZGU6MA0KMTk6MTI6NTguMDE5NDExIGdpdC5jOjcxNCAg
+ICAgICAgICAgICAgICAgICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGV4aXQg
+ICAgICAgICB8ICAgICB8ICAyLjA4ODUzOCB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IGNv
+ZGU6MA0KMTk6MTI6NTguMDE5NDE5IHRyYWNlMi90cjJfdGd0X3BlcmYuYzoyMTMgICAgfCBkMCB8
+IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGF0ZXhpdCAgICAgICB8ICAgICB8ICAyLjA4ODU0
+NSB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IGNvZGU6MA0KIy8qKioqKiqxvtPKvP68sMbk
+uL28/rqs09DQocPXuavLvrXEsaPD3NDFz6KjrL32z97T2reiy824+MnPw+a12Na31tDB0LP2tcS4
+9sjLu/LIutfpoaO9+9a5yM66zsbky/vIy9LUyM66ztDOyr3KudPDo6iw/MCotauyu8/e09rIq7K/
+u/Kyv7fWtdjQucK2oaK4tNbGoaK78smit6KjqbG+08q8/tbQtcTQxc+ioaPI57n7xPq07crVwcux
+vtPKvP6jrMfrxPrBory0tee7sLvy08q8/s2o1qq3orz+yMuyosm+s/2xvtPKvP6joSBUaGlzIGUt
+bWFpbCBhbmQgaXRzIGF0dGFjaG1lbnRzIGNvbnRhaW4gY29uZmlkZW50aWFsIGluZm9ybWF0aW9u
+IGZyb20gWElBT01JLCB3aGljaCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0aGUgcGVyc29uIG9yIGVu
+dGl0eSB3aG9zZSBhZGRyZXNzIGlzIGxpc3RlZCBhYm92ZS4gQW55IHVzZSBvZiB0aGUgaW5mb3Jt
+YXRpb24gY29udGFpbmVkIGhlcmVpbiBpbiBhbnkgd2F5IChpbmNsdWRpbmcsIGJ1dCBub3QgbGlt
+aXRlZCB0bywgdG90YWwgb3IgcGFydGlhbCBkaXNjbG9zdXJlLCByZXByb2R1Y3Rpb24sIG9yIGRp
+c3NlbWluYXRpb24pIGJ5IHBlcnNvbnMgb3RoZXIgdGhhbiB0aGUgaW50ZW5kZWQgcmVjaXBpZW50
+KHMpIGlzIHByb2hpYml0ZWQuIElmIHlvdSByZWNlaXZlIHRoaXMgZS1tYWlsIGluIGVycm9yLCBw
+bGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgYnkgcGhvbmUgb3IgZW1haWwgaW1tZWRpYXRlbHkgYW5k
+IGRlbGV0ZSBpdCEqKioqKiovIw0K
