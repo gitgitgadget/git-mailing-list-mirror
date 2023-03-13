@@ -2,146 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F00EEC6FD1C
-	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 05:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C61FEC61DA4
+	for <git@archiver.kernel.org>; Mon, 13 Mar 2023 05:05:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229861AbjCMFBy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Mar 2023 01:01:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42872 "EHLO
+        id S229516AbjCMFFG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Mar 2023 01:05:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230072AbjCMFBr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2023 01:01:47 -0400
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0CA9457F7
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 22:01:38 -0700 (PDT)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-176b90e14a9so12542059fac.9
-        for <git@vger.kernel.org>; Sun, 12 Mar 2023 22:01:38 -0700 (PDT)
+        with ESMTP id S229437AbjCMFFC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2023 01:05:02 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0872006E
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 22:05:01 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id e26-20020a9d6e1a000000b00694274b5d3aso6078610otr.5
+        for <git@vger.kernel.org>; Sun, 12 Mar 2023 22:05:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678683698;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UItSxR2bT+7IPmVLwgr5Ki2DUIBcnwajgZjOleygU24=;
-        b=f6dLYevltjLFK2FWkAU7J9qmkeskYGRR0vysUNvUaM4DA2g/n8W7PN5T7fI2m8vFKe
-         TjKT+t8EO05s64VkyvkbCyD/bixJGZ3l7p8qJ39GkMZdoFFfx8UYvgzpKdmD7yc3N3vK
-         wFcPB8Ir6cM7tdmjA1stdaN4MsIu0XnSuvkLEXZ+fBU2ro+Sur0eNu+Lj8Ji+4z4K7SM
-         LnUBZe6i4MtjPB0Jg8l2pFhZyYovNyPG4kpEpeRwygF9iZleV/maEG+XHEP1DpZc6FjC
-         LfZAcxE/FXOJPifErfJWzTEvudIfj6rKdcWoRY1GIYnQPvpdi42Q7sO4LMJ2MnQgCt5+
-         qJyA==
+        d=gmail.com; s=20210112; t=1678683900;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3esmLJHui7TFtQDwQw8xmiYaMjghPEuMDC4MWK1l5hU=;
+        b=ZnpYXkYo8fA+/a9DUq5FKvp09N10cYrMxP4OrA9Bi/C0fqbibjOusG6HrSvan+fav1
+         Or0CznkpInMRvgOMnGok6pdEqv9fuQ0sgB6VBHW9KjTS6lfSaoWychOcVMJ6u4oA7K+Z
+         HCqUNhcc5b6n86rdXq+wSAEo9SemSuZR5J8aKgkBM6WaaFPAB7ZaR9CYBa5dkz3Tsuxa
+         Vdonfs+qIEwfGVlupiHVQey6e1r5gI2KczQYLfjK5zq/2898QtesI3vbQ5Fqi8nIcxZN
+         toIYr34A2lSSJ5eHL7c4Ui/Hr1ryzmLZqAPVMq/1fsGna28E3fWgQYHwGnrHgP4f26kt
+         AoZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678683698;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UItSxR2bT+7IPmVLwgr5Ki2DUIBcnwajgZjOleygU24=;
-        b=vgUlae0oJh2onKri6X+bOwFmIDGcxIDbYdNLbGNog28vuMSyuGwqUqy2UepQkVwnWz
-         SSY0oHKAk0zirlKmxb/ZTgvWZSIM7OzSlwt5XdT0U2g0IRFch1e3mc+dz/Q2O/okK/oA
-         Z62l3qv7x99hxzHJLpB0Z2XfpsbPqWqPC5mRY53UoQr3YtymtAuQ37NTMeDPS8BYYBEv
-         p+y73mYsLfaPerDXMXvJccm8JguWb0i7IXwiRf4T5h04s07y+iYvaRrn6MBCt7hPb9cA
-         FToi+ucwHSf+V/2Q/LlGlDg/i7MKgg/rCfLsqBOS27MNJTdvCxLvpOp6xJHE+1D6060m
-         8jsw==
-X-Gm-Message-State: AO0yUKXB5Ju4PRfJhxZRU0MMG41Tx8dCC3A3JYWNoF8N9mCRvyFC8UBx
-        Q5t3+oeJiWaFMYVSh7PQWZG50iLPKak=
-X-Google-Smtp-Source: AK7set9gI+vleNSSQHDCHZnHeCbV5ZPXlRmq2lmn/a1qzEMnbRcluS8RXK7vlteiHT3QWugY6QQMZg==
-X-Received: by 2002:a05:6870:5249:b0:176:5815:eb2d with SMTP id o9-20020a056870524900b001765815eb2dmr22002075oai.50.1678683697790;
-        Sun, 12 Mar 2023 22:01:37 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1678683900;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3esmLJHui7TFtQDwQw8xmiYaMjghPEuMDC4MWK1l5hU=;
+        b=id5yj5RwSENRRPL9h0WwZMv54Dvdw2U9Q/HUzHcXOg7SDdQFEhDRSgu5A2WyOUL2Nr
+         va3vBIfbfQtxgB39XrjnRYa0AkZFfCMDkcAfC1pABQ5s0q6EPpQ+qX5ud+BLeaI5tc4Y
+         Sb7Tb0ylaFNf3IvOQGVulgBdrK9WQxfWHMTRnEQRve1MWReGYKpkdKrlAaiWtB74FTce
+         PK9LRy5GtAhy8oRj+g9x9/WExveeIiK6XWsiftOVJ+oyEjs5GAB4+76G8Ua/Js1ct2IV
+         nYqepvDErhDg3UslRaIOuyLujgUmQYJvNGfYotBoV6TtWvY0DeauzIEkZyvQ2R6qUFSR
+         CdkQ==
+X-Gm-Message-State: AO0yUKU9Q22o90Np4hSQOX5RkVyYo/5ulGZ8TNy8ZsMSxn2QvpMFlusE
+        7yyVulqnbkROwJ6IJ/Xdkw8K1QnbnGQ=
+X-Google-Smtp-Source: AK7set+4cZKrYlFk2IbhVih3SIAohem+NwOi0qmJSZnNAeZV+SSz6NXIrEzIbpC326sFiMpatc+J2A==
+X-Received: by 2002:a9d:6147:0:b0:684:dc1c:fe85 with SMTP id c7-20020a9d6147000000b00684dc1cfe85mr15155434otk.36.1678683900394;
+        Sun, 12 Mar 2023 22:05:00 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id r7-20020a056870414700b0017703b8a5f8sm451665oad.49.2023.03.12.22.01.37
+        by smtp.gmail.com with ESMTPSA id l32-20020a056830336000b006941ecefc34sm2785533ott.18.2023.03.12.22.04.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Mar 2023 22:01:37 -0700 (PDT)
+        Sun, 12 Mar 2023 22:04:59 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>,
-        Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH 2/2] test: relocate yes
-Date:   Sun, 12 Mar 2023 23:01:32 -0600
-Message-Id: <20230313050132.3464802-3-felipe.contreras@gmail.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        "Brian M . Carlson" <sandals@crustytoothpaste.net>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] test: encoding: simplify BOM addition
+Date:   Sun, 12 Mar 2023 23:04:59 -0600
+Message-Id: <20230313050459.3465060-1-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.39.2.13.g1fb56cf030
-In-Reply-To: <20230313050132.3464802-1-felipe.contreras@gmail.com>
-References: <20230313050132.3464802-1-felipe.contreras@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a command meant to be called by the subshells: therefore it
-belongs in test-lib-functions.sh.
+In 79444c9294 (utf8: handle systems that don't write BOM for UTF-16,
+2019-02-12) some prereqs were added (NO_UTF16_BOM and NO_UTF32_BOM) in
+order to conditionally add BOMs for the systems that need them.
 
-Cc: Brandon Casey <drafnel@gmail.com>
+But we don't need to check that prereq every time we are going to write
+some text.
+
+Let's check the requirement only once and generate write_utf{16,32}
+accordingly.
+
+Cc: Brian M. Carlson <sandals@crustytoothpaste.net>
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- t/test-lib-functions.sh | 21 +++++++++++++++++++++
- t/test-lib.sh           | 21 ---------------------
- 2 files changed, 21 insertions(+), 21 deletions(-)
+ t/lib-encoding.sh | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 49a850989a..da39d98391 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -87,6 +87,27 @@ test_decode_color () {
- 	'
- }
+diff --git a/t/lib-encoding.sh b/t/lib-encoding.sh
+index 2dabc8c73e..15aea597be 100644
+--- a/t/lib-encoding.sh
++++ b/t/lib-encoding.sh
+@@ -1,25 +1,25 @@
+ # Encoding helpers
  
-+# Provide an implementation of the 'yes' utility; the upper bound
-+# limit is there to help Windows that cannot stop this loop from
-+# wasting cycles when the downstream stops reading, so do not be
-+# tempted to turn it into an infinite loop. cf. 6129c930 ("test-lib:
-+# limit the output of the yes utility", 2016-02-02)
-+yes () {
-+	if test $# = 0
-+	then
-+		y=y
-+	else
-+		y="$*"
-+	fi
-+
-+	i=0
-+	while test $i -lt 99
-+	do
-+		echo "$y"
-+		i=$(($i+1))
-+	done
-+}
-+
- lf_to_nul () {
- 	perl -pe 'y/\012/\000/'
- }
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 388075a6c6..24aedc122d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1694,27 +1694,6 @@ OIDPATH_REGEX=$(test_oid_to_path $ZERO_OID | sed -e 's/0/[0-9a-f]/g')
- EMPTY_TREE=$(test_oid empty_tree)
- EMPTY_BLOB=$(test_oid empty_blob)
+-test_lazy_prereq NO_UTF16_BOM '
+-	test $(printf abc | iconv -f UTF-8 -t UTF-16 | wc -c) = 6
+-'
++if test "$(printf abc | iconv -f UTF-8 -t UTF-16 | wc -c)" = 6
++then
++	add_utf16_bom () { printf '\376\377'; }
++else
++	add_utf16_bom () { :; }
++fi
  
--# Provide an implementation of the 'yes' utility; the upper bound
--# limit is there to help Windows that cannot stop this loop from
--# wasting cycles when the downstream stops reading, so do not be
--# tempted to turn it into an infinite loop. cf. 6129c930 ("test-lib:
--# limit the output of the yes utility", 2016-02-02)
--yes () {
--	if test $# = 0
+-test_lazy_prereq NO_UTF32_BOM '
+-	test $(printf abc | iconv -f UTF-8 -t UTF-32 | wc -c) = 12
+-'
++if test "$(printf abc | iconv -f UTF-8 -t UTF-32 | wc -c)" = 12
++then
++	add_utf32_bom () { printf '\0\0\376\377'; }
++else
++	add_utf32_bom () { :; }
++fi
+ 
+ write_utf16 () {
+-	if test_have_prereq NO_UTF16_BOM
 -	then
--		y=y
--	else
--		y="$*"
--	fi
--
--	i=0
--	while test $i -lt 99
--	do
--		echo "$y"
--		i=$(($i+1))
--	done
--}
--
- # The GIT_TEST_FAIL_PREREQS code hooks into test_set_prereq(), and
- # thus needs to be set up really early, and set an internal variable
- # for convenience so the hot test_set_prereq() codepath doesn't need
+-		printf '\376\377'
+-	fi &&
++	add_utf16_bom &&
+ 	iconv -f UTF-8 -t UTF-16
+ }
+ 
+ write_utf32 () {
+-	if test_have_prereq NO_UTF32_BOM
+-	then
+-		printf '\0\0\376\377'
+-	fi &&
++	add_utf32_bom &&
+ 	iconv -f UTF-8 -t UTF-32
+ }
 -- 
 2.39.2.13.g1fb56cf030
 
