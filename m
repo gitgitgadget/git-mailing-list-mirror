@@ -2,110 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50F25C6FD1D
-	for <git@archiver.kernel.org>; Tue, 14 Mar 2023 14:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 654CDC05027
+	for <git@archiver.kernel.org>; Tue, 14 Mar 2023 16:54:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229818AbjCNOvG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Mar 2023 10:51:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48606 "EHLO
+        id S230162AbjCNQy3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Mar 2023 12:54:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229757AbjCNOvE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2023 10:51:04 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24F63A2C29
-        for <git@vger.kernel.org>; Tue, 14 Mar 2023 07:51:02 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id g6so6491494iov.13
-        for <git@vger.kernel.org>; Tue, 14 Mar 2023 07:51:02 -0700 (PDT)
+        with ESMTP id S229484AbjCNQy1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2023 12:54:27 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89C3A3A9A
+        for <git@vger.kernel.org>; Tue, 14 Mar 2023 09:54:26 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id v21so7133093ple.9
+        for <git@vger.kernel.org>; Tue, 14 Mar 2023 09:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678805461;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
-         :subject:cc:to:from:user-agent:references:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=y4M9UlmlmvU0BgAHKsMYrfqJmo05VcLtL2JCYhmbOZk=;
-        b=ffOXWv7IQDMCmmjuQQ/zxhQtV0GUuaRG5sr503XUo7wmlg1636mdCD59XEC4Uo7YZX
-         LVeFlMUKhXX4nkhincjFAfrXi8IwInfm351p1OwuWCcxTWcgQdQcnggucCVxvBhHJ7EK
-         L7Ll9UnXX21Q+jblcnLRTrNmx/2XdDG6v94KStup68vgb+x3VZrkLSvlb+P85SHqEMvf
-         My1kkl08+5HfQyOjVHWUBsHnAXJ9whnmJ3+mNM2UuRtmT+kaMQEZl6NAWnc/UhWC9FPv
-         5TsMFo5yg/lrfgn5cU+SrnI5HiXjemsRJrtXg2V7y8BnhVenJ0bRnOu9G21L3EFML22b
-         J1FQ==
+        d=gmail.com; s=20210112; t=1678812866;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=soJzwyUco171uvcryW+4Q3VYRVMhi0NUdE0ZKNqgOz0=;
+        b=nmactm+VWgSlY8SDSxNcIT/gvy7YICSt3iuHMTlrlonlOXerfb1awp5juYAZXJ1Sb6
+         Z+eI8b87bsMHYzEhRxSWQZ8bwGgm3O8HmW72TDcHDWBzUkjvajGWzKJ3+ELnDjK3g85K
+         UtMlxVDr51EbPpILZPmP+Yk6MenlhXrAMbzTA55bjSyzqcY5pAnDiJKrkR4FzD5Z3Yzj
+         VabVII6EPOzb6uhlJxGS+fm/rGjSpfPPd0/Z9p3UdQD9ISCfdJsnI5wfIr88dM975UYN
+         lKBeQJ7dog0YfSVZoxSEXISHq0IioEb/3+cumNw04o8NTxN7X+koBVjahfU9oXfy3Cwg
+         803A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678805461;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
-         :subject:cc:to:from:user-agent:references:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=y4M9UlmlmvU0BgAHKsMYrfqJmo05VcLtL2JCYhmbOZk=;
-        b=4NKvgLXQcK4ahCbK6Ho5jLexYGE4tihkKg0sE3D5MKe8SURSATaWqFVdAtv5i6A+6E
-         GfcHOmnKf9CD0gSoK08CrU9sYE1I1bCxZVLgT7flT98fzc04D8kdBKBrE1dpHxATT8LA
-         sUhzJzwLpUuXpeSBeJ3CIAxBozj39HqCYjwvrygHIs+WasWKUxPZ3wfnl6xdPN2ASi9k
-         atdWje1qnG1/6o2hL1nJXgssktY176GYKrjHyi2Cz3ZolaCl80aDB0bv+4y6/Oyzg4NG
-         2kYqDeRz95ul7WoT3f05r7K1xsx//vcHCNSRxzzKyL2yHm+NhjHifRQz7DL2Q+tZYM8Q
-         XrVQ==
-X-Gm-Message-State: AO0yUKVTD+o8Gd4GVLtSog563zYIGooGC77Qa5htG0HBiU/FOmF56FbF
-        PSah0kUsBR+zWypKlqa6EpczXHLLODy2pA==
-X-Google-Smtp-Source: AK7set8hrM0CteIhsl0cquYE6EusNnPLpG69hS17dimQS1VycD5qc8XGN8Yn4MVdDHn4aoHCZW6ESg==
-X-Received: by 2002:a5d:9297:0:b0:74c:99e8:7f44 with SMTP id s23-20020a5d9297000000b0074c99e87f44mr7654787iom.2.1678805461212;
-        Tue, 14 Mar 2023 07:51:01 -0700 (PDT)
-Received: from epic96565.epic.com (pat-verona-h.epic.com. [199.204.56.213])
-        by smtp.gmail.com with ESMTPSA id i21-20020a02b695000000b003ab21c8fa84sm821223jam.121.2023.03.14.07.51.00
+        d=1e100.net; s=20210112; t=1678812866;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=soJzwyUco171uvcryW+4Q3VYRVMhi0NUdE0ZKNqgOz0=;
+        b=RqO5xzu/btdNTDq6sOORDLR3tlAL3tZS0D4vxVS4olYppudAP4KRzPouM7SbQc1PTV
+         qeNpNmspidiN5lDd2laMlZDZYLfvcxJ+dk4kQxzG8CirxYcEy4Blw1nZhT8e0eH4wTlm
+         ay0COKU9E3u4O3OMMsLLJFFTLL6uvbQ+E84F9uqRy+5rfGFBALd1l6mTv75xW2UtKeKc
+         CJgTGheBLfDn9kfaZZs4GvbTuGJk03m3p+RMYlSAF2IDXRLvZi0J91/5UpbRffJdRubo
+         Xxso3k5btMcVLZDtSRXfPwr5CUFRhvBoETVaGz2B3+ewnDmUXm4Q0iFlQ4pj623L2Ot7
+         ynbg==
+X-Gm-Message-State: AO0yUKVQpHmajgBmyTPGryVZJo98TDTGhiYM7c9PEM8j2U/vz21ROUdh
+        WMaVT32PbMdYOXNvIDAz+0k=
+X-Google-Smtp-Source: AK7set8q52mLoY+RcvVEsHBEutuQF2KyPnmga0Lk+GRog9BE5DShCx441VDxDirFvPJDEPsP2Fh7hw==
+X-Received: by 2002:a17:90a:34c:b0:23a:baf:ffec with SMTP id 12-20020a17090a034c00b0023a0bafffecmr39609281pjf.22.1678812866010;
+        Tue, 14 Mar 2023 09:54:26 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id c1-20020a17090a490100b00233ccd04a15sm1942310pjh.24.2023.03.14.09.54.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Mar 2023 07:51:00 -0700 (PDT)
-References: <e28a23e8eb044d26947462b8619e88bd@xiaomi.com>
-User-agent: mu4e 1.9.22; emacs 28.2
-From:   Sean Allred <allred.sean@gmail.com>
-To:     =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?utf-8?B?5aec5rWp5ZOy?= <jianghaozhe1@xiaomi.com>
-Subject: Re: Git fetch slow on local repository with 600k refs
-Date:   Tue, 14 Mar 2023 09:29:31 -0500
-In-reply-to: <e28a23e8eb044d26947462b8619e88bd@xiaomi.com>
-Message-ID: <m0wn3jxu7g.fsf@epic96565.epic.com>
+        Tue, 14 Mar 2023 09:54:24 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 1/2] diff: use HEAD for attributes when using bare
+ repository
+References: <pull.1459.git.git.1678758818.gitgitgadget@gmail.com>
+        <0fc704cf1c0724473a61086098d44c3a82938b03.1678758818.git.gitgitgadget@gmail.com>
+Date:   Tue, 14 Mar 2023 09:54:24 -0700
+In-Reply-To: <0fc704cf1c0724473a61086098d44c3a82938b03.1678758818.git.gitgitgadget@gmail.com>
+        (John Cai via GitGitGadget's message of "Tue, 14 Mar 2023 01:53:37
+        +0000")
+Message-ID: <xmqqttynqnnj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-=E7=A8=8B=E6=B4=8B <chengyang@xiaomi.com> writes:
-
-> We're holding a Gerrit server cluster. And uses pull-replication
-> plugin to sync changes between master and slave.
+> From: John Cai <johncai86@gmail.com>
 >
-> When a change is pushed to master, it notify the slave, and slave
-> fetch it from master.
->
-> But we found in a big repository with 600k refs. Fetch takes 5-10
-> seconds even if fetching a 1 byte change. Here is the GIT_TRACE2_PERF
->
-> I did an experiment to fetch a ref that my slave already have. And we
-> can find git rev-list takes 2 seconds to perform. (I guess it try to
-> find remote object from reachable objects of local refs one by one)
->
-> Is there anyway to optimize such situation?
+> (a4cf900e diff: teach diff to read algorithm from diff driver,
+> 2022-02-20) does not support bare repositories.
 
-Do you need all those refs as refs -- or are you just looking to keep
-the commits?
+Wrong placement of opening parenthesis, i.e. "a4cf900e (diff: teach
+diff to read algorithm from diff driver, 2023-02-20)".  The date is
+also wrong.  Use "git show -s --format=reference a4cf900e".  Insert
+its output directly to your editor instead of transcribing manually.
 
-We found a rather clever solution for the latter we're looking to
-upstream at some point to collect all refs into a single 'archive' ref
-that collects commits in fake merge commits (there's no actual conflict
-resolution happening -- we just use the same tree over and over). We
-make each commit message look like show-ref output. For example:
+I do not think the commit is to blame in the first place for two
+reasons.
 
-A single ref (refs/archive) pointing to commit (A), with contents
+ * Even in a bare repository, the attributes defined in the
+   $GIT_DIR/info/attributes file are in effect, and the new feature
+   added by a4cf900e should work just fine with it.
 
-    tree <some arbitrary tree>
-    parent <B> [... 500 other commits 'merged' in ...]
-    author <system user>
-    committer <system user>
+ * By definition, there is no working tree in a bare repository, and
+   it always has been naturally expected we won't read attributes
+   from working tree files.  This is in no way limited to the diff
+   driver feature recently added.
 
-    deadbeef0123456788... refs/tags/very/old/release-1
-    deadbeef0123456789... refs/tags/very/old/release-2
+So the above does not look like a good first sentence to explain
+this change.
 
-When we want to pull a ref out of the archive, we have a process in
-place to do so. This keeps the total number of refs down and the
-fetch/push performance within acceptable limits.
+> Since running diff
+> on bare repositories is often done on Git servers, it would be useful to
+> allow bare repositories to also take advantage of setting the algorithm
+> via the diff driver.
 
---
-Sean Allred
+Since referring to in-tree attributes is often useful with any
+command, not limited to "diff", I wonder if it is feasible to add
+support for the --attr-source=<tree> option globally, instead of
+implementing such an option piecemeal.  If your "git diff" in a bare
+repository starts honoring attributes recorded in HEAD, don't your
+users expect your "git log" and "git show" to also honor them?
