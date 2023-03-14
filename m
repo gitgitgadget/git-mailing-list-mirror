@@ -2,94 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E334CC6FD1D
-	for <git@archiver.kernel.org>; Tue, 14 Mar 2023 01:17:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AFBCC6FD1F
+	for <git@archiver.kernel.org>; Tue, 14 Mar 2023 01:57:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230063AbjCNBRB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Mar 2023 21:17:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56648 "EHLO
+        id S230416AbjCNBxp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Mar 2023 21:53:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55682 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbjCNBQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2023 21:16:59 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7078D50FBA
-        for <git@vger.kernel.org>; Mon, 13 Mar 2023 18:16:58 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 99C9E5A215;
-        Tue, 14 Mar 2023 01:16:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1678756617;
-        bh=FUL8k7U6yKqQEJslrEXtrQDkOkF15SCDXqcynH7iuFE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=LD0wopnKkfd5ckHbMw9MlrY0Mu2nB4UtIcBFgBJWDleTqgYR9i2eVZYn2iRzoO2lp
-         sHENYUQT6l8XDz/4upb0WlQ8ACluoma7a4soS8ZAROhdjKbNLdVYdNMry9IfWanQtN
-         5TzrhDigwKnL3pEVVS6JYQHpL2R0rgDWh/xOJ8SEhcfe2MRPSaJ2Pyu28NDlUZSy2Z
-         k5rUA73A6YXmdQJylCtXe2re0Q9FNCcNUH77FlzzmQGqIONDubkxUKVHzLEgn9cAHV
-         04HNOltiUpSSodK6VRbUscMX+rM1tSLjln73HL2ZQZIoJ9QSzLyxVefGziPs0RJGXq
-         pURrWJFJWjEapNdACcOKZu6/Je29tjQySKtB7hY2sGgfAAkiLjNLIdJQHWU8DQjo7J
-         dORR4umGZm2QIfXp/9r/XqX7Dc41DR58bDd2qgFHoYWqMRdTXRpTPRMpWtW0XRNXRy
-         HZoMJFTduUV5Bs0jEG6FpQoY3V9FYYhjn8M/fR9LDqPOmCnmTdj
-Date:   Tue, 14 Mar 2023 01:16:56 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Edward J. Ouellette" <ejouellette@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Bugs in config of Git-2.39.2-64-bit.exe
-Message-ID: <ZA/LCF7R6GUeW2H6@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Edward J. Ouellette" <ejouellette@gmail.com>, git@vger.kernel.org
-References: <CA+A2caFjpWZ_UqZx8YOOTxsYDWWxrXfapPBaNdQGdEX+m9GEsw@mail.gmail.com>
+        with ESMTP id S229880AbjCNBxm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2023 21:53:42 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59C7D61528
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 18:53:41 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id o38-20020a05600c512600b003e8320d1c11so27302wms.1
+        for <git@vger.kernel.org>; Mon, 13 Mar 2023 18:53:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678758819;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=txPCP4uy7g5nFwCWt9jjWUpvg3YSH3jCXjjX/e/Tji8=;
+        b=FfjOW7QcQYC9IFZEXVevvYuV2PE7zSawuH978RNi4RUb/AinPJVVdC77/wTXdeunlO
+         hm6Xe6u7VDbgJhE07Fx4dLzSWVaZPYoqMeDupsZD9/eEyK6hmn3gk6Gnep6O+n1sfv2u
+         q7nHa6PpHvLUkrFaoPRsV+Fw0pEvhiumD9XbewTZg9lqy6chR2wrEfh3TQkNW/LtljEO
+         qRB2prAPrclJjVtpYuDveKf7MY4B+pD4ODukpmQz2SRGRlkiQdqH17NVQmsHXjHDBhLp
+         nYxbrOygZfCOR3h/3sXlkmFnExaaT6cmymB7MD9cYazTR9g+pmdac7/a515TR4Vg0zbV
+         GlSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678758819;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=txPCP4uy7g5nFwCWt9jjWUpvg3YSH3jCXjjX/e/Tji8=;
+        b=MTkgaXcRFdapxEJVNmRbqDXwS/imqhGfUVTeg/uKloW55NJNJBd5KWCIHz+hnFflzw
+         l5H3OUXNNrykLNJRIUHkBT6THk6zRxflOdxae9nKB0EayNNQCCZYfR1ocfhdVhMHR9GO
+         2QCKymPb9lc26JPFa1v3XLZY2c8LnmVkPYDIM7IcrojHMOhBQhT6PnqNx1455+SQkBK8
+         F5n9ucY75JCncz030V5tFeg5jIbZooJ/LA0d4aJoMh2CExs9d6poZr6/WPPiOD9THJ6s
+         sPJfbj/3Hsb0aFbmeoq/+V6XBNTviat/ZUFPJbv6rbl/zfHfs1KfUy7Oc6QGHbxSGVVM
+         qoRA==
+X-Gm-Message-State: AO0yUKV8uriXdsGpUlyaLDIN8axpjuNGz3McupIarlDezkrS+DhuOVik
+        CtACuPqVJUtN2m3xgN6QGJeosQFwSb4=
+X-Google-Smtp-Source: AK7set8MVIvX9BteeYPmCTTldjTXXeuG7hwGRyZ5QW4BTQ26Lpl2C6/4IUUt2oltNONabG+NzB63UQ==
+X-Received: by 2002:a05:600c:5493:b0:3ea:edc7:aa59 with SMTP id iv19-20020a05600c549300b003eaedc7aa59mr13048560wmb.32.1678758819723;
+        Mon, 13 Mar 2023 18:53:39 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l6-20020a05600c2cc600b003df5be8987esm1282871wmc.20.2023.03.13.18.53.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Mar 2023 18:53:39 -0700 (PDT)
+Message-Id: <pull.1459.git.git.1678758818.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 14 Mar 2023 01:53:36 +0000
+Subject: [PATCH 0/2] diff: support bare repositories when reading gitattributes for diff
+ algorithm
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8w9pfRwtyZVgug03"
-Content-Disposition: inline
-In-Reply-To: <CA+A2caFjpWZ_UqZx8YOOTxsYDWWxrXfapPBaNdQGdEX+m9GEsw@mail.gmail.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+To:     git@vger.kernel.org
+Cc:     John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This patch series adds support for bare repositories for the feature added
+in [1]. When using a bare repository, by default we will look for
+gitattributes from HEAD. When the --attr-source option is passed, we will
+try to read gitattributes from the commit.
 
---8w9pfRwtyZVgug03
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+A side effect of this patch series is that custom drivers will now also work
+with bare repositories.
 
-On 2023-03-14 at 01:05:47, Edward J. Ouellette wrote:
-> Hi,
+ 1. (a4cf900ee7 diff: teach diff to read algorithm from diff driver,
+    2022-02-20)
 
-Hey,
+John Cai (2):
+  diff: use HEAD for attributes when using bare repository
+  diff: add --attr-source to read gitattributes from a commit
 
-> I just installed Git using Git-2.39.2-64-bit.exe on Windows 10.
-> Windows' OpenSSL was added to my PATH, and Git was NOT added to my
-> PATH even though in the config, I selected "Git from the command line
-> and also from 3rd party software" and "Use bundled OpenSSH"
+ Documentation/diff-options.txt  |  4 ++++
+ Documentation/gitattributes.txt |  8 +++++++
+ diff.c                          | 37 ++++++++++++++++++++++++++++++---
+ diff.h                          |  1 +
+ t/lib-diff-alternative.sh       | 33 ++++++++++++++++++++++++-----
+ t/t4018-diff-funcname.sh        | 29 ++++++++++++++++++++++++++
+ userdiff.c                      |  9 +++++++-
+ userdiff.h                      |  4 ++++
+ 8 files changed, 116 insertions(+), 9 deletions(-)
 
-The Git project doesn't distribute binaries at all.  It sounds like
-you're using Git for Windows, which does.  You'd probably want to
-contact them on their issue tracker at
-https://github.com/git-for-windows/git/issues (after first verifying
-that this hasn't already been reported), since that would be the best
-way to get this fixed.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
 
---8w9pfRwtyZVgug03
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZA/LCAAKCRB8DEliiIei
-gc/TAP9yfgxkbzIH02tyGzfNme8kSHKhH0R424zm2I9OGl/vEwD/U4sF1g1MKO0v
-mKR6C28tHsZUJ5byRy0Av1+fCEda/gk=
-=3NaF
------END PGP SIGNATURE-----
-
---8w9pfRwtyZVgug03--
+base-commit: d15644fe0226af7ffc874572d968598564a230dd
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1459%2Fjohn-cai%2Fjc%2Fdiff-attr-bare-repo-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1459/john-cai/jc/diff-attr-bare-repo-v1
+Pull-Request: https://github.com/git/git/pull/1459
+-- 
+gitgitgadget
