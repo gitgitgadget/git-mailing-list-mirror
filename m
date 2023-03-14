@@ -2,71 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53D5FC6FD1D
-	for <git@archiver.kernel.org>; Tue, 14 Mar 2023 11:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF746C6FD1C
+	for <git@archiver.kernel.org>; Tue, 14 Mar 2023 11:16:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230449AbjCNLJe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Mar 2023 07:09:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37180 "EHLO
+        id S231354AbjCNLQT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Mar 2023 07:16:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49912 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230454AbjCNLJV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2023 07:09:21 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1559B8C586
-        for <git@vger.kernel.org>; Tue, 14 Mar 2023 04:08:53 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id u3-20020a17090a450300b00239db6d7d47so14746004pjg.4
-        for <git@vger.kernel.org>; Tue, 14 Mar 2023 04:08:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678792127;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QIGGfyJUlgdw/1o4fMo7+vTO7lYBlrTD9BOGqxttSJk=;
-        b=ADcRFtfmkdQlBybo7ZdUw6NQiz/Gh/+3VOSAvonKwK63PqV7I2LqrmQJvQzGA3LFTD
-         xbPsat5Rgk9Co4KHyhIjT1JDPGSGR/LwH081eZ/mlehFz/ESKrHmZ7TRWOgQlgrBQsj6
-         AIi9y3HU+yCPnjuA7tVje0YEDc2LpNCZ1671VhYeZ32L2gMljYcdAzQVP+Lo2OvIHkF5
-         YK0ySrI+AsACB2b3hTam/Ms4qaWHuAAdM5mPSc7Ylzw8yFD2TSnqZFAEOjTX5i51cMyg
-         AcB5EQpnseZrVsDCspT675pfKdhoz2VAZuL8yRrFqj+g/AMr1rbRi2O4evTWeKEF2i5V
-         n7sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678792127;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QIGGfyJUlgdw/1o4fMo7+vTO7lYBlrTD9BOGqxttSJk=;
-        b=QHquiJlUj8LqjwV5ZSYFCjyIgjaFTMh1DtPAJSpX2yQm9NzwDfbcqmYrF22szam8Ek
-         huPIV8ClMhsNMe4JnDupp9FHlydnJ20VCPl+3LH9BEPVWQBqRSsMz/cMk+xSFz9AWVRf
-         cur0l8DuklpYpKNF6jupviroWEd13WBEeQIc1fYfv6sxtv5fuMKnUjFAct9EzkV/j2aG
-         2q98l2swL2vnzlgam3Mb7vTVTmCpBc+jNTeW4gte9yqTELvTWc4qN04Jfc5AP3cZ6HMm
-         faPgfxhIXLjvFjGgAmrCKXX8tDJp/WM0pmLPT/aoqlhoR3vIMrO/WbmPPU+B9Ofa4mpn
-         az4A==
-X-Gm-Message-State: AO0yUKVUUv+5OnNMv5bfjjF1jV1eusDszx011Suy/dMNppU2oGmvQh4a
-        LD/YDzjUneJW/R3VTfWiNu+0PTz4HZPPvQrO
-X-Google-Smtp-Source: AK7set8GFZVBMEZzSPS+n5hRHo2Ur5XSxY2dcx7inM/4Row3AEC3ptDeZBl9OfS4snvnp8hTR4xcjg==
-X-Received: by 2002:a05:6a20:2d8:b0:d4:84fe:a056 with SMTP id 24-20020a056a2002d800b000d484fea056mr4356368pzb.27.1678792127114;
-        Tue, 14 Mar 2023 04:08:47 -0700 (PDT)
-Received: from localhost.localdomain ([47.246.101.58])
-        by smtp.gmail.com with ESMTPSA id r15-20020a63204f000000b0050bcf117643sm877606pgm.17.2023.03.14.04.08.44
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Mar 2023 04:08:46 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, l.s.r@web.de, peff@peff.net, tmz@pobox.com
-Subject: Re: t3206-range-diff failures on non x86 arches
-Date:   Tue, 14 Mar 2023 19:08:36 +0800
-Message-Id: <20230314110836.11226-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.39.2.459.gd58159df.dirty
-In-Reply-To: <xmqq8rggm9x9.fsf@gitster.g>
-References: <xmqq8rggm9x9.fsf@gitster.g>
+        with ESMTP id S230254AbjCNLQC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2023 07:16:02 -0400
+X-Greylist: delayed 82 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 14 Mar 2023 04:15:18 PDT
+Received: from outboundhk.mxmail.xiaomi.com (outboundhk.mxmail.xiaomi.com [207.226.244.122])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A169C26C02
+        for <git@vger.kernel.org>; Tue, 14 Mar 2023 04:15:17 -0700 (PDT)
+X-IronPort-AV: E=Sophos;i="5.97,212,1669046400"; 
+   d="scan'208";a="70964658"
+Received: from hk-mbx02.mioffice.cn (HELO xiaomi.com) ([10.56.8.122])
+  by outboundhk.mxmail.xiaomi.com with ESMTP; 14 Mar 2023 19:13:44 +0800
+Received: from BJ-MBX16.mioffice.cn (10.237.8.136) by HK-MBX02.mioffice.cn
+ (10.56.8.122) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 14 Mar
+ 2023 19:13:43 +0800
+Received: from BJ-MBX01.mioffice.cn (10.237.8.121) by BJ-MBX16.mioffice.cn
+ (10.237.8.136) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Tue, 14 Mar
+ 2023 19:13:43 +0800
+Received: from BJ-MBX01.mioffice.cn ([fe80::5383:3aa7:7116:8984]) by
+ BJ-MBX01.mioffice.cn ([fe80::5383:3aa7:7116:8984%9]) with mapi id
+ 15.02.0986.041; Tue, 14 Mar 2023 19:13:43 +0800
+From:   =?utf-8?B?56iL5rSL?= <chengyang@xiaomi.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     =?utf-8?B?5aec5rWp5ZOy?= <jianghaozhe1@xiaomi.com>
+Subject: RE: [External Mail]Re: Git fetch slow on local repository with 600k
+ refs
+Thread-Topic: [External Mail]Re: Git fetch slow on local repository with 600k
+ refs
+Thread-Index: AdlVnmz5eH6sP45LS02lAt/3qxVL1QAbJmoAABawkUA=
+Date:   Tue, 14 Mar 2023 11:13:42 +0000
+Message-ID: <0da2848da9254b64a383695c7a4bc91b@xiaomi.com>
+References: <e28a23e8eb044d26947462b8619e88bd@xiaomi.com>
+ <73a7f949-e828-fd9c-4be5-63f60b53eb41@gmail.com>
+In-Reply-To: <73a7f949-e828-fd9c-4be5-63f60b53eb41@gmail.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.237.8.11]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Todd Zullinger <tmz@pobox.com> writes:
-
-> Confirmed.  That fixes the tests.  Thanks!
-
-Sorry for the problem and thanks very much for reporting.
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogQmFnYXMgU2FuamF5YSA8
+YmFnYXNkb3RtZUBnbWFpbC5jb20+DQo+IFNlbnQ6IFR1ZXNkYXksIE1hcmNoIDE0LCAyMDIzIDQ6
+MjIgUE0NCj4gVG86IOeoi+a0iyA8Y2hlbmd5YW5nQHhpYW9taS5jb20+OyBnaXRAdmdlci5rZXJu
+ZWwub3JnDQo+IENjOiDlp5zmtanlk7IgPGppYW5naGFvemhlMUB4aWFvbWkuY29tPg0KPiBTdWJq
+ZWN0OiBbRXh0ZXJuYWwgTWFpbF1SZTogR2l0IGZldGNoIHNsb3cgb24gbG9jYWwgcmVwb3NpdG9y
+eSB3aXRoIDYwMGsgcmVmcw0KPg0KPg0KPiBPbiAzLzEzLzIzIDE4OjU0LCDnqIvmtIsgd3JvdGU6
+DQo+ID4gMTk6MTI6NTUuOTMxMTgwIGNvbW1vbi1tYWluLmM6NDggICAgICAgICAgICAgfCBkMCB8
+IG1haW4gICAgICAgICAgICAgICAgICAgICB8IHZlcnNpb24NCj4gfCAgICAgfCAgICAgICAgICAg
+fCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCAyLjMzLjEuNTU4LmcyYmQyZjI1OGY0LmRpcnR5
+DQo+ID4gMTk6MTI6NTUuOTMxMjE1IGNvbW1vbi1tYWluLmM6NDkgICAgICAgICAgICAgfCBkMCB8
+IG1haW4gICAgICAgICAgICAgICAgICAgICB8IHN0YXJ0ICAgICAgICB8DQo+IHwgIDAuMDAwMzM1
+IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgZ2l0IGZldGNoIC0tbm8tdGFncw0KPiBnaXQ6
+Ly8xMC4xMy44LjEwL21pdWkvZ2Vycml0L2Jhc2UtdGVzdC5naXQNCj4gcmVmcy9jaGFuZ2VzLzI3
+LzI3NDE5MjcvMTpyZWZzL2NoYW5nZXMvMjcvMjc0MTkyNy8xDQo+ID4gMTk6MTI6NTUuOTMxMzAy
+IGNvbXBhdC9saW51eC9wcm9jaW5mby5jOjE3MCAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAg
+ICAgICB8DQo+IGNtZF9hbmNlc3RyeSB8ICAgICB8ICAgICAgICAgICB8ICAgICAgICAgICB8ICAg
+ICAgICAgICAgICB8IGFuY2VzdHJ5OltiYXNoIHN1ZG8gYmFzaCBtaWF1dGhkDQo+IG1pYXV0aGQg
+c3lzdGVtZF0NCj4gPiAxOToxMjo1NS45MzEzODEgZ2l0LmM6NDU2ICAgICAgICAgICAgICAgICAg
+ICB8IGQwIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgY21kX25hbWUgICAgIHwNCj4gfCAg
+ICAgICAgICAgfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCBmZXRjaCAoZmV0Y2gpDQo+ID4g
+MTk6MTI6NTUuOTMxNTY2IGJ1aWx0aW4vZmV0Y2guYzoxNTc5ICAgICAgICAgfCBkMCB8IG1haW4g
+ICAgICAgICAgICAgICAgICAgICB8DQo+IHJlZ2lvbl9lbnRlciB8IHIwICB8ICAwLjAwMDY5MiB8
+ICAgICAgICAgICB8IGZldGNoICAgICAgICB8IGxhYmVsOnJlbW90ZV9yZWZzDQo+ID4gMTk6MTI6
+NTUuOTM2NzgxIGNvbm5lY3QuYzoxNjcgICAgICAgICAgICAgICAgfCBkMCB8IG1haW4gICAgICAg
+ICAgICAgICAgICAgICB8IGRhdGEgICAgICAgICB8ICAgICB8DQo+IDAuMDA1OTA3IHwgIDAuMDA1
+MjE1IHwgdHJhbnNmZXIgICAgIHwgLi5uZWdvdGlhdGVkLXZlcnNpb246Mg0KPiA+IDE5OjEyOjU1
+Ljk0MDQ0NyBidWlsdGluL2ZldGNoLmM6MTU4MiAgICAgICAgIHwgZDAgfCBtYWluICAgICAgICAg
+ICAgICAgICAgICAgfA0KPiByZWdpb25fbGVhdmUgfCByMCAgfCAgMC4wMDk1NzMgfCAgMC4wMDg4
+ODEgfCBmZXRjaCAgICAgICAgfCBsYWJlbDpyZW1vdGVfcmVmcw0KPiA+IDE5OjEyOjU2LjIyMTEz
+MyBydW4tY29tbWFuZC5jOjczOSAgICAgICAgICAgIHwgZDAgfCBtYWluICAgICAgICAgICAgICAg
+ICAgICAgfA0KPiBjaGlsZF9zdGFydCAgfCAgICAgfCAgMC4yOTAyNTIgfCAgICAgICAgICAgfCAg
+ICAgICAgICAgICAgfCBbY2gwXSBjbGFzczo/IGFyZ3Y6W2dpdCByZXYtbGlzdCAtLQ0KPiBvYmpl
+Y3RzIC0tc3RkaW4gLS1ub3QgLS1hbGwgLS1xdWlldCAtLWFsdGVybmF0ZS1yZWZzIC0tdW5zb3J0
+ZWQtaW5wdXRdDQo+ID4gMTk6MTI6NTguMDE0NzkyIHJ1bi1jb21tYW5kLmM6OTk1ICAgICAgICAg
+ICAgfCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8IGNoaWxkX2V4aXQNCj4gfCAgICAg
+fCAgMi4wODM4OTkgfCAgMS43OTM2NDcgfCAgICAgICAgICAgICAgfCBbY2gwXSBwaWQ6ODE4NjAg
+Y29kZTowDQo+ID4gMTk6MTI6NTguMDE0ODU1IGJ1aWx0aW4vZmV0Y2guYzoxMzIxICAgICAgICAg
+fCBkMCB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8DQo+IHJlZ2lvbl9lbnRlciB8IHIwICB8
+ICAyLjA4Mzk4MCB8ICAgICAgICAgICB8IGZldGNoICAgICAgICB8IGxhYmVsOmNvbnN1bWVfcmVm
+cw0KPiA+IDE5OjEyOjU4LjAxNTQxMiBidWlsdGluL2ZldGNoLmM6MTMyNiAgICAgICAgIHwgZDAg
+fCBtYWluICAgICAgICAgICAgICAgICAgICAgfA0KPiByZWdpb25fbGVhdmUgfCByMCAgfCAgMi4w
+ODQ1MzggfCAgMC4wMDA1NTggfCBmZXRjaCAgICAgICAgfCBsYWJlbDpjb25zdW1lX3JlZnMNCj4g
+PiAxOToxMjo1OC4wMTU0NjYgcnVuLWNvbW1hbmQuYzo3MzkgICAgICAgICAgICB8IGQwIHwgbWFp
+biAgICAgICAgICAgICAgICAgICAgIHwNCj4gY2hpbGRfc3RhcnQgIHwgICAgIHwgIDIuMDg0NTkw
+IHwgICAgICAgICAgIHwgICAgICAgICAgICAgIHwgW2NoMV0gY2xhc3M6PyBhcmd2OltnaXQgbWFp
+bnRlbmFuY2UNCj4gcnVuIC0tYXV0byAtLW5vLXF1aWV0XQ0KPiA+IDE5OjEyOjU4LjAxODg3OSBj
+b21tb24tbWFpbi5jOjQ4ICAgICAgICAgICAgIHwgZDEgfCBtYWluICAgICAgICAgICAgICAgICAg
+ICAgfCB2ZXJzaW9uDQo+IHwgICAgIHwgICAgICAgICAgIHwgICAgICAgICAgIHwgICAgICAgICAg
+ICAgIHwgMi4zMy4xLjU1OC5nMmJkMmYyNThmNC5kaXJ0eQ0KPiA+IDE5OjEyOjU4LjAxODkxMSBj
+b21tb24tbWFpbi5jOjQ5ICAgICAgICAgICAgIHwgZDEgfCBtYWluICAgICAgICAgICAgICAgICAg
+ICAgfCBzdGFydCAgICAgICAgfA0KPiB8ICAwLjAwMDMyNCB8ICAgICAgICAgICB8ICAgICAgICAg
+ICAgICB8IC91c3IvbGliZXhlYy9naXQtY29yZS9naXQgbWFpbnRlbmFuY2UgcnVuIC0tYXV0bw0K
+PiAtLW5vLXF1aWV0DQo+ID4gMTk6MTI6NTguMDE5MDExIGNvbXBhdC9saW51eC9wcm9jaW5mby5j
+OjE3MCAgfCBkMSB8IG1haW4gICAgICAgICAgICAgICAgICAgICB8DQo+IGNtZF9hbmNlc3RyeSB8
+ICAgICB8ICAgICAgICAgICB8ICAgICAgICAgICB8ICAgICAgICAgICAgICB8IGFuY2VzdHJ5Oltn
+aXQgYmFzaCBzdWRvIGJhc2gNCj4gbWlhdXRoZCBtaWF1dGhkIHN5c3RlbWRdDQo+ID4gMTk6MTI6
+NTguMDE5MDg3IGdpdC5jOjQ1NiAgICAgICAgICAgICAgICAgICAgfCBkMSB8IG1haW4gICAgICAg
+ICAgICAgICAgICAgICB8IGNtZF9uYW1lICAgICB8DQo+IHwgICAgICAgICAgIHwgICAgICAgICAg
+IHwgICAgICAgICAgICAgIHwgbWFpbnRlbmFuY2UgKGZldGNoL21haW50ZW5hbmNlKQ0KPiA+IDE5
+OjEyOjU4LjAxOTI3NiBnaXQuYzo3MTQgICAgICAgICAgICAgICAgICAgIHwgZDEgfCBtYWluICAg
+ICAgICAgICAgICAgICAgICAgfCBleGl0ICAgICAgICAgfCAgICAgfA0KPiAwLjAwMDY5MCB8ICAg
+ICAgICAgICB8ICAgICAgICAgICAgICB8IGNvZGU6MA0KPiA+IDE5OjEyOjU4LjAxOTI4NCB0cmFj
+ZTIvdHIyX3RndF9wZXJmLmM6MjEzICAgIHwgZDEgfCBtYWluICAgICAgICAgICAgICAgICAgICAg
+fCBhdGV4aXQNCj4gfCAgICAgfCAgMC4wMDA2OTggfCAgICAgICAgICAgfCAgICAgICAgICAgICAg
+fCBjb2RlOjANCj4gPiAxOToxMjo1OC4wMTkzODYgcnVuLWNvbW1hbmQuYzo5OTUgICAgICAgICAg
+ICB8IGQwIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgY2hpbGRfZXhpdA0KPiB8ICAgICB8
+ICAyLjA4ODUwNyB8ICAwLjAwMzkxNyB8ICAgICAgICAgICAgICB8IFtjaDFdIHBpZDo4MTg3OCBj
+b2RlOjANCj4gPiAxOToxMjo1OC4wMTk0MTEgZ2l0LmM6NzE0ICAgICAgICAgICAgICAgICAgICB8
+IGQwIHwgbWFpbiAgICAgICAgICAgICAgICAgICAgIHwgZXhpdCAgICAgICAgIHwgICAgIHwNCj4g
+Mi4wODg1MzggfCAgICAgICAgICAgfCAgICAgICAgICAgICAgfCBjb2RlOjANCj4gPiAxOToxMjo1
+OC4wMTk0MTkgdHJhY2UyL3RyMl90Z3RfcGVyZi5jOjIxMyAgICB8IGQwIHwgbWFpbiAgICAgICAg
+ICAgICAgICAgICAgIHwgYXRleGl0DQo+IHwgICAgIHwgIDIuMDg4NTQ1IHwgICAgICAgICAgIHwg
+ICAgICAgICAgICAgIHwgY29kZTowDQo+DQo+IEZyb20gYWJvdmUsIEkgc2VlIHRoYXQgdGhlIGhv
+dCBwYXRocyBhcmUgYGdpdCBtYWludGVuYW5jZSBydW5gIGFuZCBgZ2l0IHJldi0NCj4gbGlzdGAs
+IHJpZ2h0Pw0KPg0KPiBOZXh0IHRpbWUsIHRyeSB0byBzZW5kIG9ubHkgcGxhaW4tdGV4dCBlbWFp
+bCBpbiB0aGlzIE1MLCBhcyB2Z2VyIGlzbid0IGhhcHB5DQo+IHdpdGggSFRNTCBlbWFpbHMgKG1v
+c3QgbGlrZWx5IHNwYW0pLg0KPg0KPiBUaGFua3MuDQo+DQo+IC0tDQo+IEFuIG9sZCBtYW4gZG9s
+bC4uLiBqdXN0IHdoYXQgSSBhbHdheXMgd2FudGVkISAtIENsYXJhDQoNCkkgZG8gc2VuZCB0aGUg
+ZW1haWwgd2l0aCBvdXRsb29rIGFuZCBjaG9vc2UgdGhlIHBsYWludGV4dCBtb2RlLiBEbyB5b3Ug
+c3RpbGwgc2VlIG15IG1haWwgYXMgSFRNTD8NCg0KQlRXLCBJIGRpZG4ndCBzZWUgYW55IHBlcmZv
+cm1hbmNlIGlzc3VlIG9uIG1haW50ZW5hbmNlLCBidXQgb25seSBvbiBnaXQgcmV2LWxpc3QNCiMv
+KioqKioq5pys6YKu5Lu25Y+K5YW26ZmE5Lu25ZCr5pyJ5bCP57Gz5YWs5Y+455qE5L+d5a+G5L+h
+5oGv77yM5LuF6ZmQ5LqO5Y+R6YCB57uZ5LiK6Z2i5Zyw5Z2A5Lit5YiX5Ye655qE5Liq5Lq65oiW
+576k57uE44CC56aB5q2i5Lu75L2V5YW25LuW5Lq65Lul5Lu75L2V5b2i5byP5L2/55So77yI5YyF
+5ous5L2G5LiN6ZmQ5LqO5YWo6YOo5oiW6YOo5YiG5Zyw5rOE6Zyy44CB5aSN5Yi244CB5oiW5pWj
+5Y+R77yJ5pys6YKu5Lu25Lit55qE5L+h5oGv44CC5aaC5p6c5oKo6ZSZ5pS25LqG5pys6YKu5Lu2
+77yM6K+35oKo56uL5Y2z55S16K+d5oiW6YKu5Lu26YCa55+l5Y+R5Lu25Lq65bm25Yig6Zmk5pys
+6YKu5Lu277yBIFRoaXMgZS1tYWlsIGFuZCBpdHMgYXR0YWNobWVudHMgY29udGFpbiBjb25maWRl
+bnRpYWwgaW5mb3JtYXRpb24gZnJvbSBYSUFPTUksIHdoaWNoIGlzIGludGVuZGVkIG9ubHkgZm9y
+IHRoZSBwZXJzb24gb3IgZW50aXR5IHdob3NlIGFkZHJlc3MgaXMgbGlzdGVkIGFib3ZlLiBBbnkg
+dXNlIG9mIHRoZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaGVyZWluIGluIGFueSB3YXkgKGluY2x1
+ZGluZywgYnV0IG5vdCBsaW1pdGVkIHRvLCB0b3RhbCBvciBwYXJ0aWFsIGRpc2Nsb3N1cmUsIHJl
+cHJvZHVjdGlvbiwgb3IgZGlzc2VtaW5hdGlvbikgYnkgcGVyc29ucyBvdGhlciB0aGFuIHRoZSBp
+bnRlbmRlZCByZWNpcGllbnQocykgaXMgcHJvaGliaXRlZC4gSWYgeW91IHJlY2VpdmUgdGhpcyBl
+LW1haWwgaW4gZXJyb3IsIHBsZWFzZSBub3RpZnkgdGhlIHNlbmRlciBieSBwaG9uZSBvciBlbWFp
+bCBpbW1lZGlhdGVseSBhbmQgZGVsZXRlIGl0ISoqKioqKi8jDQo=
