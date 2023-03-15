@@ -2,87 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1572C6FD1D
-	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 17:54:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7B1AC74A5B
+	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 18:02:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232341AbjCORyN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Mar 2023 13:54:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44286 "EHLO
+        id S231481AbjCOSCe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Mar 2023 14:02:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232529AbjCORyK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2023 13:54:10 -0400
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BA4CC17A
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 10:54:05 -0700 (PDT)
-Received: by mail-qt1-x834.google.com with SMTP id s12so17077319qtq.11
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 10:54:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1678902845;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=KUp4QTfi1M0vw4VjbFTWchDytFFYIATT/Fgt8H2BURk=;
-        b=AHkvaSxA/BgPejnmPQPSBIWevoCV0hHuwguKg1z1LBSlTt3mkoIsBnBDHNJJIZxE0v
-         EfsDvf+yl6EmfAFQK1Zmj1fxttOR3qV5liRODEhfFAZXGj8w/4L5kOPEEu7Ly+UtxxzY
-         Mci7tNICj3HBQ4m24FwgaFeJabrlJRwTGkxbm/cvvrUb93VS5eQoeU3vJWFHpFTcYE3W
-         OCErFNHNQqGQFcwH7Jf9e3TFB7B3Qnrtpj4h+vJ8jqNWpebUkQJ1IEIz0IafqWNFNtxf
-         HE/oBYmc9qKKWHX1Lb6hVyJ1iDfqlcI/EOaPIna4lCH91QikVyDA/pErkWiiHsNS4gX+
-         h5xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678902845;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KUp4QTfi1M0vw4VjbFTWchDytFFYIATT/Fgt8H2BURk=;
-        b=2R1NRdXMnTrAOJN4WiN505qepuyGdG9aS2zL1j+2Mn45McAznAhdYtGXSEr+SaHmJs
-         1DjUO6RcHdyD+5JQnROZ7ExcOsIIR8Qhj8P26VxXJPplmrjQ+XY/67MKo6nOrjYg5Rni
-         5h4LZ38Pro6hOTYmnbSZ7yuenXZPkdpTlb/BGBAXDp0Z+NGviKklwizEeMsg0CAra3cb
-         VJ83C9RLds8t9mpftnzq00CbU9jqvaPOoMtgUlKs/yZ1L2MCrO1PdmnJ6/ypa0iFVly4
-         CSPpj9d+TF6wiDM1spxAOp1cFxLjnCQgb1hP/hMB9sMaIxGv330IVJxsgFGu6sazbPfq
-         ROhA==
-X-Gm-Message-State: AO0yUKWO8JdFiPjX1jKXAjC9rGiwIGTK+badhrnJN4KZ7o6Q2pE/o5Zt
-        EZPUYc6UYvmK66NgTExniu66
-X-Google-Smtp-Source: AK7set8x99R5Ny/0Mjx21MEfcL72zvNIUt/FE07CaaWgrN2Q+/Mji/8GThTa3gBYzqFhNEe9a+1tkg==
-X-Received: by 2002:ac8:7c53:0:b0:3c0:3b08:2d80 with SMTP id o19-20020ac87c53000000b003c03b082d80mr1123583qtv.63.1678902844798;
-        Wed, 15 Mar 2023 10:54:04 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:b4dd:42a2:285c:8312? ([2600:1700:e72:80a0:b4dd:42a2:285c:8312])
-        by smtp.gmail.com with ESMTPSA id u23-20020ac87517000000b003bfb820f17csm4122416qtq.63.2023.03.15.10.54.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Mar 2023 10:54:04 -0700 (PDT)
-Message-ID: <3e5e654f-f623-0fc8-7f68-11a2aabbf78a@github.com>
-Date:   Wed, 15 Mar 2023 13:54:03 -0400
+        with ESMTP id S229854AbjCOSCa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2023 14:02:30 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AEA281CEF
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 11:02:20 -0700 (PDT)
+Received: (qmail 18772 invoked by uid 109); 15 Mar 2023 18:02:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Mar 2023 18:02:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2833 invoked by uid 111); 15 Mar 2023 18:02:19 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Mar 2023 14:02:19 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 15 Mar 2023 14:02:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Sebastian Gniazdowski <sgniazdowski@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: A nice, beauty progress metter for Git Clone + a feature request
+Message-ID: <ZBIIKqAIF+aF8vvx@coredump.intra.peff.net>
+References: <CAKc7PVD_65vB5+meeO3xcu4ASbqr85LBGUO8Ntb7SvbO+NNHmQ@mail.gmail.com>
+ <CAKc7PVA14_mjZeuED1Ee0Mu5YoCSrR4FNNhSEKFHmnKnc-gESQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: Join us for Review Club!
-To:     Calvin Wan <calvinwan@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CAFySSZAYmtT8gMTVunn-6RMYzYeDE=CQ5fjSL75xYYROwOhqbw@mail.gmail.com>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CAFySSZAYmtT8gMTVunn-6RMYzYeDE=CQ5fjSL75xYYROwOhqbw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAKc7PVA14_mjZeuED1Ee0Mu5YoCSrR4FNNhSEKFHmnKnc-gESQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/13/2023 7:23 PM, Calvin Wan wrote:
-> Hi everyone!
+On Fri, Mar 10, 2023 at 11:37:49AM +0000, Sebastian Gniazdowski wrote:
+
+> Check out: https://asciinema.org/a/566216
 > 
-> Review Club is happening this Wednesday at 14:00 Pacific time (UTC-8).
-> You can find more info at [1] and on gitcal [2]. We run a session every
-> other week, and you can find the full schedule on gitcal.
+> Feature request is: add a pipe={cmd} option to git, that would just
+> pass through the git clone --progress output into {cmd}. This is
+> EXTREMELY EASY TO DO SO, ONLY
 > 
-> This week, we'll be discussing Derek Stolee's new filter for `git
-> for-each-ref` [3]. Let me know if you're interested and would
-> like to join (off-list is fine), and I'll send you an invite :)
+> FILE *pipe=popen(cmd_option_str, "w") ;
+> 
+> is needed, and one can then write to `pipe` file handler.
 
-I just submitted a v3 [4], hopefully not _too_ soon before the meeting.
+I think it would be neat to have options for prettier progress output.
+Unfortunately, it's not quite that easy.
 
-I've arranged to be able to attend, so please send me an invite.
+Imagine we had a config option, progress.command or something, which
+specified a shell command to which we'd pipe machine-readable progress,
+and it would turn it into something pretty. There are two gotchas I can
+think of immediately:
 
-Thanks,
--Stolee
+  1. Progress is often created by multiple processes. For example, in a
+     clone, you might see progress output from index-pack as it receives
+     the pack and resolves the delta. But then you might also see
+     progress during the checkout phase, as we write out the worktree
+     files.
 
-[4] https://lore.kernel.org/git/pull.1489.v3.git.1678902343.gitgitgadget@gmail.com/
+     One solution is to say that each progress command is independent,
+     and we'd simply run it twice, once for each context. That's easy to
+     do, but restricts some fancier options that a command could do.
+
+     Another is for the parent clone command to kick off a progress
+     process, and then tell child processes (perhaps through the
+     environment) which descriptor they can use to talk to the progress
+     command.
+
+  2. Sometimes progress is shoved through a single descriptor along with
+     other human-readable messages. I'm thinking specifically of the
+     output you get from a clone/fetch _before_ we start receiving pack
+     bytes from the server. There the server is giving progress on
+     preparing the fetch. It comes over a sideband channel through Git's
+     protocol, along with any regular stderr messages, and the client
+     side just dumps it all to the local stderr.
+
+     Obviously the remote side is not going to run our custom progress
+     command. But it would be possible to add a protocol extension that
+     says "hey, please send machine-readable progress data over sideband
+     4" or something.
+
+Now, none of that is _strictly_ necessary. We could just dump the same
+human-readable progress to the progress command that we dump to stderr
+now, and it could scrape it for things that look like progress, and pass
+everything else through. But then, you can already do that with:
+
+  git clone --progress ... 2>&1 | my-progress-scraper
+
+(and it looks like the asciinema you showed is probably just a
+syntactically nicer version of that with support from the shell?).
+
+-Peff
