@@ -2,246 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03581C6FD1D
-	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 14:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EC9BC61DA4
+	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 15:15:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233151AbjCOOX7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Mar 2023 10:23:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44322 "EHLO
+        id S232069AbjCOPPh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Mar 2023 11:15:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233045AbjCOOXx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2023 10:23:53 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC8AB9475D
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 07:23:48 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id cy23so76128832edb.12
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 07:23:48 -0700 (PDT)
+        with ESMTP id S232434AbjCOPPf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2023 11:15:35 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFCFB23678
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 08:15:33 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id l12so9362681wrm.10
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 08:15:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678890227;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
+        d=gmail.com; s=20210112; t=1678893332;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lrzzjIz8GpxjLoWilxQ9x+Sz+MioOOjw+hOyzEurOH4=;
-        b=fGy+ZzvFdW1HjhRGfZIwPJGK3if3sgxAnnriiZXCOfB4viZGilu31gArZGEAP97Rw+
-         XuaKxu3uZFh/UNwft+2d5MeemcKC+38GZQPNjlE97iDQgUlYCrzkLzflzWXcqQ5LAveU
-         aaimgIJq8WvKKU9ZCp/MnIsEwH37Q9T5lNC0L4Y/3+SEMfwcJLQ802qFK8AqWE9Eq5Cm
-         M8crckNaAZOJ9cGpejnR9S/JtcfAViCwe0Qlq4LdFJYhvEv0cvQ3zFueZyXxACDBaoVD
-         gkYSWzDvBV5gMnQe/Vh91cWIfyw/98F/P4bLc9HPciAvlg8fEhVCP0V95U+GuGrBaRoz
-         ZHbg==
+        bh=JZZo22Pxc2/5yEybW3F8IV/bW/fVlhKz+dbys/q3W3U=;
+        b=pJlaLpFd//d1OVL3Lo0rI5njHnQHP627zyVjhWhMXxl2fQXUsIt23zaCCCz3nhi+WL
+         Cd9DU2eywJjbukUwuWvUHuLu90QcuZBEZ6xU8YKQ60Tt31GlAaBwV8SKTCt4Lbq/xH98
+         kJ9439g3870/CHp80P9e0p3KRSyhHKZLzS/vNxc2OimEIVbdZh+jd+xYBTxCbCCN9C0C
+         E8ev9216N/WO0/15YpofwvCT5jBDsjuoIqRF7YLs4L+IepMtDil/+IqvtEAGBgtXbvnG
+         cKR7WNoqAE+tBiB512SG2B1YnmGn5p3SWOqDUUTDpfmt6F9q1hTkRnAJaebYxe9oCkAh
+         ZYyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678890227;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
+        d=1e100.net; s=20210112; t=1678893332;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lrzzjIz8GpxjLoWilxQ9x+Sz+MioOOjw+hOyzEurOH4=;
-        b=wm4obQ/m+OT2U0Ta32hzQMlt32vlyHqnPOCtmg7F5kIeT7ujob1Eb6U2pJ5aiQjpCw
-         Ooqhcm+n3wByFErTfZyXKT3/kr79lrb1/p7cSE1bSE3629iP2xhWkpu2O5s8fY8sogq3
-         5WfhRYq5LRFAbulA/xG4VXhBLwwM6TAHDmj9ZbMu1xvH6NhsTyRzXleHvS2REsg9XO+e
-         6AJZh9mutAvZphQSrk60GXsUbtL62IYVkBfmuiQVmx2C+Cy38PdJisP27jrfyk6/NOPP
-         Qa/KBvG5FsvrjB1gmMAaoXwviofbOoz9Ez/ZVIBWSwdnq4uQdcSU0gR8wQJDW5l3URxl
-         ExrQ==
-X-Gm-Message-State: AO0yUKULuggV7ow58DMx0Nb6A/LKQTRgjJQn35IgYcq4AyEhOMro7CcA
-        rk2s0I5GZDDEilrtXFm/it4fUxCMRpw=
-X-Google-Smtp-Source: AK7set/YWXX/8K9jSbeYpOYqao5guo7UgdnHuFg23ZvAdH1YGIc4yDoCmrj7z0H5rOruAUG7fbr2Ig==
-X-Received: by 2002:a05:6402:68a:b0:4fd:2aac:d480 with SMTP id f10-20020a056402068a00b004fd2aacd480mr2995618edy.21.1678890227150;
-        Wed, 15 Mar 2023 07:23:47 -0700 (PDT)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id u19-20020a50c053000000b004fc537aec3csm2550230edd.74.2023.03.15.07.23.46
+        bh=JZZo22Pxc2/5yEybW3F8IV/bW/fVlhKz+dbys/q3W3U=;
+        b=ZbFaMLo0jHOLZjWWNfJjVPvjQFgupMkIDc8PSpLKDTEXNz5ayz3mYZuVOn570bSoTb
+         XTUduG7MhvtQc4Zjxb4ax8AIZFom+dSEgyRekLgFnUWwHDUBIDtGPR0LdcfOl7TJmWmR
+         TTCJEiB7YE4ilOSYqa6JoSIk8hJPP4puR36LW35tBUZnXzrCfATRe1B1gcPLfsP/Inlb
+         8Cg6sERdfzTB3MjzaQJcGt8wfynkYldqWpzdmEylig7bZ+Q1BPiSgyQjBuS5QpB4jigX
+         jdK2rWzr9zI0HoXNWgnG0tHztE4MyVkGytprHfbUbFNvoDr023FmSnIChMVQ6st4eFe9
+         E/wQ==
+X-Gm-Message-State: AO0yUKUCbUSQAZ9CNXOJdZt4sudHjo6ydo5HenQAkB1fzWnoal/A7lgQ
+        1HptsgQ1vH7wNlx5C9Mi+Pf0/fUHyYg=
+X-Google-Smtp-Source: AK7set/xr4u/obqs224n1GBQCsvnI+hTfw+qE1hoH072UXlys8xYp+bG8u516BcfeEEO3eR328Jo+g==
+X-Received: by 2002:a5d:494f:0:b0:2ce:aeab:9be with SMTP id r15-20020a5d494f000000b002ceaeab09bemr2179933wrs.69.1678893332333;
+        Wed, 15 Mar 2023 08:15:32 -0700 (PDT)
+Received: from localhost.localdomain ([90.248.23.119])
+        by smtp.gmail.com with ESMTPSA id b10-20020a5d550a000000b002c706c754fesm4783191wrv.32.2023.03.15.08.15.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 07:23:46 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pcS2c-002yRq-0C;
-        Wed, 15 Mar 2023 15:23:46 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        vdye@github.com, Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 8/8] commit-reach: add tips_reachable_from_bases()
-Date:   Wed, 15 Mar 2023 15:13:56 +0100
-References: <pull.1489.git.1678111598.gitgitgadget@gmail.com>
- <pull.1489.v2.git.1678468863.gitgitgadget@gmail.com>
- <f3fb6833bd71d559a3076d9617a235614ad9a5f8.1678468864.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <f3fb6833bd71d559a3076d9617a235614ad9a5f8.1678468864.git.gitgitgadget@gmail.com>
-Message-ID: <230315.864jqmxfd9.gmgdl@evledraar.gmail.com>
+        Wed, 15 Mar 2023 08:15:31 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 0/4] rebase: cleanup merge strategy option handling
+Date:   Wed, 15 Mar 2023 15:14:55 +0000
+Message-Id: <cover.1678893298.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.39.2
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-On Fri, Mar 10 2023, Derrick Stolee via GitGitGadget wrote:
+Cleanup the handling of --strategy-option now that we no longer need
+to support "--preserve-merges" and properly quote the argument when
+saving it to disc.
 
-> From: Derrick Stolee <derrickstolee@github.com>
+These patches are based on a merge of 'master' and
+'ab/fix-strategy-opts-parsing'
 
-> +{
-> +	size_t i;
+Published-As: https://github.com/phillipwood/git/releases/tag/sequencer-merge-strategy-options%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/c2e329a52...3e02eeff7
+Fetch-It-Via: git fetch https://github.com/phillipwood/git sequencer-merge-strategy-options/v1
 
-Ditto the decl suggestion in an earlier commit, i.e...
+Phillip Wood (4):
+  rebase: stop reading and writing unnecessary strategy state
+  rebase -m: cleanup --strategy-option handling
+  rebase -m: fix serialization of strategy options
+  rebase: remove a couple of redundant strategy tests
 
-> +	struct commit_and_index *commits;
-> +	unsigned int min_generation_index = 0;
-> +	timestamp_t min_generation;
-> +	struct commit_list *stack = NULL;
-> +
-> +	if (!bases || !tips || !tips_nr)
-> +		return;
-> +
-> +	/*
-> +	 * Do a depth-first search starting at 'bases' to search for the
-> +	 * tips. Stop at the lowest (un-found) generation number. When
-> +	 * finding the lowest commit, increase the minimum generation
-> +	 * number to the next lowest (un-found) generation number.
-> +	 */
-> +
-> +	CALLOC_ARRAY(commits, tips_nr);
-> +
-> +	for (i = 0; i < tips_nr; i++) {
+ builtin/rebase.c               | 60 +++++++++-----------------------
+ sequencer.c                    | 26 ++++++++++----
+ sequencer.h                    |  1 -
+ t/t3402-rebase-merge.sh        | 21 ------------
+ t/t3418-rebase-continue.sh     | 62 +++++++++++-----------------------
+ t/t3436-rebase-more-options.sh | 18 ----------
+ 6 files changed, 56 insertions(+), 132 deletions(-)
 
-...move this here?
+-- 
+2.39.2
 
-> +		commits[i].commit = tips[i];
-> +		commits[i].index = i;
-> +		commits[i].generation = commit_graph_generation(tips[i]);
-> +	}
-> +
-> +	/* Sort with generation number ascending. */
-> +	QSORT(commits, tips_nr, compare_commit_and_index_by_generation);
-> +	min_generation = commits[0].generation;
-> +
-> +	while (bases) {
-> +		parse_commit(bases->item);
-> +		commit_list_insert(bases->item, &stack);
-> +		bases = bases->next;
-> +	}
-> +
-> +	while (stack) {
-> +		unsigned int j;
-
-...ditto...
-
-> +		int explored_all_parents = 1;
-> +		struct commit_list *p;
-> +		struct commit *c = stack->item;
-> +		timestamp_t c_gen = commit_graph_generation(c);
-> +
-> +		/* Does it match any of our tips? */
-> +		for (j = min_generation_index; j < tips_nr; j++) {
-
-...to here...
-
-> +			if (c_gen < commits[j].generation)
-> +				break;
-> +
-> +			if (commits[j].commit == c) {
-> +				tips[commits[j].index]->object.flags |= mark;
-> +
-> +				if (j == min_generation_index) {
-> +					unsigned int k = j + 1;
-> +					while (k < tips_nr &&
-> +					       (tips[commits[k].index]->object.flags & mark))
-> +						k++;
-> +
-> +					/* Terminate early if all found. */
-> +					if (k >= tips_nr)
-> +						goto done;
-> +
-> +					min_generation_index = k;
-> +					min_generation = commits[k].generation;
-> +				}
-> +			}
-> +		}
-> +
-> +		for (p = c->parents; p; p = p->next) {
-> +			parse_commit(p->item);
-> +
-> +			/* Have we already explored this parent? */
-> +			if (p->item->object.flags & SEEN)
-> +				continue;
-> +
-> +			/* Is it below the current minimum generation? */
-> +			if (commit_graph_generation(p->item) < min_generation)
-> +				continue;
-> +
-> +			/* Ok, we will explore from here on. */
-> +			p->item->object.flags |= SEEN;
-> +			explored_all_parents = 0;
-> +			commit_list_insert(p->item, &stack);
-> +			break;
-> +		}
-> +
-> +		if (explored_all_parents)
-> +			pop_commit(&stack);
-> +	}
-> +
-> +done:
-> +	free(commits);
-> +	repo_clear_commit_marks(the_repository, SEEN);
-
-I didn't see this in my earlier suggestion for passing "struct
-repository", but I think we should do the same here, i.e. have this
-function take a "r" argument.
-
-> [...]
-> @@ -2390,33 +2390,21 @@ static void reach_filter(struct ref_array *array,
->  			 struct commit_list *check_reachable,
->  			 int include_reached)
->  {
-> -	struct rev_info revs;
->  	int i, old_nr;
->  	struct commit **to_clear;
-> -	struct commit_list *cr;
->  
->  	if (!check_reachable)
->  		return;
->  
->  	CALLOC_ARRAY(to_clear, array->nr);
-> -
-> -	repo_init_revisions(the_repository, &revs, NULL);
-> -
->  	for (i = 0; i < array->nr; i++) {
->  		struct ref_array_item *item = array->items[i];
-> -		add_pending_object(&revs, &item->commit->object, item->refname);
->  		to_clear[i] = item->commit;
->  	}
->  
-> -	for (cr = check_reachable; cr; cr = cr->next) {
-> -		struct commit *merge_commit = cr->item;
-> -		merge_commit->object.flags |= UNINTERESTING;
-> -		add_pending_object(&revs, &merge_commit->object, "");
-> -	}
-> -
-> -	revs.limited = 1;
-> -	if (prepare_revision_walk(&revs))
-> -		die(_("revision walk setup failed"));
-> +	tips_reachable_from_bases(check_reachable,
-> +				  to_clear, array->nr,
-> +				  UNINTERESTING);
-
-I.e. it's not ideal, but we had a the_repository in this function before
-(should probably have passed it from further up, but whatever), so we
-could pass that to the new tips_reachable_from_bases() still.
-
-> -test_perf 'ahead-behind counts: git rev-list' '
-> -	for r in $(cat refs)
-> -	do
-> -		git rev-list --count "HEAD..$r" || return 1
-> -	done
-
-Why does this change require deleting the old perf test? Your commit 7/8
-notes this test, but here we're deleting it, let's keep it and instead
-note if the results changed, or stayed the same?
-
-More generally, your commit message says:
-
-> Add extra tests for this behavior in t6600-test-reach.sh as the
-> interesting data shape of that repository can sometimes demonstrate
-> corner case bugs.
-
-And here for a supposed optimization commit you're adding new tests, but
-when I try them with the C code at 7/8 they pass.
-
-So it seems we should add them earlier, and this is a pure-optimization
-commit, but one that's a bit confused about what goes where? :)
