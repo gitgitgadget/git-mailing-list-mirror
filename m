@@ -2,65 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14F55C6FD1D
-	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 20:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44807C6FD1D
+	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 22:19:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231725AbjCOU7L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Mar 2023 16:59:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58266 "EHLO
+        id S232116AbjCOWTL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Mar 2023 18:19:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230212AbjCOU7K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2023 16:59:10 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0024072AD
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 13:59:08 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id om3-20020a17090b3a8300b0023efab0e3bfso3094792pjb.3
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 13:59:08 -0700 (PDT)
+        with ESMTP id S231984AbjCOWTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2023 18:19:00 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B557E051
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 15:18:38 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id nn12so20440930pjb.5
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 15:18:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678913948;
+        d=gmail.com; s=20210112; t=1678918711;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FwVjG+6qLWa+C7bX2+R8srTNNVi9yOj0oFNRmdt5axM=;
-        b=Zc2KwF/28AU3UlJ8NrOlSQa36136EcVc9TcsGsC2/uFaDuO7UxMirsz8mMnDZcvvoh
-         MKQG4ITQaKKgTikdlgfzmEdMEuEoiI/BCqWfl8P5d/tYBAlyX+3hVhTNME9yaw+tDNtZ
-         AgAlHJdWp1xZZ/NHnkqX57bUBQiY6YtG9f/ijebi4pb0MoQ+McQE6wF7T4dtuoAn+6S+
-         XthYhIhMv+i/TQ+6po8InO5xKorxWj34yvbw3R1kwYHEFGLLy2woC9LZp1dYqACDfCvV
-         P7Qalcs/7Tn/fUdW2B1x/OsqyT0xmlcuLK+/uu0qEZyX4hYo1oHdbd1I1KclV8OJB/uf
-         An9w==
+        bh=T1OMKQQn76xT+fEu6Zd7Q+4Zk8Z8n/QXB/2YLd36sko=;
+        b=Gs4QiUy7Wh2vqaQ9gZ2qgAc3xw7FwdXsZ5QTNCc7bfWfUTR1OXBySaQ7YK8sFonQ0L
+         ehKjSnD7MCuH8Q2Y9OWTgJTtXm5DqmTYZKKNG+EYjafgl28oeUOJvNDbXeZrzpTOOtKU
+         NfBaY1xYIsganM+o6K06BvMc65iiouO85TJSwlSLlXvrCK3d7Q+wcKzU13xsfVt8WLkk
+         VW6Wxbax3Yh0rZ0TcmkUBdlhueG2VrCs55SILoRcAw6JXAVh3SOurrOSrfhp1+6qYCuk
+         sX106nV0hXrex/iHu8jgQCTiyi1OrnYoPyg5PLvAnvXwvEL912f0YmzLrefeVy+PD2IG
+         aoFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678913948;
+        d=1e100.net; s=20210112; t=1678918711;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=FwVjG+6qLWa+C7bX2+R8srTNNVi9yOj0oFNRmdt5axM=;
-        b=NzrCq5g84aRRl6Av15jAs+6aDSWcZYNGo+DH5eKODyLa7uGYJI8jlvRPEK+njuM8wY
-         uFqlZmAmYHCBthYzqhEWTA5GedYS+VC5JVq8X7poocpwS11QNYojyswXcqszCBajdub4
-         1GbQdEPnXNNDH/7wr3Y73h1S0h+cF9J6kgp8ll79a7S90zGwXSMoSn/MfqLozZ5M+2s7
-         B8THmJg1KjuhBqfY9XJ8YC8BSJSPnQrjhjcqzp6a+zgo18AKpnQ9OUUz0oJLVYs3HEy+
-         MYiaa3Q89lijSr2R+4Akl2yJmdwc448p9iL0bjZhrhvAB+f/cNA+6wwwPEbBQxO0vPgn
-         l3+A==
-X-Gm-Message-State: AO0yUKXL91nAUOMgbxCe3TvEDcphtVyVejVZaQ3aSnMf0VLGR5ziyRcs
-        ETfRT3hctg3UXZ+TQvi78KA=
-X-Google-Smtp-Source: AK7set8ti5Z+Aq8279f2EyLXZXvYKyzMM4jdNsWjuCa/qo/6p0xQYWavN6xlbGF2iFsKGf7j9I+SGA==
-X-Received: by 2002:a17:902:f90f:b0:19f:1c64:c9d8 with SMTP id kw15-20020a170902f90f00b0019f1c64c9d8mr684368plb.14.1678913948362;
-        Wed, 15 Mar 2023 13:59:08 -0700 (PDT)
+        bh=T1OMKQQn76xT+fEu6Zd7Q+4Zk8Z8n/QXB/2YLd36sko=;
+        b=kb5weqHM0OK66SIL+o0UjU4oCFlc9s2ZYzKw2d3LvFl2uepy1EhymtZynwV7uGGay4
+         IuBl19Ktm30AdTgpF51MhjUE0PVSrKX6jmJpXwJBvihCvLssYuoy9x4/KVA2Spw5WcT/
+         Lcnd8GQmSw+Mfk7+PLV6njelbHf8GgOmNmHa6xqWuUuulSy1lAqK4du4LYiLxvvKxjBB
+         O806/7ZpbOlfDYO9GUE78i4KbI+nMHJLI7HOyxQEkgsvyvZXK5NTeH6bC0sGVdyzj2db
+         g/1VkAoZheXMGRZCfi2ue7cTT6R0vu85gPPTwKBk4aUwoDnbBkVafuM0CKfOJ1NIWrkn
+         Lxrg==
+X-Gm-Message-State: AO0yUKXIQC9oN7k86cLd9VMMaSU4DQO2cJ/gsV4gUAoCDq/s/JHxyepF
+        J3FQCtsZFganLAtRZ/W6P4J/XEAwaXM=
+X-Google-Smtp-Source: AK7set98Epvq7vZ08yVZGUEZd59fCn0hM3EJorWLl1lhmBOdgnRQkkzAJOW9qrWZGevsTwHqvZRkhg==
+X-Received: by 2002:a17:90b:4b10:b0:237:373e:9dfa with SMTP id lx16-20020a17090b4b1000b00237373e9dfamr1378528pjb.20.1678918710888;
+        Wed, 15 Mar 2023 15:18:30 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id b11-20020a170902ed0b00b0019e81c8fd01sm4041278pld.249.2023.03.15.13.59.07
+        by smtp.gmail.com with ESMTPSA id o10-20020a17090a678a00b00230b8402760sm1840334pjj.38.2023.03.15.15.18.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 13:59:07 -0700 (PDT)
+        Wed, 15 Mar 2023 15:18:30 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/8] fetch: move reference width calculation into
- `display_state`
+Subject: Re: [PATCH 4/8] fetch: pass the full local reference name to
+ `format_display`
 References: <cover.1678878623.git.ps@pks.im>
-        <aa792b12a468263d05e8615d4b3691ed8fe823ff.1678878623.git.ps@pks.im>
-Date:   Wed, 15 Mar 2023 13:59:07 -0700
-In-Reply-To: <aa792b12a468263d05e8615d4b3691ed8fe823ff.1678878623.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Wed, 15 Mar 2023 12:21:09 +0100")
-Message-ID: <xmqqedppohno.fsf@gitster.g>
+        <0998173b57e8d7aea7a77673fa8e54dc54538a9b.1678878623.git.ps@pks.im>
+Date:   Wed, 15 Mar 2023 15:18:29 -0700
+In-Reply-To: <0998173b57e8d7aea7a77673fa8e54dc54538a9b.1678878623.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Wed, 15 Mar 2023 12:21:19 +0100")
+Message-ID: <xmqqa60dodze.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,24 +70,18 @@ X-Mailing-List: git@vger.kernel.org
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> In order to print references in proper columns we need to calculate the
-> width of the reference column before starting to print the references.
-> This is done with the help of a global variable `refcol_width`.
->
-> Refactor the code to instead use a new structure `display_state` that
-> contains the computed width and plumb it through the stack as required.
-> This is only the first step towards de-globalizing the state required to
-> print references.
+> Before printing the name of the local references that would be updated
+> by a fetch we first prettify the reference name. This is done at the
+> calling side so that `format_display()` never sees the full name of the
+> local reference. This restricts our ability to introduce new output
+> formats that might want to print the full reference name.
 
-Nice.
+As long as the prettify at the caller is *not* done to avoid doing
+the same prettifying multiple times, this change makes perfect
+sense.
 
-Given that in the previous step, what used to be called display got
-renamed to display_buffer (I think "buffer" ought to be sufficient
-in this context, though), the variable of "struct display_state"
-type should NOT be named "display", as it would be confusing when
-two things are related to "display" and only one of them is called
-as such.  Either "display_state" or "state" would be fine.
+> So let's refactor the
+> code to pass in the full local reference name and then prettify it in
+> the formatting code.
 
-Thanks.
-
-
+Good thinking.
