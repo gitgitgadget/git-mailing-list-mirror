@@ -2,76 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D41B1C7618A
-	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 11:24:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80453C6FD1D
+	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 11:25:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231300AbjCOLY5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Mar 2023 07:24:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45878 "EHLO
+        id S231416AbjCOLZB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Mar 2023 07:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231867AbjCOLY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231493AbjCOLY0 (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 15 Mar 2023 07:24:26 -0400
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B7D87B118
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1DB7B121
         for <git@vger.kernel.org>; Wed, 15 Mar 2023 04:23:33 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id E32C25C0186
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 07:21:31 -0400 (EDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id F204E5C00AD
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 07:21:38 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 15 Mar 2023 07:21:31 -0400
+  by compute5.internal (MEProxy); Wed, 15 Mar 2023 07:21:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1678879291; x=1678965691; bh=XP
-        vnAiaF3R4NYUpa7Ccck9twChDfyqLEWUbsRQo9Onk=; b=JH7CCqt2sff1PriRp0
-        ytN9DZ3SEZBbBTkpi013ZKJlLdcnNc9NjMeS2d64BCWBJG0R6QfMGuUayTZlZYsx
-        GnG/RuSTAC7tU3c9kwjtehmKnwhLa7ySWF+ZVjDzeye+o3Y2+Bhig4o7UOZ0DtVf
-        NABwcu+hQP9H4ZFFpFPNmDk6Zxsr6ko+RlQaScJRqxN4Vtzl3s+kpf230bqxYT+k
-        cTFHDE9MSSzlJbcJ1zLa7iZbnYh9492aYpHeIgNI2vz+EWVeIvaEPArMe0/VpVzZ
-        WwDYa2JFcbjtJ9P2ogZhkf/k8aPzHO8hF+sicigkfS7wCQsf1nqEC4xaE7DIHYyL
-        eHjQ==
+        :subject:subject:to:to; s=fm2; t=1678879298; x=1678965698; bh=Tk
+        QXTX4CoCCv1laJoxPvaMwE6l5S3WUf2QheEKMVHw4=; b=0FlB9qiNhCQqQp8oYz
+        5zw87pJBK98sUCR0JRFl+DxJlpMTs9smar/wTk8JZkr5saegjoKMj9F1Dl1l7RgZ
+        MMOeutHFzc6RnHPqqPwoFcwN/BuzyaNU6RGFR9EWJU1cG9gID0hsVa46V3wnXAYt
+        gBw6tRIxGF3uUtt+cp9D+mSNLbhbBKDJl5gcEsQYgfSCPqTX3sobavq9zBXo3DF+
+        sNgZaIqKceouDx4lq1lT6H6UenBJ6xJgbNQVD06KqwhNGIuo9UsEze09fHlr+8ry
+        RL6jpd5Una8GGfPc3rjElOs1k2gcFRwPZq7d/tZUkgjrUhTI1a0gdexnuyf6xXpq
+        9ddg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1678879291; x=1678965691; bh=XPvnAiaF3R4NY
-        Upa7Ccck9twChDfyqLEWUbsRQo9Onk=; b=DvnfwKAKcqvaUyP6B+3raVnntMn+X
-        kz0VbvNC+XqLDSb19P3ykJIj1quMazuL5whKqQPosqvDhHqldOlEu0rk8My5xaiH
-        p7/gQQl4EbeADDB0A8K5TngLNkPOK8X2YXfvnGjzInYntEe3jgvlHCFhYG0iOD6f
-        On/8ZvPb2g6xtR62lv1s5N4QPQSM+Kyy4anIbqeNi1Vl9ifrfmDUYWA28kGjCrgy
-        aa1vi3lTARAAS+M/QM3oR1v7BvHWw/ReE0NNk3/l/rvBtZsAfPRN48S5jCfvLRwr
-        TV5S3ntTFjUzy1Yhtnb8aHTOSE8XLEuGei9Y0TIT3uyKTt2ok5+oraHrQ==
-X-ME-Sender: <xms:O6oRZKgxP2Gt1oB-SSs70rL7rwlxCbtardWOZpXTPkL1ODK24aYbAA>
-    <xme:O6oRZLAwW-2t2f5Cqzzvlom0ea4Oogj5OHWz0jIIxjxd5FR0oMn7H1aIrZqGxzGhK
-    1TlaUl8SV4DUGMYow>
-X-ME-Received: <xmr:O6oRZCEzMnce2GfAHINtSJCizO-4-G2gUrwZY2jQvHcxgtLWuLC3yVZiu8USlg0BRo9Az0Op3HqQXTL0DW0OJg64Za-w6i5cu8tuRMRwF9A>
+        :x-sasl-enc; s=fm2; t=1678879298; x=1678965698; bh=TkQXTX4CoCCv1
+        laJoxPvaMwE6l5S3WUf2QheEKMVHw4=; b=rfTw5BJyWjCmUPvuZvZO2UGpD+fMb
+        f8n1J2iwW66qVa3/Stvv2wlSBpygC1pIlCZ9/Djjm7J7HWVTfL8LXywQf2ij7gb1
+        11RFCwaZr5kubQp+spUn+ejgakMf3pWKkJCJcD6O6acorNl0Wwv3/6R9osEQHpOO
+        XuaSGgkrF6aUS5AAA7RaJ+RxQoM/1T20/gHtR5em4AwVP8697WGFhA4Uil4+62MO
+        tILiiCLSn9t+Namku6Beviq/PYZX0DH4Q+7YNYILnpYMIiR2DHFDavkBTDOBGOQm
+        J0SkJMv3Xv9g/wzlydGQzVQFTD/NpPgVD83m89poy1jgVYKTT000w30sg==
+X-ME-Sender: <xms:QqoRZPE12MGktraxc6fyySJW0XHSMRneo8C-RWNVuoqQFdZ4fWrG_A>
+    <xme:QqoRZMWZp8ldJbjs3Kr1f6eHI8uUZ64T_cRR_miInV3iNZN1upsDXo7UShqZDtfnK
+    Ghkat8QgOp42Hnoig>
+X-ME-Received: <xmr:QqoRZBLPf__z-6L4qkUXvolqwGKd1Th2-ZsAlyv-7iUGtIYal5b0GBHmcsAzxOBNed86qmItardjj0IyLseZtulJfAS4gIw9Fs9FJXmdlJU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvddvkedgvdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepfeenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:O6oRZDTXnt9NXz4yxssirpCwQf2qN-pagWu_wkMVxLgmAhbJjhM2aA>
-    <xmx:O6oRZHwdLqTNbR_IGwDt3XnWeS15HtXxEjc1lfEtImlPjx9Sphq9mw>
-    <xmx:O6oRZB6SVo31vrejWJ_OsHCdSkDjOa7VlwnL2vvpyGXYzM9Ha8c9Dw>
-    <xmx:O6oRZIvJMgV4WNeJw1RQB0b_xS8NvPOsymsdbrqe5B2VnFocg-egLw>
+X-ME-Proxy: <xmx:QqoRZNHC8GJo0aYnDlOcMduJ6FAQuWyYo7Oe53oc1Ephp62yLXpoiQ>
+    <xmx:QqoRZFV9eoLNKE-7TTaQpKOOuZZa46XA4I_J9wi8EE39alZWVEylNQ>
+    <xmx:QqoRZINXBFwpElzyaMqfKYQB6FyIUEZprTcU9pG5fvqwhZRu3tx2VQ>
+    <xmx:QqoRZEBgWRsfv4o-oZEffslsXIA1sQI7A1sUhUf5GL4TOUa5E6fYPw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 15 Mar 2023 07:21:31 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id bc9f9d2c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ <git@vger.kernel.org>; Wed, 15 Mar 2023 07:21:38 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 1109bc82 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
         for <git@vger.kernel.org>;
-        Wed, 15 Mar 2023 11:21:08 +0000 (UTC)
-Date:   Wed, 15 Mar 2023 12:21:28 +0100
+        Wed, 15 Mar 2023 11:21:15 +0000 (UTC)
+Date:   Wed, 15 Mar 2023 12:21:36 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Subject: [PATCH 6/8] fetch: deduplicate logic to print remote URL
-Message-ID: <2ea3a4e308d2fb89f24d0cd2efc9d3867983a4b0.1678878623.git.ps@pks.im>
+Subject: [PATCH 8/8] fetch: centralize printing of reference updates
+Message-ID: <966730171106703cc378351f16f8b47d3ecb5a2c.1678878623.git.ps@pks.im>
 References: <cover.1678878623.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ORZj1oPH6BsxhAnE"
+        protocol="application/pgp-signature"; boundary="EV4LXTDrmjnwx12V"
 Content-Disposition: inline
 In-Reply-To: <cover.1678878623.git.ps@pks.im>
 Precedence: bulk
@@ -79,327 +79,315 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---ORZj1oPH6BsxhAnE
+--EV4LXTDrmjnwx12V
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When fetching from a remote, we not only print the actual references
-that have changed, but will also print the URL from which we have
-fetched them to standard output. The logic to handle this is duplicated
-across two different callsites with some non-trivial logic to compute
-the anonymized URL. Furthermore, we're using global state to track
-whether we have already shown the URL to the user or not.
+In order to print updated references during a fetch, the two different
+call sites that do this will first call `format_display()` followed by a
+call to `fputs()`. This is needlessly roundabout now that we have the
+`display_state` structure that encapsulates all of the printing logic
+for references.
 
-Refactor the code by moving it into `format_display()`. Like this, we
-can convert the global variable into a member of `display_state`. And
-second, we can deduplicate the logic to compute the anonymized URL.
+Move displaying the reference updates into `format_display()` and rename
+it to `display_ref_update()` to better match its new purpose. We have
+now centralized the logic to print reference updates into a single
+function, which enables us to more readily introduce new formats that
+may even be printing to a different file descriptor than `stderr`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fetch.c | 96 +++++++++++++++++++++----------------------------
- 1 file changed, 41 insertions(+), 55 deletions(-)
+ builtin/fetch.c | 105 ++++++++++++++++++++++++------------------------
+ 1 file changed, 52 insertions(+), 53 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 6fc2fd0d46..4e18c3902d 100644
+index 31724e9aaf..6e864f8457 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -50,6 +50,9 @@ enum {
- struct display_state {
- 	int refcol_width;
- 	int compact_format;
-+
-+	char *url;
-+	int url_len, shown_url;
+@@ -48,6 +48,8 @@ enum {
  };
 =20
- static int fetch_prune_config =3D -1; /* unspecified */
-@@ -84,7 +87,6 @@ static const char *submodule_prefix =3D "";
- static int recurse_submodules =3D RECURSE_SUBMODULES_DEFAULT;
- static int recurse_submodules_cli =3D RECURSE_SUBMODULES_DEFAULT;
- static int recurse_submodules_default =3D RECURSE_SUBMODULES_ON_DEMAND;
--static int shown_url =3D 0;
- static struct refspec refmap =3D REFSPEC_INIT_FETCH;
- static struct list_objects_filter_options filter_options =3D LIST_OBJECTS_=
-FILTER_INIT;
- static struct string_list server_options =3D STRING_LIST_INIT_DUP;
-@@ -776,13 +778,27 @@ static int refcol_width(const struct ref *ref, int co=
-mpact_format)
- 	return rlen;
- }
-=20
--static void display_state_init(struct display_state *display, struct ref *=
-ref_map)
-+static void display_state_init(struct display_state *display, struct ref *=
-ref_map,
-+			       const char *raw_url)
- {
- 	struct ref *rm;
- 	const char *format =3D "full";
-+	int i;
+ struct display_state {
++	struct strbuf buf;
++
+ 	int refcol_width;
+ 	int summary_width;
+ 	int compact_format;
+@@ -788,6 +790,8 @@ static void display_state_init(struct display_state *di=
+splay, struct ref *ref_ma
 =20
  	memset(display, 0, sizeof(*display));
 =20
-+	if (raw_url)
-+		display->url =3D transport_anonymize_url(raw_url);
-+	else
-+		display->url =3D xstrdup("foreign");
++	strbuf_init(&display->buf, 0);
 +
-+	display->url_len =3D strlen(display->url);
-+	for (i =3D display->url_len - 1; display->url[i] =3D=3D '/' && 0 <=3D i; =
-i--)
-+		;
-+	display->url_len =3D i + 1;
-+	if (4 < i && !strncmp(".git", display->url + i - 3, 4))
-+		display->url_len =3D i - 3;
-+
- 	if (verbosity < 0)
- 		return;
+ 	if (raw_url)
+ 		display->url =3D transport_anonymize_url(raw_url);
+ 	else
+@@ -837,14 +841,14 @@ static void display_state_init(struct display_state *=
+display, struct ref *ref_ma
 =20
-@@ -816,6 +832,11 @@ static void display_state_init(struct display_state *d=
-isplay, struct ref *ref_ma
- 	}
+ static void display_state_release(struct display_state *display)
+ {
++	strbuf_release(&display->buf);
+ 	free(display->url);
  }
 =20
-+static void display_state_release(struct display_state *display)
-+{
-+	free(display->url);
-+}
-+
  static void print_remote_to_local(struct display_state *display,
- 				  struct strbuf *display_buffer,
+-				  struct strbuf *display_buffer,
  				  const char *remote, const char *local)
-@@ -883,6 +904,11 @@ static void format_display(struct display_state *displ=
-ay,
+ {
+-	strbuf_addf(display_buffer, "%-*s -> %s", display->refcol_width, remote, =
+local);
++	strbuf_addf(&display->buf, "%-*s -> %s", display->refcol_width, remote, l=
+ocal);
+ }
+=20
+ static int find_and_replace(struct strbuf *haystack,
+@@ -874,14 +878,14 @@ static int find_and_replace(struct strbuf *haystack,
+ 	return 1;
+ }
+=20
+-static void print_compact(struct display_state *display, struct strbuf *di=
+splay_buffer,
++static void print_compact(struct display_state *display,
+ 			  const char *remote, const char *local)
+ {
+ 	struct strbuf r =3D STRBUF_INIT;
+ 	struct strbuf l =3D STRBUF_INIT;
+=20
+ 	if (!strcmp(remote, local)) {
+-		strbuf_addf(display_buffer, "%-*s -> *", display->refcol_width, remote);
++		strbuf_addf(&display->buf, "%-*s -> *", display->refcol_width, remote);
+ 		return;
+ 	}
+=20
+@@ -890,44 +894,46 @@ static void print_compact(struct display_state *displ=
+ay, struct strbuf *display_
+=20
+ 	if (!find_and_replace(&r, local, "*"))
+ 		find_and_replace(&l, remote, "*");
+-	print_remote_to_local(display, display_buffer, r.buf, l.buf);
++	print_remote_to_local(display, r.buf, l.buf);
+=20
+ 	strbuf_release(&r);
+ 	strbuf_release(&l);
+ }
+=20
+-static void format_display(struct display_state *display,
+-			   struct strbuf *display_buffer, char code,
+-			   const char *summary, const char *error,
+-			   const char *remote, const char *local)
++static void display_ref_update(struct display_state *display, char code,
++			       const char *summary, const char *error,
++			       const char *remote, const char *local)
+ {
+ 	int width;
+=20
  	if (verbosity < 0)
  		return;
 =20
-+	if (!display->shown_url) {
-+		strbuf_addf(display_buffer, _("From %.*s\n"), display->url_len, display-=
->url);
-+		display->shown_url =3D 1;
-+	}
++	strbuf_reset(&display->buf);
 +
- 	width =3D (summary_width + strlen(summary) - gettext_width(summary));
-=20
- 	strbuf_addf(display_buffer, " %c %-*s ", code, width, summary);
-@@ -1122,33 +1148,27 @@ N_("it took %.2f seconds to check forced updates; y=
-ou can use\n"
-    "to avoid this check\n");
-=20
- static int store_updated_refs(struct display_state *display,
--			      const char *raw_url, const char *remote_name,
-+			      const char *remote_name,
- 			      int connectivity_checked,
- 			      struct ref_transaction *transaction, struct ref *ref_map,
- 			      struct fetch_head *fetch_head)
- {
--	int url_len, i, rc =3D 0;
-+	int rc =3D 0;
- 	struct strbuf note =3D STRBUF_INIT;
- 	const char *what, *kind;
- 	struct ref *rm;
--	char *url;
- 	int want_status;
- 	int summary_width =3D 0;
-=20
- 	if (verbosity >=3D 0)
- 		summary_width =3D transport_summary_width(ref_map);
-=20
--	if (raw_url)
--		url =3D transport_anonymize_url(raw_url);
--	else
--		url =3D xstrdup("foreign");
--
- 	if (!connectivity_checked) {
- 		struct check_connected_options opt =3D CHECK_CONNECTED_INIT;
-=20
- 		rm =3D ref_map;
- 		if (check_connected(iterate_ref_map, &rm, &opt)) {
--			rc =3D error(_("%s did not send all necessary objects\n"), url);
-+			rc =3D error(_("%s did not send all necessary objects\n"), display->url=
-);
- 			goto abort;
- 		}
- 	}
-@@ -1232,13 +1252,6 @@ static int store_updated_refs(struct display_state *=
-display,
- 				what =3D rm->name;
- 			}
-=20
--			url_len =3D strlen(url);
--			for (i =3D url_len - 1; url[i] =3D=3D '/' && 0 <=3D i; i--)
--				;
--			url_len =3D i + 1;
--			if (4 < i && !strncmp(".git", url + i - 3, 4))
--				url_len =3D i - 3;
--
- 			strbuf_reset(&note);
- 			if (*what) {
- 				if (*kind)
-@@ -1248,7 +1261,7 @@ static int store_updated_refs(struct display_state *d=
-isplay,
-=20
- 			append_fetch_head(fetch_head, &rm->old_oid,
- 					  rm->fetch_head_status,
--					  note.buf, url, url_len);
-+					  note.buf, display->url, display->url_len);
-=20
- 			strbuf_reset(&note);
- 			if (ref) {
-@@ -1266,14 +1279,8 @@ static int store_updated_refs(struct display_state *=
-display,
- 					       *what ? what : "HEAD",
- 					       "FETCH_HEAD", summary_width);
- 			}
--			if (note.len) {
--				if (!shown_url) {
--					fprintf(stderr, _("From %.*s\n"),
--							url_len, url);
--					shown_url =3D 1;
--				}
-+			if (note.len)
- 				fputs(note.buf, stderr);
--			}
- 		}
+ 	if (!display->shown_url) {
+-		strbuf_addf(display_buffer, _("From %.*s\n"), display->url_len, display-=
+>url);
++		strbuf_addf(&display->buf, _("From %.*s\n"), display->url_len, display->=
+url);
+ 		display->shown_url =3D 1;
  	}
 =20
-@@ -1293,7 +1300,6 @@ static int store_updated_refs(struct display_state *d=
-isplay,
+ 	width =3D (display->summary_width + strlen(summary) - gettext_width(summa=
+ry));
 =20
-  abort:
- 	strbuf_release(&note);
--	free(url);
- 	return rc;
+-	strbuf_addf(display_buffer, " %c %-*s ", code, width, summary);
++	strbuf_addf(&display->buf, " %c %-*s ", code, width, summary);
+ 	if (!display->compact_format)
+-		print_remote_to_local(display, display_buffer, remote, prettify_refname(=
+local));
++		print_remote_to_local(display, remote, prettify_refname(local));
+ 	else
+-		print_compact(display, display_buffer, remote, prettify_refname(local));
++		print_compact(display, remote, prettify_refname(local));
+ 	if (error)
+-		strbuf_addf(display_buffer, "  (%s)", error);
+-	strbuf_addch(display_buffer, '\n');
++		strbuf_addf(&display->buf, "  (%s)", error);
++	strbuf_addch(&display->buf, '\n');
++
++	fputs(display->buf.buf, stderr);
  }
 =20
-@@ -1365,7 +1371,7 @@ static int fetch_and_consume_refs(struct display_stat=
-e *display,
+ static int update_local_ref(struct ref *ref,
+ 			    struct ref_transaction *transaction,
+ 			    struct display_state *display,
+-			    const char *remote, const struct ref *remote_ref,
+-			    struct strbuf *display_buffer)
++			    const char *remote, const struct ref *remote_ref)
+ {
+ 	struct commit *current =3D NULL, *updated;
+ 	int fast_forward =3D 0;
+@@ -937,8 +943,8 @@ static int update_local_ref(struct ref *ref,
+=20
+ 	if (oideq(&ref->old_oid, &ref->new_oid)) {
+ 		if (verbosity > 0)
+-			format_display(display, display_buffer, '=3D', _("[up to date]"), NULL,
+-				       remote, ref->name);
++			display_ref_update(display, '=3D', _("[up to date]"), NULL,
++					   remote, ref->name);
+ 		return 0;
  	}
 =20
- 	trace2_region_enter("fetch", "consume_refs", the_repository);
--	ret =3D store_updated_refs(display, transport->url, transport->remote->na=
-me,
-+	ret =3D store_updated_refs(display, transport->remote->name,
- 				 connectivity_checked, transaction, ref_map,
- 				 fetch_head);
- 	trace2_region_leave("fetch", "consume_refs", the_repository);
-@@ -1378,30 +1384,15 @@ static int fetch_and_consume_refs(struct display_st=
-ate *display,
- static int prune_refs(struct display_state *display,
- 		      struct refspec *rs,
- 		      struct ref_transaction *transaction,
--		      struct ref *ref_map,
--		      const char *raw_url)
-+		      struct ref *ref_map)
- {
--	int url_len, i, result =3D 0;
-+	int result =3D 0;
- 	struct ref *ref, *stale_refs =3D get_stale_heads(rs, ref_map);
- 	struct strbuf err =3D STRBUF_INIT;
--	char *url;
- 	const char *dangling_msg =3D dry_run
- 		? _("   (%s will become dangling)")
- 		: _("   (%s has become dangling)");
-=20
--	if (raw_url)
--		url =3D transport_anonymize_url(raw_url);
--	else
--		url =3D xstrdup("foreign");
--
--	url_len =3D strlen(url);
--	for (i =3D url_len - 1; url[i] =3D=3D '/' && 0 <=3D i; i--)
--		;
--
--	url_len =3D i + 1;
--	if (4 < i && !strncmp(".git", url + i - 3, 4))
--		url_len =3D i - 3;
--
- 	if (!dry_run) {
- 		if (transaction) {
- 			for (ref =3D stale_refs; ref; ref =3D ref->next) {
-@@ -1426,10 +1417,6 @@ static int prune_refs(struct display_state *display,
-=20
- 		for (ref =3D stale_refs; ref; ref =3D ref->next) {
- 			struct strbuf sb =3D STRBUF_INIT;
--			if (!shown_url) {
--				fprintf(stderr, _("From %.*s\n"), url_len, url);
--				shown_url =3D 1;
--			}
- 			format_display(display, &sb, '-', _("[deleted]"), NULL,
- 				       _("(none)"), ref->name,
- 				       summary_width);
-@@ -1441,7 +1428,6 @@ static int prune_refs(struct display_state *display,
-=20
- cleanup:
- 	strbuf_release(&err);
--	free(url);
- 	free_refs(stale_refs);
- 	return result;
- }
-@@ -1596,7 +1582,7 @@ static int do_fetch(struct transport *transport,
- {
- 	struct ref_transaction *transaction =3D NULL;
- 	struct ref *ref_map =3D NULL;
--	struct display_state display;
-+	struct display_state display =3D { 0 };
- 	int autotags =3D (transport->remote->fetch_tags =3D=3D 1);
- 	int retcode =3D 0;
- 	const struct ref *remote_refs;
-@@ -1678,7 +1664,7 @@ static int do_fetch(struct transport *transport,
- 	if (retcode)
- 		goto cleanup;
-=20
--	display_state_init(&display, ref_map);
-+	display_state_init(&display, ref_map, transport->url);
-=20
- 	if (atomic_fetch) {
- 		transaction =3D ref_transaction_begin(&err);
-@@ -1697,11 +1683,10 @@ static int do_fetch(struct transport *transport,
- 		 * don't care whether --tags was specified.
+@@ -949,9 +955,9 @@ static int update_local_ref(struct ref *ref,
+ 		 * If this is the head, and it's not okay to update
+ 		 * the head, and the old value of the head isn't empty...
  		 */
- 		if (rs->nr) {
--			retcode =3D prune_refs(&display, rs, transaction, ref_map, transport->u=
-rl);
-+			retcode =3D prune_refs(&display, rs, transaction, ref_map);
- 		} else {
- 			retcode =3D prune_refs(&display, &transport->remote->fetch,
--					     transaction, ref_map,
--					     transport->url);
-+					     transaction, ref_map);
- 		}
- 		if (retcode !=3D 0)
- 			retcode =3D 1;
-@@ -1812,6 +1797,7 @@ static int do_fetch(struct transport *transport,
- 		error("%s", err.buf);
+-		format_display(display, display_buffer, '!', _("[rejected]"),
+-			       _("can't fetch into checked-out branch"),
+-			       remote, ref->name);
++		display_ref_update(display, '!', _("[rejected]"),
++				   _("can't fetch into checked-out branch"),
++				   remote, ref->name);
+ 		return 1;
  	}
 =20
-+	display_state_release(&display);
- 	close_fetch_head(&fetch_head);
- 	strbuf_release(&err);
- 	free_refs(ref_map);
+@@ -960,14 +966,14 @@ static int update_local_ref(struct ref *ref,
+ 		if (force || ref->force) {
+ 			int r;
+ 			r =3D s_update_ref("updating tag", ref, transaction, 0);
+-			format_display(display, display_buffer, r ? '!' : 't', _("[tag update]"=
+),
+-				       r ? _("unable to update local ref") : NULL,
+-				       remote, ref->name);
++			display_ref_update(display, r ? '!' : 't', _("[tag update]"),
++					   r ? _("unable to update local ref") : NULL,
++					   remote, ref->name);
+ 			return r;
+ 		} else {
+-			format_display(display, display_buffer, '!', _("[rejected]"),
+-				       _("would clobber existing tag"),
+-				       remote, ref->name);
++			display_ref_update(display, '!', _("[rejected]"),
++					   _("would clobber existing tag"),
++					   remote, ref->name);
+ 			return 1;
+ 		}
+ 	}
+@@ -998,9 +1004,9 @@ static int update_local_ref(struct ref *ref,
+ 		}
+=20
+ 		r =3D s_update_ref(msg, ref, transaction, 0);
+-		format_display(display, display_buffer, r ? '!' : '*', what,
+-			       r ? _("unable to update local ref") : NULL,
+-			       remote, ref->name);
++		display_ref_update(display, r ? '!' : '*', what,
++				   r ? _("unable to update local ref") : NULL,
++				   remote, ref->name);
+ 		return r;
+ 	}
+=20
+@@ -1020,9 +1026,9 @@ static int update_local_ref(struct ref *ref,
+ 		strbuf_addstr(&quickref, "..");
+ 		strbuf_add_unique_abbrev(&quickref, &ref->new_oid, DEFAULT_ABBREV);
+ 		r =3D s_update_ref("fast-forward", ref, transaction, 1);
+-		format_display(display, display_buffer, r ? '!' : ' ', quickref.buf,
+-			       r ? _("unable to update local ref") : NULL,
+-			       remote, ref->name);
++		display_ref_update(display, r ? '!' : ' ', quickref.buf,
++				   r ? _("unable to update local ref") : NULL,
++				   remote, ref->name);
+ 		strbuf_release(&quickref);
+ 		return r;
+ 	} else if (force || ref->force) {
+@@ -1032,14 +1038,14 @@ static int update_local_ref(struct ref *ref,
+ 		strbuf_addstr(&quickref, "...");
+ 		strbuf_add_unique_abbrev(&quickref, &ref->new_oid, DEFAULT_ABBREV);
+ 		r =3D s_update_ref("forced-update", ref, transaction, 1);
+-		format_display(display, display_buffer, r ? '!' : '+', quickref.buf,
+-			       r ? _("unable to update local ref") : _("forced update"),
+-			       remote, ref->name);
++		display_ref_update(display, r ? '!' : '+', quickref.buf,
++				   r ? _("unable to update local ref") : _("forced update"),
++				   remote, ref->name);
+ 		strbuf_release(&quickref);
+ 		return r;
+ 	} else {
+-		format_display(display, display_buffer, '!', _("[rejected]"), _("non-fas=
+t-forward"),
+-			       remote, ref->name);
++		display_ref_update(display, '!', _("[rejected]"), _("non-fast-forward"),
++				   remote, ref->name);
+ 		return 1;
+ 	}
+ }
+@@ -1261,10 +1267,8 @@ static int store_updated_refs(struct display_state *=
+display,
+ 					  rm->fetch_head_status,
+ 					  note.buf, display->url, display->url_len);
+=20
+-			strbuf_reset(&note);
+ 			if (ref) {
+-				rc |=3D update_local_ref(ref, transaction, display, what,
+-						       rm, &note);
++				rc |=3D update_local_ref(ref, transaction, display, what, rm);
+ 				free(ref);
+ 			} else if (write_fetch_head || dry_run) {
+ 				/*
+@@ -1272,13 +1276,11 @@ static int store_updated_refs(struct display_state =
+*display,
+ 				 * would be written to FETCH_HEAD, if --dry-run
+ 				 * is set).
+ 				 */
+-				format_display(display, &note, '*',
+-					       *kind ? kind : "branch", NULL,
+-					       *what ? what : "HEAD",
+-					       "FETCH_HEAD");
++				display_ref_update(display, '*',
++						   *kind ? kind : "branch", NULL,
++						   *what ? what : "HEAD",
++						   "FETCH_HEAD");
+ 			}
+-			if (note.len)
+-				fputs(note.buf, stderr);
+ 		}
+ 	}
+=20
+@@ -1412,11 +1414,8 @@ static int prune_refs(struct display_state *display,
+=20
+ 	if (verbosity >=3D 0) {
+ 		for (ref =3D stale_refs; ref; ref =3D ref->next) {
+-			struct strbuf sb =3D STRBUF_INIT;
+-			format_display(display, &sb, '-', _("[deleted]"), NULL,
+-				       _("(none)"), ref->name);
+-			fputs(sb.buf, stderr);
+-			strbuf_release(&sb);
++			display_ref_update(display, '-', _("[deleted]"), NULL,
++					   _("(none)"), ref->name);
+ 			warn_dangling_symref(stderr, dangling_msg, ref->name);
+ 		}
+ 	}
 --=20
 2.40.0
 
 
---ORZj1oPH6BsxhAnE
+--EV4LXTDrmjnwx12V
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQRqjcACgkQVbJhu7ck
-PpTp/g/6AlPNqwWOdyZK6+pQa58lXVnOkOfBaOx8NtmjRXCbMRsWctiaYEw8y+7H
-B9eBvKsfp2+EiYoUd9VmW+BfZ/InvYF9lR3xTzgiG2Ix0Ya7Pz/C0hHDSLzsavCX
-GcxRC7cp5Gu3c7NHaTYgUATXg4Y4wp4N+0MBACdFpG7VmbEk/VrYGGb6OWcl+KfD
-2Py2mXFjV9EPhhICnZNwy4ki8x8CR78zz6Kk2Q8RmcQOFNMC24C3f9QJxZ+e/SKR
-7wDwlA7hOl2Mbr4+WmEvp9Orr2rA3mjNVwcdJREeeQmoa0JW60CODgihgdz3uxW7
-3SU8tm6EZ/DC4yRSzCJnoE7grPItcRiOkQLRkhCVB6gn3MlkE2kfVTHAEUvNWhQt
-+tkm0MPO/AE7IQiW4KtEKVMi/pBJ1gHAzciDQB8c6OUp45aufvUn2GtT2i4cPnKh
-tiHxXBpv0gEJkMMm4xGip41wlL9XG46cyFLW9bPrMOUL1DQ8cMgiNUxvgqdztzdF
-tHuVYdObsB22WbEGwHP8f8pKa7LTUTuwdQQsvEzOThyxlsgcKy1epTTz6P9c608g
-bPwNDGUn8qS+aMqNg1aMNY8RZKGGa1SrcTyYmux6QtLWWOd+fagC34+sjPSt4+E2
-CXmtQbY5/34JymZHMnAysPmnUIROIh52kZGwSxwQdRocZQ95p00=
-=xaj5
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQRqj8ACgkQVbJhu7ck
+PpR+NBAAosEdbvF77NCGkY84PWHVaMRxy49+NdDesLrXIJPDYHxF/EQ40ZemMQp6
+O9V8LQwB1BFFviRoir8RSw5FdjfvAhAFkA8e0oxkKt76O1x4q9dIrlxdighO1stA
+Pj9zpHX0V4tltwdjk71txDyzFI4E8FvoMG2vP7dAOcBlfM0dFX+Aha60t8lQccJ1
+/4McCBCl11j5peXf1rUPJ/yBXsn9tvPc+UpFbxLZYuM2Z3NPR10zcYGApdJI6pLF
+M5oETqtfBDH6TJUjG2an3JOhRcFeUUuWc9XckszISuVyaqOa5GJoEg7u2HAEuqMo
+CmDjieWxf28dOFDyKALJ8SJ1qHHE6oYwIj1EdL+fk9hXxM3fMh7oAC7OiPWYC1z/
+jT7Iqbe9pjplbe8RhUONcw20BO04aRLw1JOFy6f+ioyy/mEp+f08IYNlCSW6tW8U
+D+z325X9fNDZGcK2NyiQ+mJD5Hyxo9No+ZG2cy51otg7+h6UrEh4AwNr8bnS2VsS
+JuBZSzFRO4YN6H0ckyOECPVlsNUzkYkZvPtdB+tmRLeOwfwUSrjOGpqPyPR7ykhQ
+QBdZP864KjhGlnPvD1Jj/Xc+73wTNPJ69KTMGlcaX1NhsTtZXdntZkngEtjqHn1e
+L4xQTV6eMGATlBLQOOvpVgFoyWWbHbu9pNXQoOieAR+XlZiIIA4=
+=is8d
 -----END PGP SIGNATURE-----
 
---ORZj1oPH6BsxhAnE--
+--EV4LXTDrmjnwx12V--
