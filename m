@@ -2,162 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAE23C6FD1D
-	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 15:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E065C6FD1D
+	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 16:02:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233050AbjCOPPs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Mar 2023 11:15:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48258 "EHLO
+        id S232895AbjCOQCZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Mar 2023 12:02:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232115AbjCOPPk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2023 11:15:40 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38E10EFAA
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 08:15:37 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id v16so17695804wrn.0
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 08:15:37 -0700 (PDT)
+        with ESMTP id S232808AbjCOQCP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2023 12:02:15 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F52D92BF2
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 09:01:51 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id rj10so8776819pjb.4
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 09:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678893335;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=IbE528xeFF7yNa7gwhVWHzFWnFIZWCT4Se6jK4RPIg4=;
-        b=bXBkowDIEe+QzkPSXpxoLbo7yS+jkRZL7PqZ/8ef/2LuOAg5EWfkqcAeGKCcNPemPi
-         KtuxG3PRKFjZKnFaTwCairJEyE5Q4qhvvUxAYkfbT6e3VRJ6WKcu+H6qPsIZ1aly0wnz
-         RoVyD+PhVrKoSnpc/S1sXNLwXbQob3luEIb+9RzXrWRSt5/OvY9ns7qzLnuBvuBGZBV5
-         mTQ+ioQ7ZVTfosrfrTqg9Ka7pFBMhnw6xf4hL2/6JGvDCcnyTJbWuETq0Ne2caDa9Htc
-         hQV83vrmU/agFVyQQqGQfENSNA8/ta3EuhGRZgjtq9qbGR+Bn50xkVtbjZ2fcsntzhc3
-         gG+w==
+        d=gmail.com; s=20210112; t=1678896110;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jFZZHKtYF85yX9pK+gC2AVwVpqV9WMiIQEPxKE+9r+k=;
+        b=OhVvhUlUwiW9nLsAQXnshShvJ5ynf1ivHPc7oiFClz+woNb87glinDtY/L5ihr2V7R
+         HfAWLCvWvLS6lEEr4HCwPUwpZkaY//dNwF3IFu9VGk6G2KLmUuAD2/F9J/Dabyukr07U
+         YAosGCm1WK6HtPX72s4ILPPpUjAeKzofpk5X0p0mS0QitO5ya+zB3LKqSF0DCD6fudL6
+         HIk3h+bHLBSj897ijqqwfhWiDu2VyhXWE1FhiSkckpJfh13x93vrKxtuZ8fZLhMAX4iB
+         vtI4GDhi6dofWZ64/4iN80vyfuu4qz5DOw1G1g4IsiyrSn0sZ+IOdxZQwPhbCKtirq/H
+         oTkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678893335;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IbE528xeFF7yNa7gwhVWHzFWnFIZWCT4Se6jK4RPIg4=;
-        b=JWZhL4Rko1UeBdQRpvdGODyGvjz2vBayuX5BH+OH7L0yLHhoSMBFGAJSFyBL8drY0C
-         lM8+N3ZVEK7d31uyLzJarQSH9mANbsSzSfj2IyEOHfyWPBNF6z8wCNt4RCj+q+Zwlhr3
-         0WdyTtlHkUT3Tfd9FeWwVZzDF5+KH/26/79aSx67S805EWaLv/Nl1sx6qSYgBJ9KHf3l
-         IMgIsbiBinPNrr6EGZPtSD/UgY6X+uRZdfwAkFAeont1Lf3uSl+vnewucL/CRdsYqsn+
-         HiFqWyNxOup8vqjrniHul+84JXZq6EuuNd8TWlQtgRrvZsPqan6DL4qucUisdahuOGxb
-         wgCQ==
-X-Gm-Message-State: AO0yUKVO0wGMoo6zUWQc9ntTThvZPl+oUFumstHH/ATaOZ7ri/VPpBEe
-        u29ff+90dicMD5xcFgVjMiDH1CbwceU=
-X-Google-Smtp-Source: AK7set97GMz4miq1MIp8BnPKyAC2/0BOfSuj0PmQEK08YNuKVD8w5A7+t0NGipi53VrQAZgTWmON4A==
-X-Received: by 2002:a5d:63c3:0:b0:2cf:e868:f789 with SMTP id c3-20020a5d63c3000000b002cfe868f789mr2139164wrw.48.1678893335709;
-        Wed, 15 Mar 2023 08:15:35 -0700 (PDT)
-Received: from localhost.localdomain ([90.248.23.119])
-        by smtp.gmail.com with ESMTPSA id b10-20020a5d550a000000b002c706c754fesm4783191wrv.32.2023.03.15.08.15.35
+        d=1e100.net; s=20210112; t=1678896110;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jFZZHKtYF85yX9pK+gC2AVwVpqV9WMiIQEPxKE+9r+k=;
+        b=dAoIQ4+K+hHgjcwPuOraoxgsJvC8tbwtomZtN6oRZf5reHhZj048QQndXJ5OkzQCSv
+         BiQHJ2gOhSTdPfSY6WamiY+ozNheCfcUjWikEWLdTXWH8wV0d7jRFs7DB44/He9oiNPe
+         8u/Pu660tB/pvRcZftm/1Da/QxqoYAWBRD6kvVcO2g+AOzPKD3mwYbi0Y3+CYqIoXGAw
+         SV6oKpC8rS8j1YWSzj/Rm7FzGqCopm9FvdwxDn56m8u2FcAOKi7XCR5Tr25ouIDW5o8D
+         zBzWGH1UOSLQ6lSuiZv5QY0Adn//wWEyrfu8h9nwpVJt/oa2KEOhbNnt11tGgT+Lmbau
+         bXdw==
+X-Gm-Message-State: AO0yUKXxTQQZcYAKJ6GbYvP/1vhphOikSvZhadaeNUaDCQDZuoEU5YvW
+        xqh3q0+HCuSHbHwan42zr62jwSO8SuA=
+X-Google-Smtp-Source: AK7set8CnXgqNF5vNnyo+xMPXI83m5B9syAYbdt6HnKx+0ekd/fUHDkBZdKlmko3IwDPMQPqy26prg==
+X-Received: by 2002:a17:902:ec8b:b0:19e:b5d3:170f with SMTP id x11-20020a170902ec8b00b0019eb5d3170fmr146235plg.4.1678896109821;
+        Wed, 15 Mar 2023 09:01:49 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id p9-20020a170902bd0900b0019c13d032d8sm3792309pls.253.2023.03.15.09.01.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 08:15:35 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 4/4] rebase: remove a couple of redundant strategy tests
-Date:   Wed, 15 Mar 2023 15:14:59 +0000
-Message-Id: <3e02eeff78b23711187de47a1a820f9bde683200.1678893298.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <cover.1678893298.git.phillip.wood@dunelm.org.uk>
-References: <cover.1678893298.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        Wed, 15 Mar 2023 09:01:47 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 7/8] for-each-ref: add ahead-behind format atom
+References: <pull.1489.git.1678111598.gitgitgadget@gmail.com>
+        <pull.1489.v2.git.1678468863.gitgitgadget@gmail.com>
+        <82dd6f44a33279551bb638357df4bc82253283e5.1678468864.git.gitgitgadget@gmail.com>
+        <230315.868rfyxfus.gmgdl@evledraar.gmail.com>
+Date:   Wed, 15 Mar 2023 09:01:46 -0700
+In-Reply-To: <230315.868rfyxfus.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 15 Mar 2023 14:57:20 +0100")
+Message-ID: <xmqqh6umovf9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-The test removed in t3402 has been redundant ever since 80ff47957b
-(rebase: remember strategy and strategy options, 2011-02-06) which added
-a new test the first part of which (as noted in the commit message)
-duplicated the existing test. The test removed in t3418 has been
-redundant since the merge backend was removed in 68aa495b59 (rebase:
-implement --merge via the interactive machinery, 2018-12-11) as it now
-tests the same code paths as the preceding test.
+> On Fri, Mar 10 2023, Derrick Stolee via GitGitGadget wrote:
+>
+>> From: Derrick Stolee <derrickstolee@github.com>
+>> [...]
+>> +ahead-behind:<ref>::
+>> +	Two integers, separated by a space, demonstrating the number of
+>> +	commits ahead and behind, respectively, when comparing the output
+>> +	ref to the `<ref>` specified in the format.
+>> +
+>
+> As a potential (expert) user who hasn't read the code yet I'd think the
+> the "<ref>" here would be the same as "update-ref", but glancing ahead
+> at your tests it seems that it does ref matching, so "refs/heads/master"
+> and "master" are both accepted?
+>
+> Since nothing else uses "<ref>" here I think we should clearly define
+> the matching rules somehow, or maybe we do, and I missed it.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- t/t3402-rebase-merge.sh    | 21 ---------------------
- t/t3418-rebase-continue.sh | 32 --------------------------------
- 2 files changed, 53 deletions(-)
+I vaguely recall noticing this in the previous round, but doesn't
+this only require a commit-ish, not even a ref?  It is parsed with
+lookup_commit_reference_by_name().
 
-diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
-index 7e46f4ca85..79b0640c00 100755
---- a/t/t3402-rebase-merge.sh
-+++ b/t/t3402-rebase-merge.sh
-@@ -131,27 +131,6 @@ test_expect_success 'picking rebase' '
- 	esac
- '
- 
--test_expect_success 'rebase -s funny -Xopt' '
--	test_when_finished "rm -fr test-bin funny.was.run" &&
--	mkdir test-bin &&
--	cat >test-bin/git-merge-funny <<-EOF &&
--	#!$SHELL_PATH
--	case "\$1" in --opt) ;; *) exit 2 ;; esac
--	shift &&
--	>funny.was.run &&
--	exec git merge-recursive "\$@"
--	EOF
--	chmod +x test-bin/git-merge-funny &&
--	git reset --hard &&
--	git checkout -b test-funny main^ &&
--	test_commit funny &&
--	(
--		PATH=./test-bin:$PATH &&
--		git rebase -s funny -Xopt main
--	) &&
--	test -f funny.was.run
--'
--
- test_expect_success 'rebase --skip works with two conflicts in a row' '
- 	git checkout second-side  &&
- 	tr "[A-Z]" "[a-z]" <newfile >tmp &&
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index 42c3954125..2d0789e554 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -97,38 +97,6 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
- 	test_cmp expect actual
- '
- 
--test_expect_success 'rebase -i --continue handles merge strategy and options' '
--	rm -fr .git/rebase-* &&
--	git reset --hard commit-new-file-F2-on-topic-branch &&
--	test_commit "commit-new-file-F3-on-topic-branch-for-dash-i" F3 32 &&
--	test_when_finished "rm -fr test-bin funny.was.run funny.args" &&
--	mkdir test-bin &&
--	cat >test-bin/git-merge-funny <<-EOF &&
--	#!$SHELL_PATH
--	echo "\$@" >>funny.args
--	case "\$1" in --opt) ;; *) exit 2 ;; esac
--	case "\$2" in --foo) ;; *) exit 2 ;; esac
--	case "\$4" in --) ;; *) exit 2 ;; esac
--	shift 2 &&
--	>funny.was.run &&
--	exec git merge-recursive "\$@"
--	EOF
--	chmod +x test-bin/git-merge-funny &&
--	(
--		PATH=./test-bin:$PATH &&
--		test_must_fail git rebase -i -s funny -Xopt -Xfoo main topic
--	) &&
--	test -f funny.was.run &&
--	rm funny.was.run &&
--	echo "Resolved" >F2 &&
--	git add F2 &&
--	(
--		PATH=./test-bin:$PATH &&
--		git rebase --continue
--	) &&
--	test -f funny.was.run
--'
--
- test_expect_success 'rebase -r passes merge strategy options correctly' '
- 	rm -fr .git/rebase-* &&
- 	git reset --hard commit-new-file-F3-on-topic-branch &&
--- 
-2.39.2
+
 
