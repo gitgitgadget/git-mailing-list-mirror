@@ -2,101 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BAE3C61DA4
-	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 17:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1572C6FD1D
+	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 17:54:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231983AbjCORta (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Mar 2023 13:49:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36544 "EHLO
+        id S232341AbjCORyN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Mar 2023 13:54:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229546AbjCORt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2023 13:49:28 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 849EE7BA0D
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 10:49:06 -0700 (PDT)
-Received: (qmail 18607 invoked by uid 109); 15 Mar 2023 17:49:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Mar 2023 17:49:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2623 invoked by uid 111); 15 Mar 2023 17:49:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Mar 2023 13:49:05 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 15 Mar 2023 13:49:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
-        vdye@github.com, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 1/8] for-each-ref: add --stdin option
-Message-ID: <ZBIFEXuE5Um9Z4zM@coredump.intra.peff.net>
-References: <pull.1489.git.1678111598.gitgitgadget@gmail.com>
- <pull.1489.v2.git.1678468863.gitgitgadget@gmail.com>
- <a1d9e0f6ff6660c9264673be18bc24956f74eb9c.1678468864.git.gitgitgadget@gmail.com>
+        with ESMTP id S232529AbjCORyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2023 13:54:10 -0400
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BA4CC17A
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 10:54:05 -0700 (PDT)
+Received: by mail-qt1-x834.google.com with SMTP id s12so17077319qtq.11
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 10:54:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1678902845;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=KUp4QTfi1M0vw4VjbFTWchDytFFYIATT/Fgt8H2BURk=;
+        b=AHkvaSxA/BgPejnmPQPSBIWevoCV0hHuwguKg1z1LBSlTt3mkoIsBnBDHNJJIZxE0v
+         EfsDvf+yl6EmfAFQK1Zmj1fxttOR3qV5liRODEhfFAZXGj8w/4L5kOPEEu7Ly+UtxxzY
+         Mci7tNICj3HBQ4m24FwgaFeJabrlJRwTGkxbm/cvvrUb93VS5eQoeU3vJWFHpFTcYE3W
+         OCErFNHNQqGQFcwH7Jf9e3TFB7B3Qnrtpj4h+vJ8jqNWpebUkQJ1IEIz0IafqWNFNtxf
+         HE/oBYmc9qKKWHX1Lb6hVyJ1iDfqlcI/EOaPIna4lCH91QikVyDA/pErkWiiHsNS4gX+
+         h5xQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678902845;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KUp4QTfi1M0vw4VjbFTWchDytFFYIATT/Fgt8H2BURk=;
+        b=2R1NRdXMnTrAOJN4WiN505qepuyGdG9aS2zL1j+2Mn45McAznAhdYtGXSEr+SaHmJs
+         1DjUO6RcHdyD+5JQnROZ7ExcOsIIR8Qhj8P26VxXJPplmrjQ+XY/67MKo6nOrjYg5Rni
+         5h4LZ38Pro6hOTYmnbSZ7yuenXZPkdpTlb/BGBAXDp0Z+NGviKklwizEeMsg0CAra3cb
+         VJ83C9RLds8t9mpftnzq00CbU9jqvaPOoMtgUlKs/yZ1L2MCrO1PdmnJ6/ypa0iFVly4
+         CSPpj9d+TF6wiDM1spxAOp1cFxLjnCQgb1hP/hMB9sMaIxGv330IVJxsgFGu6sazbPfq
+         ROhA==
+X-Gm-Message-State: AO0yUKWO8JdFiPjX1jKXAjC9rGiwIGTK+badhrnJN4KZ7o6Q2pE/o5Zt
+        EZPUYc6UYvmK66NgTExniu66
+X-Google-Smtp-Source: AK7set8x99R5Ny/0Mjx21MEfcL72zvNIUt/FE07CaaWgrN2Q+/Mji/8GThTa3gBYzqFhNEe9a+1tkg==
+X-Received: by 2002:ac8:7c53:0:b0:3c0:3b08:2d80 with SMTP id o19-20020ac87c53000000b003c03b082d80mr1123583qtv.63.1678902844798;
+        Wed, 15 Mar 2023 10:54:04 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:b4dd:42a2:285c:8312? ([2600:1700:e72:80a0:b4dd:42a2:285c:8312])
+        by smtp.gmail.com with ESMTPSA id u23-20020ac87517000000b003bfb820f17csm4122416qtq.63.2023.03.15.10.54.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Mar 2023 10:54:04 -0700 (PDT)
+Message-ID: <3e5e654f-f623-0fc8-7f68-11a2aabbf78a@github.com>
+Date:   Wed, 15 Mar 2023 13:54:03 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a1d9e0f6ff6660c9264673be18bc24956f74eb9c.1678468864.git.gitgitgadget@gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: Join us for Review Club!
+To:     Calvin Wan <calvinwan@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <CAFySSZAYmtT8gMTVunn-6RMYzYeDE=CQ5fjSL75xYYROwOhqbw@mail.gmail.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CAFySSZAYmtT8gMTVunn-6RMYzYeDE=CQ5fjSL75xYYROwOhqbw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 10, 2023 at 05:20:56PM +0000, Derrick Stolee via GitGitGadget wrote:
-
-> When a user wishes to input a large list of patterns to 'git
-> for-each-ref' (likely a long list of exact refs) there are frequently
-> system limits on the number of command-line arguments.
+On 3/13/2023 7:23 PM, Calvin Wan wrote:
+> Hi everyone!
 > 
-> Add a new --stdin option to instead read the patterns from standard
-> input. Add tests that check that any unrecognized arguments are
-> considered an error when --stdin is provided. Also, an empty pattern
-> list is interpreted as the complete ref set.
+> Review Club is happening this Wednesday at 14:00 Pacific time (UTC-8).
+> You can find more info at [1] and on gitcal [2]. We run a session every
+> other week, and you can find the full schedule on gitcal.
 > 
-> When reading from stdin, we populate the filter.name_patterns array
-> dynamically as opposed to pointing to the 'argv' array directly. This
-> requires a careful cast while freeing the individual strings,
-> conditioned on the --stdin option.
+> This week, we'll be discussing Derek Stolee's new filter for `git
+> for-each-ref` [3]. Let me know if you're interested and would
+> like to join (off-list is fine), and I'll send you an invite :)
 
-This is a nice feature to have, but I suspect like other pattern
-features in Git (e.g., pathspecs), the matching is linear, and thus
-pre-expanding the set of refs you're interested in becomes accidentally
-quadratic.
+I just submitted a v3 [4], hopefully not _too_ soon before the meeting.
 
-And that seems to be the case here. If I have N refs and feed the whole
-set as patterns via --stdin:
+I've arranged to be able to attend, so please send me an invite.
 
--- >8 --
-for i in 4000 8000 16000 32000; do
-  rm -rf repo
-  git init -q repo
-  (
-    cd repo
-    git commit --allow-empty -qm foo
-    perl -e '
-      my ($oid, $n) = @ARGV;
-      print "create refs/heads/branch$_ $oid\n" for (1..$n);
-    ' $(git rev-parse HEAD) $i |
-    git update-ref --stdin
-    git for-each-ref --format='%(refname)' >refs
-    echo -n "$i: "
-    command time -f %U \
-      git.compile for-each-ref --stdin <refs 2>&1 >/dev/null
-  )
-done
--- 8< --
+Thanks,
+-Stolee
 
-then the result quadruples for every doubling of the refs.
-
-  4000: 0.32
-  8000: 1.33
-  16000: 5.10
-  32000: 20.90
-
-That may or may not be a show-stopper for your use case, and if not,
-I don't think it's something we need to address immediately. But we may
-want some kind of "literal" mode, that takes in a list of refs rather
-than a list of patterns, and does a sorted-merge with the list of
-available refs (or uses a hash table, I guess, but for-each-ref also
-tries to avoid even being linear in the total number of refs, so you'd
-still want to find the lowest/highest to bound the iteration).
-
--Peff
+[4] https://lore.kernel.org/git/pull.1489.v3.git.1678902343.gitgitgadget@gmail.com/
