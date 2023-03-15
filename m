@@ -2,69 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AAEDC7618B
-	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 14:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03581C6FD1D
+	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 14:24:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233148AbjCOOOQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Mar 2023 10:14:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53018 "EHLO
+        id S233151AbjCOOX7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Mar 2023 10:23:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232814AbjCOONu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2023 10:13:50 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C3C2EF96
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 07:13:20 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id fd5so42236146edb.7
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 07:13:20 -0700 (PDT)
+        with ESMTP id S233045AbjCOOXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2023 10:23:53 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC8AB9475D
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 07:23:48 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id cy23so76128832edb.12
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 07:23:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678889597;
+        d=gmail.com; s=20210112; t=1678890227;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nB5ltIGJNJtdxOmuqkl6xGJM9rgwsU8kCE31gNBcjtQ=;
-        b=Zwiklra3NxV05dLlQ91DbBnVqBHSYJ8qDJ6yh1lbu1pse/UUU3D2z9tYt6JllYjEkV
-         K3+3o62Kn1vv1J4qKN/JSWoeZ8WV4UpXCi7zuD4uF7cRRd0mrkB4GaHl9xYbj+QGIxXw
-         SS2hTopkci1TYka/0+bEg3WrTB2ePOHT4TkpLefQ3/9PwMGfKeWBw/z3g14b1x2HEIYH
-         sgtgj9NE8tZb335J3RP6fPZAQq+RWSYQn92axWBvNDRuW+3ALZDVH5bjCV2vfwWsA3Km
-         KVGw2dl+66eY/gaI5U4qrZPBKn6+igi4crW0WbeU+Rl3Oa6up+PWAFGVrBBAeSj/7NJk
-         Tvyg==
+        bh=lrzzjIz8GpxjLoWilxQ9x+Sz+MioOOjw+hOyzEurOH4=;
+        b=fGy+ZzvFdW1HjhRGfZIwPJGK3if3sgxAnnriiZXCOfB4viZGilu31gArZGEAP97Rw+
+         XuaKxu3uZFh/UNwft+2d5MeemcKC+38GZQPNjlE97iDQgUlYCrzkLzflzWXcqQ5LAveU
+         aaimgIJq8WvKKU9ZCp/MnIsEwH37Q9T5lNC0L4Y/3+SEMfwcJLQ802qFK8AqWE9Eq5Cm
+         M8crckNaAZOJ9cGpejnR9S/JtcfAViCwe0Qlq4LdFJYhvEv0cvQ3zFueZyXxACDBaoVD
+         gkYSWzDvBV5gMnQe/Vh91cWIfyw/98F/P4bLc9HPciAvlg8fEhVCP0V95U+GuGrBaRoz
+         ZHbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678889597;
+        d=1e100.net; s=20210112; t=1678890227;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nB5ltIGJNJtdxOmuqkl6xGJM9rgwsU8kCE31gNBcjtQ=;
-        b=w4XDt8Z6k1BJNVDCqgE2s6oaVaiYQsxhA+sSy6EtJQPyg2z9vA/tI4G3bVVgcTcsnd
-         vTAITcNoNklUudo2U9WvA6csc5VF/U9WiZ903ICLbcBZQldXq+V7iifAq8jmcjiJVoyI
-         HdL+LpewIb6P2oStNhHnVOLTyzFaCAuHIrTQ23utFR6oRuhaNGqH3E5hJkSCFSKMys31
-         JNeytr6leixtxpuWfNyQmX3kGSoKIiOb7pgOF4OwxEXgVvgFgfZgBnD2zrb1JZaFmGch
-         b6RTiQbg56/61JMeVBs+DoTeDGYnOju7T8Uo7yodUM1tI4u/RIeC41ua6roO5Rc7I/iu
-         X7xA==
-X-Gm-Message-State: AO0yUKUwB5D/qRRJfcXbK/HqKdDmx/VBkY8u+nJMSByhG47FyCcDk0nK
-        4KJMcZYGuKNWUWcSwfdu1jQ=
-X-Google-Smtp-Source: AK7set8KRs+SxTT2a77pBz2T01TCJ70n75A3JbV/XWbJwiWg4D8G4EQpfA1HY0Bi+sSviH/M3Mgdsw==
-X-Received: by 2002:a17:906:e0d8:b0:870:58ae:842e with SMTP id gl24-20020a170906e0d800b0087058ae842emr6553958ejb.24.1678889596520;
-        Wed, 15 Mar 2023 07:13:16 -0700 (PDT)
+        bh=lrzzjIz8GpxjLoWilxQ9x+Sz+MioOOjw+hOyzEurOH4=;
+        b=wm4obQ/m+OT2U0Ta32hzQMlt32vlyHqnPOCtmg7F5kIeT7ujob1Eb6U2pJ5aiQjpCw
+         Ooqhcm+n3wByFErTfZyXKT3/kr79lrb1/p7cSE1bSE3629iP2xhWkpu2O5s8fY8sogq3
+         5WfhRYq5LRFAbulA/xG4VXhBLwwM6TAHDmj9ZbMu1xvH6NhsTyRzXleHvS2REsg9XO+e
+         6AJZh9mutAvZphQSrk60GXsUbtL62IYVkBfmuiQVmx2C+Cy38PdJisP27jrfyk6/NOPP
+         Qa/KBvG5FsvrjB1gmMAaoXwviofbOoz9Ez/ZVIBWSwdnq4uQdcSU0gR8wQJDW5l3URxl
+         ExrQ==
+X-Gm-Message-State: AO0yUKULuggV7ow58DMx0Nb6A/LKQTRgjJQn35IgYcq4AyEhOMro7CcA
+        rk2s0I5GZDDEilrtXFm/it4fUxCMRpw=
+X-Google-Smtp-Source: AK7set/YWXX/8K9jSbeYpOYqao5guo7UgdnHuFg23ZvAdH1YGIc4yDoCmrj7z0H5rOruAUG7fbr2Ig==
+X-Received: by 2002:a05:6402:68a:b0:4fd:2aac:d480 with SMTP id f10-20020a056402068a00b004fd2aacd480mr2995618edy.21.1678890227150;
+        Wed, 15 Mar 2023 07:23:47 -0700 (PDT)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id vs4-20020a170907a58400b0092f5e46f3c4sm566731ejc.137.2023.03.15.07.13.16
+        by smtp.gmail.com with ESMTPSA id u19-20020a50c053000000b004fc537aec3csm2550230edd.74.2023.03.15.07.23.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 07:13:16 -0700 (PDT)
+        Wed, 15 Mar 2023 07:23:46 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pcRsR-002y6s-1g;
-        Wed, 15 Mar 2023 15:13:15 +0100
+        id 1pcS2c-002yRq-0C;
+        Wed, 15 Mar 2023 15:23:46 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
         vdye@github.com, Jeff King <peff@peff.net>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 7/8] for-each-ref: add ahead-behind format atom
-Date:   Wed, 15 Mar 2023 14:57:20 +0100
+Subject: Re: [PATCH v2 8/8] commit-reach: add tips_reachable_from_bases()
+Date:   Wed, 15 Mar 2023 15:13:56 +0100
 References: <pull.1489.git.1678111598.gitgitgadget@gmail.com>
  <pull.1489.v2.git.1678468863.gitgitgadget@gmail.com>
- <82dd6f44a33279551bb638357df4bc82253283e5.1678468864.git.gitgitgadget@gmail.com>
+ <f3fb6833bd71d559a3076d9617a235614ad9a5f8.1678468864.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <82dd6f44a33279551bb638357df4bc82253283e5.1678468864.git.gitgitgadget@gmail.com>
-Message-ID: <230315.868rfyxfus.gmgdl@evledraar.gmail.com>
+In-reply-to: <f3fb6833bd71d559a3076d9617a235614ad9a5f8.1678468864.git.gitgitgadget@gmail.com>
+Message-ID: <230315.864jqmxfd9.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -75,199 +75,173 @@ X-Mailing-List: git@vger.kernel.org
 On Fri, Mar 10 2023, Derrick Stolee via GitGitGadget wrote:
 
 > From: Derrick Stolee <derrickstolee@github.com>
-> [...]
-> +ahead-behind:<ref>::
-> +	Two integers, separated by a space, demonstrating the number of
-> +	commits ahead and behind, respectively, when comparing the output
-> +	ref to the `<ref>` specified in the format.
-> +
 
-As a potential (expert) user who hasn't read the code yet I'd think the
-the "<ref>" here would be the same as "update-ref", but glancing ahead
-at your tests it seems that it does ref matching, so "refs/heads/master"
-and "master" are both accepted?
-
-Since nothing else uses "<ref>" here I think we should clearly define
-the matching rules somehow, or maybe we do, and I missed it.
-
-Is there a reason we couldn't use the same "<pattern>" as for-each-ref's
-top-level accepts, with the limitation that if it matches more than one
-we'll die?
-
-Later you have e.g. ahead-behind:HEAD, but do we have test coverage for
-e.g. the edge cases where a refs/heads/HEAD exists?
-
-> @@ -645,6 +656,7 @@ static struct {
->  	[ATOM_THEN] = { "then", SOURCE_NONE },
->  	[ATOM_ELSE] = { "else", SOURCE_NONE },
->  	[ATOM_REST] = { "rest", SOURCE_NONE, FIELD_STR, rest_atom_parser },
-> +	[ATOM_AHEADBEHIND] = { "ahead-behind", SOURCE_OTHER, FIELD_STR, ahead_behind_atom_parser },
->  	/*
->  	 * Please update $__git_ref_fieldlist in git-completion.bash
->  	 * when you add new atoms
-> @@ -1848,6 +1860,7 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
->  	struct object *obj;
->  	int i;
->  	struct object_info empty = OBJECT_INFO_INIT;
-> +	int ahead_behind_atoms = 0;
->  
->  	CALLOC_ARRAY(ref->value, used_atom_cnt);
->  
-> @@ -1978,6 +1991,16 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
->  			else
->  				v->s = xstrdup("");
->  			continue;
-> +		} else if (atom_type == ATOM_AHEADBEHIND) {
-> +			if (ref->counts) {
-> +				const struct ahead_behind_count *count;
-> +				count = ref->counts[ahead_behind_atoms++];
-> +				v->s = xstrfmt("%d %d", count->ahead, count->behind);
-> +			} else {
-> +				/* Not a commit. */
-> +				v->s = xstrdup("");
-> +			}
-> +			continue;
->  		} else
->  			continue;
-
-Hrm, so despite by earlier suggestion of using "size_t" it seems we
-really are limited to "int" in the end, as our "used_atom_cnt" is an
-"int".
-
-But anyway, better to implement that limitation here, so we only need to
-fix ref-filter.c to move beyond "int".
-
->  
-> @@ -2328,6 +2351,7 @@ static void free_array_item(struct ref_array_item *item)
->  			free((char *)item->value[i].s);
->  		free(item->value);
->  	}
-> +	free(item->counts);
->  	free(item);
->  }
->  
-> @@ -2356,6 +2380,8 @@ void ref_array_clear(struct ref_array *array)
->  		free_worktrees(ref_to_worktree_map.worktrees);
->  		ref_to_worktree_map.worktrees = NULL;
->  	}
-> +
-> +	FREE_AND_NULL(array->counts);
->  }
->  
-
-Follows the exsiting pattern, so good, but FWIW I think we could do away
-with all this "and NULL", it looks like the only users are built-ins
-which never look at this data again, but then we should probably rename
-it to ref_array_release() or something...
-
->  #define EXCLUDE_REACHED 0
-> @@ -2418,6 +2444,50 @@ static void reach_filter(struct ref_array *array,
->  	free(to_clear);
->  }
->  
-> +void filter_ahead_behind(struct ref_format *format,
-> +			 struct ref_array *array)
 > +{
-> +	struct commit **commits;
-> +	size_t commits_nr = format->bases.nr + array->nr;
+> +	size_t i;
+
+Ditto the decl suggestion in an earlier commit, i.e...
+
+> +	struct commit_and_index *commits;
+> +	unsigned int min_generation_index = 0;
+> +	timestamp_t min_generation;
+> +	struct commit_list *stack = NULL;
 > +
-> +	if (!format->bases.nr || !array->nr)
+> +	if (!bases || !tips || !tips_nr)
 > +		return;
 > +
-> +	ALLOC_ARRAY(commits, commits_nr);
-> +	for (size_t i = 0; i < format->bases.nr; i++) {
+> +	/*
+> +	 * Do a depth-first search starting at 'bases' to search for the
+> +	 * tips. Stop at the lowest (un-found) generation number. When
+> +	 * finding the lowest commit, increase the minimum generation
+> +	 * number to the next lowest (un-found) generation number.
+> +	 */
+> +
+> +	CALLOC_ARRAY(commits, tips_nr);
+> +
+> +	for (i = 0; i < tips_nr; i++) {
 
-Eariler I suggested using this "size_t" in a "for", which is used here,
-good, newer code than the other commit, presumably...
+...move this here?
 
-> +		const char *name = format->bases.items[i].string;
-> +		commits[i] = lookup_commit_reference_by_name(name);
-> +		if (!commits[i])
-> +			die("failed to find '%s'", name);
+> +		commits[i].commit = tips[i];
+> +		commits[i].index = i;
+> +		commits[i].generation = commit_graph_generation(tips[i]);
 > +	}
 > +
-> +	ALLOC_ARRAY(array->counts, st_mult(format->bases.nr, array->nr));
+> +	/* Sort with generation number ascending. */
+> +	QSORT(commits, tips_nr, compare_commit_and_index_by_generation);
+> +	min_generation = commits[0].generation;
 > +
-> +	commits_nr = format->bases.nr;
-> +	array->counts_nr = 0;
-
-Not being very familiar with ref-filter.c, it seems odd that the API is
-taking pains to clear things elsewhere, but we need to set "counts_nr"
-to 0 here before an iteration.
-
-If I comment this assignment out all the tests pass, is this redundant,
-or left here for some future potential API use?
-
-> diff --git a/t/perf/p1500-graph-walks.sh b/t/perf/p1500-graph-walks.sh
-> new file mode 100755
-> index 00000000000..439a448c2e6
-> --- /dev/null
-> +++ b/t/perf/p1500-graph-walks.sh
-> @@ -0,0 +1,45 @@
-> +#!/bin/sh
+> +	while (bases) {
+> +		parse_commit(bases->item);
+> +		commit_list_insert(bases->item, &stack);
+> +		bases = bases->next;
+> +	}
 > +
-> +test_description='Commit walk performance tests'
-> +. ./perf-lib.sh
+> +	while (stack) {
+> +		unsigned int j;
+
+...ditto...
+
+> +		int explored_all_parents = 1;
+> +		struct commit_list *p;
+> +		struct commit *c = stack->item;
+> +		timestamp_t c_gen = commit_graph_generation(c);
 > +
-> +test_perf_large_repo
+> +		/* Does it match any of our tips? */
+> +		for (j = min_generation_index; j < tips_nr; j++) {
+
+...to here...
+
+> +			if (c_gen < commits[j].generation)
+> +				break;
 > +
-> +test_expect_success 'setup' '
-> +	git for-each-ref --format="%(refname)" "refs/heads/*" "refs/tags/*" >allrefs &&
-> +	sort -r allrefs | head -n 50 >refs &&
-
-Some of the point of test_perf_large_repo is being able to point the
-test to an arbitrary sized repo, why "head -n 50" here, instead of just
-doing that filtering when preparing the test repo?
-
-> +test_expect_success 'ahead-behind requires an argument' '
-> +	test_must_fail git for-each-ref \
-> +		--format="%(ahead-behind)" 2>err &&
-> +	grep "expected format: %(ahead-behind:<ref>)" err
-> +'
+> +			if (commits[j].commit == c) {
+> +				tips[commits[j].index]->object.flags |= mark;
 > +
-> +test_expect_success 'missing ahead-behind base' '
-> +	test_must_fail git for-each-ref \
-> +		--format="%(ahead-behind:refs/heads/missing)" 2>err &&
-> +	grep "failed to find '\''refs/heads/missing'\''" err
-> +'
+> +				if (j == min_generation_index) {
+> +					unsigned int k = j + 1;
+> +					while (k < tips_nr &&
+> +					       (tips[commits[k].index]->object.flags & mark))
+> +						k++;
 > +
-
-Is this grep instead of test_cmp for brevity, or because we'll catch
-this late and spew out other output as well?
-
-I'd think it would be worth testing that we only emit an error. Even if
-you don't want a full test_cmp we could check the line count too to
-assert that...
-
-> +# Run this before doing any signing, so the test has the same results
-> +# regardless of the GPG prereq.
-> +test_expect_success 'git tag --format with ahead-behind' '
-> +	test_when_finished git reset --hard tag-one-line &&
-> +	git commit --allow-empty -m "left" &&
-> +	git tag -a -m left tag-left &&
-> +	git reset --hard HEAD~1 &&
-> +	git commit --allow-empty -m "right" &&
-> +	git tag -a -m left tag-right &&
-
-Do we really need this --allow-empty insted of just using "test_commit"?
-I.e. is being TREESAME here important?
-
+> +					/* Terminate early if all found. */
+> +					if (k >= tips_nr)
+> +						goto done;
 > +
-> +	# Use " !" at the end to demonstrate whitepsace
-> +	# around empty ahead-behind token for tag-blob.
-> +	cat >expect <<-EOF &&
-> +	refs/tags/tag-blob  !
-> +	refs/tags/tag-left 1 1 !
-> +	refs/tags/tag-lines 0 1 !
-> +	refs/tags/tag-one-line 0 1 !
-> +	refs/tags/tag-right 0 0 !
-> +	refs/tags/tag-zero-lines 0 1 !
-> +	EOF
-> +	git tag -l --format="%(refname) %(ahead-behind:HEAD) !" >actual 2>err &&
-> +	grep "refs/tags/tag" actual >actual.focus &&
-> +	test_cmp expect actual.focus &&
+> +					min_generation_index = k;
+> +					min_generation = commits[k].generation;
+> +				}
+> +			}
+> +		}
 > +
-> +	# Error reported for tags that point to non-commits.
-> +	grep "error: object [0-9a-f]* is a blob, not a commit" err
+> +		for (p = c->parents; p; p = p->next) {
+> +			parse_commit(p->item);
+> +
+> +			/* Have we already explored this parent? */
+> +			if (p->item->object.flags & SEEN)
+> +				continue;
+> +
+> +			/* Is it below the current minimum generation? */
+> +			if (commit_graph_generation(p->item) < min_generation)
+> +				continue;
+> +
+> +			/* Ok, we will explore from here on. */
+> +			p->item->object.flags |= SEEN;
+> +			explored_all_parents = 0;
+> +			commit_list_insert(p->item, &stack);
+> +			break;
+> +		}
+> +
+> +		if (explored_all_parents)
+> +			pop_commit(&stack);
+> +	}
+> +
+> +done:
+> +	free(commits);
+> +	repo_clear_commit_marks(the_repository, SEEN);
 
-Maybe, but at a glance it doesn't seem so, but maybe I'm missing something...
+I didn't see this in my earlier suggestion for passing "struct
+repository", but I think we should do the same here, i.e. have this
+function take a "r" argument.
+
+> [...]
+> @@ -2390,33 +2390,21 @@ static void reach_filter(struct ref_array *array,
+>  			 struct commit_list *check_reachable,
+>  			 int include_reached)
+>  {
+> -	struct rev_info revs;
+>  	int i, old_nr;
+>  	struct commit **to_clear;
+> -	struct commit_list *cr;
+>  
+>  	if (!check_reachable)
+>  		return;
+>  
+>  	CALLOC_ARRAY(to_clear, array->nr);
+> -
+> -	repo_init_revisions(the_repository, &revs, NULL);
+> -
+>  	for (i = 0; i < array->nr; i++) {
+>  		struct ref_array_item *item = array->items[i];
+> -		add_pending_object(&revs, &item->commit->object, item->refname);
+>  		to_clear[i] = item->commit;
+>  	}
+>  
+> -	for (cr = check_reachable; cr; cr = cr->next) {
+> -		struct commit *merge_commit = cr->item;
+> -		merge_commit->object.flags |= UNINTERESTING;
+> -		add_pending_object(&revs, &merge_commit->object, "");
+> -	}
+> -
+> -	revs.limited = 1;
+> -	if (prepare_revision_walk(&revs))
+> -		die(_("revision walk setup failed"));
+> +	tips_reachable_from_bases(check_reachable,
+> +				  to_clear, array->nr,
+> +				  UNINTERESTING);
+
+I.e. it's not ideal, but we had a the_repository in this function before
+(should probably have passed it from further up, but whatever), so we
+could pass that to the new tips_reachable_from_bases() still.
+
+> -test_perf 'ahead-behind counts: git rev-list' '
+> -	for r in $(cat refs)
+> -	do
+> -		git rev-list --count "HEAD..$r" || return 1
+> -	done
+
+Why does this change require deleting the old perf test? Your commit 7/8
+notes this test, but here we're deleting it, let's keep it and instead
+note if the results changed, or stayed the same?
+
+More generally, your commit message says:
+
+> Add extra tests for this behavior in t6600-test-reach.sh as the
+> interesting data shape of that repository can sometimes demonstrate
+> corner case bugs.
+
+And here for a supposed optimization commit you're adding new tests, but
+when I try them with the C code at 7/8 they pass.
+
+So it seems we should add them earlier, and this is a pure-optimization
+commit, but one that's a bit confused about what goes where? :)
