@@ -2,101 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAB81C6FD1D
-	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 22:45:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B750C6FD1D
+	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 22:50:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230467AbjCOWpe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Mar 2023 18:45:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37684 "EHLO
+        id S231791AbjCOWue (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Mar 2023 18:50:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229751AbjCOWpd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2023 18:45:33 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 942F8158B7
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 15:45:30 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id nn12so20501424pjb.5
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 15:45:30 -0700 (PDT)
+        with ESMTP id S230280AbjCOWub (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2023 18:50:31 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7672C9E071
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 15:50:01 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id p79-20020a25d852000000b00b32573a21a3so16968018ybg.18
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 15:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678920330;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PkU9y1PP2PdIJmrv74RWtKSjRooXkQ8vFdHDOyb3AFo=;
-        b=py13b+Y99PHNXm8WzsYIwZ7iDS7yGIKouqm+u9KNHA/BpvFSZoDmOdbYPnjJiw2jOO
-         widP5DRplMH5y+Oe5+wVqW+A27yCdrXKhS1Urt/t3e4i/8Jo1KV4NHefOhLz2/tPUtf5
-         SZ9hee2F9lolHQD+LvJmJhCrmaN520C1aXKd34Rhu9aSh9/ajV5MQFyrmgrE8W4Lwwlw
-         ZnLdstoG1WIXVxYC8zHbORW2OIPaipw2WlSI5bxVCouhu4ephJ2pjquzPZJ7WGsjhl79
-         7gTeIaZvGmgyKp5W74qz6HMPhE/SEnrMrdDMjrqDVjvmjUPsnAzooHzPXGuFwE0fMW7I
-         H6pg==
+        d=google.com; s=20210112; t=1678920600;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=X5eGXDDTWJgfKPb2YT/Vq3WR6InIzVDUbGxAm9+f6OA=;
+        b=rlsM3rKsp/r9/MosLwVm/kNuqrCHILAUNKkPHK7rP/QlM91Yh6XmBp+Hzqahg7nS0W
+         /j5//qbXla1LmrIjee7CSSW6kh+GS6VWuygSCCxe1bEu0Pr7gqhEa4QMGeuz1xaNvHJq
+         gWigBHIxw+4clzU1JhdUY+f+czcCVozxkUUnBHmV+PQE6a1TRYp6zZX+Oh3Z++ahBKyx
+         l9S0Bvhg01sNKWjj3tdtC6oZkqZXVkfP76Xte/00nT0tFXaqRFlawesVqpPK6mF3gcMZ
+         y7pQ4k5y1DjDC3OQpaBW8wF4Xu1R9R7vpia4so+s6PcImSP/yx+lZ1DcwTtQPwwEKgBh
+         MQ5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678920330;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PkU9y1PP2PdIJmrv74RWtKSjRooXkQ8vFdHDOyb3AFo=;
-        b=48IccplOE/To61pWiOub3vRis+nnH1MTBSWDVZ68nkt2oIu/dWE6DizR4zvqeUzjDU
-         tGrcE8emuq0gPhXdf7ib9lRrluKP/Pc+6yBrpJnEYucCITJydAtnhQmW3greRwmtkw5O
-         6jXRQoSFcGMHL4Fq6q9jtkX3Om6RQeVrsihihqpfev29yL+R3VR1/3+vO+Jl95FEHjRQ
-         DylPTt9S/avsGx1Ljy5OmxoTZ/YdjN4bYapJSL9PNPVlGADBgmkXRVCEIRm6bZ5Isyxv
-         sN6/WM+f5oi9oKzI6ylafRV/f7A81Fgcrge9Oigc7dA+tGCVLh+PVYIPXxtBB1096f7W
-         AKog==
-X-Gm-Message-State: AO0yUKUOSjVWe4syLjNv1TXDTsmAVzZyQQGr+Y60OP6dhA+Dks6CMedB
-        Yf1as1LXPe5Q9OCGe3IG2GY=
-X-Google-Smtp-Source: AK7set9twzx6APEE0IAGfbXamwsCzjrAlN9yTXlc8IVslDNtYjH3We98PvhSF6lfFVfpzVoClRuZZA==
-X-Received: by 2002:a17:90b:1b45:b0:22b:b82a:f3a2 with SMTP id nv5-20020a17090b1b4500b0022bb82af3a2mr1629410pjb.11.1678920329949;
-        Wed, 15 Mar 2023 15:45:29 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id r15-20020a63204f000000b0050bcf117643sm3313091pgm.17.2023.03.15.15.45.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 15:45:29 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/8] fetch: deduplicate handling of per-reference format
-References: <cover.1678878623.git.ps@pks.im>
-        <d45ec31eeaf42ee042bad04efd69668144df3138.1678878623.git.ps@pks.im>
-Date:   Wed, 15 Mar 2023 15:45:28 -0700
-In-Reply-To: <d45ec31eeaf42ee042bad04efd69668144df3138.1678878623.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Wed, 15 Mar 2023 12:21:23 +0100")
-Message-ID: <xmqq4jqlocqf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        d=1e100.net; s=20210112; t=1678920600;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X5eGXDDTWJgfKPb2YT/Vq3WR6InIzVDUbGxAm9+f6OA=;
+        b=MEiPvbbTEu/109ZPDMij8/KimcfXeuljezXV6/FBUXwSp3WV9qoCtxu0tG5Uaat/u2
+         +ItxIqZaa21Ge9WmMoaMyi+xhwBdaGCnsU8C2g41UfB6BF5cpJqI97QYgfaUIalHRaLB
+         K2QU6O+gEuwdGZ5J+iUqAHOOvAresnsiIUOylsCpPSg0+cjrmBCUQcKI0+LJKNeZiITG
+         dHfKNwGyevF0yrKKTQxXNLjBf6hHBQa0AdQ/AV3YTWJb5WML9HcqJk+/d6G7J5QkN+Oy
+         ST6gt9UtEsdfPf9/2g9P+674TrBplWjNFOYuY4cu/PI9yw5zqCLFHnXmpXe7NSx8J6S3
+         ELcg==
+X-Gm-Message-State: AO0yUKVzH4XrZURH55/DVbys/8cHlysdEz/MB50hYfR9Vf8XgZ9kWSKY
+        gzxj9VMOI9VJJgCxPB65rV52PSanenHquVIe7cLM
+X-Google-Smtp-Source: AK7set+F1yXaiXyLsuj85Pse7+sJUbYX38Z+KZ9MaE2sMhV+jKXzyaiZZpGOYovkM1TOy1dB/MG9+mWfvim44Xq+aMLh
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:524e:ff9a:ee19:127f])
+ (user=jonathantanmy job=sendgmr) by 2002:a81:431b:0:b0:544:94fe:4244 with
+ SMTP id q27-20020a81431b000000b0054494fe4244mr952715ywa.10.1678920600460;
+ Wed, 15 Mar 2023 15:50:00 -0700 (PDT)
+Date:   Wed, 15 Mar 2023 15:49:58 -0700
+In-Reply-To: <3b15e9df770a118331a1b25f51de8ce97c1b7cab.1678902343.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.40.0.rc2.332.ga46443480c-goog
+Message-ID: <20230315224958.169443-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v3 3/8] commit-graph: combine generation computations
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, me@ttaylorr.com, vdye@github.com,
+        Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
+        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> +static void compute_reachable_generation_numbers_1(
+> +			struct compute_generation_info *info,
+> +			int generation_version)
+>  {
+>  	int i;
+>  	struct commit_list *list = NULL;
+>  
+> -	if (ctx->report_progress)
+> -		ctx->progress = start_delayed_progress(
+> -					_("Computing commit graph topological levels"),
+> -					ctx->commits.nr);
+> -	for (i = 0; i < ctx->commits.nr; i++) {
+> -		struct commit *c = ctx->commits.list[i];
+> -		uint32_t level;
+> +	for (i = 0; i < info->commits->nr; i++) {
+> +		struct commit *c = info->commits->list[i];
+> +		timestamp_t gen;
+> +		repo_parse_commit(info->r, c);
+> +		gen = info->get_generation(c, info->data);
+>  
+> -		repo_parse_commit(ctx->r, c);
+> -		level = *topo_level_slab_at(ctx->topo_levels, c);
+> +		display_progress(info->progress, info->progress_cnt + 1);
+>  
+> -		display_progress(ctx->progress, i + 1);
+> -		if (level != GENERATION_NUMBER_ZERO)
+> +		if (gen != GENERATION_NUMBER_ZERO && gen != GENERATION_NUMBER_INFINITY)
+>  			continue;
+>  
+>  		commit_list_insert(c, &list);
 
-> Both callsites that call `format_display()` and then print the result to
-> standard error use the same formatting directive " %s\n" to print the
-> reference to disk, thus duplicating a small part of the logic.
+So this replaces a call to display_progress with another...
 
-Hmph.
+>  			if (all_parents_computed) {
+>  				pop_commit(&list);
+> -
+> -				if (max_level > GENERATION_NUMBER_V1_MAX - 1)
+> -					max_level = GENERATION_NUMBER_V1_MAX - 1;
+> -				*topo_level_slab_at(ctx->topo_levels, current) = max_level + 1;
+> +				gen = compute_generation_from_max(
+> +						current, max_gen,
+> +						generation_version);
+> +				info->set_generation(current, gen, info->data);
+>  			}
 
-If format_display() were a function whose role was to prepare the
-contents on a single line, it can be argued that it is caller's job
-to give a leading indent that is appropriate for the line in the
-context of the display it is producing.  "store-updated-refs" and
-"prune-refs" may be showing a list of refs that were affected under
-different heading, together with different kind of information, and
-depending on the way each of these callers organize its output, the
-appropriate indentation level for the line might be different.  So I
-think the current product format_display() gives its callers is
-perfectly defensible in that sense.
+...here is where set_generation is called...
 
-On the other hand, if format_display() is only about showing a
-single line in the tightly limited context (in other words, both of
-its callers promise that they will forever be happy with the
-function showing exactly the same output), then this refactoring
-would be OK.  In addition, it may even make more sense, if that were
-the role of this callee, to do the actual printing, not just
-preparing a line of string into a strbuf, in this callee, by moving
-the fputs() from caller to callee.
+> +static void set_topo_level(struct commit *c, timestamp_t t, void *data)
+> +{
+> +	struct write_commit_graph_context *ctx = data;
+> +	*topo_level_slab_at(ctx->topo_levels, c) = (uint32_t)t;
+> +	display_progress(ctx->progress, ctx->progress_cnt + 1);
+> +}
 
-So, I dunno.  The result of applying this patch leaves it in an
-in-between state, where the division of labor between the caller and
-the callee smells somewhat iffy.
+...is this display_progress() redundant? (set_topo_level() is one of the
+possibilities that set_generation could be assigned to.) There already
+seems to be one at the top. Further supporting my query is the fact that
+in the hunk containing set_generation, there is no progress report on
+the LHS of the diff.
 
-Thanks.
+> +static void set_generation_v2(struct commit *c, timestamp_t t, void *data)
+> +{
+> +	struct write_commit_graph_context *ctx = data;
+> +	struct commit_graph_data *g = commit_graph_data_at(c);
+> +	g->generation = (uint32_t)t;
+> +	display_progress(ctx->progress, ctx->progress_cnt + 1);
+> +}
+
+Likewise for this function.
+
+Everything else up to and including this patch looks good.
