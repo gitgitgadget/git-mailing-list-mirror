@@ -2,64 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05CC8C6FD1D
-	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 23:02:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC345C6FD1D
+	for <git@archiver.kernel.org>; Wed, 15 Mar 2023 23:13:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231774AbjCOXCW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Mar 2023 19:02:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37708 "EHLO
+        id S232861AbjCOXNG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Mar 2023 19:13:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbjCOXCU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2023 19:02:20 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 011FE80923
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 16:02:19 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id 6-20020a17090a190600b00237c5b6ecd7so3514706pjg.4
-        for <git@vger.kernel.org>; Wed, 15 Mar 2023 16:02:19 -0700 (PDT)
+        with ESMTP id S230197AbjCOXNE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2023 19:13:04 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00D7B11E84
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 16:13:02 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id i5so21795561pla.2
+        for <git@vger.kernel.org>; Wed, 15 Mar 2023 16:13:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678921339;
+        d=gmail.com; s=20210112; t=1678921982;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nfBRM0x50hezjY/u6ZoSNOh+Zwf8IJazpPsDDWJpFmI=;
-        b=fbOkSMBdfS54fGQN17eNtVkt8j/2F9rP6GULU9szH4SxhDkU8aY5vCCjaPnpqw12dO
-         6sBnHCznQ0qkoeC2F8eqFPK0juZ5/bWm+A233HsSxSGq3Ge8qtTiKrEeX2lAzl86fAzG
-         +VEAn3LgME802Pokf4LokhiC5QO9tRB8S8pUZLPL9/OkzxenZnanUcteir7cWWLNMFOU
-         D14bIFW//zB+Rdh92+dTd6QYPADItLsg2EH2Ixu4VY9P2w6b6bbBcx7oLAah8WATE4iE
-         W+zIJVFDjlO6Vhu9vQhEsKzvJ1duc+Iim9Ud3nrQgGgblImlK8wf25Cc6TFwnz2sP73L
-         D5vg==
+        bh=4NnM+dzOojfbd6oAWwHUWg/Xt2mRU9OQHuTfJbEqNvc=;
+        b=EyWGu+sGkKx+gAmh/kOTGu0sHOI/22s77ACsgBF2GiC9dFC45WuiJBpofMpYUum89C
+         kUMfKnbnyIWVTsIVfbR5eiRAiraCpMtaI3GEDHhi+HFb4VLZq+HH3Q8HK8ou0mHnzx5Y
+         RFlDhLr63IFIJkO9dpgNiNOa4Y9e4ZxxI9b2Q5XD900E9eZcnYvUAwciXdvRYp2yguzb
+         NcPmxeH93EVfsVJlJuIUe0vJ1V30bENVYVj8bIsRz5vFYaCwuBY+9PqBVbdazFdLdXxh
+         e9H1L4kzbxGhzXupVsZcvH4HaAUp+jzAOYCnPb1Jxb4b9uHLLn6SoOkbvk6NRVfAKd9b
+         IaBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678921339;
+        d=1e100.net; s=20210112; t=1678921982;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=nfBRM0x50hezjY/u6ZoSNOh+Zwf8IJazpPsDDWJpFmI=;
-        b=t+UtnfziUK4olQIys/UTda6XoGlw+mQGWD34bds5QNpSo/I6UqtyC57x4WKiJq6Fc6
-         Xw0mlRDz4DbCIxRe5JiGHadu51q4oZZLBtFNuMfmHYFsWUFuRF4cjJrNW0k6ro83XOC8
-         aPZ+zumjTohAmswEPgFDJomEg3hLZ/nTrvm8osdcm0RyAmohAclCV7jeiOzPW7WxcL7R
-         biLBc/JnvUF+9CyrhIVYPf3hqme2wKFAtGCipfM/CT0WrdpoCSyYB/Pj2lJngQZHqZyQ
-         zPJzKgHGMVq6Y1a7R1pYyLTsucL2JXK8nREUTZKctkllN1M9qBKuOlfKLsF3YxDfM95+
-         kW9Q==
-X-Gm-Message-State: AO0yUKVZFN/66BDk8hqEuuxvcmILvsnJTMcBxaNnttWZxqRU2hq4PrCU
-        J/u9ht1TdNaguhIKmOBNryI=
-X-Google-Smtp-Source: AK7set/D5nNMqfDIDCbEGG+UDfH5f2N6+klq94IKUzigt5Sd9sOU6Ay+tZ/wQN2LzuK9xPDdMXBhPA==
-X-Received: by 2002:a17:902:f389:b0:1a0:566c:aaf8 with SMTP id f9-20020a170902f38900b001a0566caaf8mr958815ple.27.1678921339378;
-        Wed, 15 Mar 2023 16:02:19 -0700 (PDT)
+        bh=4NnM+dzOojfbd6oAWwHUWg/Xt2mRU9OQHuTfJbEqNvc=;
+        b=Xnyv0FtZDVHU3bbqsQ2LaFnydq5g7ji7/WFTNgCR4VQqIEbtC59+sScvXlb2PAbGAc
+         kKiKRPhXgruX58/UGrzCVqufh1XZR/soXxXvEzeYN+Tc8uBh7iEhei1pVr94HGexfhZ6
+         GYezOO6jAEDJ3IZvUVeWhMMRtiDoLBtP3PoXlbydIXIpLDVyd46t9EqhvIWiKYIO5fCP
+         O0Fg9Vo+mKMx12sEd5F08UWXTIjUp/nyJBE5nGo12GUSJkL3tNieadO9loZ1UJzUYYnj
+         YvxdlmjUmauHQGW9WBsX03oyf9i12J1MxgzIvIKGJbtN8gB4QKehWF5rNSOeY0uqPfTq
+         JhRA==
+X-Gm-Message-State: AO0yUKVKzwRWlf8eTiR+uqDaxVMeNbboJEiUSh7gmCqCL/1XFQa7h3nn
+        pi9gY/XYLEXNdcfFD9+kQvA=
+X-Google-Smtp-Source: AK7set8s65/PY07csQSj26FPWugHjh+Q3ergGkAv81pSYtenJF/UyNAYMj/K87g0wWm+DX+cCec93w==
+X-Received: by 2002:a17:902:f24c:b0:1a1:8d4e:a70d with SMTP id j12-20020a170902f24c00b001a18d4ea70dmr728344plc.38.1678921982398;
+        Wed, 15 Mar 2023 16:13:02 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id x7-20020a1709029a4700b001a0567811fbsm4152697plv.127.2023.03.15.16.02.18
+        by smtp.gmail.com with ESMTPSA id x7-20020a1709029a4700b00199023c688esm4187632plv.26.2023.03.15.16.13.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Mar 2023 16:02:18 -0700 (PDT)
+        Wed, 15 Mar 2023 16:13:01 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 6/8] fetch: deduplicate logic to print remote URL
+Subject: Re: [PATCH 7/8] fetch: fix inconsistent summary width for pruned
+ and updated refs
 References: <cover.1678878623.git.ps@pks.im>
-        <2ea3a4e308d2fb89f24d0cd2efc9d3867983a4b0.1678878623.git.ps@pks.im>
-Date:   Wed, 15 Mar 2023 16:02:18 -0700
-In-Reply-To: <2ea3a4e308d2fb89f24d0cd2efc9d3867983a4b0.1678878623.git.ps@pks.im>
-        (Patrick Steinhardt's message of "Wed, 15 Mar 2023 12:21:28 +0100")
-Message-ID: <xmqqy1nxmxdx.fsf@gitster.g>
+        <f67f9640a853b605dd1bc4be25e9988c4f059684.1678878623.git.ps@pks.im>
+Date:   Wed, 15 Mar 2023 16:12:59 -0700
+In-Reply-To: <f67f9640a853b605dd1bc4be25e9988c4f059684.1678878623.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Wed, 15 Mar 2023 12:21:32 +0100")
+Message-ID: <xmqqttylmww4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,22 +70,21 @@ X-Mailing-List: git@vger.kernel.org
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> When fetching from a remote, we not only print the actual references
-> that have changed, but will also print the URL from which we have
-> fetched them to standard output. The logic to handle this is duplicated
-> across two different callsites with some non-trivial logic to compute
-> the anonymized URL. Furthermore, we're using global state to track
-> whether we have already shown the URL to the user or not.
+> As the abbreviated hashes may have different lengths in order to be
+> unique we thus need to precompute the width of the summary's column by
+> iterating through all the objects. This is done in two locations: once
+> to compute the width for references that are to be pruned, and once for
+> all the other references. Consequentially, it can happen that the width
+> as calculated for these sets of references is different.
 
-If we are certain that store_updated_refs() is called only once for
-the entire process, then storing the preprocessed url in the display
-state and passing it around does sound like a good optimization and
-clean-up.  What do we do when fetching from multiple remotes?
+Hmph.  Use of ref_map vs stale_refs as the parameter to call
+transport_summary_width() is to come up with an appropriate width
+for showing the list of stored refs vs the list of pruned refs, so
+from that point of view, an appropriate width for each list is
+calculated to a different number may even be a feature, no?
 
-> +	display->url_len = strlen(display->url);
-> +	for (i = display->url_len - 1; display->url[i] == '/' && 0 <= i; i--)
-> +		;
-> +	display->url_len = i + 1;
+I do not mind either way all that much, but a change like this to
+update the presentation may want to be protected with a test from
+future breakages.
 
-This loop is inherited from the original, but we may want to use
-strrchr() or rindex() as a post clean-up after this series settles.
+Thanks.
