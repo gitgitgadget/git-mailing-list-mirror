@@ -2,78 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E72BAC7618A
-	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 23:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08ED0C74A5B
+	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 23:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230060AbjCPXAx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Mar 2023 19:00:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40856 "EHLO
+        id S230300AbjCPXGC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Mar 2023 19:06:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229727AbjCPXAv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2023 19:00:51 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0D059925E
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 16:00:35 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id x11so1285534pja.5
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 16:00:35 -0700 (PDT)
+        with ESMTP id S230027AbjCPXF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2023 19:05:59 -0400
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 272D0E63CA
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 16:05:54 -0700 (PDT)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-536a4eba107so29942567b3.19
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 16:05:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679007635;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=zEUUM2PvYLKg8YcTRSOR6+/attFoh4TryrDH542A1eQ=;
-        b=CPVYITrkiacj6wXODx9JFt8ws5T/B5zncf1t8odVApTjASUFE/MMRXAhJpIf4bu10S
-         osvCO3251SXIkTM+vt6gLzSHp6vDv4DwwPYWTQnFMFUx4JzVUOBZxXgXHVEn+84wjO+J
-         5Y8hVf+R8tMcVtRIZQke0F5Bh6IhfxGUBxI304Jiexp+wzYmJCHcxTgArzahM58wMngA
-         6KJZLJLvhXN7Gbd3thZkSdpX0IPU2obexF24OCASjrSCdsc4cuQwPfojq0bTsCOYrokw
-         07sx1TrpBrfIrqyhG+jBQtSqUeS4+JN4R+0Y1uDijfvp2snRuMqaSXGtSjfo5mnZA1gJ
-         miyA==
+        d=google.com; s=20210112; t=1679007953;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZpEWYR0U6+KOphq/e6myVhaUaaGED7h1FThsX06L5FU=;
+        b=EU6craDHQhAwCgxuSgSjiy3cxi3TZ1t0yiBt7+bQbCsq+Xhqt+3PGBTGMHtrZumrJ3
+         TNXJRH5zr1Qw1qVqLkssGrxIUNRwWbjEi97i27l0w5pNlc2uD03ys9dQK6WK57B0uqtA
+         06J4SoL2dRQIX/jP5WLj+yFqy58qZUj/8IJR8Db4Sdx6I9fMrJxeFSmqtf2X9ctbGeqs
+         L92nNZobhyRe30aRrC5G83m7LV/+0StD6wPlkwAK96T+ulV8W4UIikS+CEv01mcABV1t
+         fdUKFd7BIlHIfOtCG9yVCmRyCIT6qYDE6TeMvRfzF/mdoixo+RfmJB1hxGmEgbhGf6Tw
+         V6ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679007635;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zEUUM2PvYLKg8YcTRSOR6+/attFoh4TryrDH542A1eQ=;
-        b=yD8gK+K5AExaW3ShSxMy2Gzh7GGKAEKOj9r48qFvWBv9u+5RoolkN7DqzQ0M5vZE2X
-         SZqCr8qkFQ5BcnxA1tW3rWCiBdB5wY9ELYzMJNc9RW7BGe6RbzRdukmKeACD/VYcbHHC
-         cwfAd4b1ctcMZ40JsHcf5Mj7t+Mkgr0FWYbj4I4+bEVsrW7daTqbTk1W0CEVml05Z95A
-         nUSgrgKsI2hPUmiDtREhD5iqBywPiq3Z9jwLRmEJMY3BEVYaAnKB3s3+OuVmtkFxH5oE
-         zorhoJJ7KCCqg7AM89Y53FWx0AT439F/m6zZi+2Fu51gs2DZ/jzbiJBHNf/DaMkrd32C
-         rREg==
-X-Gm-Message-State: AO0yUKU2gqhsWjRuXNS7X8weDK4jyXERqNSRNbEt4dlnDwenuixnaaul
-        /v0kpu7QDK4WlYF9Mp6W++I=
-X-Google-Smtp-Source: AK7set+cdLm5TnMJ7G8R60+K/yOlbw5sACxIPAce2hrz9xRXeJqrE3SS7uo5wrTu7ow7pUIsdhvK+Q==
-X-Received: by 2002:a17:90b:20d:b0:23b:543d:f3d3 with SMTP id fy13-20020a17090b020d00b0023b543df3d3mr5863861pjb.42.1679007635073;
-        Thu, 16 Mar 2023 16:00:35 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id gp5-20020a17090adf0500b0023b3179f0fcsm3765956pjb.6.2023.03.16.16.00.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 16:00:32 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Joakim Petersen <joak-pet@online.no>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        Justin Donnelly <justinrdonnelly@gmail.com>
-Subject: Re: [PATCH try2] completion: prompt: use generic colors
-References: <20230228145934.4182166-1-felipe.contreras@gmail.com>
-        <xmqq4jr4nu3u.fsf@gitster.g>
-        <CAMP44s23cvp-YWDN7vzsKQCcWoc43PgURq+J6pwtx0rxOpZLBg@mail.gmail.com>
-        <9e317aa7-0037-7076-e159-3a70c581ebc1@online.no>
-Date:   Thu, 16 Mar 2023 16:00:32 -0700
-Message-ID: <xmqq5yb0i9nz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        d=1e100.net; s=20210112; t=1679007953;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZpEWYR0U6+KOphq/e6myVhaUaaGED7h1FThsX06L5FU=;
+        b=orjOEnd9s1wEUuBxhr7qIbo5CT7V5T68RFur7aBFO78xCdFBI5+ChMEbZzFvR91pVV
+         8tM0C9/qB0ESAasU65tro2qwItVwEyVUPe7kKpNszWscXENSSlELBPg3XdjTU0Q6sZx0
+         O5ZrRiOr2Wkmaeq9CyN2U5Gr1YutRcXYQOdIMHp5dN/UpGZQI25BKVCnnsZ+9wUhqxIt
+         r/ZiRV/uT9oNI5kAp7PessdR89/g/HJ3YqR6aWf6PjG/1sXGN+q2oTzkPCuhh8lTE1Fj
+         Vd/UWzGg82lL3S+7O1yTm6hPPC9mYtYbmLPwFCS1Sb6QGPl5roiX/7oX3EjPwYFVG8zu
+         74rg==
+X-Gm-Message-State: AO0yUKW1jC9NPb/AMZAwcFftp/yrYu0nA64FCnNJZ54iKIQjhvwzu6Dc
+        6KKbxPVjThTfj+Fyx1SCSkEJVtTfQ2rukg==
+X-Google-Smtp-Source: AK7set/waEssucKfl7uUs9Nvb6Ek3HMpKOThihSpQKBmpSVKdq51+Y/FH5GgjAOk0KXnWhDW1mpmTMPGQpE+8A==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a05:6902:208:b0:9fe:195a:ce0d with SMTP
+ id j8-20020a056902020800b009fe195ace0dmr24292837ybs.10.1679007953392; Thu, 16
+ Mar 2023 16:05:53 -0700 (PDT)
+Date:   Thu, 16 Mar 2023 16:05:51 -0700
+In-Reply-To: <20230316222200.320596-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20230316222200.320596-1-jonathantanmy@google.com>
+Message-ID: <kl6lmt4cuwj4.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2 7/8] config: report cached filenames in die_bad_number()
+From:   Glen Choo <chooglen@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Emily Shaffer <nasamuffin@google.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Calvin Wan <calvinwan@google.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Joakim Petersen <joak-pet@online.no> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> I've played around a bit with this patch, and it seems to work as
-> advertised.
+>>                                Refactoring is needed because "git config
+>> --get[-regexp] --type=int" parses the int value _after_ parsing the
+>> config file, which will run into the BUG().
+>
+> You say "fix this", but are there actually 2 bugs (so, "fix these")?
+> Firstly, that BUG() is run into when invoking "git config" the way
+> you describe, and secondly, die_bad_number() only reading cf and not
+> checking kvi to see if anything's there. (I'm not sure how to reproduce
+> the latter, though.)
 
-As the change itself is so trivial and likely to exhibit problem
-immediatly if it were not right (e.g. for some version of the shell
-but not for others), let's queue it.
+There is actually only one bug (the latter). That is tested by the new
+test I added in this patch. To reproduce it, we need:
 
-Thanks.
+- To iterate a config_set (git_config() or repo_config() will suffice),
+  in which case the config_kvi is set, but not cf.
+- Then in the config_fn_t we pass to it, we call git_parse_int() on an
+  invalid number, which will result in die_bad_number(), which prints
+  the less specific message.
+
+The former case isn't a bug. We never ran into the BUG() when invoking
+"git config" because die_bad_number() doesn't use current_* prior to
+this patch (which is where the BUG() is). t1300:'invalid unit'
+demonstrates that we print the correct message (and that we don't
+BUG()):
+
+  test_expect_success 'invalid unit' '
+    git config aninvalid.unit "1auto" &&
+    test_cmp_config 1auto aninvalid.unit &&
+    test_must_fail git config --int --get aninvalid.unit 2>actual &&
+    test_i18ngrep "bad numeric config value .1auto. for .aninvalid.unit. in file .git/config: invalid unit" actual
+  '
+
+
+(which is a good signal that I should probably reword the commit
+message)
+
+>
+>> Also, plumb "struct config_reader" into the new functions. This isn't
+>> necessary per se, but this generalizes better, so it might help us avoid
+>> yet another refactor.
+>
+> Hmm...I thought this would be desired because we don't want the_reader
+> to be used from non-public functions anyway, so we can just state
+> that that is the reason (and not worry about using future refactors as
+> a justification).
+
+Ah, good point, thanks.
