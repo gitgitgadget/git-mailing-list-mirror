@@ -2,101 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C24B0C6FD19
-	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 17:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 321F4C6FD19
+	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 18:11:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230188AbjCPRqh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Mar 2023 13:46:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46884 "EHLO
+        id S230486AbjCPSL5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Mar 2023 14:11:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230140AbjCPRqd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2023 13:46:33 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16DB6E41DE
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 10:46:21 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id r18so2301854wrx.1
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 10:46:21 -0700 (PDT)
+        with ESMTP id S230479AbjCPSLy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2023 14:11:54 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9790DC0BD
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 11:11:41 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id t83so1439670pgb.11
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 11:11:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678988779;
-        h=content-transfer-encoding:in-reply-to:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=DoM5mf4+E+dswt9ye0rr/t+eEgsbVGiDGEWrq3LqyB0=;
-        b=YroHAKrFI8+GEEpqyk7Y0Yks5GCZ9Iw4579yVnUyhgZGSY4VZRce1nS2A/whR/BooN
-         yi7fix2W0w+D9bFtR6J9q7zNXwyRxVxR9e6jNlVVoHYpHxQfieJI7iLnVfGP3A1Ab8V4
-         KC9M5QgkX/082M1vVd/Pmt/4pn7BB9FqVoLCmccFpnVmGCON16kaXBk8OZumV2igLqaw
-         hz4Ztw33LPjLaR1ScqXqhgN1lahHutbyboKcU0lIC/EEIMM29Hcn1F/2gORjIXIpdjMm
-         f/IdXg/ZFLCLxSOOxOksI3cQXPmMv/jSb6UiqDcV6tBzbCCDhF/s3zIY3OhYEK+/xt+E
-         TVTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678988779;
-        h=content-transfer-encoding:in-reply-to:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1678990301;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DoM5mf4+E+dswt9ye0rr/t+eEgsbVGiDGEWrq3LqyB0=;
-        b=wlsXU8I156EaVWmVrcZqwqEtgoPfBOtIdq1zZljLvgWbIQT5WQ2WnIe99srC9c2n5+
-         VaGsfNbgohXnrvHkxgMjUsE5i7O5PXpYJQFQJG+DoiZg2/GBZcOkNWMQyUyHsp5X94E8
-         L5LSx98JUKnP6G9XfEJgIdF6nzqzGV1KuPuakJ34rI1CWnnxt3HGKRWY2dN4qumKrfdJ
-         yobh0FL4G9WPY+I6KIH/2b82Ku2sMTipUeHheD0l+TbWtRogyua4qIO0kug2meecsM28
-         RqCBL9YvTPgcfjIERnhfjajF4QqDXTccfggvwmCQnCITpbW480HfZ5AnwFcEegRClRjX
-         QDFA==
-X-Gm-Message-State: AO0yUKX7MYZoFnqtsXWncybZiaWwW/Dhi8v4XwxGiTAYsXYiZEHvkKVW
-        DZCM49OYtyvZlfff8L7UkLxHmQ2T3+Y=
-X-Google-Smtp-Source: AK7set94zW0gBT4VuD0ziOqsbNIu/fj07s2q1c3bbnp2mlRKGtSpBo41bNeLGW0YzHbUo274g9AcXw==
-X-Received: by 2002:adf:e792:0:b0:2ca:6cb1:c9c5 with SMTP id n18-20020adfe792000000b002ca6cb1c9c5mr5373325wrm.30.1678988779354;
-        Thu, 16 Mar 2023 10:46:19 -0700 (PDT)
-Received: from [192.168.1.212] ([90.248.23.119])
-        by smtp.gmail.com with ESMTPSA id b7-20020a5d4b87000000b002cfe0ab1246sm14582wrt.20.2023.03.16.10.46.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Mar 2023 10:46:18 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <f7577c57-f70d-cca3-3f25-18525d40d79b@dunelm.org.uk>
-Date:   Thu, 16 Mar 2023 17:46:15 +0000
+        bh=W53x1XZcaPsXIUfAjesJGWV1SwCU6No7dcDtDNbFufQ=;
+        b=WeCDOg+FTq61BxraCbN+UI/xj9vN+1uKWc4PBYP5YTnf/mp3ublVPTclt4h/REAy97
+         Qi7nLDo6tnBl6//7cqdRmakAC/eDr6V+MG2hf3JfeyCdFY991HjcPLIPHPrZzGsf6G/n
+         OkePincIFfMo/ZzQ4LV7WTlNup/XjSihl4MtC6kmbQbRrj9ddOrp7L96M8K+MSc5FyBW
+         x6Sao1daNAHqiugkVEo9v4OwTOdoKTqX1JopQbmNxxAKyZZHDEzuYSh0JGoa/BU9h7iP
+         N89j0oaSyNAiAxb7RH8N6vcmU5raTmNxvfezBU+ZC5ix9UTzQhZXvDfM66qxjyvlF6+H
+         wN4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678990301;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=W53x1XZcaPsXIUfAjesJGWV1SwCU6No7dcDtDNbFufQ=;
+        b=DPkHN65s+WbhB6NrSkvTKHzkIoilWXs/kUpmCep26PtTh77d5iu1WAKCxWLMqkVO1R
+         dU7oKBa+Tw8KssF+AbuelAkLVieAnCvXWnGiXABfgnu9yxHEghRjQK0bAMX7BZwRB4V7
+         F8GRflJtJbGdUE7rNCQms4a3gmGpPFXCWdfk//BRpeFHyNAMkbzDrVjXxB4gBIsxiA7I
+         6Mi1ODrdqVnfXz2etXK5tgml3OOAyvU2OZykhjD+YOZQtF63anB4GHjvKjEDNFYNUUeB
+         6ee6AbAdJ1oCFlB35UiNY5Q0zCGt0qm84+1ugpmKmk7Ynd1IR1kpgx82bxT3CSyKQ+zo
+         PVSQ==
+X-Gm-Message-State: AO0yUKU7h0Dk0yZmNt+WfG/p7duR3kXZX2QItXovAuGdcEsJFNF+To1G
+        RAxcNVaiA9M7MZIkQwcl2XuZe+YxFKTnzb4Nues=
+X-Google-Smtp-Source: AK7set8ooI88w808Lc0DcXl2Rlltm+lt/MDu9UIbgfuz11RjEnP+j37LfgfWzKYm9n58xnXDzwzrW/I0ED8tXe7bIs0=
+X-Received: by 2002:a65:52cd:0:b0:502:ecb9:4f23 with SMTP id
+ z13-20020a6552cd000000b00502ecb94f23mr81084pgp.5.1678990301345; Thu, 16 Mar
+ 2023 11:11:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: When exactly should REBASE_HEAD exist?
-Content-Language: en-US
-To:     Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
-References: <961e68d7-5f43-c385-10fa-455b8e2f32d0@haller-berlin.de>
- <374f83c2-7bf0-38be-26ae-de28340c37d2@dunelm.org.uk>
- <f28bb5a7-ec68-dce2-9b63-7bfb5330c33e@haller-berlin.de>
- <db9f3be7-097f-006e-927a-91be7a50360c@dunelm.org.uk>
- <3ab454f1-2bb5-d990-4cc4-4e2fde2ba294@haller-berlin.de>
- <97eec89b-6a10-434a-a9aa-54c266da7fb1@haller-berlin.de>
- <18763465-de3b-7e64-129b-1f9337ea1924@dunelm.org.uk>
- <4d13d02a-ddaf-7b8f-7a27-c7a030816523@haller-berlin.de>
- <722659e9-02ac-a9d2-b0fd-b9a2a3d85753@dunelm.org.uk>
- <805626af-b147-d3cf-5257-a5b90b7cf1d9@haller-berlin.de>
-In-Reply-To: <805626af-b147-d3cf-5257-a5b90b7cf1d9@haller-berlin.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230225180325.796624-1-alexhenrie24@gmail.com>
+ <20230305050709.68736-1-alexhenrie24@gmail.com> <20230305050709.68736-4-alexhenrie24@gmail.com>
+ <kl6l7cvsi006.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <CAMMLpeRGEETraueJTTV0tJSsycNYF24YX8n6h-pMp87VcCRJtQ@mail.gmail.com> <kl6lzg8cvby2.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6lzg8cvby2.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Thu, 16 Mar 2023 12:11:28 -0600
+Message-ID: <CAMP44s3hH0Gw71UAm10Os=6YJ4RAoAJxC3exN_jekMy6-JRsVg@mail.gmail.com>
+Subject: Re: [PATCH v6 3/3] rebase: add a config option for --rebase-merges
+To:     Glen Choo <chooglen@google.com>
+Cc:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
+        tao@klerks.biz, gitster@pobox.com, newren@gmail.com,
+        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
+        sorganov@gmail.com, calvinwan@google.com, jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan
+On Thu, Mar 16, 2023 at 11:57=E2=80=AFAM Glen Choo <chooglen@google.com> wr=
+ote:
 
-On 10/03/2023 17:42, Stefan Haller wrote:
-> I tried the algorithm now and seems to do exactly what I want, so thanks
-> for the help with this, I'm happy now.
+> If users cleanly separate the two concepts, I think it is quite clear.
+> (I'm not advocating for this approach, but) e.g. if we pretend that each
+> behavior were configured separately, like:
+>
+> --[no-]rebase-merges [--rebase-merges-mode=3D(rebase-cousins|no-rebase-co=
+usins)]
+>
+> I don't think there would be any confusion.
 
-I'm glad you've got something working
+Not being conversant with these options I agree the above isn't confusing.
 
-> There's a slight correction though: if a command is rescheduled, then
-> git appears to re-append the last successful command to the end of the
-> "done" file (it's in there twice now). So I have to check the > second-to-last command of "done" against the first command of
-> "git-rebase-todo" to find out if a command was rescheduled.
+> (Having --rebase-merges-mode
+> be a no-op without --rebase-merges is probably even more confusing to
+> users, plus this would break backwards compatibility, so I don't think
+> this is a good idea at all.)
 
-Oh, sorry I'd misremembered how it works. I think it is actually a bug 
-that we write the last successful command to "done" again when 
-rescheduling but it sounds like you have a reliable work-around.
+I don't find it confusing. And how would it break backwards
+compatibility if --rebase-merges-mode doesn't exist now?
 
-Best Wishes
-
-Phillip
-
-> -Stefan
+--=20
+Felipe Contreras
