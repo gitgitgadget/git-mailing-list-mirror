@@ -2,123 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FF75C6FD19
-	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 17:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC958C6FD1F
+	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 17:28:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229540AbjCPRPS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Mar 2023 13:15:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54666 "EHLO
+        id S229850AbjCPR2k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Mar 2023 13:28:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbjCPRPR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2023 13:15:17 -0400
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD7F6E049
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 10:15:16 -0700 (PDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id e12-20020a4ada0c000000b0052cdbbdc803so349314oou.2
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 10:15:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678986915;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5NJ0nSplYU/aH4j0iYZ4h6RSkhSmh60ZsvyNsNsmOTk=;
-        b=QIkF9OeQ9wqVxri+n61W2n9KK/YznamrfQpbC+Q8rlsPcnUTlsePeqiOohCj/Fo6rI
-         Ht1bL/tsKV50ZLrExjjP/sohgAy0y0mOMa96Pwj/KTYji6zbszI896fvRe5BT9DZxJyM
-         DLmKdiN0Em2Jb5TWuJY5TmH/vInOOCq2n19au2QUfbLSeX2EQuVXZYUY4beeOv3wg5u6
-         hg7Qumc7JrTptCxWvj21/YYD5clds2AFdKDIiJFJ6TzBDh7SdKVzQqnqjIU1l863Y9b2
-         ICsMOPZElRFF0v0w26DqEe6KPbsBw2TJ91yJKbusMgKcoIGgBurw0J9DtfGQPQdyH9Os
-         H+MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678986915;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5NJ0nSplYU/aH4j0iYZ4h6RSkhSmh60ZsvyNsNsmOTk=;
-        b=b2AZn6kfhTy1wcNDyCO0XfW/RCLxwNJKNJTaFMyL8QAHyJT8/Kgw3yU92Uvx2rCniY
-         V4STqHHuKGKTKXYoK4FcCL1r69xJB8dP6obEjaQo8VdZfrA5n71v/gXWmlqre9B499XS
-         TiRbtQjQeObNUx2OHBk4iPMG771x83mRWSmI9RIUlVNVpd/f4w9gEaVLLS13Q6VTFQap
-         p9uQAa9+JuAJb2v9CQqrNFOkp8OjkHo3LDzPQkH5o3+WrWGjkWBlsyiKJgbJKZ873YMO
-         UF/yzoKCh/svXXYexUqMkZb6UbN2ofAZpnSfl4dzwMhu1hQTY1+saRgnJQjQiGTwqNP8
-         Ayog==
-X-Gm-Message-State: AO0yUKVdoe+7qTubQkJxf7UQFfl5Gz8oDdwc5Y8/FcVBxfqyO5JjTnbg
-        qT7GSedKPL46PfgEKMit8OXPes+NIK0=
-X-Google-Smtp-Source: AK7set9DNuS12rqIMUZB3xz8x1XzCk1I9fc35aFkiy5OUdJgcxB/gbicRhtsqSjDsEDU+FeYYEK8EA==
-X-Received: by 2002:a4a:95c6:0:b0:525:129c:6165 with SMTP id p6-20020a4a95c6000000b00525129c6165mr20651391ooi.6.1678986915698;
-        Thu, 16 Mar 2023 10:15:15 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id g1-20020a9d6481000000b00690e783b729sm37687otl.52.2023.03.16.10.15.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 10:15:15 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Denton Liu <liu.denton@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] object-name: fix quiet @{u} parsing
-Date:   Thu, 16 Mar 2023 11:15:14 -0600
-Message-Id: <20230316171514.23741-1-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.39.2.13.g1fb56cf030
+        with ESMTP id S229841AbjCPR2e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2023 13:28:34 -0400
+Received: from eostre.piobaire.co.uk (eostre.piobaire.co.uk [88.208.242.141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B478BBBB0A
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 10:28:32 -0700 (PDT)
+X-Virus-Scanned: amavisd-new at piobaire.co.uk
+DKIM-Filter: OpenDKIM Filter v2.11.0 eostre.piobaire.co.uk 32GHSIt5721791
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=piobaire.co.uk;
+        s=default; t=1678987711;
+        bh=TFKFJmTkzveazb0CXfinfxhotI2Usg68NH06SuZ+UCs=;
+        h=From:To:Subject:Date:From;
+        b=L6FM9wLXUirtoq+HyyzAV9LTRiPGXqx74d+yE2pkwc5tko3Pr3q5ci7kAo+nXEiqM
+         ScoRa57H6fZPdbxOQgUat7pTRq9RhDIS3p7bBeVAfuw6kuUmYtBG2Y3xuNfMjR5yhy
+         rXH4VhTwCqg1nXFKLcgSKLDx1iCy1+cL2nkN+UlDHfiOniaIzVkrNCar+Nbd/cT9iC
+         WZ7EnBlTL2c90eBbCWmszP1JKgbaxrdgloZmr3pJwHwpnnrAtWDJ6pfVHpBjVwZMT5
+         DcFJwEk+1JowjDbyinFFwhx8twhP2uD65Z5g7cVFnopitfFnX5CsZYr8h4HbilFfNE
+         Jt1pWQr+9MBnQ==
+Received: from niamh (33bba5db.skybroadband.com [51.187.165.219])
+        (authenticated bits=0)
+        by eostre.piobaire.co.uk (8.16.1/8.16.1) with ESMTPSA id 32GHSIt5721791
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 17:28:18 GMT
+From:   "Brent" <brent@piobaire.co.uk>
+To:     <git@vger.kernel.org>
+Subject: git-p4 issue
+Date:   Thu, 16 Mar 2023 17:28:14 -0000
+Message-ID: <016b01d9582c$b3ba0be0$1b2e23a0$@piobaire.co.uk>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQE3flvrjvmVX0RcbtGUALEXnIECIg==
+Content-Language: en-gb
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently `git rev-parse --quiet @{u}` is not actually quiet when
-upstream isn't configured:
+Hello all,
 
-  fatal: no upstream configured for branch 'foo'
+I=92m having some trouble with git-p4 and wondering if anyone can =
+advise. I
+have tried to google the problem but as I=92m a P4 admin not a Git admin =
+I=92m a
+bit lost.
 
-Make it so.
+I can clone the P4 branch I need OK, but then when I try to run git p4 =
+sync
+afterwards I always get an error such as:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- object-name.c                 | 5 +++--
- t/t1507-rev-parse-upstream.sh | 5 +++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+Doing initial import of //<snip>/<snip> =A0from revision #head into
+refs/remotes/p4/master
+fast-import failed: b"warning: Not updating refs/remotes/p4/master (new =
+tip
+fd3d39549d1d025f3657ab38c3e450d92309dfbe does not contain
+0cd5897229761558ef01a6b87c702c86e9bfffd2)
 
-diff --git a/object-name.c b/object-name.c
-index 2dd1a0f56e..d9f3a176d8 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -898,6 +898,7 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 	char *real_ref = NULL;
- 	int refs_found = 0;
- 	int at, reflog_len, nth_prior = 0;
-+	int fatal = !(flags & GET_OID_QUIETLY);
- 
- 	if (len == r->hash_algo->hexsz && !get_oid_hex(str, oid)) {
- 		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
-@@ -952,11 +953,11 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 
- 	if (!len && reflog_len)
- 		/* allow "@{...}" to mean the current branch reflog */
--		refs_found = repo_dwim_ref(r, "HEAD", 4, oid, &real_ref, 0);
-+		refs_found = repo_dwim_ref(r, "HEAD", 4, oid, &real_ref, !fatal);
- 	else if (reflog_len)
- 		refs_found = repo_dwim_log(r, str, len, oid, &real_ref);
- 	else
--		refs_found = repo_dwim_ref(r, str, len, oid, &real_ref, 0);
-+		refs_found = repo_dwim_ref(r, str, len, oid, &real_ref, !fatal);
- 
- 	if (!refs_found)
- 		return -1;
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index c34714ffe3..549eb315a9 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -183,6 +183,11 @@ test_expect_success '@{u} error message when no upstream' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '@{u} silent error when no upstream' '
-+	test_must_fail git rev-parse --verify --quiet @{u} 2>actual &&
-+	test_must_be_empty actual
-+'
-+
- test_expect_success 'branch@{u} error message with misspelt branch' '
- 	cat >expect <<-EOF &&
- 	fatal: no such branch: ${SQ}no-such-branch${SQ}
--- 
-2.39.2.13.g1fb56cf030
+Can anyone help?
+
+Cheers
+
+Brent
 
