@@ -2,139 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E5DC6FD1F
-	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 15:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91583C6FD1F
+	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 15:07:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229939AbjCPPGW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Mar 2023 11:06:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55660 "EHLO
+        id S230309AbjCPPHT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Mar 2023 11:07:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230309AbjCPPGT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2023 11:06:19 -0400
+        with ESMTP id S229732AbjCPPGu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2023 11:06:50 -0400
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F209C2DAD
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 08:06:18 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id E8EB532008FF;
-        Thu, 16 Mar 2023 11:06:17 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 16 Mar 2023 11:06:18 -0400
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 443F7BAD0B
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 08:06:49 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id A9246320077A;
+        Thu, 16 Mar 2023 11:06:48 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Thu, 16 Mar 2023 11:06:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1678979177; x=1679065577; bh=j9
-        ionya3K5DCcKOhfhO58ieOmubM5Xl9qgLFwkI2XwE=; b=gTF97om8jEW5zACNnp
-        9V4ONBSyZNxkZN+0o0ma9QqpjXLcA6WNAV4qMobkEJfI2XsqsGLUWAPy5e5bPqPG
-        y98B0KzzazCOa9kheyaeKhOjFp+rmzfIIcTojaKdeAFPoCivGEDHcFBSZRLi7Z+u
-        NMP5QCnkVofwcJt/8CYRFS2sDVyV8ibYKdqEoeqYzEtVfLwByPl0VipJfxdnZ64y
-        ux/oeMX9QJiKkEBGVkF1DUKCX0BOmijTNxSFaVMNjVNccOpwPqMRJ9Ff/O/8LseE
-        2KQ5PYqSTqWXK3JLmU/DhN2qkBHeIuWJezol+9iLeW2YtjqMPwdcthqml+vV+1mn
-        /j3Q==
+        :subject:subject:to:to; s=fm2; t=1678979208; x=1679065608; bh=d2
+        bNTRn4ZiaLgOMTAaAVaPuGnVQTFKjPyuBTFF/J8Q4=; b=DE00qJHPRpxY5N67qN
+        8l9IJlk198xRZz5H/HpluFFMQDit8+4qDKZsdgYr5ZqrhdzvERB7k+aRp0gW6L/1
+        oFoGkybVLaE53ipuRA+uUEwzSVrcJUjwA3QumafddpICu/xROHLR0KjGtO57kw2h
+        bo1uWABhA1NaH0yF9aooEQ8nyrhigJHCUYaOdbluyPcbvM7HF/qv242MvBjs29u6
+        Y8uExZMKKRoNl1NJAVdgtrihpx4YATlUIBUwiA2QaNksdrSbeMm4xIIvhl2v7ew+
+        HHjmRWffDyyNVSwte/mqD4OWTqO/V9ubRY4/SVvK5yqxoOGZkiqH7Tui1Nfejy1Y
+        yFPw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1678979177; x=1679065577; bh=j9ionya3K5DCc
-        KOhfhO58ieOmubM5Xl9qgLFwkI2XwE=; b=hHA2aP7wyQomU3jhqx+LsHG4sUoo8
-        raTIjvBH2rZukQYuHt9ukRf1cxYJ1wxTqQVa8TvwlXfCRyjlauQc+n4u2bw4NEfW
-        VcEqBkWcH9V9Iu+EK2wYHP8HT63E/U3XlqLVv81qfqUO6yP/XftXyKiDlcbCTZEg
-        ZO19wiScTWlO/VADg+ZFFf0CDqAZiSaaLGW1X8Gmw1eeVvPdFl/ach0Ls9eO03XR
-        jy2oY+h/zKmLJJDOjjuOSDa0ua77+MjzjxmizuluqcMDuoFOIvP4f+jCLD09Dy+X
-        yq+KO94tis6ZH8rOHRjwlOkrWo3hUXRf5Mr+FKhUiQGx2c5Sy7wQtx70A==
-X-ME-Sender: <xms:aTATZLshqiXE9gaM3K3mNg5ME3QGTHTAXb1-CoYaDjy7Rdu4yZj9gQ>
-    <xme:aTATZMd6GG7Gb1ETfEK3ykjMdSLamFeecW710_W_Rk2Q60PIEQE8GeLWncUY8XOdk
-    Yp1YH793TccHyoEAQ>
-X-ME-Received: <xmr:aTATZOxoj5f0M5K8q0C3j7o3aFRduJbioyn7Ndb2d8trtMoT_Jj5S00wQHiq2uiBIKEwSrpysLBkEwSUNp9L8IfqZt7Xi_OSmf8i__rMczvgPgOW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeftddgjedvucetufdoteggodetrfdotf
+        :x-sasl-enc; s=fm2; t=1678979208; x=1679065608; bh=d2bNTRn4ZiaLg
+        OMTAaAVaPuGnVQTFKjPyuBTFF/J8Q4=; b=o4dRKIbi+NfPsvUOY8EAT52F7PEkQ
+        6TksvWXzvh33a0/4TFBMVwqqXDuTI6WgG0DPBUE8E4u0lgdXk+VyOjR2mC2jSzcO
+        1yksBaQaP+yhlsh1nZ7AdeVMQiNzkScwKsv0kj6k0Y58Dh2sFO2E4+hT8+NPPvUr
+        C43FKof/q2r/ra2NXVySqvZM4PemP7RaM+zhfkzB+3WnaagWTBV7RjRHsmsWB7bu
+        LNdl+XIIthV/cg6yEvoLD7uxthpbWU1WJinBkNrIxXcQRT3U4q+2qFsgOBABkB74
+        0jQXnNbLvuo8Mjpkonv/T4IOV70XBTLaV79iuhC9oABLGtXuFeDObCUaw==
+X-ME-Sender: <xms:iDATZGPK59tjNV_ISAUVMnPQ4rrKQSbcdigtHv7trlN5HF2IdBAzUA>
+    <xme:iDATZE86wJZywLha-J8LZyYJPk1PhSXmu9_Iyo28NiBiE8slMnRbHgM0HNeU9m8A6
+    f7x-i80jb4pVe63ZQ>
+X-ME-Received: <xmr:iDATZNQlcB7FHmyhzUIclRlJvuMsuJw9UWPTi08joF205OmhWM5myb-bbDEZAhnE-oLb5-u5Ym6u9zglEEVeeHqTrgiXeFBkMB9GQTTspjV65fC->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeftddgjeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
     eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:aTATZKMgxwY7QjI9ErY6UnZKUe18eoq9JkBNuF6tNBMRA-MfUbT08w>
-    <xmx:aTATZL8bo3ZkoYcl8mFceQ3G4se8yRtwMT5GJBZFhgtOqIeM6mMyXg>
-    <xmx:aTATZKUGW8XdJCkXaHcR6e4VC4UNbkSWpnTqMIMsU_aa4GO2cSG4ew>
-    <xmx:aTATZIE3EIKp4v1Uo8L275mzdVhfO5aVraeLAgtYN-49Vr1qyHKI8Q>
+X-ME-Proxy: <xmx:iDATZGv_D7QO4j52Sibk2TZtyW3GuqvjLR-X3-GISUlSuODF85iFlA>
+    <xmx:iDATZOemMYecOkYHtfMtAVc-7Ez56vcwZLs5LpMGoj_XOzK9d3w7DA>
+    <xmx:iDATZK028tvedamRMIgmnQ3ke0P4syrTNiiZdG5xToQzvuOEu1e5Dw>
+    <xmx:iDATZGmp5N8W95XjX5AM8rdX_ra-pwLS8o0lsG0xF2aW3QcACTmT2Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Mar 2023 11:06:16 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 071b1b56 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 16 Mar 2023 15:05:51 +0000 (UTC)
-Date:   Thu, 16 Mar 2023 16:06:14 +0100
+ 16 Mar 2023 11:06:47 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 5ae12171 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 16 Mar 2023 15:06:21 +0000 (UTC)
+Date:   Thu, 16 Mar 2023 16:06:44 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 6/8] fetch: deduplicate logic to print remote URL
-Message-ID: <ZBMwZvQOooFiIl6S@ncase>
+Subject: Re: [PATCH 7/8] fetch: fix inconsistent summary width for pruned and
+ updated refs
+Message-ID: <ZBMwhLgGeUhtd5Zb@ncase>
 References: <cover.1678878623.git.ps@pks.im>
- <2ea3a4e308d2fb89f24d0cd2efc9d3867983a4b0.1678878623.git.ps@pks.im>
- <xmqqy1nxmxdx.fsf@gitster.g>
+ <f67f9640a853b605dd1bc4be25e9988c4f059684.1678878623.git.ps@pks.im>
+ <xmqqttylmww4.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="yE3PW4RAIcPmLtjq"
+        protocol="application/pgp-signature"; boundary="9V2unSEwLljJ/4wU"
 Content-Disposition: inline
-In-Reply-To: <xmqqy1nxmxdx.fsf@gitster.g>
+In-Reply-To: <xmqqttylmww4.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---yE3PW4RAIcPmLtjq
+--9V2unSEwLljJ/4wU
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Mar 15, 2023 at 04:02:18PM -0700, Junio C Hamano wrote:
+On Wed, Mar 15, 2023 at 04:12:59PM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > When fetching from a remote, we not only print the actual references
-> > that have changed, but will also print the URL from which we have
-> > fetched them to standard output. The logic to handle this is duplicated
-> > across two different callsites with some non-trivial logic to compute
-> > the anonymized URL. Furthermore, we're using global state to track
-> > whether we have already shown the URL to the user or not.
+> > As the abbreviated hashes may have different lengths in order to be
+> > unique we thus need to precompute the width of the summary's column by
+> > iterating through all the objects. This is done in two locations: once
+> > to compute the width for references that are to be pruned, and once for
+> > all the other references. Consequentially, it can happen that the width
+> > as calculated for these sets of references is different.
 >=20
-> If we are certain that store_updated_refs() is called only once for
-> the entire process, then storing the preprocessed url in the display
-> state and passing it around does sound like a good optimization and
-> clean-up.  What do we do when fetching from multiple remotes?
+> Hmph.  Use of ref_map vs stale_refs as the parameter to call
+> transport_summary_width() is to come up with an appropriate width
+> for showing the list of stored refs vs the list of pruned refs, so
+> from that point of view, an appropriate width for each list is
+> calculated to a different number may even be a feature, no?
 
-We execute separate git-fetch(1) processes when fetching from multiple
-remotes or when fetching submodules, so we should be fine here.
+I'd say it's not. Look at the following output generated by a `git fetch
+--prune --no-progress` with a deleted and an updated reference:
 
-> > +	display->url_len =3D strlen(display->url);
-> > +	for (i =3D display->url_len - 1; display->url[i] =3D=3D '/' && 0 <=3D=
- i; i--)
-> > +		;
-> > +	display->url_len =3D i + 1;
->=20
-> This loop is inherited from the original, but we may want to use
-> strrchr() or rindex() as a post clean-up after this series settles.
+    From /tmp/repo
+     - [deleted]         (none)     -> origin/to-be-deleted
+       82307bb..107b50a  main       -> origin/main
 
-Yeah, that'd make sense.
+Before my change, the width of the deletion and the reference update are
+calculated separately. Given that:
+
+    - we don't even display the object IDs for deleted references
+
+    - the width of the deleted reference's column is static anyway.
+
+I'd argue that it's not a feature that the widths are computed
+separately. If it was, you could just skip calculating the width of
+deleted references and just print them with a static column width.
+
+The current implementation tends to work in most cases as the column
+width is based on the minimum length where all abbreviated object IDs
+become unique. And I assume that it's the same for both sets of refs in
+the majority of cases. And in the other cases I guess that nobody cares
+much anyway.
+
+Practically speaking we could go even further than the current version,
+as I now compute the width across _all_ reference updates, even those
+which are deletions. But theoretically speaking, we could just skip over
+any deletions completely as they won't ever contribute to the column
+width anyway.
+
+> I do not mind either way all that much, but a change like this to
+> update the presentation may want to be protected with a test from
+> future breakages.
+
+Fair, having a test for this would be great. But what kept me from
+adding one here is that the column width depends on the length of the
+longest shared prefix of two object IDs that are about to be updated.
+And I just have no clue how to generate those without brute forcing them
+for both SHA1 and SHA256.
+
+Do we have any mechanism for this?
 
 Patrick
 
---yE3PW4RAIcPmLtjq
+--9V2unSEwLljJ/4wU
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQTMGUACgkQVbJhu7ck
-PpSbAA/7BzbnPCVS7H7MpUFSQ18j2R5XVSNaf7jDaGIPb9MgHaeoNHkNJE7aP7uK
-Io3JcapzaDi5rDZyMjYwU6wmKbVl4EFZCOfqXh7E28hoPJxHU95RqweTRgsCmDG+
-eG6rh/rMcs6hMHtoWM1EB7zeoLmM1+FVq9rrjajIn68hVCthasE6snePoe/S+Ivj
-iL/2DA1MHoDsycBZrqsLdCozZpNPX3xJZGN3eJKpHmyYDMb92QP09WZJCJdlho3S
-7SrOGFmD5KvG5MqapGnFucSX9qCaQMcm7FcCsXao9Cf+rU6Klp2cdd4QF4iCA61E
-dcw+yzMdzeq0/V7gv/pueV3I+nS8Ytp/Bng3O9NVd18aRIO+jnXBmkFgV7oBWIGF
-Tea4ChuHkZXbpQifrXS0QC8iBrbjZQfwocFCRVDqWWgl+7Nro5/HSCHUdQagTldD
-mWkNv3C2IxK/1hwfPprqoQNNp3ef77lsjeCXS6lM8h68ovyC0EWMHIVcTztArU7F
-WO9bPq3gz384rAKoZ/yid7FuX4Igc51aZdcmz8BmwVjwTnVxbjPik/WfkY0jV9hr
-eHVdH5QYqyOos0bfaA42N2u1F9EMM4emecWN8jSiApK/2BRZxiYzOfRa2pbxXIzv
-vAMBP7kH6L0TMMJ9oSoyjqBbmhq6F1+WXO51lj9aTCY0j3KECII=
-=ONic
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQTMIMACgkQVbJhu7ck
+PpTKYg//dViI65/A2Bb+jEdSjQezqm2bBwY4WDdsixEe2NjHi6268W0MoTc+qVWN
+KpqJphUSP0VabagmJ95Gvr+0n9Nypk+VRYpMIOXIsq7CLafgrJfBqDSvARVZ2lqc
+T7RQ1U85Vh3rKtcunKMUE8cuUY9jCtPGjX5CQ2OebcYSKiJOH0wyZqURQPKaRhHI
+hPAhm3xERwFmezTvMegX9xwb9EwpzhM2jWDsoBRLmXfxvW+jQsSwzy6nG7lj3vgg
+hRmiGsPu/OOFthiZWwNgrhN27efme4029QJ/8REP/Ff5pQ3GxaIHaDbQLiE/mUzS
+w5Ee1g+vsgfAIvf/4B60i/y9EX+jwSxdrHFTy1/8Ley/U8mNjXFwNEvNJxQFBlMf
+z+fgfa7JqDMHJd04QB0/96RVlCH4BhTUyPhmat/I/h1gQ0EMEp/tvy4mZPrdVshp
+wYltubxOLTfDyTGwAV3jN7y4EdgqtqDSpYTM5IqGyRqRJeHzMb0sEYYXL0q0dbV8
+/shWoMEWg8DOmcME0peJe32VHLgT8/XsdNjH3BwykJWbaAS/Es7nHUoJl5uKs7gd
+L1/vbB8VsArbcDHoo+dSvINs64bbwxKfGcJoYxxYMP4/A4Alsgm4oJn38RmUgSjk
+pZqG5rliYR1LXR/P5i1Bv114KAMhlcW5EijjnHyL3457YO9JmOc=
+=8Xdp
 -----END PGP SIGNATURE-----
 
---yE3PW4RAIcPmLtjq--
+--9V2unSEwLljJ/4wU--
