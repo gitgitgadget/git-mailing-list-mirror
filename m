@@ -2,89 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28563C6FD1F
-	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 16:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FF75C6FD19
+	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 17:15:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231229AbjCPQup (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Mar 2023 12:50:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46312 "EHLO
+        id S229540AbjCPRPS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Mar 2023 13:15:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229878AbjCPQun (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2023 12:50:43 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1B8BE5C0
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 09:50:40 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id h8so2390063plf.10
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 09:50:40 -0700 (PDT)
+        with ESMTP id S229489AbjCPRPR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2023 13:15:17 -0400
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD7F6E049
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 10:15:16 -0700 (PDT)
+Received: by mail-oo1-xc2d.google.com with SMTP id e12-20020a4ada0c000000b0052cdbbdc803so349314oou.2
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 10:15:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678985439;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9KjptdF+6ex6St18feRfWREZH9VSj9aL5kllMeaKODI=;
-        b=PUgczCc+uzVnvJ/et8Mno+w/yBobFPrzBQVxrmhIeI1mHogJK5AGBNf5r3iEmJi+XX
-         en0u2x6NV/JfUD/iEU1T30TtOIOBXm7QQVfdwPs48XCHN51I+h4E2qTkvUHQNZMu8x0j
-         MUvwkWbfQctItjF5L4wjpuc5acvsoih/YUzAHsaIq06Q5fR/impJNgum7bTnqyL/vBhG
-         pu3ipsXwmUD9tmkRw0CWUZkngWBg3nOsYaEDP0QDwGWQD/4EYuFQse1xaVzm96dU2DcM
-         UhP2IQEyPTGdtdvV6T7esGJTb0FRY62nEBSh7mTeRs4UzH6InVcnAzomrRQta3okdngK
-         n/sw==
+        d=gmail.com; s=20210112; t=1678986915;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5NJ0nSplYU/aH4j0iYZ4h6RSkhSmh60ZsvyNsNsmOTk=;
+        b=QIkF9OeQ9wqVxri+n61W2n9KK/YznamrfQpbC+Q8rlsPcnUTlsePeqiOohCj/Fo6rI
+         Ht1bL/tsKV50ZLrExjjP/sohgAy0y0mOMa96Pwj/KTYji6zbszI896fvRe5BT9DZxJyM
+         DLmKdiN0Em2Jb5TWuJY5TmH/vInOOCq2n19au2QUfbLSeX2EQuVXZYUY4beeOv3wg5u6
+         hg7Qumc7JrTptCxWvj21/YYD5clds2AFdKDIiJFJ6TzBDh7SdKVzQqnqjIU1l863Y9b2
+         ICsMOPZElRFF0v0w26DqEe6KPbsBw2TJ91yJKbusMgKcoIGgBurw0J9DtfGQPQdyH9Os
+         H+MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678985439;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=9KjptdF+6ex6St18feRfWREZH9VSj9aL5kllMeaKODI=;
-        b=NdySfV8Ct7maGbV/HMEg58u/j69/VXP1noFKPflgXjdDjLwAGHbYTvvdVS86jnweBi
-         I+1d8+1/DvDoAH/7g/x8m0LXxY1ozYRl9YfLXA67VzxSiIeIgNxLFuAU1VU4J16BowjZ
-         HXqEoBi3wuUq9qmcSlcjmlocksjV9GkNNN18hGu5mGcduZCTQ37GIKBlQIAYn9u7+3cg
-         dHSuxxSUDShXc1x+RpDXNEqeTxjHOQbtMfAnA03xiw4M/kAiy0oUG+0IOqEapLBLYERt
-         Cf08Gp8AYfNYwnt1l6gdfNoIX8k85CJxiymutQjRWJQSdmpcZzbzTFGxbu49z9K3O+hx
-         /dUw==
-X-Gm-Message-State: AO0yUKVGasH3FoBtMnN4LG3FYh0dinjpfj3eNob5YJ7wFgm6g4K7W+ve
-        goJczuIq2q8KVzPWfMFkGKjY/2uQU7Q=
-X-Google-Smtp-Source: AK7set8tOTDcd2f7uangUHHWx9Zab5Gg6zKbDmExRZ275DmZcK+Y2MKVRaa+vyPv3+w36dOeV4p9KA==
-X-Received: by 2002:a17:902:ce85:b0:19e:dc0e:1269 with SMTP id f5-20020a170902ce8500b0019edc0e1269mr5025527plg.7.1678985439626;
-        Thu, 16 Mar 2023 09:50:39 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id kn3-20020a170903078300b0019f114570b0sm5875930plb.152.2023.03.16.09.50.39
+        d=1e100.net; s=20210112; t=1678986915;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5NJ0nSplYU/aH4j0iYZ4h6RSkhSmh60ZsvyNsNsmOTk=;
+        b=b2AZn6kfhTy1wcNDyCO0XfW/RCLxwNJKNJTaFMyL8QAHyJT8/Kgw3yU92Uvx2rCniY
+         V4STqHHuKGKTKXYoK4FcCL1r69xJB8dP6obEjaQo8VdZfrA5n71v/gXWmlqre9B499XS
+         TiRbtQjQeObNUx2OHBk4iPMG771x83mRWSmI9RIUlVNVpd/f4w9gEaVLLS13Q6VTFQap
+         p9uQAa9+JuAJb2v9CQqrNFOkp8OjkHo3LDzPQkH5o3+WrWGjkWBlsyiKJgbJKZ873YMO
+         UF/yzoKCh/svXXYexUqMkZb6UbN2ofAZpnSfl4dzwMhu1hQTY1+saRgnJQjQiGTwqNP8
+         Ayog==
+X-Gm-Message-State: AO0yUKVdoe+7qTubQkJxf7UQFfl5Gz8oDdwc5Y8/FcVBxfqyO5JjTnbg
+        qT7GSedKPL46PfgEKMit8OXPes+NIK0=
+X-Google-Smtp-Source: AK7set9DNuS12rqIMUZB3xz8x1XzCk1I9fc35aFkiy5OUdJgcxB/gbicRhtsqSjDsEDU+FeYYEK8EA==
+X-Received: by 2002:a4a:95c6:0:b0:525:129c:6165 with SMTP id p6-20020a4a95c6000000b00525129c6165mr20651391ooi.6.1678986915698;
+        Thu, 16 Mar 2023 10:15:15 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id g1-20020a9d6481000000b00690e783b729sm37687otl.52.2023.03.16.10.15.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 09:50:39 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/8] fetch: deduplicate handling of per-reference format
-References: <cover.1678878623.git.ps@pks.im>
-        <d45ec31eeaf42ee042bad04efd69668144df3138.1678878623.git.ps@pks.im>
-        <xmqq4jqlocqf.fsf@gitster.g> <ZBMwXAnEnD5QjsFE@ncase>
-Date:   Thu, 16 Mar 2023 09:50:38 -0700
-In-Reply-To: <ZBMwXAnEnD5QjsFE@ncase> (Patrick Steinhardt's message of "Thu,
-        16 Mar 2023 16:06:04 +0100")
-Message-ID: <xmqqv8j0ljxd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Thu, 16 Mar 2023 10:15:15 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Denton Liu <liu.denton@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] object-name: fix quiet @{u} parsing
+Date:   Thu, 16 Mar 2023 11:15:14 -0600
+Message-Id: <20230316171514.23741-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.39.2.13.g1fb56cf030
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+Currently `git rev-parse --quiet @{u}` is not actually quiet when
+upstream isn't configured:
 
->> So, I dunno.  The result of applying this patch leaves it in an
->> in-between state, where the division of labor between the caller and
->> the callee smells somewhat iffy.
->> 
->> Thanks.
->
-> I totally agree with you here. From my point of view this "division of
-> labor" is getting fixed in the final patch that then also moves the
-> printing logic into `format_display()`.
+  fatal: no upstream configured for branch 'foo'
 
-Yes, again I smell the same "isn't this series going a bit too
-roundabout route to its goal?" which I expressed in my response to
-an earlier step.  The endgame of the series, even though I may not
-agree with it 100%, is self consistent and does not leave the "this
-ends at an in-between state" aftertaste in my mouth.
+Make it so.
 
-Thanks.
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
+ object-name.c                 | 5 +++--
+ t/t1507-rev-parse-upstream.sh | 5 +++++
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/object-name.c b/object-name.c
+index 2dd1a0f56e..d9f3a176d8 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -898,6 +898,7 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 	char *real_ref = NULL;
+ 	int refs_found = 0;
+ 	int at, reflog_len, nth_prior = 0;
++	int fatal = !(flags & GET_OID_QUIETLY);
+ 
+ 	if (len == r->hash_algo->hexsz && !get_oid_hex(str, oid)) {
+ 		if (warn_ambiguous_refs && warn_on_object_refname_ambiguity) {
+@@ -952,11 +953,11 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 
+ 	if (!len && reflog_len)
+ 		/* allow "@{...}" to mean the current branch reflog */
+-		refs_found = repo_dwim_ref(r, "HEAD", 4, oid, &real_ref, 0);
++		refs_found = repo_dwim_ref(r, "HEAD", 4, oid, &real_ref, !fatal);
+ 	else if (reflog_len)
+ 		refs_found = repo_dwim_log(r, str, len, oid, &real_ref);
+ 	else
+-		refs_found = repo_dwim_ref(r, str, len, oid, &real_ref, 0);
++		refs_found = repo_dwim_ref(r, str, len, oid, &real_ref, !fatal);
+ 
+ 	if (!refs_found)
+ 		return -1;
+diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
+index c34714ffe3..549eb315a9 100755
+--- a/t/t1507-rev-parse-upstream.sh
++++ b/t/t1507-rev-parse-upstream.sh
+@@ -183,6 +183,11 @@ test_expect_success '@{u} error message when no upstream' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '@{u} silent error when no upstream' '
++	test_must_fail git rev-parse --verify --quiet @{u} 2>actual &&
++	test_must_be_empty actual
++'
++
+ test_expect_success 'branch@{u} error message with misspelt branch' '
+ 	cat >expect <<-EOF &&
+ 	fatal: no such branch: ${SQ}no-such-branch${SQ}
+-- 
+2.39.2.13.g1fb56cf030
 
