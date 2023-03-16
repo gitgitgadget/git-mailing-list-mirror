@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FCABC74A5B
-	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 22:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5719C76196
+	for <git@archiver.kernel.org>; Thu, 16 Mar 2023 22:30:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230241AbjCPWXa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Mar 2023 18:23:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33338 "EHLO
+        id S229652AbjCPWaJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Mar 2023 18:30:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230300AbjCPWXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2023 18:23:11 -0400
+        with ESMTP id S230281AbjCPW37 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2023 18:29:59 -0400
 Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB7E1B8544
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 15:22:09 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id l84-20020a252557000000b00b61b96282a4so1374562ybl.0
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 15:22:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D43D9B7193
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 15:29:26 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id l84-20020a252557000000b00b61b96282a4so1389856ybl.0
+        for <git@vger.kernel.org>; Thu, 16 Mar 2023 15:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1679005323;
+        d=google.com; s=20210112; t=1679005765;
         h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=vmceiWiTOAnD6dKaxW14PFwmb0hW8xX27Yy7g6cZUeA=;
-        b=PgsskQIVI45AgYmk8g5Msg42n8YpL5tdL+IG2Q70ZlGNBzLeOtWejvM/1lpf7gjT9z
-         VJP9URYAlcNPGreSp3mR0+Sji0hruh6qA6i55xHhMmDOYLFdpr3jzoMsFhd5l7LLn0yW
-         qVfDg3LjN4RSD0GE0BENP9TgLWYeOAj5TI2K1ZnE+2BrPXme+yXnmDGei39hXyuvpX2/
-         QLsovQxu/TFtwowthVCisKegiMyJIgcNO6oDlYJ6GluGxzqo2tRyoG15pr5dskJUcFNA
-         OzUyIgwK1jKAEo7/8ijiWyfF6egAX8h0Mm4n72E9OAxFzOd6hlO21dpaIFSAgW9gk9V1
-         XmFA==
+        bh=uubF65/pfPy4h6mNk2dcg+vr8YJqDvdvuyPu/c9E3Ts=;
+        b=J5TmHMcIwe6/47+Ru93x2G1cL8uam/B0TCVggbspk4iSVqbS6PCR80VbaSZd4kzlUp
+         ah5eLk9Izairx/AVQvT+7wVRwVTYymm/mxW61rGD45ez1mbCIoWUNOUTMiaW01mHcQU7
+         PlL6DyH1NQWXL6GJp9I8VfFsXZBmi+w/pe5fiRMGdeeGGcDeES9WXpu9OU2V9ZQI/xLY
+         S9rrpezxXPXds5eypjg4YR83ZSgsmnJfNzzfUV8u4grYiqxHoxo/MIEQpk8YBABdZ4MD
+         51rQ0Evi/FxIab/3+FTrON24V3Jm7t2zE57v0swcGYe9oh+NJ9tXnq8OOSCVlcEjaTOC
+         E4Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679005323;
+        d=1e100.net; s=20210112; t=1679005765;
         h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vmceiWiTOAnD6dKaxW14PFwmb0hW8xX27Yy7g6cZUeA=;
-        b=C0+Jc7bzfSs/NpIUlfYk/+4n+VgTPcWpawJKTk7I8w+kpCgUjX8Lr7vKuN0m7oRzcy
-         qivqps7CP2LPxdPet0ZjsAOS2Qu/C0/8BKlp3E012368h7tfZr7/mjPdSE9+laDoR00J
-         zq6y+RN1g3i7O3pBTkcz0mBaaHltvHakjgOgQHftmGUMOUXk1rd2e/S7ks07lDheinHm
-         hRbrj4678GtPdmq4czY1Ql6DG8f7lFOMkTsmf36R/wuGM7gMNfHN4Tz1dm7dxkJZrn9K
-         EYJERRLeCXwvm2/lZCG7aDSmipoxfZA6dQ6IeDqPdiwFCG2D6JjHBdiUai8U8eNZsDAg
-         RsGA==
-X-Gm-Message-State: AO0yUKXR+sTsIyWBAFg3e8QfSEjc1ILsL0KXksy7g4Uk34RSK8M3ON9q
-        iPa3+pNR3FywK6BlFBWkuoDQL5z9IMW6RdAC8xVk
-X-Google-Smtp-Source: AK7set/MpbLiCvPHnjTm0fajvZVPyOVKxYfHHjsJKkBOeMyzN2tayC7NndNjihIu3M/lWKY99BUgHmWA3qIyT7BobKwH
+        bh=uubF65/pfPy4h6mNk2dcg+vr8YJqDvdvuyPu/c9E3Ts=;
+        b=tGTKahoqOPqXdrexSBSsq6RnTOCfMeB+v8SLv4DHfNYk2N3l/rEhw/d0Dmz/EQIe/y
+         6rPVaBRTWfulDzwItdhy4bdZkg4LV+H1pZKmrYPOBn1pvNYrpyOWpJJHN0k5wBgVmUkA
+         q+15HBHrKT8hWx5SwBlIGh/rFp0yN0dipuyZSsq0vhkPtbWi2rjRhyw5r1yR4XHEdpRZ
+         3RoUH0y8uU+pKuQBj/t88LT+ngCFvJEimN6xeXbEfB/t3XeJscQ9JIABUyhBpaREjR4w
+         i9GJbqYDr+U33IYcJDAt+dhfJHFqjtDzWDeeqHwc658JiV5DM6b47tgrupaVhD6CIGqX
+         P+FA==
+X-Gm-Message-State: AO0yUKUS1nacHY2ZxWhDr4ufcEvmcESwsWmlxht5TiaiSvjLK3ddSG0S
+        xtr9xmj49HbcmdmI3WmBwvI75DBlNNAdknX6Vogj
+X-Google-Smtp-Source: AK7set+XtbiGon3LrUba6k/zIULjsdqb7u0drMCbZGK27Z8lY+S4prPYN1NUWYYJ1RYPqHggHTavqqtR66SARvF9ifzP
 X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:9170:84f8:2856:fe19])
- (user=jonathantanmy job=sendgmr) by 2002:a25:f50e:0:b0:b26:81e1:f928 with
- SMTP id a14-20020a25f50e000000b00b2681e1f928mr17503635ybe.1.1679005323618;
- Thu, 16 Mar 2023 15:22:03 -0700 (PDT)
-Date:   Thu, 16 Mar 2023 15:22:00 -0700
-In-Reply-To: <3c83d9535a037653c7de2d462a4df3a3c43a9308.1678925506.git.gitgitgadget@gmail.com>
+ (user=jonathantanmy job=sendgmr) by 2002:a5b:112:0:b0:b17:294f:fb30 with SMTP
+ id 18-20020a5b0112000000b00b17294ffb30mr22256475ybx.2.1679005765286; Thu, 16
+ Mar 2023 15:29:25 -0700 (PDT)
+Date:   Thu, 16 Mar 2023 15:29:23 -0700
+In-Reply-To: <pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com>
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.40.0.rc2.332.ga46443480c-goog
-Message-ID: <20230316222200.320596-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v2 7/8] config: report cached filenames in die_bad_number()
+Message-ID: <20230316222923.321352-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2 0/8] config.c: use struct for config reading state
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
@@ -65,31 +65,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ah, thanks for spotting this bug! It is a minor one, but this now makes
-me think that we should definitely do this refactoring of a struct
-containing all the relevant config state and passing it to functions as
-much as possible (as opposed to merely leaning towards the idea).
+So overall what this series does is to create a struct that contains
+config parsing state (roughly speaking...it's either parsing state or
+a "kvi" that contains some of the parsing state that existed when its
+value was parsed), starts a pattern in config.c in which that struct
+is passed between functions as much as possible, and establishes a few
+functions like reader_origin_type() that make it convenient to work
+on the basis of this struct as opposed to on the config_source and kvi
+individually. And following this pattern, I think, likely would have
+enabled us to avoid the bug in patch 7/8 and enable us to avoid similar
+bugs in the future, so overall I'm happy with this series.
 
 "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> Fix this by refactoring the current_config_* functions into variants
-> that don't BUG() when we aren't reading config, and using the resulting
-> functions in die_bad_number(). Refactoring is needed because "git config
-> --get[-regexp] --type=int" parses the int value _after_ parsing the
-> config file, which will run into the BUG().
+>    Introduce 8/8 to get rid of the confusing acronym "struct config_source
+>    cf", but I don't mind ejecting it if it's too much churn.
 
-You say "fix this", but are there actually 2 bugs (so, "fix these")?
-Firstly, that BUG() is run into when invoking "git config" the way
-you describe, and secondly, die_bad_number() only reading cf and not
-checking kvi to see if anything's there. (I'm not sure how to reproduce
-the latter, though.)
-
-> Also, plumb "struct config_reader" into the new functions. This isn't
-> necessary per se, but this generalizes better, so it might help us avoid
-> yet another refactor.
-
-Hmm...I thought this would be desired because we don't want the_reader
-to be used from non-public functions anyway, so we can just state
-that that is the reason (and not worry about using future refactors as
-a justification).
-
-The code itself looks good.
+I think patch 8/8 is not worth including, so I didn't leave comments on
+it, but I'm fine if it ends up merged too.
+ 
