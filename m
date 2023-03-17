@@ -2,76 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C7E3C74A5B
-	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 15:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5ADFFC6FD1D
+	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 16:15:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229962AbjCQPlh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Mar 2023 11:41:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53980 "EHLO
+        id S229887AbjCQQPL convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 17 Mar 2023 12:15:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229735AbjCQPlf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2023 11:41:35 -0400
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B8C73CE14
-        for <git@vger.kernel.org>; Fri, 17 Mar 2023 08:41:35 -0700 (PDT)
-Received: by mail-pj1-x102a.google.com with SMTP id cn6so5590533pjb.2
-        for <git@vger.kernel.org>; Fri, 17 Mar 2023 08:41:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679067694;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mTyT+4dr0VyAZOESbLLLFh54RjqpLdp8U3xFiQMTSc0=;
-        b=Lp+fWf/rg2eWacpugdlgEyKuTn+nbUCOKNSzRz26nW4vQXqIqgfI4GUxlBW6WeTqgI
-         0O/Z0KJF3t3SlDzfxgaNGiiRmB54QlTCG1rZpJIWFG577/kK4bxlEbA47MScpuTgfOSg
-         JRhuBl9WqMpGTeODFyHz0bHsscn4Xu2OAZC0/FFOpvaRRVxGH9U7jmDBf4ass0u+zIeb
-         rBQ06bqj3+h6iEf2Snpp/2DAVXUINEfsQ9fshOcLf+efv+nf88b8qW6/GishFTzt3Tp6
-         QGKMJjJ5m4uhnBEGYnRN1D7xlDmhAr+PYglqypBRb8Tiaa68N5ZNhBUoGMW6oOWdmjX3
-         nUhA==
+        with ESMTP id S229530AbjCQQPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2023 12:15:09 -0400
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2ADD399F4
+        for <git@vger.kernel.org>; Fri, 17 Mar 2023 09:15:00 -0700 (PDT)
+Received: by mail-pf1-f176.google.com with SMTP id c10so3410869pfv.13
+        for <git@vger.kernel.org>; Fri, 17 Mar 2023 09:15:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679067694;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mTyT+4dr0VyAZOESbLLLFh54RjqpLdp8U3xFiQMTSc0=;
-        b=1Xf3HxH7O3mOTiJTfqf9SQ6804fNGLw9s2XbhP23sDAATn6V30senBE02KhG6Ra7+s
-         7QvMA9J96CYo0OJYnFha5bsxmDTjh+NY8qs3DmEmaM7BZI4WDMEANVzRNBeC7SPnD/Nf
-         aXIcMi/2MhdJbgo2oUWETgYOmxEJS3wtO9gEybirdEJ7fpYqd0u2QHVlDrJuBrIHE1LR
-         eEirer5++lXA7NetbBlx1AiR9ZGr7+K6XjNwYCX+rTLoHDvx1BsiQI6Vdod+lnaLNzZm
-         snKl1nwim7awkyuMDOybqMAMGpHqzTfe6a46x+RKiMkYdKpbSt/Ze8VgCg5XC1jglrEz
-         FzSg==
-X-Gm-Message-State: AO0yUKX2POAOaJz8hy6/fGi8P2pfNMh6IXtPQx/4yBfaDg4gqWKePZyf
-        QmiSdW/lXe08QApRl7pG6uJnJAN2PdA=
-X-Google-Smtp-Source: AK7set8V1bh4JyTcEn77v+d4nqRZYEri9N10jTKLznBK7m2zaC9K8RncP8A5Ecj7BmNv9lbU1ZyaYw==
-X-Received: by 2002:a17:90b:1b07:b0:23f:5247:3334 with SMTP id nu7-20020a17090b1b0700b0023f52473334mr4255093pjb.19.1679067694482;
-        Fri, 17 Mar 2023 08:41:34 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id ce8-20020a17090aff0800b002339491ead6sm5178846pjb.5.2023.03.17.08.41.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Mar 2023 08:41:33 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/8] fetch: deduplicate handling of per-reference format
-References: <cover.1678878623.git.ps@pks.im>
-        <d45ec31eeaf42ee042bad04efd69668144df3138.1678878623.git.ps@pks.im>
-        <xmqq4jqlocqf.fsf@gitster.g> <ZBMwXAnEnD5QjsFE@ncase>
-        <xmqqv8j0ljxd.fsf@gitster.g> <ZBQ4Cqkq9v2cB77f@ncase>
-Date:   Fri, 17 Mar 2023 08:41:33 -0700
-In-Reply-To: <ZBQ4Cqkq9v2cB77f@ncase> (Patrick Steinhardt's message of "Fri,
-        17 Mar 2023 10:51:06 +0100")
-Message-ID: <xmqq1qlnidw2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20210112; t=1679069700;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7I6KxFhclo9U1e4TCcSSjnAJVeytjRWiEyTahDxOpCA=;
+        b=e6xKSdWMLc9FD/1tj9lxjSSe8Noz5BL/KdKPizo3YU8Xv2JB9H7HyX6BxNKctPkce4
+         p8VZbK7yof4eSJWJEQx2hxshp2i8gHep+N4VA+fpdUevaYDB7CNSRwkkkyYQ4z1yYbkK
+         yFG/jkFUgtiwMNUrafJPT0EldelqKBPKttgaj2aslOGm4dY2XVC5s9zYrN6QKLcz7EO/
+         U3pmA9/JapUsQmjlfY6X+86L00xUX0JrE9sSM6Q7U7szKfoaYRIhz+SY2FIjKAtKBPFk
+         vDJTNJ85Le1ix8KVdwcfxHtmr91u/qWkt6/2lm41+EzKsJlanBKIa0wx/L9qO7UTvyWl
+         V/fQ==
+X-Gm-Message-State: AO0yUKV8R6C40DAua6nAdFKbm2vx1Dlg5nmafBHa8Pdhgq4mLZ3Mxa7m
+        SSTL8PsmjKi9I17oSJE9eA3854FT8KFVUTnpw3c=
+X-Google-Smtp-Source: AK7set8gKN6BCtTxfA2DlGbtNmzGMSf1b64t0LLaA98CB3MZkbRGpALlTZTJZAhD4RwJFIq1N5lW23ySIl/Z2UtsRcE=
+X-Received: by 2002:a62:a512:0:b0:5a8:a475:918f with SMTP id
+ v18-20020a62a512000000b005a8a475918fmr2828346pfm.4.1679069699944; Fri, 17 Mar
+ 2023 09:14:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover-00.17-00000000000-20230317T152724Z-avarab@gmail.com> <patch-01.17-c167bde3c0c-20230317T152724Z-avarab@gmail.com>
+In-Reply-To: <patch-01.17-c167bde3c0c-20230317T152724Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 17 Mar 2023 12:14:49 -0400
+Message-ID: <CAPig+cQigE7n6Op=8_Ky58pgXNUcGDQ7u9mJNHYF3x_TAg-i_Q@mail.gmail.com>
+Subject: Re: [PATCH 01/17] cocci: remove dead rule from "the_repository.pending.cocci"
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Fri, Mar 17, 2023 at 11:42 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> The "parse_commit_gently" macro went away in [1], so we don't need to
+> carry his for its migration.
 
-> Maybe the solution is to keep the order, but document intent better in
-> each of the patches leading towards the unified printing logic.
-
-;-).
+Nit: ECANTPARSE "carry his for its"
