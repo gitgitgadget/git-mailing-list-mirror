@@ -2,325 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF504C6FD1D
-	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 05:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D6E4C6FD1D
+	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 09:51:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbjCQFBa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Mar 2023 01:01:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52384 "EHLO
+        id S230426AbjCQJvy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Mar 2023 05:51:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229838AbjCQFBX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2023 01:01:23 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3B17B06E2
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 22:01:20 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id i9so3355246wrp.3
-        for <git@vger.kernel.org>; Thu, 16 Mar 2023 22:01:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679029280;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bsaVfHXBcKemTCXldc4n+DmxkKkZetZryL+LR9ilXo0=;
-        b=I7cQwRXb/TRzhVpfIDiwLBNhvQ+H86YSfap7LJAWbnn2jCvzs8OH13hQN3uIQT7GLo
-         EOHpnqGMbS5JG7yhvcyMS0jiRu4hMoYGlR2ebRHI6thVptCHtCHJqMzornLlwGXxEzDY
-         3n7gdujqPWgro5WNeaJmOmApGxP+13wxLYF8qbt075Qp8+rfdc9rR3og4v3Qdg3oIPAB
-         YKy9ZJYpyVIticNEo+YsESUgtobtBStHTWmMGfgk4cNVm5mNFie63OQjwudrnGouwyHv
-         jlerCWuMQ4Pt0iXdcri3etp468+VCLkHiJwaE2AKQVbMXLmzL+ZxMLGGX73FKLMN/O8F
-         Mwew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679029280;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bsaVfHXBcKemTCXldc4n+DmxkKkZetZryL+LR9ilXo0=;
-        b=Ua74VRy8RrwQ/+c1fdyziF1XtzeaWrOPFu+fQiBE4H0SQFDozHCyKb+aEKtTh+6yvx
-         I30gHD5ALUVzKdT+M0uV6QHsZDzNivQXw40KWu2XGzB4ufL+7M/nqmGUcnPEgIBViZjO
-         IioVbjBuX2YMd9jLw3/SGsiY1F1lRDDOfWHwZQr73ABV3f3f6g18JIB31H1VTnOO8PWT
-         S+ddTbtxk06Fj5BtYF4uAckVvsR69n8q1DZ6f89Nto0TUEH1meeL2wCpOo1LPDIAso4J
-         6i4KmjYaKz2r4buwtko0eGz8GrcchwXI8sIr4mBmH4aoFdmkDTMJd2ojQcG4GzXuwcSS
-         NYHw==
-X-Gm-Message-State: AO0yUKV9TW11MYD1ou0xTMYoKqiCCRXhWLZ94NLA6hH4+xHgfTa2h2Zh
-        ovfaKpQHSTpr1M4jj2jkVFwddL/iyY0T2w==
-X-Google-Smtp-Source: AK7set9Iw72u3mgJzDTf3QEJTdf315ZaN7z7jjAvdsu0oazM6dCF0D4dv69G2opTIChUJgR+AaIUOQ==
-X-Received: by 2002:a5d:5010:0:b0:2d0:d73a:7671 with SMTP id e16-20020a5d5010000000b002d0d73a7671mr4807614wrt.22.1679029280015;
-        Thu, 16 Mar 2023 22:01:20 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g9-20020a5d4889000000b002c559843748sm1027844wrq.10.2023.03.16.22.01.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Mar 2023 22:01:19 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Calvin Wan <calvinwan@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH 5/5] config API: add and use a repo_config_kvi()
-Date:   Fri, 17 Mar 2023 06:01:10 +0100
-Message-Id: <RFC-patch-5.5-2b80d293c83-20230317T042408Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.40.0.rc1.1034.g5867a1b10c5
-In-Reply-To: <RFC-cover-0.5-00000000000-20230317T042408Z-avarab@gmail.com>
-References: <pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com> <RFC-cover-0.5-00000000000-20230317T042408Z-avarab@gmail.com>
+        with ESMTP id S230286AbjCQJvc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2023 05:51:32 -0400
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9FD59E66A
+        for <git@vger.kernel.org>; Fri, 17 Mar 2023 02:51:17 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 5EF9E3200A70;
+        Fri, 17 Mar 2023 05:51:13 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Fri, 17 Mar 2023 05:51:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1679046672; x=1679133072; bh=fU
+        hE45KV/9dG1KED+1nKhFBvZYHT5SNjY/W0Rdunj/0=; b=DjyYNm51EIMX3E20uJ
+        /d6Jo437v1l4MvvVWSV/w2ZIm9FTmz7GjZKiPHPUq01uARi4CrKYn3+VQUlqSCdj
+        yPvclNPM8p1YgxwQhdu/Vg/pnnuAygds2713JKPEmr0rmxsasJcmz7nl9zyEJqXV
+        w94o5nyuNLIKzbYgtBvM5i4vxnNz8Y8RFHBDnHukwpy1XH+PUq0441qSlcu1jLSs
+        +PzGrmw0Rpt8WogwtxJPHM5vya+LQl090IBv31Ay2p0l+U+CePQte1UDYPI/JboZ
+        jvblYzLACs0/biDzL7tane2trTHIX+6OTLVnAG9cFxEbJFZcB9PvxOui3J45ZOJg
+        AvXg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1679046672; x=1679133072; bh=fUhE45KV/9dG1
+        KED+1nKhFBvZYHT5SNjY/W0Rdunj/0=; b=S5P3hY+g9ZwNsiqH+wbT0BgkCaBPA
+        ShaHBrSjLax0V7lxd9hIAybR2Xxup0VQHrOMTs/FoUxWHf1sMHN84+fuyX48T+6/
+        ne84BtA3DhGEBMd+DfxOtQWL8QOyQMVAEJgbgT50U4NndsGv2hEN49ODcs1+z3uW
+        00W5XH1v1Euu9porhAr9/2/TOOjLC5L0E1SAm2oRDBYXt80ityusOIRb5SDXoqAv
+        d8b4w7RC3msBElEGpeavk0rbPffZSVmk1fd/Ua6qjnoNpLv503IHKFomPiqtbePd
+        rpKOlhq8+qjxLnOKwfF5PKKeWU+8EvyRWCzyn2F2I8IXRbEySqHbIRQXQ==
+X-ME-Sender: <xms:EDgUZEnDj_MULkLicNjlftoNHZs491lwBcNNPh5sJUyh2I5aXLKWSA>
+    <xme:EDgUZD3Y63qQ1dBIA3ecXIV1LyXhZxKIpYlfh_t6VbNhsY4aVxsFZBIYmxyVderkp
+    KD69ziYUSTkpdQPbg>
+X-ME-Received: <xmr:EDgUZCo4TnAQar7bhlKQDAtwBtp3OQ4PTmCK5jjKaT7s4D_GhWWEZNbBsiww86eOsNMuyrTx4Bc6lsRIdUEraawtYNnf7_9R1MBUX67o4YE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdefvddgtdekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:EDgUZAkSX4__KwTdfzJzdSOIgAQsGdjHRM9kqTliUTQtSAZTLBeLFw>
+    <xmx:EDgUZC2IPiCqwTCQj2jPBqtgApFct69orvCWuGWt213m1zzo7dNv2g>
+    <xmx:EDgUZHsFW_mRueGpHL5l_XMsm-AYfvzLGaiQZiif9fdxy8Tef7X4OQ>
+    <xmx:EDgUZH9wVmtBJOZNNxK7jhAIfdrbww5QgMgAbuHMsS4-Ed5hayiZKg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 17 Mar 2023 05:51:11 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 7191079f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 17 Mar 2023 09:50:41 +0000 (UTC)
+Date:   Fri, 17 Mar 2023 10:51:06 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/8] fetch: deduplicate handling of per-reference format
+Message-ID: <ZBQ4Cqkq9v2cB77f@ncase>
+References: <cover.1678878623.git.ps@pks.im>
+ <d45ec31eeaf42ee042bad04efd69668144df3138.1678878623.git.ps@pks.im>
+ <xmqq4jqlocqf.fsf@gitster.g>
+ <ZBMwXAnEnD5QjsFE@ncase>
+ <xmqqv8j0ljxd.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="b6EwIQPrH2MIrbja"
+Content-Disposition: inline
+In-Reply-To: <xmqqv8j0ljxd.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce a repo_config_kvi(), which is a repo_config() which calls a
-"config_kvi_fn_t", rather than the "config_fn_t" that repo_config()
-uses.
 
-This allows us to pass along the "struct key_value_info *" directly,
-rather than having the callback grab it from the global
-"current_config_kvi" that we've been maintaining in
-"configset_iter()".
+--b6EwIQPrH2MIrbja
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This change is an alternate direction to the topic at [1], this
-expands on the vague suggestions I made in [2] to go in this
-direction.
+On Thu, Mar 16, 2023 at 09:50:38AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> >> So, I dunno.  The result of applying this patch leaves it in an
+> >> in-between state, where the division of labor between the caller and
+> >> the callee smells somewhat iffy.
+> >>=20
+> >> Thanks.
+> >
+> > I totally agree with you here. From my point of view this "division of
+> > labor" is getting fixed in the final patch that then also moves the
+> > printing logic into `format_display()`.
+>=20
+> Yes, again I smell the same "isn't this series going a bit too
+> roundabout route to its goal?" which I expressed in my response to
+> an earlier step.  The endgame of the series, even though I may not
+> agree with it 100%, is self consistent and does not leave the "this
+> ends at an in-between state" aftertaste in my mouth.
+>=20
+> Thanks.
 
-As this shows we can split apart the "config_fn_t", and thus avoid
-having to change the hundreds of existing "config_fn_t" callers. By
-doing this we can already get rid of the current_config_kvi()
-function, as "builtin/remote.c" and "t/helper/test-config.c" were the
-only users of it.
+Yeah. I did have some problems to lay out this series in a sensible way.
+In an earlier iteration I tried moving the printing logic in one of the
+initial patches, but from my point of view that resulted in an even more
+awkward in-between state where the formatting and printing logic was
+kind of all over the place. And another try with "big-bang-refactoring"
+was barely reviewable, either.
 
-The change to "t/t5505-remote.sh" ensures that the change here to
-config_read_push_default() isn't breaking things. It's the only test
-that would go through that codepath, but nothing asserted that we'd
-get the correct line number. Let's sanity check that, as well as the
-other callback data.
+Maybe the solution is to keep the order, but document intent better in
+each of the patches leading towards the unified printing logic.
 
-This leaves the other current_config_*() functions. Subsequent commits
-will need to deal with those.
+Patrick
 
-1. https://lore.kernel.org/git/pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com/
-2. https://lore.kernel.org/git/230307.86wn3szrzu.gmgdl@evledraar.gmail.com/
-3. https://lore.kernel.org/git/230308.867cvrziac.gmgdl@evledraar.gmail.com/
+--b6EwIQPrH2MIrbja
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/remote.c       | 11 ++++++-----
- config.c               | 32 ++++++++++++++++++--------------
- config.h               |  9 ++++++++-
- t/helper/test-config.c | 13 +++++++------
- t/t5505-remote.sh      |  7 +++++--
- 5 files changed, 44 insertions(+), 28 deletions(-)
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 729f6f3643a..c65bce05034 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -644,17 +644,18 @@ struct push_default_info
- };
- 
- static int config_read_push_default(const char *key, const char *value,
--	void *cb)
-+				    struct key_value_info *kvi, void *cb)
- {
- 	struct push_default_info* info = cb;
- 	if (strcmp(key, "remote.pushdefault") ||
- 	    !value || strcmp(value, info->old_name))
- 		return 0;
- 
--	info->scope = current_config_scope();
-+	info->scope = kvi->scope;
- 	strbuf_reset(&info->origin);
--	strbuf_addstr(&info->origin, current_config_name());
--	info->linenr = current_config_line();
-+	if (kvi->filename)
-+		strbuf_addstr(&info->origin, kvi->filename);
-+	info->linenr = kvi->linenr;
- 
- 	return 0;
- }
-@@ -663,7 +664,7 @@ static void handle_push_default(const char* old_name, const char* new_name)
- {
- 	struct push_default_info push_default = {
- 		old_name, CONFIG_SCOPE_UNKNOWN, STRBUF_INIT, -1 };
--	git_config(config_read_push_default, &push_default);
-+	repo_config_kvi(the_repository, config_read_push_default, &push_default);
- 	if (push_default.scope >= CONFIG_SCOPE_COMMAND)
- 		; /* pass */
- 	else if (push_default.scope >= CONFIG_SCOPE_LOCAL) {
-diff --git a/config.c b/config.c
-index 230a98b0631..1b3f534757c 100644
---- a/config.c
-+++ b/config.c
-@@ -2219,7 +2219,8 @@ int config_with_options(config_fn_t fn, void *data,
- 	return ret;
- }
- 
--static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
-+static void configset_iter(struct config_set *cs, config_fn_t fn,
-+			   config_kvi_fn_t fn_kvi, void *data)
- {
- 	int i, value_index;
- 	struct string_list *values;
-@@ -2230,6 +2231,7 @@ static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
- 		const char *key;
- 		const char *val;
- 		struct key_value_info *kvi;
-+		int ret;
- 
- 		entry = list->items[i].e;
- 		value_index = list->items[i].value_index;
-@@ -2239,11 +2241,15 @@ static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
- 		val = values->items[value_index].string;
- 		kvi = values->items[value_index].util;
- 
--		current_config_kvi = kvi;
--		if (fn(key, val, data) < 0)
-+		if (!fn_kvi)
-+			current_config_kvi = kvi;
-+		ret = fn_kvi ? fn_kvi(key, val, kvi, data) :
-+			fn(key, val, data);
-+		current_config_kvi = NULL;
-+
-+		if (ret < 0)
- 			git_die_config_linenr(entry->key, kvi->filename,
- 					      kvi->linenr);
--		current_config_kvi = NULL;
- 	}
- }
- 
-@@ -2567,7 +2573,13 @@ static void repo_config_clear(struct repository *repo)
- void repo_config(struct repository *repo, config_fn_t fn, void *data)
- {
- 	git_config_check_init(repo);
--	configset_iter(repo->config, fn, data);
-+	configset_iter(repo->config, fn, NULL, data);
-+}
-+
-+void repo_config_kvi(struct repository *repo, config_kvi_fn_t fn, void *data)
-+{
-+	git_config_check_init(repo);
-+	configset_iter(repo->config, NULL, fn, data);
- }
- 
- int repo_config_get_value(struct repository *repo,
-@@ -2670,7 +2682,7 @@ void git_protected_config(config_fn_t fn, void *data)
- {
- 	if (!protected_config.hash_initialized)
- 		read_protected_config();
--	configset_iter(&protected_config, fn, data);
-+	configset_iter(&protected_config, fn, NULL, data);
- }
- 
- /* Functions used historically to read configuration from 'the_repository' */
-@@ -3843,14 +3855,6 @@ enum config_scope current_config_scope(void)
- 		return current_parsing_scope;
- }
- 
--int current_config_line(void)
--{
--	if (current_config_kvi)
--		return current_config_kvi->linenr;
--	else
--		return cf->linenr;
--}
--
- int lookup_config(const char **mapping, int nr_mapping, const char *var)
- {
- 	int i;
-diff --git a/config.h b/config.h
-index a9cb01e9405..de5350dbee5 100644
---- a/config.h
-+++ b/config.h
-@@ -143,6 +143,13 @@ const char *config_origin_type_name(enum config_origin_type type);
-  */
- typedef int (*config_fn_t)(const char *, const char *, void *);
- 
-+/**
-+ * Like config_fn_t, but before the callback-specific data we'll get a
-+ * "struct key_value_info" indicating the origin of the config.
-+ */
-+typedef int (*config_kvi_fn_t)(const char *key, const char *var,
-+			       struct key_value_info *kvi, void *data);
-+
- int git_default_config(const char *, const char *, void *);
- 
- /**
-@@ -371,7 +378,6 @@ int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
- enum config_scope current_config_scope(void);
- const char *current_config_origin_type(void);
- const char *current_config_name(void);
--int current_config_line(void);
- 
- /*
-  * Match and parse a config key of the form:
-@@ -498,6 +504,7 @@ int git_configset_get_pathname(struct config_set *cs, const char *key, const cha
- /* Functions for reading a repository's config */
- struct repository;
- void repo_config(struct repository *repo, config_fn_t fn, void *data);
-+void repo_config_kvi(struct repository *repo, config_kvi_fn_t fn, void *data);
- int repo_config_get_value(struct repository *repo,
- 			  const char *key, const char **value);
- const struct string_list *repo_config_get_value_multi(struct repository *repo,
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 4ba9eb65606..2ef67b18a0b 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -37,7 +37,8 @@
-  *
-  */
- 
--static int iterate_cb(const char *var, const char *value, void *data UNUSED)
-+static int iterate_cb(const char *var, const char *value,
-+		      struct key_value_info *kvi, void *data UNUSED)
- {
- 	static int nr;
- 
-@@ -46,10 +47,10 @@ static int iterate_cb(const char *var, const char *value, void *data UNUSED)
- 
- 	printf("key=%s\n", var);
- 	printf("value=%s\n", value ? value : "(null)");
--	printf("origin=%s\n", current_config_origin_type());
--	printf("name=%s\n", current_config_name());
--	printf("lno=%d\n", current_config_line());
--	printf("scope=%s\n", config_scope_name(current_config_scope()));
-+	printf("origin=%s\n", config_origin_type_name(kvi->origin_type));
-+	printf("name=%s\n", kvi->filename ? kvi->filename : "");
-+	printf("lno=%d\n", kvi->linenr);
-+	printf("scope=%s\n", config_scope_name(kvi->scope));
- 
- 	return 0;
- }
-@@ -174,7 +175,7 @@ int cmd__config(int argc, const char **argv)
- 			goto exit1;
- 		}
- 	} else if (!strcmp(argv[1], "iterate")) {
--		git_config(iterate_cb, NULL);
-+		repo_config_kvi(the_repository, iterate_cb, NULL);
- 		goto exit0;
- 	}
- 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 43b7bcd7159..d9659b9c65e 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -853,8 +853,11 @@ test_expect_success 'rename a remote' '
- 	(
- 		cd four &&
- 		git config branch.main.pushRemote origin &&
--		GIT_TRACE2_EVENT=$(pwd)/trace \
--			git remote rename --progress origin upstream &&
-+		GIT_TRACE2_EVENT=$PWD/trace \
-+			git remote rename --progress origin upstream 2>warn &&
-+		grep -F "The global configuration remote.pushDefault" warn &&
-+		grep "/\.gitconfig:2$" warn &&
-+		grep "remote '\''origin'\''" warn &&
- 		test_region progress "Renaming remote references" trace &&
- 		grep "pushRemote" .git/config &&
- 		test -z "$(git for-each-ref refs/remotes/origin)" &&
--- 
-2.40.0.rc1.1034.g5867a1b10c5
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQUOAkACgkQVbJhu7ck
+PpToCQ//emY3rVeY2Qiltu4EA8RBapt81syjLOw5IzR3oX9i1+bMS+kApRjHBOk9
+CA4s+iE3vLJO+H97ZXjBHYo5q7iioTHqdSgrT55JgQKHOlKBtAXrkrhqlwUx/RtD
+GgsHYOzIXYqmghN0aFrUVRyjryc/kbRKF8ZdFXSFpVCQMdv0w8YSk3VMerCnXZaq
+JCxFT7MLrNp3pETw068vqhjtZzCRuq00L85O0ZPJucOKGvLnI3JMhcI2LYA1dFtC
+aEGUZLfui4HGZAyiQyelZzkeJfFIBhZcx40We9uxjMj7ZpePXA2IwB/rm9u5dmfJ
+tTjwE22EEOvLnWzg80LDEFOX+P8OBb3vgUJpQI7V4ojXhjrjH7LfkDkoDzp7eT9Z
+qk0cqndnW4W+Ijtzg3XGYIRCOEH8Gxki+8ikd4E9zKSm+3HXPY3Qo+TmeF8s1zf5
+mPSRwWQDPwtYPOMqKQrH26EDLYeyuoKZWH3S+pPs3qX8z1Q5Jfmm/QL3Va9Kj1IL
+zXY1Vj8gZp44j1F6Z4zrhe3pWYzzYVGMGmyx9b7v1AYbipmxxxt8wlMzAEBHYbLA
+KLhoG47t0jfQ8j7w97OVm4n5eOIiIKSxZlFc0rFMPRKuW3ZzTNgY/PFMZcgjSrX0
+Z/TSvSkiITMPkATcYeHyjC/dfSADuTm0ExoPBfiFTB+WQTRaat4=
+=b+9j
+-----END PGP SIGNATURE-----
 
+--b6EwIQPrH2MIrbja--
