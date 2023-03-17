@@ -2,158 +2,585 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC1AAC74A5B
-	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 10:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 058FBC6FD1D
+	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 14:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229872AbjCQKDK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Mar 2023 06:03:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34422 "EHLO
+        id S230307AbjCQOLw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Mar 2023 10:11:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbjCQKDJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2023 06:03:09 -0400
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5048E52F55
-        for <git@vger.kernel.org>; Fri, 17 Mar 2023 03:03:08 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id BB6CE3200B82;
-        Fri, 17 Mar 2023 06:03:07 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Fri, 17 Mar 2023 06:03:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1679047387; x=1679133787; bh=Bz
-        9sEIcCVcM7WMz43DH4upsX4NmzZyl4GELuz9yEgrM=; b=Fv4DajkvmH9rAcCMRc
-        Lhn1LPIOBrUhs4/5pu1mdkMIQSmkWzsd9dNiIaJFouJ0Z8GeKNBQ4e0D8KHEU0Uj
-        8DxpyfaoibNbGBhFEEjF4pD9xurG0jQRumQ69tLsMFjVWKp4AQPBoc9sh3+aD9pS
-        oTy8lbvFquGXDJi+rq+qvPb0+sw8RvSiALRGK9t6CrO5OujlbYcMo/wSiWms7m1y
-        tgIdVqBIeCv1p2/RWwdukykHIm6MqrJlhRC3gnRFHzhq6wcb5xWvfVTQLEFVaIzK
-        RoYbuRC/Gc1EMnx6Xikw0lcMaMqk+koz6ywXhE/dRV9Zecib4gDQMf2z/1KO0l3X
-        piqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1679047387; x=1679133787; bh=Bz9sEIcCVcM7W
-        Mz43DH4upsX4NmzZyl4GELuz9yEgrM=; b=biRHaS7YDQHAPG8imJaEVVsMrgJPA
-        x4BnP7ZNA/GygEWFwoUH6hy+Np74+5gUo021/qnYaU/btCDWXY5wgnCxl28XsifT
-        drcgDGF/QQvnu6VxEbo8atAUf0ji8FYNxlneyNfrryOB8MDbfVk8vR28SaVfj3Po
-        vp8ecba7ROBZ0RNYV00yeJ94Qx0N8Nc0dJsDScJMiuyav8OPe2wQ+floz3+2IFfW
-        +4SaX7Riv0zvhS24xZr05CJrN535ouoqOgAKBYBi40z2cs7WWwzOYkZ2ckdx2X3R
-        P8Cp7mQl5ToZDWR9HErEi9XTMJGjR5s85yXqf8XP5EloK3lQzzh0RosOQ==
-X-ME-Sender: <xms:2zoUZBTXHWwReyqVKfXa3PFdFK-GzPB4ccS43JaiIgqrnDg78uU_cg>
-    <xme:2zoUZKynVr4FTmkP_emWC-CDb2ficn-rhpmsAhv1fl3lJkt2BkMnhSaTAOVbcpNHp
-    2LpzpzZp8OGiy80UQ>
-X-ME-Received: <xmr:2zoUZG1EepeNrFSigg6MTgfQkab5NE-Lp2fiUfoxwaTGnNBZ76saelh96KAwCpO2MCopEMhvhdXKpq6Bb79CgNXzMF1anL0QNMD3EfyHKBo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdefvddgudduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:2zoUZJB86Dce1JfzoZTMEE1mg2bzsxBfh2ODQUP1ZZuXCbBnQppv_g>
-    <xmx:2zoUZKgt6p5eom51W8Yb9OteAFRsPBktvNxlXmwJkashyT7HhuQp0w>
-    <xmx:2zoUZNr8gFbQEwEgqZ-DXqZQOupg2D0Oq2GNuz6PiSB1Ic8tHaKePg>
-    <xmx:2zoUZCKiUDZkf_qWHJddGS8BGJePD8yXc6F-qHos8L_H7tWJWesBwg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Mar 2023 06:03:06 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 1842c3c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 17 Mar 2023 10:02:38 +0000 (UTC)
-Date:   Fri, 17 Mar 2023 11:03:03 +0100
-From:   Patrick Steinhardt <ps@pks.im>
+        with ESMTP id S229971AbjCQOLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2023 10:11:51 -0400
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BA955FA7A
+        for <git@vger.kernel.org>; Fri, 17 Mar 2023 07:11:48 -0700 (PDT)
+Received: by mail-qv1-xf34.google.com with SMTP id nf5so3503046qvb.5
+        for <git@vger.kernel.org>; Fri, 17 Mar 2023 07:11:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679062307; x=1681654307;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=luaaBMulOHpyEXewt2/SQgYaoppOxpQrR1fl4k4m2ww=;
+        b=OTF6vksLFKffTjfmplULPZ9Yj4F5TT040YdFRw6WyYcXf8S4b0r7kzocEgF3W9hS5R
+         /4tmAsWea7fpwTqKFnDgsO1nexV2IQVWlpmIQw1g0zMr3T+mopl3prIFARIDA2sSfu//
+         Y9mnHy+3Zkh13ggkr4Ln1AnkGEVuRSfhYUNfdXNwHxgYwiDZsCcEiHf6czOCNjLiwxyd
+         MBx16qzysS8zSSJSrtLWXl4c3FGlQbx9uQmw7qCpakA2AH7XVWQYPdAXTkZfMUM5CAR7
+         7Zit/gb4PjRXIkRbr/Az3b3YwL7UtSJD5TQVVm+NuFhpkf6FbHs9YSLshrVeaPBU046/
+         z5rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679062307; x=1681654307;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=luaaBMulOHpyEXewt2/SQgYaoppOxpQrR1fl4k4m2ww=;
+        b=mwJ/ZjqZs6qwE107oNEwSfgnSsVaMmjMz0+B2xbDXAF6bJdBEmckDDOf2eCxxkz+K5
+         l20EVmQi6px4SNEHl5FFyZPNvA65ocDXgTgUijCfm6EbOwSUpIPlr7By5fgzjlFCNWQh
+         +xWZzueHnaas6DAjs15wWLFphNWpL/sFcX9zJ/TGfyjtccXH0iE3Ty6j5sFQGF1+aO3B
+         qM5BcIK5SbJ4lvMNzwKguov5KDvGPksx5AbOmRdzya7jLukR49en3IUgUDqi/zG65nKZ
+         iiEi259F0h9BU3BfFqfTX2EMPajO4SbTBSESxvSP9TU7RWpc7XSCmGDsRcqWmnMsrVEB
+         pOuw==
+X-Gm-Message-State: AO0yUKWKTRb+EY0Ooc7Osjpx8kfbfswxoAySUvxGDPoYOa+HGa8Ledh2
+        W1gcG1G6tGke8LrM4zsx0Jk=
+X-Google-Smtp-Source: AK7set+LZeCQJVR14iM8Cf1l2MCYzcfhEgOmzmzgjRsoPmeLO6/WjGC2nae3ywkx8Q+enuC5HnVYLQ==
+X-Received: by 2002:a05:6214:762:b0:5ad:cd4b:3765 with SMTP id f2-20020a056214076200b005adcd4b3765mr11081938qvz.1.1679062307095;
+        Fri, 17 Mar 2023 07:11:47 -0700 (PDT)
+Received: from [192.168.1.211] ([2600:4041:454d:2100:c108:fc00:b8e8:83df])
+        by smtp.gmail.com with ESMTPSA id a3-20020ae9e803000000b007425dade624sm1736163qkg.41.2023.03.17.07.11.46
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 17 Mar 2023 07:11:46 -0700 (PDT)
+From:   John Cai <johncai86@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/8] fetch: move reference width calculation into
- `display_state`
-Message-ID: <ZBQ612KWqYg4ky2j@ncase>
-References: <cover.1678878623.git.ps@pks.im>
- <aa792b12a468263d05e8615d4b3691ed8fe823ff.1678878623.git.ps@pks.im>
- <xmqqedppohno.fsf@gitster.g>
- <ZBMwUmBhqEd74YAx@ncase>
- <xmqqpm98mzzy.fsf@gitster.g>
+Cc:     John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/2] diff: use HEAD for attributes when using bare repository
+Date:   Fri, 17 Mar 2023 10:11:46 -0400
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <BE20C11F-135C-4A5B-9148-A88C3B2A6DF5@gmail.com>
+In-Reply-To: <xmqqcz58i9ud.fsf@gitster.g>
+References: <pull.1459.git.git.1678758818.gitgitgadget@gmail.com>
+ <0fc704cf1c0724473a61086098d44c3a82938b03.1678758818.git.gitgitgadget@gmail.com>
+ <xmqqttynqnnj.fsf@gitster.g> <xmqqa60fqld6.fsf@gitster.g>
+ <20230314193839.wevenngf324pijhb@pop-os> <xmqqy1nzoyqr.fsf@gitster.g>
+ <9E479AA2-2D54-4CAF-899B-B25894B746AA@gmail.com> <xmqqcz58i9ud.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="pmzuqRU4kkLsZt6/"
-Content-Disposition: inline
-In-Reply-To: <xmqqpm98mzzy.fsf@gitster.g>
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
---pmzuqRU4kkLsZt6/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 16 Mar 2023, at 18:56, Junio C Hamano wrote:
 
-On Thu, Mar 16, 2023 at 09:18:09AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> >> Given that in the previous step, what used to be called display got
-> >> renamed to display_buffer (I think "buffer" ought to be sufficient
-> >> in this context, though), the variable of "struct display_state"
-> >> type should NOT be named "display", as it would be confusing when
-> >> two things are related to "display" and only one of them is called
-> >> as such.  Either "display_state" or "state" would be fine.
-> >
-> > Fair enough. In that case I may just as well drop the first patch.
->=20
-> If you plan to get rid of an independent "display_buffer" in the
-> endgame by moving it into the bigger struct as its .buffer member,
-> then I think the naming is fine as there will remain only one thing
-> that is "display".  The fact that I didn't see that plan through
-> when I read only the first two patches would probably mean that the
-> route this iteration of the series took was somewhat roundabout, and
-> there may be a more transparent and possibly a more direct way to
-> get to that goal?
->=20
-> I am not entirely sure if the buffer should go inside the
-> display_state structure in the endgame.  An alternative may be to
-> make it a on-stack variable of format_display() (which will later be
-> modified to do everything up to and including writing out the
-> result) and pass it through the callchain below to its helpers, just
-> like the current code already does.  And in such an approach, you'd
-> still need to name that variable passed to the helper functions
-> called by format_display()---"buffer" would be a good name for that.
+> John Cai <johncai86@gmail.com> writes:
+>
+>> Ah I see--in that case, what would be a good object to put this state =
+into? Mabe
+>> repo_settings?
+>
+> I personally think a global is good enough for a case like this.  It
+> is not like the code in the attribute subsystem is structured to
+> work in multiple repositories at the same time in the first place, so
+> in repo_settings, the_repository, or elsewhere is just as good as
+> having it in a plain old file-scope static, and even after moving it
+> into the_repository or something, the access will initially be done
+> by referring to the_repository global (which may not even exist by
+> the time "git --attr-source=3D<tree>" gets parsed), and not by plumbing=
 
-Well, we could make it an on-stack variable just fine. But I suspect
-that the only reason that this buffer exists is to optimize memory
-allocations: a git-fetch(1) can easily end up printing thousands or even
-hundreds of thousands of updated references, and reallocating that
-buffer for each of them is quite wasteful.
+> a "struct repository *" parameter through the callchain.
 
-Another alternative would be to make the buffer static and local to the
-function. But you now have shared state again, and furthermore you have
-no easy way to unleak its contents.
+Makes sense.
 
-In the end, I think that having the buffer as a member of the display
-state is the most straight-forward approach. It's self-contained and
-allows us to reduce the number of allocations to a minimum. That being
-said, I'm obviously biased here.
+>
+> Another thing to note is that there needs a mechanism to convey the
+> tree object used to read the attributes from down to subprocesses,
+> e.g. exporting the GIT_ATTR_SOURCE environment variable and make Git
+> behave as if it saw the "git --attr-source=3D<tree>" option when such
+> an environment variable exists, or something.  Otherwise, the custom
+> attribute source would only take effect inside built-in commands.
+>
+> In any case, here is what I have now, stealing some tests from your
+> patch.  I do not think I'll be working on it further at least for
+> now, so feel free to run with it.  I am not adding the "in a bare
+> repository, always read from HEAD unless told otherwise", as I do
+> not see a good way to countermand it from a command line.
 
-Patrick
+Thanks for the patch! Looks like you took it most of the way. I'll take a=
+ look
+and make some additions if necessary.
 
---pmzuqRU4kkLsZt6/
-Content-Type: application/pgp-signature; name="signature.asc"
+thanks
+John
 
------BEGIN PGP SIGNATURE-----
+>
+> ----- >8 ----- cut here ----- >8 ----- cut here ----- >8 -----
+> Subject: [PATCH] attr: teach "--attr-source=3D<tree>" global option to =
+"git"
+>
+> Earlier, 47cfc9bd (attr: add flag `--source` to work with tree-ish,
+> 2023-01-14) taught "git check-attr" the "--source=3D<tree>" option to
+> allow it to read attribute files from a tree-ish, but did so only
+> for the command.  Just like "check-attr" users wanted a way to use
+> attributes from a tree-ish and not from the working tree files,
+> users of other commands (like "git diff") would benefit from the
+> same.
+>
+> Undo most of the UI change the commit made, while keeping the
+> internal logic to read attributes from a given tree-ish.  Expose the
+> internal logic via a new "--attr-source=3D<tree>" command line option
+> given to "git", so that it can be used with any git command that
+> runs internally.
+>
+> The tests were stolen and adjusted from John Cai's effort where only
+> "git diff" learned the "--attr-source" option to read from a
+> tree-ish.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  archive.c                 |  2 +-
+>  attr.c                    | 34 ++++++++++++++++++++++++++++++++--
+>  attr.h                    | 13 +++++++++----
+>  builtin/check-attr.c      | 17 ++++++++---------
+>  builtin/pack-objects.c    |  2 +-
+>  convert.c                 |  2 +-
+>  git.c                     |  3 +++
+>  ll-merge.c                |  4 ++--
+>  pathspec.c                |  2 +-
+>  t/lib-diff-alternative.sh | 31 ++++++++++++++++++++++++++-----
+>  t/t0003-attributes.sh     |  7 ++++++-
+>  t/t4018-diff-funcname.sh  | 19 +++++++++++++++++++
+>  userdiff.c                |  2 +-
+>  ws.c                      |  2 +-
+>  14 files changed, 111 insertions(+), 29 deletions(-)
+>
+> diff --git c/archive.c w/archive.c
+> index 9aeaf2bd87..385aa5f248 100644
+> --- c/archive.c
+> +++ w/archive.c
+> @@ -120,7 +120,7 @@ static const struct attr_check *get_archive_attrs(s=
+truct index_state *istate,
+>  	static struct attr_check *check;
+>  	if (!check)
+>  		check =3D attr_check_initl("export-ignore", "export-subst", NULL);
+> -	git_check_attr(istate, NULL, path, check);
+> +	git_check_attr(istate, path, check);
+>  	return check;
+>  }
+>
+> diff --git c/attr.c w/attr.c
+> index 1053dfcd4b..d34c7e9d54 100644
+> --- c/attr.c
+> +++ w/attr.c
+> @@ -1165,11 +1165,40 @@ static void collect_some_attrs(struct index_sta=
+te *istate,
+>  	fill(path, pathlen, basename_offset, check->stack, check->all_attrs, =
+rem);
+>  }
+>
+> +static const char *default_attr_source_tree_object_name;
+> +
+> +void set_git_attr_source(const char *tree_object_name)
+> +{
+> +	default_attr_source_tree_object_name =3D xstrdup(tree_object_name);
+> +}
+> +
+> +
+> +static void compute_default_attr_source(struct object_id *attr_source)=
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQUOtYACgkQVbJhu7ck
-PpTykg/9Fd5k8+brJIECgdyI5/MziYWGDUliA5EesNCySmWW0Mzo3GZWwKr39YUJ
-XkpB5VmqtiWi+Mj6/o8ynbCkCcehntDAN8ZAVD+es79w42Tvckuyl78uUpL8Yyqa
-goWx01sMot/GnMhTTwqKVJh52F+T8nMsY8tSTfc0WvJUd/5oYNlvb9z+8qvDDrlQ
-WSdhl4kLecqrXXIMtPZUFYxNDMZ6DJbz/NxMzXWItAYc6MGtSv03kuIEU2VPls1c
-3b1Q8f4SZsC/cRSRTYxhXkO7yf8e5s6oikXw5HfODuProPNxVFnWJlLmGBXx+BK3
-w8ME1/imzEkVylUotQYOdmiKhThWfp25RNnyZuGhbdoQQLx2ZRaOGCmoiKaQIuEy
-SWYJrmLMBY2dRLN3xQy0zQRLk0ga2Q+euhhxTIqh+I27m2a3JG9qnvwM6CLxUSxE
-oe1B41VhgcglKgVQSkeTE4D2KsuNT7B79uio4k7QDQreqhsGOGyOGf/rcxoVSXI/
-YrqwAY4SiqztBnJcfdkfuy0UZjnzLEDLe7i9KT3Q13SpP8N4am74rv44ik0zrYbf
-1XitrCTo14DI+UnF/9Mmwt6FPEJv6OmsDHuRlS1gltVXV3X/s8OSgL6p9tHkvCiz
-wDzXtlbwNL+XeudfY37ry+Q4IlcVYYGW1e/qBkvbPwk8BAem3OE=
-=1q13
------END PGP SIGNATURE-----
+> +{
+> +	if (!default_attr_source_tree_object_name || !is_null_oid(attr_source=
+))
+> +		return;
+> +
+> +	if (get_oid_treeish(default_attr_source_tree_object_name, attr_source=
+))
+> +		die(_("bad --attr-source object"));
+> +}
+> +
+> +static struct object_id *default_attr_source(void)
+> +{
+> +	static struct object_id attr_source;
+> +
+> +	if (is_null_oid(&attr_source))
+> +		compute_default_attr_source(&attr_source);
+> +	if (is_null_oid(&attr_source))
+> +		return NULL;
+> +	return &attr_source;
+> +}
+> +
+>  void git_check_attr(struct index_state *istate,
+> -		    const struct object_id *tree_oid, const char *path,
+> +		    const char *path,
+>  		    struct attr_check *check)
+>  {
+>  	int i;
+> +	const struct object_id *tree_oid =3D default_attr_source();
+>
+>  	collect_some_attrs(istate, tree_oid, path, check);
+>
+> @@ -1182,10 +1211,11 @@ void git_check_attr(struct index_state *istate,=
 
---pmzuqRU4kkLsZt6/--
+>  	}
+>  }
+>
+> -void git_all_attrs(struct index_state *istate, const struct object_id =
+*tree_oid,
+> +void git_all_attrs(struct index_state *istate,
+>  		   const char *path, struct attr_check *check)
+>  {
+>  	int i;
+> +	const struct object_id *tree_oid =3D default_attr_source();
+>
+>  	attr_check_reset(check);
+>  	collect_some_attrs(istate, tree_oid, path, check);
+> diff --git c/attr.h w/attr.h
+> index 9884ea2bc6..676bd17ce2 100644
+> --- c/attr.h
+> +++ w/attr.h
+> @@ -45,7 +45,7 @@
+>   * const char *path;
+>   *
+>   * setup_check();
+> - * git_check_attr(&the_index, tree_oid, path, check);
+> + * git_check_attr(&the_index, path, check);
+>   * ------------
+>   *
+>   * - Act on `.value` member of the result, left in `check->items[]`:
+> @@ -120,7 +120,6 @@
+>  #define ATTR_MAX_FILE_SIZE (100 * 1024 * 1024)
+>
+>  struct index_state;
+> -struct object_id;
+>
+>  /**
+>   * An attribute is an opaque object that is identified by its name. Pa=
+ss the
+> @@ -135,6 +134,12 @@ struct git_attr;
+>  struct all_attrs_item;
+>  struct attr_stack;
+>
+> +/*
+> + * The textual object name for the tree-ish used by git_check_attr()
+> + * to read attributes from (instead of from the working tree).
+> + */
+> +void set_git_attr_source(const char *);
+> +
+>  /*
+>   * Given a string, return the gitattribute object that
+>   * corresponds to it.
+> @@ -203,14 +208,14 @@ void attr_check_free(struct attr_check *check);
+>  const char *git_attr_name(const struct git_attr *);
+>
+>  void git_check_attr(struct index_state *istate,
+> -		    const struct object_id *tree_oid, const char *path,
+> +		    const char *path,
+>  		    struct attr_check *check);
+>
+>  /*
+>   * Retrieve all attributes that apply to the specified path.
+>   * check holds the attributes and their values.
+>   */
+> -void git_all_attrs(struct index_state *istate, const struct object_id =
+*tree_oid,
+> +void git_all_attrs(struct index_state *istate,
+>  		   const char *path, struct attr_check *check);
+>
+>  enum git_attr_direction {
+> diff --git c/builtin/check-attr.c w/builtin/check-attr.c
+> index d7a40e674c..1a7929c980 100644
+> --- c/builtin/check-attr.c
+> +++ w/builtin/check-attr.c
+> @@ -58,7 +58,7 @@ static void output_attr(struct attr_check *check, con=
+st char *file)
+>  }
+>
+>  static void check_attr(const char *prefix, struct attr_check *check,
+> -		       const struct object_id *tree_oid, int collect_all,
+> +		       int collect_all,
+>  		       const char *file)
+>
+>  {
+> @@ -66,9 +66,9 @@ static void check_attr(const char *prefix, struct att=
+r_check *check,
+>  		prefix_path(prefix, prefix ? strlen(prefix) : 0, file);
+>
+>  	if (collect_all) {
+> -		git_all_attrs(&the_index, tree_oid, full_path, check);
+> +		git_all_attrs(&the_index, full_path, check);
+>  	} else {
+> -		git_check_attr(&the_index, tree_oid, full_path, check);
+> +		git_check_attr(&the_index, full_path, check);
+>  	}
+>  	output_attr(check, file);
+>
+> @@ -76,7 +76,7 @@ static void check_attr(const char *prefix, struct att=
+r_check *check,
+>  }
+>
+>  static void check_attr_stdin_paths(const char *prefix, struct attr_che=
+ck *check,
+> -				   const struct object_id *tree_oid, int collect_all)
+> +				   int collect_all)
+>  {
+>  	struct strbuf buf =3D STRBUF_INIT;
+>  	struct strbuf unquoted =3D STRBUF_INIT;
+> @@ -90,7 +90,7 @@ static void check_attr_stdin_paths(const char *prefix=
+, struct attr_check *check,
+>  				die("line is badly quoted");
+>  			strbuf_swap(&buf, &unquoted);
+>  		}
+> -		check_attr(prefix, check, tree_oid, collect_all, buf.buf);
+> +		check_attr(prefix, check, collect_all, buf.buf);
+>  		maybe_flush_or_die(stdout, "attribute to stdout");
+>  	}
+>  	strbuf_release(&buf);
+> @@ -106,7 +106,6 @@ static NORETURN void error_with_usage(const char *m=
+sg)
+>  int cmd_check_attr(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct attr_check *check;
+> -	struct object_id *tree_oid =3D NULL;
+>  	struct object_id initialized_oid;
+>  	int cnt, i, doubledash, filei;
+>
+> @@ -182,14 +181,14 @@ int cmd_check_attr(int argc, const char **argv, c=
+onst char *prefix)
+>  	if (source) {
+>  		if (repo_get_oid_tree(the_repository, source, &initialized_oid))
+>  			die("%s: not a valid tree-ish source", source);
+> -		tree_oid =3D &initialized_oid;
+> +		set_git_attr_source(source);
+>  	}
+>
+>  	if (stdin_paths)
+> -		check_attr_stdin_paths(prefix, check, tree_oid, all_attrs);
+> +		check_attr_stdin_paths(prefix, check, all_attrs);
+>  	else {
+>  		for (i =3D filei; i < argc; i++)
+> -			check_attr(prefix, check, tree_oid, all_attrs, argv[i]);
+> +			check_attr(prefix, check, all_attrs, argv[i]);
+>  		maybe_flush_or_die(stdout, "attribute to stdout");
+>  	}
+>
+> diff --git c/builtin/pack-objects.c w/builtin/pack-objects.c
+> index 74a167a180..d561541b8c 100644
+> --- c/builtin/pack-objects.c
+> +++ w/builtin/pack-objects.c
+> @@ -1320,7 +1320,7 @@ static int no_try_delta(const char *path)
+>
+>  	if (!check)
+>  		check =3D attr_check_initl("delta", NULL);
+> -	git_check_attr(the_repository->index, NULL, path, check);
+> +	git_check_attr(the_repository->index, path, check);
+>  	if (ATTR_FALSE(check->items[0].value))
+>  		return 1;
+>  	return 0;
+> diff --git c/convert.c w/convert.c
+> index a54d1690c0..9b67649032 100644
+> --- c/convert.c
+> +++ w/convert.c
+> @@ -1308,7 +1308,7 @@ void convert_attrs(struct index_state *istate,
+>  		git_config(read_convert_config, NULL);
+>  	}
+>
+> -	git_check_attr(istate, NULL, path, check);
+> +	git_check_attr(istate, path, check);
+>  	ccheck =3D check->items;
+>  	ca->crlf_action =3D git_path_check_crlf(ccheck + 4);
+>  	if (ca->crlf_action =3D=3D CRLF_UNDEFINED)
+> diff --git c/git.c w/git.c
+> index 6171fd6769..21bddc5718 100644
+> --- c/git.c
+> +++ w/git.c
+> @@ -4,6 +4,7 @@
+>  #include "help.h"
+>  #include "run-command.h"
+>  #include "alias.h"
+> +#include "attr.h"
+>  #include "shallow.h"
+>
+>  #define RUN_SETUP		(1<<0)
+> @@ -307,6 +308,8 @@ static int handle_options(const char ***argv, int *=
+argc, int *envchanged)
+>  			} else {
+>  				exit(list_cmds(cmd));
+>  			}
+> +		} else if (skip_prefix(cmd, "--attr-source=3D", &cmd)) {
+> +			set_git_attr_source(cmd);
+>  		} else {
+>  			fprintf(stderr, _("unknown option: %s\n"), cmd);
+>  			usage(git_usage_string);
+> diff --git c/ll-merge.c w/ll-merge.c
+> index 130d26501c..22a603e8af 100644
+> --- c/ll-merge.c
+> +++ w/ll-merge.c
+> @@ -391,7 +391,7 @@ enum ll_merge_result ll_merge(mmbuffer_t *result_bu=
+f,
+>  		normalize_file(theirs, path, istate);
+>  	}
+>
+> -	git_check_attr(istate, NULL, path, check);
+> +	git_check_attr(istate, path, check);
+>  	ll_driver_name =3D check->items[0].value;
+>  	if (check->items[1].value) {
+>  		marker_size =3D atoi(check->items[1].value);
+> @@ -419,7 +419,7 @@ int ll_merge_marker_size(struct index_state *istate=
+, const char *path)
+>
+>  	if (!check)
+>  		check =3D attr_check_initl("conflict-marker-size", NULL);
+> -	git_check_attr(istate, NULL, path, check);
+> +	git_check_attr(istate, path, check);
+>  	if (check->items[0].value) {
+>  		marker_size =3D atoi(check->items[0].value);
+>  		if (marker_size <=3D 0)
+> diff --git c/pathspec.c w/pathspec.c
+> index ab70fcbe61..74e02c75fc 100644
+> --- c/pathspec.c
+> +++ w/pathspec.c
+> @@ -730,7 +730,7 @@ int match_pathspec_attrs(struct index_state *istate=
+,
+>  	if (name[namelen])
+>  		name =3D to_free =3D xmemdupz(name, namelen);
+>
+> -	git_check_attr(istate, NULL, name, item->attr_check);
+> +	git_check_attr(istate, name, item->attr_check);
+>
+>  	free(to_free);
+>
+> diff --git c/t/lib-diff-alternative.sh w/t/lib-diff-alternative.sh
+> index a8f5d3274a..02381eb7f1 100644
+> --- c/t/lib-diff-alternative.sh
+> +++ w/t/lib-diff-alternative.sh
+> @@ -112,15 +112,36 @@ EOF
+>
+>  	STRATEGY=3D$1
+>
+> -	test_expect_success "$STRATEGY diff from attributes" '
+> +	test_expect_success "setup attributes files for tests with $STRATEGY"=
+ '
+> +		git checkout -b master &&
+>  		echo "file* diff=3Ddriver" >.gitattributes &&
+> -		git config diff.driver.algorithm "$STRATEGY" &&
+> -		test_must_fail git diff --no-index file1 file2 > output &&
+> -		cat expect &&
+> -		cat output &&
+> +		git add file1 file2 .gitattributes &&
+> +		git commit -m "adding files" &&
+> +		git checkout -b branchA &&
+> +		echo "file* diff=3DdriverA" >.gitattributes &&
+> +		git add .gitattributes &&
+> +		git commit -m "adding driverA as diff driver" &&
+> +		git checkout master &&
+> +		git clone --bare --no-local . bare.git
+> +	'
+> +
+> +	test_expect_success "$STRATEGY diff from attributes" '
+> +		test_must_fail git -c diff.driver.algorithm=3D$STRATEGY diff --no-in=
+dex file1 file2 > output &&
+>  		test_cmp expect output
+>  	'
+>
+> +	test_expect_success "diff from attributes with bare repo when branch =
+different than HEAD" '
+> +		git -C bare.git --attr-source=3DbranchA -c diff.driver.algorithm=3Dm=
+yers \
+> +			-c diff.driverA.algorithm=3D$STRATEGY \
+> +			diff HEAD:file1 HEAD:file2 >output &&
+> +		test_cmp expect output
+> +	'
+> +
+> +	test_expect_success "diff from attributes with bare repo with invalid=
+ source" '
+> +		test_must_fail git -C bare.git --attr-source=3Dinvalid-branch diff \=
+
+> +			HEAD:file1 HEAD:file2
+> +	'
+> +
+>  	test_expect_success "$STRATEGY diff from attributes has valid diffsta=
+t" '
+>  		echo "file* diff=3Ddriver" >.gitattributes &&
+>  		git config diff.driver.algorithm "$STRATEGY" &&
+> diff --git c/t/t0003-attributes.sh w/t/t0003-attributes.sh
+> index 89b306cb11..73db37a7f3 100755
+> --- c/t/t0003-attributes.sh
+> +++ w/t/t0003-attributes.sh
+> @@ -30,8 +30,13 @@ attr_check_quote () {
+>  attr_check_source () {
+>  	path=3D"$1" expect=3D"$2" source=3D"$3" git_opts=3D"$4" &&
+>
+> -	git $git_opts check-attr --source $source test -- "$path" >actual 2>e=
+rr &&
+>  	echo "$path: test: $expect" >expect &&
+> +
+> +	git $git_opts check-attr --source $source test -- "$path" >actual 2>e=
+rr &&
+> +	test_cmp expect actual &&
+> +	test_must_be_empty err &&
+> +
+> +	git $git_opts --attr-source=3D"$source" check-attr test -- "$path" >a=
+ctual 2>err &&
+>  	test_cmp expect actual &&
+>  	test_must_be_empty err
+>  }
+> diff --git c/t/t4018-diff-funcname.sh w/t/t4018-diff-funcname.sh
+> index 42a2b9a13b..c8d555771d 100755
+> --- c/t/t4018-diff-funcname.sh
+> +++ w/t/t4018-diff-funcname.sh
+> @@ -63,6 +63,25 @@ do
+>  		test_i18ngrep ! fatal msg &&
+>  		test_i18ngrep ! error msg
+>  	'
+> +
+> +	test_expect_success "builtin $p pattern compiles on bare repo with --=
+attr-source" '
+> +		test_when_finished "rm -rf bare.git" &&
+> +		git checkout -B master &&
+> +		git add . &&
+> +		echo "*.java diff=3Dnotexist" >.gitattributes &&
+> +		git add .gitattributes &&
+> +		git commit -am "changing gitattributes" &&
+> +		git checkout -B branchA &&
+> +		echo "*.java diff=3D$p" >.gitattributes &&
+> +		git add .gitattributes &&
+> +		git commit -am "changing gitattributes" &&
+> +		git clone --bare --no-local . bare.git &&
+> +		git -C bare.git symbolic-ref HEAD refs/heads/master &&
+> +		test_expect_code 1 git -C bare.git --attr-source=3DbranchA \
+> +			diff --exit-code HEAD:A.java HEAD:B.java 2>msg &&
+> +		test_i18ngrep ! fatal msg &&
+> +		test_i18ngrep ! error msg
+> +	'
+>  done
+>
+>  test_expect_success 'last regexp must not be negated' '
+> diff --git c/userdiff.c w/userdiff.c
+> index 58a3d59ef8..156660eaca 100644
+> --- c/userdiff.c
+> +++ w/userdiff.c
+> @@ -415,7 +415,7 @@ struct userdiff_driver *userdiff_find_by_path(struc=
+t index_state *istate,
+>  		check =3D attr_check_initl("diff", NULL);
+>  	if (!path)
+>  		return NULL;
+> -	git_check_attr(istate, NULL, path, check);
+> +	git_check_attr(istate, path, check);
+>
+>  	if (ATTR_TRUE(check->items[0].value))
+>  		return &driver_true;
+> diff --git c/ws.c w/ws.c
+> index da3d0e28cb..903bfcd53e 100644
+> --- c/ws.c
+> +++ w/ws.c
+> @@ -79,7 +79,7 @@ unsigned whitespace_rule(struct index_state *istate, =
+const char *pathname)
+>  	if (!attr_whitespace_rule)
+>  		attr_whitespace_rule =3D attr_check_initl("whitespace", NULL);
+>
+> -	git_check_attr(istate, NULL, pathname, attr_whitespace_rule);
+> +	git_check_attr(istate, pathname, attr_whitespace_rule);
+>  	value =3D attr_whitespace_rule->items[0].value;
+>  	if (ATTR_TRUE(value)) {
+>  		/* true (whitespace) */
