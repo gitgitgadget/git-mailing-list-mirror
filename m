@@ -2,143 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D6E4C6FD1D
-	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 09:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4872C74A5B
+	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 09:55:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230426AbjCQJvy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Mar 2023 05:51:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45492 "EHLO
+        id S229516AbjCQJzN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Mar 2023 05:55:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230286AbjCQJvc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2023 05:51:32 -0400
+        with ESMTP id S229690AbjCQJzL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2023 05:55:11 -0400
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9FD59E66A
-        for <git@vger.kernel.org>; Fri, 17 Mar 2023 02:51:17 -0700 (PDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.west.internal (Postfix) with ESMTP id 5EF9E3200A70;
-        Fri, 17 Mar 2023 05:51:13 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11F426906E
+        for <git@vger.kernel.org>; Fri, 17 Mar 2023 02:55:09 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 7A4593200AF9;
+        Fri, 17 Mar 2023 05:55:08 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 17 Mar 2023 05:51:13 -0400
+  by compute2.internal (MEProxy); Fri, 17 Mar 2023 05:55:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1679046672; x=1679133072; bh=fU
-        hE45KV/9dG1KED+1nKhFBvZYHT5SNjY/W0Rdunj/0=; b=DjyYNm51EIMX3E20uJ
-        /d6Jo437v1l4MvvVWSV/w2ZIm9FTmz7GjZKiPHPUq01uARi4CrKYn3+VQUlqSCdj
-        yPvclNPM8p1YgxwQhdu/Vg/pnnuAygds2713JKPEmr0rmxsasJcmz7nl9zyEJqXV
-        w94o5nyuNLIKzbYgtBvM5i4vxnNz8Y8RFHBDnHukwpy1XH+PUq0441qSlcu1jLSs
-        +PzGrmw0Rpt8WogwtxJPHM5vya+LQl090IBv31Ay2p0l+U+CePQte1UDYPI/JboZ
-        jvblYzLACs0/biDzL7tane2trTHIX+6OTLVnAG9cFxEbJFZcB9PvxOui3J45ZOJg
-        AvXg==
+        :subject:subject:to:to; s=fm2; t=1679046908; x=1679133308; bh=Oz
+        aSFyXVBix0u8vtp5WCvDtwGgJc9Y73IRVACjxJC8Q=; b=mexiLu/HpvBE1+Mhxm
+        1btzyBVqGiWJ5X/u9qQB5ybb5qiR51mjQc5jyxrNm2KrpDPD/XAOUqm1xXNHyWi+
+        1m2Kjvom7459EFkyirYZZbzkfmVUFnVFjqQg4hZLZ+ATAP3mvIGDV7ObyQC4HsfO
+        vwrqwp57si7kqNWlZ6vNPz6BohsS3HOo3IWOdFQQOjo4vnQG7aFgZEAXvYTE0BBj
+        b//ZuZF4BvER+Hbh+SHsZdq1M5y76i/c8GwjFXfh48gjNe525HhHOrzs/XtfaHBh
+        FJVqulg72PRKR1riXH5Wl5PdXFrIzppDbbSm9/Ch49jaqdKVY2G+PRiDFyRp5Z4h
+        0KJA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1679046672; x=1679133072; bh=fUhE45KV/9dG1
-        KED+1nKhFBvZYHT5SNjY/W0Rdunj/0=; b=S5P3hY+g9ZwNsiqH+wbT0BgkCaBPA
-        ShaHBrSjLax0V7lxd9hIAybR2Xxup0VQHrOMTs/FoUxWHf1sMHN84+fuyX48T+6/
-        ne84BtA3DhGEBMd+DfxOtQWL8QOyQMVAEJgbgT50U4NndsGv2hEN49ODcs1+z3uW
-        00W5XH1v1Euu9porhAr9/2/TOOjLC5L0E1SAm2oRDBYXt80ityusOIRb5SDXoqAv
-        d8b4w7RC3msBElEGpeavk0rbPffZSVmk1fd/Ua6qjnoNpLv503IHKFomPiqtbePd
-        rpKOlhq8+qjxLnOKwfF5PKKeWU+8EvyRWCzyn2F2I8IXRbEySqHbIRQXQ==
-X-ME-Sender: <xms:EDgUZEnDj_MULkLicNjlftoNHZs491lwBcNNPh5sJUyh2I5aXLKWSA>
-    <xme:EDgUZD3Y63qQ1dBIA3ecXIV1LyXhZxKIpYlfh_t6VbNhsY4aVxsFZBIYmxyVderkp
-    KD69ziYUSTkpdQPbg>
-X-ME-Received: <xmr:EDgUZCo4TnAQar7bhlKQDAtwBtp3OQ4PTmCK5jjKaT7s4D_GhWWEZNbBsiww86eOsNMuyrTx4Bc6lsRIdUEraawtYNnf7_9R1MBUX67o4YE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdefvddgtdekucetufdoteggodetrfdotf
+        :x-sasl-enc; s=fm2; t=1679046908; x=1679133308; bh=OzaSFyXVBix0u
+        8vtp5WCvDtwGgJc9Y73IRVACjxJC8Q=; b=ny0l5mFn0qDkr5r7Zgd21YMAEfKH2
+        odD1oJM8mMfX91FFwDRmC2j9FKRYsAMU42N3O1oHgpfNlgRgsG8C/Ik5YbL5xH1F
+        uPHpxtA5um9VZqsbnTMV+OOBLrI0xOeuZ3zU8Tu+i7HfEvO+4i3UOgcNzIo5A8eq
+        jrFgL8VTrVKJv07heU/yVMtGWXldVk25+qWPn6A1sPo0vQvHDXnEF4WkPXGE4vJj
+        8tOLYCU7PwY06cDN1xHXRc0ssEpTjDBDkT9KTYC6CFYcUs6VGRPmhhiam2NS9+2S
+        0iGG8IP9EBwm+WyF8lb1uMlWfM57ErWlOxABw/0SQfPe0jqnbiUqMUqTg==
+X-ME-Sender: <xms:-zgUZC-Nx0vKvDn8BeaCkH4d3UqavcBgdwc_kfXLi-8zZrNiQ3Swew>
+    <xme:-zgUZCtzGb7Ay4M2kYAfmrifZF0RVArx3tetnlt7XFX5Nj-XuRnxMsmLA08d-NuGs
+    lWDqSwz6HtU3VgdGA>
+X-ME-Received: <xmr:-zgUZIADUztaXGRov71JmahUK-UEbk0Y_9f_FaKsi7xiMSGI5Y9WPW6ldXxR9lFyG_uMlmWz023MteuW13LmjkwYZd6F1v7AO001Zt5HL5Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdefvddgtdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
     eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:EDgUZAkSX4__KwTdfzJzdSOIgAQsGdjHRM9kqTliUTQtSAZTLBeLFw>
-    <xmx:EDgUZC2IPiCqwTCQj2jPBqtgApFct69orvCWuGWt213m1zzo7dNv2g>
-    <xmx:EDgUZHsFW_mRueGpHL5l_XMsm-AYfvzLGaiQZiif9fdxy8Tef7X4OQ>
-    <xmx:EDgUZH9wVmtBJOZNNxK7jhAIfdrbww5QgMgAbuHMsS4-Ed5hayiZKg>
+X-ME-Proxy: <xmx:_DgUZKfpYFZfoRBkRKn5ecfLPE8xAI224-dXBl0dmWpMhS6n4iH6SA>
+    <xmx:_DgUZHNKZ03sS9NMLravOcSP5cnvASGpkoQ7waq8w-CCdGPrfOIvnQ>
+    <xmx:_DgUZEmhyJ46XDJyrunB7OW8HGuHd0GO4b-fOZ6tB2aQsWNVwuWwAA>
+    <xmx:_DgUZJUQrV65dGurBREVT9TwLEvWSNe7a_1Uir8gpTQr4kqJ3b75Lg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Mar 2023 05:51:11 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 7191079f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 17 Mar 2023 09:50:41 +0000 (UTC)
-Date:   Fri, 17 Mar 2023 10:51:06 +0100
+ 17 Mar 2023 05:55:07 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 690f1c87 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 17 Mar 2023 09:54:40 +0000 (UTC)
+Date:   Fri, 17 Mar 2023 10:55:05 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/8] fetch: deduplicate handling of per-reference format
-Message-ID: <ZBQ4Cqkq9v2cB77f@ncase>
+Subject: Re: [PATCH 7/8] fetch: fix inconsistent summary width for pruned and
+ updated refs
+Message-ID: <ZBQ4+f/YU0r6ntfb@ncase>
 References: <cover.1678878623.git.ps@pks.im>
- <d45ec31eeaf42ee042bad04efd69668144df3138.1678878623.git.ps@pks.im>
- <xmqq4jqlocqf.fsf@gitster.g>
- <ZBMwXAnEnD5QjsFE@ncase>
- <xmqqv8j0ljxd.fsf@gitster.g>
+ <f67f9640a853b605dd1bc4be25e9988c4f059684.1678878623.git.ps@pks.im>
+ <xmqqttylmww4.fsf@gitster.g>
+ <ZBMwhLgGeUhtd5Zb@ncase>
+ <xmqqh6ukmzex.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="b6EwIQPrH2MIrbja"
+        protocol="application/pgp-signature"; boundary="/FCINQTM/5257UQp"
 Content-Disposition: inline
-In-Reply-To: <xmqqv8j0ljxd.fsf@gitster.g>
+In-Reply-To: <xmqqh6ukmzex.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---b6EwIQPrH2MIrbja
+--/FCINQTM/5257UQp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 16, 2023 at 09:50:38AM -0700, Junio C Hamano wrote:
+On Thu, Mar 16, 2023 at 09:30:46AM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> >> So, I dunno.  The result of applying this patch leaves it in an
-> >> in-between state, where the division of labor between the caller and
-> >> the callee smells somewhat iffy.
-> >>=20
-> >> Thanks.
-> >
-> > I totally agree with you here. From my point of view this "division of
-> > labor" is getting fixed in the final patch that then also moves the
-> > printing logic into `format_display()`.
+> > Practically speaking we could go even further than the current version,
+> > as I now compute the width across _all_ reference updates, even those
+> > which are deletions. But theoretically speaking, we could just skip over
+> > any deletions completely as they won't ever contribute to the column
+> > width anyway.
 >=20
-> Yes, again I smell the same "isn't this series going a bit too
-> roundabout route to its goal?" which I expressed in my response to
-> an earlier step.  The endgame of the series, even though I may not
-> agree with it 100%, is self consistent and does not leave the "this
-> ends at an in-between state" aftertaste in my mouth.
+> OK.  It's good to see that you have thought it through.
 >=20
-> Thanks.
+> > Fair, having a test for this would be great. But what kept me from
+> > adding one here is that the column width depends on the length of the
+> > longest shared prefix of two object IDs that are about to be updated.
+>=20
+> You do not have to prepare "this is the correct expected output",
+> when you need to make sure that two kinds of lines use the same
+> width settings, no?  Extract such lines from the two camps, measure
+> them and see if they are of the same length, or something?
 
-Yeah. I did have some problems to lay out this series in a sensible way.
-In an earlier iteration I tried moving the printing logic in one of the
-initial patches, but from my point of view that resulted in an even more
-awkward in-between state where the formatting and printing logic was
-kind of all over the place. And another try with "big-bang-refactoring"
-was barely reviewable, either.
+Well, comparing widths of these two lines is the easy version of the
+test, agreed. But in order to test for the bug I'm fixing I'd need to
+generate two sets of object IDs, where the first set of object IDs has a
+longer shared prefix length than the second. Because otherwise, the bug
+wouldn't be guaranteed to even surface.
 
-Maybe the solution is to keep the order, but document intent better in
-each of the patches leading towards the unified printing logic.
+Anyway -- I'll have a look at adding the easy version.
 
 Patrick
 
---b6EwIQPrH2MIrbja
+--/FCINQTM/5257UQp
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQUOAkACgkQVbJhu7ck
-PpToCQ//emY3rVeY2Qiltu4EA8RBapt81syjLOw5IzR3oX9i1+bMS+kApRjHBOk9
-CA4s+iE3vLJO+H97ZXjBHYo5q7iioTHqdSgrT55JgQKHOlKBtAXrkrhqlwUx/RtD
-GgsHYOzIXYqmghN0aFrUVRyjryc/kbRKF8ZdFXSFpVCQMdv0w8YSk3VMerCnXZaq
-JCxFT7MLrNp3pETw068vqhjtZzCRuq00L85O0ZPJucOKGvLnI3JMhcI2LYA1dFtC
-aEGUZLfui4HGZAyiQyelZzkeJfFIBhZcx40We9uxjMj7ZpePXA2IwB/rm9u5dmfJ
-tTjwE22EEOvLnWzg80LDEFOX+P8OBb3vgUJpQI7V4ojXhjrjH7LfkDkoDzp7eT9Z
-qk0cqndnW4W+Ijtzg3XGYIRCOEH8Gxki+8ikd4E9zKSm+3HXPY3Qo+TmeF8s1zf5
-mPSRwWQDPwtYPOMqKQrH26EDLYeyuoKZWH3S+pPs3qX8z1Q5Jfmm/QL3Va9Kj1IL
-zXY1Vj8gZp44j1F6Z4zrhe3pWYzzYVGMGmyx9b7v1AYbipmxxxt8wlMzAEBHYbLA
-KLhoG47t0jfQ8j7w97OVm4n5eOIiIKSxZlFc0rFMPRKuW3ZzTNgY/PFMZcgjSrX0
-Z/TSvSkiITMPkATcYeHyjC/dfSADuTm0ExoPBfiFTB+WQTRaat4=
-=b+9j
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQUOPgACgkQVbJhu7ck
+PpR3IA/5Ae9LZutX1ja14lKlPSPGMz7Y+9pZzrVR53IrTPONdUSv1/LTJotTvinP
+5LG577NPfYtGTBUjz6XvR/tMrxaFx99eV2WpSrgDQwxxiGaV484caeBGsOIoTYxW
+e/g9L+N830fgwqx6Sy4pkEBm5ihmK8K69nePDXKhxiQ/IO03/Lok8kZ+hcFW7ltk
+ISTgXufYoqGIv7voRlxRVmrqyUwwo4Mk8LyZnB9q11E3OmO7uIO8EzYUtiJfq3oZ
+qaOGWu7tmXyHA69mFaudXaikGt7FTRVRGLt4SQgf1PKFFqkxemXsIpGYez8e9kQq
+cKIytdct/+cnUFBz+bDrGvYPNcTktjV7XzXmvaJ20mlwY9tNTUAXTtq1dC43zrS8
+8FTwKHH+7MLxIaFBZocM60zApg+/Nolg8lLp9aWFwu4+P1ylgeAPXf/F6CEqnCxE
+9ucnzy5HhuYzkJMP4BSNfUGkW+IbFtgdidA39WaLVWG8G7Rb13btLa7TRlKHggNZ
+vFPP6u2V39347Gwf6liw7zTCZd9xAF+RDNPPk10YxDOOZDS4rGAmtSU6uo96/jdb
+LGxLLPOXVNGgPlcW8mTgUSOBQQsDSmSxyyfagH3nWxzxcm1Q7zF185VnGpesndmM
+rLNn5UJbyzy6KRuBUgOI27ih7b3Z16BKE19E83iZpvT9AEK+7P8=
+=3TGF
 -----END PGP SIGNATURE-----
 
---b6EwIQPrH2MIrbja--
+--/FCINQTM/5257UQp--
