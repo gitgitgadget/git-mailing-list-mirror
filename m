@@ -2,128 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67EABC6FD1D
-	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 20:24:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8776C74A5B
+	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 20:29:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229764AbjCQUY6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Mar 2023 16:24:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55966 "EHLO
+        id S230203AbjCQU32 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Mar 2023 16:29:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230117AbjCQUYy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2023 16:24:54 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCA82E81D
-        for <git@vger.kernel.org>; Fri, 17 Mar 2023 13:24:53 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id ch1-20020a0569020b0100b00b3cc5b4fa9dso6336939ybb.12
-        for <git@vger.kernel.org>; Fri, 17 Mar 2023 13:24:53 -0700 (PDT)
+        with ESMTP id S229665AbjCQU3W (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2023 16:29:22 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60D0CA7BA
+        for <git@vger.kernel.org>; Fri, 17 Mar 2023 13:28:50 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id ce7so3832645pfb.9
+        for <git@vger.kernel.org>; Fri, 17 Mar 2023 13:28:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1679084692;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=KCkLJGXUGL7VYw5Srs8CHBqZhe+DhP/Kf+Zw1DCgG5o=;
-        b=LHGObHpjFE37MWmnsGBAkjulvBBVwfcvT4D386kvE2doAmFFWxv6swxJtvPS3g3DKo
-         VId3L42+hzDC8hNRz2FOvgu3yh1BAbnJoe5nJP78zQkFUUkS77wpd734V48td+6a69H3
-         k/yX0fI711hAdyJP6rZdeUDqTu+UERRhS7GBw26xZIafx6NHEQ8y0sJJ645IRbQgc+UG
-         GhUFpdP7u+ts2z5UcPPFhlVYgJjA3bbFf72UlYBL2o0So6WPrwzbGcUbnrsbiraavDlY
-         wMtxBHwsCTAclXl+GMMW+BWQcB5ohzzTGHjWUMe9JPuTYYEuyonRMsWjRQQnDqFgJESR
-         TiVA==
+        d=gmail.com; s=20210112; t=1679084930;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tZzkVGyeXhDVnuRBlr0jgZHkz3MYwBadfasY2VTqwA4=;
+        b=oGgBcMPu8uIWA2PmXDFNJ+X3Gz6YJlEbaOy/czi9qF92NBHSEdIRF7XvPmOXTqsj+c
+         qBMi0IvGsII+Huh8G4+FfR6jE7FLwd9AGzEW+h8pomMTChERKrN7KmxqKEG5Jl/vWkTX
+         T5OyT5KWbq4H8TlF4GaR+H0m8wzasO0VukkOXDlO7Yu0Q+ETXx6B8RWreWKTz6D/jGdY
+         JZlqoQOwuwEwL7/4YjFHs4BYpeI334hrRd41ishqJceTCB+MvD7YmOB5GjMmWYnCJK7V
+         u4LueEKu1TDqXvQ+PS97Jrde64yWCBp/N8KhxYtag1pYVHqNirHFDZbe9NimnggklUFg
+         dN7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679084692;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KCkLJGXUGL7VYw5Srs8CHBqZhe+DhP/Kf+Zw1DCgG5o=;
-        b=YteIkdDcVcvECUQyp+IVnGSfzDIFkw61mAFHEofBGbbimAtUaH517KCSf/uz+WE+9F
-         DpPVArDTZQ6BQ0YRqiPEUpgSkl9jR/0jbWD2lA8NDARBb/ux6uGyUNDGIdqSJr2/7vom
-         veaAWhXSi8ZgP1+orp5mUCAOTIvt2bu1by7TpuZIc508HccmPBdqksQ+lXReBV5bVq4y
-         vNcEOkOcyYPxtcip8Aj3fOexq50UUt50e6T+bqSbxg+Qi45Q1oIyXQTsQbBf/TQqRzQw
-         SAIiSHHKUMO181TT0TpP2G0rjcfFZAUAVDchHwDmy9mYvemznhcBUgAmWvBGnLkB/M8/
-         eCWQ==
-X-Gm-Message-State: AO0yUKU77QFbfFFbnV2tvtT1WjmjlUel+9GbUTqt9nieBdwWSEEcNwqf
-        2Nl8WIILMtr1LzP5wQafWGqPHacsKgIWg7vYNXnK
-X-Google-Smtp-Source: AK7set/o5J4J2WWwPxomC8kpS3FTXStLPY1f5p+/dhA6tSeWHG7Rwu61tpRbtdvlQFV5O/IWj7vGhxe/C0y5FJWCtoPL
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:97a1:d5da:aaf2:92eb])
- (user=jonathantanmy job=sendgmr) by 2002:a81:ae0d:0:b0:541:6941:5aa8 with
- SMTP id m13-20020a81ae0d000000b0054169415aa8mr5062920ywh.7.1679084692323;
- Fri, 17 Mar 2023 13:24:52 -0700 (PDT)
-Date:   Fri, 17 Mar 2023 13:24:49 -0700
-In-Reply-To: <cover.1678878623.git.ps@pks.im>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.40.0.rc2.332.ga46443480c-goog
-Message-ID: <20230317202449.1083635-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 0/8] fetch: refactor code that prints reference updates
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20210112; t=1679084930;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=tZzkVGyeXhDVnuRBlr0jgZHkz3MYwBadfasY2VTqwA4=;
+        b=SxiFKvs4KwWnDCpDB7LHMRuxtimd88Y6SHxctU/RrL9EfmLTReP+ZuQS0vEjyvxo55
+         J60ccR3dWIuQ2qtARhOPN8wQKUDr6xt6QkEraRgePYFOKc7Qb+Q6S83aHU9jXv18tSSh
+         a1ua84FIpf+NsF55MFAsiCSB/cM1UEPoCBiyXVdX0s1nnBmUifZ08qX+tzi270SL5Bw4
+         QAOoRQ+4V3Qx+rpVYAoprx2AcnS4stlOXddWv/sMoM1dHDb3iRVgD3fCFyjg18OxbT80
+         gBLcqsnFYoH6wZ7eG4nNkVR77BUQ+yPFMjNG4fbJrDC01UZr2Qnjt7JH7pEI0lXk3ExD
+         P1Cg==
+X-Gm-Message-State: AO0yUKXYFh0iPQodL6tniLiQtuO/dH+JxO2Ak4K7YsIDYRMRObVthDUh
+        BLtas9CSNxxpSHLDx8dyYiDG8Ru458g=
+X-Google-Smtp-Source: AK7set/1ioD4brmYE7qgBONIcqglOyWwpj1/XwgRO7TylSIsaIRuXslb7/VUniV9LwZsX9Xe+pgLTg==
+X-Received: by 2002:a62:cf04:0:b0:5a8:a0df:a624 with SMTP id b4-20020a62cf04000000b005a8a0dfa624mr6612318pfg.22.1679084929673;
+        Fri, 17 Mar 2023 13:28:49 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id c4-20020aa78804000000b005907716bf8bsm1961386pfo.60.2023.03.17.13.28.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Mar 2023 13:28:49 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 4/4] transport: mark unused parameters in
+ fetch_refs_from_bundle()
+References: <ZBS77VYL9ZrxKtCN@coredump.intra.peff.net>
+        <ZBS8vt97YJj3wMxn@coredump.intra.peff.net>
+Date:   Fri, 17 Mar 2023 13:28:48 -0700
+In-Reply-To: <ZBS8vt97YJj3wMxn@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 17 Mar 2023 15:17:18 -0400")
+Message-ID: <xmqq7cvfgm0v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
->     1. We want to take control of the reference updates so that we can
->        atomically update all or a subset of references that git-fetch
->        would have updated.
-> 
->     2. We want to be able to quarantine objects in a fetch so that we
->        can e.g. perform consistency checks for them before they land in
->        the main repository.
+Jeff King <peff@peff.net> writes:
 
-If you want to do this, something that might be possible is to change
-the RHS of the refspecs to put the refs in a namespace of your choice
-(e.g. ...:refs/<UUID>/...) and then you can look at what's generated and
-process them as you wish.
+> We don't look at the "to_fetch" or "nr_heads" parameters at all. At
+> first glance this seems like a bug (or at least pessimisation), because
+> it means we fetch more objects from the bundle than we actually need.
+> But the bundle does not have any way of computing the set of reachable
+> objects itself (we'd have to pull all of the objects out to walk them).
+> And anyway, we've probably already paid most of the cost of grabbing the
+> objects, since we must copy the bundle locally before accessing it.
+>
+> So it's perfectly reasonable for the bundle code to just pull everything
+> into the local object store. Unneeded objects can be dropped later via
+> gc, etc.
+>
+> But we should mark these unused parameters as such to avoid the wrath of
+> -Wunused-parameter.
 
->     - There should be as few global state as possible. This is to reduce
->       confusion and having to repeat the same incantations in multiple
->       different locations.
+Very well described, and I agree with the reasoning.
 
-Makes sense.
+Will queue all four.  Thanks.
 
->     - The logic should be as self-contained as possible. This is so that
->       it can easily be changed in a subsequent patch series.
-
-Also makes sense, but I think that some of your patches might be
-contrary to this goal (more details below).
-
-I've read all the patches, but will just summarize my thoughts here.
-
-> Patrick Steinhardt (8):
->   fetch: rename `display` buffer to avoid name conflict
-
-One other way, as others have discussed, is to just name the new
-variable display_state. (I would prefer that, at the very least so
-that in case someone else has a patch that contains the identifier
-"display", problems would be more easily noticed. This is very unlikely
-to happen but I think it's a good general direction for the Git project
-to follow.)
-
->   fetch: move reference width calculation into `display_state`
->   fetch: move output format into `display_state`
->   fetch: pass the full local reference name to `format_display`
-
-All these are good changes that I would be happy to see merged.
-
->   fetch: deduplicate handling of per-reference format
-
-I'm not so sure that this is the correct abstraction. I think that this
-and the last patch might be counterproductive to your stated goal of
-having one more mode of printing the refs, in fact, since when we have
-that new mode, the format would be different but the printing would
-remain (so we should split the format and printing).
-
->   fetch: deduplicate logic to print remote URL
-
-Makes sense, although I would need to consider only storing the
-raw URL in the struct display_state and processing it when it needs
-to be emitted (haven't checked if this is feasible, though).
-
->   fetch: fix inconsistent summary width for pruned and updated refs
-
-This changes the behavior in that the summary width, even when printing
-the summary of pruned refs, is computed based only on the updated refs.
-The summary width might need to remain out of the struct display_state
-for now.
-
->   fetch: centralize printing of reference updates
-
-Same as "fetch: deduplicate handling of per-reference format".
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  transport.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/transport.c b/transport.c
+> index 81950bf755f..c5abf26f31e 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -167,7 +167,8 @@ static struct ref *get_refs_from_bundle(struct transport *transport,
+>  }
+>  
+>  static int fetch_refs_from_bundle(struct transport *transport,
+> -			       int nr_heads, struct ref **to_fetch)
+> +				  int nr_heads UNUSED,
+> +				  struct ref **to_fetch UNUSED)
+>  {
+>  	struct bundle_transport_data *data = transport->data;
+>  	struct strvec extra_index_pack_args = STRVEC_INIT;
