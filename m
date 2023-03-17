@@ -2,185 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1CD3C74A5B
-	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 17:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C783C6FD1D
+	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 18:30:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229838AbjCQR5G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Mar 2023 13:57:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43884 "EHLO
+        id S230304AbjCQSal (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Mar 2023 14:30:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229783AbjCQR5F (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2023 13:57:05 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 057324615D
-        for <git@vger.kernel.org>; Fri, 17 Mar 2023 10:57:04 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id v21so6118027ple.9
-        for <git@vger.kernel.org>; Fri, 17 Mar 2023 10:57:04 -0700 (PDT)
+        with ESMTP id S230263AbjCQSak (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2023 14:30:40 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBEE94AFC2
+        for <git@vger.kernel.org>; Fri, 17 Mar 2023 11:30:38 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id m20-20020a9d6094000000b0069caf591747so3354860otj.2
+        for <git@vger.kernel.org>; Fri, 17 Mar 2023 11:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679075823;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VpRsuBQWcu76gTjViPBztaw2fhckRhM6n9O3e2nDcC0=;
-        b=V1FfZ7jnQQFhU62VYcISwo9lzPBxlkstXu0s3MsHhPi/Mip4K9XojZiglRS/KcwgMS
-         9YuUnNHR4dqzaUUAucKiDT4acMAeUH0Z13SkHrqmgBk/k5SIzF9uMWwWXSsTamu3JEI8
-         2WVxoqz3De/91Qg2eb2WmKmDlQF4DQfAZdtbGl0sCaVuQJCSJr9W9n8XZOw3PRSLG4Ev
-         2/qRSlbeIZricD20geWrQHGGjlC7gzmXSC1WhFr+lUFGWrlkzbDj3Muq7HBUyRcqePPi
-         wNRmo6dEeKVQTA0PfiIgqhJALoWa9jTKNSIk6AdlAI4FTYXRkVPNYi0837dTc3CAm15P
-         kA0A==
+        d=github.com; s=google; t=1679077838;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iR0FY1mOJLtSy7W2PPIpgWJ9/BrcHDzlJ9NxuBQDejU=;
+        b=RaQWgfn+O6878AtD//KBcslZRpQNX+rT1Gi3Y23t9UJg3+sJbNgosBWLeT5kVYI10I
+         6thsX0hpdqTC4lwuii9LHPQeTG8U7uC7pI7CkODko/DMqNs6gzyt13/BP3gVNq4OWhzX
+         GYwFe9lZuxKGbPjSMXWi4pfN6L/i4ClARBX853v6eyMgw6Mzi0zORmaSbPa14DwPq9K1
+         iTTE1lW5MnyHDfLNdkCe0mPuEEfzIm+r+31HYpbAF8GDgQe28pm/kgJ319e2hqGmJJTc
+         PJgdjX2pM5YQACr6EpL0ehLbZLsJwsUXEZ+b92S9hyiSVsq+UoVEdG9BJbxsCkrWij8T
+         1+Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679075823;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VpRsuBQWcu76gTjViPBztaw2fhckRhM6n9O3e2nDcC0=;
-        b=NyXW9Pg76CLMS0Kc53UT/RM0lfm7uSt06v26bam7CopRQKHbIt970QW8lMSzxa/4ig
-         C2J3LE5AFOdH1ATJjNS+NiNew4j0YZ2O++CFw5HlFBKx0Mpmel4aR7+l4yfi4edDB5bF
-         mhPIhEa4aEv0+fDhjjnb9zQj0M108qmGRxIJT/NV7dQFBAoD6f8Uv4ytxy6p3WlGYkEl
-         P1zRTxQ00fRJRKx6P0hh/S7sHiKjd1o1Y0Y7sjQvFUk4JIgx9Jnhmlimyc06H6BE8zky
-         sNc3Q02FT4JPgxSHQfQGslGPwH1J/3sDxLtre2Biau+/7dPAzVO2CMGn9m44XnwlgB0X
-         3g0g==
-X-Gm-Message-State: AO0yUKWCmdcqk0G/aXo+y7VFTgkkWLcs9kfTYW6m8vBqPdldwRDKcinK
-        0IW80kpkmejwU112RsVJFc2BOF8yaBk=
-X-Google-Smtp-Source: AK7set8RXOaehSvHc9V9jMDLNqgKzj+/H2XHG45U2U9DRM7WPTjpj5AkP4WLRVdtm60FT+KQQKsyRw==
-X-Received: by 2002:a05:6a20:431b:b0:d4:3031:de7e with SMTP id h27-20020a056a20431b00b000d43031de7emr9783929pzk.31.1679075823083;
-        Fri, 17 Mar 2023 10:57:03 -0700 (PDT)
-Received: from fivlite-virtual-machine.localdomain ([49.37.151.78])
-        by smtp.gmail.com with ESMTPSA id h12-20020aa786cc000000b005a8a5be96b2sm1846241pfo.104.2023.03.17.10.57.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Mar 2023 10:57:02 -0700 (PDT)
-From:   Kousik Sanagavarapu <five231003@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Kousik Sanagavarapu <five231003@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v4] index-pack: remove fetch_if_missing=0
-Date:   Fri, 17 Mar 2023 23:26:01 +0530
-Message-Id: <20230317175601.4250-1-five231003@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230313181518.6322-1-five231003@gmail.com>
-References: <20230313181518.6322-1-five231003@gmail.com>
+        d=1e100.net; s=20210112; t=1679077838;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iR0FY1mOJLtSy7W2PPIpgWJ9/BrcHDzlJ9NxuBQDejU=;
+        b=umL7LIMbvZqJPVPvzJsQS6SOdZbQZwKeAcD9cduw0KDm9KLy0GQ0s0StOWmNDmvD2N
+         r1THTi2bbO6EC7z3bvhYN1uafbgmRUxjdWLIM9fIEI1A7LNEZqE/C1zTh2byLoe+BeWl
+         8Pc9XojzZwO5Q8wjU21Dnx/Xak8J8PpzH0iitAPZDR5nU/1fUc6L5eMnhSVSUBUBsuf9
+         qfYyQrifabs+RIzDJ+ThMc/2/KwzFXdodV4LrbkoMQf1DZgV2Xg1MCnVqTDXfwD4kaWi
+         QuCgyCqaA6myN8UtHKkbHZfzpXDB7DW4ULis0oLezgZaLWcD05nJe7kjEAEDYzDt3sEO
+         c8LA==
+X-Gm-Message-State: AO0yUKWfODJlm5qw4bzj4rNuB5EcJk1+wRD6p7ZZ3KktWWxxpdmawLXV
+        m4lFR/GSSdREnaZNgK6KNFPn
+X-Google-Smtp-Source: AK7set9Age68LggEiI7+yi9BesZpQQzDcyNY0Lw6R1QCW2KAv4ysnaMZ9ekKzeZ59Wj581LFkvm25A==
+X-Received: by 2002:a05:6830:1385:b0:68e:da51:2cb2 with SMTP id d5-20020a056830138500b0068eda512cb2mr209799otq.37.1679077838044;
+        Fri, 17 Mar 2023 11:30:38 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:b55b:7e6b:71e6:ade7? ([2600:1700:e72:80a0:b55b:7e6b:71e6:ade7])
+        by smtp.gmail.com with ESMTPSA id q17-20020a9d7c91000000b006884c42a38asm1265697otn.41.2023.03.17.11.30.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Mar 2023 11:30:37 -0700 (PDT)
+Message-ID: <d4ac5ab2-e5e5-e894-04e0-b99249dfeced@github.com>
+Date:   Fri, 17 Mar 2023 14:30:35 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v3 3/8] commit-graph: combine generation computations
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        vdye@github.com, Jeff King <peff@peff.net>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20230315224958.169443-1-jonathantanmy@google.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <20230315224958.169443-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A collision test is triggered in sha1_object(), whenever there is an
-object file in our repo. If our repo is a partial clone, then checking
-for this file existence does not lazy-fetch the object (if the object
-is missing and if there are one or more promisor remotes) when
-fetch_if_missing is set to 0.
+On 3/15/2023 6:49 PM, Jonathan Tan wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> +static void compute_reachable_generation_numbers_1(
+>> +			struct compute_generation_info *info,
+>> +			int generation_version)
+>>  {
+>>  	int i;
+>>  	struct commit_list *list = NULL;
+>>  
+>> -	if (ctx->report_progress)
+>> -		ctx->progress = start_delayed_progress(
+>> -					_("Computing commit graph topological levels"),
+>> -					ctx->commits.nr);
+>> -	for (i = 0; i < ctx->commits.nr; i++) {
+>> -		struct commit *c = ctx->commits.list[i];
+>> -		uint32_t level;
+>> +	for (i = 0; i < info->commits->nr; i++) {
+>> +		struct commit *c = info->commits->list[i];
+>> +		timestamp_t gen;
+>> +		repo_parse_commit(info->r, c);
+>> +		gen = info->get_generation(c, info->data);
+>>  
+>> -		repo_parse_commit(ctx->r, c);
+>> -		level = *topo_level_slab_at(ctx->topo_levels, c);
+>> +		display_progress(info->progress, info->progress_cnt + 1);
+>>  
+>> -		display_progress(ctx->progress, i + 1);
+>> -		if (level != GENERATION_NUMBER_ZERO)
+>> +		if (gen != GENERATION_NUMBER_ZERO && gen != GENERATION_NUMBER_INFINITY)
+>>  			continue;
+>>  
+>>  		commit_list_insert(c, &list);
+> 
+> So this replaces a call to display_progress with another...
+> 
+>>  			if (all_parents_computed) {
+>>  				pop_commit(&list);
+>> -
+>> -				if (max_level > GENERATION_NUMBER_V1_MAX - 1)
+>> -					max_level = GENERATION_NUMBER_V1_MAX - 1;
+>> -				*topo_level_slab_at(ctx->topo_levels, current) = max_level + 1;
+>> +				gen = compute_generation_from_max(
+>> +						current, max_gen,
+>> +						generation_version);
+>> +				info->set_generation(current, gen, info->data);
+>>  			}
+> 
+> ...here is where set_generation is called...
+> 
+>> +static void set_topo_level(struct commit *c, timestamp_t t, void *data)
+>> +{
+>> +	struct write_commit_graph_context *ctx = data;
+>> +	*topo_level_slab_at(ctx->topo_levels, c) = (uint32_t)t;
+>> +	display_progress(ctx->progress, ctx->progress_cnt + 1);
+>> +}
+> 
+> ...is this display_progress() redundant? (set_topo_level() is one of the
+> possibilities that set_generation could be assigned to.) There already
+> seems to be one at the top. Further supporting my query is the fact that
+> in the hunk containing set_generation, there is no progress report on
+> the LHS of the diff.
 
-Though this global lets us control lazy-fetching in regions of code,
-it prevents multi-threading [1].
+It turns out the progress is a bit redundant here, but not entirely in
+the case of ensure_generations_valid() (if progress was enabled).
 
-Hence, use has_object() to check for the existence of an object, which
-has the default behavior of not lazy-fetching in a partial clone, even
-when fetch_if_missing is set to 1. It is worth mentioning that this is
-the only place where there is potential for lazy-fetching and all other
-cases [2] are properly handled, making it safe to remove this global
-here.
+Let's break down the iteration, which has nested loops:
 
-[1] See https://lore.kernel.org/git/xmqqv9sdeeif.fsf@gitster-ct.c.googlers.com/
-    and the discussion that follows from it.
+ 1. for all commits in the initial list.
+   2. perform DFS until generation can be computed. (while loop)
 
-[2] These cases are:
-    - When we check objects, but we return with 0 early if the object
-      doesn't exist.
-    - We prefetch delta bases in a partial clone, if we don't have them
-      (as the comment outlines).
-    - There are some cases where we fsck objects, but lazy-fetching is
-      already handled in fsck.
+When writing a commit-graph file, that initial list is _every commit
+in the commit-graph_, so having a display_progress() in the for loop
+is sufficient to get the exact number.
 
-Helped-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Kousik Sanagavarapu <five231003@gmail.com>
----
+In the case of ensure_generations_valid(), the number of assignments
+in the while loop can be much larger than the initial input list.
 
-Changes since v3:
-- Changed the commit message to give a stronger reason as to
-  why we should reduce the use of this global and in this
-  process remove it from builtin/index-pack.c
+However, ensure_generations_valid() does not use progress _and_ even
+if it did, it would make sense to signal progress based on the number
+of tips that need to be computed. I'll remove these progress counts
+inside the mutators.
 
-- Also made an addition to the test which I overlooked last time
-  and without which the does not make sense
-
- builtin/index-pack.c     | 11 +----------
- t/t5616-partial-clone.sh | 33 +++++++++++++++++++++++++++++++++
- 2 files changed, 34 insertions(+), 10 deletions(-)
-
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 6648f2daef..8c0f36a49e 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -800,8 +800,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 
- 	if (startup_info->have_repository) {
- 		read_lock();
--		collision_test_needed =
--			has_object_file_with_flags(oid, OBJECT_INFO_QUICK);
-+		collision_test_needed = has_object(the_repository, oid, 0);
- 		read_unlock();
- 	}
- 
-@@ -1728,14 +1727,6 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	int report_end_of_input = 0;
- 	int hash_algo = 0;
- 
--	/*
--	 * index-pack never needs to fetch missing objects except when
--	 * REF_DELTA bases are missing (which are explicitly handled). It only
--	 * accesses the repo to do hash collision checks and to check which
--	 * REF_DELTA bases need to be fetched.
--	 */
--	fetch_if_missing = 0;
--
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage(index_pack_usage);
- 
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index f519d2a87a..41fa7130f1 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -644,6 +644,39 @@ test_expect_success 'repack does not loosen promisor objects' '
- 	grep "loosen_unused_packed_objects/loosened:0" trace
- '
- 
-+test_expect_success 'index-pack does not lazy-fetch
-+		     when checking for sha1 collsions' '
-+	rm -rf server client another-remote &&
-+
-+	git init server &&
-+	echo "line" >server/file &&
-+	git -C server add file &&
-+	git -C server commit -am "file" &&
-+	git -C server config --local uploadpack.allowFilter 1 &&
-+	git -C server config --local uploadpack.allowAnySha1InWant 1 &&
-+
-+	git clone --no-checkout --filter=blob:none \
-+				"file://$(pwd)/server" client &&
-+	git -C client config extensions.partialClone 1 &&
-+	git -C client config remote.origin.promisor 1 &&
-+
-+	git clone "file://$(pwd)/server" another-remote &&
-+
-+	echo "new line" >server/new-file &&
-+	git -C server add new-file &&
-+	git -C server commit -am "new-file" &&
-+	HASH=$(git -C server hash-object new-file) &&
-+
-+	git -C another-remote pull &&
-+
-+	# Try to fetch so that "client" will have to do a collision-check.
-+	# This should, however, not fetch "new-file" because "client" is a
-+	# partial clone.
-+	GIT_TRACE_PACKET=git -C client fetch \
-+				"file://$(pwd)/another-remote" main &&
-+	! grep "want $HASH" trace
-+'
-+
- test_expect_success 'lazy-fetch in submodule succeeds' '
- 	# setup
- 	test_config_global protocol.file.allow always &&
--- 
-2.25.1
-
+Thanks,
+-Stolee
