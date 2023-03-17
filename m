@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73569C6FD1D
-	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 15:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96644C74A5B
+	for <git@archiver.kernel.org>; Fri, 17 Mar 2023 15:36:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231316AbjCQPgB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Mar 2023 11:36:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45278 "EHLO
+        id S230100AbjCQPgC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Mar 2023 11:36:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230474AbjCQPf7 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231277AbjCQPf7 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 17 Mar 2023 11:35:59 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FDCAAA27D
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F20BA8EAA
         for <git@vger.kernel.org>; Fri, 17 Mar 2023 08:35:30 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id x13so22025665edd.1
+Received: by mail-ed1-x52d.google.com with SMTP id w9so22037123edc.3
         for <git@vger.kernel.org>; Fri, 17 Mar 2023 08:35:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679067326;
+        d=gmail.com; s=20210112; t=1679067325;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=M2iaTobd7U8jGdUfdw9d8q88d3tJJxq8Qsw72DV/zfQ=;
-        b=jebKPz2WkwYqnrqlCIKDJGSOaTuXzFdvjnjpXEWtqrY+iyXBKR5tegmc4E2rGmliJH
-         kQkZ/LE9YWXm6gjaa61FJ12a1xmt1EHO8207siTldApu9PN4Y8+T0LnvoYf26YkEL7Uv
-         1REJzTJrnIorIbm9EgdcC/qq51kH5+8gH9QOhGTEYQYfzBXWGF2s3a/9dLb4z4lLPOX7
-         jAy8yU1Ksdco7Ht2u5RF8tba6T3EKwjBNB9VHvjHlg6wWf08Bd2dNuJH8aYBA4G85pEl
-         ZGMmN37Ndi+D8ekiKsvkLcjETYaVr1TPQj/lQrsqGoqR9gLnAnlp5acrZ8IukUcvLmV6
-         sbTA==
+        bh=eO7HYkk+WrAC4Ur1UNnXIcWTk/Gz6cB+R68aFC8dGw4=;
+        b=jVLNP6gsABFvWUc4buIj1iVhrJRolsTWB7mJquoJKd4TtTMox6P6Zc4bhkqTCBTSDl
+         fYoCnZ+B5HVP10qPjUhdpB3XluFrSR7VS4ZsJSH3RHnGtMVNsT6K3ZxCNrP+zmiBdY/t
+         WGvgX/y8JxpuYyjy3AuwMJpkyW1c1tCa/92EmgvNwH6m6iTorjiKOg0BONZoJmrsPAPJ
+         mkAN3tFfF+iCI1F3d5x+WokZb4AIFSESSCwf3q/xrv6C8wS01mfKEzNmqg3Zfk6LUNi5
+         MDF3uLlVUxYgZQw98yMzAOaVlYcU8rdLwfrKpkCr7IV0bilBvUwlTLWsZ4GVqtUu1ZZh
+         2Ckg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679067326;
+        d=1e100.net; s=20210112; t=1679067325;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=M2iaTobd7U8jGdUfdw9d8q88d3tJJxq8Qsw72DV/zfQ=;
-        b=gWKziDvI5gObd8bAOFgyhkJWF8cBQjJKTMWCxbHrobYLPjc5yDupkY/2MTwx7ZqW/s
-         p+ZyxHntJO+0Lf50QWeMcK1yaslXWKG1BzoiBwsP2Mz/9goeNK9LzVki5siT2YKdjyZ9
-         3olAYFSaDDUaUYGRyZIcP+3AJ3fctXsYhsb1eBSZiP+QLJrtBr0ucYQdANyK/19Tup/2
-         ONkPDA1oqik83I+1w/CUEptw+neV9EHHxDNP8KFduGZk8bBeV+riDqwZFCG9B+sPsu77
-         E99dopKhG2NoFxvYZZcqmVOSXyI5dbzgFX3rafVpc2l28slqAfUOTtKAMVMTSvc0EGff
-         hLUA==
-X-Gm-Message-State: AO0yUKU1AxPt64TchU7PAwaZ1zch8NRzZQXrk2bprQYgUmACMvf6nSsm
-        lcqlIETriHd7+IbTo5IB7S7XlmgUkhxBSg==
-X-Google-Smtp-Source: AK7set+M6O+D2zvJSFO4jjqoBlMSS/+k1nGqP8RlBGOh1woqItEzhp5Grbfu998RTD9LgDm3AvNtkA==
-X-Received: by 2002:aa7:c792:0:b0:4fd:298a:62cb with SMTP id n18-20020aa7c792000000b004fd298a62cbmr3191772eds.21.1679067326623;
-        Fri, 17 Mar 2023 08:35:26 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v6-20020a50d086000000b004fb00831851sm1199232edd.66.2023.03.17.08.35.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=eO7HYkk+WrAC4Ur1UNnXIcWTk/Gz6cB+R68aFC8dGw4=;
+        b=xG+JalvDPZssdk8amsz/DO+ZOD6wjcMHm1cgppNrH12u77/TkugoWfoKwH7cUGRTr8
+         g6U/wxNU8BAgbg3AR+QStFzChpsZ5HMtuplK1AAZ7627Hq5Tw/7jheTZN3tKSop6253j
+         1HrZ83isWvn8kdlOhylQzY2BC9fJitxvsxuxlqB04N2zbPJOvb22B9tEmajhEHYK+bvJ
+         cdR1/OPFdoF8CfHQdxjAtXQ5NT7hh8aHiPFN7TbCI9Ww6qaDfVyhYA1gyR6f1Vg2std5
+         NnUVlnV+VvxYpXT4Hg5Diopnkap5RqrgupzAgHraFVUHVwrAMoPIvk/wfPeRayWpeij4
+         JE3w==
+X-Gm-Message-State: AO0yUKW4ql0p9mDRc5cnRUmIfKeXSVv4VTGeA9T1co0IKRB7cCAqha/G
+        gJoHm7aSzGsBDRKee/xOnQgowmqAYd6lCA==
+X-Google-Smtp-Source: AK7set/OEAN/pjKGH0RRq+bj5weuGZX3LOs2w76WV+bkyd2hoHSi7jJWOViKBhXKOTcs/FBKvHlocg==
+X-Received: by 2002:aa7:c956:0:b0:4fe:9160:6a7b with SMTP id h22-20020aa7c956000000b004fe91606a7bmr3555355edt.9.1679067325096;
         Fri, 17 Mar 2023 08:35:25 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id v6-20020a50d086000000b004fb00831851sm1199232edd.66.2023.03.17.08.35.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Mar 2023 08:35:24 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 02/17] cocci: fix incorrect & verbose "the_repository" rules
-Date:   Fri, 17 Mar 2023 16:35:06 +0100
-Message-Id: <patch-02.17-1b1fc5d41f5-20230317T152724Z-avarab@gmail.com>
+Subject: [PATCH 01/17] cocci: remove dead rule from "the_repository.pending.cocci"
+Date:   Fri, 17 Mar 2023 16:35:05 +0100
+Message-Id: <patch-01.17-c167bde3c0c-20230317T152724Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.40.0.rc1.1034.g5867a1b10c5
 In-Reply-To: <cover-00.17-00000000000-20230317T152724Z-avarab@gmail.com>
 References: <cover-00.17-00000000000-20230317T152724Z-avarab@gmail.com>
@@ -68,197 +68,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When these rules started being added in [1] they didn't use a ";"
-after the ")", and would thus catch uses of these macros within
-expressions. But as of [2] the new additions were broken in that
-they'd only match a subset of the users of these macros.
+The "parse_commit_gently" macro went away in [1], so we don't need to
+carry his for its migration.
 
-Rather than narrowly fixing that, let's have these use the much less
-verbose pattern introduced in my recent [3]: There's no need to
-exhaustively enumerate arguments if we use the "..." syntax. This
-means that we can fold all of these different rules into one.
-
-1. afd69dcc219 (object-store: prepare read_object_file to deal with
-   any repo, 2018-11-13)
-2. 21a9651ba3f (commit-reach: prepare get_merge_bases to handle any
-   repo, 2018-11-13)
-3. 0e6550a2c63 (cocci: add a index-compatibility.pending.cocci,
-   2022-11-19)
+1. ea3f7e598c8 (revision: use repository from rev_info when parsing
+   commits, 2020-06-23)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .../coccinelle/the_repository.pending.cocci   | 160 +++++-------------
- 1 file changed, 46 insertions(+), 114 deletions(-)
+ contrib/coccinelle/the_repository.pending.cocci | 8 --------
+ 1 file changed, 8 deletions(-)
 
 diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contrib/coccinelle/the_repository.pending.cocci
-index 23b97536da5..99e192736ee 100644
+index 747d382ff5f..23b97536da5 100644
 --- a/contrib/coccinelle/the_repository.pending.cocci
 +++ b/contrib/coccinelle/the_repository.pending.cocci
-@@ -3,118 +3,50 @@
- // our code base.
+@@ -34,14 +34,6 @@ expression G;
+ + repo_parse_commit_internal(the_repository,
+   E, F, G)
  
+-@@
+-expression E;
+-expression F;
+-@@
+-- parse_commit_gently(
+-+ repo_parse_commit_gently(the_repository,
+-  E, F)
+-
  @@
--expression E;
--expression F;
--expression G;
+ expression E;
  @@
--- read_object_file(
--+ repo_read_object_file(the_repository,
--  E, F, G)
--
--@@
--expression E;
--@@
--- has_object_file(
--+ repo_has_object_file(the_repository,
--  E)
--
--@@
--expression E;
--@@
--- has_object_file_with_flags(
--+ repo_has_object_file_with_flags(the_repository,
--  E)
--
--@@
--expression E;
--expression F;
--expression G;
--@@
--- parse_commit_internal(
--+ repo_parse_commit_internal(the_repository,
--  E, F, G)
--
--@@
--expression E;
--@@
--- parse_commit(
--+ repo_parse_commit(the_repository,
--  E)
--
--@@
--expression E;
--expression F;
--@@
--- get_merge_bases(
--+ repo_get_merge_bases(the_repository,
--  E, F);
--
--@@
--expression E;
--expression F;
--expression G;
--@@
--- get_merge_bases_many(
--+ repo_get_merge_bases_many(the_repository,
--  E, F, G);
--
--@@
--expression E;
--expression F;
--expression G;
--@@
--- get_merge_bases_many_dirty(
--+ repo_get_merge_bases_many_dirty(the_repository,
--  E, F, G);
--
--@@
--expression E;
--expression F;
--@@
--- in_merge_bases(
--+ repo_in_merge_bases(the_repository,
--  E, F);
--
--@@
--expression E;
--expression F;
--expression G;
--@@
--- in_merge_bases_many(
--+ repo_in_merge_bases_many(the_repository,
--  E, F, G);
--
--@@
--expression E;
--expression F;
--@@
--- get_commit_buffer(
--+ repo_get_commit_buffer(the_repository,
--  E, F);
--
--@@
--expression E;
--expression F;
--@@
--- unuse_commit_buffer(
--+ repo_unuse_commit_buffer(the_repository,
--  E, F);
--
--@@
--expression E;
--expression F;
--expression G;
--@@
--- logmsg_reencode(
--+ repo_logmsg_reencode(the_repository,
--  E, F, G);
--
--@@
--expression E;
--expression F;
--expression G;
--expression H;
--@@
--- format_commit_message(
--+ repo_format_commit_message(the_repository,
--  E, F, G, H);
-+(
-+- read_object_file
-++ repo_read_object_file
-+|
-+- has_object_file
-++ repo_has_object_file
-+|
-+- has_object_file_with_flags
-++ repo_has_object_file_with_flags
-+|
-+- parse_commit_internal
-++ repo_parse_commit_internal
-+|
-+- parse_commit
-++ repo_parse_commit
-+|
-+- get_merge_bases
-++ repo_get_merge_bases
-+|
-+- get_merge_bases_many
-++ repo_get_merge_bases_many
-+|
-+- get_merge_bases_many_dirty
-++ repo_get_merge_bases_many_dirty
-+|
-+- in_merge_bases
-++ repo_in_merge_bases
-+|
-+- in_merge_bases_many
-++ repo_in_merge_bases_many
-+|
-+- get_commit_buffer
-++ repo_get_commit_buffer
-+|
-+- unuse_commit_buffer
-++ repo_unuse_commit_buffer
-+|
-+- logmsg_reencode
-++ repo_logmsg_reencode
-+|
-+- format_commit_message
-++ repo_format_commit_message
-+)
-+  (
-++ the_repository,
-+  ...)
 -- 
 2.40.0.rc1.1034.g5867a1b10c5
 
