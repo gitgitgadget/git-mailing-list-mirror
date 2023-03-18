@@ -2,34 +2,35 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD86BC7618E
-	for <git@archiver.kernel.org>; Sat, 18 Mar 2023 19:21:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF8B8C7618E
+	for <git@archiver.kernel.org>; Sat, 18 Mar 2023 19:24:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229713AbjCRTV2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Mar 2023 15:21:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33336 "EHLO
+        id S229713AbjCRTYH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Mar 2023 15:24:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbjCRTV1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2023 15:21:27 -0400
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D7777687
-        for <git@vger.kernel.org>; Sat, 18 Mar 2023 12:21:26 -0700 (PDT)
-Date:   Sat, 18 Mar 2023 19:21:10 +0000
+        with ESMTP id S229541AbjCRTYF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2023 15:24:05 -0400
+X-Greylist: delayed 160 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 18 Mar 2023 12:24:03 PDT
+Received: from mail-40138.protonmail.ch (mail-40138.protonmail.ch [185.70.40.138])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2DE216AC1
+        for <git@vger.kernel.org>; Sat, 18 Mar 2023 12:24:03 -0700 (PDT)
+Date:   Sat, 18 Mar 2023 19:23:47 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1679167279; x=1679426479;
+        s=protonmail3; t=1679167440; x=1679426640;
         bh=KFWLl2etjabzEFnhxNAC+9KEVSkJgcnwM9pnIyULZss=;
         h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
          Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-        b=bROuLi4d1nvo5sFfTUyEFuCT3puU0w98mvi6IAZI0S3DExz/2W+H6VLGBV2NURV03
-         iO5hzColn2fCdt4oQYscwtXAICGJJpeqpVZMgmLzj4T/44JRmXxPHJ/waK2n193o9F
-         OH/7SMOGTl39a5NGyYKmIPQZmVRJDf9kBG8wgo74r2PGYQLHF+UfozR1aL62PnvT6F
-         HmDyNt7HEbliefeAVoofT3XxTN2HjLdwMpfooUcb841gIZCKX1gpdvev+FDFhdja6F
-         4j660KK4U7IUrycaYQtdJBN6M9J/uPS2b+ABlcHk9Z9SN8jTFHcs6G+Ow1Pt7UBJ7k
-         00VnCeaYgR6XQ==
+        b=FkA4WNBNQS5qXvK+Y85RdXG/3SwscGsgLXfqn/6kvax7gwhhwFnxulCserHA9/9Rl
+         131iwe0WrRU9yAuDghubv0tp/CQi4M/NDfi+pu6417ZyzvwsjoEfZx6SAxj8sk5inQ
+         JyYnsuoq7DgiwuBcJZ0Y5YoqmifigTvBWG6DeBVGyUv4eA3R/U4tb3nOO1uyL6kCS5
+         qC0OCVKKUsQ/GCbENH0Dxz6ZYdCEwYGiJu0BT0aAN6Ngx8wd6JZTdg+SgJEmwZPmQn
+         nmMca4Ji1K/iTB8daIPS11HoFiiwsqVNw/bssFXMiX5kt507mtrY0mOA6073r/WN2E
+         YaN9G2bh2f91A==
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 From:   dooagain <dooagain@protonmail.com>
 Subject: Bug: git pull output and case sensitivity.
-Message-ID: <-Va6f9aA736sZCXChvTLaUUSpAq9-ooSELLBrqRSXR5zAQwT7QSRryN1SGBWQj7J_KowBmZuhDHwIwAkrFFfyelwtkXJ-ri4yLPpmDpBqBU=@protonmail.com>
+Message-ID: <WqmlETIn522shWOyopuARwNyw2_6uC5DpGd8FNNO1n5KWp7io9MGwcMBNEkOWVCMm9mOcT_XGZXkpERIE78eFkbvIbWpWAfGALwMi44f6xg=@protonmail.com>
 Feedback-ID: 5666827:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
