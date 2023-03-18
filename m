@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 677AAC61DA4
-	for <git@archiver.kernel.org>; Sat, 18 Mar 2023 15:47:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D41B2C74A5B
+	for <git@archiver.kernel.org>; Sat, 18 Mar 2023 15:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229550AbjCRPrM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Mar 2023 11:47:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37442 "EHLO
+        id S230016AbjCRPrN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Mar 2023 11:47:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229868AbjCRPrD (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229967AbjCRPrD (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 18 Mar 2023 11:47:03 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B571D916
-        for <git@vger.kernel.org>; Sat, 18 Mar 2023 08:47:01 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id ek18so31318949edb.6
-        for <git@vger.kernel.org>; Sat, 18 Mar 2023 08:47:01 -0700 (PDT)
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 632901C7FD
+        for <git@vger.kernel.org>; Sat, 18 Mar 2023 08:47:00 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id x3so31257809edb.10
+        for <git@vger.kernel.org>; Sat, 18 Mar 2023 08:47:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679154420;
+        d=gmail.com; s=20210112; t=1679154418;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fBmp1WNBu4l5uyQOZwjLHFcbKQroSBy4oBACTiM2LcA=;
-        b=l7+bXkJN+H4YPn3pGIx4o1xD4T7XGWdksVDpza4f2MEJX6IBHrUb63TK0KUfF3wjXS
-         xOUR0qQ3XjebbT4u1bA448hY6tdrN+Gm7C3CtHhjFXZewLR/qewkDcBy7bTz+kqLt5Xt
-         iFzkKB9gJYRjnwSapp7xA8RMmuDhMmGaP9+1DnrB0GHIM0Or50FhCXoZNYVTp4NhZMTK
-         TECyLjPSO5Bi2kbivR5S+vkvLcsQfVMlLyz8F9SJEUeK/6MxyhJwll3xAid2U9GpMhQp
-         F3hWANivQUvHc9W9LL7n7sMSLZpkBanOqe6v0Ip6um0cr/h+WbYgomtuyiOJJoUaMmTQ
-         Y9WQ==
+        bh=LDaPxSGgIUOG1uM2q0vvMxPBkJdqqLH8giy72dWAzag=;
+        b=KrQaeXhEEzPlzQjKHXJ2ys8Z8w/8JaJvr9rCZ8ZxAwS3EeWWFlokoWqvAGwZfftnm4
+         ESDvJon3m5BZMYnXmBH/gc63SlRfspI5HU7fnPzMBlI2OeJAVPHQJvrUM3U5b+B0caW5
+         ZZCJ7mhw+CzH18HqATAYdtpyzywBXkjSNGpALKz73V1GdzX6w7A38HW9BzT/cJttteDT
+         MpJnVzdOQ7Q+pvfBXuvnSgBQajbTaP5XM7I9re580ajxqVSmrrLlJhmrZIobqc2mzg4N
+         yjtZGK7Ps9gP14ocgR33r8eao1uOQ7xnP1lEYFF4Lx3+GiRRmOdZksuQABY97pWCCEc/
+         2ojA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679154420;
+        d=1e100.net; s=20210112; t=1679154418;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fBmp1WNBu4l5uyQOZwjLHFcbKQroSBy4oBACTiM2LcA=;
-        b=dVx+65K6VuMM9khu4a61Vs0R1dPByZIBNRm0Z2k5lWzyt817uQ4GrLqg2LAMrJPpNE
-         cs4VWmjPxMuzvxinnapE5229bD+WUhXp0yDrd5cMRZ7Ds+WXTHtS4aOJw2KRzdc5FKpJ
-         HshHLulRYCeAtmchY6vLGOliP+jJUG22mxYvtq5ENR0g6snJIpAwkooUbKJvIXzUl+Bg
-         fNePzCz3XbT0YrhCJyTXCIIau57pJCtzSk9m5AxnaWerf4/5na7QElufgyCPJBQ98jM4
-         /BYpUtcZhUd1ZLuaE99jrFkDFhAjCSTYl++Q6Cot5Cgcf/E47LIevKwR++NIY2v66dQq
-         UecA==
-X-Gm-Message-State: AO0yUKWLm4oeDd1Y7RlIC6q4ocOmI7Y+qSL73JVUQEu24GslgvaUGPic
-        ROYAMa0UaklwFrv7+T90obHUypCoUZglclCQUn0=
-X-Google-Smtp-Source: AK7set+Y3eU3QJHwJXCHJZ6pNdDM7tIy4ZlMxFadgyuh1tU7IQsRornM0JOro+xsp7QFVcU0qC90Bw==
-X-Received: by 2002:a17:906:edd6:b0:932:b7ce:27b4 with SMTP id sb22-20020a170906edd600b00932b7ce27b4mr3458553ejb.27.1679154419961;
-        Sat, 18 Mar 2023 08:46:59 -0700 (PDT)
+        bh=LDaPxSGgIUOG1uM2q0vvMxPBkJdqqLH8giy72dWAzag=;
+        b=E9LQtin08sRPOjJ7bcwE6hBy4ZibsvsU2PchZhJLU1atUBROaZF68K7hQ5xM0+WEe4
+         DndMDmMx4eOHPeyKkZi14uF8C3TV0KKTamEyuoAwh0SGdCQpKlJrT26UFuxTfAwy15CL
+         MnfS4TKVe04NmztvkCPJ1pj75spQGO9x6yWWONUR8hI+7e/Xd3GfgkmJB5r0gjio8xwK
+         pjMYzpm/HxsON0SUyjUlemODPF6H0d7OKPKOhHmPxLiGTw+rrTX1iW3T87eWZzQRyzvJ
+         CW2FtEDnMiOQV4WqR/7ND3hXcOyLNXr6YpKhiWDhlZ4qMuIdmbi75XVhMNRIN334a8JF
+         UsSA==
+X-Gm-Message-State: AO0yUKVYvUiruR0gXSkvFu1Z45AEWPa/dYKd6THbEOMs6LthyM4dfEfJ
+        25bXg5eFEBhKJVNwkNVevSfb1Tf5VRORqDPrEv0=
+X-Google-Smtp-Source: AK7set/wmzk+mFxw09otJvwZxN6hsVn6/caScuQdG7wFGBnbHjrGcBwkHb6gbw7d2uwtzqcj7f4wuQ==
+X-Received: by 2002:a17:906:f217:b0:931:986:7531 with SMTP id gt23-20020a170906f21700b0093109867531mr3399519ejb.39.1679154418610;
+        Sat, 18 Mar 2023 08:46:58 -0700 (PDT)
 Received: from titov.fritz.box ([216.24.216.227])
-        by smtp.gmail.com with ESMTPSA id ha18-20020a170906a89200b0092be4b381b7sm2271200ejb.81.2023.03.18.08.46.58
+        by smtp.gmail.com with ESMTPSA id ha18-20020a170906a89200b0092be4b381b7sm2271200ejb.81.2023.03.18.08.46.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Mar 2023 08:46:59 -0700 (PDT)
+        Sat, 18 Mar 2023 08:46:58 -0700 (PDT)
 From:   Andrei Rybak <rybak.a.v@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <avarab@gmail.com>, Michael J Gruber <git@grubix.eu>,
         Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
         Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 7/7] t1507: assert output of rev-parse
-Date:   Sat, 18 Mar 2023 16:46:46 +0100
-Message-Id: <20230318154646.131344-8-rybak.a.v@gmail.com>
+Subject: [PATCH v2 6/7] t1404: don't create unused file
+Date:   Sat, 18 Mar 2023 16:46:45 +0100
+Message-Id: <20230318154646.131344-7-rybak.a.v@gmail.com>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230312201520.370234-1-rybak.a.v@gmail.com>
 References: <20230312201520.370234-1-rybak.a.v@gmail.com>
@@ -68,44 +68,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tests in t1507-rev-parse-upstream.sh compare files "expect" and "actual"
-to assert the output of "git rev-parse", "git show", and "git log".
-However, two of the tests '@{reflog}-parsing does not look beyond colon'
-and '@{upstream}-parsing does not look beyond colon' don't inspect the
-contents of the created files.
+Some tests in file t1404-update-ref-errors.sh create file "unchanged" as
+the expected side for a test_cmp assertion at the end of the test for
+output of "git for-each-ref".  Test 'no bogus intermediate values during
+delete' also creates a file named "unchanged" using "git for-each-ref".
+However, the file isn't used for any assertions in the test.  Instead,
+"git rev-parse" is used to compare the reference with variable $D.
 
-Assert output of "git rev-parse" in tests in t1507-rev-parse-upstream.sh
-to improve test coverage.
+Don't create unused file "unchanged" in test 'no bogus intermediate
+values during delete' of t1404-update-ref-errors.sh.
 
 Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
 ---
- t/t1507-rev-parse-upstream.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ t/t1404-update-ref-errors.sh | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index c34714ffe3..4458820168 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -258,7 +258,8 @@ test_expect_success '@{reflog}-parsing does not look beyond colon' '
- 	git add @{yesterday} &&
- 	git commit -m "funny reflog file" &&
- 	git hash-object @{yesterday} >expect &&
--	git rev-parse HEAD:@{yesterday} >actual
-+	git rev-parse HEAD:@{yesterday} >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success '@{upstream}-parsing does not look beyond colon' '
-@@ -266,7 +267,8 @@ test_expect_success '@{upstream}-parsing does not look beyond colon' '
- 	git add @{upstream} &&
- 	git commit -m "funny upstream file" &&
- 	git hash-object @{upstream} >expect &&
--	git rev-parse HEAD:@{upstream} >actual
-+	git rev-parse HEAD:@{upstream} >actual &&
-+	test_cmp expect actual
- '
- 
- test_done
+diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
+index b5606d93b5..937ae0d733 100755
+--- a/t/t1404-update-ref-errors.sh
++++ b/t/t1404-update-ref-errors.sh
+@@ -551,7 +551,6 @@ test_expect_success REFFILES 'no bogus intermediate values during delete' '
+ 	git update-ref $prefix/foo $C &&
+ 	git pack-refs --all &&
+ 	git update-ref $prefix/foo $D &&
+-	git for-each-ref $prefix >unchanged &&
+ 	# Now try to update the reference, but hold the `packed-refs` lock
+ 	# for a while to see what happens while the process is blocked:
+ 	: >.git/packed-refs.lock &&
 -- 
 2.40.0
 
