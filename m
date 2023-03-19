@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39F0FC6FD1F
-	for <git@archiver.kernel.org>; Sun, 19 Mar 2023 06:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA701C6FD1F
+	for <git@archiver.kernel.org>; Sun, 19 Mar 2023 06:28:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230103AbjCSG2x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Mar 2023 02:28:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33808 "EHLO
+        id S230135AbjCSG25 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Mar 2023 02:28:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230134AbjCSG23 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Mar 2023 02:28:29 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 720CF24BE5
-        for <git@vger.kernel.org>; Sat, 18 Mar 2023 23:28:18 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id p34so552903wms.3
+        with ESMTP id S230133AbjCSG22 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Mar 2023 02:28:28 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 072BF1CAD9
+        for <git@vger.kernel.org>; Sat, 18 Mar 2023 23:28:19 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id bg16-20020a05600c3c9000b003eb34e21bdfso7328483wmb.0
         for <git@vger.kernel.org>; Sat, 18 Mar 2023 23:28:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112; t=1679207298;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MXyIVpmOBaaJ7bk6NwFSlTVBYbm16O9OS6IY4zPOLkc=;
-        b=ELUORhdI2zq50kHChsYh8qW/3wLxaOhL01spY2RjBvbaGwZjsKmBWZdUuNA7ZD5f/S
-         9Ral4PZZchW9pYKTBmzHMYiLXxAaAbYN7m+2oDhiAhATq0eo/+rE0k2V5oYLhD36fIDr
-         f3pUgqXPHMh99tXx0MShwTuom65SaeaUjRVejSp7qBgGCBdtdsObf4wRR+Opmf78Zqci
-         8Dh5IeLj69NnVoaybSc7McosHBQxMXawHUQ7bqNrU2dvbbEkJQUEAWDnGLvwSCadEVJd
-         aQ+TTAaR6DpKzTzVGjsKfAOxJCsj5nkn9/c/7FVGlj86xkGLZ3DlkjWQAQFU9Gn5Fq5M
-         +q0w==
+        bh=O5P1UlA78wC6o2NO71/KwdNqnIIdQ9p+id+oFGNwep4=;
+        b=b3BskEKg9G096ArMgWoP3GdSYq9J17tMly/zmtM6QkqIju1WS9PI278JMiF1tOO6Mw
+         Xx0oK58xWfUC+C+DvN+YCIojBOo/VueR1+6JZfydGG8HFhq+ryUYN+Jb7LKBdciXpE4t
+         hjIHF11hOr96/7E/tc2H8Mj0OXob0o+SWd3jCVM5583n3VRNYwQbvP2oq9qLj0HwAHZ5
+         StRI/+mNkQp97zGToN1uN45mo6Goen+VwyLdVNloS2QmQL78LifSJOFNngAqsey1DkXv
+         ONASaF+7BDLilbVcNw/uJKz1xMCjS98d24l0Z3TS82vIZ3EMETFTgYgsHHlcRQfWBbnu
+         +9tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112; t=1679207298;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MXyIVpmOBaaJ7bk6NwFSlTVBYbm16O9OS6IY4zPOLkc=;
-        b=z5b2yAz8yw8GIXnadRXkGZ68886nah4b+x/Phm9RYxeEYqthdtEw/xlspCx3K76dz3
-         wFmDH0nG18YkEGyqwFQ55P8oxwInevojvSHK7WRgek1FAsD876FP6RxJw5uO4UgMJEC1
-         qOENgObL5zk0CFkz9swZ+BBYYgyrRmL+5O3c+faJynbe0Lz4VJttJizVZHc6h9ELnCzs
-         ziitthS9ZirUPw+zzfGcUooLYhhIiUPj+4H77nHUuHeGWFwlZ6q+px87TEeOICDz965C
-         qRl+bt0CJFUrRa3fwD3pJLSYdhGWiVfjoZ2aBxBLTIXlJT9k1ZUg5MjKZquuUss1S8r+
-         4sEw==
-X-Gm-Message-State: AO0yUKXGBkXm/mLX3CdxVbhQYwB+fwrGS8bg9m3IwOSvm5ZCb+CmpZp3
-        7anTXzJquQJQnO1I3PmwFuLpl/yL9gI=
-X-Google-Smtp-Source: AK7set/LwhlyUV9vQErkcc5eo+Cst+SgEik2YhpccHR082tusSLdpN/LamaVn3hFUuXpqe35Lygh1g==
-X-Received: by 2002:a05:600c:35ce:b0:3d0:6a57:66a5 with SMTP id r14-20020a05600c35ce00b003d06a5766a5mr28575979wmq.0.1679207297721;
-        Sat, 18 Mar 2023 23:28:17 -0700 (PDT)
+        bh=O5P1UlA78wC6o2NO71/KwdNqnIIdQ9p+id+oFGNwep4=;
+        b=vKbiEJFyewiSITr59IsRc4afYlmzckWb89osx4brkY4nzDJDKVMIskpN/cyV5vnYAl
+         4I9nvktaTc2yJZPGIijs5E3vCShi/7SSbVdZkytMCl1WVI89q8OXhyez08ecJuUDO6en
+         EA5HNG9q8e5Rzz6bShECIzGWiVZz3nyam1PJ1P5VDGewcseZhE/b8y4tuALgrTyCEKN3
+         dRoyJ6PucQ2LwQc+xqZUgNrwRnS8zOSZwtBlnirPyu92s0Zu2RwoXzijVND3NxwoGt+a
+         XBRD7bRGlwdb+fiPTlHyIj6ly9IO5Gbgi3kgufkrT49OaS79UrY63MvQM1mLutZwbJ4p
+         uOFg==
+X-Gm-Message-State: AO0yUKWtNA8UrR0DSSoWXg8PZuzmu0DG0X9hHTtnVLJ8CXdHbKFo4zMV
+        j72ohllpZq6GdrYpupPHfthbxKXiYCY=
+X-Google-Smtp-Source: AK7set+YQkbB8Q8oUhqFww13styjwTjIYiiD9GDa9aKSxUeP5q5DZTuED3QSPvZn2Sz2jq3cDA9DJg==
+X-Received: by 2002:a05:600c:22d8:b0:3ed:62c0:c6c4 with SMTP id 24-20020a05600c22d800b003ed62c0c6c4mr8889206wmg.17.1679207298423;
+        Sat, 18 Mar 2023 23:28:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j19-20020a05600c191300b003eddc6aa5fasm796731wmq.39.2023.03.18.23.28.17
+        by smtp.gmail.com with ESMTPSA id u2-20020a05600c00c200b003edd1c44b57sm1468350wmm.27.2023.03.18.23.28.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Mar 2023 23:28:17 -0700 (PDT)
-Message-Id: <626d089f10b5e0fbc6e0dfbc05a6b49a87955f46.1679207285.git.gitgitgadget@gmail.com>
+        Sat, 18 Mar 2023 23:28:18 -0700 (PDT)
+Message-Id: <38af06f55bc8fd87af580aa94b8a83cdc5b1fd4d.1679207286.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1493.git.1679207282.gitgitgadget@gmail.com>
 References: <pull.1493.git.1679207282.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 19 Mar 2023 06:28:01 +0000
-Subject: [PATCH 15/16] write-or-die.h: move declarations for write-or-die.c
- functions from cache.h
+Date:   Sun, 19 Mar 2023 06:28:02 +0000
+Subject: [PATCH 16/16] csum-file.h: remove unnecessary inclusion of cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,630 +67,168 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+With the change in the last commit to move several functions to
+write-or-die.h, csum-file.h no longer needs to include cache.h.
+However, removing that include forces several other C files, which
+directly or indirectly dependend upon csum-file.h's inclusion of
+cache.h, to now be more explicit about their dependencies.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- archive-tar.c              |  1 +
- archive-zip.c              |  1 +
- builtin/blame.c            |  1 +
- builtin/cat-file.c         |  1 +
- builtin/check-attr.c       |  1 +
- builtin/check-ignore.c     |  1 +
- builtin/check-mailmap.c    |  1 +
- builtin/credential-cache.c |  1 +
- builtin/credential-store.c |  1 +
- builtin/grep.c             |  1 +
- builtin/hash-object.c      |  1 +
- builtin/log.c              |  1 +
- builtin/notes.c            |  1 +
- builtin/send-pack.c        |  1 +
- builtin/stripspace.c       |  1 +
- builtin/tag.c              |  1 +
- builtin/update-index.c     |  1 +
- bundle.c                   |  1 +
- cache.h                    | 74 ------------------------------------
- config.c                   |  1 +
- csum-file.h                |  1 +
- diagnose.c                 |  1 +
- environment.c              |  1 +
- http-backend.c             |  1 +
- log-tree.c                 |  1 +
- pkt-line.c                 |  1 +
- refs/files-backend.c       |  1 +
- refs/packed-backend.c      |  1 +
- remote-curl.c              |  1 +
- send-pack.c                |  3 +-
- sideband.c                 |  1 +
- t/helper/test-pkt-line.c   |  3 +-
- upload-pack.c              |  1 +
- write-or-die.c             |  3 +-
- write-or-die.h             | 78 ++++++++++++++++++++++++++++++++++++++
- 35 files changed, 114 insertions(+), 77 deletions(-)
- create mode 100644 write-or-die.h
+ bulk-checkin.c      | 2 +-
+ chunk-format.c      | 1 +
+ commit-graph.c      | 2 +-
+ csum-file.h         | 1 -
+ delta-islands.c     | 2 +-
+ fetch-pack.c        | 2 +-
+ midx.c              | 2 +-
+ object-file.c       | 2 +-
+ pack-bitmap-write.c | 3 ++-
+ pack-bitmap.c       | 2 +-
+ pack.h              | 2 ++
+ packfile.c          | 2 +-
+ 12 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index 16ee133bbf5..497dad0b3af 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -11,6 +11,7 @@
- #include "object-store.h"
- #include "streaming.h"
- #include "run-command.h"
-+#include "write-or-die.h"
- 
- #define RECORDSIZE	(512)
- #define BLOCKSIZE	(RECORDSIZE * 20)
-diff --git a/archive-zip.c b/archive-zip.c
-index c02dc33e406..e6f5c10a14f 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -10,6 +10,7 @@
- #include "utf8.h"
- #include "object-store.h"
- #include "userdiff.h"
-+#include "write-or-die.h"
- #include "xdiff-interface.h"
- #include "date.h"
- 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index fb271bae70e..0a3cc019059 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -33,6 +33,7 @@
- #include "refs.h"
- #include "setup.h"
- #include "tag.h"
-+#include "write-or-die.h"
- 
- static char blame_usage[] = N_("git blame [<options>] [<rev-opts>] [<rev>] [--] <file>");
- static char annotate_usage[] = N_("git annotate [<options>] [<rev-opts>] [<rev>] [--] <file>");
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 365d9234bdb..cf73d187912 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -23,6 +23,7 @@
- #include "replace-object.h"
- #include "promisor-remote.h"
- #include "mailmap.h"
-+#include "write-or-die.h"
- 
- enum batch_mode {
- 	BATCH_MODE_CONTENTS,
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index ec37b8164af..1dbe9d6ca88 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -8,6 +8,7 @@
- #include "quote.h"
- #include "setup.h"
- #include "parse-options.h"
-+#include "write-or-die.h"
- 
- static int all_attrs;
- static int cached_attrs;
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index a45d001e353..9401dad0070 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -8,6 +8,7 @@
- #include "pathspec.h"
- #include "parse-options.h"
- #include "submodule.h"
-+#include "write-or-die.h"
- 
- static int quiet, verbose, stdin_paths, show_non_matching, no_index;
- static const char * const check_ignore_usage[] = {
-diff --git a/builtin/check-mailmap.c b/builtin/check-mailmap.c
-index fa86fd9423d..002d2941e93 100644
---- a/builtin/check-mailmap.c
-+++ b/builtin/check-mailmap.c
-@@ -5,6 +5,7 @@
- #include "mailmap.h"
- #include "parse-options.h"
- #include "string-list.h"
-+#include "write-or-die.h"
- 
- static int use_stdin;
- static const char * const check_mailmap_usage[] = {
-diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
-index af56a44923d..508da4c6e4d 100644
---- a/builtin/credential-cache.c
-+++ b/builtin/credential-cache.c
-@@ -2,6 +2,7 @@
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index eb6d7a2805b..d2428b86111 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -1,7 +1,7 @@
+ /*
+  * Copyright (c) 2011, Google Inc.
+  */
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "bulk-checkin.h"
+ #include "environment.h"
+diff --git a/chunk-format.c b/chunk-format.c
+index 6d1071729df..60a73c1b140 100644
+--- a/chunk-format.c
++++ b/chunk-format.c
+@@ -3,6 +3,7 @@
+ #include "chunk-format.h"
+ #include "csum-file.h"
  #include "gettext.h"
- #include "parse-options.h"
- #include "wrapper.h"
-+#include "write-or-die.h"
- 
- #ifndef NO_UNIX_SOCKETS
- 
-diff --git a/builtin/credential-store.c b/builtin/credential-store.c
-index da32cfd89e2..8977604eb9d 100644
---- a/builtin/credential-store.c
-+++ b/builtin/credential-store.c
-@@ -5,6 +5,7 @@
- #include "credential.h"
- #include "string-list.h"
- #include "parse-options.h"
-+#include "write-or-die.h"
- 
- static struct lock_file credential_lock;
- 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index b8ebf014f40..d858bf0bea6 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -28,6 +28,7 @@
- #include "submodule-config.h"
- #include "object-store.h"
- #include "packfile.h"
-+#include "write-or-die.h"
- 
- static const char *grep_prefix;
- 
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index a2e160db026..a15fe4fd3f4 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -15,6 +15,7 @@
- #include "parse-options.h"
- #include "exec-cmd.h"
- #include "setup.h"
-+#include "write-or-die.h"
++#include "trace2.h"
  
  /*
-  * This is to create corrupt objects for debugging and as such it
-diff --git a/builtin/log.c b/builtin/log.c
-index b7b6dfbd1d1..84ec5b504d4 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -40,6 +40,7 @@
- #include "commit-reach.h"
- #include "range-diff.h"
- #include "tmp-objdir.h"
-+#include "write-or-die.h"
- 
- #define MAIL_DEFAULT_WRAP 72
- #define COVER_FROM_AUTO_MAX_SUBJECT_LEN 100
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 8e9be33ddbb..26cbb564a8e 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -25,6 +25,7 @@
- #include "notes-merge.h"
- #include "notes-utils.h"
- #include "worktree.h"
-+#include "write-or-die.h"
- 
- static const char * const git_notes_usage[] = {
- 	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index fb5b2bad2cc..2b360fee426 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -16,6 +16,7 @@
- #include "gpg-interface.h"
+  * When writing a chunk-based file format, collect the chunks in
+diff --git a/commit-graph.c b/commit-graph.c
+index 5481736c76c..f0cd2e7a2a3 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "config.h"
  #include "gettext.h"
- #include "protocol.h"
-+#include "write-or-die.h"
- 
- static const char * const send_pack_usage[] = {
- 	N_("git send-pack [--mirror] [--dry-run] [--force]\n"
-diff --git a/builtin/stripspace.c b/builtin/stripspace.c
-index 53930458ffa..9451eb69ff4 100644
---- a/builtin/stripspace.c
-+++ b/builtin/stripspace.c
-@@ -5,6 +5,7 @@
- #include "parse-options.h"
- #include "setup.h"
- #include "strbuf.h"
-+#include "write-or-die.h"
- 
- static void comment_lines(struct strbuf *buf)
- {
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 78b3e44e993..85afa50d724 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -24,6 +24,7 @@
- #include "column.h"
- #include "ref-filter.h"
- #include "date.h"
-+#include "write-or-die.h"
- 
- static const char * const git_tag_usage[] = {
- 	N_("git tag [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>] [-e]\n"
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index f97f8d4c9d5..03cda5e60d2 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -23,6 +23,7 @@
- #include "setup.h"
- #include "split-index.h"
- #include "fsmonitor.h"
-+#include "write-or-die.h"
- 
- /*
-  * Default to not allowing changes to the list of files. The
-diff --git a/bundle.c b/bundle.c
-index efeaf6f7151..dac82e2f2d9 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -16,6 +16,7 @@
- #include "strvec.h"
- #include "list-objects-filter-options.h"
- #include "connected.h"
-+#include "write-or-die.h"
- 
- static const char v2_bundle_signature[] = "# v2 git bundle\n";
- static const char v3_bundle_signature[] = "# v3 git bundle\n";
-diff --git a/cache.h b/cache.h
-index bffedd240e7..c43051d7928 100644
---- a/cache.h
-+++ b/cache.h
-@@ -686,63 +686,6 @@ extern int verify_ce_order;
- 
- extern int quote_path_fully;
- 
--/*
-- * These values are used to help identify parts of a repository to fsync.
-- * FSYNC_COMPONENT_NONE identifies data that will not be a persistent part of the
-- * repository and so shouldn't be fsynced.
-- */
--enum fsync_component {
--	FSYNC_COMPONENT_NONE,
--	FSYNC_COMPONENT_LOOSE_OBJECT		= 1 << 0,
--	FSYNC_COMPONENT_PACK			= 1 << 1,
--	FSYNC_COMPONENT_PACK_METADATA		= 1 << 2,
--	FSYNC_COMPONENT_COMMIT_GRAPH		= 1 << 3,
--	FSYNC_COMPONENT_INDEX			= 1 << 4,
--	FSYNC_COMPONENT_REFERENCE		= 1 << 5,
--};
--
--#define FSYNC_COMPONENTS_OBJECTS (FSYNC_COMPONENT_LOOSE_OBJECT | \
--				  FSYNC_COMPONENT_PACK)
--
--#define FSYNC_COMPONENTS_DERIVED_METADATA (FSYNC_COMPONENT_PACK_METADATA | \
--					   FSYNC_COMPONENT_COMMIT_GRAPH)
--
--#define FSYNC_COMPONENTS_DEFAULT ((FSYNC_COMPONENTS_OBJECTS | \
--				   FSYNC_COMPONENTS_DERIVED_METADATA) & \
--				  ~FSYNC_COMPONENT_LOOSE_OBJECT)
--
--#define FSYNC_COMPONENTS_COMMITTED (FSYNC_COMPONENTS_OBJECTS | \
--				    FSYNC_COMPONENT_REFERENCE)
--
--#define FSYNC_COMPONENTS_ADDED (FSYNC_COMPONENTS_COMMITTED | \
--				FSYNC_COMPONENT_INDEX)
--
--#define FSYNC_COMPONENTS_ALL (FSYNC_COMPONENT_LOOSE_OBJECT | \
--			      FSYNC_COMPONENT_PACK | \
--			      FSYNC_COMPONENT_PACK_METADATA | \
--			      FSYNC_COMPONENT_COMMIT_GRAPH | \
--			      FSYNC_COMPONENT_INDEX | \
--			      FSYNC_COMPONENT_REFERENCE)
--
--#ifndef FSYNC_COMPONENTS_PLATFORM_DEFAULT
--#define FSYNC_COMPONENTS_PLATFORM_DEFAULT FSYNC_COMPONENTS_DEFAULT
--#endif
--
--/*
-- * A bitmask indicating which components of the repo should be fsynced.
-- */
--extern enum fsync_component fsync_components;
--extern int fsync_object_files;
--extern int use_fsync;
--
--enum fsync_method {
--	FSYNC_METHOD_FSYNC,
--	FSYNC_METHOD_WRITEOUT_ONLY,
--	FSYNC_METHOD_BATCH,
--};
--
--extern enum fsync_method fsync_method;
--
- #define MTIME_CHANGED	0x0001
- #define CTIME_CHANGED	0x0002
- #define OWNER_CHANGED	0x0004
-@@ -1045,29 +988,12 @@ int update_server_info(int);
- extern const char *git_mailmap_file;
- extern const char *git_mailmap_blob;
- 
--/* IO helper functions */
--void maybe_flush_or_die(FILE *, const char *);
--__attribute__((format (printf, 2, 3)))
--void fprintf_or_die(FILE *, const char *fmt, ...);
--void fwrite_or_die(FILE *f, const void *buf, size_t count);
--void fflush_or_die(FILE *f);
--
- #define COPY_READ_ERROR (-2)
- #define COPY_WRITE_ERROR (-3)
- int copy_fd(int ifd, int ofd);
- int copy_file(const char *dst, const char *src, int mode);
- int copy_file_with_time(const char *dst, const char *src, int mode);
- 
--void write_or_die(int fd, const void *buf, size_t count);
--void fsync_or_die(int fd, const char *);
--int fsync_component(enum fsync_component component, int fd);
--void fsync_component_or_die(enum fsync_component component, int fd, const char *msg);
--
--static inline int batch_fsync_enabled(enum fsync_component component)
--{
--	return (fsync_components & component) && (fsync_method == FSYNC_METHOD_BATCH);
--}
--
- /* pager.c */
- void setup_pager(void);
- int pager_in_use(void);
-diff --git a/config.c b/config.c
-index 03a4fcaba5b..5ad9ae91436 100644
---- a/config.c
-+++ b/config.c
-@@ -30,6 +30,7 @@
- #include "setup.h"
- #include "worktree.h"
- #include "wrapper.h"
-+#include "write-or-die.h"
- 
- struct config_source {
- 	struct config_source *prev;
+ #include "hex.h"
 diff --git a/csum-file.h b/csum-file.h
-index 793a59da12b..4cd9014e367 100644
+index 4cd9014e367..566e05cbd25 100644
 --- a/csum-file.h
 +++ b/csum-file.h
-@@ -3,6 +3,7 @@
+@@ -1,7 +1,6 @@
+ #ifndef CSUM_FILE_H
+ #define CSUM_FILE_H
  
- #include "cache.h"
+-#include "cache.h"
  #include "hash.h"
-+#include "write-or-die.h"
+ #include "write-or-die.h"
  
- struct progress;
- 
-diff --git a/diagnose.c b/diagnose.c
-index 169a55407fd..f9a2496c7ff 100644
---- a/diagnose.c
-+++ b/diagnose.c
-@@ -9,6 +9,7 @@
- #include "strvec.h"
- #include "object-store.h"
- #include "packfile.h"
-+#include "write-or-die.h"
- 
- struct archive_dir {
- 	const char *path;
-diff --git a/environment.c b/environment.c
-index 649d16ac27c..63c697e7e97 100644
---- a/environment.c
-+++ b/environment.c
-@@ -25,6 +25,7 @@
- #include "setup.h"
- #include "shallow.h"
- #include "wrapper.h"
-+#include "write-or-die.h"
- 
- int trust_executable_bit = 1;
- int trust_ctime = 1;
-diff --git a/http-backend.c b/http-backend.c
-index 042ccf12e8c..89aad1b42c7 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -18,6 +18,7 @@
- #include "protocol.h"
- #include "date.h"
- #include "wrapper.h"
-+#include "write-or-die.h"
- 
- static const char content_type[] = "Content-Type";
- static const char content_length[] = "Content-Length";
-diff --git a/log-tree.c b/log-tree.c
-index e2bf8d6df75..ba7b885984f 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -23,6 +23,7 @@
- #include "help.h"
- #include "range-diff.h"
- #include "strmap.h"
-+#include "write-or-die.h"
- 
- static struct decoration name_decoration = { "object names" };
- static int decoration_loaded;
-diff --git a/pkt-line.c b/pkt-line.c
-index 30469eb4d8d..36ae0fea4a3 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -4,6 +4,7 @@
- #include "hex.h"
- #include "run-command.h"
- #include "wrapper.h"
-+#include "write-or-die.h"
- 
- char packet_buffer[LARGE_PACKET_MAX];
- static const char *packet_trace_prefix = "git";
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index d2b8925ebd0..e6a6971381e 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -17,6 +17,7 @@
- #include "../setup.h"
- #include "../worktree.h"
- #include "../wrapper.h"
-+#include "../write-or-die.h"
- 
- /*
-  * This backend uses the following flags in `ref_update::flags` for
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 3334c07003c..1eba1015dd5 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -9,6 +9,7 @@
- #include "../iterator.h"
- #include "../lockfile.h"
- #include "../chdir-notify.h"
-+#include "../write-or-die.h"
- 
- enum mmap_strategy {
- 	/*
-diff --git a/remote-curl.c b/remote-curl.c
-index 260ea200bb0..0f2410da8e7 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -22,6 +22,7 @@
- #include "protocol.h"
- #include "quote.h"
- #include "transport.h"
-+#include "write-or-die.h"
- 
- static struct remote *remote;
- /* always ends with a trailing slash */
-diff --git a/send-pack.c b/send-pack.c
-index f531cb48212..11f41a8d81e 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -16,8 +16,9 @@
- #include "version.h"
- #include "oid-array.h"
- #include "gpg-interface.h"
--#include "cache.h"
- #include "shallow.h"
-+#include "trace2.h"
-+#include "write-or-die.h"
- 
- int option_parse_push_signed(const struct option *opt,
- 			     const char *arg, int unset)
-diff --git a/sideband.c b/sideband.c
-index 4905cf9b32a..0af582858bf 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -5,6 +5,7 @@
- #include "sideband.h"
- #include "help.h"
- #include "pkt-line.h"
-+#include "write-or-die.h"
- 
- struct keyword_entry {
- 	/*
-diff --git a/t/helper/test-pkt-line.c b/t/helper/test-pkt-line.c
-index c5e052e5378..f4d134a1452 100644
---- a/t/helper/test-pkt-line.c
-+++ b/t/helper/test-pkt-line.c
-@@ -1,6 +1,7 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "test-tool.h"
- #include "pkt-line.h"
-+#include "write-or-die.h"
- 
- static void pack_line(const char *line)
- {
-diff --git a/upload-pack.c b/upload-pack.c
-index 1155f795382..eb3d0b3fa36 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -30,6 +30,7 @@
- #include "commit-graph.h"
- #include "commit-reach.h"
- #include "shallow.h"
-+#include "write-or-die.h"
- 
- /* Remember to update object flag allocation in object.h */
- #define THEY_HAVE	(1u << 11)
-diff --git a/write-or-die.c b/write-or-die.c
-index a7afc303db2..cc9e0787a1d 100644
---- a/write-or-die.c
-+++ b/write-or-die.c
-@@ -1,7 +1,8 @@
--#include "cache.h"
-+#include "git-compat-util.h"
+diff --git a/delta-islands.c b/delta-islands.c
+index 1222b6a6cd1..73a01179e83 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "attr.h"
+ #include "object.h"
+diff --git a/fetch-pack.c b/fetch-pack.c
+index c453a4168f9..10f759532ce 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "repository.h"
  #include "config.h"
- #include "run-command.h"
- #include "wrapper.h"
-+#include "write-or-die.h"
+diff --git a/midx.c b/midx.c
+index b111665dcab..9af3e5de889 100644
+--- a/midx.c
++++ b/midx.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "abspath.h"
+ #include "alloc.h"
+ #include "config.h"
+diff --git a/object-file.c b/object-file.c
+index 05fff230f73..397596e3c8f 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -6,7 +6,7 @@
+  * This handles basic git object files - packing, unpacking,
+  * creation etc.
+  */
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "abspath.h"
+ #include "alloc.h"
+ #include "config.h"
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 63f16080c9b..0fddeb1298b 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "environment.h"
+ #include "gettext.h"
+@@ -17,6 +17,7 @@
+ #include "pack-objects.h"
+ #include "commit-reach.h"
+ #include "prio-queue.h"
++#include "trace2.h"
+ 
+ struct bitmapped_commit {
+ 	struct commit *commit;
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 241ac9166c1..23d87e71bd9 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "commit.h"
+ #include "gettext.h"
+diff --git a/pack.h b/pack.h
+index 01d385903ad..3ab9e3f60c0 100644
+--- a/pack.h
++++ b/pack.h
+@@ -4,6 +4,8 @@
+ #include "object.h"
+ #include "csum-file.h"
+ 
++struct packed_git;
++struct pack_window;
+ struct repository;
  
  /*
-  * Some cases use stdio, but want to flush after the write
-diff --git a/write-or-die.h b/write-or-die.h
-new file mode 100644
-index 00000000000..65a5c42a47a
---- /dev/null
-+++ b/write-or-die.h
-@@ -0,0 +1,78 @@
-+#ifndef WRITE_OR_DIE_H
-+#define WRITE_OR_DIE_H
-+
-+void maybe_flush_or_die(FILE *, const char *);
-+__attribute__((format (printf, 2, 3)))
-+void fprintf_or_die(FILE *, const char *fmt, ...);
-+void fwrite_or_die(FILE *f, const void *buf, size_t count);
-+void fflush_or_die(FILE *f);
-+void write_or_die(int fd, const void *buf, size_t count);
-+
-+/*
-+ * These values are used to help identify parts of a repository to fsync.
-+ * FSYNC_COMPONENT_NONE identifies data that will not be a persistent part of the
-+ * repository and so shouldn't be fsynced.
-+ */
-+enum fsync_component {
-+	FSYNC_COMPONENT_NONE,
-+	FSYNC_COMPONENT_LOOSE_OBJECT		= 1 << 0,
-+	FSYNC_COMPONENT_PACK			= 1 << 1,
-+	FSYNC_COMPONENT_PACK_METADATA		= 1 << 2,
-+	FSYNC_COMPONENT_COMMIT_GRAPH		= 1 << 3,
-+	FSYNC_COMPONENT_INDEX			= 1 << 4,
-+	FSYNC_COMPONENT_REFERENCE		= 1 << 5,
-+};
-+
-+#define FSYNC_COMPONENTS_OBJECTS (FSYNC_COMPONENT_LOOSE_OBJECT | \
-+				  FSYNC_COMPONENT_PACK)
-+
-+#define FSYNC_COMPONENTS_DERIVED_METADATA (FSYNC_COMPONENT_PACK_METADATA | \
-+					   FSYNC_COMPONENT_COMMIT_GRAPH)
-+
-+#define FSYNC_COMPONENTS_DEFAULT ((FSYNC_COMPONENTS_OBJECTS | \
-+				   FSYNC_COMPONENTS_DERIVED_METADATA) & \
-+				  ~FSYNC_COMPONENT_LOOSE_OBJECT)
-+
-+#define FSYNC_COMPONENTS_COMMITTED (FSYNC_COMPONENTS_OBJECTS | \
-+				    FSYNC_COMPONENT_REFERENCE)
-+
-+#define FSYNC_COMPONENTS_ADDED (FSYNC_COMPONENTS_COMMITTED | \
-+				FSYNC_COMPONENT_INDEX)
-+
-+#define FSYNC_COMPONENTS_ALL (FSYNC_COMPONENT_LOOSE_OBJECT | \
-+			      FSYNC_COMPONENT_PACK | \
-+			      FSYNC_COMPONENT_PACK_METADATA | \
-+			      FSYNC_COMPONENT_COMMIT_GRAPH | \
-+			      FSYNC_COMPONENT_INDEX | \
-+			      FSYNC_COMPONENT_REFERENCE)
-+
-+#ifndef FSYNC_COMPONENTS_PLATFORM_DEFAULT
-+#define FSYNC_COMPONENTS_PLATFORM_DEFAULT FSYNC_COMPONENTS_DEFAULT
-+#endif
-+
-+/* IO helper functions */
-+void fsync_or_die(int fd, const char *);
-+int fsync_component(enum fsync_component component, int fd);
-+void fsync_component_or_die(enum fsync_component component, int fd, const char *msg);
-+
-+/*
-+ * A bitmask indicating which components of the repo should be fsynced.
-+ */
-+extern enum fsync_component fsync_components;
-+extern int fsync_object_files;
-+extern int use_fsync;
-+
-+enum fsync_method {
-+	FSYNC_METHOD_FSYNC,
-+	FSYNC_METHOD_WRITEOUT_ONLY,
-+	FSYNC_METHOD_BATCH,
-+};
-+
-+extern enum fsync_method fsync_method;
-+
-+static inline int batch_fsync_enabled(enum fsync_component component)
-+{
-+	return (fsync_components & component) && (fsync_method == FSYNC_METHOD_BATCH);
-+}
-+
-+#endif /* WRITE_OR_DIE_H */
+diff --git a/packfile.c b/packfile.c
+index cc3b1e242c7..dd4b369e59f 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "environment.h"
+ #include "gettext.h"
 -- 
 gitgitgadget
-
