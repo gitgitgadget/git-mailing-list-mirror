@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B421C6FD1F
-	for <git@archiver.kernel.org>; Sun, 19 Mar 2023 16:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF666C6FD1F
+	for <git@archiver.kernel.org>; Sun, 19 Mar 2023 16:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229886AbjCSQ1Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Mar 2023 12:27:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60754 "EHLO
+        id S230320AbjCSQ44 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 19 Mar 2023 12:56:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbjCSQ1W (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Mar 2023 12:27:22 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC8751B332
-        for <git@vger.kernel.org>; Sun, 19 Mar 2023 09:27:20 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id v1so2213785wrv.1
-        for <git@vger.kernel.org>; Sun, 19 Mar 2023 09:27:20 -0700 (PDT)
+        with ESMTP id S229505AbjCSQ4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Mar 2023 12:56:55 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E5F13D61
+        for <git@vger.kernel.org>; Sun, 19 Mar 2023 09:56:54 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id p34so1053104wms.3
+        for <git@vger.kernel.org>; Sun, 19 Mar 2023 09:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679243239;
+        d=gmail.com; s=20210112; t=1679245012;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CvMIvVUG+MWCyyahBy2kTKrtJnLDzOhp9iI7TZG0Fvc=;
-        b=C0SlbsfsYsnOlN4l0uhxYi6ac29tIZZbGDnz5mvDtdJjheaQ1sMUMo14odZ4hoPq2K
-         qASDexHUZ7/TYXz2I0PWSe77mxadDWTtG316U5uE8sG/q0+bDvqfqZBwJCoMCdLC1ujo
-         BgQGpqyu4Aj1G1tqu/tf9WmRdt8IYj7kGWAfrP1mDr2VWMIYvs42u0Cq1xs/SDqFtAPn
-         q0l3shBYWVQGd5sf5zmKu4ZY2UZbQfadKekspOE3IY69cIBZYv1LAq09d1aa+H7dqg3z
-         +G+X6Hvu3iimKFe5WIIvXJJTqvkIo9jUtIT7bK1nHEfN7BZUVYWhjcD8e70qNB9xu0vC
-         y/2w==
+        bh=UuGcHecT8qTm6aWTbVzMomeAE4+nJ5f9Wl6dyK4wZrU=;
+        b=plxnNi2Y84QsITy7JsOlNRrO6QhOQ6GUwj6TbaYcKGf/r1GV72e4b9nrfPANa8A1JV
+         dsF9KmtVciWiDMXltS4OpIJwnSePxbTrYUfpcYQLjjeOVGD8L3oVpHJU/hp5wHEIKF1m
+         weThAJ/u9PWku78/+9zkvMhz0aV4+FrabVnL0d9LbtY/qWAlO104zusyrGshthWyXCDd
+         zAwOlvlAurYfCmac8m/WYvTpGBWALxz2/D0aWl88jXgpP0duDq2hw44L2J+ZAY+RNCGz
+         q9qBJRkTfXlTTQHVC0l00L3rqPpIXgdRnCLHlW55pgQrffuz8aZeX65JZBpge6QunMJd
+         LxDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679243239;
+        d=1e100.net; s=20210112; t=1679245012;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CvMIvVUG+MWCyyahBy2kTKrtJnLDzOhp9iI7TZG0Fvc=;
-        b=WNX1DxandB/Bd0gGQQu4EXnONg8CwIwdLKRc9x0oqDiSyl5tpgE11LGn9gBBuyNUff
-         FeTbzm8artY9VIxvIAsUl/xtdCvdqZDV9HVg+6biMy14v3NiqFu/Vj60AlcGy1ogeT4t
-         CoME0+hvfJri1SRgheaRqhjOnJhgv823T2y7UVIhjRFiGvGUGR35Fycm5int1ncEjJUB
-         GprkTi9Y+GSUJzOcyYB6nPZQIOr9Ye7Nw37XlXzt2TdxJE9BvsBPvuv7wLmGAJt64l5h
-         IpgD3fKAxetmnuyMqs9+nCHNAsuVYOKFygfQ50mYO5dO37Lo1PaSrTWMmsq+ODj4y2ID
-         Or2Q==
-X-Gm-Message-State: AO0yUKWL/1K1oA8hSaQxKlkohZeU1IYCzx0HXJzTJqALMG6p7Y4xuLH7
-        rdBLV/pifCJJ3oVUuUfI9V508sHezMY=
-X-Google-Smtp-Source: AK7set9/V1HLnsC34ze4RGv9VR22EL1sfoWolLhKzk6qDxZzwS+Y4he/w9AlK7vf7GvsdsdpL/FhYA==
-X-Received: by 2002:a5d:6ace:0:b0:2cf:e688:51bd with SMTP id u14-20020a5d6ace000000b002cfe68851bdmr12503315wrw.31.1679243239260;
-        Sun, 19 Mar 2023 09:27:19 -0700 (PDT)
+        bh=UuGcHecT8qTm6aWTbVzMomeAE4+nJ5f9Wl6dyK4wZrU=;
+        b=Z0QQFS5wYYcpgzh5MpwkUEIQnbz3ouCgEgAL5qYJ6ePs5578x/EqW/CHlL09pfEVcf
+         dBxFApl6PWBgHTT+JVXf02B/21VZb0tsHvMa/16PAWGzG8EtkvPpJSVKpY4Cf7V2ZJzA
+         7he3qnQ1ml4eAN0TI4CFHUaOcqgD5zwNMloLqcr4fCkNL6BqmnpgdGmCLV3ZXHqrNvcB
+         3ekW3yi9MznCt04vxgzNtpSoJVQsHLcv2Tce001pfFqCgxJ3NRd8eukQtbTX7LN0TcR+
+         C8uqr10FFZSvvmgFB1ZwSAx2YcEC/cLcFqgZyfHz49ZaCrVk1EMOG/8deNX3/zlCD+F2
+         pThA==
+X-Gm-Message-State: AO0yUKVFan/ePhR2vuk2ciRcsZwtI8gp1qzsPT96lInOX1UIToqC4rB0
+        ff1BfaiANPDDmkHeEf1h2NqNRdHs9VU=
+X-Google-Smtp-Source: AK7set/TJXybfthOInMEn4q3wCAvTAGMs1SRb6Imiv1j4VAHfwiaAW0qJOHrjZLQVg58wB9Da63efQ==
+X-Received: by 2002:a05:600c:19cf:b0:3eb:2da4:f304 with SMTP id u15-20020a05600c19cf00b003eb2da4f304mr28689353wmq.17.1679245012694;
+        Sun, 19 Mar 2023 09:56:52 -0700 (PDT)
 Received: from localhost (62-165-236-170.pool.digikabel.hu. [62.165.236.170])
-        by smtp.gmail.com with ESMTPSA id d9-20020a5d4f89000000b002cfe466e894sm6909756wru.38.2023.03.19.09.27.18
+        by smtp.gmail.com with ESMTPSA id r6-20020a05600c35c600b003ed29189777sm14363699wmq.47.2023.03.19.09.56.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Mar 2023 09:27:18 -0700 (PDT)
+        Sun, 19 Mar 2023 09:56:52 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 0/2] Remove unnecessary inclusions of parse-options.h from headers
-Date:   Sun, 19 Mar 2023 17:27:10 +0100
-Message-Id: <20230319162712.654137-1-szeder.dev@gmail.com>
+Subject: [PATCH 0/3] parse-options.h: use designated initializers in OPT_* macros
+Date:   Sun, 19 Mar 2023 17:56:45 +0100
+Message-Id: <20230319165648.656738-1-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.40.0.499.g88fa0b00d2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -62,38 +62,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some source files use parse_options(), but don't include
-parse-options.h, while some headers do include parse-options.h, though
-don't really need it.  These patches fix these issues.
+Use designated initializers in the expansions of the OPT_* macros to
+make it more readable which one-letter macro parameter initializes
+which field in the resulting 'struct option'.
 
-This series has a small and simple conflict with the 'ds/ahead-behind'
-topic, and it will have small conflicts with Elijah's header cleanup
-series as well:
+SZEDER Gábor (3):
+  parse-options.h: use consistent name for the callback parameters
+  parse-options.h: rename _OPT_CONTAINS_OR_WITH()'s parameters
+  parse-options.h: use designated initializers in OPT_* macros
 
-  https://public-inbox.org/git/pull.1493.git.1679207282.gitgitgadget@gmail.com/T/#t
-
-
-SZEDER Gábor (2):
-  treewide: include parse-options.h in source files
-  treewide: remove unnecessary inclusions of parse-options.h from
-    headers
-
- builtin/ls-remote.c           | 1 +
- builtin/pack-objects.c        | 1 +
- builtin/receive-pack.c        | 1 +
- builtin/reflog.c              | 1 +
- builtin/send-pack.c           | 1 +
- diagnose.c                    | 1 +
- diagnose.h                    | 3 ++-
- list-objects-filter-options.c | 1 +
- list-objects-filter-options.h | 3 ++-
- ref-filter.h                  | 2 +-
- remote.c                      | 1 +
- remote.h                      | 2 +-
- revision.c                    | 1 +
- revision.h                    | 3 ++-
- send-pack.c                   | 1 +
- 15 files changed, 18 insertions(+), 5 deletions(-)
+ parse-options.h | 311 +++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 244 insertions(+), 67 deletions(-)
 
 -- 
 2.40.0.499.g88fa0b00d2
