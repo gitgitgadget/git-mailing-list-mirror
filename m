@@ -2,77 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7100C6FD1D
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 20:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B39FC6FD1D
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 20:55:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230129AbjCTUlM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 16:41:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41890 "EHLO
+        id S229819AbjCTUzW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 16:55:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230098AbjCTUlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 16:41:10 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27D167A98
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:40:44 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id j11-20020a25230b000000b00b6871c296bdso6995183ybj.5
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:40:44 -0700 (PDT)
+        with ESMTP id S229779AbjCTUzT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 16:55:19 -0400
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6087625951
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:54:57 -0700 (PDT)
+Received: by mail-il1-x131.google.com with SMTP id s1so1220611ild.6
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:54:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1679344843;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=C57rkNSlMnfLF0UAyEQtdGK+0QlZ+2KFwgtxQBW/1j8=;
-        b=Br6Pp4fanDAnaDhWAcqgEqXivAMYBnvdsd0WkRW/DLsCwbshAcKZAHSyQHVdSClR+h
-         uFM9OYt3vSjFXaD26JEVHFijR1kxlHNUosff451MN8kY/rPjNWpidrXzkHpj2sAlbr1V
-         bu93RHksFBzR6d+3dHSAqYlwKdJBeApu9NXz7ZXIZvni9afRLxL0l/SIqwklMNNwtFiS
-         fk5OGn8TPGI8D4Z03hxS2INWv0V95yhRmK3ynVjzdGvxSOiPc4l/NZyzB0g6LAjSnNY/
-         /wVJU74WlCmk3nfWSdD9HlgTiwEnohsy6RNeYxebAp37gZgJDTFHav3CHH3QUvDkeAPp
-         YOpw==
+        d=gmail.com; s=20210112; t=1679345696;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VOBUGBEe2wlgSsNRDQ0cuYVXzc/Y2FxJIw8rXUzI1VA=;
+        b=MFcWD5tdnXgJ1Fj0AL3HIWSIE3unD7yn/Q1EnrARpUHaIuyih/dtw+7dRkqMDMy+yg
+         yfyz2dbwoALkc8U7bnGIc1jArVMm9VvoTkh6N8iwqGQgGwS8jddHdPFm/eG3Iekc/Lhv
+         chfmQIoNkPN+6t+f5BR1ScqN6aSBrNm8lEMLz/05n4g0vGKuGRQDgcLHtkl02FPnKc72
+         5h0nE2gvOEpJbofzRW156IUmgoEzcnO8ZR/vHFPVWkW7KfYwxayyT4G+aXmIWjYHMVd6
+         WatZYQMb2mKeDJmhaUAitMzJLd0/kBRIQRHhRXIi17s6uxN9mpCsAmjTuEXmSk6GeGTH
+         u6uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679344843;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=C57rkNSlMnfLF0UAyEQtdGK+0QlZ+2KFwgtxQBW/1j8=;
-        b=LtEXoIoWED3DifjITmHFAoCYE5dgIGv3jUwaBIgU1g+VYOBdkbLxP3G9GManDZp0hz
-         XdNbvfdnSGxwYUyUt4aSXxSUfgqsIIljjYkNm4LntX+8JZbZ2ecIhP5uf4LalF4bLZ34
-         raduwIcZ0V1a8XW98oZHjhb1V5tF8XKRrE6iusR30O2zGc1Kod86336UymYyM8f/DF+x
-         +udwf9HOOb6a4u+sqFnctF/yg5iDp7MOHteZdiPZUUeqHA7rSL86KnDSjggjHiTcK43U
-         oq5Kc6IyTJAPShxa+27cpvReDZj3O7FQlLswYymyc2zCU95OB+N+pfR/+6t7JWHYnYYi
-         IlKA==
-X-Gm-Message-State: AAQBX9c+WxAKN7jwBRUlh3qUP85pm8B7VjJ81SHABg2fNl15hp3dQiBZ
-        MftFC67xMpKV0Rw+xwUZsLKC9ZUOSnRVKpQee8cJ
-X-Google-Smtp-Source: AKy350aYdRxKvOxr9pwnmVhm2FwOLCqbhrdYasBmZM25RN22i2LNMCszWZX4+VBCDBLVaEyOEODDlKytELyfB2PWMki+
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:5b27:b61c:65e2:5f93])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6902:124c:b0:b6c:a94:9bf3 with
- SMTP id t12-20020a056902124c00b00b6c0a949bf3mr437612ybu.9.1679344843216; Mon,
- 20 Mar 2023 13:40:43 -0700 (PDT)
-Date:   Mon, 20 Mar 2023 13:40:40 -0700
-In-Reply-To: <5d937184a0eba9176d97423fb450850fc482e4de.1679311616.git.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.40.0.rc2.332.ga46443480c-goog
-Message-ID: <20230320204040.1446345-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v4 7/9] commit-reach: implement ahead_behind() logic
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, me@ttaylorr.com, vdye@github.com,
-        Jeff King <peff@peff.net>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20210112; t=1679345696;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VOBUGBEe2wlgSsNRDQ0cuYVXzc/Y2FxJIw8rXUzI1VA=;
+        b=PPDXm7Sp5v6USGo4wktQfx7FRc4MvUQR8ZvIePJqkd/HzUey68xLnMQWLZ23FcZ2Jc
+         dtvgel0s0H9BbQNfizNPIgtp0W+hVYA8EghPBQo8Y0HsQ6OhtHpiIHyOQKu1chGLTh5U
+         dBr1zsUWAhEK8N/F+Euq25ffyUnJiPWYvu+9jrsaKAxChcKXrOfUZtudF9BG38vyzyZV
+         p5UMBx8MEdZxgG5HTkm4POgvfjNhxtB2WycWMP7yDehPdG6Hxj4bWvFz3LEwfwSveQoN
+         P4gjAQq4UDnMS6eLctWCM9fMyi2gAZXQ4VWWxqBb3cWXe3/Vx0fRv7GKcciRkAjZeAvN
+         mekQ==
+X-Gm-Message-State: AO0yUKW8XoOAF/qtDcoM6I3c5IRAJ7YpFcxnGLFyuTH3NjNBLFGNmMIs
+        HLoXh4E1rA5Wb4lXfn0LqcDHp6/cUQg=
+X-Google-Smtp-Source: AK7set8Rp8DkV8JQu+jeP3PjaB1PQa5BSqdhskWqf+W4aE8HmeC5akcYp82VOVZjtvFYbM5EYS0a+A==
+X-Received: by 2002:a92:c0c5:0:b0:318:cda9:c60c with SMTP id t5-20020a92c0c5000000b00318cda9c60cmr32009ilf.2.1679345696313;
+        Mon, 20 Mar 2023 13:54:56 -0700 (PDT)
+Received: from localhost.localdomain (bras-base-london142cw-grc-20-69-158-191-243.dsl.bell.ca. [69.158.191.243])
+        by smtp.googlemail.com with ESMTPSA id a16-20020a056e020e1000b00323058c173csm3045610ilk.59.2023.03.20.13.54.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Mar 2023 13:54:55 -0700 (PDT)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
+        gitster@pobox.com, derrickstolee@github.com
+Subject: [RFC PATCH v6 0/2] diff-files: integrate with sparse index
+Date:   Mon, 20 Mar 2023 16:52:39 -0400
+Message-Id: <20230320205241.105476-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230310050021.123769-1-cheskaqiqi@gmail.com>
+References: <20230310050021.123769-1-cheskaqiqi@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> From: Derrick Stolee <derrickstolee@github.com>
-> 
-> Fully implement the commit-counting logic required to determine
-> ahead/behind counts for a batch of commit pairs. This is a new library
-> method within commit-reach.h. This method will be linked to the
-> for-each-ref builtin in the next change.
+Did not fix the logic of spare-checkout yet. Leave the spare diff-files 
+with pathspec outside sparse definition as 'test_expect_failure' now.
+but will fix soon.
 
-Thanks. I see that all my review comments have been addressed, so up to
-and including this patch looks good. I haven't had time to look at the
-last 2 patches, but it seems that other reviewers are already looking
-at those.
+Changes since v5:
+
+1. Add space after "definition."
+
+2. Add test case for a pathspec with wildcards or other "magic"
+
+3. Before messing with modified files on disk, add a "baseline" 
+of correct behavior when a pathspec points to out-of-cone files.
+
+4. Write the contents of an
+existing file inside that sparse directory to disk manually
+
+5. Use 'test_all_match' rather than 'test_sparse_match'. 
+wouldn't need the additional 'test_must_be_empty' checks.
+
+
+Shuqi Liang (2):
+  t1092: add tests for `git diff-files`
+  diff-files: integrate with sparse index
+
+ builtin/diff-files.c                     |  8 +++
+ t/perf/p2000-sparse-operations.sh        |  2 +
+ t/t1092-sparse-checkout-compatibility.sh | 73 ++++++++++++++++++++++++
+ 3 files changed, 83 insertions(+)
+
+
+base-commit: a38d39a4c50d1275833aba54c4dbdfce9e2e9ca1
+-- 
+2.39.0
+
