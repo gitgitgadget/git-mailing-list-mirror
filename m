@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75107C6FD1D
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 20:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7443C6FD1C
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 20:03:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231139AbjCTUDZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 16:03:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39662 "EHLO
+        id S230395AbjCTUD1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 16:03:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230027AbjCTUDQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 16:03:16 -0400
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 779EE2056B
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:02:51 -0700 (PDT)
-Received: by mail-il1-x135.google.com with SMTP id h11so7074702ild.11
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:02:51 -0700 (PDT)
+        with ESMTP id S230321AbjCTUDS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 16:03:18 -0400
+Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29C472D44
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:02:55 -0700 (PDT)
+Received: by mail-il1-x131.google.com with SMTP id bp11so7095658ilb.3
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:02:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1679342570;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1679342573;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HTWs/PUt06EEBTz1ChEU6aISoFhv60JKfI/pIpQ5kl0=;
-        b=BPVyBxz3AKwsDqbrcMNaUbZLVfoUTxWGzAaC8pKYzD2+8DT5a/RKDGXAK6QnuSQABA
-         Vzp7AwWRz52irXpJM6jwguCKNJ0L4L+X46XK0HqbFSolmnDYOJDgt9n18YDHTtzR0YDu
-         jmwLRXIJ4GxeK5eMNBHdOykX6E8yL1w+MqHHHUxhnO5qtdUKYvl3Nq8bNiWT8Zr3AUaN
-         mVgzHAtW62Z40OqLu/zvCbor/0yj3TFh9RXg1edyiCz6MdwVCWWGV0bxFpwozWAMBWkT
-         oZ6xKur9NVQbvY9+FdAVXBJZicE5qh/asXQOThuc1aoyvZsntZ0bpkaY6pGgEVYhW1UT
-         J6eQ==
+        bh=GeXZQEB1xM+JoBV53w/xzzVWBFhPhNSGC4ynfnsdxL4=;
+        b=v8sEH9WHDh8HOZoX4uk6dHCI77jc7Dp7+++IaK6S5WmznBRlva2B/442ViaaT8UuPM
+         Ssiy0Co0pRpw04eyBLM8XVJq+jDFHrxSJClUjWC4zpSu0fO/pFktkPv2lDpRaJJ+5So3
+         wF2ZlRqyFamAW20K6/56HaH4zzRiXhuAtpP8WGhFFgYMAFjKUuLIxIb6/AWcMKBG6B9D
+         ay6yc7Cq+wnvBXWIeKSz5c7egKhvUVWh6acoRHShmznNzlgfV0sTVWMfHw/tUD6Zvu3r
+         C52TCwRceW59LPTl8Vs80UhFKAUcciQTkpPT9mRwC9TVrWH0sSFxHHxgn6onrggApjf/
+         4koQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679342570;
+        d=1e100.net; s=20210112; t=1679342573;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HTWs/PUt06EEBTz1ChEU6aISoFhv60JKfI/pIpQ5kl0=;
-        b=FCHtfvCm+tKCq7N3VoBKgyjL/x5tV6WTq1YLo2GCmCiPgj0tx1PQN5i6vPPKKHuXyS
-         u7g4FZ8WLJ75C4fhpZ+kPMKpp27cN7XG9M6x9qWufrMcrOxKml+d0QNAnYoS2S21B2b8
-         H/U1DPlcfeu+hKedRJfGyXsnFkS739Aw2xEr0maRuJwxE58Tl4fDzsPunEKaejtGRV6m
-         e9oo1QESZQNIq9+gyJmiGJfFywKwQzMYFtfw3yi7uwYp4Ybn5TzNyuYqaB4QHZnI2voj
-         mqeDDKqcsQsW1lIO75/ZV+vsb3R8GMlkVpv3SB86Ws08/HQCnCKvW7RrM+9gY1U1/hMH
-         pU5A==
-X-Gm-Message-State: AO0yUKXhEcsLMEPwSp7ZnvNMXFG6q79QJBJcvht5nn5Ts2OyYluG83+w
-        WsyBMaX6K1DLAgrMWD4XROdKuh5DCS1pLxfaejv1/Q==
-X-Google-Smtp-Source: AK7set97PsWHhOZGaN0zcWID5koasmkLgNgqi8kkgwhMaWnFjAcwxB+W5pjSsW+PFzJeCOXOarxL7Q==
-X-Received: by 2002:a92:d249:0:b0:315:9891:85d7 with SMTP id v9-20020a92d249000000b00315989185d7mr504026ilg.16.1679342570378;
-        Mon, 20 Mar 2023 13:02:50 -0700 (PDT)
+        bh=GeXZQEB1xM+JoBV53w/xzzVWBFhPhNSGC4ynfnsdxL4=;
+        b=1ix9S3XG22ib6mVspr+qo5MQ7leB91M0o2aH0PVBR7sYqVSiKWbp6kjaM6puzDdsn9
+         ZPC4xVphVI1l2iALI9pmfUdG6Dwj5NePUo/6/lbC8kS0npn/tYaW0ZxyGIypkGJL2X4L
+         HbPXXYrPkXua5okLumTfaeVpZR0cIH69pizP4m7NZxDB1u8C6/gg3V2kEp9l+X2HyR1D
+         gd12em5vXLQTTRZR0y6/UVaCwTpxKl1u/tyx2svN6VD1yDtslOogWhychpZf65B+zwXt
+         b6zjzKsMdmOR+tL+nqaYPgk+VNgkcQh7MWkDnwR5kJ+Nf5mUkM3yyvsLLVugP+xzLhmL
+         lUUw==
+X-Gm-Message-State: AO0yUKUHbtUQ6NTXaCINXiO13rrFeuGTdD52GkZ+HrgmVrA4tBtnRKcH
+        8JNWq+z9N5Gv+EMnTVOHNSJZC7Ai7YhUQD/0Yi1msg==
+X-Google-Smtp-Source: AK7set9inoMfYhuBmCDBNcjIve+TK/MmpWxs8QHlKAi9wBVMI7mOZ5jz5Cf9DF5YSAqDsIqgm0nDRA==
+X-Received: by 2002:a92:d203:0:b0:323:891:6f27 with SMTP id y3-20020a92d203000000b0032308916f27mr560226ily.9.1679342573405;
+        Mon, 20 Mar 2023 13:02:53 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w20-20020a056e0213f400b00314201bcbdfsm3021683ilj.3.2023.03.20.13.02.50
+        by smtp.gmail.com with ESMTPSA id a17-20020a056e0208b100b00315785bfabfsm2998516ilt.47.2023.03.20.13.02.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 13:02:50 -0700 (PDT)
-Date:   Mon, 20 Mar 2023 16:02:49 -0400
+        Mon, 20 Mar 2023 13:02:53 -0700 (PDT)
+Date:   Mon, 20 Mar 2023 16:02:52 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: [PATCH 4/6] pack-bitmap.c: factor out manual `map_pos` manipulation
-Message-ID: <0decf13869df6216914044a560d94968126836f4.1679342296.git.me@ttaylorr.com>
+Subject: [PATCH 5/6] pack-bitmap.c: use `bitmap_index_seek()` where possible
+Message-ID: <9a3e45b78b7810e0116848f1de80096b04285a55.1679342296.git.me@ttaylorr.com>
 References: <cover.1679342296.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -66,66 +66,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The pack-bitmap internals use a combination of a `map` and `map_pos`
-variable to keep a pointer to a memory mapped region of the `.bitmap`
-file, as well as the position within that file, respectively.
+As described in the previous commit, now that we have a functional
+`bitmap_index_seek()`, rewrite all callers that manually manipulate the
+`map_pos` variable with calls to `bitmap_index_seek()`.
 
-Reads within the memory mapped region are meant to mimic file reads,
-where each read adjusts the offset of the file descriptor accordingly.
-This functionality is implemented by adjusting the `map_pos` variable
-after each read.
-
-Factor out a function similar to seek() which adjusts the `map_pos`
-variable for us. Since the bitmap code only needs to adjust relative to
-the beginning of the file as well as the current position, we do not
-need to support any "whence" values outside of SEEK_SET and SEEK_CUR.
-
-Extracting out this operation into a separate function allows us to add
-some additional safety checks, such as ensuring that adding to `map_pos`
-does not overflow `size_t`, and that the resulting `map_pos` value is
-in bounds of the mapped region.
-
-The subsequent commit will rewrite all manual manipulation of the
-`map_pos` variable in terms of the new `bitmap_index_seek()`.
+This means that all callers that adjust the value of `map_pos` have
+those changes automatically bounds- and overflow-checked.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ pack-bitmap.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 1d12f90ff9..fabcf01c14 100644
+index fabcf01c14..38a3c6a3f9 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -134,6 +134,28 @@ static struct ewah_bitmap *lookup_stored_bitmap(struct stored_bitmap *st)
- 	return composed;
+@@ -174,7 +174,7 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
+ 		return NULL;
+ 	}
+ 
+-	index->map_pos += bitmap_size;
++	bitmap_index_seek(index, bitmap_size, SEEK_CUR);
+ 	return b;
  }
  
-+static size_t bitmap_index_seek(struct bitmap_index *bitmap_git, size_t offset,
-+				int whence)
-+{
-+	switch (whence) {
-+	case SEEK_SET:
-+		bitmap_git->map_pos = offset;
-+		break;
-+	case SEEK_CUR:
-+		bitmap_git->map_pos = st_add(bitmap_git->map_pos, offset);
-+		break;
-+	default:
-+		BUG("unhandled seek whence: %d", whence);
-+	}
+@@ -230,7 +230,7 @@ static int load_bitmap_header(struct bitmap_index *index)
+ 
+ 	index->entry_count = ntohl(header->entry_count);
+ 	index->checksum = header->checksum;
+-	index->map_pos += header_size;
++	bitmap_index_seek(index, header_size, SEEK_CUR);
+ 	return 0;
+ }
+ 
+@@ -269,13 +269,15 @@ static struct stored_bitmap *store_bitmap(struct bitmap_index *index,
+ static uint32_t read_be32(struct bitmap_index *bitmap_git)
+ {
+ 	uint32_t result = get_be32(bitmap_git->map + bitmap_git->map_pos);
+-	bitmap_git->map_pos += sizeof(result);
++	bitmap_index_seek(bitmap_git, sizeof(uint32_t), SEEK_CUR);
+ 	return result;
+ }
+ 
+ static uint8_t read_u8(struct bitmap_index *bitmap_git)
+ {
+-	return bitmap_git->map[bitmap_git->map_pos++];
++	uint8_t result = bitmap_git->map[bitmap_git->map_pos];
++	bitmap_index_seek(bitmap_git, sizeof(uint8_t), SEEK_CUR);
++	return result;
+ }
+ 
+ #define MAX_XOR_OFFSET 160
+@@ -794,14 +796,16 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+ 
+ 	while (xor_items_nr) {
+ 		xor_item = &xor_items[xor_items_nr - 1];
+-		bitmap_git->map_pos = xor_item->offset;
++		bitmap_index_seek(bitmap_git, xor_item->offset, SEEK_SET);
 +
-+	if (bitmap_git->map_pos >= bitmap_git->map_size)
-+		BUG("bitmap position exceeds size (%"PRIuMAX" >= %"PRIuMAX")",
-+		    (uintmax_t)bitmap_git->map_pos,
-+		    (uintmax_t)bitmap_git->map_size);
-+
-+	return bitmap_git->map_pos;
-+}
-+
- /*
-  * Read a bitmap from the current read position on the mmaped
-  * index, and increase the read position accordingly
+ 		if (bitmap_git->map_size - bitmap_git->map_pos < bitmap_header_size) {
+ 			error(_("corrupt ewah bitmap: truncated header for bitmap of commit \"%s\""),
+ 				oid_to_hex(&xor_item->oid));
+ 			goto corrupt;
+ 		}
+ 
+-		bitmap_git->map_pos += sizeof(uint32_t) + sizeof(uint8_t);
++		bitmap_index_seek(bitmap_git,
++				  sizeof(uint32_t) + sizeof(uint8_t), SEEK_CUR);
+ 		xor_flags = read_u8(bitmap_git);
+ 		bitmap = read_bitmap_1(bitmap_git);
+ 
+@@ -812,7 +816,7 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+ 		xor_items_nr--;
+ 	}
+ 
+-	bitmap_git->map_pos = offset;
++	bitmap_index_seek(bitmap_git, offset, SEEK_SET);
+ 	if (bitmap_git->map_size - bitmap_git->map_pos < bitmap_header_size) {
+ 		error(_("corrupt ewah bitmap: truncated header for bitmap of commit \"%s\""),
+ 			oid_to_hex(oid));
+@@ -842,7 +846,8 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+ 	 * Instead, we can skip ahead and immediately read the flags and
+ 	 * ewah bitmap.
+ 	 */
+-	bitmap_git->map_pos += sizeof(uint32_t) + sizeof(uint8_t);
++	bitmap_index_seek(bitmap_git, sizeof(uint32_t) + sizeof(uint8_t),
++			  SEEK_CUR);
+ 	flags = read_u8(bitmap_git);
+ 	bitmap = read_bitmap_1(bitmap_git);
+ 
 -- 
 2.40.0.77.gd564125b3f
 
