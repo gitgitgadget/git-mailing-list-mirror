@@ -2,201 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A2C4C6FD1C
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 20:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E775C6FD1C
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 22:57:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229993AbjCTUzt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 16:55:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38602 "EHLO
+        id S229791AbjCTW5M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 18:57:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229913AbjCTUzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 16:55:45 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18C0E26855
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:55:28 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id v1so5609626wrv.1
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:55:28 -0700 (PDT)
+        with ESMTP id S229865AbjCTW5I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 18:57:08 -0400
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDFAC2E81A
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 15:57:05 -0700 (PDT)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-54463468d06so136220967b3.7
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 15:57:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679345726;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Bvj0wDLlEFjKhlCJkqgVrUtzNtjPKH+xOL7RmOENF8s=;
-        b=iWsx+i2jRZksFR+UFw3VVueUeJC+z6Hp9FIU0UuyAU9bI+fnSHKVNZg85K7TsPA9ox
-         IibrXn92OIy7HL6/qLSL2WTTY3NhM01DPCrqIx7AsVPH+k9pN9cBjHoV+AT9V2BI1g+A
-         AF5Uh0UPJqK03YH2apjtYfYPFJj+IsBljCVv0NkrcUSNQW5CGc99fvjtAVmyt1RwVOoI
-         H6hV7DsbUcuUmcuP/CtpXCKd/zDPEKJLiS/A90lmxMvGNqlzAosdZ+RUFy6Nt8csTvXC
-         geY+w5RaSqtzzalwGof9BmlfGh8lvZUv3SbrPiERTkDHhkcRTMfJBEH6iifEdK71rGl3
-         +I+g==
+        d=google.com; s=20210112; t=1679353025;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QBRkEiSR9tcfhCOGkqRsAaw3tSepdN47KkEY0AN8v2E=;
+        b=k41pOaD3yCsJCP80d4IR+Uj8GnCbal4fGIDNXXE2srawmOUxigs1NMxiiczb92f+Te
+         i54kHU9xZttOy0teQwYTt4CLVbq9KFD9/dBJV10exbvWBpcz45qOzbFLIedZ58y75E85
+         9FJV6JA5CAKuw15EZ5/6rCQb/rH4tGMkCNFRPLmfPTnrvAfOrAxzHJfkhEODYKyZUmta
+         isJcSJrXKi51vWo1FBmwzckinbmPJABEDynpleRsF5DXBTLrdRjE7Q5syyTEvXttsA/f
+         eLZqmPLPQUirQ+Ior/ax2T3nuvNxfyP8LID7y7HLPM5NJzVw2KECdQ8294itxaa0Muj3
+         UMzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679345726;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Bvj0wDLlEFjKhlCJkqgVrUtzNtjPKH+xOL7RmOENF8s=;
-        b=inSxhE89jrOXCsApS2vZ7eUVnY4WwRYFDtlVyvu17xeEZa8nquLd9Wc6imXHBfrv72
-         FrSjc5zsdJEEVyAeBtA/B884hvb0iygsX4Sn7Aq95PAnNcpz024b99u/kgM8Wa1ZTO1V
-         7t12a1HI1ufQIlg2U2hDYch2qaZHIRuBWJmA+FepkeEzodn2TI13OIZAMu9gXokkMcAI
-         DSZRnVdX6nVBk4PnVBgBo0GE0sx7UaEhTwpQxIHwMxaP70lDCk6oKr0pZg3iFF2+mIw+
-         LYBjTXO9NZrhO8cSQzHG0G1dWPiVvfb2QpVJt8Xi7fTdlYOYWJ5zC1XLxTEoSxlLDfWz
-         vN9g==
-X-Gm-Message-State: AO0yUKWuFakXk/YJzzNmRR0JR2WHg5vaiQVpaKzY1Mx5fB+x6vYAc4C2
-        us/ULBNEEc2FdbeCC0+K6BkntRDeaKTOyG48aAjKqNI7qLQ=
-X-Google-Smtp-Source: AK7set+pmuzUeIaZ49tXjNaol7MIoHytu15pQPWe5hPECINvqw8hNirpiDuOCZztse9eGEUVqqq9md650KQq23xLd3M=
-X-Received: by 2002:adf:f8cb:0:b0:2c9:a6be:32a2 with SMTP id
- f11-20020adff8cb000000b002c9a6be32a2mr128863wrq.5.1679345726007; Mon, 20 Mar
- 2023 13:55:26 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230309063952.42362-1-cheskaqiqi@gmail.com> <20230310050021.123769-1-cheskaqiqi@gmail.com>
- <20230310050021.123769-2-cheskaqiqi@gmail.com> <b537d855-edb7-4f67-de08-d651868247a5@github.com>
-In-Reply-To: <b537d855-edb7-4f67-de08-d651868247a5@github.com>
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-Date:   Mon, 20 Mar 2023 16:55:13 -0400
-Message-ID: <CAMO4yUFsGQbeu=wbqG8EuptYFDv9c1tB8Y0RAU_UJ-GdbMAfVg@mail.gmail.com>
-Subject: Re: [PATCH v5 1/2] t1092: add tests for `git diff-files`
-To:     Victoria Dye <vdye@github.com>, git@vger.kernel.org
+        d=1e100.net; s=20210112; t=1679353025;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QBRkEiSR9tcfhCOGkqRsAaw3tSepdN47KkEY0AN8v2E=;
+        b=aBL6FPZLZQHonq6PTML8g3Ob2F4ukVrf0InAiVa1QQyhUfeuCP6MOefCMVp83Bjg6z
+         Ju7zl4J8wj8jgr6F/FEk7HPdSMK3F4YNcBbTvP41+pMZ+LUQHuCa2STS7TVnjytLdSwf
+         vt+SIUXeiBLouAlcaNyTqyIeBnooqlV/tXuK9BUqM4TmALhhkhIw+qyIyWV/geWfL7az
+         dQ8AUsJAIC6BqdRpcKw6qJRXMdTWqWLpur7alx2BIgpeTJUnuSBBHvAd4Guf6BcdasW4
+         ZPuLSWalLhrlTssx8G2n7ih4SfWa23Q3ipZ9y1Jz9wsJoXZmmrgCZVJC+FZhLr4o9OBy
+         xAJA==
+X-Gm-Message-State: AO0yUKU1GukhbLip93rMdLknQhYE4JDjRv1o4HRRZ8Ll+7PpuskA47pv
+        wGjdwRhv3yHiCZwLqnv2bJrRwrmeX6mqfyKdUZWz
+X-Google-Smtp-Source: AK7set+41HalivELGe0odK7znlKvHBtVMGFI8X1IfgmAQ04Ccs5XAnkUy+h/BetMDVZZEYLabVtZCk5wiqMarxOLXHJN
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:5b27:b61c:65e2:5f93])
+ (user=jonathantanmy job=sendgmr) by 2002:a81:cf04:0:b0:544:d154:fd3c with
+ SMTP id u4-20020a81cf04000000b00544d154fd3cmr6741990ywi.1.1679353025128; Mon,
+ 20 Mar 2023 15:57:05 -0700 (PDT)
+Date:   Mon, 20 Mar 2023 15:57:02 -0700
+In-Reply-To: <fe7e2e85eb37cd4068b5160721663c21a16a8138.1679315383.git.ps@pks.im>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.40.0.rc2.332.ga46443480c-goog
+Message-ID: <20230320225702.1471172-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2 6/6] fetch: centralize printing of reference updates
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 10, 2023 at 1:23=E2=80=AFPM Victoria Dye <vdye@github.com> wrot=
-e:
+Patrick Steinhardt <ps@pks.im> writes:
+> In order to print updated references during a fetch, the two different
+> call sites that do this will first call `format_display()` followed by a
+> call to `fputs()`. This is needlessly roundabout now that we have the
+> `display_state` structure that encapsulates all of the printing logic
+> for references.
+> 
+> Move displaying the reference updates into `format_display()` and rename
+> it to `display_ref_update()` to better match its new purpose, which
+> finalizes the conversion to make both the formatting and printing logic
+> of reference updates self-contained. This will make it easier to add new
+> output formats and printing to a different file descriptor than stderr.
 
- Hi Victoria!
-
-Sorry for the late reply! I was having midterm exams.
-
-Thank you for the feedback on the patch .
-I appreciate your time giving me the advice for improvement.
-
-> > In order to have staged changes outside of
-> > the sparse-checkout cone, create a 'newdirectory/testfile' and
-> > add it to the index, while leaving it outside of
-> > the sparse-checkout definition.Test 'newdirectory/testfile'
-
-> nit: missing space after "definition."
-
-Will do!
-
-> I'd be interested in seeing an additional test case for a pathspec with
-> wildcards or other "magic" [1], e.g. 'git diff-files "deep/*"'. In past
-> sparse index integrations, there has occasionally been a need for special
-> handling of those types of pathspecs [2][3], so it would be good for the
-> test to cover cases like that.
-
-Will do!
-
-> From the comment you've added here, it looks like the state you want to t=
-est
-> is "file outside sparse checkout definition exists on disk". However, sin=
-ce
-> one of the goals of this test is to verify sparse index behavior once its
-> integrated with the 'diff-files' command, whether the "outside of sparse-
-> checkout definition" file belongs to a sparse directory entry is an
-> important (and fairly nuanced) factor to consider.
->
-> The main difference between a "regular" sparse-checkout and a sparse
-> index-enabled sparse-checkout is the existence of "sparse directory"
-> entries: index entries with 'SKIP_WORKTREE' that represent directories an=
-d
-> their contents. In the context of these tests, the thing we really want t=
-o
-> verify is that the sparse index-enabled case produces the same results as
-> the full index when an operation needs to get some information out of a
-> sparse directory.
->
-> Coming back to this test, the 'newdirectory/testfile' you create, while
-> outside the sparse-checkout definition, never actually belongs to a spars=
-e
-> directory because 'newdirectory' is never collapsed - in fact, I don't
-> think it even gets the SKIP_WORKTREE bit in the index. To ensure you have=
- a
-> sparse directory & SKIP_WORKTREE, you'd need to run 'git sparse-checkout
-> reapply' after removing 'newdirectory/testfile' from disk - which doesn't
-> help if you want to test what happens when the file exists on disk!
-
-Thanks for the explanation here! I learn a lot.
-
-> In fact, because of built-in safeguards around on-disk files and
-> sparse-checkout, there isn't really a way in Git to materialize a file
-> without also expanding its sparse directory and removing SKIP_WORKTREE. I=
-f
-> you want to preserve a sparse directory, you should write the contents of=
- an
-> existing file inside that sparse directory to disk manually:
->
->         run_on_sparse mkdir folder1 &&
->         run_on_sparse cp a folder1/a &&  # `folder1/a` is identical to `a=
-` in the base commit
->
-> Git's index will not be touched by doing this, meaning the next command y=
-ou
-> invoke (in this case, 'diff-files') will need to reconcile the file on di=
-sk
-> with what it sees in the index.
->
-> > +     test_sparse_match git diff-files &&
-> > +     test_must_be_empty sparse-checkout-out &&
-> > +     test_must_be_empty sparse-checkout-err &&
-> > +     test_sparse_match git diff-files newdirectory/testfile &&
-> > +     test_must_be_empty sparse-checkout-out &&
-> > +     test_must_be_empty sparse-checkout-err &&
->
-> These checks should be 'test_all_match' rather than 'test_sparse_match'.
-> Since (through other tests) we're confident that 'git diff-files' on an
-> unmodified, non-sparse-checkout repository will give us an empty result, =
-you
-> wouldn't need the additional 'test_must_be_empty' checks.
->
-> A bit of a "spoiler": when I tested this out locally, I found that the di=
-ff
-> was *not* empty for the sparse-checkout cases, until I ran 'git status'
-> (which strips the 'SKIP_WORKTREE' bit from the file and writes it to the
-> index). That's not the desired behavior, so there's a bug in the
-> sparse-checkout logic used in 'diff-files' that needs to be fixed (my fir=
-st
-> guess would be that 'clear_skip_worktree_from_present_files()' is not bei=
-ng
-> applied when the index is read).
-
-Yeah. After I use
-
- run_on_sparse mkdir folder1 &&
- run_on_sparse cp a folder1/a &&  # `folder1/a` is identical to `a` in
-the base commit
-
- diff was *not* empty for the sparse-checkout cases
-
- when I look into builtin/diff-files.c
-'repo_read_index_preload' call 'repo_read_index' which call
- 'clear_skip_worktree_from_present_files()' to apply when the index is read=
-.
-
-I got stuck in here and do not have the idea to investigate it. Any
-tips would be helpful!
-
-
-> > +     run_on_sparse ../edit-contents newdirectory/testfile &&
-> > +     test_sparse_match git diff-files &&
-> > +     test_cmp expect sparse-checkout-out &&
-> > +     test_sparse_match git diff-files newdirectory/testfile &&
-> > +     test_cmp expect sparse-checkout-out
->
-> Similarly, you should use 'run_on_all' to modify the file & 'test_all_mat=
-ch'
-> to verify that they all match here. It would demonstrate that we don't
-> expect any "special" behavior from sparse-checkout, meaning you can proba=
-bly
-> avoid checking the result verbatim.
-
-> Finally, as with the earlier test, it'd be nice to show that the result i=
-s
-> the same with a wildcard pathspec, e.g. 'git diff-files "folder*/a"'.
-
-Will do!
----------------------------------------------------------------------------=
--
-Thanks
-Shuqi
+Thanks. Patches 1-5 look good to me. As for this patch, I'm still not
+convinced (I thought that the new mode would still print to stderr), but
+if other reviewers are OK with it then that's fine. Alternatively, patch
+6 could go with the next set of patches that implement the new mode of
+printing ref updates.
+ 
