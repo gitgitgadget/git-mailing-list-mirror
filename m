@@ -2,111 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C926C7618A
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 18:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B751C7618A
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 18:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231283AbjCTSYJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 14:24:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42950 "EHLO
+        id S229756AbjCTSa2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 14:30:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbjCTSXt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 14:23:49 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C08A81C5A3
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 11:16:57 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id om3-20020a17090b3a8300b0023efab0e3bfso17348136pjb.3
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 11:16:57 -0700 (PDT)
+        with ESMTP id S231532AbjCTS36 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 14:29:58 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA3829ED7
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 11:22:38 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id g18so13122854ljl.3
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 11:22:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679336188;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J20TUR6PUemHKjuDcCnulHb+pIyoxPkIffT03f1sj9k=;
-        b=kWZR+pwrnTKAwu/VpFE474o781XYQsp+ze2wf8ux+7AyFPQ+UsvmISJKAmDoLo3gPc
-         Ry7AanmftYeIqBG40nYgyln9hERlGRtJtVMWl+Iy5/UXn7YH+FzToAA/cumonnCE4ITj
-         8xEt4UUvMLsIHpJ39YB20A58CqSqpe8YsiZEOehUBqmsDiw51xuGwVatPpqzgtWXtLSU
-         L9lB+KYbqKJlRUDuC6Ch/3ZcdVObfENdtgIdmmJaGAW+o7SaU9excMW23SCUMWfwcEa5
-         KhM1OrmDrW4yfFhQm7Ar5e9r5A4WiRMmrfX+rwlGjqY8jMxLaxTyPigZyf5//3pQp0VD
-         +YGA==
+        d=gmail.com; s=20210112; t=1679336515;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bSY1TVzqO0JkF5elDdngTbA4hcXJOVdwNr160zl59qk=;
+        b=obEQHuS5d3CJE0+sOX52UEt6FoImQKslkoojCzD3epqAGVg7GLid0qn7SQv/iyRgJF
+         U9fjIFVFYZ6X0/00OCIpsOBwjybuJZS9g0joYO28uf7ovW8pzObnOUgA2VG/2XPdTVVq
+         5zoY+nWryoifxFQ/Rlnmu0/gT1Mfc6nkfdPsau+9IwvTB8RHclQFaLIk00mffqh4XobI
+         unmT0P+/Ch5uWs5CFrt8WxanIGSFuo1eAxIBupeqEis8sHKITecEerydHPNUIvQosOp7
+         Gc8p6rCrRkL9WEd5e2TAw3l1Gtb4CfHqYv2tb/S1FsHI2qvpn/XIOXWGpHlGEN9+M8Q3
+         e+bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679336188;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J20TUR6PUemHKjuDcCnulHb+pIyoxPkIffT03f1sj9k=;
-        b=jYV8iCLtywg7rW2oewrwmjXSadCwQOrevEDiQGHq5PNfGZNSsU19OoJEY2A2tkWQEa
-         W8gjEMuw3p6m20x85Y0/f3pNnspN0B+YGqYHNT9MA/QJQ+Bqpc9GVGe25cW4N7r4xlu9
-         AoCBLsgmSe/FGW8BcU252qy6cWaO8//HEHe5mZ/6/G1Zk7+xhpGZmgwv87+0TNV50C1X
-         ol8/mOrdXsnbXyDGI8H39Ape5d67odpBjWFlOY+zVz73o1Uk1Vp1HqalktUjJ1zXUNTt
-         hd1M5Lpb0wT4Eh9FYt6vp7cbHWl4T3vdTMS8SSz6Jn2ID2XWUwD9IeNgnUplWSrhidYb
-         /Tpg==
-X-Gm-Message-State: AO0yUKVpWZuu3SsqnsZ9wQ+I2Q25trVh1FlvZpCb6QtUdZnt4mCedSF6
-        DiuYGEDzpANE5Ei3Wgcm4oA=
-X-Google-Smtp-Source: AK7set8hz45Yy5j7zdLzlv3HKh+9SChjXAeeA1Rp31/pTlRqoaQWNayoL9OEeh5GPvoM2QrsqxSZ0Q==
-X-Received: by 2002:a17:902:ea09:b0:1a1:d0bd:6e5a with SMTP id s9-20020a170902ea0900b001a1d0bd6e5amr5510980plg.57.1679336188167;
-        Mon, 20 Mar 2023 11:16:28 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id p20-20020a170902b09400b0019c2cf1554csm7046560plr.13.2023.03.20.11.16.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 11:16:27 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/3] parse-options.h: rename _OPT_CONTAINS_OR_WITH()'s
- parameters
-References: <20230319165648.656738-1-szeder.dev@gmail.com>
-        <20230319165648.656738-3-szeder.dev@gmail.com>
-Date:   Mon, 20 Mar 2023 11:16:27 -0700
-In-Reply-To: <20230319165648.656738-3-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Sun, 19 Mar 2023 17:56:47 +0100")
-Message-ID: <xmqqr0tjl24k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20210112; t=1679336515;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bSY1TVzqO0JkF5elDdngTbA4hcXJOVdwNr160zl59qk=;
+        b=TJVXac5VINeONGMnZYT9qNBYniyGNNWi9EtgR4anWL4FKNU0VLCFHNlc/CCDbgkPIZ
+         rAXaQpmf1WU9YJT7AxR7iaVb5/drUawIl64qT6SKkP+TSeatQH66DM14fnS2Rdz9p/xF
+         0YIDttR4094EIfsoN98wMu1iXr6Vo/rmjsQebsJpc7sBATvZ3FlBNn2hWau7SIXP94kn
+         qdMWtMBPk+ZBphaDcbFtF4NIfTXlDejMhctKhzk3XY6AnSEfPfGxnBfmlqxursD7hR9O
+         KFGSUSFTH+aT1brqDjzp6dd0TXxH/pA2ZvuHV8mPEB0+eSgavHKqTfN6moZzlXB9uHiR
+         Bxrg==
+X-Gm-Message-State: AO0yUKVOlvmjUQLvcoyZq94O4mP1gt6ahY2I5GB4HpecszB1JQKExZXa
+        PaqCb3P7P6KN6fGVw7ecUgX7ydkIJg2xL3/bHmA=
+X-Google-Smtp-Source: AK7set9qaE6c5A8NkkR9kMr/oRrq3b8X56aAk2U5piUhY1LfgxzsjEuS6PaUTedP+jez5b4smYrPO8Im+EXPTW1s5Cw=
+X-Received: by 2002:a2e:740d:0:b0:299:ac1c:d8b3 with SMTP id
+ p13-20020a2e740d000000b00299ac1cd8b3mr40673ljc.9.1679336515487; Mon, 20 Mar
+ 2023 11:21:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1474.git.git.1679233875803.gitgitgadget@gmail.com>
+ <pull.1474.v2.git.git.1679327330032.gitgitgadget@gmail.com> <20230320171051.GA2615782@coredump.intra.peff.net>
+In-Reply-To: <20230320171051.GA2615782@coredump.intra.peff.net>
+From:   Stanislav M <stanislav.malishevskiy@gmail.com>
+Date:   Mon, 20 Mar 2023 21:21:44 +0300
+Message-ID: <CAEpdKf=THU=sc3S3W4azBmYp7+J945GxFqhh_i-5kV0kunMdNw@mail.gmail.com>
+Subject: Re: [PATCH v2] http: add support for different sslcert and sslkey types.
+To:     Jeff King <peff@peff.net>
+Cc:     Stanislav Malishevskiy via GitGitGadget <gitgitgadget@gmail.com>,
+        Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org,
+        Stanislav Malishevskiy <s.malishevskiy@auriga.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
-
-> Rename the 'help' parameter as it matches one of the fields in 'struct
-> option', and, while at it, rename all other parameters to the usual
-> one-letter name used in similar macro definitions.
+> > @@ -1014,10 +1020,14 @@ static CURL *get_curl_handle(void)
+> >
+> >       if (ssl_cert)
+> >               curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+> > +     if (ssl_cert_type)
+> > +             curl_easy_setopt(result, CURLOPT_SSLCERTTYPE, ssl_cert_ty=
+pe);
 >
-> Furthermore, put all parameters in the replacement list between
-> parentheses, like all other OPT_* macros do.
-
-This step when taken alone smells like it is going backwards in the
-readability department by going from a set meaningful names to
-another set of more cryptic names, but together with 3/3 where the
-designated initializers clarify what these cryptic args with short
-names correspond to, the end result gives us a pleasant read.
-
-Thanks.
-
+> We're just feeding curl whatever string the user gave us (which is good,
+> since we don't know which ones are valid). But what happens with:
 >
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> ---
->  parse-options.h | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>   GIT_SSL_CERT_TYPE=3Dbogus git fetch ...
 >
-> diff --git a/parse-options.h b/parse-options.h
-> index 34f8caf369..7e99322bab 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -381,9 +381,9 @@ int parse_opt_tracking_mode(const struct option *, const char *, int);
->  	{ OPTION_CALLBACK, (s), (l), (v), (a), (h), (f), parse_opt_passthru }
->  #define OPT_PASSTHRU_ARGV(s, l, v, a, h, f) \
->  	{ OPTION_CALLBACK, (s), (l), (v), (a), (h), (f), parse_opt_passthru_argv }
-> -#define _OPT_CONTAINS_OR_WITH(name, variable, help, flag) \
-> -	{ OPTION_CALLBACK, 0, name, (variable), N_("commit"), (help), \
-> -	  PARSE_OPT_LASTARG_DEFAULT | flag, \
-> +#define _OPT_CONTAINS_OR_WITH(l, v, h, f) \
-> +	{ OPTION_CALLBACK, 0, (l), (v), N_("commit"), (h), \
-> +	  PARSE_OPT_LASTARG_DEFAULT | (f), \
->  	  parse_opt_commits, (intptr_t) "HEAD" \
->  	}
->  #define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h, PARSE_OPT_NONEG)
+> Should we check for an error here, or will the actual request later
+> complain properly?
+
+
+Curl itself validates that string. And if we pass the wrong type or
+not pass 'ENG' in case of pkcs11: curl will return an error. In that
+case git do the same if GIT_SSL_CERT passed wrong ss 'ENG' in case of
+pkcs11: curl will return an error. In that case git do the same if
+GIT_SSL_CERT passed wrong
+
+
+=D0=BF=D0=BD, 20 =D0=BC=D0=B0=D1=80. 2023=E2=80=AF=D0=B3. =D0=B2 20:10, Jef=
+f King <peff@peff.net>:
+>
+> On Mon, Mar 20, 2023 at 03:48:49PM +0000, Stanislav Malishevskiy via GitG=
+itGadget wrote:
+>
+> > From: Stanislav Malishevskiy <s.malishevskiy@auriga.com>
+> >
+> > Basically git work with default curl ssl type - PEM. But for support
+> > eTokens like SafeNet tokens via pksc11 need setup 'ENG' as sslcert type
+> > and as sslkey type. So there added additional options for http to make
+> > that possible.
+>
+> Seems like a reasonable thing to want, and the patch looks pretty clean.
+> Two small points:
+>
+> >  http.c | 12 ++++++++++++
+> >  1 file changed, 12 insertions(+)
+>
+> There are no tests here. I think it might be possible to add them, but
+> our https test support is currently optional, and has bit-rotted a bit
+> over the years. There's some discussion here:
+>
+>   https://lore.kernel.org/git/Y9s7vyHKXP+TQPRm@pobox.com/
+>
+> So I don't think it makes sense to block this patch over the lack of
+> tests, but it's something we might keep in mind to add if the test
+> situation improves.
+>
+> > @@ -1014,10 +1020,14 @@ static CURL *get_curl_handle(void)
+> >
+> >       if (ssl_cert)
+> >               curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+> > +     if (ssl_cert_type)
+> > +             curl_easy_setopt(result, CURLOPT_SSLCERTTYPE, ssl_cert_ty=
+pe);
+>
+> We're just feeding curl whatever string the user gave us (which is good,
+> since we don't know which ones are valid). But what happens with:
+>
+>   GIT_SSL_CERT_TYPE=3Dbogus git fetch ...
+>
+> Should we check for an error here, or will the actual request later
+> complain properly?
+>
+> -Peff
