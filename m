@@ -2,79 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2E83C7618A
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 15:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DDCFC761AF
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 15:57:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232111AbjCTPIH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 11:08:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36922 "EHLO
+        id S232077AbjCTP5y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 11:57:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232129AbjCTPHi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 11:07:38 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BA3F11EA3
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 08:03:08 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id x11so10491002pja.5
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 08:03:08 -0700 (PDT)
+        with ESMTP id S232075AbjCTP52 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 11:57:28 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 275B13C7AB
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 08:48:53 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id y14so10820146wrq.4
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 08:48:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679324583;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:reply-to:user-agent:subject:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NLwOf5M8vryROySJEuFWVMtDBpNJ5UvrZrNNDGJtnzI=;
-        b=DOQi7l1qPEso/UrN9dsL9nDviEeNl6CWaG8a8lXSU4jnvKrMqjnk9w+eJL5NOnVr+/
-         v3sP7LinY4o9fz57jHfgcfWDRbZTG1uONYzM4+HFUAZICwI9xvU++Um0bD1DQdS1/DzZ
-         8/XwhSpQUytyYrt38TVDM/oVn2Q8nqNUME1x7yeTXWTStDJfqkSnFzs/N7YnxFk3xAUr
-         +l2OogMsQBvPbqQfFj9WRwSxFLxAhjIhJLtx0UJOwjtT0tLiZhIjdMI6mvSEdJzLXyCt
-         5qKlJCT8mGtAuRVdL3AQhYAlAKIxd/7lU5FNYZ2KZUujUXqSTKiZzHr2O9Vqhoc2uVq1
-         bQIw==
+        d=gmail.com; s=20210112; t=1679327331;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=94hDeh2dg66c2gKm3t2tnEcn2Xk/Y0DaR0mU9L6wdm8=;
+        b=EBR80B1QAuW7D8C5IfBEIwU4D6m4Dp73l5i4C1E7bvv16UQFRVnfrjvdjNAkryMuLk
+         cJf98CGhPuJ1yJ3RGE96AdAii3wxabbk/kkc9eDGfcLKMrUlZbOyIp6B7IDRK09YMwS7
+         d73GIHAtLGOb+l9Wcq3nPrFABkXyajDhk21izbZkDcsun9k7ujPydx/AvsYcFjpV4VBE
+         5crWOcnFET2hDIz5jileYpCKiYcQwqlrYZbNs7/PcDsyDqpAhlOR3NlxSHW8OyCuoSF3
+         GPvSpUlzfZPsFznMcYmyYLYyCKFCOANztckQFU5Q4aeHjc4K0BFuYOYJL8Snha7ZJShh
+         EhNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679324583;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:reply-to:user-agent:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NLwOf5M8vryROySJEuFWVMtDBpNJ5UvrZrNNDGJtnzI=;
-        b=rgiqOnm1W0gFDKCmfKnT/I3qR6UHbSs8F0bDUY7vC12cfbEwS7sP0BqN4HotZGLgp0
-         Yn/gcvezLSKbxgkZESKNartqwUsY4eWyNrNDOewRv8SNDaDE24VCGklQwBeCiT3tiWUe
-         vsuOs9lgTVAoaBwAo544tSKQAiK3BH3RlQ+/HhIF4nieZ1lMKYBan9q60/mcUGYsgvai
-         qnEJ5sesb1GJwPd1aqXr1wBW7TGxmLZSjhXU1MA53xJ6PkwHFSCa83PaQMQnRdZSWMET
-         D91Riu4hH1uh0TCjps+uvh7eyHHwCm+tarE6n4YsvBmIXkuAD0UGbFFaoouFgAENqso/
-         gQWw==
-X-Gm-Message-State: AO0yUKUiBE7EKVhftUVU/Xvi+VUTR9G54UgLg2AIioxfwq0EbJlCCpcM
-        aHrPKg6QYCE1Mx8G7302m9o=
-X-Google-Smtp-Source: AK7set9C3a74KtsqxAcX8BChBL6AE7e4JfvaPV3sMTPMv8gEc41cuLaJfD5E2PjybJc7ikRnh0qJ5Q==
-X-Received: by 2002:a17:90b:314d:b0:23f:618a:6bec with SMTP id ip13-20020a17090b314d00b0023f618a6becmr11957433pjb.49.1679324582950;
-        Mon, 20 Mar 2023 08:03:02 -0700 (PDT)
-Received: from [127.0.0.1] ([103.230.107.12])
-        by smtp.gmail.com with ESMTPSA id y9-20020a17090a154900b002372106a5casm6146383pja.44.2023.03.20.08.03.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Mar 2023 08:03:02 -0700 (PDT)
-Date:   Mon, 20 Mar 2023 21:02:32 +0600
-From:   Khalid Masum <khalid.masum.92@gmail.com>
-To:     stanislav.malishevskiy@gmail.com, git@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_That_change_for_support?= =?US-ASCII?Q?_different_sslcert_and_sslkey_types=2E?=
-User-Agent: K-9 Mail for Android
-Reply-to: pull.1474.git.git.1679233875803.gitgitgadget@gmail.com
-In-Reply-To: <FFDFA968-58F9-43C8-9139-B8733BFD4665@aol.com>
-References: <FFDFA968-58F9-43C8-9139-B8733BFD4665@aol.com>
-Message-ID: <1C4BE23C-0D7D-4B44-94B8-6243E1985BAC@gmail.com>
+        d=1e100.net; s=20210112; t=1679327331;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=94hDeh2dg66c2gKm3t2tnEcn2Xk/Y0DaR0mU9L6wdm8=;
+        b=mXJX0eZV8yvwTPoY5m+X0IpWHUiSsGjTLGEw6Lib6fxG3Vpbz+vvFM/DIGzi8JoLQ1
+         F6Y6AzsMd5DgXHV9MFEpALFFPQz+Cf2wK5jkGDrnsDGK4HMUjuL06vLvypLdYSmDA2OX
+         HncWt7dMVkINeincNt7ugdmtf/5d9CZBBtDGd3mQHe8B+hIzbkEZfWzcFROD9v2FnfqA
+         nuHmL//Kxw3YI0BlYjpS3GYe7xxIMXxXkOu1o05KSID0XesO/bNL+rJpGIZPNNYirhc9
+         CyGgkzhyxtYOLEgy6V3k5GJCcG17iZ0VEv+8BOXK0CpOGK/0DDsJYZOAiokgGOGzVYIo
+         /l6w==
+X-Gm-Message-State: AO0yUKUdefNlLp+2GPEt7QPb7M+hNnTAS9hfAk7wmtyLWltU7Fs8nUTl
+        45b1ykLH3F6olMY70sHZMwgdB5b5ISY=
+X-Google-Smtp-Source: AK7set8kT8u9rzlYzHgBYNPhtJEwB2JbCwe7uDZ3omt1UAUokxxBGec5TMMcfyoa/LJzcqNNQPJL7Q==
+X-Received: by 2002:a5d:50c3:0:b0:2d4:3f3b:cdb7 with SMTP id f3-20020a5d50c3000000b002d43f3bcdb7mr7072606wrt.67.1679327331002;
+        Mon, 20 Mar 2023 08:48:51 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o17-20020a056000011100b002d30fe0d2fcsm9201875wrx.13.2023.03.20.08.48.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Mar 2023 08:48:50 -0700 (PDT)
+Message-Id: <pull.1474.v2.git.git.1679327330032.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1474.git.git.1679233875803.gitgitgadget@gmail.com>
+References: <pull.1474.git.git.1679233875803.gitgitgadget@gmail.com>
+From:   "Stanislav Malishevskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 20 Mar 2023 15:48:49 +0000
+Subject: [PATCH v2] http: add support for different sslcert and sslkey types.
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Stanislav Malishevskiy <stanislav.malishevskiy@gmail.com>,
+        Stanislav Malishevskiy <s.malishevskiy@auriga.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the commit title please mention the subsystem you are=20
-changing=2E Also, a good commit message sounds like a command :)=2E
+From: Stanislav Malishevskiy <s.malishevskiy@auriga.com>
 
-An example would be:
+Basically git work with default curl ssl type - PEM. But for support
+eTokens like SafeNet tokens via pksc11 need setup 'ENG' as sslcert type
+and as sslkey type. So there added additional options for http to make
+that possible.
 
-http: add support for different sslcert and sslkey types
+Signed-off-by: Stanislav Malishevskiy <stanislav.malishevskiy@gmail.com>
+---
+    http: add support for different sslcert and sslkey types.
+    
+    Basically git work with default curl ssl type - PEM. But for support
+    eTokens like SafeNet tokens via pksc11 need setup 'ENG' as sslcert type
+    and as sslkey type. So there added additional options for http to make
+    that possible.
+    
+    Signed-off-by: Stanislav Malishevskiy stanislav.malishevskiy@gmail.com
+    
+    Changes since v1:
+    
+     * Fixed the commit message (found by Khalid Masum)
 
-Lastly, put the sign off email address in angle brackets=2E Good luck!
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1474%2Fsmalishevskiy%2Fssl_types_support-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1474/smalishevskiy/ssl_types_support-v2
+Pull-Request: https://github.com/git/git/pull/1474
 
-thanks,
-  -- Khalid Masum=20
+Range-diff vs v1:
 
+ 1:  a4b2284dd36 ! 1:  899a0761d99 That change for support different sslcert and sslkey types.
+     @@ Metadata
+      Author: Stanislav Malishevskiy <s.malishevskiy@auriga.com>
+      
+       ## Commit message ##
+     -    That change for support different sslcert and sslkey types.
+     +    http: add support for different sslcert and sslkey types.
+      
+          Basically git work with default curl ssl type - PEM. But for support
+          eTokens like SafeNet tokens via pksc11 need setup 'ENG' as sslcert type
+     -    and as sslkey type. So there added additional options for http for make
+     +    and as sslkey type. So there added additional options for http to make
+          that possible.
+      
+     -    Signed-off-by: Stanislav Malishevskiy stanislav.malishevskiy@gmail.com
+     +    Signed-off-by: Stanislav Malishevskiy <stanislav.malishevskiy@gmail.com>
+      
+       ## http.c ##
+      @@ http.c: static int curl_ssl_verify = -1;
+
+
+ http.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/http.c b/http.c
+index dbe4d29ef7a..d5d82c5230f 100644
+--- a/http.c
++++ b/http.c
+@@ -40,6 +40,7 @@ static int curl_ssl_verify = -1;
+ static int curl_ssl_try;
+ static const char *curl_http_version = NULL;
+ static const char *ssl_cert;
++static const char *ssl_cert_type;
+ static const char *ssl_cipherlist;
+ static const char *ssl_version;
+ static struct {
+@@ -59,6 +60,7 @@ static struct {
+ #endif
+ };
+ static const char *ssl_key;
++static const char *ssl_key_type;
+ static const char *ssl_capath;
+ static const char *curl_no_proxy;
+ #ifdef GIT_CURL_HAVE_CURLOPT_PINNEDPUBLICKEY
+@@ -374,8 +376,12 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		return git_config_string(&ssl_version, var, value);
+ 	if (!strcmp("http.sslcert", var))
+ 		return git_config_pathname(&ssl_cert, var, value);
++	if (!strcmp("http.sslcerttype", var))
++		return git_config_string(&ssl_cert_type, var, value);
+ 	if (!strcmp("http.sslkey", var))
+ 		return git_config_pathname(&ssl_key, var, value);
++	if (!strcmp("http.sslkeytype", var))
++		return git_config_string(&ssl_key_type, var, value);
+ 	if (!strcmp("http.sslcapath", var))
+ 		return git_config_pathname(&ssl_capath, var, value);
+ 	if (!strcmp("http.sslcainfo", var))
+@@ -1014,10 +1020,14 @@ static CURL *get_curl_handle(void)
+ 
+ 	if (ssl_cert)
+ 		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
++	if (ssl_cert_type)
++		curl_easy_setopt(result, CURLOPT_SSLCERTTYPE, ssl_cert_type);
+ 	if (has_cert_password())
+ 		curl_easy_setopt(result, CURLOPT_KEYPASSWD, cert_auth.password);
+ 	if (ssl_key)
+ 		curl_easy_setopt(result, CURLOPT_SSLKEY, ssl_key);
++	if (ssl_key_type)
++		curl_easy_setopt(result, CURLOPT_SSLKEYTYPE, ssl_key_type);
+ 	if (ssl_capath)
+ 		curl_easy_setopt(result, CURLOPT_CAPATH, ssl_capath);
+ #ifdef GIT_CURL_HAVE_CURLOPT_PINNEDPUBLICKEY
+@@ -1252,7 +1262,9 @@ void http_init(struct remote *remote, const char *url, int proactive_auth)
+ 		curl_ssl_verify = 0;
+ 
+ 	set_from_env(&ssl_cert, "GIT_SSL_CERT");
++	set_from_env(&ssl_cert_type, "GIT_SSL_CERT_TYPE");
+ 	set_from_env(&ssl_key, "GIT_SSL_KEY");
++	set_from_env(&ssl_key_type, "GIT_SSL_KEY_TYPE");
+ 	set_from_env(&ssl_capath, "GIT_SSL_CAPATH");
+ 	set_from_env(&ssl_cainfo, "GIT_SSL_CAINFO");
+ 
+
+base-commit: 950264636c68591989456e3ba0a5442f93152c1a
+-- 
+gitgitgadget
