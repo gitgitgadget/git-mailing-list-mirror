@@ -2,79 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BB66C7619A
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 19:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8766C6FD1C
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 20:03:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230475AbjCTTo3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 15:44:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38324 "EHLO
+        id S230047AbjCTUDB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 16:03:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230372AbjCTToH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 15:44:07 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00EC610A91
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 12:40:08 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id z10so7284866pgr.8
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 12:40:08 -0700 (PDT)
+        with ESMTP id S229847AbjCTUC7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 16:02:59 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF1A726856
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:02:41 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id h11so7074411ild.11
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:02:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679341208;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8qHfgO+3KHYahPPuG8oXkNhP5/sdUxcMXOvL6/x9PUU=;
-        b=NaxSVyJlsnvc+Ap6N8lZXFAlwJSYE10Pwqxmtglvczry+FGPnSvQwb0eermhmVCE9K
-         ikV7VElMAmhxU0d03KdhJ4RZZ+VLLs9e7+x+KEDIhWT7PGiWip8R99e7kTRC5FWjd5zv
-         jFxAoMj7XyQUebfM9kHFLoTWvpZ8CuF7fXPqPthSb+YUY2Z4T3Hx0sCjtaTlAJyu+bv+
-         9JaXsCA9DTg5FFo3lsgkz1VS4UIacPL4Wru6kJlLqqeekOElPFrKHJbVKByVF43fZbvf
-         TtEUwFXsgx926ALLBjWLk7MYVIU/C1iJp1yuLDZI1ziim91kwBSccQ1Cg05Ww6ZRkjDj
-         rNhA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1679342559;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+Og3gaZcdPtTYDFZ8hC5Lv8yrk8uKJBLd0YPgQ2uQes=;
+        b=oREeiDGMR77JtV6KbhaUoPnE1uKrRAOAUpcDPqzv9bVJS3wAUvdbDwoPJf5D6p6clQ
+         d102vWAsGPRs9esoaXfQomuVXWzk1qVUkmUoLmiUADDbjrYJFK6KGklx1Y9BBWYPedmv
+         nb4s2iN/HEBBDJB38zMQfuc1FeVWam36A7NoJ57daf8g0LIgBKswcLIYW8V4axbkcthN
+         XS7Y4t6VgDKuEjas6LgEOJeKQcSfqNrAO7Fryqr63m2EczdZju7DorXVJtiMImgKQ2s6
+         HIwGEgc54Wl6PC+d1E0QepdXgsuhpnqq4PljzQctX8MI+YgxEdhh5e2XtiHVun8c9ZPU
+         qkMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679341208;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8qHfgO+3KHYahPPuG8oXkNhP5/sdUxcMXOvL6/x9PUU=;
-        b=BQJ4AUDU58KuHCBEJfQcDV8ORCYsZpu/h4G2ZPRmfDV4sRQOwfFzbKcDupLJulwh8w
-         phdP0o99txDXk85svVVUSwj0wTcDUSyr6hT2fygL5GTokNZ4D0HF+WyuJzWgLYRoEYWt
-         zC/nrGSUBy8ippx5lP9efPhs99WUaHrowvZpsgWdW7jwtN0vw/p6LfgBe5Uv2GfgzYW+
-         6JnnnzrxTqMTZlLQAduwk4ni0j7xHj+gVZyFKVJGLXiWLqhLjXqsiSqbcANE65ETjDWv
-         BQ382RFdd80JfzbMlumnPam9hxPAmHxUCustxCikYG/NDGq1MeNwBtzpVHBpoWu8c61k
-         UuVg==
-X-Gm-Message-State: AO0yUKWfAbVWTW9k0+lyIVlsOBt6MctHy228o4AamvmkJdQzI2MSggU0
-        ohzRrQ0TyjXKyi4K99gZVLQ=
-X-Google-Smtp-Source: AK7set+nz4yGYilldrIWUpFb9oaaXcUoIWOyn6S3D+qh9/7Eg03cVtAW4/U/gLpPQ/460Nhmd379dw==
-X-Received: by 2002:a62:1dc7:0:b0:627:e577:4326 with SMTP id d190-20020a621dc7000000b00627e5774326mr16842pfd.17.1679341208270;
-        Mon, 20 Mar 2023 12:40:08 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id n21-20020a62e515000000b0058bc60dd98dsm6705107pff.23.2023.03.20.12.40.07
+        d=1e100.net; s=20210112; t=1679342559;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+Og3gaZcdPtTYDFZ8hC5Lv8yrk8uKJBLd0YPgQ2uQes=;
+        b=XBg6utBYbNwmuvtifa1NgpmQPar1v2joo3/ahnMr66kKElOScaxqOba7RDPNhpears
+         X8G+c9dUpgHKSJAryzZgqtso1kf2iW0rU/gilTwTD0kwvnwh7it+5nTKeb+EgoLDoVUy
+         KavRwWO0vRScAzx2L5n9m+IGk5zomqmu9Xt6H7k4z0u4fPcXQzKzBX6lo8r6B8Y/qhaS
+         z1JYGQf9QknNinAxAS4qatdFk6G9kst6s1Ifl1lleHHHg+LOzu+ER9vEc37wJA2cWfJV
+         JLwQ644BY4fiFum9jT/y3mko6srNM4hmP5DU677feTyWN5gQPdYWAzCqAH0KSPZIoSXj
+         qstQ==
+X-Gm-Message-State: AO0yUKWAJqlUP9vS1jrqWyTkls3SRKNPjrbw0Q+5EEK7XSVcdGC/GjIT
+        Lvz5xbmHu6KAUbEQHLZOWAUids/Ks3KfQ+42GQ0l6A==
+X-Google-Smtp-Source: AK7set9nnB7JGleMni61MGC9+6piuPiK+9fsrhlzPtjkY6QgCjMOiCOhoHgZwyIiNNJxc0Z4pn1N+g==
+X-Received: by 2002:a05:6e02:687:b0:315:4449:cb50 with SMTP id o7-20020a056e02068700b003154449cb50mr548062ils.16.1679342558906;
+        Mon, 20 Mar 2023 13:02:38 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id u8-20020a926008000000b003179d4bd50asm2995948ilb.75.2023.03.20.13.02.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 12:40:07 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Paul Eggert <eggert@cs.ucla.edu>
-Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
-Subject: Re: [PATCH 2/2] git-compat-util: use gettimeofday for current time
-References: <20230319064353.686226-1-eggert@cs.ucla.edu>
-        <20230319064353.686226-3-eggert@cs.ucla.edu>
-        <20230319193449.M629601@dcvr> <xmqqh6ufo01u.fsf@gitster.g>
-        <xmqqr0tjmk6d.fsf@gitster.g>
-        <047178a8-ccf5-1cab-e670-8f1c64f9ca3c@cs.ucla.edu>
-Date:   Mon, 20 Mar 2023 12:40:07 -0700
-In-Reply-To: <047178a8-ccf5-1cab-e670-8f1c64f9ca3c@cs.ucla.edu> (Paul Eggert's
-        message of "Mon, 20 Mar 2023 12:00:22 -0700")
-Message-ID: <xmqqfs9zky94.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Mon, 20 Mar 2023 13:02:38 -0700 (PDT)
+Date:   Mon, 20 Mar 2023 16:02:37 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH 0/6] pack-bitmap: miscellaneous mmap read hardening
+Message-ID: <cover.1679342296.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Paul Eggert <eggert@cs.ucla.edu> writes:
+This short series has a few minor refactorings and hardenings I noticed
+while reading the pack-bitmap.c code recently.
 
-> It might be simpler to use the gettimeofday workaround on all
-> platforms, rather than having an OVERRIDE_TIME flag and complicating
-> config.mak.uname. gettimeofday should be portable, as it's already
-> used elsewhere in Git without configury.
+The series is structured as follows:
 
-That is an excellent point.
+  - The first three are cleanups to the read_be32() and read_u8()
+    functions that could be taken on their own.
+
+  - The last three replace manually reading from `bitmap_git->map` and
+    adjusting `bitmap_git->map_pos` accordingly with a new
+    `bitmap_index_seek()` wrapper that accomplishes the same with
+    additional bounds- and overflow-checking.
+
+Thanks in advance for your review.
+
+Taylor Blau (6):
+  pack-bitmap.c: hide bitmap internals in `read_u8()`
+  pack-bitmap.c: hide bitmap internals in `read_be32()`
+  pack-bitmap.c: drop unnecessary 'inline's
+  pack-bitmap.c: factor out manual `map_pos` manipulation
+  pack-bitmap.c: use `bitmap_index_seek()` where possible
+  pack-bitmap.c: factor out `bitmap_index_seek_commit()`
+
+ pack-bitmap.c | 84 ++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 59 insertions(+), 25 deletions(-)
+
+-- 
+2.40.0.77.gd564125b3f
