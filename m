@@ -2,74 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0419C6FD1D
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 17:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A814C6FD1D
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 17:16:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233417AbjCTRJh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 13:09:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43676 "EHLO
+        id S232650AbjCTRQd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 13:16:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232621AbjCTRJK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 13:09:10 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7679228EAA
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 10:04:32 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id q16so4932714lfe.10
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 10:04:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679331814;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vkmabA3ZjbrPzHcgN+sw98Jc8sBvyhki/3uJkJ+/tyA=;
-        b=UghX5U+sBkElF/WKUIhIot+guKmjpm3KlHl7LTOmtqZOQrcUXfdKsHp4ZIVQDC75pG
-         /McueRD5XeJXpZPnf9O4qhUwil/uejOQSsgINh75p2/POsZv3GRWQtKrCJlbMmYLru0j
-         66RkD/rTBvZI8003mpth5upnEscDi/e6yIDfNrH1cB1FnHrICmfc0Z4Psbr+UujicOrg
-         bu81PH/i0EIFlQIQt23XvJLbv45X7Tox6J74hqY3h7x2F6JY0/f8q6jWrFLVLyZLpHyP
-         9xHbWDSrPZLeW9CcKFLldQIxG0yuZhhwKilCFMsf8voec3fr85zCehvde/0ITzBs/Cr8
-         5zQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679331814;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vkmabA3ZjbrPzHcgN+sw98Jc8sBvyhki/3uJkJ+/tyA=;
-        b=uIpl175yMZZvrs/8bqidNeTtPV1snGGTMKVkgULkzFgyc3l3l7l13VUXFPdS0s/JQd
-         Y7NErCY8STnRoukDl1tQl0mY21fs4PUl7azugFxFBeXElOrM23i3jwpaV0hiojcZVqmx
-         jKlwfS184tbTLYA0KPspDLq4ipTZMtVrLkv4Ej7PKCnPNoaCSIo/PFR8/N4RadclMeLP
-         4EdhoZW9F4aIO0P8/TWpgDWob2j7/z8KmGnSWKhdtviRKJKbAsDJBv8w5+XYX/eJulFF
-         53K8P38VAThMlJHgMz+nENhrjrgdIcyKn1wX9dpbVhFAX7AFdSlSpn03E6JR5M/oqgkZ
-         QDoQ==
-X-Gm-Message-State: AO0yUKWFQluyNxtY9Vome5JCemVnbLTEUOpB5/jWPHogjbeuZzO+K8BO
-        kBEg+AiaXhBopUCThRDhnfaWjGzXCW0gv0uGJ0/HnD1irhk=
-X-Google-Smtp-Source: AK7set9o3ia0IISbQRVjFEFdL5MlBwJBd1195dYVvFHnh8On+XGYYdRdlK7tV/Qza8VECMMSOwms/1VlBWmvGGFRh/w=
-X-Received: by 2002:ac2:5927:0:b0:4e8:6261:58c2 with SMTP id
- v7-20020ac25927000000b004e8626158c2mr195147lfi.7.1679331220438; Mon, 20 Mar
- 2023 09:53:40 -0700 (PDT)
+        with ESMTP id S232615AbjCTRQL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 13:16:11 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B9B311C8
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 10:12:03 -0700 (PDT)
+Received: (qmail 18823 invoked by uid 109); 20 Mar 2023 17:10:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 20 Mar 2023 17:10:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25102 invoked by uid 111); 20 Mar 2023 17:10:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Mar 2023 13:10:52 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 20 Mar 2023 13:10:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stanislav Malishevskiy via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org,
+        Stanislav Malishevskiy <stanislav.malishevskiy@gmail.com>,
+        Stanislav Malishevskiy <s.malishevskiy@auriga.com>
+Subject: Re: [PATCH v2] http: add support for different sslcert and sslkey
+ types.
+Message-ID: <20230320171051.GA2615782@coredump.intra.peff.net>
+References: <pull.1474.git.git.1679233875803.gitgitgadget@gmail.com>
+ <pull.1474.v2.git.git.1679327330032.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20230319165648.656738-1-szeder.dev@gmail.com>
-In-Reply-To: <20230319165648.656738-1-szeder.dev@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 20 Mar 2023 09:53:28 -0700
-Message-ID: <CABPp-BGXuQEef1Z2fDeHNJi=RSiTK1Jp1PehCtFvT1nzvJmoYw@mail.gmail.com>
-Subject: Re: [PATCH 0/3] parse-options.h: use designated initializers in OPT_* macros
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1474.v2.git.git.1679327330032.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 19, 2023 at 10:06=E2=80=AFAM SZEDER G=C3=A1bor <szeder.dev@gmai=
-l.com> wrote:
->
-> Use designated initializers in the expansions of the OPT_* macros to
-> make it more readable which one-letter macro parameter initializes
-> which field in the resulting 'struct option'.
+On Mon, Mar 20, 2023 at 03:48:49PM +0000, Stanislav Malishevskiy via GitGitGadget wrote:
 
-This series makes the code easier for me to read; thanks for
-submitting them.  The series is pretty short and easy to read, and I
-couldn't find any issues anywhere.
+> From: Stanislav Malishevskiy <s.malishevskiy@auriga.com>
+> 
+> Basically git work with default curl ssl type - PEM. But for support
+> eTokens like SafeNet tokens via pksc11 need setup 'ENG' as sslcert type
+> and as sslkey type. So there added additional options for http to make
+> that possible.
 
-Reviewed-by: Elijah Newren <newren@gmail.com>
+Seems like a reasonable thing to want, and the patch looks pretty clean.
+Two small points:
+
+>  http.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+
+There are no tests here. I think it might be possible to add them, but
+our https test support is currently optional, and has bit-rotted a bit
+over the years. There's some discussion here:
+
+  https://lore.kernel.org/git/Y9s7vyHKXP+TQPRm@pobox.com/
+
+So I don't think it makes sense to block this patch over the lack of
+tests, but it's something we might keep in mind to add if the test
+situation improves.
+
+> @@ -1014,10 +1020,14 @@ static CURL *get_curl_handle(void)
+>  
+>  	if (ssl_cert)
+>  		curl_easy_setopt(result, CURLOPT_SSLCERT, ssl_cert);
+> +	if (ssl_cert_type)
+> +		curl_easy_setopt(result, CURLOPT_SSLCERTTYPE, ssl_cert_type);
+
+We're just feeding curl whatever string the user gave us (which is good,
+since we don't know which ones are valid). But what happens with:
+
+  GIT_SSL_CERT_TYPE=bogus git fetch ...
+
+Should we check for an error here, or will the actual request later
+complain properly?
+
+-Peff
