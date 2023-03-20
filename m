@@ -2,379 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A4A0C6FD1D
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 06:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 579A2C6FD1D
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 06:57:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229635AbjCTGAQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 02:00:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55566 "EHLO
+        id S230022AbjCTG5q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 02:57:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbjCTGAM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 02:00:12 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 739DD1CAFF
-        for <git@vger.kernel.org>; Sun, 19 Mar 2023 23:00:09 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id iw3so11330429plb.6
-        for <git@vger.kernel.org>; Sun, 19 Mar 2023 23:00:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679292008;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=07ldifHYPVkaWQtQFeZnG/t/tyD/rJuc3VqSBBl5sjo=;
-        b=Xt2qSZ9TXyDS+WpjsK6pTR5HJCZw7qLDDC60ddTrq1ORMqSS1oLHudEToTJRNbJiGP
-         1y4rMDRfcBYAssVZCRWWwgN3oNYmJ4Zp4RTSZPKGDYtZ5PNDNI+q43D1UH/eNg10dVrF
-         qUmloAT+iI83e652DV5Db4OpNmr2s3l7tS2lrQdjLhDdzvHzDpneHMCJXbn9TIjtYVsJ
-         XIUh2s35uN3mOhVbM3j25h3PElIk3zQsrm2yamw1givgXv3h+1wxgPsFqYVjI6GlC8at
-         7jAh0I+EEuboEPPIbItBoylijvU1iN1cYFW8+T2NEao7WVO2zwd1EiORnJ2RsrjeAfi8
-         YPAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679292008;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=07ldifHYPVkaWQtQFeZnG/t/tyD/rJuc3VqSBBl5sjo=;
-        b=T0kzsLREjHpPjH32RUTpNuh4z/qx78m8oU4tGYTbEpHNChO5pLqtazwvuo3hlnAmCT
-         WVd7ZPvR6Wvk0PJn9qZp6uLnZBmY5lyUvxbu5c91TE8GSAV1fmD7HsFmA8Nwhk3cFBUs
-         Xcx+RVB1VLG5FkZ4SSRyaCeHLWi1EeoD0CpuXwOUL0c/x2siaMm48Ckg+CWTZrksuHQB
-         koSNTrGxsNwAKcCh2kP8d0V1ZDmnASGZa9oEiBl3+/uA79Kh4OtQUIcYa19QVgtxNRDM
-         42t1ISfRLQscUgdyp3K2mTUKkP3bOHiULucRqZ7HPlqtKIjOYbGRxB+ScujEJWDu8iCi
-         vswQ==
-X-Gm-Message-State: AO0yUKVHN8L6r+DCinQ5fpVT/VJzrhLz9Uu07rL5LnmmBq5GSwPxTeRW
-        zY37n21FZcvrLtUEZ2xT0NOyTX3XsOZmuQ==
-X-Google-Smtp-Source: AK7set9dNHOmbQqNZFRkEwcm+2IlAwopwbU2OnHVjdtg31aBoWu3zHN5CPzmQQxXEMkJEA2fkZRxCw==
-X-Received: by 2002:a17:90b:1a8a:b0:23f:4370:2c67 with SMTP id ng10-20020a17090b1a8a00b0023f43702c67mr13981359pjb.26.1679292008597;
-        Sun, 19 Mar 2023 23:00:08 -0700 (PDT)
-Received: from xavier.lan ([2607:fa18:92fe:92b::2a2])
-        by smtp.gmail.com with ESMTPSA id cc13-20020a17090af10d00b002353082958csm7814075pjb.10.2023.03.19.23.00.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Mar 2023 23:00:08 -0700 (PDT)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, tao@klerks.biz, gitster@pobox.com,
-        newren@gmail.com, phillip.wood123@gmail.com,
-        Johannes.Schindelin@gmx.de, sorganov@gmail.com,
-        chooglen@google.com, calvinwan@google.com,
-        jonathantanmy@google.com, felipe.contreras@gmail.com
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v8 3/3] rebase: add a config option for --rebase-merges
-Date:   Sun, 19 Mar 2023 23:59:55 -0600
-Message-Id: <20230320055955.461138-4-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320055955.461138-1-alexhenrie24@gmail.com>
-References: <20230312210456.92364-1-alexhenrie24@gmail.com>
- <20230320055955.461138-1-alexhenrie24@gmail.com>
+        with ESMTP id S229699AbjCTG5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 02:57:43 -0400
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BC3416AE0
+        for <git@vger.kernel.org>; Sun, 19 Mar 2023 23:57:41 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 244915C00F2;
+        Mon, 20 Mar 2023 02:57:38 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Mon, 20 Mar 2023 02:57:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1679295458; x=1679381858; bh=I4
+        qdAuu+LTPPj9cBkXKUx8grqxyN8Xe/VQKagpV6XdQ=; b=KNqTBoRoAoxjRg716N
+        uhfISUDY2rV/nIxECmWqDYV6TUqPEVo19A2khes9DzYzv6yy0Q5tM2CO7wiRg4X6
+        Mp6jpzVAfCI7ul6EfeGDvn4vyP1+ZsBWgNcpcWFxQgtAgn1mhps4SI6yAK6nFD8C
+        rrp1aFl6IZaqu62nt8ElbIJaeY8xZG7HXzKXW3QBz/BUpYTftTkY+YDFO8ww9cbU
+        3FGu18sMGqZjp3SnbW3PeHyM0ALB2T7D/J7FGn9yAKsFjhzXtUdvCJO8/OJBUSrd
+        H5B+z3Xg1RQl9zYjxrxudbAD50atPXa4qTvNc9L7UnUVwebC3ZEJ5N13d3YmLuQR
+        4ZQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1679295458; x=1679381858; bh=I4qdAuu+LTPPj
+        9cBkXKUx8grqxyN8Xe/VQKagpV6XdQ=; b=GnlqJ5Ja4ikCbGPsjbD3sS0TEmzNC
+        Yie87pptOUo1arUYlWQQiK/TAG4nRy8/iUhNc+6CEGxb/RofeVn6OujoMLU5btqK
+        xxFQmGEeqtuNk2JsCdasmPPVYK3x8eqbuoVHrbXdzz19IMNm5HktZpYB60yS2Ddy
+        uVd6UP9JPilSKplCDMS1Zo2mIapOnghK4ao/vTEwokyX5cd6FRVvNTEjBLVCDttL
+        Om73Dbg5SYRVnMaDJdTOO4cvPRQJ+p2ZkL5P/qMFRhqXFLxVZTAZwbDESTvGTBKZ
+        v76OnllhE6A8zZSUYcfW6dVl7JTvaBHvAzz/h0thEqGsyj1Sj9TCdyIyw==
+X-ME-Sender: <xms:4QMYZGW7g3IRh-EYpkbYQ1VEa_t8SYj2sd0I7WY6yRR83ZzZYOSTnA>
+    <xme:4QMYZCmkhbuNWfbTEuuaMILNwuhigWof6N3LRrbg-N6wqpgTq0OFJ8eQWBKU5eG-_
+    _Kpq92hZVrr8YsPew>
+X-ME-Received: <xmr:4QMYZKYTkMQ2OVMXSpPnQrHy39EoFXsuV_J4eYVfhvfdzDDdqEwwpvQanC4E7m1_oa8-9rUMzkb0AHcLPMurYWP9d3Owl2yOh8jzrdi40xNmdw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdefjedguddthecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:4QMYZNXt6njC4_wrRopENXXkL1aQs82T9Nb0iEUuo14dVKfvKPXAUw>
+    <xmx:4QMYZAlmVMDrPu-pCn1ExBm9bsiQODX-SR_96PsZkmsps_0pgyBgRA>
+    <xmx:4QMYZCckzhZGpg7gbr9dhDeqkdwVyr6PR2swiyyuuYBNry0fmbhCdg>
+    <xmx:4gMYZHu_Eezs-nDo6YtXZu6NDYx34EDC6mBtDCw1pv45debBpNsisQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 20 Mar 2023 02:57:36 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id d7c779eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 20 Mar 2023 06:57:02 +0000 (UTC)
+Date:   Mon, 20 Mar 2023 07:57:33 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/8] fetch: refactor code that prints reference updates
+Message-ID: <ZBgD3Ux34V/U/Lv5@ncase>
+References: <cover.1678878623.git.ps@pks.im>
+ <20230317202449.1083635-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="5Iys3KBu+xlHX5Mt"
+Content-Disposition: inline
+In-Reply-To: <20230317202449.1083635-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The purpose of the new option is to accommodate users who would like
---rebase-merges to be on by default and to facilitate turning on
---rebase-merges by default without configuration in a future version of
-Git.
 
-Name the new option rebase.rebaseMerges, even though it is a little
-redundant, for consistency with the name of the command line option and
-to be clear when scrolling through values in the [rebase] section of
-.gitconfig.
+--5Iys3KBu+xlHX5Mt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Support setting rebase.rebaseMerges to the nonspecific value "true" for
-users who don't need to or don't want to learn about the difference
-between rebase-cousins and no-rebase-cousins.
+On Fri, Mar 17, 2023 at 01:24:49PM -0700, Jonathan Tan wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> >     1. We want to take control of the reference updates so that we can
+> >        atomically update all or a subset of references that git-fetch
+> >        would have updated.
+> >=20
+> >     2. We want to be able to quarantine objects in a fetch so that we
+> >        can e.g. perform consistency checks for them before they land in
+> >        the main repository.
+>=20
+> If you want to do this, something that might be possible is to change
+> the RHS of the refspecs to put the refs in a namespace of your choice
+> (e.g. ...:refs/<UUID>/...) and then you can look at what's generated and
+> process them as you wish.
 
-Make --rebase-merges without an argument on the command line override
-any value of rebase.rebaseMerges in the configuration, for consistency
-with other command line flags with optional arguments that have an
-associated config option.
+There's two major problems with this, unfortunately:
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- Documentation/config/rebase.txt        | 10 ++++
- Documentation/git-rebase.txt           |  3 +-
- builtin/rebase.c                       | 81 ++++++++++++++++++--------
- t/t3422-rebase-incompatible-options.sh | 17 ++++++
- t/t3430-rebase-merges.sh               | 34 +++++++++++
- 5 files changed, 121 insertions(+), 24 deletions(-)
+- We want to use the machine-parseable format in our repository
+  mirroring functionality, where you can easily end up fetching
+  thousands or even hundreds of thousands of references. If you need to
+  write all of them anew in a first step then you'll end up slower than
+  before.
 
-diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
-index f19bd0e040..afaf6dad99 100644
---- a/Documentation/config/rebase.txt
-+++ b/Documentation/config/rebase.txt
-@@ -67,3 +67,13 @@ rebase.rescheduleFailedExec::
- 
- rebase.forkPoint::
- 	If set to false set `--no-fork-point` option by default.
-+
-+rebase.rebaseMerges::
-+	Whether and how to set the `--rebase-merges` option by default. Can
-+	be `rebase-cousins`, `no-rebase-cousins`, or a boolean. Setting to
-+	true or to `no-rebase-cousins` is equivalent to
-+	`--rebase-merges=no-rebase-cousins`, setting to `rebase-cousins` is
-+	equivalent to `--rebase-merges=rebase-cousins`, and setting to false is
-+	equivalent to `--no-rebase-merges`. Passing `--rebase-merges` on the
-+	command line, with or without an argument, overrides any
-+	`rebase.rebaseMerges` configuration.
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 4e57a87624..e7b39ad244 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -537,7 +537,8 @@ See also INCOMPATIBLE OPTIONS below.
- 	by recreating the merge commits. Any resolved merge conflicts or
- 	manual amendments in these merge commits will have to be
- 	resolved/re-applied manually. `--no-rebase-merges` can be used to
--	countermand a previous `--rebase-merges`.
-+	countermand both the `rebase.rebaseMerges` config option and a previous
-+	`--rebase-merges`.
- +
- When rebasing merges, there are two modes: `rebase-cousins` and
- `no-rebase-cousins`. If the mode is not specified, it defaults to
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 4b3f29a449..fd284e24ab 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -124,6 +124,7 @@ struct rebase_options {
- 	int fork_point;
- 	int update_refs;
- 	int config_autosquash;
-+	int config_rebase_merges;
- 	int config_update_refs;
- };
- 
-@@ -141,6 +142,8 @@ struct rebase_options {
- 		.allow_empty_message = 1,               \
- 		.autosquash = -1,                       \
- 		.config_autosquash = -1,                \
-+		.rebase_merges = -1,                    \
-+		.config_rebase_merges = -1,             \
- 		.update_refs = -1,                      \
- 		.config_update_refs = -1,               \
- 	}
-@@ -772,6 +775,16 @@ static int run_specific_rebase(struct rebase_options *opts)
- 	return status ? -1 : 0;
- }
- 
-+static void parse_rebase_merges_value(struct rebase_options *options, const char *value)
-+{
-+	if (!strcmp("no-rebase-cousins", value))
-+		options->rebase_cousins = 0;
-+	else if (!strcmp("rebase-cousins", value))
-+		options->rebase_cousins = 1;
-+	else
-+		die(_("Unknown rebase-merges mode: %s"), value);
-+}
-+
- static int rebase_config(const char *var, const char *value, void *data)
- {
- 	struct rebase_options *opts = data;
-@@ -801,6 +814,16 @@ static int rebase_config(const char *var, const char *value, void *data)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "rebase.rebasemerges")) {
-+		opts->config_rebase_merges = git_parse_maybe_bool(value);
-+		if (opts->config_rebase_merges < 0) {
-+			opts->config_rebase_merges = 1;
-+			parse_rebase_merges_value(opts, value);
-+		} else
-+			opts->rebase_cousins = 0;
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "rebase.updaterefs")) {
- 		opts->config_update_refs = git_config_bool(var, value);
- 		return 0;
-@@ -981,6 +1004,28 @@ static int parse_opt_empty(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
-+static int parse_opt_rebase_merges(const struct option *opt, const char *arg, int unset)
-+{
-+	struct rebase_options *options = opt->value;
-+
-+	options->rebase_merges = !unset;
-+	options->rebase_cousins = 0;
-+
-+	if (arg) {
-+		if (!*arg) {
-+			warning(_("--rebase-merges with an empty string "
-+				  "argument is deprecated and will stop "
-+				  "working in a future version of Git. Use "
-+				  "--rebase-merges without an argument "
-+				  "instead, which does the same thing."));
-+			return 0;
-+		}
-+		parse_rebase_merges_value(options, arg);
-+	}
-+
-+	return 0;
-+}
-+
- static void NORETURN error_on_missing_default_upstream(void)
- {
- 	struct branch *current_branch = branch_get(NULL);
-@@ -1036,7 +1081,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	struct object_id branch_base;
- 	int ignore_whitespace = 0;
- 	const char *gpg_sign = NULL;
--	const char *rebase_merges = NULL;
- 	struct string_list strategy_options = STRING_LIST_INIT_NODUP;
- 	struct object_id squash_onto;
- 	char *squash_onto_name = NULL;
-@@ -1138,10 +1182,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			   &options.allow_empty_message,
- 			   N_("allow rebasing commits with empty messages"),
- 			   PARSE_OPT_HIDDEN),
--		{OPTION_STRING, 'r', "rebase-merges", &rebase_merges,
--			N_("mode"),
-+		OPT_CALLBACK_F('r', "rebase-merges", &options, N_("mode"),
- 			N_("try to rebase merges instead of skipping them"),
--			PARSE_OPT_OPTARG, NULL, (intptr_t)"no-rebase-cousins"},
-+			PARSE_OPT_OPTARG, parse_opt_rebase_merges),
- 		OPT_BOOL(0, "fork-point", &options.fork_point,
- 			 N_("use 'merge-base --fork-point' to refine upstream")),
- 		OPT_STRING('s', "strategy", &options.strategy,
-@@ -1437,21 +1480,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (options.exec.nr)
- 		imply_merge(&options, "--exec");
- 
--	if (rebase_merges) {
--		if (!*rebase_merges)
--			warning(_("--rebase-merges with an empty string "
--				  "argument is deprecated and will stop "
--				  "working in a future version of Git. Use "
--				  "--rebase-merges without an argument "
--				  "instead, which does the same thing."));
--		else if (!strcmp("rebase-cousins", rebase_merges))
--			options.rebase_cousins = 1;
--		else if (strcmp("no-rebase-cousins", rebase_merges))
--			die(_("Unknown mode: %s"), rebase_merges);
--		options.rebase_merges = 1;
--		imply_merge(&options, "--rebase-merges");
--	}
--
- 	if (options.type == REBASE_APPLY) {
- 		if (ignore_whitespace)
- 			strvec_push(&options.git_am_opts,
-@@ -1514,13 +1542,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 				break;
- 
- 		if (i >= 0 || options.type == REBASE_APPLY) {
--			if (is_merge(&options))
--				die(_("apply options and merge options "
--					  "cannot be used together"));
--			else if (options.autosquash == -1 && options.config_autosquash == 1)
-+			if (options.autosquash == -1 && options.config_autosquash == 1)
- 				die(_("apply options are incompatible with rebase.autoSquash.  Consider adding --no-autosquash"));
-+			else if (options.rebase_merges == -1 && options.config_rebase_merges == 1)
-+				die(_("apply options are incompatible with rebase.rebaseMerges.  Consider adding --no-rebase-merges"));
- 			else if (options.update_refs == -1 && options.config_update_refs == 1)
- 				die(_("apply options are incompatible with rebase.updateRefs.  Consider adding --no-update-refs"));
-+			else if (is_merge(&options))
-+				die(_("apply options and merge options "
-+					  "cannot be used together"));
- 			else
- 				options.type = REBASE_APPLY;
- 		}
-@@ -1531,6 +1561,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	options.update_refs = (options.update_refs >= 0) ? options.update_refs :
- 			     ((options.config_update_refs >= 0) ? options.config_update_refs : 0);
- 
-+	if (options.rebase_merges == 1)
-+		imply_merge(&options, "--rebase-merges");
-+	options.rebase_merges = (options.rebase_merges >= 0) ? options.rebase_merges :
-+				((options.config_rebase_merges >= 0) ? options.config_rebase_merges : 0);
-+
- 	if (options.autosquash == 1)
- 		imply_merge(&options, "--autosquash");
- 	options.autosquash = (options.autosquash >= 0) ? options.autosquash :
-diff --git a/t/t3422-rebase-incompatible-options.sh b/t/t3422-rebase-incompatible-options.sh
-index 4711b37a28..2eba00bdf5 100755
---- a/t/t3422-rebase-incompatible-options.sh
-+++ b/t/t3422-rebase-incompatible-options.sh
-@@ -85,6 +85,11 @@ test_rebase_am_only () {
- 		test_must_fail git rebase $opt --reapply-cherry-picks A
- 	"
- 
-+	test_expect_success "$opt incompatible with --rebase-merges" "
-+		git checkout B^0 &&
-+		test_must_fail git rebase $opt --rebase-merges A
-+	"
-+
- 	test_expect_success "$opt incompatible with --update-refs" "
- 		git checkout B^0 &&
- 		test_must_fail git rebase $opt --update-refs A
-@@ -101,6 +106,12 @@ test_rebase_am_only () {
- 		grep -e --no-autosquash err
- 	"
- 
-+	test_expect_success "$opt incompatible with rebase.rebaseMerges" "
-+		git checkout B^0 &&
-+		test_must_fail git -c rebase.rebaseMerges=true rebase $opt A 2>err &&
-+		grep -e --no-rebase-merges err
-+	"
-+
- 	test_expect_success "$opt incompatible with rebase.updateRefs" "
- 		git checkout B^0 &&
- 		test_must_fail git -c rebase.updateRefs=true rebase $opt A 2>err &&
-@@ -113,6 +124,12 @@ test_rebase_am_only () {
- 		git -c rebase.autosquash=true rebase --no-autosquash $opt A
- 	"
- 
-+	test_expect_success "$opt okay with overridden rebase.rebaseMerges" "
-+		test_when_finished \"git reset --hard B^0\" &&
-+		git checkout B^0 &&
-+		git -c rebase.rebaseMerges=true rebase --no-rebase-merges $opt A
-+	"
-+
- 	test_expect_success "$opt okay with overridden rebase.updateRefs" "
- 		test_when_finished \"git reset --hard B^0\" &&
- 		git checkout B^0 &&
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index d46d9545f2..f03599c63b 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -278,6 +278,40 @@ test_expect_success 'do not rebase cousins unless asked for' '
- 	EOF
- '
- 
-+test_expect_success 'rebase.rebaseMerges=rebase-cousins is equivalent to --rebase-merges=rebase-cousins' '
-+	test_config rebase.rebaseMerges rebase-cousins &&
-+	git checkout -b config-rebase-cousins main &&
-+	git rebase HEAD^ &&
-+	test_cmp_graph HEAD^.. <<-\EOF
-+	*   Merge the topic branch '\''onebranch'\''
-+	|\
-+	| * D
-+	| * G
-+	|/
-+	o H
-+	EOF
-+'
-+
-+test_expect_success '--no-rebase-merges overrides rebase.rebaseMerges=no-rebase-cousins' '
-+	test_config rebase.rebaseMerges no-rebase-cousins &&
-+	git checkout -b override-config-no-rebase-cousins E &&
-+	git rebase --no-rebase-merges C &&
-+	test_cmp_graph C.. <<-\EOF
-+	* B
-+	* D
-+	o C
-+	EOF
-+'
-+
-+test_expect_success '--rebase-merges overrides rebase.rebaseMerges=rebase-cousins' '
-+	test_config rebase.rebaseMerges rebase-cousins &&
-+	git checkout -b override-config-rebase-cousins E &&
-+	before="$(git rev-parse --verify HEAD)" &&
-+	test_tick &&
-+	git rebase --rebase-merges C &&
-+	test_cmp_rev HEAD $before
-+'
-+
- test_expect_success 'refs/rewritten/* is worktree-local' '
- 	git worktree add wt &&
- 	cat >wt/script-from-scratch <<-\EOF &&
--- 
-2.40.0
+- Repository mirroring is comparatively flexible in what it allows. Most
+  importantly, it gives you the opiton to say that divergent references
+  should not be updated at all, which translates into an unforced fetch.
+  It's even possible to have fetches with mixed forced and unforced
+  reference updates. So if we fetched into a separate namespace first,
+  we'd now have to reimplement checks for forced updates in Gitaly so
+  that we correctly update only those refs that would have been updated
+  by Git. We'd also need to manually figure out deleted references.
 
+  This would be quite a risky change and would duplicate a lot of
+  knowledge. Furthermore, merging the two sets of references would
+  likely be quite expensive performance-wise.
+
+Also, even if we did have a different RHS, it still wouldn't fix the
+issue that objects are written into the main object database directly.
+Ideally, we'd really only accept changes into the repository once we
+have fully verified all of them. Right now it can happen that we refuse
+a fetch, but the objects would continue to exist in the repository.
+
+A second motivation for the quarantine directory is so that we can
+enumerate all objects that are indeed new. This will eventually be used
+to implement more efficient replication of the repository, where we can
+theoretically just take all of the fetched objects in the quarantine
+object directory and copy it to the replicas of that repository.
+
+[snip]
+> >   fetch: deduplicate handling of per-reference format
+>=20
+> I'm not so sure that this is the correct abstraction. I think that this
+> and the last patch might be counterproductive to your stated goal of
+> having one more mode of printing the refs, in fact, since when we have
+> that new mode, the format would be different but the printing would
+> remain (so we should split the format and printing).
+
+I already have the full implementation of the new machine-parseable
+format available locally, but didn't want to send it as part of this
+patch series yet to avoid it becoming overly large. But I can say that
+this change really did make the end goal easier to achieve, due to two
+reasons:
+
+- If we continued to handle the per-reference format at the different
+  callsites, I'd have to also amend each of the callers when introducing
+  the new format as we're going to use a different format there. But
+  when doing this in `format_display()`, we really only need to have a
+  single switch at the beginning to check whether to use the machine
+  parseable format or the other one.
+
+- Currently, all reference updates are printed to stderr. As stderr is
+  also used to display errors and the progress bar, this really makes it
+  not a good fit for the machine-parseable format. Instead, I decided
+  that it would make more sense to print the new format to stdout. And
+  by having the printing-logic self-contained we again only have a
+  single location we need to change.
+
+I realize though that all of this isn't as well-documented in the commit
+messages as it should be, which is also something that Junio complained
+about. I'll hopefully do a better job in v2 of this patch series.
+
+> >   fetch: deduplicate logic to print remote URL
+>=20
+> Makes sense, although I would need to consider only storing the
+> raw URL in the struct display_state and processing it when it needs
+> to be emitted (haven't checked if this is feasible, though).
+>=20
+> >   fetch: fix inconsistent summary width for pruned and updated refs
+>=20
+> This changes the behavior in that the summary width, even when printing
+> the summary of pruned refs, is computed based only on the updated refs.
+> The summary width might need to remain out of the struct display_state
+> for now.
+
+Fair, that's a case I didn't yet consider. I'll have another look.
+
+Patrick
+
+--5Iys3KBu+xlHX5Mt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQYA9wACgkQVbJhu7ck
+PpRXCRAAqIvO8TaamkBaO1li33K/z2gF3ERJb7cz0HQ9mc4mPTIbW1023RpgMRBF
+WPa4ANZ5xya3AQSIwXMK5K7MNKh5fDyk+8sEUAGKYfhdSsEqwkbfwCOU7xXGoRVs
+oDu8ckKRs74ItEEKk01IhmaU9E1L0xC1zTcYCd3E+/GRnezOa9TLPRCWyTTCsDhF
+WULdFtPUqGzdwmP3vHyCfKC41YiTQnk0tGKmJljF+7B8k9Dx/o1ZCFvHCzYSUrsp
+0u2QJfeTd5bm9MJiuwulCzMt4XJcthObyq9PlPYYQtcPyYSRJ6p3dUSmqwgrKE+5
+eO+FPG6zCTmr1MMISxxrUFxjMxQrQdVsj9pyObt6qDcmDQeCpjH0qP3f6ZjeCdQ5
+BeKd458ciLQLZpqr1RAbb58TC7hocDW+PyH/GRMBBhlCdHEIgABRvoCvVfWAdW4p
+PmdaF1hTfqR2lEFFjtfpzWkHXLUylS7iduqEr4cNS4sJO45em55CRfzYmZKi7ZPg
+qqOzjRD/U4zEpo0DKnJXT15pnB4JlQ+/oJ9ThY4DwGlkhlVJ6ltw/GZtRKdWcSdm
+RBHg1zpt0GNAQBRvUkI0Zyy1b1g9gBj9sn0Xcun5BYZ6TGjqiEALsU8Y2xSws12C
+4qrjbWrMx0h3VsLXXLpVzWoeYwrtsGuaWD5KVUOy/TZaElaARg0=
+=34cY
+-----END PGP SIGNATURE-----
+
+--5Iys3KBu+xlHX5Mt--
