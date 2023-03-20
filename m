@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FB26C6FD1D
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 11:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED617C7618D
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 11:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230251AbjCTL1c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 07:27:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59378 "EHLO
+        id S231243AbjCTL1g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 07:27:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230170AbjCTL11 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 07:27:27 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC1E66A4C
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 04:27:05 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id t17-20020a05600c451100b003edc906aeeaso1382684wmo.1
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 04:27:04 -0700 (PDT)
+        with ESMTP id S230348AbjCTL12 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 07:27:28 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F03183CF
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 04:27:06 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id o7so9984431wrg.5
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 04:27:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679311622;
+        d=gmail.com; s=20210112; t=1679311624;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=voQ7YeXH9eF4Imoj+AIJFG6p42Mxn016kSvitTBIW3s=;
-        b=A8TADtL0eQVPVy9zTv87Yr0jNAJUYs4Hf21fpIvvPJbJMAiJlz39WfdSfBbyFxn2nI
-         704OAF5G3liq9qFtVbmjsJ3fi2RPS2Rb5Dla3jJgSa+3mc/m9YUhSlbgiKUXzZMhpf8P
-         UTf1Bm15VGz6zPQ/H2Oolr9nQAf+q15A5XZgU/GYGCmR1yghfr38UyDQjcE4QLXplpDO
-         r3r3c0WbYg1ADMLrAymopNICOSqf27l+f5xUtQbcbPLCKpjzvQCtTEEC05wHBE1Id4mV
-         WN8bpTNTsSn2ZO5bxq0aqv0af33MUQ6JY5DJaDMImJVaFgpr2IqIUs3SoLWQF1ZzopmI
-         aoog==
+        bh=BpJj3cxaboiEVcMTdxd1AhVtKxptQqASnjV5ErAmi28=;
+        b=QqgiXlaIgw8OMzAqM7+r7Q6WYmCKYOYt2cRl5dmWNsCGYpdsBrK9G1TJzDW5U+d2BU
+         StojrUhOgBWi7oLc1ZrwGKal7SjUvSMnvzIvBIEgzPzUd8L/dwmFuWfXQscAe/quyq1b
+         BdiVWL9Lh5waT+hsf7P8T1sfFCfGh6PLdxS8Bw4edGBT8r9+jcvM4XFQqGvr/+lL56Ys
+         qZprFRRuRUnCYHiTqBX58Rzkz3gs2e6Tfjnp1h5UhdKWsQGpd1v5N5ZN1z5AMaNDxXUg
+         yIgYtS7ZS4F1TtjE9uJzqCqwOTJq2xyPpU72XDBR8psR6K1bihgBTTY73pXdES9rAS3p
+         chOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679311622;
+        d=1e100.net; s=20210112; t=1679311624;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=voQ7YeXH9eF4Imoj+AIJFG6p42Mxn016kSvitTBIW3s=;
-        b=spRLoeYpIWx3ldLj8KRTrXYpzrJxz0t0UL3rxAR0MRMHHi8hE+qDYf2ssAahbeqxC2
-         9mUyCFhymCuXpb3Yfg4qseGkDNOcDHdQRrcQAI4EhM4Lfi/jt1sEqUM24SxU4wdfJPo7
-         2FUXB5sjB2AHddxY0w6pKsayVc3kioWHi4ez4DCiNtW0kcWAV9F/aGsOLMR4UGeXaKO/
-         4NKBSFk+r2VGKxnSN3Wvo0YWEUWBJVPpEjFzCUbW+G+IdFWOqwdxaK4iZZo/GK6tbUSA
-         78UthQBjqpc7Zu3kEfz9DioNL4AM5JQvpZuREWfDfD2ae0Q68+hpGtB2kXYjaVZU13FQ
-         n/Ew==
-X-Gm-Message-State: AO0yUKWNBm2BV2W9IeT8XbJ1srUjhHD3i2HyTh7HOwlpD5B7MSyiGnBf
-        ZJYvPNYx7PRHo4eR+iahrK0xN8BjCW0=
-X-Google-Smtp-Source: AK7set9yVm+AzJ4qa6rNAQf9Iw+Y03DZE57QN3twq8lwWKEs8TN//PgFE1KJFPRo/h4nQF0b/VIERA==
-X-Received: by 2002:a05:600c:19c9:b0:3ed:31fa:f563 with SMTP id u9-20020a05600c19c900b003ed31faf563mr16141712wmq.20.1679311622474;
-        Mon, 20 Mar 2023 04:27:02 -0700 (PDT)
+        bh=BpJj3cxaboiEVcMTdxd1AhVtKxptQqASnjV5ErAmi28=;
+        b=MPP4/CwhBKfBM5WpfsC6cMz8EDK9/eHfTFqps2ixY4X/YmcISjdoMSGI08oFPHFntB
+         JK4SKNoqOuhz5FZOFm1Z7X46xp1kkGF4xQzj6yM9yal/rEh/7TFaLgM7ukmXktHtIB3F
+         WCp3AxwlLtTIPm+pv8Fv1lLyjiBGUsOfLNa6L489O4+O6bCHbDgd48fGa3Sdkp8Tjbrb
+         1liPxsz7K1iPC5U3OByB4JfwVPWeEBfuyRm7poDS6w5jXD0ZGWP5tcSNHc80gEXQ4SUT
+         6mOD9WgHlHSzgF/M1W3ep1Intoy/fSPUnBhHGAjDx7XUqOWMAtZYnv8wfkVrlCDAhSxU
+         7cWQ==
+X-Gm-Message-State: AO0yUKU9ggOT229w1gU2jHeEIU3b3rGZQrp4wA50V7zWp/PMpSrGWFgS
+        sT5ckryY6QSzvTMzfZNcvXHRssNPgvQ=
+X-Google-Smtp-Source: AK7set9n8+cc9NN9w7A9sye5ZnWl+cGz0i8n7e9fmOXxm3WsVQ2rxzuPslvAlYkG7N+vv7+b8GZb3g==
+X-Received: by 2002:a5d:5405:0:b0:2c5:5687:5ed5 with SMTP id g5-20020a5d5405000000b002c556875ed5mr13279119wrv.18.1679311623830;
+        Mon, 20 Mar 2023 04:27:03 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p9-20020a05600c468900b003ed5909aab2sm12917774wmo.25.2023.03.20.04.27.01
+        by smtp.gmail.com with ESMTPSA id m6-20020a056000008600b002cde25fba30sm8708560wrx.1.2023.03.20.04.27.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 04:27:02 -0700 (PDT)
-Message-Id: <5d937184a0eba9176d97423fb450850fc482e4de.1679311616.git.gitgitgadget@gmail.com>
+        Mon, 20 Mar 2023 04:27:03 -0700 (PDT)
+Message-Id: <87fe9676aec5224d00b786515c822975b2fce9b6.1679311616.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1489.v4.git.1679311615.gitgitgadget@gmail.com>
 References: <pull.1489.v3.git.1678902343.gitgitgadget@gmail.com>
         <pull.1489.v4.git.1679311615.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 20 Mar 2023 11:26:53 +0000
-Subject: [PATCH v4 7/9] commit-reach: implement ahead_behind() logic
+Date:   Mon, 20 Mar 2023 11:26:55 +0000
+Subject: [PATCH v4 9/9] commit-reach: add tips_reachable_from_bases()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,268 +74,381 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Fully implement the commit-counting logic required to determine
-ahead/behind counts for a batch of commit pairs. This is a new library
-method within commit-reach.h. This method will be linked to the
-for-each-ref builtin in the next change.
+Both 'git for-each-ref --merged=<X>' and 'git branch --merged=<X>' use
+the ref-filter machinery to select references or branches (respectively)
+that are reachable from a set of commits presented by one or more
+--merged arguments. This happens within reach_filter(), which uses the
+revision-walk machinery to walk history in a standard way.
 
-The interface for ahead_behind() uses two arrays. The first array of
-commits contains the list of all starting points for the walk. This
-includes all tip commits _and_ base commits. The second array specifies
-base/tip pairs by pointing to commits within the first array, by index.
-The second array also stores the resulting ahead/behind counts for each
-of these pairs.
+However, the commit-reach.c file is full of custom searches that are
+more efficient, especially for reachability queries that can terminate
+early when reachability is discovered. Add a new
+tips_reachable_from_bases() method to commit-reach.c and call it from
+within reach_filter() in ref-filter.c. This affects both 'git branch'
+and 'git for-each-ref' as tested in p1500-graph-walks.sh.
 
-This implementation of ahead_behind() allows multiple bases, if desired.
-Even with multiple bases, there is only one commit walk used for
-counting the ahead/behind values, saving time when the base/tip ranges
-overlap significantly.
+For the Linux kernel repository, we take an already-fast algorithm and
+make it even faster:
 
-This interface for ahead_behind() also makes it very easy to call
-ensure_generations_valid() on the entire array of bases and tips. This
-call is necessary because it is critical that the walk that counts
-ahead/behind values never walks a commit more than once. Without
-generation numbers on every commit, there is a possibility that a
-commit date skew could cause the walk to revisit a commit and then
-double-count it. For this reason, it is strongly recommended that 'git
-ahead-behind' is only run in a repository with a commit-graph file that
-covers most of the reachable commits, storing precomputed generation
-numbers. If no commit-graph exists, this walk will be much slower as it
-must walk all reachable commits in ensure_generations_valid() before
-performing the counting logic.
+Test                                            HEAD~1  HEAD
+-------------------------------------------------------------------
+1500.5: contains: git for-each-ref --merged     0.13    0.02 -84.6%
+1500.6: contains: git branch --merged           0.14    0.02 -85.7%
+1500.7: contains: git tag --merged              0.15    0.03 -80.0%
 
-It is possible to detect if generation numbers are available at run time
-and redirect the implementation to another algorithm that does not
-require this property. However, that implementation requires a commit
-walk per base/tip pair _and_ can be slower due to the commit date
-heuristics required. Such an implementation could be considered in the
-future if there is a reason to include it, but most Git hosts should
-already be generating a commit-graph file as part of repository
-maintenance. Most Git clients should also be generating commit-graph
-files as part of background maintenance or automatic GCs.
+(Note that we remove the iterative 'git rev-list' test from p1500
+because it no longer makes sense as a comparison to 'git for-each-ref'
+and would just waste time running it for these comparisons.)
 
-Now, let's discuss the ahead/behind counting algorithm.
+The algorithm is implemented in commit-reach.c in the method
+tips_reachable_from_base(). This method takes a string_list of tips and
+assigns the 'util' for each item with the value 1 if the base commit can
+reach those tips.
 
-The first array of commits are considered the starting commits. The
-index within that array will play a critical role.
+Like other reachability queries in commit-reach.c, the fastest way to
+search for "can A reach B?" is to do a depth-first search up to the
+generation number of B, preferring to explore first parents before later
+parents. While we must walk all reachable commits up to that generation
+number when the answer is "no", the depth-first search can answer "yes"
+much faster than other approaches in most cases.
 
-We create a new commit slab that maps commits to a bitmap. For a given
-commit (anywhere in the history), its bitmap stores information relative
-to which of the input commits can reach that commit. The ith bit will be
-on if the ith commit from the starting list can reach that commit. It is
-important to notice that these bitmaps are not the typical "reachability
-bitmaps" that are stored in .bitmap files. Instead of signalling which
-objects are reachable from the current commit, they instead signal
-"which starting commits can reach me?" It is also important to know that
-the bitmap is not necessarily "complete" until we walk that commit. We
-will perform a commit walk by generation number in such a way that we
-can guarantee the bitmap is correct when we visit that commit.
+This search becomes trickier when there are multiple targets for the
+depth-first search. The commits with lower generation number are more
+likely to be within the history of the start commit, but we don't want
+to waste time searching commits of low generation number if the commit
+target with lowest generation number has already been found.
 
-At the beginning of the ahead_behind() method, we initialize the bitmaps
-for each of the starting commits. By enabling the ith bit for the ith
-starting commit, we signal "the ith commit can reach itself."
+The trick here is to take the input commits and sort them by generation
+number in ascending order. Track the index within this order as
+min_generation_index. When we find a commit, if its index in the list is
+equal to min_generation_index, then we can increase the generation
+number boundary of our search to the next-lowest value in the list.
 
-We walk commits by popping the commit with maximum generation number out
-of the queue, guaranteeing that we will never walk a child of that
-commit in any future steps.
+With this mechanism, the number of commits to search is minimized with
+respect to the depth-first search heuristic. We will walk all commits up
+to the minimum generation number of a commit that is _not_ reachable
+from the start, but we will walk only the necessary portion of the
+depth-first search for the reachable commits of lower generation.
 
-As we walk, we load the bitmap for the current commit and perform two
-main steps. The _second_ step examines each parent of the current commit
-and adds the current commit's bitmap bits to each parent's bitmap. (We
-create a new bitmap for the parent if this is our first time seeing that
-parent.) After adding the bits to the parent's bitmap, the parent is
-added to the walk queue. Due to this passing of bits to parents, the
-current commit has a guarantee that the ith bit is enabled on its bitmap
-if and only if the ith commit can reach the current commit.
+Add extra tests for this behavior in t6600-test-reach.sh as the
+interesting data shape of that repository can sometimes demonstrate
+corner case bugs.
 
-The first step of the walk is to examine the bitmask on the current
-commit and decide which ranges the commit is in or not. Due to the "bit
-pushing" in the second step, we have a guarantee that the ith bit of the
-current commit's bitmap is on if and only if the ith starting commit can
-reach it. For each ahead_behind_count struct, check the base_index and
-tip_index to see if those bits are enabled on the current bitmap. If
-exactly one bit is enabled, then increment the corresponding 'ahead' or
-'behind' count.  This increment is the reason we _absolutely need_ to
-walk commits at most once.
-
-The only subtle thing to do with this walk is to check to see if a
-parent has all bits on in its bitmap, in which case it becomes "stale"
-and is marked with the STALE bit. This allows queue_has_nonstale() to be
-the terminating condition of the walk, which greatly reduces the number
-of commits walked if all of the commits are nearby in history. It avoids
-walking a large number of common commits when there is a deep history.
-We also use the helper method insert_no_dup() to add commits to the
-priority queue without adding them multiple times. This uses the PARENT2
-flag. Thus, we must clear both the STALE and PARENT2 bits of all
-commits, in case ahead_behind() is called multiple times in the same
-process.
-
-Co-authored-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- commit-reach.c | 103 +++++++++++++++++++++++++++++++++++++++++++++++++
- commit-reach.h |  31 +++++++++++++++
- 2 files changed, 134 insertions(+)
+ commit-reach.c              | 113 ++++++++++++++++++++++++++++++++++++
+ commit-reach.h              |   9 +++
+ ref-filter.c                |  20 ++-----
+ t/perf/p1500-graph-walks.sh |  15 +++--
+ t/t6600-test-reach.sh       |  83 ++++++++++++++++++++++++++
+ 5 files changed, 219 insertions(+), 21 deletions(-)
 
 diff --git a/commit-reach.c b/commit-reach.c
-index 2e33c599a82..cd990dce16a 100644
+index cd990dce16a..c1edeb46106 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -8,6 +8,7 @@
- #include "revision.h"
- #include "tag.h"
- #include "commit-reach.h"
-+#include "ewah/ewok.h"
- 
- /* Remember to update object flag allocation in object.h */
- #define PARENT1		(1u<<16)
-@@ -941,3 +942,105 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
- 
- 	return found_commits;
+@@ -1044,3 +1044,116 @@ void ahead_behind(struct repository *r,
+ 	clear_bit_arrays(&bit_arrays);
+ 	clear_prio_queue(&queue);
  }
 +
-+define_commit_slab(bit_arrays, struct bitmap *);
-+static struct bit_arrays bit_arrays;
++struct commit_and_index {
++	struct commit *commit;
++	unsigned int index;
++	timestamp_t generation;
++};
 +
-+static void insert_no_dup(struct prio_queue *queue, struct commit *c)
++static int compare_commit_and_index_by_generation(const void *va, const void *vb)
 +{
-+	if (c->object.flags & PARENT2)
-+		return;
-+	prio_queue_put(queue, c);
-+	c->object.flags |= PARENT2;
++	const struct commit_and_index *a = (const struct commit_and_index *)va;
++	const struct commit_and_index *b = (const struct commit_and_index *)vb;
++
++	if (a->generation > b->generation)
++		return 1;
++	if (a->generation < b->generation)
++		return -1;
++	return 0;
 +}
 +
-+static struct bitmap *get_bit_array(struct commit *c, int width)
++void tips_reachable_from_bases(struct repository *r,
++			       struct commit_list *bases,
++			       struct commit **tips, size_t tips_nr,
++			       int mark)
 +{
-+	struct bitmap **bitmap = bit_arrays_at(&bit_arrays, c);
-+	if (!*bitmap)
-+		*bitmap = bitmap_word_alloc(width);
-+	return *bitmap;
-+}
++	struct commit_and_index *commits;
++	size_t min_generation_index = 0;
++	timestamp_t min_generation;
++	struct commit_list *stack = NULL;
 +
-+static void free_bit_array(struct commit *c)
-+{
-+	struct bitmap **bitmap = bit_arrays_at(&bit_arrays, c);
-+	if (!*bitmap)
-+		return;
-+	bitmap_free(*bitmap);
-+	*bitmap = NULL;
-+}
-+
-+void ahead_behind(struct repository *r,
-+		  struct commit **commits, size_t commits_nr,
-+		  struct ahead_behind_count *counts, size_t counts_nr)
-+{
-+	struct prio_queue queue = { .compare = compare_commits_by_gen_then_commit_date };
-+	size_t width = DIV_ROUND_UP(commits_nr, BITS_IN_EWORD);
-+
-+	if (!commits_nr || !counts_nr)
++	if (!bases || !tips || !tips_nr)
 +		return;
 +
-+	for (size_t i = 0; i < counts_nr; i++) {
-+		counts[i].ahead = 0;
-+		counts[i].behind = 0;
++	/*
++	 * Do a depth-first search starting at 'bases' to search for the
++	 * tips. Stop at the lowest (un-found) generation number. When
++	 * finding the lowest commit, increase the minimum generation
++	 * number to the next lowest (un-found) generation number.
++	 */
++
++	CALLOC_ARRAY(commits, tips_nr);
++
++	for (size_t i = 0; i < tips_nr; i++) {
++		commits[i].commit = tips[i];
++		commits[i].index = i;
++		commits[i].generation = commit_graph_generation(tips[i]);
 +	}
 +
-+	ensure_generations_valid(r, commits, commits_nr);
++	/* Sort with generation number ascending. */
++	QSORT(commits, tips_nr, compare_commit_and_index_by_generation);
++	min_generation = commits[0].generation;
 +
-+	init_bit_arrays(&bit_arrays);
-+
-+	for (size_t i = 0; i < commits_nr; i++) {
-+		struct commit *c = commits[i];
-+		struct bitmap *bitmap = get_bit_array(c, width);
-+
-+		bitmap_set(bitmap, i);
-+		insert_no_dup(&queue, c);
++	while (bases) {
++		repo_parse_commit(r, bases->item);
++		commit_list_insert(bases->item, &stack);
++		bases = bases->next;
 +	}
 +
-+	while (queue_has_nonstale(&queue)) {
-+		struct commit *c = prio_queue_get(&queue);
++	while (stack) {
++		int explored_all_parents = 1;
 +		struct commit_list *p;
-+		struct bitmap *bitmap_c = get_bit_array(c, width);
++		struct commit *c = stack->item;
++		timestamp_t c_gen = commit_graph_generation(c);
 +
-+		for (size_t i = 0; i < counts_nr; i++) {
-+			int reach_from_tip = !!bitmap_get(bitmap_c, counts[i].tip_index);
-+			int reach_from_base = !!bitmap_get(bitmap_c, counts[i].base_index);
++		/* Does it match any of our tips? */
++		for (size_t j = min_generation_index; j < tips_nr; j++) {
++			if (c_gen < commits[j].generation)
++				break;
 +
-+			if (reach_from_tip ^ reach_from_base) {
-+				if (reach_from_base)
-+					counts[i].behind++;
-+				else
-+					counts[i].ahead++;
++			if (commits[j].commit == c) {
++				tips[commits[j].index]->object.flags |= mark;
++
++				if (j == min_generation_index) {
++					unsigned int k = j + 1;
++					while (k < tips_nr &&
++					       (tips[commits[k].index]->object.flags & mark))
++						k++;
++
++					/* Terminate early if all found. */
++					if (k >= tips_nr)
++						goto done;
++
++					min_generation_index = k;
++					min_generation = commits[k].generation;
++				}
 +			}
 +		}
 +
 +		for (p = c->parents; p; p = p->next) {
-+			struct bitmap *bitmap_p;
-+
 +			repo_parse_commit(r, p->item);
 +
-+			bitmap_p = get_bit_array(p->item, width);
-+			bitmap_or(bitmap_p, bitmap_c);
++			/* Have we already explored this parent? */
++			if (p->item->object.flags & SEEN)
++				continue;
 +
-+			/*
-+			 * If this parent is reachable from every starting
-+			 * commit, then none of its ancestors can contribute
-+			 * to the ahead/behind count. Mark it as STALE, so
-+			 * we can stop the walk when every commit in the
-+			 * queue is STALE.
-+			 */
-+			if (bitmap_popcount(bitmap_p) == commits_nr)
-+				p->item->object.flags |= STALE;
++			/* Is it below the current minimum generation? */
++			if (commit_graph_generation(p->item) < min_generation)
++				continue;
 +
-+			insert_no_dup(&queue, p->item);
++			/* Ok, we will explore from here on. */
++			p->item->object.flags |= SEEN;
++			explored_all_parents = 0;
++			commit_list_insert(p->item, &stack);
++			break;
 +		}
 +
-+		free_bit_array(c);
++		if (explored_all_parents)
++			pop_commit(&stack);
 +	}
 +
-+	/* STALE is used here, PARENT2 is used by insert_no_dup(). */
-+	repo_clear_commit_marks(r, PARENT2 | STALE);
-+	clear_bit_arrays(&bit_arrays);
-+	clear_prio_queue(&queue);
++done:
++	free(commits);
++	repo_clear_commit_marks(r, SEEN);
 +}
 diff --git a/commit-reach.h b/commit-reach.h
-index 148b56fea50..f708c46e523 100644
+index f708c46e523..d6321ae700e 100644
 --- a/commit-reach.h
 +++ b/commit-reach.h
-@@ -104,4 +104,35 @@ struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
- 					 struct commit **to, int nr_to,
- 					 unsigned int reachable_flag);
+@@ -135,4 +135,13 @@ void ahead_behind(struct repository *r,
+ 		  struct commit **commits, size_t commits_nr,
+ 		  struct ahead_behind_count *counts, size_t counts_nr);
  
-+struct ahead_behind_count {
-+	/**
-+	 * As input, the *_index members indicate which positions in
-+	 * the 'tips' array correspond to the tip and base of this
-+	 * comparison.
-+	 */
-+	size_t tip_index;
-+	size_t base_index;
-+
-+	/**
-+	 * These values store the computed counts for each side of the
-+	 * symmetric difference:
-+	 *
-+	 * 'ahead' stores the number of commits reachable from the tip
-+	 * and not reachable from the base.
-+	 *
-+	 * 'behind' stores the number of commits reachable from the base
-+	 * and not reachable from the tip.
-+	 */
-+	unsigned int ahead;
-+	unsigned int behind;
-+};
-+
 +/*
-+ * Given an array of commits and an array of ahead_behind_count pairs,
-+ * compute the ahead/behind counts for each pair.
++ * For all tip commits, add 'mark' to their flags if and only if they
++ * are reachable from one of the commits in 'bases'.
 + */
-+void ahead_behind(struct repository *r,
-+		  struct commit **commits, size_t commits_nr,
-+		  struct ahead_behind_count *counts, size_t counts_nr);
++void tips_reachable_from_bases(struct repository *r,
++			       struct commit_list *bases,
++			       struct commit **tips, size_t tips_nr,
++			       int mark);
 +
  #endif
+diff --git a/ref-filter.c b/ref-filter.c
+index 62135f649ec..c724ff94113 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2396,33 +2396,22 @@ static void reach_filter(struct ref_array *array,
+ 			 struct commit_list *check_reachable,
+ 			 int include_reached)
+ {
+-	struct rev_info revs;
+ 	int i, old_nr;
+ 	struct commit **to_clear;
+-	struct commit_list *cr;
+ 
+ 	if (!check_reachable)
+ 		return;
+ 
+ 	CALLOC_ARRAY(to_clear, array->nr);
+-
+-	repo_init_revisions(the_repository, &revs, NULL);
+-
+ 	for (i = 0; i < array->nr; i++) {
+ 		struct ref_array_item *item = array->items[i];
+-		add_pending_object(&revs, &item->commit->object, item->refname);
+ 		to_clear[i] = item->commit;
+ 	}
+ 
+-	for (cr = check_reachable; cr; cr = cr->next) {
+-		struct commit *merge_commit = cr->item;
+-		merge_commit->object.flags |= UNINTERESTING;
+-		add_pending_object(&revs, &merge_commit->object, "");
+-	}
+-
+-	revs.limited = 1;
+-	if (prepare_revision_walk(&revs))
+-		die(_("revision walk setup failed"));
++	tips_reachable_from_bases(the_repository,
++				  check_reachable,
++				  to_clear, array->nr,
++				  UNINTERESTING);
+ 
+ 	old_nr = array->nr;
+ 	array->nr = 0;
+@@ -2446,7 +2435,6 @@ static void reach_filter(struct ref_array *array,
+ 		clear_commit_marks(merge_commit, ALL_REV_FLAGS);
+ 	}
+ 
+-	release_revisions(&revs);
+ 	free(to_clear);
+ }
+ 
+diff --git a/t/perf/p1500-graph-walks.sh b/t/perf/p1500-graph-walks.sh
+index 439a448c2e6..e14e7620cce 100755
+--- a/t/perf/p1500-graph-walks.sh
++++ b/t/perf/p1500-graph-walks.sh
+@@ -35,11 +35,16 @@ test_perf 'ahead-behind counts: git tag' '
+ 	xargs git tag -l --format="%(ahead-behind:HEAD)" <tags
+ '
+ 
+-test_perf 'ahead-behind counts: git rev-list' '
+-	for r in $(cat refs)
+-	do
+-		git rev-list --count "HEAD..$r" || return 1
+-	done
++test_perf 'contains: git for-each-ref --merged' '
++	git for-each-ref --merged=HEAD --stdin <refs
++'
++
++test_perf 'contains: git branch --merged' '
++	xargs git branch --merged=HEAD <branches
++'
++
++test_perf 'contains: git tag --merged' '
++	xargs git tag --merged=HEAD <tags
+ '
+ 
+ test_done
+diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
+index 0cb50797ef7..b330945f497 100755
+--- a/t/t6600-test-reach.sh
++++ b/t/t6600-test-reach.sh
+@@ -529,4 +529,87 @@ test_expect_success 'for-each-ref ahead-behind:none' '
+ 		--format="%(refname) %(ahead-behind:commit-8-4)" --stdin
+ '
+ 
++test_expect_success 'for-each-ref merged:linear' '
++	cat >input <<-\EOF &&
++	refs/heads/commit-1-1
++	refs/heads/commit-1-3
++	refs/heads/commit-1-5
++	refs/heads/commit-1-8
++	refs/heads/commit-2-1
++	refs/heads/commit-5-1
++	refs/heads/commit-9-1
++	EOF
++	cat >expect <<-\EOF &&
++	refs/heads/commit-1-1
++	refs/heads/commit-1-3
++	refs/heads/commit-1-5
++	refs/heads/commit-1-8
++	EOF
++	run_all_modes git for-each-ref --merged=commit-1-9 \
++		--format="%(refname)" --stdin
++'
++
++test_expect_success 'for-each-ref merged:all' '
++	cat >input <<-\EOF &&
++	refs/heads/commit-1-1
++	refs/heads/commit-2-4
++	refs/heads/commit-4-2
++	refs/heads/commit-4-4
++	EOF
++	cat >expect <<-\EOF &&
++	refs/heads/commit-1-1
++	refs/heads/commit-2-4
++	refs/heads/commit-4-2
++	refs/heads/commit-4-4
++	EOF
++	run_all_modes git for-each-ref --merged=commit-5-5 \
++		--format="%(refname)" --stdin
++'
++
++test_expect_success 'for-each-ref ahead-behind:some' '
++	cat >input <<-\EOF &&
++	refs/heads/commit-1-1
++	refs/heads/commit-5-3
++	refs/heads/commit-4-8
++	refs/heads/commit-9-9
++	EOF
++	cat >expect <<-\EOF &&
++	refs/heads/commit-1-1
++	refs/heads/commit-5-3
++	EOF
++	run_all_modes git for-each-ref --merged=commit-9-6 \
++		--format="%(refname)" --stdin
++'
++
++test_expect_success 'for-each-ref merged:some, multibase' '
++	cat >input <<-\EOF &&
++	refs/heads/commit-1-1
++	refs/heads/commit-5-3
++	refs/heads/commit-7-8
++	refs/heads/commit-4-8
++	refs/heads/commit-9-9
++	EOF
++	cat >expect <<-\EOF &&
++	refs/heads/commit-1-1
++	refs/heads/commit-4-8
++	refs/heads/commit-5-3
++	EOF
++	run_all_modes git for-each-ref \
++		--merged=commit-5-8 \
++		--merged=commit-8-5 \
++		--format="%(refname)" \
++		--stdin
++'
++
++test_expect_success 'for-each-ref merged:none' '
++	cat >input <<-\EOF &&
++	refs/heads/commit-7-5
++	refs/heads/commit-4-8
++	refs/heads/commit-9-9
++	EOF
++	>expect &&
++	run_all_modes git for-each-ref --merged=commit-8-4 \
++		--format="%(refname)" --stdin
++'
++
+ test_done
 -- 
 gitgitgadget
-
