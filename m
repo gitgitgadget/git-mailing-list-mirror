@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A14D3C6FD1D
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 20:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33F04C6FD1C
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 20:03:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230264AbjCTUDE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 16:03:04 -0400
+        id S230206AbjCTUDN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 16:03:13 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229882AbjCTUDA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 16:03:00 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CF0527D6D
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:02:42 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id i19so7075983ila.10
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:02:42 -0700 (PDT)
+        with ESMTP id S230149AbjCTUDH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 16:03:07 -0400
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69AB04ED0
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:02:46 -0700 (PDT)
+Received: by mail-il1-x134.google.com with SMTP id r4so7086107ilt.8
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 13:02:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1679342562;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1679342565;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qNweSWarDDL6D6PfGWXryB9GRQymDMh0xU8ckrfKFhI=;
-        b=Z19uI5yyXYnPt9dsN5JAHXzTxKHInT6GvuRzQOGPcZl458AnczbNHilpnVBesHsCSA
-         3okqKxOkaKDUSNIgyaIw7A/bt2atw4AXZ2c/WsJ97oPr/xfHv/LcTzaDznSN0WQcxT9i
-         wNijA+w5ENou82VbOKLfJTvk3oYSB4GP2ZmXZQdJ6oa6G2potnXN7UtHiYP5wF75+vHK
-         dAK9q7POQpdH9PJ2mu2V9eKxkeQ1bC8pp6STbGfluZT9oRGa2HhQ6ALvY4vaZ6gMVsAE
-         tJJSP+4rNkyf+BxOEEtnMxetaiV2TSoZ7lC8wWPvORUVmWKrKearzcwiXphXXbXHn8v+
-         4E3w==
+        bh=3M0RUwC8NqbI54+W2PYI1fm4kPL+s41dBwUnD+TCbZU=;
+        b=ncdBLtbwIZLJhbQGuSszUG+tK9QV9ZMyHy6FnMujlhRljhlIL8jOeWY999OyeED5oC
+         e26+WhSHl7T17Q1qhaBzMcQrQANXJh10G3cM0aD4do63GPR9d8Te20B5Tk6rqhHVLYXp
+         2QGSDBGBcWW23QNEU85qJtPo3RDjVDZ5P8+AlcTGFgMcAZvWOcsLKQjOiuA8QrlFbTiD
+         zcmDXl5a1WEcyGVNdvJj8kfCxqLM1ugHHScSzu5bP2fQWiyxtYte7D6LObCcybxy9mkD
+         j5nZq3KqmpABU1ZJrsLasoUl9Aye4kFYroZuWJazNPJW+DfeK4HQ1rvW3D2wqLkiQ0tc
+         OpJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679342562;
+        d=1e100.net; s=20210112; t=1679342565;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qNweSWarDDL6D6PfGWXryB9GRQymDMh0xU8ckrfKFhI=;
-        b=oYgsLzIwaLgXoAQhtoKBW8wkulq3imBpqSUp8kcPaWeqMINuUwFtZHT3ZpN09j0v0L
-         c0aaWAzL9ATJHVadR0YH5moTp0gGwHY6JP1p+9iCQsq1rkDiS4T1KJ/G8PIBAj1LFPDc
-         UNTPe4hd+yM8dTpUJ1btg3ab4aZ1DQWaa2ql1FnKZ74quwUPHm1WHKtkP8yfftvTYOri
-         lFqOJdhzbXJ5y3cSMC2modv6JkFeoyRi82sxkiaXse3++rBbxotGIgQ7Jsz4HP1dCmi+
-         BWnnLvjzLSp1ZIXf41eAac/XJ8a0YS6rRpGbnNdICDW9B/PPvZDFanhvaf2XYdZCAqTe
-         hFHg==
-X-Gm-Message-State: AO0yUKW7VWqh6DpyJ1PYs+MNyhiFmdKDla428UUEqjgIcKCsGt0pTF7T
-        5+OSsDJAnl54WQdsuyHBFi+AVTqTlC+Wxwu29m9NNA==
-X-Google-Smtp-Source: AK7set8naRTVj7MeAp/moOavIi7lMJkVzet8LdmR8aj0vP/EUjC/UrJ9gIVCW72AoKXM9Nv8TaE7Ww==
-X-Received: by 2002:a92:7412:0:b0:314:17d4:e9f6 with SMTP id p18-20020a927412000000b0031417d4e9f6mr5856412ilc.6.1679342561816;
-        Mon, 20 Mar 2023 13:02:41 -0700 (PDT)
+        bh=3M0RUwC8NqbI54+W2PYI1fm4kPL+s41dBwUnD+TCbZU=;
+        b=wgxtcakMz4+fMOBbWsi9f3zn9AdZKnGU0SF7taDrvdoICvJxZNSrnkd2oRulUe7DPo
+         5oJomXv1xt3GoSagD5P7kex+1qz86BF+xogLB7XU5qj8gS/nSZAbrZe611dQKAYL7pBB
+         TjAoBDfyDyPlGYQDuCle3icz8/02Zci3K5yLcC+xu45PmRNO9vKz+GBS24nPNl+X3Gs8
+         56rDe6ad6TpbdCPKQghFPNYCBxIkvOyZd9BWERgo2EABzFFKJbnjif7VRA01Tgr+EVJv
+         OhdiWXuVd6+NO7s//piF6r3tfjzO7pUDqeYvrvhaNmUZoq2EIQYojriUKSwmDlgVQ0HQ
+         sQKg==
+X-Gm-Message-State: AO0yUKUql+elESldXpjy3JyBQ3GB0Nnr3Tf4FAl3DWOYpQ386hBlvS7E
+        d7nBnoyxZGaV5CfZC+I7lK1K5QUugn9G3Xdi9CA3JQ==
+X-Google-Smtp-Source: AK7set9n8rZ2B6Qx+KIvUdRtqW6tdwEm+fd9IcR8AY8vJ1lmEp+zASuQqsro/xb8BM9mh/uiBJOftA==
+X-Received: by 2002:a92:dcca:0:b0:314:20e6:133c with SMTP id b10-20020a92dcca000000b0031420e6133cmr509858ilr.3.1679342564755;
+        Mon, 20 Mar 2023 13:02:44 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i11-20020a92540b000000b00313b08feec7sm2967900ilb.42.2023.03.20.13.02.41
+        by smtp.gmail.com with ESMTPSA id r14-20020a92760e000000b00304ad1e7d21sm3040101ilc.28.2023.03.20.13.02.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 13:02:41 -0700 (PDT)
-Date:   Mon, 20 Mar 2023 16:02:40 -0400
+        Mon, 20 Mar 2023 13:02:44 -0700 (PDT)
+Date:   Mon, 20 Mar 2023 16:02:43 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
         Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: [PATCH 1/6] pack-bitmap.c: hide bitmap internals in `read_u8()`
-Message-ID: <8c70c94a3f5f0463041dbaaa542fd69bd159428b.1679342296.git.me@ttaylorr.com>
+Subject: [PATCH 2/6] pack-bitmap.c: hide bitmap internals in `read_be32()`
+Message-ID: <4914c5b72c3aab9f59589daf8daff5e2271c52fb.1679342296.git.me@ttaylorr.com>
 References: <cover.1679342296.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -66,82 +66,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `read_u8()` helper function internal to pack-bitmap.c was defined in
-b5007211b6 (pack-bitmap: do not use gcc packed attribute, 2014-11-27).
-
-Prior to b5007211b6, callers within pack-bitmap.c would read an
-individual unsigned integer by doing something like:
-
-    struct bitmap_disk_entry *e;
-
-    e = (struct bitmap_disk_entry *)(index->map + index->map_pos);
-    index->map_pos += sizeof(*e);
-
-...which relied on the fact that the `bitmap_disk_entry` struct was
-defined with `__attribute((packed))`, which b5007211b6 sought to get rid
-of since the `__attribute__` flag is a noop on some compilers (which
-makes the above code rely on the absence of padding to be correct).
-
-So b5007211b6 got rid of the above convention and replaced it by reading
-individual fields of that structure with a `read_u8()` helper that reads
-from the region of memory pointed to by `->map`, and updates the
-`->map_pos` pointer accordingly.
-
-But this forces callers to be intimately aware of `bitmap_git->map` and
-`bitmap_git->map_pos`. Instead, teach `read_u8()` to take a `struct
-bitmap_index *` directly, and avoid having callers deal with the
-internals themselves.
+In a similar fashion as the previous commit, update `read_be32()` to
+take a `struct bitmap_index *` instead of copies of and pointers to
+variables within that structure.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ pack-bitmap.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index ca7c81b5c9..d8ba252ba1 100644
+index d8ba252ba1..794aaf5b02 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -251,9 +251,9 @@ static inline uint32_t read_be32(const unsigned char *buffer, size_t *pos)
+@@ -244,10 +244,10 @@ static struct stored_bitmap *store_bitmap(struct bitmap_index *index,
+ 	return stored;
+ }
+ 
+-static inline uint32_t read_be32(const unsigned char *buffer, size_t *pos)
++static inline uint32_t read_be32(struct bitmap_index *bitmap_git)
+ {
+-	uint32_t result = get_be32(buffer + *pos);
+-	(*pos) += sizeof(result);
++	uint32_t result = get_be32(bitmap_git->map + bitmap_git->map_pos);
++	bitmap_git->map_pos += sizeof(result);
  	return result;
  }
  
--static inline uint8_t read_u8(const unsigned char *buffer, size_t *pos)
-+static inline uint8_t read_u8(struct bitmap_index *bitmap_git)
- {
--	return buffer[(*pos)++];
-+	return bitmap_git->map[bitmap_git->map_pos++];
- }
- 
- #define MAX_XOR_OFFSET 160
-@@ -283,8 +283,8 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
+@@ -282,7 +282,7 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
+ 		if (index->map_size - index->map_pos < 6)
  			return error(_("corrupt ewah bitmap: truncated header for entry %d"), i);
  
- 		commit_idx_pos = read_be32(index->map, &index->map_pos);
--		xor_offset = read_u8(index->map, &index->map_pos);
--		flags = read_u8(index->map, &index->map_pos);
-+		xor_offset = read_u8(index);
-+		flags = read_u8(index);
+-		commit_idx_pos = read_be32(index->map, &index->map_pos);
++		commit_idx_pos = read_be32(index);
+ 		xor_offset = read_u8(index);
+ 		flags = read_u8(index);
  
- 		if (nth_bitmap_object_oid(index, &oid, commit_idx_pos) < 0)
- 			return error(_("corrupt ewah bitmap: commit index %u out of range"),
-@@ -780,7 +780,7 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
- 		}
- 
- 		bitmap_git->map_pos += sizeof(uint32_t) + sizeof(uint8_t);
--		xor_flags = read_u8(bitmap_git->map, &bitmap_git->map_pos);
-+		xor_flags = read_u8(bitmap_git);
- 		bitmap = read_bitmap_1(bitmap_git);
- 
- 		if (!bitmap)
-@@ -821,7 +821,7 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
- 	 * ewah bitmap.
- 	 */
- 	bitmap_git->map_pos += sizeof(uint32_t) + sizeof(uint8_t);
--	flags = read_u8(bitmap_git->map, &bitmap_git->map_pos);
-+	flags = read_u8(bitmap_git);
- 	bitmap = read_bitmap_1(bitmap_git);
- 
- 	if (!bitmap)
 -- 
 2.40.0.77.gd564125b3f
 
