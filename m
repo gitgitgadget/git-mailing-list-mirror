@@ -2,94 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB466C6FD1D
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 19:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8F48C6FD1C
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 19:20:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231544AbjCTTQ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 15:16:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50536 "EHLO
+        id S230298AbjCTTUq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 15:20:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231408AbjCTTQd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 15:16:33 -0400
-Received: from zimbra.cs.ucla.edu (zimbra.cs.ucla.edu [131.179.128.68])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 636A32D6A
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 12:08:40 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTP id 7134F160045;
-        Mon, 20 Mar 2023 12:00:23 -0700 (PDT)
-Received: from zimbra.cs.ucla.edu ([127.0.0.1])
-        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id unkCvSIIrHNx; Mon, 20 Mar 2023 12:00:22 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTP id A4DD816006A;
-        Mon, 20 Mar 2023 12:00:22 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.9.2 zimbra.cs.ucla.edu A4DD816006A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cs.ucla.edu;
-        s=78364E5A-2AF3-11ED-87FA-8298ECA2D365; t=1679338822;
-        bh=BAITqEZewhBFJbmv5v9DLRPv7PcJb94Th5eWGg/MBf0=;
-        h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:
-         Content-Transfer-Encoding;
-        b=j9mcO9zFuZg0WbXPKw2bh2PbBgPiJSZBH0IBv7n3lvRsyjlICW0Iy2oDMmecRsk8c
-         V7PGAMeHHEG8Ho70dxXjqghOnJdlJsAlkISOEyiJmDBEaS271L8Sx8BHJ7CwrxgPdD
-         kzIBZ/1dKQUc/Ho4yoJeXeT4MAo0LmcOwqks3Spc=
-X-Virus-Scanned: amavisd-new at zimbra.cs.ucla.edu
-Received: from zimbra.cs.ucla.edu ([127.0.0.1])
-        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 2wf-jXM3juS9; Mon, 20 Mar 2023 12:00:22 -0700 (PDT)
-Received: from [131.179.64.200] (Penguin.CS.UCLA.EDU [131.179.64.200])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTPSA id 88DC8160045;
-        Mon, 20 Mar 2023 12:00:22 -0700 (PDT)
-Message-ID: <047178a8-ccf5-1cab-e670-8f1c64f9ca3c@cs.ucla.edu>
-Date:   Mon, 20 Mar 2023 12:00:22 -0700
+        with ESMTP id S231686AbjCTTUE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 15:20:04 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1996029169
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 12:12:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1679339532; i=tboegi@web.de;
+        bh=3Jw9wujMQeZj2xb6BtyM908qLDuyYALGlzsdsLwz2XU=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=UJiXcZcrLpR+pgG9GHVrmScubjbNQ2Qi9DnEi8nslLFmaHjRyeJf3MjS87+3hpmUu
+         SvhK/MeOn0blAdUehWOw8MqZfv/4LrGz7FwmilCWbsqSvBeHr+G1GOvyAwof6s5N+u
+         Rfe8mepws+J7Mzw1YTE/DHLMq/SbwE56sIeFvpOEMceAM0Lgsa3SkECCMI2M4JIyQY
+         LFyJsfhlMm1O8ba++pDb435l+YWiCKgvv1hHSPZs1JBekvrZc1NHuA48p/aL3mYtqG
+         DXYObww+jpKz+R5ySnE6inM4yxdh6N/CpsFg/EQQWaq/jCs359cSv85N7/puF/hLdo
+         2RMMbulVNzEww==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MBjMM-1pm0yF470m-00C9qO; Mon, 20
+ Mar 2023 20:12:12 +0100
+Date:   Mon, 20 Mar 2023 20:12:11 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     dooagain <dooagain@protonmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug: git pull output and case sensitivity.
+Message-ID: <20230320191210.jzzq5c2ssxcltvoc@tb-raspi4>
+References: <-Va6f9aA736sZCXChvTLaUUSpAq9-ooSELLBrqRSXR5zAQwT7QSRryN1SGBWQj7J_KowBmZuhDHwIwAkrFFfyelwtkXJ-ri4yLPpmDpBqBU=@protonmail.com>
+ <20230319062239.w37x64knfhfapbsn@tb-raspi4>
+ <20230320171602.GB2615782@coredump.intra.peff.net>
+ <_XGWc87b9HPBCDZ95pSmwNOFcZO21Y6bVyNnhhNuowPcM2Fhs5HmCynAqq2nME257bMhQ4w7Qta1dICTCHTlxbQ2NHN_iPYO0NkBYmS9vTI=@protonmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 2/2] git-compat-util: use gettimeofday for current time
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Eric Wong <e@80x24.org>
-References: <20230319064353.686226-1-eggert@cs.ucla.edu>
- <20230319064353.686226-3-eggert@cs.ucla.edu> <20230319193449.M629601@dcvr>
- <xmqqh6ufo01u.fsf@gitster.g> <xmqqr0tjmk6d.fsf@gitster.g>
-Content-Language: en-US
-From:   Paul Eggert <eggert@cs.ucla.edu>
-Organization: UCLA Computer Science Department
-In-Reply-To: <xmqqr0tjmk6d.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <_XGWc87b9HPBCDZ95pSmwNOFcZO21Y6bVyNnhhNuowPcM2Fhs5HmCynAqq2nME257bMhQ4w7Qta1dICTCHTlxbQ2NHN_iPYO0NkBYmS9vTI=@protonmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:vWdxvkdxKsLxLkweWDXBjATnZRj+S4YnWHyXR3hUxO+M+i6/lb0
+ ZjUDClGp1+rfKYBa3PzbFgQYW5QL7rYVGcWK7ukkVnFv8b3SDJ+f+MtL2Mn/qE/mvAWthWd
+ mH6OX1ZfmdNcb2Aj2H0SIdqkqCVlsFn9BVMdvLz1C3FTVicIwUSB/gqUWHD0UmP63c5qmNR
+ enhtn/9fECAZN0YXaJpiQ==
+UI-OutboundReport: notjunk:1;M01:P0:naF/ar19+Uk=;BhkSKOD1LNUKQm3eJsH3ZNiWzwo
+ utY/e+QtXxe1MzQhNohwpTkcpD6C8jUfKKo5lBsV5OyfLoAotfW+uopDn1IFx9BwyZbg9Xxpf
+ 2j/gnywHgdZOIGgUnLZDF6gnSgExu2ycgqqTxXqNPvkcEv5/p8nE4PAEd0oA3FABjKewEsYIH
+ XzSJSDaNegho5rKbFsxVmYQJYTC2bHnZVm2EQX1VNVAYzBMO0SYv6FvZU+lfCmZAmG+xyRr1d
+ 04dHrbeDYqvVytfkc+TFWwBGsMHvZ3s3E+rJTsYLTK/w7JCm84jusucYkeRAVtwbR2BTQ0fvc
+ y2bjlRag9Layyq91GJVd4/IgqIuJLlOCZz5ULsm9lq613vbAZAlUIQyOooiULGjJVu9/D31FQ
+ W4fqaGyJuqz3Qk8vj7z9QmESRxEmk/aJOtlA3BtclNhZQCOaUGIannbweB3x3o1SyGICB2lTL
+ YY197KxF19EV/ULY4Xr/HurdhS8td1ozjQ9ztEjUNCQZobxSt1sEfLjBndW9AFomeuDVfGHet
+ JadOdb3P6H3lR1052IxcSWyp7WPgiGWudK54y/kwrsXwYKNllIG99Bbfegavet3CtT+hyG5Mg
+ BJoGsMIwFhtKXLfo4jiB6MlJb5Nk7tUOgCg4/KYis4bkugK8Jkl0vjm9bkv70iUpnXQHxAQ2F
+ ewXOUsnM/GAIjUVNu2ufyvBDTeyw/w1TYcp/Zro72l7jEfRJ5ZTzpDn5P9gZ7zxEd1Tvx7rol
+ ue7vDrH2J0U/9PHqd+AW5K06RHd/LVgnDYxI0XJgdLlT2NTvqzV4FtVeE3kHgxJb1gQzrl9wx
+ oxZwIS9727R38d1VIKrR0rPjl3s7l3Kr8GyN0UOsZ0Z/lmGUVgggyjSQUD8ps/l1iFVPsogqh
+ OygtzO/zZC125PlyYAwMq0NU0wQHRuRmOuupw/ihuNk2QSaKEsuquoWn10YSOD6JQ8SD6TFFc
+ UXOToJmEuQ3eP8nVpD2xI7/DRvE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/20/23 10:01, Junio C Hamano wrote:
+On Mon, Mar 20, 2023 at 06:01:30PM +0000, dooagain wrote:
+> I'm not sure if this is helpful, but I documented a simple way to recrea=
+te the issue I am seeing in the README in the https://github.com/spencerdc=
+arlson/test-casing repository.
 
->> I however wonder if we should follow our
->> usual pattern of implementing git_time() with the identical function
->> signature as what we replace (i.e. system's time()), and #undef/#define
->> the symbol we replace with git_time, though.  Wouldn't it make [1/2]
->> a lot smaller and future-proof?
+It is helpful,  thanks.
+In general, we prefer to have all informartion in emails ;-)
+Anyway.
 
-Yes, something like that would work too. (Sorry, I didn't know about the 
-usual pattern.)
+To reply on Peff's comment:
 
+>So I think this is just a known gotcha, and the path forward is probably
+>a new ref storage format that doesn't rely on storing names directly in
+>the filesystem (reftable, or some system based on packed-ref slices).
 
-> +# Define OVERRIDE_TIME to override time(2) and replace it with an
-> +# implementation based on gettimeofday(2).  THis is necessary when
-> +# glibc 2.31+ on Linux is used, where in the first 1 to 2.5 ms of
-> +# every second, time(NULL) returns a value that is one less than the
-> +# tv_sec part of higher-resolution timestamps used in the file system.
+Yes, it is.
+The thing is, that Git at the moment is unable to handle to branches
+like Foo and foo on case-insensitive file systems.
+Because branch names are stored as files, and that doesn't typially work
+well under Windows or MacOs.
 
-THis -> This
+As a workaround,
+git pack-refs
+can be used.
 
-It might be simpler to use the gettimeofday workaround on all platforms, 
-rather than having an OVERRIDE_TIME flag and complicating 
-config.mak.uname. gettimeofday should be portable, as it's already used 
-elsewhere in Git without configury.
+side-note 1: a better backend for refs may make it's way into Git
+in the long term.
 
-If we're going with the more-complicated solution, config.mak.uname will 
-need changes in its AIX and MS-Windows sections because the problem is 
-known to occur there too. Although AIX configuration is simple, I'm not 
-sure how to go about the MS-Windows part as there seem to be a lot of 
-ifdefs there. Also, because the time problem does not occur with musl 
-libc (used in Alpine Linux 3.17), on the Linux side the workaround could 
-be employed only if glibc 2.31+ is in use.
+side-note 2:
+I always recommend to stick to a naming convention when working in
+a cross-platform project.
+You can keep filenames only lowercase.
+That is debatable, some people prefer camel-case rather then snake-case.
+So go for either way.
+But the same restriction/recommendation is valid for branch names as well,
+stick to one convention and avoid possible collisions under Mac or Windows=
+.
 
+Or run `git pack-refs`, but be aware the the performance may suffer,
+if you use zillions of refs.
+
+HTH
+/Torsten
+
+>
+> ------- Original Message -------
+> On Monday, March 20th, 2023 at 11:16 AM, Jeff King <peff@peff.net> wrote=
+:
+>
+>
+> > On Sun, Mar 19, 2023 at 07:22:40AM +0100, Torsten B=F6gershausen wrote=
+:
+> >
+> > > On Sat, Mar 18, 2023 at 07:21:10PM +0000, dooagain wrote:
+> > >
+> > > > Thank you for filling out a Git bug report!
+> > > > Please answer the following questions to help us understand your i=
+ssue.
+> > > >
+> > > > What did you do before the bug happened? (Steps to reproduce your =
+issue)
+> > > >
+> > > > I configured my git repository to ignore case by executing `git co=
+nfig core.ignorecase true` then I executed `git pull` multiple times.
+> > >
+> > > What do you mean by "I configured my git repository" ?
+> > > The answer is already there, so let's re-rephrase it:
+> > > Are you working on a case-insensitive file system ?
+> > >
+> > > What happens if you create a test directory, like this:
+> > > mkdir test-case
+> > > cd test-case
+> > > git init
+> > > git config --get core.ignorecase
+> >
+> >
+> > I think this is kind of a red herring, isn't it? The bug report is abo=
+ut
+> > refs, and I don't think those really respect core.ignorecase either wa=
+y,
+> > and inconsistencies are known to happen on case-insensitive filesystem=
+s
+> > (because the refs are sometimes case-sensitive and sometimes not
+> > depending on whether they are packed or loose in the filesystem).
+> >
+> > So I think this is just a known gotcha, and the path forward is probab=
+ly
+> > a new ref storage format that doesn't rely on storing names directly i=
+n
+> > the filesystem (reftable, or some system based on packed-ref slices).
+> >
+> > -Peff
