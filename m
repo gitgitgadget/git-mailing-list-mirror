@@ -2,93 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 659AEC6FD1D
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 17:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 232E5C7618A
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 17:34:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233518AbjCTR2e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 13:28:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52830 "EHLO
+        id S233570AbjCTReQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 13:34:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232728AbjCTR2F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 13:28:05 -0400
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CC4912F39
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 10:23:44 -0700 (PDT)
-Received: by mail-pg1-x529.google.com with SMTP id y35so5889640pgl.4
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 10:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679333021;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=175PJP5c1GGE5rUkfdH2evFMkRMmTH2Q564mPTLPO3g=;
-        b=OjzW9frshGB2hQPZK/7GP5M7mfeKKhjYMMtZkBhmtP/zFgIQtoS1rmOArwpjH1i1ud
-         l8fq/RrmIM/vWQOmG5G9a8h2qcX99oagCKFVK7tBqpFW6CcMdlxBPUl70CnvYh4rrytG
-         7+jHkGJaOTY8J66ka8PEYjjsTgklFw/JQAcO4s1EqES3z4LbKZVCT3sAvwajIfQc8BcL
-         4w/zpwLgaec7GVD70EFXURjM8h2QEsWCXCdcxzJ3LhYoAH4VAEtRcEqXjAIdH7TvHRp3
-         Whj82aJvPvzUIar1qEhl3wsD5TTydoMZZMf9NoWI+HS4d6WIXIi0LzkPDdqDy9Dex+jI
-         p7Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679333022;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=175PJP5c1GGE5rUkfdH2evFMkRMmTH2Q564mPTLPO3g=;
-        b=iH0bswVVwfx31kBZzugzjuEjTY2zvvCshs1Xu3/3vudNC2qtd+gz4RzryBNH0Biy05
-         PkrocoZGdhw2HABNC6aEykcpVTRR1xx4quJlotbBRZlk1XhTauzeArZD25VyLY5TBy9m
-         w/W/zazqZED18YIDkbU3FxtF2VX/B5lj24POAp75Age35SatHWZZDaE3B0JvyayoHJG2
-         p9oj7ePAi0CTRvdkMK2UaI2nY8dpDlMbixkswJhMQ4urgQnzbX0Buv+LAspTqsPltAvI
-         xlANRGL+ApMkLHC9zlXkmsOEVjjWsCwm8nl7nXajxgqhcR4TcV6o5kMfzerQdHpEqtHF
-         0Ksg==
-X-Gm-Message-State: AO0yUKWfF+/zSebtgjg8Bkj0yPgbiTagtM/IN7CUGIVdVepf8B+vA+ZI
-        GkTJLzIzzF/Uq17JikA1O/FWdrHVHro=
-X-Google-Smtp-Source: AK7set+MOFnnYnlAFa0YRB/4azZ/H7fhXmMgMUHb/bu6nbre3eznnajbctqE8RjuOBViU+LDyoskXQ==
-X-Received: by 2002:a62:6101:0:b0:625:4f81:bb30 with SMTP id v1-20020a626101000000b006254f81bb30mr12929036pfb.21.1679333021664;
-        Mon, 20 Mar 2023 10:23:41 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id v7-20020aa78087000000b006254794d5b2sm6761803pff.94.2023.03.20.10.23.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 10:23:41 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Stanislav Malishevskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Stanislav Malishevskiy <stanislav.malishevskiy@gmail.com>,
-        Stanislav Malishevskiy <s.malishevskiy@auriga.com>
-Subject: Re: [PATCH v2] http: add support for different sslcert and sslkey
- types.
-References: <pull.1474.git.git.1679233875803.gitgitgadget@gmail.com>
-        <pull.1474.v2.git.git.1679327330032.gitgitgadget@gmail.com>
-Date:   Mon, 20 Mar 2023 10:23:41 -0700
-In-Reply-To: <pull.1474.v2.git.git.1679327330032.gitgitgadget@gmail.com>
-        (Stanislav Malishevskiy via GitGitGadget's message of "Mon, 20 Mar
-        2023 15:48:49 +0000")
-Message-ID: <xmqqlejrmj4y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S233556AbjCTRds (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 13:33:48 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 402BB7A88
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 10:29:49 -0700 (PDT)
+Received: (qmail 18683 invoked by uid 109); 20 Mar 2023 17:02:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 20 Mar 2023 17:02:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24968 invoked by uid 111); 20 Mar 2023 17:01:58 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 20 Mar 2023 13:01:58 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 20 Mar 2023 13:01:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: git rebase issue
+Message-ID: <20230320170158.GA2614670@coredump.intra.peff.net>
+References: <CAHp75VfTQZ8vFQXZKgbsedG2BOad-pv9fCVkNkX+kFAxhnhhXQ@mail.gmail.com>
+ <CAHp75VcZJPysc2-NXTC53XvOwbx-UfPO9SbsBJFb72JGHFyO1A@mail.gmail.com>
+ <CAHp75Vc419vikJ184syJHN7rxyaspHzgtT9a_uFA=CT=cdqo-w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHp75Vc419vikJ184syJHN7rxyaspHzgtT9a_uFA=CT=cdqo-w@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Stanislav Malishevskiy via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+[Please don't put random folks in the to/cc unless you think they have
+specific knowledge related to your problem.]
 
-> From: Stanislav Malishevskiy <s.malishevskiy@auriga.com>
->
-> Basically git work with default curl ssl type - PEM. But for support
-> eTokens like SafeNet tokens via pksc11 need setup 'ENG' as sslcert type
-> and as sslkey type. So there added additional options for http to make
-> that possible.
->
-> Signed-off-by: Stanislav Malishevskiy <stanislav.malishevskiy@gmail.com>
-> ---
+On Mon, Mar 20, 2023 at 02:10:38PM +0200, Andy Shevchenko wrote:
 
->  http.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+> > > With the new release I have got an error
+> > >
+> > >   fatal: 'netboot' is already checked out at ...
+> > >
+> > > To work around this I have to split the above to
+> > >
+> > >   git checkout --ignore-other-worktrees "$branch"
+> > >   git rebase --rebase-merges -X ours --onto "$newbase" "$oldbase"
+> > >
+> > > which makes all these too inconvenient.
+> > >
+> > > Any suggestions?
+> 
+> So, what should I do? Today I got again to help manually with my (used
+> to working) scripts.
 
-Thanks.
+Running "git log --grep=already.checked.out" suggests that it may be
+b5cabb4a967 (rebase: refuse to switch to branch already checked out
+elsewhere, 2020-02-23).
 
-Is this something that can be protected from future breakage with a
-few new tests somewhere in t/t5559 (which may also involve touching
-t/lib-httpd.sh as well)?
+Adding its author to the cc, who may be able to say more. But my
+understanding is that this was probably fixing a bug (though I don't
+know all the implications of having a branch checked out in multiple
+worktrees).
+
+-Peff
