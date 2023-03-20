@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44E2AC7618D
-	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 11:27:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CDDFC7618A
+	for <git@archiver.kernel.org>; Mon, 20 Mar 2023 11:27:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230174AbjCTL1K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 07:27:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58926 "EHLO
+        id S230218AbjCTL1M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 07:27:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbjCTL1I (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 07:27:08 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3035E524C
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 04:27:01 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id u11-20020a05600c19cb00b003edcc414997so2396039wmq.3
+        with ESMTP id S230012AbjCTL1J (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 07:27:09 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 969D959CA
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 04:27:02 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id h17so9969073wrt.8
         for <git@vger.kernel.org>; Mon, 20 Mar 2023 04:27:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679311618;
+        d=gmail.com; s=20210112; t=1679311619;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CzWG7yCW5ur5d7QC+XEvdDFRu02hEqMdMKyfKCZeia0=;
-        b=bIQM3/lFeegWiwD94eUiV+gdE3oirdAi1MFZ1WdLsnzFKzuy/yY6rMDzaxttUgcF6+
-         hY50fa4e8J///1rsymbrmHPwqUhFCcPW85RNT+gMvOE17NFOh4uznFrZiSLZYDIYN0Vn
-         agvtsJBLutU4Ma8V1l0NuQKwLi+ojr9FOEcvFIRTTF+kSEK9H9gER/AK9mX0gC63aLob
-         qP48y07Q+VRNgYJxTvD1puxBkyf2T5zImOKCb93FFzy0LfOnfUcgzL1AKp2aut3VWlrQ
-         qREQWP2JLrHb6urop5/uiyPXnHeTNlLtMSLjWER9X3anyGCwrb3dvztw1+n4FiIyWnhp
-         NWLQ==
+        bh=rKehZwzMxp2IDxyfm57q9YaxorHBAAhc4ddH2zrnLQA=;
+        b=ACSjYbaoyXHCfSwxQyu4ByB84DZyzlp6KpIJqZgh/2FiNtFMIKvM/4YHMBDV7GyF5j
+         f9ziGc+SS57D1jQVeNIvUrp1iuWf8ep+sCto9sRXJC9fUOK+OtF7+Xn7zdH9guQWHXyz
+         UBiFhEFktw7DSlVU2Bvw+o9iPuEQJQhM8rgPaobMy9MnbxguUV/5/abZTlB16W/mO/9t
+         FhaH78qWLH+DmGt+ogFGZEhcKPAGvAxffvh+avLuJTxrbRIBJm7h1shQdzh10Du5Tet2
+         o0s3lV6Gh4DKqQRgj3GAuN5mnO9W2QjI8STfaR/Tc3c7NSaYTGJPuzTD+3h2LMZUELUt
+         LBaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679311618;
+        d=1e100.net; s=20210112; t=1679311619;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CzWG7yCW5ur5d7QC+XEvdDFRu02hEqMdMKyfKCZeia0=;
-        b=JS9JC3fYx4aXS0grdrtn8tMDlt9Ws/pmIYFmVDiNmAXongpKK4ASoNYB68tvi1DOcy
-         s7Zg7m3jy3hsoVLQeA1dHz4qscS129i7WXLTyocRNu7LWHjaOR4TwvHcngDWVPxLVwEU
-         9ZxismknsH6G8A16Vdr5RysJJyHsFynXr/vSRSscQVrXvuJ1loLvsEEDnzNI1mux3Hzr
-         WJdr9imrxMrGrxJEgrQGzYhF5nvE7tGzWv+6f6c7WsroPqWSkDnS4AkBNChp9lPMItfo
-         B8BBcSjwx3wilhc7/9yfGHUskv3y4AS5szS4T+jlQa3Ab0ZUEQ+lnfl8U9zlbpuonjk9
-         yDjg==
-X-Gm-Message-State: AO0yUKVDe83olf3c6Xsw45c+p3OrTUlIh9tGujNbE8bmZVe1c9NaCJFi
-        utS50SVh9PWUmXyXWOjPd38xafeDNtA=
-X-Google-Smtp-Source: AK7set9tXduoAsvREjRE79Qksj5lm3OFASlCGryFo4oRRhn4VSZ28X4/RhDqy61o8RRuKADWKEXXww==
-X-Received: by 2002:a05:600c:4f01:b0:3ed:31cf:fe6e with SMTP id l1-20020a05600c4f0100b003ed31cffe6emr15753408wmq.41.1679311618484;
-        Mon, 20 Mar 2023 04:26:58 -0700 (PDT)
+        bh=rKehZwzMxp2IDxyfm57q9YaxorHBAAhc4ddH2zrnLQA=;
+        b=TKn7X3+2DVoAp8+qNDyE+sIoPobdBq0GuP/s0TEeF9P3JILYn1uXa7qP3TRFWy8//d
+         yeQ+r+vuHeBJtEKEcBIH/cVX4yOmxgsoz6/ST4sHDeAdUkNjjNKex4EQ7Gs/rhYH81UN
+         a0YOM/NQ8JiR0dGaWXep2kJ3RX2QpfVAoyMY06VxeppbkQN4tDX0yBvcRcsh2BSVglfa
+         lrySN6FjtxcZZzBFDUmKSGg4QytTBNuS4xlElCDc7FMNOd2lHJoCExpF38TPGP45DRnu
+         pouZxKA4pefbgUA30GIJBdd9sPCvrNmidJZHmSfUtI3o7fkh2gXCkR37euccc3vh+ka1
+         L39g==
+X-Gm-Message-State: AO0yUKXWm6y0OOll2uezUkd13glFf+FKn0fQ64VCuOH0zoSwpRQtYO5r
+        v772bqsuWyFkMSlACzqnIdls8pMhFbQ=
+X-Google-Smtp-Source: AK7set+A2DKshESbG9nshUOk96x3Yt+Gfts97ptGvS3Bnih8wFGe1q89qnPFlBViFg8t+peaIOypgQ==
+X-Received: by 2002:a5d:694d:0:b0:2ce:adbf:cb14 with SMTP id r13-20020a5d694d000000b002ceadbfcb14mr13144111wrw.28.1679311619056;
+        Mon, 20 Mar 2023 04:26:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 16-20020a05600c025000b003ed1ff06faasm10195386wmj.19.2023.03.20.04.26.58
+        by smtp.gmail.com with ESMTPSA id a8-20020a056000100800b002d8566128e5sm227741wrx.25.2023.03.20.04.26.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 20 Mar 2023 04:26:58 -0700 (PDT)
-Message-Id: <27d94077aa98c7ea76787ac8c2a8fd15915c9eab.1679311616.git.gitgitgadget@gmail.com>
+Message-Id: <1e3d499431aee563f6104f5ef1192658ece4ae4b.1679311616.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1489.v4.git.1679311615.gitgitgadget@gmail.com>
 References: <pull.1489.v3.git.1678902343.gitgitgadget@gmail.com>
         <pull.1489.v4.git.1679311615.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 20 Mar 2023 11:26:47 +0000
-Subject: [PATCH v4 1/9] for-each-ref: add --stdin option
+Date:   Mon, 20 Mar 2023 11:26:48 +0000
+Subject: [PATCH v4 2/9] for-each-ref: explicitly test no matches
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,157 +74,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-When a user wishes to input a large list of patterns to 'git
-for-each-ref' (likely a long list of exact refs) there are frequently
-system limits on the number of command-line arguments.
+The for-each-ref builtin can take a list of ref patterns, but if none
+match, it still succeeds (but with no output). Add an explicit test that
+demonstrates that behavior.
 
-Add a new --stdin option to instead read the patterns from standard
-input. Add tests that check that any unrecognized arguments are
-considered an error when --stdin is provided. Also, an empty pattern
-list is interpreted as the complete ref set.
-
-When reading from stdin, we populate the filter.name_patterns array
-dynamically as opposed to pointing to the 'argv' array directly. This is
-simple when using a strvec, as it is NULL-terminated in the same way. We
-then free the memory directly from the strvec.
-
-Helped-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/git-for-each-ref.txt |  7 +++++-
- builtin/for-each-ref.c             | 23 ++++++++++++++++++-
- t/t6300-for-each-ref.sh            | 37 ++++++++++++++++++++++++++++++
- 3 files changed, 65 insertions(+), 2 deletions(-)
+ t/t6300-for-each-ref.sh | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 6da899c6296..ccdc2911bb9 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -9,7 +9,8 @@ SYNOPSIS
- --------
- [verse]
- 'git for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
--		   [(--sort=<key>)...] [--format=<format>] [<pattern>...]
-+		   [(--sort=<key>)...] [--format=<format>]
-+		   [ --stdin | <pattern>... ]
- 		   [--points-at=<object>]
- 		   [--merged[=<object>]] [--no-merged[=<object>]]
- 		   [--contains[=<object>]] [--no-contains[=<object>]]
-@@ -32,6 +33,10 @@ OPTIONS
- 	literally, in the latter case matching completely or from the
- 	beginning up to a slash.
- 
-+--stdin::
-+	If `--stdin` is supplied, then the list of patterns is read from
-+	standard input instead of from the argument list.
-+
- --count=<count>::
- 	By default the command shows all refs that match
- 	`<pattern>`.  This option makes it stop after showing
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 6f62f40d126..9df16cfb854 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -5,6 +5,7 @@
- #include "object.h"
- #include "parse-options.h"
- #include "ref-filter.h"
-+#include "strvec.h"
- 
- static char const * const for_each_ref_usage[] = {
- 	N_("git for-each-ref [<options>] [<pattern>]"),
-@@ -25,6 +26,8 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	struct ref_format format = REF_FORMAT_INIT;
- 	struct strbuf output = STRBUF_INIT;
- 	struct strbuf err = STRBUF_INIT;
-+	int from_stdin = 0;
-+	struct strvec vec = STRVEC_INIT;
- 
- 	struct option opts[] = {
- 		OPT_BIT('s', "shell", &format.quote_style,
-@@ -49,6 +52,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 		OPT_CONTAINS(&filter.with_commit, N_("print only refs which contain the commit")),
- 		OPT_NO_CONTAINS(&filter.no_commit, N_("print only refs which don't contain the commit")),
- 		OPT_BOOL(0, "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
-+		OPT_BOOL(0, "stdin", &from_stdin, N_("read reference patterns from stdin")),
- 		OPT_END(),
- 	};
- 
-@@ -75,7 +79,23 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
- 	filter.ignore_case = icase;
- 
--	filter.name_patterns = argv;
-+	if (from_stdin) {
-+		struct strbuf line = STRBUF_INIT;
-+
-+		if (argv[0])
-+			die(_("unknown arguments supplied with --stdin"));
-+
-+		while (strbuf_getline(&line, stdin) != EOF)
-+			strvec_push(&vec, line.buf);
-+
-+		strbuf_release(&line);
-+
-+		/* vec.v is NULL-terminated, just like 'argv'. */
-+		filter.name_patterns = vec.v;
-+	} else {
-+		filter.name_patterns = argv;
-+	}
-+
- 	filter.match_as_path = 1;
- 	filter_refs(&array, &filter, FILTER_REFS_ALL);
- 	ref_array_sort(sorting, &array);
-@@ -97,5 +117,6 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	free_commit_list(filter.with_commit);
- 	free_commit_list(filter.no_commit);
- 	ref_sorting_release(sorting);
-+	strvec_clear(&vec);
- 	return 0;
- }
 diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index c466fd989f1..a58053a54c5 100755
+index a58053a54c5..6614469d2d6 100755
 --- a/t/t6300-for-each-ref.sh
 +++ b/t/t6300-for-each-ref.sh
-@@ -1464,4 +1464,41 @@ sig_crlf="$(printf "%s" "$sig" | append_cr; echo dummy)"
- sig_crlf=${sig_crlf%dummy}
- test_atom refs/tags/fake-sig-crlf contents:signature "$sig_crlf"
+@@ -1501,4 +1501,17 @@ test_expect_success 'git for-each-ref --stdin: matches' '
+ 	test_cmp expect actual
+ '
  
-+test_expect_success 'git for-each-ref --stdin: empty' '
-+	>in &&
-+	git for-each-ref --format="%(refname)" --stdin <in >actual &&
-+	git for-each-ref --format="%(refname)" >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'git for-each-ref --stdin: fails if extra args' '
-+	>in &&
-+	test_must_fail git for-each-ref --format="%(refname)" \
-+		--stdin refs/heads/extra <in 2>err &&
-+	grep "unknown arguments supplied with --stdin" err
-+'
-+
-+test_expect_success 'git for-each-ref --stdin: matches' '
++test_expect_success 'git for-each-ref with non-existing refs' '
 +	cat >in <<-EOF &&
-+	refs/tags/multi*
-+	refs/heads/amb*
-+	EOF
-+
-+	cat >expect <<-EOF &&
-+	refs/heads/ambiguous
-+	refs/tags/multi-ref1-100000-user1
-+	refs/tags/multi-ref1-100000-user2
-+	refs/tags/multi-ref1-200000-user1
-+	refs/tags/multi-ref1-200000-user2
-+	refs/tags/multi-ref2-100000-user1
-+	refs/tags/multi-ref2-100000-user2
-+	refs/tags/multi-ref2-200000-user1
-+	refs/tags/multi-ref2-200000-user2
-+	refs/tags/multiline
++	refs/heads/this-ref-does-not-exist
++	refs/tags/bogus
 +	EOF
 +
 +	git for-each-ref --format="%(refname)" --stdin <in >actual &&
-+	test_cmp expect actual
++	test_must_be_empty actual &&
++
++	xargs git for-each-ref --format="%(refname)" <in >actual &&
++	test_must_be_empty actual
 +'
 +
  test_done
