@@ -2,198 +2,437 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 312BEC6FD1D
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 01:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF39FC6FD1D
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 06:26:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbjCUB5i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 21:57:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40296 "EHLO
+        id S229778AbjCUG0Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 02:26:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbjCUB5g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 21:57:36 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CBC8211D0
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 18:57:35 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 20so6936845lju.0
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 18:57:35 -0700 (PDT)
+        with ESMTP id S229458AbjCUG0X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2023 02:26:23 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A677231E18
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 23:26:20 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id e18so958945wra.9
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 23:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679363853;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1679379979;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VZNlFZmyieutSd+WGUHPZu9xHdJyexdRGJU/A2khkkg=;
-        b=ZUeEFcb/13HwOW+E9jRMGWAUIlGClUU3R+E5U4FL2SCYs+1X2x1SwFCJjeE/UHTYMR
-         j9wl62NWZ3aA2YpXmVhcVI/ZzoIjrJAPGfen1Ce34fFgbiR3NTFQ4v6aHFL3un40bIun
-         K6DSMrVHCEoOSJVvH39auHIU20ydJCiKyNN6BaksNp0omnKYi/4YkatA8QSvF6T8SaMY
-         goQIVPBeqqxZiAv4+2VylWy93blZL5SUFRwl6ZJWjMIsvl7C729umTaSOJfknw1rKAHV
-         8tPV3xgbFAHfpIpXI/Jy/kPVWgh/iVx36edX6M4Ek0VOn2hiUKU1VX8/qUs6sbMG47ZN
-         a0zQ==
+        bh=MiWQ36N1DxkDHPV5AyHoBZ0z2j8zVcji30xULB36B3w=;
+        b=k6B6MeLoop3EdMbSmSAbXa9R/l1H2Idi7xHC40pCkSTyfpx1z2lfjk57jJks2tjlP+
+         X16LK3RbccEL2SdVG4OlsGIVe22T4s0Wu8YORMwGJzt18dnSb4fg63C5tpgueYjD8cU/
+         +q1h0A8plC6nReg59ZS/SGFi/MoV8wvhqkESEre82/9CMguA62Zar/Xi0WjE8vveuPjT
+         LWWMI7iRjp8ei0HItKjZRN7G8gj+Uv5BeJ7WdmrhYYxN7te5bGrpd7kMAJzICx7dI8qT
+         aEMuiW1j6Le1P91+aRUBQOTEBbfm+wOnCfP0nh0BQY+7ICxjFj7d0FcNpikQgchzkKvh
+         kXPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679363853;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1679379979;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VZNlFZmyieutSd+WGUHPZu9xHdJyexdRGJU/A2khkkg=;
-        b=WwDMRxlhWpXoDVIv6qc2Z0wdjfCWHnj1XynNALhS8ml8Dog2hAizDisiAVJiZc+3oq
-         jN/dKib2vM2tbx5y4bvDuQv8GrOFgAyJcnj5I3ZjMkz58bjGkJNx64uZ9BzzB1gkWdrc
-         6GuTLK+yJstSPoLqa3udTcnZ/8CXaHOdQ/fnfUV0b/42eTg5e1nCUBGITdrKaVPDiFL8
-         CsPoTj8tDdl/mbaMR0cMN8uTU258tpp94WsiHdOTiwwc9vex/XJaYnq6goRZL0QK/fvn
-         et5z3yi4p2PWAytAql4OnJ6uFAcD8j61smNPaXCvsGjSLcmN8BkhRBesFxByC6ZkjtK2
-         cZqQ==
-X-Gm-Message-State: AO0yUKW3cg3pZJgRZE3BXOnb6pJVFPajaWlT81uauDiMgiPsmJKmJW2X
-        UWyXGnEJDsUoHRq+aSkyC83vtJgJu/OXA0Oe+STiSr0lRGc=
-X-Google-Smtp-Source: AK7set8UhtviyLWICXtg8sNG3PADI8/XZYGKddPCwzoT1RPzc6JUT5zsmkYNmYUs0X2lvQFr8ws+yy3WR2PW+DISNiQ=
-X-Received: by 2002:a2e:9257:0:b0:295:93eb:bab1 with SMTP id
- v23-20020a2e9257000000b0029593ebbab1mr368559ljg.1.1679363853443; Mon, 20 Mar
- 2023 18:57:33 -0700 (PDT)
+        bh=MiWQ36N1DxkDHPV5AyHoBZ0z2j8zVcji30xULB36B3w=;
+        b=55zENRNBMrInOr9Q/Y3EDleroccFf6U4NPuIXFij73OWRNsSbsYAN+4o5U171sZqDU
+         wxCVUc4T2n7zBzm9TfittymawvMiL/gWPeS8q6daIp2kyxQpiQYooOLiGu66TseqOED7
+         BK2kEcPt1bF0ivCW0lIfVdvDCR8j0Hcntw8Wy8llfrI7rEyoIReA4yK6LWgz9hKHpCVw
+         U1XU4UtlO+bRaEbjO4tq6bzrAH2okWZBfGKRaPGNRavHqrBc3CcDmC6PFDIEcOn/upPU
+         rU2P1EFHsF+E8nI/F90o42RwJKVXsSLsh+F5tyhWY3PzvoSlC486wzncdk2Pz4q3zAN5
+         FF8g==
+X-Gm-Message-State: AO0yUKVO2A70Z7gDi7ll/gDk/w6Q75H+YZG6uU+9osW6aoJs7Ugzwo3P
+        CtIgNS2V/QZd09q8zcgscwrrGATs+64=
+X-Google-Smtp-Source: AK7set/cQTeiyAMaYfLg4/MujHFk9ryfaXliuO0CZM2eUdbQwV05A/soRHqGFzfTWsOjuhzO7qIxdg==
+X-Received: by 2002:a5d:4fd1:0:b0:2c7:c9e:2c41 with SMTP id h17-20020a5d4fd1000000b002c70c9e2c41mr1186966wrw.57.1679379978855;
+        Mon, 20 Mar 2023 23:26:18 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a7-20020adff7c7000000b002c70ce264bfsm10565093wrq.76.2023.03.20.23.26.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Mar 2023 23:26:18 -0700 (PDT)
+Message-Id: <a1be63930c43c9c7980fa37815985898426111c6.1679379970.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1493.v2.git.1679379968.gitgitgadget@gmail.com>
+References: <pull.1493.git.1679207282.gitgitgadget@gmail.com>
+        <pull.1493.v2.git.1679379968.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 21 Mar 2023 06:25:53 +0000
+Subject: [PATCH v2 01/16] treewide: remove unnecessary cache.h inclusion from
+ a few headers
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <BBB169A5-0665-47C9-819B-6409A22AB699@lanl.gov>
-In-Reply-To: <BBB169A5-0665-47C9-819B-6409A22AB699@lanl.gov>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 20 Mar 2023 18:57:21 -0700
-Message-ID: <CABPp-BEG+vp-UcpVfcZecPBnfcuTjO6JYCo7wEU5ZrDUHBUd9g@mail.gmail.com>
-Subject: Re: bug? round-trip through fast-import/fast-export loses files
-To:     "Priedhorsky, Reid" <reidpr@lanl.gov>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Elijah Newren <newren@gmail.com>
 
-On Mon, Mar 20, 2023 at 11:23=E2=80=AFAM Priedhorsky, Reid <reidpr@lanl.gov=
-> wrote:
->
->   Hello,
->
->   I believe I=E2=80=99ve found a bug in Git. It seems that (1) round-trip=
-ping through
->   fast-export/fast-import a repository (2) that contains a commit that ch=
-anges
->   a file to a directory (3) deletes the contents of that directory from t=
-he
->   repository.
->
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
->
->   Run this shell script:
->
->   ~~~~
->   #!/bin/bash
->
->   set -ex
->
->   mkdir -p /tmp/weirdal
->   cd /tmp/weirdal
->   git --version
->
->   # init repo
->   rm -Rf wd
->   mkdir wd
->   cd wd
->   git init -b main
->
->   # first commit - foo is a file
->   touch foo
->   git add -A
->   git commit -m 'file'
->
->   # second commit - foo is a directory
->   rm foo
->   mkdir foo
->   touch foo/bar
->   git add -A
->   git commit -m 'directory'
->
->   # the contents of foo are in the working dir and the repo
->   git status
->   ls -lR
->   git ls-tree --name-only -r HEAD
->
->   # import/export repository (add --full-tree to work around bug)
->   git fast-export --no-data -- --all > ../export
->   cat ../export
->   git fast-import --force --quiet < ../export
->
->   # bug: foo is still in the WD but not the repo; should still be both
->   git status
->   ls -lR
->   git ls-tree --name-only -r HEAD
->   #git fast-export --no-data -- --all | diff -u --text ../export - || tru=
-e
->   ~~~~
->
-> What did you expect to happen? (Expected behavior)
->
->   Repo should be unchanged, i.e.:
->
->   + git status
->   On branch main
->   nothing to commit, working tree clean
->
-> What happened instead? (Actual behavior)
->
->   Git thinks foo/bar has been staged:
->
->   + git status
->   On branch main
->   Changes to be committed:
->     (use "git restore --staged <file>..." to unstage)
->           new file:   foo/bar
->
-> What's different between what you expected and what actually happened?
->
->   File foo/bar is staged when it should be unchanged.
->
-> Anything else you want to add:
->
->   This also happens in 2.38.1 built from source.
->
->   The bad behavior can be worked around with =E2=80=9C--full-tree=E2=80=
-=9D on fast-export, but
->   the real repo where I want to do this is pretty large, so I=E2=80=99d p=
-refer not to.
->
->   Note the =E2=80=9Cgit fast-export=E2=80=9D output:
->
->     commit refs/heads/main
->     mark :2
->     author Reid Priedhorsky <reidpr@lanl.gov> 1679330805 -0600
->     committer Reid Priedhorsky <reidpr@lanl.gov> 1679330805 -0600
->     data 10
->     directory
->     from :1
->     M 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 foo/bar
->     D foo
->
->   It looks to me like the =E2=80=9CM ... foo/bar=E2=80=9D is being proces=
-sed before =E2=80=9CD foo=E2=80=9D
->   when it should happen in the opposite order.
+Ever since a64215b6cd ("object.h: stop depending on cache.h; make
+cache.h depend on object.h", 2023-02-24), we have a few headers that
+could have replaced their include of cache.h with an include of
+object.h.  Make that change now.
 
-Thanks for the well-written bug report, including not only a testcase
-but even the relevant bits of the fast-export output.  I thought I had
-fixed D/F issues in fast-export & fast-import before, and indeed a
-search turns up both of
+Some C files had to start including cache.h after this change (or some
+smaller header it had brought in), because the C files were depending
+on things from cache.h but were only formerly implicitly getting
+cache.h through one of these headers being modified in this patch.
 
-253fb5f889 (fast-import: Improve robustness when D->F changes provided
-in wrong order, 2010-07-09)
-060df62422 (fast-export: Fix output order of D/F changes, 2010-07-09)
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ bulk-checkin.h              | 2 +-
+ bundle.h                    | 1 -
+ cache-tree.c                | 2 +-
+ config.c                    | 2 +-
+ fmt-merge-msg.c             | 2 +-
+ fsck.c                      | 2 +-
+ http-backend.c              | 2 +-
+ pack-mtimes.c               | 2 +-
+ packfile.h                  | 4 +++-
+ prune-packed.c              | 2 +-
+ ref-filter.c                | 2 +-
+ refs.c                      | 2 +-
+ refs.h                      | 1 -
+ refs/packed-backend.c       | 2 +-
+ refspec.c                   | 1 +
+ remote.c                    | 2 +-
+ server-info.c               | 2 +-
+ shallow.c                   | 2 +-
+ strbuf.c                    | 2 +-
+ streaming.h                 | 4 +++-
+ submodule.c                 | 2 +-
+ t/helper/test-bundle-uri.c  | 1 +
+ t/helper/test-fast-rebase.c | 2 +-
+ t/helper/test-pack-mtimes.c | 2 +-
+ t/helper/test-reach.c       | 1 +
+ transport.c                 | 2 +-
+ transport.h                 | 1 -
+ worktree.c                  | 2 +-
+ 28 files changed, 29 insertions(+), 25 deletions(-)
 
-However, it looks like both of those only considered D->F (directory
-becomes a file) changes, whereas you specifically have a case of F->D
-(file becoming a directory).
+diff --git a/bulk-checkin.h b/bulk-checkin.h
+index 8281b9cb159..48fe9a6e917 100644
+--- a/bulk-checkin.h
++++ b/bulk-checkin.h
+@@ -4,7 +4,7 @@
+ #ifndef BULK_CHECKIN_H
+ #define BULK_CHECKIN_H
+ 
+-#include "cache.h"
++#include "object.h"
+ 
+ void prepare_loose_object_bulk_checkin(void);
+ void fsync_loose_object_bulk_checkin(int fd, const char *filename);
+diff --git a/bundle.h b/bundle.h
+index 9f2bd733a6a..021adbdcbb3 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -2,7 +2,6 @@
+ #define BUNDLE_H
+ 
+ #include "strvec.h"
+-#include "cache.h"
+ #include "string-list.h"
+ #include "list-objects-filter-options.h"
+ 
+diff --git a/cache-tree.c b/cache-tree.c
+index 9d46ecef091..6f899beb041 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "hex.h"
+ #include "lockfile.h"
+diff --git a/config.c b/config.c
+index d0aff55fa66..983c45fc37b 100644
+--- a/config.c
++++ b/config.c
+@@ -5,7 +5,7 @@
+  * Copyright (C) Johannes Schindelin, 2005
+  *
+  */
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "date.h"
+ #include "branch.h"
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index 24cc44bdbc9..c870cb95b9d 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "refs.h"
+diff --git a/fsck.c b/fsck.c
+index 871c0a9a252..70e12497878 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "hex.h"
+ #include "object-store.h"
+diff --git a/http-backend.c b/http-backend.c
+index 9cfc6f25414..7e7c19e66b3 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "hex.h"
+diff --git a/pack-mtimes.c b/pack-mtimes.c
+index 0f9785fc5e4..cd92fc1d86c 100644
+--- a/pack-mtimes.c
++++ b/pack-mtimes.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "pack-mtimes.h"
+ #include "object-store.h"
+ #include "packfile.h"
+diff --git a/packfile.h b/packfile.h
+index a3f6723857b..648be62bf22 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -1,11 +1,13 @@
+ #ifndef PACKFILE_H
+ #define PACKFILE_H
+ 
+-#include "cache.h"
++#include "object.h"
+ #include "oidset.h"
+ 
+ /* in object-store.h */
+ struct packed_git;
++struct pack_entry;
++struct pack_window;
+ struct object_info;
+ 
+ /*
+diff --git a/prune-packed.c b/prune-packed.c
+index d2813f6a405..e02f466c2ee 100644
+--- a/prune-packed.c
++++ b/prune-packed.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "object-store.h"
+ #include "packfile.h"
+ #include "progress.h"
+diff --git a/ref-filter.c b/ref-filter.c
+index ed802778da7..38141bce8db 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "hex.h"
+ #include "parse-options.h"
+diff --git a/refs.c b/refs.c
+index 53240bcc07b..4e5cc73fb10 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2,7 +2,7 @@
+  * The backend-independent part of the reference module.
+  */
+ 
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "hashmap.h"
+diff --git a/refs.h b/refs.h
+index 935cdd1ece3..5741b69d0d1 100644
+--- a/refs.h
++++ b/refs.h
+@@ -1,7 +1,6 @@
+ #ifndef REFS_H
+ #define REFS_H
+ 
+-#include "cache.h"
+ #include "commit.h"
+ 
+ struct object_id;
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index b665d0f7d9b..6f975185995 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "../cache.h"
+ #include "../alloc.h"
+ #include "../config.h"
+ #include "../hex.h"
+diff --git a/refspec.c b/refspec.c
+index 28d90911aa5..7b5c305514d 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -1,5 +1,6 @@
+ #include "git-compat-util.h"
+ #include "alloc.h"
++#include "gettext.h"
+ #include "hex.h"
+ #include "strvec.h"
+ #include "refs.h"
+diff --git a/remote.c b/remote.c
+index b04e5da3383..2daddb85cb7 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "hex.h"
+diff --git a/server-info.c b/server-info.c
+index 40436892023..78643377057 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "dir.h"
+ #include "hex.h"
+diff --git a/shallow.c b/shallow.c
+index 1cbb05ba0e4..c5433a4fd30 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "hex.h"
+ #include "repository.h"
+diff --git a/strbuf.c b/strbuf.c
+index 1c57ac6574f..8800830ebf8 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "hex.h"
+ #include "refs.h"
+diff --git a/streaming.h b/streaming.h
+index 5e4e6acfd0d..bd27f59e576 100644
+--- a/streaming.h
++++ b/streaming.h
+@@ -3,10 +3,12 @@
+  */
+ #ifndef STREAMING_H
+ #define STREAMING_H 1
+-#include "cache.h"
++
++#include "object.h"
+ 
+ /* opaque */
+ struct git_istream;
++struct stream_filter;
+ 
+ struct git_istream *open_istream(struct repository *, const struct object_id *,
+ 				 enum object_type *, unsigned long *,
+diff --git a/submodule.c b/submodule.c
+index 2a057c35b74..0baf97cf770 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "repository.h"
+ #include "config.h"
+diff --git a/t/helper/test-bundle-uri.c b/t/helper/test-bundle-uri.c
+index b18e7603103..475058592d1 100644
+--- a/t/helper/test-bundle-uri.c
++++ b/t/helper/test-bundle-uri.c
+@@ -1,6 +1,7 @@
+ #include "test-tool.h"
+ #include "parse-options.h"
+ #include "bundle-uri.h"
++#include "gettext.h"
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "transport.h"
+diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
+index b1edb92a032..1e975df9041 100644
+--- a/t/helper/test-fast-rebase.c
++++ b/t/helper/test-fast-rebase.c
+@@ -12,7 +12,7 @@
+ 
+ #define USE_THE_INDEX_VARIABLE
+ #include "test-tool.h"
+-
++#include "cache.h"
+ #include "cache-tree.h"
+ #include "commit.h"
+ #include "hex.h"
+diff --git a/t/helper/test-pack-mtimes.c b/t/helper/test-pack-mtimes.c
+index f68b3761b68..0e53dee9e57 100644
+--- a/t/helper/test-pack-mtimes.c
++++ b/t/helper/test-pack-mtimes.c
+@@ -1,5 +1,5 @@
+-#include "git-compat-util.h"
+ #include "test-tool.h"
++#include "cache.h"
+ #include "hex.h"
+ #include "strbuf.h"
+ #include "object-store.h"
+diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
+index de8f26639d4..05d56267a9f 100644
+--- a/t/helper/test-reach.c
++++ b/t/helper/test-reach.c
+@@ -1,4 +1,5 @@
+ #include "test-tool.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "commit.h"
+ #include "commit-reach.h"
+diff --git a/transport.c b/transport.c
+index 906dbad5a08..80059124c0a 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "hex.h"
+diff --git a/transport.h b/transport.h
+index 85150f504fb..6393cd9823c 100644
+--- a/transport.h
++++ b/transport.h
+@@ -1,7 +1,6 @@
+ #ifndef TRANSPORT_H
+ #define TRANSPORT_H
+ 
+-#include "cache.h"
+ #include "run-command.h"
+ #include "remote.h"
+ #include "list-objects-filter-options.h"
+diff --git a/worktree.c b/worktree.c
+index e10594ef336..cbb0db2d7cc 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -1,4 +1,4 @@
+-#include "git-compat-util.h"
++#include "cache.h"
+ #include "alloc.h"
+ #include "repository.h"
+ #include "refs.h"
+-- 
+gitgitgadget
 
-Honestly, looking back at those two patches of mine, I think both were
-rather suboptimal.  A better solution that would handle both F->D and
-D->F would be having fast-export sort the diff_filepairs such that it
-processes the deletes before the modifies.  Another improved solution
-would be having fast-import sort the files given to it and handling
-deletes first.  Either should fix this.
-
-Might be a good task for a new contributor.  Any takers?  (Tagging as
-#leftoverbits.)
