@@ -2,81 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B0ADC74A5B
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 16:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF69DC74A5B
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 16:20:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231433AbjCUQAF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Mar 2023 12:00:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51696 "EHLO
+        id S229648AbjCUQUT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 12:20:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231393AbjCUQAD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2023 12:00:03 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78FAB271C
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 08:59:51 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id l16so8163330ybe.6
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 08:59:51 -0700 (PDT)
+        with ESMTP id S229676AbjCUQUR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2023 12:20:17 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFD7A2CC41
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 09:20:10 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id ja10so16578731plb.5
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 09:20:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679414390;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i1vuMB2Xss8dtQ6SpUHUQSAeerpOKeAdnUB9a0rBO+U=;
-        b=hOWBl6VRg9q5/ZR6aX3hhlw9kyKPo5z3+GauIYcQqO8eN39CDilad3pyAIyfNlL6pD
-         nS0WbLAPNBW6dRFHr9vQlFoh8LYmw7UMAtj8XxmTEfusaadHTaYk3bQYcVBLkRlKwVsU
-         wapWZ+8XuB6dsHr1H5b14K18y18cK7w+5VcRU1ysTJDczvbhiGv9cgjF67lv4NM+3/43
-         StV7rDDFC8aScFUdeTKa8Q+9kQu0NohvSd89hD5HkG9IXBrBFCMxtsG3WfWD8oH/kCLh
-         anpUHupke8uMRtfCKBL54DrZAcu4yWSVAmyxe0v3v3LDLwJaBF5Bc7t1xTr8j7+RjtjV
-         lpgA==
+        d=gmail.com; s=20210112; t=1679415610;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1ANhmHUuaQfI7Q1woi0O168sFjW91RIzpOIQAOQb7I8=;
+        b=kRd+oj8CmoUTxPdVX0SJL7QS41h0J2cuV5SjfG9+YTQjhhd6dqBTj4Ggw39tSN3zFG
+         Sex9DE+QDiIJ00IOMyuuYpoVNUIDTtyOryC9bBy9rAeoPHqyThJ++AXHmU1YTJZ+3CCZ
+         VWCjsunRY6GVF5qCsc4vxQjLm4L5TvT3s3mooPj/nUc17URJgn1laSvwCaI/+GWDwFPE
+         RHvZrAECteOTWJ7FEUBaVCtR2yClDzu/kAwTiVjgYbGmvnAZ+igZCtKcolnMnxL82lNA
+         H0tW7W0MzHopG147qCw7xWV9oGnQCoIeyfTBYhjIFl3nOo8YWbBKIjRDOjVOuHepq3fJ
+         of2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679414390;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=i1vuMB2Xss8dtQ6SpUHUQSAeerpOKeAdnUB9a0rBO+U=;
-        b=TcJxyoD4R0jbDmwqxPBOiBxxyYouSPe0C9vU+SYCqrLg5B26UisGHskafW3FSAhHyh
-         gXnL6V5BbcgkwYRI6E/G6EgUrQPXUhb2lZ9I9kw2g8MXL9DdshPq29xq8eHsZ/nh9Fh6
-         /u+TwwzW2ODsDlMfrkAVJ+CDULY7ICLMu8GsXHiSb9RYOjoIV5FXjbaUP4r9jcXbl/bd
-         YptfOrAGl7WDKs3mfXZb0b9GIHMJiyBQWE/vXWoYETV8IVCO6sOmYRcU2Vlg52R8co8/
-         yEJtmwrb6T/PosimDNZkr2S1OZdUzTNh1I3C4UNxkyLLXLnNdqUwVIXN9sOXqlkdhUdO
-         K0EQ==
-X-Gm-Message-State: AAQBX9c/6lv6I+CBQbQMn9RQKQDZZg3f3Jfoc/bwJqdtSWR2kgmn0R1N
-        loXvghmVLHFs9HRjQyu09/eeYpWaLBDe4XqjSlpJSzFw
-X-Google-Smtp-Source: AKy350ZYswX8U2fNT1XDTzYrq5x8tMYQ40rPSs997Jf3S5TY/ym7kkRkv+9fE1nRR/KeUWo/oFOUcUs9GisjG/a2vNw=
-X-Received: by 2002:a05:6902:1109:b0:b6d:fc53:c5c0 with SMTP id
- o9-20020a056902110900b00b6dfc53c5c0mr1998080ybu.1.1679414390653; Tue, 21 Mar
- 2023 08:59:50 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679415610;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=1ANhmHUuaQfI7Q1woi0O168sFjW91RIzpOIQAOQb7I8=;
+        b=n9kvUK0143slfrzlNc9TLXji2BYHdKwf9H366P88I+p1vehu/M/NQHnKbmXqoxCZv4
+         rrCTFv8kLz5czfo4teEoTbH7Qm7TEZFb358d9ku9nJjntRQvTX4bqC+gfgeyHQ3gpEg6
+         VPqI12OOc4P1EdOel/v4j84kuztxtolEPrD1UULC8rulueoBw7W3YAbl95au/zaWzeGJ
+         zeOV6YVPbPCpEXgs01k0LyHV84pXt8gb1bcvzi2SwAO2DVrnOup1TD6XkUuY1UMV/1to
+         FYeXW4mPgfA8XFa4WMZvEyz4B1So9qt8yAujb2qGA5mnQznj0M0Uur98RJBx5zYNOrwb
+         le6g==
+X-Gm-Message-State: AO0yUKX//ipGH/F1CKjhVR/zQ24VGo89jUPc6k70WXgMzUvmHUpNdZwp
+        pXHzxpXhuiZE7N+WaBuIN60=
+X-Google-Smtp-Source: AK7set/cABpn+GMP5Ah/+G5LB72c46inbsR4CCL6C2Pqa36agwv43iMnjjnPmoqiOXkVCRR2x7VytA==
+X-Received: by 2002:a05:6a20:389e:b0:d9:d8e4:4cad with SMTP id n30-20020a056a20389e00b000d9d8e44cadmr2771485pzf.16.1679415609878;
+        Tue, 21 Mar 2023 09:20:09 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id i21-20020aa787d5000000b00571cdbd0771sm8427473pfo.102.2023.03.21.09.20.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 09:20:09 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Paul Eggert <eggert@cs.ucla.edu>
+Cc:     Eric Wong <e@80x24.org>, Taylor Blau <me@ttaylorr.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2] git-compat-util: use gettimeofday(2) for time(2)
+References: <20230319064353.686226-1-eggert@cs.ucla.edu>
+        <20230320230507.3932018-1-gitster@pobox.com>
+        <f78fd970-cce5-0a38-5ada-94ccb5bce592@cs.ucla.edu>
+Date:   Tue, 21 Mar 2023 09:20:09 -0700
+In-Reply-To: <f78fd970-cce5-0a38-5ada-94ccb5bce592@cs.ucla.edu> (Paul Eggert's
+        message of "Mon, 20 Mar 2023 16:21:40 -0700")
+Message-ID: <xmqq4jqekreu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAPNJDgcauhz_NraSPTQfiDM61gyghSJShZLPUtt5HOr2xKysZg@mail.gmail.com>
-In-Reply-To: <CAPNJDgcauhz_NraSPTQfiDM61gyghSJShZLPUtt5HOr2xKysZg@mail.gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Tue, 21 Mar 2023 09:59:39 -0600
-Message-ID: <CAMP44s1VnaM=vVYX-uvN1O0D87cgmWYjZzh+QzVhxr68c8W3Cw@mail.gmail.com>
-Subject: Re: [GSoC] Intro and Micro-project
-To:     Edwin Fernando <edwinfernando734@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 21, 2023 at 9:32=E2=80=AFAM Edwin Fernando
-<edwinfernando734@gmail.com> wrote:
+Paul Eggert <eggert@cs.ucla.edu> writes:
 
-> I found and looked at a few places with pipes. I have a few thoughts
-> and questions on making a change. Firstly (if this is relevant), how
-> do I ensure that the file I write the std output to doesn't have a
-> name clash with other such files made during tests?
+> Thanks, this looks good. As a matter of fact it almost precisely
+> matches what I was about to email you. The only significant difference
+> is that yours has "#define time(x) git_time(x)" whereas mine had
+> "#define time git_time". Since Git never takes the address of 'time'
+> the two macro definitions should have equivalent effects when used in
+> Git.
 
-Every test script is run inside a different directory. You can check the $P=
-WD.
+That is a valid concern.  Writing &time would not be caught by
+compilers, and you would not notice such a mistake until you run "nm
+-ug" on the result.
 
-> I will follow up with an email of the proposed patch.
+On the other hand, straight token replacement will risk renaming
+variables and structure members, and I was not sure if we have such
+use of the identifier "time".  As long as people do not use "time"
+and "git_time" at the same time as such identifiers, that would not
+be an issue (except for perhaps expecting to see them in debuggers).
+Writing "git_time" and "time" at the same time for identifiers not
+related to the time(2) function would not be caught by compilers,
+either, but it feels much less likely mistake we would make in the
+future, so let me drop (x) from the macro.
 
-I'm not sure of the usefulness of such patch.
+Thanks.
 
-Cheers.
 
---=20
-Felipe Contreras
