@@ -2,112 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F4F2C6FD1D
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 00:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 312BEC6FD1D
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 01:57:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbjCUAPg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Mar 2023 20:15:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51624 "EHLO
+        id S229731AbjCUB5i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Mar 2023 21:57:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229541AbjCUAPe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2023 20:15:34 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEC681114E
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 17:15:29 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-544f7c176easo108908157b3.9
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 17:15:29 -0700 (PDT)
+        with ESMTP id S229592AbjCUB5g (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2023 21:57:36 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CBC8211D0
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 18:57:35 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 20so6936845lju.0
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 18:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679357729;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=K4lvwAUrdKAhJ/aCIu5+DLQPgzWxaoD9PVPRdiQKQiI=;
-        b=GvGZ7UUyQa/KR/oZ1+ec8aubGMiDya6XNcIfDQCs7bZQlRWd/O+c6+UI8StXAT3kxs
-         Trxy0cGbbYDbc8vrlpgTvFHp850tgXnyLLryG1Y5ZSmh3Iopj6vOqQGVlp3uFtFFjcpT
-         9y6LxQq2rWlwydZUk9z3MlurBqExb7eeOBnKfum/xDdjfegMX0SCqWpIgViJdsETVP0R
-         JS/zXhddXgVo1oW37+PAXsmdSmEd2xLUhAoKWWCJVeL1Bezk0D0EcRg6tnIyU5XQnxmO
-         D0bgKNDZBTS2lo4ktDSvl1ePDunu2vOOs8XbeJ3iTGfoieukyVHSZbBV5wlcc7NBlo1l
-         alow==
+        d=gmail.com; s=20210112; t=1679363853;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VZNlFZmyieutSd+WGUHPZu9xHdJyexdRGJU/A2khkkg=;
+        b=ZUeEFcb/13HwOW+E9jRMGWAUIlGClUU3R+E5U4FL2SCYs+1X2x1SwFCJjeE/UHTYMR
+         j9wl62NWZ3aA2YpXmVhcVI/ZzoIjrJAPGfen1Ce34fFgbiR3NTFQ4v6aHFL3un40bIun
+         K6DSMrVHCEoOSJVvH39auHIU20ydJCiKyNN6BaksNp0omnKYi/4YkatA8QSvF6T8SaMY
+         goQIVPBeqqxZiAv4+2VylWy93blZL5SUFRwl6ZJWjMIsvl7C729umTaSOJfknw1rKAHV
+         8tPV3xgbFAHfpIpXI/Jy/kPVWgh/iVx36edX6M4Ek0VOn2hiUKU1VX8/qUs6sbMG47ZN
+         a0zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679357729;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=K4lvwAUrdKAhJ/aCIu5+DLQPgzWxaoD9PVPRdiQKQiI=;
-        b=KumiLW4TldZivqJcEaT6DH/4fc/eN1sTMz/lWmC2WDokEFr/wpRiOPaT43d07GLPVo
-         M3JiUWnQi++5bf8pjjPFIZSR1vUl4+YTRbbdScVaWZuswZm7SF3gAeZh7nTwr3IRKANY
-         F6a0bg54cQufXssjY0CzHBIAXt6OKXoN7HoDftwkMvAbI8RBduxE9TKs39PxKJr3JH+e
-         lqlRTGwljUGXztDgdhQKnknJO6/LGBF2z1Qv06zbQrp8l7oNEot+6e621c16qYRWovEO
-         Mil7c91gn//7tetWb/oicA/QvtSZxstx2FKvBcm9d77dyc0Dktiq43zPH+XSNiwTo2PY
-         pofQ==
-X-Gm-Message-State: AAQBX9e4h0bzFAYY6X96LYQF2zjthl4hoYcvXxQUAr2Zma1HTYwx+CiS
-        OJ4ngr/M7TYudEUjvS9VIP+PPQ9JTgYsk8EjRxMjCPq7XeQ=
-X-Google-Smtp-Source: AKy350aDznESAp4qBGCIO0Vl/CTdWtRQsadI+tsMkNQsm6Q+tp38mgAiAl5nLbBZEr5NG5oub2uZxep9IbLedbZ2l8Q=
-X-Received: by 2002:a81:b3c1:0:b0:541:9895:4ce9 with SMTP id
- r184-20020a81b3c1000000b0054198954ce9mr24990ywh.9.1679357728721; Mon, 20 Mar
- 2023 17:15:28 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679363853;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VZNlFZmyieutSd+WGUHPZu9xHdJyexdRGJU/A2khkkg=;
+        b=WwDMRxlhWpXoDVIv6qc2Z0wdjfCWHnj1XynNALhS8ml8Dog2hAizDisiAVJiZc+3oq
+         jN/dKib2vM2tbx5y4bvDuQv8GrOFgAyJcnj5I3ZjMkz58bjGkJNx64uZ9BzzB1gkWdrc
+         6GuTLK+yJstSPoLqa3udTcnZ/8CXaHOdQ/fnfUV0b/42eTg5e1nCUBGITdrKaVPDiFL8
+         CsPoTj8tDdl/mbaMR0cMN8uTU258tpp94WsiHdOTiwwc9vex/XJaYnq6goRZL0QK/fvn
+         et5z3yi4p2PWAytAql4OnJ6uFAcD8j61smNPaXCvsGjSLcmN8BkhRBesFxByC6ZkjtK2
+         cZqQ==
+X-Gm-Message-State: AO0yUKW3cg3pZJgRZE3BXOnb6pJVFPajaWlT81uauDiMgiPsmJKmJW2X
+        UWyXGnEJDsUoHRq+aSkyC83vtJgJu/OXA0Oe+STiSr0lRGc=
+X-Google-Smtp-Source: AK7set8UhtviyLWICXtg8sNG3PADI8/XZYGKddPCwzoT1RPzc6JUT5zsmkYNmYUs0X2lvQFr8ws+yy3WR2PW+DISNiQ=
+X-Received: by 2002:a2e:9257:0:b0:295:93eb:bab1 with SMTP id
+ v23-20020a2e9257000000b0029593ebbab1mr368559ljg.1.1679363853443; Mon, 20 Mar
+ 2023 18:57:33 -0700 (PDT)
 MIME-Version: 1.0
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Mon, 20 Mar 2023 18:15:17 -0600
-Message-ID: <CAMP44s3qa_CoM_4--UmwYQTgO-5dHh6=jogH-rxF7OXEWr53Lw@mail.gmail.com>
-Subject: [ANNOUNCE] Sharness v1.2.0
-To:     Git <git@vger.kernel.org>
+References: <BBB169A5-0665-47C9-819B-6409A22AB699@lanl.gov>
+In-Reply-To: <BBB169A5-0665-47C9-819B-6409A22AB699@lanl.gov>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 20 Mar 2023 18:57:21 -0700
+Message-ID: <CABPp-BEG+vp-UcpVfcZecPBnfcuTjO6JYCo7wEU5ZrDUHBUd9g@mail.gmail.com>
+Subject: Re: bug? round-trip through fast-import/fast-export loses files
+To:     "Priedhorsky, Reid" <reidpr@lanl.gov>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Hi,
 
-Version 1.2.0 of Sharness [1] -- the test harness library derived from
-Git's test lib -- is released.
+On Mon, Mar 20, 2023 at 11:23=E2=80=AFAM Priedhorsky, Reid <reidpr@lanl.gov=
+> wrote:
+>
+>   Hello,
+>
+>   I believe I=E2=80=99ve found a bug in Git. It seems that (1) round-trip=
+ping through
+>   fast-export/fast-import a repository (2) that contains a commit that ch=
+anges
+>   a file to a directory (3) deletes the contents of that directory from t=
+he
+>   repository.
+>
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+>   Run this shell script:
+>
+>   ~~~~
+>   #!/bin/bash
+>
+>   set -ex
+>
+>   mkdir -p /tmp/weirdal
+>   cd /tmp/weirdal
+>   git --version
+>
+>   # init repo
+>   rm -Rf wd
+>   mkdir wd
+>   cd wd
+>   git init -b main
+>
+>   # first commit - foo is a file
+>   touch foo
+>   git add -A
+>   git commit -m 'file'
+>
+>   # second commit - foo is a directory
+>   rm foo
+>   mkdir foo
+>   touch foo/bar
+>   git add -A
+>   git commit -m 'directory'
+>
+>   # the contents of foo are in the working dir and the repo
+>   git status
+>   ls -lR
+>   git ls-tree --name-only -r HEAD
+>
+>   # import/export repository (add --full-tree to work around bug)
+>   git fast-export --no-data -- --all > ../export
+>   cat ../export
+>   git fast-import --force --quiet < ../export
+>
+>   # bug: foo is still in the WD but not the repo; should still be both
+>   git status
+>   ls -lR
+>   git ls-tree --name-only -r HEAD
+>   #git fast-export --no-data -- --all | diff -u --text ../export - || tru=
+e
+>   ~~~~
+>
+> What did you expect to happen? (Expected behavior)
+>
+>   Repo should be unchanged, i.e.:
+>
+>   + git status
+>   On branch main
+>   nothing to commit, working tree clean
+>
+> What happened instead? (Actual behavior)
+>
+>   Git thinks foo/bar has been staged:
+>
+>   + git status
+>   On branch main
+>   Changes to be committed:
+>     (use "git restore --staged <file>..." to unstage)
+>           new file:   foo/bar
+>
+> What's different between what you expected and what actually happened?
+>
+>   File foo/bar is staged when it should be unchanged.
+>
+> Anything else you want to add:
+>
+>   This also happens in 2.38.1 built from source.
+>
+>   The bad behavior can be worked around with =E2=80=9C--full-tree=E2=80=
+=9D on fast-export, but
+>   the real repo where I want to do this is pretty large, so I=E2=80=99d p=
+refer not to.
+>
+>   Note the =E2=80=9Cgit fast-export=E2=80=9D output:
+>
+>     commit refs/heads/main
+>     mark :2
+>     author Reid Priedhorsky <reidpr@lanl.gov> 1679330805 -0600
+>     committer Reid Priedhorsky <reidpr@lanl.gov> 1679330805 -0600
+>     data 10
+>     directory
+>     from :1
+>     M 100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 foo/bar
+>     D foo
+>
+>   It looks to me like the =E2=80=9CM ... foo/bar=E2=80=9D is being proces=
+sed before =E2=80=9CD foo=E2=80=9D
+>   when it should happen in the opposite order.
 
-This release contains a few features from upstream and many
-improvements.
+Thanks for the well-written bug report, including not only a testcase
+but even the relevant bits of the fast-export output.  I thought I had
+fixed D/F issues in fast-export & fast-import before, and indeed a
+search turns up both of
 
- * Moved functions into lib-sharness/functions.sh
- * Add simple example
- * Add support for zsh
- * Clarify the purpose of `aggregate-results.sh`
- * Add `SHARNESS_TEST_OUTDIR`
- * Add `SHARNESS_TEST_NB`
- * Add `-x` option for tracing commands
- * Add vim syntax file
- * Minor bugfixes
+253fb5f889 (fast-import: Improve robustness when D->F changes provided
+in wrong order, 2010-07-09)
+060df62422 (fast-export: Fix output order of D/F changes, 2010-07-09)
 
-Many thanks to all that contributed to this release:
+However, it looks like both of those only considered D->F (directory
+becomes a file) changes, whereas you specifically have a case of F->D
+(file becoming a directory).
 
-     1  Albert Chu
-     1  Chris Dunlap
-    39  Christian Couder
-     2  Eric Curtin
-    72  Felipe Contreras
-     1  Marcel Schilling
-     1  Rafael Ascens=C3=A3o
-     1  Scott Bronson
-     1  Tristan Le Guern
+Honestly, looking back at those two patches of mine, I think both were
+rather suboptimal.  A better solution that would handle both F->D and
+D->F would be having fast-export sort the diff_filepairs such that it
+processes the deletes before the modifies.  Another improved solution
+would be having fast-import sort the files given to it and handling
+deletes first.  Either should fix this.
 
-The previous release was v1.1.0 in September 2018.
-
-To find more information about the release, including download
-locations, check the GitHub Release [3].
-
-To find more information about Sharness, you can check the
-Sharness site [4].
-
-Christian Couder has decided to transfer the ownership of the
-project [2] to me, Felipe Contreras.
-
-Thank you Christian for keeping the project afloat these years and your
-many contributions.
-
-Enjoy.
-
-[1] https://github.com/felipec/sharness
-[2] https://github.com/felipec/sharness/commit/00d30002218928d11d27d7c30890=
-9baf6da6da8b
-[3] https://github.com/felipec/sharness/releases/tag/v1.2.0
-[4] https://felipec.github.io/sharness/
-
---=20
-Felipe Contreras
+Might be a good task for a new contributor.  Any takers?  (Tagging as
+#leftoverbits.)
