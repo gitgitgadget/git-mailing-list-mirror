@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35A56C74A5B
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 06:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1DD2C74A5B
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 06:26:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230252AbjCUG0t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Mar 2023 02:26:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55470 "EHLO
+        id S230267AbjCUG0v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 02:26:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230201AbjCUG0b (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230206AbjCUG0b (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 21 Mar 2023 02:26:31 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A81437B6C
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 23:26:28 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id o7so12507805wrg.5
-        for <git@vger.kernel.org>; Mon, 20 Mar 2023 23:26:28 -0700 (PDT)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E945834023
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 23:26:26 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id v1so6397344wrv.1
+        for <git@vger.kernel.org>; Mon, 20 Mar 2023 23:26:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679379986;
+        d=gmail.com; s=20210112; t=1679379985;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nA0O3qeSqMX1hqtmM6pmONEe5YJVwJwNrwiany9TGUk=;
-        b=iDGlKIRlV+DcY8WqfDtBWeuFglUuZqqP7DJv/u53v2NV1ps7gblDQcVzBmSUcnaus4
-         f8vqkwIjHDph4MbMwv3JWWWLmlg+pdd6CbwTI78F9ZX5KtZK1sGUP12B5/JyPaR55WJb
-         KKdhDqjyiLJ7XcBy7iJs/1Y3zBBl5wyD2f8SS7jQAMZnxHTJF8J5GrUfKJLSxznK5vCS
-         3BzIq6TqW5uVg2Ag6Hq2Sr30Nlj5x0uayUJU8+uqQ8aX2retmLJVGDxy//KvCkhUzDpA
-         k47XtavLT4UxVTRqGDLTnVvHKmfqCyxFQnm5bNYDzmv8fWIcwVfz6kDVnXrmpmEqyNoG
-         ASHA==
+        bh=3rCNrkPD4rtxdUcnU/Xmfx6hx2zR4kjy1jzmekiBF88=;
+        b=B1pe7w4V4gC/dSqzFKJCUsGDGGgHazV1zHyjGtURj/WHg/kGMaMhZSyBKxeR4iqM38
+         TiFwWpd74jA1tVDjT4wKOLazoiPRxXJaaEpqUYNS/lCKOp8nYHDTTJOwiabEqMOd24vA
+         bXGFqK5/DmZCo3iCTbPYjihkkL+epXfa7LVC6BKQTMwczU8oYQCpzxm9tzGPtobuj+aM
+         l4CNuZHQEgulPdhIJjUc474bGFMJ3v47RmDNgXkp3mxEX2Z0z3K6nNvOn7qegp1wD6PN
+         gAZ1Bm9H9Te/58JwUEiEQZ9HxSPfD+AIQHyn26iHd9OfCD2/27ESYsifCNC2SKKqzunw
+         0ASw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679379986;
+        d=1e100.net; s=20210112; t=1679379985;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nA0O3qeSqMX1hqtmM6pmONEe5YJVwJwNrwiany9TGUk=;
-        b=kuGRL9MvZiDuk6ozhhCypb8Tv9b5S/6Zf5UGWJqWPwjRC2hI3WtU0UuEMO+byLhWwM
-         s2ClcdQ2oScQDaf2tMmfrjbNA+IPOHaHwVCT/dqvHQkZcpoQ6oZFW5p30QBC7WF18phZ
-         3f/xemT9ufO+EPKJE9M95QU1g/Uh+udMAcXR4XgOs2g159VeKWzAb26PKOyuZl6Xv11M
-         RVSSk64XqlAPf6r4ySIIaJRUTDLsv0M3esdzLrpqPhX1XcMNsndMTfMU+lugT1zUttUD
-         Ds5g3dRKpqbAwRwZXWMMfj5eWWfMdWOHTkXb7x+x3BTrCHWivaWAGvv5P5VAW7Ntc6Gr
-         hwZQ==
-X-Gm-Message-State: AO0yUKUXRhyqcRJUd5FOBrRe3XIUI7o0Rz+NZZfMaYQC5DuPzjNWZpVV
-        fI9odq+phkyQl2fiVtVlCQbpruwCiVk=
-X-Google-Smtp-Source: AK7set//3ub76KPRBJPdSkOF2mvUpgLZwFaEi2JGG1dKvk5kLTLvmI0fKv4Lzk7FWjbT1EESuXB/Fw==
-X-Received: by 2002:adf:ed0e:0:b0:2d3:bfcc:1b11 with SMTP id a14-20020adfed0e000000b002d3bfcc1b11mr1118981wro.42.1679379986563;
-        Mon, 20 Mar 2023 23:26:26 -0700 (PDT)
+        bh=3rCNrkPD4rtxdUcnU/Xmfx6hx2zR4kjy1jzmekiBF88=;
+        b=HSSNZ+mjfhJ2bk1dN/j8sJC4rITqWR3MdTuxwRQCO38ELAP3rEdyQ8kicceG5Uo9RZ
+         Uu7hEjr7LSdelpKjB9IedFgE3qBz7Trcz2dgsAS6bqf0WQ0ygurPVDhCrIutkqrvgO7I
+         FZEm11WJoG0Potvfe6ubySW92lorXsgc3Cbp3IO9Zm7xSaZiyM7CM2N2/qdHmZRPIVim
+         dEd1HVDUzC4xA9LLSZ3Qe61QPDSY8/oQzBhCMvhbWOVgrtWG3ym+tuRvARZHIqne/3D6
+         oon9NDrVKJoEHn52qOWBQBk5AUVxn4zcTpVjR0keWUyDEsxcolhsJ+PE3M2+Go5Jj08O
+         TdZg==
+X-Gm-Message-State: AO0yUKXcLRwBxU4oxdY2lHJelUtkFwU4GKalfGIwXqUil2h8hi4Ejt0b
+        M1JX86R0kXw7JmFP1E7xqcH9szMGk6g=
+X-Google-Smtp-Source: AK7set+kH80OQcdWficuj4m0257HFVs//H9BTDSSZmRwPZqA2nZkpbZ/VcuH9awK4Ar24sH4C5H57g==
+X-Received: by 2002:a5d:46c7:0:b0:2c7:604:52a1 with SMTP id g7-20020a5d46c7000000b002c7060452a1mr1197563wrs.29.1679379984923;
+        Mon, 20 Mar 2023 23:26:24 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s2-20020a5d5102000000b002c71b4d476asm10438742wrt.106.2023.03.20.23.26.26
+        by smtp.gmail.com with ESMTPSA id k6-20020a5d6d46000000b002c5598c14acsm10621652wri.6.2023.03.20.23.26.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Mar 2023 23:26:26 -0700 (PDT)
-Message-Id: <496d36e4fd0cd68ef6592d3694c8c4ec281f579b.1679379972.git.gitgitgadget@gmail.com>
+        Mon, 20 Mar 2023 23:26:24 -0700 (PDT)
+Message-Id: <43a61845240b69fd57ec3488517d3dc1201615c6.1679379972.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1493.v2.git.1679379968.gitgitgadget@gmail.com>
 References: <pull.1493.git.1679207282.gitgitgadget@gmail.com>
         <pull.1493.v2.git.1679379968.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 21 Mar 2023 06:26:04 +0000
-Subject: [PATCH v2 12/16] treewide: remove cache.h inclusion due to
- environment.h changes
+Date:   Tue, 21 Mar 2023 06:26:01 +0000
+Subject: [PATCH v2 09/16] wrapper.h: move declarations for wrapper.c functions
+ from cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,114 +74,967 @@ From: Elijah Newren <newren@gmail.com>
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- csum-file.c            | 2 +-
- gettext.c              | 2 +-
- ls-refs.c              | 2 +-
- notes-utils.c          | 2 +-
- prompt.c               | 2 +-
- prune-packed.c         | 2 +-
- reachable.c            | 2 +-
- t/helper/test-bitmap.c | 2 +-
- trailer.c              | 2 +-
- 9 files changed, 9 insertions(+), 9 deletions(-)
+ apply.c                          |  1 +
+ builtin/am.c                     |  1 +
+ builtin/bisect.c                 |  1 +
+ builtin/branch.c                 |  1 +
+ builtin/bugreport.c              |  2 +-
+ builtin/config.c                 |  1 +
+ builtin/credential-cache.c       |  1 +
+ builtin/difftool.c               |  1 +
+ builtin/fast-import.c            |  1 +
+ builtin/fmt-merge-msg.c          |  1 +
+ builtin/gc.c                     |  1 +
+ builtin/get-tar-commit-id.c      |  1 +
+ builtin/index-pack.c             |  1 +
+ builtin/init-db.c                |  1 +
+ builtin/merge.c                  |  1 +
+ builtin/pack-objects.c           |  1 +
+ builtin/rebase.c                 |  1 +
+ builtin/receive-pack.c           |  1 +
+ builtin/rerere.c                 |  1 +
+ builtin/unpack-file.c            |  1 +
+ builtin/worktree.c               |  1 +
+ cache.h                          | 32 ----------------------------
+ commit-graph.c                   |  1 +
+ compat/mingw.c                   |  1 +
+ compat/terminal.c                |  1 +
+ config.c                         |  1 +
+ convert.c                        |  1 +
+ copy.c                           |  1 +
+ csum-file.c                      |  1 +
+ daemon.c                         |  1 +
+ diff.c                           |  1 +
+ dir.c                            |  1 +
+ entry.c                          |  1 +
+ environment.c                    |  1 +
+ fetch-pack.c                     |  1 +
+ gpg-interface.c                  |  1 +
+ http-backend.c                   |  1 +
+ imap-send.c                      |  1 +
+ ll-merge.c                       |  1 +
+ merge-recursive.c                |  1 +
+ notes-merge.c                    |  1 +
+ object-file.c                    |  1 +
+ packfile.c                       |  1 +
+ parallel-checkout.c              |  1 +
+ pkt-line.c                       |  1 +
+ read-cache.c                     |  1 +
+ rebase-interactive.c             |  1 +
+ refs.c                           |  1 +
+ refs/files-backend.c             |  3 ++-
+ rerere.c                         |  1 +
+ sequencer.c                      |  1 +
+ server-info.c                    |  1 +
+ shallow.c                        |  1 +
+ strbuf.c                         |  1 +
+ streaming.c                      |  1 +
+ t/helper/test-delta.c            |  1 +
+ t/helper/test-fsmonitor-client.c |  1 +
+ t/helper/test-read-cache.c       |  1 +
+ tag.c                            |  1 +
+ tempfile.c                       |  1 +
+ trace.c                          |  1 +
+ transport-helper.c               |  1 +
+ transport.c                      |  1 +
+ usage.c                          |  1 +
+ worktree.c                       |  1 +
+ wrapper.c                        |  1 +
+ wrapper.h                        | 36 ++++++++++++++++++++++++++++++++
+ write-or-die.c                   |  1 +
+ 68 files changed, 103 insertions(+), 34 deletions(-)
+ create mode 100644 wrapper.h
 
+diff --git a/apply.c b/apply.c
+index e5e11b85793..373565a7baf 100644
+--- a/apply.c
++++ b/apply.c
+@@ -26,6 +26,7 @@
+ #include "rerere.h"
+ #include "apply.h"
+ #include "entry.h"
++#include "wrapper.h"
+ 
+ struct gitdiff_data {
+ 	struct strbuf *root;
+diff --git a/builtin/am.c b/builtin/am.c
+index 14347ecf9aa..37f82b3eb42 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -38,6 +38,7 @@
+ #include "packfile.h"
+ #include "repository.h"
+ #include "pretty.h"
++#include "wrapper.h"
+ 
+ /**
+  * Returns the length of the first line of msg.
+diff --git a/builtin/bisect.c b/builtin/bisect.c
+index 09188e554b3..31cc57e45ba 100644
+--- a/builtin/bisect.c
++++ b/builtin/bisect.c
+@@ -11,6 +11,7 @@
+ #include "prompt.h"
+ #include "quote.h"
+ #include "revision.h"
++#include "wrapper.h"
+ 
+ static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+ static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 56dbee97d20..98475ea5325 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -26,6 +26,7 @@
+ #include "worktree.h"
+ #include "help.h"
+ #include "commit-reach.h"
++#include "wrapper.h"
+ 
+ static const char * const builtin_branch_usage[] = {
+ 	N_("git branch [<options>] [-r | -a] [--merged] [--no-merged]"),
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index b5dfad4e12a..160590e4ef6 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -8,7 +8,7 @@
+ #include "hook.h"
+ #include "hook-list.h"
+ #include "diagnose.h"
+-
++#include "wrapper.h"
+ 
+ static void get_system_info(struct strbuf *sys_info)
+ {
+diff --git a/builtin/config.c b/builtin/config.c
+index 42e6b8d3481..1c1e006ff3f 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -9,6 +9,7 @@
+ #include "urlmatch.h"
+ #include "quote.h"
+ #include "worktree.h"
++#include "wrapper.h"
+ 
+ static const char *const builtin_config_usage[] = {
+ 	N_("git config [<options>]"),
+diff --git a/builtin/credential-cache.c b/builtin/credential-cache.c
+index 25f2f71c216..af56a44923d 100644
+--- a/builtin/credential-cache.c
++++ b/builtin/credential-cache.c
+@@ -1,6 +1,7 @@
+ #include "builtin.h"
+ #include "gettext.h"
+ #include "parse-options.h"
++#include "wrapper.h"
+ 
+ #ifndef NO_UNIX_SOCKETS
+ 
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index ed06db12085..59465c39f1d 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -27,6 +27,7 @@
+ #include "object-store.h"
+ #include "dir.h"
+ #include "entry.h"
++#include "wrapper.h"
+ 
+ static int trust_exit_code;
+ 
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 7307c4657f2..3300b7f30f0 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -23,6 +23,7 @@
+ #include "commit-reach.h"
+ #include "khash.h"
+ #include "date.h"
++#include "wrapper.h"
+ 
+ #define PACK_ID_BITS 16
+ #define MAX_PACK_ID ((1<<PACK_ID_BITS)-1)
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 0f9855b680e..cc812416420 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -3,6 +3,7 @@
+ #include "fmt-merge-msg.h"
+ #include "gettext.h"
+ #include "parse-options.h"
++#include "wrapper.h"
+ 
+ static const char * const fmt_merge_msg_usage[] = {
+ 	N_("git fmt-merge-msg [-m <message>] [--log[=<n>] | --no-log] [--file <file>]"),
+diff --git a/builtin/gc.c b/builtin/gc.c
+index ef063fc828c..2107e3d1f2c 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -35,6 +35,7 @@
+ #include "exec-cmd.h"
+ #include "gettext.h"
+ #include "hook.h"
++#include "wrapper.h"
+ 
+ #define FAILED_RUN "failed to run %s"
+ 
+diff --git a/builtin/get-tar-commit-id.c b/builtin/get-tar-commit-id.c
+index 491af9202dc..67457969986 100644
+--- a/builtin/get-tar-commit-id.c
++++ b/builtin/get-tar-commit-id.c
+@@ -6,6 +6,7 @@
+ #include "tar.h"
+ #include "builtin.h"
+ #include "quote.h"
++#include "wrapper.h"
+ 
+ static const char builtin_get_tar_commit_id_usage[] =
+ "git get-tar-commit-id";
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index bae5b054039..2393897cb88 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -19,6 +19,7 @@
+ #include "object-store.h"
+ #include "replace-object.h"
+ #include "promisor-remote.h"
++#include "wrapper.h"
+ 
+ static const char index_pack_usage[] =
+ "git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 6f724f694f4..a5d4f5c8ece 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -12,6 +12,7 @@
+ #include "exec-cmd.h"
+ #include "parse-options.h"
+ #include "worktree.h"
++#include "wrapper.h"
+ 
+ #ifndef DEFAULT_GIT_TEMPLATE_DIR
+ #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 38243e55c5f..f4f4a220f30 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -49,6 +49,7 @@
+ #include "commit-reach.h"
+ #include "wt-status.h"
+ #include "commit-graph.h"
++#include "wrapper.h"
+ 
+ #define DEFAULT_TWOHEAD (1<<0)
+ #define DEFAULT_OCTOPUS (1<<1)
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 1ca800c7c50..8b55a088a7c 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -40,6 +40,7 @@
+ #include "shallow.h"
+ #include "promisor-remote.h"
+ #include "pack-mtimes.h"
++#include "wrapper.h"
+ 
+ /*
+  * Objects we are going to pack are collected in the `to_pack` structure.
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index a3f8be88882..d2f8f703d67 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -32,6 +32,7 @@
+ #include "rebase-interactive.h"
+ #include "reset.h"
+ #include "hook.h"
++#include "wrapper.h"
+ 
+ static char const * const builtin_rebase_usage[] = {
+ 	N_("git rebase [-i] [options] [--exec <cmd>] "
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index aec5ee930b2..ae49ea8c2ad 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -33,6 +33,7 @@
+ #include "commit-reach.h"
+ #include "worktree.h"
+ #include "shallow.h"
++#include "wrapper.h"
+ 
+ static const char * const receive_pack_usage[] = {
+ 	N_("git receive-pack <git-dir>"),
+diff --git a/builtin/rerere.c b/builtin/rerere.c
+index 24c78755723..d4a03707b1a 100644
+--- a/builtin/rerere.c
++++ b/builtin/rerere.c
+@@ -6,6 +6,7 @@
+ #include "parse-options.h"
+ #include "string-list.h"
+ #include "rerere.h"
++#include "wrapper.h"
+ #include "xdiff/xdiff.h"
+ #include "xdiff-interface.h"
+ #include "pathspec.h"
+diff --git a/builtin/unpack-file.c b/builtin/unpack-file.c
+index e9b105a5397..4cbb4039293 100644
+--- a/builtin/unpack-file.c
++++ b/builtin/unpack-file.c
+@@ -2,6 +2,7 @@
+ #include "config.h"
+ #include "hex.h"
+ #include "object-store.h"
++#include "wrapper.h"
+ 
+ static char *create_temp_file(struct object_id *oid)
+ {
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index ed614ffddcb..1533b4ab43c 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -16,6 +16,7 @@
+ #include "submodule.h"
+ #include "utf8.h"
+ #include "worktree.h"
++#include "wrapper.h"
+ #include "quote.h"
+ 
+ #define BUILTIN_WORKTREE_ADD_USAGE \
+diff --git a/cache.h b/cache.h
+index 705c41992bc..31c722533f9 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1085,10 +1085,6 @@ const char *repo_find_unique_abbrev(struct repository *r, const struct object_id
+ int repo_find_unique_abbrev_r(struct repository *r, char *hex, const struct object_id *oid, int len);
+ #define find_unique_abbrev_r(hex, oid, len) repo_find_unique_abbrev_r(the_repository, hex, oid, len)
+ 
+-/* set default permissions by passing mode arguments to open(2) */
+-int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
+-int git_mkstemp_mode(char *pattern, int mode);
+-
+ /*
+  * NOTE NOTE NOTE!!
+  *
+@@ -1423,31 +1419,6 @@ static inline int batch_fsync_enabled(enum fsync_component component)
+ 	return (fsync_components & component) && (fsync_method == FSYNC_METHOD_BATCH);
+ }
+ 
+-ssize_t read_in_full(int fd, void *buf, size_t count);
+-ssize_t write_in_full(int fd, const void *buf, size_t count);
+-ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
+-
+-static inline ssize_t write_str_in_full(int fd, const char *str)
+-{
+-	return write_in_full(fd, str, strlen(str));
+-}
+-
+-/**
+- * Open (and truncate) the file at path, write the contents of buf to it,
+- * and close it. Dies if any errors are encountered.
+- */
+-void write_file_buf(const char *path, const char *buf, size_t len);
+-
+-/**
+- * Like write_file_buf(), but format the contents into a buffer first.
+- * Additionally, write_file() will append a newline if one is not already
+- * present, making it convenient to write text files:
+- *
+- *   write_file(path, "counter: %d", ctr);
+- */
+-__attribute__((format (printf, 2, 3)))
+-void write_file(const char *path, const char *fmt, ...);
+-
+ /* pager.c */
+ void setup_pager(void);
+ int pager_in_use(void);
+@@ -1571,7 +1542,4 @@ int versioncmp(const char *s1, const char *s2);
+  */
+ int print_sha1_ellipsis(void);
+ 
+-/* Return 1 if the file is empty or does not exists, 0 otherwise. */
+-int is_empty_or_missing_file(const char *filename);
+-
+ #endif /* CACHE_H */
+diff --git a/commit-graph.c b/commit-graph.c
+index 8f21a0a0c20..5481736c76c 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -22,6 +22,7 @@
+ #include "json-writer.h"
+ #include "trace2.h"
+ #include "chunk-format.h"
++#include "wrapper.h"
+ 
+ void git_test_write_commit_graph_or_die(void)
+ {
+diff --git a/compat/mingw.c b/compat/mingw.c
+index cbcd03aea9b..d48899bf7b4 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -11,6 +11,7 @@
+ #include "../alloc.h"
+ #include "win32/lazyload.h"
+ #include "../config.h"
++#include "../wrapper.h"
+ #include "dir.h"
+ #include "gettext.h"
+ #define SECURITY_WIN32
+diff --git a/compat/terminal.c b/compat/terminal.c
+index afebe6b2496..ed2b30b38f7 100644
+--- a/compat/terminal.c
++++ b/compat/terminal.c
+@@ -6,6 +6,7 @@
+ #include "run-command.h"
+ #include "string-list.h"
+ #include "hashmap.h"
++#include "wrapper.h"
+ 
+ #if defined(HAVE_DEV_TTY) || defined(GIT_WINDOWS_NATIVE)
+ 
+diff --git a/config.c b/config.c
+index 6815919ec30..5b1a5d52052 100644
+--- a/config.c
++++ b/config.c
+@@ -28,6 +28,7 @@
+ #include "replace-object.h"
+ #include "refs.h"
+ #include "worktree.h"
++#include "wrapper.h"
+ 
+ struct config_source {
+ 	struct config_source *prev;
+diff --git a/convert.c b/convert.c
+index 2bd54244b55..da06e2f51cb 100644
+--- a/convert.c
++++ b/convert.c
+@@ -11,6 +11,7 @@
+ #include "sub-process.h"
+ #include "utf8.h"
+ #include "ll-merge.h"
++#include "wrapper.h"
+ 
+ /*
+  * convert.c - convert a file when checking it out and checking it in.
+diff --git a/copy.c b/copy.c
+index 4de6a110f09..c3250f08221 100644
+--- a/copy.c
++++ b/copy.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "wrapper.h"
+ 
+ int copy_fd(int ifd, int ofd)
+ {
 diff --git a/csum-file.c b/csum-file.c
-index 2d22f80d901..82ae2973d30 100644
+index cce13c0f047..2d22f80d901 100644
 --- a/csum-file.c
 +++ b/csum-file.c
-@@ -7,7 +7,7 @@
-  * files. Useful when you write a file that you want to be
-  * able to verify hasn't been messed with afterwards.
-  */
--#include "cache.h"
-+#include "git-compat-util.h"
+@@ -10,6 +10,7 @@
+ #include "cache.h"
  #include "progress.h"
  #include "csum-file.h"
- #include "wrapper.h"
-diff --git a/gettext.c b/gettext.c
-index 85d3d3424eb..5f348708300 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -2,7 +2,7 @@
-  * Copyright (c) 2010 Ævar Arnfjörð Bjarmason
-  */
++#include "wrapper.h"
  
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "abspath.h"
- #include "environment.h"
- #include "exec-cmd.h"
-diff --git a/ls-refs.c b/ls-refs.c
-index 12cbb40a198..b9f3e08ec3d 100644
---- a/ls-refs.c
-+++ b/ls-refs.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "environment.h"
- #include "gettext.h"
- #include "hex.h"
-diff --git a/notes-utils.c b/notes-utils.c
-index 8797271faf1..86552f31c4a 100644
---- a/notes-utils.c
-+++ b/notes-utils.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "config.h"
- #include "commit.h"
- #include "environment.h"
-diff --git a/prompt.c b/prompt.c
-index ba10813b313..3baa33f63d8 100644
---- a/prompt.c
-+++ b/prompt.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "config.h"
- #include "environment.h"
+ static void verify_buffer_or_die(struct hashfile *f,
+ 				 const void *buf,
+diff --git a/daemon.c b/daemon.c
+index bb795ca3ca9..e35604e194c 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -6,6 +6,7 @@
  #include "run-command.h"
-diff --git a/prune-packed.c b/prune-packed.c
-index 5a57072a7ac..58412b4fb91 100644
---- a/prune-packed.c
-+++ b/prune-packed.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "environment.h"
- #include "gettext.h"
+ #include "strbuf.h"
+ #include "string-list.h"
++#include "wrapper.h"
+ 
+ #ifdef NO_INITGROUPS
+ #define initgroups(x, y) (0) /* nothing */
+diff --git a/diff.c b/diff.c
+index 1b0be99c065..1b0b24c21c3 100644
+--- a/diff.c
++++ b/diff.c
+@@ -33,6 +33,7 @@
+ #include "promisor-remote.h"
+ #include "dir.h"
+ #include "strmap.h"
++#include "wrapper.h"
+ 
+ #ifdef NO_FAST_WORKING_DIRECTORY
+ #define FAST_WORKING_DIRECTORY 0
+diff --git a/dir.c b/dir.c
+index c72481c60ee..b57c770e68b 100644
+--- a/dir.c
++++ b/dir.c
+@@ -21,6 +21,7 @@
+ #include "ewah/ewok.h"
+ #include "fsmonitor.h"
+ #include "submodule-config.h"
++#include "wrapper.h"
+ 
+ /*
+  * Tells read_directory_recursive how a file or directory should be treated.
+diff --git a/entry.c b/entry.c
+index acb76a61aca..70212af260b 100644
+--- a/entry.c
++++ b/entry.c
+@@ -10,6 +10,7 @@
+ #include "fsmonitor.h"
+ #include "entry.h"
+ #include "parallel-checkout.h"
++#include "wrapper.h"
+ 
+ static void create_directories(const char *path, int path_len,
+ 			       const struct checkout *state)
+diff --git a/environment.c b/environment.c
+index c69571f0b29..bf02f3cf487 100644
+--- a/environment.c
++++ b/environment.c
+@@ -23,6 +23,7 @@
+ #include "tmp-objdir.h"
+ #include "chdir-notify.h"
+ #include "shallow.h"
++#include "wrapper.h"
+ 
+ int trust_executable_bit = 1;
+ int trust_ctime = 1;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 359dce6afed..c1190801405 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -30,6 +30,7 @@
+ #include "commit-graph.h"
+ #include "sigchain.h"
+ #include "mergesort.h"
++#include "wrapper.h"
+ 
+ static int transfer_unpack_limit = -1;
+ static int fetch_unpack_limit = -1;
+diff --git a/gpg-interface.c b/gpg-interface.c
+index f9c5b6c3f53..6644701fda0 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -10,6 +10,7 @@
+ #include "sigchain.h"
+ #include "tempfile.h"
+ #include "alias.h"
++#include "wrapper.h"
+ 
+ static int git_gpg_config(const char *, const char *, void *);
+ 
+diff --git a/http-backend.c b/http-backend.c
+index 7e7c19e66b3..42e6c2596e9 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -16,6 +16,7 @@
  #include "object-store.h"
-diff --git a/reachable.c b/reachable.c
-index b0f85046e9c..55bb1143530 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
+ #include "protocol.h"
+ #include "date.h"
++#include "wrapper.h"
+ 
+ static const char content_type[] = "Content-Type";
+ static const char content_length[] = "Content-Length";
+diff --git a/imap-send.c b/imap-send.c
+index c65a27219c6..aa5b2f252d2 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -28,6 +28,7 @@
+ #include "gettext.h"
+ #include "run-command.h"
+ #include "parse-options.h"
++#include "wrapper.h"
+ #if defined(NO_OPENSSL) && !defined(HAVE_OPENSSL_CSPRNG)
+ typedef void *SSL;
+ #endif
+diff --git a/ll-merge.c b/ll-merge.c
+index 130d26501c6..8be38d3bd41 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -11,6 +11,7 @@
+ #include "run-command.h"
+ #include "ll-merge.h"
+ #include "quote.h"
++#include "wrapper.h"
+ 
+ struct ll_merge_driver;
+ 
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 0b0255ebc80..f918cea4c69 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -30,6 +30,7 @@
+ #include "tag.h"
+ #include "tree-walk.h"
+ #include "unpack-trees.h"
++#include "wrapper.h"
+ #include "xdiff-interface.h"
+ 
+ struct merge_options_internal {
+diff --git a/notes-merge.c b/notes-merge.c
+index c8d0020b1a2..ba2970f0702 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -15,6 +15,7 @@
+ #include "strbuf.h"
+ #include "notes-utils.h"
+ #include "commit-reach.h"
++#include "wrapper.h"
+ 
+ struct notes_merge_pair {
+ 	struct object_id obj, base, local, remote;
+diff --git a/object-file.c b/object-file.c
+index bee41b30474..bdf68763a50 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -38,6 +38,7 @@
+ #include "promisor-remote.h"
+ #include "submodule.h"
+ #include "fsck.h"
++#include "wrapper.h"
+ 
+ /* The maximum size for an object header. */
+ #define MAX_HEADER_LEN 32
+diff --git a/packfile.c b/packfile.c
+index 3290fde15a1..8c117ccee27 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -20,6 +20,7 @@
+ #include "midx.h"
+ #include "commit-graph.h"
+ #include "promisor-remote.h"
++#include "wrapper.h"
+ 
+ char *odb_pack_name(struct strbuf *buf,
+ 		    const unsigned char *hash,
+diff --git a/parallel-checkout.c b/parallel-checkout.c
+index 38c4dc665d5..50fd7fe31ef 100644
+--- a/parallel-checkout.c
++++ b/parallel-checkout.c
+@@ -12,6 +12,7 @@
+ #include "streaming.h"
+ #include "thread-utils.h"
+ #include "trace2.h"
++#include "wrapper.h"
+ 
+ struct pc_worker {
+ 	struct child_process cp;
+diff --git a/pkt-line.c b/pkt-line.c
+index c8b90b2242e..30469eb4d8d 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -3,6 +3,7 @@
  #include "gettext.h"
  #include "hex.h"
- #include "refs.h"
-diff --git a/t/helper/test-bitmap.c b/t/helper/test-bitmap.c
-index ff35f5999b3..5bb489882da 100644
---- a/t/helper/test-bitmap.c
-+++ b/t/helper/test-bitmap.c
-@@ -1,5 +1,5 @@
- #include "test-tool.h"
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "pack-bitmap.h"
+ #include "run-command.h"
++#include "wrapper.h"
  
- static int bitmap_list_commits(void)
-diff --git a/trailer.c b/trailer.c
-index 6a5091a3c46..a2c3ed6f28c 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "alloc.h"
+ char packet_buffer[LARGE_PACKET_MAX];
+ static const char *packet_trace_prefix = "git";
+diff --git a/read-cache.c b/read-cache.c
+index 63789ea5e21..9a8d5fe97ed 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -32,6 +32,7 @@
+ #include "csum-file.h"
+ #include "promisor-remote.h"
+ #include "hook.h"
++#include "wrapper.h"
+ 
+ /* Mask for the name length in ce_flags in the on-disk index */
+ 
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index 649c94e69a6..7c885c35bfd 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -7,6 +7,7 @@
+ #include "commit-slab.h"
  #include "config.h"
- #include "environment.h"
+ #include "dir.h"
++#include "wrapper.h"
+ 
+ static const char edit_todo_list_advice[] =
+ N_("You can fix this with 'git rebase --edit-todo' "
+diff --git a/refs.c b/refs.c
+index 8684f4610f5..385051752f1 100644
+--- a/refs.c
++++ b/refs.c
+@@ -24,6 +24,7 @@
+ #include "sigchain.h"
+ #include "date.h"
+ #include "commit.h"
++#include "wrapper.h"
+ 
+ /*
+  * List of all available backends
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index de3628ff3f1..eb14d124e3f 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -13,7 +13,8 @@
+ #include "../object.h"
+ #include "../dir.h"
+ #include "../chdir-notify.h"
+-#include "worktree.h"
++#include "../worktree.h"
++#include "../wrapper.h"
+ 
+ /*
+  * This backend uses the following flags in `ref_update::flags` for
+diff --git a/rerere.c b/rerere.c
+index c3258e13902..b5ccbecdcd2 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -16,6 +16,7 @@
+ #include "object-store.h"
+ #include "hash-lookup.h"
+ #include "strmap.h"
++#include "wrapper.h"
+ 
+ #define RESOLVED 0
+ #define PUNTED 1
+diff --git a/sequencer.c b/sequencer.c
+index c61c1fc4d87..aa7983f5b45 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -41,6 +41,7 @@
+ #include "rebase-interactive.h"
+ #include "reset.h"
+ #include "branch.h"
++#include "wrapper.h"
+ 
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+diff --git a/server-info.c b/server-info.c
+index 78643377057..ae96d784e53 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -10,6 +10,7 @@
+ #include "packfile.h"
+ #include "object-store.h"
+ #include "strbuf.h"
++#include "wrapper.h"
+ 
+ struct update_info_ctx {
+ 	FILE *cur_fp;
+diff --git a/shallow.c b/shallow.c
+index c5433a4fd30..7fcba5f6d06 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -17,6 +17,7 @@
+ #include "list-objects.h"
+ #include "commit-reach.h"
+ #include "shallow.h"
++#include "wrapper.h"
+ 
+ void set_alternate_shallow_file(struct repository *r, const char *path, int override)
+ {
+diff --git a/strbuf.c b/strbuf.c
+index 9633e37b62f..70a83e7980e 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -8,6 +8,7 @@
+ #include "string-list.h"
+ #include "utf8.h"
+ #include "date.h"
++#include "wrapper.h"
+ 
+ int starts_with(const char *str, const char *prefix)
+ {
+diff --git a/streaming.c b/streaming.c
+index 27841dc1d9e..6c69f595045 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -7,6 +7,7 @@
+ #include "object-store.h"
+ #include "replace-object.h"
+ #include "packfile.h"
++#include "wrapper.h"
+ 
+ typedef int (*open_istream_fn)(struct git_istream *,
+ 			       struct repository *,
+diff --git a/t/helper/test-delta.c b/t/helper/test-delta.c
+index b15481ea596..6609fcbc12e 100644
+--- a/t/helper/test-delta.c
++++ b/t/helper/test-delta.c
+@@ -12,6 +12,7 @@
+ #include "git-compat-util.h"
+ #include "delta.h"
+ #include "cache.h"
++#include "wrapper.h"
+ 
+ static const char usage_str[] =
+ 	"test-tool delta (-d|-p) <from_file> <data_file> <out_file>";
+diff --git a/t/helper/test-fsmonitor-client.c b/t/helper/test-fsmonitor-client.c
+index 54a4856c48c..c43fc976b82 100644
+--- a/t/helper/test-fsmonitor-client.c
++++ b/t/helper/test-fsmonitor-client.c
+@@ -9,6 +9,7 @@
+ #include "fsmonitor-ipc.h"
+ #include "thread-utils.h"
+ #include "trace2.h"
++#include "wrapper.h"
+ 
+ #ifndef HAVE_FSMONITOR_DAEMON_BACKEND
+ int cmd__fsmonitor_client(int argc, const char **argv)
+diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
+index 23e9e27109f..84818363d5b 100644
+--- a/t/helper/test-read-cache.c
++++ b/t/helper/test-read-cache.c
+@@ -2,6 +2,7 @@
+ #include "test-tool.h"
+ #include "cache.h"
+ #include "config.h"
++#include "wrapper.h"
+ 
+ int cmd__read_cache(int argc, const char **argv)
+ {
+diff --git a/tag.c b/tag.c
+index 18b718cca66..3408bb9433f 100644
+--- a/tag.c
++++ b/tag.c
+@@ -8,6 +8,7 @@
+ #include "gpg-interface.h"
+ #include "hex.h"
+ #include "packfile.h"
++#include "wrapper.h"
+ 
+ const char *tag_type = "tag";
+ 
+diff --git a/tempfile.c b/tempfile.c
+index e27048f970b..cdd2cab3bad 100644
+--- a/tempfile.c
++++ b/tempfile.c
+@@ -45,6 +45,7 @@
+ #include "cache.h"
+ #include "tempfile.h"
+ #include "sigchain.h"
++#include "wrapper.h"
+ 
+ static VOLATILE_LIST_HEAD(tempfile_list);
+ 
+diff --git a/trace.c b/trace.c
+index 2b41c683fc8..de004f62988 100644
+--- a/trace.c
++++ b/trace.c
+@@ -24,6 +24,7 @@
+ #include "cache.h"
+ #include "abspath.h"
+ #include "quote.h"
++#include "wrapper.h"
+ 
+ struct trace_key trace_default_key = { "GIT_TRACE", 0, 0, 0 };
+ struct trace_key trace_perf_key = TRACE_KEY_INIT(PERFORMANCE);
+diff --git a/transport-helper.c b/transport-helper.c
+index 105bb801c21..09048eab484 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -16,6 +16,7 @@
+ #include "refspec.h"
+ #include "transport-internal.h"
+ #include "protocol.h"
++#include "wrapper.h"
+ 
+ static int debug;
+ 
+diff --git a/transport.c b/transport.c
+index 80059124c0a..c6179b801e8 100644
+--- a/transport.c
++++ b/transport.c
+@@ -26,6 +26,7 @@
+ #include "object-store.h"
+ #include "color.h"
+ #include "bundle-uri.h"
++#include "wrapper.h"
+ 
+ static int transport_use_color = -1;
+ static char transport_colors[][COLOR_MAXLEN] = {
+diff --git a/usage.c b/usage.c
+index 40a1c5a4339..b53c99dbe5b 100644
+--- a/usage.c
++++ b/usage.c
+@@ -5,6 +5,7 @@
+  */
+ #include "cache.h"
+ #include "gettext.h"
++#include "wrapper.h"
+ 
+ static void vreportf(const char *prefix, const char *err, va_list params)
+ {
+diff --git a/worktree.c b/worktree.c
+index b7bc4c7bb7a..fe4345012c4 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -9,6 +9,7 @@
+ #include "dir.h"
+ #include "wt-status.h"
+ #include "config.h"
++#include "wrapper.h"
+ 
+ void free_worktrees(struct worktree **worktrees)
+ {
+diff --git a/wrapper.c b/wrapper.c
+index df1fa6286d0..ee837575902 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -5,6 +5,7 @@
+ #include "abspath.h"
+ #include "config.h"
+ #include "gettext.h"
++#include "wrapper.h"
+ 
+ static intmax_t count_fsync_writeout_only;
+ static intmax_t count_fsync_hardware_flush;
+diff --git a/wrapper.h b/wrapper.h
+new file mode 100644
+index 00000000000..f0c7d0616d6
+--- /dev/null
++++ b/wrapper.h
+@@ -0,0 +1,36 @@
++#ifndef WRAPPER_H
++#define WRAPPER_H
++
++/* set default permissions by passing mode arguments to open(2) */
++int git_mkstemps_mode(char *pattern, int suffix_len, int mode);
++int git_mkstemp_mode(char *pattern, int mode);
++
++ssize_t read_in_full(int fd, void *buf, size_t count);
++ssize_t write_in_full(int fd, const void *buf, size_t count);
++ssize_t pread_in_full(int fd, void *buf, size_t count, off_t offset);
++
++static inline ssize_t write_str_in_full(int fd, const char *str)
++{
++	return write_in_full(fd, str, strlen(str));
++}
++
++/**
++ * Open (and truncate) the file at path, write the contents of buf to it,
++ * and close it. Dies if any errors are encountered.
++ */
++void write_file_buf(const char *path, const char *buf, size_t len);
++
++/**
++ * Like write_file_buf(), but format the contents into a buffer first.
++ * Additionally, write_file() will append a newline if one is not already
++ * present, making it convenient to write text files:
++ *
++ *   write_file(path, "counter: %d", ctr);
++ */
++__attribute__((format (printf, 2, 3)))
++void write_file(const char *path, const char *fmt, ...);
++
++/* Return 1 if the file is empty or does not exists, 0 otherwise. */
++int is_empty_or_missing_file(const char *filename);
++
++#endif /* WRAPPER_H */
+diff --git a/write-or-die.c b/write-or-die.c
+index aaa0318e824..a7afc303db2 100644
+--- a/write-or-die.c
++++ b/write-or-die.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "config.h"
+ #include "run-command.h"
++#include "wrapper.h"
+ 
+ /*
+  * Some cases use stdio, but want to flush after the write
 -- 
 gitgitgadget
 
