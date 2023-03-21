@@ -2,106 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5390C6FD1D
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 19:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89412C6FD20
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 20:05:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229835AbjCUTtl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Mar 2023 15:49:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47380 "EHLO
+        id S229676AbjCUUF3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 16:05:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbjCUTtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2023 15:49:40 -0400
-Received: from mail-vs1-xe31.google.com (mail-vs1-xe31.google.com [IPv6:2607:f8b0:4864:20::e31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FF979EE1
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 12:49:34 -0700 (PDT)
-Received: by mail-vs1-xe31.google.com with SMTP id d2so8169693vso.9
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 12:49:34 -0700 (PDT)
+        with ESMTP id S229691AbjCUUF2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2023 16:05:28 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 436E44A1E6
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 13:04:55 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id z19so6836971plo.2
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 13:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nearearth.aero; s=google; t=1679428173;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=78jPE68bp6+lywmOv4Yd95/gsMxMQ+csT4OXfHHLBR8=;
-        b=D4QsaZuNsPPdSdS/IS3II2z6Boa4OthFxxh95ChHciy6arniTip//JurmJdxddCf95
-         on8WIWdFDom62iUNET34hPlGs2wsEouHnwRcTUIY3C5X3H4Qppv7lhpttTaaN5i8CWQh
-         1tM2u8x51b+OzvRyEgOWuWOPSPrwqShq2Dr2dKPCfLnF65jNZzkP8muvdNwGFv/xPJ0A
-         sJ9cNjE1fJaXHNRyy5csE1t4QkP6tAIDXbKLZP8robNX1343WKfYw+H5VHTCIKPg/8Ru
-         aq9ZNW9feq2x9tYl1AmrDTaRC/wmZ+VUGzJLQAb36PZPktZVX4maij0VTjsayMY6L9Sy
-         0fNQ==
+        d=gmail.com; s=20210112; t=1679429090;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=601gygmPWllenNl+E507C8jXNtFIK/SStSvEjRxCky4=;
+        b=asxuJkS8s6kbPrTz+uQaR7r42IEyFXUJ6RwSNqb544SK8HWWgkdIzV2YorSbkm/I0e
+         5jGbPG6iLIwB1bTuBfT5Q6mkuO7jiYtUT6zIZ+H8KGPW+4OUam+WMvMkgCm3ZR1sfw/c
+         p9367YtkixjdYIl/++IEnNyQOmRk3t8yj0OrRWalnADvcJFs+uAnkbTgH3NVssn7xS68
+         9/yV2XvVeqLn706LC8XUOtFZabNAfTlTzy1U0PoIA8ISPykLs90gg+1/TlECpZHFyZti
+         2MfOD9nYuC0GnP78O623b5p6FSnGq2DKek+H/8mca6gN+dvgqNJDTd5dRSd1m9w0unD+
+         Qd6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679428173;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=78jPE68bp6+lywmOv4Yd95/gsMxMQ+csT4OXfHHLBR8=;
-        b=MV9Zjn5jfuIFra2OcKADPjXH92AgIOJitAxFcXzGIgCySqRDp7oEqCNATNx+4wRVW0
-         LqeTZ696LTzLzdNgp3vJSZpJqCgQWn+Ban5mkVfVspcFyqirf2aG6FDAuPKn+/uqSKBJ
-         lgIHQlfkFKsVqQYSMKvUkkFZdWmsPn0lAP/s+fuGyMF7EQgmMQZUjbvtNNzX4l0BHtGK
-         dG3ulBOGMSzLzBmaokyDFSL2DJp4z7nPReywQo+0O9rFvfKVs4vUkIdoiu0Lz8Co33gF
-         rB/JndFjMSToYufL+OHFv5AOvadmVpYcbcmsuKTZ3+PjBYRxZabeUkPdRhwm53bi/mVy
-         uE6A==
-X-Gm-Message-State: AO0yUKUbM51fTQHkU4sjizS56G3sY1qZUKHktooxCUbWi6L65R4fOp7z
-        NxsTd0u/afVAKXuhmgRuvvZLcjJGnIvIDNIBxFo=
-X-Google-Smtp-Source: AK7set+10IWn/H7LxxE/bzNg8trzHOqrjJQnyfi3tJtvxOGbafiWZcZ1uOcwBtOX4y2W7UCoaVQ0rQ==
-X-Received: by 2002:a05:6102:18e:b0:426:149c:f89 with SMTP id r14-20020a056102018e00b00426149c0f89mr1975892vsq.21.1679428173073;
-        Tue, 21 Mar 2023 12:49:33 -0700 (PDT)
-Received: from smtpclient.apple ([184.81.152.146])
-        by smtp.gmail.com with ESMTPSA id j13-20020ab015cd000000b006903f96c1a8sm1226667uae.9.2023.03.21.12.49.32
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Mar 2023 12:49:32 -0700 (PDT)
-From:   Ward Hopeman <ward.hopeman@nearearth.aero>
-Content-Type: text/plain;
-        charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.2\))
-Subject: Feature Request: Ignore Tracked IDE files
-Message-Id: <94EFF553-E498-46D9-B14A-3500FEDEBB47@nearearth.aero>
-Date:   Tue, 21 Mar 2023 15:49:30 -0400
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3696.120.41.1.2)
+        d=1e100.net; s=20210112; t=1679429090;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=601gygmPWllenNl+E507C8jXNtFIK/SStSvEjRxCky4=;
+        b=VAjCHMVAa4rRIvf11YJMqgmWwf6SlBMv+Nj4ZOJlOlXYaaME1Sd4tBCb1OoyligC5W
+         FWwl/d5Wzb6no1LREX243cy2aMMUcf8QYeIj3QB9iqrb97NdMAlyZcJCawSGbBmWUNp/
+         5ehEfyg9JwKunYvcT8pRYA2zukeJRwwq8G84G2BGa+Fyae9y24kRTK8WlhovokLGDZNy
+         lYYxlPR+x2m/9XWFZUb8kVX3sb4mY2g1qaY9fspnkzdiAx5krZKRbi1XxdAeOFP1UBwJ
+         274gQclQj9xVU/XyOs0LpqIKAabxD2EVkH1eVFrPicK9UQVsSdBsNdFk5j9zv2bAUTbd
+         SMhw==
+X-Gm-Message-State: AO0yUKXCJY8CjGPDoV0DwhhfDR3X0xhDsi8b4CLirWB0iUHgrUWggUji
+        6Yjf8H6FHxqICkIDXN96Kpg=
+X-Google-Smtp-Source: AK7set9Yf5T2inbGnn1t/7vt0zCWlEt0ecqZyt+YfdFkCxq0o99klixh1RDfJDn4dmYaSzy5PsPYGA==
+X-Received: by 2002:a17:902:e844:b0:19f:2328:beee with SMTP id t4-20020a170902e84400b0019f2328beeemr373354plg.11.1679429090247;
+        Tue, 21 Mar 2023 13:04:50 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id y6-20020a170902b48600b001a1ea1d6d6esm981039plr.290.2023.03.21.13.04.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 13:04:49 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Paul Eggert <eggert@cs.ucla.edu>,
+        Eric Wong <e@80x24.org>, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2] git-compat-util: use gettimeofday(2) for time(2)
+References: <20230319064353.686226-1-eggert@cs.ucla.edu>
+        <20230320230507.3932018-1-gitster@pobox.com>
+        <20230321182252.GJ3119834@coredump.intra.peff.net>
+Date:   Tue, 21 Mar 2023 13:04:49 -0700
+Message-ID: <xmqqh6udhnvi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-    I was unable to find this as a prior feature request, so I apologize =
-if this is a duplicate request.
+Jeff King <peff@peff.net> writes:
 
-    Request: Create an Ignore section that allows for minimal IDE =
-inclusion without impacting IDE settings for local users.
+> This looks good to me, but I wanted to mention one alternative. If we
+> are declaring that time() sucks and gettimeofday() is how to do it, then
+> we could just use gettimeofday() everywhere, and add time() to banned.h
+> to catch stragglers.
+>
+> It has two mild advantages:
+>
+>   1. gettimeofday() gives the callers extra resolution if they want it
+>      (though in practice I guess none of them really do)
 
-    Reason for the request: Most engineering teams share some IDE =
-settings when working on code. More often than not, local IDE changes =
-force engineers to resort to using "git update-index --skip-worktree =
-<file>=E2=80=9D to avoid the IDE settings files from showing up. It =
-would be nice to be able to identify IDE files that you want in the =
-repository but not necessarily track all changes as most of them are not =
-desired when individuals make those changes for local setup.But teams =
-like to track and have available generic shareable configurations like =
-tabs to space and line length etc. By making it a user configurable =
-section of ignore it allows for future IDEs to be listed without =
-impacting the way it works for common IDEs today.=20
+True.  Many of our data structures do not have room to store the
+extra resolution right now.
 
-    Example workflow:=20
-Team member Pat creates a new repository.=20
-Pat sets up the default IDE settings file(s) the way the team =
-=E2=80=9Cshould=E2=80=9D be using them, but only minimal settings like =
-line length, tabs to spaces, etc.=20
-Pat commits the IDEs settings file(s) (often a directory like .idea or =
-.vscode) to the GIT repository.=20
-Pat adds the IDE settings file to the IDE Ignore section of the =
-.gitignore file.=20
-Team member Sam checks out the repository.=20
-Sam opens a local IDE and modifies settings that work for local items =
-like executables etc.=20
-Sam makes code changes.=20
-When running `git status` Sam sees a new status section for IDE changes =
-like `untracked` files.=20
-Sam executes `git add .` and the IDE changes are ignored.
-Sam executes `git add -f .ide/settings.json` and the IDE changes are =
-included (note specific file is identified not a general flag).
+>   2. It more directly describes what's going on, and we'd play fewer
+>      games with macros (though we may end up with a git_gettimeofday()
+>      wrapper if somebody doesn't support it; I really wonder about
+>      Windows here).
 
+I think they already have a compat/ function for their use in
+compat/mingw.c so that may not be an issue.
 
-Thank you for your time,
-Ward
+> The disadvantage is that it's longer to type, and that you have to
+> declare a timeval in the caller. So maybe it's a dumb idea.
 
+Yes, you have to declare and use a timeval, but you are already
+declaring and using time_t in today's code, so if we were writing
+like so from scratch, the result wouldn't have been so bad.  We just
+do nto use time_t and use timeval instead consistently.
+
+The patch noise to go from here to there may not be worth it,
+though.
+
+Also, unless we are going to actively take advantage of extra
+resolution, I am not sure if it is wise to ask for extra resolution
+in the first place.  If time(2), at least on some platforms whose
+maintainers care, gets corrected to avoid going backwards or being
+inconsistent with filesystem timestamp in the future, converting
+everything that calls time(2) to call gettimeofday(2) would lose
+information---we will want to know which ones need only seconds
+resolution and convert them back when the world advances.
+
+So, I am not quite sure I am sold on the idea of rewriting
+everything to use gettimeofday(2).
+
+Thanks.
 
