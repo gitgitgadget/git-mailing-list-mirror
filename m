@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF69DC74A5B
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 16:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3ADCDC6FD1D
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 16:33:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbjCUQUT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Mar 2023 12:20:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52142 "EHLO
+        id S229799AbjCUQdm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 12:33:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229676AbjCUQUR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2023 12:20:17 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFD7A2CC41
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 09:20:10 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id ja10so16578731plb.5
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 09:20:10 -0700 (PDT)
+        with ESMTP id S229487AbjCUQdl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2023 12:33:41 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EF641B2CE
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 09:33:39 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id a16so11738953pjs.4
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 09:33:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679415610;
+        d=gmail.com; s=20210112; t=1679416418;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1ANhmHUuaQfI7Q1woi0O168sFjW91RIzpOIQAOQb7I8=;
-        b=kRd+oj8CmoUTxPdVX0SJL7QS41h0J2cuV5SjfG9+YTQjhhd6dqBTj4Ggw39tSN3zFG
-         Sex9DE+QDiIJ00IOMyuuYpoVNUIDTtyOryC9bBy9rAeoPHqyThJ++AXHmU1YTJZ+3CCZ
-         VWCjsunRY6GVF5qCsc4vxQjLm4L5TvT3s3mooPj/nUc17URJgn1laSvwCaI/+GWDwFPE
-         RHvZrAECteOTWJ7FEUBaVCtR2yClDzu/kAwTiVjgYbGmvnAZ+igZCtKcolnMnxL82lNA
-         H0tW7W0MzHopG147qCw7xWV9oGnQCoIeyfTBYhjIFl3nOo8YWbBKIjRDOjVOuHepq3fJ
-         of2w==
+        bh=2cVDOc0nBwCSBSpLWpxbY81j2mU+Ix6LJNRE2U+YlVQ=;
+        b=YDgo3yWSACxr34GaHQK0NvZqSnvUYr93BXtaxqsq/BcqqyZlq8KQtAlnrMWKqhQQpI
+         NINk/Fp2q5SqSMpDepKBQfK0H+CxB302v/cKWptMjGF3Bo4ubyJn7pN0BzodfYln01HB
+         eg0YLTPAofcCbP+J5bN0/OMQcnDJSGP5n6M49IjZe6cVhAo5KVL7ieZp+RfgGFvXe0r0
+         Nz08oGoRUJOqRTKFT9gxRTG1WK/tsvSN2rpMXukm1HMWfAgdxQ/5Rodacon7bNV+ZpdT
+         OxtLDYVmswbsCK/75C1UtwnJAmljDZP2oRVXpY1VyF62XaLWJZi/mrAKLBtZ9581WgXt
+         +M/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679415610;
+        d=1e100.net; s=20210112; t=1679416418;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=1ANhmHUuaQfI7Q1woi0O168sFjW91RIzpOIQAOQb7I8=;
-        b=n9kvUK0143slfrzlNc9TLXji2BYHdKwf9H366P88I+p1vehu/M/NQHnKbmXqoxCZv4
-         rrCTFv8kLz5czfo4teEoTbH7Qm7TEZFb358d9ku9nJjntRQvTX4bqC+gfgeyHQ3gpEg6
-         VPqI12OOc4P1EdOel/v4j84kuztxtolEPrD1UULC8rulueoBw7W3YAbl95au/zaWzeGJ
-         zeOV6YVPbPCpEXgs01k0LyHV84pXt8gb1bcvzi2SwAO2DVrnOup1TD6XkUuY1UMV/1to
-         FYeXW4mPgfA8XFa4WMZvEyz4B1So9qt8yAujb2qGA5mnQznj0M0Uur98RJBx5zYNOrwb
-         le6g==
-X-Gm-Message-State: AO0yUKX//ipGH/F1CKjhVR/zQ24VGo89jUPc6k70WXgMzUvmHUpNdZwp
-        pXHzxpXhuiZE7N+WaBuIN60=
-X-Google-Smtp-Source: AK7set/cABpn+GMP5Ah/+G5LB72c46inbsR4CCL6C2Pqa36agwv43iMnjjnPmoqiOXkVCRR2x7VytA==
-X-Received: by 2002:a05:6a20:389e:b0:d9:d8e4:4cad with SMTP id n30-20020a056a20389e00b000d9d8e44cadmr2771485pzf.16.1679415609878;
-        Tue, 21 Mar 2023 09:20:09 -0700 (PDT)
+        bh=2cVDOc0nBwCSBSpLWpxbY81j2mU+Ix6LJNRE2U+YlVQ=;
+        b=Oy/Rsx/M/Bjb9a8SmY3ZpijwvxoDjIHT1d9ev/bumi0rK/XMoY7RXAh/QlC/SADNLy
+         v7mb5kHoKfHlWOHsgHxBbTP2EJK6FDMPCwpn9CDCkxBmd6xFqGhTvy7MwDRlRVoAAXhw
+         VjefJkDa8dhoAjg+FCY2+h1uYeiuJfhaiipfnZrRyeN0OHYzycRY1ZOVl0oR8rBqAQw5
+         +7DlmbYEzJJ+gQvXeSxRfcFmzyC4Z+25EK2Wmw4pbdVZ9aKfUFDtB2/V/uGjm7sY0Q3i
+         iVEhJEAbWogwRYBR5zAWopriU6C3n6pc8LFxGVCJRpKQabjNtbX/J9y8512+ZDbXb9yT
+         Cx2g==
+X-Gm-Message-State: AO0yUKXh7plols6N4SWRyTXjaurNPLaq3bSHpfHGFXOJJzx0IYylWAi+
+        ByAJqujkDVEwSBmSwIu2ffyoO5cShzs=
+X-Google-Smtp-Source: AK7set9vMb0L4tvXo+AH6q9m5CIJIMe6XCZa81NOiEXRF2XFJk3CMXHki96kqb1s9rvZfmLA65Bcwg==
+X-Received: by 2002:a17:902:c40c:b0:1a1:b52d:68e1 with SMTP id k12-20020a170902c40c00b001a1b52d68e1mr3776227plk.32.1679416418367;
+        Tue, 21 Mar 2023 09:33:38 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id i21-20020aa787d5000000b00571cdbd0771sm8427473pfo.102.2023.03.21.09.20.09
+        by smtp.gmail.com with ESMTPSA id jj17-20020a170903049100b001a072aedec7sm9055950plb.75.2023.03.21.09.33.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 09:20:09 -0700 (PDT)
+        Tue, 21 Mar 2023 09:33:37 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Paul Eggert <eggert@cs.ucla.edu>
-Cc:     Eric Wong <e@80x24.org>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] git-compat-util: use gettimeofday(2) for time(2)
-References: <20230319064353.686226-1-eggert@cs.ucla.edu>
-        <20230320230507.3932018-1-gitster@pobox.com>
-        <f78fd970-cce5-0a38-5ada-94ccb5bce592@cs.ucla.edu>
-Date:   Tue, 21 Mar 2023 09:20:09 -0700
-In-Reply-To: <f78fd970-cce5-0a38-5ada-94ccb5bce592@cs.ucla.edu> (Paul Eggert's
-        message of "Mon, 20 Mar 2023 16:21:40 -0700")
-Message-ID: <xmqq4jqekreu.fsf@gitster.g>
+To:     Stephane Odul <stephane@clumio.com>
+Cc:     git@vger.kernel.org,
+        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
+        <carenas@gmail.com>, Mathias Krause <minipli@grsecurity.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: Suspected git grep regression in git 2.40.0
+References: <7E83DAA1-F9A9-4151-8D07-D80EA6D59EEA@clumio.com>
+Date:   Tue, 21 Mar 2023 09:33:37 -0700
+In-Reply-To: <7E83DAA1-F9A9-4151-8D07-D80EA6D59EEA@clumio.com> (Stephane
+        Odul's message of "Tue, 21 Mar 2023 01:04:08 -0700")
+Message-ID: <xmqqttyejc7y.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,29 +69,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Paul Eggert <eggert@cs.ucla.edu> writes:
+[jc: on the CC: line, summoned a few people who may know a lot more
+about pcre than I do]
 
-> Thanks, this looks good. As a matter of fact it almost precisely
-> matches what I was about to email you. The only significant difference
-> is that yours has "#define time(x) git_time(x)" whereas mine had
-> "#define time git_time". Since Git never takes the address of 'time'
-> the two macro definitions should have equivalent effects when used in
-> Git.
+Stephane Odul <stephane@clumio.com> writes:
 
-That is a valid concern.  Writing &time would not be caught by
-compilers, and you would not notice such a mistake until you run "nm
--ug" on the result.
+> We have a CI pipeline on a private repository that started failing
+> consistently while running `git grep -P` commands. The command
+> fails with an exit code of -11 and is failing pretty
+> consistently. With prior versions of git there is no issue
+> whatsoever, but with 2.40.0 it always fails on the same
+> call. Other git grep calls are fine, but that one is failing
+> consistently.
+>
+> I was not able to reproduce locally but my main machine is an M1
+> MacBook Pro, the CI pipeline runs under Kubernetes in AWS and the
+> container is based on Ubuntu 20.04 with the git client installed
+> via the PPA.
+>
+> The error is for this pattern `git grep -cP '^\w+ = json.load'`.
+>
+> As a workaround we tried to download and install the microsoft-git
+> v2.39.2 deb package since it allows us to downgrade, but then the
+> git grep commands just got stuck.
 
-On the other hand, straight token replacement will risk renaming
-variables and structure members, and I was not sure if we have such
-use of the identifier "time".  As long as people do not use "time"
-and "git_time" at the same time as such identifiers, that would not
-be an issue (except for perhaps expecting to see them in debuggers).
-Writing "git_time" and "time" at the same time for identifiers not
-related to the time(2) function would not be caught by compilers,
-either, but it feels much less likely mistake we would make in the
-future, so let me drop (x) from the macro.
+One "grep -P" related change we had recently between 2.39 and 2.40
+was
+
+    50b6ad55 (grep: fall back to interpreter if JIT memory
+    allocation fails, 2023-01-31)
+
+The code tries to figure out at runtime if pcre engine has
+functioning JIT by making an extra JIT compilation of a sample
+pattern and when it fails with a specific reason, fall back to
+interpreted pattern matching.  The change made the code to emit a
+bit more detailed information when it fails, but a controlled exit
+from the codepath should give $?=128, not 11.
+
+So the above commit may or may not be related.  It could be that the
+version of pcre library linked to Git 2.40 and older Git you are
+running in your CI environment has been updated.
+
+Does it make a difference if you disable JIT by prefixing the
+pattern with (*NO_JIT)?
 
 Thanks.
-
-
