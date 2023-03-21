@@ -2,77 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 11586C6FD1D
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 20:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C64E7C6FD20
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 20:47:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229788AbjCUUiz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Mar 2023 16:38:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56290 "EHLO
+        id S229789AbjCUUrK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 16:47:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjCUUiy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2023 16:38:54 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B85C737F38
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 13:38:48 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id dw14so4452097pfb.6
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 13:38:48 -0700 (PDT)
+        with ESMTP id S229967AbjCUUrH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2023 16:47:07 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75740567A6
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 13:46:48 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-544f7c176easo157603437b3.9
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 13:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679431128;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Am/vczGg7GepS9jwBONVhLNfKY5aku/bOuxY1SwY540=;
-        b=GgywuKUPo67ATyQ9geeb3Gdt8GA1TzBOFQ5WnUFsszC54VMli6CH7D+yrMzR7T2dcs
-         KTKGVqJk2zVfOlWFZte8XqwpuWPHzwzhnwaCfSjeISec21xFGkVgKOCT9DeGIePeZ0O6
-         8UL9v4oj1e+3y5e51cvpnQmo6YK8s49vuMA+QVbvtwAmacQSNkHRpMF+FpBQ2vwjFToM
-         fHLsgITUO8udhWfKW0MAMkMw37lGSGxzyjS7MqZXt1WMiQivrytYGMX9hiaO7geHt7q5
-         7JZ/m5OwdbiEfhUqWBBggdd1lPbly7tHa17omDyhhBNjslGrBwbgpqfoipTtRziyqnbK
-         V4Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679431128;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+        d=gmail.com; s=20210112; t=1679431607;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Am/vczGg7GepS9jwBONVhLNfKY5aku/bOuxY1SwY540=;
-        b=d+4MuQEJckWy+u9je2BEev+8RZjDP/tjFKF8i+FmThuVRzFzue2mHjIeni6pFCon43
-         p0FH9dxlZ4RV4dHga63ArRyii/TKHxyLvo4JTDfmRgl50AtjESMql8J6YMswPINYL9DO
-         fGHklxLZJU8jc7PeUbPh0jU9diF1l/U5AmhEIX3cFamq959XIxoquGGUT2NvdjZtx8kY
-         dkw3PTki2X1+22VFEDs6pbxaDoWgqo6JTknMr0x7KRZ0ndOdSi8qyYR8QyFYgbr6Rkvz
-         Az6Dt8ekT+pzFVv6AmI7uKe0LuKtdhgTHUMcLSTBUG1+K3pD1lHbMZaVuXoHs8dLz1Oz
-         B1OA==
-X-Gm-Message-State: AO0yUKVMJDvYkzqHGj4siqcAAStiMQd2nr9PoB8dyfZT2PvjpG0M+9vi
-        InxMPx4Ems9S/8yagOgfIzk=
-X-Google-Smtp-Source: AK7set+HVAXMDqs/gGfT06ttbURe/cdb9CN23CHaRymtIT6Fnn50vjyPK6KrqeQ6sjirRu5hW5sGhw==
-X-Received: by 2002:aa7:97a9:0:b0:627:e42f:b76d with SMTP id d9-20020aa797a9000000b00627e42fb76dmr833970pfq.12.1679431128088;
-        Tue, 21 Mar 2023 13:38:48 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id s5-20020a63e805000000b00502f1256674sm8634533pgh.41.2023.03.21.13.38.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 13:38:45 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] doc: remove GNU troff workaround
-References: <20230320190047.79836-1-felipe.contreras@gmail.com>
-        <20230321173206.GC3119834@coredump.intra.peff.net>
-        <xmqqcz52hu7n.fsf@gitster.g>
-        <20230321181702.GI3119834@coredump.intra.peff.net>
-        <CAMP44s22GzW6rFEEbNo8Bx3oKhf6occ6+Y8hP+vcp8bid-kqWw@mail.gmail.com>
-Date:   Tue, 21 Mar 2023 13:38:45 -0700
-In-Reply-To: <CAMP44s22GzW6rFEEbNo8Bx3oKhf6occ6+Y8hP+vcp8bid-kqWw@mail.gmail.com>
-        (Felipe Contreras's message of "Tue, 21 Mar 2023 12:34:51 -0600")
-Message-ID: <xmqqcz51hmay.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        bh=BOjr+A2sRSjJcC2qk0NPgdEEabkn+St763iEA3slXU8=;
+        b=LBM02G2eYOdI+xLmxTmhQ4jQUAEdU2nwsJ6Mi43ZNHAzbpylaT4g3mzrNKMVtE4Sio
+         TrVkiHhEUOrdxcbqGY4U9FiqHbHPM7JosxBnr80GBlKbpbfVlyzxRj5KhFSSM+S6e4c3
+         s4Dvt1f7DOIkLkMfjm3QzgAhGNT7pfQX3syRtIOExAIJKAJQehrh+hsOPa03EI2AIdHv
+         wm/DHQ5a90CHZjQR0D5xshuCWX5LE0uxCDaXGSZ3/9LxwkfL5ZPFLEF9zR+hDaqq1/64
+         NVeoSTwK9r1S0R0iqHAoyXFHiA80PZCG4vm3PJ71/4SfEIRmdLqmwNGZ43gFXHx6gU2H
+         uTnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679431607;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BOjr+A2sRSjJcC2qk0NPgdEEabkn+St763iEA3slXU8=;
+        b=isEym4hnsHwPTHbgCH8S80ED5pLHi/I99ubH77JdzIGnx+3yL5/Gnr8fPZTETxngYV
+         gAvMPB8kzzn3RRx8lb1ODlLTpRhmH+bPmuGompSTKalbnX2BJRqJPdglNOQkA+TgqCyK
+         nlbN0vgUr11KBkhM4U7++CrYAK9IPL/QAYvEFPBQqbg74PF+IDUmbN+sKcqp4xZk2Twd
+         bIY/l744JYRE+B2b00GZRMds9pYxm1Dz8P817RwtytQ+Ssi5MJhVEoa1Rl2bS+aoQt7p
+         ewVEwUcK5PBwx6iPpj6ep6irTC0KnhbDStfh23Z12A2VpenKcScXARgJqXm8SZ7w3ERy
+         8RAQ==
+X-Gm-Message-State: AAQBX9fn3RBKDCfArxfOyoUnWNX5L1y9/pmboOdTpLp+SeMwWJapwppt
+        UTJ6aZ/kLAJq73jAaR7KzoqyfoFB3cdSRdBHnEShnbML8mI=
+X-Google-Smtp-Source: AKy350bDp3j0egCTJSXUTgYwKllnliiOHzS5K1zMRaznLbAqWEhnK5KmOOH6kQjLhXUjRI1jOUqlrm9+WiPUvRBU48Q=
+X-Received: by 2002:a81:a7c1:0:b0:545:5b2c:4bfb with SMTP id
+ e184-20020a81a7c1000000b005455b2c4bfbmr1132801ywh.8.1679431607637; Tue, 21
+ Mar 2023 13:46:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Ridil culous <reallyridilculous@gmail.com>
+Date:   Tue, 21 Mar 2023 21:46:35 +0100
+Message-ID: <CAEg4PiL+Y8yxCpWaQFUswTj1qegT084w9m0rc14Kf1dEWk5G-g@mail.gmail.com>
+Subject: Feature Request: Allow to stash push and pop file modification times
+ to avoid rebuilds
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Hi
 
-> So yeah, it was fixed back in 2010.
+"git stash push"
+later followed by
+"git stash pop"
+does restore files but doesn't restore file modification times.
 
-Thanks, all.  Queued.
+It would be great if there would be an option to opt in for stashing
+and restoring the file modification times because not restoring them
+potentially triggers rebuilds for many IDEs (MSVC in my case) which
+can be quite expensive for big projects.
+
+Best regards
+ridil
