@@ -2,82 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 677EDC74A5B
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 12:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1DD4C6FD1D
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 14:25:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230476AbjCUMdt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Mar 2023 08:33:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58186 "EHLO
+        id S229992AbjCUOZp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 10:25:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbjCUMdr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2023 08:33:47 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A2D7423B
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 05:33:46 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id ix20so15824523plb.3
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 05:33:46 -0700 (PDT)
+        with ESMTP id S229671AbjCUOZo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2023 10:25:44 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D98869D
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 07:25:08 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id l12so13880220wrm.10
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 07:25:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679402026;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=e65B2hGeGPWYscwgzd2yKeJqkNNxHSrbB7UbDFubPw0=;
-        b=AEPmuSbWLTfgz3tHWAi2DAqrxcfArUuSXC3vTdcETn53kiGKsNH68byf8+gDgHWrJo
-         U2Va/7SL8ah/4oHyP2iB5CDqaAboUYdM+Pmpd9wQdCYugrFlZq89icznSJAhb9jMbXn9
-         v1kJTAE57tmeXtrbaI6QfjGd9KUeKQX/VIkVL6sYBqdq4nfP1geGEb0Rg5e0eUdDFbwY
-         rMHySXUeAClSyGy8mlssrT5T381rAke8WTk1dpVlfPukiWlhVIMCGNI8NJRDkwv3/0HJ
-         POrIgLUHgdq4kD3FRf0x6Pr/fPJZckVjLteI3vbd3RoHG7ZdPzQfPuldUgMykvccqQbH
-         /1/g==
+        d=gmail.com; s=20210112; t=1679408702;
+        h=subject:from:to:content-language:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xr1L697rISZfskqo9oULlB2vrlTqAnS8tUmkktffeBM=;
+        b=nqAhrSk2gJFN+wc5x36Mz04Q4yfq7RO8c3Rctzog8dqg+tXScpXOfOtsiVkSJ1V/mB
+         bwn9CgDh3FquSefuY/Gh4293Mv1I/4OPrIm2Bsve+BWDHg5lGhnhQF7N4aaGAKr0PcCY
+         57b5FNaEVAEnLS3RGhN4ZFeG5DIaWIqYcNteqf4b8iMLHZT3rcyD2fpnItZtAG3Vw/C3
+         tRLTP/04wGddIj6gng5GaY5Rq6oZkXlaCV38hMuJ70dQSYF/QPVRLvspqYTD7JH6N0o5
+         qaE4CSzyvgu361/1joG/JWLjG5IxoeNt2lI0hxQygCsxUu7D2EyXnllOPvtqnW2xPbue
+         5czQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679402026;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=e65B2hGeGPWYscwgzd2yKeJqkNNxHSrbB7UbDFubPw0=;
-        b=iYsWHcXvi15E/olRmSb6ucJ1ouytDliAFXv0Tc9+HDz9gkzen9h7fIBtppvJNERj+r
-         vkITEnbiJ4iedacoxcuhWFaA9aONiVNxEP1OuLJo1mP248qhiY/rOBrE7/6VQFntjYch
-         NA9ebQ+yXr6tLm+U8uU5jspiPbLZ6n0oIC1/uiheJN2lqE3uuVDW1qiLYGNI15aDgDRu
-         WAND+a5AaqL54jVpX4tkkHfYmFzKQjuUo4IZoRVz3rCssOPLbjBcqnPoEj3W3aR0xmwo
-         D54k5NMUtWTF1XGBBYi76wzD/ZdwZdqqU+an5Mr4bvyXbTgIXcNvSstPPPY922uycbi7
-         x1ug==
-X-Gm-Message-State: AO0yUKUWreHtchu2MaNGFWGzTebzdl3KQl45ptYlywrwQUhq+MmwZCS5
-        e374CmWE67zly7N7nu51z5sSYHAqnvs=
-X-Google-Smtp-Source: AK7set/oXpVD8eOknGfSbrFjzfJr6x/WBfFn2kYEZIGifFHjtnelxEr5hP9R1wEsmeeNwCyiwT41tg==
-X-Received: by 2002:a17:902:da90:b0:19c:fd9e:f88c with SMTP id j16-20020a170902da9000b0019cfd9ef88cmr2592780plx.18.1679402025916;
-        Tue, 21 Mar 2023 05:33:45 -0700 (PDT)
-Received: from [192.168.43.80] (subs32-116-206-28-50.three.co.id. [116.206.28.50])
-        by smtp.gmail.com with ESMTPSA id u6-20020a170902b28600b00194d14d8e54sm8622828plr.96.2023.03.21.05.33.44
+        d=1e100.net; s=20210112; t=1679408702;
+        h=subject:from:to:content-language:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Xr1L697rISZfskqo9oULlB2vrlTqAnS8tUmkktffeBM=;
+        b=VtsHOlN/k4BXk0Nn7TZmZpk7E+YpcoNb8tA3QqAXlflvQCJ5y7YUsEHuDR72J4akXg
+         1KFrvvx2APgoDw2nsphrTy9wlOPvifHKDoFAWH8FxMQ+PDMXdaHX1pSxfs66fphjNWjC
+         wRXNr7i6LZgBSmXNqAOqHuZPeOns4yjM1amc/EGts5yD3wG1nVDdvQ5Jg6FZDwHXhFjM
+         OwWruAkSTczIrmZ1a1apSjF1u2QXGj3GMQe0VlMJ0OWoOkTLiu3KerkbPxDU06mj8xeA
+         nonGuQ/aEiFIRG0V2SkzyQ0lO+6Le+nIXS2xI2js2rQHgCyqbrAXBdRjcMOglyxlsgGL
+         Q/cg==
+X-Gm-Message-State: AO0yUKV9xDezOI7OVdyZDClAVti8l0cB8B2MCflU67GJmgz292HSLtea
+        LpVdhNIFcimweOTp/vbc4I8TQKJYEmM=
+X-Google-Smtp-Source: AK7set+hK/N7ZRwK5ctfmlpoTtD3/Iortt6lnT9YWVOvlsZ/gu0hNFGg8ilwBH4GtltcBV4ZKzEMVA==
+X-Received: by 2002:a5d:6b0a:0:b0:2d0:8e61:959c with SMTP id v10-20020a5d6b0a000000b002d08e61959cmr2511312wrw.20.1679408702278;
+        Tue, 21 Mar 2023 07:25:02 -0700 (PDT)
+Received: from [192.168.0.160] ([170.253.51.134])
+        by smtp.gmail.com with ESMTPSA id a7-20020adff7c7000000b002c70ce264bfsm11544846wrq.76.2023.03.21.07.25.01
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 05:33:45 -0700 (PDT)
-Message-ID: <d228d2c7-ebd1-74b4-4b6c-f5ac037782d9@gmail.com>
-Date:   Tue, 21 Mar 2023 19:33:42 +0700
+        Tue, 21 Mar 2023 07:25:01 -0700 (PDT)
+Message-ID: <92e2b9d2-e259-6bba-7080-28a01c0d323c@gmail.com>
+Date:   Tue, 21 Mar 2023 15:24:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: Suspected git grep regression in git 2.40.0
-To:     Stephane Odul <stephane@clumio.com>, git@vger.kernel.org
-References: <7E83DAA1-F9A9-4151-8D07-D80EA6D59EEA@clumio.com>
+ Thunderbird/102.8.0
 Content-Language: en-US
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <7E83DAA1-F9A9-4151-8D07-D80EA6D59EEA@clumio.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To:     Git Mailing List <git@vger.kernel.org>
+From:   Alejandro Colomar <alx.manpages@gmail.com>
+Subject: .gitconfig: -c core.pager='less -+F -+X' status
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------kjm45tDL8kQ5k3LcQ7XACfcf"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/21/23 15:04, Stephane Odul wrote:
-> We have a CI pipeline on a private repository that started failing consistently while running `git grep -P` commands. The command fails with an exit code of -11 and is failing pretty consistently. With prior versions of git there is no issue whatsoever, but with 2.40.0 it always fails on the same call. Other git grep calls are fine, but that one is failing consistently.
-> 
-> I was not able to reproduce locally but my main machine is an M1 MacBook Pro, the CI pipeline runs under Kubernetes in AWS and the container is based on Ubuntu 20.04 with the git client installed via the PPA.
-> 
-> The error is for this pattern `git grep -cP '^\w+ = json.load'`.
-> 
-> As a  workaround we tried to download and install the microsoft-git v2.39.2 deb package since it allows us to downgrade, but then the git grep commands just got stuck.
-> 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------kjm45tDL8kQ5k3LcQ7XACfcf
+Content-Type: multipart/mixed; boundary="------------UG3qGSe6A00OTu9ktY2YZLHf";
+ protected-headers="v1"
+From: Alejandro Colomar <alx.manpages@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+Message-ID: <92e2b9d2-e259-6bba-7080-28a01c0d323c@gmail.com>
+Subject: .gitconfig: -c core.pager='less -+F -+X' status
 
-Can you do the bisection between v2.39.0..v2.40.0?
+--------------UG3qGSe6A00OTu9ktY2YZLHf
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
--- 
-An old man doll... just what I always wanted! - Clara
+Hi,
 
+I wrote recently some aliases to not clutter my screen when I want to
+check something quick:
+
+$ head -n4 ~/.gitconfig=20
+[alias]
+	df =3D -c core.pager=3D'less -+F -+X' diff
+	sw =3D -c core.pager=3D'less -+F -+X' show
+	st =3D -c core.pager=3D'less -+F -+X' status
+
+Now, `git df` and `git sw` work as expected: they open a less window,
+and it's later closed with `q`, with no traces in my screen except for
+the command itself. =20
+
+However, `git st` doesn't seem to work.  It prints everything to screen,
+and then exits.
+
+You can reproduce it on the command line too:
+
+git -c core.pager=3D'less -+F -+X' diff    # OK
+git -c core.pager=3D'less -+F -+X' show    # OK
+git -c core.pager=3D'less -+F -+X' status  # Not OK
+
+Cheers,
+Alex
+
+P.S.:  While sometimes I want to check quick something without
+cluttering my screen, I don't recommend anyone reading this to run these
+aliases as a norm.  I prefer using the ones that leave traces on the
+screen, since that way it's simple to recover from rebase accidents,
+which at least to me, happen rather often.  This is only for cases where
+I have something important on the screen which I don't want to hide
+(previously, I would open a new terminal to check something quick on
+git).
+
+--=20
+<http://www.alejandro-colomar.es/>
+GPG key fingerprint: A9348594CE31283A826FBDD8D57633D441E25BB5
+
+--------------UG3qGSe6A00OTu9ktY2YZLHf--
+
+--------------kjm45tDL8kQ5k3LcQ7XACfcf
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmQZvjUACgkQnowa+77/
+2zKtXQ//U7voiArrgTa4yZUp/NTKIGmaY3N1D7BXY59ClTCYuGPbTbwiiUoL13Y0
+5Q6hbbqbIb0mDroz7sSOZOpMiLd+xKB5PNEvno7Gx/IPKmLNZrRTB8H9BT743Whs
+kw+pAVws3AaJY4Bl7Aa9Mw9neRS1Rh0T5DlatBWNhTmVRDFaOmKRU8Y6uwF3XrPv
+C0FVvpfC+8Vf5nBSOih4be1+3cYl/CzToSp+CVFzAoUN5q+46J4iyL9XKooWEFnX
+9LZi84PVlOaHdB/w3HlsaAS1JlUiMhP8mwhu4R/fjIyUL2G9vXDUqtbhF5OE7AyZ
+h6Vt+vVHYnNgUAxGkXIPGQKfxxIhOZVdJv40ot9WOFPO3OJyXjUcfIKMGB8lPXsC
+l9Vn3tGPwHhK8KWYIyRl7S0lOWMf4cHZQChhWi4WbVsL2kl021dLNzggHVcB0vwt
+dTfIah5U1s8cXO26TtiSPB7Yl6ZUJJ3G+NOU+TfQnzXpfXnJYuLGno+uAkbjXDk1
+ZlRY2gdxPWYLbnQ/VWplaX+iHTC1V4LPbRG/QOUojIxLpbfvBiyxjP312v7eh4wS
+gUBG54sYlFq3Y37tQpXbRigxzk69nQEWTKIEBMSDzoec6GjI4RvNY6jK0QTGr+vQ
+5i2+Itx/maL/da2aC8aNIMbqX4Tq+1n/6t/80pxnbgJ3C92bXjc=
+=6fGH
+-----END PGP SIGNATURE-----
+
+--------------kjm45tDL8kQ5k3LcQ7XACfcf--
