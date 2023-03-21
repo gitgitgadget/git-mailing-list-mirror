@@ -2,97 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E89FC74A5B
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 17:48:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ABA2C7619A
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 17:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230103AbjCURsQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Mar 2023 13:48:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41232 "EHLO
+        id S230128AbjCUR4z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 13:56:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230001AbjCURsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2023 13:48:11 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DC82359B
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 10:47:57 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id u5so16832970plq.7
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 10:47:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679420877;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tzdcExcsmfBYyJgDQSzz8AK/nJz2f3AotgxZMeNFimw=;
-        b=kD65azW3M6pyG6knZY0zmnz/geuu9I/VsIqVOqoeUNXlBOKYmvjqaaALB3DOv0ZyXJ
-         tylzSwe1Mf9qunTYJUWI6xX/Aacu45TqTMqRF4BbHfq1hUzx096DaXgzXA3MvkjN3daB
-         wzLZZNmdbo3ym+F2FaUdNygOjs+pRVTAWcHhYzVULilCBb7LFAsXc8aknwz8zTgxP8cH
-         4VZ61l6+IlJPyJ53Jg40/xJoTxUjVhCdFWZ4XDP7pfuNfL8JqknQ9/HbeZscYyK7IPJR
-         lNsa8ocrcFj034q+q0/VGiLtv1u+6psDflejMVRTG4LmpJMZfAF4XSJ6z/mRgeF+Hf9x
-         xDvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679420877;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=tzdcExcsmfBYyJgDQSzz8AK/nJz2f3AotgxZMeNFimw=;
-        b=0g9DhL1DFI3VD+YGgYW4x6CjHA3/cMa2hEeGFQkskRhftJL875Hd4NlTas5TUKNq+A
-         Ay/hRHkvNvXzF2WB+tJNVi77eDf4JXn5KbrvlSiM5Tkzhy2WXBw1fA7NRaDe/vSN2DVQ
-         1Uqq4yEcG97qKvKwC0HRd8VmyTI+5ID50fVhGUG0RA3pO794EyKBb5hAPCkvDSbG7R20
-         UjRGqYQwEnB30Sz/23mR6babJmvzMPTwavab7AjsLgRYsaOREXY7hvmIIw3nGs6Rsl6S
-         Al4ev0lhHl874RTHNYF/QuQuvZTsirBl/jH1L2vy4khpbXq53VbLwp1Rrurb2wYsF55w
-         0Wzw==
-X-Gm-Message-State: AO0yUKXl/BDSDYYNNvJCx7RuobLkVQWiKcTNNPkYSQAUqfb6fE5im8z4
-        z1hmcVk1j2QQtVqYwHGtqs1eWG0+iu8=
-X-Google-Smtp-Source: AK7set9807qKNJA2XA6OgiI8sVDsKqhOwQIioAg80vxUuFv6D6hFYqrWwISfQ0qt+itUCApfQLOXzg==
-X-Received: by 2002:a17:903:2442:b0:19d:e11:32de with SMTP id l2-20020a170903244200b0019d0e1132demr3774617pls.34.1679420876869;
-        Tue, 21 Mar 2023 10:47:56 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id w12-20020a63f50c000000b0050bcf117643sm8076945pgh.17.2023.03.21.10.47.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 10:47:56 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] doc: remove GNU troff workaround
-References: <20230320190047.79836-1-felipe.contreras@gmail.com>
-        <20230321173206.GC3119834@coredump.intra.peff.net>
-Date:   Tue, 21 Mar 2023 10:47:56 -0700
-In-Reply-To: <20230321173206.GC3119834@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 21 Mar 2023 13:32:06 -0400")
-Message-ID: <xmqqcz52hu7n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S230251AbjCUR4q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2023 13:56:46 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B03F551C84
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 10:56:13 -0700 (PDT)
+Received: (qmail 28204 invoked by uid 109); 21 Mar 2023 17:56:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Mar 2023 17:56:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2497 invoked by uid 111); 21 Mar 2023 17:56:12 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 21 Mar 2023 13:56:12 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 21 Mar 2023 13:56:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH 4/6] pack-bitmap.c: factor out manual `map_pos`
+ manipulation
+Message-ID: <20230321175612.GF3119834@coredump.intra.peff.net>
+References: <cover.1679342296.git.me@ttaylorr.com>
+ <0decf13869df6216914044a560d94968126836f4.1679342296.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0decf13869df6216914044a560d94968126836f4.1679342296.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Mar 20, 2023 at 04:02:49PM -0400, Taylor Blau wrote:
 
-> I'd think 13 years is probably long enough, but I was curious about the
-> versions. You referenced the fix here:
->
->> [6] https://github.com/docbook/xslt10-stylesheets/commit/fb553434265906ed81edc6d5f533d0b08d200046
->
-> but the earliest tag in that repository that contains that commit is
-> 1.79.1 from 2016. However, it seems like that repo is oddly missing
-> older tags. You mentioned 1.76 earlier, and the changelog for the Debian
-> package of docbook-xsl mentions the 1.76 release fixing it in 2010.
+> The pack-bitmap internals use a combination of a `map` and `map_pos`
+> variable to keep a pointer to a memory mapped region of the `.bitmap`
+> file, as well as the position within that file, respectively.
+> 
+> Reads within the memory mapped region are meant to mimic file reads,
+> where each read adjusts the offset of the file descriptor accordingly.
+> This functionality is implemented by adjusting the `map_pos` variable
+> after each read.
+> 
+> Factor out a function similar to seek() which adjusts the `map_pos`
+> variable for us. Since the bitmap code only needs to adjust relative to
+> the beginning of the file as well as the current position, we do not
+> need to support any "whence" values outside of SEEK_SET and SEEK_CUR.
 
-I wondered about the same thing, and did some digging myself
-yesterday.  The commit seems to have been merged to their 'master'
-branch with the commit 0418c172 (Merge branch 'master' of
-../docbook-fixed, 2015-09-20), which is after a curious 5 year gap.
+I like the idea of centralizing the bounds checks here.
 
-But ...
+I do think copying lseek() is a little awkward, though. As you note, we
+only care about SEEK_SET and SEEK_CUR, and we have to BUG() on anything
+else. Which means we have a run-time check, rather than a compile time
+check. If we had two functions like:
 
-> So assuming the fix really was released in 2010, even long-running
-> distros like CentOS probably would have picked it up within a few years,
-> and our workaround should definitely be obsolete by now.
+  void bitmap_index_seek_to(struct bitmap_index *bitmap_git, size_t pos)
+  {
+	bitmap_git->map_pos = pos;
+	if (bitmap_git->map_pos >= bitmap_git->map_size)
+	   ...etc...
+  }
 
-... even if the fixed release was done in 2016, I would say that it
-shouldn't be too recent, especially for documentation where we still
-give preformatted ones (which I think about dropping once every few
-years).
+  void bitmap_index_incr(struct bitmap_index *bitmap_git, size_t offset)
+  {
+	bitmap_index_seek_to(bitmap_git, st_add(bitmap_git->map_pos, offset));
+  }
 
+then the compiler can see all cases directly. I dunno how much it
+matters.
+
+The other thing that's interesting from a bounds-checking perspective is
+that you're checking the seek _after_ you've read an item. Which has two
+implications:
+
+  - I don't think we could ever overflow size_t here. We are working
+    with a buffer that we got from mmap(), so it's already probably
+    bounded to some much smaller subset of size_t. And even if we
+    imagine that you really could get a buffer that stretches for the
+    whole of the memory space, and that incrementing it by 4 bytes would
+    overflow, we'd by definition have just overflowed the memory space
+    itself by reading 4 bytes (and presumably segfaulted). So I really
+    doubt this st_add() is doing anything.
+
+  - The more interesting case is that we are not overflowing size_t, but
+    simply walking past bitmap_git->map_size. But again, we are reading
+    first and then seeking. So if our seek does go past, then by
+    definition we just read garbage bytes, which is undefined behavior.
+
+    For a bounds-check, wouldn't we want it the other way around? To
+    make sure we have 4 bytes available, and then if so read them and
+    increment the offset?
+
+> +	if (bitmap_git->map_pos >= bitmap_git->map_size)
+> +		BUG("bitmap position exceeds size (%"PRIuMAX" >= %"PRIuMAX")",
+> +		    (uintmax_t)bitmap_git->map_pos,
+> +		    (uintmax_t)bitmap_git->map_size);
+
+This uses ">=", which is good, because it is valid to walk the pointer
+to one past the end of the map, which is effectively EOF. But as above,
+in that condition the callers should be checking for this EOF state
+before reading the bytes.
+
+-Peff
