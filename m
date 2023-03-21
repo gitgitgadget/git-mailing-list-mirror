@@ -2,112 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C95B1C7619A
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 18:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 633DDC6FD1D
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 18:10:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229635AbjCUSFz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Mar 2023 14:05:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39204 "EHLO
+        id S229751AbjCUSKR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 14:10:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230358AbjCUSFw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2023 14:05:52 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E18E298E3
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 11:05:27 -0700 (PDT)
-Received: (qmail 28314 invoked by uid 109); 21 Mar 2023 18:05:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Mar 2023 18:05:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2551 invoked by uid 111); 21 Mar 2023 18:05:25 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 21 Mar 2023 14:05:25 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 21 Mar 2023 14:05:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Subject: Re: [PATCH 5/6] pack-bitmap.c: use `bitmap_index_seek()` where
- possible
-Message-ID: <20230321180525.GG3119834@coredump.intra.peff.net>
-References: <cover.1679342296.git.me@ttaylorr.com>
- <9a3e45b78b7810e0116848f1de80096b04285a55.1679342296.git.me@ttaylorr.com>
+        with ESMTP id S229459AbjCUSKP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2023 14:10:15 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65B421F903
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 11:10:14 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id r4so8555144ilt.8
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 11:10:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1679422213;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=soqFlysk0izVcjuEIjDaUoagYgpVqLRoVXr72K4ZQag=;
+        b=E1FMxlCmKopMVKwfyanVFYzD4zmYFu+h0R5dk8c0eaWdFc/kdkqQ76cruDmldub+e0
+         FhVvP92meZKhAPG1FLOVBR6kKp0QJ9bLEHfSrYD4B1wPBVquEQ8iDpCkfrXX1h9RDcNe
+         578fUDDW7kWP7VG22N+a87gIOmQRiQqbulKTvmJyge4ZMaoPAgPgNT0R3n8mS3c+5V1m
+         Yx/94K2n6O9T0HO9g6WS+Ig36sOX+/868pJ4DaCUwJHcD9s4fgUzIc4j//arTlgFRh5B
+         ObdUKAlDYa30KmLV/nxZHCuZNct2fxmkYwbhw7zzLex+TYBFASCZJaDClZE2VcG58j1H
+         pQVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679422213;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=soqFlysk0izVcjuEIjDaUoagYgpVqLRoVXr72K4ZQag=;
+        b=l9Ctd9i/uf0hnfnI90dpZSAAX3fjgDcME+qZYICDFy3pkBYithmI6QoHezcHeC4oGt
+         2+r3X5gk8J0dWgeNERrQjyOKwX91Kug1q0RolLFao0/XA6x286Mh0m6Di6D93WbIaOkH
+         scCpjornFwtXzUd40mCQrHA43YLOvvPtSJGFZZ2oKDfrh33KjU93FqOA4a+s1ggSleif
+         o8zV75WOfHwuOqFw9nlnzz5md6s6a54D8YcUj34FacbpoZ2impktGJZpiJ0CxI/rT1lR
+         KOjZV3S51lIEr/6hwpy2wTZKN7eV//HFQ156sfjq+NWanqk8cslSZ8rvjuqh80609J8H
+         xGDg==
+X-Gm-Message-State: AO0yUKUrL3Xb+SjXQKcc5VPp/SgrBzw66M+5rBByLHqJqBPN1hFucSCh
+        fKACJoRAEkZ2JRfoZTlNFmKDAg==
+X-Google-Smtp-Source: AK7set+3h3bFW/OEl2vcKYZB45Mp0EatS+1WYJ0eCzbApRSXcqz+CbsSNMOpkkZbZq9oZUsFHhdROQ==
+X-Received: by 2002:a92:d8cf:0:b0:323:29e2:a19 with SMTP id l15-20020a92d8cf000000b0032329e20a19mr2530723ilo.19.1679422213724;
+        Tue, 21 Mar 2023 11:10:13 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id i42-20020a056638382a00b0040653d9e194sm3197173jav.161.2023.03.21.11.10.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 11:10:13 -0700 (PDT)
+Date:   Tue, 21 Mar 2023 14:10:12 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Edwin Fernando <edwinfernando734@gmail.com>, git@vger.kernel.org
+Subject: Re: [GSoC] Intro and Micro-project
+Message-ID: <ZBnzBEqViueKIXHx@nand.local>
+References: <CAPNJDgcauhz_NraSPTQfiDM61gyghSJShZLPUtt5HOr2xKysZg@mail.gmail.com>
+ <ZBnmsoRmQGKkQt+S@nand.local>
+ <xmqqo7omhuia.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <9a3e45b78b7810e0116848f1de80096b04285a55.1679342296.git.me@ttaylorr.com>
+In-Reply-To: <xmqqo7omhuia.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 20, 2023 at 04:02:52PM -0400, Taylor Blau wrote:
+On Tue, Mar 21, 2023 at 10:41:33AM -0700, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > That sounds great! I assume that you meant avoiding pipelines where the
+> > 'git' executable is in a non-terminal position of the pipe, e.g.:
+> >
+> >     $ git blah | <something else>
+> >
+> > Since if "git blah" exited with a non-zero code or crashed, etc., then
+> > we wouldn't see the failure since the pipeline would suppress it.
+> >
+> > That has been a long-standing goal within the test suite, and I think
+> > that it's a great project to get you started. It'll ensure that you have
+> > all of the bits in the right place to get Git running on your machine
+> > and that you're able to run the tests.
+>
+> Yes, but can somebody rewrite the micro-project idea page to clarify
+> what the "pipe" thing is about a bit more, so that you do not have
+> to repeat the above explanation the next time ;-)?
 
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -174,7 +174,7 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
->  		return NULL;
->  	}
->  
-> -	index->map_pos += bitmap_size;
-> +	bitmap_index_seek(index, bitmap_size, SEEK_CUR);
->  	return b;
+Good suggestion. I did so in the following pull request:
 
-As an aside, I notice none of the callers here or in the next patch
-check the return value of bitmap_index_seek(). I guess you included it
-to match the return value of lseek(), but maybe it is better to return
-void if nobody is looking at it.
+  https://github.com/git/git.github.io/pull/633
 
-But getting back to the bounds-checking: I think we are already
-correctly bounds-checked here, because ewah_read_mmap() will make sure
-that it doesn't read too far (and will return an error if there's
-truncation). And if it didn't, this check-on-seek doesn't help us,
-because we'll already have done out-of-bounds reads.
-
-> @@ -230,7 +230,7 @@ static int load_bitmap_header(struct bitmap_index *index)
->  
->  	index->entry_count = ntohl(header->entry_count);
->  	index->checksum = header->checksum;
-> -	index->map_pos += header_size;
-> +	bitmap_index_seek(index, header_size, SEEK_CUR);
->  	return 0;
->  }
-
-Likewise this function already has bounds checks at the top:
-
-	if (index->map_size < header_size + the_hash_algo->rawsz)
-		return error(_("corrupted bitmap index (too small)"));
-
-I'd be perfectly happy if we swapped that our for checking the bounds on
-individual reads, but the extra checking in the seek step here just
-seems redundant (and again, too late).
-
-> @@ -269,13 +269,15 @@ static struct stored_bitmap *store_bitmap(struct bitmap_index *index,
->  static uint32_t read_be32(struct bitmap_index *bitmap_git)
->  {
->  	uint32_t result = get_be32(bitmap_git->map + bitmap_git->map_pos);
-> -	bitmap_git->map_pos += sizeof(result);
-> +	bitmap_index_seek(bitmap_git, sizeof(uint32_t), SEEK_CUR);
->  	return result;
->  }
-
-The function doesn't do bounds-checks itself, but the callers do, like:
-
-                if (index->map_size - index->map_pos < 6)
-                        return error(_("corrupt ewah bitmap: truncated header for entry %d"), i);
-
-                commit_idx_pos = read_be32(index->map, &index->map_pos);
-                xor_offset = read_u8(index->map, &index->map_pos);
-                flags = read_u8(index->map, &index->map_pos);
-
-(and again, I'd be happy to see this magic "6" go away in favor of
-checking as we read each item).
-
-Maybe I'm misunderstanding the purpose of your series. I thought it was
-to avoid reading out of bounds. But since bitmap_index_seek() triggers a
-BUG(), it's not good for detecting truncated files, etc. So is it really
-just meant to be a belt-and-suspenders check on the existing
-bounds-checks? I guess that makes more sense with the way it is written,
-but I'm just a little skeptical that it's really useful.
-
--Peff
+Thanks,
+Taylor
