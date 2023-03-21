@@ -2,81 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C73AAC74A5B
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 17:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDD9FC6FD1D
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 17:17:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230319AbjCURJ2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Mar 2023 13:09:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39966 "EHLO
+        id S230272AbjCURRn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 13:17:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229670AbjCURJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2023 13:09:27 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3993521F6
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 10:08:44 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id f6-20020a17090ac28600b0023b9bf9eb63so16576097pjt.5
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 10:08:44 -0700 (PDT)
+        with ESMTP id S229471AbjCURRm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2023 13:17:42 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E94ED188
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 10:17:40 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id bf15so7237264iob.7
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 10:17:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679418474;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=X7cjAQEelJjJCetHZ+/cL3vph2bFf/xWjfkE9ljTqpk=;
-        b=fipiv0w6S0e+EKkNt6iCksu/KDcr7GNeupqZ0aOUTVsAMir67JSkRjFfnzrVHYbBty
-         CwYu/0ukcV42F6pOlo//a7yWwQH1LWjmmqw7HgnBPRxPPCro1MZogcZjcYXXUWflK7kJ
-         LR2+8UMreNNiiXQ1mKz1t/dypznQw5LjSJjWuyv4HhkS8oGs8xuxVBu4PZxaSGzwgM8g
-         2og2rcO4eUhXSHF9+CtFcQ1FibRouoN2kpc7Npcq1ytvJrP9L7lmDTudQQdqsY/Qzcvm
-         6tp6lugt/9yk2N5NRn44+gjZLccOXTDFf/Ua+/AV9VTQAYMZPPLgtV2HNKK2rIebCw90
-         ffIQ==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1679419060;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ol+XzPWiw8Q4Ozn5PcSiGjJvP5X5Jv36cI/FlpK1tZs=;
+        b=1UTfXN0JMNb3mn+4cXLaFXAq/C57dIcdboEJyU+5iCrhA+wEX5OUzwviraVbRgvFts
+         D6dwBU3VM8II/J3KRLkWtb8TEofX3J0HBViCaqKQ8SDGUVDaLcLmyXSkJPXG/qJmmSmL
+         Ds/bFX11DI51ppCga8Onqsvnswu0vsYOpGlaRlssMj8oMOmoJ8TI8/9oWZqiIIMdziX5
+         a3StOk4Xkgk/VZsLsUduzJ3gnUWU3u5RryTSHpH9rVbuON9G3ehbanUodqBXSjagLL3G
+         eiRqAB9Ocoqs3NdXVnNDIaERr+QIQTvAkygdpy0wWxUbn9fik9kdLXNfQTzOswWOOczt
+         +PGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679418474;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=X7cjAQEelJjJCetHZ+/cL3vph2bFf/xWjfkE9ljTqpk=;
-        b=w92VG9dYJMGzrnPrxMBL3LoUueahvYol66OyEgw7iFhHttU34b7FPZZl3d2Fxa+fng
-         NvgKARZuXtEeBQ/ZHEi27BshIjrObqKj6UojqXHtWxjGIi/tInQ/91fxB+vb06o2sa+2
-         /iEaHAbR9Yo3auw1HNDqwRrI3KYKkrfBzb5aPQiUiBwDJh1PdFtgGHidyCdi9zqpaBv3
-         rpuewnCP4aWakG1igHU38LMD4w2ekM+bW9kd2U1nxevRDfklSjo6gzOT/axTz1xH32pd
-         EE2pe+vOHYIpSA6x8kJ8Hb1iPnmdc3LO0sgCD8zPGlqMrY8VHRZZEQIHctigDeVdRj0C
-         cGeg==
-X-Gm-Message-State: AO0yUKW33pzMNQj1aL2NqaIqeT8JCBNWDKbTcCJkiMITXeqb1DSp3Fu9
-        9GVJDK96+ul9gZ/Gbxxz2tiBAh+TeMg=
-X-Google-Smtp-Source: AK7set8V+pni615rBfjAGK99VVJGaGlElrASXAPWa8bKTt5yT31QaL6KyJUeEyY5v/cLlTglBW4QCA==
-X-Received: by 2002:a17:902:e413:b0:1a0:75fe:cd66 with SMTP id m19-20020a170902e41300b001a075fecd66mr2425783ple.50.1679418474250;
-        Tue, 21 Mar 2023 10:07:54 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id a7-20020a170902b58700b001992e74d058sm9007070pls.7.2023.03.21.10.07.53
+        d=1e100.net; s=20210112; t=1679419060;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ol+XzPWiw8Q4Ozn5PcSiGjJvP5X5Jv36cI/FlpK1tZs=;
+        b=X5MVD6DzrS5z/NDr7shYgKnVzQCiyIbqEYBZqcLUQ9EZ8g28iSuUBkslA40rhMuXz7
+         CFdv4lO78OGvcfw9XEz24ZNAhslzZ6AGb+6wSS9fsj2r7ETEuAuK/Jtr7EmfSxqaQcw7
+         GfN/m7QVtkIN823SsolSYMp370NjaBMkxhzrd0H5xLq9VQcfdbxUhtBKYGWWJsMUwXiL
+         aDfO3U0MkForlifKXO4j2q7LxVvUnz+5iL8bBLhXh+VBdT4ZqG7as3RHfYJdsSnNgw9m
+         ofq9K0CPAxqxdqGYh05LjCpXcSieKZyCwFMudLrn8VWArcTbgSpWq3D+RRHPt9BLms8P
+         fAVw==
+X-Gm-Message-State: AO0yUKWGX8I+uNLiseBFguQ8jpoTNm0pUvJwl+qVhmB/R+5jeaQ20WbV
+        6Q024gfnBLj8d0Qe+G3fFct32KUBP1CbVWzJtGRHtA==
+X-Google-Smtp-Source: AK7set83O8tXP1smcP3XjONKrPg4mYlIbNlBNK+LZ1d0xeHx35zSf8eRtcVmNL688OuSgkZpyJ+eSg==
+X-Received: by 2002:a5d:81cd:0:b0:758:4909:fbd6 with SMTP id t13-20020a5d81cd000000b007584909fbd6mr1879460iol.12.1679419060101;
+        Tue, 21 Mar 2023 10:17:40 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id cd8-20020a0566381a0800b00406521ad090sm3320517jab.94.2023.03.21.10.17.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 10:07:53 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     "Priedhorsky, Reid" <reidpr@lanl.gov>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: bug? round-trip through fast-import/fast-export loses files
-References: <BBB169A5-0665-47C9-819B-6409A22AB699@lanl.gov>
-        <CABPp-BEG+vp-UcpVfcZecPBnfcuTjO6JYCo7wEU5ZrDUHBUd9g@mail.gmail.com>
-Date:   Tue, 21 Mar 2023 10:07:53 -0700
-In-Reply-To: <CABPp-BEG+vp-UcpVfcZecPBnfcuTjO6JYCo7wEU5ZrDUHBUd9g@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 20 Mar 2023 18:57:21 -0700")
-Message-ID: <xmqqh6uejamu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Tue, 21 Mar 2023 10:17:39 -0700 (PDT)
+Date:   Tue, 21 Mar 2023 13:17:38 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Edwin Fernando <edwinfernando734@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC] Intro and Micro-project
+Message-ID: <ZBnmsoRmQGKkQt+S@nand.local>
+References: <CAPNJDgcauhz_NraSPTQfiDM61gyghSJShZLPUtt5HOr2xKysZg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPNJDgcauhz_NraSPTQfiDM61gyghSJShZLPUtt5HOr2xKysZg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Hi Edwin!
 
-> Honestly, looking back at those two patches of mine, I think both were
-> rather suboptimal.  A better solution that would handle both F->D and
-> D->F would be having fast-export sort the diff_filepairs such that it
-> processes the deletes before the modifies.  Another improved solution
-> would be having fast-import sort the files given to it and handling
-> deletes first.  Either should fix this.
+On Tue, Mar 21, 2023 at 02:38:34PM +0000, Edwin Fernando wrote:
+> Hello,
+> I am Edwin, a first year undergrad in the department of computing,
+> Imperial College London. This is my first message to this mailing
+> list! I want to work on the micro-project "avoiding pipelines in test
+> scripts".
 
-Reminds me of the trick we had to invent for "git apply", where we
-process deletions first and then creation, to avoid the exact
-problem of creating "foo" while removing "foo/bar" ;-)
+That sounds great! I assume that you meant avoiding pipelines where the
+'git' executable is in a non-terminal position of the pipe, e.g.:
+
+    $ git blah | <something else>
+
+Since if "git blah" exited with a non-zero code or crashed, etc., then
+we wouldn't see the failure since the pipeline would suppress it.
+
+That has been a long-standing goal within the test suite, and I think
+that it's a great project to get you started. It'll ensure that you have
+all of the bits in the right place to get Git running on your machine
+and that you're able to run the tests.
+
+> I'm really excited to work on such a massive project (ie, git, not the
+> microproject) and be in contact with the people who put it all
+> together. I'm curious about how software development works at this
+> scale, since it feels quite different from the small projects I've
+> used to work on. I use bash quite frequently for automating tasks, and
+> I have experience in C, through a uni project of making an assembler.
+
+:-).
+
+> I found and looked at a few places with pipes. I have a few thoughts
+> and questions on making a change. Firstly (if this is relevant), how
+> do I ensure that the file I write the std output to doesn't have a
+> name clash with other such files made during tests?
+
+Each of the tests runs in their own "trash directory", which you can
+keep around after the tests are finished running if you invoke them with
+the '-d' flag. More information about each of those flags is available
+in t/README, as is information about the test suite as a whole.
+
+I would also recommend that you take a look through t/test-lib.sh and
+t/test-lib-functions.sh, as those give a good overview of both (a) some
+of the internals of our integration testing library, and (b) some of the
+convenience functions available to you as a test author.
+
+Looking at some example tests in the tree may be useful, too. You might
+want to check out t/t5318-commit-graph.sh as an example of our modern
+test-writing style.
+
+Let us know if you have any questions or want any pointers on getting
+started.
+
+Thanks,
+Taylor
