@@ -2,151 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46AD9C6FD20
-	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 22:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89779C6FD20
+	for <git@archiver.kernel.org>; Tue, 21 Mar 2023 22:59:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229865AbjCUWeI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Mar 2023 18:34:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35454 "EHLO
+        id S229915AbjCUW7v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Mar 2023 18:59:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229839AbjCUWeH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2023 18:34:07 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7593F50988
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 15:34:05 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id j13so16904388pjd.1
-        for <git@vger.kernel.org>; Tue, 21 Mar 2023 15:34:05 -0700 (PDT)
+        with ESMTP id S229487AbjCUW7t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2023 18:59:49 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA3BF28850
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 15:59:48 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id o2so10236536plg.4
+        for <git@vger.kernel.org>; Tue, 21 Mar 2023 15:59:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1679438045;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MvYSjZGgtjKfRDyOV7ALT2d9QeuLT9jkqY5YSFWxHs0=;
-        b=baaNdEH7JHwQ5ryGcqxuCnmJUiLqqYRCc7YS3ufm4mEuJyOtoetmNOwlXqwYYZpllJ
-         ZeDXPfHxjO4VPdBfODbhEEHBK/7ghRvxbVyWs7DyWT8OgI2vLFbXP+xRqmeMSRgu8Kt8
-         Ldq7xtm6LKPmFn3WtiM1D2VUilKR5XAaGvXCmqQn7beVTEToDYnfQFsuSR9RX/un2KfG
-         CuND+iwbOfabeHcxBecTv4ZrsVngRYzuEMko9ZALBSluBTosBMaZiXBS3s6EkxfEOOSL
-         VHHitiQb0LaPr+L6z1JWz8+KyWMWQPdCoVLzWhKWLRmvEwYcv/uw0Rxrr5F8nIHwr7K6
-         a9lg==
+        d=gmail.com; s=20210112; t=1679439588;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4fP0t/LPVJ8gpnDuhKEmgt0HrW26PYziH/KOeyrwJhk=;
+        b=l2R0+Dlg72vvPiDJpKmXhYi6ITnBqSFz+wGGuhWFf1ObvGxZApWOSeEaUmUoz6cPag
+         dhxnD8j28ZENATn71xN5LXmsconn+fR6j/XSZMhrg3xOnnDU1Oro68ypgAAgaOSxaYsm
+         mltF+iVZrP/J0XatMYaQ7FdPw7c5KiMq5O/tFfCE7hnUEbJQHs9T5zc8jTJsHg8f58UO
+         S8OGDai45foez/n5C3lbcbtJFD6oTt22QFKuBRfv9QC4ckuJutjRaFwP16GM97OYQ3S3
+         P1HuvMlbszxEozdfORM7PF0A9aLUjBPuq38nS94pMHrAHUqaN3k8EihZyXsCg1+bA4cv
+         FZyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679438045;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1679439588;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MvYSjZGgtjKfRDyOV7ALT2d9QeuLT9jkqY5YSFWxHs0=;
-        b=hznhkn7rGXYnnKT+gclPesUzt0BwNYIpQyC+V75WaDpO4FAtKyMeeRI0uIDrCYvGe8
-         SSqs/ZYsmjrybAw9xAvZsw7IsfweMlr9U72wESqiBdpmcejnQEGlvQxgE10rQpMPzEkK
-         r0rjmnr84rmkebKcaI3OlreqqaMVEPrKnw0rUsb+DIi2utPM382C2gimnXgduY3s+XQ6
-         FctEl2mej9X5PRiem886gxZ/OkokGAGr8fcs20571yalsM4oVoAAFc/J4G9Jm5gI2qCI
-         IMzlvLZ+CuvAO+AZDNpkljULk6U1e5SNb5k9YAa4radFV1KXSo62eyF3Qd8b5dK8ziYy
-         Q6UA==
-X-Gm-Message-State: AAQBX9ezpXcdaIUOIOGiUkaW+gveicAAiMt9Fm5HveuFLvf69ogZUGyn
-        dlZpTGkOXWnIqOhY+f3nyYAKN9S37NIf1UEpmg==
-X-Google-Smtp-Source: AKy350aBN3AB4kXz0QFm0teHTpO89TIVkqiRpEoArLgIfvZcFw1y4yTHl8YaYaChRbeXiqEucuaVmw==
-X-Received: by 2002:a17:903:5cc:b0:1a1:97b5:c64f with SMTP id kf12-20020a17090305cc00b001a197b5c64fmr132217plb.11.1679438044919;
-        Tue, 21 Mar 2023 15:34:04 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id c10-20020a170902b68a00b0019edf07eb06sm9224815pls.122.2023.03.21.15.34.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Mar 2023 15:34:04 -0700 (PDT)
-Message-ID: <cea3c428-02e8-a50d-1211-e62f593dc0a1@github.com>
-Date:   Tue, 21 Mar 2023 15:34:02 -0700
+        bh=4fP0t/LPVJ8gpnDuhKEmgt0HrW26PYziH/KOeyrwJhk=;
+        b=k/B/9Ltd5kRcu+dZ6yHTxjeOtKpRFDtNhSGPt7/Dni6WwETKlt8Lx0MSyEj+hGra6q
+         FGpV4NCkT7WzVVPbRV/XZc42iq/yejKnw4HoJqT6yHzi3sSTYWvlSA1tfDYmsL9Rgb31
+         bf2VhTdGDX3RMbKrsS7pjqa3b+JFt8FXpjuY2cAhT0AiCe/RLsF17ded0a3jRfMrFL7j
+         9dks8BS6ol0giN0Cb8E5EzF1iOyVSLYAPCrcfteAksrEz8o30Ufnis/9jXBwxP7oZq2F
+         TDSd8sTrqH6NEAGAgvDHR1kS9gTi3/8GQpktvofeBSyvrdwItnjhUYz7vCyQvd2WEL6G
+         cpdQ==
+X-Gm-Message-State: AO0yUKU+BhlvrKDuUl1qRVgO/BSntQnhcw88Dw2lf3LLqQmSAccHVFo9
+        VeoDigl1kAxnNSwk6O51ghI=
+X-Google-Smtp-Source: AK7set8rVpaW9t7FSurOL4BaFguCWCGqHNlSM04V7OA+VKlMXDF2SeWhQkowk1dhURW3fxvU0ODRmg==
+X-Received: by 2002:a05:6a20:bf15:b0:d9:4907:d8ac with SMTP id gc21-20020a056a20bf1500b000d94907d8acmr2876049pzb.61.1679439587958;
+        Tue, 21 Mar 2023 15:59:47 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id a21-20020a62bd15000000b005895f9657ebsm8721415pff.70.2023.03.21.15.59.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 15:59:47 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Cristian Le <cristian.le@mpsd.mpg.de>,
+        Matthias =?utf-8?Q?G=C3=B6rgens?= <matthias.goergens@gmail.com>
+Subject: Re: [PATCH] archive: improve support for running in a subdirectory
+References: <42f13cda-9de6-bfc6-7e81-64c94f5640db@mpsd.mpg.de>
+        <c7b21faa-68dd-8bd9-4670-2cf609741094@web.de>
+        <8d04019d-511f-0f99-42cc-d0b25720cd71@mpsd.mpg.de>
+        <70f10864-2cc7-cb9e-f868-2ac0011cad58@web.de>
+        <xmqqcz5lbxiq.fsf@gitster.g>
+        <d16c6a22-05d8-182c-97b4-53263d22eaa6@web.de>
+        <xmqqo7p59049.fsf@gitster.g>
+        <3da35216-ca42-9759-d4f9-20451a44c231@web.de>
+        <xmqq4jqx8q6q.fsf@gitster.g>
+        <f7949f1b-4bad-e1bf-4754-f8b79e3ce279@web.de>
+        <xmqqjzzly84q.fsf@gitster.g>
+        <9e215e5c-0b67-0362-fd53-8c22b8d348ff@web.de>
+        <e923e844-6891-76dc-e7db-4771b2d91792@web.de>
+Date:   Tue, 21 Mar 2023 15:59:47 -0700
+In-Reply-To: <e923e844-6891-76dc-e7db-4771b2d91792@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Mon, 20 Mar 2023 21:02:53 +0100")
+Message-ID: <xmqqlejpg17g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.2
-Subject: Re: [PATCH v6 2/2] diff-files: integrate with sparse index
-Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, derrickstolee@github.com
-References: <20230310050021.123769-1-cheskaqiqi@gmail.com>
- <20230320205241.105476-1-cheskaqiqi@gmail.com>
- <20230320205241.105476-3-cheskaqiqi@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230320205241.105476-3-cheskaqiqi@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
-> Originally, diff-files a pathspec that is out-of-cone in a sparse-index
-> environment, Git dies with "pathspec '<x>' did not match any files",
-> mainly because it does not expand the index so nothing is matched.
-> Expand the index when the <pathspec> needs an expanded index, i.e. the
-> <pathspec> contains wildcard that may need a full-index or the
-> <pathspec> is simply outside of sparse-checkout definition.
+René Scharfe <l.s.r@web.de> writes:
 
-...
+>  archive.c               | 71 +++++++++++++++++++++++++++++------------
+>  t/t5000-tar-tree.sh     | 13 ++++++++
+>  t/t5001-archive-attr.sh | 16 ++++++++++
+>  3 files changed, 79 insertions(+), 21 deletions(-)
 
-> +	if (pathspec_needs_expanded_index(the_repository->index, &rev.diffopt.pathspec))
-> +		ensure_full_index(the_repository->index);
+There are a handful of CI failures that can be seen at
 
-Looks good! I'm glad you were able to use the tests to confirm that this
-pathspec-based expansion was needed.
+  https://github.com/git/git/actions/runs/4482588035/jobs/7880821225#step:6:1803
+  https://github.com/git/git/actions/runs/4482588035/jobs/7880821849#step:4:1811
 
-> +		
->  	result = run_diff_files(&rev, options);
->  	result = diff_result_code(&rev.diffopt, result);
->  cleanup:
-> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-> index 3242cfe91a..82751f2ca3 100755
-> --- a/t/perf/p2000-sparse-operations.sh
-> +++ b/t/perf/p2000-sparse-operations.sh
-> @@ -125,5 +125,7 @@ test_perf_on_all git checkout-index -f --all
->  test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
->  test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
->  test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/*"
-> +test_perf_on_all git diff-files
-> +test_perf_on_all git diff-files $SPARSE_CONE/a
->  
->  test_done
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index c1329e2f16..6cbbc51a16 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -2097,4 +2097,35 @@ test_expect_failure 'diff-files with pathspec outside sparse definition' '
->  	test_all_match git diff-files folder1/a
->  '
->  
-> +test_expect_success 'diff-files pathspec expands index when necessary' '
-> +	init_repos &&
-> +
-> +	write_script edit-contents <<-\EOF &&
-> +	echo text >>"$1"
-> +	EOF
-> +
-> +	run_on_all ../edit-contents deep/a &&
-> +	
-> +	# pathspec that should expand index
-> +	! ensure_not_expanded diff-files "*/a" &&
-> +	test_must_be_empty sparse-index-err &&
-> +
-> +	! ensure_not_expanded diff-files "**a" &&
-> +	test_must_be_empty sparse-index-err
-> +'
+which is with this topic in 'seen'.  Exactly the same 'seen' without
+this topic seems to pass
 
-Thanks for adding these, it's a good idea to show when the sparse index *is*
-expanded in addition to when it is not. However, checking that the
-'sparse-index-err' is empty won't handle silent failures, so it's probably
-better to create an 'ensure_expanded' to mirror 'ensure_not_expanded'. The
-two functions could share pretty much all of their code except for the last
-line ('test_region ...').
+  https://github.com/git/git/actions/runs/4484290871
 
-> +
-> +test_expect_success 'sparse index is not expanded: diff-files' '
-> +	init_repos &&
-> +
-> +	write_script edit-contents <<-\EOF &&
-> +	echo text >>"$1"
-> +	EOF
-> +
-> +	run_on_all ../edit-contents deep/a &&
-> +
-> +	ensure_not_expanded diff-files &&
-> +	ensure_not_expanded diff-files deep/a &&
-> +	ensure_not_expanded diff-files deep/*
-> +'
-> +
->  test_done
-
+Thanks.
