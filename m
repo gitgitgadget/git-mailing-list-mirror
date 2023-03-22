@@ -2,87 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85FBDC6FD1C
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 20:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 889ECC6FD1C
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 21:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230496AbjCVUxY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 16:53:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56148 "EHLO
+        id S229768AbjCVVJh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 17:09:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231875AbjCVUxF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 16:53:05 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27AE555B0
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 13:52:47 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id q102so5133088pjq.3
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 13:52:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679518366;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a7ORZzY0lKNWqhESXJlUXNT9nwGHWdpP0rs+1RhinKc=;
-        b=Wnv0Y1KSUzqntjn0+FVurWUrcKr6BF7hUDrL9lPqXbOvjj4Imj7XABSr5vUrW0qTAc
-         u9Cjw6xGK++hVTmIZSNNjVkcfGqJ/rlqoVP4pA8AR9ZZ9c/AL+i0F2hue1S7iWV/y2Ow
-         Ez5yD5o5FCLsTHnyknc3aMxvT04sLfXC25JUwTr3pujqQJz6WaWuhAXjS12PnTP4cxtp
-         bLocKreZQeONILuXZQ2DcErmBrhFXXblYbLJjiF7A0He4AEgh0HW1A0yGiMo5CE8riLm
-         vWIW3pYuyc35X4E8djJhn6GHejx/271O6APJbL5NUJvEIOSjwETkUg0euI7wbP62yrmF
-         2E8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679518366;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=a7ORZzY0lKNWqhESXJlUXNT9nwGHWdpP0rs+1RhinKc=;
-        b=2WuGsKYZpX9FMDvltIkrT51qZpklxQqHSRrQ1yAqaRzMjdhYQKIAUb+SyJ3xXmXJZs
-         Ly2j6uR3S76fPUWeHtPdtrFR+F9lAIB4T6eJUXa/hP/5tdWDbU4gIWyQ8dy7+0b+hXsi
-         n98ZSO3iz2QxTZGj0VeYGm0jtQ/2YinuiTB30ouf/VsXEM0z9ZHgddIxPs3Db6LogFFm
-         qEc7KUZRWUXNsxFicJkr++aytELZocUawoEy4J20kjm+vZLjLdXiNGluPjoPodcwQVPX
-         3ly55xoI2zkf3/MmzuYsQfQIT+30gKWVLgNNVkvMLf72YFbzuk4lIGOY507YQyzW5hYz
-         OtgQ==
-X-Gm-Message-State: AO0yUKWb+jLEyS8JBiXfNGNjl3H/sKpjy2b7VECtIB8NDymUPGGJ3nQG
-        D0MPgnjwvBw0uAYKeDo9EREvnhSnzsU=
-X-Google-Smtp-Source: AK7set9Inx20mK3p1TWCAcG41s77dJpum4lqOPWJ5TE4ClAkovusEm20w/hZDXKE12rR/+5Tloo3OA==
-X-Received: by 2002:a05:6a20:4f26:b0:bc:b9d2:f0f8 with SMTP id gi38-20020a056a204f2600b000bcb9d2f0f8mr680848pzb.24.1679518366411;
-        Wed, 22 Mar 2023 13:52:46 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id t21-20020aa79395000000b005e5861932c9sm10470328pfe.129.2023.03.22.13.52.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 13:52:45 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Clement Mabileau <mabileau.clement@gmail.com>
-Cc:     ctmbl via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Fix mem leak in branch.c due to not-free newly
- added virtual_name variable
-References: <pull.1476.git.git.1679478126.gitgitgadget@gmail.com>
-        <27f27f3afd76fc974350c0c94e20307879eead84.1679478126.git.gitgitgadget@gmail.com>
-        <xmqqmt44enj3.fsf@gitster.g>
-        <bd5207a0-9783-6a15-93da-0904ecd21341@gmail.com>
-Date:   Wed, 22 Mar 2023 13:52:45 -0700
-In-Reply-To: <bd5207a0-9783-6a15-93da-0904ecd21341@gmail.com> (Clement
-        Mabileau's message of "Wed, 22 Mar 2023 21:00:54 +0100")
-Message-ID: <xmqqv8iscxuq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        with ESMTP id S229734AbjCVVJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 17:09:36 -0400
+Received: from st43p00im-zteg10062001.me.com (st43p00im-zteg10062001.me.com [17.58.63.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDA5921A0D
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 14:09:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mac.com; s=1a1hai;
+        t=1679519374; bh=AGioCT7o+pAbTMGSvr4xhN3g15d524BO6tEVJuvw48E=;
+        h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To;
+        b=N9i6jnrrqtAIHB84UwiBwoFeW8tk6Z7SqLHIvV1yV5RH6p9HXoEaJCedPNx5tvP6N
+         2JfDjv/pirG6oXp786h7RZCJJOAD2t+rzfKM1ljsii+HtOvl28mVzQBWtBvttvONnK
+         IbG5tPaYbLqx1yJK1ZyjdEJDqNqVGa9lBp2ks1zR7nXKCTQ0EuqCTdc7jAu1zXCDoa
+         D7u2J6+O1RECMMxezIzVWr4YV22nwXCSYggfJo/hb+YBMOfzQYfRyJWbrAfCgmHjPd
+         UqTwDGGeYGjSIaMFNAbBFNBdmFfdB0nd9L6o7HzgldZY02jlf85XKvWU6XzmsiwXKX
+         w1K0NyD/TA5dg==
+Received: from smtpclient.apple (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
+        by st43p00im-zteg10062001.me.com (Postfix) with ESMTPSA id D34B9800A9D;
+        Wed, 22 Mar 2023 21:09:32 +0000 (UTC)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.400.51.1.1\))
+Subject: Re: BUGREPORT: Modified files on a fresh clone on M2 MacBook Pro
+From:   Sjur Moshagen <sjurnm@mac.com>
+In-Reply-To: <34c11cee-d73e-4de0-85f1-5ecd5fe54c71@app.fastmail.com>
+Date:   Wed, 22 Mar 2023 22:09:19 +0100
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D9EA587E-1B31-40EC-BF00-BB37DA29DFC4@mac.com>
+References: <593742E7-F0FC-471C-AFF5-1E855A3788B0@mac.com>
+ <CAJoAoZkKTGzgVyL2wM9a4VcFObx4YpjMSatH9Bpqcgyi=zzBrQ@mail.gmail.com>
+ <3FC6072C-5856-437F-9B4F-BC182921426D@mac.com>
+ <73af529d-e918-445d-b0ee-9506e28188af@app.fastmail.com>
+ <xmqq355wegsd.fsf@gitster.g>
+ <34c11cee-d73e-4de0-85f1-5ecd5fe54c71@app.fastmail.com>
+To:     Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+X-Mailer: Apple Mail (2.3731.400.51.1.1)
+X-Proofpoint-GUID: qapx49bN3IC72oHWntxQAlfW2VTF2i0G
+X-Proofpoint-ORIG-GUID: qapx49bN3IC72oHWntxQAlfW2VTF2i0G
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.572,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2020-02-14=5F11:2020-02-14=5F02,2020-02-14=5F11,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 spamscore=0
+ mlxlogscore=769 mlxscore=0 bulkscore=0 suspectscore=0 malwarescore=0
+ adultscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303220150
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clement Mabileau <mabileau.clement@gmail.com> writes:
+22.3.2023 kl. 21:00 skrev Kristoffer Haugsbakk =
+<kristofferhaugsbakk@fastmail.com>:
+>=20
+> On Wed, Mar 22, 2023, at 20:18, Junio C Hamano wrote:
+>> The attribute file says "assume everything is text unless otherwise
+>> noted below", which you probably should not lose.
 
-> I just did it!
+I have now added all missing binary file types I could find, and kept =
+the default as text.
 
-Nice to hear.
+> On Wed, Mar 22, 2023, at 19:47, Sjur Moshagen wrote:
+>> I will add this and other missing extensions.
 
-> Thanks for the review.
+Done in =
+https://github.com/giellalt/lang-sma/commit/0f461c63ade00a623da2b2533fbe5c=
+a4b986c1f0.
 
-Well, I didn't "review" anything, though.  I just commented on 2/2
-that will become moot in your updated version, and I didn't even
-look at 1/2.  
+> By the way, when I first cloned the repository on commit 357c7cf01950
+> (text, 2023-03-21), those two binary `txt` files showed up as dirty =
+for
+> me (before you removed them in 6b0acd78f9c9 (Remove accidentally added
+> files with uncomprehensible content, 2023-03-22)). I guess it was the
+> same for you.
 
-The change(s) as a whole need to be reviewed by somebody.
+Yes, it was, should be ok now.
 
-Thanks.
+Thanks to all for the help and friendly comments and suggestions.
+
+Sjur Moshagen=
