@@ -2,82 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70269C6FD1F
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 17:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42201C6FD1C
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 17:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229784AbjCVReC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 13:34:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39964 "EHLO
+        id S229642AbjCVRe2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 13:34:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229642AbjCVRd7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 13:33:59 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69ACD367E4
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 10:33:53 -0700 (PDT)
-Received: (qmail 10283 invoked by uid 109); 22 Mar 2023 17:33:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 22 Mar 2023 17:33:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15800 invoked by uid 111); 22 Mar 2023 17:33:52 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Mar 2023 13:33:52 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 22 Mar 2023 13:33:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Emily Shaffer <nasamuffin@google.com>
-Cc:     Sjur Moshagen <sjurnm@mac.com>, git@vger.kernel.org
-Subject: Re: BUGREPORT: Modified files on a fresh clone on M2 MacBook Pro
-Message-ID: <20230322173351.GC4296@coredump.intra.peff.net>
-References: <593742E7-F0FC-471C-AFF5-1E855A3788B0@mac.com>
- <CAJoAoZkKTGzgVyL2wM9a4VcFObx4YpjMSatH9Bpqcgyi=zzBrQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJoAoZkKTGzgVyL2wM9a4VcFObx4YpjMSatH9Bpqcgyi=zzBrQ@mail.gmail.com>
+        with ESMTP id S229541AbjCVRe1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 13:34:27 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F7F521950
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 10:34:26 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id e129-20020a251e87000000b00b56598237f5so20219307ybe.16
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 10:34:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112; t=1679506465;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fTB8NQcqq5KV32SdIYWjeq1FWgNHPf9CvIFh4WFAxMk=;
+        b=Ol0dfSWPRrx3ivmSER9cZ8K5778XUPZaM9oex7NAyv8JIVKA6lM4rPwR2tEF67fH76
+         +2iKsI9WXZ16aGex7ufuGFKDTGtPeW3FsqrIqrrSJcjLs6vMqSvPTxnmUySbH8OjxQ2V
+         NllFHg1jehEsRuhbnbxnYIX9wZTWWLw/OSqQBiBUpKavlyOp3fJSEjvu4U4ywsq/ZeyX
+         qwlcUHSRVg75OdPEI/Y+xW9j4HGmE9CXGzxwnfPc6W7Ih+/FC8F0fXIpr7FNaX3cgs/0
+         Rmd5YKhF2Po7cnVD64V6JdMRgmlTh8HQ+ZJUVReCsIiLbLngzBbTvQ2DepqB/jqYx1Jl
+         TPKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679506465;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fTB8NQcqq5KV32SdIYWjeq1FWgNHPf9CvIFh4WFAxMk=;
+        b=0HKBi3/Pcy6+pHAUByrCWRHj25lnYd3svqQi2NEydlor4pBknzFP5lRvuwb3Lqm0K/
+         69pzQVkAFcn+vef0DNZjSXlv5LLqDsD8U8RyS7fGzIyyyBLBOOqRYVhDp/63LKaFG22o
+         4b5I0w/CAbhNN80/nf0CmdDW0u3nbkSQuXMYRu+UuicVdgeOw+Azvc0z8Ruyv6Wmi8ZN
+         2euFdl68pCW45MMSGQfuJu1C3/rc4T0t+hF5wH9siFvVpeLY4/pIWtO/qmklIIfePXdr
+         jJH91MO5JPy2F1ZU0t6PqaOtAHaOWOdXTWdDD/HfQS9rY7Fi8C6mXJZK3w/9c9B4LkdY
+         R5AA==
+X-Gm-Message-State: AAQBX9c0mrbXIOmR6QfQqF3MI+rtkDB4BLxDBiNalvd+7KPVX0udeIa1
+        rgvC1GxRUByZTVYsTr5SiE+/Bsu5rux14Tb8mcGnuktqYuDbMKxUJiB1+wn1ZoSV9QuNO3ziF2k
+        NfZtEvmUFSt4QbMx7CBG2/RYZsnTI3g3ch58N8ZYSThgAGdhytTKlIvwuhFRxFQevRw/M1kNcEC
+        Sn
+X-Google-Smtp-Source: AKy350bCvBQcUFLxBYs2Tkxr59NK4/ZTsm3rNzMy5Y3I4KnmUq2oOn2OpBP6+IIs4ZS9Pvn3yhpilPdmkraY2f/TaVjb
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:202:7d33:caf6:db87:e779])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:aa32:0:b0:b30:d9c:b393 with SMTP
+ id s47-20020a25aa32000000b00b300d9cb393mr340787ybi.12.1679506464983; Wed, 22
+ Mar 2023 10:34:24 -0700 (PDT)
+Date:   Wed, 22 Mar 2023 10:34:21 -0700
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.40.0.348.gf938b09366-goog
+Message-ID: <20230322173421.2243947-1-jonathantanmy@google.com>
+Subject: [RFC PATCH] bugreport: also print value of no_proxy envvar
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 22, 2023 at 09:46:11AM -0700, Emily Shaffer wrote:
+At $DAYJOB, there was an issue that could have been diagnosed much more
+quickly had we known what the $no_proxy environment variable was set
+to. Print this value when the user runs "git bugreport". This is useful
+not only when a command that explicitly uses the network (e.g. fetch
+or clone) is run, but also in a partial clone (in which lazy fetches
+may occur).
 
-> On Wed, Mar 22, 2023 at 9:38 AM Sjur Moshagen <sjurnm@mac.com> wrote:
-> >
-> > Thank you for filling out a Git bug report!
-> > Please answer the following questions to help us understand your issue.
-> >
-> > What did you do before the bug happened? (Steps to reproduce your issue)
-> > git clone https://github.com/giellalt/lang-sma
-> >
-> > What did you expect to happen? (Expected behavior)
-> > Clone to be clean, as reported by git status
-> >
-> > What happened instead? (Actual behavior)
-> > git status reported four changed files
-> 
-> It would help to know which files, or what the difference was, so we
-> have a chance to figure out what happens without having to go and buy
-> a Macbook :)
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Taking off the author's hat and putting on the reviewer's hat, I'm
+not so sure if this is the right approach, since $no_proxy might have
+information that the user doesn't want to share (especially since it
+could be used beyond the current repository, and even beyond Git), the
+user being informed that they can delete any lines notwithstanding.
 
-Just a guess, but it probably has to do with Unicode normalization.
+Therefore I'm sending this patch as RFC.
+---
+ builtin/bugreport.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-  $ git clone https://github.com/giellalt/lang-sma
-  $ cd lang-sma
-  $ git ls-files -z |
-    perl -MUnicode::Normalize -0ne '
-      chomp;
-      print "$_\n" if NFD($_) ne $_;
-    '
-  corp/SNÅSNINGEN 2014/10 uke/Arbeidsliv - sørsamisk.docx
-  corp/SNÅSNINGEN 2014/10 uke/Arbeidsliv.docx
-  [...and so on, there are 540 entries...]
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index 5bc254be80..c9dd817e70 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -12,6 +12,7 @@ static void get_system_info(struct strbuf *sys_info)
+ {
+ 	struct utsname uname_info;
+ 	char *shell = NULL;
++	char *no_proxy = NULL;
+ 
+ 	/* get git version from native cmd */
+ 	strbuf_addstr(sys_info, _("git version:\n"));
+@@ -39,6 +40,9 @@ static void get_system_info(struct strbuf *sys_info)
+ 	shell = getenv("SHELL");
+ 	strbuf_addf(sys_info, "$SHELL (typically, interactive shell): %s\n",
+ 		    shell ? shell : "<unset>");
++
++	no_proxy = getenv("no_proxy");
++	strbuf_addf(sys_info, "$no_proxy: %s\n", no_proxy ? no_proxy : "<unset>");
+ }
+ 
+ static void get_populated_hooks(struct strbuf *hook_info, int nongit)
+-- 
+2.40.0.348.gf938b09366-goog
 
-HFS silently normalized everything to NFD. On newer installs using APFS,
-I think the rules are different, but I haven't followed the details.
-
-I'm not sure if this is a red herring (after all, I'd expect 540 such
-files on HFS) or if some of the files are somehow special for APFS (I
-looked for obvious things like collisions after normalization, but
-didn't see any). I agree it would help to know which 4 files. :)
-
--Peff
