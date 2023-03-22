@@ -2,79 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0F4AC6FD1F
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 11:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F4EFC6FD1F
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 11:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230145AbjCVLNt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 07:13:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57716 "EHLO
+        id S229839AbjCVLvK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 07:51:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbjCVLNr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 07:13:47 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A2BFF30
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 04:13:43 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id o12so71273609edb.9
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 04:13:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679483621;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mWFdOhyWZIlZlvBp7oWmLnDSIyTGxI+5bmZ4/3vWVfk=;
-        b=QM5jDjm+3SCxGyU/aVTS/WJlpednSOmIL95kj1uWMxPDuMXSwc0kZIYo6pKP7P9OAs
-         4LDTE7BwzhL3QO25Gz/PjSu/sD9rkQhPpa6342Ze+cr9P8nxSkLsMvvRCEIdpDHRxRNx
-         VA2RVQ0Tj5MrXp3jUnJvTYdK8poMtegCF1Tdzdwcd+Wv18PyypqcRTc+e0iGti0gZJpI
-         EJWYYU0vr00iibWorptwZNG3+2opNStTbXgMv5DwYL5bo+DQ0aCBhwM04XUu2LN7ntdy
-         vEqsIaM3WKeP0z0QU/yqqJaCOWq6KgGMWA7Ln2ssoqB0qtJkef8MXQA//3GnEyEFGAOV
-         CuoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679483621;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mWFdOhyWZIlZlvBp7oWmLnDSIyTGxI+5bmZ4/3vWVfk=;
-        b=GM2tC+KP4q+1l0hFVsIwLBeLmMUhfcHIBxW+EtwnIG/4ctCKOY9guwSnG5H2givDOA
-         JTX2xdeMkNpfXT7g+sbJoS2IEARpEE4Nv6NSDJdvZHqj7b5tdVq+Fsamjua+zTnOm53R
-         +XLH04ZFaz2AGW+GtFJCZDeSaIYTKYl2rtbEwutYv87i268zTXQU90ktMoo6dK9X9GFG
-         Pg1A/aqS5KszGNF4Eov3bF/wM+J9ci/8x0yd3CyUfK2tbJH6bOQLDZDw2OFKtnDx2FoU
-         zkaixqm+2AWmT80SSQ4wqgIxHAjsw0nv42meZN2srbe+YQ54sCT6baAzL4Wulr+8wrZo
-         qCtw==
-X-Gm-Message-State: AO0yUKUsgnThg3GVOMp2cIAs50oJO7fdD2oARzzzTWpd/Jh4D6H2nAB1
-        ElXVVjKRPlapwgwBeE82hZM=
-X-Google-Smtp-Source: AK7set8o1R6v3YKuJsT02rpf5P/Bx6rWMRQEmWlUypSFX420c+ssUUX5lTBlKkCvaIi/EewbIo2KlA==
-X-Received: by 2002:a05:6402:150e:b0:4fa:d83b:f5da with SMTP id f14-20020a056402150e00b004fad83bf5damr5902591edw.30.1679483621707;
-        Wed, 22 Mar 2023 04:13:41 -0700 (PDT)
-Received: from localhost.localdomain (adsl-178-39-131-155.adslplus.ch. [178.39.131.155])
-        by smtp.gmail.com with ESMTPSA id u5-20020a50d505000000b004c09f0ba24dsm7540806edi.48.2023.03.22.04.13.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 04:13:41 -0700 (PDT)
-From:   Ridil culous <reallyridilculous@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, reallyridilculous@gmail.com
-Subject: Re: Feature Request: Allow to stash push and pop file modification times to avoid rebuilds
-Date:   Wed, 22 Mar 2023 12:13:29 +0100
-Message-Id: <20230322111329.781-1-reallyridilculous@gmail.com>
-X-Mailer: git-send-email 2.40.0.windows.1
-In-Reply-To: <xmqq5yathkwh.fsf@gitster.g>
-References: <xmqq5yathkwh.fsf@gitster.g>
-MIME-Version: 1.0
+        with ESMTP id S229476AbjCVLvJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 07:51:09 -0400
+Received: from weald2.air.saab.se (weald2.air.saab.se [136.163.212.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38C82D4
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 04:51:03 -0700 (PDT)
+Received: from mailhub1.air.saab.se ([136.163.213.4])
+        by weald2.air.saab.se (8.14.7/8.14.7) with ESMTP id 32MBomVi009606
+        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Wed, 22 Mar 2023 12:50:48 +0100
+DKIM-Filter: OpenDKIM Filter v2.11.0 weald2.air.saab.se 32MBomVi009606
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=saabgroup.com;
+        s=weald2_2; t=1679485848;
+        bh=LTGToGv8iwhhtg8wwnlxWsY/h21BzLzW617OjEVrv8c=;
+        h=From:To:CC:Subject:Date:References:In-Reply-To:From;
+        b=mgg6Jq/oE5ChQ74MylVAFzwZtNFUnUbeRag+qwY4VCMDtHb24bKOULQyBVVKiGLKX
+         bYp7PNTVS0jUjR9egCMWRgaEKmhnF0gxuOuD9KzwXbkPIHY4T0i/HTuOM3CLqTqjqN
+         QjBeIT8bLQrPtDZ3MyFwR0gulwlJYUfR5yYO1aJHVCy+rdxD/jYsDsqF2VS6Oq9Ql5
+         pzhhKdmsNv6bT3Fd/N9hnExBFL8UQWmWiAHbTZOR8ZDjy8H28DXWyeV8+2PjZ+ipcv
+         FSaKjfRWKYkvhHkeQ9jArhW8lOHX305nEednG2gYRG6Q58UO/+JoaC3rK33VpBevRB
+         lBISWQBtMynoQ==
+Received: from corpappl17783.corp.saab.se (corpappl17783.corp.saab.se [10.12.196.90])
+        by mailhub1.air.saab.se (8.15.2/8.15.2) with ESMTPS id 32MBomML347536
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 22 Mar 2023 12:50:48 +0100
+Received: from corpappl17778.corp.saab.se (10.12.196.85) by
+ corpappl17783.corp.saab.se (10.12.196.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.26; Wed, 22 Mar 2023 12:50:47 +0100
+Received: from corpappl17778.corp.saab.se ([fe80::8df4:c4d8:a91e:cc18]) by
+ corpappl17778.corp.saab.se ([fe80::8df4:c4d8:a91e:cc18%14]) with mapi id
+ 15.02.1118.026; Wed, 22 Mar 2023 12:50:47 +0100
+From:   Lundkvist Per <per.lundkvist@saabgroup.com>
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [EXTERNAL] Re: Soundness of signature verification excluding
+ unsigned empty merges
+Thread-Topic: [EXTERNAL] Re: Soundness of signature verification excluding
+ unsigned empty merges
+Thread-Index: AQHZW9YuL0XHoZNDkEewevJzAqRee68FcOjegAFADec=
+Date:   Wed, 22 Mar 2023 11:50:47 +0000
+Message-ID: <cf655e6bcf7248a393b8bfb89bc5833a@saabgroup.com>
+References: <27a7d2956ed94d7ea8eb6d17f1414525@saabgroup.com>,<xmqqmt46jbrg.fsf@gitster.g>
+In-Reply-To: <xmqqmt46jbrg.fsf@gitster.g>
+Accept-Language: en-AU, sv-SE, en-US
+Content-Language: en-AU
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.12.197.18]
+x-tm-as-product-ver: SMEX-14.0.0.3092-9.0.1002-27518.007
+x-tm-as-result: No-10--19.087800-8.000000
+x-tmase-matchedrid: 13nEecSBt9GJVA+ukO+5MXpXbwx9aHgaKQNhMboqZlrGZbX3v50Wr/y+
+        IfkvA3MsL2t0lTyrb2mOltXIJxb6e2Kpop2untnPjoyKzEmtrEfwUenwsKlntFjH3z6RfJRwIa7
+        NUssol07/FMNtciEZrJBiPSJiPDCdU/cjYQukEoLfqVBdB7I8UbiUGLgNIUm7+qrYkjx5HFsplD
+        /bYdJZ1edin0834i0ovtTJr/rCD9VXvJFU/uBRZYh/ebSxR/HnqJNAg+VJy+ts+HFD7B2Y6UWVx
+        BAe6/8O01Q4rs5clVanqW3VSGf5d79ZdlL8eonabh2NZp6L5YT6APa9i04WGCq2rl3dzGQ17eux
+        dOndYh+4TP2w4sTbEqX0orwAKv7RLizDq+S5cSNN7abY7WT/Xg==
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+x-tmase-result: 10--19.087800-8.000000
+x-tmase-version: SMEX-14.0.0.3092-9.0.1002-27518.007
+x-tm-snts-smtp: DA27D3A05D974486F7D316A2323927E29AB58697826EE67E59C3CD5BE27C17852002:B
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry, i wrongly addressed my reply before (https://lore.kernel.org/git/202=
-30322110309.760-1-reallyridilculous@gmail.com/) to rsbecker.=0D
-=0D
-Junio C Hamano <gitster@pobox.com> wrote:=0D
-=0D
-> Now what timestamp should "stash pop" give to the working tree files=0D
-> in this case?  The contents of the file probably is identical to the=0D
-> timestamp of the working tree files immediately before "stash push"=0D
-> was run.  If we restore the original timestamp, because it is way=0D
-> older than the build artifacts of your second build (which was done=0D
-> after "stash push"), the build artifacts would not be recreated.=0D
-=0D
-The usecase for which i'd like to have the feature would avoid that because=
- there would be only build artefacts from the time of "stash push".=0D
+Junio C Hamano wrote:
+> Lundkvist Per <per.lundkvist@saabgroup.com> writes:
+>
+> > But it seems like if we allow unsigned empty merge commits, i.e. those =
+that
+> > themselves do not introduce any any other change than what its parents
+> > introduce, and require all other commits to be properly validated, then=
+ we can
+> > safely validate the whole repository?
+>=20
+> Depends on what you are trying to protect against, I would think.
+>=20
+> Two tl;dr of it are
+>=20
+>  * a merge that does "not introduce any other change than what its
+>    parents introduce" can still cause harm to the codebase.
+>=20
+>  * a merge that introduces other changes may very well be necessary
+>    to merge two histories.
+>=20
+> Each commit signed by known/authorized people is simple.  But what
+> does it mean for them to sign an individual commit in the first
+> place?  "I wrote it" is too naive an answer ;-)
+>=20
+> A commit that is perfectly good in one context may cause the
+> codebase to do a totally wrong thing in a different context, so your
+> sign on the commit itself may assure others that you as the area
+> expert vouches for the change in its original context, but will that
+> signature be good enough to hold you responsible for the catastrophe
+> it may cause by merging the history leading to the commit to a
+> history that has forked from the original one long ago?
+
+OK, got it. For certain type of commits there may be opportunities in time =
+where
+it is possible to reintroduce these old signed commits cleanly with an unsi=
+gned
+merge, and this is a type of attack this validation strategy would not prot=
+ect
+against.
+
+Thanks!
