@@ -2,139 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39B64C6FD1F
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 09:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 907D3C6FD1F
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 09:51:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230408AbjCVJmS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 05:42:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46766 "EHLO
+        id S230128AbjCVJvX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 05:51:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229832AbjCVJmM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 05:42:12 -0400
+        with ESMTP id S229788AbjCVJuv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 05:50:51 -0400
 Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAD4E28228
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 02:42:09 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id j24so7408364wrd.0
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 02:42:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCAEB1731
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 02:49:35 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id d17so7894377wrb.11
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 02:49:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679478128;
+        d=gmail.com; s=20210112; t=1679478574;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LpsJ4lyQsLNU4LZU9CqJU2KEbYl1q5mdM0u2a7s8TMs=;
-        b=ApL6HG3nYpXjBP1GZTu+dptoN07Pmz4DCwYl2IkTc5AQJrlv4QbH6v9JS+heTvkuE+
-         YZA7I5fCAuBGwxz4J9ScZn7Dxyfu5eeKrpEjpO5v0JwKmwHLxOaGw1soyN1ZGxr4D1us
-         sccyn71dc2F2LvcCi5CJf2medv9WjYauum4SPKsr/U9ZcJ/uT3qE01jPp7cvXup6pbJD
-         wx032SOVBrRsUkTGAGR9S/0xuQbkF+v9EgnQPdff/RaTVzfkUr3rtvWOQfMHDxwxjOZh
-         CTFSEbWFrHixEkFvOqya3uLM35RsGR2ymL6xD0/cTC0UcGC5zf//y8sS0cHOs2WEzVdh
-         l7NQ==
+        bh=zu5vMShQXGrtPlU6dEg3dRa8AB+Kxzy5IsTqSQgW2Fc=;
+        b=liBWXjEEGY0g3Xh8W7VJ5OHMjV8401BNS96iLf3e553EoUIOUTbo5GD43Vf7yN+J7O
+         YqUCRz3kEUj4WLDfmtL0HJj/JWa9z7mS6QNChtHRvhfiaJCJPE0+nuDH+SkAlwZTl6a1
+         OAbZaGqRfTV07rJ7ZKKChPi3iV/tVJJqct4AO6jAcA9kd2UFk1BM5NiBwDDT7rKaYHB0
+         dh3ICz5q1PJRSC00JuFQmKN1yIobMs957WFMuY6pn0aUix7QKBLctHv+B6qOIF6ZkNWx
+         /Vt7s4cuaDpesuuYsHS+GJt2hhuYwZ7CrcAzzbC333qdWuGjcEN3uq5c93j2Q/wR759+
+         D3MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679478128;
+        d=1e100.net; s=20210112; t=1679478574;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LpsJ4lyQsLNU4LZU9CqJU2KEbYl1q5mdM0u2a7s8TMs=;
-        b=EMlMcfgNpQit/6pFGLzzXu2rsT6GxJYwBuP3aCZ8VKA3QK+DleUklm5TYbg2+CC9Zd
-         T7tkuKPgIDoROkm7Nv12b/Y8PwxvS4+Q5r9HetiNwHtSxSYKNiUqXDiROphOjWtyPhiB
-         R8yYPpHmMaYPKgRuswhDDseVoPXBSr5U/LM9iMktV3cHJNUL82/ngzid8mvRUAYMgCvb
-         n0KjD+MGtN80qJU2o+tTGTCjrqw0/V3LFfKe2XtotlbMx14S/K5GhX7PJW1bmETALTaZ
-         OJBVbH/W0ykmhldv8/4SaRYTxBos+ZfnRb0HR/r5DfRPuX4abOikLu9iZu8E8jCXFvrj
-         Drww==
-X-Gm-Message-State: AO0yUKWzka5j1vZGPoWvbbVI4w3ht8DPlM1dY8Zszq1ziKXbtl9vGLdT
-        NZYlYj677D8npJK+G7lMLqWB101iuzE=
-X-Google-Smtp-Source: AK7set9X+9p3ooZORwjeJm7lJS3vw7UyT3Q+yQgcsdDhgqLW2yQGxTSpfwqouDfqneKT9RJKzSeVIw==
-X-Received: by 2002:a5d:6ac8:0:b0:2d7:e4a2:4b3d with SMTP id u8-20020a5d6ac8000000b002d7e4a24b3dmr4710426wrw.26.1679478127918;
-        Wed, 22 Mar 2023 02:42:07 -0700 (PDT)
+        bh=zu5vMShQXGrtPlU6dEg3dRa8AB+Kxzy5IsTqSQgW2Fc=;
+        b=0WdTFZamu6pTiWkfMO4LJNP+z5YKke1PKJPF5XgJ04AMrDc/UN3V2qu3UFmbkJmSvs
+         FhzDMpVzeyuDdqYiN0IXxmlDhBVfa4Fax7iv9tXEMni49MgUhUAQiMAC/x8dUFP4qSK9
+         2mq0JBikQWqH78Yd4fRNNXU+MiFpQ3yaVoBuxTRmuu1M8ICJj357BFBPsrVu9GL8CBXn
+         L7okywGPUfE0jrOoxa4G+WAOFAfiWdIAskD6P9CxuCU1sAd6QsbsyWZNxnbGgtvZRelt
+         DZXODJPEzH1AXGw6psLgexS/Mpz4NmQkR7Msnewk43uGku2i/CRXk5fe6ZggIax+41ae
+         wCQw==
+X-Gm-Message-State: AO0yUKU660O7VAocGRzIW4pfBLkXnE//4kqBHfdBiLmxuav8m1Wi3EZl
+        Vzv4/k+OllYAEkhyCMKNJEhDKKug/to=
+X-Google-Smtp-Source: AK7set+Ta9KXd7bEFPPE9JHADihUfmZdsUIJOx/BKRrOTB1utoaBaR18cmuYT7aEI4AiC5BYR3zOHA==
+X-Received: by 2002:adf:f20a:0:b0:2ce:92af:adbe with SMTP id p10-20020adff20a000000b002ce92afadbemr4799341wro.59.1679478574156;
+        Wed, 22 Mar 2023 02:49:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s2-20020a5d5102000000b002c71b4d476asm13344041wrt.106.2023.03.22.02.42.07
+        by smtp.gmail.com with ESMTPSA id n12-20020adfe34c000000b002da75c5e143sm1076359wrj.29.2023.03.22.02.49.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 02:42:07 -0700 (PDT)
-Message-Id: <91cb506968a11fbceba856a40b14bed0c4e647bc.1679478126.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1476.git.git.1679478126.gitgitgadget@gmail.com>
-References: <pull.1476.git.git.1679478126.gitgitgadget@gmail.com>
-From:   "ctmbl via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 22 Mar 2023 09:42:05 +0000
-Subject: [PATCH 1/2] branch: improve error log on branch not found by checking
- remotes refs
+        Wed, 22 Mar 2023 02:49:34 -0700 (PDT)
+Message-Id: <pull.1471.v2.git.git.1679478573.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1471.git.git.1679153586903.gitgitgadget@gmail.com>
+References: <pull.1471.git.git.1679153586903.gitgitgadget@gmail.com>
+From:   "Sean Allred via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 22 Mar 2023 09:49:31 +0000
+Subject: [PATCH v2 0/2] Document the output format of ls-remote
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     ClementMabileau <mabileau.clement@gmail.com>,
-        ctmbl <mabileau.clement@gmail.com>
+Cc:     Sean Allred <code@seanallred.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ctmbl <mabileau.clement@gmail.com>
+cc: Eric Sunshine sunshine@sunshineco.com cc: Felipe Contreras
+felipe.contreras@gmail.com cc: Sean Allred allred.sean@gmail.com
 
-when failing to delete a branch with `git branch -d <branch>` because
-of branch not found, try to find a remote refs matching `<branch>`
-and if so add an hint:
-`Did you forget --remote?` to the error message
+Sean Allred (2):
+  Update show-ref documentation for internal consistency
+  Document the output format of ls-remote
 
-Signed-off-by: Clement Mabileau <mabileau.clement@gmail.com>
----
- builtin/branch.c | 28 +++++++++++++++++++++++-----
- 1 file changed, 23 insertions(+), 5 deletions(-)
+ Documentation/git-ls-remote.txt | 24 ++++++++++++++++++++
+ Documentation/git-show-ref.txt  | 40 +++++++++++++++++++++------------
+ 2 files changed, 50 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index f63fd45edb9..8e768761b9b 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -216,10 +216,12 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
- 	struct string_list_item *item;
- 	int branch_name_pos;
-+	char* FMT_REMOTES = "refs/remotes/%s";
-+	char* FMT_BRANCHES = "refs/heads/%s";
- 
- 	switch (kinds) {
- 	case FILTER_REFS_REMOTES:
--		fmt = "refs/remotes/%s";
-+		fmt = FMT_REMOTES;
- 		/* For subsequent UI messages */
- 		remote_branch = 1;
- 		allowed_interpret = INTERPRET_BRANCH_REMOTE;
-@@ -227,7 +229,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 		force = 1;
- 		break;
- 	case FILTER_REFS_BRANCHES:
--		fmt = "refs/heads/%s";
-+		fmt = FMT_BRANCHES;
- 		allowed_interpret = INTERPRET_BRANCH_LOCAL;
- 		break;
- 	default:
-@@ -263,9 +265,25 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
- 					| RESOLVE_REF_ALLOW_BAD_NAME,
- 					&oid, &flags);
- 		if (!target) {
--			error(remote_branch
--			      ? _("remote-tracking branch '%s' not found.")
--			      : _("branch '%s' not found."), bname.buf);
-+			char* MISSING_REMOTE_REF_ERROR_MSG = "remote-tracking branch '%s' not found.";
-+			char* MISSING_BRANCH_ERROR_MSG = "branch '%s' not found.";
-+			char* MISSING_BRANCH_HINT_MSG = "branch '%s' not found.\n"
-+											"Did you forget --remote?";
-+
-+			if (remote_branch) {
-+				error(_(MISSING_REMOTE_REF_ERROR_MSG), bname.buf);
-+			} else {
-+				char* virtual_name = mkpathdup(FMT_REMOTES, bname.buf);
-+				char* virtual_target = resolve_refdup(virtual_name,
-+							RESOLVE_REF_READING
-+							| RESOLVE_REF_NO_RECURSE
-+							| RESOLVE_REF_ALLOW_BAD_NAME,
-+							&oid, &flags);
-+				if (virtual_target)
-+					error(_(MISSING_BRANCH_HINT_MSG), bname.buf);
-+				else
-+					error(_(MISSING_BRANCH_ERROR_MSG), bname.buf);
-+			}
- 			ret = 1;
- 			continue;
- 		}
+
+base-commit: 950264636c68591989456e3ba0a5442f93152c1a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1471%2Fvermiculus%2Fsa%2Fdoc-ls-remote-output-format-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1471/vermiculus/sa/doc-ls-remote-output-format-v2
+Pull-Request: https://github.com/git/git/pull/1471
+
+Range-diff vs v1:
+
+ -:  ----------- > 1:  4408b518810 Update show-ref documentation for internal consistency
+ 1:  a80059d90da ! 2:  44e79f0d69c Document the output format of ls-remote
+     @@ Documentation/git-ls-remote.txt: OPTIONS
+      +OUTPUT
+      +------
+      +
+     -+The output is in the format: '<SHA-1 ID>' '<tab>' '<reference>'.
+     ++The output is in the format:
+     ++
+     ++------------
+     ++<OID> TAB <reference name> LF
+     ++------------
+     ++
+     ++For example,
+      +
+      +----
+      +$ git ls-remote
+
 -- 
 gitgitgadget
-
