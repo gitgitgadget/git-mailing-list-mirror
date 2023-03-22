@@ -2,87 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6025C6FD1C
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 16:23:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57100C6FD1C
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 16:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbjCVQXG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 12:23:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51114 "EHLO
+        id S230228AbjCVQiZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 12:38:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230033AbjCVQW7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 12:22:59 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05EBC3A86C
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 09:22:46 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id om3-20020a17090b3a8300b0023efab0e3bfso23969435pjb.3
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 09:22:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679502165;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7YtpwqQG45EmHV14xFG8KSyzHxyhivyw5joGAwWeH4E=;
-        b=W7/MmZGJ6g6J92g51LT9+4UxIt5QwNhN8lZlR7pwLW78IKDOeMfZ9IornEeaFrWY71
-         kkA6PxB8wGr/Htt0mXIJTiJaDTxnDaet+Do2lHZlokrEm8ckGsBFCzwBml7bJ2LARb7H
-         Y+r3XjBpJalTtSXHSwrlA1Oifs+RsMCmlROBz382LqeGeIIKyjFftaT9CQK8GcW29E75
-         h7ZQWBhi6TnAVNe6jRY2PZMbzUxPC1H0mo3x4hJu34Mxc+pauTjq6/J65FI34P8Em4T1
-         N+J1adFll1qNjBZgZRekvFFeFLpRQM4/32r8PMM2oGsCQT8ETaajU9lWC8bBlU31b2Zq
-         fxuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679502165;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7YtpwqQG45EmHV14xFG8KSyzHxyhivyw5joGAwWeH4E=;
-        b=ie/kHtf82dMK+Jjos+Zkyz7HNWNxES31f+ZO7ZnF4rHlJvoMwr1myJgXFX8pvRpm5m
-         ZOmeNj+VJ6OpwhGp+vAWqkFdfyPsH1qjTWBCW98Z9m36YlWp1f4lzZc5NeWqz7ype8MX
-         rYkaepQo+d2mM0sMhwr5VjLBUXZe4H28SEqXd39lmR+zFiISnLTT0iH5luFp/BsPvSuj
-         88h+tazYmW0TLAMrnFBQ8tR5h0JXR8+1FnuH5Sih06s2Pf88ge9G0ZDZmQVMHp0+3vz5
-         TU7Nf0oYwZSOkF6jDN/Su+MquOPUX5ZAtJtZL7VXM8v/86KC4nvUEN7xX0N2hDF0aJof
-         YdJQ==
-X-Gm-Message-State: AO0yUKXQPDu6NLE2VkeRBWsHff7Ses0WMDy2l8pOUl4vfr4sNVZVO7Wn
-        z3XjWu176avxMe7/xS2qwNw=
-X-Google-Smtp-Source: AK7set/pkRfTzwFQLGwie8T9mPqzQtm5DoOKNTwVeXOGzz5Dg1vAj2VBbhF4NCMvaW3Tnw4gmBGPrg==
-X-Received: by 2002:a05:6a20:8b99:b0:d8:b2a8:f383 with SMTP id m25-20020a056a208b9900b000d8b2a8f383mr106391pzh.53.1679502165319;
-        Wed, 22 Mar 2023 09:22:45 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id z5-20020a6552c5000000b0050301521335sm9822816pgp.11.2023.03.22.09.22.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 09:22:44 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/4] Fix a few split-index bugs
-References: <pull.1497.git.1679500859.gitgitgadget@gmail.com>
-Date:   Wed, 22 Mar 2023 09:22:43 -0700
-In-Reply-To: <pull.1497.git.1679500859.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Wed, 22 Mar 2023 16:00:55
-        +0000")
-Message-ID: <xmqqfs9wg3ho.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        with ESMTP id S230035AbjCVQiY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 12:38:24 -0400
+X-Greylist: delayed 531 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 22 Mar 2023 09:38:14 PDT
+Received: from qs51p00im-qukt01071902.me.com (qs51p00im-qukt01071902.me.com [17.57.155.9])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 190145FA40
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 09:38:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mac.com; s=1a1hai;
+        t=1679502543; bh=pSTpKshU8MqKCmbobieLXH1FPZN7Ucud4wD0NpxXa4I=;
+        h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To;
+        b=ZSsFxjEV/7+VC9h7ipku3K9YRC3dXk92/Nmo8JmnCTUfV2fRrh7Nz3pB2F8Oh5G5T
+         jpH/E6tNKu5vfrt7KBiQ1chf3z/SprZTBLbKP6PpqFNz3BJFU5cAyw9hDhtfa1pWlU
+         CwTz908/JXfVy03GbM/5sbP1kBIJjR9h+xwW3I9AQpOAEVEcu//YDlDtP3EnpvXjmw
+         uwCaK1VKWjU10lx61FS9kMO2JyX0jWRw7mYLIDBbp9+sxjBXGBRahnR/Xf7IR24r8r
+         AzhwAMn9VTwyC6IfRZYVtQVAi/vMooOfzxWc8TeDlFSmr15Oyrxp0LW5tfo7QSIGvF
+         UDLTgPUc7sVqQ==
+Received: from smtpclient.apple (qs51p00im-dlb-asmtp-mailmevip.me.com [17.57.155.28])
+        by qs51p00im-qukt01071902.me.com (Postfix) with ESMTPSA id 1A7DB5EC0C23
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 16:29:01 +0000 (UTC)
+From:   Sjur Moshagen <sjurnm@mac.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.400.51.1.1\))
+Subject: BUGREPORT: Modified files on a fresh clone on M2 MacBook Pro
+Message-Id: <593742E7-F0FC-471C-AFF5-1E855A3788B0@mac.com>
+Date:   Wed, 22 Mar 2023 17:28:49 +0100
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3731.400.51.1.1)
+X-Proofpoint-ORIG-GUID: fEc5JkxrMEfxEmAorVw5Kon5M-VdvtDv
+X-Proofpoint-GUID: fEc5JkxrMEfxEmAorVw5Kon5M-VdvtDv
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.425,18.0.572,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2022-01-11=5F01:2022-01-11=5F01,2020-02-14=5F11,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 clxscore=1011
+ bulkscore=0 phishscore=0 spamscore=0 adultscore=0 malwarescore=0
+ mlxscore=0 mlxlogscore=829 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303220116
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-> Note: While the Git maintainer has stated a strong preference to introduce
-> regression tests in the same patch that fixes the corresponding regression,
-> this patch series starts with a stand-alone patch that demonstrates a
-> problematic scenario via a new test_expect_failure test case.
+What did you do before the bug happened? (Steps to reproduce your issue)
+git clone https://github.com/giellalt/lang-sma
 
-It is fine, especially to show existing/old bugs that need extensive
-explanation.
+What did you expect to happen? (Expected behavior)
+Clone to be clean, as reported by git status
 
-> This patch series is based on maint-2.37, the oldest maintenance branch it
-> applies without merge conflicts. When merging with next, there are only
-> trivial conflicts in unpack-trees.c due to en/dir-api-cleanup where
-> o->result is now o->internal.result.
+What happened instead? (Actual behavior)
+git status reported four changed files
 
-Thanks for digging into old and important case.  Maintenance of the
-index data structure is a crucial part of the health of the system.
+What's different between what you expected and what actually happened?
+Nothing except those four files
+
+Anything else you want to add:
+This only happens on an M2 Macbook Pro. With Apple's git (1.37.1), a =
+huge number of files were reported as modified.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.40.0
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 22.3.0 Darwin Kernel Version 22.3.0: Mon Jan 30 20:39:46 =
+PST 2023; root:xnu-8792.81.3~2/RELEASE_ARM64_T6020 arm64
+compiler info: clang: 14.0.0 (clang-1400.0.29.202)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
+
