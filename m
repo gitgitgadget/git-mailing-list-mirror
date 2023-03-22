@@ -2,79 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E896C6FD1C
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 23:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97145C6FD1F
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 23:38:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230057AbjCVXgf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 19:36:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51876 "EHLO
+        id S229945AbjCVXil (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 19:38:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230045AbjCVXgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 19:36:33 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9D762385D
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 16:36:27 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id bc12so20133674plb.0
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 16:36:27 -0700 (PDT)
+        with ESMTP id S229436AbjCVXij (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 19:38:39 -0400
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 095B119B1
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 16:38:39 -0700 (PDT)
+Received: by mail-pf1-x449.google.com with SMTP id 16-20020a056a00073000b006260bbaa3a4so8806299pfm.16
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 16:38:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679528187;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+        d=google.com; s=20210112; t=1679528318;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=stzI67adVRP8Do889kkoiEHwxNzcFWP49S+xX1UPMaI=;
-        b=Him+8xlEcAgP87xqp2nEEVPK7FYZCbJNfedxUrZlelLiJ3f64ftbw15ZG6W8GH8+Ou
-         SOaOL0P5AvpJnabEV/ZVy2EcvnaNvVj4NW6DuBa9uyYjxGJ3q6OSSPIBTMmAh73slBYx
-         uyIHvOZdz5ntCgJ+yrnlUnThha7LLQI22Vcr9EwbvYjlEymmAWja5l2thJZVwLr6nzMO
-         I71rmi71vSw7jYrsKqnqBLGnS/wPSV54LCG0DteZ8Ad3PVdm2FgEoabZ+MvuSEbnSl94
-         ZRuo57zrBBg09wIIyZ/inNBicJDvJSQi0pLqDQDbdUi+fIvrYpuVh2fph93vrAHP9I3b
-         HaDg==
+        bh=RQCMLug4ROfv3clyE0e5N0SZxRnbGEiquyE3JPv9MMk=;
+        b=td2rByPSCEaksCWGc1ih/5y4OLjtVCH31bPTDbv/j+UtpDIstraT2fMB5a+FX1FLRO
+         5J1+J6yZ6fQ6n6hQ+xfqVCkpUi445ccAc9auTVs7If+U9hd/fKn4obqFiYFSIU+4EinB
+         bXCmb1zoHfeZjHHArzvk4kUvzTUGTQ8PtUHTa0XxHj1nVTl2bEkn9zbdEAoSbeGV35Yg
+         6PE7JR1SqIuGt47zHgb8sXlgqaqMeEXmMedxKPWa9dX+VWQKzUApLmKs3Mr0TKql09A2
+         6i/VNfK7Dq3vIu38RGiQfo9vkP/Bse/jB8oDMMoj0lBsuzNb+TLt1jDfV1WwHfh0m3Cy
+         1gbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679528187;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+        d=1e100.net; s=20210112; t=1679528318;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=stzI67adVRP8Do889kkoiEHwxNzcFWP49S+xX1UPMaI=;
-        b=z9gqKXnvtyJvt621QFFeU/msLXyahjh5T/MGjiXFGFiFD2sB6e2WSmmKpNOOpOgRN9
-         R4tVtN73XTpl8z7wLGMT9X2y072m/0FzydwgCAytSb//d9wP3R+Y0eJ0/qcHXfrKXbN0
-         fTeM1EmkjlsEDUt/3IwcPnuTaWZr4kaJ41fFBegAq5ivlQf9q6IfkTWAFsP7fQ+UZud9
-         8u8e0TZSdSLupzCaARlGG8Li+5s28tiBF/WOkYnkb6L7APvXxWJCl9L60K1zWeTv4jNp
-         RjcR8EvueA+s/1zgYOxmijNO5ENpgdAuvxVXzgaUIKJKpqBNIQmtFp9pGyYHc5gIMpVb
-         MzPw==
-X-Gm-Message-State: AO0yUKVVEvkim0hizIl9hvdSHvvMafXRaX/PO1YzNUZsWoYslOt5Ei2e
-        q66nj/zjjK0m00ApJVRoUlE=
-X-Google-Smtp-Source: AK7set/9yjlST7Siu3SD/M24/X071Vj4AfW0v1piWaMkSJLqNggMqrpU1EZiG2dV8ZI5YNHyOPEZug==
-X-Received: by 2002:a05:6a20:6a9d:b0:cc:e39e:3f64 with SMTP id bi29-20020a056a206a9d00b000cce39e3f64mr929179pzb.24.1679528187074;
-        Wed, 22 Mar 2023 16:36:27 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id k9-20020aa792c9000000b006293f833124sm1927461pfa.13.2023.03.22.16.36.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 16:36:26 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Shuqi Liang <cheskaqiqi@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com, derrickstolee@github.com
-Subject: Re: [PATCH v7 0/2] diff-files: integrate with sparse index
-References: <20230320205241.105476-1-cheskaqiqi@gmail.com>
-        <20230322161820.3609-1-cheskaqiqi@gmail.com>
-Date:   Wed, 22 Mar 2023 16:36:26 -0700
-In-Reply-To: <20230322161820.3609-1-cheskaqiqi@gmail.com> (Shuqi Liang's
-        message of "Wed, 22 Mar 2023 12:18:18 -0400")
-Message-ID: <xmqqilesbbph.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        bh=RQCMLug4ROfv3clyE0e5N0SZxRnbGEiquyE3JPv9MMk=;
+        b=1hqM9OmA6MRAwnSth1U20BuzLAhVD+tTCILqO3HuSFrSwvGpfEVCRxGurgza7fSAE6
+         Q5BoNLCzdBaWAx4JQ9agQM+jiBZUwCj8aABJZxRBG8oAF/Q4exwtASQ8pu3PqTjOyasJ
+         ZxpI8ltBVX0VL5WcAaZzXOvuY3VmSMLGmO5bCHGTV4eWce1db4bZntBueR77q8PTgR1f
+         aLroUyd0W23+6g3zXB9QBL6JbL8J/2fyRJyOl4HjdHHT4R22obu79lAiuZ2UDQRIa4bK
+         s0pUZeeeYC+d/u2E+0KifVKv3wq74nfbV2nbSiqL6TtHW3FhBxQD3vLeOndDIlrJEQr3
+         4Lpw==
+X-Gm-Message-State: AO0yUKULzNdV7PZVtnr7FRyOcCGQ+iuWfmrZlc0xKqOdE0E8qZks6ESn
+        o68ZcS0MePb4L1aEp3neffnebdG4OGzFIw==
+X-Google-Smtp-Source: AK7set849EFsUscCGVQXoCdQ5sWKDT8aMF+kHtuNKnhm+54QQ9ZapM4OikpBxD1e9mgI/UXkRT4t0mU7JJ9Qtg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a17:902:e984:b0:1a1:9015:4d5c with SMTP
+ id f4-20020a170902e98400b001a190154d5cmr1697097plb.3.1679528318097; Wed, 22
+ Mar 2023 16:38:38 -0700 (PDT)
+Date:   Wed, 22 Mar 2023 16:38:36 -0700
+In-Reply-To: <patch-15.17-c8ff241844a-20230317T152725Z-avarab@gmail.com>
+Mime-Version: 1.0
+References: <cover-00.17-00000000000-20230317T152724Z-avarab@gmail.com> <patch-15.17-c8ff241844a-20230317T152725Z-avarab@gmail.com>
+Message-ID: <kl6l8rfoe4qr.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH 15/17] cocci: apply the "revision.h" part of "the_repository.pending"
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang <cheskaqiqi@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason         <avarab@gmail.com> writes:
 
-> 3. Use `--stat` to ignore file creation time differences in unrefreshed
-> index.
+> diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contrib/co=
+ccinelle/the_repository.pending.cocci
+> deleted file mode 100644
+> index 1190a3312bd..00000000000
+> --- a/contrib/coccinelle/the_repository.pending.cocci
+> +++ /dev/null
+> @@ -1,14 +0,0 @@
+> -// This file is used for the ongoing refactoring of
+> -// bringing the index or repository struct in all of
+> -// our code base.
 
-I am curious about this one.  Why is this a preferred solution over
-say "run 'update-index --refresh' before running diff-files"?
+Now that we've deleted this file, I wanted to get a sense of where this
+series lands us in the the_repository migration. ISTR that we'd consider
+ourselves "done" when we stop referencing "the_repository" in
+non-builtins, so presumably we aren't there yet ;)
 
-Note that this is merely "I am curious", not "I think it is wrong".
+Inspecting all of the ".h" files, we can see that the only remaining
+function/macro of this sort is "the_hash_algo". Because you expanded the
+search to cover cases not in "NO_THE_REPOSITORY_COMPATIBILITY_MACROS",
+you've actually achieved more than what your CL says. Hooray!
 
-Thanks.
+We can't go so far as to say that we've removed all implicit references
+to "the_repository", though, since we still have functions that
+reference "the_repository" in their implementations. But, I don't think
+this ".cocci" file would help us with those cases anyway, since this was
+targeted specifically at functions/macros that were passing
+"the_repository" to functions that accepted a "struct repository" arg.
+
+Thanks for the cleanup, this is great!
