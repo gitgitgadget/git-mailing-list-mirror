@@ -2,149 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D5CCC6FD1C
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 18:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E829DC76195
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 18:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230001AbjCVSWd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 14:22:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47414 "EHLO
+        id S231332AbjCVSzL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 14:55:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229905AbjCVSWc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 14:22:32 -0400
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 414C164B38
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 11:22:31 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 86DDC5C00FF;
-        Wed, 22 Mar 2023 14:22:30 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Wed, 22 Mar 2023 14:22:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-        cc:cc:content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1679509350; x=1679595750; bh=eW
-        AZ9zZzeK9nT9Jk6tqI6qRvDIvgZhH3jMwnsRcVWVc=; b=Gqoa6boigkAb5rlycP
-        fO7yOm2W/rfL1YOltXQ/qMgbk9pigKBi7RhmCMEFm1ZIIe6V9W0E1EQQOEua9jiO
-        l3lRQcEtVcDLesB+S+g7IPoUeHsvJX1Qk3ufRYTmUWj9TzMaaA5BXvdJ2Q0DblqC
-        CjYziWp3RJr4sdccc1ZgtUYtHein0ibLOaWpi52vsjWbdkPD7Aoqn84A3uDT38E/
-        XsV+0vzd0/HheIK6Rv+6/T/kz7ueMhBcLNVskI82UstTRAdCJrvx7GFY7OStzguf
-        bVarAf/d4D1khZwl6U5G1tWrmhM9/K9co0Xfkwn8Stt0AlwuO2Y6KaZc5EJm38cw
-        lQ5g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1679509350; x=1679595750; bh=eWAZ9zZzeK9nT
-        9Jk6tqI6qRvDIvgZhH3jMwnsRcVWVc=; b=vgqlvvWAuYsdUUjb5grB7QamoXTD+
-        1keAgWeACobfruEqTOpQ2KsguaUZ83LSObIySb8MNYC//a63nwiEWtp7YnJGGXwi
-        jqE+sWYo4tlfXP7jLY2FOATvT2num0cGmwRkoI7wN/Vi3fcUrfRXu+d487DHBocs
-        wnMsMkxJvrEHHB1h/v8nhbT1JfH/wtb3JPSmyhFESFLhAEXiHZMJi6uRdNB1QUz/
-        MFYV8uvGdsYihT2SUlebSV+ed8W+Wite8nlaS0kA8EW59wI8mf1bbbqmEHnp/7qD
-        w5kH8mVNSy34NVKrbdPj51PLWZ57l8dlyhn5SXSx3nQblBxa+Smq+nX3w==
-X-ME-Sender: <xms:ZkcbZAj6bvaX1r-kwZdSskLrlViEpQ14TpdI0U9qBoAz8_DVbqD4anI>
-    <xme:ZkcbZJDBOVklVZqIzNRI2DkD9UmzkFQFfuza9tys5j2DEuwcghB5E35Ohn46S0eEL
-    4hMkw8KVgFbBccJQg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdegvddguddufecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruh
-    hgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpefgtdel
-    vdfgtdduffegvdejvedtffeiueegkeegjeeuteekleffieevgfetgeehtdenucffohhmrg
-    hinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
-    grihhlrdgtohhm
-X-ME-Proxy: <xmx:ZkcbZIEinyn9VXv6Onk0Nip7kKy83bxAICophfrpuHCvvw94odYvdg>
-    <xmx:ZkcbZBQDkaOYQqMoWckWayBeT1h53m02TJaOyC7VhiEsecYQMNWL4w>
-    <xmx:ZkcbZNwLNlgspuiK7rw8IeFYvjvaJTZFbO1rrlg8dJBRP28ZiHZy-A>
-    <xmx:ZkcbZLau43f2LfFgioAR68z7ILzlq32l38rdLoeZhbJs7SFPsIGWBQ>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 5A0B415A0091; Wed, 22 Mar 2023 14:22:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-236-g06c0f70e43-fm-20230313.001-g06c0f70e
-Mime-Version: 1.0
-Message-Id: <73af529d-e918-445d-b0ee-9506e28188af@app.fastmail.com>
-In-Reply-To: <3FC6072C-5856-437F-9B4F-BC182921426D@mac.com>
+        with ESMTP id S230044AbjCVSy1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 14:54:27 -0400
+X-Greylist: delayed 349 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 22 Mar 2023 11:53:41 PDT
+Received: from st43p00im-ztfb10063301.me.com (st43p00im-ztfb10063301.me.com [17.58.63.179])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D58BF6505B
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 11:53:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mac.com; s=1a1hai;
+        t=1679510870; bh=zxcps7qNbVVizxhvAhh9/iCyekK0kKE3s2L1siz8w2g=;
+        h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To;
+        b=MDVOkWP8LnpQeG/RwN66LADb04c8V7h5RYFbBWkii1ygaFK/dJBHDVQoqoR7c0Ffn
+         dFAkMqy6ypY/n1K5w8Y2i1vcNdvf3moNCnGzv5/as6MpbMRHEbOHbQ3nshxYeloHWV
+         Bhmi+rooK+TjPmwCyaP9wcCAlxWCyRfq/qhW5xTuUo7SnZn4erHvcg065aE6duUqWK
+         btYrzEckewMbFEGAkXUtsNKdtX+N08NKmf8/1oSU3klO8jIZWNDpknVw3anNFbFgTH
+         sBjfeHe7miQhY+zuV+uLHMmuTvvk/4WFLYfbHkG6zbM+3aXNHlwn7nyXtn63i5HI8e
+         syWdaHynFxqwg==
+Received: from smtpclient.apple (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
+        by st43p00im-ztfb10063301.me.com (Postfix) with ESMTPSA id EBDEC701D0C;
+        Wed, 22 Mar 2023 18:47:48 +0000 (UTC)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.400.51.1.1\))
+Subject: Re: BUGREPORT: Modified files on a fresh clone on M2 MacBook Pro
+From:   Sjur Moshagen <sjurnm@mac.com>
+In-Reply-To: <73af529d-e918-445d-b0ee-9506e28188af@app.fastmail.com>
+Date:   Wed, 22 Mar 2023 19:47:35 +0100
+Cc:     Emily Shaffer <nasamuffin@google.com>, git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <68ACFE61-5D19-43D8-887A-7150E8B90BDB@mac.com>
 References: <593742E7-F0FC-471C-AFF5-1E855A3788B0@mac.com>
  <CAJoAoZkKTGzgVyL2wM9a4VcFObx4YpjMSatH9Bpqcgyi=zzBrQ@mail.gmail.com>
  <3FC6072C-5856-437F-9B4F-BC182921426D@mac.com>
-Date:   Wed, 22 Mar 2023 19:22:09 +0100
-From:   "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To:     "Sjur Moshagen" <sjurnm@mac.com>,
-        "Emily Shaffer" <nasamuffin@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: BUGREPORT: Modified files on a fresh clone on M2 MacBook Pro
-Content-Type: text/plain
+ <73af529d-e918-445d-b0ee-9506e28188af@app.fastmail.com>
+To:     Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+X-Mailer: Apple Mail (2.3731.400.51.1.1)
+X-Proofpoint-GUID: cgTfQ630wJBjZB-TCqk-JIok1bH9Vi4w
+X-Proofpoint-ORIG-GUID: cgTfQ630wJBjZB-TCqk-JIok1bH9Vi4w
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.883,17.0.605.474.0000000_definitions?=
+ =?UTF-8?Q?=3D2022-06-21=5F08:2020-02-14=5F02,2022-06-21=5F08,2020-01-23?=
+ =?UTF-8?Q?=5F02_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=743 malwarescore=0
+ spamscore=0 bulkscore=0 suspectscore=0 mlxscore=0 adultscore=0
+ clxscore=1011 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303220131
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 22, 2023, at 18:29, Sjur Moshagen wrote:
-> [snip]
->
-> Yes, of course :)
->
-> It only happens with binary files (.docx and .pdf files), which got me 
-> suspicious. It turned out that updating the .gitattributes file fixed 
-> the issue, cf
->
-> https://github.com/giellalt/lang-sma/commit/fb5b56fa9fa7f25be1a1d7190bbb4d12b5a908fd#diff-618cd5b83d62060ba3d027e314a21ceaf75d36067ff820db126642944145393e
->
-> What is still a mystery to me is that there has been no issues with 
-> cloning files on Intel Macs (git version 2.39.2), or on Linux (git 
-> version 2.34.1), even with the old .gitattributes file - ie the cloned 
-> repos were clean on these systems. Only on M2 (possibly also M1) Macs 
-> did this issue pop up.
->
-> Please tell me if there is more I can do to help.
->
-> Regards,
-> Sjur
+22.3.2023 kl. 19:22 skrev Kristoffer Haugsbakk =
+<kristofferhaugsbakk@fastmail.com>:
+>=20
+> I still get a dirty working repository after a fresh clone (on Linux,
+> git version 2.40.0) on your commit 6425cb09a8d0 (Apply changes 127,
+> 2023-03-22):
+>=20
+>    $ git status
+>    On branch main
+>    Your branch is up to date with 'origin/main'.
+>=20
+>    Changes not staged for commit:
+>      (use "git add <file>..." to update what will be committed)
+>      (use "git restore <file>..." to discard changes in working =
+directory)
+>            modified:   "corp/SN\303\205SNINGEN 2014/43 =
+uke/N\303\246ringsliv.doc"
+>            modified:   "corp/SN\303\205SNINGEN 2015/26 =
+uke/\303\230lsamling.doc"
+>            modified:   "corp/SN\303\205SNINGEN 2015/38 uke /SAK1 =
+-s\303\270rsamisk.doc"
+>            modified:   "corp/SN\303\205SNINGEN 2015/38 uke /SAK1.doc"
+>            modified:   "corp/Sn\303\245sningen 2012/20 uke/Artig med =
+animasjon - samisk.doc"
+>            modified:   "corp/Sn\303\245sningen 2012/20 uke/Artig med =
+animasjon.doc"
+>            modified:   "corp/Sn\303\245sningen 2012/4. uke/Mange vil =
+l\303\246re s\303\270rs/Mange vil l\303\246re s\303\270rsamisk - =
+saemien.doc"
+>            modified:   "corp/Sn\303\245sningen 2012/4. uke/Mange vil =
+l\303\246re s\303\270rs/Mange vil l\303\246re s\303\270rsamisk.doc"
+>            modified:   "corp/Sn\303\245sningen 2012/4. uke/P\303\245 =
+sameskolen/Det er p\303\245 sameskolen jeg f\303\270ler meg hjemme - =
+samisk.doc"
+>            modified:   "corp/Sn\303\245sningen 2012/4. uke/P\303\245 =
+sameskolen/Det er p\303\245 sameskolen jeg f\303\270ler meg hjemme.doc"
+>            modified:   "corp/Sn\303\245sningen 2013/50 uke/Dramatikk =
+og kj\303\246rlighet - S\303\270rsamisk.doc"
+>=20
+>    no changes added to commit (use "git add" and/or "git commit -a")
+>=20
+> Note that this `doc` extension was not covered by your update.
+>=20
+> But it becomes clean if I remove this line:
+>=20
+>    $ git diff
+>    diff --git a/.gitattributes b/.gitattributes
+>    index bbd8c0db810d..3959fefadfc1 100644
+>    --- a/.gitattributes
+>    +++ b/.gitattributes
+>    @@ -2,7 +2,6 @@
+>     # DO NOT EDIT - the file is updated via the template system.
+>=20
+>     # Some defaults:
+>    -* text   eol=3Dlf
 
-I still get a dirty working repository after a fresh clone (on Linux,
-git version 2.40.0) on your commit 6425cb09a8d0 (Apply changes 127,
-2023-03-22):
+Thanks for pointing this out - git status did not return these files for =
+me. Also interesting that you got it on a Linux box, that has not =
+happened to us, cf earlier email in this thread.
 
-    $ git status
-    On branch main
-    Your branch is up to date with 'origin/main'.
+I will add this and other missing extensions.
 
-    Changes not staged for commit:
-      (use "git add <file>..." to update what will be committed)
-      (use "git restore <file>..." to discard changes in working directory)
-            modified:   "corp/SN\303\205SNINGEN 2014/43 uke/N\303\246ringsliv.doc"
-            modified:   "corp/SN\303\205SNINGEN 2015/26 uke/\303\230lsamling.doc"
-            modified:   "corp/SN\303\205SNINGEN 2015/38 uke /SAK1 -s\303\270rsamisk.doc"
-            modified:   "corp/SN\303\205SNINGEN 2015/38 uke /SAK1.doc"
-            modified:   "corp/Sn\303\245sningen 2012/20 uke/Artig med animasjon - samisk.doc"
-            modified:   "corp/Sn\303\245sningen 2012/20 uke/Artig med animasjon.doc"
-            modified:   "corp/Sn\303\245sningen 2012/4. uke/Mange vil l\303\246re s\303\270rs/Mange vil l\303\246re s\303\270rsamisk - saemien.doc"
-            modified:   "corp/Sn\303\245sningen 2012/4. uke/Mange vil l\303\246re s\303\270rs/Mange vil l\303\246re s\303\270rsamisk.doc"
-            modified:   "corp/Sn\303\245sningen 2012/4. uke/P\303\245 sameskolen/Det er p\303\245 sameskolen jeg f\303\270ler meg hjemme - samisk.doc"
-            modified:   "corp/Sn\303\245sningen 2012/4. uke/P\303\245 sameskolen/Det er p\303\245 sameskolen jeg f\303\270ler meg hjemme.doc"
-            modified:   "corp/Sn\303\245sningen 2013/50 uke/Dramatikk og kj\303\246rlighet - S\303\270rsamisk.doc"
-
-    no changes added to commit (use "git add" and/or "git commit -a")
-
-Note that this `doc` extension was not covered by your update.
-
-But it becomes clean if I remove this line:
-
-    $ git diff
-    diff --git a/.gitattributes b/.gitattributes
-    index bbd8c0db810d..3959fefadfc1 100644
-    --- a/.gitattributes
-    +++ b/.gitattributes
-    @@ -2,7 +2,6 @@
-     # DO NOT EDIT - the file is updated via the template system.
-
-     # Some defaults:
-    -* text   eol=lf
-     *.png    binary
-     *.jpg    binary
-     *.jpeg   binary
-
--- 
-Kristoffer Haugsbakk
+Best,
+Sjur=
