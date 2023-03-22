@@ -2,99 +2,246 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CCF9C6FD1C
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 16:01:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44A53C6FD1F
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 16:18:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230047AbjCVQBL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 12:01:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33958 "EHLO
+        id S230056AbjCVQSr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 12:18:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230099AbjCVQBH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 12:01:07 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C75ED50F93
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 09:01:05 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id v4-20020a05600c470400b003ee4f06428fso2289260wmo.4
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 09:01:05 -0700 (PDT)
+        with ESMTP id S229961AbjCVQSp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 12:18:45 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C25A16E96
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 09:18:34 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id l9so10160233iln.1
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 09:18:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679500864;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1679501913;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A3ib7yuv25Yk7MrLfx2gVEaVtF2eRGWMtyxxUs9Xe7A=;
-        b=JommsP5ttJfF3/cFtILd19aO4te9RkopzZVADwE/yj4qcWOdrWQbFoOyVGhqtX/9Oa
-         v7eGt2Xmxq92f+2WsOcVqLFoI4TsvUDByNKi2RXoGFX5584Ty6i2Vpz5XTKJv1eSVjJ6
-         iNRjNmX3Laa4vybIfsbYl1K4Yn7s5j8RLg6Sci77o/RCNNqdYIPszEcI7OZ9iyoQheF+
-         Bxvu9ICTzsnGjDDUtlMU9YZUb4as/JOELjDz6rwB6YaHY9C303iwUX3etpLwxd9c34S7
-         RMiuBfmhj0Qc9sacJYKrQ9nRExVnpUDqADpBubXT58GFwmMgmHFB0l456X02th5PyNGT
-         jW9Q==
+        bh=0Hiiah/I+TezeWdpqXJAP0bn3YCF4n8XSIgXUD3nJ18=;
+        b=RTSEaGr1eNIOGLH3aLEf/nmFbSgiD3r2e55XnavnpT0aig9fmFC8z+PuPvl5szTE7C
+         CFtoq9w4DmcL2DPbXlHVUxDG9v87Bm5QE458+2/0xJnKTR8RR9F60bX1HwBpVyphJVRW
+         tngvAxF53lXZyHr+Z77z4XXAktr/7R9sjx7UtEhGQwfaz+Qsrqu+H8GUhg4YwCKO4cec
+         toZY0m3lWUD13gGQvOK+8l/Patx+DQhTdXj5D+NuSUqhYKTpd9YFKj35QkC7trcVSqoo
+         tYUMWmXKOMSFeymm710y8UJXhe4YpHLepAn0am7o6KkSliJmsQCXwiFqCwa6YD7eZ0zX
+         d7vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679500864;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1679501913;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A3ib7yuv25Yk7MrLfx2gVEaVtF2eRGWMtyxxUs9Xe7A=;
-        b=FFj0lRNwkFI8xMwws639vMVE/XDJGcokOOyhcjeQeVlDb58HjYAOp6phCLAIe8OpCz
-         jbjWuyt01uDuhwLgZVW0tCA9FqUAvv8YmIhJKvzY3vq9i5DbYaI2nBYemvpiSBjMw2cD
-         cmLjXYLHOzkRmpt9rvGKPJcnMvgZfXuA9Y2NkzjCRlMUsNQwKfjpPSSj9Xz398b8FxgW
-         hn3intARil8sIswr3bR45wrNPiDHG7+TZxPCwh/fYovaJO4/xc6EDPH21BZglj90w5GK
-         eUBKHM09ZspOad5UEA7R0BiIxISBxUszp35XkQ/riz6a1N/sw/wAEa+WriKiWQURwema
-         EYIA==
-X-Gm-Message-State: AO0yUKXHu/BBhS7290g43a8OC0mU39VxyZ/HpUi3QJeFglQvHFJUWWK5
-        JdTrPRDWefCVC8pLxTo0T5WRusgVB5E=
-X-Google-Smtp-Source: AK7set+WCalcw8swzHHFL0tn1QvxgiVqHjSDnM810NOKMwuhp9SCDr6UvC3on5iKJvDWU08pXSC3Rg==
-X-Received: by 2002:a7b:c850:0:b0:3ed:2f1a:883c with SMTP id c16-20020a7bc850000000b003ed2f1a883cmr41623wml.14.1679500864178;
-        Wed, 22 Mar 2023 09:01:04 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l2-20020a05600c4f0200b003ee610d1ce9sm2302045wmq.34.2023.03.22.09.01.03
+        bh=0Hiiah/I+TezeWdpqXJAP0bn3YCF4n8XSIgXUD3nJ18=;
+        b=cCjbTOe5r5gOIv5BcDnVr2Qql9PLXOWzhv9Q300WS7Fu4ksFxF9KOVByazo1Z07C2j
+         pE9EoztPhd9cqaRVOEoAhKYEwt4mitKlXnkXzfV67VDGov9sH/iI+KCCcgaqlZc6zjdI
+         aPHelbmQo6C585MqRly0+MWdrqcqJQe2LOz+QinHn6dUpkzczNz+xvAGJvuZzci0cdh/
+         9cFNt8kWS6jkqB4zPs0FdIuMc+8wZiGS7Lr39JAf1msqMuiRSU9uxN+hoI1xVS3V3K5m
+         iFgP6Jkq7+J4pRndr7Pf310SmhbstnxcZRlpmrZ6uFOpM7qAtsOBvqoQMwrZHWN61uN5
+         oLEg==
+X-Gm-Message-State: AO0yUKWafG0r3UFuvss/Ckan88pxaIjQIR50SPC/MnyVNESlMgXmoZyk
+        wNP7o6kOSTTW4cG219tuf5t21v8yEwg=
+X-Google-Smtp-Source: AK7set9V7GTjkIKmsMGCdiutRgaChWuhDSCt+MSZjatv6+zSg1e68sVmtPppNuuQ47vIL8te8grJfw==
+X-Received: by 2002:a92:dd0d:0:b0:323:66a:be1d with SMTP id n13-20020a92dd0d000000b00323066abe1dmr4891801ilm.25.1679501913633;
+        Wed, 22 Mar 2023 09:18:33 -0700 (PDT)
+Received: from localhost.localdomain (bras-base-london142cw-grc-20-69-158-191-243.dsl.bell.ca. [69.158.191.243])
+        by smtp.googlemail.com with ESMTPSA id q18-20020a056e02107200b0032304e1814bsm4460129ilj.40.2023.03.22.09.18.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 09:01:04 -0700 (PDT)
-Message-Id: <3963d3e542896b9cdf871dc7ea13330ddac87795.1679500859.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1497.git.1679500859.gitgitgadget@gmail.com>
-References: <pull.1497.git.1679500859.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 22 Mar 2023 16:00:59 +0000
-Subject: [PATCH 4/4] unpack-trees: take care to propagate the split-index flag
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Wed, 22 Mar 2023 09:18:33 -0700 (PDT)
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
+        gitster@pobox.com, derrickstolee@github.com
+Subject: [PATCH v7 0/2] diff-files: integrate with sparse index
+Date:   Wed, 22 Mar 2023 12:18:18 -0400
+Message-Id: <20230322161820.3609-1-cheskaqiqi@gmail.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230320205241.105476-1-cheskaqiqi@gmail.com>
+References: <20230320205241.105476-1-cheskaqiqi@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When copying the `split_index` structure from one index structure to
-another, we need to propagate the `SPLIT_INDEX_ORDERED` flag, too, if it
-is set, otherwise Git might forget to write the shared index when that
-is actually needed.
+Changes since v6:
 
-It just so _happens_ that in many instances when `unpack_trees()` is
-called, the result causes the shared index to be written anyway, but
-there are edge cases when that is not so.
+1. Fix word wrap in commit message.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- unpack-trees.c | 2 ++
- 1 file changed, 2 insertions(+)
+2. Use  'mkdir -p folder1' since full-checkout already have folder1.
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 90b92114be8..ca5e47c77c0 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1916,6 +1916,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		 * create a new one.
- 		 */
- 		o->result.split_index = o->src_index->split_index;
-+		if (o->src_index->cache_changed & SPLIT_INDEX_ORDERED)
-+			o->result.cache_changed |= SPLIT_INDEX_ORDERED;
- 		o->result.split_index->refcount++;
- 	} else {
- 		o->result.split_index = init_split_index(&o->result);
+3. Use `--stat` to ignore file creation time differences in unrefreshed
+index.
+
+4. In 'diff-files with pathspec outside sparse definition' add 
+'git diff-files "folder*/a" to show that the result is the same with a 
+wildcard pathspec.
+
+5. Create an 'ensure_expanded' to handle silent failures.
+
+
+Shuqi Liang (2):
+  t1092: add tests for `git diff-files`
+  diff-files: integrate with sparse index
+
+ builtin/diff-files.c                     |  8 ++
+ t/perf/p2000-sparse-operations.sh        |  2 +
+ t/t1092-sparse-checkout-compatibility.sh | 98 ++++++++++++++++++++++++
+ 3 files changed, 108 insertions(+)
+
+Range-diff against v6:
+1:  2a994e60bc ! 1:  e2dcf9921e t1092: add tests for `git diff-files`
+    @@ Metadata
+      ## Commit message ##
+         t1092: add tests for `git diff-files`
+     
+    -    Before integrating the 'git diff-files' builtin
+    -    with the sparse index feature, add tests to
+    -    t1092-sparse-checkout-compatibility.sh to ensure it currently works
+    -    with sparse-checkout and will still work with sparse index
+    -    after that integration.
+    +    Before integrating the 'git diff-files' builtin with the sparse index
+    +    feature, add tests to t1092-sparse-checkout-compatibility.sh to ensure
+    +    it currently works with sparse-checkout and will still work with sparse
+    +    index after that integration.
+     
+    -    When adding tests against a sparse-checkout
+    -    definition, we test two modes: all changes are
+    -    within the sparse-checkout cone and some changes are outside
+    -    the sparse-checkout cone.
+    +    When adding tests against a sparse-checkout definition, we test two
+    +    modes: all changes are within the sparse-checkout cone and some changes
+    +    are outside the sparse-checkout cone.
+     
+    -    In order to have staged changes outside of
+    -    the sparse-checkout cone, make a directory called 'folder1' and
+    -    copy `a` into 'folder1/a'. 'folder1/a' is identical to `a` in the base
+    -    commit. These make 'folder1/a' in the index, while leaving it outside of
+    -    the sparse-checkout definition. Test 'folder1/a'being present on-disk
+    +    In order to have staged changes outside of the sparse-checkout cone,
+    +    make a directory called 'folder1' and copy `a` into 'folder1/a'.
+    +    'folder1/a' is identical to `a` in the base commit. These make
+    +    'folder1/a' in the index, while leaving it outside of the
+    +    sparse-checkout definition. Test 'folder1/a'being present on-disk
+         without modifications, then change content inside 'folder1/a' in order
+         to test 'folder1/a' being present on-disk with modifications.
+     
+    @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'grep sparse direc
+     +	test_all_match git diff-files deep/*
+     +'
+     +
+    -+test_expect_failure 'diff-files with pathspec outside sparse definition' '
+    ++test_expect_success 'diff-files with pathspec outside sparse definition' '
+     +	init_repos &&
+     +
+     +	test_sparse_match test_must_fail git diff-files folder2/a &&
+    @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'grep sparse direc
+     +	# Add file to the index but outside of cone for sparse-checkout cases.
+     +	# Add file to the index without sparse-checkout cases to ensure all have 
+     +	# same output.
+    -+	run_on_all mkdir folder1 &&
+    ++	run_on_all mkdir -p folder1 &&
+     +	run_on_all cp a folder1/a &&
+     +
+     +	# file present on-disk without modifications
+    -+	test_all_match git diff-files &&
+    -+	test_all_match git diff-files folder1/a &&
+    ++	# use `--stat` to ignore file creation time differences in
+    ++	# unrefreshed index
+    ++	test_all_match git diff-files --stat &&
+    ++	test_all_match git diff-files --stat folder1/a &&
+    ++	test_all_match git diff-files --stat "folder*/a" &&
+     +
+     +	# file present on-disk with modifications
+     +	run_on_all ../edit-contents folder1/a &&
+     +	test_all_match git diff-files &&
+    -+	test_all_match git diff-files folder1/a
+    ++	test_all_match git diff-files folder1/a &&
+    ++	test_all_match git diff-files "folder*/a" 
+     +'
+     +
+      test_done
+2:  ac730e372d ! 2:  fb8edaf583 diff-files: integrate with sparse index
+    @@ Commit message
+         <pathspec> contains wildcard that may need a full-index or the
+         <pathspec> is simply outside of sparse-checkout definition.
+     
+    -    Remove full index requirement for `git diff-files`
+    -    and add test to ensure the index only expanded when necessary
+    -    in `git diff-files`.
+    +    Remove full index requirement for `git diff-files`.Create an
+    +    'ensure_expanded' to handle silent failures. Add test to
+    +    ensure the index only expanded when necessary in `git diff-files`.
+     
+         The `p2000` tests demonstrate a ~96% execution time reduction for 'git
+         diff-files' and a ~97% execution time reduction for 'git diff-files'
+    @@ builtin/diff-files.c: int cmd_diff_files(int argc, const char **argv, const char
+     +
+     +	if (pathspec_needs_expanded_index(the_repository->index, &rev.diffopt.pathspec))
+     +		ensure_full_index(the_repository->index);
+    -+		
+    ++
+      	result = run_diff_files(&rev, options);
+      	result = diff_result_code(&rev.diffopt, result);
+      cleanup:
+    @@ t/perf/p2000-sparse-operations.sh: test_perf_on_all git checkout-index -f --all
+      test_done
+     
+      ## t/t1092-sparse-checkout-compatibility.sh ##
+    -@@ t/t1092-sparse-checkout-compatibility.sh: test_expect_failure 'diff-files with pathspec outside sparse definition' '
+    - 	test_all_match git diff-files folder1/a
+    +@@ t/t1092-sparse-checkout-compatibility.sh: ensure_not_expanded () {
+    + 	test_region ! index ensure_full_index trace2.txt
+    + }
+    + 
+    ++ensure_expanded () {
+    ++	rm -f trace2.txt &&
+    ++	if test -z "$WITHOUT_UNTRACKED_TXT"
+    ++	then
+    ++		echo >>sparse-index/untracked.txt
+    ++	fi &&
+    ++
+    ++	if test "$1" = "!"
+    ++	then
+    ++		shift &&
+    ++		test_must_fail env \
+    ++			GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
+    ++			git -C sparse-index "$@" \
+    ++			>sparse-index-out \
+    ++			2>sparse-index-error || return 1
+    ++	else
+    ++		GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
+    ++			git -C sparse-index "$@" \
+    ++			>sparse-index-out \
+    ++			2>sparse-index-error || return 1
+    ++	fi &&
+    ++	test_region index ensure_full_index trace2.txt
+    ++}
+    ++
+    + test_expect_success 'sparse-index is not expanded' '
+    + 	init_repos &&
+    + 
+    +@@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'diff-files with pathspec outside sparse definition' '
+    + 	test_all_match git diff-files "folder*/a" 
+      '
+      
+     +test_expect_success 'diff-files pathspec expands index when necessary' '
+    @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_failure 'diff-files with p
+     +	run_on_all ../edit-contents deep/a &&
+     +	
+     +	# pathspec that should expand index
+    -+	! ensure_not_expanded diff-files "*/a" &&
+    -+	test_must_be_empty sparse-index-err &&
+    -+
+    -+	! ensure_not_expanded diff-files "**a" &&
+    -+	test_must_be_empty sparse-index-err
+    ++	ensure_expanded diff-files "*/a" &&
+    ++	ensure_expanded diff-files "**a" 
+     +'
+     +
+     +test_expect_success 'sparse index is not expanded: diff-files' '
 -- 
-gitgitgadget
+2.39.0
+
