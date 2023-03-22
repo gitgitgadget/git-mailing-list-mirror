@@ -2,66 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37342C6FD1F
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 22:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B789FC6FD1C
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 22:36:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229902AbjCVWZt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 18:25:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48578 "EHLO
+        id S229726AbjCVWgr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 18:36:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbjCVWZs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 18:25:48 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B7FE23847
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 15:25:47 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id w4so12533139plg.9
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 15:25:47 -0700 (PDT)
+        with ESMTP id S229745AbjCVWgp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 18:36:45 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F6710269
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 15:36:44 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id y35so10349315pgl.4
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 15:36:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679523946;
+        d=gmail.com; s=20210112; t=1679524604;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=39kBECxFmq+ljMYO6kYLZx4MceoKMb/5IkA43jxYKgA=;
-        b=Ro85G3ERTwmUGg6ZtDVC1zj+4+k6+zW4P9OCM5rtbWLIyeX8EuPpZrEF64Gkel+urA
-         8SrKzz2NQsxfPQFr53KIPFPbiY7biAFXChBgAJxwX6fO2xVPVsHCFLplHiHOlBqP7c2Z
-         zD8+kzI2EIWIDuQwcQ2FVbeAgFWEhzGekqlIUlEwX+auC5IZlFHbgQjNFCjSVsxHnwje
-         spqSM/pik36TDwiLvyRFFqL5QYH5MASdlAw72FuIujBHc54mnWTI/VU1WlC2Yc1oPUG1
-         /kL2RSz1HxfJbAj8cYC2UKWLdHCmfgLVKe5HqnPU9bjq3RLkkaRT8jkkkmlWGFLyMM49
-         yfcw==
+        bh=+8aml6ihDXpH09qYxP0yguQ5O/9BhYQSQbBCv51q1BA=;
+        b=SMbUuo1QAHOfxa3EbuwtcT6p5rGDqaZd0dBbqCnu9RtPvUh/+YgzZehYhYAz8eEepq
+         4M+pNFD3ZOapGp4aKEH0goc4dBXjeTPtrBe9x+MnQ4Amm71d7eIs0kRJmbt6m/QFP6u1
+         YtHelME1jQz7sT4U+GH/0bwSd8lvobgmIL5ECYy/CS2DXh+3ci/MsqNQ3YKH6nmGrxHh
+         JxX0j2WjZoNVWramyIT2tHhPCWXYg2ZwJv3eHpWhOu72np/PBTV5OHgfOnjBcHXLF6cg
+         JtsPXnRZWrX0RXzjhbnyQwbsUL4VdUFg+Up+WU2R1kXN+E+O0k4kEdn/IuSXTyieRgcP
+         6Rpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679523946;
+        d=1e100.net; s=20210112; t=1679524604;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=39kBECxFmq+ljMYO6kYLZx4MceoKMb/5IkA43jxYKgA=;
-        b=uDUVO3tn3ZipIMv3mm2oxg6jX1IanysXFTzt7md5l5iK9If4m3lBlOxDPMRUnAA5Zr
-         vnPVU+khmC7VlO6s7THZuie6Y9ACvLsWgwhZEtc0/+xF8zika7ila2d4xrztwS8I3DIN
-         5nQQQBHb51ActEATofMZZ/BHgEYXKD1C0Co/ejDusBmy82wcPz2IukC5PZTogBr6DMxz
-         tb0Eb3TveBIVQCPFPWLgyWQy4U2LYcpvwtJP/JVHyYq+Ubwwt8fTNfbisqa62c4V8t2x
-         ageAsdVya/FIbRpwH3HiHidEFlgx4tIyvC1g0BWzpjh8BfEeRF43YQTOJwP3XoW9hPU+
-         NnoQ==
-X-Gm-Message-State: AO0yUKWUkzP98H1XOdI5oh20qTXTMtDhVJ2rugzYpndyZ+VTKyGTxsA9
-        Yvdz/onv2GcxpvXU6Sh0OKI=
-X-Google-Smtp-Source: AK7set/ADLNpY1RA4/JEcz9uOLmjk22CrBqis4k4m9X1td9A30kcjFxsaMmHsOeHjBUEGf4PZp69nQ==
-X-Received: by 2002:a05:6a20:4c8f:b0:d4:fcb2:7966 with SMTP id fq15-20020a056a204c8f00b000d4fcb27966mr808549pzb.11.1679523946406;
-        Wed, 22 Mar 2023 15:25:46 -0700 (PDT)
+        bh=+8aml6ihDXpH09qYxP0yguQ5O/9BhYQSQbBCv51q1BA=;
+        b=R/uDhwFGO6tLkRl7ItBiNXjRCEfoSy5iHiLJYNRZLFn7POftQRS3+snPbddscOBm+l
+         uzO3oZF5X3ZcmyGmV2unPzflA/O1nHn8ig2od6lDEPezs2+w48aYNyXSLQ/sH/OB6ckc
+         BKpB0x67qHa448F1lGTSpUKJh+kuq5QUUUgVjeX0j3eY060l6phY0vlhaQR1atahOmwR
+         GbIxoifnc458P0fR3e6hkbEIremGnDumSo6x5+E0oG35nz2SEhSN0PMPOPkWH+mO/ruW
+         HOUBC7JmrrPGC6Z10i6p87WD66xlBS3Tu6KTXAxMVAanrgjo189g8HOuf5Nypc/2ujoV
+         AS1A==
+X-Gm-Message-State: AO0yUKVWjr/WHj6PhqGf0TfG0NmAepcnp5PqYHryO3TfTLQV/+9eitoZ
+        gSiOpImnwEkbaDS32hDs4nmdzbR/3nY=
+X-Google-Smtp-Source: AK7set/1fq0cFqc6qjTLzkWG1NR0vf1LIAxJ5LX951XVOfCAKr3OezbQQ2qGd8LYBtk74oP7uTe7DA==
+X-Received: by 2002:a62:1955:0:b0:623:77f5:eeed with SMTP id 82-20020a621955000000b0062377f5eeedmr4497060pfz.25.1679524603958;
+        Wed, 22 Mar 2023 15:36:43 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id h24-20020a63df58000000b0050f85ef50d1sm5598475pgj.26.2023.03.22.15.25.46
+        by smtp.gmail.com with ESMTPSA id c3-20020aa78e03000000b00593c1c5bd0esm6920752pfr.164.2023.03.22.15.36.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 15:25:46 -0700 (PDT)
+        Wed, 22 Mar 2023 15:36:43 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "ClementMabileau via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, ClementMabileau <mabileau.clement@gmail.com>
-Subject: Re: [PATCH v2] branch: improve error log on branch not found by
- checking remotes refs
-References: <pull.1476.git.git.1679478126.gitgitgadget@gmail.com>
-        <pull.1476.v2.git.git.1679515402379.gitgitgadget@gmail.com>
-Date:   Wed, 22 Mar 2023 15:25:45 -0700
-In-Reply-To: <pull.1476.v2.git.git.1679515402379.gitgitgadget@gmail.com>
-        (ClementMabileau via GitGitGadget's message of "Wed, 22 Mar 2023
-        20:03:22 +0000")
-Message-ID: <xmqq355wctjq.fsf@gitster.g>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] bugreport: also print value of no_proxy envvar
+References: <20230322173421.2243947-1-jonathantanmy@google.com>
+Date:   Wed, 22 Mar 2023 15:36:43 -0700
+In-Reply-To: <20230322173421.2243947-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Wed, 22 Mar 2023 10:34:21 -0700")
+Message-ID: <xmqqsfdwbeh0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,120 +66,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"ClementMabileau via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> From: ctmbl <mabileau.clement@gmail.com>
-
-This "name <address>" should match what is on "Signed-off-by:".  I
-offhand do not know where GitGitGadget gets the information, but I
-suspect the original commit object you created records ctmbl as the
-author name, not "Clement Mabileau"?  I can fix it for this single
-time, but if you plan to contribute to the project in an ongoing
-basis, you may want to fix your .git/config (or $HOME/.gitconfig)
-with a "[user] name = ..." entry.
-
-
-> when failing to delete a branch with `git branch -d <branch>` because
-> of branch not found, try to find a remote refs matching `<branch>`
-> and if so add an hint:
-> `Did you forget --remote?` to the error message
-
-
-
->  builtin/branch.c | 29 ++++++++++++++++++++++++-----
->  1 file changed, 24 insertions(+), 5 deletions(-)
+> At $DAYJOB, there was an issue that could have been diagnosed much more
+> quickly had we known what the $no_proxy environment variable was set
+> to. Print this value when the user runs "git bugreport". This is useful
+> not only when a command that explicitly uses the network (e.g. fetch
+> or clone) is run, but also in a partial clone (in which lazy fetches
+> may occur).
 >
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index f63fd45edb9..697636e2874 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -216,10 +216,12 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->  	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
->  	struct string_list_item *item;
->  	int branch_name_pos;
-> +	char* FMT_REMOTES = "refs/remotes/%s";
-> +	char* FMT_BRANCHES = "refs/heads/%s";
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> Taking off the author's hat and putting on the reviewer's hat, I'm
+> not so sure if this is the right approach, since $no_proxy might have
+> information that the user doesn't want to share (especially since it
+> could be used beyond the current repository, and even beyond Git), the
+> user being informed that they can delete any lines notwithstanding.
 
-In our codebase, the asterisk sticks to the variable, not to the
-type.  cf. Documentation/CodingGuidelines
+How certain are you that the "git bugreport" process will see more
+or less the same set of environment variables as the process that
+runs "git" for real work for the same user?  The latter may have its
+environment affected due to $CORP wrapper scripts, etc.
 
- - When declaring pointers, the star sides with the variable
-   name, i.e. "char *string", not "char* string" or
-   "char * string".  This makes it easier to understand code
-   like "char *string, c;".
+Or other environment variables like http_proxy may be causing harm
+to the user's use of Git, and inspecting no_proxy alone may not give
+you anything useful.  With devil's advocate hat on, I am tempted to
+suggest another approach at the the total opposite of the spectrum:
+dump everything in **environ and let the user edit out what ought to
+be private.  Intelligent ones may even notice a fishy setting they
+forgot about while trying to cull the report of these environment
+variables ;-)
 
-> @@ -263,9 +265,26 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->  					| RESOLVE_REF_ALLOW_BAD_NAME,
->  					&oid, &flags);
->  		if (!target) {
-> -			error(remote_branch
-> -			      ? _("remote-tracking branch '%s' not found.")
-> -			      : _("branch '%s' not found."), bname.buf);
-> +			char* MISSING_REMOTE_REF_ERROR_MSG = "remote-tracking branch '%s' not found.";
-> +			char* MISSING_BRANCH_ERROR_MSG = "branch '%s' not found.";
-> +			char* MISSING_BRANCH_HINT_MSG = "branch '%s' not found.\n"
-> +											"Did you forget --remote?";
-
-You'd need to enclose these text literals inside N_() to tell the
-tools that they are to be translated.  e.g.
-
-	char *remote_ref_error = N_("remote-tracking branch '%s' not found.");
-
-Otherwise, using the variables inside _() would not let the
-machinery to find translated strings.
-
-Having said that, I do not see the point of introducing three
-variables that are hard to read, misleadingly named with all capital
-letters as if they were macros, and each of which is only used once.
-It does not make the code that computes which message gets used any
-easier to follow (by hiding long text literal), and it does not help
-reusing the same message elsewhere.  For that matter, the two new
-variables we saw above (again in all caps) are also of dubious merit.
-
-
-
+> Therefore I'm sending this patch as RFC.
+> ---
+>  builtin/bugreport.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+> index 5bc254be80..c9dd817e70 100644
+> --- a/builtin/bugreport.c
+> +++ b/builtin/bugreport.c
+> @@ -12,6 +12,7 @@ static void get_system_info(struct strbuf *sys_info)
+>  {
+>  	struct utsname uname_info;
+>  	char *shell = NULL;
+> +	char *no_proxy = NULL;
+>  
+>  	/* get git version from native cmd */
+>  	strbuf_addstr(sys_info, _("git version:\n"));
+> @@ -39,6 +40,9 @@ static void get_system_info(struct strbuf *sys_info)
+>  	shell = getenv("SHELL");
+>  	strbuf_addf(sys_info, "$SHELL (typically, interactive shell): %s\n",
+>  		    shell ? shell : "<unset>");
 > +
-> +			if (remote_branch) {
-> +				error(_(MISSING_REMOTE_REF_ERROR_MSG), bname.buf);
-> +			} else {
-> +				char* virtual_name = mkpathdup(FMT_REMOTES, bname.buf);
-
-Hmph.  bname.buf at this point has what?  
-
-If the user said "git branch -d frotz", we would have 'frotz'
-there, right?  Then we apply FMT_REMOTES (Yuck, now I have to go
-scroll up, see that it is set to "refs/remotes/%s", and hope or
-verify that its value hasn't been changed in the meantime---in
-short, don't introduce that variable.  A macro might be OK, but I do
-not see much point here) and we get "refs/remotes/frotz" back.
-
-So, we check "refs/remotes/frotz" here ...
-
-> +				char* virtual_target = resolve_refdup(virtual_name,
-> +							RESOLVE_REF_READING
-> +							| RESOLVE_REF_NO_RECURSE
-> +							| RESOLVE_REF_ALLOW_BAD_NAME,
-> +							&oid, &flags);
-> +				FREE_AND_NULL(virtual_name);
-
-... but why should we?  If your workflow interacts with the original
-repository you cloned from, you would have remote-tracking branches
-like "refs/remotes/origin/frotz" and it may be plausible that you
-meant to remove with "git branch -d frotz" the remote-tracking
-branch "refs/remotes/origin/frotz".  But the new code makes no
-effort to figure out the name of the remote (e.g. 'origin') here,
-and I am not sure what value it adds to check and try to tell the
-user about "refs/remotes/frotz".  Or are we assuming that the user
-would say "git branch -d origin/frotz" in such a case?
-
-> +				if (virtual_target)
-> +					error(_(MISSING_BRANCH_HINT_MSG), bname.buf);
-> +				else
-> +					error(_(MISSING_BRANCH_ERROR_MSG), bname.buf);
-> +			}
-
-Are you leaking virtual_target here?
-
->  			ret = 1;
->  			continue;
->  		}
+> +	no_proxy = getenv("no_proxy");
+> +	strbuf_addf(sys_info, "$no_proxy: %s\n", no_proxy ? no_proxy : "<unset>");
+>  }
+>  
+>  static void get_populated_hooks(struct strbuf *hook_info, int nongit)
