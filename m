@@ -2,141 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 53791C6FD1C
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 09:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F946C6FD1C
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 09:15:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229664AbjCVJEU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 05:04:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50594 "EHLO
+        id S230388AbjCVJPy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 05:15:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjCVJET (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 05:04:19 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C2E10A85
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 02:04:17 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id 7B4073200903;
-        Wed, 22 Mar 2023 05:04:15 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 22 Mar 2023 05:04:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1679475855; x=1679562255; bh=OQ
-        iX/uYyDbXCrFgmbG9wPKtohUldfvpI4I9ahKkrwew=; b=vkfOPBeMryKXaoYTUL
-        qAFgzIB18aojcSeHWD3kfNts13ozQ3oUJD3swEsRtr7p9l9opv8WmUKMXwfhmwcO
-        rhtdzq1UkhLhbPucw1IteQnkO/aoq1bg9SFzfCaXPoRLMDjNbrlhNU2V35EZYOZM
-        ZOIA8JKZ93sVv18CSPBh/ZOrcRMHvKqY+0xgyW/vLCgMZUnTtLs5oJYIHZEdb4/O
-        5HqxuKXeUiJGeGjPTqMAG0DO7tWw2Q7mTLemYAGH1sxHVelOZBp+PIps85/CELJy
-        4muG2hSd1pNEX8TLVtSBzcsgQvprSJqWvm8NvtHh7eeH248zSL9a/vx6dLzMgo/l
-        T1zA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1679475855; x=1679562255; bh=OQiX/uYyDbXCr
-        FgmbG9wPKtohUldfvpI4I9ahKkrwew=; b=uIdpcTeDLF/bh4tyI8BW67VSCzl2z
-        l4G9f3Wu9beDxZQcxbYKP/JIElgXMb4D2HNRltTAdpF8Qus/nuBqnyBpvxa4et7K
-        q4ptmwoDnSr8FqxyRE2KdLL9RSKwwt0QgVmVxmZzeOXwm60UGsKnkklhp+RqqpP2
-        iXYtrVvDuEgK4cNKsM4m8W9RhrkN26EyPix5dkrDqzR/kaX7zQVjjezJxEbrmRmF
-        6mT+yatH1jqoEBgBbTi9VtL1uBLsUmmgtsgmPqiWS/t1qy7l3U3hVSrxfl4gDvb6
-        b7CyjvQfzb7j3bBVE1LN8+vv7trP0710CdWtkSG3LrpVyf29qi9XBx0sw==
-X-ME-Sender: <xms:jsQaZE_hoSqCQRBbh7fVo4JgbR87xnMUDZxb88OxJ8XTU0OaAc770g>
-    <xme:jsQaZMsEJBaaWJbS2aLkrwllTMmhjDfJOa7PsUIR46NiWndLf8fR6qNICYOiJeJeC
-    5cGAq98HE0OXrZ-GA>
-X-ME-Received: <xmr:jsQaZKDEKDZZtPBXRiKGfPH6184ZKs4Hq8av3yACyjtYlSQu0rqLWWNbz6BThVOL0ck2LsVJ4TlJ3cd93IW0XFY_1TSQPq-gC_ZobxU_Epgw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeguddgudefudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:jsQaZEfkZvi0G4egtPjI6B-VzbTIr0Kvy85G3Di5GPqTyRVdnv0opw>
-    <xmx:jsQaZJPAnnQSzA-a90dO2mfANv85s2Zq5FaqsEAtyD4QP495QbgqDw>
-    <xmx:jsQaZOmsBsuy-DMjQrgy3vaSgZPVYxkEpPCRbPLvfbgBVWz2lRnGQg>
-    <xmx:j8QaZH2RpR_eQ9nlUaNFxxLtfigK2Gtl8gZbTPhJEQFYbC9M16fPug>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Mar 2023 05:04:13 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id d779a1ec (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 22 Mar 2023 09:03:35 +0000 (UTC)
-Date:   Wed, 22 Mar 2023 10:04:08 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 6/6] fetch: centralize printing of reference updates
-Message-ID: <ZBrEiKnbaq5N9DOl@ncase>
-References: <fe7e2e85eb37cd4068b5160721663c21a16a8138.1679315383.git.ps@pks.im>
- <20230320225702.1471172-1-jonathantanmy@google.com>
+        with ESMTP id S230394AbjCVJPt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 05:15:49 -0400
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CABCB5D76B
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 02:15:47 -0700 (PDT)
+Received: by mail-oo1-xc33.google.com with SMTP id r8-20020a4aa8c8000000b0053b6fd7bc8dso224657oom.4
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 02:15:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679476546; x=1682068546;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XAUpBburE54d6pbHLNN3HI6nCR8KzhtkNI01ffxH/Ew=;
+        b=lUe8v0zRqIKYrcGRExIExORcgkphF5ugR6LJRXbnhOVWvO13tLyI442vQ4yqLtg9+j
+         2anAn41j2vPgOMWZWz0VsL3I0muPA9iDHc8/f8Q1u4JVSJxRfjnCbwDZuSwyprpUOmS6
+         /qcCVK1y+0Jfj77bDFjAyLjuHP+Ik0AFvnkonD/2rBRazF8OZuCAi1s6o45bnreoRpTJ
+         WhufMiX+zs4QVCMpB3ejDJuJoOsYwPD8ngMm6JXr1gCsDC3T8QPlT3WfxnZWyluE+yRi
+         CQaysAO1yFwCxUzq2QOVr9+UhMhO2beIdPbypljqdK9/v4fMR7r10BBQ6z355fFtLBNF
+         RJBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679476546; x=1682068546;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XAUpBburE54d6pbHLNN3HI6nCR8KzhtkNI01ffxH/Ew=;
+        b=QPpT+32nwbwPiS/R2yzce5fe6uWBNBRbEb5b4tL64AI+1mUlUX7Vy3SQ/AIe0M9blf
+         yeTRc3EX9hBJnh+eb1lSERgPV/iKQTJtNZKY4hPts5V5mt6JeyZqoC4p9aUSVwf4i3jO
+         qB3J6CUJFgrg0EW0sTHkR1PYp08XHEX6BUr23XOPXDF++RTIs2MtN07cAja8tTvC2fhv
+         atH0rX66hf1pw4Wr0aKbalYYfnPShIXyrH0ZDq0Q5GVhMKFfLkIs6zwUG+hxbOQ76/iP
+         i0zuTMzxWyuKmUFSv3ejo9i2xsuuUGrV8+87l8kZCOuoSo5bEK9efGWSixy/D7w6lTuQ
+         phpw==
+X-Gm-Message-State: AO0yUKXme6VPVFfe7IWLx/gRnNQMh1sAm68Deh6SvUnFnrNzBinGxjYQ
+        G9xu36xxKtVYW5/OL+bJplYD/mU73rk=
+X-Google-Smtp-Source: AK7set+7sJiGIAxO0zA6k2X3fFfn+zA5kZqTIq+dSW7H0cU2utC6pBn9bFAXB8aVwziq7uLnpG+FQw==
+X-Received: by 2002:a4a:d10d:0:b0:52d:73cd:db2e with SMTP id k13-20020a4ad10d000000b0052d73cddb2emr2921688oor.0.1679476546698;
+        Wed, 22 Mar 2023 02:15:46 -0700 (PDT)
+Received: from epic96565.epic.com (097-091-065-227.res.spectrum.com. [97.91.65.227])
+        by smtp.gmail.com with ESMTPSA id p45-20020a4a95f0000000b0051fdb2cba97sm5814686ooi.7.2023.03.22.02.15.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Mar 2023 02:15:46 -0700 (PDT)
+References: <94EFF553-E498-46D9-B14A-3500FEDEBB47@nearearth.aero>
+User-agent: mu4e 1.9.22; emacs 30.0.50
+From:   Sean Allred <allred.sean@gmail.com>
+To:     Ward Hopeman <ward.hopeman@nearearth.aero>
+Cc:     git@vger.kernel.org
+Subject: Re: Feature Request: Ignore Tracked IDE files
+Date:   Wed, 22 Mar 2023 04:10:26 -0500
+In-reply-to: <94EFF553-E498-46D9-B14A-3500FEDEBB47@nearearth.aero>
+Message-ID: <m0o7ol6ta7.fsf@epic96565.epic.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="8aUwU7W6bmssVIOs"
-Content-Disposition: inline
-In-Reply-To: <20230320225702.1471172-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---8aUwU7W6bmssVIOs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ward Hopeman <ward.hopeman@nearearth.aero> writes:
+>     Request: Create an Ignore section that allows for minimal IDE
+>     inclusion without impacting IDE settings for local users.
+>
+>     Reason for the request: Most engineering teams share some IDE
+> settings when working on code. More often than not, local IDE changes
+> force engineers to resort to using "git update-index --skip-worktree
+> <file>=E2=80=9D to avoid the IDE settings files from showing up. It would=
+ be
+> nice to be able to identify IDE files that you want in the repository
+> but not necessarily track all changes as most of them are not desired
+> when individuals make those changes for local setup. But teams like to
+> track and have available generic shareable configurations like tabs to
+> space and line length etc. By making it a user configurable section of
+> ignore it allows for future IDEs to be listed without impacting the
+> way it works for common IDEs today.
 
-On Mon, Mar 20, 2023 at 03:57:02PM -0700, Jonathan Tan wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > In order to print updated references during a fetch, the two different
-> > call sites that do this will first call `format_display()` followed by a
-> > call to `fputs()`. This is needlessly roundabout now that we have the
-> > `display_state` structure that encapsulates all of the printing logic
-> > for references.
-> >=20
-> > Move displaying the reference updates into `format_display()` and rename
-> > it to `display_ref_update()` to better match its new purpose, which
-> > finalizes the conversion to make both the formatting and printing logic
-> > of reference updates self-contained. This will make it easier to add new
-> > output formats and printing to a different file descriptor than stderr.
->=20
-> Thanks. Patches 1-5 look good to me. As for this patch, I'm still not
-> convinced (I thought that the new mode would still print to stderr),
+It sounds like you are rather after 'public' vs 'private' IDE settings,
+which would be a feature of the IDE -- not of Git -- and it seems a far
+simpler model. Public settings are checked-in, private settings are not,
+and private settings override public settings.
 
-The reason why I decided against printing to stderr is that it's already
-used by other things. The progress meter is one of these, runtime errors
-are another one. I also think it's weird to have a parseable format that
-should be parsed via stderr.
+This is used by Visual Studio (IIRC) and possible in other tools (Emacs
+I know for sure, though I can't imagine VS Code doesn't have this
+concept by now). It's even the model used by Git itself for some things
+(.gitignore vs. .git/info/exclude vs. core.excludesfile).
 
-Anyway, let's discuss this once I'm posting the second patch series to
-the mailing list.
+Are these alternative approaches not an option?
 
-> but
-> if other reviewers are OK with it then that's fine. Alternatively, patch
-> 6 could go with the next set of patches that implement the new mode of
-> printing ref updates.
-
-I'd be fine either way. Thanks for your review!
-
-Patrick
-
---8aUwU7W6bmssVIOs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQaxIcACgkQVbJhu7ck
-PpSwCA//WSfN4alOy3LoH0naT4kkpsNYl5duTPUFoZ8SJWM6PfTTbQuIhZbIx1Oq
-UEkdK0ImBoczfAz7d48HLHj5v7btCxNZeEOmVFPBISny2TunQ78F4v9Qa13CEAcR
-lr/IQdxez/14xSgPVcnfoEoX57VKXglKOWMltPewZcUVAPKF6VJjbrFtHTHqmsBx
-40e+A6re1rLotXCEjvDCn+7nTtk+zSalr2ztbuRhpCBLTgI0aHbFUD+SPgLXVL9u
-CQnBI6DP3pyrAED/lnNWAXB6boWSSFDuqSP5+IYo1gputqPMYYKnkdAdPm+BsXHr
-HnGl09e30zOnR55dKY5h/LmGN0nVlhM/7YfRL53qWhYkZ4JO4V1RowI5L9rucDLv
-5GavGKh6JAD9NSvimHiRuSuYQC60I1zCs+ce6+an491KRR2OYS1187qV60sKYAlO
-BICzyN40TxKgsVaPgSw4gR9zn6E3OgtWq1g11WMkUyVPXEPzTe/hsKXDxEuuDYCV
-YoCG/ie9eLfRr4xHOo6fi3lnBZ5CTbuIO9LK0MLuNuROUa7tuz7hzgd/P6SCxRBO
-sF01YizTsJNql9x9NuUFPOIhjdxh1B11+/K6DyTM1lzB6q+NN7/tcGRi3gCB/pxd
-NCwbFZ1BlW6rAstUHGhj0KyjyRtgRauJ/4GPxtyo/z5BGTh2FyE=
-=K9If
------END PGP SIGNATURE-----
-
---8aUwU7W6bmssVIOs--
+--
+Sean Allred
