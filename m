@@ -2,209 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 419E7C6FD1C
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 17:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3C1BC6FD1F
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 17:59:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231150AbjCVRpa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 13:45:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58220 "EHLO
+        id S229604AbjCVR75 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 13:59:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230480AbjCVRpK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 13:45:10 -0400
-Received: from mail-4318.protonmail.ch (mail-4318.protonmail.ch [185.70.43.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7B471B31A
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 10:44:45 -0700 (PDT)
-Date:   Wed, 22 Mar 2023 17:44:23 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail3; t=1679507077; x=1679766277;
-        bh=1i8b5V0pM530YzOwxB1tWLhNwMxL7DfazTdBgZ0PsPk=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=ea9eeVvG+YW6Z7p/Uxpbok0a0ckWRfud7zeLe0/pJahiMzxQ/fS8rClifoWh2IID/
-         p4GztMChQPFD0S2+9Qo+ACBLIdZCsGeQuY3/rjxMX1tH147+cBiercLnj1pqyKFPwK
-         +irfGX1iw+wnnrOoRIToVugO2xxxtUFj7JhKt23df3vyaCVnqCvN30NUPshfQju5eS
-         TZt+/YxptCA54kTU4WTAemhu76sHC5l8B1awuGYuk6RsJ7wpoyV1mRCSqbAgmq5v6f
-         fBhIqjk5gFPQrsczTrZ+9TjwbmKF8MqcZdSWAgu2g2m4YzM5ZAAp2xzc47b1LV3Uf8
-         CZurBigT93MIg==
-To:     =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-From:   dooagain <dooagain@protonmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Bug: git pull output and case sensitivity.
-Message-ID: <RzFzlUstO3B5yEeHQADOAFSBeeieGLLv_Vbj4B9yss_8qB_kshBK5NvvOBKlfnHPg_7GDhdyWGxmak-jyczZCyjihDnqMp2oZRpiCyn6wU0=@protonmail.com>
-In-Reply-To: <20230320191210.jzzq5c2ssxcltvoc@tb-raspi4>
-References: <-Va6f9aA736sZCXChvTLaUUSpAq9-ooSELLBrqRSXR5zAQwT7QSRryN1SGBWQj7J_KowBmZuhDHwIwAkrFFfyelwtkXJ-ri4yLPpmDpBqBU=@protonmail.com> <20230319062239.w37x64knfhfapbsn@tb-raspi4> <20230320171602.GB2615782@coredump.intra.peff.net> <_XGWc87b9HPBCDZ95pSmwNOFcZO21Y6bVyNnhhNuowPcM2Fhs5HmCynAqq2nME257bMhQ4w7Qta1dICTCHTlxbQ2NHN_iPYO0NkBYmS9vTI=@protonmail.com> <20230320191210.jzzq5c2ssxcltvoc@tb-raspi4>
-Feedback-ID: 5666827:user:proton
+        with ESMTP id S230396AbjCVR7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 13:59:54 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F3F58C14
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 10:59:53 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id o2so12610423plg.4
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 10:59:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1679507992;
+        h=content-transfer-encoding:cc:to:subject:from:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LRDbnv9eRkjhpbDAx3ZCYOjvQoPhZLNW9SmWYsy8oCU=;
+        b=HAj3lgC5ET1jdFiiGuvUdOcRoeC4jEN1bUHoGfvR1jur/BcD0a4n/G27OL7rXHAhUB
+         HRzF71Tsn49InRAXVFvK4egiIlt9deyYxevXyGsMAgxhpBOp5ZtP1McCUF6vhl1oOMpJ
+         wgl2kUcd/YA8BkINMUFBJ6bWp7706dbxoIGIAbLqC3p13vidy4d9wY15mlBcpbOvh54i
+         hnrZQnXqFIQEJQPhO230P44tYm+Rn3mxqYJXRmCjIA6FvrsUrg9/4j0MGE6+1jSH1HcW
+         yKltRFi1lYsWOuLwSwfb7FV8/u3szqfFWxJ3UM39kdI11Q4wG5Wz7Rvr/TvxcwcQesTh
+         /wyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679507992;
+        h=content-transfer-encoding:cc:to:subject:from:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LRDbnv9eRkjhpbDAx3ZCYOjvQoPhZLNW9SmWYsy8oCU=;
+        b=3bFOTWNnjEiHHjIQ9jN652RAtOI5IrCTj2YzuGjUK2ZYRca0ZvRguuJpTJMpTymMaP
+         hz5n6x3RLZQ4Crp7GT82Rj0waj20YrNzDIIclyCQI4QCRfcgo+SIAim/QxoDqgnvnuP9
+         +Hk2uXO2S/WxrDPpo0qdOVkM8gcbb4oPEJGfX2x0ZhiYaIgzJBfq9O84TRQgm5MPVGfC
+         rJEPzYaTBIl+jY6qqGjfE09VSjQe0xWZIuvxmLtpwDkZ1YRfiwgIk/73rrhVusOino6i
+         IrHxSECRUzLn1yoyWKKJ3R1d6leBBvsq11i3CxKrcz+WTWmB2Xnyc0LfJIgu9u5g/H64
+         rWJA==
+X-Gm-Message-State: AO0yUKWFQG8aPTaeU8CAf9NZKSNYclx7qQKgeGOz9NigUGRuHjZObWnc
+        h3J4OjMqPEMfmUHKAcSafhlaZg1d+SJmGhjYM8hAA2Lz4sZxn3BdnRNQMuSJ4tZWQg1LDo71jAc
+        QrvleHA5BIasPA8OHe1xNtWgn9JBwChC2fg2llloIqb9v7vnLsYkrSgVzMzqIXPs=
+X-Google-Smtp-Source: AK7set+tFvmugX0beCLGaICwVQZmsNnAHifT+5nNqyDyuMFYaINY5dkfR4p4WAMEG0hSIHDLPB+9aw==
+X-Received: by 2002:a17:902:e5cf:b0:19d:7a4:4063 with SMTP id u15-20020a170902e5cf00b0019d07a44063mr4111778plf.46.1679507992508;
+        Wed, 22 Mar 2023 10:59:52 -0700 (PDT)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id c23-20020a170902849700b001933b4b1a49sm10877396plo.183.2023.03.22.10.59.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Mar 2023 10:59:52 -0700 (PDT)
+Message-ID: <f337e514-8d3b-927a-5fe3-34f67f199435@github.com>
+Date:   Wed, 22 Mar 2023 10:59:50 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.7.2
+Content-Language: en-US
+From:   Victoria Dye <vdye@github.com>
+Subject: Git 2.41 release date
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is probably overkill, but here is a script that replicates the issue
+Hi everyone! 
 
-#! /usr/bin/env bash
+While perusing the Git Calendar [1], I noticed that the final 2.41 release
+date is on a major US holiday (Memorial Day, May 29). In the past, release
+dates have been shifted to avoid situations like this, and doing so has been
+noticeably helpful to downstream maintainers/integrators. Would it make
+sense to similarly shift 2.41?
 
-# WARNING
-# These are dangerous commands that create and delete
-# disk volumes. Uncomment and execute at your own risk.
+Thanks,
+-Victoria 
 
-# [BEGIN DANGEROUS COMMANDS]
-#=20
-# This is the command to "cleanup" or remove the newly created Volume.
-# This will delete the Volume with an id of `disk1s9` that is going to
-# change depending on your drive setup. Execute `diskutil list` to see=20
-# general disk info
-#
-# `diskutil apfs deleteVolume disk1s9`
-#
-# Create a case sensitive volume
-# `diskutil apfs addVolume disk1 APFSX Casesensitive` # disk1s9
-#
-# [END DANGEROUS COMMANDS]
-
-SCRIPT_DIR=3D$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pw=
-d)
-REMOTE=3D/Volumes/Casesensitive/casing
-# Set REMOTE=3D"${SCRIPT_DIR}/casing-remote"
-# If you do not want to create a case sensitive volume
-REPO=3D"${SCRIPT_DIR}/casing-bob"
-REPO_OTHER=3D"${SCRIPT_DIR}/casing-alice"
-
-rm -rf "${REPO}" "${REPO_OTHER}" "${REMOTE}" && \
-  mkdir "${REPO}" "${REPO_OTHER}" "${REMOTE}" && \
-  cd "${REMOTE}" && \
-  git init --bare && \
-  cd "${REPO}" && \
-  git init && \
-  echo "#casing" > README.md && \
-  git add README.md && \
-  git commit -m "init commit" && \
-  git branch -M master && \
-  git remote add origin "${REMOTE}" && \
-  git push -u origin master && \
-  git clone "${REMOTE}" "${REPO_OTHER}" && \
-  cd "${REPO}" && \
-  git checkout -b Bug/foo && \
-  touch foo && \
-  git add foo && \
-  git commit -m "adding foo file" && \
-  git push --set-upstream origin Bug/foo && \
-  cd "${REPO_OTHER}" && \
-  git checkout -b bug/bar && \
-  touch bar && \
-  git add bar && \
-  git commit -m "added bar file" && \
-  git push --set-upstream origin bug/bar && \
-  cd "${REPO_OTHER}" && \
-
-  # casing-alice always thinks that Bug/foo is a new branch
-  # because it has a loacl ref of ".git/refs/remotes/origin/bug/bar"
-  # so it doesn't know Bug/foo and bug/foo are the same branch.
-  # It does seem that local "bug/foo"=20
-  # is in sync with remote "Bug/foo" despite the warning
-
-  git pull
-  git pull
-
-
-------- Original Message -------
-On Monday, March 20th, 2023 at 1:12 PM, Torsten B=C3=B6gershausen <tboegi@w=
-eb.de> wrote:
-
-
-> On Mon, Mar 20, 2023 at 06:01:30PM +0000, dooagain wrote:
->=20
-> > I'm not sure if this is helpful, but I documented a simple way to recre=
-ate the issue I am seeing in the README in the https://github.com/spencerdc=
-arlson/test-casing repository.
->=20
->=20
-> It is helpful, thanks.
-> In general, we prefer to have all informartion in emails ;-)
-> Anyway.
->=20
-> To reply on Peff's comment:
->=20
-> > So I think this is just a known gotcha, and the path forward is probabl=
-y
-> > a new ref storage format that doesn't rely on storing names directly in
-> > the filesystem (reftable, or some system based on packed-ref slices).
->=20
->=20
-> Yes, it is.
-> The thing is, that Git at the moment is unable to handle to branches
-> like Foo and foo on case-insensitive file systems.
-> Because branch names are stored as files, and that doesn't typially work
-> well under Windows or MacOs.
->=20
-> As a workaround,
-> git pack-refs
-> can be used.
->=20
-> side-note 1: a better backend for refs may make it's way into Git
-> in the long term.
->=20
-> side-note 2:
-> I always recommend to stick to a naming convention when working in
-> a cross-platform project.
-> You can keep filenames only lowercase.
-> That is debatable, some people prefer camel-case rather then snake-case.
-> So go for either way.
-> But the same restriction/recommendation is valid for branch names as well=
-,
-> stick to one convention and avoid possible collisions under Mac or Window=
-s.
->=20
-> Or run `git pack-refs`, but be aware the the performance may suffer,
-> if you use zillions of refs.
->=20
-> HTH
-> /Torsten
->=20
-> > ------- Original Message -------
-> > On Monday, March 20th, 2023 at 11:16 AM, Jeff King peff@peff.net wrote:
-> >=20
-> > > On Sun, Mar 19, 2023 at 07:22:40AM +0100, Torsten B=C3=B6gershausen w=
-rote:
-> > >=20
-> > > > On Sat, Mar 18, 2023 at 07:21:10PM +0000, dooagain wrote:
-> > > >=20
-> > > > > Thank you for filling out a Git bug report!
-> > > > > Please answer the following questions to help us understand your =
-issue.
-> > > > >=20
-> > > > > What did you do before the bug happened? (Steps to reproduce your=
- issue)
-> > > > >=20
-> > > > > I configured my git repository to ignore case by executing `git c=
-onfig core.ignorecase true` then I executed `git pull` multiple times.
-> > > >=20
-> > > > What do you mean by "I configured my git repository" ?
-> > > > The answer is already there, so let's re-rephrase it:
-> > > > Are you working on a case-insensitive file system ?
-> > > >=20
-> > > > What happens if you create a test directory, like this:
-> > > > mkdir test-case
-> > > > cd test-case
-> > > > git init
-> > > > git config --get core.ignorecase
-> > >=20
-> > > I think this is kind of a red herring, isn't it? The bug report is ab=
-out
-> > > refs, and I don't think those really respect core.ignorecase either w=
-ay,
-> > > and inconsistencies are known to happen on case-insensitive filesyste=
-ms
-> > > (because the refs are sometimes case-sensitive and sometimes not
-> > > depending on whether they are packed or loose in the filesystem).
-> > >=20
-> > > So I think this is just a known gotcha, and the path forward is proba=
-bly
-> > > a new ref storage format that doesn't rely on storing names directly =
-in
-> > > the filesystem (reftable, or some system based on packed-ref slices).
-> > >=20
-> > > -Peff
+[1] https://calendar.google.com/calendar/u/0/embed?src=jfgbl2mrlipp4pb6ieih0qr3so@group.calendar.google.com
