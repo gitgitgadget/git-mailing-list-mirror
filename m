@@ -2,104 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CA79C6FD1F
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 20:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D14A0C6FD1F
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 20:12:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231849AbjCVUIP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 16:08:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51350 "EHLO
+        id S232141AbjCVUMY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 16:12:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231841AbjCVUHv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 16:07:51 -0400
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D046A436
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 13:01:55 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 070735C01ED;
-        Wed, 22 Mar 2023 16:00:48 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Wed, 22 Mar 2023 16:00:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-        cc:cc:content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1679515248; x=1679601648; bh=EX
-        XtL/c1GKNRs44wmvIQD0ebQiv82HrBdfMtNFkEsUE=; b=lShs+yQl1P4Ujd48Sm
-        QJXZJJad9YaEidzVLlRG3bNqr6ly6FtuWBVHWrr/o7DXlTel8pJ0xyEoVRLXo/+i
-        c5T1Wi5cYKg80HiJrv+ZZpRV4FgTpRAx/ovyhmovUY0UZn6vM5wpakq/qfSKMxHl
-        gXcypwRWoXTcvzyS429cJr0DL1NkNeuMRatjrEa4w5wWUQ+fCll9cQK+jFR8gAay
-        sK8u9zaJGKcWQlK9uy3bSnzeqH4s4yTtrxAJ6GJ7SDBBifp6aRT5xG1SSFnNE2RK
-        PEjHuM+jJ8jq7/DV7twLQpVWya22WYI9uxBl5J2jlEtgUdKtfFWZLFV7RajKrrx6
-        EieA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1679515248; x=1679601648; bh=EXXtL/c1GKNRs
-        44wmvIQD0ebQiv82HrBdfMtNFkEsUE=; b=k3XUueusuPceoAxh5gWeof0sFedXr
-        mRxrBAqiX6Nq40N97TBko4zv+uwVTSQ2s+VCvoLpJelF6wXtWJR0qEB9LckZ3doy
-        GwC1f0A5Sn21wz+7gDf5x/QjB0kMe+BhPKr9OHRFNTLFLG2qRQfsSkXTgIVUQoRt
-        zLEiB76+fW0CIbJf6zFXc39qMJlgscXZE7+DukJ7G4e4I63pttdC/sVcgegbasRH
-        ucC95ytYbv0DAdlmY2Wz/iQlJYqhexaYSyzbVr8gmgbKpK60wRhRYkxhxw0m0uOU
-        XekorFT9BbCH0ryVn+EZzDQ2Smw8qPhlknkxobJFcsGrtnjA2sUwXJ9nw==
-X-ME-Sender: <xms:b14bZAQ1aon9jzRI2oRYMCinuHvJwkh_SSXXC9HT8fKV60-cN0Y0764>
-    <xme:b14bZNxGgI1TPVZgVB0S0jfA6d7d8Mra0Fd-829G1ViDTDRd34empvwctg-vpyuTS
-    apTpL1t01zWG7J8xQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdegvddgudefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruh
-    hgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeeigeev
-    vdetfeetledtieefheetgedugfehtddtledvhfejkefghfelvdegieefueenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgv
-    rhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:b14bZN0reJGQBpeARdyND2b8lg6sQNSf8c0q6CV_aYJLfZtstiueSw>
-    <xmx:b14bZECnMkLNQkO_JjqQSGOcXsO_E57IEF76Qp4ur_M2TKRIv7_CaA>
-    <xmx:b14bZJh6GJ20NYd8Ih9rl0c8jISZZFxZHz-LYTTsy1kR5kayHMEDJA>
-    <xmx:cF4bZJIH-iXEd531OqzSbZlqGYsg-m1J-0HYVnJK_d8E3it9GwtB0A>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id B737A15A008E; Wed, 22 Mar 2023 16:00:47 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-236-g06c0f70e43-fm-20230313.001-g06c0f70e
-Mime-Version: 1.0
-Message-Id: <34c11cee-d73e-4de0-85f1-5ecd5fe54c71@app.fastmail.com>
-In-Reply-To: <xmqq355wegsd.fsf@gitster.g>
-References: <593742E7-F0FC-471C-AFF5-1E855A3788B0@mac.com>
- <CAJoAoZkKTGzgVyL2wM9a4VcFObx4YpjMSatH9Bpqcgyi=zzBrQ@mail.gmail.com>
- <3FC6072C-5856-437F-9B4F-BC182921426D@mac.com>
- <73af529d-e918-445d-b0ee-9506e28188af@app.fastmail.com>
- <xmqq355wegsd.fsf@gitster.g>
-Date:   Wed, 22 Mar 2023 21:00:13 +0100
-From:   "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        "Sjur Moshagen" <sjurnm@mac.com>
-Cc:     git@vger.kernel.org
-Subject: Re: BUGREPORT: Modified files on a fresh clone on M2 MacBook Pro
-Content-Type: text/plain
+        with ESMTP id S232101AbjCVUMA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 16:12:00 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B19F13C
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 13:04:10 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id y14so18316080wrq.4
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 13:04:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679515403;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fN2DaZHiYuprJ75BnkU7yBhqfVOrv8/NB3NMdaV0vRs=;
+        b=JMXvWXDP5hY+D0NjC4llBs3Z2mS6EolTfo6/WCufz4xwKY1XEyKPw2Kult6M0Y7sju
+         twdOVjA9YtIAKtUpxHKpBKBQRdxUNLhSzsHyUpkn633SGrXiJpcAJFiRjYfa7X0EkD66
+         BvzrAmDoCE2XrtnGzmZcJMU9tpQ63rEa5em+eHQA1Gpmbg2adc2CJMI8KPfWzWue6KIw
+         h8tktF5KaNx3ENam/v4IVGkMJ/LQCk3pSi3lKi0FZMh/9Mfms8Tfebb3kxGoO92RmDO8
+         YzMNdDVzLTMfeBh0h/7KDQvwRBw8vOP8gm+oqDLk9I2DsMwKdmn11duTVWvWIU8LeSDt
+         R80Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679515403;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fN2DaZHiYuprJ75BnkU7yBhqfVOrv8/NB3NMdaV0vRs=;
+        b=aup8rHbP1taIvwO9Nl/qk6oUjVagJ8H6MbEOik39JFXIR5n/AJp1F39Htb9PaW0CJF
+         ah5ZHC3Csnvj7iGhe8vhwFE80oXbKyuPfF7gOjfV632y4h6jYMFbSsr1fb0dXv+2tH22
+         bk2vsRdMLIhLYh+BjwfXiBW39zJq+xeaOhfR/4DfsIlgugNx68DG4LTcj7HWKEPjOKLW
+         yk/ANfywNVRIIkeAZI345Z/9i1G8dvQaYSuvu2wcfBLJkxFt8sMWYe8rxD19I8CGG4WZ
+         VEWiWpz5u562eVX2LDLc5ovpkrqTQ8KJ84Bg/5FY7kEUC1hE7LmfxJKmYEAO1MT0fz2J
+         6XbA==
+X-Gm-Message-State: AAQBX9fKEUI67jt0EmoNWpSTSr+PDIxD+FUztpgXERhqqhgadEG+o8Xf
+        OzDUL5FZr3L3GfmHcDCaiDWJi5LuaZI=
+X-Google-Smtp-Source: AKy350ZV2muFOS8r563DuNkqjLNOxxm9tkc3PisoEyD0CagvARsYp9z75Xn/PyIQrPtpvK5r3PmELA==
+X-Received: by 2002:a5d:5690:0:b0:2d5:a170:839d with SMTP id f16-20020a5d5690000000b002d5a170839dmr770483wrv.25.1679515403322;
+        Wed, 22 Mar 2023 13:03:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v13-20020a5d6b0d000000b002daf0b52598sm1426458wrw.18.2023.03.22.13.03.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Mar 2023 13:03:23 -0700 (PDT)
+Message-Id: <pull.1476.v2.git.git.1679515402379.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1476.git.git.1679478126.gitgitgadget@gmail.com>
+References: <pull.1476.git.git.1679478126.gitgitgadget@gmail.com>
+From:   "ClementMabileau via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 22 Mar 2023 20:03:22 +0000
+Subject: [PATCH v2] branch: improve error log on branch not found by checking
+ remotes refs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     ClementMabileau <mabileau.clement@gmail.com>,
+        ctmbl <mabileau.clement@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 22, 2023, at 20:18, Junio C Hamano wrote:
-> The attribute file says "assume everything is text unless otherwise
-> noted below", which you probably should not lose.
+From: ctmbl <mabileau.clement@gmail.com>
 
-That was to illustrate the issue, not to propose a change. Sorry about
-not being clear.
+when failing to delete a branch with `git branch -d <branch>` because
+of branch not found, try to find a remote refs matching `<branch>`
+and if so add an hint:
+`Did you forget --remote?` to the error message
 
-(But it also so happens to be the case that I know very little about 
-`.gitattributes` :))
+Signed-off-by: Clement Mabileau <mabileau.clement@gmail.com>
+---
+    branch: improve error log on branch not found by checking remotes refs
+    
+    when failing to delete a branch with git branch -d <branch> because of
+    branch not found, try to find a remote refs matching <branch> and if so
+    add an hint: Did you forget --remote? to the error message
 
-On Wed, Mar 22, 2023, at 19:47, Sjur Moshagen wrote:
-> I will add this and other missing extensions.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1476%2Fctmbl%2Fbranch%2Fdeletion%2Fimprove-error-msg-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1476/ctmbl/branch/deletion/improve-error-msg-v2
+Pull-Request: https://github.com/git/git/pull/1476
 
-By the way, when I first cloned the repository on commit 357c7cf01950
-(text, 2023-03-21), those two binary `txt` files showed up as dirty for
-me (before you removed them in 6b0acd78f9c9 (Remove accidentally added
-files with uncomprehensible content, 2023-03-22)). I guess it was the
-same for you.
+Range-diff vs v1:
 
+ 1:  91cb506968a ! 1:  eb95695ace2 branch: improve error log on branch not found by checking remotes refs
+     @@ builtin/branch.c: static int delete_branches(int argc, const char **argv, int fo
+      +							| RESOLVE_REF_NO_RECURSE
+      +							| RESOLVE_REF_ALLOW_BAD_NAME,
+      +							&oid, &flags);
+     ++				FREE_AND_NULL(virtual_name);
+      +				if (virtual_target)
+      +					error(_(MISSING_BRANCH_HINT_MSG), bname.buf);
+      +				else
+ 2:  27f27f3afd7 < -:  ----------- Fix mem leak in branch.c due to not-free newly added virtual_name variable
+
+
+ builtin/branch.c | 29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/branch.c b/builtin/branch.c
+index f63fd45edb9..697636e2874 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -216,10 +216,12 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *item;
+ 	int branch_name_pos;
++	char* FMT_REMOTES = "refs/remotes/%s";
++	char* FMT_BRANCHES = "refs/heads/%s";
+ 
+ 	switch (kinds) {
+ 	case FILTER_REFS_REMOTES:
+-		fmt = "refs/remotes/%s";
++		fmt = FMT_REMOTES;
+ 		/* For subsequent UI messages */
+ 		remote_branch = 1;
+ 		allowed_interpret = INTERPRET_BRANCH_REMOTE;
+@@ -227,7 +229,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 		force = 1;
+ 		break;
+ 	case FILTER_REFS_BRANCHES:
+-		fmt = "refs/heads/%s";
++		fmt = FMT_BRANCHES;
+ 		allowed_interpret = INTERPRET_BRANCH_LOCAL;
+ 		break;
+ 	default:
+@@ -263,9 +265,26 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+ 					| RESOLVE_REF_ALLOW_BAD_NAME,
+ 					&oid, &flags);
+ 		if (!target) {
+-			error(remote_branch
+-			      ? _("remote-tracking branch '%s' not found.")
+-			      : _("branch '%s' not found."), bname.buf);
++			char* MISSING_REMOTE_REF_ERROR_MSG = "remote-tracking branch '%s' not found.";
++			char* MISSING_BRANCH_ERROR_MSG = "branch '%s' not found.";
++			char* MISSING_BRANCH_HINT_MSG = "branch '%s' not found.\n"
++											"Did you forget --remote?";
++
++			if (remote_branch) {
++				error(_(MISSING_REMOTE_REF_ERROR_MSG), bname.buf);
++			} else {
++				char* virtual_name = mkpathdup(FMT_REMOTES, bname.buf);
++				char* virtual_target = resolve_refdup(virtual_name,
++							RESOLVE_REF_READING
++							| RESOLVE_REF_NO_RECURSE
++							| RESOLVE_REF_ALLOW_BAD_NAME,
++							&oid, &flags);
++				FREE_AND_NULL(virtual_name);
++				if (virtual_target)
++					error(_(MISSING_BRANCH_HINT_MSG), bname.buf);
++				else
++					error(_(MISSING_BRANCH_ERROR_MSG), bname.buf);
++			}
+ 			ret = 1;
+ 			continue;
+ 		}
+
+base-commit: 950264636c68591989456e3ba0a5442f93152c1a
 -- 
-Kristoffer Haugsbakk
+gitgitgadget
