@@ -2,81 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F05EC7619A
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 20:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85FBDC6FD1C
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 20:53:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231907AbjCVUOj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 16:14:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40764 "EHLO
+        id S230496AbjCVUxY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 16:53:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232242AbjCVUOJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 16:14:09 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0803882372
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 13:05:19 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id o11so20328933ple.1
-        for <git@vger.kernel.org>; Wed, 22 Mar 2023 13:05:19 -0700 (PDT)
+        with ESMTP id S231875AbjCVUxF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 16:53:05 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27AE555B0
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 13:52:47 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id q102so5133088pjq.3
+        for <git@vger.kernel.org>; Wed, 22 Mar 2023 13:52:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=clumio.com; s=google; t=1679515476;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Z41PP6WYUENlE/mR2N7ET4CqBBbGHbFYuzLyfePX50o=;
-        b=HZ9Sk4gYttNGdJ2wLSY2QCsSKBTj/J0a7E0soVEbrELUizV4Lw5FPGxEjciDd9gXIx
-         NpMLV825h9N+SsN4G6SLROkqI9FD94dfTTRctMeVkawGUJt0CuTaLBeMgpZ+52eRosQP
-         KOU7a/mGS3K+7dWkS1cU++WhvhQsZ94pwnTOvc+uozOcKHE9JWXq4tcJteJcHfEqWfrS
-         +6XjD1bUVX5q/a11dLjV17erPZmikkvDSnb93krdpmwDobmkvGEjMN1TZb0jtEwXhc5B
-         b962UHvOZHckktODt8FyGrZqJME8Jc+yKEDgvkGpp6YF+gyPuvGSeYn1Lg7Ymd/39gub
-         YwMA==
+        d=gmail.com; s=20210112; t=1679518366;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=a7ORZzY0lKNWqhESXJlUXNT9nwGHWdpP0rs+1RhinKc=;
+        b=Wnv0Y1KSUzqntjn0+FVurWUrcKr6BF7hUDrL9lPqXbOvjj4Imj7XABSr5vUrW0qTAc
+         u9Cjw6xGK++hVTmIZSNNjVkcfGqJ/rlqoVP4pA8AR9ZZ9c/AL+i0F2hue1S7iWV/y2Ow
+         Ez5yD5o5FCLsTHnyknc3aMxvT04sLfXC25JUwTr3pujqQJz6WaWuhAXjS12PnTP4cxtp
+         bLocKreZQeONILuXZQ2DcErmBrhFXXblYbLJjiF7A0He4AEgh0HW1A0yGiMo5CE8riLm
+         vWIW3pYuyc35X4E8djJhn6GHejx/271O6APJbL5NUJvEIOSjwETkUg0euI7wbP62yrmF
+         2E8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679515476;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z41PP6WYUENlE/mR2N7ET4CqBBbGHbFYuzLyfePX50o=;
-        b=3sD+84lkOa6N8DMvDJElZmOUXSGhC2hCWmpHhfgz4kshHeq2/VR2MSHmsKCn/RpfSP
-         6rbsTLhU4eOcYEzARkjHPoepiBpfDMncnRPuCZWM0xce+4pt1NNi2yaemdXzbHgXJpOa
-         mmYLUH/6wTtQuHpc12CRhBS9CzgwGvd1jUXuT6FGgdnaA8VIbSxtnwfq+V2UnDSYaMp5
-         6R3D/flrGJ3tMbtxX9N4X8LIV1Q6SLPW2Zl+NOSYsm5znZePC1XDg3tub1wJ0hb+PPlh
-         XQPIZiHX/9s5mIbfy7rcKtkeOZ6danKTf8erCr+KQKPD/PO9+CL+MggAuMF3Ez5qss0s
-         TXCg==
-X-Gm-Message-State: AO0yUKXN+E8RL7j2RQvoYF0xXb8C44HPVdQl2Lr9Nqtnjum38jdjwH6O
-        Ic6oZabjaOwi9bwhQNEl1BJm5QubDoY4AMpchvVzCQ==
-X-Google-Smtp-Source: AK7set9cDF2ejITrUMnJ2DwfvU+WzXircL5H1Z2bFrV8J/cPMBsf2vhq9XyRMN4sRDxMF8bLpqIU2A==
-X-Received: by 2002:a05:6a20:6d91:b0:d9:d287:75dd with SMTP id gl17-20020a056a206d9100b000d9d28775ddmr513278pzb.50.1679515475704;
-        Wed, 22 Mar 2023 13:04:35 -0700 (PDT)
-Received: from smtpclient.apple (107-194-200-191.lightspeed.sntcca.sbcglobal.net. [107.194.200.191])
-        by smtp.gmail.com with ESMTPSA id n21-20020a62e515000000b0058bc60dd98dsm10430697pff.23.2023.03.22.13.04.33
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Mar 2023 13:04:34 -0700 (PDT)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.400.51.1.1\))
-Subject: Re: [EXTERNAL SENDER] Suspected git grep regression in git 2.40.0
-From:   Stephane Odul <stephane@clumio.com>
-In-Reply-To: <4a103812-c4c6-a010-c2e5-4e42e9855c2e@grsecurity.net>
-Date:   Wed, 22 Mar 2023 13:04:22 -0700
-Cc:     =?utf-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C24D1B3F-AA4A-46E3-B746-5AA551F64E2C@clumio.com>
-References: <7E83DAA1-F9A9-4151-8D07-D80EA6D59EEA@clumio.com>
- <xmqqttyejc7y.fsf@gitster.g>
- <b0f4b588-9871-8e59-e5a2-3f8745a7c4cd@grsecurity.net>
- <51078D7E-C325-4F57-96C1-601B4E102DD9@clumio.com>
- <4a103812-c4c6-a010-c2e5-4e42e9855c2e@grsecurity.net>
-To:     Mathias Krause <minipli@grsecurity.net>
-X-Mailer: Apple Mail (2.3731.400.51.1.1)
+        d=1e100.net; s=20210112; t=1679518366;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=a7ORZzY0lKNWqhESXJlUXNT9nwGHWdpP0rs+1RhinKc=;
+        b=2WuGsKYZpX9FMDvltIkrT51qZpklxQqHSRrQ1yAqaRzMjdhYQKIAUb+SyJ3xXmXJZs
+         Ly2j6uR3S76fPUWeHtPdtrFR+F9lAIB4T6eJUXa/hP/5tdWDbU4gIWyQ8dy7+0b+hXsi
+         n98ZSO3iz2QxTZGj0VeYGm0jtQ/2YinuiTB30ouf/VsXEM0z9ZHgddIxPs3Db6LogFFm
+         qEc7KUZRWUXNsxFicJkr++aytELZocUawoEy4J20kjm+vZLjLdXiNGluPjoPodcwQVPX
+         3ly55xoI2zkf3/MmzuYsQfQIT+30gKWVLgNNVkvMLf72YFbzuk4lIGOY507YQyzW5hYz
+         OtgQ==
+X-Gm-Message-State: AO0yUKWb+jLEyS8JBiXfNGNjl3H/sKpjy2b7VECtIB8NDymUPGGJ3nQG
+        D0MPgnjwvBw0uAYKeDo9EREvnhSnzsU=
+X-Google-Smtp-Source: AK7set9Inx20mK3p1TWCAcG41s77dJpum4lqOPWJ5TE4ClAkovusEm20w/hZDXKE12rR/+5Tloo3OA==
+X-Received: by 2002:a05:6a20:4f26:b0:bc:b9d2:f0f8 with SMTP id gi38-20020a056a204f2600b000bcb9d2f0f8mr680848pzb.24.1679518366411;
+        Wed, 22 Mar 2023 13:52:46 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id t21-20020aa79395000000b005e5861932c9sm10470328pfe.129.2023.03.22.13.52.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Mar 2023 13:52:45 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Clement Mabileau <mabileau.clement@gmail.com>
+Cc:     ctmbl via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] Fix mem leak in branch.c due to not-free newly
+ added virtual_name variable
+References: <pull.1476.git.git.1679478126.gitgitgadget@gmail.com>
+        <27f27f3afd76fc974350c0c94e20307879eead84.1679478126.git.gitgitgadget@gmail.com>
+        <xmqqmt44enj3.fsf@gitster.g>
+        <bd5207a0-9783-6a15-93da-0904ecd21341@gmail.com>
+Date:   Wed, 22 Mar 2023 13:52:45 -0700
+In-Reply-To: <bd5207a0-9783-6a15-93da-0904ecd21341@gmail.com> (Clement
+        Mabileau's message of "Wed, 22 Mar 2023 21:00:54 +0100")
+Message-ID: <xmqqv8iscxuq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is great work Mathias!
+Clement Mabileau <mabileau.clement@gmail.com> writes:
 
-Now that you have an easy way to reproduce, and I have a good =
-workaround, I do not believe there is much more I can contribute and =
-will leave this in your expert hands.
+> I just did it!
 
-Thank you,
-Stephane Odul=
+Nice to hear.
+
+> Thanks for the review.
+
+Well, I didn't "review" anything, though.  I just commented on 2/2
+that will become moot in your updated version, and I didn't even
+look at 1/2.  
+
+The change(s) as a whole need to be reviewed by somebody.
+
+Thanks.
