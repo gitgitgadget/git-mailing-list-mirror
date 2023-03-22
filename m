@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4E30C6FD1C
-	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 16:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3CCF9C6FD1C
+	for <git@archiver.kernel.org>; Wed, 22 Mar 2023 16:01:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230291AbjCVQBJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Mar 2023 12:01:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33940 "EHLO
+        id S230047AbjCVQBL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Mar 2023 12:01:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229906AbjCVQBG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2023 12:01:06 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52B9D65446
+        with ESMTP id S230099AbjCVQBH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2023 12:01:07 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C75ED50F93
         for <git@vger.kernel.org>; Wed, 22 Mar 2023 09:01:05 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id t15so17615342wrz.7
+Received: by mail-wm1-x336.google.com with SMTP id v4-20020a05600c470400b003ee4f06428fso2289260wmo.4
         for <git@vger.kernel.org>; Wed, 22 Mar 2023 09:01:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679500863;
+        d=gmail.com; s=20210112; t=1679500864;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6HWgix6MtXPwLulkf+Lqdg0AYUoo+ggdD0mNFQepnrc=;
-        b=gcf+I1h5UGTYMpx7wEcVyOpRlws08uwOYvHQ4k42Nyhni37vjy8k2xpi+TBuao2eHZ
-         yf6MvYCDYMs3hUHb6OVL5unyInmkQKDw3IK6AL35hGEE/SNPY7dwnwT83yNhwAopiKZP
-         N/zYkkD6w9s3zrJRdytrQPl/bxE4xD34FhLZcWXUkY5+g1VtCoB3sEmHo6bdKnJABmj6
-         wZgSCIKKWdJtQvFS/ZSm9N6vkmaFeOSkVObqY0nMsm3zJdhV0b7VDdsEfNhkX5aCGLvD
-         PcTkEFJ30ex6dOxrmLPx9YY3zJDMSD/LdWYqirjCXdg1q2loSdfA9cNZwayVqsO7XtmD
-         UHNA==
+        bh=A3ib7yuv25Yk7MrLfx2gVEaVtF2eRGWMtyxxUs9Xe7A=;
+        b=JommsP5ttJfF3/cFtILd19aO4te9RkopzZVADwE/yj4qcWOdrWQbFoOyVGhqtX/9Oa
+         v7eGt2Xmxq92f+2WsOcVqLFoI4TsvUDByNKi2RXoGFX5584Ty6i2Vpz5XTKJv1eSVjJ6
+         iNRjNmX3Laa4vybIfsbYl1K4Yn7s5j8RLg6Sci77o/RCNNqdYIPszEcI7OZ9iyoQheF+
+         Bxvu9ICTzsnGjDDUtlMU9YZUb4as/JOELjDz6rwB6YaHY9C303iwUX3etpLwxd9c34S7
+         RMiuBfmhj0Qc9sacJYKrQ9nRExVnpUDqADpBubXT58GFwmMgmHFB0l456X02th5PyNGT
+         jW9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679500863;
+        d=1e100.net; s=20210112; t=1679500864;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6HWgix6MtXPwLulkf+Lqdg0AYUoo+ggdD0mNFQepnrc=;
-        b=GrdCY/mu6LeORQZKNIqmigwITW3pDB25MBQito8xv+KY9lDmwmsmW6oUkZvbGOTOqu
-         95Gl1yJlx+hP9Zev8HVixIgA91zAMXGO5qQj5A6h5JV4eS/iG/8OZnqVa9Tu5dyaZOER
-         UDStZEOeth0fiQjkr0ENWTkO+r8yNORyYOvqwLa1uawQUOBPe1bNXIABZ1rYgINYteqb
-         ODVxw7uqJp2bDvleQKZMKHqt2Je+hmNV26t8c8YS5JWjBJKvkg9dWJ0IzTb4rdcm11C2
-         4v6GlIT4G1GWE2GGx5BKZNSPRbIoKtPkD3T+uKSlYnulwoa+SVkmZSii4WQ0M9+k8elg
-         JOFg==
-X-Gm-Message-State: AAQBX9chq4US17P5bQS0Y5HEpUppkOxhtVjaGD4QP4hQ3ASWryEvdxET
-        ji0X6bNEVKzAWtTYDiXATxnmI6NJo9k=
-X-Google-Smtp-Source: AKy350aLSzGVW+g3+IqzTjMNQOtQ1js/iv5v1lAWrBX7clOEKpGASIkXIkuk9oRFPejHnFodnyWbfw==
-X-Received: by 2002:adf:e5ca:0:b0:2ce:9877:84ae with SMTP id a10-20020adfe5ca000000b002ce987784aemr274051wrn.16.1679500863664;
-        Wed, 22 Mar 2023 09:01:03 -0700 (PDT)
+        bh=A3ib7yuv25Yk7MrLfx2gVEaVtF2eRGWMtyxxUs9Xe7A=;
+        b=FFj0lRNwkFI8xMwws639vMVE/XDJGcokOOyhcjeQeVlDb58HjYAOp6phCLAIe8OpCz
+         jbjWuyt01uDuhwLgZVW0tCA9FqUAvv8YmIhJKvzY3vq9i5DbYaI2nBYemvpiSBjMw2cD
+         cmLjXYLHOzkRmpt9rvGKPJcnMvgZfXuA9Y2NkzjCRlMUsNQwKfjpPSSj9Xz398b8FxgW
+         hn3intARil8sIswr3bR45wrNPiDHG7+TZxPCwh/fYovaJO4/xc6EDPH21BZglj90w5GK
+         eUBKHM09ZspOad5UEA7R0BiIxISBxUszp35XkQ/riz6a1N/sw/wAEa+WriKiWQURwema
+         EYIA==
+X-Gm-Message-State: AO0yUKXHu/BBhS7290g43a8OC0mU39VxyZ/HpUi3QJeFglQvHFJUWWK5
+        JdTrPRDWefCVC8pLxTo0T5WRusgVB5E=
+X-Google-Smtp-Source: AK7set+WCalcw8swzHHFL0tn1QvxgiVqHjSDnM810NOKMwuhp9SCDr6UvC3on5iKJvDWU08pXSC3Rg==
+X-Received: by 2002:a7b:c850:0:b0:3ed:2f1a:883c with SMTP id c16-20020a7bc850000000b003ed2f1a883cmr41623wml.14.1679500864178;
+        Wed, 22 Mar 2023 09:01:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l5-20020adfe585000000b002cea9d931e6sm14186281wrm.78.2023.03.22.09.01.02
+        by smtp.gmail.com with ESMTPSA id l2-20020a05600c4f0200b003ee610d1ce9sm2302045wmq.34.2023.03.22.09.01.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Mar 2023 09:01:03 -0700 (PDT)
-Message-Id: <c1c35f0f026993c493eaae3cf643b25c339205c4.1679500859.git.gitgitgadget@gmail.com>
+        Wed, 22 Mar 2023 09:01:04 -0700 (PDT)
+Message-Id: <3963d3e542896b9cdf871dc7ea13330ddac87795.1679500859.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1497.git.1679500859.gitgitgadget@gmail.com>
 References: <pull.1497.git.1679500859.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 22 Mar 2023 16:00:58 +0000
-Subject: [PATCH 3/4] fsmonitor: avoid overriding `cache_changed` bits
+Date:   Wed, 22 Mar 2023 16:00:59 +0000
+Subject: [PATCH 4/4] unpack-trees: take care to propagate the split-index flag
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,46 +69,32 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-As of e636a7b4d030 (read-cache: be specific what part of the index has
-changed, 2014-06-13), the paradigm `cache_changed = 1` fell out of
-fashion and it became a bit field instead.
+When copying the `split_index` structure from one index structure to
+another, we need to propagate the `SPLIT_INDEX_ORDERED` flag, too, if it
+is set, otherwise Git might forget to write the shared index when that
+is actually needed.
 
-This is important because some bits have specific meaning and should not
-be unset without care, e.g. `SPLIT_INDEX_ORDERED`.
+It just so _happens_ that in many instances when `unpack_trees()` is
+called, the result causes the shared index to be written anyway, but
+there are edge cases when that is not so.
 
-However, b5a816975206 (mark_fsmonitor_valid(): mark the index as changed
-if needed, 2019-05-24) did use the `cache_changed` attribute as if it
-were a Boolean instead of a bit field.
-
-That not only would override the `SPLIT_INDEX_ORDERED` bit when marking
-index entries as valid via the FSMonitor, but worse: it would set the
-`SOMETHING_OTHER` bit (whose value is 1). This means that Git would
-unnecessarily force a full index to be written out when a split index
-was asked for.
-
-Let's instead use the bit that is specifically intended to indicate
-FSMonitor-triggered changes, allowing the split-index feature to work as
-designed.
-
-Noticed-by: Jeff Hostetler <jeffhost@microsoft.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- fsmonitor.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ unpack-trees.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fsmonitor.h b/fsmonitor.h
-index edf7ce5203b..778707b131b 100644
---- a/fsmonitor.h
-+++ b/fsmonitor.h
-@@ -86,7 +86,7 @@ static inline void mark_fsmonitor_valid(struct index_state *istate, struct cache
- 	    !(ce->ce_flags & CE_FSMONITOR_VALID)) {
- 		if (S_ISGITLINK(ce->ce_mode))
- 			return;
--		istate->cache_changed = 1;
-+		istate->cache_changed |= FSMONITOR_CHANGED;
- 		ce->ce_flags |= CE_FSMONITOR_VALID;
- 		trace_printf_key(&trace_fsmonitor, "mark_fsmonitor_clean '%s'", ce->name);
- 	}
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 90b92114be8..ca5e47c77c0 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1916,6 +1916,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		 * create a new one.
+ 		 */
+ 		o->result.split_index = o->src_index->split_index;
++		if (o->src_index->cache_changed & SPLIT_INDEX_ORDERED)
++			o->result.cache_changed |= SPLIT_INDEX_ORDERED;
+ 		o->result.split_index->refcount++;
+ 	} else {
+ 		o->result.split_index = init_split_index(&o->result);
 -- 
 gitgitgadget
-
