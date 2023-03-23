@@ -2,142 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E123C6FD1C
-	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 23:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E07D8C74A5B
+	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 23:59:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229729AbjCWXzn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Mar 2023 19:55:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38802 "EHLO
+        id S229672AbjCWX7T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Mar 2023 19:59:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjCWXzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2023 19:55:42 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE0A7DA0
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 16:55:41 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id y5so346051ybu.3
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 16:55:41 -0700 (PDT)
+        with ESMTP id S229499AbjCWX7R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2023 19:59:17 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E04562BF25
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 16:59:16 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id r29so132706wra.13
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 16:59:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679615740;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=gmail.com; s=20210112; t=1679615955;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XLz6+3S3wsjbzqWYFbHPh9c2gAMExit9yVX7THQ2W38=;
-        b=LyrQWbLPWuem0fA5Z1iBNkC1ffWdyzxaBSyjKu+6MBuY9yYjPqh5rgd8C/bWJy3n7w
-         qc5mEW1dV2OL5CZalHO7PHnVVQJsl7IliEGGMtXuNFb0Cl8aeBlmPtMAMfLunjtpysED
-         55nPn6soibRF3X7e73jIUfIg85wT0j6meVlRS0PNmtoUkQ9Mu+miNjXlgwWN/U/3LWAa
-         cwxjGMR2BdYnPfLPMtTMB95OmKn5JlIjufuZ1JZ7jD3s4RAuQqvYHNOW6W8c2nIRO/C7
-         vDlKX9/5K3Tniu3d7pLrC4D1+p692MOXWNDHl87Q9OfUJq6EOqIsUd2AzqBLObvHpol2
-         zq+A==
+        bh=S1VzF+iFq+1elH6o4DIlRXkn1CgikpMnDou2IVz1LJE=;
+        b=aacsNa0KRYJwiIUErf++rfX1s2Vq7WbFc3OTXNseu0QOzzV4jNXCuL5EzJJPARLlg6
+         IFV0hYhPvT24cgJWg2OU/Xn55mbxNBqR6UkV2MV0ne1pqMbXZjD89JcivjB3WU9trYAr
+         ZlncMKx/HmvezM9zIhB4FOTNacJIH6P3tdfN+mR89vLHDIPUEA/M8xag144188JdS/pU
+         dFla1W60WsVlPFXcYNRe8y2TM9jAlnqk/1UqSCjxw7NT4GjQLUOC4ak9+Ks35/N/B0pl
+         N3YAjc4LCtrSVZgpcKBwk11o1rCX/5CcqFgltU0xl/NlIF9BDHUNPUoCtHlvR3Eg30al
+         kgOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679615740;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=1e100.net; s=20210112; t=1679615955;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XLz6+3S3wsjbzqWYFbHPh9c2gAMExit9yVX7THQ2W38=;
-        b=QHVqOilWaLLdV8Y0Yk0RKe+v9iCuM/Jg9Bhi//WJittaePTiCm3G/9dJ8X3ErgNPEG
-         AZS+2bURi7mbk8Ib7KIOIvTYn+jVZ5hbF74Slo89rXPUGAU52nCmvJ58Za/a1wv2QCBy
-         WyKvQka6YWTb1yUmmvjq8WROPc7OwXsND23cWXdtaSG8pq/+wWPQEipLByIFERjtcYu/
-         Wk6ruH+DrsjGl1kQdkPKvJdGa2Hl0MIvoGQ6O6hlTs7LMlP5MsjhIkJuafuqsgyxNDRp
-         Jm8yMe7plLrMnwmc485m16D7GZjfI/pSB+lKSn8imi0a3RYk5vlWtbUEYpz4R5BT3JMK
-         YerQ==
-X-Gm-Message-State: AAQBX9fXc2dOEsGI7Z54hLOdfOtibPfntkxawryVOic0P8Hb0bL9gE3X
-        0kSW89nMslNW2mj0fDpBn645/Spf2yF4rHTbcPg=
-X-Google-Smtp-Source: AKy350YWIKKnZBXYL/46+4A/KnNrfAZptYEJbQyQ3GJSPR9Acx0TogYResxtWyH9sWYFCaE0RC8pT/zs5JfqhFg51Vg=
-X-Received: by 2002:a05:6902:1083:b0:b69:ca6f:452c with SMTP id
- v3-20020a056902108300b00b69ca6f452cmr283790ybu.0.1679615740280; Thu, 23 Mar
- 2023 16:55:40 -0700 (PDT)
+        bh=S1VzF+iFq+1elH6o4DIlRXkn1CgikpMnDou2IVz1LJE=;
+        b=ttlnjclkbMXwKTD5MF3EIYyQ1sltZ4sh9qLed5mYvIDusl0taRv8kQdh0NHSaTpUYK
+         Vh3eeE+K96LoDoklKpw5xzhEgmX9Kow8i9QVnn+4p0xvH9VfUvmrUK615FO/x4f60qzR
+         dKx3Lt0r9SvZshae8W2zYwQG03mhemcuu+Wi8RlO3EPlY2glDe6iSw1qnIyWUI9XIcli
+         U555dHfgP7+vy61Wvw6uR28XKCLgX9D/lkPLtBYd1jpSbZCzTf32x1rpZMj8vU8MBP0P
+         7CXTlSiuk8+7fiQC7B5B13mSZaWSRsakomgfT8uampoGVJb0kKxE8Xd/Q2JIVBVeFUp7
+         ZVNw==
+X-Gm-Message-State: AAQBX9fQ7saUHC16G+MH6cEcelXexBiZ+Hv3W+Kz+bCuih4SJF3gq7v+
+        OmKYakdE/eexHHmNOESCAqBE7o+fZ92JFmBeyvQ=
+X-Google-Smtp-Source: AKy350ajyQT9ASRtGQCNIJR36WIy9lzVr6peRPglvNdiAI7/YxS3rbSRYGhkllocO9nWze/n/uFyKZSFMQ8BF9j1kLc=
+X-Received: by 2002:adf:f782:0:b0:2ce:abd2:13f3 with SMTP id
+ q2-20020adff782000000b002ceabd213f3mr188220wrp.5.1679615955007; Thu, 23 Mar
+ 2023 16:59:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
- <xmqq3573lx2d.fsf@gitster.g> <CANgJU+XoT42u91WP7-p4V41w7q-UVhutL2LUfNkp3_BRCOn-FQ@mail.gmail.com>
- <4222af90-bd6b-d970-2829-1ddfaeb770bf@dunelm.org.uk> <CAMP44s1Qqd2cYcf7OGxz1-PY-8TF2KG+9jPEWMrnCaCfPe_1sw@mail.gmail.com>
- <008101d95ddf$7863d900$692b8b00$@nexbridge.com> <CAMP44s1X6LGpFfA_Zb_GakXehBJDeGrfFcehPgv+YM++xKHN3A@mail.gmail.com>
- <008201d95de1$359285c0$a0b79140$@nexbridge.com>
-In-Reply-To: <008201d95de1$359285c0$a0b79140$@nexbridge.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Thu, 23 Mar 2023 17:55:29 -0600
-Message-ID: <CAMP44s3Gk67rPEPjoAxLHS4KrCQBb6VoPJ6Rqm-FTK+8PTaRRQ@mail.gmail.com>
-Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
-To:     rsbecker@nexbridge.com
-Cc:     phillip.wood@dunelm.org.uk, demerphq <demerphq@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrn@google.com>,
-        Jose Lopes <jabolopes@google.com>,
-        Aleksandr Mikhailov <avmikhailov@google.com>
+References: <20230320205241.105476-1-cheskaqiqi@gmail.com> <20230322161820.3609-1-cheskaqiqi@gmail.com>
+ <xmqqilesbbph.fsf@gitster.g> <CAMO4yUFshQ_bP3gXeZhfHQ3OevC+_3qKwa-iy2nNGScvRouu6Q@mail.gmail.com>
+ <xmqqlejna20n.fsf@gitster.g>
+In-Reply-To: <xmqqlejna20n.fsf@gitster.g>
+From:   Shuqi Liang <cheskaqiqi@gmail.com>
+Date:   Thu, 23 Mar 2023 19:59:03 -0400
+Message-ID: <CAMO4yUFG2EnEPM3AqXbywpZp2rYU_emJgE5h3_tY+u2ZMXqrhA@mail.gmail.com>
+Subject: Re: [PATCH v7 0/2] diff-files: integrate with sparse index
+To:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 23, 2023 at 5:43=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
->
-> On Thursday, March 23, 2023 7:35 PM, Felipe Contreras wrote:
-> >On Thu, Mar 23, 2023 at 5:30=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
-> >>
-> >> On Thursday, March 23, 2023 7:22 PM, Felipe Contreras wrote:
-> >> >On Sat, Feb 18, 2023 at 5:12=E2=80=AFAM Phillip Wood <phillip.wood123=
-@gmail.com>
-> >wrote:
-> >> >>
-> >> >> On 18/02/2023 01:59, demerphq wrote:
-> >> >> > On Sat, 18 Feb 2023 at 00:24, Junio C Hamano <gitster@pobox.com> =
-wrote:
-> >> >> >>
-> >> >> >> Emily Shaffer <nasamuffin@google.com> writes:
-> >> >> >>
-> >> >> >>> Basically, if this effort turns out not to be fruitful as a
-> >> >> >>> whole, I'd like for us to still have left a positive impact on =
-the codebase.
-> >> >> >>> ...
-> >> >> >>> So what's next? Naturally, I'm looking forward to a spirited
-> >> >> >>> discussion about this topic - I'd like to know which concerns
-> >> >> >>> haven't been addressed and figure out whether we can find a way
-> >> >> >>> around them, and generally build awareness of this effort with =
-the
-> >community.
-> >> >> >>
-> >> >> >> On of the gravest concerns is that the devil is in the details.
-> >> >> >>
-> >> >> >> For example, "die() is inconvenient to callers, let's propagate
-> >> >> >> errors up the callchain" is an easy thing to say, but it would
-> >> >> >> take much more than "let's propagate errors up" to libify
-> >> >> >> something like
-> >> >> >> check_connected() to do the same thing without spawning a
-> >> >> >> separate process that is expected to exit with failure.
-> >> >> >
-> >> >> >
-> >> >> > What does "propagate errors up the callchain" mean?  One
-> >> >> > interpretation I can think of seems quite horrible, but another
-> >> >> > seems quite doable and reasonable and likely not even very
-> >> >> > invasive of the existing code:
-> >> >> >
-> >> >> > You can use setjmp/longjmp to implement a form of "try", so that
-> >> >> > errors dont have to be *explicitly* returned *in* the call chain.
-> >> >> > And you could probably do so without changing very much of the
-> >> >> > existing code at all, and maintain a high level of conceptual
-> >> >> > alignment with the current code strategy.
-> >> >>
-> >> >> Using setjmp/longjmp is an interesting suggestion, I think lua does
-> >> >> something similar to what you describe for perl. However I think
-> >> >> both of those use a allocator with garbage collection. I worry that
-> >> >> using longjmp in git would be more invasive (or result in more
-> >> >> memory leaks) as we'd need to to guard each allocation with some
-> >> >> code to clean it up and then propagate the error. That means we're
-> >> >> back to manually propagating errors up the call chain in many cases=
-.
-> >> >
-> >> >We could just use talloc [1].
-> >>
-> >> talloc is not portable.
-> >
-> >What makes you say that?
->
-> talloc is not part of a POSIX standard I could find.
+Hi Junio
 
-It's a library, like: z, ssl, curl, pcre2-8, etc. Libraries can be
-compiled on different platforms.
+On Thu, Mar 23, 2023 at 12:03=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 
---=20
-Felipe Contreras
+> > When the index file is not up-to-date, git diff-files may show differen=
+ces
+> > between the working directory and the index that are caused by file cre=
+ation
+> > time differences, rather than actual changes to the file contents. By u=
+sing git
+> > diff-files --stat, which ignores file creation time differences.
+>
+> Use of "diff-files --stat" would mean that the contents of the blob
+> registered in the index will be inspected, which can be used to hide
+> the "stat dirty" condition.
+>
+> But doesn't it cut both ways?  Starting from a clean index that has
+> up-to-date stat information for paths, we may want to test what
+> "stat dirty" changes diff-files reports when we touch paths in the
+> working tree, both inside and outside the spase cones.  A test with
+> "--stat" will not achieve that, exactly because it does not pay
+> attention to and hides the stat dirtiness.
+
+In this case, we can only use 'git diff-files --stat' when files are
+present on disk without modifications. Since we know in the
+full-checkout case 'diff-files --stat' will give empty output, so
+sparse-checkout and sparse-index are also empty. These make
+sure that the paths in the working tree are not dirty. So we do not
+need to pay attention to 'stat dirty' change.
+
+When 'file present on-disk with modifications'. We use 'git diff-files'
+instead of  'git diff-files --stat' so we can get the expected
+"modified" status but avoids potential breakages related to
+inconsistency in the file creation time.
+
+# file present on-disk without modifications
+# use `--stat` to ignore file creation time differences in
+# unrefreshed index
+test_all_match git diff-files --stat &&
+test_all_match git diff-files --stat folder1/a &&
+test_all_match git diff-files --stat "folder*/a" &&
+
+# file present on-disk with modifications
+run_on_all ../edit-contents folder1/a &&
+test_all_match git diff-files &&
+test_all_match git diff-files folder1/a &&
+test_all_match git diff-files "folder*/a"
+
+> On the other hand, if "update-index --refresh" is used in the test,
+> we may discover breakages caused by "update-index" not handling
+> the sparse index correctly.  It would be outside the topic of this
+> series, so avoiding it would be simpler, but (1) if it is not broken,
+> then as you said, it would be a more direct way to test diff-files,
+> and (2) if it is broken, it would need to be fixed anyway, before or
+> after this series.  So, I dunno...
+
+Thanks
+Shuqi
