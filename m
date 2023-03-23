@@ -2,69 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A0ACC6FD1C
-	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 19:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 001EEC6FD1C
+	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 19:38:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230025AbjCWTfF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Mar 2023 15:35:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35484 "EHLO
+        id S231774AbjCWTi1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Mar 2023 15:38:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229773AbjCWTfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2023 15:35:04 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA4E819694
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 12:35:01 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id o32so7907891wms.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 12:35:01 -0700 (PDT)
+        with ESMTP id S231807AbjCWTiW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2023 15:38:22 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A26F4212B8
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 12:38:14 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id bg16-20020a05600c3c9000b003eb34e21bdfso1937040wmb.0
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 12:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679600100;
+        d=gmail.com; s=20210112; t=1679600292;
         h=content-transfer-encoding:in-reply-to:references:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IHxT0ldiiTQKO6os5tt6GBy1mT6seKKjLqzEe6Co+qM=;
-        b=az0GTRNMk6So+kBCcuxeVxRjwRqR0qaaOJbovpOd3vrz5Rtx60hPVw9KiO9d59VvV/
-         95H2jXpYiEDQOIfYFTSQsIa6Wo9/HmIL0rI/LhRUX66K1luZCn/z9iYDF3m33DPgcIIk
-         TNW0F5FZb/534brzfSRFkw38Z3E9qKrWJSiapdAo2Hbl+QzkxB2AcKz7fHk//8VZhD+V
-         ryT7T5XTbDxctp9w89sjrWImtcX/xwJfTmqTts1yv2e702qZhfozNVGq+b6giq8UqpVw
-         CKQ9+vHfseMVYftLYMXbvbQMa3z5Ftp1U3yHA3r8l/i0D02Q+lsGQT4Agh3y/G5Ohp4a
-         q5Sg==
+        bh=Y4fUntdDfdu43BwrX55PNxy89TipgdW+N9xiJtJvMeY=;
+        b=gpu/mre8RHgB4/xt/U8awwwY1utrj7pBmAFBpOTJcf5Slrxc163Q105tNu+PeGMHCQ
+         hcOm0KppZ/dEQckEDQyUuOtT2lyDbs9bSKPmj6UgM+K2gHYBH92xaj+n/mGzzY/u809R
+         Rs/tl78HYGOGyW7TlF0AAT/oOBrSHJN2CYixCAX5JkPGKSq9dwxRQzyYgEDDI9OISW+i
+         tgS1K9L14xRGPRYgsUERbj5GMqvaY8JDa37/SZSXsjNu9L963/MNhEe83ajx92hAW+lI
+         Dy2DOf7OBN2TIbfQt4V2hCv6T1oIiQxTZVs0tXTV5XKTJRReQ3O3I1dgi/n9IvY7Pdqz
+         iu1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679600100;
+        d=1e100.net; s=20210112; t=1679600292;
         h=content-transfer-encoding:in-reply-to:references:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IHxT0ldiiTQKO6os5tt6GBy1mT6seKKjLqzEe6Co+qM=;
-        b=SzbEtdv3IJQ8O7pe693098amneA22eentgvBsaJDP5sz0Li5lp/OlpmEclcBo8B9pC
-         z2GBOKnoB1iKT8kcws3HdFnv53gmVIx//cYn928S116wye1J2I7nyX2SfJlDHxUxzWiX
-         rcabu1LkeyJirX7/MuQEjH7vuZ+RIZjUZ6LbAN+Ap3llucI2svjWGZlTgR8xjgZp33Zo
-         EIP9mN1djo4Q6iKXAjl+NKHRuIiKyIJ9MLUx2iib6KBnBGmKqZe/AabvqcIXeLTjaVPA
-         gQQ3SJJ8z+cAeBOZR+K+nTGwp3i9MdEAxZioRWm8I/7fVSCjBfLMGa0I0cP+2FARRky6
-         M8Og==
-X-Gm-Message-State: AO0yUKXfC9IPCMsNKeaFu0eE+FXUnF5jtpVzX/lrXXhNfdsfjBaYSpQW
-        07td2hVbs/MJ9GLm1gVL/Uk=
-X-Google-Smtp-Source: AK7set93cjwlB7Eki08A6KiMHyhCdTlfdRmLlt95QMFwjE2pTjg/an69sYoCyt+Uu5vQgM489VaGiw==
-X-Received: by 2002:a1c:791a:0:b0:3ed:e2e6:8ddb with SMTP id l26-20020a1c791a000000b003ede2e68ddbmr499738wme.35.1679600100330;
-        Thu, 23 Mar 2023 12:35:00 -0700 (PDT)
+        bh=Y4fUntdDfdu43BwrX55PNxy89TipgdW+N9xiJtJvMeY=;
+        b=zmPV2iMUY0KzrhAzwcx3UK+bViikAdDfH1fdtev5xvXTqwFZnXiwusCV8l3PV2K4Sf
+         pt4OadHi/y9w1WXiVs+vIgmn9xLyjdtK/zomFpG+P6B5oilEhiu6Vzw/2+LqHBvyWDvt
+         nYIlwBnQf1s17gWBdSPqd2d7n8lt/be3rwmybLF2YCZXtkLEXUKWVxYMw5kEt67qoeEm
+         l6lu4zzQjx2MYbuj4qjA6ZM7d+Ini8/zo41KmReMTOHRF8G6Rm4TIyoSBHnRTd1WWFFN
+         +gVaqZmJ50GE8mCuN3YVHaRce6KXU52JcNS6dqHD2jpuFnUn6sHRlZgolrV4mwFfPvM1
+         AJpA==
+X-Gm-Message-State: AO0yUKV+ULvLuX7yCFSfcm4/J3JiAvE6q2O5xfJzDJA3kmeBcCk6VKfj
+        3fgdaXOj9ChR77OQzMdbq1Eu6G50JLQ=
+X-Google-Smtp-Source: AK7set+SLXPADXvG2191XOnpbX06KrR2gHi2vcMDL0+Aoi5ub+0W7zbOVC2S+5ieSVo3XtLEIIDeQQ==
+X-Received: by 2002:a1c:6a13:0:b0:3ed:ec34:f1 with SMTP id f19-20020a1c6a13000000b003edec3400f1mr509106wmc.35.1679600292518;
+        Thu, 23 Mar 2023 12:38:12 -0700 (PDT)
 Received: from [192.168.1.212] ([90.253.29.198])
-        by smtp.gmail.com with ESMTPSA id c18-20020a7bc852000000b003ed2c0a0f37sm2733224wml.35.2023.03.23.12.34.59
+        by smtp.gmail.com with ESMTPSA id m5-20020a7bce05000000b003edff838723sm2796311wmc.3.2023.03.23.12.38.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 12:35:00 -0700 (PDT)
+        Thu, 23 Mar 2023 12:38:12 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <a3833d93-5db0-454e-526e-04681e5e5276@dunelm.org.uk>
-Date:   Thu, 23 Mar 2023 19:34:57 +0000
+Message-ID: <b54f00c1-e8e3-67d7-0288-805ae18d7335@dunelm.org.uk>
+Date:   Thu, 23 Mar 2023 19:38:09 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 7/8] sequencer: pass `onto` to complete_action() as
- object-id
+Subject: Re: [PATCH 0/8] sequencer refactoring
 Content-Language: en-US
 To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
 References: <20230323162235.995574-1-oswald.buddenhagen@gmx.de>
- <20230323162235.995574-8-oswald.buddenhagen@gmx.de>
-In-Reply-To: <20230323162235.995574-8-oswald.buddenhagen@gmx.de>
+In-Reply-To: <20230323162235.995574-1-oswald.buddenhagen@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -73,71 +71,37 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Oswald
 
-On 23/03/2023 16:22, Oswald Buddenhagen wrote:
-> ... instead of as a commit, which makes the purpose clearer and will
-> simplify things later.
-
-given that we want onto to be a commit I'm not sure how this makes 
-anything clearer.
-
-> As a side effect, this change revealed that skip_unnecessary_picks() was
-> butchering the commit object due to missing const-correctness. Slightly
-> adjust its API to rectify this.
-
-I don't think this is correct. If you look at the original code it makes 
-a copy of the oid and uses the copy when calling skip_unnecessary_picks()
-
->   int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
->   		    const char *shortrevisions, const char *onto_name,
-> -		    struct commit *onto, const struct object_id *orig_head,
-> +		    const struct object_id *onto, const struct object_id *orig_head,
->   		    struct string_list *commands, unsigned autosquash,
->   		    unsigned update_refs, struct todo_list *todo_list,
->   		    enum rebase_action action)
->   {
->   	char shortonto[GIT_MAX_HEXSZ + 1];
->   	const char *todo_file = rebase_path_todo();
->   	struct todo_list new_todo = TODO_LIST_INIT;
->   	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
-> -	struct object_id oid = onto->object.oid;
-
-Here we copy the onto's oid
-
-> @@ -6158,7 +6157,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
->   		BUG("invalid todo list after expanding IDs:\n%s",
->   		    new_todo.buf.buf);
->   
-> -	if (opts->allow_ff && skip_unnecessary_picks(r, &new_todo, &oid)) {
-
-Here we pass the copy to skip_unnecessary_picks()
+Thanks for working on this. I've only had time for a quick read of the 
+first 7 patches but there are some worthwhile clean ups here and the 
+series is well structured. I'll try and have a thorough look at the last 
+patch but I'm going to be off line next week so it may take a while.
 
 Best Wishes
 
 Phillip
 
-> +	if (opts->allow_ff && skip_unnecessary_picks(r, &new_todo, &onto)) {
->   		todo_list_release(&new_todo);
->   		return error(_("could not skip unnecessary pick commands"));
->   	}
-> @@ -6171,7 +6170,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
->   
->   	res = -1;
->   
-> -	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
-> +	if (checkout_onto(r, opts, onto_name, onto, orig_head))
->   		goto cleanup;
->   
->   	if (require_clean_work_tree(r, "rebase", NULL, 1, 1))
-> diff --git a/sequencer.h b/sequencer.h
-> index a1b8ca6eb1..24bf71d5db 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -188,7 +188,7 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
->   
->   int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
->   		    const char *shortrevisions, const char *onto_name,
-> -		    struct commit *onto, const struct object_id *orig_head,
-> +		    const struct object_id *onto, const struct object_id *orig_head,
->   		    struct string_list *commands, unsigned autosquash,
->   		    unsigned update_refs, struct todo_list *todo_list,
->   		    enum rebase_action action);
+On 23/03/2023 16:22, Oswald Buddenhagen wrote:
+> This is a preparatory series for the separately posted 'rebase --rewind' patch,
+> but I think it has value in itself.
+> 
+> 
+> Oswald Buddenhagen (8):
+>    rebase: simplify code related to imply_merge()
+>    rebase: move parse_opt_keep_empty() down
+>    sequencer: pass around rebase action explicitly
+>    sequencer: create enum for edit_todo_list() return value
+>    rebase: preserve interactive todo file on checkout failure
+>    sequencer: simplify allocation of result array in
+>      todo_list_rearrange_squash()
+>    sequencer: pass `onto` to complete_action() as object-id
+>    rebase: improve resumption from incorrect initial todo list
+> 
+>   builtin/rebase.c              |  63 +++++++--------
+>   builtin/revert.c              |   3 +-
+>   rebase-interactive.c          |  36 ++++-----
+>   rebase-interactive.h          |  27 ++++++-
+>   sequencer.c                   | 139 +++++++++++++++++++---------------
+>   sequencer.h                   |  15 ++--
+>   t/t3404-rebase-interactive.sh |  34 ++++++++-
+>   7 files changed, 196 insertions(+), 121 deletions(-)
+> 
