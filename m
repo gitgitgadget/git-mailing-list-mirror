@@ -2,65 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACFEAC74A5B
-	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 20:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0451C74A5B
+	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 20:16:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231533AbjCWUA5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Mar 2023 16:00:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39596 "EHLO
+        id S231218AbjCWUQz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Mar 2023 16:16:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230321AbjCWUA4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2023 16:00:56 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E29328D1F
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 13:00:55 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id o2so15920024plg.4
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 13:00:55 -0700 (PDT)
+        with ESMTP id S229600AbjCWUQx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2023 16:16:53 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8320D25E0D
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 13:16:48 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id d13so22522687pjh.0
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 13:16:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679601654;
+        d=gmail.com; s=20210112; t=1679602608;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fAa/qCJ0Z2C5bNmxgwISjfLV1s9GfHbyve901TmBzFI=;
-        b=f7YV6NdyTyhosz7BzE/xxcgOu8V7yQzP9GGBKEkhsQzfGsyFOInwqfNZkqNprPdk9H
-         enxAakaUSx92nkZPbRrRhtbl1ZIhpDNmJ9t9r1fiKPDNuACPup3XGMUbSJjG/NM5bLt7
-         yTycVi9H5UxbyBkZPyl4my0r+8yvWwaQFXX4nWaj5AlYjxAxeWA7bH0u3ItrnKCngFZf
-         UPJk89zrQioNcTI0PGpCVE8FBrxfyXY2TO9GJaV+L/FhmXMcyMMCy2XoBGtK0hHt3MVb
-         UCfnyBctgyTt0m0EYIadyoSXkPkgoQMWrWuK/F6LKkz2hgIcgZQq+lnv5ptDgUjFufDT
-         Z35g==
+        bh=b4E0tjNNqKJnuuSMZLvdcAkclCnIa472H2ONEhtVooo=;
+        b=JBcSSL8DQcKYpO0B2q6xf+OWTkKK7rp+hp1qGtQLDFT28RS96JqiL93IAKTF2g5H/e
+         ZR5zZ5Zs/qdF2A6bGHmKBYfrqrt3t4vKU6mmohvFMQNaZ5jKzVEjJVIyhEbMl6xiX8Oj
+         uDZq+4OTDptdqlc9tgz/dy8bzOkGwV2wlthAsrj0/jdZuhY7hWa1ey9CHqJq2mmKtW82
+         9bl3aE7GaT8qodzPKtj9aVigmtbjJtdu3K7XxgFfOERlHd+R2Xl9Sg2eqKUzkXThcb5/
+         5dHsEze5n8YLmsaocdFprBZOE0QR4EYFPzg/8J1ezsPjir558G1hInmC5LEzVtC6+MUn
+         ooNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679601654;
+        d=1e100.net; s=20210112; t=1679602608;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=fAa/qCJ0Z2C5bNmxgwISjfLV1s9GfHbyve901TmBzFI=;
-        b=jXgN6CU/8WdYpTBVzJa5oAL8fegaetb8pttTXwIJpgNJX5PWP6WVoCeigHkfJNBlfW
-         S5itacCsmsnXSiWouYWKeuduhLS99O6+XpIcW6ASBYoa9RL57hKSxyst7HrRwXDeeRTA
-         JX70LFsrg4DwJsP10bYfn0/C+arkOxXucM8gM1OkLTZUO67kt5NNPUht2uaxR5wbJ9zR
-         oX4dhXlTS0a2tEcinIkRRXz4Ta5UFYkTYmpelxsGjRZaxJI6kwKO+k1JO3WXZJiNhOqi
-         VOik2XvT/5FIpD9k4Na44Gg94OebXwZpx+NcAc2/17XWNK2xEnYd6o10PWZXPaoJ9SCY
-         iImg==
-X-Gm-Message-State: AAQBX9cs4+ofRyDgGJdQNP4IxQAwjEWYZW4hknUN7YxccqvFpblIo9FT
-        7m0TE9K1op5G+dl6dJkTg54=
-X-Google-Smtp-Source: AKy350ZuMqCCvF0GMpesYCS/P3sdwjdWvuYjSdl8FraqVqZw1PilWGf4kk5DOTF6ieZCxC4lWJa28g==
-X-Received: by 2002:a17:90b:3502:b0:237:8417:d9e3 with SMTP id ls2-20020a17090b350200b002378417d9e3mr199785pjb.15.1679601654407;
-        Thu, 23 Mar 2023 13:00:54 -0700 (PDT)
+        bh=b4E0tjNNqKJnuuSMZLvdcAkclCnIa472H2ONEhtVooo=;
+        b=zvEIL0jzKZ+MD9ofeOvt9UQ83JP8yeszF4v5qxV9eqyA3RitsdLDBCm5AxY6goyCWM
+         v+bbhGj2Ha/qQ+gWTtUezqfZshoSKci/KxpgyVcS0zF+EHpGH3CohD+uvPOG9aYCVGqD
+         KA55dt0LoQPwaOQyuvXvw0Dj4X/u9yhWtJXwFcfbufJQ9yt6yynTRXLH7Jsvgg1akPWf
+         UrpCEsywZ7uU1qgy7l65E2ku8AdoTt7IyG94AgQzwI5Vv7mx9Dki39aI6VVy1vKxW1Gd
+         DQIhFQrrt2xv4O4qRRBAsoPM+z7e2beQQA0z9Oxfb1eR8nDOr3mlWAJ23HB1TrTz2pI7
+         KypQ==
+X-Gm-Message-State: AAQBX9eRV7DIu4S1br08f4Yy/Kq6vElxu6lQC45GmLgZdIvWdoSBixP6
+        Az0K9C5pCHphT3m+raVvEM0=
+X-Google-Smtp-Source: AKy350bXs9jRzTMj2WrcPHuiiGQGHFXXXqCfGL8mpmCdWxrIpNcxeUZtUZguI4WnOtWLI5VRrW3wug==
+X-Received: by 2002:a17:90b:4a02:b0:234:ba34:71bf with SMTP id kk2-20020a17090b4a0200b00234ba3471bfmr299276pjb.1.1679602607917;
+        Thu, 23 Mar 2023 13:16:47 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id p7-20020a1709028a8700b001a1860da968sm12652640plo.178.2023.03.23.13.00.54
+        by smtp.gmail.com with ESMTPSA id h6-20020a170902eec600b0019cb131b89csm11847203plb.254.2023.03.23.13.16.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Mar 2023 13:00:54 -0700 (PDT)
+        Thu, 23 Mar 2023 13:16:47 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
-Subject: Re: [PATCH 1/8] rebase: simplify code related to imply_merge()
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/8] rebase: preserve interactive todo file on checkout
+ failure
 References: <20230323162235.995574-1-oswald.buddenhagen@gmx.de>
-        <20230323162235.995574-2-oswald.buddenhagen@gmx.de>
-        <2b296b75-3f8d-28a9-a3d8-8134450852da@dunelm.org.uk>
-Date:   Thu, 23 Mar 2023 13:00:53 -0700
-In-Reply-To: <2b296b75-3f8d-28a9-a3d8-8134450852da@dunelm.org.uk> (Phillip
-        Wood's message of "Thu, 23 Mar 2023 19:40:17 +0000")
-Message-ID: <xmqqiler8cga.fsf@gitster.g>
+        <20230323162235.995574-6-oswald.buddenhagen@gmx.de>
+Date:   Thu, 23 Mar 2023 13:16:47 -0700
+In-Reply-To: <20230323162235.995574-6-oswald.buddenhagen@gmx.de> (Oswald
+        Buddenhagen's message of "Thu, 23 Mar 2023 17:22:32 +0100")
+Message-ID: <xmqq8rfn8bps.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,33 +68,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-> On 23/03/2023 16:22, Oswald Buddenhagen wrote:
->> The code's evolution left in some bits surrounding enum rebase_type that
->> don't really make sense any more. In particular, it makes no sense to
->> invoke imply_merge() if the type is already known not to be
->> REBASE_APPLY, and it makes no sense to assign the type after calling
->> imply_merge().
->
-> These look sensible, did imply_merges() use to do something more which
-> made these calls useful?
+> Creating a suitable todo file is a potentially labor-intensive process,
+> so be less cavalier about discarding it when something goes wrong (e.g.,
+> the user messed with the repo while editing the todo).
 
-Good question.
+Is there a reason why we do not always keep it?  Why is the file
+sometimes precious but not precious at all in other times?
 
->>   @@ -1494,9 +1493,6 @@ int cmd_rebase(int argc, const char **argv,
->> const char *prefix)
->>   		}
->>   	}
->>   -	if (options.type == REBASE_MERGE)
->> -		imply_merge(&options, "--merge");
+Tying the previous bit to "-i was explicitly given" feels a bit
+unintuitive---when the sequencer machinery was implicitly chosen,
+and gives the control back to the user, should a user be forbidden
+to muck with the todo list?
 
-This piece is reasonable, of course.  We already know we are in
-merge mode so there is nothing implied.
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index a309addd50..728c869db4 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -153,6 +153,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>  	replay.keep_redundant_commits = (opts->empty == EMPTY_KEEP);
+>  	replay.quiet = !(opts->flags & REBASE_NO_QUIET);
+>  	replay.verbose = opts->flags & REBASE_VERBOSE;
+> +	replay.precious_todo = opts->flags & REBASE_INTERACTIVE_EXPLICIT;
+>  	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
+>  	replay.committer_date_is_author_date =
+>  					opts->committer_date_is_author_date;
+> diff --git a/sequencer.c b/sequencer.c
+> index b1c29c8802..f8a7f4e721 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4570,6 +4570,10 @@ static int checkout_onto(struct repository *r, struct replay_opts *opts,
+>  		.default_reflog_action = sequencer_reflog_action(opts)
+>  	};
+>  	if (reset_head(r, &ropts)) {
+> +		// Editing the todo may have been costly; don't just discard it.
+> +		if (opts->precious_todo)
+> +			exit(1);  // Error was already printed
 
-Before this hunk, there is a bit of code to react to
-options.strategy given.  The code complains if we are using the
-apply backend, and sets the options.type to REBASE_MERGE, which is
-suspiciously similar to what imply_merge() is doing.  I wonder if
-the code should be simplified to make a call to imply_merge() while
-we are doing similar simplification like this patch does?
+No // comments, please.
+
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index ff0afad63e..c625aad10a 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -288,13 +288,14 @@ test_expect_success 'abort' '
+>  '
+>  
+>  test_expect_success 'abort with error when new base cannot be checked out' '
+> +	test_when_finished "git rebase --abort ||:" &&
+>  	git rm --cached file1 &&
+>  	git commit -m "remove file in base" &&
+>  	test_must_fail git rebase -i primary > output 2>&1 &&
+>  	test_i18ngrep "The following untracked working tree files would be overwritten by checkout:" \
+>  		output &&
+>  	test_i18ngrep "file1" output &&
+> -	test_path_is_missing .git/rebase-merge &&
+> +	test_path_is_dir .git/rebase-merge &&
+>  	rm file1 &&
+>  	git reset --hard HEAD^
+>  '
+
+Are we happy to just see that the directory still exists?  I thought
+the original motivation explained in the proposed log message was to
+keep the todo list file, so shouldn't you be checking if the file is
+there (and if you can reliably ensure that the file has contents
+that are expected, that would be even better)?
+
+Also, as the keeping of the todo list is now conditional, we should
+have another test that checks that the file is gone when that
+condition ("INTERACTIVE_EXPLICIT"?) does not trigger, I think.
+
+Other than that, nicely written.  Thanks.
