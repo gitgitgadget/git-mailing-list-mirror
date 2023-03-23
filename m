@@ -2,179 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B484CC74A5B
-	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 17:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB003C74A5B
+	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 17:26:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231343AbjCWR0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Mar 2023 13:26:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35654 "EHLO
+        id S230410AbjCWR0d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Mar 2023 13:26:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230132AbjCWR0O (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2023 13:26:14 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0031E36095
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 10:25:42 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id a16so17761609pjs.4
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 10:25:42 -0700 (PDT)
+        with ESMTP id S231514AbjCWR0b (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2023 13:26:31 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E61AA26C33
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 10:26:06 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id y4so90095792edo.2
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 10:26:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1679592342;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7BIVPlaL4j83CTfjSGoR0TZWMX8l2Iu54h9oGKHDJxs=;
-        b=V4OO3MvEFnOpRlu/TFfIkTZlBIQASBTG0FxcxSAPJDp5tS2FF7fyAzdNHIEm0c/rGy
-         CgQcLE2hEV+CLDmVKuexyZQ1dYpkP1AamBACihV+/hJvX7zbPwO+lMbWLksQiHhUqnEo
-         /RXHoTN5uEmahjbYqfBVJQv9J5OCGmILb7lQqrWk/dsig3bWOglG0tYboHSx6p+6G8HI
-         /bWRrTYy6oUFSaHXRZFA1x5WTbRzjkb+z4WYlguwQDupMhP+QTY5Zmv2y793ha25AfEb
-         Z4xZ9G/b9Vt6caA2sA9A9ktYknyNEthRBpGD9ua2G0mwNIRhzvQ1JGsVUowzZgCEvTH7
-         QN3g==
+        d=grsecurity.net; s=grsec; t=1679592365;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EMAFIzFsBhK6Et9opctAfAiAe2Fq0uojm77c1NQsO0U=;
+        b=oxQYLMOWoKNQn40n+WB1bBirgzggEUUXHXMOaeQP8PSLi/ANW/Zq56R5fKVd5ikadx
+         qF4K1rl6wxxYTCKucL9X0fvYIVWIEGxI29CEJHd5gh9jGjmwpugXgbAuJl0POPWV0DPQ
+         LdcUYb2RQVGEUmO4mDHnP/jwT59DY6nKy6S5CsKR7cOfTnGxjjEEXKEfzS4ahJwI0l2p
+         cxEm9XYS7+rmnj2avBciygGaYiPHNXkyE6JuIy3RobLgbTJjCC37x7TJgUcBavhTXaXW
+         YtowcIZQWOTVlk+zGGCxNF69ZTJPk8i5cXyrxNqvJLkmSbPuWcOL1mcpkJFF6c2JKGMS
+         0UUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679592342;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7BIVPlaL4j83CTfjSGoR0TZWMX8l2Iu54h9oGKHDJxs=;
-        b=RYnEKzXDqhh6RhoPXKeTnuf4f/H30GACmaOMiO/+J3AcIowBmot27bDTfRSl4RfqJ1
-         SYiQMYW7TSvrVPNsudQFQHldrgJRPprO4WtJmmWMksnLh/DEvRR1yFqiL0aytYgRQTUm
-         toMVOBTK5W58fg4eIcsdAnUoxS9UmZkeYWbRlTvLh5HKjTxkP/jHDFy0B9CKUkr029eN
-         zxugWZpi6d5YSCBILFkl5FpeXmYbLi5U7mUDLJ8GyZ+1Fzb6tsTIvTsIbfzX3VVD2fUK
-         EFiI10LzlG9xLKPysS0P7x8yNYG1Pu2Phtxd2LpjAGD+h47+wm5VhjIuzweo7to5crmO
-         ht4g==
-X-Gm-Message-State: AO0yUKV3ekp/H+4wH+ROrd9YnfZ6KEtGmRBmmoyvO/w50RKxVaTqn7rY
-        S5BAQl3kiRSGvSir+zacH1TG
-X-Google-Smtp-Source: AK7set8mAurHDUhvDBn7h/R2Fj9nJ/V2+bQwv3llPLEiGnMWtjOez0m9/TZM7JqCoW3bc5E1CnO9fw==
-X-Received: by 2002:a17:902:f691:b0:1a1:be45:9857 with SMTP id l17-20020a170902f69100b001a1be459857mr9226184plg.1.1679592342134;
-        Thu, 23 Mar 2023 10:25:42 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id j3-20020a170902c3c300b001a072be70desm12607546plj.41.2023.03.23.10.25.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 10:25:41 -0700 (PDT)
-Message-ID: <29eb319d-baf0-22d5-12b4-3e8ee7323050@github.com>
-Date:   Thu, 23 Mar 2023 10:25:40 -0700
+        d=1e100.net; s=20210112; t=1679592365;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EMAFIzFsBhK6Et9opctAfAiAe2Fq0uojm77c1NQsO0U=;
+        b=KouSZcT5/OXTSlZuNnNwhbxcOMusm0AfPr557K9zgek4aFaxXHOM+Khx/euHM7cq1S
+         fSNqfWAalMLauOtt+U3YC6hFS1Ttd5OTqjR4NBv3iRvfScmyLxo29kdLtpFYJ2E5fms/
+         32au0aEdUwkFhDVkmwoECE+8l9/QvQM+gMDQsxmJoahJ64JMq5HQqHZ2rGp4MULRHe+k
+         G6GrLJbiKUITGXpA7yaPlD1VULYBq+PRf3OZ3w6ztlr0c9HgbbseTl9JPrQekst4KbrO
+         VwHiG3h5zQC0PAkrQe/dI/R6xRQUaDq3nP2u+1mKaQTUu+XrTr96iGh7Tgy9SlGDfUGP
+         1jZw==
+X-Gm-Message-State: AO0yUKXZVaKJdfX0G1FsvZPwTnkNDKg+ABPqhhFj/LLgLX3nKBzWr1nE
+        4TfYnm5b6o0cwiKr86j8RiCkBphb8yphn1d8tBU=
+X-Google-Smtp-Source: AK7set/NOmv+xNhXIj1z4dSDXViEf2lFDrYISS230HnqnMwIXHB6jrgvfdHP6YE+/WYRBlcnYVtEsQ==
+X-Received: by 2002:a17:907:2090:b0:921:7e42:2777 with SMTP id pv16-20020a170907209000b009217e422777mr14113701ejb.69.1679592365273;
+        Thu, 23 Mar 2023 10:26:05 -0700 (PDT)
+Received: from x1.fritz.box (p200300f6af156c006b24c65af1cba60f.dip0.t-ipconnect.de. [2003:f6:af15:6c00:6b24:c65a:f1cb:a60f])
+        by smtp.gmail.com with ESMTPSA id d7-20020a1709067f0700b00882f9130eafsm8867400ejr.26.2023.03.23.10.26.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Mar 2023 10:26:04 -0700 (PDT)
+From:   Mathias Krause <minipli@grsecurity.net>
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc:     Mathias Krause <minipli@grsecurity.net>,
+        Stephane Odul <stephane@clumio.com>,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2] grep: work around UTF-8 related JIT bug in PCRE2 <= 10.34
+Date:   Thu, 23 Mar 2023 18:25:39 +0100
+Message-Id: <20230323172539.25230-1-minipli@grsecurity.net>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230323144000.21146-1-minipli@grsecurity.net>
+References: <20230323144000.21146-1-minipli@grsecurity.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.2
-Subject: Re: [PATCH v7 0/2] diff-files: integrate with sparse index
-Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Derrick Stolee <derrickstolee@github.com>
-References: <20230320205241.105476-1-cheskaqiqi@gmail.com>
- <20230322161820.3609-1-cheskaqiqi@gmail.com> <xmqqilesbbph.fsf@gitster.g>
- <CAMO4yUFshQ_bP3gXeZhfHQ3OevC+_3qKwa-iy2nNGScvRouu6Q@mail.gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <CAMO4yUFshQ_bP3gXeZhfHQ3OevC+_3qKwa-iy2nNGScvRouu6Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
-> On Wed, Mar 22, 2023 at 7:36 PM Junio C Hamano <gitster@pobox.com> wrote:
-> 
->>> 3. Use `--stat` to ignore file creation time differences in unrefreshed
->>> index.
->>
->> I am curious about this one.  Why is this a preferred solution over
->> say "run 'update-index --refresh' before running diff-files"?
->>
->> Note that this is merely "I am curious", not "I think it is wrong".
-> 
-> Hi Junio
-> 
-> Thank you for your question, it has prompted me to consider the matter
-> further =)  I think both solutions, using git diff-files --stat and using git
-> update-index --refresh before git diff-files, can produce the same output but
-> in different ways.
+Stephane is reporting[1] a regression introduced in git v2.40.0 that leads
+to 'git grep' segfaulting in his CI pipeline. It turns out, he's using an
+older version of libpcre2 that triggers a wild pointer dereference in
+the generated JIT code that was fixed in PCRE2 10.35.
 
-While they'll (ideally) give the same user-facing result, there is a
-difference in how they exercise 'diff-files' because of how 'update-index
---refresh' will affect SKIP_WORKTREE and sparse directories.
+Instead of completely disabling the JIT compiler for the buggy version,
+just mask out the Unicode property handling as we used to do prior to
+commit acabd2048ee0 ("grep: correctly identify utf-8 characters with
+\{b,w} in -P").
 
-Using the same scenario you've set up for your test, suppose I start with a
-fresh copy of the 't1092' repo. In the 'sparse-index' repo copy, 'folder1/'
-will be a sparse directory:
+[1] https://lore.kernel.org/git/7E83DAA1-F9A9-4151-8D07-D80EA6D59EEA@clumio.com/
 
-$ git ls-files -t --sparse folder1/
-S folder1/
+Reported-by: Stephane Odul <stephane@clumio.com>
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+---
+v2:
+- make PCRE2_UCP masking depend only on the PCRE2 version, as
+  suggested by Junio
 
-(note: "S" indicates that SKIP_WORKTREE is applied to the entry)
+ grep.c | 9 +++++++++
+ grep.h | 3 +++
+ 2 files changed, 12 insertions(+)
 
-Now suppose I copy 'a' into 'folder1/' and run 'update-index --refresh'
-then 'ls-files' again:
-
-$ git update-index --refresh
-$ git ls-files -t --sparse folder1/
-S folder1/0/
-H folder1/a
-
-(note: "H" indicates that 'folder1/a' does not have SKIP_WORKTREE applied)
-
-The sparse directory has been expanded and SKIP_WORKTREE has been removed
-from the file that's now present on-disk. This was an intentional "safety"
-measure added in [1] to address the growing volume of bugs and complexities
-in scenarios where SKIP_WORKTREE files existed on disk.
-
-Ultimately, the main difference between this test with & without
-'update-index' is who applies those index corrections when initially reading
-the index: 'update-index' or 'diff-files'. I lean towards the latter because
-the former is tested (almost identically) in 'update-index modify outside
-sparse definition' earlier in 't1092'.
-
-[1] https://lore.kernel.org/git/pull.1114.v2.git.1642175983.gitgitgadget@gmail.com/
-
-> 
-> When the index file is not up-to-date, git diff-files may show differences
-> between the working directory and the index that are caused by file creation
-> time differences, rather than actual changes to the file contents. By using git
-> diff-files --stat, which ignores file creation time differences.
-
-More or less, yes. Internally, 'diff-files' will "see" the file creation
-differences, but the '--stat' format doesn't print them.
-
-> 
-> While 'git update-index --refresh' updates the index file to match the contents
-> of the working tree. By running this command before git diff-files, we can
-> ensure that the index file is up-to-date and that the output of git diff-files
-> accurately reflects the differences between the working directory and the index.
-
-This isn't quite true - 'update-index' only updates the *contents* of index
-entries (or, colloquially, "stage them for commit") for files explicitly
-provided as arguments. Separately, though, '--refresh' updates *all* index
-entries' cached 'stat' information. 
-
-Going a bit deeper: with no arguments, 'update-index' will read the index,
-do nothing to it, then write it only if something has changed. In almost all
-cases, reading the index doesn't cause any changes to it, making it a no-op.
-However, the removal of SKIP_WORKTREE is done on read (including a refresh
-of the entry's stat information), so a even plain 'update-index' *without*
-'--refresh' would write a modified index to disk. In your test, that means:
-
-	run_on_sparse mkdir -p folder1 &&
-	run_on_sparse cp a folder1/a &&
-	run_on_all git update-index &&
-	test_all_match git diff-files
-
-would get you the same result as:
-
-	run_on_sparse mkdir -p folder1 &&
-	run_on_sparse cp a folder1/a &&
-	run_on_all git update-index --refresh &&
-	test_all_match git diff-files
-
-> 
-> Maybe using git update-index --refresh would be more direct and
-> straightforward solution.
-> 
-> (Hi Victoria, do you have any comments?  =)
-
-I hope the above explanation is helpful. I still think '--stat' is the best
-way to test this case, but I'm interested to hear your/others' thoughts on
-the matter given the additional context.
-
-> 
-> 
-> Thanks
-> Shuqi
+diff --git a/grep.c b/grep.c
+index cee44a78d044..dcfa7a27bf88 100644
+--- a/grep.c
++++ b/grep.c
+@@ -320,6 +320,15 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 	if (!opt->ignore_locale && is_utf8_locale() && !literal)
+ 		options |= (PCRE2_UTF | PCRE2_UCP | PCRE2_MATCH_INVALID_UTF);
+ 
++#ifndef GIT_PCRE2_VERSION_10_35_OR_HIGHER
++	/*
++	 * Work around a JIT bug related to invalid Unicode character handling
++	 * fixed in 10.35:
++	 * https://github.com/PCRE2Project/pcre2/commit/c21bd977547d
++	 */
++	options &= ~PCRE2_UCP;
++#endif
++
+ #ifndef GIT_PCRE2_VERSION_10_36_OR_HIGHER
+ 	/* Work around https://bugs.exim.org/show_bug.cgi?id=2642 fixed in 10.36 */
+ 	if (PCRE2_MATCH_INVALID_UTF && options & (PCRE2_UTF | PCRE2_CASELESS))
+diff --git a/grep.h b/grep.h
+index 6075f997e68f..c59592e3bdba 100644
+--- a/grep.h
++++ b/grep.h
+@@ -7,6 +7,9 @@
+ #if (PCRE2_MAJOR >= 10 && PCRE2_MINOR >= 36) || PCRE2_MAJOR >= 11
+ #define GIT_PCRE2_VERSION_10_36_OR_HIGHER
+ #endif
++#if (PCRE2_MAJOR >= 10 && PCRE2_MINOR >= 35) || PCRE2_MAJOR >= 11
++#define GIT_PCRE2_VERSION_10_35_OR_HIGHER
++#endif
+ #if (PCRE2_MAJOR >= 10 && PCRE2_MINOR >= 34) || PCRE2_MAJOR >= 11
+ #define GIT_PCRE2_VERSION_10_34_OR_HIGHER
+ #endif
+-- 
+2.39.2
 
