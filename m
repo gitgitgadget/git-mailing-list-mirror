@@ -2,138 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88E70C74A5B
-	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 19:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACFEAC74A5B
+	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 20:00:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231301AbjCWTqt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Mar 2023 15:46:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52558 "EHLO
+        id S231533AbjCWUA5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Mar 2023 16:00:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbjCWTqp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2023 15:46:45 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90D614C0D
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 12:46:33 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id u11-20020a05600c19cb00b003edcc414997so1796683wmq.3
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 12:46:33 -0700 (PDT)
+        with ESMTP id S230321AbjCWUA4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2023 16:00:56 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E29328D1F
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 13:00:55 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id o2so15920024plg.4
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 13:00:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679600792;
-        h=content-transfer-encoding:in-reply-to:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oajf+kR6jEMpzg1ZTu7IWlOQ1kADcN1jle0NB1m8PUg=;
-        b=NYsjHTpsWQawnRJoj7apkYOmdu0ICZYqddarPSGeRNi/T5/vXJKnkNwPnFzzn+HU0e
-         nO/i/ZNMSB8GXuVkbc2IAzUCUfBfBQRjBHxj6HNy1nk75R43m0vl6PLrfWKODdJUtM7A
-         OTzKtPsm2N9lpVACvnhMSzWlwfkamS12yIjEmi7dX4jaKitglXhpHTUr5ZctotE6ZVJW
-         ofY7jcMKrNQkEWttruARiSqHINhws3QnSBxHeyYbTjSF47OhX+3qpM6AaPscAwRoJPP7
-         FBKocGhmfxEDuFsVXYKR6XduJez13s77QyTBqru+akVtayJuMetPyaSy66fyZ6LwXi3S
-         yZEA==
+        d=gmail.com; s=20210112; t=1679601654;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fAa/qCJ0Z2C5bNmxgwISjfLV1s9GfHbyve901TmBzFI=;
+        b=f7YV6NdyTyhosz7BzE/xxcgOu8V7yQzP9GGBKEkhsQzfGsyFOInwqfNZkqNprPdk9H
+         enxAakaUSx92nkZPbRrRhtbl1ZIhpDNmJ9t9r1fiKPDNuACPup3XGMUbSJjG/NM5bLt7
+         yTycVi9H5UxbyBkZPyl4my0r+8yvWwaQFXX4nWaj5AlYjxAxeWA7bH0u3ItrnKCngFZf
+         UPJk89zrQioNcTI0PGpCVE8FBrxfyXY2TO9GJaV+L/FhmXMcyMMCy2XoBGtK0hHt3MVb
+         UCfnyBctgyTt0m0EYIadyoSXkPkgoQMWrWuK/F6LKkz2hgIcgZQq+lnv5ptDgUjFufDT
+         Z35g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679600792;
-        h=content-transfer-encoding:in-reply-to:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oajf+kR6jEMpzg1ZTu7IWlOQ1kADcN1jle0NB1m8PUg=;
-        b=3OmP5jHQWPKNAvwH2uWGNthF0AE4o6jFEhYd9DAeR7/TNEseXNzdFQb00eb9oVSO5+
-         RLhasN1ZCu86YTrjKGaNZ+/nLGzL5Afa09P5utR7rZEqsLvDXl62mo0Xm9uu8IJGH/KB
-         Q189yArL/11hr9yyQUbG49QDzN/RzP2VdSAkPopG2JYoC9a8U0lRykchUVb6Db5V7VoR
-         UgPq4HKw/5Hu0dOXcHoxgKyI3gitAI2PrBuAcEujEklTM0ahz41Qs06gDsLXtqWCILmr
-         wtcxafeEashfpHopHv5Wy8YBPSmoMfasA/QIsjsa2dgvifV0m0i1nlJVUU3SdMd/Q+sx
-         AEnw==
-X-Gm-Message-State: AO0yUKWGv/3d/10I8Fg5ovlEWzm8wtsUN1ssKGHqIOmJuGm8dDQCE9SC
-        inIAURewWwkT5GGjQP7Utho=
-X-Google-Smtp-Source: AK7set+Zt0qdrhFfscPhWpXSbLSDMAXmqXr4jbAL8cwKUNlFphzovS4n2magnOUqT+z4XxLrftAGIg==
-X-Received: by 2002:a1c:7c11:0:b0:3eb:399f:6b70 with SMTP id x17-20020a1c7c11000000b003eb399f6b70mr576362wmc.31.1679600792114;
-        Thu, 23 Mar 2023 12:46:32 -0700 (PDT)
-Received: from [192.168.1.212] ([90.253.29.198])
-        by smtp.gmail.com with ESMTPSA id g19-20020a05600c311300b003eddf30bab6sm2867360wmo.27.2023.03.23.12.46.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 12:46:31 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <d1fb77a0-9ed8-4f3d-5bad-bc443b5522d2@dunelm.org.uk>
-Date:   Thu, 23 Mar 2023 19:46:28 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 6/8] sequencer: simplify allocation of result array in
- todo_list_rearrange_squash()
-Content-Language: en-US
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
+        d=1e100.net; s=20210112; t=1679601654;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fAa/qCJ0Z2C5bNmxgwISjfLV1s9GfHbyve901TmBzFI=;
+        b=jXgN6CU/8WdYpTBVzJa5oAL8fegaetb8pttTXwIJpgNJX5PWP6WVoCeigHkfJNBlfW
+         S5itacCsmsnXSiWouYWKeuduhLS99O6+XpIcW6ASBYoa9RL57hKSxyst7HrRwXDeeRTA
+         JX70LFsrg4DwJsP10bYfn0/C+arkOxXucM8gM1OkLTZUO67kt5NNPUht2uaxR5wbJ9zR
+         oX4dhXlTS0a2tEcinIkRRXz4Ta5UFYkTYmpelxsGjRZaxJI6kwKO+k1JO3WXZJiNhOqi
+         VOik2XvT/5FIpD9k4Na44Gg94OebXwZpx+NcAc2/17XWNK2xEnYd6o10PWZXPaoJ9SCY
+         iImg==
+X-Gm-Message-State: AAQBX9cs4+ofRyDgGJdQNP4IxQAwjEWYZW4hknUN7YxccqvFpblIo9FT
+        7m0TE9K1op5G+dl6dJkTg54=
+X-Google-Smtp-Source: AKy350ZuMqCCvF0GMpesYCS/P3sdwjdWvuYjSdl8FraqVqZw1PilWGf4kk5DOTF6ieZCxC4lWJa28g==
+X-Received: by 2002:a17:90b:3502:b0:237:8417:d9e3 with SMTP id ls2-20020a17090b350200b002378417d9e3mr199785pjb.15.1679601654407;
+        Thu, 23 Mar 2023 13:00:54 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id p7-20020a1709028a8700b001a1860da968sm12652640plo.178.2023.03.23.13.00.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Mar 2023 13:00:54 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
+Subject: Re: [PATCH 1/8] rebase: simplify code related to imply_merge()
 References: <20230323162235.995574-1-oswald.buddenhagen@gmx.de>
- <20230323162235.995574-7-oswald.buddenhagen@gmx.de>
-In-Reply-To: <20230323162235.995574-7-oswald.buddenhagen@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        <20230323162235.995574-2-oswald.buddenhagen@gmx.de>
+        <2b296b75-3f8d-28a9-a3d8-8134450852da@dunelm.org.uk>
+Date:   Thu, 23 Mar 2023 13:00:53 -0700
+In-Reply-To: <2b296b75-3f8d-28a9-a3d8-8134450852da@dunelm.org.uk> (Phillip
+        Wood's message of "Thu, 23 Mar 2023 19:40:17 +0000")
+Message-ID: <xmqqiler8cga.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Oswald
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-On 23/03/2023 16:22, Oswald Buddenhagen wrote:
-> The operation doesn't change the number of elements in the array, so we do
-> not need to allocate the result piecewise.
+> On 23/03/2023 16:22, Oswald Buddenhagen wrote:
+>> The code's evolution left in some bits surrounding enum rebase_type that
+>> don't really make sense any more. In particular, it makes no sense to
+>> invoke imply_merge() if the type is already known not to be
+>> REBASE_APPLY, and it makes no sense to assign the type after calling
+>> imply_merge().
+>
+> These look sensible, did imply_merges() use to do something more which
+> made these calls useful?
 
-I think the reasoning behind this patch is sound.
+Good question.
 
-> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-> ---
->   sequencer.c | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index f8a7f4e721..fb224445fa 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -6225,7 +6225,7 @@ static int skip_fixupish(const char *subject, const char **p) {
->   int todo_list_rearrange_squash(struct todo_list *todo_list)
->   {
->   	struct hashmap subject2item;
-> -	int rearranged = 0, *next, *tail, i, nr = 0, alloc = 0;
-> +	int rearranged = 0, *next, *tail, i, nr = 0;
->   	char **subjects;
->   	struct commit_todo_item commit_todo;
->   	struct todo_item *items = NULL;
-> @@ -6334,6 +6334,8 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
->   	}
->   
->   	if (rearranged) {
-> +		items = ALLOC_ARRAY(items, todo_list->nr);
-> +
->   		for (i = 0; i < todo_list->nr; i++) {
->   			enum todo_command command = todo_list->items[i].command;
->   			int cur = i;
-> @@ -6346,16 +6348,15 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
->   				continue;
->   
->   			while (cur >= 0) {
-> -				ALLOC_GROW(items, nr + 1, alloc);
->   				items[nr++] = todo_list->items[cur];
->   				cur = next[cur];
->   			}
->   		}
->   
-> +		assert(nr == todo_list->nr);
+>>   @@ -1494,9 +1493,6 @@ int cmd_rebase(int argc, const char **argv,
+>> const char *prefix)
+>>   		}
+>>   	}
+>>   -	if (options.type == REBASE_MERGE)
+>> -		imply_merge(&options, "--merge");
 
-If this assert fails we may have already had some out of bounds memory 
-accesses.
+This piece is reasonable, of course.  We already know we are in
+merge mode so there is nothing implied.
 
-> +		todo_list->alloc = nr;
->   		FREE_AND_NULL(todo_list->items);
-
-I think it would be cleaner to keep the original ordering and free the 
-old list before assigning todo_list->alloc
-
->   		todo_list->items = items;
-> -		todo_list->nr = nr;
-> -		todo_list->alloc = alloc;
->   	}
-
-Best Wishes
-
-Phillip
-
->   	free(next);
+Before this hunk, there is a bit of code to react to
+options.strategy given.  The code complains if we are using the
+apply backend, and sets the options.type to REBASE_MERGE, which is
+suspiciously similar to what imply_merge() is doing.  I wonder if
+the code should be simplified to make a call to imply_merge() while
+we are doing similar simplification like this patch does?
