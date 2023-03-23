@@ -2,145 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9F66C74A5B
-	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 15:51:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1121C6FD1C
+	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 16:03:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231800AbjCWPvj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Mar 2023 11:51:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33164 "EHLO
+        id S231229AbjCWQD3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Mar 2023 12:03:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232179AbjCWPv3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2023 11:51:29 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78DE71BFC
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 08:51:24 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id m6-20020a05600c3b0600b003ee6e324b19so1421359wms.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 08:51:24 -0700 (PDT)
+        with ESMTP id S230302AbjCWQD2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2023 12:03:28 -0400
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76A631815D
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 09:03:21 -0700 (PDT)
+Received: by mail-pg1-x530.google.com with SMTP id q206so3097144pgq.9
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 09:03:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679586683;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wDWXcycjFXtczCy1EfybbHUYiKV+apwW//gsbXaWDrM=;
-        b=S6aIUsaqsweVpnnH2EVwLzBBln6UZ7SvEbJ5jZM6aLTIyHonwKPYe0exXPbTH2tz2n
-         T4wHRaXmPFZYpOoFI0SNzCXD/9nuhDTg4sz25/119gCNFaz3xxMen+A3cUr0mGhJhCP0
-         wDInlqBAmzIRn0Vq6icOs8ZjvWRXxMCki5GfoyXQSzYaasKPfnrcXAl8ALb+j2Ilqndi
-         89y6eTpJcCp8kNqpKUwTNiG6KBUeTbHHaA+7/XIRmR/G8ZRl22HFKUDsoJZRshAdsM7G
-         yuDwWBJMgDYEAZu+VgzBPHhcZfRF3LPMaH7g53Ed/hCwylDHAF8rXsXuSOZBTWLBLzYp
-         dvQQ==
+        d=gmail.com; s=20210112; t=1679587401;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OiuDFjv0JNacSbse4MxUEyoUq2ZzzWZUP3autHTya0g=;
+        b=i+QPa+C6560HVw1kCRhPCzQuCUCCvfIH1hsme7vOVhF/WilDWXwzP8wfZMdhp9VWMZ
+         J4BJkbwcQvOUJ78X8otc+MDSBvX0F10uGIPrftBROlGwXLN4qdAImRC4M/nj7kwVoZgp
+         mtXbr48R1EhS2HaOkDU7OHuJyupGmQMs27esdbFuLawtY6ZYEGfZMnJqpNL1Y/rsWXbJ
+         7u9ZluSGIflCEgYEnLOXUrSSiDvSnLeRcAZsDcoE54JYLCH2FkuNvKv73N/TSWJjdIIr
+         0yM3TLuJxXpi6mtzl3DvRjiAZvWU2B5CMlgrBe6/Aj85bQzQAPRCo1hNmv8SqWTmmxPO
+         ubuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679586683;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wDWXcycjFXtczCy1EfybbHUYiKV+apwW//gsbXaWDrM=;
-        b=uWSTjxhn+NCsQLNXfSpfnDyBZjAwzM6Nuvn6VbQHjovCt2Z0SxV002z6AfnsM/+Ark
-         f1/iOxWrVn2KC0tynI1k/YrKZwYwVlXQZtdjDDuuptMHILcf1hWzwQkyaIRTd9mobtzk
-         /fvUak+ih/atkqSbTZmImlHr8x4G0ylK8YZKDSefnJrI5r4gI9zoKXL+G2Gf/Xwmav7D
-         pEsfgz/MSQp8oVWYm19asjr+GtgAxqdH6ZfZHOhqp5qP4+R86RJus15JBDGfjtHSV3J/
-         19qGwInmNfYFXWBaxC9///yLQbGX9MR/RP83qftzhFLPjTXFr+VKlmy8GcoTV0gJlbRv
-         j6WA==
-X-Gm-Message-State: AO0yUKXdC4slBXaDjQJSmPWARolLK8i+zIs20ejevZE2nex9S5ww6gM/
-        0Y4Nw9XKt17ciy4BzNWmT8M=
-X-Google-Smtp-Source: AK7set/UtNT/jYRJ7sRq83V9dz3p67/1bYx25ScP5VPVwHKTUYsmV67Ahp8Sft7WPEeroO7l9fZsJA==
-X-Received: by 2002:a05:600c:3ca0:b0:3eb:38b0:e748 with SMTP id bg32-20020a05600c3ca000b003eb38b0e748mr2735074wmb.13.1679586682910;
-        Thu, 23 Mar 2023 08:51:22 -0700 (PDT)
-Received: from ?IPV6:2a01:cb19:8346:b700:d93c:afe0:40cb:5597? ([2a01:cb19:8346:b700:d93c:afe0:40cb:5597])
-        by smtp.gmail.com with ESMTPSA id n26-20020a05600c3b9a00b003e1202744f2sm2329694wms.31.2023.03.23.08.51.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 08:51:22 -0700 (PDT)
-Message-ID: <cffce108-c39d-f13f-9fb6-60624f7e7cea@gmail.com>
-Date:   Thu, 23 Mar 2023 16:51:22 +0100
+        d=1e100.net; s=20210112; t=1679587401;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OiuDFjv0JNacSbse4MxUEyoUq2ZzzWZUP3autHTya0g=;
+        b=mTe5mSearcLS/5yXMhEZRXu2rfWfHvN+jESAeyEvjSabRHEk4xOm60RnPpRm91li8n
+         342YwNYxckj++cwilLOXUHUmsAPe8K8h3f8abb1ha+2WPqATPWqXbmmL8DVxdVuQT5Is
+         Dbh+/ezmoomZpFENtVAmY0bwvKF8aoReH682V9bE2N/RpHa/ws+4BwnBz6jyRujREN5U
+         WN+LhH2hPQmwDXMsiCFnYewkZO9LQMSxJ8CnBzAhlwGeVFSWnf+3ORtzh3k8V+7btvpi
+         yoe5bA04ojmTyyAUAzfg1haLH9UXNvcN0N1zquEN4fObFgfT3GJmejRnDKuE7dFR5AB5
+         5QYA==
+X-Gm-Message-State: AO0yUKV2rR6Sq5Q53QTvBdfLvnAkLZwPrDjskRULwCZwhvd5i5boyrkT
+        xqJQj27Nl/712IjCyVJIkFiqf9qLkLM=
+X-Google-Smtp-Source: AK7set/2fxGZYti8siiF7EYMAJxljbCjXMUDrw9kPuMqFDUIXdc7WNfFkgnUQFjyeOG9nyVHwnIi/Q==
+X-Received: by 2002:a62:4d83:0:b0:623:e4d2:d13e with SMTP id a125-20020a624d83000000b00623e4d2d13emr6602770pfb.34.1679587400872;
+        Thu, 23 Mar 2023 09:03:20 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id n12-20020aa78a4c000000b005a8db4e3ecesm12213364pfa.69.2023.03.23.09.03.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Mar 2023 09:03:20 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Shuqi Liang <cheskaqiqi@gmail.com>
+Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v7 0/2] diff-files: integrate with sparse index
+References: <20230320205241.105476-1-cheskaqiqi@gmail.com>
+        <20230322161820.3609-1-cheskaqiqi@gmail.com>
+        <xmqqilesbbph.fsf@gitster.g>
+        <CAMO4yUFshQ_bP3gXeZhfHQ3OevC+_3qKwa-iy2nNGScvRouu6Q@mail.gmail.com>
+Date:   Thu, 23 Mar 2023 09:03:20 -0700
+In-Reply-To: <CAMO4yUFshQ_bP3gXeZhfHQ3OevC+_3qKwa-iy2nNGScvRouu6Q@mail.gmail.com>
+        (Shuqi Liang's message of "Thu, 23 Mar 2023 03:42:21 -0400")
+Message-ID: <xmqqlejna20n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-From:   Clement Mabileau <mabileau.clement@gmail.com>
-Subject: Re: [PATCH v2] branch: improve error log on branch not found by
- checking remotes refs
-To:     Junio C Hamano <gitster@pobox.com>,
-        ClementMabileau via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.1476.git.git.1679478126.gitgitgadget@gmail.com>
- <pull.1476.v2.git.git.1679515402379.gitgitgadget@gmail.com>
- <xmqq355wctjq.fsf@gitster.g>
-Content-Language: en-GB
-In-Reply-To: <xmqq355wctjq.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Shuqi Liang <cheskaqiqi@gmail.com> writes:
 
-On 22/03/2023 23:25, Junio C Hamano wrote:
-> "ClementMabileau via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: ctmbl <mabileau.clement@gmail.com>
-> 
-> This "name <address>" should match what is on "Signed-off-by:".  I
-> offhand do not know where GitGitGadget gets the information, but I
-> suspect the original commit object you created records ctmbl as the
-> author name, not "Clement Mabileau"?  I can fix it for this single
-> time, but if you plan to contribute to the project in an ongoing
-> basis, you may want to fix your .git/config (or $HOME/.gitconfig)
-> with a "[user] name = ..." entry.
+> When the index file is not up-to-date, git diff-files may show differences
+> between the working directory and the index that are caused by file creation
+> time differences, rather than actual changes to the file contents. By using git
+> diff-files --stat, which ignores file creation time differences.
 
-Well maybe it got it from the original commit or from my GitHub
-username, I can't know for sure. But sorry for that :/ , I'll make
-sure it's fixed it for potential future contribution!
+Use of "diff-files --stat" would mean that the contents of the blob
+registered in the index will be inspected, which can be used to hide
+the "stat dirty" condition.
 
-> If the user said "git branch -d frotz", we would have 'frotz'
-> there, right?  Then we apply FMT_REMOTES (Yuck, now I have to go
-> scroll up, see that it is set to "refs/remotes/%s", and hope or
-> verify that its value hasn't been changed in the meantime---in
-> short, don't introduce that variable.  A macro might be OK, but I do
-> not see much point here) and we get "refs/remotes/frotz" back.
-> 
-> So, we check "refs/remotes/frotz" here ...
-> 
->> [...]
-> 
-> ... but why should we?  If your workflow interacts with the original
-> repository you cloned from, you would have remote-tracking branches
-> like "refs/remotes/origin/frotz" and it may be plausible that you
-> meant to remove with "git branch -d frotz" the remote-tracking
-> branch "refs/remotes/origin/frotz".  But the new code makes no
-> effort to figure out the name of the remote (e.g. 'origin') here,
-> and I am not sure what value it adds to check and try to tell the
-> user about "refs/remotes/frotz".  Or are we assuming that the user
-> would say "git branch -d origin/frotz" in such a case?
+But doesn't it cut both ways?  Starting from a clean index that has
+up-to-date stat information for paths, we may want to test what
+"stat dirty" changes diff-files reports when we touch paths in the
+working tree, both inside and outside the spase cones.  A test with
+"--stat" will not achieve that, exactly because it does not pay
+attention to and hides the stat dirtiness.
 
-Before fixing anything about the code maybe I should first address your
-last point which is the interest of the patch in the first place (and I
-should have started with that...).
+On the other hand, if "update-index --refresh" is used in the test,
+we may discover breakages caused by "update-index" not handling
+the sparse index correctly.  It would be outside the topic of this
+series, so avoiding it would be simpler, but (1) if it is not broken,
+then as you said, it would be a more direct way to test diff-files,
+and (2) if it is broken, it would need to be fixed anyway, before or
+after this series.  So, I dunno...
 
-A few months earlier, for the first time, I had to delete a remote ref
-(because of a fork I fetched but no longer wanted: maybe a designed
-solution exists but I'm not aware of it). However, despite being used to
-git I had a hard time figuring out how to do it, I tried different
-things, one was `git branch -d origin/<branch>` (I recently discovered
-that it was written in `git branch --help` but I didn't find it at the
-time). Even googling it proved difficult (because of a poor keyword
-choice I must confess), most results was dealing with deleting remote
-branches, such as `git push remote :branch`.
-In the end, I finally understood that I needed that `--remote` flag and
-really regretted that there wasn't an hint message to head me towards
-the solution when I was getting close to it.
-
-Now I hope you'll understand why I suggested this patch. Maybe I'm the
-only one that ended up in this situation, in this case I'd understand
-that you would no longer be interested in the patch!
-However if you still are, I'll be happy to make the modification you
-asked for.
-
->> +				if (virtual_target)
->> +					error(_(MISSING_BRANCH_HINT_MSG), bname.buf);
->> +				else
->> +					error(_(MISSING_BRANCH_ERROR_MSG), bname.buf);
->> +			}
-> 
-> Are you leaking virtual_target here?
-
-Yeah probably, I'll fix it along with the other.
-
-Thanks for reviewing this!
+Thanks.
