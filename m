@@ -2,67 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 001EEC6FD1C
-	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 19:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3873FC74A5B
+	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 19:39:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231774AbjCWTi1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Mar 2023 15:38:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41174 "EHLO
+        id S231624AbjCWTjM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Mar 2023 15:39:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231807AbjCWTiW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2023 15:38:22 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A26F4212B8
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 12:38:14 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id bg16-20020a05600c3c9000b003eb34e21bdfso1937040wmb.0
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 12:38:14 -0700 (PDT)
+        with ESMTP id S231681AbjCWTjK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2023 15:39:10 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6F30DBCD
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 12:39:09 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id n10-20020a05600c4f8a00b003ee93d2c914so1582279wmq.2
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 12:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679600292;
+        d=gmail.com; s=20210112; t=1679600348;
         h=content-transfer-encoding:in-reply-to:references:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y4fUntdDfdu43BwrX55PNxy89TipgdW+N9xiJtJvMeY=;
-        b=gpu/mre8RHgB4/xt/U8awwwY1utrj7pBmAFBpOTJcf5Slrxc163Q105tNu+PeGMHCQ
-         hcOm0KppZ/dEQckEDQyUuOtT2lyDbs9bSKPmj6UgM+K2gHYBH92xaj+n/mGzzY/u809R
-         Rs/tl78HYGOGyW7TlF0AAT/oOBrSHJN2CYixCAX5JkPGKSq9dwxRQzyYgEDDI9OISW+i
-         tgS1K9L14xRGPRYgsUERbj5GMqvaY8JDa37/SZSXsjNu9L963/MNhEe83ajx92hAW+lI
-         Dy2DOf7OBN2TIbfQt4V2hCv6T1oIiQxTZVs0tXTV5XKTJRReQ3O3I1dgi/n9IvY7Pdqz
-         iu1g==
+        bh=4cXA8QzqBa9VGOP4qgR92TdJSdGPvDJ9Zj12/gKLYOg=;
+        b=dctsEoblvnfsyVIhjkFy7RS/dPeHvmm7CD28JZAvgmnyuyg0xZ3c/PRqvyDYf5B4v1
+         QUrjPO1zKXPWcLJr3Ir9alsSZdx/FPbbvMlwJNIGi9/NQn6/iGJ4R4wW7sMQRczEXhAN
+         Dv6osEnGTCQEZtNArhpP7mymOyK85C+KTQ+foJT1Q4N9prJylOdFS6BpI69YN2vjpCfh
+         hrIsYZCdmQg9SH6kl/dYFt7VT70CCIHeF5tAH7iYDM2KIdZL83iz0Xylsupm+SiamLb5
+         LmHHuUgnz/RQvN0bSPfo001au+6+sP8xozuKoBH0g/Ub5f+hEpeJVhN6HsSr//04a+Br
+         LnmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679600292;
+        d=1e100.net; s=20210112; t=1679600348;
         h=content-transfer-encoding:in-reply-to:references:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y4fUntdDfdu43BwrX55PNxy89TipgdW+N9xiJtJvMeY=;
-        b=zmPV2iMUY0KzrhAzwcx3UK+bViikAdDfH1fdtev5xvXTqwFZnXiwusCV8l3PV2K4Sf
-         pt4OadHi/y9w1WXiVs+vIgmn9xLyjdtK/zomFpG+P6B5oilEhiu6Vzw/2+LqHBvyWDvt
-         nYIlwBnQf1s17gWBdSPqd2d7n8lt/be3rwmybLF2YCZXtkLEXUKWVxYMw5kEt67qoeEm
-         l6lu4zzQjx2MYbuj4qjA6ZM7d+Ini8/zo41KmReMTOHRF8G6Rm4TIyoSBHnRTd1WWFFN
-         +gVaqZmJ50GE8mCuN3YVHaRce6KXU52JcNS6dqHD2jpuFnUn6sHRlZgolrV4mwFfPvM1
-         AJpA==
-X-Gm-Message-State: AO0yUKV+ULvLuX7yCFSfcm4/J3JiAvE6q2O5xfJzDJA3kmeBcCk6VKfj
-        3fgdaXOj9ChR77OQzMdbq1Eu6G50JLQ=
-X-Google-Smtp-Source: AK7set+SLXPADXvG2191XOnpbX06KrR2gHi2vcMDL0+Aoi5ub+0W7zbOVC2S+5ieSVo3XtLEIIDeQQ==
-X-Received: by 2002:a1c:6a13:0:b0:3ed:ec34:f1 with SMTP id f19-20020a1c6a13000000b003edec3400f1mr509106wmc.35.1679600292518;
-        Thu, 23 Mar 2023 12:38:12 -0700 (PDT)
+        bh=4cXA8QzqBa9VGOP4qgR92TdJSdGPvDJ9Zj12/gKLYOg=;
+        b=mfOZhriXGOz7V8sDtBAq8vCWzKpKA7kDWC/iydQoP+ZsAqrlJ3knm5iSK/lWdMZCz1
+         kQb2aTIoS9INHM6ZvHUyIqTUeN9PzQ4uWRZRrBcHI9urs+Vx20GstT/AWxV5/Rr9yebd
+         +Ga74byo/9zF3HZS4/k7bCMLMoBS17M5WEtujrsodwNjrTxJkE6hWutn56MniACS/z5k
+         ecTEt8mVpKDNpCE377TtjB819ubR6/YPs1k7mbA4vQeWQXEiCMVMaTnW9H9lJELyO9MP
+         4AEESqpJK/FnocqIYBpPvrYKddIzkhgujfkG9RJfdafmUEoD1P3p6WV/H9HFPbJdgRoO
+         3YnQ==
+X-Gm-Message-State: AO0yUKV6ko0kdkg6ElaJbiQGQNLKzvjxY+fh/c446qdfvgVBqqTLrh27
+        jT0fqkw+2keMcP+KYSSuruzZUnOprO4=
+X-Google-Smtp-Source: AK7set/vvTVpG/d22PSyyU+wW3RXwh58p3vrP9wDwNEftZqtxWtFWQwAUbei/xZLepSnrBqVzb1OaQ==
+X-Received: by 2002:a05:600c:3795:b0:3ed:a82d:dffb with SMTP id o21-20020a05600c379500b003eda82ddffbmr467720wmr.40.1679600348118;
+        Thu, 23 Mar 2023 12:39:08 -0700 (PDT)
 Received: from [192.168.1.212] ([90.253.29.198])
-        by smtp.gmail.com with ESMTPSA id m5-20020a7bce05000000b003edff838723sm2796311wmc.3.2023.03.23.12.38.11
+        by smtp.gmail.com with ESMTPSA id m20-20020a05600c3b1400b003dc434b39c7sm8053891wms.0.2023.03.23.12.39.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Mar 2023 12:38:12 -0700 (PDT)
+        Thu, 23 Mar 2023 12:39:07 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <b54f00c1-e8e3-67d7-0288-805ae18d7335@dunelm.org.uk>
-Date:   Thu, 23 Mar 2023 19:38:09 +0000
+Message-ID: <28e9e0fe-3a00-50f7-2204-57f69a20c693@dunelm.org.uk>
+Date:   Thu, 23 Mar 2023 19:39:05 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/8] sequencer refactoring
+Subject: Re: [PATCH 2/8] rebase: move parse_opt_keep_empty() down
 Content-Language: en-US
 To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
 References: <20230323162235.995574-1-oswald.buddenhagen@gmx.de>
-In-Reply-To: <20230323162235.995574-1-oswald.buddenhagen@gmx.de>
+ <20230323162235.995574-3-oswald.buddenhagen@gmx.de>
+In-Reply-To: <20230323162235.995574-3-oswald.buddenhagen@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -70,38 +71,62 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Hi Oswald
+On 23/03/2023 16:22, Oswald Buddenhagen wrote:
+> This moves it right next to parse_opt_empty(), which is a much more
+> logical place. As a side effect, this removes the need for a forward
+> declaration of imply_merge().
 
-Thanks for working on this. I've only had time for a quick read of the 
-first 7 patches but there are some worthwhile clean ups here and the 
-series is well structured. I'll try and have a thorough look at the last 
-patch but I'm going to be off line next week so it may take a while.
+This looks good, it is nice to get rid of that forward declaration
 
 Best Wishes
 
 Phillip
 
-On 23/03/2023 16:22, Oswald Buddenhagen wrote:
-> This is a preparatory series for the separately posted 'rebase --rewind' patch,
-> but I think it has value in itself.
+> Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+> ---
+>   builtin/rebase.c | 25 ++++++++++++-------------
+>   1 file changed, 12 insertions(+), 13 deletions(-)
 > 
-> 
-> Oswald Buddenhagen (8):
->    rebase: simplify code related to imply_merge()
->    rebase: move parse_opt_keep_empty() down
->    sequencer: pass around rebase action explicitly
->    sequencer: create enum for edit_todo_list() return value
->    rebase: preserve interactive todo file on checkout failure
->    sequencer: simplify allocation of result array in
->      todo_list_rearrange_squash()
->    sequencer: pass `onto` to complete_action() as object-id
->    rebase: improve resumption from incorrect initial todo list
-> 
->   builtin/rebase.c              |  63 +++++++--------
->   builtin/revert.c              |   3 +-
->   rebase-interactive.c          |  36 ++++-----
->   rebase-interactive.h          |  27 ++++++-
->   sequencer.c                   | 139 +++++++++++++++++++---------------
->   sequencer.h                   |  15 ++--
->   t/t3404-rebase-interactive.sh |  34 ++++++++-
->   7 files changed, 196 insertions(+), 121 deletions(-)
-> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 8ffea0f0d8..491759db19 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -362,19 +362,6 @@ static int run_sequencer_rebase(struct rebase_options *opts)
+>   	return ret;
+>   }
+>   
+> -static void imply_merge(struct rebase_options *opts, const char *option);
+> -static int parse_opt_keep_empty(const struct option *opt, const char *arg,
+> -				int unset)
+> -{
+> -	struct rebase_options *opts = opt->value;
+> -
+> -	BUG_ON_OPT_ARG(arg);
+> -
+> -	imply_merge(opts, unset ? "--no-keep-empty" : "--keep-empty");
+> -	opts->keep_empty = !unset;
+> -	return 0;
+> -}
+> -
+>   static int is_merge(struct rebase_options *opts)
+>   {
+>   	return opts->type == REBASE_MERGE;
+> @@ -969,6 +956,18 @@ static enum empty_type parse_empty_value(const char *value)
+>   	die(_("unrecognized empty type '%s'; valid values are \"drop\", \"keep\", and \"ask\"."), value);
+>   }
+>   
+> +static int parse_opt_keep_empty(const struct option *opt, const char *arg,
+> +				int unset)
+> +{
+> +	struct rebase_options *opts = opt->value;
+> +
+> +	BUG_ON_OPT_ARG(arg);
+> +
+> +	imply_merge(opts, unset ? "--no-keep-empty" : "--keep-empty");
+> +	opts->keep_empty = !unset;
+> +	return 0;
+> +}
+> +
+>   static int parse_opt_empty(const struct option *opt, const char *arg, int unset)
+>   {
+>   	struct rebase_options *options = opt->value;
