@@ -2,99 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7297C6FD1C
-	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 18:20:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD5FCC6FD20
+	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 18:29:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231795AbjCXSUG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Mar 2023 14:20:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48540 "EHLO
+        id S229505AbjCXS3m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Mar 2023 14:29:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231821AbjCXSUE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2023 14:20:04 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FD3C1F92D
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 11:20:03 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-536af432ee5so48869877b3.0
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 11:20:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1679682002;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=T26zSDmPrqGwYSR/LmfF1FYFVUjnxhRwHirGSuS9a/o=;
-        b=fkiaEIuf32ihvt73NqK9a53sSgvSVB4WE2Kd+T0ELYp0lruwbK/GvKWi9/q/y5/+LV
-         4xqRf4KN3sBTWk9GAYIeu/nIlX94apgPDipLwEZGQpYun8ZCWcjoZjKOQfy1MU+vmjNk
-         ZS9UAwLmxslIgnGqy7PwnxJESjeiyW134Jqngw5RWAXTlo/4Rf2P0gRdOyTVfGsdcCxn
-         Mz25aDV4XO9/GMPxVt6XUzi+8LnuS5UzfbXoXYtemDn++uAiYNCdC56jyC2F/IzC/BY7
-         m08kkvHxo2OlhQaIZnrVyG7HCspLaYk56AOXmEO0RD3sxi5z8MP1q3dSrn33kfMC1e7V
-         MS7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679682002;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=T26zSDmPrqGwYSR/LmfF1FYFVUjnxhRwHirGSuS9a/o=;
-        b=4/NY1g6sj1Y/dWFcdj7aR2kaHSLqQBLOmoYE8caaJe/CQw4k0bL7CYIrnnfRBEJ2AI
-         MXtr2wlKRCIYa+rjoZ0yp4k8CdvpzBUYRVXjbx03jtytjDqMrH7omV8al8ySqHq8YifP
-         yQrU2jQLS6jToLmmzaecCP+c16zIQJ3Yc4wWrrB5oYmHdERHqIkSlxC9+m/cm+cHU3lC
-         kkyRjksZPkf7Sw/Wnqs+QuIVsZHGEmWZKNmR0/KAsRTdyZDSgmlHL/4G7MNvHzW7eXjj
-         ktMOZZ0iabWavFw/2Ks+Ot41D1BqAOxrid2KCUPHaOryhDnw7EAZNhmnkT+sf8LYjg2D
-         1Wdw==
-X-Gm-Message-State: AAQBX9euVBsLTPIRGH+ENO+/42bPxS1wUWPJtVFXfMym35MZLAKTZQjc
-        p3VG0dV5PDaTJzfxv31/vBKYB4PmA44JfJhFeAtqWJhYC1I+PvcnLWgx0po8PSP4E71Aw2AG5RV
-        KkAOBckOqjPWcxXlJ2m+0FZrEzc3HCW+Vf5LC44Hy/ZV9IY6RNCDDfrirJGLrsHLYSJ4GRfTYEB
-        E=
-X-Google-Smtp-Source: AKy350YiF0X3kWkeFe2Vj528hnAbDW/9KfVIthq98S/tOoBDkT8ovJHpTrFeesoXjpZaA7DdK870Tw==
-X-Received: by 2002:a81:490d:0:b0:541:66e6:dc31 with SMTP id w13-20020a81490d000000b0054166e6dc31mr3623849ywa.9.1679682002034;
-        Fri, 24 Mar 2023 11:20:02 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:55e4:a877:13cb:cca6? ([2600:1700:e72:80a0:55e4:a877:13cb:cca6])
-        by smtp.gmail.com with ESMTPSA id o5-20020a817e05000000b00545a0818471sm538123ywn.1.2023.03.24.11.20.01
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Mar 2023 11:20:01 -0700 (PDT)
-Message-ID: <85f81579-5876-a573-6d35-88b35ab0f290@github.com>
-Date:   Fri, 24 Mar 2023 14:20:01 -0400
+        with ESMTP id S229508AbjCXS3l (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2023 14:29:41 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B83A168BE
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 11:29:32 -0700 (PDT)
+Received: (qmail 5868 invoked by uid 109); 24 Mar 2023 18:29:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 24 Mar 2023 18:29:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4475 invoked by uid 111); 24 Mar 2023 18:29:30 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 24 Mar 2023 14:29:30 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 24 Mar 2023 14:29:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH 4/6] pack-bitmap.c: factor out manual `map_pos`
+ manipulation
+Message-ID: <20230324182929.GA536252@coredump.intra.peff.net>
+References: <cover.1679342296.git.me@ttaylorr.com>
+ <0decf13869df6216914044a560d94968126836f4.1679342296.git.me@ttaylorr.com>
+ <20230321175612.GF3119834@coredump.intra.peff.net>
+ <61ae4ad5-4d4d-933c-a2cb-e7e2cd734401@github.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: limiting git branch --contains
-Content-Language: en-US
-To:     git@vger.kernel.org
-References: <ZBygZbz5E6jVNp3y@ugly> <xmqqpm8z8dab.fsf@gitster.g>
- <ZBy6Ku+znv/wuOix@ugly> <594a358e-7bd4-e7a1-ad0f-7e41ca1fe767@github.com>
- <ZB3o0seQJVbtPa+j@ugly>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <ZB3o0seQJVbtPa+j@ugly>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <61ae4ad5-4d4d-933c-a2cb-e7e2cd734401@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/24/2023 2:15 PM, Oswald Buddenhagen wrote:
-> On Fri, Mar 24, 2023 at 01:23:32PM -0400, Derrick Stolee wrote:
->> Could you make sure to run 'git commit-graph write --reachable' before
->> testing again?
->>
-> i did, didn't help.
+On Fri, Mar 24, 2023 at 02:04:05PM -0400, Derrick Stolee wrote:
+
+> >> +	if (bitmap_git->map_pos >= bitmap_git->map_size)
+> >> +		BUG("bitmap position exceeds size (%"PRIuMAX" >= %"PRIuMAX")",
+> >> +		    (uintmax_t)bitmap_git->map_pos,
+> >> +		    (uintmax_t)bitmap_git->map_size);
+> > 
+> > This uses ">=", which is good, because it is valid to walk the pointer
+> > to one past the end of the map, which is effectively EOF. But as above,
+> > in that condition the callers should be checking for this EOF state
+> > before reading the bytes.
 > 
-> but regardless, even if this would improve things by an order of magnitude (or even two), it would be still wasteful, given that the expected working set contains a few tens commits, while the whole graph contains well over a million commits.
+> In other words, it would be too easy for a strange data shape to trigger
+> this BUG() statement, which should be reserved for the most-extreme cases
+> of developer mistake. Things like "this is an unacceptable 'whence' value"
+> or "this should never be NULL" make sense, but this is too likely to be
+> hit due to a runtime error.
 
-Hm. The point is that it _should_ improve things by several orders
-of magnitude by using generation numbers to avoid walking a
-significant portion of the commits. That is, unless the commit is
-extremely old.
+Sort of. AFAICT in all of the "increment" cases we'll already have done
+bounds-checks, so this really is a BUG() condition. But in that case I
+question whether it's even worthwhile. The calling code ends up being
+something like:
 
-But what you were originally asking was also about filtering the
-set of branches to pick, instead of just the commits that are
-walked.
+  /* check that we have enough bytes */
+  if (total - pos < 4)
+	return error(...);
 
-In that case, perhaps you should use 
+  /* read those bytes */
+  get_be32() or whatever...
 
-  git for-each-ref --format="%(refname)" --contains=<oid> <ref1> <ref2> ... <refN>
+  /* now advance pos, making sure we...had enough bytes? */
+  bitmap_index_seek(..., 4);
 
-or use ref patterns instead of exact refs, if you have such a
-grouping?
+We know the advance will succeed because we checked ahead of time that
+we had enough bytes. So it really is a BUG() if we don't, as it would
+indicate somebody missed the earlier check. On the other hand, it is a
+weird spot for an extra check, because by definition we'll have just
+read off the array just before the seek.
 
-Thanks,
--Stolee
+> Would it make sense to return an 'int' instead of the size_t of map_pos?
+> That way we could return in error if this is exceeded, and then all
+> callers can respond "oh wait, that move would exceed the file size, so
+> I should fail in my own way..."?
+
+You can die() to avoid returning an error. But given that this is bitmap
+code, and we can generally complete the operation even if it is broken
+(albeit slower), usually we'd try to return the error up the call chain
+(like bitmap_index_seek_commit() does later in the series). Plus that
+follows our libification trend of not killing the process in low-level
+code.
+
+It does make the callers more complicated, though. If this were
+_replacing_ the existing bounds-checks that might be worth it, but
+coming after like this, I guess I just don't see it as adding much.
+
+The case where we _do_ seek directly to a file-provided offset, rather
+than incrementing, is an important check that this series adds, but that
+one should be a die() and not a BUG().
+
+-Peff
