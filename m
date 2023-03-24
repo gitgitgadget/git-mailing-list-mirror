@@ -2,111 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DAC0C76196
-	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 20:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBA93C76195
+	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 21:21:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231960AbjCXUy7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Mar 2023 16:54:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56504 "EHLO
+        id S231444AbjCXVVr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Mar 2023 17:21:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232271AbjCXUyq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2023 16:54:46 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C043166C0
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 13:54:45 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id eh3so12582098edb.11
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 13:54:44 -0700 (PDT)
+        with ESMTP id S231196AbjCXVVq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2023 17:21:46 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F89718140
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 14:21:45 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-5456249756bso56396477b3.5
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 14:21:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679691283;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1679692904;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fBmp1WNBu4l5uyQOZwjLHFcbKQroSBy4oBACTiM2LcA=;
-        b=XVYM9+8+IUhA68S2YT/ubj//zC3vO67lp7XgxHk3Rl6I0JQNAUO1sxZNaQK+KrZFpp
-         bVcVveS55bVaeRG8n92uD/YDxnP9Y2B7WxV3plkf/9GjwE5lQQRgrQDnH6lYfK2UR+nP
-         4AiPcMjXYY/sIfOPUQmyd7E9pBK+IBtOI5day/forCfDFB0hquX52j31pNVyx6TzAJ3j
-         VT59nPFZjIM6N2aRSRIRqdJWvAIBYdIPrTC6q3EwSWnn8PJqy0s+aLi0LLklJ5fjPk2l
-         +W2/ZzqOveozmeLfWEtykOGNaFi4yuzwxIlPvutpCmaja2pfvYE2hJigfoFtWUEqniyx
-         rtEA==
+        bh=ASzZQnECEqWHTzaiiVX9ExDSUXpx3pdE5LdZgG3zIlg=;
+        b=XeBZWImFOrvjstOT6nN/r+pYgD2pZkpZNtAd+rYmwGk1BHgRmHNUXhzDEKFkoy6+l+
+         C8nkQOXKVvDKi702zh0dGumFXOoEhqfxR3IB48ljnEbwKaICKM/MxdHqHADxH+LSTwaR
+         r9GCyakLzTc0ob6A9skutYARBcmNh+ZmKrBZQGbZ03IJ5THGe1JbuwNpuaczhkrou1ws
+         Av5p9J/EKMTsm5TE3BgxGnvdjhtkvVP5PxJtjxqoYFMX8uojfVTnuP4SGV9Bc9DLfjLq
+         w4HqKKcrWongzxuEQ+1thktWljQlj3Tb0CbUl7Uu32VBvx593RfJ/xykIQlmYCmODrUj
+         ASKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679691283;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1679692904;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fBmp1WNBu4l5uyQOZwjLHFcbKQroSBy4oBACTiM2LcA=;
-        b=eoqReg736ImiJf8extpIKt3yjh44IcDZOwVKdnSTxCS3CxXV3k0XAChYlTvp3mxLoU
-         LzcXKGuDy8UItKarqAwk5UJHr6bJgz41/4iRdRX2GkEFs8WmAG7lTBESHfuZbf/Ni4OE
-         /SZ5H5+qDO5+kZS5otQ7DrJcvO2QHCnDCuFYp/CfVIkYAaxHDf5bCFH9+V9ALkvEDbiN
-         quaYjo6zCqkwTwIbwxz29PTokUjHmDw2+WICTneoRd6mmlYNsv1HvpXFe84wdTzOPYNm
-         LQDWq+x3Om7aWuZCMjOejKKLsegRvDTdF/LJDMvDZatdqyYVohZ8oYcN1rxaZw1mJkjE
-         /AKA==
-X-Gm-Message-State: AAQBX9fpiQn3d/byOLHG22bBoO076OjvFGfzdfGCThrTwFF7JbHtOZRm
-        wuBjgro18qrugZISrAKBhtWGbj0QyKr4/a4s
-X-Google-Smtp-Source: AKy350a7r6Ihbw529jZO66ZA1JvXY+EoEk2qQr6GxxmNGxMiVqn/8u1PTgKqN0FqvTvB6fbLtA82Og==
-X-Received: by 2002:a05:6402:1285:b0:4fb:6523:2b37 with SMTP id w5-20020a056402128500b004fb65232b37mr4949322edv.15.1679691283373;
-        Fri, 24 Mar 2023 13:54:43 -0700 (PDT)
-Received: from titov.fritz.box ([212.102.57.11])
-        by smtp.gmail.com with ESMTPSA id e22-20020a50a696000000b005021c7f08absm2007099edc.29.2023.03.24.13.54.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Mar 2023 13:54:42 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Michael J Gruber <git@grubix.eu>,
-        Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 7/7] t1507: assert output of rev-parse
-Date:   Fri, 24 Mar 2023 21:54:34 +0100
-Message-Id: <20230324205434.93754-8-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230324205434.93754-1-rybak.a.v@gmail.com>
-References: <20230312201520.370234-1-rybak.a.v@gmail.com>
- <20230324205434.93754-1-rybak.a.v@gmail.com>
+        bh=ASzZQnECEqWHTzaiiVX9ExDSUXpx3pdE5LdZgG3zIlg=;
+        b=mCmbRcA6eNa09ejkN65LJiMtBUb8KUupC/XxzgCn0LrESKk0W55aArO0qmTmjv1i51
+         qfNGxsJu3RqOqGwzz4JzSpCQD+Gjks1eJBuWAjn8WEcfIiAvWaZh5qTBXTUeSNzbZceM
+         hcyW64BiwTcpvfRbcjS0gg9pnm0E8bho3V6r+HKmWnnFMTGWhkezGptGpD2sXliHXWdb
+         t4AHjFKhwriPVXm627wFHtKyiBSuOrTbEwkd/YrMQki3y3pQ0zgJV8yqpjHsYrtloBVw
+         ytqyrdcbU1n3fq8CprsECpweVfVyoVGKFBEdBd/CQ6CFJ6KspfhMMv5Ud9Ky4QCVZOtG
+         YdjA==
+X-Gm-Message-State: AAQBX9fQb0Aflr+EhkiHziK1KrSCPaGs77mT8TQEG4I5G1kOGTR3aXLN
+        tO1B/IbrVmZfpGYov19PYc5Nu63EsbSkR3xbc2Y=
+X-Google-Smtp-Source: AKy350ZCzIQSF3N78JWx/pUkLA9L+JuypmKZyuPM8OAvBt8k6Qq7cHzEe2PGHrf/s84N8P2pKgsFXVrSv0qF3E264z0=
+X-Received: by 2002:a81:c84a:0:b0:541:753d:32f9 with SMTP id
+ k10-20020a81c84a000000b00541753d32f9mr1690820ywl.9.1679692904378; Fri, 24 Mar
+ 2023 14:21:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAJoAoZ=Cig_kLocxKGax31sU7Xe4==BGzC__Bg2_pr7krNq6MA@mail.gmail.com>
+ <xmqq3573lx2d.fsf@gitster.g> <CANgJU+XoT42u91WP7-p4V41w7q-UVhutL2LUfNkp3_BRCOn-FQ@mail.gmail.com>
+ <4222af90-bd6b-d970-2829-1ddfaeb770bf@dunelm.org.uk> <CAMP44s1Qqd2cYcf7OGxz1-PY-8TF2KG+9jPEWMrnCaCfPe_1sw@mail.gmail.com>
+ <008101d95ddf$7863d900$692b8b00$@nexbridge.com> <CAMP44s1X6LGpFfA_Zb_GakXehBJDeGrfFcehPgv+YM++xKHN3A@mail.gmail.com>
+ <008201d95de1$359285c0$a0b79140$@nexbridge.com> <CAMP44s3Gk67rPEPjoAxLHS4KrCQBb6VoPJ6Rqm-FTK+8PTaRRQ@mail.gmail.com>
+ <004d01d95e86$bd355d40$37a017c0$@nexbridge.com>
+In-Reply-To: <004d01d95e86$bd355d40$37a017c0$@nexbridge.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Fri, 24 Mar 2023 15:21:32 -0600
+Message-ID: <CAMP44s3fXYcOsq-XRNZX0y6D=W37=ONELUpTBtkzv4KLbym2iA@mail.gmail.com>
+Subject: Re: Proposal/Discussion: Turning parts of Git into libraries
+To:     rsbecker@nexbridge.com
+Cc:     phillip.wood@dunelm.org.uk, demerphq <demerphq@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <nasamuffin@google.com>,
+        Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrn@google.com>,
+        Jose Lopes <jabolopes@google.com>,
+        Aleksandr Mikhailov <avmikhailov@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tests in t1507-rev-parse-upstream.sh compare files "expect" and "actual"
-to assert the output of "git rev-parse", "git show", and "git log".
-However, two of the tests '@{reflog}-parsing does not look beyond colon'
-and '@{upstream}-parsing does not look beyond colon' don't inspect the
-contents of the created files.
+On Fri, Mar 24, 2023 at 1:28=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
+>
+> On Thursday, March 23, 2023 7:55 PM, Felipe Contreras wrote:
+> >On Thu, Mar 23, 2023 at 5:43=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
+> >>
+> >> On Thursday, March 23, 2023 7:35 PM, Felipe Contreras wrote:
+> >> >On Thu, Mar 23, 2023 at 5:30=E2=80=AFPM <rsbecker@nexbridge.com> wrot=
+e:
+> >> >>
+> >> >> On Thursday, March 23, 2023 7:22 PM, Felipe Contreras wrote:
+> >> >> >On Sat, Feb 18, 2023 at 5:12=E2=80=AFAM Phillip Wood
+> >> >> ><phillip.wood123@gmail.com>
+> >> >wrote:
+> >> >> >>
+> >> >> >> On 18/02/2023 01:59, demerphq wrote:
+> >> >> >> > On Sat, 18 Feb 2023 at 00:24, Junio C Hamano <gitster@pobox.co=
+m>
+> >wrote:
+> >> >> >> >>
+> >> >> >> >> Emily Shaffer <nasamuffin@google.com> writes:
+> >> >> >> >>
+> >> >> >> >>> Basically, if this effort turns out not to be fruitful as a
+> >> >> >> >>> whole, I'd like for us to still have left a positive impact =
+on the codebase.
+> >> >> >> >>> ...
+> >> >> >> >>> So what's next? Naturally, I'm looking forward to a spirited
+> >> >> >> >>> discussion about this topic - I'd like to know which
+> >> >> >> >>> concerns haven't been addressed and figure out whether we
+> >> >> >> >>> can find a way around them, and generally build awareness of
+> >> >> >> >>> this effort with the
+> >> >community.
+> >> >> >> >>
+> >> >> >> >> On of the gravest concerns is that the devil is in the detail=
+s.
+> >> >> >> >>
+> >> >> >> >> For example, "die() is inconvenient to callers, let's
+> >> >> >> >> propagate errors up the callchain" is an easy thing to say,
+> >> >> >> >> but it would take much more than "let's propagate errors up"
+> >> >> >> >> to libify something like
+> >> >> >> >> check_connected() to do the same thing without spawning a
+> >> >> >> >> separate process that is expected to exit with failure.
+> >> >> >> >
+> >> >> >> >
+> >> >> >> > What does "propagate errors up the callchain" mean?  One
+> >> >> >> > interpretation I can think of seems quite horrible, but
+> >> >> >> > another seems quite doable and reasonable and likely not even
+> >> >> >> > very invasive of the existing code:
+> >> >> >> >
+> >> >> >> > You can use setjmp/longjmp to implement a form of "try", so
+> >> >> >> > that errors dont have to be *explicitly* returned *in* the cal=
+l chain.
+> >> >> >> > And you could probably do so without changing very much of the
+> >> >> >> > existing code at all, and maintain a high level of conceptual
+> >> >> >> > alignment with the current code strategy.
+> >> >> >>
+> >> >> >> Using setjmp/longjmp is an interesting suggestion, I think lua
+> >> >> >> does something similar to what you describe for perl. However I
+> >> >> >> think both of those use a allocator with garbage collection. I
+> >> >> >> worry that using longjmp in git would be more invasive (or
+> >> >> >> result in more memory leaks) as we'd need to to guard each
+> >> >> >> allocation with some code to clean it up and then propagate the
+> >> >> >> error. That means we're back to manually propagating errors up t=
+he call
+> >chain in many cases.
+> >> >> >
+> >> >> >We could just use talloc [1].
+> >> >>
+> >> >> talloc is not portable.
+> >> >
+> >> >What makes you say that?
+> >>
+> >> talloc is not part of a POSIX standard I could find.
+> >
+> >It's a library, like: z, ssl, curl, pcre2-8, etc. Libraries can be compi=
+led on different
+> >platforms.
+>
+> talloc adds additional *required* dependencies to git, including python3 =
+- required to configure and build talloc - which is not available on the No=
+nStop ia64 platform (required support through end of 2025). I must express =
+my resistance to what would amount to losing support for git on this NonSto=
+p platform.
 
-Assert output of "git rev-parse" in tests in t1507-rev-parse-upstream.sh
-to improve test coverage.
+That is not true. You don't need python3 for talloc, not even to build
+it, it's just a single simple c file, it's easy to compile.
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
- t/t1507-rev-parse-upstream.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+The only reason python is used is to run waf, which is used to build
+Samba, which is much more complex, but you don't need to run it,
+especially if you know the characteristics of your system.
 
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index c34714ffe3..4458820168 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -258,7 +258,8 @@ test_expect_success '@{reflog}-parsing does not look beyond colon' '
- 	git add @{yesterday} &&
- 	git commit -m "funny reflog file" &&
- 	git hash-object @{yesterday} >expect &&
--	git rev-parse HEAD:@{yesterday} >actual
-+	git rev-parse HEAD:@{yesterday} >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success '@{upstream}-parsing does not look beyond colon' '
-@@ -266,7 +267,8 @@ test_expect_success '@{upstream}-parsing does not look beyond colon' '
- 	git add @{upstream} &&
- 	git commit -m "funny upstream file" &&
- 	git hash-object @{upstream} >expect &&
--	git rev-parse HEAD:@{upstream} >actual
-+	git rev-parse HEAD:@{upstream} >actual &&
-+	test_cmp expect actual
- '
- 
- test_done
--- 
-2.40.0
+This simple Makefile builds libtalloc.so just fine:
 
+  CC :=3D gcc
+  CFLAGS :=3D -fPIC -I./lib/replace
+  LDFLAGS :=3D -Wl,--no-undefined
+
+  # For talloc.c
+  CFLAGS +=3D -DTALLOC_BUILD_VERSION_MAJOR=3D2
+-DTALLOC_BUILD_VERSION_MINOR=3D4 -DTALLOC_BUILD_VERSION_RELEASE=3D0
+  CFLAGS +=3D -DHAVE_CONSTRUCTOR_ATTRIBUTE -DHAVE_VA_COPY
+-DHAVE_VALGRIND_MEMCHECK_H -DHAVE_INTPTR_T
+
+  # For replace.h
+  CFLAGS +=3D -DNO_CONFIG_H -D__STDC_WANT_LIB_EXT1__=3D1
+  CFLAGS +=3D -DHAVE_STDBOOL_H -DHAVE_BOOL -DHAVE_STRING_H
+-DHAVE_LIMITS_H -DHAVE_STDINT_H
+  CFLAGS +=3D -DHAVE_DLFCN_H -DHAVE_UINTPTR_T -DHAVE_C99_VSNPRINTF
+-DHAVE_MEMMOVE -DHAVE_STRNLEN -DHAVE_VSNPRINTF
+
+  libtalloc.so: talloc.o
+    $(CC) $(LDFLAGS) -shared -o $@ $^
+
+But of course, most of those defines are not even needed with a simple
+"replace.h" that is less than 10 lines of code.
+
+--=20
+Felipe Contreras
