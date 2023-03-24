@@ -2,76 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A51AEC6FD1C
-	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 19:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08A49C6FD20
+	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 19:59:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231864AbjCXTrE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Mar 2023 15:47:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51804 "EHLO
+        id S231984AbjCXT70 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Mar 2023 15:59:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231857AbjCXTrC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2023 15:47:02 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D8DB17146
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 12:46:58 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id l9-20020a17090a3f0900b0023d32684e7fso6199956pjc.1
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 12:46:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679687218;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=yotlMy3XuCcxr1B0kfSV4BVJ+FqGBtxpnMwAyK+boIM=;
-        b=cRpsRYziIBvyc7t0JF52ON2H14fxCntSHJ//T+DMZnCVY7yukZdKKvs7PIg/p2aZHm
-         LgV+J82YmOrB/n6STvHR8bGSTK40tbQUAFckaoB4BFEfWex4k7QktqwbEnSC2Q6XJwnU
-         Zmjaftpm0s8sVFaPVQsHJXUmFGFnIHjd8kK3ub+09BOpW5DoDtXJD/jT6WaqWQWuvOZ9
-         New+osDKW5zlrLCJ/lO9O6zK5wNF71CVTWNrcvR9BQt2lK88eXW4CJXOZIRjkgMUJ07t
-         mxOkBqMWQU32cHHiUEAuQP+miJ3dF1bzCwa6DODy0UtJboTLAGP24/cWMlhxFnAd2qMC
-         gKxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679687218;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yotlMy3XuCcxr1B0kfSV4BVJ+FqGBtxpnMwAyK+boIM=;
-        b=XP+v9XLq1cC6LKjG070/7rXZGflY1pxmhZR2d7A1oxGEYLreg3SAumYiQEfVttIwYC
-         xRI670YTLHSQzMS828qSvGmsLuyDINZXFUw5HpZpAIXIxBNJueti6dZcUD8+IjGIVAef
-         Lllzo7JhmvnJEbV8YDJfi83HS3cX7j8TbXmcJhbrWy65TSsRuFv1yi/JWygZrtIexNql
-         S1bzDYCdZQO1QQy3xINP/b0VEvjuqkJV91eEUdVw+cey+nhPZbM/mhL9pxJBMQ1f4fBj
-         IJ21yqGbq+MBPxu8AZZOQyKduH3wfmChZxJMOLsqHTreeMvr1hHqlMEiX2SMOePvG7B8
-         28Sg==
-X-Gm-Message-State: AAQBX9deVXyaw64gS6r62qYNQhbJqMPLJEOpzpjchnmtvqeqxTtaCV4P
-        4yen84BxJ+aZHBWCD1DdL2I=
-X-Google-Smtp-Source: AKy350Yw4d7f6t+un2Gz2jxDEeMYAUaTVgY52rNuHq2dV2tq9P20hbNRWDmZwtvFqBe34yJw4tkA7Q==
-X-Received: by 2002:a17:902:c411:b0:199:1996:71ec with SMTP id k17-20020a170902c41100b00199199671ecmr4586764plk.16.1679687217933;
-        Fri, 24 Mar 2023 12:46:57 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id bg9-20020a1709028e8900b0019cbabf127dsm14573088plb.182.2023.03.24.12.46.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Mar 2023 12:46:57 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 0/6] minor cleanups to fast-export --anonymize
-References: <20230322173636.GA5643@coredump.intra.peff.net>
-        <4931e301-2fb6-0d4b-a7bd-f65dee87071a@github.com>
-X-Gnus-Delayed: Fri, 24 Mar 2023 16:17:32 -0700
-Date:   Fri, 24 Mar 2023 12:46:57 -0700
-Message-ID: <xmqqjzz6dj9q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229921AbjCXT7Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2023 15:59:25 -0400
+Received: from bluemchen.kde.org (unknown [IPv6:2001:470:142:8::100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B84920D1C
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 12:58:56 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+        by bluemchen.kde.org (Postfix) with ESMTP id 4AF36241A2
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 15:58:39 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.4, from userid 1000)
+        id 1pfnYd-TcN-00
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 20:58:39 +0100
+Date:   Fri, 24 Mar 2023 20:58:39 +0100
+From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To:     git@vger.kernel.org
+Subject: Re: limiting git branch --contains
+Message-ID: <ZB4A7+LMY+NSaPYE@ugly>
+Mail-Followup-To: git@vger.kernel.org
+References: <ZBygZbz5E6jVNp3y@ugly>
+ <xmqqpm8z8dab.fsf@gitster.g>
+ <ZBy6Ku+znv/wuOix@ugly>
+ <594a358e-7bd4-e7a1-ad0f-7e41ca1fe767@github.com>
+ <ZB3o0seQJVbtPa+j@ugly>
+ <85f81579-5876-a573-6d35-88b35ab0f290@github.com>
+ <ZB3z3e5G3Lrv9g3Y@ugly>
+ <20230324191302.GB536967@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20230324191302.GB536967@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+On Fri, Mar 24, 2023 at 03:13:02PM -0400, Jeff King wrote:
+>On Fri, Mar 24, 2023 at 08:02:53PM +0100, Oswald Buddenhagen wrote:
+>> maybe the operation just forgets to load the graph?
+>
+so i strace'd the thing, and there is indeed no appearance of 
+'commit-graph' in the log.
 
-> I saw this was on its way to next(?) without any comment, but it
-> really doesn't need any. Each patch was clear and created a self-
-> sufficient reason, but the culmination of dropping parameters and
-> clearing up memory is also good.
+so i tried git log --graph ... and still nothing?!
 
-I also thought these were self evidently ready for 'next'.  Thanks
-for a positive confirmation.
+and yes, core.commitgraph is true (originally absent, so same thing).
 
+>That seems weird.
+>
+indeed.
+
+so weird in fact, that i tried another repository. and it works!
+
+so apparently something is wrong with my/the linux repository.
+things i can imagine contributing to throwing it off somehow:
+
+$ git remote -v
+alsa    git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound.git (fetch)
+alsa    git://git.kernel.org/pub/scm/linux/kernel/git/tiwai/sound.git (push)
+history git://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git (fetch)
+history git://git.kernel.org/pub/scm/linux/kernel/git/tglx/history.git (push)
+linux-mips      git://git.linux-mips.org/pub/scm/ralf/linux (fetch)
+linux-mips      git://git.linux-mips.org/pub/scm/ralf/linux (push)
+linux-wireless  git://git.kernel.org/pub/scm/linux/kernel/git/kvalo/wireless-drivers (fetch)
+linux-wireless  git://git.kernel.org/pub/scm/linux/kernel/git/kvalo/wireless-drivers (push)
+origin  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git (fetch)
+origin  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git (push)
+ossi    git@github.com:ossilator/linux.git (fetch)
+ossi    git@github.com:ossilator/linux.git (push)
+
+(the linux-* remotes haven't been pulled for years.)
+
+$ grep replace .git/packed-refs
+a3628e41a9946c4fe93d9b2ae5906e1b2184fa8e refs/replace/1da177e4c3f41524e886b7f1b8a0c1fc7321cac2
+
+>What version of Git are you using?
+>
+rather recent master. dogfeeding my contributions.
