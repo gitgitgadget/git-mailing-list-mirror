@@ -2,112 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52611C6FD20
-	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 04:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD8ADC6FD1C
+	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 04:45:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230004AbjCXElY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Mar 2023 00:41:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57416 "EHLO
+        id S230501AbjCXEpl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Mar 2023 00:45:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229623AbjCXElX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2023 00:41:23 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54F0E12F03
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 21:41:22 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id fy10-20020a17090b020a00b0023b4bcf0727so516573pjb.0
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 21:41:22 -0700 (PDT)
+        with ESMTP id S229623AbjCXEpj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2023 00:45:39 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47F792887A
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 21:45:39 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id l14so505815pfc.11
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 21:45:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679632882;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jfGdNPjMrQOpQn4S00WsOxTn8p0bVeQDTQIpye/psH4=;
-        b=PY/hgnAMgQfX4PUYx2pldrR3ZA4gPHmqjiQakKY666DjzO5bQFoY5Xuhfr4wp/becF
-         ArTd/ra7NGPezRrgoXWcHhFQfW6A8CpJvjcho1NMXgjp2JqnDZPi+hlfMfoDQeQ7kI/D
-         jvv+evR5+Oq3NmEfRIUSZodV0Pq3p6uXZ9qazlY3Th77hequYlWDbidB9y7cAhw533rj
-         BBtFJyKepPCZtKLLbZXOZ+gtqFTdnu8R3wYmj6N8l0GPXosTp5yNvbFd6gLH5ejOBjxM
-         6BdwV4rPewZ9vDCkh6lzt405evAQkCihkts4oVjdSd79703MZ7/0W+fcHqL7mcP6suJ8
-         M41g==
+        d=gmail.com; s=20210112; t=1679633139;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0FC1hS9MJTk4N+IT8tAYkQBrt3lYsQg+JAGhfUiAiJc=;
+        b=oYVewoH2e52rk6VaEEWoQ17Wv5X4vgM9M0Vo/PkxKdxrDJ/PakadnoMqysQFhB2fS+
+         bwoW2jVZEAeIOgxBB+LtJTQgXM+L7j1ff9xgWPtMwKMrXXuk0vTZX+tEqypmU0Bmz8fk
+         W34GXJwkTn7Z801UlhPm5XO/EUTIDPdGG7VjpGbAz+rwAa3vwq1ErbOz+vRCYGqrqF9m
+         1ylaetEI67MrXjcyTxumtc6N7vD/Z/umBVYW3K1fWqGUH7fUlOt6upAUQcltJE9sikZt
+         1qrNH0lZkaRrpBB9XR9ebFR9qy5HPr530ilpyJe/APY2JKIOLTpn3Z4XvKvSrCpes1Id
+         gpWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679632882;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jfGdNPjMrQOpQn4S00WsOxTn8p0bVeQDTQIpye/psH4=;
-        b=iy8YbmIwysLCO6LYDlAZc23e06PpXf1Ry8blDPZaSQXpfA0t6xKuXCspzmlEVH7+eH
-         ebLxJMSDvBdic327HbnEG8ceRcNQElrfqnNKxStnFg5cAmYUv9QSOWdiqe3CV/VphrhY
-         rbklTdN/e461gniKeV10EMtmEc6LuuTT1L1jwy6UtMiUuciXZi8FKaoUTu3UlCsrA+nq
-         xpWk0zm7C4/HgtkVN4TAjNVDP0skgoJnNgz0km0Npj+suENVmSaLavZCtBMbpOO+diYs
-         TXMGSmbyPhwSigmisOTJNoeHeLDzwySoo22KY2p8G/Kde22bGPMSfJYnquiFF/5LFLXe
-         SsJQ==
-X-Gm-Message-State: AO0yUKWhfLoa0wITU8UajOldsL6CDmjx5atLI7641nYyjC4gMym+o33A
-        trOw+M+1fZwiwDkZfTb5it8=
-X-Google-Smtp-Source: AK7set9q/XxI1fleJRX/9KCq/nATSnJn5WNV1RnRzpW0xcYvmxLw0yCd557GFfyTbJn/qW2OYbdCsQ==
-X-Received: by 2002:a05:6a20:c10f:b0:d9:84d2:7a9f with SMTP id bh15-20020a056a20c10f00b000d984d27a9fmr1772202pzb.24.1679632881718;
-        Thu, 23 Mar 2023 21:41:21 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679633139;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0FC1hS9MJTk4N+IT8tAYkQBrt3lYsQg+JAGhfUiAiJc=;
+        b=b7foK8r2he4dMEONw5LSdqs22TmEFOQBbG8jSE/p075V1sEhH38/BR40bhZ65H5diM
+         NyXxhi3R5EgwiL00/+vzXelNG1BsVAiqmVyqraR56VWxY1i/s9jbUkqjh+v5B52wkXPp
+         Ae3dFLfmbwB7nkliZ0VC94lPW8JosRT9Gd20f8YTrZw4eDgHLcTEp0IXID+g7rKUvMKJ
+         kDyCZ8XHc9a5m7qw+d08jjjiCWkE9VKJcnS9eZofJiovQs52L6kZ9dEmacKjvY2URzcx
+         jQVgxZVwtR2qgZ49Fz1nOJ3A0uDokt3x2IOkbNyWmAcjaBV6ileWe9QKHvZGnIJvKmsN
+         Vx5Q==
+X-Gm-Message-State: AAQBX9cUkm6axVlNbUJisQPgm+3uUSui8iFQ/IpVofLo6xP+gQJdVT6Z
+        C7NlS66/4lXLQtwcfRRK380=
+X-Google-Smtp-Source: AKy350ZtHCp5Wr50/9Xdaeb+E7Fqd3gfay123oDsLv3rW/ICL/tZfCASGXr+6/I8xnjKQjRvsRSLaQ==
+X-Received: by 2002:a62:5245:0:b0:627:ff1d:db6d with SMTP id g66-20020a625245000000b00627ff1ddb6dmr1605650pfb.21.1679633138601;
+        Thu, 23 Mar 2023 21:45:38 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id k23-20020aa790d7000000b006247123adf1sm13167566pfk.143.2023.03.23.21.41.21
+        by smtp.gmail.com with ESMTPSA id d13-20020aa78e4d000000b00622e01989cbsm13197718pfr.176.2023.03.23.21.45.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Mar 2023 21:41:21 -0700 (PDT)
+        Thu, 23 Mar 2023 21:45:38 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] blame: allow --contents to work with non-HEAD commit
-References: <20230324010457.275902-1-jacob.e.keller@intel.com>
-Date:   Thu, 23 Mar 2023 21:41:21 -0700
-In-Reply-To: <20230324010457.275902-1-jacob.e.keller@intel.com> (Jacob
-        Keller's message of "Thu, 23 Mar 2023 18:04:57 -0700")
-Message-ID: <xmqqy1nm69se.fsf@gitster.g>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Sjur Moshagen <sjurnm@mac.com>, git@vger.kernel.org
+Subject: Re: BUGREPORT: Modified files on a fresh clone on M2 MacBook Pro
+References: <593742E7-F0FC-471C-AFF5-1E855A3788B0@mac.com>
+        <20230323053110.z64tcce5dy3q7yew@tb-raspi4>
+Date:   Thu, 23 Mar 2023 21:45:37 -0700
+Message-ID: <xmqqr0te69la.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Torsten Bögershausen <tboegi@web.de> writes:
 
-> From: Jacob Keller <jacob.keller@gmail.com>
->
-> The --contents option can be used with git blame to blame the file as if
-> it had the contents from the specified file. This is akin to copying the
-> contents into the working tree and then running git blame. This option
-> has been supported since 1cfe77333f27 ("git-blame: no rev means start
-> from the working tree file.")
->
-> The --contents option always blames the file as if it was based on the
-> current HEAD commit. If you try to pass a revision while using
-> --contents, you get the following error:
->
->   fatal: cannot use --contents with final commit object name
->
-> This is because the blame process generates a fake working tree commit
-> which always uses the HEAD object.
+> The general rule and recommendation would be to start the text attributes
+> definition by using a "catch all" rule, followed by files that need
+> special treatment.
+> The very first text/binary line would be
+> * text=auto
+> which will tell Git to auto-detect all files (and file types),
+> see below,
+> This basically prevents corruption of binary files.
+> which are not mentioned later.
+> Like README.md, LICENCE and so on.
+> Then there is a list of file extension, that are known to be binary,
+> you can add them as shown below.
 
-"the HEAD object as its sole parent."
+Thanks for writing this down clearly.
 
-> Fix fake_working_tree_commit to take the object ID to use for the
-> parent instead of always using HEAD. If both a revision and --contents
-> is provided, look up the object ID from the provided revision instead of
-> using HEAD.
-
-An obvious enhancement.
-
-As the original author of 1cfe7733 (git-blame: no rev means start
-from the working tree file., 2007-01-30), I am not sure if the verb
-"fix" is fair to describe this change, though.  If you update the
-working tree file with contents that is vastly different and totally
-unrelated to the version at HEAD, then with this new feature, your
-"blame" can start at the working tree file, and then some commit
-that is totally unrelated to HEAD, and down the history from it, and
-everything should make sense, but if you smudge your working tree
-files that way, it would be quite awkward to use the working tree to
-advance the history that leads to HEAD.  That is the reason why I
-designed the "fake commit based on off-history contents" features to
-work only with HEAD.  But unlike actually messing with the contents
-of the working tree files, feeding a temporary contents via the
-"--contents" option has much less chance of breaking the next
-commit, so I do not have any objection to this patch.
-
-Thanks.
+If I would add one thing to the general advice, it is that it
+applies o those who are using Git primarily as their source code,
+not binary asset, control system, which roughly translates to "for
+most of the paths in the project, 'git diff' without using any
+external diff driver is useful".  In such an environment,
+"everything by default is text, and only selected few are not" would
+work very well.  If on the other hand there are myriad of binary
+asset of different types, it can become cumbersome to mark them "do
+not try normalizing the eol, which is done to help cross platform
+development" individually.
