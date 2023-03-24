@@ -2,123 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E07D8C74A5B
-	for <git@archiver.kernel.org>; Thu, 23 Mar 2023 23:59:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E614C74A5B
+	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 01:05:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229672AbjCWX7T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Mar 2023 19:59:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40728 "EHLO
+        id S229849AbjCXBFJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Mar 2023 21:05:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbjCWX7R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2023 19:59:17 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E04562BF25
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 16:59:16 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id r29so132706wra.13
-        for <git@vger.kernel.org>; Thu, 23 Mar 2023 16:59:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679615955;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S1VzF+iFq+1elH6o4DIlRXkn1CgikpMnDou2IVz1LJE=;
-        b=aacsNa0KRYJwiIUErf++rfX1s2Vq7WbFc3OTXNseu0QOzzV4jNXCuL5EzJJPARLlg6
-         IFV0hYhPvT24cgJWg2OU/Xn55mbxNBqR6UkV2MV0ne1pqMbXZjD89JcivjB3WU9trYAr
-         ZlncMKx/HmvezM9zIhB4FOTNacJIH6P3tdfN+mR89vLHDIPUEA/M8xag144188JdS/pU
-         dFla1W60WsVlPFXcYNRe8y2TM9jAlnqk/1UqSCjxw7NT4GjQLUOC4ak9+Ks35/N/B0pl
-         N3YAjc4LCtrSVZgpcKBwk11o1rCX/5CcqFgltU0xl/NlIF9BDHUNPUoCtHlvR3Eg30al
-         kgOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679615955;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S1VzF+iFq+1elH6o4DIlRXkn1CgikpMnDou2IVz1LJE=;
-        b=ttlnjclkbMXwKTD5MF3EIYyQ1sltZ4sh9qLed5mYvIDusl0taRv8kQdh0NHSaTpUYK
-         Vh3eeE+K96LoDoklKpw5xzhEgmX9Kow8i9QVnn+4p0xvH9VfUvmrUK615FO/x4f60qzR
-         dKx3Lt0r9SvZshae8W2zYwQG03mhemcuu+Wi8RlO3EPlY2glDe6iSw1qnIyWUI9XIcli
-         U555dHfgP7+vy61Wvw6uR28XKCLgX9D/lkPLtBYd1jpSbZCzTf32x1rpZMj8vU8MBP0P
-         7CXTlSiuk8+7fiQC7B5B13mSZaWSRsakomgfT8uampoGVJb0kKxE8Xd/Q2JIVBVeFUp7
-         ZVNw==
-X-Gm-Message-State: AAQBX9fQ7saUHC16G+MH6cEcelXexBiZ+Hv3W+Kz+bCuih4SJF3gq7v+
-        OmKYakdE/eexHHmNOESCAqBE7o+fZ92JFmBeyvQ=
-X-Google-Smtp-Source: AKy350ajyQT9ASRtGQCNIJR36WIy9lzVr6peRPglvNdiAI7/YxS3rbSRYGhkllocO9nWze/n/uFyKZSFMQ8BF9j1kLc=
-X-Received: by 2002:adf:f782:0:b0:2ce:abd2:13f3 with SMTP id
- q2-20020adff782000000b002ceabd213f3mr188220wrp.5.1679615955007; Thu, 23 Mar
- 2023 16:59:15 -0700 (PDT)
+        with ESMTP id S229499AbjCXBFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2023 21:05:07 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 664E13A8F
+        for <git@vger.kernel.org>; Thu, 23 Mar 2023 18:05:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1679619906; x=1711155906;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=VQlCDMCGJZqbX9xqGq8jvJghlP6VjwY4hDAPQArs1D0=;
+  b=ggibGRQG3CPCWVP3NFA4Q3eDGNHG0yt07whBsJf21NHVw6xOFHD1WSKA
+   m8Hu5zOOUZ5OHI36xVoHym22+5FRGHGTZVxmbZnEanvv1xQ7wasgTUhIl
+   Ytaao01APzbXI1RBc29VDk+S5sz1e3JumdHWVH2FY0qctD4ginWfZhj5z
+   49j2laj4B3u66ME94Yvw9O2rw4MKtpxrYpGFe0zy/3rNCAzAEBsYUQeEi
+   eLKOW+sCILFLumPrjrrhEdRgO+e5L0R/Ldc3qH5/vk7Ax3YrZ+ovEvCsk
+   SFMPd5bcKgmux5Bce/tOZIYydO2EtCNq82wIZpO7FoKKhXzvmE/ZFfWA/
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10658"; a="319325228"
+X-IronPort-AV: E=Sophos;i="5.98,286,1673942400"; 
+   d="scan'208";a="319325228"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2023 18:05:06 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10658"; a="682500964"
+X-IronPort-AV: E=Sophos;i="5.98,286,1673942400"; 
+   d="scan'208";a="682500964"
+Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([10.166.241.1])
+  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Mar 2023 18:05:04 -0700
+From:   Jacob Keller <jacob.e.keller@intel.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH] blame: allow --contents to work with non-HEAD commit
+Date:   Thu, 23 Mar 2023 18:04:57 -0700
+Message-Id: <20230324010457.275902-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.40.0.131.g970374df36d8
 MIME-Version: 1.0
-References: <20230320205241.105476-1-cheskaqiqi@gmail.com> <20230322161820.3609-1-cheskaqiqi@gmail.com>
- <xmqqilesbbph.fsf@gitster.g> <CAMO4yUFshQ_bP3gXeZhfHQ3OevC+_3qKwa-iy2nNGScvRouu6Q@mail.gmail.com>
- <xmqqlejna20n.fsf@gitster.g>
-In-Reply-To: <xmqqlejna20n.fsf@gitster.g>
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-Date:   Thu, 23 Mar 2023 19:59:03 -0400
-Message-ID: <CAMO4yUFG2EnEPM3AqXbywpZp2rYU_emJgE5h3_tY+u2ZMXqrhA@mail.gmail.com>
-Subject: Re: [PATCH v7 0/2] diff-files: integrate with sparse index
-To:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
-        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+From: Jacob Keller <jacob.keller@gmail.com>
 
-On Thu, Mar 23, 2023 at 12:03=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
+The --contents option can be used with git blame to blame the file as if
+it had the contents from the specified file. This is akin to copying the
+contents into the working tree and then running git blame. This option
+has been supported since 1cfe77333f27 ("git-blame: no rev means start
+from the working tree file.")
 
-> > When the index file is not up-to-date, git diff-files may show differen=
-ces
-> > between the working directory and the index that are caused by file cre=
-ation
-> > time differences, rather than actual changes to the file contents. By u=
-sing git
-> > diff-files --stat, which ignores file creation time differences.
->
-> Use of "diff-files --stat" would mean that the contents of the blob
-> registered in the index will be inspected, which can be used to hide
-> the "stat dirty" condition.
->
-> But doesn't it cut both ways?  Starting from a clean index that has
-> up-to-date stat information for paths, we may want to test what
-> "stat dirty" changes diff-files reports when we touch paths in the
-> working tree, both inside and outside the spase cones.  A test with
-> "--stat" will not achieve that, exactly because it does not pay
-> attention to and hides the stat dirtiness.
+The --contents option always blames the file as if it was based on the
+current HEAD commit. If you try to pass a revision while using
+--contents, you get the following error:
 
-In this case, we can only use 'git diff-files --stat' when files are
-present on disk without modifications. Since we know in the
-full-checkout case 'diff-files --stat' will give empty output, so
-sparse-checkout and sparse-index are also empty. These make
-sure that the paths in the working tree are not dirty. So we do not
-need to pay attention to 'stat dirty' change.
+  fatal: cannot use --contents with final commit object name
 
-When 'file present on-disk with modifications'. We use 'git diff-files'
-instead of  'git diff-files --stat' so we can get the expected
-"modified" status but avoids potential breakages related to
-inconsistency in the file creation time.
+This is because the blame process generates a fake working tree commit
+which always uses the HEAD object.
 
-# file present on-disk without modifications
-# use `--stat` to ignore file creation time differences in
-# unrefreshed index
-test_all_match git diff-files --stat &&
-test_all_match git diff-files --stat folder1/a &&
-test_all_match git diff-files --stat "folder*/a" &&
+Fix fake_working_tree_commit to take the object ID to use for the
+parent instead of always using HEAD. If both a revision and --contents
+is provided, look up the object ID from the provided revision instead of
+using HEAD.
 
-# file present on-disk with modifications
-run_on_all ../edit-contents folder1/a &&
-test_all_match git diff-files &&
-test_all_match git diff-files folder1/a &&
-test_all_match git diff-files "folder*/a"
+This enables use of --contents with an arbitrary revision, rather than
+forcing the use of the local HEAD commit. This makes the --contents
+option significantly more flexible.
 
-> On the other hand, if "update-index --refresh" is used in the test,
-> we may discover breakages caused by "update-index" not handling
-> the sparse index correctly.  It would be outside the topic of this
-> series, so avoiding it would be simpler, but (1) if it is not broken,
-> then as you said, it would be a more direct way to test diff-files,
-> and (2) if it is broken, it would need to be fixed anyway, before or
-> after this series.  So, I dunno...
+Reword the documentation so that its clear that --contents can be used
+with <rev>.
 
-Thanks
-Shuqi
+Add tests for the --contents option to the annotate-tests.sh test
+script.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+I ran into this because I use --contents in a process I'm working on for
+comparing differences between two forks of a project. I use blame --contents
+where I point blame to the contents from the other repository. It is useful
+to be able to do with at arbitrary commits. Currently I have to switch the
+working tree to the commit rather than being able to target a commit by its
+oid.
+
+With this change I can more easily run this process without the need to
+actually check the contents out in the working tree. Its relatively simple
+to make --contents work with a revision, since I just need to generate the
+fake contents starting from that revision instead of starting from HEAD.
+
+This might make it possible for --contents to work with --reverse now as
+well, but I haven't investigated that.
+
+ Documentation/blame-options.txt |  9 ++++-----
+ blame.c                         | 27 ++++++++++++++++-----------
+ t/annotate-tests.sh             | 14 ++++++++++++++
+ 3 files changed, 34 insertions(+), 16 deletions(-)
+
+diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
+index 9a663535f443..6476dd327377 100644
+--- a/Documentation/blame-options.txt
++++ b/Documentation/blame-options.txt
+@@ -64,11 +64,10 @@ include::line-range-format.txt[]
+ 	manual page.
+ 
+ --contents <file>::
+-	When <rev> is not specified, the command annotates the
+-	changes starting backwards from the working tree copy.
+-	This flag makes the command pretend as if the working
+-	tree copy has the contents of the named file (specify
+-	`-` to make the command read from the standard input).
++	Pretend the file being annotated has the contents from the named
++	file instead of using the contents of <rev> or the working tree
++	copy. You may specify '-' to make the command read from standard
++	input for the file contents.
+ 
+ --date <format>::
+ 	Specifies the format used to output dates. If --date is not
+diff --git a/blame.c b/blame.c
+index e45d8a3bf92a..52fca5a7f5b7 100644
+--- a/blame.c
++++ b/blame.c
+@@ -177,12 +177,12 @@ static void set_commit_buffer_from_strbuf(struct repository *r,
+ static struct commit *fake_working_tree_commit(struct repository *r,
+ 					       struct diff_options *opt,
+ 					       const char *path,
+-					       const char *contents_from)
++					       const char *contents_from,
++					       struct object_id *oid)
+ {
+ 	struct commit *commit;
+ 	struct blame_origin *origin;
+ 	struct commit_list **parent_tail, *parent;
+-	struct object_id head_oid;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *ident;
+ 	time_t now;
+@@ -198,10 +198,7 @@ static struct commit *fake_working_tree_commit(struct repository *r,
+ 	commit->date = now;
+ 	parent_tail = &commit->parents;
+ 
+-	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL))
+-		die("no such ref: HEAD");
+-
+-	parent_tail = append_parent(r, parent_tail, &head_oid);
++	parent_tail = append_parent(r, parent_tail, oid);
+ 	append_merge_parents(r, parent_tail);
+ 	verify_working_tree_path(r, commit, path);
+ 
+@@ -2772,22 +2769,30 @@ void setup_scoreboard(struct blame_scoreboard *sb,
+ 		sb->commits.compare = compare_commits_by_reverse_commit_date;
+ 	}
+ 
+-	if (sb->final && sb->contents_from)
+-		die(_("cannot use --contents with final commit object name"));
+-
+ 	if (sb->reverse && sb->revs->first_parent_only)
+ 		sb->revs->children.name = NULL;
+ 
+-	if (!sb->final) {
++	if (sb->contents_from || !sb->final) {
++		struct object_id head_oid, *parent_oid;
++
+ 		/*
+ 		 * "--not A B -- path" without anything positive;
+ 		 * do not default to HEAD, but use the working tree
+ 		 * or "--contents".
+ 		 */
++		if (sb->final) {
++			parent_oid = &sb->final->object.oid;
++		} else {
++			if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &head_oid, NULL))
++				die("no such ref: HEAD");
++			parent_oid = &head_oid;
++		}
++
+ 		setup_work_tree();
+ 		sb->final = fake_working_tree_commit(sb->repo,
+ 						     &sb->revs->diffopt,
+-						     sb->path, sb->contents_from);
++						     sb->path, sb->contents_from,
++						     parent_oid);
+ 		add_pending_object(sb->revs, &(sb->final->object), ":");
+ 	}
+ 
+diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
+index f1b9a6ce4dae..b35be20cf327 100644
+--- a/t/annotate-tests.sh
++++ b/t/annotate-tests.sh
+@@ -72,6 +72,16 @@ test_expect_success 'blame 1 author' '
+ 	check_count A 2
+ '
+ 
++test_expect_success 'blame with --contents' '
++	check_count --contents=file A 2
++'
++
++test_expect_success 'blame with --contents changed' '
++	echo "1A quick brown fox jumps over the" >contents &&
++	echo "another lazy dog" >>contents &&
++	check_count --contents=contents A 1 "Not Committed Yet" 1
++'
++
+ test_expect_success 'blame in a bare repo without starting commit' '
+ 	git clone --bare . bare.git &&
+ 	(
+@@ -98,6 +108,10 @@ test_expect_success 'blame 2 authors' '
+ 	check_count A 2 B 2
+ '
+ 
++test_expect_success 'blame with --contents and revision' '
++	check_count -h testTag --contents=file A 2 "Not Committed Yet" 2
++'
++
+ test_expect_success 'setup B1 lines (branch1)' '
+ 	git checkout -b branch1 main &&
+ 	echo "3A slow green fox jumps into the" >>file &&
+-- 
+2.40.0.131.g970374df36d8
+
