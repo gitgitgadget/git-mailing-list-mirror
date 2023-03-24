@@ -2,94 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E72FC6FD20
-	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 19:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7474AC6FD1C
+	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 19:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230157AbjCXT2v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Mar 2023 15:28:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54680 "EHLO
+        id S231863AbjCXTnu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Mar 2023 15:43:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbjCXT2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2023 15:28:50 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0C451E294
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 12:28:49 -0700 (PDT)
-Received: (qmail 6381 invoked by uid 109); 24 Mar 2023 19:28:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 24 Mar 2023 19:28:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4810 invoked by uid 111); 24 Mar 2023 19:28:48 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 24 Mar 2023 15:28:48 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 24 Mar 2023 15:28:48 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Baumann, Moritz" <moritz.baumann@sap.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Feature Request: Option to make "git rev-list --objects" output
- duplicate objects
-Message-ID: <20230324192848.GC536967@coredump.intra.peff.net>
-References: <AS1PR02MB8185A45DB63216699AFB2C5494849@AS1PR02MB8185.eurprd02.prod.outlook.com>
+        with ESMTP id S231845AbjCXTnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2023 15:43:49 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39358166D1
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 12:43:48 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id l7so2380693pjg.5
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 12:43:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679687028;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jQQW+u9QPptxF2nShVl06jKLjVfxAvKbcIMtxCO8o68=;
+        b=SMndBhFdtAX5boWtr8nlWe86aZXgVD05tI98095sJ8h6wieNcl7tAtZrZVpG2hvdWy
+         vO6UsNk3ozgAk87EqZRHwTFzavsxcv2CmNRy2hJ+AeCauog8Uz7614cMPMkwc9AndYFK
+         Jcym87MudWea19q9VWLQRCrCicGFqAVgVGiBtOOTO/VtiRvdZtRQ0xPZn3/Ia2VnMBQj
+         dif0HstcuVsf7jyQK45cTnVp0Vrdph5lb1X+pmmT+3Egk5SeBqVxisbIpI3k4l8Q0l/v
+         ldt8Nz7oSivl8GWU4DNTpRxP8x4Tja8d8CaL2NPsTqiwsThtUM1WbQEEWf1pY87AZaBd
+         l9Dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679687028;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=jQQW+u9QPptxF2nShVl06jKLjVfxAvKbcIMtxCO8o68=;
+        b=pvJE4oF6Plg/nKutmu1h4WiUAy7iAeAh0umqS0lnYra2BZ87mhUWyJamegKMBnSGDw
+         VazOAFg066a99CQJTnb0nztV6yjHbYsllMm3deSJNeKD0rtd0tLA6nEx/YZO2ISCzIhS
+         SVNKaqbiK09oCWVItRHpa3rm0eoTLYkQeDS3bXOXMcW3dgDeCnTMpJwyR190jkyw9uY0
+         0VXdy0uGVb2x44f9Z4kycE+f1LdrwaJbRjX0BefdJVRuqhdSIrWarKj9OvgZ0Mcqsj5h
+         BePKlc53UFWYS1+ndCJlJT4GYWNEFQWMDPFPZMyUj2G1AmVQ+Z6PCu7fcr1sFPe+wGDi
+         3ofw==
+X-Gm-Message-State: AAQBX9chXu8tOU/iaQ2xVrlEg1LnoDXHFzYQ+ijlzysLabVRvS66Ty92
+        K1NoL5HjgeMoeJitiIxlmrM=
+X-Google-Smtp-Source: AKy350ZSX4nhbYAJ04ExRL1kp/tH5ktEVRbTZsHJ2QQ2oZvuJGIffnjkVWmIvQinmOTACWCVFlXXgw==
+X-Received: by 2002:a17:903:2806:b0:1a1:c3eb:af7 with SMTP id kp6-20020a170903280600b001a1c3eb0af7mr3053991plb.55.1679687027559;
+        Fri, 24 Mar 2023 12:43:47 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id h13-20020a170902f7cd00b0019d1f42b00csm14560169plw.17.2023.03.24.12.43.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Mar 2023 12:43:47 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH 5/6] pack-bitmap.c: use `bitmap_index_seek()` where
+ possible
+References: <cover.1679342296.git.me@ttaylorr.com>
+        <9a3e45b78b7810e0116848f1de80096b04285a55.1679342296.git.me@ttaylorr.com>
+        <20230321180525.GG3119834@coredump.intra.peff.net>
+        <8a7cf287-421c-9a7f-0788-c5e219e6a8e3@github.com>
+        <20230324183514.GB536252@coredump.intra.peff.net>
+Date:   Fri, 24 Mar 2023 12:43:46 -0700
+In-Reply-To: <20230324183514.GB536252@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 24 Mar 2023 14:35:14 -0400")
+Message-ID: <xmqqr0tedjf1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <AS1PR02MB8185A45DB63216699AFB2C5494849@AS1PR02MB8185.eurprd02.prod.outlook.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 24, 2023 at 03:51:21PM +0000, Baumann, Moritz wrote:
+Jeff King <peff@peff.net> writes:
 
-> …and then used the resulting list for all subsequent checks. After writing some
-> unit tests, I noticed that the returned list is not sufficient: If you generate
-> the exact same file twice, once with a "bad" name and once with a "good" name,
-> you will only see one of those names and therefore the hook will mistakenly
-> allow the push.
-> 
-> So, what I would want/need is an option that forces "git rev-list --objects"
-> to output the object multiple times if it has multiple names in the commit
-> range. Admittedly, such an option would likely only be useful for hooks that
-> validate file names.
+> On Fri, Mar 24, 2023 at 02:06:43PM -0400, Derrick Stolee wrote:
+>
+>> >> +	bitmap_index_seek(index, header_size, SEEK_CUR);
+>> >>  	return 0;
+>> >>  }
+>> > 
+>> > Likewise this function already has bounds checks at the top:
+>> > 
+>> > 	if (index->map_size < header_size + the_hash_algo->rawsz)
+>> > 		return error(_("corrupted bitmap index (too small)"));
+>> > 
+>> > I'd be perfectly happy if we swapped that our for checking the bounds on
+>> > individual reads, but the extra checking in the seek step here just
+>> > seems redundant (and again, too late).
+>> 
+>> I think it would be nice to replace all of these custom bounds
+>> checks with a check within bitmap_index_seek() and error conditions
+>> done in response to an error code returned by that method. It keeps
+>> the code more consistent in the potential future of changing the
+>> amount to move the map_pos and the amount checked in these conditions.
+>
+> Yeah, that's what I was getting at. But doing it at seek time is too
+> late. We'll have just read off the end of the array.
 
-Another problem you might not have run into yet: the names given by
-rev-list are not quoted in any way, and will just omit newlines. So if
-your hook is trying to avoid malicious garbage like "foo\nbar", it won't
-work.
+Yup.  You illustrated it nicely in your response for the previous
+step of the series.  If the typical access pattern is to check, read
+and then advance to the next position, and by the time you are ready
+to advance to the next position, you'd better have done the checking.
 
-Those names are really just intended as hints for pack-objects. I
-suspect the documentation could be more clear about these limitations.
+> You really need an interface more like "make sure there are N bytes for
+> me to read at offset X". Then you can read and advance past them.
+>
+> For individual items where you want to copy the bytes out anyway (like a
+> be32) you can have a nice interface like:
+>
+>   if (read_be32(bitmap_git, &commit_idx_pos) < 0 ||
+>       read_u8(bitmap_git, &xor_offset) < 0 ||
+>       read_u8(bitmap_git, &flags) < 0)
+> 	return error("truncated bitmap entry");
 
-> Would it be feasible to implement such an option? If so, does it sound like a
-> good or bad idea?
-> 
-> Is there any alternative for my use case that doesn't involve walking the
-> commits one-by-one? (That's what we previously did and what turned out to be
-> quite slow on our repository.)
+Yeah, that kind of flow reads really well.
 
-I'm not sure what you mean by "one by one", since that is inherently
-what rev-list is doing under the hood. If you mean "running a separate
-process for each commit", then yes, that will be slow. But if you want
-to know all of the names touched in a set of commits, I have used
-something like this before:
+> But given that there is only one spot that calls these, that kind of
+> refactoring might not be worth it (right now it just uses the magic
+> number "6" right before grabbing the data).
 
-  git rev-list $new --not --all |
-  git diff-tree --stdin --format= -r -c --name-only
+Yeah, it seems most of the callers with SEEK_SET are "I find the
+next offset from a table and jump there in preparation for doing
+something".  I suspect callers with SEEK_CUR would fit in the
+read_X() pattern better?  From that angle, it smells that the two
+kinds of seek functions may want to be split into two different
+helpers.
 
-A few notes:
+Thanks.
 
-  - the names may be quoted if they have metacharacters; use "-z" if
-    your reading side can handle it to make things simpler
 
-  - merges are always tricky. I think "-c" will give you what you want
-    (showing names which differed from any parent), but I didn't think
-    too hard.  Using "-m" definitely would work, but may produce extra
-    names (ones where the merge just brought together two lines of
-    history, even though the commit where one of those lines touched the
-    file may have been excluded via "--not --all").
-
-  - if you are assuming the existing names are good, then probably
-    --diff-filter=A would be useful, as it would show only
-    newly-introduced names.
-
--Peff
