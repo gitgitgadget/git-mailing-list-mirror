@@ -2,143 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97120C6FD1C
-	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 18:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BE38C6FD1C
+	for <git@archiver.kernel.org>; Fri, 24 Mar 2023 18:08:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232372AbjCXSGT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Mar 2023 14:06:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46622 "EHLO
+        id S232067AbjCXSIE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Mar 2023 14:08:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232315AbjCXSF7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2023 14:05:59 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2C3723D91
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 11:04:07 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-536af432ee5so48085857b3.0
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 11:04:07 -0700 (PDT)
+        with ESMTP id S232503AbjCXSHd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2023 14:07:33 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F38C1CF4D
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 11:06:45 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id n125so3247013ybg.7
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 11:06:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1679681046;
+        d=github.com; s=google; t=1679681204;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=G2na2+n0izRa93r+f8GfA5dIvwi1DHslinPQjw92j6Q=;
-        b=ZWWSaea9hl+HqHIDKUk9AxgLdqnVlwY6xV2AknAxQKrzW7pEvUeEpsTOavHrlKNeRV
-         mQDs298YTD4aoxfn3hd+lCjOO7XBr1VqFxSGOl1M19uYuptBAQlm/iInfpV3z3IN7x/6
-         bclMJ0I17U/WlMiBTLgIJEK4OvOOSxyZjWAtYe/lOgnN5YJc/3lEwD0WJRvVUa0cwFIz
-         6Tv9BFw1QAfiA+U2+yHGT3ZdH5v4GQW/8VxCcMJlef1LPvUDlm7UQDkXGVJXKdYieAuG
-         Hvx3ooJVdgynvcBvWCam+Ap/zLYtHSrDkL8WwehA8CdheWeDhAtIZbDur/b4WsnW6VYr
-         xl7A==
+        bh=GJuApYJlGlrugGebotFvm0lEsWFco9+jVH/5FPaQROc=;
+        b=TaeK+y6RDeAB0efBQvCuXLuv037PhUFIHCL14PlLp7/dbmfG490PBmCgKz1ruRp40c
+         mv6WDM4cZnlZoiW4ZV5B/t2o7R09XrKMA2XgI4g7IsnwgmLuNetGW7Bc6G6rpzCBGKyu
+         YaOiLY4iwRTnxgE5q9VSROyzb+1DC942zE8ZJcaFYv7ETfA1XvG8/adDGWUblxlx4SQP
+         G3/Hy3vPLdZepsBq4Yw5Oss2vd3ym4epVpC/BCwr7pqQFdYVg5yImX+a0xDhNEpNLp9T
+         zufJ6rL5G3qQTi3thpTkgFIEaT1fAEsy40sedLd/9FihEK3pd+0Yq6JycQ33WGHQ9ZYK
+         mVdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679681046;
+        d=1e100.net; s=20210112; t=1679681204;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G2na2+n0izRa93r+f8GfA5dIvwi1DHslinPQjw92j6Q=;
-        b=bah/w4owWU9hDeUvtKbTHeRZ2ln8JQwK82FJ39GoRYQqhpHW/f3GHTMsjQR0j3qfg1
-         27myG4BqE8bDR9Vmoiw4uv5DWtma9U/ZXYhrXNSTkhribQAQG+apNgObbk5Py6q/zggA
-         QKs1aRmTX/RBa+D3VuRpzG/yrqEwAC0HaSkOZg4YUm9UwNKT0Mj+VWrDSK4AMka7CxTd
-         V6AnXYnkQfCSiPBTE1cFrnpI73VsldiuGuxYuTMumnPCjVxehvo4TVUZcdXrDM066yhZ
-         Q70gCGbMkgYZdjo3lrnnP58ZZv5lR6uQovNmgbqJ8U6A+XHVtsxZZ0E21r6j5erHIr6v
-         HqUA==
-X-Gm-Message-State: AAQBX9eYnCcMXsI+jI9l59Be6ouOtrPdAI4Dry+2NSSpjZMm5GB5cFdE
-        u0n3r+yrOx9KbCqwUGP+jYzJ
-X-Google-Smtp-Source: AKy350ZzpQqNvS9vCQBD1ri8NfzgbC1E7LguDPDZRCKarTtutJhXcofq8zZByy5cv27Iiy71UyFtoA==
-X-Received: by 2002:a0d:d505:0:b0:541:7193:e136 with SMTP id x5-20020a0dd505000000b005417193e136mr3053509ywd.23.1679681046144;
-        Fri, 24 Mar 2023 11:04:06 -0700 (PDT)
+        bh=GJuApYJlGlrugGebotFvm0lEsWFco9+jVH/5FPaQROc=;
+        b=sbJ4mysypP8OkHqDWv6cHzEjYVpictwqQ1FdGGsatHhiotOr35xVMC1WpoTxHXEteq
+         BJnLEfK4EU32bt83M2n23d9I4GL8JroxS7G95SPjw2szdJKZwVYnpumW3WM3zQ0PRxxS
+         1plOpc7sZBcUht+H7b++ITebrDA8oyCTPzYDw1ad6Bq9EaR2dXwhZ7/CIxWg/8zcDYoG
+         OHK0Rg4YSbg2ld8PQzWDX2FpOcvYi4kfWWSzI4wosm+IQUL4+zVJUaQThHZfS5Y8HN4K
+         2d2A5dvQi+GGWHMUXS2i6nkLBHHfrZPMVJc8BCrFaPh/VuTZpT4fx6WWCgSPqnEhasHf
+         SoFA==
+X-Gm-Message-State: AAQBX9ebg+EB9ylnIopSldKViVOFdaBePY/7/Y20a4jSXVtTIJxOq7Ah
+        mqF62ajSG0mz4eIHkZsbNd9f
+X-Google-Smtp-Source: AKy350b9e8XXiyYuH0sVzBdXRDd/E6JBAimW+m1vGljwWAwFLQ2E7D+oucx9t3upyKP1iRLPAeQpcg==
+X-Received: by 2002:a25:144:0:b0:a2d:a981:6f50 with SMTP id 65-20020a250144000000b00a2da9816f50mr3260837ybb.27.1679681204356;
+        Fri, 24 Mar 2023 11:06:44 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e72:80a0:55e4:a877:13cb:cca6? ([2600:1700:e72:80a0:55e4:a877:13cb:cca6])
-        by smtp.gmail.com with ESMTPSA id d123-20020a0ddb81000000b00545a08184e4sm542046ywe.116.2023.03.24.11.04.05
+        by smtp.gmail.com with ESMTPSA id d8-20020a818d08000000b00545a0818501sm525733ywg.145.2023.03.24.11.06.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Mar 2023 11:04:05 -0700 (PDT)
-Message-ID: <61ae4ad5-4d4d-933c-a2cb-e7e2cd734401@github.com>
-Date:   Fri, 24 Mar 2023 14:04:05 -0400
+        Fri, 24 Mar 2023 11:06:44 -0700 (PDT)
+Message-ID: <8a7cf287-421c-9a7f-0788-c5e219e6a8e3@github.com>
+Date:   Fri, 24 Mar 2023 14:06:43 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH 4/6] pack-bitmap.c: factor out manual `map_pos`
- manipulation
+Subject: Re: [PATCH 5/6] pack-bitmap.c: use `bitmap_index_seek()` where
+ possible
 Content-Language: en-US
 To:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
 References: <cover.1679342296.git.me@ttaylorr.com>
- <0decf13869df6216914044a560d94968126836f4.1679342296.git.me@ttaylorr.com>
- <20230321175612.GF3119834@coredump.intra.peff.net>
+ <9a3e45b78b7810e0116848f1de80096b04285a55.1679342296.git.me@ttaylorr.com>
+ <20230321180525.GG3119834@coredump.intra.peff.net>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20230321175612.GF3119834@coredump.intra.peff.net>
+In-Reply-To: <20230321180525.GG3119834@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 3/21/2023 1:56 PM, Jeff King wrote:
-> On Mon, Mar 20, 2023 at 04:02:49PM -0400, Taylor Blau wrote:
+On 3/21/2023 2:05 PM, Jeff King wrote:
+> On Mon, Mar 20, 2023 at 04:02:52PM -0400, Taylor Blau wrote:
 > 
->> The pack-bitmap internals use a combination of a `map` and `map_pos`
->> variable to keep a pointer to a memory mapped region of the `.bitmap`
->> file, as well as the position within that file, respectively.
->>
->> Reads within the memory mapped region are meant to mimic file reads,
->> where each read adjusts the offset of the file descriptor accordingly.
->> This functionality is implemented by adjusting the `map_pos` variable
->> after each read.
->>
->> Factor out a function similar to seek() which adjusts the `map_pos`
->> variable for us. Since the bitmap code only needs to adjust relative to
->> the beginning of the file as well as the current position, we do not
->> need to support any "whence" values outside of SEEK_SET and SEEK_CUR.
+>> --- a/pack-bitmap.c
+>> +++ b/pack-bitmap.c
+>> @@ -174,7 +174,7 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
+>>  		return NULL;
+>>  	}
+>>  
+>> -	index->map_pos += bitmap_size;
+>> +	bitmap_index_seek(index, bitmap_size, SEEK_CUR);
+>>  	return b;
 > 
-> I like the idea of centralizing the bounds checks here.
+> As an aside, I notice none of the callers here or in the next patch
+> check the return value of bitmap_index_seek(). I guess you included it
+> to match the return value of lseek(), but maybe it is better to return
+> void if nobody is looking at it.
 > 
-> I do think copying lseek() is a little awkward, though. As you note, we
-> only care about SEEK_SET and SEEK_CUR, and we have to BUG() on anything
-> else. Which means we have a run-time check, rather than a compile time
-> check. If we had two functions like:
-> 
->   void bitmap_index_seek_to(struct bitmap_index *bitmap_git, size_t pos)
->   {
-> 	bitmap_git->map_pos = pos;
-> 	if (bitmap_git->map_pos >= bitmap_git->map_size)
-> 	   ...etc...
->   }
-> 
->   void bitmap_index_incr(struct bitmap_index *bitmap_git, size_t offset)
->   {
-> 	bitmap_index_seek_to(bitmap_git, st_add(bitmap_git->map_pos, offset));
->   }
-> 
-> then the compiler can see all cases directly. I dunno how much it
-> matters.
+> But getting back to the bounds-checking: I think we are already
+> correctly bounds-checked here, because ewah_read_mmap() will make sure
+> that it doesn't read too far (and will return an error if there's
+> truncation). And if it didn't, this check-on-seek doesn't help us,
+> because we'll already have done out-of-bounds reads.
 
-Whenever the compiler can help us, I'm usually in favor.
-
-In this case, I'd call them bitmap_index_seek() and bitmap_index_increment(),
-which should be clear enough.
-
-The other alternative would be to use an enum instead of an arbitrary int.
-The compiler can warn to some extent, but it's not as helpful as a method
-name distinction.
-
->> +	if (bitmap_git->map_pos >= bitmap_git->map_size)
->> +		BUG("bitmap position exceeds size (%"PRIuMAX" >= %"PRIuMAX")",
->> +		    (uintmax_t)bitmap_git->map_pos,
->> +		    (uintmax_t)bitmap_git->map_size);
+>> +	bitmap_index_seek(index, header_size, SEEK_CUR);
+>>  	return 0;
+>>  }
 > 
-> This uses ">=", which is good, because it is valid to walk the pointer
-> to one past the end of the map, which is effectively EOF. But as above,
-> in that condition the callers should be checking for this EOF state
-> before reading the bytes.
+> Likewise this function already has bounds checks at the top:
+> 
+> 	if (index->map_size < header_size + the_hash_algo->rawsz)
+> 		return error(_("corrupted bitmap index (too small)"));
+> 
+> I'd be perfectly happy if we swapped that our for checking the bounds on
+> individual reads, but the extra checking in the seek step here just
+> seems redundant (and again, too late).
 
-In other words, it would be too easy for a strange data shape to trigger
-this BUG() statement, which should be reserved for the most-extreme cases
-of developer mistake. Things like "this is an unacceptable 'whence' value"
-or "this should never be NULL" make sense, but this is too likely to be
-hit due to a runtime error.
-
-Would it make sense to return an 'int' instead of the size_t of map_pos?
-That way we could return in error if this is exceeded, and then all
-callers can respond "oh wait, that move would exceed the file size, so
-I should fail in my own way..."?
+I think it would be nice to replace all of these custom bounds
+checks with a check within bitmap_index_seek() and error conditions
+done in response to an error code returned by that method. It keeps
+the code more consistent in the potential future of changing the
+amount to move the map_pos and the amount checked in these conditions.
 
 Thanks,
 -Stolee
