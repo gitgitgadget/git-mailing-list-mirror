@@ -2,147 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8812AC6FD1F
-	for <git@archiver.kernel.org>; Sat, 25 Mar 2023 11:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EF2FC6FD1C
+	for <git@archiver.kernel.org>; Sat, 25 Mar 2023 12:16:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231735AbjCYLIM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Mar 2023 07:08:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59718 "EHLO
+        id S231926AbjCYMQl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Mar 2023 08:16:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230399AbjCYLIL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2023 07:08:11 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A64FFF1A
-        for <git@vger.kernel.org>; Sat, 25 Mar 2023 04:08:09 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id t15so4080344wrz.7
-        for <git@vger.kernel.org>; Sat, 25 Mar 2023 04:08:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679742488;
-        h=content-transfer-encoding:in-reply-to:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wcfOcqyB213RdR7DQHGdGszCKJ9jjd+10IDMm/GgUEM=;
-        b=DREfKxEh1wiE4spKoIIbGgybh2FcSx2i9uATec36AZNqaTEbHQxf1ht02pYscDODp8
-         xxVY9Gfc8Jpbr/JZzXE1sgY7o4V8Foe6X2EtE0dY9yT8IR1BXIVCs65wu9ANkONWPw2t
-         Jo9A9gg7kXp2ZudAmWFTL8X4wWC7Z/uXJ62A+qJh5SmeJ1Vev6rGgEgSPugzrRdh4YZd
-         yo7CiyKm4Oj28I7etH76hJyd3J3H9WZHuoPdeTjyb+sP6KNj/Qi1UMutQElYpmMjW5b9
-         4HImGgVlT7O+pe82P+2qoj2gVtUA3PvH9rH/U5KN5MJHZR/jdLVt3Htds9pW9xIjkaDy
-         Fv1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679742488;
-        h=content-transfer-encoding:in-reply-to:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wcfOcqyB213RdR7DQHGdGszCKJ9jjd+10IDMm/GgUEM=;
-        b=1XHv+Io+bMChympAAz1OIUmjIknIr+bWumz93UbouuThPpSMJ+EblS187CIw5vmyg9
-         znrRCg5A8F9gOPDPM48zcNiClU0a3cROHDcPhp62UP8+0U7bQdf/onw6H7jGsAten/Zv
-         yPgaJpwRxB65izD8yYtw7zzBDvP53C1PIuHjJYuJZb3kVuhYutHMyBsXkS5K6lSY2Rpv
-         1qyLo7GzehzRr2VCDr9FIy8Lfckb0UXNPX/CbwdADvyoCflh8RvEiTiOEZ/TglAyKMWS
-         isYF71RGNqBbKTQ6lbSOph8qCvCc1HfeVFNZiGBnMQLrohZ5JHLjlObXjd321UhUiIb0
-         hlLQ==
-X-Gm-Message-State: AAQBX9fqOmHehrOiNAQVYs0cV8JeTPN0nKEzaNgQ+TkrWWjWMIoN4jWU
-        raIdKHYOb2Hol9+N3fTijeZ+3DX0+Qo=
-X-Google-Smtp-Source: AKy350YJeS9xHUEmGUTA6fx/HH/uBm0qUEqL0NiNJNCUK/MnKcYOw+0vufFy0/09ixKBob4N4V681w==
-X-Received: by 2002:adf:f687:0:b0:2ce:aa8b:4590 with SMTP id v7-20020adff687000000b002ceaa8b4590mr5567955wrp.9.1679742487881;
-        Sat, 25 Mar 2023 04:08:07 -0700 (PDT)
-Received: from [192.168.1.212] ([90.253.29.198])
-        by smtp.gmail.com with ESMTPSA id i11-20020a05600c290b00b003ee20b4b2dasm7508838wmd.46.2023.03.25.04.08.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Mar 2023 04:08:07 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <f72b3820-124c-3e2c-30e2-ca3f46b74dc0@dunelm.org.uk>
-Date:   Sat, 25 Mar 2023 11:08:06 +0000
+        with ESMTP id S231880AbjCYMQk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2023 08:16:40 -0400
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36084AD
+        for <git@vger.kernel.org>; Sat, 25 Mar 2023 05:16:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1679746592; i=l.s.r@web.de;
+        bh=D2xeTccEZcOqt3Vh9mbMgMH1ch7jmdq1G2T/vbAKkg8=;
+        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+        b=I/Wcapj+Xp/E169s8HCRzR+VHw9Sfm6KO9oVemkgoS9i/RgMXthIYtCod72IkxTML
+         J6OIY7+sfXFas6GqURjP3L5vC8pN1/zWpUYQ9gaEWSkRfk1V7w30jFH7jT34I2K1bf
+         LWtU11Ahx4mTtTSB/6xP9+ythtIokGe1j6BT7Bk5ScBoRZW3ew/j/x/vEoI3apjnrn
+         EULfS0lS7adliEc/nlyGMUB5ZFm1iCsMzML6jeJXhWa3g4GfapCrOuzXBluy40fsP2
+         UfXfTjGHX9uqEdnYotm0jPR1Qk0O6OKOAg2YS4IYgEU0EVpO/NHtSn+SUUZFHZ6cSh
+         XOiny/vxhy7xg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.31.43]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mfc8o-1q8X1M3Oki-00g9Xj; Sat, 25
+ Mar 2023 13:16:32 +0100
+Message-ID: <233edbbe-35c1-9b5b-7578-4c70c6d24449@web.de>
+Date:   Sat, 25 Mar 2023 13:16:32 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/8] sequencer refactoring
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.0
 Content-Language: en-US
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
-References: <20230323162235.995574-1-oswald.buddenhagen@gmx.de>
-In-Reply-To: <20230323162235.995574-1-oswald.buddenhagen@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] t5000: use check_mtime()
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:C7W2W8kDnlPxikpSgUCHzFQzqhurcyEaIxxaLUnvGUQtivfukQr
+ FelBjkET8gaOoV3aESZ295M2WuNH6zjI9+qhs+5YGuhOhCqWVX5Tt92dMp7ev/MSEJQrAWR
+ BWoLs5UNtfVnvmGDbGmmpxdJB2F8u2h4v7vSYTIT0nwCBFPZ2ffK8z90V9B7dX3L1s1FziY
+ xcyTDbRAz/J6q6lJnC9kA==
+UI-OutboundReport: notjunk:1;M01:P0:VPeS6Y9oKrs=;X/IJPPaei6euXCFFOqDCNV754bB
+ D1rEcvz6neNc6uU13mAhEC90G42JvwaGbY5hCkrNXDCXFP0/c4YcZHRZ8Y3AqDzGFUAOfBg7X
+ oMs4jdIWMswh3t0yaEazGgEdvrO7kGl00a/J3iY5uJfPxRf1t8XUL6tV1isg6aq6I7gbGrc0z
+ h+WQu+udzk/nxTkHHILAxbjZnywAr9PhC73EZmLMFVhm2ZD1uVzVbFeyu2fJpVaG1pSLE0dgM
+ RawsyCRiHlZk5mC+PhzBNaMj+XEsBZ068l6orIfmGCXcuo2RmhuCBKZGmzpuar9jWQcrtBqMH
+ i44d+zOtklJA4pXwJmGdzx03v21rA0et7/IdBjy7n/RxuVRFNVa9Xfv7yupJO6lMvicnhau+a
+ x1nglf8pPBnFkLRpqlV4IJEQsFayqnraRMgc3ISeJYqlqIyt4pd/S+//Ky5IdjmRXvBj5+fay
+ NIKdvB/8m0Hn8wq5U9Kl+X1/Cz4JJIKTBVjEE+/LfDAPurYWv3duFiH3R+m3XHpqeQwAe37C3
+ ca6SMR7LAN2684EFHQKteG3/94DF8rpcjcGO9TBySbAZwLruLikuJ95AmQVuNpJFxC+PHxV0w
+ z6mlBwpoET0senyh1tIT7RLR13JeI6q0U7h6tGjYr/eFQ0OaWjlrF1FrsmGTK63Z//QM/ZldV
+ WkFEeXfxLTeciS7cBT7yrj1p0fmuR9JMWLuGPboR5mD9yZMTCYl1BtWJvA9ulYnKfw7IcT4Fr
+ hLsiEkb/McPjbxWeb4p7mbWat0PwKLeCfUK6/RHd9+0FaDJfWJwgkz5Y1VrH/sNZvkGS8VNPk
+ 1j3QjlxXCS/XfZw0ttGS0Rmp82SmrGbStIf2KAqQCJi90G2/z878dm577/fv3EIGjB4VSXbtl
+ Kr7fqkvlyDeg3scq8h7iJ0mNFvfGaVfw/D8dyHPV1WDn0dxZP5LT6hZMNyi7f2I40w+un8ANV
+ +phfFtQ4sE331J42INZOgd4M0sA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Oswald
+fd2da4b1ea (archive: add --mtime, 2023-02-18) added a helper function
+for checking the file modification time of an extracted entry.  Use it
+for the older mtime test as well to shorten the code and piggyback on
+the archive extraction done to validate file contents.
 
-On 23/03/2023 16:22, Oswald Buddenhagen wrote:
-> This is a preparatory series for the separately posted 'rebase --rewind' patch,
-> but I think it has value in itself.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/t5000-tar-tree.sh | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-I had a hard time applying these patches. In the end I had success with 
-checking out next, applying 
-https://lore.kernel.org/git/20230323162234.995514-1-oswald.buddenhagen@gmx.de 
-and then applying this series. It is very helpful to detail the base 
-commit in the cover letter. A series like this should normally be based 
-on master see Documentation/SubmittingPatches.
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index 918a2fc7c6..f0bd70dbd6 100755
+=2D-- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -185,6 +185,7 @@ test_expect_success 'git archive' '
+ '
 
-Having applied the patches I'm unable to compile them with DEVELOPER=1 
-(see Documentation/CodingGuidelines)
+ check_tar b
++check_mtime b a/a 1117231200
 
-In file included from log-tree.c:20:
-sequencer.h:7:6: error: ISO C forbids forward references to ‘enum’ types 
-[-Werror=pedantic]
-     7 | enum rebase_action;
-       |      ^~~~~~~~~~~~~
-sequencer.h:140:34: error: ISO C forbids forward references to ‘enum’ 
-types [-Werror=pedantic]
-   140 |                             enum rebase_action action);
-       |                                  ^~~~~~~~~~~~~
-sequencer.h:196:26: error: ISO C forbids forward references to ‘enum’ 
-types [-Werror=pedantic]
-   196 |                     enum rebase_action action);
-       |                          ^~~~~~~~~~~~~
+ test_expect_success 'git archive --mtime' '
+ 	git archive --mtime=3D2002-02-02T02:02:02-0200 HEAD >with_mtime.tar
+@@ -257,14 +258,6 @@ test_expect_success 'git archive --remote with config=
+ured remote' '
+ 	test_cmp_bin b.tar b5-nick.tar
+ '
 
-In file included from ./cache.h:12,
-                  from ./builtin.h:6,
-                  from builtin/rebase.c:8:
-builtin/rebase.c: In function ‘cmd_rebase’:
-builtin/rebase.c:1246:95: error: left-hand operand of comma expression 
-has no effect [-Werror=unused-value]
-  1246 | 
-(BUILD_ASSERT_OR_ZERO(ARRAY_SIZE(action_names) == ACTION_LAST),
-       | 
-                               ^
-./trace2.h:158:69: note: in definition of macro ‘trace2_cmd_mode’
-   158 | #define trace2_cmd_mode(sv) trace2_cmd_mode_fl(__FILE__, 
-__LINE__, (sv))
-       | 
-     ^~
-
-sequencer.c: In function ‘todo_list_rearrange_squash’:
-sequencer.c:6346:23: error: operation on ‘items’ may be undefined 
-[-Werror=sequence-point]
-  6346 |                 items = ALLOC_ARRAY(items, todo_list->nr);
-
-
-Best Wishes
-
-Phillip
-
-> 
-> Oswald Buddenhagen (8):
->    rebase: simplify code related to imply_merge()
->    rebase: move parse_opt_keep_empty() down
->    sequencer: pass around rebase action explicitly
->    sequencer: create enum for edit_todo_list() return value
->    rebase: preserve interactive todo file on checkout failure
->    sequencer: simplify allocation of result array in
->      todo_list_rearrange_squash()
->    sequencer: pass `onto` to complete_action() as object-id
->    rebase: improve resumption from incorrect initial todo list
-> 
->   builtin/rebase.c              |  63 +++++++--------
->   builtin/revert.c              |   3 +-
->   rebase-interactive.c          |  36 ++++-----
->   rebase-interactive.h          |  27 ++++++-
->   sequencer.c                   | 139 +++++++++++++++++++---------------
->   sequencer.h                   |  15 ++--
->   t/t3404-rebase-interactive.sh |  34 ++++++++-
->   7 files changed, 196 insertions(+), 121 deletions(-)
-> 
+-test_expect_success 'validate file modification time' '
+-	mkdir extract &&
+-	"$TAR" xf b.tar -C extract a/a &&
+-	test-tool chmtime --get extract/a/a >b.mtime &&
+-	echo "1117231200" >expected.mtime &&
+-	test_cmp expected.mtime b.mtime
+-'
+-
+ test_expect_success 'git get-tar-commit-id' '
+ 	git get-tar-commit-id <b.tar >actual &&
+ 	git rev-parse HEAD >expect &&
+=2D-
+2.40.0
