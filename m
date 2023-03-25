@@ -2,70 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AA93C6FD1F
-	for <git@archiver.kernel.org>; Sat, 25 Mar 2023 07:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C138C6FD1C
+	for <git@archiver.kernel.org>; Sat, 25 Mar 2023 07:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230019AbjCYHgK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Mar 2023 03:36:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59456 "EHLO
+        id S231766AbjCYHj0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Mar 2023 03:39:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjCYHgJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2023 03:36:09 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06E9D93C5
-        for <git@vger.kernel.org>; Sat, 25 Mar 2023 00:36:08 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id v4-20020a05600c470400b003ee4f06428fso2168571wmo.4
-        for <git@vger.kernel.org>; Sat, 25 Mar 2023 00:36:07 -0700 (PDT)
+        with ESMTP id S231575AbjCYHjY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2023 03:39:24 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B670A196BB
+        for <git@vger.kernel.org>; Sat, 25 Mar 2023 00:39:19 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id m6-20020a05600c3b0600b003ee6e324b19so2174183wms.1
+        for <git@vger.kernel.org>; Sat, 25 Mar 2023 00:39:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679729766;
+        d=gmail.com; s=20210112; t=1679729958;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IFWypjZzD4ArrcS2ZtdLRLQ+YRWJy11qIse3apayfec=;
-        b=DUnIqr7t97AnEBjKsYeEXZTeuJ+L4DQmBfB2r1GCgdASovR/b4/RrzFoGJLgkwiQZ5
-         3yEuhabOOoIlcvBCMS/7Qzxmo/jYQti/ywrOmguy0s/W+mD97/F369FICZp2CNQpzS3r
-         27/P+IupwPgzc0Sl9ZDZSGVWwRQuQ+xkJXs0agDRS2B8Fof54H3IMWzyLLCj+HHwzCr6
-         gbVq4NoDWb39XBCay9ej+mr1+arZrTcjPkhz8lpMI0vF4lyhAh5ushKg43/jYNF1G1J8
-         hBjuDevB7UgvtFzYsx3BrOjPj9+TIfJGsyA9juFQY08DX2dV/t6xQ6ui5s2KWPam2OST
-         FCaw==
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=+ashQW7su37tkK5ponjsy/pDnQaQwbCxMkyhaXwzJX8=;
+        b=dMu9jts+ymvAlGI2AK6xtEq8jCgFpxqcE618GcyRuicEtdwXIizGRfGsQLk4S90J6F
+         yxnCs1sRAZ7AdhNQmcvqJ4XDt+c1Z34Pi49aPNqP3bKYuGv/i3pw/v43kne4buwXnrQr
+         Nm7U734TxwnOAsvtXu/evN93R6M3db0KTUUHyH23xjqZRht9RmejhpDWwuYh1pE0gjCD
+         vGAzgzh81cQ5GkZCrQlD5JWWMftadBX1LGUIOp+++igusW3mtzFT8ipiQO69GmwL/Jcd
+         CVdIy5QVWrVeeqKQ14cVWbu2ZaFCANERt4uZDYAdqqh/+iQrH3qECMGqOxNPuB0CPaxu
+         gv4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679729766;
+        d=1e100.net; s=20210112; t=1679729958;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IFWypjZzD4ArrcS2ZtdLRLQ+YRWJy11qIse3apayfec=;
-        b=X9OCDsD26M4LiBkalVdiRPqJ0cJgPTbn7CtzxgX96xGiviDhrFbhClSc4HaJDdD+TP
-         GeedneJGC7qaJ+Juiu6aSd0ipkGh299eiebb+bVFGDKzpkt4VZROwIfC++V7IeahUxNg
-         1cfjmhi8gpvClyJwRSdiJpKJZA76nB89VpDbSBQB5G43+8EwkRcg4uq6SjymY+c1OUnp
-         wqHiatY0B6lL9GhiCmRR2i7+eI06ac8fVi9cnmafQ27mRhUk56/594aeS8zmKxkIrCmw
-         eY5gED6+Fri0QfGzJFYNGudX9ie7wEnsxQ9ERnIVBBN/lZ/SkHo12dd+10HSSz4ENi3X
-         mSlA==
-X-Gm-Message-State: AO0yUKVYeiiovIsEDNy/dg9GEiibjZt3vPXnSjBiXk4ebA3S9+GlgnpS
-        ffx8dREyDpjaEX8VsUTCz1eN+cIi2H4=
-X-Google-Smtp-Source: AK7set+UZWU6siiRVLEmpdX+UXz+CU630SYNnaN6Nl/63gh03D4lAMFEiNfkVramvprFlFsPvGWGLg==
-X-Received: by 2002:a05:600c:474c:b0:3ed:bfb4:ad9f with SMTP id w12-20020a05600c474c00b003edbfb4ad9fmr7142248wmo.2.1679729766169;
-        Sat, 25 Mar 2023 00:36:06 -0700 (PDT)
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+ashQW7su37tkK5ponjsy/pDnQaQwbCxMkyhaXwzJX8=;
+        b=h9H9De0VgnoYuP9DaN0XonfuaFixROy3UHC1I5WjWIMrqNqX0ytVe91KrTxZ4QZOZE
+         EuhoU9CbNM8We5fVIDiRdhw9QN5qoNWrg8LKq04I9aNNq4YrV9D+eQe0OW+VPVh4xqiy
+         jDLS1urzG+DNKjycRnqWnWlhl3OzyDCU8dYS4jl5DXXgoPt+0uIOdaHYWgPnfq1g2ymn
+         ZHi56YX3MQ9gWNtujsup+3eAUeD88RHPj6N534a7qsDsyRGZ43jruwJzaOJUbUSKlEc7
+         nTU+YkOC/PLvTqrcQncu3SGmWzKM7vuZTGxZ5k0tRE/8mVlMduXPiO8QdgOIqyK41y5b
+         sfWw==
+X-Gm-Message-State: AO0yUKUkGKKznaqcHP3j8uV3x2Cv1dUEkfMWxFwAV48u+zr0UIkyBaRT
+        k4/P4DFGayw+WAP54eZtAHefl92zpyU=
+X-Google-Smtp-Source: AK7set82UBypB1BlY7x78KR2ugt8W5fwHaqWEUsj110q6VyyHmSLbOWwTBeMrAhGSkQhMABi+vrI6Q==
+X-Received: by 2002:a7b:c7ca:0:b0:3ee:97c:58f4 with SMTP id z10-20020a7bc7ca000000b003ee097c58f4mr3994306wmk.12.1679729957700;
+        Sat, 25 Mar 2023 00:39:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d7-20020adffbc7000000b002d5a8d8442asm15751052wrs.37.2023.03.25.00.36.05
+        by smtp.gmail.com with ESMTPSA id e8-20020a05600c218800b003ede06f3178sm7052343wme.31.2023.03.25.00.39.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Mar 2023 00:36:05 -0700 (PDT)
-Message-Id: <pull.1469.v2.git.git.1679729764851.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1469.git.git.1678829531648.gitgitgadget@gmail.com>
-References: <pull.1469.git.git.1678829531648.gitgitgadget@gmail.com>
+        Sat, 25 Mar 2023 00:39:17 -0700 (PDT)
+Message-Id: <pull.1477.git.git.1679729956620.gitgitgadget@gmail.com>
 From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 25 Mar 2023 07:36:04 +0000
-Subject: [PATCH v2] credential/libsecret: support password_expiry_utc
+Date:   Sat, 25 Mar 2023 07:39:16 +0000
+Subject: [PATCH] credential/wincred: store password_expiry_utc
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Dennis Kaarsemaker <dennis@kaarsemaker.net>,
-        Mantas =?UTF-8?Q?Mikul=C4=97nas?= <grawity@gmail.com>,
+Cc:     "Johannes Schindelin [ ]" <Johannes.Schindelin@gmx.de>,
+        "Johannes Sixt [ ]" <j6t@kdbg.org>,
+        "Harshil Jani [ ]" <harshiljani2002@gmail.com>,
+        Jakub =?UTF-8?Q?Bere=C5=BCa=C5=84ski?= <kuba@berezanscy.pl>,
+        Karsten Blees <blees@dcon.de>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
         Javier Roucher Iglesias 
         <Javier.Roucher-Iglesias@ensimag.imag.fr>,
-        Matthieu Moy <git@matthieu-moy.fr>,
         M Hickford <mirth.hickford@gmail.com>,
         M Hickford <mirth.hickford@gmail.com>
 Precedence: bulk
@@ -76,290 +75,109 @@ From: M Hickford <mirth.hickford@gmail.com>
 
 Signed-off-by: M Hickford <mirth.hickford@gmail.com>
 ---
-    credential/libsecret: store password_expiry_utc
+    credential/wincred: store password_expiry_utc
     
-    Patch v2 adds tests.
+    Help wanted from a Windows user to test. I tried testing on Linux with
+    Wine after cross-compiling [1] but Wine has incomplete support for
+    wincred.h [2]. To test:
+    
+    cd contrib/credential/wincred/
+    make
+    echo host=example.com\nprotocol=https\nusername=tim\npassword=xyzzy\npassword_expiry_utc=2000 | ./git-credential-wincred.exe store
+    echo host=example.com\nprotocol=https | ./git-credential-wincred.exe get
+    
+    
+    Output of second command should include line password_expiry_utc=2000
+    
+    [1] make CC="zig cc -target x86_64-windows-gnu" [2]
+    https://github.com/wine-mirror/wine/blob/bf9d15e3b1a29f73fedda0c34547a9b29d5e2789/dlls/advapi32/cred.c#L181-L186
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1469%2Fhickford%2Flibsecret-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1469/hickford/libsecret-v2
-Pull-Request: https://github.com/git/git/pull/1469
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1477%2Fhickford%2Fwincred-expiry-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1477/hickford/wincred-expiry-v1
+Pull-Request: https://github.com/git/git/pull/1477
 
-Range-diff vs v1:
+ .../wincred/git-credential-wincred.c          | 26 +++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
- 1:  46ba4863f33 ! 1:  1e27677b6f5 credential/libsecret: support password_expiry_utc
-     @@ contrib/credential/libsecret/git-credential-libsecret.c: static void credential_
-       }
-       
-       static void usage(const char *name)
-     +
-     + ## t/lib-credential.sh ##
-     +@@ t/lib-credential.sh: helper_test_clean() {
-     + 	reject $1 https example.com store-user
-     + 	reject $1 https example.com user1
-     + 	reject $1 https example.com user2
-     ++	reject $1 https example.com user3
-     + 	reject $1 http path.tld user
-     + 	reject $1 https timeout.tld user
-     + 	reject $1 https sso.tld
-     +@@ t/lib-credential.sh: helper_test_timeout() {
-     + 	'
-     + }
-     + 
-     ++helper_test_password_expiry_utc() {
-     ++	HELPER=$1
-     ++
-     ++	test_expect_success "helper ($HELPER) stores password_expiry_utc" '
-     ++		check approve $HELPER <<-\EOF
-     ++		protocol=https
-     ++		host=example.com
-     ++		username=user3
-     ++		password=pass
-     ++		password_expiry_utc=9999999999
-     ++		EOF
-     ++	'
-     ++
-     ++	test_expect_success "helper ($HELPER) gets password_expiry_utc" '
-     ++		check fill $HELPER <<-\EOF
-     ++		protocol=https
-     ++		host=example.com
-     ++		username=user3
-     ++		--
-     ++		protocol=https
-     ++		host=example.com
-     ++		username=user3
-     ++		password=pass
-     ++		password_expiry_utc=9999999999
-     ++		--
-     ++		EOF
-     ++	'
-     ++}
-     ++
-     + write_script askpass <<\EOF
-     + echo >&2 askpass: $*
-     + what=$(echo $1 | cut -d" " -f1 | tr A-Z a-z | tr -cd a-z)
-     +
-     + ## t/t0301-credential-cache.sh ##
-     +@@ t/t0301-credential-cache.sh: test_atexit 'git credential-cache exit'
-     + # test that the daemon works with no special setup
-     + helper_test cache
-     + 
-     ++helper_test_password_expiry_utc cache
-     ++
-     + test_expect_success 'socket defaults to ~/.cache/git/credential/socket' '
-     + 	test_when_finished "
-     + 		git credential-cache exit &&
-     +
-     + ## t/t0303-credential-external.sh ##
-     +@@ t/t0303-credential-external.sh: else
-     + 	helper_test_timeout "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"
-     + fi
-     + 
-     ++helper_test_password_expiry_utc "$GIT_TEST_CREDENTIAL_HELPER"
-     ++
-     + # clean afterwards so that we are good citizens
-     + # and don't leave cruft in the helper's storage, which
-     + # might be long-term system storage
-
-
- .../libsecret/git-credential-libsecret.c      | 42 ++++++++++++++++---
- t/lib-credential.sh                           | 30 +++++++++++++
- t/t0301-credential-cache.sh                   |  2 +
- t/t0303-credential-external.sh                |  2 +
- 4 files changed, 71 insertions(+), 5 deletions(-)
-
-diff --git a/contrib/credential/libsecret/git-credential-libsecret.c b/contrib/credential/libsecret/git-credential-libsecret.c
-index 2c5d76d789f..3f2b530db79 100644
---- a/contrib/credential/libsecret/git-credential-libsecret.c
-+++ b/contrib/credential/libsecret/git-credential-libsecret.c
-@@ -39,6 +39,7 @@ struct credential {
- 	char *path;
- 	char *username;
- 	char *password;
-+	char *password_expiry_utc;
- };
- 
- #define CREDENTIAL_INIT { 0 }
-@@ -54,6 +55,20 @@ struct credential_operation {
- 
- /* ----------------- Secret Service functions ----------------- */
- 
-+static const SecretSchema schema = {
-+	"org.git.Password",
-+	SECRET_SCHEMA_NONE,
-+	{
-+		{  "user", SECRET_SCHEMA_ATTRIBUTE_STRING },
-+		{  "object", SECRET_SCHEMA_ATTRIBUTE_STRING },
-+		{  "protocol", SECRET_SCHEMA_ATTRIBUTE_STRING },
-+		{  "port", SECRET_SCHEMA_ATTRIBUTE_INTEGER },
-+		{  "server", SECRET_SCHEMA_ATTRIBUTE_STRING },
-+		{  "password_expiry_utc", SECRET_SCHEMA_ATTRIBUTE_INTEGER },
-+		{  NULL, 0 },
-+	}
-+};
-+
- static char *make_label(struct credential *c)
- {
- 	if (c->port)
-@@ -78,6 +93,9 @@ static GHashTable *make_attr_list(struct credential *c)
- 		g_hash_table_insert(al, "port", g_strdup_printf("%hu", c->port));
- 	if (c->path)
- 		g_hash_table_insert(al, "object", g_strdup(c->path));
-+	if (c->password_expiry_utc)
-+		g_hash_table_insert(al, "password_expiry_utc",
-+			g_strdup(c->password_expiry_utc));
- 
- 	return al;
+diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
+index ead6e267c78..9be892610d0 100644
+--- a/contrib/credential/wincred/git-credential-wincred.c
++++ b/contrib/credential/wincred/git-credential-wincred.c
+@@ -91,7 +91,8 @@ static void load_cred_funcs(void)
+ 		die("failed to load functions");
  }
-@@ -101,9 +119,11 @@ static int keyring_get(struct credential *c)
  
- 	attributes = make_attr_list(c);
- 	items = secret_service_search_sync(service,
--					   SECRET_SCHEMA_COMPAT_NETWORK,
-+					   &schema,
- 					   attributes,
--					   SECRET_SEARCH_LOAD_SECRETS | SECRET_SEARCH_UNLOCK,
-+					   SECRET_SEARCH_LOAD_SECRETS | SECRET_SEARCH_UNLOCK |
-+					   // for backwards compatibility
-+					   SECRET_SCHEMA_DONT_MATCH_NAME,
- 					   NULL,
- 					   &error);
- 	g_hash_table_unref(attributes);
-@@ -128,6 +148,12 @@ static int keyring_get(struct credential *c)
- 			c->username = g_strdup(s);
+-static WCHAR *wusername, *password, *protocol, *host, *path, target[1024];
++static WCHAR *wusername, *password, *protocol, *host, *path, target[1024],
++	*password_expiry_utc;
+ 
+ static void write_item(const char *what, LPCWSTR wbuf, int wlen)
+ {
+@@ -183,6 +184,7 @@ static void get_credential(void)
+ 	CREDENTIALW **creds;
+ 	DWORD num_creds;
+ 	int i;
++	CREDENTIAL_ATTRIBUTEW *attr;
+ 
+ 	if (!CredEnumerateW(L"git:*", 0, &num_creds, &creds))
+ 		return;
+@@ -195,6 +197,15 @@ static void get_credential(void)
+ 			write_item("password",
+ 				(LPCWSTR)creds[i]->CredentialBlob,
+ 				creds[i]->CredentialBlobSize / sizeof(WCHAR));
++			attr = creds[i]->Attributes;
++			for (int j = 0; j < creds[i]->AttributeCount; j++) {
++				if (wcscmp(attr->Keyword, L"git_password_expiry_utc")) {
++					write_item("password_expiry_utc", (LPCWSTR)attr->Value,
++					attr->ValueSize / sizeof(WCHAR));
++					break;
++				}
++				attr++;
++			}
+ 			break;
  		}
  
-+		s = g_hash_table_lookup(attributes, "password_expiry_utc");
-+		if (s) {
-+			g_free(c->password_expiry_utc);
-+			c->password_expiry_utc = g_strdup(s);
-+		}
-+
- 		s = secret_value_get_text(secret);
- 		if (s) {
- 			g_free(c->password);
-@@ -162,7 +188,7 @@ static int keyring_store(struct credential *c)
- 
- 	label = make_label(c);
- 	attributes = make_attr_list(c);
--	secret_password_storev_sync(SECRET_SCHEMA_COMPAT_NETWORK,
-+	secret_password_storev_sync(&schema,
- 				    attributes,
- 				    NULL,
- 				    label,
-@@ -198,7 +224,7 @@ static int keyring_erase(struct credential *c)
- 		return EXIT_FAILURE;
- 
- 	attributes = make_attr_list(c);
--	secret_password_clearv_sync(SECRET_SCHEMA_COMPAT_NETWORK,
-+	secret_password_clearv_sync(&schema,
- 				    attributes,
- 				    NULL,
- 				    &error);
-@@ -238,6 +264,7 @@ static void credential_clear(struct credential *c)
- 	g_free(c->path);
- 	g_free(c->username);
- 	g_free(c->password);
-+	g_free(c->password_expiry_utc);
- 
- 	credential_init(c);
- }
-@@ -285,6 +312,9 @@ static int credential_read(struct credential *c)
- 		} else if (!strcmp(key, "username")) {
- 			g_free(c->username);
- 			c->username = g_strdup(value);
-+		} else if (!strcmp(key, "password_expiry_utc")) {
-+			g_free(c->password_expiry_utc);
-+			c->password_expiry_utc = g_strdup(value);
- 		} else if (!strcmp(key, "password")) {
- 			g_free(c->password);
- 			c->password = g_strdup(value);
-@@ -312,9 +342,11 @@ static void credential_write_item(FILE *fp, const char *key, const char *value)
- 
- static void credential_write(const struct credential *c)
+@@ -204,6 +215,7 @@ static void get_credential(void)
+ static void store_credential(void)
  {
--	/* only write username/password, if set */
-+	/* only write username/password/expiry, if set */
- 	credential_write_item(stdout, "username", c->username);
- 	credential_write_item(stdout, "password", c->password);
-+	credential_write_item(stdout, "password_expiry_utc",
-+		c->password_expiry_utc);
- }
+ 	CREDENTIALW cred;
++	CREDENTIAL_ATTRIBUTEW expiry_attr;
  
- static void usage(const char *name)
-diff --git a/t/lib-credential.sh b/t/lib-credential.sh
-index 5ea8bc9f1dc..9ebf7eeae48 100644
---- a/t/lib-credential.sh
-+++ b/t/lib-credential.sh
-@@ -43,6 +43,7 @@ helper_test_clean() {
- 	reject $1 https example.com store-user
- 	reject $1 https example.com user1
- 	reject $1 https example.com user2
-+	reject $1 https example.com user3
- 	reject $1 http path.tld user
- 	reject $1 https timeout.tld user
- 	reject $1 https sso.tld
-@@ -298,6 +299,35 @@ helper_test_timeout() {
- 	'
- }
+ 	if (!wusername || !password)
+ 		return;
+@@ -217,6 +229,14 @@ static void store_credential(void)
+ 	cred.Persist = CRED_PERSIST_LOCAL_MACHINE;
+ 	cred.AttributeCount = 0;
+ 	cred.Attributes = NULL;
++	if (password_expiry_utc != NULL) {
++		expiry_attr.Keyword = L"git_password_expiry_utc";
++		expiry_attr.Value = (LPVOID)password_expiry_utc;
++		expiry_attr.ValueSize = (wcslen(password_expiry_utc)) * sizeof(WCHAR);
++		expiry_attr.Flags = 0;
++		cred.Attributes = &expiry_attr;
++		cred.AttributeCount = 1;
++	}
+ 	cred.TargetAlias = NULL;
+ 	cred.UserName = wusername;
  
-+helper_test_password_expiry_utc() {
-+	HELPER=$1
-+
-+	test_expect_success "helper ($HELPER) stores password_expiry_utc" '
-+		check approve $HELPER <<-\EOF
-+		protocol=https
-+		host=example.com
-+		username=user3
-+		password=pass
-+		password_expiry_utc=9999999999
-+		EOF
-+	'
-+
-+	test_expect_success "helper ($HELPER) gets password_expiry_utc" '
-+		check fill $HELPER <<-\EOF
-+		protocol=https
-+		host=example.com
-+		username=user3
-+		--
-+		protocol=https
-+		host=example.com
-+		username=user3
-+		password=pass
-+		password_expiry_utc=9999999999
-+		--
-+		EOF
-+	'
-+}
-+
- write_script askpass <<\EOF
- echo >&2 askpass: $*
- what=$(echo $1 | cut -d" " -f1 | tr A-Z a-z | tr -cd a-z)
-diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-index 698b7159f03..f5ba727e53b 100755
---- a/t/t0301-credential-cache.sh
-+++ b/t/t0301-credential-cache.sh
-@@ -30,6 +30,8 @@ test_atexit 'git credential-cache exit'
- # test that the daemon works with no special setup
- helper_test cache
+@@ -278,6 +298,8 @@ static void read_credential(void)
+ 			wusername = utf8_to_utf16_dup(v);
+ 		} else if (!strcmp(buf, "password"))
+ 			password = utf8_to_utf16_dup(v);
++		else if (!strcmp(buf, "password_expiry_utc"))
++			password_expiry_utc = utf8_to_utf16_dup(v);
+ 		/*
+ 		 * Ignore other lines; we don't know what they mean, but
+ 		 * this future-proofs us when later versions of git do
+@@ -292,7 +314,7 @@ int main(int argc, char *argv[])
+ 	    "usage: git credential-wincred <get|store|erase>\n";
  
-+helper_test_password_expiry_utc cache
-+
- test_expect_success 'socket defaults to ~/.cache/git/credential/socket' '
- 	test_when_finished "
- 		git credential-cache exit &&
-diff --git a/t/t0303-credential-external.sh b/t/t0303-credential-external.sh
-index f028fd14182..f1478680bff 100755
---- a/t/t0303-credential-external.sh
-+++ b/t/t0303-credential-external.sh
-@@ -52,6 +52,8 @@ else
- 	helper_test_timeout "$GIT_TEST_CREDENTIAL_HELPER_TIMEOUT"
- fi
+ 	if (!argv[1])
+-		die(usage);
++		die("%s", usage);
  
-+helper_test_password_expiry_utc "$GIT_TEST_CREDENTIAL_HELPER"
-+
- # clean afterwards so that we are good citizens
- # and don't leave cruft in the helper's storage, which
- # might be long-term system storage
+ 	/* git use binary pipes to avoid CRLF-issues */
+ 	_setmode(_fileno(stdin), _O_BINARY);
 
 base-commit: 27d43aaaf50ef0ae014b88bba294f93658016a2e
 -- 
