@@ -2,73 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72061C6FD1C
-	for <git@archiver.kernel.org>; Sat, 25 Mar 2023 08:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 210ECC6FD1C
+	for <git@archiver.kernel.org>; Sat, 25 Mar 2023 08:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232366AbjCYIhw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Mar 2023 04:37:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37690 "EHLO
+        id S232267AbjCYIiA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Mar 2023 04:38:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232153AbjCYIhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2023 04:37:12 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFCB418B0B
-        for <git@vger.kernel.org>; Sat, 25 Mar 2023 01:36:59 -0700 (PDT)
-Received: (qmail 12678 invoked by uid 109); 25 Mar 2023 08:36:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 25 Mar 2023 08:36:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11915 invoked by uid 111); 25 Mar 2023 08:36:58 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Mar 2023 04:36:58 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 25 Mar 2023 04:36:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH] t3070: make chain lint tester happy
-Message-ID: <20230325083658.GA3738217@coredump.intra.peff.net>
-References: <13accf6f99d367d137eefd02e3f6bf05bf099e00.1679328580.git.phillip.wood@dunelm.org.uk>
- <3714ba2f6528c38eb9c438126316a08b0cefca7c.1679696180.git.git@grubix.eu>
- <20230325063731.GB562387@coredump.intra.peff.net>
- <CAPig+cT9zjP++ECkTMjh33gzWyh_ho6n8_XYkXTHxnuGiDbnow@mail.gmail.com>
- <20230325075832.GA579632@coredump.intra.peff.net>
- <CAPig+cSdBTeeWX-UAoUXzt1b+nC=xRgtPTHgtg+kSBAbeCKedg@mail.gmail.com>
+        with ESMTP id S232065AbjCYIhU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2023 04:37:20 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95B1D1816F
+        for <git@vger.kernel.org>; Sat, 25 Mar 2023 01:37:03 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso7231137pjb.0
+        for <git@vger.kernel.org>; Sat, 25 Mar 2023 01:37:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679733423;
+        h=content-transfer-encoding:to:subject:from:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w9lQcnZS35qRxFqfUfh9xxvgmfadICOlH1ps5XVUI90=;
+        b=CilBkdP+uHQq8tWT+KFA3nHIslUUgkhRf+nizrB7wBpgRRt5tn2f2P+A121S2qEFi0
+         oLDG/p3WsaM7qY3+BKJ9lMlyJPSaY23PXVdeSTksVQUAqLwPlB08HdQ942v3d4Bf32my
+         TXbq0D74OkFjuTHKJ+OshdbyCGi/q+1UxnKKzmdUGK45ycoV8hk8jALEs2NpIGZGEqoI
+         adNuvJclP5Lrljh4iD9Vi+0DSUz5BDeYA4+rH/6jxLdEAT2Cw35nt4PVPVlxeNIIw1W3
+         Yj5c2jJ7aTtQL+d6MiUn3QI413giQDEqK7DEd6++Bb3lQsPS5/+hLiS1PPysvsi6jSA1
+         iBmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679733423;
+        h=content-transfer-encoding:to:subject:from:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=w9lQcnZS35qRxFqfUfh9xxvgmfadICOlH1ps5XVUI90=;
+        b=NLaOsS5KAmhh8ClBTvpVOW7Qm9Bar+3yck4hBDhYxw5NCcEX+eJ+P8oBERURUeflkx
+         iRFKYhV1Ea7G3PwfgHQ00TYWU1EIADkq+Cus2FEaNEH9vIIHrej+pL7ReX4xrpLafW2f
+         voIPnjpNwuboFYnPfr90TIynBuz6Y+uIV6Q5e3MoYgTlpycpQc67MmXQhqcxm7vfX/RG
+         o36/UPUf7OCraBfhEkFmb1/cR0LhK32pOO6Cwo7g/JNNeDWq1q5vH+UMYwDrHXLlNDQH
+         jY6ZA7zT5pFPE6+1CsQYejsFGbDFMkCyanVtG2XJoFLt0jyN+De52d5Yo/jQr8crDCY3
+         j9xQ==
+X-Gm-Message-State: AO0yUKUJtUX5IHGK/ELc/4oDvDjjx+YQ0gaNUE4nD6EYFOtnlFuud+pn
+        FkXnEiIUPIZ/pXt1vd8QwqBYSC+3VtHMGA==
+X-Google-Smtp-Source: AK7set8DHp8lddN/oJF26lJXUmi88y0N2y/l4vEgvsfchflykUc7PR34KRsmb1l4TZSHDpGjFweDYA==
+X-Received: by 2002:a05:6a20:b227:b0:da:53ea:5ca3 with SMTP id eh39-20020a056a20b22700b000da53ea5ca3mr5292661pzb.57.1679733422718;
+        Sat, 25 Mar 2023 01:37:02 -0700 (PDT)
+Received: from [192.168.1.113] ([202.83.126.194])
+        by smtp.gmail.com with ESMTPSA id i21-20020aa787d5000000b00625f5aaa1d9sm15089114pfo.83.2023.03.25.01.37.01
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 25 Mar 2023 01:37:02 -0700 (PDT)
+Message-ID: <20e57ea3-3284-a5c8-09a8-5f2159818d57@gmail.com>
+Date:   Sat, 25 Mar 2023 14:36:58 +0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Content-Language: en-US
+From:   Khalid Masum <khalid.masum.92@gmail.com>
+Subject: [RFC][GSoC Proposal Draft] clone: bundle-uri: make it resumable
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cSdBTeeWX-UAoUXzt1b+nC=xRgtPTHgtg+kSBAbeCKedg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 25, 2023 at 04:06:39AM -0400, Eric Sunshine wrote:
+Hello!
 
-> On Sat, Mar 25, 2023 at 3:58 AM Jeff King <peff@peff.net> wrote:
-> > On Sat, Mar 25, 2023 at 02:54:45AM -0400, Eric Sunshine wrote:
-> > > I am unable to reproduce any linting errors when running this script
-> > > through chainlint, which is why I was more than a little confused by
-> > > this patch when I read it, and I was just about to ask for more
-> > > information, such as the actual error message.
-> >
-> > It's not your chain-lint script, but rather the builtin one that sticks
-> > "(exit 117) &&" in front of the snippet and evals it. So it creates the
-> > exact "foo && bar &" situation by prepending a line to the snippet.
-> 
-> Thanks for clarifying that. I failed to infer that from the commit message.
+This is my draft proposal to implement resumable bundle-uri clone.
 
-To be fair, I didn't figure it out from the commit either. It's just
-that running it stand-alone was the first thing I happened to try. ;)
+I would love to hear your thoughts on this.  Also, I think the timeline 
+section
 
-> Yes, I can reproduce it now. My mistake was that I tested 'seen'
-> rather than 1f2e05f0b79, not realizing that Junio had already applied
-> Michael's patch. (I meant to check if it had been applied, but forgot
-> to do so.)
+could be improved amd I need your input on that.
 
-Oof. I got lucky twice, then, because I did run "seen" but I hadn't
-fetched recently enough.
 
--Peff
+thanks,
+
+  -- Khalid Masum
+
+
+======================================================
+GSoC23 Draft Proposal: Resumable cloning with git bundle
+======================================================
+
+Overview:
+=========
+Currently, git clones are not resumable. But there is a workaround using
+git bundles, where the user can `wget -c` the bundle, then clone from it.
+However this comes with drawbacks that `git clone` does not have. For
+example, with git clone we can specify branch, or send authentication 
+credentials,
+which we can not do with `wget` in a simple manner.
+
+However with the new `bundle-uri` we should be able to add this feature.
+
+As suggested by Derrick Stolee <derrickstolee@github.com> here:
+
+https://lore.kernel.org/git/7097d1d6-00a1-2a82-1923-610d41f4053f@github.com/
+
+Where it is suggested that, the randomized temporary download files 
+could be
+renamed with hashed url, enabling the ability to have resumable clone.
+
+Deliverables:
+=============
+- Ability to resume a cloning process with bundle-uri.
+- Testcases for the newly added feature.
+- Update on documentation for the newer changes.
+
+Timeline:
+=========
+Before April 25:
+     - Familiarize myself with git's codebase and architecture.
+     - Making small contributions to git.
+
+Before May 25:
+     - Research and familiarize with git bundle and git object download
+       process.
+     - Understanding the core implementation of git bundle.
+     - Communicate with mentors for further understanding and finding 
+ways of
+       implementation.
+
+May 26 - June 20:
+     - Starting to implement the git bundle-uri resumable feature.
+     - Refactor the codebase for necessary integration.
+     - Write some of the test-cases for the created modules.
+
+June 21- July 20:
+     - Finish implementing the feature.
+     - Necessary test cases are implemented and reviewed.
+     - Document the changes.
+
+July 21 - Aug 10:
+     - Finishing touches, making sure everything is stable.
+
+Aug 11- 27:
+     - Buffer period for any unexpected events.
+     - Final report writing.
+     - Project submission
+
+Contributions
+==============
+Microproject:
+-------------
+Modernized test script: t3501
+Link: 
+https://lore.kernel.org/git/20220405150657.19801-1-khalid.masum.92@gmail.com/
+Status: Accepted
+
+Other contributions:
+--------------------
+Patch review: 
+https://lore.kernel.org/git/pull.1474.git.git.1679233875803.gitgitgadget@gmail.com/
+
+Motivation:
+===========
+I am captivated by the engineering behind Git and aspire to contribute
+regularly to the project, impacting its features. I view GSoC as an
+excellent opportunity to jumpstart my contributions and deepen my
+understanding of software engineering.
+
+Conclusion:
+===========
+Implementation of resumable clone is a long wanted feature in git
+since 2011. With this contribution I believe we will be able to be
+closer to this goal, or at least get a very good workaround on this
+feature.
+
