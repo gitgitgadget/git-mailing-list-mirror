@@ -2,141 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 709C2C6FD1F
-	for <git@archiver.kernel.org>; Sat, 25 Mar 2023 05:24:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8275EC6FD1F
+	for <git@archiver.kernel.org>; Sat, 25 Mar 2023 06:30:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbjCYFYS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Mar 2023 01:24:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50634 "EHLO
+        id S232345AbjCYGak (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Mar 2023 02:30:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbjCYFYR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2023 01:24:17 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE262101
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 22:24:16 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id bi31so2765187oib.9
-        for <git@vger.kernel.org>; Fri, 24 Mar 2023 22:24:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679721855;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=64hUphgnILE+oxNkc2KU4VfdSZaoYkeYJ3VP5ZTSJX4=;
-        b=Lqw50rXgdsjtyEbtaDFHjtKU+vEb5AL2np9gnxr4dnGXxu9yfRTbR4aeT/yjVEJjCi
-         HQeEDqyyslbbv5sG2cCuaiBTrP0mBTgghkK3lJ0XFBInhgJa09D2c6QfnJeejsz2xtUA
-         c4dlTv0ZffPdf8FRcE0NQTqx/2eM1fG2ZVij8xOhaAU/dhpvGQby3X5ZlhFtjSlsabZU
-         OCXg+NPr32H64Of2p/CSGRnpsNmeaRtPweKGh7Yv/OvYpiKaRCHlxo/7G6HlPl/io/M5
-         GKyy+kYcdX49tlYap9RVptqQ0CoJeDbgHLTksEWNX7SyZaEXqoNcL3q8q0xuxMBb76xn
-         eysg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679721855;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=64hUphgnILE+oxNkc2KU4VfdSZaoYkeYJ3VP5ZTSJX4=;
-        b=vWRI9WL3praln9HhBPCOeg/p8/onlk+xwPkk+U+9RSwCo2e+VdkYmoidDSe4+B8WGC
-         tpR2/NJ8kCw4ChqpeyIKe4Ipp4WYzJ53hK2It77xQJGPa/QZu72GXMGyNR5pAYNkSg4q
-         pee2TCOliEGkO170/bmZkiTHnYqFjWNObqwlXnbj+7MlW9XYRID/D47RnaXxl+WxDC/J
-         uhwq23uCDHKlop2cYIu6f8CAcFD+NL4rIHP8TGzRw1iagpWxiADlVmrNdKaRWGiNXmlq
-         JoD3b6q4B0goc+WU9tU4Bk1NdonQI7pU/GP07qTACv55UhUjAdJYKZe30BVLyIzFdRTR
-         I4iw==
-X-Gm-Message-State: AO0yUKXMqMWGFRQYzJjR484pSOiMcELQjrMzH/oCOIhrvRu+pTTPgN1n
-        5rRc56iORz0JsxM8E8NwLdyvFU8pRaSPeDCDow0=
-X-Google-Smtp-Source: AK7set9Vg8F7lOWumocexwPEhlfLjxovKCFZZiOBnzGJoAKWIDjvj6RObW0FerxzcEgUVa7M0xx+pgmNcFifdeqni4c=
-X-Received: by 2002:a05:6808:3c1:b0:386:b836:2ace with SMTP id
- o1-20020a05680803c100b00386b8362acemr1436123oie.9.1679721855461; Fri, 24 Mar
- 2023 22:24:15 -0700 (PDT)
+        with ESMTP id S229920AbjCYGai (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2023 02:30:38 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88503158A6
+        for <git@vger.kernel.org>; Fri, 24 Mar 2023 23:30:37 -0700 (PDT)
+Received: (qmail 11291 invoked by uid 109); 25 Mar 2023 06:30:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 25 Mar 2023 06:30:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10462 invoked by uid 111); 25 Mar 2023 06:30:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Mar 2023 02:30:36 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 25 Mar 2023 02:30:35 -0400
+From:   Jeff King <peff@peff.net>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: limiting git branch --contains
+Message-ID: <20230325063035.GA562387@coredump.intra.peff.net>
+References: <xmqqpm8z8dab.fsf@gitster.g>
+ <ZBy6Ku+znv/wuOix@ugly>
+ <594a358e-7bd4-e7a1-ad0f-7e41ca1fe767@github.com>
+ <ZB3o0seQJVbtPa+j@ugly>
+ <85f81579-5876-a573-6d35-88b35ab0f290@github.com>
+ <ZB3z3e5G3Lrv9g3Y@ugly>
+ <20230324191302.GB536967@coredump.intra.peff.net>
+ <ZB4A7+LMY+NSaPYE@ugly>
+ <20230324204504.GB549549@coredump.intra.peff.net>
+ <ZB4e/yE+25W66z6S@ugly>
 MIME-Version: 1.0
-References: <20230312210456.92364-1-alexhenrie24@gmail.com>
- <20230320055955.461138-1-alexhenrie24@gmail.com> <20230320055955.461138-4-alexhenrie24@gmail.com>
- <f062165f-2e59-67b5-ebff-b029c29dd4d6@dunelm.org.uk> <xmqqttyb8fxw.fsf@gitster.g>
-In-Reply-To: <xmqqttyb8fxw.fsf@gitster.g>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Fri, 24 Mar 2023 23:23:39 -0600
-Message-ID: <CAMMLpeRC5s80meD5mB0rmHRYR7iCa_WH0qOTaXvppw2ZHMriWQ@mail.gmail.com>
-Subject: Re: [PATCH v8 3/3] rebase: add a config option for --rebase-merges
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-        tao@klerks.biz, newren@gmail.com, Johannes.Schindelin@gmx.de,
-        sorganov@gmail.com, chooglen@google.com, calvinwan@google.com,
-        jonathantanmy@google.com, felipe.contreras@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZB4e/yE+25W66z6S@ugly>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 23, 2023 at 12:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> >> @@ -1514,13 +1542,15 @@ int cmd_rebase(int argc, const char **argv, co=
-nst char *prefix)
-> >>                              break;
-> >>              if (i >=3D 0 || options.type =3D=3D REBASE_APPLY) {
-> >> -                    if (is_merge(&options))
-> >> -                            die(_("apply options and merge options "
-> >> -                                      "cannot be used together"));
-> >
-> > This isn't a new change but having thought about it I'm not sure
-> > moving this code is a good idea. If the user runs
-> >
-> >       git -c rebase.updateRefs=3Dtrue rebase --whitespace=3Dfix --exec =
-"make test"
-> >
-> > then instead of getting an message saying that they cannot use apply
-> > and merge options together they'll get a message suggesting they pass
-> > --no-update-refs which wont fix the problem for them.
->
-> Hmph.  Instead of dying here, ...
->
-> >> +                    if (options.autosquash =3D=3D -1 && options.confi=
-g_autosquash =3D=3D 1)
-> >>                              die(_("apply options are incompatible wit=
-h rebase.autoSquash.  Consider adding --no-autosquash"));
-> >> +                    else if (options.rebase_merges =3D=3D -1 && optio=
-ns.config_rebase_merges =3D=3D 1)
-> >> +                            die(_("apply options are incompatible wit=
-h rebase.rebaseMerges.  Consider adding --no-rebase-merges"));
-> >>                      else if (options.update_refs =3D=3D -1 && options=
-.config_update_refs =3D=3D 1)
-> >>                              die(_("apply options are incompatible wit=
-h rebase.updateRefs.  Consider adding --no-update-refs"));
->
-> ... we get caught here, and the next one is not triggered.
->
-> >> +                    else if (is_merge(&options))
-> >> +                            die(_("apply options and merge options "
-> >> +                                      "cannot be used together"));
-> >>                      else
-> >>                              options.type =3D REBASE_APPLY;
->
-> What's the reason why "cannot be used together" is moved to the last
-> in the chain?
->
-> The first two new conditions in this chain try to catch an
-> invocation with some apply-specific command line option
-> (e.g. "--whitespace=3Dfix") when used with configuration variables
-> specific to the merge-backend (e.g. "rebase.merges") and suggest
-> overriding the configuration from the command line, and I suspect
-> that the motivation behind this change is that their error messages
-> are more specific than the generic "apply and merge do not mix".
+On Fri, Mar 24, 2023 at 11:06:55PM +0100, Oswald Buddenhagen wrote:
 
-Phillip specifically asked for `git -c rebase.rebaseMerges=3Dtrue rebase
---whitespace=3Dfix` to print "error: apply options are incompatible with
-rebase.rebaseMerges. Consider adding --no-rebase-merges".[1] I could
-have sworn that "if (is_merge(&options))" had to be after "if
-(options.rebase_merges =3D=3D -1 && options.config_rebase_merges =3D=3D 1)"=
- to
-make that happen, but now it works without that change. I must have
-been debugging with some intermediate version that still had
-'imply_merge(&options, "--rebase-merges")' before this if chain. I'll
-send a v9 that puts "if (is_merge(&options))" back at the top.
+> > Ah, that is your problem. When "replace" refs are in use, the data
+> > stored in the commit-graph can't reliably be used. [...]
+> > 
+> why isn't the commit-graph built with the replaces applied (and tagged by a
+> hash of the used replaces, so we know when to ignore it)?
 
-Thanks for your attention to detail!
+I think a similar idea has come up before, but we decided to do the
+simplest safe thing (disabling optimizations) to start with. And then
+somebody who really cared about making optimizations work with commit
+graphs could come along and do so later. Nobody has yet; you could be
+that someone. ;)
 
--Alex
+> at minimum, i'd expect a warning giving a reason when the graph is ignored.
 
-[1] https://lore.kernel.org/git/7ba8a92d-8c94-5226-5416-6ed3a8e2e389@dunelm=
-.org.uk/
+That might be reasonable. The commit graph is an optimization, so we'd
+never produce a wrong answer by ignoring it. And since the fallback was
+the status quo before the optimizations were implemented, it didn't seem
+like that big a deal. But these days the performance many of us expect
+is with those optimizations, so perhaps the tables have turned.
+
+I do think there might be some complications, though. I think we may
+build commit graphs by default these days during "gc" and even
+incrementally after "fetch". If we warned when the graphs are disabled,
+it basically means that every command in a repo with replace refs would
+issue the warning.
+
+> > I'd still be curious to see the
+> > difference between "just commit graphs" and "commit graphs plus the
+> > patch I showed earlier". I think it should make things faster, but if
+> > it's only a few milliseconds on average, it's not that urgent to pursue.
+> > 
+> if there is a speed difference at all, it gets drowned out by the noise.
+
+OK, thanks for testing. I do think that looking into a true single
+traversal might make sense, but I don't think we've seen a case yet
+where it's a substantial speedup.
+
+-Peff
