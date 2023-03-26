@@ -2,70 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E86BC6FD1C
-	for <git@archiver.kernel.org>; Sun, 26 Mar 2023 05:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3C6EC6FD1C
+	for <git@archiver.kernel.org>; Sun, 26 Mar 2023 05:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231801AbjCZFBr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Mar 2023 01:01:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56174 "EHLO
+        id S231681AbjCZFMN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Mar 2023 01:12:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229795AbjCZFBp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Mar 2023 01:01:45 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F05D83FB
-        for <git@vger.kernel.org>; Sat, 25 Mar 2023 22:01:44 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id ew6so23212429edb.7
-        for <git@vger.kernel.org>; Sat, 25 Mar 2023 22:01:43 -0700 (PDT)
+        with ESMTP id S229643AbjCZFML (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Mar 2023 01:12:11 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8A4630E8
+        for <git@vger.kernel.org>; Sat, 25 Mar 2023 22:12:08 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id i5so23503833eda.0
+        for <git@vger.kernel.org>; Sat, 25 Mar 2023 22:12:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679806902;
+        d=gmail.com; s=20210112; t=1679807527;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=v0GSZVPeNjXWAVtnX5RzR+EEeeSDYUps7/yrjWh7QTs=;
-        b=WF+WIAaafoqZn70smdoG/8hxfBQRsPruBArhI3xslJZt5Ju68O/zT9F1R2gth/Wm8K
-         g6tMC9C2g1wG/Z7kgsyvkP66BK88a1wD6y7Y+eAlE4o1+XUqAlZhezJ1Mqia0D1FHzRF
-         OzKWNV5b3tQvVF6R8cv4JchngA7EUu1CAskW9tv37UtkrNWHuNacUJhRAKG3lgVtQP+b
-         mDguBa9vWCCY+lIPKiTWFlVUZhl6MWxt+2du7sHLtm2NY2r7mvKPnvkGyf2tociSdaZ8
-         GxhxQdGW5rgTPQw/caERcCsZKI3WS6T9zA6JV73FRqxGidP/Xf4YPwk6viFzqoQPK/cg
-         CRPw==
+        bh=Apl5YA2yo0Z8bZ6cMuZSkXBDgFUgHJ5KyjqW+ljBVAw=;
+        b=HD6JW8kYtaiMTEbaMu8UdSNiozodOI71D/9IQK582OvGX3arMvHSuDiPrLCm1bK31Z
+         bi3WFcDBTUTt/5lk9tis6r6DeuME7s15/ZQQCsuxh8wPUYdsIX5UWIPFK51HbTcqzkLn
+         WKtL+km6Jf6PcLv6bfEfwzqz1jZuLJvhpvhbVW7dOL3Cv28IBJcCAqrdXYGE4UdmX7Kl
+         zLwQiNuoClqmxStIaJdB/Mq9nLF2SUjranKolUQd5gTHHaGFjPQbVyhB3Sb0FnqaBcHQ
+         DD+qzIrhQA6XgiIce1X0e1hlYYpDervbKGanjIwvkFkXRAKepW7sTE3sFbC+GgEfO4gW
+         z9oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679806902;
+        d=1e100.net; s=20210112; t=1679807527;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=v0GSZVPeNjXWAVtnX5RzR+EEeeSDYUps7/yrjWh7QTs=;
-        b=D6eC0/Z+1kwNqEmm4Q/IcwvaMcqjfQ+ou0UDln1d/gLP3drOnzQ01nQjUMV7Zghieg
-         RqsXgBQ3WD9m0qT/Plo57THA9cxDSOBCwGtqoUEjBnAZYEfOw+TFJTH5z+C30T8z///z
-         wGpZV3owE5SNGqxka/6ms+5NG1ajxxTJTQ4KbLihEIyEXmhtrfoI7lRn9GCh2QbCfPYM
-         dZaqLxtta4xp/wMOxnvnFaC528fFfbldmsZOL8aW9Q4aU5BfSU/h/rDkFItCIntQZFaS
-         brODWonHjJF/KNNdBorjN7jhLoEVi21OTbmqoc0rdb+m5opHINyMn3bSBaThI15DS0Dj
-         VGXA==
-X-Gm-Message-State: AAQBX9dnlMwcKJVQFn0KXmOjAKHbxrESm4ZMvN5Syxofz04D3MTB0bzq
-        nVhlUOdcotdDpTW8vyiUZNY=
-X-Google-Smtp-Source: AKy350ZJoTRMHXvfEEh7S7loFs+h79PCzFhwuOERqMgB3GVCpv8FJcodSu9b/e3Gnv05cCiAD4ljnw==
-X-Received: by 2002:a17:907:c01a:b0:932:3d1b:b69d with SMTP id ss26-20020a170907c01a00b009323d1bb69dmr8653075ejc.47.1679806902393;
-        Sat, 25 Mar 2023 22:01:42 -0700 (PDT)
+        bh=Apl5YA2yo0Z8bZ6cMuZSkXBDgFUgHJ5KyjqW+ljBVAw=;
+        b=krZZe+wdxNvNuJ2neRyMAaqNLzFNnY5YJXuuTI8eGVIZmJmhWzXxlVhKgt+zY7P5Rk
+         395KL9o2XjLO8FkdjbYpjjDHvJUSqSQrKjNEjP8VCFwBtzqaOotGHSkAhvLdAcs6g4Pr
+         RNCeXlfODWUjZzEEOOijVmpv2R3gDgmvDsjc8Nwfyq6OAtFtyz2/pGNwxGl2Y7KRgQl7
+         vC0tZvn8dADxYXkzNglWAnQXMGsKwxAv+D4RTSHrYvksDZNhFo1dlUTWenPHSrGs4Lei
+         NJjo+oMWbWS2BvCQScVEBp8DjJgmwBbi6fxY3JWH8JxImJiIoJg2D4jE0w9JE0LsbTis
+         fdAg==
+X-Gm-Message-State: AAQBX9eNTFPdEQp5W0sE/wqgZ8xSCwIFm3IWA4RKf87JyEngpAJ2XLZv
+        Z+/cGGV4i7wCII4g04GziDV9knCXj7Q=
+X-Google-Smtp-Source: AKy350YoitfA7refRJBQ+aGJhT4Nu/UtNcICgJH3JsBCFdKNXqkGKPV2waqbRvs+8ia8fIaeey3Bmg==
+X-Received: by 2002:a17:906:5850:b0:935:3028:ff58 with SMTP id h16-20020a170906585000b009353028ff58mr7630893ejs.55.1679807527137;
+        Sat, 25 Mar 2023 22:12:07 -0700 (PDT)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id g19-20020a17090613d300b00931db712768sm12397672ejc.4.2023.03.25.22.01.41
+        by smtp.gmail.com with ESMTPSA id y12-20020a17090668cc00b008d044ede804sm10476735ejr.163.2023.03.25.22.12.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Mar 2023 22:01:41 -0700 (PDT)
+        Sat, 25 Mar 2023 22:12:06 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pgIVh-004J9w-1u;
-        Sun, 26 Mar 2023 07:01:41 +0200
+        id 1pgIfm-004Jaw-0p;
+        Sun, 26 Mar 2023 07:12:06 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Glen Choo <chooglen@google.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 15/17] cocci: apply the "revision.h" part of
- "the_repository.pending"
-Date:   Sun, 26 Mar 2023 06:59:46 +0200
+Subject: Re: [PATCH 02/17] cocci: fix incorrect & verbose "the_repository"
+ rules
+Date:   Sun, 26 Mar 2023 07:02:55 +0200
 References: <cover-00.17-00000000000-20230317T152724Z-avarab@gmail.com>
- <patch-15.17-c8ff241844a-20230317T152725Z-avarab@gmail.com>
- <kl6l8rfoe4qr.fsf@chooglen-macbookpro.roam.corp.google.com>
- <kl6l5yase416.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <patch-02.17-1b1fc5d41f5-20230317T152724Z-avarab@gmail.com>
+ <kl6ledpge75s.fsf@chooglen-macbookpro.roam.corp.google.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <kl6l5yase416.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-ID: <230326.86ileow1fu.gmgdl@evledraar.gmail.com>
+In-reply-to: <kl6ledpge75s.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <230326.86edpcw0yh.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,48 +75,89 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Mar 22 2023, Glen Choo wrote:
 
-> Glen Choo <chooglen@google.com> writes:
+> Every time I try to read cocci and spatch docs, I'm impressed at how
+> impenetrable they are ;)
+
+FWIW you should ignore the manpage, which and instead read the
+"Coccinelle User=E2=80=99s manual", and particularly "The SmPL Grammar", bo=
+th of
+which are available as PDFs on their website.
+
+But their docs are rather terse, and sometimes even incomplete. I've
+often resorted to grepping their own test cases to figure out how
+something works.
+
+> Nevertheless, I'd still like to understand how
+> the pattern works. I'll take a stab in the dark, and perhaps you can
+> correct me.
 >
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason         <avarab@gmail.com> writes:
->>
->>> diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contrib/=
-coccinelle/the_repository.pending.cocci
->>> deleted file mode 100644
->>> index 1190a3312bd..00000000000
->>> --- a/contrib/coccinelle/the_repository.pending.cocci
->>> +++ /dev/null
->>> @@ -1,14 +0,0 @@
->>> -// This file is used for the ongoing refactoring of
->>> -// bringing the index or repository struct in all of
->>> -// our code base.
->> We can't go so far as to say that we've removed all implicit references
->> to "the_repository", though, since we still have functions that
->> reference "the_repository" in their implementations. But, I don't think
->> this ".cocci" file would help us with those cases anyway, since this was
->> targeted specifically at functions/macros that were passing
->> "the_repository" to functions that accepted a "struct repository" arg.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason         <avarab@gmail.com> writes:
 >
-> For these implicitly-the_repository functions, (e.g. git_path) we'd
-> presumably refactor them into repo_* versions and then apply the same
-> sorts of changes we did in this series? I guess we'd make those changes
-> in contrib/coccinelle/the_repository.cocci, so we don't need the
-> *.pending* one.
+>> +(
+>> +- read_object_file
+>> ++ repo_read_object_file
+>> +|
+>> +- has_object_file
+>> ++ repo_has_object_file
+>> +|
+>> +- has_object_file_with_flags
+>> ++ repo_has_object_file_with_flags
+>> +|
+>> +- parse_commit_internal
+>> ++ repo_parse_commit_internal
+>> +|
+>> +- parse_commit
+>> ++ repo_parse_commit
+>> +|
+>> +- get_merge_bases
+>> ++ repo_get_merge_bases
+>> +|
+>> +- get_merge_bases_many
+>> ++ repo_get_merge_bases_many
+>> +|
+>> +- get_merge_bases_many_dirty
+>> ++ repo_get_merge_bases_many_dirty
+>> +|
+>> +- in_merge_bases
+>> ++ repo_in_merge_bases
+>> +|
+>> +- in_merge_bases_many
+>> ++ repo_in_merge_bases_many
+>> +|
+>> +- get_commit_buffer
+>> ++ repo_get_commit_buffer
+>> +|
+>> +- unuse_commit_buffer
+>> ++ repo_unuse_commit_buffer
+>> +|
+>> +- logmsg_reencode
+>> ++ repo_logmsg_reencode
+>> +|
+>> +- format_commit_message
+>> ++ repo_format_commit_message
+>> +)
+>
+> I assume that `|` characters in parentheses are a logical OR, and each
+> of the expressions checks for the `-` side in the original and replaces
+> it with the `+` side.
 
-Whether we add it to a "pending" or not is just a question of whether
-the migration is done right away, or left for later.
+Yes, just a simple "replace A with B".
 
-> On that note, I'm curious what contrib/coccinelle/the_repository.cocci
-> is doing for us after this series. By definition, all of the macros have
-> been fully migrated, so they're all a noop.
+>> +  (
+>> ++ the_repository,
+>> +  ...)
+>
+> Then this is another expression that matches literal `()` after the
+> previous expression? `+the_repository` adds `the_repository` right after
+> the opening `(`, then leaves the uninteresting `...` in place.
+>
+> If so, I don't know how cocci/spatch tells the difference between
+> literal `()` vs an expression in the syntax (preceding whitespace?).
 
-I left them for the benefit of any in-flight conflicts, or semantic
-conflicts with out-of-tree.
+Yes, whitespace is significant in the coccinelle syntax, generally its
+own "()" grouping goes at the beginning of a line, wheras you indent
+program text in the "diff" with whitespace.
 
-I.e. in such a case you'd keep the other side, then apply the cocci
-rule, and the result is a semantically correct merge of the two.
-
-> Would this slow down `make coccicheck`?
-
-A bit. It doesn't slow it down by much, as these rules are the simplest
-to execute, spatch can skip the file if the relevant tokens aren't found
-in it.
+E.g. our equals-null.cocci has two rules that use "(" and ")" in a way
+that would be ambiguous if this whitespace-disambiguation weren't being
+used.
