@@ -2,155 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5200FC6FD1C
-	for <git@archiver.kernel.org>; Sun, 26 Mar 2023 15:12:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F2DFC6FD1C
+	for <git@archiver.kernel.org>; Sun, 26 Mar 2023 17:08:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232413AbjCZPML (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Mar 2023 11:12:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46730 "EHLO
+        id S232083AbjCZRIL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Mar 2023 13:08:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232073AbjCZPMK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Mar 2023 11:12:10 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7B515BAD
-        for <git@vger.kernel.org>; Sun, 26 Mar 2023 08:12:07 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id o32so3631030wms.1
-        for <git@vger.kernel.org>; Sun, 26 Mar 2023 08:12:07 -0700 (PDT)
+        with ESMTP id S232008AbjCZRIJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Mar 2023 13:08:09 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F3D13AA1
+        for <git@vger.kernel.org>; Sun, 26 Mar 2023 10:08:08 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id p13-20020a17090a284d00b0023d2e945aebso9326569pjf.0
+        for <git@vger.kernel.org>; Sun, 26 Mar 2023 10:08:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679843526;
-        h=content-transfer-encoding:in-reply-to:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BTJRZ9LGiCZJnoTWXP2FJaLhqdu8gqdAJnH4LHz6oD8=;
-        b=Uo11KRqjt3pR5qzGbzei8TTsECRE0ZoHUOZwqnfrdmLcrNpf6MCC8i/dt12a2zygid
-         QnvbJi1ZKbOmy1feHzfbQh9r90vR4Ysqbwm8hHOdxMfJAX4gfaqeNKGEmMjlDtzRqhdB
-         y4pIIcFCxLs3t4BmtZwSEwPgb2q7UjFeLF/0aXZ9puIgSwbNmTrpt1PsbKIUkrpMIP4s
-         Q/T54qVyf7TM/Zuxks9V/aLj+HCYOoM8e7U7H2Im8osMT+b38SfZ7Zd2ZPDSc0O2rRLI
-         RG/TAHzuJk27FX4mi3JKJi0ub4IKXCULRkJQ52ERO2J12aCpl6DigVffyi8xJwyK2X3K
-         AAOQ==
+        d=gmail.com; s=20210112; t=1679850487;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JGd/nqvmAnf68f2v15ZtiTSAHEv1iE3SRxe/jKH7qvg=;
+        b=NX6gSec6ss9fitkluz/KKYV840bLQ/25vVRcTgDWbgzZD3RDDoTZWSt9Envix59g8m
+         hzggKoy9+aXtp0YeEwKLcqTzpCesxYVC5F9pTOSwD9+YpJCq671DIPQR/V0vmJLCGnsn
+         GIIE5+8X6ylpNW/SCkNsFyfqWBMt1VjLXwWGksLDwBdWoOdryidwnya4kchVd9dnH/2a
+         RwX/leOqiclrYEXx2KUADVkfQxNek0FPgKYG3hsZqC7nWW1FPXFYB1VVVD+6OJaFAqKk
+         rN3ywfdTwBU3zAndIe7s8aJVMB1WdpEqeKE+eHehNtuorGiSyjfdc6zf/Wx91VfegZyS
+         YFHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679843526;
-        h=content-transfer-encoding:in-reply-to:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BTJRZ9LGiCZJnoTWXP2FJaLhqdu8gqdAJnH4LHz6oD8=;
-        b=YlUEx7PDGoVZIqSyy7+j0VkIYmdz/+YlJYYcp4xOj2QuFyJ08SKl3A2igo2DrKr0z4
-         fq9NsIfDEiVqpnG2tYuuPurVtlnbHZ4/cLtuQaNlhkz4cVhRSMVMfbKdpy8fbrJrg6z7
-         P03a4qDXnpF8Bp5RGS67GxFiJ6L/JoX+mkI+Pm0RstAqurSHdRjMX503zcuEV/qaBqI2
-         U28iFZZse81eZwcacc3XDTJ9sUsewdDMP2PZW59NjYigl/m9ZD5nYzioufO+uQ/3BgfH
-         0uIsz0CS0NvvKJmDrwitJxQiqxwMjz4CZmwu8VIXi6qcgthNFVQrfCuGjh4WAR8sEsH+
-         EeAw==
-X-Gm-Message-State: AO0yUKVpDyVPEqxJZrl8QpJpMidaAMV+h43SWdSX1K3gwrZsTqK7ACFp
-        rhygI885YvKp+RUMvZ/yxiU=
-X-Google-Smtp-Source: AK7set+Q7VfpOUUCjRqzaWu8Pa0x64TWvsJ95hLSa/eZesGkLV8mVRNhPJZDnzFg1ziqNUNUX/MLow==
-X-Received: by 2002:a7b:ca59:0:b0:3eb:2da5:e19 with SMTP id m25-20020a7bca59000000b003eb2da50e19mr7098843wml.27.1679843526148;
-        Sun, 26 Mar 2023 08:12:06 -0700 (PDT)
-Received: from [192.168.1.212] ([90.253.53.152])
-        by smtp.gmail.com with ESMTPSA id z10-20020a05600c0a0a00b003edd2ec9f85sm5932478wmp.6.2023.03.26.08.12.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Mar 2023 08:12:05 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <19ab92b4-6b83-d788-78f2-43a3ec3ec412@dunelm.org.uk>
-Date:   Sun, 26 Mar 2023 16:12:03 +0100
+        d=1e100.net; s=20210112; t=1679850487;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JGd/nqvmAnf68f2v15ZtiTSAHEv1iE3SRxe/jKH7qvg=;
+        b=5zYZBResAK09uArKp7SQlKDs4fZfv+SY+Fk4oMTtp9AYhaPY0dzECU095YGYoP1aSZ
+         ghw1TRGrfiOpvWF7fxxVa6DNHTxKK99si3JaGQapNAR0iuneyWCsXI2bIl+MO8OBH5tm
+         UYUx1/WjUkP0p326CCO6uIjuVPD72T4sfgsscyKP35GRcTjH/M458lrTDidgeAFJWnSR
+         GJ1D4ML82teLxRxb4V1kE6S9iIvMYGwtD1F3DwCxWw/BSgcH3QyBisyyQGKrC5GL8kdd
+         8B0B8xx8uLHFpkWnacRflGXbwIUYVKUU6gZsrSYy64lPEOhYNx7MuFcBd7l3gFx/7tTz
+         Oyjg==
+X-Gm-Message-State: AAQBX9fSHWWykWpJsbRrjGb1JpqPuG5wRvBS3GW6121IPVci5ArbodLk
+        LBn4gBkuWO9QePPUC7RK/kmq+wn7b5RSjg==
+X-Google-Smtp-Source: AKy350b5jvBoqdxa9v2vNI8LETz3aWGc5njN5ob/E9JS5+wBr8WzHNv23LKbbWXjnMIvdand+T/MrA==
+X-Received: by 2002:a17:90b:4c8b:b0:23f:2c65:fab7 with SMTP id my11-20020a17090b4c8b00b0023f2c65fab7mr9788432pjb.42.1679850487454;
+        Sun, 26 Mar 2023 10:08:07 -0700 (PDT)
+Received: from fivlite-virtual-machine.localdomain ([49.37.150.51])
+        by smtp.gmail.com with ESMTPSA id c5-20020a17090aa60500b0023af8a3cf6esm2884532pjq.48.2023.03.26.10.08.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Mar 2023 10:08:07 -0700 (PDT)
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     git@vger.kernel.org
+Cc:     five231003@gmail.com
+Subject: [GSoC][Project Idea] Refactor lazy-fetching in a partial clone
+Date:   Sun, 26 Mar 2023 22:38:01 +0530
+Message-Id: <20230326170801.7955-1-five231003@gmail.com>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v9 0/3] rebase: document, clean up, and introduce a config
- option for --rebase-merges
-Content-Language: en-US
-To:     Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org,
-        tao@klerks.biz, gitster@pobox.com, newren@gmail.com,
-        phillip.wood123@gmail.com, Johannes.Schindelin@gmx.de,
-        sorganov@gmail.com, chooglen@google.com, calvinwan@google.com,
-        jonathantanmy@google.com, felipe.contreras@gmail.com
-References: <20230320055955.461138-1-alexhenrie24@gmail.com>
- <20230326030636.2635642-1-alexhenrie24@gmail.com>
-In-Reply-To: <20230326030636.2635642-1-alexhenrie24@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alex
+The term "object" below always means a blob or a tree since git doesn't
+yet allow filters on commits or tags.
 
-On 26/03/2023 04:06, Alex Henrie wrote:
-> This patch series introduces a rebase.rebaseMerges config option to
-> accommodate users who would like --rebase-merges to be on by default and
-> to facilitate turning on --rebase-merges by default without
-> configuration in a future version of Git. It also cleans up and
-> documents the behavior of the --rebase-merges command line option to
-> avoid confusion about how the config option and the command line option
-> interact.
-> 
-> Changes from v8:
-> - Add braces around one-line else clause
-> - Remove unnecessary change to error message priority
+Whenever an object is missing in a partial clone and we check for it
+or read it, we trigger a lazy-fetch depending on whether fetch_if_missing
+is set to 1 or 0. Currently, this global is set to 1 everywhere and some
+commands which do not want to lazy-fetch have it set to 0 internally (for
+example index-pack, fetch-pack, rev-list).
 
-The range-diff looks good to me. This iteration addresses all of my 
-outstanding concerns.
+The goal of this project is to look into all the commands where fetch_if_missing
+is set to 1 (in which case, whenever an object is missing, a connection
+is made, the object that is missing is fetched and we disconnect. This
+is bad because we are fetching for each object individually and this
+leads to huge performance loss) and make changes so that fetching of
+objects is done in a batch. In this way, when all of commands know how
+to nicely fetch objects, we can change fetch_if_missing to default to 0.
+
+I think this can be implemented by looking for all the places in the code
+where has_object_file*(), read_object_file() or really any other function
+which uses oid_object_info_extended(), is used and where fetch_if_missing is
+set to 1 and make the necessary and appropriate changes to either fetch
+efficiently or to not fetch at all and also write the tests necessary
+according to the family [1] they belong to.
+
+The above idea is the result of the discussion on the patch
+
+  https://lore.kernel.org/git/20230225052439.27096-1-five231003@gmail.com/
+
+Please let me know if it is doable as a project.
 
 Thanks
 
-Phillip
-
-> Thanks to Phillip, Junio, Johannes and Sergey for your feedback on v8.
-> 
-> Alex Henrie (3):
->    rebase: add documentation and test for --no-rebase-merges
->    rebase: deprecate --rebase-merges=""
->    rebase: add a config option for --rebase-merges
-> 
->   Documentation/config/rebase.txt        | 10 ++++
->   Documentation/git-rebase.txt           | 19 ++++---
->   builtin/rebase.c                       | 70 ++++++++++++++++++++------
->   t/t3422-rebase-incompatible-options.sh | 17 +++++++
->   t/t3430-rebase-merges.sh               | 44 ++++++++++++++++
->   5 files changed, 138 insertions(+), 22 deletions(-)
-> 
-> Range-diff against v8:
-> 1:  09fb7c1b74 = 1:  a22b9d0da2 rebase: add documentation and test for --no-rebase-merges
-> 2:  a846716a4a = 2:  112fee4833 rebase: deprecate --rebase-merges=""
-> 3:  b12a3610ba ! 3:  868899cd6d rebase: add a config option for --rebase-merges
->      @@ builtin/rebase.c: static int rebase_config(const char *var, const char *value, v
->       +		if (opts->config_rebase_merges < 0) {
->       +			opts->config_rebase_merges = 1;
->       +			parse_rebase_merges_value(opts, value);
->      -+		} else
->      ++		} else {
->       +			opts->rebase_cousins = 0;
->      ++		}
->       +		return 0;
->       +	}
->       +
->      @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
->        		if (ignore_whitespace)
->        			strvec_push(&options.git_am_opts,
->       @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix)
->      - 				break;
->      -
->      - 		if (i >= 0 || options.type == REBASE_APPLY) {
->      --			if (is_merge(&options))
->      --				die(_("apply options and merge options "
->      --					  "cannot be used together"));
->      --			else if (options.autosquash == -1 && options.config_autosquash == 1)
->      -+			if (options.autosquash == -1 && options.config_autosquash == 1)
->      + 					  "cannot be used together"));
->      + 			else if (options.autosquash == -1 && options.config_autosquash == 1)
->        				die(_("apply options are incompatible with rebase.autoSquash.  Consider adding --no-autosquash"));
->       +			else if (options.rebase_merges == -1 && options.config_rebase_merges == 1)
->       +				die(_("apply options are incompatible with rebase.rebaseMerges.  Consider adding --no-rebase-merges"));
->        			else if (options.update_refs == -1 && options.config_update_refs == 1)
->        				die(_("apply options are incompatible with rebase.updateRefs.  Consider adding --no-update-refs"));
->      -+			else if (is_merge(&options))
->      -+				die(_("apply options and merge options "
->      -+					  "cannot be used together"));
->        			else
->      - 				options.type = REBASE_APPLY;
->      - 		}
->       @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix)
->        	options.update_refs = (options.update_refs >= 0) ? options.update_refs :
->        			     ((options.config_update_refs >= 0) ? options.config_update_refs : 0);
+[1] https://lore.kernel.org/git/20230311025906.4170554-1-jonathantanmy@google.com/
