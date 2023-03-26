@@ -2,306 +2,233 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C4DAC77B6D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D06B5C77B6E
 	for <git@archiver.kernel.org>; Sun, 26 Mar 2023 22:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbjCZWpy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Mar 2023 18:45:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54142 "EHLO
+        id S229880AbjCZWp6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Mar 2023 18:45:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229736AbjCZWpw (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229743AbjCZWpw (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 26 Mar 2023 18:45:52 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D14459E4
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB83059D3
         for <git@vger.kernel.org>; Sun, 26 Mar 2023 15:45:47 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id l27so6850155wrb.2
-        for <git@vger.kernel.org>; Sun, 26 Mar 2023 15:45:46 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id m2so6837119wrh.6
+        for <git@vger.kernel.org>; Sun, 26 Mar 2023 15:45:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679870745;
+        d=gmail.com; s=20210112; t=1679870746;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Xy8rIU6zY+gVCqSPJW9tGTszLEWihFyx8/olYYeGIqg=;
-        b=q7/wQoV1bsyuCmBHM/+HObuekLOrAKn1plXWFXHOV1BLWehvk2LlaAe4wnoVV1b/xJ
-         DqG1UB/Wt5twr57F75nvt1W6ogWJVXze78hYsX8n8O7377zIylUSew/AEAgzFzUilESy
-         ygS1KM6/AxAwk6L/m6fGOa9A2ruBuMn9kjSoPWAoGH0BDbZX2u4amS39O2Zfiyv8b8fX
-         /jwGr/T0GvLkjTINYbECtNJNvOscMSp2E3HMAxv6XKaQS4zGXOGPWuA/kEDafLK/emRs
-         pRtwxm6Lg+PKZcnJGT+iMTccDagOTsXkr+lVo2U67gts15g0ivBm8rS9NEelh9cxW/O5
-         kgKg==
+        bh=J8QhUNEFReiCSgkZDDHAbi0jGT1Xpb/cllleVu/3f1k=;
+        b=RmarioEhfthl1oGAhk+iZHx+Gk72q0v9lvvx/gQQtoAHeWWFNMbAH9aqu1vaYUCAe2
+         yaFy7+0HeF/wazjiHTzdDW1ykw66zvGVsMiH3iJoTna9kxnZRz/weyzOawrB/NH5+Fjo
+         +N9+2iDomL9uWTkUUUoUQlbpSGUXVSvWWXyO3qYRcSHsQJvJ1fqA5LEMBLzJuw0XeMpT
+         Miz+qThpRFAYtLIEzL+Xaq/fAPpSccN/SocZikrOYBXLhnHer7Kf4E2WYTCC97Dz+cLU
+         NYA00SJqcMQ62lgYF+l4QUPLggMoQQL56WXWqzGxgg+GUJp+UgYBgiPcfwyPQU6nO0fi
+         blyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679870745;
+        d=1e100.net; s=20210112; t=1679870746;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Xy8rIU6zY+gVCqSPJW9tGTszLEWihFyx8/olYYeGIqg=;
-        b=iPLI8JjsqD5/KSTdetx7VvSrI2Ee6IZL/mS54UO9vW1aNP5fMBzltU2BcATdlW9zej
-         3iApYLZL6vIZu6a4WVD7cK+Pbog9RSPovmXXs8dVveAPvqG3heKGoWvTZlL5ixAXbD4Y
-         ZuX9vT6rwQyH7A0WoR7T5xedlEogY3FocjeHbuvX0Y0qK9N0+5VdKSfzfvjNl1sfmrp6
-         vHV/LW1HMAEUMGbKnE5HwVsbJRBipX45LlOXaob5I+fL/pOGCVjrTpDpXRRhRTC5qMxF
-         0uJAatyGMkLj1DquAtZXeiaoRUl4SELintJjuKIqFzjyjQ2mbpKP3/Od44rsnyW7Y7Sh
-         srmw==
-X-Gm-Message-State: AAQBX9dbcscPdWud8Pfuuv72RxR05P16ShDQMU0FV4kVCzrT0ox7FWJQ
-        8UIHDPbMJyGsP8iIN0px9SXmITCdg2o=
-X-Google-Smtp-Source: AKy350atwk2W5NOF6d0EOJShnDDToe3PeUMJwJeiEjv1r3u4AKTalhD3y4NEIAl5NJFfe/8Y3BDfFA==
-X-Received: by 2002:adf:dd10:0:b0:2d8:e6ba:99e8 with SMTP id a16-20020adfdd10000000b002d8e6ba99e8mr7768161wrm.33.1679870745095;
+        bh=J8QhUNEFReiCSgkZDDHAbi0jGT1Xpb/cllleVu/3f1k=;
+        b=2wJvHXOP+qNSgDecVOncNXf6wriZH17LyH8Gtsu/JTtY0xrmagVWyDQXGIs/gYJsyf
+         0L66h6xDP3nAmRaLVItP8mdY3ZuTLRUKZZdiMp7BJs4JZliBgLZvLU6UOHPDbjJe6Rkn
+         viPs4gFLnwXjpIvOg4GxA7uxERE7kgxwN+0OwuNEkL5CcYKAZQNGayl8SfL2UUdUQhBR
+         ly/9bMKfsVMhnN1qM429wtWAqDqDQUhxka/1kfkipOIua8geCNKeSL2d8ZkBZJKjXvha
+         nVbrMoC4oGAIjRhT+JkHmp2Rcr+Xo4Wz3LqNZO77wIm9l+Bge5WSrKfYsOr4aQtRh09S
+         4IDA==
+X-Gm-Message-State: AAQBX9drUm2QOmyLpeMQpoAsXmFN1YG76QSb9RAJ1ckidBchcPLBBu0g
+        L3Tb/WOqVom/HbkSxGyzv8vjGzP0eCE=
+X-Google-Smtp-Source: AKy350a2Fvqv1gKKvnDOWcDi4Si3y/EOVnQSykpE4IFabHUTKtEXMAxWvUrhCgWxAeqJ9dByh75Xzw==
+X-Received: by 2002:adf:f18c:0:b0:2c5:5687:5ed5 with SMTP id h12-20020adff18c000000b002c556875ed5mr8004475wro.18.1679870745952;
         Sun, 26 Mar 2023 15:45:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y16-20020a1c4b10000000b003e91b9a92c9sm11703939wma.24.2023.03.26.15.45.44
+        by smtp.gmail.com with ESMTPSA id m8-20020a5d4a08000000b002c3f03d8851sm23389249wrq.16.2023.03.26.15.45.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Mar 2023 15:45:44 -0700 (PDT)
-Message-Id: <pull.1497.v2.git.1679870743.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1497.git.1679500859.gitgitgadget@gmail.com>
+        Sun, 26 Mar 2023 15:45:45 -0700 (PDT)
+Message-Id: <c025fccbdde1a4df11ba36552f86369ed74d37d2.1679870743.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1497.v2.git.1679870743.gitgitgadget@gmail.com>
 References: <pull.1497.git.1679500859.gitgitgadget@gmail.com>
+        <pull.1497.v2.git.1679870743.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 26 Mar 2023 22:45:39 +0000
-Subject: [PATCH v2 0/4] Fix a few split-index bugs
+Date:   Sun, 26 Mar 2023 22:45:40 +0000
+Subject: [PATCH v2 1/4] split-index & fsmonitor: demonstrate a bug
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I received an internal bug report that after upgrading from v2.39.2 to
-v2.40.0, some users ran into the following error message:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-BUG: fsmonitor.c:21: fsmonitor_dirty has more entries than the index (57 > 0)
+This commit adds a new test case that demonstrates a bug in the
+split-index code that is triggered under certain circumstances when the
+FSMonitor is enabled, and its symptom manifests in the form of one of
+the following error messages:
 
+    BUG: fsmonitor.c:20: fsmonitor_dirty has more entries than the index (2 > 1)
 
-It sounds very much like the report we received in
-https://lore.kernel.org/git/CAC7ZvybvykKQyMWcZoKXxFDu_amnkxZCDq2C6KHoyhmHN2tcKw@mail.gmail.com/,
-but sadly that thread petered out when the reporter stopped being able to
-reproduce the problem.
+    BUG: unpack-trees.c:776: pos <n> doesn't point to the first entry of <dir>/ in index
 
-After a few days of investigating, I am convinced that this is due to some
-old bugs, and not actually a regression in v2.40.0 (although I can believe
-that some improvements in v2.40.0 might make it easier to run into these
-bugs).
+    error: invalid path ''
+    error: The following untracked working tree files would be overwritten by reset:
+            initial.t
 
-This patch series addresses those bugs.
+Which of these error messages appears depends on timing-dependent
+conditions.
 
-Note: While the Git maintainer has stated a strong preference to introduce
-regression tests in the same patch that fixes the corresponding regression,
-this patch series starts with a stand-alone patch that demonstrates a
-problematic scenario via a new test_expect_failure test case. The reason why
-I specifically split out the test into its own commit is that there is a lot
-of information to unpack in the commit message that is larger than any of
-the subsequent bug fixes. Besides, it motivates not only the second patch
-(which marks the test case as test_expect_success) but paints the larger
-picture necessary to understand also the need for the remaining two patches.
+Technically the root cause lies with a bug in the split-index code that
+has nothing to do with FSMonitor, but for the sake of this new test case
+it was the easiest way to trigger the bug.
 
-This patch series is based on maint-2.37, the oldest maintenance branch it
-applies without merge conflicts. When merging with next, there are only
-trivial conflicts in unpack-trees.c due to en/dir-api-cleanup where
-o->result is now o->internal.result.
+The bug is this: Under specific conditions, Git needs to skip writing
+the "link" extension (which is the index extension containing the
+information pertaining to the split-index). To do that, the `base_oid`
+attribute of the `split_index` structure in the in-memory index is
+zeroed out, and `do_write_index()` specifically checks for a "null"
+`base_oid` to understand that the "link" extension should not be
+written. However, this violates the consistency of the in-memory index
+structure, but that does not cause problems in most cases because the
+process exits without using the in-memory index structure anymore,
+anyway.
 
-Changes since v1:
+But: _When_ the in-memory index is still used (which is the case e.g. in
+`git rebase`), subsequent writes of `the_index` are at risk of writing
+out a bogus index file, one that _should_ have a "link" extension but
+does not. In many cases, the `SPLIT_INDEX_ORDERED` flag _happens_ to be
+set for subsequent writes, forcing the shared index to be written, which
+re-initializes `base_oid` to a non-bogus state, and all is good.
 
- * Fix a double "the" in a commit message
- * Replace enum strip_extensions by the bit field enum write_extensions,
-   inverting the meaning of the values to avoid double negatives
- * Leave a trailing comma at the definition of the enum values
+When it is _not_ set, however, all kinds of mayhem ensue, resulting in
+above-mentioned error messages, and often enough putting worktrees in a
+totally broken state where the only recourse is to manually delete the
+`index` and the `index.lock` files and then call `git reset` manually.
+Not something to ask users to do.
 
-Johannes Schindelin (4):
-  split-index & fsmonitor: demonstrate a bug
-  split-index; stop abusing the `base_oid` to strip the "link" extension
-  fsmonitor: avoid overriding `cache_changed` bits
-  unpack-trees: take care to propagate the split-index flag
+The reason why it is comparatively easy to trigger the bug with
+FSMonitor is that there is _another_ bug in the FSMonitor code:
+`mark_fsmonitor_valid()` sets `cache_changed` to 1, i.e. treating that
+variable as a Boolean. But it is a bit field, and 1 happens to be the
+`SOMETHING_CHANGED` bit that forces the "link" extension to be skipped
+when writing the index, among other things.
 
- fsmonitor.h                  |  2 +-
- read-cache.c                 | 49 +++++++++++++++++++++++-------------
- t/t7527-builtin-fsmonitor.sh | 37 +++++++++++++++++++++++++++
- unpack-trees.c               |  2 ++
- 4 files changed, 72 insertions(+), 18 deletions(-)
+"Comparatively easy" is a relative term in this context, for sure. The
+essence of how the new test case triggers the bug is as following:
 
+1. The `git rebase` invocation will first reset the worktree to
+   a commit that contains only the `one.t` file, and then execute a
+   rebase script that starts with the following commands (commit hashes
+   skipped):
 
-base-commit: eb88fe1ff5ceb34845f0919b8bdc60d8a1703cf6
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1497%2Fdscho%2Ffix-split-index-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1497/dscho/fix-split-index-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1497
+   label onto
 
-Range-diff vs v1:
+   reset initial
+   pick two
+   label two
 
- 1:  c025fccbdde = 1:  c025fccbdde split-index & fsmonitor: demonstrate a bug
- 2:  f1897b88072 ! 2:  8cc075f6325 split-index; stop abusing the `base_oid` to strip the "link" extension
-     @@ Commit message
-      
-          One might be tempted to simply call `discard_split_index()` instead,
-          under the assumption that Git decided to write a non-split index and
-     -    therefore the the `split_index` structure might no longer be wanted.
-     +    therefore the `split_index` structure might no longer be wanted.
-          However, that is not possible because that would release index entries
-          in `split_index->base` that are likely to still be in use. Therefore we
-          cannot do that.
-      
-     -    The next best thing we _can_ do is to introduce a flag, specifically
-     -    indicating when the "link" extension should be skipped. So that's what
-     -    we do here.
-     +    The next best thing we _can_ do is to introduce a bit field to indicate
-     +    specifically which index extensions (not) to write. So that's what we do
-     +    here.
-      
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-     @@ read-cache.c: static int record_ieot(void)
-       	return !git_config_get_index_threads(&val) && val != 1;
-       }
-       
-     -+enum strip_extensions {
-     -+	WRITE_ALL_EXTENSIONS = 0,
-     -+	STRIP_ALL_EXTENSIONS = 1,
-     -+	STRIP_LINK_EXTENSION_ONLY = 2
-     ++enum write_extensions {
-     ++	WRITE_NO_EXTENSION =              0,
-     ++	WRITE_SPLIT_INDEX_EXTENSION =     1<<0,
-     ++	WRITE_CACHE_TREE_EXTENSION =      1<<1,
-     ++	WRITE_RESOLVE_UNDO_EXTENSION =    1<<2,
-     ++	WRITE_UNTRACKED_CACHE_EXTENSION = 1<<3,
-     ++	WRITE_FSMONITOR_EXTENSION =       1<<4,
-      +};
-     ++#define WRITE_ALL_EXTENSIONS ((enum write_extensions)-1)
-      +
-       /*
-        * On success, `tempfile` is closed. If it is the temporary file
-     @@ read-cache.c: static int record_ieot(void)
-        */
-       static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
-      -			  int strip_extensions, unsigned flags)
-     -+			  enum strip_extensions strip_extensions, unsigned flags)
-     ++			  enum write_extensions write_extensions, unsigned flags)
-       {
-       	uint64_t start = getnanotime();
-       	struct hashfile *f;
-     @@ read-cache.c: static int do_write_index(struct index_state *istate, struct tempf
-       	}
-       
-      -	if (!strip_extensions && istate->split_index &&
-     -+	if (strip_extensions == WRITE_ALL_EXTENSIONS && istate->split_index &&
-     - 	    !is_null_oid(&istate->split_index->base_oid)) {
-     +-	    !is_null_oid(&istate->split_index->base_oid)) {
-     ++	if (write_extensions & WRITE_SPLIT_INDEX_EXTENSION &&
-     ++	    istate->split_index) {
-       		struct strbuf sb = STRBUF_INIT;
-       
-     + 		if (istate->sparse_index)
-      @@ read-cache.c: static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
-       		if (err)
-       			return -1;
-       	}
-      -	if (!strip_extensions && !drop_cache_tree && istate->cache_tree) {
-     -+	if (strip_extensions != STRIP_ALL_EXTENSIONS && !drop_cache_tree && istate->cache_tree) {
-     ++	if (write_extensions & WRITE_CACHE_TREE_EXTENSION &&
-     ++	    !drop_cache_tree && istate->cache_tree) {
-       		struct strbuf sb = STRBUF_INIT;
-       
-       		cache_tree_write(&sb, istate->cache_tree);
-     @@ read-cache.c: static int do_write_index(struct index_state *istate, struct tempf
-       			return -1;
-       	}
-      -	if (!strip_extensions && istate->resolve_undo) {
-     -+	if (strip_extensions != STRIP_ALL_EXTENSIONS && istate->resolve_undo) {
-     ++	if (write_extensions & WRITE_RESOLVE_UNDO_EXTENSION &&
-     ++	    istate->resolve_undo) {
-       		struct strbuf sb = STRBUF_INIT;
-       
-       		resolve_undo_write(&sb, istate->resolve_undo);
-     @@ read-cache.c: static int do_write_index(struct index_state *istate, struct tempf
-       			return -1;
-       	}
-      -	if (!strip_extensions && istate->untracked) {
-     -+	if (strip_extensions != STRIP_ALL_EXTENSIONS && istate->untracked) {
-     ++	if (write_extensions & WRITE_UNTRACKED_CACHE_EXTENSION &&
-     ++	    istate->untracked) {
-       		struct strbuf sb = STRBUF_INIT;
-       
-       		write_untracked_extension(&sb, istate->untracked);
-     @@ read-cache.c: static int do_write_index(struct index_state *istate, struct tempf
-       			return -1;
-       	}
-      -	if (!strip_extensions && istate->fsmonitor_last_update) {
-     -+	if (strip_extensions != STRIP_ALL_EXTENSIONS && istate->fsmonitor_last_update) {
-     ++	if (write_extensions & WRITE_FSMONITOR_EXTENSION &&
-     ++	    istate->fsmonitor_last_update) {
-       		struct strbuf sb = STRBUF_INIT;
-       
-       		write_fsmonitor_extension(&sb, istate);
-     @@ read-cache.c: static int commit_locked_index(struct lock_file *lk)
-       		return commit_lock_file(lk);
-       }
-       
-     -+/*
-     -+ * Write the Git index into a `.lock` file
-     -+ *
-     -+ * If `strip_link_extension` is non-zero, avoid writing any "link" extension
-     -+ * (used by the split-index feature).
-     -+ */
-     - static int do_write_locked_index(struct index_state *istate, struct lock_file *lock,
-     +-static int do_write_locked_index(struct index_state *istate, struct lock_file *lock,
-      -				 unsigned flags)
-     -+				 unsigned flags, int strip_link_extension)
-     ++static int do_write_locked_index(struct index_state *istate,
-     ++				 struct lock_file *lock,
-     ++				 unsigned flags,
-     ++				 enum write_extensions write_extensions)
-       {
-       	int ret;
-       	int was_full = istate->sparse_index == INDEX_EXPANDED;
-     @@ read-cache.c: static int do_write_locked_index(struct index_state *istate, struc
-       	trace2_region_enter_printf("index", "do_write_index", the_repository,
-       				   "%s", get_lock_file_path(lock));
-      -	ret = do_write_index(istate, lock->tempfile, 0, flags);
-     -+	ret = do_write_index(istate, lock->tempfile, strip_link_extension ? STRIP_LINK_EXTENSION_ONLY : 0, flags);
-     ++	ret = do_write_index(istate, lock->tempfile, write_extensions, flags);
-       	trace2_region_leave_printf("index", "do_write_index", the_repository,
-       				   "%s", get_lock_file_path(lock));
-       
-     @@ read-cache.c: static int write_split_index(struct index_state *istate,
-       	int ret;
-       	prepare_to_write_split_index(istate);
-      -	ret = do_write_locked_index(istate, lock, flags);
-     -+	ret = do_write_locked_index(istate, lock, flags, 0);
-     ++	ret = do_write_locked_index(istate, lock, flags, WRITE_ALL_EXTENSIONS);
-       	finish_writing_split_index(istate);
-       	return ret;
-       }
-     +@@ read-cache.c: static int write_shared_index(struct index_state *istate,
-     + 
-     + 	trace2_region_enter_printf("index", "shared/do_write_index",
-     + 				   the_repository, "%s", get_tempfile_path(*temp));
-     +-	ret = do_write_index(si->base, *temp, 1, flags);
-     ++	ret = do_write_index(si->base, *temp, WRITE_NO_EXTENSION, flags);
-     + 	trace2_region_leave_printf("index", "shared/do_write_index",
-     + 				   the_repository, "%s", get_tempfile_path(*temp));
-     + 
-      @@ read-cache.c: int write_locked_index(struct index_state *istate, struct lock_file *lock,
-       	if ((!si && !test_split_index_env) ||
-       	    alternate_index_output ||
-     @@ read-cache.c: int write_locked_index(struct index_state *istate, struct lock_fil
-      -		if (si)
-      -			oidclr(&si->base_oid);
-      -		ret = do_write_locked_index(istate, lock, flags);
-     -+		ret = do_write_locked_index(istate, lock, flags, 1);
-     ++		ret = do_write_locked_index(istate, lock, flags,
-     ++					    ~WRITE_SPLIT_INDEX_EXTENSION);
-       		goto out;
-       	}
-       
-     @@ read-cache.c: int write_locked_index(struct index_state *istate, struct lock_fil
-       		if (!temp) {
-      -			oidclr(&si->base_oid);
-      -			ret = do_write_locked_index(istate, lock, flags);
-     -+			ret = do_write_locked_index(istate, lock, flags, 1);
-     ++			ret = do_write_locked_index(istate, lock, flags,
-     ++						    ~WRITE_SPLIT_INDEX_EXTENSION);
-       			goto out;
-       		}
-       		ret = write_shared_index(istate, &temp, flags);
- 3:  c1c35f0f026 = 3:  89b3cd9a668 fsmonitor: avoid overriding `cache_changed` bits
- 4:  3963d3e5428 = 4:  df61146eaf5 unpack-trees: take care to propagate the split-index flag
+   reset two
+   pick three
+   [...]
 
+2. Before executing the `label` command, a split index is written, as
+   well as the shared index.
+
+3. The `reset initial` command in the rebase script writes out a new
+   split index but skips writing the shared index, as intended.
+
+4. The `pick two` command updates the worktree and refreshes the index,
+   marking the `two.t` entry as valid via the FSMonitor, which sets the
+   `SOMETHING_CHANGED` bit in `cache_changed`, which in turn causes the
+   `base_oid` attribute to be zeroed out and a full (non-split) index
+   to be written (making sure _not_ to write the "link" extension).
+
+5. Now, the `reset two` command will leave the worktree alone, but
+   still write out a new split index, not writing the shared index
+   (because `base_oid` is still zeroed out, and there is no index entry
+   update requiring it to be written, either).
+
+6. When it is turn to run `pick three`, the index is read, but it is
+   too short: It only contains a single entry when there should be two,
+   because the "link" extension is missing from the written-out index
+   file.
+
+There are three bugs at play, actually, which will be fixed over the
+course of the next commits:
+
+- The `base_oid` attribute should not be zeroed out to indicate when
+  the "link" extension should not be written, as it puts the in-memory
+  index structure into an inconsistent state.
+
+- The FSMonitor should not overwrite bits in `cache_changed`.
+
+- The `unpack_trees()` function tries to reuse the `split_index`
+  structure from the source index, if any, but does not propagate the
+  `SPLIT_INDEX_ORDERED` flag.
+
+While a fix for the second bug would let this test case pass, there are
+other conditions where the `SOMETHING_CHANGED` bit is set. Therefore,
+the bug that most crucially needs to be fixed is the first one.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t7527-builtin-fsmonitor.sh | 37 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
+
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index d419085379c..cbafdd69602 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -1003,4 +1003,41 @@ test_expect_success !UNICODE_COMPOSITION_SENSITIVE 'Unicode nfc/nfd' '
+ 	egrep "^event: nfd/d_${utf8_nfc}/?$" ./unicode.trace
+ '
+ 
++test_expect_failure 'split-index and FSMonitor work well together' '
++	git init split-index &&
++	test_when_finished "git -C \"$PWD/split-index\" \
++		fsmonitor--daemon stop" &&
++	(
++		cd split-index &&
++		git config core.splitIndex true &&
++		# force split-index in most cases
++		git config splitIndex.maxPercentChange 99 &&
++		git config core.fsmonitor true &&
++
++		# Create the following commit topology:
++		#
++		# *   merge three
++		# |\
++		# | * three
++		# * | merge two
++		# |\|
++		# | * two
++		# * | one
++		# |/
++		# * 5a5efd7 initial
++
++		test_commit initial &&
++		test_commit two &&
++		test_commit three &&
++		git reset --hard initial &&
++		test_commit one &&
++		test_tick &&
++		git merge two &&
++		test_tick &&
++		git merge three &&
++
++		git rebase --force-rebase -r one
++	)
++'
++
+ test_done
 -- 
 gitgitgadget
+
