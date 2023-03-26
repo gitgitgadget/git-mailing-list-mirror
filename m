@@ -2,175 +2,242 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06F11C6FD1C
-	for <git@archiver.kernel.org>; Sun, 26 Mar 2023 12:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C17ABC74A5B
+	for <git@archiver.kernel.org>; Sun, 26 Mar 2023 14:28:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231297AbjCZMxM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Mar 2023 08:53:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42252 "EHLO
+        id S232319AbjCZO2J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Mar 2023 10:28:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbjCZMxL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Mar 2023 08:53:11 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA7B27DA7
-        for <git@vger.kernel.org>; Sun, 26 Mar 2023 05:53:09 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id w9so25301480edc.3
-        for <git@vger.kernel.org>; Sun, 26 Mar 2023 05:53:09 -0700 (PDT)
+        with ESMTP id S230203AbjCZO2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Mar 2023 10:28:08 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08A841A7
+        for <git@vger.kernel.org>; Sun, 26 Mar 2023 07:28:06 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id l37so3600263wms.2
+        for <git@vger.kernel.org>; Sun, 26 Mar 2023 07:28:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679835188;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Gm/119T+6QebRsvkRn2kGuFYu2sMCt+f8vMZSGEgnRk=;
-        b=p9xXPCbYomJUMWR6JjA8vfEE5zeYI5J5dZ7TvSsGrFh6DmjqdYMvOup2XnXXwJ0rxD
-         cemXhNOStROHldG3AiYHMyHi79Ja5cjFRSA1b3xOObcExx3dox67azeJICWUIW7R38FD
-         KGIykF+cW9hzWIRXywnJI+Lc64DE+3XVQyVpN+VjBDWM1HD7DnQahgWOTPnZWuq6jBk0
-         qF6LYPsaI1s+NZn6FtrcSiJwJ6heeSLSA1C7K+OXfgZfjzeWwdShi9n/fjdj/CWrepVE
-         +TRCWJ+xFU7IPopqX4ZFOQn9QYxDcGHGndwnfAtefk9+shSKaXnrLMcVE8RzyrR6jknY
-         WNcQ==
+        d=gmail.com; s=20210112; t=1679840884;
+        h=content-transfer-encoding:in-reply-to:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PJwk4YKK75L1sFcXvqAnL+mvYf1xoOp6jS3YX7DWg9Y=;
+        b=b+5vIFEj9xhEx88txnjiUos9uq+17nZjrsxLmcrSe7O2rGZIE1zP2gItXOODOJRJeI
+         aBQkGFSw6apxON4T0v0RHNhUT4fPA2R8cz7hSz6Q7r8wJ8NIZJFm9/WMC+7BE4Z6Et6o
+         dh0R5RsYapzKEQ6mZND5TB0n1uZ75EMpPfcnopRFVBevwGh9KCgm2c/bUZ3c2Vxckant
+         EqbschGIL5sm9ydNNWpppreH4xCycOPZ6vzfELoqWlZcCJpuQ/yx8YAMxwdRIOKcX76E
+         YkUOCkCAb24HGpydPIoV29UiXEqXmH+76aMIEsSd/y2xepqLKpabC/RhpgTQXaT9kqLa
+         vEAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679835188;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gm/119T+6QebRsvkRn2kGuFYu2sMCt+f8vMZSGEgnRk=;
-        b=O9bs20TlQlqFvwE1pYAqWmJGbg50llajrQhF8nxSvveeUzO1SFRd9PVVBDmdBjOvAK
-         R/GEsAxxS0nymwK8vfvnhOyS1IzIiTpxLeT3L48drS73D/gXNIJm3SONRjQEPsXIbZgJ
-         VG3CjHQZr65zg1i4UjAi7Tzo9APJTcul9bC66Pvafg3HUU69f695kA/VHV54gIwUebRk
-         XkBf3XFt5rVEGispAXoxOklV28YIlDtagxPCDQxWAQpYjkG+zF9ke4711j9YDBqFDwrb
-         p9px3VmQzHFnJ/n+GLiJx20Gx14+4Sd0QLxf9yskphzM2hOaSwvmLujnJuVCCOT1NPAk
-         6HZA==
-X-Gm-Message-State: AAQBX9frCFpCazOUM4xtau1W8N5qlkI2xinvAzsmxijdKQi5cKMq7GNi
-        5O+5ISDkPhBqznctWehgR21y+HyrBcJ4/w==
-X-Google-Smtp-Source: AKy350YrxIGNJuJHEG+YPkv6FFOuJs1VTRus9/A/C5iKjxmZV7euii4A0vPSEreIhOJOjMpRQ/7m2w==
-X-Received: by 2002:a05:6402:8c4:b0:4fc:725:e670 with SMTP id d4-20020a05640208c400b004fc0725e670mr8594621edz.11.1679835188266;
-        Sun, 26 Mar 2023 05:53:08 -0700 (PDT)
-Received: from [10.10.18.214] ([212.102.57.11])
-        by smtp.gmail.com with ESMTPSA id f11-20020a50a6cb000000b00501c96564b5sm9612102edc.93.2023.03.26.05.53.07
+        d=1e100.net; s=20210112; t=1679840884;
+        h=content-transfer-encoding:in-reply-to:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PJwk4YKK75L1sFcXvqAnL+mvYf1xoOp6jS3YX7DWg9Y=;
+        b=WHSWL5COlN43XXzTCF7nqwcRRbag6jO/cZGVPEHB0g46NIqniYjqiQr1CyBb6PTIi8
+         1JpzaAKdlOSXrLc1uosgdz97/SaLRFN3pI1x0X7ovO2+lLcTaHBgYITu44Ih4Bcr9dhC
+         ugh4vvBYWCIiHg7PhiJNehQ/LsCJSnz3KOYiublaZjFNVoChTWuOTWkrIsmdcl99OdQR
+         pNT52zrnTJY/7enKLNbHDjgebrmLP4hX6IZpWNcDa9PEh7vGkSP13l2znzPSN+kVRfna
+         Ri3HWv0u9BhfnSEW5Al5ocShOzu+44KE7Pmxs+wP5hSn8L2N3mjGbi0FWNfG7unURPxM
+         dptw==
+X-Gm-Message-State: AAQBX9dU4wdh8dYGiyyiv+dDmxRvKq+kxYg/2ZkUTDJySfoTu2QbhR9m
+        EBoQNtioNs1NFwLN9rWjB0bAXLthaqk=
+X-Google-Smtp-Source: AKy350bFgtJnWtI7MiqhsAmzSx2YDcbG2Q36lVFudnFH9AHWPoio4dXFyo3PNtUrTragVg25WZTK/w==
+X-Received: by 2002:a05:600c:220c:b0:3ef:61f7:7d34 with SMTP id z12-20020a05600c220c00b003ef61f77d34mr4043561wml.1.1679840884314;
+        Sun, 26 Mar 2023 07:28:04 -0700 (PDT)
+Received: from [192.168.1.212] ([90.253.53.152])
+        by smtp.gmail.com with ESMTPSA id p19-20020a05600c469300b003ee9f396dcesm5763421wmo.30.2023.03.26.07.28.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Mar 2023 05:53:08 -0700 (PDT)
-Message-ID: <5e53c8be-92b7-82e0-e204-a0cbfdffc529@gmail.com>
-Date:   Sun, 26 Mar 2023 14:53:06 +0200
+        Sun, 26 Mar 2023 07:28:03 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <8a188876-c456-7269-28de-9ff406204030@dunelm.org.uk>
+Date:   Sun, 26 Mar 2023 15:28:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.0
-Subject: Re: [PATCH] t5000: use check_mtime()
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <233edbbe-35c1-9b5b-7578-4c70c6d24449@web.de>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 8/8] rebase: improve resumption from incorrect initial
+ todo list
 Content-Language: en-US
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-In-Reply-To: <233edbbe-35c1-9b5b-7578-4c70c6d24449@web.de>
+To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
+References: <20230323162235.995574-1-oswald.buddenhagen@gmx.de>
+ <20230323162235.995574-9-oswald.buddenhagen@gmx.de>
+In-Reply-To: <20230323162235.995574-9-oswald.buddenhagen@gmx.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/03/2023 13:16, René Scharfe wrote:
-> fd2da4b1ea (archive: add --mtime, 2023-02-18) added a helper function
-> for checking the file modification time of an extracted entry.  Use it
-> for the older mtime test as well to shorten the code and piggyback on
-> the archive extraction done to validate file contents.
+Hi Oswald
+
+On 23/03/2023 16:22, Oswald Buddenhagen wrote:
+> When the user butchers the todo file during rebase -i setup, the
+> --continue which would follow --edit-todo would have skipped the last
+> steps of the setup. Notably, this would bypass the fast-forward over
+> untouched picks (though the actual picking loop would still fast-forward
+> the commits, one by one).
 > 
-> Signed-off-by: René Scharfe <l.s.r@web.de>
-> ---
->   t/t5000-tar-tree.sh | 9 +--------
->   1 file changed, 1 insertion(+), 8 deletions(-)
+> Fix this by splitting off the tail of complete_action() to a new
+> start_rebase() function and call that from sequencer_continue() when no
+> commands have been executed yet.
 > 
-> diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-> index 918a2fc7c6..f0bd70dbd6 100755
-> --- a/t/t5000-tar-tree.sh
-> +++ b/t/t5000-tar-tree.sh
-> @@ -185,6 +185,7 @@ test_expect_success 'git archive' '
->   '
-> 
->   check_tar b
-> +check_mtime b a/a 1117231200
-> 
->   test_expect_success 'git archive --mtime' '
->   	git archive --mtime=2002-02-02T02:02:02-0200 HEAD >with_mtime.tar
-> @@ -257,14 +258,6 @@ test_expect_success 'git archive --remote with configured remote' '
->   	test_cmp_bin b.tar b5-nick.tar
->   '
-> 
-> -test_expect_success 'validate file modification time' '
-> -	mkdir extract &&
-> -	"$TAR" xf b.tar -C extract a/a &&
-> -	test-tool chmtime --get extract/a/a >b.mtime &&
-> -	echo "1117231200" >expected.mtime &&
-> -	test_cmp expected.mtime b.mtime
-> -'
+> More or less as a side effect, we no longer checkout `onto` before exiting
+> when the todo file is bad. 
+
+I think the implications of this change deserve to be discussed in the 
+commit message. Three things spring to mind but there may be others I 
+haven't thought of
+
+  - Previously when rebase stopped and handed control back to the user
+    HEAD would have already been detached. This patch changes that
+    meaning we can have an active rebase of a branch while that branch is
+    checked out. What does "git status" show in this case? What does the
+    shell prompt show? Will it confuse users?
+
+  - Previously if the user created a commit before running "rebase
+    --continue" we'd rebase on to that commit. Now that commit will be
+    silently dropped.
+
+  - Previously if the user checkout out another commit before running
+    "rebase --continue" we'd rebase on to that commit. Now we we rebase
+    on to the original "onto" commit.
+
+ > This makes aborting cheaper and will simplify
+ > things in a later change.
+
+Given that we're stopping so the user can fix the problem and continue 
+the rebase I don't think optimizing for aborting is a convincing reason 
+for this change on its own.
+
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 62986a7b1b..00d3e19c62 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -231,7 +231,8 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+>   		return ret;
+>   	}
+>   	if (cmd == 'c')
+> -		return sequencer_continue(the_repository, opts);
+> +		return sequencer_continue(the_repository, opts,
+> +					  0, NULL, NULL, NULL);
+
+It's a bit unfortunate that we have to start passing all these extra 
+parameters, could the sequencer read them itself in read_populate_opts()?
+
+> -int sequencer_continue(struct repository *r, struct replay_opts *opts)
+> +static int start_rebase(struct repository *r, struct replay_opts *opts, unsigned flags,
+> +			const char *onto_name, const struct object_id *onto,
+> +			const struct object_id *orig_head, struct todo_list *todo_list);
+
+It would be nice to avoid this forward declaration. I think you could do 
+that by adding a preparatory patch that moves either checkout_onto() or 
+sequencer_continue()
+
+> @@ -6142,49 +6154,52 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>   
+>   		return error(_("nothing to do"));
+>   	} else if (res == EDIT_TODO_INCORRECT) {
+> -		checkout_onto(r, opts, onto_name, onto, orig_head);
+>   		todo_list_release(&new_todo);
+>   
+>   		return -1;
+>   	}
+>   
+> -	/* Expand the commit IDs */
+> -	todo_list_to_strbuf(r, &new_todo, &buf2, -1, 0);
+> -	strbuf_swap(&new_todo.buf, &buf2);
+> -	strbuf_release(&buf2);
+> -	new_todo.total_nr -= new_todo.nr;
+> -	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0)
+> -		BUG("invalid todo list after expanding IDs:\n%s",
+> -		    new_todo.buf.buf);
+
+I don't think we need to move this code. If start_rebase() is called 
+from sequencer_continue() the initial edit of the todo list failed and 
+has been fixed by running "git rebase --edit-todo". In that case the 
+oids have already been expanded on disc.
+
+> -	if (opts->allow_ff && skip_unnecessary_picks(r, &new_todo, &onto)) {
+> -		todo_list_release(&new_todo);
+> -		return error(_("could not skip unnecessary pick commands"));
+> -	}
 > -
->   test_expect_success 'git get-tar-commit-id' '
->   	git get-tar-commit-id <b.tar >actual &&
->   	git rev-parse HEAD >expect &&
-> --
-> 2.40.0
+> -	if (todo_list_write_to_file(r, &new_todo, todo_file, NULL, NULL, -1,
+> -				    flags & ~(TODO_LIST_SHORTEN_IDS), action)) {
+> -		todo_list_release(&new_todo);
+> -		return error_errno(_("could not write '%s'"), todo_file);
+> -	}
+> -
+> -	res = -1;
+> -
+> -	if (checkout_onto(r, opts, onto_name, onto, orig_head))
+> -		goto cleanup;
+> -
+> -	if (require_clean_work_tree(r, "rebase", NULL, 1, 1))
+> -		goto cleanup;
+> -
+> -	todo_list_write_total_nr(&new_todo);
+> -	res = pick_commits(r, &new_todo, opts);
+> -
+> -cleanup:
+> +	res = start_rebase(r, opts, flags, onto_name, onto, orig_head, &new_todo);
+>   	todo_list_release(&new_todo);
+>   
+>   	return res;
+>   }
+>   
 
-This patch looks good to me.
+> +test_expect_success 'continue after bad first command' '
+> +	test_when_finished "git rebase --abort ||:" &&
+> +	git checkout primary^0 &&
 
-When reading check_mtime() I got confused by extra space in first parameter
-to test_expect_success, but after running t5000 and reading check_tar, it'd
-become obvious that the space is there to align together subtests related
-to one invocation of git-archive:
+If you want a specific commit it's better to use a tag name as those are 
+fixed whereas the branches get rebased all over the place in this test file.
 
-     [...]
-     ok 7 - remove ignored file
-     ok 8 - git archive
-     ok 9 -  extract tar archive
-     ok 10 # skip  interpret pax headers (missing TAR_NEEDS_PAX_FALLBACK)
-     ok 11 -  validate filenames
-     ok 12 -  validate file contents
-     ok 13 -  validate mtime of a/a
-     ok 14 - git archive --mtime
-     ok 15 -  extract tar archive
-     ok 16 # skip  interpret pax headers (missing TAR_NEEDS_PAX_FALLBACK)
-     ok 17 -  validate filenames
-     ok 18 -  validate file contents
-     ok 19 -  validate mtime of a/a
-     ok 20 - git archive --prefix=prefix/
-     [...]
+> +	git reflog expire --expire=all HEAD &&
 
-The only tangentially related nitpick is to the function check_mtime(),
-which doesn't follow the code style for Shell scripts -- a space is missing
-before parentheses.  Same for almost all the other helper functions in test
-files related to git-archive:
+Is this really necessary, can you pass -n to "git reflog" below?
 
-     $ git grep -E '^[a-z_]+[(][)]' t/t500*
-     t/t5000-tar-tree.sh:get_pax_header() {
-     t/t5000-tar-tree.sh:check_tar() {
-     t/t5000-tar-tree.sh:check_added() {
-     t/t5000-tar-tree.sh:check_mtime() {
-     t/t5001-archive-attr.sh:test_expect_exists() {
-     t/t5001-archive-attr.sh:test_expect_missing() {
-     t/t5002-archive-attr-pattern.sh:test_expect_exists() {
-     t/t5002-archive-attr-pattern.sh:test_expect_missing() {
-     t/t5003-archive-zip.sh:check_zip() {
-     t/t5003-archive-zip.sh:check_added() {
-     t/t5004-archive-corner-cases.sh:make_dir() {
-     t/t5004-archive-corner-cases.sh:check_dir() {
-     t/t5004-archive-corner-cases.sh:build_tree() {
+> +	(
+> +		set_fake_editor &&
+> +		test_must_fail env FAKE_LINES="bad 1 pick 1 pick 2 reword 3" \
+> +			git rebase -i HEAD~3 &&
+> +		test_cmp_rev HEAD primary &&
+> +		FAKE_LINES="pick 2 pick 3 reword 4" git rebase --edit-todo &&
+> +		FAKE_COMMIT_MESSAGE="E_reworded" git rebase --continue
+> +	) &&
+> +	git reflog > reflog &&
+> +	test $(grep -c fast-forward reflog) = 1 &&
 
-compare to:
+Using test_line_count would make test failures easier to debug.
 
-     $ git grep -E '^[a-z_]+ [(][)]' t/t500*
-     t/t5000-tar-tree.sh:tar_info () {
-     t/t5001-archive-attr.sh:extract_tar_to_dir () {
+> +	test_cmp_rev HEAD~1 primary~1 &&
+> +	test "$(git log -1 --format=%B)" = "E_reworded"
 
+It is slightly more work, but please use test_cmp for things like this 
+as it makes it so much easier to debug test failures.
 
-Quote from Documentation/CodingGuidelines:
+Best Wishes
 
-     - We prefer a space between the function name and the parentheses,
-       and no space inside the parentheses. The opening "{" should also
-       be on the same line.
-    
-            (incorrect)
-            my_function(){
-                    ...
-    
-            (correct)
-            my_function () {
-                    ...
+Phillip
 
+> +'
+> +
+> +test_expect_success 'abort after bad first command' '
+> +	test_when_finished "git rebase --abort ||:" &&
+> +	git checkout primary^0 &&
+> +	(
+> +		set_fake_editor &&
+> +		test_must_fail env FAKE_LINES="bad 1 pick 1 pick 2 reword 3" \
+> +			git rebase -i HEAD~3
+> +	) &&
+> +	git rebase --abort &&
+> +	test_cmp_rev HEAD primary
+> +'
+> +
+>   test_expect_success 'tabs and spaces are accepted in the todolist' '
+>   	rebase_setup_and_clean indented-comment &&
+>   	write_script add-indent.sh <<-\EOF &&
