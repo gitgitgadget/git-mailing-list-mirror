@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF7E1C76196
-	for <git@archiver.kernel.org>; Sun, 26 Mar 2023 03:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9D32C6FD1C
+	for <git@archiver.kernel.org>; Sun, 26 Mar 2023 03:09:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230522AbjCZDJs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Mar 2023 23:09:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34796 "EHLO
+        id S231297AbjCZDJz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Mar 2023 23:09:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjCZDJq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2023 23:09:46 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 409549EEF
-        for <git@vger.kernel.org>; Sat, 25 Mar 2023 20:09:45 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id kq3so5460635plb.13
-        for <git@vger.kernel.org>; Sat, 25 Mar 2023 20:09:45 -0700 (PDT)
+        with ESMTP id S231156AbjCZDJu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2023 23:09:50 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D64AAA241
+        for <git@vger.kernel.org>; Sat, 25 Mar 2023 20:09:46 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id qe8-20020a17090b4f8800b0023f07253a2cso5459235pjb.3
+        for <git@vger.kernel.org>; Sat, 25 Mar 2023 20:09:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679800184;
+        d=gmail.com; s=20210112; t=1679800186;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oayQy3r2WlceDAk+h+VTqHuWCCfEBjeitaO7oQRg/mY=;
-        b=N5ezz0iUPVvDrjYHCk6kxLOLiikLwbCdUJzNA78XHGbmk+L8dOSbGG8wGsT5vdvtkP
-         +lVzF0ivVB23evsJnhQYpEIHM+zcvoS0hUBRtV/WtI4INT8Dfsq7MdIgUKHYxL3s3hwP
-         4reay7BkDhj4JeNuk3JftX1/dPNrjpXz+QBMSwnbu3zwZBDyTFp7DSbC1A2NWrtngiC9
-         DMTNMDPmzStfpAAjEoitBAnYM4B/ADwWliOEYsNQXixJUQIiLq/a4dBbY21Vc3rUID14
-         uZEqdOPyYRH7vw0L548bLbD+OlGd85oQ2DIUeKhIFQLtRWKudcBrHhxEwvOoITlQWScq
-         1KRQ==
+        bh=mG0Eh42iXR92/z6npu4aNTODQkar2R2pkU5LgoUXoUQ=;
+        b=NWyYxC0QhlcAnHL98CC2VsHb301kVpd2lXvJmX4hhe1Mg1gIXQj+9dvApF2djAE88J
+         NNA1MKtCnQ5Dk44SSTGLmJW1NJCBD2z1QCmzs/YMd7r/eyu/EFcAaJ49W2faipyPs1QT
+         5wT0DWu85krBhxXlJ6JO1FUSup9xilQMWC+0UtVwSktQmI3naAHlp01O+17ml4IfPwNv
+         AZQgEUfgH7AdnTUaaO9kSak2ccJBmFBLpbh6vPnKomWNuNyag8D6EJY+MEj+9SkhIQDt
+         rEtcwzHolGj8KsSxL6f7jmGTsLXZZQTJk5v/e7fVC8YTgrGSNaK2ir9Psx9GaIoj55OF
+         Mapw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679800184;
+        d=1e100.net; s=20210112; t=1679800186;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oayQy3r2WlceDAk+h+VTqHuWCCfEBjeitaO7oQRg/mY=;
-        b=eAro7wgq2Dd8PJzxpgnSFZKe5Yp4yTzdjSs/BUradU/2r5HKgG30QR9Qarka8faNkL
-         jq2pOUmR7njkfjck1u107sOwVRQsb+2FHq8t36v/4IAItB74NfdBQD3FZkIFbdnI8NB3
-         gE5MZoeC8xdSm5Pn0DpK3vf0E52Luk2IgBh2MhvNwPPsTa1GhUEWPjZzDltoYtNf2VO/
-         sKGTclxDfAr2b5a8lSD3zfBm2i6aEdRNZR7nFK8cZdIRKH4Av+UfBCUovMsZew2M2JKh
-         vpnjy4rVL4cXpXx3GSaCmbmIH+1UwH2gbpDFAFy6QEvJEXvyOH6wRfjrjsHFlv2w8yhd
-         pHqw==
-X-Gm-Message-State: AAQBX9fQwLxk7A+7qt8wUsD/gY1f5fOXU8AzsZh7hKGB9NhdjgLcLjrF
-        4rlNRjyt62s3aoh54xTtsGS9bi2nttH6pQ==
-X-Google-Smtp-Source: AKy350ZJdkGIKrFgSnBaEnY992WEIv6vHUM70QLVEdmTpDb0XdjW07iewnPJRdTdlu2t/fMpVMOGkg==
-X-Received: by 2002:a17:903:32d2:b0:19e:68b1:65b9 with SMTP id i18-20020a17090332d200b0019e68b165b9mr9777252plr.12.1679800184423;
-        Sat, 25 Mar 2023 20:09:44 -0700 (PDT)
+        bh=mG0Eh42iXR92/z6npu4aNTODQkar2R2pkU5LgoUXoUQ=;
+        b=iaPYJKef23YtXJM/OpYp4OPg6z6PbaVdf8Aio4JRw6yOPC/cVLBb/TUOo+CCC2u992
+         +hKEYyoe7k1jpWAYsM9g9tGOhxN2wVm67ZlpS4yUy2DaChlA12J5qKUAUl8UQ7XBIOpE
+         UjSoLf+1fkJKkeDSTAKn9mzNFDvhs0nkwiwDlb3U1NA12pJJCsDB9b+vDkjL8ksZpJMl
+         MgWiwDaUW3pl3a1ODkXTEBq/SB4kORuCW0gHvWZ6mdia6gR3OcLyvSr7jm3KGhiV2Dk6
+         KkE709JM/+o1UfLdvdV7sfsHsgWXn5uiWrKUmOzMsXgF2iIlfQSzTXVecFKfJt3cCWd7
+         aeNg==
+X-Gm-Message-State: AAQBX9fh55Rdy6AJbaYU8HwaBf3oJBRMNP9toqGJK4/XzclJ8mxwkL3p
+        Ft1A75WZ9ooX9tJDBUDOy6LUXZOkXCjtMg==
+X-Google-Smtp-Source: AKy350Y7iKfEVQiPjb9V0sTuTZ/5E9ncYPmj75Y/AVtbThKPKMClRC0Di6cTPR72D2O4o4h2gY7TJQ==
+X-Received: by 2002:a17:902:e801:b0:1a0:53b8:907f with SMTP id u1-20020a170902e80100b001a053b8907fmr9234707plg.17.1679800186116;
+        Sat, 25 Mar 2023 20:09:46 -0700 (PDT)
 Received: from xavier.hsd1.ut.comcast.net ([2601:681:897e:74d0::de86])
-        by smtp.gmail.com with ESMTPSA id x17-20020a170902ea9100b001a1c00317b0sm13587929plb.273.2023.03.25.20.09.42
+        by smtp.gmail.com with ESMTPSA id x17-20020a170902ea9100b001a1c00317b0sm13587929plb.273.2023.03.25.20.09.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Mar 2023 20:09:43 -0700 (PDT)
+        Sat, 25 Mar 2023 20:09:45 -0700 (PDT)
 From:   Alex Henrie <alexhenrie24@gmail.com>
 To:     git@vger.kernel.org, tao@klerks.biz, gitster@pobox.com,
         newren@gmail.com, phillip.wood123@gmail.com,
@@ -56,87 +56,98 @@ To:     git@vger.kernel.org, tao@klerks.biz, gitster@pobox.com,
         chooglen@google.com, calvinwan@google.com,
         jonathantanmy@google.com, felipe.contreras@gmail.com
 Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v9 0/3] rebase: document, clean up, and introduce a config option for --rebase-merges
-Date:   Sat, 25 Mar 2023 21:06:33 -0600
-Message-Id: <20230326030636.2635642-1-alexhenrie24@gmail.com>
+Subject: [PATCH v9 1/3] rebase: add documentation and test for --no-rebase-merges
+Date:   Sat, 25 Mar 2023 21:06:34 -0600
+Message-Id: <20230326030636.2635642-2-alexhenrie24@gmail.com>
 X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230320055955.461138-1-alexhenrie24@gmail.com>
+In-Reply-To: <20230326030636.2635642-1-alexhenrie24@gmail.com>
 References: <20230320055955.461138-1-alexhenrie24@gmail.com>
+ <20230326030636.2635642-1-alexhenrie24@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series introduces a rebase.rebaseMerges config option to
-accommodate users who would like --rebase-merges to be on by default and
-to facilitate turning on --rebase-merges by default without
-configuration in a future version of Git. It also cleans up and
-documents the behavior of the --rebase-merges command line option to
-avoid confusion about how the config option and the command line option
-interact.
+As far as I can tell, --no-rebase-merges has always worked, but has
+never been documented. It is especially important to document it before
+a rebase.rebaseMerges option is introduced so that users know how to
+override the config option on the command line. It's also important to
+clarify that --rebase-merges without an argument is not the same as
+--no-rebase-merges and not passing --rebase-merges is not the same as
+passing --rebase-merges=no-rebase-cousins.
 
-Changes from v8:
-- Add braces around one-line else clause
-- Remove unnecessary change to error message priority
+A test case is necessary to make sure that --no-rebase-merges keeps
+working after its code is refactored in the following patches of this
+series. The test case is a little contrived: It's unlikely that a user
+would type both --rebase-merges and --no-rebase-merges at the same time.
+However, if an alias is defined which includes --rebase-merges, the user
+might decide to add --no-rebase-merges to countermand that part of the
+alias but leave alone other flags set by the alias.
 
-Thanks to Phillip, Junio, Johannes and Sergey for your feedback on v8.
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+---
+ Documentation/git-rebase.txt | 18 +++++++++++-------
+ t/t3430-rebase-merges.sh     | 10 ++++++++++
+ 2 files changed, 21 insertions(+), 7 deletions(-)
 
-Alex Henrie (3):
-  rebase: add documentation and test for --no-rebase-merges
-  rebase: deprecate --rebase-merges=""
-  rebase: add a config option for --rebase-merges
-
- Documentation/config/rebase.txt        | 10 ++++
- Documentation/git-rebase.txt           | 19 ++++---
- builtin/rebase.c                       | 70 ++++++++++++++++++++------
- t/t3422-rebase-incompatible-options.sh | 17 +++++++
- t/t3430-rebase-merges.sh               | 44 ++++++++++++++++
- 5 files changed, 138 insertions(+), 22 deletions(-)
-
-Range-diff against v8:
-1:  09fb7c1b74 = 1:  a22b9d0da2 rebase: add documentation and test for --no-rebase-merges
-2:  a846716a4a = 2:  112fee4833 rebase: deprecate --rebase-merges=""
-3:  b12a3610ba ! 3:  868899cd6d rebase: add a config option for --rebase-merges
-    @@ builtin/rebase.c: static int rebase_config(const char *var, const char *value, v
-     +		if (opts->config_rebase_merges < 0) {
-     +			opts->config_rebase_merges = 1;
-     +			parse_rebase_merges_value(opts, value);
-    -+		} else
-    ++		} else {
-     +			opts->rebase_cousins = 0;
-    ++		}
-     +		return 0;
-     +	}
-     +
-    @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
-      		if (ignore_whitespace)
-      			strvec_push(&options.git_am_opts,
-     @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix)
-    - 				break;
-    - 
-    - 		if (i >= 0 || options.type == REBASE_APPLY) {
-    --			if (is_merge(&options))
-    --				die(_("apply options and merge options "
-    --					  "cannot be used together"));
-    --			else if (options.autosquash == -1 && options.config_autosquash == 1)
-    -+			if (options.autosquash == -1 && options.config_autosquash == 1)
-    + 					  "cannot be used together"));
-    + 			else if (options.autosquash == -1 && options.config_autosquash == 1)
-      				die(_("apply options are incompatible with rebase.autoSquash.  Consider adding --no-autosquash"));
-     +			else if (options.rebase_merges == -1 && options.config_rebase_merges == 1)
-     +				die(_("apply options are incompatible with rebase.rebaseMerges.  Consider adding --no-rebase-merges"));
-      			else if (options.update_refs == -1 && options.config_update_refs == 1)
-      				die(_("apply options are incompatible with rebase.updateRefs.  Consider adding --no-update-refs"));
-    -+			else if (is_merge(&options))
-    -+				die(_("apply options and merge options "
-    -+					  "cannot be used together"));
-      			else
-    - 				options.type = REBASE_APPLY;
-    - 		}
-     @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix)
-      	options.update_refs = (options.update_refs >= 0) ? options.update_refs :
-      			     ((options.config_update_refs >= 0) ? options.config_update_refs : 0);
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 9a295bcee4..4e57a87624 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -529,20 +529,24 @@ See also INCOMPATIBLE OPTIONS below.
+ 
+ -r::
+ --rebase-merges[=(rebase-cousins|no-rebase-cousins)]::
++--no-rebase-merges::
+ 	By default, a rebase will simply drop merge commits from the todo
+ 	list, and put the rebased commits into a single, linear branch.
+ 	With `--rebase-merges`, the rebase will instead try to preserve
+ 	the branching structure within the commits that are to be rebased,
+ 	by recreating the merge commits. Any resolved merge conflicts or
+ 	manual amendments in these merge commits will have to be
+-	resolved/re-applied manually.
++	resolved/re-applied manually. `--no-rebase-merges` can be used to
++	countermand a previous `--rebase-merges`.
+ +
+-By default, or when `no-rebase-cousins` was specified, commits which do not
+-have `<upstream>` as direct ancestor will keep their original branch point,
+-i.e. commits that would be excluded by linkgit:git-log[1]'s
+-`--ancestry-path` option will keep their original ancestry by default. If
+-the `rebase-cousins` mode is turned on, such commits are instead rebased
+-onto `<upstream>` (or `<onto>`, if specified).
++When rebasing merges, there are two modes: `rebase-cousins` and
++`no-rebase-cousins`. If the mode is not specified, it defaults to
++`no-rebase-cousins`. In `no-rebase-cousins` mode, commits which do not have
++`<upstream>` as direct ancestor will keep their original branch point, i.e.
++commits that would be excluded by linkgit:git-log[1]'s `--ancestry-path`
++option will keep their original ancestry by default. In `rebase-cousins` mode,
++such commits are instead rebased onto `<upstream>` (or `<onto>`, if
++specified).
+ +
+ It is currently only possible to recreate the merge commits using the
+ `ort` merge strategy; different merge strategies can be used only via
+diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+index fa2a06c19f..d46d9545f2 100755
+--- a/t/t3430-rebase-merges.sh
++++ b/t/t3430-rebase-merges.sh
+@@ -250,6 +250,16 @@ test_expect_success 'with a branch tip that was cherry-picked already' '
+ 	EOF
+ '
+ 
++test_expect_success '--no-rebase-merges countermands --rebase-merges' '
++	git checkout -b no-rebase-merges E &&
++	git rebase --rebase-merges --no-rebase-merges C &&
++	test_cmp_graph C.. <<-\EOF
++	* B
++	* D
++	o C
++	EOF
++'
++
+ test_expect_success 'do not rebase cousins unless asked for' '
+ 	git checkout -b cousins main &&
+ 	before="$(git rev-parse --verify HEAD)" &&
 -- 
 2.40.0
 
