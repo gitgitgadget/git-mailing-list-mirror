@@ -2,70 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 023B6C6FD1D
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 19:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBC1FC76195
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 20:09:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231977AbjC0TuJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 15:50:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45534 "EHLO
+        id S231716AbjC0UJy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 16:09:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232661AbjC0Tty (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 15:49:54 -0400
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 153C84ED1
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 12:49:46 -0700 (PDT)
-Received: by mail-pl1-x62b.google.com with SMTP id w4so9494769plg.9
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 12:49:46 -0700 (PDT)
+        with ESMTP id S229685AbjC0UJx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 16:09:53 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E02E711B
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 13:09:52 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id x15so8810575pjk.2
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 13:09:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679946586;
+        d=gmail.com; s=20210112; t=1679947792;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/VT/lVQ4L3EMvdneVxTB8J/4qzpc8jMcrg847tUwnnM=;
-        b=jSMM+GNrSZZZM/OGuYaBT9eSdcUPs8q6pYWbmEglcortgffd7yZlolzqSxJ+QZuPB8
-         cnTQ6umoKhtrwF2GdUYt61cjxOPbepKAGoa81PejsoKcI3n7nRaGokyAixbanX+VXc4o
-         xqE9oeB71Hn92mTU19lEgyOvyu9oNs/86WrXChLEkc6VNxuLgcG31UHb9qUI3ezMQLuK
-         36OkdMaRzlB99vGV46spvP5v/7+xEWOtOpi21QgXbP2R2dWRhdIbGi9N9y6zHFlJHkVf
-         Wd7zltBlqsvwnJpfS6DxRRYbIPrNdBXhr3xzTkMB/e4nJTiZlknpng/yPOCvNDGhBXvi
-         6aAQ==
+        bh=Q9Ay2mdGgIqbcEzto8a+VKdBMjdmn3hN5VtT3GWJh/Q=;
+        b=WCxZkq+PnpuJSj0whTnR8g5MeOGhom40mJ8/679TJvktxSU/NUk3kHaks7H+3xMiPX
+         qOhRUVUFOfl/lqzQH5k4upUbNumXSm6gBii/kWLmdYCYo5Jkp7yUHoPMmy6J3OQsYZ99
+         dqmqnAya4dEOShasyRfSeTH8HvYOgzPsbqMLeKYqcpCmYgcqY+rig8UnXIeByzx7cKqy
+         vqFivBM9hxc1adXXkh0yQFTzhroI908ZoOrwFfLupy5OQrxHFYHGerkusUgiyMlb5gZn
+         3mzwHzBcNlw56sdWPN9kzotRv5db9hKCsxsTWSAg2fPFmed6aTCE8u8V2TB3dUA2Sz5N
+         8xTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679946586;
+        d=1e100.net; s=20210112; t=1679947792;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/VT/lVQ4L3EMvdneVxTB8J/4qzpc8jMcrg847tUwnnM=;
-        b=yDG7/czlDiu993EIIJHysyACRWtluawNxTWJ+Xzmo/4b6UV1NxgfIi3iV3H8GLbBo8
-         65Ole8h9F3h4pyyx5KD+csp6T1btS/+gR/EdSVwt7noyS+GF40XPX3w1tqW0M8vw1L0c
-         7igQ02QEPhyAE06GHqxg7b3g1LG2hVL5O0w1mJjAATazuvtchjVGsHPmh1HmTwVDMTPJ
-         7JHGF3ClplTHtz/ELR/lkVO2QElGjINf8uxJMQ4ja0Tdw+Gcj8i+9KZijjyVI4B+FEFH
-         TejYB6rjgKzdUo1F+eCc1asvGfYL52Q6saoG5XzRnigXvDuGt0tR1wqFTT8P2fAt7E2s
-         JwBg==
-X-Gm-Message-State: AAQBX9cuDQzaLB1q7RVm87cdnx7d8jBsxSYLxYG+NAYOClSFShSUPWny
-        3U9AnAYc8HbYU5DdcYpuK1A=
-X-Google-Smtp-Source: AKy350ZiEvqvLcc2iAEPkHwiAnHWeMGN3UoOZKAlClv2x02HAuEyOeU2gBUJX1nM6XqdnVOZ91NiQg==
-X-Received: by 2002:a17:902:e14c:b0:19f:2fd5:10dd with SMTP id d12-20020a170902e14c00b0019f2fd510ddmr10421574pla.24.1679946586170;
-        Mon, 27 Mar 2023 12:49:46 -0700 (PDT)
+        bh=Q9Ay2mdGgIqbcEzto8a+VKdBMjdmn3hN5VtT3GWJh/Q=;
+        b=kBnoCQLHO0ulPtnNfX5PfEdndvm0e/t9NoBO1//qctVmpTlu/Agiw4lYLGWvTqt2Ox
+         qvrFwcpEomDMdPO9aStYnP17WQoSZaydD8Nr6wKXq6Q6lYGSq56V3pYGx3FO8v27csE4
+         zhAohEhubiGxRLAJgMZg6A0pofUhjXmQnoVU9vFBMKELJNoFiYq//qC42JAtUfC5ZFjp
+         QeWaaqHluLNSTacztW5iSRaxDXTtjbnaPZtiNomRiCrKbHAj74Yem5COxt6SYJoVCmZW
+         Ph/YaKwz0YxDty4/4ed4FfGSIClV+TG2boVLlgexeSJEh4btsUOxehA3vfytrE6O5jM/
+         DOPA==
+X-Gm-Message-State: AO0yUKUANNtQNTi2eU2TDdcOL82t9TGQ0h2P33W13PmkhCxjXGzm1ZkF
+        ZBEE1NNDtYil4WqkB7XIxtITljcfJdE=
+X-Google-Smtp-Source: AK7set+33E5dsqlqmeplDvBKe1on+TJ/Vw6+rhfusloi3RLepLn0zjQ+g1aMXCKDlXG5n357zL2ChQ==
+X-Received: by 2002:a05:6a20:21d5:b0:de:247e:d1fe with SMTP id p21-20020a056a2021d500b000de247ed1femr13647395pzb.1.1679947792323;
+        Mon, 27 Mar 2023 13:09:52 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id k9-20020a170902760900b001a1a8e98e93sm19252383pll.287.2023.03.27.12.49.45
+        by smtp.gmail.com with ESMTPSA id x48-20020a056a000bf000b005a79596c795sm19342018pfu.29.2023.03.27.13.09.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 12:49:45 -0700 (PDT)
+        Mon, 27 Mar 2023 13:09:52 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v5 0/5] branch: operations on orphan branches
-References: <ffd675e9-8a64-ae05-fc3b-36ae99092735@gmail.com>
-        <34a58449-4f2e-66ef-ea01-119186aebd23@gmail.com>
-        <2193a4ed-b263-068e-92f8-847dcb053f8c@gmail.com>
-        <139555f1-21ab-d987-a58e-c7f04ce222d3@gmail.com>
-        <f8e6447e-5cd3-98fa-f567-39e1c60dacb0@gmail.com>
-Date:   Mon, 27 Mar 2023 12:49:45 -0700
-In-Reply-To: <f8e6447e-5cd3-98fa-f567-39e1c60dacb0@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Mon, 27 Mar 2023 00:19:36 +0200")
-Message-ID: <xmqq7cv29dpi.fsf@gitster.g>
+To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] config: tell the user that we expect an ASCII character
+References: <20230327194344.12910-1-code@khaugsbakk.name>
+Date:   Mon, 27 Mar 2023 13:09:51 -0700
+In-Reply-To: <20230327194344.12910-1-code@khaugsbakk.name> (Kristoffer
+        Haugsbakk's message of "Mon, 27 Mar 2023 21:43:44 +0200")
+Message-ID: <xmqq355q9cs0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -74,20 +67,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rubén Justo <rjusto@gmail.com> writes:
+Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
 
-> In this iteration, v5, I've reverted some of those major refactorings,
-> mainly the inlining, because it ended up introducing unnecessary
-> complexity for minimal benefit in this series.  Maybe those refactorings
-> make more sense in future series.
+> Commit 50b54fd72a (config: be strict on core.commentChar, 2014-05-17)
+> notes that “multi-byte character encoding could also be misinterpreted”,
+> and indeed a multi-byte codepoint (non-ASCII) is not accepted as a valid
+> `core.commentChar`.
 
-The previous one has been cooking in 'next' already for some time
-(even before the feature freeze for 2.40), so we'd usually do not
-take such a rewrite and rather go with incremental refinements, but
-let's discard it out of 'next' and queue this intereation instead.
-
-We're probably overdue to rewind and rebuild 'next' this round
-anyway.
-
-Thanks for an updated version.  Will queue.
-
+Makes sense.  Will queue.  Thanks.
