@@ -2,94 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB859C76195
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 11:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67853C7619A
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 11:37:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232156AbjC0LAf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 07:00:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43630 "EHLO
+        id S231737AbjC0LhP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 07:37:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231913AbjC0LAe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 07:00:34 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16AA3423C
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 04:00:25 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id bi9so10813700lfb.12
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 04:00:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679914823;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QrnYQ0Z9iZBhnFFAezKwZrjEgqSrbmBCmWbFqAQtE3c=;
-        b=EPJWC37UCp2S6MK9Kvu3ZHuDH+6+nDmsMmNruaXbnj9ji4xt0dzqBW516s4a2NVxSY
-         aS0y14ntL4se5ea3WOGvzeJMGeFDvtOClsYkqzwkxMq0JY3xvHHAVAkdQ6G94zstg/I1
-         Eyd4tA+9UZG4+Hze1it1aufr6iD0oYRc4pZJNJ2QqkxWGWn8qqkNzwZfX91IeO7jkXyG
-         EY7rFx7yaZzGahYWmxKQrSGydlgX+F6nkHS9Mhpc5b3bgs6BKODSwoPQBemJAe9DOrtl
-         /XzSk68nHsrWbRvcgDu8Gok9I7MVtLqGVH5m9dH1U7Fxp3/Z24m+jITBgu8adTbweniM
-         Zijw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679914823;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QrnYQ0Z9iZBhnFFAezKwZrjEgqSrbmBCmWbFqAQtE3c=;
-        b=5qPoXZbqOyAZMtP1eqRHhp3y3NUyx4tSY9gRUYLKE+TTkg0MX/V3T81kDtMj+Phnu3
-         AJDFYkRusIEnDYeJDgb35g9DgPY4HEUcd0C4pZw9OJLBgnci0yxrFATwRjwNQhYiFItc
-         0QY7ZjJSlGQrAFWFMN4txD9QfEhF2LE1rhMjZNjrix8IImu1dV9DRXAJsQemvLfjI0H2
-         yueYccg9wgS7CzoOLtOc/KtUIPB7j4A2PRZ4hPfetTG36pwnLPCKWNRF+MknntNlqkgE
-         F4YEUKxrVdJQdBGMbm/6wqI55l0c8r7IJbWGr6bup5x6aJLVe3qdu9Bd6Hy+p2WUygPS
-         TeIA==
-X-Gm-Message-State: AAQBX9cmjMu6Rhqt9JUcrGwkB2HWUOKj3ps0H0428jb7HhwsaBk5vqrU
-        jwnBaJg90JPLS6Rch4l9VdfLSMEofL3miqz+mTFILA7XJ2w=
-X-Google-Smtp-Source: AKy350ajcPNjhps6kUSF+kHx965xPNl29adRj2rB6iYbwJovhD1stR9lGC2WEDBcRT6s97rA8ZUqrE7j/0DugO86UBk=
-X-Received: by 2002:ac2:519c:0:b0:4e8:446f:f600 with SMTP id
- u28-20020ac2519c000000b004e8446ff600mr3205847lfi.13.1679914822972; Mon, 27
- Mar 2023 04:00:22 -0700 (PDT)
+        with ESMTP id S232240AbjC0LhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 07:37:11 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A745949E8
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 04:37:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1679917025; i=johannes.schindelin@gmx.de;
+        bh=0aZEsuuzmW0wGJCXUJXz0fk13iGZWuh4WKuIh6PDPFs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=j6EKPtnVf7Do/FZYs7KWnm20LFKkjohQE7ChQI3q2NkaETwefJMrTj6araK7xOQkM
+         ebSj16tAX6P5oe2U8LXwPTQX7uVEiePo/sCFFp8QQay3pz00dZw3I9ICUufDg7ioVw
+         zkFdC/IFs0XCxJBRjdCJVfY79bAcGk8tsLuBlYYPrIir9MnCqlTf5S/P6VsmTj+dr9
+         dDRd+0wjHeqxfVHVh7Tu5+pxm9dXwkg1RWBZZv66DAREUPxq5U33iODH/1lThI5bG4
+         rKgzbdei5oe4Zt//WpYTnM6iq9s32Iluj41+4OW7y1JhGesKRw1MQLgWZHHVLnPRS6
+         ZcPYelymvDJdw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MMGRK-1pzvuB0lV8-00JKrx; Mon, 27
+ Mar 2023 13:37:05 +0200
+Date:   Mon, 27 Mar 2023 13:37:03 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Eric DeCosta <edecosta@mathworks.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH] fsmonitor: handle differences between Windows named pipe
+ functions
+In-Reply-To: <pull.1503.git.1679678090412.gitgitgadget@gmail.com>
+Message-ID: <e48e768a-19f3-386a-9bda-8fa8681d1a6c@gmx.de>
+References: <pull.1503.git.1679678090412.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <CAKc7PVD_65vB5+meeO3xcu4ASbqr85LBGUO8Ntb7SvbO+NNHmQ@mail.gmail.com>
- <CAKc7PVA14_mjZeuED1Ee0Mu5YoCSrR4FNNhSEKFHmnKnc-gESQ@mail.gmail.com> <ZBIIKqAIF+aF8vvx@coredump.intra.peff.net>
-In-Reply-To: <ZBIIKqAIF+aF8vvx@coredump.intra.peff.net>
-From:   Sebastian Gniazdowski <sgniazdowski@gmail.com>
-Date:   Mon, 27 Mar 2023 10:59:56 +0000
-Message-ID: <CAKc7PVDZ4Ra7s-pyFms1-sGqjYD9b407G1u0A0hHTkQRa-MPkQ@mail.gmail.com>
-Subject: Re: A nice, beauty progress metter for Git Clone + a feature request
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:N5DrJEgSjcBy+gXCRl1fzYI8BtmH6ayF/a/xk9kv2WBBxoBLN5O
+ JqL4S2w/47ayxdZmm4vKwhKEukaB1E1I3gLerjhH/J5TG5Cdga/U4Z8L5jIvmZ/6Rtp79iE
+ bOl+dSUE+OG9ySJCQUBq+tY8q1zxEUAGOhJQlJwFb6OsuOEszdJA5oKjReA/n6dOC3CacdR
+ 7Ydq1kSq6uyTukGnenfbQ==
+UI-OutboundReport: notjunk:1;M01:P0:pUQaQm5d2CE=;6O3l3qm8OZjQVp/687eouRZ35bs
+ FrB9BETNv9l5ctGl3B9BUV3HcMoIa59BP19My2xVqUNDw+9k/CCmG7WHT3nxWaeFhEQeZmyQD
+ Jn7ZjQ9u/vl8xADL7GTAo4rKn07HloAIm9wmrZw+wl/tPrlw0j9lvjpyPG4tODeEt4mDcnvb6
+ piJk9E0tfalhqi+G5//vIqudOCsNTWIzWNIXSaT5ldX7KXmo+ojrtxn9oY/ErNlnBdmqRMnoT
+ e54YycILb0I7qfw/hVHKPs7yCoLmPHxbuC+d4+pw7wjFTTmFW0CNz6dZSreVHiV92DqEKq9SR
+ ReXFY2D2bnGbHkmpC8MOKgo/o1CaIPOf/dmXsoO2yPjptGY1z9If2lLa21DXbnYrsqRUNHi9m
+ fsh8fo4LiDa8vZQQoRPaePq4pf/paN7ZL4blSOHndazGfJgPRXot23auY5DwBCoz488R2fdfU
+ 9T93HM++S2FqldhAF84vrWIDUP6/apW0EKx6Bg3htOmwjJmP7iUZjGB1oq9gXmggIq9ZasRY0
+ YRZsYFshXyj/4V/CsM56IpgBIYBt9HEzYWbK2LTPyqcaK5gvH8ESplzfg2Tw1z5+U/+6EEeSx
+ ZXvkUhKcri7uFHwUSwLxRGOvvL59/J3roPajwwqJMF+g/hMTcohHzWgsAPCXBWqeGA/focioL
+ QSDVlGp6wefQaQi7tW1/RPcAkZgumjQ0IENSN4RlUqqZ4gKvwIIc6YXcxfRXqquweG6GfGBwT
+ uaHEBYtqPgR1dsrObU0MzyIZdQsJDrIWIGYrY7saVximMYDPdOJ7Ob155g8NxwbFpM+moqWOJ
+ T81mmdkoZ+TQ3PfdkJUJ1Rur4aADYoQ1KbWOGEK2Hu45IIb56JSkemVuHuMHFgAdAY/cmwlyB
+ I2fVYT2c5DdUKAR0xrlAnhuumaZ2gaWNNm3N8YDjQQtlsmgyPuul2F9MtYJwbS5rwDJMoWIDZ
+ fDULre2hcDezSjlVGhKCqFvy6pY=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 15 Mar 2023 at 18:02, Jeff King <peff@peff.net> wrote:
-> Now, none of that is _strictly_ necessary. We could just dump the same
-> human-readable progress to the progress command that we dump to stderr
-> now, and it could scrape it for things that look like progress, and pass
-> everything else through. But then, you can already do that with:
+Hi Eric,
+
+On Fri, 24 Mar 2023, Eric DeCosta via GitGitGadget wrote:
+
+> From: Eric DeCosta <edecosta@mathworks.com>
 >
->   git clone --progress ... 2>&1 | my-progress-scraper
+> CreateNamedPipeW is perfectly happy accepting pipe names with seemingly
+> embedded escape charcters (e.g. \b), WaitNamedPipeW is not and incorrect=
+ly
+> returns ERROR_FILE_NOT_FOUND when clearly a named pipe, succesfully crea=
+ted
+> with CreateNamedPipeW, exists.
 >
-> (and it looks like the asciinema you showed is probably just a
-> syntactically nicer version of that with support from the shell?).
+> For example, this network path is problemmatic:
+> \\batfs-sb29-cifs\vmgr\sbs29\my_git_repo
 >
-> -Peff
+> In order to work around this issue, rather than using the path to the
+> worktree directly as the name of the pipe, instead use the hash of the
+> worktree path.
 
-Yes, that's what the asciinema does  =E2=80=93 it pipes git clone --progres=
-s
-to a script, and that's pretty much it. That's why I thought about a
-core.pipe option, that would hold the my-progress-scrapper command.
-That's a very easy change, could it be added to git source code? The
-scrapper from the asciinema doesn't care if it's count, retrieve or
-resolve, etc. currently ongoing, it simply displays a gauge with the
-current percentage for the current stage. After a while one discovers
-that it's resolve that's the final stage, and the gauge is intuitive
-either before or after this revelation.
+This is a rather large deviation from the other platforms, and it has an
+unwanted side effect: Git for Windows' installer currently enumerates the
+named pipes to figure out which FSMonitor instances need to be stopped
+before upgrading. It has to do that because it would otherwise be unable
+to overwrite the Git executable. And it needs to know the paths [*1*] so
+that it can stop the FSMonitors gracefully (as opposed to terminating them
+and risk interrupting them while they serve a reply to a Git client).
 
+A much less intrusive change (that would not break Git for Windows'
+installer) would be to replace backslashes by forward slashes in the path.
 
+Please do that instead.
 
+Ciao,
+Johannes
 
-
---=20
-Best regards,
-Sebastian Gniazdowski
+Footnote *1*: If you think that the Git for Windows installer could simply
+enumerate the process IDs of the FSMonitor instances and then look for
+their working directories: That is not a viable option. Not only does the
+Windows-based FSMonitor specifically switch to the parent directory (to
+avoid blocking the removal of a Git directory merely by running the
+process in said directory), even worse: there is no officially-sanctioned
+way to query a running process' current working directory (the only way I
+know of involves injecting a remote thread! Which will of course risk
+being labeled as malware by current anti-malware solutions).
