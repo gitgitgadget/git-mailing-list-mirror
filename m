@@ -2,113 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5702FC76195
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 16:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B54C5C6FD1D
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 16:30:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230386AbjC0Q3S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 12:29:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42032 "EHLO
+        id S232208AbjC0Qay (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 12:30:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229845AbjC0Q3R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 12:29:17 -0400
+        with ESMTP id S230386AbjC0Qax (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 12:30:53 -0400
 Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32B1D1BF8
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 09:29:16 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id fy10-20020a17090b020a00b0023b4bcf0727so9489761pjb.0
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 09:29:16 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B9FC1BF8
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 09:30:52 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id lr16-20020a17090b4b9000b0023f187954acso9473611pjb.2
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 09:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679934555;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aesAQ1fiN+Bv/JF+gJST6EepZuh1cC2M1PXPOdScWt8=;
-        b=Ianq4s9WJS5e1T7czI6KLSU9fGEz8BAwFN22tcxrELErG4oIgazaiFH8qxCMS/6Yim
-         py/FG02uIy4ZJxcRYBqOUgcjUwe2cqKSODsFL097yhpcB+EPZy3+KYoBfpy8t84Fe6rI
-         c78LjCJI7QX5AhfPsaWX9WCY0XwefV0XsE9P91BT3K1BkiJEaKu0tddt1+WYrrh3Kofm
-         RTHlS5mjT+9WOVAhcnxUDMRJZpOI2b3jCiXieg/sGId6qnQm60mxfH9IfvhFnBvqD2kq
-         QbSobCDAmxLoA87Y947Ndl8YSEGAdIkShydLlaFShNaJSkhCUtfuF/tTKR6grQGZwT7Z
-         WFPQ==
+        d=gmail.com; s=20210112; t=1679934651;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=niDQe7LHQCLj2Rd1eWWLziCuNqEr2tFgtHhSH+1loxg=;
+        b=oVPZrKiizw3I1nP5bSB/kDPG9uMtnDEHgT5yswBm191dwjSbJbTuMWhpkpxiFKzqIf
+         +/5bQTqzJXm3b/HygGmsnMxTjqsBbgHAHvzPnBKY2gwAg7RQSUKB1TsRvXlNKpHmHHvX
+         LhBRJloOcaqf4vEBYjIFzpygOGihNm6G0zZqVD6eqLj9QD69G6dWLjyYiotQvUlL3/EL
+         cQb6yUOy3wrC1+vm/e8y1CnhGYLhaXkWhD9lWCWan97+X4Qt5XKUndOp70u3N3voUO2x
+         Lo5ggzsovq5hXoxhdOxPbbprbjK6n5SXXn3TxfdnLZ6Pu6CVfAfLe/Gd2C9MYy0TIsU5
+         9J8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679934555;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aesAQ1fiN+Bv/JF+gJST6EepZuh1cC2M1PXPOdScWt8=;
-        b=bowppMXuqGz2SinfXmSxP6jwqs6m9P0hXUQrqCJhUwDy63idibuercR/+u4a8W5ziG
-         yX469tHkE1ICjVLb1zT65T7mjoSYydtQ6jEFNnzjIe9FHmbxHfG7CGO1JB1SmF03PD0a
-         PLRE0tjQbDdVbktkmeXZOpQjvo9mbzyVb6D2BSPnNiDNZ/TkVPVXQ4McjJ4MMSkJHJAB
-         m9TENL8lTXpQe7i+73F/Na2EH1fY1vsQCx72stNfH99Im5coNv6BFophK39SZh6Elj6C
-         jUjLJKPxrv996JYV3G5ZLZcaUaveyHJszLGQ2aQY+mvjvC55+5iOuPnMt7WaMiHAaaEJ
-         dP+w==
-X-Gm-Message-State: AAQBX9e1MO7b0oullphJ/jKXKwyXHM2PFXz7QUAEzva4r27Jcj4ISnIq
-        0AvgLmDq1vfosSuRWUTvzcU=
-X-Google-Smtp-Source: AKy350Y2Fxi9IC+UoCynGzsj57ww/I1RG8laRIn6tApNdPuYPT290rkWdapZRQGS1BIOvedrshRB4w==
-X-Received: by 2002:a17:90a:4c:b0:237:f018:6433 with SMTP id 12-20020a17090a004c00b00237f0186433mr14423169pjb.27.1679934555603;
-        Mon, 27 Mar 2023 09:29:15 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1679934651;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=niDQe7LHQCLj2Rd1eWWLziCuNqEr2tFgtHhSH+1loxg=;
+        b=ZIoJih2UNGva8nLRndyUlJ8Ml/8kgYRBJ3FSHsI43ccQJ1P41EFM185W3owfJry7Ng
+         hw2YvLDc/aLuwMjyEFNKaf/HuV810HQRKDdepClEV8u0IGVzRwJ0CNcyPGUEMuyhgyTD
+         8lgtO8R0bs8XfaT/4dEr4wl8SMgFQtQ4vyNPnIQU7+Ons3gP9QGnOgwhbrcip1d9mhr+
+         0IMVg5Kla/eG5CTvZhypFizRDTyhYE/58QRBxmLHwIf++S7zoTUdwhY1+AnQ+SxPXs/i
+         Q6uIpuWPjyvIm2GG0J3cjijtSwy315LmcSGD1+QdBr/Jl6iERVjVnMqImu8zRLaNo/qn
+         0bVw==
+X-Gm-Message-State: AAQBX9cHeqncy14tSmxro6rfZrxUPXmTiTlYf9MMTslzTsLQpWbWpyNU
+        6vBCpVQl0sMJfSxPvDkjk+s=
+X-Google-Smtp-Source: AK7set8fLwuGyIS190PqcNDZcuft9l0s28A0FNm1X/Fh4nV00fFoZeD0Jgf7w+Dn1G0ha1pYWc2Sew==
+X-Received: by 2002:a17:90a:17a9:b0:23f:452c:7a4f with SMTP id q38-20020a17090a17a900b0023f452c7a4fmr12761093pja.46.1679934651555;
+        Mon, 27 Mar 2023 09:30:51 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id c13-20020a170902c1cd00b0019f2328bef8sm19437647plc.34.2023.03.27.09.29.15
+        by smtp.gmail.com with ESMTPSA id s17-20020a17090a5d1100b0023d3845b02bsm7678696pji.45.2023.03.27.09.30.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 09:29:15 -0700 (PDT)
+        Mon, 27 Mar 2023 09:30:51 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Mario Grgic <mario_grgic@hotmail.com>,
-        demerphq <demerphq@gmail.com>, git@vger.kernel.org
+To:     Mario Grgic <mario_grgic@hotmail.com>
+Cc:     git@vger.kernel.org
 Subject: Re: git bug: Perl compatible regular expressions do not work as
  expected
 References: <MW4PR20MB5517583CBEEF34B1E87CCF1290859@MW4PR20MB5517.namprd20.prod.outlook.com>
-        <CANgJU+Vn8ZLGcAYbuDeNkv6T5YdX6t20BqGQDPB0VL_TzoGSWg@mail.gmail.com>
-        <MW4PR20MB5517888E63C13099E284B97590859@MW4PR20MB5517.namprd20.prod.outlook.com>
-        <eba23dc4-c036-fd1b-a1f0-028e8fff602b@web.de>
-Date:   Mon, 27 Mar 2023 09:29:14 -0700
-In-Reply-To: <eba23dc4-c036-fd1b-a1f0-028e8fff602b@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sat, 25 Mar 2023 19:09:35 +0100")
-Message-ID: <xmqqh6u6cg4l.fsf@gitster.g>
+        <MW4PR20MB551779102E85B305E9F675E990859@MW4PR20MB5517.namprd20.prod.outlook.com>
+Date:   Mon, 27 Mar 2023 09:30:51 -0700
+In-Reply-To: <MW4PR20MB551779102E85B305E9F675E990859@MW4PR20MB5517.namprd20.prod.outlook.com>
+        (Mario Grgic's message of "Sat, 25 Mar 2023 11:39:20 -0400")
+Message-ID: <xmqqcz4ucg1w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Mario Grgic <mario_grgic@hotmail.com> writes:
 
-> Am 25.03.23 um 14:09 schrieb Mario Grgic:
->> The lowercase -p is to print the output in patch format. You can rewrite the command line as
->>
->>  git log --all --patch --perl-regexp -G '\bmain\b’
->>
->> I still get no output in any git version after 2.38.4
+> Confirming that putting back NO_REGEX = YesPlease in the Makefile fixes the problem. I.e. the following patch fixes it for me:
 >
-> -G doesn't support Perl regular expressions.  --perl-regexp only affects
-> --grep, --grep-reflog, --author, and --committer.  Neither POSIX basic
-> nor extended regular expressions support \b as word boundary.  GNU regex
-> and our compat/regex/ do, as extensions.  macOS regex supports it if the
-> flag REG_ENHANCED is given to regcomp(3).
+> --- Makefile	2023-03-25 11:24:01.000000000 -0400
+> +++ Makefile.patched	2023-03-25 11:25:11.000000000 -0400
+> @@ -1554,6 +1554,7 @@
+>  		APPLE_COMMON_CRYPTO = YesPlease
+>  		COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
+>  	endif
+> +	NO_REGEX = YesPlease
+>  	PTHREAD_LIBS =
+>  endif
 
-Good summary to unconfuse speculations in the thread.
-
-> So perhaps this is rather a feature request to support Perl regular
-> expressions for -G (and probably -S as well).  
-
-Perhaps.  I used to be a "it would be wonderful if pcre were usable
-everywhere" dreamer, but after seeing our share of bugs caused by
-use of pcre, I am not a huge proponent anymore.  I do not object to
-such an enhancement at all, as long as it is done cleanly and in
-such a way that it is clear pcre cannot be used by accident when the
-user does not ask for it.
-
-> Or to enable REG_ENHANCED
-> for them, at least, like 54463d32ef (use enhanced basic regular
-> expressions on macOS, 2023-01-08) did to get alternations for git grep
-> on macOS.
-
-This one sounds like a reasonable thing, which may not have huge
-unintended fallout, to do.  I am a bit surprised that we have to
-cover each individual callsite of regcomp(3), though.  Doesn't the
-54463d32ef fix use "#define regcomp git_regcomp" to cover everybody?
-
-
-
+It will unfortunately break multibyte support on macOS by reverting
+what 1819ad32 (grep: fix multibyte regex handling under macOS,
+2022-08-26) did.
