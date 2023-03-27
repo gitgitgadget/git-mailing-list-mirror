@@ -2,153 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82C20C7619A
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 07:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AD6CC76195
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 07:05:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232132AbjC0HDE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 03:03:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36842 "EHLO
+        id S232166AbjC0HFF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 03:05:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229651AbjC0HDC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 03:03:02 -0400
-Received: from EUR03-DBA-obe.outbound.protection.outlook.com (mail-dbaeur03on2052.outbound.protection.outlook.com [40.107.104.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31EBA130
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 00:02:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jUIfj6FldS018EoOiNowabMs41xM5DZUrI/PISQG5mEsSN/uKzTtdSpJrAlXIXBOSmq9E+E30MbJBrKxHI2TDb/x4oXn4SXtrYjQC8R//sbclqVIcYNLKucd90KBk4daNY1EBSorYQYGB5c2e/sX2HTjfBJZ4x10FW0LTdIseLcllUgUcq9YJJO7CUS3k6TCGETqF+0Vw5GPg6fTxqd2Q0nyXmrotzNaIbu/2icYReBsB7JmbTez+eYPgZnKsg76XWD4CN6BLxIXuIM3QFcRUjpa2qGfKMog5brZT8gFnAFgSs6ZN6z1zv/4xZl+ZuiEylG7hg/220s1WBr5+SypHw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FwJI4Q1l2zuePnXxW5aMb8jxl/t2ecYKzvomM3jVbQw=;
- b=iqkMGn6VdsiTjfiWB2V1WqHBbVVdCLF+np7pUfW4Pz7dSxhx5sKxPT+rGToCDhWhwu2st4Ozx+BHD1lZammUjxmC4xj7YxTry9GCGXSwQnk/9sADvovR0JHoKEE79WcKmIifXdT7eKtHteKglpCcRimtlDPOAkAkh23czlwFuimljedn8DrVk1VSNewByaWRj0hsnhQXF0SPyuYQAkLdCfP4Qx8XDtaaUQ0l7hLuVkr6O8BLilVc3WMom3N7gDy+tJYhXOWWCLeXcnoG9duHXDa5Z3lJgJCVfRpqFeP1Zlt4b60rWs3wsbTevW13yW+FIuYrex+VIni5USyR09zhyg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=sap.com; dmarc=pass action=none header.from=sap.com; dkim=pass
- header.d=sap.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sap.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FwJI4Q1l2zuePnXxW5aMb8jxl/t2ecYKzvomM3jVbQw=;
- b=CA7JlO9U3wpcoGbfW6XmKwMIN53w0els225Aa3CghdxEhcJ50ZQQ79IcPX/sobw0Lf9RvIkoRzuxvnOxO5KN8oeCzlNCuMr0Xr7GW23lEGtinOEiFwM790kY949hJuCgM/riunAlNYjP5vK6MVxnEdfTzrFXUN/srfwQ2rbG7BnpwUX/1OfdTdoDriwoah6x25XbpAw0QN9sumhJ2Zg78UF1bxkv17Stkc8Q0ROv+TaTvjv30ZTYocsRk5wNLi93VdqY6pmxLhGkofJQtB7R4AoazicTcjW/HgqKErKhgwPOk516mr4qlogncnYPolcBfR7OSpamojKf56/dUJa5Pw==
-Received: from AS1PR02MB8185.eurprd02.prod.outlook.com (2603:10a6:20b:474::9)
- by DU0PR02MB8899.eurprd02.prod.outlook.com (2603:10a6:10:409::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.38; Mon, 27 Mar
- 2023 07:02:55 +0000
-Received: from AS1PR02MB8185.eurprd02.prod.outlook.com
- ([fe80::6cf1:746f:8bbf:ae7a]) by AS1PR02MB8185.eurprd02.prod.outlook.com
- ([fe80::6cf1:746f:8bbf:ae7a%6]) with mapi id 15.20.6222.029; Mon, 27 Mar 2023
- 07:02:54 +0000
-From:   "Baumann, Moritz" <moritz.baumann@sap.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Feature Request: Option to make "git rev-list --objects" output
- duplicate objects
-Thread-Topic: Feature Request: Option to make "git rev-list --objects" output
- duplicate objects
-Thread-Index: AdleZgb9LbFh6JNJTEaFo9PrT/CbJwACr1d5AIFn6UA=
-Date:   Mon, 27 Mar 2023 07:02:54 +0000
-Message-ID: <AS1PR02MB818545E563E40C5E31A02D1E948B9@AS1PR02MB8185.eurprd02.prod.outlook.com>
-References: <AS1PR02MB8185A45DB63216699AFB2C5494849@AS1PR02MB8185.eurprd02.prod.outlook.com>
- <xmqq4jqa3xgj.fsf@gitster.g>
-In-Reply-To: <xmqq4jqa3xgj.fsf@gitster.g>
-Accept-Language: en-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-processedbytemplafy: true
-x-templafyemailsigvstoversion: 7.51.1.0
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=sap.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AS1PR02MB8185:EE_|DU0PR02MB8899:EE_
-x-ms-office365-filtering-correlation-id: 85a2b19d-6be4-4c06-29b4-08db2e9149da
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Qs0iKw38h8JVwlKvYh22ijEXNKxrLSE+m1wY3yV6XjctVcom4YbZznLWGdgHQZijY+9mZj0fJjUkGDqxbDabQUfTclWEl9MxxzQ6rQeHVFexk91mpWOWGZyNFdQby1DUe/bSiM4bye1KUzlS46AKdTv/+XjMv1flB3SdJ5ZNQlJ0HPnTUPWnyQE2hwtoN2hIn05A4l0iFnLVN6XbaKmDrIVeHlCAt9+6S6AxgyywGYZLTeoAk4u0juZuYluFR7JHObMX+X+L+JkE5GGohRE/KqEsXXvrkxXo6PWz47aPAQVHMI3qaWyPa0zjVLLGAGr8xNkYVu6W7JE+euR7K8qK56iFioMJDpyKP2++Q+b52iK3xvM255UoVb9LimAf2CauRONK8V2SMMzQI29f1wW58xCe9abwCMur0BHKHWYRJhS7b7HL+NKWlUaXvmB7N+CaMn3Fp8SbPRTgUfHXPrErnZ/ZS58kHo+UosBqawgR8pe5vziZF5MUndkr5upOrWuUTrA3QSYTjW6H97iJigUremIc0xUo4G/PeoxeMPNG16/wJAldwqI2e6j3SF2XFsfOejaIO3YKllTmJQcKvsCJaz5wxrb6Zz2JW5Sd6BAl1FlVCyniVJZ1KXakdWWuiHvQ
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS1PR02MB8185.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(376002)(39860400002)(346002)(396003)(366004)(451199021)(7696005)(38100700002)(86362001)(186003)(71200400001)(66446008)(478600001)(66476007)(66556008)(76116006)(66946007)(52536014)(5660300002)(8936002)(8676002)(26005)(6506007)(9686003)(33656002)(38070700005)(2906002)(55016003)(41300700001)(316002)(64756008)(82960400001)(122000001)(6916009)(4326008);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?Windows-1252?Q?j+OoKosc4vSPyPnwchPUvReWBr0g2oHV07uZVGqGDsp8+8UjOA50793M?=
- =?Windows-1252?Q?6YzlM54V0t9rsUjGrJ82FhzQR2SenvgKTdOWCzRq+V094l/jpRa3xjwI?=
- =?Windows-1252?Q?kiunta7dLXKHzrsbwtkGrj+dlvE7rE4T0Z23OPSn4YU8zzh9W3wFPfG5?=
- =?Windows-1252?Q?1iCEuGIJf/ia4GMoZcHaWn+W6jblLHDfeZcxGRKoFJ09Z3SbnmRhRZcN?=
- =?Windows-1252?Q?C4S6ukn5BQctS2iro5vVzhsNuRDW7nkyVF2GpZA2a6XqqOUlv9dPlxMe?=
- =?Windows-1252?Q?LgWw/PHUtIs56ghWytbHcuEke/U1boSq3Dkf8CbOHk5+5rNCn6WdyBJh?=
- =?Windows-1252?Q?dYeHewGLsluAuExF2w4e7KVETQGxPMQTNlVMWgkDRCKEDkQ87+NgS8Zw?=
- =?Windows-1252?Q?pDK2cR1D+DfKtEToZQMzpoo9+nZGkmpORILoQlFtDJBN15VObpv5agZt?=
- =?Windows-1252?Q?Fl6UfIlPB5XKrZtLxRMsHlnn4TI5y4DrGQ2DfYsdAdyyaYw/+iWWUbza?=
- =?Windows-1252?Q?0CxiOwRqRuX1UgyWM8r2wrQCfngD8SDXVmx+5/3uvx8mWroT5GS3eCnz?=
- =?Windows-1252?Q?Mpr9D0FoA50b/qGNp9oYC/iroxRztQqOHoSsDIhymhfcQyZXA5DzaTPw?=
- =?Windows-1252?Q?WVwE+kgMbrTeiUIqSAYEQZwWMqteDVPIvOD47XsHv49WisCgt1VZ5fmB?=
- =?Windows-1252?Q?s9pzQFFGWgOKnBXpacx369Eo0ocwAXa3zjIivIAsRD5oF1Qo0KVUlupm?=
- =?Windows-1252?Q?hdTAgzMjFqree/JRC5gKMxsQ6EiW/XMip6ouHzFOwkox4iNOzSP/IiWk?=
- =?Windows-1252?Q?rFTkuG6idG+4X3S2Qv/lNxQvAxbrYQp8IFN/hv+eMyXfuxL5MVApnuLa?=
- =?Windows-1252?Q?tF+P96aAy+jJrpU8e7wpTt7hl7QSK8rzRnXlX/ZJFSIAUgJSU1YPxdei?=
- =?Windows-1252?Q?5+smAt5ekhg3Eu6y1kk1e8q5srvxykrm9HVHxNynYNDUgfLK8xUBVbjS?=
- =?Windows-1252?Q?ACnaOjlilw+CsDTt4zFlKHojgAw5L2Z/UDXYJ6cXludHjnYVSFbbS/jO?=
- =?Windows-1252?Q?8fM3MZoELacMIpDA6xrPcp5u5iGQswnTXVN8Ou5TsY2H7XYYrofSPpoh?=
- =?Windows-1252?Q?bK7k8X8YCl+dQ61S65xruEoX5AnEA2gbG6eLoqWGJ3TqqcI57OUw6aMS?=
- =?Windows-1252?Q?kIf80OPjFue6sp9gpY1n2kIPDJOzWoYQWxvVLstXbufQA7fzRlxd9krJ?=
- =?Windows-1252?Q?YJKbO5Z8aRjaEWeQxX5t5ya9lcQITTn0XF0Z+oQ0RllKiGP/LhJg4BWC?=
- =?Windows-1252?Q?hobzhUCd/V4ZqXZ0IumBcixDSusAw/skGzVpYN/453JDccI/Yt9q8TV4?=
- =?Windows-1252?Q?hO+Vb71mXOo0om9rIvOhpe75LWEGOcwC7y8bFejio2QyCRNu2M745r5B?=
- =?Windows-1252?Q?HNa881e+3BrIMGseH8ohNDwYhcC0r+T4C0w0nXdJ1rQaRcgNSSaxbXnH?=
- =?Windows-1252?Q?vT3fyTHI8rhQo+Sl4SmBh/T3lX0DRZbuU66BuWZIicLvlWyR+lvEubTz?=
- =?Windows-1252?Q?UI1UV42lvhOxRD6aDZBNeEbCLZPq5HlVLrVmBc9Y7/CWWeiaXf/iG7pz?=
- =?Windows-1252?Q?1l5YYyD0pl93FyxYgCT8XGoc7lj82zmGUxrhErfcICORNlbZO/WebbWs?=
- =?Windows-1252?Q?LAa5Re6pG0OIC1kmR10T/IyeU4WM0N7A?=
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S232115AbjC0HFD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 03:05:03 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E920C40FA
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 00:05:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1679900660; i=johannes.schindelin@gmx.de;
+        bh=GroawwLKP7qHD1Z1aCpPyJKGt/OmY395ovgWD9Y+uBw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=rgni7YTDH5dUGqof2TMWRDYqhZpRJNXYZVbv2rYuPC6aPwgGYqKxFXCi5mVl6+aak
+         jEnwaCYXy9OumktwTVSFLGpcLF/XrtYztr3kPdcIvgcXk0NsbgXKuIfm8JKk7zaX3s
+         atEG6vczcyXEFuYmMpYYRXmi6dt1PMNtEpwRQvkp0pLaEGO7Qyq4ElcpujiVoDD2Uo
+         wxGKx4XGq4DMnf48mXm4W0XtafwxmeAjVQ19kjGa/8q4m5Wte0UNepevcmYi5tUh+4
+         ebl2P7O4n+cS+7XGX+quZXlDq4x1sUu0YY7aJXgAhci7eTeRj/hoKOn/hm5P2YsRie
+         NHrR8i6vHrUAQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mwfai-1qeoZC2cos-00y6r1; Mon, 27
+ Mar 2023 09:04:20 +0200
+Date:   Mon, 27 Mar 2023 09:04:17 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] rebase -i: do not update "done" when rescheduling
+ command
+In-Reply-To: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
+Message-ID: <f05deb00-1bcd-9e05-739f-6a30d6d8cf3b@gmx.de>
+References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: sap.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS1PR02MB8185.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 85a2b19d-6be4-4c06-29b4-08db2e9149da
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Mar 2023 07:02:54.7012
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 42f7676c-f455-423c-82f6-dc2d99791af7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KpAC8hMol8+gC7v+I7dMkBX7fUjlmO+g/bMw3PKfypWxqGZ4RuY8IWg/EWzC4hhzl6Soa+NO69G8TsKPHzmOtg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR02MB8899
+Content-Type: multipart/mixed; boundary="8323328-1580625367-1679900660=:123"
+X-Provags-ID: V03:K1:aUd6XHAvShjQEgwgXUfkYcAg13hjbVr9uihSj1GOeEfsQ43OyXr
+ OX6Vx84xxndNtrYhST3LqAeuRfM28nlApEfRrgqb+n2V+FX1X+JPgk4OgL0Y4wKhzbp0Hdz
+ B1xXgClK35wH0D+wcdEBVZ5ZCSelRHEgffng9bun9IwkqMjb+waCnPqUSC13ooT6jed91l4
+ xGcb65nPfRVyv7LXJwLfw==
+UI-OutboundReport: notjunk:1;M01:P0:RRk1rFxLWRA=;96XY1VU5d1f7/GgxIxvd4KdeGJQ
+ d0pDIlZf/Cm2UqwMt+P0CQ8kw+d7O0X26dYAmM1peyqTOgvlvPLTm1plwj1tKhK8zoMX6fdSx
+ /ScxOY7Ft577HI8cKORseU1sM6xjFjjMZ2e2U9qUay2mq2cM0LDbDlcAWQMQnYPa+LfrHOJGH
+ rgNRs4OlY3U6dUcbU6Cwgb/rHfjkCYiZ+DhRxNg0SJuxH0SZqlcuXF3pQhhaYPhLN1vfFZ3te
+ T3kFrFTK69xfELrlex8Ar+arsUHNvv6vn8zydbwc0sDivjIhc5Vsm/7TSiAkzQxZXouff7MLQ
+ N2pYPHI543SHkhEQHNTcfZ4OcEtXBxhJFkI5yv+komR3D4xof00pcsW/cY3hhmLA3JMqZLIYX
+ BIl7iqeEk7B8rDVIgfUSs6EoSSOBF4aajfUwYfXvQgJO81ezyyihvmiMjHneOBliUvVjLuPQh
+ S3TxPe8TK2IthMi0WdjR2BRAI+3WSsntxrMf08Xz8s5OJQERIGoJkf+n4BnohfuWfz7Q0W3SY
+ 0OX87eeujA3dYBfEV93+AXLS7nhz2lMcDGBWn2qCHVe/T/ACeTjNnd01o8+JmqAa/ZD+jgGbJ
+ jk0Jb0Sok9hnfElRLhoIU0G073w+7b+SRB2fgrz2w3TmhwI/IQ+Hs3kzxLiLo56fAvfsrMGg/
+ 8HL3/OJRqGfu1euhbfAVSI5npiwjTlYa1zt/SSwTpJP4AaBC7B9CN8CQqjNSdmmGqzt8u0vdy
+ 3jDnaULj4UR6zm7KpsQ4i3/cAYI6U8XOT1O5qsoCas+CLAmYhRQfNwAUXtxEJP5xNOu7qgzSL
+ efCsB6yfYn0jZqi1EyK5d0or2EaOMSgQwpEDVJBus5gjkhoqffYs6x3Xbdofp3XbnYmH6dhhE
+ CdwN2MHsz6/C4QQVD00epMhUEHyCCaT93fkuxoGSPkKiRDjO4yr05hWEPJr70enrx11T1Tc5o
+ +djwPkwHto87xUDulnzg3uvShFM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I do not think there currently is such an option, and not showing
-> the same object twice is pretty much fundamental in the operation of
-> the command, so it is unclear what the new feature should look like.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1580625367-1679900660=:123
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Phillip,
+
+On Sun, 19 Mar 2023, Phillip Wood via GitGitGadget wrote:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> Should it also show the same commit it encounters during its history
-> walk (remember, a history can have forks and merges in it) in
-> duplicates if it encounters it more than once?  Should it show all
-> the subtrees and blobs in the tree of each commit, even if most of
-> them do not change from commit to commit?  How does the user control
-> which ones are duplicated and which ones are to be visited only
-> once?  How does the command line option used by the user to tell the
-> command to give such a choice look like?
+> As the sequencer executes todo commands it appends them to
+> .git/rebase-merge/done. This file is used by "git status" to show the
+> recently executed commands. Unfortunately when a command is rescheduled
+> the command preceding it is erroneously appended to the "done" file.
+> This means that when rebase stops after rescheduling "pick B" the "done"
+> file contains
+>
+> 	pick A
+> 	pick B
+> 	pick A
+>
+> instead of
+>
+> 	pick A
+> 	pick B
+>
+> Fix this by not updating the "done" file when adding a rescheduled
+> command back into the "todo" file. A couple of the existing tests are
+> modified to improve their coverage as none of them trigger this bug or
+> check the "done" file.
 
-I was a bit brief in my description on Friday evening, due to the day & tim=
-e.
-My na=EFve idea would be as follows:
+I am purposefully not yet focusing on the patch, as I have a concern about
+the reasoning above.
 
-The option would be called something like "--include-all-object-names" and
-belong to the category of options that only make sense in combination with
-"--objects". That name (hopefully) already explains the intended behavior:
+When a command fails that needs to be rescheduled, I actually _like_ that
+there is a record in `done` about said command. It is very much like a
+`pick` that failed (but was not rescheduled) and was then `--skip`ed: it
+still shows up on `done`.
 
- * commits are not duplicated
- * as before, only changed blobs / subtrees are shown, however:
- * blobs / subtrees are duplicated in the output if they were previously sh=
-own
-   with a different name
+I do understand the concern that the rescheduled command now shows up in
+both `done` and `git-rebase-todo` (which is very different from the failed
+`pick` command that would show up _only_ in `git-rebase-todo`). So maybe
+we can find some compromise, e.g. adding a commented-out line to `done` =
+=C3=A0
+la:
 
-> By the way, "rev-list" internally uses walking the commits
-> one-by-one, anyway ;-).
+	# rescheduled: pick A
 
-I really should not write emails on Friday evening=85 What I meant was that=
- I'd
-rather use a single call to git than one per commit.
+What do you think?
 
-(The previous implementation of my hook then also queried all blobs for eac=
-h
-commit, not just the changed ones, which contributed to the bad performance=
-.)
+Ciao,
+Johannes
+
+--8323328-1580625367-1679900660=:123--
