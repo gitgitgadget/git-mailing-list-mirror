@@ -2,113 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C821CC7619A
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 09:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B068FC7619A
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 09:17:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232852AbjC0JLD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 05:11:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52962 "EHLO
+        id S233170AbjC0JRn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 05:17:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232827AbjC0JLB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 05:11:01 -0400
-Received: from mout-xforward.gmx.net (mout-xforward.gmx.net [82.165.159.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83A0E171B
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 02:11:00 -0700 (PDT)
+        with ESMTP id S232345AbjC0JRm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 05:17:42 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2BA63C26
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 02:17:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1679908242; i=johannes.schindelin@gmx.de;
-        bh=zP/VadzbsCpWzb41WIXNsSqcVt4V0sxU02isBP/IIY8=;
+        t=1679908654; i=johannes.schindelin@gmx.de;
+        bh=S7NEhjTZ9rZU9JmyfP0LiTWH/5esVuR1aMz3/Vq6zNg=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=mg+0i8+K/fMS6F43D5OlbLHKWxe0BqdQ+tTUbHmfC44a2L2BmFzQU+OE1QfExt1Zd
-         fLiboDsMS5f4mIzWlLPDK0NfNlSOCJ4RHdoH2KW+t9ipdK0KRhWbrBrkKc57BnDJKY
-         QPpzhmBZ8w9FEZ6HtaUbRx1RBJFJk5q4wLuU9SEel06rhhjayY6z8Nbxoi+3U7ZtSg
-         3iaRfO6lDESOsm4f3WM0EG2hQnyVd3Q71wWyxpUDF67mdqHbCs9fgaqMjaCWK6XWd1
-         Nou9DHGBGq/fYYVeUKMSFx96xa9bmCKwM4kjNv6EPEGnIQXUj8p79UidEl00KqkBC9
-         oc3b0MZdBn6UQ==
+        b=re5+WXnJcvDJjldv9LxHpe+oxFiNiMd9wm0kG+HJ+k48Xji/JdoOkzdqTbKtAq1Kj
+         2Q4ETeOLoU3jC62QJdnKfDcBwSP66QzTNzTURZHqWp8+TyPsTyrrM00mKxzUpiJOah
+         r0aGYO98434M6hMGb04Yk7XDmG/dN9W6HY20qBrZBV1QHmI8GtzF7m49CudXKLnVkp
+         cZkh+jt0hdOvfdgy+kTvzL77nK2wlKPww06gNFr9ayWt0FLOWPXyHiW9qosvEc0wlz
+         oNw10RgL6iJpuJojTEMwVkx+CDzSpelRZ7I4/pcNsBuRvrAtmycN59EWQs4BN92lJM
+         1ovzVTuAqosgg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVeI2-1pqaGM25p6-00RWEb; Mon, 27
- Mar 2023 11:10:42 +0200
-Date:   Mon, 27 Mar 2023 11:10:40 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M4axq-1piMsC2cMg-001ieD; Mon, 27
+ Mar 2023 11:17:34 +0200
+Date:   Mon, 27 Mar 2023 11:17:32 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Jeff King <peff@peff.net>
-cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
-        Matthew John Cheetham via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Derrick Stolee <derrickstolee@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
-        M Hickford <mirth.hickford@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Glen Choo <chooglen@google.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v7 00/12] Enhance credential helper protocol to include
- auth headers
-In-Reply-To: <Y91FjhNgZGz6foFl@coredump.intra.peff.net>
-Message-ID: <0f94b998-e223-85cc-7730-f75675d5e649@gmx.de>
-References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com> <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com> <e57c1ca3-c21c-db41-a386-e5887f46055c@github.com> <xmqqwn5bg695.fsf@gitster.g> <Y9JkMLueCwjkLHOr@coredump.intra.peff.net> <xmqqfsbxcmdd.fsf@gitster.g>
- <6f83ed25-a7e1-06dd-f180-d70c7e1b1973@gmx.de> <Y91FjhNgZGz6foFl@coredump.intra.peff.net>
+To:     Paul Mackerras <paulus@ozlabs.org>,
+        Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH 0/2] gitk: handle long command-lines
+In-Reply-To: <pull.1469.git.1674559397.gitgitgadget@gmail.com>
+Message-ID: <af2111f8-2669-b952-6c4e-45ee0330ec14@gmx.de>
+References: <pull.1469.git.1674559397.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VmN5JKbfXtQBgwVPYI6GkpVQ5xyFoIl7OX3iS0LANE6FEDPbM7n
- debpUN7RtRp4pUHkVO7HjX65/epxR4qcANqkxrYgLrAMDdR7HjhCQqDY4h0S8GejPD7dL5U
- uGJoTXoTa31CIZShtu7RT1H2ljYMLAwnaq57rssSDe9x6YmP2K5pWb3MnSRCPwflwO4NpnR
- JnfXqO6WWt8/Fxkmyog8g==
-UI-OutboundReport: junk:10;M01:P0:ILQsNmtHkHU=;oL3NYTp+sMqmMFeerelUHzuR5ZmDi
- gKvk0a1uWSz3UpzYBs8A58SRXDzENPH1NyVq3INXzl+n4SIkOZCgj6bhQOlOlAGsm03MTxTyB
- hCTk41bBzrv+vp70kbN6AasPsLfiiYLIf0NToGwdvLynFHpI6KYZus+4nPgeKwXB8dkaMCoKi
- QebF2stsR4vTV87qmcyq9F5AFOvNBo5Cpd30fClFbSSxC54qf6LOCMrpd9NIGXUfvkFmAJBmQ
- 2Wy0mdmQAmTExabZbLiIpu/0nrNZ9zI5fso2CI5+5BQDSezKvyEQUhhFusmL1vSfAA8FmYBUW
- zkoLhEUHAWBUxXhqUyj7+qAFFR2zfNY+z2VRCbkvgcyoszN0eGTrCveZBath8sl5FYfrizDic
- dRl9f2vm32ieXQB4B5zY2pEHLUw8JmMTJ8UnR1br8uiJz5M5zM92zKRKSjXSmW4KRQ3bJZ/yr
- /9o+FMDNThSQN8fA0bxrmXC/GoiGev8+tQQmyY9uCWFmC3UdK3aoBt5QKH8wAQ1eKLT8VsEdj
- ihQw1tP06Xq1TxddQzYJG3MWoOOW8PW2AcOFXByW7lpnqPbYMr0ZfNDpb9LcGeMtDN7vE8H0Y
- XYIwiff45pb6tqy6Cartira4wRbsqPls/6DI3EpWlC8H+OyrrF94hlKCkZwx8kag9YSiWVWy4
- 5VycEjtdMrcnlpmV64+XxiTgG4Q+vfBso/kjqhUIhFF4NLygJx1b93yhjB/O7fO0I3Nl12T+n
- Yrw49R7DTeSgwMKtH3vKU6Os02bO0Lz5VWMOzETlE7E4pPXWhUUFAgy7oyjoitdzwtGrs+dmN
- 3pXmnW1nak3Ju/0QloV5odJ1Z3jVanx+xCSCYEW/6ElQlafnErjinnqVlZBj3mjbSh99przB5
- lhre/hyuQ2mfB43/hg9cZrEkuWcrDGdAKG+tQqc0427s9tFHYbR9T9uPYK5l1hHrtoeTxLNBD
- fuOsUl/XfxD46ivvKMGqYzRb62MImdjRvQmPYPau+xrOBfsOZQejAy8UBiLQIZnSieWQ==
+X-Provags-ID: V03:K1:w/gARIg32RVUJxxZyWM/scs2eCYBGSAKZfFNSdowWCdbsiOlS1I
+ JwCmWO2VP9RXHaMSsuo3Z3oDSRbNX3utZnrlLMtwJaPSu2W/ayLONiNdM3qLqe9s5n4Jvp4
+ W75wh9fhrKTH9eSJZ5fk3AS+nAB0Yk82LTiz1ZgC0Fr1j4GU31ckKyM9DZkd7WFVVA0yDiC
+ bZgMna+FaxTNgeBJsLstA==
+UI-OutboundReport: notjunk:1;M01:P0:tdUSCFU3BEY=;gO9Sul8Aw0xd0MH8BMHJqRhUE6J
+ K6ZCph1JouK+DJaZGYhwm6u4oWrjXYp6rDRMkzp6GibfNtp6auk6sZV93tTFWWYJRwfKMijMh
+ 0yqWAJSNUAF7YhsMtZtAiiuHeGfWtwnF0zEWPdRwNoc8+gXkyVZRVGSRybbgdJG1Ql4CNTdLi
+ VeU0Y9TT5M5ro2m1lCrx5QFM8D+FvDrJ0TIKwnSkxN1Yolwv+6pjISbdbuaeipNImzKODxWn6
+ /q22/oDpOfy6tQEO7q61pzbnVmEmFEh07KrzAGsGTKG32MXRWbdokbzZ9A+NqnYVhvNdtbYb1
+ do8+K64I6WZHTywcbxr1wZhJ5ELZSdryKCJbTD5k5kuRWzT9n2jVOvre4093c1BbD7gqEsa8P
+ vfceSbstIizP/+zArt6rDETjIKlwZlLJBp9uEW+k/HdsNoRM0X/00zh/x0EkbVGFebS8x2mkT
+ 0LqYsaybQ5kXeYQUs8k98uFoo7yH8RtIgFeURWiQCaiD8VIIy8ZxvVZG9N4M/shRR+pdmm+l8
+ 92PCx3kyztE46k1WgeQOZ0gWB9fBjokdAktEUrr5ysOSjfCrDEwNErX83qyLNgEvVfLAYoRmc
+ U5TLib8iwKsKJSikYcvGquYeOJcwJNxVMdz2GyGdAPUYvK8Ufp17oy1aclM0r+B8NOR6digFK
+ ktB8gBFICRkfNuMCCCp0WXoGSFlRRCD6EOb3hcArjDQlNbBOfwIWgiJZJ3FFdNHK8/9D+ZScz
+ uhgB5dr6P2lg8b4l5Qnj9K3JpxJ+KKA2MRhfmEYXgIK935mo1cVNjAwMMYfCOuhFJ78k40xhC
+ 6JmMZAbZMd9h01e2+gq/5C6aJCLsWLCBeLR3DB32jk3M+C1bQQXFTRUvVAC/92uVcU81jmCf9
+ CR8cvET1DRLWJkpDNrIdZV1D1p6Zpv6ShbJw5BxHpHHZ0YIsyH6l4hLg+XHOmfVpQzLrAGpuh
+ GVB8YEcU+1SniD8R1/8vgrOE47Y=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+Hi Pau & Junio,
 
-On Fri, 3 Feb 2023, Jeff King wrote:
+this patch series saw a positive review from Junio (thank you! I know that
+you try to stay away from Tcl code, so I appreciate the effort very much),
+but apart from that it simply languished on the mailing list for more than
+two months now.
 
-> On Thu, Feb 02, 2023 at 11:14:33AM +0100, Johannes Schindelin wrote:
->
-> > > I do not mind reverting the merge to 'next' to have an improved
-> > > version.  Your "do we really want to add a custom server based on
-> > > questionable codebase whose quality as a test-bed for real world
-> > > usage is dubious?" is a valid concern.
-> >
-> > Except.
-> >
-> > Except that this code base would have made for a fine base to potentia=
-lly
-> > implement an HTTPS-based replacement for the aging and insecure
-> > git-daemon.
->
-> I'm skeptical that it is a good idea for Git to implement a custom http
-> server from scratch.
-
-To be clear: I never suggested to implement a generic HTTP server.
-
-All I wanted was to have a replacement for `git daemon` that speaks
-https:// instead of git://. It does not have to speak to every browser out
-there, it only needs to respond well when speaking to Git clients. That is
-a much, much smaller surface than "production-ready server, HTTP/2 and so
-on".
-
-And while the proposed test helper was not quite complete in that way, and
-while it may have had much of the `git daemon` code that you would love to
-lose, it would have offered an incremental way forward.
-
-I am afraid that this way forward is now blocked, and we're further away
-from dropping that `git daemon` code you wanted to drop than ever.
+Paul, is there anything I can do to help you integrate this into `gitk`?
+Or is it time to pass over `gitk` maintenance to the Git project?
 
 Ciao,
 Johannes
+
+On Tue, 24 Jan 2023, Johannes Schindelin via GitGitGadget wrote:
+
+> These patches have been cooking for such a long time in Git for Windows =
+that
+> you might think they turned into broth. Yummy broth, to be sure. But bro=
+th.
+> 'Tis beyond time for the patches to make it upstream.
+>
+> Johannes Schindelin (1):
+>   gitk: prevent overly long command lines
+>
+> Nico Rieck (1):
+>   gitk: escape file paths before piping to git log
+>
+>  gitk | 36 +++++++++++++++++++++++++++++++-----
+>  1 file changed, 31 insertions(+), 5 deletions(-)
+>
+>
+> base-commit: 465f03869ae11acd04abfa1b83c67879c867410c
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1469%2=
+Fdscho%2Fgitk-long-cmdline-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1469/dsch=
+o/gitk-long-cmdline-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1469
+> --
+> gitgitgadget
+>
