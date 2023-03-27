@@ -2,536 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6C42C761A6
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 07:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCB25C7619A
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 08:08:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232831AbjC0HzN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 03:55:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49300 "EHLO
+        id S232911AbjC0IIf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 04:08:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232614AbjC0HzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 03:55:10 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 992084216
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 00:55:07 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id q19so4588507wrc.5
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 00:55:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679903706;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IyzRXTn2HjsM05P/Q6JPnQn+mjR/uH82IaoxMmfPHO4=;
-        b=R5FxO0s23FIw7qsGqs5vzxi12Y03r6Kaq9rQhevCWUaUNrZVFw/KBU2DB6CzYGVDg0
-         p835D7h+5wUbnDjq6uft68/quvY60YS+nxb1nsawM9oblaVdtdFmyuz2lM/9wEBeiq+y
-         mtMMqiBchQdkzka2sgM6KLR5axaEF9KdEGnss+VAz3z/EjRMBjqxzMrwKCyi6IPyRcuf
-         5ffIHBFhJFWhZWmQnIcgMx7Vq+JeycjZZzTZsNpp3hd7rKVlsv2JZ/D9yMELKhYeNn2h
-         dMSIFud1I8MYH2Wh3wAZAut8BGLUJrOpfEq2+tP+aAPX+V0FWFxVWPhHRgFTIvDVt8gK
-         B62g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679903706;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IyzRXTn2HjsM05P/Q6JPnQn+mjR/uH82IaoxMmfPHO4=;
-        b=XZVx9n4LKwAilLR8R3fAYn0UGO1fegbS6TNBnuA6blazYRz9ztSJR5uMCW9N0Ucv7N
-         3JFStKxVjfPZnADn22zBR5LDB9WIKAW5n164DO59jkdVzHXHiYWPOoag0mgoruVGdUb4
-         TWYozPCFxf49qQcprQ6lzhs0KuFzGuAd6yH3RhiHJKhIX4sxIm7P3UNcziCaV2Gw1Uyz
-         Xy4XkJSwL1r1Wb2eaBsZfgrme2WMTJA7XUArnVLUPPILN2inzcYDsSRI4uPF7kSB95TD
-         vc7wF/U3uCZXtclni866cET5YVniMwCYllajc4DSr+mEQhuVHUxGUrg+t2K+GaSnYqWJ
-         0ywQ==
-X-Gm-Message-State: AAQBX9dgr7TjAiIJCdlINMhnxHb+WzalklU/a/v2E9U0xY7WIUHOxM+j
-        3DkbwhLXEJCyo77UK7UqgM0/QvInrWI=
-X-Google-Smtp-Source: AKy350adCCEQk8yunRuZMzLOXEYBb67pewKWM7XmmfJHWl1cIjjYyna+QcKs+tyz9ouTjDQ77MeRUA==
-X-Received: by 2002:adf:e242:0:b0:2cf:e15b:c1c5 with SMTP id bl2-20020adfe242000000b002cfe15bc1c5mr8216085wrb.22.1679903705802;
-        Mon, 27 Mar 2023 00:55:05 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z15-20020a5d44cf000000b002ce9f0e4a8fsm24449794wrr.84.2023.03.27.00.55.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 00:55:05 -0700 (PDT)
-Message-Id: <ef6e5b4d786933b5c94cf82e63719ce4e88fbbba.1679903703.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1488.v2.git.1679903703.gitgitgadget@gmail.com>
-References: <pull.1488.git.1678283349.gitgitgadget@gmail.com>
-        <pull.1488.v2.git.1679903703.gitgitgadget@gmail.com>
-From:   "William Sprent via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Mar 2023 07:55:03 +0000
-Subject: [PATCH v2 2/2] builtin/sparse-checkout: add check-rules command
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        with ESMTP id S231946AbjC0IId (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 04:08:33 -0400
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1901738
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 01:08:31 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id CDE175C00EA;
+        Mon, 27 Mar 2023 04:08:30 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Mon, 27 Mar 2023 04:08:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :message-id:mime-version:reply-to:sender:subject:subject:to:to;
+         s=fm2; t=1679904510; x=1679990910; bh=2KFapTubhuOIrIsMnnLgTb/kB
+        dmXzWW4o8fSkA3dx6s=; b=KCjDgT7rIhPtFCyVPpMoYE5H0Bh6058HS41Q654yW
+        lqCAUBtYMgJWcGkHr+pKPfak1fYwu2Tb4YWbGL7FS3fNvbQVpP+Fot/duQvz/wM3
+        /WnJWPsZDmnljqsT6MsWhcwUc0MLXrTNPi5Uk9zQxc+Nk3FtEtWiEBDC1yjCz7QK
+        SqGctH5a6zz4zgtP8Zi5CgMcl6VdgYejgxm8et88t9dYcszUqnyzyJmTJE8MNlUQ
+        szlCKwOoeoJvCUzal1dOgLCfZOeSV5ZL31AvVOq2cQLhaPuxeqrO1bNmi5rYDjoE
+        RfJbG4kEDiUpKHaZj0sc9wIKT2S59NbU8smOfzuIZafSA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:message-id
+        :mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+        1679904510; x=1679990910; bh=2KFapTubhuOIrIsMnnLgTb/kBdmXzWW4o8f
+        SkA3dx6s=; b=QWsT4bmudV3++P6SPJbRdz9Z4VPxAWCIPBlhXRtnnxIM33BXAZr
+        JRJUsjfVkmRt8pE8KW+3JzLnxm8QOJzRi8SldCeUs3MxWx0/boavP5vp1IM3Lk5i
+        HhN1afW2k+XUm2H9NuFPXSP+lbakqI7ajerWem1UuD4DLefyd6Za2Nl71CEPVPsd
+        NiP3TGU+E3dsIUREyzx5w+hYDk+gOO8nAfrEp305qW5lwkazduIm3kwtU7II+uXf
+        z2+jpCWtv1CtZmE4S9NtrNAKRZeJxggJgEGRWPnMCTEMZbo9vcTeOTw4GoL3XaPW
+        J4VZYtIpia5Lkmyueqh1BcNweHlR95MyJCQ==
+X-ME-Sender: <xms:_k4hZMmGslIU_v8RN6uqe-5tEIkClOkgT_wUjdY1ypBHC-N7AWb-jg>
+    <xme:_k4hZL0VXnILz2VV8EP74y8G1wzB6EjvQFD02XFtwerVGhH9MP0qNWQgdPEUxc0ps
+    K7aZqAkLqEe5NM08g>
+X-ME-Received: <xmr:_k4hZKpnMyFzygKg96G9qisStCiFIPnsLBwCXgOFlyq-Pjo9KdH_MhvWe9VDwPs03VCVDmK85BnPI8a0yXfvibb5mpVjL3fbwhjS4Dq3GfKnKV4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdehvdcutefuodetggdotefrodftvfcurf
+    hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucfu
+    thgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeugf
+    eutdeuieehteelveegudejkeejheeljeejhffhgffhvefgkeeukeejtdeijeenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
+    hm
+X-ME-Proxy: <xmx:_k4hZIlLoZNjxa2ZRZoBOQ0on_7ZwXcHWEUhVKUQkgJgfWqSm1CAUA>
+    <xmx:_k4hZK0DGnKi4C6geTqVuak6dY2jbd2kFwX4Hr3cexGHi2QcObhktA>
+    <xmx:_k4hZPuaw97TDaMVFOZzelm2pUZqyMdJiXPqCHwMgyZoxtJdftLwKw>
+    <xmx:_k4hZP_e2FJGuV50tplSZ0HGKa7SfIBpDVV0tnQZQRqxEjateoXl5w>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 27 Mar 2023 04:08:29 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id dad5e421 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 27 Mar 2023 08:08:22 +0000 (UTC)
+Date:   Mon, 27 Mar 2023 10:08:25 +0200
+From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Cc:     Victoria Dye <vdye@github.com>, Elijah Newren <newren@gmail.com>,
-        William Sprent <williams@unity3d.com>,
-        William Sprent <williams@unity3d.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH] commit-graph: fix truncated generation numbers
+Message-ID: <f8a0a869e8b0882f05cac49d78f49ba3553d3c44.1679904401.git.ps@pks.im>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ad0dTK1NmGVaPl+N"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: William Sprent <williams@unity3d.com>
 
-There exists no direct way to interrogate git about which paths are
-matched by a given set of sparsity rules. It is possible to get this
-information from git, but it includes checking out the commit that
-contains the paths, applying the sparse checkout patterns and then using
-something like 'git ls-files -t' to check if the skip worktree bit is
-set. This works in some case, but there are cases where it is awkward or
-infeasible to generate a checkout for this purpose.
+--ad0dTK1NmGVaPl+N
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Exposing the pattern matching of sparse checkout enables more tooling to
-be built and avoids a situation where tools that want to reason about
-sparse checkouts start containing parallel implementation of the rules.
-To accommodate this, add a 'check-rules' subcommand to the
-'sparse-checkout' builtin along the lines of the 'git check-ignore' and
-'git check-attr' commands. The new command accepts a list of paths on
-stdin and outputs just the ones the match the sparse checkout.
+In 80c928d947 (commit-graph: simplify compute_generation_numbers(),
+2023-03-20), the code to compute generation numbers was simplified to
+use the same infrastructure as is used to compute topological levels.
+This refactoring introduced a bug where the generation numbers are
+truncated when they exceed UINT32_MAX because we explicitly cast the
+computed generation number to `uint32_t`. This is not required though:
+both the computed value and the field of `struct commit_graph_data` are
+of the same type `timestamp_t` already, so casting to `uint32_t` will
+cause truncation.
 
-To allow for use in a bare repository and to allow for interrogating
-about other patterns than the current ones, include a '--rules-file'
-option which allows the caller to explicitly pass sparse checkout rules
-in the format accepted by 'sparse-checkout set --stdin'.
+This cast can cause us to miscompute generation data overflows:
 
-To allow for reuse of the handling of input patterns for the
-'--rules-file' flag, modify 'add_patterns_from_input()' to be able to
-read from a 'FILE' instead of just stdin.
+    1. Given a commit with no parents and committer date
+       `UINT32_MAX + 1`.
 
-To allow for reuse of the logic which decides whether or not rules
-should be interpreted as cone-mode patterns, split that part out of
-'update_modes()' such that can be called without modifying the config.
+    2. We compute its generation number as `UINT32_MAX + 1`, but
+       truncate it to `1`.
 
-An alternative could have been to create a new 'check-sparsity' command.
-However, placing it under 'sparse-checkout' allows for a) more easily
-re-using the sparse checkout pattern matching and cone/non-code mode
-handling, and b) keeps the documentation for the command next to the
-experimental warning and the cone-mode discussion.
+    3. We calculate the generation offset via `$generation - $date`,
+       which is thus `1 - (UINT32_MAX + 1)`. The computation underflows
+       and we thus end up with an offset that is bigger than the maximum
+       allowed offset.
 
-Signed-off-by: William Sprent <williams@unity3d.com>
+As a result, we'd be writing generation data overflow information into
+the commit-graph that is bogus and ultimately not even required.
+
+Fix this bug by removing the needless cast.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-sparse-checkout.txt |  25 ++++-
- builtin/sparse-checkout.c             | 131 +++++++++++++++++++++----
- t/t1091-sparse-checkout-builtin.sh    | 134 +++++++++++++++++++++++++-
- 3 files changed, 267 insertions(+), 23 deletions(-)
 
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index 68392d2a56e..53dc17aa77a 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -9,7 +9,7 @@ git-sparse-checkout - Reduce your working tree to a subset of tracked files
- SYNOPSIS
- --------
- [verse]
--'git sparse-checkout' (init | list | set | add | reapply | disable) [<options>]
-+'git sparse-checkout' (init | list | set | add | reapply | disable | check-rules) [<options>]
- 
- 
- DESCRIPTION
-@@ -135,6 +135,29 @@ paths to pass to a subsequent 'set' or 'add' command.  However,
- the disable command, so the easy restore of calling a plain `init`
- decreased in utility.
- 
-+'check-rules'::
-+	Check whether sparsity rules match one or more paths.
-++
-+By default `check-rules` reads a list of paths from stdin and outputs only
-+the ones that match the current sparsity rules. The input is expected to consist
-+of one path per line, matching the output of `git ls-tree --name-only` including
-+that pathnames that begin with a double quote (") are interpreted as C-style
-+quoted strings.
-++
-+When called with the `--rules-file <file>` flag the input files are matched
-+against the sparse checkout rules found in `<file>` instead of the current ones.
-+The rules in the files are expected to be in the same form as accepted by `git
-+sparse-checkout set --stdin` (in particular, they must be newline-delimited).
-++
-+By default, the rules passed to the `--rules-file` option are interpreted as
-+cone mode directories. To pass non-cone mode patterns with `--rules-file`,
-+combine the option with the `--no-cone` option.
-++
-+When called with the `-z` flag, the format of the paths input on stdin as well
-+as the output paths are \0 terminated and not quoted. Note that this does not
-+apply to the format of the rules passed with the `--rules-file` option.
-+
-+
- EXAMPLES
- --------
- `git sparse-checkout set MY/DIR1 SUB/DIR2`::
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 5fdc3d9aab5..8243d866817 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -20,7 +20,7 @@
- static const char *empty_base = "";
- 
- static char const * const builtin_sparse_checkout_usage[] = {
--	N_("git sparse-checkout (init | list | set | add | reapply | disable) [<options>]"),
-+	N_("git sparse-checkout (init | list | set | add | reapply | disable | check-rules) [<options>]"),
- 	NULL
- };
- 
-@@ -384,13 +384,7 @@ static int set_config(enum sparse_checkout_mode mode)
- 	return 0;
- }
- 
--static int update_modes(int *cone_mode, int *sparse_index)
--{
--	int mode, record_mode;
--
--	/* Determine if we need to record the mode; ensure sparse checkout on */
--	record_mode = (*cone_mode != -1) || !core_apply_sparse_checkout;
--
-+static enum sparse_checkout_mode update_cone_mode(int *cone_mode) {
- 	/* If not specified, use previous definition of cone mode */
- 	if (*cone_mode == -1 && core_apply_sparse_checkout)
- 		*cone_mode = core_sparse_checkout_cone;
-@@ -398,12 +392,21 @@ static int update_modes(int *cone_mode, int *sparse_index)
- 	/* Set cone/non-cone mode appropriately */
- 	core_apply_sparse_checkout = 1;
- 	if (*cone_mode == 1 || *cone_mode == -1) {
--		mode = MODE_CONE_PATTERNS;
- 		core_sparse_checkout_cone = 1;
--	} else {
--		mode = MODE_ALL_PATTERNS;
--		core_sparse_checkout_cone = 0;
-+		return MODE_CONE_PATTERNS;
- 	}
-+	core_sparse_checkout_cone = 0;
-+	return MODE_ALL_PATTERNS;
-+}
-+
-+static int update_modes(int *cone_mode, int *sparse_index)
-+{
-+	int mode, record_mode;
-+
-+	/* Determine if we need to record the mode; ensure sparse checkout on */
-+	record_mode = (*cone_mode != -1) || !core_apply_sparse_checkout;
-+
-+	mode = update_cone_mode(cone_mode);
- 	if (record_mode && set_config(mode))
- 		return 1;
- 
-@@ -547,7 +550,7 @@ static void strbuf_to_cone_pattern(struct strbuf *line, struct pattern_list *pl)
- 
- static void add_patterns_from_input(struct pattern_list *pl,
- 				    int argc, const char **argv,
--				    int use_stdin)
-+				    FILE *file)
+This commit applies on top of cbfe360b14 (commit-reach: add
+tips_reachable_from_bases(), 2023-03-20), which has recently been merged
+to next.
+
+ commit-graph.c                     | 2 +-
+ t/t5328-commit-graph-64bit-time.sh | 9 +++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index 172e679db1..b96509354e 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1565,7 +1565,7 @@ static timestamp_t get_generation_from_graph_data(str=
+uct commit *c, void *data)
+ static void set_generation_v2(struct commit *c, timestamp_t t, void *data)
  {
- 	int i;
- 	if (core_sparse_checkout_cone) {
-@@ -557,9 +560,9 @@ static void add_patterns_from_input(struct pattern_list *pl,
- 		hashmap_init(&pl->parent_hashmap, pl_hashmap_cmp, NULL, 0);
- 		pl->use_cone_patterns = 1;
- 
--		if (use_stdin) {
-+		if (file) {
- 			struct strbuf unquoted = STRBUF_INIT;
--			while (!strbuf_getline(&line, stdin)) {
-+			while (!strbuf_getline(&line, file)) {
- 				if (line.buf[0] == '"') {
- 					strbuf_reset(&unquoted);
- 					if (unquote_c_style(&unquoted, line.buf, NULL))
-@@ -581,10 +584,10 @@ static void add_patterns_from_input(struct pattern_list *pl,
- 			}
- 		}
- 	} else {
--		if (use_stdin) {
-+		if (file) {
- 			struct strbuf line = STRBUF_INIT;
- 
--			while (!strbuf_getline(&line, stdin)) {
-+			while (!strbuf_getline(&line, file)) {
- 				size_t len;
- 				char *buf = strbuf_detach(&line, &len);
- 				add_pattern(buf, empty_base, 0, pl, 0);
-@@ -611,7 +614,8 @@ static void add_patterns_cone_mode(int argc, const char **argv,
- 	struct pattern_list existing;
- 	char *sparse_filename = get_sparse_checkout_filename();
- 
--	add_patterns_from_input(pl, argc, argv, use_stdin);
-+	add_patterns_from_input(pl, argc, argv,
-+				use_stdin ? stdin : NULL);
- 
- 	memset(&existing, 0, sizeof(existing));
- 	existing.use_cone_patterns = core_sparse_checkout_cone;
-@@ -648,7 +652,7 @@ static void add_patterns_literal(int argc, const char **argv,
- 					   pl, NULL, 0))
- 		die(_("unable to load existing sparse-checkout patterns"));
- 	free(sparse_filename);
--	add_patterns_from_input(pl, argc, argv, use_stdin);
-+	add_patterns_from_input(pl, argc, argv, use_stdin ? stdin : NULL);
+ 	struct commit_graph_data *g =3D commit_graph_data_at(c);
+-	g->generation =3D (uint32_t)t;
++	g->generation =3D t;
  }
- 
- static int modify_pattern_list(int argc, const char **argv, int use_stdin,
-@@ -667,7 +671,8 @@ static int modify_pattern_list(int argc, const char **argv, int use_stdin,
- 		break;
- 
- 	case REPLACE:
--		add_patterns_from_input(pl, argc, argv, use_stdin);
-+		add_patterns_from_input(pl, argc, argv,
-+					use_stdin ? stdin : NULL);
- 		break;
- 	}
- 
-@@ -929,6 +934,91 @@ static int sparse_checkout_disable(int argc, const char **argv,
- 	return set_config(MODE_NO_PATTERNS);
- }
- 
-+static char const * const builtin_sparse_checkout_check_rules_usage[] = {
-+	N_("git sparse-checkout check-rules [-z] [--skip-checks]"
-+	   "[--[no-]cone] [--rules-file <file>]"),
-+	NULL
-+};
-+
-+static struct sparse_checkout_check_rules_opts {
-+	int cone_mode;
-+	int null_termination;
-+	char *rules_file;
-+} check_rules_opts;
-+
-+static int check_rules(struct pattern_list *pl, int null_terminated) {
-+	struct strbuf line = STRBUF_INIT;
-+	struct strbuf unquoted = STRBUF_INIT;
-+	char *path;
-+	int line_terminator = null_terminated ? 0 : '\n';
-+	strbuf_getline_fn getline_fn = null_terminated ? strbuf_getline_nul
-+		: strbuf_getline;
-+	the_repository->index->sparse_checkout_patterns = pl;
-+	while (!getline_fn(&line, stdin)) {
-+		path = line.buf;
-+		if (!null_terminated && line.buf[0] == '"') {
-+			strbuf_reset(&unquoted);
-+			if (unquote_c_style(&unquoted, line.buf, NULL))
-+				die(_("unable to unquote C-style string '%s'"),
-+					line.buf);
-+
-+			path = unquoted.buf;
-+		}
-+
-+		if (path_in_sparse_checkout(path, the_repository->index))
-+			write_name_quoted(path, stdout, line_terminator);
-+	}
-+	strbuf_release(&line);
-+	strbuf_release(&unquoted);
-+
-+	return 0;
-+}
-+
-+static int sparse_checkout_check_rules(int argc, const char **argv, const char *prefix)
-+{
-+	static struct option builtin_sparse_checkout_check_rules_options[] = {
-+		OPT_BOOL('z', NULL, &check_rules_opts.null_termination,
-+			 N_("terminate input and output files by a NUL character")),
-+		OPT_BOOL(0, "cone", &check_rules_opts.cone_mode,
-+			 N_("when used with --rules-file interpret patterns as cone mode patterns")),
-+		OPT_FILENAME(0, "rules-file", &check_rules_opts.rules_file,
-+			 N_("use patterns in <file> instead of the current ones.")),
-+		OPT_END(),
-+	};
-+
-+	FILE *fp;
-+	int ret;
-+	struct pattern_list pl = {0};
-+	char *sparse_filename;
-+	check_rules_opts.cone_mode = -1;
-+
-+	argc = parse_options(argc, argv, prefix,
-+			     builtin_sparse_checkout_check_rules_options,
-+			     builtin_sparse_checkout_check_rules_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN_OPT);
-+
-+	if (check_rules_opts.rules_file && check_rules_opts.cone_mode < 0)
-+		check_rules_opts.cone_mode = 1;
-+
-+	update_cone_mode(&check_rules_opts.cone_mode);
-+	pl.use_cone_patterns = core_sparse_checkout_cone;
-+	if (check_rules_opts.rules_file) {
-+		fp = xfopen(check_rules_opts.rules_file, "r");
-+		add_patterns_from_input(&pl, argc, argv, fp);
-+		fclose(fp);
-+	} else {
-+		sparse_filename = get_sparse_checkout_filename();
-+		if (add_patterns_from_file_to_list(sparse_filename, "", 0, &pl,
-+						   NULL, 0))
-+			die(_("unable to load existing sparse-checkout patterns"));
-+		free(sparse_filename);
-+	}
-+
-+	ret = check_rules(&pl, check_rules_opts.null_termination);
-+	clear_pattern_list(&pl);
-+	return ret;
-+}
-+
- int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
- {
- 	parse_opt_subcommand_fn *fn = NULL;
-@@ -939,6 +1029,7 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
- 		OPT_SUBCOMMAND("add", &fn, sparse_checkout_add),
- 		OPT_SUBCOMMAND("reapply", &fn, sparse_checkout_reapply),
- 		OPT_SUBCOMMAND("disable", &fn, sparse_checkout_disable),
-+		OPT_SUBCOMMAND("check-rules", &fn, sparse_checkout_check_rules),
- 		OPT_END(),
- 	};
- 
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 7216267aec7..9ceb17f9118 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -555,7 +555,7 @@ test_expect_success 'cone mode: set with core.ignoreCase=true' '
- 	check_files repo a folder1
- '
- 
--test_expect_success 'interaction with submodules' '
-+test_expect_success 'setup submodules' '
- 	git clone repo super &&
- 	(
- 		cd super &&
-@@ -566,11 +566,22 @@ test_expect_success 'interaction with submodules' '
- 		git commit -m "add submodule" &&
- 		git sparse-checkout init --cone &&
- 		git sparse-checkout set folder1
--	) &&
-+	)
+=20
+ static void compute_generation_numbers(struct write_commit_graph_context *=
+ctx)
+diff --git a/t/t5328-commit-graph-64bit-time.sh b/t/t5328-commit-graph-64bi=
+t-time.sh
+index 093f0c067a..57e4d9c699 100755
+--- a/t/t5328-commit-graph-64bit-time.sh
++++ b/t/t5328-commit-graph-64bit-time.sh
+@@ -63,4 +63,13 @@ test_expect_success 'set up and verify repo with generat=
+ion data overflow chunk'
+=20
+ graph_git_behavior 'overflow 2' repo left right
+=20
++test_expect_success 'single commit with generation data exceeding UINT32_M=
+AX' '
++	git init repo-uint32-max &&
++	cd repo-uint32-max &&
++	test_commit --date "@4294967297 +0000" 1 &&
++	git commit-graph write --reachable &&
++	graph_read_expect 1 "generation_data" &&
++	git commit-graph verify
 +'
-+
-+test_expect_success 'interaction with submodules' '
- 	check_files super a folder1 modules &&
- 	check_files super/modules/child a deep folder1 folder2
- '
- 
-+test_expect_success 'check-rules interaction with submodules' '
-+	git -C super ls-tree --name-only -r HEAD >all-files &&
-+	git -C super sparse-checkout check-rules >check-rules-matches <all-files &&
-+
-+	test_i18ngrep ! "modules/" check-rules-matches &&
-+	test_i18ngrep "folder1/" check-rules-matches
-+'
-+
- test_expect_success 'different sparse-checkouts with worktrees' '
- 	git -C repo sparse-checkout set --cone deep folder1 &&
- 	git -C repo worktree add --detach ../worktree &&
-@@ -915,4 +926,123 @@ test_expect_success 'disable fails outside work tree' '
- 	test_i18ngrep "this operation must be run in a work tree" err
- '
- 
-+test_expect_success 'setup clean' '
-+	git -C repo clean -fdx
-+'
-+
-+test_expect_success 'check-rules cone mode' '
-+	cat >rules <<-\EOF &&
-+	folder1
-+	deep/deeper1/deepest
-+	EOF
-+
-+	git -C bare ls-tree -r --name-only HEAD >all-files &&
-+	git -C bare sparse-checkout check-rules --cone \
-+		--rules-file ../rules >check-rules-file <all-files &&
-+
-+	git -C repo sparse-checkout set --cone --stdin <rules&&
-+	git -C repo ls-files -t >out &&
-+	sed -n "/^S /!s/^. //p" out >ls-files &&
-+
-+	git -C repo sparse-checkout check-rules >check-rules-default <all-files &&
-+
-+	test_i18ngrep "deep/deeper1/deepest/a" check-rules-file &&
-+	test_i18ngrep ! "deep/deeper2" check-rules-file &&
-+
-+	test_cmp check-rules-file ls-files &&
-+	test_cmp check-rules-file check-rules-default
-+'
-+
-+test_expect_success 'check-rules non-cone mode' '
-+	cat >rules <<-\EOF &&
-+	deep/deeper1/deepest/a
-+	EOF
-+
-+	git -C bare ls-tree -r --name-only HEAD >all-files &&
-+	git -C bare sparse-checkout check-rules --no-cone --rules-file ../rules\
-+		>check-rules-file <all-files &&
-+
-+	cat rules | git -C repo sparse-checkout set --no-cone --stdin &&
-+	git -C repo ls-files -t >out &&
-+	sed -n "/^S /!s/^. //p" out >ls-files &&
-+
-+	git -C repo sparse-checkout check-rules >check-rules-default <all-files &&
-+
-+	cat >expect <<-\EOF &&
-+	deep/deeper1/deepest/a
-+	EOF
-+
-+	test_cmp expect check-rules-file &&
-+	test_cmp check-rules-file ls-files &&
-+	test_cmp check-rules-file check-rules-default
-+'
-+
-+test_expect_success 'check-rules cone mode is default' '
-+	cat >rules <<-\EOF &&
-+	folder1
-+	EOF
-+
-+	cat >all-files <<-\EOF &&
-+	toplevel
-+	folder2/file
-+	folder1/file
-+	EOF
-+
-+	cat >expect <<-\EOF &&
-+	toplevel
-+	folder1/file
-+	EOF
-+
-+	git -C repo sparse-checkout set --no-cone &&
-+	git -C repo sparse-checkout check-rules \
-+		--rules-file ../rules >actual <all-files &&
-+
-+	git -C bare sparse-checkout check-rules \
-+		--rules-file ../rules >actual-bare <all-files &&
-+
-+	test_cmp expect actual &&
-+	test_cmp expect actual-bare
-+'
-+
-+test_expect_success 'check-rules quoting' '
-+	cat >rules <<-EOF &&
-+	"folder\" a"
-+	EOF
-+	cat >files <<-EOF &&
-+	"folder\" a/file"
-+	"folder\" b/file"
-+	EOF
-+	cat >expect <<-EOF &&
-+	"folder\" a/file"
-+	EOF
-+	git sparse-checkout check-rules --cone \
-+		--rules-file rules >actual <files &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'check-rules null termination' '
-+	cat >rules <<-EOF &&
-+	"folder\" a"
-+	EOF
-+
-+	lf_to_nul >files <<-EOF &&
-+	folder" a/a
-+	folder" a/b
-+	folder" b/fileQ
-+	EOF
-+
-+	cat >expect <<-EOF &&
-+	folder" a/aQfolder" a/bQ
-+	EOF
-+
-+	git sparse-checkout check-rules --cone -z \
-+		--rules-file rules >actual.nul <files &&
-+	nul_to_q <actual.nul >actual &&
-+	echo >>actual &&
-+
-+	test_cmp expect actual
-+'
-+
 +
  test_done
--- 
-gitgitgadget
+--=20
+2.40.0
+
+
+--ad0dTK1NmGVaPl+N
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQhTvgACgkQVbJhu7ck
+PpSzIA//T5hAtKmnTQzpW9/lPGedMBArueq6XzcsykCUDsDuze/E34btwiCdGw6F
+29U8kfRU2g+YSARtbg4iz45UiV9pw+sFxb2yZaum/ASpB8fvHeuSdnSlfvNzqkru
+97KdPKn345EziYS0SPV395P0TEmLw8R0V5PHdm5NTjfbPASCh9bEmMVH9SgS8R/Z
+aWuwpbkXTJJHI3uMhb1VrItItkkaldMQFqtmg3rHZ6JP0zob4zBATuolMrPK13aV
+v8C8+o3/ho9PQsma59se6/AT+nCFYPaQiotbsg8WldWKEG7jHLPJimB6TYtDsgCc
+7GXXLc0TJC7QWnd8UgnWNL+5e5RTqeG0ZZb54XvfS+7AHgbzX9qFSO1tVuMEkSHW
+fVhPCTMY4sa7lCL52ekpzwV3p0AMyqNFQcnCK6eAHRiQcFmlvoxOYi2qR/6wCZsN
+18WrlN+AlX525nJxMr7caYaGiWago+umnDdIgbja3bvgTfWJSmAQw8whQ7//vUL8
+GxM9Ktl5W2L/Nrc9Ic7wOGCRl8rAPdOeZBr5BoWgy4n2z4msivmaPoN9PVyW86B3
+IEdnK4IMLVwvfDBE2FNd3BiXJNZM71qtFCCiGc3UCvYKFsQG1KqbYUmfdRG76A6k
+nca/dCwsYFhfOBr2qAJ3HncnslmOwGuqzcWqIG0JqDdgBIHi3Uw=
+=ToTz
+-----END PGP SIGNATURE-----
+
+--ad0dTK1NmGVaPl+N--
