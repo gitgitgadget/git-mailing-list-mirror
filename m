@@ -2,184 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCB25C7619A
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 08:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB8C7C7619A
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 08:34:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232911AbjC0IIf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 04:08:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37936 "EHLO
+        id S233254AbjC0Iek (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 04:34:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231946AbjC0IId (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 04:08:33 -0400
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1901738
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 01:08:31 -0700 (PDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id CDE175C00EA;
-        Mon, 27 Mar 2023 04:08:30 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Mon, 27 Mar 2023 04:08:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :message-id:mime-version:reply-to:sender:subject:subject:to:to;
-         s=fm2; t=1679904510; x=1679990910; bh=2KFapTubhuOIrIsMnnLgTb/kB
-        dmXzWW4o8fSkA3dx6s=; b=KCjDgT7rIhPtFCyVPpMoYE5H0Bh6058HS41Q654yW
-        lqCAUBtYMgJWcGkHr+pKPfak1fYwu2Tb4YWbGL7FS3fNvbQVpP+Fot/duQvz/wM3
-        /WnJWPsZDmnljqsT6MsWhcwUc0MLXrTNPi5Uk9zQxc+Nk3FtEtWiEBDC1yjCz7QK
-        SqGctH5a6zz4zgtP8Zi5CgMcl6VdgYejgxm8et88t9dYcszUqnyzyJmTJE8MNlUQ
-        szlCKwOoeoJvCUzal1dOgLCfZOeSV5ZL31AvVOq2cQLhaPuxeqrO1bNmi5rYDjoE
-        RfJbG4kEDiUpKHaZj0sc9wIKT2S59NbU8smOfzuIZafSA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:message-id
-        :mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-        1679904510; x=1679990910; bh=2KFapTubhuOIrIsMnnLgTb/kBdmXzWW4o8f
-        SkA3dx6s=; b=QWsT4bmudV3++P6SPJbRdz9Z4VPxAWCIPBlhXRtnnxIM33BXAZr
-        JRJUsjfVkmRt8pE8KW+3JzLnxm8QOJzRi8SldCeUs3MxWx0/boavP5vp1IM3Lk5i
-        HhN1afW2k+XUm2H9NuFPXSP+lbakqI7ajerWem1UuD4DLefyd6Za2Nl71CEPVPsd
-        NiP3TGU+E3dsIUREyzx5w+hYDk+gOO8nAfrEp305qW5lwkazduIm3kwtU7II+uXf
-        z2+jpCWtv1CtZmE4S9NtrNAKRZeJxggJgEGRWPnMCTEMZbo9vcTeOTw4GoL3XaPW
-        J4VZYtIpia5Lkmyueqh1BcNweHlR95MyJCQ==
-X-ME-Sender: <xms:_k4hZMmGslIU_v8RN6uqe-5tEIkClOkgT_wUjdY1ypBHC-N7AWb-jg>
-    <xme:_k4hZL0VXnILz2VV8EP74y8G1wzB6EjvQFD02XFtwerVGhH9MP0qNWQgdPEUxc0ps
-    K7aZqAkLqEe5NM08g>
-X-ME-Received: <xmr:_k4hZKpnMyFzygKg96G9qisStCiFIPnsLBwCXgOFlyq-Pjo9KdH_MhvWe9VDwPs03VCVDmK85BnPI8a0yXfvibb5mpVjL3fbwhjS4Dq3GfKnKV4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdehvdcutefuodetggdotefrodftvfcurf
-    hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucfu
-    thgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeugf
-    eutdeuieehteelveegudejkeejheeljeejhffhgffhvefgkeeukeejtdeijeenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrih
-    hm
-X-ME-Proxy: <xmx:_k4hZIlLoZNjxa2ZRZoBOQ0on_7ZwXcHWEUhVKUQkgJgfWqSm1CAUA>
-    <xmx:_k4hZK0DGnKi4C6geTqVuak6dY2jbd2kFwX4Hr3cexGHi2QcObhktA>
-    <xmx:_k4hZPuaw97TDaMVFOZzelm2pUZqyMdJiXPqCHwMgyZoxtJdftLwKw>
-    <xmx:_k4hZP_e2FJGuV50tplSZ0HGKa7SfIBpDVV0tnQZQRqxEjateoXl5w>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Mar 2023 04:08:29 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id dad5e421 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 27 Mar 2023 08:08:22 +0000 (UTC)
-Date:   Mon, 27 Mar 2023 10:08:25 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH] commit-graph: fix truncated generation numbers
-Message-ID: <f8a0a869e8b0882f05cac49d78f49ba3553d3c44.1679904401.git.ps@pks.im>
+        with ESMTP id S233195AbjC0IeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 04:34:14 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78B287ED3
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 01:29:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1679905725; i=johannes.schindelin@gmx.de;
+        bh=ludUiiZhnpuAvRN1IyAzP5dSl1oXpsJ0Ygbb+SFasos=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=pwHL9ze+jzYNG0j/7J79PqrnRZ4jUqo936Kruweac2HpWFdiEBAUzSJC+cJ/M+yp9
+         d//VTuka8ypQP3JfLcw4k88DsnCyPDUESm/B8yXod0wO0yR6akdXsDfgqGf4POi8m0
+         xkKAG5jGmHlbW+oejAoQRswldkJpmJ/vHeTpjYVhuCZ0StMA/JMH6j9/6vvLWHARKl
+         Sar9u3zR+kbrBrXz4o108KWoFo6Nri7Mw7VOnIl8wtG73pYvQKzfAzWt7XjMrkO+9A
+         hgfJtHPpYdKb6BDcCuYV4i/GwBo/DPPTBAlVF942Zv+GR9omjO3E1VpvmCUqFeNWpG
+         nqI2hVQZvkE6w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZkpb-1pvEgU3327-00WpZJ; Mon, 27
+ Mar 2023 10:28:45 +0200
+Date:   Mon, 27 Mar 2023 10:28:44 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     "L2750558108@outlook.com" <L2750558108@outlook.com>
+cc:     git <git@vger.kernel.org>
+Subject: Re: When using git commit in a path with spaces, it prompts Cannot
+ read "xxx": No such file or directory
+In-Reply-To: <BY5PR14MB35605DDFA6C7F6CD9DF89202B1A09@BY5PR14MB3560.namprd14.prod.outlook.com>
+Message-ID: <ca58a4a2-dd73-26f5-9d2f-13a658bbaa9b@gmx.de>
+References: <BY5PR14MB35605DDFA6C7F6CD9DF89202B1A09@BY5PR14MB3560.namprd14.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ad0dTK1NmGVaPl+N"
-Content-Disposition: inline
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:B4n63eOmhpW9BcZYns5OgT/Tco16n0ryWFwCNSU1MlmKT3eB7q+
+ 1Lti59dBqxTfmhXP+7wDnui1imeEyBrfIV9uP7c4ZlBy3s9AjsOvINbPjFM05lWk5OFtSnY
+ EHrNR6pTB0vdCihA/i6o518ITdck+j4lmkCs7xbNI7ZDDpBQOFwWo5mcYUpaC2zdVl5/EGj
+ OfXjVIbj808WmqEDBOnGg==
+UI-OutboundReport: notjunk:1;M01:P0:NBbx275dVVQ=;loOQ7UeoKpIYtNbiyW7XRuim2Vj
+ 6z1dyCN0mDn3rFKGanTfc9gGAtL/JxCuPwV8sFGDUJnV76Odp40FtCpinskyBqCakm8tu7NfY
+ iRbZL3K1GwdTFhHClXNWNzIcNhCRgE544jQ7bfP9X0wRYMMq+VhG17tb0p0Od+Gium/TzboG6
+ fmxHUOTWFBAZwjF2+R8dFJJ4UY1Vbe9vTgMFkohQw7UYy2wlBu+6HznC5mA9sIa4QKJuxRyDx
+ uYpmBWQ+PTpvf2HGolXLFVeL+J1uqW6RyIvkC7p4egectl2biv/o9XhpkvjkLxDGNYsf0PRs0
+ 38PurFWJSpQnLKtnOLd4LoTV06ns4xEFlOIAEW79uAVY+TG/vWapsDm9LQyWL7LNmO0zY2nD5
+ JNv+fJ8i9KLv0mrCgecz6C4e5FY3DopctXn+W/QzYnUkDI4lSTTeyirZMsHCqwf4WF34kvcRQ
+ /SwFCaCw8XiAyY06vxaWljpfDZ6vP8HVwG8d6r+hCio+aBchENug1CqXHttCAkBKt3U0Pq6F1
+ 8PxCYyN1WcrJo0/qayfH9giHdX+TTTjiOMbXu+SufPznCuAhdgUY3+MzNDKJqv6BRIBIfiGPJ
+ g6bjwBZkxNcxmO+Rbp5kZfEyP3FbfiqtdbfRjmhBAHw3lDRbxCOSlezX2ZjjlwxfLTKJcfhIG
+ 1tWf5rI8R4l7L5ylqzwsi3p7rgChzWGSgDradsanMQ/do2STTMvb9EZWFrV8fybMk/DAhlG08
+ 4k149Peg5H/Pf6B0XfKhEPKk0lTCevL56QSnppg2B0o8d4FRzNVTyEbW7t9VcT/dbXb8xb/fX
+ gd+4sVNuvUQpOUOg78yex/skkGqO9ciYmIXnsw0HI/juX8EXcQ2Fyp9971z8LRsM3Uev6CQBS
+ ud4SJX/hqvSFUWUvZa4hSVLNpzXjD3WCy5yx9nOmAslxwxhEKPmyJbsc+s/ZSaqbqreNYhkKY
+ EYI2UA==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---ad0dTK1NmGVaPl+N
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, 17 Feb 2023, L2750558108@outlook.com wrote:
 
-In 80c928d947 (commit-graph: simplify compute_generation_numbers(),
-2023-03-20), the code to compute generation numbers was simplified to
-use the same infrastructure as is used to compute topological levels.
-This refactoring introduced a bug where the generation numbers are
-truncated when they exceed UINT32_MAX because we explicitly cast the
-computed generation number to `uint32_t`. This is not required though:
-both the computed value and the field of `struct commit_graph_data` are
-of the same type `timestamp_t` already, so casting to `uint32_t` will
-cause truncation.
+> In Windows
+> When using git commit in a path with spaces, it prompts Cannot read "xxx=
+": No such file or directory
+>
+> Reduce:
+> 1.Init a respository at "C:/te st";
+> 2.cd "C:/te st"
+> 3.git add .
+> 4.git commit
+> 5.fatal: could not read 'C:/te': No such file or directory
 
-This cast can cause us to miscompute generation data overflows:
+I suspect that your Git version is basically super old, but I cannot know
+for sure because vital information has been omitted from this bug report.
 
-    1. Given a commit with no parents and committer date
-       `UINT32_MAX + 1`.
+And I cannot reproduce (this was done in a PowerShell window):
 
-    2. We compute its generation number as `UINT32_MAX + 1`, but
-       truncate it to `1`.
+	PS C:\> git init "te st"
+	Initialized empty Git repository in C:/te st/.git/
+	PS C:\> cd "te st"
+	PS C:\te st> git add .
+	PS C:\te st> git commit
+	On branch main
 
-    3. We calculate the generation offset via `$generation - $date`,
-       which is thus `1 - (UINT32_MAX + 1)`. The computation underflows
-       and we thus end up with an offset that is bigger than the maximum
-       allowed offset.
+	Initial commit
 
-As a result, we'd be writing generation data overflow information into
-the commit-graph that is bogus and ultimately not even required.
+	nothing to commit (create/copy files and use "git add" to track)
+	PS C:\te st> git commit --allow-empty -m "works!"
+	[main (root-commit) 0d51f36] works!
+	PS C:\te st>
 
-Fix this bug by removing the needless cast.
+In other words, Git has no problem with the space in the working
+directory's path.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-
-This commit applies on top of cbfe360b14 (commit-reach: add
-tips_reachable_from_bases(), 2023-03-20), which has recently been merged
-to next.
-
- commit-graph.c                     | 2 +-
- t/t5328-commit-graph-64bit-time.sh | 9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 172e679db1..b96509354e 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1565,7 +1565,7 @@ static timestamp_t get_generation_from_graph_data(str=
-uct commit *c, void *data)
- static void set_generation_v2(struct commit *c, timestamp_t t, void *data)
- {
- 	struct commit_graph_data *g =3D commit_graph_data_at(c);
--	g->generation =3D (uint32_t)t;
-+	g->generation =3D t;
- }
-=20
- static void compute_generation_numbers(struct write_commit_graph_context *=
-ctx)
-diff --git a/t/t5328-commit-graph-64bit-time.sh b/t/t5328-commit-graph-64bi=
-t-time.sh
-index 093f0c067a..57e4d9c699 100755
---- a/t/t5328-commit-graph-64bit-time.sh
-+++ b/t/t5328-commit-graph-64bit-time.sh
-@@ -63,4 +63,13 @@ test_expect_success 'set up and verify repo with generat=
-ion data overflow chunk'
-=20
- graph_git_behavior 'overflow 2' repo left right
-=20
-+test_expect_success 'single commit with generation data exceeding UINT32_M=
-AX' '
-+	git init repo-uint32-max &&
-+	cd repo-uint32-max &&
-+	test_commit --date "@4294967297 +0000" 1 &&
-+	git commit-graph write --reachable &&
-+	graph_read_expect 1 "generation_data" &&
-+	git commit-graph verify
-+'
-+
- test_done
---=20
-2.40.0
-
-
---ad0dTK1NmGVaPl+N
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQhTvgACgkQVbJhu7ck
-PpSzIA//T5hAtKmnTQzpW9/lPGedMBArueq6XzcsykCUDsDuze/E34btwiCdGw6F
-29U8kfRU2g+YSARtbg4iz45UiV9pw+sFxb2yZaum/ASpB8fvHeuSdnSlfvNzqkru
-97KdPKn345EziYS0SPV395P0TEmLw8R0V5PHdm5NTjfbPASCh9bEmMVH9SgS8R/Z
-aWuwpbkXTJJHI3uMhb1VrItItkkaldMQFqtmg3rHZ6JP0zob4zBATuolMrPK13aV
-v8C8+o3/ho9PQsma59se6/AT+nCFYPaQiotbsg8WldWKEG7jHLPJimB6TYtDsgCc
-7GXXLc0TJC7QWnd8UgnWNL+5e5RTqeG0ZZb54XvfS+7AHgbzX9qFSO1tVuMEkSHW
-fVhPCTMY4sa7lCL52ekpzwV3p0AMyqNFQcnCK6eAHRiQcFmlvoxOYi2qR/6wCZsN
-18WrlN+AlX525nJxMr7caYaGiWago+umnDdIgbja3bvgTfWJSmAQw8whQ7//vUL8
-GxM9Ktl5W2L/Nrc9Ic7wOGCRl8rAPdOeZBr5BoWgy4n2z4msivmaPoN9PVyW86B3
-IEdnK4IMLVwvfDBE2FNd3BiXJNZM71qtFCCiGc3UCvYKFsQG1KqbYUmfdRG76A6k
-nca/dCwsYFhfOBr2qAJ3HncnslmOwGuqzcWqIG0JqDdgBIHi3Uw=
-=ToTz
------END PGP SIGNATURE-----
-
---ad0dTK1NmGVaPl+N--
+Ciao,
+Johannes
