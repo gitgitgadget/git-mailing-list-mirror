@@ -2,105 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B068FC7619A
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 09:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BD41C7619A
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 09:19:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233170AbjC0JRn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 05:17:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60628 "EHLO
+        id S233200AbjC0JTY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 05:19:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232345AbjC0JRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 05:17:42 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2BA63C26
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 02:17:40 -0700 (PDT)
+        with ESMTP id S233156AbjC0JTW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 05:19:22 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63AC2210D
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 02:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1679908654; i=johannes.schindelin@gmx.de;
-        bh=S7NEhjTZ9rZU9JmyfP0LiTWH/5esVuR1aMz3/Vq6zNg=;
+        t=1679908757; i=johannes.schindelin@gmx.de;
+        bh=rExz5XF1EqKjCEXriEZvbcE7ZcUvUyIK4XFnB2dJs+I=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=re5+WXnJcvDJjldv9LxHpe+oxFiNiMd9wm0kG+HJ+k48Xji/JdoOkzdqTbKtAq1Kj
-         2Q4ETeOLoU3jC62QJdnKfDcBwSP66QzTNzTURZHqWp8+TyPsTyrrM00mKxzUpiJOah
-         r0aGYO98434M6hMGb04Yk7XDmG/dN9W6HY20qBrZBV1QHmI8GtzF7m49CudXKLnVkp
-         cZkh+jt0hdOvfdgy+kTvzL77nK2wlKPww06gNFr9ayWt0FLOWPXyHiW9qosvEc0wlz
-         oNw10RgL6iJpuJojTEMwVkx+CDzSpelRZ7I4/pcNsBuRvrAtmycN59EWQs4BN92lJM
-         1ovzVTuAqosgg==
+        b=GpC9MvTL+g9Y7xSXMeae3SLACJssaJMk4zzLFXFCkE8axw82mL/ap+XUYX9M4GfkI
+         /XbDdvycroNWaYDZ9SSeNl33hsXLmBQYXgmd4WATDDLjTSR5xWMQaOcRIXXZ7ckxOB
+         Hh+PViTLbRAs3fR3QVr8hymPr8LCJeY0tAj+ymzOg9trVw/OPAGdDcGIjfIyyevrDG
+         d6tmBTTm2pLYMr/EicvnQUtSnJlxrJfZ/th3VjtRo8ZHKIaX9tz9ZHAQs3TNFHBXZ6
+         zbRsuU8DwkeqiecFBl2Xnu+GkMJ00rXQOh5eYH03sngfpEANf8O3IknhrfrPpZ0bsQ
+         kudJo/p17C9GA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M4axq-1piMsC2cMg-001ieD; Mon, 27
- Mar 2023 11:17:34 +0200
-Date:   Mon, 27 Mar 2023 11:17:32 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2mFY-1qS70T1gcO-013AEo; Mon, 27
+ Mar 2023 11:19:17 +0200
+Date:   Mon, 27 Mar 2023 11:19:16 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Paul Mackerras <paulus@ozlabs.org>,
-        Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH 0/2] gitk: handle long command-lines
-In-Reply-To: <pull.1469.git.1674559397.gitgitgadget@gmail.com>
-Message-ID: <af2111f8-2669-b952-6c4e-45ee0330ec14@gmx.de>
-References: <pull.1469.git.1674559397.gitgitgadget@gmail.com>
+To:     Drew Noakes <drnoakes@microsoft.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: --jobs=0 no longer does any work
+In-Reply-To: <PSAP153MB03910458707331B64FA7460DCAA19@PSAP153MB0391.APCP153.PROD.OUTLOOK.COM>
+Message-ID: <ed63b919-eb3a-1aae-0746-1ff582890a28@gmx.de>
+References: <PSAP153MB03910458707331B64FA7460DCAA19@PSAP153MB0391.APCP153.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:w/gARIg32RVUJxxZyWM/scs2eCYBGSAKZfFNSdowWCdbsiOlS1I
- JwCmWO2VP9RXHaMSsuo3Z3oDSRbNX3utZnrlLMtwJaPSu2W/ayLONiNdM3qLqe9s5n4Jvp4
- W75wh9fhrKTH9eSJZ5fk3AS+nAB0Yk82LTiz1ZgC0Fr1j4GU31ckKyM9DZkd7WFVVA0yDiC
- bZgMna+FaxTNgeBJsLstA==
-UI-OutboundReport: notjunk:1;M01:P0:tdUSCFU3BEY=;gO9Sul8Aw0xd0MH8BMHJqRhUE6J
- K6ZCph1JouK+DJaZGYhwm6u4oWrjXYp6rDRMkzp6GibfNtp6auk6sZV93tTFWWYJRwfKMijMh
- 0yqWAJSNUAF7YhsMtZtAiiuHeGfWtwnF0zEWPdRwNoc8+gXkyVZRVGSRybbgdJG1Ql4CNTdLi
- VeU0Y9TT5M5ro2m1lCrx5QFM8D+FvDrJ0TIKwnSkxN1Yolwv+6pjISbdbuaeipNImzKODxWn6
- /q22/oDpOfy6tQEO7q61pzbnVmEmFEh07KrzAGsGTKG32MXRWbdokbzZ9A+NqnYVhvNdtbYb1
- do8+K64I6WZHTywcbxr1wZhJ5ELZSdryKCJbTD5k5kuRWzT9n2jVOvre4093c1BbD7gqEsa8P
- vfceSbstIizP/+zArt6rDETjIKlwZlLJBp9uEW+k/HdsNoRM0X/00zh/x0EkbVGFebS8x2mkT
- 0LqYsaybQ5kXeYQUs8k98uFoo7yH8RtIgFeURWiQCaiD8VIIy8ZxvVZG9N4M/shRR+pdmm+l8
- 92PCx3kyztE46k1WgeQOZ0gWB9fBjokdAktEUrr5ysOSjfCrDEwNErX83qyLNgEvVfLAYoRmc
- U5TLib8iwKsKJSikYcvGquYeOJcwJNxVMdz2GyGdAPUYvK8Ufp17oy1aclM0r+B8NOR6digFK
- ktB8gBFICRkfNuMCCCp0WXoGSFlRRCD6EOb3hcArjDQlNbBOfwIWgiJZJ3FFdNHK8/9D+ZScz
- uhgB5dr6P2lg8b4l5Qnj9K3JpxJ+KKA2MRhfmEYXgIK935mo1cVNjAwMMYfCOuhFJ78k40xhC
- 6JmMZAbZMd9h01e2+gq/5C6aJCLsWLCBeLR3DB32jk3M+C1bQQXFTRUvVAC/92uVcU81jmCf9
- CR8cvET1DRLWJkpDNrIdZV1D1p6Zpv6ShbJw5BxHpHHZ0YIsyH6l4hLg+XHOmfVpQzLrAGpuh
- GVB8YEcU+1SniD8R1/8vgrOE47Y=
+X-Provags-ID: V03:K1:HedkWqhJ0CRD/KRIKVg6L+MT81Q1rI+CzczQV2zcHHn5w6ioZ/v
+ 7MCiVI4mJLLyI4i9DcHBw+NJoKxnFJRE6lAdIYJ8uE+2XVniumuNxlfs+iSaePm1SZm/8qd
+ Vxrt6V3W4F9A21A4TIfMvKt6DelBAvGIrUGn2QdU0Y3vyHIV2rVqb4Cya9KkHsuZ3EONHDT
+ xNYQMds4W27r4J4VOcz9g==
+UI-OutboundReport: notjunk:1;M01:P0:bJ+vq31XgLI=;sgo9MfxVDmpqLbY62wXpIDRopky
+ CxnJO/d9cKl3CVCYEidstNnHwkyUkOHXvKyVUB3cJAQqPKTBj2dg5k8uXpAqmSh7Hzy6b9q+Q
+ jojHIQqF/aj2BSmaXyIYnrfegh3HL6ceeW/o9QKUMa23rKIcbOhQPvc4gNkCUqJkOxc86/02W
+ f4A7JfpXqNY3x27lPjAWWyFlrdCUYw1pTMc/cvApn6EPyCRgg/S8dIuv1cR0rXa9PEkz0YsSN
+ COkV0g+VJXkTrRN1YZKi4JNg5dogyS+LcdtJd8p50iTk3fLqDNA6tyAMitQg47Vb4o5VxHGMb
+ JORQ+aRtSfHHBT/8sev32OX7IPa0XEdvrDjFYOobLOVPV080Vus+/d47QidRcr2d+LtkQfqxe
+ eYxxDrYCPCsbtTVahg9CGLYyX0s/F/FGyaI2eX3AB9saSdUpXRoKmO+HqWhNbqnfV8yDfUN1S
+ L50IkWvbJYdZr4R0uYxwvdfHaJHCgjK7yfLaYpY5eYSdxmzbLtABhfCeMJpVpCBFuMLmQfxG3
+ X7VWFbuSsqs7uGDmwPgKkpb+45U5F39TyXDPjZdnuqRhyZn1ETGz5eha5IsQhUS0TuQYW0GZ1
+ /Y3x3+Zn5AtPJeUXr19mDKG1Ve9e9d74t5WHyP+pQ6lOeD4JQRW/Vd9XA6NFq/qsfOcaftxsl
+ 17bGyXs9RY/FyUGbi3RU44adYhxWq6RGtKltGFpjEcnES/7J/QyIbaPGbhJ4fKFrh9b3ws9xi
+ RFK8Vx3KdhnK8XBF7ryDNVrl2bOrY46AfbIZOBpgvyqi/RRYQrCZxpdrX6OlFW/0TZjICjuCd
+ VAMeqkWHrPpfvl3MUA4kxodSROeCFfiBrBTsl7OBbIEHXNkIX34MjAP/ULcafgfY4x/Fu4TDb
+ okah/nZNWIaJT1T96qIXeum/ef762rjn/ygqAAbZIgVOHiV5T0L92IptYA9QIVVkY55zfmU87
+ miDyvRABErb4exwUZ+p9TNbCixw=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Pau & Junio,
+Hi Drew,
 
-this patch series saw a positive review from Junio (thank you! I know that
-you try to stay away from Tcl code, so I appreciate the effort very much),
-but apart from that it simply languished on the mailing list for more than
-two months now.
+On Fri, 17 Feb 2023, Drew Noakes wrote:
 
-Paul, is there anything I can do to help you integrate this into `gitk`?
-Or is it time to pass over `gitk` maintenance to the Git project?
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> - Enter a repo with multiple remotes
+> - Run: git fetch --all --prune --jobs=3D0
+>
+> What did you expect to happen? (Expected behavior)
+>
+> - Multiple remotes to be fetched in parallel
+>
+> What happened instead? (Actual behavior)
+>
+> - Nothing fetched and command exits quickly with no output
+>
+> What's different between what you expected and what actually happened?
+>
+> - That command used to work correctly. It now does nothing.
+
+This should be fixed via
+https://github.com/git/git/commit/d180cc297922569e530da843bee4df3964167dea
+which made it into v2.40.0, unless I am mistaken. Could you verify?
 
 Ciao,
 Johannes
-
-On Tue, 24 Jan 2023, Johannes Schindelin via GitGitGadget wrote:
-
-> These patches have been cooking for such a long time in Git for Windows =
-that
-> you might think they turned into broth. Yummy broth, to be sure. But bro=
-th.
-> 'Tis beyond time for the patches to make it upstream.
->
-> Johannes Schindelin (1):
->   gitk: prevent overly long command lines
->
-> Nico Rieck (1):
->   gitk: escape file paths before piping to git log
->
->  gitk | 36 +++++++++++++++++++++++++++++++-----
->  1 file changed, 31 insertions(+), 5 deletions(-)
->
->
-> base-commit: 465f03869ae11acd04abfa1b83c67879c867410c
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1469%2=
-Fdscho%2Fgitk-long-cmdline-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1469/dsch=
-o/gitk-long-cmdline-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1469
-> --
-> gitgitgadget
->
