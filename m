@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB237C76195
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 07:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6C42C761A6
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 07:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232815AbjC0HzL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 03:55:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49264 "EHLO
+        id S232831AbjC0HzN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 03:55:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232675AbjC0HzI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 03:55:08 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC7EB10F1
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 00:55:06 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id u11-20020a05600c19cb00b003edcc414997so4541287wmq.3
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 00:55:06 -0700 (PDT)
+        with ESMTP id S232614AbjC0HzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 03:55:10 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 992084216
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 00:55:07 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id q19so4588507wrc.5
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 00:55:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679903705;
+        d=gmail.com; s=20210112; t=1679903706;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wuWNRxbLYL/ICmf2/sEpOoJq+U7EQkMObU9K8rzZXc8=;
-        b=gGjHpDopdixXOT16kkshqxja5hTZ20ZnR0IAlBvLYKC0/BoyLqVg1b+GlmsoqJuXNZ
-         25v2rkKTYddXN4GVTAZ92FJRMDZ1H9Qmd3o1D/D/wv7lhq7YCHMzBeA/6WpW7T3ncVew
-         dEbqWIFw4if0LF08J97GtT+I7FbwJH9uPejldAaGFAXWtdLYuGjg0BRdhXOcdioj5Dge
-         TTYH9kzwW/eTTr0uXg27wf01WnzZuGzaYGI5pnLCYkaAzF5zYHjN92+fL5HXkGa4XF1p
-         HFjq+1DK2ifc1xu9nEpk+1v7IX6I3UzYdzdwlt0/w3/2gnH1L6t+06fCe/gvUv0K61N6
-         iW5Q==
+        bh=IyzRXTn2HjsM05P/Q6JPnQn+mjR/uH82IaoxMmfPHO4=;
+        b=R5FxO0s23FIw7qsGqs5vzxi12Y03r6Kaq9rQhevCWUaUNrZVFw/KBU2DB6CzYGVDg0
+         p835D7h+5wUbnDjq6uft68/quvY60YS+nxb1nsawM9oblaVdtdFmyuz2lM/9wEBeiq+y
+         mtMMqiBchQdkzka2sgM6KLR5axaEF9KdEGnss+VAz3z/EjRMBjqxzMrwKCyi6IPyRcuf
+         5ffIHBFhJFWhZWmQnIcgMx7Vq+JeycjZZzTZsNpp3hd7rKVlsv2JZ/D9yMELKhYeNn2h
+         dMSIFud1I8MYH2Wh3wAZAut8BGLUJrOpfEq2+tP+aAPX+V0FWFxVWPhHRgFTIvDVt8gK
+         B62g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679903705;
+        d=1e100.net; s=20210112; t=1679903706;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wuWNRxbLYL/ICmf2/sEpOoJq+U7EQkMObU9K8rzZXc8=;
-        b=wff9BUdT8jPr5O2GYf+0gHF5Wi4u6Y/c8nAHs+XI+QNbdJp4b19Uqvr3UOO67seqXd
-         d2sQBeNbQ+LVEk2wACbbtSeuCr1IX91Q9YLPS72A+RyuVW3c6rPZGj2eXfdMMwvnWfU2
-         qQUrJL5FkE/ySQuVpwddr121aHCxlh7RH7eZuApnqEJ2NKVpKLXBIoizI881YzYiSBTn
-         ipdWHwgmdeZUg/tqmknI80EZu5RxYJwm8aRRwFqfuLyYSpgSwbGTTxcYTa7zSfQhqYKw
-         FP5HLvpHR2fOuXh4iaAIvYn+LSxBJPuRK+CnYcar5+NmU++UJWYIpSxaWSKKndfXs79y
-         bUjA==
-X-Gm-Message-State: AO0yUKXI3AB8tQ8p12LXLv8UQN/ns95kP9CGa90ZhDm9xSBCzhMJNDTk
-        glML4pCHfSxirh21rFW2sOj9cQWTkk4=
-X-Google-Smtp-Source: AK7set8i3gkgJbHpYUMcyRSOdFy1tVcrYjTA+gwbxATnjtu4RDiry2RF9OcDTA6wivDgOWy9q7ZBXw==
-X-Received: by 2002:a05:600c:3595:b0:3ee:f91:19aa with SMTP id p21-20020a05600c359500b003ee0f9119aamr10793040wmq.0.1679903705026;
+        bh=IyzRXTn2HjsM05P/Q6JPnQn+mjR/uH82IaoxMmfPHO4=;
+        b=XZVx9n4LKwAilLR8R3fAYn0UGO1fegbS6TNBnuA6blazYRz9ztSJR5uMCW9N0Ucv7N
+         3JFStKxVjfPZnADn22zBR5LDB9WIKAW5n164DO59jkdVzHXHiYWPOoag0mgoruVGdUb4
+         TWYozPCFxf49qQcprQ6lzhs0KuFzGuAd6yH3RhiHJKhIX4sxIm7P3UNcziCaV2Gw1Uyz
+         Xy4XkJSwL1r1Wb2eaBsZfgrme2WMTJA7XUArnVLUPPILN2inzcYDsSRI4uPF7kSB95TD
+         vc7wF/U3uCZXtclni866cET5YVniMwCYllajc4DSr+mEQhuVHUxGUrg+t2K+GaSnYqWJ
+         0ywQ==
+X-Gm-Message-State: AAQBX9dgr7TjAiIJCdlINMhnxHb+WzalklU/a/v2E9U0xY7WIUHOxM+j
+        3DkbwhLXEJCyo77UK7UqgM0/QvInrWI=
+X-Google-Smtp-Source: AKy350adCCEQk8yunRuZMzLOXEYBb67pewKWM7XmmfJHWl1cIjjYyna+QcKs+tyz9ouTjDQ77MeRUA==
+X-Received: by 2002:adf:e242:0:b0:2cf:e15b:c1c5 with SMTP id bl2-20020adfe242000000b002cfe15bc1c5mr8216085wrb.22.1679903705802;
         Mon, 27 Mar 2023 00:55:05 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z6-20020a05600c0a0600b003ee6aa4e6a9sm7917647wmp.5.2023.03.27.00.55.04
+        by smtp.gmail.com with ESMTPSA id z15-20020a5d44cf000000b002ce9f0e4a8fsm24449794wrr.84.2023.03.27.00.55.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Mar 2023 00:55:04 -0700 (PDT)
-Message-Id: <4b231e9beb43e4fac6457b9bf86e4c1db39c4238.1679903703.git.gitgitgadget@gmail.com>
+        Mon, 27 Mar 2023 00:55:05 -0700 (PDT)
+Message-Id: <ef6e5b4d786933b5c94cf82e63719ce4e88fbbba.1679903703.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1488.v2.git.1679903703.gitgitgadget@gmail.com>
 References: <pull.1488.git.1678283349.gitgitgadget@gmail.com>
         <pull.1488.v2.git.1679903703.gitgitgadget@gmail.com>
 From:   "William Sprent via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Mar 2023 07:55:02 +0000
-Subject: [PATCH v2 1/2] builtin/sparse-checkout: remove NEED_WORK_TREE flag
+Date:   Mon, 27 Mar 2023 07:55:03 +0000
+Subject: [PATCH v2 2/2] builtin/sparse-checkout: add check-rules command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,129 +70,468 @@ X-Mailing-List: git@vger.kernel.org
 
 From: William Sprent <williams@unity3d.com>
 
-In preparation for adding a sub-command to 'sparse-checkout' that can be
-run in a bare repository, remove the 'NEED_WORK_TREE' flag from its
-entry in the 'commands' array of 'git.c'.
+There exists no direct way to interrogate git about which paths are
+matched by a given set of sparsity rules. It is possible to get this
+information from git, but it includes checking out the commit that
+contains the paths, applying the sparse checkout patterns and then using
+something like 'git ls-files -t' to check if the skip worktree bit is
+set. This works in some case, but there are cases where it is awkward or
+infeasible to generate a checkout for this purpose.
 
-To avoid that this changes any behaviour, add calls to
-'setup_work_tree()' to all of the 'sparse-checkout' sub-commands and add
-tests that verify that 'sparse-checkout <cmd>' still fail with a clear
-error message telling the user that the command needs a work tree.
+Exposing the pattern matching of sparse checkout enables more tooling to
+be built and avoids a situation where tools that want to reason about
+sparse checkouts start containing parallel implementation of the rules.
+To accommodate this, add a 'check-rules' subcommand to the
+'sparse-checkout' builtin along the lines of the 'git check-ignore' and
+'git check-attr' commands. The new command accepts a list of paths on
+stdin and outputs just the ones the match the sparse checkout.
+
+To allow for use in a bare repository and to allow for interrogating
+about other patterns than the current ones, include a '--rules-file'
+option which allows the caller to explicitly pass sparse checkout rules
+in the format accepted by 'sparse-checkout set --stdin'.
+
+To allow for reuse of the handling of input patterns for the
+'--rules-file' flag, modify 'add_patterns_from_input()' to be able to
+read from a 'FILE' instead of just stdin.
+
+To allow for reuse of the logic which decides whether or not rules
+should be interpreted as cone-mode patterns, split that part out of
+'update_modes()' such that can be called without modifying the config.
+
+An alternative could have been to create a new 'check-sparsity' command.
+However, placing it under 'sparse-checkout' allows for a) more easily
+re-using the sparse checkout pattern matching and cone/non-code mode
+handling, and b) keeps the documentation for the command next to the
+experimental warning and the cone-mode discussion.
 
 Signed-off-by: William Sprent <williams@unity3d.com>
 ---
- builtin/sparse-checkout.c          |  6 ++++++
- git.c                              |  2 +-
- t/t1091-sparse-checkout-builtin.sh | 33 ++++++++++++++++++++++++++++++
- 3 files changed, 40 insertions(+), 1 deletion(-)
+ Documentation/git-sparse-checkout.txt |  25 ++++-
+ builtin/sparse-checkout.c             | 131 +++++++++++++++++++++----
+ t/t1091-sparse-checkout-builtin.sh    | 134 +++++++++++++++++++++++++-
+ 3 files changed, 267 insertions(+), 23 deletions(-)
 
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index 68392d2a56e..53dc17aa77a 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -9,7 +9,7 @@ git-sparse-checkout - Reduce your working tree to a subset of tracked files
+ SYNOPSIS
+ --------
+ [verse]
+-'git sparse-checkout' (init | list | set | add | reapply | disable) [<options>]
++'git sparse-checkout' (init | list | set | add | reapply | disable | check-rules) [<options>]
+ 
+ 
+ DESCRIPTION
+@@ -135,6 +135,29 @@ paths to pass to a subsequent 'set' or 'add' command.  However,
+ the disable command, so the easy restore of calling a plain `init`
+ decreased in utility.
+ 
++'check-rules'::
++	Check whether sparsity rules match one or more paths.
+++
++By default `check-rules` reads a list of paths from stdin and outputs only
++the ones that match the current sparsity rules. The input is expected to consist
++of one path per line, matching the output of `git ls-tree --name-only` including
++that pathnames that begin with a double quote (") are interpreted as C-style
++quoted strings.
+++
++When called with the `--rules-file <file>` flag the input files are matched
++against the sparse checkout rules found in `<file>` instead of the current ones.
++The rules in the files are expected to be in the same form as accepted by `git
++sparse-checkout set --stdin` (in particular, they must be newline-delimited).
+++
++By default, the rules passed to the `--rules-file` option are interpreted as
++cone mode directories. To pass non-cone mode patterns with `--rules-file`,
++combine the option with the `--no-cone` option.
+++
++When called with the `-z` flag, the format of the paths input on stdin as well
++as the output paths are \0 terminated and not quoted. Note that this does not
++apply to the format of the rules passed with the `--rules-file` option.
++
++
+ EXAMPLES
+ --------
+ `git sparse-checkout set MY/DIR1 SUB/DIR2`::
 diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index c3738154918..5fdc3d9aab5 100644
+index 5fdc3d9aab5..8243d866817 100644
 --- a/builtin/sparse-checkout.c
 +++ b/builtin/sparse-checkout.c
-@@ -57,6 +57,7 @@ static int sparse_checkout_list(int argc, const char **argv, const char *prefix)
- 	char *sparse_filename;
- 	int res;
+@@ -20,7 +20,7 @@
+ static const char *empty_base = "";
  
-+	setup_work_tree();
- 	if (!core_apply_sparse_checkout)
- 		die(_("this worktree is not sparse"));
+ static char const * const builtin_sparse_checkout_usage[] = {
+-	N_("git sparse-checkout (init | list | set | add | reapply | disable) [<options>]"),
++	N_("git sparse-checkout (init | list | set | add | reapply | disable | check-rules) [<options>]"),
+ 	NULL
+ };
  
-@@ -448,6 +449,7 @@ static int sparse_checkout_init(int argc, const char **argv, const char *prefix)
+@@ -384,13 +384,7 @@ static int set_config(enum sparse_checkout_mode mode)
+ 	return 0;
+ }
+ 
+-static int update_modes(int *cone_mode, int *sparse_index)
+-{
+-	int mode, record_mode;
+-
+-	/* Determine if we need to record the mode; ensure sparse checkout on */
+-	record_mode = (*cone_mode != -1) || !core_apply_sparse_checkout;
+-
++static enum sparse_checkout_mode update_cone_mode(int *cone_mode) {
+ 	/* If not specified, use previous definition of cone mode */
+ 	if (*cone_mode == -1 && core_apply_sparse_checkout)
+ 		*cone_mode = core_sparse_checkout_cone;
+@@ -398,12 +392,21 @@ static int update_modes(int *cone_mode, int *sparse_index)
+ 	/* Set cone/non-cone mode appropriately */
+ 	core_apply_sparse_checkout = 1;
+ 	if (*cone_mode == 1 || *cone_mode == -1) {
+-		mode = MODE_CONE_PATTERNS;
+ 		core_sparse_checkout_cone = 1;
+-	} else {
+-		mode = MODE_ALL_PATTERNS;
+-		core_sparse_checkout_cone = 0;
++		return MODE_CONE_PATTERNS;
+ 	}
++	core_sparse_checkout_cone = 0;
++	return MODE_ALL_PATTERNS;
++}
++
++static int update_modes(int *cone_mode, int *sparse_index)
++{
++	int mode, record_mode;
++
++	/* Determine if we need to record the mode; ensure sparse checkout on */
++	record_mode = (*cone_mode != -1) || !core_apply_sparse_checkout;
++
++	mode = update_cone_mode(cone_mode);
+ 	if (record_mode && set_config(mode))
+ 		return 1;
+ 
+@@ -547,7 +550,7 @@ static void strbuf_to_cone_pattern(struct strbuf *line, struct pattern_list *pl)
+ 
+ static void add_patterns_from_input(struct pattern_list *pl,
+ 				    int argc, const char **argv,
+-				    int use_stdin)
++				    FILE *file)
+ {
+ 	int i;
+ 	if (core_sparse_checkout_cone) {
+@@ -557,9 +560,9 @@ static void add_patterns_from_input(struct pattern_list *pl,
+ 		hashmap_init(&pl->parent_hashmap, pl_hashmap_cmp, NULL, 0);
+ 		pl->use_cone_patterns = 1;
+ 
+-		if (use_stdin) {
++		if (file) {
+ 			struct strbuf unquoted = STRBUF_INIT;
+-			while (!strbuf_getline(&line, stdin)) {
++			while (!strbuf_getline(&line, file)) {
+ 				if (line.buf[0] == '"') {
+ 					strbuf_reset(&unquoted);
+ 					if (unquote_c_style(&unquoted, line.buf, NULL))
+@@ -581,10 +584,10 @@ static void add_patterns_from_input(struct pattern_list *pl,
+ 			}
+ 		}
+ 	} else {
+-		if (use_stdin) {
++		if (file) {
+ 			struct strbuf line = STRBUF_INIT;
+ 
+-			while (!strbuf_getline(&line, stdin)) {
++			while (!strbuf_getline(&line, file)) {
+ 				size_t len;
+ 				char *buf = strbuf_detach(&line, &len);
+ 				add_pattern(buf, empty_base, 0, pl, 0);
+@@ -611,7 +614,8 @@ static void add_patterns_cone_mode(int argc, const char **argv,
+ 	struct pattern_list existing;
+ 	char *sparse_filename = get_sparse_checkout_filename();
+ 
+-	add_patterns_from_input(pl, argc, argv, use_stdin);
++	add_patterns_from_input(pl, argc, argv,
++				use_stdin ? stdin : NULL);
+ 
+ 	memset(&existing, 0, sizeof(existing));
+ 	existing.use_cone_patterns = core_sparse_checkout_cone;
+@@ -648,7 +652,7 @@ static void add_patterns_literal(int argc, const char **argv,
+ 					   pl, NULL, 0))
+ 		die(_("unable to load existing sparse-checkout patterns"));
+ 	free(sparse_filename);
+-	add_patterns_from_input(pl, argc, argv, use_stdin);
++	add_patterns_from_input(pl, argc, argv, use_stdin ? stdin : NULL);
+ }
+ 
+ static int modify_pattern_list(int argc, const char **argv, int use_stdin,
+@@ -667,7 +671,8 @@ static int modify_pattern_list(int argc, const char **argv, int use_stdin,
+ 		break;
+ 
+ 	case REPLACE:
+-		add_patterns_from_input(pl, argc, argv, use_stdin);
++		add_patterns_from_input(pl, argc, argv,
++					use_stdin ? stdin : NULL);
+ 		break;
+ 	}
+ 
+@@ -929,6 +934,91 @@ static int sparse_checkout_disable(int argc, const char **argv,
+ 	return set_config(MODE_NO_PATTERNS);
+ }
+ 
++static char const * const builtin_sparse_checkout_check_rules_usage[] = {
++	N_("git sparse-checkout check-rules [-z] [--skip-checks]"
++	   "[--[no-]cone] [--rules-file <file>]"),
++	NULL
++};
++
++static struct sparse_checkout_check_rules_opts {
++	int cone_mode;
++	int null_termination;
++	char *rules_file;
++} check_rules_opts;
++
++static int check_rules(struct pattern_list *pl, int null_terminated) {
++	struct strbuf line = STRBUF_INIT;
++	struct strbuf unquoted = STRBUF_INIT;
++	char *path;
++	int line_terminator = null_terminated ? 0 : '\n';
++	strbuf_getline_fn getline_fn = null_terminated ? strbuf_getline_nul
++		: strbuf_getline;
++	the_repository->index->sparse_checkout_patterns = pl;
++	while (!getline_fn(&line, stdin)) {
++		path = line.buf;
++		if (!null_terminated && line.buf[0] == '"') {
++			strbuf_reset(&unquoted);
++			if (unquote_c_style(&unquoted, line.buf, NULL))
++				die(_("unable to unquote C-style string '%s'"),
++					line.buf);
++
++			path = unquoted.buf;
++		}
++
++		if (path_in_sparse_checkout(path, the_repository->index))
++			write_name_quoted(path, stdout, line_terminator);
++	}
++	strbuf_release(&line);
++	strbuf_release(&unquoted);
++
++	return 0;
++}
++
++static int sparse_checkout_check_rules(int argc, const char **argv, const char *prefix)
++{
++	static struct option builtin_sparse_checkout_check_rules_options[] = {
++		OPT_BOOL('z', NULL, &check_rules_opts.null_termination,
++			 N_("terminate input and output files by a NUL character")),
++		OPT_BOOL(0, "cone", &check_rules_opts.cone_mode,
++			 N_("when used with --rules-file interpret patterns as cone mode patterns")),
++		OPT_FILENAME(0, "rules-file", &check_rules_opts.rules_file,
++			 N_("use patterns in <file> instead of the current ones.")),
++		OPT_END(),
++	};
++
++	FILE *fp;
++	int ret;
++	struct pattern_list pl = {0};
++	char *sparse_filename;
++	check_rules_opts.cone_mode = -1;
++
++	argc = parse_options(argc, argv, prefix,
++			     builtin_sparse_checkout_check_rules_options,
++			     builtin_sparse_checkout_check_rules_usage,
++			     PARSE_OPT_KEEP_UNKNOWN_OPT);
++
++	if (check_rules_opts.rules_file && check_rules_opts.cone_mode < 0)
++		check_rules_opts.cone_mode = 1;
++
++	update_cone_mode(&check_rules_opts.cone_mode);
++	pl.use_cone_patterns = core_sparse_checkout_cone;
++	if (check_rules_opts.rules_file) {
++		fp = xfopen(check_rules_opts.rules_file, "r");
++		add_patterns_from_input(&pl, argc, argv, fp);
++		fclose(fp);
++	} else {
++		sparse_filename = get_sparse_checkout_filename();
++		if (add_patterns_from_file_to_list(sparse_filename, "", 0, &pl,
++						   NULL, 0))
++			die(_("unable to load existing sparse-checkout patterns"));
++		free(sparse_filename);
++	}
++
++	ret = check_rules(&pl, check_rules_opts.null_termination);
++	clear_pattern_list(&pl);
++	return ret;
++}
++
+ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+ {
+ 	parse_opt_subcommand_fn *fn = NULL;
+@@ -939,6 +1029,7 @@ int cmd_sparse_checkout(int argc, const char **argv, const char *prefix)
+ 		OPT_SUBCOMMAND("add", &fn, sparse_checkout_add),
+ 		OPT_SUBCOMMAND("reapply", &fn, sparse_checkout_reapply),
+ 		OPT_SUBCOMMAND("disable", &fn, sparse_checkout_disable),
++		OPT_SUBCOMMAND("check-rules", &fn, sparse_checkout_check_rules),
  		OPT_END(),
  	};
  
-+	setup_work_tree();
- 	repo_read_index(the_repository);
- 
- 	init_opts.cone_mode = -1;
-@@ -760,6 +762,7 @@ static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
- 		OPT_END(),
- 	};
- 
-+	setup_work_tree();
- 	if (!core_apply_sparse_checkout)
- 		die(_("no sparse-checkout to add to"));
- 
-@@ -806,6 +809,7 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
- 		OPT_END(),
- 	};
- 
-+	setup_work_tree();
- 	repo_read_index(the_repository);
- 
- 	set_opts.cone_mode = -1;
-@@ -855,6 +859,7 @@ static int sparse_checkout_reapply(int argc, const char **argv,
- 		OPT_END(),
- 	};
- 
-+	setup_work_tree();
- 	if (!core_apply_sparse_checkout)
- 		die(_("must be in a sparse-checkout to reapply sparsity patterns"));
- 
-@@ -898,6 +903,7 @@ static int sparse_checkout_disable(int argc, const char **argv,
- 	 * forcibly return to a dense checkout regardless of initial state.
- 	 */
- 
-+	setup_work_tree();
- 	argc = parse_options(argc, argv, prefix,
- 			     builtin_sparse_checkout_disable_options,
- 			     builtin_sparse_checkout_disable_usage, 0);
-diff --git a/git.c b/git.c
-index 6171fd6769d..5adc835cf10 100644
---- a/git.c
-+++ b/git.c
-@@ -583,7 +583,7 @@ static struct cmd_struct commands[] = {
- 	{ "show-branch", cmd_show_branch, RUN_SETUP },
- 	{ "show-index", cmd_show_index, RUN_SETUP_GENTLY },
- 	{ "show-ref", cmd_show_ref, RUN_SETUP },
--	{ "sparse-checkout", cmd_sparse_checkout, RUN_SETUP | NEED_WORK_TREE },
-+	{ "sparse-checkout", cmd_sparse_checkout, RUN_SETUP },
- 	{ "stage", cmd_add, RUN_SETUP | NEED_WORK_TREE },
- 	{ "stash", cmd_stash, RUN_SETUP | NEED_WORK_TREE },
- 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 627267be153..7216267aec7 100755
+index 7216267aec7..9ceb17f9118 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -882,4 +882,37 @@ test_expect_success 'by default, non-cone mode will warn on individual files' '
- 	grep "pass a leading slash before paths.*if you want a single file" warning
+@@ -555,7 +555,7 @@ test_expect_success 'cone mode: set with core.ignoreCase=true' '
+ 	check_files repo a folder1
  '
  
-+test_expect_success 'setup bare repo' '
-+	git clone --bare "file://$(pwd)/repo" bare
-+'
-+test_expect_success 'list fails outside work tree' '
-+	test_must_fail git -C bare sparse-checkout list 2>err &&
-+	test_i18ngrep "this operation must be run in a work tree" err
-+'
-+
-+test_expect_success 'add fails outside work tree' '
-+	test_must_fail git -C bare sparse-checkout add deeper 2>err &&
-+	test_i18ngrep "this operation must be run in a work tree" err
-+'
-+
-+test_expect_success 'set fails outside work tree' '
-+	test_must_fail git -C bare sparse-checkout set deeper 2>err &&
-+	test_i18ngrep "this operation must be run in a work tree" err
+-test_expect_success 'interaction with submodules' '
++test_expect_success 'setup submodules' '
+ 	git clone repo super &&
+ 	(
+ 		cd super &&
+@@ -566,11 +566,22 @@ test_expect_success 'interaction with submodules' '
+ 		git commit -m "add submodule" &&
+ 		git sparse-checkout init --cone &&
+ 		git sparse-checkout set folder1
+-	) &&
++	)
 +'
 +
-+test_expect_success 'init fails outside work tree' '
-+	test_must_fail git -C bare sparse-checkout init 2>err &&
-+	test_i18ngrep "this operation must be run in a work tree" err
++test_expect_success 'interaction with submodules' '
+ 	check_files super a folder1 modules &&
+ 	check_files super/modules/child a deep folder1 folder2
+ '
+ 
++test_expect_success 'check-rules interaction with submodules' '
++	git -C super ls-tree --name-only -r HEAD >all-files &&
++	git -C super sparse-checkout check-rules >check-rules-matches <all-files &&
++
++	test_i18ngrep ! "modules/" check-rules-matches &&
++	test_i18ngrep "folder1/" check-rules-matches
 +'
 +
-+test_expect_success 'reapply fails outside work tree' '
-+	test_must_fail git -C bare sparse-checkout reapply 2>err &&
-+	test_i18ngrep "this operation must be run in a work tree" err
+ test_expect_success 'different sparse-checkouts with worktrees' '
+ 	git -C repo sparse-checkout set --cone deep folder1 &&
+ 	git -C repo worktree add --detach ../worktree &&
+@@ -915,4 +926,123 @@ test_expect_success 'disable fails outside work tree' '
+ 	test_i18ngrep "this operation must be run in a work tree" err
+ '
+ 
++test_expect_success 'setup clean' '
++	git -C repo clean -fdx
 +'
 +
-+test_expect_success 'disable fails outside work tree' '
-+	test_must_fail git -C bare sparse-checkout disable 2>err &&
-+	test_i18ngrep "this operation must be run in a work tree" err
++test_expect_success 'check-rules cone mode' '
++	cat >rules <<-\EOF &&
++	folder1
++	deep/deeper1/deepest
++	EOF
++
++	git -C bare ls-tree -r --name-only HEAD >all-files &&
++	git -C bare sparse-checkout check-rules --cone \
++		--rules-file ../rules >check-rules-file <all-files &&
++
++	git -C repo sparse-checkout set --cone --stdin <rules&&
++	git -C repo ls-files -t >out &&
++	sed -n "/^S /!s/^. //p" out >ls-files &&
++
++	git -C repo sparse-checkout check-rules >check-rules-default <all-files &&
++
++	test_i18ngrep "deep/deeper1/deepest/a" check-rules-file &&
++	test_i18ngrep ! "deep/deeper2" check-rules-file &&
++
++	test_cmp check-rules-file ls-files &&
++	test_cmp check-rules-file check-rules-default
 +'
++
++test_expect_success 'check-rules non-cone mode' '
++	cat >rules <<-\EOF &&
++	deep/deeper1/deepest/a
++	EOF
++
++	git -C bare ls-tree -r --name-only HEAD >all-files &&
++	git -C bare sparse-checkout check-rules --no-cone --rules-file ../rules\
++		>check-rules-file <all-files &&
++
++	cat rules | git -C repo sparse-checkout set --no-cone --stdin &&
++	git -C repo ls-files -t >out &&
++	sed -n "/^S /!s/^. //p" out >ls-files &&
++
++	git -C repo sparse-checkout check-rules >check-rules-default <all-files &&
++
++	cat >expect <<-\EOF &&
++	deep/deeper1/deepest/a
++	EOF
++
++	test_cmp expect check-rules-file &&
++	test_cmp check-rules-file ls-files &&
++	test_cmp check-rules-file check-rules-default
++'
++
++test_expect_success 'check-rules cone mode is default' '
++	cat >rules <<-\EOF &&
++	folder1
++	EOF
++
++	cat >all-files <<-\EOF &&
++	toplevel
++	folder2/file
++	folder1/file
++	EOF
++
++	cat >expect <<-\EOF &&
++	toplevel
++	folder1/file
++	EOF
++
++	git -C repo sparse-checkout set --no-cone &&
++	git -C repo sparse-checkout check-rules \
++		--rules-file ../rules >actual <all-files &&
++
++	git -C bare sparse-checkout check-rules \
++		--rules-file ../rules >actual-bare <all-files &&
++
++	test_cmp expect actual &&
++	test_cmp expect actual-bare
++'
++
++test_expect_success 'check-rules quoting' '
++	cat >rules <<-EOF &&
++	"folder\" a"
++	EOF
++	cat >files <<-EOF &&
++	"folder\" a/file"
++	"folder\" b/file"
++	EOF
++	cat >expect <<-EOF &&
++	"folder\" a/file"
++	EOF
++	git sparse-checkout check-rules --cone \
++		--rules-file rules >actual <files &&
++
++	test_cmp expect actual
++'
++
++test_expect_success 'check-rules null termination' '
++	cat >rules <<-EOF &&
++	"folder\" a"
++	EOF
++
++	lf_to_nul >files <<-EOF &&
++	folder" a/a
++	folder" a/b
++	folder" b/fileQ
++	EOF
++
++	cat >expect <<-EOF &&
++	folder" a/aQfolder" a/bQ
++	EOF
++
++	git sparse-checkout check-rules --cone -z \
++		--rules-file rules >actual.nul <files &&
++	nul_to_q <actual.nul >actual &&
++	echo >>actual &&
++
++	test_cmp expect actual
++'
++
 +
  test_done
 -- 
 gitgitgadget
-
