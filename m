@@ -2,88 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7C69C7619A
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 10:17:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3844CC76195
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 10:38:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233483AbjC0KRe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 06:17:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49464 "EHLO
+        id S233681AbjC0KiJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 06:38:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233375AbjC0KRc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 06:17:32 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21FE512F
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 03:17:32 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id r187so9823962ybr.6
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 03:17:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679912251;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K//sqDqP7G6c8NjXRFFXx0YYvUsTGlXDpD/id+odkA4=;
-        b=EtzdLGQWHqWBTrAPUOjeyM+c0RZtYBU5R0JtiQMSVFzGYTil2CYgSfXP0DQYhGL6S0
-         Yc189itMjc/qIQu8PMKO5XJcidSCIceOxssMm/I6DFoBmiJXjgwijwQeG36c2bw6Odlw
-         /1mWBfJmwQjXtVeFUiY4/BryKu0dNumXokHuYRxD1cRTwa8vpUhToSMMs0ROgO3I9jlB
-         fux1YgtWWiRk/6KJx7p/DIZTp4GVLn1zFjuEgy6oW8NG8j9Nb7EeFBBExWvPaWDlqw1E
-         zxqY/EcF/bxaugjG5trV39kXl1U38kS9udMYQVBGcQmg0/FE3yhTeId8fRoXHGURPCTy
-         TJmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679912251;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=K//sqDqP7G6c8NjXRFFXx0YYvUsTGlXDpD/id+odkA4=;
-        b=57UXuWoMWmZUTqDQX9bHwPRusnsvXc5Id4FF7oKVkeo5219Zbt5FnErvBrDl9nmHqO
-         EIhLivZ3D1fmkujgHd1dhNs9e145890JY8VtK7eol0Bsz/mUNZy5Ri/yig9yOhu6Xccq
-         seuxdgowzUq2MNu0UNe8fpq50egzy8x5hsTESiivkhJBZ3iUCi7mo7aZgCdBwXOtRFlw
-         BBt7XbnaO60CyaREbjnjj+uTbTE6yM4ZMJoVx0L+07c79aYZ6I4nXAJDIk7/GWpvg1Tq
-         pvzC1G3a8cQ3AJDDGGTA8KtZuUgWT4OsSHZiUHhHMkvU/Sv5YLpgNiUYU5I+B+5gCeMo
-         gnfg==
-X-Gm-Message-State: AAQBX9ccsMlF+ngd712UfXq8ywubOfo06tSHNRMVCSJWdP+qfA2OQzs2
-        kD6RN+Sb4Oyj6yIw2ePfs9XkY8diarltvhaq5Zg=
-X-Google-Smtp-Source: AKy350Zh2eL+Bv729+V2ASRQqaBMvgwTUgQqumgGt6SpyIGInvaP/bJcY04jYa3YrWt71vhXef7datT2HCmHCjSlHUA=
-X-Received: by 2002:a05:6902:10c2:b0:b21:a3b8:45cd with SMTP id
- w2-20020a05690210c200b00b21a3b845cdmr7345599ybu.0.1679912251333; Mon, 27 Mar
- 2023 03:17:31 -0700 (PDT)
+        with ESMTP id S233665AbjC0KiD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 06:38:03 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACDC14C2F
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 03:37:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1679913455; i=johannes.schindelin@gmx.de;
+        bh=/bwYO8bvUDHc8lXp5Hk7XcqI4CZ6eQJqjE+rvhm0VjU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=I4ea5oZDfLsMOMFOozMVYyJ02F87Q3CxcdRxxCqALk23/aQv2bw12KkNBi7Y7R8kT
+         4fleaezoCrzfT+Utsz+q4U+51Rg5Ak/YtPeen3OS/onFiZOk2L/MMahklhn2RQECL8
+         EQtgBS8J47wk3xtRsaQlPfMGO6CnlsQJHTSvu/kZJFAoumVksS5rJF1qqmJW+lTXFe
+         1++rm/N0P2PfoHx388o+dPEP82rOq4RFGmS0Ts9IQoOaMAxEMsZhVU/vWM82g809ZP
+         yEVsBoUOmRlHSL+nhYHXnKgF74CNH6Eozb+Tqt/gO3vSXEu/zj5DjARgnOpZ6lwovo
+         sdv/W17LwpxeA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgesQ-1qNm5L1taG-00h8US; Mon, 27
+ Mar 2023 12:37:35 +0200
+Date:   Mon, 27 Mar 2023 12:37:33 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
+        avarab@gmail.com, tenglong.tl@alibaba-inc.com, me@ttaylorr.com
+Subject: win-test: unknown terminal "xterm-256color", was Re: [RFC PATCH 6/6]
+ ls-tree: introduce '--pattern' option
+In-Reply-To: <xmqqtu20qinx.fsf@gitster.g>
+Message-ID: <d566eb68-6476-a193-2acb-10106a154d3d@gmx.de>
+References: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com>        <20221117113023.65865-7-tenglong.tl@alibaba-inc.com>        <2q985o75-p6ro-3319-rqos-004621r0p7pq@tzk.qr> <xmqqtu20qinx.fsf@gitster.g>
 MIME-Version: 1.0
-References: <pull.1469.git.1674559397.gitgitgadget@gmail.com> <af2111f8-2669-b952-6c4e-45ee0330ec14@gmx.de>
-In-Reply-To: <af2111f8-2669-b952-6c4e-45ee0330ec14@gmx.de>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Mon, 27 Mar 2023 04:17:20 -0600
-Message-ID: <CAMP44s0jG1CQMygMASjEe8Uzu7rOrNuxUbjS05FAA=zBwMV72Q@mail.gmail.com>
-Subject: Re: [PATCH 0/2] gitk: handle long command-lines
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Paul Mackerras <paulus@ozlabs.org>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:CWlb3S957ILeniA5gBnEswsomyBvJiTbPXrr9YvD/2G1C22L5PB
+ gRnsLdaDeLUPvFrfHFAqwx2QDg5O1Sm7SxG8Gtgp7o7WGswjzL45W3KAWZkRoLvsOsA4RN5
+ fHSN+1SvD0dOEehxQ7TMKp+fEiQi9ypg76ZzBiPGfwUT6da9gSv38x94OBuWz+GZzbNEmxK
+ GrNzFLdAAeqvIy4qMutYA==
+UI-OutboundReport: notjunk:1;M01:P0:IacNTCX1pcY=;egVhF3uHCTRi77lp8RJwb7aP+Lb
+ PllAQysyrKC0EN2IFQPSMgRZg4HYrmKtjwlMdMGZBir2eJlnndbdAsTAK0YC/MPJ60zwZI1nc
+ nQG+tWxhh6v5sGloeLbRrtWNK+EeWWWuBsJuQxUHwNNrGmKAHEzT/Nu7uUhx1/bCDmVepzRCb
+ q+qB89ZjW+9tpJ9M4oLGjBi1Jf6qy3x6sKpv1EVys7kQ+fZSELarTz17DADBWb2oo1HU4EAkF
+ vocHB0mcoWU1vlg9Uxmmpi01Htyc2ixzkpLnPQNRCsMq6nwCekaf7Y9eEmNlA52WkZfykzupv
+ 9yol43nnhfnUL0vniaA0XzKYSb9SpkuHLESrr4ZL/fxQaZ2fekWsed4vTBrlAh4Rj+mIKR9T2
+ eJkqMa7VHA3gihSRwKhH3z7HUSIZwkvKsvPiXxOjXc5GCCuFhq56h4r8iaLhYpWi+0znV8I40
+ /x2xsvJ3rSgfX+sdC9QcmXcs2JyA8mzvL65lBnIELZJSo6lCRJlBZFIz2tLZOIZ/3ir+9Y8ZH
+ cum2AsEs3YEGjiYcYWi7xgiHzlV9C9dHnDthkPMmihhzwB3CygYKFAJFJ4Z9c5CGXy/R7UmEl
+ aFAfjO4BPbjXU/96NEYuLj5IxzWZJLdxQb1Jr/Kb82HeVpmFxEANgzFq1UpJDs3GwaWw+pIwo
+ AN2d6doLwDjjesNJm1qlCo0ab/asGtBwngMUroJSQQOPd9ohbcqesk7XjEZkQBqVW4XS4qiOk
+ 72H8bvy5Ta/Lgm9F0CSrfDbzHIdDavbwsrcA14JR5eaDYyCYoNuWJ7CXzLDFvxr8ci6A7QPqD
+ KerIh7yl1h0kOnEAZZ6FkX3Awy5nIzwG2DvGYg8eeAPU4wgeHXwmEM5x5VhIZIe4fjUnaGGML
+ 0DKcrF2Tnfl+xM9nu5aGJX+gpIVggxrfCZRxQjq+YFZvADIMhw7vsNsreE4i52Tffp8ka3kTq
+ ybixzemZyd4aeLkwyuwdpGA51II=
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 27, 2023 at 3:41=E2=80=AFAM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+Hi Junio
 
-> this patch series saw a positive review from Junio (thank you! I know tha=
-t
-> you try to stay away from Tcl code, so I appreciate the effort very much)=
-,
-> but apart from that it simply languished on the mailing list for more tha=
-n
-> two months now.
+On Tue, 13 Dec 2022, Junio C Hamano wrote:
 
-Two months? My patch which contains an obvious fix [1] has been
-waiting almost two years.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> > The hard-coded object IDs break the `linux-sha256` job, as pointed out=
+ in
+> > https://github.com/git/git/blob/6ab7651d8669/whats-cooking.txt#L522-L5=
+37.
+> >
+> > Please squash this in to address this (Junio, please feel free to
+> > cherry-pick this on top of `tl/ls-tree--pattern` to reduce the number =
+of
+> > CI failures):
+>
+> These days, I gather topics with known CI breakages near the tip of
+> 'seen', and push out only the good bottom half of 'seen' until such
+> a topic gets rerolled, at which time it gets added back to the set
+> of topics pushed out on 'seen' again (and then ejected if it CI
+> breaks).  I excluded the part with the topic from last night's
+> pushout.
+>
+> By the way do you know anything about xterm-256color error in win
+> test(6)?
+>
+> https://github.com/git/git/actions/runs/3676139624/jobs/6216575838#step:=
+5:196
 
-> Paul, is there anything I can do to help you integrate this into `gitk`?
-> Or is it time to pass over `gitk` maintenance to the Git project?
+Unfortunately by the time I got back to this mail, the log had expired.
+Here is a link to the same symptom in a newer build:
 
-Or just remove it from the Git codebase and maintain it elsewhere.
+https://github.com/git/git/actions/runs/4523517641/jobs/7966768829#step:6:=
+63
 
-[1] https://lore.kernel.org/git/20210505211846.1842824-1-felipe.contreras@g=
-mail.com/
+> I do not think we hard-code any specific terminal name (other than
+> dumb and possibly vt100) in our tests or binaries, so it may be
+> coming from the CI runner environment---some parts incorrectly think
+> xterm-256color is available there while there is no support for the
+> particular terminal?
 
---=20
-Felipe Contreras
+The TERM is hard-coded in the MSYS2 runtime:
+https://github.com/git-for-windows/msys2-runtime/commit/bd627864ab4189984c=
+db0892c00f91e39c4e8243
+
+Note: The MSYS2 runtime merely wants to ensure that `TERM` is set; If it
+already has a value, that value remains unchanged.
+
+And to save on bandwidth/time (in a desperate attempt to counter the
+ever-growing runtimes of Git's CI builds), I liberally exclude files from
+the "minimal subset of Git for Windows' SDK", e.g. `/usr/lib/terminfo/`
+and `/usr/share/terminfo/`. That's why `tput` cannot figure out what to do
+with this `TERM` value.
+
+If these `tput` errors become too much of a sore in your eye, I see two
+ways forward:
+
+- Set `TERM=3Ddumb` for the Windows jobs
+
+- Use a simple shim like this one in `ci/` (and maybe even in
+  `t/test-lib.sh`):
+
+  tput() {
+  	printf '\e[%sm%s'"$(test sgr0 !=3D $1 || echo '\x0f')" "$( \
+		case $1 in
+		bold) echo 1;;
+		dim) echo 2;;
+		rev) echo 7;;
+		setaf) echo 3$2;;
+		setab) echo 4$2;;
+		esac \
+	)"
+  }
+
+Personally, I do not really want to work on this, not before much bigger
+fish are fed first. For example, the friction regarding the CI build times
+is becoming quite crushing.
+
+Ciao,
+Johannes
