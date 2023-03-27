@@ -2,98 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FAF1C6FD1D
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 17:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEB1DC76195
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 17:40:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230135AbjC0RXr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 13:23:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57448 "EHLO
+        id S229650AbjC0RkK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 13:40:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229845AbjC0RXq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 13:23:46 -0400
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D9553C3F
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 10:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1679937816; i=l.s.r@web.de;
-        bh=UamConE/7bFCDza4mS1n/GM3QeaeWdypEjt4j4g/T7k=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=C+vTN/9Z80roxhKw7UtthHv2s5fy7Ff/HVInE0p7recaJLgn13ICcprecjB6cKaFp
-         7SIzg7qjV8OTopIBIlNmbzQrIJQHKlDpiirBMeQKtiDkikQkxaZmDqlnskmqMYkCQ4
-         2rWmBMin4YOYbIw2v5lxX1cxNWcjDOFp69HBAF8glSWv2HxGqwOTpYVkQSitmVAwUL
-         /p7MsXZ/GUn23vVX8YurXDa7/0H8JuASVJcuW3cNVuR/o48KWgAgXqU8fllHkCaaH9
-         1KN3I9EFWlv/6cGgURut2hhqt0+PZHX0YBfyhEX/zwB6MEDpvw8L85fhABA6tU9XQB
-         7WWEvWJNKkEiw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.31.43]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MJFdB-1q0rUR17kJ-00KW7E; Mon, 27
- Mar 2023 19:23:36 +0200
-Message-ID: <03fd7ddb-8241-1a0a-3e82-d8083e4ce0f7@web.de>
-Date:   Mon, 27 Mar 2023 19:23:35 +0200
+        with ESMTP id S229606AbjC0RkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 13:40:09 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F3B21BCE
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 10:40:04 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id bn14so5618304pgb.11
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 10:40:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679938804;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SXIv8z5HZsiLeSCGqsGtI2BZAtKpd4bxtpVKB4ZnxYg=;
+        b=gA3JQYTgf2biuXoPNivO6QUITwfIzGqdFKg1kJVidLDrWSNxiSBSx6B7/H3JrVX61x
+         +DkjyAEDx0OEnDCE3jnTU2gq/KaIUJqF3q6vGcAE0iuP0y1f5OkfBvXx1ThSifaTMzaG
+         jUlBAfBl2ApeI9L0bP9FiMRwRfSO+1KVRBYMog4SR/4fBG8jkl5vnoxD+lDbeWI7xtv8
+         KgzXPxPNo5Ecdn/FHKiXl2GRbHu3HMdj7DuViOw6s3V7bCBsy3ru2wQd2iUJRIPWoHNC
+         ytE7+gOjMAkOFOYM2hmy5Pq7abfmsNCvnVUqFexXQbKFj/w49nzgMnFzasz8QQAudYvS
+         FF3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679938804;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=SXIv8z5HZsiLeSCGqsGtI2BZAtKpd4bxtpVKB4ZnxYg=;
+        b=HO+pZeTwCacv/w1crrBRUOkzHmvZUKQAmy3kaSDieODmiYmdKtfSLdZ03g3cYYeV2v
+         vQnAhQ4rdIGAy2Sr5yeM3r514zWR6FhsR3RX/YwmyE1s0V1ry5B6AC0jp3jxx95rpSDd
+         bn8w2ujWRFw6Rc92eURkLNuiHBSz4E7w5MdbNfrK5NZteap88BPyFDX6APnSSk8Cg6Ya
+         QN8cxyfUAOnmlD102LHQDCrmmhYsumdbSlh2TpGrZODS2N5s15FeI/QcKOeZpsDIwGyD
+         YXW1eM1tGqTzuOPsJ7j6/v98JhEkjVVYErZaP6Cnn5XLllo+aMgLynwKL/ol8FDt1Hom
+         v4pQ==
+X-Gm-Message-State: AAQBX9f95E+dccdFZYaMXRMLZo80C9h9F0y9mKK0Sw/w1roJMlOwdUe3
+        roOLCahpbqwYhe47pHdzQVA=
+X-Google-Smtp-Source: AKy350YVH1CqoHikNDPhCG8ETqwjiKnm63zoJx0o5joEFi6SPd0U1blhSpBR5pmv0vHNlGH/eaJfQg==
+X-Received: by 2002:a62:7bce:0:b0:625:e051:e462 with SMTP id w197-20020a627bce000000b00625e051e462mr12326245pfc.15.1679938803775;
+        Mon, 27 Mar 2023 10:40:03 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id c8-20020a62e808000000b005cdbd9c8825sm19335643pfi.195.2023.03.27.10.40.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Mar 2023 10:40:03 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] t3701: we don't need no Perl for `add -i` anymore
+References: <pull.1504.git.1679898996492.gitgitgadget@gmail.com>
+Date:   Mon, 27 Mar 2023 10:40:03 -0700
+In-Reply-To: <pull.1504.git.1679898996492.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Mon, 27 Mar 2023 06:36:36
+        +0000")
+Message-ID: <xmqqzg7yaya4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.0
-Subject: Re: git bug: Perl compatible regular expressions do not work as
- expected
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Mario Grgic <mario_grgic@hotmail.com>,
-        demerphq <demerphq@gmail.com>, git@vger.kernel.org
-References: <MW4PR20MB5517583CBEEF34B1E87CCF1290859@MW4PR20MB5517.namprd20.prod.outlook.com>
- <CANgJU+Vn8ZLGcAYbuDeNkv6T5YdX6t20BqGQDPB0VL_TzoGSWg@mail.gmail.com>
- <MW4PR20MB5517888E63C13099E284B97590859@MW4PR20MB5517.namprd20.prod.outlook.com>
- <eba23dc4-c036-fd1b-a1f0-028e8fff602b@web.de> <xmqqh6u6cg4l.fsf@gitster.g>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqh6u6cg4l.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:+w1fTl/uo5ALFClzZw8/NGw6YlCBq+kRX8dYMAK6PNaZtfxfn6K
- LVeiw89ahGNOhklUJ/94wYYLjj1H/hL2FCYsCfSUuGhg2QirFjVY4skpNz4/dODckmDuWu6
- FKVItuZ2s4ffcOKkr39hJVwoChz23NFotAWLOxXDhNEhZUdj78y5rQkyZ1hi/swIm0rjBTx
- eEOvNfVFgD6m3g+awCqWQ==
-UI-OutboundReport: notjunk:1;M01:P0:26X8Xk7Kb1w=;dDGLIEtPknXndk3O7f53tbyp7ah
- uia196V4/RnXQw6qUUqq/OaXHtT7iaEh59rJchGrpu5F7c38NG3hXfmcMGc4Dn8USooa0TF6G
- oSvW+LTIaOBGr/+MF0he8pKHzrcFOAtfcCc4C20ZRwJDyX5/r/geJQss1n5Oe7OuvDot8cUZR
- aoKQT3j2jB24O0Y0r0sW8AXEGe3wXrnSlLwaUW6n94lEFXox6CPIQKY9328p4Y0VB+ui5vm+B
- ImzmJAdk1yhTeYQjvlKg4gVhhH5Fo3e6/UJwMBVTLaGirZ1Jx3APXU9bNbL3tsVR6hwMEsRsU
- dOfmpvdQpl4q22I4qRMvn6jndbroOSvAhzf27YfGf8m8QCLSDz1VcZpFO1aNyfjPE6M/DyTLz
- c4w+blZbZKthR7xqKyQU0kZ1jKgcuXFFNR1iaJSGnT9wnozqvnDGfhPz3NfNJ04f2nSpV3joR
- kq4H0vStPC4acAmIDkwZxYBmiJ9K/f+eOzaO+u2XxcPPhnLNyIrAsaLM/Pu4juhqaiNoAojKm
- rnfFaE1EKdl8aAqlngBkTm3zqKBjQQ93Ax7erVM6nkYjn/p/eq0+E1kxQXzYtY3BuSu/nOG2W
- aMIr9fXEvOLSAnybpsssxK0Rl34T0MqrbWKD60Lfsv+LYa/4QkErAVxF5GpyLRW8+3vI6x7jw
- 1rPQfpCiKZ3WUZ5u4G5mHYgV5z21/92vcO+6KwiFBqSn6FXirzpk+z5wJ5yVaaBtSXq67phGE
- dTzII9J2i8RwPIC1aIHtL+RYY9VQaqQXZHxzpLq4MoaaT6kUIED68FjBki5V1shPR4XCwf4GD
- sFuouTIFkKOIovGEQv01Pr2AK0lNkQZiFSa/znueQs4ulqXh1nJKVZrSY8h+Wdfq4MSu34TXY
- WeAWigyd6sUZgKupA4t8+FJj81SUx1z/2618RwteYdyoNFMel0XS3auhEsPAywzfBoG5PtV9Q
- Xd+t08XhkM3L9gW7w/0YWlg2gpg=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.03.23 um 18:29 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> Or to enable REG_ENHANCED
->> for them, at least, like 54463d32ef (use enhanced basic regular
->> expressions on macOS, 2023-01-08) did to get alternations for git grep
->> on macOS.
->
-> This one sounds like a reasonable thing, which may not have huge
-> unintended fallout, to do.  I am a bit surprised that we have to
-> cover each individual callsite of regcomp(3), though.  Doesn't the
-> 54463d32ef fix use "#define regcomp git_regcomp" to cover everybody?
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-54463d32ef only affects basic regular expressions (BRE), but -G and -S
-use extended ones (ERE).  macOS allows both to be "enhanced".
+> -if test_have_prereq !PERL
+> -then
+> -	skip_all='skipping add -i (scripted) tests, perl not available'
+> -	test_done
+> -fi
+> -
 
-I have a hard time finding a readable reference to the documentation to
-brings us all onto the same page regarding what REG_ENHANCED actually
-does.  [1] is in raw troff format, [2] isn't very pretty and shows ads.
-Anyway, the rather lengthy section "ENHANCED FEATURES" explains it.
+The version before ab/retire-scripted-add-p partially touched this
+line used to use !ADD_I_USE_BUILTIN,!PERL as the prerequisites, i.e.
+"When we are not testing the built-in version, skip this script if
+we do not have a working Perl".  Now we no longer have the scripted
+one, the former half of the prerequisite is never satisified (i.e.
+we are always testing the built-in version, and there is no reason
+to see if Perl is available).
 
-Ren=C3=A9
+With this the topic becomes complete.  Very nice.
 
+I read the changes other test scripts touched by the topic just to
+double check, and it seems this was the only misconversion.  t2016
+and t6132 had the same logic but spelled in different ways, and
+there were converted correctly back then.
 
-[1] https://opensource.apple.com/source/Libc/Libc-1439.40.11/regex/FreeBSD=
-/re_format.7.auto.html
-[2] https://www.unix.com/man-page/osx/7/re_format/
+Will queue.  Thanks.
