@@ -2,103 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB8C7C7619A
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 08:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66AAAC7619A
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 09:08:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233254AbjC0Iek (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 04:34:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49616 "EHLO
+        id S232750AbjC0JHz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 05:07:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233195AbjC0IeO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 04:34:14 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78B287ED3
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 01:29:43 -0700 (PDT)
+        with ESMTP id S233069AbjC0JHd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 05:07:33 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0FF640FB
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 02:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1679905725; i=johannes.schindelin@gmx.de;
-        bh=ludUiiZhnpuAvRN1IyAzP5dSl1oXpsJ0Ygbb+SFasos=;
+        t=1679907946; i=johannes.schindelin@gmx.de;
+        bh=SmVBrtfA9kGc3/khB2Sr2G/JJsGanAYBf4sLw7y1Ij0=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=pwHL9ze+jzYNG0j/7J79PqrnRZ4jUqo936Kruweac2HpWFdiEBAUzSJC+cJ/M+yp9
-         d//VTuka8ypQP3JfLcw4k88DsnCyPDUESm/B8yXod0wO0yR6akdXsDfgqGf4POi8m0
-         xkKAG5jGmHlbW+oejAoQRswldkJpmJ/vHeTpjYVhuCZ0StMA/JMH6j9/6vvLWHARKl
-         Sar9u3zR+kbrBrXz4o108KWoFo6Nri7Mw7VOnIl8wtG73pYvQKzfAzWt7XjMrkO+9A
-         hgfJtHPpYdKb6BDcCuYV4i/GwBo/DPPTBAlVF942Zv+GR9omjO3E1VpvmCUqFeNWpG
-         nqI2hVQZvkE6w==
+        b=iC0qDR7mgtLfrb7OgQ1us7dEHOl45j+6xSAER1LSz5GTJSppn+6TYgoCsV0+LUHUi
+         8We+YDr+O/62zl1xsyNoQW2ieJ3k0FfwRQKSNXd+nj5nuVEv+J3WqdNTt5uYP8R03D
+         U1mV2BMcbvRimq9N0LC/xS7HuFrFVRhIxwHwXZWFCRkzcHFJAduIEr7/4zwZ7EWjG2
+         llEPuuGiiEpcfBgj+AjXRIEc+yA/4dD3sBpmRAOYQHtqoKE0+Xiu8p4Y+Q8cLtmPRD
+         odIrVdcJNqId1vUEqTvIuQS/PQppOpuFiVu3O+L1D4HBqbSxCRbviN+EsGSVBpgUEu
+         ZfI2nY/3fL1rA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZkpb-1pvEgU3327-00WpZJ; Mon, 27
- Mar 2023 10:28:45 +0200
-Date:   Mon, 27 Mar 2023 10:28:44 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M9nxn-1plvSx0kM9-005rXJ; Mon, 27
+ Mar 2023 11:05:46 +0200
+Date:   Mon, 27 Mar 2023 11:05:44 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     "L2750558108@outlook.com" <L2750558108@outlook.com>
-cc:     git <git@vger.kernel.org>
-Subject: Re: When using git commit in a path with spaces, it prompts Cannot
- read "xxx": No such file or directory
-In-Reply-To: <BY5PR14MB35605DDFA6C7F6CD9DF89202B1A09@BY5PR14MB3560.namprd14.prod.outlook.com>
-Message-ID: <ca58a4a2-dd73-26f5-9d2f-13a658bbaa9b@gmx.de>
-References: <BY5PR14MB35605DDFA6C7F6CD9DF89202B1A09@BY5PR14MB3560.namprd14.prod.outlook.com>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Victoria Dye <vdye@github.com>,
+        Matthew John Cheetham via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v7 00/12] Enhance credential helper protocol to include
+ auth headers
+In-Reply-To: <230206.86y1pa4gdh.gmgdl@evledraar.gmail.com>
+Message-ID: <a1d44a2f-fb3e-fa99-121d-804a884e6aed@gmx.de>
+References: <pull.1352.v6.git.1674012618.gitgitgadget@gmail.com> <pull.1352.v7.git.1674252530.gitgitgadget@gmail.com> <e57c1ca3-c21c-db41-a386-e5887f46055c@github.com> <xmqqwn5bg695.fsf@gitster.g> <Y9JkMLueCwjkLHOr@coredump.intra.peff.net> <xmqqfsbxcmdd.fsf@gitster.g>
+ <6f83ed25-a7e1-06dd-f180-d70c7e1b1973@gmx.de> <230202.86edr8pax5.gmgdl@evledraar.gmail.com> <60c3f1d0-2858-8811-7eb0-d6f586bf2ab8@gmx.de> <230206.86y1pa4gdh.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:B4n63eOmhpW9BcZYns5OgT/Tco16n0ryWFwCNSU1MlmKT3eB7q+
- 1Lti59dBqxTfmhXP+7wDnui1imeEyBrfIV9uP7c4ZlBy3s9AjsOvINbPjFM05lWk5OFtSnY
- EHrNR6pTB0vdCihA/i6o518ITdck+j4lmkCs7xbNI7ZDDpBQOFwWo5mcYUpaC2zdVl5/EGj
- OfXjVIbj808WmqEDBOnGg==
-UI-OutboundReport: notjunk:1;M01:P0:NBbx275dVVQ=;loOQ7UeoKpIYtNbiyW7XRuim2Vj
- 6z1dyCN0mDn3rFKGanTfc9gGAtL/JxCuPwV8sFGDUJnV76Odp40FtCpinskyBqCakm8tu7NfY
- iRbZL3K1GwdTFhHClXNWNzIcNhCRgE544jQ7bfP9X0wRYMMq+VhG17tb0p0Od+Gium/TzboG6
- fmxHUOTWFBAZwjF2+R8dFJJ4UY1Vbe9vTgMFkohQw7UYy2wlBu+6HznC5mA9sIa4QKJuxRyDx
- uYpmBWQ+PTpvf2HGolXLFVeL+J1uqW6RyIvkC7p4egectl2biv/o9XhpkvjkLxDGNYsf0PRs0
- 38PurFWJSpQnLKtnOLd4LoTV06ns4xEFlOIAEW79uAVY+TG/vWapsDm9LQyWL7LNmO0zY2nD5
- JNv+fJ8i9KLv0mrCgecz6C4e5FY3DopctXn+W/QzYnUkDI4lSTTeyirZMsHCqwf4WF34kvcRQ
- /SwFCaCw8XiAyY06vxaWljpfDZ6vP8HVwG8d6r+hCio+aBchENug1CqXHttCAkBKt3U0Pq6F1
- 8PxCYyN1WcrJo0/qayfH9giHdX+TTTjiOMbXu+SufPznCuAhdgUY3+MzNDKJqv6BRIBIfiGPJ
- g6bjwBZkxNcxmO+Rbp5kZfEyP3FbfiqtdbfRjmhBAHw3lDRbxCOSlezX2ZjjlwxfLTKJcfhIG
- 1tWf5rI8R4l7L5ylqzwsi3p7rgChzWGSgDradsanMQ/do2STTMvb9EZWFrV8fybMk/DAhlG08
- 4k149Peg5H/Pf6B0XfKhEPKk0lTCevL56QSnppg2B0o8d4FRzNVTyEbW7t9VcT/dbXb8xb/fX
- gd+4sVNuvUQpOUOg78yex/skkGqO9ciYmIXnsw0HI/juX8EXcQ2Fyp9971z8LRsM3Uev6CQBS
- ud4SJX/hqvSFUWUvZa4hSVLNpzXjD3WCy5yx9nOmAslxwxhEKPmyJbsc+s/ZSaqbqreNYhkKY
- EYI2UA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1551748266-1679907946=:123"
+X-Provags-ID: V03:K1:XaX6B7Eie1QvoEcn9qR3sEMp/dK7XCXgTCqD5DX5aD+B2QzCHF6
+ LA+WCtzIvyU3yD3yd7FKBqwnz+NTnHlKfhcELZ4cqCwIkXrT5tD7WRiV36wtX/ZqemljCQy
+ uHyWMd/yca1AHjz58UTqVuLHkBW6q01Uq4PC5xV/vzDWChmAP1VtswRKdfAbHGpXz2Kmibk
+ W4BDAOaH8GjCnmywbwbUQ==
+UI-OutboundReport: notjunk:1;M01:P0:Wir7cM4gbMw=;eSg/T4H+lVD99cpbUERetiQYk4M
+ EeEUEcnvMCw3N6cO+5R3vaLapobTCH2PttPrwUp0li7QFFk4f1GDXztgIfGE0tHkOPV6b1eDL
+ 0S2M5uEvpfoXDkqv8zinT+UCn2RMmQ4pLZEjje4eA+8LVgvM8N6fb5Sye460l3EL6+A8uhj3C
+ M/Lgju8pQ0ziKRs8dDHxQNwCk//rOJNbFxkp3E3+gkh+Yx1hezPgS6cuiM5ht86QDjXzDVzuj
+ nbu3XsmqSz2coChFGq3um3NfHpv3zUtfmgFjLUNWVVoQJcLvJ/T/wOxsaIzsRirB+SBROsPQ/
+ K1sVib7PpSxmjQb5hGEdEkTMrviOYy61I7LzShfihf9Ds/+g2LWKDoEtA0+odRMmji7rLHh95
+ +ad8JXGYzD+UxmYkpvSxGknsqzfVQS7TVIYdCK36NYplTAb+kKG2NRA1poY+S1+uooieV8yhs
+ ihtU5JNlZ5f4z5J5jGnGlqrHnGwgHC1npCXx+X+twuz52NXxiZZz1+NNyvm6jMyJ6cpPAMCdS
+ OHJG5ULZ537UuUWyizJKHHrvGCoUDMqKzSqwYTb1Mmrm80QbBf6gMMDm21XTBuoUnqBWRMmH5
+ B6XjX+z5vixzttMhTxPJqUeKYc/7kfePpQzCBGbePozOLg2GbTyOBK+QQkflHbvAii/F6lLfx
+ rdSMm84xSu9iyQ7j7sQuzK1PGmkOtiXLzDFNpw54tWjT/DeSC8LbsYrqJDXhGQf/YzuNhdb6s
+ NbeDFo9GBpLXKSeuSeFbpfQl/4ohod/lyOuR8/yeNrHnRkPn15YEG0pIy+1Okmfo50TQekUXl
+ C0zsKRsb5dC+2DW5txxsEtMy+EnBbaCCGo7lcSPnC0c7Akb7yXY1JwqHWca/R287AErcuCOlG
+ WW/OGwJNBBd4tFp0jiC/YxZlt2wzUQBPRkgI9OCmAg1FCrp7MtcpW+xDsQcdbYYDQUKSaKOh8
+ FGpiyMUN25HHpqLHGn4d4YHFCLM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 17 Feb 2023, L2750558108@outlook.com wrote:
+--8323328-1551748266-1679907946=:123
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> In Windows
-> When using git commit in a path with spaces, it prompts Cannot read "xxx=
-": No such file or directory
+Hi =C3=86var,
+
+On Mon, 6 Feb 2023, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> we currently have CI tests running Apache on *nix boxes, but you're
+> suggesting a loss of coverage on Windows
 >
-> Reduce:
-> 1.Init a respository at "C:/te st";
-> 2.cd "C:/te st"
-> 3.git add .
-> 4.git commit
-> 5.fatal: could not read 'C:/te': No such file or directory
+> Is it really harder to just install (or even ship our own package of)
+> Apache for Windows than it is to embark on PID file handling, logging,
+> timeout management and the long tail of "80% is easy, the rest is really
+> hard" of writing our own production-class httpd (as the suggestion is to
+> have it eventually mature beyond the test suite)?
 
-I suspect that your Git version is basically super old, but I cannot know
-for sure because vital information has been omitted from this bug report.
-
-And I cannot reproduce (this was done in a PowerShell window):
-
-	PS C:\> git init "te st"
-	Initialized empty Git repository in C:/te st/.git/
-	PS C:\> cd "te st"
-	PS C:\te st> git add .
-	PS C:\te st> git commit
-	On branch main
-
-	Initial commit
-
-	nothing to commit (create/copy files and use "git add" to track)
-	PS C:\te st> git commit --allow-empty -m "works!"
-	[main (root-commit) 0d51f36] works!
-	PS C:\te st>
-
-In other words, Git has no problem with the space in the working
-directory's path.
+Yes, it _is_ that much harder, and it would result in yet more painful
+increases of the build times which have really gotten out of hand in the
+past year.
 
 Ciao,
 Johannes
+
+--8323328-1551748266-1679907946=:123--
