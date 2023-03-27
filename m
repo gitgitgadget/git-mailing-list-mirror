@@ -2,64 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AD6CC76195
-	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 07:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B0B0C7619A
+	for <git@archiver.kernel.org>; Mon, 27 Mar 2023 07:17:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232166AbjC0HFF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Mar 2023 03:05:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38740 "EHLO
+        id S232433AbjC0HRh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Mar 2023 03:17:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232115AbjC0HFD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2023 03:05:03 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E920C40FA
-        for <git@vger.kernel.org>; Mon, 27 Mar 2023 00:05:01 -0700 (PDT)
+        with ESMTP id S232405AbjC0HRe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2023 03:17:34 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE25C3C17
+        for <git@vger.kernel.org>; Mon, 27 Mar 2023 00:17:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1679900660; i=johannes.schindelin@gmx.de;
-        bh=GroawwLKP7qHD1Z1aCpPyJKGt/OmY395ovgWD9Y+uBw=;
+        t=1679901450; i=johannes.schindelin@gmx.de;
+        bh=a1Va5VO+TZBK3Zq7gQYJATYJreBmtfSSueahnspsaWE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=rgni7YTDH5dUGqof2TMWRDYqhZpRJNXYZVbv2rYuPC6aPwgGYqKxFXCi5mVl6+aak
-         jEnwaCYXy9OumktwTVSFLGpcLF/XrtYztr3kPdcIvgcXk0NsbgXKuIfm8JKk7zaX3s
-         atEG6vczcyXEFuYmMpYYRXmi6dt1PMNtEpwRQvkp0pLaEGO7Qyq4ElcpujiVoDD2Uo
-         wxGKx4XGq4DMnf48mXm4W0XtafwxmeAjVQ19kjGa/8q4m5Wte0UNepevcmYi5tUh+4
-         ebl2P7O4n+cS+7XGX+quZXlDq4x1sUu0YY7aJXgAhci7eTeRj/hoKOn/hm5P2YsRie
-         NHrR8i6vHrUAQ==
+        b=OsQ8nSwR0JzUow4Rh3z/4ohYSUwKeXZXhKig49xwo/CTFkdtX5ZSltej3ZjWY2YS/
+         N4m/M1XW+2h3vIWnWeZi5me5Ee5s61Sq32bO1sISrpKHyx+xVEQcbDjtCzOnjNt0CB
+         RsISs0xdc6G3i4ZcNBiyFMjNzNH0d6KIAmCAILwEVw+clkZhE11FmnssNxSDpIhyG7
+         gn3pQFq7flCWKzse1hM/TJsfLF1PuH5DjTDwphqM5whLzKdrCa1RJl0OUoe83sBwIT
+         1NOs2kB8RcZIQbz5FNaPvs/Ib3Bkp+ojSE9+2mFyf5xT1FJrpj1M+YYYgfN8S6JH5S
+         o3JUL0YuPTz+Q==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mwfai-1qeoZC2cos-00y6r1; Mon, 27
- Mar 2023 09:04:20 +0200
-Date:   Mon, 27 Mar 2023 09:04:17 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mdvqg-1qHgLs0l7O-00b0Mf; Mon, 27
+ Mar 2023 09:17:30 +0200
+Date:   Mon, 27 Mar 2023 09:17:28 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Stefan Haller <lists@haller-berlin.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] rebase -i: do not update "done" when rescheduling
- command
-In-Reply-To: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
-Message-ID: <f05deb00-1bcd-9e05-739f-6a30d6d8cf3b@gmx.de>
-References: <pull.1492.git.1679237337683.gitgitgadget@gmail.com>
+To:     sang.tts.designer@gmail.com
+cc:     martin.agren@gmail.com, git@vger.kernel.org
+Subject: RE: Bug Report with Git Bash
+In-Reply-To: <002601d95a64$57312bd0$05938370$@gmail.com>
+Message-ID: <36529771-b147-48ac-13df-51ed8462eaa1@gmx.de>
+References: <000801d95a56$e9253f80$bb6fbe80$@gmail.com> <CAN0heSqEH+AtzXcybPY-Jd-bRtgtKmGrfxbXL-adsvjr_srEZw@mail.gmail.com> <001d01d95a63$f1fa38b0$d5eeaa10$@gmail.com> <002601d95a64$57312bd0$05938370$@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1580625367-1679900660=:123"
-X-Provags-ID: V03:K1:aUd6XHAvShjQEgwgXUfkYcAg13hjbVr9uihSj1GOeEfsQ43OyXr
- OX6Vx84xxndNtrYhST3LqAeuRfM28nlApEfRrgqb+n2V+FX1X+JPgk4OgL0Y4wKhzbp0Hdz
- B1xXgClK35wH0D+wcdEBVZ5ZCSelRHEgffng9bun9IwkqMjb+waCnPqUSC13ooT6jed91l4
- xGcb65nPfRVyv7LXJwLfw==
-UI-OutboundReport: notjunk:1;M01:P0:RRk1rFxLWRA=;96XY1VU5d1f7/GgxIxvd4KdeGJQ
- d0pDIlZf/Cm2UqwMt+P0CQ8kw+d7O0X26dYAmM1peyqTOgvlvPLTm1plwj1tKhK8zoMX6fdSx
- /ScxOY7Ft577HI8cKORseU1sM6xjFjjMZ2e2U9qUay2mq2cM0LDbDlcAWQMQnYPa+LfrHOJGH
- rgNRs4OlY3U6dUcbU6Cwgb/rHfjkCYiZ+DhRxNg0SJuxH0SZqlcuXF3pQhhaYPhLN1vfFZ3te
- T3kFrFTK69xfELrlex8Ar+arsUHNvv6vn8zydbwc0sDivjIhc5Vsm/7TSiAkzQxZXouff7MLQ
- N2pYPHI543SHkhEQHNTcfZ4OcEtXBxhJFkI5yv+komR3D4xof00pcsW/cY3hhmLA3JMqZLIYX
- BIl7iqeEk7B8rDVIgfUSs6EoSSOBF4aajfUwYfXvQgJO81ezyyihvmiMjHneOBliUvVjLuPQh
- S3TxPe8TK2IthMi0WdjR2BRAI+3WSsntxrMf08Xz8s5OJQERIGoJkf+n4BnohfuWfz7Q0W3SY
- 0OX87eeujA3dYBfEV93+AXLS7nhz2lMcDGBWn2qCHVe/T/ACeTjNnd01o8+JmqAa/ZD+jgGbJ
- jk0Jb0Sok9hnfElRLhoIU0G073w+7b+SRB2fgrz2w3TmhwI/IQ+Hs3kzxLiLo56fAvfsrMGg/
- 8HL3/OJRqGfu1euhbfAVSI5npiwjTlYa1zt/SSwTpJP4AaBC7B9CN8CQqjNSdmmGqzt8u0vdy
- 3jDnaULj4UR6zm7KpsQ4i3/cAYI6U8XOT1O5qsoCas+CLAmYhRQfNwAUXtxEJP5xNOu7qgzSL
- efCsB6yfYn0jZqi1EyK5d0or2EaOMSgQwpEDVJBus5gjkhoqffYs6x3Xbdofp3XbnYmH6dhhE
- CdwN2MHsz6/C4QQVD00epMhUEHyCCaT93fkuxoGSPkKiRDjO4yr05hWEPJr70enrx11T1Tc5o
- +djwPkwHto87xUDulnzg3uvShFM=
+Content-Type: multipart/mixed; boundary="8323328-1481356811-1679901450=:123"
+X-Provags-ID: V03:K1:kgwP/GJXWjgMKids3eAAQqMZy56heuHAbVo1qOTr+2BzRaP2I8f
+ nEPYP8PQJSai3hgZfNgf4xYWKNaDD5/ksgxklqBRP2uBo07tCsw1hhBBWdP2hJVmkFkvBdK
+ 7wCEZLn+4uY7yoj+GCI/nc8Fmg7QvAzzYxBPpUkjHqTZrFeW+mZrJL94VE3Tcqv3YJfGhS4
+ bJMV9Ujf4eKzkE1T2ZHHg==
+UI-OutboundReport: notjunk:1;M01:P0:o/tz/m/jvVA=;euw7vr+DH8DM3NGlbvUZ7ql5VOh
+ iEl3pJ3LetCOcrvldKwJF+mA0AcYG/s94X9wx235EcDwfIyI9A9sL0pAtZajqB+jGMAhV5tcc
+ jPlH8Xp9R81aXETZiXv7vNJIEvVIa8nQg8BXvXHh7j9Rkbg07Qou0Pe9GxgqC8/rKDgGz0iDB
+ I/hWtMbjox+JlwvL1xv0Ts0GFZRa54NTgOVPfaGlVdJEoJQfgaYpOXCPafWF/HjbIINZDRZyI
+ AvTgLzG6JU9tv5dDtvjudasxkgVcELM/dkaKkuodlJtByGa/YuDQIqqMxW078RnCKMAEn2TDP
+ qlI2wvWupbNYz/FxvH6WQJmHAroeFCZG1AM50aph1sxaJgUOyW5KwyAk32MMryoMeCuJ3CLXw
+ +u8IkF9uLCDm8nlX1rQ1VWpc+EtIi08V0ut6O7fGfAVQkwF7+Eckxan/0yt48QJzAXdwll3vp
+ +jzHPW8NaS14jrUrtx4E9FkvVfGP6isWxympx1d7SnViBps0BC1D3s5hqtZ5HFhcF+X/7fj/w
+ rrp5DPxIvtCoEzTwKktLp+3n2uLizwOa8Bic6CRvPwhNtKRu+MWUbf5U/8ve47zSUMZnBPzu8
+ 8OSSJn4VFqiGlE1IAgFL/4c+8tTUq4OgHvQpld9fIl7ipRSfAQoJFavmJETUg/acxl3xOEQhy
+ Uhie8xBQCEMrxJ+oKBx1PRpIy8K7913V2312hxsPQLSHKcXr8V+MfR5Hn7llElWVPfx6ygzn6
+ DEuUchBvnyr6JOoHHXfnreLZWF13no+ffcNHCuZ40+gc4GUdmsDkDhsfAibVpbS60T285MxCH
+ 9MGN8xajBptcZ9civQGHkVUTU2M5iUJ6ImmUVSIqkdoE0aOv7YSUMfIw7rjgCNd4IWsiq2aBj
+ k2YETHyW+4l/HS1D2vTZirX5O26+JVPqviujtRSUNdudNFhKtJOqd+Z/jb+qd3iytmm/6mtPf
+ z/kH4OJdZhjsb1Cge21s/YKP4bw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -67,57 +64,74 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1580625367-1679900660=:123
+--8323328-1481356811-1679901450=:123
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Phillip,
+Hi,
 
-On Sun, 19 Mar 2023, Phillip Wood via GitGitGadget wrote:
+FWIW the reason why you see it in your Ubuntu setup is most likely rooted
+in the `/etc/skel/.bashrc` file that contains this:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> As the sequencer executes todo commands it appends them to
-> .git/rebase-merge/done. This file is used by "git status" to show the
-> recently executed commands. Unfortunately when a command is rescheduled
-> the command preceding it is erroneously appended to the "done" file.
-> This means that when rebase stops after rescheduling "pick B" the "done"
-> file contains
->
-> 	pick A
-> 	pick B
-> 	pick A
->
-> instead of
->
-> 	pick A
-> 	pick B
->
-> Fix this by not updating the "done" file when adding a rescheduled
-> command back into the "todo" file. A couple of the existing tests are
-> modified to improve their coverage as none of them trigger this bug or
-> check the "done" file.
-
-I am purposefully not yet focusing on the patch, as I have a concern about
-the reasoning above.
-
-When a command fails that needs to be rescheduled, I actually _like_ that
-there is a record in `done` about said command. It is very much like a
-`pick` that failed (but was not rescheduled) and was then `--skip`ed: it
-still shows up on `done`.
-
-I do understand the concern that the rescheduled command now shows up in
-both `done` and `git-rebase-todo` (which is very different from the failed
-`pick` command that would show up _only_ in `git-rebase-todo`). So maybe
-we can find some compromise, e.g. adding a commented-out line to `done` =
-=C3=A0
-la:
-
-	# rescheduled: pick A
-
-What do you think?
+	# don't put duplicate lines or lines starting with space in the history.
+	# See bash(1) for more options
+	HISTCONTROL=3Dignoreboth
 
 Ciao,
 Johannes
 
---8323328-1580625367-1679900660=:123--
+On Sun, 19 Mar 2023, sang.tts.designer@gmail.com wrote:
+
+> Dear Martin,
+> What a very quick response!
+> I just tried your recommendation, and it works.
+> There is no word that can explain my appreciation, to be honest!
+> Thanks a million.
+>
+> --
+> Thanks and Best Regards!
+> ---------------------------------------------------
+> Sang Truong Tan
+>
+> Department of Electronics
+> HCMC University of Technology
+> Phone: (+84) 977 600 563 or (+84) 908 983 574
+> Email: mailto:sang.tts.designer@gmail.com
+>
+> From: Martin =C3=85gren <mailto:martin.agren@gmail.com>
+> Sent: Sunday, March 19, 2023 7:28 PM
+> To: mailto:sang.tts.designer@gmail.com
+> Cc: mailto:git@vger.kernel.org
+> Subject: Re: Bug Report with Git Bash
+>
+> Hi,
+>
+> On Sunday, 19 March 2023, <mailto:sang.tts.designer@gmail.com> wrote:
+> This is a relatively simple bug. when we double-type a command, like 'ls=
+'.
+> However, in the Ubuntu environment, the command only occurs once when we
+> press the top arrow to use the prior command.
+> It is identical when using git bash.
+> Repeat these steps:
+> Type "ls: in git bash.
+> 2. Type "ls" once more.
+> 3. To return to the previous command, use the top arrow.
+> As you can see, the number of times we type the can command 'ls' does no=
+t
+> matter; it only needs to occur once.
+>
+> This depends on how your shell is configured.
+>
+> Look into HISTCONTROL and ignoredups.
+>
+> You might want something like
+>
+>   export HISTCONTROL=3Dignoredups
+>
+> in ~/.bashrc.
+>
+> Martin
+>
+>
+
+--8323328-1481356811-1679901450=:123--
