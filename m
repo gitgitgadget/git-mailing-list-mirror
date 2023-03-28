@@ -2,126 +2,230 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0962C76196
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 11:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E636CC76195
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 12:14:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232521AbjC1LiH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 07:38:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60630 "EHLO
+        id S229714AbjC1MOl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 08:14:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230245AbjC1LiF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 07:38:05 -0400
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5E15F5
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 04:38:03 -0700 (PDT)
+        with ESMTP id S230447AbjC1MOj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 08:14:39 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A84A86E89
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 05:14:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1680003479; i=johannes.schindelin@gmx.de;
-        bh=s+c734gXKOotbhjZDjhzcnX/7MCKZyZiK5Em1FditGc=;
+        t=1680005660; i=johannes.schindelin@gmx.de;
+        bh=LkGJfp0vtoSVSxB8ncW5i8XqbX71Bxc4KfYRHkek2ds=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=EsXo2vEPr1VgNFTsVK4B0qQaWOClD5gfC+4WKpSqe/cBzly1oxybd/ACHS15iZdMz
-         12kAgZ2c8kHGGmM/1PVEyuMzRG7Sug7M/cQBhPtxXW8jmPT98pnpAcQey+TlzuEJX4
-         t+7ShGS0HajifBU1VNomTd5BaBM8wChE17S8yE3tEuskGcR6HxvT+vpDxA/sW2dAuG
-         KjVberkv0uKzj2lFKT/DvuwH5Xp06imdSp9ka9owBqVI42ecSi3gzlWfo8Gf3ieF2F
-         r1YMbQU/xGzoL3DnQYzQFCyVcQrJBW62KgPagBO5Pi80WrAP14u6Suw5zvBRt/1/m2
-         sxHS6+Tecnb1A==
+        b=EbFTs6xnr81t88sGBel81yaSprgpbVab75HJ5YPEPYZfCJ/Tts3kf9gNhF36FXNVF
+         Y9fiuW5S8UBMK5aE4pQ3KMAYo/oxSabfjfAn3XIPTj9Ez4K5erkEoPTkxn/tq0hyeS
+         sc7DPci7M1nSLK5gP+4pOPqGoEake77XQLtoMEmX8bOHCN0ugfSYsDpzEuKo6wKEYX
+         Gu2v9I7VUKZCv4oUPTvCoHz9PK+2aMRp/hokugcXHfHcMdrJHu1zeIGSZ6EawxLmSg
+         LEZq1yP3iSQVcjO3sbHvS+zlzYgFdpGZZNHmf3cS0LRUYD8oz+fb6GIXp0I/xcsKDH
+         myjGl+1mgGRaA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MPGRp-1q6ccE0ZJt-00Peg4; Tue, 28
- Mar 2023 13:37:59 +0200
-Date:   Tue, 28 Mar 2023 13:37:57 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.212.93]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MwQT9-1qZ6Rl1c0r-00sJaV; Tue, 28
+ Mar 2023 14:14:20 +0200
+Date:   Tue, 28 Mar 2023 14:14:18 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
-cc:     git@vger.kernel.org
-Subject: Re: range-diff: slight usability problem with mistyped ref
-In-Reply-To: <b93934a2-91e7-4645-9a24-4f2354172f31@app.fastmail.com>
-Message-ID: <818b3ad0-df43-3484-8c19-d95026f6b2b1@gmx.de>
-References: <b93934a2-91e7-4645-9a24-4f2354172f31@app.fastmail.com>
+To:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, "Johannes Sixt [ ]" <j6t@kdbg.org>,
+        "Harshil Jani [ ]" <harshiljani2002@gmail.com>,
+        =?UTF-8?Q?Jakub_Bere=C5=BCa=C5=84ski?= <kuba@berezanscy.pl>,
+        Karsten Blees <blees@dcon.de>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Javier Roucher Iglesias 
+        <Javier.Roucher-Iglesias@ensimag.imag.fr>,
+        M Hickford <mirth.hickford@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH] credential/wincred: store password_expiry_utc
+In-Reply-To: <pull.1477.git.git.1679729956620.gitgitgadget@gmail.com>
+Message-ID: <35e1ebe6-e15b-1712-f030-70ab708740db@gmx.de>
+References: <pull.1477.git.git.1679729956620.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1554220849-1680003479=:123"
-X-Provags-ID: V03:K1:I+tE4q35/ZpaPSQYzxNj24Trqt6A5NJpBfkuAhVbOk5sjMHDbid
- wO9RRnc2idL9XZNU/Uq6sYmoz67eLKqGzP7YGoA4pqpoyfQmAD0Wvre9GTyquvmDAWNTgrB
- 2sVPcKOI20918lL0UVdwEUumQl0BXlx71+SB0uyYwszWdh86P5fFm8kdWX0UvAW+z/p5lyx
- LpBcEl73k/qc8f8Ni66mA==
-UI-OutboundReport: notjunk:1;M01:P0:AXaeY3WYums=;mO125ZMuCNIAPhnnRwc0E6HGvOD
- yZZQOLIUmwFKqgRForsp4PV6lZrqSfRr+IYsvh5yM2bufcYiuotmjiF0s6m4n78iLUfVS+oFt
- SXayKhyEqHyQjqEBPY99YBz+zL3maq0mAiCMtrnBtd7XmMqQPLJV1EqvzVO5gtQRS5B79dR9H
- xfgz+5DBWyX3oV4oxV8anbTgcrmaGvtbQoEc0nyvXoztAElUD9WqvDlWEIz6iOf/nNlXr1BQo
- zTR9nf9q6ykPNc5/ncWg/RGAjLcxGEb+VhTf2areExJ5WJwrlzqSd1MxUEMgobCJbgrsqwe3s
- fh/R8rURVRmtaUdp66rK/xKp2/RJBlay7iztOxBYw/+d/J1KchFcJaJkxeHh4gxxC/8mrVZbQ
- MXxbpKT4TQejP7zY5P0JvU8bB2rhHGo6++Rxa059addV38zy+I4uLkVdGIsTHh/jC2Yr7rwv/
- 2DRB/QG2NYEtDOF7ZoJ4vz8DfeCgZsqMdE24ghi3qcaRgdNl6zefAgGav0Wt9mG/vBLOb6/qa
- gshXvNuoMeRH0rwk9FVUsH2O31SYSSLqV6dZcDteS3JASUseUVUGUYssJUBnND8TahU78uwBY
- b6D0GwOJa0y2W5J0mgS9adzPBg4A8+e2vPhFs6Vblp9hUASYrPtP0pQRXxXnz2v5snNcXtuej
- QrnP7pYjXkXgOlB49yVnBJEDdet5cOrhoK7vvC6FsFYK1fAhp2wzD8TO2P5KXC4gYiPG9KuW8
- zTKiq7hgKVXO3BlraoTg7NPIVUoxS1pYTIG8wZnFaIrZq+pTDXqRy2UapKAN+XRUWnxXolk5h
- GUQCEOtGhvqbRW9NVlOncQ8XrzdEZg6qSaAN+gbhYVqwu51i3rky2IL0eUUwVZ6AEV7v2N4ai
- dDLk2ItANANTtWHntJe1VuUF9B6jAnf+RznqbJZ1i+hjREkLCYC4Y3OfPRYiyeYFdUAFB2xCP
- e0KnnQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1ZughELe3wtA6sU3SQcf+N0hRfIKSos6aE1wZby6mUBTDhGcU4k
+ CYCxhhv6rCb6VrtOzmvtbn1TT8Tdr7AeJ8LxpmUQaA9ipUh9GZBlARQuucCI8VT92yvg2MH
+ WEinNERoVeZERkghVTUierqmN1E6UO8z9kn+k5OJR1O7JfLJvNHRAv8j1GajSORjZqDK7Cp
+ 00tKnn3vSSBpRxvy0Ku5Q==
+UI-OutboundReport: notjunk:1;M01:P0:VsJYl+7Wsc0=;S9suC2FRVTve9Dx24BrD2EbX0Kg
+ VPSPXQi/qHOXzigO4mBscR3KS4JgZ43XWE95MLkNQUb3Q0ZovBg8A/cQJqnlGfsTD16Ty/o16
+ 9iDblhTEXDmOEEWU2zjCXdgy9Ez/d4wXl/ag7dFLdcML+PtcLpmfsVZyWMCv41TZ7FXBM1hvw
+ iHL/NftqbNADZuWSbxW8tIusswcNVsPsZVUqaAxPUAHbXi1ogmSTY3EqOWpHQIFmHOigERlhm
+ rqvDvRLlNRfV093EgtpEdeOtcqcA4l0mqaM6l/dH7ToRKS+okGMkfuBKpUpyXn5FLh9VKNagb
+ ROyKITpyGChG+3VnS7pTzmWyzy1g3cOe7Zbk6ONJNrf3s3jpMX6BV7MKOsuu6eF8UsinFtusk
+ AOQFzFsfDbabzYsZnoGwWO2SnvLZ4U3xbyVDUah3jqjKDJW5fU0NDKDgSQ5oHlAck4mLLFGS5
+ 1VaDv0Osj+qHmOf8RRiSm1gA7iBtugQiLUoTl8yxH29+eI6Z1bLogYWCiCHibD/jpjUJweTxI
+ GFlkSDh/VXpA/XrqMaMerk+/jvG5gleUumBrtkjJi/5OBhs/LGP1AyDr6V6wycAOyPDZjVdAb
+ nUVwcMqQvfAIYZLTKpzjlNleFS/6ZQsrwSTBCC5H4LTB1kD0ucLgzCKDrGFFeoxu54YaSVl/L
+ FSuzl0H07fWWvF/1CnLMYryx05GmZ/oo9YZll/Mm6/dVm1wlI4EqumRKA5AyrQYkLtUfBOXsS
+ f5m4ov44sgghNkV1G0dzB7ns7LtPt0a0JVTeWhK3I3D0c3YDyPZtw45b+Owa8IT8dLGSVurww
+ 5oN5A0VVDJS0syPPx4+OHOvhBzRccqregFrn1AAZrkFUwgy5hgDwsUftaQQ+0SD+VyZGb/iPo
+ /FoXdwGZvAWAxRgp8xxAILl8M3k7QwGG/m6RC7XKp2xMKurAY8S6gnwngpUQ8U9MTXdGBi5EU
+ MkXIdaJ5ReoVZW20jwgzO2lRxVY=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi M,
 
---8323328-1554220849-1680003479=:123
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Sat, 25 Mar 2023, M Hickford via GitGitGadget wrote:
 
-Hi Kristoffer,
-
-On Sat, 25 Mar 2023, Kristoffer Haugsbakk wrote:
-
->     $ # Misspelled ref `seen` as `seent`
->     $ ./bin-wrappers/git range-diff master next seent
->     fatal: need two commit ranges
+> From: M Hickford <mirth.hickford@gmail.com>
 >
->     usage: git range-diff [<options>] <old-base>..<old-tip> <new-base>..=
-<new-tip>
->        or: git range-diff [<options>] <old-tip>...<new-tip>
->        or: git range-diff [<options>] <base> <old-tip> <new-tip>
->     [=E2=80=A6]
+> Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+> ---
+>     credential/wincred: store password_expiry_utc
 >
-> Expected behavior: tell me that `seent` is not a revision.
+>     Help wanted from a Windows user to test. I tried testing on Linux wi=
+th
+>     Wine after cross-compiling [1] but Wine has incomplete support for
+>     wincred.h [2]. To test:
 >
-> Actual behavior: generic error message.
+>     cd contrib/credential/wincred/
+>     make
+>     echo host=3Dexample.com\nprotocol=3Dhttps\nusername=3Dtim\npassword=
+=3Dxyzzy\npassword_expiry_utc=3D2000 | ./git-credential-wincred.exe store
+>     echo host=3Dexample.com\nprotocol=3Dhttps | ./git-credential-wincred=
+.exe get
 >
-> [...]
 >
-> In conclusion: IMO and assuming that my cross-version testing is
-> correct, `range-diff` has a slight usability regression for when you
-> mistype the ref. It would be nice if the error message without a
-> pathspec separator (`--`/`dash_dash`) was as nice as the one without it.
+>     Output of second command should include line password_expiry_utc=3D2=
+000
 
-I can see how the error message is confusing. At the same time, the usage
-below the error message should provide an indicator what forms are
-applicable (even if all of the synopses are missing the `[--] [<path>...]`
-part).
+Sadly, no, it's empty:
 
-Now, it seems to be very, very tricky to address your concern properly.
-The reason is that:
+	$ cd contrib/credential/wincred/
+	$ make
+	cc     git-credential-wincred.c   -o git-credential-wincred.exe
+	$ echo host=3Dexample.com\nprotocol=3Dhttps\nusername=3Dtim\npassword=3Dx=
+yzzy\npassword_expiry_utc=3D2000 | ./git-credential-wincred.exe store
+	$ echo host=3Dexample.com\nprotocol=3Dhttps | ./git-credential-wincred.ex=
+e get
 
-	git range-diff a.x b c
+The reason is that `echo` does not interpret the escaped `n`, it does not
+even get the backslash because Bash eats it first.
 
-could have a typo where the user actually meant to say `a...x`, i.e. the
-symmetric range form. Or the user might have meant `a..x` and the full
-history of `b` with a file `c`. Or `a.x` was a mistyped ref name and the
-three-commit form was intended.
+But even with `printf` it does not work:
 
-So even making the exact error message depend on the number of arguments
-could result in misleading error message.
+	$ printf 'host=3Dexample.com\nprotocol=3Dhttps\nusername=3Dtim\npassword=
+=3Dxyzzy\npassword_expiry_utc=3D2000\n' | ./git-credential-wincred.exe sto=
+re
+	$ printf 'host=3Dexample.com\nprotocol=3Dhttps\n' | ./git-credential-winc=
+red.exe get                                        username=3Dtim
+	password=3Dxyzzy
 
-We _could_ extend the `else` arm in
-https://github.com/git/git/blob/v2.40.0/builtin/range-diff.c#L142-L144 to
-try to parse up to the first three arguments as commit-ishs and report for
-which argument that fails, of course, but even that is subject to
-ambiguities: what if the third argument happens to match both a ref and a
-file?
+And the reason is...
 
-Do you have any splendid idea how to phrase the error message (or adapt
-it to the concrete invocation)?
+> @@ -195,6 +197,15 @@ static void get_credential(void)
+>  			write_item("password",
+>  				(LPCWSTR)creds[i]->CredentialBlob,
+>  				creds[i]->CredentialBlobSize / sizeof(WCHAR));
+> +			attr =3D creds[i]->Attributes;
+> +			for (int j =3D 0; j < creds[i]->AttributeCount; j++) {
+> +				if (wcscmp(attr->Keyword, L"git_password_expiry_utc")) {
+
+				  ^^^^^^
+
+... here. Note how the return value of `wcscmp()` needs to be non-zero to
+enter the conditional block? But `wcscmp()` returns 0 if there are no
+differences between the two provided strings.
+
+That's not the only bug, though. While the loop iterates over all of the
+attributes, the `attr` variable is unchanged, and always points to the
+first attribute. You have to access it as `creds[i]->Attributes[j]`,
+though, see e.g.
+https://github.com/sandboxie-plus/Sandboxie/blob/f2a357f9222b81e7bdc994e5d=
+9824790a1b5d826/Sandboxie/core/dll/cred.c#L324
+
+So with this patch on top of your patch, it works for me:
+
+=2D- snip --
+diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib=
+/credential/wincred/git-credential-wincred.c
+index 9be892610d0..1aa840e31a0 100644
+=2D-- a/contrib/credential/wincred/git-credential-wincred.c
++++ b/contrib/credential/wincred/git-credential-wincred.c
+@@ -197,9 +197,9 @@ static void get_credential(void)
+ 			write_item("password",
+ 				(LPCWSTR)creds[i]->CredentialBlob,
+ 				creds[i]->CredentialBlobSize / sizeof(WCHAR));
+-			attr =3D creds[i]->Attributes;
+ 			for (int j =3D 0; j < creds[i]->AttributeCount; j++) {
+-				if (wcscmp(attr->Keyword, L"git_password_expiry_utc")) {
++				attr =3D creds[i]->Attributes + j;
++				if (!wcscmp(attr->Keyword, L"git_password_expiry_utc")) {
+ 					write_item("password_expiry_utc", (LPCWSTR)attr->Value,
+ 					attr->ValueSize / sizeof(WCHAR));
+ 					break;
+=2D- snap --
+
+But I have to wonder: why even bother with `git-wincred`? This credential
+helper is so ridiculously limited in its capabilities, it does not even
+support any host that is remotely close to safe (no 2FA, no OAuth, just
+passwords). So I would be just as happy if I weren't asked to spend my
+time to review changes to a credential helper I'd much rather see retired
+than actively worked on.
 
 Ciao,
 Johannes
 
---8323328-1554220849-1680003479=:123--
+> +					write_item("password_expiry_utc", (LPCWSTR)attr->Value,
+> +					attr->ValueSize / sizeof(WCHAR));
+> +					break;
+> +				}
+> +				attr++;
+> +			}
+>  			break;
+>  		}
+>
+> @@ -204,6 +215,7 @@ static void get_credential(void)
+>  static void store_credential(void)
+>  {
+>  	CREDENTIALW cred;
+> +	CREDENTIAL_ATTRIBUTEW expiry_attr;
+>
+>  	if (!wusername || !password)
+>  		return;
+> @@ -217,6 +229,14 @@ static void store_credential(void)
+>  	cred.Persist =3D CRED_PERSIST_LOCAL_MACHINE;
+>  	cred.AttributeCount =3D 0;
+>  	cred.Attributes =3D NULL;
+> +	if (password_expiry_utc !=3D NULL) {
+> +		expiry_attr.Keyword =3D L"git_password_expiry_utc";
+> +		expiry_attr.Value =3D (LPVOID)password_expiry_utc;
+> +		expiry_attr.ValueSize =3D (wcslen(password_expiry_utc)) * sizeof(WCHA=
+R);
+> +		expiry_attr.Flags =3D 0;
+> +		cred.Attributes =3D &expiry_attr;
+> +		cred.AttributeCount =3D 1;
+> +	}
+>  	cred.TargetAlias =3D NULL;
+>  	cred.UserName =3D wusername;
+>
+> @@ -278,6 +298,8 @@ static void read_credential(void)
+>  			wusername =3D utf8_to_utf16_dup(v);
+>  		} else if (!strcmp(buf, "password"))
+>  			password =3D utf8_to_utf16_dup(v);
+> +		else if (!strcmp(buf, "password_expiry_utc"))
+> +			password_expiry_utc =3D utf8_to_utf16_dup(v);
+>  		/*
+>  		 * Ignore other lines; we don't know what they mean, but
+>  		 * this future-proofs us when later versions of git do
+> @@ -292,7 +314,7 @@ int main(int argc, char *argv[])
+>  	    "usage: git credential-wincred <get|store|erase>\n";
+>
+>  	if (!argv[1])
+> -		die(usage);
+> +		die("%s", usage);
+>
+>  	/* git use binary pipes to avoid CRLF-issues */
+>  	_setmode(_fileno(stdin), _O_BINARY);
+>
+> base-commit: 27d43aaaf50ef0ae014b88bba294f93658016a2e
+> --
+> gitgitgadget
+>
