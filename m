@@ -2,192 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3E8CC6FD18
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 18:00:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8830C6FD18
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 18:09:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229518AbjC1SA7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 14:00:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50620 "EHLO
+        id S229737AbjC1SJE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 14:09:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjC1SA5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 14:00:57 -0400
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D2AF12BD8
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 11:00:56 -0700 (PDT)
-Received: by mail-pl1-x64a.google.com with SMTP id c2-20020a170903234200b001a0aecba4e1so8095001plh.16
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 11:00:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1680026456;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6t/3mSva+d2tqZQikzON4h+JHrjqzcelGHsfI/kgph4=;
-        b=kLjPW9+GF8mXsjoHgwTm59LF9q161i/yXgM4TsOHXnIHkbderhNvykFbuNr5FzLhhB
-         YufjCZ73KzSDuZLedtumPMZ2bE57Ok0FVq8eKb71451BW19Xi5Pnk1w6tm9W5ZX7R7vu
-         DEaiQt6BvbpYm9WA07SP3Fe4P4pUb894QOTude6BPDaJzppgfhVFfkTwZ9P7qJkzVYPf
-         lFTk4twAlfL4Swh9wFd4n52yKHMJR204cpfyLwwC+iWaNSVxrfam+CG0CZQkENyYn5tD
-         wi/ABYFONQDanbYmUd2T5eh8nmvWbKj5cn5J24FQNobjkMMvhfkBXiMfV3UHG08hwEwi
-         BcYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680026456;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6t/3mSva+d2tqZQikzON4h+JHrjqzcelGHsfI/kgph4=;
-        b=i070rlKvQaz2ryFpAFrAmMdQVx6qCDml0Rykj7iHsA1RS6nrYBIl/PoUnKOoLR2oZA
-         fRzVPMT1/Lna8b7KxuE6+lDbhOMHlXXlSHRF9y2LhjaLxhtwo38Z2fZAvs9IB7pbZnlf
-         ges5yLkjQd3WLXdbUF3MsfPUiUgRUvtB5jDXYTOR7rTkBLXpSZUBihdwhgIkZ06b1lSw
-         tRpIfTpdE7GMGahiDVEhVQH1GLQ9cUOAclOjQAsfSSDLHJHrKkfHMQIffvKUh0ai8ALv
-         xohk806iJqTovyHg8Iz4YJHjU8LpSMYzsk8HPo0x2Xu4asOeiyNwuiwWQLxApjSBTBwd
-         /JeA==
-X-Gm-Message-State: AAQBX9c2GpdmOYBS4BJDc3LJQCl/HX6APb/I7C3lB6q0pf4c/rFQ1g8M
-        6EruVnt0ZY89JmLusEaIviDNPGihawu+eQ==
-X-Google-Smtp-Source: AKy350ZdTWxnnYZXpT9ePcOENawvBG/GYSgwF4vSApgSEFClSv2HwwJz7U9jMSaH1BCxmZlhd+a26ukh1kVPJQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a17:903:41c4:b0:1a0:1f4e:a890 with SMTP
- id u4-20020a17090341c400b001a01f4ea890mr6604697ple.1.1680026455914; Tue, 28
- Mar 2023 11:00:55 -0700 (PDT)
-Date:   Tue, 28 Mar 2023 11:00:53 -0700
-In-Reply-To: <pull.1463.v3.git.git.1680025914.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-References: <pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com> <pull.1463.v3.git.git.1680025914.gitgitgadget@gmail.com>
-Message-ID: <kl6llejgdacq.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 0/8] config.c: use struct for config reading state
-From:   Glen Choo <chooglen@google.com>
-To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Calvin Wan <calvinwan@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229602AbjC1SJD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 14:09:03 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F3341B5
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 11:09:00 -0700 (PDT)
+Received: (qmail 1284 invoked by uid 109); 28 Mar 2023 18:09:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Mar 2023 18:08:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 453 invoked by uid 111); 28 Mar 2023 18:08:59 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Mar 2023 14:08:59 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 28 Mar 2023 14:08:59 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
+        avarab@gmail.com, tenglong.tl@alibaba-inc.com, me@ttaylorr.com
+Subject: Re: win-test: unknown terminal "xterm-256color", was Re: [RFC PATCH
+ 6/6] ls-tree: introduce '--pattern' option
+Message-ID: <20230328180859.GB18558@coredump.intra.peff.net>
+References: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com>
+ <20221117113023.65865-7-tenglong.tl@alibaba-inc.com>
+ <2q985o75-p6ro-3319-rqos-004621r0p7pq@tzk.qr>
+ <xmqqtu20qinx.fsf@gitster.g>
+ <d566eb68-6476-a193-2acb-10106a154d3d@gmx.de>
+ <xmqqzg7ylye4.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzg7ylye4.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Mar 27, 2023 at 01:42:11PM -0700, Junio C Hamano wrote:
 
-> Note to Junio: 8/8 (which renames "cs" -> "set") conflicts with
-> ab/config-multi-and-nonbool. I previously said that I'd rebase this, but
-> presumably a remerge-diff is more ergonomic + flexible (let me know if I'm
-> mistaken), so I'll send a remerge-diff in a reply (I don't trust GGG not to
-> mangle the patch :/).
+> > And to save on bandwidth/time (in a desperate attempt to counter the
+> > ever-growing runtimes of Git's CI builds), I liberally exclude files from
+> > the "minimal subset of Git for Windows' SDK", e.g. `/usr/lib/terminfo/`
+> > and `/usr/share/terminfo/`. That's why `tput` cannot figure out what to do
+> > with this `TERM` value.
+> 
+> Ah, so it is not like "you ship vt100 but not xterm-color yet the
+> runtime insists you are by default on xterm-color", so "set it to
+> something your terminfo database understands" would not work.  I am
+> not sure what unintended fallouts there would be from setting it to
+> dumb, though.  Our tests are designed for unattended testing, and
+> they are even capable of running without control terminal, so it
+> should be OK to force TERM=dumb, I guess.
 
+We already force TERM=dumb in test-lib.sh, so the tests themselves
+should behave the same. The original terminal is only used for colorized
+output from the test harness itself. But I don't think we'd colorize
+anyway in CI, since stdout is not a terminal (and we tend to further go
+through "prove" anyway).
 
-  diff --git a/config.c b/config.c
-  remerge CONFLICT (content): Merge conflict in config.c
-  index b17658e1ba..159c404d0c 100644
-  --- a/config.c
-  +++ b/config.c
-  @@ -2351,15 +2351,9 @@ void read_very_early_config(config_fn_t cb, void *data)
-    config_with_options(cb, data, NULL, &opts);
-  }
+So it should be fine to just set TERM=dumb everywhere. What actually
+confuses me is that we try to do so already:
 
-  -<<<<<<< HEAD
-  -static struct config_set_element *configset_find_element(struct config_set *set, const char *key)
-  -||||||| c000d91638
-  -static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
-  -=======
-  RESULT_MUST_BE_USED
-  -static int configset_find_element(struct config_set *cs, const char *key,
-  +static int configset_find_element(struct config_set *set, const char *key,
-            struct config_set_element **dest)
-  ->>>>>>> gitster/ab/config-multi-and-nonbool
-  {
-    struct config_set_element k;
-    struct config_set_element *found_entry;
-  @@ -2392,15 +2386,9 @@ static int configset_add_value(struct config_reader *reader,
-    struct key_value_info *kv_info = xmalloc(sizeof(*kv_info));
-    int ret;
+  $ git grep -B1 dumb ci/lib.sh
+  ci/lib.sh-# GitHub Action doesn't set TERM, which is required by tput
+  ci/lib.sh:export TERM=${TERM:-dumb}
 
-  -<<<<<<< HEAD
-  -	e = configset_find_element(set, key);
-  -||||||| c000d91638
-  -	e = configset_find_element(cs, key);
-  -=======
-  -	ret = configset_find_element(cs, key, &e);
-  +	ret = configset_find_element(set, key, &e);
-    if (ret)
-      return ret;
-  ->>>>>>> gitster/ab/config-multi-and-nonbool
-    /*
-    * Since the keys are being fed by git_config*() callback mechanism, they
-    * are already normalized. So simply add them without any further munging.
-  @@ -2510,40 +2498,21 @@ int git_configset_get_value(struct config_set *set, const char *key, const char
-    * queried key in the files of the configset, the value returned will be the last
-    * value in the value list for that key.
-    */
-  -<<<<<<< HEAD
-  -	values = git_configset_get_value_multi(set, key);
-  -||||||| c000d91638
-  -	values = git_configset_get_value_multi(cs, key);
-  -=======
-  -	if ((ret = git_configset_get_value_multi(cs, key, &values)))
-  +	if ((ret = git_configset_get_value_multi(set, key, &values)))
-      return ret;
-  ->>>>>>> gitster/ab/config-multi-and-nonbool
+Pushing a stripped-down workflow file to just run "echo $TERM" shows
+that it seems to already be set by Actions to "dumb" on ubuntu-latest,
+but is xterm-256color on windows-latest.
 
-    assert(values->nr > 0);
-    *value = values->items[values->nr - 1].string;
-    return 0;
-  }
+So maybe we just want to make the line above unconditionally set $TERM?
 
-  -<<<<<<< HEAD
-  -const struct string_list *git_configset_get_value_multi(struct config_set *set, const char *key)
-  -||||||| c000d91638
-  -const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key)
-  -=======
-  -int git_configset_get_value_multi(struct config_set *cs, const char *key,
-  +int git_configset_get_value_multi(struct config_set *set, const char *key,
-            const struct string_list **dest)
-  ->>>>>>> gitster/ab/config-multi-and-nonbool
-  -{
-  -<<<<<<< HEAD
-  -	struct config_set_element *e = configset_find_element(set, key);
-  -	return e ? &e->value_list : NULL;
-  -||||||| c000d91638
-  -	struct config_set_element *e = configset_find_element(cs, key);
-  -	return e ? &e->value_list : NULL;
-  -=======
-  +{
-    struct config_set_element *e;
-    int ret;
-
-  -	if ((ret = configset_find_element(cs, key, &e)))
-  +	if ((ret = configset_find_element(set, key, &e)))
-      return ret;
-    else if (!e)
-      return 1;
-  @@ -2557,12 +2526,12 @@ static int check_multi_string(struct string_list_item *item, void *util)
-    return item->string ? 0 : config_error_nonbool(util);
-  }
-
-  -int git_configset_get_string_multi(struct config_set *cs, const char *key,
-  +int git_configset_get_string_multi(struct config_set *set, const char *key,
-            const struct string_list **dest)
-  {
-    int ret;
-
-  -	if ((ret = git_configset_get_value_multi(cs, key, dest)))
-  +	if ((ret = git_configset_get_value_multi(set, key, dest)))
-      return ret;
-    if ((ret = for_each_string_list((struct string_list *)*dest,
-            check_multi_string, (void *)key)))
-  @@ -2571,17 +2540,16 @@ int git_configset_get_string_multi(struct config_set *cs, const char *key,
-    return 0;
-  }
-
-  -int git_configset_get(struct config_set *cs, const char *key)
-  +int git_configset_get(struct config_set *set, const char *key)
-  {
-    struct config_set_element *e;
-    int ret;
-
-  -	if ((ret = configset_find_element(cs, key, &e)))
-  +	if ((ret = configset_find_element(set, key, &e)))
-      return ret;
-    else if (!e)
-      return 1;
-    return 0;
-  ->>>>>>> gitster/ab/config-multi-and-nonbool
-  }
-
-  int git_configset_get_string(struct config_set *set, const char *key, char **dest)
+-Peff
