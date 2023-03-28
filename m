@@ -2,92 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5F0FC6FD18
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 13:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A58DC6FD18
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 13:59:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230518AbjC1Nrs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 09:47:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56734 "EHLO
+        id S232858AbjC1N7Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 09:59:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229924AbjC1Nrq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 09:47:46 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A04225271
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 06:47:43 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id l7so10842707pjg.5
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 06:47:43 -0700 (PDT)
+        with ESMTP id S232659AbjC1N7O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 09:59:14 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5124510E2
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 06:59:12 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id q7-20020a05600c46c700b003ef6e809574so4239626wmo.4
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 06:59:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680011263;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=NrFsBlEa9k2OqvYk/TZCvz1BKhWdrurY+1w44uyHcI0=;
-        b=OahCnm/58d+AOIqpwV+kd1Z3yBqAFfcpxFRBHdSY8fsy5H3jZlgMg8jbd7hi9faRrT
-         ehdiNI+kcprV3c/jQxA/62AlNQyE4xz/okNNze4htv6ocd2hIgAhZN8zAZi4Q3smPSUa
-         suPBxUXGg2DpSd9YaGdHnu6ADzSVotgez2jLqbtXMf6sJGETFkoNkIDQZwgP6Lo2kcAt
-         sCasLgM6okaZ8ixhloTHxeGHJ/jzHXGF8WYngPlvbqc0z/5s05aOLuYenuuIkjTb+6D4
-         EdlX2avwoAEOypK0tBBBmukRotY4r20Fz8GOru8o/itTrA40UeGv99511qreSstRm/2/
-         8kIw==
+        d=gmail.com; s=20210112; t=1680011950;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PI4Osjd+uHtRJh64rwyVOhjIAebtdHpt8zujQ6ro5Zk=;
+        b=pH0ben2EBNllK8w3zbXeApPOn2SmfAM/0ZzyvPbHYsmNHFRHTccSbZEucJ3ZEutJs0
+         PPv7s+6gs7auujV1+09LZDHebHf73CmWdVnNqAUKeeoi0hgyKeVRVaQ58ieAR/qL/Mv/
+         iCZHxfznq5EmM/UQ7gmenX1/s+LU/qpyF8QyXsKFUc/ED3w0ZMwB/xVeWED21pBOk1mS
+         9YY4rlGEAUi2t3QvfJrypMcKYdTpIC3NmYcz/BHpEbBgfZx7JDpyhkLH3QQVQIQDR4jA
+         YY32AyFssmUanyMrXn7hnxfG01TjagZLNTigNRFqglpsK3XaypV+tDSrezD4Cto44PAl
+         qBGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680011263;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NrFsBlEa9k2OqvYk/TZCvz1BKhWdrurY+1w44uyHcI0=;
-        b=qrdG7sLWBaZ0abwYptz6kI+kXtos5ZESWn//Epu+kZliUN6zYEdrZp+ciQ9kt0FgX8
-         YLZoh/iccbd9WXp1xeIAwCgUvubYrp/HWsPYyvl8IjihFkO8eqXsGhKhdlE3t0gEOwBJ
-         JD3sjGASznimeWUkuY38jFoFYHQf/7wCYnvorktJZGWgJExMHEe+GMrb2IY9WUoPW71F
-         OtHemggTHmkzPmHlV5fLhx/7jt5yN5wxxWgRu5gkYJvCTLeGzwEkLCOWxwAudWjQeHhE
-         jataDjzD21Q8rGmqAKV9ROewWwdPBoygPAr9fqJ7FtvGh1z15PLpqQE7BiMkPs2QdPNC
-         Y1/A==
-X-Gm-Message-State: AO0yUKVjsmdndP32TS99t5kA6RCTy/BoGsTe+fPomQKpRfb/OW90U8Om
-        wnU12jcqgpj45adhe8nle/c=
-X-Google-Smtp-Source: AK7set9IoMImSqGW3Lxbs41noV56sNjdQtWoc8Ix54bp+SM5CzLtgy89ZDVBVsLdjatvx3OkE/Rntg==
-X-Received: by 2002:a05:6a20:2921:b0:d3:84ca:11b with SMTP id t33-20020a056a20292100b000d384ca011bmr13129029pzf.40.1680011263021;
-        Tue, 28 Mar 2023 06:47:43 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id x8-20020aa79188000000b0062622ae3648sm20968372pfa.78.2023.03.28.06.47.42
+        d=1e100.net; s=20210112; t=1680011950;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PI4Osjd+uHtRJh64rwyVOhjIAebtdHpt8zujQ6ro5Zk=;
+        b=4CeiQK0Bq0pho3ZZV7oqd5GKG2f22/IOs5YfIKKHpbtyLS/iD/kZnLXPupjCU5z/XO
+         mYe5pcvsVGhXTq2bOfFqwZz44rKxreAn69f7095rtNEi625E6/M5EkHfXwuv3J/4VjoP
+         jxBE67EDuU0rlEVGNbR5//ySIxTDSvWEfjOnkNjZiYgsyimKUk97r2PMskrrCUXsar5P
+         9o9kB7YAsp6vsBkLfBQaXH/Q3G7yzjk0fplg3FvxiVAjfw08RRJQr/X0LYJVgptxRLq/
+         urEKhHvQP3mPuHAekonK6peXdNUxCloM6CkKVPODy0XlhCT4A1+rhHeRvKL+mzVUnpVL
+         hWUQ==
+X-Gm-Message-State: AO0yUKXC8Q/rEIvIw5W0C5VxKajqIPYsBLcoN31zCEJ3E5woZuU9bqSo
+        iMcY4omFQKLz/ZZchjUj3iYjaJzzh4OM6g==
+X-Google-Smtp-Source: AK7set/lCgePszbeEbcM6JlqIcM08SLF21clFQ/J33Bfqp2v97+mXfQds9FnJYJHYPxXTk9tI4ClMg==
+X-Received: by 2002:a1c:7406:0:b0:3ee:18e:a1ef with SMTP id p6-20020a1c7406000000b003ee018ea1efmr11869554wmc.1.1680011950522;
+        Tue, 28 Mar 2023 06:59:10 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id q7-20020a05600c46c700b003ede2c59a54sm6252268wmo.37.2023.03.28.06.59.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 06:47:42 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Mario Grgic <mario_grgic@hotmail.com>,
-        demerphq <demerphq@gmail.com>, git@vger.kernel.org
-Subject: Re: git bug: Perl compatible regular expressions do not work as
- expected
-References: <MW4PR20MB5517583CBEEF34B1E87CCF1290859@MW4PR20MB5517.namprd20.prod.outlook.com>
-        <CANgJU+Vn8ZLGcAYbuDeNkv6T5YdX6t20BqGQDPB0VL_TzoGSWg@mail.gmail.com>
-        <MW4PR20MB5517888E63C13099E284B97590859@MW4PR20MB5517.namprd20.prod.outlook.com>
-        <eba23dc4-c036-fd1b-a1f0-028e8fff602b@web.de>
-        <xmqqh6u6cg4l.fsf@gitster.g>
-        <03fd7ddb-8241-1a0a-3e82-d8083e4ce0f7@web.de>
-        <xmqqjzz1nalp.fsf@gitster.g>
-Date:   Tue, 28 Mar 2023 06:47:41 -0700
-Message-ID: <xmqqsfdpj8ci.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Tue, 28 Mar 2023 06:59:10 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 01/17] cocci: remove dead rule from "the_repository.pending.cocci"
+Date:   Tue, 28 Mar 2023 15:58:42 +0200
+Message-Id: <patch-v2-01.17-e1e27490d60-20230328T110946Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.40.0.rc1.1034.g5867a1b10c5
+In-Reply-To: <cover-v2-00.17-00000000000-20230328T110946Z-avarab@gmail.com>
+References: <cover-00.17-00000000000-20230317T152724Z-avarab@gmail.com> <cover-v2-00.17-00000000000-20230328T110946Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+The "parse_commit_gently" macro went away in [1], so we don't need to
+carry this for its migration.
 
-> I suspect that 54463d32ef was done in a conservative way to avoid
-> unintended side effects to make ERE "enhanced".  I am not 100%
-> certain, but after reading the documentation you pointed at, I do
-> not see a valid expression without ENHANCED flag starting to mean
-> totally different thing with it (well, an extra '?' turning a
-> pattern from greedy to minimal may count as such a change in
-> semantics, but I do not see anybody sensible adding an extra '?'
-> in a pattern in the first place).
+1. ea3f7e598c8 (revision: use repository from rev_info when parsing
+   commits, 2020-06-23)
 
-Sorry, but that is nonsense.  We cannot avoid being backward
-incompatible if we suddenly flip the "enhanced" bit for BRE.  A
-sane pattern written expecting non-enhanced BRE can change its
-meaning when the "enhanced" mode is enabled.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ contrib/coccinelle/the_repository.pending.cocci | 8 --------
+ 1 file changed, 8 deletions(-)
 
-But if "enhanced" is what users want, and if that is what the other
-tools on the platform use, then perhaps flipping the "enhanced" bit
-may not be a bad idea.
+diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contrib/coccinelle/the_repository.pending.cocci
+index 747d382ff5f..23b97536da5 100644
+--- a/contrib/coccinelle/the_repository.pending.cocci
++++ b/contrib/coccinelle/the_repository.pending.cocci
+@@ -34,14 +34,6 @@ expression G;
+ + repo_parse_commit_internal(the_repository,
+   E, F, G)
+ 
+-@@
+-expression E;
+-expression F;
+-@@
+-- parse_commit_gently(
+-+ repo_parse_commit_gently(the_repository,
+-  E, F)
+-
+ @@
+ expression E;
+ @@
+-- 
+2.40.0.rc1.1034.g5867a1b10c5
 
