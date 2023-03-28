@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AF08C76196
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 17:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02BC9C761AF
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 17:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229880AbjC1RwM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 13:52:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35842 "EHLO
+        id S229882AbjC1RwN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 13:52:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229829AbjC1RwD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 13:52:03 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 600D7EB51
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 10:52:00 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id q19so10025881wrc.5
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 10:52:00 -0700 (PDT)
+        with ESMTP id S229835AbjC1RwE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 13:52:04 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61066EC55
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 10:52:01 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id t4so7863213wra.7
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 10:52:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680025918;
+        d=gmail.com; s=20210112; t=1680025919;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6P/7rgXnBxtYdDtKxOqHBic1qXczXZvszI1/b+zgZWo=;
-        b=bs9OS7vfR/5D8gPOjZlr9FsSoHBxA4SUFkeU7cY5l+L9uv3IfwzzvVwswhBikN71Dx
-         H0bqGH4qJ7QAVK1HtIgvbBb0qm+AroYrjZ9zvJYtVRHF9wmL8kpUnQZcH2fHoSFX4TGf
-         qDZxNZAItao+cn64kQR4g3TKJP54/c8PjuS+9ULLm7k7wDkKxiqvl7UVvfMa7HO8R9VP
-         0BENS94Plku0ZlsH5/ZolZgnVANtYt3qxlvxkvfY9a291JX+yGiPrsGPhkKfJoC7w8wN
-         j9yYIvoergBXxem3+sfB837ygE+uDfAK3Bvo7RxtFwaSWPfZ0Udx8TZXNmZuopxu+Rrr
-         JwAw==
+        bh=1dnhUZOb4gchAzO3NZrajGYFaK0JwbYAObXMtWCIw4Y=;
+        b=jviqV6y+WP6YrRoR6ObcUTfPv0TbUgMo0W0wwdsVIovxZUL0YEJA+sb+FEFN0EyP+M
+         1d+IeJHzDCTtA5VvBINIRIVOA+PwrRoN/1+MdnzVDsJbWdwBZVQmWyxnCaDkMqrlnmlZ
+         XP8coGQlJo434ulskrT86xEIbjQ1GTwyctcq1vZuISEnS2SXUHmGMmbqmt6zCFJXSCz3
+         x9sFw3YLwoOES3WzU8pVL95pC4R6FEbvluUo2RG5dod28vD5U2H0AI9/ylP1CbjSh/1s
+         GL5LZiFR64olT6RlWOUyoDrBzDv++6TE7osKEBgNrQDXByooyDErhNB7hZJ7fKh9DDXx
+         UjtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680025918;
+        d=1e100.net; s=20210112; t=1680025919;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6P/7rgXnBxtYdDtKxOqHBic1qXczXZvszI1/b+zgZWo=;
-        b=HbF8lFDFVpLXQX8OZnoRsPpmexUpPjAHy9EIBYJeQ3PrELh7CvTgGrPM79owSTEpM0
-         3w15DFtka6W/xJmxcpNlFhtnKxI5UE1SVBctL8QYy3XGqg9dDKhPXiN7IpF6GIecgRPW
-         ld6opt50e7EAMsIjvDbadoM4u8DvtiJE7b7QnXvaxhL2VGS/yvJJ/WY4LGzC79OnuFsm
-         wryU5D7tyb1S7/r2L2zVV+F9yy5zRl18wZu/jeH6qwRxx4mamFMI6oPtTtYKOxLL9pz7
-         UY3Wt3nl3IuSE0A2h1yVnzvlT2G/khypBet7aMHyEPKYDeSEBxggV5rVeoZAgsDMzORC
-         V1lg==
-X-Gm-Message-State: AAQBX9e1l2SGZqqG57pzpj5LUmQuAYbTiZsn7QH+hBHi9zkxCM0sJIuI
-        vBKtSGCo/X0l9AgghBQb9tsHMqXZ9Vo=
-X-Google-Smtp-Source: AKy350ZjH5CdoLonAraCoHGn9hALnSAGkwUkS6UTtNtsw+x8Y508jfCMWQ/iaQkt1ffqrDIPHqQDjA==
-X-Received: by 2002:a5d:6689:0:b0:2ce:9fd8:8e6d with SMTP id l9-20020a5d6689000000b002ce9fd88e6dmr13141910wru.8.1680025918676;
-        Tue, 28 Mar 2023 10:51:58 -0700 (PDT)
+        bh=1dnhUZOb4gchAzO3NZrajGYFaK0JwbYAObXMtWCIw4Y=;
+        b=LcIwHWbxXNFp4Ch15cAuFmEUPkuBDIVtZ61OXsJavf/DxwxezKnkWsXAmAERo7VOnJ
+         hCJcwGxdyN7oSSeRBJx8OWgKMUJmwcGc+kIqepBx6YdbNDxDIZ1EddH2QkS2FqA2VhDE
+         28WZI+yYV0fiaNqgtIf6O+jPtgmvcHhQPvnBBvIp6k4c1g+mzGFYI6c6PWC/NaACaYVo
+         y+ssIghjyrC+aAZA3GGLnP10dyt0yAUCrg9ekaI8S7KGemnUGoeuu7nNsU4O3ipUKLvB
+         yScWu3RjCx9WlGYsGHvAjPuIDXm+FSnq36bqLSvsLJ9f+4JgKGkJveh4DzUW9ODmwcOn
+         OBDg==
+X-Gm-Message-State: AAQBX9d0zlOmhnqogaxXCJdpIf9QEM+SMMqHs5R5hFFobKXcN8EbwuDR
+        i8Z7J8hmdvJpDgzeP94zMcDoXgx+ZPA=
+X-Google-Smtp-Source: AKy350aqBIlwggUmnqeD4yeNOeZv9wbKZBo85oSGJdHCBcvhmiZ9wzDuw/Q2jiX5AbcvFJLeWdS+2w==
+X-Received: by 2002:adf:fa4c:0:b0:2da:75c5:e127 with SMTP id y12-20020adffa4c000000b002da75c5e127mr11766800wrr.23.1680025919340;
+        Tue, 28 Mar 2023 10:51:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e18-20020a056000121200b002d24a188b64sm28158015wrx.112.2023.03.28.10.51.57
+        by smtp.gmail.com with ESMTPSA id t14-20020a05600001ce00b002da76acfee1sm15858449wrx.28.2023.03.28.10.51.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 10:51:58 -0700 (PDT)
-Message-Id: <e02dddd560f68a6f1abe38bb9161de783ca04be2.1680025914.git.gitgitgadget@gmail.com>
+        Tue, 28 Mar 2023 10:51:59 -0700 (PDT)
+Message-Id: <c79eaf74f89803dbc117a80ef6da65898aaa23e5.1680025914.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1463.v3.git.git.1680025914.gitgitgadget@gmail.com>
 References: <pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com>
         <pull.1463.v3.git.git.1680025914.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Mar 2023 17:51:50 +0000
-Subject: [PATCH v3 4/8] config.c: plumb the_reader through callbacks
+Date:   Tue, 28 Mar 2023 17:51:51 +0000
+Subject: [PATCH v3 5/8] config.c: remove current_config_kvi
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,244 +73,214 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-The remaining references to "cf_global" are in config callback
-functions. Remove them by plumbing "struct config_reader" via the
-"*data" arg.
+Add ".config_kvi" to "struct config_reader" and replace
+"current_config_kvi" with "the_reader.config_kvi", plumbing "struct
+config_reader" where necesssary.
 
-In both of the callbacks here, we are only reading from
-"reader->source". So in the long run, if we had a way to expose readonly
-information from "reader->source" (probably in the form of "struct
-key_value_info"), we could undo this patch (i.e. remove "struct
-config_reader" fom "*data").
+Also, introduce a setter function for ".config_kvi", which allows us to
+enforce the contraint that only one of ".source" and ".config_kvi" can
+be set at a time (as documented in the comments). Because of this
+constraint, we know that "populate_remote_urls()" was never touching
+"current_config_kvi" when iterating through config files, so it doesn't
+need to store and restore that value.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- config.c | 74 ++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 43 insertions(+), 31 deletions(-)
+ config.c | 82 +++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 43 insertions(+), 39 deletions(-)
 
 diff --git a/config.c b/config.c
-index 3a28b397c4d..cb6ff134f5f 100644
+index cb6ff134f5f..71ee36f069b 100644
 --- a/config.c
 +++ b/config.c
-@@ -62,6 +62,9 @@ struct config_reader {
+@@ -52,7 +52,24 @@ struct config_source {
+ #define CONFIG_SOURCE_INIT { 0 }
+ 
+ struct config_reader {
++	/*
++	 * These members record the "current" config source, which can be
++	 * accessed by parsing callbacks.
++	 *
++	 * The "source" variable will be non-NULL only when we are actually
++	 * parsing a real config source (file, blob, cmdline, etc).
++	 *
++	 * The "config_kvi" variable will be non-NULL only when we are feeding
++	 * cached config from a configset into a callback.
++	 *
++	 * They cannot be non-NULL at the same time. If they are both NULL, then
++	 * we aren't parsing anything (and depending on the function looking at
++	 * the variables, it's either a bug for it to be called in the first
++	 * place, or it's a function which can be reused for non-config
++	 * purposes, and should fall back to some sane behavior).
++	 */
+ 	struct config_source *source;
++	struct key_value_info *config_kvi;
+ };
+ /*
+  * Where possible, prefer to accept "struct config_reader" as an arg than to use
+@@ -61,27 +78,6 @@ struct config_reader {
+  */
  static struct config_reader the_reader;
  
- /*
-+ * FIXME The comments are temporarily out of date since "cf_global" has been
-+ * moved to the_reader, but not current_*.
-+ *
-  * These variables record the "current" config source, which
-  * can be accessed by parsing callbacks.
-  *
-@@ -76,11 +79,7 @@ static struct config_reader the_reader;
-  * at the variables, it's either a bug for it to be called in the first place,
-  * or it's a function which can be reused for non-config purposes, and should
-  * fall back to some sane behavior).
+-/*
+- * FIXME The comments are temporarily out of date since "cf_global" has been
+- * moved to the_reader, but not current_*.
 - *
-- * FIXME "cf_global" has been replaced by "the_reader.source", remove
-- * "cf_global" once we plumb "the_reader" through all of the callback functions.
-  */
--static struct config_source *cf_global;
- static struct key_value_info *current_config_kvi;
- 
+- * These variables record the "current" config source, which
+- * can be accessed by parsing callbacks.
+- *
+- * The "cf_global" variable will be non-NULL only when we are actually
+- * parsing a real config source (file, blob, cmdline, etc).
+- *
+- * The "current_config_kvi" variable will be non-NULL only when we are feeding
+- * cached config from a configset into a callback.
+- *
+- * They should generally never be non-NULL at the same time. If they are both
+- * NULL, then we aren't parsing anything (and depending on the function looking
+- * at the variables, it's either a bug for it to be called in the first place,
+- * or it's a function which can be reused for non-config purposes, and should
+- * fall back to some sane behavior).
+- */
+-static struct key_value_info *current_config_kvi;
+-
  /*
-@@ -98,8 +97,6 @@ static inline void config_reader_push_source(struct config_reader *reader,
+  * Similar to the variables above, this gives access to the "scope" of the
+  * current value (repo, global, etc). For cached values, it can be found via
+@@ -95,6 +91,8 @@ static enum config_scope current_parsing_scope;
+ static inline void config_reader_push_source(struct config_reader *reader,
+ 					     struct config_source *top)
  {
++	if (reader->config_kvi)
++		BUG("source should not be set while iterating a config set");
  	top->prev = reader->source;
  	reader->source = top;
--	/* FIXME remove this when cf_global is removed. */
--	cf_global = reader->source;
  }
- 
- static inline struct config_source *config_reader_pop_source(struct config_reader *reader)
-@@ -109,8 +106,6 @@ static inline struct config_source *config_reader_pop_source(struct config_reade
- 		BUG("tried to pop config source, but we weren't reading config");
- 	ret = reader->source;
- 	reader->source = reader->source->prev;
--	/* FIXME remove this when cf_global is removed. */
--	cf_global = reader->source;
+@@ -109,6 +107,14 @@ static inline struct config_source *config_reader_pop_source(struct config_reade
  	return ret;
  }
  
-@@ -175,6 +170,7 @@ struct config_include_data {
- 	void *data;
- 	const struct config_options *opts;
- 	struct git_config_source *config_source;
-+	struct config_reader *config_reader;
- 
- 	/*
- 	 * All remote URLs discovered when reading all config files.
-@@ -465,6 +461,7 @@ static int include_condition_is_true(struct config_source *cf,
- static int git_config_include(const char *var, const char *value, void *data)
- {
- 	struct config_include_data *inc = data;
-+	struct config_source *cf = inc->config_reader->source;
- 	const char *cond, *key;
- 	size_t cond_len;
- 	int ret;
-@@ -478,16 +475,16 @@ static int git_config_include(const char *var, const char *value, void *data)
- 		return ret;
- 
- 	if (!strcmp(var, "include.path"))
--		ret = handle_path_include(cf_global, value, inc);
-+		ret = handle_path_include(cf, value, inc);
- 
- 	if (!parse_config_key(var, "includeif", &cond, &cond_len, &key) &&
--	    cond && include_condition_is_true(cf_global, inc, cond, cond_len) &&
-+	    cond && include_condition_is_true(cf, inc, cond, cond_len) &&
- 	    !strcmp(key, "path")) {
- 		config_fn_t old_fn = inc->fn;
- 
- 		if (inc->opts->unconditional_remote_url)
- 			inc->fn = forbid_remote_url;
--		ret = handle_path_include(cf_global, value, inc);
-+		ret = handle_path_include(cf, value, inc);
- 		inc->fn = old_fn;
- 	}
- 
-@@ -2228,6 +2225,7 @@ int config_with_options(config_fn_t fn, void *data,
- 		inc.data = data;
- 		inc.opts = opts;
- 		inc.config_source = config_source;
-+		inc.config_reader = &the_reader;
- 		fn = git_config_include;
- 		data = &inc;
- 	}
-@@ -2348,7 +2346,9 @@ static struct config_set_element *configset_find_element(struct config_set *cs,
- 	return found_entry;
- }
- 
--static int configset_add_value(struct config_set *cs, const char *key, const char *value)
-+static int configset_add_value(struct config_reader *reader,
-+			       struct config_set *cs, const char *key,
-+			       const char *value)
- {
- 	struct config_set_element *e;
- 	struct string_list_item *si;
-@@ -2374,12 +2374,12 @@ static int configset_add_value(struct config_set *cs, const char *key, const cha
- 	l_item->e = e;
- 	l_item->value_index = e->value_list.nr - 1;
- 
--	if (!cf_global)
-+	if (!reader->source)
- 		BUG("configset_add_value has no source");
--	if (cf_global->name) {
--		kv_info->filename = strintern(cf_global->name);
--		kv_info->linenr = cf_global->linenr;
--		kv_info->origin_type = cf_global->origin_type;
-+	if (reader->source->name) {
-+		kv_info->filename = strintern(reader->source->name);
-+		kv_info->linenr = reader->source->linenr;
-+		kv_info->origin_type = reader->source->origin_type;
- 	} else {
- 		/* for values read from `git_config_from_parameters()` */
- 		kv_info->filename = NULL;
-@@ -2434,16 +2434,25 @@ void git_configset_clear(struct config_set *cs)
- 	cs->list.items = NULL;
- }
- 
-+struct configset_add_data {
-+	struct config_set *config_set;
-+	struct config_reader *config_reader;
-+};
-+#define CONFIGSET_ADD_INIT { 0 }
++static inline void config_reader_set_kvi(struct config_reader *reader,
++					 struct key_value_info *kvi)
++{
++	if (kvi && reader->source)
++		BUG("kvi should not be set while parsing a config source");
++	reader->config_kvi = kvi;
++}
 +
- static int config_set_callback(const char *key, const char *value, void *cb)
+ static int pack_compression_seen;
+ static int zlib_compression_seen;
+ 
+@@ -377,20 +383,17 @@ static void populate_remote_urls(struct config_include_data *inc)
  {
--	struct config_set *cs = cb;
--	configset_add_value(cs, key, value);
-+	struct configset_add_data *data = cb;
-+	configset_add_value(data->config_reader, data->config_set, key, value);
- 	return 0;
+ 	struct config_options opts;
+ 
+-	struct key_value_info *store_kvi = current_config_kvi;
+ 	enum config_scope store_scope = current_parsing_scope;
+ 
+ 	opts = *inc->opts;
+ 	opts.unconditional_remote_url = 1;
+ 
+-	current_config_kvi = NULL;
+ 	current_parsing_scope = 0;
+ 
+ 	inc->remote_urls = xmalloc(sizeof(*inc->remote_urls));
+ 	string_list_init_dup(inc->remote_urls);
+ 	config_with_options(add_remote_url, inc->remote_urls, inc->config_source, &opts);
+ 
+-	current_config_kvi = store_kvi;
+ 	current_parsing_scope = store_scope;
  }
  
- int git_configset_add_file(struct config_set *cs, const char *filename)
- {
--	return git_config_from_file(config_set_callback, filename, cs);
-+	struct configset_add_data data = CONFIGSET_ADD_INIT;
-+	data.config_reader = &the_reader;
-+	data.config_set = cs;
-+	return git_config_from_file(config_set_callback, filename, &data);
+@@ -2257,7 +2260,8 @@ int config_with_options(config_fn_t fn, void *data,
+ 	return ret;
  }
  
- int git_configset_get_value(struct config_set *cs, const char *key, const char **value)
-@@ -2558,6 +2567,7 @@ int git_configset_get_pathname(struct config_set *cs, const char *key, const cha
- static void repo_read_config(struct repository *repo)
+-static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
++static void configset_iter(struct config_reader *reader, struct config_set *cs,
++			   config_fn_t fn, void *data)
  {
- 	struct config_options opts = { 0 };
-+	struct configset_add_data data = CONFIGSET_ADD_INIT;
+ 	int i, value_index;
+ 	struct string_list *values;
+@@ -2269,14 +2273,14 @@ static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
+ 		value_index = list->items[i].value_index;
+ 		values = &entry->value_list;
  
- 	opts.respect_includes = 1;
- 	opts.commondir = repo->commondir;
-@@ -2569,8 +2579,10 @@ static void repo_read_config(struct repository *repo)
- 		git_configset_clear(repo->config);
+-		current_config_kvi = values->items[value_index].util;
++		config_reader_set_kvi(reader, values->items[value_index].util);
  
- 	git_configset_init(repo->config);
-+	data.config_set = repo->config;
-+	data.config_reader = &the_reader;
+ 		if (fn(entry->key, values->items[value_index].string, data) < 0)
+ 			git_die_config_linenr(entry->key,
+-					      current_config_kvi->filename,
+-					      current_config_kvi->linenr);
++					      reader->config_kvi->filename,
++					      reader->config_kvi->linenr);
  
--	if (config_with_options(config_set_callback, repo->config, NULL, &opts) < 0)
-+	if (config_with_options(config_set_callback, &data, NULL, &opts) < 0)
- 		/*
- 		 * config_with_options() normally returns only
- 		 * zero, as most errors are fatal, and
-@@ -2696,9 +2708,12 @@ static void read_protected_config(void)
- 		.ignore_worktree = 1,
- 		.system_gently = 1,
- 	};
-+	struct configset_add_data data = CONFIGSET_ADD_INIT;
-+
- 	git_configset_init(&protected_config);
--	config_with_options(config_set_callback, &protected_config,
--			    NULL, &opts);
-+	data.config_set = &protected_config;
-+	data.config_reader = &the_reader;
-+	config_with_options(config_set_callback, &data, NULL, &opts);
+-		current_config_kvi = NULL;
++		config_reader_set_kvi(reader, NULL);
+ 	}
  }
  
- void git_protected_config(config_fn_t fn, void *data)
-@@ -2883,6 +2898,7 @@ void git_die_config(const char *key, const char *err, ...)
-  */
- 
- struct config_store_data {
-+	struct config_reader *config_reader;
- 	size_t baselen;
- 	char *key;
- 	int do_not_match;
-@@ -2897,6 +2913,7 @@ struct config_store_data {
- 	unsigned int parsed_nr, parsed_alloc, *seen, seen_nr, seen_alloc;
- 	unsigned int key_seen:1, section_seen:1, is_keys_section:1;
- };
-+#define CONFIG_STORE_INIT { 0 }
- 
- static void config_store_data_clear(struct config_store_data *store)
+@@ -2614,7 +2618,7 @@ static void repo_config_clear(struct repository *repo)
+ void repo_config(struct repository *repo, config_fn_t fn, void *data)
  {
-@@ -2931,12 +2948,7 @@ static int store_aux_event(enum config_event_t type,
- 			   size_t begin, size_t end, void *data)
+ 	git_config_check_init(repo);
+-	configset_iter(repo->config, fn, data);
++	configset_iter(&the_reader, repo->config, fn, data);
+ }
+ 
+ int repo_config_get_value(struct repository *repo,
+@@ -2720,7 +2724,7 @@ void git_protected_config(config_fn_t fn, void *data)
  {
- 	struct config_store_data *store = data;
--	/*
--	 * FIXME Keep using "cf" so that we can avoid rewrapping a
--	 * really long line below. Remove this when "cf" gets plumbed
--	 * correctly.
--	 */
--	struct config_source *cf = cf_global;
-+	struct config_source *cf = store->config_reader->source;
+ 	if (!protected_config.hash_initialized)
+ 		read_protected_config();
+-	configset_iter(&protected_config, fn, data);
++	configset_iter(&the_reader, &protected_config, fn, data);
+ }
  
- 	ALLOC_GROW(store->parsed, store->parsed_nr + 1, store->parsed_alloc);
- 	store->parsed[store->parsed_nr].begin = begin;
-@@ -3254,9 +3266,9 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
- 	char *filename_buf = NULL;
- 	char *contents = NULL;
- 	size_t contents_sz;
--	struct config_store_data store;
-+	struct config_store_data store = CONFIG_STORE_INIT;
+ /* Functions used historically to read configuration from 'the_repository' */
+@@ -3827,8 +3831,8 @@ int parse_config_key(const char *var,
+ const char *current_config_origin_type(void)
+ {
+ 	int type;
+-	if (current_config_kvi)
+-		type = current_config_kvi->origin_type;
++	if (the_reader.config_kvi)
++		type = the_reader.config_kvi->origin_type;
+ 	else if(the_reader.source)
+ 		type = the_reader.source->origin_type;
+ 	else
+@@ -3873,8 +3877,8 @@ const char *config_scope_name(enum config_scope scope)
+ const char *current_config_name(void)
+ {
+ 	const char *name;
+-	if (current_config_kvi)
+-		name = current_config_kvi->filename;
++	if (the_reader.config_kvi)
++		name = the_reader.config_kvi->filename;
+ 	else if (the_reader.source)
+ 		name = the_reader.source->name;
+ 	else
+@@ -3884,16 +3888,16 @@ const char *current_config_name(void)
  
--	memset(&store, 0, sizeof(store));
-+	store.config_reader = &the_reader;
+ enum config_scope current_config_scope(void)
+ {
+-	if (current_config_kvi)
+-		return current_config_kvi->scope;
++	if (the_reader.config_kvi)
++		return the_reader.config_kvi->scope;
+ 	else
+ 		return current_parsing_scope;
+ }
  
- 	/* parse-key returns negative; flip the sign to feed exit(3) */
- 	ret = 0 - git_config_parse_key(key, &store.key, &store.baselen);
+ int current_config_line(void)
+ {
+-	if (current_config_kvi)
+-		return current_config_kvi->linenr;
++	if (the_reader.config_kvi)
++		return the_reader.config_kvi->linenr;
+ 	else
+ 		return the_reader.source->linenr;
+ }
 -- 
 gitgitgadget
 
