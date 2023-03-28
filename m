@@ -2,111 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CB8CC76196
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 21:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6926FC6FD18
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 22:40:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229752AbjC1VqQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 17:46:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41424 "EHLO
+        id S229682AbjC1Wkp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 18:40:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbjC1VqO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 17:46:14 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 952911712
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 14:46:13 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id z19so13049900plo.2
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 14:46:13 -0700 (PDT)
+        with ESMTP id S229730AbjC1Wkm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 18:40:42 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B412330D5
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 15:40:11 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id r11so55926704edd.5
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 15:40:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680039973;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oi14APOOv6Q1fNO63fK4l139tz0crVVtscS18fKHVKI=;
-        b=V4m/7jueSHhIkBpexONlXXi9aCfBTa+fa6HIpzc3eld/JHN+JNrg3/pUQChljk3BLb
-         TPZP/w/dT8JPCDy82rqhZmAyyhWqAHQN2uCTl/0ssi/BnofR1cwPkgxTESdjwO2h45ug
-         X10yAf/UNejfUe2zl8X+swrXlJZsZhc+gN3tEbjPMwMzm7LgPZYb/eTBQfqQGaLPUbBB
-         aaBmXc9lUZgSm/9g/QFTFlzOeElAYthhqpkEgN5NiVcLIiP5grkgpVjdLwluB3hfXn3K
-         ggT164SDl0GHPJQHOqDRHoGPbUtHZyrH3yK5QwA5uLHhgFIGljfawqEdP3pljImB0M8i
-         G/uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680039973;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+        d=google.com; s=20210112; t=1680043209;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=oi14APOOv6Q1fNO63fK4l139tz0crVVtscS18fKHVKI=;
-        b=iEfSP57xQq9Rh+c46sgattdjBgUav0oJKsF6XLi6Bxh2QQaSavsnnDhgK7ctXkR6qE
-         S9Qy69EIZrrt8mFW89YE20VOwbDdlCyWCd8oVLDIBjmRGC9nCoMG1Vj18aXM0TimRd8d
-         BtTwb7mjprhIVksxelndeMQ0xvj0K2EWUHpk6CPStdtqqDTEz+t6FXMhxrMb3JC6Zy2M
-         fTKbgHtmuBXLNjtNHXqXSkEYbO6Er+N6lTy973PbcB//KKYHz9KB87dps5KIL/if3q7k
-         3S+gM8qNlIphM22saOfg+EifOTTenM7bFapNLzqYCz2h8McLwkKgyxBtT2i3bZQIByia
-         I/jg==
-X-Gm-Message-State: AO0yUKVMclSAycTO1aSA659RsmH9zTozrYDyygfdzRcolwpCQpLY4vsm
-        1TGKohfobR0ZylLfsLtYL2w=
-X-Google-Smtp-Source: AK7set8FwBUNcoYoIRTcn9X0IxUS1xkUcYbA6l1FKzm3H/rO4XmGUgIXAqHGtNnMd6T9eRfREh7y4A==
-X-Received: by 2002:a05:6a20:811a:b0:d0:11bc:eed6 with SMTP id g26-20020a056a20811a00b000d011bceed6mr14134198pza.50.1680039972898;
-        Tue, 28 Mar 2023 14:46:12 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id j11-20020a62e90b000000b005825b8e0540sm3905173pfh.204.2023.03.28.14.46.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 14:46:12 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH 3/4] tests: drop here-doc check from internal chain-linter
-References: <20230328202043.GA1241391@coredump.intra.peff.net>
-        <20230328202819.GC1241631@coredump.intra.peff.net>
-Date:   Tue, 28 Mar 2023 14:46:12 -0700
-In-Reply-To: <20230328202819.GC1241631@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 28 Mar 2023 16:28:19 -0400")
-Message-ID: <xmqqzg7wczx7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        bh=oQsfy4uKHQEhuNJ+FKz6A+ZZxdUrWmwPGxRXJPoDQvU=;
+        b=KxNHH/gvOd7YXUuKXg7ZNK7+eqJE0UPl9G0tlHpNGtpPmwPcEIi91sZvY6PUwZXDe7
+         BAfguiqc/NfMfI8oCkytqKs9/bxqi0IgW7/GJ2ocmLDpxn1YCUn2eUzQMHjYib4bTELW
+         jKRJtDhkNYSrLB27M2d1u9sp01pd37FgUxTPbVD6PiKFDuKJaBnmLmyY6sxwrGs/R4K3
+         W5oOmR0Vl27Swe6a3HYXtdryz2rYGZrEKmMNjIlK0hOOhC0akaSgpX9LxAeiSoSvxmhf
+         ROwbd5uKWQE4uQBUda4/6SeZzzFhebXYFST2nKBl7s/CDw8NOGWU5sZuaPQd40PjyMvF
+         JPDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680043209;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oQsfy4uKHQEhuNJ+FKz6A+ZZxdUrWmwPGxRXJPoDQvU=;
+        b=NFzmNUVRcr/Rm41fSvmNgsT3rsx7ksNEJvO9oRII04qL7TVr4maM8WTienTsEyHNjr
+         PGlZvXhjxCq3D4TvJlHuM2grRO2aC9uX+3A2ZsQrukTx9cV7ifAclWQZDlxN8cx/xICr
+         z+A34WS0PmpJr4Us7FwmDpQHjbkqmI/LwJbn1HOS7BzwQboKEkj61HOaoclwio0NETq9
+         XcuhAnbMRAaXRwAAS7lC3sSZmQw1kLKxsKZ+u461eetY90OlXz+a6J+l/nHgly7NHhnk
+         IW1euvsvhZaexpmnNFx9oACyIOJGTffeFFOFjF3vpQMRZFL1vNMSKeBLvjG2FTOPEBQU
+         bKlA==
+X-Gm-Message-State: AAQBX9cY1zeRPkeaAkEoxM6wMuERC8YTymdg0/WdeU0EZVRIeJCs5xnX
+        KyKS9kEbDuubqLIkppk4xT1GOnmI18Hfenx7wAk469+Tgxs2QUj387DhZg==
+X-Google-Smtp-Source: AKy350YCiObQWB61HKEATxiz6wDDqCzckDCTY8kgniUPeaV8inR9cElontMhZnnaCizwrAx1LijpxbfbDXh0Uf2gte4=
+X-Received: by 2002:a50:8e41:0:b0:4fb:e0e8:5140 with SMTP id
+ 1-20020a508e41000000b004fbe0e85140mr8485273edx.6.1680043208666; Tue, 28 Mar
+ 2023 15:40:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Emily Shaffer <nasamuffin@google.com>
+Date:   Tue, 28 Mar 2023 15:39:56 -0700
+Message-ID: <CAJoAoZ=KrnAWV3PpfBkYNs_KHFP5O2dVYOWY3jF=CM9+d89Dpg@mail.gmail.com>
+Subject: Video conference libification eng discussion, this Thursday 16:30UTC
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hello folks,
 
-> I'd also be OK dropping this. 12% is nice, but this one test is an
-> outlier. Picking t4202 somewhat at random as a more realistic test, any
-> improvement seems to be mostly lost in the noise.
->
->  t/test-lib.sh | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index cfcbd899c5a..0048ec7b6f6 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1101,9 +1101,10 @@ test_run_ () {
->  		trace=
->  		# 117 is magic because it is unlikely to match the exit
->  		# code of other programs
-> -		if test "OK-117" != "$(test_eval_ "fail_117 && $1${LF}${LF}echo OK-\$?" 3>&1)"
-> +		test_eval_ "fail_117 && $1"
-> +		if test $? != 117
->  		then
-> -			BUG "broken &&-chain or run-away HERE-DOC: $1"
-> +			BUG "broken &&-chain: $1"
->  		fi
+Google is hosting a standing engineering discussion about libifying
+Git, for contributors interested in participating in or hearing about
+the progress of this effort. Expect this discussion to be free-form
+and casual - no powerpoints here!
 
-This "here-doc" linter is a cute trick.  With seemingly so little
-extra code, it catches a breakage in such an unexpected way.
+We're hoping to hold this meeting every Thursday at 9:30am Pacific
+(16:30 UTC) via Google Meet.
 
-Even with a very small code footprint, overhead of an extra process
-is still there, and it would be very hard to figure out what it does
-(once you are told what it does, you can probably figure out how it
-works).  These make it a "cute trick".
+To get an invite to the video conference and the notes document,
+please reply to this email. Please also add points to the agenda
+(template follows) if you want to raise awareness of them.
 
-While it is a bit sad to see it lost, the resulting code certainly
-is easier to follow, I would think.  I do not offhand know how
-valuable detecting unterminated here-doc is, compared to the
-increased clarity of hte code.
+I'll reply to this mail tomorrow-ish with the topic we'll discuss
+during the meeting, and I'll reply again afterwards with the notes.
 
-Thanks.
+ - (asynchronous) What's cooking in libification?
+   - Patches we sent regarding libification
+   - Patches for review related to the libification effort
+ - (asynchronous) What happened in the past 1-2 weeks that interested
+parties or intermittent contributors need to know?
+ - (asynchronous) Where are you stuck? What eng discussions do we want
+to have? (We'll choose a topic from this list a day ahead of the
+meeting.)
+ - Session topic: <TBD>
 
-
+Thanks, and I'm looking forward to it!
+ - Emily
