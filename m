@@ -2,339 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5393C761AF
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 17:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C609C76196
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 17:45:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229611AbjC1Rjy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 13:39:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48448 "EHLO
+        id S229661AbjC1RpP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 13:45:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229573AbjC1Rjo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 13:39:44 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 370B7AF09
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 10:39:43 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id y184so9556426oiy.8
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 10:39:43 -0700 (PDT)
+        with ESMTP id S229579AbjC1RpN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 13:45:13 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB39EC159
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 10:45:06 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id mp3-20020a17090b190300b0023fcc8ce113so15896494pjb.4
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 10:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680025182;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T5G2N1remCHj5KibBcy3jcwP9yYLNU2WQLl5EGi31pk=;
-        b=fv3X6Ju/LYxVq1OSF+THwFEvyNfaphL20ftjM1MQGrYpPJDpbhFsAkkihlgBuwL0Jq
-         fTSwRA8V6SKb2j2AwVGzBD/eCBTu5RcqbVtGVYzZ5rP8AV5v15WeYKJMvanHK0mshAIt
-         RbzaOB9dYTu7RUH3F5sdS2qnbuNlX4uii0Sk6I05bl+FhRFdFD5Srxc2zvOC27GYvHEE
-         SymEYqi/3VUkFUwK5hqplayTviw70vgemJNxB0N8uJKzFKBuxwAWbvfpp2lpo/I0UJUq
-         HuJ52fBfoLl1JZBrt8KNZ07vlEopMOnHeeE/BGXpFpxZsah6HDvi2JUW/5PUbJ1A064C
-         cd9g==
+        d=gmail.com; s=20210112; t=1680025506;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=L7TSm79LZrJj5iosR2YaRs6faxEJZL8DvWpODUg09y0=;
+        b=Pq0NZB/C89vLPWizDRGZktgb35SjxTem2Ewpv130XhPKmlokkInYsxPyYxTurwTwaL
+         wpXrgG7UIT8raIRQmvxnG0Herq8K8atM45MWAUZMfR3G14fu7sjCUTJd6Hp+v3Yc+gUi
+         nMzKm2o6VljGK7dgbCuuIy4lV3fa3Kag/3l26O79JqfMVQEdamw6YHeEiZxiwcLcWZ1C
+         6ardX4KTIemNV2RhIiNmVtCxkt5tw2XVOfIiNRV+qdVowVfG6L2gjaCWxOq3y+UkP+I5
+         3kIofdCkBA+RUHsmT8kb8IWYu2g6jf7cJR2nMSCMU/8I3RhWD0XL7ZHm4KiYIzqS2KPF
+         GRBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680025182;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T5G2N1remCHj5KibBcy3jcwP9yYLNU2WQLl5EGi31pk=;
-        b=T/XFMscyFJobyrQCiAIAZo6acEe0xj1SZKtoihC98PsWBlTaUTa+YHFAuqicOWulsE
-         6xrGZ6yavJV5IYnQGhmdwb3+Ws2qlLwWXvCO12J2rIIy4xdZha25V97iJzCqdk7yVdMh
-         onXtCYThfsO8J7+4Ixs2uQWUHgfTsTKfDXa23FaCLXWQpXKskRuY28k5NxRBMltl8QaE
-         SBAxPdlIYHBoRLMIwUcWx4CIejVLa/jOtlSsb1jsAs92iYlZb8rXUtyJYXrzbSQwKj+D
-         7N7DFJAWDTkU5iq8ipXdhDr5DUE2vp7Ox46GQEvap6e0O9YNQwJ0i6BeJGqgivtIcpms
-         iTkA==
-X-Gm-Message-State: AAQBX9dWDGWRaCJw5/PF+BXX3uPRpDBVgDrw9heM57bIoDIAbWzQsV2Y
-        EXhOHDLXqQKAM4xVbldAvvAgCXBmnew=
-X-Google-Smtp-Source: AKy350Z8/QqKPXuYXr2xz6trvSmvhDqYWVKVP0tC2ykIEluxFp+NOozImTS+aPEBJUBBSp3CjouwfQ==
-X-Received: by 2002:a54:4d04:0:b0:389:4b35:431e with SMTP id v4-20020a544d04000000b003894b35431emr2622843oix.29.1680025182198;
-        Tue, 28 Mar 2023 10:39:42 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id t129-20020a4a5487000000b0049fd5c02d25sm12834106ooa.12.2023.03.28.10.39.41
+        d=1e100.net; s=20210112; t=1680025506;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=L7TSm79LZrJj5iosR2YaRs6faxEJZL8DvWpODUg09y0=;
+        b=umxg7vn/n6QVKoi2oT0owOrnP/CVNh0VEar/r25tIdjLrfwQzsaZq5HCYXxHRauLLm
+         GD2Q3AlF/oN86j4dQy+HLiFQuaZw1vshjZAUFIc6bCzkZy4T5xgqMswfBvkjQIeZd4WJ
+         TKfUVdHGMo+qRyvrKZZFEximamG+h6raMvgJ8MmZYQnNaqUjhJ5RcxfKH1iUrLKdcpgH
+         MoF28xE3DGTJ6BJwdnSgGltm02mNj6Wc/9xXmHkU5o4RSkFwJoKOPrRQ/cFBoju+xITZ
+         hOc2f7ITpmPt4RJamx3SXNDWovSjmprb3rzSsUo1sMlYdO2H4JJMbP+/se9cp1a2w5i6
+         jhTQ==
+X-Gm-Message-State: AAQBX9fJrU3mgluWXxd+0Bu7+uOiGRHgRNzYLEwA2p4QjcOXIICpqq50
+        mEqw5VTBpe0YxaeatRagN3E=
+X-Google-Smtp-Source: AKy350ZRHlI34PS38LoT1truBrasnUnpl1IbMbDS4F5rWDpNdZkHKDiLjDyScCrbbinyRPFeqG5RXA==
+X-Received: by 2002:a17:902:f543:b0:1a1:ce5d:5a15 with SMTP id h3-20020a170902f54300b001a1ce5d5a15mr17281568plf.50.1680025506235;
+        Tue, 28 Mar 2023 10:45:06 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id b4-20020a170902a9c400b0019f3da8c2a4sm21357015plr.69.2023.03.28.10.45.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 10:39:41 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 4/6] test: avoid `path` variable
-Date:   Tue, 28 Mar 2023 11:39:30 -0600
-Message-Id: <20230328173932.3614601-5-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.39.2.13.g1fb56cf030
-In-Reply-To: <20230328173932.3614601-1-felipe.contreras@gmail.com>
-References: <20230328173932.3614601-1-felipe.contreras@gmail.com>
+        Tue, 28 Mar 2023 10:45:05 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>,
+        Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] commit-graph: fix truncated generation numbers
+References: <f8a0a869e8b0882f05cac49d78f49ba3553d3c44.1679904401.git.ps@pks.im>
+Date:   Tue, 28 Mar 2023 10:45:05 -0700
+In-Reply-To: <f8a0a869e8b0882f05cac49d78f49ba3553d3c44.1679904401.git.ps@pks.im>
+        (Patrick Steinhardt's message of "Mon, 27 Mar 2023 10:08:25 +0200")
+Message-ID: <xmqqfs9og47y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In zsh it's linked to `PATH`.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- t/t0003-attributes.sh         | 16 ++++++------
- t/t1450-fsck.sh               | 16 ++++++------
- t/t3305-notes-fanout.sh       | 12 ++++-----
- t/t4046-diff-unmerged.sh      | 48 +++++++++++++++++------------------
- t/t5329-pack-objects-cruft.sh |  8 +++---
- 5 files changed, 50 insertions(+), 50 deletions(-)
+> In 80c928d947 (commit-graph: simplify compute_generation_numbers(),
+> 2023-03-20), the code to compute generation numbers was simplified to
+> use the same infrastructure as is used to compute topological levels.
+> This refactoring introduced a bug where the generation numbers are
+> truncated when they exceed UINT32_MAX because we explicitly cast the
+> computed generation number to `uint32_t`. This is not required though:
+> both the computed value and the field of `struct commit_graph_data` are
+> of the same type `timestamp_t` already, so casting to `uint32_t` will
+> cause truncation.
+>
+> This cast can cause us to miscompute generation data overflows:
+>
+>     1. Given a commit with no parents and committer date
+>        `UINT32_MAX + 1`.
+>
+>     2. We compute its generation number as `UINT32_MAX + 1`, but
+>        truncate it to `1`.
+>
+>     3. We calculate the generation offset via `$generation - $date`,
+>        which is thus `1 - (UINT32_MAX + 1)`. The computation underflows
+>        and we thus end up with an offset that is bigger than the maximum
+>        allowed offset.
+>
+> As a result, we'd be writing generation data overflow information into
+> the commit-graph that is bogus and ultimately not even required.
+>
+> Fix this bug by removing the needless cast.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>
+> This commit applies on top of cbfe360b14 (commit-reach: add
+> tips_reachable_from_bases(), 2023-03-20), which has recently been merged
+> to next.
 
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 89b306cb11..b956b2fc29 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -7,10 +7,10 @@ TEST_CREATE_REPO_NO_TEMPLATE=1
- . ./test-lib.sh
- 
- attr_check_basic () {
--	path="$1" expect="$2" git_opts="$3" &&
-+	fpath="$1" expect="$2" git_opts="$3" &&
- 
--	git $git_opts check-attr test -- "$path" >actual 2>err &&
--	echo "$path: test: $expect" >expect &&
-+	git $git_opts check-attr test -- "$fpath" >actual 2>err &&
-+	echo "$fpath: test: $expect" >expect &&
- 	test_cmp expect actual
- }
- 
-@@ -20,18 +20,18 @@ attr_check () {
- }
- 
- attr_check_quote () {
--	path="$1" quoted_path="$2" expect="$3" &&
-+	fpath="$1" quoted_path="$2" expect="$3" &&
- 
--	git check-attr test -- "$path" >actual &&
-+	git check-attr test -- "$fpath" >actual &&
- 	echo "\"$quoted_path\": test: $expect" >expect &&
- 	test_cmp expect actual
- }
- 
- attr_check_source () {
--	path="$1" expect="$2" source="$3" git_opts="$4" &&
-+	fpath="$1" expect="$2" source="$3" git_opts="$4" &&
- 
--	git $git_opts check-attr --source $source test -- "$path" >actual 2>err &&
--	echo "$path: test: $expect" >expect &&
-+	git $git_opts check-attr --source $source test -- "$fpath" >actual 2>err &&
-+	echo "$fpath: test: $expect" >expect &&
- 	test_cmp expect actual &&
- 	test_must_be_empty err
- }
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index bca46378b2..489e03865c 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -589,9 +589,9 @@ test_expect_success 'fsck notices submodule entry pointing to null sha1' '
- 	)
- '
- 
--while read name path pretty; do
-+while read name fpath pretty; do
- 	while read mode type; do
--		: ${pretty:=$path}
-+		: ${pretty:=$fpath}
- 		test_expect_success "fsck notices $pretty as $type" '
- 		(
- 			git init $name-$type &&
-@@ -603,7 +603,7 @@ while read name path pretty; do
- 			blob=$(git rev-parse :file) &&
- 			tree=$(git rev-parse HEAD^{tree}) &&
- 			value=$(eval "echo \$$type") &&
--			printf "$mode $type %s\t%s" "$value" "$path" >bad &&
-+			printf "$mode $type %s\t%s" "$value" "$fpath" >bad &&
- 			bad_tree=$(git mktree <bad) &&
- 			git fsck 2>out &&
- 			test_i18ngrep "warning.*tree $bad_tree" out
-@@ -674,8 +674,8 @@ create_repo_missing () {
- 		unrelated=$(echo unrelated | git hash-object --stdin -w) &&
- 		git tag -m foo tag $unrelated &&
- 		sha1=$(git rev-parse --verify "$1") &&
--		path=$(echo $sha1 | sed 's|..|&/|') &&
--		rm .git/objects/$path
-+		fpath=$(echo $sha1 | sed 's|..|&/|') &&
-+		rm .git/objects/$fpath
- 	)
- }
- 
-@@ -781,11 +781,11 @@ test_expect_success 'fsck --name-objects' '
- test_expect_success 'alternate objects are correctly blamed' '
- 	test_when_finished "rm -rf alt.git .git/objects/info/alternates" &&
- 	name=$(test_oid numeric) &&
--	path=$(test_oid_to_path "$name") &&
-+	fpath=$(test_oid_to_path "$name") &&
- 	git init --bare alt.git &&
- 	echo "../../alt.git/objects" >.git/objects/info/alternates &&
--	mkdir alt.git/objects/$(dirname $path) &&
--	>alt.git/objects/$(dirname $path)/$(basename $path) &&
-+	mkdir alt.git/objects/$(dirname $fpath) &&
-+	>alt.git/objects/$(dirname $fpath)/$(basename $fpath) &&
- 	test_must_fail git fsck >out 2>&1 &&
- 	test_i18ngrep alt.git out
- '
-diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
-index 1ec1fb6715..a0d8ec85a1 100755
---- a/t/t3305-notes-fanout.sh
-+++ b/t/t3305-notes-fanout.sh
-@@ -6,10 +6,10 @@ TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- path_has_fanout() {
--	path=$1 &&
-+	fpath=$1 &&
- 	fanout=$2 &&
- 	after_last_slash=$(($(test_oid hexsz) - $fanout * 2)) &&
--	echo $path | grep -q -E "^([0-9a-f]{2}/){$fanout}[0-9a-f]{$after_last_slash}$"
-+	echo $fpath | grep -q -E "^([0-9a-f]{2}/){$fanout}[0-9a-f]{$after_last_slash}$"
- }
- 
- touched_one_note_with_fanout() {
-@@ -17,17 +17,17 @@ touched_one_note_with_fanout() {
- 	modification=$2 &&  # 'A' for addition, 'D' for deletion
- 	fanout=$3 &&
- 	diff=$(git diff-tree --no-commit-id --name-status --root -r $notes_commit) &&
--	path=$(echo $diff | sed -e "s/^$modification[\t ]//") &&
--	path_has_fanout "$path" $fanout;
-+	fpath=$(echo $diff | sed -e "s/^$modification[\t ]//") &&
-+	path_has_fanout "$fpath" $fanout;
- }
- 
- all_notes_have_fanout() {
- 	notes_commit=$1 &&
- 	fanout=$2 &&
- 	git ls-tree -r --name-only $notes_commit |
--	while read path
-+	while read fpath
- 	do
--		path_has_fanout $path $fanout || return 1
-+		path_has_fanout $fpath $fanout || return 1
- 	done
- }
- 
-diff --git a/t/t4046-diff-unmerged.sh b/t/t4046-diff-unmerged.sh
-index ffaf69335f..4998a1ce27 100755
---- a/t/t4046-diff-unmerged.sh
-+++ b/t/t4046-diff-unmerged.sh
-@@ -19,10 +19,10 @@ test_expect_success setup '
- 		do
- 			for t in o x
- 			do
--				path="$b$o$t" &&
--				case "$path" in ooo) continue ;; esac &&
--				paths="$paths$path " &&
--				p="	$path" &&
-+				fpath="$b$o$t" &&
-+				case "$fpath" in ooo) continue ;; esac &&
-+				paths="$paths$fpath " &&
-+				p="	$fpath" &&
- 				case "$b" in x) echo "$m1$p" ;; esac &&
- 				case "$o" in x) echo "$m2$p" ;; esac &&
- 				case "$t" in x) echo "$m3$p" ;; esac ||
-@@ -36,22 +36,22 @@ test_expect_success setup '
- '
- 
- test_expect_success 'diff-files -0' '
--	for path in $paths
-+	for fpath in $paths
- 	do
--		>"$path" &&
--		echo ":000000 100644 $ZERO_OID $ZERO_OID U	$path" || return 1
-+		>"$fpath" &&
-+		echo ":000000 100644 $ZERO_OID $ZERO_OID U	$fpath" || return 1
- 	done >diff-files-0.expect &&
- 	git diff-files -0 >diff-files-0.actual &&
- 	test_cmp diff-files-0.expect diff-files-0.actual
- '
- 
- test_expect_success 'diff-files -1' '
--	for path in $paths
-+	for fpath in $paths
- 	do
--		>"$path" &&
--		echo ":000000 100644 $ZERO_OID $ZERO_OID U	$path" &&
--		case "$path" in
--		x??) echo ":100644 100644 $blob1 $ZERO_OID M	$path"
-+		>"$fpath" &&
-+		echo ":000000 100644 $ZERO_OID $ZERO_OID U	$fpath" &&
-+		case "$fpath" in
-+		x??) echo ":100644 100644 $blob1 $ZERO_OID M	$fpath"
- 		esac || return 1
- 	done >diff-files-1.expect &&
- 	git diff-files -1 >diff-files-1.actual &&
-@@ -59,12 +59,12 @@ test_expect_success 'diff-files -1' '
- '
- 
- test_expect_success 'diff-files -2' '
--	for path in $paths
-+	for fpath in $paths
- 	do
--		>"$path" &&
--		echo ":000000 100644 $ZERO_OID $ZERO_OID U	$path" &&
--		case "$path" in
--		?x?) echo ":100644 100644 $blob2 $ZERO_OID M	$path"
-+		>"$fpath" &&
-+		echo ":000000 100644 $ZERO_OID $ZERO_OID U	$fpath" &&
-+		case "$fpath" in
-+		?x?) echo ":100644 100644 $blob2 $ZERO_OID M	$fpath"
- 		esac || return 1
- 	done >diff-files-2.expect &&
- 	git diff-files -2 >diff-files-2.actual &&
-@@ -74,12 +74,12 @@ test_expect_success 'diff-files -2' '
- '
- 
- test_expect_success 'diff-files -3' '
--	for path in $paths
-+	for fpath in $paths
- 	do
--		>"$path" &&
--		echo ":000000 100644 $ZERO_OID $ZERO_OID U	$path" &&
--		case "$path" in
--		??x) echo ":100644 100644 $blob3 $ZERO_OID M	$path"
-+		>"$fpath" &&
-+		echo ":000000 100644 $ZERO_OID $ZERO_OID U	$fpath" &&
-+		case "$fpath" in
-+		??x) echo ":100644 100644 $blob3 $ZERO_OID M	$fpath"
- 		esac || return 1
- 	done >diff-files-3.expect &&
- 	git diff-files -3 >diff-files-3.actual &&
-@@ -87,9 +87,9 @@ test_expect_success 'diff-files -3' '
- '
- 
- test_expect_success 'diff --stat' '
--	for path in $paths
-+	for fpath in $paths
- 	do
--		echo " $path | Unmerged" || return 1
-+		echo " $fpath | Unmerged" || return 1
- 	done >diff-stat.expect &&
- 	echo " 0 files changed" >>diff-stat.expect &&
- 	git diff --cached --stat >diff-stat.actual &&
-diff --git a/t/t5329-pack-objects-cruft.sh b/t/t5329-pack-objects-cruft.sh
-index 303f7a5d84..86838d2b0f 100755
---- a/t/t5329-pack-objects-cruft.sh
-+++ b/t/t5329-pack-objects-cruft.sh
-@@ -28,8 +28,8 @@ basic_cruft_pack_tests () {
- 				git rev-list --objects --no-object-names base..loose |
- 				while read oid
- 				do
--					path="$objdir/$(test_oid_to_path "$oid")" &&
--					printf "%s %d\n" "$oid" "$(test-tool chmtime --get "$path")" ||
-+					fpath="$objdir/$(test_oid_to_path "$oid")" &&
-+					printf "%s %d\n" "$oid" "$(test-tool chmtime --get "$fpath")" ||
- 					echo "object list generation failed for $oid"
- 				done |
- 				sort -k1
-@@ -413,8 +413,8 @@ test_expect_success 'loose objects mtimes upsert others' '
- 		git repack &&
- 
- 		tip="$(git rev-parse cruft)" &&
--		path="$objdir/$(test_oid_to_path "$tip")" &&
--		test-tool chmtime --get +1000 "$path" >expect &&
-+		fpath="$objdir/$(test_oid_to_path "$tip")" &&
-+		test-tool chmtime --get +1000 "$fpath" >expect &&
- 
- 		git checkout main &&
- 		git branch -D other &&
--- 
-2.39.2.13.g1fb56cf030
+The patch is clearly explained and the change looks quite
+straight-forward.  Derrick, Ack?
 
+Thanks.
