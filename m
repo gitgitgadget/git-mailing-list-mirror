@@ -2,134 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01619C76196
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 14:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2E04C6FD18
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 14:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229718AbjC1OEU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 10:04:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46182 "EHLO
+        id S231193AbjC1OGN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 10:06:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229611AbjC1OET (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 10:04:19 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF9E6C650
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 07:03:04 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id o2so11751070plg.4
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 07:03:04 -0700 (PDT)
+        with ESMTP id S230378AbjC1OGL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 10:06:11 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A05ECA1E
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 07:04:54 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id i5-20020a05600c354500b003edd24054e0so9504622wmq.4
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 07:04:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680012167;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=HkLNbb3R6R5EOeupHUL0fRYt1fFuyBx9NbrhIHcHTZk=;
-        b=ioMD+4WVujvdHQsvFcrbMIEc++tGvAPhKaHRHq3mPzBy4gAex3MBjS7ieRVGGf5h8X
-         1Dj2mtqCdXnbFsoPjqReDDUty6AUwUnb8iAW50OzyObJfx3K1Kdsp2jgF97eri5pCz3M
-         OikFic4A4+un6Hqzad9XkYcNYugfzRsQYVqrmdjb4FmcV3d9CENX5hjIPQgUz9F7LL9t
-         1JgYDp31JXiPi/64cD/k93kPF5Rl/AbwM3NLnEBdAY+ogxCMFOXMdz9pORAp4DkyaqI3
-         qgNZ6gzDC7bqufl7dED+EoOlGLxn5hf3AfSEJ56LAYkiV8QaAbeVkoSLSmzaVrp+iMVX
-         PUNA==
+        d=gmail.com; s=20210112; t=1680012276;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fKdoz8Xp6iodDGIZKsiD48q69nz9jdau8wljbxb+fM0=;
+        b=E5fCkw1YJ0S2owCl0jGxYMMfXSPljIOwyUcK2RkpFLFRRvHRHnv9T5Y52Q8G43AkBk
+         AZEJtO5MThBFEx+ZZDzUlqbKgr1+mtX9fRHgBkP8571Xd0gbW3v4zKeiklOnQjmOMb1+
+         JSndV5hAp4kgrOyKwhcKr97mBXKSdYimBtTkxbqf+phL4QqwooiDnDKJUOswBgU9qYQ/
+         xdj1LPb30B/wbRv2Wj6i7vMmmABl/4N/g2Z6iQpr0gqh0442+oq9+U7DtXH0uwT92aA0
+         I6LL50bU79ChHHGvxVBo59o09+xZJLn0TI9rkSNC5miCHb4b39C9GSslDY7sLxAhM9pZ
+         QGkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680012167;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=HkLNbb3R6R5EOeupHUL0fRYt1fFuyBx9NbrhIHcHTZk=;
-        b=F/lju+rZCPmZknrI4BH6sK0K0uY2HwrsH3hqIU5hW/dT+3vWlN0XNZdO6WQed2JPQe
-         zT7TTFnNByWT+gRZVWENO8Pin/+5kDcZ167UTNw82D1n/Ircs4RGcu0K/8DEOuLojN3y
-         cQ7iWaOr0DrQTueIriHNtYMTsCz4p0iICOiyGSkbIusv5kEKgor6hy1RgwTuw4bJCcEv
-         FR0oAzb0lDwTAz7b0VE8OXA0rPgTt8ChsvG2bB0w0hmkzkJu2FOEavmburhkNdyvLSZr
-         GxjwNQajdjcnET1pCXINgN/xNY/B+mg6Q5CUY466ZI65Qzp9CMPFPeqnzy9gTdHavg9J
-         VJZw==
-X-Gm-Message-State: AAQBX9ev6AhmpLv0Ok0zGnDS9knEtMDDOYcfEeEtf0N9sDTvk6lgHl8P
-        P5x8++QPqQseNl1JzXN+pilov9XuC6s=
-X-Google-Smtp-Source: AKy350YV0x8c5mFa0AqenMGhk/XPhqBkqBDdlc37aHVu5MoJiuBwpxiisnM8sFfq499iohefr83Tng==
-X-Received: by 2002:a17:902:d101:b0:1a1:c671:8bc9 with SMTP id w1-20020a170902d10100b001a1c6718bc9mr12574863plw.7.1680012167473;
-        Tue, 28 Mar 2023 07:02:47 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id g5-20020a170902c38500b0019cbec6c17bsm21163045plg.190.2023.03.28.07.02.47
+        d=1e100.net; s=20210112; t=1680012276;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fKdoz8Xp6iodDGIZKsiD48q69nz9jdau8wljbxb+fM0=;
+        b=k0J8X+wSKs4u9JA7hPeLClGLPkqokPq9JIXmcXOJMldMYE7Se5Df54q2l/XCT6KKYG
+         CNUN00WhiyyPzUL4oEvtWueP2Vt8civMJgvg2mCBj5+wYfzKaTeZ7fXX3RWroSA+pcbq
+         DwIHlnMmG7XcrTU+DTGsYv2ajtlM5tZukt2f96pO+EtrL3acx5xSDmGJbedmd7VGwNC7
+         ypv6xFh+PjnQs8yUMDay9lTGK3aOcCfr93IWUuPnslujeMsy89X6Cdq8GRn9kX4xlKhI
+         oyULujAC0GQoNwhkQ8h96hZebcWnK65C6KjwU36rwAeC5audy6o8Zw9Zodotgg/IcCRp
+         j0kw==
+X-Gm-Message-State: AO0yUKWzbEnjR+LFlJxF0QoS99iKlH3xz+Lrptz3EJVD5P+Jos93kcXj
+        u2JhXocPW+6nrD/a8hUirKKJUlMXHKY5Ug==
+X-Google-Smtp-Source: AK7set/62/2yhZ3ltIl2aEvs4a3i0aVPWPm1u1mhdHshuejqsuY0Ybk92lqd/uMn/mCFc6c86bGPhw==
+X-Received: by 2002:a7b:cd88:0:b0:3ee:7061:1bdd with SMTP id y8-20020a7bcd88000000b003ee70611bddmr12342922wmj.4.1680012276227;
+        Tue, 28 Mar 2023 07:04:36 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n10-20020a05600c3b8a00b003ede3f5c81fsm12903622wms.41.2023.03.28.07.04.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Mar 2023 07:02:47 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] sequencer: beautify subject of reverts of reverts
-References: <20230323162234.995465-1-oswald.buddenhagen@gmx.de>
-Date:   Tue, 28 Mar 2023 07:02:46 -0700
-Message-ID: <xmqqtty5ht2x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Tue, 28 Mar 2023 07:04:35 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>, raymond@heliax.dev,
+        zweiss@equinix.com,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v8 0/9] config API: make "multi" safe, fix segfaults, propagate "ret"
+Date:   Tue, 28 Mar 2023 16:04:19 +0200
+Message-Id: <cover-v8-0.9-00000000000-20230328T140126Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.40.0.rc1.1034.g5867a1b10c5
+In-Reply-To: <cover-v7-0.9-00000000000-20230308T090513Z-avarab@gmail.com>
+References: <cover-v7-0.9-00000000000-20230308T090513Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
+This series fixes numerous segfaults in config API users, because they
+didn't expect *_get_multi() to hand them a string_list with a NULL in
+it given config like "[a] key" (note, no "="'s).
 
-> diff --git a/sequencer.c b/sequencer.c
-> index 3be23d7ca2..853b4ed334 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2234,6 +2234,9 @@ static int do_pick_commit(struct repository *r,
->  		if (opts->commit_use_reference) {
->  			strbuf_addstr(&msgbuf,
->  				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-> +		} else if (starts_with(msg.subject, "Revert \"")) {
-> +			strbuf_addstr(&msgbuf, "Reapply ");
-> +			strbuf_addstr(&msgbuf, msg.subject + 7);
->  		} else {
->  			strbuf_addstr(&msgbuf, "Revert \"");
->  			strbuf_addstr(&msgbuf, msg.subject);
+A larger general overview at v1[1], but note the API changes in
+v2[2]. Changes since v7[3]:
 
-Two and half comments:
+* A trivial documentation change to 3/9, to clarify which doc in
+  config.h refer to what. As noted in the v7 discussion I think that
+  config.h could use some larger cleanups in this area, but let's
+  leave that for some future topic.
 
- * The hard-coded +7 looks fragile.  Perhaps use skip_prefix?
+Branch & passing CI for this at:
+https://github.com/avar/git/tree/avar/have-git_configset_get_value-use-dest-and-int-pattern-8
 
- * During transition to introduce a new version of Git with this
-   feature, when reverting an existing revert of a revert, care must
-   be taken.  Such a commit would begin as
+1. https://lore.kernel.org/git/cover-00.10-00000000000-20221026T151328Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/cover-v2-0.9-00000000000-20221101T225822Z-avarab@gmail.com/
+3. https://lore.kernel.org/git/cover-v7-0.9-00000000000-20230308T090513Z-avarab@gmail.com/
 
-	Revert "Revert ...
+Ævar Arnfjörð Bjarmason (9):
+  config tests: cover blind spots in git_die_config() tests
+  config tests: add "NULL" tests for *_get_value_multi()
+  config API: add and use a "git_config_get()" family of functions
+  versioncmp.c: refactor config reading next commit
+  config API: have *_multi() return an "int" and take a "dest"
+  for-each-repo: error on bad --config
+  config API users: test for *_get_value_multi() segfaults
+  config API: add "string" version of *_value_multi(), fix segfaults
+  for-each-repo: with bad config, don't conflate <path> and <cmd>
 
-   and turning it to
+ builtin/for-each-repo.c              |  14 ++--
+ builtin/gc.c                         |  15 ++--
+ builtin/log.c                        |   6 +-
+ builtin/submodule--helper.c          |   7 +-
+ builtin/worktree.c                   |   3 +-
+ config.c                             | 109 ++++++++++++++++++++++-----
+ config.h                             |  72 +++++++++++++++---
+ pack-bitmap.c                        |   6 +-
+ submodule.c                          |   3 +-
+ t/helper/test-config.c               |  28 ++++++-
+ t/t0068-for-each-repo.sh             |  19 +++++
+ t/t1308-config-set.sh                | 108 +++++++++++++++++++++++++-
+ t/t3309-notes-merge-auto-resolve.sh  |   7 +-
+ t/t4202-log.sh                       |  15 ++++
+ t/t5304-prune.sh                     |  12 ++-
+ t/t5310-pack-bitmaps.sh              |  20 +++++
+ t/t5552-skipping-fetch-negotiator.sh |  16 ++++
+ t/t7004-tag.sh                       |  17 +++++
+ t/t7413-submodule-is-active.sh       |  16 ++++
+ t/t7900-maintenance.sh               |  38 ++++++++++
+ versioncmp.c                         |  22 ++++--
+ 21 files changed, 481 insertions(+), 72 deletions(-)
 
-	Reapply "Revert ...
+Range-diff against v7:
+ 1:  9f297a35e14 =  1:  b600354c0f6 config tests: cover blind spots in git_die_config() tests
+ 2:  45d483066ef =  2:  49908f0bcf3 config tests: add "NULL" tests for *_get_value_multi()
+ 3:  a977b7b188f !  3:  d163b3d04ff config API: add and use a "git_config_get()" family of functions
+    @@ config.h: void git_configset_clear(struct config_set *cs);
+       * value in the 'dest' pointer.
+       */
+      
+    ++/**
+    ++ * git_configset_get() returns negative values on error, see
+    ++ * repo_config_get() below.
+    ++ */
+     +RESULT_MUST_BE_USED
+     +int git_configset_get(struct config_set *cs, const char *key);
+     +
+ 4:  3a5a323cd91 =  4:  d7dfedb7225 versioncmp.c: refactor config reading next commit
+ 5:  dced12a40d2 =  5:  840fb9d5c74 config API: have *_multi() return an "int" and take a "dest"
+ 6:  d910f7e3a27 =  6:  75a68b14217 for-each-repo: error on bad --config
+ 7:  57db0fcd91f =  7:  a78056e2748 config API users: test for *_get_value_multi() segfaults
+ 8:  b374a716555 =  8:  686b512c3df config API: add "string" version of *_value_multi(), fix segfaults
+ 9:  6791e1f6f85 =  9:  6fce633493b for-each-repo: with bad config, don't conflate <path> and <cmd>
+-- 
+2.40.0.rc1.1034.g5867a1b10c5
 
-   may not be a good way to label such a reversion of a double
-   revert without end-user confusion.  As it is very likely that
-   such a reversion commit was created by existing versions of Git,
-   the easiest and least confusing way out would be to notice and
-   refrain from touching such a commit.
-
- * The change lacks tests.
-
-Removal of hardcoded +7 (i.e. the first point) may look like this.
-
- sequencer.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git i/sequencer.c w/sequencer.c
-index 853b4ed334..520113ec63 100644
---- i/sequencer.c
-+++ w/sequencer.c
-@@ -2227,6 +2227,8 @@ static int do_pick_commit(struct repository *r,
- 	 */
- 
- 	if (command == TODO_REVERT) {
-+		const char *original_title;
-+
- 		base = commit;
- 		base_label = msg.label;
- 		next = parent;
-@@ -2234,9 +2236,9 @@ static int do_pick_commit(struct repository *r,
- 		if (opts->commit_use_reference) {
- 			strbuf_addstr(&msgbuf,
- 				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
--		} else if (starts_with(msg.subject, "Revert \"")) {
-+		} else if (skip_prefix(msg.subject, "Revert \"", &original_title)) {
--			strbuf_addstr(&msgbuf, "Reapply ");
-+			strbuf_addstr(&msgbuf, "Reapply \"");
--			strbuf_addstr(&msgbuf, msg.subject + 7);
-+			strbuf_addstr(&msgbuf, original_title);
- 		} else {
- 			strbuf_addstr(&msgbuf, "Revert \"");
- 			strbuf_addstr(&msgbuf, msg.subject);
