@@ -2,158 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 645F2C6FD18
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 16:05:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B8D1C76196
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 16:11:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230103AbjC1QFw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 12:05:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36896 "EHLO
+        id S231203AbjC1QLX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 12:11:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbjC1QFv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 12:05:51 -0400
-X-Greylist: delayed 907 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 28 Mar 2023 09:05:48 PDT
-Received: from m13153.mail.163.com (m13153.mail.163.com [220.181.13.153])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 06ECDD9
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 09:05:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-        Message-ID; bh=fjwEGXBKLEog3dhqG0rbf2csF7IkT39lXk6/jBkxT0Q=; b=c
-        0C/VwCy+FzQAtAN22jtogmELPvE0bFw1OP0WQvDCtFSZGe92ngSy7liqcdBcdvWA
-        UIt4/sjFuG9tvhK2MLbuOs1x1h+9LYLeSu1yGfpHU70awVbq+/UbhJHLdmrJeROU
-        XvilMASiOffJDbtDZaG7hAYHDS+HKMnTCNLBwZ6kuc=
-Received: from 18994118902$163.com ( [183.255.39.33] ) by
- ajax-webmail-wmsvr153 (Coremail) ; Tue, 28 Mar 2023 23:50:32 +0800 (CST)
-X-Originating-IP: [183.255.39.33]
-Date:   Tue, 28 Mar 2023 23:50:32 +0800 (CST)
-From:   "Zhang Yi" <18994118902@163.com>
-To:     git@vger.kernel.org, christian.couder@gmail.com,
-        hariom18599@gmail.com
-Subject: [GSOC] [PROPOSAL v1] Draft of proposal for "Unify ref-filter
- formats with other pretty formats"
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2023 www.mailtech.cn 163com
-X-NTES-SC: AL_QuyTAvyat04o5CKfYukXn0oVgu88UcCzvPok34ZQOZk0kizuwg0eUkZhA1b6ysyPGweeiSGtWTp0zsNZR61JT5MgNYub9RvB3f1K60k9vIMG
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+        with ESMTP id S229809AbjC1QLV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 12:11:21 -0400
+Received: from bluemchen.kde.org (bluemchen.kde.org [209.51.188.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BA56BA
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 09:11:20 -0700 (PDT)
+Received: from ugly.fritz.box (localhost [127.0.0.1])
+        by bluemchen.kde.org (Postfix) with ESMTP id 6B141202E9
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 12:11:18 -0400 (EDT)
+Received: by ugly.fritz.box (masqmail 0.3.4, from userid 1000)
+        id 1phBuo-Upb-00
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 18:11:18 +0200
+Date:   Tue, 28 Mar 2023 18:11:18 +0200
+From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] rebase: implement --rewind
+Message-ID: <ZCMRpnS9gzN1Rlbh@ugly>
+Mail-Followup-To: git@vger.kernel.org
+References: <20230323162235.995645-1-oswald.buddenhagen@gmx.de>
+ <7bd63d7e-ad13-d5b8-54ea-ba5f81da0c17@gmx.de>
 MIME-Version: 1.0
-Message-ID: <4cb30507.79cd.18728e9ee58.Coremail.18994118902@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: mcGowADXuLTJDCNkvdcCAA--.20186W
-X-CM-SenderInfo: zprymmqurrmmmqsbiqqrwthudrp/1tbiZQlA-l8ZXi9F8AAAsQ
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <7bd63d7e-ad13-d5b8-54ea-ba5f81da0c17@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGksIHRoZXJlIGlzIGEgbXkgZmlyc3QgdmVyc29pbiBvZiBwcm9wb3NhbCBmb3IgIlVuaWZ5IHJl
-Zi1maWx0ZXIgZm9ybWF0cyB3aXRoIG90aGVyIApwcmV0dHkgZm9ybWF0cyIuIFRoZXJlIG1heSBi
-ZSBtYW55IGJhY2t3YXJkcy4gSSdtIHJlYWR5IGZvciB0aGUgY29ycmVjdGlvbi4KClRoYW5rcyBm
-b3IgeW91ciBhdHRlbnRpb24uCgoqIFVuaWZ5IHJlZi1maWx0ZXIgZm9ybWF0cyB3aXRoIG90aGVy
-IHByZXR0eSBmb3JtYXRzCgoqIFBlcnNvbmFsIEluZm9ybWF0aW9uCgpGdWxsIG5hbWU6IFpoYW5n
-IFlpCgpFLW1haWw6IDE4OTk0MTE4OTAyQDE2My5jb20KVGVsOiAoKzg2KTE4OTk0MTE4OTAyCgpF
-ZHVjYXRpb246IFd1aGFuIFVuaXZlcnNpdHkgb2YgVGVjaG5vbG9neSAoQ2hpbmEpCk1ham9yOiBD
-b21wdXRlciBlbmdpbmVlcmluZyAKWWVhcjogRmlyc3QteWVhciBwb3N0Z3JhZHVhdGUgc3R1ZGVu
-dAoKR2l0aHViOiBodHRwczovL2dpdGh1Yi5jb20vemhhbnlpMjIzMzMKCiogU3lub3BzaXMKCkdp
-dCBoYXMgYXQgbGVhc3QgZm91ciBpbXBsZW1lbnRzIHRvIGZvcm1hdCBjb21tYW5kIG91dHB1dCwg
-d2hpY2ggbWFrZXMgY2hhb3MgYW5kCmhpbmRlciBpbXByb3ZlbWVudCBvZiBjb2RlIHF1YWxpdHku
-CgpBaW0gdG8gdW5pZnkgdGhlIGRpZmZlcmVudCBpbXBsZW1lbnRhdGlvbnMgdG8gZm9ybWF0IG91
-dHB1dCBmb3IgZGlmZmVyZW50CmNvbW1hbmRzLCB3ZSB3YW50IHRvIHRyYW5zZm9ybSBwcmV0dHkg
-aW50byByZWYtZmlsdGVyIGZvcm1hdHRpbmcgbG9naWMuIEFjY29yZGluZwpJbiB0aGUgcHJlc2Vu
-dCBzaXR1YXRpb24sIEkgbmVlZCB0byBhZGQgbW9yZSByZWYtZmlsdGVyIGF0b21zIHRvIHJlcGxh
-Y2UKcHJldHR5LgoKSW4gbXkgbWluZCwgdGhlcmUgYXJlIDYgc3RlcHMgbG9naWNhbGx5OgoxLiBD
-aGVjayBhbmQgZmluZCBhIHByZXR0eSBhdG9tIHdoaWNoIGhhcyBubyBzdWJzdGl0dXRlIGluIHJl
-Zi1maWx0ZXIuCjIuIEFkZCByZWFzb25hYmxlIHRlc3Qgc2NyaXB0cyBhbmQgbWF5YmUgZG9jdW1l
-bnRzIGluIGFkdmFuY2UuCjMuIEJ1aWxkIGEgcmVmLWZpbHRlciBhdG9tIGFuZCBpdHMgYXJndW1l
-bnRzIHRvIHJlcGxhY2UgYSBwcmV0dHkgYXRvbS4KNC4gTWFrZSBhIHRyYW5zbGF0aW9uIGJldHdl
-ZW4gcHJldHR5IGZvcm1hdHMgYW5kIHJlZi1maWx0ZXIgYXJndW1lbnRzLgo1LiBNb2RpZnkgdGhl
-IHByZXR0eSBjb2RlIHRvIHJlZi1maWx0ZXIgbG9naWMuCjYuIFJlY2hlY2sgZG9jdW1lbnRzIGFu
-ZCBydW4gdGVzdCBzY3JpcHRzLgoKKiBCZW5lZml0cyB0byBDb21tdW5pdHkKCkknbSB3aWxsaW5n
-IHRvIHN0YXkgYXJvdW5kIGFmdGVyIHRoZSBwcm9qZWN0LiBCeSB0aGF0IHRpbWUsIEkgd2lsbCBi
-ZSBpbiBteQpzZWNvbmQgeWVhciB3aXRob3V0IGNsYXNzZXMuIEFuZCBteSB0dXRvciBoYXMgYW4g
-b3BlbiBtaW5kIGFib3V0IG15IHJlcXVlc3QgdG8KaW52b3ZsZSBpbiBhbiBvcGVuIHNvdXJjZSBw
-cm9qZWN0IGJ5IG5vdy4gQ29uc2lkZXIgdGhlIHN1YmplY3RpdmUgYW5kIG9iamVjdGl2ZQpjb25k
-aXRpb25zLCBJIHRoaW5rIHRoZXJlIGlzIGEgaGlnaCBwb3NzaWJpbGl0eSB0aGF0IEkgd2lsbCBz
-dGF5IGFyb3VuZC4KClBhcnRpY3VsYXJseSwgSSB3aXNoIHRvIGJlIGEgY28tbWVudG9yIGlmIEkg
-aGF2ZSB0aGUgYWJpbGl0eS4gVGhlcmUgbWF5IGJlIHNvbWUKZGlmZmljdWx0aWVzLiBCdXQgd2hh
-dCBJIGxlYXJuIGZyb20gbXkgZmluaXRlIGV4cGVyaWVuY2UgaXMgdGhhdCB5b3Ugc2hvdWxkIG5v
-dApyZWZ1c2Ugc29tZXRoaW5nIHBvc2l0aXZlIGp1c3QgYmVjYXVzZSBvZiB0aGUgZGlmZmljdWx0
-aWVzIGluIHRoZSBtaW5kLiBUaGUKZnJlc2ggbmV3IGpvYiBtYXkgYmUgZGlmZmljdWx0LCBidXQg
-aXQgY2FuIHNob3cgbWUgdGhlIHBvc3NpYmlsaXRpZXMgb2YgdGhlCndvcmxkLCB3aGljaCBtZWFu
-cyBjaGFuZ2UgbXkgbWluZC4KCldoYXQncyBtb3JlLCBJIHRyaWVkIHRvIHBlcnN1YWRlIGEgc2No
-b29sbWF0ZSB3aG8gSSB0aGluayBpcyBraW5kIG9mIG9ic2Vzc2VkCndpdGggdGVjaG5vbG9neSB0
-byB0YWtlIHBhcnQgaW4gYW4gb3BlbiBzb3VyY2UgY29tbXVuaXR5IGZvciBib3RoIHNlbGYtZ3Jv
-d3RoIGFuZApjb21wYW5pb24uIEFuZCBJIGZhaWxlZCwgYmVjYXVzZSBoZSB0aGlua3MgaXQgaXMg
-aGFyZC4gIEl0J3MgYWx3YXlzIGhhcmQgdG8KY2hhbmdlIE90aGVycycgZGVlcC1yb290ZWQgaWRl
-YXMgYnkgd29yZC4gQnV0IEkgdGhpbmsgdGhlIGFjdGlvbnMgc3BlYWsgbG91ZGVyCnRoYW4gd29y
-ZHMuIE1heWJlIGFmdGVyIHRoZSBwcm9qZWN0LCBJIGNhbiBjaGFuZ2UgdGhlIG1pbmRzIG9mIHBl
-b3BsZSBhcm91bmQgbWUKYWJvdXQgam9pbmluZyBhbiBvcGVuIHNvdXJjZSBjb21tdW5pdHkuIFRo
-ZXJlIG1heSBiZSBubyB2aXN1YWwgYmVuZWZpdHMgdG8gdGhlCmNvbW11bml0eSBvZiBnaXQgYnV0
-IHNob3VsZCBiZSBiZW5lZmljaWFsIHRvIHRoZSB3aG9sZSBvcGVuIHNvdXJjZSBjb21tdW5pdHku
-CgoqIE1pY3JvcHJvamVjdAoKdDk3MDA6IG1vZGVybml6ZSB0ZXN0IHNjcmlwdHMgWzFdCgpUaGUg
-bWljcm9wcm9qZWN0IHBhdGNoZXMgaGF2ZSBiZWVuIG1lcmdlZC4gVGhlIG1lcmdlIGluZm8gaXMg
-YXMgYmVsb3c6Cgpjb21taXQgODc2MGEyYjNjNjM0NzhlODc2NmI3ZmY0NWQ3OThiZDFiZTQ3ZjUy
-ZApNZXJnZTogYTJkMmI1MjI5ZSA1MDlkM2Y1MTAzCkF1dGhvcjogSnVuaW8gQyBIYW1hbm8gPGdp
-dHN0ZXJAcG9ib3guY29tPgpEYXRlOiAgIFR1ZSBGZWIgMjggMTY6Mzg6NDcgMjAyMyAtMDgwMAoK
-ICAgIE1lcmdlIGJyYW5jaCAnenkvdDk3MDAtc3R5bGUnCgogICAgVGVzdCBzdHlsZSBmaXhlcy4K
-CiAgICAqIHp5L3Q5NzAwLXN0eWxlOgogICAgICB0OTcwMDogbW9kZXJuaXplIHRlc3Qgc2NyaXB0
-cwoKKiBQbGFuCgoqKiBEZWxpdmVyYWJsZXMKCjEuIERvY3VtZW50cy4KMi4gVGVzdCBzY3JpcHRz
-LgozLiBNb2RpZmllZCByZWYtZmlsdGVyLgogICAzLjEuICBOZXcgYXRvbSBhbmQgYXJndW1lbnRz
-CiAgIDMuMi4gTmV3IGZ1bmN0aW9ucyBsaWtlIGZvb19hdG9tX3BhcnNlciwgZ3JhYl9mb28KICAg
-My4zLiBtb2RpZmllZCBmdW5jdGlvbnMgbGlrZSBncmFiX3ZhbHVlcyBhbmQgc3RhdGljIHN0cnVj
-dC4KNC4gTW9kaWZpZWQgcHJldHR5IHdoaWNoIGlzIHBsdWdnZWQgaW4gYnkgcmVmLWZpbHRlci4K
-CioqIFRpbWVsaW5lIGFuZCBmZWFzaWJpbGl0eQoKSXQgc2VlbXMgaW1wb3NzaWJsZSBmb3IgbWUg
-dG8gZXN0aW1hdGUgdGhlIHRpbWUgY29uc3VtZWQuIFRoZSBpZGVhIHBhZ2UgWzJdCnNob3dzIHRo
-ZSBleHBlY3RlZCB0aW1lIGlzIGJldHdlZW4gMTc1IGhvdXJzIGFuZCAzNTAgaG91cnMuIFNvIEkg
-Y2hlY2tlZCB0aGUKdGltZWxpbmUgb2YgR1NPQywgSXQgc2hvd3MgdGhhdCB0aGUgb2ZmaWNpYWwg
-Y29kZSB0aW1lIHN0YXJ0cyBmcm9tIDA1LTI5IHRvCjA4LTI4IGFuZCBjYW4gYmUgZXh0ZW5kZWQg
-dG8gMTEtMDYuIEFmdGVyIHRoYXQgSSBjaGVjayBteSBjbGFzcyBzY2hlZHVsZS4KVGhlIGNvbmNs
-dXNpb24gaXMgYXMgYmVsb3c6CgoxLiBub3d+MDYtMDU6IGFyb3VuZCAyfjMgY2xhc3NlcyBldmVy
-eSB3ZWVrLiBJdCBpcyBlYXN5IHRvIGNvdmVyIHRoZSB0aW1lCnByb2plY3QgbmVlZHMuCjIuIDA2
-LTA1fjA2LTMwOiBUaGVyZSBhcmUgbWFueSBjbGFzc2VzIG9uIHdvcmtkYXlzLiBIb3BlIEkgY2Fu
-IHRha2UgY2xhc3NlcyB3aXRoCmZsZXhpYmlsaXR5LgozLiAgQWZ0ZXIgMDYtMzA6IFRoaXMgc2Vt
-ZXN0ZXIgaXMgZmluaXNoZWQuCgpJIHRoaW5rIGl0IGlzIGEgYml0IHRpbWUtbGltaXRlZCBpZiBJ
-IGZvbGxvdyB0aGUgb2ZmaWNpYWwgdGltZWxpbmUuIEl0IHNlZW1zCm5lY2Vzc2FyeSB0byBkbyBz
-b21lIHdvcmsgaW4gYWR2YW5jZS4KCiogUmVsYXRlZCB3b3JrCgpUaGUgYmxvZyBieSBIYXJpb20g
-VmVybWEgc2hvd3MgdGhlIG91dGxpbmUgb2YgdGhlIHdvcmsuWzNdCgpUaGlzIHByb3Bvc2FsIGRy
-YWZ0IGJlbmVmaXRzIGZyb20gTnNlbmdpeXVtdmEgV2lsYmVyZm9yY2Whr3MgcmVjZW50IHdvcmsg
-WzRdCm11Y2guIFRoYW5rcy4KCiogQmlvZ3JhaGljYWwgaW5mb3JtYXRpb24KCkl0IGlzIGFsd2F5
-cyBmdW5ueSB0byByZWNhbGwgdGhhdCBJIGZpcnN0IGxlYXJuZWQgYWJvdXQgTGludXggaW4gYSBz
-dGltdWxhdGVkCmhhY2tlciBnYW1lIGluIG15IGZyZXNoIHllYXIgaW4gY29sbGVnZS4gQWZ0ZXIg
-dGhhdCwgSSB0cmllZCB0byB0ZWFjaCBteXNlbGYKTGludXggYW5kIHN0YXJ0ZWQgdG8ga25vdyBv
-cGVuIHNvdXJjZSBwcm9qZWN0cy4gT3ZlcmNvbWUgbWFueSBkaWZmaWN1bHRpZXMgYW5kIEkKZmlu
-YWxseSBrbm93IHNvbWV0aGluZyBzaGFsbG93IGFib3V0IExpbnV4LiBBcyBhIHNpZGUgZWZmZWN0
-LCBJIGFtIG1vcmUKZW50aHVzaWFzdGljIGFuZCBiZXR0ZXIgYXQgcHJvZ3JhbW1pbmcgY29tcGFy
-ZWQgd2l0aCBteSBzY2hvb2xtYXRlcy4gQnV0IHRoZQpwZXJpb2Qgb2Ygc3RhZ25hdGlvbiBjYW1l
-LCBJIGJlZ2FuIHRvIHdyaXRlIHNvbWUgbWVhbmluZ2xlc3MgcHJvamVjdHMgZm9yIHNjaG9vbAp0
-YXNrcyBhbmQgcmVwZWF0ZWQgbXlzZWxmIHdpdGhvdXQgcHJvZ3Jlc3MuIFRoZSBiZXN0IG91dCBv
-ZiB0aGUgd29yc3QsIEkgdG91Y2hlZApleGNlbGxlbnQgb3BlbiBzb3VyY2Ugc29mdHdhcmUgZHVy
-aW5nIHRoZSB0aW1lLCBzdWNoIGFzIHZpbSwgZW1hY3MsIHZpc3VhbApzdHVkaW8gY29kZSwgUXQs
-IFZMQyBhbmQsIG9mIGNvdXJzZSwgZ2l0LiBOZWFyIHRoZSBlbmQgb2YgbXkganVuaW9yIHllYXIs
-IEkgcmVhZAphbiBhcnRpY2xlIGFib3V0IGxlYXJuaW5nIGJ5IGNvbnRyaWJ1dGluZyB0byBhbiBv
-cGVuIHNvdXJjZSBwcm9qZWN0IGJ5IGEgZ2VlawppbiB0aGUgY29tbXVuaXR5IG9mIGVtYWNzLiBB
-bG1vc3QgYXQgdGhlIHNhbWUgdGltZSwgSSBrbmV3IHRoZSBHU09DIGFuZCBwcmVmZXJyZWQKdG8g
-dGFrZSBwYXJ0IGluIGdpdC4gQnV0IGl0IHdhcyBuZWFyIHRoZSBzdGFydCBkYXRlIG9mIG15IHBs
-YW4gZm9yIHBvc3RncmFkdWF0ZQpxdWFsaWZ5aW5nIGV4YW1pbmF0aW9uLiBTbyBJIGp1c3QgcG9z
-dHBvbmVkIHRoZSBzdHVmZiBmb3IgR1NPQy4gIEx1Y2tpbHksIEkKcGFzc2VkIHRoZSBleGFtaW5h
-dGlvbi4gQWZ0ZXIgSSBnb3QgdXNlZCB0byBsaWZlIGFzIGEgcG9zdGdyYWR1YXRlIHN0dWRlbnQs
-IEkKZmVsdCB0aGUgbW90aXZhdGlvbiB0byBwcm9ncmVzcyBhZ2Fpbi4gVGhlbiBJIHRyaWVkIHRv
-IGNvbnRyaWJ1dGUgZm9yIGdpdC4gTm93IEkKanVzdCBmaW5pc2ggYSBtaWNybyBwcm9qZWN0LCB3
-aGljaCBzZWVtcyB0cml2aWFsLiBCdXQgaXQgcmVhbGx5IGxldCBtZSBoYXZlIGEKZGVlcGVyIHVu
-ZGVyc3RhbmRpbmcgb2Ygb3BlbiBzb3VyY2UgYW5kIGZyZWUgc29mdHdhcmUgYW5kIG1vcmUgbW90
-aXZhdGlvbiB0bwpjb250cmlidXRlLiBJIGhvcGUgSSBjYW4gc3RheSBhIGxvbmcgdGltZSBoZXJl
-IGJlZm9yZSBiZWluZyBpbnZvbHZlZCB3aXRoIG90aGVyCmludGVyZXN0aW5nIHByb2plY3RzIHNp
-bmNlIHRoZSBxdWFsaXR5IGlzIG1vcmUgaW1wb3J0YW50IHRoYW4gdGhlIHF1YW50aXR5LgpJIGtu
-b3cgaXQgc2VlbXMgYSBiaXQgc3R1YmJvcm4gdG8gYmVsaWV2ZSB0aGF0IGNvbnRyaWJ1dGluZyB3
-aWxsIGxlYWQgdG8KcHJvZ3Jlc3MsIHdoaWNoIGlzIGFsc28gaW5mbHVlbmNlZCBieSBteSBsZWFy
-bmluZyBhdHRpdHVkZS4gQnV0IHdpdGhvdXQgYWN0aW9uLApJIGNhbiBub3QgdmVyaWZ5IHRoZSBi
-ZWxpZWYuICBTb29hdCBsZWFzdCBJIHdpbGwgdHJ5IHRvIGNvbnRyaWJ1dGUgZm9yIG9uZSB5ZWFy
-LgpBZnRlciB0aGF0LCBJIGhvcGUgSSBjYW4gaGF2ZSBhIGJldHRlciB1bmRlcnN0YW5kaW5nLgoK
-U29ycnksIHRoZSBhYm92ZSB0ZXh0IG1heSBiZSBtZXNzaW5nLiBJbiBzaG9ydCwgSSB3aWxsIHRy
-eSB0byBjb250cmlidXRlIGZvcgpnaXQgZm9yIGF0IGxlYXN0IG9uZSB5ZWFyLgoKKiBDbG9zaW5n
-IHJlbWFya3MKClRoYW5rcyBmb3IgQ2hyaXN0aWFuIENvdWRlcidzIGhlbHAuCgpbMV0gaHR0cHM6
-Ly9sb3JlLmtlcm5lbC5vcmcvZ2l0LzIwMjMwMjIyMDQwNzQ1LjE1MTEyMDUtMS0xODk5NDExODkw
-MkAxNjMuY29tLwpbMl0gaHR0cHM6Ly9naXQuZ2l0aHViLmlvL1NvQy0yMDIzLUlkZWFzLwpbM10g
-aHR0cHM6Ly9oYXJyeS1ob3YuZ2l0aHViLmlvL2Jsb2dzL3Bvc3RzL3RoZS1maW5hbC1yZXBvcnQK
-WzRdIGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL2dpdC9wdWxsLjE0NTIuZ2l0LjE2NzIxMDI1MjM5
-MDIuZ2l0Z2l0Z2FkZ2V0QGdtYWlsLmNvbS8K
+On Tue, Mar 28, 2023 at 04:53:52PM +0200, Johannes Schindelin wrote:
+>I do not think that the concept in its
+>current form mixes well with being in the middle of a `--rebase-merges`
+>run.
+>
+fundamentally, it shouldn't pose a problem: the already done part leads 
+up to a single commit, from which a complete todo with merges up to that 
+point can be built again, while the remainder of the pre-existing todo 
+should be unfazed by the fact that you're repeatedly messing with 
+whatever branch you stopped in.
+i *think* i even tried a few simple cases and found the result adequate, 
+but i don't remember for sure (it's been a few months since i authored 
+the patch).
+just give it a shot.
+
+>On the other hand, it might often be good enough to redo only the 
+>commits
+>between `onto` and `HEAD`, not the complete rebase script that's now in
+>`done`. But then it does not strike me so much as "rewinding" but as
+>"nesting.
+>
+according to the terminology i'm using, this still qualifies as a flat 
+rewind, only that it limits itself to --first-parent. we'll see whether 
+this turns out to be a necessary simplification, but i don't think so.
+
+true nesting would mean that the rewind itself can be aborted, in case 
+you change your mind back. adding that as an option on top of what i'm 
+doing isn't a hard problem _per se_. you would need to figure out the 
+challenges from my OP, though.
+also note the reference in the OP; we discussed this here a while ago 
+already.
+
