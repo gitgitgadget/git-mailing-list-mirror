@@ -2,85 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23081C76196
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 19:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 243D5C6FD18
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 20:06:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229493AbjC1TvE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 15:51:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35526 "EHLO
+        id S229720AbjC1UG1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 16:06:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjC1TvD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 15:51:03 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 611311996
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 12:51:02 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id x20so13767905ljq.9
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 12:51:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680033060;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Rir1pPpQd8i+tHTow2+Lenf0wxZp9AKH96vpNRdLhIM=;
-        b=drKFhRjbFn03aTQIbs2FwRWIB07wKFT8JjmBFY4pete3aVM79c+9DoKlYDJhbyg93h
-         ahoC7Ydppe3vPZ8g+F7Ds9j+lnysUiTsfEHwuMlHpBaQsysB4Ssjx0wmsZqroio9h0T2
-         +dLAHDEhXGA4ELI2rsrnWgTBP5Mmv5UZspKXIaQ4efqYXpNjMZsIiE+v1+8QznCBbE7P
-         +ZoUL9LIWGMjgLhxZwWD6bNtl9f879pmg2iUqHYiKFFKTsbvGGhIep/7as5refqrC1uK
-         7Xbofqp4IsRh6A5p6xV2+4zkEHtpPSrXOxaJ4v48gXRuSSNj/aJ7obzfZnHTzShUyq6M
-         18wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680033060;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Rir1pPpQd8i+tHTow2+Lenf0wxZp9AKH96vpNRdLhIM=;
-        b=QOBtj9I6JV6MGqwK2amMIF55F+MeuHLS0YLy7Ca6PAKVTNG8JG3dXbBRmFi3u4jmYP
-         EEqEnjQlzZss6HDXtljlKamahoTmHeygNrmxXVDh0c7zlHIYLndkcphJdFoC/Hdr4Mub
-         zBJF/drM+GwjhPOr9BeWxX1e1a79iCNvbzvu58sSATQ3ifXQMfW5gI7Zb92ruWzO7txb
-         gw0OV/o5oUwzRVtHWTk3kGRu5BpHpdvCFWz/M/uooPdjvAG+NagfWAMz+C+G6z1pDrDR
-         o3RFyqt31QGA10mgETlW5PDVgTu5uUeOZlHzMSQBJrB8S0RKdPGQxm+iwSzOZNe2Cv5E
-         cJCQ==
-X-Gm-Message-State: AAQBX9eRp9Vg78/Q849simuZ8QYrOHl4+xnEVhVYItHlcw7paxnlCupv
-        8HdhyZSetBY6wl7Acs25/QRsjaygWvS9b/eiUk0SwDXB
-X-Google-Smtp-Source: AKy350bidTclYOu5IZXDeTN1XVY79k0Tt0/gGyGUc8WOgd42Zd7ALMSUldhEOCFaQKdNoDcgf5KMQPA63BBiwbVyipc=
-X-Received: by 2002:a2e:86d2:0:b0:2a1:d819:f0ae with SMTP id
- n18-20020a2e86d2000000b002a1d819f0aemr5249119ljj.9.1680033060403; Tue, 28 Mar
- 2023 12:51:00 -0700 (PDT)
+        with ESMTP id S229487AbjC1UG0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 16:06:26 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40C7FD8
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 13:06:25 -0700 (PDT)
+Received: (qmail 1807 invoked by uid 109); 28 Mar 2023 19:59:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Mar 2023 19:59:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1462 invoked by uid 111); 28 Mar 2023 19:59:42 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Mar 2023 15:59:42 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 28 Mar 2023 15:59:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
+        avarab@gmail.com, tenglong.tl@alibaba-inc.com, me@ttaylorr.com
+Subject: Re: win-test: unknown terminal "xterm-256color", was Re: [RFC PATCH
+ 6/6] ls-tree: introduce '--pattern' option
+Message-ID: <20230328195942.GA1173031@coredump.intra.peff.net>
+References: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com>
+ <20221117113023.65865-7-tenglong.tl@alibaba-inc.com>
+ <2q985o75-p6ro-3319-rqos-004621r0p7pq@tzk.qr>
+ <xmqqtu20qinx.fsf@gitster.g>
+ <d566eb68-6476-a193-2acb-10106a154d3d@gmx.de>
+ <xmqqzg7ylye4.fsf@gitster.g>
+ <20230328180859.GB18558@coredump.intra.peff.net>
+ <xmqqbkkcfz9s.fsf@gitster.g>
 MIME-Version: 1.0
-References: <CAKc7PVD_65vB5+meeO3xcu4ASbqr85LBGUO8Ntb7SvbO+NNHmQ@mail.gmail.com>
- <CAKc7PVA14_mjZeuED1Ee0Mu5YoCSrR4FNNhSEKFHmnKnc-gESQ@mail.gmail.com>
- <ZBIIKqAIF+aF8vvx@coredump.intra.peff.net> <CAKc7PVDZ4Ra7s-pyFms1-sGqjYD9b407G1u0A0hHTkQRa-MPkQ@mail.gmail.com>
- <20230328175139.GA18558@coredump.intra.peff.net>
-In-Reply-To: <20230328175139.GA18558@coredump.intra.peff.net>
-From:   Sebastian Gniazdowski <sgniazdowski@gmail.com>
-Date:   Tue, 28 Mar 2023 20:49:43 +0000
-Message-ID: <CAKc7PVDUaQfcdZggraN15bnWs1M_Wk6n6u25unW+Mo5GCaEykQ@mail.gmail.com>
-Subject: Re: A nice, beauty progress metter for Git Clone + a feature request
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqbkkcfz9s.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 28 Mar 2023 at 17:51, Jeff King <peff@peff.net> wrote:
-> So I dunno. It might only be a few lines. It just feels like a weird
-> feature to add.
+On Tue, Mar 28, 2023 at 12:31:59PM -0700, Junio C Hamano wrote:
 
-I would perceive the feature as a nice, versatile trick instead of
-weird=E2=80=A6 Current git clone progress is quite unexpected =E2=80=93 whe=
-n I was
-starting to use Git I've had a sensation of disappointment each time
-I've run clone =E2=80=93 was expecting some nice progress bar and was serve=
-d
-with bunch of text lines with numbers that weren't any percentages=E2=80=A6
-I'm not saying that the progress in the asciinema is some uber cool
-solution, but then, it may serve as an example to draw attention to
-beautifying the progress and the freedom of hooking any command via a
-core.progress_pipe might result in some other nice scripts/apps to
-bloom out there.
+> Jeff King <peff@peff.net> writes:
+> 
+> > So it should be fine to just set TERM=dumb everywhere. What actually
+> > confuses me is that we try to do so already:
+> >
+> >   $ git grep -B1 dumb ci/lib.sh
+> >   ci/lib.sh-# GitHub Action doesn't set TERM, which is required by tput
+> >   ci/lib.sh:export TERM=${TERM:-dumb}
+> >
+> > Pushing a stripped-down workflow file to just run "echo $TERM" shows
+> > that it seems to already be set by Actions to "dumb" on ubuntu-latest,
+> > but is xterm-256color on windows-latest.
+> >
+> > So maybe we just want to make the line above unconditionally set $TERM?
+> 
+> I thought that Dscho earlier said xterm-256 is set by mingw when
+> nothing is set to TERM, which explains why TERM=${TERM:-dumb} is
+> not good enough to "fix" this one for them.
 
---=20
-Best regards,
-Sebastian Gniazdowski
+Ah, I took it to mean that in our code, we'd default to xterm256-color.
+But perhaps it is the outer bash which is doing so, via that runtime. I
+tested with a dummy workflow like:
+
+  name: fake ci
+  on: [push, pull_request]
+  jobs:
+    ubuntu:
+      runs-on: ubuntu-latest
+      steps:
+        - name: check TERM
+	- run: |
+	  echo TERM=$TERM
+    windows:
+      runs-on: windows-latest
+      steps:
+        - name: check TERM
+          shell: bash
+          run: |
+            echo TERM=$TERM
+
+and got "dumb" for ubuntu (which is not set by us; this is before
+ci/lib.sh is run) and "xterm256-color" for windows (I guess because it's
+mingw bash).
+
+At any rate, unconditionally setting TERM=dumb should cover all cases,
+I'd think. I'm happy to prepare a patch.
+
+-Peff
