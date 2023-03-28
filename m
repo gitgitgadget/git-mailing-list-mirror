@@ -2,110 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E77AC76196
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 18:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AC90C6FD18
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 18:32:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229661AbjC1S0y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 14:26:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33792 "EHLO
+        id S229572AbjC1Scp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 14:32:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjC1S0x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 14:26:53 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 381A9198A
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 11:26:51 -0700 (PDT)
-Received: (qmail 1391 invoked by uid 109); 28 Mar 2023 18:26:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 28 Mar 2023 18:26:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 561 invoked by uid 111); 28 Mar 2023 18:26:50 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Mar 2023 14:26:50 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 28 Mar 2023 14:26:50 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Baumann, Moritz" <moritz.baumann@sap.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] docs: document caveats of rev-list's object-name output
-Message-ID: <20230328182650.GC18558@coredump.intra.peff.net>
-References: <AS1PR02MB8185A45DB63216699AFB2C5494849@AS1PR02MB8185.eurprd02.prod.outlook.com>
- <20230324192848.GC536967@coredump.intra.peff.net>
- <AS1PR02MB8185DF947EBC583318481E1994889@AS1PR02MB8185.eurprd02.prod.outlook.com>
+        with ESMTP id S229520AbjC1Sco (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 14:32:44 -0400
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C054199B
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 11:32:43 -0700 (PDT)
+Received: by mail-qv1-xf2b.google.com with SMTP id g9so9863634qvt.8
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 11:32:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1680028362;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=r3xoBFG6Gl7JUG8syUCIsB2Fbe7+YArG5VhausE+Jsw=;
+        b=D4ehc9/c2ozNsG5oRoiKfMBS9Ew/yYNoMfheAfg+EiL3woapc3osKjGHL0joCYIqSU
+         uP1X8gaxG183h7+6IwE1imOLZpK0KmaEfDrY+3gRSOOoIxfVL7Dk7kvPoOJBmwOHLeeZ
+         h0IGjJmNxpzi9xJzc6MU5CQFsPREttA75RJ/HYlF18DoiggzIMi9KDA2nsSkWgtMSooS
+         E3M34DwmZioyZS73h0gTQfHBI5Hjh/6ihT3kv4T319TeWp+hFtpt/9f3kGmPkx6p/Wl9
+         DRsAQRra8kGiKx6abuLgsWkAUd+weRcH+uLaT0ceyHEDX4jSVPlqgYBRmdD773zSJtuM
+         231Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680028362;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=r3xoBFG6Gl7JUG8syUCIsB2Fbe7+YArG5VhausE+Jsw=;
+        b=tYFIuhFR5XRS5AfloHzQ8VrmG6gXzNpB7tviAIQqyEm/mbIPitDJxSdUMJZP3d7i2D
+         m2kmoLdz9LQHEE0VbH9V/GIggjXJXoEUsMNpPJHaXE+Op+5iq7SysZUx1/jZxF7mLpU+
+         VmIuzwnCMHDCqY327/g1tTL9NKZxzOVE8vKTnR9vXvQ8Qrp8L+Kb2U2NzLOZwk+K/V7T
+         aEosXevfo51Do3I5JNPeAIYzKNq4f4vtFmzApbXs6pNmV72Y+OK0UtZ0GXMygfn4m5j9
+         X5XfTaC30OrFgfA0uYl+bh9ooQOqhSM6G7Cii1m8uepbQPTOiv14PxqhJCm19gKy2MBe
+         rHww==
+X-Gm-Message-State: AAQBX9dmi0TgMO2H1Qm8uujry3EBjZgXQmv4a6ZHBU6uNuT5S4dNPZiG
+        rXNq3ep1MH8CzghjiE0i14rrqiEUB/I314yxDA==
+X-Google-Smtp-Source: AKy350bu6LbI7/+YR/MPQh2d2X+MpZy6spyOmyO98jrqNQu8gC8FJL6rIihvzOzBaS1SqoXoG7JdVw==
+X-Received: by 2002:a05:6214:226e:b0:5dd:5c8d:866f with SMTP id gs14-20020a056214226e00b005dd5c8d866fmr27146765qvb.23.1680028362112;
+        Tue, 28 Mar 2023 11:32:42 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:5188:124d:a12d:bff? ([2600:1700:e72:80a0:5188:124d:a12d:bff])
+        by smtp.gmail.com with ESMTPSA id 78-20020a370551000000b0074236d3a149sm8740503qkf.92.2023.03.28.11.32.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Mar 2023 11:32:41 -0700 (PDT)
+Message-ID: <ca1f77db-a483-8b32-8e34-9bce1ea8afc3@github.com>
+Date:   Tue, 28 Mar 2023 14:32:40 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <AS1PR02MB8185DF947EBC583318481E1994889@AS1PR02MB8185.eurprd02.prod.outlook.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.0
+Subject: Re: [PATCH] commit-graph: fix truncated generation numbers
+To:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+References: <f8a0a869e8b0882f05cac49d78f49ba3553d3c44.1679904401.git.ps@pks.im>
+ <xmqqfs9og47y.fsf@gitster.g>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqfs9og47y.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 28, 2023 at 08:08:02AM +0000, Baumann, Moritz wrote:
-
-> > Those names are really just intended as hints for pack-objects. I
-> > suspect the documentation could be more clear about these limitations.
+On 3/28/23 1:45 PM, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> That would indeed be great and would have likely prevented the obvious
-> misconceptions on my side.
+>> In 80c928d947 (commit-graph: simplify compute_generation_numbers(),
+>> 2023-03-20), the code to compute generation numbers was simplified to
+>> use the same infrastructure as is used to compute topological levels.
+>> This refactoring introduced a bug where the generation numbers are
+>> truncated when they exceed UINT32_MAX because we explicitly cast the
+>> computed generation number to `uint32_t`. This is not required though:
+>> both the computed value and the field of `struct commit_graph_data` are
+>> of the same type `timestamp_t` already, so casting to `uint32_t` will
+>> cause truncation.
+>>
+>> This cast can cause us to miscompute generation data overflows:
+>>
+>>     1. Given a commit with no parents and committer date
+>>        `UINT32_MAX + 1`.
+>>
+>>     2. We compute its generation number as `UINT32_MAX + 1`, but
+>>        truncate it to `1`.
+>>
+>>     3. We calculate the generation offset via `$generation - $date`,
+>>        which is thus `1 - (UINT32_MAX + 1)`. The computation underflows
+>>        and we thus end up with an offset that is bigger than the maximum
+>>        allowed offset.
+>>
+>> As a result, we'd be writing generation data overflow information into
+>> the commit-graph that is bogus and ultimately not even required.
+>>
+>> Fix this bug by removing the needless cast.
+>>
+>> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>> ---
+>>
+>> This commit applies on top of cbfe360b14 (commit-reach: add
+>> tips_reachable_from_bases(), 2023-03-20), which has recently been merged
+>> to next.
+> 
+> The patch is clearly explained and the change looks quite
+> straight-forward.  Derrick, Ack?
 
-Here's what I came up with.
+Yes, looks good. What a silly mistake, but thanks for going
+the extra mile to introduce a test that will prevent it in
+the future.
 
--- >8 --
-Subject: docs: document caveats of rev-list's object-name output
-
-At first glance, the names given by "rev-list --objects" seem like a
-good way to see which paths are present in a set of commits. But there
-are some subtle gotchas there. We do not document the format of the
-names at all, so let's do so, along with warning of these problems.
-
-I intentionally did not document the exact format of the names here, as
-I don't think it's something we want people to rely on (though I doubt
-in practice that we'd change it at this point).
-
-Though all of this is historically tied to "--objects", these days we
-have a separate "--object-names" flag which can turn the names off or
-on. So I put the detailed documentation there, but added a note from
---objects (which did not otherwise mention the names at all, even though
-they are on by default).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I also considered adding a specific "if you want the names of each file
-in a range of commits, pipe to diff-tree" example. But it seemed like it
-would clutter up this section. It might be OK as a stand-alone in the
-EXAMPLES section, but should probably be done as a separate patch if
-anyone is interested.
-
- Documentation/rev-list-options.txt | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 90c73d6708b..3000888a908 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -890,7 +890,7 @@ ifdef::git-rev-list[]
- 	Print the object IDs of any object referenced by the listed
- 	commits.  `--objects foo ^bar` thus means ``send me
- 	all object IDs which I need to download if I have the commit
--	object _bar_ but not _foo_''.
-+	object _bar_ but not _foo_''. See also `--object-names` below.
- 
- --in-commit-order::
- 	Print tree and blob ids in order of the commits. The tree
-@@ -920,7 +920,12 @@ ifdef::git-rev-list[]
- 
- --object-names::
- 	Only useful with `--objects`; print the names of the object IDs
--	that are found. This is the default behavior.
-+	that are found. This is the default behavior. Note that the
-+	"name" of each object is ambiguous, and mostly intended as a
-+	hint for packing objects. In particular: no distinction is made between
-+	the names of tags, trees, and blobs; path names may be modified
-+	to remove newlines; and if an object would appear multiple times
-+	with different names, only one name is shown.
- 
- --no-object-names::
- 	Only useful with `--objects`; does not print the names of the object
--- 
-2.40.0.616.gf524ec75088
+Thanks,
+-Stolee
 
