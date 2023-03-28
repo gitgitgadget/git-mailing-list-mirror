@@ -2,124 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EB3FC76196
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 16:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A61DC76196
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 17:03:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232141AbjC1Q62 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 12:58:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45476 "EHLO
+        id S232402AbjC1RDG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 13:03:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbjC1Q60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 12:58:26 -0400
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEDD1BDF2
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 09:58:25 -0700 (PDT)
-Received: by mail-pj1-x104a.google.com with SMTP id o19-20020a17090ab89300b0023b3a5f0aa3so3483655pjr.9
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 09:58:25 -0700 (PDT)
+        with ESMTP id S232318AbjC1RDD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 13:03:03 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1E79EFB1
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 10:02:59 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id o6-20020a17090a9f8600b0023f32869993so15785337pjp.1
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 10:02:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1680022705;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20210112; t=1680022979;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JXfvGk9TMBkNKOHw8bvj8pVSmQNtUQsW3yfKe+TkhUs=;
-        b=KzHvjSVQfJDi3abmRrFHgq4TizE2j9FEyVgaPNPs6BCkkRC/zhP+PB2UTtMT5DrM4u
-         /gZQg0mpMwlRowYKRQIoRp9s4yR7NUmT/ZIyJQuy4a+Ypzs+llr3B/Yin64oD8DGcB9o
-         yf0/SbJ3BK7TtvotmXncYKzu4852GzeN/QfI9N2ZuJA5KUvHdSMoFePvPkNhFDLTkACA
-         nYWBDePbSA7wsN+X+K730JGXAhn0D40rWCQk6AUzfW6F1lA1CWQdhLEFO8RZnkd4kqbY
-         L+5UzjDkdYZ22Yxgoa6JW83UDlN10ZeYWfhLIebHxdZo7ums9AkDDQMAa1uDmoOoVqLd
-         qyPw==
+        bh=mGF+SLsU2DyBe+3jo3B+LEJ4dBZdQBIzsgMFzdhsOSk=;
+        b=YINkM3k4GR1ylCFgRfQyIRdc8xvVwU/QuncF15li/NB00j5nEGNrCibndFcfwnXsdj
+         j2vvePl+e9VtVK0ebBFRy19m2BUXqSM16V9C1EDDAo+72SRdEmFut393F0miIUptKuKL
+         d6xgqnKlGshqj/17A7ktbuAu+MPRGOiPq+zYEQ3TWwiWW5TADfkb9trjmuL90XCjQJOt
+         H11RgSmFDhxHLnklvAMvD7y2pVH5z/vwaAFvr1j5wcobCqZB6wEtFhOhcd/xBz8S88dB
+         es0bkskjcRMFIGqX28rhB8ZYDOIxh+a9LA0Esy1MfpoypPqGZG6Q0sDN1afERiEm2C0w
+         w2WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680022705;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+        d=1e100.net; s=20210112; t=1680022979;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=JXfvGk9TMBkNKOHw8bvj8pVSmQNtUQsW3yfKe+TkhUs=;
-        b=uZVad1R+rLYMhett0V0zPyi4GwLwzKSW4nYAucXzoikiTE6L+NpO3uKeWQEyjlAMiF
-         8n4VIZ0fQkXkxa8MlVqt9DfnBDSfnGjE9vk08qEpJiIEhSMmWv78ddGJWRjRPIOtc5dw
-         jKQLFRAxghBOVyOKu/LxZhH5ngNJO58pc3IyHM1cq0oL/nNtuPvaf9aNuC7A+b36cuQR
-         Ky/AK/Ps2OgB0nvzyAUjvlm8MPCsGEqAVUnSOOXPXGiKmuxj3jTs+i/QKyBvIrAUAXVI
-         63MBglA0vYMzJ6LJ59gLZpmv3hHCj5r027rJUh4dEqGK6D1sfnV2i6gy03oCmDSe6aC7
-         umwg==
-X-Gm-Message-State: AAQBX9f2jR4kGjZrTAX0XZTcfZRcDA7fdYvAV5dagkUqvOqfP3r914s6
-        l26MNsNGZyGW1NG9tI1IJw5c6+gPFmqqMA==
-X-Google-Smtp-Source: AKy350YpMEMX0GrjjDwC0AuDJ7V5Smbc35vBVQ0B6SaoMAtj4ZvvSkO/OlUkvvzUpE+C7CfakJkITN93hkPSeQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a63:ed09:0:b0:50f:a35d:9dd1 with SMTP id
- d9-20020a63ed09000000b0050fa35d9dd1mr4329417pgi.5.1680022705354; Tue, 28 Mar
- 2023 09:58:25 -0700 (PDT)
-Date:   Tue, 28 Mar 2023 09:58:23 -0700
-In-Reply-To: <cover-v8-0.9-00000000000-20230328T140126Z-avarab@gmail.com>
-Mime-Version: 1.0
-References: <cover-v7-0.9-00000000000-20230308T090513Z-avarab@gmail.com> <cover-v8-0.9-00000000000-20230328T140126Z-avarab@gmail.com>
-Message-ID: <kl6lo7ocdd8w.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v8 0/9] config API: make "multi" safe, fix segfaults,
- propagate "ret"
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        bh=mGF+SLsU2DyBe+3jo3B+LEJ4dBZdQBIzsgMFzdhsOSk=;
+        b=g7+Ca9ij49UTuXjKyIm/wD7CwRV3q+0dquhjXgwz3XOiFHWrJJ2R+E5LjZR962iE51
+         waw0yHuqDUfIXau45Su5GWu5obGIpF4AywmQYogTJ8peuagv9xvgMbxj8B65VBFYmi5s
+         95GBrSbsR/7KIjfMpG/jMLoDwL01JRP+JKcQocGTE0qpsrYlrMOB9nk7+cThAXbT5A58
+         goJYNRMtSBcTv9DOstXeS7LpAfPG11ghqFce7oumdOC7xqZJIQJuDc0Yt1Be9bvaAEik
+         LoKZfZwzhabQMmPs8Wy3EcQIMvBXpxrQREuM2lKAyEExNifllMO3eQ2oFUGJBGXexUYy
+         0sOQ==
+X-Gm-Message-State: AAQBX9cqPEjhe2eY/ekNXFx8x7hz/oBhhTri0p5As8b7VmhBfiGEaF/O
+        Xk3gwV9ucHki+gBtFyLniNY=
+X-Google-Smtp-Source: AKy350ZW5wdGQ7jDJnPMnA94HZDFBYi5vz/wT9uXx9ObNyuAmkWfQnPuCQt+Kt1jclzcVnN6RzQkTQ==
+X-Received: by 2002:a17:902:ecc2:b0:19a:b754:4053 with SMTP id a2-20020a170902ecc200b0019ab7544053mr21774371plh.26.1680022979269;
+        Tue, 28 Mar 2023 10:02:59 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id b3-20020a170902d88300b0019f789cddccsm12400169plz.19.2023.03.28.10.02.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Mar 2023 10:02:58 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
         Derrick Stolee <derrickstolee@github.com>,
         Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
         Taylor Blau <me@ttaylorr.com>,
-        "SZEDER =?utf-8?Q?G=C3=A1b?= =?utf-8?Q?or?=" <szeder.dev@gmail.com>,
+        =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
         Calvin Wan <calvinwan@google.com>,
         Emily Shaffer <emilyshaffer@google.com>, raymond@heliax.dev,
-        zweiss@equinix.com,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        zweiss@equinix.com
+Subject: Re: [PATCH v8 0/9] config API: make "multi" safe, fix segfaults,
+ propagate "ret"
+References: <cover-v7-0.9-00000000000-20230308T090513Z-avarab@gmail.com>
+        <cover-v8-0.9-00000000000-20230328T140126Z-avarab@gmail.com>
+        <kl6lo7ocdd8w.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Tue, 28 Mar 2023 10:02:58 -0700
+In-Reply-To: <kl6lo7ocdd8w.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Tue, 28 Mar 2023 09:58:23 -0700")
+Message-ID: <xmqqo7ocg665.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Glen Choo <chooglen@google.com> writes:
 
-> This series fixes numerous segfaults in config API users, because they
-> didn't expect *_get_multi() to hand them a string_list with a NULL in
-> it given config like "[a] key" (note, no "=3D"'s).
->
-> [..]
->
-> * A trivial documentation change to 3/9, to clarify which doc in
->   config.h refer to what. As noted in the v7 discussion I think that
->   config.h could use some larger cleanups in this area, but let's
->   leave that for some future topic.
->
-> [...]
->
-> Range-diff against v7:
->  1:  9f297a35e14 =3D  1:  b600354c0f6 config tests: cover blind spots in =
-git_die_config() tests
->  2:  45d483066ef =3D  2:  49908f0bcf3 config tests: add "NULL" tests for =
-*_get_value_multi()
->  3:  a977b7b188f !  3:  d163b3d04ff config API: add and use a "git_config=
-_get()" family of functions
->     @@ config.h: void git_configset_clear(struct config_set *cs);
->        * value in the 'dest' pointer.
->        */
->      =20
->     ++/**
->     ++ * git_configset_get() returns negative values on error, see
->     ++ * repo_config_get() below.
->     ++ */
->      +RESULT_MUST_BE_USED
->      +int git_configset_get(struct config_set *cs, const char *key);
->      +
+> Thanks! I read through config.h to be sure, and the result looks pretty
+> clear to me.
 
-Thanks! I read through config.h to be sure, and the result looks pretty
-clear to me.
+Thanks, both.  Replaced and will mark the topic for 'next' soonish.
 
->  4:  3a5a323cd91 =3D  4:  d7dfedb7225 versioncmp.c: refactor config readi=
-ng next commit
->  5:  dced12a40d2 =3D  5:  840fb9d5c74 config API: have *_multi() return a=
-n "int" and take a "dest"
->  6:  d910f7e3a27 =3D  6:  75a68b14217 for-each-repo: error on bad --confi=
-g
->  7:  57db0fcd91f =3D  7:  a78056e2748 config API users: test for *_get_va=
-lue_multi() segfaults
->  8:  b374a716555 =3D  8:  686b512c3df config API: add "string" version of=
- *_value_multi(), fix segfaults
->  9:  6791e1f6f85 =3D  9:  6fce633493b for-each-repo: with bad config, don=
-'t conflate <path> and <cmd>
-
-Reviewed-by: Glen Choo <chooglen@google.com>
