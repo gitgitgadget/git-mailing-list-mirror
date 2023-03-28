@@ -2,185 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05C86C6FD18
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 16:21:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EB3FC76196
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 16:58:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233199AbjC1QVD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 12:21:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60386 "EHLO
+        id S232141AbjC1Q62 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 12:58:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233131AbjC1QVB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 12:21:01 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B81E3E049
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 09:20:59 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id u10so12189130plz.7
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 09:20:59 -0700 (PDT)
+        with ESMTP id S229632AbjC1Q60 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 12:58:26 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEDD1BDF2
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 09:58:25 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id o19-20020a17090ab89300b0023b3a5f0aa3so3483655pjr.9
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 09:58:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1680020459;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J/m2SC7R62GEYy3o9CW9gIbOHyji0qtCW/9j5GlSgwQ=;
-        b=gGlzqlg6UKJ9eH0OjAq4Huob500Pmxo1vzp3kvva3V7N5/aWn538tfaLogAz3f6IFn
-         BOZa0Qdn2m7y5D5ZcAm/Qy6Qhz/9siFo21mfbOT8EY5JULWIqU0r6+mZCDaHoUZXRuby
-         q1Q13b2SLfUqxOSS1Bpmg0kBEnBQuXk/SCRB83zmQqzLRg4v3D2Tq0gCi2LnrJ3XU/VV
-         ZRO/bRSbaUGjjRClgPoytKHgGQQrygazm63iYOB5Q1A1qWTOhKx5czEKFXiOrfuoypJk
-         OwY6NXjeyGO4DSDVO+5jg8LA1/zF9torkPw4rzbY4Ni/pxecg/LQqLfrrHU7SAQCX8BU
-         he1g==
+        d=google.com; s=20210112; t=1680022705;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JXfvGk9TMBkNKOHw8bvj8pVSmQNtUQsW3yfKe+TkhUs=;
+        b=KzHvjSVQfJDi3abmRrFHgq4TizE2j9FEyVgaPNPs6BCkkRC/zhP+PB2UTtMT5DrM4u
+         /gZQg0mpMwlRowYKRQIoRp9s4yR7NUmT/ZIyJQuy4a+Ypzs+llr3B/Yin64oD8DGcB9o
+         yf0/SbJ3BK7TtvotmXncYKzu4852GzeN/QfI9N2ZuJA5KUvHdSMoFePvPkNhFDLTkACA
+         nYWBDePbSA7wsN+X+K730JGXAhn0D40rWCQk6AUzfW6F1lA1CWQdhLEFO8RZnkd4kqbY
+         L+5UzjDkdYZ22Yxgoa6JW83UDlN10ZeYWfhLIebHxdZo7ums9AkDDQMAa1uDmoOoVqLd
+         qyPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680020459;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J/m2SC7R62GEYy3o9CW9gIbOHyji0qtCW/9j5GlSgwQ=;
-        b=ey19A/2NfWhoyZPzeyowFsQAplYo1RElY4G4Q15YKZl+5joydPJKvVTzDHYJLj6FK7
-         xWhv5TSfVTkxS/mH3Fb/9pOfZ/wmpIN7NAMg5837/DRmMenhqOSRMQnPtKV964WJD05m
-         5LVYJ5SQo/Pvcsbq0FdgfF32n1t/q8d2IxxM/RXgcId9AYuU4cDzCEC5fH2MgI9DLmTI
-         AHiS13WTkHs3N+hkqn3eho1jWK7pahh8ZBIG8cc2blcO/yn2a+c8iTGilgNqOwhFqcct
-         hCBof6PFLROMIggYwP80QhvjtptjJn1iLacl6OYif0XaCmhVggt5O09ChcqvuSP8svV/
-         63EQ==
-X-Gm-Message-State: AO0yUKXvhct//WLRhM7MyDJ1Izm6eNNUF9FeWe3lG8XaKDp6HMCzHmrU
-        Im02Cs8OH/M+yZITJnDhBUfv
-X-Google-Smtp-Source: AK7set8tGZvcNJf7bcDKZQvpOeVZNlphAks9wTTaZm1k10vI1z4DCyI+NZbUB1klLKIpi7SRxoQG2g==
-X-Received: by 2002:a05:6a20:c320:b0:da:f3cb:764e with SMTP id dk32-20020a056a20c32000b000daf3cb764emr12558950pzb.23.1680020459151;
-        Tue, 28 Mar 2023 09:20:59 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id bs187-20020a6328c4000000b0050f74d435e6sm16092165pgb.18.2023.03.28.09.20.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Mar 2023 09:20:58 -0700 (PDT)
-Message-ID: <bfd16069-e542-e8c2-e32e-b3e08fc27211@github.com>
-Date:   Tue, 28 Mar 2023 09:20:57 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.2
-Subject: Re: [RFC][PATCH v3] GSoC 2023 proposal: more sparse index integration
-Content-Language: en-US
-To:     Vivan Garg <gvivan6@gmail.com>, git@vger.kernel.org
-Cc:     christian.couder@gmail.com, hariom18599@gmail.com
-References: <20230226083347.80519-1-gvivan6@gmail.com>
- <20230323063844.23222-1-gvivan6@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230323063844.23222-1-gvivan6@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20210112; t=1680022705;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=JXfvGk9TMBkNKOHw8bvj8pVSmQNtUQsW3yfKe+TkhUs=;
+        b=uZVad1R+rLYMhett0V0zPyi4GwLwzKSW4nYAucXzoikiTE6L+NpO3uKeWQEyjlAMiF
+         8n4VIZ0fQkXkxa8MlVqt9DfnBDSfnGjE9vk08qEpJiIEhSMmWv78ddGJWRjRPIOtc5dw
+         jKQLFRAxghBOVyOKu/LxZhH5ngNJO58pc3IyHM1cq0oL/nNtuPvaf9aNuC7A+b36cuQR
+         Ky/AK/Ps2OgB0nvzyAUjvlm8MPCsGEqAVUnSOOXPXGiKmuxj3jTs+i/QKyBvIrAUAXVI
+         63MBglA0vYMzJ6LJ59gLZpmv3hHCj5r027rJUh4dEqGK6D1sfnV2i6gy03oCmDSe6aC7
+         umwg==
+X-Gm-Message-State: AAQBX9f2jR4kGjZrTAX0XZTcfZRcDA7fdYvAV5dagkUqvOqfP3r914s6
+        l26MNsNGZyGW1NG9tI1IJw5c6+gPFmqqMA==
+X-Google-Smtp-Source: AKy350YpMEMX0GrjjDwC0AuDJ7V5Smbc35vBVQ0B6SaoMAtj4ZvvSkO/OlUkvvzUpE+C7CfakJkITN93hkPSeQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a63:ed09:0:b0:50f:a35d:9dd1 with SMTP id
+ d9-20020a63ed09000000b0050fa35d9dd1mr4329417pgi.5.1680022705354; Tue, 28 Mar
+ 2023 09:58:25 -0700 (PDT)
+Date:   Tue, 28 Mar 2023 09:58:23 -0700
+In-Reply-To: <cover-v8-0.9-00000000000-20230328T140126Z-avarab@gmail.com>
+Mime-Version: 1.0
+References: <cover-v7-0.9-00000000000-20230308T090513Z-avarab@gmail.com> <cover-v8-0.9-00000000000-20230328T140126Z-avarab@gmail.com>
+Message-ID: <kl6lo7ocdd8w.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v8 0/9] config API: make "multi" safe, fix segfaults,
+ propagate "ret"
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "SZEDER =?utf-8?Q?G=C3=A1b?= =?utf-8?Q?or?=" <szeder.dev@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>, raymond@heliax.dev,
+        zweiss@equinix.com,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Vivan Garg wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Hi Vivan, 
+> This series fixes numerous segfaults in config API users, because they
+> didn't expect *_get_multi() to hand them a string_list with a NULL in
+> it given config like "[a] key" (note, no "=3D"'s).
+>
+> [..]
+>
+> * A trivial documentation change to 3/9, to clarify which doc in
+>   config.h refer to what. As noted in the v7 discussion I think that
+>   config.h could use some larger cleanups in this area, but let's
+>   leave that for some future topic.
+>
+> [...]
+>
+> Range-diff against v7:
+>  1:  9f297a35e14 =3D  1:  b600354c0f6 config tests: cover blind spots in =
+git_die_config() tests
+>  2:  45d483066ef =3D  2:  49908f0bcf3 config tests: add "NULL" tests for =
+*_get_value_multi()
+>  3:  a977b7b188f !  3:  d163b3d04ff config API: add and use a "git_config=
+_get()" family of functions
+>     @@ config.h: void git_configset_clear(struct config_set *cs);
+>        * value in the 'dest' pointer.
+>        */
+>      =20
+>     ++/**
+>     ++ * git_configset_get() returns negative values on error, see
+>     ++ * repo_config_get() below.
+>     ++ */
+>      +RESULT_MUST_BE_USED
+>      +int git_configset_get(struct config_set *cs, const char *key);
+>      +
 
-Sorry for the delay in re-reviewing! You've largely addressed my original
-comments, so I only had a few follow-up questions/notes to add.
+Thanks! I read through config.h to be sure, and the result looks pretty
+clear to me.
 
-> +# In GSoC
-> +
-> +## Plan
-> +
-> +Plan
-> +
-> +The proposed idea of increasing "sparse-index" integrations may appear straightforward 
-> +initially. However, after reviewing previous implementations, I have found that this 
-> +idea can present unforeseen difficulties for some functions. For example, to enable 
-> +"sparse-index," we must ensure that "sparse-checkout" is compatible with the target 
-> +Git command. Achieving this compatibility requires modifying the original command 
-> +logic, which can lead to other unanticipated issues. Therefore, I have incorporated 
-> +additional steps in the plan, to the steps proposed by the community and mentors, 
-> +outlined below to proactively address potential complications.
-> +
-> +1.	Conduct an investigation to determine if a Git command functions properly with 
-> +    sparse-checkout. This step is estimated to take approximately 7-14 days.
-> +
-> +2.	Modify the logic of the Git command, if necessary, to ensure it functions 
-> +    properly with sparse-checkout. Develop corresponding tests to validate the 
-> +    modifications. This step is estimated to take approximately 7-14 days.
+>  4:  3a5a323cd91 =3D  4:  d7dfedb7225 versioncmp.c: refactor config readi=
+ng next commit
+>  5:  dced12a40d2 =3D  5:  840fb9d5c74 config API: have *_multi() return a=
+n "int" and take a "dest"
+>  6:  d910f7e3a27 =3D  6:  75a68b14217 for-each-repo: error on bad --confi=
+g
+>  7:  57db0fcd91f =3D  7:  a78056e2748 config API users: test for *_get_va=
+lue_multi() segfaults
+>  8:  b374a716555 =3D  8:  686b512c3df config API: add "string" version of=
+ *_value_multi(), fix segfaults
+>  9:  6791e1f6f85 =3D  9:  6fce633493b for-each-repo: with bad config, don=
+'t conflate <path> and <cmd>
 
-I'm guessing these two steps will be much shorter if the command is already
-compatible with sparse-checkout (<7 days for step 1, and you could skip step
-2 entirely)?
-
-> +
-> +3.	Add tests to t1092-sparse-checkout-compatibility.sh for the built-in, focusing 
-> +    on what happens for paths outside of the sparse-checkout cone.
-> +
-> +4.	Disable the command_requires_full_index setting in the built-in and ensure 
-> +    the tests pass.
-> +
-> +5.	If the tests do not pass, then alter the logic to work with the sparse index.
-> +
-> +6.	Add tests to check that a sparse index stays sparse.
-> +
-> +7.	Add performance tests to demonstrate speedup.
-> +
-> +8.	If any changes are made that affect the behavior of the Git command, update 
-> +    the documentation accordingly. Note that such changes should be rare.
-> +
-> +Points 3-8 combined should take approximately 15-30 days.
-
-Does this also account for the time _after_ submission to the mailing list?
-Responding to review comments, iterating on changes, etc?
-
-> +
-> +To summarize, each integration will follow a similar schedule to the one outlined 
-> +above. Therefore, without extending the timeline, we can expect to complete 2-3 i
-> +ntegrations during the GSoC program period.
-> +
-> +Timeline 
-> +
-> +Determining the exact time arrangement for each integration is difficult, as there 
-> +may be unforeseen challenges that arise during the process. However, based on my 
-> +estimation, I anticipate that each integration will take approximately 1.5 - 2 months 
-> +to complete, starting from May 29th. Please refer to the detailed breakdown of each 
-> +step in the plan section for a more accurate estimate.
-> +The proposed integration schedule is as follows:
-> +
-> +•	git describe
-> +•	git write-tree
-> +•	git diff-files
-
-At this point, initial integrations for both 'git describe' [1] and 'git
-diff-files' [2] have been submitted to the mailing list. To make your plan
-more flexible/resilient to concurrent contributions, I think it'd be
-reasonable to give a list of 5-6 commands you'll choose from to complete
-your 2-3 planned integrations.
-
-[1] https://lore.kernel.org/git/pull.1480.git.git.1679926829475.gitgitgadget@gmail.com/
-[2] https://lore.kernel.org/git/20230322161820.3609-1-cheskaqiqi@gmail.com/
-
-> +
-> +This schedule is based on the order of difficulty outlined in GSoC 2023 Ideas.
-> +
-> +It's worth noting that each integration may require different amounts of time 
-> +and attention, and modifications to the schedule may be necessary as I delve 
-> +deeper into each command. Nevertheless, I am committed to delivering quality 
-> +results within the given timeframe.
-> +
-> +In summary, I anticipate that each integration will take an average of 1.5 months, 
-> +but I remain flexible and open to adjusting the schedule as needed to ensure the 
-> +success of the project.
-> +	
-> +Availability
-> +
-> +I commit to responding to all communication daily and being available throughout 
-> +the duration of the program. While I will be taking some summer courses at my 
-> +university, I will not be enrolled in a typical full course load. As part of GSOC, 
-> +I plan to commit to a medium-sized project of 175 hours. I have experience managing 
-> +my time effectively while taking courses and working full-time internships in the 
-> +past.
-> +
-> +The program is officially 16 weeks long. To ensure timely completion of the project, 
-> +I plan to spend 8 hours per week until August 15th, which is when my semester ends. 
-> +From August 16th until September 1st, I plan to dedicate 8 hours per day to the project. 
-> +There are only three weeks during which I would prefer to focus on other things: 
-> +June 23rd-30th (midterm week) and August 1st-15th (finals season). However, as I will be 
-> +committing 8 hours per day following Aug 15th, it should be ample enough to make up for it.
-
-Thanks for adding these availability details!
-
-> +
-> +I am confident that I will have ample time to complete the project within the allocated 
-> +time frame. Additionally, I am hoping to continue working on the project even after 
-> +GSOC ends, as there are several functions that need to be implemented.
-> +
+Reviewed-by: Glen Choo <chooglen@google.com>
