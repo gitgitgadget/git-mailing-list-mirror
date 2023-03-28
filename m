@@ -2,92 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03395C76196
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 21:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CB8CC76196
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 21:46:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229866AbjC1VYq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 17:24:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59424 "EHLO
+        id S229752AbjC1VqQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 17:46:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbjC1VYp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 17:24:45 -0400
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E64681999
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 14:24:42 -0700 (PDT)
-Received: by mail-pl1-x64a.google.com with SMTP id d2-20020a170902cec200b001a1e8390831so8254192plg.5
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 14:24:42 -0700 (PDT)
+        with ESMTP id S229729AbjC1VqO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 17:46:14 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 952911712
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 14:46:13 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id z19so13049900plo.2
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 14:46:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1680038682;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=l9Jd7kTyuQDwCjSd5cMF/DvRh2yYzkYJazavLZaD/S8=;
-        b=QGCWdx0LsneGc8YDdUnzgC/ICtQEOdB9WI3VoM78JNpHJ/aEvoDq3qshAJfV3QRm9q
-         HEvXf4NMwCWZkCLj0+Ay3HByfaEspNSAnByYA5ZRRS4COKmdQIHVfEK5ncjqEWMcDlNv
-         w6xuqul47r/NTR77d3ROYaexnw8DIn5i6jhvr9ULVU5Ddh2+eCKRlDw4kSPqcYD93lm5
-         04r5EZ21qVP07B/R04WMNTD/f2J0HNRsRdp6pOxyEQ+KQlxrQEUsIpHCQO13L0WYragw
-         1gH9okEFi4ASjqI1WSA67EyvU1I0xvpAYhFsgnJEVpBX0JyZwnTlKcRhQsiD/eZSZbSQ
-         7jmQ==
+        d=gmail.com; s=20210112; t=1680039973;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oi14APOOv6Q1fNO63fK4l139tz0crVVtscS18fKHVKI=;
+        b=V4m/7jueSHhIkBpexONlXXi9aCfBTa+fa6HIpzc3eld/JHN+JNrg3/pUQChljk3BLb
+         TPZP/w/dT8JPCDy82rqhZmAyyhWqAHQN2uCTl/0ssi/BnofR1cwPkgxTESdjwO2h45ug
+         X10yAf/UNejfUe2zl8X+swrXlJZsZhc+gN3tEbjPMwMzm7LgPZYb/eTBQfqQGaLPUbBB
+         aaBmXc9lUZgSm/9g/QFTFlzOeElAYthhqpkEgN5NiVcLIiP5grkgpVjdLwluB3hfXn3K
+         ggT164SDl0GHPJQHOqDRHoGPbUtHZyrH3yK5QwA5uLHhgFIGljfawqEdP3pljImB0M8i
+         G/uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680038682;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l9Jd7kTyuQDwCjSd5cMF/DvRh2yYzkYJazavLZaD/S8=;
-        b=gLqVUgo/JGy6eQps1jA6MSxV6uo9smB0oNvzqtou50M4i7zxYnk1NUODW+ZG1/3zMY
-         lrfS/GmIK44lBiW1fcCvoSnZ04f3ULw5Cwalr1Y9z8uX7uTs9FBoW5oTpy4YEobu1/Uv
-         XiAKQiLVsrGb54X6jediJJKXX2OEAKhRJAAdpwWxkmmYxk16UgQJBxoRbJlk49bzzcd1
-         1HicWEK2rKIPDHL3FNt/JAllbWYxurcgVmrbnQaFfunhkCvTryGyCk54d+22zhAMfPlS
-         blYum5pb7Fv4IcjY2WstECtDjfOwjM+3LDpUeL5SdFTQiqWOJYMS3MahHiRPHKz2dY+u
-         E0NQ==
-X-Gm-Message-State: AAQBX9dmGCjO22YFNA7hCTsbu1YGsDWTqi7kvFUqAssX0+WxEibk64jb
-        3T6pDAvCansSPuNq3QFMl6j9HJDpzKOOpQ==
-X-Google-Smtp-Source: AKy350YZHuWrBU98e0bF9Mx0Hqi1wBg4vRz6x5TMtY/27fFHsBF6gTm8cwzSatzmZa649mj4zl0LDBYhm8UPWw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:23d3:b0:62a:424b:2af0 with SMTP
- id g19-20020a056a0023d300b0062a424b2af0mr8310935pfc.0.1680038682450; Tue, 28
- Mar 2023 14:24:42 -0700 (PDT)
-Date:   Tue, 28 Mar 2023 14:24:33 -0700
-In-Reply-To: <xmqqsfdoeiqu.fsf@gitster.g>
-Mime-Version: 1.0
-References: <pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com>
- <pull.1463.v3.git.git.1680025914.gitgitgadget@gmail.com> <kl6llejgdacq.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqsfdoeiqu.fsf@gitster.g>
-Message-ID: <kl6lilekd0xa.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 0/8] config.c: use struct for config reading state
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Calvin Wan <calvinwan@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        d=1e100.net; s=20210112; t=1680039973;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=oi14APOOv6Q1fNO63fK4l139tz0crVVtscS18fKHVKI=;
+        b=iEfSP57xQq9Rh+c46sgattdjBgUav0oJKsF6XLi6Bxh2QQaSavsnnDhgK7ctXkR6qE
+         S9Qy69EIZrrt8mFW89YE20VOwbDdlCyWCd8oVLDIBjmRGC9nCoMG1Vj18aXM0TimRd8d
+         BtTwb7mjprhIVksxelndeMQ0xvj0K2EWUHpk6CPStdtqqDTEz+t6FXMhxrMb3JC6Zy2M
+         fTKbgHtmuBXLNjtNHXqXSkEYbO6Er+N6lTy973PbcB//KKYHz9KB87dps5KIL/if3q7k
+         3S+gM8qNlIphM22saOfg+EifOTTenM7bFapNLzqYCz2h8McLwkKgyxBtT2i3bZQIByia
+         I/jg==
+X-Gm-Message-State: AO0yUKVMclSAycTO1aSA659RsmH9zTozrYDyygfdzRcolwpCQpLY4vsm
+        1TGKohfobR0ZylLfsLtYL2w=
+X-Google-Smtp-Source: AK7set8FwBUNcoYoIRTcn9X0IxUS1xkUcYbA6l1FKzm3H/rO4XmGUgIXAqHGtNnMd6T9eRfREh7y4A==
+X-Received: by 2002:a05:6a20:811a:b0:d0:11bc:eed6 with SMTP id g26-20020a056a20811a00b000d011bceed6mr14134198pza.50.1680039972898;
+        Tue, 28 Mar 2023 14:46:12 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id j11-20020a62e90b000000b005825b8e0540sm3905173pfh.204.2023.03.28.14.46.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Mar 2023 14:46:12 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Michael J Gruber <git@grubix.eu>
+Subject: Re: [PATCH 3/4] tests: drop here-doc check from internal chain-linter
+References: <20230328202043.GA1241391@coredump.intra.peff.net>
+        <20230328202819.GC1241631@coredump.intra.peff.net>
+Date:   Tue, 28 Mar 2023 14:46:12 -0700
+In-Reply-To: <20230328202819.GC1241631@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 28 Mar 2023 16:28:19 -0400")
+Message-ID: <xmqqzg7wczx7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Glen Choo <chooglen@google.com> writes:
+> I'd also be OK dropping this. 12% is nice, but this one test is an
+> outlier. Picking t4202 somewhat at random as a more realistic test, any
+> improvement seems to be mostly lost in the noise.
 >
->> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->>> Note to Junio: 8/8 (which renames "cs" -> "set") conflicts with
->>> ab/config-multi-and-nonbool. I previously said that I'd rebase this, but
->>> presumably a remerge-diff is more ergonomic + flexible (let me know if I'm
->>> mistaken), so I'll send a remerge-diff in a reply (I don't trust GGG not to
->>> mangle the patch :/).
+>  t/test-lib.sh | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 >
-> A patch that is indented by two places would not be mechanically
-> applicable anyway and even without such indentation, the hunk-side
-> markers like c000d91638, gitster/ab/config-multi-and-nonbool, etc.
-> you have in the patch would be different from conflicts I would see,
-> so it wouldn't be very useful.  There should probably be a mode
-> where remerge-diff would omit these labels to help mechanical
-> application of such a "patch".
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index cfcbd899c5a..0048ec7b6f6 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1101,9 +1101,10 @@ test_run_ () {
+>  		trace=
+>  		# 117 is magic because it is unlikely to match the exit
+>  		# code of other programs
+> -		if test "OK-117" != "$(test_eval_ "fail_117 && $1${LF}${LF}echo OK-\$?" 3>&1)"
+> +		test_eval_ "fail_117 && $1"
+> +		if test $? != 117
+>  		then
+> -			BUG "broken &&-chain or run-away HERE-DOC: $1"
+> +			BUG "broken &&-chain: $1"
+>  		fi
 
-Ah, bummer :(
+This "here-doc" linter is a cute trick.  With seemingly so little
+extra code, it catches a breakage in such an unexpected way.
 
-I was thinking about that as well. remerge-diff actually outputs
-left and right in "--format=reference", which I then manually modified
-to reflect the conflicted version in the working tree, giving the final
-result here. I wonder what remerge-diff or "git apply" could do instead.
+Even with a very small code footprint, overhead of an extra process
+is still there, and it would be very hard to figure out what it does
+(once you are told what it does, you can probably figure out how it
+works).  These make it a "cute trick".
+
+While it is a bit sad to see it lost, the resulting code certainly
+is easier to follow, I would think.  I do not offhand know how
+valuable detecting unterminated here-doc is, compared to the
+increased clarity of hte code.
+
+Thanks.
+
+
