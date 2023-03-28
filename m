@@ -2,108 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56C48C6FD18
-	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 13:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5F0FC6FD18
+	for <git@archiver.kernel.org>; Tue, 28 Mar 2023 13:47:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232532AbjC1Nqp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Mar 2023 09:46:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49424 "EHLO
+        id S230518AbjC1Nrs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Mar 2023 09:47:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230407AbjC1Nqi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2023 09:46:38 -0400
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CECBB462
-        for <git@vger.kernel.org>; Tue, 28 Mar 2023 06:46:14 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 7406F3200033;
-        Tue, 28 Mar 2023 09:46:04 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Tue, 28 Mar 2023 09:46:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-transfer-encoding:content-type:content-type
-        :date:date:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm1; t=1680011164; x=1680097564; bh=zR2iqP9iIyWPQyryaTzycg/Al
-        wuzBdtVFuMJ5yc8lhk=; b=fbtW487IhSybRLZC+4soMe/+z8dc/agttFejcjZzU
-        MqKQu62HygwQ0b2M9DJgNm3Q79GwnzYUz40aYoTmrkp5WBpLvRZmu2DFPix/OJSy
-        ZZhkkRf2xb37oJ86s3mFejpA7RXNVW2m4JNNOFTH2NHZRfRVL8Xjyt9WmZx2Q5rj
-        Jl9B4r3+RzhrAW9vYCcU8R1IJpXerWMpdwNS8DPZBdddFDItZP1KUrOT1hLwFZyj
-        GUiNiva60nXgef2eY/N5aQYFSC3MdkyK6nSraQJivCgFRNv0t1beoHq/4/ijb2AT
-        1xefvzkQC9J6c548TVeAhhOzaPlxFD8XdIIcRufNe2bIw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-        1680011164; x=1680097564; bh=zR2iqP9iIyWPQyryaTzycg/AlwuzBdtVFuM
-        J5yc8lhk=; b=Mun72Ec2dpNP0OaVAhuuoOf+bn8GsURI7u/52T+VhFC6hE8gbjb
-        qCgicWscBMie99gxQlcezJm0AwCSMfIuQA0TEUKW4vv1C095C2h91YrD6Z0oh8fx
-        oNtLJPXso0HctPv2o1LTyRtic1L8RJHqKINy7aGuklDXMo6vSbfODYBeJ4uF02Vv
-        T2bKZKs39vYac7Yb/RddQxCpVSrr7CGMWKKYza7dnWwTHx1OwEcOOADW13+4z1Ey
-        q+ruDYH21o+7coIOjfZoI7Lz0vkupaJrsV0zmkMFmBb3VN9BcgImizIfHMd4eA2A
-        tY+2GXszwGwNhePtYjq1+pjasak+fwcPdGQ==
-X-ME-Sender: <xms:m-8iZB6OXz10S0loLVET8-JCcEy2IRzs5dcyCoTD1SB_9yKAVfkDPyE>
-    <xme:m-8iZO6S_Eqmw0lBSQq0uNkrS7Skztpl6vFZ_ZUJv3IJfBq4yBccxF71PErnM-qZp
-    5Te9d6ZDFB_ps10DQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdehgedgieekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:nO8iZIe7VKjT9ZX__vFpeYqDYSDbYxeZ368GQOlKTj5PFIaL0S3Syw>
-    <xmx:nO8iZKKO5gONaikWRSS_0mGKIZ9u1rY0_oCmiN9dp9ACm8dR44aWNw>
-    <xmx:nO8iZFIL7AKWC2vpc-lTF4sZi85CHBYMNQg2LgyJXu2GCr17CFBdIQ>
-    <xmx:nO8iZHwiNW_Iwo9xTOAVDgLEQUk990u9jEezSJ7pFdFSHsgWiy61kQ>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id E782915A0092; Tue, 28 Mar 2023 09:46:03 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-237-g62623e8e3f-fm-20230327.001-g62623e8e
-Mime-Version: 1.0
-Message-Id: <5333b921-0be6-49c7-b2dd-7d6ee5700385@app.fastmail.com>
-In-Reply-To: <ZCLqbmWsN/7Ihjg+@ugly>
-References: <20230323162234.995465-1-oswald.buddenhagen@gmx.de>
- <210376fb-f830-4883-b576-2936dabc09cc@app.fastmail.com>
- <xmqqa5zxn85r.fsf@gitster.g>
- <4f570b05-036d-45a1-8caa-cebfce3026c9@app.fastmail.com>
- <ZCLqbmWsN/7Ihjg+@ugly>
-Date:   Tue, 28 Mar 2023 15:43:46 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Oswald Buddenhagen" <oswald.buddenhagen@gmx.de>
-Cc:     "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] sequencer: beautify subject of reverts of reverts
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S229924AbjC1Nrq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2023 09:47:46 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A04225271
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 06:47:43 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id l7so10842707pjg.5
+        for <git@vger.kernel.org>; Tue, 28 Mar 2023 06:47:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680011263;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=NrFsBlEa9k2OqvYk/TZCvz1BKhWdrurY+1w44uyHcI0=;
+        b=OahCnm/58d+AOIqpwV+kd1Z3yBqAFfcpxFRBHdSY8fsy5H3jZlgMg8jbd7hi9faRrT
+         ehdiNI+kcprV3c/jQxA/62AlNQyE4xz/okNNze4htv6ocd2hIgAhZN8zAZi4Q3smPSUa
+         suPBxUXGg2DpSd9YaGdHnu6ADzSVotgez2jLqbtXMf6sJGETFkoNkIDQZwgP6Lo2kcAt
+         sCasLgM6okaZ8ixhloTHxeGHJ/jzHXGF8WYngPlvbqc0z/5s05aOLuYenuuIkjTb+6D4
+         EdlX2avwoAEOypK0tBBBmukRotY4r20Fz8GOru8o/itTrA40UeGv99511qreSstRm/2/
+         8kIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680011263;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NrFsBlEa9k2OqvYk/TZCvz1BKhWdrurY+1w44uyHcI0=;
+        b=qrdG7sLWBaZ0abwYptz6kI+kXtos5ZESWn//Epu+kZliUN6zYEdrZp+ciQ9kt0FgX8
+         YLZoh/iccbd9WXp1xeIAwCgUvubYrp/HWsPYyvl8IjihFkO8eqXsGhKhdlE3t0gEOwBJ
+         JD3sjGASznimeWUkuY38jFoFYHQf/7wCYnvorktJZGWgJExMHEe+GMrb2IY9WUoPW71F
+         OtHemggTHmkzPmHlV5fLhx/7jt5yN5wxxWgRu5gkYJvCTLeGzwEkLCOWxwAudWjQeHhE
+         jataDjzD21Q8rGmqAKV9ROewWwdPBoygPAr9fqJ7FtvGh1z15PLpqQE7BiMkPs2QdPNC
+         Y1/A==
+X-Gm-Message-State: AO0yUKVjsmdndP32TS99t5kA6RCTy/BoGsTe+fPomQKpRfb/OW90U8Om
+        wnU12jcqgpj45adhe8nle/c=
+X-Google-Smtp-Source: AK7set9IoMImSqGW3Lxbs41noV56sNjdQtWoc8Ix54bp+SM5CzLtgy89ZDVBVsLdjatvx3OkE/Rntg==
+X-Received: by 2002:a05:6a20:2921:b0:d3:84ca:11b with SMTP id t33-20020a056a20292100b000d384ca011bmr13129029pzf.40.1680011263021;
+        Tue, 28 Mar 2023 06:47:43 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id x8-20020aa79188000000b0062622ae3648sm20968372pfa.78.2023.03.28.06.47.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Mar 2023 06:47:42 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Mario Grgic <mario_grgic@hotmail.com>,
+        demerphq <demerphq@gmail.com>, git@vger.kernel.org
+Subject: Re: git bug: Perl compatible regular expressions do not work as
+ expected
+References: <MW4PR20MB5517583CBEEF34B1E87CCF1290859@MW4PR20MB5517.namprd20.prod.outlook.com>
+        <CANgJU+Vn8ZLGcAYbuDeNkv6T5YdX6t20BqGQDPB0VL_TzoGSWg@mail.gmail.com>
+        <MW4PR20MB5517888E63C13099E284B97590859@MW4PR20MB5517.namprd20.prod.outlook.com>
+        <eba23dc4-c036-fd1b-a1f0-028e8fff602b@web.de>
+        <xmqqh6u6cg4l.fsf@gitster.g>
+        <03fd7ddb-8241-1a0a-3e82-d8083e4ce0f7@web.de>
+        <xmqqjzz1nalp.fsf@gitster.g>
+Date:   Tue, 28 Mar 2023 06:47:41 -0700
+Message-ID: <xmqqsfdpj8ci.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 28, 2023, at 15:23, Oswald Buddenhagen wrote:
-> i thought about that already, and concluded that it's getting a bit "t=
-oo
-> nerdy" and over-engineered.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I see that point too.
+> I suspect that 54463d32ef was done in a conservative way to avoid
+> unintended side effects to make ERE "enhanced".  I am not 100%
+> certain, but after reading the documentation you pointed at, I do
+> not see a valid expression without ENHANCED flag starting to mean
+> totally different thing with it (well, an extra '?' turning a
+> pattern from greedy to minimal may count as such a change in
+> semantics, but I do not see anybody sensible adding an extra '?'
+> in a pattern in the first place).
 
-> the main motivation for me is to break the dogmatism with which some
-> people are approaching the matter - "$tool did it, so it is _the_ way".
-> set an example where the tool does something "humane", and you may
-> change some minds.
+Sorry, but that is nonsense.  We cannot avoid being backward
+incompatible if we suddenly flip the "enhanced" bit for BRE.  A
+sane pattern written expecting non-enhanced BRE can change its
+meaning when the "enhanced" mode is enabled.
 
-Good thinking.
+But if "enhanced" is what users want, and if that is what the other
+tools on the platform use, then perhaps flipping the "enhanced" bit
+may not be a bad idea.
 
-Your patch does something =E2=80=9Chumane=E2=80=9D without adding any in=
-volved logic. A
-good default for those who don=E2=80=99t want to change the provided rev=
-ert
-message. (Why? I would hope that they at least write something in the
-body (after the subject) about why they are (reverting a
-revert)/reapplying.)
-
---=20
-Kristoffer Haugsbakk
-Frequent reverter
