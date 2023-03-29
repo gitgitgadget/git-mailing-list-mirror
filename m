@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DCEDC6FD18
-	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 07:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F32E3C6FD18
+	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 08:06:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229959AbjC2HoH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Mar 2023 03:44:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59238 "EHLO
+        id S230298AbjC2IGf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Mar 2023 04:06:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229982AbjC2HoF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2023 03:44:05 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30981211B
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 00:44:02 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id h25so18982781lfv.6
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 00:44:02 -0700 (PDT)
+        with ESMTP id S230216AbjC2IG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2023 04:06:29 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A31B535A7
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 01:06:25 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id y20so19087490lfj.2
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 01:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680075840;
+        d=gmail.com; s=20210112; t=1680077183;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VnrbFIC+4FwKZr5gT1Wijy/vP/xAzAxrqQHobTtT0qA=;
-        b=ArkpsAGdtL9fdPwJkpusJhIqJ4NaMr/qfF237ytA6WH2YdIasHuOwrw1OSGdUyY/zx
-         Br+Blw75rxzXHKqxlveqjP5fnN92wu/TYFsIjjS1gGHer3yoHEl/Cec33JX9mKdipPIX
-         KsfCMgXInh81iOImHRl32TUnWi0SezTzc1+8eEUidj1WSgnLBUul54AOz/Bgk/5SApwv
-         Ay3Ior+jyRUJY4a5vzR7SCx6BCStk8WLESXuxS8FGCie+Nq+Cz5BRIAomhfGRZAWG2w4
-         Nt3km3R/tVVihIrVc9auS/24TBMKn+BMxWGCS5t6YS9cQbpBRvnpGePt8wkJSRsybKnY
-         T33Q==
+        bh=Ab/9xo5xcCVwNd7fYIpt30u9GD5F12B2HmtU/JCDQ4s=;
+        b=XRCyM5u8ESFZyk47YmsttZVg1VMXS07Fx5GA7G1O70VF3GUOK59GwgANU6M69EnjYS
+         0pzWDPiQ6aBdj6N/mRAUTEKo3go8YrOqur7+nlEBb9TBxrFLDL9fvkqG6N3ontRbFIl3
+         fy/yNwMD2VbqgcVCy7JGGa18k51D55A/gceNOFlSejZS8W71q458e2cH0uah5GLGHZQT
+         NxNO3DWmJcrHkUuuXumeByrqjfOLlM4BC3PnkNRmBg4uMYjNPuTeAzaWyWlYV91G6awJ
+         mGTCQxwGh5lZEAJ/SM0+xxTwt4TES5qJ6hdNL210QBPtxFQXAwxoSLGa/QLknx8vnaIs
+         6vRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680075840;
+        d=1e100.net; s=20210112; t=1680077183;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VnrbFIC+4FwKZr5gT1Wijy/vP/xAzAxrqQHobTtT0qA=;
-        b=3K+/Gc6K+ljGVhKG3gipVQehC79o5v2KZyJ4TEet2NOAngJGS9ZsqYL3aSji1+eQPm
-         WNf6V4LNyqOL2d6r3kUV6EUJdg/GKycA94gdM7Hl4oHFbdDKi4niRxpeGUKINcFrAx3k
-         W64mAYiqRwzakU1LDqujVIDDJgZOMjfbU32/cXtxpwIbPkYu56RQ0W1BfHOzS/6nmA7Z
-         UA1pnjLhsqhMGaRf4/DEI0Vqa0YuqUK8Zpqj8LCLilSrLkfk2Z1Ra9EskpVLTLbdhI/c
-         HRa0rywMxkSlU7aA2zuObttnggiMice00Ls4nKdXsSBzSR0FsSMufN06VS2Zqgyd09B8
-         dYfw==
-X-Gm-Message-State: AAQBX9e/WRgplDDPjmetUDsQLHDvsF/SaFbEA7zZ4d4e6ber5OEDJtg3
-        IP3wkZqI7LHt23lZBrXY2eDsIIPG0uk=
-X-Google-Smtp-Source: AKy350YAki8EgFiDieJryOmBHWE1hC1N4OLtWFwnD1OOK+C7cgxzaGYO9wBJ5vNxI4RONAQ13kLgmA==
-X-Received: by 2002:ac2:550f:0:b0:4d7:44c9:9f4c with SMTP id j15-20020ac2550f000000b004d744c99f4cmr5080077lfk.4.1680075839894;
-        Wed, 29 Mar 2023 00:43:59 -0700 (PDT)
+        bh=Ab/9xo5xcCVwNd7fYIpt30u9GD5F12B2HmtU/JCDQ4s=;
+        b=53ExkLnVLpHe+x/uppQ8YSlsRJvOdfR/Z/SH4PhWOaJwzJtSPaB8TuJIyyQ74ObDwY
+         QUYUS29Wv3dHn0YvFbM2p7xRGxFtyBjyDW+1TnPaPhMww90ag6YRPoWgMmue8ZmqHzyA
+         zU27LElDKBsq9+K5EkJc5+AB8mmjDHr63iuF1DCPkeS8y4OtcthliOZkYg7YE26rJzo4
+         eaI7gRovd6y6aRaXPAQDRdMYkRSrZn6QTkhaFy5UULwgveLmEFWFT5d2zw8028UpEKaE
+         la9pLsqEU3t228sqlJWFA5MXm0Kt3PmnL8DQkKmhWGBeAwZE7e4ifgVOQ50njBfRbBT2
+         wuUQ==
+X-Gm-Message-State: AAQBX9cuNNVUmBf03o7m510ak97l5WG1yhlaxEdO20sgzreDDlN8xlXa
+        J4b7PGc26tDaIhoUnxPGTTU33aLmmNo=
+X-Google-Smtp-Source: AKy350bo3CDNcu4UG6ajLZgXLLY/q8yS3mGQVhctnOm1JAfVJ0OjBXyojv9wSVFkpKa+IcW2JW2gnA==
+X-Received: by 2002:ac2:4a71:0:b0:4d8:4fed:fa0c with SMTP id q17-20020ac24a71000000b004d84fedfa0cmr5889886lfp.9.1680077183152;
+        Wed, 29 Mar 2023 01:06:23 -0700 (PDT)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id u18-20020ac243d2000000b004e9c8290512sm4258956lfl.82.2023.03.29.00.43.56
+        by smtp.gmail.com with ESMTPSA id w8-20020a2e3008000000b002a4bb086610sm1804850ljw.123.2023.03.29.01.06.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 00:43:57 -0700 (PDT)
+        Wed, 29 Mar 2023 01:06:22 -0700 (PDT)
 From:   Sergey Organov <sorganov@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org
@@ -66,10 +66,10 @@ References: <xmqqr0v7o0pp.fsf@gitster.g> <871qn5pyez.fsf@osv.gnss.ru>
         <878rg5vgvc.fsf@osv.gnss.ru> <xmqqjzzo46tv.fsf@gitster.g>
         <874jqj31gv.fsf@osv.gnss.ru> <xmqq8rfugbuy.fsf@gitster.g>
         <87y1nk6aa5.fsf@osv.gnss.ru>
-Date:   Wed, 29 Mar 2023 10:43:55 +0300
+Date:   Wed, 29 Mar 2023 11:06:21 +0300
 In-Reply-To: <87y1nk6aa5.fsf@osv.gnss.ru> (Sergey Organov's message of "Sat,
         25 Mar 2023 19:55:14 +0300")
-Message-ID: <87r0t80zpg.fsf@osv.gnss.ru>
+Message-ID: <87mt3w0yo2.fsf@osv.gnss.ru>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -79,78 +79,34 @@ X-Mailing-List: git@vger.kernel.org
 
 Sergey Organov <sorganov@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Sergey Organov <sorganov@gmail.com> writes:
->>
->>>> I do not quite understand the last one (#4),
->>>
->>> Well, -m does not imply -p, whereas the rest of diff-merges options
->>> (-c/--cc/--remerge-diff) do imply -p. This is what half of this
->>> lengthy discussion was about.
->>>
->>>> own 4., it would be that introducing --diff-merges={kind} may have
->>>> been a mistake.  It would have been fine and better to just let
->>>> users choose from whatever set of options we support, i.e. (-c,
->>>> --cc, --remerge-diff, -m -p, -m --raw, ...).
->>
->>> It's fine with me that --cc is everything you need, but what I need is
->>> rather diff to the first parent, ...
->>
->> I think "show --first-parent" should give that already.
->
-> Well, for "git show" even "show -m" does the right thing (once properly
-> configured), as "-p" is implied by "git show".
->
-> Taking "git show" into the picture brings yet another argument if favor
-> of new "-m" behavior, as then "git show -m" and "git log -m -n1" will
-> finally start to produce the same result, that I'd find desirable.
->
-> That said,
->
->   --diff-merges=first-parent
->
-> that could be shortened to
->
->   --diff-merges=1
->
-> is the universal answer that works out-of-the-box for any command the
-> same way, reliably, and then it's also
->
->   -m -p
->
-> if configured accordingly, that has been made available by previously
-> accepted patches.
->
-> These series just did the last logical step: allowed it to be just
->
->   -m
->
-> if configured accordingly.
->
->> One problem with "-m implies -p" is that it is unclear what should be
->> done to things like "-m --raw".
->
-> Nothing specific is actually needed, as far as I'm aware, as implied -p
-> doesn't interfere with --raw. Please give particular example of a
-> problem if you foresee one.
+[...]
 
-In fact there is already a test for it that I added some time ago (as
-well as for --stat), so a problem would have been caught. Please also
-notice that it was an agreed goal for "-m" to finally imply "-p" at that
-time:
+> [As a side-note, current behavior of implied -p, explicit -p, -s, and
+> --raw with respect to each other that I figured by experiment looks
+> suspect to me. E.g., once explicit -p is given, and then canceled by -s,
+> I can't get bare --raw output anymore]
 
-commit 48229c193d2e6e728d3243bacea2f1e1490ced8a
-Author: Sergey Organov <sorganov@gmail.com>
-Date:   Fri May 21 00:46:55 2021 +0300
+Specifically, this test unexpectedly fails:
 
-t4013: test "git log -m --raw"
+modified   t/t4013-diff-various.sh
+@@ -457,6 +457,16 @@ diff-tree --stat --compact-summary initial mode
+ diff-tree -R --stat --compact-summary initial mode
+ EOF
+ 
++# This should succeed, but --patch --no-patch does something hidden
++# that breaks --raw.
++test_expect_success '--no-patch only cancels --patch' '
++	git log --raw master >result &&
++	process_diffs result >expected &&
++	git log --patch --no-patch --raw >result &&
++	process_diffs result >actual &&
++	test_cmp expected actual
++'
++
+ test_expect_success 'log -m matches pure log' '
+ 	git log master >result &&
+ 	process_diffs result >expected &&
 
-This is to ensure we won't break different diff formats when we start
-to imply "-p" by "-m".
-
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
 Thanks,
 -- Sergey Organov
