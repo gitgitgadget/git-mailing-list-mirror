@@ -2,162 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0047DC74A5B
-	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 11:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04101C74A5B
+	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 11:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229760AbjC2LTo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Mar 2023 07:19:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50962 "EHLO
+        id S229877AbjC2Ldu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Mar 2023 07:33:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229665AbjC2LTk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2023 07:19:40 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65580420A
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 04:19:39 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id i6so18817080ybu.8
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 04:19:39 -0700 (PDT)
+        with ESMTP id S229872AbjC2Ldr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2023 07:33:47 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EA7640F2
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 04:33:40 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id ek18so61871843edb.6
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 04:33:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680088778;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vXV7RvL/WN+CWAREKmla9jQF71X+9UXVlz5pSKcWK5A=;
-        b=dAl+q28KweBexNxkRcBNKG/YMleGaGsage2YIb1KavPBEDxK5/X9J4HzsyL4H9ztG9
-         hxk/xJlMId2LtC0aJQFuKSGBeAPjN0CaDeVu+4Rzs/Yx+BWkTg0DG9Z9rvp2G7VdaeF8
-         NUWv9LnwVSWM0poSAxgSB3zJnyK1iRyjGG9bCX6PAk6oQX6CyiiRyiid9VUyZVYQhQHj
-         hiRHYq28Pf9hFHFumSvzCkEWTOq13N3PlAhh7NDyk/cPw3K89Bua4bM2PCfAAVVMslx6
-         RvhOaC2UMAIY8w9iDfKfuBgy5zQbQFNL8WRdK4qncgPkYkywKXIN0Tdr7M+nU8Ivi5D1
-         KJWw==
+        d=gmail.com; s=20210112; t=1680089618;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9B3uW54iWMCvNIUrmCiZdT2VAqbHRYGZO0J0Gcauy1k=;
+        b=g/qLBX8A8dlSCk401pCqA+oeqXRNTJCuiB9ieoDVcgGWSM7MM2N0lSZwD8XXIWrEhz
+         Qgo38OqbqWYY/LzEIHbW0QGA/7de1XKbgLAMFik+7usq9NWZelPZjQKNt1i/54ymIPAX
+         O0YJeYNurRyNHzSPUh304UM89GCmiMKIdC5H8ymp87IJvbLGjpj/WjgNNJcgzp8z/RDk
+         ff6i6NxLb/2rQLHGbRV3wBUc/qtX3lVmiFtdv3i5DqjB6gw7Wd0WQRt2NEVrYczuv6dQ
+         G6fNvQQQm8IqhMjmd9IVjnyAdJHbU30LkvDq+4qxHRCApaJQ2E7ALO7LuZiYM+FOKL93
+         wnBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680088778;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vXV7RvL/WN+CWAREKmla9jQF71X+9UXVlz5pSKcWK5A=;
-        b=ptmvRZ+9GaB8DkrBubFFe7J/LXKAlEN5a5e5V57tPbIeVdZ2DQE4MFSZJIWZTvJ+97
-         DkolY/n3S6PD3xJE6RTtmURi4dnHS/UEdNmoUJ1u5J3ERD+p6zGfhTuOs+uaK9wbsBxG
-         fNOYRoUPNLfdGipEbHfbfXA77yrJVo13iLGefurNOSWzk8nIKeXiM1mC0vXPxFA481rl
-         gaz4savzJStNPDwqWJSliMyqvU05TFGaRJDFNjVmavz2m4TglsCOd0F1H4xjafWBgacA
-         cvGeu+dTo7KK4Ks2CMUxyu809e/pvnAJt6Gd/nBE3mujB+MmGMINKi0qmtxbo2oDqK5A
-         TRMw==
-X-Gm-Message-State: AAQBX9ccFhgBk68Ad3j55zL3f0/U9J/2zaA/LeJDOCNJUL07oDGOUx2Y
-        dKCsTKTrAOdhWKTHb1GwOOgmeja3ABreD/iDkPs=
-X-Google-Smtp-Source: AKy350Yh4dhB1AEMxj+V2yuGCms0TaHtcsDFHw5bZbqVsINnturFJF+soBX6S3autIex4sLSXOR4ym6zf8Vw8kDB1Dk=
-X-Received: by 2002:a05:6902:703:b0:b48:5eaa:a804 with SMTP id
- k3-20020a056902070300b00b485eaaa804mr10033917ybt.0.1680088778611; Wed, 29 Mar
- 2023 04:19:38 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680089618;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9B3uW54iWMCvNIUrmCiZdT2VAqbHRYGZO0J0Gcauy1k=;
+        b=dx5Z2RJ5F3ofzfYvyYZmo0qmhxmyHyoK2feh1PSSucAxrt0O39wdwCaF2SEDDQX7JX
+         lvKhVd8qlY8CauU31jWs/9j3MgquBbjvV50UqWmbIZEfnlNjHs3EB4J1yVCwH8Wm5nv4
+         7RmtQ0rUeiBU9M1FdN7YZAhY59qtPXo9c8ONJuEC2YO+I0SecTHgr0V93wo+nG6wDSNE
+         WUAew5OSZcg/0U1YJMrR1ldTgZC9pTaJk5/DCNpjSutXECsLQo6VoxkWc810mT3YrX99
+         Ken+kXvk1VmIMZeogStbqRr88o7dkDRuwglbnx4C5FUcVVW22p80ViHHNYwosv/a1emc
+         qBew==
+X-Gm-Message-State: AAQBX9cjfoDnx+eA51dPVxH4eSPcEpl+UyeHU6Dw762e7/Es4ZHvNx+J
+        sqejnQVbkGNKVQtAZyLYTRQeE1y1Vuebtw==
+X-Google-Smtp-Source: AKy350Zp7aaCXI4hpEVCRgXYDJB5IBOOBgpsXKjyxSmc2b8vGx8pftb97NZ8rkv6DrSvYhgHQYkksA==
+X-Received: by 2002:a17:906:b303:b0:8b1:7fa:6588 with SMTP id n3-20020a170906b30300b008b107fa6588mr16989293ejz.12.1680089618491;
+        Wed, 29 Mar 2023 04:33:38 -0700 (PDT)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id la18-20020a170907781200b00914001c91fcsm16367472ejc.86.2023.03.29.04.33.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Mar 2023 04:33:38 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1phU3d-0058y2-1c;
+        Wed, 29 Mar 2023 13:33:37 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <nasamuffin@google.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v3 3/8] config.c: create config_reader and the_reader
+Date:   Wed, 29 Mar 2023 12:41:32 +0200
+References: <pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com>
+ <pull.1463.v3.git.git.1680025914.gitgitgadget@gmail.com>
+ <72774fd08f3eb9ff1d449814637e584692ba2bfc.1680025914.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <72774fd08f3eb9ff1d449814637e584692ba2bfc.1680025914.git.gitgitgadget@gmail.com>
+Message-ID: <230329.86sfdnvlke.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20230328173932.3614601-1-felipe.contreras@gmail.com>
- <ZCONCVC2ITBJWoBA@tapette.crustytoothpaste.net> <CAMP44s07W6SzJZnmpMMejM8cTNvwrKnNiD+1U=JWMBwUX8JbMA@mail.gmail.com>
- <230329.861ql7x4k4.gmgdl@evledraar.gmail.com>
-In-Reply-To: <230329.861ql7x4k4.gmgdl@evledraar.gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Wed, 29 Mar 2023 05:19:27 -0600
-Message-ID: <CAMP44s1z6PBS8whv6+nhbzQr-H2+QYTDw=WHf0AkY2mbJDZfMA@mail.gmail.com>
-Subject: Re: [PATCH 0/6] test: make the test suite work with zsh
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 29, 2023 at 3:58=E2=80=AFAM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarma=
-son
-<avarab@gmail.com> wrote:
+
+On Tue, Mar 28 2023, Glen Choo via GitGitGadget wrote:
+
+> From: Glen Choo <chooglen@google.com>
 >
-> On Tue, Mar 28 2023, Felipe Contreras wrote:
+> Create "struct config_reader" to hold the state of the config source
+> currently being read. Then, create a static instance of it,
+> "the_reader", and use "the_reader.source" to replace references to
+> "cf_global" in public functions.
 >
-> > On Tue, Mar 28, 2023 at 6:57=E2=80=AFPM brian m. carlson
-> > <sandals@crustytoothpaste.net> wrote:
-> >>
-> >> On 2023-03-28 at 17:39:26, Felipe Contreras wrote:
-> >> > It's not difficult to make the testing library work for zsh, so I di=
-d that in
-> >> > the first patch.
-> >> >
-> >> > The rest of the patches are basically to deal with some variables th=
-at are
-> >> > special in zsh, workaround a bug, and a minor discrepancy.
-> >>
-> >> There was a point at which the tests worked entirely in sh mode with
-> >> zsh.  I know because I fixed a handful of tests there, ending with
-> >> c64368e3a2a47, and I patched zsh to run all commands in a pipeline in =
-a
-> >> subshell in sh mode to fix the remaining tests.
-> >>
-> >> If I symlink zsh (zsh 5.9 (x86_64-debian-linux-gnu)) to sh in a
-> >> temporary directory and use it in SHELL_PATH, I get only the following
-> >> failures:
-> >
-> > That would defeat my motivation behind the patches, which is to be
-> > able to run one test file in zsh.
+> This doesn't create much immediate benefit (since we're mostly replacing
+> static variables with a bigger static variable), but it prepares us for
+> a future where this state doesn't have to be global; "struct
+> config_reader" (or a similar struct) could be provided by the caller, or
+> constructed internally by a function like "do_config_from()".
 >
-> "One" as in one specific file you have in mind, or a "one-off run"?
+> A more typical approach would be to put this struct on "the_repository",
+> but that's a worse fit for this use case since config reading is not
+> scoped to a repository. E.g. we can read config before the repository is
+> known ("read_very_early_config()"), blatantly ignore the repo
+> ("read_protected_config()"), or read only from a file
+> ("git_config_from_file()"). This is especially evident in t5318 and
+> t9210, where test-tool and scalar parse config but don't fully
+> initialize "the_repository".
 
-One specific file.
+I don't mean to just rehash previous discussion
+(i.e. https://lore.kernel.org/git/230307.86wn3szrzu.gmgdl@evledraar.gmail.com/
+and downthread). I get that you think sticking this in a "struct
+repository *" here isn't clean, and would prefer to not conflate the
+two.
 
-I just did a quick porting of the code in my fork, and this should
-give you a good idea (it's preliminary):
+Fair enough.
 
-https://github.com/felipec/git/blob/zsh/tests/t/t9904-completion-zsh.sh
+But I think this paragraph still does a bad job of justifying this
+direction with reference to existing code.
 
-I had already sent versions of this test file that run in bash, but
-it's much better to fix test-lib.sh so that it works for zsh and they
-can be run directly.
+Why? Because from reading it you get the impression that with
+read_very_early_config() and read_protected_config() "config reading is
+not scoped to a repository", but "scoped to" is doing a *lot* of work
+here.
 
-> The
-> 1/6 here looks like it fixes most of the issues, but e.g. the
-> test-lib.sh fix in 2/6 would be needed by any test that reached that
-> code, wouldn't it?
+At the start of read_very_early_config() we do:
 
-Yes, but my test file doesn't reach that code.
+	struct config_options opts = { 0 };
+	[...]
+	opts.ignore_repo = 1;
+	opts.ignore_worktree = 1;
 
-> Some details on all of this in an updated commit message would be most
-> welcome...
+And then call config_with_options(), which does:
 
-Well, those details depended on the response.
+	struct config_include_data inc = CONFIG_INCLUDE_INIT;
 
-Since nobody seems to be interested in the tests running with vanilla
-zsh, I can just drop them and the explanation.
+And that struct has:
 
-> > Only the first patch is needed for that, the rest were in case anyone
-> > cared to run all the tests.
-> >
-> >> I don't care a lot of other folks want to make zsh run the testsuite i=
-n
-> >> zsh mode, but I'd think that using sh mode would be simpler and less
-> >> likely to break in general, and would avoid us needing to carry a lot =
-of
-> >> patches to work around various variables that are special in zsh mode.
-> >
-> > We don't need to carry the patches if the patches are applied.
->
-> But we do need to carry some hacks going forward, some of it seems
-> pretty isolated & easy to spot, but e.g. the 6/6 fix of:
->
-> -               if test "$c" =3D " "
-> +               if test "$c" =3D " " || test -z "$c"
->
-> Is quite subtle, you might look at that and be convinced that the RHS is
-> redundant, and be right, but only because you assume POSIX semantics.
->
-> If we are going to include this I think the relevant t/README and
-> Documentation/CodingGuidelines parts should be updated to note that
-> we're not targeting POSIX shellscripts anymore, but the subset of it
-> that zsh is happy with.
+	struct git_config_source *config_source;
 
-There's no point in that. I consider it a bug in zsh, along with 5/6,
-so presumably at some point it's going to be fixed.
+Which in turn has:
 
-And if nobody cares about running these tests in zsh, it doesn't matter any=
-way.
+	/* The repository if blob is not NULL; leave blank for the_repository */
+	struct repository *repo;
+	const char *blob;
 
-Cheers.
+The read_protected_config() is then another thin wrapper for
+config_with_options().
 
---=20
-Felipe Contreras
+So, so far the reader might be genuinely confused, since we already have
+a "repo" in scope why can't we use it for this cache? Even if just
+reading the system config etc.
+
+For *those* cases I think what I *think* you're going for is that while
+we have a "struct repository" already, we don't want to use it for our
+"cache", and instead have a file-scoped one.
+
+Personally, I don't see how it's cleaner to always use a file-scope
+rather than piggy-back on the global we almost always have (or provide a
+fallback), but let's not get on that topic again :)
+
+Now, the case that *is* special on the other hand is
+git_config_from_file(), there we really don't have a "repository" at
+all, as it never gets the "struct config_include_data inc", or a
+"git_config_source".
+
+But if we dig a bit into those cases there's 3x users of
+git_config_from_file() outside of config.c itself:
+
+ * setup.c, to read only repo's "config.worktree"
+ * setup.c, to read only repo "config"
+ * sequencer.c, to read "sequencer/opts"
+
+For the former two, I think the only thing that's needed is something
+like this, along with a corresponding change to
+do_git_config_sequence():
+
+	diff --git a/config.h b/config.h
+	index 7606246531a..b8a3de4eb93 100644
+	--- a/config.h
+	+++ b/config.h
+	@@ -85,7 +85,10 @@ typedef int (*config_parser_event_fn_t)(enum config_event_t type,
+	 
+	 struct config_options {
+	        unsigned int respect_includes : 1;
+	+       unsigned int ignore_system : 1;
+	+       unsigned int ignore_global : 1;
+	        unsigned int ignore_repo : 1;
+	+       unsigned int ignore_local : 1;
+	        unsigned int ignore_worktree : 1;
+	        unsigned int ignore_cmdline : 1;
+	        unsigned int system_gently : 1;
+
+I.e. we actually *do* have a repo there, we just haven't bridged the gap
+of "ignore most of its config" so we can use config_with_options()
+there.
+
+The sequencer.c case is trickier, but presumably for such isolated
+reading we could have a lower-level function which would return the
+equivalent of a "key_value_info" on errors or whatever.
+
+
+Anyway, I'm fine with this direction for now, but given the above & my
+previous RFC
+https://lore.kernel.org/git/RFC-cover-0.5-00000000000-20230317T042408Z-avarab@gmail.com/
+I can't help but think we're taking two steps forward & one step
+backwards for some of this.
+
+I.e. are we assuming no "repo", but per the above we really do have one,
+but we just don't pass it because we don't have a "read only the
+worktree config part", or whatever?
+
+Ditto the line number relaying for builtin/config.c, which as my RFC
+showed we have one or two API users that care, which we can just
+convert...
