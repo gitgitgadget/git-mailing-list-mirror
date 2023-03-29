@@ -2,101 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84F42C74A5B
-	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 18:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC25CC761AF
+	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 18:57:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229886AbjC2SxQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Mar 2023 14:53:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55586 "EHLO
+        id S229586AbjC2S5o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Mar 2023 14:57:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229885AbjC2SxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2023 14:53:14 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAB5E5FFA
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 11:53:12 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso19592974pjb.0
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 11:53:12 -0700 (PDT)
+        with ESMTP id S229846AbjC2S5m (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2023 14:57:42 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B97A5251
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 11:57:40 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id fy10-20020a17090b020a00b0023b4bcf0727so17204074pjb.0
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 11:57:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680115992;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UVDUS7uD7xpwmjIAJvmY3ViEB1rjYCUdj0Zp1FqJcoo=;
-        b=Lo1Zemq9Vlvj2kfvl90vlgewjatAgN34xk+YzAKdvvXNrLm9yEitAvDrGAv7JdAziW
-         ZSOeuN8AaDhe15OOP9nbdq6iNgruRDl/4oz8yZxPomF2C1hrO6j4Vn90nwdlqXRVS4Hy
-         eB16lj0ehNAd4rflZ+KQnYgxeqX+P4dro561CdPBXcO2FMJJ4fmc12D0u9W+H438VNXr
-         bfyBZ5ImWHaCbSOAeRObBOGPsExjiO4ijIZ5nfiyYo2hPvdGsBhiQPtcO9niZdz+Z/15
-         qbY0nzK9QqSjnHRtyZtcXXHRmd6JRzGq6chUUm8WYxJ9lBkd25xfXmmW98jX2XZGQCNd
-         qoCw==
+        d=gmail.com; s=20210112; t=1680116259;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZPV5bJHkS/Asyl6s2VJOewWGaocqGPNCXrxj3s9AVnI=;
+        b=BODyKVRmXdgpKXZ2SLzNWO+I7El+ED64jD/PNDDzIyLE80YoZUiY9AGWA9l4kuW/gg
+         +QuvchYrAuFMkFuUOZfoC0L0itoBsL8NE5JacKngbPLyMR9Ud4yfvHSOf1WZIL1UB4hV
+         grO5+A1OhuVcvdan4+AoL8nE+AQBIdRwREaY8bdF1olGeaxk+CHI/il8ikVcWFKAVJ9g
+         y1XyyxBSmsuFzEcWwv3xFkzcfn6ngb4PSbqanSRyK6xxMnMCpMXBk27y2hIg5gYCXt2p
+         xfS15+zvZXddQh9wFBF3v1pmwb1xFk8qzJlDcYR241UHelzhqPJ+AOmaE+buDbq5WoqC
+         FO7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680115992;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UVDUS7uD7xpwmjIAJvmY3ViEB1rjYCUdj0Zp1FqJcoo=;
-        b=wy0VgHmWBijS0mtKtfDpkI7bVrd9MsxXQkBtCWsjkziA93UjTYK6eBY62R7YyPti3c
-         k+8dg11cAb/wUfUmiC+i2eoPesXkv/64wmtjYEFR49ZudFyk+Zdn1STVmO65bDJaJFSm
-         Vnc1u1nawlC8UvXjQ158Z4/Wc7y+BF8a2ilSHimfdl7MgAM3qE4Hm2TCLQZygf+n7BFC
-         iYxA9vDtPlgRA0nuNnORZswR+L04uxmi9N+X3nlyrmDDyz5RK8u13F3aGWcoMBotCnDg
-         l+CRqDi24Z63QGmrF3/WDLKPxesd3V0MAY5mK7Vdx8OhmTdCkYBgtoXX40M8ORLP3+Ph
-         i1Bw==
-X-Gm-Message-State: AAQBX9dzp/mr4HnsyM5HJdKQ62NN1luGI4gG7SMSI7Cbhf9NEp2fOwlF
-        vkhU7c1XttJLGD5tAXEqP1E=
-X-Google-Smtp-Source: AKy350a+LxKQBAi+WpLFa4pxZsJgqe1qNminxVhRHJMbuzVqrWZpGi9dYF4ccBPDn0+j3GD1D/ORfg==
-X-Received: by 2002:a17:902:c949:b0:1a1:adb0:ed72 with SMTP id i9-20020a170902c94900b001a1adb0ed72mr24184292pla.4.1680115992271;
-        Wed, 29 Mar 2023 11:53:12 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680116259;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZPV5bJHkS/Asyl6s2VJOewWGaocqGPNCXrxj3s9AVnI=;
+        b=P4EFSEOYcoAiFIbeULvgk/AENS3TsYNBCNatSb389waifkl+/5cLF1+T0cOL5FY/pZ
+         ylsawGzPHFehGgTItoXMaVZNIcBdkO0w7CubFCmfgEBionsSsmKTuyufl3eMjR6WT+Od
+         PguaYk4TKDHNHYHc9pF7M8tb9KXGB7Oq5aY0fkTgfcaipxRoKJYOWspgFzjpuYxKVwy3
+         +O2KKBdVBkQoIodssUzqnm/sYPvtU9iVsKjcBSJUQcEhrRJqo0JNL+SAglDON0MwHLMo
+         0r5O49HSFyud9C8haAPuiiG9PXkvt3o82sjSsUQoPEWjlYmY5lC8yOCRYFV9odVu1tnK
+         N63w==
+X-Gm-Message-State: AO0yUKUn53ixEX/3BWmwC59VdrH6FraN9v5kVA4sPF+vUyuoAemZmOoi
+        VbRNbcyFEjXX039vaS0qQl0=
+X-Google-Smtp-Source: AK7set8ba07+SoCqrHCEgUUT8rhMSNpQo5sw00jyV08bPdn6TOMc7e02iLGA+igqcgSVJE7z2CKwPA==
+X-Received: by 2002:a05:6a20:3aaa:b0:d8:e105:eb25 with SMTP id d42-20020a056a203aaa00b000d8e105eb25mr19190329pzh.7.1680116259492;
+        Wed, 29 Mar 2023 11:57:39 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id s12-20020a632c0c000000b004fadb547d0csm21744611pgs.61.2023.03.29.11.53.11
+        by smtp.gmail.com with ESMTPSA id g6-20020a62e306000000b005a8bf239f5csm23373798pfh.193.2023.03.29.11.57.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 11:53:11 -0700 (PDT)
+        Wed, 29 Mar 2023 11:57:39 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stanislav M <stanislav.malishevskiy@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Stanislav Malishevskiy via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Stanislav Malishevskiy <s.malishevskiy@auriga.com>
-Subject: Re: [PATCH v2] http: add support for different sslcert and sslkey
- types.
-References: <pull.1474.git.git.1679233875803.gitgitgadget@gmail.com>
-        <pull.1474.v2.git.git.1679327330032.gitgitgadget@gmail.com>
-        <xmqqlejrmj4y.fsf@gitster.g>
-        <20230321172223.GA3119834@coredump.intra.peff.net>
-        <xmqqjzzahufj.fsf@gitster.g>
-        <CAEpdKf=pMcMn6q0wGGcrFN1yi1duguSNLDkqhDmvMBeKQ--yuA@mail.gmail.com>
-        <20230323180159.GA1015351@coredump.intra.peff.net>
-        <CAEpdKfm0S4tkLz8DMnkJmhMmJk8Cj1tUm7NbMe7kpATq0bkxCw@mail.gmail.com>
-Date:   Wed, 29 Mar 2023 11:53:11 -0700
-In-Reply-To: <CAEpdKfm0S4tkLz8DMnkJmhMmJk8Cj1tUm7NbMe7kpATq0bkxCw@mail.gmail.com>
-        (Stanislav M.'s message of "Thu, 23 Mar 2023 21:16:50 +0300")
-Message-ID: <xmqqfs9n9yp4.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <nasamuffin@google.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v3 3/8] config.c: create config_reader and the_reader
+References: <pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com>
+        <pull.1463.v3.git.git.1680025914.gitgitgadget@gmail.com>
+        <72774fd08f3eb9ff1d449814637e584692ba2bfc.1680025914.git.gitgitgadget@gmail.com>
+        <230329.86sfdnvlke.gmgdl@evledraar.gmail.com>
+Date:   Wed, 29 Mar 2023 11:57:38 -0700
+In-Reply-To: <230329.86sfdnvlke.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 29 Mar 2023 12:41:32 +0200")
+Message-ID: <xmqq7cuz9yhp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stanislav M <stanislav.malishevskiy@gmail.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-[administrivia: do not top-post]
+> But I think this paragraph still does a bad job of justifying this
+> direction with reference to existing code.
 
->> Yes, but I'm not sure if there is a way for Git to trigger curl to look
->> at the certificate that does not involve feeding it an https URL (and we
->> want a valid one, because we want to see that it correctly speaks to the
->> server).
-> ...
-> In my opinion they need the same set of tests which is used as usual
-> for https. But use the right certificate and key.
-> But I don't have any idea how to do that with hardware usb eToken in my case.
+I thought it read reasonably well, if not perfect, and do not think
+I am capable of rewriting it better, unfortunately.
 
-OK, so where does this put us, with respect to the change?  We have
-some behaviour change that we do not know how to test?  How would we
-know when we break it in the future?  It is not like the new feature
-is not useful enough that nobody would care if it gets broken by
-accident or anything like that, so...?
+Care to suggest a better rewrite?
 
-At least perhaps we can throw bogus strings in the environment and
-make sure cURL library gives complaints, or something?
+> 	 struct config_options {
+> 	        unsigned int respect_includes : 1;
+> 	+       unsigned int ignore_system : 1;
+> 	+       unsigned int ignore_global : 1;
+> 	        unsigned int ignore_repo : 1;
+> 	+       unsigned int ignore_local : 1;
+> 	        unsigned int ignore_worktree : 1;
+> 	        unsigned int ignore_cmdline : 1;
+> 	        unsigned int system_gently : 1;
+
+That does look (I am not sure about _local bit, though) well
+organized, but I suspect that it can be left for a follow-on
+clean-up series, perhaps?
 
 Thanks.
