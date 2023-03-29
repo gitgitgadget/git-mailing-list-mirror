@@ -2,71 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC25CC761AF
-	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 18:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B018FC74A5B
+	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 19:02:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbjC2S5o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Mar 2023 14:57:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60482 "EHLO
+        id S229992AbjC2TCd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Mar 2023 15:02:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229846AbjC2S5m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2023 14:57:42 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B97A5251
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 11:57:40 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id fy10-20020a17090b020a00b0023b4bcf0727so17204074pjb.0
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 11:57:40 -0700 (PDT)
+        with ESMTP id S229470AbjC2TCc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2023 15:02:32 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 399152D55
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 12:02:31 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id kq3so15837920plb.13
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 12:02:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680116259;
+        d=gmail.com; s=20210112; t=1680116550;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZPV5bJHkS/Asyl6s2VJOewWGaocqGPNCXrxj3s9AVnI=;
-        b=BODyKVRmXdgpKXZ2SLzNWO+I7El+ED64jD/PNDDzIyLE80YoZUiY9AGWA9l4kuW/gg
-         +QuvchYrAuFMkFuUOZfoC0L0itoBsL8NE5JacKngbPLyMR9Ud4yfvHSOf1WZIL1UB4hV
-         grO5+A1OhuVcvdan4+AoL8nE+AQBIdRwREaY8bdF1olGeaxk+CHI/il8ikVcWFKAVJ9g
-         y1XyyxBSmsuFzEcWwv3xFkzcfn6ngb4PSbqanSRyK6xxMnMCpMXBk27y2hIg5gYCXt2p
-         xfS15+zvZXddQh9wFBF3v1pmwb1xFk8qzJlDcYR241UHelzhqPJ+AOmaE+buDbq5WoqC
-         FO7g==
+        bh=o9UfdgZ7fyB+9ATsrhxNvn7xER/+dhTWpk2IT6sJaio=;
+        b=cpuxJtcckGbyTF5U26xp6f/73MirbtiI85hTW6Ew3oXtM6Mo9JJVHLnvGJ81SIgtpM
+         zelFVWV758Vz7Qz1dOXo6Zuj83Cg57rCnQ2looe4Y6S2Z+hcNhx7dfutV6toIpPvzUBn
+         9RNRWEKVaM8GVZerhnNP95BtZLY2ra+rUUW/OC8VVXi3YTQSTk4b0HlZH/q5mcZjzltU
+         PLwBAIzZanOrZCSCbbOFDihplP2NTsw6I0FPlN5vL4SdERmHyiHTUJt6z/S6q2N6JF/P
+         8TvkaInSGuDw1xdflsy7QhKWGJU4qVzvx7n+wBeP8WWioDkOEE/xNe5A48CO6tneOpD9
+         68wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680116259;
+        d=1e100.net; s=20210112; t=1680116550;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZPV5bJHkS/Asyl6s2VJOewWGaocqGPNCXrxj3s9AVnI=;
-        b=P4EFSEOYcoAiFIbeULvgk/AENS3TsYNBCNatSb389waifkl+/5cLF1+T0cOL5FY/pZ
-         ylsawGzPHFehGgTItoXMaVZNIcBdkO0w7CubFCmfgEBionsSsmKTuyufl3eMjR6WT+Od
-         PguaYk4TKDHNHYHc9pF7M8tb9KXGB7Oq5aY0fkTgfcaipxRoKJYOWspgFzjpuYxKVwy3
-         +O2KKBdVBkQoIodssUzqnm/sYPvtU9iVsKjcBSJUQcEhrRJqo0JNL+SAglDON0MwHLMo
-         0r5O49HSFyud9C8haAPuiiG9PXkvt3o82sjSsUQoPEWjlYmY5lC8yOCRYFV9odVu1tnK
-         N63w==
-X-Gm-Message-State: AO0yUKUn53ixEX/3BWmwC59VdrH6FraN9v5kVA4sPF+vUyuoAemZmOoi
-        VbRNbcyFEjXX039vaS0qQl0=
-X-Google-Smtp-Source: AK7set8ba07+SoCqrHCEgUUT8rhMSNpQo5sw00jyV08bPdn6TOMc7e02iLGA+igqcgSVJE7z2CKwPA==
-X-Received: by 2002:a05:6a20:3aaa:b0:d8:e105:eb25 with SMTP id d42-20020a056a203aaa00b000d8e105eb25mr19190329pzh.7.1680116259492;
-        Wed, 29 Mar 2023 11:57:39 -0700 (PDT)
+        bh=o9UfdgZ7fyB+9ATsrhxNvn7xER/+dhTWpk2IT6sJaio=;
+        b=LjF2fFv9xMuXCPKhKs+HzY8nSYR0TYK+xjN14iTE8goByna5z7/4VjvlcHQTrIBOaT
+         2d3qONaaNmKgsU0D8BTNnO1sHnRkukMDsM7nOKOUs0b/Y9rjbNVq1aHNaeNSX+vpgZLR
+         ciSxs52ufPjlqs2CnV0KZ1cH5yQHWGSsGVy/KPmbjojFPa4WsOG+VbVjXQ7G6LgaP9mM
+         yFWNHniJHbZVRNiLlmWP/efhU6lMtJA88ww54Rtu899j4FPtEUh6qz15Gm0t7cKQUxWd
+         OZsWJqQ0T5yOZElzv4SFDVAIR6p+UkKCSbtxMhQcceULz1OKM57HWcEqfjx3BEgo+/nB
+         RRkQ==
+X-Gm-Message-State: AAQBX9eEPjAt6xXKrxPAnJZ0sD6h2PKIlJoVNwu6I31Ck0etL0g3rUWt
+        OvIYcL31RwXbrVZtGhTAlb4=
+X-Google-Smtp-Source: AKy350YeUVWiL3Nn8h2Ozub6vULNNdS05j76YzFBns7b6p+pAaGuJB9tJWi0xqbxLpLdTIcpeJh+WA==
+X-Received: by 2002:a17:902:db04:b0:1a1:97b5:c660 with SMTP id m4-20020a170902db0400b001a197b5c660mr3341953plx.20.1680116550617;
+        Wed, 29 Mar 2023 12:02:30 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id g6-20020a62e306000000b005a8bf239f5csm23373798pfh.193.2023.03.29.11.57.39
+        by smtp.gmail.com with ESMTPSA id d10-20020a170902b70a00b0019a5aa7eab0sm23389888pls.54.2023.03.29.12.02.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 11:57:39 -0700 (PDT)
+        Wed, 29 Mar 2023 12:02:30 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v3 3/8] config.c: create config_reader and the_reader
-References: <pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com>
-        <pull.1463.v3.git.git.1680025914.gitgitgadget@gmail.com>
-        <72774fd08f3eb9ff1d449814637e584692ba2bfc.1680025914.git.gitgitgadget@gmail.com>
-        <230329.86sfdnvlke.gmgdl@evledraar.gmail.com>
-Date:   Wed, 29 Mar 2023 11:57:38 -0700
-In-Reply-To: <230329.86sfdnvlke.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 29 Mar 2023 12:41:32 +0200")
-Message-ID: <xmqq7cuz9yhp.fsf@gitster.g>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 00/17] cocci: remove "the_repository" wrapper macros
+References: <cover-00.17-00000000000-20230317T152724Z-avarab@gmail.com>
+        <cover-v2-00.17-00000000000-20230328T110946Z-avarab@gmail.com>
+Date:   Wed, 29 Mar 2023 12:02:29 -0700
+In-Reply-To: <cover-v2-00.17-00000000000-20230328T110946Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 28 Mar
+ 2023 15:58:41
+        +0200")
+Message-ID: <xmqq355n9y9m.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -75,28 +71,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> But I think this paragraph still does a bad job of justifying this
-> direction with reference to existing code.
+>  1:  c167bde3c0c !  1:  e1e27490d60 cocci: remove dead rule from "the_repository.pending.cocci"
+>     @@ Commit message
+>          cocci: remove dead rule from "the_repository.pending.cocci"
+>      
+>          The "parse_commit_gently" macro went away in [1], so we don't need to
+>     -    carry his for its migration.
+>     +    carry this for its migration.
+>      
+>          1. ea3f7e598c8 (revision: use repository from rev_info when parsing
+>             commits, 2020-06-23)
+>  2:  1b1fc5d41f5 =  2:  5ac9d5b8905 cocci: fix incorrect & verbose "the_repository" rules
+>  3:  34c6b8afd6c !  3:  a3fcd19d744 cocci: sort "the_repository" rules by header
+>     @@ Commit message
+>          rules. This will make subsequent commits easier to follow, as we'll be
+>          applying these rules on a header-by-header basis.
+>      
+>     +    Once we've fully applied "the_repository.pending.cocci" we'll keep
+>     +    this rules around for a while in "the_repository.cocci", to help any
+>     +    outstanding topics and out-of-tree code to resolve textual or semantic
+>     +    conflicts with these changes, but eventually we'll remove the
+>     +    "the_repository.cocci" as a follow-up.
+>     +
+>     +    So even if some of these functions are subsequently moved and/or split
+>     +    into other or new headers there's no risk of this becoming stale, if
+>     +    and when that happens the we should be removing these rules anyway.
+>     +
+>          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>      
+>       ## contrib/coccinelle/the_repository.pending.cocci ##
 
-I thought it read reasonably well, if not perfect, and do not think
-I am capable of rewriting it better, unfortunately.
+After removing the rebase noise from later steps, the above two are
+the real changes compared to the previous round.
 
-Care to suggest a better rewrite?
+Are people happy with the result?  I think the previous round was
+both read carefully on the central piece of the series, with some
+spot checks to mechanical parts, and with the above clarification
+the series is ready to be merged down to 'next'.
 
-> 	 struct config_options {
-> 	        unsigned int respect_includes : 1;
-> 	+       unsigned int ignore_system : 1;
-> 	+       unsigned int ignore_global : 1;
-> 	        unsigned int ignore_repo : 1;
-> 	+       unsigned int ignore_local : 1;
-> 	        unsigned int ignore_worktree : 1;
-> 	        unsigned int ignore_cmdline : 1;
-> 	        unsigned int system_gently : 1;
-
-That does look (I am not sure about _local bit, though) well
-organized, but I suspect that it can be left for a follow-on
-clean-up series, perhaps?
-
-Thanks.
+If I am grossly off base in the above assessment, please holler
+soonish.  Thanks.
