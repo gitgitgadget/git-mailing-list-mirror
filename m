@@ -2,63 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81B53C6FD18
-	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 18:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84F42C74A5B
+	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 18:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229564AbjC2SpT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Mar 2023 14:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49496 "EHLO
+        id S229886AbjC2SxQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Mar 2023 14:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229525AbjC2SpS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2023 14:45:18 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04FC74498
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 11:45:17 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id u10so15817434plz.7
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 11:45:16 -0700 (PDT)
+        with ESMTP id S229885AbjC2SxO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2023 14:53:14 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAB5E5FFA
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 11:53:12 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso19592974pjb.0
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 11:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680115516;
+        d=gmail.com; s=20210112; t=1680115992;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WMMX1zTsJUy0M2PWwlCXaZlyIWmnnivfbv1+0r3QrxE=;
-        b=JU8GQ+zuab6ReZgDhyji8DpRlHI3ZraCC/qzasNGe2Gdnuz4mCgeCUhvowWKbn2zBF
-         DYHquEOXvW/mk9+mUXtwru8MQl3C2e6AjhCbpbQOtdQe9/zWgw4sYUphlt0gNnASu34S
-         zPYgelIsy3ewH4lXMx3B7KizMvsJut3V2XYu3HaxwxHzbjct9incFB3uNAXr2Lq0lvwJ
-         7Runwc9yzlB6HcnAieqsQ2yffbQAnlPV5rk9bWKNk1Ij6lDwkoL5fuRbgWE7m7uHOGni
-         MGs7XByY0n+paHuao/+aFdn4WL3DnZ/J8enoTIrm/uLol6v51TTQV2s3jR+cxNIjFP9Z
-         2lWQ==
+        bh=UVDUS7uD7xpwmjIAJvmY3ViEB1rjYCUdj0Zp1FqJcoo=;
+        b=Lo1Zemq9Vlvj2kfvl90vlgewjatAgN34xk+YzAKdvvXNrLm9yEitAvDrGAv7JdAziW
+         ZSOeuN8AaDhe15OOP9nbdq6iNgruRDl/4oz8yZxPomF2C1hrO6j4Vn90nwdlqXRVS4Hy
+         eB16lj0ehNAd4rflZ+KQnYgxeqX+P4dro561CdPBXcO2FMJJ4fmc12D0u9W+H438VNXr
+         bfyBZ5ImWHaCbSOAeRObBOGPsExjiO4ijIZ5nfiyYo2hPvdGsBhiQPtcO9niZdz+Z/15
+         qbY0nzK9QqSjnHRtyZtcXXHRmd6JRzGq6chUUm8WYxJ9lBkd25xfXmmW98jX2XZGQCNd
+         qoCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680115516;
+        d=1e100.net; s=20210112; t=1680115992;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=WMMX1zTsJUy0M2PWwlCXaZlyIWmnnivfbv1+0r3QrxE=;
-        b=SArhZb5zAvkeKhtqRP0HmlX2aQ2MEsEjSYuCV+1FrPrLPirOHDothO2pl0lCFuYBNn
-         +j3snF57bSxCbLS/wnsNEOFI8g461xpbEDciztyiu0sRjm3nV3o202vvZB/DvMYug/eL
-         BMOAMDwNtZIB8bvuPZbs+a8xkb7zn0CD3h/MNRRPWwXB5n2QKiGl/tcADHknVpCgMgym
-         vYHwgUHscB1ITqKfYZZCdhqRfRQ0wWJJ07yOp9/momiMRKJ35raYR1xufJZ54QwcHOKa
-         M7nJRBknSEFCm467lyJXe7KsN1C5X3pJ6E+ivqj9OwT1rwMCZ5VR86Ei1gJ0XumpQR9L
-         Lwlw==
-X-Gm-Message-State: AAQBX9cUBTkrd9qrQ9AcVwOSN59i3QoiEAbLYmOMdDbiqLrGCXxEy6dr
-        dqlfq/eq1JPA2jSOQBdg1Mk=
-X-Google-Smtp-Source: AKy350aRlPT5s5qHoZqofIBfWVSXaHsM6I2amRWCvNO4OpsavDd4mx6TWcixDOus2Z1mfG/q+MF1dQ==
-X-Received: by 2002:a17:902:d482:b0:19f:27fe:95c3 with SMTP id c2-20020a170902d48200b0019f27fe95c3mr22791438plg.41.1680115516303;
-        Wed, 29 Mar 2023 11:45:16 -0700 (PDT)
+        bh=UVDUS7uD7xpwmjIAJvmY3ViEB1rjYCUdj0Zp1FqJcoo=;
+        b=wy0VgHmWBijS0mtKtfDpkI7bVrd9MsxXQkBtCWsjkziA93UjTYK6eBY62R7YyPti3c
+         k+8dg11cAb/wUfUmiC+i2eoPesXkv/64wmtjYEFR49ZudFyk+Zdn1STVmO65bDJaJFSm
+         Vnc1u1nawlC8UvXjQ158Z4/Wc7y+BF8a2ilSHimfdl7MgAM3qE4Hm2TCLQZygf+n7BFC
+         iYxA9vDtPlgRA0nuNnORZswR+L04uxmi9N+X3nlyrmDDyz5RK8u13F3aGWcoMBotCnDg
+         l+CRqDi24Z63QGmrF3/WDLKPxesd3V0MAY5mK7Vdx8OhmTdCkYBgtoXX40M8ORLP3+Ph
+         i1Bw==
+X-Gm-Message-State: AAQBX9dzp/mr4HnsyM5HJdKQ62NN1luGI4gG7SMSI7Cbhf9NEp2fOwlF
+        vkhU7c1XttJLGD5tAXEqP1E=
+X-Google-Smtp-Source: AKy350a+LxKQBAi+WpLFa4pxZsJgqe1qNminxVhRHJMbuzVqrWZpGi9dYF4ccBPDn0+j3GD1D/ORfg==
+X-Received: by 2002:a17:902:c949:b0:1a1:adb0:ed72 with SMTP id i9-20020a170902c94900b001a1adb0ed72mr24184292pla.4.1680115992271;
+        Wed, 29 Mar 2023 11:53:12 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id m10-20020a1709026bca00b001a24e2eec75sm5892731plt.193.2023.03.29.11.45.15
+        by smtp.gmail.com with ESMTPSA id s12-20020a632c0c000000b004fadb547d0csm21744611pgs.61.2023.03.29.11.53.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 11:45:15 -0700 (PDT)
+        Wed, 29 Mar 2023 11:53:11 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH v2 6/6] fetch: centralize printing of reference updates
-References: <20230320225702.1471172-1-jonathantanmy@google.com>
-Date:   Wed, 29 Mar 2023 11:45:15 -0700
-In-Reply-To: <20230320225702.1471172-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Mon, 20 Mar 2023 15:57:02 -0700")
-Message-ID: <xmqqlejf9z2c.fsf@gitster.g>
+To:     Stanislav M <stanislav.malishevskiy@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Stanislav Malishevskiy via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org,
+        Stanislav Malishevskiy <s.malishevskiy@auriga.com>
+Subject: Re: [PATCH v2] http: add support for different sslcert and sslkey
+ types.
+References: <pull.1474.git.git.1679233875803.gitgitgadget@gmail.com>
+        <pull.1474.v2.git.git.1679327330032.gitgitgadget@gmail.com>
+        <xmqqlejrmj4y.fsf@gitster.g>
+        <20230321172223.GA3119834@coredump.intra.peff.net>
+        <xmqqjzzahufj.fsf@gitster.g>
+        <CAEpdKf=pMcMn6q0wGGcrFN1yi1duguSNLDkqhDmvMBeKQ--yuA@mail.gmail.com>
+        <20230323180159.GA1015351@coredump.intra.peff.net>
+        <CAEpdKfm0S4tkLz8DMnkJmhMmJk8Cj1tUm7NbMe7kpATq0bkxCw@mail.gmail.com>
+Date:   Wed, 29 Mar 2023 11:53:11 -0700
+In-Reply-To: <CAEpdKfm0S4tkLz8DMnkJmhMmJk8Cj1tUm7NbMe7kpATq0bkxCw@mail.gmail.com>
+        (Stanislav M.'s message of "Thu, 23 Mar 2023 21:16:50 +0300")
+Message-ID: <xmqqfs9n9yp4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,23 +77,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Stanislav M <stanislav.malishevskiy@gmail.com> writes:
 
-> Thanks. Patches 1-5 look good to me. As for this patch, I'm still not
-> convinced (I thought that the new mode would still print to stderr), but
-> if other reviewers are OK with it then that's fine. Alternatively, patch
-> 6 could go with the next set of patches that implement the new mode of
-> printing ref updates.
+[administrivia: do not top-post]
 
-When further changes to the display_ref_update() starts doing
-something iffy, we may still want to block them at that time, but
-unless I am grossly misreading this patch, I do not think this one
-changes the behaviour to start showing the ref update notification
-to anywhere other than the standard error stream at this stage, and
-the changes in this step can be evaluated for its "clean-up" value
-alone.  
+>> Yes, but I'm not sure if there is a way for Git to trigger curl to look
+>> at the certificate that does not involve feeding it an https URL (and we
+>> want a valid one, because we want to see that it correctly speaks to the
+>> server).
+> ...
+> In my opinion they need the same set of tests which is used as usual
+> for https. But use the right certificate and key.
+> But I don't have any idea how to do that with hardware usb eToken in my case.
 
-So I am inclined to say that we should take it as-is.
+OK, so where does this put us, with respect to the change?  We have
+some behaviour change that we do not know how to test?  How would we
+know when we break it in the future?  It is not like the new feature
+is not useful enough that nobody would care if it gets broken by
+accident or anything like that, so...?
+
+At least perhaps we can throw bogus strings in the environment and
+make sure cURL library gives complaints, or something?
 
 Thanks.
-
