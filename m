@@ -2,124 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3AD2C6FD18
-	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 11:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2A43C6FD18
+	for <git@archiver.kernel.org>; Wed, 29 Mar 2023 12:06:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229493AbjC2L5A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Mar 2023 07:57:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60076 "EHLO
+        id S229530AbjC2MGs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Mar 2023 08:06:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjC2L47 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2023 07:56:59 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F4F11FFF
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 04:56:33 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id ek18so62129945edb.6
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 04:56:33 -0700 (PDT)
+        with ESMTP id S229495AbjC2MGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2023 08:06:47 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8CD64ED0
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 05:06:21 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id d10so9105356pgt.12
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 05:06:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680090988;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=isk6Om0nSCs6K1HPd9U9d3S/S8X/L3AeiXCWsC30/Ew=;
-        b=haijnWTFfRfK7UwAuAG3vuuKQLqvFYmndZwrizFUu1zKHBk6e1n4yTinc9zl14YD+H
-         bq4aFkVdQn1/SxKmLxz8JpD2SSbSMwAJ0rvHn6A4mjXwz+6e6KCeH7gU99r1A3c1Bsq8
-         4z9FxDPgjkLbgdOWQ5QnDgjeHd6chfemcLTMiR3QA4Y5cWBk/XH/FW0mCyQTpQYiVNrK
-         DFdL42+KnbeSmkgmxgS5PYFLsxouJS056NlW1PbWfR5McgtFgE+GVZhYjZrrDLjH/fZc
-         5bD1qXr55yVgiT2byvawEsJwbHIAPYb8L+269/oibwo1rjjy17CaRc7F8m39GZU6o5Qg
-         RXKA==
+        d=gmail.com; s=20210112; t=1680091580;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bBOgXlj+t7MsMa6vbSf7YxMhZhdByXOzRvKuPQjr4Eg=;
+        b=M5xcDl1xY8pWLhs7+LacBaOAvRnjlYXHM2SotbG0/6ILYpogNN35qerSrN38JwSH2Q
+         AlLqRovOC2Ha32II7ELOwoGWFsGMsGsdROzs/dMbTKFeKD1Q0QRJEgP0OrfHUbOqGaJM
+         WGUv/iiUfEdj+X/Su8lFQ6cPDauPg6KK4GBDZKZkeCWCTaeM0hIegkDak2asjnGCDdrS
+         ghKN2MKM7TvnEiiOe/srpNyGBjrYj+OgphLmn1IWaIV0acGf/D6Vwa05sclc32b/ci4Z
+         7bth/VfaQjVwo57r8jFrln6TWWOPVX7vDCGE39gRVYS5/eJ9BUYXtY3PEDKRuK05GcJ2
+         AIBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680090988;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=isk6Om0nSCs6K1HPd9U9d3S/S8X/L3AeiXCWsC30/Ew=;
-        b=miy0jkoad87H/rR1XouO6qlIwtnEffXGykUn5BigMijucwUV09f0de25Od/erw/cgg
-         7WhySWTo9IPiPZUOP7VOZmYM0R83oz+/WLLc/JZrPH1tEZGpIizdBBvQQIE4fMBZrThV
-         vFP45FZP8NckOFgdh4DOSbUuN+fffYohBpA7Lh5DbBnF7LdwcMiin5G5n8PWd9qmSyms
-         J78+QS12siDjnlVyh8WnLegotWTciFmY0WkDclFtb2R64+b2O6omx6XLKbYErlK+SEXa
-         J07qhlk8Rt70SMbsl+nEZ3e8FDbYXS+bKWXN2TzAvHhzqYyvd/D7tjijm+nNKMAGUh7h
-         jTnQ==
-X-Gm-Message-State: AAQBX9d2dy/MIaDZSnk7BQAV+c7eQMFLn3rHP1qKgjIWSgBmmlWdjhcK
-        DeP+B6PghfUqNJaFB6dsy6IpfyYpgG4zQg==
-X-Google-Smtp-Source: AKy350YtInoql6tg1uDqeBfh2K2Uysds7BzUzrlGgUc3rcuFa3nAQsyKzfQZ5w5pS4iKkKdceLjlNg==
-X-Received: by 2002:aa7:d9c7:0:b0:4fc:6a39:d2f2 with SMTP id v7-20020aa7d9c7000000b004fc6a39d2f2mr18874315eds.18.1680090988132;
-        Wed, 29 Mar 2023 04:56:28 -0700 (PDT)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id m11-20020a50998b000000b004c13fe8fabfsm16895668edb.84.2023.03.29.04.56.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 04:56:27 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1phUPh-0059e5-34;
-        Wed, 29 Mar 2023 13:56:25 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Calvin Wan <calvinwan@google.com>
-Subject: Re: [RFC PATCH 0/5] bypass config.c global state with configset
-Date:   Wed, 29 Mar 2023 13:53:06 +0200
-References: <pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com>
- <RFC-cover-0.5-00000000000-20230317T042408Z-avarab@gmail.com>
- <kl6la60buquj.fsf@chooglen-macbookpro.roam.corp.google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <kl6la60buquj.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-ID: <230329.86o7obvkie.gmgdl@evledraar.gmail.com>
+        d=1e100.net; s=20210112; t=1680091580;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bBOgXlj+t7MsMa6vbSf7YxMhZhdByXOzRvKuPQjr4Eg=;
+        b=HXngRih4Q7VcB7oZDJ7304dfKL0ZNa9bK46n5LCgCygoio92Rhi74dTsL4SZm3/qbj
+         6OiVkSXI//mO/qtmJ4Zc+wLNr83EUyuRPdAm7JyNIwbITaPKso0eugSWPYjsJVPnUbFy
+         zgO2mBP5KiTQS50LHAsoaSn3SjwNdVygqj5aI8Cf9/1vfvOgGxc/wEwN8lpGMmbI889j
+         heLwwp9WWDRz6vzWaKf19Ll17/OCl3u4w6nJyUgf6futeEI+YX7gY5tiWQVVCLgUf2MK
+         A85xLTTgetwe/yjvJI23qQcQyWq1eg6oGi9RvhaQD7WuhkRkcmNeS/1L+9POrsnHwT7X
+         pPZg==
+X-Gm-Message-State: AO0yUKU2zc8VdfwqxkS8TG+/3rmREeZmufuueRxG7R3qQb3GEOzxRhm3
+        7tDMXFHSt2BBw3hPFVUtrUI=
+X-Google-Smtp-Source: AKy350bBK+S3Sc80OXnsjDBZtwnPoIsXG3y4CnzJjhhiixcKDTaYV7m0Q9FtKwq5GOYhhwFTHt+Q+A==
+X-Received: by 2002:a62:65c4:0:b0:5a8:b07b:82dc with SMTP id z187-20020a6265c4000000b005a8b07b82dcmr14675628pfb.0.1680091580307;
+        Wed, 29 Mar 2023 05:06:20 -0700 (PDT)
+Received: from localhost.localdomain ([47.246.101.54])
+        by smtp.gmail.com with ESMTPSA id w5-20020aa78585000000b005a8dd86018dsm17775341pfn.64.2023.03.29.05.06.18
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Mar 2023 05:06:19 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     gitster@pobox.com
+Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
+        sunshine@sunshineco.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v7 4/4] notes.c: don't do stripespace when parse file arg
+Date:   Wed, 29 Mar 2023 20:06:13 +0800
+Message-Id: <20230329120613.11415-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.40.0.rc2.4.gb9d12f0c
+In-Reply-To: <xmqqsfdog9d1.fsf@gitster.g>
+References: <xmqqsfdog9d1.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Fri, Mar 17 2023, Glen Choo wrote:
+> > The file maybe is a binary and it could contains multiple line
+>
+> "could contain"?
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-> [...]
->> Similarly, you mention git_parse_int() wanting to report a filename
->> and/or line number. I'm aware that it can do that, but it doesn't do
->> so in the common case, e.g.:
->>
->> 	git -c format.filenameMaxLength=3Dabc log
->> 	fatal: bad numeric config value 'abc' for 'format.filenamemaxlength': i=
-nvalid unit
->>
->> And the same goes for writing it to e.g. ~/.gitconfig. It's only if
->> you use "git config --file" or similar that we'll report a filename.
->
-> That's true, but I think that's a bug, not a feature. See 7/8 [1] where
-> I addressed it.
->
-> 1.  https://lore.kernel.org/git/3c83d9535a037653c7de2d462a4df3a3c43a9308.=
-1678925506.git.gitgitgadget@gmail.com/
->
->> We can just make config_set_callback() and configset_iter()
->> non-static, so e.g. the builtin/config.c caller that implements
->> "--show-origin" can keep its config_with_options(...) call, but
->> instead of "streaming" the config, it'll buffer it up into a
->> configset.
->
-> Hm, so to extrapolate, we could make it so that nobody outside of
-> config.c uses the *config_from_file() APIs directly. Instead, all reads
-> get buffered up into a configset. That might not be a bad idea. It would
-> definitely help with some of your goals of config API surface reduction.
->
-> This would be friendlier in cases where we were already creating custom
-> configsets (I know we have some of those, but I don't recall where), but
-> in cases where we were reading the file directly (e.g.
-> builtin/config.c), we'd be taking a memory and runtime hit. I'm not sure
-> how I (or others) feel about that yet.
+Will fix.
 
-I'm pretty sure that in the end this wouldn't matter, i.e. the time it
-takes to parse the config is trivial, and the users of these APIs like
-"git config -l --show-origin" aren't performance-senitive.
+> > breaks, if we do the stripespace on it's content, the notes will
+>
+> "stripspace"?
 
-But for the general case & if you're concerned about this a trivial
-addition on top of what I suggested would be to pass a streaming
-callback to config_set_callback(), i.e. you could get the values you'd
-get from configset_iter() as we parse them.
+Will fix, also in the commit subject.
+
+> If a file is "binary" then by definition there is no "line" and no
+> "line break" in it, so while I can see what you are trying to say,
+> this needs a bit rephrasing to make it easier to follow for future
+> readers.  Perhaps something like...
+>
+>     The file given to the "-F" option could be binary, in which case
+>     we want to store it verbatim without corrupting its contents.
+
+Thanks, the phrasing is obviously better.
+
+> But I do not necessarily agree with the logic here, regardless of
+> how it is phrased.  Existing users are used to seeing the contents
+> fed from "-F <file>" get cleaned up, and to them, this unconditional
+> removal of stripspace() will be a regression.  Besides, don't they
+> expect that
+>
+> 	-m="$(cat file)"
+>
+> be equivalent to
+>
+> 	-F file
+
+> for their text file?
+
+Yes, for text file. I agree and I actually notice it will be
+a regression, because I didn't figure out when user might
+store a binary file's content in notes, so I'd like to discuss
+about this issue.
+
+> A --binary-file=<file> option that is incompatible with -m/-F and
+> "append" action may make sense if we really want to have a feature
+> to help those who want to attach binary contents as a note to
+> objects.
+
+Actually, -m/-F/-c/-C in 'git notes add' is quite like the
+options in 'git commit', rather than "--binary-file=", I think
+maybe '--[no-]stripspace' is a bit better.  Defaults to
+'--stripspace' which keeps old logic (stripspace the string fed by
+-m/-F). If specifying '--no-stripspace', we do not stripespace.
+
+Thanks.
