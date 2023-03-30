@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B582C6FD1D
-	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 14:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B66FC6FD1D
+	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 15:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232670AbjC3O5o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Mar 2023 10:57:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39122 "EHLO
+        id S232818AbjC3PQK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Mar 2023 11:16:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232617AbjC3O5g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2023 10:57:36 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF22BCDCF
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 07:57:14 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso22272550pjb.0
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 07:57:14 -0700 (PDT)
+        with ESMTP id S232758AbjC3PQI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2023 11:16:08 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FCC0CA1C
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 08:14:44 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id n14so2509824plc.8
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 08:14:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680188230;
+        d=gmail.com; s=20210112; t=1680189282;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WTqbvaK3Y4TQFFn4SByPhZJS9w1TKMPFR9N5MvLblj8=;
-        b=gbJGrbMD8TSdCIGs80e7RZDEvaFRboMrzQudRbTbLyO1485oszDvWeHq2FIVmdV6KC
-         H+Wd4f1dZHNPt10graIStX903v0PwQTgIVeMa4vCIlV/DxeDRLBLx+BzG9qnOmRN79jU
-         x6JjxOgpj7F+NLLNcPVxt11J9p5FMJro2L1PClod83boEBNJfV18tpSl+FXlKcL9Bbbp
-         +Z++0UhxnZTntqzsli0dgGi5LPWerQxqSrsokmyTpKiNujnxiknc7TnESLtAQLszym6v
-         81qzLhbKT3RqO2zXN0dDNsMSeknydlgM33/Lnc3YRISZb1wS2JeXErzULzcHvxulZ+Cp
-         qgiw==
+        bh=Qv/8tdg2DdTv5VEAB1obNGh6swMwTU0CIbb3iiacQsE=;
+        b=lvxvjtHWEtvZgzpq7N6w/JYEmcAU7ZdIM1QKMMNEFNx1ZH9jS05isxtH6VszNUrGPG
+         2Y+1by6pyNdPKW5VFwr16mAAq6SAtwgVD61YhtWMkGMqZmBTmesrLyR/G549UsVz0Dt1
+         U86TtVwoESIXR/1YMag1x9TnaOlcAFN83+RCzVOsqM6zTmKvHE6xPcJKK4ltX6LL2is1
+         TZq0gOZTP5qXlRH/y6IU2/arufwGnInrZipSMWykKzr2QxGTM4dXxayOpCh3fGqlirjY
+         JdLAr7tZ7AN+a6IdFOd8/r1bjzgVqD+uyqX33rX3n85FlZFZ0hsisI7z9NvJ6xYnf8WF
+         kMFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680188230;
+        d=1e100.net; s=20210112; t=1680189282;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=WTqbvaK3Y4TQFFn4SByPhZJS9w1TKMPFR9N5MvLblj8=;
-        b=RFZCmwJ8qxS1/3EdVTvgoayshKLBtWs3aQXKCzX1BZevIxS5pUJc0I2S2fk+iUzuf1
-         xnOuDeK5On3Dz6VZJozJi+9dqaeqn9oaXkfpvJGNE+WwMlIipO9bG/YxA8J+C9B1Kcr8
-         vNmNFMh72PP4ZWh+ilBAThKnW8t214lti6BrVGe181OZtt3iqeSebHzLtAS9vQioHVw2
-         tU7Mp8x9avgvqyVaCk6+118s7PbuAAGOxmXIWRgvOULVVqiueTNIwAptg1+aR2h5UbWi
-         Gpxqwj7LhiQSe8QQNsFfxr11gklFQHe5vhQs2EP0eLDaAA5IomD43NlpB5swl7cs/nLA
-         9tsA==
-X-Gm-Message-State: AAQBX9fAJ8AifTGN7g3uqMW1PjIv+OwCNOrbbs3724fiemjv0KKF5Uwd
-        GbTgrIGu/+r2cLWD0+lL6ZIitDX6wWg=
-X-Google-Smtp-Source: AKy350ZgPB5FhhqzOqhR4w9TofmFbSj+jneC1FXkM8hBmTCqjE/r1seVbm7h1eHpYHxQUz1fCVmbow==
-X-Received: by 2002:a17:902:da8a:b0:1a2:8c7e:f31f with SMTP id j10-20020a170902da8a00b001a28c7ef31fmr2735403plx.11.1680188230349;
-        Thu, 30 Mar 2023 07:57:10 -0700 (PDT)
+        bh=Qv/8tdg2DdTv5VEAB1obNGh6swMwTU0CIbb3iiacQsE=;
+        b=3nAxEOqZJhzX4YR2UGnBSdlxqmEnMkuWZ37/roInUGbq9jNSaeMqDfs+CNgYbcvlHG
+         pgUjdsrg9hBpoiGMMNWp8BNTS7bWFFzcMbzWoUnIFGCFx3OV1AdpFNwD4YAq6RnMOnhU
+         1/tc24DMpRsRmpfM93suVjbQjrye1mii8WWCyUxMgAc5qx2iNDJNW9mI8vPkLTGWMczh
+         Nm38IiYnzI/XO8EyOAY/J248yaP3ii/VnHo2WxyaMe4mUPXV8e/+jQjYj3IYVBRHVCtV
+         bMBFEkasBNMbVwdQRAwZ6Byxz2nM2E0iis7rxJ7AKiCM5YyxuSP9MlatQ12JetanIB0F
+         n/vg==
+X-Gm-Message-State: AAQBX9eqO+W6uT2Gbqq7/bd1OZw68XgLrEGh6Q3e8MhV6tkRi6ts9vUt
+        Y3ANBmE8mtLPnSkKtEoG5ws=
+X-Google-Smtp-Source: AKy350bzMoPVWWL8iuOf09EBNlEAi6VaiTIdLwkq52GwiOg/48L2JVitn1cUejaJkpNPSzoxR9ZyIw==
+X-Received: by 2002:a17:90a:348:b0:237:b702:4990 with SMTP id 8-20020a17090a034800b00237b7024990mr25336731pjf.26.1680189281685;
+        Thu, 30 Mar 2023 08:14:41 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id p7-20020a1709028a8700b001a1860da968sm24794207plo.178.2023.03.30.07.57.09
+        by smtp.gmail.com with ESMTPSA id z12-20020a17090a1fcc00b0023b15e61f07sm3354932pjz.12.2023.03.30.08.13.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 07:57:09 -0700 (PDT)
+        Thu, 30 Mar 2023 08:13:54 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Raghul Nanth A via GitGitGadget" <gitgitgadget@gmail.com>
@@ -58,11 +58,11 @@ Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
 Subject: Re: [PATCH v3] describe: enable sparse index for describe
 References: <pull.1480.v2.git.git.1680107154078.gitgitgadget@gmail.com>
         <pull.1480.v3.git.git.1680155957146.gitgitgadget@gmail.com>
-Date:   Thu, 30 Mar 2023 07:57:09 -0700
-In-Reply-To: <pull.1480.v3.git.git.1680155957146.gitgitgadget@gmail.com>
-        (Raghul Nanth A. via GitGitGadget's message of "Thu, 30 Mar 2023
-        05:59:16 +0000")
-Message-ID: <xmqq1ql64796.fsf@gitster.g>
+        <xmqq1ql64796.fsf@gitster.g>
+Date:   Thu, 30 Mar 2023 08:13:02 -0700
+In-Reply-To: <xmqq1ql64796.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+        30 Mar 2023 07:57:09 -0700")
+Message-ID: <xmqqtty22ry9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,76 +70,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Raghul Nanth A via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Raghul Nanth A <nanth.raghul@gmail.com>
+> "Raghul Nanth A via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> Add usage and performance tests for describe
+>> From: Raghul Nanth A <nanth.raghul@gmail.com>
+>>
+>> Add usage and performance tests for describe
+>
+> I think this sentence can easily go.
+>
+>> Describe uses the index when it is run with --dirty flag, which uses the
+>> run_diff_index commmand. The command is sparse-index aware and hence we
+>> can just set the requires-full-index to false
+>
+> End the sentence with full-stop.  More importantly, it would be
+> nicer to have something to substantiate the "this is sparse aware"
+> claim here, something like "since commit X" or "as shown in the test
+> tXXXX.YY".
 
-I think this sentence can easily go.
+With a bit of digging into the history, I think the topic that was
+merged at 8d2c3732 (Merge branch 'ld/sparse-diff-blame', 2021-12-21)
+made various modes of "git diff" to be sparse-index aware.  t1092
+has tests for "git diff --cached", which uses the same machinery.
 
-> Describe uses the index when it is run with --dirty flag, which uses the
-> run_diff_index commmand. The command is sparse-index aware and hence we
-> can just set the requires-full-index to false
+    Subject: [PATCH] describe: make it sparse-index aware
 
-End the sentence with full-stop.  More importantly, it would be
-nicer to have something to substantiate the "this is sparse aware"
-claim here, something like "since commit X" or "as shown in the test
-tXXXX.YY".
+    "git describe" needs to compare the index and the working tree
+    when (and only when) it is run with the "--dirty" flag.  This is
+    done by calling the run_diff_index() function, which has been
+    already made aware of the sparse-index in the series that led to
+    8d2c3732 (Merge branch 'ld/sparse-diff-blame', 2021-12-21).
+    t1092 has tests for "git diff --cached", which uses this exact
+    machinery.
 
-Updated tests do look good, and the code change is of course minimal
-and to the point, which is also good.
+    Mark "git describe" that the command does not require the index
+    to be expanded fully beforehand.
+
+or something like that.
+
+> Updated tests do look good, and the code change is of course minimal
+> and to the point, which is also good.
 
 Thanks.
-
-> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-> index 3242cfe91a0..db7887470f9 100755
-> --- a/t/perf/p2000-sparse-operations.sh
-> +++ b/t/perf/p2000-sparse-operations.sh
-> @@ -43,6 +43,7 @@ test_expect_success 'setup repo and indexes' '
->  	done &&
->  
->  	git sparse-checkout init --cone &&
-> +	git tag -a v1.0 -m "Final" &&
->  	git sparse-checkout set $SPARSE_CONE &&
->  	git checkout -b wide $OLD_COMMIT &&
->  
-> @@ -125,5 +126,7 @@ test_perf_on_all git checkout-index -f --all
->  test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
->  test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
->  test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/*"
-> +test_perf_on_all git describe --dirty
-> +test_perf_on_all 'echo >>new && git describe --dirty'
->  
->  test_done
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 801919009e1..8bc35c51426 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -1514,6 +1514,24 @@ test_expect_success 'sparse-index is not expanded: stash' '
->  	ensure_not_expanded stash pop
->  '
->  
-> +test_expect_success 'sparse-index is not expanded: describe' '
-> +	init_repos &&
-> +	# Add tag to be read by describe
-> +	git -C sparse-index tag -a v1.0 -m "Version 1" &&
-> +	ensure_not_expanded describe --dirty &&
-> +	cp sparse-index-out sparse-index-dirty &&
-> +	ensure_not_expanded describe &&
-> +	cp sparse-index-out sparse-index-normal &&
-> +	# Check describe has same output on clean tree
-> +	test_cmp sparse-index-dirty sparse-index-normal &&
-> +	echo "test" >>sparse-index/g &&
-> +	ensure_not_expanded describe --dirty &&
-> +	echo "v1.0-dirty" > actual &&
-> +	# Check describe on dirty work tree
-> +	test_cmp sparse-index-out actual &&
-> +	ensure_not_expanded describe
-> +'
-> +
->  test_expect_success 'sparse index is not expanded: diff' '
->  	init_repos &&
->  
->
-> base-commit: 27d43aaaf50ef0ae014b88bba294f93658016a2e
