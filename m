@@ -2,99 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF1F0C6FD1D
-	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 15:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E67AC761A6
+	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 15:29:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233069AbjC3P07 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Mar 2023 11:26:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40572 "EHLO
+        id S232910AbjC3P3J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Mar 2023 11:29:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233064AbjC3P0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2023 11:26:40 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2658D538
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 08:26:19 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso22371257pjb.0
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 08:26:19 -0700 (PDT)
+        with ESMTP id S232983AbjC3P3D (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2023 11:29:03 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7942AD333
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 08:28:39 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id d11-20020a05600c3acb00b003ef6e6754c5so8217943wms.5
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 08:28:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680189927;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ldWvFz54+puxOrlwA1i/Z9AxK0Zw21P+QKCkqxwXGDc=;
-        b=SYYGq8zLFW0ZcJbCGPil5PS9Zu6Fz8k7fmsbbc32VT+YBuhO1JapzKWOyh9bIRZIUr
-         w0zA3VqNxorxcUizVYf60s2eyyTO7S8xYrIyI0F5UBqUOBuw0BHlCXLOoRItMn8W16s/
-         kiZKwYqOnDvxgwW8OYwS/VC9xddqFA1UV7bv3ncvjhe1qlODqcgUCCm+QwhywmRHGoDv
-         hhubQUIxAza1SZ7iEh2YNk2GsWk02tys1x5RXydbC+eWXa4+H3gUKFLT80L0NCx6w4C8
-         1zoYjdXBjn/lPFXFDaKPM03MNezNw09BJnzY2sWoKhXHaq6gZlvQZTpiHExhMsYF0X94
-         CwtQ==
+        d=gmail.com; s=20210112; t=1680190084;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=RPMJlXRQj3obpdviN0zME11xRBIlROo/wnFgFHROyBQ=;
+        b=SZOp37/BbvUlzkoADePnIvqpgW6AQ0xQPWG1Dx71/a7pnReq6Z3Y+ljI6VwOBnAHb/
+         F7xyU5xS3y9pB9Nkoi2Z3ZEPfz1Do/1BxR2OpyTfh7H0mPvlU7RY1lS+CeR//GAOMIbM
+         GG8ZOMq/kN6zjw1/wvQ19G+0WqSNommgMsfahdnKk+ZlNnigezCl0PRDYf8olnPU4fdp
+         mb26q3t7/gnN+vM6ZdEA6gqX7Ix1aTBW+NbTBjbQ5N8Xk8Lk2DKXpGG5LdaBY7ZWK3E7
+         5BEhhxy4qytQjqT/hmZi6id81VIPz6rWPJCtq6+fMZgyzuCPFVnRXs1Y/1UqB01BCew/
+         a9pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680189927;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ldWvFz54+puxOrlwA1i/Z9AxK0Zw21P+QKCkqxwXGDc=;
-        b=bFnI69mwLOg8NFZ2MK+TzXIbb+2V4AY1Wmd32smXEYUvi8ycklgDpRhoYENS4l8wfO
-         QWndtDC0SgOBmbQ0ZH5k0z0a6fHc7kIktI+1qKKYsKqVypAq1YCxn06H/Cs0tp1f5zFt
-         Pz6ktOYCsDqdUxd4DfjEQ7j7p45RBlxcvZoihoplOLnsYOUkb96vYGWt1i+9GwuDW502
-         pKR0akZhN8sAqCT7rLEWgXoFbR2Sa/kIsDAHSuAPyF8iQ5iHJZ5FBAmYhcSPPby9ML0s
-         rlbLd/t5yoLOJnKtsH/JmTD/XiLfWzOXAW005+ARfb1VK4Eyq1iMDB2HO15vKQjjxsOL
-         Bmjw==
-X-Gm-Message-State: AO0yUKX53Xz8HQIUG5dd5efLV4ID5/dSxFFuXUUMG3xey5ygt7j+XjoD
-        QFa5fC/ShS6XKhEEdWBai7c=
-X-Google-Smtp-Source: AK7set9FowaHn7PrWrMhVZJYmjlBW7A1R4IG94jo80z6PDgTpzPbPhk15DAmvOsnnq96nhWd5A6/4w==
-X-Received: by 2002:a05:6a20:be29:b0:d9:e45d:95c8 with SMTP id ge41-20020a056a20be2900b000d9e45d95c8mr17330404pzb.30.1680189926762;
-        Thu, 30 Mar 2023 08:25:26 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id x24-20020a62fb18000000b00582f222f088sm28389pfm.47.2023.03.30.08.25.26
+        d=1e100.net; s=20210112; t=1680190084;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RPMJlXRQj3obpdviN0zME11xRBIlROo/wnFgFHROyBQ=;
+        b=qQHGFl6l3PicNQXnGPl4ryzAMPt2BCrQ4xGhGPST1wIsQhO+PXpg+osar/Ny34t9Ap
+         18ysbcjRIv1rKJ4IKFfbXmpmvuUBofuqrxQM0Og2nFv4mCjKfoYT5vduEPRYVgI4UEFo
+         WQkkZEMuRglThnnAlpphKgja9V7hZkWU302lhrhcDX6+sN9GXNpPUf7sdd12khUGex47
+         G9JF6kkWHTqPXKsQB26oov/Z97AjZaQTS9Inw15j2F12AFTxHiRtmx7wEBL0X6dLLdp7
+         vjrk34/Lz4qh4+g9p4aRdsNBsb8IyQF0REif19EiDH0tImi2O1QH7AmDsTGKQk+uh3ec
+         1joQ==
+X-Gm-Message-State: AO0yUKX7h9w/s08qQyy1Rb5wygXtrX3iciSeIRsctkGvBLddhVyQENES
+        UAwI25USEpuG7yaMJHpeWiVquvc3Ugs=
+X-Google-Smtp-Source: AK7set+Oy/EORNaapwBSwk3NBZThAKq+hZKDRxfrvaN7SgWIrAZiNOMIR2O6uu+isIyKa90+PUO4XA==
+X-Received: by 2002:a1c:f201:0:b0:3ee:6d55:8b68 with SMTP id s1-20020a1cf201000000b003ee6d558b68mr18094610wmc.37.1680190084459;
+        Thu, 30 Mar 2023 08:28:04 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l3-20020a1c7903000000b003ed1ff06faasm6132152wme.19.2023.03.30.08.28.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 08:25:26 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] ref-filter: remove unused ref_format member
-References: <20230330112133.4437-1-oystwa@gmail.com>
-        <20230330112133.4437-2-oystwa@gmail.com> <xmqqo7oa2rjs.fsf@gitster.g>
-Date:   Thu, 30 Mar 2023 08:25:26 -0700
-In-Reply-To: <xmqqo7oa2rjs.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-        30 Mar 2023 08:21:43 -0700")
-Message-ID: <xmqqjzyy2rdl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        Thu, 30 Mar 2023 08:28:04 -0700 (PDT)
+Message-Id: <pull.1506.git.1680190083688.gitgitgadget@gmail.com>
+From:   "Siddharth Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 30 Mar 2023 15:28:03 +0000
+Subject: [PATCH] hashmap.h: fix minor typo
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     "Emily Shaffer [ ]" <emilyshaffer@google.com>,
+        "Jonathan Tan [ ]" <jonathantanmy@google.com>,
+        Siddharth Singh <siddharthsingh3099@gmail.com>,
+        Siddharth Singh <siddhartth@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Siddharth Singh <siddhartth@google.com>
 
-> Øystein Walle <oystwa@gmail.com> writes:
->
->> use_rest was added in b9dee075eb (ref-filter: add %(rest) atom,
->> 2021-07-26) but was never used. As far as I can tell it was used in a
->> later patch that was submitted to the mailing list but never applied.
->>
->> Signed-off-by: Øystein Walle <oystwa@gmail.com>
->> ---
->> Would be nice to have a link to the email thread here, but I don't know
->> how.
->
->
-> Here is a link to the patch that led to that commit you cited:
->
-> https://lore.kernel.org/git/207cc5129649e767036d8467ea7c884c3f664cc7.1627270010.git.gitgitgadget@gmail.com/
->
-> It indeed is cumbersome to add, as the Message-Ids for patches from
-> GitGitGadget tend to be ultra long.
->
-> But b9dee075eb was the last one in the 5-patch series; I do
-> not see any "later patch there in the thread.
+The word "no" should be "not".
 
-I think there was a follow-up RFC series that was written to use the
-value of the member, cf.
+Signed-off-by: Siddharth Singh <siddhartth@google.com>
+---
+    hashmap.h: fix minor typo
+    
+    Hi folks ! I'm Siddharth from Google, I'm working on libification of
+    Git, while going through the hashmap.h I found a minor typo in the
+    documentation comment.
 
-https://lore.kernel.org/git/9c5fddf6885875ccd3ce3f047bb938c77d9bbca2.1628842990.git.gitgitgadget@gmail.com/
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1506%2Fs-i-d-d-i-s%2Ffix-typo-in-hashmap.h-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1506/s-i-d-d-i-s/fix-typo-in-hashmap.h-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1506
 
-but it seems there was no review on the series.
+Hi folks ! I'm Siddharth from Google, I'm working on
+libification of Git, while going through the hashmap.h
+I found a minor typo in the documentation comment.
+---
+ hashmap.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hashmap.h b/hashmap.h
+index 7251687d730..e2cf9c78d84 100644
+--- a/hashmap.h
++++ b/hashmap.h
+@@ -270,7 +270,7 @@ void hashmap_clear_(struct hashmap *map, ssize_t offset);
+ #define hashmap_clear(map) hashmap_clear_(map, -1)
+ 
+ /*
+- * Similar to hashmap_clear(), except that the table is no deallocated; it
++ * Similar to hashmap_clear(), except that the table is not deallocated; it
+  * is merely zeroed out but left the same size as before.  If the hashmap
+  * will be reused, this avoids the overhead of deallocating and
+  * reallocating map->table.  As with hashmap_clear(), you may need to free
+
+base-commit: 8d90352acc5c855620042fdcc6092f23a276af6d
+-- 
+gitgitgadget
