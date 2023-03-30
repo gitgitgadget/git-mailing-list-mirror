@@ -2,202 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 724F0C77B61
-	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 06:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 074FFC761AF
+	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 07:47:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230006AbjC3GE4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Mar 2023 02:04:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60024 "EHLO
+        id S229646AbjC3HrY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Mar 2023 03:47:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjC3GEy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2023 02:04:54 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 076A11BD6
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 23:04:53 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id ek18so72185201edb.6
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 23:04:52 -0700 (PDT)
+        with ESMTP id S229567AbjC3HrX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2023 03:47:23 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11EFFFA
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 00:47:22 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id z83so22429488ybb.2
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 00:47:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680156291;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=z5q+Zxx/ohoVitoPxin5+0yllVDyAkMnWiOJULJgIfg=;
-        b=gZRvmGlpipk+TNXdwJBorZl3Ro3MwAXAMDYe9akn/4E77XBJcjEDe0saDS4NIzjNPz
-         FSIMVDOx579uN6z6WyPO2iqjanIu0OcuV379zQcdaUX+Veohgusk8OaFG4FkT5fqGqno
-         LAH3zHMfk+WlIWi7WtnhxMP836gXDV8mWHaC/c8RC8C2BhmAgAqXP3f1mtJtDV487lbz
-         ULRXie0ea4p/vmcKhNfz6AKGtnwzWA/ggtSa5DYvNBn4/4ak67JgTXr7QMGUnXgC/+e7
-         R9Jz3yailUzcBCIerYRSZaVNHUCy+mhi6eFq1ejBcJKKOnBKUZ9B7A1eGj6eW7wxOYyf
-         6MXQ==
+        d=gmail.com; s=20210112; t=1680162441;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vO8onz6+6OOoTlgVAQUo3DPsH1/75Tg5Er86SZsOC40=;
+        b=kHCu+gW7xl/XQufyCl5w0MKqjL9Y4MAzvEUXicnUd0JLlGpfUsUfGx7T9aMbUMxfhr
+         G5XlJzkxdsBnxzYgL8jqR3NkAn+ZeBlosGeZtrSb/TpQ95J9ZGuKauUq4J9nW8jRkBc9
+         6yP0TNLJZIJl1ZsZEg1kWjwTffXa3uyYTY7oQvp1/Uyp8xzUm1JNn7a8l7ZdeUvvR5vJ
+         hAf+vJXLUzaxA7EFwZFWw6h2A8PLc8X/XMFqyJ5uK9ZmTIHPt4FsqCoDAQE93/cFdLzk
+         1K8IsKmfNZ/+x8DJC7DIEmOuYnJ3Mc1Txb6zh+L66vye62AT28Lz/YWs43bXkPyW5Obo
+         16Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680156291;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=z5q+Zxx/ohoVitoPxin5+0yllVDyAkMnWiOJULJgIfg=;
-        b=pGx9prvXi+OXHp6eNaJN+OG30MnhdA4jFBzraq5UrGEdeV9zmcz6o7UJFBWOYi3nAE
-         K30ydfWazYjjDrn1sB+FZ+GvQFsXvEGRFWIImocKvn5DL+8QQpC7LXpXoMwqmiN+ZmzL
-         hiPZrD9WRWYXKgZkjPmIXVdE9MUiVdfWpmMMzbg4XFdTt5RcYvHRUDeY35eIbIdbtXzt
-         4FYrZFHQZZkU7G2SkR4D0bA+iLeY6LXEP3XpW1jWHoZxHVN6ar91I9zJ/kX3uvLGX7ST
-         yoo/WhoZTMji+3jtytzPNbgLotbuTOPQK+Y9z9lH0lHH/HLcOkin8Tw4I93h31KFC97u
-         rUDQ==
-X-Gm-Message-State: AAQBX9fWX63h6J3rXfzBOgJ51RnnMxpEpFZJwPaJxJV6LWDlpkYKbH2X
-        AF+vGSzzVqGTyER5dRSc8lJVWYXeIvwy4YGaA54=
-X-Google-Smtp-Source: AKy350bGk/naV02rTHcNYX1SZkrBnYj4GHlWwEcRWiHfAfHCHubWY11+9ozMrlTADn0anFYG8hFJOMZrJ2CK7qiAo5k=
-X-Received: by 2002:a17:907:6092:b0:930:310:abc9 with SMTP id
- ht18-20020a170907609200b009300310abc9mr12143536ejc.9.1680156291384; Wed, 29
- Mar 2023 23:04:51 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680162441;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vO8onz6+6OOoTlgVAQUo3DPsH1/75Tg5Er86SZsOC40=;
+        b=ZpMtAhQOb4CI+nlJkDMZVgVdMZIMo3HuWAlW4/zyuI1kPft4dFeKwq9CREbNpdr+ZY
+         H/jKX+7iBqlUagWD5KXljtYL7r+qcCs6bkT+8kji54VYc2rofvFsoDOQoioFwK2NFmmC
+         4rcR4exTOl+fWquqGFK1W5WMK0uniKYhYidcHG5H7l/OXyfoLGtP4tz9kywgCU2X0/hF
+         p43QcE6xGzEx2gsUD71pvtxACMQafiZIHtYGGVVP98yYsUeoKmLIKAndVINqhgaH28x+
+         C6mDh/tuEbqKmHqsuexW8G04MrrbQUEF0Pl4dhHwD/EjNL1bymnIJ2+GPNoxvVYn6w6y
+         FTLA==
+X-Gm-Message-State: AAQBX9f5mJ8jkb2YxB8W9V5FXVTPPXVKBy1N57R78wfbyWyDM4ZE0J1w
+        /um3nF1NQWeCBJzI5M4ImBfRfijO8eCuOTapOFajA8HMBx4=
+X-Google-Smtp-Source: AKy350ble3ublWGnWrqBCWasEj535KYf5eFMCiUsb3D/qVNR7X4oXggrY6eFcfD6PssdWiadiJ+zmoj+RZuZgJ8VVU4=
+X-Received: by 2002:a25:7403:0:b0:b7e:6118:348 with SMTP id
+ p3-20020a257403000000b00b7e61180348mr3116528ybc.0.1680162441230; Thu, 30 Mar
+ 2023 00:47:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1496.git.1679707396407.gitgitgadget@gmail.com> <8511e030-8167-715c-5ed4-1646e6e9ef85@gmx.de>
-In-Reply-To: <8511e030-8167-715c-5ed4-1646e6e9ef85@gmx.de>
-From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Thu, 30 Mar 2023 07:04:13 +0100
-Message-ID: <CAGJzqsmd9XAP3wyqTJ2yJt6hTx9LxB0e6qd6YWRt=k_PLuA9Kg@mail.gmail.com>
-Subject: Re: [PATCH] credential/wincred: include wincred.h
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-        Harshil Jani <harshiljani2002@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
+References: <20230328173932.3614601-1-felipe.contreras@gmail.com>
+ <ZCONCVC2ITBJWoBA@tapette.crustytoothpaste.net> <xmqqh6u3d119.fsf@gitster.g>
+ <ZCS4SXlkqnvjxidA@tapette.crustytoothpaste.net> <xmqqjzyz3p5n.fsf@gitster.g>
+In-Reply-To: <xmqqjzyz3p5n.fsf@gitster.g>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Thu, 30 Mar 2023 01:47:09 -0600
+Message-ID: <CAMP44s1Amx4raO2rzTHxCgfEXywZwPCJwJ8edzJO_+_pY8PAkg@mail.gmail.com>
+Subject: Re: [PATCH 0/6] test: make the test suite work with zsh
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 28 Mar 2023 at 13:15, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi M,
->
-> On Sat, 25 Mar 2023, M Hickford via GitGitGadget wrote:
->
-> > From: M Hickford <mirth.hickford@gmail.com>
-> >
-> > Delete redundant definitions. Mingw-w64 has wincred.h since 2007 [1].
-> >
-> > [1] https://github.com/mingw-w64/mingw-w64/blob/9d937a7f4f766f903c9433044f77bfa97a0bc1d8/mingw-w64-headers/include/wincred.h
->
-> Sounds good, and the diffstat is nice. But not as nice as it would look if
-> we retired the `wincred` helper. As I pointed out in
-> https://lore.kernel.org/git/35e1ebe6-e15b-1712-f030-70ab708740db@gmx.de/,
-> I'd much rather spend my time on other things than reviewing patches to a
-> credential helper I consider unsafe.
+On Wed, Mar 29, 2023 at 9:15=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 
-Thanks Johannes for your reply. What do you mean by "unsafe"? Not
-useful in the modern world of 2FA? Doch! You can use
-git-credential-wincred to store OAuth credentials [1].
+> If the native mode didn't impose too much burden on our developers'
+> to maintain, it would have been nicer, but judging from the contents
+> of these patches, I am afraid that it falls on the other side of the
+> line.
 
-For storage, both git-credential-wincred and Git Credential Manager
-use the same wincred.h CredWrite API [2]. This is surely preferable
-to plaintext git-credential-store [3].
+There is zero burden to maintain.
 
-[1] https://lore.kernel.org/git/CAGJzqs=D8hmcxJKGCcz-NqEQ+QDYgi_aO02fj59kQoHZgiW3OQ@mail.gmail.com/T/#md6a0bbf7a36801652c16afe6f5c9dbd19914b2a7
-[2] https://github.com/git-ecosystem/git-credential-manager/blob/main/src/shared/Core/Interop/Windows/WindowsCredentialManager.cs
-[3] https://lore.kernel.org/git/CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com/
+What burden did this fix specific for ksh93 cause to "our developers"
+0e418e568f (t0005: work around strange $? in ksh when program
+terminated by a signal, 2010-07-09)?
 
+--- a/t/t0005-signals.sh
++++ b/t/t0005-signals.sh
+@@ -13,6 +13,7 @@ test_expect_success 'sigchain works' '
+        test-sigchain >actual
+        case "$?" in
+        143) true ;; # POSIX w/ SIGTERM=3D15
++       271) true ;; # ksh w/ SIGTERM=3D15
+          3) true ;; # Windows
+          *) false ;;
+        esac &&
 
->
-> Ciao,
-> Johannes
->
-> >
-> > Signed-off-by: M Hickford <mirth.hickford@gmail.com>
-> > ---
-> >     credential/wincred: include wincred.h
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1496%2Fhickford%2Fwincred-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1496/hickford/wincred-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/1496
-> >
-> >  .../wincred/git-credential-wincred.c          | 61 +------------------
-> >  1 file changed, 1 insertion(+), 60 deletions(-)
-> >
-> > diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
-> > index ead6e267c78..6e5a91a7168 100644
-> > --- a/contrib/credential/wincred/git-credential-wincred.c
-> > +++ b/contrib/credential/wincred/git-credential-wincred.c
-> > @@ -6,6 +6,7 @@
-> >  #include <stdio.h>
-> >  #include <io.h>
-> >  #include <fcntl.h>
-> > +#include <wincred.h>
-> >
-> >  /* common helpers */
-> >
-> > @@ -33,64 +34,6 @@ static void *xmalloc(size_t size)
-> >       return ret;
-> >  }
-> >
-> > -/* MinGW doesn't have wincred.h, so we need to define stuff */
-> > -
-> > -typedef struct _CREDENTIAL_ATTRIBUTEW {
-> > -     LPWSTR Keyword;
-> > -     DWORD  Flags;
-> > -     DWORD  ValueSize;
-> > -     LPBYTE Value;
-> > -} CREDENTIAL_ATTRIBUTEW, *PCREDENTIAL_ATTRIBUTEW;
-> > -
-> > -typedef struct _CREDENTIALW {
-> > -     DWORD                  Flags;
-> > -     DWORD                  Type;
-> > -     LPWSTR                 TargetName;
-> > -     LPWSTR                 Comment;
-> > -     FILETIME               LastWritten;
-> > -     DWORD                  CredentialBlobSize;
-> > -     LPBYTE                 CredentialBlob;
-> > -     DWORD                  Persist;
-> > -     DWORD                  AttributeCount;
-> > -     PCREDENTIAL_ATTRIBUTEW Attributes;
-> > -     LPWSTR                 TargetAlias;
-> > -     LPWSTR                 UserName;
-> > -} CREDENTIALW, *PCREDENTIALW;
-> > -
-> > -#define CRED_TYPE_GENERIC 1
-> > -#define CRED_PERSIST_LOCAL_MACHINE 2
-> > -#define CRED_MAX_ATTRIBUTES 64
-> > -
-> > -typedef BOOL (WINAPI *CredWriteWT)(PCREDENTIALW, DWORD);
-> > -typedef BOOL (WINAPI *CredEnumerateWT)(LPCWSTR, DWORD, DWORD *,
-> > -    PCREDENTIALW **);
-> > -typedef VOID (WINAPI *CredFreeT)(PVOID);
-> > -typedef BOOL (WINAPI *CredDeleteWT)(LPCWSTR, DWORD, DWORD);
-> > -
-> > -static HMODULE advapi;
-> > -static CredWriteWT CredWriteW;
-> > -static CredEnumerateWT CredEnumerateW;
-> > -static CredFreeT CredFree;
-> > -static CredDeleteWT CredDeleteW;
-> > -
-> > -static void load_cred_funcs(void)
-> > -{
-> > -     /* load DLLs */
-> > -     advapi = LoadLibraryExA("advapi32.dll", NULL,
-> > -                             LOAD_LIBRARY_SEARCH_SYSTEM32);
-> > -     if (!advapi)
-> > -             die("failed to load advapi32.dll");
-> > -
-> > -     /* get function pointers */
-> > -     CredWriteW = (CredWriteWT)GetProcAddress(advapi, "CredWriteW");
-> > -     CredEnumerateW = (CredEnumerateWT)GetProcAddress(advapi,
-> > -         "CredEnumerateW");
-> > -     CredFree = (CredFreeT)GetProcAddress(advapi, "CredFree");
-> > -     CredDeleteW = (CredDeleteWT)GetProcAddress(advapi, "CredDeleteW");
-> > -     if (!CredWriteW || !CredEnumerateW || !CredFree || !CredDeleteW)
-> > -             die("failed to load functions");
-> > -}
-> > -
-> >  static WCHAR *wusername, *password, *protocol, *host, *path, target[1024];
-> >
-> >  static void write_item(const char *what, LPCWSTR wbuf, int wlen)
-> > @@ -300,8 +243,6 @@ int main(int argc, char *argv[])
-> >
-> >       read_credential();
-> >
-> > -     load_cred_funcs();
-> > -
-> >       if (!protocol || !(host || path))
-> >               return 0;
-> >
-> >
-> > base-commit: 27d43aaaf50ef0ae014b88bba294f93658016a2e
-> > --
-> > gitgitgadget
-> >
+This patch was applied once and forgotten about for 6 six years until
+one developer refactored the code in 9b67c9942e (tests: factor
+portable signal check out of t0005, 2016-06-30).
+
+"Our developers" did not have to care about code that affected only
+one shell. Not since 2010, not since 2016, not even today.
+
+Even the original author admitted he didn't understand how this code
+truly interacted in other situations [1]:
+
+> Frankly, I don't know how bash's 'kill -TERM' and a Windows program
+> interact.  I've avoided this topic like the plague so far.
+
+It's not true that applying patches to fix a situation for a specific
+shell causes a hypothetical burden to our developers to magically
+appear.
+
+In reality the patch is applied once and forgotten about it until a)
+another developer stumbles upon a similar problem, or b) another
+developer stumbles upon that specific code.
+
+No developer cared about 0e418e568f being applied. It fixed the
+situation for one shell, it didn't affect other shells negatively, and
+that's all anyone needed to know.
+
+[1] https://lore.kernel.org/git/576DA6FB.1050108@kdbg.org
+
+--=20
+Felipe Contreras
