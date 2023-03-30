@@ -2,70 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A30DCC6FD1D
-	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 18:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB17C761A6
+	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 18:54:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231617AbjC3SpT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Mar 2023 14:45:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48738 "EHLO
+        id S230099AbjC3Syc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Mar 2023 14:54:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231745AbjC3SpR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2023 14:45:17 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ADC9AD14
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 11:45:14 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id qe8-20020a17090b4f8800b0023f07253a2cso20683398pjb.3
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 11:45:14 -0700 (PDT)
+        with ESMTP id S229505AbjC3Sya (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2023 14:54:30 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CADC7B2
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 11:54:29 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id x15so18160850pjk.2
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 11:54:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680201914;
+        d=gmail.com; s=20210112; t=1680202469;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Sn0xIrGaozElt8nhJYzXOE47rMonhgY2fAKC3uynbRc=;
-        b=F0meX/cm2Bma8n8iAe5kawZrWjmXFbRjTMnsE+nhYh7rQreZAhrTylaiiZ7U3SxSHr
-         OuJlwLj0OW2Y/uov5irDLxutgPW/Og3ppWsgFtBZxPbdUoxDYLX3dsYJfydjlWhDaier
-         rvWEvlyRTWoBh/6xcMugsPEwN9CXV91no+NVu449dL54krR7mkXBWOn6cGxhMpWemqVL
-         pPgkqyggzoRzrIvPSkMdPoTl9caIwfnDemxEuAJAyRtrp3CvzK0ZswmIkhAWyFsSSkWN
-         XRoLsGj5dRzjnCn4VGrAbyfIfcL7N//z3tfYkFlHDWAjd4ITNN7KhZ1IPhNV8NqDuAFT
-         dzmQ==
+        bh=IHxCpZS4VBYt5XZC7Acp+TvqeMfgNDYoEkbayRpVzqU=;
+        b=HRXHng9mKm8tgd/tnndzaXXH45rHaC/487uXsol2MSpkXEoQve7GoTuQHAEW8fUwv3
+         dNWI8m4fMOhM6+1o3jp5GZisfXP57sJHYPW/odMUnnKaIAM1hqn6wR23qa4QcrWTSTNO
+         VhmzG599AbN72KSBHAJ8+sG2+XbratbCOk/ceg/eAFm7reX03Gpi5J1/bSEOyit6r1yK
+         W7vMiTVfCMxnS1mC5R0KrGZT4m3YJUMPwhhlTxyBwA6nT1tYqJQMYoKvlnfnWEo4bn+z
+         9a//a3Mrg2FZ6+BSJ0WlmopWf7+jpeirOiF7Ynu0zszE4KaR9MqaPpMuaEAVGviDxkxa
+         HRSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680201914;
+        d=1e100.net; s=20210112; t=1680202469;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Sn0xIrGaozElt8nhJYzXOE47rMonhgY2fAKC3uynbRc=;
-        b=t8AdwyeUVlTXe4gREVglkkLWQbbK7HfCD2bAtT9zBcF7ht+RQGnirp+XG12EEFJwgK
-         vl/6wy/CDDsiSaGWxboJAavnLgG2npO1eoNXlQzH6K7YTehSS2csNcvtL8zg939biicK
-         hpokZmT2yaSQ0PdDMVwaD4I0ZQce5la/TalFqzQKLi58ENFq/RUVmuMbaY9oVe6ZQxhH
-         yF90y0LVgdHYyjato2rRioimJ0+835i4004+2FcUJry4XjrkT1e3bfAi1hhVTsuqAksP
-         05LQ68KGMgbcYfwu7hrwR0zYXeJotyAk2ok+5RNvqhMBoUiDiAQwX44b1JfbciMnvsyA
-         QjQw==
-X-Gm-Message-State: AAQBX9c9G7GcDH1hhhyPH0UCZOZKldbVIch0h86nqKfRzKAx3JlDSmBt
-        CxMisEo6cqmuz1raqAz+tqQ=
-X-Google-Smtp-Source: AKy350bcnyQWibF9vn25qHnmXCvd48mj7908xI1hE3VYuo8Bjm7Nv3OfT0cMVkw+HlxsNDr/SButGA==
-X-Received: by 2002:a17:903:28ce:b0:1a0:6e4:4931 with SMTP id kv14-20020a17090328ce00b001a006e44931mr20683010plb.31.1680201913564;
-        Thu, 30 Mar 2023 11:45:13 -0700 (PDT)
+        bh=IHxCpZS4VBYt5XZC7Acp+TvqeMfgNDYoEkbayRpVzqU=;
+        b=S2Kg9ghoqbcEs9i86viLo7vCXH3w0d14XejHiTiaGujGbzH2yEmH425UC76KpZMveU
+         cctMKbvdRqYH+ZpoCwh11TpQ+O9uA2G+jBIwlCLHbXYmbEDLuMKpgqUoy3dqypDM4h+9
+         9TXNLJVmhkcFqOtVJnMci1RkcOpdQrJLc4Vf5755TJq4kaArT7JUwFxmPh9q9cpWFkW5
+         YrJ0YUHEOYLBIcsEIgwYycRRSpzROIwM1vOUdKZ+2BlEIbh8Cg4MUwIqn0xHbyoNe2UI
+         bZ7yqeRVJOmKv41IJe3FmzMuxr0Pm+oYcEPTHbc+rK6zg2Hv/vtVvUKqXZKq2s6gHpbg
+         w7BA==
+X-Gm-Message-State: AAQBX9f8GdzvM/Y2IprAKdBT3NKf6OTMLyQpjStShvUFxsnA/1p6l3h6
+        F8eIeXAjGQd9Neh02gc8GWy652ErpDg=
+X-Google-Smtp-Source: AKy350bVuZIJsC/In8N2ny/10OOtnBzBFl0Ey4iSlSTEi0ZdGWGr11cdkZoTdLNnrtucsrnkzG5yYQ==
+X-Received: by 2002:a17:90b:4b0f:b0:234:721e:51e5 with SMTP id lx15-20020a17090b4b0f00b00234721e51e5mr7429198pjb.10.1680202469131;
+        Thu, 30 Mar 2023 11:54:29 -0700 (PDT)
 Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id w21-20020a170902d71500b0019abd4ddbf2sm54476ply.179.2023.03.30.11.45.13
+        by smtp.gmail.com with ESMTPSA id u3-20020a17090abb0300b0023371cb020csm3543235pjr.34.2023.03.30.11.54.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 11:45:13 -0700 (PDT)
+        Thu, 30 Mar 2023 11:54:28 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Michael J Gruber <git@grubix.eu>
-Subject: Re: [PATCH 1/4] tests: run internal chain-linter under "make test"
-References: <20230328202043.GA1241391@coredump.intra.peff.net>
-        <20230328202207.GA1241631@coredump.intra.peff.net>
-        <230329.86wn2zvo9u.gmgdl@evledraar.gmail.com>
-        <xmqq7cuzd0cs.fsf@gitster.g>
-        <20230329232804.GC2314218@coredump.intra.peff.net>
-Date:   Thu, 30 Mar 2023 11:45:12 -0700
-In-Reply-To: <20230329232804.GC2314218@coredump.intra.peff.net> (Jeff King's
-        message of "Wed, 29 Mar 2023 19:28:04 -0400")
-Message-ID: <xmqq8rfejcxz.fsf@gitster.g>
+Cc:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] branch, for-each-ref: add option to omit empty lines
+References: <20230330112133.4437-1-oystwa@gmail.com>
+        <20230330112133.4437-3-oystwa@gmail.com> <xmqqilei1bgk.fsf@gitster.g>
+        <20230330182502.GB3286761@coredump.intra.peff.net>
+Date:   Thu, 30 Mar 2023 11:54:28 -0700
+In-Reply-To: <20230330182502.GB3286761@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 30 Mar 2023 14:25:02 -0400")
+Message-ID: <xmqq4jq2jcij.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,21 +71,26 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> I had hoped that "chainlint" in that comment would remain sufficient, as
-> the context implies that we're disabling the script. But it's easy
-> enough to expand. I squashed this in:
+> On Thu, Mar 30, 2023 at 08:54:35AM -0700, Junio C Hamano wrote:
 >
-> diff --git a/t/Makefile b/t/Makefile
-> index 10881affdd0..3e00cdd801d 100644
-> --- a/t/Makefile
-> +++ b/t/Makefile
-> @@ -44,7 +44,7 @@ CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
->  
->  # `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
->  # checks all tests in all scripts via a single invocation, so tell individual
-> -# scripts not to "chainlint" themselves
-> +# scripts not to run the external "chainlint.pl" script themselves
+>>  * now we care if output is empty anyway, perhaps we can optimize
+>>    out fwrite() too, perhaps with something like
+>> 
+>> 	if (output.len || !omit_empty)
+>> 		printf("%.*s\n", output.len, output.buf);
+>> 
+>>    perhaps?
+>> 
+>> I am not sure about the latter, but we tend to use "%.*s" liberally
+>> when we could use fwrite() in our codebase for brevity, so ...
+>
+> I think it would be a mistake here, as you can use "%00" in the format
+> to include a NUL in the output.
 
-OK.  I've taken it and did "rebase -i" on this end.
+Good point.  Thanks for catching it.
 
-Thanks.
+>
+> (The rest of your review seemed quite sensible to me, and I like the
+> idea of the omit-empty option in general).
+>
+> -Peff
