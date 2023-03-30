@@ -2,130 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EDB8C6FD1D
-	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 19:31:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FA53C6FD1D
+	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 20:32:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232141AbjC3TbB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Mar 2023 15:31:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36688 "EHLO
+        id S229661AbjC3Uch (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Mar 2023 16:32:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232110AbjC3TbA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2023 15:31:00 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC67ACDD4
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 12:30:57 -0700 (PDT)
-Received: (qmail 31369 invoked by uid 109); 30 Mar 2023 19:30:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 30 Mar 2023 19:30:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20741 invoked by uid 111); 30 Mar 2023 19:30:56 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 Mar 2023 15:30:56 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 30 Mar 2023 15:30:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
+        with ESMTP id S229448AbjC3Ucg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2023 16:32:36 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43553B0
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 13:32:35 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id o11so19302685ple.1
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 13:32:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680208355;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gRiwbhHMn9hG7TrS1wK2NdE//wIvmY8H7Fo5NF9xVDE=;
+        b=KulyLEcp4GY0Md32FVg+0qpxcxLINSAcTB5gG9TtKRYWRg87NaVu4L0RLf799CKqay
+         CwqWqOFeSjSeFIuIEtN+IvUIzf3SoQS+GX9WyK+v1vaCutWwNyX74Wslvi16CcCyCrkz
+         9ZdG0KUvoAb0KjR4mZRjT06UmhkNQdS9BKoiJodeezaiptBcY3MdV9ysW5dDzWHuRe+2
+         yc64FjnHXgcxOHoDYBztyFactpf//SeJ6TQK1sPD+UWMesVmGhfR/FOj5Ysu1MhFE+uy
+         x0ZXsWTTIJYX041snlhmyuoY58Q+sdjK7Q9b+OMtmaDZWi4caqVZwLG4Mlh9CeKDFSsv
+         83xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680208355;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gRiwbhHMn9hG7TrS1wK2NdE//wIvmY8H7Fo5NF9xVDE=;
+        b=xXDyHnLb7ZV/ldgUMapWIOEG2WhZY8uG9NrpBOcnOJYnv4WyhcFFcu+cf7BDW5IA69
+         c58h1/eYgkbmJ96PzpAi7ZyWweTS5n4hcDdtW83DB2OmUZQXFgZb0l1J9DaXxXexnZ45
+         erLFXcDFl2YJunvX731CdQK7Ksvl/JUuwcTbxkfSsW+njfSDt3dU4TmCfLNKoID2jGk9
+         yJ4Z6gs9lh42u37kLR3AD4hFEBDpD+8GFqSzeHCz91Y6JaRbZvqcYoQTaiN9Q/+X1+vs
+         nL6Bn+pE3oIwVhX5V2gkI0VEukEcd3VC1Nv+NaLFAM2/rG694GUwcWl3rYilPeP1VtSa
+         uo8Q==
+X-Gm-Message-State: AAQBX9csJ67B2CbMC90Rha1ncN5C9hOhxt7sg70d8pAhaOvWzXikLiHe
+        FbhNSOatpFVdD+Iwr++pcV4=
+X-Google-Smtp-Source: AKy350ZA+lSdFgPT9EKbkq7+kl1i6OxkcE8kpggCtKekmt978vup23O5Jm32PIi0uXLqKSWX2ocxEw==
+X-Received: by 2002:a17:90b:4f47:b0:23d:2f73:d3c8 with SMTP id pj7-20020a17090b4f4700b0023d2f73d3c8mr29132342pjb.42.1680208354642;
+        Thu, 30 Mar 2023 13:32:34 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id u10-20020a170902a60a00b001a1f6f15c3fsm148747plq.72.2023.03.30.13.32.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Mar 2023 13:32:34 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Michael J Gruber <git@grubix.eu>
-Subject: [PATCH v2 5/5] tests: skip test_eval_ in internal chain-lint
-Message-ID: <20230330193056.GE27989@coredump.intra.peff.net>
-References: <20230330192712.GA27719@coredump.intra.peff.net>
+Subject: Re: [PATCH v2 0/5] some chainlint fixes and performance improvements
+References: <20230328202043.GA1241391@coredump.intra.peff.net>
+        <20230330192712.GA27719@coredump.intra.peff.net>
+Date:   Thu, 30 Mar 2023 13:32:34 -0700
+In-Reply-To: <20230330192712.GA27719@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 30 Mar 2023 15:27:12 -0400")
+Message-ID: <xmqqjzyyhtel.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230330192712.GA27719@coredump.intra.peff.net>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To check for broken &&-chains, we run "fail_117 && $1" as a test
-snippet, and check the exit code. We use test_eval_ to do so, because
-that's the way we run the actual test.
+Jeff King <peff@peff.net> writes:
 
-But we don't need any of its niceties, like "set -x" tracing. In fact,
-they hinder us, because we have to explicitly disable them. So let's
-skip that and use "eval" more directly, which is simpler. I had hoped it
-would also be faster, but it doesn't seem to produce a measurable
-improvement (probably because it's just running internal shell commands,
-with no subshells or forks).
+> As before, I think the first patch is the most important, and the rest
+> are optimizations. But with Eric's patch to chainlint.pl in the middle,
+> I think the argument for patch 4 (previously patch 3) is much stronger.
+>
+> Patch 5 remains mostly a cleanup, with no performance improvement. IMHO
+> the result is easier to follow, but I'm open to arguments to the
+> contrary.
+>
+>   [1/5]: tests: run internal chain-linter under "make test"
+>   [2/5]: tests: replace chainlint subshell with a function
+>   [3/5]: tests: diagnose unclosed here-doc in chainlint.pl
+>   [4/5]: tests: drop here-doc check from internal chain-linter
+>   [5/5]: tests: skip test_eval_ in internal chain-lint
 
-Note that there is one gotcha: even though we don't intend to run any of
-the commands if the &&-chain is intact, an error like this:
+The new step [3/5] makes it easier to justify [4/5], indeed.  Two
+primary changes at the beginning are good as before.  The last one
+does not make anything particularly easier to read, replacing one
+cryptic eval stuff with another, but it does not make it any worse,
+and the most importantly, it is clear to see that it does not change
+the behaviour.
 
-   test_expect_success 'broken' '
-	# this next line breaks the &&-chain
-	true
-	# and then this one is executed even by the linter
-	return 1
-   '
+Will queue.  Thanks.  Let's merge it down to 'next'.
 
-means we'll "return 1" from the eval, and thus from test_run_(). We
-actually do notice this in test_expect_success, but only by saying "hey,
-this test didn't say it was OK, so it must have failed", which is not
-right (it should say "broken &&-chain").
-
-We can handle this by calling test_eval_inner_() instead, which is our
-trick for wrapping "return" in a test snippet. But to do that, we have
-to push the trace code out of that inner function and into test_eval_().
-This is arguably where it belonged in the first place, but it never
-mattered because the "inner_" function had only one caller.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Same as before.
-
- t/test-lib.sh | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0048ec7b6f6..293caf0f20e 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1041,10 +1041,7 @@ want_trace () {
- # (and we want to make sure we run any cleanup like
- # "set +x").
- test_eval_inner_ () {
--	# Do not add anything extra (including LF) after '$*'
--	eval "
--		want_trace && trace_level_=$(($trace_level_+1)) && set -x
--		$*"
-+	eval "$*"
- }
- 
- test_eval_ () {
-@@ -1069,7 +1066,10 @@ test_eval_ () {
- 	#     be _inside_ the block to avoid polluting the "set -x" output
- 	#
- 
--	test_eval_inner_ "$@" </dev/null >&3 2>&4
-+	# Do not add anything extra (including LF) after '$*'
-+	test_eval_inner_ </dev/null >&3 2>&4 "
-+		want_trace && trace_level_=$(($trace_level_+1)) && set -x
-+		$*"
- 	{
- 		test_eval_ret_=$?
- 		if want_trace
-@@ -1095,18 +1095,13 @@ test_run_ () {
- 	expecting_failure=$2
- 
- 	if test "${GIT_TEST_CHAIN_LINT:-1}" != 0; then
--		# turn off tracing for this test-eval, as it simply creates
--		# confusing noise in the "-x" output
--		trace_tmp=$trace
--		trace=
- 		# 117 is magic because it is unlikely to match the exit
- 		# code of other programs
--		test_eval_ "fail_117 && $1"
-+		test_eval_inner_ "fail_117 && $1" </dev/null >&3 2>&4
- 		if test $? != 117
- 		then
- 			BUG "broken &&-chain: $1"
- 		fi
--		trace=$trace_tmp
- 	fi
- 
- 	setup_malloc_check
--- 
-2.40.0.692.g7c4c956fc5c
