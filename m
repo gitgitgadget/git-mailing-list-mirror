@@ -2,287 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54B26C74A5B
-	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 05:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 724F0C77B61
+	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 06:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229963AbjC3F7Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Mar 2023 01:59:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54522 "EHLO
+        id S230006AbjC3GE4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Mar 2023 02:04:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbjC3F7X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2023 01:59:23 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E5CF4C1A
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 22:59:20 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id u11-20020a05600c19cb00b003edcc414997so10991908wmq.3
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 22:59:19 -0700 (PDT)
+        with ESMTP id S229486AbjC3GEy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2023 02:04:54 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 076A11BD6
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 23:04:53 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id ek18so72185201edb.6
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 23:04:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680155958;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bWV7fW27l9pw4sYrDM77CXcsf9OlbVg6PkI3JZZ2p8c=;
-        b=EoHvLP2pZrgKwgMjP9Tn53O+leK9dC0KbyjlQrjt+KB9WefjZGyoMV4TLcaQ6eNlwQ
-         UNbbBX2VMBRqjcXcbjCiyILF8nA/6doTu+TDQtAYnL3pawbyNwGxP8bLx9qxD4I0ExjD
-         3rCg9gROsqfUVRBUCfV/yDog+vU1xzu8RmVUcz02dC0ZJhHrPCt8CgI2mVPCbNV8MZgL
-         SmRb0/trumSSlrxgSfKxmEsgfI3N+sU9Mmap99kHmfXd372GRvmfgaMJCXXSX0YHny5s
-         f+JSVTzcuQE7SJS/eyz6B8BOc/y+LFgFX8mMbYhIm02Lu7a/hEz0uGi/2fzdVEu++Lm3
-         Yu5Q==
+        d=gmail.com; s=20210112; t=1680156291;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=z5q+Zxx/ohoVitoPxin5+0yllVDyAkMnWiOJULJgIfg=;
+        b=gZRvmGlpipk+TNXdwJBorZl3Ro3MwAXAMDYe9akn/4E77XBJcjEDe0saDS4NIzjNPz
+         FSIMVDOx579uN6z6WyPO2iqjanIu0OcuV379zQcdaUX+Veohgusk8OaFG4FkT5fqGqno
+         LAH3zHMfk+WlIWi7WtnhxMP836gXDV8mWHaC/c8RC8C2BhmAgAqXP3f1mtJtDV487lbz
+         ULRXie0ea4p/vmcKhNfz6AKGtnwzWA/ggtSa5DYvNBn4/4ak67JgTXr7QMGUnXgC/+e7
+         R9Jz3yailUzcBCIerYRSZaVNHUCy+mhi6eFq1ejBcJKKOnBKUZ9B7A1eGj6eW7wxOYyf
+         6MXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680155958;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bWV7fW27l9pw4sYrDM77CXcsf9OlbVg6PkI3JZZ2p8c=;
-        b=uibHCvmbvy+17+AlXqejjbhdYs1XASx6yX6RuTerj4q0R4mMZqEVSeEeYQimRG2M/Y
-         OwD+ua8Zigh8lNkSX23hA88BiMUfYvpiX0YlpfwqdcYO7a7/wBxRnD9AxtPkdnB90amg
-         Zb8nDgPO3WufkhaiNsK6iDm1ri03e++j3n+npbovvnFkQa29P3gjEpDKyhi69bv/3Lrb
-         XmonZBTdPndvxs+tQgPjWomglHK6HOZ9r0Ga9wxNGd7mo8ssv8zOwPn5fZeRdzt/uumi
-         9YqFoB8VqQa/+JZJJD580GpTGwKgJYsef9+gjrQdHDx6/TCUh8GYOnCa0LIPjq7gJ8nM
-         93ww==
-X-Gm-Message-State: AO0yUKUYOsE0iRMh2kzjzZlBWN/QO5soLW98U8CYZpguUVo9ERIoAl/w
-        R1HSIkYXgkshTut95I0e+Ib815dk4/0=
-X-Google-Smtp-Source: AK7set8vWrn9cSvD7ddLmg1jMwB9gBtKCDjdJuwbrKUgVzZL7QjGKrSjipvHz0lHUPOQ8mnDPpyHbg==
-X-Received: by 2002:a7b:c398:0:b0:3ee:2bed:222d with SMTP id s24-20020a7bc398000000b003ee2bed222dmr17030366wmj.3.1680155958133;
-        Wed, 29 Mar 2023 22:59:18 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y5-20020a1c4b05000000b003e91b9a92c9sm4489369wma.24.2023.03.29.22.59.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 22:59:17 -0700 (PDT)
-Message-Id: <pull.1480.v3.git.git.1680155957146.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1480.v2.git.git.1680107154078.gitgitgadget@gmail.com>
-References: <pull.1480.v2.git.git.1680107154078.gitgitgadget@gmail.com>
-From:   "Raghul Nanth A via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 30 Mar 2023 05:59:16 +0000
-Subject: [PATCH v3] describe: enable sparse index for describe
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20210112; t=1680156291;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z5q+Zxx/ohoVitoPxin5+0yllVDyAkMnWiOJULJgIfg=;
+        b=pGx9prvXi+OXHp6eNaJN+OG30MnhdA4jFBzraq5UrGEdeV9zmcz6o7UJFBWOYi3nAE
+         K30ydfWazYjjDrn1sB+FZ+GvQFsXvEGRFWIImocKvn5DL+8QQpC7LXpXoMwqmiN+ZmzL
+         hiPZrD9WRWYXKgZkjPmIXVdE9MUiVdfWpmMMzbg4XFdTt5RcYvHRUDeY35eIbIdbtXzt
+         4FYrZFHQZZkU7G2SkR4D0bA+iLeY6LXEP3XpW1jWHoZxHVN6ar91I9zJ/kX3uvLGX7ST
+         yoo/WhoZTMji+3jtytzPNbgLotbuTOPQK+Y9z9lH0lHH/HLcOkin8Tw4I93h31KFC97u
+         rUDQ==
+X-Gm-Message-State: AAQBX9fWX63h6J3rXfzBOgJ51RnnMxpEpFZJwPaJxJV6LWDlpkYKbH2X
+        AF+vGSzzVqGTyER5dRSc8lJVWYXeIvwy4YGaA54=
+X-Google-Smtp-Source: AKy350bGk/naV02rTHcNYX1SZkrBnYj4GHlWwEcRWiHfAfHCHubWY11+9ozMrlTADn0anFYG8hFJOMZrJ2CK7qiAo5k=
+X-Received: by 2002:a17:907:6092:b0:930:310:abc9 with SMTP id
+ ht18-20020a170907609200b009300310abc9mr12143536ejc.9.1680156291384; Wed, 29
+ Mar 2023 23:04:51 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>,
-        Raghul Nanth A <nanth.raghul@gmail.com>,
-        Raghul Nanth A <nanth.raghul@gmail.com>
+References: <pull.1496.git.1679707396407.gitgitgadget@gmail.com> <8511e030-8167-715c-5ed4-1646e6e9ef85@gmx.de>
+In-Reply-To: <8511e030-8167-715c-5ed4-1646e6e9ef85@gmx.de>
+From:   M Hickford <mirth.hickford@gmail.com>
+Date:   Thu, 30 Mar 2023 07:04:13 +0100
+Message-ID: <CAGJzqsmd9XAP3wyqTJ2yJt6hTx9LxB0e6qd6YWRt=k_PLuA9Kg@mail.gmail.com>
+Subject: Re: [PATCH] credential/wincred: include wincred.h
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Harshil Jani <harshiljani2002@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Raghul Nanth A <nanth.raghul@gmail.com>
+On Tue, 28 Mar 2023 at 13:15, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi M,
+>
+> On Sat, 25 Mar 2023, M Hickford via GitGitGadget wrote:
+>
+> > From: M Hickford <mirth.hickford@gmail.com>
+> >
+> > Delete redundant definitions. Mingw-w64 has wincred.h since 2007 [1].
+> >
+> > [1] https://github.com/mingw-w64/mingw-w64/blob/9d937a7f4f766f903c9433044f77bfa97a0bc1d8/mingw-w64-headers/include/wincred.h
+>
+> Sounds good, and the diffstat is nice. But not as nice as it would look if
+> we retired the `wincred` helper. As I pointed out in
+> https://lore.kernel.org/git/35e1ebe6-e15b-1712-f030-70ab708740db@gmx.de/,
+> I'd much rather spend my time on other things than reviewing patches to a
+> credential helper I consider unsafe.
 
-Add usage and performance tests for describe
+Thanks Johannes for your reply. What do you mean by "unsafe"? Not
+useful in the modern world of 2FA? Doch! You can use
+git-credential-wincred to store OAuth credentials [1].
 
-Describe uses the index when it is run with --dirty flag, which uses the
-run_diff_index commmand. The command is sparse-index aware and hence we
-can just set the requires-full-index to false
+For storage, both git-credential-wincred and Git Credential Manager
+use the same wincred.h CredWrite API [2]. This is surely preferable
+to plaintext git-credential-store [3].
 
-Performance metrics
-
-  Test                                                     HEAD~1            HEAD
-  -------------------------------------------------------------------------------------------------
-  2000.2: git describe --dirty (full-v3)                   0.08(0.09+0.01)   0.08(0.06+0.03) +0.0%
-  2000.3: git describe --dirty (full-v4)                   0.09(0.07+0.03)   0.08(0.05+0.04) -11.1%
-  2000.4: git describe --dirty (sparse-v3)                 0.88(0.82+0.06)   0.02(0.01+0.05) -97.7%
-  2000.5: git describe --dirty (sparse-v4)                 0.68(0.60+0.08)   0.02(0.02+0.04) -97.1%
-  2000.6: echo >>new && git describe --dirty (full-v3)     0.08(0.04+0.05)   0.08(0.05+0.04) +0.0%
-  2000.7: echo >>new && git describe --dirty (full-v4)     0.08(0.07+0.03)   0.08(0.05+0.04) +0.0%
-  2000.8: echo >>new && git describe --dirty (sparse-v3)   0.75(0.69+0.07)   0.02(0.03+0.03) -97.3%
-  2000.9: echo >>new && git describe --dirty (sparse-v4)   0.81(0.73+0.09)   0.02(0.01+0.05) -97.5%
-
-Signed-off-by: Raghul Nanth A <nanth.raghul@gmail.com>
----
-    describe: enable sparse index for describe
-    
-     * Removed describe tests not concerned with sparse index
-    
-     * Added performance metric to commit message
-    
-     * Moved tests to t1092.sh
-    
-     * Explained reason for changes in commit message
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1480%2FNanthR%2Fdescribe-sparse-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1480/NanthR/describe-sparse-v3
-Pull-Request: https://github.com/git/git/pull/1480
-
-Range-diff vs v2:
-
- 1:  03176f64607 ! 1:  01838ca3ab0 describe: enable sparse index for describe
-     @@ Commit message
-      
-          Add usage and performance tests for describe
-      
-     +    Describe uses the index when it is run with --dirty flag, which uses the
-     +    run_diff_index commmand. The command is sparse-index aware and hence we
-     +    can just set the requires-full-index to false
-     +
-          Performance metrics
-      
-            Test                                                     HEAD~1            HEAD
-     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse-index is n
-      +test_expect_success 'sparse-index is not expanded: describe' '
-      +	init_repos &&
-      +	# Add tag to be read by describe
-     -+	ensure_not_expanded tag -a v1.0 -m "Version 1" &&
-     ++	git -C sparse-index tag -a v1.0 -m "Version 1" &&
-      +	ensure_not_expanded describe --dirty &&
-     ++	cp sparse-index-out sparse-index-dirty &&
-      +	ensure_not_expanded describe &&
-     -+	echo "test" >>sparse-index/extra.txt &&
-     ++	cp sparse-index-out sparse-index-normal &&
-     ++	# Check describe has same output on clean tree
-     ++	test_cmp sparse-index-dirty sparse-index-normal &&
-     ++	echo "test" >>sparse-index/g &&
-      +	ensure_not_expanded describe --dirty &&
-     ++	echo "v1.0-dirty" > actual &&
-     ++	# Check describe on dirty work tree
-     ++	test_cmp sparse-index-out actual &&
-      +	ensure_not_expanded describe
-      +'
-      +
-       test_expect_success 'sparse index is not expanded: diff' '
-       	init_repos &&
-       
-     -
-     - ## t/t6121-describe-sparse.sh (new) ##
-     -@@
-     -+#!/bin/sh
-     -+
-     -+test_description='git describe in sparse checked out trees'
-     -+
-     -+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-     -+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-     -+
-     -+. ./test-lib.sh
-     -+
-     -+check_describe () {
-     -+	indir= &&
-     -+	while test $# != 0
-     -+	do
-     -+		case "$1" in
-     -+		-C)
-     -+			indir="$2"
-     -+			shift
-     -+			;;
-     -+		*)
-     -+			break
-     -+			;;
-     -+		esac
-     -+		shift
-     -+	done &&
-     -+	indir=${indir:+"$indir"/} &&
-     -+	expect="$1"
-     -+	shift
-     -+	describe_opts="$@"
-     -+	test_expect_success "describe $describe_opts" '
-     -+		git ${indir:+ -C "$indir"} describe $describe_opts >actual &&
-     -+		echo "$expect" >expect &&
-     -+		test_cmp expect actual
-     -+	'
-     -+}
-     -+
-     -+test_expect_success setup '
-     -+	test_commit initial file one &&
-     -+	test_commit --annotate A file A &&
-     -+
-     -+	test_tick &&
-     -+
-     -+	git sparse-checkout init --cone
-     -+'
-     -+
-     -+check_describe A HEAD
-     -+
-     -+test_expect_success 'describe --dirty with --work-tree' '
-     -+	(
-     -+		cd "$TEST_DIRECTORY" &&
-     -+		git --git-dir "$TRASH_DIRECTORY/.git" --work-tree "$TRASH_DIRECTORY" describe --dirty >"$TRASH_DIRECTORY/out"
-     -+	) &&
-     -+	grep "A" out
-     -+'
-     -+
-     -+test_expect_success 'set-up dirty work tree' '
-     -+	echo >>file
-     -+'
-     -+
-     -+test_expect_success 'describe --dirty with --work-tree (dirty)' '
-     -+	git describe --dirty >expected &&
-     -+	(
-     -+		cd "$TEST_DIRECTORY" &&
-     -+		git --git-dir "$TRASH_DIRECTORY/.git" --work-tree "$TRASH_DIRECTORY" describe --dirty >"$TRASH_DIRECTORY/out"
-     -+	) &&
-     -+	test_cmp expected out
-     -+'
-     -+test_done
+[1] https://lore.kernel.org/git/CAGJzqs=D8hmcxJKGCcz-NqEQ+QDYgi_aO02fj59kQoHZgiW3OQ@mail.gmail.com/T/#md6a0bbf7a36801652c16afe6f5c9dbd19914b2a7
+[2] https://github.com/git-ecosystem/git-credential-manager/blob/main/src/shared/Core/Interop/Windows/WindowsCredentialManager.cs
+[3] https://lore.kernel.org/git/CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com/
 
 
- builtin/describe.c                       |  2 ++
- t/perf/p2000-sparse-operations.sh        |  3 +++
- t/t1092-sparse-checkout-compatibility.sh | 18 ++++++++++++++++++
- 3 files changed, 23 insertions(+)
-
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 5b5930f5c8c..7ff9b5e4b20 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -654,6 +654,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 			int fd, result;
- 
- 			setup_work_tree();
-+			prepare_repo_settings(the_repository);
-+			the_repository->settings.command_requires_full_index = 0;
- 			repo_read_index(the_repository);
- 			refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED,
- 				      NULL, NULL, NULL);
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 3242cfe91a0..db7887470f9 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -43,6 +43,7 @@ test_expect_success 'setup repo and indexes' '
- 	done &&
- 
- 	git sparse-checkout init --cone &&
-+	git tag -a v1.0 -m "Final" &&
- 	git sparse-checkout set $SPARSE_CONE &&
- 	git checkout -b wide $OLD_COMMIT &&
- 
-@@ -125,5 +126,7 @@ test_perf_on_all git checkout-index -f --all
- test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
- test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
- test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/*"
-+test_perf_on_all git describe --dirty
-+test_perf_on_all 'echo >>new && git describe --dirty'
- 
- test_done
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 801919009e1..8bc35c51426 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1514,6 +1514,24 @@ test_expect_success 'sparse-index is not expanded: stash' '
- 	ensure_not_expanded stash pop
- '
- 
-+test_expect_success 'sparse-index is not expanded: describe' '
-+	init_repos &&
-+	# Add tag to be read by describe
-+	git -C sparse-index tag -a v1.0 -m "Version 1" &&
-+	ensure_not_expanded describe --dirty &&
-+	cp sparse-index-out sparse-index-dirty &&
-+	ensure_not_expanded describe &&
-+	cp sparse-index-out sparse-index-normal &&
-+	# Check describe has same output on clean tree
-+	test_cmp sparse-index-dirty sparse-index-normal &&
-+	echo "test" >>sparse-index/g &&
-+	ensure_not_expanded describe --dirty &&
-+	echo "v1.0-dirty" > actual &&
-+	# Check describe on dirty work tree
-+	test_cmp sparse-index-out actual &&
-+	ensure_not_expanded describe
-+'
-+
- test_expect_success 'sparse index is not expanded: diff' '
- 	init_repos &&
- 
-
-base-commit: 27d43aaaf50ef0ae014b88bba294f93658016a2e
--- 
-gitgitgadget
+>
+> Ciao,
+> Johannes
+>
+> >
+> > Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+> > ---
+> >     credential/wincred: include wincred.h
+> >
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1496%2Fhickford%2Fwincred-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1496/hickford/wincred-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/1496
+> >
+> >  .../wincred/git-credential-wincred.c          | 61 +------------------
+> >  1 file changed, 1 insertion(+), 60 deletions(-)
+> >
+> > diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
+> > index ead6e267c78..6e5a91a7168 100644
+> > --- a/contrib/credential/wincred/git-credential-wincred.c
+> > +++ b/contrib/credential/wincred/git-credential-wincred.c
+> > @@ -6,6 +6,7 @@
+> >  #include <stdio.h>
+> >  #include <io.h>
+> >  #include <fcntl.h>
+> > +#include <wincred.h>
+> >
+> >  /* common helpers */
+> >
+> > @@ -33,64 +34,6 @@ static void *xmalloc(size_t size)
+> >       return ret;
+> >  }
+> >
+> > -/* MinGW doesn't have wincred.h, so we need to define stuff */
+> > -
+> > -typedef struct _CREDENTIAL_ATTRIBUTEW {
+> > -     LPWSTR Keyword;
+> > -     DWORD  Flags;
+> > -     DWORD  ValueSize;
+> > -     LPBYTE Value;
+> > -} CREDENTIAL_ATTRIBUTEW, *PCREDENTIAL_ATTRIBUTEW;
+> > -
+> > -typedef struct _CREDENTIALW {
+> > -     DWORD                  Flags;
+> > -     DWORD                  Type;
+> > -     LPWSTR                 TargetName;
+> > -     LPWSTR                 Comment;
+> > -     FILETIME               LastWritten;
+> > -     DWORD                  CredentialBlobSize;
+> > -     LPBYTE                 CredentialBlob;
+> > -     DWORD                  Persist;
+> > -     DWORD                  AttributeCount;
+> > -     PCREDENTIAL_ATTRIBUTEW Attributes;
+> > -     LPWSTR                 TargetAlias;
+> > -     LPWSTR                 UserName;
+> > -} CREDENTIALW, *PCREDENTIALW;
+> > -
+> > -#define CRED_TYPE_GENERIC 1
+> > -#define CRED_PERSIST_LOCAL_MACHINE 2
+> > -#define CRED_MAX_ATTRIBUTES 64
+> > -
+> > -typedef BOOL (WINAPI *CredWriteWT)(PCREDENTIALW, DWORD);
+> > -typedef BOOL (WINAPI *CredEnumerateWT)(LPCWSTR, DWORD, DWORD *,
+> > -    PCREDENTIALW **);
+> > -typedef VOID (WINAPI *CredFreeT)(PVOID);
+> > -typedef BOOL (WINAPI *CredDeleteWT)(LPCWSTR, DWORD, DWORD);
+> > -
+> > -static HMODULE advapi;
+> > -static CredWriteWT CredWriteW;
+> > -static CredEnumerateWT CredEnumerateW;
+> > -static CredFreeT CredFree;
+> > -static CredDeleteWT CredDeleteW;
+> > -
+> > -static void load_cred_funcs(void)
+> > -{
+> > -     /* load DLLs */
+> > -     advapi = LoadLibraryExA("advapi32.dll", NULL,
+> > -                             LOAD_LIBRARY_SEARCH_SYSTEM32);
+> > -     if (!advapi)
+> > -             die("failed to load advapi32.dll");
+> > -
+> > -     /* get function pointers */
+> > -     CredWriteW = (CredWriteWT)GetProcAddress(advapi, "CredWriteW");
+> > -     CredEnumerateW = (CredEnumerateWT)GetProcAddress(advapi,
+> > -         "CredEnumerateW");
+> > -     CredFree = (CredFreeT)GetProcAddress(advapi, "CredFree");
+> > -     CredDeleteW = (CredDeleteWT)GetProcAddress(advapi, "CredDeleteW");
+> > -     if (!CredWriteW || !CredEnumerateW || !CredFree || !CredDeleteW)
+> > -             die("failed to load functions");
+> > -}
+> > -
+> >  static WCHAR *wusername, *password, *protocol, *host, *path, target[1024];
+> >
+> >  static void write_item(const char *what, LPCWSTR wbuf, int wlen)
+> > @@ -300,8 +243,6 @@ int main(int argc, char *argv[])
+> >
+> >       read_credential();
+> >
+> > -     load_cred_funcs();
+> > -
+> >       if (!protocol || !(host || path))
+> >               return 0;
+> >
+> >
+> > base-commit: 27d43aaaf50ef0ae014b88bba294f93658016a2e
+> > --
+> > gitgitgadget
+> >
