@@ -2,83 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A74BC6FD1D
-	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 04:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0C7AC6FD1D
+	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 05:51:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbjC3EFq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Mar 2023 00:05:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45044 "EHLO
+        id S229703AbjC3FvN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Mar 2023 01:51:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229481AbjC3EFo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2023 00:05:44 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B577171F
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 21:05:43 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id iw3so16929610plb.6
-        for <git@vger.kernel.org>; Wed, 29 Mar 2023 21:05:43 -0700 (PDT)
+        with ESMTP id S229500AbjC3FvM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2023 01:51:12 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B18BC359B
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 22:51:10 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id w9so72109168edc.3
+        for <git@vger.kernel.org>; Wed, 29 Mar 2023 22:51:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680149143;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z0DUD/g5BR7O3ynQY+uVn9xP5hDV+CEnKC7lyzZa7JI=;
-        b=gHGHyCtoYTx/fCEVTUxUYHpm/Pixxg4RlFesta1mURAslkTYMzuMxoRba/H8Hp+eDe
-         Wdp7Bkx+l9P5krcQK6MLMS0x/zTKCaAyFHDvH3sXgXB/7mDYOh39FJ2zp/bJhrl5rRBt
-         UOotr6QQYF8FAeUFqxq1g052X+v5kBWmWZ2BSafIOtzcbW4Q0sxQjHCKwe9baYTCM743
-         o/iAaoEl44/M7/oLPZsodFnB9wfoW+dJN2R9Kw3qQMrc8Ez7o3OiEgy12DfAVwqTsZtp
-         I7GDYcHtA6wbckXagl9szZuHmGkKN9ksnnna7QXMEQZUF4Iq88LGKs8j9n2ywHI+WAzH
-         2mWQ==
+        d=gmail.com; s=20210112; t=1680155469;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yfc29W9h1bTLTZ2Mo/kT+jvrKzQW7s7Knfyz+uludao=;
+        b=lPwx5yFwyaXtpvFCprPr4p6T6/JRt5pkAXHj1lcmJEWi+cx/NZnihnC9knrKSd9A5S
+         vRuMnxR3RJMrXEYdW9OPNNW7bjpsRdU4qGM8nn/WVnhWCgVs8wM7PfjrzRKignZIqwWY
+         Xhc0xMCRp7DVr+ly86oQiOFvfo+FiAY1J6TyPoAx5nvlwVL5nRxFibQYSDBV7kuEG9A0
+         7VdKtOgm7eyrPRR5TtuXBEBpiMmAc4CsD2MfppS4Owrk3KguGzaktbzIHhMuOX06Mk7m
+         SQoOKKMTzgoqEgVi22jyHpHnBon4HJUDkag6nVT//G2w8Xl3KuUTIHsgCzJMGKUaGSi7
+         z27w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680149143;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z0DUD/g5BR7O3ynQY+uVn9xP5hDV+CEnKC7lyzZa7JI=;
-        b=R5SibWOtZsajSzbAOPFtsBfaxKvslqo/qP6lC59/It9NcXQS6rA6N7wyhiE4C6mKka
-         85k0xADxMoiMmLRyUsZQ2c6iyXrTWzT62+n/A72UhP+BYFSQIQSRjPQ8HXorq9trcVVr
-         0iVUxw3q5XSk0HN5M3YATYAHv3biCh7J67ZTztJM6rfMT8cBFrZE4CT7pvSci6SrkEIX
-         mq22UUy04mYBKoZ6bbDJEyWe8qGC+d8q1yWwaVIcrAyzWWgkXwsmfRiiC6q87OZYbKSw
-         68Ql6QJUjcv5OyT03ASaREOwz6VMXV/9yEnFWBvVZJTcotKlhppDoY/jhFKEu6AvKE0l
-         zkRQ==
-X-Gm-Message-State: AAQBX9eMkio+E9HSI3aqcr6NrZ0wuzf3wCjPw3ZNAcZVDWBKPfv5RGJq
-        ZLWzOc6i26KzrDnjYYsOwbQYecOFDzs=
-X-Google-Smtp-Source: AKy350bMPUkhxUliAIlaiIJq8+mk0zcCg07Wnf/YzR235eOsQqJhu7jeAGamM7a9+ILjcWxI1Yfm4A==
-X-Received: by 2002:a17:902:d2cb:b0:1a1:db10:7ba3 with SMTP id n11-20020a170902d2cb00b001a1db107ba3mr30112018plc.2.1680149142752;
-        Wed, 29 Mar 2023 21:05:42 -0700 (PDT)
-Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
-        by smtp.gmail.com with ESMTPSA id q2-20020a170902edc200b001a1a18a678csm23773870plk.148.2023.03.29.21.05.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 21:05:42 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2023, #06; Wed, 29)
-References: <xmqqv8ij5g83.fsf@gitster.g>
-        <CABPp-BHia5NO40-j=inCsroYn=J=+Zk12usNzL9keFFqTsghvg@mail.gmail.com>
-Date:   Wed, 29 Mar 2023 21:05:42 -0700
-In-Reply-To: <CABPp-BHia5NO40-j=inCsroYn=J=+Zk12usNzL9keFFqTsghvg@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 29 Mar 2023 21:02:00 -0700")
-Message-ID: <xmqqfs9m51ex.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20210112; t=1680155469;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yfc29W9h1bTLTZ2Mo/kT+jvrKzQW7s7Knfyz+uludao=;
+        b=FHmUSaY8zCF0PXqVErta+bR3GSpf1rDfCeW7G34INt1a4i+gz6/HQwk5gsCna2kCA2
+         naYUEZWNog+MsqxraPwNXOcgReIUoOKRFKiRpktsaE3Z226PLZKDK4owgUr/gb7RF9A6
+         +mEgDruj2zQEOku+J0Emi251gMDJqID0TDXTTtWcYFk/sN0rMuaLSqn4wadlbzATdJfO
+         xWG+Z/NrA3SYBH4Li2IjEiRUW0bzYJTAPbMgUmG3erf7yfTjtoOnV1gfy4vlM6SAjVvg
+         f/mNb4midz9xJKZJKzNJLtr//vN11nqNxtfW7f3GmjaRQOrdJLJ5rWgJd6KSSBVLL/49
+         8I0w==
+X-Gm-Message-State: AAQBX9fOSouQ4qgxRaktYUeRxYCmWAav5xePTG7jrHBLqFFvEBdOBmpL
+        96MKHCgAxnpq34jcwYIaqaMbaQsf/d+MUqWgB9ufLd5UV00=
+X-Google-Smtp-Source: AKy350ZqbuO7gIfNyb0x+lvr0By/mgupqUVRtN0Pq2k3FAZVVMBGU+NzG0HlUXMnX9Cn17T/m65Dq1FVLLwvYnQgzXE=
+X-Received: by 2002:a17:906:3118:b0:92f:fc27:8ea0 with SMTP id
+ 24-20020a170906311800b0092ffc278ea0mr10778975ejx.9.1680155468875; Wed, 29 Mar
+ 2023 22:51:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1477.git.git.1679729956620.gitgitgadget@gmail.com> <35e1ebe6-e15b-1712-f030-70ab708740db@gmx.de>
+In-Reply-To: <35e1ebe6-e15b-1712-f030-70ab708740db@gmx.de>
+From:   M Hickford <mirth.hickford@gmail.com>
+Date:   Thu, 30 Mar 2023 06:50:30 +0100
+Message-ID: <CAGJzqs=D8hmcxJKGCcz-NqEQ+QDYgi_aO02fj59kQoHZgiW3OQ@mail.gmail.com>
+Subject: Re: [PATCH] credential/wincred: store password_expiry_utc
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, "Johannes Sixt [ ]" <j6t@kdbg.org>,
+        "Harshil Jani [ ]" <harshiljani2002@gmail.com>,
+        =?UTF-8?B?SmFrdWIgQmVyZcW8YcWEc2tp?= <kuba@berezanscy.pl>,
+        Karsten Blees <blees@dcon.de>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        Javier Roucher Iglesias 
+        <Javier.Roucher-Iglesias@ensimag.imag.fr>,
+        M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Tue, 28 Mar 2023 at 13:14, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> And the reason is...
+>
+> > @@ -195,6 +197,15 @@ static void get_credential(void)
+> >                       write_item("password",
+> >                               (LPCWSTR)creds[i]->CredentialBlob,
+> >                               creds[i]->CredentialBlobSize / sizeof(WCHAR));
+> > +                     attr = creds[i]->Attributes;
+> > +                     for (int j = 0; j < creds[i]->AttributeCount; j++) {
+> > +                             if (wcscmp(attr->Keyword, L"git_password_expiry_utc")) {
+>
+>                                   ^^^^^^
+>
+> ... here. Note how the return value of `wcscmp()` needs to be non-zero to
+> enter the conditional block? But `wcscmp()` returns 0 if there are no
+> differences between the two provided strings.
+>
+> That's not the only bug, though. While the loop iterates over all of the
+> attributes, the `attr` variable is unchanged, and always points to the
+> first attribute. You have to access it as `creds[i]->Attributes[j]`,
+> though, see e.g.
+> https://github.com/sandboxie-plus/Sandboxie/blob/f2a357f9222b81e7bdc994e5d9824790a1b5d826/Sandboxie/core/dll/cred.c#L324
+>
+> So with this patch on top of your patch, it works for me:
+>
 
-> Not sure if you want more review, or the notice is just stale.  If the
-> latter, some helpful pointers:
-
-Thanks.  It was the latter.
+Thanks Johannes for the review and the fix. I'll include it in any patch v2.
 
 >
-> Jonathan Tan reviewed the latest series, v2, here:
-> https://lore.kernel.org/git/20230321215653.1615083-1-jonathantanmy@google.com/
->
-> (Ævar also looked at v1, and pointed out one of my commit messages
-> needed clarification, and that my overall cover letter needed further
-> explanation -- both of which were provided in v2).
+> But I have to wonder: why even bother with `git-wincred`? This credential
+> helper is so ridiculously limited in its capabilities, it does not even
+> support any host that is remotely close to safe (no 2FA, no OAuth, just
+> passwords). So I would be just as happy if I weren't asked to spend my
+> time to review changes to a credential helper I'd much rather see retired
+> than actively worked on.
+
+git-credential-wincred has the same capabilities as popular helpers
+git-credential-cache, git-credential-store, git-credential-osxkeychain
+and git-credential-libsecret. Any of which can store OAuth credentials
+generated by a helper such as git-credential-oauth [1]. This is
+compatible with 2FA (any 2FA happens in browser). Example config:
+
+    [credential]
+        helper = wincred
+        helper = oauth
+
+This patch to store password_expiry_utc is necessary to avoid Git
+trying to use OAuth credentials beyond expiry. See
+https://github.com/git/git/commit/d208bfdfef97a1e8fb746763b5057e0ad91e283b
+for background (I'll add to commit message v2).
+
+What about Git Credential Manager? GCM has a similar need to store
+password expiry, see comment
+https://github.com/git-ecosystem/git-credential-manager/discussions/1169#discussioncomment-5472096.
+
+I think OAuth is important enough to fix this issue in both
+git-credential-wincred and GCM. Some users might prefer the above
+setup over GCM to avoid .NET dependency or if they really like
+git-credential-oauth.
+
+Note that OAuth expiry issues don't occur authenticating to GitHub
+because GitHub doesn't populate OAuth expiry.
+
+[1] https://github.com/hickford/git-credential-oauth
