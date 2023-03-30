@@ -2,145 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E97FEC6FD1D
-	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 13:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64CD1C761AF
+	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 13:02:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231753AbjC3NAn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Mar 2023 09:00:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56332 "EHLO
+        id S231757AbjC3NCA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Mar 2023 09:02:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231755AbjC3NAm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2023 09:00:42 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6554F9EE0
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 06:00:36 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id f188so4870778ybb.3
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 06:00:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680181235;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I+x9o8mWf0rDfzpWH4iGkk/SANTYWoEsD6l4wVbK4P0=;
-        b=Fp1UGLht9jKh2Z8IJ6aMQ1w2cCThvUOFsi8AzxEgpAPqQ7Lt5nCvu5eKkUoywclWxs
-         pVbmStTbetcusXsOcu8s7oR48q17rROQof6lgwUORWYKNASwrrsX+WyCZy0nUoIjjSSV
-         2YkeP90vlPIMopB5PPRghIXWRhv4Uhj2CUKzO5Jfli/KH9RfqoZYtuh1RYZPGMvTwaM0
-         6ca3h2KkY5usc+wIK6f9yRckeFH/8TPJWCtKG8sT6H7Y7b2sxSmVRii45P8nQpuTg7Yl
-         LX/A/zoPC9bPnGIpbC5PTVcbZ9dm6btMLPIWaPtmBok1AapkE56x4NadVO4lvlS8Mupy
-         aYBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680181235;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I+x9o8mWf0rDfzpWH4iGkk/SANTYWoEsD6l4wVbK4P0=;
-        b=4Qx/ugGUxe411oc2berqe8lsht/iCOqrEYX5Wi7ShwJdhM2zirK4H+PymK/4k1nOgT
-         boCfV4jY3psunFZo/lCZGSC8GCpj9rIBuoOsAovvbwFtn4Fc1ORes/LtyUSUnOzdQwPM
-         Gip+UkoSkHH2sNzgI4EJ1MynMogvcRemmrXU++Z+hmaOr8WHJT5LA7NidyXiM1hQ8q49
-         dtcrKNthR5pF89hVIWUwviNrsHjog/g+H61uFQyMJHptqgn0fqHEs/jKYdlKrb9rdUNy
-         BhX6uSlPok2G1jbxTOcNLTEQtc4NNJeeiPcTrBhun/u+px3w8syEmWBzdwY11Puh1EZW
-         PdqQ==
-X-Gm-Message-State: AAQBX9cAWm0bY2FxnLUM5WrKaZEUomLBUeqyYz1wo7yVJCBX1727uv5W
-        sDJhx6zR8O/d/PBTJ+05W2paFk8Bg5JeAQ3rkxg=
-X-Google-Smtp-Source: AKy350ZhSd/TxOXo/IFRh5dvQl468fESl820omx2zohu/dzhugQFwdRrw2z+6tpgYEWpavddAtbwbEA7wuoqbOQ7CVI=
-X-Received: by 2002:a05:6902:1205:b0:b69:fab9:de60 with SMTP id
- s5-20020a056902120500b00b69fab9de60mr15156828ybu.0.1680181235530; Thu, 30 Mar
- 2023 06:00:35 -0700 (PDT)
+        with ESMTP id S231678AbjC3NB7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2023 09:01:59 -0400
+Received: from mailscanner.iro.umontreal.ca (mailscanner.iro.umontreal.ca [132.204.25.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 423D49020
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 06:01:52 -0700 (PDT)
+Received: from pmg2.iro.umontreal.ca (localhost.localdomain [127.0.0.1])
+        by pmg2.iro.umontreal.ca (Proxmox) with ESMTP id 2C65680800;
+        Thu, 30 Mar 2023 09:01:50 -0400 (EDT)
+Received: from mail01.iro.umontreal.ca (unknown [172.31.2.1])
+        by pmg2.iro.umontreal.ca (Proxmox) with ESMTP id 7F57C80223;
+        Thu, 30 Mar 2023 09:01:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=iro.umontreal.ca;
+        s=mail; t=1680181306;
+        bh=vwjQaTCIF6p/HTPCFZ938CzUrGf6Z2obFpEy8P0UWiw=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=Assnul/2yvQ0pewZ9KmQTylOC3J3/4hdSwjXcW1E3MiPPDbaaqurX+cEZ6DrmZCQS
+         qT5Z06vpEsiMwy8Rq+Z6cZ2Ig9IIWwiusw/okUB/V2G/zy8VBnAMcFK/ozdDZyz1ce
+         c0o0xW8c9pykbMV9ehTq6AkgpC8rpUsfFkBBcCxixPQTzMRRjSSiz/4cSNx9qVoTm/
+         zJIM7dPSAfCRDlYWIlFUzg3xbCTT2uAahQbgFg4uPx7SER4rCfXSwefxXsFda8bqYJ
+         iQPIP1Eqxcr/+cwlLZMlIwpVspCMGrjcAvHchoyQoEB6Awxo+EHdsbW4QcUE6FNKMz
+         VsjM8+l254WVg==
+Received: from pastel (69-196-169-39.dsl.teksavvy.com [69.196.169.39])
+        by mail01.iro.umontreal.ca (Postfix) with ESMTPSA id 585B6123358;
+        Thu, 30 Mar 2023 09:01:46 -0400 (EDT)
+From:   Stefan Monnier <monnier@iro.umontreal.ca>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: `git gc` says "unable to read" but `git fsck` happy
+In-Reply-To: <20230329233735.GD2314218@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 29 Mar 2023 19:37:35 -0400")
+Message-ID: <jwvfs9mz9n7.fsf-monnier+Inbox@gnu.org>
+References: <jwvfs9nusjm.fsf-monnier+Inbox@gnu.org>
+        <20230329233735.GD2314218@coredump.intra.peff.net>
+Date:   Thu, 30 Mar 2023 09:01:39 -0400
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20230328173932.3614601-1-felipe.contreras@gmail.com>
- <ZCONCVC2ITBJWoBA@tapette.crustytoothpaste.net> <CAMP44s07W6SzJZnmpMMejM8cTNvwrKnNiD+1U=JWMBwUX8JbMA@mail.gmail.com>
- <230329.861ql7x4k4.gmgdl@evledraar.gmail.com> <CAMP44s1z6PBS8whv6+nhbzQr-H2+QYTDw=WHf0AkY2mbJDZfMA@mail.gmail.com>
-In-Reply-To: <CAMP44s1z6PBS8whv6+nhbzQr-H2+QYTDw=WHf0AkY2mbJDZfMA@mail.gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Thu, 30 Mar 2023 07:00:24 -0600
-Message-ID: <CAMP44s1MuQK1uWTnWLv9AJ4X6P_Xd3XSH1KGJOG0bn0aaBNMqQ@mail.gmail.com>
-Subject: Re: [PATCH 0/6] test: make the test suite work with zsh
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 29, 2023 at 5:19=E2=80=AFAM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Wed, Mar 29, 2023 at 3:58=E2=80=AFAM =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason
-> <avarab@gmail.com> wrote:
+>> How come it can't read `f5e44b38fc8f7e15e5e6718090d05b09912254fa` during
+>> "repack" while `git fsck` says everything is fine?
+>
+> Do you use separate worktrees?
 
-> > But we do need to carry some hacks going forward, some of it seems
-> > pretty isolated & easy to spot, but e.g. the 6/6 fix of:
-> >
-> > -               if test "$c" =3D " "
-> > +               if test "$c" =3D " " || test -z "$c"
-> >
-> > Is quite subtle, you might look at that and be convinced that the RHS i=
-s
-> > redundant, and be right, but only because you assume POSIX semantics.
+Very much so, indeed!
 
-Actually, that isn't even true (see below).
+> It sounds like it might be similar to this case:
+>
+>   https://lore.kernel.org/git/c6246ed5-bffc-7af9-1540-4e2071eff5dc@kdbg.org/
 
-> > If we are going to include this I think the relevant t/README and
-> > Documentation/CodingGuidelines parts should be updated to note that
-> > we're not targeting POSIX shellscripts anymore, but the subset of it
-> > that zsh is happy with.
+That's sounds exactly right.  I was actually preparing to file
+a separate bug report because of a similar problem I had identified
+where a worktree's `index` caused a similar problem (`git fsck` happy
+but `git gc` fails) except it was found much earlier in `git gc`,
+causing a "bad object" error almost right away.
 
-But in this particular case the exact opposite is true: the script is
-*not* POSIX, it just happens to work on bash and other shells.
+> If so, there are patches in the current "master" (but not in a released
+> version yet) that fix fsck to detect this.
 
-You *assume* it's POSIX because it works on bash and it doesn't work
-on zsh, but in this particular case bash is the non-POSIX one, zsh is
-following POSIX correctly.
+Good, thanks.
 
-> There's no point in that. I consider it a bug in zsh, along with 5/6,
-> so presumably at some point it's going to be fixed.
+>> More importantly: how do I diagnose this further and fix it?
+>
+> If it is the same problem (which would be a blob or maybe cached tree
+> missing in one of the worktree's index files), then probably you'd
+> either:
+>
+>   1. Accept the loss and blow away that worktree's index file (or
+>      perhaps even the whole worktree, and just recreate it).
 
-Actually, no. I've changed my mind.
+Hmm... the problem is "that": I have about a hundred worktrees for
+this repository.
+But yes, I can just throw away all those `index` files, I guess.
 
-I was going to report to the zsh dev mailing list the fact that this
-created an extra empty field at the end (in sh mode):
+>      (assuming that the file itself is still hanging around).
+> The original corruption bug itself (gc not taking into account worktree
+> index files) has been fixed for a while, so the theory is that this can
+> be lingering corruption from a repack by an older version of Git. But if
+> you have evidence to the contrary, we'd like to hear that, too. ;)
 
-  IFS=3D, ; str=3D'foo,bar,,roo,'; printf '"%s"\n' $str
+My suspicion is that the origin of the broken state is elsewhere (maybe
+a power failure?) because the problem appeared "simultaneously" (a few
+days apart, really) for two different repositories.
 
-But then I read the POSIX specification, and the section 2.6.5 Field
-Splitting [1] is very clear on what should happen.
+> I don't think --aggressive would help at all. In theory --prune=now
+> might, but I think even that won't help if the problem is that the
+> object is referenced in an index file.
 
-What muddles the waters is the distinction between `IFS white space`
-characters (newline, space and tab), and non-`IFS white space`
-characters (all the other).
+Indeed, I had also tried `--prune=now` and it did not help.
+Thanks,
 
-If we ignore all the shite space stuff and concentrate on the rules
-for non-`IFS white space` characters (as comma is), then we arrive at
-this subitem:
 
-3.b. "Each occurrence in the input of an IFS character that is not IFS
-white space, along with any adjacent IFS white space, shall delimit a
-field, as described previously."
+        Stefan
 
-In other words: each occurence of a non-`IFS white space` character
-shall delimit a field. Or: each occurence of a comma should delimit a
-field.
-
-The script only works if the last delimiter does *not* delimit a
-field, and thus it's not following POSIX, it just happens to work on
-most shells. My patch does make it align with POSIX.
-
-I've reported bash's non-compliance with POSIX to their mailing list [2].
-
-But I bet nobody here will care, because POSIX is just an excuse to
-segregate the shells the main developers want to make work, from the
-ones they are not (Brian even used the language of certain shells
-being one of "the good ones").
-
-Cheers.
-
-[1] https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.ht=
-ml#tag_18_06_05
-[2] https://lists.gnu.org/archive/html/bug-bash/2023-03/msg00152.html
-
---
-Felipe Contreras
