@@ -2,354 +2,237 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 894A2C761A6
-	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 17:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37DF6C6FD1D
+	for <git@archiver.kernel.org>; Thu, 30 Mar 2023 17:51:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230321AbjC3RVu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Mar 2023 13:21:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53084 "EHLO
+        id S231205AbjC3Rvd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Mar 2023 13:51:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232320AbjC3RVq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2023 13:21:46 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EF13EB79
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 10:21:39 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id e15-20020a17090ac20f00b0023d1b009f52so22706473pjt.2
-        for <git@vger.kernel.org>; Thu, 30 Mar 2023 10:21:39 -0700 (PDT)
+        with ESMTP id S232024AbjC3RvV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2023 13:51:21 -0400
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B6FC678
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 10:51:20 -0700 (PDT)
+Received: by mail-pj1-x104a.google.com with SMTP id nu18-20020a17090b1b1200b0023fbe01dc06so9569421pjb.8
+        for <git@vger.kernel.org>; Thu, 30 Mar 2023 10:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680196898;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=QnlLuFxwEJOMpiz8did1eySjD0O8qoWUpBhNtpyB4Jk=;
-        b=fUb1qw6+6MUZ5ui8UvLQK6p4YJ7JVT+0/tZD3G4raKd113HPVqsV8ZbWrDxSIqCDVS
-         O6Mi0j6S4HcL8P66qM46k5vrGTX4uI7VLoafnt2YCfBT9voiSX2y2/GlJA8HI8Imq9Pu
-         xiAkwl0cuDVHYYmIQFoG0D44uRIywtnb1OGm2IDOCVfc5v0oMQ3dnZPPd24CrlnQbUuE
-         OkuWIf9EblC04wWx7EwUkH0vwawvjPyvZRHwafg5UpSOScahsMMKl1LsKjYqveF1SgfY
-         YKNvz5xUBKw+F3sTDIwfoL6EqUVWLxHnmdO+3Kgiq8gOYtyQR3gJPN8cRw8ZTERTF9xm
-         ffpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680196898;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=google.com; s=20210112; t=1680198680;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QnlLuFxwEJOMpiz8did1eySjD0O8qoWUpBhNtpyB4Jk=;
-        b=2p2FWpbPf4ya68uv4gzy+iVopWduPCHlGXO5xS47irEDDozXy2EI+K3wZ1jU1bmEHe
-         2K2PpQmO5CF8SyYR31f9HsPpIxrdIkTAUDdpjE/QSZXXE5ONxZcgTx6UyToL6AISrA0J
-         Yu/yAhyRittjriSWfNF52gry2SRpxhJH5E2njuZzLGSntuWAEIMlpDUF6uUCrEheBth7
-         lSrr1aSfFPcaHrxXNokglfS4ygRoaGuEdYGjgFJawbiD1mgxSoD+GvTL9Jd+nN3Sp2TO
-         qlSa1Ybf5+z6wowjWvlLjfGdSW6trg1r8Jx+gXGgoNoO9LDZTQpjTGkJ+U2AbLEjpGpm
-         AVMw==
-X-Gm-Message-State: AAQBX9cmIfTkGEmKYVUBHbbLYc9eozpjlhqIDzxO10XVWAkZtnQlIiQH
-        uE8JS7zihjEpiGZHRDigbmA+RpHlusRReg==
-X-Google-Smtp-Source: AKy350a7Yll7jOV9Sa4HKYK72zdce8MgwXohC3u6EsNV5lWaVZPDTXirctL3dOGrTQpzCi3UmlXkLg==
-X-Received: by 2002:a05:6a20:4ca4:b0:d9:4c19:fe69 with SMTP id fq36-20020a056a204ca400b000d94c19fe69mr7542167pzb.25.1680196898135;
-        Thu, 30 Mar 2023 10:21:38 -0700 (PDT)
-Received: from fivlite-virtual-machine.localdomain ([49.37.149.166])
-        by smtp.gmail.com with ESMTPSA id g21-20020aa78195000000b0062a54ce6b2bsm134257pfi.108.2023.03.30.10.21.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Mar 2023 10:21:19 -0700 (PDT)
-From:   Kousik Sanagavarapu <five231003@gmail.com>
-To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com, hariom18599@gmail.com,
-        five231003@gmail.com
-Subject: [GSoC][Proposal] Unify ref-filter formats with other --pretty formats
-Date:   Thu, 30 Mar 2023 22:50:52 +0530
-Message-Id: <20230330172052.10680-1-five231003@gmail.com>
-X-Mailer: git-send-email 2.40.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=gPVTkaxazFMR8SN3Sdcu69npouVdaMeDaC6sPx/Jiy0=;
+        b=LnX2RaEWFsCVdVZ9llEactPrgonahC1o1/P524WHNvFN1l1V7qEbzT+aLw0XvfT11A
+         m4XyLgPfx9WMrU6XPw78NsJRKWCtCar6RWdbRlcL23HZqOBhZJRmw7OoqPFYcOVP1CeT
+         ZtkqdoqPUs55SHuddyTktqkjC38v3oFkpUxobi9RgVOSkYiezas3ttNTAB3AoQ+pca2w
+         XpWui9wnOGIPNdAcg5E7Woh5Kx//rwUqDaxmBWoJnYOEFDz1jk8uSnnSJ9LI1IitLi8W
+         bozJx9gyZQxHg+Xzyt3JysWhqdvyCY620fdy2v6+szWvK6K6nhAkCC2wDhLPe3SzTrpp
+         kwUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680198680;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gPVTkaxazFMR8SN3Sdcu69npouVdaMeDaC6sPx/Jiy0=;
+        b=6K7saik9cA4RkKHYvBbseVkkbNQ34HYi9c5S9o7Dvtv0KMmx5N9Ct5TjH9ywA0Y+y1
+         On1szQ2uXL0rYYZi9QCOHVVsUgNj3jf1TizogsiMUaC1v3iq1fflXr4FymXTxyQ6aW0O
+         scEe2B/S7Uo+Cfx7v8TqBwap655hRJxCOvl7QUs6ewwgh92GFFRQuerltBqsNxhJyWrM
+         SjLmPOUYG4i7hnM5h5gFjH5fySxPNJBbuQ0dOqYYJhNt53f50edSsGgAVEvYQnLWqOB5
+         O1kXWbvBANi3KfovrnLDfZhLlJlsK3ZsWurRR50Ir7HyCpmFnaxiOK8tO804sqLyAwVh
+         iZCw==
+X-Gm-Message-State: AAQBX9cY6LLAh+CiA2SbhMUnybnUJlg/ebd+IPxGRvlNWXPjRhev1INr
+        5Sv4KKH1birBlBmxTz62L2MYAa+z988BMg==
+X-Google-Smtp-Source: AKy350bw3inQhzPbGYWIcMHyKEezIN5zCQ5byPCeTc0Qld+8EgECupMQ1anA/QK8JXAm+WnK3tYFhxMbCLIKPA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1388:b0:625:ccea:1627 with SMTP
+ id t8-20020a056a00138800b00625ccea1627mr13110157pfg.5.1680198680399; Thu, 30
+ Mar 2023 10:51:20 -0700 (PDT)
+Date:   Thu, 30 Mar 2023 10:51:11 -0700
+In-Reply-To: <230329.86sfdnvlke.gmgdl@evledraar.gmail.com>
+Mime-Version: 1.0
+References: <pull.1463.v2.git.git.1678925506.gitgitgadget@gmail.com>
+ <pull.1463.v3.git.git.1680025914.gitgitgadget@gmail.com> <72774fd08f3eb9ff1d449814637e584692ba2bfc.1680025914.git.gitgitgadget@gmail.com>
+ <230329.86sfdnvlke.gmgdl@evledraar.gmail.com>
+Message-ID: <kl6lcz4qcels.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v3 3/8] config.c: create config_reader and the_reader
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Emily Shaffer <nasamuffin@google.com>,
+        Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This proposal can also be read at
-https://docs.google.com/document/d/1JBznA5n0WdWsbEskCeXxOnQuaa0urD89VtprxstLPzo/edit?usp=sharing
-
-Unify ref-filter formats with other --pretty formats
-
-Personal Info
-=============
-Full Name: Venkata Sai Sri Kousik Sanagavarapu
-E-mail: five231003@gmail.com
-Ph. No.: +91 6304308245
-Alt. Ph. No.: +91 9704654555
-
-Education: Vasavi College of Engineering, Hyderabad
-Year: II / IV
-Semester: IV / XIII
-Degree: Bachelor of Engineering in
-	    Electronics and Communication Engineering
-
-Github: https://github.com/five-sh
-
-Overview
-========
-Git has an old problem of duplicated implementations of some logic.
-For example, Git has at least 4 different implementations to format
-command output for different commands.
-
-The goal of this project is to reduce these duplications and work
-towards a single implementation to format command output. There is
-more than one way to do this and there has been work done on this
-by GSoC students and Outreachy interns before me.
-
-The expected project size is 175 hours or 350 hours and the difficulty
-level is medium.
-
-Pre GSoC
-========
-I first got into Git’s source code around October, 2022 and have been
-going through code of topics that I found interesting whenever I had
-some time away from my college work. The following are the patches that
-I submitted, from earliest to the latest:
-
-[PATCH] repository-version.txt: partialClone casing change
-Status: merged into master
-Commit: 29c550f0a
-Merge Commit: 859899ddc (branch: ks/partialclone-casing)
-Description:
-This was my first patch to Git. I had found that the configuration
-variable extensions.partialClone had a typo in the way it was documented,
-while reading the documentation surrounding partial clones. Now that I
-look at it again, it seems that the patch was kind of noisy because the
-config variable would have still worked with no emphasis on the case but
-I guess it’s good to have everything going in one pattern, for the sake
-of documentation.
-
-Mailing list:
-https://lore.kernel.org/git/20221110160556.29557-1-five231003@gmail.com/
-
-[RFC][PATCH] object.c: use has_object() instead of
-		       repo_has_object_file()
-Status: Peff and others took off from here
-Description:
-This again was kind of a search-and-replace type of patch. I wasn’t
-really sure of the code and made this change as a result of the
-comment surrounding repo_has_object_file() which says that this and
-related functions are deprecated (hence the RFC). Peff reviewed the
-patch and explained about this function and the use of it in the
-particular case where I made the change, which was really helpful
-and added to my knowledge. Peff also realized that there were changes
-to be done to the logic of parse_object() (the function in which I
-made the change) and submitted patches, which were in turn reviewed
-by Ævar and he submitted changes in response to that.
-
-I now think that I should have replied to the review and taken part
-in the discussion, leading to me learning something more, but I was
-so overwhelmed that I didn’t do it. I corrected this in my later patches.
-
-Mailing list:
-https://lore.kernel.org/git/20221116163956.1039137-1-five231003@gmail.com/
-
-[PATCH] merge: use reverse_commit_list() for list reversal
-(Microproject)
-Status: Discontinued
-Description:
-This was a change I did to address the issue #1156 on gitgitgadget.
-This was however not a correct change logic wise because the
-reverse_commit_list() function modifies the list in-place (that is,
-uses the elements of the original list to make the reversed list)
-such a modification could break merge if we had multiple merge strategies.
-
-Mailing list:
-https://lore.kernel.org/git/20230202165137.118741-1-five231003@gmail.com/
-
-[PATCH] commit: warn the usage of reverse_commit_list() helper
-Status: Discontinued
-Description:
-This change was made based on the preceding patch but according to the
-review it seems that such an addition to the comment was unnecessary
-as the original comment was clear enough.
-
-Mailing list:
-https://lore.kernel.org/git/20230207150359.177641-1-five231003@gmail.com/
-
-[PATCH v4] index-pack: remove fetch_if_missing=0
-Status: Discontinued
-Description:
-This change strove to remove the use of fetch_if_missing in index-pack
-by replacing has_object_file() with has_object() which does not
-lazy-fetch when an object is missing in a partial clone. A test was
-also added to make sure that this change did not lazy-fetch.
-
-This patch was discontinued because it was decided as a result of
-discussion that it would be better to check all the cases where
-fetch_if_missing is set to 1 and make changes there so that we either
-fetch efficiently or not fetch at all. By doing this, in the final
-world-view, we can remove fetch_if_missing from index-pack as it
-would be set to zero everywhere.
-
-Mailing list:
-https://lore.kernel.org/git/20230317175601.4250-1-five231003@gmail.com/
-
-Proposed Project
-================
-Goal
-====
-The goal of this project is, as the title says, unifying ref-filter
-formats with other pretty formats. It would be great to have a single
-interface, which took care of all the formatting and not have different
-logic to implement different formatting options. Quoting from the mailing
-list discussion
-
-https://lore.kernel.org/git/CAL21BmnU2aTT_8iqejurgKeHXk-kmmGK1tmXLcVh7G12rwRPOw@mail.gmail.com/
-
-“For example, 'short' in pretty means 'commit %(objectname)%0aAuthor: %(author)'
-in ref-filter”
-
-Previous Work
-=============
-There has been much work done in the past in this area. It majorly comes
-from previous Outreachy interns and GSoC students.
-
-Olga Telezhnaia <olyatelezhnaya@gmail.com> did work in this area in the
-fields of `cat-file` and `ref-filter` as a part of her Outreachy Internship
-titled “Unifying Git’s format languages”. This work and also the work done
-after that helped take ref-filter to a more general setting. She blogged
-about her work here
-
-https://medium.com/@olyatelezhnaya
-
-
-Hariom Verma <hariom18599@gmail.com> did work in this area as his GSoC
-project titled “Unify ref-filter formats with other --pretty formats”.
-This is the major work done in this area and the final report can be
-read at
-
-https://harry-hov.github.io/blogs/posts/the-final-report
-
-This work is very useful as this serves as a kind of documentation
-and starting point to work towards the goal.
-
-ZheNing Hu <adlternative@gmail.com> has done major work under his GSoC
-project titled “Use ref-filter formats in git cat-file” in the area of
-git cat-file, but more relevant to this project are the changes done to
-ref-filter. This work was a continuation of Olga’s work and made some
-changes to ref-filter logic. His final report can be read here
-
-https://github.com/adlternative/adlternative.github.io/blob/gh-pages/blogs/gsoc/GSOC-Git-Final-Blog.md
-
-Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com> did work in
-this area as a part of his Outreachy Internship titled “Unify ref-filter
-formats with other --pretty formats”. He got rid of the duplicate
-implementation of the `signature` atom logic. This work can be read here
-
-https://lore.kernel.org/git/20230311210607.64927-1-nsengiyumvawilberforce@gmail.com/
-
-Difficulties
-============
-A major difficulty is backward compatibility, so any changes made to
-remove the duplicated logic would need to be done so very carefully.
-Any new tests added must also be very precise so as to efficiently
-test the changes that are made.
-
-There are also minor difficulties, such as the older tests failing
-because of the changes made, so the work will have to be in such a way
-that those tests are successful and the duplicated logic is refactored.
-
-The Plan
-========
-I think Hariom’s final report of his GSoC project is a good starting
-point for working on the project. The report lists the work which is
-left in the “WHATS LEFT?” section, so I think the first issue to work
-on would be to look into why “Around 30% of the log tests are failing”
-and to work in the area of mbox/email formatting for commits. Work can
-also be done to make pretty handle unknown formatting options.
-
-From here, I can work on the remaining portion of the formats and can
-remove the duplicated logic wherever possible, also writing tests to
-ensure that everything works.
-
-I can take the approach similar to what Hariom did before this.
-
-Estimated Timeline
-==================
-
-Misc
-April 5 to May 3
-- Continue to work on git and get more familiar with the code.
-
-- Find and fix stuff.
-
-- Work on stuff that interests me.
-
-Community Bonding
-May 4 to May 28
-- Get myself familiar with the code of ref-filter.{c, h} and
-  pretty.{c, h}.
-
-- Communicate with my mentors about the approaches that can
-  be taken to get to the goal.
-
-- Working on Hariom’s branches (mentioned in his final report)
-  and making changes on top of them.
-
-Coding Phase I
-May 29 to July 14
-- Convert formatting options to reuse ref-filter formatting logic.
-
-- Update existing tests and add new tests.
-
-- Update documentation.
-
-Coding Phase II
-July 14 to August 21
-- Further convert formatting options to reuse ref-filter formatting
-  logic and teach pretty to handle them.
-
-- Update existing tests and add new tests.
-
-- Update documentation.
-
-Final Coding Phase
-August 21 to August 28
-- Wrap up and fix bugs (if any).
-
-- Update about the remaining stuff (if any).
-
-- Make a final report outlining future work.
-
-Blogging about Git
-==================
-I think blogging is one of the important parts of any project. It
-helps other people understand what one is doing and helps the person
-get to a better understanding of their work. I will blog about the
-project every week, the blogs can be read at
-
-https://five-sh.github.io/
-
-Availability
-============
-I will be having my semester mostly throughout the summer and so will
-be able to work 35-40 hours per week. I will always be able to dedicate
-more time towards the project on the weekends.
-
-I will be in contact through my email and my phone.
-
-I am also open to calls and online meets.
-
-Post GSoC
-=========
-I love being a part of the Git community. The whole process of getting
-to work on git’s code, submitting patches and getting reviews is a new
-and great experience for me. I plan to continue in the community after
-GSoC too and will continue contributing to git and will continue learning
-from all of you.
-
-I am also open to co-mentoring or mentoring if ever given the chance.
-
-I also am very interested in partial clones and I hope to work in that
-area.
-
-Closing (optional)
-==================
-Ever since I first got into git’s code and its community back in 2022,
-it has evolved into a very unique and great experience for me. I have
-learned so much in the past few months and will continue to do so from
-all of you here at git.
-
-Hariom's proposal has been a great resource in writing this proposal.
-
-Thanks & Regards,
-Kousik Sanagavarapu
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> On Tue, Mar 28 2023, Glen Choo via GitGitGadget wrote:
+>> A more typical approach would be to put this struct on "the_repository",
+>> but that's a worse fit for this use case since config reading is not
+>> scoped to a repository. E.g. we can read config before the repository is
+>> known ("read_very_early_config()"), blatantly ignore the repo
+>> ("read_protected_config()"), or read only from a file
+>> ("git_config_from_file()"). This is especially evident in t5318 and
+>> t9210, where test-tool and scalar parse config but don't fully
+>> initialize "the_repository".
+>
+> [...]
+>
+> But I think this paragraph still does a bad job of justifying this
+> direction with reference to existing code.
+>
+> Why? Because from reading it you get the impression that with
+> read_very_early_config() and read_protected_config() "config reading is
+> not scoped to a repository", but "scoped to" is doing a *lot* of work
+> here.
+>
+> [...]
+>
+> So, so far the reader might be genuinely confused, since we already have
+> a "repo" in scope why can't we use it for this cache? Even if just
+> reading the system config etc.
+>
+> For *those* cases I think what I *think* you're going for is that while
+> we have a "struct repository" already, we don't want to use it for our
+> "cache", and instead have a file-scoped one.
+
+I was probably unclear, bleh. I intended "repository" to mean 'the thing
+users interact with', not "struct repository". At any rate, the major
+use case I'm concerned with is 'reading config from a file', where the
+repository really isn't relevant at all (more on that later).
+
+> Personally, I don't see how it's cleaner to always use a file-scope
+> rather than piggy-back on the global we almost always have (or provide a
+> fallback), but let's not get on that topic again :)
+
+Piggybacking is probably less intrusive, but I'm not sure it results in
+a coherent interface. The _only_ use of git_config_source.repo is to
+read config from blobs in config_with_options() (which we need to read
+.gitmodules from commits, not the working copy). After that, we don't
+actually propagate the "struct repository" at all (because it's not
+needed), and I think it makes sense to keep it that way.
+
+> Now, the case that *is* special on the other hand is
+> git_config_from_file(), there we really don't have a "repository" at
+> all, as it never gets the "struct config_include_data inc", or a
+> "git_config_source".
+>
+> But if we dig a bit into those cases there's 3x users of
+> git_config_from_file() outside of config.c itself:
+>
+>  * setup.c, to read only repo's "config.worktree"
+>  * setup.c, to read only repo "config"
+>  * sequencer.c, to read "sequencer/opts"
+
+We should also include git_config_from_file_with_options() (which is
+basically the same thing), which adds one more caller:
+
+* bundle-uri.c, to read bundle URI files
+
+> For the former two, I think the only thing that's needed is something
+> like this, along with a corresponding change to
+> do_git_config_sequence():
+>
+> 	diff --git a/config.h b/config.h
+> 	index 7606246531a..b8a3de4eb93 100644
+> 	--- a/config.h
+> 	+++ b/config.h
+> 	@@ -85,7 +85,10 @@ typedef int (*config_parser_event_fn_t)(enum config_e=
+vent_t type,
+> 	=20
+> 	 struct config_options {
+> 	        unsigned int respect_includes : 1;
+> 	+       unsigned int ignore_system : 1;
+> 	+       unsigned int ignore_global : 1;
+> 	        unsigned int ignore_repo : 1;
+> 	+       unsigned int ignore_local : 1;
+> 	        unsigned int ignore_worktree : 1;
+> 	        unsigned int ignore_cmdline : 1;
+> 	        unsigned int system_gently : 1;
+>
+> I.e. we actually *do* have a repo there, we just haven't bridged the gap
+> of "ignore most of its config" so we can use config_with_options()
+> there.
+
+I'm ambivalent on this. On the one hand, you're not wrong to say that
+there probably _is_ a repository that we just happen to not care about,
+and maybe it makes sense for config_with_options() to see a "struct
+repository". On the other, I'm still quite convinced that the "struct
+repository" that we already have just happens to be there by accident
+(because "struct git_config_source" is a union of unrelated things), and
+I don't think we should be piggybacking onto that.
+
+> The sequencer.c case is trickier, but presumably for such isolated
+> reading we could have a lower-level function which would return the
+> equivalent of a "key_value_info" on errors or whatever.
+
+bundle-uri.c falls into this case of 'read a file in config syntax' too.
+For this reason, I see at least two layers to the config API:
+
+- Parsing a file in config syntax, i.e. the "lower level" API
+- Reading Git-specific config (understanding where config is located,
+  caching it, etc), i.e. the "higher level" API
+
+We have in-tree callers for _both_ of these layers, and I think that's
+appropriate. IOW I don't think we necessarily need to hide the "lower
+level" API inside of config.c and expose only the "higher level" API
+in-tree [1], which was the impression I got from some of your RFC
+patches.
+
+Separating the layers like this also makes it possible to expose the
+"lower" level to out-of-tree callers in a sensible way. To parse a
+file in a given syntax, a caller shouldn't need to know about
+repositories and whatnot. That's exactly what this series is trying to
+prepare for, and being principled about the 'config reading cache' is
+essential to get this sort of separation.
+
+> I.e. are we assuming no "repo", but per the above we really do have one,
+> but we just don't pass it because we don't have a "read only the
+> worktree config part", or whatever?
+
+This was addressed above.
+
+> Ditto the line number relaying for builtin/config.c, which as my RFC
+> showed we have one or two API users that care, which we can just
+> convert...
+
+builtin/config.c is a weird case that I think needs some refactoring,
+e.g. there's
+
+- git config -l, which will list all of the git config ("higher level")
+- git config -l -f <file>, which lists config from just a file ("lower
+  level")
+
+but it uses config_with_options() in both cases! It works because
+config_with_options() can switch between "read a subset the git config"
+and "read just this file", but it's pretty gross, and we sometimes get
+it wrong. (see https://lore.kernel.org/git/xmqqzg9kew1q.fsf@gitster.g/
+as an example of how --global is a bit broken).
+
+Your suggestion to convert that (also made upthread, but I can't find
+the link for some reason...) to something that uses config_set sounds
+pretty reasonable [1].
+
+> Anyway, I'm fine with this direction for now, but given the above & my
+> previous RFC
+> https://lore.kernel.org/git/RFC-cover-0.5-00000000000-20230317T042408Z-av=
+arab@gmail.com/
+> I can't help but think we're taking two steps forward & one step
+> backwards for some of this.
+
+Thanks. I appreciate the feedback, nevertheless; I think it's bringing
+us closer to a good conclusion.
+
+FWIW I'm working on a followup that will take _many_ steps forward by
+adjusting config_fn_t. I don't know how that will pan out, so I
+appreciate checking in this series, which is at least a marginal
+improvement over the status quo.
+
+[1] "struct config_set" doesn't fall very neatly into the "lower" and
+"higher" level API discussion. It's useful to be able to read config
+into some in-memory cache (in-tree and out-of-tree), though that isn't
+as "low level" as parsing config (without caching). That will probably
+be a good follow up to my work to _just_ parse config.
