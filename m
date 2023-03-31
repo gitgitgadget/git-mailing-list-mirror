@@ -2,133 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3B8DC76196
-	for <git@archiver.kernel.org>; Fri, 31 Mar 2023 20:45:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8789DC761A6
+	for <git@archiver.kernel.org>; Fri, 31 Mar 2023 23:49:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232724AbjCaUpY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Mar 2023 16:45:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56638 "EHLO
+        id S231837AbjCaXtK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Mar 2023 19:49:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232157AbjCaUpJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2023 16:45:09 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4128E2220E
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 13:45:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1680295496; i=l.s.r@web.de;
-        bh=KPJ0dn4L6Cle8BfI/xHMTHSSBykrB3+XmGc8tqj97Ws=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=ZsRtyQw/9br7SO1z1W4fnaXp67v5P3XDl2em9uwd6PKChXw13I7yBqhKp3FDNdna5
-         U5UcLEOqyP9rMU3h3WeKVXHn54o2kuz3zTSvXedTb5wn8wHc6koOk6BJ/bfvy2hBRP
-         RJDvIAxi7cppx0iL4MvG+LxtxmBDI5ZwJpXtkfp1M5DPL0Dchw/Xa4+x3aFzHMtayn
-         VOGMdCEqLVXoIiUSLHXU4V/+OOBCBirCg3DWJKA1Ym+kbfeEFAMBwWX0r+DSula8In
-         W/ZAf5chJQCT7ZBIxYsh87y+EUdU5ITObseknBYIzaWnhUQv55KOzdV3Fu5f76qU5e
-         hQoraTY1ix0/w==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.158.21]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N0Zs0-1qcWg009JM-00weYp; Fri, 31
- Mar 2023 22:44:56 +0200
-Message-ID: <b8b3777b-ee6e-d90e-3365-5cb9c9d129fe@web.de>
-Date:   Fri, 31 Mar 2023 22:44:55 +0200
+        with ESMTP id S230195AbjCaXtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2023 19:49:08 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CA701BF52
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 16:49:06 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-545cb3c9898so369074287b3.7
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 16:49:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1680306545;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fufowuCFsu0CjEHx6YCFElYGeWTnBV4lbQfj2ePc7jE=;
+        b=I/nhSnn30hWohUisrpiMkFhCOjQtrBQq69MYcRBdoNVyOzxCgaD/FXF2VcgyaMxdJb
+         8nxIxMphSI1hQ9FDHe1WHpcJjhJ3e1kORVAhlxS/WsA5yPRh6Tu48k7D4Bkw+g9vCxMI
+         oXNK/x37Gf3HOTvBzXsewQXKMgGY21CCu4eoKy3KtCNO1t5no4BduMx72/JBX9+O2kpI
+         i9XR0F8NlTkuKBy+5leFr7OW7p8C9z+rkYWZ+el9JUg+nlpbLuV4WDaOW1Mh07UBzygB
+         0mCX4dQFvSDjr8PrqNSOpATcNmmGrdVv0P/TdiWqIYYPlJWcxGRkFwXdrNSg7o43RAtS
+         kP9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680306545;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fufowuCFsu0CjEHx6YCFElYGeWTnBV4lbQfj2ePc7jE=;
+        b=pLHjG0O98+lvQ6391X6rhhpbiruQBX5BVJpqJjbRoBTCQOtn6HagCY8noCiMmsSod5
+         xFPG2lffUDpkn5W+v/BkoAmAHYzW2UMmFqrom586weOa1EtxJfw4aNAi2THeLZmjK+qa
+         ben23/yD9eYA/zXduKyPARez2THWB8s8KaHDgN+eQJaBlWy/kNRsfZTlc4ofVERiWUX5
+         d3lLj07Neb49NIy7fJaCO+sNUQmtEj6UHc5fwhEXwqkxI1sHnBOkn1Am4WneLGA5Bbd9
+         QhNBhFEizSCYDv21YBS0TAHedbptuBVQgAbbqdMdXTxzwQFyszr6bXH/u6c3Ff7du1vt
+         knwg==
+X-Gm-Message-State: AAQBX9dgy3jsVxQUcdAdYUkp3nZ45jI51v2a6iuPdPskvCuZ13/42cO1
+        yrZ4HLIddlOJyoxH/hGQ9SA8lg==
+X-Google-Smtp-Source: AKy350Z5iwvNOJBX+Ne31Zz0N1SD1Cbr6fPt2PHBmU03i7J4o9kwtT6jHDK+lZ9ukkLWVld5NiNGsw==
+X-Received: by 2002:a0d:d9ca:0:b0:542:931e:2c56 with SMTP id b193-20020a0dd9ca000000b00542931e2c56mr27888451ywe.39.1680306545461;
+        Fri, 31 Mar 2023 16:49:05 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 206-20020a8117d7000000b00545a0818491sm844980ywx.33.2023.03.31.16.49.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Mar 2023 16:49:05 -0700 (PDT)
+Date:   Fri, 31 Mar 2023 19:49:04 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: How do we review changes made with coccinelle?
+Message-ID: <ZCdxcKr2mQ5cBQ8u@nand.local>
+References: <kl6l7cuycd3n.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <xmqqtty2hx30.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.1
-Subject: Re: regex compilation error with --color-words
-To:     Diomidis Spinellis <dds@aueb.gr>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, demerphq <demerphq@gmail.com>,
-        Mario Grgic <mario_grgic@hotmail.com>
-References: <CAPig+cSNmws2b7f7aRA2C56kvQYG3w_g+KhYdqhtmf+XhtAMhQ@mail.gmail.com>
- <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:e9X1CVn4hGaXZidzBW8tjC3ZpIZOItHVxkXZFwXQzzTh5GBV+l7
- tqI3vWZqLBVtw3K+CaN1F/aPE0P1wOohohPlGiqsBXgPIp5WaPwNVKxJZ8tvLiuvP3EobEM
- jktW+7hcVbdRtL9BLw6tIHpBZsarsbr5C4sUWAYPAuqDVYc0DsDvw7GPJmVfMHk7Dfp0AMi
- ikVRoPlqRupYdAVLOq5cA==
-UI-OutboundReport: notjunk:1;M01:P0:3BX/n/gRgUQ=;FDlA9cez9nwWvHpeZDF+9zdIlV8
- +4gKNNccGmpR202nPh/k0wE3/2sQNJ8cMrI7feGutKMQEt4Nhm0mY5JPbzpD78pbnqbgLH2VW
- Nt4L3Duiw5plfM/BtHak3Pr/8MJW2liPulufg73ZWEoZBOLwYHa+o2xr9lsNYSFCX5raknPKO
- tbJsWZUWUYjCuCbd0byzpOYekDwFPSihPpj//k7pdQxLGZBIAfhP6j8wdgG5lE3lPuzpKBr7E
- 6pNfN8nbAbk1H5huAYAU/lNG+4T7yAAA91Y9RK1VDG9v0/WQNsCibLoH/lcMur/UMjWG/1RkC
- LKAAwTk/PyfXdy0CmL7ood3yNjKvVpEqFabaAlhqnA9xuN4/QoGhhYsbqgQwwN9Yj83nArYul
- Cy87jxD1nEicyQi+UTtPzhLY0EPGS0z1L76XOF2a0qvbNpG+T85dyKsO9knJmeoLZUoczBHUy
- e0SD5eftfGK+kJ9cOF9wBrFS5buq5NSVjUnSEt0zlCQmbNXoTMCX0XcdH7dAxzW8zICVNNyC4
- akyK8MBJkHjVK9X7D0w5C0sJoLFcqF7uFrxwnvAwShzqi6vil/wDjE736/xUmUiQ+Tnrb0Llt
- LVlMn59ilUDs4GYP2QjzuSA/ZnxFgvwXQwLFPPa5jRiAbF19121XJPo+bVtLw8W7vEUrIDVI1
- GBS8SXz/QFQH73D4ob79TJ3hWOYMkIVBExiVPRqZU37prT46IxKID9aECLhxcY7lZu+sa5yM0
- S/IW/l8HKOqvGncZ/VHIG3pmwzmq0oMgrIgytdsE09M2nvUCVL+5iI72p02jV/oOe8PfNrkel
- mzyICxmDg0VcsqMCt8L2EKgz+rOjg3Z1vwLrnqYwxIQkOmkS7O4yUuAD0YKyHEDnivyMHr/Xr
- A0xTQVFmkimkNvBi1t61tYTWgCm9impqfrR0X2A8+mfApbPDQZsr3jlOSFX155TTosAkNe3F/
- fpM+Uz8Ng0yUFWwdWRzRh4elFZQ=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqtty2hx30.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.03.23 um 09:55 schrieb Diomidis Spinellis:
-> On 30-Mar-23 1:55, Eric Sunshine wrote:
->> I'm encountering a failure on macOS High Sierra 10.13.6 when using
->> --color-words:
+On Thu, Mar 30, 2023 at 12:13:07PM -0700, Junio C Hamano wrote:
+> Glen Choo <chooglen@google.com> writes:
 >
-> The built-in word separation regular expression pattern for the Perl lan=
-guage fails to work with the macOS regex engine.=C2=A0 The same also happe=
-ns with the FreeBSD one (tested on 14.0).
+> > - Is it okay to give Reviewed-By on the basis of _just_ the in-tree
+> >   changes and ignore the .cocci patch?
 >
-> The issue can be replicated through the following sequence of commands.
->
-> git init color-words
-> cd color-words
-> echo '*.pl=C2=A0=C2=A0 diff=3Dperl' >.gitattributes
-> echo 'print 42;' >t.pl
-> git add t.pl
-> git commit -am Add
-> git show --color-words
+> If they were made in separate steps, sure.  If not, not really.  But
+> we can still say "I've checked the changes the author made to the
+> code and they looked good."  But we haven't reviewed the patch in
+> its entirety in such a case to give a Reviewed-by, I would thihk.
 
-Or in Git's own repo:
+I think that while none of us would probably call ourselves "Coccinelle
+experts", we are probably reasonably capable of reviewing *.cocci files
+and their impact on the tree.
 
-   $ git log -p --color-words --no-merges '*.c'
-   Schwerwiegend: invalid regular expression: [a-zA-Z_][a-zA-Z0-9_]*|[0-9]=
-[0-9.]*([Ee][-+]?[0-9]+)?[fFlLuU]*|0[xXbB][0-9a-fA-F]+[lLuU]*|\.[0-9][0-9]=
-*([Ee][-+]?[0-9]+)?[fFlL]?|[-+*/<>%&^|=3D!]=3D|--|\+\+|<<=3D?|>>=3D?|&&|\|=
-\||::|->\*?|\.\*|<=3D>|[^[:space:]]|[<C0>-<FF>][<80>-<BF>]+
-   commit 14b9a044798ebb3858a1f1a1377309a3d6054ac8
-   [...]
+What I meant when we were talking about this off-list was that I don't
+consider myself an expert at writing idiomatic Coccinelle rules. But I
+feel competent enough that I could review Ævar's patches by roughly
+grokking the *.cocci changes, and then checking that the resulting tree
+state matched my understanding of those changes.
 
-The error disappears when localization is turned off:
+> > - Do we care about new patches slowing down coccicheck?
 
-   $ LANG=3DC git log -p --color-words --no-merges '*.c' >/dev/null
-   # just finishes without an error
+I was the one who asked this question off-list, and I did so in a
+leading way that implied that the answer was "no".
 
-The issue also vanishes when the "|[\xc0-\xff][\x80-\xbf]+" part is
-removed that the macros PATTERNS and IPATTERN in userdiff.c append.
+> Surely.
 
-So it seems regcomp(1) on macOS doesn't like invalid Unicode characters
-unless it's in ASCII mode (LANG=3DC).  664d44ee7f (userdiff: simplify
-word-diff safeguard, 2011-01-11) explains that this part exists to match
-a multi-byte UTF-8 character.  With a regcomp(1) that supports
-multi-byte characters natively they need to be specified differently, I
-guess, perhaps like this "[^\x00-\x7f]"?
+But I agree with Junio that we *do* care about slowing down the
+performance of 'make coccicheck'. When I originally asked, I was under
+the (false) impression that we didn't run 'make coccicheck' in CI. But
+we do (see ci/run-static-analysis.sh), so we do care about the
+performance there since we don't want to unnecessarily slow down CI.
 
-> Strangely, I haven't been able to reproduce the failure with egrep on an=
-y of the two platforms.
->
-> egrep '[[:alpha:]_'\''][[:alnum:]_'\'']*|0[xb]?[0-9a-fA-F_]*|[0-9a-fA-F_=
-]+(\.[0-9a-fA-F_]+)?([eE][-+]?[0-9_]+)?|=3D>|-[rwxoRWXOezsfdlpSugkbctTBMAC=
->]|~~|::|&&=3D|\|\|=3D|//=3D|\*\*=3D|&&|\|\||//|\+\+|--|\*\*|\.\.\.?|[-+*/=
-%.^&<>=3D!|]=3D|=3D~|!~|<<|<>|<=3D>|>>|[^[:space:]]|[\xc0-\xff][\x80-\xbf]=
-+' /dev/null
-
-No idea how to specify non-ASCII bytes in shell or regex.  '\xNN' does
-not seem to do the trick.  printf(1) interpretes octal numbers, though:
-
-   $ echo =C3=B6 | egrep $(printf "[\200-\377]")
-   egrep: illegal byte sequence
-
-(The regex contains "illegal bytes" -- UTF-8 multi-byte sequences cut
-short; the "=C3=B6" is OK.)
-
-Ren=C3=A9
+Thanks,
+Taylor
