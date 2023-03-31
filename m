@@ -2,112 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E30E5C76196
-	for <git@archiver.kernel.org>; Fri, 31 Mar 2023 14:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 718EDC761A6
+	for <git@archiver.kernel.org>; Fri, 31 Mar 2023 15:40:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232495AbjCaOgM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Mar 2023 10:36:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42098 "EHLO
+        id S233264AbjCaPkM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Mar 2023 11:40:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232144AbjCaOgJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2023 10:36:09 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 955F01A2
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 07:36:08 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id t10so90288161edd.12
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 07:36:08 -0700 (PDT)
+        with ESMTP id S233233AbjCaPkD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2023 11:40:03 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 880D520D9D
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 08:39:56 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id c4so4784760pjs.4
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 08:39:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680273366;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Dbpo3kwtMGOPrFw962inEOty5xHQYI0/gupwZkXtDKI=;
-        b=b+r+Nbz8mQoIh6P2yWUhygEvoyXUJYgHv3vFuRWHTnn5253/IVqORjDZX64vtRxTBm
-         juuMH/iBcrLVE0t0dalRcvZEE0EQmeNLc19IV5h9bCC9Y0URUs5GD+fMkVoe+ofBl8Bm
-         5EuuaXev5JOLa+ZAFTs/xLso8oAsIPb4W5hpzXsvGC8///Gb9IaYerECVrZ/eEmjZC3h
-         WIS7OcN27z/SrbOj2Oz2iPT4MEc8Ud+4MQVyp6EfWsD+TNtWymmk3T9Si8CKSZCqaaC6
-         uFLVKXvT+8OCidqZmGnyQdJGOE4YGprsJ9NdgwrJdP0cM4Jn20dW9TSG1u799M5KbbW2
-         HB6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680273366;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20210112; t=1680277196;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Dbpo3kwtMGOPrFw962inEOty5xHQYI0/gupwZkXtDKI=;
-        b=3FfHOamYpp17F+SCzlzp7tEYCxapTXnRG4q9Xr9S1VwDI8sI8806kU3WgFemWBDrs3
-         V6qk7f1d2gt0krPrpBAGxmI10wP8YOyN+cx2ow1kBAeP5FX3/c88mtedIZV+AMRfHgtJ
-         ZPBYNO081w7jfvPxQs5bPXUxUPgUxqHRC2oKi9MEeyMWMK0k9LSfrOKDnojfwh8ZamgS
-         zLr3MeD6aX4/hkIVmQ40cnCy6sdUUtEnUjmrz2Fh4KG3OhVLu6i5TaN9TGQH0knnutvT
-         064ULo6tQhIFrjkfqKK4GT7U/gAahx8kpjffi9rbqZHwQs+TEv/Cvfb4Y9ZWrlJaufpV
-         6JQg==
-X-Gm-Message-State: AAQBX9cW2bS2IwNpuT6hcEBgSJxXjyi7eZnIaxSW1OxunpgWV8fct5Qj
-        gu/YeVVhrStK3twxAspRA3e49mbzoeuzX2dQ
-X-Google-Smtp-Source: AKy350bDk+6WfM2K6l9jfRyBDNftii51Q4K6OlC7uBHIeKTV0Yx4k3a+fJn7fdCi5IM2QTHYaEml6Q==
-X-Received: by 2002:a05:6402:e:b0:4fa:d75c:16cd with SMTP id d14-20020a056402000e00b004fad75c16cdmr23510490edu.34.1680273366510;
-        Fri, 31 Mar 2023 07:36:06 -0700 (PDT)
-Received: from titov.fritz.box ([45.88.97.21])
-        by smtp.gmail.com with ESMTPSA id h27-20020a50cddb000000b004c19f1891fasm1114353edj.59.2023.03.31.07.36.06
+        bh=bUdnZXGPuKRSxmSykDVGpflzKODpBcpGZ1v3tHci8cg=;
+        b=n7XFhiuQD8Ps96qQK0TMgfRUDtP+NNf+ZloMupbZ3KT0G3aEvmw+BD+1U/Bku2Su0B
+         iCZLWEv13QvFP7/WkaNjyuaYmc9aEdhVTdHPFuAZN+o4bV4xFUhykZdEFIWbkAOUy7uf
+         pHsbGzF2bnYibsQqmiWkCepLvTFxUmBCbE+pLhTMA3OyXf49Hghwd9+FWG9rTVyI6wMD
+         JEUGJ9iqnwf5rvN7AZDLKcRQorz/sEZnMtfAJUfeHnpYJlFM2yjNTVAdxpTp8g1hwmKf
+         bvdIepwC14GqYDJ3zSDxksllDOLicZmaKU7qu505M2tgp1rhRc0h74hZDp1UazKBDa5F
+         ONNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680277196;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=bUdnZXGPuKRSxmSykDVGpflzKODpBcpGZ1v3tHci8cg=;
+        b=Nk7MAlNnhoG4uNzmoS3zT1FXRQaL+4q48eTNh0/3OwL08RvJuK98kAP30oxgg1T34u
+         YqK8TlLjIEuLRo2RNmSy8PrZZ0VPiX7EaIfwSVZCIbYy1boz3/5eZdR1V/oDQx+u9dJq
+         KvWoQQRefNwxN3vh670KStJasTlALTfIaPL+L6n1f9WKt2KcNefaTq/tMJH/LqZDLay9
+         ZiNCUyw/4YjYOMVRga9lO5KZRQGgqXhc0FaGO0cQgxOkYSlBBjM5eD4dbSJpvvK6tYJo
+         59tjgBOPMqiLHXFy42rR4ovz95dBJ40b7vY+sPWZk1BfwLgoQgSov/ylNT9IqEZ0YV6y
+         lzrA==
+X-Gm-Message-State: AAQBX9cc4h3pyTHavsGrh2XM5Agq0Tb0MhiZvsS9JxjAkbZc3ptLYIUW
+        64Q1IUKcttdZhqiCw3S7odQ=
+X-Google-Smtp-Source: AKy350YfXjbqD+8RmmOJkbda5mb1MtF8kKbaSwAPG1N/QEBlFpbNPqxIBR5ldbbFlUnlHj0Rp3rh/g==
+X-Received: by 2002:a17:902:d2c9:b0:19e:6700:174 with SMTP id n9-20020a170902d2c900b0019e67000174mr34723321plc.25.1680277195855;
+        Fri, 31 Mar 2023 08:39:55 -0700 (PDT)
+Received: from localhost (83.92.168.34.bc.googleusercontent.com. [34.168.92.83])
+        by smtp.gmail.com with ESMTPSA id ik30-20020a170902ab1e00b0019f1264c7d7sm1728918plb.103.2023.03.31.08.39.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Mar 2023 07:36:06 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bwilliams.eng@gmail.com>,
-        Carl Worth <cworth@cworth.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 1/2] t3060: fix mention of function prune_index
-Date:   Fri, 31 Mar 2023 16:36:03 +0200
-Message-Id: <20230331143604.82040-1-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.40.0
+        Fri, 31 Mar 2023 08:39:55 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] t5563: prevent "ambiguous redirect"
+References: <pull.1507.git.1680245525637.gitgitgadget@gmail.com>
+Date:   Fri, 31 Mar 2023 08:39:55 -0700
+In-Reply-To: <pull.1507.git.1680245525637.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Fri, 31 Mar 2023 06:52:05
+        +0000")
+Message-ID: <xmqq7cuxhqus.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit [1] added tests which trigger function prune_cache.  The comments
-in these tests, however, incorrectly call it "prune_path".  Since then,
-function "prune_cache" has been renamed to "prune_index" in commit [2].
-Later still in commit [3], the_index singleton, which is also mentioned
-in a comment, stopped being used directly with function "prune_index".
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Fix mentions of function "prune_index" and the struct it changes in
-comments in file "t3060-ls-files-with-tree.sh".
+> (in fact, the `printf ''>$CHALLENGE` is removed because the next line
+> overwrites the file anyway because it _also_ uses a single `>` to
+> redirect the output).
 
-[1] 54e1abce90 (Add test case for ls-files --with-tree, 2007-10-03)
-[2] 6510ae173a (ls-files: convert prune_cache to take an index,
-    2017-06-12)
-[3] 188dce131f (ls-files: use repository object, 2017-06-22)
+Good eyes. I also wondered what that empty printf was doing.  While
+I suspect the original intention was to start from an empty file and
+keep appending contents with any meaning so that the redirection on
+subsequent lines would look identical, I do not think it is
+necessary in this case, primarily because it is unlikely that any
+future change will swap the first line with any subsequent lines.
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
-
-Found this by accident while working on an unrelated topic.
-
- t/t3060-ls-files-with-tree.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t3060-ls-files-with-tree.sh b/t/t3060-ls-files-with-tree.sh
-index c4a72ae446..5a06732ca7 100755
---- a/t/t3060-ls-files-with-tree.sh
-+++ b/t/t3060-ls-files-with-tree.sh
-@@ -40,7 +40,7 @@ test_expect_success 'setup' '
- 	git commit -a -m "remove them all" &&
- 
- 	# The bug also requires some entry before our directory so that
--	# prune_path will modify the_index.cache
-+	# prune_index will modify the_repository->index.cache
- 
- 	mkdir a_directory_that_sorts_before_sub &&
- 	>a_directory_that_sorts_before_sub/file &&
-@@ -56,7 +56,7 @@ test_expect_success 'usage' '
- '
- 
- test_expect_success 'git ls-files --with-tree should succeed from subdir' '
--	# We have to run from a sub-directory to trigger prune_path
-+	# We have to run from a sub-directory to trigger prune_index
- 	# Then we finally get to run our --with-tree test
- 	(
- 		cd sub &&
--- 
-2.40.0
+Thanks for spotting.  I was hoping that we could soon retire the
+"quote the redirection target if it has parameter substitution to
+help older bash" rule in our coding guidelines, but this example
+shows that the world is not quite ready yet.
 
