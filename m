@@ -2,102 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A131C6FD18
-	for <git@archiver.kernel.org>; Fri, 31 Mar 2023 10:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06B76C76196
+	for <git@archiver.kernel.org>; Fri, 31 Mar 2023 10:37:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231199AbjCaKQj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Mar 2023 06:16:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46590 "EHLO
+        id S231142AbjCaKhi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Mar 2023 06:37:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbjCaKP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2023 06:15:56 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C9D520612
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 03:11:46 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id m6-20020a05600c3b0600b003ee6e324b19so13516849wms.1
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 03:11:46 -0700 (PDT)
+        with ESMTP id S230488AbjCaKhT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2023 06:37:19 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8661D1C1C5
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 03:37:14 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id bi9so28255051lfb.12
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 03:37:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680257504;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=okSfJuwpTy0GGYM2wO3rhJNOEha/gK0oRKa61tk//+E=;
-        b=PD/kbsmk0c9AEHGXzQz0GknR3hvsk59Xx+dus3WpnyNX0X2lxG26NG8WtK1EvE9ZL3
-         6FivUwZK45oKvqGVdpt0tga4oQNWnm5wjt27i/i5ASaqf1l+ILCNqGEw4S8d9YgctFs+
-         VzPUt+YWELMOLA75s0hTuswkhJBhu6KjUu2C7LTwGkGWNF+ThNP8IRCeYl0q0+8a1yC1
-         rSRV6MoCeOJqFavpHZjxhQFd3l05WAWW462U4+1vEY3qWi/Mq9xHARWKGhe+xqekS4ph
-         16qN+2aAl/t21Qyec4SxZfXuZ1xHVSpux095leAbu95FfG4aJiHLDPRCOM0mqk65LiN6
-         gIKw==
+        d=gmail.com; s=20210112; t=1680259032;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=D2G4b5SnJPsale2mFDWSgo1mdJsJfjAb4xYDOm7u4bQ=;
+        b=lOqNTyqUw+3O5C38T6hI8k/mpNaLnoorK4p2EiyjKYZzaL9PhPrIrpudxPHR3I6sni
+         Cz0CR2cg/Fle6vIRopfwWPCwyUhzXMAPBtur2wrroLMlZU/NKZmHGsFbeakNlXuU7u6p
+         JBzCECBHip5uCqFEI6GgyJdX4hY61dikpETqFEBlOA2nOX0dx5qdAkw43kx3uDe4KQy+
+         0Hh8Co8yCY/Nuv/dh9HUDrXsmDeIaoyBu30IM8+ZMwbEN2OnqY27LTXncE/0/yARH+iH
+         n6MYGWYxfuSAD+9GTAoypzGdRUD/7dMen4nGzXTXoIvvdpP4YDJszfOfa/FIH1qY3AdD
+         9LgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680257504;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=okSfJuwpTy0GGYM2wO3rhJNOEha/gK0oRKa61tk//+E=;
-        b=kfgHatIy2lTDFyRgptuIBgbAAhseysBOmfT3iL+6W6EnrSNhamPlltqF7s3V94GC+k
-         G4gjLzZTiBanFpLdgrpJlgBa9udNVwnj1ca7RFOH7bXdf7nZ3vivnvDFX7LZUllLPP0h
-         wItubNnn7+nHt4cCD1V5KSNRo7YazihMKymf/uc+qPYb4DbwVGneNCgBBXP+DQELksHF
-         HoIK/eXL9P9+BgE919bON7vlAcXmaNXmWu3lz0BSxhCCNFbrmQyLqeRj5Mm9yKBCmS/X
-         EDAT3KXu+EsVoijxUWHTLNoVvkio0SwWLdagR3XlZt0BoH+j+RdBlbfVRmC/s1p1mEHw
-         fNvg==
-X-Gm-Message-State: AO0yUKUJFldJ/+zTgtZ+ozRGQ0SmXyikfX7Jtqn5PqbNDmLhMaS3j6B1
-        1nDCIZtKdYyGdVI17oOZCKaLCM1eTI8=
-X-Google-Smtp-Source: AK7set+8bXKgSV4ho/szXP3eUoaRWE/zeJf5XCen6a5BHDgZY+unvDapnaVVJXKBSffp46QmXlJlyA==
-X-Received: by 2002:a7b:c5d4:0:b0:3ed:8079:27d7 with SMTP id n20-20020a7bc5d4000000b003ed807927d7mr19353326wmk.40.1680257504363;
-        Fri, 31 Mar 2023 03:11:44 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q11-20020a5d574b000000b002c54c92e125sm1796244wrw.46.2023.03.31.03.11.44
+        d=1e100.net; s=20210112; t=1680259032;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=D2G4b5SnJPsale2mFDWSgo1mdJsJfjAb4xYDOm7u4bQ=;
+        b=z1/hc9xfrh94FKemhC9ZGCJGoQ+5GDLL578CfAcqPK28mrXHVtmo26W/DnbLqIEasw
+         MJHMPRSzL6uxC6+7q0qYhTvlZm23vUiW+JAn0Y+Jhgzn4MeseSVaa8b3HZ1XFaUTzZwu
+         V5V5rPxbrJuo01VWDzcxAnuRZzutYoHl7EnMmD3MIK34KJmGbkZ36Aho9iWwlRSWM51d
+         xDMK6l0DoR+KpHd8gk7fyVr4a1SGaEZLiB7WvE7sT2Xe6uq6SL7qwiQQhTeLLeKJhTJo
+         vAZmvkmBujZvHh+1XPf/fGN5U7oRsQjYI0/IH0ppSBwL4pHb/+g2PwQ/CIx8vjJ9GCBl
+         LjQg==
+X-Gm-Message-State: AAQBX9dgfB0sckSvOi0ey69ssii3MI2+y7Izfcp+pYuAclbTnGp9CBOo
+        CoJiUmmc4qJlz9epvYJUFfBgr9zgouQ=
+X-Google-Smtp-Source: AKy350azhg/U2+s7qCJYgW5pGBHoQaSmWCQcGhEU7KH46+e2cfsf8hMaHRcwR/l95Ypa3qCfkdxitA==
+X-Received: by 2002:ac2:43dc:0:b0:4eb:982:ad3 with SMTP id u28-20020ac243dc000000b004eb09820ad3mr7309759lfl.24.1680259032411;
+        Fri, 31 Mar 2023 03:37:12 -0700 (PDT)
+Received: from localhost.localdomain ([2001:4641:9d1:0:9c74:f016:4c88:53bb])
+        by smtp.gmail.com with ESMTPSA id c17-20020a197611000000b004d575f56227sm326021lff.114.2023.03.31.03.37.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Mar 2023 03:11:44 -0700 (PDT)
-Message-Id: <pull.1484.git.git.1680257503697.gitgitgadget@gmail.com>
-From:   "ryicoh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 31 Mar 2023 10:11:43 +0000
-Subject: [PATCH] doc: add that '-' is the same as '@{-1}'
-Fcc:    Sent
+        Fri, 31 Mar 2023 03:37:12 -0700 (PDT)
+From:   =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, oystwa@gmail.com
+Subject: Re: [PATCH 1/2] ref-filter: remove unused ref_format member
+Date:   Fri, 31 Mar 2023 12:37:08 +0200
+Message-Id: <20230331103708.18945-1-oystwa@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <xmqqjzyy2rdl.fsf@gitster.g>
+References: <xmqqjzyy2rdl.fsf@gitster.g>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     ryicoh <ryicoh@gmail.com>, ryicoh <ryicoh@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ryicoh <ryicoh@gmail.com>
+On Thu, 30 Mar 2023 at 17:25, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Øystein Walle <oystwa@gmail.com> writes:
+> >
+> >> use_rest was added in b9dee075eb (ref-filter: add %(rest) atom,
+> >> 2021-07-26) but was never used. As far as I can tell it was used in a
+> >> later patch that was submitted to the mailing list but never applied.
+> >>
+> >> Signed-off-by: Øystein Walle <oystwa@gmail.com>
+> >> ---
+> >> Would be nice to have a link to the email thread here, but I don't know
+> >> how.
+> >
+> >
+> > Here is a link to the patch that led to that commit you cited:
+> >
+> > https://lore.kernel.org/git/207cc5129649e767036d8467ea7c884c3f664cc7.1627270010.git.gitgitgadget@gmail.com/
+> >
+> > It indeed is cumbersome to add, as the Message-Ids for patches from
+> > GitGitGadget tend to be ultra long.
+> >
+> > But b9dee075eb was the last one in the 5-patch series; I do
+> > not see any "later patch there in the thread.
+>
+> I think there was a follow-up RFC series that was written to use the
+> value of the member, cf.
+>
+> https://lore.kernel.org/git/9c5fddf6885875ccd3ce3f047bb938c77d9bbca2.1628842990.git.gitgitgadget@gmail.com/
+>
+> but it seems there was no review on the series.
 
-Signed-off-by: ryicoh <ryicoh@gmail.com>
----
-    doc: add that '-' is the same as '@{-1}'
-    
-    Now, the document of '-' is written only git-switch.txt.
-    
-    https://github.com/git/git/blob/6369acd968d02899973a9a853c48029b92cea401/Documentation/git-switch.txt#L51
-    
-    I want same one in revisions.txt.
-    
-    Thank you.
+The follow-up series you link to seems to be a superset of the first series,
+which is what confused me. This is why I thought perhaps a subset of the latter
+series was accepted. But I see now that the dates match that of the first
+series, and you even applied it very soon after. Strange choice to include the
+first five patches in the follow-up series, then...
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1484%2Fryicoh%2Fdoc-hyphen-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1484/ryicoh/doc-hyphen-v1
-Pull-Request: https://github.com/git/git/pull/1484
+Looked through the git.git log and see that it's not uncommon to reference
+patches from lore.kernel.org, so I can do the same. Perhaps in the "footnote
+style" to make it easier to digest. That is, if we want to apply this in the
+first place... It is a very minor cleanup of something that does no harm. On
+the other hand this particlar line of development seems abandoned.
 
- Documentation/revisions.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 9aa58052bc7..9e7ea2cf71e 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -94,7 +94,8 @@ some output processing may assume ref names in UTF-8.
- 
- '@{-<n>}', e.g. '@{-1}'::
-   The construct '@{-<n>}' means the <n>th branch/commit checked out
--  before the current one.
-+  before the current one. You may also specify - which is synonymous
-+  to @{-1}.
- 
- '[<branchname>]@\{upstream\}', e.g. 'master@\{upstream\}', '@\{u\}'::
-   A branch B may be set up to build on top of a branch X (configured with
-
-base-commit: 6369acd968d02899973a9a853c48029b92cea401
--- 
-gitgitgadget
+Øsse
