@@ -2,214 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8300CC76196
-	for <git@archiver.kernel.org>; Fri, 31 Mar 2023 20:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3B8DC76196
+	for <git@archiver.kernel.org>; Fri, 31 Mar 2023 20:45:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229967AbjCaUit (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Mar 2023 16:38:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53410 "EHLO
+        id S232724AbjCaUpY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Mar 2023 16:45:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233110AbjCaUis (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2023 16:38:48 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99DB31D86D
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 13:38:44 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id i6so28853380ybu.8
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 13:38:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680295124;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YYxdxbSuSv/eo7w2uj9GkU0lBTrS6VWQgCxqY+6sQ4w=;
-        b=dQAc5SrPdkTNBJVPQcp+8QBQDa2SjE0SN2HwxXzlH7ccZcxpWcRiUZGjGrGfWiM4DU
-         MGfSX4cPOKDEZpAxGHR7s4RNZ7yiwrKAMX0pKA4lvcjVn0R3csE653vVVsJUa1u7krtW
-         SP2kZMF5/6qlHXOMb0kf2DkOyQBx7WIX0NgLs2v0mlJ+0E5YdQTI+Aog7vyd/8VDB5oD
-         KVkwimtcLfdPf87ooJI5xRpZWNe+eohCvZ4is6xAjLnBmZsUdXrav5+G5chRhvnbeoOD
-         Lt+cBMXgPoySc5hA1AZkqgaoSbnq1Xm0TFNiRThuhU72jX0PGtv3S8Z/4LQ9v1TwhTX/
-         lOIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680295124;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YYxdxbSuSv/eo7w2uj9GkU0lBTrS6VWQgCxqY+6sQ4w=;
-        b=Px1nqfPRJyij4DXPjcqN3AqSGpAV2hHIuKYsG7mULAbAze9O5s+bjMor4Uk4ScKDZa
-         B1qaFc2zLLq7eFjKPYCd/BU9Oe16547giCy2CoaFQlqAxIjCs0AyTPNwc7iFR0kax27y
-         64TG3R2v1DQlsUZtfp0KngfKekF781oNXpDwwhV2AbnYz5tFpJnv2Z1u3MZ3JTbFFZO7
-         59pvkScGXDlddt9lqmDMy9bbRlgKUqfoI6e+zWsiY3J/MKrNY5eldMRpyFP5aZhiDzHb
-         Vd7KKBz2koeGXs/MIOlwFvyvhSXF8T1SDalKpD7/6R6nbvRdsYTLzw4gFNSL7/WDFOZw
-         6/5Q==
-X-Gm-Message-State: AAQBX9fubr9GZPDFIcL7710wU4iFK+z54OGRF81H3chVbdWJy0FZOqsm
-        FOqsRoyyxcMkQPKD7Ei1kj03eHCwnMp4QJN73z162lAQ04BJrg==
-X-Google-Smtp-Source: AKy350bHBxD9c99U7gBRgRj3JmK9xOxc9vdeSF1AEKTYCPH/DZdCSc4oDlLkjw2NXpzBJQ/LcyrsMqg+FCGZTfdxLNs=
-X-Received: by 2002:a25:d0d0:0:b0:b6e:b924:b96f with SMTP id
- h199-20020a25d0d0000000b00b6eb924b96fmr6925769ybg.3.1680295123617; Fri, 31
- Mar 2023 13:38:43 -0700 (PDT)
+        with ESMTP id S232157AbjCaUpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2023 16:45:09 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4128E2220E
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 13:45:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1680295496; i=l.s.r@web.de;
+        bh=KPJ0dn4L6Cle8BfI/xHMTHSSBykrB3+XmGc8tqj97Ws=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=ZsRtyQw/9br7SO1z1W4fnaXp67v5P3XDl2em9uwd6PKChXw13I7yBqhKp3FDNdna5
+         U5UcLEOqyP9rMU3h3WeKVXHn54o2kuz3zTSvXedTb5wn8wHc6koOk6BJ/bfvy2hBRP
+         RJDvIAxi7cppx0iL4MvG+LxtxmBDI5ZwJpXtkfp1M5DPL0Dchw/Xa4+x3aFzHMtayn
+         VOGMdCEqLVXoIiUSLHXU4V/+OOBCBirCg3DWJKA1Ym+kbfeEFAMBwWX0r+DSula8In
+         W/ZAf5chJQCT7ZBIxYsh87y+EUdU5ITObseknBYIzaWnhUQv55KOzdV3Fu5f76qU5e
+         hQoraTY1ix0/w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.158.21]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N0Zs0-1qcWg009JM-00weYp; Fri, 31
+ Mar 2023 22:44:56 +0200
+Message-ID: <b8b3777b-ee6e-d90e-3365-5cb9c9d129fe@web.de>
+Date:   Fri, 31 Mar 2023 22:44:55 +0200
 MIME-Version: 1.0
-References: <20230330172052.10680-1-five231003@gmail.com>
-In-Reply-To: <20230330172052.10680-1-five231003@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 31 Mar 2023 22:38:31 +0200
-Message-ID: <CAP8UFD2Rq3Mh=X_g3_etHOje=G5hYgsFMO=6MuzgXUsysC+79A@mail.gmail.com>
-Subject: Re: [GSoC][Proposal] Unify ref-filter formats with other --pretty formats
-To:     Kousik Sanagavarapu <five231003@gmail.com>
-Cc:     git@vger.kernel.org, hariom18599@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.1
+Subject: Re: regex compilation error with --color-words
+To:     Diomidis Spinellis <dds@aueb.gr>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, demerphq <demerphq@gmail.com>,
+        Mario Grgic <mario_grgic@hotmail.com>
+References: <CAPig+cSNmws2b7f7aRA2C56kvQYG3w_g+KhYdqhtmf+XhtAMhQ@mail.gmail.com>
+ <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:e9X1CVn4hGaXZidzBW8tjC3ZpIZOItHVxkXZFwXQzzTh5GBV+l7
+ tqI3vWZqLBVtw3K+CaN1F/aPE0P1wOohohPlGiqsBXgPIp5WaPwNVKxJZ8tvLiuvP3EobEM
+ jktW+7hcVbdRtL9BLw6tIHpBZsarsbr5C4sUWAYPAuqDVYc0DsDvw7GPJmVfMHk7Dfp0AMi
+ ikVRoPlqRupYdAVLOq5cA==
+UI-OutboundReport: notjunk:1;M01:P0:3BX/n/gRgUQ=;FDlA9cez9nwWvHpeZDF+9zdIlV8
+ +4gKNNccGmpR202nPh/k0wE3/2sQNJ8cMrI7feGutKMQEt4Nhm0mY5JPbzpD78pbnqbgLH2VW
+ Nt4L3Duiw5plfM/BtHak3Pr/8MJW2liPulufg73ZWEoZBOLwYHa+o2xr9lsNYSFCX5raknPKO
+ tbJsWZUWUYjCuCbd0byzpOYekDwFPSihPpj//k7pdQxLGZBIAfhP6j8wdgG5lE3lPuzpKBr7E
+ 6pNfN8nbAbk1H5huAYAU/lNG+4T7yAAA91Y9RK1VDG9v0/WQNsCibLoH/lcMur/UMjWG/1RkC
+ LKAAwTk/PyfXdy0CmL7ood3yNjKvVpEqFabaAlhqnA9xuN4/QoGhhYsbqgQwwN9Yj83nArYul
+ Cy87jxD1nEicyQi+UTtPzhLY0EPGS0z1L76XOF2a0qvbNpG+T85dyKsO9knJmeoLZUoczBHUy
+ e0SD5eftfGK+kJ9cOF9wBrFS5buq5NSVjUnSEt0zlCQmbNXoTMCX0XcdH7dAxzW8zICVNNyC4
+ akyK8MBJkHjVK9X7D0w5C0sJoLFcqF7uFrxwnvAwShzqi6vil/wDjE736/xUmUiQ+Tnrb0Llt
+ LVlMn59ilUDs4GYP2QjzuSA/ZnxFgvwXQwLFPPa5jRiAbF19121XJPo+bVtLw8W7vEUrIDVI1
+ GBS8SXz/QFQH73D4ob79TJ3hWOYMkIVBExiVPRqZU37prT46IxKID9aECLhxcY7lZu+sa5yM0
+ S/IW/l8HKOqvGncZ/VHIG3pmwzmq0oMgrIgytdsE09M2nvUCVL+5iI72p02jV/oOe8PfNrkel
+ mzyICxmDg0VcsqMCt8L2EKgz+rOjg3Z1vwLrnqYwxIQkOmkS7O4yUuAD0YKyHEDnivyMHr/Xr
+ A0xTQVFmkimkNvBi1t61tYTWgCm9impqfrR0X2A8+mfApbPDQZsr3jlOSFX155TTosAkNe3F/
+ fpM+Uz8Ng0yUFWwdWRzRh4elFZQ=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Am 30.03.23 um 09:55 schrieb Diomidis Spinellis:
+> On 30-Mar-23 1:55, Eric Sunshine wrote:
+>> I'm encountering a failure on macOS High Sierra 10.13.6 when using
+>> --color-words:
+>
+> The built-in word separation regular expression pattern for the Perl lan=
+guage fails to work with the macOS regex engine.=C2=A0 The same also happe=
+ns with the FreeBSD one (tested on 14.0).
+>
+> The issue can be replicated through the following sequence of commands.
+>
+> git init color-words
+> cd color-words
+> echo '*.pl=C2=A0=C2=A0 diff=3Dperl' >.gitattributes
+> echo 'print 42;' >t.pl
+> git add t.pl
+> git commit -am Add
+> git show --color-words
 
-On Thu, Mar 30, 2023 at 7:21=E2=80=AFPM Kousik Sanagavarapu
-<five231003@gmail.com> wrote:
->
-> This proposal can also be read at
-> https://docs.google.com/document/d/1JBznA5n0WdWsbEskCeXxOnQuaa0urD89Vtprx=
-stLPzo/edit?usp=3Dsharing
+Or in Git's own repo:
 
-Thanks for your proposal!
+   $ git log -p --color-words --no-merges '*.c'
+   Schwerwiegend: invalid regular expression: [a-zA-Z_][a-zA-Z0-9_]*|[0-9]=
+[0-9.]*([Ee][-+]?[0-9]+)?[fFlLuU]*|0[xXbB][0-9a-fA-F]+[lLuU]*|\.[0-9][0-9]=
+*([Ee][-+]?[0-9]+)?[fFlL]?|[-+*/<>%&^|=3D!]=3D|--|\+\+|<<=3D?|>>=3D?|&&|\|=
+\||::|->\*?|\.\*|<=3D>|[^[:space:]]|[<C0>-<FF>][<80>-<BF>]+
+   commit 14b9a044798ebb3858a1f1a1377309a3d6054ac8
+   [...]
 
-[...]
+The error disappears when localization is turned off:
 
-> Pre GSoC
-> =3D=3D=3D=3D=3D=3D=3D=3D
-> I first got into Git=E2=80=99s source code around October, 2022 and have =
-been
-> going through code of topics that I found interesting whenever I had
-> some time away from my college work. The following are the patches that
-> I submitted, from earliest to the latest:
+   $ LANG=3DC git log -p --color-words --no-merges '*.c' >/dev/null
+   # just finishes without an error
 
-Thanks for these patches!
+The issue also vanishes when the "|[\xc0-\xff][\x80-\xbf]+" part is
+removed that the macros PATTERNS and IPATTERN in userdiff.c append.
 
-[...]
+So it seems regcomp(1) on macOS doesn't like invalid Unicode characters
+unless it's in ASCII mode (LANG=3DC).  664d44ee7f (userdiff: simplify
+word-diff safeguard, 2011-01-11) explains that this part exists to match
+a multi-byte UTF-8 character.  With a regcomp(1) that supports
+multi-byte characters natively they need to be specified differently, I
+guess, perhaps like this "[^\x00-\x7f]"?
 
-> Previous Work
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> There has been much work done in the past in this area. It majorly comes
-> from previous Outreachy interns and GSoC students.
+> Strangely, I haven't been able to reproduce the failure with egrep on an=
+y of the two platforms.
 >
-> Olga Telezhnaia <olyatelezhnaya@gmail.com> did work in this area in the
-> fields of `cat-file` and `ref-filter` as a part of her Outreachy Internsh=
-ip
-> titled =E2=80=9CUnifying Git=E2=80=99s format languages=E2=80=9D. This wo=
-rk and also the work done
-> after that helped take ref-filter to a more general setting. She blogged
-> about her work here
->
-> https://medium.com/@olyatelezhnaya
->
->
-> Hariom Verma <hariom18599@gmail.com> did work in this area as his GSoC
-> project titled =E2=80=9CUnify ref-filter formats with other --pretty form=
-ats=E2=80=9D.
-> This is the major work done in this area and the final report can be
-> read at
->
-> https://harry-hov.github.io/blogs/posts/the-final-report
->
-> This work is very useful as this serves as a kind of documentation
-> and starting point to work towards the goal.
->
-> ZheNing Hu <adlternative@gmail.com> has done major work under his GSoC
-> project titled =E2=80=9CUse ref-filter formats in git cat-file=E2=80=9D i=
-n the area of
-> git cat-file, but more relevant to this project are the changes done to
-> ref-filter. This work was a continuation of Olga=E2=80=99s work and made =
-some
-> changes to ref-filter logic. His final report can be read here
->
-> https://github.com/adlternative/adlternative.github.io/blob/gh-pages/blog=
-s/gsoc/GSOC-Git-Final-Blog.md
->
-> Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com> did work in
-> this area as a part of his Outreachy Internship titled =E2=80=9CUnify ref=
--filter
-> formats with other --pretty formats=E2=80=9D.
+> egrep '[[:alpha:]_'\''][[:alnum:]_'\'']*|0[xb]?[0-9a-fA-F_]*|[0-9a-fA-F_=
+]+(\.[0-9a-fA-F_]+)?([eE][-+]?[0-9_]+)?|=3D>|-[rwxoRWXOezsfdlpSugkbctTBMAC=
+>]|~~|::|&&=3D|\|\|=3D|//=3D|\*\*=3D|&&|\|\||//|\+\+|--|\*\*|\.\.\.?|[-+*/=
+%.^&<>=3D!|]=3D|=3D~|!~|<<|<>|<=3D>|>>|[^[:space:]]|[\xc0-\xff][\x80-\xbf]=
++' /dev/null
 
-Actually he has been working on this outside of Outreachy (and any
-other program) as he didn't fulfill the requirements for being
-accepted by Outreachy.
+No idea how to specify non-ASCII bytes in shell or regex.  '\xNN' does
+not seem to do the trick.  printf(1) interpretes octal numbers, though:
 
-> He got rid of the duplicate
-> implementation of the `signature` atom logic.
+   $ echo =C3=B6 | egrep $(printf "[\200-\377]")
+   egrep: illegal byte sequence
 
-Even if the end goal is to get rid of duplicate implementations, for
-now the ref-filter formats need to have equivalent atoms as what the
-pretty formats have. Otherwise it will not be possible to fully
-replace pretty formats using ref-filter formats. So for now the goal
-of Wilberforce's patch is to add `signature` atoms to the ref-filter
-formats.
+(The regex contains "illegal bytes" -- UTF-8 multi-byte sequences cut
+short; the "=C3=B6" is OK.)
 
-> This work can be read here
->
-> https://lore.kernel.org/git/20230311210607.64927-1-nsengiyumvawilberforce=
-@gmail.com/
->
-> Difficulties
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> A major difficulty is backward compatibility, so any changes made to
-> remove the duplicated logic would need to be done so very carefully.
-> Any new tests added must also be very precise so as to efficiently
-> test the changes that are made.
->
-> There are also minor difficulties, such as the older tests failing
-> because of the changes made, so the work will have to be in such a way
-> that those tests are successful and the duplicated logic is refactored.
->
-> The Plan
-> =3D=3D=3D=3D=3D=3D=3D=3D
-> I think Hariom=E2=80=99s final report of his GSoC project is a good start=
-ing
-> point for working on the project. The report lists the work which is
-> left in the =E2=80=9CWHATS LEFT?=E2=80=9D section, so I think the first i=
-ssue to work
-> on would be to look into why =E2=80=9CAround 30% of the log tests are fai=
-ling=E2=80=9D
-> and to work in the area of mbox/email formatting for commits. Work can
-> also be done to make pretty handle unknown formatting options.
-
-More details about these would be nice.
-
-> From here, I can work on the remaining portion of the formats
-
-Here too.
-
-> and can
-> remove the duplicated logic wherever possible, also writing tests to
-> ensure that everything works.
->
-> I can take the approach similar to what Hariom did before this.
-
-Could you give more details about what Hariom did that you would also
-like to do?
-
-> Estimated Timeline
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> Misc
-> April 5 to May 3
-> - Continue to work on git and get more familiar with the code.
->
-> - Find and fix stuff.
->
-> - Work on stuff that interests me.
->
-> Community Bonding
-> May 4 to May 28
-> - Get myself familiar with the code of ref-filter.{c, h} and
->   pretty.{c, h}.
->
-> - Communicate with my mentors about the approaches that can
->   be taken to get to the goal.
->
-> - Working on Hariom=E2=80=99s branches (mentioned in his final report)
->   and making changes on top of them.
-
-Can you give links to these branches and tell a bit about the changes
-you would like to make on top of each one?
-
-Best,
-Christian.
+Ren=C3=A9
