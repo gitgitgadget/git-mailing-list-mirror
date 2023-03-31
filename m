@@ -2,173 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 461C5C77B62
-	for <git@archiver.kernel.org>; Fri, 31 Mar 2023 14:28:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84127C761A6
+	for <git@archiver.kernel.org>; Fri, 31 Mar 2023 14:36:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232880AbjCaO2z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Mar 2023 10:28:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57590 "EHLO
+        id S232091AbjCaOgL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Mar 2023 10:36:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232873AbjCaO2s (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2023 10:28:48 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F5220339
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 07:28:20 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id s19so13535986pgi.0
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 07:28:20 -0700 (PDT)
+        with ESMTP id S232138AbjCaOgJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2023 10:36:09 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 933C02112
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 07:36:08 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id i5so90649896eda.0
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 07:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680272865;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iy7rFsyFGSuV21M2ANIDCBJ2HInd04X0eIKBpCpmouQ=;
-        b=dgsIHKq6Zwp4XgSJnHWSFy/OSfMvJ2luQS2JCHZKOk0wLTgLPdTRZsPrliOFP653Ao
-         ixuj4T/amg7Z1ip2HxUfWk5mMm5X3AseWOIeakP0JcmBquw2kmoZ0BPNaLmDcpl3D8M4
-         GqfnVHvwRD+QsQV2cCQhkTRugf/xtUELAtsN+mDEnWb9af922MNae54f25XVVLQGu/iF
-         sku+OSStJLrVh+mBDfXvUhlVGr+W0CFIaYNpmSJ29Dt6eKu6zxYgkd4sI1trQByWkzqU
-         B5ir286pFJ07dhCOuuWVKKcgt3uB/zS7LwesFSsaESROC+JYIWmiQnHyv6CdnD/5mnF+
-         Xazg==
+        d=gmail.com; s=20210112; t=1680273367;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kNHsVwxNim+XpsphhYeURsYRwWICi68Fh+dzJntucDw=;
+        b=QX3pRUxYVwFMAGTriGaVB96cBkNIwCOV7E3jZAF72QcoJZzn5zRtAYVGwsU18AV1/f
+         3S1R3M0kIe3ogSrxOwxJf8Plnb7/enaOUR2H/Nzo/DbXkEBTjoxo6yktMr8Qwt4lfkoM
+         QCcHuvZ30sAicuQYeg/WfXI2ue8eeeQr8XfMFOxG1DTWTemAAITWCcjGByfupHuKR6pT
+         yN2qU196UFhqNlpoAXNOHq7ee+1a9aQdj1lnxxl0VQ1uQbdlIzXOeY0619UJweekC69z
+         wFNLdRhpq8B/V2inx0M/1K3gu+6Fh2ROV7J9uoC6Wwvux9IrFa4/g7VTxtrM+mXBzHtW
+         Nu8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680272865;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iy7rFsyFGSuV21M2ANIDCBJ2HInd04X0eIKBpCpmouQ=;
-        b=0sfwrp9oBMgI9c29Hwlwjs8+/YVVvLXYZW7nNkEuP4e4uTW1heOOkDMkdcwQtcpBgN
-         PYHr4BsUpDPafRKs/Nx8rP7UK+TYyZHxdW7oOVp/OPNpH5goLaqS53CiEO1kTySmLMdT
-         8gqbXtaCSxkijPq5icG2jejE0QZX1ino6ZfbCdSlx9AMXsxZZ/UHl+DtnxQVgZRTHzOB
-         ULAYOAtWRwJd4ognOJcbgnnEBGo0+Gscp8X94T8Z1UODaBPpLXUwVe8bdlYGjaHICw3n
-         mo7CgOA/OvHk6PYzvuBTHlnHIrIdkshNyKm//ZYjX0UmaBiwVoBCJYyD+BFxEPEmX6s9
-         0VGg==
-X-Gm-Message-State: AAQBX9fIoCV5D9osnmHBy0aKvAgRy1+211myIt6Q26W04+wDlKX2VLgc
-        93IAUbUhRsFUk0U+/NUHGXXlmMZgqb/yWUM7
-X-Google-Smtp-Source: AKy350btWD+R9g5hCMKoIYefvm8UF2DvQm02QyEODElVC70yf3ooBB3ueFqRm3hw7QKH7MiSbgi1gw==
-X-Received: by 2002:a05:6a00:1c91:b0:5e4:f141:568b with SMTP id y17-20020a056a001c9100b005e4f141568bmr6338364pfw.3.1680272865511;
-        Fri, 31 Mar 2023 07:27:45 -0700 (PDT)
-Received: from localhost.localdomain ([2405:201:e020:20ea:fb6f:c0b4:a709:2d74])
-        by smtp.gmail.com with ESMTPSA id m14-20020aa78a0e000000b006260526cf0csm1885954pfa.116.2023.03.31.07.27.43
+        d=1e100.net; s=20210112; t=1680273367;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kNHsVwxNim+XpsphhYeURsYRwWICi68Fh+dzJntucDw=;
+        b=mxTGGjGiWFxDpatibwjQiHaEkCGlPONsIHH2JkjKL+S4bnaGKYaAvxlX0vqYg3hAaA
+         NZcFQoK9bthwaCJtyt9PfgMajlqZIbneYItQQQO2GjqTpTgKboapxCkwiFZWBZFedsIr
+         FZas9Ux1jkGnzXgVo4wRYkY1NH6fu8iIJy4nJmzRk8RCieRKJ5NlTk+Qoj/B+TLlSiLK
+         2HXOYgQE47rrlA9p5EF45B/IMl5kg8PpCKDP7VuFkU/nb6GpmP+V/vhTE/AKt/yHMpBz
+         fXGtJ/kQXpzM2168efq2HXyBnfEzXGNhDi9E/mADFJZ1qRGWKyAtSJgvBkthUpDlph9T
+         Hg1A==
+X-Gm-Message-State: AAQBX9cRk5mLRc0oqeE5RmL+3oQnuR96hSMk6byaWVzXeKLB8xXmt8Yp
+        57VGHeb1dEfL80QSrNeOZlH395vKZGDiin3N
+X-Google-Smtp-Source: AKy350Yp5Yg3Pn/NmrbxbopYIWq/mWlC7edEvTeCpkGzCOyZcm4aNIKmq/p5ORmxp6yXofFK2dn8RA==
+X-Received: by 2002:a05:6402:1055:b0:501:d190:b362 with SMTP id e21-20020a056402105500b00501d190b362mr25263919edu.27.1680273366955;
+        Fri, 31 Mar 2023 07:36:06 -0700 (PDT)
+Received: from titov.fritz.box ([45.88.97.21])
+        by smtp.gmail.com with ESMTPSA id h27-20020a50cddb000000b004c19f1891fasm1114353edj.59.2023.03.31.07.36.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Mar 2023 07:27:45 -0700 (PDT)
-From:   Raghul Nanth A <nanth.raghul@gmail.com>
+        Fri, 31 Mar 2023 07:36:06 -0700 (PDT)
+From:   Andrei Rybak <rybak.a.v@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Raghul Nanth A <nanth.raghul@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>
-Subject: [GSOC][PATCH] describe: enable sparse index for describe
-Date:   Fri, 31 Mar 2023 19:57:38 +0530
-Message-Id: <20230331142738.52824-1-nanth.raghul@gmail.com>
+Cc:     Brandon Williams <bwilliams.eng@gmail.com>,
+        Carl Worth <cworth@cworth.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 2/2] t2107: fix mention of the_index.cache_changed
+Date:   Fri, 31 Mar 2023 16:36:04 +0200
+Message-Id: <20230331143604.82040-2-rybak.a.v@gmail.com>
 X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230331143604.82040-1-rybak.a.v@gmail.com>
+References: <20230331143604.82040-1-rybak.a.v@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add usage and performance tests for describe
+Commit [1] added a test to t2107-update-index-basic.sh with a comment
+that mentions macro "active_cache_changed".  Later in [2], the macro was
+removed and its usage in function cmd_update_index in file
+builtin/update-index.c was replaced with "the_index.cache_changed".
 
-git describe compares the index with the working tree when (and only
-when) it is run with the "--dirty" flag. This is done by the
-run_diff_index() function. The function has been made aware of the
-sparse-index in the series that led to 8d2c3732 (Merge branch
-'ld/sparse-diff-blame', 2021-12-21). Hence we can just set the
-requires-full-index to false for "describe".
+Fix the outdated comment in file t2107-update-index-basic.sh.
 
-Performance metrics
+[1] fa137f67a4 (lockfile.c: store absolute path, 2014-11-02)
+[2] dc594180d9 (cocci & cache.h: apply variable section of "pending"
+    index-compatibility, 2022-11-19)
 
-  Test                                                     HEAD~1            HEAD
-  -------------------------------------------------------------------------------------------------
-  2000.2: git describe --dirty (full-v3)                   0.08(0.09+0.01)   0.08(0.06+0.03) +0.0%
-  2000.3: git describe --dirty (full-v4)                   0.09(0.07+0.03)   0.08(0.05+0.04) -11.1%
-  2000.4: git describe --dirty (sparse-v3)                 0.88(0.82+0.06)   0.02(0.01+0.05) -97.7%
-  2000.5: git describe --dirty (sparse-v4)                 0.68(0.60+0.08)   0.02(0.02+0.04) -97.1%
-  2000.6: echo >>new && git describe --dirty (full-v3)     0.08(0.04+0.05)   0.08(0.05+0.04) +0.0%
-  2000.7: echo >>new && git describe --dirty (full-v4)     0.08(0.07+0.03)   0.08(0.05+0.04) +0.0%
-  2000.8: echo >>new && git describe --dirty (sparse-v3)   0.75(0.69+0.07)   0.02(0.03+0.03) -97.3%
-  2000.9: echo >>new && git describe --dirty (sparse-v4)   0.81(0.73+0.09)   0.02(0.01+0.05) -97.5%
-
-Signed-off-by: Raghul Nanth A <nanth.raghul@gmail.com>
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
 ---
- builtin/describe.c                       |  2 ++
- t/perf/p2000-sparse-operations.sh        |  3 +++
- t/t1092-sparse-checkout-compatibility.sh | 30 ++++++++++++++++++++++++
- 3 files changed, 35 insertions(+)
+ t/t2107-update-index-basic.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 5b5930f5c8..7ff9b5e4b2 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -654,6 +654,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 			int fd, result;
- 
- 			setup_work_tree();
-+			prepare_repo_settings(the_repository);
-+			the_repository->settings.command_requires_full_index = 0;
- 			repo_read_index(the_repository);
- 			refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED,
- 				      NULL, NULL, NULL);
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 3242cfe91a..db7887470f 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -43,6 +43,7 @@ test_expect_success 'setup repo and indexes' '
- 	done &&
- 
- 	git sparse-checkout init --cone &&
-+	git tag -a v1.0 -m "Final" &&
- 	git sparse-checkout set $SPARSE_CONE &&
- 	git checkout -b wide $OLD_COMMIT &&
- 
-@@ -125,5 +126,7 @@ test_perf_on_all git checkout-index -f --all
- test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
- test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
- test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/*"
-+test_perf_on_all git describe --dirty
-+test_perf_on_all 'echo >>new && git describe --dirty'
- 
- test_done
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 801919009e..2b46fb2a48 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1514,6 +1514,36 @@ test_expect_success 'sparse-index is not expanded: stash' '
- 	ensure_not_expanded stash pop
- '
- 
-+test_expect_success 'describe tested on all' '
-+	init_repos &&
-+
-+	# Add tag to be read by describe
-+
-+	run_on_all git tag -a v1.0 -m "Version 1" &&
-+	test_all_match git describe --dirty &&
-+	run_on_all rm g &&
-+	test_all_match git describe --dirty
-+'
-+
-+
-+test_expect_success 'sparse-index is not expanded: describe' '
-+	init_repos &&
-+
-+	# Add tag to be read by describe
-+
-+	git -C sparse-index tag -a v1.0 -m "Version 1" &&
-+
-+	ensure_not_expanded describe --dirty &&
-+	echo "test" >>sparse-index/g &&
-+	ensure_not_expanded describe --dirty &&
-+	echo "v1.0-dirty" >actual &&
-+
-+	# Check describe on dirty work tree
-+
-+	test_cmp sparse-index-out actual &&
-+	ensure_not_expanded describe
-+'
-+
- test_expect_success 'sparse index is not expanded: diff' '
- 	init_repos &&
- 
+Found this by while investigating the root cause for the first patch in this
+series.
+
+diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+index 07e6de84e6..89b285fa3a 100755
+--- a/t/t2107-update-index-basic.sh
++++ b/t/t2107-update-index-basic.sh
+@@ -83,7 +83,7 @@ test_expect_success '.lock files cleaned up' '
+ 	cd repo &&
+ 	git config core.worktree ../../worktree &&
+ 	# --refresh triggers late setup_work_tree,
+-	# active_cache_changed is zero, rollback_lock_file fails
++	# the_index.cache_changed is zero, rollback_lock_file fails
+ 	git update-index --refresh --verbose >out &&
+ 	test_must_be_empty out &&
+ 	! test -f .git/index.lock
 -- 
 2.40.0
 
-As for the previous questions, yes I am intereseted in GSOC. I had
-missed the part regarding the micro projects when I was going through
-the requirements. Sorry about that. Would I be required to make one now?
