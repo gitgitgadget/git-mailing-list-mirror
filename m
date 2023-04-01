@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 507E2C77B72
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72EE3C77B71
 	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 21:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230152AbjDAV3H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Apr 2023 17:29:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60060 "EHLO
+        id S230162AbjDAV3L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Apr 2023 17:29:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230090AbjDAV3F (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2023 17:29:05 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 890B493FB
+        with ESMTP id S230113AbjDAV3G (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2023 17:29:06 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB4ED93C2
         for <git@vger.kernel.org>; Sat,  1 Apr 2023 14:29:04 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id o32so14908634wms.1
+Received: by mail-wm1-x329.google.com with SMTP id u11-20020a05600c19cb00b003edcc414997so15916499wmq.3
         for <git@vger.kernel.org>; Sat, 01 Apr 2023 14:29:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680384542;
+        d=gmail.com; s=20210112; t=1680384543;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eRu4JBrQ9k+aFnaTKf0xWSTGf6TU8UWVGqC92cgpg48=;
-        b=A1jbdTKQB9fbrB5X3B4Jj5sVyZAQNPOj9c7w5NGhmqSKoZFIWlwILcWVrpMBPcsbP2
-         yf7fSwI6wAnmWJUdW9xYUIn/SLp1PHz+AjXodKxf6fT0UyOr0/TJkOSGTr5m7ek2cbnw
-         R+e4nNo5bY8DhvDGW7l+i1pk54L2rfC7qyexX2h0zGijSZfX5m0X72yUpgWPjxzJ+K66
-         0e2PnS95E+Vcw3gzU+iLRxUX0SOlngoaRWvt966Y6DBL3m8zJUwD2tvz47JZfQketxTo
-         /C5G5KS9RHqPSMRujy7CWqgUDbWV5kdfZZRJQpu1Mru86Q6u5biSJ1/tYs+AcbyM28CD
-         yYhg==
+        bh=pHlsklKDtGHBtdf2RNlEwL2fSwX7wLVYtDR4NomFA70=;
+        b=HE+wkz6bvcwtHL2FhuP3BKjC+XBy+f6s25fabYBrSfjtStrb/RE5zHR5J8KuC7GR9G
+         Zc/sl/yroElQ/xsKZNZeFkQCfGeRRkCJpewQhnBUkWLWmkSkCBf9aSkI+xxxsdmV2soD
+         FpAlHnD8OapbpfuRnbeYj0gdQINZhpj9PxxTdojb6Jr7AQhXsXzfCJjfr0zeuVHiHgsK
+         vK/5dBKtXhC23bgmVxdJZbNnanXeIRew4gtGOsMgdsXzC+KCrIvEXB0w0BMdVuIF2gYQ
+         tcHXqMJMrMFCrKekez/WXP+PAm9CcJLDxVVCaipLP0+EmgK82jqQx0OcZTMt/Tqf31nY
+         o+wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680384542;
+        d=1e100.net; s=20210112; t=1680384543;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eRu4JBrQ9k+aFnaTKf0xWSTGf6TU8UWVGqC92cgpg48=;
-        b=ouoD/Yy1c7yAAKWXXU2Mukp4lJ1qlATof/j2jttRwq+qrdEYkdzEyqXGRtt5NPzKRs
-         VGnY5n3jMIFjK7OlYA1AhlzeycPHFIBhSp9zcgh+qdoSpUpkJQCOtroEtrG165BW2kO2
-         zfXnHjLg7V33RTO59h8z9WQ0B+4yVd8rwUTYcuBrjZKoyuM/SjQ8RQ4kTmZ7AW7Kzu6U
-         7Nmhz2T2g+rWloq1b1tWZy27708VaZAyNcxCrZco5jpZavrviXFodAszd+GpZSthbmyY
-         f6Gwxa4UytpapC0TNxTV9gjYAmM3jMIzxsH1H1SnvDOYXTB2tJEgMNS7mDJli+JvZwMk
-         15ew==
-X-Gm-Message-State: AO0yUKX+6SpzhPQUiZuXZG0XK/YeqPLHvePmhhJXtczs8nykBDoJqfun
-        DSgRPP4LNs1O6kbHn+6FgX/pyfiU5egneq2+
-X-Google-Smtp-Source: AK7set8e0V5dL9m0h5AlRz0uVKCRucWLLdeHLfUPiXqxU+abDzrRF8flq6J3jnVVFgkERouGViFhDg==
-X-Received: by 2002:a1c:770b:0:b0:3ed:4b0f:5378 with SMTP id t11-20020a1c770b000000b003ed4b0f5378mr23351175wmi.27.1680384542275;
+        bh=pHlsklKDtGHBtdf2RNlEwL2fSwX7wLVYtDR4NomFA70=;
+        b=pAQd459qUpkbYYDlXkKla+tF686Y6DhUnw7PkCnuDbR8NN2UU9RrEdYH4g/QxEp4qG
+         tBp+VITM1c2rCKnebkLD/zFODesJP7TybjmvfunONBzzMDIKGbZ+40wRbj8791CX41I1
+         sfvaArg4j92M1E6WpgKKTwqmy6xEcx6y+nwOgrs/fnXo8oFVcolFaLAg3pakiRI6BjMy
+         Yh7mxteEL2iNWvJbRnAdWOZmY769yfBqSuaVd0frKr4bXskFMW0Vv5mme6dHVausN6Hm
+         zerM9ucX07s5Pqwd9l3M0DY/y1mia2dfQR9Cm0duWs0n3cDGfwHfUky+IoyNQpiT1TCJ
+         ApTA==
+X-Gm-Message-State: AAQBX9fDACWlCys63Q624qrE9elaeCPoPc09SAvpTvqeUtu8PKYbrJKk
+        0zrym4aW1051SV8Bg31q+uMEi+uUwwIpny+N
+X-Google-Smtp-Source: AKy350Yfg3S5oioFi39u8PCYckFmAuvFkejZg4qCAsJ4RhOGsjthW27CD5BrdCiCPVYKbZ47gdaFmg==
+X-Received: by 2002:a05:600c:cc:b0:3f0:3049:b216 with SMTP id u12-20020a05600c00cc00b003f03049b216mr9937192wmm.28.1680384542818;
         Sat, 01 Apr 2023 14:29:02 -0700 (PDT)
 Received: from titov.fritz.box ([212.102.57.24])
-        by smtp.gmail.com with ESMTPSA id i12-20020a5d55cc000000b002c3f81c51b6sm5738364wrw.90.2023.04.01.14.29.01
+        by smtp.gmail.com with ESMTPSA id i12-20020a5d55cc000000b002c3f81c51b6sm5738364wrw.90.2023.04.01.14.29.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 14:29:01 -0700 (PDT)
+        Sat, 01 Apr 2023 14:29:02 -0700 (PDT)
 From:   Andrei Rybak <rybak.a.v@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -57,9 +57,9 @@ Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
         Martin Stenberg <martin@gnutiken.se>,
         =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v1 2/6] t1300: fix config file syntax error descriptions
-Date:   Sat,  1 Apr 2023 23:28:54 +0200
-Message-Id: <20230401212858.266508-3-rybak.a.v@gmail.com>
+Subject: [PATCH v1 3/6] t1300: don't create unused files
+Date:   Sat,  1 Apr 2023 23:28:55 +0200
+Message-Id: <20230401212858.266508-4-rybak.a.v@gmail.com>
 X-Mailer: git-send-email 2.40.0
 In-Reply-To: <20230401212858.266508-1-rybak.a.v@gmail.com>
 References: <20230401212858.266508-1-rybak.a.v@gmail.com>
@@ -70,42 +70,51 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Three tests in t1300-config.sh check that "git config --get" barfs when
-the config file contains various syntax errors: key=value pair without
-equals sign, broken section line, and broken value string.  The sample
-config files include a comment describing the kind of broken syntax.
-This description seems to have been copy-pasted from the "broken section
-line" sample to the other two samples.
+syntax errors are present in the config file.  The tests redirect
+standard output and standard error of "git config --get" to files,
+"actual" and "error" correspondingly.  They assert presence of an error
+message in file "error".  However, these tests don't use file "actual"
+for assertions.
 
-Fix descriptions of broken config file syntax in samples used in
-t1300-config.sh.
+Don't redirect standard output of "git config --get" to file "actual" in
+t1300-config.sh to avoid creating unnecessary files.
 
 Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
 ---
- t/t1300-config.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t1300-config.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 2575279ab8..d566729d74 100755
+index d566729d74..8ac4531c1b 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -1571,7 +1571,7 @@ test_expect_success 'git config --edit respects core.editor' '
- # malformed configuration files
- test_expect_success 'barf on syntax error' '
- 	cat >.git/config <<-\EOF &&
--	# broken section line
-+	# broken key=value
+@@ -1575,7 +1575,7 @@ test_expect_success 'barf on syntax error' '
  	[section]
  	key garbage
  	EOF
-@@ -1591,7 +1591,7 @@ test_expect_success 'barf on incomplete section header' '
+-	test_must_fail git config --get section.key >actual 2>error &&
++	test_must_fail git config --get section.key 2>error &&
+ 	test_i18ngrep " line 3 " error
+ '
  
- test_expect_success 'barf on incomplete string' '
- 	cat >.git/config <<-\EOF &&
--	# broken section line
-+	# broken value string
+@@ -1585,7 +1585,7 @@ test_expect_success 'barf on incomplete section header' '
+ 	[section
+ 	key = value
+ 	EOF
+-	test_must_fail git config --get section.key >actual 2>error &&
++	test_must_fail git config --get section.key 2>error &&
+ 	test_i18ngrep " line 2 " error
+ '
+ 
+@@ -1595,7 +1595,7 @@ test_expect_success 'barf on incomplete string' '
  	[section]
  	key = "value string
  	EOF
+-	test_must_fail git config --get section.key >actual 2>error &&
++	test_must_fail git config --get section.key 2>error &&
+ 	test_i18ngrep " line 3 " error
+ '
+ 
 -- 
 2.40.0
 
