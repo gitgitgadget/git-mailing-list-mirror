@@ -2,107 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB917C77B6E
-	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 21:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 121DBC6FD1D
+	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 21:31:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230113AbjDAV3S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Apr 2023 17:29:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60108 "EHLO
+        id S229711AbjDAVbO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Apr 2023 17:31:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230153AbjDAV3H (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2023 17:29:07 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08FB1A26A
-        for <git@vger.kernel.org>; Sat,  1 Apr 2023 14:29:07 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id j18-20020a05600c1c1200b003ee5157346cso17515153wms.1
-        for <git@vger.kernel.org>; Sat, 01 Apr 2023 14:29:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680384545;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wPA6VephNu4ae9tYi/0aHGAe7CNAeibjD4ifce3lHUg=;
-        b=kk3teSVZPWiIVX2xSPVMH4p2juVQgA2138L1TwdMhtaMf/AbuDUS/Fa+EgHFhQKV8V
-         UgqahSAdtF5qaCJakHTNzIT0wjwket+998L4uR+oMsfRppq6q608U5NFLAeB5u9QIHKa
-         R2Bb0PWidUjaV4xGpLzeDl1Fi+z4d64JPiWPmogMx6HFnhWmfTcRKoNw3ABNd0COB4mv
-         iQUTYXPdWTaqWdbQlNmsDtVLoN+aVQ+bE/PHgEynzl3awd3Bgj3ax+gmpIGcxPC9EFFw
-         NPO0QaFDbGe1LlQ/LVnymTAJLpjHx2CiJS1FL9QcWTDdUn7rNkLIFXs/wr2PM3RFabxf
-         v3ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680384545;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wPA6VephNu4ae9tYi/0aHGAe7CNAeibjD4ifce3lHUg=;
-        b=Hdxp/SfLXgPbzsniXJ+SjxU6vGVVU5+l4wTnSbcPavTiZbjxLQNlIOSRqIKJt3fUhX
-         y+I4CpJTpep46+uBUkdQo0dpjTdJTopchCRry7e0y+0jZtLcIRRiKkrikWaFYSGK1KUv
-         e7lYp6Brevz3J5zOuOUq9sM4oEJ4a1caQeh2tr/8twAEArBMPuGvfKlvsgGbY9LvP0Ay
-         iXyBzsG2yJzvHHzEkLVq/6AKX4CoPqVYToVCfmp8MyWFfk8MqAsP6qmZR26yy6Dq9AQx
-         h1uwBCInRx1xqJnvPElh+jyZ/UGI66efusO+vnzYgHtrlpLztLooXwaPRZ5YsH4FfJ27
-         8naw==
-X-Gm-Message-State: AAQBX9fKL2E+I6UYSz4OK2p/XlSPpIyaCQ+dhp0EnLp4+N6aBACOF/kq
-        kN7bTPmzq1AhFUpV6uPth4VS0suFbmMtw3/o
-X-Google-Smtp-Source: AKy350ZxYbkYAfps72rvqE9NJDp9giR7xgfHaSyVjiQs/EnRXOcyxu45OYiTT85Joey/wmkowcKyGg==
-X-Received: by 2002:a7b:c001:0:b0:3f0:3d41:bda3 with SMTP id c1-20020a7bc001000000b003f03d41bda3mr6100343wmb.5.1680384545189;
-        Sat, 01 Apr 2023 14:29:05 -0700 (PDT)
-Received: from titov.fritz.box ([212.102.57.24])
-        by smtp.gmail.com with ESMTPSA id i12-20020a5d55cc000000b002c3f81c51b6sm5738364wrw.90.2023.04.01.14.29.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 14:29:04 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
+        with ESMTP id S229379AbjDAVbM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2023 17:31:12 -0400
+X-Greylist: delayed 2446 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 01 Apr 2023 14:31:05 PDT
+Received: from pulsar.hadrons.org (2.152.192.238.dyn.user.ono.com [2.152.192.238])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE1722B0E4
+        for <git@vger.kernel.org>; Sat,  1 Apr 2023 14:31:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=hadrons.org
+        ; s=201908; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:
+        Subject:To:From:Date:From:Reply-To:Subject:Cc:Content-ID:Content-Description:
+        In-Reply-To:References:X-Debbugs-Cc;
+        bh=ETlUwqOfJtzggNF6vImy1akm49HP0OsYzo2yW5O+rOk=; b=V6gXjR/kg82CM2S3EyJctdCcvT
+        btaNWgb+kLsbuODE06CAAG9kCgTZOczkWJuj4sLL/qnuP7eE+n+UmJyMmqhjMbuFIo3IRqx5mVd67
+        GEUZoQyU0X+cHQWnNkGJOxfcTLyQRO448Nx/EUQCBY0BZvX+RVUgn4GIphh2T8S70+BgTE7pi6/Qu
+        XVzWNoqz24oFbeexPzwwb89EqZ5MTVkpwZ3D8HqpEH/7nJwRRMvA134YsCI6rbCMj2Ea7jscGSpAi
+        Os+zEZjFJF7k5yQYk0vEyIrtypyTobfmyEX/cQCglA59i7k67gQI3HidoWyg6vi7qVHp1nuJ99npV
+        oGZYd53g==;
+Received: from guillem by pulsar.hadrons.org with local (Exim 4.96)
+        (envelope-from <guillem@hadrons.org>)
+        id 1piiAz-0007u3-0W
+        for git@vger.kernel.org;
+        Sat, 01 Apr 2023 22:50:17 +0200
+Date:   Sat, 1 Apr 2023 22:50:16 +0200
+From:   Guillem Jover <guillem@hadrons.org>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Martin Stenberg <martin@gnutiken.se>,
-        =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v1 6/6] t2019: don't create unused files
-Date:   Sat,  1 Apr 2023 23:28:58 +0200
-Message-Id: <20230401212858.266508-7-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230401212858.266508-1-rybak.a.v@gmail.com>
-References: <20230401212858.266508-1-rybak.a.v@gmail.com>
+Subject: Add a way to disable =?utf-8?Q?=C2=ABgit_c?= =?utf-8?B?bGVhbsK7?=
+ per repo
+Message-ID: <ZCiZCM+AAUnjp4Ml@thunder.hadrons.org>
+Mail-Followup-To: Guillem Jover <guillem@hadrons.org>, git@vger.kernel.org
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tests in t2019-checkout-ambiguous-ref.sh redirect two invocations of
-"git checkout" to files "stdout" and "stderr".  Several assertions are
-made using file "stderr".  File "stdout", however, is unused.
+Hi!
 
-Don't redirect standard output of "git checkout" to file "stdout" in
-t2019-checkout-ambiguous-ref.sh to avoid creating unnecessary files.
+[ I initially filed this in the Debian bug tracking system as it
+  seemed to me that filing a feature request on a mailing list had
+  a great potential to get lost. But I guess I can try anyway. :) ]
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
- t/t2019-checkout-ambiguous-ref.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+For repositories that are not tracking code, say when storing your ~/
+under git, or to store say collections of data files such as photos,
+texts or similar, you might end up using .gitignore to unclutter
+«git status». The problem is that both ignored and non-ignored
+untracked files can be “precious”, as in not version-tracked by losing
+them might imply data loss.
 
-diff --git a/t/t2019-checkout-ambiguous-ref.sh b/t/t2019-checkout-ambiguous-ref.sh
-index 2c8c926b4d..9540588664 100755
---- a/t/t2019-checkout-ambiguous-ref.sh
-+++ b/t/t2019-checkout-ambiguous-ref.sh
-@@ -16,7 +16,7 @@ test_expect_success 'setup ambiguous refs' '
- '
- 
- test_expect_success 'checkout ambiguous ref succeeds' '
--	git checkout ambiguity >stdout 2>stderr
-+	git checkout ambiguity 2>stderr
- '
- 
- test_expect_success 'checkout produces ambiguity warning' '
-@@ -37,7 +37,7 @@ test_expect_success 'checkout reports switch to branch' '
- '
- 
- test_expect_success 'checkout vague ref succeeds' '
--	git checkout vagueness >stdout 2>stderr &&
-+	git checkout vagueness 2>stderr &&
- 	test_set_prereq VAGUENESS_SUCCESS
- '
- 
--- 
-2.40.0
+Accidentally running «git clean -xdf» or «git clean -Xdf» might be
+catastrophic there. But for the ~/ case (or any such tracking in a
+parent of git trees, this is even worse, as an accidental «cd» too
+much while in some code repo might end up accidentally recursively
+running those «git clean» on an unexpected working tree and all of
+its subdirectories (except for other git working trees).
 
+I tend to be rather careful with this, but I recently had a scare
+where this happened to me, and lost a few (not essential) files before
+I noticed and Ctrl-C'd git. I then set out to try to disable git clean
+on these situations, but I see no way to do that as aliases do not work
+with built-ins, and adding a ~/bin/git wrapper to check for this seems
+extremely cumbersome.
+
+It would thus be nice if there was an option that could be set to
+completely disable «git clean» on a repo. I guess it might make sense
+to disable for any untracked file, or perhaps for ignored and/or
+non-ignored. So that these kind of work trees could be protected.
+
+Thanks,
+Guillem
