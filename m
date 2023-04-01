@@ -2,97 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50B52C76196
-	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 15:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3320DC6FD1D
+	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 16:27:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229708AbjDAPxt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Apr 2023 11:53:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36618 "EHLO
+        id S229573AbjDAQ1O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Apr 2023 12:27:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbjDAPxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2023 11:53:48 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AEA11B7D5
-        for <git@vger.kernel.org>; Sat,  1 Apr 2023 08:53:47 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id j13so23478293pjd.1
-        for <git@vger.kernel.org>; Sat, 01 Apr 2023 08:53:47 -0700 (PDT)
+        with ESMTP id S229461AbjDAQ1N (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2023 12:27:13 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51B50E06D
+        for <git@vger.kernel.org>; Sat,  1 Apr 2023 09:27:12 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id z19so24253834plo.2
+        for <git@vger.kernel.org>; Sat, 01 Apr 2023 09:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680364427;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Pz5v5ucPKLSRyT92YABygffvMOngad4UQfZSgjtDIQQ=;
-        b=E6ff5LYyk169ynOCiNybbNy4Xpz7vWLEB/XuQ7myd42ipTtKQSLDW6XpTHRzjBVU1K
-         Ewc2c2cwzZQ3Q57yu02oboCEaGWf1V0Kp/eaJzEB7Yw07mg7uG6Ci6lBy/WP45WP3+DV
-         tpqg8syznfUtmVEbp+RH0T2+kHyuLg7RgWu41TFRTFY80gXgw8Iq3HIAQAkUInQma/+K
-         D/DItWG/3/2pIVlHjt5aY9/+rI8dX/YlLk56krAECWtD6/5K4Htb3nkZ7QHopTCXnpbq
-         Lm4rmSdY1JbqY+rj0wJpp5LurnDXvVrK/xdWVxZfVFatPIyNXNkknQJ8fnY/esw2snMz
-         ngbA==
+        d=gmail.com; s=20210112; t=1680366432;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dmI52c3GkWAvOYARNhQsD1KwZFxDbMgxSNOiAPuTDAo=;
+        b=WXG5FJJOAZp+Dj4HA4z85DGHA96H2fKn+dTAaI53xTqvAwbdpTEp6RyDYETnxTNnZg
+         AjEJ2FJEkjH4zEIQ/BBmjUEXYwPmYNxZj6zkInMyucjMvr6fg3MwijHXN1MlEOLJH1Do
+         PNqj8qWo5CaxWgsb0/oosY1owKuCwQ/HHtuKrrjkOOYSzb36RWsGgBquQoe/KNzjnflC
+         yacgBDX2oBJszYMN/ao0v11KvCcTsEpSU0pXyW4wSahXugX29IkqA+VJM0fSFZf+Dnh9
+         fcQRfckFK/v6asuYasW8jOcSnLmV+JEr1s/95ob6HmOb6TflM1X9lP2hpveAAOab4Xbo
+         60WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680364427;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Pz5v5ucPKLSRyT92YABygffvMOngad4UQfZSgjtDIQQ=;
-        b=psEZDhJ9NMrRqq6aSavAN0sy1ysVPVHxl0W8uZzsQvULKIWHmZ3zF74j5QjIKtrCBj
-         xsZgpFJ9sxRLio6akoJEWJHT8Hsp7nbqZ7fG8woSXZXU4RJvRSYq5ToV5VoPPq4wHcOj
-         Fh1G6zKDs3kuw/Gd7fDj9zCbmiQfokJmYmWp9dkCt+fE1Bg2MHUrbCrjYBe0YWwKKr/c
-         YvbVAaHeNmHH4RRhXkKRxZYrRFmOpe207T1Vi7lCtV3lq6Or88yekhzq0Nx8hAYSknWd
-         fPFZ4Ere2XB6X0C6Awdz89ifTRNSLpT3NYJxl2gyLykRA8S3amtijAfAb2+tXjH/juVK
-         Hcgg==
-X-Gm-Message-State: AO0yUKUh65IfZLLIKlA5CBjSWm4N0zZnobQXUe8xDSh2mFBkxEXKF9nT
-        LJxZYf16sm6zXmFbsSifzXU=
-X-Google-Smtp-Source: AK7set870AJr93ilLaE8dJShr1tgXRzLVWZGV5DBHi7H/1kfDh+kbZ22drhuuS1Xt8DAwqbnF2xEoA==
-X-Received: by 2002:a05:6a20:c41f:b0:db:6237:e76 with SMTP id en31-20020a056a20c41f00b000db62370e76mr25521760pzb.15.1680364426751;
-        Sat, 01 Apr 2023 08:53:46 -0700 (PDT)
-Received: from localhost.localdomain (121.CH37014.cyberhome.ne.jp. [126.249.181.121])
-        by smtp.gmail.com with ESMTPSA id e1-20020a6558c1000000b00513a9b29634sm3329058pgu.27.2023.04.01.08.53.45
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 01 Apr 2023 08:53:46 -0700 (PDT)
-From:   ryicoh <ryicoh@gmail.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, gitgitgadget@gmail.com, ryicoh@gmail.com
-Subject: Re: [PATCH] doc: add that '-' is the same as '@{-1}'
-Date:   Sun,  2 Apr 2023 00:53:42 +0900
-Message-Id: <20230401155342.21230-1-ryicoh@gmail.com>
-X-Mailer: git-send-email 2.37.0 (Apple Git-136)
-In-Reply-To: <xmqqlejchpct.fsf@gitster.g>
-References: <xmqqlejchpct.fsf@gitster.g>
+        d=1e100.net; s=20210112; t=1680366432;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dmI52c3GkWAvOYARNhQsD1KwZFxDbMgxSNOiAPuTDAo=;
+        b=S+XNqrLb7Q8D63TjDuTYn4BcADf9irQNzBvUj8BPH1FrKjMw57moxeA1WkJkLhL9LU
+         WQXtTv1nI0e35SwJGOw75vIf0ufu4yHQwz2k0p2KB83efdzyeWGUr+MfKIk0dzIzNU//
+         EHxw/cifSci8UwljaUJ2OJ5iPIaQINbhN9OOwCvTkiXWBLSR+OS9yKdjcdoV4J/zMSc5
+         qjrxjVQph6mTj3uK1hannlPILxQbi/DfEsfEPTxg45+n3aP4NJEwPP+1arySTfRdICrs
+         8YGRyYVbCC2JN5w/XBlHbCUIXARwoIge72JSNU/h5EMHmDY1DVQALGoDa3Eu7h8CulRE
+         cGgA==
+X-Gm-Message-State: AO0yUKVr7+7Re30lOI2XZLi6SpvohcjRDtm+k2+Ie9BnEWQuK/CGxaqw
+        keA6xeQJ0Pgoop5IagV43z8=
+X-Google-Smtp-Source: AK7set+iukcCweftXXj6KAI/Im3DNkBxkXN8RMbxdLe53LkxEL1YgxcADNW1PsESd7JkPHaZ3+OU/g==
+X-Received: by 2002:a05:6a20:c10f:b0:d9:84d2:7a9f with SMTP id bh15-20020a056a20c10f00b000d984d27a9fmr28468137pzb.24.1680366431653;
+        Sat, 01 Apr 2023 09:27:11 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id t13-20020aa7938d000000b0062ddaa823bfsm3826209pfe.185.2023.04.01.09.27.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Apr 2023 09:27:11 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matt Gardner <four712@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: macOS git grep change in required character classes
+References: <CA+MNPvgceR3s30LaCS716NGw+8S47CQZTqFno=vE2XAuiBA7Kw@mail.gmail.com>
+Date:   Sat, 01 Apr 2023 09:27:10 -0700
+In-Reply-To: <CA+MNPvgceR3s30LaCS716NGw+8S47CQZTqFno=vE2XAuiBA7Kw@mail.gmail.com>
+        (Matt Gardner's message of "Sat, 1 Apr 2023 11:50:28 -0400")
+Message-ID: <xmqqa5zrbmap.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Oswald, Junio and Phillip.
+Matt Gardner <four712@gmail.com> writes:
 
-Thank you for your reviews. Let me reply to each comments.
+> My best guess is that
+> https://github.com/git/git/commit/1819ad327b7a1f19540a819813b70a0e8a7f798f
+> is causing git grep -E to require BSD style regular expression
+> character classes.  I don't know if this is a bug or an unadvertised
+> change in behavior.
 
-> i'd recommend quoting the dash as you do in the summary (or adding some markup?), as otherwise it's way too easy to misread.
+I think you diagnosed it correctly.  The story is "Once upon a time,
+we declared that the regex library of macOS is so broken and
+unusable.  We used a fallback definition to work it around, but
+unfortunately the fallback library did not support multi-byte
+matching correctly, which made some folks on macOS unhappy.  So we
+let Git built with the regex library shipped with macOS starting
+that commit, with one side effect that patterns you would feed Git
+on that platform would behave more like patterns you give to other
+tools on the platform."
 
-That's good. I'll fix it.
-
-> It is certainly *not* synonymous in general and I
-> doubt we want to make it to.
-
-That's correct. Your examples helped me understand.
-
-> A few commands (checkout, merge, rebase and switch spring to mind) accept '-' as a shorthand for '@{-1}' but I don't think it is universally accepted.
-
-That's correct too.
-
-
-> for now we should
-> update its documentation to mention "- can also be used in place of
-> @{-1}".
-
-Finally, How should I update the documentation? How about following changes?
-
-- You may also specify `-` which is synonymous to `@{-1}`.
-+ Only some commands (checkout, switch, etc,), you may also specify `-` which is synonymous to `@{-1}`.
-
-Other commands also seem to accept '-', such as `cherry-pick`.
-It's not good idea to write all commands that accepted it.
-
-Best Wishes
+So, it is not a bug in Git, it is a deliberate change in behaviour
+with unintended consequences X-<.
 
