@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20B67C77B6C
-	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 08:48:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F57BC6FD1D
+	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 08:48:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229714AbjDAIs3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Apr 2023 04:48:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54754 "EHLO
+        id S229775AbjDAIsb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Apr 2023 04:48:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbjDAIrg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2023 04:47:36 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 099C823B77
-        for <git@vger.kernel.org>; Sat,  1 Apr 2023 01:47:07 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id bj20so18419446oib.3
-        for <git@vger.kernel.org>; Sat, 01 Apr 2023 01:47:07 -0700 (PDT)
+        with ESMTP id S229588AbjDAIrm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2023 04:47:42 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF4072293C
+        for <git@vger.kernel.org>; Sat,  1 Apr 2023 01:47:08 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id bl22so4432006oib.11
+        for <git@vger.kernel.org>; Sat, 01 Apr 2023 01:47:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680338826;
+        d=gmail.com; s=20210112; t=1680338827;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JbqCxcsV102S514Il6sHip0tz9GKcS3iM8S2LS0CY7Q=;
-        b=kS6gHNGoZcAh89wVxJ75aeutPVvalyGrg1WHGz4wt17G+whpG6CCDwM4b27bxC9aHc
-         HTG/Cn40mJMDj1iDoXn0xkGCElJ0G+iqy1J4b3LK71fzwgc+WoEaxFfDSWuqTjfIYaXh
-         KKMf/8SYLN9NugyQ7XYQ3XmcUq8liQF6Lt/w7iVm1hO0qGbcjUXz8xllIVu8jx6Zzy9c
-         /i6AYjCk0u72AZhjwhNBKkMcHPw1rj8mgkng3N+lXhcgByyjK6PnpK42JZ2d9gNEfvJ0
-         U7HgRhaiib7+l2UHSeeKd92rX94OTQgIlhNT0CZykhdE66tne/uOLTscx9Wd4hNnkwK6
-         KGLA==
+        bh=JSkIhf4M60HT4kf3h+QXf1EV4yyjB8kukzag9Y7TKO0=;
+        b=lzGD5X1WBAu43kfWhpNOjlWQ6ROGdI/Vb+cFMg6zrOL0rWdeBE8oYsWLNKHOk+Tv3g
+         2V7NuwdIiKARe+TgBFB4Bz7gFKw4T3W/adsvUB0sjOl5aj1ZOBk1vcjsNv7lamDq+aE1
+         VsH5LJfts0CUS2FGuQ/2Q8tzbgCLXcD5mpLw6DV8e2DrcMrXYHewfrH7h1Di9oMrZk2t
+         YllSE/zaHKejymz/BtebI9G/t8XilRyD2YSlj3zYLAcTRKWoCDqvjisKiWChO1vp7gob
+         JmIGnxtzYQoCP4SaBMXzZoeKytdXisyfBFWO3vIapOyo6TgtKU6HXAcxENu9B0e4e6nJ
+         kQDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680338826;
+        d=1e100.net; s=20210112; t=1680338827;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JbqCxcsV102S514Il6sHip0tz9GKcS3iM8S2LS0CY7Q=;
-        b=lXzanDUaGMyzRqQgvSEMdEpSPioSJEHtN4ZBNYGWnOGYbmMc1RTdFFBFI8m6d3/e7S
-         LMMWcTwyklHWNafFzuyXwt25bNse7wNUBFVZWwecRjCQDVg8LNq+hmJDPoLtLxci4JIR
-         SRbLkVe7nfqZyU05zr1yvKvYzC7a1z8KhEL68PwnFohU3/0X/KzW1SOrMW72CI+7g4xv
-         JbA78Vl5S2wKr+sotJe54fqEjbOf6oM4KLF2NwiFzVJlx7I/aMgZ+6d4G/3KqYCFz7uG
-         61+u9WD7kRFTPs0FDtgd9KqA6SgM1lc6yO1FX/IR4wkfIzQtsTBUUynOdPHY/CFU9dT8
-         PITQ==
-X-Gm-Message-State: AO0yUKVkUSg0d23/iICFNucbnBEIXCiIjE0ecjKbZrBGITf8u5/IIfqg
-        2l/qjRFehrBoxVmLv9BkmuLmzSsxZHM=
-X-Google-Smtp-Source: AK7set+NGfXltvJ4tqoSCUs65pLixcnsw1Fp974hey6Cvn6aaZDOS60OYVfGSkug06fWz1hP0Ji3pQ==
-X-Received: by 2002:a05:6808:4ca:b0:387:85fc:f912 with SMTP id a10-20020a05680804ca00b0038785fcf912mr12766251oie.57.1680338826452;
-        Sat, 01 Apr 2023 01:47:06 -0700 (PDT)
+        bh=JSkIhf4M60HT4kf3h+QXf1EV4yyjB8kukzag9Y7TKO0=;
+        b=e+nVnffqkjlJC+TQAcwEkxSaVTmMgJCshGozUw5eTMm7wSU2ngY9J2lcapmvirOKae
+         Bh/hs7uNMWYw47nJLINqzmt7eL+Lodr+V4sIjR3dhKjz/24VuV3+7Ffb+cDnFIiesljp
+         sLJepsw4E9dq1gy4e638V3KHfatsqYzRQ7LrXlgcjB45ogw2Wz69OiRqaKHHhuZrJLzW
+         dXqWOH+5fjmRtO7Dp7rwpwR7mUITkUzytbFflpc4MfbKiTe60ogPF7mtDW29H+a7tiL/
+         Q6Q/LrJUEagSluXCtw0+R5TDD9lh5kobelA92Z9gwpcRjxhUYtG8FvkRmUQynGDZlEEM
+         kZXQ==
+X-Gm-Message-State: AO0yUKUXiqYNQwEyQ16tmqhHRnYTH61gLP/9oCNJO/4KpmwwnKcc/5UO
+        AN4tjbPwSX8AOYZSkBU5KI1cWEY52DE=
+X-Google-Smtp-Source: AK7set8yg/dZvunIKOx7wxiGdmUFotCOOzz1NJKKiQKphYDRKCXV0KR2f+k2V592F01ro4xbu9UC+g==
+X-Received: by 2002:a05:6808:2345:b0:378:9c51:3ed6 with SMTP id ef5-20020a056808234500b003789c513ed6mr13598724oib.20.1680338827692;
+        Sat, 01 Apr 2023 01:47:07 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id l2-20020acabb02000000b003896df086b0sm1864707oif.15.2023.04.01.01.47.05
+        by smtp.gmail.com with ESMTPSA id d22-20020a4a5216000000b0053b56462336sm1783129oob.21.2023.04.01.01.47.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 01:47:06 -0700 (PDT)
+        Sat, 01 Apr 2023 01:47:07 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v7 28/49] completion: simplify equal suffix check
-Date:   Sat,  1 Apr 2023 02:46:05 -0600
-Message-Id: <20230401084626.304356-29-felipe.contreras@gmail.com>
+Subject: [PATCH v7 29/49] completion: refactor __gitcomp
+Date:   Sat,  1 Apr 2023 02:46:06 -0600
+Message-Id: <20230401084626.304356-30-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20230401084626.304356-1-felipe.contreras@gmail.com>
 References: <20230401084626.304356-1-felipe.contreras@gmail.com>
@@ -64,41 +64,147 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We know the prefix is already '--no-', there's no need to check for the
-first '--'.
+We have two chunks of code doing exactly the same, there's no need for
+that.
+
+No functional changes.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.bash | 2 +-
- contrib/completion/git-completion.zsh  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ contrib/completion/git-completion.bash | 52 +++++++++-----------------
+ contrib/completion/git-completion.zsh  | 52 ++++++++------------------
+ 2 files changed, 34 insertions(+), 70 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e07d5054cb..187350dbfc 100644
+index 187350dbfc..9de394b223 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -355,7 +355,7 @@ __gitcomp ()
- 			c="$c${4-}"
+@@ -345,44 +345,28 @@ __gitcomp ()
+ 		return
+ 	fi
+ 
+-	case "$cur_" in
+-	--no-*)
+-		local c i=0 IFS=$' \t\n'
+-		for c in $1; do
+-			if [[ $c == "--" ]]; then
++	local c i=0 IFS=$' \t\n'
++	for c in $1; do
++		if [[ $c == "--" ]]; then
++			if [[ "$cur_" == --no-* ]]; then
+ 				continue
+ 			fi
+-			c="$c${4-}"
++
++			c="--no-...${4-}"
  			if [[ $c == "$cur_"* ]]; then
- 				case $c in
--				--*=|*.) ;;
-+				*=|*.) ;;
- 				*) c="$c " ;;
- 				esac
- 				COMPREPLY[i++]="${2-}$c"
+-				case $c in
+-				*=|*.) ;;
+-				*) c="$c " ;;
+-				esac
+-				COMPREPLY[i++]="${2-}$c"
++				COMPREPLY[i++]="${2-}$c "
+ 			fi
+-		done
+-		;;
+-	*)
+-		local c i=0 IFS=$' \t\n'
+-		for c in $1; do
+-			if [[ $c == "--" ]]; then
+-				c="--no-...${4-}"
+-				if [[ $c == "$cur_"* ]]; then
+-					COMPREPLY[i++]="${2-}$c "
+-				fi
+-				break
+-			fi
+-			c="$c${4-}"
+-			if [[ $c == "$cur_"* ]]; then
+-				case $c in
+-				*=|*.) ;;
+-				*) c="$c " ;;
+-				esac
+-				COMPREPLY[i++]="${2-}$c"
+-			fi
+-		done
+-		;;
+-	esac
++			break
++		fi
++		c="$c${4-}"
++		if [[ $c == "$cur_"* ]]; then
++			case $c in
++			*=|*.) ;;
++			*) c="$c " ;;
++			esac
++			COMPREPLY[i++]="${2-}$c"
++		fi
++	done
+ }
+ 
+ # Clear the variables caching builtins' options when (re-)sourcing
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index 202f66a4f7..c9520589db 100644
+index c9520589db..029ca23e50 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -68,7 +68,7 @@ __gitcomp ()
- 			fi
- 			c="$c${4-}"
- 			case $c in
--			--*=|*.) ;;
-+			*=|*.) ;;
- 			*) c="$c " ;;
- 			esac
- 			array+=("$c")
+@@ -58,42 +58,22 @@ __gitcomp ()
+ 
+ 	[[ "$cur_" == *= ]] && return
+ 
+-	case "$cur_" in
+-	--no-*)
+-		local c IFS=$' \t\n'
+-		local -a array
+-		for c in ${=1}; do
+-			if [[ $c == "--" ]]; then
+-				continue
+-			fi
+-			c="$c${4-}"
+-			case $c in
+-			*=|*.) ;;
+-			*) c="$c " ;;
+-			esac
+-			array+=("$c")
+-		done
+-		compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
+-		;;
+-	*)
+-		local c IFS=$' \t\n'
+-		local -a array
+-		for c in ${=1}; do
+-			if [[ $c == "--" ]]; then
+-				c="--no-...${4-}"
+-				array+=("$c ")
+-				break
+-			fi
+-			c="$c${4-}"
+-			case $c in
+-			*=|*.) ;;
+-			*) c="$c " ;;
+-			esac
+-			array+=("$c")
+-		done
+-		compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
+-		;;
+-	esac
++	local c IFS=$' \t\n'
++	local -a array
++	for c in ${=1}; do
++		if [[ $c == "--" ]]; then
++			[[ "$cur_" == --no-* ]] && continue
++			array+=("--no-...${4-} ")
++			break
++		fi
++		c="$c${4-}"
++		case $c in
++		*=|*.) ;;
++		*) c="$c " ;;
++		esac
++		array+=("$c")
++	done
++	compadd -Q -S '' -p "${2-}" -a -- array && _ret=0
+ }
+ 
+ __gitcomp_direct ()
 -- 
 2.33.0
 
