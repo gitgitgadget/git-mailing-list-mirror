@@ -2,71 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD29CC76196
-	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 05:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 227ADC6FD1D
+	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 08:22:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233478AbjDAFdt convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 1 Apr 2023 01:33:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35364 "EHLO
+        id S229495AbjDAIWj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Apr 2023 04:22:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51472 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbjDAFdr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2023 01:33:47 -0400
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD9421DF87
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 22:33:46 -0700 (PDT)
-Received: by mail-qv1-f47.google.com with SMTP id m6so17934074qvq.0
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 22:33:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680327226;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HtvtWWvIZgrNQeRAPvMOj5ImSnP5aCcuAqPjzt/srpI=;
-        b=gDhAFuyAGNaHpvUMxg9lBH2H8RYtcRTBwgNgEqJui7FBsjYoeo4t2giKkS57fvf+7s
-         2a2cqp2xZiBflBYXfz9E8t5SW13xkZtZGM5jKf1IHUmRH/+xAZA8kHgmkvR3ooXtXgUb
-         DjV4b0Xg00By+9l1ltvZ/U8UpKyHefXEbMC9I10fT+Y3pQCzuuEky8gfcThRIPkfDLaK
-         qYc3zWGCQ0bYheHFgy9FaNkRmtR/i875EXOs39zN7+cbKiSKV+KJ8Y0xtBevdYhylfQq
-         x2PwlUlZaEpvWIDXtTr9FpTdXX82G4hZqwml4q1dLg6uYcmMa5OihrtigTk4kl+T8Lmm
-         f86w==
-X-Gm-Message-State: AAQBX9fQIDMMmG7U36bBSeen4goosJFVkLGXv+OntOB/OBtNiH41ovrt
-        pTIvUBS5AfNCvXrGhHJy8WHgIhv8x8j9dF/UzJgh35nh
-X-Google-Smtp-Source: AKy350YG+EF/w6uJlhKu9HqrmEaqvgvSpeFBqHik2YtmZcAkhkDG5JROOPIDlfOebPgPrxQjSWT7uq6QI36Zw5yJgRA=
-X-Received: by 2002:a05:6214:a64:b0:56e:9197:4ccd with SMTP id
- ef4-20020a0562140a6400b0056e91974ccdmr2576793qvb.0.1680327225713; Fri, 31 Mar
- 2023 22:33:45 -0700 (PDT)
+        with ESMTP id S229436AbjDAIWi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2023 04:22:38 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B6AECA05
+        for <git@vger.kernel.org>; Sat,  1 Apr 2023 01:22:36 -0700 (PDT)
+Received: (qmail 15727 invoked by uid 109); 1 Apr 2023 08:22:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 01 Apr 2023 08:22:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3150 invoked by uid 111); 1 Apr 2023 08:22:34 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 01 Apr 2023 04:22:34 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 1 Apr 2023 04:22:33 -0400
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH] fetch: download bundles once, even with --all
+Message-ID: <20230401082233.GA3503828@coredump.intra.peff.net>
+References: <pull.1508.git.1680278344173.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <20230401015632.103581-1-felipe.contreras@gmail.com> <20230401015632.103581-2-felipe.contreras@gmail.com>
-In-Reply-To: <20230401015632.103581-2-felipe.contreras@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 1 Apr 2023 01:33:34 -0400
-Message-ID: <CAPig+cR_F0Xi3qTAJdSs7n3ad545JwHxLmR+xXuNGCB6P460xA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] test: fix build for zsh
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1508.git.1680278344173.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 31, 2023 at 10:16 PM Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> zsh has the ability to emulate Bourne shell, which is closer to what our
-> testing suite expect.
+On Fri, Mar 31, 2023 at 03:59:04PM +0000, Derrick Stolee via GitGitGadget wrote:
 
-s/expect/expects/
+> diff --git a/bundle-uri.c b/bundle-uri.c
+> index 177c1810402..56390651b92 100644
+> --- a/bundle-uri.c
+> +++ b/bundle-uri.c
+> @@ -792,6 +792,15 @@ int fetch_bundle_uri(struct repository *r, const char *uri,
+>  
+>  	init_bundle_list(&list);
+>  
+> +	/*
+> +	 * Do not fetch a NULL or empty bundle URI. An empty bundle URI
+> +	 * could signal that a configured bundle URI has been disabled.
+> +	 */
+> +	if (!uri || !*uri) {
+> +		result = 0;
+> +		goto cleanup;
+> +	}
 
-> Using the POSIX_ARGZERO option makes $0 behave as POSIX seems to define:
-> show the name of the command launched, as opposed to the zsh default:
-> the path of the script.
->
-> This enables many tests, but not all.
->
-> We can run the tests with `zsh --emulate sh` which has more more
-> compatibility, but doing `emulate sh` inside the script allows us to
-> just use `zsh`, although it's not as compatible.
+Coverity flagged this "!uri"; it can never be true since we
+unconditionally xstrdup(uri) at the top of the function, and we'd
+segfault in that case.
 
-s/more more/more/
+I think the existing code that assumes a non-NULL uri is reasonable.
+Even before the xstrdup() we'd have segfaulted when it was handed to
+fetch_bundle_uri_internal().
 
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+It's not a huge deal, in the sense that you're just being overly
+defensive, but the comment and conditional here are a little misleading.
+
+-Peff
