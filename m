@@ -2,90 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73D31C76196
-	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 15:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B68E1C76196
+	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 15:50:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229646AbjDAPYd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Apr 2023 11:24:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57640 "EHLO
+        id S229538AbjDAPuo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Apr 2023 11:50:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjDAPYc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2023 11:24:32 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5BF4EF2
-        for <git@vger.kernel.org>; Sat,  1 Apr 2023 08:24:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1680362649; i=l.s.r@web.de;
-        bh=Xo844ySUcbXxkZNnNzi+32Mxgts+TAOcSL3UKEc2I9o=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=owqywJ0khls6oe8N0foJUoxi4wrdj6pfXT2xoRfNc0EIZ/MiUiKNDDUGIWJEdK7H2
-         AThOFgoWS7QWvgoxCyifeD3+3i9tYlnTrYQpKKuaxmfR66jqc03/z7CgsUIH99boV/
-         WTThtMdm3letlMXb+3LUpvZCTcGe12ZCO2+glg4lvvxVjgKU14dpdQ0Qe6ccOcLhKS
-         kbMuZT0wIVpEz+OlsFQ4BWWy1tqWqTAPaCaaGGr7c8mo37KL0EzltmKyC5At+BJ7dz
-         cE5k+Kg2/uqDtfvxVyJ0eKTUipr1PHx0dv3KlYvMV1OWBCbphkVkBhsCp11wm+H1/C
-         nJP6PVMF4vsvA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.158.21]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M9IOZ-1poyCs0hYl-006Ccq; Sat, 01
- Apr 2023 17:24:09 +0200
-Message-ID: <58a6b697-b403-308a-dd71-6179ec128661@web.de>
-Date:   Sat, 1 Apr 2023 17:24:07 +0200
+        with ESMTP id S229518AbjDAPum (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2023 11:50:42 -0400
+Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8807E1EFC4
+        for <git@vger.kernel.org>; Sat,  1 Apr 2023 08:50:40 -0700 (PDT)
+Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-17aceccdcf6so26292795fac.9
+        for <git@vger.kernel.org>; Sat, 01 Apr 2023 08:50:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680364239;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mYcUCB3e+jdIKavlfWKX5ftTzT7hK9uIJhVZbO6emNM=;
+        b=l0sM2WzUM9XaYcraKfgGS2stcjnTJXmDTp2GcNltXzJbfgnBGtSr760DapVY6dAuBS
+         eRuAFydxTm4zDg5byz6M6AI7H+P8ZJYj+eUKfFlOc3bIiJNgM0eAqsrxvfeuI8shtUlf
+         ELqbcNpA5Qar+f+DRoCUeuMSyQhXcSe0Wohtvo8/pswOm0TgPUd158sDJTxXxgu+UuHZ
+         09fjOGTec7PTJ5pbmD9uzZCs2CqMdahqGSqssIRSRJ755j1mgGYbujTe6C6FiVnyXSyA
+         wf9mRZPSHcBz6aMLvEEYYric8DYhyfrChnf07KzKUE1fUVGVo5PwZV8spPuhhyBduJEs
+         QPeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680364239;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mYcUCB3e+jdIKavlfWKX5ftTzT7hK9uIJhVZbO6emNM=;
+        b=0zA6kdy1ubcjvQohhFnFiovAtcEvcFatslH/Znw0qfpzMnhdVTv9Yc76j5d6nOoqaf
+         3umTd0ZIBFszq5FbA7z9JNEnKiBOUH1S5zWa3ZKfunXwm9j88sinuj/fQtO++1W1+82X
+         kOaYz9iwbn2VwM+Qsl/wdNlKUWeD2GaU1kJoGWL77ab5yqi3pcvQkZKm1h/JOx6Pm1Ot
+         0V/+/82qzW9IOpJiqL6g+e6uExHouet+qJn5UjandgZcphNcCvxYD4kGZz4+hG83aelZ
+         eHN9ALU1BGto3LcE0WpbMMJ+IMVFtv/pMGaWvp3mZVC4YjDtUOakcxNA4aiAeekFzNqw
+         p7Iw==
+X-Gm-Message-State: AAQBX9cPoiYYso2cMFePJkTL8/5ZygVxbG5ij9MoiJN4HTEfeX+931Xl
+        fdWEq4RihJSLWwrfJolzOV7Ah7xnQMrb2khyn2JIQioICtk=
+X-Google-Smtp-Source: AKy350YcEENOh/Eqz8xcMrlY3XCMfmy1GUVDhfEUWw8hcfKzt77Cd4/T2bThLaHSNbAT/W9XNgFjF18RYTToqsXiUxE=
+X-Received: by 2002:a05:6870:738c:b0:180:5b56:87d2 with SMTP id
+ z12-20020a056870738c00b001805b5687d2mr1058615oam.1.1680364239565; Sat, 01 Apr
+ 2023 08:50:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.1
-Subject: Re: [ANNOUNCE] Git Rev News edition 97
-To:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershause?= =?UTF-8?Q?n?= 
-        <tboegi@web.de>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?5a2f5a2Q5piT?= <mengziyi540841@gmail.com>,
-        Bruno Brito <bruno@git-tower.com>
-References: <CAP8UFD3adabbwdvaCmEXW9fQ88s6Zniim42vR3cT7VMobxFoQg@mail.gmail.com>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CAP8UFD3adabbwdvaCmEXW9fQ88s6Zniim42vR3cT7VMobxFoQg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:3Ss+r7bgekGyTpQXgv9eZZ4krkQcb7bz0o5uNK+wKTjeAIN9YsI
- ZoY2A9YUeeDVX5bDbYYivWjlAIb3y40A+m8qk0mRZKP7fiOrxrUpi+k+NIgI2pG0f59ssfJ
- d56FLnRWg/20/aX818cIw2Q3R1toswxocEqH5RpzGGaRh+dVIDUaIih/rwVqDeOSbzTOvkr
- V2yX4ihXhvdnOgiBkQctA==
-UI-OutboundReport: notjunk:1;M01:P0:FTJNnDUND8A=;nHQqgE1no0vy6dlVaM5ye3DVSYq
- G3pUVIPzwVx8Bc5dZ3GV2vMI4dPhNmb5R/dVWvBADS7Z0RhYvRfh+pUnUauPFTBS1QZkl5C03
- h07mqOUn2zx3kJc/k1CzcKiT037gYaowA+HByK6Wh4tXr/3IaAn+SrJrUcArRqfiLyH4P8tHc
- jnR2wrDp0JsjEQLlWn/Pgz6TPqHp5PiAAA6iTYetB52LYWnEo0fCIEZK6TDl+8F0Vzz0un8x1
- VhbUjIlOfybDDxEB6DoYqradHXAA7qHHdqKzgFNf9rzt/C1SJS1LjQUn7aOm7Jrcds/jB5kZk
- 2S1M6c69IJFKgjKcjaoq+IZVDU0a2tsiSMmXR0Wk15aaSyghqKpkHiqdv36VvhSj2n+LAQCcA
- beFUZIWClVTPZ5zc0Y0iIb5moUsWFOsCzNVPt0XKI9xYmzowkzMKuE6rIGkt0Xe4Bl4ufnTpN
- ds8Dc9N/aWKFjzARTjY6LNkHcIXoenr65QD+qGMx2APeiyjcG0p7Ay/lL9Sj4XXt394uDiz37
- OxWdG5TxHM+zn63xuqy7ErDNXrPFnfOZRThm6ACDBH1fETuNVPR9IBESI3ocPNICtOninLuNG
- C0JrcYHu1wzrOFW4nUGexrMR0Ac+pzIszQV5IOTGYlD/aOAwEnWOw5aXzCMZAbJxAP5FmR3Yd
- c0nEcA5AGalOjxeJKnI6NjZkjJwPBN9DwAbsqABhMazTDIcWumWVh257K8neTHuASlq9YNlkG
- tN9a+jZ94if8blUS42Mk/7K+aeGF4t5WkuKmGhpig5NjhldsKQ6XtcMn0+Y0vsApNXarEq6dw
- Aa44DLxhuiGqzeDyszmgX7qKDmdzfBnzR0qTRy6YF5q1iwSrLEzVeJ/vCATT094mYyxGq7giI
- 5V1QKA0G6Ov/TKP4bTS/6ImWG0GMpPM9q2OaPfU5fxcUQLQPsyx4PuPGadGWRJyeU4w7cYtHe
- 9Ca1KNXpc8NNW2f/nb6SEb+HcKs=
+From:   Matt Gardner <four712@gmail.com>
+Date:   Sat, 1 Apr 2023 11:50:28 -0400
+Message-ID: <CA+MNPvgceR3s30LaCS716NGw+8S47CQZTqFno=vE2XAuiBA7Kw@mail.gmail.com>
+Subject: macOS git grep change in required character classes
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 01.04.23 um 17:00 schrieb Christian Couder:
-> Hi everyone,
->
-> The 97th edition of Git Rev News is now published:
->
->   https://git.github.io/rev_news/2023/03/29/edition-97/
+Thank you for filling out a Git bug report!
 
-I get 404 File not found.  https://git.github.io/rev_news/2023/03/31/editi=
-on-97/ works.
+Please answer the following questions to help us understand your issue.
 
-Ren=C3=A9
+What did you do before the bug happened? (Steps to reproduce your issue)
 
+$ mkdir git-grep-test
+$ cd git-grep-test
+$ git init
+$ echo "sub test { return; }" > test.pl
+$ git grep --untracked -E \\btest\\b
+
+What did you expect to happen? (Expected behavior)
+
+It should find the results like the following:
+
+test.pl:sub test { return; }
+
+What happened instead? (Actual behavior)
+
+No results found
+
+What's different between what you expected and what actually happened?
+
+To get results, you have to use BSD style character classes:
+
+$ git grep --untracked -E \[\[:\<:\]\]test\[\[:\>:\]\]
+
+test.pl:sub test { return; }
+
+Anything else you want to add:
+
+Testing in both git 2.24 and 2.34 (the only other version I have
+access to at the moment), \\b and other GNU style character classes
+return results.
+
+My best guess is that
+https://github.com/git/git/commit/1819ad327b7a1f19540a819813b70a0e8a7f798f
+is causing git grep -E to require BSD style regular expression
+character classes.  I don't know if this is a bug or an unadvertised
+change in behavior.  In either case, it is frustrating.  Any person or
+tool would have to know which version of git they have and which
+operating system they are on to get results.
+
+Please review the rest of the bug report below.
+
+You can delete any lines you don't wish to share.
+[System Info]
+git version:
+git version 2.40.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Jun 21 21:18:39
+PDT 2022; root:xnu-6153.141.66~1/RELEASE_X86_64 x86_64
+compiler info: clang: 12.0.0 (clang-1200.0.32.29)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
