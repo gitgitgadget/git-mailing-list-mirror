@@ -2,116 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D6E8C761A6
-	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 02:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD29CC76196
+	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 05:33:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233435AbjDACyO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Mar 2023 22:54:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56386 "EHLO
+        id S233478AbjDAFdt convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 1 Apr 2023 01:33:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231775AbjDACyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2023 22:54:13 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFAA212CD5
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 19:54:12 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id iw3so23151816plb.6
-        for <git@vger.kernel.org>; Fri, 31 Mar 2023 19:54:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680317652;
-        h=content-transfer-encoding:in-reply-to:cc:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uMSE3/v/bsXXJZkpw0o7G9alPCc7KTWV8evMDO1g3fY=;
-        b=Lhben/Gxzxh949irbKYGP8h0k4ATFkhFFgmya6hyso10KJ6x7Yn12I6fybxGseDo9d
-         rSDOhpzMM7Z3m/72syai5whqA2eehW5rmRLln5wtAdZ/I5OphkuFNH/Gz8TdkvN3ghIt
-         8MV1MIx8QuL3QOeVH3FVIdiJhc4bLrBHd9+v6JMqsThmYyinjUMlIy0+4vK0CT7ylNop
-         4/5e0G247AR6zWJnPddJ6DqXY7ylErcuhZ2SIz2OmlQ1QaOFWDma5yccYUIUnar5wOp0
-         na6g+Zz/wRlx72j1gGlqbbY2bJUx5oBFCCB4sIqc02wE0fe4e4CrDn3nWEw2FGW+xoMR
-         /tfg==
+        with ESMTP id S229470AbjDAFdr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2023 01:33:47 -0400
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD9421DF87
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 22:33:46 -0700 (PDT)
+Received: by mail-qv1-f47.google.com with SMTP id m6so17934074qvq.0
+        for <git@vger.kernel.org>; Fri, 31 Mar 2023 22:33:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680317652;
-        h=content-transfer-encoding:in-reply-to:cc:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uMSE3/v/bsXXJZkpw0o7G9alPCc7KTWV8evMDO1g3fY=;
-        b=5SX/sy8zZdZZq4wOPNgFrZ2kuDTlaaOmxgT9xhJfDCaJBvU7dcIKdW/+6eAmVR4PPK
-         PMrpx2mhoZBwI/Hhys3TXtu+nGEdxJjOjmK5/2bkUdDrRs7wZHHKgvMEEI7fhA4e9k/H
-         Nbp8rQGbxUyROnCr9mtvz83b6N9qDjO62wBYIiPsxejZ/EDyr7z+K/vzdmKXdloER5uM
-         I+siaGJntQ3SxZdFqnGm8xAnS9bfhXCmNz0lFCQsvBqeCSa3Gx1FnkaHlk0t1BtRYUfr
-         z4V5yKYxojC9euq8KEpo4ofQFB0HFBnMW0d/QcBSOAiJhnF3wddIyc6ItVLDtWsQ6i8H
-         yXdw==
-X-Gm-Message-State: AAQBX9cfqekW3fKID1LgJTVPQ94OnN7u1kmath0mcDo+AQbUbjFc/GS0
-        ubWFLBk//gM4xXdp9GLOQlWcWJEdXJQ5rw==
-X-Google-Smtp-Source: AKy350bPNJ/XQd9sgVspftfrrFShemi+XRM9/sfMm4My3W+TWDuouA6R9s2WwAr/3d+9fP031/WCyQ==
-X-Received: by 2002:a17:902:d4ce:b0:19e:b2ed:6fff with SMTP id o14-20020a170902d4ce00b0019eb2ed6fffmr13541447plg.31.1680317652154;
-        Fri, 31 Mar 2023 19:54:12 -0700 (PDT)
-Received: from [192.168.43.80] (subs02-180-214-232-71.three.co.id. [180.214.232.71])
-        by smtp.gmail.com with ESMTPSA id jg2-20020a17090326c200b0019a8530c063sm2252159plb.102.2023.03.31.19.54.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 31 Mar 2023 19:54:11 -0700 (PDT)
-Message-ID: <9a0948e2-d030-ac89-a009-9247054f71f9@gmail.com>
-Date:   Sat, 1 Apr 2023 09:54:08 +0700
+        d=1e100.net; s=20210112; t=1680327226;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HtvtWWvIZgrNQeRAPvMOj5ImSnP5aCcuAqPjzt/srpI=;
+        b=gDhAFuyAGNaHpvUMxg9lBH2H8RYtcRTBwgNgEqJui7FBsjYoeo4t2giKkS57fvf+7s
+         2a2cqp2xZiBflBYXfz9E8t5SW13xkZtZGM5jKf1IHUmRH/+xAZA8kHgmkvR3ooXtXgUb
+         DjV4b0Xg00By+9l1ltvZ/U8UpKyHefXEbMC9I10fT+Y3pQCzuuEky8gfcThRIPkfDLaK
+         qYc3zWGCQ0bYheHFgy9FaNkRmtR/i875EXOs39zN7+cbKiSKV+KJ8Y0xtBevdYhylfQq
+         x2PwlUlZaEpvWIDXtTr9FpTdXX82G4hZqwml4q1dLg6uYcmMa5OihrtigTk4kl+T8Lmm
+         f86w==
+X-Gm-Message-State: AAQBX9fQIDMMmG7U36bBSeen4goosJFVkLGXv+OntOB/OBtNiH41ovrt
+        pTIvUBS5AfNCvXrGhHJy8WHgIhv8x8j9dF/UzJgh35nh
+X-Google-Smtp-Source: AKy350YG+EF/w6uJlhKu9HqrmEaqvgvSpeFBqHik2YtmZcAkhkDG5JROOPIDlfOebPgPrxQjSWT7uq6QI36Zw5yJgRA=
+X-Received: by 2002:a05:6214:a64:b0:56e:9197:4ccd with SMTP id
+ ef4-20020a0562140a6400b0056e91974ccdmr2576793qvb.0.1680327225713; Fri, 31 Mar
+ 2023 22:33:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH] hooks: add sendemail-validate-series
-Content-Language: en-US
-To:     Robin Jarry <robin@jarry.cc>, git@vger.kernel.org
-References: <20230103231133.64050-1-robin@jarry.cc>
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>
-In-Reply-To: <20230103231133.64050-1-robin@jarry.cc>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20230401015632.103581-1-felipe.contreras@gmail.com> <20230401015632.103581-2-felipe.contreras@gmail.com>
+In-Reply-To: <20230401015632.103581-2-felipe.contreras@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 1 Apr 2023 01:33:34 -0400
+Message-ID: <CAPig+cR_F0Xi3qTAJdSs7n3ad545JwHxLmR+xXuNGCB6P460xA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] test: fix build for zsh
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/4/23 06:11, Robin Jarry wrote:
-> +sendemail-validate-series
-> +~~~~~~~~~~~~~~~~~~~~~~~~~
-> +
-> +This hook is invoked by linkgit:git-send-email[1].  It allows performing
-> +validation on a complete patch series at once, instead of patch by patch with
-> +`sendemail-validate`.
-> +
-> +`sendemail-validate-series` takes no arguments, but for each e-mail to be sent
-> +it receives on standard input a line of the format:
-> +
-> +  <patch-file> LF
-> +
-> +where `<patch-file>` is a name of a file that holds an e-mail to be sent,
-> +
+On Fri, Mar 31, 2023 at 10:16 PM Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> zsh has the ability to emulate Bourne shell, which is closer to what our
+> testing suite expect.
 
-In most cases, the patch series is generated by git-format-patch(1). When the
-command is run, it will output:
+s/expect/expects/
 
-```
-$ git format-patch -o /tmp --cover-letter --base=<base-commit> <base-commit>
-/tmp/0000-cover-letter.patch
-/tmp/0001-<patch-subject>.patch
-/tmp/0002-<patch-subject>.patch
-/tmp/0003-<patch-subject>.patch
-...
-```
+> Using the POSIX_ARGZERO option makes $0 behave as POSIX seems to define:
+> show the name of the command launched, as opposed to the zsh default:
+> the path of the script.
+>
+> This enables many tests, but not all.
+>
+> We can run the tests with `zsh --emulate sh` which has more more
+> compatibility, but doing `emulate sh` inside the script allows us to
+> just use `zsh`, although it's not as compatible.
 
-The output can be fed to the hook (as you write).
+s/more more/more/
 
-But I think the hook should also take patch file arguments, for the sake of
-completeness with sendemail-validate hook; that is:
-
-```
-sendemail-validate-series <patch file>...
-```
-
-Also, there should have a check that In-Reply-To must be the first patch in
-the given series or the cover letter (if there is one).
-
-Anyway, rather than pinging by random people, I'd like to see [PATCH RESEND],
-rebased on latest git.git tree, ideally with Junio Cc'ed.
-
-Thanks.
-
--- 
-An old man doll... just what I always wanted! - Clara
-
+> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
