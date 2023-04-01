@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7AB2C77B60
-	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 08:47:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEC37C6FD1D
+	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 08:47:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjDAIr5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Apr 2023 04:47:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56416 "EHLO
+        id S229729AbjDAIr6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Apr 2023 04:47:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229512AbjDAIrT (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229668AbjDAIrT (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 1 Apr 2023 04:47:19 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D939191EE
-        for <git@vger.kernel.org>; Sat,  1 Apr 2023 01:46:55 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id x8-20020a9d3788000000b0069f922cd5ceso13144138otb.12
-        for <git@vger.kernel.org>; Sat, 01 Apr 2023 01:46:55 -0700 (PDT)
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B838622E89
+        for <git@vger.kernel.org>; Sat,  1 Apr 2023 01:46:56 -0700 (PDT)
+Received: by mail-oi1-x230.google.com with SMTP id bj20so18419301oib.3
+        for <git@vger.kernel.org>; Sat, 01 Apr 2023 01:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680338814;
+        d=gmail.com; s=20210112; t=1680338815;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OpignU75XOPRKpUUxUZsEhg8hoR4DwwwSQC2GnPLcmI=;
-        b=fRaBzJaxvMyYj9YKR61BiWYtVdcavfK68xXiJFv1y2tX68DKY8YP4p3fCkO9nEFiRD
-         1RhvGBokUZRDNWnhEvI15Hm76QNmM4T++PhG5+PPHmlTggruDNhvQqZGW5SXYusSbk/N
-         i0pr65ov9fsbb2LzW9pM47EtQ67T5K/OXnKlMmyJUALsOcbH5L5dcWVqSe514gjHsOZ+
-         fa2rD30YV7NwDrisMAKQcIe9QuvOd+f9VUQuZo3JA3Pt2ouNd8004B8LMtkkrcvDRrjR
-         1WHtWjEM9qvtdTcitISNQKdM0AzNS9xcSkukeufHiDp5u3NN7/Jq4Hev6XXJPNoG+Qoq
-         okSg==
+        bh=TUPD4wT3yVNFqeYKeak3J9i5PQROoZ1ZYgYzlhb+u2Y=;
+        b=TBV24KxbjTQIzhk3F/2K52w+lomqIDc8eVGsV3ePAlIu1iLEiiGhwbKALrrEMAodd9
+         oKDkaskdm9ddgMD+w+rJQq46b4y5qijibj47oKYOvrbYPxEoNfhx7gLx2Eu5Ku0mqc+A
+         6UcC/580m0D7sxmykWRaxV6LndlgaW8e4ejCo+uSJCMU7M7jm5q0/CKYzwS1uGPh1nlm
+         zPGqPf04z8bfBL7HkE/3kJNDY2TfAw3XpRG9/5cvTDYPD1Hl+Rq9lUTFc3nUjh6+NjKJ
+         mb99Exvb5RjcdRQl9AUydHEN1x2qr1L67QdpaNXJVhjGszmGPOcOcL4G0wbZS9temtM4
+         7WfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680338814;
+        d=1e100.net; s=20210112; t=1680338815;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OpignU75XOPRKpUUxUZsEhg8hoR4DwwwSQC2GnPLcmI=;
-        b=K5Qc22nDWHmQ59Q08EFU9/5XpE2419qGQwFJXGY+6uQ6eaAXnxTcKEzq9ePaCz3Wyk
-         2hNh+oapZ7JzzWWJ7UwrYAAeU1dlSqihe69ww0f8Ie+zgNhGF4AxVxtPoENHE1AzU+5J
-         8YVsnsWGz9Gu71Wjk+k6Ye2DIgPYUp7HXqfd+76Wwx8SwK0h6ajdjVfdyvmNBunN+7+v
-         Lsr561JqsuAthS25UfZfmuvzmLnBONqkc4ljCNmSsp++hqfnoLlsw/MR1OhSmn9tQMU2
-         332oQbePV9evfnih004Rfwuehak8WydIxm4ZkzLISBebXXX84XlQSd6cUX+x97Ubl2v8
-         h2mw==
-X-Gm-Message-State: AAQBX9cw4mqOyyO4Mki5x8omHDzNJfc2pWqMb2x7pNM8hyh8gCxye0s9
-        4dfWXdLnXeovIwzyr1n6Rp9Ybqv9xQY=
-X-Google-Smtp-Source: AKy350YCip4VdEahNrQ8KFpdB0twagLBuvUNmOc/u/iqk/sH/eEzIRvVh1UMxfMv/yPzSSUEPnw3Xg==
-X-Received: by 2002:a9d:4f18:0:b0:6a1:20b9:34b6 with SMTP id d24-20020a9d4f18000000b006a120b934b6mr12872225otl.0.1680338814356;
-        Sat, 01 Apr 2023 01:46:54 -0700 (PDT)
+        bh=TUPD4wT3yVNFqeYKeak3J9i5PQROoZ1ZYgYzlhb+u2Y=;
+        b=K60etGIpA44TIC1DhYX9snOCr0eR/9DnKAo4OiGJe5QiFsnDxZWAPNbD9FU4ow5tNd
+         bKGktXb05urXeEeYHJP9C+wW/AcTMco0ohXa6YhfjN7+Ybcghul72fFMJjNd8I0IvQ/+
+         vUhEJ+vYC0Lv7WsASUt0YD78hyN/UxTNSPqEuy+A5DoyBLUcr3ObI008h4t/AVwIJFCD
+         rVhC+Y/lrrQlea58PmPAGa+bne0UwBtDKGe2MdT0RBP3/5PIhuITN+oixEUvj5CoIqW/
+         3Ut+dEW6hmnvy2yKVm3xulz1bdlaJexhPiuJj7LIcpyb1G9EYBYQ4EQ0BrEKWVT5tPNt
+         8xSQ==
+X-Gm-Message-State: AO0yUKWATNRKFkaq0+sgUo7Z3rl1YrzIgdse02cRgjy1QDbcQh6U/zRR
+        NpNnZA4ERdCqzB3CRLBd2cwrTYk0tVE=
+X-Google-Smtp-Source: AK7set+DnWsyCVznOeY6mEeb6XPM8tLi3bfAkI+40VIz3Ns+XTDi2o9r7WQ5XpuMpvzAatyMeay8mg==
+X-Received: by 2002:aca:909:0:b0:384:102a:46cc with SMTP id 9-20020aca0909000000b00384102a46ccmr12462491oij.58.1680338815667;
+        Sat, 01 Apr 2023 01:46:55 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id d11-20020a9d5e0b000000b006a3170fe3efsm322275oti.27.2023.04.01.01.46.53
+        by smtp.gmail.com with ESMTPSA id q189-20020acad9c6000000b0038756901d1esm1860195oig.35.2023.04.01.01.46.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 01:46:53 -0700 (PDT)
+        Sat, 01 Apr 2023 01:46:55 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v7 19/49] completion: zsh: fix options with arguments
-Date:   Sat,  1 Apr 2023 02:45:56 -0600
-Message-Id: <20230401084626.304356-20-felipe.contreras@gmail.com>
+Subject: [PATCH v7 20/49] completion: zsh: expand --git-dir file argument
+Date:   Sat,  1 Apr 2023 02:45:57 -0600
+Message-Id: <20230401084626.304356-21-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20230401084626.304356-1-felipe.contreras@gmail.com>
 References: <20230401084626.304356-1-felipe.contreras@gmail.com>
@@ -64,38 +64,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-They support both '--git-dir=value' and '--git-dir value'. Fix the
-arguments to support both.
-
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ contrib/completion/git-completion.zsh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index b31c9894e4..0619d05d34 100644
+index 0619d05d34..b49bce51ac 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -210,15 +210,15 @@ __git_zsh_main ()
- 	_arguments -C \
- 		'(-p --paginate --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
- 		'(-p --paginate)--no-pager[do not pipe git output into a pager]' \
--		'--git-dir=-[set the path to the repository]: :_directories' \
-+		'--git-dir=[set the path to the repository]: :_directories' \
- 		'--bare[treat the repository as a bare repository]' \
- 		'(- :)--version[prints the git suite version]' \
--		'--exec-path=-[path to where your core git programs are installed]:: :_directories' \
-+		'--exec-path=[path to where your core git programs are installed]:: :_directories' \
- 		'--html-path[print the path where git''s HTML documentation is installed]' \
- 		'--info-path[print the path where the Info files are installed]' \
- 		'--man-path[print the manpath (see `man(1)`) for the man pages]' \
--		'--work-tree=-[set the path to the working tree]: :_directories' \
--		'--namespace=-[set the git namespace]' \
-+		'--work-tree=[set the path to the working tree]: :_directories' \
-+		'--namespace=[set the git namespace]:' \
- 		'--no-replace-objects[do not use replacement refs to replace git objects]' \
- 		'(- :)--help[prints the synopsis and a list of the most commonly used commands]: :->arg' \
- 		'(-): :->command' \
+@@ -240,7 +240,7 @@ __git_zsh_main ()
+ 		if (( $+opt_args[--bare] )); then
+ 			__git_dir='.'
+ 		else
+-			__git_dir=${opt_args[--git-dir]}
++			__git_dir=${~opt_args[--git-dir]}
+ 		fi
+ 
+ 		(( $+opt_args[--help] )) && command='help'
 -- 
 2.33.0
 
