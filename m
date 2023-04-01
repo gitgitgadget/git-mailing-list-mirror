@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92E7BC761AF
-	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 15:11:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A32FC76196
+	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 15:11:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229714AbjDAPLb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Apr 2023 11:11:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42622 "EHLO
+        id S229804AbjDAPLd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Apr 2023 11:11:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42894 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229977AbjDAPK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230162AbjDAPK6 (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 1 Apr 2023 11:10:58 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 241641D2C6
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E17851F7B2
         for <git@vger.kernel.org>; Sat,  1 Apr 2023 08:10:54 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id bg16-20020a05600c3c9000b003eb34e21bdfso17162288wmb.0
-        for <git@vger.kernel.org>; Sat, 01 Apr 2023 08:10:53 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id s13so14564327wmr.4
+        for <git@vger.kernel.org>; Sat, 01 Apr 2023 08:10:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680361852;
+        d=gmail.com; s=20210112; t=1680361854;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+g/Sly1PVYaV4QH/BxmGyrWtJFgO4Ex0geMsimjD2FA=;
-        b=jYcL3TnMKazTlJqdW5knEf2GqNfEamTM1AJxuQR68QaY7dDw+hNgnOEKOOy0hx5CKI
-         xQMnbRiFGJ2zmUBG5m2EKyg8EkMI66PFLMcMLzGdyiukr4SEQVeQGELE7TTaobPh++Yk
-         fQl1NQvS3M6pi3ZlasMYVyZ01YCiN+C/bCQsI6hn4Q8oLZgCI37uZjMMwt029uxH6ciz
-         Tq+sPv7dlhQKlCQKFyLLx+9PZJvfO+0NmwdZkw3XVlLzQcJT/F07Kb2kjkyZd/xngAB6
-         rtIDZ7sXYcc5MJ19qhds9XHtniOjGC51Juy+FHfa3Q+6KP2o61n2idK78Ys5qaPGrqNd
-         J6uA==
+        bh=O+giBddeP/vAOtEknKR5vDnEexHLIbZoW933D35Ivkg=;
+        b=OEbmzuYjZMdHed/W+ImnTRTnuU2s6df6BxgsdjzTQ0zxNBKUF3FcHw9LjwjJlqTjjk
+         sLen+JU+96860guT+TgvhkAPVWuNOEzJClGZCTYNfzod4074oBavUdj+A4FSn6h88DJl
+         YRSVJA+I7/UcIiz8kb4B4n2je2TdVna0yBDqLNlMxsI8VpCeETjNrXnT7z5Ne9N03Fpn
+         mgOFBTNduii40lDfc0ghw8EBT2FfQ9Eayi9WebHgZOEAzshievbPke1FTMS6pKF2SoLy
+         b3WTaj8C4+QNFv5ssf3pUSt1+txlBdanDHS1HBkuycMwCLDgzdTPn89UXnF4jNvUKvCk
+         MKOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680361852;
+        d=1e100.net; s=20210112; t=1680361854;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+g/Sly1PVYaV4QH/BxmGyrWtJFgO4Ex0geMsimjD2FA=;
-        b=m2hK4KZuR9nDtD042dm9nck/j2ZI0UR2EGowro0BNlqqKl0ij/JcoVyC3eypqOKmWF
-         KOQkbpN47Xd1kIwO+tx7x/M48ad4VswntxdK4gutRomFGjf2legSa2q4q86FkKmvSA6D
-         asAq0Sprk+3aHR3JMFxdbPBGgs57auc4UMAEHtcib95agL1rcu1pgnNKrDLMpc2NS0Q7
-         N6Y+bpFUhNFqomP513q1VFAZfhYcRlTnKKqilVq4xXT9bqGZvyk4qqg9cgXT2dagtova
-         gizcMR8Si+ZHf5dp8dtht2yM2NtrOVXugSE934s/oJrMzLXxwELIVhEgIrLyvQNzif5y
-         XPIA==
-X-Gm-Message-State: AAQBX9fGMVPL/64ef2msLvgVrXTwg1DBBzfJJRflNMjLDjRSZk0JEv3c
-        S7Q9FWqsWG4hVazRbi70BX5q2QtG7oM=
-X-Google-Smtp-Source: AKy350aTFwW5O+rw88AuZTFSwt9/C+c9JR2MCpylaZ6xU+NZL6osbHe9tw00if842emr9uG6ekwapA==
-X-Received: by 2002:a7b:cd18:0:b0:3ef:6aa1:9284 with SMTP id f24-20020a7bcd18000000b003ef6aa19284mr17019222wmj.29.1680361851934;
-        Sat, 01 Apr 2023 08:10:51 -0700 (PDT)
+        bh=O+giBddeP/vAOtEknKR5vDnEexHLIbZoW933D35Ivkg=;
+        b=EkKCxozYtJZRxRGKbA12JJecy1TmJeG2gZ1B7EOi5JmkS+pNKBeQpczvenJI14XOe9
+         kC4cQIVtjfYNanT9h4REml/BvP0d+k6vh3d4+TEXuFeE8Na5sfWUYuDi2gQ88eFc16wg
+         ix00j0jFYilP0Mk0Atd4o1YqRjdiduYgF3L2jxuix1oRD4peoM9VmJWDKQY3ZmLjwNGZ
+         Ar5j/rpz6KtnVyTxyllhukKfTJzN9r25+oRWE6ky2ckA7cL/E1VEflow5/enpRdQJ9ZS
+         OjT3qytDOmz3moW0xIFi2SdH8by6ElmEb5xJ7exli1oIHxkQknNQubz3X5+xmB2GWzgV
+         epGQ==
+X-Gm-Message-State: AO0yUKU1FTFFEGn6cL+PXaxB64F1iIRJ+1FEkr/wJtNTcPN1B/Cw5fZ9
+        JAdtvEedWkBenNJ9XQHJYSkBXIiYhV4=
+X-Google-Smtp-Source: AK7set/mZ/r6Psi2z5TZaYXCps12LQvS/jdTAmq+XA5BNWGPitx6imXK8h7VyBlEGm0t9ADG4FP1ig==
+X-Received: by 2002:a7b:c7d4:0:b0:3eb:25ff:3446 with SMTP id z20-20020a7bc7d4000000b003eb25ff3446mr22453213wmk.4.1680361854249;
+        Sat, 01 Apr 2023 08:10:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id fc11-20020a05600c524b00b003ebff290a52sm13533843wmb.28.2023.04.01.08.10.51
+        by smtp.gmail.com with ESMTPSA id n13-20020a7bc5cd000000b003ede3e54ed7sm6371896wmk.6.2023.04.01.08.10.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 08:10:51 -0700 (PDT)
-Message-Id: <4b41942a24ee6845eb4f3055619c5cdb3667bd13.1680361840.git.gitgitgadget@gmail.com>
+        Sat, 01 Apr 2023 08:10:54 -0700 (PDT)
+Message-Id: <7c3235c79433147d992bf9e4642f1ba7329fbdd1.1680361840.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1509.git.1680361837.gitgitgadget@gmail.com>
 References: <pull.1509.git.1680361837.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 01 Apr 2023 15:10:29 +0000
-Subject: [PATCH 16/24] treewide: remove cache.h inclusion due to editor.h
- changes
+Date:   Sat, 01 Apr 2023 15:10:33 +0000
+Subject: [PATCH 20/24] strbuf: move forward declarations to beginning of file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,25 +69,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This actually only affects sideband.c, but helps towards removing
-cache.h inclusion in conjunction with some of the upcoming patches
-that will be applied.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- sideband.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ strbuf.h | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/sideband.c b/sideband.c
-index 25e2a185716..6cbfd391c47 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "color.h"
- #include "config.h"
- #include "editor.h"
+diff --git a/strbuf.h b/strbuf.h
+index 3dfeadb44c2..547696fb233 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -1,6 +1,8 @@
+ #ifndef STRBUF_H
+ #define STRBUF_H
+ 
++struct object_id;
++struct repository;
+ struct string_list;
+ 
+ /**
+@@ -72,12 +74,6 @@ struct strbuf {
+ extern char strbuf_slopbuf[];
+ #define STRBUF_INIT  { .buf = strbuf_slopbuf }
+ 
+-/*
+- * Predeclare this here, since cache.h includes this file before it defines the
+- * struct.
+- */
+-struct object_id;
+-
+ /**
+  * Life Cycle Functions
+  * --------------------
+@@ -634,7 +630,6 @@ void strbuf_list_free(struct strbuf **list);
+  * Add the abbreviation, as generated by repo_find_unique_abbrev(), of `sha1` to
+  * the strbuf `sb`.
+  */
+-struct repository;
+ void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct repository *repo,
+ 				   const struct object_id *oid, int abbrev_len);
+ void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_id *oid,
 -- 
 gitgitgadget
 
