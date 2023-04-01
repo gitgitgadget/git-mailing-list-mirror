@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26D97C76196
-	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 15:10:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71CDDC6FD1D
+	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 15:10:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230094AbjDAPKy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Apr 2023 11:10:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42356 "EHLO
+        id S229947AbjDAPKz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Apr 2023 11:10:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230121AbjDAPKr (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230123AbjDAPKr (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 1 Apr 2023 11:10:47 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86C971BF72
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA24F1CBAE
         for <git@vger.kernel.org>; Sat,  1 Apr 2023 08:10:44 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id l10-20020a05600c1d0a00b003f04bd3691eso689022wms.5
+Received: by mail-wm1-x333.google.com with SMTP id d11-20020a05600c3acb00b003ef6e6754c5so11702874wms.5
         for <git@vger.kernel.org>; Sat, 01 Apr 2023 08:10:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112; t=1680361843;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=15k1+wysyoqwgOK4avZnVYPyEdw7efOu8zIndYH67jU=;
-        b=dK8M0pktAbMIwULax1rM29p08DR06CXS3GjiRIKTf6xGq77zJcrfhwmQLPWPJ2f/fQ
-         m48zxyTbndi07l3Q6eoHVurv8Hm/zEMuB8nFUo2B3KqzHY7acFaiV/3kKD4wmV+E6W0h
-         5ygpAeoeb0fWBAVq4afe2vkH5bKUDaIQoqkub+TpEzzXssVFjkN+XjZ5xga1Y80JVyu+
-         A7RXWToYw8XyJjvsOxbkIqiZBw8wAwcqFiDfubwGDXmAVmducycoaQcRdxt1bmOd6+8g
-         A52joHTdIjACIIwiqzRcJJXOzdnnfo0i/n64+xS6HCotwnT5cdF5Y+VaH5JF7tbPSSed
-         snmA==
+        bh=8TR4N/Efmqx5wIuutFZPJqwYUKvntB+y/dChvQi+xps=;
+        b=Vkr2EQxsYHiDvO/xHOOdoDnN+6jqlK5ebJCn9R6kOnLJcoDHlOl9TRWWN4DhSekY7e
+         7y+DcKmWg1LTISPU+T9Th50Mtbi3dX35oG8zPWopE051uLhClrfz4w2wueW/Qcilu8Jr
+         Ya5JbLJVOXAJCodAaBIXMCgtckT085DmwePlBptOqtuhSEzJ6Ni9BEWMOIRT9p5zlekt
+         Th2JBhyWIfL3Y+8iqhaipI1GlGffSjCf91VTMTAwv3xb7UJPN9lbzyoT9jIBxi03ssKl
+         OU/r2VSG4sTDnngsSyGYj7XIfaf3JQe2D+b929/3fsm2CeEA1WGVUcaI/tH14paOSH3q
+         lKzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112; t=1680361843;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=15k1+wysyoqwgOK4avZnVYPyEdw7efOu8zIndYH67jU=;
-        b=kHyyWsU3xmbwHRBs1rmgCUIe+xi6kCnoTQKHU1M62tPgSX43kRyNwrT0rB389HyV11
-         Qk6b79Yi7/B+k1OX1jzPsvPwKp8SgQmVir80Tep5TM4XazskQi/hRNNaGvzozuNpbyTL
-         1hFdq6PhsZ68iuUDcZ7o4G/ZvqySuKq8kSuj2LXd4NRhABeitmuEpGU4bigLbVNJmNHc
-         BzM4Ee/0JmUMJTze4mDoGeZ8Y6jMMdWOyD41y5X0GX4E+mI6DDBbbLXEGhk4AxQQu0ik
-         Aai+Csyb713t41lEEZG5pj2n76Qt6xu5Tgw6X+KmidgRf5qTcFKZ7MEGtj1lPB5Ewou7
-         pcuA==
-X-Gm-Message-State: AAQBX9cnCyR+KE+iLYW/3ASpJT5z/L9HqAYnHTjluiSMq33gjmXZx2jI
-        lH0aCQHi3TQPJnzlHgczlUEFCGAFYow=
-X-Google-Smtp-Source: AKy350borSJAJ9Kz/75Ag/pIfYytyNAw3ZV73h+1SlCOWsvY5IxOu+MB9Jcl4n8t0lG1mpYCxEFE5A==
-X-Received: by 2002:a7b:c84e:0:b0:3f0:3ab2:a7e5 with SMTP id c14-20020a7bc84e000000b003f03ab2a7e5mr6076903wml.34.1680361842654;
-        Sat, 01 Apr 2023 08:10:42 -0700 (PDT)
+        bh=8TR4N/Efmqx5wIuutFZPJqwYUKvntB+y/dChvQi+xps=;
+        b=Dr4p+VtyjScrxSctg53ci0bOnL2eO6Fc6GktnTPvRnAqH2zp8g32By+D1rLL6oY3cR
+         myUP/FrUEzKbXA7mQg30L3586xNERKZ9ehbrZQthYS/M1VN+JNSTYWQXCuKlLgQTeXjc
+         VShWwuAV8ciRHhDfocFwlufePLLhxJDWSc/SltAuQnU6Mb+WqzYXdSccJxNP2sZAdBNV
+         DE4NjRDa9gBCLGsjAyrmqiQnnRatx/0TFmvgKdSz25dhTrJY1SzJcINN0lznFmbwz/DW
+         KKEdUL+f+1v7ngEcGJbzwhx32Qz9rp1CMPz94tZKzGrGCmn/5F9dZe/X34+9kRCFneLz
+         RKGQ==
+X-Gm-Message-State: AO0yUKX1VOsVVXcz2WHbBVxZzX8i8+DZeD/q0hsaXcL53wy7eLhK6M0j
+        +cJWEcHHIxVwnuBiyALi2INCL/cpdLI=
+X-Google-Smtp-Source: AK7set/5B1fsPhyKf2a1QREo0mVrIgFXT/OEHwGoABEtHWgGzHlr382VbKqrtatuuGLxQpFhg9dwJQ==
+X-Received: by 2002:a05:600c:2305:b0:3ee:9c0e:c78f with SMTP id 5-20020a05600c230500b003ee9c0ec78fmr22861732wmo.5.1680361843153;
+        Sat, 01 Apr 2023 08:10:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a5-20020adffb85000000b002c794495f6fsm5068002wrr.117.2023.04.01.08.10.41
+        by smtp.gmail.com with ESMTPSA id v8-20020a05600c470800b003ef71d7d64asm13731774wmo.6.2023.04.01.08.10.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 08:10:41 -0700 (PDT)
-Message-Id: <6acf4eb2c7734883837b8c10bfdaa7cf4963af10.1680361838.git.gitgitgadget@gmail.com>
+        Sat, 01 Apr 2023 08:10:42 -0700 (PDT)
+Message-Id: <e163bed61ff7330d7ed2991a4e19f8ead917063b.1680361839.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1509.git.1680361837.gitgitgadget@gmail.com>
 References: <pull.1509.git.1680361837.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 01 Apr 2023 15:10:14 +0000
-Subject: [PATCH 01/24] treewide: be explicit about dependence on trace.h &
- trace2.h
+Date:   Sat, 01 Apr 2023 15:10:15 +0000
+Subject: [PATCH 02/24] treewide: be explicit about dependence on advice.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,830 +69,323 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Dozens of files made use of trace and trace2 functions, without
-explicitly including trace.h or trace2.h.  This made it more difficult
-to find which files could remove a dependence on cache.h.  Make C files
-explicitly include trace.h or trace2.h if they are using them.
+Dozens of files made use of advice functions, without explicitly
+including advice.h.  This made it more difficult to find which files
+could remove a dependence on cache.h.  Make C files explicitly include
+advice.h if they are using it.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- blame.c                                  | 1 +
- builtin/checkout.c                       | 1 +
- builtin/commit-graph.c                   | 1 +
- builtin/fetch.c                          | 2 ++
- builtin/fsmonitor--daemon.c              | 1 +
- builtin/gc.c                             | 1 +
- builtin/push.c                           | 1 +
- builtin/rebase.c                         | 1 +
- builtin/receive-pack.c                   | 2 ++
- builtin/reset.c                          | 2 ++
- cache-tree.c                             | 2 ++
- cache.h                                  | 2 --
- chdir-notify.c                           | 1 +
- common-main.c                            | 1 +
- compat/fsmonitor/fsm-listen-win32.c      | 1 +
- compat/mingw.c                           | 1 +
- compat/simple-ipc/ipc-unix-socket.c      | 1 +
- compat/simple-ipc/ipc-win32.c            | 2 ++
- compat/win32/trace2_win32_process_info.c | 1 +
- config.c                                 | 1 +
- connect.c                                | 1 +
- convert.c                                | 1 +
- diff-lib.c                               | 1 +
- dir.c                                    | 1 +
- environment.c                            | 1 +
- exec-cmd.c                               | 2 ++
- fetch-pack.c                             | 1 +
- fsmonitor.c                              | 1 +
- fsmonitor.h                              | 1 +
- git.c                                    | 2 ++
- http.c                                   | 1 +
- merge-ort.c                              | 1 +
- name-hash.c                              | 1 +
- notes-merge.c                            | 1 +
- pack-bitmap.c                            | 1 +
- pack-revindex.c                          | 1 +
- packfile.c                               | 1 +
- pkt-line.c                               | 1 +
- preload-index.c                          | 1 +
- progress.c                               | 1 +
- promisor-remote.c                        | 1 +
- protocol.c                               | 1 +
- read-cache.c                             | 1 +
- remote-curl.c                            | 1 +
- repository.c                             | 1 +
- revision.c                               | 1 +
- run-command.c                            | 2 ++
- scalar.c                                 | 1 +
- setup.c                                  | 1 +
- shallow.c                                | 1 +
- submodule.c                              | 1 +
- t/helper/test-date.c                     | 1 +
- t/helper/test-lazy-init-name-hash.c      | 1 +
- t/helper/test-path-utils.c               | 1 +
- trace.c                                  | 1 +
- trace2.c                                 | 1 +
- transport.c                              | 1 +
- tree-walk.c                              | 1 +
- unpack-trees.c                           | 1 +
- upload-pack.c                            | 1 +
- wrapper.c                                | 1 +
- wt-status.c                              | 2 ++
- 62 files changed, 70 insertions(+), 2 deletions(-)
+ add-patch.c               | 1 +
+ branch.c                  | 1 +
+ builtin/add.c             | 1 +
+ builtin/am.c              | 1 +
+ builtin/clone.c           | 1 +
+ builtin/commit.c          | 1 +
+ builtin/fetch.c           | 1 +
+ builtin/merge-recursive.c | 1 +
+ builtin/merge.c           | 1 +
+ builtin/mv.c              | 1 +
+ builtin/pull.c            | 1 +
+ builtin/push.c            | 1 +
+ builtin/reset.c           | 1 +
+ builtin/tag.c             | 1 +
+ cache.h                   | 1 -
+ config.c                  | 1 +
+ convert.c                 | 1 +
+ editor.c                  | 1 +
+ notes-merge.c             | 1 +
+ object-name.c             | 1 +
+ refs.c                    | 1 +
+ sequencer.c               | 1 +
+ transport.c               | 1 +
+ unpack-trees.c            | 1 +
+ wt-status.c               | 1 +
+ 25 files changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/blame.c b/blame.c
-index 62db9807640..3455f6a5ea3 100644
---- a/blame.c
-+++ b/blame.c
-@@ -9,6 +9,7 @@
- #include "hex.h"
- #include "setup.h"
- #include "tag.h"
-+#include "trace2.h"
- #include "blame.h"
+diff --git a/add-patch.c b/add-patch.c
+index 1e1ee2df596..b381f14a7de 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "add-interactive.h"
++#include "advice.h"
  #include "alloc.h"
- #include "commit-slab.h"
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 38a8cd6a965..422ea768404 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -26,6 +26,7 @@
- #include "setup.h"
- #include "submodule.h"
- #include "submodule-config.h"
-+#include "trace2.h"
- #include "tree.h"
- #include "tree-walk.h"
- #include "unpack-trees.h"
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 90114269761..a3d00fa232b 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -12,6 +12,7 @@
- #include "progress.h"
- #include "replace-object.h"
- #include "tag.h"
-+#include "trace2.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/branch.c b/branch.c
+index 99a0e7889e4..3a087b8b4c1 100644
+--- a/branch.c
++++ b/branch.c
+@@ -1,5 +1,6 @@
+ #include "git-compat-util.h"
+ #include "cache.h"
++#include "advice.h"
+ #include "config.h"
+ #include "branch.h"
+ #include "environment.h"
+diff --git a/builtin/add.c b/builtin/add.c
+index f12054d9be1..d3c51e28142 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -5,6 +5,7 @@
+  */
+ #define USE_THE_INDEX_VARIABLE
+ #include "cache.h"
++#include "advice.h"
+ #include "config.h"
+ #include "builtin.h"
+ #include "lockfile.h"
+diff --git a/builtin/am.c b/builtin/am.c
+index cd1e20f24e5..8d876f31546 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -6,6 +6,7 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "cache.h"
+ #include "abspath.h"
++#include "advice.h"
+ #include "config.h"
+ #include "builtin.h"
+ #include "environment.h"
+diff --git a/builtin/clone.c b/builtin/clone.c
+index c171def1f3e..f1e8aa3f27e 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -11,6 +11,7 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "builtin.h"
+ #include "abspath.h"
++#include "advice.h"
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 9d8e1ea91a3..b09017e04f9 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -7,6 +7,7 @@
  
- #define BUILTIN_COMMIT_GRAPH_VERIFY_USAGE \
- 	N_("git commit-graph verify [--object-dir <dir>] [--shallow] [--[no-]progress]")
+ #define USE_THE_INDEX_VARIABLE
+ #include "cache.h"
++#include "advice.h"
+ #include "config.h"
+ #include "lockfile.h"
+ #include "cache-tree.h"
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 6a6a58d49c9..ffe0e214592 100644
+index ffe0e214592..f2b80987751 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -31,6 +31,8 @@
- #include "promisor-remote.h"
- #include "commit-graph.h"
- #include "shallow.h"
-+#include "trace.h"
-+#include "trace2.h"
- #include "worktree.h"
- #include "bundle-uri.h"
- 
-diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
-index a280d8bb14f..df876b41d65 100644
---- a/builtin/fsmonitor--daemon.c
-+++ b/builtin/fsmonitor--daemon.c
-@@ -14,6 +14,7 @@
- #include "simple-ipc.h"
- #include "khash.h"
- #include "pkt-line.h"
-+#include "trace2.h"
- 
- static const char * const builtin_fsmonitor__daemon_usage[] = {
- 	N_("git fsmonitor--daemon start [<options>]"),
-diff --git a/builtin/gc.c b/builtin/gc.c
-index b291e23b13d..000a2ef5e11 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -37,6 +37,7 @@
+@@ -2,6 +2,7 @@
+  * "git fetch"
+  */
+ #include "cache.h"
++#include "advice.h"
+ #include "config.h"
  #include "gettext.h"
- #include "hook.h"
- #include "setup.h"
-+#include "trace2.h"
- #include "wrapper.h"
- 
- #define FAILED_RUN "failed to run %s"
+ #include "environment.h"
+diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+index 8ea9dc78aa1..25f42f2be7e 100644
+--- a/builtin/merge-recursive.c
++++ b/builtin/merge-recursive.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "builtin.h"
++#include "advice.h"
+ #include "commit.h"
+ #include "gettext.h"
+ #include "tag.h"
+diff --git a/builtin/merge.c b/builtin/merge.c
+index a99be9610e9..225b7064066 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -9,6 +9,7 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "cache.h"
+ #include "abspath.h"
++#include "advice.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "environment.h"
+diff --git a/builtin/mv.c b/builtin/mv.c
+index b7c5ffbd8c7..8f7770aa32b 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -6,6 +6,7 @@
+ #define USE_THE_INDEX_VARIABLE
+ #include "builtin.h"
+ #include "abspath.h"
++#include "advice.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "environment.h"
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 5405d09f22f..636ce12c94d 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -7,6 +7,7 @@
+  */
+ #define USE_THE_INDEX_VARIABLE
+ #include "cache.h"
++#include "advice.h"
+ #include "config.h"
+ #include "builtin.h"
+ #include "gettext.h"
 diff --git a/builtin/push.c b/builtin/push.c
-index fa550b8f80a..a99ba38a368 100644
+index a99ba38a368..6001e4ae0a4 100644
 --- a/builtin/push.c
 +++ b/builtin/push.c
-@@ -16,6 +16,7 @@
- #include "submodule.h"
- #include "submodule-config.h"
- #include "send-pack.h"
-+#include "trace2.h"
- #include "color.h"
- 
- static const char * const push_usage[] = {
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index dbc8f90ef04..fb859f93a30 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -32,6 +32,7 @@
- #include "sequencer.h"
- #include "rebase-interactive.h"
- #include "reset.h"
-+#include "trace2.h"
- #include "hook.h"
- #include "wrapper.h"
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 2ba5a74ba7b..aa5b6fe861f 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -32,6 +32,8 @@
- #include "object-store.h"
- #include "protocol.h"
- #include "commit-reach.h"
-+#include "trace.h"
-+#include "trace2.h"
- #include "worktree.h"
- #include "shallow.h"
- #include "wrapper.h"
+@@ -2,6 +2,7 @@
+  * "git push"
+  */
+ #include "cache.h"
++#include "advice.h"
+ #include "branch.h"
+ #include "config.h"
+ #include "environment.h"
 diff --git a/builtin/reset.c b/builtin/reset.c
-index 0ed329236c8..4d639ec6b37 100644
+index 4d639ec6b37..d8c52cc6edf 100644
 --- a/builtin/reset.c
 +++ b/builtin/reset.c
-@@ -29,6 +29,8 @@
- #include "setup.h"
- #include "submodule.h"
- #include "submodule-config.h"
-+#include "trace.h"
-+#include "trace2.h"
- #include "dir.h"
- #include "add-interactive.h"
+@@ -9,6 +9,7 @@
+  */
+ #define USE_THE_INDEX_VARIABLE
+ #include "builtin.h"
++#include "advice.h"
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/builtin/tag.c b/builtin/tag.c
+index bfd51389571..3e801f54a07 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -7,6 +7,7 @@
+  */
  
-diff --git a/cache-tree.c b/cache-tree.c
-index ff14b527da3..39f0c744727 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -11,6 +11,8 @@
- #include "replace-object.h"
- #include "promisor-remote.h"
- #include "sparse-index.h"
-+#include "trace.h"
-+#include "trace2.h"
- 
- #ifndef DEBUG_CACHE_TREE
- #define DEBUG_CACHE_TREE 0
+ #include "cache.h"
++#include "advice.h"
+ #include "config.h"
+ #include "builtin.h"
+ #include "environment.h"
 diff --git a/cache.h b/cache.h
-index 82d7b112b4e..c8ae80fded3 100644
+index c8ae80fded3..d9ca2688d8c 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -8,8 +8,6 @@
- #include "advice.h"
+@@ -5,7 +5,6 @@
+ #include "strbuf.h"
+ #include "hashmap.h"
+ #include "list.h"
+-#include "advice.h"
  #include "gettext.h"
  #include "convert.h"
--#include "trace.h"
--#include "trace2.h"
  #include "string-list.h"
- #include "pack-revindex.h"
- #include "hash.h"
-diff --git a/chdir-notify.c b/chdir-notify.c
-index 929ec01b3a2..8e38cd6f3ae 100644
---- a/chdir-notify.c
-+++ b/chdir-notify.c
-@@ -3,6 +3,7 @@
- #include "chdir-notify.h"
- #include "list.h"
- #include "strbuf.h"
-+#include "trace.h"
- 
- struct chdir_notify_entry {
- 	const char *name;
-diff --git a/common-main.c b/common-main.c
-index b83cb5cf066..f3193173535 100644
---- a/common-main.c
-+++ b/common-main.c
-@@ -3,6 +3,7 @@
- #include "gettext.h"
- #include "attr.h"
- #include "setup.h"
-+#include "trace2.h"
- 
- /*
-  * Many parts of Git have subprograms communicate via pipe, expect the
-diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
-index 7b07b74ba5b..677b1bbdeca 100644
---- a/compat/fsmonitor/fsm-listen-win32.c
-+++ b/compat/fsmonitor/fsm-listen-win32.c
-@@ -4,6 +4,7 @@
- #include "fsm-listen.h"
- #include "fsmonitor--daemon.h"
- #include "gettext.h"
-+#include "trace2.h"
- 
- /*
-  * The documentation of ReadDirectoryChangesW() states that the maximum
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 94c5a1daa40..abbc3faf32f 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -12,6 +12,7 @@
- #include "win32/lazyload.h"
- #include "../config.h"
- #include "../environment.h"
-+#include "../trace2.h"
- #include "../wrapper.h"
- #include "dir.h"
- #include "gettext.h"
-diff --git a/compat/simple-ipc/ipc-unix-socket.c b/compat/simple-ipc/ipc-unix-socket.c
-index 152db60a311..7064475b39f 100644
---- a/compat/simple-ipc/ipc-unix-socket.c
-+++ b/compat/simple-ipc/ipc-unix-socket.c
-@@ -4,6 +4,7 @@
- #include "strbuf.h"
- #include "pkt-line.h"
- #include "thread-utils.h"
-+#include "trace2.h"
- #include "unix-socket.h"
- #include "unix-stream-server.h"
- 
-diff --git a/compat/simple-ipc/ipc-win32.c b/compat/simple-ipc/ipc-win32.c
-index 997f6144344..6adce3c650e 100644
---- a/compat/simple-ipc/ipc-win32.c
-+++ b/compat/simple-ipc/ipc-win32.c
-@@ -5,6 +5,8 @@
- #include "strbuf.h"
- #include "pkt-line.h"
- #include "thread-utils.h"
-+#include "trace.h"
-+#include "trace2.h"
- #include "accctrl.h"
- #include "aclapi.h"
- 
-diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
-index a53fd924340..e3e895c78a2 100644
---- a/compat/win32/trace2_win32_process_info.c
-+++ b/compat/win32/trace2_win32_process_info.c
-@@ -1,5 +1,6 @@
- #include "../../cache.h"
- #include "../../json-writer.h"
-+#include "../../trace2.h"
- #include "lazyload.h"
- #include <Psapi.h>
- #include <tlHelp32.h>
 diff --git a/config.c b/config.c
-index 5ad9ae91436..e5c2e477319 100644
+index e5c2e477319..3cee6538f3f 100644
 --- a/config.c
 +++ b/config.c
-@@ -28,6 +28,7 @@
- #include "replace-object.h"
- #include "refs.h"
- #include "setup.h"
-+#include "trace2.h"
- #include "worktree.h"
- #include "wrapper.h"
- #include "write-or-die.h"
-diff --git a/connect.c b/connect.c
-index 737dd906f72..929f72ec5d7 100644
---- a/connect.c
-+++ b/connect.c
-@@ -14,6 +14,7 @@
- #include "string-list.h"
- #include "oid-array.h"
- #include "transport.h"
-+#include "trace2.h"
- #include "strbuf.h"
- #include "version.h"
- #include "protocol.h"
+@@ -7,6 +7,7 @@
+  */
+ #include "cache.h"
+ #include "abspath.h"
++#include "advice.h"
+ #include "alloc.h"
+ #include "date.h"
+ #include "branch.h"
 diff --git a/convert.c b/convert.c
-index da06e2f51cb..126036ec330 100644
+index 126036ec330..59127706448 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -9,6 +9,7 @@
- #include "sigchain.h"
- #include "pkt-line.h"
- #include "sub-process.h"
-+#include "trace.h"
- #include "utf8.h"
- #include "ll-merge.h"
- #include "wrapper.h"
-diff --git a/diff-lib.c b/diff-lib.c
-index 4169dd8cb13..8b5cca96ace 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -13,6 +13,7 @@
- #include "unpack-trees.h"
- #include "refs.h"
- #include "submodule.h"
-+#include "trace.h"
- #include "dir.h"
- #include "fsmonitor.h"
- #include "commit-reach.h"
-diff --git a/dir.c b/dir.c
-index 18fd14c46b2..10f6c38b930 100644
---- a/dir.c
-+++ b/dir.c
-@@ -23,6 +23,7 @@
- #include "fsmonitor.h"
- #include "setup.h"
- #include "submodule-config.h"
-+#include "trace2.h"
- #include "wrapper.h"
- 
- /*
-diff --git a/environment.c b/environment.c
-index 63c697e7e97..2254595e4a8 100644
---- a/environment.c
-+++ b/environment.c
-@@ -24,6 +24,7 @@
- #include "chdir-notify.h"
- #include "setup.h"
- #include "shallow.h"
-+#include "trace.h"
- #include "wrapper.h"
- #include "write-or-die.h"
- 
-diff --git a/exec-cmd.c b/exec-cmd.c
-index fae0d4b244a..6f618463896 100644
---- a/exec-cmd.c
-+++ b/exec-cmd.c
-@@ -5,6 +5,8 @@
- #include "gettext.h"
- #include "quote.h"
- #include "strvec.h"
-+#include "trace.h"
-+#include "trace2.h"
- 
- #if defined(RUNTIME_PREFIX)
- 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 368f2ed25a1..7d4f190fb1d 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -17,6 +17,7 @@
- #include "remote.h"
- #include "run-command.h"
- #include "connect.h"
-+#include "trace2.h"
- #include "transport.h"
- #include "version.h"
- #include "oid-array.h"
-diff --git a/fsmonitor.c b/fsmonitor.c
-index c956a347a27..28c083d4d84 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -7,6 +7,7 @@
- #include "fsmonitor-ipc.h"
- #include "run-command.h"
- #include "strbuf.h"
-+#include "trace2.h"
- 
- #define INDEX_EXTENSION_VERSION1	(1)
- #define INDEX_EXTENSION_VERSION2	(2)
-diff --git a/fsmonitor.h b/fsmonitor.h
-index edf7ce5203b..67faf592e12 100644
---- a/fsmonitor.h
-+++ b/fsmonitor.h
-@@ -4,6 +4,7 @@
+@@ -1,4 +1,5 @@
  #include "cache.h"
- #include "dir.h"
- #include "fsmonitor-settings.h"
-+#include "trace.h"
- 
- extern struct trace_key trace_fsmonitor;
- 
-diff --git a/git.c b/git.c
-index 77f920a6f6f..d2bb86e0d32 100644
---- a/git.c
-+++ b/git.c
-@@ -9,6 +9,8 @@
- #include "replace-object.h"
- #include "setup.h"
- #include "shallow.h"
-+#include "trace.h"
-+#include "trace2.h"
- 
- #define RUN_SETUP		(1<<0)
- #define RUN_SETUP_GENTLY	(1<<1)
-diff --git a/http.c b/http.c
-index dbe4d29ef7a..0212c0ad3b2 100644
---- a/http.c
-+++ b/http.c
-@@ -12,6 +12,7 @@
- #include "version.h"
- #include "pkt-line.h"
++#include "advice.h"
+ #include "config.h"
  #include "gettext.h"
-+#include "trace.h"
- #include "transport.h"
- #include "packfile.h"
- #include "protocol.h"
-diff --git a/merge-ort.c b/merge-ort.c
-index 5bf64354d16..ad7367179d9 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -37,6 +37,7 @@
- #include "strmap.h"
- #include "submodule-config.h"
- #include "submodule.h"
-+#include "trace2.h"
- #include "tree.h"
- #include "unpack-trees.h"
- #include "xdiff-interface.h"
-diff --git a/name-hash.c b/name-hash.c
-index 2c2861efd1c..fb13716e430 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -9,6 +9,7 @@
+ #include "hex.h"
+diff --git a/editor.c b/editor.c
+index d632d790660..3bea3ef72f7 100644
+--- a/editor.c
++++ b/editor.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "abspath.h"
++#include "advice.h"
+ #include "config.h"
  #include "environment.h"
  #include "gettext.h"
- #include "thread-utils.h"
-+#include "trace.h"
- #include "trace2.h"
- #include "sparse-index.h"
- 
 diff --git a/notes-merge.c b/notes-merge.c
-index c40107c3aa0..19405ec71ac 100644
+index 19405ec71ac..0258f87d21f 100644
 --- a/notes-merge.c
 +++ b/notes-merge.c
-@@ -13,6 +13,7 @@
- #include "notes.h"
- #include "notes-merge.h"
- #include "strbuf.h"
-+#include "trace.h"
- #include "notes-utils.h"
- #include "commit-reach.h"
- #include "wrapper.h"
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 23d87e71bd9..eba838d24ee 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -15,6 +15,7 @@
- #include "pack-objects.h"
- #include "packfile.h"
- #include "repository.h"
-+#include "trace2.h"
- #include "object-store.h"
- #include "list-objects-filter-options.h"
- #include "midx.h"
-diff --git a/pack-revindex.c b/pack-revindex.c
-index 03c7e81f9da..9f9927d9471 100644
---- a/pack-revindex.c
-+++ b/pack-revindex.c
-@@ -3,6 +3,7 @@
- #include "pack-revindex.h"
- #include "object-store.h"
- #include "packfile.h"
-+#include "trace2.h"
- #include "config.h"
- #include "midx.h"
- 
-diff --git a/packfile.c b/packfile.c
-index b120405ccc8..2d3dabb1aee 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -15,6 +15,7 @@
- #include "commit.h"
- #include "object.h"
- #include "tag.h"
-+#include "trace.h"
- #include "tree-walk.h"
- #include "tree.h"
- #include "object-store.h"
-diff --git a/pkt-line.c b/pkt-line.c
-index 36ae0fea4a3..3561d853584 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -3,6 +3,7 @@
- #include "gettext.h"
- #include "hex.h"
- #include "run-command.h"
-+#include "trace.h"
- #include "wrapper.h"
- #include "write-or-die.h"
- 
-diff --git a/preload-index.c b/preload-index.c
-index 52544d004e7..4abf9c983b2 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -11,6 +11,7 @@
- #include "progress.h"
- #include "thread-utils.h"
- #include "repository.h"
-+#include "trace2.h"
- 
- /*
-  * Mostly randomly chosen maximum thread counts: we
-diff --git a/progress.c b/progress.c
-index 44c784d75f1..c5c8514737a 100644
---- a/progress.c
-+++ b/progress.c
-@@ -13,6 +13,7 @@
- #include "progress.h"
- #include "strbuf.h"
- #include "trace.h"
-+#include "trace2.h"
- #include "utf8.h"
- #include "config.h"
- 
-diff --git a/promisor-remote.c b/promisor-remote.c
-index a8dbb788e8f..9d83d2f4b9c 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -4,6 +4,7 @@
- #include "object-store.h"
- #include "promisor-remote.h"
- #include "config.h"
-+#include "trace2.h"
- #include "transport.h"
- #include "strvec.h"
- #include "packfile.h"
-diff --git a/protocol.c b/protocol.c
-index bdb32e1eeb6..4d8eb887e82 100644
---- a/protocol.c
-+++ b/protocol.c
-@@ -2,6 +2,7 @@
- #include "config.h"
- #include "environment.h"
- #include "protocol.h"
-+#include "trace2.h"
- 
- static enum protocol_version parse_protocol_version(const char *value)
- {
-diff --git a/read-cache.c b/read-cache.c
-index e5e72169047..a744eb89e4e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -23,6 +23,7 @@
- #include "resolve-undo.h"
- #include "run-command.h"
- #include "strbuf.h"
-+#include "trace2.h"
- #include "varint.h"
- #include "split-index.h"
- #include "utf8.h"
-diff --git a/remote-curl.c b/remote-curl.c
-index 0f2410da8e7..0ada1dd8026 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -21,6 +21,7 @@
- #include "setup.h"
- #include "protocol.h"
- #include "quote.h"
-+#include "trace2.h"
- #include "transport.h"
- #include "write-or-die.h"
- 
-diff --git a/repository.c b/repository.c
-index f6d9f5db08e..c53e480e326 100644
---- a/repository.c
-+++ b/repository.c
-@@ -14,6 +14,7 @@
- #include "setup.h"
- #include "submodule-config.h"
- #include "sparse-index.h"
-+#include "trace2.h"
- #include "promisor-remote.h"
- 
- /* The main repository */
-diff --git a/revision.c b/revision.c
-index cd3e841433a..7c34c93885e 100644
---- a/revision.c
-+++ b/revision.c
-@@ -31,6 +31,7 @@
- #include "worktree.h"
- #include "setup.h"
- #include "strvec.h"
-+#include "trace2.h"
- #include "commit-reach.h"
- #include "commit-graph.h"
- #include "prio-queue.h"
-diff --git a/run-command.c b/run-command.c
-index 614d48fa9a2..e64bb08a5bf 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -8,6 +8,8 @@
- #include "thread-utils.h"
- #include "strbuf.h"
- #include "string-list.h"
-+#include "trace.h"
-+#include "trace2.h"
- #include "quote.h"
- #include "config.h"
- #include "packfile.h"
-diff --git a/scalar.c b/scalar.c
-index 27635658c01..f7680463e1b 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -16,6 +16,7 @@
- #include "packfile.h"
- #include "help.h"
- #include "setup.h"
-+#include "trace2.h"
- 
- static void setup_enlistment_directory(int argc, const char **argv,
- 				       const char * const *usagestr,
-diff --git a/setup.c b/setup.c
-index 6c5b85e96c1..3bb7a9fff62 100644
---- a/setup.c
-+++ b/setup.c
-@@ -10,6 +10,7 @@
- #include "chdir-notify.h"
- #include "promisor-remote.h"
- #include "quote.h"
-+#include "trace2.h"
- 
- static int inside_git_dir = -1;
- static int inside_work_tree = -1;
-diff --git a/shallow.c b/shallow.c
-index b4d726bd595..128f56179ed 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -17,6 +17,7 @@
- #include "list-objects.h"
- #include "commit-reach.h"
- #include "shallow.h"
-+#include "trace.h"
- #include "wrapper.h"
- 
- void set_alternate_shallow_file(struct repository *r, const char *path, int override)
-diff --git a/submodule.c b/submodule.c
-index d7d0a8a0834..58c9d5e5673 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -28,6 +28,7 @@
- #include "commit-reach.h"
- #include "setup.h"
- #include "shallow.h"
-+#include "trace2.h"
- 
- static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
- static int initialized_fetch_ref_tips;
-diff --git a/t/helper/test-date.c b/t/helper/test-date.c
-index 45951b1df87..a01eec99f35 100644
---- a/t/helper/test-date.c
-+++ b/t/helper/test-date.c
-@@ -1,6 +1,7 @@
- #include "test-tool.h"
+@@ -1,4 +1,5 @@
  #include "cache.h"
- #include "date.h"
-+#include "trace.h"
- 
- static const char *usage_msg = "\n"
- "  test-tool date relative [time_t]...\n"
-diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-init-name-hash.c
-index 06ce3a47ccf..f23d983c118 100644
---- a/t/helper/test-lazy-init-name-hash.c
-+++ b/t/helper/test-lazy-init-name-hash.c
-@@ -4,6 +4,7 @@
++#include "advice.h"
+ #include "commit.h"
+ #include "gettext.h"
+ #include "refs.h"
+diff --git a/object-name.c b/object-name.c
+index 53f9d359ee8..ff647d6c7b5 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "advice.h"
+ #include "config.h"
  #include "environment.h"
- #include "parse-options.h"
- #include "setup.h"
-+#include "trace.h"
+ #include "gettext.h"
+diff --git a/refs.c b/refs.c
+index 0f369dbde7a..cfced6f174a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3,6 +3,7 @@
+  */
  
- static int single;
- static int multi;
-diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-index 4f5ac2fadce..6355c9e4b6d 100644
---- a/t/helper/test-path-utils.c
-+++ b/t/helper/test-path-utils.c
-@@ -4,6 +4,7 @@
+ #include "cache.h"
++#include "advice.h"
+ #include "alloc.h"
+ #include "config.h"
  #include "environment.h"
- #include "setup.h"
- #include "string-list.h"
-+#include "trace.h"
- #include "utf8.h"
- 
- /*
-diff --git a/trace.c b/trace.c
-index 81318a2455d..d8eaa0a786a 100644
---- a/trace.c
-+++ b/trace.c
-@@ -26,6 +26,7 @@
+diff --git a/sequencer.c b/sequencer.c
+index 1a315ac13c9..eaba379e3ad 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1,5 +1,6 @@
+ #include "cache.h"
+ #include "abspath.h"
++#include "advice.h"
+ #include "alloc.h"
+ #include "config.h"
  #include "environment.h"
- #include "quote.h"
- #include "setup.h"
-+#include "trace.h"
- #include "wrapper.h"
- 
- struct trace_key trace_default_key = { "GIT_TRACE", 0, 0, 0 };
-diff --git a/trace2.c b/trace2.c
-index e8ba62c0c3d..21264df71b7 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -7,6 +7,7 @@
- #include "thread-utils.h"
- #include "version.h"
- #include "trace.h"
-+#include "trace2.h"
- #include "trace2/tr2_cfg.h"
- #include "trace2/tr2_cmd_name.h"
- #include "trace2/tr2_ctr.h"
 diff --git a/transport.c b/transport.c
-index d2a1af43b5c..11b38d16dcf 100644
+index 11b38d16dcf..82bf2496ba7 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -22,6 +22,7 @@
- #include "string-list.h"
- #include "oid-array.h"
- #include "sigchain.h"
-+#include "trace2.h"
- #include "transport-internal.h"
- #include "protocol.h"
- #include "object-store.h"
-diff --git a/tree-walk.c b/tree-walk.c
-index 38b6556478d..59add24c8e9 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -5,6 +5,7 @@
- #include "gettext.h"
- #include "hex.h"
- #include "object-store.h"
-+#include "trace2.h"
- #include "tree.h"
- #include "pathspec.h"
- #include "json-writer.h"
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "advice.h"
+ #include "alloc.h"
+ #include "config.h"
+ #include "environment.h"
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 4a5522bdb26..d41489b4adb 100644
+index d41489b4adb..c6de2ca5a7e 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -17,6 +17,7 @@
- #include "sparse-index.h"
- #include "submodule.h"
- #include "submodule-config.h"
-+#include "trace2.h"
- #include "fsmonitor.h"
- #include "object-store.h"
- #include "promisor-remote.h"
-diff --git a/upload-pack.c b/upload-pack.c
-index e23f16dfdd2..71440c63806 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -22,6 +22,7 @@
- #include "version.h"
- #include "string-list.h"
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "advice.h"
  #include "strvec.h"
-+#include "trace2.h"
- #include "prio-queue.h"
- #include "protocol.h"
- #include "quote.h"
-diff --git a/wrapper.c b/wrapper.c
-index ee837575902..c130d7518bf 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -5,6 +5,7 @@
- #include "abspath.h"
+ #include "repository.h"
  #include "config.h"
- #include "gettext.h"
-+#include "trace2.h"
- #include "wrapper.h"
- 
- static intmax_t count_fsync_writeout_only;
 diff --git a/wt-status.c b/wt-status.c
-index 4bef09de1ca..ccbfd9cc6de 100644
+index ccbfd9cc6de..47f223c0f8d 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -18,6 +18,8 @@
- #include "column.h"
- #include "setup.h"
- #include "strbuf.h"
-+#include "trace.h"
-+#include "trace2.h"
- #include "utf8.h"
- #include "worktree.h"
- #include "lockfile.h"
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "advice.h"
+ #include "wt-status.h"
+ #include "object.h"
+ #include "dir.h"
 -- 
 gitgitgadget
 
