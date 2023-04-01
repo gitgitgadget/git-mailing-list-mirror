@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E9F4C6FD1D
-	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 08:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83C08C76196
+	for <git@archiver.kernel.org>; Sat,  1 Apr 2023 08:47:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229638AbjDAIrI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 1 Apr 2023 04:47:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55560 "EHLO
+        id S229675AbjDAIrT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 1 Apr 2023 04:47:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbjDAIqy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2023 04:46:54 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A6EC1F7B3
-        for <git@vger.kernel.org>; Sat,  1 Apr 2023 01:46:43 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id q27so17676746oiw.0
-        for <git@vger.kernel.org>; Sat, 01 Apr 2023 01:46:43 -0700 (PDT)
+        with ESMTP id S229450AbjDAIrA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2023 04:47:00 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A2720C29
+        for <git@vger.kernel.org>; Sat,  1 Apr 2023 01:46:44 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id f4-20020a9d0384000000b0069fab3f4cafso13135084otf.9
+        for <git@vger.kernel.org>; Sat, 01 Apr 2023 01:46:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680338802;
+        d=gmail.com; s=20210112; t=1680338803;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YALdm2/0a1pXRLq+ru7XwkN3rxaKhRZCMQQLXCsdWm4=;
-        b=DH+n2unKqJp32kRdQXG7Sc1QZ5Pby7Fjq4pVYKAQoYvjIkexLnRtytEJ/Bnmv8/G7v
-         w2kmKLFFyGyJCNXX+g3FBTPYRQ4DCiADh3xrITJ6D2OfawN9xchpGNrbwVF/BRyF33QN
-         TxjlWK4r/x6YgwyRFaN4d4nLEsyU+mldxmkH3Dxfo1dc4ahffgC/YdWTVpsNznEmIb/i
-         5YbediwV/dbAGtKIJxf5/lVsBNqCnjpu40xZOcADc/vriIEw5cpf2pB1hWO/EK0ygKML
-         6nXP5vpyF8E14K3lCb6JAP/h+E2R8683ZomlBcug2PQ5zPjT1V+/b4qeMFpcW/xo3h4h
-         d3WA==
+        bh=nIpnDUOgGlPCgKXX0oLBp3OIzqLY1SOFKqnWWMhtFjE=;
+        b=WRkUnJ9BRxQNkT3wo9bNyhiRrBLwKBac4rsB6QxulbLKA/YIyyh6DTuFOsfCkrhcFo
+         7MuwStPgXbk8HgLbLmMIaqLmDohm+AfVt7cVihf6gyU7eDQ2I5bjCNy9D0nCwJSEpLZm
+         VGJ0yyk//IetMF/N5dNxrNHt+YliyIxMKaUr4+WAaVJXW7KT1mb1xeaYqTQ4l88RY7tX
+         4knGkGQqKl0rOBgf8cpF9XvJZQRDPJxwQSY9jaUoeXd1dLrH6LtnkjqhKxcRFfKdprg/
+         DOGhWg2YLmZv9i1h6XspnVHJvVHNz7iJ9stl4h1koGrJFTWyNGjpZYQyMdnAB+EHoSXl
+         UktA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680338802;
+        d=1e100.net; s=20210112; t=1680338803;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YALdm2/0a1pXRLq+ru7XwkN3rxaKhRZCMQQLXCsdWm4=;
-        b=xsOx+AEa0JgahPF3Fgl3ucBMuo7VfWfM/MjKdbw1A+EKjdLnStZ9l4ZgYAN8Jh+YMY
-         kL9DWxTuXB2tANUrWyncFvWD/ZMJSz6bU25vgVs4DnOrDjIyXcA+SyHTt3WdXGDifsbd
-         tq7Z/NnUfyS2g1UqHHe+ehF0GzDlY/o+Gb5SPS29Iy30TX2b9Z1daNiAQ40GBc37TQem
-         Q7mKfiPEDcB7YK9DY09oaLqGy2tr6nbdfyd6ZR+KOYJOQANDUrYae41CElnQ7qQeOly2
-         lU7oLUZ+U2E1UMglIQm+s1rdExKvvKPa+OYHXahieCTVWZx5uUfF2P6LmthNKlVunpsw
-         gmgw==
-X-Gm-Message-State: AO0yUKU7nI+2bVySQ9Xl+I761vozDc7FDZg7f9LB5nzogd6g0lVl2LuM
-        pCPRprQHCRiHU+Xx93k6ufoOWHn0jNo=
-X-Google-Smtp-Source: AK7set/vXlDDJKbV1sSFzcYNgF21zCKuoalzsc+nknz2YVe/zYsLkc9Hq4zddyIm32gRp7yeJGouUA==
-X-Received: by 2002:aca:2217:0:b0:387:6a3b:5a86 with SMTP id b23-20020aca2217000000b003876a3b5a86mr13044221oic.28.1680338802165;
-        Sat, 01 Apr 2023 01:46:42 -0700 (PDT)
+        bh=nIpnDUOgGlPCgKXX0oLBp3OIzqLY1SOFKqnWWMhtFjE=;
+        b=wXtjX+Oy2Y8qavMCuBy6KBcAruqlNhEugdnZsWAtwj/JHtwca5/l18k6qk+CRCq4ZA
+         NVvUZD9LZ2dur4xZ/YLPHNl+8kAGvY1kHRzQZUuekLMZ92m6luvNxbjvLWK/5TSELBl7
+         Mq69CagXXwS+mFl2xWSvQw9pcH0yCtIiVflwxxcPV9vwWV8IoXdxnNsJfDzkcNPqjjbL
+         qNxtCgJL+M7KYKLuUHD1lxfe45JiogM9WP/s3mKmoURyvsbLs/ZBR2CwHlwJKKBz2ukG
+         /6CnOdwQxKfiYbYoyQTsOTMplk9XWgRg21aXYwkXdl3E1qIKuspdV8OpCc2sW8Za0nQz
+         qWyw==
+X-Gm-Message-State: AAQBX9dWwS6BIiiXrwFlRQvdrguQzrmt0t5qm/I7O9LGVYQhjAgb/P87
+        7zwdWDQZRdk8E2l7oCJeyzC5kTktsDc=
+X-Google-Smtp-Source: AKy350b0Rsn5CpcU18yLk1wPV8/oLeZCDrQ5ICfjI98ntoceFuZKq+27lF3p83B/MqDAdiJLIZUs7Q==
+X-Received: by 2002:a9d:6d05:0:b0:6a3:780:5848 with SMTP id o5-20020a9d6d05000000b006a307805848mr868908otp.25.1680338803400;
+        Sat, 01 Apr 2023 01:46:43 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id h4-20020aca1804000000b003896fc34eddsm1820393oih.52.2023.04.01.01.46.41
+        by smtp.gmail.com with ESMTPSA id u3-20020a4a5703000000b0053e3da7f810sm1773562ooa.25.2023.04.01.01.46.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Apr 2023 01:46:41 -0700 (PDT)
+        Sat, 01 Apr 2023 01:46:43 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH v7 10/49] completion: fix for suboptions with value
-Date:   Sat,  1 Apr 2023 02:45:47 -0600
-Message-Id: <20230401084626.304356-11-felipe.contreras@gmail.com>
+Subject: [PATCH v7 11/49] completion: zsh: trivial improvement
+Date:   Sat,  1 Apr 2023 02:45:48 -0600
+Message-Id: <20230401084626.304356-12-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20230401084626.304356-1-felipe.contreras@gmail.com>
 References: <20230401084626.304356-1-felipe.contreras@gmail.com>
@@ -64,56 +64,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We need to ignore options that don't start with -- as well.
+$words has basically all the words we need, except the first one: git.
 
-Depending on the value of COMP_WORDBREAKS, the last word could be
-duplicated otherwise.
-
-Can be tested with:
-
-  git merge -X diff-algorithm=<tab>
+Lets simply add that instead of passing the original, which contains
+options we don't want to pass downstream (like -c and -C).
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- contrib/completion/git-completion.zsh | 2 +-
- t/t9904-completion-zsh.sh             | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.zsh | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
-index d11f4765b6..13809f7894 100644
+index 13809f7894..790879e319 100644
 --- a/contrib/completion/git-completion.zsh
 +++ b/contrib/completion/git-completion.zsh
-@@ -56,7 +56,7 @@ __gitcomp ()
- 	local cur_="${3-$cur}"
+@@ -215,9 +215,6 @@ __git_zsh_main ()
+ {
+ 	local curcontext="$curcontext" state state_descr line
+ 	typeset -A opt_args
+-	local -a orig_words
+-
+-	orig_words=( ${words[@]} )
  
- 	case "$cur_" in
--	--*=)
-+	*=)
+ 	_arguments -C \
+ 		'(-p --paginate --no-pager)'{-p,--paginate}'[pipe all output into ''less'']' \
+@@ -257,7 +254,7 @@ __git_zsh_main ()
+ 
+ 		(( $+opt_args[--help] )) && command='help'
+ 
+-		words=( ${orig_words[@]} )
++		words=( git ${words[@]} )
+ 
+ 		__git_zsh_bash_func $command
  		;;
- 	--no-*)
- 		local c IFS=$' \t\n'
-diff --git a/t/t9904-completion-zsh.sh b/t/t9904-completion-zsh.sh
-index b7e4029bf9..994d57a67f 100755
---- a/t/t9904-completion-zsh.sh
-+++ b/t/t9904-completion-zsh.sh
-@@ -176,7 +176,7 @@ test_expect_success '__gitcomp - expand/narrow all negative options' '
- 	EOF
- '
- 
--test_expect_failure '__gitcomp - equal skip' '
-+test_expect_success '__gitcomp - equal skip' '
- 	test_gitcomp "--option=" "--option=" <<-\EOF &&
- 
- 	EOF
-@@ -1134,7 +1134,7 @@ test_expect_success 'git clone --config= - value' '
- 	EOF
- '
- 
--test_expect_failure 'options with value' '
-+test_expect_success 'options with value' '
- 	test_completion "git merge -X diff-algorithm=" <<-\EOF
- 
- 	EOF
 -- 
 2.33.0
 
