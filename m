@@ -2,227 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CAAAC76196
-	for <git@archiver.kernel.org>; Sun,  2 Apr 2023 09:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E109C76196
+	for <git@archiver.kernel.org>; Sun,  2 Apr 2023 10:41:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230090AbjDBJol (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Apr 2023 05:44:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45688 "EHLO
+        id S230310AbjDBKlQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Apr 2023 06:41:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjDBJok (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2023 05:44:40 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AC6E199B
-        for <git@vger.kernel.org>; Sun,  2 Apr 2023 02:44:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1680428671; i=l.s.r@web.de;
-        bh=BjC28764vPzN/Nz/ZW9FCe7AngG6wAxv8jTC93aBN/A=;
-        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=VTMSshQCJWPpgRW/+lxTIYwBVe1VwDdVEDQkGFN6b76n2Iv1iLTmswUwzDuETVuxY
-         2l22Vm2G1hAM5oBzydxLdw3WHYJD16T9ShVyn8XMqzC0jNSgTHEA/vanQniUfYbZoe
-         wPE/pr64vzhmnjLCg8q/WDOPTF+wht5BLtUoVx5s00rkjM2Z5iLaVPhEAA+Dzz6Qni
-         CYmj4WvGNmI8PywhUUwy9tlLEIf7sF1HDWK1ayxGF5fd/qdVo2e6SiLAr5zz764Xk2
-         En8R7Nzfse/M9TNu2cAcu17NysCiGmQDy/G8dDeH78VXlsasXnhjLLRJLjeM3n8BSP
-         xzVVEPCfIqeqA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.158.21]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MsaS7-1qXpzA0OE7-00tdO4; Sun, 02
- Apr 2023 11:44:31 +0200
-Message-ID: <c4728fac-bea9-3794-077e-c978d99f46bf@web.de>
-Date:   Sun, 2 Apr 2023 11:44:30 +0200
+        with ESMTP id S229492AbjDBKlO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2023 06:41:14 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29A0A11EB4
+        for <git@vger.kernel.org>; Sun,  2 Apr 2023 03:41:13 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id v6-20020a05600c470600b003f034269c96so6183221wmo.4
+        for <git@vger.kernel.org>; Sun, 02 Apr 2023 03:41:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680432071;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=r/vaz5mJ+8oIKXIkGFDeLVzD3Sa+ejishQh6kzfP0Xs=;
+        b=IHTVZsy70EwWTTAQgOwpi+bxzti1y9BDJYODIhAQXuaFkSGpSI67OZov1U2ugBZ4l8
+         8eWGbGrTHf8oReioIiDcy/gNy0aqZXgMRdTJNvv6+HLSsZHqXGxRDpiGZfjNX8+5gcS7
+         LuQgnhJZL+P9rz0cy9DRpT42HaZtr0+ez7xaFesV9CuR5hr4bL+YheQZ8GtIqlaAK21M
+         Y5q8WVwWij3OMCfcD8dnl0DZbP1nhNW6qIRSwoLsqiCcXsezjNDg7H9KeLOaenZNq1s2
+         qfRypwV8GjAMBWPr78DYjpPJUo9tol+gt59AqmjC+slDG7XFmLe68xvcJ1GK+gsPFox5
+         8kxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680432071;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=r/vaz5mJ+8oIKXIkGFDeLVzD3Sa+ejishQh6kzfP0Xs=;
+        b=r1nvmhg4ow89pBwszXB4LfM6GISz5QV57xXzCf6nj1IYvS3ixOosRZMQHOyk8HxJr2
+         ZKpcu5DquR6ZJezxWLcMzUmmPT4R4Qxyu3vyr/ENq3wF7KnkZxZBpCr7UhbQ+eY5crR8
+         wuSvnn6anjlM+csMqeu2S9rlOMWrAsc3Js6vrH4OzM9w5Z4dsxoXm3UioN5aQFuWvonP
+         uPLXvU/INsp2zetLooYbo91OrJb6yqC+H1RiTHVYaiJjSDAeq0Iq4CxP33a5QZkl0pBF
+         Smjuflh3IMHLEpAgMDZZdsTfZaa64MEetlYddU+q2hshdRgrVtxNCzKn4Rp4Yu3Hlo9T
+         fG0A==
+X-Gm-Message-State: AO0yUKW7zWn4peBlfzdJ+A7GukEJfRr0eouZdJeAFBIAqWVsURCUB3ld
+        vs1a4wugSa5FCFW4CZL9oAY=
+X-Google-Smtp-Source: AK7set86EnR5iwLmmTYLx9oyAKNsaA/wLlwPwUuYNWcRZTbpYKxFrbYjrz+ny3jpgMs8bEzntXztmA==
+X-Received: by 2002:a7b:ca59:0:b0:3eb:2da5:e19 with SMTP id m25-20020a7bca59000000b003eb2da50e19mr24872572wml.27.1680432071560;
+        Sun, 02 Apr 2023 03:41:11 -0700 (PDT)
+Received: from [10.23.18.56] ([212.102.57.24])
+        by smtp.gmail.com with ESMTPSA id s15-20020a05600c45cf00b003eb2e33f327sm25463102wmo.2.2023.04.02.03.41.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 02 Apr 2023 03:41:11 -0700 (PDT)
+Message-ID: <96430edd-a4f8-1f3c-a1f2-860e0af5e4e7@gmail.com>
+Date:   Sun, 2 Apr 2023 12:41:09 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.1
-Subject: Re: regex compilation error with --color-words
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Diomidis Spinellis <dds@aueb.gr>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, demerphq <demerphq@gmail.com>,
-        Mario Grgic <mario_grgic@hotmail.com>
-References: <CAPig+cSNmws2b7f7aRA2C56kvQYG3w_g+KhYdqhtmf+XhtAMhQ@mail.gmail.com>
- <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr>
- <b8b3777b-ee6e-d90e-3365-5cb9c9d129fe@web.de>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [GSOC][PATCH v2] t3701: don't lose "git" exit codes in test
+ scripts
 Content-Language: en-US
-In-Reply-To: <b8b3777b-ee6e-d90e-3365-5cb9c9d129fe@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ZWUpb53FRpyh3gh5XSoNNl81QYBcwHMqII6wilUYkmd8oNg2bDG
- K/3bqZv9CganmBpiPqg7WiTddMiUx+YHZUdij49L2f7XkJLbBScegq7ck9TnhXpg6BxYY0l
- JgZ0NETR6DwLaorw9nd7+FhNsLALn8tbclk0pH5rtZ6d4Um/8MTwE86mOuCWvsFbjSjoYbV
- VXFLdf+oc7tSrfwNsOzBw==
-UI-OutboundReport: notjunk:1;M01:P0:x1YhemePopo=;8e48FxJHD+MUvHDfmyUxXMv93RT
- q57ulpG2o8CTTmky3LKqZ3zJs941OoqN4tCWDa4Pjrp/ZwwSiVgNStoV+Vx6QtYkY4tAnCKkR
- B4KbUDGOklJKT832ZvKUNX8kWPn8BZ62gouehnKJj5mD7jZU+B5neCna2+9G0ndmpELllKjf3
- s9VC6xpOlh+I9pnupYdtvPd+KpAE1akvCIleQ7GqPVVPOP68Xysy7+LA01GeIi0NQ26ACcEEK
- 3BCe997Kag3RYIEMim3hEW/fRECyIw7uoL7EYRjw14QMJIA8aZfSeOAWWeEfX7AfLN/diih0Z
- Fdc8UbEcN3SgwR5iFAIiF+t4/B5YgnssT08alAaVAXPjJVveeRN/1wl02GEi7brT8vrTiH7He
- q2+/nJ12KdA3nMUV5sGY7ud/uuVHoq5fgQL32OPomFb8pPCB6YJEBpY01aih5mrgTNMmVUQnq
- 05Cza6U3gTN10ShSIQkAd9LazKOaoPJLP+sUUMhbKmwQ6I7vumxWkc36+yLFYpBWsdxiaPa1X
- 5hy0oykq/7plHBfjxZ2hNyVj0PUv2LOjLQAe8xlqaX3VCt2EA4haPyC/wbvi4KRHjtJpMfyRV
- RmSitg46u2vJaRgZ3Zd9RJb2/KNMv/v4QZx0jpkclfz/mKERq8+Zoo9P8cdpuesAZh/FavxcJ
- VWNnfDXgzskK84LRC83wwJ7cOtIE+EoinidFJ4ZAvXBvTY2MgxSHVjuJxPrgKd7eTAsvoTJEa
- PLdtkphl9cWach56EGhhdUsePTIi3851/adfwUftfffK97JEio2hKxwZ7ILdQ+HjtAbapfctp
- s2hde60jRaFDU3LKbd4Uwmy7K0jIjF8qpXyspZ9eLLYHPdFDYOTWmLy6BA5HtJ5navrjPpZsq
- xc0QmKuINQPPqi5JA/2lXBxIRfVx7+gG8W9h2f8Ck4PAgf8wlAqitqB+Hdz1JlXkKIZh9ltK1
- qub6PA==
+To:     Edwin Fernando <edwinfernando734@gmail.com>, git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>
+References: <20230326173147.39626-1-edwinfernando734@gmail.com>
+ <20230401194756.5954-1-edwinfernando734@gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+In-Reply-To: <20230401194756.5954-1-edwinfernando734@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 31.03.23 um 22:44 schrieb Ren=C3=A9 Scharfe:
-> Am 30.03.23 um 09:55 schrieb Diomidis Spinellis:
->> On 30-Mar-23 1:55, Eric Sunshine wrote:
->>> I'm encountering a failure on macOS High Sierra 10.13.6 when using
->>> --color-words:
->>
->> The built-in word separation regular expression pattern for the Perl la=
-nguage fails to work with the macOS regex engine.=C2=A0 The same also happ=
-ens with the FreeBSD one (tested on 14.0).
->>
->> The issue can be replicated through the following sequence of commands.
->>
->> git init color-words
->> cd color-words
->> echo '*.pl=C2=A0=C2=A0 diff=3Dperl' >.gitattributes
->> echo 'print 42;' >t.pl
->> git add t.pl
->> git commit -am Add
->> git show --color-words
->
-> Or in Git's own repo:
->
->    $ git log -p --color-words --no-merges '*.c'
->    Schwerwiegend: invalid regular expression: [a-zA-Z_][a-zA-Z0-9_]*|[0-=
-9][0-9.]*([Ee][-+]?[0-9]+)?[fFlLuU]*|0[xXbB][0-9a-fA-F]+[lLuU]*|\.[0-9][0-=
-9]*([Ee][-+]?[0-9]+)?[fFlL]?|[-+*/<>%&^|=3D!]=3D|--|\+\+|<<=3D?|>>=3D?|&&|=
-\|\||::|->\*?|\.\*|<=3D>|[^[:space:]]|[<C0>-<FF>][<80>-<BF>]+
->    commit 14b9a044798ebb3858a1f1a1377309a3d6054ac8
->    [...]
->
-> The error disappears when localization is turned off:
->
->    $ LANG=3DC git log -p --color-words --no-merges '*.c' >/dev/null
->    # just finishes without an error
->
-> The issue also vanishes when the "|[\xc0-\xff][\x80-\xbf]+" part is
-> removed that the macros PATTERNS and IPATTERN in userdiff.c append.
->
-> So it seems regcomp(1) on macOS doesn't like invalid Unicode characters
-> unless it's in ASCII mode (LANG=3DC).  664d44ee7f (userdiff: simplify
-> word-diff safeguard, 2011-01-11) explains that this part exists to match
-> a multi-byte UTF-8 character.  With a regcomp(1) that supports
-> multi-byte characters natively they need to be specified differently, I
-> guess, perhaps like this "[^\x00-\x7f]"?
+On 01/04/2023 21:47, Edwin Fernando wrote:
+> Exit codes were lost due to piping and command substitution:
 
-Actually we can drop the "|[\xc0-\xff][\x80-\xbf]+" part in that case
-because the "[^[:space:]]" suffices.  And we probably need to do that at
-runtime because it depends on the locale.  The rather elaborate patch
-below does that.  It leaks the truncated word_regex, which isn't that
-bad because it's done only once per run, but certainly untidy.
+s/were/are/
 
-I suspect/hope this can be done simpler and cleaner after refactoring
-the userdiff code to allow for runtime assembly of regular expressions.
+See section "[[present-tense]]" in Documentation/SubmittingPatches:
 
-And it's regcomp(3), or rather regexec(3), not regcomp(1).
+    The problem statement that describes the status quo is written in the
+    present tense.  Write "The code does X when it is given input Y",
+    instead of "The code used to do Y when given input X".  You do not
+    have to say "Currently"---the status quo in the problem statement is
+    about the code _without_ your change, by project convention.
 
-=2D--
- userdiff.c | 38 ++++++++++++++++++++++++++++++++++++--
- userdiff.h |  2 ++
- 2 files changed, 38 insertions(+), 2 deletions(-)
+> 
+> - "git ... | <command>"
+> - "<command> $(git ... )"
+> 
+> Fix these issues using the intermediate step of writing output to file.
+> ---
+> Changes in response to review:
+> - addressed code style issues: ">diff" not  "> diff_file"
+> - a more direct alternative to "test -z $(cat ...)"
+> - commit message similar to previous commits accomplishing same goals
+> - revert unnecessary change. keep "<var> = $(git ...)"
+> 
+>   t/t3701-add-interactive.sh | 31 +++++++++++++++----------------
+>   1 file changed, 15 insertions(+), 16 deletions(-)
+> 
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 80446b311d..77aad9032a 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -292,10 +292,10 @@ test_expect_success FILEMODE 'patch does not affect mode' '
+>   	echo content >>file &&
+>   	chmod +x file &&
+>   	printf "n\\ny\\n" | git add -p &&
+> -	git show :file > show_file &&
+> -	grep content show_file &&
+> -	git diff file > diff_file &&
+> -	grep "new mode" diff_file
+> +	git show :file >show &&
+> +	grep content show &&
+> +	git diff file >diff &&
+> +	grep "new mode" diff
+>   '
+>   
+>   test_expect_success FILEMODE 'stage mode but not hunk' '
+> @@ -303,10 +303,10 @@ test_expect_success FILEMODE 'stage mode but not hunk' '
+>   	echo content >>file &&
+>   	chmod +x file &&
+>   	printf "y\\nn\\n" | git add -p &&
+> -	git diff --cached file > diff_file &&
+> -	grep "new mode" diff_file &&
+> -	git diff file > diff_file &&
+> -	grep "+content" diff_file
+> +	git diff --cached file >diff &&
+> +	grep "new mode" diff &&
+> +	git diff file >diff &&
+> +	grep "+content" diff
+>   '
+>   
+>   
+> @@ -315,12 +315,11 @@ test_expect_success FILEMODE 'stage mode and hunk' '
+>   	echo content >>file &&
+>   	chmod +x file &&
+>   	printf "y\\ny\\n" | git add -p &&
+> -	git diff --cached file > diff_file &&
+> -	grep "new mode" diff_file &&
+> -	git diff --cached file diff_file &&
+> -	grep "+content" diff_file &&
+> -	git diff file > diff_file &&
+> -	test -z $(cat diff_file)
+> +	git diff --cached file >diff &&
+> +	grep "new mode" diff &&
+> +	grep "+content" diff &&
+> +	git diff file >diff &&
+> +	test_must_be_empty diff
+>   '
+>   
+>   # end of tests disabled when filemode is not usable
+> @@ -977,8 +976,8 @@ test_expect_success 'handle submodules' '
+>   
+>   	force_color git -C for-submodules add -p dirty-head >output 2>&1 <y &&
+>   	git -C for-submodules ls-files --stage dirty-head >actual &&
+> -	git -C for-submodules/dirty-head rev-parse HEAD > rev &&
+> -	grep -f rev actual
+> +	rev="$(git -C for-submodules/dirty-head rev-parse HEAD)" &&
+> +	grep "$rev" actual
+>   '
+>   
+>   test_expect_success 'set up pathological context' '
 
-diff --git a/userdiff.c b/userdiff.c
-index 09203fbc35..aa2cd150ba 100644
-=2D-- a/userdiff.c
-+++ b/userdiff.c
-@@ -9,6 +9,8 @@ static struct userdiff_driver *drivers;
- static int ndrivers;
- static int drivers_alloc;
+It seems that you've created a second commit on top of the patch
+you've originally sent and have only sent the second commit as "v2".
+That is not what you want to show your reviewers, and more importantly,
+that is not what we want to record in our history.
 
-+#define OR_MULTI_BYTE_CHAR "|[\xc0-\xff][\x80-\xbf]+"
-+
- #define PATTERNS(lang, rx, wrx) { \
- 	.name =3D lang, \
- 	.binary =3D -1, \
-@@ -16,7 +18,9 @@ static int drivers_alloc;
- 		.pattern =3D rx, \
- 		.cflags =3D REG_EXTENDED, \
- 	}, \
--	.word_regex =3D wrx "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+", \
-+	.word_regex =3D wrx "|[^[:space:]]" OR_MULTI_BYTE_CHAR, \
-+	.is_builtin =3D 1, \
-+	.has_multi_byte_char_fallback =3D 1, \
- }
- #define IPATTERN(lang, rx, wrx) { \
- 	.name =3D lang, \
-@@ -25,7 +29,9 @@ static int drivers_alloc;
- 		.pattern =3D rx, \
- 		.cflags =3D REG_EXTENDED | REG_ICASE, \
- 	}, \
--	.word_regex =3D wrx "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+", \
-+	.word_regex =3D wrx "|[^[:space:]]" OR_MULTI_BYTE_CHAR, \
-+	.is_builtin =3D 1, \
-+	.has_multi_byte_char_fallback =3D 1, \
- }
-
- /*
-@@ -330,6 +336,25 @@ static int userdiff_find_by_namelen_cb(struct userdif=
-f_driver *driver,
- 	return 0;
- }
-
-+static int regexec_support_multi_byte_chars(void)
-+{
-+	static const char not_space[] =3D "[^[:space:]]";
-+	static const char utf8_multi_byte_char[] =3D "\xc2\xa3";
-+	regex_t re;
-+	regmatch_t match;
-+	static int result =3D -1;
-+
-+	if (result !=3D -1)
-+		return result;
-+	if (regcomp(&re, not_space, REG_EXTENDED))
-+		BUG("invalid regular expression: %s", not_space);
-+	result =3D !regexec(&re, utf8_multi_byte_char, 1, &match, 0) &&
-+		match.rm_so =3D=3D 0 &&
-+		match.rm_eo =3D=3D strlen(utf8_multi_byte_char);
-+	regfree(&re);
-+	return result;
-+}
-+
- static struct userdiff_driver *userdiff_find_by_namelen(const char *name,=
- size_t len)
- {
- 	struct find_by_namelen_data udcbdata =3D {
-@@ -337,6 +362,15 @@ static struct userdiff_driver *userdiff_find_by_namel=
-en(const char *name, size_t
- 		.len =3D len,
- 	};
- 	for_each_userdiff_driver(userdiff_find_by_namelen_cb, &udcbdata);
-+	if (udcbdata.driver &&
-+	    udcbdata.driver->is_builtin &&
-+	    udcbdata.driver->has_multi_byte_char_fallback &&
-+	    regexec_support_multi_byte_chars()) {
-+		const char *word_regex =3D udcbdata.driver->word_regex;
-+		udcbdata.driver->word_regex =3D xmemdupz(word_regex,
-+			strlen(word_regex) - strlen(OR_MULTI_BYTE_CHAR));
-+		udcbdata.driver->has_multi_byte_char_fallback =3D 0;
-+	}
- 	return udcbdata.driver;
- }
-
-diff --git a/userdiff.h b/userdiff.h
-index 24419db697..83f5863d58 100644
-=2D-- a/userdiff.h
-+++ b/userdiff.h
-@@ -21,6 +21,8 @@ struct userdiff_driver {
- 	const char *textconv;
- 	struct notes_cache *textconv_cache;
- 	int textconv_want_cache;
-+	int is_builtin;
-+	int has_multi_byte_char_fallback;
- };
- enum userdiff_driver_type {
- 	USERDIFF_DRIVER_TYPE_BUILTIN =3D 1<<0,
-=2D-
-2.40.0
+Instead, you should squash these two commits together and send it as
+a single patch, as though the commit from v1 doesn't exist.
