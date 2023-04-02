@@ -2,59 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23DF2C7619A
-	for <git@archiver.kernel.org>; Sun,  2 Apr 2023 14:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48A83C76196
+	for <git@archiver.kernel.org>; Sun,  2 Apr 2023 15:16:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231149AbjDBOiZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Apr 2023 10:38:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45722 "EHLO
+        id S231248AbjDBPQc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Apr 2023 11:16:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230433AbjDBOiY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2023 10:38:24 -0400
-Received: from m13112.mail.163.com (m13112.mail.163.com [220.181.13.112])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 1476F525C
-        for <git@vger.kernel.org>; Sun,  2 Apr 2023 07:38:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-        Message-ID; bh=OSgjQUSSVrjfsyoxbatPpRCwG0RYDF/neui1mM1Ly5E=; b=j
-        /ZJK6JUCQA3Y9k76Vmy01RYlnx8O0WpbHgihzdtUHPuGqOT3xgUlq64Nyufh16d3
-        DGGT33NKV2yJ+XA3l4N/WUra6hLXzmNLlpQSQIHngpeotTqoN9vqCR1IHnMvapfr
-        82KJwmNuikEs3RGc6hR/YC9hAIMtsy30fm0lg7M0/A=
-Received: from 18994118902$163.com ( [153.0.171.49] ) by
- ajax-webmail-wmsvr112 (Coremail) ; Sun, 2 Apr 2023 22:38:12 +0800 (CST)
-X-Originating-IP: [153.0.171.49]
-Date:   Sun, 2 Apr 2023 22:38:12 +0800 (CST)
-From:   ZhangYI <18994118902@163.com>
-To:     "Christian Couder" <christian.couder@gmail.com>,
-        git@vger.kernel.org, hariom18599@gmail.com
-Subject: Re:  [GSOC] [PROPOSAL v2] Draft of proposal for "Unify ref-filter
- formats with other pretty formats"
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2023 www.mailtech.cn 163com
-In-Reply-To: <CAP8UFD3Lns7pQQ-yNc5W8d2bfPBmJ0pcD52yCbkFOmymhWKw9Q@mail.gmail.com>
-References: <100814d1.2603.18735b059bb.Coremail.18994118902@163.com>
- <CAP8UFD3Lns7pQQ-yNc5W8d2bfPBmJ0pcD52yCbkFOmymhWKw9Q@mail.gmail.com>
-X-NTES-SC: AL_QuyTAvifuUoi5CKabekXn0oVgu88UcCzvPok34ZQOZk0pivh/A8/W0NjEWXk0sGvKQayjCS7dTFH8NRFV4xDfaUGm/3uzaIwSgkRcIvhLrt+
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+        with ESMTP id S231135AbjDBPQb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2023 11:16:31 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A27B8A73
+        for <git@vger.kernel.org>; Sun,  2 Apr 2023 08:16:30 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id o25-20020a9d4119000000b006a11eb19f8eso13211322ote.5
+        for <git@vger.kernel.org>; Sun, 02 Apr 2023 08:16:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680448589;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=oK9Rfuf7vsi0afjw9vm3DYflA8ihU8UniQJadLhgtho=;
+        b=h8B20rlAA9ZBhzkHP54seL5XLiw+srjKGOhyJqjy3cmVA2GkgmB0hShcN5nIiilqDw
+         CC/cVAf/5BUVUtAujiEsRS2FUgHKNECtfyVmlz8Eq4XyAbXWicDR5vf0Qfo3cXfEBKNP
+         OIVPndAE7YRv+1rVFVMVdzJAFY4E1f9cpgNy3YRLew2cHrJTHmxwIZ9aUrVgnlR3asbW
+         KS6bxxbw51F5LHuV62+zPmxbhMQaLUlCW/3O8+oSXH9ZKNgE9VanbXPU28Wz1ZoPcALS
+         lPaz5t3658Y40L0FxoMvN8I1xJoNJWnB0xV4tYOqlJHRVZRVw3i3SdhODs3yan6YBY1/
+         uJoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680448589;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oK9Rfuf7vsi0afjw9vm3DYflA8ihU8UniQJadLhgtho=;
+        b=IFBzuI+kAa3UGnK5ADQR0cFp4Otv01JCDVHlF8ChUNV04DnbVqXeIXpnLsR3dFzKx1
+         gUKtQLRlxHchYdSJnLIwbw3abeFywh5GjyJowEpokc4u+TsAt5nFnKHbYPQGewHfdKZW
+         OXsaUlZvh7dNc6DGVgSqHYasRopP8bYJH6RtVrHF3NK2Vl3TwiClNSQvann9Rn0UtSE0
+         1r4Ms/5pMI38DYt3ozYuBY/R8YF9O5uCP0erRuAI6gsFg1G8Sx4kO+vvWFGH7SilAZab
+         drKhY2rt154ZM50l4Oy/MobZUOUbfCFHnPh9Lv46n7y4+q6MuzIqVUqyykJOSJUGnOC3
+         pCHg==
+X-Gm-Message-State: AO0yUKWqAHI5bYuszRTynK+IzcjUKqlm+3DW+SMKjkWuyCI8rjb7my0X
+        jYcitV9OhUyRIDXiM2GZk3Ue8wbDj3DUmy1HXvPoL3o2Yp216w==
+X-Google-Smtp-Source: AK7set8IEd8N0vJO01IvXnJ9zItKLFt1E/WVcULAq2sYTXL0ZYjio+lQy0c14YK3e3rdtAHaEC56BlNsejDRrSwss0A=
+X-Received: by 2002:a05:6830:1bcf:b0:697:7885:3e3 with SMTP id
+ v15-20020a0568301bcf00b00697788503e3mr10224312ota.4.1680448589600; Sun, 02
+ Apr 2023 08:16:29 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <3cea7bba.1e54.18742678107.Coremail.18994118902@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: cMGowADX5pZUkylk0mECAA--.2345W
-X-CM-SenderInfo: zprymmqurrmmmqsbiqqrwthudrp/1tbiGAlF-lv2lgM6LwABsG
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+From:   Alexandre Garnier <zigarn@gmail.com>
+Date:   Sun, 2 Apr 2023 17:16:18 +0200
+Message-ID: <CAFFOgCUs9d6wJDf3p-+8UkzXRSymCgBctGt+rP+k0CzZPp2LJw@mail.gmail.com>
+Subject: Revision ref '@{push}' not resolved as documented
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhhbmtzIGZvcsKgQ2hyaXN0aWFuIENvdWRlcidzwqBDb25zdHJ1Y3RpdmUgY29tbWVudHMuCkkn
-dmUgbG9va2VkIHRocm91Z2ggT2xnYSBUZWxlemhuYXZhJ3MgZGV0YWlsZWQgYW5kIGhlbHBmdWwg
-YmxvZ3MuIApJIGFsc28gdHJpZWQgdG8gdW5kZXJzdGFuZCBtb3JlIGFib3V0IHRoZSB3b3JrcyBv
-ZiB0aGUgcHJvamVjdCB0b2RheS4KCkkgaGF2ZSBvbmUgcXVlc3Rpb25zIGhlcmU6CkkgdXNlZCBn
-ZGIgdG8gdHJhY2sgdGhlIGZ1bmN0aW9uIGNhbGwgcmVsYXRlZCB0byByZWYtZmlsdGVyIG9mIHRo
-ZSBjb21tYW5kCiJnaXQgbG9nIC0yIC0tcHJldHR5PSVoICIgYnkgc2V0dGluZyBicmVha3Mgb24g
-YWxsIG5vLXN0YXRpYyBmdW5jdGlvbnMgaW4KcmVmLWZpbHRlci5jIGJ1dCBmb3VuZCBubyBzdG9w
-LgpTaG91bGQgSSB1c2UgYW5vdGhlciBjb21tYW5kPwpPciBhcyBJIGtub3csIEdpdCB1c2UgZGlm
-ZmVyZW50IGJyYW5jaCBmb3IgZGlmZmVyZW50IHB1cnBvc2UsIGxpa2UgdG9kbywgbmV4dC4KU2hv
-dWxkIEkgdXNlIGFub3RoZXIgYnJhbmNoPwo=
+Hi!
+
+I followed the example of ref '@{push}' in the documentation of
+'rev-parse' (https://git-scm.com/docs/git-rev-parse#Documentation/git-rev-parse.txt-emltbranchnamegtpushemegemmasterpushemempushem)
+and it doesn't work as documented.
+Here is a way to reproduce:
+
+# Setup
+$ git init --bare origin.git
+$ git clone --bare origin.git myfork.git
+$ git clone origin.git local
+$ cd local/
+$ git commit --allow-empty -m init
+$ git push origin
+$ git remote add myfork ../myfork.git
+
+# Check for
+$ git rev-parse --symbolic-full-name @{upstream}
+refs/remotes/origin/main
+$ git rev-parse --symbolic-full-name @{push}
+refs/remotes/origin/main
+
+# Follow doc's example
+$ git config push.default current
+$ git config remote.pushdefault myfork
+$ git switch -c mybranch origin/main
+$ git rev-parse --symbolic-full-name @{upstream}
+refs/remotes/origin/main
+$ git rev-parse --symbolic-full-name @{push}  # should be
+refs/remotes/myfork/mybranch
+@{push}
+fatal: ambiguous argument '@{push}': unknown revision or path not in
+the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+
+# Push is done with the expected remote, and only then the ref can be resolved
+$ git push
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+To ../myfork.git
+* [new branch] mybranch -> mybranch
+$ git rev-parse --symbolic-full-name @{push}
+refs/remotes/myfork/mybranch
+
+So it means the branch has to exist in the remote to resolve '@{push}'
+as a symbolic ref?
+I think I remember that a few years ago the example was working as-is
+without the need to push.
+
+If this is the expected behavior (not the best IMHO as it was a way to
+check where it is going to be pushed before doing it), documentation
+of the ref needs to be updated I think.
+
+Regards,
+-- 
+Alex Garnier
