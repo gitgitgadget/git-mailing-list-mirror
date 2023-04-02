@@ -2,115 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84FFBC76196
-	for <git@archiver.kernel.org>; Sun,  2 Apr 2023 19:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58FFAC7619A
+	for <git@archiver.kernel.org>; Sun,  2 Apr 2023 19:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231162AbjDBTS1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Apr 2023 15:18:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60564 "EHLO
+        id S229659AbjDBTkc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Apr 2023 15:40:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjDBTS0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2023 15:18:26 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6610D527A
-        for <git@vger.kernel.org>; Sun,  2 Apr 2023 12:18:24 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id u11-20020a05600c19cb00b003edcc414997so16850627wmq.3
-        for <git@vger.kernel.org>; Sun, 02 Apr 2023 12:18:24 -0700 (PDT)
+        with ESMTP id S229492AbjDBTka (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2023 15:40:30 -0400
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1851BA26C
+        for <git@vger.kernel.org>; Sun,  2 Apr 2023 12:40:30 -0700 (PDT)
+Received: by mail-yb1-xb35.google.com with SMTP id p15so32468782ybl.9
+        for <git@vger.kernel.org>; Sun, 02 Apr 2023 12:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680463102;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1680464429;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kng1dj3OD3GwrN64rav04oa27GKWD9CKe/Vim1FKEOo=;
-        b=nFmTd1+V6nQdX60ZT8qk+AWh89iRwqAwWdRZmyzYhtEkvljGbzjcx+GC96ScTSB3ry
-         IYfJBWtiIgLfYAq5ooOSjH7aljOsaZCgAMYrb4yG39vsYbQGjtuYXjVNX64rC8avBkN3
-         WD30fMRnzAJR11ddMtiN8rZzksjLSAhFgWP5N9M29MpDV3ua//QwDRolq8VnWgbcB8a8
-         B9jfnSsWcfZnTLOaM7FH2MvplKMGPOsAKT1C3LDzgC7P8MXnNbmUO/fln5GdmGKhkFbK
-         uVQ3r2wmbcIM+gFZVXObv4Z9WZk0UFi+m9+pAmwUKvo7BT3icjceDsgNMsH1jEx/cN/6
-         Razw==
+        bh=hsuOq9ncmmIBdd87thMfvIhgSPUDnNULn32azrwmRz8=;
+        b=DADM5IfpDAMZouOhM4jp61zjre4T+zKkOn4n8E0897Q8v568ihCStvQJbikEzUroCl
+         JjUgZXPInQVba9vlM4qcQaO33ZeAx9WQKfva2XAwPEwjo+R1z+EKYY53BOR4s7oi5KFR
+         6ZzWoH19JuCuufXuAMeVexU7A0FfJwn9POtHAolAU20VKERpxjVD90ug1QqPQwE1OTz2
+         XXVAUdgMNIeEObeQRH76WyCK2vCCRts8Al2dpoKonbQEICiq6u2AM5f5Q7TDIZbV+D7p
+         BEWANWJawcu75zjrFz9nEkMZ1GdETYSbZMUTI7AoXZrPqShfkST1WbblxvWnhdmYHzzc
+         kEdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680463102;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1680464429;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kng1dj3OD3GwrN64rav04oa27GKWD9CKe/Vim1FKEOo=;
-        b=Xx5j8KE49ADO2bZnzI9+aOMUfuiH+x699bw7tZITcwmS0TWpR5nX+INjc55c/MFvFt
-         UGdvtFGfz+AJLGw6DOklUh04KElmuHE3jqzvcelfVNb05GqS5NnQzrwoYBThxQIxjCER
-         uRM8uSEtVx4mNSFb20fVx3VjnfiH+MF2oTkOrad5HHSWCgwN9ymlVLXc/tTLJ15Lwo+J
-         RmHlDG5/SivMs3UHXvL59RwG8n6/90SqjFhHKak4dkolSDgsrelfeEfbC05cggpZXtQi
-         GfU4KEoKO+Q9GqAmYfuM4oztOSKv0PQfL29JZ4B3lF67TfN9r3bLWQhCgsA8iZELmdi1
-         eh5g==
-X-Gm-Message-State: AAQBX9falnm47lBETgo7+nGXW9R/gDLncLXWnn2sD9iyp4aBXK+88vsv
-        xAjyAFLP/OdOvM/eor/w20hNOfsfPRrWFj/6
-X-Google-Smtp-Source: AKy350ax4bx6Qawic8R2DKDWRosxe0k2SHlJhGMAsdiRp1MomqRrCZwA3GaCpTqNwPz+rHagia5u0A==
-X-Received: by 2002:a05:600c:3ba3:b0:3f0:4d9b:7cb2 with SMTP id n35-20020a05600c3ba300b003f04d9b7cb2mr2413461wms.3.1680463102431;
-        Sun, 02 Apr 2023 12:18:22 -0700 (PDT)
-Received: from localhost.localdomain ([2a0c:5bc0:40:2e25:76c6:3bff:fe8a:46ba])
-        by smtp.gmail.com with ESMTPSA id h16-20020a05600c351000b003f046ad52efsm8402508wmq.31.2023.04.02.12.18.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Apr 2023 12:18:22 -0700 (PDT)
-From:   Edwin Fernando <edwinfernando734@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Edwin Fernando <edwinfernando734@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Andrei Rybak <rybak.a.v@gmail.com>
-Subject: [GSOC][PATCH v4] t3701: don't lose "git" exit codes in test scripts
-Date:   Sun,  2 Apr 2023 20:17:09 +0100
-Message-Id: <20230402191709.19296-1-edwinfernando734@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230402113607.2394-1-edwinfernando734@gmail.com>
-References: <20230402113607.2394-1-edwinfernando734@gmail.com>
+        bh=hsuOq9ncmmIBdd87thMfvIhgSPUDnNULn32azrwmRz8=;
+        b=xNtsCqOIJ21oqOvYFJ0atRcDbMKuq3ABG/jmawbx3dlinQagXA0vhjfKYUB0GxKP9J
+         XXu0apRc5p3MYzSdrXhNQ2DnprW8BZJESVznzKRHaNEAQkPqCbNhSWN/KRINJ7zNodWO
+         P+sAgaonI9CHw4sS6+zcoUbNzrbhmfwW/BlMMjWCNL499S+FqmPXKsXhaQgk4LCLtv3E
+         TQ4JTPQXgGSY9mZAkXwOXPuGWgTqeT5ToXuGqdc+vAwgfc54Gi4AtTWZL4z3pk2ldRY5
+         mbl0r9D+PW7RKc+wHTxbBYJz4YjM1i+IT2T38I6UFxD38lq45l7SlZp2HmTzfohpzLqV
+         B8tQ==
+X-Gm-Message-State: AAQBX9f7CTNzS9FUtD6pWgr00JjpS+GK8Rwk2dg2cQAZLarmwqvHUeEF
+        5w4r8mYZ4HMcfIgr0r1PsU9lJmnxpZd+SqiPwKs=
+X-Google-Smtp-Source: AKy350ZxLT47HiEQDfer+8AfGApJwUtFO3VSl0hI2ShvfMP710ypcW3msGsIGWTTmuPjve3kV6qbJ7va/A1aARxJmi0=
+X-Received: by 2002:a25:680e:0:b0:b78:3a15:e6fe with SMTP id
+ d14-20020a25680e000000b00b783a15e6femr16058283ybc.2.1680464429216; Sun, 02
+ Apr 2023 12:40:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <100814d1.2603.18735b059bb.Coremail.18994118902@163.com>
+ <CAP8UFD3Lns7pQQ-yNc5W8d2bfPBmJ0pcD52yCbkFOmymhWKw9Q@mail.gmail.com> <3cea7bba.1e54.18742678107.Coremail.18994118902@163.com>
+In-Reply-To: <3cea7bba.1e54.18742678107.Coremail.18994118902@163.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 2 Apr 2023 21:40:17 +0200
+Message-ID: <CAP8UFD2Tjqf0A+xv69pHDZFUDG2rPU7tj=9KSYh36_zTg0hG6g@mail.gmail.com>
+Subject: Re: [GSOC] [PROPOSAL v2] Draft of proposal for "Unify ref-filter
+ formats with other pretty formats"
+To:     ZhangYI <18994118902@163.com>
+Cc:     git@vger.kernel.org, hariom18599@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Exit codes are lost due to piping: "git ... | <command>"
-Fix these issues using the intermediate step of writing output to file.
+On Sun, Apr 2, 2023 at 4:38=E2=80=AFPM ZhangYI <18994118902@163.com> wrote:
 
-Signed-off-by: Edwin Fernando <edwinfernando734@gmail.com>
----
-Apply my changes on top of the latest commit in upstream history.
-Test 76 in t3701 fails. This commit breaks the test:
-a9f4a01760 (Merge branch 'jk/add-p-unmerged-fix', 2023-03-19)
-Identified by checking out commits in:
-"git log --oneline -- t/t3701-add-interactive.sh"
-I don't know if it is normal to have broken tests in the main repository.
+> I have one questions here:
+> I used gdb to track the function call related to ref-filter of the comman=
+d
+> "git log -2 --pretty=3D%h " by setting breaks on all no-static functions =
+in
+> ref-filter.c but found no stop.
+> Should I use another command?
 
- t/t3701-add-interactive.sh | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+`git log` uses pretty formats. If you want to see how ref-filter
+formats work you should run for example `git for-each-ref`.
 
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 3982b6b49d..b8291206a0 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -286,8 +286,10 @@ test_expect_success FILEMODE 'patch does not affect mode' '
- 	echo content >>file &&
- 	chmod +x file &&
- 	printf "n\\ny\\n" | git add -p &&
--	git show :file | grep content &&
--	git diff file | grep "new mode"
-+	git show :file >show &&
-+	grep content show &&
-+	git diff file >diff &&
-+	grep "new mode" diff
- '
- 
- test_expect_success FILEMODE 'stage mode but not hunk' '
-@@ -295,8 +297,10 @@ test_expect_success FILEMODE 'stage mode but not hunk' '
- 	echo content >>file &&
- 	chmod +x file &&
- 	printf "y\\nn\\n" | git add -p &&
--	git diff --cached file | grep "new mode" &&
--	git diff          file | grep "+content"
-+	git diff --cached file >diff &&
-+	grep "new mode" diff &&
-+	git diff file >diff &&
-+	grep "+content" diff
- '
- 
- 
--- 
-2.40.0
+> Or as I know, Git use different branch for different purpose, like todo, =
+next.
+> Should I use another branch?
 
+No this is not an issue with development branches.
