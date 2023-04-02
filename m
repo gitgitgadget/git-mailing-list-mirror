@@ -2,95 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43A32C76196
-	for <git@archiver.kernel.org>; Sun,  2 Apr 2023 18:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02B3CC7619A
+	for <git@archiver.kernel.org>; Sun,  2 Apr 2023 18:51:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230469AbjDBSmC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Apr 2023 14:42:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51592 "EHLO
+        id S231309AbjDBSvD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 2 Apr 2023 14:51:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjDBSmB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2023 14:42:01 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D62C92102
-        for <git@vger.kernel.org>; Sun,  2 Apr 2023 11:41:58 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id n125so32388147ybg.7
-        for <git@vger.kernel.org>; Sun, 02 Apr 2023 11:41:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680460918;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/w5Z/vSD4+x9ZS3bzca7h06vp0QN+7kR91eTPEup3RI=;
-        b=nxQi+vTZjpcYYlukMDh08o4Ngi222TY8v18Ccb8NrkHCC7q+Zvc+R1TfBZBO4GkoaT
-         8kziwY6LuSLpoRmXPYZBQIsY7CVTDdc8NLQtbNzjsiFblNKSdnTDCVgvw+WYy4L2vDKL
-         MWxK91F//Wv88niWdz3G/CtOfhXMGXYx9f1QoInrM70YRRh1kNvIp+/P0DXs/bxHcOZ5
-         Hc/4oFJLQemjSwq2dfJHdneagH/azEgItWXTTibbexoldoyU3Hckh3ZitLuN69dqYvus
-         JPPIAYjftAcnYcNpK8n0AG2ReyUzsI6fbs1AnDlyKSPRShf9AvD6nFB0o6GMXkMT/GI4
-         Co0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680460918;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/w5Z/vSD4+x9ZS3bzca7h06vp0QN+7kR91eTPEup3RI=;
-        b=EUY7KrBAfTiLnSYCWdCJLPH2kSxefJ4O+fviy1PWl/nVQj8y8xRXll4yV5Ujfr4CJW
-         dx5XcHIc5Lj4E8HnkC8Koa/JbsRvMVBYxJ1trqR/ztzzYCphMKsSnQr3UHFXGwsOT1+S
-         NiwbDwtDDtdu0KXxswu25MpOC14zhWnSaYfFNHOL5ui1rmy6BivkoKQR6CpN3RmSXDbz
-         b/KCjSwiGNeR9MVSMb4IUNeUNZOnwHx5y7tH92U5R3QzR7eqB2gJLp9OWmoBiZJZqmha
-         nvUpZBMaXko9ZTn8gxuIxavZW/dIaifEFRrOvJzpJcoFvyyA9Irn8aULBKN05cu2nwIG
-         0yqQ==
-X-Gm-Message-State: AAQBX9ecWfNmpL6h1WApR8cc/R2lo0SVicRPc+gMfjVj/guTtDJA/o0C
-        TPP0nabeoa5leqBH8caVjQjc5ZPiPf6Kvogm8nwt0n087Rs=
-X-Google-Smtp-Source: AKy350YKBLuAXR0hVsBEji+lvwOeFp0x21zhHFuKWgvq8Spc4it/iBb2Z6wTgeVkQ6n7yNCZJqQmi4JIsGnqLs3gYjM=
-X-Received: by 2002:a05:6902:70d:b0:b45:5cbe:48b3 with SMTP id
- k13-20020a056902070d00b00b455cbe48b3mr21846474ybt.0.1680460918081; Sun, 02
- Apr 2023 11:41:58 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFFOgCUs9d6wJDf3p-+8UkzXRSymCgBctGt+rP+k0CzZPp2LJw@mail.gmail.com>
-In-Reply-To: <CAFFOgCUs9d6wJDf3p-+8UkzXRSymCgBctGt+rP+k0CzZPp2LJw@mail.gmail.com>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Sun, 2 Apr 2023 13:41:46 -0500
-Message-ID: <CAMP44s0ujDcosdU2yDz-o7G8aCswEkpTP=Bfnjgt+5p=D4iHJw@mail.gmail.com>
-Subject: Re: Revision ref '@{push}' not resolved as documented
-To:     Alexandre Garnier <zigarn@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S231253AbjDBSvC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2023 14:51:02 -0400
+Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97D143C12
+        for <git@vger.kernel.org>; Sun,  2 Apr 2023 11:50:59 -0700 (PDT)
+Received: (Authenticated sender: robin@jarry.cc)
+        by mail.gandi.net (Postfix) with ESMTPSA id 4AB5020002;
+        Sun,  2 Apr 2023 18:50:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
+        t=1680461458;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=kUMJWpRFf7gwOQiIBK8If5ZXmAGTjryPL6FOv71/OWQ=;
+        b=HF8dfZnvRlP1y51Qg/0BfOwGznp9IIfq4baWzD1vODlVF/cP/yjfL8YU5z9OWjh91KQuup
+        PUDwb8S/AHUOFL3SKFmn76bEFelF2P4iiObMEs9Stc6qtEd+Z80MZLNxTjYDkCHUJTASyt
+        2bFIJyn6wfEc/yXYHxDFNL9AiY08FKcSf2ta53y71Vbtdyu9U9gCk1dHcPOUqyCMjTbUNJ
+        saH6ECJhM4MO4JCLcdY66LRPgQv4uGV3MCSxUryUWU44axxBubnnKnNotNQArAIELNxFdf
+        RtMtGjsgqEITAphaTfeYxJWJYksKMgnFZaXiY4Z0sK2unkJ26HHcYYlQCViEIw==
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Sun, 02 Apr 2023 20:50:56 +0200
+Message-Id: <CRMHVBPXG6SW.2DL6RVNEMVERF@ringo>
+Cc:     "Junio C Hamano" <gitster@pobox.com>
+Subject: Re: [PATCH] hooks: add sendemail-validate-series
+From:   "Robin Jarry" <robin@jarry.cc>
+To:     "Bagas Sanjaya" <bagasdotme@gmail.com>, <git@vger.kernel.org>
+X-Mailer: aerc/0.14.0-142-g5dde23f8aa67-dirty
+References: <20230103231133.64050-1-robin@jarry.cc>
+ <9a0948e2-d030-ac89-a009-9247054f71f9@gmail.com>
+In-Reply-To: <9a0948e2-d030-ac89-a009-9247054f71f9@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 2, 2023 at 10:41=E2=80=AFAM Alexandre Garnier <zigarn@gmail.com=
-> wrote:
+Hi,
 
-> # Push is done with the expected remote, and only then the ref can be res=
-olved
-> $ git push
-> Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
-> To ../myfork.git
-> * [new branch] mybranch -> mybranch
-> $ git rev-parse --symbolic-full-name @{push}
-> refs/remotes/myfork/mybranch
+Bagas Sanjaya, Apr 01, 2023 at 04:54:
+> In most cases, the patch series is generated by git-format-patch(1).
+> When the command is run, it will output:
 >
-> So it means the branch has to exist in the remote to resolve '@{push}'
-> as a symbolic ref?
+> ```
+> $ git format-patch -o /tmp --cover-letter --base=3D<base-commit> <base-co=
+mmit>
+> /tmp/0000-cover-letter.patch
+> /tmp/0001-<patch-subject>.patch
+> /tmp/0002-<patch-subject>.patch
+> /tmp/0003-<patch-subject>.patch
+> ...
+> ```
+>
+> The output can be fed to the hook (as you write).
+>
+> But I think the hook should also take patch file arguments, for the
+> sake of completeness with sendemail-validate hook; that is:
+>
+> ```
+> sendemail-validate-series <patch file>...
+> ```
 
-It has to exist as a ref.
+I don't mind adding this but I am concerned with the maximum size of the
+command line arguments when sending large series. Standard input seems
+like a safer solution.
 
-This is not just for @{push}, same with @{upstream}:
+> Also, there should have a check that In-Reply-To must be the first
+> patch in the given series or the cover letter (if there is one).
 
-% git config branch.master.merge refs/heads/foobar
+This is really non-trivial as it depends on the --[no-]chain-reply-to
+and --[no-]thread options. Also, the validation occurs before the
+message id headers are generated. I'd prefer trusting git-format-patch
+to order the patch files properly based on their file names.
 
-Now `master@{upstream}` doesn't work.
+> Anyway, rather than pinging by random people, I'd like to see [PATCH
+> RESEND], rebased on latest git.git tree, ideally with Junio Cc'ed.
 
-> I think I remember that a few years ago the example was working as-is
-> without the need to push.
-
-You don't need to push, you can fetch, but the remote ref has to
-exist, and I think it has always been that way.
-
-Cheers.
-
---=20
-Felipe Contreras
+Will do. Thanks.
