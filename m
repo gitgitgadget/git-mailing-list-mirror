@@ -2,112 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48A83C76196
-	for <git@archiver.kernel.org>; Sun,  2 Apr 2023 15:16:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 270A7C7619A
+	for <git@archiver.kernel.org>; Sun,  2 Apr 2023 17:17:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231248AbjDBPQc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 2 Apr 2023 11:16:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33262 "EHLO
+        id S230218AbjDBRRW convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 2 Apr 2023 13:17:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231135AbjDBPQb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2023 11:16:31 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A27B8A73
-        for <git@vger.kernel.org>; Sun,  2 Apr 2023 08:16:30 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id o25-20020a9d4119000000b006a11eb19f8eso13211322ote.5
-        for <git@vger.kernel.org>; Sun, 02 Apr 2023 08:16:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680448589;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oK9Rfuf7vsi0afjw9vm3DYflA8ihU8UniQJadLhgtho=;
-        b=h8B20rlAA9ZBhzkHP54seL5XLiw+srjKGOhyJqjy3cmVA2GkgmB0hShcN5nIiilqDw
-         CC/cVAf/5BUVUtAujiEsRS2FUgHKNECtfyVmlz8Eq4XyAbXWicDR5vf0Qfo3cXfEBKNP
-         OIVPndAE7YRv+1rVFVMVdzJAFY4E1f9cpgNy3YRLew2cHrJTHmxwIZ9aUrVgnlR3asbW
-         KS6bxxbw51F5LHuV62+zPmxbhMQaLUlCW/3O8+oSXH9ZKNgE9VanbXPU28Wz1ZoPcALS
-         lPaz5t3658Y40L0FxoMvN8I1xJoNJWnB0xV4tYOqlJHRVZRVw3i3SdhODs3yan6YBY1/
-         uJoQ==
+        with ESMTP id S229681AbjDBRRU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2023 13:17:20 -0400
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9342A4EFF
+        for <git@vger.kernel.org>; Sun,  2 Apr 2023 10:17:19 -0700 (PDT)
+Received: by mail-qk1-f169.google.com with SMTP id de37so8280566qkb.7
+        for <git@vger.kernel.org>; Sun, 02 Apr 2023 10:17:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680448589;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oK9Rfuf7vsi0afjw9vm3DYflA8ihU8UniQJadLhgtho=;
-        b=IFBzuI+kAa3UGnK5ADQR0cFp4Otv01JCDVHlF8ChUNV04DnbVqXeIXpnLsR3dFzKx1
-         gUKtQLRlxHchYdSJnLIwbw3abeFywh5GjyJowEpokc4u+TsAt5nFnKHbYPQGewHfdKZW
-         OXsaUlZvh7dNc6DGVgSqHYasRopP8bYJH6RtVrHF3NK2Vl3TwiClNSQvann9Rn0UtSE0
-         1r4Ms/5pMI38DYt3ozYuBY/R8YF9O5uCP0erRuAI6gsFg1G8Sx4kO+vvWFGH7SilAZab
-         drKhY2rt154ZM50l4Oy/MobZUOUbfCFHnPh9Lv46n7y4+q6MuzIqVUqyykJOSJUGnOC3
-         pCHg==
-X-Gm-Message-State: AO0yUKWqAHI5bYuszRTynK+IzcjUKqlm+3DW+SMKjkWuyCI8rjb7my0X
-        jYcitV9OhUyRIDXiM2GZk3Ue8wbDj3DUmy1HXvPoL3o2Yp216w==
-X-Google-Smtp-Source: AK7set8IEd8N0vJO01IvXnJ9zItKLFt1E/WVcULAq2sYTXL0ZYjio+lQy0c14YK3e3rdtAHaEC56BlNsejDRrSwss0A=
-X-Received: by 2002:a05:6830:1bcf:b0:697:7885:3e3 with SMTP id
- v15-20020a0568301bcf00b00697788503e3mr10224312ota.4.1680448589600; Sun, 02
- Apr 2023 08:16:29 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680455838;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ulZGUMXgMxZ3kXQNpJPBYMAwm3nDPYM7e/CdA/ZWolk=;
+        b=Nv2LykVf/Ce1YyY+Js4IXjflXWbJB9bQDNHpwVtcbwtVnsDsdMszemaSgI4afw01d6
+         Y94YlOiPHkOBeFOS0R89QHr+M9tHxgKnSonn7csSaaXTAGSdpYDaKqS0ksBfY9p6BQfP
+         QEaORJwrLXntGdTFgzjHUv29kJOIxt1WHwCFZ8/UGIXn2XY2P/MUb4nGvassUuoE+i+N
+         W3VPnn2sN/iUXaDt9GCyAzNXmaeLpV3bQjr73/CP/B7N9G3vQDslhCDxJac25zVwXhBp
+         3Kidm2b3rD11GfcHEc5t019ebQfJ9mgeub80re1JuQt5kfO5raWHtboH5o9fO5SQw1ss
+         +mug==
+X-Gm-Message-State: AAQBX9dBXh7+zgGHxkFEPL1Ppqi1z/u0Hk85SWuyMWkhBbT27IxdM8fz
+        sy1D5GCK49zFCDCDWgiCh7FvDHe/e/GeQ7lL67unF56mdRE=
+X-Google-Smtp-Source: AKy350amztHkDsoi5xnG1PixBQ04NWko+LiHJY1FZ+VBnKQ41A4gGBexDXtcR+Tdd8DgwSoEdBBDPEhN/EeNl3rJAx4=
+X-Received: by 2002:a05:620a:a98:b0:748:60ff:dff0 with SMTP id
+ v24-20020a05620a0a9800b0074860ffdff0mr7120564qkg.8.1680455838577; Sun, 02 Apr
+ 2023 10:17:18 -0700 (PDT)
 MIME-Version: 1.0
-From:   Alexandre Garnier <zigarn@gmail.com>
-Date:   Sun, 2 Apr 2023 17:16:18 +0200
-Message-ID: <CAFFOgCUs9d6wJDf3p-+8UkzXRSymCgBctGt+rP+k0CzZPp2LJw@mail.gmail.com>
-Subject: Revision ref '@{push}' not resolved as documented
-To:     git@vger.kernel.org
+References: <20230401194756.5954-1-edwinfernando734@gmail.com> <20230402113607.2394-1-edwinfernando734@gmail.com>
+In-Reply-To: <20230402113607.2394-1-edwinfernando734@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 2 Apr 2023 13:17:07 -0400
+Message-ID: <CAPig+cRs7u2gZC_Tb1Zx4UWn-Ut5yB4OW4RU3kJrT-bR73bfQA@mail.gmail.com>
+Subject: Re: [GSOC][PATCH v3] t3701: don't lose "git" exit codes in test scripts
+To:     Edwin Fernando <edwinfernando734@gmail.com>
+Cc:     git@vger.kernel.org, Andrei Rybak <rybak.a.v@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+On Sun, Apr 2, 2023 at 7:36 AM Edwin Fernando
+<edwinfernando734@gmail.com> wrote:
+> Exit codes are lost due to piping and command substitution:
+>
+> - "git ... | <command>"
+> - "<command> $(git ... )"
+>
+> Fix these issues using the intermediate step of writing output to file.
+>
+> Signed-off-by: Edwin Fernando <edwinfernando734@gmail.com>
+> ---
+> Changes from v2:
+> - use git rebase to squash commit history,
+>   and diff with upstream commit for review
+> - use present tense for code before the commit.
 
-I followed the example of ref '@{push}' in the documentation of
-'rev-parse' (https://git-scm.com/docs/git-rev-parse#Documentation/git-rev-parse.txt-emltbranchnamegtpushemegemmasterpushemempushem)
-and it doesn't work as documented.
-Here is a way to reproduce:
+Thanks. The patch is looking a lot better. One comment, though...
 
-# Setup
-$ git init --bare origin.git
-$ git clone --bare origin.git myfork.git
-$ git clone origin.git local
-$ cd local/
-$ git commit --allow-empty -m init
-$ git push origin
-$ git remote add myfork ../myfork.git
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> @@ -311,9 +315,11 @@ test_expect_success FILEMODE 'stage mode and hunk' '
+>         printf "y\\ny\\n" | git add -p &&
+> -       git diff --cached file | grep "new mode" &&
+> -       git diff --cached file | grep "+content" &&
+> -       test -z "$(git diff file)"
+> +       git diff --cached file >diff &&
+> +       grep "new mode" diff &&
+> +       grep "+content" diff &&
+> +       git diff file >diff &&
+> +       test_must_be_empty diff
+>  '
 
-# Check for
-$ git rev-parse --symbolic-full-name @{upstream}
-refs/remotes/origin/main
-$ git rev-parse --symbolic-full-name @{push}
-refs/remotes/origin/main
+The other changes in your patch are worthwhile, but it seems that you
+have based this patch on an outdated copy of the repository. This
+particular change had already been made by 9fdc79ecba (tests: don't
+lose misc "git" exit codes, 2023-02-06) a couple months ago[1].
 
-# Follow doc's example
-$ git config push.default current
-$ git config remote.pushdefault myfork
-$ git switch -c mybranch origin/main
-$ git rev-parse --symbolic-full-name @{upstream}
-refs/remotes/origin/main
-$ git rev-parse --symbolic-full-name @{push}  # should be
-refs/remotes/myfork/mybranch
-@{push}
-fatal: ambiguous argument '@{push}': unknown revision or path not in
-the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
+So, you'll want to update your repository to the latest available from
+Junio, re-roll using "master" as a base for the patch, and drop this
+change while keeping the others.
 
-# Push is done with the expected remote, and only then the ref can be resolved
-$ git push
-Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
-To ../myfork.git
-* [new branch] mybranch -> mybranch
-$ git rev-parse --symbolic-full-name @{push}
-refs/remotes/myfork/mybranch
-
-So it means the branch has to exist in the remote to resolve '@{push}'
-as a symbolic ref?
-I think I remember that a few years ago the example was working as-is
-without the need to push.
-
-If this is the expected behavior (not the best IMHO as it was a way to
-check where it is going to be pushed before doing it), documentation
-of the ref needs to be updated I think.
-
-Regards,
--- 
-Alex Garnier
+[1]: https://github.com/git/git/commit/9fdc79ecba0f4a3ef885f1409d2db5a1dbabd649
