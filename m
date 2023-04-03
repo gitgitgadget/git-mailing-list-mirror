@@ -2,83 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 374FEC76188
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 22:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2704C76188
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 22:30:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233788AbjDCWRJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 18:17:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39190 "EHLO
+        id S233813AbjDCWaR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 18:30:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233786AbjDCWRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 18:17:07 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 035F726A2
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 15:17:06 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id v6-20020a05600c470600b003f034269c96so8702882wmo.4
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 15:17:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680560224;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SXXVP+7caEvHXT7TqMMsegQn9ap5p1N37DKace1hWCI=;
-        b=MksfXNVfbKlVA8OpjMc6sMx6OycYYW2ml1EjaZQ5ItTxCVz/BRU8DIVntBdGRBdScy
-         nX/wIKBm0OenYFeun89oBroSegiHHYyTaRq5Bjcbm1ZPY54vDz/oMHd1dRGgKL9XuukM
-         nokXJao9oLui1uprjqEhgd2BfBDeRlXjXhBqmfxunQmv5Jsn57ujG0SoOKLDKX+T0CBZ
-         x/fNupooKLMH+APhCSk3rP0ynfOlDgGE36YAx7nGjjASTSzve2mOUw0Z/3vGXH1d0AQR
-         NJ5z/AVZOvOquRcrcQg0LrsL+dDAOEQfP2ZDpFG5m7Lsv3Aa4XaXdTK2reB9a7p+YTOO
-         FUgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680560224;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SXXVP+7caEvHXT7TqMMsegQn9ap5p1N37DKace1hWCI=;
-        b=i7GVEgszvdjQFzPLr+dov/ZN9EElspfq1lipgxm3GXUtKXwmIBmc+yfd2jXYsw5caq
-         mtjMMqvf/dALyBEk2XS2zkip4lepEDJfcflOKu60n8zr+JfS5zzia+ORhiwP2SCOcUhG
-         HzNOYvZUzIpekSWd6Vwd8HBYkUnT1QeoWdUhFCOpkswvB2qYanptYn4P7UwFgOJVqXLO
-         ro1EbkdULfGMzNna08lw/FcwF6ky7QNiuE3o1faPFX8dghGcxmLyzrDcGiBvBxe7Z5B7
-         DuqrnARgix9EqX+YjY4SFUdYQiguEZdxIIfkmYgAVBoGzTdt6gB5H6bW0a2VtZWUq2sj
-         fKYw==
-X-Gm-Message-State: AAQBX9eb6lE8TmuKnsAdMMle8UsFeuxEemUUytN4xxxrPJQ4k940ZLfp
-        pf/vF75gsVGO8BoJqAbc4tgDG4stDOLo/pyRhjY=
-X-Google-Smtp-Source: AKy350YXcaTQHTg/A8yBo2SqbmuroVAPSciCfH3VrXLgR8gg/FEu84J/I0od6jF8M6l6HVCDqmTj0nGZ3RDcEcFEGfk=
-X-Received: by 2002:a05:600c:20f:b0:3eb:5a1e:d524 with SMTP id
- 15-20020a05600c020f00b003eb5a1ed524mr228866wmi.3.1680560224396; Mon, 03 Apr
- 2023 15:17:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230402000117.313171-1-cheskaqiqi@gmail.com> <xmqqilec4ra0.fsf@gitster.g>
-In-Reply-To: <xmqqilec4ra0.fsf@gitster.g>
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-Date:   Mon, 3 Apr 2023 18:16:52 -0400
-Message-ID: <CAMO4yUGnkR5Jj5m52LXb9+LQUcJyjMW_RcFM2dzALAaKa064dQ@mail.gmail.com>
-Subject: Re: [RFC][PATCH v1] write-tree: integrate with sparse index
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Victoria Dye <vdye@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S233737AbjDCWaM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 18:30:12 -0400
+Received: from relay10.mail.gandi.net (relay10.mail.gandi.net [IPv6:2001:4b98:dc4:8::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6BEA4683
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 15:29:51 -0700 (PDT)
+Received: (Authenticated sender: robin@jarry.cc)
+        by mail.gandi.net (Postfix) with ESMTPSA id 7D229240004;
+        Mon,  3 Apr 2023 22:29:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
+        t=1680560990;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=w16pf3yAWOdXqgsu74/sBbubMFliH5BIskAloD/n6TM=;
+        b=WQxsLn9XDnBMHdvCWx/gIVjTdzzt0AwhRePMK6HK3ve9s6+bopQhepI9Q8PzEulqpVA1rI
+        MLWfer6RetOtvrOwUP2+s/tQpPs6NrmHbyxvZi/FqI1/8hM1YoXCahb6UYI1HDSxdeGWCm
+        Vw0v2e/BdPl+suD/XqfWVFWuxrRAJERtN7q45s/ZonFf/JiqrMkEwfWSywacxk8wRQm4qT
+        qOjCitHKzzqVS87Xqr63gcR84YoxQxlj09BBZk5hBqjH4Ln2CdzIPj28JEuHuDEEL10mn2
+        43XgjlUUvNsOjgvjW7HNlxoFOqCyypWFDF1aMvHmWlkLFEjkIj+Dw9kN39APoQ==
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Tue, 04 Apr 2023 00:29:47 +0200
+Message-Id: <CRNH5FOB91JE.14CZEA494X002@ringo>
+Cc:     "Tim Culverhouse" <tim@timculverhouse.com>,
+        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
+        "Bagas Sanjaya" <bagasdotme@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Eric Sunshine" <sunshine@sunshineco.com>
+Subject: Re: [PATCH RESEND] hooks: add sendemail-validate-series
+From:   "Robin Jarry" <robin@jarry.cc>
+To:     <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>
+X-Mailer: aerc/0.14.0-145-gedb59e6a06c0
+References: <20230402185635.302653-1-robin@jarry.cc>
+ <66099367-4ea0-7d2a-a089-7a88e27f695e@dunelm.org.uk>
+In-Reply-To: <66099367-4ea0-7d2a-a089-7a88e27f695e@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 3, 2023 at 4:58=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
+Phillip Wood, Apr 03, 2023 at 16:09:
+> Usually git commands that produce or consume paths either use quoted=20
+> paths terminated by LF or unquoted paths terminated by NUL. That way=20
+> there is no ambiguity when a path contains LF.
 
-> Has the test suite been exercised with this patch?  It seems to
-> break at least t0012
->
-
-Hi Junio
-
-I commented out the 'test_perf_on_all git grep --cached bogus --
-"f2/f1/f1/*"' before
-running 'p2000-sparse-operations.sh'.  I did this because I found that
-with its presence,
-even without adding any code, the tests wouldn't pass.  After commenting it=
- out,
-everything worked well. (In the patch I submitted above I did not
-commented it out )
-
-Thanks
-Shuqi
+Thinking again about that. The probability that a file path name
+generated by git-format-patch would contain LF is close to zero.
+However, reading per line is more natural and more in line with other
+hooks that read from stdin. Having that single hook separating stuff in
+stdin with NUL bytes is weird from a user point of view. Don't you think
+it would be an acceptable limitation?
