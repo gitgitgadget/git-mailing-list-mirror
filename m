@@ -2,119 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9911C76196
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 22:33:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 662E7C761AF
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 22:52:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232367AbjDCWd5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 18:33:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49648 "EHLO
+        id S233482AbjDCWwZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 18:52:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233492AbjDCWdt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 18:33:49 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B36422C
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 15:33:44 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id l27so30893005wrb.2
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 15:33:44 -0700 (PDT)
+        with ESMTP id S233744AbjDCWwW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 18:52:22 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAA4849D4
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 15:52:05 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id le6so29519883plb.12
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 15:52:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680561223;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pHlsklKDtGHBtdf2RNlEwL2fSwX7wLVYtDR4NomFA70=;
-        b=J0iSRHOvciPashI0IHar4dccbDwcf3O84EPeF/jaVhIpPp/6mfSkyoFX0ewRUrGWQW
-         /MEEida0PUDb7mOxqpZH6dkZ7cteTVIyxbQWaTr2y+tG4ZFbKS85z78POryFTjAqyagY
-         jDZjeJm2ii5hqbBky9jMLQCrIz7nNS6U0IaNrInRJ8nz9uLoh8ErfDoO/3HoJ9OHcFWY
-         +UMm0P94uyCPY/FBuD0O0z/hdmneueYAHoJPpaOv4gzB7NgVDGgU3lBgDk0gHU2jBEnF
-         pFSvRkT4hVfIrFGjcNmLBM6NCdSYaUds+I3veOuXCMUmI+E4jIBLcgrdzhmqF21odQh+
-         bVbA==
+        d=gmail.com; s=20210112; t=1680562325;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p/tRAtoLIS26WMfBgLZ9YdhOGMsl9rm4QTbrB2TyvsE=;
+        b=kyLwyGCwAW41ihhx4mYJCNuH6aZhw1S+jpSatDSgX8jx1QjUvPJCzu7pUSofLWAJdV
+         Jx3ZIGsdtKLuH37wn6pl9PU47i50BKd34hm/RyZYqPcLXbH72c186mCn1BcR+/pkvDgY
+         My+YPiKUirGzPzMpaGheIcD9mhXbNDQMaZBJufKFyJkguaNCOHxHuZ4mgYp69yjuu/CV
+         5xwt22hAtCFjSqwuXniegrzHbjqVo4EB54TF077gF5Gajo/HbQCJNZThetQsltsUkk6+
+         Jy9SG898xWUbzfSRTX0pxOMS46e6rTWQ4Vl3j2e+LsUg2Mu5CzEruCEgA/40mpmpCPBA
+         N3aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680561223;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pHlsklKDtGHBtdf2RNlEwL2fSwX7wLVYtDR4NomFA70=;
-        b=tPvwcauG8B84UIFbJ3fpQ8Wv12MKKtibgNMH1O6l8pzChF1GOm6M90/SfbIITnbbm1
-         VhmOixgtTMqumqEL5udplBOSahUsnfV1FeyL8HPXaHldSNisDVi9dMnEu8dD5wYONEvw
-         8+fBdXVsD5UoZSEuVnkXjS5dA46MN4xs+P5qlQJAtGwB7qQGuFIgg8p8gsedGW8zcYXe
-         jHdtkWq5+DavCJWmv8Kkz6fisl6p7bvf6GLefl3Rhc9G66ZiATocU3DKp8V6Ueu58ijf
-         TETbyazeN4C+LlBZmR+JswgAG8hidnmhjqptxk+nVzo3DiR1DXZgTUJsxbzF9ZbKf7I6
-         Dh3Q==
-X-Gm-Message-State: AAQBX9eqcOKI2VKMhwdYeUrRBTfkMKpLPXQgB8Oe0q6xcaoVpswyMik2
-        ST/7ooV1gV5bP8bMCoBgVx1yPv4PXL3uPE7NZeE=
-X-Google-Smtp-Source: AKy350aLGozItR+nzAhk/Ri9DyVhlDPM1Z313PKGEtHslWfQIjgpIGSyrDJEt3cX186reNe5b2a3jg==
-X-Received: by 2002:adf:facb:0:b0:2e5:5f89:3386 with SMTP id a11-20020adffacb000000b002e55f893386mr81365wrs.23.1680561222918;
-        Mon, 03 Apr 2023 15:33:42 -0700 (PDT)
-Received: from titov.fritz.box ([212.102.57.24])
-        by smtp.gmail.com with ESMTPSA id m17-20020adfe0d1000000b002d1e49cff35sm10697453wri.40.2023.04.03.15.33.42
+        d=1e100.net; s=20210112; t=1680562325;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=p/tRAtoLIS26WMfBgLZ9YdhOGMsl9rm4QTbrB2TyvsE=;
+        b=bAbOHY3zIhSYayBcXwYfbrbpInuBIju4m7sdx/WjKR9kQtb0gpD1SYCkTAIukLl1WM
+         8biGdQpoJk97qdnYL56AE+wQVN7zPf+LYxFFo2EH5WDX+orpYZqAsw4q04wMDAAIdIuY
+         +B2ZXNwLX5mFEDZBZIEhx1+b8NTvq/LEmSaFkAtUyAC3Oxn+XvI9lrxvyMShN9JHRKcn
+         0u1bHnirzcqtFzwFJ5miQiusMWXXar6K1VwV9CVBDAqfdGUjk8AHcrJEc+TfmRsGtxWP
+         2NRPCv8W39Q30kVD6qrOJkFKJShVo3caaPTwHsieIpOOWQSPRIc7CRBpD6eglAc3TcRu
+         fzEA==
+X-Gm-Message-State: AAQBX9d4Jn8bJTt1LVelpj1cYgvM2JT+LsSoXkeNYx515WVaiBMwf/hn
+        nQXpkhpqtdbWlm3OZLiS0wI=
+X-Google-Smtp-Source: AKy350ZWTM2oWv3Ap35Z/uDydC+RXLcoz6bSRjn8FE806Ka7BfHRO0yET8DXYlelhmQYVqUJDk9WnA==
+X-Received: by 2002:a17:90b:4f41:b0:237:29b1:1893 with SMTP id pj1-20020a17090b4f4100b0023729b11893mr384334pjb.46.1680562325048;
+        Mon, 03 Apr 2023 15:52:05 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id s17-20020a17090a881100b002372106a5casm6630474pjn.44.2023.04.03.15.52.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 15:33:42 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/6] t1300: don't create unused files
-Date:   Tue,  4 Apr 2023 00:33:35 +0200
-Message-Id: <20230403223338.468025-4-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230403223338.468025-1-rybak.a.v@gmail.com>
-References: <20230401212858.266508-1-rybak.a.v@gmail.com>
- <20230403223338.468025-1-rybak.a.v@gmail.com>
+        Mon, 03 Apr 2023 15:52:04 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Robin Jarry" <robin@jarry.cc>
+Cc:     <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>,
+        "Tim Culverhouse" <tim@timculverhouse.com>,
+        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
+        "Bagas Sanjaya" <bagasdotme@gmail.com>,
+        "Eric Sunshine" <sunshine@sunshineco.com>
+Subject: Re: [PATCH RESEND] hooks: add sendemail-validate-series
+References: <20230402185635.302653-1-robin@jarry.cc>
+        <66099367-4ea0-7d2a-a089-7a88e27f695e@dunelm.org.uk>
+        <CRNH5FOB91JE.14CZEA494X002@ringo>
+Date:   Mon, 03 Apr 2023 15:52:04 -0700
+In-Reply-To: <CRNH5FOB91JE.14CZEA494X002@ringo> (Robin Jarry's message of
+        "Tue, 04 Apr 2023 00:29:47 +0200")
+Message-ID: <xmqq7cus4m0b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Three tests in t1300-config.sh check that "git config --get" barfs when
-syntax errors are present in the config file.  The tests redirect
-standard output and standard error of "git config --get" to files,
-"actual" and "error" correspondingly.  They assert presence of an error
-message in file "error".  However, these tests don't use file "actual"
-for assertions.
+"Robin Jarry" <robin@jarry.cc> writes:
 
-Don't redirect standard output of "git config --get" to file "actual" in
-t1300-config.sh to avoid creating unnecessary files.
+> Thinking again about that. The probability that a file path name
+> generated by git-format-patch would contain LF is close to zero.
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
- t/t1300-config.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Close to zero is very different from absolutely zero, and in the
+case of format-patch generated patches, I think it is absolutely
+zero.  At least, that was the case back when I designed and
+implemented it, and I do not think I accepted a patch to break it
+over the years.
 
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index d566729d74..8ac4531c1b 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1575,7 +1575,7 @@ test_expect_success 'barf on syntax error' '
- 	[section]
- 	key garbage
- 	EOF
--	test_must_fail git config --get section.key >actual 2>error &&
-+	test_must_fail git config --get section.key 2>error &&
- 	test_i18ngrep " line 3 " error
- '
- 
-@@ -1585,7 +1585,7 @@ test_expect_success 'barf on incomplete section header' '
- 	[section
- 	key = value
- 	EOF
--	test_must_fail git config --get section.key >actual 2>error &&
-+	test_must_fail git config --get section.key 2>error &&
- 	test_i18ngrep " line 2 " error
- '
- 
-@@ -1595,7 +1595,7 @@ test_expect_success 'barf on incomplete string' '
- 	[section]
- 	key = "value string
- 	EOF
--	test_must_fail git config --get section.key >actual 2>error &&
-+	test_must_fail git config --get section.key 2>error &&
- 	test_i18ngrep " line 3 " error
- '
- 
--- 
-2.40.0
+But "git send-email" can be fed a list of files and even a directory
+(and enumerate files in it).  The filenames are under end-users'
+control in this case, so "close to zero" has absolutely no relevance.
+If the end user means to feed you such a file, they can do so 100%
+of the time.
+
+If we support such a file is a different issue.  A good rule of
+thumb to decide if it is reasonable is to see if the main command
+already works with such filenames, e.g.
+
+    $ git format-patch -2
+    0001-foo.txt
+    0002-bar.txt
+    $ mv 0001-foo.txt '0001-fo
+    > o.txt'
+    $ mkdir dir
+    $ mv 000[12]*.txt dir/.
+
+may prepare two patch files that can be sent via send-email.  One
+file (the first one) is deliberately given a filename with LF in
+it.  Does send-email work on it correctly if you did e.g.
+
+    $ git send-email dir/000[12]*.txt
+
+or something silly like
+
+    $ git send-email dir
+
+or does it already choke on the first file because of the filename?
+
 
