@@ -2,72 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5B47C76188
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 17:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B95BC76188
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 17:36:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232982AbjDCRZu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 13:25:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59046 "EHLO
+        id S230414AbjDCRg2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 13:36:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232340AbjDCRZs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 13:25:48 -0400
-Received: from relay10.mail.gandi.net (relay10.mail.gandi.net [IPv6:2001:4b98:dc4:8::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 811FC122
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 10:25:46 -0700 (PDT)
-Received: (Authenticated sender: robin@jarry.cc)
-        by mail.gandi.net (Postfix) with ESMTPSA id 124D4240005;
-        Mon,  3 Apr 2023 17:25:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
-        t=1680542744;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=MXzbgENvkcdhJwgEl/eBxGHrhpeIDzfwMYE5owy8oiA=;
-        b=nw8bN+PEi48K7Yrf/tZ5WZyNzaPlzzTJCAV1Thg3VTavdy53eL62uJhBWmJOrc9kJPmnIp
-        6ctb/0HJQtm4tv3K+7kdyO3YWRcYhXv0YTVrNwe+toriYIZqKPUc/CCqoU1moTozY+0Eep
-        2xioaIP84dac7p1wXspURA7o50Pp/o6863OWluyffFZMuDaL7fB2ZUzgUn0frv5AxUkWhw
-        hknhYECyrDS2ZEjWFVW4OVG1UDAQVjet9yXXUqHzTVYiVUqQf8ctCNZt6757fECk8oGv01
-        ecAoQREflcVudsGnFtPSgzVSpeumlKtXfrpRBuPvGEHLB0KTb728jkkU01MfrA==
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 03 Apr 2023 19:25:42 +0200
-Message-Id: <CRNAOLZTJKEN.3G96UM2HO763B@ringo>
-Cc:     <git@vger.kernel.org>, "Tim Culverhouse" <tim@timculverhouse.com>,
-        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
-        "Bagas Sanjaya" <bagasdotme@gmail.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>
-Subject: Re: [PATCH RESEND] hooks: add sendemail-validate-series
-From:   "Robin Jarry" <robin@jarry.cc>
-To:     "Junio C Hamano" <gitster@pobox.com>,
-        "Phillip Wood" <phillip.wood123@gmail.com>
-X-Mailer: aerc/0.14.0-144-gf975689ea403
-References: <20230402185635.302653-1-robin@jarry.cc>
- <66099367-4ea0-7d2a-a089-7a88e27f695e@dunelm.org.uk>
- <xmqqo7o59dlz.fsf@gitster.g>
-In-Reply-To: <xmqqo7o59dlz.fsf@gitster.g>
+        with ESMTP id S229498AbjDCRg0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 13:36:26 -0400
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DF0D1FF9
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 10:36:26 -0700 (PDT)
+Received: by mail-pl1-x62c.google.com with SMTP id iw3so28790035plb.6
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 10:36:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680543385;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=2L80H1gqrvqZx/5fzTXNBrzijJOaUE4YsA5rDHGp6fg=;
+        b=DepA+J7XflnyGNaCfXSMu29BMecvGMIJ1jqXczwq1Vnw2P4iGoXrRl9QFOturZsxfB
+         0y87QSgJ1k3vQR+zHaee0882YB9iutluTBe7KcUqh9jrb2zxt3/tx+zA/RRR2cBB2Lqi
+         p0wxUoRQZjXl++Gu1IQekevw+dbHbVz804KXeMqC5mK3UFvDtbwRSmUYLE7i+GznHHoG
+         F2qgAwZjKGLMtVITEje53F5546ZEjKR0AIwVrnHSZFj0xvEqNbfgIvEILbmPqdlaFN9w
+         pfWjSjxRp+QJB3jfIvJOIZlSqsABEVwgcdSRvCS3I6DmtU6n6/ENUA1f5Dwd93BoG3vv
+         vp7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680543385;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2L80H1gqrvqZx/5fzTXNBrzijJOaUE4YsA5rDHGp6fg=;
+        b=dpVZG4D496VbSKtpyT6sQWNrJKzzoiFvBbOyZ2LJIGH3sUM69w1fa4SHt8Bm7usicI
+         7vdbjbP0IFSCpFFKjd2a2UV7DoMTnCDjPoTmO0iJvq2Ple2Da1jzD188lf8v2N4cEsyj
+         YfHWcmgMDvF0jV6HRxPVE6owBIiDEXrT++ABjDtey9dS8C9LtqGJBfCeof7vT3aCAvuf
+         R7UN6zSqce9/49eAtacvjQdLKvU48srK0A3OrLZqOA2q6nPMsm1a8Chx4PiJKENj3z+6
+         ZAkalS95Dt72VErSfCyzRUWXg1by5TovdHCoPIHthKN6nWBC2BuIMCN1O43qT7nWuzqN
+         gKoA==
+X-Gm-Message-State: AAQBX9cu6lnMmvaQJwqzACRVi404hr00sc0bJoQWXCdAMx7n8DX01/9f
+        lIhmfltwotjFzUm45spm9VoUaZ7qm2A=
+X-Google-Smtp-Source: AKy350aUcAJfh8FTn685Cbc927xI46jV8UjPTMcl+kHUd3XBJKCoYs/EVqXDxEKU4oImjSSGzgcjQA==
+X-Received: by 2002:a17:90b:1b4c:b0:241:b90:4a1c with SMTP id nv12-20020a17090b1b4c00b002410b904a1cmr4466304pjb.44.1680543384970;
+        Mon, 03 Apr 2023 10:36:24 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id s1-20020a17090ae68100b0023d0290afbdsm10061880pjy.4.2023.04.03.10.36.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Apr 2023 10:36:24 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2023, #06; Wed, 29)
+References: <xmqqv8ij5g83.fsf@gitster.g>
+        <CABPp-BGoPuGCZw+9wCgdYyRR4Zf4y9Kun27GrQhtMdYWpOUsYQ@mail.gmail.com>
+Date:   Mon, 03 Apr 2023 10:36:24 -0700
+Message-ID: <xmqq8rf86f6v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano, Apr 03, 2023 at 17:42:
-> I do not know why we need another hook to do pretty much the same
-> thing as the existing one (which could be taught to spool and then the
-> last round to validate, in addition to each step rejecting incoming
-> one as needed), but at least calling it there would be very much in
-> line with the existing one, I would say.
+Elijah Newren <newren@gmail.com> writes:
 
-If for example the validation would require trying to apply patches on
-top of another branch in a temp repository, you would need to know the
-number of patches and be able to determine whether you need to reset the
-branch (patch 1/N) before applying. For that you would need to parse the
-contents of the patches. This is not the end of the world but I assumed
-that it would be easier to handle with a hook that fires once with all
-patch files.
+>> * cw/submodule-status-in-parallel (2023-03-02) 6 commits
+>> ...
+>>  Comments?
+>>  source: <20230302215237.1473444-1-calvinwan@google.com>
+>
+> Perhaps this could be marked as needing a reroll, based on both
+> https://lore.kernel.org/git/CAFySSZDk05m6gU5-V1R+y3YnQ5PPduVW54+_gjBwD0rmacsLsw@mail.gmail.com/
+> and https://lore.kernel.org/git/xmqqv8jczbs0.fsf@gitster.g/ ?
 
-Another option would be to change sendemail-validate to be called only
-once with all patches. That would be the ideal solution since the
-existing hook is not always usable with series. But that would be
-a breaking change. I personally don't mind a small breakage like this
-but I don't know what is the project's policy.
+Sounds fair.  Thanks!
