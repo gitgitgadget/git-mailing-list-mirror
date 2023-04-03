@@ -2,116 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71E01C76188
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 14:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E330CC76196
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 15:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233565AbjDCOdM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 10:33:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38626 "EHLO
+        id S232579AbjDCPKM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 11:10:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233567AbjDCOdH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 10:33:07 -0400
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::221])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4312E7D
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 07:32:55 -0700 (PDT)
-Received: (Authenticated sender: robin@jarry.cc)
-        by mail.gandi.net (Postfix) with ESMTPSA id 52537240008;
-        Mon,  3 Apr 2023 14:32:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
-        t=1680532373;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=ABuPrhgb1bfKlXyrcYRmwA/guTzVtIEFqBVhJSCJg7w=;
-        b=CsYURUCcqkbBpoOY/XB5gUCCX/Yjl6+PAw0y01p05RbdIhdQO718uNrSxUXyzYwrSlSzaD
-        YWCz6Cu6gA5/eT2EpE2eJYIVza/mkCFyPOTRuSgcF9Rul0m1zeq7lnk814htUKc2+/fhNa
-        qQpZTLYknUFGCza4dP77nTTVaPRDtHCPHEh/r5WsADcEkQNyIVhN4hYSuHtkZH1lVh3V/b
-        3cclORVW3qrA3rbmdspcyxiHTNfCPQUhthw5SYtve2+yb/YuuvdJhU5qtzv0Uu812Dp7sZ
-        7YV8NcSgsxBi7AFOuqEZW7JSkfECd2c0E4eHwKSY3lmycQ9M1CCvzsXJ0FcAyQ==
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 03 Apr 2023 16:32:50 +0200
-Message-Id: <CRN7096DENCQ.1HF4OQ0ZD4HFP@ringo>
-Cc:     "Tim Culverhouse" <tim@timculverhouse.com>,
-        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
-        "Bagas Sanjaya" <bagasdotme@gmail.com>,
-        "Junio C Hamano" <gitster@pobox.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>
-Subject: Re: [PATCH RESEND] hooks: add sendemail-validate-series
-From:   "Robin Jarry" <robin@jarry.cc>
-To:     <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>
-X-Mailer: aerc/0.14.0-144-gf975689ea403
-References: <20230402185635.302653-1-robin@jarry.cc>
- <66099367-4ea0-7d2a-a089-7a88e27f695e@dunelm.org.uk>
-In-Reply-To: <66099367-4ea0-7d2a-a089-7a88e27f695e@dunelm.org.uk>
+        with ESMTP id S231899AbjDCPKL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 11:10:11 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3A12E62
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 08:10:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1680534603; i=johannes.schindelin@gmx.de;
+        bh=5eQGoIpTXyPLHanMThVzoSPbObk59ynMdEgarsP+gPg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=NgPb0sQ8FNIylNI1sH/Z4Bkg9apd5uv8PcEVM5TNv0+8nJZhRVCXWRLd9sxKm0Cu6
+         KL1HUOa5PhGx7x7wx4ruz24dQqmm9wTWQZRRwKtWSLdLaMEiH82lX9T1c729GAHn1i
+         CZN7BwMiQGOJT8criOXLGKogRtlJiD4Kze2w/vOPloS48YPUWa3ERCjy/OsMIFL04k
+         UQiOWqgMe+NjUmGLlUF0jWuRfu2yW5+DTVAElHYty+vKRk2QRLuUv3STAGx0vB7uTr
+         Ivcjmq3X7jfFHZglyQfyIr90M87p049VCJeI3c3ESR+ma9IqO7eLY/6sva1FlIIkCR
+         fafGA6joeSVSQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.213.182]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCsUC-1paW8B018i-008qQ5; Mon, 03
+ Apr 2023 17:10:03 +0200
+Date:   Mon, 3 Apr 2023 17:10:01 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Richard Spano <richard.spano@live.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: System Environmental Variables being wiped on update
+In-Reply-To: <AS2PR03MB919368C4FB4C7F94255D2CEA89869@AS2PR03MB9193.eurprd03.prod.outlook.com>
+Message-ID: <7aeccfbc-a6d1-8fc4-339f-562c53d1c133@gmx.de>
+References: <AS2PR03MB919368C4FB4C7F94255D2CEA89869@AS2PR03MB9193.eurprd03.prod.outlook.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-436107597-1680534603=:26978"
+X-Provags-ID: V03:K1:C11qfSvG6cdYm3kxCeFH9JbbPyttHIJHx4wqzBetrw/R/UKLNcM
+ EgPW29eAEXzmypZGIifXJu22RyaEqSkn0H75A8tacOMiJ0h1dtFxEizvuiYWZTkTo+b/SUD
+ ayevuhkq9aSHJiQcez/CD/CDhtnP/Yc9DCYYhZi0pAEoMKiJHUfUZHGhvWJvvq3vm+/Hq2M
+ ngIbq135BvdJoty6VN9EQ==
+UI-OutboundReport: notjunk:1;M01:P0:LodovEqnRZI=;7wOifMzzZrroqfEfCGW+fgSM9w0
+ pAC27YRwVZWg9ooZnbSmbmeT04pM3+lpp9XWRPmsxRVmGIK1vMaPsz8k3iMEpjuql4hvq48ql
+ avVW92H9UooYTQ8WeKESIj/139bK7QQaCwK6+8VXGKk0mj4xOVb73LN4/4x3fddo+nhFzp8MR
+ vei8N4cgPYuPWI3cSzE3wJdnKaFg6R0efWZrHUrXJM7aFOmOLJskbO4+2Y5eZO93kI7gUhj0B
+ rGUlba/y4TtQsXWgn0K/VMGPC3b3E9abBGevq04pm8EjmdDvyM1o9ZHT0K3hqqHFNcVFApd3J
+ 88wSEB+TE4QloMz25Wzcgnm2HE5NczoJ4ZTgRDvXmzPXE0kvkq5XbHxaY/6I82QxpwOsF3lgU
+ /ZiSJMsAwMmM4qfyaIOSY4kYGD+TA16pNIqzWvDiXWV+jkWo4Vhj3/r+/3HYuichCyc5dTDWY
+ jC4aPwQDSue50hTOTXfCR4b36/KogC5Jagjeb7jZD3oHpXX/vxndW1av2Z1Zs3DWGgPj4W3gb
+ RzF5RJNv8X6U1qc98cmOG3XNMC89NLpAxpuYAesM13585XqoRGdOaP+m2W4+57ShJnpVfEDzz
+ ocQdqYHv4S4pkWPnF8F23g6QCxxH0BWwywlAljA3meUWd72b9hV0S/kpAmHel3WXxW3AJnu5A
+ +2XZ1dhXsQostaLz0QHzic3TM9+/p1DSkKKXI2/mWVM0XNpDSb71pJwMA8CP8KRbjbmjF9KIQ
+ XHGD9a0zyDNJ5a7Sprc0Xo4Eip2b3tTXzijcf7HThYO+FhcoPq+MKiL/BZTciMT7Q2KEki+mQ
+ s/H6vRNTWXXT4IXEhchICulEMfO6ls82GpMzsnNaEsJD368IZlJ7ITJYIUVTI0mv8KOL61xp4
+ usUkN9XJ4pgFxgcX64kMCG3LQ7TXJ2U90smaO/s2StEzJqRIBGhzTeNQSeJA/0pkMaWIjjQPu
+ YZjoW8mJu5T0kkjxZeZ49oL66CM=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Phillip Wood, Apr 03, 2023 at 16:09:
-> > +  <patch-file> LF
+--8323328-436107597-1680534603=:26978
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Richard,
+
+On Wed, 22 Mar 2023, Richard Spano wrote:
+
+> We have GIT installed on machine and we have =E2=80=9CC:\Program
+> Files\Git\usr\bin\=E2=80=9D added to the PATH system variable (windows).=
+ When
+> updating GIT this addition to the PATH variable is wiped. If this is not
+> noticed then we have issues with GIT until we manually re-add this in.
 >
-> Usually git commands that produce or consume paths either use quoted=20
-> paths terminated by LF or unquoted paths terminated by NUL. That way=20
-> there is no ambiguity when a path contains LF.
+> Is there a way to stop these variables being removed during a GIT update=
+?
 
-I had never imagined that some twisted mind would insert LF in path
-names but since nothing will forbid it, I agree that it is
-a possibility.
+The Git for Windows-specific part of the `PATH` is considered to be
+"owned" by Git for Windows. This is required to allow for future changes
+similar to the ones when we moved Git for Windows from MSys to MSYS2,
+where the paths changed that needed to be added.
 
-I'm not sure what you mean by quoted paths, you mean adding literal
-double quotes before printing them to the hook stdin? That means the
-hook needs to handle de-quoting after reading, right?
+However, I have good news for you: if you _want_ `usr\bin` to be added to
+the `PATH`, you only need to select the 3rd option on the "Adjusting your
+PATH environment" page of the installer.
 
-> > diff --git a/git-send-email.perl b/git-send-email.perl
-> > index 07f2a0cbeaad..bec4d0f4ab47 100755
-> > --- a/git-send-email.perl
-> > +++ b/git-send-email.perl
-> > @@ -800,6 +800,7 @@ sub is_format_patch_arg {
-> >   			validate_patch($f, $target_xfer_encoding);
-> >   		}
-> >   	}
-> > +	validate_patch_series(@files)
->
-> This happens fairly early, before the user has had a chance to edit the=
-=20
-> patches and before we have added all the recipient and in-reply-to=20
-> headers to the patch files. Would it be more useful to validate what=20
-> will actually be sent?
+You might want to review the implications, though.
 
-I agree that it would be better. I added the check here to be in line
-with the existing sendemail-validate hook. I could move it after edition
-and header finalization but then we would need to move
-sendemail-validate as well for consistency. What do you think?
+Ciao,
+Johannes
 
-> > +	# The hook needs a correct cwd and GIT_DIR.
-> > +	require Cwd;
-> > +	my $cwd_save =3D Cwd::getcwd();
-> > +	chdir($repo->wc_path() or $repo->repo_path()) or die("chdir: $!");
-> > +	local $ENV{"GIT_DIR"} =3D $repo->repo_path();
->
-> This looks like it is copied from the existing code but why do we need=20
-> to do this? I'm struggling to come up with a scenario where "git=20
-> send-email" can find the repository but the hook cannot.
-
-Again, for consistency I assumed it would be best to keep the code
-similar in both hooks. If you think it is safe to skip that check, I'll
-remove it gladly.
-
-> > +	# cannot use git hook run, it closes stdin before forking the hook
-> > +	open(my $stdin, "|-", $validate_hook) or die("fork: $!");
->
-> This passes $validate_hook to the shell to execute which is not what we=
-=20
-> want as it will split the hook path on whitespace etc. I think it would=
-=20
-> be better to use "git hook run --to-stdin" (see 0414b3891c (hook:=20
-> support a --to-stdin=3D<path> option, 2023-02-08))
-
-Ah that's a nice addition. I'll add that in v2.
-
-Thanks for reviewing!
+--8323328-436107597-1680534603=:26978--
