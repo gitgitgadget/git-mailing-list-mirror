@@ -2,214 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74155C76196
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 16:29:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44519C76188
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 16:34:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232199AbjDCQ3X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 12:29:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33638 "EHLO
+        id S232628AbjDCQeX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 12:34:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231809AbjDCQ3W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 12:29:22 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54F031721
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 09:29:21 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id h12-20020a17090aea8c00b0023d1311fab3so31151732pjz.1
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 09:29:21 -0700 (PDT)
+        with ESMTP id S232501AbjDCQeT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 12:34:19 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 265541FD3
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 09:34:15 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id l7so27757510pjg.5
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 09:34:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680539361;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=g08Kv26XU0P++/Nlb0ZN7ddk8DCklTeSLdYsTAgxYLo=;
-        b=N5X+BMMt1X6JlR3u2kWTmCDBRSXE9KUH41W1XzhJvHdmsV22SfYXMiJBNsVOKLWuPb
-         g3Cyn9n3Ir4WHWjq0gqJU8a6Vm/8tyAnaUj1BXi+LjKFKvP3IBeBEkyN3Ail8HA6MvhC
-         Mge4R++bgRD5IJ/nPgXyFlBrySdnJnVVtVNnd0ISp6SJGf5HltP5SMyT7wKLQgG2KEh9
-         kP7YyH/jAozSFLyBOhmAw2YUjdLFwgMMvqD/PU8+Ril46qfu+1fBaQ7mNC8w7Sq4E0fu
-         QE8Vj4ZJnNsq4V0NH7PDCEkPge+4iiPZ1wVgVO/2wEo8dK3oSUQsSCPZzrE7b9k2dkJY
-         RxTg==
+        d=github.com; s=google; t=1680539654;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=glLk76fBNij24aTY69Aqmy26c/VcJaXl4Aqd+qRF6/k=;
+        b=Iekr8JcEjcyRvtUV76wN5G4n5PRAqhIuTrhQ4P2OSXm1J7xcsyUvbIDD82jArpH2rU
+         7pLsVxikUUQVtF+EQd0kt+Z5kQW3EoASCEtk0KLGdsfOxaDiMR6ZCZEl6sf+OU5TAXJ2
+         IpneGwrNxUuHj/A/nnKBwiAoannsAXrmGOWHvDs6K8md0cUvWOM4nSaU9vbILOligmV1
+         iXIHVRsTDn2dQuERQTnqXeWq/IJto5MTEmMc2lG9OWUh/XKN8qBp8WdlyBNr2rv8cvoR
+         8PuNtXEfBkiCv5/uzdfmPvId5/CY1jGF9dhap0JA2TFJ4OJB85QcTU2a75F70QvqOohX
+         Yj5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680539361;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
+        d=1e100.net; s=20210112; t=1680539654;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g08Kv26XU0P++/Nlb0ZN7ddk8DCklTeSLdYsTAgxYLo=;
-        b=WArm5ORDAFApBzBQaLek8hyAnMVXLKePgLG+X2+QHm6zxIj06rkCQHueiOwfrojx0p
-         cc/vrRPH16nxbNZFdp7LJuUWxVhDAL3fXiKRey1jlp67rR9SiHIxfBD1I3PWOzRBCu2M
-         4GsyqlPf+R0AnurVRjnvFu/4G6URh3OKeuvU/1moOZx1zrbB7WdQvf8UBVFbWXVvNuBc
-         AznaLKz686npd6WclDxuK+dmFUvStUi4OhLQVNZHU/qIyBLsJVKVfL3ug64Bxilrofe6
-         XgjYUB7pc+NlP0HPdo4R2CQoIyPb7NADrp4elgJ3EgEXaIGdQn2M0Ytp57V/FgFKSSy5
-         E0Gw==
-X-Gm-Message-State: AAQBX9fYET1ncI9WHuSRA6Bj28Lcy/T3W5P4kghnCbqW/Vuue38EJPqs
-        DaOxPtOLNJMyXrBRjsG4M8Y=
-X-Google-Smtp-Source: AKy350ZlqwKPIeYPdomcBv7ThQV1fhJmPwLdZD5pl/+BpxO3PJAiKOaAoxxbsvYXgbl5Pmt7R2Uuvw==
-X-Received: by 2002:a17:902:ecc4:b0:1a1:c9f7:cec5 with SMTP id a4-20020a170902ecc400b001a1c9f7cec5mr47199837plh.2.1680539360702;
-        Mon, 03 Apr 2023 09:29:20 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id k10-20020a170902ce0a00b0019a70a42b0asm6928988plg.169.2023.04.03.09.29.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 09:29:20 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Diomidis Spinellis <dds@aueb.gr>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>, demerphq <demerphq@gmail.com>,
-        Mario Grgic <mario_grgic@hotmail.com>
-Subject: Re: regex compilation error with --color-words
-References: <CAPig+cSNmws2b7f7aRA2C56kvQYG3w_g+KhYdqhtmf+XhtAMhQ@mail.gmail.com>
-        <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr>
-        <b8b3777b-ee6e-d90e-3365-5cb9c9d129fe@web.de>
-        <c4728fac-bea9-3794-077e-c978d99f46bf@web.de>
-Date:   Mon, 03 Apr 2023 09:29:20 -0700
-In-Reply-To: <c4728fac-bea9-3794-077e-c978d99f46bf@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 2 Apr 2023 11:44:30 +0200")
-Message-ID: <xmqq5yad7wv3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        bh=glLk76fBNij24aTY69Aqmy26c/VcJaXl4Aqd+qRF6/k=;
+        b=Y/QuvRLy/TVi1DHNX7Pkfpukgho0WyKj0K0u9bA62MuZFozfI6jbYA3cZ5xww25Pdp
+         xtuTrtcRVzZBwE9Ilau7dDyB2LCBnW28McKPiGvohAvEarMwTC1xbywWyRHsNH496IQ8
+         cp2tGfWi6iuuFb7LbyfZGHsAMTbbh8d6P3t9pU+Mh1d8irYY/g8Cdbs4C51IoAozpf6J
+         r8sclvXoFnVhSbKpvLFXHPEsQF8Nd2Yd7Qej4nFDMKWoFDuONv82sR80ztadfFQ2xYvP
+         xczvkONIA9pRRPE4DKuhqM2p2kesPSGin0NWXkpSIEU4E8BHcvgpRAfTZvOs3TLLQpmT
+         FQ0w==
+X-Gm-Message-State: AAQBX9edfgfmiB3RGo6c4w/ZsEysgkOT+X0VR/CQ/JW7LZQO/iX2JeYe
+        yeGKy4x59bmvCQm4De//CXig
+X-Google-Smtp-Source: AKy350ZPCFbF/Clu7ac2vjfTqVX89EGXTonWJDfnQKyCnrAk+MNvwrkAueMDE130m+NPcM/uSCPENg==
+X-Received: by 2002:a17:903:20d4:b0:1a1:c746:7d6f with SMTP id i20-20020a17090320d400b001a1c7467d6fmr28669101plb.53.1680539654565;
+        Mon, 03 Apr 2023 09:34:14 -0700 (PDT)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id r24-20020a170902be1800b001992e74d055sm6864835pls.12.2023.04.03.09.34.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 03 Apr 2023 09:34:14 -0700 (PDT)
+Message-ID: <f8d8ed7f-49cd-d65a-521c-e03d2c552c50@github.com>
+Date:   Mon, 3 Apr 2023 09:34:10 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.7.2
+Subject: Re: [GSOC][PATCH v4] describe: enable sparse index for describe
+Content-Language: en-US
+To:     Raghul Nanth A <nanth.raghul@gmail.com>, gitgitgadget@gmail.com
+Cc:     derrickstolee@github.com, git@vger.kernel.org
+References: <pull.1480.v3.git.git.1680155957146.gitgitgadget@gmail.com>
+ <20230331182038.224892-1-nanth.raghul@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <20230331182038.224892-1-nanth.raghul@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Raghul Nanth A wrote:
+> git describe compares the index with the working tree when (and only
+> when) it is run with the "--dirty" flag. This is done by the
+> run_diff_index() function. The function has been made aware of the
+> sparse-index in the series that led to 8d2c3732 (Merge branch
+> 'ld/sparse-diff-blame', 2021-12-21). Hence we can just set the
+> requires-full-index to false for "describe".
+> 
 
-> Actually we can drop the "|[\xc0-\xff][\x80-\xbf]+" part in that case
-> because the "[^[:space:]]" suffices.  And we probably need to do that at
-> runtime because it depends on the locale.  The rather elaborate patch
-> below does that.  It leaks the truncated word_regex, which isn't that
-> bad because it's done only once per run, but certainly untidy.
+This is a good description of the patch and the reasoning behind the
+changes.
 
-Small ugliness like what we see below is fine in a technology
-demonostration.
-
-> I suspect/hope this can be done simpler and cleaner after refactoring
-> the userdiff code to allow for runtime assembly of regular expressions.
-
-Do we expect "does the regcomp(3) and regexec(3) correctly match a
-non-space multi-byte UTF-8 sequence as expected?" to be the only
-choices, do we expect we will choose from only two, and do we expect
-that the differences between the MB version and fallback version to
-be the same "OR_MULTI_BYTE_CHAR may be omitted"?  For now I think
-it would be reasonable to answer yes to all three.
-
-How are .is_builtin and .has_multi_byte_char_fallback bits expected
-to be used?  For what kind of files do we expect them to be set
-differently?
-
-In the simplest case, I would imagine that we could do this
-
- 	...
- 	const char *word_regex;
-+	const char *word_regex_wo_mb;
- 	const char *textconv;
- 	...
-
-in the definition of "struct userdifif_driver", use
-
- #define PATTERNS(lang, rx, wrx) { \
- 	...
- 	.word_regex = wrx "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+", \
-+	.word_regex_wo_mb = wrx "|[^[:space:]]", \
- }
-
-and similar for IPATTERN, and make a non-NULL .word.regex_wo_mb
-serve as the .has_multi_byte_char_fallback bit to trigger "does our
-regex engine do a good job for multi-byte?"
-
-Thanks.
-
-> diff --git a/userdiff.c b/userdiff.c
-> index 09203fbc35..aa2cd150ba 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -9,6 +9,8 @@ static struct userdiff_driver *drivers;
->  static int ndrivers;
->  static int drivers_alloc;
->
-> +#define OR_MULTI_BYTE_CHAR "|[\xc0-\xff][\x80-\xbf]+"
+> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
+> index 801919009e..2b46fb2a48 100755
+> --- a/t/t1092-sparse-checkout-compatibility.sh
+> +++ b/t/t1092-sparse-checkout-compatibility.sh
+> @@ -1514,6 +1514,36 @@ test_expect_success 'sparse-index is not expanded: stash' '
+>  	ensure_not_expanded stash pop
+>  '
+>  
+> +test_expect_success 'describe tested on all' '
+> +	init_repos &&
 > +
->  #define PATTERNS(lang, rx, wrx) { \
->  	.name = lang, \
->  	.binary = -1, \
-> @@ -16,7 +18,9 @@ static int drivers_alloc;
->  		.pattern = rx, \
->  		.cflags = REG_EXTENDED, \
->  	}, \
-> -	.word_regex = wrx "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+", \
-> +	.word_regex = wrx "|[^[:space:]]" OR_MULTI_BYTE_CHAR, \
-> +	.is_builtin = 1, \
-> +	.has_multi_byte_char_fallback = 1, \
->  }
->  #define IPATTERN(lang, rx, wrx) { \
->  	.name = lang, \
-> @@ -25,7 +29,9 @@ static int drivers_alloc;
->  		.pattern = rx, \
->  		.cflags = REG_EXTENDED | REG_ICASE, \
->  	}, \
-> -	.word_regex = wrx "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+", \
-> +	.word_regex = wrx "|[^[:space:]]" OR_MULTI_BYTE_CHAR, \
-> +	.is_builtin = 1, \
-> +	.has_multi_byte_char_fallback = 1, \
->  }
->
->  /*
-> @@ -330,6 +336,25 @@ static int userdiff_find_by_namelen_cb(struct userdiff_driver *driver,
->  	return 0;
->  }
->
-> +static int regexec_support_multi_byte_chars(void)
-> +{
-> +	static const char not_space[] = "[^[:space:]]";
-> +	static const char utf8_multi_byte_char[] = "\xc2\xa3";
-> +	regex_t re;
-> +	regmatch_t match;
-> +	static int result = -1;
+> +	# Add tag to be read by describe
 > +
-> +	if (result != -1)
-> +		return result;
-> +	if (regcomp(&re, not_space, REG_EXTENDED))
-> +		BUG("invalid regular expression: %s", not_space);
-> +	result = !regexec(&re, utf8_multi_byte_char, 1, &match, 0) &&
-> +		match.rm_so == 0 &&
-> +		match.rm_eo == strlen(utf8_multi_byte_char);
-> +	regfree(&re);
-> +	return result;
-> +}
+> +	run_on_all git tag -a v1.0 -m "Version 1" &&
+> +	test_all_match git describe --dirty &&
+> +	run_on_all rm g &&
+> +	test_all_match git describe --dirty
+> +'
 > +
->  static struct userdiff_driver *userdiff_find_by_namelen(const char *name, size_t len)
->  {
->  	struct find_by_namelen_data udcbdata = {
-> @@ -337,6 +362,15 @@ static struct userdiff_driver *userdiff_find_by_namelen(const char *name, size_t
->  		.len = len,
->  	};
->  	for_each_userdiff_driver(userdiff_find_by_namelen_cb, &udcbdata);
-> +	if (udcbdata.driver &&
-> +	    udcbdata.driver->is_builtin &&
-> +	    udcbdata.driver->has_multi_byte_char_fallback &&
-> +	    regexec_support_multi_byte_chars()) {
-> +		const char *word_regex = udcbdata.driver->word_regex;
-> +		udcbdata.driver->word_regex = xmemdupz(word_regex,
-> +			strlen(word_regex) - strlen(OR_MULTI_BYTE_CHAR));
-> +		udcbdata.driver->has_multi_byte_char_fallback = 0;
-> +	}
->  	return udcbdata.driver;
->  }
->
-> diff --git a/userdiff.h b/userdiff.h
-> index 24419db697..83f5863d58 100644
-> --- a/userdiff.h
-> +++ b/userdiff.h
-> @@ -21,6 +21,8 @@ struct userdiff_driver {
->  	const char *textconv;
->  	struct notes_cache *textconv_cache;
->  	int textconv_want_cache;
-> +	int is_builtin;
-> +	int has_multi_byte_char_fallback;
->  };
->  enum userdiff_driver_type {
->  	USERDIFF_DRIVER_TYPE_BUILTIN = 1<<0,
-> --
-> 2.40.0
+> +
+> +test_expect_success 'sparse-index is not expanded: describe' '
+> +	init_repos &&
+> +
+> +	# Add tag to be read by describe
+> +
+> +	git -C sparse-index tag -a v1.0 -m "Version 1" &&
+> +
+> +	ensure_not_expanded describe --dirty &&
+> +	echo "test" >>sparse-index/g &&
+> +	ensure_not_expanded describe --dirty &&
+> +	echo "v1.0-dirty" >actual &&
+> +
+> +	# Check describe on dirty work tree
+> +
+> +	test_cmp sparse-index-out actual &&
+
+This type of output comparison should be part of 'describe tested on all',
+not the "ensure not expanded" test; the former tests the correctness of 'git
+describe', whereas the latter focuses on index expansion. When unit testing,
+it helps to keep the scope of each test fairly narrow with a specific focus
+so that they can more easily isolate future regressions.
+
+> +	ensure_not_expanded describe
+> +'
+> +
+>  test_expect_success 'sparse index is not expanded: diff' '
+>  	init_repos &&
+>  
+
