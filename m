@@ -2,101 +2,225 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 65C1BC76196
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 19:29:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44D35C76188
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 19:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230044AbjDCT3y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 15:29:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50654 "EHLO
+        id S231862AbjDCTdJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 15:33:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232240AbjDCT3s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 15:29:48 -0400
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B54A1E7E
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 12:29:47 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 2B9813200319;
-        Mon,  3 Apr 2023 15:29:47 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Mon, 03 Apr 2023 15:29:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-transfer-encoding:content-type:content-type
-        :date:date:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to;
-         s=fm1; t=1680550186; x=1680636586; bh=KUVgYp+H/z0EAvb2aHJSrGTOW
-        T9D/Qtw9NVhamunEhw=; b=Mscw9n14sHvDrY7o6Atwn4w5V3F00hQqZ+P9IWrGx
-        w7dqWOaisfThYNJxKxCZcWOYNBCP4OpMhqn2si77gY8x/PR7QFtOjISlg2O2lGui
-        4S4UafaaDh/Ukl6/RADAfW9mHSIglafeTJ3GALiAx5Strrx08Ff5iINFIjj9Y7hL
-        VQiirj3t5n6X8s/r7XuH5K1KHyNO9q+nY74Ge9qv1KuUb9b8HPLLEVUWfWsjLLF0
-        VZS/VIgQNWO2GjNVHHtiN6KnSZNdCv3MlKYuzMaBcdY/BBz7Rknm9AyFFVEOAY86
-        dKBJKiki3bNVPnMn5ktjTzjqGuc1VesfZavh2p7xtBJtA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-transfer-encoding
-        :content-type:content-type:date:date:feedback-id:feedback-id
-        :from:from:in-reply-to:in-reply-to:message-id:mime-version
-        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-        1680550186; x=1680636586; bh=KUVgYp+H/z0EAvb2aHJSrGTOWT9D/Qtw9NV
-        hamunEhw=; b=aLovdLGiOK6c31mDePA0ASjCXDi2b/fQ/bcPC+YUi8dcY78ScDa
-        2QD8PJFRGNHPK/4UcZu+Rf5Zplp8qXDsglDNClSqIXcmFfYRtEpKIVXcvQniBPoU
-        HatgzuDSwW9tSMYqsfC5FrvfvppBCIhFrt+tv1tOUisBAABmd5ENLFvqVKCc5OeU
-        gmVoCDsXQW3HJTYU/Mo8eq1XqdnClaahtkXIwYYqQaD78EqepCnJhaKV8eY4eXHE
-        JsnMnJVPAO/xmqLQfMW/sxjlEF9ovzbzzl5VFatJ88MTA43Dzu63mPCxryM373Do
-        KEV1L/Rgs69aZokE+yuh6HEPrCNEC0wZMfQ==
-X-ME-Sender: <xms:KikrZDAunF6seHzq38yZe3NqJJWE20Zc6x0P_zDm-fLrSObcEQxxwhs>
-    <xme:KikrZJjmNBZVE1-QiY7buUbx6KIg3O5HEiQfY8r0aqLlKf-Yn7ZOUarh2zXCG6A9_
-    gvdkv230R5EvtDV2Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeijedgudefkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
-    mfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssg
-    grkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeeh
-    hfeliefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:KikrZOkWM1fR3q54VfxP-TkUdQ_HWOO2eIBK-lMGuvRXq-RMjxG-WA>
-    <xmx:KikrZFyDBXmxfJjUPWbyPsft4DCVGfYmD5RfWka8NOba2Ni513BVIA>
-    <xmx:KikrZIRacZg_E0FlR6LrlYdBDLWF_qqP8tVYqbTR9TxT2T2ImfsMew>
-    <xmx:KikrZHNUxuPQHXGofYINA8NPXkpC_t_KWTAHUXprefU6Op1gyrQQDg>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 94E0E15A0096; Mon,  3 Apr 2023 15:29:46 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-238-g746678b8b6-fm-20230329.001-g746678b8
-Mime-Version: 1.0
-Message-Id: <de43cd37-bfa5-4dbc-84d5-9362e9af6a9a@app.fastmail.com>
-In-Reply-To: <818b3ad0-df43-3484-8c19-d95026f6b2b1@gmx.de>
-References: <b93934a2-91e7-4645-9a24-4f2354172f31@app.fastmail.com>
- <818b3ad0-df43-3484-8c19-d95026f6b2b1@gmx.de>
-Date:   Mon, 03 Apr 2023 21:29:17 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: range-diff: slight usability problem with mistyped ref
-Content-Type: text/plain;charset=utf-8
+        with ESMTP id S231655AbjDCTdH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 15:33:07 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A88BD198C
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 12:33:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1680550372; i=l.s.r@web.de;
+        bh=b+2d+nMK19RT13p34FrUkJtzcvMtETAOQGsAULLgTpE=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=GBX5gC24HGkP9c02nrTnIIqZxFTcJ3Lwk0CscvzY7wfrbfMkfVijzr8aKTD1w0vwb
+         e4LsOCw00hF4FS8ly7kmjDNB6Y54idM9wWpph9mupHglkv9wid9Jw2TDruOcNGpi16
+         xb5q7kTNzObrWmNe/Mp4EU6lrhW46E0PoWDfLYWf1MV4v0ZnIdF7Fy68RwX23gaext
+         Rq2/m9AekuTXPnJR3umT3RyfO9aAgcj2avuRqwafEuf2Gs0WTgOeiH2cBq928FHngq
+         559YvPot7V5+Qc4XuS9YWt8oi1FcQ/C6611jfp3nrWhPPPlezDNrSUXmRt4W15J8ao
+         v+F2n+XC+D67w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.158.21]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N3ouw-1qRaLM2j9E-00zx2L; Mon, 03
+ Apr 2023 21:32:52 +0200
+Message-ID: <bc6e89c9-d886-c519-85b3-fbc3f4eb5528@web.de>
+Date:   Mon, 3 Apr 2023 21:32:51 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.1
+Subject: Re: regex compilation error with --color-words
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Diomidis Spinellis <dds@aueb.gr>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, demerphq <demerphq@gmail.com>,
+        Mario Grgic <mario_grgic@hotmail.com>
+References: <CAPig+cSNmws2b7f7aRA2C56kvQYG3w_g+KhYdqhtmf+XhtAMhQ@mail.gmail.com>
+ <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr>
+ <b8b3777b-ee6e-d90e-3365-5cb9c9d129fe@web.de>
+ <c4728fac-bea9-3794-077e-c978d99f46bf@web.de> <xmqq5yad7wv3.fsf@gitster.g>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqq5yad7wv3.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:4Vxskq1a/OtDvHqCGSUds4baPwjo267Vnp0dSrxq+ZjTW5lf8IL
+ ihQAfGp9ukWTScqtJvzN+XDwe2pZWdcFWFzeiIt8er1NW6aBhKQLGIqaw4z355e/lo4BTgr
+ PM5YQlGH1ttzstXuH1qJt3ZoQy5NsXrmy6fY6R+ZbKaWmjyRKSmuRXaRYlSUbkRk71iH98K
+ y2CyPOseDegoP49c9J5OA==
+UI-OutboundReport: notjunk:1;M01:P0:X6aXOEVLRmk=;oRM/CudCWhgE7q7MsJXSurCtdRF
+ 4TQDgMXlLt19F7VnArFZvvX7oEdO4xIZQwe8sA9BCqvrB8dubiyI6skm6omYuaNz3y/cr0NdD
+ W25oj8EnJtCE620A3ky89FzyVtRmNFUIt5xAV18lZZnJnxr751So2z1hHqs0nN+x0tnlnlb7E
+ ljZ9g6L6ZfZZ/O5Lci9OHK8yebpPz54WVzspZltp4YmOxgR7GogV4/in1ok/yx/8G2QoBfDLw
+ qacqrDRdSfNMpQpxa3hvTp9G4ZEHnOYKW7UO3JD3xwdRRgQaZ4RAkCegkdp5bMb6KHaAEANKC
+ aFDfg4+yvwZdUMaGITRp377CApDpQ0TfFGb9c4ILcCjmWzSMFneInlUQBnf5zdZ2jNBzncy4s
+ KS+iMM6SigCI9xpCOztJ/HzlAXTv5IaF0wz6Q758U62K8eDwaiYzbgOG//NltOLLMXfG+XqPH
+ fC/ZdvRfHlYa98m0ieonjJxMt/niCmidr69ZEnAugNf/reiJmFRKqOQowC0Bw9IkBC8xLWKIZ
+ 4Qs5brybgOKu1aDS2PVAPZurE6dfM9aX/1Xux7nSRNUnUqH/3F7r3DGslKlJPcTaKfN3LQw8x
+ Hfxqn84ZrStBMQjtZOmkekzF9JUpqHSmFa27gvFwuoErXGFDYqez3Pl5ccaBy9h6JNAVcv6lD
+ BdD7vzdRoGR9De3nP3dsqtix+/lix2hkDCw3tXbLMHV5niSNYNBn6/vTUaOnxfqaOMlMZyHLL
+ 6KphJd7reIcNYgYKWwGe2Sj0frCYE4Bz+JKKYKmSWhA7WXvpWATwurBhusV9uValLyuovJjen
+ 1A8fFoDK2F7YENoFHPeQ2L9Vw9GCwN4VX0nvrnlyZeXIaJw8qV7ktdsZ9Ce3Io7FShQPZQ5wo
+ cE/+tyeBTtp3vHGhSYhs1Si6kqNM59ZQhaOf089PVfFYRWRvy1G66oAOXDNc3Ix+bshjIYXb/
+ WBdB970hNRwFxvwlyqsEjPCRPu4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes and thanks for your reply
+Am 03.04.23 um 18:29 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>> Actually we can drop the "|[\xc0-\xff][\x80-\xbf]+" part in that case
+>> because the "[^[:space:]]" suffices.  And we probably need to do that a=
+t
+>> runtime because it depends on the locale.  The rather elaborate patch
+>> below does that.  It leaks the truncated word_regex, which isn't that
+>> bad because it's done only once per run, but certainly untidy.
+>
+> Small ugliness like what we see below is fine in a technology
+> demonostration.
+>
+>> I suspect/hope this can be done simpler and cleaner after refactoring
+>> the userdiff code to allow for runtime assembly of regular expressions.
+>
+> Do we expect "does the regcomp(3) and regexec(3) correctly match a
+> non-space multi-byte UTF-8 sequence as expected?" to be the only
+> choices, do we expect we will choose from only two, and do we expect
+> that the differences between the MB version and fallback version to
+> be the same "OR_MULTI_BYTE_CHAR may be omitted"?  For now I think
+> it would be reasonable to answer yes to all three.
+>
+> How are .is_builtin and .has_multi_byte_char_fallback bits expected
+> to be used?  For what kind of files do we expect them to be set
+> differently?
 
-On Tue, Mar 28, 2023, at 13:37, Johannes Schindelin wrote:
-> So even making the exact error message depend on the number of
-> arguments could result in misleading error message.
+.is_builtin is unnecessary here.  It is a remnant of me noticing that we
+don't add "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+" to user-defined
+patterns, but .has_multi_byte_char_fallback alone suffices.
 
-Yeah, I see. It seems that the variadic nature of the command makes it
-difficult to guess what the user might have meant in all cases.
+>
+> In the simplest case, I would imagine that we could do this
+>
+>  	...
+>  	const char *word_regex;
+> +	const char *word_regex_wo_mb;
+>  	const char *textconv;
+>  	...
+>
+> in the definition of "struct userdifif_driver", use
+>
+>  #define PATTERNS(lang, rx, wrx) { \
+>  	...
+>  	.word_regex =3D wrx "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+", \
+> +	.word_regex_wo_mb =3D wrx "|[^[:space:]]", \
 
-> Do you have any splendid idea how to phrase the error message (or
-> adapt it to the concrete invocation)?
+Ah, nice, no allocation or string manipulation at runtime at all, at
+the small cost of having near-duplicate static strings.
 
-No. I was going to look more closely at that if-else chain, but given
-the fact that I don=E2=80=99t know C and all the cases that would need t=
-o be
-covered (=E2=80=9Cwhat if the third argument happens to match both a ref=
- and a
-file?=E2=80=9D) I wouldn=E2=80=99t get anywhere.
-
---=20
-Kristoffer Haugsbakk
+>  }
+>
+> and similar for IPATTERN, and make a non-NULL .word.regex_wo_mb
+> serve as the .has_multi_byte_char_fallback bit to trigger "does our
+> regex engine do a good job for multi-byte?"
+>
+> Thanks.
+>
+>> diff --git a/userdiff.c b/userdiff.c
+>> index 09203fbc35..aa2cd150ba 100644
+>> --- a/userdiff.c
+>> +++ b/userdiff.c
+>> @@ -9,6 +9,8 @@ static struct userdiff_driver *drivers;
+>>  static int ndrivers;
+>>  static int drivers_alloc;
+>>
+>> +#define OR_MULTI_BYTE_CHAR "|[\xc0-\xff][\x80-\xbf]+"
+>> +
+>>  #define PATTERNS(lang, rx, wrx) { \
+>>  	.name =3D lang, \
+>>  	.binary =3D -1, \
+>> @@ -16,7 +18,9 @@ static int drivers_alloc;
+>>  		.pattern =3D rx, \
+>>  		.cflags =3D REG_EXTENDED, \
+>>  	}, \
+>> -	.word_regex =3D wrx "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+", \
+>> +	.word_regex =3D wrx "|[^[:space:]]" OR_MULTI_BYTE_CHAR, \
+>> +	.is_builtin =3D 1, \
+>> +	.has_multi_byte_char_fallback =3D 1, \
+>>  }
+>>  #define IPATTERN(lang, rx, wrx) { \
+>>  	.name =3D lang, \
+>> @@ -25,7 +29,9 @@ static int drivers_alloc;
+>>  		.pattern =3D rx, \
+>>  		.cflags =3D REG_EXTENDED | REG_ICASE, \
+>>  	}, \
+>> -	.word_regex =3D wrx "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+", \
+>> +	.word_regex =3D wrx "|[^[:space:]]" OR_MULTI_BYTE_CHAR, \
+>> +	.is_builtin =3D 1, \
+>> +	.has_multi_byte_char_fallback =3D 1, \
+>>  }
+>>
+>>  /*
+>> @@ -330,6 +336,25 @@ static int userdiff_find_by_namelen_cb(struct user=
+diff_driver *driver,
+>>  	return 0;
+>>  }
+>>
+>> +static int regexec_support_multi_byte_chars(void)
+>> +{
+>> +	static const char not_space[] =3D "[^[:space:]]";
+>> +	static const char utf8_multi_byte_char[] =3D "\xc2\xa3";
+>> +	regex_t re;
+>> +	regmatch_t match;
+>> +	static int result =3D -1;
+>> +
+>> +	if (result !=3D -1)
+>> +		return result;
+>> +	if (regcomp(&re, not_space, REG_EXTENDED))
+>> +		BUG("invalid regular expression: %s", not_space);
+>> +	result =3D !regexec(&re, utf8_multi_byte_char, 1, &match, 0) &&
+>> +		match.rm_so =3D=3D 0 &&
+>> +		match.rm_eo =3D=3D strlen(utf8_multi_byte_char);
+>> +	regfree(&re);
+>> +	return result;
+>> +}
+>> +
+>>  static struct userdiff_driver *userdiff_find_by_namelen(const char *na=
+me, size_t len)
+>>  {
+>>  	struct find_by_namelen_data udcbdata =3D {
+>> @@ -337,6 +362,15 @@ static struct userdiff_driver *userdiff_find_by_na=
+melen(const char *name, size_t
+>>  		.len =3D len,
+>>  	};
+>>  	for_each_userdiff_driver(userdiff_find_by_namelen_cb, &udcbdata);
+>> +	if (udcbdata.driver &&
+>> +	    udcbdata.driver->is_builtin &&
+>> +	    udcbdata.driver->has_multi_byte_char_fallback &&
+>> +	    regexec_support_multi_byte_chars()) {
+>> +		const char *word_regex =3D udcbdata.driver->word_regex;
+>> +		udcbdata.driver->word_regex =3D xmemdupz(word_regex,
+>> +			strlen(word_regex) - strlen(OR_MULTI_BYTE_CHAR));
+>> +		udcbdata.driver->has_multi_byte_char_fallback =3D 0;
+>> +	}
+>>  	return udcbdata.driver;
+>>  }
+>>
+>> diff --git a/userdiff.h b/userdiff.h
+>> index 24419db697..83f5863d58 100644
+>> --- a/userdiff.h
+>> +++ b/userdiff.h
+>> @@ -21,6 +21,8 @@ struct userdiff_driver {
+>>  	const char *textconv;
+>>  	struct notes_cache *textconv_cache;
+>>  	int textconv_want_cache;
+>> +	int is_builtin;
+>> +	int has_multi_byte_char_fallback;
+>>  };
+>>  enum userdiff_driver_type {
+>>  	USERDIFF_DRIVER_TYPE_BUILTIN =3D 1<<0,
+>> --
+>> 2.40.0
