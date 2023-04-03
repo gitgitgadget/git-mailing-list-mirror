@@ -2,48 +2,49 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6E27C7619A
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 00:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C43EC7619A
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 00:18:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230367AbjDCAF6 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 2 Apr 2023 20:05:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54172 "EHLO
+        id S230299AbjDCASJ convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sun, 2 Apr 2023 20:18:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229503AbjDCAF4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2023 20:05:56 -0400
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1876E5FC5
-        for <git@vger.kernel.org>; Sun,  2 Apr 2023 17:05:55 -0700 (PDT)
-Received: by mail-qv1-f49.google.com with SMTP id mf5so2247673qvb.4
-        for <git@vger.kernel.org>; Sun, 02 Apr 2023 17:05:55 -0700 (PDT)
+        with ESMTP id S229498AbjDCASI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2023 20:18:08 -0400
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC96E6182
+        for <git@vger.kernel.org>; Sun,  2 Apr 2023 17:18:06 -0700 (PDT)
+Received: by mail-qk1-f175.google.com with SMTP id y7so8454631qky.1
+        for <git@vger.kernel.org>; Sun, 02 Apr 2023 17:18:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680480354;
+        d=1e100.net; s=20210112; t=1680481086;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ICOMbpPN5APoPrdRm4hlFOLpy587/4ZntybStlkTUQk=;
-        b=E/2hDdvMeyJKtdO5MCeYINMYJ3Xx3JVTTvH5auJnaqtTgbF3bP2K7kjrTRD7TL9ZPH
-         8TahloOsAUHpWXMgHMEmBb6KauzHH+D+I8BTr6RqNqqsp+X47cemVNSGjEoGYLmVTT0k
-         dvIb/24FflZzDeumsQDf9tlbrp4M1q/Hh+5s5hElKueBjxHR+rYE96wbB3vIhIJnlkP+
-         QP0oEG/z9XJ2d3Pa6O0VathuZbu7IWEtw5ZSqR2r8bm4atipVxoWABVsAj9LinWdJUKb
-         fMFR2l9Xpw57SJPnmd/MKmdCkAPm5iv/kVOiD2rcCnlHcJAalfL1JfBrKScuOQpzwwtW
-         1qxg==
-X-Gm-Message-State: AAQBX9dTeeIIYtkouUh3HNuJ9/hldQn5zG2FHFhz80awrTn+8+2ACd8r
-        SQirUcGGCWKfOIGxqxb3YgFYMJkxbKyNVG40gc0=
-X-Google-Smtp-Source: AKy350bx9+NLJb61rA5eRajxTAItrVCIG6B8VSa4qXBshkSF/vuF5LdPjy/QXwiMBYHNyf++gvfzmvTCcDl0seLIzrY=
-X-Received: by 2002:ad4:5a12:0:b0:56c:1ff3:9e93 with SMTP id
- ei18-20020ad45a12000000b0056c1ff39e93mr5943429qvb.5.1680480354118; Sun, 02
- Apr 2023 17:05:54 -0700 (PDT)
+        bh=bNEn5z+BJ1HEtA04FBhpKYxN/ahomc2CItFvHDq5YTc=;
+        b=kZvZ8JSJdqo5UhyFvOZtszenzOQAboYXZlWhvK4G5O2CYC3tqdtFCmqN6GkcSfVd9j
+         B5EI+oa71CNcI7CglXAXgWvmyBQNmcGkFguz/R9RMzqbstnfj3WEZipviT9nI+zIC0CE
+         H6gFTanasTEeP1cXpGk2p4CakGnQiBjQ6Fe6ycG3RONyzdKY7L2W3yiuXaxTUEIMWhX7
+         1eRXgb5U35X5nXyWw7CtZ72tX1ZeZNoeLrujG9hWi93rgeaVfkoocFVWuBiRVJyd6Crx
+         0xIjFjeqrmmDJwyI1ONtDtiMetJFOFyUU+p3oauiO/e70NjQbTirxikC+8/PLRewQgZg
+         yFZA==
+X-Gm-Message-State: AO0yUKWdLmvb77VFtSy5pPuCjv+ayRVTvnpLdFx1geUOOKf7UFrej9aq
+        v3ZJMXS49faoIAFeBfqwhjbSzvy2qN5lzSIR/J5SeXDt
+X-Google-Smtp-Source: AK7set/gVsln2bMdVsf7jgQ3iaotQMZN4ywHYTp5pa009DMgIh+MRwCl1rcUzWTQzsCcDB644Ua9HCrGpy9a61LvkCw=
+X-Received: by 2002:ae9:e80d:0:b0:743:7dcc:282a with SMTP id
+ a13-20020ae9e80d000000b007437dcc282amr8906145qkg.8.1680481085678; Sun, 02 Apr
+ 2023 17:18:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230103231133.64050-1-robin@jarry.cc> <9a0948e2-d030-ac89-a009-9247054f71f9@gmail.com>
- <CRMHVBPXG6SW.2DL6RVNEMVERF@ringo>
-In-Reply-To: <CRMHVBPXG6SW.2DL6RVNEMVERF@ringo>
+References: <20230402185635.302653-1-robin@jarry.cc>
+In-Reply-To: <20230402185635.302653-1-robin@jarry.cc>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 2 Apr 2023 20:05:43 -0400
-Message-ID: <CAPig+cS_+a+yu92+hKJ+Nvuvi4ymPOESaUgorYUAUGMAj9oZAg@mail.gmail.com>
-Subject: Re: [PATCH] hooks: add sendemail-validate-series
+Date:   Sun, 2 Apr 2023 20:17:54 -0400
+Message-ID: <CAPig+cSAvLcVTYF21ksyuhMtFxQkg71ktGd7tw595VRq1kcyvA@mail.gmail.com>
+Subject: Re: [PATCH RESEND] hooks: add sendemail-validate-series
 To:     Robin Jarry <robin@jarry.cc>
-Cc:     Bagas Sanjaya <bagasdotme@gmail.com>, git@vger.kernel.org,
+Cc:     git@vger.kernel.org, Tim Culverhouse <tim@timculverhouse.com>,
+        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8BIT
@@ -51,57 +52,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 2, 2023 at 3:19 PM Robin Jarry <robin@jarry.cc> wrote:
-> Bagas Sanjaya, Apr 01, 2023 at 04:54:
-> > In most cases, the patch series is generated by git-format-patch(1).
-> > When the command is run, it will output:
-> >
-> > $ git format-patch -o /tmp --cover-letter --base=<base-commit> <base-commit>
-> > /tmp/0000-cover-letter.patch
-> > /tmp/0001-<patch-subject>.patch
-> > /tmp/0002-<patch-subject>.patch
-> > /tmp/0003-<patch-subject>.patch
-> >
-> > The output can be fed to the hook (as you write).
-> >
-> > But I think the hook should also take patch file arguments, for the
-> > sake of completeness with sendemail-validate hook; that is:
-> >
-> > sendemail-validate-series <patch file>...
+On Sun, Apr 2, 2023 at 3:10 PM Robin Jarry <robin@jarry.cc> wrote:
+> When sending patch series (with a cover-letter or not)
+> sendemail-validate is called with every email/patch file independently
+> from the others. When one of the patches depends on a previous one, it
+> may not be possible to use this hook in a meaningful way.
 >
-> I don't mind adding this but I am concerned with the maximum size of the
-> command line arguments when sending large series. Standard input seems
-> like a safer solution.
-
-I share your concern, and don't see a good reason for complicating the
-implementation _and_ the API by feeding pathnames to the hook as both
-stdin and as arguments. Feeding them on stdin is the safer choice even
-if it makes the hook implementation a bit more clunky.
-
-> > Also, there should have a check that In-Reply-To must be the first
-> > patch in the given series or the cover letter (if there is one).
+> Changing sendemail-validate to take all patches as arguments would break
+> backward compatibility.
 >
-> This is really non-trivial as it depends on the --[no-]chain-reply-to
-> and --[no-]thread options. Also, the validation occurs before the
-> message id headers are generated. I'd prefer trusting git-format-patch
-> to order the patch files properly based on their file names.
+> Add a new hook to allow validating patch series instead of patch by
+> patch. The patch files are provided in the hook script standard input.
 
-Moreover, enforcing In-Reply-To: like that would almost certainly be
-undesirable. It may be policy on _this_ project to chain rerolls like
-that, but other projects have different policies, even to the point of
-prohibiting chaining.
+It's not clear from this description whether the pathnames of the
+patches are fed to the hook on stdin or if the patch contents are fed
+on stdin.
 
-Such In-Reply-To: enforcement is also well outside the scope of the
-patch under discussion, as well as being entirely orthogonal.
-
-> > Anyway, rather than pinging by random people, I'd like to see [PATCH
-> > RESEND], rebased on latest git.git tree, ideally with Junio Cc'ed.
+> git hook run cannot be used since it closes the hook standard input. Run
+> the hook directly.
 >
-> Will do. Thanks.
+> Signed-off-by: Robin Jarry <robin@jarry.cc>
+> ---
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> @@ -600,6 +600,23 @@ the name of the file that holds the e-mail to be sent.  Exiting with a
+> +sendemail-validate-series
+> +~~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +This hook is invoked by linkgit:git-send-email[1].  It allows performing
+> +validation on a complete patch series at once, instead of patch by patch with
+> +`sendemail-validate`.
+> +
+> +`sendemail-validate-series` takes no arguments, but for each e-mail to be sent
+> +it receives on standard input a line of the format:
+> +
+> +  <patch-file> LF
+> +
+> +where `<patch-file>` is a name of a file that holds an e-mail to be sent,
 
-Generally speaking, once you've sent a patch or patch series, when you
-re-roll, you should _not_ rebase it onto Junio's latest "master" since
-doing so makes it harder for him to pick up the new version. In this
-case, your original patch didn't get picked up, so no harm done by
-rebasing it on "master", but it's good practice to avoid doing so
-unless there is a strong reason.
+This does a better job than the commit message of explaining that
+stdin receives the names of the patches rather than the content of the
+patches themselves. It's a nit, but it might be even clearer to say
+that <patch-file> is the _pathname_ of the file rather than merely the
+_name_.
+
+> +If the hook exits with non-zero status, `git send-email` will abort before
+> +sending any e-mails.
+
+It was a bit startling to see this spelled "e-mail" rather than
+"email", the latter of which is used far more frequently in the
+documentation. However, "e-mail" does indeed appear in githooks.txt
+more frequently than "email", so the use of "e-mail" here is probably
+fine.
+
+I doubt that any of the above comments warrant a reroll.
