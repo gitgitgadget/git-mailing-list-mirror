@@ -2,84 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36C90C76196
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 15:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A50DC76188
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 16:24:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232503AbjDCPt6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 11:49:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59376 "EHLO
+        id S232709AbjDCQYD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 12:24:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232506AbjDCPtu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 11:49:50 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02C9C30EB
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 08:49:21 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso33055776pjb.0
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 08:49:21 -0700 (PDT)
+        with ESMTP id S232725AbjDCQYA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 12:24:00 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFC4D2122
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 09:23:59 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id y20so38861312lfj.2
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 09:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680536959;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oBeCe2MEqi3yGB3vkNVljihTAYUf0y+Tvxk6r2U6NzY=;
-        b=o/mP5rs0CE4ITyyKRBdKPLChrfFom5ahGhqE7j/1fkAQX527VJHcR2n/sahwcv7eBz
-         1PZ1hDGcsvLvvNNw1EssyvqY3PS0uP5NH9W1m5Uh4e68bgYFbRjK4c8doYEYIW3S45P5
-         9baMdKos5Z0dP0rSXcAJIxpLhO3BGbR6N8kTtEjoZf/OkojEh4kbhX2+RixK31Exi7Q2
-         By3N0ebTlgCH4ctea5fCNKbQF4K8UrNv1WPRSJ1z0WB61Ym4J8MNHIf/dd/D1g003jiZ
-         Nbzkr4xQeNMdsFST2j3ku/n2+sRhrrFYOUOVjRQouLbHbJ2Yrwt11qt9aXN9KEb25yQg
-         +UrA==
+        d=gmail.com; s=20210112; t=1680539038;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oA6Vb2kWkvkRnnsElbA6+Wu8g/vg6hVyEhjd28zBCz8=;
+        b=Hu/El885yHa3t25G7BUy7Hk51jBs9REBqMsecAH8GVfQtdCLwR89YvfOdR7k9VohIh
+         YO62xL3l47aHGJo3aZAJ6dvcjkgcJAqe383jtc1pOC71+U1GizLB4UyICxJkvfkrRxOM
+         Uh8J/lIh1DC8MJugg8513W6FA5M3BRcJJEz6JYheqC10qq+6CTAO/9gKU5rgfeFtFIWD
+         g18UvtaBH2Q323V0zzRVqsOurp2dNyB2Aw+LiSRZ+l8AaNlkHZm2c7GVK2/6VPo30fDw
+         EcztR2kvIN8Fq/bn2O45MB3qijXFMeszm6RGx3/3ywPRMTGH8tzHuGI9Jrt6QV7wb+H9
+         l2PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680536959;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oBeCe2MEqi3yGB3vkNVljihTAYUf0y+Tvxk6r2U6NzY=;
-        b=P8gZpowbni+akEdyd0w6gi+l3Wwq/GH6PNbOQ7l0dGWNRQGFId0aWanNuy4jL/d5cV
-         tYtmJTw3qvMshlA14j+G2OjJx5ustcsK2e9vU4pl3VrWQUn17GGsD12PRUqYXbb8wSV9
-         2x/X1F3iiGhM38ljRrwnwdEOSZyYQeTWfJ+hFNgz6RaVKXWyTjmfr58Wx5CGk2Xl0cWJ
-         kYEUXAZCuBc6DUOK7JAZnqFoxlPesF+IlXm1zorRCkgZJ/BGQL7umhh0fjqEsy62nrAY
-         P/wu0V88MV/Qa8mrrJeozshYf7Grt5prnN6rjiqv+KSFmsInfqod61HwqujHqWErRgS2
-         Z2ew==
-X-Gm-Message-State: AAQBX9dmveoxGlNqD+/fSDsJMOKTDMubAceQlxUdL8d98UHVOXWhQSW9
-        RI/ez0U0Gp6xoNHkrp8JpQo=
-X-Google-Smtp-Source: AKy350ZVebkzN2XEPq4w/dleoR0QLM0XvmDr4qddO75o3NNRZUosQp91n0Jv+DEmLY05HiXiwK+ooQ==
-X-Received: by 2002:a17:902:d503:b0:1a1:b8ff:5552 with SMTP id b3-20020a170902d50300b001a1b8ff5552mr46714128plg.6.1680536959145;
-        Mon, 03 Apr 2023 08:49:19 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id s16-20020a170902989000b001a279237e73sm6775630plp.152.2023.04.03.08.49.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 08:49:18 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2023, #06; Wed, 29)
-References: <xmqqv8ij5g83.fsf@gitster.g>
-        <CABPp-BGoPuGCZw+9wCgdYyRR4Zf4y9Kun27GrQhtMdYWpOUsYQ@mail.gmail.com>
-Date:   Mon, 03 Apr 2023 08:49:18 -0700
-In-Reply-To: <CABPp-BGoPuGCZw+9wCgdYyRR4Zf4y9Kun27GrQhtMdYWpOUsYQ@mail.gmail.com>
-        (Elijah Newren's message of "Sat, 1 Apr 2023 12:07:58 -0700")
-Message-ID: <xmqqfs9h9da9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20210112; t=1680539038;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oA6Vb2kWkvkRnnsElbA6+Wu8g/vg6hVyEhjd28zBCz8=;
+        b=b4MdC/ak5L0mek36aYCVmF0Pt3TIq5jRUOma9MMEPdBDRrSTVxQnukiqEQYcH9M0lv
+         E9PLt4IShPBRm69bepsQnBDZMc4Hf71aOAwwPvytjHG2t/jGbN/c+d/JMPzA5bpgGqim
+         fmbDVtrRVSilfmAD4RGinA+VbYOomuB6El6P9InQS3LoIBXQ1zw9k2XVgxKbqnQbynnG
+         owMXKQyKRTBwP4964rYvF9w9AEWWAC4nT5EV1SunYiNvq8lCCmXl/IumrG6jg9tFiWrd
+         8Z7GhChgLwF1oh5E5pqsFimFrtx9DwKCHAyv2Wr5lTIPcY34/sh57y9e5KEjziFNgQfd
+         AQ5Q==
+X-Gm-Message-State: AAQBX9dtqSx5qP7iuIVw26WTPBauiAPZt3JiE+NYZCl6/LYGH/wXuKLN
+        1aX1t2UZkUyh5aNaJRm6juiv2IPG+RM5PcYDwgOfoQwXdV0=
+X-Google-Smtp-Source: AKy350a8EoNvmo4qb7+vi1YTARIWesjkODAu4jLfZgTpjNCIXx3OUha93wfhEq9FNQ9vKYDEHgSx2jq0v3pLr5JfS+I=
+X-Received: by 2002:ac2:5310:0:b0:4eb:1606:48d5 with SMTP id
+ c16-20020ac25310000000b004eb160648d5mr7045144lfh.7.1680539037781; Mon, 03 Apr
+ 2023 09:23:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1509.git.1680361837.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1509.git.1680361837.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 3 Apr 2023 09:23:44 -0700
+Message-ID: <CABPp-BE9QSOmHuZanmi5igfhaD8UGJWqv2CwV50Fa2eCQD0gRg@mail.gmail.com>
+Subject: Re: [PATCH 00/24] Header cleanups (splitting up cache.h)
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
->> * ad/test-record-count-when-harness-is-in-use (2022-12-25) 1 commit
->>  - test-lib: allow storing counts with test harnesses
->>
->>  Allow summary results from tests to be written to t/test-results
->>  directory even when a test harness like 'prove' is in use.
->>
->>  Needs review.
->>  source: <20221224225200.1027806-1-adam@dinwoodie.org>
+On Sat, Apr 1, 2023 at 8:10=E2=80=AFAM Elijah Newren via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Maybe mark as expecting a re-roll?  (based on Peff's review and your
-> follow-up at https://lore.kernel.org/git/xmqqr0u1agq8.fsf@gitster.g/,
-> plus the typo I just spotted in the commit message)?
+[...]
+> This series builds on en/header-cleanup
+> (https://lore.kernel.org/git/pull.1485.v2.git.1677197376.gitgitgadget@gma=
+il.com/)
+> and en/header-split-cleanup
+> (https://lore.kernel.org/git/pull.1493.v2.git.1679379968.gitgitgadget@gma=
+il.com/),
+> and continues to focus on splitting declarations from cache.h to separate
+> headers.
+[...]
+>
+> There are more changes I plan to make after this series graduates (still
+> focused around splitting up cache.h), but this series was long enough.
 
-Sounds good.  Thanks.
+While preparing some of those additional splits of cache.h, I found a
+few small tweaks that make more sense being squashed into this series.
+I'll send out a re-roll tonight.
