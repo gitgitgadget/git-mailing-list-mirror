@@ -2,77 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B95BC76188
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 17:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A051C761A6
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 17:36:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230414AbjDCRg2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 13:36:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39402 "EHLO
+        id S231336AbjDCRg3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 13:36:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229498AbjDCRg0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 13:36:26 -0400
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DF0D1FF9
+        with ESMTP id S229603AbjDCRg1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 13:36:27 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 162D11FFC
         for <git@vger.kernel.org>; Mon,  3 Apr 2023 10:36:26 -0700 (PDT)
-Received: by mail-pl1-x62c.google.com with SMTP id iw3so28790035plb.6
+Received: by mail-pl1-x634.google.com with SMTP id u10so28782947plz.7
         for <git@vger.kernel.org>; Mon, 03 Apr 2023 10:36:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112; t=1680543385;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=2L80H1gqrvqZx/5fzTXNBrzijJOaUE4YsA5rDHGp6fg=;
-        b=DepA+J7XflnyGNaCfXSMu29BMecvGMIJ1jqXczwq1Vnw2P4iGoXrRl9QFOturZsxfB
-         0y87QSgJ1k3vQR+zHaee0882YB9iutluTBe7KcUqh9jrb2zxt3/tx+zA/RRR2cBB2Lqi
-         p0wxUoRQZjXl++Gu1IQekevw+dbHbVz804KXeMqC5mK3UFvDtbwRSmUYLE7i+GznHHoG
-         F2qgAwZjKGLMtVITEje53F5546ZEjKR0AIwVrnHSZFj0xvEqNbfgIvEILbmPqdlaFN9w
-         pfWjSjxRp+QJB3jfIvJOIZlSqsABEVwgcdSRvCS3I6DmtU6n6/ENUA1f5Dwd93BoG3vv
-         vp7g==
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6L4Ahn7VIwEvR79et5h7CCA9aAO3zKyXWz0C7JOOZJc=;
+        b=g952qju/FDkmcqGqXybrAPQAF7gBsFIHQ74Lk6scSEVQNh3eNLiyM/3y0jpa8c0QC4
+         iZ4jlOMaf8XtVqOQmjA1I00OptnWTrKkf6o2BqexyL4CDIIOc1tkR5A2h+dFq66zIFzM
+         Kmo4Y0SBdW0m+3iMq3OpA0EADpyjMOZm8xh6JXMMPIMIBpoEFFx0RQyW8QjghKFplqDl
+         7Mh6gOO21hH/8zH6rMQXuGYRa5dpSx+sLVv/WNa2NXZ3vjVtCw8YPmn2RooJ+vXo/JKu
+         qqRGwEmhS2m7o1dfpO/BQ3pgplx64QnYwZJi1KUwFhVHO3kLxu32lB8gcwNsQ3IZP2dY
+         FZIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112; t=1680543385;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2L80H1gqrvqZx/5fzTXNBrzijJOaUE4YsA5rDHGp6fg=;
-        b=dpVZG4D496VbSKtpyT6sQWNrJKzzoiFvBbOyZ2LJIGH3sUM69w1fa4SHt8Bm7usicI
-         7vdbjbP0IFSCpFFKjd2a2UV7DoMTnCDjPoTmO0iJvq2Ple2Da1jzD188lf8v2N4cEsyj
-         YfHWcmgMDvF0jV6HRxPVE6owBIiDEXrT++ABjDtey9dS8C9LtqGJBfCeof7vT3aCAvuf
-         R7UN6zSqce9/49eAtacvjQdLKvU48srK0A3OrLZqOA2q6nPMsm1a8Chx4PiJKENj3z+6
-         ZAkalS95Dt72VErSfCyzRUWXg1by5TovdHCoPIHthKN6nWBC2BuIMCN1O43qT7nWuzqN
-         gKoA==
-X-Gm-Message-State: AAQBX9cu6lnMmvaQJwqzACRVi404hr00sc0bJoQWXCdAMx7n8DX01/9f
-        lIhmfltwotjFzUm45spm9VoUaZ7qm2A=
-X-Google-Smtp-Source: AKy350aUcAJfh8FTn685Cbc927xI46jV8UjPTMcl+kHUd3XBJKCoYs/EVqXDxEKU4oImjSSGzgcjQA==
-X-Received: by 2002:a17:90b:1b4c:b0:241:b90:4a1c with SMTP id nv12-20020a17090b1b4c00b002410b904a1cmr4466304pjb.44.1680543384970;
-        Mon, 03 Apr 2023 10:36:24 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6L4Ahn7VIwEvR79et5h7CCA9aAO3zKyXWz0C7JOOZJc=;
+        b=WSl932H8gtbl5A4RqoyXWuGCsQAe2dkJW7v0YB6aZ2f6qWWN6a7M1kUEmbZP9LlvoL
+         eU6Z63faGbDyC9XI0516hBB8PrnmjHR9NRly2eQFtlc+4sdd6lUKmrvBCRNz4yZe7GF1
+         HCD0ZN3/kXYIaooKto+RtFsl6Q69uOucDylkhhs3AoWknj08qSoQntyNQSI81aUcldYW
+         WBaY0qPScFevq6lvVsp/X7H3AqAUsswp2zB9TQjIN+JPKW9nGK6R0xFwXFwKYryt5wY/
+         5hMiVTMaoUPYQ2BwJlalh9hkfvu13OyAas6ZGXk7e2UV0m9MUJWQ4nEbtQTRbETVf7Zy
+         wiYg==
+X-Gm-Message-State: AO0yUKV4m60zf9TJW6jvgrkVD6OriJpBDr857AExY2fxSWy3cFAqHF8G
+        h2QMmKMnUPdLm3MT7bGpI1oIiMt5o28=
+X-Google-Smtp-Source: AK7set/MloI+odGMh4L+i76DJqKpzymRi5MF4Z8W3mOudbJlIOzhHlgQvR6JElW1fayurSsYFq3xvQ==
+X-Received: by 2002:a05:6a20:4fb0:b0:dd:ac3a:b798 with SMTP id gh48-20020a056a204fb000b000ddac3ab798mr30480562pzb.13.1680543385552;
+        Mon, 03 Apr 2023 10:36:25 -0700 (PDT)
 Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id s1-20020a17090ae68100b0023d0290afbdsm10061880pjy.4.2023.04.03.10.36.24
+        by smtp.gmail.com with ESMTPSA id d3-20020a654243000000b00502ecc282e2sm6332814pgq.5.2023.04.03.10.36.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 10:36:24 -0700 (PDT)
+        Mon, 03 Apr 2023 10:36:25 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
+To:     Guillem Jover <guillem@hadrons.org>
 Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Mar 2023, #06; Wed, 29)
-References: <xmqqv8ij5g83.fsf@gitster.g>
-        <CABPp-BGoPuGCZw+9wCgdYyRR4Zf4y9Kun27GrQhtMdYWpOUsYQ@mail.gmail.com>
-Date:   Mon, 03 Apr 2023 10:36:24 -0700
-Message-ID: <xmqq8rf86f6v.fsf@gitster.g>
+Subject: Re: Add a way to disable =?utf-8?B?wqtnaXQgY2xlYW7Cuw==?= per repo
+References: <ZCiZCM+AAUnjp4Ml@thunder.hadrons.org>
+Date:   Mon, 03 Apr 2023 10:36:25 -0700
+Message-ID: <xmqq355g6f6u.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Guillem Jover <guillem@hadrons.org> writes:
 
->> * cw/submodule-status-in-parallel (2023-03-02) 6 commits
->> ...
->>  Comments?
->>  source: <20230302215237.1473444-1-calvinwan@google.com>
->
-> Perhaps this could be marked as needing a reroll, based on both
-> https://lore.kernel.org/git/CAFySSZDk05m6gU5-V1R+y3YnQ5PPduVW54+_gjBwD0rmacsLsw@mail.gmail.com/
-> and https://lore.kernel.org/git/xmqqv8jczbs0.fsf@gitster.g/ ?
+> Accidentally running «git clean -xdf» or «git clean -Xdf» might be
+> catastrophic there.
 
-Sounds fair.  Thanks!
+So would accidentally running "rm -fr" there be catastrophic, too.
+I doubt it would make much sense to file a feature request to Debian
+or GNU/FSF to disable "rm -r" in certain directories.  I am not sure
+why "git clean" should be any different.
+
+Commands like "git clean" require "-f" before they become overly
+destructuve for a reason.  clean.requireForce defaults to true for
+the same reason.
