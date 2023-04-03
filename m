@@ -2,171 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E0B8C76196
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 16:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC70CC76188
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 16:51:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232815AbjDCQsN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 12:48:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57252 "EHLO
+        id S232113AbjDCQvp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 12:51:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232520AbjDCQsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 12:48:11 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9985019B7
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 09:48:10 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id o11so28660373ple.1
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 09:48:10 -0700 (PDT)
+        with ESMTP id S232939AbjDCQvn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 12:51:43 -0400
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AF3C1BEE
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 09:51:42 -0700 (PDT)
+Received: by mail-pl1-x62b.google.com with SMTP id u10so28638402plz.7
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 09:51:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680540490; x=1683132490;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PnHZeWkqbetH6gsplr89ZqzyyP+CjAoR903/ixwrhsM=;
-        b=AQQziFMWPdADBnG6xReUdLe+WgnHzfyi1/0amko0opq+nnJ3zLY8rdM2uUARUrQK/4
-         bHM6953V69UbbG0enDbKaWYyMLOzFg4rJ/WUD6+1mJReRPRY/0RICuIs0XCsJChaNcxq
-         Tc3fzCk+0n5rEUHRPLI1VoNbY42cPsaa0ytOAHAoQ6qJLjwb1PYvP5MpNXg7xT6SOGOB
-         TFMM3xH/XG3a4OLxrQzSExocRYhfNvXk3wQX8h4ZC++TuaBSMUgr42IDsc1ZTjwmNscO
-         VHMWVWlxLaAKmXzMQIMJuQb9R9ckCSk3p84gr621e1EImBLCF0T36FRAr8A2HBuNKtQ/
-         kJLg==
+        d=gmail.com; s=20210112; t=1680540702;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=obzDSe12lcqKKJG2vg6kjVyonbI4agqHAmfKPuqT+Lk=;
+        b=NsWLZCF0Ct8i3jguXCt0MAWqQYVaQqShO/GUkmQLqFHuZX6U4UR2HGWVNLcQuBrp7s
+         au+uvdIstDsaf4Wble3ZkFuXZuJqO9wlGqsArl93GNwg1RdJEbtm89VfPcyAOFTxlXuk
+         scjUtMdEOeR7B6rPfg0sl1ez652VGNwzdrWZigGc8KeZuhFmk9yu7+2tKXNeE0kXg6mP
+         z8uoyZ+2UvsvnCN65mOyxiw3vHpI5xoQ1fx6ZusawKjW2uDo4Y7mjOM6Vc72oAwMcIEg
+         u5C/+zJfr1Uys64LZlGj9vfyPaa0wGzIGTQlr4mm3MMEMDzoEH6Q+ov+DOd1nNIu6Q83
+         eLMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680540490; x=1683132490;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PnHZeWkqbetH6gsplr89ZqzyyP+CjAoR903/ixwrhsM=;
-        b=27xvamq+kFJEKi1rfMduh21LKM3IHUWiqBcSW/OrFs9ABaYgwtevhpAfhSt8LqLI/3
-         52FCBWrB4z0xGIm3nbD1unHC+K15nt+2RIuZog8sofYWtOtoNIL81m7/9vpCPq9f6zyg
-         F2jqLLHTG5P5dfQm72Z4zFTwhzNI9FxwhLr1QzwAPgbvLhf6dmFc7dpBnNABh/qW8VPV
-         jzygtJ8HlM+LVrCtcGXsLh3YreIzen+PwSQUOfSjgwt+/pCt8NtO+AbvNurEAW6A9BOy
-         Z0CnZOIaCTOpxhpC/ZMCII5Oc9tW1xcvBVcoWTVh8Xiyh/Ls++Zljm98qCd1BOe1FjJH
-         H8Tw==
-X-Gm-Message-State: AAQBX9flqntvXIwc60ewYCdN/1pmEOxIzAj06601VIa2dCOzjR230z97
-        U/zSfiKaBs3fotN9NCTDUPt7/DVWgRnLvlFgv2I=
-X-Google-Smtp-Source: AKy350Y+/+uMixXhowiRli2ZAFrNM/E7mJkdI8wiLuZjpGszKa0SDkLcv92O/4hizj+EMUTc8dh8bA==
-X-Received: by 2002:a17:902:c94c:b0:1a2:6092:2193 with SMTP id i12-20020a170902c94c00b001a260922193mr16270110pla.4.1680540489498;
-        Mon, 03 Apr 2023 09:48:09 -0700 (PDT)
-Received: from localhost.localdomain ([2405:201:e020:20ea:fb6f:c0b4:a709:2d74])
-        by smtp.gmail.com with ESMTPSA id g5-20020a170902934500b001994fc55998sm6816236plp.217.2023.04.03.09.48.06
+        d=1e100.net; s=20210112; t=1680540702;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=obzDSe12lcqKKJG2vg6kjVyonbI4agqHAmfKPuqT+Lk=;
+        b=hbg98cvznvMmU8WsaF+65WPRAhwoH2aQDoOjoVQ64+S5MFNmri7fAiwG6Yay/QmNO5
+         h0nJFzNoR3FlhCtPONZzg3+e69Pio2p2HYULGiFRQsJTDEeht014DXXLowp+pdbRucEu
+         UsZZrODcdqyd1qH34v808ks1dJYOC3oqCczBQnwbuyj8NN5H+/UItYMsEMCXROOZBjmn
+         I0wt1RhMXMtMGi9KqgDS+dAjL4OOhk5cKWl3KtVTloU4lo08O22E0vOrdT6wcG6MZvM9
+         loQxhUoILAe0dwNNrKr1ff85BFF6W+MOjldjcPJfFTyrVPFAYEPQGkbZY9+PehwTxnfv
+         owuQ==
+X-Gm-Message-State: AAQBX9fcCXxye2slAdUR5wT9Ot/iwPo1VZbP62VkjLNiOiMfwLfTaRKR
+        EGDkIj8E6Euh8xCnS7VjZJiBy3n9JXU=
+X-Google-Smtp-Source: AKy350arCgyQB/Nr+dqJnPe1EKICOgMFjyngwqMPszWgWow9txmBU3oxlRLGiSKqxQMykMWsPJvF/w==
+X-Received: by 2002:a17:902:c941:b0:19c:e405:4446 with SMTP id i1-20020a170902c94100b0019ce4054446mr2276041pla.30.1680540701722;
+        Mon, 03 Apr 2023 09:51:41 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id j11-20020a17090276cb00b0019e5fc3c7e6sm6870721plt.101.2023.04.03.09.51.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 09:48:09 -0700 (PDT)
-From:   Raghul Nanth A <nanth.raghul@gmail.com>
-To:     git@vger.kernel.org
-Cc:     derrickstolee@github.com, vdye@github.com, nanth.raghul@gmail.com
-Subject: [GSOC][PATCH v5] describe: enable sparse index for describe
-Date:   Mon,  3 Apr 2023 22:17:49 +0530
-Message-Id: <20230403164749.246001-1-nanth.raghul@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230331182038.224892-1-nanth.raghul@gmail.com>
-References: <20230331182038.224892-1-nanth.raghul@gmail.com>
+        Mon, 03 Apr 2023 09:51:41 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alexandre Garnier <zigarn@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Revision ref '@{push}' not resolved as documented
+References: <CAFFOgCUs9d6wJDf3p-+8UkzXRSymCgBctGt+rP+k0CzZPp2LJw@mail.gmail.com>
+Date:   Mon, 03 Apr 2023 09:51:41 -0700
+In-Reply-To: <CAFFOgCUs9d6wJDf3p-+8UkzXRSymCgBctGt+rP+k0CzZPp2LJw@mail.gmail.com>
+        (Alexandre Garnier's message of "Sun, 2 Apr 2023 17:16:18 +0200")
+Message-ID: <xmqqh6tw7vtu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git describe compares the index with the working tree when (and only
-when) it is run with the "--dirty" flag. This is done by the
-run_diff_index() function. The function has been made aware of the
-sparse-index in the series that led to 8d2c3732 (Merge branch
-'ld/sparse-diff-blame', 2021-12-21). Hence we can just set the
-requires-full-index to false for "describe".
+Alexandre Garnier <zigarn@gmail.com> writes:
 
-Performance metrics
+> # Push is done with the expected remote, and only then the ref can be resolved
+> $ git push
+> Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+> To ../myfork.git
+> * [new branch] mybranch -> mybranch
+> $ git rev-parse --symbolic-full-name @{push}
+> refs/remotes/myfork/mybranch
 
-  Test                                                     HEAD~1            HEAD
-  -------------------------------------------------------------------------------------------------
-  2000.2: git describe --dirty (full-v3)                   0.08(0.09+0.01)   0.08(0.06+0.03) +0.0%
-  2000.3: git describe --dirty (full-v4)                   0.09(0.07+0.03)   0.08(0.05+0.04) -11.1%
-  2000.4: git describe --dirty (sparse-v3)                 0.88(0.82+0.06)   0.02(0.01+0.05) -97.7%
-  2000.5: git describe --dirty (sparse-v4)                 0.68(0.60+0.08)   0.02(0.02+0.04) -97.1%
-  2000.6: echo >>new && git describe --dirty (full-v3)     0.08(0.04+0.05)   0.08(0.05+0.04) +0.0%
-  2000.7: echo >>new && git describe --dirty (full-v4)     0.08(0.07+0.03)   0.08(0.05+0.04) +0.0%
-  2000.8: echo >>new && git describe --dirty (sparse-v3)   0.75(0.69+0.07)   0.02(0.03+0.03) -97.3%
-  2000.9: echo >>new && git describe --dirty (sparse-v4)   0.81(0.73+0.09)   0.02(0.01+0.05) -97.5%
+This one is expected.
 
-Signed-off-by: Raghul Nanth A <nanth.raghul@gmail.com>
----
+I think the root cause of this confusion is that the "rev-parse"
+command, even with "--symbolic" or "--symbolic-full-name", is still
+about answering a question about an existing object name.  If
+"rev-parse X" fails because X does not spell a valid object name,
+"rev-parse --symbolic-full-name X" is designed to fail the same way.
 
-  * Removed describe tests not concerned with sparse index
-  * Added performance metric to commit message
-  * Moved tests to t1092.sh
-  * Explained reason for changes in commit message
-  * Added tests to validate behaviour in sparse and full indices
+I am not sure how involved the implementation to change the above
+design to be offhand.  The general flow of rev-parse is to feed an
+end-user supplied string to the object-name layer and ask it to be
+turned into an object name, and "--symbolic-full" must be stopping
+that flow after the original string is canonicalized (e.g. 'master'
+is turned into 'refs/heads/master') but before it is turned into an
+object name, in order to be able to return 'refs/heads/master'.  I
+would not be surprised if it wasn't to hard to special case the
+"--symbolic" request to yield an unborn branch name like you
+expected, but it would change the semantics and breaks backward
+compatibility, so care must be taken if anybody wants to pursue
+this.
 
- builtin/describe.c                       |  2 ++
- t/perf/p2000-sparse-operations.sh        |  3 +++
- t/t1092-sparse-checkout-compatibility.sh | 25 ++++++++++++++++++++++++
- 3 files changed, 30 insertions(+)
+Thanks.
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 5b5930f5c8..7ff9b5e4b2 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -654,6 +654,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 			int fd, result;
- 
- 			setup_work_tree();
-+			prepare_repo_settings(the_repository);
-+			the_repository->settings.command_requires_full_index = 0;
- 			repo_read_index(the_repository);
- 			refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED,
- 				      NULL, NULL, NULL);
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 3242cfe91a..db7887470f 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -43,6 +43,7 @@ test_expect_success 'setup repo and indexes' '
- 	done &&
- 
- 	git sparse-checkout init --cone &&
-+	git tag -a v1.0 -m "Final" &&
- 	git sparse-checkout set $SPARSE_CONE &&
- 	git checkout -b wide $OLD_COMMIT &&
- 
-@@ -125,5 +126,7 @@ test_perf_on_all git checkout-index -f --all
- test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
- test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
- test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/*"
-+test_perf_on_all git describe --dirty
-+test_perf_on_all 'echo >>new && git describe --dirty'
- 
- test_done
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 801919009e..51bebd4fa9 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1514,6 +1514,31 @@ test_expect_success 'sparse-index is not expanded: stash' '
- 	ensure_not_expanded stash pop
- '
- 
-+test_expect_success 'describe tested on all' '
-+	init_repos &&
-+
-+	# Add tag to be read by describe
-+
-+	run_on_all git tag -a v1.0 -m "Version 1" &&
-+	test_all_match git describe --dirty &&
-+	run_on_all rm g &&
-+	test_all_match git describe --dirty
-+'
-+
-+
-+test_expect_success 'sparse-index is not expanded: describe' '
-+	init_repos &&
-+
-+	# Add tag to be read by describe
-+
-+	git -C sparse-index tag -a v1.0 -m "Version 1" &&
-+
-+	ensure_not_expanded describe --dirty &&
-+	echo "test" >>sparse-index/g &&
-+	ensure_not_expanded describe --dirty &&
-+	ensure_not_expanded describe
-+'
-+
- test_expect_success 'sparse index is not expanded: diff' '
- 	init_repos &&
- 
--- 
-2.40.0
 
