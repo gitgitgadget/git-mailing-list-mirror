@@ -2,98 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A55F9C76196
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 20:58:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFAF8C76188
+	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 21:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233534AbjDCU6T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 16:58:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42184 "EHLO
+        id S233685AbjDCVS6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 17:18:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230527AbjDCU6S (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 16:58:18 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46FAF1725
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 13:58:17 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id p3-20020a17090a74c300b0023f69bc7a68so31834998pjl.4
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 13:58:17 -0700 (PDT)
+        with ESMTP id S233678AbjDCVS4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 17:18:56 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83B5F3A97
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 14:18:52 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id ml21so6548064pjb.4
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 14:18:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680555496;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nREoqFw6z0KXEqgbCZwvFTJ9ZsIiVHBPjPD2RGj8T/0=;
-        b=SaFKp8SXDBGWOPyRvp5lVFwwsf7HBXdOaDfYeBLUpdPgM/QiE5OeoTTYA9Oc1h7t5T
-         cPIHH24s9G4XjKdPXv80q8ZZLLAEVbVSMiT34Meit+F+gutb77AI77rZjNd5ZM9DTNGh
-         /GsW0hsXGhVgphWwfAHYDENnpHOVPwZvkmYGjNFdozkGV/SqJ0aDzGcC39dGvqXxbmO4
-         Gr7ctxQShOol8aamI55JCoM1owBlGjlcaEFSFIqjcPmxn1kx3/Apr8its9OUkJzLNMBV
-         QrVb3iLwZbYenArktD/qyzcZDpPuzSnBbB+s0NdZi2EKdvULCTh8edZ4X1SaMeK6rpWi
-         YzvQ==
+        d=gmail.com; s=20210112; t=1680556732;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7bsIWaWp+sMMgUjPQWPm2uRs3BtjdlBNdS3Vu9Ytcgo=;
+        b=mlpHQxJZaXS1F4XcJgVapppQbkLb7PhFEpDnGPewMSDw3zEiRxV0wC0/U1rK1RTd6R
+         wRHG144Kmk0Gyh1yMQ2gDUXGNurbzT4uW2qY8/H+TxsmVj9KdQR2j2yC7ZlUNgbiw7Wi
+         11q2ahAQZTKsMUJY/OgxMSQT2tqtyO4WwkHVV3+4ID626vZFfKAsQsddqbC0BOk2X+mA
+         paRPZy7AqPOv+w+xG90nV9RtdLeJqETXZUrHlBmauc0diGuxXxyOIuXPAS5OhLRjrw7b
+         kMWg5k8nhu5fTzADc6Zc+Z/e2ZXRKVBZo2dDFvbdjzBtEMXajZlg1UsKCrVNMEMZRyth
+         Satg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680555496;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=nREoqFw6z0KXEqgbCZwvFTJ9ZsIiVHBPjPD2RGj8T/0=;
-        b=cHrInJpq5I9HVQ02dayDuMvQYwbLIJosW4rJf8ezyGETPs+6SCmiimfA3GDQg7jO/j
-         gu/YgtU3yJO05iC0420zKyxRssdUE7gCM8uhiSZbd3/o40EYYrZ8WgViQZffIEOKyUiV
-         UjpO2CEejeCr1zZxV+eMAIF/Afe0jJkPH96HcaZu8LHPnsy3hh3bL5mr/hgNAItwowsy
-         ZiY7NhXSWlRxPI/aJxc0NaI3ye01lxTJaU4ZSEpoZ3T575LI3mHi9D44eYSCURw72BJ+
-         EE/Z6ji71IHJ0otyRaNMFDVYqPqImhbCgEfC5LFW6cLb53eLt7WXbklTiZ8odOavg6M/
-         JLqg==
-X-Gm-Message-State: AAQBX9fBauYcZkC6MSKlGPc9yEY3fSzFcpOHoz7hHlk9dtnqyEDv11dB
-        xtoySEWloyeP3VKcQSPAt30=
-X-Google-Smtp-Source: AKy350bFMDxwQrSVLwVvp+ssQGcE3nifRY+on2Z9YYQ6rbbjuhBf4MRQV1/nIVs6xweJQdnHcfqJ0g==
-X-Received: by 2002:a17:903:1d1:b0:19e:ecaf:c4b4 with SMTP id e17-20020a17090301d100b0019eecafc4b4mr477059plh.4.1680555496348;
-        Mon, 03 Apr 2023 13:58:16 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680556732;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7bsIWaWp+sMMgUjPQWPm2uRs3BtjdlBNdS3Vu9Ytcgo=;
+        b=b1XxyiwcXGw7p1CWIVFFRicq1/44QwX//67hvq4HltYAEzzjsbxxHKFlGKlZFFU99r
+         YPBIJMofyI2XbB/gdEydHmFyk6HJVzCcOMFK6BxmsnUxvA3k5SWTLGa9EG2OueEjKg0l
+         QZgMefXWHcYh6QJqz5dMyVWdIz3uxiVB9bcmPXDDB4eEhehmDgjq/35y8fVm0IGlToMB
+         wMtWnNrG/J9+MlrFYSQCurATGdxRwtaldn+zuuLuudNIWWn11e0LJQ6za2986OqimTWR
+         eRsJ5mccKM5omNGUJjf4Ro8CGSzs334T+pNTj26GOkS3lduBFEkLQ/AIHbZ745JYJKjD
+         a08Q==
+X-Gm-Message-State: AAQBX9cOW/FrD3t+c/COnxxDYTHFb/HWr0r0a/TsoDBmQfpufXGn2nLT
+        xiIjWZXTq131wKdYsimQCD8=
+X-Google-Smtp-Source: AKy350bbAOPaHcNysYtLjNtQYaah9gI8zYHFCfeRPpjSX8tNnha8v/JTvsdksxnzMwBztVV/Ezn1Rg==
+X-Received: by 2002:a17:902:f20c:b0:1a2:88c5:d337 with SMTP id m12-20020a170902f20c00b001a288c5d337mr432388plc.22.1680556731818;
+        Mon, 03 Apr 2023 14:18:51 -0700 (PDT)
 Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id c20-20020a170902b69400b0019f1027f88bsm6972200pls.307.2023.04.03.13.58.15
+        by smtp.gmail.com with ESMTPSA id g3-20020a170902740300b001a19f2f81a3sm7026090pll.175.2023.04.03.14.18.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 13:58:15 -0700 (PDT)
+        Mon, 03 Apr 2023 14:18:51 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Shuqi Liang <cheskaqiqi@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com, derrickstolee@github.com
-Subject: Re: [RFC][PATCH v1] write-tree: integrate with sparse index
-References: <20230402000117.313171-1-cheskaqiqi@gmail.com>
-Date:   Mon, 03 Apr 2023 13:58:15 -0700
-In-Reply-To: <20230402000117.313171-1-cheskaqiqi@gmail.com> (Shuqi Liang's
-        message of "Sat, 1 Apr 2023 20:01:17 -0400")
-Message-ID: <xmqqilec4ra0.fsf@gitster.g>
+To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc:     git@vger.kernel.org, rybak.a.v@gmail.com,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH v2 2/3] doc: interpret-trailers: =?utf-8?Q?don?=
+ =?utf-8?Q?=E2=80=99t?= use deprecated
+ config
+References: <20230331181229.15255-1-code@khaugsbakk.name>
+        <cover.1680548650.git.code@khaugsbakk.name>
+        <ea06be8f5ac77e5be64ab674f5a4fbe0b7e56c0e.1680548650.git.code@khaugsbakk.name>
+Date:   Mon, 03 Apr 2023 14:18:51 -0700
+In-Reply-To: <ea06be8f5ac77e5be64ab674f5a4fbe0b7e56c0e.1680548650.git.code@khaugsbakk.name>
+        (Kristoffer Haugsbakk's message of "Mon, 3 Apr 2023 21:22:00 +0200")
+Message-ID: <xmqqbkk44qbo.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang <cheskaqiqi@gmail.com> writes:
+Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
 
-> Update 'git write-tree' to allow using the sparse-index in memory
-> without expanding to a full one.
->
-> The recursive algorithm for update_one() was already updated in 2de37c5
-> (cache-tree: integrate with sparse directory entries, 2021-03-03) to
-> handle sparse directory entries in the index. Hence we can just set the
-> requires-full-index to false for "write-tree".
->
-> The `p2000` tests demonstrate a ~96% execution time reduction for 'git
-> write-tree' using a sparse index:
->
-> Test                                           before  after
-> -----------------------------------------------------------------
-> 2000.78: git write-tree (full-v3)              0.34    0.33 -2.9%
-> 2000.79: git write-tree (full-v4)              0.32    0.30 -6.3%
-> 2000.80: git write-tree (sparse-v3)            0.47    0.02 -95.8%
-> 2000.81: git write-tree (sparse-v4)            0.45    0.02 -95.6%
->
-> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-> ---
->  builtin/write-tree.c                     |  4 ++++
->  t/perf/p2000-sparse-operations.sh        |  1 +
->  t/t1092-sparse-checkout-compatibility.sh | 28 ++++++++++++++++++++++++
->  3 files changed, 33 insertions(+)
+> [2]: “At the same time, in order to allow `git interpret-trailers` to
+>    better simulate the behavior of `git command -s`,
+>    'trailer.<token>.cmd' will not automatically execute.”
 
-Has the test suite been exercised with this patch?  It seems to
-break at least t0012
+This may be a question more for Zhening than for you, but is the
+above a typo for "git commit -s", not "command"?
 
+> +$ git config trailer.see.cmd "glog-ref"
+> +$ cat msg.txt | git interpret-trailers --trailer=see
 
+This is inherited from the original, but it is a poor practice to
+run "cat" on a single file and pipe the result to another command.
+Just redirect from the file into the downstream command instead,
+i.e.
+
+    $ git interpret-trailers <empty-msg.txt
+
+Perhaps we should do that as a preliminary clean-up before these
+updates?
