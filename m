@@ -2,126 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4F43C761A6
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 19:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0877BC6FD1D
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 19:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236000AbjDDTve (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Apr 2023 15:51:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45174 "EHLO
+        id S236274AbjDDTxQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Apr 2023 15:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230004AbjDDTvd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2023 15:51:33 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1A8FA8
-        for <git@vger.kernel.org>; Tue,  4 Apr 2023 12:51:31 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id v6-20020a05600c470600b003f034269c96so10522473wmo.4
-        for <git@vger.kernel.org>; Tue, 04 Apr 2023 12:51:31 -0700 (PDT)
+        with ESMTP id S236250AbjDDTxM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2023 15:53:12 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F7AF4ED7
+        for <git@vger.kernel.org>; Tue,  4 Apr 2023 12:53:08 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id m2so34012799wrh.6
+        for <git@vger.kernel.org>; Tue, 04 Apr 2023 12:53:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680637890; x=1683229890;
-        h=subject:from:to:content-language:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=vOWWptlMwS7x0v9qMR/X7GZF8/y6INJkVuY+7+tB2Ok=;
-        b=B/jK6oynLNtlTK4EmIKgfS7Kq1wKAg9FsdAPMkiO0kqRPx+wRJhakiXjBJgDV2DK3y
-         4RVF0smEnPxJ9pcNA2O8goExiZ295/2TJ0RM8xwIjNmadWjZT5FHPHIXuuy8AXTOJzXw
-         qDy1Bn0aGEpndIAbZQpzaKPkSzUsiF1hK2zzjovxLDr2CcYpM+EeDEeLUcYrwr4DxpBN
-         5uOTfWoO8F9STxUbR+aT70t10N+u86a+QcDsj5bVVRrhEea9CVls5tWqyyFVceZH+u1x
-         pCHQycH5PZMrZ2zIkdSnOKrqIXJBb/VP4kIpr6yEBHxcXOsxiXNckRJHyGdyiyF3kJ0d
-         0VNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680637890; x=1683229890;
-        h=subject:from:to:content-language:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20210112; t=1680637987; x=1683229987;
+        h=in-reply-to:references:to:from:content-language:subject:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vOWWptlMwS7x0v9qMR/X7GZF8/y6INJkVuY+7+tB2Ok=;
-        b=5+iEHppUnuqPHeqQr/8e2xvld59nJNLM/Gj3bW/74uY15VeOPKPlvkClkAlkSD0PWH
-         TiYagXh7Nqgdkil6x1Q6I3XFUtFacHYBqAdT7+3/g+yz81i4nAvorAzYG5gv2qf2/zM3
-         n6i266ajzu357kWFIQ7/PJwltGh4dJq14vgmaNNLoNfQqtcKmiaJ4TGDmdZKfD6LRmxQ
-         AliGMKqIcsu3NvMiW1MWF422YoCHIx3QHPcPwJa/5LlziIb+uFkfkESd5elQFEZ7AGhZ
-         g5GTz0m1zAvaYkPddVxJk12Abz/uEHUBbkL7yPXllltIXFHED5EJfdv/9lmRYixVzxh9
-         +7dw==
-X-Gm-Message-State: AAQBX9fjyzctcP9Zww0DUYyKXwWt21yDomvtv4IfcpwuVC7qg0sOQ1i2
-        lf9+NcAdPkHcn29k2QYx/xgiFcTtDjU=
-X-Google-Smtp-Source: AKy350ZUH+AhJtzt3t99zPhUvMuKD6YdVE+qvjEbRH4uSOO6GRHtalZiOu8cPVAHyvaY69ggS/yXUQ==
-X-Received: by 2002:a7b:cd0d:0:b0:3eb:42fc:fb30 with SMTP id f13-20020a7bcd0d000000b003eb42fcfb30mr3107927wmj.32.1680637890271;
-        Tue, 04 Apr 2023 12:51:30 -0700 (PDT)
+        bh=emtwFo3RuQuDTBDh17RfUPAyuaSUxjRjJfTdGuzO+iQ=;
+        b=FE2gLFb5VotKZIS9oAXNDnvQg8yUHm4r6Gxy03VJytgXCZvyVJvngBk7f5a1M+/6V9
+         kltUGZZEYZdhYqmMXgNzVpYETrwO90faptm8rmt+yMd177wL+ZOEcr1EKf+WhYLMfVmb
+         BVh5UtqGRK6Z3GRmn+DrgkxWoLhzPPypgb9hCz7Jh8KZPJ/dek1mocJ8Y8nzy4A6nZUU
+         k24wquGGxcN3dJ8mjqXH1PwLcTSmRKuTw3SwvhErWqUvIwdpZoU0h9vcJKWvWMxzeeAQ
+         J445dLXTxiAeWNUJ6kThWBbzZNmg4vRWzRsjqbhpSrhyHpu7x2D8u4tENr2sg8nUeN1k
+         UUHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680637987; x=1683229987;
+        h=in-reply-to:references:to:from:content-language:subject:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=emtwFo3RuQuDTBDh17RfUPAyuaSUxjRjJfTdGuzO+iQ=;
+        b=0GCBXOv4exVzXI/a65H3xJy0HNUGMDhUyM/zccsWLyaGTEpUfUZxupSy6WZz2+EjSZ
+         +bZLyzjyb1eZpL/JfXj1WLEZynzRTUi+QVIPp/+VgZWPknzw7n4u0blvftWkjvf5FSk+
+         CGTh0Zo6qxdwdQQ0rSfLJhL9LfMnUvY1x7ekJiPk8Rs80ZNJJEcdPjyjHNqggp3kO2RB
+         rA5KkZOlQW0aPUfblZXqeCvPZbscwhy7wBcJgdM5+C7gFJjHwVcBhCw/r87DGYnvt34p
+         DY4QnQX3hUcgJJGpWEi/N8o04IfhJattFgeMABpVviBewSOx6nZ+I3f/KeV24EFFhwGv
+         qAxg==
+X-Gm-Message-State: AAQBX9czViggJDN70tGtmVb9pPP0FfEV9NUsbci+alM2+I8TyLWDf9ot
+        fmLXtCjkpneZ0y0q6sFw27jsSXnrrn4=
+X-Google-Smtp-Source: AKy350a4a4UOi+5I1nz8qbUhiwIcO+m/mSpAml9Sd4RSJidBAbxln/UIFY9EXo+VaaR0ci9dMtxSoQ==
+X-Received: by 2002:adf:eb0e:0:b0:2de:79b6:63ef with SMTP id s14-20020adfeb0e000000b002de79b663efmr2498010wrn.63.1680637986867;
+        Tue, 04 Apr 2023 12:53:06 -0700 (PDT)
 Received: from [192.168.0.160] ([170.253.51.134])
-        by smtp.gmail.com with ESMTPSA id j23-20020a05600c1c1700b003ee443bf0c7sm23159227wms.16.2023.04.04.12.51.29
+        by smtp.gmail.com with ESMTPSA id r16-20020adfdc90000000b002cff06039d7sm13054519wrj.39.2023.04.04.12.53.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 12:51:29 -0700 (PDT)
-Message-ID: <a0b6d751-25fd-a132-f8a5-9844e5d9b8a6@gmail.com>
-Date:   Tue, 4 Apr 2023 21:51:21 +0200
+        Tue, 04 Apr 2023 12:53:06 -0700 (PDT)
+Message-ID: <0f90f1a0-56bc-7ca4-e276-9c163ec8ec2c@gmail.com>
+Date:   Tue, 4 Apr 2023 21:53:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
+Subject: Re: Dubious diff using --diff-algorithm=histogram
 Content-Language: en-US
+From:   Alejandro Colomar <alx.manpages@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>,
         Alejandro Colomar <alx@nginx.com>
-From:   Alejandro Colomar <alx.manpages@gmail.com>
-Subject: Dubious diff using --diff-algorithm=histogram
+References: <a0b6d751-25fd-a132-f8a5-9844e5d9b8a6@gmail.com>
+In-Reply-To: <a0b6d751-25fd-a132-f8a5-9844e5d9b8a6@gmail.com>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------87Nq48cOLlF1Vw37cCeg5auj"
+ boundary="------------MVdobDtuJegCZwbDZGMKJ8SH"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------87Nq48cOLlF1Vw37cCeg5auj
-Content-Type: multipart/mixed; boundary="------------2JqdZMn5Lb09me0t7YKvL3UE";
+--------------MVdobDtuJegCZwbDZGMKJ8SH
+Content-Type: multipart/mixed; boundary="------------G07WiAq0GGwL0lE0lEZpN0kz";
  protected-headers="v1"
 From: Alejandro Colomar <alx.manpages@gmail.com>
 To: Git Mailing List <git@vger.kernel.org>, Alejandro Colomar <alx@nginx.com>
-Message-ID: <a0b6d751-25fd-a132-f8a5-9844e5d9b8a6@gmail.com>
-Subject: Dubious diff using --diff-algorithm=histogram
+Message-ID: <0f90f1a0-56bc-7ca4-e276-9c163ec8ec2c@gmail.com>
+Subject: Re: Dubious diff using --diff-algorithm=histogram
+References: <a0b6d751-25fd-a132-f8a5-9844e5d9b8a6@gmail.com>
+In-Reply-To: <a0b6d751-25fd-a132-f8a5-9844e5d9b8a6@gmail.com>
 
---------------2JqdZMn5Lb09me0t7YKvL3UE
+--------------G07WiAq0GGwL0lE0lEZpN0kz
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On 4/4/23 21:51, Alejandro Colomar wrote:
+> Hi,
+>=20
+> I've met some strange diff with the histogram algorithm.  I know this
+> has a lot of magic in it, and it's probably not so trivial to improve,
+> and maybe my code base is so weird that it makes the histogram do crazy=
 
-I've met some strange diff with the histogram algorithm.  I know this
-has a lot of magic in it, and it's probably not so trivial to improve,
-and maybe my code base is so weird that it makes the histogram do crazy
-stuff, but I wanted to show it to you in case there's anything that can
-be improved.
+> stuff, but I wanted to show it to you in case there's anything that can=
 
-So, patience is showing a better diff than histogram, which shouldn't
-happen usually, and less in this case, where p++ is such a common thing
-to do (although maybe this nxt_slow_path() macro is called a lot in the
-file and confuses the histogram?).
+> be improved.
+>=20
+> So, patience is showing a better diff than histogram, which shouldn't
+> happen usually, and less in this case, where p++ is such a common thing=
 
-Code base: <https://github.com/nginx/unit.git>
+> to do (although maybe this nxt_slow_path() macro is called a lot in the=
 
-Cheers,
-Alex
+> file and confuses the histogram?).
+>=20
+> Code base: <https://github.com/nginx/unit.git>
+>=20
+> Cheers,
+> Alex
 
----
+Now this has surprised me even more:
 
 alx@asus5775:~/src/nginx/unit/space$ git diff --diff-algorithm=3Dhistogra=
 m=20
 diff --git a/src/nxt_http_parse.c b/src/nxt_http_parse.c
-index 8646a6ce..92bdfb1f 100644
+index 8646a6ce..3559f2e2 100644
 --- a/src/nxt_http_parse.c
 +++ b/src/nxt_http_parse.c
-@@ -340,10 +340,10 @@ nxt_http_parse_request_line(nxt_http_request_parse_=
-t *rp, u_char **pos,
+@@ -340,9 +340,9 @@ nxt_http_parse_request_line(nxt_http_request_parse_t =
+*rp, u_char **pos,
 =20
  space_after_target:
 =20
 -    if (nxt_slow_path(end - p < 10)) {
--
-         p++;
++    p++;
 =20
+-        p++;
 +    if (nxt_slow_path(end - p < 10)) {
-+
+=20
          if (p =3D=3D end) {
              return NXT_AGAIN;
-         }
 alx@asus5775:~/src/nginx/unit/space$ git diff --diff-algorithm=3Dpatience=
 =20
 diff --git a/src/nxt_http_parse.c b/src/nxt_http_parse.c
-index 8646a6ce..92bdfb1f 100644
+index 8646a6ce..3559f2e2 100644
 --- a/src/nxt_http_parse.c
 +++ b/src/nxt_http_parse.c
 @@ -340,10 +340,10 @@ nxt_http_parse_request_line(nxt_http_request_parse_=
@@ -129,7 +138,7 @@ t *rp, u_char **pos,
 =20
  space_after_target:
 =20
-+        p++;
++    p++;
 +
      if (nxt_slow_path(end - p < 10)) {
 =20
@@ -138,74 +147,34 @@ t *rp, u_char **pos,
          if (p =3D=3D end) {
              return NXT_AGAIN;
          }
-alx@asus5775:~/src/nginx/unit/space$ git diff --diff-algorithm=3Dmyers=20
-diff --git a/src/nxt_http_parse.c b/src/nxt_http_parse.c
-index 8646a6ce..92bdfb1f 100644
---- a/src/nxt_http_parse.c
-+++ b/src/nxt_http_parse.c
-@@ -340,10 +340,10 @@ nxt_http_parse_request_line(nxt_http_request_parse_=
-t *rp, u_char **pos,
-=20
- space_after_target:
-=20
--    if (nxt_slow_path(end - p < 10)) {
--
-         p++;
-=20
-+    if (nxt_slow_path(end - p < 10)) {
-+
-         if (p =3D=3D end) {
-             return NXT_AGAIN;
-         }
-alx@asus5775:~/src/nginx/unit/space$ git diff --diff-algorithm=3Dminimal =
-
-diff --git a/src/nxt_http_parse.c b/src/nxt_http_parse.c
-index 8646a6ce..92bdfb1f 100644
---- a/src/nxt_http_parse.c
-+++ b/src/nxt_http_parse.c
-@@ -340,10 +340,10 @@ nxt_http_parse_request_line(nxt_http_request_parse_=
-t *rp, u_char **pos,
-=20
- space_after_target:
-=20
--    if (nxt_slow_path(end - p < 10)) {
--
-         p++;
-=20
-+    if (nxt_slow_path(end - p < 10)) {
-+
-         if (p =3D=3D end) {
-             return NXT_AGAIN;
-         }
-
 
 
 --=20
 <http://www.alejandro-colomar.es/>
 GPG key fingerprint: A9348594CE31283A826FBDD8D57633D441E25BB5
 
---------------2JqdZMn5Lb09me0t7YKvL3UE--
+--------------G07WiAq0GGwL0lE0lEZpN0kz--
 
---------------87Nq48cOLlF1Vw37cCeg5auj
+--------------MVdobDtuJegCZwbDZGMKJ8SH
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmQsf7kACgkQnowa+77/
-2zJ4wBAAp77sRlDA7atv65ZjLwjGoq7ipNJH1J35t+kJXsynFs9MUxA0GS0mIZJg
-gfp2O/gN5Ji49YMAFoE1F+B+FXUQzRMtz/H/mJ03ITeLuPIMDd7TyKZwsWNYO/qh
-zNrvJcXShl7GRunE4R/uQRSBqgSdZr8HKKjCRow2ns6MwDY0flY7HMLqurb+pQrt
-CdALQwiEaCprdeRzi26+QE36kThr8uvN71NpiywWYlcKWZHg85m2v8yvijPjzFxG
-TC4kHyz0rFr1b6pnNHDw8TtvdGRtU5YTnzojwJldurSYRbAi8yBiywgWGjG9Go9b
-oqeJGN9b5hv6ykXc1Ug4ILSuHQzr5goJjUTlttxM/tw/9qJUVR/6/S30acpSSLv8
-/rJAl/vJE0GHcTUtse/a/wvxKDF9aT6/x5i4XKojK3TG5dyEN5yYGOHC0jHvA+oS
-Xw4OXH/AgteEa+QnAhhwMHk/5kCiJWxD7/2Ds5ELhoeX4ud5B26AYwzO4BjeDC0f
-69uFW8FVkZBpQTg8P7hjVHRrxjbIiO3p4uGYREBtV0k2EJ8XzUHgeU6QPtQ9i5bp
-LeRwIE2ovHPndMnY8jhqKDynGuMlHos3Z/q+BvHHeS9J6L1D8V2bqlQDDjVA06+W
-EkjCEkAQi9+jYW+JwCXdxKoTr7+j/+Dl1fcQeGP2a36bHt1vmD4=
-=/Hv5
+iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmQsgCEACgkQnowa+77/
+2zJC4Q/9Fk5r1CMEgnaGIaDSb4Fnm+9zy0rEUyRaQ47VSn/M2lDuInpJAwtEpVAv
+SsAueTnLLg1r3ZOMkCXx1z130N3Jw0LFvO9yjpT3gKSSOXR1VrUptmeJ15N90WVH
+bIsebg3TtVKlLrHOnk6fgL1hGrRmHjgE1UNHPWDIhDz6P3oT/1lc6lYRD3uZizas
+unAZk0qbVAdwsk0m3k6eS3qEewP5LKT2YNOMuXr7Ln2whF9dLYdWeOYe6hbP2YVE
+zfCipy4m93+JNrtHERdVciNdoKMPsHxJG+iZdiUMZMa8XvJkq2oH1JW+3/caTiZa
+qHUkel9yzq0T4O871aHFm//pGSQhqwKx8ZDQ/m/US5vzu74XXaA9N6Ta26tooKTw
+YLvCrlceGUe/aMMrTK5qev6qdNTuUF6AFOJVe2Tril70/WLe7APC2nePIrI2IcgQ
+ZQAvyUvfyfThSFvxeC5cqy0kyeGxiTM4W4GylFBHGH+ATmemKNMQT2Cx1KU5Kz7B
+jDAuErbuFHOPICVMDUC3B39Yp0AuycwFu7EiUM1tp5iM2FXy8Y6SqlkbVFXF4u46
+YhywJ6ndVPO/5BWwHngYzNvgh6sxrSwU3I5jRilbTv+n0wXZ7TP+0UVNgP2mz5pH
+CBFCnwCmw2ZO9Y1c4OKl8BseuTIDF+0eZTfR6FDs3KfMS/cam2M=
+=gugN
 -----END PGP SIGNATURE-----
 
---------------87Nq48cOLlF1Vw37cCeg5auj--
+--------------MVdobDtuJegCZwbDZGMKJ8SH--
