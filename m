@@ -2,101 +2,292 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 671F6C6FD1D
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 18:38:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4D75C6FD1D
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 18:55:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236033AbjDDSiv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Apr 2023 14:38:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41346 "EHLO
+        id S235955AbjDDSz6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Apr 2023 14:55:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234808AbjDDSi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2023 14:38:28 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF9D449F8
-        for <git@vger.kernel.org>; Tue,  4 Apr 2023 11:37:05 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id kq3so32154490plb.13
-        for <git@vger.kernel.org>; Tue, 04 Apr 2023 11:37:05 -0700 (PDT)
+        with ESMTP id S235839AbjDDSz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2023 14:55:57 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1363D170F
+        for <git@vger.kernel.org>; Tue,  4 Apr 2023 11:55:56 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id i6so39954249ybu.8
+        for <git@vger.kernel.org>; Tue, 04 Apr 2023 11:55:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680633425;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FKleTAhkTvia/yZqTT6UYot7n2e+xgqEQ5smpgEFiTE=;
-        b=GrV5m122BWjn8Ynyd/u92AsWsvnLhc6Gt3fbbxI/rr9ay/JWe5sHOKiV5f+SsP7+r+
-         sHS++lwWgApO2/ivvc5JZlwcKnZAjTnGuVkH81JmwRh5jE32Z2LAfPRJ6XWF6tYCWZpt
-         EN8vUGBb69AleK43xsr3pgJu4/viLJhJ7RHmjmjpkquCVYJRF0n845bWwzV00N2SD5SE
-         yOKiu1a7RqrKpMOaXzuOlzc9oQj8V/03DcC7ItRmD4OuJuJwUu03J4Essc76tFsoYPOd
-         /ripa4oATVNOOTlkLzrCFLal2jL0ATiVfuXlp1R4FIAS/pTG1hFlOG6IWyV2G7L9RLb+
-         wpfw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1680634555;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EPexTTIUip19Glf0OOjYkI/0+5qKpXoe/+pVuVqyS08=;
+        b=J7cGJ8DeFXJRCUxWVaEFolbn0Uq/jyk2PhcCtsJNifUgPNjGE5iZt3Lq22fG4Kmptw
+         v79Xxs4NKp+K69S3flqO7qsik65YteGMis3ilGexy5C8DB3uZd3H6mevaDS7v1uOySX1
+         XgH/S1CsHjsaxsbqiQl2bU58pihoaZxQOXytOboe1oPFE9LW/1ISxPNQ0k88Q1huQv90
+         WhszcVjxL4ilvzOZc3DLGRKIMyLW98v8tVqbo8BIFgDijyv5Xy08oYmup2utLjtrRxMr
+         IuWysmygHtNGvMstGDm/ZBQbrxdgQpR7DgvaX4xdxZqdIaU21qmCcsr/xRPfEg5SkpTf
+         yK0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680633425;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FKleTAhkTvia/yZqTT6UYot7n2e+xgqEQ5smpgEFiTE=;
-        b=MF4rIENXhaIuAy8aWbGNPrm47kMeuLBEu7HIO+2y+vk/oEdQdDGpI//g/gyalKgbe8
-         iltlxYwKoXW6k6iI4boItlhelfqZXpSrGF3weK8Bwsa0KKbkSyG/gXbzCjSXewDtZgeW
-         v+VFphUek6nNTamfHTDfoG7iJWdIgtba2S16vQhA4+vl0XOXKEEQz41nXr/f8dRECBVY
-         XiZuouvjGRGo+YKbHBMvLK+bkMMQ0MjN7a6og0wL+NAMF8pvxcHoA3l3TNhXX09MP80J
-         45wAf4CUVN4h3f2N4YFuim35B/8J1EKNTL3rPUP9lPxjlTObk2U1jMKu3WQSvuyf9rd1
-         vX4Q==
-X-Gm-Message-State: AAQBX9d43LoR2iT/07zrdLdZsomO3YF+Ilr17KNrjgiKEgw0N5LBiwQX
-        g5UnERILak2fU2u6e+l2+Dw=
-X-Google-Smtp-Source: AKy350ZxjXnxJxrjcD/0E8pFMuPucMz/BV3RZ/woLZ08pV+ON8xL13bBTfR6G/hFG1bwJmb1+taSzw==
-X-Received: by 2002:a17:90b:1d10:b0:23c:feb9:2cea with SMTP id on16-20020a17090b1d1000b0023cfeb92ceamr3825676pjb.42.1680633424956;
-        Tue, 04 Apr 2023 11:37:04 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id z22-20020a17090a609600b00227223c58ecsm8101480pji.42.2023.04.04.11.37.04
+        d=1e100.net; s=20210112; t=1680634555;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EPexTTIUip19Glf0OOjYkI/0+5qKpXoe/+pVuVqyS08=;
+        b=DKfUjtDK9GaO/j69pB9F7jJP4nfHj3ah5y3InJASyMv/YX1omW1NV2D7cXT39YTeUX
+         P+26ajy+9UMHyx/0w9l4xOsDgJSv9y7PhAO0xso7mv3yOV82aZMoWBs7zZ4ksbZqjqU9
+         u00XDB9Xva4L0OybLH/UDa2JFSaMzb9g5EecmOdAHkMBjyQGbkkB22EJVaSOESJ0q9dm
+         6MKFU+zDGi7Hdgkx3JvwwqZpd824BQGTiOlU4rxkedjGbKUEJiVezCzE5Hris8BYsLxN
+         wzIVWbubeankbpKFOufvDgQzaaF+c3VSaeeAK7Bm1qNHKasOaMKK5InnmEPDcAw0mmuC
+         ZjoA==
+X-Gm-Message-State: AAQBX9dSlt1tfc/MwLjonh1gCt48FubG+zGWiIkFJ1Msd1H35KwCFFZS
+        TZS/l+c0vQMgL0KeBp2txcx5irD1806sZytc8GkBDQ==
+X-Google-Smtp-Source: AKy350ZOcMrDCP/ugood1WnYUoNWpjMmSs2g8XByq0T99tT/8ztHRBAQDP0Asz2tZQy/Do3PdoDCXg==
+X-Received: by 2002:a25:54d:0:b0:a5d:feb5:4ccf with SMTP id 74-20020a25054d000000b00a5dfeb54ccfmr4471114ybf.27.1680634554966;
+        Tue, 04 Apr 2023 11:55:54 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id s82-20020a257755000000b00b7767ca7471sm3522341ybc.14.2023.04.04.11.55.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 11:37:04 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc:     git@vger.kernel.org, rybak.a.v@gmail.com,
-        "ZheNing Hu" <adlternative@gmail.com>
-Subject: Re: [PATCH v2 2/3] doc: interpret-trailers: =?utf-8?Q?don?=
- =?utf-8?Q?=E2=80=99t?= use deprecated
- config
-References: <20230331181229.15255-1-code@khaugsbakk.name>
-        <cover.1680548650.git.code@khaugsbakk.name>
-        <ea06be8f5ac77e5be64ab674f5a4fbe0b7e56c0e.1680548650.git.code@khaugsbakk.name>
-        <xmqqbkk44qbo.fsf@gitster.g>
-        <bbdd2746-cfb6-4841-8314-4bdad5493f72@app.fastmail.com>
-Date:   Tue, 04 Apr 2023 11:37:04 -0700
-In-Reply-To: <bbdd2746-cfb6-4841-8314-4bdad5493f72@app.fastmail.com>
-        (Kristoffer Haugsbakk's message of "Tue, 04 Apr 2023 20:02:53 +0200")
-Message-ID: <xmqqy1n7ze7j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Tue, 04 Apr 2023 11:55:54 -0700 (PDT)
+Date:   Tue, 4 Apr 2023 14:55:50 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com
+Subject: Re: [PATCH] repack: fix geometric repacking with gitalternates
+Message-ID: <ZCxytq1esQWvjIz/@nand.local>
+References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+On Tue, Apr 04, 2023 at 01:08:33PM +0200, Patrick Steinhardt wrote:
+> Both issues have the same underlying root cause, which is that geometric
+> repacks don't honor whether packfiles are local or not. As a result,
+> they will try to include packs part of the alternate object directory
+> and then at a later point fail to locate them as they do not exist in
+> the object directory of the repository we're about to repack.
 
-> On Mon, Apr 3, 2023, at 23:18, Junio C Hamano wrote:
->> Perhaps we should do that as a preliminary clean-up before these
->> updates?
+Interesting. This fix does make sense, but I wonder if it is doing the
+right thing.
+
+When we have an alternated repository and do 'git repack -ad' in the
+"member" repository, we'll end up creating a new pack containing all
+objects in that repository, including ones from the alternate.
+
+For example, if you do something like:
+
+    rm -fr shared member
+
+    git init shared
+    git -C shared commit --allow-empty -m "base" && git -C shared repack -d
+
+    git clone --shared shared member
+    git -C member repack -ad
+
+    for dir in shared member
+    do
+      echo "==> $dir"
+      find $dir/.git/objects -type f
+    done
+
+Then you'll end up with the output:
+
+    ==> shared
+    shared/.git/objects/pack/pack-a2f0c663b287c3eeb0207397f8cafb9ae49f8277.idx
+    shared/.git/objects/pack/pack-a2f0c663b287c3eeb0207397f8cafb9ae49f8277.pack
+    shared/.git/objects/info/packs
+    ==> member
+    member/.git/objects/pack/pack-a2f0c663b287c3eeb0207397f8cafb9ae49f8277.idx
+    member/.git/objects/pack/pack-a2f0c663b287c3eeb0207397f8cafb9ae49f8277.pack
+    member/.git/objects/info/alternates
+    member/.git/objects/info/packs
+
+In other words, we end up creating the pack necessary in the member
+repository necessary to complete the repack. Since we're using `-a`
+here, that means creating an identical pack as we have in the shared
+repository.
+
+If we instead did something like:
+
+    git -C member repack -adl # <- `-l` is new here
+
+, our output changes to instead contain the following (empty) pack
+directory in the member repository:
+
+    ==> member
+    member/.git/objects/info/alternates
+    member/.git/objects/info/packs
+
+> Skip over packfiles that aren't local. This will cause geometric repacks
+> to never include packfiles of its alternates.
+
+...So I wonder if this is the right thing to do in all cases. IOW,
+should we be creating packs in the "member" repository which may be
+based off of packs from the shared repository when `-l` is not
+specified?
+
+I think this gets tricky. For one, the geometric repack code creates at
+most one new pack. So if some of the packs that were above the split
+line (IOW, the ones that don't need to be squashed together) were in the
+shared repository, I'm not sure how you'd write a MIDX that covers both
+without using the MIDX-over-alternates feature. I have no idea how that
+works with MIDX bitmaps (IIUC, the MIDX/alternates feature is very
+niche).
+
+I think we reasonably could do something like ignoring non-local packs
+in `init_pack_geometry()` only when `-l` is given. That still runs into
+problems when trying to write a MIDX or MIDX bitmaps, so we should
+likely declare the combination "-l --write-midx --write-bitmap-index" as
+unsupported. For backwards compatibility, I think it would make sense to
+have "--no-local" be the default when `--geometric` is given (which is
+already the case, since po_args is zero-initialized).
+
+I suspect in practice that nobody cares about what happens when you run
+"git repack --geometric=<d> --local", but in case they do, I think the
+above is probably the most reasonable behavior that I can quickly come
+up with.
+
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/repack.c            |  6 ++++
+>  t/t7703-repack-geometric.sh | 59 +++++++++++++++++++++++++++++++++++++
+>  2 files changed, 65 insertions(+)
 >
-> I think updating to use `<msg.txt` for existing (on `master`) examples
-> would fit in as patch number 2, since I rewrite heredocs to use files in
-> patch 1. The commit message for patch 2 would then say, “and let’s make
-> things consistent for the other examples as well”.
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 87f73c8923..c6d12fa4bd 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -333,6 +333,12 @@ static void init_pack_geometry(struct pack_geometry **geometry_p,
+>  	geometry = *geometry_p;
+>
+>  	for (p = get_all_packs(the_repository); p; p = p->next) {
+> +		/*
+> +		 * We don't want to repack packfiles which are not part of the
+> +		 * primary object database.
+> +		 */
+> +		if (!p->pack_local)
+> +			continue;
 
-The suggestion to do so in a separate preliminary step was made
-because I had an impression that existing examples were full of
-these "cat file | command" patterns, and you were adjusting only
-some of them.  If there were (I didn't count or re-check the file)
-say 10 such bad examples and you are only changing only two for the
-primary purpose of the patch (i.e. use interpret-trailers command
-correctly), updating the other 8 bad examples "while at it" would
-make the patch with unnecessarily noisy, and fixing the "cat file |"
-in a separate step may help us let each step of the series focus on
-one thing and do it well.
+So this would change to something like `if (po_args.local &&
+!p->pack_local)`.
 
-But I see there is only one or two existing "cat file | command", so
-I agree with you that it is more reasonable to do it there.
+> diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
+> index 8821fbd2dd..9f8bc663e4 100755
+> --- a/t/t7703-repack-geometric.sh
+> +++ b/t/t7703-repack-geometric.sh
+> @@ -281,4 +281,63 @@ test_expect_success '--geometric with pack.packSizeLimit' '
+>  	)
+>  '
+>
+> +packed_objects() {
+> +	git verify-pack -v "$@" >tmp-object-list &&
+> +	sed -n -e "s/^\([0-9a-f][0-9a-f]*\).*\(commit\|tree\|blob\|tag\).*/\1/p" <tmp-object-list &&
+> +	rm -f tmp-object-list
+> +}
 
-Thanks.
+Just a nitpick, but I've found the output from index-pack to be a little
+easier to work with here. I think that you could replace this function
+with the following and have it work:
+
+--- 8< ---
+diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
+index 9f8bc663e4..e3ac5001bd 100755
+--- a/t/t7703-repack-geometric.sh
++++ b/t/t7703-repack-geometric.sh
+@@ -282,9 +282,8 @@ test_expect_success '--geometric with pack.packSizeLimit' '
+ '
+
+ packed_objects() {
+-	git verify-pack -v "$@" >tmp-object-list &&
+-	sed -n -e "s/^\([0-9a-f][0-9a-f]*\).*\(commit\|tree\|blob\|tag\).*/\1/p" <tmp-object-list &&
+-	rm -f tmp-object-list
++	git show-index <"$1" >tmp-object-list &&
++	cut -d' ' -f2 tmp-object-list
+ }
+
+ test_expect_success '--geometric with no local objects creates no pack' '
+--- >8 ---
+
+I removed the "&& rm -f tmp-object-list", since we overwrite it anyway
+whenever we call packed_objects().
+
+> +test_expect_success '--geometric with no local objects creates no pack' '
+> +	git init shared &&
+> +	test_when_finished "rm -fr shared" &&
+> +	test_commit -C shared "shared" &&
+> +	git -C shared repack -Ad &&
+> +
+> +	# Set up the member repository so that it does not have
+> +	# any objects on its own.
+> +	git clone --shared shared member &&
+> +	test_when_finished "rm -fr member" &&
+> +
+> +	git -C member repack --geometric 2 --write-midx &&
+> +	find member/.git/objects/pack -type f >actual &&
+> +	test_must_be_empty actual
+
+Another small nitpick, but I think these last two lines could be
+replaced with
+
+    test_dir_is_empty member/.git/objects/pack
+
+or even
+
+    test_dir_is_empty member/$packdir
+
+> +test_expect_success '--geometric does not include shared packfiles' '
+> +	git init shared &&
+> +	test_when_finished "rm -fr shared" &&
+> +	test_commit -C shared "shared" &&
+> +	git -C shared repack -Ad &&
+> +
+> +	git clone --shared shared member &&
+> +	test_when_finished "rm -fr member" &&
+> +	git -C member commit --allow-empty --message "not-shared" &&
+
+Any reason to make this commit empty? Could we replace this with
+
+    test_commit -C member not-shared
+
+?
+
+> +test_expect_success '--geometric with same packfile in shared repository' '
+> +	git init shared &&
+> +	test_when_finished "rm -fr shared" &&
+> +	test_commit -C shared "shared" &&
+> +	git -C shared repack -Ad &&
+> +
+> +	# Prepare the member repository so that it got the exact same packfile
+> +	# as the shared repository and set up gitalternates.
+> +	cp -r shared member &&
+> +	test_when_finished "rm -fr member" &&
+> +	test-tool path-utils real_path shared/.git/objects >member/.git/objects/info/alternates &&
+> +	find shared/.git/objects -type f >expect &&
+
+This works, though it may be easier to write something like:
+
+    git clone -s shared member &&
+    test_when_finished "rm -fr member" &&
+    # ensure that "shared" and "member" have an identical set of packs
+    git -C member repack -a &&
+    find shared/.git/objects -type f >expect &&
+
+> +	# After repacking, contents of the member repository should not have
+> +	# changed.
+> +	git -C member repack --geometric 2 --write-midx 2>error &&
+
+I think that "2>error" is a stray change left over from debugging, and
+could probably be removed.
+
+> +	find shared/.git/objects -type f >actual &&
+
+This and above could be replaced with shared/$packdir. Whenever I'm
+asserting the contents of a directory are unchanged, I typically like to
+call the two files under comparison "before" and "after", but "expect"
+and "actual" are fine here, too.
+
+Thanks,
+Taylor
