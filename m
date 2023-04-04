@@ -2,140 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D19FC6FD1D
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 21:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F34EC76188
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 23:48:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236033AbjDDVPB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Apr 2023 17:15:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51706 "EHLO
+        id S236656AbjDDXsr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Apr 2023 19:48:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232269AbjDDVPA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2023 17:15:00 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 209E8170E
-        for <git@vger.kernel.org>; Tue,  4 Apr 2023 14:14:58 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-545e907790fso524934927b3.3
-        for <git@vger.kernel.org>; Tue, 04 Apr 2023 14:14:58 -0700 (PDT)
+        with ESMTP id S236625AbjDDXsq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2023 19:48:46 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 346283C1D
+        for <git@vger.kernel.org>; Tue,  4 Apr 2023 16:48:45 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id n19-20020a05600c501300b003f064936c3eso195124wmr.0
+        for <git@vger.kernel.org>; Tue, 04 Apr 2023 16:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680642897;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r6gxlXrgptADu/RlV/6WWqUkuRYhZwusmMmm5NDCv5c=;
-        b=QhfJJzyxmyGIRK8D1rs73ot3kGgQFI5o6mMgoMVo9YNn7a3EIANwLfQ/ZTUYmxLofw
-         h6HMt8tRawYfi492VjBTk2/sw7Lxx5lRsGUZap4OWzuR+wRqzeDJc0c5ChSWUueFkMc5
-         ddJ4iXA82KAitKXbSeETBnm9hduFhyYniWQviJgTUDdoNm5AJrVslH6qtJ20yQM3oCkG
-         +gzFXvJa7hl5X6MF5jfVeOiXTTLhvr5mhClRc3MgL/jB7FjhVD7woWnQM5aGY6Czg1LI
-         l7itMAHxOqtPtuGiu4lpiCn/eEEaWPTmc/NmrR1eNkYAxuR8vXUcgwhWiGij5V3Rp2mL
-         QcYQ==
+        d=gmail.com; s=20210112; t=1680652123;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=mSx7z/4fjJNqKjf3NEmaHak5bBBiC8nBj4iFJZ+QAO8=;
+        b=aImoLTyjQQFzmkeZVkh+sRSs1MWgrZmCCXMhPfcwonXkVDbGK7dPVph5uPKaikx3dk
+         Gm0DstbBaBmPCPqARzwSOOyMQHJ0lWTU8HCKEmJsYQnrsEdnBi91WD++uBKQsMtgk32Z
+         jSpduQKI6T8+/+jrGeqWvwe7xLIjQc+z33zFQYVoy5acq/sFyKvdpKUrgoruE+F1SzuQ
+         DL7pdMe9TjUVmW0Lbe/lClYH5IP97XUS313TbgXFszJcrZbiH+ik9EC7fQIU+2u+f1Na
+         F7tt2LcVj95fEpB49A5i2WtWWhFKdzKBeq2qFGEkR1jKUL3L2HqeRWLnsWbRlZYsnd+L
+         0SDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680642897;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=r6gxlXrgptADu/RlV/6WWqUkuRYhZwusmMmm5NDCv5c=;
-        b=xSV2fRpUwkgRZCCfrrQc1BFxI0gp1GB20ADqE2uingky2EWt6y6Pz2ML5TwDH1pEsv
-         0c5kOzDm/m2lwCpkidN8VkIkq3zYgMYMbdIxi4DeB5MqvRrCpYAD0XcdCzq7CzSaTvzE
-         FBZ/kT0SLK1eMX/zcEiAmKVeJaEcefHMMyVU+xxufYrQFMSoofKvyzUN4MjsplK/qBz4
-         n294envQpf3gPWDrfFXn27WMP/cEA+jgchJMMunxwLPoHNkG6Jfty0A05quZ8ArnFBzb
-         me59EW3yRYuyjJ13nXiFCiN2rK4mcORrz819+Gn4MRiSJ5XbNIx8r55noSCQQNVIUaPC
-         JTCw==
-X-Gm-Message-State: AAQBX9eJ1tGMJGHzHc94Y+EQ+EW2R8VJXoBUkIzMslFw4oW3nHnKTYoV
-        6o74K7FgPSuGVqOruuhUiMjbFOJ2Ixd+0t1Lles=
-X-Google-Smtp-Source: AKy350bMSJ/Fx2x+E1xKjsFGJJGUJGp3UWGH7CBgXNDA8qIT4g/9tQRacqqZfe+96RddPTcAaRWEpquQVgpQw0MyMSU=
-X-Received: by 2002:a81:b283:0:b0:549:2cc8:6e3e with SMTP id
- q125-20020a81b283000000b005492cc86e3emr2292786ywh.9.1680642897303; Tue, 04
- Apr 2023 14:14:57 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680652123;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mSx7z/4fjJNqKjf3NEmaHak5bBBiC8nBj4iFJZ+QAO8=;
+        b=uw76WKmxVH0eEGPQGNUF+iDeY8HXggSdlzVnlzasCPc5IPV6E7WGa5OAf4uNnzjEhs
+         otN3SrA36FeZIRPRHQdDzNMJE+/rkZX4hJvYmGfZOigOsqqqco7uIOhwWzFcD4FHJ3ng
+         YLHgwmoh47UeCdbi/iFYLwayomHnGWFAeGBWYjHZoXnsV6XqUKS5xHAAJzgrM5eW4+xe
+         dYXqYSn9zy0Q6OZHVfzHgIC0VtIWCWJzQ2q9LkH9PCNqj4t2jNtJ8DIUJYdyV2Q2tz3S
+         1HjUMupVJ0gd99ga2oCxkmDHDsWH3ocS5ZqTFp+js1+j3FH2M7AqbRz8kT4EEo/W23+H
+         IDyQ==
+X-Gm-Message-State: AAQBX9diYK1OqaTxpJTfb9F0OXqVmIikCAh/PnRV1xfkhf2LHSzk8xuo
+        HjgVThq+OfGaK8umGoqsfGoqY92/SRM=
+X-Google-Smtp-Source: AKy350ZGOOanRLrUaAR79kwEBkD1U9j6hhGxRIoRIiR0yfHL70p3ZR9/6N3HX8OyiKp5Xm5KdxMS+A==
+X-Received: by 2002:a7b:c850:0:b0:3ef:6ea4:a675 with SMTP id c16-20020a7bc850000000b003ef6ea4a675mr3209257wml.36.1680652123206;
+        Tue, 04 Apr 2023 16:48:43 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q25-20020a7bce99000000b003edc11c2ecbsm379946wmj.4.2023.04.04.16.48.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Apr 2023 16:48:42 -0700 (PDT)
+Message-Id: <pull.1488.git.git.1680652122547.gitgitgadget@gmail.com>
+From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 04 Apr 2023 23:48:42 +0000
+Subject: [PATCH] clone: error specifically with --local and symlinked objects
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAGP6POLrtA_9kjCwUbVB8-F+dgQbhz==oy5SsXULfspNj_Umuw@mail.gmail.com>
- <87edp0ak45.fsf@vps.thesusis.net> <CAGP6POLVpjxO91s1dX98TLepXMrybSWq9y8qJ6b7w+e0SRJT1A@mail.gmail.com>
- <CAGP6POJr63o67k+7BeokM-pkPbXYrQy4kcWwMXTfoeuFaPaADQ@mail.gmail.com>
- <CAGP6POLx0+OhMJ9oqmK8R9Lq7tppC258NWHNFhqXMbO9smXd+w@mail.gmail.com>
- <CAPx1Gvcz6f3AQJYfq7Sih0bL6pAi5mHZj8rj=kd7kRDWKLZEzw@mail.gmail.com>
- <87lej7zhpt.fsf@osv.gnss.ru> <xmqq4jpv1pcj.fsf@gitster.g> <877curzb9u.fsf@osv.gnss.ru>
-In-Reply-To: <877curzb9u.fsf@osv.gnss.ru>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Tue, 4 Apr 2023 16:14:46 -0500
-Message-ID: <CAMP44s2od_=3p8+GF7tSBqQ0KsDaa4qVKXS66BS7L7BJadA_Xw@mail.gmail.com>
-Subject: Re: git revert with partial commit.
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Chris Torek <chris.torek@gmail.com>,
-        Hongyi Zhao <hongyi.zhao@gmail.com>,
-        Phillip Susi <phill@thesusis.net>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, Glen Choo <chooglen@google.com>,
+        Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 4, 2023 at 3:08=E2=80=AFPM Sergey Organov <sorganov@gmail.com> =
-wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Sergey Organov <sorganov@gmail.com> writes:
-> >
-> >>> This kind of operation produces a new commit, so there's no such
-> >>> thing as a partial revert or partial cherry-pick, at least in
-> >>> terms of "things Git can do by itself".  But we, as humans writing
-> >>> programs, wish to *achieve* such things.
-> >>
-> >> So, why Git can't help us achieving it by supporting paths limiting in
-> >> (all) merge operations? There seems to be no absolute obstacles, just =
-a
-> >> luck of support.
-> >
-> > I think there is no fundamental reason to forbid an optional
-> > pathspec to "cherry-pick" and "revert", given that a commit that
-> > results from either "git cherry-pick" or "git revert" is called a
-> > "cherry-pick" or a "revert" merely by convention and there is no
-> > tool-level support to treat them any specially at merge or rebase
-> > time [*1*].  It would make it harder to design tool-level support
-> > for full cherry-picks or reverts, but that is a problem for future
-> > generation, not ours ;-)  Allowing pathspec to "merge" and recording
-> > the result as a merge of two (or more) parents is an absolute no-no
-> > but that is not what we are discussing.
->
-> If I got this right, you believe that "git merge" should never have
-> support for "partial merges", whereas it makes sense for cherry-pick and
-> revert? If so, I disagree. There is no reason for Git to strictly
-> prevent me from using the feature specifically in "git merge" (once it's
-> otherwise implemented), provided I do mean it and didn't do it by
-> mistake.
->
-> Please notice that I can do it right now already (and I did a few
-> times), only with a more pain than necessary, and I don't see why this
-> pain is to be preserved (provided we do have the feature implemented in
-> the future). Besides, "git merge" is only a helper, and it'd be an
-> improvement if it'll be capable to help in more cases.
+From: Glen Choo <chooglen@google.com>
 
-This sounds awfully familiar to Mercurial's reluctance to support
-rewriting history. It wasn't the tool's place to prescribe what the
-users should or shouldn't do.
+6f054f9fb3 (builtin/clone.c: disallow --local clones with
+symlinks, 2022-07-28) gives a good error message when "git clone
+--local" fails when the repo to clone has symlinks in
+"$GIT_DIR/objects". In bffc762f87 (dir-iterator: prevent top-level
+symlinks without FOLLOW_SYMLINKS, 2023-01-24), we later extended this
+restriction to the case where "$GIT_DIR/objects" is itself a symlink,
+but we didn't update the error message then - bffc762f87's tests show
+that we print a generic "failed to start iterator over" message.
 
-If the user wants to do it, the tool should help him do it, not
-pontificate about what is heretic.
+This is exacerbated by the fact that Documentation/git-clone.txt
+mentions neither restriction, so users are left wondering if this is
+intentional behavior or not.
 
-The user is still going to do it, like with a rebase plugin on
-Mercurial, or with `git filter-branch` and then merge the result. All
-the tool is achieving is being annoying by not helping the user.
+Fix this by adding a check to builtin/clone.c: when doing a local clone,
+perform an extra check to see if "$GIT_DIR/objects" is a symlink, and if
+so, assume that that was the reason for the failure and report the
+relevant information. Ideally, dir_iterator_begin() would tell us that
+the real failure reason is the presence of the symlink, but (as far as I
+can tell) there isn't an appropriate errno value for that.
 
-> > But I do not think Chris meant to say "you should not expect such a
-> > feature"; what we heard was a reasonable explanation of how the
-> > current world works, and I do not see a reason to react strongly to
-> > such a statement as if you were unreasonably forbidden from doing
-> > something sensible.
->
-> Nice, so I figure I may allow myself to still keep a weak hope for the
-> feature, and thus stop being forbidden, even if not unreasonably, from
-> doing something sensible. ;-)
+Also, update Documentation/git-clone.txt to reflect that this
+restriction exists.
 
-I wouldn't. Features agreed by everyone decades ago never got merged,
-even features already agreed by the maintainer.
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+    clone: error specifically with --local and symlinked objects
+    
+    We noticed this because repo [1] creates Git repos where
+    "$GIT_DIR/objects" is a symlink, and users have gotten confused as to
+    whether this was intended behavior or not.
+    
+    I'm no good with lstat() and errno, so if there's a better to do this,
+    I'd appreciate the input :)
+    
+    [1] https://gerrit.googlesource.com/git-repo
 
-Cheers.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1488%2Fchooglen%2Fpush-nymnqqnttzxz-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1488/chooglen/push-nymnqqnttzxz-v1
+Pull-Request: https://github.com/git/git/pull/1488
 
---=20
-Felipe Contreras
+ Documentation/git-clone.txt | 5 +++++
+ builtin/clone.c             | 7 ++++++-
+ t/t5604-clone-reference.sh  | 2 +-
+ 3 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index d6434d262d6..c37c4a37f74 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -58,6 +58,11 @@ never use the local optimizations).  Specifying `--no-local` will
+ override the default when `/path/to/repo` is given, using the regular
+ Git transport instead.
+ +
++If the repository's `$GIT_DIR/objects` has symbolic links or is a
++symbolic link, the clone will fail. This is a security measure to
++prevent the unintentional copying of files by dereferencing the symbolic
++links.
+++
+ *NOTE*: this operation can race with concurrent modification to the
+ source repository, similar to running `cp -r src dst` while modifying
+ `src`.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 462c286274c..74ec5b8b02a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -327,8 +327,13 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
+ 
+ 	iter = dir_iterator_begin(src->buf, DIR_ITERATOR_PEDANTIC);
+ 
+-	if (!iter)
++	if (!iter) {
++		struct stat st;
++		if (lstat(src->buf, &st) >= 0 && S_ISLNK(st.st_mode))
++			die(_("'%s' is a symlink, refusing to clone with --local"),
++			    src->buf);
+ 		die_errno(_("failed to start iterator over '%s'"), src->buf);
++	}
+ 
+ 	strbuf_addch(src, '/');
+ 	src_len = src->len;
+diff --git a/t/t5604-clone-reference.sh b/t/t5604-clone-reference.sh
+index 83e3c97861d..9845fc04d59 100755
+--- a/t/t5604-clone-reference.sh
++++ b/t/t5604-clone-reference.sh
+@@ -358,7 +358,7 @@ test_expect_success SYMLINKS 'clone repo with symlinked objects directory' '
+ 	test_must_fail git clone --local malicious clone 2>err &&
+ 
+ 	test_path_is_missing clone &&
+-	grep "failed to start iterator over" err
++	grep "is a symlink, refusing to clone with --local" err
+ '
+ 
+ test_done
+
+base-commit: 27d43aaaf50ef0ae014b88bba294f93658016a2e
+-- 
+gitgitgadget
