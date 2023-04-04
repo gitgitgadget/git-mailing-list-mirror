@@ -2,74 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B089FC76196
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 00:16:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35E5FC76196
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 00:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231533AbjDDAQ2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 20:16:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44256 "EHLO
+        id S231686AbjDDAUR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 20:20:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjDDAQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 20:16:27 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01778A6
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 17:16:25 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id c18so29686782ple.11
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 17:16:25 -0700 (PDT)
+        with ESMTP id S229576AbjDDAUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 20:20:16 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A746D171D
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 17:20:14 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id t10so123851022edd.12
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 17:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680567385;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=moPLv3Od0PVspw8Sg0LzMQZgJnRMhW2VXlF3qHHw7nA=;
-        b=V4/d7s8jOmq1cigCttR3yEVp/oIl1krRr+Cly1S/wJsSWJYVEXhv9oGXyNxS3N6S+O
-         CqY9tXPg3rCPhjg2WPcWJTJXTtMCHzVKKkYBzx1urujZcBfA8abWO/lexhCFhWHqO5H5
-         kHAma/vI+DHcnyWXAE4ciAD/4TwK6dkuR+I7NRhWH4xiee+JL0+fqnFDgLeZvfbT0Ki3
-         6cTJnuj8jLzKxHisjexTEuzeqwXpi8PHaj4yg0WQ5Y5PJashACuSwAkX3gJxnGU65TC3
-         Uw3stCSC57rrGlV1Up0FrUV9qmKDjKMzWfMqjyY4XFq+l0nqk8/CbZ5m7AO5xtVrUuuM
-         TIRQ==
+        d=gmail.com; s=20210112; t=1680567613;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/z37p4hm/+VAnRxWPTbtuo99NnYwFGWbqOl/Pa+P02c=;
+        b=Jefrh7L+rNSenyIoQx21OsqG1oihdCKiJQvc/h5WSTXReHLquhf7EmvIaogz3zLjTZ
+         KxBQ7W+kQOKe7VCHeQXJX+e+A175jSVPQwFgwYpA5tifqJuEh/BqZX8dgm6OGqxJzd8/
+         x6wbgmuO4pgr3PJM3ZXLWnmvwelF7lg3I7m2xTJo4PamGMw9hu4KllVMpJT0+mMdl1s7
+         FUnpYWwUhPME/3Smpk9UNYEvbDuwOwss+1mTxOd3crOqogPCRr8Ze1YkclBjiFIEmh/J
+         6qq01dkYVpPcNajpTbaBE+UR+FLEheJI73WwzT7Pi291OQhEJar69EAl81caynYtfPCf
+         KzSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680567385;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=moPLv3Od0PVspw8Sg0LzMQZgJnRMhW2VXlF3qHHw7nA=;
-        b=fCBXHTW/UE07qQFE7a5DWu25SwIiL7tlen26V6R78Ci1NEmlUFPybi9TboJJSCWPZi
-         n4qCfq04UTVfr2uQLLXrTLE03LfNYs0RG2ViUdU+RHgSbS9bPEuFIq5ZOM+pLLZAmT6Y
-         ICfMC3gujCPx1XA9ax0UjjKzs00EX/BZJ5QNDNF4FpQCx/FN0iO0JmCY6dyaIOdzdmry
-         UXtQg7RriKNeQzQlR9Xxb41YTA3ggYhfuZ9YpRk2jgpnr14b9wrxlVR2Kb5I+976PnUt
-         qGjO6WXz3+VUzgKM5k3lUvK2MDxRiSrdJq7z9HOL/dvmkbOOISki+GscDEU74thjdMGK
-         JJjg==
-X-Gm-Message-State: AAQBX9c1DEOVgw3sOEIb1EIeMz46yG5jxwRyt7AXIdUf/nxnJ+HLC6ku
-        Dp2OSkExA40TetaQpQijjDc=
-X-Google-Smtp-Source: AKy350Z23Sr/62bxIa9Z0qarSc5dBJMLXQ6zncZ2FeNWifs2E8w+Vm3KNHM4IGv3buv1fSNH9x7U/Q==
-X-Received: by 2002:a17:90b:1d04:b0:23b:3672:3b53 with SMTP id on4-20020a17090b1d0400b0023b36723b53mr622399pjb.39.1680567385309;
-        Mon, 03 Apr 2023 17:16:25 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id k5-20020a170902760500b001992fc0a8eesm7208202pll.174.2023.04.03.17.16.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 17:16:24 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Raghul Nanth A <nanth.raghul@gmail.com>
-Cc:     git@vger.kernel.org, derrickstolee@github.com, vdye@github.com
-Subject: Re: [GSOC][PATCH v1] diff-index: enable diff-index
-References: <20230403190538.361840-1-nanth.raghul@gmail.com>
-Date:   Mon, 03 Apr 2023 17:16:24 -0700
-Message-ID: <xmqqv8ic33jb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20210112; t=1680567613;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/z37p4hm/+VAnRxWPTbtuo99NnYwFGWbqOl/Pa+P02c=;
+        b=e90QNw+rUNQCiBZhlgZtobGk98osuNXYYUDKVPBmrsdhkyf6SpRLmCbLArzAsY47ir
+         5chAk6k9K39amra9mM4n1RSd0BS0CPMazJefw1DlGycwL5V/wv1qko44AhlpQ6M81mRo
+         DYuRjNbMFdaycVHThcvqeM/Zgy7yumgVEZoaaTzLXf1zinp2s4KmqwnEW3K0+RzuwT9N
+         Hr8G8q/b39FIvJzWOOoPJty2LauOaXm1bvvufj6Li2UMPi/p/67VShKwxo9lfrqiMaod
+         TN9f/Qqb4Ct2o7C+iNcfxl+tpK4lN7LuNIt1DNEFYKdPZ6PZvRWJDkqvb7aclxTB3aRK
+         UTtw==
+X-Gm-Message-State: AAQBX9fQ4H/jo2UoNel60NT6jcCvF6qX2szrRlxkA7LsOvaWTB9F5OF+
+        bicOSu9rzKAjM1W7SV2B0UEEcR+zxTmwiQZaAvO0I29NqD8r4jolIzg=
+X-Google-Smtp-Source: AKy350agDBanV1wsqr/7kZ9GqOtalsqr2+8tEPJ/pCvXSOgMFlVGTkWhmkHdfiMCBPz8GQmN2oDcoYq/DAseEF5SQ0M=
+X-Received: by 2002:a50:d65a:0:b0:4fc:f0b8:7da0 with SMTP id
+ c26-20020a50d65a000000b004fcf0b87da0mr518694edj.1.1680567612940; Mon, 03 Apr
+ 2023 17:20:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAGP6POLrtA_9kjCwUbVB8-F+dgQbhz==oy5SsXULfspNj_Umuw@mail.gmail.com>
+ <87edp0ak45.fsf@vps.thesusis.net>
+In-Reply-To: <87edp0ak45.fsf@vps.thesusis.net>
+From:   Hongyi Zhao <hongyi.zhao@gmail.com>
+Date:   Tue, 4 Apr 2023 08:20:01 +0800
+Message-ID: <CAGP6POLVpjxO91s1dX98TLepXMrybSWq9y8qJ6b7w+e0SRJT1A@mail.gmail.com>
+Subject: Re: git revert with partial commit.
+To:     Phillip Susi <phill@thesusis.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Raghul Nanth A <nanth.raghul@gmail.com> writes:
+On Tue, Apr 4, 2023 at 2:36=E2=80=AFAM Phillip Susi <phill@thesusis.net> wr=
+ote:
+>
+>
+> Hongyi Zhao <hongyi.zhao@gmail.com> writes:
+>
+> > Hi here,
+> >
+> > I want to revert a previous commit partially, as follows:
+> >
+> > werner@X10DAi:~$ git log |grep -A3 -B5 -m1 texstudio
+> > commit f18fbd1e16a1ca4215621768d17858c036086608
+> > Author: Hongyi Zhao <hongyi.zhao@gmail.com>
+> > Date:   Sun Aug 1 20:01:02 2021 +0800
+> >
+> >     deleted:    Public/CTAN/IDE/phonon/compile-install-phonon
+> >     deleted:    Public/CTAN/IDE/texstudio-org/texstudio.git.sh
+> >     modified:   Public/repo/github.com/Dushistov/sdcv.git.sh
+> >     deleted:    Public/repo/github.com/goldendict/stardict-relative/big=
+dict
+> >
+> > More specifically, I just want to revert the following ones:
+> >
+> >     deleted:    Public/CTAN/IDE/phonon/compile-install-phonon
+> >     deleted:    Public/CTAN/IDE/texstudio-org/texstudio.git.sh
+> >
+> > Is this possible?
+>
+> If you are comfortable with git-gui and gitk, then I would say just
+> revert it, then click ammend the previous commit in git-gui, and click
+> to unstage the changes you DON'T want to revert, then commit.  If you
+> want to do it from the command line, then git-revert, then git checkout
+> HEAD~1 -- ( the other 4 file names here ) will get back the other 4
+> files then you can git commit --amend.  Alternatively you can skip
+> git-revert and instead git checkout f18fbd1e16~1 -- (the two files that
+> you DO want to revert), then git commit.
 
-> Uses the run_diff_index() function to generate its diff.
+Thanks for your tips. I've also figured out the similar solution based
+on the comment here [1], as shown below:
 
-The sentence lacks a subject.
-> +	test_all_match git diff-index HEAD --cached
+$ git show f18fbd1e16a1ca4215621768d17858c036086608 --
+Public/CTAN/IDE/phonon/compile-install-phonon
+Public/CTAN/IDE/texstudio-org/texstudio.git.sh | git apply --reverse
+--3way
 
-See "git help cli".  Do not write rev after a dashed option.
+Because the commit I want to revert is done a long time ago, which is
+not the parent of the commit I'm currently on, so I can't use the `~1`
+which indicates that I want to go back one commit from my current
+position.
 
-Thanks.
+[1] https://stackoverflow.com/questions/5669358/can-i-do-a-partial-revert-i=
+n-git
+
+Best,
+Zhao
