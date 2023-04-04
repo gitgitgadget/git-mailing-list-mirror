@@ -2,100 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90874C77B6E
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 20:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6F0EC6FD1D
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 20:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235594AbjDDUOb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Apr 2023 16:14:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60044 "EHLO
+        id S235526AbjDDUUY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Apr 2023 16:20:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235758AbjDDUO2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2023 16:14:28 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B78322121
-        for <git@vger.kernel.org>; Tue,  4 Apr 2023 13:14:27 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id kq3so32393748plb.13
-        for <git@vger.kernel.org>; Tue, 04 Apr 2023 13:14:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680639267;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3jW4DkEULq7DU+jLhC0kYxSU/IV5ZYe1KQ9qaQB2uHQ=;
-        b=gEk2zkKKIUq1Pgb905jijbndOLLVmGmAuTWSkyY34S0r7wHagt+HVQv1+HlGsUZVhZ
-         LOUk9Xn0t2eKkVCbWGQDVESL3Y+wDbrPalHfO5e+lpgQeBtK384URHGyisPqtdOG8XGl
-         vN+VJoRcUlAy0gH711g9cGVO+QKtF/udC/Xi5Ikzm1fz7lljpif1Su9e5avPjZ9uEwz8
-         aucciU8VPy4zEemRsV0hcTzWF1eQu7351bVaS/ftV2fXkUCBz+GIANuCXBmoFbeL0+yL
-         My9hZG66vjz4gcTlaWykXq/tMq8j3nyVho8LuEEZzSLc/wzZyereoOheGk3jBeEYbh5z
-         kq8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680639267;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=3jW4DkEULq7DU+jLhC0kYxSU/IV5ZYe1KQ9qaQB2uHQ=;
-        b=QO/tKyRlXBtciOd+EeOkqSmN9v4jMRyyEamUgMX+JC7071jXUr88zSYxYPOtuLYqxe
-         vQqWvjwzqRGo5RQxXCttt+r+xbofwvHTVXN2dMxfWIVsj1ThtFDTQdLEtfm+xRPUF55d
-         etvwLLFBLN7q/N/nln8nzcxJchKobPTSsIDDk39z4gIc6hqQNGoCuDAIOUWK9fBWNbvq
-         aqxjsW9PWc5xGIVD0Ewi44frMkAHpOUdQrrHCbWQVLQaoQO2mz9Ak/+omAB1raSiGqFG
-         xY7oI+OwOw9lO+b9Tsoo4YDl/UaRaISVOyMMZ/FYUQaw1mD0ugNzz/gDA16DsivVuwyT
-         dYGg==
-X-Gm-Message-State: AAQBX9fnjmXO2v5Kw0zlAYzk0P/Z264moVckZWl2gsWFXOYPU9++zsov
-        IwOi6Aij0AiXpcQ1S5Bx+NQ=
-X-Google-Smtp-Source: AKy350Yjy4OxesSx+SU1keBsWLXIrUijTLnIMOPLmlW/kAXXjOGZ90DtRreiAtpUlffoyQx7fnD1UQ==
-X-Received: by 2002:a17:902:d510:b0:1a1:8007:d370 with SMTP id b16-20020a170902d51000b001a18007d370mr161631plg.33.1680639267100;
-        Tue, 04 Apr 2023 13:14:27 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id p3-20020a1709026b8300b0019a91895cdfsm8743148plk.50.2023.04.04.13.14.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 13:14:26 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robin Jarry" <robin@jarry.cc>
-Cc:     <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>,
-        "Tim Culverhouse" <tim@timculverhouse.com>,
-        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
-        "Bagas Sanjaya" <bagasdotme@gmail.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>
-Subject: Re: [PATCH RESEND] hooks: add sendemail-validate-series
-References: <20230402185635.302653-1-robin@jarry.cc>
-        <66099367-4ea0-7d2a-a089-7a88e27f695e@dunelm.org.uk>
-        <CRNH5FOB91JE.14CZEA494X002@ringo> <xmqq7cus4m0b.fsf@gitster.g>
-        <CRNHSC3H2B6C.UCSDE4Y6ET4A@ringo>
-Date:   Tue, 04 Apr 2023 13:14:26 -0700
-In-Reply-To: <CRNHSC3H2B6C.UCSDE4Y6ET4A@ringo> (Robin Jarry's message of "Tue,
-        04 Apr 2023 00:59:42 +0200")
-Message-ID: <xmqqbkk3z9p9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S232269AbjDDUUX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2023 16:20:23 -0400
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D108730DC
+        for <git@vger.kernel.org>; Tue,  4 Apr 2023 13:20:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1680639617; i=johannes.schindelin@gmx.de;
+        bh=JdR6wsghP+Gcju9hdjh81xZ9Q3Z3QDIjCX6jVv6xx7A=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=sOPktliQDyZ08sHafcimMk8f6DdYX7y79C+6YLhbzGqcp069cFpUqnZJ2c/Zfnk/2
+         FdvO/MioSsMk1RpsbD83K/ZUhLGm+gp1lI9CzsGrkSSgPa7G6zzdR1tiNIFa8GLSiu
+         dy4Q3eH16Dxx4OTKQh5mgLyOdJ+P6FV0kFs/lq3Ac876CiOoj8rugNQW0hOmYYT8SS
+         mmpYGbrSGZ2vDhQJCZjUUCRePr7Gi7K8vohwoYko3YuHEbb01DX2lyd0OpNUjm1D3A
+         QNLvCg4cLAbZRg25oA6BWlXDkYbGRT7x1hXflOmQNgfBgvlxexFzya8oFDq2lfM1NS
+         WujlOIXUOWiVA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.213.182]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MOREc-1q382x0vxm-00PwK8; Tue, 04
+ Apr 2023 22:20:17 +0200
+Date:   Tue, 4 Apr 2023 22:20:15 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
+cc:     git@vger.kernel.org
+Subject: Re: range-diff: slight usability problem with mistyped ref
+In-Reply-To: <de43cd37-bfa5-4dbc-84d5-9362e9af6a9a@app.fastmail.com>
+Message-ID: <b8e9b054-4cd5-9c65-a397-088143d2fdc4@gmx.de>
+References: <b93934a2-91e7-4645-9a24-4f2354172f31@app.fastmail.com> <818b3ad0-df43-3484-8c19-d95026f6b2b1@gmx.de> <de43cd37-bfa5-4dbc-84d5-9362e9af6a9a@app.fastmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-1941335813-1680639617=:26978"
+X-Provags-ID: V03:K1:+KxNSY2Ku3w3hdSZl8dzq5pBYgDZwA1n3LLcB5f4LiJlqJ6Qy17
+ JFEFvKx1c/OfwQ9ICa7jaqfc93cBT1PTPSo5tfyFqaQLCIIfz7hMJBpT6ofKZgpkW5xACPF
+ 6Ho2ElcverRHT7L6bPwRJlmpfXQ77EFwb2VwkQ+neAtKZ33tHUZ7Wjd8+GYHb+TVLMKpwvQ
+ VzeMBOs6txWvg+/QZsJNw==
+UI-OutboundReport: notjunk:1;M01:P0:W7ypiWUeK4E=;3ZjVOKbEYswVN2CdddF7wkhwv1k
+ gtGjDqMMqy7mFMq1Lcj4zLEidQom2TTS/CRpGKf53IqOBM6FHyT5Ex9EPhchzI6Dxha3p/BJY
+ J7t7YMaC1DiSzPNdWIhrJ5eA8olC8MxnkjmsDQB4RZZoN8MvfgnGzJxgTRVdkOP1TtP5tsGUH
+ nBSg9RvlT1gZkD4ttP0m/nKL93/so/sQN+vaIkc0Z2FdSxJF6lVtmJkgeS1hq+77s/VdUu8Rz
+ 269qBr/nxfTLASrFe0UgaIdMtWn2hVWOOcBuUONeU/l19VS5qvMyNFKYcsUMzfD28PEo+lMtF
+ pPAFUBpFxhjtK8/T2N21szF/xD1KyaBzygCCWaIw4tK5p58aOPNmiCgDfBRsIj0eihxyY9nMw
+ JtfQssfHIWtKcCO30HzMe9wpNSh3oqBmzxLWc1XTunfQGj9pUTWYim7A4bp4ykJ2/b3u7Q4/S
+ swp3vy0YiZzS18+wHKsPAKSYD0x8fr14qbeUzAl8w0gxutsbmw93q9aDmJ1gGZwIMV5hRODIV
+ JHNALudy5S78RuBc2FoRBt8QEj2NsSyMxIbLqnC/uDI1YVAdGuO6SjbBAkpaWAwfoZodaEVqf
+ ShEUxEgb9y+vEKe0P43Sx/+z0C+FZvxDP+/pImRleVAjvCzXefJeeHEStozFfls8unzvX4AOW
+ y9IYTCVxTSuGG3TpBarJot33oR3+fuKF/dH1vworweL9GxPG7dF+lYV35h2igoXM9tuwvvIXi
+ EFb8Vvl9KTqKZnGQ+WoRvOVE21FK2fKsdOi+jZgMDTWBquNG0eYLORObTW+DREkIuILw8MfnH
+ Ghot9qnB2lzsLw3xcdCcdR5nWTnGZ50gyV41dryl5XnwOu/We7ZqFFYcxkwF4fa4wf4AirrjY
+ NvAfSm9YuI40KvWd0KVC+xZLhi6xzZiOllZxfAhOOVK2Qz9n/iaCVrHM29wJ059wpuppyIXTn
+ oTt29w==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robin Jarry" <robin@jarry.cc> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
->> it.  Does send-email work on it correctly if you did e.g.
->>
->>     $ git send-email dir/000[12]*.txt
->>
->> or something silly like
->>
->>     $ git send-email dir
->>
->> or does it already choke on the first file because of the filename?
+--8323328-1941335813-1680639617=:26978
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Kristoffer,
+
+On Mon, 3 Apr 2023, Kristoffer Haugsbakk wrote:
+
+> On Tue, Mar 28, 2023, at 13:37, Johannes Schindelin wrote:
+> > So even making the exact error message depend on the number of
+> > arguments could result in misleading error message.
 >
-> It seems to work with both. I guess, NUL bytes separation it is then...
+> Yeah, I see. It seems that the variadic nature of the command makes it
+> difficult to guess what the user might have meant in all cases.
+>
+> > Do you have any splendid idea how to phrase the error message (or
+> > adapt it to the concrete invocation)?
+>
+> No. I was going to look more closely at that if-else chain, but given
+> the fact that I don=E2=80=99t know C and all the cases that would need t=
+o be
+> covered (=E2=80=9Cwhat if the third argument happens to match both a ref=
+ and a
+> file?=E2=80=9D) I wouldn=E2=80=99t get anywhere.
 
-Feeding the filenames as the command line arguments would have been
-much simpler X-<, but either NUL termination or c-quoting the
-filenames would be needed _if_ we want to support crazy folks who
-feed us such garbage filenames.  Letting hook scripts understand NUL
-termination is a chore and it still is debatable if it is reasonable
-to support, though.  I'd say it would be sufficient to just declare
-"files whose name has LF in it is not given to the hook, ever" and
-users would avoid such a filename if they care.
+Knowledge of C is not required to come up with an error message ;-)
 
-Thanks.
+The forms in which `git range-diff` can be called are:
 
+	git range-diff A...B [[--] <path>...]
+	git range-diff A..B C..D [[--] <path>...]
+	git range-diff A B C [[--] <path>...]
 
+In general, I find it hard to guess which form was meant when a typo
+causes an error message. For example, `git range-diff A..B C` might have
+been intended to be the three-rev form `A B C`, but it could also have
+been intended to pass two commit ranges `A..B HEAD..C`.
+
+As such, I wonder whether we can just cleverly _avoid_ saying _which_ form
+we suspect the user to have intended.
+
+In other words, instead of
+
+	need two commit ranges
+
+we could say:
+
+	`range-diff` needs three revs, two ranges or a symmetric range
+
+Since this does not require any C expertise, it would probably be a good
+idea to let C experts work on other patches, patches that do require their
+expertise: The patch to improve the error message does not require any
+knowledge of the C language at all.
+
+Ciao,
+Johannes
+
+--8323328-1941335813-1680639617=:26978--
