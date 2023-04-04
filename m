@@ -2,92 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DAB4C761A6
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 19:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE04FC6FD1D
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 19:40:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235998AbjDDTb6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Apr 2023 15:31:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59866 "EHLO
+        id S235899AbjDDTkg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Apr 2023 15:40:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235986AbjDDTb5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2023 15:31:57 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8830140E6
-        for <git@vger.kernel.org>; Tue,  4 Apr 2023 12:31:52 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id om3-20020a17090b3a8300b0023efab0e3bfso37230790pjb.3
-        for <git@vger.kernel.org>; Tue, 04 Apr 2023 12:31:52 -0700 (PDT)
+        with ESMTP id S235610AbjDDTke (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2023 15:40:34 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC457C7
+        for <git@vger.kernel.org>; Tue,  4 Apr 2023 12:40:32 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id g17so43766807lfv.4
+        for <git@vger.kernel.org>; Tue, 04 Apr 2023 12:40:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680636712;
+        d=gmail.com; s=20210112; t=1680637231;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6u+YUnimTHNqsVP7F3dghDPdmr+RHhSOP18RibhhSu8=;
-        b=P0SA8CYKyvL8Q0TRQ9El2yEbBx7T3paBdY7iEvLp+1f9C5AP9YUhWNh5RPCvOjVzpZ
-         2Jn9G/vaXknKDJ37lrtH8T7HXNWs/Syi8Y3vt1pTm80K2s34qgwSRdSkEWAqs/0YXy75
-         kZQATSCd+nKm/Gp4pqmpE80Onyds2cSsGFLcU/zFGDGyBPiW6/Oe93oRIGhWDnTrSRq9
-         2lO8qmyoaaH+FVXIuS+nhXbjx+772OswBd3q6Pgvxrlr7zxtFEihe0kPeVMvlEolH7C1
-         bdjlriax5kfz6mm8kaUy10CEB0LWseVihV7NINZtCPduKJAJP2FhoRAveu2UaslSyhcQ
-         WA8Q==
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=A456QBBHf6Ng5S/1OOIHe2nmrAJm6PXC0wZ3aLAQyCY=;
+        b=iZCA6z4IE8MRKp0zjQon/LjOonv3yaPfatPUaVIqQHMtj64CqNRa0OQxYNbe9/3Ez1
+         j30u7kZd5AMHCbxqRrfcnXe+r89bjjFVj5cQO7jy8mEsoZQrZuNnnLgXtkT+Jsfdm+fi
+         DBrbsvmgN/mTG23cLaontmWRPbtM7GBd3CEt8TseX97vpiYXydjMgv86lAIAnjf5Xv5J
+         nYdligjzTo0SmX3uoR5hrLNgcS3t5tKhxN118BT8nqSCoDP1QOJEM2aWx9X65IdabAE8
+         ad2ztpKFZyYeMjKfYhtp/AIua8KZh7py739OdcqxvK5LVhPd3tC2SoXaj4GSNFlcCWPn
+         +rgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680636712;
+        d=1e100.net; s=20210112; t=1680637231;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6u+YUnimTHNqsVP7F3dghDPdmr+RHhSOP18RibhhSu8=;
-        b=1i5e9hlWH1s9mZB3IO9r/bruoaekurTlGrQ3gjBIo5D99GSXJF/4dgUGpWoNE7LK5O
-         TAQmrShLTUXs8OPx6osusyo9pGbu35uparz11k1/jZCkn8/z0RxMr4KYNEKoSMrdn6Wc
-         iWWQIzQKqnwDgWk5fRatcoQsKVARlETmipllWJefJLnfUS/1UUs8E7bNnlP4Gw4KWaqJ
-         y83st0i2AqKAfQiTyoNCW3LJjXJdXdY766w/7d427VO8gWUDjUEo7oXeYFbdbufmMy3k
-         fNxWPPi9b9d4Lr5EwFZ2zpA+Z8hPEXizMWULOPnWCewcD+u6nRn9NukWFu4FcdLC7HMq
-         3fCg==
-X-Gm-Message-State: AAQBX9dblyD2O0L1Vwp9kahl+awnx38QN3eKETmMJDji6I7ATIsTqPqA
-        YhqZRRHXoanReX8V8/++Ine+ap7xFeg=
-X-Google-Smtp-Source: AKy350btd5q4jt7/5/l0+bfz8VRalTaP/tRnSwu4zFULoE+u6flcSrAWNJc8KxHe7hKmdCnkPhiEaQ==
-X-Received: by 2002:a05:6a20:619a:b0:e3:9d4e:b340 with SMTP id x26-20020a056a20619a00b000e39d4eb340mr3460394pzd.12.1680636711819;
-        Tue, 04 Apr 2023 12:31:51 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id e5-20020a62ee05000000b005e099d7c30bsm8971154pfi.205.2023.04.04.12.31.51
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=A456QBBHf6Ng5S/1OOIHe2nmrAJm6PXC0wZ3aLAQyCY=;
+        b=3Cgt6XM4FC9Qjwoq4pR2g4oPIBzsEHrgEsPT3bZMcA6tmyTop1OVlZikQC0mnw0eaB
+         Vngps+Y3pmw02FrDSB8NN7uuCAWvMz2mgh1a06mN2XboBNQUATfq8mMnr4JBXln5OBOT
+         2+NdKH+tC+h4KRs1FfcoPqId71h+Qjhj7QtV29CzCe5O6gdY0B5XieqOLw/BooVdnQ+i
+         4tNj6Y2CrfBE+O27J4aRqQ+xN/KIniJVJJ9Ojz/wXbd/fGNiJgjnjppEYR4Obe02fBLP
+         49R5YlwgYWt0rb58pwa+PxkFpl+sm2rxjBcajG+rt0UKJ9hBV2QamS+LKzqG4kJwQwDH
+         B1OQ==
+X-Gm-Message-State: AAQBX9dWd+K7O8zPzIxVrHav18wFLplZIErgbVO2axdZ0cKIabeY+1lI
+        awLHe8Ol93OUkREiV/p8ybuplp6nyBI=
+X-Google-Smtp-Source: AKy350b0+BkuT6K2/l9BGTX3+OWR0J8166MuOJHabG4ows3O7fmEuqYQjfaB4psazLyITgkkk8lwtQ==
+X-Received: by 2002:ac2:5fe7:0:b0:4e8:5e24:29bc with SMTP id s7-20020ac25fe7000000b004e85e2429bcmr828781lfg.1.1680637230452;
+        Tue, 04 Apr 2023 12:40:30 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id s9-20020a2e98c9000000b0029c88629125sm2499807ljj.114.2023.04.04.12.40.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 12:31:51 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Paul Eggert <eggert@cs.ucla.edu>
-Cc:     Carlo Arenas <carenas@gmail.com>, demerphq@gmail.com,
-        60690@debbugs.gnu.org, mega lith01 <megalith01@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?Q?Tukusej=E2=80=99s?= Sirs <tukusejssirs@protonmail.com>,
-        pcre-dev@exim.org
-Subject: Re: bug#60690: -P '\d' in GNU and git grep
-References: <2554712d-e386-3bab-bc6c-1f0e85d999db@cs.ucla.edu>
-        <CAPUEspj1m6F0_XgOFUVaq3Aq_Ah3PzCUs7YUyFH9_Zz-MOYTTA@mail.gmail.com>
-        <96358c4e-7200-e5a5-869e-5da9d0de3503@cs.ucla.edu>
-Date:   Tue, 04 Apr 2023 12:31:51 -0700
-In-Reply-To: <96358c4e-7200-e5a5-869e-5da9d0de3503@cs.ucla.edu> (Paul Eggert's
-        message of "Tue, 4 Apr 2023 11:25:59 -0700")
-Message-ID: <xmqqttxvzbo8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        Tue, 04 Apr 2023 12:40:29 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Chris Torek <chris.torek@gmail.com>,
+        Hongyi Zhao <hongyi.zhao@gmail.com>,
+        Phillip Susi <phill@thesusis.net>,
+        Git List <git@vger.kernel.org>
+Subject: Re: git revert with partial commit.
+References: <CAGP6POLrtA_9kjCwUbVB8-F+dgQbhz==oy5SsXULfspNj_Umuw@mail.gmail.com>
+        <87edp0ak45.fsf@vps.thesusis.net>
+        <CAGP6POLVpjxO91s1dX98TLepXMrybSWq9y8qJ6b7w+e0SRJT1A@mail.gmail.com>
+        <CAGP6POJr63o67k+7BeokM-pkPbXYrQy4kcWwMXTfoeuFaPaADQ@mail.gmail.com>
+        <CAGP6POLx0+OhMJ9oqmK8R9Lq7tppC258NWHNFhqXMbO9smXd+w@mail.gmail.com>
+        <CAPx1Gvcz6f3AQJYfq7Sih0bL6pAi5mHZj8rj=kd7kRDWKLZEzw@mail.gmail.com>
+        <87lej7zhpt.fsf@osv.gnss.ru> <xmqq4jpv1pcj.fsf@gitster.g>
+Date:   Tue, 04 Apr 2023 22:40:29 +0300
+In-Reply-To: <xmqq4jpv1pcj.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+        04 Apr 2023 11:20:28 -0700")
+Message-ID: <877curzb9u.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Paul Eggert <eggert@cs.ucla.edu> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> This is an evolving area. Git master is fiddling with flags and
-> options, and so is GNU grep master, and so is PCRE2, and there are
-> bugs. If you're running bleeding-edge versions of this code you'll get
-> different behavior than if you're running grep 3.8, pcregrep 8.45,
-> Perl 5.36, and git 2.39.2 (which is what Fedora 37 has).
+> Sergey Organov <sorganov@gmail.com> writes:
 >
-> What I'm fearing is that we may evolve into mutually incompatible
-> interpretations of how Perl regular expressions deal with UTF-8
-> text. That'd be a recipe for confusion down the road.
+>>> This kind of operation produces a new commit, so there's no such
+>>> thing as a partial revert or partial cherry-pick, at least in
+>>> terms of "things Git can do by itself".  But we, as humans writing
+>>> programs, wish to *achieve* such things.
+>>
+>> So, why Git can't help us achieving it by supporting paths limiting in
+>> (all) merge operations? There seems to be no absolute obstacles, just a
+>> luck of support.
+>
+> I think there is no fundamental reason to forbid an optional
+> pathspec to "cherry-pick" and "revert", given that a commit that
+> results from either "git cherry-pick" or "git revert" is called a
+> "cherry-pick" or a "revert" merely by convention and there is no
+> tool-level support to treat them any specially at merge or rebase
+> time [*1*].  It would make it harder to design tool-level support
+> for full cherry-picks or reverts, but that is a problem for future
+> generation, not ours ;-)  Allowing pathspec to "merge" and recording
+> the result as a merge of two (or more) parents is an absolute no-no
+> but that is not what we are discussing.
 
-Nicely said.  My personal inclination is to let Perl folks decide
-and follow them (even though I am skeptical about the wisdom of
-letting '\d' match anything other than [0-9]), but even in Git
-circle there would be different opinions, so I am glad that the
-discussion is visible on the list to those who are intrested.
+If I got this right, you believe that "git merge" should never have
+support for "partial merges", whereas it makes sense for cherry-pick and
+revert? If so, I disagree. There is no reason for Git to strictly
+prevent me from using the feature specifically in "git merge" (once it's
+otherwise implemented), provided I do mean it and didn't do it by
+mistake.
 
+Please notice that I can do it right now already (and I did a few
+times), only with a more pain than necessary, and I don't see why this
+pain is to be preserved (provided we do have the feature implemented in
+the future). Besides, "git merge" is only a helper, and it'd be an
+improvement if it'll be capable to help in more cases.
+
+[...]
+
+> But I do not think Chris meant to say "you should not expect such a
+> feature"; what we heard was a reasonable explanation of how the
+> current world works, and I do not see a reason to react strongly to
+> such a statement as if you were unreasonably forbidden from doing
+> something sensible.
+
+Nice, so I figure I may allow myself to still keep a weak hope for the
+feature, and thus stop being forbidden, even if not unreasonably, from
+doing something sensible. ;-)
+
+Thanks,
+-- Sergey Organov
