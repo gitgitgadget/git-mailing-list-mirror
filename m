@@ -2,121 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22352C761A6
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 20:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C2DBC6FD1D
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 20:51:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235827AbjDDUgA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Apr 2023 16:36:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46924 "EHLO
+        id S236394AbjDDUvZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Apr 2023 16:51:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231750AbjDDUf7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2023 16:35:59 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CCA219BC
-        for <git@vger.kernel.org>; Tue,  4 Apr 2023 13:35:58 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id w4so32447997plg.9
-        for <git@vger.kernel.org>; Tue, 04 Apr 2023 13:35:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680640558;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8mTuQ4RePGm5SVEAhqxaH2hKu948I5GDbPQcAqQWSW4=;
-        b=FLjsDl40um7sWYDMjktrVlzT3HBXQmTquyGZ3qOCi+6eufWLXM3kD8T5ao97l7h+CZ
-         RbhAdU7gU1zxr2+VaHJalDN+Xma4FsDgGRJOmTpEjs8MtMVAIybIkPIVlrS1lFvSJC3i
-         Z+IjJfLfj5D28+VIj+Q3Ngm8A9cYQopPAOR3wtiy2ydyiEW1P+kp1pCaCcB7PiIGzqPK
-         FGw9kJ5uFNK1Srf/XFqBw4cKbRKfx7wbc4kWJ9Yf1TRF0ApSSzDHWPV6aq2Xb1kqD1AB
-         iWwATs0EJfYXFQbmfSZQ+YcZdflJfaqz48wiwDQAbgY/oUXmUs8cQ6tFOIMuURoXtB++
-         CRag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680640558;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8mTuQ4RePGm5SVEAhqxaH2hKu948I5GDbPQcAqQWSW4=;
-        b=X9C1RCgqOZsh/hxzcSjUsC96HPIDXAyq45WsjCqGoKn06KWFNzVU8a6CSPCJzcABty
-         3VVBoZ6udPOICCS3H1UdyEUvawLfX0KpOVh+3L58fL0SKyiHw3rIS1TjtL4DvvpvP32v
-         uJ4BLSWLdwfjdHvChUCoyLXbUHhZs8eqp+sn0l9f3RBYqxZpy8WcDRSm2nRh+tjoXv1O
-         lbQ8BHM7Pg+xju38+a64AiUifDstlk2R2uEAjN98O+ztzfh8gPQ50+IVdcNp1c5Jn2eQ
-         8bfXgKP4/vew5+cCy4XFJxnZBGUaFRAEIqD3gKxIY44le6HAJXPuEjFCa1KstjEqIRuT
-         PdGw==
-X-Gm-Message-State: AAQBX9eKTqOfTGQ/bCF5D5XUeHzdFPF38/YbiLjps4rlAL8jnxnFs6Fx
-        HghvxSA5a6Uk0hQIc292Jfo=
-X-Google-Smtp-Source: AKy350alOu+7ivAstDh9qDBHm0xK8pGN4IQrtY9X1QSYtVez+JeseUJK9Axrg7PocXLSE2FrjIJXxA==
-X-Received: by 2002:a05:6a20:4e1f:b0:d5:9216:9182 with SMTP id gk31-20020a056a204e1f00b000d592169182mr3528725pzb.9.1680640557624;
-        Tue, 04 Apr 2023 13:35:57 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id a12-20020aa780cc000000b0062e26487e7esm2625849pfn.155.2023.04.04.13.35.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 13:35:57 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Tao Klerks <tao@klerks.biz>
-Cc:     David Aguilar <davvid@gmail.com>,
-        Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4] mergetool: new config guiDefault supports
- auto-toggling gui by DISPLAY
-References: <pull.1381.v3.git.1666076086910.gitgitgadget@gmail.com>
-        <pull.1381.v4.git.1679153263217.gitgitgadget@gmail.com>
-        <ZCvx/REMF69xkXJg@gmail.com>
-        <CAPMMpohtL2dG_Ody5zALhS5kOuLLTTRw7L0vc6SnpWym+usppg@mail.gmail.com>
-Date:   Tue, 04 Apr 2023 13:35:57 -0700
-In-Reply-To: <CAPMMpohtL2dG_Ody5zALhS5kOuLLTTRw7L0vc6SnpWym+usppg@mail.gmail.com>
-        (Tao Klerks's message of "Tue, 4 Apr 2023 16:50:31 +0200")
-Message-ID: <xmqq355fz8pe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
+        with ESMTP id S236279AbjDDUvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2023 16:51:20 -0400
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B93E9468E
+        for <git@vger.kernel.org>; Tue,  4 Apr 2023 13:51:13 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id 2F652320090F;
+        Tue,  4 Apr 2023 16:51:13 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Tue, 04 Apr 2023 16:51:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+        cc:cc:content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1680641472; x=1680727872; bh=fQ
+        t9cq2n0ClHVEEECpCKtL5UPExJQYrrv3soWUYzOLg=; b=Zu9FXAg2E766pmId0M
+        jNjJipvwXzuuXPKit74Iy5kEJAibqezPsbUf5gjHOBunbxyM+/JLtGm/61rPpq+K
+        oF8o3aL5CB6kN/kxsD9PDan9r8HewkaHt/Zqsett1/Yrs0wUTndWWivfGhO1Hl/9
+        0p+qghfnikQkPL6dXEZtamW803hiYM/hfgIq87xMcd88M0Bj/dc1Ibsq33FAHblw
+        evBYBiZnNOIO7zy/RHpH6Rb/W2OrahW+4dNbL7vxJjaiPftF0ScBkh4tYV2uCTMK
+        iQJ6jX6RhbVYan0ZlpdeI1tnu1vJfV9UJwHAIw2j3nSdVoJJLausIbBpp4HfKPnu
+        Jjqw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1680641472; x=1680727872; bh=fQt9cq2n0ClHV
+        EEECpCKtL5UPExJQYrrv3soWUYzOLg=; b=aJ3TnlHfjX44pODrq+lTtzx6UCXRo
+        Qi3H7lRcLcnC6p7JapWy/by2h9XO+G2vlLw00jmaBJF2onsYTVPg/YkxYC1ZaVR9
+        n7i8xvAV7Gtwb+vgLFsRlEsRcmJ93EQh+w8EAhkCXD2de+QkHc2dQBhXOWmRafa+
+        tZZq9BMDQkks/eLhntfnhnuSh+aOoK4kgDLDstjE8CU4PLdepaGpjYAhlTpIrCRc
+        VkB/wLYPQpOBch/TXs/EnPJaUEYHcIlflsUs41sODvNachucxUPVZSo1kZvtKuxI
+        12cIUBUyYAS2r6aUYUM2t0JffMDujFJAaOfstwtWBijCvrxL1CsmWucTQ==
+X-ME-Sender: <xms:wI0sZMRycavF3FEHeD4e1aFqS2BrYKtp6sEsvvSbBa68-WqSgTN8IaE>
+    <xme:wI0sZJwREPm6C0-AuCDrUWEj00RM8hqddCUJNoxzYOliNqKGc4n1wC3I_s97zOrBV
+    Sr_UTzg21KUDSSpCw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeiledgudehhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruh
+    hgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeeigeev
+    vdetfeetledtieefheetgedugfehtddtledvhfejkefghfelvdegieefueenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgv
+    rhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
+X-ME-Proxy: <xmx:wI0sZJ3_2fYprylVPX5U9E8Oq-kv3A1TYXuC3S4F-laewpowx-Oq3A>
+    <xmx:wI0sZABQGAbDPgWmJOuMGeuarO0Aq4NOj_hpfcQafTS8TmN03Sv9BQ>
+    <xmx:wI0sZFjUfWy-dzLk6i9Bg0u6GOgKnxVkRs4MxZCiY0Qv4jM7SaEvbA>
+    <xmx:wI0sZPdbUvUkbimwhIO201q28kPoMEexmvSNlgx2eohoma8_c7-LkA>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 9850F15A0091; Tue,  4 Apr 2023 16:51:12 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-334-g8c072af647-fm-20230330.001-g8c072af6
+Mime-Version: 1.0
+Message-Id: <b5316855-971d-4b7b-89cd-e81ececc5124@app.fastmail.com>
+In-Reply-To: <5b99135f-c1d4-434b-b508-35f5d66dd2bb@app.fastmail.com>
+References: <CAKazavxTXwcZFtL2XyU3MpaUR=snWY8w8Lwpco+mkbqm2nWE=w@mail.gmail.com>
+ <5b99135f-c1d4-434b-b508-35f5d66dd2bb@app.fastmail.com>
+Date:   Tue, 04 Apr 2023 22:50:52 +0200
+From:   "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To:     "Rohit Ner" <rohitner1@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git log causing hang while browsing upstream linux
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tao Klerks <tao@klerks.biz> writes:
+On Tue, Apr 4, 2023, at 22:27, Kristoffer Haugsbakk wrote:
+> FWIW: on my machine:
 
-> If you get it wrong, an inconvenient or even bad
-> thing happens: If you're in a GUI context and you forget to say
-> `--gui`, then you get the CLI tool - not the end of the world, you
-> might argue. If you're in a non-GUI context and you say `--gui`, you
-> get a (hopefully intelligible) error about not finding a display, or
-> worst case, you hang - and git doesn't know what happened, the
-> messaging has to assume you aborted explicitly.
+So my point is: have you given the command a half a minute or so to
+output the initial lines? Certain `log` invocations can take a long time
+on repositories with rich histories.
 
-The worst case I can think of is if you have a machine that allows a
-persistent virtual graphical session (remote desktop).  You can go
-there, open a terminal and create a screen session, which captures
-the $DISPLAY in effect.  You may disconnect from the screen session
-before you disconnect from the remote desktop.  As the remote
-desktop is persistent, the $DISPLAY would be valid even after you
-disconnect from there.
-
-Then you ssh into the machine and connect to the screen session.  If
-you say "xterm &" in that screen session, a new window with a
-terminal will open and be shown on that remote display session,
-which you cannot see until you reconnect to the remote desktop.
-Running "git mergetool --gui" would be the same.
-
-With the proposed patch, the experience would become even worse in
-that scenario, I am afraid.  "git mergetool" (without "--[no-]gui")
-would detect the presense of $DISPLAY and start a GUI mergetool that
-you cannot view or interact with ;-).  You need to explicitly say
-"git mergetool --no-gui" in such a case to force use of cli tool.
-
-Even with that caveat, I think the proposed behaviour would be a net
-improvement.  I almost always work in non-GUI environment, but I can
-see many people work in both and depending on their environment wish
-to use the best tool for the situation.
-
-> If there were a way to get git to autoselect "--gui" by presence of
-> the DISPLAY, as it does for the *default* mergetool, then this kind of
-> flow would be much more intuitive, usable, etc.
->
-> I'm not sure whether I'm explaining better, or just repeating myself,
-> so I'll stop here :)
-
-Hopefully your explanation was clear enough.  Others may be able to
-offer solution better than "look at DISPLAY and choose --[no-]gui
-when neither is given from the command line", but I think at least I
-understand your motivation behind this change.
-
-Thanks.
+-- 
+Kristoffer Haugsbakk
