@@ -2,122 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BA0CC7618D
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 05:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1B94C761A6
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 06:47:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233226AbjDDFiI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Apr 2023 01:38:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33076 "EHLO
+        id S233555AbjDDGrF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Apr 2023 02:47:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232578AbjDDFiH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2023 01:38:07 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 480B11FCD
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 22:38:04 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id iw3so30261636plb.6
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 22:38:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=t-engineering.se; s=google; t=1680586683;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6hf78krS+suKp2rx2uH9j6ppbREzUVFXNMyaJOrB0Oc=;
-        b=JmfqznuL4Bmelr2bdxBlWdO4tiiCU5ZWNX6SGfMskliAkiV+YqO8vNZDGd0+fz4Sck
-         DpPO2ps7L/W4Hk6craEuYRfUQY4kR+p9HxmRCqM9Ii8XaldreJnyNDX4bNGkqhWT2ycn
-         dcEqLxmO8NnPiXogWmNEH9mWzznpXu5bg/db8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680586683;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6hf78krS+suKp2rx2uH9j6ppbREzUVFXNMyaJOrB0Oc=;
-        b=krsjeh4V4v81a3pUa5Msi4igZJFH9HyYfpsBf7+YxkvE9Ff4sPdQXzNttRBDyTUq07
-         1Wkm3mT6F5GHRRXhBjH3NyLSQNJLiIvH5sfsOGV1m+9+hj4IN3ROwZNyiavdKKFA9Brb
-         EWfdcLgWSR9IFGFmWy+k6404FsAf7DXtSxGBYLKldm6AwygHeM96vD6xc6tPQ3q2Aezt
-         kTOFpQ6184qFn3hzSh/yNdpXseb1UD5TWAa3kc49SBmwA2UJmk92Mk+iymosKlLylIkw
-         Y/3e1Fg2RzCJDKi4rWvq1tG5XfnCRTCbz7jfwk0u9vbppJ4IDh8eHKM3uOtXezdaMWxQ
-         aXJw==
-X-Gm-Message-State: AAQBX9c+0/tQDMnqp+o5a3TZ1f4MWiagBdhtdw2wgtfyiPKXIl0le4JA
-        HGrwWLk+tnIAVvBmQS29cUs/LYI771LKWLspykKN4y0IyCTvjftK7UY=
-X-Google-Smtp-Source: AKy350bRyfjS1ft66uLXH5ckqSSaN/Kp5XXc8X0knubHPbM69oNtuBZhPLR0hBsf/DsYuMX0RV3Wgc6YnBQLr4wtoyM=
-X-Received: by 2002:a17:902:7448:b0:1a2:74df:b384 with SMTP id
- e8-20020a170902744800b001a274dfb384mr537448plt.12.1680586683374; Mon, 03 Apr
- 2023 22:38:03 -0700 (PDT)
+        with ESMTP id S233352AbjDDGrE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2023 02:47:04 -0400
+Received: from mail.cs.ucla.edu (mail.cs.ucla.edu [131.179.128.66])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B16022729
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 23:46:59 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.cs.ucla.edu (Postfix) with ESMTP id B809F3C09FA06;
+        Mon,  3 Apr 2023 23:46:58 -0700 (PDT)
+Received: from mail.cs.ucla.edu ([127.0.0.1])
+        by localhost (mail.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id dRGahyowkSL6; Mon,  3 Apr 2023 23:46:58 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.cs.ucla.edu (Postfix) with ESMTP id 50CD53C09FA08;
+        Mon,  3 Apr 2023 23:46:58 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.cs.ucla.edu 50CD53C09FA08
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cs.ucla.edu;
+        s=9D0B346E-2AEB-11ED-9476-E14B719DCE6C; t=1680590818;
+        bh=OPKGbZHEgoMi8NRsw8a0G2vgxL3IygYevxOn970mno8=;
+        h=Message-ID:Date:MIME-Version:To:From;
+        b=SzxiOLdccdooebFoT64zRlOK1yMXrRpaZZTb6G913crnXjlaCR9GtOg7enjqjrHRK
+         dK4wVg8cHY1IiOyaP/vEPnM4n7aMZUXu40/SZ6H7gTZbJKQH7qECPXC1QoDbvfyAmo
+         WKPy28P+4mI1eAGN0UlagJWtNNmlB7GcLnMm2nGGfV3DqqKcCzgBxnLp94pzrMBDj/
+         c+U9KvQtBHXCFeOhE/X8i+HyltGsZr23a8t2L0f9bA8EQezx+KHCSB4dVoB4MO+up7
+         iOvwIOSimA/sZl71UWJUTYE3VlF3UmpKgP1Afd7UILJ8urXbEbEA0JjTBbi011K/C1
+         ycpJq+AqoDfJg==
+X-Virus-Scanned: amavisd-new at mail.cs.ucla.edu
+Received: from mail.cs.ucla.edu ([127.0.0.1])
+        by localhost (mail.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id V-Qx7gZwcg3n; Mon,  3 Apr 2023 23:46:58 -0700 (PDT)
+Received: from [192.168.1.9] (cpe-172-91-119-151.socal.res.rr.com [172.91.119.151])
+        by mail.cs.ucla.edu (Postfix) with ESMTPSA id 0AB563C09FA06;
+        Mon,  3 Apr 2023 23:46:58 -0700 (PDT)
+Message-ID: <920dcc8d-9e45-a03e-af06-6b420c6e0f81@cs.ucla.edu>
+Date:   Mon, 3 Apr 2023 23:46:57 -0700
 MIME-Version: 1.0
-From:   Mattias Holmqvist <mattias.holmqvist@t-engineering.se>
-Date:   Tue, 4 Apr 2023 07:37:51 +0200
-Message-ID: <CAPMLkzd=VGGqZ0trMMVXUsjGwbjFN-nz3tGQUG-O0Xc84Zc+hw@mail.gmail.com>
-Subject: --shallow-exclude commit list is offsetted one commit
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Content-Language: en-US
+To:     Jim Meyering <jim@meyering.net>
+Cc:     60690@debbugs.gnu.org, demerphq@gmail.com,
+        mega lith01 <megalith01@gmail.com>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com,
+        =?UTF-8?Q?Tukusej=e2=80=99s_Sirs?= <tukusejssirs@protonmail.com>,
+        pcre-dev@exim.org
+References: <230109.86v8lf297g.gmgdl@evledraar.gmail.com>
+ <2554712d-e386-3bab-bc6c-1f0e85d999db@cs.ucla.edu>
+ <CA+8g5KHuE-kQqmi9cVjeJbpyt54v9m9omh9A9we1zmR0+aTDHg@mail.gmail.com>
+From:   Paul Eggert <eggert@cs.ucla.edu>
+Organization: UCLA Computer Science Department
+Subject: Re: bug#60690: -P '\d' in GNU and git grep
+In-Reply-To: <CA+8g5KHuE-kQqmi9cVjeJbpyt54v9m9omh9A9we1zmR0+aTDHg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-git clone -b A --shallow-exclude=B
+On 2023-04-03 20:30, Jim Meyering wrote:
+> have you seen justification
+> (other than for compatibility with some other tool or language) for
+> allowing \d to match non-ASCII by default, in spite of the risks?
 
+In the example =C3=86var supplied in <https://bugs.gnu.org/60690>, my=20
+impression was that it was better when \d matched non-ASCII digits. That=20
+is, in a UTF-8 locale it's better when \d finds matches in these lines:
 
-What did you expect to happen? (Expected behavior)
-My remote repo looks like this:
+>> 	> git-gui/po/ja.po:"- =E7=AC=AC=EF=BC=91=E8=A1=8C: =E4=BD=95=E3=82=92=
+=E3=81=97=E3=81=9F=E3=81=8B=E3=80=81=E3=82=92=EF=BC=91=E8=A1=8C=E3=81=A7=E8=
+=A6=81=E7=B4=84=E3=80=82\n"
+>> 	> git-gui/po/ja.po:"- =E7=AC=AC=EF=BC=92=E8=A1=8C: =E7=A9=BA=E7=99=BD=
+\n"
 
-  A B   # two branches, A and B
-1 |     # commit in A
-2 |\    # merge from B to A
-3   |   # commit in B
-4 |     # commit in A
-5 |\    # merge from B to A
-6   |   # commit in B
+because they contain the Japanese digits "=EF=BC=91" and "=EF=BC=92". Thi=
+s was the only=20
+example I recall being given.
 
-A and B are branches. 1 is a commit in A, 2 is a merge from B to A etc.
+Also, I find it odd that grep -P '^[\w\d]*$' matches lines containing=20
+any sort of Arabic word characters, but it rejects lines containing=20
+Arabic digits like "=D9=A3" that are perfectly reasonable in Arabic-langu=
+age=20
+text. I also find it odd that [\d] and [[:digit:]] mean different things.
 
-I would have expected the following repo as a result
-
-  A
-1 |
-2 |
-4 |
-5 |
-
-I would also have expected a shallow file with the following commits in .git:
-3
-6
-
-What happened instead? (Actual behavior)
-
-When I run the command I get a repo like this:
-
-  A
-1 |
-
-I also get a shallow file in .git with the following commit list
-2
-5
-
-What's different between what you expected and what actually happened?
-The commit list in the shallow file is offsetted one commit.
-he consequence of that is that not only B is excluded but also
-everything in A that depends on B
-
-Anything else you want to add:
-The result is the same if I use the git fetch --shallow-exclude
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.40.0.windows.1
-cpu: x86_64
-built from commit: 1d90ca2906dd4b7ddaf0669a13c173ec579d794a
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 22621
-compiler info: gnuc: 12.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): <unset>
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+There are arguments on the other side, otherwise we wouldn't be having=20
+this discussion. And it's true that grep -P '\d' formerly rejected=20
+Arabic digits (though it's also true that grep -P '\w' formerly rejected=20
+Arabic letters...). Still, the cure's oddness and incompatibility with=20
+Git, Perl, etc. appears to me to be worse than the disease of dealing=20
+with grep -P invocations that need to use [0-9] or LC_ALL=3D"C" anyway if=
+=20
+they want to be portable to any program other than GNU grep.
