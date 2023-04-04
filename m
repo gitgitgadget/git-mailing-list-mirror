@@ -2,91 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B503C761A6
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 20:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D52FFC6FD1D
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 20:26:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235964AbjDDUWe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Apr 2023 16:22:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36436 "EHLO
+        id S236153AbjDDU0k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Apr 2023 16:26:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbjDDUWd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2023 16:22:33 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEDD93C2F
-        for <git@vger.kernel.org>; Tue,  4 Apr 2023 13:22:32 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id bi39so2771368qkb.13
-        for <git@vger.kernel.org>; Tue, 04 Apr 2023 13:22:32 -0700 (PDT)
+        with ESMTP id S236122AbjDDU0i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2023 16:26:38 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C473A90
+        for <git@vger.kernel.org>; Tue,  4 Apr 2023 13:26:36 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id e18so34083995wra.9
+        for <git@vger.kernel.org>; Tue, 04 Apr 2023 13:26:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680639751;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Scku16UJVa3W5OsGRyb//EOsMIY9/TJdetuko9EXTJM=;
-        b=FiIJNT6ScyJ3vUplmUN0KXYy+vW0XXzN8rkmWX2xzCxjzkSd0yzJRYtfM5D/gb7t2X
-         qwukLp6KXR/o/jxAFqVMP84E79CT03UIv10vP8XfbhGvgBL9QLnQ6tEk6hXgB6o712bC
-         mba3b/9MCw1XzGWqwuUMgFcry7usksuu6qEpQqWYTA1LB52z+5uhKxEHFH2eAfuK/C1H
-         HVqQtBHhBAhZbRBXZA0ujHObyyTSs4kolGaUFqo4BUouxiibGekc2tzggjuP53FcmD37
-         wkA4zwugF8JtokOmqG5JZqxMy0jj72dxsAzermAActFkUYKkIzOfIu49CX+vS4v0446R
-         DvHQ==
+        d=gmail.com; s=20210112; t=1680639995; x=1683231995;
+        h=subject:from:cc:to:content-language:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=SDcQbehf+ycXQTx402yL23sGITATfHsIjIZb1HLmn3M=;
+        b=DXU024FuF7pvUmCkerxvkoYD4ktAaxYppjmNWV66KqFFmHzkdNLWiRk3h/kxbKp2Hs
+         kATIgoMU1dT6dxNOV1aWYa0y6Be2/mmuYrXtL25yrQMEZW/TSFxN+rlftDOPP9H6jpY7
+         qpYaRqZECHRUNV/KON8r/I/5hOC9NJUseNEll/jKw8Ike0tu+6OH/nOHEiTxOl/izr5U
+         BxrXOdXoAOfVSJK8j5GrcjMxKHnyDWcb0qFtRtU3JCRnu8Ni9eOcDYqQaCKtlZdNWWG/
+         9ev9Bg3cbeBPXxEe5LC6VJyo5l5fMvRcgHQHj9fuPKW0TFcKS8clH3aJHJqxBSIDeaqv
+         tvtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680639751;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Scku16UJVa3W5OsGRyb//EOsMIY9/TJdetuko9EXTJM=;
-        b=FvK+Jd00rIOwWHfgXfA2OI23cdzln7GTntZeGakYfkpHo87wKBkyhNsze1AoCprocv
-         Pcx10hR+I8C+yZLZVrRtm706IZDbYZI1OD/h7fcBS+LNl68wL+f6jhYtTtGYqhAtH6c1
-         HS+jjaYfXvmkKNggRY/K2fKcgF3vFCY6q7xP8v0nvDGNVv4HmSPv0e35tR0UxJw0riOK
-         J8oR8dWgVw9lFQLwyF/f2T+1jgaWmgPwEqKXaoEi7uc5s5IEh7jLXSV4iicmOrD+59+3
-         dVrKFsbJ3loegj8VP09hyHKO+aHDB1vvyhb+6ZNUyT5ZPlUspJhysadFy7OQQ8zUNKDB
-         19tQ==
-X-Gm-Message-State: AAQBX9fUR3JGWzpQiHqhqL/jKhJ6QCxLTGSAiAgjedMcRrhsvrTZX27E
-        vaZvlGuclp9I55ZirEN/Z+Iv/EYgZoVuzrWAckeiW8F1uJE2Ng==
-X-Google-Smtp-Source: AKy350Z6qENGlvsCrrXKwOnOElEr9gWEoALEQ4nnDwpl1e7c9dfKKmNG14ifre25Y0I0L7a7B8toh07CY9V5NIoedE0=
-X-Received: by 2002:a05:620a:190b:b0:746:7be8:f89e with SMTP id
- bj11-20020a05620a190b00b007467be8f89emr204597qkb.7.1680639751496; Tue, 04 Apr
- 2023 13:22:31 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680639995; x=1683231995;
+        h=subject:from:cc:to:content-language:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SDcQbehf+ycXQTx402yL23sGITATfHsIjIZb1HLmn3M=;
+        b=3dkEX4cQyBlVq5+ADUvfM89jvllbY7P+Tz25T2pf5RA6zu4o2Kh18QHOAPM5ETkxPv
+         GOVHdhihXMXW3HowiYnvaMpOyNNx6S3EPE53JSDBUzShuMPbGwloaySCXpN8h1+T8wIV
+         LjqkAEcG5zD5KzzzVhsh6Xwi/LCPY1nhImWJZQByu6PqVGh8Ms5LfxvFpderJVH7UgXr
+         JiUiF90rZobgUZxmo2Lspd/VfjbXnkNfIy9ERS/KfpF6k2T0OZz+pluHwZIOqL4OM5Dq
+         1XAdRG/ooXrsX21WLmqyboTfWqYv492Eo7XXo7iy5ofFu135Ysdsow76W5EMW4pFgPbY
+         1yHw==
+X-Gm-Message-State: AAQBX9eD64BaSnoMjV0o/iNT6RWaxvC3LS++8iRB4lXPVTJhTGTKdEN1
+        oZvZNuRn/B6H2OvnvFmgAnFmCO4+xsY=
+X-Google-Smtp-Source: AKy350aYbezFAWv0qaKLRWse2gHHRGAw7HrOe4FMNLlHD1aDVtDPYSPOS/yabArm8L4IKCPYhCnjbg==
+X-Received: by 2002:adf:f74d:0:b0:2dd:def:58fb with SMTP id z13-20020adff74d000000b002dd0def58fbmr2408167wrp.43.1680639995041;
+        Tue, 04 Apr 2023 13:26:35 -0700 (PDT)
+Received: from [192.168.0.160] ([170.253.51.134])
+        by smtp.gmail.com with ESMTPSA id a5-20020adffb85000000b002c794495f6fsm13013699wrr.117.2023.04.04.13.26.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Apr 2023 13:26:34 -0700 (PDT)
+Message-ID: <27551992-99d0-e0e4-a9c6-bebca729d78e@gmail.com>
+Date:   Tue, 4 Apr 2023 22:26:27 +0200
 MIME-Version: 1.0
-References: <YT2PR01MB98744AB0A168B729E89D57AFF0939@YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM>
- <YT2PR01MB98749C01D9FE7D040F80A51DF0939@YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM>
-In-Reply-To: <YT2PR01MB98749C01D9FE7D040F80A51DF0939@YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 4 Apr 2023 22:22:20 +0200
-Message-ID: <CAP8UFD1KCCqOFQ86Q4Sg4x0KYrO4B1dRyJKih74S61JsTGim7Q@mail.gmail.com>
-Subject: Re: Git fsmonitor
-To:     =?UTF-8?B?RnLDqWTDqXJpYyBMYW5kcnk=?= <fred.landry@pqm.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Content-Language: en-US
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Alejandro Colomar <alx@nginx.com>
+From:   Alejandro Colomar <alx.manpages@gmail.com>
+Subject: diff -w when removing nested braces (thus unindenting)
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------aMEiJ0ms26OZNGzixYxZ0ul5"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------aMEiJ0ms26OZNGzixYxZ0ul5
+Content-Type: multipart/mixed; boundary="------------WV0lvXmlpMOTcW3YqGgszhBg";
+ protected-headers="v1"
+From: Alejandro Colomar <alx.manpages@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+Cc: Alejandro Colomar <alx@nginx.com>
+Message-ID: <27551992-99d0-e0e4-a9c6-bebca729d78e@gmail.com>
+Subject: diff -w when removing nested braces (thus unindenting)
+
+--------------WV0lvXmlpMOTcW3YqGgszhBg
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
 Hi,
 
-On Tue, Apr 4, 2023 at 5:57=E2=80=AFPM Fr=C3=A9d=C3=A9ric Landry <fred.land=
-ry@pqm.net> wrote:
->
-> Hi,
->
-> I could not find details about which platforms are supported for the fsmo=
-nitor feature.
+When removing nested braces, it would be nice if the diff algorithm
+could try to remove the brace in a way that it fits semantically.
+Considering the following diff:
 
-The doc about core.fsmonitor says:
+> diff --git a/src/nxt_http_parse.c b/src/nxt_http_parse.c
+> index 9f3233c8..0e8de7c5 100644
+> --- a/src/nxt_http_parse.c
+> +++ b/src/nxt_http_parse.c
+> @@ -351,29 +351,30 @@ nxt_http_parse_request_line(nxt_http_request_pars=
+e_t *rp, u_char **pos,
+> =20
+>          } while (*p =3D=3D ' ');
+> =20
+> -        if (memcmp(p, "HTTP/", nxt_min(end - p, 5)) =3D=3D 0) {
+> +        if (memcmp(p, "HTTP/", nxt_min(end - p, 5)) !=3D 0) {
+> +            return NXT_HTTP_PARSE_INVALID;
+> +        }
+> =20
+>          switch (end - p) {
+>          case 8:
+>              if (p[7] < '0' || p[7] > '9') {
+> -                    break;
+> +                return NXT_HTTP_PARSE_INVALID;
+>              }
+>              /* Fall through. */
+>          case 7:
+>              if (p[6] !=3D '.') {
+> -                    break;
+> +                return NXT_HTTP_PARSE_INVALID;
+>              }
+>              /* Fall through. */
+>          case 6:
+>              if (p[5] < '0' || p[5] > '9') {
+> -                    break;
+> +                return NXT_HTTP_PARSE_INVALID;
+>              }
+>              /* Fall through. */
+>          default:
+>              return NXT_AGAIN;
+>          }
+>      }
+> -    }
 
-"The built-in file system monitor is currently available only on a
-limited set of supported platforms. Currently, this includes Windows
-and MacOS."
+This brace removal looks like it would be an unmatching brace.
+It would be nicer if the diff showed this:
 
-You can still configure a hook instead of the built-in system monitor
-to get a similar feature on Linux. For example the githooks doc has a
-"fsmonitor-watchman" section to use
-https://facebook.github.io/watchman/ which works on Linux using
-inotify.
 
-> I am running debian 10 servers and git-2.4.0 and I am getting:
+          }
+ -    }
+      }
 
-Git 2.4.0 from 2015 or Git 2.40.0 from 2023?
+Although I'm conscious that this might be a wild wish impossible
+to implement; so I'd just like you to know this little itch of
+mine in case you consider it doable.
 
-Best,
-Christian.
+Cheers,
+
+Alex
+
+> =20
+>      /* " HTTP/1.1\r\n" or " HTTP/1.1\n" */
+> =20
+
+
+
+--=20
+<http://www.alejandro-colomar.es/>
+GPG key fingerprint: A9348594CE31283A826FBDD8D57633D441E25BB5
+
+--------------WV0lvXmlpMOTcW3YqGgszhBg--
+
+--------------aMEiJ0ms26OZNGzixYxZ0ul5
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmQsh/MACgkQnowa+77/
+2zKolQ//Z8XTbTAylDSJur1G5tAiaBRIXr+BxSfzy/TX83snvt/jjdNxI4mk129g
+e2+Y8LhqhkkSfPY/jXrxgaiOd5WqBhVfoZ6iTjdeBAn6aCIFM8i+jbIvqVufx4MD
+BbjLo88bdFbg+rBut6On18pqGFkfIz4p19w6yjzkEQOwtYxHK3eogYHenHAOFBiG
+IqDDfmITthR6/fl7w9CRTUS8z4Nn7mgqkT1GqkgmMdcBNTfJTESAr0JqcIAJpQHm
+7HkYs3SVEGhY7nevPfQ3UBhEE14IXagTH80lBPLAezcjREcLYhvNrv+GLDiSTJKh
+au2dy/7FXV+4BsGuj6Ey9RlXCJK6QpEExHnKmkTEsw76AZGPBpPqF8oYrmHXNVeJ
+woo+bGvtOKuqBKrZplJYZKsgrBQapAF0xcFx03gHDe5YfE7ljro1N8gf4t5mvjBV
+ryjasFCS1YJAlzkGzXpcTGrz+K06VnzZDjlxfAog6N+jWnPb11tpHWRAKGYUn8Xj
+7x+G85vZreKALv+m46pm5WLVvNNBNC4lezYYhrNMpy6vno7EYAESevDy0pGMwuur
+vHHCdKDq4dK1ghuckCNvOn182/5j0nvBo3amNHOpdR8pJKV80Umo648B5injG4/g
+vUYi0m7PoiZGauNpk25Mwb7iRklgWFkPU1dvschYKyD5f6aOAAw=
+=y1S2
+-----END PGP SIGNATURE-----
+
+--------------aMEiJ0ms26OZNGzixYxZ0ul5--
