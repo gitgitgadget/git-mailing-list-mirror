@@ -2,186 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 602E8C76196
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 00:35:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 279DFC76196
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 00:37:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232054AbjDDAf4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 20:35:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52098 "EHLO
+        id S230200AbjDDAhX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 20:37:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjDDAfz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 20:35:55 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E9AE2113
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 17:35:54 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id p15so36883546ybl.9
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 17:35:54 -0700 (PDT)
+        with ESMTP id S229576AbjDDAhW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 20:37:22 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D63982113
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 17:37:21 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id h8so124145237ede.8
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 17:37:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680568553;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1680568640;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7hKn17XFuLx80/b0CiPGkShrS2aDj9Z6ag/jSfS8Me0=;
-        b=fB3GBwcGDlh/BbWmwkm4QQjjqunCTAL4ZgeGgtPZ5HvU5/Hw0FNkmHXCt3h3X1oCrh
-         zVVQ6zL5oReJieKo+iuw2jUH8GbU9cwKpnfcIeov8VcBypPElRENcULqSl8F7qWdTPbL
-         +fEJC5n3igIs27MBnrynn3a+AwkDmIE5GEnMG9oEWRfZ9MWCswy/tYoGB+/SpmeTCxAc
-         B7TYzaSN5bB9DiGY4/9MzeLqkKZqevyxVRCuqQvNJ7Q5xsYhjNj5mwycVnXxE1X4fmtP
-         PaWGqHZ6VUpA0iajQgfirHx+Twg7d5ljcZU0oSqB/WL1YWwwUAcFl4swbzB7HNlfrJG9
-         mz/g==
+        bh=7docARFwhZaOSwPy7omqXWOOC188zTgpnHxrYoW/bNc=;
+        b=dM0qccoNcUse9E8ql1wthI+4mtdlVsuB3wQWXYbnR7Zn2kAGqNu4iUhPg8amO5Q7YD
+         CnScqAZ5h8q87EdX/rcaiBmB3iSFykG/NlUjTUDglX+nDUbdl/o7xe8VJayh6MkFWgHw
+         vYjEwd/UYJ/XxQnQwzliL6bPMXwbuWkV+e2V/xvfdYR7obI5LNVMxoYIRi8XsIaNkl2e
+         qQElpYCFySIgz+XhsnqrRy/zC69xlMTich4aZscPiVHuEzIIOVTlgxfRutMAymxwbaGp
+         dChMXWfIvoXF8ynmVQHNyAwi2pqt3tXMxu2z/1jfqKfQNFJWUN3A9hArykPnne3jcf0r
+         PSkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680568553;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1680568640;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7hKn17XFuLx80/b0CiPGkShrS2aDj9Z6ag/jSfS8Me0=;
-        b=j6LgXMuAbTOZYLa0axAFHpRIMNwgUk0XDEqHj/FuFRAoyu3aTltDbzgdU4bVQLYKxj
-         GwKRb+n3mYXv+ZL8vy/ZgWBiruX2Dk+EZIWwCdQJ+quMFXRzU/ian4Ujw+Q77baDUZbd
-         qYI5muRmzgBAOhrUD7Uux2mnoMzLlOhQpZ3VaCGcZnAq6scFsKEiszjg9pIETgcRwi9j
-         qLeaqynzt61V8Q5lYKqSNyzteOzauQpvpCQNH2EiQXVLnNfDHnz1BqQV+K47pt9zfhym
-         ii1B2/l4T3tN8JACCRMonnf0oGxcUmm+vCCI3wgtxA7Eh9BLFgbbRbXIBMUmuvPBYw2j
-         udPA==
-X-Gm-Message-State: AAQBX9dMHX+jfPEZCvNtseWGquaz/y/ROLDDuhoEjN+boaF61bIlv72x
-        +tD+8jOun4DoI1vdKq6n/cAmfG4agDvVog==
-X-Google-Smtp-Source: AKy350ZVzOI+zZvwo3f/eWuXIrr6N9K9kcKR6qEx26VVWnJ94/bkMNcN771YbU+iBl9rrffS8WuVVg==
-X-Received: by 2002:a25:aa26:0:b0:b6b:edd:8772 with SMTP id s35-20020a25aa26000000b00b6b0edd8772mr1332778ybi.6.1680568552977;
-        Mon, 03 Apr 2023 17:35:52 -0700 (PDT)
-Received: from localhost.localdomain (bras-base-london142cw-grc-20-69-158-191-243.dsl.bell.ca. [69.158.191.243])
-        by smtp.googlemail.com with ESMTPSA id n1-20020a05690211c100b00b7c727ddcadsm2915284ybu.63.2023.04.03.17.35.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 17:35:52 -0700 (PDT)
-From:   Shuqi Liang <cheskaqiqi@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Shuqi Liang <cheskaqiqi@gmail.com>, vdye@github.com,
-        gitster@pobox.com, derrickstolee@github.com
-Subject: [PATCH v2] write-tree: integrate with sparse index
-Date:   Mon,  3 Apr 2023 20:35:39 -0400
-Message-Id: <20230404003539.1578245-1-cheskaqiqi@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230402000117.313171-1-cheskaqiqi@gmail.com>
-References: <20230402000117.313171-1-cheskaqiqi@gmail.com>
+        bh=7docARFwhZaOSwPy7omqXWOOC188zTgpnHxrYoW/bNc=;
+        b=Twxmqx5fPunO4rtFjxE7DTcgSVXABMdUUoqITLE+V+ofDFnc5QnIr9IKYDKNpY/oeC
+         drpB8dU7Wja7KRx0vvjR36WpcPNcW2QkYXyF9ZhPScm8PQ1mc4vd/0t+/JN6xewdjvY/
+         3sO3fWYeq+uhW7jpO/wL+C3zeeiVCQk+YLNukdSOx273Xf3+ofxl6ESoGnlOji4Nu0Ui
+         Fyr4CUY/hseM+PWzzGpLfPCBl0CxE7naeZtgccJg4yUGShA7dYP68kAGlkGAAkTaiMxx
+         30gcEdh4UtzCtpbHDU7HT+gpshIve2dvoQQ2PVkufytWM9O2o7Zdusy2ekcE7NKRVhO3
+         ogww==
+X-Gm-Message-State: AAQBX9eANWhVifSNvX/fS18olX+lGJKH5aS4pW776TGOeOpoAttJIui+
+        1ryHMyYb0r7/InjrQDZ6H0NkhOZzo6LXyJzzc1E9Mc0gbeIOJr4lz0c=
+X-Google-Smtp-Source: AKy350Z6vAE8iKw6eSNyUuZD5RevBOgFH9TmJrLr1jtHDCl6MroAGmKBl2paYa8rFRlUVO3xhAD0ui7haVP7H7Tjzlo=
+X-Received: by 2002:a17:907:6b8f:b0:932:4577:6705 with SMTP id
+ rg15-20020a1709076b8f00b0093245776705mr287170ejc.6.1680568640065; Mon, 03 Apr
+ 2023 17:37:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAGP6POLrtA_9kjCwUbVB8-F+dgQbhz==oy5SsXULfspNj_Umuw@mail.gmail.com>
+ <87edp0ak45.fsf@vps.thesusis.net> <CAGP6POLVpjxO91s1dX98TLepXMrybSWq9y8qJ6b7w+e0SRJT1A@mail.gmail.com>
+In-Reply-To: <CAGP6POLVpjxO91s1dX98TLepXMrybSWq9y8qJ6b7w+e0SRJT1A@mail.gmail.com>
+From:   Hongyi Zhao <hongyi.zhao@gmail.com>
+Date:   Tue, 4 Apr 2023 08:37:08 +0800
+Message-ID: <CAGP6POJr63o67k+7BeokM-pkPbXYrQy4kcWwMXTfoeuFaPaADQ@mail.gmail.com>
+Subject: Re: git revert with partial commit.
+To:     Phillip Susi <phill@thesusis.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Update 'git write-tree' to allow using the sparse-index in memory
-without expanding to a full one.
+On Tue, Apr 4, 2023 at 8:20=E2=80=AFAM Hongyi Zhao <hongyi.zhao@gmail.com> =
+wrote:
+>
+> On Tue, Apr 4, 2023 at 2:36=E2=80=AFAM Phillip Susi <phill@thesusis.net> =
+wrote:
+> >
+> >
+> > Hongyi Zhao <hongyi.zhao@gmail.com> writes:
+> >
+> > > Hi here,
+> > >
+> > > I want to revert a previous commit partially, as follows:
+> > >
+> > > werner@X10DAi:~$ git log |grep -A3 -B5 -m1 texstudio
+> > > commit f18fbd1e16a1ca4215621768d17858c036086608
+> > > Author: Hongyi Zhao <hongyi.zhao@gmail.com>
+> > > Date:   Sun Aug 1 20:01:02 2021 +0800
+> > >
+> > >     deleted:    Public/CTAN/IDE/phonon/compile-install-phonon
+> > >     deleted:    Public/CTAN/IDE/texstudio-org/texstudio.git.sh
+> > >     modified:   Public/repo/github.com/Dushistov/sdcv.git.sh
+> > >     deleted:    Public/repo/github.com/goldendict/stardict-relative/b=
+igdict
+> > >
+> > > More specifically, I just want to revert the following ones:
+> > >
+> > >     deleted:    Public/CTAN/IDE/phonon/compile-install-phonon
+> > >     deleted:    Public/CTAN/IDE/texstudio-org/texstudio.git.sh
+> > >
+> > > Is this possible?
+> >
+> > If you are comfortable with git-gui and gitk, then I would say just
+> > revert it, then click ammend the previous commit in git-gui, and click
+> > to unstage the changes you DON'T want to revert, then commit.  If you
+> > want to do it from the command line, then git-revert, then git checkout
+> > HEAD~1 -- ( the other 4 file names here ) will get back the other 4
+> > files then you can git commit --amend.  Alternatively you can skip
+> > git-revert and instead git checkout f18fbd1e16~1 -- (the two files that
+> > you DO want to revert), then git commit.
+>
+> Thanks for your tips. I've also figured out the similar solution based
+> on the comment here [1], as shown below:
+>
+> $ git show f18fbd1e16a1ca4215621768d17858c036086608 --
+> Public/CTAN/IDE/phonon/compile-install-phonon
+> Public/CTAN/IDE/texstudio-org/texstudio.git.sh | git apply --reverse
+> --3way
+>
+> Because the commit I want to revert is done a long time ago, which is
+> not the parent of the commit I'm currently on, so I can't use the `~1`
+> which indicates that I want to go back one commit from my current
+> position.
 
-The recursive algorithm for update_one() was already updated in 2de37c5
-(cache-tree: integrate with sparse directory entries, 2021-03-03) to
-handle sparse directory entries in the index. Hence we can just set the
-requires-full-index to false for "write-tree".
+Sorry for my inappropriate description above. In fact, it's a more
+concise method which also will do the trick, aka, as follows:
 
-The `p2000` tests demonstrate a ~96% execution time reduction for 'git
-write-tree' using a sparse index:
+$ git checkout f18fbd1e16~1 --
+Public/CTAN/IDE/phonon/compile-install-phonon
+Public/CTAN/IDE/texstudio-org/texstudio.git.sh
 
-Test                                           before  after
------------------------------------------------------------------
-2000.78: git write-tree (full-v3)              0.34    0.33 -2.9%
-2000.79: git write-tree (full-v4)              0.32    0.30 -6.3%
-2000.80: git write-tree (sparse-v3)            0.47    0.02 -95.8%
-2000.81: git write-tree (sparse-v4)            0.45    0.02 -95.6%
-
-Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
----
-
-* change the position of "settings.command_requires_full_index = 0"
-
-Range-diff against v1:
-1:  d8a9ccd0b3 ! 1:  8873c79759 write-tree: integrate with sparse index
-    @@ Commit message
-     
-      ## builtin/write-tree.c ##
-     @@ builtin/write-tree.c: int cmd_write_tree(int argc, const char **argv, const char *cmd_prefix)
-    - 	};
-    - 
-    - 	git_config(git_default_config, NULL);
-    -+	
-    -+	prepare_repo_settings(the_repository);
-    -+	the_repository->settings.command_requires_full_index = 0;
-    -+
-      	argc = parse_options(argc, argv, cmd_prefix, write_tree_options,
-      			     write_tree_usage, 0);
-      
-    ++	prepare_repo_settings(the_repository);
-    ++	the_repository->settings.command_requires_full_index = 0;
-    ++	
-    + 	ret = write_cache_as_tree(&oid, flags, tree_prefix);
-    + 	switch (ret) {
-    + 	case 0:
-     
-      ## t/perf/p2000-sparse-operations.sh ##
-     @@ t/perf/p2000-sparse-operations.sh: test_perf_on_all git checkout-index -f --all
-
-
- builtin/write-tree.c                     |  3 +++
- t/perf/p2000-sparse-operations.sh        |  1 +
- t/t1092-sparse-checkout-compatibility.sh | 28 ++++++++++++++++++++++++
- 3 files changed, 32 insertions(+)
-
-diff --git a/builtin/write-tree.c b/builtin/write-tree.c
-index 45d61707e7..4492da0912 100644
---- a/builtin/write-tree.c
-+++ b/builtin/write-tree.c
-@@ -38,6 +38,9 @@ int cmd_write_tree(int argc, const char **argv, const char *cmd_prefix)
- 	argc = parse_options(argc, argv, cmd_prefix, write_tree_options,
- 			     write_tree_usage, 0);
- 
-+	prepare_repo_settings(the_repository);
-+	the_repository->settings.command_requires_full_index = 0;
-+	
- 	ret = write_cache_as_tree(&oid, flags, tree_prefix);
- 	switch (ret) {
- 	case 0:
-diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-index 3242cfe91a..9924adfc26 100755
---- a/t/perf/p2000-sparse-operations.sh
-+++ b/t/perf/p2000-sparse-operations.sh
-@@ -125,5 +125,6 @@ test_perf_on_all git checkout-index -f --all
- test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
- test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
- test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/*"
-+test_perf_on_all git write-tree 
- 
- test_done
-diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index 801919009e..3b8191b390 100755
---- a/t/t1092-sparse-checkout-compatibility.sh
-+++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -2055,4 +2055,32 @@ test_expect_success 'grep sparse directory within submodules' '
- 	test_cmp actual expect
- '
- 
-+test_expect_success 'write-tree on all' '
-+	init_repos &&
-+
-+	write_script edit-contents <<-\EOF &&
-+	echo text >>"$1"
-+	EOF
-+
-+	run_on_all ../edit-contents deep/a &&
-+	run_on_all git update-index deep/a &&
-+	test_all_match git write-tree &&
-+
-+	run_on_all mkdir -p folder1 &&
-+	run_on_all cp a folder1/a &&
-+	run_on_all ../edit-contents folder1/a &&
-+	run_on_all git update-index folder1/a &&
-+	test_all_match git write-tree
-+'
-+
-+test_expect_success 'sparse-index is not expanded: write-tree' '
-+	init_repos &&
-+
-+	ensure_not_expanded write-tree &&
-+
-+	echo "test1" >>sparse-index/a &&
-+	git -C sparse-index update-index a &&
-+	ensure_not_expanded write-tree 
-+'
-+
- test_done
--- 
-2.39.0
-
+> [1] https://stackoverflow.com/questions/5669358/can-i-do-a-partial-revert=
+-in-git
+>
+> Best,
+> Zhao
