@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35E5FC76196
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 00:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5C7BC76196
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 00:28:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231686AbjDDAUR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 20:20:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44852 "EHLO
+        id S232099AbjDDA2y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 20:28:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjDDAUQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 20:20:16 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A746D171D
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 17:20:14 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id t10so123851022edd.12
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 17:20:14 -0700 (PDT)
+        with ESMTP id S232157AbjDDA2t (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 20:28:49 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A040F5262
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 17:28:38 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id y4so124118905edo.2
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 17:28:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680567613;
+        d=gmail.com; s=20210112; t=1680568117;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/z37p4hm/+VAnRxWPTbtuo99NnYwFGWbqOl/Pa+P02c=;
-        b=Jefrh7L+rNSenyIoQx21OsqG1oihdCKiJQvc/h5WSTXReHLquhf7EmvIaogz3zLjTZ
-         KxBQ7W+kQOKe7VCHeQXJX+e+A175jSVPQwFgwYpA5tifqJuEh/BqZX8dgm6OGqxJzd8/
-         x6wbgmuO4pgr3PJM3ZXLWnmvwelF7lg3I7m2xTJo4PamGMw9hu4KllVMpJT0+mMdl1s7
-         FUnpYWwUhPME/3Smpk9UNYEvbDuwOwss+1mTxOd3crOqogPCRr8Ze1YkclBjiFIEmh/J
-         6qq01dkYVpPcNajpTbaBE+UR+FLEheJI73WwzT7Pi291OQhEJar69EAl81caynYtfPCf
-         KzSA==
+        bh=naAqBM8E2OFkZmg4IMO8eHskLQa/ib2V28AZPKj2OAo=;
+        b=BPV9iT4Y1OlWT3Z3M0tHFaUIXg7UngkTZg+WJOrroLLPUfaigI7/0gxP2VLwlGAtSC
+         Xk5bt8F6uj+1P67i8W09lqQ8gRXXqT6WFcs6mJAJ60ux7bIZK011D4DJrT7Uw3X51YeC
+         yZlHvGNTlUCEHxGngewg0f1svQQ52JS9EyCeQ7mflgKlVUUKnKqDKZ0jHUS4mkHP0dMO
+         wgkaqAgYs03BTkYfVigTBco4AI/fm8rVgrVdFBWR3sRIVZczglTTP3sts2qEx9eA83QZ
+         Bl4bRZuvDbknnyp6oWyDB4XkwKhgOfTd3S/G+Bhg+xLLSLEAIka7h5RX8iluugMr/nH9
+         7P2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680567613;
+        d=1e100.net; s=20210112; t=1680568117;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/z37p4hm/+VAnRxWPTbtuo99NnYwFGWbqOl/Pa+P02c=;
-        b=e90QNw+rUNQCiBZhlgZtobGk98osuNXYYUDKVPBmrsdhkyf6SpRLmCbLArzAsY47ir
-         5chAk6k9K39amra9mM4n1RSd0BS0CPMazJefw1DlGycwL5V/wv1qko44AhlpQ6M81mRo
-         DYuRjNbMFdaycVHThcvqeM/Zgy7yumgVEZoaaTzLXf1zinp2s4KmqwnEW3K0+RzuwT9N
-         Hr8G8q/b39FIvJzWOOoPJty2LauOaXm1bvvufj6Li2UMPi/p/67VShKwxo9lfrqiMaod
-         TN9f/Qqb4Ct2o7C+iNcfxl+tpK4lN7LuNIt1DNEFYKdPZ6PZvRWJDkqvb7aclxTB3aRK
-         UTtw==
-X-Gm-Message-State: AAQBX9fQ4H/jo2UoNel60NT6jcCvF6qX2szrRlxkA7LsOvaWTB9F5OF+
-        bicOSu9rzKAjM1W7SV2B0UEEcR+zxTmwiQZaAvO0I29NqD8r4jolIzg=
-X-Google-Smtp-Source: AKy350agDBanV1wsqr/7kZ9GqOtalsqr2+8tEPJ/pCvXSOgMFlVGTkWhmkHdfiMCBPz8GQmN2oDcoYq/DAseEF5SQ0M=
-X-Received: by 2002:a50:d65a:0:b0:4fc:f0b8:7da0 with SMTP id
- c26-20020a50d65a000000b004fcf0b87da0mr518694edj.1.1680567612940; Mon, 03 Apr
- 2023 17:20:12 -0700 (PDT)
+        bh=naAqBM8E2OFkZmg4IMO8eHskLQa/ib2V28AZPKj2OAo=;
+        b=eP4YHwCuJpsXrP1LzqNydZnk/aW85DI4tkNhUSyiq/jfz9cWK/ASD6oJSpNmwEhH2e
+         OH/eP+f6ozntuBET/dnqDYmsFJHZ2YSwgFzLEnt6oRaCwBvDAxJzjisOv//U0dELH60u
+         HVYdJogmlbCSr6gHJmfAnyPHQ10FNWM8YpEscXgCOwyGTaX+aSAnC/zEOJZ1hgdMUqTU
+         w6/BoBIqu9h1VUGSA1qw1utJV7zy0/1zDctPi/wnKP8sfeVVXSW2LHm5j7miy8fXozgc
+         K97iGMA4jqdo6j9eT+2h7m0exyczAsC7b/aK5xweuu1vQiUGRasFiNuItWIRMic3tb3P
+         DaTw==
+X-Gm-Message-State: AAQBX9dIP3gy0XHp5Rk2K4BWJ7pt3x9LHnc3GqAnEGMXmN0CCIqokfQr
+        NnYj1klMY/ZsAB8EUMXJIB5pFnSTOQ0yTIQjiSM=
+X-Google-Smtp-Source: AKy350ad69jvC2fWqyuNvEYDyMHmnqG9OWZtvmLE9R5Sjd+HvwHY2/QSMqIlMY+1HLmMuvh6r/SNy+WmREhhFbGZ+9s=
+X-Received: by 2002:a17:907:6c17:b0:924:efbb:8a8b with SMTP id
+ rl23-20020a1709076c1700b00924efbb8a8bmr276618ejc.6.1680568116934; Mon, 03 Apr
+ 2023 17:28:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAGP6POLrtA_9kjCwUbVB8-F+dgQbhz==oy5SsXULfspNj_Umuw@mail.gmail.com>
- <87edp0ak45.fsf@vps.thesusis.net>
-In-Reply-To: <87edp0ak45.fsf@vps.thesusis.net>
+ <20230402141613.yeseo5fj3lafuf7w@tb-raspi4>
+In-Reply-To: <20230402141613.yeseo5fj3lafuf7w@tb-raspi4>
 From:   Hongyi Zhao <hongyi.zhao@gmail.com>
-Date:   Tue, 4 Apr 2023 08:20:01 +0800
-Message-ID: <CAGP6POLVpjxO91s1dX98TLepXMrybSWq9y8qJ6b7w+e0SRJT1A@mail.gmail.com>
+Date:   Tue, 4 Apr 2023 08:28:25 +0800
+Message-ID: <CAGP6POLmDtwCnqZN3yBaiYj3VpdpH=bNnKhX6Dfu0NfyVVzYCA@mail.gmail.com>
 Subject: Re: git revert with partial commit.
-To:     Phillip Susi <phill@thesusis.net>
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
 Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -62,12 +62,10 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 4, 2023 at 2:36=E2=80=AFAM Phillip Susi <phill@thesusis.net> wr=
-ote:
+On Sun, Apr 2, 2023 at 10:16=E2=80=AFPM Torsten B=C3=B6gershausen <tboegi@w=
+eb.de> wrote:
 >
->
-> Hongyi Zhao <hongyi.zhao@gmail.com> writes:
->
+> On Sun, Apr 02, 2023 at 05:17:30PM +0800, Hongyi Zhao wrote:
 > > Hi here,
 > >
 > > I want to revert a previous commit partially, as follows:
@@ -90,30 +88,19 @@ dict
 > >
 > > Is this possible?
 >
-> If you are comfortable with git-gui and gitk, then I would say just
-> revert it, then click ammend the previous commit in git-gui, and click
-> to unstage the changes you DON'T want to revert, then commit.  If you
-> want to do it from the command line, then git-revert, then git checkout
-> HEAD~1 -- ( the other 4 file names here ) will get back the other 4
-> files then you can git commit --amend.  Alternatively you can skip
-> git-revert and instead git checkout f18fbd1e16~1 -- (the two files that
-> you DO want to revert), then git commit.
+> It is.
+> Find the last commit that had those 2 files, in other word the commit
+> before f18fbd1e16a1ca4215621, say it is xyz.
+>
+> git checkout xyz -- Public/CTAN/IDE/phonon/compile-install-phonon
+> should get the first file back into your working tree and staged.
+>
+> (Of course, this is out of my head. And you should be able to "restore"
+> both files in one go.)
 
-Thanks for your tips. I've also figured out the similar solution based
-on the comment here [1], as shown below:
+Thanks a lot for this nice trick, and it works like a charm.
 
-$ git show f18fbd1e16a1ca4215621768d17858c036086608 --
-Public/CTAN/IDE/phonon/compile-install-phonon
-Public/CTAN/IDE/texstudio-org/texstudio.git.sh | git apply --reverse
---3way
-
-Because the commit I want to revert is done a long time ago, which is
-not the parent of the commit I'm currently on, so I can't use the `~1`
-which indicates that I want to go back one commit from my current
-position.
-
-[1] https://stackoverflow.com/questions/5669358/can-i-do-a-partial-revert-i=
-n-git
+> Good luck.
 
 Best,
 Zhao
