@@ -2,112 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9D35C761A6
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 13:30:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 841DFC761AF
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 14:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234118AbjDDNai (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 4 Apr 2023 09:30:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39558 "EHLO
+        id S235671AbjDDOLA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Apr 2023 10:11:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235026AbjDDNag (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2023 09:30:36 -0400
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5988D358B
-        for <git@vger.kernel.org>; Tue,  4 Apr 2023 06:30:34 -0700 (PDT)
-Received: by mail-oi1-x235.google.com with SMTP id w13so12813777oik.2
-        for <git@vger.kernel.org>; Tue, 04 Apr 2023 06:30:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680615033;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7Dp5pAZeAhl6Dlb996jYKEzkjfchLLr1AyPpbuRPgDw=;
-        b=f7xzAycoYYxR0LRVNhOuPX4T0SzCghUO46OAL99PyGqC3aloobFL44REoIjZH/vPn4
-         dOxk1pJXXEi2uqD7zlRAi5UygBVyhjzpMhrj2rWDqQ7dxIg5SNg32+zaq2smNfCKCczZ
-         cSmf2/DacyWm2TMLhViKLzqxqUZ/2+DUbswiwl/+ZEIk+Q0UH4lr9MuE+s41yY0Zko8i
-         BhxNLwQb9I1k2xmCNjL3r5LfLQf+h1RxVAfBp8ALJXACvVOE7NqPIdjrh5j/3Fq7I6mi
-         km+1u5cPgzwiAsNjFzyiWN3QbM1pNSnlIUSHAXyELW+86Pzm3KqhXMIzeAJ99dZUhhh9
-         kKjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680615033;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7Dp5pAZeAhl6Dlb996jYKEzkjfchLLr1AyPpbuRPgDw=;
-        b=1t871AYnpUpzuvBT816DORRe4JrJUz2rr19fNDBFKFM0emg0Vx8udReDYA4CNqfUtV
-         M/lXUnM4XFbv4qxCvUl8N/K0qr71xIp76GTdAqphWOIl3Z2npTwiH1KYM+oxfRmctg+F
-         jX8sQiEKkiK2fOzmR3OpK6RuGtKyciisyekL0f5gU4i50Rkj5zdrXz0TbJfuqEIb/5OL
-         O/h1Zmu1DwlYhxLy9eWOL4NFiQxnXOX1ZTqevorwS3QX8rgkjta4KyOEBBNrkKZHtm4P
-         Pqku3PbRYgwybmMh+a6/K7o3ZlMDoWbcbfCYfaYgrxIEkkG+LdQGeMyK0RrI+2tw8L9j
-         rScw==
-X-Gm-Message-State: AAQBX9fznIT5MlKaYNYXHKeq1K01q9daR+8yaUiY4YGT+TafnjwjYRpn
-        dbITbv48p5bAxUjXvAgMlf10qEj+vrbVMZk/
-X-Google-Smtp-Source: AKy350a0hEHsqZDS/c3m+XnHX1rBFG5mW0Zj8il3T68qGk/fCSLdTCsKQ8rn8Fb8NvOP7E4nhdCW8A==
-X-Received: by 2002:a05:6808:2813:b0:387:3a49:4733 with SMTP id et19-20020a056808281300b003873a494733mr1081544oib.59.1680615032130;
-        Tue, 04 Apr 2023 06:30:32 -0700 (PDT)
-Received: from [10.136.10.190] ([194.199.146.45])
-        by smtp.gmail.com with ESMTPSA id r204-20020acadad5000000b00383eaf88e75sm5179469oig.39.2023.04.04.06.30.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Apr 2023 06:30:31 -0700 (PDT)
-Message-ID: <ff7bb1f4-e35a-66ad-1116-6bb2b906fed3@gmail.com>
-Date:   Tue, 4 Apr 2023 15:30:33 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2] branch: improve error log on branch not found by
- checking remotes refs
+        with ESMTP id S235330AbjDDOKy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2023 10:10:54 -0400
+Received: from CAN01-YT3-obe.outbound.protection.outlook.com (mail-yt3can01on2080.outbound.protection.outlook.com [40.107.115.80])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 695452D79
+        for <git@vger.kernel.org>; Tue,  4 Apr 2023 07:10:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Aej4xnWf86CCH8SG3qmn9nwwwRDpXTp1dLnGoucFdyp+cGVC0mUMPP90qXpZYSLxK7JCCGeF3tEHiDJ6UpHIGKyMIhY60lwUw0b/5e4TwfxtRYmj/D8g1HM1Y4xHo3qTPDuiQXT1yH/0ZmdwGEumniRfTuclgMnRLxdrkgwdIP0VWdWTD8/pr7kspmv3HStjySgYJVWGMRpqrXX+KL5SJW0mER7P+R2u8iRMlSh2/536loozL7TE2z1SK20gr+im238YfhjkE7X7G6vASo8AVDxpjAZc9ptwap+2r5wAt1okb03ANKSzFd1RsStO26B/OzzeHg4z7IY4L9iuEWyHBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=43Ftpnn5vBaMruoFIdqZ0scfEWT+5Gezh8HzJHuZUYI=;
+ b=mbenTAGbK0HApnDVnNauVdiDrm4oJizxvytyuYejPtaNJ1LPleHAXI4vmQHcB9rvL+/qvhwd5xE33u4VVgCXQk7LKrjNKuh1LlSq5o9xkg10LlvlYlZ1a33p5+7bpr/hs/ZG34l82CPnICK9BgpMF27cgIMCK8GRlVCeMBU4vxikwS2cbvXtabQxeeBXYOb36g+nzdFQXktMZsR1JF0pRkbRy9vqgyxNjfkrKvq9intTq6NoONKRvc8gvWcK8/FFY6DVO+gW8+tqCjwyX258mw69NLYlDnVAjVTmViDdPix7prF7qgAtuIiLREsth/Ry55PcYLPCV9s8HC7XUT8fJw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=pqm.net; dmarc=pass action=none header.from=pqm.net; dkim=pass
+ header.d=pqm.net; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pqm.net; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=43Ftpnn5vBaMruoFIdqZ0scfEWT+5Gezh8HzJHuZUYI=;
+ b=ZYKMlCsE/Vj4Ld8xaffuWVy8u27n+qsH8OLypBTeUaZbWuVOfoz5VX4N7fN2QkSio1hgk4ioKc26w1QIcB0mA2P+yKoiT+AwFtILPwapKngSyBwStMCT9M/scCYXjvqGMOTSp0bKLfB4t1pSgy7NACXMNAHula6GxM0KH+R/83c=
+Received: from YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:da::5)
+ by YT3PR01MB5842.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:66::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6254.35; Tue, 4 Apr
+ 2023 14:10:51 +0000
+Received: from YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::5cd3:5a92:347f:73c0]) by YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM
+ ([fe80::5cd3:5a92:347f:73c0%5]) with mapi id 15.20.6254.035; Tue, 4 Apr 2023
+ 14:10:51 +0000
+From:   =?iso-8859-1?Q?Fr=E9d=E9ric_Landry?= <fred.landry@pqm.net>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Git fsmonitor
+Thread-Topic: Git fsmonitor
+Thread-Index: Adlm/sv4v3lJVuUFTSS72doHUgizPgAAFr5g
+Date:   Tue, 4 Apr 2023 14:10:51 +0000
+Message-ID: <YT2PR01MB98749C01D9FE7D040F80A51DF0939@YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM>
+References: <YT2PR01MB98744AB0A168B729E89D57AFF0939@YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM>
+In-Reply-To: <YT2PR01MB98744AB0A168B729E89D57AFF0939@YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM>
+Accept-Language: en-CA, en-US
 Content-Language: en-US
-From:   Clement Mabileau <mabileau.clement@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        ClementMabileau via GitGitGadget <gitgitgadget@gmail.com>,
-        mabileau.clement@gmail.com
-Cc:     git@vger.kernel.org
-References: <pull.1476.git.git.1679478126.gitgitgadget@gmail.com>
- <pull.1476.v2.git.git.1679515402379.gitgitgadget@gmail.com>
- <xmqq355wctjq.fsf@gitster.g> <cffce108-c39d-f13f-9fb6-60624f7e7cea@gmail.com>
-In-Reply-To: <cffce108-c39d-f13f-9fb6-60624f7e7cea@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=pqm.net;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: YT2PR01MB9874:EE_|YT3PR01MB5842:EE_
+x-ms-office365-filtering-correlation-id: 807d2ac6-f0ac-4b66-37c4-08db351665f3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: pSP/oSmUkeGxzm7OT1D/+/a01vLNjivsqUOEg5qMvS4Z3ETBO4ZqnWkxWnAeLD+M5sUuMGWjR+BNocJQlhnQqOEyNie/plyU1hRgBr5+/rZHG5RGxEvRBblVhtSzkJkTZHBPE0hujkNUVqP7IOC/5Rfq4LL9jltwkU1/ltDoQbVBtT4zhHGnn3A/KCjKTQoZHJ4VOFC2YKxTzuYS3Oe1iyYkBrkIrJ6lAppLL4Xzk9KaYOEMjFjFVX85EbcAo8JkwibAnZZExaK6SBDOzpfGRRajq3JSJc0vul2vbF8K4Gazm9iM8HOJgtJkczbBKav7L1q+mMHy+RkE/hJE0IT3YiSc4scyZSwS2HmnJjcgHpnfyaOGg8oUmM7E2K8pgS/AUhO/qZiCzItei5E4/F7OLhSqFSde4O7fpJDdtkQxJu0XkyyCU6AE56cxZddjmJnpx8sQScG/PZJ3RJTvLENwsfWbOiJtw1OlhPMO3AZ6fyLbcaOrTQDBU5M1QCRvlDpPSw4PNBuE1oA2I29k3dum0jZSuXfhorzlJz6sf4Gj4tC6PwmIRGngEtNn3+5L/7xb9BPgZOwEnkN9OtdDjhmy4gVDSVF7XG8pBPwEtbjv+MsBYavb2lBGSjVfuSGFTJw5
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(376002)(39850400004)(136003)(366004)(346002)(396003)(451199021)(3480700007)(38070700005)(7696005)(71200400001)(64756008)(66476007)(66556008)(66946007)(76116006)(41300700001)(6916009)(8676002)(66446008)(478600001)(316002)(86362001)(38100700002)(6506007)(9686003)(55016003)(186003)(2940100002)(122000001)(8936002)(7116003)(2906002)(558084003)(33656002)(5660300002)(26005)(52536014);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?0rxU/UDVRDmAjaBtLGh64+wnQ4GTZrr86JSVbEiACeK7MUlIkdD8CmSxjk?=
+ =?iso-8859-1?Q?KsbgUSiKdksDSXpdfpX9UKbpzpXpG9xfIT8cNC0WfsrHCllOXYPeCGv5iX?=
+ =?iso-8859-1?Q?wgCM69QPg8V78EdqNPO+fJLyU0pJ5/hWIghjcBlMTb6DxCVyOkej85ewb+?=
+ =?iso-8859-1?Q?VbXASuXFMwtlmpX/AI+O4B0fnNbbWiKLp14X4Rs+qQ1yhJfGVR0M1/VOlo?=
+ =?iso-8859-1?Q?aTffpa+el6pa1/nd/d1CNVLlXz9vwQHY9gJfronR1GFbYYiY9Gse+XRjym?=
+ =?iso-8859-1?Q?c5H9zQYIPK9NQ3FwIzW6W6DMgeQotKWVeV23f6VV9TPuJQ+drSSvbeQV1a?=
+ =?iso-8859-1?Q?oOVxMl+IQTGB0iPkAtQ/GL7LiIBWIOwcUqkr/OYeDaBRNVUh0Ic3knEDk1?=
+ =?iso-8859-1?Q?A8smBFujf7KNJpQRitQfVBHCsZRfEwa0xGI0xqNs+zEnMbSdi81JdtpML/?=
+ =?iso-8859-1?Q?5grw/YXJW4sYWgtqh2OPuyDucPv8z7ktkShvj4Q2rOoIGpXBYbWZJa21Ks?=
+ =?iso-8859-1?Q?RFL3t8p8Guar+BiIWOzbd+WaDrqwqog9cRE0jQiAYDq9DyPRjbOUSStRec?=
+ =?iso-8859-1?Q?KfSP01TO/KGb5BHpisgWVb4vjtGX3AKiirCBWOY5xSqHodHXCyNwpz6faw?=
+ =?iso-8859-1?Q?IZdBs2JaBMYcdC9OQ3Son+qIqqBVR+v9OFDatNTOxzmNkA7HnLAWmdYW9+?=
+ =?iso-8859-1?Q?K4UtLA10PqW+CyBm8e72+7ZXLWbZ3JK84e2LtST7BEWohHcSKuoEug4TUu?=
+ =?iso-8859-1?Q?mjQlz2PxR9aTpOQtq1odOWO1513DgOsLDK5SxcUUWmZlGz/OLpgDh7Tq04?=
+ =?iso-8859-1?Q?PvRipEbwtDs7HrjU49WYezbTWZ2Jlp6ARiKZ4rjjSis9cy3ntn0dDTeVw5?=
+ =?iso-8859-1?Q?fS4j4l7BTqJNiOiGIiGLMaRSL3JSYSj5jWZBlddRyz9L7i4sJZ3FnjAoLG?=
+ =?iso-8859-1?Q?Jv88HWfLZaYT6ijcQWP8GNkxBDWaztBZ0enG/Nkfiam0ICp1Vg7ddEGf+A?=
+ =?iso-8859-1?Q?jGx9jZS8VJjgX9fS6tbhlM6HvUzR8mq7Uzhv4K9acWSDRPEj9tcEQnuVoL?=
+ =?iso-8859-1?Q?iK/cqYMZHfMNJdb695Qo8r4qGiHaegbK36Nh3YKAi0IXs97JyewibICjTs?=
+ =?iso-8859-1?Q?AeIkhFsQ2ZU0WTomJl09+NeC10O0/j1E34xrImQrW7pkBUsQBdz4EQ4Ajz?=
+ =?iso-8859-1?Q?Nvljj4b31mg+0dhjX0/U/mJ5VbaN3Hr+g0VHAySUDonu4ivujBRGZi5IVV?=
+ =?iso-8859-1?Q?Dm1wDjwoDWvJhqJAn/gGGVxLno9u5cOU7kkccMIOApa00kuFXzcSxlvNLy?=
+ =?iso-8859-1?Q?zPMngjPvPP7X+0T1JhA2KbyVJoFwMXB50yVAxbNi6iZ0THvq/t0PniSB15?=
+ =?iso-8859-1?Q?wbJwADCgcaHMqBvFNiU3L0Rt3N3flL6w5/omu50yDD2KQUWAPkZ0BVJJzT?=
+ =?iso-8859-1?Q?xdcHGwuh4FvsmFcjpu303jSuYNs7Y3287B+1jxrKE+MbQV3U2Odn5ugjlO?=
+ =?iso-8859-1?Q?jktY7YtEq9vLwQz7z/sb/YTmIRfonNUvc6jcSsEtSLjnzd+4DNLRIUJsLO?=
+ =?iso-8859-1?Q?mNaq4wBX9byQda35a7unlMzuNTTGQw4EiJQXT27gkMzj/xtdiQqybhBf/o?=
+ =?iso-8859-1?Q?pvowxXWL1Xjlw=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: pqm.net
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: YT2PR01MB9874.CANPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 807d2ac6-f0ac-4b66-37c4-08db351665f3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Apr 2023 14:10:51.8914
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 1e3b41ca-ca79-421e-8e11-8dba90c2f296
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 34dgQpY6QVdOWmE53G5djbKVRYwxgHwANOGpstYy9ODyFtsnncRZuKlfB3hdzUTtIjrK5xkb6LUCzTxYM0VTFg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT3PR01MB5842
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+I could not find details about which platforms are supported for the fsmoni=
+tor feature. I am running debian 10 servers and git-2.4.0 and I am getting:
 
-On 3/23/23 16:51, Clement Mabileau wrote:
->
-> Well maybe it got it from the original commit or from my GitHub
-> username, I can't know for sure. But sorry for that :/ , I'll make
-> sure it's fixed it for potential future contribution!
->
-> Before fixing anything about the code maybe I should first address your
-> last point which is the interest of the patch in the first place (and I
-> should have started with that...).
->
-> A few months earlier, for the first time, I had to delete a remote ref
-> (because of a fork I fetched but no longer wanted: maybe a designed
-> solution exists but I'm not aware of it). However, despite being used to
-> git I had a hard time figuring out how to do it, I tried different
-> things, one was `git branch -d origin/<branch>` (I recently discovered
-> that it was written in `git branch --help` but I didn't find it at the
-> time). Even googling it proved difficult (because of a poor keyword
-> choice I must confess), most results was dealing with deleting remote
-> branches, such as `git push remote :branch`.
-> In the end, I finally understood that I needed that `--remote` flag and
-> really regretted that there wasn't an hint message to head me towards
-> the solution when I was getting close to it.
->
-> Now I hope you'll understand why I suggested this patch. Maybe I'm the
-> only one that ended up in this situation, in this case I'd understand
-> that you would no longer be interested in the patch!
-> However if you still are, I'll be happy to make the modification you
-> asked for.
->
->
-> Yeah probably, I'll fix it along with the other.
->
-> Thanks for reviewing this!
+fatal: fsmonitor--daemon not supported on this platform
 
-Well, it would be nice to have an answer in order to know if I should 
-abandon this patch or not :)
-Thanks!
+Thanks in advance.
+
+Fred
