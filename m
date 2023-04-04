@@ -2,200 +2,368 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A398C76196
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 01:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16836C7618D
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 02:32:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232971AbjDDBYF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 21:24:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44744 "EHLO
+        id S232550AbjDDCcD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 22:32:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232671AbjDDBXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 21:23:19 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57FDE3AB8
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 18:22:51 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id i5-20020a05600c354500b003edd24054e0so20870263wmq.4
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 18:22:51 -0700 (PDT)
+        with ESMTP id S231967AbjDDCcB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 22:32:01 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BFB7CF
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 19:31:57 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id gp15-20020a17090adf0f00b0023d1bbd9f9eso34699887pjb.0
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 19:31:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680571369;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1680575516;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3fK+r8mnA24uK6iRPH+kij2kFJOKntNx89h8MnE5IZI=;
-        b=eYXu5SUzheJCpuAIis7aM7y6rXMj3qz0gfRx8mEBIdOt495CvbwmA6ozwBqRaRsuXe
-         HAWqWuWZnebu6087na6/Zo4V4vnkCo8mapeE2zTBomzQltDjI4yhkgvyjz4hZiHxVJm3
-         4byFhjllqW16fIGdNFbOU9EoF19vjmb7ZjcDCaX7WkaVscrwPRybw5GRUkHMR4JVD22X
-         TOkQF3ejrDwCNR+0iBYt62e5QBtS8tyZRcfdbz5fCUHylp2s+xJT228c68aZ68LNa/QN
-         LJmq9hmg6GzxFOd/fnUL1EMnYhC3KVN7PD5wx586OkdwEeapQffCulqkBnaHT/WHNpDB
-         KPEw==
+        bh=qwisBNhG3K4qGHZB9Yu3UfiqpmVyuaAe7uTFrr56kZk=;
+        b=Vg2C072kQKAF3iGSjoxBl4UrTClNEvm8HJs5Qfb3oCygcfR5R6KlPXwETebghvtMa+
+         Zt5LnJQbF99VKwBEJPjDRq6Fpmhx91+hGlRFvC79gaYUcQ9bIRnowgStYyHJbAv78ZUO
+         fEgiKfyFw0vMr9vWbijbBJ9vbXzwPBLKaSf9Y/oHAz+HsGCvYzrv1JLg3Er31k4QZyHy
+         uxk2Z624N1T5B1XfQyGwc+huD7XpdPSPX4vMEXp8O6j+0RQkOG2SFa84Ht5ECpuWewYi
+         a18c4dR0fldOYgZXEQRXOEwmFqkwANK97Ow7kPT92K5nDf/lUbB97fUd2e4zU162HRep
+         yaiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680571369;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1680575516;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3fK+r8mnA24uK6iRPH+kij2kFJOKntNx89h8MnE5IZI=;
-        b=z53ynbzQuzDYLlyUMHZ+fnxVtKZNijN0x0rrwmG0TcLALcq5ijcQRkcqpusepdDiSZ
-         EWQ36G63wmpZRo5fJW2xTrSMTTNRmFxP+2+7EZMw8XxMhjxlEZz+6K2aH1D0CIIC6mDh
-         r8SRzKYAwuxnVTljK86eq96iS1nkmrZEtTUMZxIZ+A6Fb8Gh2wok/ayAKjtcHujZdVQR
-         2zBCkDeUluo7FCvaix02GfpdGbc711Gb8XRq5SXXgCmw2RHdrb8uab9hsfANzNturdDu
-         n2X81k4kJRQE+4N3gvi/eFZtAjPNHrw5/zz7fLNMTAGT0HoAa8kNtxoCcgpa98ZYhb8Q
-         7t8g==
-X-Gm-Message-State: AAQBX9cq+WeTTqB5itv1O1t/JBf1rJSYkKoWeAcAeWs7L5qQ/LGqAwIk
-        3uFteJNLlOLxFzm81xOPWR2WgQ0U0mw=
-X-Google-Smtp-Source: AKy350YIxZQJFDm2bX/yB8lCJg1XZT33Xwg76qDK/saNZBinn/rVr8NpmvKd1yBDLSFVEKlr4jblpA==
-X-Received: by 2002:a7b:c7d6:0:b0:3df:eecc:de2b with SMTP id z22-20020a7bc7d6000000b003dfeeccde2bmr833020wmk.11.1680571369718;
-        Mon, 03 Apr 2023 18:22:49 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g25-20020a7bc4d9000000b003eae73f0fc1sm13433078wmk.18.2023.04.03.18.22.49
+        bh=qwisBNhG3K4qGHZB9Yu3UfiqpmVyuaAe7uTFrr56kZk=;
+        b=XIIYsuXLxCKsGtO1FuiX+5DjaKcLHGd5zy2W4VhI0cYBQxFfRa1t7v5TgAOaQToMvc
+         ccDZGQqovTDFi5hLFRGpLA2Yer8+jKCgNoktvlSbyARVmCNcnWQeoSuMkAkM1zWhtrdK
+         VMVX8ghRLqebgfuWwp7IBRTWQ0CVVHVSmzqItkYqemCiWlhvoxZnucCdvm43FwngV4ia
+         7A2vlWb+uqZMT30IvsJ9WY0L/KnXG0F2JSNs3KsOirFnoPzvqVpbT0YG3IeCW4+iP2i2
+         AHr65DwQBZraPC4nRXvw4rSl57p714dfvM6BGjFhV8+5k4QGqsgK6YPvSNEf3mX45Qwx
+         TGXg==
+X-Gm-Message-State: AAQBX9cbAu9gVl3Nl9Uq5mGPtypqwoWgJXQtHyJyoytM9gFXGJYgaZre
+        IpgZPls5dOsCLWr7NfI5iXfEdhfBNUYBT/Kg
+X-Google-Smtp-Source: AKy350ZJHVD8Pr/zePNZSfz25q/0Nulle6IzPdeo6/QkLKWb/lbkdhXabtma6He7aMHpXI//ECuO8Q==
+X-Received: by 2002:a17:902:cece:b0:19f:1c69:54b5 with SMTP id d14-20020a170902cece00b0019f1c6954b5mr1370721plg.12.1680575516164;
+        Mon, 03 Apr 2023 19:31:56 -0700 (PDT)
+Received: from fivlite-virtual-machine.localdomain ([49.37.145.200])
+        by smtp.gmail.com with ESMTPSA id y17-20020a170902b49100b001963bc7bdb8sm7164382plr.274.2023.04.03.19.31.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 18:22:49 -0700 (PDT)
-Message-Id: <538d95833a279e1693ab590fb9bb43f72fe97b2b.1680571352.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1509.v2.git.1680571348.gitgitgadget@gmail.com>
-References: <pull.1509.git.1680361837.gitgitgadget@gmail.com>
-        <pull.1509.v2.git.1680571348.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 04 Apr 2023 01:22:27 +0000
-Subject: [PATCH v2 23/24] treewide: reduce includes of cache.h in other
- headers
-Fcc:    Sent
+        Mon, 03 Apr 2023 19:31:55 -0700 (PDT)
+From:   Kousik Sanagavarapu <five231003@gmail.com>
+To:     git@vger.kernel.org
+Cc:     christian.couder@gmail.com, hariom18599@gmail.com,
+        five231003@gmail.com
+Subject: [GSoC][Proposal v2] Unify ref-filter formats with other --pretty formats
+Date:   Tue,  4 Apr 2023 08:01:49 +0530
+Message-Id: <20230404023149.11867-1-five231003@gmail.com>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230330172052.10680-1-five231003@gmail.com>
+References: <20230330172052.10680-1-five231003@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Calvin Wan <calvinwan@google.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Thanks Christian for reviewing the previous version of this
+proposal. I have made the changes that you mentioned about
+in your review.
 
-We had a handful of headers including cache.h that didn't need to
-anymore.  Drop those includes and replace them with includes of
-smaller files, or forward declarations.  However, note that two .c
-files now need to directly include cache.h, though they should have
-been including it all along given they are directly using structs
-defined in it.
+This proposal can also be read at
+https://docs.google.com/document/d/1JBznA5n0WdWsbEskCeXxOnQuaa0urD89VtprxstLPzo/edit?usp=sharing
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- archive.h        | 2 +-
- chdir-notify.c   | 3 ++-
- quote.c          | 3 ++-
- refs/ref-cache.h | 2 +-
- rerere.c         | 2 +-
- resolve-undo.h   | 7 ++++++-
- revision.c       | 2 +-
- split-index.h    | 2 +-
- 8 files changed, 15 insertions(+), 8 deletions(-)
+Unify ref-filter formats with other --pretty formats
 
-diff --git a/archive.h b/archive.h
-index f96839ef383..3a4bdfbd078 100644
---- a/archive.h
-+++ b/archive.h
-@@ -1,9 +1,9 @@
- #ifndef ARCHIVE_H
- #define ARCHIVE_H
- 
--#include "cache.h"
- #include "object-name.h"
- #include "pathspec.h"
-+#include "string-list.h"
- 
- struct repository;
- struct pretty_print_context;
-diff --git a/chdir-notify.c b/chdir-notify.c
-index 8e38cd6f3ae..0d7bc046074 100644
---- a/chdir-notify.c
-+++ b/chdir-notify.c
-@@ -1,7 +1,8 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "abspath.h"
- #include "chdir-notify.h"
- #include "list.h"
-+#include "path.h"
- #include "strbuf.h"
- #include "trace.h"
- 
-diff --git a/quote.c b/quote.c
-index 7ccb5a06cd1..43c739671ed 100644
---- a/quote.c
-+++ b/quote.c
-@@ -1,5 +1,6 @@
--#include "cache.h"
-+#include "git-compat-util.h"
- #include "alloc.h"
-+#include "path.h"
- #include "quote.h"
- #include "strbuf.h"
- #include "strvec.h"
-diff --git a/refs/ref-cache.h b/refs/ref-cache.h
-index 850d9d3744e..cf4ad9070b9 100644
---- a/refs/ref-cache.h
-+++ b/refs/ref-cache.h
-@@ -1,7 +1,7 @@
- #ifndef REFS_REF_CACHE_H
- #define REFS_REF_CACHE_H
- 
--#include "cache.h"
-+#include "hash.h"
- 
- struct ref_dir;
- struct ref_store;
-diff --git a/rerere.c b/rerere.c
-index 093c0f6f993..7abc94bf444 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -1,4 +1,4 @@
--#include "git-compat-util.h"
-+#include "cache.h"
- #include "abspath.h"
- #include "alloc.h"
- #include "config.h"
-diff --git a/resolve-undo.h b/resolve-undo.h
-index 2b3f0f901e6..d1ea9727712 100644
---- a/resolve-undo.h
-+++ b/resolve-undo.h
-@@ -1,7 +1,12 @@
- #ifndef RESOLVE_UNDO_H
- #define RESOLVE_UNDO_H
- 
--#include "cache.h"
-+struct cache_entry;
-+struct index_state;
-+struct pathspec;
-+struct string_list;
-+
-+#include "hash.h"
- 
- struct resolve_undo_info {
- 	unsigned int mode[3];
-diff --git a/revision.c b/revision.c
-index 3d86e07abb8..43f88eaf56c 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1,4 +1,4 @@
--#include "git-compat-util.h"
-+#include "cache.h"
- #include "alloc.h"
- #include "config.h"
- #include "environment.h"
-diff --git a/split-index.h b/split-index.h
-index 7a435ca2c97..1a153f47ba3 100644
---- a/split-index.h
-+++ b/split-index.h
-@@ -1,7 +1,7 @@
- #ifndef SPLIT_INDEX_H
- #define SPLIT_INDEX_H
- 
--#include "cache.h"
-+#include "hash.h"
- 
- struct index_state;
- struct strbuf;
--- 
-gitgitgadget
+Personal Info
+=============
+Full Name: Venkata Sai Sri Kousik Sanagavarapu
+E-mail: five231003@gmail.com
+Ph. No.: +91 6304308245
+Alt. Ph. No.: +91 9704654555
 
+Education: Vasavi College of Engineering, Hyderabad
+Year: II / IV
+Semester: IV / XIII
+Degree: Bachelor of Engineering in
+	    Electronics and Communication Engineering
+
+Github: https://github.com/five-sh
+
+Overview
+========
+Git has an old problem of duplicated implementations of some logic.
+For example, Git has at least 4 different implementations to format
+command output for different commands.
+
+The goal of this project is to reduce these duplications and work
+towards a single implementation to format command output. There is
+more than one way to do this and there has been work done on this
+by GSoC students and Outreachy interns before me.
+
+The expected project size is 175 hours or 350 hours and the difficulty
+level is medium.
+
+Pre GSoC
+========
+I first got into Git’s source code around October, 2022 and have been
+going through code of topics that I found interesting whenever I had
+some time away from my college work. The following are the patches that
+I submitted, from earliest to the latest:
+
+[PATCH] repository-version.txt: partialClone casing change
+Status: merged into master
+Commit: 29c550f0a
+Merge Commit: 859899ddc (branch: ks/partialclone-casing)
+Description:
+This was my first patch to Git. I had found that the configuration
+variable extensions.partialClone had a typo in the way it was documented,
+while reading the documentation surrounding partial clones. Now that I
+look at it again, it seems that the patch was kind of noisy because the
+config variable would have still worked with no emphasis on the case but
+I guess it’s good to have everything going in one pattern, for the sake
+of documentation.
+
+Mailing list:
+https://lore.kernel.org/git/20221110160556.29557-1-five231003@gmail.com/
+
+[RFC][PATCH] object.c: use has_object() instead of
+		       repo_has_object_file()
+Status: Peff and others took off from here
+Description:
+This again was kind of a search-and-replace type of patch. I wasn’t
+really sure of the code and made this change as a result of the
+comment surrounding repo_has_object_file() which says that this and
+related functions are deprecated (hence the RFC). Peff reviewed the
+patch and explained about this function and the use of it in the
+particular case where I made the change, which was really helpful
+and added to my knowledge. Peff also realized that there were changes
+to be done to the logic of parse_object() (the function in which I
+made the change) and submitted patches, which were in turn reviewed
+by Ævar and he submitted changes in response to that.
+
+I now think that I should have replied to the review and taken part
+in the discussion, leading to me learning something more, but I was
+so overwhelmed that I didn’t do it. I corrected this in my later patches.
+
+Mailing list:
+https://lore.kernel.org/git/20221116163956.1039137-1-five231003@gmail.com/
+
+[PATCH] merge: use reverse_commit_list() for list reversal
+(Microproject)
+Status: Discontinued
+Description:
+This was a change I did to address the issue #1156 on gitgitgadget.
+This was however not a correct change logic wise because the
+reverse_commit_list() function modifies the list in-place (that is,
+uses the elements of the original list to make the reversed list)
+such a modification could break merge if we had multiple merge strategies.
+
+Mailing list:
+https://lore.kernel.org/git/20230202165137.118741-1-five231003@gmail.com/
+
+[PATCH] commit: warn the usage of reverse_commit_list() helper
+Status: Discontinued
+Description:
+This change was made based on the preceding patch but according to the
+review it seems that such an addition to the comment was unnecessary
+as the original comment was clear enough.
+
+Mailing list:
+https://lore.kernel.org/git/20230207150359.177641-1-five231003@gmail.com/
+
+[PATCH v4] index-pack: remove fetch_if_missing=0
+Status: Discontinued
+Description:
+This change strove to remove the use of fetch_if_missing in index-pack
+by replacing has_object_file() with has_object() which does not
+lazy-fetch when an object is missing in a partial clone. A test was
+also added to make sure that this change did not lazy-fetch.
+
+This patch was discontinued because it was decided as a result of
+discussion that it would be better to check all the cases where
+fetch_if_missing is set to 1 and make changes there so that we either
+fetch efficiently or not fetch at all. By doing this, in the final
+world-view, we can remove fetch_if_missing from index-pack as it
+would be set to zero everywhere.
+
+Mailing list:
+https://lore.kernel.org/git/20230317175601.4250-1-five231003@gmail.com/
+
+Proposed Project
+================
+Goal
+====
+The goal of this project is, as the title says, unifying ref-filter
+formats with other pretty formats. It would be great to have a single
+interface, which took care of all the formatting and not have different
+logic to implement different formatting options. Quoting from the mailing
+list discussion
+
+https://lore.kernel.org/git/CAL21BmnU2aTT_8iqejurgKeHXk-kmmGK1tmXLcVh7G12rwRPOw@mail.gmail.com/
+
+“For example, 'short' in pretty means 'commit %(objectname)%0aAuthor: %(author)'
+in ref-filter”
+
+Previous Work
+=============
+There has been much work done in the past in this area. It majorly comes
+from previous Outreachy interns and GSoC students.
+
+Olga Telezhnaia <olyatelezhnaya@gmail.com> did work in this area in the
+fields of `cat-file` and `ref-filter` as a part of her Outreachy Internship
+titled “Unifying Git’s format languages”. This work and also the work done
+after that helped take ref-filter to a more general setting. She blogged
+about her work here
+
+https://medium.com/@olyatelezhnaya
+
+
+Hariom Verma <hariom18599@gmail.com> did work in this area as his GSoC
+project titled “Unify ref-filter formats with other --pretty formats”.
+This is the major work done in this area and the final report can be
+read at
+
+https://harry-hov.github.io/blogs/posts/the-final-report
+
+This work is very useful as this serves as a kind of documentation
+and starting point to work towards the goal.
+
+ZheNing Hu <adlternative@gmail.com> has done major work under his GSoC
+project titled “Use ref-filter formats in git cat-file” in the area of
+git cat-file, but more relevant to this project are the changes done to
+ref-filter. This work was a continuation of Olga’s work and made some
+changes to ref-filter logic. His final report can be read here
+
+https://github.com/adlternative/adlternative.github.io/blob/gh-pages/blogs/gsoc/GSOC-Git-Final-Blog.md
+
+Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com> did work in
+this area where he implemented an equivalent atom of`signature` of pretty
+in ref-filter, so that in the future we can remove duplicate implementations.
+This work can be read here
+
+https://lore.kernel.org/git/20230311210607.64927-1-nsengiyumvawilberforce@gmail.com/
+
+Difficulties
+============
+A major difficulty is backward compatibility, so any changes made to
+remove the duplicated logic would need to be done so very carefully.
+Any new tests added must also be very precise so as to efficiently
+test the changes that are made.
+
+There are also minor difficulties, such as the older tests failing
+because of the changes made, so the work will have to be in such a way
+that those tests are successful and the duplicated logic is refactored.
+
+The Plan
+========
+I think Hariom’s final report of his GSoC project is a good starting
+point for working on the project. The report lists the work which is
+left in the “WHATS LEFT?” section, so I think the first issue to work
+on would be his branch
+
+https://github.com/harry-hov/git/commits/pretty-lib-2.0.2
+
+Also carefully look for stuff in this branch that have potential and
+discuss them with my mentors.
+
+I can take the approach similar to what others did before me, that is
+by starting off with re-implementing atoms that are in pretty, in
+ref-filter which will help our end goal of removing duplicated logic
+wherever possible. 
+
+Estimated Timeline
+==================
+
+Misc
+April 5 to May 3
+- Continue to work on git and get more familiar with the code.
+
+- Find and fix stuff.
+
+- Work on stuff that interests me.
+
+Community Bonding
+May 4 to May 28
+- Get myself familiar with the code of ref-filter.{c, h} and
+  pretty.{c, h}.
+
+- Communicate with my mentors about the approaches that can
+  be taken to get to the goal.
+
+- Reading Hariom's branches [1] and discussing with mentors
+  about the possible approaches that can be taken and also if
+  there could be work done on his branches or taken from his
+  branches for future work.
+
+Coding Phase I
+May 29 to July 14
+- Re-implement atoms that are in pretty in ref-filter.
+
+- Update existing tests and add new tests.
+
+- Update documentation.
+
+Coding Phase II
+July 14 to August 21
+- Further convert formatting options to reuse ref-filter formatting
+  logic and teach pretty to handle them.
+
+- Update existing tests and add new tests.
+
+- Update documentation.
+
+Final Coding Phase
+August 21 to August 28
+- Wrap up and fix bugs (if any).
+
+- Update about the remaining stuff (if any).
+
+- Make a final report outlining future work.
+
+[1]: https://github.com/harry-hov/git/commits/pretty-lib-2.0.3
+     https://github.com/harry-hov/git/commits/fix-graph3
+
+Blogging about Git
+==================
+I think blogging is one of the important parts of any project. It
+helps other people understand what one is doing and helps the person
+get to a better understanding of their work. I will blog about the
+project every week, the blogs can be read at
+
+https://five-sh.github.io/
+
+Availability
+============
+I will be having my semester mostly throughout the summer and so will
+be able to work 35-40 hours per week. I will always be able to dedicate
+more time towards the project on the weekends.
+
+I will be in contact through my email and my phone.
+
+I am also open to calls and online meets.
+
+Post GSoC
+=========
+I love being a part of the Git community. The whole process of getting
+to work on git’s code, submitting patches and getting reviews is a new
+and great experience for me. I plan to continue in the community after
+GSoC too and will continue contributing to git and will continue learning
+from all of you.
+
+I am also open to co-mentoring or mentoring if ever given the chance.
+
+I also am very interested in partial clones and I hope to work in that
+area.
+
+Closing (optional)
+==================
+Ever since I first got into git’s code and its community back in 2022,
+it has evolved into a very unique and great experience for me. I have
+learned so much in the past few months and will continue to do so from
+all of you here at git.
+
+Hariom's proposal has been a great resource in writing this proposal.
+
+Thanks & Regards,
+Kousik Sanagavarapu
