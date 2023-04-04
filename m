@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10B26C76196
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 01:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09CD8C761AF
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 01:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232476AbjDDBXA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 21:23:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43114 "EHLO
+        id S232573AbjDDBXC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 21:23:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232390AbjDDBWq (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232373AbjDDBWq (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 3 Apr 2023 21:22:46 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68E8E2D53
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 18:22:44 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id n10-20020a05600c4f8a00b003ee93d2c914so20536156wmq.2
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 18:22:44 -0700 (PDT)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5FC22D49
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 18:22:43 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id y14so31163924wrq.4
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 18:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112; t=1680571362;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NoMJ9cVwb/ZvflFcl5pAhOAsWQBn3D0Pm7GwOWGmO2I=;
-        b=l4Qap++IiravqWHSlq12WAqR0Afeyl/w78b5x1BjqcL3tq22JuPCoshKVKYb8t2uLn
-         bKesNG1utMhjVGvfdiOzQJgamd3HOv20fWK63EGtkU1KFrZtfLSQFzxdJiLvM1ZT99Jb
-         Nyndaw56sAZlD2bLxTkKnV6OMx3u9ylZlTcX4dMgk4vyoLHa49CE/4bSi6RkY3kEv9dB
-         Zn/XAa1s9dNeLSZK+47Clejk3J8/jXjR9ShTaEb2op1rADNwWcPZCSQyxKsVSTHYHjZ5
-         5cx9T0k8IGvPWXrPSpa/apmp4w9l7fn7dYjSe5hsN/bhEem4Wfv2pok8FDKBw94da+4Q
-         kpCw==
+        bh=xVa8TGY+H+t/NaKfh9R72LeG+5L0LeXEBerU/2UNCsk=;
+        b=Vw1or3glWDlEKsX3Mj4yqKm5hCSX5iRXf6+/qMZlnOApMkh7U3558xpWstG/OzBSHN
+         BK0BqzwfhhTXVf5EPNn4T+2fALz/xs9oZVD4To8f+GmcrUqGPTHLi8BgAt2rjF74A7Vc
+         f+kpVk1klCUY20X6h/kCTe+RGcIHJ2gxJvI7se1FdZE8DiEv23jwlp1J6jKhlqCZDlJM
+         ui7/mcIbPRzleoLN5IJWzNz+/LM03LhUsY3J2M0Lw6tMuOBjYnyg1hi6aibPDwgakmDP
+         ovHk//HgreBpaTNeYbQ/Ie46WG7TW3QJs2qXRiTrZu99hNcL4DLvlQYyW6gJxpJwx+nx
+         pDIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112; t=1680571362;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NoMJ9cVwb/ZvflFcl5pAhOAsWQBn3D0Pm7GwOWGmO2I=;
-        b=lTjkA5jq/v6GMHQXochPcrPZ2yBbFmKaJuAy5TjSBHjouHi/Q+XTmEpxwVr6gySd6v
-         1SkIEX9eF1O8FBVbcp8HIAcZ3KPJHulWKagO/KwZNErnMZKzwvwnG3N5sS/XlpeaWfci
-         xtyEExmwgza3+oqRfjDQEhFPF51xhRyCregpksnXBKRSkBxtOtXjGJxjPpXUdBiP7Eoq
-         uOUHmn+vimR1OZICOKESQcvUSwkdvlPi+ndVL/t+X8TrDwLHJpVEN3yHqGN+ipfj+nV3
-         5NvCTQVgzO1dwMWAh380abVN4bnyf/sqglUuCRswgLRAraW1FzltaiaI+rnLCo+lm1PT
-         BXUg==
-X-Gm-Message-State: AAQBX9f1eBGw2uHn5fo/z91CrlCdaDUC9GGGgWjptEKe7Zk0HU7XQzhm
-        cOHyOYTS93uMemPLjWM45aZeosY7acI=
-X-Google-Smtp-Source: AKy350YNjIyBf05Rzrqmt75QnE8aYLG7gL8EnRUNmB8GgeZ+XXBAMCa/dzxkVrLnINpzEdlUZ1W0Qw==
-X-Received: by 2002:a1c:7716:0:b0:3ee:67ff:4aad with SMTP id t22-20020a1c7716000000b003ee67ff4aadmr767258wmi.26.1680571362442;
-        Mon, 03 Apr 2023 18:22:42 -0700 (PDT)
+        bh=xVa8TGY+H+t/NaKfh9R72LeG+5L0LeXEBerU/2UNCsk=;
+        b=35SPBcDC0HQHh67oLEbF2D1oYJR3v7GMgWU83myowpdnMnTDUQDitUfUaoky85mhXa
+         nlIoaVw8p/Kv3kLbYShHeQUS5/qIBrNjTgAipVL0C8QjAWrpjp5I3F171LET5lGM1N1k
+         g0e4z4CMSHdpVemhyncPmfVhdlOC69KLZuxYJGtZgVzEdK5WufvFXQyAUrc4J4OKJbEf
+         sa33RnVrhttUdDg/FM+rCpT6I282GaeKF3UnFW9QyLbLBRYxsQMc04/AYR80A/54kFNC
+         FyoPpx3Kt9VvzHnQrIb6LJafoyqRlChcH4Mhx0e0ds7jEpp7/sGXHL1gSdPrUnnjgmHm
+         dEfw==
+X-Gm-Message-State: AAQBX9cD6XlcLA4t2dG8hRWyizZncfbCWqQnVO9l/wp8c8mTF5auX7A+
+        icE9g3sKOOhTNs34wmCSEMnTc6cGYKA=
+X-Google-Smtp-Source: AKy350YA/EELgq2zzv7NMGgdgCrzCX0nvT9uAT3qEsqUiunHPoOqX54Hwwna1YE1pMrkeSj93xiCIg==
+X-Received: by 2002:adf:ef4a:0:b0:2c7:ae57:5acc with SMTP id c10-20020adfef4a000000b002c7ae575accmr256756wrp.26.1680571361853;
+        Mon, 03 Apr 2023 18:22:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u21-20020a05600c00d500b003ee4e99a8f6sm13515777wmm.33.2023.04.03.18.22.42
+        by smtp.gmail.com with ESMTPSA id t16-20020adfdc10000000b002e5ff05765esm10416275wri.73.2023.04.03.18.22.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Apr 2023 18:22:42 -0700 (PDT)
-Message-Id: <dbfe03129e3073f57a13c23dd697eb4785c5e3be.1680571351.git.gitgitgadget@gmail.com>
+        Mon, 03 Apr 2023 18:22:41 -0700 (PDT)
+Message-Id: <54545bbb02cc1cc1f7148b5bb39ea16a8914ef61.1680571351.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1509.v2.git.1680571348.gitgitgadget@gmail.com>
 References: <pull.1509.git.1680361837.gitgitgadget@gmail.com>
         <pull.1509.v2.git.1680571348.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 04 Apr 2023 01:22:15 +0000
-Subject: [PATCH v2 11/24] treewide: remove cache.h inclusion due to git-zlib
- changes
+Date:   Tue, 04 Apr 2023 01:22:14 +0000
+Subject: [PATCH v2 10/24] git-zlib: move declarations for git-zlib functions
+ from cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,25 +72,202 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-This actually only affects http-backend.c, but the git-zlib changes
-are going to be instrumental in pulling out an object-file.h which
-will help with several more files.
+Move functions from cache.h for zlib.c into a new header file.  Since
+adding a "zlib.h" would cause issues with the real zlib, rename zlib.c
+to git-zlib.c while we are at it.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- http-backend.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Makefile                 |  2 +-
+ archive-tar.c            |  1 +
+ archive-zip.c            |  1 +
+ builtin/unpack-objects.c |  1 +
+ cache.h                  | 25 +------------------------
+ zlib.c => git-zlib.c     |  3 ++-
+ git-zlib.h               | 28 ++++++++++++++++++++++++++++
+ http-backend.c           |  1 +
+ http.h                   |  3 +++
+ 9 files changed, 39 insertions(+), 26 deletions(-)
+ rename zlib.c => git-zlib.c (99%)
+ create mode 100644 git-zlib.h
 
-diff --git a/http-backend.c b/http-backend.c
-index d41b3b9e1e7..ac146d85c54 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -1,4 +1,4 @@
+diff --git a/Makefile b/Makefile
+index 50ee51fde32..0c367881bff 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1036,6 +1036,7 @@ LIB_OBJS += fsmonitor.o
+ LIB_OBJS += fsmonitor-ipc.o
+ LIB_OBJS += fsmonitor-settings.o
+ LIB_OBJS += gettext.o
++LIB_OBJS += git-zlib.o
+ LIB_OBJS += gpg-interface.o
+ LIB_OBJS += graph.o
+ LIB_OBJS += grep.o
+@@ -1196,7 +1197,6 @@ LIB_OBJS += write-or-die.o
+ LIB_OBJS += ws.o
+ LIB_OBJS += wt-status.o
+ LIB_OBJS += xdiff-interface.o
+-LIB_OBJS += zlib.o
+ 
+ BUILTIN_OBJS += builtin/add.o
+ BUILTIN_OBJS += builtin/am.o
+diff --git a/archive-tar.c b/archive-tar.c
+index 497dad0b3af..4cd81d8161e 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -5,6 +5,7 @@
+ #include "alloc.h"
+ #include "config.h"
+ #include "gettext.h"
++#include "git-zlib.h"
+ #include "hex.h"
+ #include "tar.h"
+ #include "archive.h"
+diff --git a/archive-zip.c b/archive-zip.c
+index e6f5c10a14f..ef538a90df4 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -5,6 +5,7 @@
+ #include "config.h"
+ #include "archive.h"
+ #include "gettext.h"
++#include "git-zlib.h"
+ #include "hex.h"
+ #include "streaming.h"
+ #include "utf8.h"
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index f2c1323e661..ddbdb3dd226 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -4,6 +4,7 @@
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
++#include "git-zlib.h"
+ #include "hex.h"
+ #include "object-store.h"
+ #include "object.h"
+diff --git a/cache.h b/cache.h
+index 21db5da39a5..c06778b69cd 100644
+--- a/cache.h
++++ b/cache.h
+@@ -3,6 +3,7 @@
+ 
+ #include "git-compat-util.h"
+ #include "strbuf.h"
++#include "git-zlib.h"
+ #include "hashmap.h"
+ #include "list.h"
+ #include "gettext.h"
+@@ -14,30 +15,6 @@
+ #include "repository.h"
+ #include "statinfo.h"
+ 
+-typedef struct git_zstream {
+-	z_stream z;
+-	unsigned long avail_in;
+-	unsigned long avail_out;
+-	unsigned long total_in;
+-	unsigned long total_out;
+-	unsigned char *next_in;
+-	unsigned char *next_out;
+-} git_zstream;
+-
+-void git_inflate_init(git_zstream *);
+-void git_inflate_init_gzip_only(git_zstream *);
+-void git_inflate_end(git_zstream *);
+-int git_inflate(git_zstream *, int flush);
+-
+-void git_deflate_init(git_zstream *, int level);
+-void git_deflate_init_gzip(git_zstream *, int level);
+-void git_deflate_init_raw(git_zstream *, int level);
+-void git_deflate_end(git_zstream *);
+-int git_deflate_abort(git_zstream *);
+-int git_deflate_end_gently(git_zstream *);
+-int git_deflate(git_zstream *, int flush);
+-unsigned long git_deflate_bound(git_zstream *, unsigned long);
+-
+ #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
+ #define DTYPE(de)	((de)->d_type)
+ #else
+diff --git a/zlib.c b/git-zlib.c
+similarity index 99%
+rename from zlib.c
+rename to git-zlib.c
+index d594cba3fc9..d43bbeb6daa 100644
+--- a/zlib.c
++++ b/git-zlib.c
+@@ -2,7 +2,8 @@
+  * zlib wrappers to make sure we don't silently miss errors
+  * at init time.
+  */
 -#include "cache.h"
 +#include "git-compat-util.h"
++#include "git-zlib.h"
+ 
+ static const char *zerr_to_string(int status)
+ {
+diff --git a/git-zlib.h b/git-zlib.h
+new file mode 100644
+index 00000000000..d8a670aff9f
+--- /dev/null
++++ b/git-zlib.h
+@@ -0,0 +1,28 @@
++#ifndef GIT_ZLIB_H
++#define GIT_ZLIB_H
++
++typedef struct git_zstream {
++	z_stream z;
++	unsigned long avail_in;
++	unsigned long avail_out;
++	unsigned long total_in;
++	unsigned long total_out;
++	unsigned char *next_in;
++	unsigned char *next_out;
++} git_zstream;
++
++void git_inflate_init(git_zstream *);
++void git_inflate_init_gzip_only(git_zstream *);
++void git_inflate_end(git_zstream *);
++int git_inflate(git_zstream *, int flush);
++
++void git_deflate_init(git_zstream *, int level);
++void git_deflate_init_gzip(git_zstream *, int level);
++void git_deflate_init_raw(git_zstream *, int level);
++void git_deflate_end(git_zstream *);
++int git_deflate_abort(git_zstream *);
++int git_deflate_end_gently(git_zstream *);
++int git_deflate(git_zstream *, int flush);
++unsigned long git_deflate_bound(git_zstream *, unsigned long);
++
++#endif /* GIT_ZLIB_H */
+diff --git a/http-backend.c b/http-backend.c
+index 89aad1b42c7..d41b3b9e1e7 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -2,6 +2,7 @@
  #include "alloc.h"
  #include "config.h"
  #include "environment.h"
++#include "git-zlib.h"
+ #include "hex.h"
+ #include "repository.h"
+ #include "refs.h"
+diff --git a/http.h b/http.h
+index 77c042706c6..783b2b09b8b 100644
+--- a/http.h
++++ b/http.h
+@@ -1,7 +1,10 @@
+ #ifndef HTTP_H
+ #define HTTP_H
+ 
++struct packed_git;
++
+ #include "cache.h"
++#include "git-zlib.h"
+ 
+ #include <curl/curl.h>
+ #include <curl/easy.h>
 -- 
 gitgitgadget
 
