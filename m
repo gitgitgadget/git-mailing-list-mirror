@@ -2,93 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0D75C76188
-	for <git@archiver.kernel.org>; Mon,  3 Apr 2023 22:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B089FC76196
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 00:16:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233731AbjDCW7x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 3 Apr 2023 18:59:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38994 "EHLO
+        id S231533AbjDDAQ2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 3 Apr 2023 20:16:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233811AbjDCW7s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 18:59:48 -0400
-Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD1511FD2
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 15:59:45 -0700 (PDT)
-Received: (Authenticated sender: robin@jarry.cc)
-        by mail.gandi.net (Postfix) with ESMTPSA id CFAEE20002;
-        Mon,  3 Apr 2023 22:59:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
-        t=1680562784;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=5u6YDjia06p9gs5wVHiBjhx3EYvqiglz00CiHb5gXgY=;
-        b=R31Lth4mrPyizHqFpLgkw6KawYjmWJbxmnPftZd2nMEkczVUm9AFxRiz9az2sA3ezkNE3f
-        7Q20T34lFXOgI0cIMsDnDZXdf7PD9M4EINf/bPOm7pG0RWjVJO3mhJXTUQSjhy/JxFNH2x
-        qUKv1eampXovw6RYawXt9P8a2zZp1C0IzBodVu67QsrvYMXPWzSQ3j1NGx7uxMu83wxZrO
-        hh6VAgr8dOsSdUb9NiqTKTZmyBaZNahSBP8TN1Ig3fNHhCFHwez4xxQdeITJahRe2FGR/k
-        7qQhvl37HHS+fV7b+b7uqiXd4Qef/L9QqIIcLAVunuKYMpqCnJBV5Q7Y35mytg==
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 04 Apr 2023 00:59:42 +0200
-Message-Id: <CRNHSC3H2B6C.UCSDE4Y6ET4A@ringo>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>,
-        "Tim Culverhouse" <tim@timculverhouse.com>,
-        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
-        "Bagas Sanjaya" <bagasdotme@gmail.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>
-Subject: Re: [PATCH RESEND] hooks: add sendemail-validate-series
-From:   "Robin Jarry" <robin@jarry.cc>
-X-Mailer: aerc/0.14.0-145-gedb59e6a06c0
-References: <20230402185635.302653-1-robin@jarry.cc>
- <66099367-4ea0-7d2a-a089-7a88e27f695e@dunelm.org.uk>
- <CRNH5FOB91JE.14CZEA494X002@ringo> <xmqq7cus4m0b.fsf@gitster.g>
-In-Reply-To: <xmqq7cus4m0b.fsf@gitster.g>
+        with ESMTP id S229576AbjDDAQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2023 20:16:27 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01778A6
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 17:16:25 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id c18so29686782ple.11
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 17:16:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680567385;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=moPLv3Od0PVspw8Sg0LzMQZgJnRMhW2VXlF3qHHw7nA=;
+        b=V4/d7s8jOmq1cigCttR3yEVp/oIl1krRr+Cly1S/wJsSWJYVEXhv9oGXyNxS3N6S+O
+         CqY9tXPg3rCPhjg2WPcWJTJXTtMCHzVKKkYBzx1urujZcBfA8abWO/lexhCFhWHqO5H5
+         kHAma/vI+DHcnyWXAE4ciAD/4TwK6dkuR+I7NRhWH4xiee+JL0+fqnFDgLeZvfbT0Ki3
+         6cTJnuj8jLzKxHisjexTEuzeqwXpi8PHaj4yg0WQ5Y5PJashACuSwAkX3gJxnGU65TC3
+         Uw3stCSC57rrGlV1Up0FrUV9qmKDjKMzWfMqjyY4XFq+l0nqk8/CbZ5m7AO5xtVrUuuM
+         TIRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680567385;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=moPLv3Od0PVspw8Sg0LzMQZgJnRMhW2VXlF3qHHw7nA=;
+        b=fCBXHTW/UE07qQFE7a5DWu25SwIiL7tlen26V6R78Ci1NEmlUFPybi9TboJJSCWPZi
+         n4qCfq04UTVfr2uQLLXrTLE03LfNYs0RG2ViUdU+RHgSbS9bPEuFIq5ZOM+pLLZAmT6Y
+         ICfMC3gujCPx1XA9ax0UjjKzs00EX/BZJ5QNDNF4FpQCx/FN0iO0JmCY6dyaIOdzdmry
+         UXtQg7RriKNeQzQlR9Xxb41YTA3ggYhfuZ9YpRk2jgpnr14b9wrxlVR2Kb5I+976PnUt
+         qGjO6WXz3+VUzgKM5k3lUvK2MDxRiSrdJq7z9HOL/dvmkbOOISki+GscDEU74thjdMGK
+         JJjg==
+X-Gm-Message-State: AAQBX9c1DEOVgw3sOEIb1EIeMz46yG5jxwRyt7AXIdUf/nxnJ+HLC6ku
+        Dp2OSkExA40TetaQpQijjDc=
+X-Google-Smtp-Source: AKy350Z23Sr/62bxIa9Z0qarSc5dBJMLXQ6zncZ2FeNWifs2E8w+Vm3KNHM4IGv3buv1fSNH9x7U/Q==
+X-Received: by 2002:a17:90b:1d04:b0:23b:3672:3b53 with SMTP id on4-20020a17090b1d0400b0023b36723b53mr622399pjb.39.1680567385309;
+        Mon, 03 Apr 2023 17:16:25 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id k5-20020a170902760500b001992fc0a8eesm7208202pll.174.2023.04.03.17.16.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Apr 2023 17:16:24 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Raghul Nanth A <nanth.raghul@gmail.com>
+Cc:     git@vger.kernel.org, derrickstolee@github.com, vdye@github.com
+Subject: Re: [GSOC][PATCH v1] diff-index: enable diff-index
+References: <20230403190538.361840-1-nanth.raghul@gmail.com>
+Date:   Mon, 03 Apr 2023 17:16:24 -0700
+Message-ID: <xmqqv8ic33jb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano, Apr 04, 2023 at 00:52:
-> Close to zero is very different from absolutely zero, and in the
-> case of format-patch generated patches, I think it is absolutely
-> zero.  At least, that was the case back when I designed and
-> implemented it, and I do not think I accepted a patch to break it
-> over the years.
->
-> But "git send-email" can be fed a list of files and even a directory
-> (and enumerate files in it).  The filenames are under end-users'
-> control in this case, so "close to zero" has absolutely no relevance.
-> If the end user means to feed you such a file, they can do so 100%
-> of the time.
+Raghul Nanth A <nanth.raghul@gmail.com> writes:
 
-Ok that's a fair point. Even though I am having a hard time believing
-someone would do such a thing :D
+> Uses the run_diff_index() function to generate its diff.
 
-> If we support such a file is a different issue.  A good rule of
-> thumb to decide if it is reasonable is to see if the main command
-> already works with such filenames, e.g.
->
->     $ git format-patch -2
->     0001-foo.txt
->     0002-bar.txt
->     $ mv 0001-foo.txt '0001-fo
->     > o.txt'
->     $ mkdir dir
->     $ mv 000[12]*.txt dir/.
->
-> may prepare two patch files that can be sent via send-email.  One
-> file (the first one) is deliberately given a filename with LF in
-> it.  Does send-email work on it correctly if you did e.g.
->
->     $ git send-email dir/000[12]*.txt
->
-> or something silly like
->
->     $ git send-email dir
->
-> or does it already choke on the first file because of the filename?
+The sentence lacks a subject.
+> +	test_all_match git diff-index HEAD --cached
 
-It seems to work with both. I guess, NUL bytes separation it is then...
+See "git help cli".  Do not write rev after a dashed option.
+
+Thanks.
