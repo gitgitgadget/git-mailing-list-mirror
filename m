@@ -2,113 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAE1EC76196
-	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 03:30:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BA0CC7618D
+	for <git@archiver.kernel.org>; Tue,  4 Apr 2023 05:38:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232997AbjDDDaZ convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 3 Apr 2023 23:30:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42822 "EHLO
+        id S233226AbjDDFiI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 4 Apr 2023 01:38:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231686AbjDDDaX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2023 23:30:23 -0400
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F8DF19AB
-        for <git@vger.kernel.org>; Mon,  3 Apr 2023 20:30:17 -0700 (PDT)
-Received: by mail-lf1-f44.google.com with SMTP id k37so40690267lfv.0
-        for <git@vger.kernel.org>; Mon, 03 Apr 2023 20:30:17 -0700 (PDT)
+        with ESMTP id S232578AbjDDFiH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2023 01:38:07 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 480B11FCD
+        for <git@vger.kernel.org>; Mon,  3 Apr 2023 22:38:04 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id iw3so30261636plb.6
+        for <git@vger.kernel.org>; Mon, 03 Apr 2023 22:38:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=t-engineering.se; s=google; t=1680586683;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6hf78krS+suKp2rx2uH9j6ppbREzUVFXNMyaJOrB0Oc=;
+        b=JmfqznuL4Bmelr2bdxBlWdO4tiiCU5ZWNX6SGfMskliAkiV+YqO8vNZDGd0+fz4Sck
+         DpPO2ps7L/W4Hk6craEuYRfUQY4kR+p9HxmRCqM9Ii8XaldreJnyNDX4bNGkqhWT2ycn
+         dcEqLxmO8NnPiXogWmNEH9mWzznpXu5bg/db8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680579015;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RxLvDywim81BDoQlVW2zTMwgbTw8PpwLQvG0B7AxiqM=;
-        b=lRMV1ypLTF73A9hLY4gAJd9rIeReDtp2yjjVQ4PvMVLfPiqkLg/qDW56iE8SU87OuV
-         o/gOCIRXDXedsgpY9m7Kp1FLArHkYmpL1EnixeqTqSof6qx9/0Tp8W9gWr/hzVji+91W
-         kHVyPkOuSlc93Px162gvH48N/JqbOBxde632LLMn1RVrb0FihjIYqqVj1ki26m9h1YRx
-         a2Kaduxzqiwxte5B5MF6Tryi804LqEnpsIrujB2scaEzhlEXhYlOLwisqHDxgpzpRSDr
-         38gLcekRfoXJssiwMTqL97/lePjsk+qdBKkRYYz/veTzXPbyZ8f57i1GutXs5y73LzJF
-         4bUQ==
-X-Gm-Message-State: AAQBX9cDVjTkUUPS6M6mP12xArn3gFTCgNRRz2lWa8nZ91NQ/tBXdzLT
-        1gW9GjZUeXr5G8qkTewUne4UQhAIHK1CDjYlFKA=
-X-Google-Smtp-Source: AKy350buA7U1HUotqrdLUjYZ0ef4wICYwOpKaxxNkWrBVNxWp/yfxQR+dKDIjFqxCeAk36IpJF1epjCYQUTvgBWJolc=
-X-Received: by 2002:a19:f607:0:b0:4d5:ca32:6ed5 with SMTP id
- x7-20020a19f607000000b004d5ca326ed5mr388039lfe.3.1680579015313; Mon, 03 Apr
- 2023 20:30:15 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680586683;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6hf78krS+suKp2rx2uH9j6ppbREzUVFXNMyaJOrB0Oc=;
+        b=krsjeh4V4v81a3pUa5Msi4igZJFH9HyYfpsBf7+YxkvE9Ff4sPdQXzNttRBDyTUq07
+         1Wkm3mT6F5GHRRXhBjH3NyLSQNJLiIvH5sfsOGV1m+9+hj4IN3ROwZNyiavdKKFA9Brb
+         EWfdcLgWSR9IFGFmWy+k6404FsAf7DXtSxGBYLKldm6AwygHeM96vD6xc6tPQ3q2Aezt
+         kTOFpQ6184qFn3hzSh/yNdpXseb1UD5TWAa3kc49SBmwA2UJmk92Mk+iymosKlLylIkw
+         Y/3e1Fg2RzCJDKi4rWvq1tG5XfnCRTCbz7jfwk0u9vbppJ4IDh8eHKM3uOtXezdaMWxQ
+         aXJw==
+X-Gm-Message-State: AAQBX9c+0/tQDMnqp+o5a3TZ1f4MWiagBdhtdw2wgtfyiPKXIl0le4JA
+        HGrwWLk+tnIAVvBmQS29cUs/LYI771LKWLspykKN4y0IyCTvjftK7UY=
+X-Google-Smtp-Source: AKy350bRyfjS1ft66uLXH5ckqSSaN/Kp5XXc8X0knubHPbM69oNtuBZhPLR0hBsf/DsYuMX0RV3Wgc6YnBQLr4wtoyM=
+X-Received: by 2002:a17:902:7448:b0:1a2:74df:b384 with SMTP id
+ e8-20020a170902744800b001a274dfb384mr537448plt.12.1680586683374; Mon, 03 Apr
+ 2023 22:38:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <230109.86v8lf297g.gmgdl@evledraar.gmail.com> <2554712d-e386-3bab-bc6c-1f0e85d999db@cs.ucla.edu>
-In-Reply-To: <2554712d-e386-3bab-bc6c-1f0e85d999db@cs.ucla.edu>
-From:   Jim Meyering <jim@meyering.net>
-Date:   Mon, 3 Apr 2023 20:30:02 -0700
-Message-ID: <CA+8g5KHuE-kQqmi9cVjeJbpyt54v9m9omh9A9we1zmR0+aTDHg@mail.gmail.com>
-Subject: Re: bug#60690: -P '\d' in GNU and git grep
-To:     Paul Eggert <eggert@cs.ucla.edu>
-Cc:     60690@debbugs.gnu.org, demerphq@gmail.com,
-        mega lith01 <megalith01@gmail.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com,
-        =?UTF-8?Q?Tukusej=E2=80=99s_Sirs?= <tukusejssirs@protonmail.com>,
-        pcre-dev@exim.org
+From:   Mattias Holmqvist <mattias.holmqvist@t-engineering.se>
+Date:   Tue, 4 Apr 2023 07:37:51 +0200
+Message-ID: <CAPMLkzd=VGGqZ0trMMVXUsjGwbjFN-nz3tGQUG-O0Xc84Zc+hw@mail.gmail.com>
+Subject: --shallow-exclude commit list is offsetted one commit
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 3, 2023 at 2:39 PM Paul Eggert <eggert@cs.ucla.edu> wrote:
-> I've recently done some bug-report maintenance about a set of GNU grep
-> bug reports related to whether whether "grep -P '\d'" should match
-> non-ASCII digits, and have some thoughts about coordinating GNU grep
-> with git grep in this department.
->
-> GNU Bug#62605[1] "`[\d]` does not work with PCRE" has been fixed on
-> Savannah's copy of GNU grep, and some sort of fix should appear in the
-> next grep release. However, I'm leaving the GNU grep bug report open for
-> now because it's related to Bug#60690[2] "[PATCH v2] grep: correctly
-> identify utf-8 characters with \{b,w} in -P" and to Bug#62552[3] "Bug
-> found in latest stable release v3.10 of grep". I merged these related
-> bug reports, and the oldest one, Bug#60690, is now the representative
-> displayed in the GNU grep bug list[4].
->
-> For this set of grep bug reports there's still a pending issue discussed
-> in my recent email[5], which proposes a patch so I've tagged Bug#60690
-> with "patch". The proposal is that GNU grep -P '\d' should revert to the
-> grep 3.9 behavior, i.e., that in a UTF-8 locale, \d should also match
-> non-ASCII decimal digits.
->
-> In researching this a bit further, I found that on March 23 Git disabled
-> the use of PCRE2_UCP in PCRE2 10.34 or earlier[6], due to a PCRE2 bug
-> that can cause a crash when PCRE2_UCP is used[7]. A bug fix[8] should
-> appear in the next PCRE2 release.
->
-> When PCRE2 10.35 comes out,
+What did you do before the bug happened? (Steps to reproduce your issue)
+git clone -b A --shallow-exclude=B
 
-Thanks for finding that.
-It's clearly a good idea to disable PCRE2_UCP for those using those
-older, known-buggy versions of pcre2.
 
-The latest is 10.42, per https://github.com/PCRE2Project/pcre2/releases
+What did you expect to happen? (Expected behavior)
+My remote repo looks like this:
 
-> it appears that 'git grep -P' will behave
-> like 'grep -P' only if GNU grep adopts something like the solution
-> proposed in [5].
->
-> [1]: https://bugs.gnu.org/62605
-> [2]: https://bugs.gnu.org/60690
-> [3]: https://bugs.gnu.org/62552
-> [4]: https://debbugs.gnu.org/cgi/pkgreport.cgi?package=grep
-> [5]: https://lists.gnu.org/archive/html/grep-devel/2023-04/msg00004.html
-> [6]:
-> https://github.com/git/git/commit/14b9a044798ebb3858a1f1a1377309a3d6054ac8
-> [7]:
-> https://lore.kernel.org/git/7E83DAA1-F9A9-4151-8D07-D80EA6D59EEA@clumio.com/
-> [8]:
-> https://github.com/git/git/commit/14b9a044798ebb3858a1f1a1377309a3d6054ac8
+  A B   # two branches, A and B
+1 |     # commit in A
+2 |\    # merge from B to A
+3   |   # commit in B
+4 |     # commit in A
+5 |\    # merge from B to A
+6   |   # commit in B
 
-Thanks for all of the links. However, have you seen justification
-(other than for compatibility with some other tool or language) for
-allowing \d to match non-ASCII by default, in spite of the risks?
-IMHO, we have an obligation to retain compatibility with how grep -P
-'\d' has worked since -P was added. I'd be happy to see an option to
-enable the match-multibyte-digits behavior, but making it the default
-seems too likely to introduce unwarranted risk.
+A and B are branches. 1 is a commit in A, 2 is a merge from B to A etc.
+
+I would have expected the following repo as a result
+
+  A
+1 |
+2 |
+4 |
+5 |
+
+I would also have expected a shallow file with the following commits in .git:
+3
+6
+
+What happened instead? (Actual behavior)
+
+When I run the command I get a repo like this:
+
+  A
+1 |
+
+I also get a shallow file in .git with the following commit list
+2
+5
+
+What's different between what you expected and what actually happened?
+The commit list in the shallow file is offsetted one commit.
+he consequence of that is that not only B is excluded but also
+everything in A that depends on B
+
+Anything else you want to add:
+The result is the same if I use the git fetch --shallow-exclude
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.40.0.windows.1
+cpu: x86_64
+built from commit: 1d90ca2906dd4b7ddaf0669a13c173ec579d794a
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0 22621
+compiler info: gnuc: 12.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): <unset>
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
