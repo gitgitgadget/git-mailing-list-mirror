@@ -2,123 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06B80C7619A
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 15:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3733C76188
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 15:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238585AbjDEPzB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 11:55:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45844 "EHLO
+        id S238491AbjDEP6L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 11:58:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239232AbjDEPy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 11:54:57 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D44E6119
-        for <git@vger.kernel.org>; Wed,  5 Apr 2023 08:54:56 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6E4AD1F1C16;
-        Wed,  5 Apr 2023 11:54:56 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-        :to:cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=qxHfqchS1jjQcXo0Cy/OmGbdIvGf86ZECE5Gkjq
-        +Y4g=; b=bA41qrU9gL/QQDfFwTjYJvB8FIuUvTqmTblS6gR7W2YNH9sqeQzs6sU
-        99tkBPXmwYUsS404jfahRCNnH/Hsp1oqvCJTf2mLKpDcg+dBnPNpOpcju9/7MPlR
-        DXE2P5g7iO0rmcIHFjC00MBq73Ad0Uky4oGYbeDEEAgU+OZRVTMs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 671AE1F1C15;
-        Wed,  5 Apr 2023 11:54:56 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [108.15.224.39])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 743D41F1C13;
-        Wed,  5 Apr 2023 11:54:52 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Date:   Wed, 5 Apr 2023 11:54:49 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] global: resolve Perl executable via PATH
-Message-ID: <ZC2ZyTTZFbd_gNtw@pobox.com>
-References: <d9cfad7caf9ff5bf88eb06cf7bb3be5e70e6d96f.1680689378.git.ps@pks.im>
- <ZC2I7CfVzY6Tl7Pk@pobox.com>
- <ZC2LOAwycdaUawxM@ncase>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="OX7MKnrpSUV5QuvN"
-Content-Disposition: inline
-In-Reply-To: <ZC2LOAwycdaUawxM@ncase>
-X-Pobox-Relay-ID: 33ED1AD2-D3CA-11ED-AD8E-C2DA088D43B2-09356542!pb-smtp20.pobox.com
+        with ESMTP id S238541AbjDEP6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 11:58:10 -0400
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E1AD107
+        for <git@vger.kernel.org>; Wed,  5 Apr 2023 08:58:08 -0700 (PDT)
+Received: by mail-yb1-xb49.google.com with SMTP id 8-20020a250508000000b00b7c653a0a4aso28202575ybf.23
+        for <git@vger.kernel.org>; Wed, 05 Apr 2023 08:58:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112; t=1680710288;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cQlqdGJSnD9tB1Cn+j+VJxMpW8I4DxuPuz+qLOuiqa0=;
+        b=DlkjEWA5NYYWI9CGuN0dWLk7SfG3SBirTwqicTadLenYe1AyiW1cVkVcmvCdT0+Iyz
+         nCyTWxHfHm1w0TbGYeDRXRxu3eyNOZHCx4DWtQmoGkdQRM2BD8WmMWD25GFDHlzjPtTk
+         9qKE7qbKBEOuvBGIUqH4qbef91cN3rIvvwynfUtMUQNCtSYG8V9EljzMespo0Q2A/LDe
+         P+3NW27CpwAYR/efNX+sgD+39jn0YUlNcf8UDfThiETVqxhy0z7yr5s8c903+8W6LBKx
+         DRlUa6a9GfV2qMbz19AKeOuGtMAPMYOqn07ySM7yifbpAye4EGilrYXsdxyMiGTG2VMn
+         PxVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680710288;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cQlqdGJSnD9tB1Cn+j+VJxMpW8I4DxuPuz+qLOuiqa0=;
+        b=6NVWt3K7Jw3NmDhS1+1+GCHw2Wlla4s9ClcDChnEvK6+0yjxmb3YqMQFmQzf+Fr/L4
+         HGLQmOEgA+FqS+AFAgfDQeuFLqkDi7/92tJ+q/p8dc3sso8B/xIS855fcJnbGuMZTSPe
+         mD09da83HAJmNe3lxDqfY61i7poDoeiFryxd1+h2bs6MS1Szx20OIpl7SH7IYtPVSEdT
+         GHk3IS/PjYuvLJ5pIcYysen8jAzleAoFtx9zWOd7mDLL9Mnd2kcXOEJDC1AN/3Vpj5+m
+         C7j3ODFDibWjfDVX+FYh0lcZnpb98H+OFYoHA1HgASFGM5AYobeMi7tmvSo2H/062V7u
+         8VhA==
+X-Gm-Message-State: AAQBX9cj/YJsTC/Uc8TUQ2aMTfS0jhZt+Y1MFW3BCgisYy3KHjc0FKt9
+        HAA7QbSSwkPlC4r5lkbrTnlDgbDpEv0=
+X-Google-Smtp-Source: AKy350aL0Y7mC9Iahp6gzq4u45QdW24MlFxOnxv9hJPNFw42sqPAx3LSjKn9VOYweu+sW7XE99Lhq7fFg6I=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a25:734a:0:b0:b6b:6a39:949c with SMTP id
+ o71-20020a25734a000000b00b6b6a39949cmr3851089ybc.6.1680710288098; Wed, 05 Apr
+ 2023 08:58:08 -0700 (PDT)
+Date:   Wed, 05 Apr 2023 08:58:06 -0700
+In-Reply-To: <CAMP44s128zFcMrK7URUK73ZmzETDRA5SNkWwoHgukZ9Q3f+5Qg@mail.gmail.com>
+Mime-Version: 1.0
+References: <pull.1510.git.1680661709616.gitgitgadget@gmail.com>
+ <CAMP44s15E0xJwXv8qGp8FqQvB_KaxS2TXenNZNH_VzvXpXv4Hw@mail.gmail.com>
+ <owlyzg7mubui.fsf@fine.c.googlers.com> <CAMP44s128zFcMrK7URUK73ZmzETDRA5SNkWwoHgukZ9Q3f+5Qg@mail.gmail.com>
+Message-ID: <owlywn2qtj75.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH] MyFirstContribution: render literal *
+From:   Linus Arver <linusa@google.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, "Emily Shaffer [ ]" <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
---OX7MKnrpSUV5QuvN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> "We" probably don't want to change it, *I* do. Because in AsciiDoc
+> there's a difference between a listing block and a literal block, but
+> the Git documentation does a very poor job of being compatible with
+> AsciiDoc anyway.
 
-Patrick Steinhardt wrote:
-> On Wed, Apr 05, 2023 at 10:42:52AM -0400, Todd Zullinger wrote:
->> Is there a reason to not set PERL_PATH, which is the
->> documented method to handle this?  From the Makefike:
->>=20
->> # Define PERL_PATH to the path of your Perl binary (usually /usr/bin/per=
-l).
->=20
-> Setting PERL_PATH helps with a subset of invocations where the Makefile
-> either executes Perl directly or where it writes the shebang itself. But
-> the majority of scripts I'm touching have `#!/usr/bin/perl` as shebang,
-> and that path is not adjusted by setting PERL_PATH.
+TIL. I'll be happy to apply the listing block -> literal block changes
+you suggested in a separate follow-up patch (probably looking at other
+docs we have as well, not just for MyFirstContribution.txt).
 
-Ahh.  I wonder if that's intentional?  I haven't dug into
-the history, so I'm not sure.  It seems like an oversight,
-as an initial reaction.
+> It doesn't even use the modern syntax.
 
-> I'd be happy to amend the patch series to only fix up shebangs which
-> would not be helped by setting PERL_PATH. But if we can make it work
-> without having to set PERL_PATH at all I don't quite see the point.
-
-It's certainly debatable whether using /path/to/env perl is
-better than hard-coding it at build time (forgetting about
-the usage of RUNTIME_PREFIX). [Debatable in a friendly
-sense, of course.]
-
-As a distribution packager, I prefer to set the path at
-build time to help ensure that an end user can't easily
-break things by installing a different perl in PATH.
-
-The Fedora build system will munge /path/to/env perl
-shebangs to /usr/bin/perl and it won't effect us much.
-
-That may not be true for other distributions and they may
-care more if they want to keep using a hard-coded path to
-perl.  I don't know how it may affects the Windows folks
-either, who are further askew from our other, more UNIX-like
-targets.
-
-I don't know what the right choice is for upstream Git, it
-can easily be argued in either direction. :)
-
-Cheers,
-
---=20
-Todd
-
---OX7MKnrpSUV5QuvN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEIGcjzoxKnTmf/7jnQyWTi76vDOMFAmQtmcMACgkQQyWTi76v
-DOMoRAf/dto99w5VRrnkXPndep6l9JsBIS5LgZFFNCTMzIRboUHWui0rACP0lK+H
-H5W2TzpvGD42CVhNMRu2pKAdQPm5EZeaZ7TfH+4g9nvOMha/Qg3B4EmnRbg7YGkA
-1/OuRK23QaRkvKUIeFLe7Av0JzkJVyO6ZYX6dz5eQFx50sequaBcRse8apuTg9yq
-mnEukO/QFzCo7uFEnrqzC/wYb5X5y/OMiJsMPavdM1ELH/rF5mQBU/TZfitWQ0Bc
-0g5WVimCqyvUpEwFVeHi+OjYKKbxyoJ7gg9BvrKOkHV0YHBKQDvKcH+oitRygOLd
-iAv+IAB1J/FrTq051s6J8qd/Il0fPw==
-=m5DK
------END PGP SIGNATURE-----
-
---OX7MKnrpSUV5QuvN--
+I am new to asciidoc; if you know any other examples of modernizations
+we can do, feel free to chime in. Thanks.
