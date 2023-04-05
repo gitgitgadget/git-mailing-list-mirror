@@ -2,223 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 787FEC7619A
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 17:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C2D7C76188
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 17:32:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230042AbjDERbn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 13:31:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49772 "EHLO
+        id S230042AbjDERcf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 13:32:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229687AbjDERbm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 13:31:42 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C4735BA1
-        for <git@vger.kernel.org>; Wed,  5 Apr 2023 10:31:39 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id ml21so12757028pjb.4
-        for <git@vger.kernel.org>; Wed, 05 Apr 2023 10:31:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1680715898;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QIEC+Vqv0IgRZZugZqn3f8Tp6Z+52LjBS/UGIOkXcKs=;
-        b=L6JVA7QuWoFH3Th2Owv3zxekqLNYVmADr0jzbPtsYTvZ8u90ZX+flJMD5t6XgCRwsh
-         8PPTQM7qQOyIr/2d2vETGydq5zAgXgL1691m7uEcS1wFXQU2PpR206GL3KULxc2ecoY/
-         4IqX1R8GWbidCObqqNfjvlvk7C1GpcZLj7Go1r1RUbLD2MpjwsAPXavg8GpuRLfnfZcU
-         sxYSufkzt1wMtMcJM8cS7fCJYZCrYdqpkyG6nWLeTI+PaOyLWkwNrJZ8LW978R20Tkw/
-         6ir2GCat5f+4QiulnE0JU9DWnu/Guo0WWInfBcW1VGxmnuDFUSI1X+Xw4EsHEQLQMeN2
-         GAmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680715898;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QIEC+Vqv0IgRZZugZqn3f8Tp6Z+52LjBS/UGIOkXcKs=;
-        b=7lfFdegiXquWQQgaD6fzDYapGhC/u9mhu5J7hbot1ufF4JZ2u2AQFOFxQem3oP2+ks
-         z90CFoMdHTcNwBupaPBSmmvje7pIcuvp3L56QIPdngm9Kp3rp1mYYKblloSn7dCYIibA
-         yh678Zbl2qXrwFRt2pOA75tCrf9b4FM7TCbrOcdksAxkhEl9eSSVdoMcc7+b3PJPza8N
-         bIJIx/GlumFBGaYWcYdLxF3/MpM7koaS89CA/oNbdWLby2UxrSf1fimLQD1XcwSWYYgk
-         XdVXADlCwffghTkYd6J4gikNdIgbOj0IXkEeelEcTNoArW5u10+nBwZy4FO6Wscj9fhk
-         ejcw==
-X-Gm-Message-State: AAQBX9es2I0fMif8xPjSKgUGRsP00zSuqEVBRfVUMa+EZFBPlTDmaNsH
-        wcMFf8fttgNblTb6Ts1xmOiL
-X-Google-Smtp-Source: AKy350Y7d499qaNbdfLyV8osQcPi27hdE0SlzOxpfRb/rCYKdORpmYlH400MZxFmcRzI6pCrCsw6cQ==
-X-Received: by 2002:a17:90a:46c2:b0:240:40ac:bed9 with SMTP id x2-20020a17090a46c200b0024040acbed9mr3225705pjg.20.1680715898609;
-        Wed, 05 Apr 2023 10:31:38 -0700 (PDT)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id z10-20020a17090ab10a00b00233b18e6fb3sm1668350pjq.1.2023.04.05.10.31.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 05 Apr 2023 10:31:38 -0700 (PDT)
-Message-ID: <9d0309bd-943c-dd51-97cf-59721eda78f7@github.com>
-Date:   Wed, 5 Apr 2023 10:31:36 -0700
+        with ESMTP id S229712AbjDERcd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 13:32:33 -0400
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88F6B4C31
+        for <git@vger.kernel.org>; Wed,  5 Apr 2023 10:32:32 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 4F3995C00C2;
+        Wed,  5 Apr 2023 13:32:29 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Wed, 05 Apr 2023 13:32:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1680715949; x=1680802349; bh=tf
+        W2bN0eHPIFYhqFelVmUrI5Ng5c9YEFw6J02x7tl20=; b=p9WRWPkxGtuqkG/hVB
+        ipSHeIufLHs8SW49pwgXRrk88v/Szdmtfcr3u6JaboldqueeLDRr5We7zNwyONVq
+        bqrr8+jUx91DrO6BQM+lUjuS/9iKTb0rJ6OraCsXJrk5qIMq8kgR/ZlilcHp4tEc
+        AaNCA0M1lWB7G6drVxZPDz+pheyHS0N7Fm0/fSK2j573gehOmgGZRf3BQEQP/Jah
+        xOYf9OXTk4tTV18En7CvgqB+czj6gwhqMvX6AE4IcmdazXmfC0lcue8F5G+qUIs1
+        FcxwjRvsJTfa7fsC8KWixgW2F0ndNR0Z0lPPNy72hDhEnucTL9RhjoDdbBkg183s
+        WSXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1680715949; x=1680802349; bh=tfW2bN0eHPIFY
+        hqFelVmUrI5Ng5c9YEFw6J02x7tl20=; b=WFmiHN3ygcJqdRFhVTmmf1NeKwbjj
+        qrDJ3b09QU3tz48mJMfEgTI7U1GfRUJz3ITN9d5oECoqqLXsvgy0lj8TjN3YdPka
+        m9O/qJcm7j40jNVUm6vBkVl+bG0oMP/Df/NO64kp4kzCNXBVxMxhuYh4n1YWrjHa
+        yMdzW/83fxIoK7D7R/L/qHnook+dnhS6+Tr9ZGaoS9hqbvFrPpEkjqNeeV1wdizW
+        t7XnNMrIgUPPEvqsZFI/Jc5ReTdX8ryg5P7pvz3A7OfkIAOrVJhOCp8kj3Vwch8a
+        Z0GCPOQCRePyQ8DOw/ByzAQ489XY9JMe6LHyW+EtqFWjcdbMjDxGPObsQ==
+X-ME-Sender: <xms:rLAtZCR33iA-cLkHyUoz-uvIsdBIDO3HsFjbzvUy1V7GF6PwoTbGtg>
+    <xme:rLAtZHwu6TK9YvRTBuZDftgSeClAeRvzhV7zWHfUtjm8OLUl7eUSzUpn63qIruzhT
+    hjy04iqC9DpochARA>
+X-ME-Received: <xmr:rLAtZP2KvIZvywN6w-3kOWMsohL3ArEd9A8SaIesdIyeYZcZQdYygrkqPNYjndRdZjrFXOBM6unve8MoqjzoFHGWqNiUXQ6fsUo-U6zHzfQE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdejuddgudduhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:rLAtZODnRY8y6vKRpRun6AmP88eXH5vCch1SEU_GRf5K2kXPcQh4zA>
+    <xmx:rLAtZLi-2g3xU3ihZKuIQ7rsLqqh1KhtDOYVRyhGX5V2sr4jQpaBhA>
+    <xmx:rLAtZKogA1DKCnbdZljtTFZwNlnbtEPVrhUimLNHGlm0abA1J5fMVQ>
+    <xmx:rbAtZDYPvqGC7rju4sE_1iaDVjQnXC-oIOG7uRLcvtIuwCxpvlg4uA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 5 Apr 2023 13:32:27 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 6c812c5b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 5 Apr 2023 17:32:17 +0000 (UTC)
+Date:   Wed, 5 Apr 2023 19:32:22 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Jeff King <peff@peff.net>
+Cc:     Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] global: resolve Perl executable via PATH
+Message-ID: <ZC2wppC62E7wOcqM@xps>
+References: <d9cfad7caf9ff5bf88eb06cf7bb3be5e70e6d96f.1680689378.git.ps@pks.im>
+ <ZC2I7CfVzY6Tl7Pk@pobox.com>
+ <ZC2LOAwycdaUawxM@ncase>
+ <20230405165414.GA497301@coredump.intra.peff.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.7.2
-Subject: Re: [PATCH v2] write-tree: integrate with sparse index
-Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, derrickstolee@github.com
-References: <20230402000117.313171-1-cheskaqiqi@gmail.com>
- <20230404003539.1578245-1-cheskaqiqi@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230404003539.1578245-1-cheskaqiqi@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ix9BjDx25LRXBfkL"
+Content-Disposition: inline
+In-Reply-To: <20230405165414.GA497301@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
-> Update 'git write-tree' to allow using the sparse-index in memory
-> without expanding to a full one.
-> 
-> The recursive algorithm for update_one() was already updated in 2de37c5
-> (cache-tree: integrate with sparse directory entries, 2021-03-03) to
-> handle sparse directory entries in the index. Hence we can just set the
-> requires-full-index to false for "write-tree".
-> 
-> The `p2000` tests demonstrate a ~96% execution time reduction for 'git
-> write-tree' using a sparse index:
-> 
-> Test                                           before  after
-> -----------------------------------------------------------------
-> 2000.78: git write-tree (full-v3)              0.34    0.33 -2.9%
-> 2000.79: git write-tree (full-v4)              0.32    0.30 -6.3%
-> 2000.80: git write-tree (sparse-v3)            0.47    0.02 -95.8%
-> 2000.81: git write-tree (sparse-v4)            0.45    0.02 -95.6%
-> 
-> Signed-off-by: Shuqi Liang <cheskaqiqi@gmail.com>
-> ---
-> 
-> * change the position of "settings.command_requires_full_index = 0"
 
-Could you describe why you made this change? You don't need to re-roll, but
-in the future please make sure to describe the reasoning for changes like
-this in these version notes if the context can't be gathered from other
-discussions in the thread. 
+--ix9BjDx25LRXBfkL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Range-diff against v1:
-> 1:  d8a9ccd0b3 ! 1:  8873c79759 write-tree: integrate with sparse index
->     @@ Commit message
->      
->       ## builtin/write-tree.c ##
->      @@ builtin/write-tree.c: int cmd_write_tree(int argc, const char **argv, const char *cmd_prefix)
->     - 	};
->     - 
->     - 	git_config(git_default_config, NULL);
->     -+	
->     -+	prepare_repo_settings(the_repository);
->     -+	the_repository->settings.command_requires_full_index = 0;
->     -+
->       	argc = parse_options(argc, argv, cmd_prefix, write_tree_options,
->       			     write_tree_usage, 0);
->       
->     ++	prepare_repo_settings(the_repository);
->     ++	the_repository->settings.command_requires_full_index = 0;
->     ++	
->     + 	ret = write_cache_as_tree(&oid, flags, tree_prefix);
->     + 	switch (ret) {
->     + 	case 0:
->      
->       ## t/perf/p2000-sparse-operations.sh ##
->      @@ t/perf/p2000-sparse-operations.sh: test_perf_on_all git checkout-index -f --all
-> 
-> 
->  builtin/write-tree.c                     |  3 +++
->  t/perf/p2000-sparse-operations.sh        |  1 +
->  t/t1092-sparse-checkout-compatibility.sh | 28 ++++++++++++++++++++++++
->  3 files changed, 32 insertions(+)
-> 
-> diff --git a/builtin/write-tree.c b/builtin/write-tree.c
-> index 45d61707e7..4492da0912 100644
-> --- a/builtin/write-tree.c
-> +++ b/builtin/write-tree.c
-> @@ -38,6 +38,9 @@ int cmd_write_tree(int argc, const char **argv, const char *cmd_prefix)
->  	argc = parse_options(argc, argv, cmd_prefix, write_tree_options,
->  			     write_tree_usage, 0);
->  
-> +	prepare_repo_settings(the_repository);
-> +	the_repository->settings.command_requires_full_index = 0;
-> +	
->  	ret = write_cache_as_tree(&oid, flags, tree_prefix);
->  	switch (ret) {
->  	case 0:
-> diff --git a/t/perf/p2000-sparse-operations.sh b/t/perf/p2000-sparse-operations.sh
-> index 3242cfe91a..9924adfc26 100755
-> --- a/t/perf/p2000-sparse-operations.sh
-> +++ b/t/perf/p2000-sparse-operations.sh
-> @@ -125,5 +125,6 @@ test_perf_on_all git checkout-index -f --all
->  test_perf_on_all git update-index --add --remove $SPARSE_CONE/a
->  test_perf_on_all "git rm -f $SPARSE_CONE/a && git checkout HEAD -- $SPARSE_CONE/a"
->  test_perf_on_all git grep --cached --sparse bogus -- "f2/f1/f1/*"
-> +test_perf_on_all git write-tree 
->  
->  test_done
-> diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-> index 801919009e..3b8191b390 100755
-> --- a/t/t1092-sparse-checkout-compatibility.sh
-> +++ b/t/t1092-sparse-checkout-compatibility.sh
-> @@ -2055,4 +2055,32 @@ test_expect_success 'grep sparse directory within submodules' '
->  	test_cmp actual expect
->  '
->  
-> +test_expect_success 'write-tree on all' '
+On Wed, Apr 05, 2023 at 12:54:14PM -0400, Jeff King wrote:
+> On Wed, Apr 05, 2023 at 04:52:40PM +0200, Patrick Steinhardt wrote:
+>=20
+> > > Is there a reason to not set PERL_PATH, which is the
+> > > documented method to handle this?  From the Makefike:
+> > >=20
+> > > # Define PERL_PATH to the path of your Perl binary (usually /usr/bin/=
+perl).
+> >=20
+> > Setting PERL_PATH helps with a subset of invocations where the Makefile
+> > either executes Perl directly or where it writes the shebang itself. But
+> > the majority of scripts I'm touching have `#!/usr/bin/perl` as shebang,
+> > and that path is not adjusted by setting PERL_PATH.
+>=20
+> Which scripts? If I do:
+>=20
+>   mkdir /tmp/foo
+>   ln -s /usr/bin/perl /tmp/foo/my-perl
+>   make PERL_PATH=3D/tmp/foo/my-perl prefix=3D/tmp/foo install
+>=20
+>   head -n 1 /tmp/foo/bin/git-cvsserver
+>=20
+> Then I see:
+>=20
+>   #!/tmp/foo/my-perl
+>=20
+> And that is due to this segment in the Makefile:
+>=20
+>   $(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VER=
+SION-FILE
+>           $(QUIET_GEN) \
+>           sed -e '1{' \
+>               -e '        s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+>               -e '        r GIT-PERL-HEADER' \
+>               -e '        G' \
+>               -e '}' \
+>               -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+>               $< >$@+ && \
+>           chmod +x $@+ && \
+>           mv $@+ $@
+>=20
+> And that behavior goes all the way back to bc6146d2abc ('build' scripts
+> before installing., 2005-09-08). If there are some perl scripts we are
+> "building" outside of this rule, then that is probably a bug.
+>=20
+> The only thing I found via:
+>=20
+>   find /tmp/foo -type | xargs grep /usr/bin/perl
+>=20
+> was a sample hook (which is probably a bug; we do munge the hook scripts
+> to replace @PERL_PATH@, etc, but I think the Makefile never learned that
+> the template hook scripts might be something other than shell scripts).
 
-It's not clear what "on all" means in this context. If it's "write-tree with
-changes both inside and outside the cone", then please either make that
-explicit in the test name or simplify the name to just 'write-tree' (like
-'clean').
+Yeah, agreed, the scripts we install are fine from all I can tell. I
+should've clarified, but what I care about is our build infra as well as
+our test scripts. That's neither clear from the commit description nor
+=66rom the changes that I'm doing.
 
-> +	init_repos &&
+I'd be happy to keep the current state of installed scripts as-is and
+resend another iteration of this patch that only addresses shebangs used
+in internal scripts.
 
-It would be nice to have a baseline 'test_all_match git write-tree' before
-making any changes to the index (as you do in the 'sparse-index is not
-expanded: write-tree' test). 
+Patrick
 
-> +
-> +	write_script edit-contents <<-\EOF &&
-> +	echo text >>"$1"
-> +	EOF
-> +
-> +	run_on_all ../edit-contents deep/a &&
-> +	run_on_all git update-index deep/a &&
-> +	test_all_match git write-tree &&
+--ix9BjDx25LRXBfkL
+Content-Type: application/pgp-signature; name="signature.asc"
 
-First you make a change inside the sparse cone and 'write-tree'...
+-----BEGIN PGP SIGNATURE-----
 
-> +
-> +	run_on_all mkdir -p folder1 &&
-> +	run_on_all cp a folder1/a &&
-> +	run_on_all ../edit-contents folder1/a &&
-> +	run_on_all git update-index folder1/a &&
-> +	test_all_match git write-tree
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQtsKUACgkQVbJhu7ck
+PpQpKw//V2tiC+leF+5Vb0VzYiIP1VW5yWBsdBKaSjHBXN3el4hQUlt0EG5vxrbd
+b+6RxQIxy5e2C11xDhdWLWReGCcD4IMlTCqMhjZJ0ve16DMa67AoEAQcwi8mBJ7r
+xE9mQOQYO6ZJQh0dOy6r12Kq6IgrP3kwZIWiZlipREHFWrkrWsrSq2cgJfFCO1+S
+tk/fZX4E5RnMSlipHbJBjmMphoA8H8seHkLHR2AtxNl7V7Q6vwF1bFA8J3dXwE0D
+y3jSv1z7noS/hxPus/cV4qEhbebvq8I9Y7rmgI8VFVMxt2SjTjnBX7DyfyjADt0/
+aVT27p1TSyYb6JLSJE0g/piqDaUDwdWoQFdlCc6/CKG/m8xC1dsHWXhCvSHXk2QH
+Zwa3A93EzE1O0SDTJ4QydC9tomjngnV4xKgja24XGUeL4mc3zHgGdcNsqwaJ+kX6
+rJljSHZrWQDpiIRPJaQ6/O3itBKu/k56ulixB86Wjxy/rW5WZrtAivbBO71CmLNq
+n+pLZ0KcTdLSgr0YS2OTQH71INfJ/OMLgCMq+Gs9ZzJDJCwaz4FO6MwgZ9y9iuTR
+7KhBJzaUaks7c1WzlgEtSnTG17ru0wRvO6BPB7H565EKn7xEkIx79c92M4kIaFJR
+YIIKoz+1VR212JRODOJR3lsLB5cLE+ff3Cbp8hmPtf1pVVbSOZA=
+=99AY
+-----END PGP SIGNATURE-----
 
-...then make a change outside the cone and 'write-tree' again. Makes sense.
-
-However, there isn't any test of the working tree after 'write-tree' exits.
-For example, I'd be interested in seeing a comparison of the output of 'git
-status --porcelain=v2', as well as ensuring that SKIP_WORKTREE files weren't
-materialized on disk in 'sparse-checkout' and 'sparse-index' (e.g.,
-'folder2/a' shouldn't exist).
-
-It also wouldn't hurt to 'test_all_match' on the 'git update-index' calls,
-but I don't feel too strongly either way.
-
-> +'
-> +
-> +test_expect_success 'sparse-index is not expanded: write-tree' '
-> +	init_repos &&
-> +
-> +	ensure_not_expanded write-tree &&
-> +
-> +	echo "test1" >>sparse-index/a &&
-> +	git -C sparse-index update-index a &&
-> +	ensure_not_expanded write-tree 
-
-This also looks good. 
-
-> +'
-> +
->  test_done
-
+--ix9BjDx25LRXBfkL--
