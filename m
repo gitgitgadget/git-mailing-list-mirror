@@ -2,99 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6DAFC7619A
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 05:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 676D2C7619A
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 06:39:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236735AbjDEFjW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 01:39:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36570 "EHLO
+        id S236706AbjDEGjc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 02:39:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236386AbjDEFjV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 01:39:21 -0400
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0A1019B3
-        for <git@vger.kernel.org>; Tue,  4 Apr 2023 22:39:19 -0700 (PDT)
-Received: by mail-pj1-x1049.google.com with SMTP id q8-20020a17090ad38800b0023f116f305bso16795324pju.0
-        for <git@vger.kernel.org>; Tue, 04 Apr 2023 22:39:19 -0700 (PDT)
+        with ESMTP id S231191AbjDEGjb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 02:39:31 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 854103588
+        for <git@vger.kernel.org>; Tue,  4 Apr 2023 23:39:29 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id a11so36263456lji.6
+        for <git@vger.kernel.org>; Tue, 04 Apr 2023 23:39:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1680673159;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LQVOIsAT216Zdt+yPCme0lvW1EPfL9zmkyJTYflVC6I=;
-        b=JGIp2a6zDo+f/m/iPLB8zbs1RbxNGVGSM0wgw6Ys47kp6piIHU20dAtJKmv3NR9RVe
-         9XuIMXI/Wz8U1DypXjEaSIMkpUn6+0kMPeTi2jFxWti1uBLpxtkmsKNV3+Uz2/BQ1uWk
-         beIxAQWWaWBGAE1wtgwixtxx5OvSMlIiXarbZj0CDWptaRxcWz7N1tlDuOly24rjJhZI
-         BjrbMxn8b02nUwmOgIoP9FxyLS2ztWsDM6ME8k/YzMHEHVf9uq33aOQso1KwUssJViuH
-         s9RzE/VxLo8VU7zm6d62cmGLthDz5XZ67A4+o1AkPdiN9+4XUs+1kYcmFo83fITe3hyj
-         vKEg==
+        d=gmail.com; s=20210112; t=1680676767;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mKoN3WWhMlWySGkf/JbQY1fQ9rOymxJ5NkWMMhzmXec=;
+        b=M775ZWSPf7WHYPuBI2dh9FkzzuJIWdkTM8unMZTeReoiRCYFGbyQT1yqgZyBKDo5vq
+         mG9xRBaZgoZQwbjGwh1qZpCPg9zslzhSc42lpVXqPG4si+WYHzyAGXApneOeCU4+fbgZ
+         7x+jlbn4EEA3uB0BQyqgCAp17oaVA86ovkosgUSgRfU07hMK+0vDN+y/aml/i5KmyDAg
+         9WVUkhA1J8GhPLRqHCvzPdwgs+2OYNBiMM3qcu7sHBhnrlV1CT/6FW3LVPfozUqbUsFC
+         BsRK67M7lirxahfavLz0d/TgR9wO1Hf6H0EQYqleVxAS0G7ZdxruZNij7u16dBf08xMO
+         YObQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680673159;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LQVOIsAT216Zdt+yPCme0lvW1EPfL9zmkyJTYflVC6I=;
-        b=hhZL1lSArQCDm3F5WpGhFfFFisxhTHIqyhvEgGUXqmcdzsB6sO7VE/8S4iyc808Wbv
-         ZPLWmtdpg2I6VZfAN2OJsYjBW6OQV6DJlPvgr1W4gNsqcGXflzptRt3hLcevLWFrQt+R
-         TX0KDZ+hh5pjkv5G70kguYfMjBg/yPBw+B8XmpqGDv4fB+IJ62qwwJI6cNQHdfUWPikn
-         XIgXq9XK1YuigpBo8b7HMka6yJRFtmpnZBF8oh5voyx9DXUq6Rw+N8MZDVZiozDR4dYK
-         E1BOyN9CZegk68lGyhVI/df6rvUmqdu62WzwLiYUez/m3CtxUkOiAwx5Epk41QYyCoPu
-         MMcQ==
-X-Gm-Message-State: AAQBX9cTRO+K+P0Adohs7mTrQSGxsVXgbLFzBp6gT7sMxVUaFv8WD2KM
-        jHJOqFGHrbzRtafLliE9yypHqkj5gTE=
-X-Google-Smtp-Source: AKy350beS6bZfKTxVZWDEObMoweq8XLwPgIdjgG0DpIVyUbUYO5dl1Rtl2y+2+w+uVFadwMu7SSsT22tdhQ=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:90a:2b09:b0:23d:33e5:33ec with SMTP id
- x9-20020a17090a2b0900b0023d33e533ecmr1836072pjc.1.1680673159183; Tue, 04 Apr
- 2023 22:39:19 -0700 (PDT)
-Date:   Tue, 04 Apr 2023 22:39:17 -0700
-In-Reply-To: <CAMP44s15E0xJwXv8qGp8FqQvB_KaxS2TXenNZNH_VzvXpXv4Hw@mail.gmail.com>
-Mime-Version: 1.0
-References: <pull.1510.git.1680661709616.gitgitgadget@gmail.com> <CAMP44s15E0xJwXv8qGp8FqQvB_KaxS2TXenNZNH_VzvXpXv4Hw@mail.gmail.com>
-Message-ID: <owlyzg7mubui.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH] MyFirstContribution: render literal *
-From:   Linus Arver <linusa@google.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, "Emily Shaffer [ ]" <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+        d=1e100.net; s=20210112; t=1680676767;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mKoN3WWhMlWySGkf/JbQY1fQ9rOymxJ5NkWMMhzmXec=;
+        b=5SYRltiol3NOjkcSVNPG7YcpplsRwSj38phfZ77PXYgJuaP18th8E0We328dc3AiG8
+         Bd9uuZDoLzxehjpWNTVR/IPXdiiGeYIouxlD3oeIH+3cFRuCG2k0T1XCj70alsl4nJ3F
+         ezJci3t75K0N9h5zwur/jkeoecOqM/o7dBeK+Un7gDlzk+OnOPegJP/HvwBmmHzpTnHg
+         ztUzZOKOm8pjzQJJbK9QPAatbWLthz3uEKbnm1xXayEwm8FkMfA77W668bQQo71cqGpW
+         Ylgjfm2VvHsAEF98i7CgPBQ+PdQEF1wqNvtIsZKQcRbigkZtyic2Y+uKtrtw5hwgzUS/
+         kjGA==
+X-Gm-Message-State: AAQBX9d9YizB2UNg73p/bh0fsN+R+3w6DYCDas+rEUJ/Wf7a8hCFiofT
+        cdO2DmK4n1dlneluAGE4gws3TWC4804=
+X-Google-Smtp-Source: AKy350Y80ClKW/1SgApuSN/Azpyns5dNwFFWwcmL9Vl5gJsKBXnP4qGGVxPi4NTYJpkqusKQVLVglA==
+X-Received: by 2002:a2e:920a:0:b0:29b:d4e6:cbaf with SMTP id k10-20020a2e920a000000b0029bd4e6cbafmr1468889ljg.33.1680676767106;
+        Tue, 04 Apr 2023 23:39:27 -0700 (PDT)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id p12-20020a2e9a8c000000b0029e8a32964csm2704851lji.36.2023.04.04.23.39.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 04 Apr 2023 23:39:26 -0700 (PDT)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Chris Torek <chris.torek@gmail.com>,
+        Hongyi Zhao <hongyi.zhao@gmail.com>,
+        Phillip Susi <phill@thesusis.net>,
+        Git List <git@vger.kernel.org>
+Subject: Re: git revert with partial commit.
+References: <CAGP6POLrtA_9kjCwUbVB8-F+dgQbhz==oy5SsXULfspNj_Umuw@mail.gmail.com>
+        <87edp0ak45.fsf@vps.thesusis.net>
+        <CAGP6POLVpjxO91s1dX98TLepXMrybSWq9y8qJ6b7w+e0SRJT1A@mail.gmail.com>
+        <CAGP6POJr63o67k+7BeokM-pkPbXYrQy4kcWwMXTfoeuFaPaADQ@mail.gmail.com>
+        <CAGP6POLx0+OhMJ9oqmK8R9Lq7tppC258NWHNFhqXMbO9smXd+w@mail.gmail.com>
+        <CAPx1Gvcz6f3AQJYfq7Sih0bL6pAi5mHZj8rj=kd7kRDWKLZEzw@mail.gmail.com>
+        <87lej7zhpt.fsf@osv.gnss.ru> <xmqq4jpv1pcj.fsf@gitster.g>
+        <877curzb9u.fsf@osv.gnss.ru>
+        <CAMP44s2od_=3p8+GF7tSBqQ0KsDaa4qVKXS66BS7L7BJadA_Xw@mail.gmail.com>
+Date:   Wed, 05 Apr 2023 09:39:25 +0300
+In-Reply-To: <CAMP44s2od_=3p8+GF7tSBqQ0KsDaa4qVKXS66BS7L7BJadA_Xw@mail.gmail.com>
+        (Felipe Contreras's message of "Tue, 4 Apr 2023 16:14:46 -0500")
+Message-ID: <87wn2qg7du.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Felipe!
-
 Felipe Contreras <felipe.contreras@gmail.com> writes:
-> Small nit: with this change we would lose the quotes, which are
-> helpful, I would rather do "`foo`".
 
-I see that the doc currently does not quote backticked areas, so this
-would be introducing a new style. I think such a change should belong in
-a separate patch.
+> On Tue, Apr 4, 2023 at 3:08 PM Sergey Organov <sorganov@gmail.com> wrote:
+>>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>> > Sergey Organov <sorganov@gmail.com> writes:
+>> >
+>> >>> This kind of operation produces a new commit, so there's no such
+>> >>> thing as a partial revert or partial cherry-pick, at least in
+>> >>> terms of "things Git can do by itself".  But we, as humans writing
+>> >>> programs, wish to *achieve* such things.
+>> >>
+>> >> So, why Git can't help us achieving it by supporting paths limiting in
+>> >> (all) merge operations? There seems to be no absolute obstacles, just a
+>> >> luck of support.
+>> >
+>> > I think there is no fundamental reason to forbid an optional
+>> > pathspec to "cherry-pick" and "revert", given that a commit that
+>> > results from either "git cherry-pick" or "git revert" is called a
+>> > "cherry-pick" or a "revert" merely by convention and there is no
+>> > tool-level support to treat them any specially at merge or rebase
+>> > time [*1*].  It would make it harder to design tool-level support
+>> > for full cherry-picks or reverts, but that is a problem for future
+>> > generation, not ours ;-)  Allowing pathspec to "merge" and recording
+>> > the result as a merge of two (or more) parents is an absolute no-no
+>> > but that is not what we are discussing.
+>>
+>> If I got this right, you believe that "git merge" should never have
+>> support for "partial merges", whereas it makes sense for cherry-pick and
+>> revert? If so, I disagree. There is no reason for Git to strictly
+>> prevent me from using the feature specifically in "git merge" (once it's
+>> otherwise implemented), provided I do mean it and didn't do it by
+>> mistake.
+>>
+>> Please notice that I can do it right now already (and I did a few
+>> times), only with a more pain than necessary, and I don't see why this
+>> pain is to be preserved (provided we do have the feature implemented in
+>> the future). Besides, "git merge" is only a helper, and it'd be an
+>> improvement if it'll be capable to help in more cases.
+>
+> This sounds awfully familiar to Mercurial's reluctance to support
+> rewriting history. It wasn't the tool's place to prescribe what the
+> users should or shouldn't do.
+>
+> If the user wants to do it, the tool should help him do it, not
+> pontificate about what is heretic.
+>
+> The user is still going to do it, like with a rebase plugin on
+> Mercurial, or with `git filter-branch` and then merge the result. All
+> the tool is achieving is being annoying by not helping the user.
 
-That being said, personally I think having the quotes around the
-backticks makes things harder to read, especially for users directly
-reading from the raw *.txt file.
+Yep, and I'm worried by such trends in Git as well. Looks like growing
+influence of software development culture where the user is not
+considered to be intelligent enough to make proper decisions by himself,
+and needs to be thoroughly guided by the tool (designers) all the time.
 
-
-> And for what it's worth I would revamp the whole section, something like  
-> this:
-
-> --- a/Documentation/MyFirstContribution.txt
-> +++ b/Documentation/MyFirstContribution.txt
-> @@ -1136,18 +1136,18 @@ information on how to handle comments from  
-> reviewers.
->   We'll reuse our `psuh` topic branch for v2. Before we make any changes,  
-> we'll
->   mark the tip of our v1 branch for easy reference:
-
-> -----
-> +....
->   $ git checkout psuh
->   $ git branch psuh-v1
-> -----
-> +....
-
-
-While I see the four dots (....) being used to denote regions in other
-files like SubmittingPatches, they are not used at all in
-MyFirstContribution.txt. So I am not sure why we would want to change
-this.
+Thanks,
+-- Sergey Organov
