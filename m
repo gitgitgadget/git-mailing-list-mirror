@@ -2,135 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 120DBC7619A
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 14:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE7FDC76188
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 14:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238519AbjDEOsN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 10:48:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34180 "EHLO
+        id S238049AbjDEOwt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 10:52:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238594AbjDEOsL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 10:48:11 -0400
+        with ESMTP id S233443AbjDEOwq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 10:52:46 -0400
 Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D75E107
-        for <git@vger.kernel.org>; Wed,  5 Apr 2023 07:48:08 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.west.internal (Postfix) with ESMTP id 5757B3200941;
-        Wed,  5 Apr 2023 10:48:07 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62AD91FE6
+        for <git@vger.kernel.org>; Wed,  5 Apr 2023 07:52:45 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id C9C1A3200949;
+        Wed,  5 Apr 2023 10:52:44 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 05 Apr 2023 10:48:07 -0400
+  by compute4.internal (MEProxy); Wed, 05 Apr 2023 10:52:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1680706086; x=1680792486; bh=og
-        PTuF2DXJt1GlLOWKloFIAp8xsM3m2BLXNHA9lR54Y=; b=p7HLot2hz7PSY5LyIB
-        DTqQ4IghkX1qDhQ4QVe/jdqrlYTNZHfnqspjlNtu96NmM0RH9x0dzyBIHuvW4LmB
-        g1itOHKSgWDkDgAH4h0KjOBPwacCowXLIXLExdjUwaPIbx7+QEWOAN4nBmO5uURV
-        FEfKZuuiR4PMU6jQ77RKbVO/NHVKzIbS1stU1CCXFanTE5jSWjyUi6iYFsfAjS5E
-        RHcb2g53+B34Sn8Bg7yhDKgsndXtCRcT7VPa02tLNwGOFZECjmvupuBxgDcxZ1kK
-        nhormBa+f2u3j7T8I5exO8bdWq8fKXaaa6B8aEq9p5zKfZYzHw+1u6Iq/QUax3HJ
-        ARYQ==
+        :subject:subject:to:to; s=fm2; t=1680706364; x=1680792764; bh=9c
+        enJisXpyKPSWSQGq4ejrqvdZAeXc1xQ9o0x5ZNtQs=; b=zV4CMnDR6LYwsxXOnR
+        DEEpMdlQLPNjDHe+d0QLeGQj1/EwrgAKhgFFhYR83jGRzPvrLehP0ZX46r6Kg6gD
+        eWU020zsmxiUMaXZi/lb5WsCLzuYRD9kLtOK5i2TXvSnXDWyVqCmZn41l2TONnj/
+        3A0wrRMXczEzW88eeVUwlk/4mGVIVdQMw2+4/9Q0BaGH/wq+QPuAHMaZG6ua8Uu6
+        OXj2ziRQmqNxrIySBZelNaDm5he4G8SzX00fu4KDL3Pyf3kjmu/damdqwqy2K3AP
+        WcZrHIldsCMQ8WCNLk/XNmQZoH+SRQ1LS/AjTBrwG4YArV4XL/+2rL1NFBHF9KEI
+        qp1A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm2; t=1680706086; x=1680792486; bh=ogPTuF2DXJt1G
-        lLOWKloFIAp8xsM3m2BLXNHA9lR54Y=; b=EBi1Sba9P4Qmag+k9aNKeQq5OSzrt
-        8yYNz6xqGiMGov19s9BLfnjBqfUpN8GLMw9nFjFjoIY6nUTNF3UuWP7zImSGB+f0
-        z4b8YfqogNIFX0VuCg77tx95UGlhs7msRFBkr5ecEQHHloiLH/RLYYaSLvRImlEG
-        OLp4mRCc3/5ptTCOpPXxnMVnUfQUSQ83zKRlWQlLyA5CdqB8jXsTctYUJCMoenOu
-        +e4AgPJBJlJyntki0BRgGjjAqfZvFzzKgtYMApJnHXDmGq7eLE6Se5uIEbnLei8B
-        GhOZZyyuo/hGlvn66yVO39wpWYJD2hobdxaQXTxUitNKM0snCJIATmBDg==
-X-ME-Sender: <xms:JootZCUfLqH4jA2O5WkUsn8_0udlAvK_-KXmjOIP8KY9rzoMZ20l3g>
-    <xme:JootZOmcsCSCtn_ewuwBP_U8R-Hjq-NlXTTu9jW3hbFZMoYk9jCmwLMvtyipBL7mK
-    dW-a-eas2VAK67VxA>
-X-ME-Received: <xmr:JootZGZ9WPjkG26HOB23YnrcysC0g1tgWANxrQPnxxaFhu7UO-_TCzbNk8ua2ONaPKEB3I57wgqLQG7TuTYdqR8LOVGtmQuyAGSshmL_jB1J>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdejuddgkeduucetufdoteggodetrfdotf
+        :x-sasl-enc; s=fm2; t=1680706364; x=1680792764; bh=9cenJisXpyKPS
+        WSQGq4ejrqvdZAeXc1xQ9o0x5ZNtQs=; b=OxJXvtFVbrF9M2T6bEtGoIXqrrcER
+        /n9Ju85xSKYuQX7U0XGF5ikQRsClqL1IxakA74lJvwYQ0sGJdH8/yashssjaLDcI
+        +ylUVq9q+nARQtWcHfvlOYrLnWw2U3ZuetYfCVYT8ktg9LsGQUwjpOIx+F9U9W6/
+        v+9nqG8w6IVxsYDHUf3ate0aVvXiNKYkT+Z9FKERedCGMAFGMiTZvo5t8K97WRzQ
+        vO5nUYsZfbnfYMeEZ86QTM+6LQHB5h44I1EZIxSz0wlLYpmIe9fpmKLf9Ex6RTka
+        inbILdlSv0KuS1URVP0LJUiw8U3bYjI5ayVdlGchB9Gur9US7QfbQlJoA==
+X-ME-Sender: <xms:PIstZMB-mPK3ta6pXSzoOZnWhzvAiuFCpkHPqHkTnAQkU05pDL-4GA>
+    <xme:PIstZOiTxO1TctGPwopI5WR3CvW28LKFpTgvn3G_AdMPZ1l3y09PdJSrS1EnVAffA
+    pM8VG1aRbHtdTsNMw>
+X-ME-Received: <xmr:PIstZPnB1VpOKRjDeBPEGXFQxuT5HAU3F_yVgkgirIHlh9PLNWRxdXAzlAE4hjes8yfm6z8Rlg9XwRLs9Ti-mArwY-ZSH_3Vy001cswlZqEx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdejuddgkedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:JootZJV0QpGTVONOgOuKFQVHul01n5P6K0J8puk8uUsS2Yq3PlYk9w>
-    <xmx:JootZMlFqXlVuIHi9D7ZsleBRVWA74YimTcghtjT0AtShaBqWaQcKQ>
-    <xmx:JootZOfo9wW6wj0wGa_WbfgwLT19UgmVT8uErGptD-87xL9XP24LbQ>
-    <xmx:JootZDuhVZsqOY5qCErRZ3dm-yZy2kWDNsPqD9jhfeH8HAR1CARzyg>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:PIstZCy5uL0vrZ_b4VDKyVFFsfMUvBMgspMaRrlSch2suqyz0LTljw>
+    <xmx:PIstZBQk2NZiUZ8xP7Lc4DJdAKho23I6nhL7cSlv9VjE5MGXgGqXPw>
+    <xmx:PIstZNbwx8UsvVqO1HUURb6xSbAt8ViYqmhve5JPPL0AMysusKwbyQ>
+    <xmx:PIstZC7FUVHfI7JDKmLyBxmqiVsUY_-3yNohL1eNNtduRR3PXW42fA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Apr 2023 10:48:05 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 5d753d65 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 5 Apr 2023 14:47:56 +0000 (UTC)
-Date:   Wed, 5 Apr 2023 16:48:00 +0200
+ 5 Apr 2023 10:52:43 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 87723ad3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 5 Apr 2023 14:52:36 +0000 (UTC)
+Date:   Wed, 5 Apr 2023 16:52:40 +0200
 From:   Patrick Steinhardt <ps@pks.im>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
+To:     Todd Zullinger <tmz@pobox.com>
 Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] global: resolve Perl executable via PATH
-Message-ID: <ZC2KICsJN5pmsqWX@ncase>
+Message-ID: <ZC2LOAwycdaUawxM@ncase>
 References: <d9cfad7caf9ff5bf88eb06cf7bb3be5e70e6d96f.1680689378.git.ps@pks.im>
- <CAMP44s0eLNOWFr7fc6M5Fompw1Y13vAxk8=fAWVZ8-22Y-xihg@mail.gmail.com>
+ <ZC2I7CfVzY6Tl7Pk@pobox.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="g/tTUJAQIFyMQNzc"
+        protocol="application/pgp-signature"; boundary="4rjD0QfuCAdWU9Ra"
 Content-Disposition: inline
-In-Reply-To: <CAMP44s0eLNOWFr7fc6M5Fompw1Y13vAxk8=fAWVZ8-22Y-xihg@mail.gmail.com>
+In-Reply-To: <ZC2I7CfVzY6Tl7Pk@pobox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---g/tTUJAQIFyMQNzc
-Content-Type: text/plain; charset=utf-8
+--4rjD0QfuCAdWU9Ra
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Apr 05, 2023 at 08:35:50AM -0500, Felipe Contreras wrote:
-> On Wed, Apr 5, 2023 at 5:53=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
-> >
+On Wed, Apr 05, 2023 at 10:42:52AM -0400, Todd Zullinger wrote:
+> Patrick Steinhardt wrote:
 > > The majority of Perl scripts we carry in Git have a `#!/usr/bin/perl`
 > > shebang. This is not a portable location for the Perl interpreter and
 > > may thus break on some systems that have the interpreter installed in a
 > > different location. One such example is NixOS, where the only executable
 > > installed in `/usr/bin` is env(1).
-> >
-> > Convert the shebangs to resolve the location of the Perl interpreter via
-> > env(1) to make these scripts more portable. While the location of env(1)
-> > is not guaranteed by any standard either, in practice all distributions
-> > including NixOS have it available at `/usr/bin/env`. We're also already
-> > using this idiom in a small set of other scripts, and until now nobody
-> > complained about them.
 >=20
-> This is standard practice in Ruby, and it does seem to work everywhere.
+> Is there a reason to not set PERL_PATH, which is the
+> documented method to handle this?  From the Makefike:
 >=20
-> However, I wonder if /bin/env does also work. I can't imagine a system
-> system providing /usr/bin/env but not /bin/env.
+> # Define PERL_PATH to the path of your Perl binary (usually /usr/bin/perl=
+).
 
-NixOS does indeed only have /usr/bin/env and does not have /bin/env, so
-it wouldn't.
+Setting PERL_PATH helps with a subset of invocations where the Makefile
+either executes Perl directly or where it writes the shebang itself. But
+the majority of scripts I'm touching have `#!/usr/bin/perl` as shebang,
+and that path is not adjusted by setting PERL_PATH.
+
+I'd be happy to amend the patch series to only fix up shebangs which
+would not be helped by setting PERL_PATH. But if we can make it work
+without having to set PERL_PATH at all I don't quite see the point.
 
 Patrick
 
---g/tTUJAQIFyMQNzc
+--4rjD0QfuCAdWU9Ra
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQtiiAACgkQVbJhu7ck
-PpTduQ/8C/4JD9lBe6RTVL8uvB+HXOcOUyjyYMAVyT4GCfXr2gJYcraMTLqc+htZ
-8lYKtKE6efi+9KOqL9axKY4V44z6AyGQwurVxYka7xiiOUin4tRh0111l1CGG09j
-ILVqVu+1pOuRTwUkIECAapDG+1UcAxPJZoYFBqDfY/hK1q0l7X0RSHj73CoKLg6S
-Io6mc07KiqWkd8tgKRhOIKbDoKTTrpasTN4FwaufdLbFFvJahUH4t5WYZH3JhKvy
-TiQI/3DsjIRiauEKurIa7ISa0Ign6dY3A31WbKo9nCDdlfgFExA9MVPmruXyaEyb
-Pk2pG6poFq/5O0pPYzTLTF+0LRFeg7SVCkP6qPxvuw06595REQCWEEwyPq2EOqnu
-gO/Ow/1HKfwGS+6sC56n8rL2Vv9yVC/K6KqLcft/BqMtcFxAGHIU6budhsKWBb4M
-O1paeXvGxMc9wOijt3cr6PrnKY55CMEWJeLLLoXKSzI7ZTbLEFuWcPRoWmw3aHwf
-76YD5G9QyCOmR8SCvpsXy7kyPStIocUU7WVNcbmcDU4KvXodMVvyoPsOe8+lUem4
-oGyXtn3NiWslavhWAilA+JeATWqPYXgLXre1XNNIzseKfpCie8VtAis5LrAJ8Jll
-F7QTxYzigYwqPFGBHAaHCCqRpnF073EtzVVki/4Bn5p0ok5xVuA=
-=dlMQ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQtizcACgkQVbJhu7ck
+PpQDmRAAjYI3kt/rm4mRUtSCCQGVh4bacGjF1uvkhQjeLeiRYrzHYH8Kf4kXNv/R
+fneZQ5DY8b2zHNKjTW4Y7PvnXP6QgwMuDGIY+I2q1nkmToa5CVx7Jjpa8keqSK+w
+mGcQ+ulbBNNQUi1SUmvHHlrC8ULMJ38igcfEZKGVFJ00goKfCRRpxDpmVt6sdKFf
+jgRsplfzG0tia8vYpRFL++DpNX7KqoO6VXPYpkJpQMv8CEPC3NWbmLUkGaMqNTv5
+CCGdKFbhRLCkQTMNwb0TrmpKf5ihljmZ2ZW9Lnb1AvAnqN7ZSzBf+9gCilRF0PPm
+n5/cRohGo5gA9mX42cU94TeYMkWMo4fzUA2alDEyeOOVAC2Ob4dP5Bu13pooNte9
+xnCDRrQN9AIVAH+JqFEbGuptKy7UsCoLF1gsRYb6foWezG/j2Onhs95uej67+L7t
+wYmNtBWDlKdh+Fwywu8vFbBa647DZE7EHeHOrZwJ4gEE/tN4Ztqfv16ldoHo3Un5
+qkbvwlvfvXhm1KkfL2rHDlfEQdp68v91TYrCA4fPMKql405MXVdj1q0cZjxyP2ek
+i+VW0RFZr6eRrxm1kz0Zt1ibdC09GlTa+CRC97CYz1sV1d4gEY3UdU7+ob1gPIgD
+zCKpKuN/LIG+KlNhNWdnIv50ZrWZztFX12Lbyk0A/+kQlsQQM4U=
+=Dd43
 -----END PGP SIGNATURE-----
 
---g/tTUJAQIFyMQNzc--
+--4rjD0QfuCAdWU9Ra--
