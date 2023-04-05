@@ -2,91 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73FBDC76188
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 20:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95FB6C76188
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 20:41:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231132AbjDEUD5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 16:03:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40314 "EHLO
+        id S234685AbjDEUlk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 16:41:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230479AbjDEUDw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 16:03:52 -0400
-Received: from mail.cs.ucla.edu (mail.cs.ucla.edu [131.179.128.66])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 434E426AE
-        for <git@vger.kernel.org>; Wed,  5 Apr 2023 13:03:52 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.cs.ucla.edu (Postfix) with ESMTP id DAD523C09FA02;
-        Wed,  5 Apr 2023 13:03:51 -0700 (PDT)
-Received: from mail.cs.ucla.edu ([127.0.0.1])
-        by localhost (mail.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 5aZEMnBhpMz3; Wed,  5 Apr 2023 13:03:51 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-        by mail.cs.ucla.edu (Postfix) with ESMTP id 905833C09FA04;
-        Wed,  5 Apr 2023 13:03:51 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.cs.ucla.edu 905833C09FA04
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cs.ucla.edu;
-        s=9D0B346E-2AEB-11ED-9476-E14B719DCE6C; t=1680725031;
-        bh=8PkslEbHjoWrpxk5RHwWEEVpxilllW7PcwBgH/aBFtk=;
-        h=Message-ID:Date:MIME-Version:To:From;
-        b=CftoLGsHsh5+2RqTPkPiiFimYzMr4dQgc415GFbs6dKBjA2ISMPv1p2YYlZn/6k4W
-         yOuq+Fv6giOfadQqgV56YsHcz4rZfo+tCY7rlNTo8MLLSTahRqwc3buVoBzY6zKLVT
-         JC8Ea7lsV+gVxbOwyBIVlj6+pJLNXW1GP/wJ3+mB6e39YJg1MqYj/kv3oF6YCuAaBs
-         LUIWivy/Lnwa+ozTMLlxqmC50PBwy9cZaQ8116gwM5KLLBeWBOwuK4XawQOGxkQa49
-         DSOvtaQKY/TYKIiVDmqEwrlsZ8ERVJ36HcSlVPQuo11NPCVlb3F7goLAwUQhNes8vk
-         DX5sQ4hLPkE7Q==
-X-Virus-Scanned: amavisd-new at mail.cs.ucla.edu
-Received: from mail.cs.ucla.edu ([127.0.0.1])
-        by localhost (mail.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id EB-czLSrBsYx; Wed,  5 Apr 2023 13:03:51 -0700 (PDT)
-Received: from [192.168.1.9] (cpe-172-91-119-151.socal.res.rr.com [172.91.119.151])
-        by mail.cs.ucla.edu (Postfix) with ESMTPSA id 4A6033C09FA02;
-        Wed,  5 Apr 2023 13:03:51 -0700 (PDT)
-Message-ID: <ed237a07-2f77-74eb-2f52-49b9b8f08873@cs.ucla.edu>
-Date:   Wed, 5 Apr 2023 13:03:51 -0700
+        with ESMTP id S234310AbjDEUl0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 16:41:26 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B09F86B5
+        for <git@vger.kernel.org>; Wed,  5 Apr 2023 13:40:33 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id o6-20020a17090a9f8600b0023f32869993so40754046pjp.1
+        for <git@vger.kernel.org>; Wed, 05 Apr 2023 13:40:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680727223;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7RaIcy+2wGtchmMsoruyY+wjsVBozeRUz0H4bVBFwhM=;
+        b=V5s2zJABjlm9BNW5CF2RY4wQ6B5BemUBSvXuiNbZgL9vxE/gqIBfGcJLI5vp/pSHp+
+         bsjeN403FVe1fM1zi1Apeyeaphk5mUxG2mo/978oilw61p4NQQ/kvnzBaP5aQWQcjxtw
+         WMx4VRkTos91O5y4uE07y4zuwS06gK1aaVfomyMcYsjbecI3bqzKC1D6o+wOFn+6beiP
+         cXwDrsU0GVLcPca4otMCyq3WbglKFVoCIrfyGwO4HvFZsLoo78AQFMZ0r8wq5llmRCtJ
+         zP3Kpx5u8KykHMmAKNDo9M1NjvizeFI5r0+j9MWF/dErRAYCtjeL1lE33vSNJoVO3n8l
+         yKEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680727223;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=7RaIcy+2wGtchmMsoruyY+wjsVBozeRUz0H4bVBFwhM=;
+        b=2ZSl/2K+B9vGg4H0dhN3FVD7gVIgPT1PDrrD0jVzQ0iNkVwS5s6N3kUOWwN/hhy8dL
+         8OgeV8J+cIEhPcZbjn24PAn4AuZS8e80wBzdLAta+styFuTNBsW7W8u6iCiJPcIuNdAc
+         CDuQkpgEWbHfiNAklP7gMIugA/GVFnO3cGkCziEXG63Tw/vrWGRbIlX3SiNBrqz0usMN
+         HSYLXfrCRwToa4inY+dmVV8SWYaWsGVJIzS2pMdp/0pIZh6HYpICkBiCQgjUP5UuXeTG
+         nPSx37zBEogCgzPqK6So017e4XoUKRE6wrv2cSpzKUdZXQncJyw/pGcvYCCSEX91vjU/
+         J0SA==
+X-Gm-Message-State: AAQBX9f6z/qWf03VCaZgPB59DMmPUxwyhFAwcHsIIRz5yLTjgq7C1slD
+        uvIg3673ofw2gQG8WIfOmgE=
+X-Google-Smtp-Source: AKy350Z6260aQlLYOVDDEqNs469Yv06Vneyoi1GUYDt0oTex0dOntWd6qOSAnvPusYGiouQda99d0Q==
+X-Received: by 2002:a17:902:e80d:b0:1a1:dfb6:b804 with SMTP id u13-20020a170902e80d00b001a1dfb6b804mr9039218plg.11.1680727223481;
+        Wed, 05 Apr 2023 13:40:23 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id b24-20020a630c18000000b005023496e339sm9366843pgl.63.2023.04.05.13.40.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Apr 2023 13:40:23 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Adam Majer <adamm@zombino.com>, git@vger.kernel.org
+Subject: Re: git clone of empty repositories doesn't preserve hash
+References: <e7a8957e-6251-39f1-5109-87d4dd382e81@zombino.com>
+        <xmqqr0syw3pe.fsf@gitster.g>
+        <d04c430e-b609-b0a1-fd0f-0f3734d5c3b1@zombino.com>
+        <20230405200153.GA525125@coredump.intra.peff.net>
+Date:   Wed, 05 Apr 2023 13:40:22 -0700
+In-Reply-To: <20230405200153.GA525125@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 5 Apr 2023 16:01:53 -0400")
+Message-ID: <xmqqa5zmukp5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Content-Language: en-US
-To:     Jim Meyering <jim@meyering.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, demerphq@gmail.com,
-        Philip.Hazel@gmail.com, 60690@debbugs.gnu.org,
-        mega lith01 <megalith01@gmail.com>,
-        Carlo Arenas <carenas@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        pcre-dev@exim.org,
-        =?UTF-8?Q?Tukusej=e2=80=99s_Sirs?= <tukusejssirs@protonmail.com>,
-        git@vger.kernel.org
-References: <2554712d-e386-3bab-bc6c-1f0e85d999db@cs.ucla.edu>
- <CAPUEspj1m6F0_XgOFUVaq3Aq_Ah3PzCUs7YUyFH9_Zz-MOYTTA@mail.gmail.com>
- <96358c4e-7200-e5a5-869e-5da9d0de3503@cs.ucla.edu>
- <xmqqttxvzbo8.fsf@gitster.g>
- <6d86214a-1b80-eb88-1efb-36e61fd3203e@cs.ucla.edu>
- <CA+8g5KHYqgAZPpTOXWekDpWv-mvj-rBkGu+4MXy4OB1VDeS4Lw@mail.gmail.com>
-From:   Paul Eggert <eggert@cs.ucla.edu>
-Organization: UCLA Computer Science Department
-Subject: Re: bug#60690: -P '\d' in GNU and git grep
-In-Reply-To: <CA+8g5KHYqgAZPpTOXWekDpWv-mvj-rBkGu+4MXy4OB1VDeS4Lw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2023-04-05 12:40, Jim Meyering wrote:
-> (C)  preserve grep -P's tradition of \d matching only 0..9, and once
-> grep uses 10.43 or newer, \b and \w will also work as desired.
+Jeff King <peff@peff.net> writes:
 
-If I understand you correctly, (C) would mean that GNU grep -P, git grep 
--P, and pcre2grep -u would all use PCRE2_UTF | PCRE2_UCP, and would also 
-use the extra option PCRE2_EXTRA_ASCII_BSD that is planned for 10.43 PCRE2.
+> Yeah, we send a special capability line in that case. If you do:
+>
+>   GIT_TRACE_PACKET=1 git clone a b
+>
+> you can see that upload-pack indicates that ls-refs understands the
+> "unborn" capability:
+>
+>   packet:  upload-pack> version 2
+>   packet:  upload-pack> agent=git/2.40.0.824.g7b678b1f643
+>   packet:  upload-pack> ls-refs=unborn
+>   packet:  upload-pack> fetch=shallow wait-for-done
+>   packet:  upload-pack> server-option
+>   packet:  upload-pack> object-format=sha256
+>   packet:  upload-pack> object-info
+>   packet:  upload-pack> 0000
+>
+> And then clone asks for it say "yes, I also understand unborn":
+>
+>   packet:        clone> command=ls-refs
+>   packet:        clone> agent=git/2.40.0.824.g7b678b1f643
+>   packet:        clone> object-format=sha256
+>   packet:        clone> 0001
+>   packet:        clone> peel
+>   packet:        clone> symrefs
+>   packet:        clone> unborn
+>   packet:        clone> ref-prefix HEAD
+>   packet:        clone> ref-prefix refs/heads/
+>   packet:        clone> ref-prefix refs/tags/
+>   packet:        clone> 0000
+>
+> And then upload-pack can send us the extra information:
+>
+>   packet:  upload-pack> unborn HEAD symref-target:refs/heads/maestro
+>   packet:  upload-pack> 0000
+>
+> I think we'd need to do something similar here for object-format.
 
-This would require changes to bleeding-edge pcre2grep -u (since it would 
-need to add PCRE2_EXTRA_ASCII_BSD unless --no-ucp is also given), and to 
-git grep -P (which would need to add PCRE2_UCP and 
-PCRE2_EXTRA_ASCII_BSD, when libpcre2 is new enough to #define 
-PCRE2_EXTRA_ASCII_BSD).
-
-This option works for me as well. In fact it's the least work for me 
-since I already implemented it in bleeding-edge GNU grep (so it works 
-this way already :-).
+I guess we only need to touch "git clone" then.  Without being
+asked, it advertsizes object-format=sha256 already, and when the
+maestro repository is prepared without --object-format=sha256,
+upload-pack advertises object-format=sha1 instead.  So it probably
+is just the matter of capturing it and using it to populate the
+extensions.objectformat with an appropriate value.
 
