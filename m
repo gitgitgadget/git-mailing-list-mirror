@@ -2,78 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3733C76188
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 15:58:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13F77C7619A
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 16:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238491AbjDEP6L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 11:58:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49092 "EHLO
+        id S233513AbjDEQsd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 12:48:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238541AbjDEP6K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 11:58:10 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E1AD107
-        for <git@vger.kernel.org>; Wed,  5 Apr 2023 08:58:08 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 8-20020a250508000000b00b7c653a0a4aso28202575ybf.23
-        for <git@vger.kernel.org>; Wed, 05 Apr 2023 08:58:08 -0700 (PDT)
+        with ESMTP id S229699AbjDEQsc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 12:48:32 -0400
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C2074C17
+        for <git@vger.kernel.org>; Wed,  5 Apr 2023 09:48:25 -0700 (PDT)
+Received: by mail-pg1-x54a.google.com with SMTP id v135-20020a63618d000000b005139242a138so6639163pgb.7
+        for <git@vger.kernel.org>; Wed, 05 Apr 2023 09:48:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1680710288;
+        d=google.com; s=20210112; t=1680713304;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cQlqdGJSnD9tB1Cn+j+VJxMpW8I4DxuPuz+qLOuiqa0=;
-        b=DlkjEWA5NYYWI9CGuN0dWLk7SfG3SBirTwqicTadLenYe1AyiW1cVkVcmvCdT0+Iyz
-         nCyTWxHfHm1w0TbGYeDRXRxu3eyNOZHCx4DWtQmoGkdQRM2BD8WmMWD25GFDHlzjPtTk
-         9qKE7qbKBEOuvBGIUqH4qbef91cN3rIvvwynfUtMUQNCtSYG8V9EljzMespo0Q2A/LDe
-         P+3NW27CpwAYR/efNX+sgD+39jn0YUlNcf8UDfThiETVqxhy0z7yr5s8c903+8W6LBKx
-         DRlUa6a9GfV2qMbz19AKeOuGtMAPMYOqn07ySM7yifbpAye4EGilrYXsdxyMiGTG2VMn
-         PxVQ==
+        bh=fMtGSb1AC4KvIUVLMrg0WXZSDWUmL0Q48C8MU8g17NU=;
+        b=PXIsE/Slwnp4tD74fMYwkNgkta40sXMr35PACZjqTTtpuK4YWghbIa/Zzz975MiVPS
+         Id2zCQqan+56YHMUrxCo6iZUimQu59lwaKyqPf3lcvqV91x2XszKbN1ctFiJk3sySNeJ
+         I0iy9+06AQ4rZcAsou8PTK4LJ2yQaivU5Zd9CzxeemEwpPv99wWHuOl5HaiaC13rwh2N
+         rKi2UlzoSx4HckrGmiqBuDymRwkKYdrumGdDMF2W+U6Ka6YOsFMANM91YAId2lnevBIf
+         xJ55YCF0U7ousgKjYXfqHIHofJbYnSRT27pmAo/WW1MOyeq835E9fuqPIN3ADDjydjcz
+         igHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680710288;
+        d=1e100.net; s=20210112; t=1680713304;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cQlqdGJSnD9tB1Cn+j+VJxMpW8I4DxuPuz+qLOuiqa0=;
-        b=6NVWt3K7Jw3NmDhS1+1+GCHw2Wlla4s9ClcDChnEvK6+0yjxmb3YqMQFmQzf+Fr/L4
-         HGLQmOEgA+FqS+AFAgfDQeuFLqkDi7/92tJ+q/p8dc3sso8B/xIS855fcJnbGuMZTSPe
-         mD09da83HAJmNe3lxDqfY61i7poDoeiFryxd1+h2bs6MS1Szx20OIpl7SH7IYtPVSEdT
-         GHk3IS/PjYuvLJ5pIcYysen8jAzleAoFtx9zWOd7mDLL9Mnd2kcXOEJDC1AN/3Vpj5+m
-         C7j3ODFDibWjfDVX+FYh0lcZnpb98H+OFYoHA1HgASFGM5AYobeMi7tmvSo2H/062V7u
-         8VhA==
-X-Gm-Message-State: AAQBX9cj/YJsTC/Uc8TUQ2aMTfS0jhZt+Y1MFW3BCgisYy3KHjc0FKt9
-        HAA7QbSSwkPlC4r5lkbrTnlDgbDpEv0=
-X-Google-Smtp-Source: AKy350aL0Y7mC9Iahp6gzq4u45QdW24MlFxOnxv9hJPNFw42sqPAx3LSjKn9VOYweu+sW7XE99Lhq7fFg6I=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a25:734a:0:b0:b6b:6a39:949c with SMTP id
- o71-20020a25734a000000b00b6b6a39949cmr3851089ybc.6.1680710288098; Wed, 05 Apr
- 2023 08:58:08 -0700 (PDT)
-Date:   Wed, 05 Apr 2023 08:58:06 -0700
-In-Reply-To: <CAMP44s128zFcMrK7URUK73ZmzETDRA5SNkWwoHgukZ9Q3f+5Qg@mail.gmail.com>
+        bh=fMtGSb1AC4KvIUVLMrg0WXZSDWUmL0Q48C8MU8g17NU=;
+        b=fgU5b9SxtjO2IDSWOa1LR1dKZXOr/XFwDG803zrQN4/BHeBWsrJLRxBnHPkBMpbBoE
+         mIhwVmtrisfS0vn6tw4e1xV9CkvJhVOS1xKbcjlkv+xX97ULG/2mjIbyKawYlcIhybvc
+         UJA+rhe0CkJeQhKWWWtU6sVvre5De+3XqVr2H/p9Y9IzVo5PQafOdIoYqC5QoXrQBRbi
+         058cKSXiuA9KB3CDsoik6n/86NspPLniiDJKfj6z5+76cJYcg9hqqqEV0niun9/LyHfa
+         P7YWghaqehtRm5Xr/o99/15L1KKVD6hO0VTSS10S+31SWczMKtPGIzprL2HnxqcA8exO
+         2OEw==
+X-Gm-Message-State: AAQBX9dwig4SHKpGBaIhChytFHHU/UTLy3rXuq1AoF2ClXGCA5WShSBN
+        jSbUUKcljG8iNo+6aCVpUfhmJKpbRDTaVw==
+X-Google-Smtp-Source: AKy350Zy3Ezvb5QzgYNJ/kd8msJBPDI+oagTbFDTF+uHYDRK+4sfVRPtCNQhBB4oxJJzN9Q8t6PvELDTg+t2NQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a17:902:bb95:b0:1a2:a843:d363 with SMTP
+ id m21-20020a170902bb9500b001a2a843d363mr2874380pls.10.1680713304610; Wed, 05
+ Apr 2023 09:48:24 -0700 (PDT)
+Date:   Wed, 05 Apr 2023 09:48:22 -0700
+In-Reply-To: <xmqq7curxk22.fsf@gitster.g>
 Mime-Version: 1.0
-References: <pull.1510.git.1680661709616.gitgitgadget@gmail.com>
- <CAMP44s15E0xJwXv8qGp8FqQvB_KaxS2TXenNZNH_VzvXpXv4Hw@mail.gmail.com>
- <owlyzg7mubui.fsf@fine.c.googlers.com> <CAMP44s128zFcMrK7URUK73ZmzETDRA5SNkWwoHgukZ9Q3f+5Qg@mail.gmail.com>
-Message-ID: <owlywn2qtj75.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH] MyFirstContribution: render literal *
-From:   Linus Arver <linusa@google.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, "Emily Shaffer [ ]" <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+References: <pull.1488.git.git.1680652122547.gitgitgadget@gmail.com> <xmqq7curxk22.fsf@gitster.g>
+Message-ID: <kl6ly1n65l7t.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH] clone: error specifically with --local and symlinked objects
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> "We" probably don't want to change it, *I* do. Because in AsciiDoc
-> there's a difference between a listing block and a literal block, but
-> the Git documentation does a very poor job of being compatible with
-> AsciiDoc anyway.
+> If you want to do lstat(2) yourself, the canonical way to check its
+> success is to see the returned value is 0, not "not negative", but
+> let's first see how dir_iterator_begin() can fail.
 
-TIL. I'll be happy to apply the listing block -> literal block changes
-you suggested in a separate follow-up patch (probably looking at other
-docs we have as well, not just for MyFirstContribution.txt).
+Ah, thanks.
 
-> It doesn't even use the modern syntax.
+>                                Unfortunately, if lstat(2) failed
+>    with ENOTDIR (e.g. dir_iterator_begin() gets called with a path
+>    whose leading component is not a directory), the caller will also
+>    see ENOTDIR, but the distinction may not matter in practice.  I
+>    haven't thought things through.
+>
+> ...
+>
+> 	if (!iter) {
+> 		if (errno == ENOTDIR)
+> 			die(_("'%s' is not a directory, refusing to clone with --local"),
+> 			    src->buf);
+> 		else
+> 			die_errno(_("failed to stat '%s'"), src->buf);
+> 	}
+>
+> may be sufficient.  But because this is an error codepath, it is not
+> worth optimizing what happens there, and an extra lstat(2) is not
+> too bad, if the code gains extra clarity.
 
-I am new to asciidoc; if you know any other examples of modernizations
-we can do, feel free to chime in. Thanks.
+Yeah, the considerations here make sense to me.
+
+Since this is an error code path, I think the extra lstat() is probably
+worth it since it lets us be really specific about the error. Maybe:
+
+	if (!iter) {
+		struct stat st;
+
+    if (errno == ENOTDIR && lstat(src->buf, &st) == 0 && S_ISLNK(st.st_mode))
+			die(_("'%s' is a symlink, refusing to clone with --local"),
+			    src->buf);
+
+    die_errno(_("failed to start iterator over '%s'"), src->buf);
+	}
+
+Doing the extra lstat() only makes sense if we saw ENOTDIR orignally
+anyway.
+
+Alternatively, since we do care about the distinction between ENOTDIR
+from lstat vs ENOTDIR because dir_iterator_begin() saw a symlink, maybe
+it's better to refactor dir_iterator_begin() so that we stop
+piggybacking on "errno = ENOTDIR" in these two cases. I didn't want to
+do this because I wasn't sure who might be relying on this behavior, but
+this check was pretty recently introduced anyway (bffc762f87
+(dir-iterator: prevent top-level symlinks without FOLLOW_SYMLINKS,
+2023-01-24), so maybe nobody needs it.
