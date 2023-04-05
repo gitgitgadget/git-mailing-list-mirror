@@ -2,138 +2,251 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 676D2C7619A
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 06:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEF88C76188
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 07:08:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236706AbjDEGjc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 02:39:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45940 "EHLO
+        id S236999AbjDEHIa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 03:08:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231191AbjDEGjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 02:39:31 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 854103588
-        for <git@vger.kernel.org>; Tue,  4 Apr 2023 23:39:29 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id a11so36263456lji.6
-        for <git@vger.kernel.org>; Tue, 04 Apr 2023 23:39:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680676767;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mKoN3WWhMlWySGkf/JbQY1fQ9rOymxJ5NkWMMhzmXec=;
-        b=M775ZWSPf7WHYPuBI2dh9FkzzuJIWdkTM8unMZTeReoiRCYFGbyQT1yqgZyBKDo5vq
-         mG9xRBaZgoZQwbjGwh1qZpCPg9zslzhSc42lpVXqPG4si+WYHzyAGXApneOeCU4+fbgZ
-         7x+jlbn4EEA3uB0BQyqgCAp17oaVA86ovkosgUSgRfU07hMK+0vDN+y/aml/i5KmyDAg
-         9WVUkhA1J8GhPLRqHCvzPdwgs+2OYNBiMM3qcu7sHBhnrlV1CT/6FW3LVPfozUqbUsFC
-         BsRK67M7lirxahfavLz0d/TgR9wO1Hf6H0EQYqleVxAS0G7ZdxruZNij7u16dBf08xMO
-         YObQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680676767;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mKoN3WWhMlWySGkf/JbQY1fQ9rOymxJ5NkWMMhzmXec=;
-        b=5SYRltiol3NOjkcSVNPG7YcpplsRwSj38phfZ77PXYgJuaP18th8E0We328dc3AiG8
-         Bd9uuZDoLzxehjpWNTVR/IPXdiiGeYIouxlD3oeIH+3cFRuCG2k0T1XCj70alsl4nJ3F
-         ezJci3t75K0N9h5zwur/jkeoecOqM/o7dBeK+Un7gDlzk+OnOPegJP/HvwBmmHzpTnHg
-         ztUzZOKOm8pjzQJJbK9QPAatbWLthz3uEKbnm1xXayEwm8FkMfA77W668bQQo71cqGpW
-         Ylgjfm2VvHsAEF98i7CgPBQ+PdQEF1wqNvtIsZKQcRbigkZtyic2Y+uKtrtw5hwgzUS/
-         kjGA==
-X-Gm-Message-State: AAQBX9d9YizB2UNg73p/bh0fsN+R+3w6DYCDas+rEUJ/Wf7a8hCFiofT
-        cdO2DmK4n1dlneluAGE4gws3TWC4804=
-X-Google-Smtp-Source: AKy350Y80ClKW/1SgApuSN/Azpyns5dNwFFWwcmL9Vl5gJsKBXnP4qGGVxPi4NTYJpkqusKQVLVglA==
-X-Received: by 2002:a2e:920a:0:b0:29b:d4e6:cbaf with SMTP id k10-20020a2e920a000000b0029bd4e6cbafmr1468889ljg.33.1680676767106;
-        Tue, 04 Apr 2023 23:39:27 -0700 (PDT)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id p12-20020a2e9a8c000000b0029e8a32964csm2704851lji.36.2023.04.04.23.39.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Apr 2023 23:39:26 -0700 (PDT)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Chris Torek <chris.torek@gmail.com>,
-        Hongyi Zhao <hongyi.zhao@gmail.com>,
-        Phillip Susi <phill@thesusis.net>,
-        Git List <git@vger.kernel.org>
-Subject: Re: git revert with partial commit.
-References: <CAGP6POLrtA_9kjCwUbVB8-F+dgQbhz==oy5SsXULfspNj_Umuw@mail.gmail.com>
-        <87edp0ak45.fsf@vps.thesusis.net>
-        <CAGP6POLVpjxO91s1dX98TLepXMrybSWq9y8qJ6b7w+e0SRJT1A@mail.gmail.com>
-        <CAGP6POJr63o67k+7BeokM-pkPbXYrQy4kcWwMXTfoeuFaPaADQ@mail.gmail.com>
-        <CAGP6POLx0+OhMJ9oqmK8R9Lq7tppC258NWHNFhqXMbO9smXd+w@mail.gmail.com>
-        <CAPx1Gvcz6f3AQJYfq7Sih0bL6pAi5mHZj8rj=kd7kRDWKLZEzw@mail.gmail.com>
-        <87lej7zhpt.fsf@osv.gnss.ru> <xmqq4jpv1pcj.fsf@gitster.g>
-        <877curzb9u.fsf@osv.gnss.ru>
-        <CAMP44s2od_=3p8+GF7tSBqQ0KsDaa4qVKXS66BS7L7BJadA_Xw@mail.gmail.com>
-Date:   Wed, 05 Apr 2023 09:39:25 +0300
-In-Reply-To: <CAMP44s2od_=3p8+GF7tSBqQ0KsDaa4qVKXS66BS7L7BJadA_Xw@mail.gmail.com>
-        (Felipe Contreras's message of "Tue, 4 Apr 2023 16:14:46 -0500")
-Message-ID: <87wn2qg7du.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        with ESMTP id S236745AbjDEHI3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 03:08:29 -0400
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83ED526B8
+        for <git@vger.kernel.org>; Wed,  5 Apr 2023 00:08:27 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id 0FFC03200933;
+        Wed,  5 Apr 2023 03:08:24 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Wed, 05 Apr 2023 03:08:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1680678504; x=1680764904; bh=xy
+        QljjIqyR0ZQ8y1nDPGLtIKYpgQQCB6i6KBLI8XVnA=; b=ni5lOyUCjE0rnVcj4n
+        IFvjs4vwfC9KNGyVPBfXs0xlzRnozijo1sw9OFuiFmRnndzTsMccBAgaN1ps8gTh
+        IkmnkbJJcu4My7zb/PdS1+EZFcXDZwC+zKaCnn5liwTS6djvWKWSlYZOG9XO5xCr
+        StDI5XKXOSRehmdnnnEDvLsB5bI5+8qIpyLQTLnYsML4w/ta5hTQWe4nWjKwQLjM
+        EkJX0C1DoSIfjXs4YlCzPwiW05+MPhFsoQt++tb9/yLAJlj6gMi1YzqlauYj67dh
+        JGvjYKbAGMKsRRQby6st3nt36c9iwoUCQg78neoWs+tTmW7QtPvLd3qM2lRNM24M
+        z/aA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm2; t=1680678504; x=1680764904; bh=xyQljjIqyR0ZQ
+        8y1nDPGLtIKYpgQQCB6i6KBLI8XVnA=; b=dZyLYArk4iAumVj2UukOKeaee8xZQ
+        6fmEaBE99GWatNAFcb+sxhf5XXXX/BZnZlbKprYI7I0SuHzbqb6JPZRRm1cmK9Ue
+        4aJB/UPb/fsiSTATrE1yK8qesoYBPteVFBdWYmCQYczao4ZcC3sjtu/ER0z1v3q8
+        xtY51Q6K1M3//OdHPmAwrnutV2vpNKhfgzJMUXcnFkoAJJGfoAvUUlT1s8qj0iQv
+        wJCWuXfRJoWPSd8wGwJEkk/L4lF2JDXqB1OxT6yhGVYtc0dYQBSyhUb+25eqfjVd
+        vWa66OhURm3TAwjj/QuUg9oxMra/XSvvfthGknE/g7fcqAuoxggH/3Cyw==
+X-ME-Sender: <xms:aB4tZNBJknyaDRLbQG6dkssOnVkZcgj2ZFlsbLOa_Ul52rRkAvdYJA>
+    <xme:aB4tZLhpUCyBhKS7Z5ih_zCNfrUTgN586nITcPpo8vdpYWBVhi41WJIFjJH-sL_HU
+    oUhyuUHmdGca6SHnw>
+X-ME-Received: <xmr:aB4tZImrOBo8LUCX_NEwLW0s6OAhX1le_aPAhZlB2fc2GB3b3yPCbhWVMjTPMtQGRu_N-OmKl5kOsbo9Fj8K15wMoJ--kiGrOTWHR1tmM9z7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdejtddguddugecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:aB4tZHyLbUmqGJ-4QWqhY00gxvfSv5cmS56bGGlSUwGmrrPEZXhcdA>
+    <xmx:aB4tZCSQiQkAA0Yqf7_Qlq_oB7ZH907pmc6OVJhOurDeKVjU1NMTMA>
+    <xmx:aB4tZKZTKUHdSURzEi5JDMAVjH3_FVf_6rxUWoND2lmynNuUhO5mLg>
+    <xmx:aB4tZNf9QJmeYIIIZFxi-98fYdzvc7tCmaGDZl3dC0TuibM_GhUgpA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 5 Apr 2023 03:08:23 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 163085b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 5 Apr 2023 07:08:14 +0000 (UTC)
+Date:   Wed, 5 Apr 2023 09:08:19 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com
+Subject: Re: [PATCH] repack: fix geometric repacking with gitalternates
+Message-ID: <ZC0eY8q6ushpfkrQ@ncase>
+References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
+ <ZCxytq1esQWvjIz/@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="s3dsQziF6hCM3Sih"
+Content-Disposition: inline
+In-Reply-To: <ZCxytq1esQWvjIz/@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> On Tue, Apr 4, 2023 at 3:08 PM Sergey Organov <sorganov@gmail.com> wrote:
->>
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->> > Sergey Organov <sorganov@gmail.com> writes:
->> >
->> >>> This kind of operation produces a new commit, so there's no such
->> >>> thing as a partial revert or partial cherry-pick, at least in
->> >>> terms of "things Git can do by itself".  But we, as humans writing
->> >>> programs, wish to *achieve* such things.
->> >>
->> >> So, why Git can't help us achieving it by supporting paths limiting in
->> >> (all) merge operations? There seems to be no absolute obstacles, just a
->> >> luck of support.
->> >
->> > I think there is no fundamental reason to forbid an optional
->> > pathspec to "cherry-pick" and "revert", given that a commit that
->> > results from either "git cherry-pick" or "git revert" is called a
->> > "cherry-pick" or a "revert" merely by convention and there is no
->> > tool-level support to treat them any specially at merge or rebase
->> > time [*1*].  It would make it harder to design tool-level support
->> > for full cherry-picks or reverts, but that is a problem for future
->> > generation, not ours ;-)  Allowing pathspec to "merge" and recording
->> > the result as a merge of two (or more) parents is an absolute no-no
->> > but that is not what we are discussing.
->>
->> If I got this right, you believe that "git merge" should never have
->> support for "partial merges", whereas it makes sense for cherry-pick and
->> revert? If so, I disagree. There is no reason for Git to strictly
->> prevent me from using the feature specifically in "git merge" (once it's
->> otherwise implemented), provided I do mean it and didn't do it by
->> mistake.
->>
->> Please notice that I can do it right now already (and I did a few
->> times), only with a more pain than necessary, and I don't see why this
->> pain is to be preserved (provided we do have the feature implemented in
->> the future). Besides, "git merge" is only a helper, and it'd be an
->> improvement if it'll be capable to help in more cases.
->
-> This sounds awfully familiar to Mercurial's reluctance to support
-> rewriting history. It wasn't the tool's place to prescribe what the
-> users should or shouldn't do.
->
-> If the user wants to do it, the tool should help him do it, not
-> pontificate about what is heretic.
->
-> The user is still going to do it, like with a rebase plugin on
-> Mercurial, or with `git filter-branch` and then merge the result. All
-> the tool is achieving is being annoying by not helping the user.
+--s3dsQziF6hCM3Sih
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yep, and I'm worried by such trends in Git as well. Looks like growing
-influence of software development culture where the user is not
-considered to be intelligent enough to make proper decisions by himself,
-and needs to be thoroughly guided by the tool (designers) all the time.
+On Tue, Apr 04, 2023 at 02:55:50PM -0400, Taylor Blau wrote:
+> On Tue, Apr 04, 2023 at 01:08:33PM +0200, Patrick Steinhardt wrote:
+> > Both issues have the same underlying root cause, which is that geometric
+> > repacks don't honor whether packfiles are local or not. As a result,
+> > they will try to include packs part of the alternate object directory
+> > and then at a later point fail to locate them as they do not exist in
+> > the object directory of the repository we're about to repack.
+>=20
+> Interesting. This fix does make sense, but I wonder if it is doing the
+> right thing.
+>=20
+> When we have an alternated repository and do 'git repack -ad' in the
+> "member" repository, we'll end up creating a new pack containing all
+> objects in that repository, including ones from the alternate.
+>=20
+> For example, if you do something like:
+>=20
+>     rm -fr shared member
+>=20
+>     git init shared
+>     git -C shared commit --allow-empty -m "base" && git -C shared repack =
+-d
+>=20
+>     git clone --shared shared member
+>     git -C member repack -ad
+>=20
+>     for dir in shared member
+>     do
+>       echo "=3D=3D> $dir"
+>       find $dir/.git/objects -type f
+>     done
+>=20
+> Then you'll end up with the output:
+>=20
+>     =3D=3D> shared
+>     shared/.git/objects/pack/pack-a2f0c663b287c3eeb0207397f8cafb9ae49f827=
+7.idx
+>     shared/.git/objects/pack/pack-a2f0c663b287c3eeb0207397f8cafb9ae49f827=
+7.pack
+>     shared/.git/objects/info/packs
+>     =3D=3D> member
+>     member/.git/objects/pack/pack-a2f0c663b287c3eeb0207397f8cafb9ae49f827=
+7.idx
+>     member/.git/objects/pack/pack-a2f0c663b287c3eeb0207397f8cafb9ae49f827=
+7.pack
+>     member/.git/objects/info/alternates
+>     member/.git/objects/info/packs
+>=20
+> In other words, we end up creating the pack necessary in the member
+> repository necessary to complete the repack. Since we're using `-a`
+> here, that means creating an identical pack as we have in the shared
+> repository.
+>=20
+> If we instead did something like:
+>=20
+>     git -C member repack -adl # <- `-l` is new here
+>=20
+> , our output changes to instead contain the following (empty) pack
+> directory in the member repository:
+>=20
+>     =3D=3D> member
+>     member/.git/objects/info/alternates
+>     member/.git/objects/info/packs
 
-Thanks,
--- Sergey Organov
+Yup, that's fair.
+
+> > Skip over packfiles that aren't local. This will cause geometric repacks
+> > to never include packfiles of its alternates.
+>=20
+> ...So I wonder if this is the right thing to do in all cases. IOW,
+> should we be creating packs in the "member" repository which may be
+> based off of packs from the shared repository when `-l` is not
+> specified?
+>=20
+> I think this gets tricky. For one, the geometric repack code creates at
+> most one new pack. So if some of the packs that were above the split
+> line (IOW, the ones that don't need to be squashed together) were in the
+> shared repository, I'm not sure how you'd write a MIDX that covers both
+> without using the MIDX-over-alternates feature. I have no idea how that
+> works with MIDX bitmaps (IIUC, the MIDX/alternates feature is very
+> niche).
+
+I agree, things would become tricky in case geometric repacks are
+expected to work across alternates.
+
+> I think we reasonably could do something like ignoring non-local packs
+> in `init_pack_geometry()` only when `-l` is given. That still runs into
+> problems when trying to write a MIDX or MIDX bitmaps, so we should
+> likely declare the combination "-l --write-midx --write-bitmap-index" as
+> unsupported. For backwards compatibility, I think it would make sense to
+> have "--no-local" be the default when `--geometric` is given (which is
+> already the case, since po_args is zero-initialized).
+
+Okay, I agree that it's not all that sensible to allow writing bitmaps
+in a geometric repack that spans across multiple repositories. These
+bitmaps would immediately break once the shared repository performs a
+repack that removes a subset of packfiles that the bitmap depends on,
+which would make it non-obvious for how to even do repacks in such a
+shared repository at all.
+
+But I'm not yet sure whether I understand why `-l --write-midx` should
+be prohibited like you summarized in the follow-up mail:
+
+On Tue, Apr 04, 2023 at 02:55:50PM -0400, Taylor Blau wrote:
+> TL;DR: I think that this is a (much) more complicated problem than
+> originally anticipated, but the easiest thing to do is to assume that
+> git repack --geometric=3D<d> means git repack --geometric=3D<d> --no-local
+> unless otherwise specified, and declare --geometric=3D<d> --local
+> unsupported when used in conjunction with --write-midx or
+> --write-bitmap-index.
+
+The newly written MIDX would of course only span over the local
+packfiles, but is that even a problem? Ideally, Git would know to handle
+multiple MIDX files, and in that case it would make sense both for the
+shared and for the member repository to have one.
+
+> I suspect in practice that nobody cares about what happens when you run
+> "git repack --geometric=3D<d> --local", but in case they do, I think the
+> above is probably the most reasonable behavior that I can quickly come
+> up with.
+
+Well, I do as we use alternates to implement fork networks at GitLab and
+we're in the process of adopting geometric repacking. So what I want to
+have is that I can perform geometric repacks both in the shared and in
+the member repository that includes only the local packfiles.
+
+And yes, I agree that the above is the most reasonable behaviour, with
+the exception of disallowing MIDXs when doing a local geometric repack.
+But that raises the question: what do we do about the currently-broken
+behaviour when executing `git repack --geometric=3D<d> --no-local` in a
+alternated repository?
+
+I'd personally be fine to start honoring the `po_args.local` flag so
+that we skip over any non-local packfiles there while ignoring the
+larger problem of non-local geometric repacks breaking in certain
+scenarios. It would at least improve the status quo as users now have a
+way out in case they ever happen to hit that error. And it allows us to
+use geometric repacks in alternated repositories. But are we okay with
+punting on the larger issue for the time being?
+
+Thanks for your feedback and this interesting discussion!
+
+Patrick
+
+--s3dsQziF6hCM3Sih
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQtHmIACgkQVbJhu7ck
+PpRjNw/8CQ/JmGeAg+e8vvJWE7YeuSai2VZGkscIDnfZEBDlZ1jJHm4UrtSSvf0j
+rHh4+Wp3RnCYSiOhjD+VDbaZ/a4Lq8BthpS3zKnzjGLQWQG+O2M/Mruzjkd80YaW
+A+tbxCAk49k079rQr/vIHI+boRRaCDea6uFY064hGExerU9Q7oeEIJQ1YuwlsLdm
+kWaZceh5ubcM24WVfbmMw56mbXgu0bpAmzmX3sK92i9Ry78Mh9hNqL1PfB7u+a8P
+VejnnEwgxxo8iVDnyrj8YhOD/uo34RRyHVyysifb3hjVuSs0b5wZqLwuY8UZaeE4
+eANAkhpWQUZUfWeQly70npIghstp0msgX3oyeyYhlSpKPhLQihxDAPuWYcNj2Nsg
+RRD5Sl6nGqSY3FwVoS8GE/tvNHe3B215WD2hQhpAQAxxy0bVyTISdQNchSFbintb
+l/79c/G9F5+7tjVTwivc6aNEDlVWVkYq6vGKjzaVLyD//jWUNS4cnJVvOJTMsNUH
+fbka6wT11NJOY6/5HgauRSGDNUgaTog/ogV2EVOeE72JCXfWXKvvpl0hVnmNiT9M
+0PCqJ9E1Z/hoj1R5hBV1Jb5yLQQ2DA0ZPz2Ez1RhTJ2g8OfG+Ytyc+NIcbvTzE1h
+T+NL6VI7qmXxXamYT2EFJX0ffuoSSsfqKS3NkNWgSadQ9qi/MNY=
+=VaCW
+-----END PGP SIGNATURE-----
+
+--s3dsQziF6hCM3Sih--
