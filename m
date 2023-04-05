@@ -2,85 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0629DC76188
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 13:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F46CC76188
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 14:43:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238279AbjDENgK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 09:36:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46780 "EHLO
+        id S238457AbjDEOnL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 10:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238266AbjDENgE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 09:36:04 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEA945FCC
-        for <git@vger.kernel.org>; Wed,  5 Apr 2023 06:36:02 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id cf7so42558576ybb.5
-        for <git@vger.kernel.org>; Wed, 05 Apr 2023 06:36:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680701762;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VggWtoWbZcPILk7ArjMga2p++PX4pdis5t7T53gcfGY=;
-        b=FtOFAyY50SBhAfiaP7GNqNV+Jdvn41/Hhe3ukTBWfYB1gJd6isIXSIP/XYMDfunfmi
-         egJ7gPOfrxxEFNdnMXvGFeoFT9BsXLm27Ty567UmCkJOQeIO2lw9/gg3gvwxEzcD5AUM
-         Tjfo7dOZOb/LzAzls54fgK8PVYc8sqh91oNSW6XyKYpPskexd50qCOXgW8QZDrkTj93D
-         qBa/0mixDUZxUaqPWE5oIJwhY4AaOpTCKk/i1CHbKBgkUzcBOC000z9bX4p4JdQRmnRY
-         1D1dCec3l9EoC+dxqCRNro7Az0PQ5HgQY+wLcnpdx1wJZLxUUuuaADj4jlEFeC2ExxG4
-         vipQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680701762;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VggWtoWbZcPILk7ArjMga2p++PX4pdis5t7T53gcfGY=;
-        b=0t/dW/xaCq5yIHs0Z6Y21770CQ/HUx7rFfD9JNLO8dCJDFZPfSbRv4u47BrHrbefay
-         pK/v8ch92czhZn4JvaYiAgHOtd8r0sfrM9w+Nbb+ivKzZzdhgQCCrXUMq8b6VUSiTi4R
-         UKiVASPUyYrmdkWRH0TDVp8HsQgCNDEx8uEEzBH/75huaf2vvhPkTa4uk9BEkqWSk8Ff
-         qAzwc/do0VEjeuFJe2WV/KAUG8tNjbLZamcLngV5zetjrrsu05cpTyyGb1bMX5+PodO8
-         2kwT5rPXa+TGs7yD8s73ecBl51b4behUJDgFDr20sRlBBed1vdiihtJiw2LGMzLgfLYY
-         u/5A==
-X-Gm-Message-State: AAQBX9fIIHtlk/Q6S8bWep2Qbm8ZTLSQRITlubjgphV62Z+1b1Gapgn9
-        GZoc66xftF293EUvfJdmre1fQR6AA25C41zddfuwfScb
-X-Google-Smtp-Source: AKy350Y46r+bk5IGbQuCHlZq9uL3JezlK529SPLNisbLTHEfitIhqmIgahTRs9ocZMbKagXrxsanD41SQZxGzf1f7w4=
-X-Received: by 2002:a25:d285:0:b0:b4a:3896:bc17 with SMTP id
- j127-20020a25d285000000b00b4a3896bc17mr3564223ybg.0.1680701761847; Wed, 05
- Apr 2023 06:36:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <d9cfad7caf9ff5bf88eb06cf7bb3be5e70e6d96f.1680689378.git.ps@pks.im>
-In-Reply-To: <d9cfad7caf9ff5bf88eb06cf7bb3be5e70e6d96f.1680689378.git.ps@pks.im>
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-Date:   Wed, 5 Apr 2023 08:35:50 -0500
-Message-ID: <CAMP44s0eLNOWFr7fc6M5Fompw1Y13vAxk8=fAWVZ8-22Y-xihg@mail.gmail.com>
-Subject: Re: [PATCH] global: resolve Perl executable via PATH
+        with ESMTP id S238383AbjDEOnE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 10:43:04 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EB282D77
+        for <git@vger.kernel.org>; Wed,  5 Apr 2023 07:43:03 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A70A1F1426;
+        Wed,  5 Apr 2023 10:43:00 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
+        :to:cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=4RGPJt+1mX7yZnDeJcr14cu5WEAvGMlN3tnDfcO
+        PPZ4=; b=mQOXI92KfCrTp0dZxz8FO+N98iYv1b8PhlzRTtE9RnNpEWSOAdH4she
+        03qi5j0k3o1FijZXpv13H1tC7iVYwIO/AGkf/z17UgkPa/zhdqYmmIcD3NvrTm42
+        /EU8MboAMsqn3k3BfLnJS8IN3AZTKes01LRqHIDyjGadABdqcpVA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 222211F1425;
+        Wed,  5 Apr 2023 10:43:00 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [108.15.224.39])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CFD6D1F1424;
+        Wed,  5 Apr 2023 10:42:55 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Date:   Wed, 5 Apr 2023 10:42:52 -0400
+From:   Todd Zullinger <tmz@pobox.com>
 To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] global: resolve Perl executable via PATH
+Message-ID: <ZC2I7CfVzY6Tl7Pk@pobox.com>
+References: <d9cfad7caf9ff5bf88eb06cf7bb3be5e70e6d96f.1680689378.git.ps@pks.im>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="PkwihCrBN/69aKoW"
+Content-Disposition: inline
+In-Reply-To: <d9cfad7caf9ff5bf88eb06cf7bb3be5e70e6d96f.1680689378.git.ps@pks.im>
+X-Pobox-Relay-ID: 2704BAFA-D3C0-11ED-A687-C2DA088D43B2-09356542!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 5, 2023 at 5:53=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
+
+--PkwihCrBN/69aKoW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Patrick Steinhardt wrote:
 > The majority of Perl scripts we carry in Git have a `#!/usr/bin/perl`
 > shebang. This is not a portable location for the Perl interpreter and
 > may thus break on some systems that have the interpreter installed in a
 > different location. One such example is NixOS, where the only executable
 > installed in `/usr/bin` is env(1).
->
-> Convert the shebangs to resolve the location of the Perl interpreter via
-> env(1) to make these scripts more portable. While the location of env(1)
-> is not guaranteed by any standard either, in practice all distributions
-> including NixOS have it available at `/usr/bin/env`. We're also already
-> using this idiom in a small set of other scripts, and until now nobody
-> complained about them.
 
-This is standard practice in Ruby, and it does seem to work everywhere.
+Is there a reason to not set PERL_PATH, which is the
+documented method to handle this?  From the Makefike:
 
-However, I wonder if /bin/env does also work. I can't imagine a system
-system providing /usr/bin/env but not /bin/env.
+# Define PERL_PATH to the path of your Perl binary (usually /usr/bin/perl).
 
 --=20
-Felipe Contreras
+Todd
+
+--PkwihCrBN/69aKoW
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEIGcjzoxKnTmf/7jnQyWTi76vDOMFAmQtiOEACgkQQyWTi76v
+DOOyywgAupegJ9m/JkmawLBMtsavgRtODXib6FqGQChmW1VQExl3yRA0Uj/5x9DM
+qmUnDT4WgyEhlBMKInBp4FCtKGKXL80i4SNGTSFw192vw8f5FlHk6k4I4n4np+9B
+ESwg1HYvUV/9LlS69Q25SdCpvSApwqhSHIl46Rj7EpNsww/1wBD7Doy+jS4NyVyZ
+nJqNzmwLdZFAhsOE2F37Wlc5Jur5gbXvImX1Uj+jMXOcFBnArVdyywQA7oP1b+c8
+0vq1fqTt4BKcGhtjBOLTZQR+TPkEK5LiqH41D/OpEcMsuudPuMorTa7yaWQE/SJm
+gyoj3rCtrb9BJIPXjBbsPZDXNKUS/A==
+=9g9g
+-----END PGP SIGNATURE-----
+
+--PkwihCrBN/69aKoW--
