@@ -2,105 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC274C76188
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 12:55:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58AC3C761A6
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 13:23:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238014AbjDEMzI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 08:55:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60442 "EHLO
+        id S237424AbjDENXM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 09:23:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237832AbjDEMzC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 08:55:02 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D892659D5
-        for <git@vger.kernel.org>; Wed,  5 Apr 2023 05:55:00 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id cm7-20020a056830650700b006a11f365d13so17667726otb.0
-        for <git@vger.kernel.org>; Wed, 05 Apr 2023 05:55:00 -0700 (PDT)
+        with ESMTP id S237040AbjDENXK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 09:23:10 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12A47213F
+        for <git@vger.kernel.org>; Wed,  5 Apr 2023 06:23:10 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id u97so375493ybi.10
+        for <git@vger.kernel.org>; Wed, 05 Apr 2023 06:23:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680699300;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1680700989;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vE2aGtnJ2La74fOnLY/ZgKmfAxYcesFBjnMADPel69k=;
-        b=UYlsRZSzgjoLlyOVZe0WHKOXQJhulIhY9pxO+q6lJErqolMnlnVzBJ2ji1KdIjX6IG
-         yg+SqUEo8JgMoEcT7J9JxHEw8qwOrjVONl3uqIDJ50R6s2L9ZV5i3V55GAUjqmwwVtte
-         y2B/evN0UvyvB+kopIzJfkBKIy505eD8MN70Gk+EtjiK993SERIP5TPexH+FJWtlEF31
-         l4C7K0cbVTC3nWG8g9x9EFwT2Wo0tavCsECu0dGwvW2rNDWliUuDQgNX0sSNHR36DKWy
-         Fy1zGroxVErFKcU+exLd+ghqPwPNXMBuEa9gYKnmT12yCoVjG1DzFSCWSeDa+H9DibDX
-         eCUA==
+        bh=iX1yUOKZBmNQB80GMKIRopFgCv7l1RWNuqqepDObRA8=;
+        b=T3lVEQ9AgPjODZZXJFULne5+ZhMlKpv74yyGKCwPxlbuWt4ysPcFb9gnzPnFoTzSNP
+         6auuYOMJ2wJKyro0Wpg7F5z4hEtvPDOFmN/ytRW8fnCi3PxmMYFYov7v26iFhhNCJJQ1
+         WdPqAZ0m+TuxOGy0AOWhxGHEFfjYuL+CkfCrMSxV9Zx0oW5bAtua5jDP4mp9WJe7HDdM
+         tLGzDG3LYS/VgGd0ePpJY8oPmUHt9KWkr/2OQCDWtJcLXBZ8lqtnEPD0q6UD0Go+s4Eo
+         r8QY5pJSCXItQ76YB9bpzzU2WcJ7/39tIqWjRKHsnuXp0DOUvLMTDuZzyEqq8EuirH1R
+         PvcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680699300;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1680700989;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vE2aGtnJ2La74fOnLY/ZgKmfAxYcesFBjnMADPel69k=;
-        b=Q6YKipxhEqkNNaf8h/ILqq4oZCZ/ZBz4nE0GFBBD2SsSAmpGvSBAcfpI7e9Nev2q4w
-         3bTQtjt1VZqfu4VbggH1GnFTHhlnMP57O3KJn2hBo5QZ8yf+sqG7CEG6axWScnJKtLYF
-         5yYsJW+TstfL2tKwh3GtU4hlzW2GfCX4PfSQhzxlWETXsapEhFVoqlBl30nTQlk8mEYf
-         BC2OC3SrhPj9kZ1LSk6OngolY6lf0vlx3FR7mPAqWug3+iaI7CnhOEjqF8h5VZjC0wfl
-         RyX7p1uVMh/nkEBuWC7YCN5OphH3PpH0WuQ6a5JqcztWcw0g/Z+mNS+3OWTigbN2tUR0
-         ye9Q==
-X-Gm-Message-State: AAQBX9erbv09btD21aq2wT1q1OfSFy0r3b7ExXHvf1wLl1gzPZRncCXF
-        NJWl3/9xB7AETrdJgSMeB5q7VozhSh8=
-X-Google-Smtp-Source: AKy350ZwSOZwORQ8XR/tgeIT+y6cg/ML3Gb4zJrMi9ow4gRluIhB3rU0EX8oJCNJWX0XFTqKKHfP9w==
-X-Received: by 2002:a05:6830:4d5:b0:69c:497:50f9 with SMTP id s21-20020a05683004d500b0069c049750f9mr1118848otd.4.1680699299839;
-        Wed, 05 Apr 2023 05:54:59 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id e12-20020a9d730c000000b006a3ae1c5a30sm427294otk.9.2023.04.05.05.54.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 05:54:59 -0700 (PDT)
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC PATCH 3/3] doc: asciidoc.py workarounds for doc guideline
-Date:   Wed,  5 Apr 2023 06:54:53 -0600
-Message-Id: <20230405125453.49674-4-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.40.0+fc1
-In-Reply-To: <20230405125453.49674-1-felipe.contreras@gmail.com>
-References: <20230405125453.49674-1-felipe.contreras@gmail.com>
+        bh=iX1yUOKZBmNQB80GMKIRopFgCv7l1RWNuqqepDObRA8=;
+        b=Om6AsUBiIvSctZ6nmb1Bd4Gjjcws/k6E0k+h6eVm20tYdmjTK1EuorG5axGvS/CIY7
+         t6TF/mQVc1SRUn8GEnQEjL1V9IrgHfVXpaJzoqJBEuWAP/ocHGmNQWFGbvgmF2TuoxM/
+         Wrfa3o/AxyaHu/bhNLXaLdAOTvel/L5P6h6HHT3R1QVlGb+Y1iRtV2j5xirbY1NXeihN
+         QYqoF5EHbPch2Y59CzQcj1WCP6IkT7Zc5L5GalOf3/JQPPjP1olqicPcsBwwPrmTK0s6
+         h8wFNYsjij0O7ZJcWVc3s9FSLk993FFylQaYJqoETaNRzhGXeJLE5ws/mMWBqfGzKyxr
+         ZpHg==
+X-Gm-Message-State: AAQBX9e/L3lIpqCMarj0XrJpCerrs6a6Gn/46fGyKGTrti8V8ymAMxo7
+        wtvtsQY8yi8um5CEIqXlW9sk586ZXtlt/f3lP6jd1SkS
+X-Google-Smtp-Source: AKy350Y2DMPJyFhRuPbaReK4yhH1ZFMKuf3ZLjme23nMS7bJ2rvKhIDD0zcDZy0tjzBvkVq87UrFY910A3DVM0aTg50=
+X-Received: by 2002:a25:7491:0:b0:b48:5eaa:a804 with SMTP id
+ p139-20020a257491000000b00b485eaaa804mr3560956ybc.0.1680700989294; Wed, 05
+ Apr 2023 06:23:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.1510.git.1680661709616.gitgitgadget@gmail.com>
+ <CAMP44s15E0xJwXv8qGp8FqQvB_KaxS2TXenNZNH_VzvXpXv4Hw@mail.gmail.com> <owlyzg7mubui.fsf@fine.c.googlers.com>
+In-Reply-To: <owlyzg7mubui.fsf@fine.c.googlers.com>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Wed, 5 Apr 2023 08:22:58 -0500
+Message-ID: <CAMP44s128zFcMrK7URUK73ZmzETDRA5SNkWwoHgukZ9Q3f+5Qg@mail.gmail.com>
+Subject: Re: [PATCH] MyFirstContribution: render literal *
+To:     Linus Arver <linusa@google.com>
+Cc:     Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, "Emily Shaffer [ ]" <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-asciidoc.py for some reason can't handle one URL, and doesn't understand
-listings inside listings (of obvious different levels).
+On Wed, Apr 5, 2023 at 12:39=E2=80=AFAM Linus Arver <linusa@google.com> wro=
+te:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/DocumentationGuideline.adoc | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+> > And for what it's worth I would revamp the whole section, something lik=
+e
+> > this:
+>
+> > --- a/Documentation/MyFirstContribution.txt
+> > +++ b/Documentation/MyFirstContribution.txt
+> > @@ -1136,18 +1136,18 @@ information on how to handle comments from
+> > reviewers.
+> >   We'll reuse our `psuh` topic branch for v2. Before we make any change=
+s,
+> > we'll
+> >   mark the tip of our v1 branch for easy reference:
+>
+> > -----
+> > +....
+> >   $ git checkout psuh
+> >   $ git branch psuh-v1
+> > -----
+> > +....
+>
+>
+> While I see the four dots (....) being used to denote regions in other
+> files like SubmittingPatches, they are not used at all in
+> MyFirstContribution.txt. So I am not sure why we would want to change
+> this.
 
-diff --git a/Documentation/DocumentationGuideline.adoc b/Documentation/DocumentationGuideline.adoc
-index 8f1300f898..a581c47f05 100644
---- a/Documentation/DocumentationGuideline.adoc
-+++ b/Documentation/DocumentationGuideline.adoc
-@@ -4,7 +4,7 @@
- :3: https://docs.asciidoctor.org/asciidoc/latest/text/troubleshoot-unconstrained-formatting/
- :4: https://docs.asciidoctor.org/asciidoc/latest/text/literal-monospace/
- :5: https://lore.kernel.org/git/pull.1304.git.git.1659387885711.gitgitgadget@gmail.com/[[PATCH\\] Documentation/git-reflog: remove unneeded \ from \{]
--:6: https://lore.kernel.org/git/CABPp-BEEDS%3Dv7ouOKts83OFMxDq%3DF0TKO1XvHEbnmXJ+Z1WELA@mail.gmail.com/[Re: [PATCH\\] git-merge-tree.txt: replace spurious HTML entity]
-+:6: https://lore.kernel.org/git/CAMP44s3Kqyrdavp1OiozNbA7k4EHCj0KiQq4d2Dyg_KZSEAUuQ@mail.gmail.com/[Re: [PATCH\\] git-merge-tree.txt: replace spurious HTML entity]
- 
- Documents shall follow the AsciiDoc format, a simple markup language specified in the {1}[AsciiDoc Language
- Documentation].
-@@ -78,12 +78,13 @@ Renders as:
- 
- Often you'll want to include example code, for that you can use listing blocks:
- 
-------
-+[listing]
-+....
- ----
- __attribute__((format (printf, 2, 3)))
- void fprintf_or_die(FILE *, const char *fmt, ...);
- ----
-------
-+....
- 
- Renders as:
- 
--- 
-2.40.0+fc1
+"We" probably don't want to change it, *I* do. Because in AsciiDoc
+there's a difference between a listing block and a literal block, but
+the Git documentation does a very poor job of being compatible with
+AsciiDoc anyway. It doesn't even use the modern syntax. So it probably
+doesn't matter.
 
+Cheers.
+
+--=20
+Felipe Contreras
