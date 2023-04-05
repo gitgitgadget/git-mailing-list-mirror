@@ -2,104 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03606C7619A
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 18:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8921C7619A
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 19:04:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233838AbjDESoS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 14:44:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41292 "EHLO
+        id S233917AbjDETEo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 15:04:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjDESoQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 14:44:16 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8623E35B1
-        for <git@vger.kernel.org>; Wed,  5 Apr 2023 11:44:15 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id ix20so35292574plb.3
-        for <git@vger.kernel.org>; Wed, 05 Apr 2023 11:44:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680720255;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I8aR/WwZoYC5Mf7ShdigVuhga8dpmhX6F8EurBUriMw=;
-        b=DalDDFBNvTkTFvpRToyVjVWy9BlXS8CACsq4G0KFqkAVSoGfz5C1AjDGybesx8/pTh
-         K4F+fzEcYLMRzldBz9ruZDHTzVXZnT7mlg61UqrrC+oQw/hqlchK7ddpjV0xQ6scV+aN
-         TgK06baMJas4is6Z4Em+yG39A6HK/Kf3ffc6FgOqTa2yyHsxWi/ocG+h1EB8aJpHydLS
-         auE/TukxnTRszBoZYFQy+AVUa89+BFR9Qjyn+ZowBnuJ7wp7j3fAA8vP/zWQSZ3uLtHl
-         7FZfcrfTR0Q0uQv3aPeWQNBFt5i5aOJEYf9hDMA0t9hPcI0a0GUKhyIuPiDZhgo/GilV
-         DXCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680720255;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=I8aR/WwZoYC5Mf7ShdigVuhga8dpmhX6F8EurBUriMw=;
-        b=TDOck6UDdDYBiGKA5KH+DAasqOJ/A101FQGNh3MDoFWKEKJm8HCB0RJwhFNCyx+kBL
-         EWq8nWQoXcv0V1TaP/z/QZiKXLC60G3EKi5jpxCxI5X1usSJ7BoaeOOCLSBK6Q3HbLWj
-         f3LDbGpU23knZiBLVYMmFVukyIO8v57oAA0dkxnHlgv+BPv0LAxs3JJwoW1hhWKhp/dR
-         ahUOW4YDJxNSCVJyRj9g1D59HKBmL+x2uPK61+Rl+p6SA04tFDKDDG22xvF8X5ZhG4gh
-         10xQo9ocB6Llhy4iQWd0UwFPzVzfKi7ZO7lG6lKLfUVZ9LYNKUwNOaQdqxVcNBYyXqKK
-         a5jQ==
-X-Gm-Message-State: AAQBX9fTw5hv3r2JXY7tsakzG6S1qR6hRBDH4/TVCHTwJXuo7y5PgFna
-        auX2Ke7YvUqyki4TLovkEU8=
-X-Google-Smtp-Source: AKy350aCjCuiNYitF2pmGZQ1vS3uqWhh9ajvJaF8KEso3LE5PbEp2O5HPUUpoJrH1xqa9pFIBGs/9Q==
-X-Received: by 2002:a17:903:32c1:b0:1a1:dd2a:fe72 with SMTP id i1-20020a17090332c100b001a1dd2afe72mr9128810plr.23.1680720254741;
-        Wed, 05 Apr 2023 11:44:14 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id c3-20020a170902aa4300b0019f2a7f4d16sm10448895plr.39.2023.04.05.11.44.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 11:44:14 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Todd Zullinger <tmz@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] global: resolve Perl executable via PATH
-References: <d9cfad7caf9ff5bf88eb06cf7bb3be5e70e6d96f.1680689378.git.ps@pks.im>
-        <ZC2I7CfVzY6Tl7Pk@pobox.com> <ZC2LOAwycdaUawxM@ncase>
-        <ZC2ZyTTZFbd_gNtw@pobox.com> <ZC2xcDwuhiEn2giX@xps>
-Date:   Wed, 05 Apr 2023 11:44:14 -0700
-In-Reply-To: <ZC2xcDwuhiEn2giX@xps> (Patrick Steinhardt's message of "Wed, 5
-        Apr 2023 19:35:44 +0200")
-Message-ID: <xmqqv8iaw4n5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229520AbjDETEm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 15:04:42 -0400
+Received: from mail.cs.ucla.edu (mail.cs.ucla.edu [131.179.128.66])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23F506EB2
+        for <git@vger.kernel.org>; Wed,  5 Apr 2023 12:04:29 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.cs.ucla.edu (Postfix) with ESMTP id 7CC873C09FA00;
+        Wed,  5 Apr 2023 12:04:29 -0700 (PDT)
+Received: from mail.cs.ucla.edu ([127.0.0.1])
+        by localhost (mail.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id RQFYaT8pCWkd; Wed,  5 Apr 2023 12:04:29 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.cs.ucla.edu (Postfix) with ESMTP id 3F3603C09FA02;
+        Wed,  5 Apr 2023 12:04:29 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.cs.ucla.edu 3F3603C09FA02
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cs.ucla.edu;
+        s=9D0B346E-2AEB-11ED-9476-E14B719DCE6C; t=1680721469;
+        bh=A5QqC6pTJiuMWmHDn0PeTFbe/cing73GoNhYwwNMCXk=;
+        h=Message-ID:Date:MIME-Version:From:To;
+        b=Kshsl4GHwHgUO4jd/s3/C8xBzgZPwTnyInFsabrj1l3fg9P69ZaIKk7zsHF+Osx4T
+         dWG6MNbxOt5BTc6303ooOhQIXsrR19858BZzNjyoaeZRYyU5ilMjeXg2T9NV0C5uxP
+         029lCtfR6OAEJy6TmMSpAQWknN76bRdRniFGNnGLhw6TIkkcOj96qsqdGLTMyKard0
+         TVvdCmmbCgetrxK/5njbSxnEEVn/beLt86vpVKmbDGhWBNuIuPZOIenjrjsTKjPf6q
+         vVl192QJ+rjcuGPxW9/M5JqLBt20Tk+YvP6aDRN1KnijKorU69GPfgEqSaHZBRH5kH
+         HYuFDvX6+NF8Q==
+X-Virus-Scanned: amavisd-new at mail.cs.ucla.edu
+Received: from mail.cs.ucla.edu ([127.0.0.1])
+        by localhost (mail.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id IigyzgVcjc-m; Wed,  5 Apr 2023 12:04:29 -0700 (PDT)
+Received: from [192.168.1.9] (cpe-172-91-119-151.socal.res.rr.com [172.91.119.151])
+        by mail.cs.ucla.edu (Postfix) with ESMTPSA id EA1B33C09FA00;
+        Wed,  5 Apr 2023 12:04:28 -0700 (PDT)
+Message-ID: <33b3eb15-73e2-8004-9f06-19e5ec5c5877@cs.ucla.edu>
+Date:   Wed, 5 Apr 2023 12:04:28 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Content-Language: en-US
+From:   Paul Eggert <eggert@cs.ucla.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     demerphq@gmail.com, Philip.Hazel@gmail.com, 60690@debbugs.gnu.org,
+        mega lith01 <megalith01@gmail.com>,
+        Carlo Arenas <carenas@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        pcre-dev@exim.org,
+        =?UTF-8?Q?Tukusej=e2=80=99s_Sirs?= <tukusejssirs@protonmail.com>,
+        git@vger.kernel.org
+References: <2554712d-e386-3bab-bc6c-1f0e85d999db@cs.ucla.edu>
+ <CAPUEspj1m6F0_XgOFUVaq3Aq_Ah3PzCUs7YUyFH9_Zz-MOYTTA@mail.gmail.com>
+ <96358c4e-7200-e5a5-869e-5da9d0de3503@cs.ucla.edu>
+ <xmqqttxvzbo8.fsf@gitster.g>
+ <6d86214a-1b80-eb88-1efb-36e61fd3203e@cs.ucla.edu>
+Organization: UCLA Computer Science Department
+Subject: Re: bug#60690: -P '\d' in GNU and git grep
+In-Reply-To: <6d86214a-1b80-eb88-1efb-36e61fd3203e@cs.ucla.edu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 2023-04-05 11:32, Paul Eggert wrote:
 
->> I don't know what the right choice is for upstream Git, it
->> can easily be argued in either direction. :)
->
-> I agree, there is no clearly-superior choice -- both have their merits.
-> I'll probably send a v2 that only munges internal scripts that are used
-> as part of our build and testing infrastructure. That's the area I care
-> most about in this context anyway.
+> in a February 8 commit[1], Philip Hazel changed pcre2grep to use 
+> PCRE2_UCP, so this will mean 10.43 pcre2grep -u will behave like 3.9 GNU 
+> grep -P did (though 3.10 has changed this).
 
-My preference is 
+Sorry, due to fumblefingers I gave the wrong URL for [1]. Here's a 
+corrected URL:
 
- (1) not to touch scripts that are processed by Makefile to use
-     $PERL_PATH,
+https://github.com/PCRE2Project/pcre2/commit/8385df8c97b6f8069a48e600c7e4e94cc3e3ebd9
 
- (2) fix callers of "./foo.pl" to invoke "$PERL_PATH ./foo.pl" where
-     the perl () { command "$PERL_PATH" "$@" } wrapper is not
-     avialable, and
-
- (3) fix them to use "perl foo.pl" where the wrapper is visible.
-
-That way, we can wean ourselves away from the assumption that perl
-interpreter should exist at /usr/bin/perl without introducing a new
-assumption that everybody's env should exist at /usr/bin/env.  There
-may already be scripts that assume "#!/usr/bin/env foo" is
-acceptable, but fixing them would be outside the scope of this
-discussion, I would say.
-
-Thanks all for a good discussion.
-
-
-
-
-
-
+It also mentions a new --case-restrict option, intended for 10.43 
+pcre2grep. Given Perl's and PCRE2's plethora of options I suppose one 
+could imagine several other options of that ilk.
