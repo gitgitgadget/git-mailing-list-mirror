@@ -2,88 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFEACC7619A
-	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 08:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1926C76188
+	for <git@archiver.kernel.org>; Wed,  5 Apr 2023 09:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237413AbjDEIeR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 5 Apr 2023 04:34:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56476 "EHLO
+        id S237014AbjDEJLp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 5 Apr 2023 05:11:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237443AbjDEIeP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2023 04:34:15 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF49730EB
-        for <git@vger.kernel.org>; Wed,  5 Apr 2023 01:34:06 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id lr16-20020a17090b4b9000b0023f187954acso36550227pjb.2
-        for <git@vger.kernel.org>; Wed, 05 Apr 2023 01:34:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680683646;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7YZD9szKbfRXWghLDYijk0TX/gnGKIyGPf3aOUfEyWA=;
-        b=YOYG8AxSXoZgslWfA4MxO1ONqaAH2nX6YYCF4vvZ4Qnud4VfXDWEOBSK9ZWjYonqNQ
-         MlQxKGEmpGhJVkZotC7rOwyvdmUvUV0Tcm0NP5nuTeYOtcrVCyiLSUYHfWyq2mN2Bd13
-         /sYsocshayjDyl/YXZFPpYnDRqTaLJnYBf+tyTf8xlORUl8ZLlw7/YOdHnlg77fj2/hH
-         hceaSaoFOxPDkJyHbGM2TGU5tcdwjSeZPJBXcanmV6Ugqyskwm1Xno0earcDe+uXvBBw
-         HEl4LJvcAmfQzTMTyRA8Y/ResXe9bmzdp0XEUUkiSvFPR7tqe2W5slVspnoDvlMOAs6T
-         QsXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680683646;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7YZD9szKbfRXWghLDYijk0TX/gnGKIyGPf3aOUfEyWA=;
-        b=4htHNaerxX17218BBHDLMdDY+ct+WDkeNOInBwVcCtQ22n2NGTGf0e0AspQggD5jTp
-         SFdEyPd2GjxylhWmtBNUTucX7BeACHpJgeywPLZORllzatkcMN9JXNuP9yA+aba4rnVi
-         ut5DT57bR8AT39nI6KRrR+1BW9DqyeD36olvbBrlhGFW5wu7G5HN5hnFgebZu/NTcmK8
-         EjdcRYu8wi5mo68RJCQcyxc7976/4m6c13DgrfdLOWsOMkObR6rq0NTaHWJKSQzr4hoI
-         YqJdVlsJI8dkFeH7TJdTGFg6dGmVsJwCuCz4R13k1zJgoayILzvDm4GQ8EzbLEIrs1sY
-         x5sw==
-X-Gm-Message-State: AAQBX9eLsniUMCtU1Li0/SBqQuu4XbYKYZ8VXS3FNeUAmKX+JduWWiSh
-        jz8XvnJYkKSktoOKRry3YTIfzzDpM8M=
-X-Google-Smtp-Source: AKy350b20qPm4x/kWhgKFLM5UT/X6kJMvYBfkrCwkmXstD23+XKW6FKvcrDCemLkc3GM75UeW5EoyA==
-X-Received: by 2002:a17:90b:3508:b0:237:b702:4958 with SMTP id ls8-20020a17090b350800b00237b7024958mr5567468pjb.38.1680683645941;
-        Wed, 05 Apr 2023 01:34:05 -0700 (PDT)
-Received: from trent-reznor ([2601:641:4000:81:9906:bd64:c8fa:48fa])
-        by smtp.gmail.com with ESMTPSA id p19-20020a170902b09300b001992e74d058sm9722724plr.7.2023.04.05.01.34.05
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Apr 2023 01:34:05 -0700 (PDT)
-Date:   Wed, 5 Apr 2023 01:34:03 -0700
-From:   Daniel Watson <ozzloy@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] SubmittingPatches: clarify MUA discussion with "the"
-Message-ID: <ZC0yey+S+OD/S2tt@trent-reznor>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+        with ESMTP id S231742AbjDEJLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2023 05:11:43 -0400
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 761E790
+        for <git@vger.kernel.org>; Wed,  5 Apr 2023 02:11:42 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id 50E5B5C00FD;
+        Wed,  5 Apr 2023 05:11:39 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Wed, 05 Apr 2023 05:11:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm1; t=1680685899; x=1680772299; bh=KURhENeqjTVI/C00MaR43N7Gj
+        S/bRd2LRQmbtpc1abg=; b=FaccYQ70XwY4G8ZSc65w5aKywybT36Gf9SjZBPzlZ
+        TjCfIcXB8YmSnxJKy9uy2at9rXRtR1Dp/4doGu1FLZGnLk+wqruUBh6iS8YIjf4O
+        k3+6+Ej9sG55aeRbZh1hBo3JtZWrx06LE2xIdZ1RZtqWbUxCLxRAAPSu0F7zzfsf
+        r0TBKNAYxdvFnp/K1Js56sq1uXRGdsx0Jgw9/mZWot/RP2pGixLVbLiv/8ysqdV4
+        mjcZixHOUp8PXDLqBRGHAAltm88a1Ra5w9SjMzZcwgWi74Z05UIhIdfOWoTTqnQi
+        Mjg3XyaEts+ZrcsmPmkv/CLXSYmqeXoAUUkTGf4KeSDxg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+        1680685899; x=1680772299; bh=KURhENeqjTVI/C00MaR43N7GjS/bRd2LRQm
+        btpc1abg=; b=vMGWp+zVppv/s+bSQ7iRbAc4TDJ+d3Iv0x15TgdgEgBDWjTOz4T
+        Yf9QwcG86sDSdjAFUKcg29huO1gQlnSw2fpiuIougSplFxjvDfUpQHjcLP7DNqiI
+        XMQYRa0N2J4WYKmDvFCy4YDYp1brQhsHLUKs8I3XHMZCj/ukMLK18gIHPPaUdeiD
+        lnZq7N5wBNGFcOukb9q6FkMI99mGeDdQAorBLayeT7TaSszoz3DloiKzItI2Wpn5
+        yWvIG2pWEkRF30NSW6rn95buktxRr+8TcGLzBVVfMQ5X8/mqVKQWrFATwDjAyrdC
+        k9W/dly9HPQ7vQidgZ06hISvrya4jVtlvxQ==
+X-ME-Sender: <xms:SzstZMLHLz5onFOJa1tj_W66-2BtzkB1XsXtv-XwDkc9wBIoMYlYRWw>
+    <xme:SzstZMJ1nhJUl_VipWPZ9N_zVSs3IWzyMJaRl2iZk76Wnc0EUh3I5Do2vHJtsZbSH
+    MskuJDCY84MEfjM8Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdejuddgudefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
+    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:SzstZMvHfA3EnZZAYFYYfoAudhdLyYAyzijQ0oeSDRaQwyeoWiFFig>
+    <xmx:SzstZJbfqFdI6ZjhP6PsollCRm23nV-q4wTDP2B4bMTn1-ukBA8krQ>
+    <xmx:SzstZDa7U3qG-2J5ZDObTwgef35mpdARpI7q-a1Ofl8rLk0jwXqbdQ>
+    <xmx:SzstZEDz0FqHjV8-Pob5aeSafTl-6RkTl-QrvUF_p8WcP-eRjTIpJg>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 0B2A815A009A; Wed,  5 Apr 2023 05:11:38 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-334-g8c072af647-fm-20230330.001-g8c072af6
+Mime-Version: 1.0
+Message-Id: <7941ae15-a29c-4163-8170-02fd96a80048@app.fastmail.com>
+In-Reply-To: <CAOLTT8QJYumrv1G1SQ8005n2ab1Ycyoc6T_YyFHunJM5=6ZmtQ@mail.gmail.com>
+References: <20230331181229.15255-1-code@khaugsbakk.name>
+ <cover.1680548650.git.code@khaugsbakk.name>
+ <ea06be8f5ac77e5be64ab674f5a4fbe0b7e56c0e.1680548650.git.code@khaugsbakk.name>
+ <CAOLTT8QJYumrv1G1SQ8005n2ab1Ycyoc6T_YyFHunJM5=6ZmtQ@mail.gmail.com>
+Date:   Wed, 05 Apr 2023 11:09:12 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "ZheNing Hu" <adlternative@gmail.com>
+Cc:     git@vger.kernel.org, "Andrei Rybak" <rybak.a.v@gmail.com>
+Subject: =?UTF-8?Q?Re:_[PATCH_v2_2/3]_doc:_interpret-trailers:_don=E2=80=99t_use_?=
+ =?UTF-8?Q?deprecated_config?=
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Without the word "the", the sentence is a little harder to read. The
-word "the" makes it clearer that the comment refers to discrete patches,
-and not portions of individual patches.
+On Wed, Apr 5, 2023, at 09:45, ZheNing Hu wrote:
+> Changing these examples from command -> cmd makes sense.
+> So users will tend to use 'cmd' instead of 'command' as much as
+> possible when referring to examples.
 
-Signed-off-by: Daniel Watson <ozzloy@gmail.com>
----
-Thanks for creating git!
+Thanks ZheNing. I=E2=80=99ll add an =E2=80=9Cack=E2=80=9D trailer to thi=
+s patch. :)
 
- Documentation/SubmittingPatches | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 927f7329a5..b218e27357 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -543,7 +543,7 @@ trigger a new CI build to ensure all tests pass.
- [[mua]]
- == MUA specific hints
- 
--Some of patches I receive or pick up from the list share common
-+Some of the patches I receive or pick up from the list share common
- patterns of breakage.  Please make sure your MUA is set up
- properly not to corrupt whitespaces.
- 
--- 
-2.34.1
-
+--=20
+Kristoffer Haugsbakk
