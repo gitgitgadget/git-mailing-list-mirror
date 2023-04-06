@@ -2,178 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E014FC76196
-	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 08:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E831C77B6C
+	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 08:35:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236170AbjDFI3Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Apr 2023 04:29:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45658 "EHLO
+        id S235629AbjDFIfN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Apr 2023 04:35:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236019AbjDFI3X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2023 04:29:23 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AE39130
-        for <git@vger.kernel.org>; Thu,  6 Apr 2023 01:29:22 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id w9so147451651edc.3
-        for <git@vger.kernel.org>; Thu, 06 Apr 2023 01:29:22 -0700 (PDT)
+        with ESMTP id S235166AbjDFIfM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2023 04:35:12 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40FEF133
+        for <git@vger.kernel.org>; Thu,  6 Apr 2023 01:35:11 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id p15so45356873ybl.9
+        for <git@vger.kernel.org>; Thu, 06 Apr 2023 01:35:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680769761;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+WiShJKyGVu79DFX6WrgEzl11YPyRnP5oIWCpbfHHPQ=;
-        b=dS+b+WoaX26mCQiwHpK7dQenX0/Zh/m0qlvP0b9zX6PZSPm4W3ssUhKmryj0brOp6P
-         iwwFp8vwA2OZOEOH4AGR5m434T7QCsBAbcDryuUMDRpJkPtorVvp19mRmlD1/ZF8/ORR
-         XgB7bGQ31YJAu90uueAs0UGi8Bijm6nWsZN69S5HjOnwr46qcPAMOmCPZ9csdV9uDBE6
-         Quf3eJeLArslSvLK+nfU2PwuTQ0wH9jLUA/LO9Hq3h7MJARHuTrjNOh1VGv6ASgvUYBj
-         xXZv/MYBTe+670LY/d673Fbs3xU7EQdn825fOJGAWSLHVqjwqJ6G//1WpwgKo40FLVsi
-         POug==
+        d=gmail.com; s=20210112; t=1680770110;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gFJnq3szbAAj85jaa/BcUeywFmbbuJhgfRHR+oBi1T4=;
+        b=iOsTfaSxEoytqlFEAP27uNlKPTuvJCGz55cq+mwQNCA4AHIquWxt+Ef3DrOMWOZtsT
+         UBaSGoObLOTD6K07dQvisI8utKLOKf93BNccOyrLUsKltkBSjpsr/k5IXf/bZ7+52ySG
+         JjqDVz4WN9RCEmKIXIyE0NiZZe2XRYmvLep1nCTZbVYURtz8dc4FEoaZQXcti6C22X6X
+         DJLbv/GAfLCKI82udWawGx8/jF9zNyllvl6B5F5iFl9tCHTIUaAC0Vr5WLilagcUkzkF
+         GrdmI2Kk83igr9H2Y5TMmKh9YniAbdqmYf6EnVlrIigcnky2rc8eoo7J5rjokvP+fLVs
+         vEzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680769761;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+WiShJKyGVu79DFX6WrgEzl11YPyRnP5oIWCpbfHHPQ=;
-        b=H+fiMk1LeP8fKAarV9ZKUCnVfgwHTiXWjupoV9cnfIoQWrcmXBfzOm0MU1p9CLYxuH
-         FRA45Z0P/PW1t6rvLUUBK+GoPbkjUC/+v+lnzqnVVZuTLf0PWVCs30yJavhzxRzuZx1B
-         MuNthxXChI9/p6v6723pfgXIBPYx90/1E8o0uinJ3Ooz9QyTRw4ZrsXATAu+JdTC8awW
-         cmh80GKd9clcWEWxSM6V7btJras6HqipotYzyjoHwI3jJ9wP2TTwKPwCCK4AOtoyY0i3
-         Tu8mso8MD/1y1rc0X3njBs4f6TYRFTThN15D5qRsOvU47eC81GcubdC0Pvzl+RqSL7S+
-         lTHA==
-X-Gm-Message-State: AAQBX9fWpEzaY/lWb01OKQeR9mrZZHpZ7N941Q6oehGpJ7uJIdG1nC8q
-        kcOQnh8910GxubMM7e8lrI4=
-X-Google-Smtp-Source: AKy350Z8xLcE3Z8Qln0kkOQ0Ql0zhho4ZL1XVpvVboH8608pqM8PrOY1Q9xFYpoY+oTqzxONfRp5Iw==
-X-Received: by 2002:a17:906:6c86:b0:932:e141:29c7 with SMTP id s6-20020a1709066c8600b00932e14129c7mr5200296ejr.19.1680769760558;
-        Thu, 06 Apr 2023 01:29:20 -0700 (PDT)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id kf25-20020a17090776d900b0093b8c0952e4sm480037ejc.219.2023.04.06.01.29.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 01:29:20 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pkKzf-005Obg-20;
-        Thu, 06 Apr 2023 10:29:19 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>,
-        Patrick Steinhardt <ps@pks.im>, Todd Zullinger <tmz@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] global: resolve Perl executable via PATH
-Date:   Thu, 06 Apr 2023 10:03:53 +0200
-References: <d9cfad7caf9ff5bf88eb06cf7bb3be5e70e6d96f.1680689378.git.ps@pks.im>
- <ZC2I7CfVzY6Tl7Pk@pobox.com> <ZC2LOAwycdaUawxM@ncase>
- <20230405165414.GA497301@coredump.intra.peff.net> <ZC2wppC62E7wOcqM@xps>
- <20230405181505.GA517608@coredump.intra.peff.net>
- <CAMP44s2_b0=Bm-NmDQ7ZVBen27ZtK9DpaF0gs965k1wXzzhARQ@mail.gmail.com>
- <20230406033507.GA2092122@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <20230406033507.GA2092122@coredump.intra.peff.net>
-Message-ID: <230406.86y1n5tnvk.gmgdl@evledraar.gmail.com>
+        d=1e100.net; s=20210112; t=1680770110;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gFJnq3szbAAj85jaa/BcUeywFmbbuJhgfRHR+oBi1T4=;
+        b=xuTP2iB0GZCYo3vpKsxqYgS+wogyjRt1a8c5Xv5wFlOyYekPD1/1HcY3mHlMGVCp8J
+         yfA+KCWNPhixT0ynguKcW4MisCZD2ApzCUyxpiYldZhvCg5CP7IKe9eNRjZ8Hd7jmefJ
+         rxZdax3RpQyY0SnCm55ehQdEFBUCljcgMuoDHKOlZC5VCMPF1wd9rYr97+B/exNAQIEb
+         POK8GY3plB1uCGQ1YGzwBy2QX1AbqMHzGozcu0Ok2XYEsht96lAua29i2CMDC8K42CaL
+         9XOAmXjEt9MJVrCjnDJvN2UmJCO8eEkDDID7lobXzkSlvSkNIX7uhGdxXehU8uDeT7vO
+         dXog==
+X-Gm-Message-State: AAQBX9fbuHYEvhaiIR/++J4K0N76cUeP02HNspul69vRPp7JVRTf1aiq
+        Om5yFcMZSflytvg7WPsRDeLT//mfAT/dP4JK9Xk=
+X-Google-Smtp-Source: AKy350ZuRG+Zk5HTXfRpV6cTQTk0PdsQMNgXznl0hC8yJnerwT8dKUw2C483WZ3r2WrYIUAJBCwQJTAL6isYJIqiTWY=
+X-Received: by 2002:a25:d28b:0:b0:b45:5cbe:48b3 with SMTP id
+ j133-20020a25d28b000000b00b455cbe48b3mr1613518ybg.0.1680770110391; Thu, 06
+ Apr 2023 01:35:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20230323221523.52472-1-felipe.contreras@gmail.com>
+ <20230406035729.GA2092667@coredump.intra.peff.net> <xmqq8rf5r66s.fsf@gitster.g>
+In-Reply-To: <xmqq8rf5r66s.fsf@gitster.g>
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Thu, 6 Apr 2023 03:34:59 -0500
+Message-ID: <CAMP44s0DbALdFGsS=+NT6tTze=qK+z8EG0UuBVagPvsq9nby_g@mail.gmail.com>
+Subject: Re: [PATCH] doc: asciidoc: remove custom header macro
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Wed, Apr 05 2023, Jeff King wrote:
-
-> On Wed, Apr 05, 2023 at 09:18:20PM -0500, Felipe Contreras wrote:
+On Wed, Apr 5, 2023 at 11:22=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
->> On Wed, Apr 5, 2023 at 2:09=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->> > On Wed, Apr 05, 2023 at 07:32:22PM +0200, Patrick Steinhardt wrote:
->>=20
->> > IMHO we should aim for fixing those inconsistencies, and then letting
->> > people set PERL_PATH as appropriate (even to something that will find =
-it
->> > via $PATH if they want to).
->>=20
->> We can aim to fix all those inconsistencies *eventually* while in the
->> meantime make them runnable for most people *today*.
->>=20
->> It's not a dichotomy.
+> Jeff King <peff@peff.net> writes:
 >
-> It is if the proposed patches change the behavior in such a way as to
-> make things less consistent.
+> > On Thu, Mar 23, 2023 at 04:15:23PM -0600, Felipe Contreras wrote:
+> >
+> >> In 2007 we added a custom header macro to provide version information
+> >> 7ef195ba3e (Documentation: Add version information to man pages,
+> >> 2007-03-25),
+> >>
+> >> However, in 2008 asciidoc added the attributes to do this properly [1]=
+.
+> >>
+> >> This was not implemented in Git until 2019: 226daba280 (Doc/Makefile:
+> >> give mansource/-version/-manual attributes, 2019-09-16).
+> >>
+> >> But in 2023 we are doing it properly, so there's no need for the custo=
+m
+> >> macro.
+> >>
+> >> [1] https://github.com/asciidoc-py/asciidoc-py/commit/ad78a3c
+> >
+> > This should be OK to do, as it is just touching the python asciidoc
+> > side. When we discussed those attributes in 2019:
+> >
+> >   https://lore.kernel.org/git/20190320183229.GK31362@pobox.com/
+> >
+> > asciidoctor support was new and incomplete. It needed v1.5.7 (from
+> > 2018), and even today still does not seem to handle manversion. But
+> > since this patch leaves in place the equivalent hack in
+> > asciidoctor-extensions.rb, it will continue working.
 >
-> There are three plausible perls to run (whether intentionally or
-> accidentally):
->
->   1. the one in PERL_PATH
->
->   2. /usr/bin/perl
->
->   3. the first one in $PATH
->
-> What the code tries to do now is to consistently use (1). If there are
-> cases that accidentally use (2), which is what I took Patrick's patch to
-> mean, then that is a problem for people who set PERL_PATH to something
-> else, but not for people who leave it as /usr/bin/perl. If we "fix"
-> those cases by switching them to (3), then now things are less
-> consistent for such people than when we started.
->
-> But I am not clear on what those cases are (if any), and we have not
-> seen Patrick's follow-up proposed patch.
->
-> I did find one case that is accidentally doing (3), and posted a patch
-> elsewhere in the thread to convert it to (1). If you prefer behavior
-> (3), you might consider that a regression, but it seems meaningless
-> given the 99% of other cases that are using (1). If you want (3) to be
-> the behavior everywhere, then we'd need to completely change our stance
-> on how we invoke perl, or we need to teach PERL_PATH to handle this case
-> so that people building Git can choose their own preference (sadly I
-> don't think "make PERL_PATH=3D'/usr/bin/env perl'" quite works because we
-> have to shell-quote it in some contexts before evaluating).
+> Sounds like the proposed log message can use a bit more polishing to
+> help future readers of "git log", then.
 
-I just want to chime in to say that I've read this whole
-thread-at-large, and I think what you're pointing out here is correct,
-and that we should keep hardcoding "#!/usr/bin/perl", and then just have
-"PERL_PATH" set.
+Yes, *if* what Jeff King was saying were true, which is not. At least
+not completely.
 
-I.e. most of Patrick's original patch is unnecessary, as we either use
-"$PERL_PATH" in the Makefile already, or munge the shebang when we
-install.
+> But I think it is not required to be explicit about us leaving the
+> asciidoctor side untouched to keep it working (in other words, we do
+> not talk about things that we are not doing in our log message, unless
+> it is so unnatural not to do them at the same time to warrant such an
+> explanation).
 
-Then the only change we should need is the one you suggested in
-<20230406032647.GA2092142@coredump.intra.peff.net> in the side-thread.
+I did explain that we could fix all the issues of this particular
+problem for both asciidoc and asciidoctor as far back as 2021 [1].
+This fix did not materialize in subsequent patches: [2][3][4][5][6].
 
-Using "env" liket his is also incorrect. I might have a "perl" in my
-"$PATH" which I expect to use for e.g. by .bashrc, but I don't want that
-perl to take priority over "$PERL_PATH" for git when I run some test
-script.
+But the fix exists, and it's explicitly explained (multiple times).
 
-I also wonder if something like this (untested) wouldn't be useful to
-provide an earlier warning of this, instead of failing when we fail to
-invoke the relevant scripts.
+Basically: instead of trying to make docbook-xsl understand "$version"
+in order to join it as "$source $version". We can just say
+`source=3D"$source $version"` and forget about $version.
 
-	diff --git a/Makefile b/Makefile
-	index 60ab1a8b4f4..9abc2e52cfa 100644
-	--- a/Makefile
-	+++ b/Makefile
-	@@ -910,6 +910,15 @@ ifndef PYTHON_PATH
-	 	PYTHON_PATH =3D /usr/bin/python
-	 endif
-=09=20
-	+define check-path-exists
-	+ifeq ($$(wildcard $$($(1))),)
-	+$$(error $(1) set to '$(2)', which does not exist)
-	+endif
-	+endef
-	+
-	+$(eval $(call check-path-exists,SHELL_PATH,$(SHELL_PATH)))
-	+$(eval $(call check-path-exists,PERL_PATH,$(PERL_PATH)))
-	+
-	 export PERL_PATH
-	 export PYTHON_PATH
+I don't know how I can say it more clearly: we can fix all the
+problems for all the tools and all their backends with one simple
+patch.
 
-That should not break anything in principle, as we already rely on these
-to build git itself, but note that that's not the case with
-"PYTHON_PATH".
+So after 6 attempts I'm trying to change the strategy and only clarify
+the problem for asciidoc.py, which hopefully is clear now. But it can
+be fixed for asciidoctor as well...*today*.
 
-In the case of "PERL_PATH" I think that's limited to building the docs,
-so if we did something like this perhaps it should be in shared.mak, and
-that check should be in Documentation/Makefile.
+Cheers.
 
-But perhaps it's all reduntant to just running into an error when we try
-to generate-cmdlist.sh or whatever...
+[1] https://lore.kernel.org/git/20210514121435.504423-7-felipe.contreras@gm=
+ail.com/
+[2] https://lore.kernel.org/git/20210515115653.922902-4-felipe.contreras@gm=
+ail.com
+[3] https://lore.kernel.org/git/20210521223701.526547-4-felip01e.contreras@=
+gmail.com/
+[4] https://lore.kernel.org/git/20210608090026.1737348-4-felipe.contreras@g=
+mail.com/
+[5] https://lore.kernel.org/git/20210618215231.796592-420-felipe.contreras@=
+gmail.com/
+[6] https://lore.kernel.org/git/20210621163110.1074145-4-felipe.contreras@g=
+mail.com/
+
+--=20
+Felipe Contreras
