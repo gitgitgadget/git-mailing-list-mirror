@@ -2,101 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF4BFC76196
-	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 18:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97D2BC76196
+	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 18:20:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239704AbjDFSHT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Apr 2023 14:07:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55636 "EHLO
+        id S239418AbjDFSUI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Apr 2023 14:20:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230116AbjDFSHS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2023 14:07:18 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33ED22D43
-        for <git@vger.kernel.org>; Thu,  6 Apr 2023 11:07:14 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id ml21so16036804pjb.4
-        for <git@vger.kernel.org>; Thu, 06 Apr 2023 11:07:14 -0700 (PDT)
+        with ESMTP id S229600AbjDFSUH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2023 14:20:07 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3D6A19B
+        for <git@vger.kernel.org>; Thu,  6 Apr 2023 11:20:04 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id mp3-20020a17090b190300b0023fcc8ce113so43702852pjb.4
+        for <git@vger.kernel.org>; Thu, 06 Apr 2023 11:20:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680804433; x=1683396433;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Q4JQsKk0LIo5Xs8thIzzkQgY4gL//P3W7jdCwoFhofc=;
-        b=HxVbLOtBEqYFXIfN4LUE0JKs6I6q6KLRNELltmjiXdZ4yqUAnxBIjKUiQAYDkYhCmO
-         LXjAN+IEpUwbmEhJCEbxLUanbjDH6hVsk5o9fUFdloYdIn7P1gab+D0W+lHiPxOp7aFS
-         peqx8GlgkfqL3SN06BJ7cCkL7Ee2EtfSOMIXg4Ppyu9FGz2shCShNMVdHBjPjsQVmbAb
-         KdITXSVQ9qzod6loBrPPO+5wXK5hsULGLH9tNdY3WMwjs/z8m5hJc/OhlKzGQFxcTyzN
-         VzhZ5uvmJu9rtMzqIwDXdHPV9P4gsOhYs7rpI1RYGhqe73P/aARZsiQF4K+W8KE1j18U
-         cV6Q==
+        d=gmail.com; s=20210112; t=1680805204; x=1683397204;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GJK9kIkwE8hWfw9TbSlTYsijsHWYuXPtD9HHKeoLJQg=;
+        b=ZW+/rhzkxOwl5lz28u36IPl/vFNG0h7aiLzcqUjW4PyXkB48SmfcqPItvAJZqGorNh
+         faDPPl5UhDjCBEjAJu/zDrey1WksgWssLh4mzASvtNjSdCqeuP/JLX2qI5CRvQOrlEmX
+         0PWVK7lLT6S8dzlUDKwukyO8EIOBU4e1AR/9qf+6cppotl/J6bGmB6kPrzQlkbnJZ6uY
+         E5jdxcpSwtFbcodPdE9UwTlszpRlKJzICIbB6c1kCyu2XMCrp17UoAopE7nCcC2GAqKB
+         1ZWwZg7QfqWzpB/bnIZ9/VlUf9dmnke6oe4mfRbZdW+SrDw1AVP2WR8lUXxgqA6oYbOc
+         ERPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680804433; x=1683396433;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q4JQsKk0LIo5Xs8thIzzkQgY4gL//P3W7jdCwoFhofc=;
-        b=UTuHwklnF3C3BuymdGfhqMkTup6doFGqKx35RJ7Majhlj4xIyLh90J135yj8/7jfyt
-         qaru29gIzd+gFss+1ZJQZfr4gWXjT+ZaQ2i4gENUgEK/Cf+wf7M4ATpkNw5Z93ZGiSNO
-         lqrht6vFpG2G1luZIauw6oo1/KVSXKjypdp8GPRjjL2LLYzkDYfRwBBP2iCkqwyr1ByC
-         MT5I9Aw0q9TOyYmBH0nzQGFW+pxZeldFjUQLm0pGWm7SG2Ldloc3XMzZuCFvxQjeKtlI
-         IL8Sv+flEVM3L7PL+t6+2lG0WsmS6Dg+ZrUF44hIxCDyUyRW9JkRAYPb5E+QAHwTc0VW
-         KSpQ==
-X-Gm-Message-State: AAQBX9cofDkUWb+9fash0+bBTlapJ4DppfoeF4dA/upeRDdgkErBAsI0
-        RFSoEaMiuzCZV27Jzp/4TYw=
-X-Google-Smtp-Source: AKy350awldSFsqVwsbufj6iBk3aEFexXo7WGVJOOyAKE+7w+8Pgwx+8/7LpwVJOiCigwKI1gq0s5Nw==
-X-Received: by 2002:a17:902:ec84:b0:1a2:8924:225d with SMTP id x4-20020a170902ec8400b001a28924225dmr8125plg.47.1680804433383;
-        Thu, 06 Apr 2023 11:07:13 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680805204; x=1683397204;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=GJK9kIkwE8hWfw9TbSlTYsijsHWYuXPtD9HHKeoLJQg=;
+        b=Hf0T/D+uVuSM9TO+PLA7PqCkS5OwwjUbuVxTAjMEVF2EZjMoKaMw/AkS+lamMRxgp0
+         2DFFU1yd7qqfEL+1R/PK+gdZLA2xu0SdaqxnmiGJk24ws19/pblJo0kPayKmAGDI32wW
+         nswEB4XrLSyjwbLWcYD21PpV0BKGmCm8d2Y/LK37R9dA2X9R8vz+0ARQQIwWEmGO46AZ
+         YvVvarvcgK58+4D2tU1uxZsd7nGWzuWD48lMJWIw0W1N7eiDHC1uyAXQ+lR/lZkUYc5E
+         QdCFOPndEXUXADh6+1gPCDfIle/TwlRQ+gKVni3xOnXIVPUVKL1p7jWKcFCQPHrE3RnC
+         U9vQ==
+X-Gm-Message-State: AAQBX9do+2qAaIv0AoYqjF0G9dJvWSxHlDuXpvCHZ22f+JLJseyW/7+u
+        +Tcj6eYB3pDB1TzY+xECebe7gAAbU5U=
+X-Google-Smtp-Source: AKy350Zs3rtX5Kgy/gX8dL35cvNnaW8/IcehLGNfoAGZS0cBIxHouFuEcrIxeY3a6maGFSixbualiA==
+X-Received: by 2002:a17:90b:1a8e:b0:233:feb4:895f with SMTP id ng14-20020a17090b1a8e00b00233feb4895fmr11995555pjb.44.1680805204180;
+        Thu, 06 Apr 2023 11:20:04 -0700 (PDT)
 Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id v8-20020a1709028d8800b001a217a7a11csm1667440plo.131.2023.04.06.11.07.12
+        by smtp.gmail.com with ESMTPSA id r14-20020a17090a4dce00b00233db0db3dfsm3406625pjl.7.2023.04.06.11.20.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 11:07:12 -0700 (PDT)
+        Thu, 06 Apr 2023 11:20:03 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
 Subject: Re: [PATCH 2/2] branch, for-each-ref: add option to omit empty lines
 References: <20230330112133.4437-1-oystwa@gmail.com>
         <20230330112133.4437-3-oystwa@gmail.com>
         <44e7ac0f-2fd9-fd01-89da-a8d036d2e400@dunelm.org.uk>
         <xmqqjzywg7sg.fsf@gitster.g>
         <CAFaJEqtxNa+fuuKzkKPLkF3qdYwZUj+tMKXB3u2ok6H008vjHA@mail.gmail.com>
-Date:   Thu, 06 Apr 2023 11:07:12 -0700
-In-Reply-To: <CAFaJEqtxNa+fuuKzkKPLkF3qdYwZUj+tMKXB3u2ok6H008vjHA@mail.gmail.com>
-        (=?utf-8?Q?=22=C3=98ystein?= Walle"'s message of "Thu, 6 Apr 2023 18:55:52
- +0200")
-Message-ID: <xmqqv8i8q3zj.fsf@gitster.g>
+        <20230406171203.GB2709660@coredump.intra.peff.net>
+Date:   Thu, 06 Apr 2023 11:20:03 -0700
+In-Reply-To: <20230406171203.GB2709660@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 6 Apr 2023 13:12:03 -0400")
+Message-ID: <xmqqo7o0q3e4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Øystein Walle <oystwa@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> It however theoretically can break an existing use case where the
->> user correlates the output with a list of refs they externally
->> prepared (e.g. "for-each-ref --format... a b c" shows "A", "", and
->> "C", and the user knows "b" produced "").  I do not know how likely
->> such users complain, though, and if there is nobody who relies on
->> the current behaviour, surely "unconditionally omit" is a very
->> tempting approach to take.
->>
->> Thanks.
->
-> I actually instinctively expected for-each-ref to suppress empty lines, at
-> least by default. I don't see a good reason for them, except for something
-> along the lines of what you said.
+> It might be enough to flip the default unconditionally (no config), but
+> I think we may still want "--no-omit-empty-lines" as an escape hatch. I
+> dunno. Maybe that is somehow choosing the worst of both worlds.
 
-That makes two of us ;-)
+It is very tempting, indeed.  We can add the escape hatch and flip
+the default, and only when somebody complains, come back and say
+"oh, sorry, we didn't know anybody used it" and flip the default
+back, perhaps?
 
-> We can of course make it a config option along with the flag, then after some
-> time flip the default, and perhaps ultimately remove the config option again.
+This is a totally unrelated tangent, but it is a bit unfortunate
+that with our parse-options API, it is not trivial to
 
-Yeah, but this v2 is not starting with purely a new feature without
-breaking anybody, so we can stop here for now, and once there is
-enough interest to go through the deprecation dance, we can do that
-as a separate series later.
+ - mark that "--keep-empty-lines" and "--omit-empty-lines" toggle
+   the same underlying Boolean variable,
 
-Thanks.
+ - accept "--no-keep" and "--no-omit" as obvious synonyms for
+   "--omit" and "--keep", 
+
+ - have "git foo -h" listing to show "--keep" and "--omit" together,
+
+ - omit these "--no-foo" variants from "git foo -h" listing.
+
+by the way.
+
