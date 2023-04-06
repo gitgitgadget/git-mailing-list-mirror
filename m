@@ -2,84 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A34AEC7618D
-	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 16:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7131DC7618D
+	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 16:56:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238761AbjDFQeZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Apr 2023 12:34:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47596 "EHLO
+        id S239510AbjDFQ4e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Apr 2023 12:56:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239399AbjDFQeX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2023 12:34:23 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCA6D7ED8
-        for <git@vger.kernel.org>; Thu,  6 Apr 2023 09:34:21 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id f22so33874548plr.0
-        for <git@vger.kernel.org>; Thu, 06 Apr 2023 09:34:21 -0700 (PDT)
+        with ESMTP id S229975AbjDFQ4d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2023 12:56:33 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EE752D7D
+        for <git@vger.kernel.org>; Thu,  6 Apr 2023 09:56:32 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-93df929479cso154642166b.3
+        for <git@vger.kernel.org>; Thu, 06 Apr 2023 09:56:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680798861; x=1683390861;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Lk3M0NCRxu8tbnKd5oUX735hDQKTj7uTHk+WJezR6ko=;
-        b=iVjry3KMT6H6CHWT0UtpuIv6hq6adAEYNPV/LcRkRk56l2IabZVwmqBlPCRMNnToGc
-         kVmWD/UqmIbzazQq7TwDs/3zTHFH7Z6j7piCI4+Hy8hhOvVLYPRSlW95k5Wlz2lOzIrr
-         6iyZbFq4gEKZq7ysVtW6kR5QSW2/cdAr+yLqOWqF2QOjkNZYiKXwrOeUtU9yjdJUFPhi
-         Jk2ySDe7gKgWkRF2sdAFbN5zAKH5edLtOEszai8o3fFw/6QeG9qmx4J/QMesQaFKuhRR
-         8CfwR1hEus83wbd35rkdRJMjs40YW9111daJv9S/+NA9PSyHiJGhD8Po4g/ihz6I8BK2
-         YWzw==
+        d=gmail.com; s=20210112; t=1680800191; x=1683392191;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PylI0t1CjHG3XCm7tmPKCV8UmvXYwAwKEYIAjYOcnN8=;
+        b=aaESoH47FqtbQSAgBeSNgXJQ33QrqmA1wV0feQ/cIzdf8fgxr3Voa2sa22BDZdAQ/z
+         fk7kQ+IJujNNDhdP5z24J/7otYxP8rHwgcOkY8xqJXTcGyfFl+rrbhrIt1SG/jxY96My
+         fx1ZChVCB1AdwzZKOwcYLbdLrN44SpjFak+SY10OjnG53gTsA9ENiDG+W4++P4ag2yYE
+         f8WWjBE3nt9nFbzJplwTNjlLhxEfQzFJO7XTdEWEb9AUk2n+zxNXiscXfVs0geYot+p/
+         EF7us8q1rb3WG2x0ZPbRwqxcdcYsZts9XMjx/mio82uVD2n1spk0gEHd3fkxLQlpyv/R
+         z30A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680798861; x=1683390861;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Lk3M0NCRxu8tbnKd5oUX735hDQKTj7uTHk+WJezR6ko=;
-        b=5OSA1IcZW1tyfe+3RO6nAuQS9zqyLmArWzA99LaHpTSarUfUBf9Og/7x+7Hma+4Kcw
-         fpDbBFWlP/qvt5lRk6UD/FCC8Ve7hD6vqSKYsWL67wKhSDhwwOeFNnhQRqyznxAUvtEG
-         KtQSgECxcVN2t6wjM6rJDIjaejB63vCQgFK9ut7YDEk5lU0efhI1y5xw4N5njLjKkMOd
-         AsnH+J+6NEa5fhDf1YzEtr7kSdLBoTzXf7eIYjphykRqBJD40djb+GB75MJ+/vofIo6W
-         BaWUbVgAT1/KoK9s8Mguk6ie1pFX9l7BGj0eA848DUYKmnA6eg3Ydcw2sWW1ZN+XFPMi
-         i4fg==
-X-Gm-Message-State: AAQBX9fVv+d7AfJ7bV0d4BuJhww8mmAtAsmAnVVOPVM477+ek0oTR2kz
-        T+dNbJLHOdxvAJ+yd6tAsP0=
-X-Google-Smtp-Source: AKy350b9JDuOondG7QrfhyGfywD/fCs27/t4MHe5H4vcevNZ3g/ezFtdYA2VsdfgMqbbtB70m/fF0g==
-X-Received: by 2002:a17:902:c60a:b0:1a2:8940:6db8 with SMTP id r10-20020a170902c60a00b001a289406db8mr8239836plr.69.1680798861129;
-        Thu, 06 Apr 2023 09:34:21 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id iz3-20020a170902ef8300b001a072be70desm1596221plb.41.2023.04.06.09.34.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 09:34:20 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH] t/lib-httpd: pass PERL_PATH to CGI scripts
-References: <d9cfad7caf9ff5bf88eb06cf7bb3be5e70e6d96f.1680689378.git.ps@pks.im>
-        <20230406032647.GA2092142@coredump.intra.peff.net>
-        <ZC6AdylF4TI41vnX@ncase>
-        <20230406093602.GD2215039@coredump.intra.peff.net>
-Date:   Thu, 06 Apr 2023 09:34:20 -0700
-In-Reply-To: <20230406093602.GD2215039@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 6 Apr 2023 05:36:02 -0400")
-Message-ID: <xmqq1qkxq8ab.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20210112; t=1680800191; x=1683392191;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PylI0t1CjHG3XCm7tmPKCV8UmvXYwAwKEYIAjYOcnN8=;
+        b=mwctkmrqrYzniJ5GcQYROfxFeg2qIf1yYwbMkcbnN0BPEcKszYIb3iGvhTOuvQZUyS
+         85to6GOZMHeGq4OS4/Xl+1NaRmwg28LxNbOqJtzvM7fzXJlH0lKwIiY+RCangUy+pnA8
+         iimUYTJE3f0oRYpCeAs5OI0KtfNWIwugqt7zaAfM4D1ZpagY3el6Uzlwft4TCAC/HgsO
+         pHfxkXa1Rc1dSS9BrhMT+c7o/rU0yPWxqeXpXasSdtqzWuirUYTw9nzWKA5BtuJZjpsG
+         XLgUOgpUyG4rM0ve+nXkW25qpbCfjbPqXsn4SoADv1jDnFd+jBxHO4l1tBVqXSSTSG18
+         44/A==
+X-Gm-Message-State: AAQBX9fyor1RDmu5wbIXljMMcxrEM3C8ZtLxjZ1G61C0oIV3gAqmSe37
+        fZ9zHS+Mlz4YDqiTDLmSejgs/wN26ebcKaZZq6c=
+X-Google-Smtp-Source: AKy350buHTM//AbGBJLcizNAykE2l5BfUorDklt7FF401mROnwvfWIAtv2S7Pp2XJoJuWPIz120CwQalEe7opH/Ylv8=
+X-Received: by 2002:a50:871b:0:b0:4fb:dc5e:6501 with SMTP id
+ i27-20020a50871b000000b004fbdc5e6501mr139092edb.1.1680800190783; Thu, 06 Apr
+ 2023 09:56:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20230330112133.4437-1-oystwa@gmail.com> <20230330112133.4437-3-oystwa@gmail.com>
+ <44e7ac0f-2fd9-fd01-89da-a8d036d2e400@dunelm.org.uk> <xmqqjzywg7sg.fsf@gitster.g>
+In-Reply-To: <xmqqjzywg7sg.fsf@gitster.g>
+From:   =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
+Date:   Thu, 6 Apr 2023 18:55:52 +0200
+Message-ID: <CAFaJEqtxNa+fuuKzkKPLkF3qdYwZUj+tMKXB3u2ok6H008vjHA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] branch, for-each-ref: add option to omit empty lines
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> Subject: t/lib-httpd: pass PERL_PATH to CGI scripts
+On Fri, 31 Mar 2023 at 19:17, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> As discussed in t/README, tests should aim to use PERL_PATH rather than
-> straight "perl". We usually do this automatically with a "perl" function
-> in test-lib.sh, but a few cases need to be handled specially.
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> > Do the empty lines in the output serve any useful purpose? If not then
+> > it might be better just to suppress them unconditionally rather than
+> > adding a new command line option.
+>
+> It's a nice egg of columbus.
+>
+> It however theoretically can break an existing use case where the
+> user correlates the output with a list of refs they externally
+> prepared (e.g. "for-each-ref --format... a b c" shows "A", "", and
+> "C", and the user knows "b" produced "").  I do not know how likely
+> such users complain, though, and if there is nobody who relies on
+> the current behaviour, surely "unconditionally omit" is a very
+> tempting approach to take.
+>
+> Thanks.
 
-Thanks, all, for a discussion that led to this simple solution that
-allows us to consistently use what the builder specifies as PERL_PATH,
-which we document as the way we aim to invoke "perl".
+I actually instinctively expected for-each-ref to suppress empty lines, at
+least by default. I don't see a good reason for them, except for something
+along the lines of what you said.
 
-Will queue.
+We can of course make it a config option along with the flag, then after so=
+me
+time flip the default, and perhaps ultimately remove the config option agai=
+n.
+Perhaps in a v3 if there is enough interest; will send a v2 shortly. But I
+must admit I am not very motivated to follow that up down the line.
 
+=C3=98sse
