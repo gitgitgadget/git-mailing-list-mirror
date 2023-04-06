@@ -2,131 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 813AEC77B6E
-	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 22:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E259DC76196
+	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 23:23:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231676AbjDFWTZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Apr 2023 18:19:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41376 "EHLO
+        id S230509AbjDFXXT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Apr 2023 19:23:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232134AbjDFWTM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2023 18:19:12 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F402B7
-        for <git@vger.kernel.org>; Thu,  6 Apr 2023 15:19:06 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-4fa3c1a7a41so1445571a12.2
-        for <git@vger.kernel.org>; Thu, 06 Apr 2023 15:19:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680819545; x=1683411545;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FZhMEJ3O8XGASk7tVlovLWnpvyfrq8HtzBWFOaTptAQ=;
-        b=CrMacPQRomgXy70HTjOCCBtRA1X1W7u1S860XkIdZNWwdf1sAiv880eeRr8VTO8jJt
-         HjhDlTXytcZlY/wWYHAzJZLTXb4dzWLZktg1MmISjVzT6ruu85C+yNebAQ/Uzbb9GCsJ
-         MYlB46TAJuK7t8suk68RazHc5SImEDlnAKhbAj/yM3Wo6NZEXq7RsOOzr5UoGyeNSto9
-         KcWY4Tr1eSxizVwtD7xRcxs6K/+7Un3AQAk6uxlbFO3LHYjyzAH8tkkL5Gm2c7sQ5nIu
-         PXBNXIZ3/Sn5VOSXoQjG/xv7l9GaMASCg7+mKIWqUn0wrgjDLUr0RGfu0u26URUrozWl
-         gSzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680819545; x=1683411545;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FZhMEJ3O8XGASk7tVlovLWnpvyfrq8HtzBWFOaTptAQ=;
-        b=3u06cFTDlBlQon1lYPW8JZU/f1yQs1ouBhSf+liXo/V5hEEbyfkNIcUIvZ8R0OXMIJ
-         mJWwM0457zH4XHXZNM2kuFvkoMaDfQZG5n43uGW2FSQVLEzMKn7aQxCkaSmBA6RpvY1w
-         sH+priMfQAMdICfHAr+zEWZkstqS6/vtmUgPxm/z2mj6B4zbVo9Y4DkxPUDBqhVRN5z5
-         B3Tcts1SPZEK+i4rfKOcacQZrFNdcd6hcdE7/tjWtY9s4YGWEGD1aNDQOsXcdBKLPY7i
-         JhkC4HQZZBTkeOj+9OA1GWCe/i+ztEL1LNCQPx/AU9Qo44kHG1Qkxpeql2S8narNMB4z
-         YGHg==
-X-Gm-Message-State: AAQBX9fyQDSkAxaXPKm4Z1eBPBtIrAjOpVZKFmOnbtjLkrxFkIlXGAJd
-        0f6nzR2gd25sya/mAN/6wTg=
-X-Google-Smtp-Source: AKy350aHzPlMNqCWA/tLVw76wRgv5ACGRVetjDeEtIIVeGjJmHT+CmhpSwTm5C6Ot4KQBFj+wU+JPA==
-X-Received: by 2002:a50:ee99:0:b0:502:3376:7872 with SMTP id f25-20020a50ee99000000b0050233767872mr1070425edr.35.1680819544433;
-        Thu, 06 Apr 2023 15:19:04 -0700 (PDT)
-Received: from [10.6.18.184] ([45.88.97.12])
-        by smtp.gmail.com with ESMTPSA id y30-20020a50ce1e000000b0050470829dbesm828214edi.63.2023.04.06.15.19.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 15:19:04 -0700 (PDT)
-Message-ID: <35bc2dc5-d5cb-3492-ff94-41b93b7563d4@gmail.com>
-Date:   Fri, 7 Apr 2023 00:19:03 +0200
+        with ESMTP id S229575AbjDFXXS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2023 19:23:18 -0400
+X-Greylist: delayed 2847 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 06 Apr 2023 16:23:16 PDT
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48AA0558A
+        for <git@vger.kernel.org>; Thu,  6 Apr 2023 16:23:16 -0700 (PDT)
+Received: from bsmtp2.bon.at (unknown [192.168.181.105])
+        by bsmtp5.bon.at (Postfix) with ESMTPS id 4PsxD32dxZz5tlG
+        for <git@vger.kernel.org>; Fri,  7 Apr 2023 00:35:47 +0200 (CEST)
+Received: from [192.168.0.98] (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 4PsxCx6NcPz5tlC;
+        Fri,  7 Apr 2023 00:35:41 +0200 (CEST)
+Message-ID: <7fe0aa93-a764-66b0-5015-2f5fbd3901ab@kdbg.org>
+Date:   Fri, 7 Apr 2023 00:35:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 4/6] t1450: don't create unused files
+ Thunderbird/102.6.0
+Subject: Re: [PATCH] userdiff: support regexec(3) with multi-byte support
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Diomidis Spinellis <dds@aueb.gr>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        demerphq <demerphq@gmail.com>,
+        Mario Grgic <mario_grgic@hotmail.com>,
+        "D. Ben Knoble" <ben.knoble@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <CAPig+cSNmws2b7f7aRA2C56kvQYG3w_g+KhYdqhtmf+XhtAMhQ@mail.gmail.com>
+ <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr>
+ <b8b3777b-ee6e-d90e-3365-5cb9c9d129fe@web.de>
+ <c4728fac-bea9-3794-077e-c978d99f46bf@web.de> <xmqq5yad7wv3.fsf@gitster.g>
+ <bc6e89c9-d886-c519-85b3-fbc3f4eb5528@web.de>
+ <7327ac06-d5da-ec53-543e-78e7729e78bb@web.de>
 Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?=c3=98ystein_Walle?= <oystwa@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20230401212858.266508-1-rybak.a.v@gmail.com>
- <20230403223338.468025-1-rybak.a.v@gmail.com>
- <20230403223338.468025-5-rybak.a.v@gmail.com>
- <230406.86lej5tn8c.gmgdl@evledraar.gmail.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-In-Reply-To: <230406.86lej5tn8c.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From:   Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <7327ac06-d5da-ec53-543e-78e7729e78bb@web.de>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/04/2023 10:41, Ævar Arnfjörð Bjarmason wrote:
+Am 06.04.23 um 22:19 schrieb René Scharfe:
+> Since 1819ad327b (grep: fix multibyte regex handling under macOS,
+> 2022-08-26) we use the system library for all regular expression
+> matching on macOS, not just for git grep.  It supports multi-byte
+> strings and rejects invalid multi-byte characters.
 > 
-> On Tue, Apr 04 2023, Andrei Rybak wrote:
->> ---
->>   t/	 | 5 +----
->>   1 file changed, 1 insertion(+), 4 deletions(-)
->>
->> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
->> index bca46378b2..8c442adb1a 100755
->> --- a/t/t1450-fsck.sh
->> +++ b/t/t1450-fsck.sh
->> @@ -989,10 +989,7 @@ test_expect_success 'fsck error and recovery on invalid object type' '
->>   
->>   		garbage_blob=$(git hash-object --stdin -w -t garbage --literally </dev/null) &&
->>   
->> -		cat >err.expect <<-\EOF &&
->> -		fatal: invalid object type
->> -		EOF
->> -		test_must_fail git fsck >out 2>err &&
->> +		test_must_fail git fsck 2>err &&
->>   		grep -e "^error" -e "^fatal" err >errors &&
->>   		test_line_count = 1 errors &&
->>   		grep "$garbage_blob: object is of unknown type '"'"'garbage'"'"':" err
+> This broke all built-in userdiff word regexes in UTF-8 locales because
+> they all include such invalid bytes in expressions that are intended to
+> match multi-byte characters without explicit support for that from the
+> regex engine.
 > 
-> ...but ditto my review on other patches, this just seems like a mistake
-> of mine, i.e. if I add the "test_must_be_empty out" the test passes.
+> "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+" is added to all built-in word
+> regexes to match a single non-space or multi-byte character.  The \xNN
+> characters are invalid if interpreted as UTF-8 because they have their
+> high bit set, which indicates they are part of a multi-byte character,
+> but they are surrounded by single-byte characters.
+
+Perhpas the expression should be "[\xc4\x80-\xf7\xbf\xbf\xbf]+", i.e.,
+sequences of code points U+0080 to U+10FFFF?
+
 > 
-> So isn't the answer here that my 31deb28f5e had an unintentional
-> regression, and we should bring the assertion back? Its commit message
-> says nothing about wanting to stop asserting stdout.
-> 
-> Maybe there was a reason I'm missing for why I remved it, it's since
-> been paged out of my wetware, but looking at it briefly now it just
-> seems like an unintentional bug / loss of test coverage that we should
-> fix.
+> Replace that expression with "|[^[:space:]]" if the regex engine
+> supports multi-byte matching, as there is no need to have an explicit
+> range for multi-byte characters then.
 
-Tests in t1450-fsck.sh that do enforce empty standard output do it mostly
-via ">../actual 2>&1" and then a "test_must_be_empty actual".
+This is not equivalent. The original treated a sequence of non-ASCII
+characters as a word. The new version treats each individual non-space
+character (both ASCII and non-ASCII) as a word.
 
-For 'fsck error and recovery on invalid object type', the question is:
-is having this assertion useful for a developer using this test? The test
-is about invalid object types and what error messages "git fsck" prints
-about them.  The test creates a fresh repository for it:
+> Additionally the word regex for tex contains the expression
+> "[a-zA-Z0-9\x80-\xff]+" with a similarly invalid range.  The best
+> replacement with only valid characters that I can come up with is
+> "([a-zA-Z0-9]|[^\x01-\x7f])+".  Unlike the original it matches NUL
+> characters, though.  Assuming that tex files usually don't contain NUL
+> this should be acceptable.
 
-> 	git init --bare garbage-type &&
+This is acceptable, of course. The replacement range looks sensible.
 
-Is it useful to a developer working on this part of "git fsck" to have
-a "reminder" that no dangling objects should be found in such a fresh
-repository?  Speaking of which, should there be such a test:
+-- Hannes
 
-	test_expect_success 'fresh repository has no dangling objects' '
-		git init fresh &&
-		git -C fresh fsck >out
-		test_must_be_empty out
-	'
-
-? Maybe even in t0001-init.sh?
