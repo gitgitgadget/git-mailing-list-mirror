@@ -2,124 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0433EC77B6C
-	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 21:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C417AC77B6F
+	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 21:56:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231882AbjDFVfq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Apr 2023 17:35:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59622 "EHLO
+        id S232901AbjDFVzb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Apr 2023 17:55:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbjDFVfp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2023 17:35:45 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 972D5C2
-        for <git@vger.kernel.org>; Thu,  6 Apr 2023 14:35:44 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id l15so4528037ejq.10
-        for <git@vger.kernel.org>; Thu, 06 Apr 2023 14:35:44 -0700 (PDT)
+        with ESMTP id S237510AbjDFVzS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2023 17:55:18 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEE939EF3
+        for <git@vger.kernel.org>; Thu,  6 Apr 2023 14:55:17 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-54be7584b28so87816827b3.16
+        for <git@vger.kernel.org>; Thu, 06 Apr 2023 14:55:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680816943; x=1683408943;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9hSLKyFUCH/MpQ8FhwgPX74fmuaDhNFOJBfsO8wb6hg=;
-        b=g5fN2jNVUkxkrfU9LuQJzHyfNFV2i+bFhM5iU+VP8f47Pf+KZtdLNYa37q2EfUbo56
-         PAJw37/CY4ehaGEiqVQnOP42NkEuMS5SNAFiddxeiJxapbUnbVwNxlhY7vyJtcwSNJQk
-         tifh+LZqJwOAVuiMx8EY85+1pO4z4c9TaOgTMWM/kESuJ8hayqcopRzYgdAWSP14Jkuh
-         NSQZ9AJZxWGKnC4mHiSgSGyYhEdqqV1f2nd0LrC8/6/nO0q1uk5OwZbJvf3ura2PSEC3
-         PQGPNHR1QVr/K/UClv08M2AdfAxkoJEZJyx0ceaUG0nQqhSpwnhOwxxW2oLhx/PsxnsH
-         FVMA==
+        d=google.com; s=20210112; t=1680818117;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=FPfDZl/slVeA3aYM7KwLRgbWOulPs//mpYdZtR3XaZg=;
+        b=YLQzixiiYmKzLtCc8PpjIIjwm5KLlBm9no2v2awLmTdvNEq/mjLnSngWbvNYpLrKaj
+         qLVD9TtPxg2TdnUy6MgjnZzeabE30c09bfnfZU5i/l7464pzi2xF3j5F0cQzdkcdX5O6
+         aWzW1S8kX9QFZWIb8tbG6gnPn1PlbQPJYwJj9D2c3uNctZuoZKcw7cTskHKHjwdnWMTG
+         yHpA69c4IjB5vemadlVdgbMAptJYBIHQUM8Ykw/rQDNKdY6qGC+FBpiYIji5lP8Cm0Id
+         HBAtd54y1QA73SnKXbBLwbnjQzs8O24ufwiqZjob9SpLoI8WKQVfNHSd6GmS5DlbuwEz
+         aecA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680816943; x=1683408943;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9hSLKyFUCH/MpQ8FhwgPX74fmuaDhNFOJBfsO8wb6hg=;
-        b=DG7ybiLxpkjIZhahymq+Yv81TqhSUYIHFqXC80i9RA23ZFIXylMh3xdhKzF3OHT5UQ
-         Vq/xVmpqvr1QQ+/nOWIf12+mOOdgcp/NO1gk6O9+ZVcnriSqNJYg1A0cc2nuEpr0Hezk
-         zFOQf+4t8xVXHefbwLEnDwZwJe+7eoVz1CbosdSYp8wr0iqXf//rimQYncSUytqD3RiG
-         GUN6U+0h7mhONszJ1g7AbfUol+Q5G5iYMNNuYlg0j3n/wt/zf7TijMheUpVvnMaDA8oG
-         XSeLuyPnlixnhLycpCPD2dtlBQDbjgDvKfTX7DoDUeU/Q5he6x8XOxdOfWB+dFtACF+T
-         bBOg==
-X-Gm-Message-State: AAQBX9d7Pz/oXCILBCaFNN/bipvSiHhMAWfBblNu1nxbx3ZXSBWaJvX8
-        iVwvRpSvRF1sZgDSjvcsSrUuff7+nzKz04z2AyM=
-X-Google-Smtp-Source: AKy350Y0oB+jWY643iKW/eQl0aUWGbS1CJWBJ+3Ynkmw/ov4HjVR9Tsjl8yxkGhRRWCfsE2dzbQ17g==
-X-Received: by 2002:a17:906:498f:b0:949:8f1e:9f1 with SMTP id p15-20020a170906498f00b009498f1e09f1mr290829eju.1.1680816942998;
-        Thu, 06 Apr 2023 14:35:42 -0700 (PDT)
-Received: from [10.6.18.184] ([45.88.97.12])
-        by smtp.gmail.com with ESMTPSA id ke19-20020a17090798f300b009306be6bed7sm1255504ejc.190.2023.04.06.14.35.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 14:35:42 -0700 (PDT)
-Message-ID: <7a5de047-3535-3b87-f023-43c400d57131@gmail.com>
-Date:   Thu, 6 Apr 2023 23:35:42 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: git config tests for "'git config ignores pairs ..." (was Re: [PATCH
- v2 3/6] t1300: don't create unused files)
-Content-Language: en-US
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?=c3=98ystein_Walle?= <oystwa@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20230401212858.266508-1-rybak.a.v@gmail.com>
- <20230403223338.468025-1-rybak.a.v@gmail.com>
- <20230403223338.468025-4-rybak.a.v@gmail.com>
- <230406.86pm8htnfk.gmgdl@evledraar.gmail.com>
- <c43e6b71-075a-e39a-7351-8595e145dacf@gmail.com>
-In-Reply-To: <c43e6b71-075a-e39a-7351-8595e145dacf@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20210112; t=1680818117;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FPfDZl/slVeA3aYM7KwLRgbWOulPs//mpYdZtR3XaZg=;
+        b=FKc3t6TEXIEVrraolxFsHwBjDvFBQQt6sOSAnGh021vEVtBPiUklY6k+TgN1vJIE6C
+         okfr4lhKMg9FtQM5w1VMQV6iNkhCL8pZ7WjNb1DV8RVUM87ALZwZ5MD4K2Hf8t2R4rJI
+         TwzFCjprSNnExISZ+XRkWVqIda7yVdKJ6/c7OoRZfbBkC5TjO/UP2YncuagudqE+p0o8
+         BUWmyAryqmbGbkDPZVl1uv6alRNEOzb789uMww+jCvXeIRGowIcQcPBBHP3MS8jrv2ea
+         e7UdHwYAJULaQjYxrVJdUTOO8eS2AWaaArQaKA5IxBesjADqE+6qozrRC5cry2XNrcoN
+         ZGvA==
+X-Gm-Message-State: AAQBX9d/x/k8q1bvteiWKq8nIpeNZwoW9PdeK6Rl6x7eVeIMdWUVWPoK
+        ij43I7z1PzODIfItOtW+zC5VIz0uZqM3/g==
+X-Google-Smtp-Source: AKy350YI2NxS9UXptFNjvi76vaGw4YbUf1FheSgjiqcgaBQ4o7BjqG0wA+7Q3MLSxGuPwMoWDECmsp+3EtEBcQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:3a07])
+ (user=chooglen job=sendgmr) by 2002:a0d:ec4a:0:b0:541:7f7b:a2ff with SMTP id
+ r10-20020a0dec4a000000b005417f7ba2ffmr7015221ywn.8.1680818117214; Thu, 06 Apr
+ 2023 14:55:17 -0700 (PDT)
+Date:   Thu, 06 Apr 2023 14:55:15 -0700
+In-Reply-To: <ZC87IcLcBnxBRCdr@nand.local>
+Mime-Version: 1.0
+References: <pull.1488.git.git.1680652122547.gitgitgadget@gmail.com>
+ <xmqq7curxk22.fsf@gitster.g> <kl6ly1n65l7t.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <ZC87IcLcBnxBRCdr@nand.local>
+Message-ID: <kl6lmt3k3ccc.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH] clone: error specifically with --local and symlinked objects
+From:   Glen Choo <chooglen@google.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/04/2023 23:30, Andrei Rybak wrote:
-> On 06/04/2023 10:38, Ævar Arnfjörð Bjarmason wrote:
->>
->> Ditto my comment on 1/6, shouldn't we instead be doing e.g.:
->>
->>     diff --git a/t/t1300-config.sh b/t/t1300-config.sh
->>     index 2575279ab84..df2070c2f09 100755
->>     --- a/t/t1300-config.sh
->>     +++ b/t/t1300-config.sh
->>     @@ -1575,7 +1575,8 @@ test_expect_success 'barf on syntax error' '
->>          [section]
->>          key garbage
->>          EOF
->>     -    test_must_fail git config --get section.key >actual 2>error &&
->>     +    test_must_fail git config --get section.key >out 2>error &&
->>     +    test_must_be_empty out &&
->>          test_i18ngrep " line 3 " error
->>      '
->>
->> I.e. before this we had no coverage on the error being the only output,
->> but seemingly by mistake. Let's just assert that, rather than dropping
->> the redirection entirely, no?
-> 
-> Here, failing invocations of "git config" are tested, and an argument,
-> as Junio C Hamano outlined in 
-> https://lore.kernel.org/git/xmqqsfe8s56p.fsf@gitster.g/
-> for output of failing "git mktree", could be applied here.
-> 
-> Thinking about it more, such assertions enforcing empty standard output for
-> these commands might be helpful if some tools and/or scripts rely on empty
-> standard output instead of checking the exit code.  Hyrum's Law applies 
-> here,
-> I guess.
+Thanks for the feedback!
 
-There are some tests in t/t1300-config.sh that do check that standard output
-or standard error is empty.  And I think I stumbled some other broken tests,
-while checking those.
+(and phew, I was a few minutes away from submitting v2 :P)
 
-Test 'git config ignores pairs without count' checks that standard error
-(2>error) is empty.  Just below it, there seems to be a copy-paste error:
-there are two tests titled 'git config ignores pairs with zero count'.
-First one doesn't check any output, but the second checks standard output,
-while calling the file "error" (>error). Test 'git config ignores pairs
-with empty count' checks >error as well.
+Taylor Blau <me@ttaylorr.com> writes:
 
-They were all introduced in d8d77153ea (config: allow specifying config entries
-via envvar pairs, 2021-01-12) by Patrick Steinhardt.  Patrick, what do you think?
+> We *could* teach the dir-iterator API to return a specialized error code either
+> through a pointer, like:
+>
+>     struct dir_iterator *dir_iterator_begin(const char *path,
+>                                             unsigned int flags, int *error)
+>
+> and set error to something like -DIR_ITERATOR_IS_SYMLINK when error is
+> non-NULL.
+>
+> Or we could do something like this:
+>
+>     int dir_iterator_begin(struct dir_iterator **it,
+>                            const char *path, unsigned int flags)
+>
+> and have the `dir_iterator_begin()` function return its specialized
+> error and initialize the dir iterator through a pointer. Between these
+> two, I prefer the latter, but I think it's up to individual taste.
+
+Yeah, I've thought about doing the latter. That's also what I'd prefer.
+Since you've brought it up, I'll give that a try.
+
+>> 	if (!iter) {
+>> 		struct stat st;
+>>
+>>     if (errno == ENOTDIR && lstat(src->buf, &st) == 0 && S_ISLNK(st.st_mode))
+>
+> Couple of nit-picks here. Instead of writing "lstat(src->buf, &st ==
+> 0)", we should write "!lstat(src->buf, &st)" to match
+> Documentation/CodingGuidelines.
+
+Ah, thanks.
+
+> But note that that call to lstat() will clobber your errno value, so
+> you'd want to save it off beforehand. If you end up going this route,
+> I'd probably do something like:
+>
+>     if (!iter) {
+>       int saved_errno = errno;
+>       if (errno == ENOTDIR) {
+>         struct stat st;
+>
+>         if (!lstat(src->buf, &st) && S_ISLNK(st.st_mode))
+>           die(_("'%s' is a symlink, refusing to clone with `--local`"),
+>               src->buf);
+>       }
+>       errno = saved_errno;
+>
+>       die_errno(_("failed to start iterator over '%s'"), src->buf);
+>     }
+
+Ah thanks, yes. I think it isn't different in practice, since we're
+lstat()-ing the same path, but we should always use the "real" errno to
+be safe.
+
+This is another good reason to return an error code instead of
+overloading errno.
