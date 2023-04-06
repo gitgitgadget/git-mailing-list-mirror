@@ -2,146 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ADC5C7618D
-	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 14:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54872C7618D
+	for <git@archiver.kernel.org>; Thu,  6 Apr 2023 15:45:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239501AbjDFOu3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Apr 2023 10:50:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51400 "EHLO
+        id S238806AbjDFPpY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Apr 2023 11:45:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239654AbjDFOuJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2023 10:50:09 -0400
-Received: from bluemchen.kde.org (bluemchen.kde.org [IPv6:2001:470:142:8::100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 282F4B462
-        for <git@vger.kernel.org>; Thu,  6 Apr 2023 07:49:04 -0700 (PDT)
-Received: from ugly.fritz.box (localhost [127.0.0.1])
-        by bluemchen.kde.org (Postfix) with ESMTP id 3416D2418A;
-        Thu,  6 Apr 2023 10:49:02 -0400 (EDT)
-Received: by ugly.fritz.box (masqmail 0.3.4, from userid 1000)
-        id 1pkQv7-TQr-00; Thu, 06 Apr 2023 16:49:01 +0200
-Date:   Thu, 6 Apr 2023 16:49:01 +0200
-From:   Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] rebase: implement --rewind
-Message-ID: <ZC7b3QjRTQ2k7bhf@ugly>
-Mail-Followup-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-References: <20230323162235.995645-1-oswald.buddenhagen@gmx.de>
- <7bd63d7e-ad13-d5b8-54ea-ba5f81da0c17@gmx.de>
- <ZCMRpnS9gzN1Rlbh@ugly>
- <4fa6d2da-4885-09d9-dddb-6f19efda6398@gmx.de>
- <ZC2Qhi73YKSOJrM2@ugly>
- <230406.86zg7ls2jx.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229617AbjDFPpW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2023 11:45:22 -0400
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AF208A66
+        for <git@vger.kernel.org>; Thu,  6 Apr 2023 08:45:21 -0700 (PDT)
+Received: by mail-qk1-x72a.google.com with SMTP id y7so13244751qky.1
+        for <git@vger.kernel.org>; Thu, 06 Apr 2023 08:45:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680795920;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RFsD2+GzDkJ4XHTOiptOBEv1CaiCwfmfe5UABd76rH8=;
+        b=P19rU7JXHzUzmPhWhz/BlYF4wzDQ2YORVksL6gFF6XQacSJKbG+x+xYd2UPbZCG2kR
+         Q3MO22MeT5kYQXRKbNRFBqqfuChlSRkwBMzbpCKErFbRDngXTfPX6qUxHnkSu7wReGxj
+         6MUlOosx50IBPExa6bXsYOd6hLlVhGSbec70gqQV23Tqa3zrl9zB5dapx6I98WKPxkEJ
+         IrgwCz7lumL6LXjPkHLOnMMQJBoC4qSXmAJBgKulK6szgJ5KmGjNl6JT7b8u9vGVsNf1
+         UKnvlbrgv5obqZL/zFzB2HOyvtpQJ7Sx4D+wYAJATbqunx5rFvwvfsy8AxeNUe2xOInc
+         FXtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680795920;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RFsD2+GzDkJ4XHTOiptOBEv1CaiCwfmfe5UABd76rH8=;
+        b=IpYYAskyYZL78kZ95kn1/QVzZ7uXODZUihEg92x0ZvcoUw5lXoNizXII6DTMWbTI4l
+         h3h9+uj9Vf+KdO/TY+TeA9h6CKclAYsIbVSREETWdlZoRT9TjTkm+VnGfrgs2fOpaktB
+         2fnopl7QB1F6Az+Ke+IiOt0NoGk3mEUFnBJHk4N+w9NxBRx5HVGN5v67wqoct6L61Pe1
+         naCbOJC5Bg7Qtn/icq8YDWvZFN15YgDwsBWk2CLthNmyi49fudOcRAi7rh9ZXhCgFOZ0
+         hbBSHxbQ1qDt0j9KgZxLEtOX+/tr0vWeBUiID6ihUsQKs9Juxp+V1dyqRiG4PFIBr7Dg
+         k5Yw==
+X-Gm-Message-State: AAQBX9e2M8VhyHoKKgCSn01eU9+UQVHLByqOZ6RH2MxP8jxy4bhB1bH8
+        xSOAERfx98l0xkyIF4AwvTeieZCo7GElGpK2ejHy+9n7pCQ=
+X-Google-Smtp-Source: AKy350Z84z2cPpW/yIWeSZZfvcjmNdEMr5kQdi9PtQ0/c+S2q2SYM1PZRitNdtPVA2x7AWMjKqze6Lb7brxBxuFNegk=
+X-Received: by 2002:a05:620a:410a:b0:742:8868:bfd1 with SMTP id
+ j10-20020a05620a410a00b007428868bfd1mr2737838qko.7.1680795920160; Thu, 06 Apr
+ 2023 08:45:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <230406.86zg7ls2jx.gmgdl@evledraar.gmail.com>
+References: <2554712d-e386-3bab-bc6c-1f0e85d999db@cs.ucla.edu>
+ <CAPUEspj1m6F0_XgOFUVaq3Aq_Ah3PzCUs7YUyFH9_Zz-MOYTTA@mail.gmail.com>
+ <96358c4e-7200-e5a5-869e-5da9d0de3503@cs.ucla.edu> <xmqqttxvzbo8.fsf@gitster.g>
+ <6d86214a-1b80-eb88-1efb-36e61fd3203e@cs.ucla.edu>
+In-Reply-To: <6d86214a-1b80-eb88-1efb-36e61fd3203e@cs.ucla.edu>
+From:   demerphq <demerphq@gmail.com>
+Date:   Thu, 6 Apr 2023 17:45:09 +0200
+Message-ID: <CANgJU+XoyptS8NU+f6uMLrKjQakv=iN2c4DQydVaBVH3dK3s-w@mail.gmail.com>
+Subject: Re: bug#60690: -P '\d' in GNU and git grep
+To:     Paul Eggert <eggert@cs.ucla.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Carlo Arenas <carenas@gmail.com>, 60690@debbugs.gnu.org,
+        mega lith01 <megalith01@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Tukusej=E2=80=99s_Sirs?= <tukusejssirs@protonmail.com>,
+        pcre-dev@exim.org, Philip.Hazel@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 06, 2023 at 12:45:02PM +0200, Ævar Arnfjörð Bjarmason wrote:
->My most common use-case for "nested" is certainly less complex that
->Johannes's, and is the following:
+On Wed, 5 Apr 2023 at 20:32, Paul Eggert <eggert@cs.ucla.edu> wrote:
 >
-> * I've got e.g. a 10 patch series
+> On 2023-04-04 12:31, Junio C Hamano wrote:
 >
-> * I start rebasing that on "master", solve conflicts with "1..4", and
->   am now on a conflict on 5/10.
+> > My personal inclination is to let Perl folks decide
+> > and follow them (even though I am skeptical about the wisdom of
+> > letting '\d' match anything other than [0-9])
 >
-> * It now becomes obvious to me that the even larger conflict I'm about
->   to have on 6/10 would be better handled if I went back to 2/10 or
->   whatever, did a change I could do here in 5/10 differently, and then
->   proceeded.
+> I looked into what pcre2grep does. It has always done only 8-bit
+> processing unless you use the -u or --utf option, so plain "pcre2grep
+> '\d'" matches only ASCII digits.
 >
->I.e. when I'm at 5/10 I'd conceptually like to do another "git rebase 
->-i
->HEAD~5" or whatever, use the *already rewritten* commits (otherwise I'd
->just abort and restast), re-arrange/rewrite them, and when I'm done
->return to 5/10.
+> Although this causes pcre2grep to mishandle Unicode characters:
 >
-yes, this patch addresses this use case - mostly.
-
-i'm generally dealing with an even more benign case, because i'm 
-"rebasing" with --keep-base most of the time (and i have the thing 
-aliased to 'reshape' - maybe something for upstream?).
-
-the case of rewinding from a conflicted state currently needs manual 
-handling. i suppose i should detect the state, re-insert the pick, and 
-reset hard out of it, as if --skip was used. the implicit 
-destructiveness feels wrong, though. maybe require --force?
-
->But here's the important bit: Sometimes I'm just wrong about my re-edit
->to 2/10 being the right thing, and it would actually just make things
->worse, as I might discover in my "nested" rebase once I'm at 4/5 or
->whatever.
+>    $ echo '=C3=86var' | pcre2grep '[Ss=C3=9F]'
+>    =C3=86var
 >
->So being able to do an "--abort" ot that point to go back to the
->"un-nested" 5/10 (*not* "original" 5/10) and proceed from there would be
->nice.
+> it mimics Perl 5.36:
 >
-yeah, i'm experiencing that sometimes, but not often enough to bother 
-automating it. manual recovery by hand-editing the todo after rewinding 
-again did the trick so far.
-
->From a UX perspective I think just as our $PS1 integration can be made
->to show "5/10" it would be ideal if in this case we could show
->e.g. "5/10 -> 1/5" or whatever. I.e. I'm in a nested rebase of 1/5,
->which started from that 5/10".
+>    $ echo '=C3=86var' | perl -ne 'print $_ if /[Ss=C3=9F]/'
+>    =C3=86var
 >
-hmm, i think you just pointed out johannes' hangup to me. ^^
+> so this seems to be what Perl users expect, despite its infelicities.
 
-you both are assuming a limited rewind, where you explicitly specify the 
-affected range, and the todo list editor presents only that. you're 
-deriving the term "nested" from the fact that it's an isolated subset of 
-the rewritten commits.
+Actually no, I think you have misunderstood what is happening at the
+different layers involved here.
 
-however, i see these problems with that aproach:
-- as mentioned in the OP, i might want to move hunks out of the nested 
-   range. i could stash them, but then i'm dealing with two methods of 
-   organizing the history, which gets really messy
-- it gets even trickier if i want to move commits *into* the nested 
-   range - i'd have to manually insert a pick, and then deal with the 
-   possible conflict after unnesting
-- who says that the nesting point should be the last chance to change my 
-   mind? suppose i stop at 10, get the idea to re-edit 5, but after 
-   reaching 15 i notice that re-editing 5 (and thus probably also 10)  
-   was a terrible idea, so i want to go back to pre-nest 10
+Your terminal is rendering =C3=9F as a glyph. But it is almost certainly
+actually the octets C3 9F (which is the UTF8 canonical representation
+of the codepoint U+DF). So the code you provided to perl is close to
+the equivalent of
 
-now suppose my approach, where the rebase is rewound right to `onto`, 
-and the whole remaining todo is left in place. the nested base is 
-implicitly determined by the first modified line of the rewound todo, so 
-there is no harm in rewinding the whole rebase (*). and the rebase can 
-just continue past the rewind point without anything special happening.  
+echo '=C3=86var' | perl -ne 'print $_ if /[Ss\x{C3}\x{9F}]/'
 
-if we want to be able to undo the rewind, we push HEAD and the todo list 
-onto a stack. as phillip said, that's basically just a checkpoint, which 
-happens to be automatically created when we are rewinding. that could be 
-presented at the prompt as "REBASE 5/10 [1]" to signify the number of 
-available checkpoints (and you'd access them with 'git rebase --restore 
-[<id>]', quite similarly to stashes).
+And if you check, you will see that U+C6 "=C3=86" in utf8 is represented as
+the octets C3 86.
 
-of course it gets really "interesting" when you want to go back to a 
-checkpoint, but also want to salvage some of the rewritten commits. then 
-you'll have to manually pick commits from the reflog, etc., but i don't 
-see how one could possibly get around the complexity (we could present a 
-combined todo file where alternative versions of commits are shown in 
-comments, but that's quite some effort for only a slight improvement).
+So what you have done is the equivalent of:
 
-(*) actually, there is:
-- firstly, having the entire todo in front of you can be rather annoying 
-   when it's more than two dozen commits long and the part you want to 
-   edit isn't near the beginning.
-- secondly, skipping over merges doesn't appear to be a thing, so 
-   johannes' use case would be *insanely* slow. but that's "only" an 
-   implementation issue.
+perl -le'print "\x{C3}\x{86}"' | perl -ne'print $_ if /[Ss\x{C3}\x{9F}]/'
 
-given these problems, i can see that it would make sense to accept an 
-optional argument that limits the depth of the rewind (without impacting 
-the overall approach).
+which of course matches. \x{C3} matches \x{C3} always and everywhere.
 
-thanks!
+What you should have done is something like this:
+
+$ echo '=C3=86var' | perl -ne 'utf8::decode($_); print $_ if /[Ss\x{DF}]/u'
+$ echo 'ba=C3=9F' | perl -MEncode -ne 'utf8::decode($_); print
+encode_utf8($_) if /[Ss\x{DF}]/u'
+ba=C3=9F
+$ echo '=C3=86var' | perl -MEncode -ne 'utf8::decode($_); print
+encode_utf8($_) if /[Ss\x{C6}]/u'
+=C3=86var
+$ echo '=C3=86var' | perl -MEncode -ne 'utf8::decode($_); print
+encode_utf8($_) if /[Ss\x{e6}]/ui'
+=C3=86var
+
+The "utf8::decode($_)" tells perl to decode the input string as though
+it contained utf8 (which in this case it does). THe /u suffix tells
+the regex engine that you want Unicode semantics.
+
+I believe that the same thing is true of your pcre2grep example. You
+simply aren't checking what you think you are checking. You terminal
+renders UTF8 as glyphs, but the programs you are feeding those glyphs
+to aren't seeing glyphs, they are seeing UTF8 sequences as distinct
+octets, and are not decoding their input back as codepoints.
+
+You could have checked your assumptions by using the -Mre=3Ddebug option to=
+ perl:
+
+$ echo '=C3=86var' | perl -Mre=3Ddebug -ne 'print $_ if /[Ss=C3=9F]/'
+Compiling REx "[Ss%x{c3}%x{9f}]"
+Final program:
+   1: ANYOF[Ss\x9F\xC3] (11)
+  11: END (0)
+stclass ANYOF[Ss\x9F\xC3] minlen 1
+Matching REx "[Ss%x{c3}%x{9f}]" against "%x{c3}%x{86}var%n"
+Matching stclass ANYOF[Ss\x9F\xC3] against "%x{c3}%x{86}var%n" (6 bytes)
+   0 <> <%x{c3}>             |   0| 1:ANYOF[Ss\x9F\xC3](11)
+   1 <%x{c3}> <%x{86}var>    |   0| 11:END(0)
+Match successful!
+=C3=86var
+Freeing REx: "[Ss%x{c3}%x{9f}]"
+
+The line: Matching REx "[Ss%x{c3}%x{9f}]" against "%x{c3}%x{86}var%n"
+
+basically says it all. Perl has not decoded the UTF8 into U+C6, and it
+has not decoded the UTF8 for U+DF either. Instead you have asked it if
+the UTF8 sequence that represents U+C6 contains any of the same octets
+as the UTF8 representation of U+53, U+73 and U+DF would. Which gives
+the common octet of \x{c3}.
+
+> For better Unicode handling one can use pcre2grep's -u or --utf option,
+> which causes pcre2grep to behave more like GNU grep -P and git grep -P:
+> "echo '=C3=86var' | pcre2grep -u '[Ss=C3=9F]'" outputs nothing, which I t=
+hink is
+> what most people would expect (unless they're Perl users :-).
+
+It is what Perl users would expect also, assuming you actually wrote
+the character class [Ss\x{DF}] and asked for unicode semantics. \x{DF}
+is the Latin1 codepoint range, so perl will assume that you meant
+ASCII semantics unless you tell it otherwise.
+
+Basically these tests you have quoted here are just examples of
+garbage in garbage out.
+
+Perl has been working together with the Unicode consortium for over 20
+years. Afaik we were and are the reference implementation for the spec
+on regular expression matching in Unicode and we have a long history
+of working together with the Unicode consortium to refine and
+implement the spec. You should assume that if Perl seems to have made
+a gross error in how it does Unicode matching that you are simply
+using it wrong, we take a great deal of pride in having the best
+Unicode support there is.
+
+https://unicode.org/reports/tr18/
+
+FWIW, i think this email nicely illustrates the issues with git and
+regular expressions. To do regular expressions properly you need to
+know a) what semantics do you expect, b) how to decode the text you
+are matching against. If you want unicode semantics you need to have a
+way to ask for it. If you want to match against Unicode data then you
+need a way to determine which of the 6 possible encodings[1] of
+Unicode data you are using. If you get either wrong you will not get
+the results you expect.  You may even want to deal with cases where
+you want Unicode semantics, but to match against non-unicode data. For
+instance Latin-1. In Latin-1 the codepoint U+DF is the *octet* 0xDF.
+Maybe you want that octet to match "ss" case-insensitively, as a
+German speaker would expect and as Unicode specifies is correct.  Or
+vice versa, maybe you are like some of the posters to this thread who
+seem to expect that \d should not match U+16B51 (as a Hmong speaker
+might expect). Perl resolves these problems at the pattern level by
+supporting the suffixes /a and /u (for ascii and unicode), and at the
+string level it supports two type of string, unicode strings, and
+binary/ASCII strings. By default input is the latter but there are a
+variety of ways of saying that a file handle should decode to Unicode
+instead.
+
+cheers,
+Yves
+[1] UTF-EBCDIC, UTF-8, UTF-16LE, UTF-16BE, UTF-32LE, UTF-32BE.
+
+
+
+
+--
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
