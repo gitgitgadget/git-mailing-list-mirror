@@ -2,84 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23A16C6FD1D
-	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 14:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DFB5C77B61
+	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 14:41:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240247AbjDGOaS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Apr 2023 10:30:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49684 "EHLO
+        id S231542AbjDGOlX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Apr 2023 10:41:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231700AbjDGOaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2023 10:30:16 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09C536EAC
-        for <git@vger.kernel.org>; Fri,  7 Apr 2023 07:30:15 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id h12-20020a17090aea8c00b0023d1311fab3so43449091pjz.1
-        for <git@vger.kernel.org>; Fri, 07 Apr 2023 07:30:15 -0700 (PDT)
+        with ESMTP id S229601AbjDGOlW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2023 10:41:22 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADE481739
+        for <git@vger.kernel.org>; Fri,  7 Apr 2023 07:41:20 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-942e6555947so178118766b.2
+        for <git@vger.kernel.org>; Fri, 07 Apr 2023 07:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680877814; x=1683469814;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E3Z7H7H/1jc0i0htq35qwpSrkoqb0582w6UayIS829w=;
-        b=WyD9nAZItwum71ZAHHDri8y9bhe4m3QxrHguH2prEmYSAVHy1zSnaEBb//uP4ABKGE
-         5omACd4OBkdKVjmBSD2yIT8+Fzgx7L1CZdW6Xkv+roa+w5vIKcKM51YX3fHTQsqdy94V
-         nQtQIP8axsH9jRig9qtFpOMEpPvPJMFsrjXqv/7GYq1R3x2PWcz1TH166O5AxANyt7b4
-         iwnoD0RiPK83BEJ9tW6BZW6hwbn8vfG364KXTh+FgfqlOhCUNE4P70nMC/kX6iMl1DbP
-         WK9BngIhPPQMqtVWuP6rR7Yagip60AwQsHhIaUL/DlOprsrNZVjAq/V+a813UwkriLLI
-         C/oQ==
+        d=gmail.com; s=20210112; t=1680878479; x=1683470479;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ddZVnB8dMRGtqtr8qMd6Ee4EzPDfP0G9teoe0xI4JIo=;
+        b=FXcgZNcwV/RlSbQW4y9Q7myvbeVby5s18QGaVm5qHN4gKuSvw8Q5IA5ke7zT0/+ywT
+         TSDbYgqaZBIopFdAEFmH5mBm0YwtA2QwZW5FD7uf5pE44/95hkCpmUQMW+GeQBdAiG6n
+         kZfXiNPTANlHghqHV6pdtYIrJ4Yb59PTXc7UFBJbJkevB7yZr2GSVnB2twr7t/l3QII6
+         diPAyEN3aUrIt1e5JjI/P1xsQ0RKPC3Mg7ucgfcuSFKSwIWcbzu1Ow+iv3lQHHXCj+xm
+         zKils2g2njDhiw93fDwr5hdnWU6W5UBA3NiTZfqJsswjhGZzkFZ/NfCNUItfFa7ynv7+
+         VfMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680877814; x=1683469814;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=E3Z7H7H/1jc0i0htq35qwpSrkoqb0582w6UayIS829w=;
-        b=JjUNcfcUzJ5+kWQd0ULzs5FzH1TzEFFEixMUYFjk8VOE2vvVnz5Muwxc1Kz+j+w2LP
-         21ojxdHbNFOlU26xEHNNrEVGuO4UCwi3b+HdngpDGdOkN/plYBD6yi/EBTCkUXA8CYSZ
-         /w9FE/V0mnja/R5ww7hjY3JLeG1TFc5d8X7kGHZr0CmFejbFKYPi7kWlRZ5eXTGOjYbZ
-         6J4jm8ewIGJEIqjh9yHWldl+SgDDCSQ1movXu4qKJOyg+y0KD1V4uRAuRzkj5szPceTS
-         T1n82bUTHFvPTvqv2mjVDv7kIUoR8cnPA50lFh3hzzzuuwvpfId0iEpuirxHvPSUUirG
-         4xEQ==
-X-Gm-Message-State: AAQBX9cYDJx5mMfDO59+0j+93hvbCHilXzqmTv0YQcDCXqos1sAz0LUV
-        sIpmTuoAOvqe6f+eb0RsYGI=
-X-Google-Smtp-Source: AKy350aCY+zQQ2H2z6CNyMmMk1f4XOvhYlle72HWGokuvOkNnHAra9sX8zZ766S7So6ijy8C9VPypw==
-X-Received: by 2002:a05:6a20:47c8:b0:e1:3bde:3a98 with SMTP id ey8-20020a056a2047c800b000e13bde3a98mr3234138pzb.52.1680877814253;
-        Fri, 07 Apr 2023 07:30:14 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id w8-20020a63c108000000b005141e2c733dsm2723822pgf.11.2023.04.07.07.30.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 07:30:12 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH] doc: asciidoc: remove custom header macro
-References: <20230323221523.52472-1-felipe.contreras@gmail.com>
-        <20230406035729.GA2092667@coredump.intra.peff.net>
-        <CAMP44s2u4tj7hUZHZ9H4qsJGp1a=Y=YUTBAxmSzftdfHX_HqwQ@mail.gmail.com>
-        <20230406071914.GA2143526@coredump.intra.peff.net>
-Date:   Fri, 07 Apr 2023 07:30:11 -0700
-In-Reply-To: <20230406071914.GA2143526@coredump.intra.peff.net> (Jeff King's
-        message of "Thu, 6 Apr 2023 03:19:14 -0400")
-Message-ID: <xmqqwn2nlq8c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        d=1e100.net; s=20210112; t=1680878479; x=1683470479;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ddZVnB8dMRGtqtr8qMd6Ee4EzPDfP0G9teoe0xI4JIo=;
+        b=Ne+waVydhpPrPhRHb5MfESe+W8cpT70+7OAgQhb6ofOOFTHAOqapdTC3PmseqRKUCq
+         4FebWJFKDxZu2uChJUZS0wav41i3mjhDUIvHKYr9+2HgMvtftSy9uCeNQ+OXebkMnB/E
+         thl86XzMD0mepHUwUzSvWkyyIoSy5qUE7w9vnNMiDS7Gcem4/l5s3a/zduI/330c4NWh
+         cjFwpu5sS/197bQHCzYvVVKvVg0QkE9Kw0r9OEtHsL0EcppnqFUYefZKX9ANx30uZCHv
+         qi3Bp1ZfI52VNjNY5CPQDI1Ut88Ojt1wyw7kYl4QW2Xzog3xEXytqYoTXAaJTQbjGXd0
+         x6zQ==
+X-Gm-Message-State: AAQBX9cdPTkGABixjG0eTwEy7GvXBeDZF4A5sjBiyTKVscLTOAUv6Y23
+        mqI74kVj/WiqsN/vwpi0QNW6rUI37YWBTWWdxEA=
+X-Google-Smtp-Source: AKy350app7i6sYhHrDAFrG/QH5ZTlkBDrOTp3KkswIhLz8bWwF+YR+Q5zJ8llhrJFTuJUYN7gX8N2/h54Umn2FOKU5E=
+X-Received: by 2002:a50:a457:0:b0:4fb:2593:844 with SMTP id
+ v23-20020a50a457000000b004fb25930844mr1502406edb.2.1680878479027; Fri, 07 Apr
+ 2023 07:41:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAPig+cSNmws2b7f7aRA2C56kvQYG3w_g+KhYdqhtmf+XhtAMhQ@mail.gmail.com>
+ <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr> <b8b3777b-ee6e-d90e-3365-5cb9c9d129fe@web.de>
+ <c4728fac-bea9-3794-077e-c978d99f46bf@web.de> <xmqq5yad7wv3.fsf@gitster.g>
+ <bc6e89c9-d886-c519-85b3-fbc3f4eb5528@web.de> <7327ac06-d5da-ec53-543e-78e7729e78bb@web.de>
+In-Reply-To: <7327ac06-d5da-ec53-543e-78e7729e78bb@web.de>
+From:   "D. Ben Knoble" <ben.knoble@gmail.com>
+Date:   Fri, 7 Apr 2023 10:41:07 -0400
+Message-ID: <CALnO6CDgs+of5KCRRwpmzEoHcqZ4udbHVhNrd63q4fFh_5TwHg@mail.gmail.com>
+Subject: Re: [PATCH] userdiff: support regexec(3) with multi-byte support
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Diomidis Spinellis <dds@aueb.gr>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        demerphq <demerphq@gmail.com>,
+        Mario Grgic <mario_grgic@hotmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Apr 6, 2023 at 4:19=E2=80=AFPM Ren=C3=A9 Scharfe <l.s.r@web.de> wro=
+te:
+>
+> Since 1819ad327b (grep: fix multibyte regex handling under macOS,
+> 2022-08-26) we use the system library for all regular expression
+> matching on macOS, not just for git grep.  It supports multi-byte
+> strings and rejects invalid multi-byte characters.
+>
+> This broke all built-in userdiff word regexes in UTF-8 locales because
+> they all include such invalid bytes in expressions that are intended to
+> match multi-byte characters without explicit support for that from the
+> regex engine.
+>
+> "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+" is added to all built-in word
+> regexes to match a single non-space or multi-byte character.  The \xNN
+> characters are invalid if interpreted as UTF-8 because they have their
+> high bit set, which indicates they are part of a multi-byte character,
+> but they are surrounded by single-byte characters.
+>
+> Replace that expression with "|[^[:space:]]" if the regex engine
+> supports multi-byte matching, as there is no need to have an explicit
+> range for multi-byte characters then.  Check for that capability at
+> runtime, because it depends on the locale and thus on environment
+> variables.  Construct the full replacement expression at build time
+> and just switch it in if necessary to avoid string manipulation and
+> allocations at runtime.
+>
+> Additionally the word regex for tex contains the expression
+> "[a-zA-Z0-9\x80-\xff]+" with a similarly invalid range.  The best
+> replacement with only valid characters that I can come up with is
+> "([a-zA-Z0-9]|[^\x01-\x7f])+".  Unlike the original it matches NUL
+> characters, though.  Assuming that tex files usually don't contain NUL
+> this should be acceptable.
+>
+> Reported-by: D. Ben Knoble <ben.knoble@gmail.com>
+> Reported-by: Eric Sunshine <sunshine@sunshineco.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 
-> At any rate, I don't think any of that needs to hold up this patch,
-> which is not touching the asciidoctor side at all (I only wondered while
-> reviewing it what the implications might be).
-
-Yeah, sounds good.  Wondering about and discussing possible
-implications is also a good thing, when done in a productive way.
-
-Queued.  Trickling in modernization a bit by bit to avoid hogging
-too much list bandwidth may also be a good thing to do.
-
-Thanks.
+I tested the patch locally on top of ae73b2c8f1 and it solved my
+problem. Seems like there's still some further discussion, though.
