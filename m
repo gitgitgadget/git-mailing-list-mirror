@@ -2,524 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40CB3C76196
-	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 07:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03A1FC76196
+	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 07:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231918AbjDGHZm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Apr 2023 03:25:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56270 "EHLO
+        id S231680AbjDGHtd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Apr 2023 03:49:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239888AbjDGHZU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2023 03:25:20 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19C2AA5FA
-        for <git@vger.kernel.org>; Fri,  7 Apr 2023 00:25:00 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id g5so1663641wrb.5
-        for <git@vger.kernel.org>; Fri, 07 Apr 2023 00:24:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680852292;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F22gc7CMK/IkrjH4+XLPMdpTh5abX8hRPQ02EpYvKw8=;
-        b=DItG7t18iazyRmpe0Frej0mNcWerYfAmM4SkHqm0JhYpabWD8bnVOzl8FiOQLavdT0
-         dNxi0DQBhjLZJN7C5NDw83Gu1pcWSEPwsbYSszUseV5/jTMgANQkuXKVUjuxalQh/Af1
-         JkGC+/lcLvpi+XOGshvLNb5Sr+7zLmzjP2+bQGPnLr1pyXJMCXHrkC7q89BB2OflcPjx
-         H6rtt+lb52wlESQ/W5O0UHjayGfVM6kvOfQDczavUciXuWD1eByAxBrp2Osw9wJXq/qY
-         QCAuWe3gqXq/8SNnh85hEA1SrjwkFlCKWmm+f36UvH12+zCwRYOfBUN3nLCm3taUO3db
-         I2rQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680852292;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=F22gc7CMK/IkrjH4+XLPMdpTh5abX8hRPQ02EpYvKw8=;
-        b=mZteavdBrF8KV8WB/Q9vAIfvxImuMolfvwnhcIwKYLAjmZkrEb6OKM1/LuDWVtRQ8j
-         Dm4O1G6Nhe3evrKdloOYDlOuxJ3wz51r53SHSpAdDJzfu4ApEYmTBqGagucxFB0U2oK2
-         mnq589xugYEnM42bFUY17fh2Ky/H88/Nu7qB6Mf0LidZyNKA4DaUsFxigX7LM6TWNpXh
-         FhFZunjPetq7MYcbL6AdrPdb0I2pv7llcMGV+T1aBw+ChwPO7Nmk+rgA2+0EIYbHsRGd
-         MLryH7qrR6zSOhter0OUxZZxh2mUchsupMx61BOsAK7z8+weqR78atAmsQTj/igSnHno
-         yT+A==
-X-Gm-Message-State: AAQBX9fHJsUguD6KwvdyMxPoZuavx6xoktz1vEdm2PfpC321L3Mj/4DH
-        xe59EfDHHdmimk3aMA1rsyOgJD2tiuefew==
-X-Google-Smtp-Source: AKy350Y1PDW0UTauQ7DTNQdNFkyOc7YQ5ESlckBFfTGz6EQOUm5GWYSsFlfA8tmT4g6hS4rMIL9nSw==
-X-Received: by 2002:a5d:4530:0:b0:2ef:45d2:6ac2 with SMTP id j16-20020a5d4530000000b002ef45d26ac2mr617859wra.27.1680852292192;
-        Fri, 07 Apr 2023 00:24:52 -0700 (PDT)
-Received: from christian-Precision-5550.lan ([2001:861:3f04:7ca0:90e:3fb7:fec2:981])
-        by smtp.gmail.com with ESMTPSA id f7-20020a5d6647000000b002da1261aa44sm3782761wrw.48.2023.04.07.00.24.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 00:24:51 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        John Cai <johncai86@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 13/14] replay: add different modes
-Date:   Fri,  7 Apr 2023 09:24:14 +0200
-Message-Id: <20230407072415.1360068-14-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.40.0.228.gb2eb5bb98e
-In-Reply-To: <20230407072415.1360068-1-christian.couder@gmail.com>
-References: <20230407072415.1360068-1-christian.couder@gmail.com>
+        with ESMTP id S230194AbjDGHtb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2023 03:49:31 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B45955FDB
+        for <git@vger.kernel.org>; Fri,  7 Apr 2023 00:49:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1680853752; i=l.s.r@web.de;
+        bh=86J3+U7OdJF7fqc2fUs9M4lulY4sBJvOkhwjpmpnsMo=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=ni7LWHkgAMgCsyE/Z0tN4yUGgzVRVGG82caFBa5AXwsw4BG573puN1hvMHiHmBYW3
+         8TntXyB2vO+YPq1UV5vwbCJw2JqFM27ohXFZXMa2j/39a0G0kTKIc0N0Wk7N9SbJJ2
+         D/t9q5bTaxv+35TITWVmZMrjsvGp4bl77XFTDPw/itZWjgzYD+L9lshzujEJx7PeIV
+         aEzHJNHcN9/RtA/woFqMXTmA3n98R6Z+uxvptap8Ch+Pb1PR6/H4LmIhJClWUaLWjR
+         WOacNMqJQ1AXehcMV0qJKR++UDVP5Et16N1LD0BbF2om4InleviSfRxOmtTKxHPVo8
+         KKv80z9ynkSlw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.158.21]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M4sXj-1pilhQ484F-001nuj; Fri, 07
+ Apr 2023 09:49:12 +0200
+Message-ID: <39eb2a9f-83e0-449e-1157-152c43d49b48@web.de>
+Date:   Fri, 7 Apr 2023 09:49:10 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.1
+Subject: Re: [PATCH] userdiff: support regexec(3) with multi-byte support
+Content-Language: en-US
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Git List <git@vger.kernel.org>, Diomidis Spinellis <dds@aueb.gr>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        demerphq <demerphq@gmail.com>,
+        Mario Grgic <mario_grgic@hotmail.com>,
+        "D. Ben Knoble" <ben.knoble@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <CAPig+cSNmws2b7f7aRA2C56kvQYG3w_g+KhYdqhtmf+XhtAMhQ@mail.gmail.com>
+ <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr>
+ <b8b3777b-ee6e-d90e-3365-5cb9c9d129fe@web.de>
+ <c4728fac-bea9-3794-077e-c978d99f46bf@web.de> <xmqq5yad7wv3.fsf@gitster.g>
+ <bc6e89c9-d886-c519-85b3-fbc3f4eb5528@web.de>
+ <7327ac06-d5da-ec53-543e-78e7729e78bb@web.de>
+ <7fe0aa93-a764-66b0-5015-2f5fbd3901ab@kdbg.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <7fe0aa93-a764-66b0-5015-2f5fbd3901ab@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:4N8cRyWy+cm5SWqV4qdmQol8ayN8zDj8MOJF4IEJbUt4b5y77zd
+ TypPeVVKirGLfpVq3aEqkAh1754dhW9X6mk/CoCjG0B94GxNo/CmT0BAgOmYQ+rbpoEkewt
+ 1Xyu6AADRl4OdxV62oVEjrHqzOVCs9yU+sT08plq+4O1tViwL20ZN5iZ/K/NLQRaXXQEH1c
+ GuiQa4a7I7Pr3rbJNJ5Uw==
+UI-OutboundReport: notjunk:1;M01:P0:Leg7TXsTMd8=;Xmt/PkDlN/6mrJJ7Ks7ZocR6LZl
+ 671jSWbBi9OERDyTLfowUkXwKtxrEJ5kes5l9Y8o+Myv46Timr50XModoYH9tM0CgkNZHpfQJ
+ /Znk5hOolxI+7ozULRYG2Mq8lVE77URYiCw6FD9agVT3mubDysxPos+SvptlLAZu5W2Dv996+
+ 0WYJF+5NavDHrqcZTW2atQ3yyRqFKL7rWd6dn76UiwmrYnGsh2kVPXycpZu2yToGTKspYbMol
+ SNSOX8oxRn8/nDqEYc+Au3jKtjMJZWyd+NNkeXM05DmmbtWg1mIBI6gROO47QRVCplBoDMOjq
+ qGdEub4jpTcsj3cnyC89NOC6qNTdKPnc7I/TF1D0lHJ3Ez3bhph/fD/kRp+UENyzS3KWqQQZy
+ cL2CfdbEmN6ASHHHZaeEYCenNC4vhcGT4FX1kUoi0uznlocLpeP1pAp0/vh6kwjaL6iakAu73
+ jri10M2dfIPIQzW/oTtOeg6sB+i9JFD2x9pEYBQox8P/fjDgpDRzG2ZGTtEyh0a3I/HmR3Jy+
+ nO6+99Wo+NsMlBtL8rM2FIQL/WofF4Hezy7kc/0Lah/cONZ4Qk6SdO8Sn7QPjIUhdPiLtF1Uc
+ gPtpp+a75h2rlEz3v2Sa5YnFeEgnC6CYodc/4j7LD1OpjBgMWp46TEvPrqrYahC21I5QQ40jr
+ onEGAWricDCnb8lEd/U8ndpjCkik4L8yzP/FxodQBkcaspto4/VTL2RWmcvJVBRfg5UTH6mBh
+ woHggha3l811qHvgLfec9jRqNM+U9oKyEiIqSRu27QAeO/6XdvxF+b+vwQawrcXRwmeQSfERp
+ QUujonsh+aT9I3ZomnS7I+2COxGHg6vftpwGLHdG+oRi67LzZplLGwTeGv5iWa8PbQEAwzCZS
+ q/i9ZHVg1OpjZy+TOtieGNMAsow5URVi8ez3lXmyXj261oivgpr/RvP7XKGjIYlO1XJ+cmaj3
+ btVkRg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Am 07.04.23 um 00:35 schrieb Johannes Sixt:
+> Am 06.04.23 um 22:19 schrieb Ren=C3=A9 Scharfe:
+>> Since 1819ad327b (grep: fix multibyte regex handling under macOS,
+>> 2022-08-26) we use the system library for all regular expression
+>> matching on macOS, not just for git grep.  It supports multi-byte
+>> strings and rejects invalid multi-byte characters.
+>>
+>> This broke all built-in userdiff word regexes in UTF-8 locales because
+>> they all include such invalid bytes in expressions that are intended to
+>> match multi-byte characters without explicit support for that from the
+>> regex engine.
+>>
+>> "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+" is added to all built-in word
+>> regexes to match a single non-space or multi-byte character.  The \xNN
+>> characters are invalid if interpreted as UTF-8 because they have their
+>> high bit set, which indicates they are part of a multi-byte character,
+>> but they are surrounded by single-byte characters.
+>
+> Perhpas the expression should be "[\xc4\x80-\xf7\xbf\xbf\xbf]+", i.e.,
+> sequences of code points U+0080 to U+10FFFF?
 
-There is already a 'rebase' mode with `--onto`. Let's add an 'advance' or
-'cherry-pick' mode with `--advance`. This new mode will make the target
-branch advance as we replay commits onto it.
+regcomp(3) on macOS doesn't like it:
 
-While at it, let's also add a `--contained` that can be used along with
-`--onto` to rebase all the branches contained in the <revision-range>
-argument.
+fatal: invalid regular expression: [a-zA-Z_][a-zA-Z0-9_]*|[0-9][0-9.]*([Ee=
+][-+]?[0-9]+)?[fFlLuU]*|0[xXbB][0-9a-fA-F]+[lLuU]*|\.[0-9][0-9]*([Ee][-+]?=
+[0-9]+)?[fFlL]?|[-+*/<>%&^|=3D!]=3D|--|\+\+|<<=3D?|>>=3D?|&&|\|\||::|->\*?=
+|\.\*|<=3D>|[^[:space:]]|[=C4=80-????]
 
-Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-replay.txt |  58 +++++++++--
- builtin/replay.c             | 185 +++++++++++++++++++++++++++++------
- t/t3650-replay-basics.sh     |  45 +++++++++
- 3 files changed, 247 insertions(+), 41 deletions(-)
+Looks like it objects to U+10FFFF here; "[\xc4\x80-\xf3\xa0\x80\x80]" is
+accepted for example.
 
-diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
-index ce2cafc42e..d714c72188 100644
---- a/Documentation/git-replay.txt
-+++ b/Documentation/git-replay.txt
-@@ -9,7 +9,7 @@ git-replay - Replay commits on a different base, without touching working tree
- SYNOPSIS
- --------
- [verse]
--'git replay' [--onto <newbase>] <revision-range>...
-+'git replay' [--contained] [--onto <newbase> | --advance <branch>] <revision-range>...
- 
- DESCRIPTION
- -----------
-@@ -20,11 +20,12 @@ references.  However, the output of this command is meant to be used
- as input to `git update-ref --stdin`, which would update the relevant
- branches.
- 
--When the `--onto <newbase>` option is not passed, the commits will be
--replayed onto a base guessed from the `<revision-range>`.  For example
--if the `<revision-range>` is `origin/main..mybranch` then `mybranch`
--was probably based on an old version of `origin/main`, so we will
--replay it on the newest version of that branch.
-+When neither the `--onto <newbase>` option nor the
-+`--advance <branch>` option are passed, the commits will be replayed
-+onto a base guessed from the `<revision-range>`.  For example if the
-+`<revision-range>` is `origin/main..mybranch` then `mybranch` was
-+probably based on an old version of `origin/main`, so we will replay
-+it on the newest version of that branch.
- 
- OPTIONS
- -------
-@@ -33,9 +34,17 @@ OPTIONS
- 	Starting point at which to create the new commits.  May be any
- 	valid commit, and not just an existing branch name.
- +
--The update-ref commands in the output will update the branch(es)
--in the revision range to point at the new commits (in other
--words, this mimics a rebase operation).
-+When `--onto` is specified, the update-ref command(s) in the output will
-+update the branch(es) in the revision range to point at the new
-+commits (in other words, this mimics a rebase operation).
-+
-+--advance <branch>::
-+	Starting point at which to create the new commits; must be a
-+	branch name.
-++
-+When `--advance` is specified, the update-ref command(s) in the output
-+will update the branch passed as an argument to `--advance` to point at
-+the new commits (in other words, this mimics a cherry-pick operation).
- 
- <revision-range>::
- 	Range of commits to replay; see "Specifying Ranges" in
-@@ -51,7 +60,10 @@ input to `git update-ref --stdin`.  It is basically of the form:
- 	update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
- 	update refs/heads/branch3 ${NEW_branch3_HASH} ${OLD_branch3_HASH}
- 
--where the number of refs updated depend on the arguments passed.
-+where the number of refs updated depend on the arguments passed.  When
-+using `--advance`, the number of refs updated is always one, but for
-+`--onto`, it can be one or more (rebasing multiple branches
-+simultaneously is supported).
- 
- EXIT STATUS
- -----------
-@@ -71,6 +83,32 @@ $ git replay --onto target origin/main..mybranch
- update refs/heads/mybranch ${NEW_mybranch_HASH} ${OLD_mybranch_HASH}
- ------------
- 
-+To cherry-pick the commits from mybranch onto target:
-+
-+------------
-+$ git replay --advance target origin/main..mybranch
-+update refs/heads/target ${NEW_target_HASH} ${OLD_target_HASH}
-+------------
-+
-+Note that the first two examples replay the exact same commits and on
-+top of the exact same new base, they only differ in that the first
-+provides instructions to make mybranch point at the new commits and
-+the second provides instructions to make target point at them.
-+
-+What if you have a stack of branches, one depending upon another, and
-+you'd really like to rebase the whole set?
-+
-+------------
-+$ git replay --contained --onto origin/main origin/main..tipbranch
-+update refs/heads/branch1 ${NEW_branch1_HASH} ${OLD_branch1_HASH}
-+update refs/heads/branch2 ${NEW_branch2_HASH} ${OLD_branch2_HASH}
-+update refs/heads/tipbranch ${NEW_tipbranch_HASH} ${OLD_tipbranch_HASH}
-+------------
-+
-+In contrast, trying to do this with rebase would require 3 separate
-+rebases, eacho of which involves a different <ONTO> and <UPSTREAM> and
-+forces you to first check out each branch in turn.
-+
- When calling `git replay`, one does not need to specify a range of
- commits to replay using the syntax `A..B`; any range expression will
- do:
-diff --git a/builtin/replay.c b/builtin/replay.c
-index af948af73c..63b3ad518e 100644
---- a/builtin/replay.c
-+++ b/builtin/replay.c
-@@ -12,6 +12,7 @@
- #include "parse-options.h"
- #include "refs.h"
- #include "revision.h"
-+#include "strmap.h"
- 
- static const char *short_commit_name(struct commit *commit)
- {
-@@ -75,10 +76,24 @@ static struct commit *create_commit(struct tree *tree,
- 	return (struct commit *)obj;
- }
- 
--static struct commit *guess_new_base(struct rev_cmdline_info *info)
-+struct ref_info {
-+	struct commit *onto;
-+	struct strset positive_refs;
-+	struct strset negative_refs;
-+	int positive_refexprs;
-+	int negative_refexprs;
-+};
-+
-+static void get_ref_information(struct rev_cmdline_info *cmd_info,
-+				struct ref_info *ref_info)
- {
--	struct commit *new_base = NULL;
--	int i, bottom_commits = 0;
-+	int i;
-+
-+	ref_info->onto = NULL;
-+	strset_init(&ref_info->positive_refs);
-+	strset_init(&ref_info->negative_refs);
-+	ref_info->positive_refexprs = 0;
-+	ref_info->negative_refexprs = 0;
- 
- 	/*
- 	 * When the user specifies e.g.
-@@ -95,32 +110,110 @@ static struct commit *guess_new_base(struct rev_cmdline_info *info)
- 	 * the second because they'd likely just be replaying commits on top
- 	 * of the same commit and not making any difference.
- 	 */
--	for (i = 0; i < info->nr; i++) {
--		struct rev_cmdline_entry *e = info->rev + i;
-+	for (i = 0; i < cmd_info->nr; i++) {
-+		struct rev_cmdline_entry *e = cmd_info->rev + i;
- 		struct object_id oid;
-+		const char *refexpr = e->name;
- 		char *fullname = NULL;
-+		int can_uniquely_dwim = 1;
-+
-+		if (*refexpr == '^')
-+			refexpr++;
-+		if (dwim_ref(refexpr, strlen(refexpr), &oid, &fullname, 0) != 1)
-+			can_uniquely_dwim = 0;
-+
-+		if (e->flags & BOTTOM) {
-+			if (can_uniquely_dwim)
-+				strset_add(&ref_info->negative_refs, fullname);
-+			if (!ref_info->negative_refexprs)
-+				ref_info->onto = lookup_commit_reference_gently(the_repository,
-+										&e->item->oid, 1);
-+			ref_info->negative_refexprs++;
-+		} else {
-+			if (can_uniquely_dwim)
-+				strset_add(&ref_info->positive_refs, fullname);
-+			ref_info->positive_refexprs++;
-+		}
- 
--		if (!(e->flags & BOTTOM))
--			continue;
-+		free(fullname);
-+	}
-+}
- 
-+static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
-+				  const char *onto_name,
-+				  const char **advance_name,
-+				  struct commit **onto,
-+				  struct strset **update_refs)
-+{
-+	struct ref_info rinfo;
-+
-+	get_ref_information(cmd_info, &rinfo);
-+	if (!rinfo.positive_refexprs)
-+		die(_("need some commits to replay"));
-+	if (onto_name && *advance_name)
-+		die(_("--onto and --advance are incompatible"));
-+	else if (onto_name) {
-+		*onto = peel_committish(onto_name);
-+		if (rinfo.positive_refexprs <
-+		    strset_get_size(&rinfo.positive_refs))
-+			die(_("all positive revisions given must be references"));
-+	} else if (*advance_name) {
-+		struct object_id oid;
-+		char *fullname = NULL;
-+
-+		*onto = peel_committish(*advance_name);
-+		if (dwim_ref(*advance_name, strlen(*advance_name),
-+			     &oid, &fullname, 0) == 1) {
-+			*advance_name = fullname;
-+		} else {
-+			die(_("argument to --advance must be a reference"));
-+		}
-+		if (rinfo.positive_refexprs > 1)
-+			die(_("cannot advance target with multiple source branches because ordering would be ill-defined"));
-+	} else {
-+		int positive_refs_complete = (
-+			rinfo.positive_refexprs ==
-+			strset_get_size(&rinfo.positive_refs));
-+		int negative_refs_complete = (
-+			rinfo.negative_refexprs ==
-+			strset_get_size(&rinfo.negative_refs));
- 		/*
--		 * We need a unique base commit to know where to replay; error
--		 * out if not unique.
--		 *
--		 * Also, we usually don't want to replay commits on the same
--		 * base they started on, so only accept this as the base if
--		 * it uniquely names some ref.
-+		 * We need either positive_refs_complete or
-+		 * negative_refs_complete, but not both.
- 		 */
--		if (bottom_commits++ ||
--		    dwim_ref(e->name, strlen(e->name), &oid, &fullname, 0) != 1)
--			die(_("cannot determine where to replay commits; please specify --onto"));
--
--		free(fullname);
--		new_base = lookup_commit_reference_gently(the_repository,
--							  &e->item->oid, 1);
-+		if (rinfo.negative_refexprs > 0 &&
-+		    positive_refs_complete == negative_refs_complete)
-+			die(_("cannot implicitly determine whether this is an --advance or --onto operation"));
-+		if (negative_refs_complete) {
-+			struct hashmap_iter iter;
-+			struct strmap_entry *entry;
-+
-+			if (rinfo.negative_refexprs == 0)
-+				die(_("all positive revisions given must be references"));
-+			else if (rinfo.negative_refexprs > 1)
-+				die(_("cannot implicitly determine whether this is an --advance or --onto operation"));
-+			else if (rinfo.positive_refexprs > 1)
-+				die(_("cannot advance target with multiple source branches because ordering would be ill-defined"));
-+
-+			/* Only one entry, but we have to loop to get it */
-+			strset_for_each_entry(&rinfo.negative_refs,
-+					      &iter, entry) {
-+				*advance_name = entry->key;
-+			}
-+		} else { /* positive_refs_complete */
-+			if (rinfo.negative_refexprs > 1)
-+				die(_("cannot implicitly determine correct base for --onto"));
-+			if (rinfo.negative_refexprs == 1)
-+				*onto = rinfo.onto;
-+		}
- 	}
--
--	return new_base;
-+	if (!*advance_name) {
-+		*update_refs = xcalloc(1, sizeof(**update_refs));
-+		**update_refs = rinfo.positive_refs;
-+		memset(&rinfo.positive_refs, 0, sizeof(**update_refs));
-+	}
-+	strset_clear(&rinfo.negative_refs);
-+	strset_clear(&rinfo.positive_refs);
- }
- 
- static struct commit *pick_regular_commit(struct commit *pickme,
-@@ -155,29 +248,41 @@ static struct commit *pick_regular_commit(struct commit *pickme,
- 
- int cmd_replay(int argc, const char **argv, const char *prefix)
- {
--	struct commit *onto;
-+	const char *advance_name = NULL;
-+	struct commit *onto = NULL;
- 	const char *onto_name = NULL;
--	struct commit *last_commit = NULL;
-+	int contained = 0;
-+
- 	struct rev_info revs;
-+	struct commit *last_commit = NULL;
- 	struct commit *commit;
- 	struct merge_options merge_opt;
- 	struct merge_result result;
-+	struct strset *update_refs = NULL;
- 	int ret = 0;
- 
- 	const char * const replay_usage[] = {
--		N_("git replay [--onto <newbase>] <revision-range>..."),
-+		N_("git replay [--contained] [--onto <newbase> | --advance <branch>] <revision-range>..."),
- 		NULL
- 	};
- 	struct option replay_options[] = {
-+		OPT_STRING(0, "advance", &advance_name,
-+			   N_("branch"),
-+			   N_("make replay advance given branch")),
- 		OPT_STRING(0, "onto", &onto_name,
- 			   N_("revision"),
- 			   N_("replay onto given commit")),
-+		OPT_BOOL(0, "contained", &contained,
-+			 N_("advance all branches contained in revision-range")),
- 		OPT_END()
- 	};
- 
- 	argc = parse_options(argc, argv, prefix, replay_options, replay_usage,
- 			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
- 
-+	if (advance_name && contained)
-+		die(_("options '%s' and '%s' cannot be used together"),
-+		    "--advance", "--contained");
- 
- 	repo_init_revisions(the_repository, &revs, prefix);
- 
-@@ -193,10 +298,11 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	revs.topo_order = 1;
- 	revs.simplify_history = 0;
- 
--	if (onto_name)
--		onto = peel_committish(onto_name);
--	else
--		onto = guess_new_base(&revs.cmdline);
-+	determine_replay_mode(&revs.cmdline, onto_name, &advance_name,
-+			      &onto, &update_refs);
-+
-+	if (!onto) /* FIXME: Should handle replaying down to root commit */
-+		die("Replaying down to root commit is not supported yet!");
- 
- 	if (prepare_revision_walk(&revs) < 0) {
- 		ret = error(_("error preparing revisions"));
-@@ -206,6 +312,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	init_merge_options(&merge_opt, the_repository);
- 	memset(&result, 0, sizeof(result));
- 	merge_opt.show_rename_progress = 0;
-+
- 	result.tree = get_commit_tree(onto);
- 	last_commit = onto;
- 	while ((commit = get_revision(&revs))) {
-@@ -243,12 +350,16 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 			    oid_to_hex(&commit->object.oid));
- 		}
- 
-+		/* Update any necessary branches */
-+		if (advance_name)
-+			continue;
- 		decoration = get_name_decoration(&commit->object);
- 		if (!decoration)
- 			continue;
--
- 		while (decoration) {
--			if (decoration->type == DECORATION_REF_LOCAL) {
-+			if (decoration->type == DECORATION_REF_LOCAL &&
-+			    (contained || strset_contains(update_refs,
-+							  decoration->name))) {
- 				printf("update %s %s %s\n",
- 				       decoration->name,
- 				       oid_to_hex(&last_commit->object.oid),
-@@ -258,11 +369,23 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
-+	/* In --advance mode, advance the target ref */
-+	if (result.clean == 1 && advance_name) {
-+		printf("update %s %s %s\n",
-+		       advance_name,
-+		       oid_to_hex(&last_commit->object.oid),
-+		       oid_to_hex(&onto->object.oid));
-+	}
-+
- 	/* Cleanup */
- 	merge_finalize(&merge_opt, &result);
- 	ret = result.clean;
- 
- cleanup:
-+	if (update_refs) {
-+		strset_clear(update_refs);
-+		free(update_refs);
-+	}
- 	release_revisions(&revs);
- 
- 	/* Return */
-diff --git a/t/t3650-replay-basics.sh b/t/t3650-replay-basics.sh
-index f55b71763a..976032ad18 100755
---- a/t/t3650-replay-basics.sh
-+++ b/t/t3650-replay-basics.sh
-@@ -60,4 +60,49 @@ test_expect_success 'using replay to rebase two branches, one on top of other' '
- 	test_cmp expect result
- '
- 
-+test_expect_success 'using replay to perform basic cherry-pick' '
-+	# The differences between this test and the last one are:
-+	#   --advance vs --onto
-+	# 2nd field of result is refs/heads/main vs. refs/heads/topic2
-+	# 4th field of result is hash for main instead of hash for topic2
-+
-+	git replay --advance main topic1..topic2 >result &&
-+
-+	test_line_count = 1 result &&
-+
-+	git log --format=%s $(cut -f 3 -d " " result) >actual &&
-+	test_write_lines E D M L B A >expect &&
-+	test_cmp expect actual &&
-+
-+	printf "update refs/heads/main " >expect &&
-+	printf "%s " $(cut -f 3 -d " " result) >>expect &&
-+	git rev-parse main >>expect &&
-+
-+	test_cmp expect result
-+'
-+
-+test_expect_success 'using replay to also rebase a contained branch' '
-+	git replay --contained --onto main main..topic3 >result &&
-+
-+	test_line_count = 2 result &&
-+	cut -f 3 -d " " result >new-branch-tips &&
-+
-+	git log --format=%s $(head -n 1 new-branch-tips) >actual &&
-+	test_write_lines F C M L B A >expect &&
-+	test_cmp expect actual &&
-+
-+	git log --format=%s $(tail -n 1 new-branch-tips) >actual &&
-+	test_write_lines H G F C M L B A >expect &&
-+	test_cmp expect actual &&
-+
-+	printf "update refs/heads/topic1 " >expect &&
-+	printf "%s " $(head -n 1 new-branch-tips) >>expect &&
-+	git rev-parse topic1 >>expect &&
-+	printf "update refs/heads/topic3 " >>expect &&
-+	printf "%s " $(tail -n 1 new-branch-tips) >>expect &&
-+	git rev-parse topic3 >>expect &&
-+
-+	test_cmp expect result
-+'
-+
- test_done
--- 
-2.40.0.228.gb2eb5bb98e
+\xc4\x80 is U+0100, by the way; U+0080 would be \xc2\x80.  And
+regcomp(3) doesn't like that either ("[\xc2\x80-\xf3\xa0\x80\x80]"):
 
+fatal: invalid regular expression: [a-zA-Z_][a-zA-Z0-9_]*|[0-9][0-9.]*([Ee=
+][-+]?[0-9]+)?[fFlLuU]*|0[xXbB][0-9a-fA-F]+[lLuU]*|\.[0-9][0-9]*([Ee][-+]?=
+[0-9]+)?[fFlL]?|[-+*/<>%&^|=3D!]=3D|--|\+\+|<<=3D?|>>=3D?|&&|\|\||::|->\*?=
+|\.\*|<=3D>|[^[:space:]]|[<U+0080>-=F3=A0=80=80]
+
+>> Replace that expression with "|[^[:space:]]" if the regex engine
+>> supports multi-byte matching, as there is no need to have an explicit
+>> range for multi-byte characters then.
+>
+> This is not equivalent. The original treated a sequence of non-ASCII
+> characters as a word. The new version treats each individual non-space
+> character (both ASCII and non-ASCII) as a word.
+
+I assume you mean "The original treated [a single non-space as well as]
+a sequence of non-ASCII characters [making up a single multi-byte
+character] as a word.".  That works as intended by 664d44ee7f (userdiff:
+simplify word-diff safeguard, 2011-01-11).
+
+The new one doesn't match multi-byte whitespace anymore.  What other
+differences do they have?
+
+Ren=C3=A9
