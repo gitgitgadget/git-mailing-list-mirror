@@ -2,132 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0926C77B6E
-	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 06:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0F82C76196
+	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 06:12:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233137AbjDGGIF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Apr 2023 02:08:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41008 "EHLO
+        id S233763AbjDGGMq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Apr 2023 02:12:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231508AbjDGGID (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2023 02:08:03 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FED086B8
-        for <git@vger.kernel.org>; Thu,  6 Apr 2023 23:08:02 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id j11so53332315lfg.13
-        for <git@vger.kernel.org>; Thu, 06 Apr 2023 23:08:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680847680; x=1683439680;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+I3ipYfdveAhZ3Tkv1ry9c0gjBj0dwFueu8wSPUl8gw=;
-        b=VE9xzxntUgaDIypbyfEPiAhu+h4paYspl8p9x0gbL91hg/1CD3L5MuAnsgci1xB2fc
-         8xXhpjSUQEPamqqjHht4FprfSrMVOxnNeY3zBEXQG5aFCLryyc/OeI3DEr7V1dFWSZgR
-         ul6nwGkNX+JQSxsbFBM4+Q+uMIqQzHHS/ZCakLJKg2Fqrs3ttA9gMwL8sKo0B/Eelfrt
-         4zjRETsl3S40UnfjWwXJat+sT3hueFXDEvc7/COAUO5m8499nQHgNSZuw1S88CcHZ8kF
-         NnTNW/2Cz+qh6QFGw9cC9btgH/0esZ30z2k5rvKiUuruVYLWOPEhDN/yp8layE7Ra+vE
-         o/IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680847680; x=1683439680;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+I3ipYfdveAhZ3Tkv1ry9c0gjBj0dwFueu8wSPUl8gw=;
-        b=1cOJO47gTlV1RAmsvGvTehx5LYpDcWBjW4xtb8vp/AptI6JCFIKq+UHM2dJ8Hp0c5i
-         D8kPIJGy4Wnmc895CjOD0leLaaNsz4XCUG6/OePUEy6HMILtjZJjOd29L+1Pmj+0zcUt
-         IfKHaPzxxwWNV3Nu1eF1IQbbjyAHdExs7jZrSSCzmTbHKnp6u+VtGmVls01IzZ12S2Nz
-         QyQS/HdEdlRsrYRsk088SP34ATkWTWfEaP9xpCmyaPOuvZXKj5KaUFPJMffRBACikkSf
-         XbH/sA526ktCp57q6ngQiQQ/sYhyusKNZzyMU0HswNkAeiu3DXmiQVmDjhtr4UM3Ev75
-         0Q0Q==
-X-Gm-Message-State: AAQBX9dWZvUIe0ku13DhxEFpK5E0zKZKd5upS0Gs5urJ/konpZPmVul1
-        lC2VeWAS96h2cZKhTtKeceiMhvV6B4H3ViLw97k=
-X-Google-Smtp-Source: AKy350bGFrO2hssZHIPdZHwf8f18WspfEIN96PPoLkGGnNQVxOhTCPihC+6O66xDwZH+7Gwj/ZSk+2n95y4hN17vrGo=
-X-Received: by 2002:ac2:4569:0:b0:4e9:22ff:948d with SMTP id
- k9-20020ac24569000000b004e922ff948dmr390595lfm.7.1680847680409; Thu, 06 Apr
- 2023 23:08:00 -0700 (PDT)
+        with ESMTP id S233395AbjDGGMo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2023 02:12:44 -0400
+Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C71CA271
+        for <git@vger.kernel.org>; Thu,  6 Apr 2023 23:12:31 -0700 (PDT)
+Received: from [10.93.18.190] (unknown [213.88.146.90])
+        by dd36226.kasserver.com (Postfix) with ESMTPSA id ACA873C0BAC;
+        Fri,  7 Apr 2023 08:12:27 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
+        s=kas202302241129; t=1680847947;
+        bh=kbAT1nrc0rnLZRxX6bggX2KKxVYl2hfL8T/AoVucQ7o=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=ZkkIe4ApdMY0lPH8lTFGm+vX8Zn+4Rxt7koW/en14AN/oxxewXRiSOG0X+VloCxLa
+         Qg4d6NY4w/HifLgautZJkQFVx1V4xlRht1CTpes6Q8aekLHxmSEQarIfGLyqD0hSch
+         6x1OKK9gws+aOnylaW0jZPsRBSx5qpmlElZClOlhjNQtZN/CfaTZuJyCBRgLEhem1O
+         1B6wtqPwsknIS9j+nEJm3Mn86mfd2bT3m8rg8UyikPAgzvM8KTPbAUmjVv1yzwXNtF
+         kbq7hoi5wVCQmktfou9RZpveB1K7qxNH1WEOk+JGdL0t9J967roPNaFc+2q/eoKljB
+         jH50NDZbH6egw==
+Message-ID: <dda64e68-1390-0b4d-bb93-65f745ab1300@haller-berlin.de>
+Date:   Fri, 7 Apr 2023 08:12:26 +0200
 MIME-Version: 1.0
-References: <47afc6a6c8757032d9d69a2f9aaaeb427c5a003f.1680571352.git.gitgitgadget@gmail.com>
- <20230405172840.730076-1-calvinwan@google.com>
-In-Reply-To: <20230405172840.730076-1-calvinwan@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 6 Apr 2023 23:07:48 -0700
-Message-ID: <CABPp-BEurqhk32hC041kcXiVNpVXx3YzJMyzDh4E=ctBLemz8A@mail.gmail.com>
-Subject: Re: [PATCH v2 21/24] strbuf: move forward declarations to beginning
- of file
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.1
+Subject: Re: Possible bug in git-rebase man page
+Content-Language: de-DE, en-US
+To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc:     johannes.schindelin@gmx.de
+References: <db535468-c991-df18-61bd-ec312fdb5ca0@haller-berlin.de>
+ <51aca4bd-0f2b-0689-4b51-260349cc4151@gmail.com>
+ <f3e522f6-294d-4c08-b261-34d8e5b03b46@haller-berlin.de>
+ <7e99ff9b-99b7-1ea9-4131-43f507780284@gmail.com>
+From:   Stefan Haller <lists@haller-berlin.de>
+In-Reply-To: <7e99ff9b-99b7-1ea9-4131-43f507780284@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spamd-Bar: --
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 5, 2023 at 10:28=E2=80=AFAM Calvin Wan <calvinwan@google.com> w=
-rote:
->
->  Instead of moving these declarations, can we move
->  strbuf_repo_add_unique_abbrev() and strbuf_add_unique_abbrev() to
->  object-name.[ch]? These functions are related to both strbuf and
->  object-name, but object-name should be a higher level API than strbuf
->  so it seems more natural to belong in there.
+On 06.04.23 14:07, Phillip Wood wrote:
+> Hi Stefan
+> 
+> On 06/04/2023 11:48, Stefan Haller wrote:
+>> On 06.04.23 11:49, Phillip Wood wrote:
+>>> Hi Stefan
+>>>
+>>> On 05/04/2023 18:36, Stefan Haller wrote:
+>>>> The git-rebase documentation has an example for a git-rebase-todo file
+>>>> when --rebase-merges is used; one of the lines in that file is
+>>>>
+>>>>     reset refactor-button # Use the Button class for all buttons
+>>>>
+>>>>   From reading the code that parses the file, this doesn't seem to be a
+>>>> valid line; as far as I can see, comments are not supported for
+>>>> reset or
+>>>> label. The label is the entire rest of the line after the command.
+>>>
+>>> You're right that comments are not supported for labels, but for the
+>>> reset command do_reset() ignores everything after the label so it does
+>>> effectively support comments.
+>>
+>> I don't follow; do_reset() simply uses whatever is stored in
+>> item->arg_len, and this is set to go until the end of the line for
+>> "label" and "reset" in parse_insn_line().
+> 
+> But it splits in line in do_reset()
+> 
+>         /* Determine the length of the label */
+>         for (i = 0; i < len; i++)
+>             if (isspace(name[i]))
+>                 break;
+>         len = i;
+> 
+>         commit = lookup_label(r, name, len, &ref_name);
 
-I like that suggestion; that would be better overall.  However, should
-it be in this (already lengthy) series?  I'm guessing you likely
-already have such a change in the series you're including, and if I
-were to add it to mine (and risk doing it slightly differently), that
-might increase the conflicts you need to deal with.  Would it perhaps
-be easier to keep this small change for this series, or even drop this
-particular patch, and then let you address this improved direction
-with your strbuf work?
+Ah, I missed that, thanks. But it does this only after special-casing
+the "[new root]" label, which does contain a space and needs to go to
+the end of the line. This is weird.
 
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> >  strbuf.h | 9 ++-------
-> >  1 file changed, 2 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/strbuf.h b/strbuf.h
-> > index 3dfeadb44c2..547696fb233 100644
-> > --- a/strbuf.h
-> > +++ b/strbuf.h
-> > @@ -1,6 +1,8 @@
-> >  #ifndef STRBUF_H
-> >  #define STRBUF_H
-> >
-> > +struct object_id;
-> > +struct repository;
-> >  struct string_list;
-> >
-> >  /**
-> > @@ -72,12 +74,6 @@ struct strbuf {
-> >  extern char strbuf_slopbuf[];
-> >  #define STRBUF_INIT  { .buf =3D strbuf_slopbuf }
-> >
-> > -/*
-> > - * Predeclare this here, since cache.h includes this file before it de=
-fines the
-> > - * struct.
-> > - */
-> > -struct object_id;
-> > -
-> >  /**
-> >   * Life Cycle Functions
-> >   * --------------------
-> > @@ -634,7 +630,6 @@ void strbuf_list_free(struct strbuf **list);
-> >   * Add the abbreviation, as generated by repo_find_unique_abbrev(), of=
- `sha1` to
-> >   * the strbuf `sb`.
-> >   */
-> > -struct repository;
-> >  void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct repositor=
-y *repo,
-> >                                  const struct object_id *oid, int abbre=
-v_len);
-> >  void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object_i=
-d *oid,
-> > --
-> > gitgitgadget
+This whole topic started because the todo parser that we are using in
+lazygit has a bug where it doesn't recognize the "[new root]" label
+properly, and this is because it does split the line at the first
+whitespace, but without special-casing "[new root]" like git does.
+
+How would you recommend we fix this? We could replicate git's current
+behavior exactly, but then this would break when you introduce comments
+later. Or we could anticipate that comments are added at some point, and
+already split the line at the first # (trimming whitespace before that).
+This would not exactly match git's current behavior, but it would be
+good enough because git never actually uses whitespace in label or reset
+lines except for the "[new root]" case.
+
+I'm leaning towards the second option myself. Any thoughts?
+
+-Stefan
