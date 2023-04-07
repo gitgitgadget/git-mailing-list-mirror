@@ -2,453 +2,396 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5215DC761A6
-	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 02:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA272C76196
+	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 05:45:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239432AbjDGCl3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Apr 2023 22:41:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39660 "EHLO
+        id S230298AbjDGFo7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Apr 2023 01:44:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbjDGCl2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2023 22:41:28 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8165E83C0
-        for <git@vger.kernel.org>; Thu,  6 Apr 2023 19:41:26 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id w133so30385200oib.1
-        for <git@vger.kernel.org>; Thu, 06 Apr 2023 19:41:26 -0700 (PDT)
+        with ESMTP id S231470AbjDGFo5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2023 01:44:57 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7487686A6
+        for <git@vger.kernel.org>; Thu,  6 Apr 2023 22:44:55 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id k37so53387648lfv.0
+        for <git@vger.kernel.org>; Thu, 06 Apr 2023 22:44:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680835286;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1680846292; x=1683438292;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vOXLmhzLnFws+xbxMjEVBPxe19URqUEZRCdiflR3T5c=;
-        b=UzUxbj/mgh9UwLffcCL1CxTY7wcAEznSlB7pem6JZVAFyB4z9kD+56gVpnmR5ig8Uj
-         nogbTKs+f4c7W3TSCGxGKb42EW31xTxzXpWPVADWItb7CxK+JF7w7rRsKGd6RFDhJzR1
-         op94XviHZCifNfCjZtRNVXeBOWa7WpQOLtwJ5ScRov/Dk4qBQ2uh/l5H4g/IvCT3ogim
-         zFT+lrQhS4De/M6Sf33IIBDzCdB4LbUIiF8E3SLBmXRCiCKpL79o6ZBfgVMffDm3aja1
-         X1mpUSQWfuCg0DAc6Xp5HupCBBcEIZpVRDe0YQPNMLsDG5MRuOzw6/yxt/tFS51OuDQA
-         2CsA==
+        bh=R13NrSeO1unRFKOKZ4AZigcqvXL5e+KGQHw2vj+Lw14=;
+        b=c2Qz77E/G1awnlCLhwlmPJTFYGLHMRGJ8oF2QnqTb4zfKKw/9W3+FjYByxqBs9CuuE
+         LNSDWqQITQr2MHq3RVjx7wa2mT+J4D688troiIALaUmzSiRo2LJ8VdBMSgGmD9vz5hqd
+         nlqom44TyFVLjVyeGFlLpBMM3qt+wie3i2XYRZBj0t+Y0B2UaCFjy/5Se3e/tk3yh4nx
+         q+09qfSsxkKvhbTX3QDBjLEDrL4ZiHtoQ0fhqsulMAYeEapARV6e/Do7j3UmdAJUMAH5
+         1tAdldGSt8DNcbaZp/SL6mMxP3Ib+LqwYPMS2LpHremt2LiFFvWQ8zkwmqXkFvQwK5pJ
+         vZog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680835286;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vOXLmhzLnFws+xbxMjEVBPxe19URqUEZRCdiflR3T5c=;
-        b=TsMAk93Oun6+xgGGVXvEbi4QImfJTXPWJQNY5gSAxDyyMTzyur0Kls63qz+8HgTe7o
-         Ru4jn57Orwo02IJFyzolqcIzFBmXXcQnT/c7tRTU64kB+9QczIf9I9SK/baryeiDF8/5
-         z5H4qRkut1xRTIYwgEVStDpidLQZ/L/iZzwogIa1yCQbHtH9gort4sltDCKEx9MHQj6G
-         OWq0WOZYuL36GLNRT0RGXcg8TdOEc+59efRID3qy/x3oFIw+IkNt+o++ugsKi1vY5FaP
-         IRXSFInSunScnaUUsgBXW/uPKscmLG5JMqUY5kGoS+3Fz2oqbyieitm2MjkuVGfY3/a6
-         sTmA==
-X-Gm-Message-State: AAQBX9dxPn5eeclLiK7RCEfqFh9Vxx34laG0nZf1fbntacg6Je7OkLZW
-        lTvmcAiRiU7kmV9cJ7haC6M=
-X-Google-Smtp-Source: AKy350a8cn8Yu3MIgXLraISOwZK41w96fUN7RyDf+6l8iZxzTW/Sk8RLWIOVKZ0YmrluIsKs13wB2w==
-X-Received: by 2002:a05:6808:1a25:b0:384:28d6:b99c with SMTP id bk37-20020a0568081a2500b0038428d6b99cmr510706oib.7.1680835285618;
-        Thu, 06 Apr 2023 19:41:25 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id e3-20020a05680809a300b00389509965e3sm1292434oig.58.2023.04.06.19.41.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Apr 2023 19:41:25 -0700 (PDT)
-Date:   Thu, 06 Apr 2023 20:41:24 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Patrick Steinhardt <ps@pks.im>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?B?RGFuaWVsIE1hcnTDrQ==?= <mvdan@mvdan.cc>
-Message-ID: <642f82d4153e5_9afe29469@chronos.notmuch>
-In-Reply-To: <230406.867cupv3n1.gmgdl@evledraar.gmail.com>
-References: <20230405012742.2452208-1-felipe.contreras@gmail.com>
- <20230405012742.2452208-2-felipe.contreras@gmail.com>
- <230405.86fs9evfte.gmgdl@evledraar.gmail.com>
- <CAMP44s0oBKfp6bXbg_+vp4CuRj_nh8uDBTCeT65z7UCUzj4K0Q@mail.gmail.com>
- <230406.867cupv3n1.gmgdl@evledraar.gmail.com>
-Subject: Re: [PATCH 1/2] Add fetch.updateHead option
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+        d=1e100.net; s=20210112; t=1680846292; x=1683438292;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R13NrSeO1unRFKOKZ4AZigcqvXL5e+KGQHw2vj+Lw14=;
+        b=kInOjVJcs8Yzo4iB5j5lp1fQjhbWcXwlAZjbHuUKg53ykaeCw5TSavlUTor4dLXObj
+         TgTViIg1/TSyvBvHfDx/Qim38Hgn3sJX2+L3t34TlgvxLRmdg9KVQCfJWcx/zBhm3VII
+         a0TdrPM2IRqg/sq8bfDdBOegu+JpXrKnW/20StWHsjMf1qpOVcZI2nk6KG2GIXHbyMnd
+         /ovDyxvI0QSF+Qyvnx6ml4PyZejUMy1iYUVAY9TqBpCJDuti188sBeEF0QesvoKpgMik
+         p2fa9oDXOuOHf56GzyAPKORvs/33grxuQVOM2axNDS4HvapzecFuPstFN86dmUMLpFaN
+         4D5Q==
+X-Gm-Message-State: AAQBX9eZRmcZU7Uv6IYMDXl/AjZRK0KoL4kAg7I/y6R2ez+JkoEmag2J
+        WXTe4X0iDdMW/Hla0jLYdB/XU4VWsiuRfRkqd/k=
+X-Google-Smtp-Source: AKy350aySoq/wXisd9X8tC/zy/D7wyZumMm/AycrHUzt1iw+z6XoMVB7cCNyP7nFu7fgDZjiwyoo7wuQgD2dHAijfmg=
+X-Received: by 2002:ac2:5188:0:b0:4d5:ca42:e43e with SMTP id
+ u8-20020ac25188000000b004d5ca42e43emr405430lfi.7.1680846291382; Thu, 06 Apr
+ 2023 22:44:51 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.1678893298.git.phillip.wood@dunelm.org.uk>
+ <cover.1680708043.git.phillip.wood@dunelm.org.uk> <dd7b82cdd54cc962385dff8a1adab4c1d4fb2167.1680708043.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <dd7b82cdd54cc962385dff8a1adab4c1d4fb2167.1680708043.git.phillip.wood@dunelm.org.uk>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 6 Apr 2023 22:44:39 -0700
+Message-ID: <CABPp-BF8ND=Q_ONb3=WV+4F8ZVJ6h+0FeVNOr_YV-7s02uJXSA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] sequencer: use struct strvec to store merge
+ strategy options
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Wed, Apr 05 2023, Felipe Contreras wrote:
-> > On Wed, Apr 5, 2023 at 4:28=E2=80=AFAM =C3=86var Arnfj=C3=B6r=C3=B0 B=
-jarmason <avarab@gmail.com> wrote:
-> >> On Tue, Apr 04 2023, Felipe Contreras wrote:
-
-> >> > +
-> >> > +     if (!ref || !target) {
-> >> > +             warning(_("could not update remote head"));
-> >> > +             return;
-> >> > +     }
-> >> > +
-> >> > +     r =3D resolve_ref_unsafe(ref, 0, NULL, &flags);
-> >> > +
-> >> > +     if (r) {
-> >> > +             if (config =3D=3D FETCH_UPDATE_HEAD_MISSING) {
-> >> > +                     if (flags & REF_ISSYMREF)
-> >> > +                             /* already present */
-> >> > +                             return;
-> >> > +             } else if (config =3D=3D FETCH_UPDATE_HEAD_ALWAYS) {=
-
-> >> > +                     if (!strcmp(r, target))
-> >> > +                             /* already up-to-date */
-> >> > +                             return;
-> >>
-> >> I think you should name the "enum" you're adding below, the one that=
-
-> >> contains the new "FETCH_UPDATE_HEAD_DEFAULT".
-> >>
-> >> Then this could be a "switch", and the compiler could check the
-> >> arguments, i.e. you could pass an enum type instead of an "int".
-> >
-> > Sure, it can be an `enum fetch_update_mode` instead of `int`, but I
-> > don't see what value it provides, other than more verbosity. The enum=
-
-> > right above is also unnamed, and 'remote->origin' is an int. And it's=
-
-> > not the only enum of that kind in the source code.
-> >
-> > Using a switch is better, but that doesn't require an enum type. The
-> > multiple ifs are just a remnant of a previous version of the code.
-> =
-
-> More on this below, but it's for self-documentation (makes the code
-> easier to follow),
-
-I guess it *can* make the code easier to follow for some people, but only=
- very
-marginally, and certainly not for me.
-
-> and the compiler can notice missing "case" arms,
-> which isn't the case with an "int".
-
-Yes, but that has never been useful in my experience.
-
-> > But I seem to recall previous discussions (perhaps in LKML) where
-> > people accepted that lines 120-characters long are OK. We don't live
-> > in the 80's anymore, terminals have more than 80 columns.
-> =
-
-> I don't know what the kernel does, but we try to conform to our
-> CodingGuidelines, which sets a limit of 80.
-
-There's a difference between claiming we try to conform to X, and actuall=
-y
-trying to conform to X. I think the evidence above shows it's not the lat=
-ter.
-
-That is: the guideline says something which isn't actually true. Or at le=
-ast:
-if we are trying, we are not trying very hard.
-
-> But whatever else we do, we don't generally say that a newly added
-> function to a given file should be exempted from the preferred coding
-> style because the file isn't consistently using it.
-
-A guideline is not a law.
-
-If the guideline says "try to do X", and a patch doesn't do X, that's not=
- a
-valid reason to reject it. It is not a prescriptive command, it has no "s=
-hall"
-or "must". It's merely a suggestion.
-
-And as I showed above, a suggestion that is clearly not followed to the t=
-ee in
-all the code base.
-
-> >> > diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> >> > index dc44da9c79..dbeb2928ae 100755
-> >> > --- a/t/t5510-fetch.sh
-> >> > +++ b/t/t5510-fetch.sh
-> >> > @@ -814,6 +814,37 @@ test_expect_success 'fetch from multiple conf=
-igured URLs in single remote' '
-> >> >       git fetch multipleurls
-> >> >  '
-> >> >
-> >> > +test_cmp_symbolic_ref () {
-> >> > +     git symbolic-ref "$1" >actual &&
-> >> > +     echo "$2" >expected &&
-> >> > +     test_cmp expected actual
-> >> > +}
-> >>
-> >> Sort of an aside, but this seems to be the Nth use of this pattern i=
-n
-> >> the test suite, e.g. t1401-symbolic-ref.sh repeatedly hardcodes the
-> >> same.
-> >>
-> >> I wonder if a prep commit to stick this in test-lib-functions.sh wou=
-ld
-> >> be in order, or maybe a "--symbolic" argument to "test_cmp_rev"?
-> >
-> > Sure. If I had incline that such a patch would be merged (or this one=
-)
-> > I would do it, but I have a plethora of cleanup patches just gatherin=
-g
-> > dust, so I'd rather not.
-> =
-
-> Fair enough, thanks.
-> =
-
-> Re the "more below" above, I tried hacking some of what I suggested
-> upthread on top of your patches, here's the result of
-> that. Changes/commentary:
-> =
-
->  * Switched the "int" to "enum"
-
-For the record: I still don't see any value in doing that.
-
-But I also don't see any harm, so I'm OK with that change.
-
->  * You've prepared the parse_update_head() to accept a NULL "r", but as=
-
->    this & your other code shows, we never pass it NULL. I don't get why=
-
->    we'd have it handle that case, as surely all plausible users are
->    "populate this config variable for me", no?
-
-Yeah, I don't see any value in checking that, it probably was already the=
-re
-from the original function I copied the code.
-
->  * I think better than a BUG() call in the new update_head() we should
->    just drop "need_update_head" entirely. It ends up just being a
->    variable that states "is missing or always", so for update_head() we=
-
->    can just pass a boolean "missing?".
-
-Actually, `need_update_head` doesn't equal "is missing or always": it mos=
-tly
-tracks the fact that we sent "HEAD" as part of the refspecs sent to the r=
-emote.
-
-For example if you do `git fetch`, that sets `need_update_head`, but if y=
-ou do
-`git fetch master` it does not (AFAIK).
-
-So your change is not equivalent, and it would call update_head() unneces=
-sarily
-in many instances where there is no "HEAD" coming back from the remote, s=
-o
-`struct ref *head` is NULL. That's not a big issue, since the function wi=
-ll
-simply return in those cases.
-
-But...
-
-According to Jeff King, there are some instances where "HEAD" is coming b=
-ack
-from the server, even if we didn't request it, in those cases we would wa=
-nt the
-local "remote/foo/HEAD" to be updated as well (if configured).
-
-So your change is not functionally equivalent: it's actually better. The =
-reason
-I didn't implement the logic Jeff King suggested is that I didn't see a w=
-ay to
-do it without complicating the code, but your suggestion is the way.
-
->  * I renamed "update_head" to "fetch_update_head" just to have the
->    compiler catch cases where we were using the old "int", but if you
->    find some of this useful we could keep the old name.
-
-I do find a lot of this useful (bar the switch to an enum), but I think t=
-he old
-name is better, since it's a configuration that affects commands other th=
-an
-`git fetch`, for example `git remote update`.
-
-> Hope some of that helps.
-> =
-
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 6bf147b0123..6492e88d779 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -59,7 +59,7 @@ static int fetch_prune_tags_config =3D -1; /* unspeci=
-fied */
->  static int prune_tags =3D -1; /* unspecified */
->  #define PRUNE_TAGS_BY_DEFAULT 0 /* do we prune tags by default? */
->  =
-
-> -static int fetch_update_head =3D FETCH_UPDATE_HEAD_DEFAULT;
-> +static enum fetch_update_head fetch_update_head =3D FETCH_UPDATE_HEAD_=
-DEFAULT;
->  =
-
->  static int all, append, dry_run, force, keep, multiple, update_head_ok=
-;
->  static int write_fetch_head =3D 1;
-> @@ -1584,7 +1584,8 @@ static int backfill_tags(struct transport *transp=
-ort,
->  	return retcode;
+On Wed, Apr 5, 2023 at 8:22=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
+>
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> The sequencer stores the merge strategy options in an array of strings
+> which allocated with ALLOC_GROW(). Using "struct strvec" avoids manually
+> managing the memory of that array and simplifies the code.
+>
+> Aside from memory allocation the changes to the sequencer are largely
+> mechanical, changing xopts_nr to xopts.nr and xopts[i] to xopts.v[i]. A
+> new option parsing macro OPT_STRVEC() is also added to collect the
+> strategy options.  Hopefully this can be used to simplify the code in
+> builtin/merge.c in the future.
+>
+> Note that there is a change of behavior to "git cherry-pick" and "git
+> revert" as passing =E2=80=9C--no-strategy-option=E2=80=9D will now clear =
+any previous
+> strategy options whereas before this change it did nothing.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  builtin/revert.c   | 20 +++-----------------
+>  parse-options-cb.c | 16 ++++++++++++++++
+>  parse-options.h    | 10 ++++++++++
+>  sequencer.c        | 47 ++++++++++++++++++++--------------------------
+>  sequencer.h        | 11 ++++++++---
+>  5 files changed, 57 insertions(+), 47 deletions(-)
+>
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 62986a7b1b..362857da65 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -44,20 +44,6 @@ static const char * const *revert_or_cherry_pick_usage=
+(struct replay_opts *opts)
+>         return opts->action =3D=3D REPLAY_REVERT ? revert_usage : cherry_=
+pick_usage;
 >  }
->  =
-
-> -static void update_head(int config, const struct ref *head, const stru=
-ct remote *remote)
-> +static void update_head(int fetch_missing, const struct ref *head,
-> +			struct remote *remote)
-
-This is good, it simplifies the logic below.
-
->  {
->  	char *ref, *target;
->  	const char *r;
-> @@ -1594,7 +1595,7 @@ static void update_head(int config, const struct =
-ref *head, const struct remote
->  		return;
->  =
-
->  	if (!remote->mirror) {
-> -		ref =3D apply_refspecs((struct refspec *)&remote->fetch, "refs/heads=
-/HEAD");
-> +		ref =3D apply_refspecs(&remote->fetch, "refs/heads/HEAD");
->  		target =3D apply_refspecs((struct refspec *)&remote->fetch, head->sy=
-mref);
-
-Small nit: you didn't drop this casting.
-
->  =
-
->  		if (!ref || !target) {
-> @@ -1609,17 +1610,14 @@ static void update_head(int config, const struc=
-t ref *head, const struct remote
->  	r =3D resolve_ref_unsafe(ref, 0, NULL, &flags);
->  =
-
->  	if (r) {
-> -		if (config =3D=3D FETCH_UPDATE_HEAD_MISSING) {
-> +		if (fetch_missing) {
->  			if (flags & REF_ISSYMREF)
->  				/* already present */
->  				return;
-> -		} else if (config =3D=3D FETCH_UPDATE_HEAD_ALWAYS) {
-> -			if (!strcmp(r, target))
-> -				/* already up-to-date */
-> -				return;
-> -		} else
-> -			/* should never happen */
-> +		} else if (!strcmp(r, target)) {
-> +			/* already up-to-date */
->  			return;
-> +		}
-
-I prefer to have the main logic (always) on top, but otherwise good.
-
->  	}
->  =
-
->  	if (!create_symref(ref, target, "remote update head")) {
-> @@ -1643,7 +1641,7 @@ static int do_fetch(struct transport *transport,
->  	int must_list_refs =3D 1;
->  	struct fetch_head fetch_head =3D { 0 };
->  	struct strbuf err =3D STRBUF_INIT;
-> -	int need_update_head =3D 0, update_head_config =3D 0;
-> +	enum fetch_update_head update_head_config =3D FETCH_UPDATE_HEAD_DEFAU=
-LT;
->  =
-
->  	if (tags =3D=3D TAGS_DEFAULT) {
->  		if (transport->remote->fetch_tags =3D=3D 2)
-> @@ -1680,15 +1678,19 @@ static int do_fetch(struct transport *transport=
-,
->  =
-
->  		if (transport->remote->fetch.nr) {
->  =
-
-> -			if (transport->remote->update_head)
-> -				update_head_config =3D transport->remote->update_head;
-> +			if (transport->remote->fetch_update_head !=3D FETCH_UPDATE_HEAD_DEF=
-AULT)
-
-In Git codestyle implicit tends to be preferred over explicit (as is in t=
-he Linux codesyle)
-
- * `if (p)` over `if (p !=3D NULL)`
- * `if (i)` over `if (i !=3D 0)`
- * `if (!strcmp(...)` over `if (strcmp(...) =3D=3D 0`
-
-And so on, so I think this strongly suggests this is preferred:
-
-  if (transport->remote->update_head)
-
-Over
-
-  if (transport->remote->fetch_update_head !=3D FETCH_UPDATE_HEAD_DEFAULT=
-)
-
-> +				update_head_config =3D transport->remote->fetch_update_head;
->  			else
->  				update_head_config =3D fetch_update_head;
->  =
-
-> -			need_update_head =3D update_head_config && update_head_config !=3D =
-FETCH_UPDATE_HEAD_NEVER;
+>
+> -static int option_parse_x(const struct option *opt,
+> -                         const char *arg, int unset)
+> -{
+> -       struct replay_opts **opts_ptr =3D opt->value;
+> -       struct replay_opts *opts =3D *opts_ptr;
 > -
-> -			if (need_update_head)
-> +			switch (update_head_config) {
-> +			case FETCH_UPDATE_HEAD_MISSING:
-> +			case FETCH_UPDATE_HEAD_ALWAYS:
->  				strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
-> +			case FETCH_UPDATE_HEAD_DEFAULT:
-> +			case FETCH_UPDATE_HEAD_NEVER:
+> -       if (unset)
+> -               return 0;
+> -
+> -       ALLOC_GROW(opts->xopts, opts->xopts_nr + 1, opts->xopts_alloc);
+> -       opts->xopts[opts->xopts_nr++] =3D xstrdup(arg);
+> -       return 0;
+> -}
+> -
+>  static int option_parse_m(const struct option *opt,
+>                           const char *arg, int unset)
+>  {
+> @@ -114,8 +100,8 @@ static int run_sequencer(int argc, const char **argv,=
+ struct replay_opts *opts)
+>                              N_("select mainline parent"), option_parse_m=
+),
+>                 OPT_RERERE_AUTOUPDATE(&opts->allow_rerere_auto),
+>                 OPT_STRING(0, "strategy", &opts->strategy, N_("strategy")=
+, N_("merge strategy")),
+> -               OPT_CALLBACK('X', "strategy-option", &opts, N_("option"),
+> -                       N_("option for merge strategy"), option_parse_x),
+> +               OPT_STRVEC('X', "strategy-option", &opts->xopts, N_("opti=
+on"),
+> +                       N_("option for merge strategy")),
+>                 { OPTION_STRING, 'S', "gpg-sign", &opts->gpg_sign, N_("ke=
+y-id"),
+>                   N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_=
+t) "" },
+>                 OPT_END()
+> @@ -176,7 +162,7 @@ static int run_sequencer(int argc, const char **argv,=
+ struct replay_opts *opts)
+>                                 "--signoff", opts->signoff,
+>                                 "--mainline", opts->mainline,
+>                                 "--strategy", opts->strategy ? 1 : 0,
+> -                               "--strategy-option", opts->xopts ? 1 : 0,
+> +                               "--strategy-option", opts->xopts.nr ? 1 :=
+ 0,
+>                                 "-x", opts->record_origin,
+>                                 "--ff", opts->allow_ff,
+>                                 "--rerere-autoupdate", opts->allow_rerere=
+_auto =3D=3D RERERE_AUTOUPDATE,
+> diff --git a/parse-options-cb.c b/parse-options-cb.c
+> index d346dbe210..8eb96c5ca9 100644
+> --- a/parse-options-cb.c
+> +++ b/parse-options-cb.c
+> @@ -208,6 +208,22 @@ int parse_opt_string_list(const struct option *opt, =
+const char *arg, int unset)
+>         return 0;
+>  }
+>
+> +int parse_opt_strvec(const struct option *opt, const char *arg, int unse=
+t)
+> +{
+> +       struct strvec *v =3D opt->value;
+> +
+> +       if (unset) {
+> +               strvec_clear(v);
+> +               return 0;
+> +       }
+> +
+> +       if (!arg)
+> +               return -1;
+> +
+> +       strvec_push(v, arg);
+> +       return 0;
+> +}
+> +
+>  int parse_opt_noop_cb(const struct option *opt, const char *arg, int uns=
+et)
+>  {
+>         return 0;
+> diff --git a/parse-options.h b/parse-options.h
+> index 26f19384e5..2d1d4d052f 100644
+> --- a/parse-options.h
+> +++ b/parse-options.h
+> @@ -285,6 +285,15 @@ struct option {
+>         .help =3D (h), \
+>         .callback =3D &parse_opt_string_list, \
+>  }
+> +#define OPT_STRVEC(s, l, v, a, h) { \
+> +       .type =3D OPTION_CALLBACK, \
+> +       .short_name =3D (s), \
+> +       .long_name =3D (l), \
+> +       .value =3D (v), \
+> +       .argh =3D (a), \
+> +       .help =3D (h), \
+> +       .callback =3D &parse_opt_strvec, \
+> +}
+>  #define OPT_UYN(s, l, v, h) { \
+>         .type =3D OPTION_CALLBACK, \
+>         .short_name =3D (s), \
+> @@ -478,6 +487,7 @@ int parse_opt_commits(const struct option *, const ch=
+ar *, int);
+>  int parse_opt_commit(const struct option *, const char *, int);
+>  int parse_opt_tertiary(const struct option *, const char *, int);
+>  int parse_opt_string_list(const struct option *, const char *, int);
+> +int parse_opt_strvec(const struct option *, const char *, int);
+>  int parse_opt_noop_cb(const struct option *, const char *, int);
+>  enum parse_opt_result parse_opt_unknown_cb(struct parse_opt_ctx_t *ctx,
+>                                            const struct option *,
+> diff --git a/sequencer.c b/sequencer.c
+> index c35a67e104..6e2f3357c8 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -355,9 +355,7 @@ void replay_opts_release(struct replay_opts *opts)
+>         free(opts->reflog_action);
+>         free(opts->default_strategy);
+>         free(opts->strategy);
+> -       for (size_t i =3D 0; i < opts->xopts_nr; i++)
+> -               free(opts->xopts[i]);
+> -       free(opts->xopts);
+> +       strvec_clear (&opts->xopts);
+>         strbuf_release(&opts->current_fixups);
+>         if (opts->revs)
+>                 release_revisions(opts->revs);
+> @@ -693,8 +691,8 @@ static int do_recursive_merge(struct repository *r,
+>         next_tree =3D next ? get_commit_tree(next) : empty_tree(r);
+>         base_tree =3D base ? get_commit_tree(base) : empty_tree(r);
+>
+> -       for (i =3D 0; i < opts->xopts_nr; i++)
+> -               parse_merge_opt(&o, opts->xopts[i]);
+> +       for (i =3D 0; i < opts->xopts.nr; i++)
+> +               parse_merge_opt(&o, opts->xopts.v[i]);
+>
+>         if (!opts->strategy || !strcmp(opts->strategy, "ort")) {
+>                 memset(&result, 0, sizeof(result));
+> @@ -2325,7 +2323,7 @@ static int do_pick_commit(struct repository *r,
+>                 commit_list_insert(base, &common);
+>                 commit_list_insert(next, &remotes);
+>                 res |=3D try_merge_command(r, opts->strategy,
+> -                                        opts->xopts_nr, (const char **)o=
+pts->xopts,
+> +                                        opts->xopts.nr, opts->xopts.v,
+>                                         common, oid_to_hex(&head), remote=
+s);
+>                 free_commit_list(common);
+>                 free_commit_list(remotes);
+> @@ -2898,8 +2896,7 @@ static int populate_opts_cb(const char *key, const =
+char *value, void *data)
+>         else if (!strcmp(key, "options.gpg-sign"))
+>                 git_config_string_dup(&opts->gpg_sign, key, value);
+>         else if (!strcmp(key, "options.strategy-option")) {
+> -               ALLOC_GROW(opts->xopts, opts->xopts_nr + 1, opts->xopts_a=
+lloc);
+> -               opts->xopts[opts->xopts_nr++] =3D xstrdup(value);
+> +               strvec_push(&opts->xopts, value);
+>         } else if (!strcmp(key, "options.allow-rerere-auto"))
+>                 opts->allow_rerere_auto =3D
+>                         git_config_bool_or_int(key, value, &error_flag) ?
+> @@ -2920,22 +2917,21 @@ void parse_strategy_opts(struct replay_opts *opts=
+, char *raw_opts)
+>  {
+>         int i;
+>         int count;
+> +       const char **argv;
+>         char *strategy_opts_string =3D raw_opts;
+>
+>         if (*strategy_opts_string =3D=3D ' ')
+>                 strategy_opts_string++;
+>
+> -       count =3D split_cmdline(strategy_opts_string,
+> -                             (const char ***)&opts->xopts);
+> +       count =3D split_cmdline(strategy_opts_string, &argv);
+>         if (count < 0)
+>                 die(_("could not split '%s': %s"), strategy_opts_string,
+>                             split_cmdline_strerror(count));
+> -       opts->xopts_nr =3D count;
+> -       for (i =3D 0; i < opts->xopts_nr; i++) {
+> -               const char *arg =3D opts->xopts[i];
+> +       for (i =3D 0; i < count; i++) {
+> +               const char *arg =3D argv[i];
+>
+>                 skip_prefix(arg, "--", &arg);
+> -               opts->xopts[i] =3D xstrdup(arg);
+> +               strvec_push(&opts->xopts, arg);
+>         }
+>  }
+>
+> @@ -3055,8 +3051,8 @@ static void write_strategy_opts(struct replay_opts =
+*opts)
+>         int i;
+>         struct strbuf buf =3D STRBUF_INIT;
+>
+> -       for (i =3D 0; i < opts->xopts_nr; ++i)
+> -               strbuf_addf(&buf, " --%s", opts->xopts[i]);
+> +       for (i =3D 0; i < opts->xopts.nr; ++i)
+> +               strbuf_addf(&buf, " --%s", opts->xopts.v[i]);
+>
+>         write_file(rebase_path_strategy_opts(), "%s\n", buf.buf);
+>         strbuf_release(&buf);
+> @@ -3080,7 +3076,7 @@ int write_basic_state(struct replay_opts *opts, con=
+st char *head_name,
+>                 write_file(rebase_path_verbose(), "%s", "");
+>         if (opts->strategy)
+>                 write_file(rebase_path_strategy(), "%s\n", opts->strategy=
+);
+> -       if (opts->xopts_nr > 0)
+> +       if (opts->xopts.nr > 0)
+>                 write_strategy_opts(opts);
+>
+>         if (opts->allow_rerere_auto =3D=3D RERERE_AUTOUPDATE)
+> @@ -3464,13 +3460,10 @@ static int save_opts(struct replay_opts *opts)
+>         if (opts->gpg_sign)
+>                 res |=3D git_config_set_in_file_gently(opts_file,
+>                                         "options.gpg-sign", opts->gpg_sig=
+n);
+> -       if (opts->xopts) {
+> -               int i;
+> -               for (i =3D 0; i < opts->xopts_nr; i++)
+> -                       res |=3D git_config_set_multivar_in_file_gently(o=
+pts_file,
+> -                                       "options.strategy-option",
+> -                                       opts->xopts[i], "^$", 0);
+> -       }
+> +       for (size_t i =3D 0; i < opts->xopts.nr; i++)
+> +               res |=3D git_config_set_multivar_in_file_gently(opts_file=
+,
+> +                               "options.strategy-option",
+> +                               opts->xopts.v[i], "^$", 0);
+>         if (opts->allow_rerere_auto)
+>                 res |=3D git_config_set_in_file_gently(opts_file,
+>                                 "options.allow-rerere-auto",
+> @@ -3880,7 +3873,7 @@ static int do_merge(struct repository *r,
+>         struct commit *head_commit, *merge_commit, *i;
+>         struct commit_list *bases, *j;
+>         struct commit_list *to_merge =3D NULL, **tail =3D &to_merge;
+> -       const char *strategy =3D !opts->xopts_nr &&
+> +       const char *strategy =3D !opts->xopts.nr &&
+>                 (!opts->strategy ||
+>                  !strcmp(opts->strategy, "recursive") ||
+>                  !strcmp(opts->strategy, "ort")) ?
+> @@ -4063,9 +4056,9 @@ static int do_merge(struct repository *r,
+>                         strvec_push(&cmd.args, "octopus");
+>                 else {
+>                         strvec_push(&cmd.args, strategy);
+> -                       for (k =3D 0; k < opts->xopts_nr; k++)
+> +                       for (k =3D 0; k < opts->xopts.nr; k++)
+>                                 strvec_pushf(&cmd.args,
+> -                                            "-X%s", opts->xopts[k]);
+> +                                            "-X%s", opts->xopts.v[k]);
+>                 }
+>                 if (!(flags & TODO_EDIT_MERGE_MSG))
+>                         strvec_push(&cmd.args, "--no-edit");
+> diff --git a/sequencer.h b/sequencer.h
+> index 33dbaf5b66..8a79d6b200 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -2,6 +2,7 @@
+>  #define SEQUENCER_H
+>
+>  #include "strbuf.h"
+> +#include "strvec.h"
+>  #include "wt-status.h"
+>
+>  struct commit;
+> @@ -60,8 +61,7 @@ struct replay_opts {
+>         /* Merge strategy */
+>         char *default_strategy;  /* from config options */
+>         char *strategy;
+> -       char **xopts;
+> -       size_t xopts_nr, xopts_alloc;
+> +       struct strvec xopts;
+>
+>         /* Reflog */
+>         char *reflog_action;
+> @@ -80,7 +80,12 @@ struct replay_opts {
+>         /* Private use */
+>         const char *reflog_message;
+>  };
+> -#define REPLAY_OPTS_INIT { .edit =3D -1, .action =3D -1, .current_fixups=
+ =3D STRBUF_INIT }
+> +#define REPLAY_OPTS_INIT {                     \
+> +       .edit =3D -1,                             \
+> +       .action =3D -1,                           \
+> +       .current_fixups =3D STRBUF_INIT,          \
+> +       .xopts =3D STRVEC_INIT,                   \
+> +}
+>
+>  /*
+>   * Note that ordering matters in this enum. Not only must it match the m=
+apping
+> --
+> 2.40.0.670.g64ef305212.dirty
 
-I would rather have "default:" here to catch all the rest.
-
-I suppose this could be clearer to some people (although IMO overly verbo=
-se),
-but this has nothing to do with the enum change, as it can be done with `=
-int
-update_head_config`.
-
-> +				break;
-> +			}
->  			refspec_ref_prefixes(&transport->remote->fetch,
->  					     &transport_ls_refs_options.ref_prefixes);
->  		}
-> @@ -1801,8 +1803,16 @@ static int do_fetch(struct transport *transport,=
-
->  =
-
->  	commit_fetch_head(&fetch_head);
->  =
-
-> -	if (need_update_head)
-> -		update_head(update_head_config, find_ref_by_name(remote_refs, "HEAD"=
-), transport->remote);
-> +	switch (update_head_config) {
-> +	case FETCH_UPDATE_HEAD_MISSING:
-> +	case FETCH_UPDATE_HEAD_ALWAYS:
-> +		update_head(update_head_config =3D=3D FETCH_UPDATE_HEAD_MISSING,
-> +			    find_ref_by_name(remote_refs, "HEAD"),
-> +			    transport->remote);
-> +	case FETCH_UPDATE_HEAD_DEFAULT:
-> +	case FETCH_UPDATE_HEAD_NEVER:
-> +		break;
-> +	}
-
-Ditto. Although this isn't functionally equivalent, it's actually better.=
-
-
----
-
-I've integrated the important parts of these changes into v2 and sent tha=
-t.
-
-I still don't see an incline of this patch ever being merged, so it's pro=
-bably
-just an exercise, but for the record there it is.
-
-Cheers.
-
--- =
-
-Felipe Contreras=
+Simple, but very nice cleanup.  :-)
