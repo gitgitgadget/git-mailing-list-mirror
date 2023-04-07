@@ -2,111 +2,216 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DFB5C77B61
-	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 14:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03839C77B6C
+	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 15:51:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231542AbjDGOlX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Apr 2023 10:41:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53374 "EHLO
+        id S230437AbjDGPvj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Apr 2023 11:51:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbjDGOlW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2023 10:41:22 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADE481739
-        for <git@vger.kernel.org>; Fri,  7 Apr 2023 07:41:20 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-942e6555947so178118766b.2
-        for <git@vger.kernel.org>; Fri, 07 Apr 2023 07:41:20 -0700 (PDT)
+        with ESMTP id S229469AbjDGPvh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2023 11:51:37 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A94A1993
+        for <git@vger.kernel.org>; Fri,  7 Apr 2023 08:51:36 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id j22so9267547ejv.1
+        for <git@vger.kernel.org>; Fri, 07 Apr 2023 08:51:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680878479; x=1683470479;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ddZVnB8dMRGtqtr8qMd6Ee4EzPDfP0G9teoe0xI4JIo=;
-        b=FXcgZNcwV/RlSbQW4y9Q7myvbeVby5s18QGaVm5qHN4gKuSvw8Q5IA5ke7zT0/+ywT
-         TSDbYgqaZBIopFdAEFmH5mBm0YwtA2QwZW5FD7uf5pE44/95hkCpmUQMW+GeQBdAiG6n
-         kZfXiNPTANlHghqHV6pdtYIrJ4Yb59PTXc7UFBJbJkevB7yZr2GSVnB2twr7t/l3QII6
-         diPAyEN3aUrIt1e5JjI/P1xsQ0RKPC3Mg7ucgfcuSFKSwIWcbzu1Ow+iv3lQHHXCj+xm
-         zKils2g2njDhiw93fDwr5hdnWU6W5UBA3NiTZfqJsswjhGZzkFZ/NfCNUItfFa7ynv7+
-         VfMQ==
+        d=gmail.com; s=20210112; t=1680882694;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WYB8VawpuetGDVC9XFx9j0/aVW6f8Zo38fxeN6+xjRQ=;
+        b=oktlozWmboymLRy2yjZm2mR9cGyBMIoKB3gZozPPJ9K+bRY46yHmy98fBvAeww0HiH
+         MOjjtG4uQ//90SwAr180poqyrk/OiKw5kZKiXmQLNujVf/S9KLSxJ5m18z8K+5udKUpL
+         04WGsegwy/Ya1dvd6k8tOysfM62MU9YxlyRl9pfQJk1s4J+eL2rTDok6F5ssDmoQc6MI
+         y9xpSKnuoXHIQtYNN2gxJ5cTwlsSxHFe77ee7dEsSE7XJ3lQTdkROgcQu3kML6zFtaaX
+         97GiwWS8DE1ELA2/F5P+apymDnEHLSYZwjcWYfw2vOlPs28s/M6sRQ7jQMYUsTcNKHk4
+         DiBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680878479; x=1683470479;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ddZVnB8dMRGtqtr8qMd6Ee4EzPDfP0G9teoe0xI4JIo=;
-        b=Ne+waVydhpPrPhRHb5MfESe+W8cpT70+7OAgQhb6ofOOFTHAOqapdTC3PmseqRKUCq
-         4FebWJFKDxZu2uChJUZS0wav41i3mjhDUIvHKYr9+2HgMvtftSy9uCeNQ+OXebkMnB/E
-         thl86XzMD0mepHUwUzSvWkyyIoSy5qUE7w9vnNMiDS7Gcem4/l5s3a/zduI/330c4NWh
-         cjFwpu5sS/197bQHCzYvVVKvVg0QkE9Kw0r9OEtHsL0EcppnqFUYefZKX9ANx30uZCHv
-         qi3Bp1ZfI52VNjNY5CPQDI1Ut88Ojt1wyw7kYl4QW2Xzog3xEXytqYoTXAaJTQbjGXd0
-         x6zQ==
-X-Gm-Message-State: AAQBX9cdPTkGABixjG0eTwEy7GvXBeDZF4A5sjBiyTKVscLTOAUv6Y23
-        mqI74kVj/WiqsN/vwpi0QNW6rUI37YWBTWWdxEA=
-X-Google-Smtp-Source: AKy350app7i6sYhHrDAFrG/QH5ZTlkBDrOTp3KkswIhLz8bWwF+YR+Q5zJ8llhrJFTuJUYN7gX8N2/h54Umn2FOKU5E=
-X-Received: by 2002:a50:a457:0:b0:4fb:2593:844 with SMTP id
- v23-20020a50a457000000b004fb25930844mr1502406edb.2.1680878479027; Fri, 07 Apr
- 2023 07:41:19 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680882694;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WYB8VawpuetGDVC9XFx9j0/aVW6f8Zo38fxeN6+xjRQ=;
+        b=A8MBf94wkLD859hBwjlsR1wAnYBNlmZ0pDwDrRQzBxQpdxdBiI/mQ6+3a3PO3a6YkK
+         /nhFu4DqgZzudNdCAxkIL1vOxcZelyz1x7z8CXe58Hl2/aLNLtfDz8yTWtBoeAsFghKc
+         t/69BMt5ycR6TGAXppZtzzbXLkYAetz/u3POh9Woz39Xh/TfPycP6mFQBChtnqvU+yBr
+         pkbddNggXXyPbd4rBnTtS6hqJihWzXJ0u/hlQ0Z7prY2ntpTGN4Cae+T64xshtVQK4rb
+         6hPlEy7d/w4AV9CJvwWlmDAeYJu4Amm2i6vnHZs1B4+FAqkNwkFkpaypzkIIb+kLfdCC
+         Tjog==
+X-Gm-Message-State: AAQBX9c4pVbCsCIg38GTNtFC6VWKPT1jcbnRk6bh+BBNLpEqzaFdYK4d
+        Obb3rpq6oM6SkiriZiI7CeQ=
+X-Google-Smtp-Source: AKy350aFskbcbVgZaZwfO5+L0jV59e8gkwxh0f0AgIBWBWvx7wW8enD333qEKribzSXVRloIfcBr1w==
+X-Received: by 2002:a17:906:4e0e:b0:922:78e2:7680 with SMTP id z14-20020a1709064e0e00b0092278e27680mr2739933eju.52.1680882694502;
+        Fri, 07 Apr 2023 08:51:34 -0700 (PDT)
+Received: from localhost (78-131-17-112.pool.digikabel.hu. [78.131.17.112])
+        by smtp.gmail.com with ESMTPSA id a12-20020a17090680cc00b00922a79e79c2sm2164230ejx.217.2023.04.07.08.51.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Apr 2023 08:51:33 -0700 (PDT)
+Date:   Fri, 7 Apr 2023 17:51:32 +0200
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>, Glen Choo <chooglen@google.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>, raymond@heliax.dev,
+        zweiss@equinix.com
+Subject: Re: [PATCH v8 9/9] for-each-repo: with bad config, don't conflate
+ <path> and <cmd>
+Message-ID: <20230407155132.GA3117@szeder.dev>
+References: <cover-v7-0.9-00000000000-20230308T090513Z-avarab@gmail.com>
+ <cover-v8-0.9-00000000000-20230328T140126Z-avarab@gmail.com>
+ <patch-v8-9.9-6fce633493b-20230328T140127Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <CAPig+cSNmws2b7f7aRA2C56kvQYG3w_g+KhYdqhtmf+XhtAMhQ@mail.gmail.com>
- <b45bf46f-580a-870c-5293-10ecdf2e56d3@aueb.gr> <b8b3777b-ee6e-d90e-3365-5cb9c9d129fe@web.de>
- <c4728fac-bea9-3794-077e-c978d99f46bf@web.de> <xmqq5yad7wv3.fsf@gitster.g>
- <bc6e89c9-d886-c519-85b3-fbc3f4eb5528@web.de> <7327ac06-d5da-ec53-543e-78e7729e78bb@web.de>
-In-Reply-To: <7327ac06-d5da-ec53-543e-78e7729e78bb@web.de>
-From:   "D. Ben Knoble" <ben.knoble@gmail.com>
-Date:   Fri, 7 Apr 2023 10:41:07 -0400
-Message-ID: <CALnO6CDgs+of5KCRRwpmzEoHcqZ4udbHVhNrd63q4fFh_5TwHg@mail.gmail.com>
-Subject: Re: [PATCH] userdiff: support regexec(3) with multi-byte support
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Diomidis Spinellis <dds@aueb.gr>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        demerphq <demerphq@gmail.com>,
-        Mario Grgic <mario_grgic@hotmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-v8-9.9-6fce633493b-20230328T140127Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 6, 2023 at 4:19=E2=80=AFPM Ren=C3=A9 Scharfe <l.s.r@web.de> wro=
-te:
->
-> Since 1819ad327b (grep: fix multibyte regex handling under macOS,
-> 2022-08-26) we use the system library for all regular expression
-> matching on macOS, not just for git grep.  It supports multi-byte
-> strings and rejects invalid multi-byte characters.
->
-> This broke all built-in userdiff word regexes in UTF-8 locales because
-> they all include such invalid bytes in expressions that are intended to
-> match multi-byte characters without explicit support for that from the
-> regex engine.
->
-> "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+" is added to all built-in word
-> regexes to match a single non-space or multi-byte character.  The \xNN
-> characters are invalid if interpreted as UTF-8 because they have their
-> high bit set, which indicates they are part of a multi-byte character,
-> but they are surrounded by single-byte characters.
->
-> Replace that expression with "|[^[:space:]]" if the regex engine
-> supports multi-byte matching, as there is no need to have an explicit
-> range for multi-byte characters then.  Check for that capability at
-> runtime, because it depends on the locale and thus on environment
-> variables.  Construct the full replacement expression at build time
-> and just switch it in if necessary to avoid string manipulation and
-> allocations at runtime.
->
-> Additionally the word regex for tex contains the expression
-> "[a-zA-Z0-9\x80-\xff]+" with a similarly invalid range.  The best
-> replacement with only valid characters that I can come up with is
-> "([a-zA-Z0-9]|[^\x01-\x7f])+".  Unlike the original it matches NUL
-> characters, though.  Assuming that tex files usually don't contain NUL
-> this should be acceptable.
->
-> Reported-by: D. Ben Knoble <ben.knoble@gmail.com>
-> Reported-by: Eric Sunshine <sunshine@sunshineco.com>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+On Tue, Mar 28, 2023 at 04:04:28PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> Fix a logic error in 4950b2a2b5c (for-each-repo: run subcommands on
+> configured repos, 2020-09-11). Due to assuming that elements returned
+> from the repo_config_get_value_multi() call wouldn't be "NULL" we'd
+> conflate the <path> and <command> part of the argument list when
+> running commands.
+> 
+> As noted in the preceding commit the fix is to move to a safer
+> "*_string_multi()" version of the *_multi() API. This change is
+> separated from the rest because those all segfaulted. In this change
+> we ended up with different behavior.
+> 
+> When using the "--config=<config>" form we take each element of the
+> list as a path to a repository. E.g. with a configuration like:
+> 
+> 	[repo] list = /some/repo
+> 
+> We would, with this command:
+> 
+> 	git for-each-repo --config=repo.list status builtin
+> 
+> Run a "git status" in /some/repo, as:
+> 
+> 	git -C /some/repo status builtin
+> 
+> I.e. ask "status" to report on the "builtin" directory. But since a
+> configuration such as this would result in a "struct string_list *"
+> with one element, whose "string" member is "NULL":
+> 
+> 	[repo] list
+> 
+> We would, when constructing our command-line in
+> "builtin/for-each-repo.c"...
+> 
+> 	strvec_pushl(&child.args, "-C", path, NULL);
+> 	for (i = 0; i < argc; i++)
+> 		strvec_push(&child.args, argv[i]);
+> 
+> ...have that "path" be "NULL", and as strvec_pushl() stops when it
+> sees NULL we'd end with the first "argv" element as the argument to
+> the "-C" option, e.g.:
+> 
+> 	git -C status builtin
+> 
+> I.e. we'd run the command "builtin" in the "status" directory.
+> 
+> In another context this might be an interesting security
+> vulnerability, but I think that this amounts to a nothingburger on
+> that front.
+> 
+> A hypothetical attacker would need to be able to write config for the
+> victim to run, if they're able to do that there's more interesting
+> attack vectors. See the "safe.directory" facility added in
+> 8d1a7448206 (setup.c: create `safe.bareRepository`, 2022-07-14).
+> 
+> An even more unlikely possibility would be an attacker able to
+> generate the config used for "for-each-repo --config=<key>", but
+> nothing else (e.g. an automated system producing that list).
+> 
+> Even in that case the attack vector is limited to the user running
+> commands whose name matches a directory that's interesting to the
+> attacker (e.g. a "log" directory in a repository). The second
+> argument (if any) of the command is likely to make git die without
+> doing anything interesting (e.g. "-p" to "log", there being no "-p"
+> built-in command to run).
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/for-each-repo.c  |  2 +-
+>  t/t0068-for-each-repo.sh | 13 +++++++++++++
+>  2 files changed, 14 insertions(+), 1 deletion(-)
+> 
+> diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
+> index 224164addb3..ce8f7a99086 100644
+> --- a/builtin/for-each-repo.c
+> +++ b/builtin/for-each-repo.c
+> @@ -46,7 +46,7 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
+>  	if (!config_key)
+>  		die(_("missing --config=<config>"));
+>  
+> -	err = repo_config_get_value_multi(the_repository, config_key, &values);
+> +	err = repo_config_get_string_multi(the_repository, config_key, &values);
+>  	if (err < 0)
+>  		usage_msg_optf(_("got bad config --config=%s"),
+>  			       for_each_repo_usage, options, config_key);
+> diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
+> index 6b51e00da0e..4b90b74d5d5 100755
+> --- a/t/t0068-for-each-repo.sh
+> +++ b/t/t0068-for-each-repo.sh
+> @@ -46,4 +46,17 @@ test_expect_success 'error on bad config keys' '
+>  	test_expect_code 129 git for-each-repo --config="'\''.b"
+>  '
+>  
+> +test_expect_success 'error on NULL value for config keys' '
+> +	cat >>.git/config <<-\EOF &&
+> +	[empty]
+> +		key
+> +	EOF
+> +	cat >expect <<-\EOF &&
+> +	error: missing value for '\''empty.key'\''
+> +	EOF
+> +	test_expect_code 129 git for-each-repo --config=empty.key 2>actual.raw &&
+> +	grep ^error actual.raw >actual &&
+> +	test_cmp expect actual
+> +'
 
-I tested the patch locally on top of ae73b2c8f1 and it solved my
-problem. Seems like there's still some further discussion, though.
+In this case the full error message looks like this:
+
+  $ ./git -c empty.key for-each-repo --config=empty.key
+  error: missing value for 'empty.key'
+  fatal: got bad config --config=empty.key
+
+  usage: git for-each-repo --config=<config> [--] <arguments>
+
+      --config <config>     config key storing a list of repository paths
+
+Having both an "error:" and a "fatal:" message seems redundant.
+
+
+On a related note, according to the usage shown above (and the
+synopsis in the man page), 'git for-each-repo' expects mandatory
+<arguments>, but this doesn't seem to be enforced, and invoking it
+without any arguments results in the usage of the main git command:
+
+  $ ./git -c empty.key=. for-each-repo --config=empty.key
+  usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+             [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+             [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+             [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+             [--config-env=<name>=<envvar>] <command> [<args>]
+  
+  These are common Git commands used in various situations:
+  
+  start a working area (see also: git help tutorial)
+  [...]
+
+This is misleading, because without any hints as to what was wrong I
+thought that the problem is with the options of the main git command,
+not with the (lack of) arguments of the 'for-each-repo' command.
+
+
