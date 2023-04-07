@@ -2,216 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03839C77B6C
-	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 15:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05625C77B61
+	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 15:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230437AbjDGPvj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Apr 2023 11:51:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54368 "EHLO
+        id S231358AbjDGPz7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Apr 2023 11:55:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbjDGPvh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2023 11:51:37 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A94A1993
-        for <git@vger.kernel.org>; Fri,  7 Apr 2023 08:51:36 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id j22so9267547ejv.1
-        for <git@vger.kernel.org>; Fri, 07 Apr 2023 08:51:36 -0700 (PDT)
+        with ESMTP id S229469AbjDGPz5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2023 11:55:57 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BEFB659E
+        for <git@vger.kernel.org>; Fri,  7 Apr 2023 08:55:56 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id n14so24446803plc.8
+        for <git@vger.kernel.org>; Fri, 07 Apr 2023 08:55:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680882694;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WYB8VawpuetGDVC9XFx9j0/aVW6f8Zo38fxeN6+xjRQ=;
-        b=oktlozWmboymLRy2yjZm2mR9cGyBMIoKB3gZozPPJ9K+bRY46yHmy98fBvAeww0HiH
-         MOjjtG4uQ//90SwAr180poqyrk/OiKw5kZKiXmQLNujVf/S9KLSxJ5m18z8K+5udKUpL
-         04WGsegwy/Ya1dvd6k8tOysfM62MU9YxlyRl9pfQJk1s4J+eL2rTDok6F5ssDmoQc6MI
-         y9xpSKnuoXHIQtYNN2gxJ5cTwlsSxHFe77ee7dEsSE7XJ3lQTdkROgcQu3kML6zFtaaX
-         97GiwWS8DE1ELA2/F5P+apymDnEHLSYZwjcWYfw2vOlPs28s/M6sRQ7jQMYUsTcNKHk4
-         DiBQ==
+        d=gmail.com; s=20210112; t=1680882956; x=1683474956;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NN19a4IbdDTEVg+CUuXTyU9pCh+hU9wrdC/7cRYiHeE=;
+        b=USHC1v1Y2KNGE16Suj4VRjbfyGwaPwfzW12oZfJJIUSQBv6z8L6Saewhf5DPQ91Vu1
+         XdLfNtxpv48Da6vHDN1phTkFrEuVBJGUBbaY8igycZiDE3K3iCP9SLC5VDf8CcAcTvhh
+         me5XSEGoJqYjoGYqYBB3FFpIBmf69tvUCf/501jTus8LtJ/nQasWkbVBjyJ9HdzHE/jp
+         dxgrOdPQsoAIf9YFQrMJ6j8ZLoXx1Hmzqa5chWTA9SrcWpRLqkySI5m5bnD0TiP7eQVA
+         6GgkygG4LkvY9C9VOJ9iJeCDBUU/avtGMXmhcxgzYo4bGeo/iSx0C7aWRNwaX+rHnspx
+         EGPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680882694;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20210112; t=1680882956; x=1683474956;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WYB8VawpuetGDVC9XFx9j0/aVW6f8Zo38fxeN6+xjRQ=;
-        b=A8MBf94wkLD859hBwjlsR1wAnYBNlmZ0pDwDrRQzBxQpdxdBiI/mQ6+3a3PO3a6YkK
-         /nhFu4DqgZzudNdCAxkIL1vOxcZelyz1x7z8CXe58Hl2/aLNLtfDz8yTWtBoeAsFghKc
-         t/69BMt5ycR6TGAXppZtzzbXLkYAetz/u3POh9Woz39Xh/TfPycP6mFQBChtnqvU+yBr
-         pkbddNggXXyPbd4rBnTtS6hqJihWzXJ0u/hlQ0Z7prY2ntpTGN4Cae+T64xshtVQK4rb
-         6hPlEy7d/w4AV9CJvwWlmDAeYJu4Amm2i6vnHZs1B4+FAqkNwkFkpaypzkIIb+kLfdCC
-         Tjog==
-X-Gm-Message-State: AAQBX9c4pVbCsCIg38GTNtFC6VWKPT1jcbnRk6bh+BBNLpEqzaFdYK4d
-        Obb3rpq6oM6SkiriZiI7CeQ=
-X-Google-Smtp-Source: AKy350aFskbcbVgZaZwfO5+L0jV59e8gkwxh0f0AgIBWBWvx7wW8enD333qEKribzSXVRloIfcBr1w==
-X-Received: by 2002:a17:906:4e0e:b0:922:78e2:7680 with SMTP id z14-20020a1709064e0e00b0092278e27680mr2739933eju.52.1680882694502;
-        Fri, 07 Apr 2023 08:51:34 -0700 (PDT)
-Received: from localhost (78-131-17-112.pool.digikabel.hu. [78.131.17.112])
-        by smtp.gmail.com with ESMTPSA id a12-20020a17090680cc00b00922a79e79c2sm2164230ejx.217.2023.04.07.08.51.33
+        bh=NN19a4IbdDTEVg+CUuXTyU9pCh+hU9wrdC/7cRYiHeE=;
+        b=yqezJPy0mtnzu56KVVz/hoQfc6H0F1fqdohO8ugcBKauOG/QH8nIWBkCLFlQsYxbBv
+         uIEUZn+n00IAwvaDDW1e3+Q9Pz3/+skgy9sv6UnhemcBAIbJSK05axB3C0HNihyHZvRT
+         O4xyvvjyNZURozxekvXJMx+2od4cHDtP1ZWhFkcQNvykida52qwC41ixzzt+epPLwvqb
+         CY/hyj/EuggLcixvtuTGn/c8EA4Sb1ulhEeRmeqFX1DBgJ2bSgdhGU19aThcr0jFlXnF
+         ojzoO33jvubmThKY6Vpag31hNjnu9u16LirBWJJhCR6mwwCCLGH2ebJ5N2OvXdtCyEaG
+         Wyvg==
+X-Gm-Message-State: AAQBX9dVSrFxeBawXCZHqYHLMYL5s8tIAI8TmuaKSf5J2PQbv07ZblWJ
+        NIfLwdi/A9ZtuL0NybSf3c93vA8FUhc=
+X-Google-Smtp-Source: AKy350YPLTgVPqZoNDZjgMbg7FJ1EL0MDWQ8NnmFTBEPWqhXRGoF43sVG3goFgxIQdZDzUeE65KPuA==
+X-Received: by 2002:a05:6a20:791e:b0:d8:cb1a:f4e5 with SMTP id b30-20020a056a20791e00b000d8cb1af4e5mr2535490pzg.23.1680882955871;
+        Fri, 07 Apr 2023 08:55:55 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id d16-20020aa78690000000b005a7c892b435sm3243784pfo.25.2023.04.07.08.55.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 08:51:33 -0700 (PDT)
-Date:   Fri, 7 Apr 2023 17:51:32 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-        Taylor Blau <me@ttaylorr.com>, Glen Choo <chooglen@google.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>, raymond@heliax.dev,
-        zweiss@equinix.com
-Subject: Re: [PATCH v8 9/9] for-each-repo: with bad config, don't conflate
- <path> and <cmd>
-Message-ID: <20230407155132.GA3117@szeder.dev>
-References: <cover-v7-0.9-00000000000-20230308T090513Z-avarab@gmail.com>
- <cover-v8-0.9-00000000000-20230328T140126Z-avarab@gmail.com>
- <patch-v8-9.9-6fce633493b-20230328T140127Z-avarab@gmail.com>
+        Fri, 07 Apr 2023 08:55:54 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] coccinelle: add and apply branch_get() rules
+References: <4cb4b69c-bd14-dfbd-6d06-59a7cd7e8c94@gmail.com>
+Date:   Fri, 07 Apr 2023 08:55:53 -0700
+In-Reply-To: <4cb4b69c-bd14-dfbd-6d06-59a7cd7e8c94@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+        message of "Thu, 6 Apr 2023 22:34:56 +0200")
+Message-ID: <xmqqjzynlm9i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v8-9.9-6fce633493b-20230328T140127Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 28, 2023 at 04:04:28PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> Fix a logic error in 4950b2a2b5c (for-each-repo: run subcommands on
-> configured repos, 2020-09-11). Due to assuming that elements returned
-> from the repo_config_get_value_multi() call wouldn't be "NULL" we'd
-> conflate the <path> and <command> part of the argument list when
-> running commands.
-> 
-> As noted in the preceding commit the fix is to move to a safer
-> "*_string_multi()" version of the *_multi() API. This change is
-> separated from the rest because those all segfaulted. In this change
-> we ended up with different behavior.
-> 
-> When using the "--config=<config>" form we take each element of the
-> list as a path to a repository. E.g. with a configuration like:
-> 
-> 	[repo] list = /some/repo
-> 
-> We would, with this command:
-> 
-> 	git for-each-repo --config=repo.list status builtin
-> 
-> Run a "git status" in /some/repo, as:
-> 
-> 	git -C /some/repo status builtin
-> 
-> I.e. ask "status" to report on the "builtin" directory. But since a
-> configuration such as this would result in a "struct string_list *"
-> with one element, whose "string" member is "NULL":
-> 
-> 	[repo] list
-> 
-> We would, when constructing our command-line in
-> "builtin/for-each-repo.c"...
-> 
-> 	strvec_pushl(&child.args, "-C", path, NULL);
-> 	for (i = 0; i < argc; i++)
-> 		strvec_push(&child.args, argv[i]);
-> 
-> ...have that "path" be "NULL", and as strvec_pushl() stops when it
-> sees NULL we'd end with the first "argv" element as the argument to
-> the "-C" option, e.g.:
-> 
-> 	git -C status builtin
-> 
-> I.e. we'd run the command "builtin" in the "status" directory.
-> 
-> In another context this might be an interesting security
-> vulnerability, but I think that this amounts to a nothingburger on
-> that front.
-> 
-> A hypothetical attacker would need to be able to write config for the
-> victim to run, if they're able to do that there's more interesting
-> attack vectors. See the "safe.directory" facility added in
-> 8d1a7448206 (setup.c: create `safe.bareRepository`, 2022-07-14).
-> 
-> An even more unlikely possibility would be an attacker able to
-> generate the config used for "for-each-repo --config=<key>", but
-> nothing else (e.g. an automated system producing that list).
-> 
-> Even in that case the attack vector is limited to the user running
-> commands whose name matches a directory that's interesting to the
-> attacker (e.g. a "log" directory in a repository). The second
-> argument (if any) of the command is likely to make git die without
-> doing anything interesting (e.g. "-p" to "log", there being no "-p"
-> built-in command to run).
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  builtin/for-each-repo.c  |  2 +-
->  t/t0068-for-each-repo.sh | 13 +++++++++++++
->  2 files changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/for-each-repo.c b/builtin/for-each-repo.c
-> index 224164addb3..ce8f7a99086 100644
-> --- a/builtin/for-each-repo.c
-> +++ b/builtin/for-each-repo.c
-> @@ -46,7 +46,7 @@ int cmd_for_each_repo(int argc, const char **argv, const char *prefix)
->  	if (!config_key)
->  		die(_("missing --config=<config>"));
->  
-> -	err = repo_config_get_value_multi(the_repository, config_key, &values);
-> +	err = repo_config_get_string_multi(the_repository, config_key, &values);
->  	if (err < 0)
->  		usage_msg_optf(_("got bad config --config=%s"),
->  			       for_each_repo_usage, options, config_key);
-> diff --git a/t/t0068-for-each-repo.sh b/t/t0068-for-each-repo.sh
-> index 6b51e00da0e..4b90b74d5d5 100755
-> --- a/t/t0068-for-each-repo.sh
-> +++ b/t/t0068-for-each-repo.sh
-> @@ -46,4 +46,17 @@ test_expect_success 'error on bad config keys' '
->  	test_expect_code 129 git for-each-repo --config="'\''.b"
->  '
->  
-> +test_expect_success 'error on NULL value for config keys' '
-> +	cat >>.git/config <<-\EOF &&
-> +	[empty]
-> +		key
-> +	EOF
-> +	cat >expect <<-\EOF &&
-> +	error: missing value for '\''empty.key'\''
-> +	EOF
-> +	test_expect_code 129 git for-each-repo --config=empty.key 2>actual.raw &&
-> +	grep ^error actual.raw >actual &&
-> +	test_cmp expect actual
-> +'
+Rubén Justo <rjusto@gmail.com> writes:
 
-In this case the full error message looks like this:
+> There are three supported ways to obtain a "struct branch *" for the
+> currently checked out branch, in the current worktree, using the API
+> branch_get(): branch_get(NULL), branch_get("") and branch_get("HEAD").
+>
+> The first one is the recommended [1][2] and optimal usage.  Let's add
+> two coccinelle rules to convert the latter two into the first one.
+>
+>   1. f019d08ea6 (API documentation for remote.h, 2008-02-19)
+>
+>   2. d27eb356bf (remote: move doc to remote.h and refspec.h, 2019-11-17)
 
-  $ ./git -c empty.key for-each-repo --config=empty.key
-  error: missing value for 'empty.key'
-  fatal: got bad config --config=empty.key
+Citing commits in the past is not an optimal way to justify a
+recommendation, though.  It does not show that these recommendations
+made earlier are still current.  Phrasing it this way
 
-  usage: git for-each-repo --config=<config> [--] <arguments>
+    Among them, the comment in remote.h for "struct branch"
+    recommends branch_get(NULL) for HEAD.
 
-      --config <config>     config key storing a list of repository paths
+might be a way to say that it comes from the current source, and
+when future readers of "git log" stumbles on this commit, they will
+also understand why the change was made.
 
-Having both an "error:" and a "fatal:" message seems redundant.
+> diff --git a/contrib/coccinelle/branch_get.cocci b/contrib/coccinelle/branch_get.cocci
+> new file mode 100644
+> index 0000000000..3ec5b59723
+> --- /dev/null
+> +++ b/contrib/coccinelle/branch_get.cocci
+> @@ -0,0 +1,10 @@
+> +@@
+> +@@
+> +- branch_get("HEAD")
+> ++ branch_get(NULL)
+> +@@
+> +@@
+> +- branch_get("")
+> ++ branch_get(NULL)
+> +
 
+I am not sure about these rules.  Noybody is passing "" to ask for
+HEAD in the current code.  Neither
 
-On a related note, according to the usage shown above (and the
-synopsis in the man page), 'git for-each-repo' expects mandatory
-<arguments>, but this doesn't seem to be enforced, and invoking it
-without any arguments results in the usage of the main git command:
+    $ git log -S'branch_get("")'
 
-  $ ./git -c empty.key=. for-each-repo --config=empty.key
-  usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
-             [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-             [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
-             [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
-             [--config-env=<name>=<envvar>] <command> [<args>]
-  
-  These are common Git commands used in various situations:
-  
-  start a working area (see also: git help tutorial)
-  [...]
+shows anything.  The first one does modify existing calls, but there
+are many calls to branch_get() that pass a computed value in a
+strbuf or a variable.  Do we know they are not passing "HEAD" or ""?
 
-This is misleading, because without any hints as to what was wrong I
-thought that the problem is with the options of the main git command,
-not with the (lack of) arguments of the 'for-each-repo' command.
+Stepping back a bit.  What is the ultimate goal for this change?
 
+Are we going to insist that the currently checked out branch MUST be
+asked for by passing NULL and not "" or "HEAD" to branch_get()?  If
+that is the goal, then it almost makes me wonder if we should just
+do the attached patch, plus your changes to the callers, without
+adding any new Coccinelle rules, and finding and fixing the fallouts
+by inspecting all the call graph that leads to branch_get().
 
+If that is not the goal, and we will keep acepting NULL, "", and "HEAD"
+as equivalents, the value of updating callers with literal "HEAD" to
+pass NULL is rather dubious.
+
+To be fair, I do not think we would not see if "branch_get(NULL)
+must be the only way to ask for the current branch" is a good goal,
+until we at least try a little.  Maybe during such a conversion that
+starts by erroring when the function is called with "HEAD" or ""
+(attached below), we might find that we need to change an existing
+caller (or many of them) to do something silly like this:
+
+ return_type a_caller(const char *branch_name, ...)
+ {
+-	struct branch *branch = branch_get(branch_name);
++	struct branch *branch;
++
++	if (branch_name &&
++	    (!strcmp(branch_name, "HEAD") || !*branch_name))
++		branch = branch_get(NULL);
++	else
++		branch = branch_get(branch_name);
+	... use branch_name ...
+	... use branch ...
+
+in which case we may start doubtint the goal to always use NULL for
+"HEAD".
+
+So, I dunno.  The patch does not make anything worse (other than
+adding two extra Coccinelle rules), but to me, the ultimate goal
+("where does it want to take us") is unclear.
+
+ remote.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git i/remote.c w/remote.c
+index 3a831cb530..3788dd3fa0 100644
+--- i/remote.c
++++ w/remote.c
+@@ -1829,8 +1829,10 @@ struct branch *branch_get(const char *name)
+ 	struct branch *ret;
+ 
+ 	read_config(the_repository);
+-	if (!name || !*name || !strcmp(name, "HEAD"))
++	if (!name)
+ 		ret = the_repository->remote_state->current_branch;
++	else if (!*name || !strcmp(name, "HEAD"))
++		BUG("use NULL for HEAD to call branch_get()");
+ 	else
+ 		ret = make_branch(the_repository->remote_state, name,
+ 				  strlen(name));
