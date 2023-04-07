@@ -2,217 +2,273 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62D5AC76196
-	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 02:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B4BCC76196
+	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 02:37:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240465AbjDGCTp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 6 Apr 2023 22:19:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56128 "EHLO
+        id S232933AbjDGChl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 6 Apr 2023 22:37:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37488 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240459AbjDGCTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2023 22:19:44 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0098A9
-        for <git@vger.kernel.org>; Thu,  6 Apr 2023 19:19:42 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id cw23so5536135ejb.12
-        for <git@vger.kernel.org>; Thu, 06 Apr 2023 19:19:42 -0700 (PDT)
+        with ESMTP id S230250AbjDGChk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2023 22:37:40 -0400
+Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C86114696
+        for <git@vger.kernel.org>; Thu,  6 Apr 2023 19:37:38 -0700 (PDT)
+Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-17fcc07d6c4so30304377fac.8
+        for <git@vger.kernel.org>; Thu, 06 Apr 2023 19:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680833981; x=1683425981;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RtX98K5Nsd8Hlgx5J5WRnRm9O0Koai/O3qbYVbnIDS4=;
-        b=AeyBzo8QGFIehVYEALs1V4XuOG+7ktvZu7ev+y7nR72b8cEu4ckizcRD+FugOU9Oid
-         fTkTCwgiQ4pvxCEICUqCeiPKVVupRelJhhuN7mCEjMtenDzEciFHKyheXWRJ/71Px6s7
-         99XQlm7paiCaLDB1J2yJ9ZeUzA8YfRqFw14jL8ktZgo6Uyz/5WQusjwgw5xsYvV864aN
-         o/DMSfSp/yNgIZXscRnZeXNnFZdeITHIQE4T8rKRM8uDpHUgUw1Y8mO0YEB0IdCdbQHs
-         nR8DTBMExsWnf5eTRYhhTxKMZXEzO5+Q8+ooFk9OmxTsEf0RoPwBCu/cpPnCG2ONgiSg
-         TRdA==
+        d=gmail.com; s=20210112; t=1680835058;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1kvEtbLxNyvMnXaZpYewDorJCyW6qY4ZdNkXk0Y56Ik=;
+        b=RMS4hoh3ImYUn9SWm6WdunEKxVZebGZPGbT4c1dSEgyBrLdM31LukwN0HUUHUd3ioF
+         7x71NEfhmNyC0QgNJnhDfR2gGrRKv3zbC7xKPJ2i62F6YISSLH45i+LYQ30DLEv0NPgL
+         TCQgzp0f6UlgHrfAkv7iQiI4jymZcpC8NJmhdEekCqo5bp1DIAdhR5RzOiG3BHJgIxD8
+         ubRWlFhD86uyCzOKoKO977dJY4kPU9SwYvX8Fc2bLIY2fwbcSzOcjiBRD12V6UDVEOUh
+         Zg7NGP3aoZ6e4UxoAbiwL+LWAs8vfV2poGY7nPhfth9bCh8GWeL+ZYdREFpxQlqJ5lG/
+         WroA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680833981; x=1683425981;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RtX98K5Nsd8Hlgx5J5WRnRm9O0Koai/O3qbYVbnIDS4=;
-        b=hU4yjoxfrLVD8UUmyvylTOBv8HjAULHpp0Y+YWyFrnQmSIb0xQcBzmRndpGyZL3Su0
-         BAivbSyv6A/B7+U873PcAgZ/ByF5aDfPUyyfUbtZxev09N4OlR8hPr339d5zD7fTfmYs
-         6ljFJjMZ6bns83xE/oM6Dlv3MYQtK9fAQeio2DsKoez/MqJ6YD0M7FnXGrjExPaLnNtT
-         pTkSfJzbLPIswjYgC22fWNB04aNmAQDrmWko/iuhSkbcI3qcCmz+AstX+AcZVBgm+AJt
-         0ZjB2/EZyHTbHrI3cEbeWOTkeWyvaO7zHrVeelBmy9dzYKFI9TNjrxYkcNCTaluu4mU6
-         EN/g==
-X-Gm-Message-State: AAQBX9cjD8XmdU8LeXNUCTgQysZtUxGCo+NdyU6WQOb5QUjRoyNNwzej
-        /vV3x3SOuyTc2mYuVmf5fsk=
-X-Google-Smtp-Source: AKy350ZzTRJDk21SI8/Xs3CogubtiovRb0nFDzIGVMwP5yQwBz7dTOf0LRUgi/vOJ0pqfDdazpdcYQ==
-X-Received: by 2002:a17:907:9864:b0:945:2f54:5eae with SMTP id ko4-20020a170907986400b009452f545eaemr920433ejc.77.1680833980808;
-        Thu, 06 Apr 2023 19:19:40 -0700 (PDT)
-Received: from [10.6.18.184] ([45.88.97.12])
-        by smtp.gmail.com with ESMTPSA id gt19-20020a170906f21300b00905a1abecbfsm1501044ejb.47.2023.04.06.19.19.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Apr 2023 19:19:40 -0700 (PDT)
-Message-ID: <4ef5464b-31dd-3c3e-05be-9891162e4f05@gmail.com>
-Date:   Fri, 7 Apr 2023 04:19:39 +0200
+        d=1e100.net; s=20210112; t=1680835058;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1kvEtbLxNyvMnXaZpYewDorJCyW6qY4ZdNkXk0Y56Ik=;
+        b=ZhqdMORjHiSXmKvgOLAmFDMe/KKYQTFWD3DZW9QS4ZDaJCYc7vU0nYPM/ReJStKWPg
+         tzVukAvY95dqvQky1bQgHAo1FDU8NN8b5R2K4llp9Can1SnmmS7HxI3BYh/dqG9K88A1
+         GG1gl3pNyocWBTGHnKw8x8YdGp/QVcMfVfLZRY6SkCpgJmOu8nnR98rJ3kXUmJD4kSf6
+         H1fydVpWF6psK0C1iSgST06YhLnpI3wdTwSx/ARynduXkmIwR77T15iDxo967bow6rQw
+         4cmSceBQQEneeRlx+gbgNGdvjTG6mALdb3Z2HSmoahzxoOW8ERrRDpJR9xzeGuR+z+5y
+         GC0Q==
+X-Gm-Message-State: AAQBX9cJ1AcuXzWsc+emS5rbF4eNRfeqlRV7fz/GzzrDTenleEWrOvX0
+        T7cnHzKSVrvZc7PuHW822pvX2xXC3v0=
+X-Google-Smtp-Source: AKy350Y5RBCFoOfeASRAqCFyVa241C1OhdqGTZ2Nm9Gcsbh++yA7W/yk5H+i3iB8gTu0aIRbWUO6Vw==
+X-Received: by 2002:a05:6870:6303:b0:177:9040:d243 with SMTP id s3-20020a056870630300b001779040d243mr801867oao.37.1680835057848;
+        Thu, 06 Apr 2023 19:37:37 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id yg21-20020a05687c009500b0016a37572d17sm1329592oab.2.2023.04.06.19.37.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Apr 2023 19:37:37 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Patrick Steinhardt <ps@pks.im>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2 0/2] Add fetch.updateHead option
+Date:   Thu,  6 Apr 2023 20:37:34 -0600
+Message-Id: <20230407023736.49190-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.40.0+fc1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v2 6/6] t2019: don't create unused files
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?=c3=98ystein_Walle?= <oystwa@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20230401212858.266508-1-rybak.a.v@gmail.com>
- <20230403223338.468025-1-rybak.a.v@gmail.com>
- <20230403223338.468025-7-rybak.a.v@gmail.com>
- <230406.86h6tttn21.gmgdl@evledraar.gmail.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-In-Reply-To: <230406.86h6tttn21.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Disclaimer: while trying to write a response to this email, I went a bit
-off track, and a big portion of message below is an investigation of
-test coverage of what is printed to standard output and standard error
-by "git checkout".  It's still mostly relevant to the discussion about
-t2019, or at least I hope so.
+It's surprising that `git clone` and `git init && git remote add -f` don't
+create the same remote state.
 
-There are four parts to this investigation, starting with:
+Fix this by introducing a new configuration: `fetch.updateHead` which updates
+the remote `HEAD` when it's not present with "missing", or always with
+"always".
 
+By default it's "never", which retains the current behavior.
 
-1. Standard output of "git checkout"
-Other than "git checkout -p" (tested in t3701-add-interactive.sh), it
-seems that the only thing that "git checkout" prints to standard output
-is in:
+This has already been discussed before [1].
 
-   a) function "show_local_changes" in builtin/checkout.c -- a couple
-      of tests in t7201-co.sh validate this
-   b) function "report_tracking" in builtin/checkout.c -- there are
-      tests that validate tracking information in output of "git
-      checkout" in t6040-tracking-info.sh.  One test in
-      t2020-checkout-detach.sh, titled 'tracking count is accurate after
-      orphan check' validates it as well.
+Changes since v1:
 
-While trying to find all tests that validate standard output of
-"git checkout", I found out a couple of things.
+1. Make `fetch_update_head` a named enum as suggested by Ævar
+2. Remove `need_update_head`: use switch case instead, per Ævar
+3. Make `update_head` receive `fetch_missing` boolean, instead of enum,
+   per Ævar
+4. Make `update_head` receive an unconsted `struct remote`: worse, but
+   simplifies the review process
 
+[1] https://lore.kernel.org/git/20201118091219.3341585-1-felipe.contreras@gmail.com/
 
-2. Standard error of "git checkout"
-Honestly, I haven't noticed it before, but I found it surprising that
-messages about branch switching:
+Felipe Contreras (2):
+  Add fetch.updateHead option
+  fetch: add support for HEAD update on mirrors
 
-    - "Switched to branch '%s'\n"
-    - "Switched to a new branch '%s'\n"
-    - "Switched to and reset branch '%s'\n"
+ Documentation/config/fetch.txt  |  4 ++
+ Documentation/config/remote.txt |  3 ++
+ builtin/fetch.c                 | 76 ++++++++++++++++++++++++++++++++-
+ remote.c                        | 20 +++++++++
+ remote.h                        | 12 ++++++
+ t/t5510-fetch.sh                | 49 +++++++++++++++++++++
+ 6 files changed, 163 insertions(+), 1 deletion(-)
 
-are printed to standard error.
-
-Several tests in t2020-checkout-detach.sh validate what is printed into
-standard error by "git checkout" via a variation of ">actual 2>&1".
-Tests for advice printed by "git checkout" (looking at "advice.c", it
-all goes to stderr), also do a variation of ">actual 2>&1".
-
-
-3. t2024-checkout-dwim.sh
-Test 'loosely defined local base branch is reported correctly' in t2024
-has an interesting validation of output of "git checkout":
-
-	git checkout strict | sed -e "s/strict/BRANCHNAME/g" >expect &&
-	status_uno_is_clean &&
-	git checkout loose | sed -e "s/loose/BRANCHNAME/g" >actual &&
-	status_uno_is_clean &&
-
-	test_cmp expect actual
-
-which is fine, except that neither file "expect" nor "actual" contain
-the string "BRANCHNAME".  And this test was broken when it was
-introduced in 05e73682cd (checkout: report upstream correctly even with
-loosely defined branch.*.merge, 2014-10-14).  It was probably intended
-for this test to redirect standard error of "git checkout".  It should
-be cleaned up as a separate patch/topic.
-
-On 06/04/2023 10:44, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Apr 04 2023, Andrei Rybak wrote:
-> 
->> Tests in t2019-checkout-ambiguous-ref.sh redirect two invocations of
->> "git checkout" to files "stdout" and "stderr".  Several assertions are
->> made using file "stderr".  File "stdout", however, is unused.
->>
->> Don't redirect standard output of "git checkout" to file "stdout" in
->> t2019-checkout-ambiguous-ref.sh to avoid creating unnecessary files.
->>
->> Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
->> ---
->>   t/t2019-checkout-ambiguous-ref.sh | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/t/t2019-checkout-ambiguous-ref.sh b/t/t2019-checkout-ambiguous-ref.sh
->> index 2c8c926b4d..9540588664 100755
->> --- a/t/t2019-checkout-ambiguous-ref.sh
->> +++ b/t/t2019-checkout-ambiguous-ref.sh
->> @@ -16,7 +16,7 @@ test_expect_success 'setup ambiguous refs' '
->>   '
->>   
->>   test_expect_success 'checkout ambiguous ref succeeds' '
->> -	git checkout ambiguity >stdout 2>stderr
->> +	git checkout ambiguity 2>stderr
->>   '
-> 
-> Ditto earlier comments that we should just fix this, if I make this
-> ">out" and "test_must_be_empty out" this succeeds, shouldn't we just use
-> that?
-
-4. t2019-checkout-ambiguous-ref.sh
-Back on topic: is empty standard output something that this test in
-t2019 should worry about?  Let's take a look at other tests.
-
-Aside from what was mentioned in section 1, tests in t7201 don't look
-at standard output of "git checkout".  There isn't a lot of
-"test_must_be_empty" in t/t2*check*:
-
-     $ git grep 'test_must_be_empty' t/t2*check*
-     t/t2004-checkout-cache-temp.sh: test_must_be_empty stderr &&
-     t/t2013-checkout-submodule.sh:  test_must_be_empty actual
-     t/t2013-checkout-submodule.sh:  test_must_be_empty actual
-     t/t2013-checkout-submodule.sh:  test_must_be_empty actual
-     t/t2024-checkout-dwim.sh:       test_must_be_empty status.actual
-
-The first one, in t2004, asserts output of "git checkout-index".
-All three in t2013 assert output of "git checkout HEAD >actual 2>&1".
-The last one, in t2024, asserts output of "git status".
-
-(There's also one "test_line_count = 0" in the same test in t2004,
-  but otherwise these tests seem to be pretty up-to-date w.r.t.
-  to using test_must_be_empty helper)
-
-> 
->>   test_expect_success 'checkout produces ambiguity warning' '
-> 
-> As an aside, we should really just combine these two tests.
-
-My dumb script for finding unused files gives false-positives for such
-tests.  And there a lot of tests that got split during introduction of
-C_LOCALE_OUTPUT prerequisite or were introduced before C_LOCALE_OUTPUT
-was phased out.
-
-For t2019, however, the tests were created this way before
-C_LOCALE_OUTPUT in 0cb6ad3c3d ("checkout: fix bug with ambiguous refs",
-2011-01-11).  Then the prerequisite was added in 6b3d83efac
-("t2019-checkout-ambiguous-ref.sh: depend on C_LOCALE_OUTPUT",
-2011-04-03) and removed in d3bd0425b2 ("i18n: use test_i18ngrep in
-lib-httpd and t2019", 2011-04-12).
-
-> 
->> @@ -37,7 +37,7 @@ test_expect_success 'checkout reports switch to branch' '
->>   '
->>   
->>   test_expect_success 'checkout vague ref succeeds' '
->> -	git checkout vagueness >stdout 2>stderr &&
->> +	git checkout vagueness 2>stderr &&
->>   	test_set_prereq VAGUENESS_SUCCESS
->>   '
-> 
+Range-diff against v1:
+1:  1cb238c83d ! 1:  0b80baba39 Add fetch.updateHead option
+    @@ Commit message
+     
+         For the next major version of Git, we might want to change this default.
+     
+    +    Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+         Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+     
+      ## Documentation/config/fetch.txt ##
+    @@ builtin/fetch.c: static int fetch_prune_tags_config = -1; /* unspecified */
+      static int prune_tags = -1; /* unspecified */
+      #define PRUNE_TAGS_BY_DEFAULT 0 /* do we prune tags by default? */
+      
+    -+static int fetch_update_head = FETCH_UPDATE_HEAD_DEFAULT;
+    ++static enum fetch_update_head fetch_update_head = FETCH_UPDATE_HEAD_DEFAULT;
+     +
+      static int all, append, dry_run, force, keep, multiple, update_head_ok;
+      static int write_fetch_head = 1;
+    @@ builtin/fetch.c: static int backfill_tags(struct transport *transport,
+      	return retcode;
+      }
+      
+    -+static void update_head(int config, const struct ref *head, const struct remote *remote)
+    ++static void update_head(int fetch_missing, const struct ref *head,
+    ++			struct remote *remote)
+     +{
+     +	char *ref, *target;
+     +	const char *r;
+    @@ builtin/fetch.c: static int backfill_tags(struct transport *transport,
+     +	if (!head || !head->symref || !remote)
+     +		return;
+     +
+    -+	ref = apply_refspecs((struct refspec *)&remote->fetch, "refs/heads/HEAD");
+    -+	target = apply_refspecs((struct refspec *)&remote->fetch, head->symref);
+    ++	ref = apply_refspecs(&remote->fetch, "refs/heads/HEAD");
+    ++	target = apply_refspecs(&remote->fetch, head->symref);
+     +
+     +	if (!ref || !target) {
+     +		warning(_("could not update remote head"));
+    @@ builtin/fetch.c: static int backfill_tags(struct transport *transport,
+     +	r = resolve_ref_unsafe(ref, 0, NULL, &flags);
+     +
+     +	if (r) {
+    -+		if (config == FETCH_UPDATE_HEAD_MISSING) {
+    -+			if (flags & REF_ISSYMREF)
+    -+				/* already present */
+    -+				return;
+    -+		} else if (config == FETCH_UPDATE_HEAD_ALWAYS) {
+    ++		if (!fetch_missing) {
+     +			if (!strcmp(r, target))
+     +				/* already up-to-date */
+     +				return;
+    -+		} else
+    -+			/* should never happen */
+    ++		} else if (flags & REF_ISSYMREF)
+    ++			/* already present */
+     +			return;
+     +	}
+     +
+    @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+      	int must_list_refs = 1;
+      	struct fetch_head fetch_head = { 0 };
+      	struct strbuf err = STRBUF_INIT;
+    -+	int need_update_head = 0, update_head_config = 0;
+    ++	enum fetch_update_head update_head_config = FETCH_UPDATE_HEAD_DEFAULT;
+      
+      	if (tags == TAGS_DEFAULT) {
+      		if (transport->remote->fetch_tags == 2)
+    @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+     +			else
+     +				update_head_config = fetch_update_head;
+     +
+    -+			need_update_head = update_head_config && update_head_config != FETCH_UPDATE_HEAD_NEVER;
+    -+
+    -+			if (need_update_head)
+    ++			switch (update_head_config) {
+    ++			case FETCH_UPDATE_HEAD_MISSING:
+    ++			case FETCH_UPDATE_HEAD_ALWAYS:
+     +				strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
+    ++			default:
+    ++				break;
+    ++			}
+      			refspec_ref_prefixes(&transport->remote->fetch,
+      					     &transport_ls_refs_options.ref_prefixes);
+     +		}
+    @@ builtin/fetch.c: static int do_fetch(struct transport *transport,
+      
+      	commit_fetch_head(&fetch_head);
+      
+    -+	if (need_update_head)
+    -+		update_head(update_head_config, find_ref_by_name(remote_refs, "HEAD"), transport->remote);
+    ++	switch (update_head_config) {
+    ++	case FETCH_UPDATE_HEAD_MISSING:
+    ++	case FETCH_UPDATE_HEAD_ALWAYS:
+    ++		update_head(update_head_config == FETCH_UPDATE_HEAD_MISSING,
+    ++			    find_ref_by_name(remote_refs, "HEAD"),
+    ++			    transport->remote);
+    ++	default:
+    ++		break;
+    ++	}
+     +
+      	if (set_upstream) {
+      		struct branch *branch = branch_get("HEAD");
+    @@ remote.c: static void read_branches_file(struct remote_state *remote_state,
+      	remote->fetch_tags = 1; /* always auto-follow */
+      }
+      
+    -+int parse_update_head(int *r, const char *var, const char *value)
+    ++int parse_update_head(enum fetch_update_head *r, const char *var,
+    ++		      const char *value)
+     +{
+    -+	if (!r)
+    -+		return -1;
+    -+	else if (!value)
+    ++	if (!value)
+     +		return config_error_nonbool(var);
+     +	else if (!strcmp(value, "never"))
+     +		*r = FETCH_UPDATE_HEAD_NEVER;
+    @@ remote.h: enum {
+      	REMOTE_BRANCHES
+      };
+      
+    -+enum {
+    ++enum fetch_update_head {
+     +	FETCH_UPDATE_HEAD_DEFAULT = 0,
+     +	FETCH_UPDATE_HEAD_NEVER,
+     +	FETCH_UPDATE_HEAD_MISSING,
+    @@ remote.h: struct remote {
+      	int prune;
+      	int prune_tags;
+      
+    -+	int update_head;
+    ++	enum fetch_update_head update_head;
+     +
+      	/**
+      	 * The configured helper programs to run on the remote side, for
+    @@ remote.h: void apply_push_cas(struct push_cas_option *, struct remote *, struct
+      char *relative_url(const char *remote_url, const char *url,
+      		   const char *up_path);
+      
+    -+int parse_update_head(int *r, const char *var, const char *value);
+    ++int parse_update_head(enum fetch_update_head *r, const char *var,
+    ++		      const char *value);
+     +
+      #endif
+     
+2:  fe6d62510b ! 2:  5c0f48b9cc fetch: add support for HEAD update on mirrors
+    @@ Commit message
+         Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+     
+      ## builtin/fetch.c ##
+    -@@ builtin/fetch.c: static void update_head(int config, const struct ref *head, const struct remote
+    +@@ builtin/fetch.c: static void update_head(int fetch_missing, const struct ref *head,
+      	if (!head || !head->symref || !remote)
+      		return;
+      
+    --	ref = apply_refspecs((struct refspec *)&remote->fetch, "refs/heads/HEAD");
+    --	target = apply_refspecs((struct refspec *)&remote->fetch, head->symref);
+    +-	ref = apply_refspecs(&remote->fetch, "refs/heads/HEAD");
+    +-	target = apply_refspecs(&remote->fetch, head->symref);
+     +	if (!remote->mirror) {
+    -+		ref = apply_refspecs((struct refspec *)&remote->fetch, "refs/heads/HEAD");
+    -+		target = apply_refspecs((struct refspec *)&remote->fetch, head->symref);
+    ++		ref = apply_refspecs(&remote->fetch, "refs/heads/HEAD");
+    ++		target = apply_refspecs(&remote->fetch, head->symref);
+      
+     -	if (!ref || !target) {
+     -		warning(_("could not update remote head"));
+-- 
+2.40.0+fc1
 
