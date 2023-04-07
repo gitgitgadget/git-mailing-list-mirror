@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 427AFC77B6E
-	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 07:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 906ACC76196
+	for <git@archiver.kernel.org>; Fri,  7 Apr 2023 07:25:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240003AbjDGHZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Apr 2023 03:25:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56240 "EHLO
+        id S240006AbjDGHZa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Apr 2023 03:25:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239780AbjDGHZT (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S239851AbjDGHZT (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 7 Apr 2023 03:25:19 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E276FAA
-        for <git@vger.kernel.org>; Fri,  7 Apr 2023 00:24:58 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id t4so36368310wra.7
-        for <git@vger.kernel.org>; Fri, 07 Apr 2023 00:24:58 -0700 (PDT)
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F51A5F8
+        for <git@vger.kernel.org>; Fri,  7 Apr 2023 00:24:59 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id l10-20020a05600c1d0a00b003f04bd3691eso9879917wms.5
+        for <git@vger.kernel.org>; Fri, 07 Apr 2023 00:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680852289;
+        d=gmail.com; s=20210112; t=1680852291;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hN9vFUWxPoulKIlSZYk1lZU5x2q73yl+mO73oAkxjtY=;
-        b=KbUXGU25uIKlGr3taKKE24MSYGp+6Ru39qjPq2mZm+HWFnzOADA6JPPTL5TmGHxgdp
-         S4L5XmwoHQfSugINu+XnECOevF2pqVTkT2mWlUjAHTaLx8PZCepvCLEZk7Hwd5yv9rym
-         f0QoIyysCvCVY8NSvOEadXzAjuCjs4N7wde+uWyYflz958PFFs9qEWSCvMfm/wp+SfDN
-         c05PQo84JuIDsaO32PBK65/ZtSxLFZPaJgo9lOpXHTStMt4Tu/k97uPj0+9W+u1B2Mwr
-         1TVYfiD0ty/Y5kGmugu3aB3TCuiBhU5BzWTeJuRrhoTgtLO4OE6yw8D2sI7570netPVf
-         BUqg==
+        bh=r99VpLl2c9eXbN/lJ4kLt/D8QaiW9A8ougIHgBkAfEA=;
+        b=KseE3NSvN4+OBG1j1yvICFai7LvU42706n+mpvzlOQXO8fwXmvr6kyG/3L0L/yVwa/
+         rUEyCQZPlAcvISCqmf78EHGjSOoTlWnwh/cttjPVL9BBvnnY8RHUXNwmS9lV7gdWdr6P
+         C/aLVXfr17TiBds6qvpwnwMMVoRo2eTGLV0GHEd1SO9wv3WpfXNL6nkeeFWgi3zFqP/C
+         1knYJIGUPzNWriTBzN6AacPVA2KiDnjYLdZfdehWblQ3KnUu8etzXycH5P9EFNjh2pLD
+         /ZU11IikKaL+jrcHjpL/5Gy2creGnLAjGPmW88PwoMPR/NkD0hmWY7tnjUkcocTOYC83
+         9m9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680852289;
+        d=1e100.net; s=20210112; t=1680852291;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hN9vFUWxPoulKIlSZYk1lZU5x2q73yl+mO73oAkxjtY=;
-        b=PNDeGqPuCM7+1dziFtiaP2/+xzlBqdvQYzMTKQfACHV+pSuMF67k2yKB+SBnca11PX
-         qYKi5kFrGhk5GrctU1Il2dkA2rTeoO5DejtWr2VCPof8Y6j/jK4j0/MgnVX80cQ4+bPW
-         OPf12oPGldYAdJfHzi/R6JuLaxDOCCd/Z0yzppUfYY8OJdoyHq719sgk3eEz2H6E74Mg
-         FS+uG4c/LxH5GURwR5BXV6OD0n1CRDulf1E4tY4qiw/zbVT/RehCOGwFKVawsDvuZZao
-         zy8V+Wi5dFkI+OFtqBwODOWmefYA9q0mXRf1TH4hO8GyTGeosd4TO5idof0zfgzlz1Th
-         Ut0w==
-X-Gm-Message-State: AAQBX9ef6f6AAkCIs5iyj3OC7WxIUUfTLs98GIZBGxZQvXgJDr5aXewL
-        btmT3wnqjQdtWKFenZmpB9pHprFWlFZDZA==
-X-Google-Smtp-Source: AKy350YOzWuLt9ql+qxCgLruIwHWt2OkQZMmJhXZQrTO7hoagmeYZ0l7CagYqTUWDoKs6JopfmqKNA==
-X-Received: by 2002:a5d:6b03:0:b0:2ef:b257:b46c with SMTP id v3-20020a5d6b03000000b002efb257b46cmr430251wrw.29.1680852289013;
-        Fri, 07 Apr 2023 00:24:49 -0700 (PDT)
+        bh=r99VpLl2c9eXbN/lJ4kLt/D8QaiW9A8ougIHgBkAfEA=;
+        b=s2kcmAK2oD7rmFHyMYie67z/Rd0fHjuNgUMaHBu+QlmwJnoF1CgI4KjW+QIMuRTlnr
+         0NqEbk/1mNTZGVCO7GCZ9p7DibVdwkPUV/xElRJiuknsijQSIbghSJFzlyTixXmc29WU
+         tCY5FB+hKi0rG1SEg1jOvJz96MAHhNYF9L6L85viXSmF7Uzf61N6fa43KPfVieagZzhj
+         0KsBTXHw5RRSP4oMBmiy2OrhyJTEII3U6/DHTFrjls3PPTxUZhJpyIeumjOjykC7X/fe
+         w5CqI8+XnBvhCmsqemsXH9cy4v8ME5Bh12MdBCTzXPY0tiY/+QG1pG+FTA5UCTaEjplh
+         KdvA==
+X-Gm-Message-State: AAQBX9ehXorIpnGcGXGiUZi7z1f86FKaunuSADETbyRSN2DhcLJOQS5o
+        ypSd4sKhJdVCw2Bj+ppcBuCPO/u//8wGww==
+X-Google-Smtp-Source: AKy350YY/26ps7XIZAQ4sCjmFbyk86uqwl7vODlUB72Eb8Xds5Ea2wA1nuY+cwdOZdv/xo88+6s0uA==
+X-Received: by 2002:a05:600c:28f:b0:3dc:4b87:a570 with SMTP id 15-20020a05600c028f00b003dc4b87a570mr564557wmk.35.1680852291403;
+        Fri, 07 Apr 2023 00:24:51 -0700 (PDT)
 Received: from christian-Precision-5550.lan ([2001:861:3f04:7ca0:90e:3fb7:fec2:981])
-        by smtp.gmail.com with ESMTPSA id f7-20020a5d6647000000b002da1261aa44sm3782761wrw.48.2023.04.07.00.24.48
+        by smtp.gmail.com with ESMTPSA id f7-20020a5d6647000000b002da1261aa44sm3782761wrw.48.2023.04.07.00.24.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 00:24:48 -0700 (PDT)
+        Fri, 07 Apr 2023 00:24:51 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
         Elijah Newren <newren@gmail.com>,
         John Cai <johncai86@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 09/14] replay: very coarse worktree updating
-Date:   Fri,  7 Apr 2023 09:24:10 +0200
-Message-Id: <20230407072415.1360068-10-christian.couder@gmail.com>
+Subject: [PATCH 12/14] replay: introduce guess_new_base()
+Date:   Fri,  7 Apr 2023 09:24:13 +0200
+Message-Id: <20230407072415.1360068-13-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.40.0.228.gb2eb5bb98e
 In-Reply-To: <20230407072415.1360068-1-christian.couder@gmail.com>
 References: <20230407072415.1360068-1-christian.couder@gmail.com>
@@ -70,82 +70,139 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-In case of conflict, let's just update the worktree and index. And then
-let's just die() as this command doesn't have ways to handle conflicts
-yet.
+In many cases the `--onto` option is not necessary as we can guess the
+branch we would like to replay onto.
 
-Note that we might want to improve this behavior in the case of a bare
-repository in a future commit.
-
-We also have to lock the index only after all the commits have been
-picked, so that in case of conflict the index is not already locked.
-Note that this locking of the index will be removed in a following
-commit as we will not want to modify it anymore.
+So let's introduce guess_new_base() for that purpose and make `--onto`
+optional.
 
 Co-authored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/replay.c | 35 +++++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+ Documentation/git-replay.txt |  8 ++++-
+ builtin/replay.c             | 61 +++++++++++++++++++++++++++++++-----
+ 2 files changed, 61 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
+index 7a83f70343..ce2cafc42e 100644
+--- a/Documentation/git-replay.txt
++++ b/Documentation/git-replay.txt
+@@ -9,7 +9,7 @@ git-replay - Replay commits on a different base, without touching working tree
+ SYNOPSIS
+ --------
+ [verse]
+-'git replay' --onto <newbase> <revision-range>...
++'git replay' [--onto <newbase>] <revision-range>...
+ 
+ DESCRIPTION
+ -----------
+@@ -20,6 +20,12 @@ references.  However, the output of this command is meant to be used
+ as input to `git update-ref --stdin`, which would update the relevant
+ branches.
+ 
++When the `--onto <newbase>` option is not passed, the commits will be
++replayed onto a base guessed from the `<revision-range>`.  For example
++if the `<revision-range>` is `origin/main..mybranch` then `mybranch`
++was probably based on an old version of `origin/main`, so we will
++replay it on the newest version of that branch.
++
+ OPTIONS
+ -------
+ 
 diff --git a/builtin/replay.c b/builtin/replay.c
-index a331887d12..9c795c05a7 100644
+index 63513ea6f1..af948af73c 100644
 --- a/builtin/replay.c
 +++ b/builtin/replay.c
-@@ -152,10 +152,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 	onto = peel_committish(onto_name);
- 	strbuf_addf(&branch_name, "refs/heads/%s", argv[2]);
+@@ -75,6 +75,54 @@ static struct commit *create_commit(struct tree *tree,
+ 	return (struct commit *)obj;
+ }
  
--	repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
--	if (repo_read_index(the_repository) < 0)
--		BUG("Could not read index");
++static struct commit *guess_new_base(struct rev_cmdline_info *info)
++{
++	struct commit *new_base = NULL;
++	int i, bottom_commits = 0;
++
++	/*
++	 * When the user specifies e.g.
++	 *   git replay origin/main..mybranch
++	 *   git replay ^origin/next mybranch1 mybranch2
++	 * we want to be able to determine where to replay the commits.  In
++	 * these examples, the branches are probably based on an old version
++	 * of either origin/main or origin/next, so we want to replay on the
++	 * newest version of that branch.  In contrast we would want to error
++	 * out if they ran
++	 *   git replay ^origin/master ^origin/next mybranch
++	 *   git replay mybranch~2..mybranch
++	 * the first of those because there's no unique base to choose, and
++	 * the second because they'd likely just be replaying commits on top
++	 * of the same commit and not making any difference.
++	 */
++	for (i = 0; i < info->nr; i++) {
++		struct rev_cmdline_entry *e = info->rev + i;
++		struct object_id oid;
++		char *fullname = NULL;
++
++		if (!(e->flags & BOTTOM))
++			continue;
++
++		/*
++		 * We need a unique base commit to know where to replay; error
++		 * out if not unique.
++		 *
++		 * Also, we usually don't want to replay commits on the same
++		 * base they started on, so only accept this as the base if
++		 * it uniquely names some ref.
++		 */
++		if (bottom_commits++ ||
++		    dwim_ref(e->name, strlen(e->name), &oid, &fullname, 0) != 1)
++			die(_("cannot determine where to replay commits; please specify --onto"));
++
++		free(fullname);
++		new_base = lookup_commit_reference_gently(the_repository,
++							  &e->item->oid, 1);
++	}
++
++	return new_base;
++}
++
+ static struct commit *pick_regular_commit(struct commit *pickme,
+ 					  struct commit *last_commit,
+ 					  struct merge_options *merge_opt,
+@@ -117,7 +165,7 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	int ret = 0;
+ 
+ 	const char * const replay_usage[] = {
+-		N_("git replay --onto <newbase> <revision-range>..."),
++		N_("git replay [--onto <newbase>] <revision-range>..."),
+ 		NULL
+ 	};
+ 	struct option replay_options[] = {
+@@ -130,12 +178,6 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	argc = parse_options(argc, argv, prefix, replay_options, replay_usage,
+ 			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
+ 
+-	if (!onto_name) {
+-		error(_("option --onto is mandatory"));
+-		usage_with_options(replay_usage, replay_options);
+-	}
 -
+-	onto = peel_committish(onto_name);
+ 
  	repo_init_revisions(the_repository, &revs, prefix);
  
- 	strvec_pushl(&rev_walk_args, "", argv[2], "--not", argv[1], NULL);
-@@ -194,12 +190,39 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
- 			die(_("replaying merge commits is not supported yet!"));
+@@ -151,6 +193,11 @@ int cmd_replay(int argc, const char **argv, const char *prefix)
+ 	revs.topo_order = 1;
+ 	revs.simplify_history = 0;
  
- 		pick = pick_regular_commit(commit, last_commit, &merge_opt, &result);
--		if (!pick)
--			break;
-+		if (!pick) {
-+			/* TODO: handle conflicts in sparse worktree instead */
-+			struct object_id head;
-+			struct tree *head_tree;
-+			struct lock_file lock = LOCK_INIT;
++	if (onto_name)
++		onto = peel_committish(onto_name);
++	else
++		onto = guess_new_base(&revs.cmdline);
 +
-+			repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
-+			if (repo_read_index(the_repository) < 0)
-+				BUG("Could not read index");
-+
-+			get_oid("HEAD", &head);
-+			head_tree = parse_tree_indirect(&head);
-+			printf("Switching from %s to %s.\n",
-+			       oid_to_hex(&head_tree->object.oid),
-+			       oid_to_hex(&result.tree->object.oid));
-+			merge_switch_to_result(&merge_opt, head_tree, &result,
-+					       1, 1);
-+			if (write_locked_index(&the_index, &lock,
-+					       COMMIT_LOCK | SKIP_IF_UNCHANGED))
-+				die(_("unable to write %s"), get_index_file());
-+
-+			die(_("failure to pick %s; cannot handle conflicts yet"),
-+			    oid_to_hex(&commit->object.oid));
-+		}
-+
- 		last_commit = pick;
- 		last_picked_commit = commit;
- 	}
- 
-+	repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
-+	if (repo_read_index(the_repository) < 0)
-+		BUG("Could not read index");
-+
- 	merge_switch_to_result(&merge_opt, head_tree, &result, 1, !result.clean);
- 
- 	if (result.clean < 0)
+ 	if (prepare_revision_walk(&revs) < 0) {
+ 		ret = error(_("error preparing revisions"));
+ 		goto cleanup;
 -- 
 2.40.0.228.gb2eb5bb98e
 
