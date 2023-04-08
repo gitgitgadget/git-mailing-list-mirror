@@ -2,137 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BEB1C76196
-	for <git@archiver.kernel.org>; Sat,  8 Apr 2023 00:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63C04C76196
+	for <git@archiver.kernel.org>; Sat,  8 Apr 2023 00:07:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229482AbjDHAD6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 7 Apr 2023 20:03:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51456 "EHLO
+        id S229503AbjDHAHv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 7 Apr 2023 20:07:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjDHAD5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2023 20:03:57 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE189BBBE
-        for <git@vger.kernel.org>; Fri,  7 Apr 2023 17:03:54 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id pc4-20020a17090b3b8400b0024676052044so166244pjb.1
-        for <git@vger.kernel.org>; Fri, 07 Apr 2023 17:03:54 -0700 (PDT)
+        with ESMTP id S229454AbjDHAHu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2023 20:07:50 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BFDF113F5
+        for <git@vger.kernel.org>; Fri,  7 Apr 2023 17:07:49 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-1a2104d8b00so253165ad.1
+        for <git@vger.kernel.org>; Fri, 07 Apr 2023 17:07:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680912234; x=1683504234;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IdyKiKCyF4IKSEYK9b2Rz2JVIj1N40sjzYWoYYEQbuI=;
-        b=mIxKNSdqt/qTgksohgmm+HkG/bDkcVjsxGqSj7JcUXueEAtE3TzMXUnIv3jHklHmW6
-         vJF5SFCzNnahaZRliXSx8Z6yQMoYXvLGlkmWuzw1IJL7dOcjK0c160zh8theljdzBvF3
-         l646FMpSqlzX+s/VhoPjrMGabWU8tJkjMUHEU5qJrqmhqD4xs9cZZV8tgkTKmdTddV15
-         CpKO6oWKs9w3EG2pMdHDpN9s2LyeuRuMlr+OrodP2eDrnscu0GXiPnbm/Gzcg1tCTuHu
-         RFV0op2IaUIs20L1CaRvEk0CPT1dYtDSHcpVovi7x5XLF8TyXWFTPj3HSWye8mM0Th8q
-         dzgQ==
+        d=google.com; s=20210112; t=1680912468;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bsSSJCRaUEHm1VWBWCZk1HZ86MuAR3ciMZfVBUm1168=;
+        b=acb/eyEiMfa8FOtSj7Kav/xBBFiX46j8LKq5h6qm3A4smV4EzE3x4rBRfSmX2ldJcc
+         oxWqWjLguICOdQQI5rbrVNEnBrbKVYjR5nRPGo9F8aahG/Rt+6NfJ1vV30jfGlZwbFnL
+         DTcuk+UKOBj6mFNTTx1toFFJBpEk3eYo1+yAC5nabDZ0zp0L8BT6JT+R/PMYCOtzUpDK
+         kFbvJ+2MOS/48y/+UNYVZXndjBpZJV67rtvj2127wl2Evc5dpkowsU/GCAWPvYq0YFey
+         BCTUnlZlIArqxTqId+pq93P80k2qYWCa+XKc3RYOijgrODSff29OHRdmCHFj2ilrxsm4
+         mUNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680912234; x=1683504234;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=IdyKiKCyF4IKSEYK9b2Rz2JVIj1N40sjzYWoYYEQbuI=;
-        b=ZXhi0v5i9Zzg/TLakFZBBDM5UvZFNAiTrtmBCBj1fyYKfnM3TsQMI1+0rd0ugtSuEo
-         rVvEj9xAIGnNAkQQxf1pwDpDMlDNbUR0E7GNY8hg/P/4ZR05hopapiHLKhnAQq/2ZaKz
-         +gZNlvY91UR1llt4vg1HjPv0TrsGgwbLJAhw74ave8yBUHUQG/hsNPSye8XKVHlb8uI0
-         0iLBB7/z15t1CjRJtDXPX4Mm4XDn/2wov/5KbDgyXO83b6NBZz6lTJDfwZ5xPERuen4m
-         kLPYAZkx/0FTx2YO6iRQlUFKNeCfqW+4p2rgOupmI90q0Ec3XrJt53NdqrIzZ8gFcZD1
-         QRRg==
-X-Gm-Message-State: AAQBX9cyBQjqdRT7UkyupgrWxn+ZWE8dIUmSWDiVuGa29d4aW7mXvJHb
-        vlB5JdcLEH5nC3PUQC8Cxxk=
-X-Google-Smtp-Source: AKy350bAnnyVEj2x8LQa0Dz3auUfCy/1trwFtN/JSUqZ3QU0OcRaDgOW1MoZFlbyrhO+t/SkEsbVMQ==
-X-Received: by 2002:a17:90b:4b87:b0:234:656d:235a with SMTP id lr7-20020a17090b4b8700b00234656d235amr4281151pjb.43.1680912234326;
-        Fri, 07 Apr 2023 17:03:54 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id jx20-20020a17090b46d400b0023f355a0bb5sm3302942pjb.14.2023.04.07.17.03.51
+        d=1e100.net; s=20210112; t=1680912468;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bsSSJCRaUEHm1VWBWCZk1HZ86MuAR3ciMZfVBUm1168=;
+        b=5Dm5FaSKZ+xLYqUsNr2dHclTMAf8wTOyXWLDkDpRPzfDLaMczd+3gatM1xBfc+Q1Iu
+         G0SN8d2Q4xBSBJWC4NzAvI9EoI7fKm8Cb98bAtb8m4fOBMMDDbEOkFCPibhXLEMtjnLt
+         BeoZ3AEvbmy/6CJwUeoiov6jolZhBFU5EnE7hYXpGM7VlDG/6HR0R1Gq9wPcNziV8XJ7
+         CyT++lkVlO1B18S9fGkvWKhBqFsFDSfLUtngBnETzNz5TGd2TnFZCk3T0Lk++2qo6PiR
+         yUWl9VGoRIHTv6da9rMrJig9ucJueU+LvKP4oGX46Cd8iXoUX9im58jolncvjyyOoxRj
+         oXEw==
+X-Gm-Message-State: AAQBX9ctf5XWwx1CPeFh2IdZU6oELp2x+JnaZZWkf5rPpfaPHaUCf5Ux
+        9q4P1OBAPjgk04CVnHEK7vKeJ4XFS9HCnzM1gfZ2hAUo
+X-Google-Smtp-Source: AKy350ZLAFMz69IBi4RxszlxkJbmoUfIDN8b4VOzYea3/HPQLuG7a3JROtPbVBR1238eXj6/5KknGw==
+X-Received: by 2002:a17:902:ba8f:b0:1a1:c941:2f77 with SMTP id k15-20020a170902ba8f00b001a1c9412f77mr112068pls.4.1680912468285;
+        Fri, 07 Apr 2023 17:07:48 -0700 (PDT)
+Received: from google.com ([2620:15c:2d3:202:3cbf:c928:3960:94f5])
+        by smtp.gmail.com with ESMTPSA id 3-20020a630a03000000b00476d1385265sm3134691pgk.25.2023.04.07.17.07.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Apr 2023 17:03:52 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <nasamuffin@google.com>
+        Fri, 07 Apr 2023 17:07:47 -0700 (PDT)
+Date:   Fri, 7 Apr 2023 17:07:43 -0700
+From:   Emily Shaffer <nasamuffin@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] usage: clarify --recurse-submodules as a boolean
-References: <ZDCWrl4GhgYKYFYG@google.com> <xmqqcz4fi7bd.fsf@gitster.g>
-Date:   Fri, 07 Apr 2023 17:03:51 -0700
-In-Reply-To: <xmqqcz4fi7bd.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        07 Apr 2023 16:47:02 -0700")
-Message-ID: <xmqqy1n3gryw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+Message-ID: <ZDCwT3mhaGHyydng@google.com>
+References: <ZDCWrl4GhgYKYFYG@google.com>
+ <xmqqcz4fi7bd.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqcz4fi7bd.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Apr 07, 2023 at 04:47:02PM -0700, Junio C Hamano wrote:
+> 
+> Emily Shaffer <nasamuffin@google.com> writes:
+> 
+> > `git switch` `git checkout`, `git reset`, and `git read-tree` allow a user to choose to
+> > recurse into submodules. All three of these commands' short usage seems
+> > to indicate that `--recurse-submodules` should take an argument. In
+> > practice, ...
+> 
+> Did you add 'git switch' at the last minute in so much of a hurry
+> that you forgot to put a comma after it, or rewrap the paragraph?
+> ;-)
 
+It was 'git checkout', if you must know ;) and in such a hurry that I
+also neglected to s/three/four/g. Will fix it with the reroll.
+
+> 
 > I do agree with you that "git checkout -h" and "git reset -h" that
 > list
->
+> 
 > 	--recurse-submodules[=<checkout>]
 > 	--recurse-submodules[=<reset>]
->
+> 
 > are being unnecessarily confusing by not saying anything about what
 > these placeholders are to be filled with.  
->
-> This however is a breaking change....
+> 
+> This however is a breaking change.  Even though there is no hint
+> that <checkout> and <reset> placeholders above take either Boolean
+> true or false in the documentation, they may have picked up a habit
+> to use the undocumented form from some random website.
 
-With your patch, the callback becomes like this:
+Ah, yeah, I see what you mean, from my locally-built version:
 
-int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
-						     const char *arg, int unset)
-{
-	if (unset)
-		config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
-	else
-		config_update_recurse_submodules = RECURSE_SUBMODULES_ON;
-	return 0;
-}
+  g checkout --recurse-submodules=false master
+  error: option `recurse-submodules' takes no value
 
-but this makes me wonder if it makes it better by turning it around
-180 degrees and going in the opposite direction.
+> I am not
+> sure it is safe to change the behaviour right under them, like this
+> patch does, and I wonder if we should do this in two steps, with its
+> first step doing:
+> 
+>  * "--[no-]recurse-submodules" from the command line gets no
+>    warning, as that is the way we recommend users to use the
+>    feature.
+> 
+>  * "--recurse-submodules=$true" and "--recurse-submodules=$false"
+>    (for various ways to spell true and false) get warning that tells
+>    the users that versions of Git in a year or more in the future
+>    will stop supporting the Boolean argument form of the option and
+>    instructs them to use "--[no-]recurse-submodules" instead.
+> 
+> We may have to also mention in the documentation that historically
+> the code accepted a Boolean value as an optional argument for the
+> option by mistake, but we are deprecating that form.
+> 
+> And after the second step, the code will end up looking like what
+> this patch shows.
 
-With Devil's advocate hat on, what if we declare that *any* option
-that sets a boolean variable can be spelled in any of the following
-ways?
+I'd be happy to do so with a reroll, probably on Monday. It's true that
+while these are user-facing commands which we don't guarantee backwards
+compatibility for, there's not a reason to subject users to that kind of
+pain unnecessarily.
 
-    [enables "frotz" option]
-    --frotz             # naturally
-    --frotz=yes         # usual synonyms yes/true/1/... are accepted
+Thanks for the quick response.
 
-    [disables "frotz" option]
-    --no-frotz          # naturally
-    --frotz=no          # usual synonyms no/false/0/... are accepted
-
-It would be just the matter of updating OPT_BOOL()'s implementation.
-
-Then the patches to builtin/checkout.c and friends would look like:
-
- static struct option *add_common_options(struct checkout_opts *opts,
- 					 struct option *prevopts)
- {
- 	struct option options[] = {
- 		OPT__QUIET(&opts->quiet, N_("suppress progress reporting")),
--		OPT_CALLBACK_F(0, "recurse-submodules", NULL,
--			    "checkout", "control recursive updating of submodules",
--			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater),
-+		OPT_BOOL(0, "recurse-submodules", &config_update_recurse_submodules,
-+			N_("control recursive updating of submodules")),
- 		OPT_BOOL(0, "progress", &opts->show_progress, N_("force progress reporting")),
-
-and we no longer need the callback function.
-
-We will not break any existing users, and then suddenly people can
-now say
-
-	--progress
-        --no-progress
-        --progress=yes
-        --progress=no
-
-just like --recurse-submodules=yes has silently been allowed all
-these years.
-
-Hmm?
+ - Emily
