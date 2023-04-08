@@ -2,106 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6944C77B61
-	for <git@archiver.kernel.org>; Sat,  8 Apr 2023 05:01:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5E3FC7619A
+	for <git@archiver.kernel.org>; Sat,  8 Apr 2023 06:27:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229835AbjDHFBf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 8 Apr 2023 01:01:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47478 "EHLO
+        id S229881AbjDHG1w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 8 Apr 2023 02:27:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbjDHFBa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2023 01:01:30 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 886F3CC01
-        for <git@vger.kernel.org>; Fri,  7 Apr 2023 22:01:28 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id j1-20020a05600c1c0100b003f04da00d07so4995209wms.1
-        for <git@vger.kernel.org>; Fri, 07 Apr 2023 22:01:28 -0700 (PDT)
+        with ESMTP id S229561AbjDHG1v (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2023 02:27:51 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0937DB740
+        for <git@vger.kernel.org>; Fri,  7 Apr 2023 23:27:51 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-54c061acbc9so151738677b3.11
+        for <git@vger.kernel.org>; Fri, 07 Apr 2023 23:27:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680930087; x=1683522087;
+        d=gmail.com; s=20210112; t=1680935270; x=1683527270;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NF72RZy6Lg3Abkq5r49TDt8ODdQqgH+JoDE9ap8+4F4=;
-        b=RkDOIn1VvUUUJJTAd8XS+cL4rPVeUVl6zGK2hKOgtuZnqqV5QUJX5S5t+mNnBuMt8H
-         Nnn8zTuPckM2vaCqMSs5H8PbF4nwSpe9xEaFNYkQXIVjVW6aZpPgzS0Xcp4XNMm9R5hE
-         MMBXIMv0Q0XIXfibQQhUZL7zeKWgjB7JW/rY2D+uxAYfKbzTYENLOwCSBL8N6h9fnebv
-         WVtAogGGlTp8QYIHQzY/BowSqZ/EC9I2JNScbKTviV2ph8DU7Bxbd745pJltWYv9+Z+L
-         E4LmisqGfK/SNiaTHn//+aks0Oig10/Y8FRKOdObAIMDEfCZY1/6cRnhoQge/nm1Z5IB
-         zzzA==
+        bh=EPqgpgTbvsvkO+2lgRZGSBUPMRTsL376+9kbuAwq0No=;
+        b=IOsCy5JzS79KXlnBxDzU5oxCEC8YCuWNm9rfUtjHxhBUB2KAJfqJd5ZecyAdV0zbH2
+         VQS/8V7piE69TeNlptwH0BoQ2+MV4Zj8K+miTI5DjL59UEDTUExqfPeb0DIZnC9OJP8W
+         dwnOPeiWOuwqjBYiSIW4Az601n5UoKXogjhfrJxmdGOl1OppPCoXWZWeiH4LBnRSP/Ac
+         Zxcg95X2cDXlBVtd4D/QaSshpNN9Zz5AbSLAxifUp46C+qRr5dc5RXX82UqUFf1teC3F
+         3r/XTf4TD8oaVc+N/BXkcD251vIxrJHV5SEKKQTUjgyATdjxC0zEbe2nzpMoRzJ+EvEU
+         3wkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680930087; x=1683522087;
+        d=1e100.net; s=20210112; t=1680935270; x=1683527270;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NF72RZy6Lg3Abkq5r49TDt8ODdQqgH+JoDE9ap8+4F4=;
-        b=YvmX7XKI7xzUwu9snWsR9gUxd7Z/1Zt0jmGkgGCoi6jICfaVBS+KuD+hXjRDcm5taf
-         xZYMPY2dO/TYk/V5dhShaZNSc1a/9Pzs9DyZzIAdxUmFk1iTDkJcUetQIERM3LL1J06G
-         OOcM5GGJFfM0SyYpR7Tcdeejrro0H/CEnaH0hf6ZJs+gl1f/f4CmK80FHOKubnOdJ39f
-         j8sSnufzpnMno/dJQKTzeNCS4puTm2MHZoBzoaqIo2KTatBbVrPng/ZcuhkkHtvK5vRo
-         4+9DJg/VJdw+/sHL4BfC5wwe9c6BdrrCI1JSFYmm2mDvqwDYH8nI3EwEPH5v550qTRBQ
-         l6wQ==
-X-Gm-Message-State: AAQBX9fo6cRddh6fxgksNrzrD6aqPMAXngZNRBz1e6/zK7sxHWzg7dDK
-        Qzo+Bdfh8SP+jHqjTx8qQJ6l6DhL8KnPjWlqj0c=
-X-Google-Smtp-Source: AKy350bH7nP8YmEVysXIlQlls42DSYQTM4X3Sfk0P0GokhzgQMdR1aXzdqLAIRuksRug0GVyeuyA1sO3LinceVZDyBY=
-X-Received: by 2002:a05:600c:3786:b0:3ee:143f:786d with SMTP id
- o6-20020a05600c378600b003ee143f786dmr158379wmr.4.1680930086816; Fri, 07 Apr
- 2023 22:01:26 -0700 (PDT)
+        bh=EPqgpgTbvsvkO+2lgRZGSBUPMRTsL376+9kbuAwq0No=;
+        b=MTujTYcCiVP/lgb7+S7GXke73SgA4PWWJcaRKvYer+YECmu037MCi81Ro6QYeodBhV
+         8JkOYqdYfSs/BGJIcGfV6UT2omo4EUix3NrXL5SywpcLKdb9lyoE61m+RK0dZGSVAUw1
+         UZSJB0rs0HAS7PmCIysbOAJxjvyVdwp3WcXrlMFNL3LxIEpxKm9KupCanOPwHpm32iKc
+         +oL+HIOKKtyda2v6DNrHm+l6+mn0akDI2B7G+p0kz8LLkqmKi2ojjI91NCSQ8WKumhqg
+         R5aL8xsmi9LQWsU4ndW+KhuWGzz9TmiPh+rNlFCRwjruDG0Go5pu2YlNXcVYopbuGJkc
+         74aA==
+X-Gm-Message-State: AAQBX9cLbYsNSTpX6UepwrWNU1zkwycrkfUtoyG98k0wDFIrW3K/NNxq
+        5nEz+zkBwlz1zm9S1dHq4ArKB38/sSIRq3MpGBU=
+X-Google-Smtp-Source: AKy350ZyKq2lzsQqzcX4mwgnXHmT0YjIvgkeUtD9InUax+6hpFnf2nsu1rAWRwnT0cearTWEvYyHDORQCstuTIBsuWA=
+X-Received: by 2002:a81:a907:0:b0:53c:6fda:835f with SMTP id
+ g7-20020a81a907000000b0053c6fda835fmr610091ywh.0.1680935270198; Fri, 07 Apr
+ 2023 23:27:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <2554712d-e386-3bab-bc6c-1f0e85d999db@cs.ucla.edu>
- <CAPUEspj1m6F0_XgOFUVaq3Aq_Ah3PzCUs7YUyFH9_Zz-MOYTTA@mail.gmail.com>
- <96358c4e-7200-e5a5-869e-5da9d0de3503@cs.ucla.edu> <xmqqttxvzbo8.fsf@gitster.g>
- <CANgJU+U+xXsh9psd0z5Xjr+Se5QgdKkjQ7LUQ-PdUULSN3n4+g@mail.gmail.com> <065bcdcb-5770-5384-5afe-4a4d29272274@cs.ucla.edu>
-In-Reply-To: <065bcdcb-5770-5384-5afe-4a4d29272274@cs.ucla.edu>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Fri, 7 Apr 2023 22:01:14 -0700
-Message-ID: <CAPUEspjtN-cwm=Nn=hMCcbOcOgPaVHsBfLW9TXn1HZrxtRR3BQ@mail.gmail.com>
-Subject: Re: bug#60690: -P '\d' in GNU and git grep
-To:     Paul Eggert <eggert@cs.ucla.edu>
-Cc:     demerphq <demerphq@gmail.com>, 60690@debbugs.gnu.org,
-        mega lith01 <megalith01@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Tukusej=E2=80=99s_Sirs?= <tukusejssirs@protonmail.com>,
-        git@vger.kernel.org, pcre2-dev@googlegroups.com,
-        Junio C Hamano <gitster@pobox.com>
+References: <CAOLTT8RTB7kpabN=Rv1nHvKTaYh6pLR6moOJhfC2wdtUG_xahQ@mail.gmail.com>
+ <xmqqy1n3k63p.fsf@gitster.g>
+In-Reply-To: <xmqqy1n3k63p.fsf@gitster.g>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 8 Apr 2023 14:27:53 +0800
+Message-ID: <CAOLTT8SXXKG3uEd8Q=uh3zx7XeUDUWezGgNUSCd1Fpq-Kyy-2A@mail.gmail.com>
+Subject: Re: [Question] Can git cat-file have a type filtering option?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>, johncai86@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 7, 2023 at 12:00=E2=80=AFPM Paul Eggert <eggert@cs.ucla.edu> wr=
-ote:
+Junio C Hamano <gitster@pobox.com> =E4=BA=8E2023=E5=B9=B44=E6=9C=888=E6=97=
+=A5=E5=91=A8=E5=85=AD 00:30=E5=86=99=E9=81=93=EF=BC=9A
 >
-> On 2023-04-06 06:39, demerphq wrote:
+> ZheNing Hu <adlternative@gmail.com> writes:
 >
-> > Unicode specifies that \d match any digit
-> > in any script that it supports.
+> > all blobs, and then use `git cat-file --batch` to retrieve them. This
+> > is not very elegant, or in other words, it might be better to have an
+> > internal implementation of filtering within `git cat-file
+> > --batch-all-objects`.
 >
-> "Specifies" is too strong. The Unicode Regular Expressions technical
-> standard (UTS#18) mentions \d only in Annex C[1], next to the word
-> "digit" in a column labeled "Property" (even though \d is really syntax
-> not a property). This is at best an informal recommendation, not a
-> requirement, as UTS#18 0.2[2] says that UTS#18's syntax is only for
-> illustration and that although it's similar to Perl's, the two syntax
-> forms may not be exactly the same. So we can't look to UTS#18 for a
-> definitive way out of the \d mess, as the Unicode folks specifically
-> delegated matters to us.
+> It does sound prominently elegant to have each tool does one task
+> and does it well, and being able to flexibly combine them to achieve
+> a larger task.
 >
-> Even ignoring the \d issue the digit situation is messy. UTS#18 Annex C
-> says "\p{gc=3DDecimal_Number}" is the standard recommended syntax
-> assignment for digits. However, PCRE2 does not support this syntax; it
-> supports another variant \p{Nd} that UTS#18 also recommends. So it
-> appears that PCRE2 already does not implement every recommended aspect
-> of UTS#18 syntax. PCRE2 also doesn't match Perl, which does support
-> "\p{gc=3DDecimal_Number}".
 
-Not sure I follow the whole logic here, but PCRE2[3] (search for
-"general category" which is what the "gc" above stands for) only
-supports the abbreviated form of the unicode classes and `Nd` is
-indeed the one that corresponds to `Decimal_Number`.
+Okay, you're right. It's not "ungraceful" to have each task do its own thin=
+g.
+I should clarify that for a command like `git cat-file --batch-all-objects`=
+,
+which traverses all objects, it would be better to have a filter. It might =
+be
+more performant than using `git rev-list --filter | git cat-file --batch`?
 
-Carlo
 
-[1]: https://unicode.org/reports/tr18/#Compatibility_Properties
-[2]: https://unicode.org/reports/tr18/#Conformance
-[3]: https://pcre2project.github.io/pcre2/doc/html/pcre2pattern.html
+> Once that approach is working well, it may still make sense to give
+> a special case codepath that bundles a specific combination of these
+> primitive features, if use cases for the specific combination appear
+> often.  But I do not know if the particular one, "we do not want to
+> feed specific list of objects to check to 'cat-file --batch'",
+> qualifies as one.
+>
+> > For example, `--type-filter`?
+>
+> Is the object type the only thing that people often would want to
+> base their filtering decision on?  Will we then see somebody else
+> request a "--size-filter", and then somebody else realizes that the
+> filtering criteria based on size need to be different between blobs
+> (most likely counted in bytes) and trees (it may be more convenient
+> to count the tree entries, not byes)?  It sounds rather messy and
+> we may be better off having such an extensible logic in one place.
+>
+
+Yes, having a generic filter for `git cat-file` would be better.
+
+> Like rev-list's object list filtering, that is.
+>
+> Is the logic that implements rev-list's object list filtering
+> something that is easily called from the side, as if it were a
+> library routine?  Refactoring that and teaching cat-file an option
+> to activate that logic might be more palatable.
+>
+
+I don't think so. While `git rev-list` traverses objects and performs
+filtering within a revision, `git cat-file --batch-all-objects` traverses
+all loose and packed objects. It might be difficult to perfectly
+extract the filtering from `git rev-list` and apply it to `git cat-file`.
+
+> Thanks.
