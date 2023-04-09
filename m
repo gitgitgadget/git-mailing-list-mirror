@@ -2,97 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AFC0C77B6F
-	for <git@archiver.kernel.org>; Sun,  9 Apr 2023 17:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBA31C77B6E
+	for <git@archiver.kernel.org>; Sun,  9 Apr 2023 19:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229575AbjDIRBP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Apr 2023 13:01:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39102 "EHLO
+        id S229485AbjDITIL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Apr 2023 15:08:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjDIRBO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Apr 2023 13:01:14 -0400
-Received: from pulsar.hadrons.org (2.152.192.238.dyn.user.ono.com [2.152.192.238])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B6422D5D
-        for <git@vger.kernel.org>; Sun,  9 Apr 2023 10:01:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=hadrons.org
-        ; s=201908; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version
-        :References:Message-ID:Subject:Cc:To:From:Date:From:Reply-To:Subject:
-        Content-ID:Content-Description:X-Debbugs-Cc;
-        bh=+rkrMLm0gpYdK2a/bO9BUnFXdy77+aoTlAdA+EO2Q4Q=; b=dC9PPsHCnR5/I1tP6iWY5He1av
-        yQOKmNZuxIhOk8pvan6+PHxHql8BqCXyqe5uLSCeNaUxJj2Mc7Dd8Mde9RTVXYQo0B5Twrop2YgoR
-        rVxlqQSpYpCIM4GWO55VJ7g//vKCO5hodq+KPaQvzhKx/ppPuJh2DgIQ3S+spOzndciILvxJde05s
-        astzCZRV+GiOzb+x5BhSbrrOCsjLqVe+FnKv9i+6Hwm48EX1MT99OfPU7Ypo9MR/P2MET+4KAVMIE
-        LrePBtcHQo5y2cVqnKbYjK6uCwHhXDjsCq6zWUB7iDESccDXuwzdVVGYTPuMzmM0+DdHW7e0+qfgD
-        umy2tEkQ==;
-Received: from guillem by pulsar.hadrons.org with local (Exim 4.96)
-        (envelope-from <guillem@hadrons.org>)
-        id 1plYPb-00005h-0t;
-        Sun, 09 Apr 2023 19:01:07 +0200
-Date:   Sun, 9 Apr 2023 19:01:07 +0200
-From:   Guillem Jover <guillem@hadrons.org>
+        with ESMTP id S229445AbjDITII (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Apr 2023 15:08:08 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EEBD35A7
+        for <git@vger.kernel.org>; Sun,  9 Apr 2023 12:08:07 -0700 (PDT)
+Received: (qmail 22888 invoked by uid 109); 9 Apr 2023 19:08:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 09 Apr 2023 19:08:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23578 invoked by uid 111); 9 Apr 2023 19:08:05 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 09 Apr 2023 15:08:05 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sun, 9 Apr 2023 15:08:05 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Add a way to disable =?utf-8?B?wqtn?= =?utf-8?Q?it_clean=C2=BB?=
- per repo
-Message-ID: <ZDLvUxp0d33VgFQY@thunder.hadrons.org>
-Mail-Followup-To: Guillem Jover <guillem@hadrons.org>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <ZCiZCM+AAUnjp4Ml@thunder.hadrons.org>
- <xmqq355g6f6u.fsf@gitster.g>
+Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] doc: simplify man version
+Message-ID: <20230409190805.GA77061@coredump.intra.peff.net>
+References: <20230408001829.11031-1-felipe.contreras@gmail.com>
+ <xmqqr0suf0wz.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq355g6f6u.fsf@gitster.g>
+In-Reply-To: <xmqqr0suf0wz.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+On Sat, Apr 08, 2023 at 03:45:48PM -0700, Junio C Hamano wrote:
 
-On Mon, 2023-04-03 at 10:36:25 -0700, Junio C Hamano wrote:
-> Guillem Jover <guillem@hadrons.org> writes:
-> > Accidentally running «git clean -xdf» or «git clean -Xdf» might be
-> > catastrophic there.
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 > 
-> So would accidentally running "rm -fr" there be catastrophic, too.
+> > diff --git a/Documentation/Makefile b/Documentation/Makefile
+> > index a6ba5bd460..4721b000c1 100644
+> > --- a/Documentation/Makefile
+> > +++ b/Documentation/Makefile
+> > @@ -150,8 +150,7 @@ ASCIIDOC_HTML = xhtml11
+> >  ASCIIDOC_DOCBOOK = docbook
+> >  ASCIIDOC_CONF = -f asciidoc.conf
+> >  ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF) \
+> > -		-amanversion=$(GIT_VERSION) \
+> > -		-amanmanual='Git Manual' -amansource='Git'
+> > +		-amanmanual='Git Manual' -amansource='Git $(GIT_VERSION)'
+> >  ASCIIDOC_DEPS = asciidoc.conf GIT-ASCIIDOCFLAGS
+> >  TXT_TO_HTML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_HTML)
+> >  TXT_TO_XML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_DOCBOOK)
+> 
+> Is this a complete patch, or will this leave us in an incomplete
+> in-between place?
+> 
+> We have some references to manversion in "git grep manversion
+> Documentation/" in asciidoc.conf and asciidoctor-extensions.rb
+> remaining after this ptach is applied, which presumably are no
+> longer used.  I would imagine that these leftover references end up
+> substituting them with something benign, like an empty string, in
+> the output, but it somehow makes me feel dirty [*].
 
-Sure.
+I think we are OK with this patch on its own. Asciidoc seems to be smart
+enough to omit the empty XML element on its own. Asciidoctor isn't (and
+nor is ruby hack which adds it in), but docbook is essentially just
+concatenating them anyway. Either way, the generated roff looks like:
 
-> I doubt it would make much sense to file a feature request to Debian
-> or GNU/FSF to disable "rm -r" in certain directories.  I am not sure
-> why "git clean" should be any different.
+  .TH "GIT" "1" "2023\-04\-06" "Git 2\&.40\&.0\&.316\&.g67fafd" "Git Manual"
 
-Right, but I see a substantial difference though, «git clean» is
-part of the git toolset to manage among other things specific work
-trees, where that behavior is controlled through configuration, and
-is as such confined within those specific realms, where also the
-properties of what is being tracked might be different.
-(With GNU coreutils rm you can confine it within one filesystem with
---one-file-system, but TBH I've never had the need to use it AFAIR,
-and it's not enabled by default.)
+(the first "GIT" is the command name, so this is from git.1).
 
-> Commands like "git clean" require "-f" before they become overly
-> destructuve for a reason.  clean.requireForce defaults to true for
-> the same reason.
+I do think we probably want to pair this with another patch removing the
+asciidoctor-extensions hack, but the reasoning there is separate (it was
+needed for some older versions that we can probably declare as "too old"
+now).
 
-Right, I guess that's another reason for me why I see these («rm» vs
-«git clean») as not being entirely comparable. Using «rm» requires in
-most cases no force options, even when removing recursively (with -r),
-while «git clean» by default will fail fatally (for all invocations
-AFAICS?), so perhaps I'm holding it wrong, but when you end up invoking
-a command very often (f.ex. to make sure your project is building from
-a clean state), which requires using a force option (because passing -i
-would become very cumbersome very quick), that becomes a habit or part
-of your muscle-memory (perhaps a bad one), that means I tend to not pay
-as much attention as I'd do when running «rm -rf» (also because of the
-confinement I mentioned above).
-
-For now it occurred to me that I could create dummy git repos in
-parent directories to act as «git clean» barriers, so that it does not
-propagate further up in the directory tree, but that still seems like
-a hack, and I'd really like to protect specific work trees where I know
-I never want to be able to run «git clean».
-
-Thanks,
-Guillem
+-Peff
