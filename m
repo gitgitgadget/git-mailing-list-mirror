@@ -2,120 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38F34C761A6
-	for <git@archiver.kernel.org>; Sun,  9 Apr 2023 06:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B612C761A6
+	for <git@archiver.kernel.org>; Sun,  9 Apr 2023 07:47:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229461AbjDIGvc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Apr 2023 02:51:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39540 "EHLO
+        id S229504AbjDIHnN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 9 Apr 2023 03:43:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjDIGva (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Apr 2023 02:51:30 -0400
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D9E94ED5
-        for <git@vger.kernel.org>; Sat,  8 Apr 2023 23:51:29 -0700 (PDT)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-54e40113cf3so88914117b3.12
-        for <git@vger.kernel.org>; Sat, 08 Apr 2023 23:51:29 -0700 (PDT)
+        with ESMTP id S229436AbjDIHnM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Apr 2023 03:43:12 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7396249CD
+        for <git@vger.kernel.org>; Sun,  9 Apr 2023 00:43:11 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id j1so6095127wrb.0
+        for <git@vger.kernel.org>; Sun, 09 Apr 2023 00:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681023088; x=1683615088;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LYIitX3oMOWo5LH0hKkSi1fZdkCwuH7QhNqdrpdv488=;
-        b=JjZLbC2qAklkLtdFbmMvkc13DYYhsgIGLUqldCDwqXIDhMN0vzrCN+N/HAkLmzBJeU
-         vd3uDh0vgN8GJVhHVR1sltjF6IyDD+YmCHp1ONgw7FW634PgxLzGJO31yAvUy8m0KtI9
-         aV4Bp1F4CoIuNQ3MN7nOvNaHGKEjsk/68RA8CeD6d50+gyf9gScGz2k1yJgc5jOsWnec
-         rXuOlXCpRt1G/Y7s3oOf/T2TER49sVvpP/jeeN1bfAogZvijsPKgru9HGYGWb5H8Mj6a
-         D7AfM2kJa44aKQlmIZZXSUlO/Uz6wtbGVwpz5lR2w9b5LHxCMiGP6u31FphO2kJndeF0
-         zR4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681023088; x=1683615088;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20210112; t=1681026190; x=1683618190;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LYIitX3oMOWo5LH0hKkSi1fZdkCwuH7QhNqdrpdv488=;
-        b=MPgBHkPIRKHXDzXwJDraGTGVKi/dDBQKshV/7EP9XgYx/QsIoWEQNHdWrLwf6V7njY
-         7pQifImz9fYTUuNZK7Qeua9zx/nbxk932ukAotpF39jbHUP/D9ZNzpooHXGgTsdBZt8D
-         ckm1O8lsl/pHbzMi6N2D6tyzkfLnqbItob+3eKpPmXSaDawkyp3/P4Shg8exZEtgGo7r
-         RrJZRtftlbXUB7NKfExgRquShGvFTWzX2jP0VqXfKs3fyRJ01TR8EOBTjiyiXFCZ0yVj
-         gsfRTwE6pBBR7HWVeIxvC0dpkHbWtWLilbX25ZUGuTEbuHLWfZq5V1MTtCwMGwVzUk1h
-         3sLQ==
-X-Gm-Message-State: AAQBX9fCpKtnofO8s2KXkD7SvNX5qT2kMHI6a2Q4ghfZZLoHC2CCiOQM
-        hb5wvnHcQF51Y0izuMo3At359uxTvRY9sUNfGIU=
-X-Google-Smtp-Source: AKy350ZGkWyjdEEPj+StV069Oz5qTvLi/Qs9PPg5H5n/rXDKj1R9OMXhlwguAGEq/2HRlzSpBUpx23tofnJxSO4hdlU=
-X-Received: by 2002:a81:af5d:0:b0:52e:e095:d840 with SMTP id
- x29-20020a81af5d000000b0052ee095d840mr4042200ywj.0.1681023088121; Sat, 08 Apr
- 2023 23:51:28 -0700 (PDT)
+        bh=2L0pMxVpR90tKfhvqMGlQ0vpuBIz/ppXxv5vY0PJct0=;
+        b=QCMlx2H36j5pi1pGz4u7Ee7p06ua/cjO+knvkZTbdrJlr79nVUZ9Hu3mHX9HKI53Pm
+         L0WaeNFAvl4COvNWjAu7cYHqoWk40lxLaEhXy+mw8+8RoSxJFhBLldhC5mHdS3pz6NhY
+         Jcu9yQP0zb3AfttNMluI47UZ+cP08amxXzoRN4N/88qq9qpoRNDkSRt20/hu1zOR7Stp
+         ECgnLR/aBIH8dQo1yWwKPSzxSg1mHKH7zYiTayYA0yKVxIxg7nBwr2CSugT9uN5FV2u1
+         k2OVC0J15p149TnFNePY+d56IZAKyfWsf8G/NMQwFg3BlxvgUlmYox+8tXhG7Vm/S8hE
+         g6Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681026190; x=1683618190;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2L0pMxVpR90tKfhvqMGlQ0vpuBIz/ppXxv5vY0PJct0=;
+        b=tFnmdx5GlqME24zR6u2gJeAKyf0F09wqq6R6mAeTX0alW3TkjpjQiPsGPthHoA48yH
+         dN6R5f8CVWF1sZoysbHpKNLogelN75JgAX48SnkHCgesVmcz384Tw8QRpOmNIUU0po3f
+         Js1NZFaP38XD8PYRfc67DOiZ+vvwPBoTMWT6vqpPLBwUfjLNSsRTz0WeMyXnEoV8maZA
+         Kq4uUOfNagjbIx55B7KQFGtgWvHdv8bGAj1a0gbAfiFe74ibeLtsn165imS6ToALNYx+
+         DWHAazNUa6E+pMDms8dlTpJ8UV9vdVSHVyRkkGEwQc8+nFEB61KaeyVJ9lCkhL5JaTmy
+         iRGg==
+X-Gm-Message-State: AAQBX9dsp4ioV3I4YmqR7/PunVGzLzf7VjFAGnZ7V5Y65LsiIpBBK2is
+        rT1Vi28ImwfZMq0Plxt/A4ynS3vJZBU=
+X-Google-Smtp-Source: AKy350bzwKXfI87ahP1XbK+2nAllKsWHBszi8y/mgjS39Y+uGMQyxXBlz9qM1Lar2BU3+x+nZ6BPLg==
+X-Received: by 2002:a5d:4610:0:b0:2dc:cad4:87b9 with SMTP id t16-20020a5d4610000000b002dccad487b9mr4465657wrq.68.1681026189598;
+        Sun, 09 Apr 2023 00:43:09 -0700 (PDT)
+Received: from [192.168.2.52] (123.red-88-14-42.dynamicip.rima-tde.net. [88.14.42.123])
+        by smtp.gmail.com with ESMTPSA id z3-20020a05600c0a0300b003ee6aa4e6a9sm13940907wmp.5.2023.04.09.00.43.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 09 Apr 2023 00:43:09 -0700 (PDT)
+Subject: Re: [PATCH] coccinelle: add and apply branch_get() rules
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <4cb4b69c-bd14-dfbd-6d06-59a7cd7e8c94@gmail.com>
+ <xmqqjzynlm9i.fsf@gitster.g> <376aca6d-1b09-9bf9-c258-81e8ed2443c2@gmail.com>
+ <xmqqjzymf0wt.fsf@gitster.g>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Message-ID: <d01d9fc8-0112-eae3-0792-1e75912720e2@gmail.com>
+Date:   Sun, 9 Apr 2023 09:43:06 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <CAOLTT8RTB7kpabN=Rv1nHvKTaYh6pLR6moOJhfC2wdtUG_xahQ@mail.gmail.com>
- <xmqqy1n3k63p.fsf@gitster.g> <CAOLTT8SXXKG3uEd8Q=uh3zx7XeUDUWezGgNUSCd1Fpq-Kyy-2A@mail.gmail.com>
- <ZDIUvK/bF7BFqX5q@nand.local> <ZDIgyKDQ2rJT2YEI@nand.local> <ZDIiO1HMjej+rnMk@nand.local>
-In-Reply-To: <ZDIiO1HMjej+rnMk@nand.local>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 9 Apr 2023 14:51:34 +0800
-Message-ID: <CAOLTT8TFiXG1hABFVLp_TOEZ4__s2k4+nvcG3Ax867=LJxOi_g@mail.gmail.com>
-Subject: Re: [Question] Can git cat-file have a type filtering option?
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        johncai86@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqjzymf0wt.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> =E4=BA=8E2023=E5=B9=B44=E6=9C=889=E6=97=A5=E5=
-=91=A8=E6=97=A5 10:26=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Sat, Apr 08, 2023 at 10:19:52PM -0400, Taylor Blau wrote:
-> > On Sat, Apr 08, 2023 at 09:28:28PM -0400, Taylor Blau wrote:
-> > > > I don't think so. While `git rev-list` traverses objects and perfor=
-ms
-> > > > filtering within a revision, `git cat-file --batch-all-objects` tra=
-verses
-> > > > all loose and packed objects. It might be difficult to perfectly
-> > > > extract the filtering from `git rev-list` and apply it to `git cat-=
-file`.
-> > >
-> > > `rev-list`'s `--all` option does exactly the former: it looks at all
-> > > loose and packed objects instead of doing a traditional object walk.
+On 08-abr-2023 15:45:54, Junio C Hamano wrote:
+
+> I do not know why you are
+> arguing against my suggestion to improve your proposed log message.
+
+Sorry, that's not my intention.  The recommendation still stands and the
+message was not clear about it.
+
+> >> Stepping back a bit.  What is the ultimate goal for this change?
 > >
-> > Sorry, this isn't right: --all pretends as if you passed all references
-> > to it over argv, not to just look at the individual loose and packed
-> > objects.
->
-> The right thing to do here if you wanted to get a listing of all blobs
-> in your repository regardless of their reachability or whether they are
-> loose or packed is:
->
->     git cat-file --batch-check=3D'%(objectname)' --batch-all-objects |
->     git rev-list --objects --stdin --no-walk --filter=3D'object:type=3Dbl=
-ob'
->
+> > Of course, as you pointed out, there are usages where a computed value
+> > is used, perhaps coming from the user, which might end up specifying
+> > "HEAD".  Those usages of branch_get() are not considered here.  Not even
+> > indirect ones.
+> 
+> That is what I found problematic, because I do not think this
+> particular change will get us closer to the endgame of not feedling
+> "" or "HEAD", if ...
 
-This looks like a mistake. Try passing a tree oid to git rev-list:
+The objective in this patch is to avoid having in the codebase
+branch_get("HEAD") in favor of branch_get(NULL).  Because that's what we
+recommend and, anyway, a smart compiler is going to optimize out that
+strcmp with two literals.  Therefore, we follow the recommendations and
+save some compiler effort in the way.
 
-git rev-list --objects --stdin --no-walk --filter=3D'object:type=3Dblob'
-<<< HEAD^{tree}
-27f9fa75c6d8cdae7834f38006b631522c6a5ac3
-4860bebd32f8d3f34c2382f097ac50c0b972d3a0 .cirrus.yml
-c592dda681fecfaa6bf64fb3f539eafaf4123ed8 .clang-format
-f9d819623d832113014dd5d5366e8ee44ac9666a .editorconfig
-b0044cf272fec9b987e99c600d6a95bc357261c3 .gitattributes
-...
-
-> Or, if your filter is as straightforward as "is this object a blob or
-> not", you could write something like:
->
->     git cat-file --batch-check --batch-all-objects | awk '
->       if ($2 =3D=3D "blob") { print $0 }'
->
-> Or you could tighten up the AWK expression by doing something like:
->
->     git cat-file --batch-check=3D'%(objecttype) %(objectname)' \
->       --batch-all-objects | awk '/^blob / { print $2 }'
->
-> Sorry for the brain fart.
->
-> Thanks,
-> Taylor
+But, branch_get() cannot stop supporting a computed value that ends
+being "HEAD", as a way to refer to the current branch.  However, maybe
+you are suggesting so...
