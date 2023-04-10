@@ -2,350 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54974C76196
-	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 22:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E1A9C76196
+	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 22:53:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229814AbjDJWwU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Apr 2023 18:52:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41996 "EHLO
+        id S229804AbjDJWx1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Apr 2023 18:53:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbjDJWwQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2023 18:52:16 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F0FA1FE0
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 15:52:14 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1a652700c36so31295ad.0
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 15:52:14 -0700 (PDT)
+        with ESMTP id S229591AbjDJWx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2023 18:53:26 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13490173C
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 15:53:25 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id u13so6338811ybu.5
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 15:53:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1681167133;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QSaFEG8Yb6T8CKmpBjbXJM5O8JI8SHWGrRK4dUnU15M=;
-        b=sIf1Rr4c0idNiOgLCYZY0o5lyRPgF6/5k5k25fxBNduEabNN1SADkKKY/TDW0jSEk+
-         mHuBby40xTpc2pPZBFKpHHUgCzAFmtS8rdRaw8zsvZ8qRBiXmvnDXKacunxrL5Qzo6MT
-         KAA6nsPcQNMMa1hPDQThwUOceRRxV8JeNYcGodG1oRrLRvUeo+WUclNjed3r5KRyouRe
-         Peha8NUmVAU962giNvS64aHDZjg3ycSkfcQcr19YD8GOunCE5lSGLH9pADYugr195K+X
-         Dn8ia+nKMLxD0N1Si8Y5GTXcyPkDNizyuipwba05g7SLsYamkQVYobS2uKC9Ji9fkIgA
-         oTGQ==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1681167204; x=1683759204;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0drjlbEuyMcEtZl3ijl7ek3mudC6OHCJewHhfTLtsJ8=;
+        b=AiXk6q84L2XlF4EL83F8Id3nHH5q1O+gk7vWQO7GqbKyELeJA0FKNP9JlN84GkHM1k
+         7AYu0+k+vJoUe+hjQ5Ay1l+jz7uf/8MNqqVxfvdaydxkPHxVleB119UgMc0/hOTHDKk+
+         d65HyH0K3e2XQrZf9/jt8YLM+76ygWEiias2deNrdeHHPU7SuvR3kfTvpeFGu2t5pQTF
+         17zyZ96RBz7WTPZNRfH+L8+6dEakPQuNujyabdVuwzxHf5iXDE3BUYwgI89YuWYnm48T
+         AqYT/SJcqD8MtCLS8JkUy/NSL/HkP0zrGg0LWqMFDhHPouEpjao2YuTmh3v1B9tr1zhf
+         Oeag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681167133;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QSaFEG8Yb6T8CKmpBjbXJM5O8JI8SHWGrRK4dUnU15M=;
-        b=gjYJHaGaDUiGMvjzYP6BRSwbBNp3i/VkHv60o6PCitJzb3rGR0T7RY+1ttXiz6QYq+
-         U9Bgyu+p8oJVCnbbGUcoTP4I0teupaMcXGNcWf0jr7IV5KOBijCmkmOQ/mQY7cyl5U8q
-         23RSe3R8hG52aoNI5yJXX9Iw17mI+kpGPKGPoPENfIJ+3Rr6z1HOJx2sAac52wL8xErf
-         e2k7udzbnQZ32/HYD3GlSyPe4cFxvIXCuUGfA3r3fpj4Nko1Fd4Qu32DuJ69JBLKg1YT
-         iLvCAyNsk3FWL7iuANB/Hpjk+LGuAzQf9aS7otSaFIGUHK4onFFTVYmyq/L5mQrxrUe8
-         dArw==
-X-Gm-Message-State: AAQBX9f01CRdT4BxGelSLmN3sajUuCAXr6871vAi7WI1eS/De6P+dLrX
-        fGOVM1UMjBWsJ/JVbeMnikVFhtlf5baVxWaxg0CD5Fjf
-X-Google-Smtp-Source: AKy350ZuzKqkf0SKF7VuRRHbh1KQ/fXHEcMoyRMXrMrX+alwejMhPlqHOqyGNvn2pKk3zWCXr5vWDQ==
-X-Received: by 2002:a17:902:c191:b0:1a5:160f:8581 with SMTP id d17-20020a170902c19100b001a5160f8581mr108512pld.10.1681167133113;
-        Mon, 10 Apr 2023 15:52:13 -0700 (PDT)
-Received: from google.com ([2620:15c:2d3:202:e06e:1db:d0a:7a9])
-        by smtp.gmail.com with ESMTPSA id p15-20020aa7860f000000b005810c4286d6sm8411244pfn.0.2023.04.10.15.52.12
-        for <git@vger.kernel.org>
+        d=1e100.net; s=20210112; t=1681167204; x=1683759204;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0drjlbEuyMcEtZl3ijl7ek3mudC6OHCJewHhfTLtsJ8=;
+        b=Ax8G531qHdvAgaeRd+MGSWGIlqZ126dXe7Rx/wGWhLNETu0t7ATmbNrL8W+PmrvrQS
+         d2XaLZpFP2aO7l4Lc1b9fyptS7/sjVM1TLnjdEdbJmZ6BlvDMDDSn7Po/6Hoc16lBIVV
+         j6fcb6apeN/HBVcENLQ92O3dAJwiRUZhEyKlrKxoggnxJx7Aoc0iy2GQHqdFsp03txiI
+         kbPaAGWgqRP785gyb8TWpZW5X0OKWpqbVEc0usYMAqfZIDOoGKu014HFI0I9iP8XyYUT
+         Ajg6C2TmAY7K0YXk9D4bUCEXgN5IQdc1hHoZ6t0aeDfnH26EfvKoTPLsWo8hujf+Be50
+         JXaw==
+X-Gm-Message-State: AAQBX9fAaQhBNkfrnbICf1U6HVewglyDRxFqsfWdUAEuh3n4n24oh1zk
+        0jZbpQRJPQpdFOorsY7QHU0AHesphhX2IFPSQ8HsbQ==
+X-Google-Smtp-Source: AKy350bwrsjujeTLjYYGbGuUPZKVToOkZRCUBDfj1+CoJk91tK8myfvnqKqCY3vEgekLMteOMxXUxg==
+X-Received: by 2002:a05:6902:1207:b0:b8e:f653:45d8 with SMTP id s7-20020a056902120700b00b8ef65345d8mr4836810ybu.40.1681167204028;
+        Mon, 10 Apr 2023 15:53:24 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id j19-20020a25d213000000b00b7767ca7487sm3230922ybg.36.2023.04.10.15.53.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Apr 2023 15:52:12 -0700 (PDT)
-Date:   Mon, 10 Apr 2023 15:52:07 -0700
-From:   Emily Shaffer <nasamuffin@google.com>
+        Mon, 10 Apr 2023 15:53:23 -0700 (PDT)
+Date:   Mon, 10 Apr 2023 18:53:18 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Subject: [PATCH v2] usage: clarify --recurse-submodules as a boolean
-Message-ID: <ZDSTFwMFO7vbj/du@google.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/7] pack-revindex: enable on-disk reverse indexes by default
+Message-ID: <cover.1681166596.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZDCWrl4GhgYKYFYG@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`git switch` `git checkout`, `git reset`, and `git read-tree` allow a
-user to choose to recurse into submodules. All four of these commands'
-short usage seems to indicate that `--recurse-submodules` should take an
-argument. In practice, though, all four of these commands parse through
-the same callback path:
+This series enables pack reverse-indexes to be written to disk by
+default instead of computed on-the-fly in memory.
 
-  option_parse_recurse_submodules_worktree_updater(...) checks for
-  set/unset, or passes off to...
-  parse_update_recurse_submodules_arg(...), which is a straight handoff
-  to...
-  parse_update_recurse(...), which only accepts true or false.
+For repositories with large packs, this can have a significant benefit
+for both end-users and Git forges. Extensive performance tests appear in
+the fifth and sixth commit, but here are some highlights:
 
-So ultimately, it can only be true or false, unlike `git push
---recurse-submodules=<enum>`. A user could provide
-`--recurse-submodules=true`, but we don't typically suggest that for
-boolean arguments.
-(Documentation/git-(switch|checkout|reset|read-tree).txt suggests
---[no-]recurse-submodules, too.)
+  - The time it takes to generate a pack containing objects for the 10
+    most-recent commits in linux.git (starting from 68047c48b228) drops
+    from ~540ms to ~240ms, yielding a ~2.22x improvement.
 
-In fact, these four commands are the only ones that use this codepath -
-so there's not any reason for it to be so meandering. However, because
-option_parse_recurse_submodules_worktree_updater() modifies static state
-in submodule.c, we still need to get a handle to that static state
-through a function call.
+  - The time it takes to compute the on-disk object size of a single
+    object drops from ~300ms to 4ms, yielding a ~76.96x improvement.
 
-To preserve the behavior of --recurse-submodules=true and clarify the
-usage string simultaneously, get rid of the OPT_CALLBACK_F in favor of a
-simple OPT_BOOL, and call a setter in submodule.c for the static state
-instead. Also, remove the now-unused
-option_parse_recurse_submodules_worktree_updater(),
-parse_update_recurse_submodules_arg(), and parse_update_recurse() calls.
+Reverse indexes are a trade-off between the time they take to be
+computed versus the time it takes to access a single record. In-memory
+reverse indexes take time to generate proportional to the number of
+packed objects in the repository, but have instantaneous lookup time.
 
-Signed-off-by: Emily Shaffer <nasamuffin@google.com>
+On-disk reverse indexes can be "generated" instantly (the time it takes
+to generate them is a one-time cost, loading them is instantaneous).
+But individual record lookup time is slower, since it involves multiple
+disk I/O operations.
 
----
+In the vast majority of cases, this trade-off favors the on-disk ".rev"
+files. But in certain cases, the in-memory variant performs more
+favorably. Since these cases are narrow, and performance is machine- and
+repository-dependent, this series also introduces a new configuration
+option to disable reading ".rev" files in the third commit.
 
-The one thing missing from this patch is tests - especially since the
-need for a reroll was predicated on not breaking a specific user edge
-case. But I had some trouble finding a good spot, because it seems these
-commands weren't explicitly testing the --recurse-submodule flag
-anywhere. I'm planning to add them sometime this week, but if someone
-beats me to it, or has a suggestion of where to put them, or if Junio
-wants to take this patch without them, I won't mind.
+The series is structured as follows:
 
-Changes since v1:
+  - A couple of cleanup patches to plug a leak in stage_tmp_packfiles().
+  - Three patches to enable `pack.readReverseIndex`.
+  - Another patch to change the default of `pack.writeReverseIndex` from
+    "false" to "true".
+  - A final patch to enable the test suite to be run in a mode that does
+    not use on-disk ".rev" files.
 
- - Added translation tag to the usage string at all 3 callsites
- - Took Junio's advice[1] and got rid of the callback interface
-   entirely, replacing it with a setter to the static state in
-   submodule.c.
+Thanks in advance for your review. I'm really excited to get this in the
+hands of users after a couple of years of running this at GitHub (and
+being opt-in otherwise).
 
-By the way, it occurred to me to try and get a handle directly to the
-static int and pass that in to OPT_BOOL instead of this overhead. I gave
-it a try despite the feeling of poor layering smell, but it turns out
-we're saved from having to even consider that, because
-RECURSE_SUBMODULES_ON == 2. So no matter what, we will need to take an
-extra step to do the conversion from bool (and be careful about setting
-when it wasn't explicitly provided, because this static also takes its
-value from the config before the option parse happens).
+Taylor Blau (7):
+  pack-write.c: plug a leak in stage_tmp_packfiles()
+  t5325: mark as leak-free
+  pack-revindex: make `load_pack_revindex` take a repository
+  pack-revindex: introduce GIT_TEST_REV_INDEX_DIE_ON_DISK
+  pack-revindex: introduce `pack.readReverseIndex`
+  config: enable `pack.writeReverseIndex` by default
+  t: invert `GIT_TEST_WRITE_REV_INDEX`
 
- - Emily
+ Documentation/config/pack.txt     |  8 +++++++-
+ builtin/index-pack.c              |  5 +++--
+ builtin/pack-objects.c            |  5 +++--
+ ci/run-build-and-tests.sh         |  1 -
+ pack-bitmap.c                     |  5 +++--
+ pack-revindex.c                   | 12 +++++++++---
+ pack-revindex.h                   |  6 ++++--
+ pack-write.c                      |  2 ++
+ packfile.c                        |  2 +-
+ repo-settings.c                   |  1 +
+ repository.h                      |  1 +
+ t/README                          |  2 +-
+ t/perf/p5312-pack-bitmaps-revs.sh |  3 +--
+ t/t5325-reverse-index.sh          | 16 +++++++++++++++-
+ 14 files changed, 51 insertions(+), 18 deletions(-)
 
-1: https://lore.kernel.org/git/xmqqy1n3fat2.fsf%40gitster.g
----
-Range-diff against v1:
-1:  c345a44e36 < -:  ---------- usage: clarify --recurse-submodules as a boolean
--:  ---------- > 1:  1ec2a064d2 usage: clarify --recurse-submodules as a boolean
-
- builtin/checkout.c  | 14 +++++++++++---
- builtin/read-tree.c | 10 +++++++---
- builtin/reset.c     | 10 +++++++---
- submodule-config.c  | 20 --------------------
- submodule-config.h  |  1 -
- submodule.c         | 19 +++++--------------
- submodule.h         |  6 +++---
- 7 files changed, 33 insertions(+), 47 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 38a8cd6a96..d105403b0e 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -80,6 +80,7 @@ struct checkout_opts {
- 	int ignore_unmerged;
- 	int pathspec_file_nul;
- 	char *pathspec_from_file;
-+	int recurse_submodules;
- 
- 	const char *new_branch;
- 	const char *new_branch_force;
-@@ -1587,9 +1588,8 @@ static struct option *add_common_options(struct checkout_opts *opts,
- {
- 	struct option options[] = {
- 		OPT__QUIET(&opts->quiet, N_("suppress progress reporting")),
--		OPT_CALLBACK_F(0, "recurse-submodules", NULL,
--			    "checkout", "control recursive updating of submodules",
--			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater),
-+		OPT_BOOL(0, "recurse-submodules", &opts->recurse_submodules,
-+			 N_("control recursive updating of submodules")),
- 		OPT_BOOL(0, "progress", &opts->show_progress, N_("force progress reporting")),
- 		OPT_BOOL('m', "merge", &opts->merge, N_("perform a 3-way merge with the new branch")),
- 		OPT_STRING(0, "conflict", &opts->conflict_style, N_("style"),
-@@ -1597,6 +1597,11 @@ static struct option *add_common_options(struct checkout_opts *opts,
- 		OPT_END()
- 	};
- 	struct option *newopts = parse_options_concat(prevopts, options);
-+	/*
-+	 * we only want to act on --recurse-submodules if it was set explicitly,
-+	 * so put it into unset third state.
-+	 */
-+	opts->recurse_submodules = -1;
- 	free(prevopts);
- 	return newopts;
- }
-@@ -1677,6 +1682,9 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	argc = parse_options(argc, argv, prefix, options,
- 			     usagestr, parseopt_flags);
- 
-+	if (opts->recurse_submodules >= 0)
-+		set_config_update_recurse_submodules(opts->recurse_submodules);
-+
- 	if (opts->show_progress < 0) {
- 		if (opts->quiet)
- 			opts->show_progress = 0;
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index 600d4f748f..4d325f7481 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -116,6 +116,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
- 	struct unpack_trees_options opts;
- 	int prefix_set = 0;
- 	struct lock_file lock_file = LOCK_INIT;
-+	int recurse_submodules = -1;
- 	const struct option read_tree_options[] = {
- 		OPT__SUPER_PREFIX(&opts.super_prefix),
- 		OPT_CALLBACK_F(0, "index-output", NULL, N_("file"),
-@@ -149,9 +150,8 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
- 			 N_("skip applying sparse checkout filter")),
- 		OPT_BOOL(0, "debug-unpack", &opts.internal.debug_unpack,
- 			 N_("debug unpack-trees")),
--		OPT_CALLBACK_F(0, "recurse-submodules", NULL,
--			    "checkout", "control recursive updating of submodules",
--			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater),
-+		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
-+			 N_("control recursive updating of submodules")),
- 		OPT__QUIET(&opts.quiet, N_("suppress feedback messages")),
- 		OPT_END()
- 	};
-@@ -177,6 +177,10 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
- 	if (opts.reset)
- 		opts.reset = UNPACK_RESET_OVERWRITE_UNTRACKED;
- 
-+	/* only modify the value if set explicitly */
-+	if (recurse_submodules >= 0)
-+		set_config_update_recurse_submodules(recurse_submodules);
-+
- 	prepare_repo_settings(the_repository);
- 	the_repository->settings.command_requires_full_index = 0;
- 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 0ed329236c..d67b5ab1e0 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -326,6 +326,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	struct object_id oid;
- 	struct pathspec pathspec;
- 	int intent_to_add = 0;
-+	int recurse_submodules = -1;
- 	const struct option options[] = {
- 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
- 		OPT_BOOL(0, "no-refresh", &no_refresh,
-@@ -339,9 +340,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				N_("reset HEAD, index and working tree"), MERGE),
- 		OPT_SET_INT(0, "keep", &reset_type,
- 				N_("reset HEAD but keep local changes"), KEEP),
--		OPT_CALLBACK_F(0, "recurse-submodules", NULL,
--			    "reset", "control recursive updating of submodules",
--			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater),
-+		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
-+			 N_("control recursive updating of submodules")),
- 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
- 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
- 				N_("record only the fact that removed paths will be added later")),
-@@ -356,6 +356,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 						PARSE_OPT_KEEP_DASHDASH);
- 	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
- 
-+	/* only modify the value if set explicitly */
-+	if (recurse_submodules >= 0)
-+		set_config_update_recurse_submodules(recurse_submodules);
-+
- 	if (pathspec_from_file) {
- 		if (patch_mode)
- 			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--patch");
-diff --git a/submodule-config.c b/submodule-config.c
-index ecf0fcf007..9ef0bdc207 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -338,26 +338,6 @@ int option_fetch_parse_recurse_submodules(const struct option *opt,
- 	return 0;
- }
- 
--static int parse_update_recurse(const char *opt, const char *arg,
--				int die_on_error)
--{
--	switch (git_parse_maybe_bool(arg)) {
--	case 1:
--		return RECURSE_SUBMODULES_ON;
--	case 0:
--		return RECURSE_SUBMODULES_OFF;
--	default:
--		if (die_on_error)
--			die("bad %s argument: %s", opt, arg);
--		return RECURSE_SUBMODULES_ERROR;
--	}
--}
--
--int parse_update_recurse_submodules_arg(const char *opt, const char *arg)
--{
--	return parse_update_recurse(opt, arg, 1);
--}
--
- static int parse_push_recurse(const char *opt, const char *arg,
- 			       int die_on_error)
- {
-diff --git a/submodule-config.h b/submodule-config.h
-index c2045875bb..fda6ad0162 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -55,7 +55,6 @@ int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- struct option;
- int option_fetch_parse_recurse_submodules(const struct option *opt,
- 					  const char *arg, int unset);
--int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
- int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
- void repo_read_gitmodules(struct repository *repo, int skip_if_read);
- void gitmodules_config_oid(const struct object_id *commit_oid);
-diff --git a/submodule.c b/submodule.c
-index 94644fac0a..8a2a6c8384 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -229,21 +229,12 @@ int git_default_submodule_config(const char *var, const char *value,
- 	return 0;
- }
- 
--int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
--						     const char *arg, int unset)
-+void set_config_update_recurse_submodules(int value)
- {
--	if (unset) {
--		config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
--		return 0;
--	}
--	if (arg)
--		config_update_recurse_submodules =
--			parse_update_recurse_submodules_arg(opt->long_name,
--							    arg);
--	else
--		config_update_recurse_submodules = RECURSE_SUBMODULES_ON;
--
--	return 0;
-+	if (value < 0 || value > 1)
-+		BUG("config_update_recurse_submodules is a boolean");
-+	config_update_recurse_submodules = value ? RECURSE_SUBMODULES_ON
-+						 : RECURSE_SUBMODULES_OFF;
- }
- 
- /*
-diff --git a/submodule.h b/submodule.h
-index c55a25ca37..9532d4e073 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -51,9 +51,9 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *,
- 					     const char *path);
- int git_default_submodule_config(const char *var, const char *value, void *cb);
- 
--struct option;
--int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
--						     const char *arg, int unset);
-+/* Sets static state 'config_update_recurse_submodules'. 'value' must be 0 or 1. */
-+void set_config_update_recurse_submodules(int value);
-+
- int is_tree_submodule_active(struct repository *repo,
- 			     const struct object_id *treeish_name,
- 			     const char *path);
 -- 
-2.40.0.577.gac1e443424-goog
-
+2.40.0.323.g9c80379958
