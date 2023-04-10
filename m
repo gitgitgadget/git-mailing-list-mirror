@@ -2,237 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 122D6C77B61
-	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 22:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C19DC77B6F
+	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 22:54:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229868AbjDJWx4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Apr 2023 18:53:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43292 "EHLO
+        id S229946AbjDJWx7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Apr 2023 18:53:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229901AbjDJWxp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2023 18:53:45 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ADA2212E
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 15:53:43 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-54c12009c30so233389577b3.9
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 15:53:43 -0700 (PDT)
+        with ESMTP id S229507AbjDJWxr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2023 18:53:47 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08613211B
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 15:53:46 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id z9so6211241ybs.9
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 15:53:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1681167222; x=1683759222;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WPfbEcaOwGFeNtY9Wa7/E9QTZEQLc5FFABXfxZzDLWA=;
-        b=6icYCugtnp+tMUayyASz65lzeqQ04JQ5L/6AZo/NRjL8BxEhDTDpvzpKOWN3tGFbPN
-         viCR0wuqtfd8noQqPD5Pr4TFULCrz3nkhPecjujOkxVPLVbif/KB0HLlWG6TPKnIZ7ZV
-         1OCGQGZXporUB1d1d+YJNvQYfG7R6cVlAk28dmMi/mLOynag7QvOiUWkl7CagOtfg850
-         O6oPzoQZOENf9G+44Qi4ngAYFmYYO9W1Sy4NVEslxurmwCt5CN/9DBolmFTjAX14zCe+
-         dUtU2xqWIc1pM+xJnTabudyQL7ajdtMofAGzZh0I4YIzksfouSpVCu6Zu5GLSausvFrn
-         9Lbw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1681167225; x=1683759225;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fziDqg2Z1UHsm3H8cJvq5x//xNnwMbr1AO0i2gwl/KM=;
+        b=urg/siUdW0I7aIf4JPsYkRwueUWqDaZVoo038D+eM5Y0/Cmz/JmwjT5G/59HbtEkXE
+         bA8ZijxiXmsxBcouwa2cH6kYM4r66nSIAkefP/irzwOVdmPzj+cQEQ9kzCizAdbeq0Jc
+         +9EzwtbTN0WH+HFMIXzctQsS1iFGZruaP4LtwLfu9mj2MNAhYJy+VXmleIR1ydTwXfGP
+         Fq2O9IBqxeOhkMIQVRMrvReUoQXSHuGMCvK+CU/Rp41JEYKrpyOZofI7gf/ljhmu99tt
+         ZH5D6CTrlfC1kdYQhXtrPUY12zucnt+w1uoahkimKx4Gt+rEo+3zv6UlxBEpjiJUhgOA
+         A8+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681167222; x=1683759222;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WPfbEcaOwGFeNtY9Wa7/E9QTZEQLc5FFABXfxZzDLWA=;
-        b=3c9SUPXV5hMp398X9wWWJYka6SeGt2SA9hSyzPa//nGB1CmX35uj1sAy1qGzEKlEBZ
-         efgIB8ES1M5rTeM/9u+YNCZA+EfbQOmw+QF8KsauiLSZYe+8ycabGp9ixbfnjUjSGc9o
-         emBWBCvA0iih1nlilBcdnJsO++uj2Mrg8VO6vYCCeBCY619xjdP3owy9VoLdInG5UsRc
-         ++V1kVJ5e2e9C8WBVvONrLPZD6N+cdjFlzgHEDe3MjN7TU/+NGrGSnGSIEqqnJy261BD
-         DzXS8DRazuneKkmb9vy6qcWHPT0aFH/spjHwPy67Bmkon3nMvt+dlBF0eOcjc71ObOhp
-         SQLg==
-X-Gm-Message-State: AAQBX9c3KwqO9UNuuHAiP5/F1WA+KK2L9oUXyQ7a1TzSvhZyJbttjC6g
-        LpriiG1nJ1AvdvLqOpo3UTuTybyaUkV4bsRKg9Vchg==
-X-Google-Smtp-Source: AKy350a4XvlgW3BbIGYo/2z4FYe7jntpp8YYsm/KyG0J0fgz6MsQjt3iTbuYgUgDCnPXYH4U3UeQKA==
-X-Received: by 2002:a81:728a:0:b0:533:9c8d:81d1 with SMTP id n132-20020a81728a000000b005339c8d81d1mr10290780ywc.3.1681167222012;
-        Mon, 10 Apr 2023 15:53:42 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1681167225; x=1683759225;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fziDqg2Z1UHsm3H8cJvq5x//xNnwMbr1AO0i2gwl/KM=;
+        b=1B27jRMzANeH/Q+obJguRtg3Uks7L6ruOcmnFM3PKjuHwaRU8aV4+1C+p4p/lNSvgd
+         Wka7s3Na6GWK8Go+KSEQJTVzBgnsrhCMAr3/kSbeXAoEbCUPhpgZ4pQM9LkQovGZ/+kY
+         /CZIko+NBDQwSGuWi6v5v/MFEugR7yNQVbzZ65aZLD0mCvM8cH9vX4041Lo+vgRUWxA/
+         YtQJq7LI7juGJgU7JEY5PaNdVgBzJtoPacsKuZeOtRnBHVyscgtv0irbnbYRGPTPm7NE
+         A/eBgLPWplD2OonuaAt0cUlmulMS4JGZ+vPDQDhLyCmL03uueK3X4oryEDmc7kKECBeH
+         Fedw==
+X-Gm-Message-State: AAQBX9dMUnX0D4QG1FAwoScLIC3XR2Gpi6eN12SYmIceiRMo3hPn0vYy
+        53ywhOwAaME6ujbLWHQyY8IpJVHiIrnvdbitS5iOjA==
+X-Google-Smtp-Source: AKy350aOqGa+XksLVRi2JBbah/eeyTFQt1EOg6fB3np4zVJR01FYsTUiF4UgCwUYhQj4rdzp5jPHvw==
+X-Received: by 2002:a25:a265:0:b0:b8c:49c:85cf with SMTP id b92-20020a25a265000000b00b8c049c85cfmr9928419ybi.3.1681167225036;
+        Mon, 10 Apr 2023 15:53:45 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 82-20020a810a55000000b00545a0818486sm3106418ywk.22.2023.04.10.15.53.41
+        by smtp.gmail.com with ESMTPSA id v72-20020a252f4b000000b00b7767ca747csm3194951ybv.25.2023.04.10.15.53.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Apr 2023 15:53:41 -0700 (PDT)
-Date:   Mon, 10 Apr 2023 18:53:40 -0400
+        Mon, 10 Apr 2023 15:53:44 -0700 (PDT)
+Date:   Mon, 10 Apr 2023 18:53:43 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 6/7] config: enable `pack.writeReverseIndex` by default
-Message-ID: <56a0fc0098e0b0551e01414c8e67c17fb1ba3054.1681166596.git.me@ttaylorr.com>
+Subject: [PATCH 7/7] t: invert `GIT_TEST_WRITE_REV_INDEX`
+Message-ID: <9c80379958824ac8fb7834f4f98000d11c3dc4e0.1681166596.git.me@ttaylorr.com>
 References: <cover.1681166596.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1681166596.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Back in e37d0b8730 (builtin/index-pack.c: write reverse indexes,
-2021-01-25), Git learned how to read and write a pack's reverse index
-from a file instead of in-memory.
+Back in e8c58f894b (t: support GIT_TEST_WRITE_REV_INDEX, 2021-01-25), we
+added a test knob to conditionally enable writing a ".rev" file when
+indexing a pack. At the time, this was used to ensure that the test
+suite worked even when ".rev" files were written, which served as a
+stress-test for the on-disk reverse index implementation.
 
-A pack's reverse index is a mapping from pack position (that is, the
-order that objects appear together in a ".pack")  to their position in
-lexical order (that is, the order that objects are listed in an ".idx"
-file).
+Now that reading from on-disk ".rev" files is enabled by default, the
+test knob `GIT_TEST_WRITE_REV_INDEX` no longer has any meaning.
 
-Reverse indexes are consulted often during pack-objects, as well as
-during auxiliary operations that require mapping between pack offsets,
-pack order, and index index.
+We could get rid of the option entirely, but there would be no
+convenient way to test Git when ".rev" files *aren't* in place.
 
-They are useful in GitHub's infrastructure, where we have seen a
-dramatic increase in performance when writing ".rev" files[1]. In
-particular:
+Instead of getting rid of the option, invert its meaning to instead
+disable writing ".rev" files, thereby running the test suite in a mode
+where the reverse index is generated from scratch.
 
-  - an ~80% reduction in the time it takes to serve fetches on a popular
-    repository, Homebrew/homebrew-core.
-
-  - a ~60% reduction in the peak memory usage to serve fetches on that
-    same repository.
-
-  - a collective savings of ~35% in CPU time across all pack-objects
-    invocations serving fetches across all repositories in a single
-    datacenter.
-
-Reverse indexes are also beneficial to end-users as well as forges. For
-example, the time it takes to generate a pack containing the objects for
-the 10 most recent commits in linux.git (representing a typical push) is
-significantly faster when on-disk reverse indexes are available:
-
-    $ { git rev-parse HEAD && printf '^' && git rev-parse HEAD~10 } >in
-    $ hyperfine -L v false,true 'git.compile -c pack.readReverseIndex={v} pack-objects --delta-base-offset --revs --stdout <in >/dev/null'
-    Benchmark 1: git.compile -c pack.readReverseIndex=false pack-objects --delta-base-offset --revs --stdout <in >/dev/null
-      Time (mean ± σ):     543.0 ms ±  20.3 ms    [User: 616.2 ms, System: 58.8 ms]
-      Range (min … max):   521.0 ms … 577.9 ms    10 runs
-
-    Benchmark 2: git.compile -c pack.readReverseIndex=true pack-objects --delta-base-offset --revs --stdout <in >/dev/null
-      Time (mean ± σ):     245.0 ms ±  11.4 ms    [User: 335.6 ms, System: 31.3 ms]
-      Range (min … max):   226.0 ms … 259.6 ms    13 runs
-
-    Summary
-      'git.compile -c pack.readReverseIndex=true pack-objects --delta-base-offset --revs --stdout <in >/dev/null' ran
-	2.22 ± 0.13 times faster than 'git.compile -c pack.readReverseIndex=false pack-objects --delta-base-offset --revs --stdout <in >/dev/null'
-
-The same is true of writing a pack containing the objects for the 30
-most-recent commits:
-
-    $ { git rev-parse HEAD && printf '^' && git rev-parse HEAD~30 } >in
-    $ hyperfine -L v false,true 'git.compile -c pack.readReverseIndex={v} pack-objects --delta-base-offset --revs --stdout <in >/dev/null'
-    Benchmark 1: git.compile -c pack.readReverseIndex=false pack-objects --delta-base-offset --revs --stdout <in >/dev/null
-      Time (mean ± σ):     866.5 ms ±  16.2 ms    [User: 1414.5 ms, System: 97.0 ms]
-      Range (min … max):   839.3 ms … 886.9 ms    10 runs
-
-    Benchmark 2: git.compile -c pack.readReverseIndex=true pack-objects --delta-base-offset --revs --stdout <in >/dev/null
-      Time (mean ± σ):     581.6 ms ±  10.2 ms    [User: 1181.7 ms, System: 62.6 ms]
-      Range (min … max):   567.5 ms … 599.3 ms    10 runs
-
-    Summary
-      'git.compile -c pack.readReverseIndex=true pack-objects --delta-base-offset --revs --stdout <in >/dev/null' ran
-	1.49 ± 0.04 times faster than 'git.compile -c pack.readReverseIndex=false pack-objects --delta-base-offset --revs --stdout <in >/dev/null'
-
-...and savings on trivial operations like computing the on-disk size of
-a single (packed) object are even more dramatic:
-
-    $ git rev-parse HEAD >in
-    $ hyperfine -L v false,true 'git.compile -c pack.readReverseIndex={v} cat-file --batch-check="%(objectsize:disk)" <in'
-    Benchmark 1: git.compile -c pack.readReverseIndex=false cat-file --batch-check="%(objectsize:disk)" <in
-      Time (mean ± σ):     305.8 ms ±  11.4 ms    [User: 264.2 ms, System: 41.4 ms]
-      Range (min … max):   290.3 ms … 331.1 ms    10 runs
-
-    Benchmark 2: git.compile -c pack.readReverseIndex=true cat-file --batch-check="%(objectsize:disk)" <in
-      Time (mean ± σ):       4.0 ms ±   0.3 ms    [User: 1.7 ms, System: 2.3 ms]
-      Range (min … max):     1.6 ms …   4.6 ms    1155 runs
-
-    Summary
-      'git.compile -c pack.readReverseIndex=true cat-file --batch-check="%(objectsize:disk)" <in' ran
-       76.96 ± 6.25 times faster than 'git.compile -c pack.readReverseIndex=false cat-file --batch-check="%(objectsize:disk)" <in'
-
-In the more than two years since e37d0b8730 was merged, Git's
-implementation of on-disk reverse indexes has been thoroughly tested,
-both from users enabling `pack.writeReverseIndexes`, and from GitHub's
-deployment of the feature. The latter has been running without incident
-for more than two years.
-
-This patch changes Git's behavior to write on-disk reverse indexes by
-default when indexing a pack, which should make the above operations
-faster for everybody's Git installation after a repack.
-
-(The previous commit explains some potential drawbacks of using on-disk
-reverse indexes in certain limited circumstances, that essentially boil
-down to a trade-off between time to generate, and time to access. For
-those limited cases, the `pack.readReverseIndex` escape hatch can be
-used).
-
-[1]: https://github.blog/2021-04-29-scaling-monorepo-maintenance/#reverse-indexes
+This ensures that we are still running and exercising Git's behavior
+when forced to generate reverse indexes from scratch.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/config/pack.txt     | 2 +-
- builtin/index-pack.c              | 1 +
- builtin/pack-objects.c            | 1 +
- t/perf/p5312-pack-bitmaps-revs.sh | 3 +--
- t/t5325-reverse-index.sh          | 1 +
- 5 files changed, 5 insertions(+), 3 deletions(-)
+ builtin/index-pack.c      | 4 ++--
+ builtin/pack-objects.c    | 4 ++--
+ ci/run-build-and-tests.sh | 1 -
+ pack-revindex.h           | 2 +-
+ t/README                  | 2 +-
+ t/t5325-reverse-index.sh  | 2 +-
+ 6 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
-index 7db7fed466..d4c7c9d4e4 100644
---- a/Documentation/config/pack.txt
-+++ b/Documentation/config/pack.txt
-@@ -182,4 +182,4 @@ pack.writeReverseIndex::
- 	linkgit:gitformat-pack[5])
- 	for each new packfile that it writes in all places except for
- 	linkgit:git-fast-import[1] and in the bulk checkin mechanism.
--	Defaults to false.
-+	Defaults to true.
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index b17e79cd40..323c063f9d 100644
+index 323c063f9d..9e36c985cf 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -1753,6 +1753,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	fsck_options.walk = mark_link;
- 
- 	reset_pack_idx_option(&opts);
-+	opts.flags |= WRITE_REV;
- 	git_config(git_index_pack_config, &opts);
+@@ -1758,8 +1758,8 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
  	if (prefix && chdir(prefix))
  		die(_("Cannot come back to cwd"));
+ 
+-	if (git_env_bool(GIT_TEST_WRITE_REV_INDEX, 0))
+-		rev_index = 1;
++	if (git_env_bool(GIT_TEST_NO_WRITE_REV_INDEX, 0))
++		rev_index = 0;
+ 	else
+ 		rev_index = !!(opts.flags & (WRITE_REV_VERIFY | WRITE_REV));
+ 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 77d88f85b0..dbaa04482f 100644
+index dbaa04482f..1797871ce9 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -4293,6 +4293,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	}
- 
+@@ -4295,8 +4295,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
  	reset_pack_idx_option(&pack_idx_opts);
-+	pack_idx_opts.flags |= WRITE_REV;
+ 	pack_idx_opts.flags |= WRITE_REV;
  	git_config(git_pack_config, NULL);
- 	if (git_env_bool(GIT_TEST_WRITE_REV_INDEX, 0))
- 		pack_idx_opts.flags |= WRITE_REV;
-diff --git a/t/perf/p5312-pack-bitmaps-revs.sh b/t/perf/p5312-pack-bitmaps-revs.sh
-index 0684b690af..ceec60656b 100755
---- a/t/perf/p5312-pack-bitmaps-revs.sh
-+++ b/t/perf/p5312-pack-bitmaps-revs.sh
-@@ -12,8 +12,7 @@ test_lookup_pack_bitmap () {
- 	test_perf_large_repo
+-	if (git_env_bool(GIT_TEST_WRITE_REV_INDEX, 0))
+-		pack_idx_opts.flags |= WRITE_REV;
++	if (git_env_bool(GIT_TEST_NO_WRITE_REV_INDEX, 0))
++		pack_idx_opts.flags &= ~WRITE_REV;
  
- 	test_expect_success 'setup bitmap config' '
--		git config pack.writebitmaps true &&
--		git config pack.writeReverseIndex true
-+		git config pack.writebitmaps true
- 	'
+ 	progress = isatty(2);
+ 	argc = parse_options(argc, argv, prefix, pack_objects_options,
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index b098e10f52..e9fbfb6345 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -27,7 +27,6 @@ linux-TEST-vars)
+ 	export GIT_TEST_MULTI_PACK_INDEX=1
+ 	export GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=1
+ 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
+-	export GIT_TEST_WRITE_REV_INDEX=1
+ 	export GIT_TEST_CHECKOUT_WORKERS=2
+ 	;;
+ linux-clang)
+diff --git a/pack-revindex.h b/pack-revindex.h
+index ef8afee88b..46e834064e 100644
+--- a/pack-revindex.h
++++ b/pack-revindex.h
+@@ -34,7 +34,7 @@
+ #define RIDX_SIGNATURE 0x52494458 /* "RIDX" */
+ #define RIDX_VERSION 1
  
- 	# we need to create the tag up front such that it is covered by the repack and
+-#define GIT_TEST_WRITE_REV_INDEX "GIT_TEST_WRITE_REV_INDEX"
++#define GIT_TEST_NO_WRITE_REV_INDEX "GIT_TEST_NO_WRITE_REV_INDEX"
+ #define GIT_TEST_REV_INDEX_DIE_IN_MEMORY "GIT_TEST_REV_INDEX_DIE_IN_MEMORY"
+ #define GIT_TEST_REV_INDEX_DIE_ON_DISK "GIT_TEST_REV_INDEX_DIE_ON_DISK"
+ 
+diff --git a/t/README b/t/README
+index 29576c3748..bdfac4cceb 100644
+--- a/t/README
++++ b/t/README
+@@ -475,7 +475,7 @@ GIT_TEST_DEFAULT_HASH=<hash-algo> specifies which hash algorithm to
+ use in the test scripts. Recognized values for <hash-algo> are "sha1"
+ and "sha256".
+ 
+-GIT_TEST_WRITE_REV_INDEX=<boolean>, when true enables the
++GIT_TEST_NO_WRITE_REV_INDEX=<boolean>, when true disables the
+ 'pack.writeReverseIndex' setting.
+ 
+ GIT_TEST_SPARSE_INDEX=<boolean>, when true enables index writes to use the
 diff --git a/t/t5325-reverse-index.sh b/t/t5325-reverse-index.sh
-index 66171c1d67..149dcf5193 100755
+index 149dcf5193..0548fce1aa 100755
 --- a/t/t5325-reverse-index.sh
 +++ b/t/t5325-reverse-index.sh
-@@ -14,6 +14,7 @@ packdir=.git/objects/pack
- test_expect_success 'setup' '
- 	test_commit base &&
+@@ -7,7 +7,7 @@ TEST_PASSES_SANITIZE_LEAK=true
  
-+	test_config pack.writeReverseIndex false &&
- 	pack=$(git pack-objects --all $packdir/pack) &&
- 	rev=$packdir/pack-$pack.rev &&
+ # The below tests want control over the 'pack.writeReverseIndex' setting
+ # themselves to assert various combinations of it with other options.
+-sane_unset GIT_TEST_WRITE_REV_INDEX
++sane_unset GIT_TEST_NO_WRITE_REV_INDEX
+ 
+ packdir=.git/objects/pack
  
 -- 
 2.40.0.323.g9c80379958
-
