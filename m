@@ -2,83 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBA31C77B6E
-	for <git@archiver.kernel.org>; Sun,  9 Apr 2023 19:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A6CBC77B61
+	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 08:10:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229485AbjDITIL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 9 Apr 2023 15:08:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38940 "EHLO
+        id S229730AbjDJIKt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Apr 2023 04:10:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbjDITII (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Apr 2023 15:08:08 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EEBD35A7
-        for <git@vger.kernel.org>; Sun,  9 Apr 2023 12:08:07 -0700 (PDT)
-Received: (qmail 22888 invoked by uid 109); 9 Apr 2023 19:08:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 09 Apr 2023 19:08:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23578 invoked by uid 111); 9 Apr 2023 19:08:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 09 Apr 2023 15:08:05 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sun, 9 Apr 2023 15:08:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: simplify man version
-Message-ID: <20230409190805.GA77061@coredump.intra.peff.net>
-References: <20230408001829.11031-1-felipe.contreras@gmail.com>
- <xmqqr0suf0wz.fsf@gitster.g>
+        with ESMTP id S229649AbjDJIKs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2023 04:10:48 -0400
+Received: from m1381.mail.163.com (m1381.mail.163.com [220.181.13.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D7C4E40D9
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 01:10:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+        Message-ID; bh=+FSed1IW7s04FEt8Z1i01MNoPTNj0Lpt+1A7ABqL2sE=; b=l
+        6Xn6DnDDkTCXIVq3k1qj307t7yLs+b1iDQhHZ3yha8RJ0Py3HnH0u2GozWlkshV9
+        slw9d8zcnnmRlTc9l4HmuMm5T0GxpYhN4gKgGyKb2VG6a/pyvqvLUtacKcFVnffq
+        N0CELzWKbFsNlugpawGRWc2PEe0SnezkjFhXu9aXiA=
+Received: from 18994118902$163.com ( [153.0.171.49] ) by
+ ajax-webmail-wmsvr81 (Coremail) ; Mon, 10 Apr 2023 16:10:44 +0800 (CST)
+X-Originating-IP: [153.0.171.49]
+Date:   Mon, 10 Apr 2023 16:10:44 +0800 (CST)
+From:   "Zhang Yi" <18994118902@163.com>
+To:     git@vger.kernel.org, christian.couder@gmail.com,
+        hariom18599@gmail.com
+Subject: Re:[GSOC] [PROPOSAL v3] Draft of proposal for "Unify ref-filter
+ formats with other pretty formats"
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2023 www.mailtech.cn 163com
+In-Reply-To: <17b1acf2.6231.18748391cab.Coremail.18994118902@163.com>
+References: <17b1acf2.6231.18748391cab.Coremail.18994118902@163.com>
+X-NTES-SC: AL_QuyTA/2au0ov4iWQYekXn0oVgu88UcCzvPok34ZQOZk0iCrw2CEvV216L3XH79+iCQaoogqXfDdB9dhgW4N8eJA/T5NcJGiiGXtYMUbMo9dt
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqr0suf0wz.fsf@gitster.g>
+Message-ID: <17ee1b01.5434.1876a37a5ed.Coremail.18994118902@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: UcGowAB3fy+ExDNkHAMGAA--.39948W
+X-CM-SenderInfo: zprymmqurrmmmqsbiqqrwthudrp/1tbiZRdN-l8ZXu+CvAACsK
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 08, 2023 at 03:45:48PM -0700, Junio C Hamano wrote:
-
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > diff --git a/Documentation/Makefile b/Documentation/Makefile
-> > index a6ba5bd460..4721b000c1 100644
-> > --- a/Documentation/Makefile
-> > +++ b/Documentation/Makefile
-> > @@ -150,8 +150,7 @@ ASCIIDOC_HTML = xhtml11
-> >  ASCIIDOC_DOCBOOK = docbook
-> >  ASCIIDOC_CONF = -f asciidoc.conf
-> >  ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF) \
-> > -		-amanversion=$(GIT_VERSION) \
-> > -		-amanmanual='Git Manual' -amansource='Git'
-> > +		-amanmanual='Git Manual' -amansource='Git $(GIT_VERSION)'
-> >  ASCIIDOC_DEPS = asciidoc.conf GIT-ASCIIDOCFLAGS
-> >  TXT_TO_HTML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_HTML)
-> >  TXT_TO_XML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_DOCBOOK)
-> 
-> Is this a complete patch, or will this leave us in an incomplete
-> in-between place?
-> 
-> We have some references to manversion in "git grep manversion
-> Documentation/" in asciidoc.conf and asciidoctor-extensions.rb
-> remaining after this ptach is applied, which presumably are no
-> longer used.  I would imagine that these leftover references end up
-> substituting them with something benign, like an empty string, in
-> the output, but it somehow makes me feel dirty [*].
-
-I think we are OK with this patch on its own. Asciidoc seems to be smart
-enough to omit the empty XML element on its own. Asciidoctor isn't (and
-nor is ruby hack which adds it in), but docbook is essentially just
-concatenating them anyway. Either way, the generated roff looks like:
-
-  .TH "GIT" "1" "2023\-04\-06" "Git 2\&.40\&.0\&.316\&.g67fafd" "Git Manual"
-
-(the first "GIT" is the command name, so this is from git.1).
-
-I do think we probably want to pair this with another patch removing the
-asciidoctor-extensions hack, but the reasoning there is separate (it was
-needed for some older versions that we can probably declare as "too old"
-now).
-
--Peff
+CgpIaSwgSSBoYXZlIGRvbmUgc29tZSBwcmVwYXJhdG9yeSB3b3JrLiBJIHJlYWQgbW9zdCBwYXJ0
+IG9mIHRoZSBwYXRjaAoicmVmLWZpbHRlcjogYWRkIG5ldyAic2lnbmF0dXJlIiBhdG9tIlsxXSBi
+dXQgdGhlIHBhcnQgb2YgdGhlIHRlc3Qgc2NyaXB0IGlzCmxlZnQuCkkgcGxhbiB0byByZWFkIGRl
+dGFpbHMgYWJvdXQgdGVzdCBzY3JpcHRzIGlmIHRoZSBwcmV2aW91cyB3b3JrIG9mIHRoZSBwYXRj
+aCBpcwp3ZWxsIGRvd24uCiogTXkgcXVlc3Rpb25zCioqIEFyZSB0aGVyZSBtb3JlIGFzcGVjdHMg
+SSBuZWVkIHRvIGZvY3VzIHdoZW4gcmVhZGluZyBvdGhlcidzCnBhdGNoZXM/CioqIEFyZSB0aGVy
+ZSBvdGhlciBwYXRjaGVzIG5lY2Vzc2FyeSB0byByZWFkPwoKClRoYW5rcyBmb3IgYWxsIHN1Z2dl
+c3Rpb25zLgpCZWxvdyBpcyB3aGF0IEkgZ3Jhc3AgZnJvbSByZWYtZmlsdGVyOiBhZGQgbmV3ICJz
+aWduYXR1cmUiIGF0b20gcGF0Y2hlcy4gSSB3aWxsCnB1dCBpdCBvbiBteSBibG9nIHNpdGUgbGF0
+ZXIuCgoKKiB2MQoqKiBUaGUgZ29hbCBvZiB2MQpBZGQgInNpZ25hdHVyZSIgYXRvbSB3aXRoIGBn
+cmFkZWAsYHNpZ25lcmAsIGBrZXlgLCBgZmluZ2VycHJpbnRgLApgcHJpbWFyeWtleWZpbmdlcnBy
+aW50YCwgYHRydXN0bGV2ZWxgIGFzIGFyZ3VtZW50cy4KVG8gZ2V0IGNvbnN0aXR1dGVzIGZvciAl
+R0csICVHPywgJUdTLCAlR0ssICVHRiwgJUdQLCBhbmQgJUdUIHByZXR0eSBmb3JtYXRzLgoqKiBU
+aGUgYXBwcm9hY2gKKioqIGVudW0KYXRvbV90eXBlOyBBVE9NX1NJR05BVFVSRTogdXNlZCBhcyB0
+aGUgaW5kZXggb2YgdmFsaWRfYXRvbSBhcnJheS4KKioqIHN0cnVjdAp1c2VkX2F0b207IHN0cnVj
+dCB7Li4ufSBzaWduYXR1cmU6IGFkZCBzaWduYXR1cmUgYXRvbSBhbmQgaXRzIG9wdGlvbnMuCnZh
+bGlkX2F0b20gOyBbQVRPTV9TSUdOQVRVUkVdOiBzZWVtcyBidWlsZCBhIG1hcCBiZXR3ZWVuICJz
+aWduYXR1cmUiIGFuZApmdW5jdGlvbiAic2lnbmF0dXJlX2F0b21fcGFyc2VyIi4KKioqIGZ1bmN0
+aW9uCioqKiogYWRkCnN0YXRpYyBpbnQgc2lnbmF0dXJlX2F0b21fcGFyc2VyOiBTZXQgInNpZ25h
+dHVyZS5vcHRpb24iIGFjY29yZGluZyB0byBhcmdzLgpzdGF0aWMgdm9pZCBncmFiX3NpZ25hdHVy
+ZTogU2V0IHRoZSByZXN1bHQgc3RyaW5nIGluIGF0b21fdmFsdWUudmFsdWUgZm9yCnNpZ25hdHVy
+ZSBvcHRpb25zLiBUaGVyZSBhcmUgbW9yZSBkZXRhaWxzIG5lZWQgdG8gdW5kZXJzdGFuZC4KKioq
+KiBtb2RpZnkKc3RhdGljIHZvaWQgZ3JhYl92YWx1ZXM6IGFkZCBncmFiX3NpZ25hdHVyZSBpbiBj
+YXNlIE9CSl9DT01NSVQuCioqKiBkb2N1bWVudAoqKiogdGVzdCBzY3JpcHRzCioqIE90aGVycycg
+Y29tbWVudHMgb24gdjEKKioqIEp1bmlvIEMgSGFtYW5vCjEuIExhY2sgbW90aXZhdGlvbi4KMi4g
+TmVlZCB0byBkZWFsIHdpdGggc2lnbmVkIHRhZy4KMy4gSW1wcm92ZSB0aGUgc3R5bGUgb2YgImlm
+IGVsc2UiLgo0LiBSZW5hbWUgZ3JhYl9zaWduYXR1cmUgdG8gZ3JhYl9jb21taXRfc2lnbmF0dXJl
+LiBUaGlzIG1ha2UgZWFzaWVyIGZvciBmdXR1cmUKZGV2ZWxvcGVycyB0byB1bmRlcnN0YW5kIGFu
+ZCBhZGQgImdyYWJfdGFnX3NpZ25hdHVyZSIuCjUuIEFkZCBzcGFjZSBiZXR3ZWVuIGNhc3QgYW5k
+IHZhbHVlLgo2LiBDaGVjayB1c2VkLWF0b20gdG8gbWFrZSBzdXJlIHRoZXJlIGlzIG5lZWQgdG8g
+ZG8gc2lnbmF0dXJlIHByb2Nlc3NpbmcuCjcuIEEgY2FsbCB0byBjaGVja19jb21taXRfc2lnbmF0
+dXJlKCkgc2hvdWxkIGhhdmUgYSBtYXRjaGluZyBjYWxsIHRvCnNpZ25hdHVyZV9jaGVja19jbGVh
+cigpLgoqKiogSmVmZiBLaW5nCjEuIEFkZCBhbiBhbm5vdGF0aW9uIGZvciB0aGUgdW51c2VkIHBh
+cmFtZXRlciwgd2hpY2ggaXMgbmVjZXNzYXJ5IHdoZW4KLVd1bnVzZWQtcGFyYW1ldGVyIGlzIG9u
+LgoyLiBJbiBzaWduYXR1cmVfYXRvbV9wYXJzZXIsIHJldHVybiBlcnJfYmFkX2FyZyBmb3Igd3Jv
+bmcgYXJnLiBUaGlzIG1ha2UgdGhlCmVycm9yIG1lc3NhZ2UgbWF0Y2ggdGhlIG90aGVycy4KKiB2
+MiBzZWVtcyBtZWV0IHNvbWUgbWlzdGFrZSBhYm91dCBtZXNzYWdlIElECjEuIE1vcmUgZGV0YWls
+ZWQgY29tbWl0IG1lc3NhZ2UuCjIuIEFkZCBwYXJzZV9zaWduYXR1cmVfb3B0aW9uKCksIHdoaWNo
+IHJldHVybiB2YWx1ZSBmb3Igc3RydWN0IHNpZ25hdHVyZS5vcHRpb24Kb3IgLTEgd2hlbiBnZXQg
+d3JvbmcgYXJnLiBUaGlzIGZ1bmN0aW9uIGlzIHVzZWQgaW4gZ3JhYl9zaWduYXR1cmUoKSBhbmQK
+c2lnbmF0dXJlX2F0b21fcGFyc2VyKCkuCjMuIE1vZGlmeSBzaWduYXR1cmVfYXRvbV9wYXJzZXIo
+KS4gVXNlIHBhcnNlX3NpZ25hdHVyZV9vcHRpb24oKSB0byBnZXQgb3B0IGFuZApyZXR1cm4gZXJy
+X2JhZF9hcmcgZm9yIHdyb25nIGFyZy4KNC4gTW9kaWZ5IGdyYWJfc2lnbmF0dXJlKCkuIFVzZSBw
+YXJzZV9zaWduYXR1cmVfb3B0aW9uKCkgdG8gY2hlY2sgbmFtZSBpbgp1c2VkX2F0b20gYW5kIHVz
+ZSBjaGVja19jb21taXRfc2lnbmF0dXJlKCkgd2l0aCBzaWduYXR1cmVfY2hlY2tfY2xlYXIoKSBv
+bmx5Cm9uY2UuCjUuIEFkZCB0ZXN0IGZvciBiYXJlIHNpZ25hdHVyZSBhdG9tKCUoc2lnbmF0dXJl
+KSkuCiogdjMgYW5kIHY0CjEuIFJlbW92ZSB0ZXN0IGZvciBiYXJlIHNpZ25hdHVyZSBhdG9tIGJl
+Y2F1c2UgdGhlIHJlc3VsdCBvZiB0aGUgdGVzdCBpcyBub3QKc2FtZSBvbiBkaWZmZXJlbnQgcGxh
+dGZvcm0uCioqIEp1bmlvIEMgSGFtYW5vJ3MgY29tbWVudHMKQXZvaWQgY2FsbGluZyBjaGVja19j
+b21taXRfc2lnbmF0dXJlKCkgd2hlbiBubyAlKHNpZ25hdHVyZSkgYXRvbXMgaXMgdXNlZC4KKiB2
+NQoxLiBBZGQgYSBzaWduYXR1cmVfY2hlY2tlZCBmbGFnIHRvIGF2b2lkIGNhbGxpbmcgY2hlY2tf
+Y29tbWl0X3NpZ25hdHVyZSgpCnVubmVjZXNzYXJpbHkuCjIuIEZpeCB0aGUgdGVzdCBmb3IgYmFy
+ZSBzaWduYXR1cmUgYXRvbSglKHNpZ25hdHVyZSkpIGFib3V0IHRydXN0ZGIuCioqIEp1bmlvIEMg
+SGFtYW5vJ3MgY29tbWVudHMKQSBxdWVzdGlvbiBhYm91dCBkaWZmZXJlbmNlcyBiZXR3ZWVuIHZl
+cnNpb25zIG9mIEdQRy4gSXQgc2VlbXMgbm8gcmVsYXRpb25zaGlwCndpdGggbXkgd29yay4KKiBW
+aWV3IHRoZXNlIHBhdGNoZXMgYSB3aG9sZQoqKiBUaGUgZ2VuZXJhbCBkaXJlY3Rpb24KMS4gUmVn
+aXN0ZXIgYSBuZXcgc2lnbmF0dXJlIGFuZCBpdHMgb3B0aW9ucyBpbiBlbnVtIGF0b21fdHlwZSBh
+bmQgc3RydWN0IHVzZWQKYXRvbS4KMi4gRGVmaW5lIGEgZm9vX2F0b21fcGFyc2VyKCkgdG8gY29u
+dmVydCBzdHJpbmcgYXJnIHRvIGludCBvcHRpb24uCjMuIEJpbmQgYXRvbSB3aXRoIGl0cyBmb29f
+YXRvbV9wYXJzZXIoKSBpbiB2YWxpZF9hdG9tLgo0LiBEZWZpbmUgYSBncmFiX2ZvbygpIHRvIHNl
+dCBzdHJpbmcgcyBpbiBzdHJ1Y3QgYXRvbV92YWx1ZSBhY2NvcmRpbmcgdG8gb3B0aW9uLgo1LiBJ
+bnNlcnQgdGhlIGdyYWJfZm9vKCkgaW50byBncmFiX3ZhbHVlcygpIGZ1bmN0aW9uLgoqKiBscyBp
+dCBwb3NzaWJsZSB0byB1c2UgdGhlIHNpbWlsYXIgYXBwcm9hY2gKWWVzLiBJIGNhbiBmb2xsb3cg
+dGhlIGdlbmVyYWwgaWRlYSBvZiB0aGlzIHBhdGNoLiBPZiBjb3Vyc2UsIEkgbmVlZCB0byBmaW5l
+dHVuZQp0aGUgZGV0YWlscyBhY2NvcmRpbmcgdG8gdGhlIGF0b20gSSB3b3JrIG9uLgoqIEVsc2UK
+Y2hlY2tfY29tbWl0X3NpZ25hdHVyZSgpIGlzIGRlZmluZWQgaW4gY29tbWl0LmMuCldoYXQgaXMg
+R1BHPwpodHRwczovL2dudXBnLm9yZy8KR251UEcgYWxsb3dzIHlvdSB0byBlbmNyeXB0IGFuZCBz
+aWduIHlvdXIgZGF0YSBhbmQgY29tbXVuaWNhdGlvbnMuCgoKWzFdIGh0dHBzOi8vcHVibGljLWlu
+Ym94Lm9yZy9naXQvcHVsbC4xNDUyLmdpdC4xNjcyMTAyNTIzOTAyLmdpdGdpdGdhZGdldEBnbWFp
+bC5jb20vIAoK
