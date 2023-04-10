@@ -2,84 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0AACC77B61
-	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 20:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B383C77B6F
+	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 21:05:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229804AbjDJUwU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Apr 2023 16:52:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35980 "EHLO
+        id S229940AbjDJVFu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Apr 2023 17:05:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbjDJUwT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2023 16:52:19 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6592D19AF
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 13:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1681159922; i=l.s.r@web.de;
-        bh=gMkm3mAr9gN4fBf0W+QNVTE2aZO5PKY3k0SqZkjTig8=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=Mwj8S1Zg7Jn5Rh1F7eMNa/YjsVIzMHmzPyIh52oRvBjKyaCvV+9k1B3v9YCwCaYLF
-         Y8wBM3LXCAWCCyuPJZ8XAogP3mfqxXH8X9FcmCGj4T/uzohYgYA1m7dYbNVmIJc0/a
-         eWVIncdRButm7nFOHJ8H/0gk5fEhTNhm//9x4NY3PobxSa1At6KyKr0xNEWnxT1y4B
-         PaMW2Z6+8+DDzBDBZJ7AINgAe6Yp+dH+nXz/askh5h9HvVPl8m68L1a5m2zpwK86s/
-         EaXTqf8utwL1Cijs5lfTXLbFxKHRYCqN1ASt7h/Fe8tKDgDm3HG03g+7F9/1vfmATT
-         hkmjj9cJoYAfw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.158.21]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mfc8y-1qJ6Jl4B2G-00g4eL; Mon, 10
- Apr 2023 22:52:02 +0200
-Message-ID: <b17e05d5-deda-527f-1587-9f1cd7046a0b@web.de>
-Date:   Mon, 10 Apr 2023 22:52:01 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.1
+        with ESMTP id S229935AbjDJVFt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2023 17:05:49 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C16821BD8
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 14:05:46 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id v9so11067081pjk.0
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 14:05:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1681160746; x=1683752746;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TNn+fqP7AbH09R5goJ76XuTqmfsUrL5QCglYTfi7nrY=;
+        b=k0m9Dkkr90eyVR8RSzDMRMu7Kd6uL00zOSpVrjwM7kn3hBt+y9UuDkheUkOPEH0jY9
+         G3/6meEbpotN35oCEBtCZIgAJjZAZ4aqfd/CHC5QlBgj4Ef9jueuiDp9IG1IArukNtUI
+         PdvNY+eQaEwLQ0RqYTCJ0CBMAFmtcMW38gxD7sCRB4y1ec7r7XrLXaSjuALSN8/CngfI
+         iLC/4x5fB9N9fF9V/YqMO6L8e8sH4NuwvmcaP+HKLKghvbr7GaNEGhYhNXBViqt/xK9u
+         mySXhqjG4XPTh03TdSLK64OHm4Cf4DpAv7SX04sJf5h+nOUGHAjW94ma5gcabFpBP4TE
+         ef7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681160746; x=1683752746;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TNn+fqP7AbH09R5goJ76XuTqmfsUrL5QCglYTfi7nrY=;
+        b=79hryEyfZaw3P/fulVCMZdGlhrUGQ35CqaD3dcDhbjDf3bNI0XDV4+ATzs8NOdgLRO
+         JzXl1ins2BAh0tIsBo1pRHvgQEp/o6VGytzfMAs/tV3I4CdPhH+JdYoyPpT1Cw4ZIa5D
+         ZPytA9vkae+dgGAHV4m6pnCzdfmro2WQ3/cMBDwBZT+DTPd5etftegxvs2S1dbB8OJ2e
+         2H1dPKHbryBQycCwoICx8jvW8WjLeIYVoZ2BzFfjAeCPCIqFB8iCc2WI2bq7k5K66mvJ
+         /BmAXwgqsvUvSDKfBpFfI9llcnXu+6M1tdW7ahtC4BPVfKmQsuD4K0e/32NJfBbVAjFr
+         vlEA==
+X-Gm-Message-State: AAQBX9c4yY+uVWFswU5JmQkf6inbR/z8IWnvv6om94QMHfw2pioOvS6M
+        3Mp7Hc+LI/xhzVJtaJV2eKw=
+X-Google-Smtp-Source: AKy350aNa5oMIxSPmvidAnyc0LOrmK1ECvAv43gRZTgjrh/bT4PhXvo6As+eLpwiPrqvoU7c4bTimA==
+X-Received: by 2002:a17:902:cec4:b0:1a1:c8b3:3fe1 with SMTP id d4-20020a170902cec400b001a1c8b33fe1mr9951528plg.31.1681160746133;
+        Mon, 10 Apr 2023 14:05:46 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id l14-20020a63ea4e000000b004fab4455748sm7517236pgk.75.2023.04.10.14.05.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Apr 2023 14:05:45 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
 Subject: Re: [PATCH] date: remove approxidate_relative()
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
 References: <f5b9a290-7cec-7a83-660b-e15494d2cdc8@web.de>
- <xmqqjzyjemji.fsf@gitster.g>
- <20230410202536.GE104097@coredump.intra.peff.net>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20230410202536.GE104097@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:KrlN+ApJpwetPhbM3fIAf2ilfgAOSNUfytD2LRnQ9Fb6Fze8Aff
- sU/8zFgn1GBwE1ppV5khIUzkekzmLXrnhPve20HjRmeASrm/dR0RsGC68Wj+ZNt68QkNktp
- Qw5Xuf8zWgZSeNFy1ftZjhOtZuKQX4Xned0n/djXkmEChXFwzQlgimRghbOE4JQwrAbKHwg
- /I0rKLCVYtlAo8Ai3xcsQ==
-UI-OutboundReport: notjunk:1;M01:P0:x85o12vktHc=;+qFKAAdLtUk8pnWrLZZ7lhQcGt7
- E5BQ+3coLbdEMNnen97Bb8OvIpGSenEZH3R1HUVMqzY55E7fKXoyncS9rPFz395nDjssmQoDM
- O1J4plifkXx4qSAAW0STlIQbNKvI7chE2ynFaQ8l8ZvJiPkStpIv/X+/xQs48Bt8cQ8IaYw4t
- i+CA4OEDoNYKHWXXk/k1vvFKSluyI3WwcLB5WnxM/fpyvhS85uwI+wDHpFmpSzlfoMUkEmYTx
- FaVFmN4L/832tFAoTZrAcUlAZmuYvNlZZpUFgqkkkZZ55nmGyo6XDh/3+Mdk8eaKa5VWJus6j
- rxbHJxaB6W9x1/v88Cibr+GRVKTXK+DxOlBA+Ha6VjUHWOXMd56uXlzeANZLiglyMl5po2nM2
- O/5Dk8T6SQgli293K4//Mt0+47Gn4+wU53pV2CYhlEsTnjNl0BfBbFoSnnP62cKHstZU88q3R
- CqcjpHaHH5+qsz1HmpIqj87jwZVQNJhdq9D3sP7AZ/IoixX1/ew18uWOadrYIU7BJY3EWmvCq
- whUib09Fl9fePPZxIJwzvtETmLQpTjvAfVKHuc9HADgr9g8aGB2gfOGA7oHjYgkEX13/zRRiI
- IqcNWqEYBbA2tuHpwDNxtimKlxqRgG5MWk9OjOKX8ua4zElNNUaFMGYaH7jde/v6lY/kto2dq
- INgbq1EKcUGOwuXTZjPL0PW99BAGt4ri2+yOH+65GkXgG49AZNNar4ODpbu4Vev4Ozs9o3ayU
- aMkk3WxGABG8Fg05VTtVpwtvrwVvxqk7rHA/XJgxX1XebjF+cq5ADPAKrAZW1pun5h1QsKI5H
- OoCESfJXu7zA+6TkLOuIjq1x+TQaAoqgt2lROok8+KqY/4ZTvJxT7votH6lEOlgt/4EY8jO+N
- l90IPow8BecAvFms0DjJM3EDMMa0Is8eWqCcYPJEfgicUgKZreu6wU0b406MZssQENckO0a+s
- aWEBjegLgFx9kO8k2yDl5NeIHE4=
+        <xmqqjzyjemji.fsf@gitster.g>
+        <20230410202536.GE104097@coredump.intra.peff.net>
+Date:   Mon, 10 Apr 2023 14:05:45 -0700
+In-Reply-To: <20230410202536.GE104097@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 10 Apr 2023 16:25:36 -0400")
+Message-ID: <xmqqy1mzcus6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.04.23 um 22:25 schrieb Jeff King:
->
-> I'm not sure of the least-confusing way to address a single hunk, though
-> (by line number is one option, by hunk-number within the patch is
-> another). I suspect the best workflow for a user would be to
-> interactively say "show me more context for this hunk". Some viewers
-> have support for that (e.g., GitHub's web view of a diff). But handling
-> that for a one-shot CLI program is tricky, not to mention then feeding
-> it back to format-patch to generate the output you want to send. :)
+Jeff King <peff@peff.net> writes:
 
-So basically you propose a format-patch --interactive mode that shows
-each hunk and allows extending its context.  This could work.  For hunks
-that span multiple screens it might be a bit iffy -- or perhaps not, if
-the scrollback buffer of the terminal or console is big enough.
+> Cute. It feels like this only goes half-way, though. You really want
+> per-hunk configurable context. This particular patch was just lucky that
+> there was only one hunk in the date.c file.
 
-Ren=C3=A9
+"-U16" extends the context lines in both directions by the same
+number of lines, but most likely you need to extend asymmetrically.
+In René's patch, for example, much of the body of approxidate_str()
+is visible in the precontext of the hunk to remove
+approxidate_relative(), but the body of that function is irrelevant.
+What he wanted to show was the body of approxidate_careful() and the
+size of that function is where the -U16 came from.
+
+Instead, imagine --extra-context='<range>:<path>' were the way to
+tell Git to include the specified range of lines in the post context
+even though they may not have been modified.  Then René's patch
+could have been produced with
+
+    $ git format-patch -1 \
+      --extra-context='/^timestamp_t approxidate_careful/,/^}$/:date.c'
+
+and would have shown 3 lines of precontext before the removed
+approxidate_relative(), plus the unchanged approxidate_careful()
+function in full in the postcontext.
