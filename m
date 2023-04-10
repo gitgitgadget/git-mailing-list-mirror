@@ -2,64 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CAE50C76196
-	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 23:07:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29A8DC77B61
+	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 23:10:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229663AbjDJXHn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Apr 2023 19:07:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46854 "EHLO
+        id S229693AbjDJXKn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Apr 2023 19:10:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbjDJXHm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2023 19:07:42 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8487D1FF9
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 16:07:41 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1a526499aa5so2757415ad.0
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 16:07:41 -0700 (PDT)
+        with ESMTP id S229507AbjDJXKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2023 19:10:42 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C51C1BF6
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 16:10:41 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id l9-20020a17090a3f0900b0023d32684e7fso113717pjc.1
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 16:10:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681168061; x=1683760061;
+        d=gmail.com; s=20210112; t=1681168241; x=1683760241;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HfsR33I3jYFai1PVLdgGk3jw3+RMsLq+oh+mTF6e2J8=;
-        b=LhRQV/1fdf8izHneSKUteG03nsDWEg+DE1cHlXvVbzkuNlHZMCcLvtCEYiUQZ7bOyi
-         aMr2K7nyfUmF9ZaFzlfkyo6ZC/eSK0HHJ2xWkjHXE327UHHwblSTnJMKJGHEkHD2QTgr
-         8w7aY1m3LH1Ke+ZxL/H2iN2ZHvQTywywqAtcJ1HWLw6T4+Mhj87HighYOOWC5WraIqbN
-         o6YHurw3RpRV0h+Jjf/4VZ6L0pAOOuR6KYjP1kTyaTnNyCiuO+zrwSKGl8jD1F9KxRWa
-         fFixuNh64VHSgoutfH9PVcRFkDTgzxWVSulfreAodPPJIKKkCiHGq0KK67RE0hAEzt9T
-         8cXQ==
+        bh=CW+MH7TXlyhkUll2F8LbdCAmaxn5So+LaeM/CufueUU=;
+        b=pXyHdgXGvd3Hba3Bs2Hh+KpAJZkjQAHiYPcUsDvvwvUdDp6dunoEPKdvrkx7u4z9o6
+         cbxCeT9A0k9PEAgJJkgFBAd4nLA3/YZiSPR3y2596N4fo76IoGa+SrozYN4G/oPTCtUf
+         c5cBU7QFkjvHJUKSRQjaYiCiR1oBxiN7lAz8/2sGn139En1zBsJg7oQTORGcQw4RvMon
+         fkzJ4e4aGun4tiIoj06BBbynS582nVldswXZQgqeSY5efyTkbHJGoLoQMziaZQVK2ZOP
+         gyGLJmpW7Z+VbWmo+LIa7h9l84ruyVbkq/atUI/sRCRkQUQi8jC4Ja2+2vW5XlC/dcsg
+         88fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681168061; x=1683760061;
+        d=1e100.net; s=20210112; t=1681168241; x=1683760241;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=HfsR33I3jYFai1PVLdgGk3jw3+RMsLq+oh+mTF6e2J8=;
-        b=aGJAhrDpsbX3qg+Zq0iK3RfG5djPMFw2M1ZzH4ikkSpMBa9OesrD1q8fOaYpquTS6h
-         E6K0bWH9uBD57lnJHk2SszJEW8U+yWUWw3kPbCmU/AnVqFlRcLdRkMc34yt4UzCN0ctX
-         1D9JuqhuOTBZuJAY9T3aNTLe5c5u8R4Xfr/ThVYRHcB2l6iT7ScsL04cn5l3zTTHm+ig
-         JSnp8Owk5/XtBZ/faN3XoiAivxR6MK8SB9O0VlNEddoBIbPeTQoBakuD6J6BA3I+BM+V
-         diizkAYT601jVj/8sBFyd12x33PpVC1XWHqL+PpWSooCW1295B0CIc1P2WkTHm5TQ4MJ
-         eMbA==
-X-Gm-Message-State: AAQBX9cZaYsu099ylWSUI5lsWAwXyYB+OYthvDC/MpHGB+q0sIuja/lO
-        9uEHv/crna7SUj+F76aU628gEJCGO88=
-X-Google-Smtp-Source: AKy350Yup9TPw74vucWa9PnyY1lhOYnLeaPOofOxC8ghVlhSZS3KkeMtzekyyVppswVYXwShQs90kg==
-X-Received: by 2002:a62:1d86:0:b0:638:45f7:7130 with SMTP id d128-20020a621d86000000b0063845f77130mr5257242pfd.4.1681168060888;
-        Mon, 10 Apr 2023 16:07:40 -0700 (PDT)
+        bh=CW+MH7TXlyhkUll2F8LbdCAmaxn5So+LaeM/CufueUU=;
+        b=cOy/mbJ+EOgorJhlMlyuFmtOpyDusqaA3yLNsvDFTJeUMJjDXrQX++7uDkuzK7kEEC
+         lzynh4xYJPYNh+lA9iFCRGh6wmCrkskopgNaa0fCD4d/7zJOqoZIP6bwjxHbcTcvEGPx
+         yDtrn4CkrYVcRK7VLmKmn5fvnBcJMLHuwfevJJI8jAjQjVvUb5/1xw34Al6Z198qjQVn
+         DufLWm8lKEIBGkjl42xsmNhCJJl2Xa9RcjJ3vC381ql4Cy4bROSwYj5jvX4Xu/zzVo8b
+         mA0vpUyp3RoLxH096/EEeHUhVJEZt8R3QqLim7+ZIRYAp95g5GhFw0wVTKUaywZi1B7Z
+         0DdA==
+X-Gm-Message-State: AAQBX9dQMoF/b5eM0n9CIjP0xlwKFF3fUVT9x35BC/mRpIUogSJxIU8U
+        Z+oKusuCHAfR34Rdyc30fN4mowx/xiM=
+X-Google-Smtp-Source: AKy350Yk3VgHl6hYpsn0WjblBmxyNPalqlZPKp5iuUsDHnaBi6t38gsj5VGD3KzVOK2liPNhptcoRQ==
+X-Received: by 2002:a17:90b:1d91:b0:23b:3f18:a8fe with SMTP id pf17-20020a17090b1d9100b0023b3f18a8femr12450844pjb.31.1681168240593;
+        Mon, 10 Apr 2023 16:10:40 -0700 (PDT)
 Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id 22-20020aa79216000000b005ac419804d5sm8559571pfo.98.2023.04.10.16.07.40
+        by smtp.gmail.com with ESMTPSA id u14-20020a170902a60e00b0019f892dc696sm8304779plq.229.2023.04.10.16.10.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Apr 2023 16:07:40 -0700 (PDT)
+        Mon, 10 Apr 2023 16:10:40 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Emily Shaffer <nasamuffin@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] usage: clarify --recurse-submodules as a boolean
-References: <ZDCWrl4GhgYKYFYG@google.com> <xmqqcz4fi7bd.fsf@gitster.g>
-        <ZDCwT3mhaGHyydng@google.com>
-Date:   Mon, 10 Apr 2023 16:07:39 -0700
-In-Reply-To: <ZDCwT3mhaGHyydng@google.com> (Emily Shaffer's message of "Fri, 7
-        Apr 2023 17:07:43 -0700")
-Message-ID: <xmqqpm8bcp50.fsf@gitster.g>
+Subject: Re: [PATCH v2] usage: clarify --recurse-submodules as a boolean
+References: <ZDSTFwMFO7vbj/du@google.com>
+Date:   Mon, 10 Apr 2023 16:10:40 -0700
+In-Reply-To: <ZDSTFwMFO7vbj/du@google.com> (Emily Shaffer's message of "Mon,
+        10 Apr 2023 15:52:07 -0700")
+Message-ID: <xmqqfs97cozz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,28 +68,64 @@ X-Mailing-List: git@vger.kernel.org
 
 Emily Shaffer <nasamuffin@google.com> writes:
 
-> It was 'git checkout', if you must know ;) and in such a hurry that I
-> also neglected to s/three/four/g. Will fix it with the reroll.
+> `git switch` `git checkout`, `git reset`, and `git read-tree` allow a
 
-You fixed three-or-four but not the missing comma in v2, it seems.
-I locally touched it up while queuing v2, but ...
+Missing comma?
 
->> This however is a breaking change.  Even though there is no hint
-> ...
->> I am not
->> sure it is safe to change the behaviour right under them, like this
->> patch does, and I wonder if we should do this in two steps, with its
->> first step doing:
-> ...
-> I'd be happy to do so with a reroll, probably on Monday. It's true that
-> while these are user-facing commands which we don't guarantee backwards
-> compatibility for, there's not a reason to subject users to that kind of
-> pain unnecessarily.
+> user to choose to recurse into submodules. All four of these commands'
+> short usage seems to indicate that `--recurse-submodules` should take an
+> argument. In practice, though, all four of these commands parse through
+> the same callback path:
+>
+>   option_parse_recurse_submodules_worktree_updater(...) checks for
+>   set/unset, or passes off to...
+>   parse_update_recurse_submodules_arg(...), which is a straight handoff
+>   to...
+>   parse_update_recurse(...), which only accepts true or false.
 
-... I do not see how this part is addressed in v2.  You got too
-excited by the idea of how to replace the awful abuse of parse
-options callback interface with a more focused setter function in
-the API and forgot to do other changes you meant to or something?
+"true or false" -> "various forms of 'true' (e.g. on/1/yes) or 'false'"
+
+> So ultimately, it can only be true or false, unlike `git push
+
+Likewise.  Here is a minimally touched up version I queued.
 
 Thanks.
 
+    usage: clarify --recurse-submodules as a boolean
+    
+    `git switch`, `git checkout`, `git reset`, and `git read-tree` allow a
+    user to choose to recurse into submodules. All four of these commands'
+    short usage seems to indicate that `--recurse-submodules` should take an
+    argument. In practice, though, all four of these commands parse through
+    the same callback path:
+    
+      option_parse_recurse_submodules_worktree_updater(...) checks for
+      set/unset, or passes off to...
+      parse_update_recurse_submodules_arg(...), which is a straight handoff
+      to...
+      parse_update_recurse(...), which only accepts various ways to
+      spell a Boolean
+    
+    So ultimately, it can only be true or false (or yes/no/on/off/etc),
+    unlike `git push --recurse-submodules=<enum>`. A user could provide
+    `--recurse-submodules=true`, but we don't typically suggest that for
+    boolean arguments.
+    
+    Documentation/git-(switch|checkout|reset|read-tree).txt suggests
+    --[no-]recurse-submodules, too.
+    
+    In fact, these four commands are the only ones that use this codepath -
+    so there's not any reason for it to be so meandering. However, because
+    option_parse_recurse_submodules_worktree_updater() modifies static state
+    in submodule.c, we still need to get a handle to that static state
+    through a function call.
+    
+    To preserve the behavior of --recurse-submodules=true and clarify the
+    usage string simultaneously, get rid of the OPT_CALLBACK_F in favor of a
+    simple OPT_BOOL, and call a setter in submodule.c for the static state
+    instead. Also, remove the now-unused
+    option_parse_recurse_submodules_worktree_updater(),
+    parse_update_recurse_submodules_arg(), and parse_update_recurse() calls.
+    
+    Signed-off-by: Emily Shaffer <nasamuffin@google.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
