@@ -2,74 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE023C77B61
-	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 16:47:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F72EC76196
+	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 17:01:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230135AbjDJQr0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Apr 2023 12:47:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52420 "EHLO
+        id S230083AbjDJRBw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Apr 2023 13:01:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230090AbjDJQrZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2023 12:47:25 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 317B81BC1
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 09:47:24 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id z26so6997582lfj.11
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 09:47:24 -0700 (PDT)
+        with ESMTP id S229669AbjDJRBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2023 13:01:51 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CDEC1BF2
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 10:01:50 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id d9so5125880wrb.11
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 10:01:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681145242; x=1683737242;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ECCNalpAR3bK4z9IO/+18sUAtSsEQKFpT6pUp1B5lTI=;
-        b=Izha0l4D3x81rCbGQFkimiDmOUVtTnmFJBWwWUyWejQ+v4bvhXchwifApV+896HZQq
-         MDtbq7PkUKMCSM3P2wDADNryq8v1QGiTekqkFrxkHEw/bzr8rssa00R0d0820Ny3nKt8
-         gqGOc3AN3Oli3fz4fwzl/BdT5TSBM3yFL3F6cNMu6fN6wXCS40zZy//lgIH7pHGqjvfC
-         fzXi7eozpd8m9rFAcuQ69E6fHkO1mF7JIhaXOZCWuRRKGvYpjCAiuDLvj6zKquogShVz
-         D8/6j2RAX2j0wO9S1qbgJxn1Pn9b17sl2giwvXf7/C6zn8APrUUzdWJdftYopduy/KuG
-         HWmw==
+        d=gmail.com; s=20210112; t=1681146109;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=l9jJM2zKjM8sAOPWQPAfBpEHB8B3VSnzol6t7vlFQzM=;
+        b=UU+utOa2o2BmrPFU3x0HoKX4TllX621ryh4h/p7euayUfUiN/xiuhQizUpVUcugcC6
+         NyUWNJfhoakk4lWL/lMn6KkbAYCjdsv6WvjRn+CCGHD1R/40ZAA2FzMIpolYbCCtSkq0
+         eNteTXd8aZ3DJgydIBbEyd73hNePDw7J9cUpkQNrwfDfeA4hCQZpOxoP4ZqMu+s40STz
+         Gx89rVd2t2xcp9Xr59DWL/KxHu5MXDQBNlsH6Y/59J3sYMuuWxfUKC8zBxYqhsoufR+B
+         ZHwuhCknGcEJekUN5AV01G5a+X6Ohy9SRSbrT15zxOYoV8Ql8NL1YW2rtqg6A4N/2cQ3
+         dNsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681145242; x=1683737242;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ECCNalpAR3bK4z9IO/+18sUAtSsEQKFpT6pUp1B5lTI=;
-        b=5DSBTEv0l4ZR3twpk5ODSoXcKpg3hXRMi8bNXB8ydPZGMgt8j9Y3emTJobSgAAD5nj
-         7N6j2Intk1p0sssI0P1oMtxllGd0gkdRGzmJp+jzCKQaBYJHVpby1Vm93X97wfTFJVsD
-         +lYl2gfSXnICTkMe0IQO6ezYVe1V16j84MQSEE4VE2z8QAhDIo1QJe4+WfeiHlLTOAz5
-         BlIuuON6B/Th8aWLgSBwQTqnII9+D2jEBUG1zdvWLxOLjhPxYQX+6x8c4G/45P14SFnw
-         xxYHtTRpmg7qUNPT1PqCtPMs0F7y8Q5JMOnQ+glog7u30wAuHmAY/8YUOvuRn394Y5qR
-         lNmA==
-X-Gm-Message-State: AAQBX9dDFXX6lCwm7oK2sDI5wrg5uTll/qy47m1y/8Z+KXyak0r/P2yN
-        Dm+UOgtx/oeU9hE8bt2iQXlMXqcRlyZHf/OJ6eI=
-X-Google-Smtp-Source: AKy350aPdJXcNkiIsCLbh7WL3zq/Vb/5hLpQdrMPqQl7bEUT8fXP1LxAZKrWMzOsfIIfjayziggwNi5FeHSLgjoD9CE=
-X-Received: by 2002:a05:6512:3996:b0:4e8:4409:bb76 with SMTP id
- j22-20020a056512399600b004e84409bb76mr4692872lfu.2.1681145242430; Mon, 10 Apr
- 2023 09:47:22 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1681146109;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l9jJM2zKjM8sAOPWQPAfBpEHB8B3VSnzol6t7vlFQzM=;
+        b=fqtvpu7Ugff6RfSvxVyKZtZWj/sD/hDMB1wcpgn+m3BAWyfaPauGjgD75o+tVKH86w
+         s4f4JchHKq0gpjIhbIgxHwzpZruN1JHoAjOq56fWit6QtR00lMEpB74gekLDm+wbPsbA
+         PHcrtH3VfvwA7YbqrhU4wQ+j+N8ocmmEMz9ROj1W72dMOtuC+f/9VQ9pJcH8R0vQTPig
+         6szB6Fy5dcLrwozoCK+kg/5PEEvlyyTl0N4ks/VpjoBw2vL3wKnugVY+m4g3wODaLyt4
+         i5O80pWujcvlKywwcdIgDgeRVtz7kjZkfPCsqAIrQW6Yh8OKLE4hjc/4L7suV4d4TklO
+         vlgQ==
+X-Gm-Message-State: AAQBX9eAB87psDuS8SxWjUTrCvbOxWMa2PPlUSgUBmQ3QiFnyD0eeRoG
+        YmGHvNP92T239zmgEdS48xJgqoZT9ok=
+X-Google-Smtp-Source: AKy350bE0lG9PDGnBbt5cjJUiRuA4PUpyj29yvb6Wki2KQ+lMCMlS/iXCwJxzpNZoU0J4kFp/N4cJA==
+X-Received: by 2002:a5d:6842:0:b0:2d7:9206:488d with SMTP id o2-20020a5d6842000000b002d79206488dmr7290434wrw.36.1681146108673;
+        Mon, 10 Apr 2023 10:01:48 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n5-20020a5d4845000000b002e5f6f8fc4fsm12200860wrs.100.2023.04.10.10.01.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Apr 2023 10:01:48 -0700 (PDT)
+Message-Id: <pull.1490.git.git.1681146107.gitgitgadget@gmail.com>
+From:   "Allen Reese via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 10 Apr 2023 17:01:45 +0000
+Subject: [PATCH 0/2] subtree: support GPG commit signing
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <47afc6a6c8757032d9d69a2f9aaaeb427c5a003f.1680571352.git.gitgitgadget@gmail.com>
- <20230405172840.730076-1-calvinwan@google.com> <CABPp-BEurqhk32hC041kcXiVNpVXx3YzJMyzDh4E=ctBLemz8A@mail.gmail.com>
- <CAFySSZD-9Ui8v0Ki1j96zouAB=sCRT0qBWOhb5-A4TfizpOqfw@mail.gmail.com>
-In-Reply-To: <CAFySSZD-9Ui8v0Ki1j96zouAB=sCRT0qBWOhb5-A4TfizpOqfw@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 10 Apr 2023 09:47:10 -0700
-Message-ID: <CABPp-BEtAVWE3voSPzdL0495cWnMxOWHECXYzwpeHCSRXA33Xg@mail.gmail.com>
-Subject: Re: [PATCH v2 21/24] strbuf: move forward declarations to beginning
- of file
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Allen Reese <java.allen@apple.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2023 at 8:52=E2=80=AFAM Calvin Wan <calvinwan@google.com> w=
-rote:
->
-> I do have this change in one of my series already, and since I'm
-> planning on removing the declarations anyways, dropping this patch for
-> now would be my recommendation.
+Add support for -S/--gpg-sign/--no-gpg-sign command line options and
+commit.gpgsign configuration. These are passed to invocations of git
+commit-tree.
 
-Cool, I'll submit a reroll tonight with this patch dropped.
+cc: Avery apenwarr@gmail.com
+
+Allen Reese (1):
+  contrib/subtree: fix gpg_sign_arg not being passed to git merge.
+
+Jacques Vidrine (1):
+  subtree: support GPG commit signing
+
+ contrib/subtree/git-subtree.sh     | 36 ++++++++++++++++++++++++------
+ contrib/subtree/git-subtree.txt    |  9 ++++++++
+ contrib/subtree/t/t7900-subtree.sh |  2 +-
+ 3 files changed, 39 insertions(+), 8 deletions(-)
+
+
+base-commit: 0607f793cbe0af16aee6d2480056d891835884bd
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1490%2Fareese%2Fgit-subtree-support-gpg-signing-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1490/areese/git-subtree-support-gpg-signing-v1
+Pull-Request: https://github.com/git/git/pull/1490
+-- 
+gitgitgadget
