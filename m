@@ -2,118 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A6CBC77B61
-	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 08:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82E6FC77B61
+	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 09:08:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229730AbjDJIKt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Apr 2023 04:10:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36780 "EHLO
+        id S229746AbjDJJIx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Apr 2023 05:08:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbjDJIKs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2023 04:10:48 -0400
-Received: from m1381.mail.163.com (m1381.mail.163.com [220.181.13.81])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D7C4E40D9
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 01:10:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-        Message-ID; bh=+FSed1IW7s04FEt8Z1i01MNoPTNj0Lpt+1A7ABqL2sE=; b=l
-        6Xn6DnDDkTCXIVq3k1qj307t7yLs+b1iDQhHZ3yha8RJ0Py3HnH0u2GozWlkshV9
-        slw9d8zcnnmRlTc9l4HmuMm5T0GxpYhN4gKgGyKb2VG6a/pyvqvLUtacKcFVnffq
-        N0CELzWKbFsNlugpawGRWc2PEe0SnezkjFhXu9aXiA=
-Received: from 18994118902$163.com ( [153.0.171.49] ) by
- ajax-webmail-wmsvr81 (Coremail) ; Mon, 10 Apr 2023 16:10:44 +0800 (CST)
-X-Originating-IP: [153.0.171.49]
-Date:   Mon, 10 Apr 2023 16:10:44 +0800 (CST)
-From:   "Zhang Yi" <18994118902@163.com>
-To:     git@vger.kernel.org, christian.couder@gmail.com,
-        hariom18599@gmail.com
-Subject: Re:[GSOC] [PROPOSAL v3] Draft of proposal for "Unify ref-filter
- formats with other pretty formats"
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2023 www.mailtech.cn 163com
-In-Reply-To: <17b1acf2.6231.18748391cab.Coremail.18994118902@163.com>
-References: <17b1acf2.6231.18748391cab.Coremail.18994118902@163.com>
-X-NTES-SC: AL_QuyTA/2au0ov4iWQYekXn0oVgu88UcCzvPok34ZQOZk0iCrw2CEvV216L3XH79+iCQaoogqXfDdB9dhgW4N8eJA/T5NcJGiiGXtYMUbMo9dt
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+        with ESMTP id S229579AbjDJJIv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2023 05:08:51 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3A02107
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 02:08:50 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id e22so3828861wra.6
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 02:08:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1681117729;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nJMdwwT6zJxqWFsLxxmyVtK+/GcPLQtdsTryeFIvrMk=;
+        b=JPaTM129eb6SlOnr9q4lSOiRVH+ANSJVXWbcsiyjkxdFH71onjVMp1qNujcyiPHzCA
+         wUUXy7iPXMIxnqSVnO5iq5PK6AP1Pvu2ZP8h/N/Rgu67KlKzETWN7M2UT2BGK1vY9MKQ
+         NMqM3m/WKoNVVXBhk15RlySc29MaPKffV42wNRYiql2xob0SBSqf5/lZ9Isv2bxfB52Z
+         eOu8JNlSha7sTATfQemrQRZt/PUtxZnhF/EbCPMUuhiPjtW9TKdXmr9CbSW6kht3nz6t
+         D199lWgxZTDPHsa4BSwWxjEPdbRMA7vCDHzcm30zIu2JG2StbB5ntVx4Kvu3p25doW+L
+         /2eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681117729;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nJMdwwT6zJxqWFsLxxmyVtK+/GcPLQtdsTryeFIvrMk=;
+        b=sMuwTMbmZ6R/ELuwOX14MmNt0hJ/1BVnbClOpsue3nxBmXvK7Xn66LqvHlCnEn6t44
+         jtlQYzKFcOM8ozZXxGkbmnbiBvW/mTHAcUFwYVM//S5b194bnS0PeuvLjAHo32rDzKsx
+         gPEcgtK8teQ5o+IjYPXLrSxrUDeETTUZ9VYrqVEBgQZ5iuTyY8JdniddQ+0v50YPjI4u
+         CUqDQM7RqIdToBHJJTAHdnISgDeyxxPU71qB0k7O/9eXiScWxA9RzTDYJRZVrSt3bBYJ
+         iQHIEbeVQRWpPM24MutcMMW23YgpV6V7pdt1avk5x1AxnkKOAJmT7kj3ZMnI58/zfRDG
+         YM2g==
+X-Gm-Message-State: AAQBX9db7aNVilvv/qYM0T49TRUtbWMYbFwxDCKf+kddP4aoFxGeVLqy
+        BRXMdQnhmfjtQOxa4ZLLRNYdf0YwsEI=
+X-Google-Smtp-Source: AKy350Zd3t2LqOaL/OPW3WSylw4l5kn0mMX1/HMNGZCExlSlgq/5vyW4QlZSBX/luayFCnv/tk2C6g==
+X-Received: by 2002:adf:e9c1:0:b0:2f2:7a0a:e4a5 with SMTP id l1-20020adfe9c1000000b002f27a0ae4a5mr389340wrn.7.1681117729175;
+        Mon, 10 Apr 2023 02:08:49 -0700 (PDT)
+Received: from localhost.localdomain ([90.253.53.152])
+        by smtp.gmail.com with ESMTPSA id f8-20020a05600c154800b003f034c76e85sm17232568wmg.38.2023.04.10.02.08.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Apr 2023 02:08:48 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH v4 0/5] rebase: cleanup merge strategy option handling
+Date:   Mon, 10 Apr 2023 10:08:26 +0100
+Message-Id: <cover.1681117706.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.40.0.672.gbd2d2ac924
+In-Reply-To: <cover.1678893298.git.phillip.wood@dunelm.org.uk>
+References: <cover.1678893298.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 MIME-Version: 1.0
-Message-ID: <17ee1b01.5434.1876a37a5ed.Coremail.18994118902@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: UcGowAB3fy+ExDNkHAMGAA--.39948W
-X-CM-SenderInfo: zprymmqurrmmmqsbiqqrwthudrp/1tbiZRdN-l8ZXu+CvAACsK
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-CgpIaSwgSSBoYXZlIGRvbmUgc29tZSBwcmVwYXJhdG9yeSB3b3JrLiBJIHJlYWQgbW9zdCBwYXJ0
-IG9mIHRoZSBwYXRjaAoicmVmLWZpbHRlcjogYWRkIG5ldyAic2lnbmF0dXJlIiBhdG9tIlsxXSBi
-dXQgdGhlIHBhcnQgb2YgdGhlIHRlc3Qgc2NyaXB0IGlzCmxlZnQuCkkgcGxhbiB0byByZWFkIGRl
-dGFpbHMgYWJvdXQgdGVzdCBzY3JpcHRzIGlmIHRoZSBwcmV2aW91cyB3b3JrIG9mIHRoZSBwYXRj
-aCBpcwp3ZWxsIGRvd24uCiogTXkgcXVlc3Rpb25zCioqIEFyZSB0aGVyZSBtb3JlIGFzcGVjdHMg
-SSBuZWVkIHRvIGZvY3VzIHdoZW4gcmVhZGluZyBvdGhlcidzCnBhdGNoZXM/CioqIEFyZSB0aGVy
-ZSBvdGhlciBwYXRjaGVzIG5lY2Vzc2FyeSB0byByZWFkPwoKClRoYW5rcyBmb3IgYWxsIHN1Z2dl
-c3Rpb25zLgpCZWxvdyBpcyB3aGF0IEkgZ3Jhc3AgZnJvbSByZWYtZmlsdGVyOiBhZGQgbmV3ICJz
-aWduYXR1cmUiIGF0b20gcGF0Y2hlcy4gSSB3aWxsCnB1dCBpdCBvbiBteSBibG9nIHNpdGUgbGF0
-ZXIuCgoKKiB2MQoqKiBUaGUgZ29hbCBvZiB2MQpBZGQgInNpZ25hdHVyZSIgYXRvbSB3aXRoIGBn
-cmFkZWAsYHNpZ25lcmAsIGBrZXlgLCBgZmluZ2VycHJpbnRgLApgcHJpbWFyeWtleWZpbmdlcnBy
-aW50YCwgYHRydXN0bGV2ZWxgIGFzIGFyZ3VtZW50cy4KVG8gZ2V0IGNvbnN0aXR1dGVzIGZvciAl
-R0csICVHPywgJUdTLCAlR0ssICVHRiwgJUdQLCBhbmQgJUdUIHByZXR0eSBmb3JtYXRzLgoqKiBU
-aGUgYXBwcm9hY2gKKioqIGVudW0KYXRvbV90eXBlOyBBVE9NX1NJR05BVFVSRTogdXNlZCBhcyB0
-aGUgaW5kZXggb2YgdmFsaWRfYXRvbSBhcnJheS4KKioqIHN0cnVjdAp1c2VkX2F0b207IHN0cnVj
-dCB7Li4ufSBzaWduYXR1cmU6IGFkZCBzaWduYXR1cmUgYXRvbSBhbmQgaXRzIG9wdGlvbnMuCnZh
-bGlkX2F0b20gOyBbQVRPTV9TSUdOQVRVUkVdOiBzZWVtcyBidWlsZCBhIG1hcCBiZXR3ZWVuICJz
-aWduYXR1cmUiIGFuZApmdW5jdGlvbiAic2lnbmF0dXJlX2F0b21fcGFyc2VyIi4KKioqIGZ1bmN0
-aW9uCioqKiogYWRkCnN0YXRpYyBpbnQgc2lnbmF0dXJlX2F0b21fcGFyc2VyOiBTZXQgInNpZ25h
-dHVyZS5vcHRpb24iIGFjY29yZGluZyB0byBhcmdzLgpzdGF0aWMgdm9pZCBncmFiX3NpZ25hdHVy
-ZTogU2V0IHRoZSByZXN1bHQgc3RyaW5nIGluIGF0b21fdmFsdWUudmFsdWUgZm9yCnNpZ25hdHVy
-ZSBvcHRpb25zLiBUaGVyZSBhcmUgbW9yZSBkZXRhaWxzIG5lZWQgdG8gdW5kZXJzdGFuZC4KKioq
-KiBtb2RpZnkKc3RhdGljIHZvaWQgZ3JhYl92YWx1ZXM6IGFkZCBncmFiX3NpZ25hdHVyZSBpbiBj
-YXNlIE9CSl9DT01NSVQuCioqKiBkb2N1bWVudAoqKiogdGVzdCBzY3JpcHRzCioqIE90aGVycycg
-Y29tbWVudHMgb24gdjEKKioqIEp1bmlvIEMgSGFtYW5vCjEuIExhY2sgbW90aXZhdGlvbi4KMi4g
-TmVlZCB0byBkZWFsIHdpdGggc2lnbmVkIHRhZy4KMy4gSW1wcm92ZSB0aGUgc3R5bGUgb2YgImlm
-IGVsc2UiLgo0LiBSZW5hbWUgZ3JhYl9zaWduYXR1cmUgdG8gZ3JhYl9jb21taXRfc2lnbmF0dXJl
-LiBUaGlzIG1ha2UgZWFzaWVyIGZvciBmdXR1cmUKZGV2ZWxvcGVycyB0byB1bmRlcnN0YW5kIGFu
-ZCBhZGQgImdyYWJfdGFnX3NpZ25hdHVyZSIuCjUuIEFkZCBzcGFjZSBiZXR3ZWVuIGNhc3QgYW5k
-IHZhbHVlLgo2LiBDaGVjayB1c2VkLWF0b20gdG8gbWFrZSBzdXJlIHRoZXJlIGlzIG5lZWQgdG8g
-ZG8gc2lnbmF0dXJlIHByb2Nlc3NpbmcuCjcuIEEgY2FsbCB0byBjaGVja19jb21taXRfc2lnbmF0
-dXJlKCkgc2hvdWxkIGhhdmUgYSBtYXRjaGluZyBjYWxsIHRvCnNpZ25hdHVyZV9jaGVja19jbGVh
-cigpLgoqKiogSmVmZiBLaW5nCjEuIEFkZCBhbiBhbm5vdGF0aW9uIGZvciB0aGUgdW51c2VkIHBh
-cmFtZXRlciwgd2hpY2ggaXMgbmVjZXNzYXJ5IHdoZW4KLVd1bnVzZWQtcGFyYW1ldGVyIGlzIG9u
-LgoyLiBJbiBzaWduYXR1cmVfYXRvbV9wYXJzZXIsIHJldHVybiBlcnJfYmFkX2FyZyBmb3Igd3Jv
-bmcgYXJnLiBUaGlzIG1ha2UgdGhlCmVycm9yIG1lc3NhZ2UgbWF0Y2ggdGhlIG90aGVycy4KKiB2
-MiBzZWVtcyBtZWV0IHNvbWUgbWlzdGFrZSBhYm91dCBtZXNzYWdlIElECjEuIE1vcmUgZGV0YWls
-ZWQgY29tbWl0IG1lc3NhZ2UuCjIuIEFkZCBwYXJzZV9zaWduYXR1cmVfb3B0aW9uKCksIHdoaWNo
-IHJldHVybiB2YWx1ZSBmb3Igc3RydWN0IHNpZ25hdHVyZS5vcHRpb24Kb3IgLTEgd2hlbiBnZXQg
-d3JvbmcgYXJnLiBUaGlzIGZ1bmN0aW9uIGlzIHVzZWQgaW4gZ3JhYl9zaWduYXR1cmUoKSBhbmQK
-c2lnbmF0dXJlX2F0b21fcGFyc2VyKCkuCjMuIE1vZGlmeSBzaWduYXR1cmVfYXRvbV9wYXJzZXIo
-KS4gVXNlIHBhcnNlX3NpZ25hdHVyZV9vcHRpb24oKSB0byBnZXQgb3B0IGFuZApyZXR1cm4gZXJy
-X2JhZF9hcmcgZm9yIHdyb25nIGFyZy4KNC4gTW9kaWZ5IGdyYWJfc2lnbmF0dXJlKCkuIFVzZSBw
-YXJzZV9zaWduYXR1cmVfb3B0aW9uKCkgdG8gY2hlY2sgbmFtZSBpbgp1c2VkX2F0b20gYW5kIHVz
-ZSBjaGVja19jb21taXRfc2lnbmF0dXJlKCkgd2l0aCBzaWduYXR1cmVfY2hlY2tfY2xlYXIoKSBv
-bmx5Cm9uY2UuCjUuIEFkZCB0ZXN0IGZvciBiYXJlIHNpZ25hdHVyZSBhdG9tKCUoc2lnbmF0dXJl
-KSkuCiogdjMgYW5kIHY0CjEuIFJlbW92ZSB0ZXN0IGZvciBiYXJlIHNpZ25hdHVyZSBhdG9tIGJl
-Y2F1c2UgdGhlIHJlc3VsdCBvZiB0aGUgdGVzdCBpcyBub3QKc2FtZSBvbiBkaWZmZXJlbnQgcGxh
-dGZvcm0uCioqIEp1bmlvIEMgSGFtYW5vJ3MgY29tbWVudHMKQXZvaWQgY2FsbGluZyBjaGVja19j
-b21taXRfc2lnbmF0dXJlKCkgd2hlbiBubyAlKHNpZ25hdHVyZSkgYXRvbXMgaXMgdXNlZC4KKiB2
-NQoxLiBBZGQgYSBzaWduYXR1cmVfY2hlY2tlZCBmbGFnIHRvIGF2b2lkIGNhbGxpbmcgY2hlY2tf
-Y29tbWl0X3NpZ25hdHVyZSgpCnVubmVjZXNzYXJpbHkuCjIuIEZpeCB0aGUgdGVzdCBmb3IgYmFy
-ZSBzaWduYXR1cmUgYXRvbSglKHNpZ25hdHVyZSkpIGFib3V0IHRydXN0ZGIuCioqIEp1bmlvIEMg
-SGFtYW5vJ3MgY29tbWVudHMKQSBxdWVzdGlvbiBhYm91dCBkaWZmZXJlbmNlcyBiZXR3ZWVuIHZl
-cnNpb25zIG9mIEdQRy4gSXQgc2VlbXMgbm8gcmVsYXRpb25zaGlwCndpdGggbXkgd29yay4KKiBW
-aWV3IHRoZXNlIHBhdGNoZXMgYSB3aG9sZQoqKiBUaGUgZ2VuZXJhbCBkaXJlY3Rpb24KMS4gUmVn
-aXN0ZXIgYSBuZXcgc2lnbmF0dXJlIGFuZCBpdHMgb3B0aW9ucyBpbiBlbnVtIGF0b21fdHlwZSBh
-bmQgc3RydWN0IHVzZWQKYXRvbS4KMi4gRGVmaW5lIGEgZm9vX2F0b21fcGFyc2VyKCkgdG8gY29u
-dmVydCBzdHJpbmcgYXJnIHRvIGludCBvcHRpb24uCjMuIEJpbmQgYXRvbSB3aXRoIGl0cyBmb29f
-YXRvbV9wYXJzZXIoKSBpbiB2YWxpZF9hdG9tLgo0LiBEZWZpbmUgYSBncmFiX2ZvbygpIHRvIHNl
-dCBzdHJpbmcgcyBpbiBzdHJ1Y3QgYXRvbV92YWx1ZSBhY2NvcmRpbmcgdG8gb3B0aW9uLgo1LiBJ
-bnNlcnQgdGhlIGdyYWJfZm9vKCkgaW50byBncmFiX3ZhbHVlcygpIGZ1bmN0aW9uLgoqKiBscyBp
-dCBwb3NzaWJsZSB0byB1c2UgdGhlIHNpbWlsYXIgYXBwcm9hY2gKWWVzLiBJIGNhbiBmb2xsb3cg
-dGhlIGdlbmVyYWwgaWRlYSBvZiB0aGlzIHBhdGNoLiBPZiBjb3Vyc2UsIEkgbmVlZCB0byBmaW5l
-dHVuZQp0aGUgZGV0YWlscyBhY2NvcmRpbmcgdG8gdGhlIGF0b20gSSB3b3JrIG9uLgoqIEVsc2UK
-Y2hlY2tfY29tbWl0X3NpZ25hdHVyZSgpIGlzIGRlZmluZWQgaW4gY29tbWl0LmMuCldoYXQgaXMg
-R1BHPwpodHRwczovL2dudXBnLm9yZy8KR251UEcgYWxsb3dzIHlvdSB0byBlbmNyeXB0IGFuZCBz
-aWduIHlvdXIgZGF0YSBhbmQgY29tbXVuaWNhdGlvbnMuCgoKWzFdIGh0dHBzOi8vcHVibGljLWlu
-Ym94Lm9yZy9naXQvcHVsbC4xNDUyLmdpdC4xNjcyMTAyNTIzOTAyLmdpdGdpdGdhZGdldEBnbWFp
-bC5jb20vIAoK
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
+
+Cleanup the handling of --strategy-option now that we no longer need to
+support "--preserve-merges" and properly quote the argument when saving
+it to disc.
+
+A hopefully final re-roll to fix a memory leak I spotted in V3.
+
+Changes since V3:
+ - Fixed a memory leak added in V3. The array returned by
+   split_cmdline() is allocated on the heap so we need to fee it. The
+   array elements come from the string passed to split_cmdline() so do
+   not need to be individually freed.
+
+Changes since V2:
+
+ - Added Elijah's Reviewed-by: trailer.
+ - Fixed a typo in patch 4 spotted by Elijah.
+
+Changes since V1:
+
+I've rebased these patches onto 'master' to avoid conflicts with
+'sg/parse-options-h-initializers' in the new patch 2 (this series
+depends on 'ab/fix-strategy-opts-parsing' but that has now been merged
+to master).
+
+Patch 1 - Unchanged.
+
+Patch 2 - New patch to store the merge strategy options in an "struct
+          strvec". This patch also introduces a new macro OPT_STRVEC()
+          to collect options into an "struct strvec".
+
+Patch 3 - Small simplification due to the changes in patch 2.
+
+Patch 4 - Moved the code to quote a list so it can split by
+          split_cmdline() into a new function quote_cmdline() as
+	  suggested by Elijah.
+
+Patch 5 - Reworded the commit message as suggested by Elijah.
+
+
+Base-Commit: 140b9478dad5d19543c1cb4fd293ccec228f1240
+Published-As: https://github.com/phillipwood/git/releases/tag/sequencer-merge-strategy-options%2Fv4
+View-Changes-At: https://github.com/phillipwood/git/compare/140b9478d...7de1aa101
+Fetch-It-Via: git fetch https://github.com/phillipwood/git sequencer-merge-strategy-options/v4
+
+Phillip Wood (5):
+  rebase: stop reading and writing unnecessary strategy state
+  sequencer: use struct strvec to store merge strategy options
+  rebase -m: cleanup --strategy-option handling
+  rebase -m: fix serialization of strategy options
+  rebase: remove a couple of redundant strategy tests
+
+ alias.c                        | 18 +++++++
+ alias.h                        |  3 ++
+ builtin/rebase.c               | 54 ++++-----------------
+ builtin/revert.c               | 20 ++------
+ parse-options-cb.c             | 16 +++++++
+ parse-options.h                | 10 ++++
+ sequencer.c                    | 58 ++++++++++------------
+ sequencer.h                    | 12 +++--
+ t/t3402-rebase-merge.sh        | 21 --------
+ t/t3418-rebase-continue.sh     | 88 +++++++++++++---------------------
+ t/t3436-rebase-more-options.sh | 18 -------
+ 11 files changed, 127 insertions(+), 191 deletions(-)
+
+Range-diff against v3:
+1:  882b403423 = 1:  882b403423 rebase: stop reading and writing unnecessary strategy state
+2:  1d8e59aa16 ! 2:  4b288e883d sequencer: use struct strvec to store merge strategy options
+    @@ sequencer.c: void parse_strategy_opts(struct replay_opts *opts, char *raw_opts)
+     -		opts->xopts[i] = xstrdup(arg);
+     +		strvec_push(&opts->xopts, arg);
+      	}
+    ++	free(argv);
+      }
+      
+    + static void read_strategy_opts(struct replay_opts *opts, struct strbuf *buf)
+     @@ sequencer.c: static void write_strategy_opts(struct replay_opts *opts)
+      	int i;
+      	struct strbuf buf = STRBUF_INIT;
+3:  e98ef5ce8c = 3:  4e040c1214 rebase -m: cleanup --strategy-option handling
+4:  a5e940e2d0 = 4:  671ee03503 rebase -m: fix serialization of strategy options
+5:  2d1d328110 = 5:  7de1aa1016 rebase: remove a couple of redundant strategy tests
+-- 
+2.40.0.672.gbd2d2ac924
+
