@@ -2,59 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCA7DC76196
-	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 15:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A61EBC76196
+	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 15:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229980AbjDJPw5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Apr 2023 11:52:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32938 "EHLO
+        id S229724AbjDJPyu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Apr 2023 11:54:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229878AbjDJPwz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2023 11:52:55 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F4C4686
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 08:52:54 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id y69so11933699ybe.2
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 08:52:54 -0700 (PDT)
+        with ESMTP id S229592AbjDJPyt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2023 11:54:49 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BC4D1B9
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 08:54:48 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id f188so36839431ybb.3
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 08:54:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1681141973;
+        d=google.com; s=20210112; t=1681142087;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BbcO69gtu/CEGBvyvoHmyd0dLsv8Su0UGdCtGV6B6Uc=;
-        b=ViOC66Nw4NeFXbM26dRykJJKgAzdu3aNFaS/cJEqaokR71z4Cla8uHIbKZ99I2IOgu
-         9U8bKQDjtvV1a+aCHrOxAwAhBoo/s3d7FC1PZMyNgXf00ogqwa3cmTSVu7dJbHmJwNKQ
-         /Cs9QO59FDxkkvQvnhU6Y6gjYKMBRpSNKkcWosUavdIcx67crQ57++jJ2WaNzARw+Ac3
-         To27c0s2GUJMG2Yzz4fbmzdygIU61GaTlTa2B15+WUo1jvf16ocx8HuDrixUGCgmRI8L
-         f6+td4hOVhW9Ot8QY9WxKtgF+8Ar/+H4mEBC28b4vuLfjYaopVi60EDgvpNuZHcj8TFb
-         l8IQ==
+        bh=oQTZuQijK/yLWw0QLXxlFpDBcTC//xEPv53/6acRoYc=;
+        b=r7j51Zev9k6dTsv4BXNMOfPPfzAszyl/GHMWw3h1KQy32VOpf9rUwm0fmxoNJoJn/X
+         b4Dh3lE14Jtgqv15pn6jPglMPZGnFKDlcOT49WG6vA5b6P3POyurjZSKdXtyIiuNKrBS
+         jZKH6WMedVmysIqHkwS7PCL39ell/vP8I9qi4xRfzeiRafOkWH4bTN3G/ehq/vmRK01K
+         uqKaVc99CZpRSif40YXIUmB6RliAyflUjyIpsFFuE8G5Q/0HF/qNHLgEjyp2aBA5YFrf
+         nOKqkVYapB7hVODJz8TSOSNDup/CxFTcijwAbSZogwS+8QOk+8uqjdjspc7Nr9mLk8op
+         SarQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681141973;
+        d=1e100.net; s=20210112; t=1681142087;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BbcO69gtu/CEGBvyvoHmyd0dLsv8Su0UGdCtGV6B6Uc=;
-        b=4nNApzMp9wVOkBPrwlx43i8DrLzdfK//oLOJzctXJSa3RYOkZJrzT2MVcFwCladnqa
-         ptT7OyqCAtuYJmSvhagIzXbr3g5FV6vc5/KMzJh1FfXLpDKBsHxY/xDOeXCtN+gB2SuL
-         E/vtW5N04jUdtdl58JhbIZgsz90z1l6YeRRAmRo8iAj2V1xk0doEc/iG7p4phPM38nq+
-         iT3LcOfLP9b+ZnUDxuS2Va8053ALJcXBA8fmuxmGdKcvq7iJDDF2X3apKCGRjbiejpXT
-         pOhv9ucr8Hcod4e6X2Szh8SxluzFwpdBIvU834EUvXMrxh6YXXVktTPmmyqcwuA6ZW0y
-         GTXg==
-X-Gm-Message-State: AAQBX9dxA5YXxgQGxXejRc7a5doZoW70eTqzFBmo+recqFVkbgD8pXPM
-        QNeij4r721EJh/xVpKj9FTY4kc3tsdA5m9z2p5utruSRii4DIfw5ZmesDg==
-X-Google-Smtp-Source: AKy350aM+gdXKPxAXXEDzf9Eh6NmedCguvhYy5OiIj///QubUHV9akjxZ3J6HYtrBi8yCHUQxFKsOGwAUty0qEqe44Y=
-X-Received: by 2002:a25:7612:0:b0:b8e:ec30:853e with SMTP id
- r18-20020a257612000000b00b8eec30853emr2065364ybc.4.1681141973283; Mon, 10 Apr
- 2023 08:52:53 -0700 (PDT)
+        bh=oQTZuQijK/yLWw0QLXxlFpDBcTC//xEPv53/6acRoYc=;
+        b=SddQxvjiG66Et3DWtpWw0CIlJIqAP1NNeIxcDYGYFWJn86UP3E79fp212hurE1okgz
+         RKdiWdDt917tJJXcpgCg1KUFdgb9W45PxAvPe33BwcqKJ4yh7A3lGocuTZLtSpd1HWmR
+         H17nSEcxLg0NpsBRZymLmMnBsQLbF/K5uPn6tcuFaVf+m6jEPSkbVBqunZkLIoThvbxN
+         jbF4uaghyx+xyEX0oR69h+roz1aP+K9PoFWZWaNW3F8aw4sFXovqBBsJzmFPhX2mcx6a
+         Mw9AHbHc5dToLehOMhRW30vwtMa4njf0rbricY177vtF22JLLI4KOrXWIeDFvz2ufqJj
+         zxhA==
+X-Gm-Message-State: AAQBX9evj/UpuSgQL1aPEoZ2VhVdj/zE77o4Ef+r8eqyLCCdLPyDrmra
+        FNWdUZFTNLVSu2/c/fuUOPEnrVzfrcsGXdxh+1oA6B57oOSr5+fr/uUVCw==
+X-Google-Smtp-Source: AKy350aFmfprrD6hzvNfI2BtgXhDZVTcvUi2sWzy91kX2HrgF3NhfQzrANSn3IVovzcuR8yNBfvLMeFabR+j9OqVkx4=
+X-Received: by 2002:a25:d994:0:b0:b8e:fbcb:d6ef with SMTP id
+ q142-20020a25d994000000b00b8efbcbd6efmr2063921ybg.4.1681142087534; Mon, 10
+ Apr 2023 08:54:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <47afc6a6c8757032d9d69a2f9aaaeb427c5a003f.1680571352.git.gitgitgadget@gmail.com>
- <20230405172840.730076-1-calvinwan@google.com> <CABPp-BEurqhk32hC041kcXiVNpVXx3YzJMyzDh4E=ctBLemz8A@mail.gmail.com>
-In-Reply-To: <CABPp-BEurqhk32hC041kcXiVNpVXx3YzJMyzDh4E=ctBLemz8A@mail.gmail.com>
+References: <pull.1509.v2.git.1680571348.gitgitgadget@gmail.com>
+ <20230405173020.730912-1-calvinwan@google.com> <CABPp-BHi8tNxoLKSxCaHbyK3zHRevJTqJQdNjU3cLynNExmYVQ@mail.gmail.com>
+In-Reply-To: <CABPp-BHi8tNxoLKSxCaHbyK3zHRevJTqJQdNjU3cLynNExmYVQ@mail.gmail.com>
 From:   Calvin Wan <calvinwan@google.com>
-Date:   Mon, 10 Apr 2023 08:52:42 -0700
-Message-ID: <CAFySSZD-9Ui8v0Ki1j96zouAB=sCRT0qBWOhb5-A4TfizpOqfw@mail.gmail.com>
-Subject: Re: [PATCH v2 21/24] strbuf: move forward declarations to beginning
- of file
+Date:   Mon, 10 Apr 2023 08:54:36 -0700
+Message-ID: <CAFySSZBix0UWYtc75J+SrFKApdkyWGktGGJ4TLCMOVOu_go5iQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/24] Header cleanups (splitting up cache.h)
 To:     Elijah Newren <newren@gmail.com>
 Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -64,77 +63,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I do have this change in one of my series already, and since I'm
-planning on removing the declarations anyways, dropping this patch for
-now would be my recommendation.
+I meant wrapper.c haha -- I'm also currently interested in doing the
+same header cleanup you did in cache.h with git-compat-util.h
 
-On Thu, Apr 6, 2023 at 11:08=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
+On Fri, Apr 7, 2023 at 12:08=E2=80=AFAM Elijah Newren <newren@gmail.com> wr=
 ote:
 >
-> On Wed, Apr 5, 2023 at 10:28=E2=80=AFAM Calvin Wan <calvinwan@google.com>=
+> On Wed, Apr 5, 2023 at 10:30=E2=80=AFAM Calvin Wan <calvinwan@google.com>=
  wrote:
 > >
-> >  Instead of moving these declarations, can we move
-> >  strbuf_repo_add_unique_abbrev() and strbuf_add_unique_abbrev() to
-> >  object-name.[ch]? These functions are related to both strbuf and
-> >  object-name, but object-name should be a higher level API than strbuf
-> >  so it seems more natural to belong in there.
->
-> I like that suggestion; that would be better overall.  However, should
-> it be in this (already lengthy) series?  I'm guessing you likely
-> already have such a change in the series you're including, and if I
-> were to add it to mine (and risk doing it slightly differently), that
-> might increase the conflicts you need to deal with.  Would it perhaps
-> be easier to keep this small change for this series, or even drop this
-> particular patch, and then let you address this improved direction
-> with your strbuf work?
->
 > > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > > From: Elijah Newren <newren@gmail.com>
+> > > This series builds on en/header-cleanup
+> > > (https://lore.kernel.org/git/pull.1485.v2.git.1677197376.gitgitgadget=
+@gmail.com/)
+> > > and en/header-split-cleanup
+> > > (https://lore.kernel.org/git/pull.1493.v2.git.1679379968.gitgitgadget=
+@gmail.com/),
+> > > and continues to focus on splitting declarations from cache.h to sepa=
+rate
+> > > headers. This series continues dropping the number of cache.h include=
+s; in
+> > > this series we go from 254 such includes to 190.
 > > >
-> > > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > > ---
-> > >  strbuf.h | 9 ++-------
-> > >  1 file changed, 2 insertions(+), 7 deletions(-)
+> > > The series may appear to be long at first glance, but is repetitive a=
+nd
+> > > simple. It should be relatively easy to review, and falls into roughl=
+y 3
+> > > categories. An overview:
 > > >
-> > > diff --git a/strbuf.h b/strbuf.h
-> > > index 3dfeadb44c2..547696fb233 100644
-> > > --- a/strbuf.h
-> > > +++ b/strbuf.h
-> > > @@ -1,6 +1,8 @@
-> > >  #ifndef STRBUF_H
-> > >  #define STRBUF_H
+> > >  * Patches 1-6, 7: Being more explicit about dependencies. This was
+> > >    motivated by the fact that trying to find unnecessary dependencies=
+ on
+> > >    cache.h were being made harder by implicit dependencies on trace.h=
+,
+> > >    trace2.h, and advice.h that were included via cache.h. (Similar to
+> > >    gettext.h handling in the previous series.) So I simply try to mak=
+e
+> > >    dependencies more explicit, for both these headers and a few other=
+s. To
+> > >    make review easy, I split it into half a dozen patches, one header=
+ per
+> > >    patch (well, except that I handle trace.h and trace2.h together). =
+Patch 7
+> > >    then removes several includes of cache.h that are no longer needed=
+ due to
+> > >    patches 1-6.
+> > >  * Patches 8-19: For several choices of FOO, move declarations of fun=
+ctions
+> > >    for FOO.c from cache.h to FOO.h. To simplify reviewing, each case =
+is
+> > >    split into two patches, with the second patch cleaning up unnecess=
+ary
+> > >    includes of cache.h in other source files.
+> > >  * Patches 20-24: Other small manual cleanups noticed while doing abo=
+ve work
 > > >
-> > > +struct object_id;
-> > > +struct repository;
-> > >  struct string_list;
-> > >
-> > >  /**
-> > > @@ -72,12 +74,6 @@ struct strbuf {
-> > >  extern char strbuf_slopbuf[];
-> > >  #define STRBUF_INIT  { .buf =3D strbuf_slopbuf }
-> > >
-> > > -/*
-> > > - * Predeclare this here, since cache.h includes this file before it =
-defines the
-> > > - * struct.
-> > > - */
-> > > -struct object_id;
-> > > -
-> > >  /**
-> > >   * Life Cycle Functions
-> > >   * --------------------
-> > > @@ -634,7 +630,6 @@ void strbuf_list_free(struct strbuf **list);
-> > >   * Add the abbreviation, as generated by repo_find_unique_abbrev(), =
-of `sha1` to
-> > >   * the strbuf `sb`.
-> > >   */
-> > > -struct repository;
-> > >  void strbuf_repo_add_unique_abbrev(struct strbuf *sb, struct reposit=
-ory *repo,
-> > >                                  const struct object_id *oid, int abb=
-rev_len);
-> > >  void strbuf_add_unique_abbrev(struct strbuf *sb, const struct object=
-_id *oid,
-> > > --
-> > > gitgitgadget
+> > > Since patches 1-15 & 17-19 are just more of the same types of patches
+> > > already reviewed in the last two series, it probably makes more sense=
+ for
+> > > reviewers to focus on the other patches: 16 + 20-24 (which also happe=
+n to be
+> > > smaller). I would particularly most like review of patches 16, 22, & =
+24
+> > > since they are the least like any previously reviewed patches.
+> >
+> > Patches 1-15 a& 17-19 LGTM! Very welcome changes to see the size of
+> > cache.h shrink after this and your previous series.
+> >
+> > I had the same change in patch 16 on a local branch, specifically movin=
+g
+> > editor related functions from strbuf. The eventual dream for lower leve=
+l
+> > libraries such as strbuf is to separate out the functions that touch
+> > higher level objects, allowing for the eventual libification of parts o=
+f
+> > Git.
+> >
+> > Patch 20: removal of unnecessary headers are always welcome since it
+> > allows readers to easily understand what dependencies a file has.
+> >
+> > Patch 21: I do have a suggestion that I will leave on the patch
+> >
+> > Patch 22: with what's currently in wrapper.h, it feels like it's
+> > becoming the new dumping ground for functions that don't quite have a
+> > home elsewhere. While I think this change makes sense right now, I do
+> > hope in the future wrapper.h can be broken up with more reasonable
+> > boundaries rather than "this function is a git-specific stdlib or
+> > whatever lib function".
+>
+> Yeah, I wouldn't be surprised that we have multiple places needing
+> cleanup.  I haven't looked much at wrapper.[ch] from this angle, but
+> you got me curious and I took a brief glance.  Do you really mean
+> wrapper.h, or wrapper.c?  wrapper.h is actually pretty small, only
+> declaring 8 functions.  The other 32 non-static functions in wrapper.c
+> are declared in git-compat-util.h.
+>
+> > Patch 23: same reasoning as with patch 20, swapping to more precise
+> > headers clarifies file dependencies
+> >
+> > Patch 24: moving more items from the "dumping ground" to where they're
+> > supposed to be :)
+> >
+> > Besides patch 21, the rest of the series LGTM, thanks!
+>
+> Thanks for taking a look!
