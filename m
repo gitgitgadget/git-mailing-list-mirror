@@ -2,100 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 308D2C76196
-	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 23:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D934C77B61
+	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 23:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229671AbjDJXXY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Apr 2023 19:23:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60600 "EHLO
+        id S230005AbjDJX3e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Apr 2023 19:29:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbjDJXXX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2023 19:23:23 -0400
-X-Greylist: delayed 1076 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 10 Apr 2023 16:23:22 PDT
-Received: from st43p00im-ztbu10063701.me.com (st43p00im-ztbu10063701.me.com [17.58.63.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB1D1BD2
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 16:23:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mervin.works;
-        s=sig1; t=1681167925;
-        bh=bGJ5V/90yUf6kT2G83wf1HFWl0FYkvaiHu5cyQhfZsA=;
-        h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:To;
-        b=CEvnHWrXj0PL+4AhOmzIuen4RJLPAIeOHyQD6wUaP+gD5YBdfC7B7x+OqL5YezBXU
-         4x1/SORcX5dI7wuj6FRNJXpo97pua+NePR2DuiWs3iXKabC7Sbi9p3Ket3PO7Mgyjm
-         jN5rCOBs8zcbT0TB5L9snb+MJpTDXaohOsbBUp6+siLeJh0a4VrEj2h4w4AWqoE4n1
-         j814g10wdDCfxrlR4Mfovwx7M6PgeHXQm44gbVBIkdvP2QH5zOoLphw6foaoUC2KZV
-         1EAIw0s74aBPFJy9sn3eEmL2IQksJJfQ+I32wLiHlUhJ3b3Gr/eektfrepnuNz+VPT
-         a3AKNZkUiIhRA==
-Received: from smtpclient.apple (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
-        by st43p00im-ztbu10063701.me.com (Postfix) with ESMTPSA id 1A237D00C78;
-        Mon, 10 Apr 2023 23:05:23 +0000 (UTC)
+        with ESMTP id S229839AbjDJX3d (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2023 19:29:33 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C316211B
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 16:29:31 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-54ee9ad5eb3so122821097b3.1
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 16:29:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1681169371; x=1683761371;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xZ0ia5sRDGQkAwof+Od4n2KCtDiYQDl50wcfod0xRW0=;
+        b=GFNBgQogteLvsMmPHtQZeD1Unq5azZbqo3xWfF7T8Dd8VV9KTeMlTR6q7mg9NsWzVz
+         /1mWkdZKGXnk1a1SeFWSuEn1jOQg5uqMYZZc3KDz3MYpS3IKg7F0Dxa9ShdatSLbCPD9
+         CrWDvz8+2rr+2RjVZ0qoriFkDkUWZDdPOj7cqqhavkbixZhyz3eHM8LEnEy206COolOJ
+         1ekvVHPrjFc0yjhWkcwX1O4YflMjK0O9D1AsBmJ9+3swf3esFlZArsbPJRPKyH7Rigay
+         wG1lt9ZiGCb6oRft0IaW59/xRxr1SM6bWk+2XkwPuXxdYK3rIAuMwn4hrxwnSSsdpyPl
+         z27Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681169371; x=1683761371;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xZ0ia5sRDGQkAwof+Od4n2KCtDiYQDl50wcfod0xRW0=;
+        b=PJEciPj5VuqRFUm/U/388ChwRuFsI16wqiC4exTA/eM5FXZpevluQpMKckIISrVE7J
+         jFmsjGUfmWsilMO49ZXKXrLN3I54HOoAHPxrSm/vv3X6QCNOneBlM5gaMJicuJVxCU1T
+         yD3CxbvQANE3rA9gGlHZ11tpAzUoNzsP9fnTwuWk32enPDAqQtQWGLD8yBPt1FIsukmE
+         HNvYgplNPSURt+7Q6e0V5oYIpeolRpKh1NQ8iJfUncJ/Hcgq12B9wlDMdPBIPDmwWBxb
+         ztHuCU3jKpg+9JB0DGr7b7DJaaEHLpMUly9vCru8fIL8SJcMyVpjH1sLB5n/hW+ilXxq
+         AQCw==
+X-Gm-Message-State: AAQBX9dYRl7L13V+czb6KtDq1EzHJmzVTT5n3nYDRbRUCvNiEelRVcQk
+        /VpgcST2OiK1KziDqT/Zu5ovWw==
+X-Google-Smtp-Source: AKy350YCUNx+Qxry6s2zeRltqPXoxr6pMKIQhFIpV3CepqleTRt3iCw+dXztFP704t4yhEI6HyglgQ==
+X-Received: by 2002:a81:4844:0:b0:549:104e:8f70 with SMTP id v65-20020a814844000000b00549104e8f70mr9006896ywa.48.1681169370752;
+        Mon, 10 Apr 2023 16:29:30 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id p191-20020a8198c8000000b0054eff2f2bdesm1476330ywg.10.2023.04.10.16.29.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Apr 2023 16:29:30 -0700 (PDT)
+Date:   Mon, 10 Apr 2023 19:29:29 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Patrick Steinhardt <ps@pks.im>
+Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com
+Subject: Re: [PATCH] repack: fix geometric repacking with gitalternates
+Message-ID: <ZDSb2T8v6lvaqOyL@nand.local>
+References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
+ <ZCxytq1esQWvjIz/@nand.local>
+ <ZC0eY8q6ushpfkrQ@ncase>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From:   Mervin Guy <mail@mervin.works>
-Mime-Version: 1.0 (1.0)
-Subject: Re: 'git config --edit' unexpected behavior
-Date:   Mon, 10 Apr 2023 19:05:12 -0400
-Message-Id: <C65981B6-49FA-4A62-84D6-541D3CFF0541@mervin.works>
-References: <D6798678-9CC3-416F-B238-F3D28EC910B2@mervin.works>
-Cc:     git@vger.kernel.org
-In-Reply-To: <D6798678-9CC3-416F-B238-F3D28EC910B2@mervin.works>
-To:     Jeff King <peff@peff.net>
-X-Mailer: iPad Mail (20F5028e)
-X-Proofpoint-ORIG-GUID: v4seWXFricdCXIy25uAkE83YxNKgCGcs
-X-Proofpoint-GUID: v4seWXFricdCXIy25uAkE83YxNKgCGcs
-X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
- =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.883,17.11.64.514.0000000_definitions?=
- =?UTF-8?Q?=3D2022-06-21=5F08:2020-02-14=5F02,2022-06-21=5F08,2022-02-23?=
- =?UTF-8?Q?=5F01_signatures=3D0?=
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 bulkscore=0 malwarescore=0
- spamscore=0 suspectscore=0 mlxlogscore=999 adultscore=0 phishscore=0
- clxscore=1030 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2304100202
+Content-Disposition: inline
+In-Reply-To: <ZC0eY8q6ushpfkrQ@ncase>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm confident there is an error in the `git config --global -e` pipeline tho=
-ugh (very likely git.c), because when using git-aliases the function perform=
-s as expected.
+On Wed, Apr 05, 2023 at 09:08:19AM +0200, Patrick Steinhardt wrote:
+> But I'm not yet sure whether I understand why `-l --write-midx` should
+> be prohibited like you summarized in the follow-up mail:
+>
+> On Tue, Apr 04, 2023 at 02:55:50PM -0400, Taylor Blau wrote:
+> > TL;DR: I think that this is a (much) more complicated problem than
+> > originally anticipated, but the easiest thing to do is to assume that
+> > git repack --geometric=<d> means git repack --geometric=<d> --no-local
+> > unless otherwise specified, and declare --geometric=<d> --local
+> > unsupported when used in conjunction with --write-midx or
+> > --write-bitmap-index.
+>
+> The newly written MIDX would of course only span over the local
+> packfiles, but is that even a problem? Ideally, Git would know to handle
+> multiple MIDX files, and in that case it would make sense both for the
+> shared and for the member repository to have one.
 
-My current alias `ec` pointing to the command `!vi $HOME/.gitconfig` - where=
- $HOME is `/root`. The full command looks like `git ec` and works as expecte=
-d.
+Right, I don't think that it's a problem. But I don't know how well the
+MIDX-over-alternates thing works in practice. I know that the feature
+exists, but I don't think it is as battled-tested as non-alternated
+MIDXs.
 
-Meaning that the only difference between the failed-run and successful-run w=
-as calling the git built-in `git config --global -e`.
+So I think you'd have to ban MIDX bitmaps when the MIDX spans over
+multiple repositories through an alternates file, but otherwise it
+should be OK.
 
-> On Apr 10, 2023, at 16:49, Hello World! <mail@mervin.works> wrote:
->=20
-> =EF=BB=BFUsing the command, the trace says it=E2=80=99s using 'vi /root/.g=
-itconfig' - which is indeed the set editor.
->=20
-> For more verbosity, the call-chain is 'git.c' (trace: built-in: git config=
-) =E2=86=92 'run_command.c' (trace: run_command: 'vi /root/.gitconfig') whic=
-h doesn=E2=80=99t seem strange.
->>> On Apr 10, 2023, at 16:25, Jeff King <peff@peff.net> wrote:
->>> =EF=BB=BF On Mon, Apr 10, 2023 at 03:44:26PM -0400, Mervin Guy wrote:
->>>=20
->>> What did you do before the bug happened? (Steps to reproduce your issue)=
+> But that raises the question: what do we do about the currently-broken
+> behaviour when executing `git repack --geometric=<d> --no-local` in a
+> alternated repository?
+>
+> I'd personally be fine to start honoring the `po_args.local` flag so
+> that we skip over any non-local packfiles there while ignoring the
+> larger problem of non-local geometric repacks breaking in certain
+> scenarios. It would at least improve the status quo as users now have a
+> way out in case they ever happen to hit that error. And it allows us to
+> use geometric repacks in alternated repositories. But are we okay with
+> punting on the larger issue for the time being?
 
->>> - Changed my directory to a git-repo I was working on, using 'cd <direct=
-ory_name>'. Then I ran 'git config --global -e'.
->>> What did you expect to happen? (Expected behavior)
->>> - I exepected the command to display my current-config file, with all se=
-ttings included, in my editor.
->>> What happened instead? (Actual behavior)
->>> - My config-file was overwritten and displayed a default-setup message, t=
-he config-file was lost after this point.
->>> I experimented with different ways of activating the command, but they a=
-ll led to an overwrite of the file.
->>=20
->> That's certainly unexpected. "git config --global -e" works fine for me.
->> And Git itself won't overwrite the file; it will run your editor with
->> the name of the file, and the editor is responsible for any writing.
->> Which editor are you trying to use? Can you try running with:
->>=20
->> GIT_TRACE=3D1 git config --global -e
->>=20
->> which should show the editor command that Git runs.
->>=20
->> -Peff
+I wonder if the larger issue could be simplified into (a) honoring
+`po_args.local` when doing the geometric rollup, and (b) dropping the
+non-local packs when writing a MIDX.
+
+> Thanks for your feedback and this interesting discussion!
+
+Ditto ;-).
+
+Thanks,
+Taylor
