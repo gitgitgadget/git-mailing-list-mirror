@@ -2,90 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1BF4C77B61
-	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 23:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 308D2C76196
+	for <git@archiver.kernel.org>; Mon, 10 Apr 2023 23:23:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229994AbjDJXUg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Apr 2023 19:20:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56986 "EHLO
+        id S229671AbjDJXXY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 10 Apr 2023 19:23:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230019AbjDJXU1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2023 19:20:27 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E63A272E
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 16:20:22 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-54ee17a659bso128544697b3.4
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 16:20:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1681168821; x=1683760821;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eCwSK8/VFHk2osZXt09cF1o9OuJCM3J6vFtfVTWHvrY=;
-        b=bpGGprVSuARSXyMr0vKoxYzQOl7OmuF6NdxkZwlWvi3k9yY+3csDwqxpDJ9qXECxJJ
-         74cxZf6klpKjq0aYfKeXKLEfk//P5ceHojJEAhhLMuXYlKm4QzXEQuV6sZqMiHDkCBSY
-         n6jJ2OC8eDk0NF9QpSkqb3rC7Nb5UT6GrelQQaU3zfjXZWdeP+udLpvu8vIkuVzZwjf+
-         P4zGFPJvvElQAz8YWHoXplN6gD8AcSENugJY8OxgfOvlxCE1Fl2BieW+o8S5u7SsyUwH
-         8XP40EWpI/kbJDmqHLGD9qPiokT4jD/hcsyFCahpjhBq7h+WCyAanV5y81Vee7zWAqOR
-         irlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681168821; x=1683760821;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eCwSK8/VFHk2osZXt09cF1o9OuJCM3J6vFtfVTWHvrY=;
-        b=MAMnRbSSel/HWnjp72ZuGXtLAaRsPvm7LcWitUQ8JdrX4Dc8HHVc6qqPBmn5DoAyV0
-         iZQiNlf+v02mjcnCjX5ylAjhiyAbXKwpdZLa/Z9uXejvJ/3JxvaWZvw4YL8a/rLWVJ0a
-         2/q0lrQoFvnWv56uzWM4AHaM4SSkqJAvElpQXI/z2pe9IVza4vBcyRtkX+UPpsZNVNnO
-         z1lkEyuRRNpjFxQvmMPV5BNDHrxl28H+c68kdmHGHfh22LEZLFTRooRmXi5Erebmc+yJ
-         Ozl7suWHWSZcWLCs7CYCs78lpqehx+XPZxJNJ3dqsMBsYd9Z3kvyG+TpV/HRWXAbF3Yn
-         Ip6g==
-X-Gm-Message-State: AAQBX9fTGMUlA2WgAMw3XINVUenQcRQFQW3YYXqMkj0piNUvpvC9rIC5
-        +Ch5ox10hCq9FfPaAuHrONWQFw==
-X-Google-Smtp-Source: AKy350YYjF6JCX7jvZmYCRQaXEV3GkzkhIxOTDX42CZTpREAaQ5+kJZFl9HnJJKNmn0BDN60adDrHg==
-X-Received: by 2002:a81:9889:0:b0:54e:ff2f:484c with SMTP id p131-20020a819889000000b0054eff2f484cmr4809990ywg.15.1681168820716;
-        Mon, 10 Apr 2023 16:20:20 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bo5-20020a05690c058500b00545a08184fesm3076393ywb.142.2023.04.10.16.20.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Apr 2023 16:20:20 -0700 (PDT)
-Date:   Mon, 10 Apr 2023 19:20:19 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     ZheNing Hu <adlternative@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>, johncai86@gmail.com
-Subject: Re: [Question] Can git cat-file have a type filtering option?
-Message-ID: <ZDSZs8LgZzDLf5m1@nand.local>
-References: <CAOLTT8RTB7kpabN=Rv1nHvKTaYh6pLR6moOJhfC2wdtUG_xahQ@mail.gmail.com>
- <xmqqy1n3k63p.fsf@gitster.g>
- <CAOLTT8SXXKG3uEd8Q=uh3zx7XeUDUWezGgNUSCd1Fpq-Kyy-2A@mail.gmail.com>
- <ZDIUvK/bF7BFqX5q@nand.local>
- <ZDIgyKDQ2rJT2YEI@nand.local>
- <ZDIiO1HMjej+rnMk@nand.local>
- <CAOLTT8TFiXG1hABFVLp_TOEZ4__s2k4+nvcG3Ax867=LJxOi_g@mail.gmail.com>
- <20230410200141.GB104097@coredump.intra.peff.net>
-MIME-Version: 1.0
+        with ESMTP id S229485AbjDJXXX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2023 19:23:23 -0400
+X-Greylist: delayed 1076 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 10 Apr 2023 16:23:22 PDT
+Received: from st43p00im-ztbu10063701.me.com (st43p00im-ztbu10063701.me.com [17.58.63.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AB1D1BD2
+        for <git@vger.kernel.org>; Mon, 10 Apr 2023 16:23:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mervin.works;
+        s=sig1; t=1681167925;
+        bh=bGJ5V/90yUf6kT2G83wf1HFWl0FYkvaiHu5cyQhfZsA=;
+        h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:To;
+        b=CEvnHWrXj0PL+4AhOmzIuen4RJLPAIeOHyQD6wUaP+gD5YBdfC7B7x+OqL5YezBXU
+         4x1/SORcX5dI7wuj6FRNJXpo97pua+NePR2DuiWs3iXKabC7Sbi9p3Ket3PO7Mgyjm
+         jN5rCOBs8zcbT0TB5L9snb+MJpTDXaohOsbBUp6+siLeJh0a4VrEj2h4w4AWqoE4n1
+         j814g10wdDCfxrlR4Mfovwx7M6PgeHXQm44gbVBIkdvP2QH5zOoLphw6foaoUC2KZV
+         1EAIw0s74aBPFJy9sn3eEmL2IQksJJfQ+I32wLiHlUhJ3b3Gr/eektfrepnuNz+VPT
+         a3AKNZkUiIhRA==
+Received: from smtpclient.apple (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
+        by st43p00im-ztbu10063701.me.com (Postfix) with ESMTPSA id 1A237D00C78;
+        Mon, 10 Apr 2023 23:05:23 +0000 (UTC)
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230410200141.GB104097@coredump.intra.peff.net>
+Content-Transfer-Encoding: quoted-printable
+From:   Mervin Guy <mail@mervin.works>
+Mime-Version: 1.0 (1.0)
+Subject: Re: 'git config --edit' unexpected behavior
+Date:   Mon, 10 Apr 2023 19:05:12 -0400
+Message-Id: <C65981B6-49FA-4A62-84D6-541D3CFF0541@mervin.works>
+References: <D6798678-9CC3-416F-B238-F3D28EC910B2@mervin.works>
+Cc:     git@vger.kernel.org
+In-Reply-To: <D6798678-9CC3-416F-B238-F3D28EC910B2@mervin.works>
+To:     Jeff King <peff@peff.net>
+X-Mailer: iPad Mail (20F5028e)
+X-Proofpoint-ORIG-GUID: v4seWXFricdCXIy25uAkE83YxNKgCGcs
+X-Proofpoint-GUID: v4seWXFricdCXIy25uAkE83YxNKgCGcs
+X-Proofpoint-Virus-Version: =?UTF-8?Q?vendor=3Dfsecure_engine=3D1.1.170-22c6f66c430a71ce266a39bfe25bc?=
+ =?UTF-8?Q?2903e8d5c8f:6.0.138,18.0.883,17.11.64.514.0000000_definitions?=
+ =?UTF-8?Q?=3D2022-06-21=5F08:2020-02-14=5F02,2022-06-21=5F08,2022-02-23?=
+ =?UTF-8?Q?=5F01_signatures=3D0?=
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 bulkscore=0 malwarescore=0
+ spamscore=0 suspectscore=0 mlxlogscore=999 adultscore=0 phishscore=0
+ clxscore=1030 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2304100202
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2023 at 04:01:41PM -0400, Jeff King wrote:
-> For that reason, and just for general flexibility, I think you are
-> mostly better off piping cat-file through an external filter program
-> (and then back to cat-file to get more data on each object).
+I'm confident there is an error in the `git config --global -e` pipeline tho=
+ugh (very likely git.c), because when using git-aliases the function perform=
+s as expected.
 
-Yeah, agreed. The convention of printing objects listed on the
-command-line regardless of whether they would pass through the object
-filter is confusing to me, too.
+My current alias `ec` pointing to the command `!vi $HOME/.gitconfig` - where=
+ $HOME is `/root`. The full command looks like `git ec` and works as expecte=
+d.
 
-But using `rev-list --no-walk` to accomplish the same job for a filter
-as trivial as the type-level one feels overkill anyway, so I agree that
-just relying on `cat-file` to produce the list of objects, filtering it
-yourself, and then handing it back to `cat-file` is the easiest thing to
-do.
+Meaning that the only difference between the failed-run and successful-run w=
+as calling the git built-in `git config --global -e`.
 
-Thanks,
-Taylor
+> On Apr 10, 2023, at 16:49, Hello World! <mail@mervin.works> wrote:
+>=20
+> =EF=BB=BFUsing the command, the trace says it=E2=80=99s using 'vi /root/.g=
+itconfig' - which is indeed the set editor.
+>=20
+> For more verbosity, the call-chain is 'git.c' (trace: built-in: git config=
+) =E2=86=92 'run_command.c' (trace: run_command: 'vi /root/.gitconfig') whic=
+h doesn=E2=80=99t seem strange.
+>>> On Apr 10, 2023, at 16:25, Jeff King <peff@peff.net> wrote:
+>>> =EF=BB=BF On Mon, Apr 10, 2023 at 03:44:26PM -0400, Mervin Guy wrote:
+>>>=20
+>>> What did you do before the bug happened? (Steps to reproduce your issue)=
+
+>>> - Changed my directory to a git-repo I was working on, using 'cd <direct=
+ory_name>'. Then I ran 'git config --global -e'.
+>>> What did you expect to happen? (Expected behavior)
+>>> - I exepected the command to display my current-config file, with all se=
+ttings included, in my editor.
+>>> What happened instead? (Actual behavior)
+>>> - My config-file was overwritten and displayed a default-setup message, t=
+he config-file was lost after this point.
+>>> I experimented with different ways of activating the command, but they a=
+ll led to an overwrite of the file.
+>>=20
+>> That's certainly unexpected. "git config --global -e" works fine for me.
+>> And Git itself won't overwrite the file; it will run your editor with
+>> the name of the file, and the editor is responsible for any writing.
+>> Which editor are you trying to use? Can you try running with:
+>>=20
+>> GIT_TRACE=3D1 git config --global -e
+>>=20
+>> which should show the editor command that Git runs.
+>>=20
+>> -Peff
