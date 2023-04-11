@@ -2,102 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 569B4C76196
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 09:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF887C76196
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 09:46:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229819AbjDKJmF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 05:42:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40266 "EHLO
+        id S229644AbjDKJqe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 05:46:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbjDKJl7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 05:41:59 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BED4526AB
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 02:41:57 -0700 (PDT)
-Received: (qmail 6854 invoked by uid 109); 11 Apr 2023 09:41:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Apr 2023 09:41:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5897 invoked by uid 111); 11 Apr 2023 09:41:56 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Apr 2023 05:41:56 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 11 Apr 2023 05:41:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     Mervin Guy <mail@mervin.works>
-Cc:     git@vger.kernel.org
-Subject: Re: 'git config --edit' unexpected behavior
-Message-ID: <20230411094156.GC398350@coredump.intra.peff.net>
-References: <D6798678-9CC3-416F-B238-F3D28EC910B2@mervin.works>
- <C65981B6-49FA-4A62-84D6-541D3CFF0541@mervin.works>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <C65981B6-49FA-4A62-84D6-541D3CFF0541@mervin.works>
+        with ESMTP id S229452AbjDKJqd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 05:46:33 -0400
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18BE61997
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 02:46:32 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.west.internal (Postfix) with ESMTP id D7656320094A;
+        Tue, 11 Apr 2023 05:46:28 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Tue, 11 Apr 2023 05:46:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+         h=cc:cc:content-transfer-encoding:content-type:content-type
+        :date:date:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to;
+         s=fm2; t=1681206388; x=1681292788; bh=aHKQ8+5VTDZkY2uYVV1Bm6H4q
+        m56Z2Faf0pZ63PAcio=; b=xz2E3E1RORHStokUarBVC6ZhWssFk4/S/hXvYn6Gr
+        uiIuUuN3ovNIggQHbuO7mFY7v2wMAYTX9i3yiovwrqqjeBRHq4qozB4U/xyqsWj6
+        ntNJTssMolVtaciWOxUxP3O8UuDPk4qurkRAK1A5JJRvgLOzeS81appGVvDC6vQ1
+        4N9qrxbsUM/LKvIB6j7Affapash2MBcSN0p3WkYjxNclbpjaLXpJyHgt18xMkyOj
+        o+mHiRc4OUNJ8X5artUy4SLxtiSAAe8RKI+t6mswB9HmxFpejTyUhmjOGhIpRYag
+        f8Kha9cZSC3+8tOnSZV8uTB83wIvIC0vH421mXPxavh2A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-transfer-encoding
+        :content-type:content-type:date:date:feedback-id:feedback-id
+        :from:from:in-reply-to:in-reply-to:message-id:mime-version
+        :references:reply-to:sender:subject:subject:to:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+        1681206388; x=1681292788; bh=aHKQ8+5VTDZkY2uYVV1Bm6H4qm56Z2Faf0p
+        Z63PAcio=; b=b7yUFtCjmGh4VCEQ/KtUCBSKPkv4uPdpaQdoItSeyXhQ4z0SrgW
+        Ny6l4Eo2gwvmqX9xiloCWY/qIpuGKC5fPwUhvRoCDmAeFW8VTwghbcHoMiTCeRNf
+        w1noufBhUYEhj3gFwBizXYiulRaGxyYH2TXFutbjGzuHpLrCuKCXh6dP/fpJbKW9
+        H23O6OVB4AqF3zTKcmU4MEMGMQLWKH4Xjy4LZypEF8ptKZTSbek4PokuHS1hpNmH
+        sR4NdcWrKJWflVRN+c0K+gkJ+gRRZ5DczGG7PVKru/KqCjPqlly+Zwgokb6Kn/01
+        lEXFR157pyJ/mfQadH+a78FPz6/aMcFl82w==
+X-ME-Sender: <xms:dCw1ZCfCP1HxsgrIn0K9HmuNGpKmDRxhhC6S5jT5E1dtF-GzczdmiiI>
+    <xme:dCw1ZMPQfvY94nWz6PPOK22oMoyF2XyF3F0FiB1uHP3oaInS6HQpEYgkvY3p06rGc
+    FHwJV7Zdwv3YWmDgg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekgedgvddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkeduvedthfelueevheffhedvveei
+    ueeiheehudehveegueetteduuddtfeelueenucffohhmrghinhepkhgvrhhnvghlrdhorh
+    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:dCw1ZDhtsmiS5GVPNBtgWeaj5iZd4HIt247Q74GPo3EIKh0pyGDCnQ>
+    <xmx:dCw1ZP88nGZ4HE7o_Y6fZzOVVNDTbKgzytvkD8OoeK9wTWidprzE7A>
+    <xmx:dCw1ZOvWqqibkVOl5tsD_rxiebrxIlbuKogBbJP5WERpO8N3fz3UKQ>
+    <xmx:dCw1ZDVJOJGSLLCm5m-zlCO3M2C7wOQFwJii7zh2zmAovuEiJXywpQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 4A26215A008E; Tue, 11 Apr 2023 05:46:28 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-334-g8c072af647-fm-20230330.001-g8c072af6
+Mime-Version: 1.0
+Message-Id: <a356d9d4-e7e5-460d-bf90-b9d51649a20b@app.fastmail.com>
+In-Reply-To: <ZDSjBQhyDBGi9wBN@nand.local>
+References: <CAKazavxTXwcZFtL2XyU3MpaUR=snWY8w8Lwpco+mkbqm2nWE=w@mail.gmail.com>
+ <5b99135f-c1d4-434b-b508-35f5d66dd2bb@app.fastmail.com>
+ <b5316855-971d-4b7b-89cd-e81ececc5124@app.fastmail.com>
+ <CAKazavzS112w3wsxnA-2ibWH3xGrE_w7Av+VZg-DfgfH0aK72A@mail.gmail.com>
+ <ZDSjBQhyDBGi9wBN@nand.local>
+Date:   Tue, 11 Apr 2023 11:45:47 +0200
+From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To:     "Taylor Blau" <me@ttaylorr.com>, "Rohit Ner" <rohitner1@gmail.com>
+Cc:     "Derrick Stolee" <derrickstolee@github.com>, git@vger.kernel.org
+Subject: Re: git log causing hang while browsing upstream linux
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2023 at 07:05:12PM -0400, Mervin Guy wrote:
+On Tue, Apr 11, 2023, at 02:00, Taylor Blau wrote:
+> TL;DR: if you run "git commit-graph write" once before running "git log
+> --oneline --graph", you'll get near-instantaneous results.
 
-> I'm confident there is an error in the `git config --global -e`
-> pipeline though (very likely git.c), because when using git-aliases
-> the function performs as expected.
-> 
-> My current alias `ec` pointing to the command `!vi $HOME/.gitconfig` -
-> where $HOME is `/root`. The full command looks like `git ec` and works
-> as expected.
-> 
-> Meaning that the only difference between the failed-run and
-> successful-run was calling the git built-in `git config --global -e`.
+Cool! Testing on Linux repo:
 
-OK, so we can guess it has to do with the "--edit" option specifically,
-and your editor is doing what we'd expect. The main thing that code is
-doing is just opening the editor, but there's this curious bit of code
-before it does so:
+Without it:
 
-  $ sed -ne '851,+11p' builtin/config.c
-  		if (use_global_config) {
-  			int fd = open(config_file, O_CREAT | O_EXCL | O_WRONLY, 0666);
-  			if (fd >= 0) {
-  				char *content = default_user_config();
-  				write_str_in_full(fd, content);
-  				free(content);
-  				close(fd);
-  			}
-  			else if (errno != EEXIST)
-  				die_errno(_("cannot create configuration file %s"), config_file);
-  		}
-  		launch_editor(config_file, NULL, NULL);
+    $ time git log --oneline --graph | head -1
+    *   0d3eb744aed4 Merge tag 'urgent-rcu.2023.04.07a' of git://git.ker=
+nel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu
 
-That shouldn't be overwriting your existing file, since O_EXCL will
-refuse to open the file in that case.
+    real	0m11.379s
+    user	0m10.655s
+    sys	0m0.726s
 
-But I wonder if something funny is going on with the file selection. We
-support both the traditional $HOME/.gitconfig location, but also the xdg
-location (usually $HOME/.config/git/config, but $XDG_CONFIG_HOME can
-tweak that).
+With it:
 
-When reading config for most commands, we will generally pull from both
-sources. But for "git config --global", we have to pick one to operate
-on, both for reading and writing. The logic is supposed to prefer
-$HOME/.gitconfig, but use the xdg location if it exists and the $HOME
-one doesn't.
+    $ time git log --oneline --graph | head -1
+    *   0d3eb744aed4 Merge tag 'urgent-rcu.2023.04.07a' of git://git.ker=
+nel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu
 
-From your output:
+    real	0m0.032s
+    user	0m0.014s
+    sys	0m0.023s
 
-> > Using the command, the trace says it’s using 'vi /root/.gitconfig' -
-> > which is indeed the set editor.
+Maybe I=E2=80=99m gonna enable `git maintenance` for my repos. :)
 
-it's picking the $HOME one. You said you had previous contents that were
-overwritten. How did you add them originally, and might they have been
-in the xdg location? Can you see if there is anything in /root/.config/git?
-
-I admit I still don't know how we'd trigger this case; if the file did
-exist then we should never use /root/.config in the first place.
-
-Another left-field possibility: is /root on an unusual filesystem (e.g.,
-a networked one) where O_EXCL might not behave as it should?
-
--Peff
+--=20
+Kristoffer Haugsbakk
