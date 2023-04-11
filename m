@@ -2,117 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 300B8C77B6F
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 16:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AFD4C77B6F
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 16:32:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbjDKQaI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 12:30:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35894 "EHLO
+        id S229564AbjDKQcK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 12:32:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229932AbjDKQaG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 12:30:06 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBE5940FC
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 09:30:02 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id m18so8318787plx.5
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 09:30:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681230602; x=1683822602;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=/PWIFAMmpnOpqXQ4vPZBXRovWExHk8mFwpSq1QLF/hY=;
-        b=MFcNOlGFB9Id/8Ug4ltgYePEBH7DX11m9vz6/zVkPZs6rMXnnK+OD4TkTA27apYFgi
-         +rJE0fVA4VkcGEluFEVsMgdOaEvNtHCQDMwUwnfpiAx3vQkCcKVQcvaCoivdjjibS05e
-         diU9UU/reqyZedta6+dcWCFCCrGn4sACUt09EqgLGdA0iLCkXcFp63sUhC0S5NImH+X+
-         bUept7tSrQ++2ePEMgmGdYRxlnlQH7tibnxqX3LyCc1LJqIwKHKYsrNBkZAs5bpog+Hh
-         WvJ687Lesjb5r3oqkGsNQpBOsK4t0BKY0wC3W1aQsR6sv4jWuc/yIlGw3ub14BWDRsDM
-         RDag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681230602; x=1683822602;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/PWIFAMmpnOpqXQ4vPZBXRovWExHk8mFwpSq1QLF/hY=;
-        b=pC6Rs7LPSEYbrXIPwAfS4XqSYlEFV8ylrWbuOF3QFENbsfw+g/0sq2Hzhqbjg9kVoc
-         PBvMCyvadtniLNNCjq1MsiuYm2S25xWs7OagHnos4rsOOP3tdjysCWA0Lp27y7E23yGM
-         5WblRrrAk0CTGKC72CByPqgKMASIdlA+W7Se+JnXgEeAkQ31WpA6l/3wFs8Pcs7vD5RI
-         vxgfFiqDngn+XncPtH3rU5YK2cosMYkGd0irNC6QpspPi8lcjAjRnu9XLquvuaA3r5Y+
-         5AHhoqNeDlecrr7wNHnFRnqo9d7fnaq7qcFUnb/HqztvUoRtZtuZi4V9jqgVXd/rVgDp
-         AggQ==
-X-Gm-Message-State: AAQBX9ceuQc5Iar8xkukEg2+1WFSe28o82xIy9QXJDHQB2xRxDXpTBc0
-        QuTZ7F3xaL6x4dfYvPR9FHM=
-X-Google-Smtp-Source: AKy350ZKP84peP9tAi0d3BIjoG9dz0wA4VoeYtD1HEsTCb2qFWI50wwst+wFvUZwfBQSXFd8XY76yQ==
-X-Received: by 2002:a17:90a:1981:b0:246:cac9:330d with SMTP id 1-20020a17090a198100b00246cac9330dmr6124521pji.8.1681230601953;
-        Tue, 11 Apr 2023 09:30:01 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id s1-20020a17090ae68100b002349fcf17f8sm11468893pjy.15.2023.04.11.09.30.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 09:30:00 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] doc: simplify man version
-References: <20230408001829.11031-1-felipe.contreras@gmail.com>
-        <xmqqr0suf0wz.fsf@gitster.g> <64349c7dc4f49_7452943c@chronos.notmuch>
-Date:   Tue, 11 Apr 2023 09:30:00 -0700
-Message-ID: <xmqqwn2i9ybb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229704AbjDKQcJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 12:32:09 -0400
+X-Greylist: delayed 1600 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 11 Apr 2023 09:32:05 PDT
+Received: from cressida.uberspace.de (cressida.uberspace.de [185.26.156.202])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4ED440FC
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 09:32:05 -0700 (PDT)
+Received: (qmail 31708 invoked by uid 989); 11 Apr 2023 16:05:23 -0000
+Authentication-Results: cressida.uberspace.de;
+        auth=pass (plain)
+From:   Matthias Beyer <mail@beyermatthias.de>
+To:     git@vger.kernel.org
+Subject: Bug with git-config includeIf
+Date:   Tue, 11 Apr 2023 18:05:18 +0200
+Message-ID: <3352350.44csPzL39Z@takeshi>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; boundary="nextPart8326540.T7Z3S40VBb"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+X-Rspamd-Bar: -
+X-Rspamd-Report: MIME_GOOD(-0.2) SIGNED_PGP(-2) MID_RHS_NOT_FQDN(0.5) BAYES_HAM(-0.120411)
+X-Rspamd-Score: -1.820411
+Received: from unknown (HELO unkown) (::1)
+        by cressida.uberspace.de (Haraka/3.0.1) with ESMTPSA; Tue, 11 Apr 2023 18:05:23 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+        d=beyermatthias.de; s=uberspace;
+        h=from;
+        bh=WQkqmtFwHaNvPVn+X56WyPvO2Zhii2Bfs8y2ZYACK5Q=;
+        b=l4v+lIEK7WfWBqvrTInPQui42hLDgVXqGK4INSANz6nzhPMB5LRC4o+iL4wXnc48+gdkeaKOcI
+        5j8zIqdzvetdglNJeTCvLIN6jaQU3CIXQFebiUlKc2ndH72JP6/eHMAWMlGHzYuN2IJUB+Mopnsy
+        z7jaU02X82KStN0veTjZWZRgjdyxESwKMtwY5msVHI4Osz5vBPd8UAiA/OUptoFb2I1yX9abVk1J
+        S72QCUER1N4TcWumRJGk5rE7Bd/wGoprbIJrT9yguWBzS+ilVc79z12uXEyJRRDnzDeH6fgIqIcK
+        e6FOVmbp+zGbr62jdzHvbJcoa0qhC2sCKpwNjctfqnXIP9MywmCBkVvB3/DS/tDivjwBUIDOdzdZ
+        Wuspkl3yQTsEVtE9FluRRYOwenATJwZeoww4Mmnhz6rPJH+PZ0C07GRCEKbAg480ZfTAJ1XpU8Eg
+        DXt7XvuplBq18MZaf27hnmuFnY6/E0QS1XQ4vL0psqpLaceFy7aJCQHMtMQB68+967a1HMu9Go40
+        /1q5KirWqwaH2ECZMufaUTBe4Kl2M5hHnmiohGoPlpJxtEzZC5Y2jA/X97OtHMvpKbDyFtZLZJRd
+        aV6W8zTInohp9qNgmdzQImKovPNAPCzjv6K20sF0ieDcss/ZlXTxdXWS6i6sxc+ACWwHLA2YNaXC
+        M=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+--nextPart8326540.T7Z3S40VBb
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"; protected-headers="v1"
+From: Matthias Beyer <mail@beyermatthias.de>
+To: git@vger.kernel.org
+Subject: Bug with git-config includeIf
+Date: Tue, 11 Apr 2023 18:05:18 +0200
+Message-ID: <3352350.44csPzL39Z@takeshi>
+MIME-Version: 1.0
 
-> Junio C Hamano wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->> 
->> > diff --git a/Documentation/Makefile b/Documentation/Makefile
->> > index a6ba5bd460..4721b000c1 100644
->> > --- a/Documentation/Makefile
->> > +++ b/Documentation/Makefile
->> > @@ -150,8 +150,7 @@ ASCIIDOC_HTML = xhtml11
->> >  ASCIIDOC_DOCBOOK = docbook
->> >  ASCIIDOC_CONF = -f asciidoc.conf
->> >  ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF) \
->> > -		-amanversion=$(GIT_VERSION) \
->> > -		-amanmanual='Git Manual' -amansource='Git'
->> > +		-amanmanual='Git Manual' -amansource='Git $(GIT_VERSION)'
->> >  ASCIIDOC_DEPS = asciidoc.conf GIT-ASCIIDOCFLAGS
->> >  TXT_TO_HTML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_HTML)
->> >  TXT_TO_XML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_DOCBOOK)
->> 
->> Is this a complete patch,
->
-> Yes it is complete.
+Hi,
 
-Good.
+please keep me in CC when replying, I am not subscribed.
 
-> I don't know know what could give this impression, given that a link to
-> the documentation and the link to the source code was given:
-> ...
-> The code clearly tests for empty strings:
->
->   test="not($Name = '') and not($Version = '')
+I experience the following (seemingly) bug in my git setup:
 
-This part is exactly what I meant.  The readers of "git log"
-shouldn't have to dig to external source material and find that
-line to convince themselves why this is safe thing to do.
+I have three files for my git configuration:
 
-> And it's not clear to me what else it would be checking for.
+* ~/.gitconfig -> ~/config/git/gitconfig
+* ~/config/git/gitconfig_private
+* ~/config/git/gitconfig_work
 
-Good.  The job of reviewers is not about nitpicking, but work with
-and help a patch author to polish the patch text (both proposed log
-message or diff) by pointing out what the author may have thought
-obvious to everybody, because it was obvious to the author, but may
-not be so obvious.  The goal is not to convince reviewers how the
-patch text is correct in review discussion thread.  The goal is to
-use reviewers' input to identify such parts of the patch text that
-needs clarifying and update the patch text.  It is to avoid future
-readers of "git log -p" to ask the same question, because unlike
-reviewers, they will not have the original author readily available
-to answer their questions.
+The gitconfig_private sets my email address to this very email address, the 
+gitconfig_work sets it to me work email address.
 
-Thanks.
+The gitconfig file has a `includeIf` directive:
+
+```
+[include]
+    path = ~/config/git/gitconfig_private                                                                                                                                                                                                                                                                                    
+
+[includeIf "gitdir:~/dev/work/"]
+    path = ~/config/git/gitconfig_work   
+```
+
+That means, from my understanding, that all git repositories in ~/dev/work 
+should now have the work-related email address set.
+
+If I go to ~/dev/work/somerepo and `git config --get user.email` it indeed 
+shows the expected email address.
+
+But if I go to a subdirectory in that repository, the very same command shows 
+the private email address, and commits get written with that private email 
+address.
+
+Did I miss something obvious or did I discover a bug?
+
+git: 2.38.4
+
+Best,
+Matthias
+--nextPart8326540.T7Z3S40VBb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+Content-Transfer-Encoding: 7Bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEUJGUus1GMTrRclzcEKWX9Kitz80FAmQ1hT4ACgkQEKWX9Kit
+z83Dlg/8Dzd+qX1OcKZ+mCpmTjg0DNJq7RI5lfriMBWv6AMNI7riwQFl4/8Hs2jd
+DHBz/j3hD6U5CUmI2qOXYmLAc8BgkFWorxlPPRhhXh9Jkvzv2COZ5SquEaAvYhOT
+VCONh57u5/fe9XOHo7jSjKywUzAkWqjuctgigTuo98QzttLFx+OZ3TYDBWtJNZ1L
+WGOw/jK/b+db2QIAJhceAPmry6ZjUQhTHfAiF5mgQ9eBfioWC6K4ifQrjYptWpXX
+vEox8BmbR8q3VpXZ36NBuOoLr4Ok0ia4YhgpkKIWO3qalKNnFKED0u4M6Oj0lNss
+n5DgmPF1Mqlo70/+f3MHNu6Be8VatHFwuC0TsobMbQ3U2vWjQXgvAZ0Fa9nnI7sV
+pgSckqAjLrvFFz3n/pOV/svi3fmo58cGGRmZgGl7KxD1mUPvWgncF3u5Brtliu38
+M/9DY3wf1wP4vDlXW1SToHU1R8TRceSoJwYAh/vSSwI64f2GPwm9zy1cu3+G7imj
+Qt8/V+6ypK+x99a7+fRpkPoem9jMDVlp8q+H+y6jCsFMVPy04Kt/c05DTcXDilRs
+Hkr3VKmkP6b+w+5FReN83PJC4/csRirhRsDuJj8Szg4+iwYNBJkJaRQRRiGToe5j
+1c6LNFOMj1/cWTQuS1ayd5le2zVXPZ1SVDOY/IkG0pzckkm9yhQ=
+=VqeX
+-----END PGP SIGNATURE-----
+
+--nextPart8326540.T7Z3S40VBb--
+
+
+
