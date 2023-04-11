@@ -2,188 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E35DC77B73
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 14:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7C38C76196
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 15:43:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229918AbjDKOJg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 10:09:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39512 "EHLO
+        id S229630AbjDKPny (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 11:43:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229746AbjDKOJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 10:09:26 -0400
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AB7F10E
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 07:09:25 -0700 (PDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id f188so40032171ybb.3
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 07:09:25 -0700 (PDT)
+        with ESMTP id S229477AbjDKPnw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 11:43:52 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2DFE1731
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 08:43:51 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id px4so6204385pjb.3
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 08:43:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681222164; x=1683814164;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YCPPM785+Ww4zmbGOHKWEh2jH7v7lfQcIOAWXXBvh3U=;
-        b=mi22UbHRiU8hrEHdeCcXB9cMjvN86a+bUOBpGJGwJvIhyr3wEVCe2dnKKuqLUpvPmk
-         azkXLo1lmBEZuNXG1UriSZ3bpy/aqcn+UgudVGCZpahYhAtFMlkQsD7y4qgPxmFY6os0
-         miHUlBVNNOTIA+yxNhO74/5ilb8cOeJhzG4ecjPahLzK/7zDRTulZgVpiXcYmK+rLo3g
-         euShwm0Rg3niUvZQmETVoer5QuvCenQHJFHUG1yMUibs37o09EFNaMy0S5l6UJ0Yj28d
-         pp6aV+0wnifAAJQw+69GXdiiofbodlQ0FT0cixN4Js889OGXEV380b0vAoAT/ggr1nQN
-         oaFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681222164; x=1683814164;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20210112; t=1681227831; x=1683819831;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YCPPM785+Ww4zmbGOHKWEh2jH7v7lfQcIOAWXXBvh3U=;
-        b=lQSTA0TPyRF8Ho/jdzPaV1CIzNryoN/mh9vVH0YJM0Xy5YcGPHLksMn0gclIgBnGdA
-         4Zymq/EM/i/ckRRR0s0WYog5Sqz+FZv8Q4WYfJMkQOik6DF87v7dlGSvcspyyW02/8tT
-         +8jO8G5fHTfF7UsuhYzJifE2/MBL6hS4kxfyjhmXeagKL4HTnHSPbPail/n02I2B5ZZf
-         RSl8q/TZJb5aGpX2eJep/B+yv+qT9TqcL3gcqdXKL9XmZELUrmv0WCmE5IVFk/vNmbYF
-         3bdW/zx87r/o1AbgbKlhUqTFmAD3itLm1LV5iw1OUJY7PRMumq5Otg0G1X10ME8G71FU
-         3VsA==
-X-Gm-Message-State: AAQBX9eTy6aKl8wGZB5gvKVYnmUluc2XTJXnucnDDAeLLXnENIToRfgF
-        LBSp23VBFn+D0faZ9P4CvXdx7ZVb+cEEQ3m+Ue8=
-X-Google-Smtp-Source: AKy350ax1H2Wo1PTHllD57Sn/rNtTfhN3W0HejSUBhbA5p4EnVX8xOjQMdi9hEZ19I30Lik76B9436Q0/cizsfVYmGs=
-X-Received: by 2002:a25:be11:0:b0:b7d:4c96:de0 with SMTP id
- h17-20020a25be11000000b00b7d4c960de0mr5097413ybk.5.1681222164532; Tue, 11 Apr
- 2023 07:09:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAOLTT8RTB7kpabN=Rv1nHvKTaYh6pLR6moOJhfC2wdtUG_xahQ@mail.gmail.com>
- <xmqqy1n3k63p.fsf@gitster.g> <CAOLTT8SXXKG3uEd8Q=uh3zx7XeUDUWezGgNUSCd1Fpq-Kyy-2A@mail.gmail.com>
- <ZDIUvK/bF7BFqX5q@nand.local> <CAOLTT8RbU6G67BtE9fSv4gEn10dtR7cT-jf+dcEfhvNhvcwETQ@mail.gmail.com>
- <20230410201414.GC104097@coredump.intra.peff.net>
-In-Reply-To: <20230410201414.GC104097@coredump.intra.peff.net>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 11 Apr 2023 22:09:33 +0800
-Message-ID: <CAOLTT8T9pJFr94acvUo-8EYriST1gOAkXaDZBxHk54o=Zm5=Sg@mail.gmail.com>
-Subject: Re: [Question] Can git cat-file have a type filtering option?
+        bh=FO2ZTKmru+cnPtWbDaJn7HWwzBrAfGXDlf+uY0QROWM=;
+        b=i7L1lStgBHk8xqQulF3AXAKGN5KbO6kbpY8cD/BhDQrkymNsBgGddETMjbuU4m/eEm
+         052jj0RlCXTQtbxHB2prV6a7+EeCWpEc3KlCoGczHzEzUHOB6CG1I4KJfF1aiGWNObfK
+         0TalVeAdIEF7YyO2zeu10UhoCQk/R1nr1W+m7o9U+Oe++3dhpbWXNu9GgAKE5XBLAwsn
+         JBWH19Khq/S9PqVQnp0P6GL0c65JEE/y0bVN1y4+nWIU9b+cVK7njFQAKdIVu3zkJgqp
+         YXDpdO/aNxOYKsul8F8E8FhVjq8gnjKXLYkUtTWcnsD/nOxNllWcMB5PtOurCKkxEIfO
+         o9tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681227831; x=1683819831;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FO2ZTKmru+cnPtWbDaJn7HWwzBrAfGXDlf+uY0QROWM=;
+        b=1L9jyTTtZSANa4ioOFyI3NIIgP+95eMnEWK19gwVNR/mZAXbCueolwOzc0TOF6Pp+y
+         mketzg0mZA1yW+pdS7iPM7z5gSpm/OUNDDtg3+m8SMCu1NKtBQ1o+hwL1IjIybp33mDy
+         KIY/+ZSUoFSUNDo6hZL1ou6suEKUGR+Xm3IGuHVJYCXxf2X10lNSZ8RCN7BlsTuXZSrg
+         nuM85BPxE6SgV1DKJRd5Et2G2LAYCjdONq9GZUJQmLXMIUHaSI3KSKuU+93aQy0v7Vbm
+         6JqNeCeYNJDIMo5Ir7pJnEPeVO6ZSPsvykULA3Q9v1s2ModrzdAGyODftjtApEFuJFBx
+         9zBw==
+X-Gm-Message-State: AAQBX9fT+D+GzqoSrI9E+e24Hu4iptDfj5tWeCRqE9So1BMr3F78pGPH
+        uy8mSUlF8MjmGY0lO5x/VDw=
+X-Google-Smtp-Source: AKy350YbjSd77QyCRvCj02295YbYqK1iz2RH3IukXLuev4sGf/C+6b0glanbXlMEbcv8AFeWX1CJ/w==
+X-Received: by 2002:a05:6a20:9298:b0:db:22dc:23d with SMTP id q24-20020a056a20929800b000db22dc023dmr14323654pzg.5.1681227831176;
+        Tue, 11 Apr 2023 08:43:51 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id c14-20020a655a8e000000b004fb26a80875sm8882859pgt.22.2023.04.11.08.43.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Apr 2023 08:43:48 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>, johncai86@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] date: remove approxidate_relative()
+References: <f5b9a290-7cec-7a83-660b-e15494d2cdc8@web.de>
+        <xmqqjzyjemji.fsf@gitster.g>
+        <20230410202536.GE104097@coredump.intra.peff.net>
+        <xmqqy1mzcus6.fsf@gitster.g>
+        <20230411093005.GB398350@coredump.intra.peff.net>
+Date:   Tue, 11 Apr 2023 08:43:47 -0700
+In-Reply-To: <20230411093005.GB398350@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 11 Apr 2023 05:30:05 -0400")
+Message-ID: <xmqqsfd6bf0s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> =E4=BA=8E2023=E5=B9=B44=E6=9C=8811=E6=97=A5=E5=91=
-=A8=E4=BA=8C 04:14=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Sun, Apr 09, 2023 at 02:47:30PM +0800, ZheNing Hu wrote:
->
-> > > Perhaps slightly so, since there is naturally going to be some
-> > > duplicated effort spawning processes, loading any shared libraries,
-> > > initializing the repository and reading its configuration, etc.
-> > >
-> > > But I'd wager that these are all a negligible cost when compared to t=
-he
-> > > time we'll have to spend reading, inflating, and printing out all of =
-the
-> > > objects in your repository.
-> >
-> > "What you said makes sense. I implemented the --type-filter option for
-> > git cat-file and compared the performance of outputting all blobs in th=
-e
-> > git repository with and without using the type-filter. I found that the
-> > difference was not significant.
-> >
-> > time git  cat-file --batch-all-objects --batch-check=3D"%(objectname)
-> > %(objecttype)" |
-> > awk '{ if ($2 =3D=3D "blob") print $1 }' | git cat-file --batch > /dev/=
-null
-> > 17.10s user 0.27s system 102% cpu 16.987 total
-> >
-> > time git cat-file --batch-all-objects --batch --type-filter=3Dblob >/de=
-v/null
-> > 16.74s user 0.19s system 95% cpu 17.655 total
-> >
-> > At first, I thought the processes that provide all blob oids by using
-> > git rev-list or git cat-file --batch-all-objects --batch-check might wa=
-ste
-> > cpu, io, memory resources because they need to read a large number
-> > of objects, and then they are read again by git cat-file --batch.
-> > However, it seems that this is not actually the bottleneck in performan=
-ce.
->
-> Yeah, I think most of your time there is spent on the --batch command
-> itself, which is just putting through a lot of bytes. You might also try
-> with "--unordered". The default ordering for --batch-all-objects is in
-> sha1 order, which has pretty bad locality characteristics for delta
-> caching. Using --unordered goes in pack-order, which should be optimal.
->
-> E.g., in git.git, running:
->
->   time \
->     git cat-file --batch-all-objects --batch-check=3D'%(objecttype) %(obj=
-ectname)' |
->     perl -lne 'print $1 if /^blob (.*)/' |
->     git cat-file --batch >/dev/null
->
-> takes:
->
->   real  0m29.961s
->   user  0m29.128s
->   sys   0m1.461s
->
-> Adding "--unordered" to the initial cat-file gives:
->
->   real  0m1.970s
->   user  0m2.170s
->   sys   0m0.126s
->
-> So reducing the size of the actual --batch printing may make the
-> relative cost of using multiple processes much higher (I didn't apply
-> your --type-filter patches to test myself).
->
+Jeff King <peff@peff.net> writes:
 
-You are right. Adding the --unordered option can avoid the
-time-consuming sorting process from affecting the test results.
-
-time git cat-file --unordered --batch-all-objects \
---batch-check=3D"%(objectname) %(objecttype)" | \
-awk '{ if ($2 =3D=3D "blob") print $1 }' | git cat-file --batch > /dev/null
-
-4.17s user 0.23s system 109% cpu 4.025 total
-
-time git cat-file --unordered --batch-all-objects --batch
---type-filter=3Dblob >/dev/null
-
-3.84s user 0.17s system 97% cpu 4.099 total
-
-It looks like the difference is not significant either.
-
-After all, the truly time-consuming process is reading
-the entire data of the blob, whereas git cat-file --batch-check
-only reads the first few bytes of the object in comparison.
-
-> In general, I do think having a processing pipeline like this is OK, as
-> it's pretty flexible. But especially for smaller queries (even ones that
-> don't ask for the whole object contents), the per-object lookup costs
-> can start to dominate (especially in a repository that hasn't been
-> recently packed). Right now, even your "--batch --type-filter" example
-> is probably making at least two lookups per object, because we don't
-> have a way to open a "handle" to an object to check its type, and then
-> extract the contents conditionally. And of course with multiple
-> processes, we're naturally doing a separate lookup in each one.
+>> Instead, imagine --extra-context='<range>:<path>' were the way to
+>> tell Git to include the specified range of lines in the post context
+>> even though they may not have been modified.  Then René's patch
+>> could have been produced with
+>> 
+>>     $ git format-patch -1 \
+>>       --extra-context='/^timestamp_t approxidate_careful/,/^}$/:date.c'
+>> 
+>> and would have shown 3 lines of precontext before the removed
+>> approxidate_relative(), plus the unchanged approxidate_careful()
+>> function in full in the postcontext.
 >
-
-Yes, the type of the object is encapsulated in the header of the loose
-object file or the object entry header of the pack file. We have to read
-it to get the object type. This may be a lingering question I have had:
-why does git put the type/size in the file data instead of storing it as so=
-me
-kind of metadata elsewhere?
-
-> So a nice thing about being able to do the filtering in one process is
-> that we could _eventually_ do it all with one object lookup. But I'd
-> probably wait on adding something like --type-filter until we have an
-> internal single-lookup API, and then we could time it to see how much
-> speedup we can get.
+> Ooh, I like that very much. In that sense it really feels like an
+> extension of --function-context. Would the regexes be searches starting
+> from the edge of some context (as they more or less are under the hood
+> for function context), or would you search within the whole file for
+> ranges (and then presumably use them when a hunk's context is adjacent
+> to or overlaps a range)?
 >
+> If the latter, I guess you could also allow both absolute and relative
+> line numbers, similar to how "-L" accepts range input.
 
-I am highly skeptical of this "internal single-lookup API". Do we really
-need an extra metadata table to record all objects?
-Something like: metadata: {oid: type, size}?
+We want the latter.
 
-> -Peff
+If we further imagine that approxidate_careful() were defined very
+far away (in either direction) from approxidate_relative() that
+"extending" the patch context to show the removal of the latter to
+cover the former would show too much irrelevant information, I think
+René would have wanted to show a normal patch plus an extra hunk
+that contains the entirety of approxidate_careful() that shows no
+modification (i.e. all lines are prefixed with an SP).  The way I
+think about this new "feature" is "compute what hunks should be
+shown, honoring all other options.  Then pretend no-op hunks to
+cover all specified lines in the postimage [*] are also in the
+result.  Combine them all, ignoring parts of the made-up no-op hunks
+when they contradict the real hunks.".  The end result should show
+all specified lines from the postimage plus the usual diff.
 
-ZheNing Hu
+
+[Footnote]
+
+ * There is no need for a similar option to talk about lines in the
+   preimage, because a line in the preimage would either appear in
+   the postimage (in which case the range in the postimage can be
+   used to show it), or otherwise it would appear as deleted line
+   (in which case the reader will see it without the new feature.
