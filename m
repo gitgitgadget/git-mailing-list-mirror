@@ -2,86 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76F65C76196
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 21:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC448C7619A
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 21:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbjDKVNR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 17:13:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36798 "EHLO
+        id S229630AbjDKVOg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 17:14:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjDKVNQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 17:13:16 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5973430D0
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 14:13:15 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id q5so12529161ybk.7
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 14:13:15 -0700 (PDT)
+        with ESMTP id S229483AbjDKVOe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 17:14:34 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C9A30D0
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 14:14:33 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id y69so16591765ybe.2
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 14:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1681247594; x=1683839594;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1681247673; x=1683839673;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Iddy4MIkPAzDb37d1Pjb12xFg3EhfTw7hnvj1Kh47U=;
-        b=UcXEhH5aFlmioehOUqO8Xj65RqR0ZI6JwtvW7G1bBWPP2xC6f88r8K1Xt+DJscMbBD
-         tUNEJ7wtiPUapildROr4QGIlWzRfVnbIhAbUKgyKca+c2RBbqEdmov0eSJHnHsZ7A5Kq
-         0AqGFAtKOiggHxyeZ4zaJXXrCLk9FUWBzYC66CzYCKUgwqaUxthG2NiVt76cRHuLpOCx
-         JnybNOj5VXklYT+a0/dgvgNL1T9LemcJHuEXhDlJSg4ZCeKNNsOV9qoAyX3nPkwA0Ct+
-         ChNbXwsvNRjshfriVJ+0u5o5jQU9HCVvKYeRcJMUGCSFU1ixfr352lWnjiJnMtUIhcRC
-         Gsew==
+        bh=OPCBHVxCbjeycGniRs3hVzGDW2WGOebYMirbZyBj7xk=;
+        b=xHRuvMptlYaBQqoHvmiEyB72CUjZi+ChbHCha5RLj20DD1or21JG2wIBRDyQC1AhJa
+         QEsNWM3jT8+1iUk11l8w52ejBcOnm3bwTspupsHepCdYCf7FogOuOOW7IWb37zG4i57l
+         Njr3a8CpMCfVbKFalwNqSkLOHyY6G0gl0pZy0lZseRES0d2+Yt4xqnAR7c6LkLZDS4lb
+         7nFu3D4BzvdDwvkF2nzZm+tGZX2Zt64pYUOmVnZFBGHWPToDqZFME51PKTxMB3pzsVTX
+         wCs8evry6WRLM03s6qv52U0GzUd+b/btmd2E7+S3k8ti9Zxs/1pwS4YYslaWdmKKOTH6
+         gXqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681247594; x=1683839594;
+        d=1e100.net; s=20210112; t=1681247673; x=1683839673;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8Iddy4MIkPAzDb37d1Pjb12xFg3EhfTw7hnvj1Kh47U=;
-        b=3xRVrPbn5+cPtpLZBTSlCWkUlMSoFYgJqaC3WPDmKQCnB8v2M2RMBiUfxWCEGe731d
-         e00lp/VOsi9VPnCSfJdc/Foo+u1gIPY30TiQhM3kxxaXTHmx6gqP0151d7yuu/HNmXY3
-         qPAZLh99tjBGTtk9KpYgYKxXhIeRk4dK10Wy88xzqtTNDLYOnMRVREzF6G+0s6sYtMLp
-         Dz8duXOFwxaIgMz+sj9XDDBMMeH6vJ4pzZ0hPcQ0qB7nibQgss/Cfp4bMyAIgWvgmYjh
-         cW5qw2DuRRBzcRnUEwcMikzJTorkEsEM5QkYR7Qb+lVH1iWftI26T+ZAIY76LWjbeYpG
-         6wdg==
-X-Gm-Message-State: AAQBX9ef9bL3OQqqvhq6zPOigFcJ/ljjkaLjrQJkRIjkf4F302prdHDG
-        EZQedawHjMHy5IVQlQmtEWf8ow==
-X-Google-Smtp-Source: AKy350a0YZZuMubV0w8s+8Z57KvPYGkLmOvLRWUV6oXv3WXG+shymDHRuZPyqx3ne1foo1znTQ6RPQ==
-X-Received: by 2002:a25:3757:0:b0:b3f:208d:ba7 with SMTP id e84-20020a253757000000b00b3f208d0ba7mr196420yba.16.1681247594413;
-        Tue, 11 Apr 2023 14:13:14 -0700 (PDT)
+        bh=OPCBHVxCbjeycGniRs3hVzGDW2WGOebYMirbZyBj7xk=;
+        b=jYNcOhfBzzJkVCKvorl0i/s93H6YShJEsjk2kPVMWlZ+8ZN2glLlmmTLMjoR2VRWCT
+         zHS5UWUBGnkEfk40Rt1MW/S0ZkNa/o3fYCU6h0DOeJbgPGPfVj57OfnNM5bdXNJwgbVj
+         c+oFr664d+sNcf9AqqBdAUNyllde3Q0uaBM7v8B81bZBOxz8uVZBYl3x3dF+JrHIMrWg
+         9Z62YYcRgm82cvFchZEFxoOcGktydWNz8OxXL8HdyKNzUHW7+DClCJvWHqDgveDDoe/H
+         EaJhHpJizRa4t2gBjou3gdtnp9aGsfLXtBjELUsF+Md5omnHFuhz8puch3dEWCN3kfXZ
+         5cVQ==
+X-Gm-Message-State: AAQBX9dQFUr6FCQzGdbdUDovmRVU5W1bQVD3kHpCzTm6FNlaBwoO56ZA
+        jcsUJQ/SqslG5/uY8fVWTzNGsw==
+X-Google-Smtp-Source: AKy350Z9gYtmmZP4viX+EeOlOIl8V2NcwMFOfvpicCv4cCCWhUI4ssGyEqBczHkfappxobaxQR2qkw==
+X-Received: by 2002:a25:2008:0:b0:b8d:2846:3f8a with SMTP id g8-20020a252008000000b00b8d28463f8amr8717145ybg.2.1681247673070;
+        Tue, 11 Apr 2023 14:14:33 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i125-20020a255483000000b00b7767ca7496sm3901803ybb.51.2023.04.11.14.13.13
+        by smtp.gmail.com with ESMTPSA id r125-20020a254483000000b00b7767ca749dsm3889130yba.58.2023.04.11.14.14.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 14:13:13 -0700 (PDT)
-Date:   Tue, 11 Apr 2023 17:13:12 -0400
+        Tue, 11 Apr 2023 14:14:32 -0700 (PDT)
+Date:   Tue, 11 Apr 2023 17:14:31 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Patrick Steinhardt <ps@pks.im>
 Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
         peff@peff.net, dstolee@microsoft.com
 Subject: Re: [PATCH] repack: fix geometric repacking with gitalternates
-Message-ID: <ZDXNaCYV+DhxaBt3@nand.local>
+Message-ID: <ZDXNtygNkdSbohTe@nand.local>
 References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
  <ZCxytq1esQWvjIz/@nand.local>
  <ZC0eY8q6ushpfkrQ@ncase>
  <4c7b95e1-9d3c-e253-98ca-ac6c201babb3@github.com>
- <ZDSgbYa+j/5c5t8j@nand.local>
- <ZDWVSuFJLU54txwc@ncase>
+ <ZDWTp2RfFTbiE9I9@ncase>
+ <ZDWYLPw4Hk0-12Fe@ncase>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZDWVSuFJLU54txwc@ncase>
+In-Reply-To: <ZDWYLPw4Hk0-12Fe@ncase>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 07:13:46PM +0200, Patrick Steinhardt wrote:
-> So ultimately, we would only ever write an MIDX containing only local
-> packs already. It rather feels like this is only by chance though, so I
-> think it is good to include your patch regardless of whether it actually
-> does something or not. Better be explicit here, also as documentation to
-> the reader.
+On Tue, Apr 11, 2023 at 07:26:04PM +0200, Patrick Steinhardt wrote:
+> > The problems are quite multi-faceted, but taken on their own most of the
+> > problems actually seem quite easy to fix. I've got a local patch series
+> > that addresses almost all of the pain points I have found until now:
+> >
+> > - A segfault in git-multi-pack-index(1) when passed no packfiles and a
+> >   preferred packfile that it cannot find.
+> >
+> > - The issue that git-repack(1) asks git-multi-pack-index(1) to write an
+> >   MIDX with packs that it cannot actually track because they are not
+> >   local.
+> >
+> > - An issue with git-pack-objects(1) that keeps it from packing objects
+> >   that are non-local due to the way `--stdin-packs` is only referring to
+> >   the packfile basenames.
+> >
+> > - The fact that we don't honor `-l` when doing geometric repacking.
+>
+> Ah, one more thing I forgot: add a safety mechanism that disables
+> writing bitmaps when we see non-local packs.
 
-Doh, this is definitely right. I even wrote that code a while ago; shows
-you how good my memory is ;-).
+Thank you very much for working on this.
 
-FWIW, I agree that even though it doesn't do anything in this instance,
-it is a good safeguard to have in place, so I think including it in your
-series is the right thing to do.
+For what it's worth, I think that this whole thing is pretty cool.
+Having a couple of different forges use this feature in subtly different
+ways is proving to be an extremely effective way to shake out subtle
+bugs in the implementation.
 
 Thanks,
 Taylor
