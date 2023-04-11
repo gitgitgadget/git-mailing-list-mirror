@@ -2,66 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A355C77B6F
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 13:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68B18C76196
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 13:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbjDKNXg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 09:23:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34280 "EHLO
+        id S230345AbjDKNpa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 09:45:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjDKNXf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 09:23:35 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C17FA1BC
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 06:23:33 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-54f6fc7943eso39695017b3.3
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 06:23:33 -0700 (PDT)
+        with ESMTP id S230304AbjDKNpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 09:45:25 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BD7D2D48
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 06:45:24 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-54ee17a659bso159969817b3.4
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 06:45:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1681219413; x=1683811413;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=github.com; s=google; t=1681220723; x=1683812723;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ELfe2RFyMS8767ulhMSu3K3JQ7xWL6j0DzJac2/eanM=;
-        b=SdW0oJAkhOhvZxWfj0r9jJvf1/+o9qH2kn1FAYaBPsLxh7sXWtlwWvBIlPUmd3CwJ6
-         eDcoCiKEOQxbR4kCLDE/nECP17ZNgguZ8Lz7dapvBq5u3Oq4bvVQCDwsJHu/aFvfpIOP
-         71B/WZvBDnfWlmwZERJ1v59mN9rBzzfJNahTPKisP3jAsAKF9NolB0M1bst/Ne8Rj3xQ
-         dbknKJebFi+RccM9+K5hQmCAMQs66ZIn0hyhrPCU1d2/mLc3wTPBRbeHrINxWt5S2uo2
-         ibbSNyRoHaTWzb2/LPA/4CB1hHaav1vBKIrxkTBcrqXXRc89TQ+ba2qUanBVYGu67/Yb
-         qnwg==
+        bh=2vIOVWl9/+gnjDuqN43n4z1IqpJRKIIzI0Au6ERZ1Qc=;
+        b=UmL+rkzOJgPbZQvRE9MsMJ3rUV0fgZFPWTN/g7WJllB4RvIVnOxVbX+PqNxqKbPs9a
+         96BTvjBpcYFTGn2E8qB91VvNT80jwLiOq8quHyZQzzGb5YFkg+4ql9mKSOAMiK2f/QK4
+         itdr4wINHvkIocPHUZd5Ki0B9k1oDLL97CbH72Ko2TX4cGAfJnoO4XnGDpMQRvRKxwbJ
+         FSfwzmvsb5Tac+yJShAlmzdTyy95Na+MYTe1xV/7jHhNArRo4DYLIyElwchdA3wZLbug
+         9Ec/rlB0gMKAtFbRLIX+PbXo2gcgWHg2EU4XLvVi6HDY5IffjIYBkfEw45BFNokGempJ
+         0+0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681219413; x=1683811413;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20210112; t=1681220723; x=1683812723;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ELfe2RFyMS8767ulhMSu3K3JQ7xWL6j0DzJac2/eanM=;
-        b=Munwu58zTluZ6v9I7Ul7cp7An6Qa2XeGDlCE8tkXB3p/fxHeFlgBGZaVQRHS4xIG/D
-         R3eapLffq609Jv65uk0iFWXE4ku72NvNCZNPkqr2zkEveoQYKUKk84N4iHEXaV0aAd49
-         wsdtHDpZQ1sZq8Kcvzc5d3hRTCBJ0BdoBcIuXwcSKP34VeMCfwLkyvObFqYltQif2eUU
-         ylX1QwfNG/P3po492iCzDcLWw1VXCbuo8EbFTtCtSI+qGivQajs2S5pieExQn+CBl+Qd
-         5lYzfCQmEXQDQqKjINSpulaXvcmGjU7TaHz6JvqmR2+KKbCAHtmwxth5daqc+9X0yNDL
-         CCfQ==
-X-Gm-Message-State: AAQBX9ctNNOgNGT6OB47wGTM1b3kl0jDL9KAaFyTvnHU2NH4Hbzp6BPZ
-        aDPt+PUNYmx3K4OQqL0RQugF
-X-Google-Smtp-Source: AKy350bBcq50o+WlOfv0Vntft4+gP5qpME7qniAyRf0YVIjAjdMKr3KFdxjpcMvT34lu+UCQOCUCDQ==
-X-Received: by 2002:a0d:d50e:0:b0:542:46f5:fb1e with SMTP id x14-20020a0dd50e000000b0054246f5fb1emr10552290ywd.44.1681219412829;
-        Tue, 11 Apr 2023 06:23:32 -0700 (PDT)
+        bh=2vIOVWl9/+gnjDuqN43n4z1IqpJRKIIzI0Au6ERZ1Qc=;
+        b=tk9TMLTjfAfN/Khzdh4T2/k8tjtDHMPi+xadWiTT6TIjfeFtYBXYJd90JxN1fNEwdw
+         29Yup/wem2siy9PfvMLW9jFZqAuD6NNP3oajE/1NVJwcWYctoQNuW3oauzgiFQ9R6i42
+         N3c3y+Srv1gxyZRGFxP1YILnBRx4f9GgeOYHhFJ4pZfmwW55sNaBo17KGLmrY4kQUIsR
+         GmLhJh8yS4GueyRBeGVf9deUZhOFN0rVs/hivFK5TkiOlvmCNYndAYA8R8wFjG5u15yk
+         wk3+MUP8HVA3q922XGeINqp/spDNerBhHzdk7HohTYg/cDvyb+SIL+UsdAeGfIUV6ODj
+         r3Jg==
+X-Gm-Message-State: AAQBX9dhj9xSPAAtoQ/oLwGruk3lp9HNscuACCz2PRC+CGsHsttBehin
+        hKHDqp+OKuFxR+QRZb+VJap08fMUSHSg6rGVdw==
+X-Google-Smtp-Source: AKy350bcuGGXmMJpLhkzsQ/e/t27JdxrSiVsmaUuMAdbzHtWXMdNz3tcfCE0ZBW2+buJBqj2BGRpXA==
+X-Received: by 2002:a0d:f943:0:b0:544:4d3d:4231 with SMTP id j64-20020a0df943000000b005444d3d4231mr6991493ywf.47.1681220723337;
+        Tue, 11 Apr 2023 06:45:23 -0700 (PDT)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id l200-20020a0de2d1000000b00545a0818487sm3458371ywe.23.2023.04.11.06.23.32
+        by smtp.gmail.com with ESMTPSA id d82-20020a814f55000000b0054ef368af47sm2019572ywb.116.2023.04.11.06.45.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Apr 2023 06:23:32 -0700 (PDT)
-Message-ID: <423b5c5c-ef86-198a-16f7-c836ed78928c@github.com>
-Date:   Tue, 11 Apr 2023 09:23:31 -0400
+        Tue, 11 Apr 2023 06:45:22 -0700 (PDT)
+Message-ID: <d81c0fe8-580f-dbab-9904-e0ea8459576c@github.com>
+Date:   Tue, 11 Apr 2023 09:45:21 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 1/7] pack-write.c: plug a leak in stage_tmp_packfiles()
+Subject: Re: [PATCH 3/7] pack-revindex: make `load_pack_revindex` take a
+ repository
+Content-Language: en-US
 To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 References: <cover.1681166596.git.me@ttaylorr.com>
- <18be29c3988295cd58521f8cc4a729897df074c8.1681166596.git.me@ttaylorr.com>
-Content-Language: en-US
+ <be4faf11011efcfab479e5785e6c2bbac95309bd.1681166596.git.me@ttaylorr.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <18be29c3988295cd58521f8cc4a729897df074c8.1681166596.git.me@ttaylorr.com>
+In-Reply-To: <be4faf11011efcfab479e5785e6c2bbac95309bd.1681166596.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -69,202 +70,174 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 4/10/2023 6:53 PM, Taylor Blau wrote:
+> In a future commit, we will introduce a `pack.readReverseIndex`
+> configuration, which forces Git to generate the reverse index from
+> scratch instead of loading it from disk.
+> 
+> In order to avoid reading this configuration value more than once, we'll
+> use the `repo_settings` struct to lazily load this value.
+> 
+> In order to access the `struct repo_settings`, add a repository argument
+> to `load_pack_revindex`, and update all callers to pass the correct
+> instance (in all cases, `the_repository`).
 
-> Instead, simply free() `rev_tmp_name` at the end of
-> `stage_tmp_packfiles()`.
+If all callers use the_repository, then we could presumably use
+the_repository within the method directly. However, there are some
+cases where the call chain is less obvious that we have already
+entered something that is "repository scoped".
 
-> @@ -568,6 +568,8 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
->  		rename_tmp_packfile(name_buffer, rev_tmp_name, "rev");
->  	if (mtimes_tmp_name)
->  		rename_tmp_packfile(name_buffer, mtimes_tmp_name, "mtimes");
-> +
-> +	free((char *)rev_tmp_name);
+The patch below applies on top of this one and is the result of
+exploring the two callers within pack-bitmap.c. Since they are
+static, I was able to only modify things within that file, but
+found two callers to _those_ methods that were repository scoped,
+so without making this connection we are losing that scope.
 
-Just cut off from the context is a "if (rev_tmp_name)", so it might be
-good to group this into that block, since we have the condition, anyway.
-
-
-But I was also thinking about how we like to use "const" as an indicator
-as "I am not responsible for free()ing this". And this comes from the
-public write_rev_file() method. Based on the API prototype, we could
-think that this string is held by a static strbuf (making the method
-not reentrant, but that happens sometimes in our methods). But generally,
-I wanted to inspect what it would take to make the API reflect the fact
-that it can return a "new" string.
-
-But there are two issues:
-
- 1. The actual logic is inside write_rev_file_order(), so that API
-    needs to change, too.
-
- 2. The "new" string is created only if the rev_name parameter is
-    NULL, which is somewhat understandable but still requires
-    inside knowledge about the implementation to make that choice.
-
- 3. If we inspect the callers to these methods, only one caller
-    passes a non-null name: builtin/index-pack.c. The rest pass NULL,
-    including write_midx_reverse_index() (which then leaks the name).
-
-The below diff includes my attempt to change the API to return a
-non-const string that must be freed by the callers.
+There are other non-static methods in pack-bitmap.c that might
+benefit from wiring a repository pointer through (or adding a
+repository pointer to struct bitmap_index to get it for free),
+but I used the trick of defining a local repository pointer at
+the top of the method to make it easier to change in the future.
 
 Thanks,
 -Stolee
 
+
 --- >8 ---
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index b17e79cd40f..6d2fa52f9c4 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1725,7 +1725,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- {
- 	int i, fix_thin_pack = 0, verify = 0, stat_only = 0, rev_index;
- 	const char *curr_index;
--	const char *curr_rev_index = NULL;
-+	char *curr_rev_index = NULL;
- 	const char *index_name = NULL, *pack_name = NULL, *rev_index_name = NULL;
- 	const char *keep_msg = NULL;
- 	const char *promisor_msg = NULL;
-@@ -1956,8 +1956,7 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 		free((void *) curr_pack);
- 	if (!index_name)
- 		free((void *) curr_index);
--	if (!rev_index_name)
--		free((void *) curr_rev_index);
-+	free(curr_rev_index);
- 
- 	/*
- 	 * Let the caller know this pack is not self contained
-diff --git a/midx.c b/midx.c
-index 9af3e5de889..85154bedd73 100644
---- a/midx.c
-+++ b/midx.c
-@@ -945,7 +945,7 @@ static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
- 				     struct write_midx_context *ctx)
- {
- 	struct strbuf buf = STRBUF_INIT;
--	const char *tmp_file;
-+	char *tmp_file;
- 
- 	trace2_region_enter("midx", "write_midx_reverse_index", the_repository);
- 
-@@ -958,6 +958,7 @@ static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
- 		die(_("cannot store reverse index file"));
- 
- 	strbuf_release(&buf);
-+	free(tmp_file);
- 
- 	trace2_region_leave("midx", "write_midx_reverse_index", the_repository);
- }
-diff --git a/pack-write.c b/pack-write.c
-index f1714054951..73850c061d9 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -207,15 +207,15 @@ static void write_rev_trailer(struct hashfile *f, const unsigned char *hash)
- 	hashwrite(f, hash, the_hash_algo->rawsz);
+From 9816f7026199981b86d9f3e2188036e1b20bc2f9 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <derrickstolee@github.com>
+Date: Tue, 11 Apr 2023 09:34:42 -0400
+Subject: [PATCH] pack-bitmap: use struct repository more often
+
+The previous change introduced a 'struct repository *' parameter to
+load_pack_revindex(). To satisfy the callers within pack-bitmap.c, these
+parameters were filled with 'the_repository'.
+
+However, these callers are sometimes included in methods that are
+already scoped to a 'struct repository *' parameter. By dropping the
+link from that repository and using the_repository, we are giving a
+false impression that this portion of the rev-index API is properly
+scoped to a single repository.
+
+Expand the static methods in pack-bitmap.c that call
+load_pack_revindex() to include a 'struct repository *' parameter.
+Modify the callers of those methods to pass a repository as appropriate.
+For the methods without an appropriate repository, create a local
+variable equal to the_repository so it is easier to convert them to
+using a parameter in the future.
+
+In the case of prepare_bitmap_git(), we already have a repository
+pointer parameter that can be used. In prepare_bitmap_walk(), the
+rev_info struct contains a repository pointer.
+
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ pack-bitmap.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
+
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 8e3bb00931..38b35c4823 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -463,7 +463,7 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ 	return 0;
  }
  
--const char *write_rev_file(const char *rev_name,
--			   struct pack_idx_entry **objects,
--			   uint32_t nr_objects,
--			   const unsigned char *hash,
--			   unsigned flags)
-+char *write_rev_file(const char *rev_name,
-+		     struct pack_idx_entry **objects,
-+		     uint32_t nr_objects,
-+		     const unsigned char *hash,
-+		     unsigned flags)
+-static int load_reverse_index(struct bitmap_index *bitmap_git)
++static int load_reverse_index(struct repository *r, struct bitmap_index *bitmap_git)
  {
- 	uint32_t *pack_order;
- 	uint32_t i;
--	const char *ret;
-+	char *ret;
- 
- 	if (!(flags & WRITE_REV) && !(flags & WRITE_REV_VERIFY))
- 		return NULL;
-@@ -233,12 +233,13 @@ const char *write_rev_file(const char *rev_name,
- 	return ret;
- }
- 
--const char *write_rev_file_order(const char *rev_name,
--				 uint32_t *pack_order,
--				 uint32_t nr_objects,
--				 const unsigned char *hash,
--				 unsigned flags)
-+char *write_rev_file_order(const char *rev_name,
-+			   uint32_t *pack_order,
-+			   uint32_t nr_objects,
-+			   const unsigned char *hash,
-+			   unsigned flags)
- {
-+	char *ret_name;
- 	struct hashfile *f;
- 	int fd;
- 
-@@ -249,10 +250,11 @@ const char *write_rev_file_order(const char *rev_name,
- 		if (!rev_name) {
- 			struct strbuf tmp_file = STRBUF_INIT;
- 			fd = odb_mkstemp(&tmp_file, "pack/tmp_rev_XXXXXX");
--			rev_name = strbuf_detach(&tmp_file, NULL);
-+			rev_name = ret_name = strbuf_detach(&tmp_file, NULL);
- 		} else {
- 			unlink(rev_name);
- 			fd = xopen(rev_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
-+			ret_name = xstrdup(rev_name);
+ 	if (bitmap_is_midx(bitmap_git)) {
+ 		uint32_t i;
+@@ -477,24 +477,23 @@ static int load_reverse_index(struct bitmap_index *bitmap_git)
+ 		 * since we will need to make use of them in pack-objects.
+ 		 */
+ 		for (i = 0; i < bitmap_git->midx->num_packs; i++) {
+-			ret = load_pack_revindex(the_repository,
+-						 bitmap_git->midx->packs[i]);
++			ret = load_pack_revindex(r, bitmap_git->midx->packs[i]);
+ 			if (ret)
+ 				return ret;
  		}
- 		f = hashfd(fd, rev_name);
- 	} else if (flags & WRITE_REV_VERIFY) {
-@@ -264,6 +266,7 @@ const char *write_rev_file_order(const char *rev_name,
- 			} else
- 				die_errno(_("could not stat: %s"), rev_name);
- 		}
-+		ret_name = xstrdup(rev_name);
- 		f = hashfd_check(rev_name);
- 	} else
- 		return NULL;
-@@ -280,7 +283,7 @@ const char *write_rev_file_order(const char *rev_name,
- 			  CSUM_HASH_IN_STREAM | CSUM_CLOSE |
- 			  ((flags & WRITE_IDX_VERIFY) ? 0 : CSUM_FSYNC));
- 
--	return rev_name;
-+	return ret_name;
- }
- 
- static void write_mtimes_header(struct hashfile *f)
-@@ -543,7 +546,7 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
- 			 unsigned char hash[],
- 			 char **idx_tmp_name)
- {
--	const char *rev_tmp_name = NULL;
-+	char *rev_tmp_name = NULL;
- 	const char *mtimes_tmp_name = NULL;
- 
- 	if (adjust_shared_perm(pack_tmp_name))
-@@ -564,8 +567,10 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
+ 		return 0;
  	}
- 
- 	rename_tmp_packfile(name_buffer, pack_tmp_name, "pack");
--	if (rev_tmp_name)
-+	if (rev_tmp_name) {
- 		rename_tmp_packfile(name_buffer, rev_tmp_name, "rev");
-+		free(rev_tmp_name);
-+	}
- 	if (mtimes_tmp_name)
- 		rename_tmp_packfile(name_buffer, mtimes_tmp_name, "mtimes");
+-	return load_pack_revindex(the_repository, bitmap_git->pack);
++	return load_pack_revindex(r, bitmap_git->pack);
  }
-diff --git a/pack.h b/pack.h
-index 3ab9e3f60c0..02bbdfb19cc 100644
---- a/pack.h
-+++ b/pack.h
-@@ -96,8 +96,8 @@ struct ref;
  
- void write_promisor_file(const char *promisor_name, struct ref **sought, int nr_sought);
+-static int load_bitmap(struct bitmap_index *bitmap_git)
++static int load_bitmap(struct repository *r, struct bitmap_index *bitmap_git)
+ {
+ 	assert(bitmap_git->map);
  
--const char *write_rev_file(const char *rev_name, struct pack_idx_entry **objects, uint32_t nr_objects, const unsigned char *hash, unsigned flags);
--const char *write_rev_file_order(const char *rev_name, uint32_t *pack_order, uint32_t nr_objects, const unsigned char *hash, unsigned flags);
-+char *write_rev_file(const char *rev_name, struct pack_idx_entry **objects, uint32_t nr_objects, const unsigned char *hash, unsigned flags);
-+char *write_rev_file_order(const char *rev_name, uint32_t *pack_order, uint32_t nr_objects, const unsigned char *hash, unsigned flags);
+ 	bitmap_git->bitmaps = kh_init_oid_map();
+ 	bitmap_git->ext_index.positions = kh_init_oid_pos();
  
- /*
-  * The "hdr" output buffer should be at least this big, which will handle sizes
+-	if (load_reverse_index(bitmap_git))
++	if (load_reverse_index(r, bitmap_git))
+ 		goto failed;
+ 
+ 	if (!(bitmap_git->commits = read_bitmap_1(bitmap_git)) ||
+@@ -581,7 +580,7 @@ struct bitmap_index *prepare_bitmap_git(struct repository *r)
+ {
+ 	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+ 
+-	if (!open_bitmap(r, bitmap_git) && !load_bitmap(bitmap_git))
++	if (!open_bitmap(r, bitmap_git) && !load_bitmap(r, bitmap_git))
+ 		return bitmap_git;
+ 
+ 	free_bitmap_index(bitmap_git);
+@@ -590,9 +589,10 @@ struct bitmap_index *prepare_bitmap_git(struct repository *r)
+ 
+ struct bitmap_index *prepare_midx_bitmap_git(struct multi_pack_index *midx)
+ {
++	struct repository *r = the_repository;
+ 	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+ 
+-	if (!open_midx_bitmap_1(bitmap_git, midx) && !load_bitmap(bitmap_git))
++	if (!open_midx_bitmap_1(bitmap_git, midx) && !load_bitmap(r, bitmap_git))
+ 		return bitmap_git;
+ 
+ 	free_bitmap_index(bitmap_git);
+@@ -1593,7 +1593,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 	 * from disk. this is the point of no return; after this the rev_list
+ 	 * becomes invalidated and we must perform the revwalk through bitmaps
+ 	 */
+-	if (load_bitmap(bitmap_git) < 0)
++	if (load_bitmap(revs->repo, bitmap_git) < 0)
+ 		goto cleanup;
+ 
+ 	object_array_clear(&revs->pending);
+@@ -1743,6 +1743,7 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 				       uint32_t *entries,
+ 				       struct bitmap **reuse_out)
+ {
++	struct repository *r = the_repository;
+ 	struct packed_git *pack;
+ 	struct bitmap *result = bitmap_git->result;
+ 	struct bitmap *reuse;
+@@ -1753,7 +1754,7 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 
+ 	assert(result);
+ 
+-	load_reverse_index(bitmap_git);
++	load_reverse_index(r, bitmap_git);
+ 
+ 	if (bitmap_is_midx(bitmap_git))
+ 		pack = bitmap_git->midx->packs[midx_preferred_pack(bitmap_git)];
+@@ -2133,11 +2134,12 @@ int rebuild_bitmap(const uint32_t *reposition,
+ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
+ 				struct packing_data *mapping)
+ {
++	struct repository *r = the_repository;
+ 	uint32_t i, num_objects;
+ 	uint32_t *reposition;
+ 
+ 	if (!bitmap_is_midx(bitmap_git))
+-		load_reverse_index(bitmap_git);
++		load_reverse_index(r, bitmap_git);
+ 	else if (load_midx_revindex(bitmap_git->midx) < 0)
+ 		BUG("rebuild_existing_bitmaps: missing required rev-cache "
+ 		    "extension");
+-- 
+2.40.0.vfs.0.0.3.g5872ac9aaa4
+
