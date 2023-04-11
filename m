@@ -2,121 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7C38C76196
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 15:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA975C76196
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 15:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbjDKPny (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 11:43:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33266 "EHLO
+        id S229949AbjDKP6t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 11:58:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbjDKPnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 11:43:52 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2DFE1731
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 08:43:51 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id px4so6204385pjb.3
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 08:43:51 -0700 (PDT)
+        with ESMTP id S229745AbjDKP6q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 11:58:46 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ACCE4ED6
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 08:58:45 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id 20so10091501plk.10
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 08:58:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681227831; x=1683819831;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FO2ZTKmru+cnPtWbDaJn7HWwzBrAfGXDlf+uY0QROWM=;
-        b=i7L1lStgBHk8xqQulF3AXAKGN5KbO6kbpY8cD/BhDQrkymNsBgGddETMjbuU4m/eEm
-         052jj0RlCXTQtbxHB2prV6a7+EeCWpEc3KlCoGczHzEzUHOB6CG1I4KJfF1aiGWNObfK
-         0TalVeAdIEF7YyO2zeu10UhoCQk/R1nr1W+m7o9U+Oe++3dhpbWXNu9GgAKE5XBLAwsn
-         JBWH19Khq/S9PqVQnp0P6GL0c65JEE/y0bVN1y4+nWIU9b+cVK7njFQAKdIVu3zkJgqp
-         YXDpdO/aNxOYKsul8F8E8FhVjq8gnjKXLYkUtTWcnsD/nOxNllWcMB5PtOurCKkxEIfO
-         o9tw==
+        d=gmail.com; s=20210112; t=1681228725; x=1683820725;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l+vleOt+IniUGPr0jN9ZkaC9Cgi5AFK5EuanjFrpiac=;
+        b=m3/zEXK+7Z5jUeuJMmuPZXkaqypZV9U3rRzdfI3OhCd4uueDSMi41tqUBQJ8eLUAD0
+         a73AjwVsIN+Gn6qVGkoY5cmYM6SiwyiDErxgG1txOI6UQXCMbLfPlAx6oD6NXii0a4jq
+         fODdoF/3z0XY/+xR8IlyH3Af+VotdFLlMlHiIw9zmX6Six6Is+tb82kOIc+Q+0qU4oWW
+         p63+Ik30KIcn4icWu3qg0/ykx6CswDlf9VsToOlIqdv8g7am3lQQtIEmNwU0nDsMN1J9
+         /hejWfGK9XxuMUOzCkulkKc4CfuA9hTWSDtqHopvcYiILX0WwXIzJ64z3q4GcAx4XAQA
+         67pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681227831; x=1683819831;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FO2ZTKmru+cnPtWbDaJn7HWwzBrAfGXDlf+uY0QROWM=;
-        b=1L9jyTTtZSANa4ioOFyI3NIIgP+95eMnEWK19gwVNR/mZAXbCueolwOzc0TOF6Pp+y
-         mketzg0mZA1yW+pdS7iPM7z5gSpm/OUNDDtg3+m8SMCu1NKtBQ1o+hwL1IjIybp33mDy
-         KIY/+ZSUoFSUNDo6hZL1ou6suEKUGR+Xm3IGuHVJYCXxf2X10lNSZ8RCN7BlsTuXZSrg
-         nuM85BPxE6SgV1DKJRd5Et2G2LAYCjdONq9GZUJQmLXMIUHaSI3KSKuU+93aQy0v7Vbm
-         6JqNeCeYNJDIMo5Ir7pJnEPeVO6ZSPsvykULA3Q9v1s2ModrzdAGyODftjtApEFuJFBx
-         9zBw==
-X-Gm-Message-State: AAQBX9fT+D+GzqoSrI9E+e24Hu4iptDfj5tWeCRqE9So1BMr3F78pGPH
-        uy8mSUlF8MjmGY0lO5x/VDw=
-X-Google-Smtp-Source: AKy350YbjSd77QyCRvCj02295YbYqK1iz2RH3IukXLuev4sGf/C+6b0glanbXlMEbcv8AFeWX1CJ/w==
-X-Received: by 2002:a05:6a20:9298:b0:db:22dc:23d with SMTP id q24-20020a056a20929800b000db22dc023dmr14323654pzg.5.1681227831176;
-        Tue, 11 Apr 2023 08:43:51 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1681228725; x=1683820725;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=l+vleOt+IniUGPr0jN9ZkaC9Cgi5AFK5EuanjFrpiac=;
+        b=OvUML/3c0c1+Pz9nY8HE2YnG5ziGTRNvC8SthWDgF3XvOLY/4pyUKylE3f6qN8F3xB
+         5Gx+mJULLKp4NdWAKOK/wZBErnLyK8Je1+ZK0gxLM6ugnw4PLH+/flxdrMbgK2YZLpZK
+         K/ON7BzPjvzPCtBWVOqih9jUDmfFKGXtnpgqLT8hqP1hFl1Sp5RtVPd2g1SMk91qUW8B
+         SpYsKj2dmaoBr/BN0g2XsBG7+BkhBtFbjKXYqaGiAUTI/OPSVN4dLFNerjxStgEzVPbo
+         jDFgBnTF3ykiv2igouFNkcXC+Le/EjkMXzdh/ABG6Kze25YI1ExYPPcVAlAN0BUg3V6Z
+         KSKg==
+X-Gm-Message-State: AAQBX9dE5EuO7Ec6SJhEytxMYkrow0LiqfvBy2Ewiqh0BzN1Q2t70qS1
+        dMVNQF57ozo7m+E3n36OjJk=
+X-Google-Smtp-Source: AKy350aOUVae1AymAY2J1eCIm2nWq0Zy13mUltcWwwT+yW31algD9a76kiqJr+xOVSYn8+VK6J63fg==
+X-Received: by 2002:a17:90b:4f44:b0:246:818c:d8e4 with SMTP id pj4-20020a17090b4f4400b00246818cd8e4mr5043722pjb.11.1681228724660;
+        Tue, 11 Apr 2023 08:58:44 -0700 (PDT)
 Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id c14-20020a655a8e000000b004fb26a80875sm8882859pgt.22.2023.04.11.08.43.48
+        by smtp.gmail.com with ESMTPSA id j3-20020a170902690300b001a19f2f81a3sm3978953plk.175.2023.04.11.08.58.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 08:43:48 -0700 (PDT)
+        Tue, 11 Apr 2023 08:58:42 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] date: remove approxidate_relative()
-References: <f5b9a290-7cec-7a83-660b-e15494d2cdc8@web.de>
-        <xmqqjzyjemji.fsf@gitster.g>
-        <20230410202536.GE104097@coredump.intra.peff.net>
-        <xmqqy1mzcus6.fsf@gitster.g>
-        <20230411093005.GB398350@coredump.intra.peff.net>
-Date:   Tue, 11 Apr 2023 08:43:47 -0700
-In-Reply-To: <20230411093005.GB398350@coredump.intra.peff.net> (Jeff King's
-        message of "Tue, 11 Apr 2023 05:30:05 -0400")
-Message-ID: <xmqqsfd6bf0s.fsf@gitster.g>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Robin Jarry <robin@jarry.cc>, git@vger.kernel.org,
+        Tim Culverhouse <tim@timculverhouse.com>,
+        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Michael Strawbridge <michael.strawbridge@amd.com>
+Subject: Re: [PATCH v2] hooks: add sendemail-validate-series
+References: <20230402185635.302653-1-robin@jarry.cc>
+        <20230405231305.96996-1-robin@jarry.cc>
+        <230406.868rf5tkzs.gmgdl@evledraar.gmail.com>
+        <9b8d6cc4-741a-5081-d5de-df0972efec37@gmail.com>
+Date:   Tue, 11 Apr 2023 08:58:41 -0700
+In-Reply-To: <9b8d6cc4-741a-5081-d5de-df0972efec37@gmail.com> (Phillip Wood's
+        message of "Tue, 11 Apr 2023 10:58:05 +0100")
+Message-ID: <xmqqo7nubeby.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> Instead, imagine --extra-context='<range>:<path>' were the way to
->> tell Git to include the specified range of lines in the post context
->> even though they may not have been modified.  Then René's patch
->> could have been produced with
->> 
->>     $ git format-patch -1 \
->>       --extra-context='/^timestamp_t approxidate_careful/,/^}$/:date.c'
->> 
->> and would have shown 3 lines of precontext before the removed
->> approxidate_relative(), plus the unchanged approxidate_careful()
->> function in full in the postcontext.
->
-> Ooh, I like that very much. In that sense it really feels like an
-> extension of --function-context. Would the regexes be searches starting
-> from the edge of some context (as they more or less are under the hood
-> for function context), or would you search within the whole file for
-> ranges (and then presumably use them when a hunk's context is adjacent
-> to or overlaps a range)?
->
-> If the latter, I guess you could also allow both absolute and relative
-> line numbers, similar to how "-L" accepts range input.
+> A hook that wants to check some property of the whole series needs to
+> know which patch is the final one. We could pass that via the
+> environment as we do for external diff commands with
+> GIT_DIFF_PATH_COUNTER and GIT_DIFF_PATH_TOTAL.
 
-We want the latter.
+Ahh, I forgot that we added them to deal with "I am called
+repeatedly, where is the end of the series of calls?" question,
+which exactly is the same issue.  Glad that you brought it up.
 
-If we further imagine that approxidate_careful() were defined very
-far away (in either direction) from approxidate_relative() that
-"extending" the patch context to show the removal of the latter to
-cover the former would show too much irrelevant information, I think
-René would have wanted to show a normal patch plus an extra hunk
-that contains the entirety of approxidate_careful() that shows no
-modification (i.e. all lines are prefixed with an SP).  The way I
-think about this new "feature" is "compute what hunks should be
-shown, honoring all other options.  Then pretend no-op hunks to
-cover all specified lines in the postimage [*] are also in the
-result.  Combine them all, ignoring parts of the made-up no-op hunks
-when they contradict the real hunks.".  The end result should show
-all specified lines from the postimage plus the usual diff.
-
-
-[Footnote]
-
- * There is no need for a similar option to talk about lines in the
-   preimage, because a line in the preimage would either appear in
-   the postimage (in which case the range in the postimage can be
-   used to show it), or otherwise it would appear as deleted line
-   (in which case the reader will see it without the new feature.
+Thanks.
