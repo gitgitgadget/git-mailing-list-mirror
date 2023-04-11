@@ -2,118 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7439BC76196
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 21:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D943C7619A
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 21:58:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbjDKVkW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 17:40:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54190 "EHLO
+        id S229492AbjDKV6t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 17:58:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjDKVkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 17:40:20 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 793F044A6
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 14:40:19 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-54c17fa9ae8so283008277b3.5
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 14:40:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1681249218; x=1683841218;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hoy2O3+5f83o8Wg+c/ziAKbdUyMfLIrrcn8G0f06rmY=;
-        b=Ut7tN5KEIEQmUueWzJUe0BVu4ycv45KM7LNKGQLJKocgWY/oxMo7ScldoQqsdKHNFp
-         F4Y2sJ7+zrsPQ76xfDt9GdvCSexy8NQQXT8FCcj1ts5xRxTcpubvgDAs3FEkbE6XqMsW
-         gENY0OF8/guEcYzZsW6z8R2X4m1dXJd8EriXNyoeUafCIDR3YjAWr2jiiYnKZEoGKdlE
-         bC3XFZ4d72GqQlzNIsCE6kXKQcGazIf+tqIXcu6qg4PKusO7zNG+ymf7sNQtnk3sK08b
-         Yo6Aa/wg5QQ5FeafdX98v4L2DupOclzIYWkPjYbrxS2ERDdKpLeSfSglPFQBSBHlU80p
-         5JAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681249218; x=1683841218;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Hoy2O3+5f83o8Wg+c/ziAKbdUyMfLIrrcn8G0f06rmY=;
-        b=rfF1kUHruw8MgKMrLnGyNmZEMW9VFQy2J6kF5GngIoVD6r2dJ6YAAO6OYnAxu0H1aY
-         9pNPEJ5zuaT/8g7JRTzKaaSwXw5NVZCiJKzbX1R1XQTE2Ene7k0qc1Xy0psgq8Otn+eE
-         z2PRN2d0l9LjxoQp6m2Ibzajvy+Qrg5P9+pjR0NBn2F96FCg6FTcHK9u6/x9MnkpMy9y
-         HuIiq0OAxzCIGnIuNxsxoYlCHaVzxhFdEP3l0OhWmT08uVP4+A93DH7p+TgkVZsMuRcG
-         IQiD5ig5pl7/oF6MZMUb2emCyf/qlG7JRZq4iKqkyT2zNj0pl8Z/h7RPVkNYX1r2G9N1
-         sxdA==
-X-Gm-Message-State: AAQBX9cyPwfzM9Ohyu+SHJ3dz5qrh1f00NIdjBc/wKLziJllthTEc2NM
-        t55yK3KgAfoiPTnW2XPg55Oo3g==
-X-Google-Smtp-Source: AKy350Z6LJD0w/a0jdP5A0O+HH9Z9v6TRj0pThPcagsA9p6KHzAO5czJvK7cH8/V/lIGt1UqgOGeKg==
-X-Received: by 2002:a0d:f443:0:b0:54e:f0d1:e3e5 with SMTP id d64-20020a0df443000000b0054ef0d1e3e5mr7822975ywf.24.1681249218657;
-        Tue, 11 Apr 2023 14:40:18 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r22-20020a814416000000b00545a08184bdsm3295551ywa.77.2023.04.11.14.40.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 14:40:18 -0700 (PDT)
-Date:   Tue, 11 Apr 2023 17:40:17 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] pack-revindex: enable on-disk reverse indexes by
- default
-Message-ID: <ZDXTwZcRx7rGa5vW@nand.local>
-References: <cover.1681166596.git.me@ttaylorr.com>
- <bfa4c23d-8b38-7505-fb57-a02e0a028292@github.com>
+        with ESMTP id S229469AbjDKV6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 17:58:48 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65BC51727
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 14:58:47 -0700 (PDT)
+Received: (qmail 13776 invoked by uid 109); 11 Apr 2023 21:58:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Apr 2023 21:58:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11026 invoked by uid 111); 11 Apr 2023 21:58:46 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Apr 2023 17:58:46 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 11 Apr 2023 17:58:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jonas Haag <jonas@lophus.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: Infinite loop + memory leak in annotate_refs_with_symref_info
+Message-ID: <20230411215845.GA678138@coredump.intra.peff.net>
+References: <39035D34-8548-44B0-BBBB-5C36B3876C4A@lophus.org>
+ <20230411210633.GA626331@coredump.intra.peff.net>
+ <20230411211604.GB626331@coredump.intra.peff.net>
+ <ZDXPemH0d3YWnpjL@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <bfa4c23d-8b38-7505-fb57-a02e0a028292@github.com>
+In-Reply-To: <ZDXPemH0d3YWnpjL@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 09:54:08AM -0400, Derrick Stolee wrote:
-> On 4/10/2023 6:53 PM, Taylor Blau wrote:
-> > In the vast majority of cases, this trade-off favors the on-disk ".rev"
-> > files. But in certain cases, the in-memory variant performs more
-> > favorably. Since these cases are narrow, and performance is machine- and
-> > repository-dependent, this series also introduces a new configuration
-> > option to disable reading ".rev" files in the third commit.
->
-> I agree that the performance trade-off indicates that having the .rev
-> files is preferred. It makes operations that _can_ be very fast as fast
-> as possible (inspecting a small number of objects is much faster because
-> we don't generate the in-memory index in O(N) time) and you create a knob
-> for disabling it in the case that we are already doing something that
-> inspects almost-all objects.
+On Tue, Apr 11, 2023 at 05:22:02PM -0400, Taylor Blau wrote:
 
-Sweet; I'm glad that you agree.
+> > Never mind. I was able to reproduce (I never used klaus, but it's
+> > packaged for Debian, so it was pretty easy to do). And yes, the problem
+> > still exists today. And bisection confirms it's from 2c6a403.
+> 
+> Yeah, same here. I hadn't used it either, but it's easily installable
+> via pip, too. Indeed, you can see the value of *offset jumping backwards
+> in `connect.c::parse_value_value()` (whose caller in this case is
+> `connect.c::annotate_refs_with_symref_info()`).
 
-FWIW for non-GitHub folks, observing a slow-down here has never been an
-issue for us. So much so that I wrote the pack.readReverseIndex knob
-yesterday for the purpose of sending this series.
+Yep. And Jonas's suggested fix is the right thing. Assigning offset
+directly _would_ be the right thing, since we are taking the distance
+back to the beginning of the feature_list string. Except that earlier in
+the function we incremented feature_list by the incoming value of
+the offset!
 
-That said, I think that including it here is still worthwhile, since the
-cases where performance really suffers (e.g., `git cat-file
---batch-all-objects --batch-check='%(objectsize:disk)'`) isn't something
-that GitHub runs regularly if at all.
+Here's a test that demonstrates the problem (and passes with the
+accompanying code change):
 
-To accommodate different workflows, I think having the option to opt-out
-of reading the on-disk ".rev" files is worthwhile.
+diff --git a/connect.c b/connect.c
+index c0c8a38178..5e265ba9d7 100644
+--- a/connect.c
++++ b/connect.c
+@@ -616,7 +616,7 @@ const char *parse_feature_value(const char *feature_list, const char *feature, i
+ 				if (lenp)
+ 					*lenp = 0;
+ 				if (offset)
+-					*offset = found + len - feature_list;
++					*offset += found + len - feature_list;
+ 				return value;
+ 			}
+ 			/* feature with a value (e.g., "agent=git/1.2.3") */
+@@ -628,7 +628,7 @@ const char *parse_feature_value(const char *feature_list, const char *feature, i
+ 				if (lenp)
+ 					*lenp = end;
+ 				if (offset)
+-					*offset = value + end - feature_list;
++					*offset += value + end - feature_list;
+ 				return value;
+ 			}
+ 			/*
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 20d063fb9a..c8422d66e7 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -360,4 +360,39 @@ test_expect_success 'ls-remote prefixes work with all protocol versions' '
+ 	test_cmp expect actual.v2
+ '
+ 
++test_expect_success 'v0 clients can handle multiple symrefs' '
++	# Git will not generate multiple symref entries for v0 these days, but it
++	# is technically allowed, and we did so until d007dbf7d6 (Revert
++	# "upload-pack: send non-HEAD symbolic refs", 2013-11-18). Test the
++	# client handling here by faking that older behavior.
++	#
++	# Note that our oid is hard-coded to always be sha1, and not using
++	# test_oid. Since our fake capabilities line does not have an
++	# object-format entry, the client will always use sha1 mode.
++	oid=1234567890123456789012345678901234567890 &&
++	symrefs="symref=refs/remotes/origin/HEAD:refs/remotes/origin/main" &&
++	symrefs="$symrefs symref=HEAD:refs/heads/main" &&
++
++	test-tool pkt-line pack >input.q <<-EOF &&
++	$oid HEADQ$symrefs
++	$oid refs/heads/main
++	$oid refs/remotes/origin/HEAD
++	$oid refs/remotes/origin/main
++	0000
++	EOF
++	q_to_nul <input.q >input &&
++
++	cat >expect <<-EOF &&
++	ref: refs/heads/main	HEAD
++	$oid	HEAD
++	$oid	refs/heads/main
++	ref: refs/remotes/origin/main	refs/remotes/origin/HEAD
++	$oid	refs/remotes/origin/HEAD
++	$oid	refs/remotes/origin/main
++	EOF
++
++	git ls-remote --symref --upload-pack="cat input; cat;:" . >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 
-> This was an easy series to read. I applied the patches locally and poked
-> around in the resulting code as I went along. This led to a couple places
-> where I recommend a few changes, including a new patch that wires
-> repository pointers through a few more method layers.
 
-Thanks for taking a look. Based on your review, there are only a couple
-of things on my mind:
+I was going to ask if Jonas wanted to wrap this up as a patch, but I
+think that's pretty much it right there. :) I'll write up a commit
+message for it later tonight.
 
-  - I amended the last patch to more clearly state when we would want to
-    run the suite GIT_TEST_NO_WRITE_REV_INDEXES=1 set, and kept it in
-    the linux-TEST-vars configuration.
+I also wondered if we tested this multiple-symref case for protocol v2
+(where it works fine), but it looks like we may not. There are earlier
+tests which _would_ trigger it, but we force them into v0 mode, due to
+b2f73b70b2 (t5512: compensate for v0 only sending HEAD symrefs,
+2019-02-25). I think we really should be letting ls-remote use the
+protocol it prefers (v2 by default, and v0 if the suite is run in that
+mode), and the expected output should be adjusted based on the mode.
+I'll see if I can do that as well, to make this a two-patch series.
 
-  - How do you want to handle that extra patch? As I noted in [1], I
-    think squashing the two together in one way or another makes sense.
-    So really we have to figure out (a) if you think that is the right
-    way to go, and (b) if so, how to handle attribution / the commit
-    message.
-
-Thanks,
-Taylor
-
-[1]: https://lore.kernel.org/git/ZDXRajRky5XtFenU@nand.local/
+-Peff
