@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A466C77B6F
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 13:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7930C76196
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 13:54:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230507AbjDKNva (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 09:51:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42162 "EHLO
+        id S230371AbjDKNyT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 09:54:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230488AbjDKNvT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 09:51:19 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB8155A1
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 06:51:08 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id w15-20020a056830410f00b006a386a0568dso11230796ott.4
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 06:51:08 -0700 (PDT)
+        with ESMTP id S230332AbjDKNyS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 09:54:18 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6425A10FD
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 06:54:10 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id i15-20020a9d610f000000b006a11f365d13so3161301otj.0
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 06:54:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1681221068; x=1683813068;
+        d=github.com; s=google; t=1681221249; x=1683813249;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5NOOsCKfRcP9UNH093XtYR/0uqoTjzyZZ9VhUlaC7D4=;
-        b=YGmtfE1xsM6NwR1bmhX2j9cuP8yV9V7tyikfbVgvteAa9xi7yHOb2oS3AvG19SXtCV
-         VrfjVJB8e10tneFUrFE+COFZI1sRJBZt4fbILh0lwVIo8/MSb2XpL+IkDKNaxMM5Rfx/
-         UnEPDRK96InnJsnzixAYLkHLVUjRBOsg0bNnvNcnt8MUEw19zJOBe2BIhuPKaZPcBcSE
-         Uj5wsuvaauAn1z21Ll3yWcD0GzFEfuqTqc7+4eMdRpQs+9+rwvbR1zltWFnHBcPhblFT
-         7BrakED8v7M6oGuY9GmExxs8ikHoy6Z4iPmYad23hx22ry/zxlu1y1/QSOI0xZWou9mx
-         7DXQ==
+        bh=KgXuK+wWyLuCIcL5TrNFSctb2g6MLw0NegOa+/xzsRE=;
+        b=jaohit6rHLj6ObpOuIS6itl6LsFD1qJGhxsx7WcROda2T43tLuoBrFoGY6LRZdu9A8
+         NdpfABo0NtQdywvNbjEdnCoY2tCvJRpHpdTFx9ttFBX+7r2MQeDgQhV5VUJTjkEKu0H3
+         hTResIHvpK+Q46fhO6YIpS9LOBSWVrE/31hHCiK+5xxZz3VSrbvQ8Fme80maKc1kAOIW
+         floCkEwRlEtKZ8RPbYdT9AjEC0v4Az0A1Bpd/4UYFv/4tm2TdFYbk0o3R+IkIokEN55Q
+         8U3i/mryNgk0gskFZ6unQp9KZ5865LNUIa69F8B4I76eHV27r/MO4ZF75ljrKuX1ZS0X
+         q9xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681221068; x=1683813068;
+        d=1e100.net; s=20210112; t=1681221249; x=1683813249;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5NOOsCKfRcP9UNH093XtYR/0uqoTjzyZZ9VhUlaC7D4=;
-        b=wb+wdiWu4AjnWCffhDpeTvtOZb5scQeY7gnJCSwonyb6vSdxpZfnPpE+elYTA3wPma
-         0euKbRpPmFYbRq++LqAYbSbLzwiYUPcEFSXfUF7mQ6h1wgcF2OAJR5fPm7q8lvAaQ8/Y
-         uAUmyGRM+LRZcnMg0b/016hBVIGR0IMKukviOFEoc0ypHBOWQ+RsgbtoIhgawQupMGoT
-         YgmZmOTDTCs9FhqtclcMyZV9Klg7IWLTENqvzXF9JCnewxdqbZ9zL18dzkAzdRvN3IbU
-         xaTbwzwcwz61vHHg0D1tr43/cSktM6tNGSm/aq174DCHUzBSUvAKGcuHe51bQsiP3aRq
-         /G5A==
-X-Gm-Message-State: AAQBX9cMFFxyHQAl0ydV/JQT/MJjWDX2EITgd1jkGTHQIeW8UCCZd0eg
-        2kpC4036z/AONkfI7NH5yknw
-X-Google-Smtp-Source: AKy350blE6eKNp67/iI3Ol3gDXTOw0KdmW9DUX1ev32Rv3i1DXLvdcuIYV1y18Txp+8UxRO71knj2A==
-X-Received: by 2002:a05:6830:1d57:b0:6a1:49c0:6a61 with SMTP id p23-20020a0568301d5700b006a149c06a61mr6779641oth.28.1681221067976;
-        Tue, 11 Apr 2023 06:51:07 -0700 (PDT)
+        bh=KgXuK+wWyLuCIcL5TrNFSctb2g6MLw0NegOa+/xzsRE=;
+        b=WymXcB7+NHjFJnfi2Ta2TYP99h+P0y5GhlBsmtVnD5O3G0BjFeGqyQSMXjirTKeZH2
+         5geBuDslnQBTbHRXSYd5LE7u7rp1d7a1EbTuLmzKOF0BoqUdw9PruTb89/LWcCRrV/5U
+         69c3jD+XQEsOHYCdz4GKOy8XRrm/j63eMWShuMjXGh2G773AkbZiSPT3ldDFrMswTMjk
+         LKOhvRQxm+dJx4xHElaz/AKoIhVS4YugrQ7thQnUqSgd3QFz6GyvExyL14COEtZNqXAa
+         IEWRqk9rctIZqbiCvcV9gYUt0mv3Vwcwc+F+ieJmFkQgTBa4YfYESiIi7txhrS08FazQ
+         fJqA==
+X-Gm-Message-State: AAQBX9eNn0KB8srcDeRvKLhrRR5AYIykH+YO9qqPqS49HGpJfUDmQ6qk
+        xpnNg+dt/x484oEBYDiKlpBe
+X-Google-Smtp-Source: AKy350beFS+Njyy2xp3ybQ/hR5r6GbnLHMmwqiqIW4yURWdLO0nRnVYR3GIABGWx0oQrCsK8CqnzSA==
+X-Received: by 2002:a9d:64da:0:b0:69d:d4f4:733d with SMTP id n26-20020a9d64da000000b0069dd4f4733dmr1547270otl.4.1681221249523;
+        Tue, 11 Apr 2023 06:54:09 -0700 (PDT)
 Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id v5-20020a0568301bc500b006a2fd720f82sm5385983ota.7.2023.04.11.06.51.06
+        by smtp.gmail.com with ESMTPSA id t21-20020a9d5915000000b006a13dd5c8a2sm5383997oth.5.2023.04.11.06.54.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Apr 2023 06:51:07 -0700 (PDT)
-Message-ID: <18a54c6e-7357-42ca-779f-2ba3e6653880@github.com>
-Date:   Tue, 11 Apr 2023 09:51:06 -0400
+        Tue, 11 Apr 2023 06:54:09 -0700 (PDT)
+Message-ID: <bfa4c23d-8b38-7505-fb57-a02e0a028292@github.com>
+Date:   Tue, 11 Apr 2023 09:54:08 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH 7/7] t: invert `GIT_TEST_WRITE_REV_INDEX`
+Subject: Re: [PATCH 0/7] pack-revindex: enable on-disk reverse indexes by
+ default
 Content-Language: en-US
 To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 References: <cover.1681166596.git.me@ttaylorr.com>
- <9c80379958824ac8fb7834f4f98000d11c3dc4e0.1681166596.git.me@ttaylorr.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <9c80379958824ac8fb7834f4f98000d11c3dc4e0.1681166596.git.me@ttaylorr.com>
+In-Reply-To: <cover.1681166596.git.me@ttaylorr.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -69,29 +69,32 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 4/10/2023 6:53 PM, Taylor Blau wrote:
-> Instead of getting rid of the option, invert its meaning to instead
-> disable writing ".rev" files, thereby running the test suite in a mode
-> where the reverse index is generated from scratch.
+> In the vast majority of cases, this trade-off favors the on-disk ".rev"
+> files. But in certain cases, the in-memory variant performs more
+> favorably. Since these cases are narrow, and performance is machine- and
+> repository-dependent, this series also introduces a new configuration
+> option to disable reading ".rev" files in the third commit.
+
+I agree that the performance trade-off indicates that having the .rev
+files is preferred. It makes operations that _can_ be very fast as fast
+as possible (inspecting a small number of objects is much faster because
+we don't generate the in-memory index in O(N) time) and you create a knob
+for disabling it in the case that we are already doing something that
+inspects almost-all objects.
+ 
+> The series is structured as follows:
 > 
-> This ensures that we are still running and exercising Git's behavior
-> when forced to generate reverse indexes from scratch.
+>   - A couple of cleanup patches to plug a leak in stage_tmp_packfiles().
+>   - Three patches to enable `pack.readReverseIndex`.
+>   - Another patch to change the default of `pack.writeReverseIndex` from
+>     "false" to "true".
+>   - A final patch to enable the test suite to be run in a mode that does
+>     not use on-disk ".rev" files.
 
-I don't think this is true because you remove the environment
-variable from the following test. Replacing the line with
-GIT_TEST_NO_WRITE_REV_INDEX=1 would keep us testing the from-scratch
-case as a side-effect in other tests.
-
-> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> index b098e10f52..e9fbfb6345 100755
-> --- a/ci/run-build-and-tests.sh
-> +++ b/ci/run-build-and-tests.sh
-> @@ -27,7 +27,6 @@ linux-TEST-vars)
->  	export GIT_TEST_MULTI_PACK_INDEX=1
->  	export GIT_TEST_MULTI_PACK_INDEX_WRITE_BITMAP=1
->  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-> -	export GIT_TEST_WRITE_REV_INDEX=1
->  	export GIT_TEST_CHECKOUT_WORKERS=2
->  	;;
+This was an easy series to read. I applied the patches locally and poked
+around in the resulting code as I went along. This led to a couple places
+where I recommend a few changes, including a new patch that wires
+repository pointers through a few more method layers.
 
 Thanks,
 -Stolee
