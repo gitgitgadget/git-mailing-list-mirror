@@ -2,224 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63A17C76196
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 03:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07FFDC76196
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 07:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229941AbjDKDB0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 10 Apr 2023 23:01:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47686 "EHLO
+        id S230071AbjDKHmT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 03:42:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229909AbjDKDBO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2023 23:01:14 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16BF72D49
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 20:01:12 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id w21so5967229wra.4
-        for <git@vger.kernel.org>; Mon, 10 Apr 2023 20:01:12 -0700 (PDT)
+        with ESMTP id S230048AbjDKHmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 03:42:17 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CEE9273D
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 00:42:11 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id o2so7039806plg.4
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 00:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681182070;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1681198930; x=1683790930;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fa0v754i0Q2U43qAMyRL0LkHJXVVJNPDNxKpJw0tJis=;
-        b=ZlvYCk1GAfxBE+SFz/q0UhxLEziTxRkYhUTSipUEoDOzvBx48KE+VXB0ZRPpcAha45
-         4U1SR/p+4QYdjpgEWUPmRJcjGHmyfOEwuc1WY5a22pX0ftjVteSxZEzWXeaZwo1/8nJ9
-         /og9pX2SYQKdoH5iZbzR7Lssa4TBgcmLwMgBXrdva7WwgjpbR+VXKO+ZKy41MuwP/qZr
-         QKxC9Hy8FZ7OTU9C77sQHDVe0a08Xer5rz/BlHNqIpphetBs3affhnimfTpqu2SysLKH
-         qH2CE5LhY1TZmuCCmRwM21xtsp7VuixcRe8PAes5bW9MOYjrLriPremgl0KTT7Xsof+e
-         Bf2A==
+        bh=mmEixFEbuFKg9g3y20MSsLUyDC88nhcrDNyrneW0yhM=;
+        b=Qc8n0euejN+DeQjK5f+LpDhJdrvL4ylFr7jZ8wv11bIRhcr8nxw2g3P/bUOWuD0RRR
+         VfRSsRirKbR7DRNM7RCUcDjMzfaQODQB3qRadRZPov+2BBrU6Pzjsbzyf9LfXW1Y74T2
+         +ueq02kQzD31N4mEfz2IUCDlM9/o3692Fdek8m0DlymyVICT6O4dG8F/ulrOJLmJb942
+         9i2BPmMow7Bnueuj7OneKvFmaQV/pVKqSG4S51ib/YRLCuz+aV6fULz+j1S4G9+YftUi
+         mtperHC6hxY6EDAZmMvK5y6Uc+jg/6bM9OHecGxh7YkEN+Fu7DWtJO3yb6ChkxzDn1Ep
+         rIZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681182070;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1681198930; x=1683790930;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fa0v754i0Q2U43qAMyRL0LkHJXVVJNPDNxKpJw0tJis=;
-        b=Pn+LtlfS1zZb1Fho71VYq8OUKcaXeJPYfEfSoJplc9YcQGUTFwpMgNUwDwCeWYljO3
-         qSzdrIohPSGngykcwuPnIynWRqM2/gl/YOIabM4k/6XG8ikYQPiJxDOSqH+l+zonPMN4
-         Y3DYAdhb5Ee5z0qFdiby5csOJ/majsu5TKCicK4SnbBZAuXUbogeU7r3k3P39PU/9UXh
-         FSaEHvShMmppcsjBk9iambVNABRKZy2n4tudIDgHe8aYQCn83GEc5ny7yVi8i0WxnFpO
-         cWR0EvEKFVhTraudqTyE2JKULwkMnBE+9O4kGXbPcZxbPwC2XTnoWhcp6pfaSFIaZOyL
-         rkuA==
-X-Gm-Message-State: AAQBX9cYGgxw0df/zindCplS5qf7pO0ogObDE7atwM9oiUsZF3c3m9Bi
-        lHrJ8mBD3/VWOXiQNAJW/yJP5Nek/MY=
-X-Google-Smtp-Source: AKy350Y8Cp60ZdA6PejJo+2rWANNc6h0z8xJhaNEUN9q0mpFynJcV/YLU3NQDbm+94ny+oN0l/Nitg==
-X-Received: by 2002:adf:e710:0:b0:2f2:7a7e:6ba with SMTP id c16-20020adfe710000000b002f27a7e06bamr1904814wrm.15.1681182070445;
-        Mon, 10 Apr 2023 20:01:10 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z16-20020a5d4c90000000b002cf1c435afcsm13228666wrs.11.2023.04.10.20.01.09
+        bh=mmEixFEbuFKg9g3y20MSsLUyDC88nhcrDNyrneW0yhM=;
+        b=rCQk5vdByeoTIjU0Fxe6iFKl9KLRmJG3XjS8ovFP9li0du9MoUX6wvgvrGzIirHOWd
+         S6OsJfU3ngfRNZMllp7JqdVxJdWjmRGAPY99Gh2DKsy7s/Vhu560m4Tv3NR/M5yzeo+f
+         HYSgpZ/eooKhClD1GZAewAmeXJ+tROQoiW0byQA6U1SghwZBcbpaaUemOF1TqguBDE6K
+         D/nCS9fVE0Lh1xJIKrB6hmJxyhrK4fUXFwKH4uJ0wtL+RqLmu8SRxx+RuKYrDv6qiccQ
+         Sb3XqD/T15IVyT2AQR+k6bF7XyLjFqrHJXHohRyeHY77mxvoW5CYDqobzwP2oZUXsx6h
+         z7SA==
+X-Gm-Message-State: AAQBX9cSw2npnWHLlonOdHWPTHBWwchvpe/tAcfTUe4PsEUfWVPIv5jS
+        K5RYJ8ry40Yk3EJDx1NjOhk9Nv7Ze4Y=
+X-Google-Smtp-Source: AKy350ZItZpble1fDgNC9oP7AQQ4QhY8fEFoFpdUsVyXfCLtG+oiDK2fTh7re0PfCCJZqTslMBRSow==
+X-Received: by 2002:a17:903:22ce:b0:1a0:f8ba:ae55 with SMTP id y14-20020a17090322ce00b001a0f8baae55mr20073990plg.7.1681198930366;
+        Tue, 11 Apr 2023 00:42:10 -0700 (PDT)
+Received: from iron-rod.hsd1.ca.comcast.net ([2601:646:9e80:a0b0::f6a9])
+        by smtp.gmail.com with ESMTPSA id az4-20020a170902a58400b001a1deff606fsm8992820plb.125.2023.04.11.00.42.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Apr 2023 20:01:10 -0700 (PDT)
-Message-Id: <f3c5ad2a2be24fcbe86026e4550e90bd7fc186ae.1681182062.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1509.v3.git.1681182060.gitgitgadget@gmail.com>
-References: <pull.1509.v2.git.1680571348.gitgitgadget@gmail.com>
-        <pull.1509.v3.git.1681182060.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 11 Apr 2023 03:00:42 +0000
-Subject: [PATCH v3 05/23] treewide: be explicit about dependence on
- oid-array.h
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Tue, 11 Apr 2023 00:42:08 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Calvin Wan <calvinwan@google.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>, Calvin Wan <calvinwan@google.com>
+Subject: [PATCH v3 06/23] treewide: be explicit about dependence on mem-pool.h
+Date:   Tue, 11 Apr 2023 00:41:47 -0700
+Message-Id: <20230411074204.3024420-1-newren@gmail.com>
+X-Mailer: git-send-email 2.40.0.172.g72fe1174621
+In-Reply-To: <pull.1509.v3.git.1681182060.gitgitgadget@gmail.com>
+References: <pull.1509.v3.git.1681182060.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 Acked-by: Calvin Wan <calvinwan@google.com>
 ---
- builtin/bisect.c     | 1 +
- builtin/fetch.c      | 1 +
- builtin/index-pack.c | 1 +
- builtin/log.c        | 1 +
- cache.h              | 1 -
- commit-graph.c       | 1 +
- diff.c               | 1 +
- merge-ort.c          | 1 +
- read-cache.c         | 1 +
- ref-filter.c         | 1 +
- upload-pack.c        | 1 +
- 11 files changed, 10 insertions(+), 1 deletion(-)
+ builtin/checkout.c        | 1 +
+ cache.h                   | 1 -
+ merge-ort.c               | 1 +
+ read-cache.c              | 1 +
+ split-index.c             | 1 +
+ t/helper/test-mergesort.c | 1 +
+ 6 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 26f07357a03..7dc175c6570 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -9,6 +9,7 @@
- #include "dir.h"
- #include "strvec.h"
- #include "run-command.h"
-+#include "oid-array.h"
- #include "prompt.h"
- #include "quote.h"
- #include "revision.h"
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index f2b80987751..e0936629213 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -12,6 +12,7 @@
- #include "refspec.h"
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 422ea768404..65988fd8a3b 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -15,6 +15,7 @@
+ #include "hook.h"
+ #include "ll-merge.h"
+ #include "lockfile.h"
++#include "mem-pool.h"
+ #include "merge-recursive.h"
  #include "object-store.h"
- #include "oidset.h"
-+#include "oid-array.h"
- #include "commit.h"
- #include "builtin.h"
- #include "string-list.h"
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index ceb0f120ede..5adfb2521cd 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -19,6 +19,7 @@
- #include "packfile.h"
- #include "pack-revindex.h"
- #include "object-store.h"
-+#include "oid-array.h"
- #include "replace-object.h"
- #include "promisor-remote.h"
- #include "setup.h"
-diff --git a/builtin/log.c b/builtin/log.c
-index 2ce645eee97..094897df236 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -20,6 +20,7 @@
- #include "revision.h"
- #include "log-tree.h"
- #include "builtin.h"
-+#include "oid-array.h"
- #include "tag.h"
- #include "reflog-walk.h"
- #include "patch-ids.h"
+ #include "parse-options.h"
 diff --git a/cache.h b/cache.h
-index 5f1279454a8..6eac3134a22 100644
+index 6eac3134a22..66705dd469e 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -11,7 +11,6 @@
- #include "path.h"
- #include "pathspec.h"
+@@ -13,7 +13,6 @@
  #include "object.h"
--#include "oid-array.h"
  #include "repository.h"
  #include "statinfo.h"
- #include "mem-pool.h"
-diff --git a/commit-graph.c b/commit-graph.c
-index 1bf673b1345..fe9a8b2342f 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -12,6 +12,7 @@
- #include "hash-lookup.h"
- #include "commit-graph.h"
- #include "object-store.h"
-+#include "oid-array.h"
- #include "alloc.h"
- #include "hashmap.h"
- #include "replace-object.h"
-diff --git a/diff.c b/diff.c
-index 47c1973a504..89cd0b17da5 100644
---- a/diff.c
-+++ b/diff.c
-@@ -29,6 +29,7 @@
- #include "string-list.h"
- #include "strvec.h"
- #include "graph.h"
-+#include "oid-array.h"
- #include "packfile.h"
- #include "parse-options.h"
- #include "help.h"
+-#include "mem-pool.h"
+ 
+ typedef struct git_zstream {
+ 	z_stream z;
 diff --git a/merge-ort.c b/merge-ort.c
-index ad7367179d9..9b0b184b130 100644
+index 9b0b184b130..1008684fbbc 100644
 --- a/merge-ort.c
 +++ b/merge-ort.c
-@@ -32,6 +32,7 @@
+@@ -31,6 +31,7 @@
+ #include "hex.h"
  #include "entry.h"
  #include "ll-merge.h"
++#include "mem-pool.h"
  #include "object-store.h"
-+#include "oid-array.h"
+ #include "oid-array.h"
  #include "promisor-remote.h"
- #include "revision.h"
- #include "strmap.h"
 diff --git a/read-cache.c b/read-cache.c
-index a744eb89e4e..1b585ce8424 100644
+index 1b585ce8424..4ada6d62b90 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -15,6 +15,7 @@
- #include "refs.h"
- #include "dir.h"
- #include "object-store.h"
-+#include "oid-array.h"
- #include "tree.h"
- #include "commit.h"
+@@ -21,6 +21,7 @@
  #include "blob.h"
-diff --git a/ref-filter.c b/ref-filter.c
-index df84bb71643..1c6174c8aed 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -7,6 +7,7 @@
- #include "refs.h"
- #include "wildmatch.h"
- #include "object-store.h"
-+#include "oid-array.h"
- #include "repository.h"
- #include "commit.h"
- #include "remote.h"
-diff --git a/upload-pack.c b/upload-pack.c
-index 71440c63806..e17545a834a 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -8,6 +8,7 @@
- #include "sideband.h"
- #include "repository.h"
- #include "object-store.h"
-+#include "oid-array.h"
- #include "tag.h"
- #include "object.h"
- #include "commit.h"
+ #include "environment.h"
+ #include "gettext.h"
++#include "mem-pool.h"
+ #include "resolve-undo.h"
+ #include "run-command.h"
+ #include "strbuf.h"
+diff --git a/split-index.c b/split-index.c
+index c98807c655b..5602b74994b 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "alloc.h"
+ #include "gettext.h"
++#include "mem-pool.h"
+ #include "split-index.h"
+ #include "ewah/ewok.h"
+ 
+diff --git a/t/helper/test-mergesort.c b/t/helper/test-mergesort.c
+index 335e5bb3a90..737e0c52358 100644
+--- a/t/helper/test-mergesort.c
++++ b/t/helper/test-mergesort.c
+@@ -1,5 +1,6 @@
+ #include "test-tool.h"
+ #include "cache.h"
++#include "mem-pool.h"
+ #include "mergesort.h"
+ 
+ static uint32_t minstd_rand(uint32_t *state)
 -- 
-gitgitgadget
+2.40.0.172.g72fe1174621
 
