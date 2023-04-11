@@ -2,93 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E16BFC7619A
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 19:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA0A4C76196
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 20:03:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229632AbjDKTOV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 15:14:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54836 "EHLO
+        id S229679AbjDKUDp convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 11 Apr 2023 16:03:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbjDKTOP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 15:14:15 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C3E64C15
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 12:14:05 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id 98e67ed59e1d1-24493a05a62so553517a91.3
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 12:14:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681240445; x=1683832445;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sv13vpRoBTogOEMfKSmMelgvzHGBXczKQaSW/1fKnTE=;
-        b=gR/KfB3s9dApLJFClwyEAKQFtgTCuA0t1I4WxfAiif3IPavzpZPCXfN8T3C3dUCsF/
-         xQ+vSL8TCIlU8lMrL61wsVE/2AUmrEckzxXr8CYgx9nBnlZ4gDhHPgLyr+P4sYU51cEh
-         tphlgi3nqyjKnhpzjtPqCSfOo0JBc7T2tty/sBeRamYiyD3YcV/B6EhagsZoBvgWzSak
-         6R5EQDn9+MMNLBv6NaxuSEBFU6j3AnKhU0GvJ29F6/W5qN1qZMnuc4+pnM4FFehNHODi
-         F7RBePLOkt535XycbEM85DYRvEN0JATSihPbLN+8VZWlMiQJKFJ5Mc/AKY6oL17bQR0I
-         /t3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681240445; x=1683832445;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=sv13vpRoBTogOEMfKSmMelgvzHGBXczKQaSW/1fKnTE=;
-        b=MC8ZZpOiaWDRVJ5qZdHXJ3OyMzRJPohUJ8qyU0SVtFIGaDkQMbAKBNbu4eWHtDgFJC
-         dewzr1EcpYvPbqR5xxuZGMrMBTWn8OFAMRY510NJP1eA4XCDKl6Ll+c6mtANWx3m+D1U
-         FgRfPz9yleIceSbtJ5LHGV9tY9Ejmn0jzJ20snA48J8/i5IoWSTlJgO6WpYKZ0mtRfXs
-         zpIe/V0Lv1Z1PVWPxGzXYe8HMK/SPhUt77kY4HFdRJ7nGhL/qc+q5yopXXJ+YoogWxkh
-         aML/nEy6TMd2fTaLXbZPc6zc1KuzFHCU3qw+KN+xdbAHFwjfoAFycUYUgTii3+nurgkL
-         tsyw==
-X-Gm-Message-State: AAQBX9eAtPu1MHN/F3x3+nkIYhav4pHoKtHIuyNajjMgDy0JEgZGtpuv
-        M/G5Zr9eIslDWY8LIDENbJk=
-X-Google-Smtp-Source: AKy350YN1IKA6OUNzYfxfxHgyragvxiYA1oI3vsXkINCQrEbG4dhaWUpUcu+ehbL8smYhGIiYaP3WQ==
-X-Received: by 2002:aa7:962c:0:b0:635:e961:3350 with SMTP id r12-20020aa7962c000000b00635e9613350mr3947879pfg.19.1681240444822;
-        Tue, 11 Apr 2023 12:14:04 -0700 (PDT)
-Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id t13-20020a62ea0d000000b006363690dddasm5005343pfh.5.2023.04.11.12.14.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 12:14:04 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Robin Jarry" <robin@jarry.cc>
-Cc:     "Phillip Wood" <phillip.wood123@gmail.com>, <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "Tim Culverhouse" <tim@timculverhouse.com>,
-        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
-        "Bagas Sanjaya" <bagasdotme@gmail.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>,
-        "Michael Strawbridge" <michael.strawbridge@amd.com>
-Subject: Re: [PATCH] send-email: export patch counters in validate environment
-References: <20230411114723.89029-1-robin@jarry.cc>
-        <79a7c59f-6644-1dad-3b85-fe0ca8beb968@gmail.com>
-        <xmqqbkjubcyc.fsf@gitster.g> <CRU3FHOZIRVM.3N8I4FAZ2RGO5@ringo>
-Date:   Tue, 11 Apr 2023 12:14:03 -0700
-In-Reply-To: <CRU3FHOZIRVM.3N8I4FAZ2RGO5@ringo> (Robin Jarry's message of
-        "Tue, 11 Apr 2023 19:13:19 +0200")
-Message-ID: <xmqqile29qpw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        with ESMTP id S229485AbjDKUDo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 16:03:44 -0400
+X-Greylist: delayed 561 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 11 Apr 2023 13:03:39 PDT
+Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49C0F46A5
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 13:03:39 -0700 (PDT)
+Received: from mors-relay-8201.netcup.net (localhost [127.0.0.1])
+        by mors-relay-8201.netcup.net (Postfix) with ESMTPS id 4PwxPN1Tzdz3tbq
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 21:54:16 +0200 (CEST)
+Authentication-Results: mors-relay-8201.netcup.net; dkim=permerror (bad message/signature format)
+Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
+        by mors-relay-8201.netcup.net (Postfix) with ESMTPS id 4PwxPN0nBwz3tbb
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 21:54:16 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at policy02-mors.netcup.net
+Received: from mx2ee7.netcup.net (unknown [10.243.12.53])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by policy02-mors.netcup.net (Postfix) with ESMTPS id 4PwxPM3tm3z8svV
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 21:54:15 +0200 (CEST)
+Received: from smtpclient.apple (unknown [45.153.183.212])
+        by mx2ee7.netcup.net (Postfix) with ESMTPSA id E03531A0074
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 21:54:10 +0200 (CEST)
+Authentication-Results: mx2ee7;
+        spf=pass (sender IP is 45.153.183.212) smtp.mailfrom=jonas@lophus.org smtp.helo=smtpclient.apple
+Received-SPF: pass (mx2ee7: connection is authenticated)
+From:   Jonas Haag <jonas@lophus.org>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.300.101.1.3\))
+Subject: Infinite loop + memory leak in annotate_refs_with_symref_info
+Message-Id: <39035D34-8548-44B0-BBBB-5C36B3876C4A@lophus.org>
+Date:   Tue, 11 Apr 2023 22:53:59 +0300
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3731.300.101.1.3)
+X-PPP-Message-ID: <168124285127.27024.18266503911800580311@mx2ee7.netcup.net>
+X-Rspamd-Queue-Id: E03531A0074
+X-Spamd-Result: default: False [-5.10 / 15.00];
+        BAYES_HAM(-5.50)[99.99%];
+        MV_CASE(0.50)[];
+        MIME_GOOD(-0.10)[text/plain];
+        FROM_EQ_ENVFROM(0.00)[];
+        MIME_TRACE(0.00)[0:+];
+        ASN(0.00)[asn:208149, ipnet:45.153.182.0/23, country:GR];
+        RCVD_COUNT_ZERO(0.00)[0];
+        RCPT_COUNT_ONE(0.00)[1];
+        TO_DN_NONE(0.00)[];
+        MID_RHS_MATCH_FROM(0.00)[];
+        FROM_HAS_DN(0.00)[];
+        TO_MATCH_ENVRCPT_ALL(0.00)[];
+        ARC_NA(0.00)[]
+X-Rspamd-Server: rspamd-worker-8404
+X-NC-CID: XwC1RsLpiTSo9z2CbTaU64NXHDKA31iKF+zYXwGCKIQ=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Robin Jarry" <robin@jarry.cc> writes:
+Hello!
 
-> It is probably best to let git-send-email out of the picture. Since
-> nothing prevents from sending multiple patch series at once, it may not
-> be possible to determine the proper ordering of all these files. A dumb
-> 1-based counter will be perfectly suitable.
+There is an infinite loop with an accompanying memory leak in annotate_refs_with_symref_info that was introduced in Git 2.28 (I think in commit 2c6a403: “connect: add function to parse multiple v1 capability values”).
 
-As long as the design decision is clearly documented, I am more than
-fine to make it the user's problem ;-) It is a better design between
-the two, as the user knows better what their payload is.
+To reproduce the issue, start Klaus [1] using the --smarthttp option and attempt to clone a repository. git-remote-http will enter an infinite loop.
 
-> I can run the loop twice to determine the count of non-FIFOs and adjust
-> GIT_SENDEMAIL_FILE_TOTAL accordingly.
+I think this is triggered by a bug in Dulwich, the Python Git implementation that Klaus uses. I’m assuming that Dulwich sends some invalid responses that make the Git client go into an infinite loop.
 
-It sounds like a reasonable way out.
+I believe the bug in Git is in connect.c, function parse_feature_value, in the updating of `*offset`: It doesn’t seem to take into account that `feature_list` has already been offset by `*offset`. I believe the update needs to use `*offset +=` instead of `*offset =`. When I make this change, the infinite loop seems to go away, and cloning via Klaus/Dulwich will fail with “invalid index-pack output”. Cloning from github.com works, although I’m not sure if that’s a relevant smoke test in this case.
 
-Thanks.
+Jonas
 
+[1] https://github.com/jonashaag/klaus
