@@ -2,71 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B880BC76196
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 09:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2077CC77B74
+	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 09:31:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229638AbjDKJZI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 05:25:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46034 "EHLO
+        id S229824AbjDKJa3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 05:30:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229578AbjDKJZG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 05:25:06 -0400
+        with ESMTP id S229914AbjDKJaK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 05:30:10 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7912C194
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 02:25:04 -0700 (PDT)
-Received: (qmail 6752 invoked by uid 109); 11 Apr 2023 09:25:03 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B8F33A80
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 02:30:06 -0700 (PDT)
+Received: (qmail 6789 invoked by uid 109); 11 Apr 2023 09:30:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Apr 2023 09:25:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 11 Apr 2023 09:30:05 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5818 invoked by uid 111); 11 Apr 2023 09:25:02 -0000
+Received: (qmail 5846 invoked by uid 111); 11 Apr 2023 09:30:05 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Apr 2023 05:25:02 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 11 Apr 2023 05:30:05 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 11 Apr 2023 05:25:02 -0400
+Date:   Tue, 11 Apr 2023 05:30:05 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
 Subject: Re: [PATCH] date: remove approxidate_relative()
-Message-ID: <20230411092502.GA398350@coredump.intra.peff.net>
+Message-ID: <20230411093005.GB398350@coredump.intra.peff.net>
 References: <f5b9a290-7cec-7a83-660b-e15494d2cdc8@web.de>
  <xmqqjzyjemji.fsf@gitster.g>
  <20230410202536.GE104097@coredump.intra.peff.net>
- <b17e05d5-deda-527f-1587-9f1cd7046a0b@web.de>
+ <xmqqy1mzcus6.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b17e05d5-deda-527f-1587-9f1cd7046a0b@web.de>
+In-Reply-To: <xmqqy1mzcus6.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2023 at 10:52:01PM +0200, René Scharfe wrote:
+On Mon, Apr 10, 2023 at 02:05:45PM -0700, Junio C Hamano wrote:
 
-> Am 10.04.23 um 22:25 schrieb Jeff King:
-> >
-> > I'm not sure of the least-confusing way to address a single hunk, though
-> > (by line number is one option, by hunk-number within the patch is
-> > another). I suspect the best workflow for a user would be to
-> > interactively say "show me more context for this hunk". Some viewers
-> > have support for that (e.g., GitHub's web view of a diff). But handling
-> > that for a one-shot CLI program is tricky, not to mention then feeding
-> > it back to format-patch to generate the output you want to send. :)
+> Jeff King <peff@peff.net> writes:
 > 
-> So basically you propose a format-patch --interactive mode that shows
-> each hunk and allows extending its context.  This could work.  For hunks
-> that span multiple screens it might be a bit iffy -- or perhaps not, if
-> the scrollback buffer of the terminal or console is big enough.
+> > Cute. It feels like this only goes half-way, though. You really want
+> > per-hunk configurable context. This particular patch was just lucky that
+> > there was only one hunk in the date.c file.
+> 
+> "-U16" extends the context lines in both directions by the same
+> number of lines, but most likely you need to extend asymmetrically.
 
-Well, less proposing and more thinking out loud. :)
+Good point. This is sort of like grep's "-C" along with "-A" and "-B".
+All of which I generally find somewhat awkward. :)
 
-One thing that I think would make it awkward is that some people (well,
-me at least) tend to show diffs repeatedly. So I might look at a diff
-several times, and then even run format-patch multiple times as part of
-my workflow of sending it. Interactively expanding the diff each time,
-and then losing that result, would be annoying.
+> In René's patch, for example, much of the body of approxidate_str()
+> is visible in the precontext of the hunk to remove
+> approxidate_relative(), but the body of that function is irrelevant.
+> What he wanted to show was the body of approxidate_careful() and the
+> size of that function is where the -U16 came from.
+> 
+> Instead, imagine --extra-context='<range>:<path>' were the way to
+> tell Git to include the specified range of lines in the post context
+> even though they may not have been modified.  Then René's patch
+> could have been produced with
+> 
+>     $ git format-patch -1 \
+>       --extra-context='/^timestamp_t approxidate_careful/,/^}$/:date.c'
+> 
+> and would have shown 3 lines of precontext before the removed
+> approxidate_relative(), plus the unchanged approxidate_careful()
+> function in full in the postcontext.
 
-So an interactive tool that somehow output "oh, and here are some
-parameters you can feed back to get the same view" would be my ideal.
+Ooh, I like that very much. In that sense it really feels like an
+extension of --function-context. Would the regexes be searches starting
+from the edge of some context (as they more or less are under the hood
+for function context), or would you search within the whole file for
+ranges (and then presumably use them when a hunk's context is adjacent
+to or overlaps a range)?
+
+If the latter, I guess you could also allow both absolute and relative
+line numbers, similar to how "-L" accepts range input.
 
 -Peff
