@@ -2,86 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83751C7619A
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 21:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B829FC7619A
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 21:16:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229603AbjDLVQX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 17:16:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45904 "EHLO
+        id S229721AbjDLVQb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 17:16:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229516AbjDLVQW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 17:16:22 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9FC5244
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 14:16:21 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1a6715ee82fso2330555ad.1
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 14:16:21 -0700 (PDT)
+        with ESMTP id S229717AbjDLVQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 17:16:29 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 763F26E96
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 14:16:28 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id g3so14257016pja.2
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 14:16:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681334181; x=1683926181;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ew7jnduykgCNiXLA2hSD8gWlQ4y+fLcpr+dZ07PKkdo=;
-        b=s5NjQoGDDprsl2X2ljEZP/HlVoo5oQX3Zeqt5vuPgHiOEkdsYeF+cCZXcWA0Q95jVD
-         GXb4K9opjsxKDC6r+bzRQnPZOdhfxyl6Lcjxy9J9ubKkjpnx9acu2m88XrgdT7hDwWbO
-         CVL0dIvIPDz9nEPkMuYdK41fHs0oypYqHi19c9il0MYgMoQWkOBlSQTvkIC8rki8GXOV
-         2MzKtYBEsEEMq8zdU+lKvtInoelN3jrphJGYzYgDNeSpa8FnCkHFzu+F7W9DxAz76D7o
-         Od4X+VamGZ+HEw15KPcjZAhCsM4gn2pvn9bDkMP2hW8OPa1nnF7XFWxqKrx/RSoY8ys3
-         QR9g==
+        d=gmail.com; s=20221208; t=1681334188; x=1683926188;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=0OGFtlbeVdhJgg5cpCl7ZZGXmILv83eL0vYf4jWQzs8=;
+        b=rvQmmT1nGU4AS0f5o/SinJ2lY4Z6p1wtfzV2u2RI00GqGCmrPttENH92J82KlcyITO
+         rq1iRjJGUi1u8YvJIWfoXressxxt5vgvw29HM4F1Nnvdodj//jOhCO4WRINVkgY3VrWL
+         AsowaDEp/294Gan1mvNKXyAqz9eAzouK8D+v1PTJt4LAT26L+dGIHQFDgmYgEm7PYPmO
+         B1+l45U3lV12Jmcv3ZDlZrSUCCW1BN9RWxBsLij6WOjoBjwA7wCvHR+AeGl9q20HNAcC
+         Mvx5SiaWhXCEkrXWBYsTuv37M3dXzda+dxGezslOFI3/MA1+RRT7iHZNyrLTEt/doM2v
+         OUuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681334181; x=1683926181;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ew7jnduykgCNiXLA2hSD8gWlQ4y+fLcpr+dZ07PKkdo=;
-        b=KDFE7RdccUHyecjhLti5yi0zJIxFEaxTFVNtN2B0fH0KXVTKopIgpH/dwwLdaGsP/S
-         uIGBcM2Cff66sIVfA5Gy6/UQyupojUM+vMYvi4B3LdBQrSgs0NtY9a4HsKohhbLvX9sx
-         pd43lZFoip4tZB0HsLISIf+xiZmDHhah2cQx/TMTz+Nmhg+RVvZqg7rGHBnBK8Hu4d0c
-         uy5w1jf3jA/dUa8pHZDSu/s9kgVRVtq+vRf4vscMkhkv4SDbDILY1mSNHuYqjBjg4GrU
-         JL39GwXHKwlaMIw493iuGdkXeiaGEtWrxLRZAVh/jIYn474YlOYsNnm9Dka8wLBJOGu1
-         2i5g==
-X-Gm-Message-State: AAQBX9eTmdZnJqn9EvOmljSi7lFYCIq+/gc8a20Zm/IkHNU/ksX+A8hv
-        n34Xj7yzBWsRQ8lwMrMgUXQ=
-X-Google-Smtp-Source: AKy350YyVFf51K0K48jsEy+7h3SgWFtxxtTZydWQTCGG4Nf+3jXkk6x2gClrVYO6rqXyCuQdhO/4xw==
-X-Received: by 2002:a05:6a00:190b:b0:63a:e097:26b with SMTP id y11-20020a056a00190b00b0063ae097026bmr323980pfi.13.1681334180851;
-        Wed, 12 Apr 2023 14:16:20 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681334188; x=1683926188;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0OGFtlbeVdhJgg5cpCl7ZZGXmILv83eL0vYf4jWQzs8=;
+        b=UKqn73eiiTZYk1/eiRda62dL8xHa41ynM1NvAFhaFEkz/5UpONo8npWJQZXfcCkeje
+         tDJkirtDhU7T29DC9dzUul52G33ndJ9ujkhhgnOjscCQmODwnwLhNt+MYrb4cfcU/mXS
+         65KpJtu8YsejDSwuq+58EDnFIEbmrDsg9Hr34WneCvNW9hzJzAq8F1OIaJuAmQx7IWol
+         mzco1TG61xkMWa5M+uODaptqbyxHKX1/c0TiyRzTbjsY69GS+jNUkI98QPrMYfl/iIr1
+         mMRNmhXnoV3vYC4saTqXlfJar/0qZwqaDEakaM4wjFwp4k0hET4wl8EtK72zk2m21vpq
+         sSFg==
+X-Gm-Message-State: AAQBX9cyvBR3WsXAgZZN5RlWpZYZJqYKrY8LhABgdc9nDex7jaVxfIAQ
+        NWEOR7LbsQDlBgRdVxzCkBY=
+X-Google-Smtp-Source: AKy350ap0EggyYiPzHtTM16SjFdteGrgOwh0bpTIVKshaQR7mwROE0lw2dbM9KedPmk0me0nJuZJNw==
+X-Received: by 2002:a05:6a20:4e23:b0:d5:1863:fe5f with SMTP id gk35-20020a056a204e2300b000d51863fe5fmr4290100pzb.2.1681334187835;
+        Wed, 12 Apr 2023 14:16:27 -0700 (PDT)
 Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
-        by smtp.gmail.com with ESMTPSA id b8-20020aa78108000000b0062d7c0dc4f4sm12058596pfi.80.2023.04.12.14.16.20
+        by smtp.gmail.com with ESMTPSA id x25-20020a056a00271900b00636caef0714sm7145022pfv.144.2023.04.12.14.16.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 14:16:20 -0700 (PDT)
+        Wed, 12 Apr 2023 14:16:27 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
 Cc:     git@vger.kernel.org, adlternative@gmail.com,
         christian.couder@gmail.com
-Subject: Re: [PATCH v3 0/4] doc: interpret-trailers: don't use deprecated
- config
+Subject: Re: [PATCH v3 2/4] doc: interpret-trailers: use input redirection
 References: <cover.1680548208.git.code@khaugsbakk.name>
         <cover.1681326818.git.code@khaugsbakk.name>
-Date:   Wed, 12 Apr 2023 14:16:19 -0700
-In-Reply-To: <cover.1681326818.git.code@khaugsbakk.name> (Kristoffer
-        Haugsbakk's message of "Wed, 12 Apr 2023 21:52:11 +0200")
-Message-ID: <xmqqr0so7qe4.fsf@gitster.g>
+        <12f7b10462184cbac884859e91d7b45e021041ee.1681326818.git.code@khaugsbakk.name>
+Date:   Wed, 12 Apr 2023 14:16:27 -0700
+Message-ID: <xmqqjzyg7qdw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
 
-> Replace deprecated `command` with `cmd` (patch 3). While visiting this
-> file also:
->
-> • rewrite heredoc examples to use files which are shown with
->   cat(1) (patch 1);
-> • use input redirection instead of using cat(1) piped into `git
->   interpret-trailers` (patch 2); and
-> • fix an example that didn’t work properly (patch 4).
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
 
-This was a pleasant read.  I had small nits here and there but
-overall the series is very well crafted.
+Perhaps explain why it is a good idea in the body of the message?
 
-Will queue.  Thanks.
+    Instead of "cat"ting a single file into a pipe, redirect from
+    the file to the standard input of the command on the downstream
+    side of the pipe.  This is more straight-forward, saves one
+    extra process, and often makes the line shorter.
+
+or something like that.
