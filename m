@@ -2,96 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01FBDC7619A
-	for <git@archiver.kernel.org>; Tue, 11 Apr 2023 23:59:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8170BC7619A
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 00:54:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbjDKX7M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 19:59:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46640 "EHLO
+        id S229521AbjDLAyF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 11 Apr 2023 20:54:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229633AbjDKX7L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 19:59:11 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02BF21BE8
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 16:59:11 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-54f6a796bd0so74592057b3.12
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 16:59:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112; t=1681257550; x=1683849550;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=w165FbynC8FcmF2mN7XAI0phBAkX9pED+y+KguMAnbc=;
-        b=0T13SD2KQR2m8FTxDwUg7OhUVuxU9YRL+LyDvSPqy7f5nquoPTJymeRrdGLaIOVnY5
-         hBciCI2xqy2QnAptwg/v0QGar3xrohLdrFyAy8aolaED/vRQMQEGVZGMmEa/LrhEKWZF
-         cU+a7z1oT7u9zKzEL2QvmA8/7LLkXqe8MOYMo+zfS+NVr7GsGkPAHqUfn6TLmCBvsbDn
-         YJLy1aRFkzLE5kH0EOe5bjTuQQx3bzZpOKl6Z2YZbjmJFtJ7e9yz+xJeIYZkPG0Pcc/1
-         5FBhVF9I9kGiRDqkcVnKtZ73piNnOd9amCBsFa+ovFSxMHgUdJQ21gNLEXFZrSCVCWD4
-         Nqgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681257550; x=1683849550;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=w165FbynC8FcmF2mN7XAI0phBAkX9pED+y+KguMAnbc=;
-        b=my5kqllZXf9VDxRXuGzRoiRYRjbpNNXTvzepzeEC+RaChfgehb5KjxtW7aSh3aijXg
-         bA3WVRxt36nC5DVSdtnOHCVQXanxf0PZlaBoe6LPPvobY8+aD5kKJyRQxF3Bqa0R4pBi
-         8GWGXNQCmtx09zYHU2+I0BIBhMDq18g4sOypW2kta6v6Ju8IV+M93Zzq1F7b2+iCMPoe
-         VsrR5Y4SInSk/w/2KY79COEW5j5x2nj9cI7UnOELe6pKAJJj2ZCoukm8pBS3w4DJZ/8m
-         PXR6ME8YjEqhW3OhhqkiSKyOX4MAmH83XYE8ZEVd0MrALT5B5YI2+4RNNfxftZZm57j1
-         cqpw==
-X-Gm-Message-State: AAQBX9c/l2oMPClUPFwAt3BTa3Bk6xFNQLrsY8NA419oPL5u6kqLVnsC
-        53m2PXj3ErO8CdOGxduOiLmPDg==
-X-Google-Smtp-Source: AKy350b6c0CQn2nO0h1avYVHg0EfxiNSk//9/vy5hsh2ZE+w8iuzyCqjrumltBtTAircf8fjCi+gqQ==
-X-Received: by 2002:a0d:ddd6:0:b0:54f:859e:14d0 with SMTP id g205-20020a0dddd6000000b0054f859e14d0mr1474090ywe.36.1681257550156;
-        Tue, 11 Apr 2023 16:59:10 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id cd11-20020a05690c088b00b00545a081849esm2985921ywb.46.2023.04.11.16.59.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Apr 2023 16:59:09 -0700 (PDT)
-Date:   Tue, 11 Apr 2023 19:59:05 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jonas Haag <jonas@lophus.org>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
+        with ESMTP id S229485AbjDLAyD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2023 20:54:03 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5FF359D
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 17:54:02 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 503BF5A569;
+        Wed, 12 Apr 2023 00:54:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1681260841;
+        bh=tPmKWtalccWfg1oPzCgME8Aoujojh38VEskbwbafobk=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=oTyWfznXDj2VK+7N23cUOdJiNRVKcLfpsbykvATncwsnsdcMm77qcYA7rAJ1pVeux
+         f9GXk54DGBjkILl7FeLmw0vtbgUB5xxM5gXPhULxQEk80c4EG/d8+EAr3ztinfSfV6
+         meFuw1brFSm0S1pOYf4cQ5Qw3QPuZtbzZvDlHbo9C5PV9o0YotR33i9nSFO/9u5eas
+         dhOPVqQvJiGGwNtT7CB0sk3QdaNDV4uvvZoyczewa4QypFzJG1rHTyQm7iIgCwjgqi
+         WxfGxPLUmb1Eq8eiJyZQIWxxq/jTp+FqFRnStUc61v/uUG9EOtBealbDp3B+VSCTnB
+         h0shzM3uuEG/CtUX+rwj4uRxsGlBSZdH9lCnUxQ+jUdRGYftxNm29IpPgX7wzXFyhH
+         h31MVu8GABRjk4Hf55X8Ac/2nigAXtj/excd4vvFOLqpRgrUShdYDQoiXuhdV55aZR
+         WixPsL/XNXaqAxtAsFX5nNikRO4+yGaFRA6nbQ5dnv1rDff1R2f
+Date:   Wed, 12 Apr 2023 00:53:59 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jonas Haag <jonas@lophus.org>, git@vger.kernel.org
 Subject: Re: Infinite loop + memory leak in annotate_refs_with_symref_info
-Message-ID: <ZDX0SWLpPQGf9BPl@nand.local>
+Message-ID: <ZDYBJwCuXD6UCI5p@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Taylor Blau <me@ttaylorr.com>, Jonas Haag <jonas@lophus.org>,
+        git@vger.kernel.org
 References: <39035D34-8548-44B0-BBBB-5C36B3876C4A@lophus.org>
  <ZDXCKecwxo36fALm@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="EdlknW2atkLZQk08"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <ZDXCKecwxo36fALm@nand.local>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 04:25:13PM -0400, Taylor Blau wrote:
-> > I believe the bug in Git is in connect.c, function
-> > parse_feature_value, in the updating of `*offset`: It doesn’t seem to
-> > take into account that `feature_list` has already been offset by
-> > `*offset`. I believe the update needs to use `*offset +=` instead of
-> > `*offset =`. When I make this change, the infinite loop seems to go
-> > away, and cloning via Klaus/Dulwich will fail with “invalid index-pack
-> > output”. Cloning from github.com works, although I’m not sure if
-> > that’s a relevant smoke test in this case.
->
-> I'm not sure I understand. Looking at the relevant bits in
-> connect.c::parse_feature_value(), it all seems correct to me, since the
-> beginning of `feature_list` is adjusted by the current value of
-> `*offset`.
 
-Oops. This was exactly[1] the problem as you suggested, I was just
-thinking about it backwards. When we write into `*offset`, we need to
-take into account that `feature_list` has already been moved forward by
-`*offset`.
+--EdlknW2atkLZQk08
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Obviously the discussion can continue below [1], but just wanted to
-correct my wrong here and acknowledge that you were absolutely right in
-your original report.
+On 2023-04-11 at 20:25:13, Taylor Blau wrote:
+> Hi Jonas,
+>=20
+> On Tue, Apr 11, 2023 at 10:53:59PM +0300, Jonas Haag wrote:
+> > Hello!
+> >
+> > There is an infinite loop with an accompanying memory leak in
+> > annotate_refs_with_symref_info that was introduced in Git 2.28 (I
+> > think in commit 2c6a403: =E2=80=9Cconnect: add function to parse multip=
+le v1
+> > capability values=E2=80=9D).
+>=20
+> I'm not familiar with Klaus and don't have it installed, but a couple of
+> questions: were you able to reproduce this result with any other forges
+> or tools, and were you able to confirm that 2c6a403 is the culprit via a
+> bisection?
+>=20
+> In case the answer to the latter question is "yes", I cc'd brian carlson
+> on this thread, since they are the original author of that patch.
 
-Thanks,
-Taylor
+I may be the author of the patch, but I honestly don't remember much
+about that code except that it was a bear to write, and I am honestly
+not terribly surprised that it came out less than perfect.  I do
+apologize for the buggy code, though.
 
-[1]: https://lore.kernel.org/git/20230411215845.GA678138@coredump.intra.peff.net/
+It looks like Peff has come up with a patch downthread, and a test even,
+which I think will probably fix the problem, so I'll refrain from
+sending one myself for now.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--EdlknW2atkLZQk08
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZDYBJwAKCRB8DEliiIei
+gVMbAPsHhfYgNl6KpyTVwCn+yBaNfrzSJ/hfEqIser/RqvxytgD8C2JmsYDymVKh
+kZBjmfg0EIDg3zD3uTJVOq3J7pSEQQw=
+=EksE
+-----END PGP SIGNATURE-----
+
+--EdlknW2atkLZQk08--
