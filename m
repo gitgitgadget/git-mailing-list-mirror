@@ -2,247 +2,220 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3F84C77B6E
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 09:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87294C77B6E
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 09:57:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229586AbjDLJyr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 05:54:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41248 "EHLO
+        id S230062AbjDLJ47 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 05:56:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230176AbjDLJyp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 05:54:45 -0400
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::222])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB427690
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 02:54:39 -0700 (PDT)
-Received: (Authenticated sender: robin@jarry.cc)
-        by mail.gandi.net (Postfix) with ESMTPSA id DE3514000D;
-        Wed, 12 Apr 2023 09:54:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
-        t=1681293278;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=70tgvnJ4Rg8E1gemWXnY1Z+M755c+LOujRrvtfQw9fo=;
-        b=eAW9QAigSnaC2SXdM8SLr5xUeyl2r0l1l1AXf+XXLTYaBttVff9WA4yK2weMWlPxX6H2IL
-        3rV6eiYl4QxAbOhHjVRJpw3wB0jumTQlU4DpHR/d2UetkaAlt+ULGjS43vGjxSm8smqo7o
-        v0nNYE8TVx5ITPySwls1lNoKLEaLn8r89MZMtOB1Ni6x4pEGov3hl11s6yLLwAseEZ6was
-        HZfCwAptM7qZJiG+TWsQOE97VlV77VZtoSjmQYqzYxZrVpCHIoNDjjq0ME7izyW+gySzFj
-        8ckKxyxhVrTBKpG0vdZnKiJJfPWCnZQeZgrZvv92Uh4w6+34X/arY7FWoMxN2Q==
-From:   Robin Jarry <robin@jarry.cc>
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Tim Culverhouse <tim@timculverhouse.com>,
-        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Michael Strawbridge <michael.strawbridge@amd.com>,
-        Robin Jarry <robin@jarry.cc>
-Subject: [PATCH v2] send-email: export patch counters in validate environment
-Date:   Wed, 12 Apr 2023 11:54:34 +0200
-Message-Id: <20230412095434.140754-1-robin@jarry.cc>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230411114723.89029-1-robin@jarry.cc>
-References: <20230411114723.89029-1-robin@jarry.cc>
+        with ESMTP id S229485AbjDLJ45 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 05:56:57 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A09B2728A
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 02:56:53 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id i20so14740325ybg.10
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 02:56:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681293412; x=1683885412;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZRWKy4ea2/o0Lhl8h2lRKkYgfshp2v+l2+IQs8qLJYU=;
+        b=poxubYJvRhwPyNNCwS+H3M6s80yMTRw6AyPf70Yw8P41bgDDl2PLb/pRiaDyzoiQUl
+         bXzNEmwnhdh4FBuVqXE8d7a29/Fe4thE6q4avG0eZULO0tnux2ckqbXMYOFsaLaoQf+3
+         aTW1EvQa2ocNVelRtJdUU+0He7q4iqhxZRfUdq5JTPZg8Ap23S+7pPYzNPY9tGzjCy11
+         nbHxWbE/a4NHILwym96X8BTf8R6vNEREmOQLG/qxDedk60+sRnlKRLrziS2gotrO9PaY
+         tcVzKaBX/C5RaJreUxxQCbcfori3TaBOLyc02YEL9l4lDRzkrMv4f+G7P+QYL4KISaE4
+         A/CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681293412; x=1683885412;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZRWKy4ea2/o0Lhl8h2lRKkYgfshp2v+l2+IQs8qLJYU=;
+        b=gBMVo9oEFNFGnrdiPCKuOeMhzo2ekmU72qexenxf0WpzTvJ4KE7YLpwydBFMW4x0v3
+         mT3d7LB7O0h+LK10t4aKa2zrP/vm/fFi2/IK9T/rway1ABzoc8OsV68NvLbOFCQWS1Xs
+         PA94VIM4EJMJIiM7R3au6ZDjmc1QBy2phanPXGa+frsIWGOav+IcnD4Sz8PF066/4S3Q
+         GulIRtN4w+6SKVyLSlOuQOjOnt2dGw7JbcZ0RyfGSkl5MGu4sA3wMOP1lgbx4iwc1QvT
+         zrs7o5gm34UpJyQ6r3LBM0h5XsWOlec2OjPJyjgOxY4zvxzT+OfEeQ52IpMLhzfAe5ye
+         hLgQ==
+X-Gm-Message-State: AAQBX9fij0l4buJRWpo78hM8tISoIEkS2tJ9lnMjhwr0guuq1FCE53cn
+        t2h/euYACpa6CAfaV5N3ZSBNB0BUv6ZVo4GCcs4qqFXvnCaoTsr5
+X-Google-Smtp-Source: AKy350Z24PKo1DXlhcBZG5tK7bAiK9vehPYOkxWkW2mQIXynBW6Nnbf6fqRASVhbHoQlWHlwrEKYxTSN5CijDuUkbP4=
+X-Received: by 2002:a25:ca05:0:b0:b8e:efd8:f2c with SMTP id
+ a5-20020a25ca05000000b00b8eefd80f2cmr1603481ybg.1.1681293412609; Wed, 12 Apr
+ 2023 02:56:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAOLTT8RTB7kpabN=Rv1nHvKTaYh6pLR6moOJhfC2wdtUG_xahQ@mail.gmail.com>
+ <xmqqy1n3k63p.fsf@gitster.g> <CAOLTT8SXXKG3uEd8Q=uh3zx7XeUDUWezGgNUSCd1Fpq-Kyy-2A@mail.gmail.com>
+ <ZDIUvK/bF7BFqX5q@nand.local> <CAOLTT8RbU6G67BtE9fSv4gEn10dtR7cT-jf+dcEfhvNhvcwETQ@mail.gmail.com>
+ <20230410201414.GC104097@coredump.intra.peff.net> <CAOLTT8T9pJFr94acvUo-8EYriST1gOAkXaDZBxHk54o=Zm5=Sg@mail.gmail.com>
+ <20230412074309.GB1695531@coredump.intra.peff.net>
+In-Reply-To: <20230412074309.GB1695531@coredump.intra.peff.net>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Wed, 12 Apr 2023 17:57:02 +0800
+Message-ID: <CAOLTT8Rw796zxMYxg5+nx8+YoQVnfy=nPXH8Aq0j0Cw+GLT1rA@mail.gmail.com>
+Subject: Re: [Question] Can git cat-file have a type filtering option?
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>, johncai86@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When sending patch series (with a cover-letter or not)
-sendemail-validate is called with every email/patch file independently
-from the others. When one of the patches depends on a previous one, it
-may not be possible to use this hook in a meaningful way. A hook that
-wants to check some property of the whole series needs to know which
-patch is the final one.
+Jeff King <peff@peff.net> =E4=BA=8E2023=E5=B9=B44=E6=9C=8812=E6=97=A5=E5=91=
+=A8=E4=B8=89 15:43=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Tue, Apr 11, 2023 at 10:09:33PM +0800, ZheNing Hu wrote:
+>
+> > > So reducing the size of the actual --batch printing may make the
+> > > relative cost of using multiple processes much higher (I didn't apply
+> > > your --type-filter patches to test myself).
+> > >
+> >
+> > You are right. Adding the --unordered option can avoid the
+> > time-consuming sorting process from affecting the test results.
+>
+> Just to be clear: it's not the cost of sorting, but rather that
+> accessing the object contents in a sub-optimal order is much worse (and
+> that sub-optimal order happens to be "sorted by sha1", since that is
+> effectively random with respect to the contents).
+>
 
-Expose the current and total number of patches to the hook via the
-GIT_SENDEMAIL_PATCH_COUNTER and GIT_SENDEMAIL_PATCH_TOTAL environment
-variables so that both incremental and global validation is possible.
+Okay, thanks for correcting me. Reading the packfile in SHA1 order is
+actually a type of random read, and it should cause additional overhead.
 
-Sharing any other state between successive invocations of the validate
-hook must be done via external means. For example, by storing it in
-a git config sendemail.validateWorkdir entry.
+> > time git cat-file --unordered --batch-all-objects \
+> > --batch-check=3D"%(objectname) %(objecttype)" | \
+> > awk '{ if ($2 =3D=3D "blob") print $1 }' | git cat-file --batch > /dev/=
+null
+> >
+> > 4.17s user 0.23s system 109% cpu 4.025 total
+> >
+> > time git cat-file --unordered --batch-all-objects --batch
+> > --type-filter=3Dblob >/dev/null
+> >
+> > 3.84s user 0.17s system 97% cpu 4.099 total
+> >
+> > It looks like the difference is not significant either.
+>
+> OK, good, that means we can probably not worry about it. :)
+>
+> > > In general, I do think having a processing pipeline like this is OK, =
+as
+> > > it's pretty flexible. But especially for smaller queries (even ones t=
+hat
+> > > don't ask for the whole object contents), the per-object lookup costs
+> > > can start to dominate (especially in a repository that hasn't been
+> > > recently packed). Right now, even your "--batch --type-filter" exampl=
+e
+> > > is probably making at least two lookups per object, because we don't
+> > > have a way to open a "handle" to an object to check its type, and the=
+n
+> > > extract the contents conditionally. And of course with multiple
+> > > processes, we're naturally doing a separate lookup in each one.
+> > >
+> >
+> > Yes, the type of the object is encapsulated in the header of the loose
+> > object file or the object entry header of the pack file. We have to rea=
+d
+> > it to get the object type. This may be a lingering question I have had:
+> > why does git put the type/size in the file data instead of storing it a=
+s some
+> > kind of metadata elsewhere?
+>
+> It's not just metadata; it's actually part of what we hash to get the
+> object id (though of course it doesn't _have_ to be stored in a linear
+> buffer, as the pack storage shows).
 
-Add a sample script with placeholder validations.
+I'm still puzzled why git calculated the object id based on {type, size, da=
+ta}
+ together instead of just {data}?
 
-Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Robin Jarry <robin@jarry.cc>
----
+> But for loose objects, where would
+> such metadata be? And accessing it isn't too expensive; we only zlib
+> inflate the first few bytes (the main cost is in the syscalls to find
+> and open the file).
+>
 
-Notes:
-    v1 -> v2:
-    
-    * Added more details in documentation.
-    * Exclude FIFOs from COUNT/TOTAL
-    * Only set TOTAL once.
-    * Only unset COUNT/TOTAL once.
-    * Add sample hook script.
+I may not have a lot of experience with this here. It looks like I should
+go ahead and do some performance testing to compare the cost of searching
+and opening loose objects v.s reading and inflating loose objects.
 
- Documentation/githooks.txt                 | 22 ++++++
- git-send-email.perl                        | 17 ++++-
- templates/hooks--sendemail-validate.sample | 84 ++++++++++++++++++++++
- 3 files changed, 122 insertions(+), 1 deletion(-)
- create mode 100755 templates/hooks--sendemail-validate.sample
+> For packed object, it effectively is metadata, just stuck at the front
+> of the object contents, rather than in a separate table. That lets us
+> use the same .idx file for finding that metadata as we do for the
+> contents themselves (at the slight cost that if you're _just_ accessing
+> metadata, the results are sparser within the file, which has worse
+> behavior for cold-cache disks).
+>
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 62908602e7be..c8e55b2613f5 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -600,6 +600,28 @@ the name of the file that holds the e-mail to be sent.  Exiting with a
- non-zero status causes `git send-email` to abort before sending any
- e-mails.
- 
-+The following environment variables are set when executing the hook.
-+
-+`GIT_SENDEMAIL_FILE_COUNTER`::
-+	A 1-based counter incremented by one for every file holding an e-mail
-+	to be sent (excluding any FIFOs). This counter does not follow the
-+	patch series counter scheme. It will always start at 1 and will end at
-+	GIT_SENDEMAIL_FILE_TOTAL.
-+
-+`GIT_SENDEMAIL_FILE_TOTAL`::
-+	The total number of files that will be sent (excluding any FIFOs). This
-+	counter does not follow the patch series counter scheme. It will always
-+	be equal to the number of files being sent, whether there is a cover
-+	letter or not.
-+
-+These variables may for instance be used to validate patch series.
-+
-+The sample `sendemail-validate` hook that comes with Git checks that all sent
-+patches (excluding the cover letter) can be applied on top of the upstream
-+repository default branch without conflicts. Some placeholders are left for
-+additional validation steps to be performed after all patches of a given series
-+have been applied.
-+
- fsmonitor-watchman
- ~~~~~~~~~~~~~~~~~~
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 07f2a0cbeaad..497ec0354790 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -795,11 +795,26 @@ sub is_format_patch_arg {
- @files = handle_backup_files(@files);
- 
- if ($validate) {
-+	# FIFOs can only be read once, exclude them from validation.
-+	my @real_files = ();
- 	foreach my $f (@files) {
- 		unless (-p $f) {
--			validate_patch($f, $target_xfer_encoding);
-+			push(@real_files, $f);
- 		}
- 	}
-+
-+	# Run the loop once again to avoid gaps in the counter due to FIFO
-+	# arguments provided by the user.
-+	my $num = 1;
-+	my $num_files = scalar @real_files;
-+	$ENV{GIT_SENDEMAIL_FILE_TOTAL} = "$num_files";
-+	foreach my $r (@real_files) {
-+		$ENV{GIT_SENDEMAIL_FILE_COUNTER} = "$num";
-+		validate_patch($r, $target_xfer_encoding);
-+		$num += 1;
-+	}
-+	delete $ENV{GIT_SENDEMAIL_FILE_COUNTER};
-+	delete $ENV{GIT_SENDEMAIL_FILE_TOTAL};
- }
- 
- if (@files) {
-diff --git a/templates/hooks--sendemail-validate.sample b/templates/hooks--sendemail-validate.sample
-new file mode 100755
-index 000000000000..c898ee3ab167
---- /dev/null
-+++ b/templates/hooks--sendemail-validate.sample
-@@ -0,0 +1,84 @@
-+#!/bin/sh
-+
-+# An example hook script to validate a patch (and/or patch series) before
-+# sending it via email.
-+#
-+# The hook should exit with non-zero status after issuing an appropriate
-+# message if it wants to prevent the email(s) from being sent.
-+#
-+# To enable this hook, rename this file to "sendemail-validate".
-+#
-+# By default, it will only check that the patch(es) can be applied on top of
-+# the default upstream branch without conflicts. Replace the XXX placeholders
-+# with appropriate checks according to your needs.
-+
-+set -e
-+
-+validate_cover_letter()
-+{
-+	file="$1"
-+	# XXX: Add appropriate checks here (e.g. spell checking).
-+}
-+
-+validate_patch()
-+{
-+	file="$1"
-+	# Ensure that the patch applies without conflicts to the latest
-+	# upstream version.
-+	git am -3 "$file" || die "failed to apply patch on upstream repo"
-+	# XXX: Add appropriate checks here (e.g. checkpatch.pl).
-+}
-+
-+validate_series()
-+{
-+	# XXX: Add appropriate checks here (e.g. quick build, etc.).
-+}
-+
-+die()
-+{
-+	echo "sendemail-validate: error: $*" >&2
-+	exit 1
-+}
-+
-+get_work_dir()
-+{
-+	git config --get sendemail.validateWorkdir || {
-+		# Initialize it to a temp dir, if unset.
-+		git config --add sendemail.validateWorkdir "$(mktemp -d)"
-+		git config --get sendemail.validateWorkdir
-+	}
-+}
-+
-+get_upstream_url()
-+{
-+	git config --get remote.origin.url ||
-+		die "cannot get remote.origin.url"
-+}
-+
-+clone_upstream()
-+{
-+	workdir="$1"
-+	url="$(get_upstream_url)"
-+	rm -rf -- "$workdir"
-+	git clone --depth=1 "$url" "$workdir" ||
-+		die "failed to clone upstream repository"
-+}
-+
-+# main -------------------------------------------------------------------------
-+
-+workdir=$(get_work_dir)
-+if [ "$GIT_SENDEMAIL_FILE_COUNTER" = 1 ]; then
-+	clone_upstream "$workdir"
-+fi
-+cd "$workdir"
-+export GIT_DIR="$workdir/.git"
-+
-+if grep -q "^diff --git " "$1"; then
-+	validate_patch "$1"
-+else
-+	validate_cover_letter "$1"
-+fi
-+
-+if [ "$GIT_SENDEMAIL_FILE_COUNTER" = "$GIT_SENDEMAIL_FILE_TOTAL" ]; then
-+	validate_series || die "patch series was rejected"
-+fi
--- 
-2.40.0
+Agree. But what if there is a metadata table in the .idx file?
+We can even know the type and size of the object without accessing
+the packfile.
 
+> But when I say that lookup costs dominate, what I mean is that we'd
+> spend a lot of our time binary searching within the pack .idx file, or
+> falling back to syscalls to look for loose objects.
+>
+
+Alright, binary search in .idx may indeed be more time-consuming than
+reading type and size from the packfile.
+
+> > > So a nice thing about being able to do the filtering in one process i=
+s
+> > > that we could _eventually_ do it all with one object lookup. But I'd
+> > > probably wait on adding something like --type-filter until we have an
+> > > internal single-lookup API, and then we could time it to see how much
+> > > speedup we can get.
+> >
+> > I am highly skeptical of this "internal single-lookup API". Do we reall=
+y
+> > need an extra metadata table to record all objects?
+> > Something like: metadata: {oid: type, size}?
+>
+> No, I don't mean changing the storage at all. I mean that rather than
+> doing this:
+>
+>   /* get type, size, etc, for --batch format */
+>   type =3D oid_object_info(&oid, &size);
+>
+>   /* now get the contents for --batch to write them itself; but note
+>    * that this searches for the entry again within all packs, etc */
+>   contents =3D read_object_file(oid, &type, &size);
+>
+> as the cat-file code now does (because the first call is in
+> batch_object_write(), and the latter in print_object_or_die()), they
+> could be a single call that does the lookup once.
+>
+> We could actually do that today, since the object contents are
+> eventually fed from oid_object_info_extended(), and we know ahead of
+> time that we want both the metadata and the contents. But that wouldn't
+> work if we filtered by type, etc.
+>
+
+So what you mentioned earlier about single read refers to combining
+the two read operations of getting type size and getting content into one,
+when we know exactly that we need to retrieve the content.(in order to redu=
+ce
+the overhead of the binary search once).
+
+> I'm not sure how much of a speedup it would yield in practice, though.
+> If you're printing the object contents, then the extra lookup is
+> probably not that expensive by comparison.
+>
+
+I feel like this solution may not be feasible. After we get the type and si=
+ze
+for the first time, we go through different output processes for different =
+types
+of objects: use `stream_blob()` for blobs, and `read_object_file()` with
+`batch_write()` for other objects. If we obtain the content of a blob in on=
+e
+single read operation, then the performance optimization provided by
+`stream_blob()` would be invalidated.
+
+> -Peff
