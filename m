@@ -2,77 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDE26C77B71
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 10:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40695C77B71
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 10:23:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231485AbjDLKXY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 06:23:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36356 "EHLO
+        id S231598AbjDLKXf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 06:23:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231580AbjDLKXF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 06:23:05 -0400
+        with ESMTP id S231262AbjDLKXI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 06:23:08 -0400
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09E096E87
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 03:23:00 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 43DB43200981;
-        Wed, 12 Apr 2023 06:23:00 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85CF27D89
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 03:23:05 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.west.internal (Postfix) with ESMTP id A8A1D3200984;
+        Wed, 12 Apr 2023 06:23:04 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 12 Apr 2023 06:23:00 -0400
+  by compute3.internal (MEProxy); Wed, 12 Apr 2023 06:23:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1681294979; x=1681381379; bh=cL
-        C7rR08BvrCD4BZ30X2sSsFUcBMmeOu+5gFUCuK0cs=; b=cAvpse6HS9kSVeRSRN
-        3lTIG8Gckk/+/80ruVxxVGd5UtVqGJDJgUuOhDmG001aW7/U2Oz3I/f8k37IjoYt
-        bFxvpEYY12v9tS9C6eU674InYTlTOJ6CGyiRcivDxBGiqK1RO/rEMbd20vL2wCrn
-        FuQ6CP+i2MnZd/SPK4GTkU0FJ69aY6dg6YJcjyg4YAkUpxCteQ6NcbjsmRFUFrGk
-        l4wahs0wm8UtVJCRNpnIonuSix66k1Zy0/SM1Tkip8eKN9mRUqoLHmMklKn+tjTU
-        DMbQW5Xnj8XwGHsN7roywEAGKMqe93BfdDAOTB9fJItjvg8uf/3W5URRbdCPwhoD
-        J0QQ==
+        :subject:subject:to:to; s=fm3; t=1681294984; x=1681381384; bh=br
+        9prARjMcDuS9r+1lDr24rpMi1ZT2vNvswKW1/UsUU=; b=H70dU9eGWrcKnBXkWi
+        FnejIh7WTDQVa1zg8uxfFbcypvAQ/Y2cyI80ovsoRlh7q0/mONPZQf2tu6e3uJ06
+        73tNx4WKQ8Xl7BsYl83jB36RF8o+QHSBJIz+5HHnNGlKecmED3Am2jQRs3Ktg9YB
+        YygwE1D0pjqbxsSfKcYbbGYKxpUBN0BZJiBNb26nRdUdI6XwH/G2xR6SomuvH66t
+        f9I2Ln8YRcTlkvOX8C1k3GpDvqdEBL5/CgGb1JqwnILhB7uet8YFsWzL6IipJCX+
+        Gq0dSm7tlmM+eS4VLS3ulpQPVz7R1AMhxaP2t6dnlgG5aFneJ+N7hGBYLvH/yTjm
+        YzEQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1681294979; x=1681381379; bh=cLC7rR08BvrCD
-        4BZ30X2sSsFUcBMmeOu+5gFUCuK0cs=; b=WvY3nKDagb/lBcrGqGdqLPiKjXh+K
-        HV3tcJqAmQciTFwRYR0XiCvzTeSC3WJVLlQLjf6zED678ajeQMbUEr2IUPhoTkw+
-        kVBOenIkPqGUPR60kq3BIrPTMsfJ/us2Xi9EUQuyy9caxOGOFAAJkpdONlbtWpVB
-        gC7rl4cnOkzxAZOvmS/gncqm/DoDVRWV4b7bL6bwDOwGDIUjvx3oIGwY4O9hby5p
-        FAEuK/ELQPG2DpPUecJaNZ9uvVnMl5d2auFBVMzre803R0bdhIIT6x29MhDxE6q5
-        ckUo3bh92YtrBGz4rECkoW12x+Jf+2M5JpHJZS3KFkyML4uMBpec1uaPw==
-X-ME-Sender: <xms:g4Y2ZFrRHbk-3YGenooLXC4kZm1YFUFTojXxCoCd8tul_SvPYhp6TA>
-    <xme:g4Y2ZHobt-4bvdMG3mvRUz3R6nCi9e0W-QJhBFoRQ1mVmGBfuAjQAGq-xQc0a1-lk
-    qO29J2ZewSQrI6P4A>
-X-ME-Received: <xmr:g4Y2ZCOnfj4hJbi1ZKCcf-4fommC5prKusJzP3X5gpiB8fcWBcudldGOI7lwJj73zSRmNsubZHgFiEHFfLyaAUm48SLrEazgn3pjSoHkR0M>
+        :x-sasl-enc; s=fm3; t=1681294984; x=1681381384; bh=br9prARjMcDuS
+        9r+1lDr24rpMi1ZT2vNvswKW1/UsUU=; b=AlbL334gC6HzJ/iq5vpZetb6Wd0CE
+        IwGNfZy5QNpDFPQ2xMeQ9jptGTZwjv4q+w72nmE9Nm02qBdX0TW3MwIkFuymESNq
+        xW7Cu+zIq/bCr+nM2fg+UTHbgcIXClPEzi6pLbmXQtpTXpy29LHzbHSIheFOeNjd
+        Nlb3Cqszow1Hna2w4ism2mrHGL7dkSbnipTaXlNBw1w3jJHiX8SlgTa6rUKUpZhu
+        2/jqlytI5HzbLkw+TOcU+SNV796FrgzdINNPmR1WR0t6R1eoc1CkDxtTNP9UBPb4
+        6VgHugx7fBxgZXyBbin7F/RmJOy/0vIOUWAX9yBU5TnWcctQI7qjLd4PQ==
+X-ME-Sender: <xms:iIY2ZNCpJTXNYuGwaTNqhNkJw_9paBbK92uHdvaK4UyeanxQplnLTA>
+    <xme:iIY2ZLhJUKsA9wrIA9LdQO2vl308mGSXkZ8W_VhYGy3Zd2N7jl9ChAzjYPaU4RO8v
+    Pf89syA582bRsJKSw>
+X-ME-Received: <xmr:iIY2ZIkLa5C1FRKEIEwausr_v7VDMGImJLOt4MQAGzRa_ZZcCNXf3kvUY1ne34imdL_v4uY_gCqA1Si4FARg9y7sJHoth7zQwqck2yxUoaE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekiedgvdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpeefnecurfgr
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:g4Y2ZA4IPhkek_oyg0k0a9HdxrGRW1RVzG79OgCxSdilZmSK-v36XQ>
-    <xmx:g4Y2ZE7G0UczVuZVOjMsNpw0HGjpB0d5h_gw0mbzr76D2aqgUnSgVw>
-    <xmx:g4Y2ZIgfSgFU9isvJ3Ip-FjRGl9xangmqz3-TpGF0DjvAp-qaUHwhw>
-    <xmx:g4Y2ZEEPRmQAYBc0B0ZPOs8njLTEILc7V-NeB1PuC7-xbSKKC06Pyg>
+X-ME-Proxy: <xmx:iIY2ZHxrIF_8FQdDr_SVBO4M1cKNnpshjfleH9kZfpFJQS9JfR3hBQ>
+    <xmx:iIY2ZCTw8nvqTZfx7MROsZZPadqa23tYNcPYnU7HkD5dy6d6IgAbVw>
+    <xmx:iIY2ZKYzRyQeYpE0igJj-JY6VCWye2bouYFGKpgRdaHKtfO1VhvDDA>
+    <xmx:iIY2ZNdddqvVSX4R7BY4_H9DB3DJ5ews8JSq6fyxDn_yXPJUrcOXQg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Apr 2023 06:22:58 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 31f0d03e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 12 Apr 2023 10:22:38 +0000 (UTC)
-Date:   Wed, 12 Apr 2023 12:22:56 +0200
+ 12 Apr 2023 06:23:02 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id a4cc6bbc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Wed, 12 Apr 2023 10:22:42 +0000 (UTC)
+Date:   Wed, 12 Apr 2023 12:23:01 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>, peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH v2 7/8] repack: honor `-l` when calculating pack geometry
-Message-ID: <608dde4ad52c28ef42845b6bfdcb168e252bd29b.1681294715.git.ps@pks.im>
+Subject: [PATCH v2 8/8] repack: disable writing bitmaps when doing a local
+ geometric repack
+Message-ID: <b74d0a037b07706d07fad7b438fa0cb211726575.1681294715.git.ps@pks.im>
 References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
  <cover.1681294715.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="BrvMiK5VlhVhNsKB"
+        protocol="application/pgp-signature"; boundary="soGiN+iHKjbWApds"
 Content-Disposition: inline
 In-Reply-To: <cover.1681294715.git.ps@pks.im>
 Precedence: bulk
@@ -80,99 +81,97 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---BrvMiK5VlhVhNsKB
+--soGiN+iHKjbWApds
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When the user passes `-l` to git-repack(1), then they essentially ask us
-to only repack objects part of the local object database while ignoring
-any packfiles part of an alternate object database. And we in fact honor
-this bit when doing a geometric repack as the resulting packfile will
-only ever contain local objects.
+In order to write a bitmap, we need to have full coverage of all objects
+that are about to be packed. In the traditional non-multi-pack-index
+world this meant we need to do a full repack of all objects into a
+single packfile. But in the new multi-pack-index world we can get away
+with writing bitmaps when we have multiple packfiles as long as the
+multi-pack-index covers all objects.
 
-What we're missing though is that we don't take locality of packfiles
-into account when computing whether the geometric sequence is intact or
-not. So even though we would only ever roll up local packfiles anyway,
-we could end up trying to repack because of non-local packfiles. This
-does not make much sense, and in the worst case it can cause us to try
-and do the geometric repack over and over again because we're never able
-to restore the geometric sequence.
+This is not always the case though. When writing multi-pack-indices in a
+repository that is connected to an alternate object directory we may end
+up writing a multi-pack-index that only has partial coverage of objects.
+The end result is that writing the bitmap will fail:
 
-Fix this bug by honoring whether the user has passed `-l`. If so, we
-skip adding any non-local packfiles to the pack geometry.
+    $ git multi-pack-index write --stdin-packs --bitmap <packfiles
+    warning: Failed to write bitmap index. Packfile doesn't have full closu=
+re (object 1529341d78cf45377407369acb0f4ff2b5cdae42 is missing)
+    error: could not write multi-pack bitmap
+
+Now there are two different ways to fix this. The first one would be to
+amend git-multi-pack-index(1) to disable writing bitmaps when we notice
+that we don't have full object coverage. But we ain't really got enough
+information there, and seeing that it is a low-level plumbing command it
+does not feel like the right place to fix this.
+
+We can easily fix it at a higher level in git-repack(1) though. When all
+of the following conditions are true:
+
+    - We are asked to write a multi-pack index with bitmaps.
+
+    - We are asked to only include local objects via `-l`.
+
+    - We are connected to an alternate repository that has packfiles.
+
+Then we will override the user's ask and disable writing bitmaps with a
+warning. This is similar to what we do in git-pack-objects(1), where we
+also disable writing bitmaps in case we omit an object from the pack.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/repack.c            | 13 ++++++--
- t/t7703-repack-geometric.sh | 59 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 70 insertions(+), 2 deletions(-)
+ builtin/repack.c            | 20 ++++++++++++++++++++
+ t/t7703-repack-geometric.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 80d4e813c8..f57869f14a 100644
+index f57869f14a..07d92fdf87 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -325,7 +325,8 @@ static int geometry_cmp(const void *va, const void *vb)
- }
+@@ -881,6 +881,26 @@ int cmd_repack(int argc, const char **argv, const char=
+ *prefix)
+ 	if (pack_kept_objects < 0)
+ 		pack_kept_objects =3D write_bitmaps > 0 && !write_midx;
 =20
- static void init_pack_geometry(struct pack_geometry **geometry_p,
--			       struct string_list *existing_kept_packs)
-+			       struct string_list *existing_kept_packs,
-+			       const struct pack_objects_args *args)
- {
- 	struct packed_git *p;
- 	struct pack_geometry *geometry;
-@@ -335,6 +336,14 @@ static void init_pack_geometry(struct pack_geometry **=
-geometry_p,
- 	geometry =3D *geometry_p;
-=20
- 	for (p =3D get_all_packs(the_repository); p; p =3D p->next) {
-+		if (args->local && !p->pack_local)
-+			/*
-+			 * When asked to only repack local packfiles we skip
-+			 * over any packfiles that are borrowed from alternate
-+			 * object directories.
-+			 */
-+			continue;
++	if (write_midx && write_bitmaps && geometric_factor && po_args.local) {
++		struct packed_git *p;
 +
- 		if (!pack_kept_objects) {
- 			/*
- 			 * Any pack that has its pack_keep bit set will appear
-@@ -897,7 +906,7 @@ int cmd_repack(int argc, const char **argv, const char =
-*prefix)
- 	if (geometric_factor) {
- 		if (pack_everything)
- 			die(_("options '%s' and '%s' cannot be used together"), "--geometric", =
-"-A/-a");
--		init_pack_geometry(&geometry, &existing_kept_packs);
-+		init_pack_geometry(&geometry, &existing_kept_packs, &po_args);
- 		split_pack_geometry(geometry, geometric_factor);
- 	}
++		for (p =3D get_all_packs(the_repository); p; p =3D p->next) {
++			if (p->pack_local)
++				continue;
++
++			/*
++			 * When asked to do a local repack, but we have
++			 * packfiles that are inherited from an alternate, then
++			 * we cannot guarantee that the multi-pack-index would
++			 * have full coverage of all objects. We thus disable
++			 * writing bitmaps in that case.
++			 */
++			warning(_("disabling bitmap writing, as some objects are not being pack=
+ed"));
++			write_bitmaps =3D 0;
++			break;
++		}
++	}
++
+ 	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE) && !write_midx)
+ 		die(_(incremental_bitmap_conflict_error));
 =20
 diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index 0a2f2bd46c..96c8d4cdfa 100755
+index 96c8d4cdfa..0aaec9f853 100755
 --- a/t/t7703-repack-geometric.sh
 +++ b/t/t7703-repack-geometric.sh
-@@ -10,6 +10,12 @@ objdir=3D.git/objects
- packdir=3D$objdir/pack
- midx=3D$objdir/pack/multi-pack-index
-=20
-+packed_objects() {
-+	git show-index <"$1" >tmp-object-list &&
-+	cut -d' ' -f2 tmp-object-list &&
-+	rm tmp-object-list
-+ }
-+
- test_expect_success '--geometric with no packs' '
- 	git init geometric &&
- 	test_when_finished "rm -fr geometric" &&
-@@ -361,4 +367,57 @@ test_expect_success '--geometric with same pack in mai=
-n and alternate ODB' '
- 	test_cmp expected-files actual-files
+@@ -420,4 +420,31 @@ test_expect_success '--geometric -l with non-intact ge=
+ometric sequence across OD
+ 	test_cmp expected-objects actual-objects.sorted
  '
 =20
-+test_expect_success '--geometric -l with non-intact geometric sequence acr=
-oss ODBs' '
++test_expect_success '--geometric -l disables writing bitmaps with non-loca=
+l packfiles' '
 +	test_when_finished "rm -fr shared member" &&
 +
 +	git init shared &&
@@ -181,49 +180,24 @@ oss ODBs' '
 +	git clone --shared shared member &&
 +	test_commit_bulk -C member --start=3D2 1 &&
 +
-+	# Verify that our assumptions actually hold: both generated packfiles
-+	# should have three objects and should be non-equal.
-+	packed_objects shared/.git/objects/pack/pack-*.idx >packed-objects &&
-+	test_line_count =3D 3 packed-objects &&
-+	packed_objects member/.git/objects/pack/pack-*.idx >packed-objetcs &&
-+	test_line_count =3D 3 packed-objects &&
-+	test "$(basename member/.git/objects/pack/pack-*.pack)" !=3D "$(basename =
-shared/.git/objects/pack/pack-*.pack)" &&
++	# When performing a geometric repack with `-l` while connecting to an
++	# alternate object database that has a packfile we do not have full
++	# coverage of objects. As a result, we expect that writing the bitmap
++	# will be disabled.
++	git -C member repack -l --geometric=3D2 --write-midx --write-bitmap-index=
+ 2>err &&
++	cat >expect <<-EOF &&
++	warning: disabling bitmap writing, as some objects are not being packed
++	EOF
++	test_cmp expect err &&
++	test ! -f member/.git/objects/pack/multi-pack-index-*.bitmap &&
 +
-+	# Perform the geometric repack. With `-l`, we should only see the local
-+	# packfile and thus arrive at the conclusion that the geometric
-+	# sequence is intact. We thus expect no changes.
-+	#
-+	# Note that we are using stat(1) to verify idempotence to also verify
-+	# that the mtime did not change. This is done in order to detect the
-+	# case where we do repack objects, but the resulting packfile is the
-+	# same.
-+	stat member/.git/objects/pack/* >expected-member-packs &&
-+	git -C member repack --geometric=3D2 -l -d &&
-+	stat member/.git/objects/pack/* >actual-member-packs &&
-+	test_cmp expected-member-packs actual-member-packs &&
-+
-+	(
-+		packed_objects shared/.git/objects/pack/pack-*.idx &&
-+		packed_objects member/.git/objects/pack/pack-*.idx
-+	) | sort >expected-objects &&
-+
-+	# On the other hand, when doing a non-local geometric repack we should
-+	# see both packfiles and thus repack them. We expect that the shared
-+	# object database was not changed.
-+	stat shared/.git/objects/pack/* >expected-shared-packs &&
-+	git -C member repack --geometric=3D2 -d &&
-+	stat shared/.git/objects/pack/* >actual-shared-packs &&
-+	test_cmp expected-shared-packs actual-shared-packs &&
-+
-+	# Furthermore, we expect that the member repository now has a single
-+	# packfile that contains the combined shared and non-shared objects.
-+	ls member/.git/objects/pack/pack-*.idx >actual &&
-+	test_line_count =3D 1 actual &&
-+	packed_objects member/.git/objects/pack/pack-*.idx >actual-objects &&
-+	test_line_count =3D 6 actual-objects &&
-+	sort <actual-objects >actual-objects.sorted &&
-+	test_cmp expected-objects actual-objects.sorted
++	# On the other hand, when we repack without `-l`, we should see that
++	# the bitmap gets created.
++	git -C member repack --geometric=3D2 --write-midx --write-bitmap-index 2>=
+err &&
++	test_must_be_empty err &&
++	test -f member/.git/objects/pack/multi-pack-index-*.bitmap
 +'
 +
  test_done
@@ -231,24 +205,24 @@ shared/.git/objects/pack/pack-*.pack)" &&
 2.40.0
 
 
---BrvMiK5VlhVhNsKB
+--soGiN+iHKjbWApds
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ2hn8ACgkQVbJhu7ck
-PpQz8g//Z1l5w3PTXqWRyaZ6Mkl2AQXiFFwZIvjKmgsBZvLieQpBFrFLO9scf1MJ
-crhrVA9dFqlBbw01z63KJsKEIhZOypTGUrgNWTfGM0mhzXuA97vau0WWU/yTY3rK
-hlYfLnYrLZOY4b25luw1yxpdADvbPNvKcfN+qhJnFnoX4A7f8wTkZAG6E/h8LqOi
-bZdl55wyyck7MTMKXv7rWK5TxWUsQauTX4yRNhYzzuDEowjWuLeqfFNgUFEvL0Iz
-+Qv2TSp7c0+drTMV6UmoOEHxLnkkgLe8nHlhWUJYFI4Waefs8GxDbGrKd/ZgW+Ht
-SJuuIo3rdd01SoGutHERwhWSZpdc3sfcOatRMF+e85j3oYQnT9buka254OldqnIT
-ZCvmdXQZNwX+Rfiy9o9f9IVpwSzjR4QhQ/2982H4BuXfX3PzreFmzpQwLfc1kxIt
-KHEXoAWt1VLkKmb7SklgbAi+8NMqTps/aPpKOwStJ6sOFN1G/QHdVry6h8De0O4c
-4oQXWqq1gYEviS9fZXYW3P5Y/3XDu+HTYkv0dJHKgSQlFBnjKHt1rkd0jQCfXFe4
-SvMMDZWi2k9KDDFMFZ7pzT/TI8mH4qsMhw+BcZB2Glz7y/6UCUaz7ehPtiHsqI3b
-13EPnJUiHvB7ejKxvI2UJxvIWpWwtgCTUbjoITYaxJjHxl5WGn0=
-=NvNh
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ2hoQACgkQVbJhu7ck
+PpTYtRAAqE1dOr4cjyfZsVbVZG//+0duqdlaV71gD8K+V/NENoEeQjxLBlvtzvHb
+hxISTdSkldWwzvBW0jOlEIcmIZWsfg2a+uuJ2mfVTh3ZD83RjUGctJWEHq+O1GtA
+f8hTcfyT0fEel7gLCVGnOxt080bu0c4AoM0mdajjakSRqkhC87kFHHVdZ1nRGWDl
+AB1efeOfrP7pyyyRDo5jLhSDQN7jmh1L+ngDKgHjnmSr3zQZuPUgPQaA/BnmZgYm
+0a7Ur7M70DhNysSIbib4HUCo8sxE5sNQQf0vDedg2o1O+QuFBciiV8zuB13PoHOj
+09OrqXioNGvROFfv0hhVJrGiTcJw0JfPJ9fpQs5xoq/mIqdxcQ5ralefKoF7OmuW
+kHs4VbG/wEygvS4f93NbPq93Dvw6KVmImzFKF0KCFExBDc91qoFJCINku0kxfBvR
+69AH8z4TZ18sOZwomvyY8EjzpcdCtBf1WjnMWN3HEvRPsXmQBvCCFr58wP/EerzQ
+Mnrca+MpvQsx3HLhCyx+dxzxvcYhg+BiipSNz1qWUE5Sdb/bKv57cQ0qjyMIIp5f
+GoJGzu65qX/kbsl7PfD0b3bj/uWybFryboqf1SRMySqwa2NkiOhCar2IFgeyQyaW
+W8nLprRxk0CE/Z826fYwipcacZUykDNC9fYB5hhybWci0XqgtcU=
+=sI07
 -----END PGP SIGNATURE-----
 
---BrvMiK5VlhVhNsKB--
+--soGiN+iHKjbWApds--
