@@ -2,244 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7545DC77B6F
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 06:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96848C7619A
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 06:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229773AbjDLGkt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 02:40:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52536 "EHLO
+        id S229825AbjDLGrB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 02:47:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229573AbjDLGks (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 02:40:48 -0400
+        with ESMTP id S229817AbjDLGq6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 02:46:58 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BD532683
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 23:40:46 -0700 (PDT)
-Received: (qmail 17991 invoked by uid 109); 12 Apr 2023 06:40:46 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73AB061A1
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 23:46:54 -0700 (PDT)
+Received: (qmail 18117 invoked by uid 109); 12 Apr 2023 06:46:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Apr 2023 06:40:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Apr 2023 06:46:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17219 invoked by uid 111); 12 Apr 2023 06:40:45 -0000
+Received: (qmail 17264 invoked by uid 111); 12 Apr 2023 06:46:52 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Apr 2023 02:40:45 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Apr 2023 02:46:52 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 12 Apr 2023 02:40:45 -0400
+Date:   Wed, 12 Apr 2023 02:46:51 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, Jonas Haag <jonas@lophus.org>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org
-Subject: [PATCH 7/7] v0 protocol: use size_t for capability length/offset
-Message-ID: <20230412064045.GA1681575@coredump.intra.peff.net>
+Subject: Re: [PATCH 1/7] v0 protocol: fix infinite loop when parsing
+ multi-valued capabilities
+Message-ID: <20230412064651.GA1681676@coredump.intra.peff.net>
 References: <20230412062300.GA838367@coredump.intra.peff.net>
+ <20230412062924.GA1681312@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230412062300.GA838367@coredump.intra.peff.net>
+In-Reply-To: <20230412062924.GA1681312@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When parsing server capabilities, we use "int" to store lengths and
-offsets. At first glance this seems like a spot where our parser may be
-confused by integer overflow if somebody sent us a malicious response.
+On Wed, Apr 12, 2023 at 02:29:24AM -0400, Jeff King wrote:
 
-In practice these strings are all bounded by the 64k limit of a
-pkt-line, so using "int" is OK. However, it makes the code simpler to
-audit if they just use size_t everywhere. Note that because we take
-these parameters as pointers, this also forces many callers to update
-their declared types.
+> But on the second call, now *offset is set to that larger index, which
+> lets us skip past the first "symref" capability. However, we do so by
+> incrementing feature_list. That means our pointer difference is now too
+> small; it is counting from where we resumed parsing, not from the start
+> of the original feature_list pointer. And because we incremented
+> feature_list only inside our function, and not the caller, that
+> increment is lost next time the function is called.
+> 
+> The simplest solution is to account for those skipped bytes by
+> incrementing *offset, rather than assigning to it. (The other possible
+> solution is to add an extra level of pointer indirection to feature_list
+> so that the caller knows we moved it forward, but that seems more
+> complicated).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I guess you could argue that "int" is fine here, given the context.
-Mostly I just did a double-take while looking at the code, so I thought
-this might save the next person from doing the same.
+Hmph. So after convincing myself that was the end of it, now I'm not so
+sure. We also increment feature_list if we find a false positive in the
+middle of another entry. I.e., the code even after this patch looks
+like:
 
- builtin/receive-pack.c |  2 +-
- connect.c              | 22 +++++++++++-----------
- connect.h              |  4 ++--
- fetch-pack.c           |  4 ++--
- send-pack.c            |  2 +-
- transport.c            |  2 +-
- upload-pack.c          |  2 +-
- 7 files changed, 19 insertions(+), 19 deletions(-)
+          while (*feature_list) {
+                  const char *found = strstr(feature_list, feature);
+                  if (!found)
+                          return NULL;
+                  if (feature_list == found || isspace(found[-1])) {
+                          const char *value = found + len;
+                          /* feature with no value (e.g., "thin-pack") */
+                          if (!*value || isspace(*value)) {
+                                  if (lenp)
+                                          *lenp = 0;
+                                  if (offset)
+                                          *offset += found + len - feature_list;
+                                  return value;
+                          }
+                          /* feature with a value (e.g., "agent=git/1.2.3") */
+                          else if (*value == '=') {
+                                  size_t end;
+  
+                                  value++;
+                                  end = strcspn(value, " \t\n");
+                                  if (lenp)
+                                          *lenp = end;
+                                  if (offset)
+                                          *offset += value + end - feature_list;
+                                  return value;
+                          }
+                          /*
+                           * otherwise we matched a substring of another feature;
+                           * keep looking
+                           */
+                  }
+                  feature_list = found + 1;
+          }
+          return NULL;
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 9109552533..3b495ecc84 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2093,7 +2093,7 @@ static struct command *read_head_info(struct packet_reader *reader,
- 			const char *feature_list = reader->line + linelen + 1;
- 			const char *hash = NULL;
- 			const char *client_sid;
--			int len = 0;
-+			size_t len = 0;
- 			if (parse_feature_request(feature_list, "report-status"))
- 				report_status = 1;
- 			if (parse_feature_request(feature_list, "report-status-v2"))
-diff --git a/connect.c b/connect.c
-index 5e265ba9d7..5685551cf0 100644
---- a/connect.c
-+++ b/connect.c
-@@ -22,7 +22,7 @@
- 
- static char *server_capabilities_v1;
- static struct strvec server_capabilities_v2 = STRVEC_INIT;
--static const char *next_server_feature_value(const char *feature, int *len, int *offset);
-+static const char *next_server_feature_value(const char *feature, size_t *len, size_t *offset);
- 
- static int check_ref(const char *name, unsigned int flags)
- {
-@@ -205,10 +205,10 @@ static void parse_one_symref_info(struct string_list *symref, const char *val, i
- static void annotate_refs_with_symref_info(struct ref *ref)
- {
- 	struct string_list symref = STRING_LIST_INIT_DUP;
--	int offset = 0;
-+	size_t offset = 0;
- 
- 	while (1) {
--		int len;
-+		size_t len;
- 		const char *val;
- 
- 		val = next_server_feature_value("symref", &len, &offset);
-@@ -231,7 +231,7 @@ static void annotate_refs_with_symref_info(struct ref *ref)
- static void process_capabilities(struct packet_reader *reader, int *linelen)
- {
- 	const char *feat_val;
--	int feat_len;
-+	size_t feat_len;
- 	const char *line = reader->line;
- 	int nul_location = strlen(line);
- 	if (nul_location == *linelen)
-@@ -595,9 +595,9 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 	return list;
- }
- 
--const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
-+const char *parse_feature_value(const char *feature_list, const char *feature, size_t *lenp, size_t *offset)
- {
--	int len;
-+	size_t len;
- 
- 	if (!feature_list)
- 		return NULL;
-@@ -621,7 +621,7 @@ const char *parse_feature_value(const char *feature_list, const char *feature, i
- 			}
- 			/* feature with a value (e.g., "agent=git/1.2.3") */
- 			else if (*value == '=') {
--				int end;
-+				size_t end;
- 
- 				value++;
- 				end = strcspn(value, " \t\n");
-@@ -643,8 +643,8 @@ const char *parse_feature_value(const char *feature_list, const char *feature, i
- 
- int server_supports_hash(const char *desired, int *feature_supported)
- {
--	int offset = 0;
--	int len;
-+	size_t offset = 0;
-+	size_t len;
- 	const char *hash;
- 
- 	hash = next_server_feature_value("object-format", &len, &offset);
-@@ -668,12 +668,12 @@ int parse_feature_request(const char *feature_list, const char *feature)
- 	return !!parse_feature_value(feature_list, feature, NULL, NULL);
- }
- 
--static const char *next_server_feature_value(const char *feature, int *len, int *offset)
-+static const char *next_server_feature_value(const char *feature, size_t *len, size_t *offset)
- {
- 	return parse_feature_value(server_capabilities_v1, feature, len, offset);
- }
- 
--const char *server_feature_value(const char *feature, int *len)
-+const char *server_feature_value(const char *feature, size_t *len)
- {
- 	return parse_feature_value(server_capabilities_v1, feature, len, NULL);
- }
-diff --git a/connect.h b/connect.h
-index f41a0b4c1f..1645126c17 100644
---- a/connect.h
-+++ b/connect.h
-@@ -12,14 +12,14 @@ int finish_connect(struct child_process *conn);
- int git_connection_is_socket(struct child_process *conn);
- int server_supports(const char *feature);
- int parse_feature_request(const char *features, const char *feature);
--const char *server_feature_value(const char *feature, int *len_ret);
-+const char *server_feature_value(const char *feature, size_t *len_ret);
- int url_is_local_not_ssh(const char *url);
- 
- struct packet_reader;
- enum protocol_version discover_version(struct packet_reader *reader);
- 
- int server_supports_hash(const char *desired, int *feature_supported);
--const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset);
-+const char *parse_feature_value(const char *feature_list, const char *feature, size_t *lenp, size_t *offset);
- int server_supports_v2(const char *c);
- void ensure_server_supports_v2(const char *c);
- int server_feature_v2(const char *c, const char **v);
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 368f2ed25a..97a44ed582 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1099,7 +1099,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 	struct ref *ref = copy_ref_list(orig_ref);
- 	struct object_id oid;
- 	const char *agent_feature;
--	int agent_len;
-+	size_t agent_len;
- 	struct fetch_negotiator negotiator_alloc;
- 	struct fetch_negotiator *negotiator;
- 
-@@ -1117,7 +1117,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 		agent_supported = 1;
- 		if (agent_len)
- 			print_verbose(args, _("Server version is %.*s"),
--				      agent_len, agent_feature);
-+				      (int)agent_len, agent_feature);
- 	}
- 
- 	if (!server_supports("session-id"))
-diff --git a/send-pack.c b/send-pack.c
-index f81bbb28d7..97344b629e 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -538,7 +538,7 @@ int send_pack(struct send_pack_args *args,
- 		die(_("the receiving end does not support this repository's hash algorithm"));
- 
- 	if (args->push_cert != SEND_PACK_PUSH_CERT_NEVER) {
--		int len;
-+		size_t len;
- 		push_cert_nonce = server_feature_value("push-cert", &len);
- 		if (push_cert_nonce) {
- 			reject_invalid_nonce(push_cert_nonce, len);
-diff --git a/transport.c b/transport.c
-index 89a220425e..6223dc3de2 100644
---- a/transport.c
-+++ b/transport.c
-@@ -317,7 +317,7 @@ static struct ref *handshake(struct transport *transport, int for_push,
- 	struct git_transport_data *data = transport->data;
- 	struct ref *refs = NULL;
- 	struct packet_reader reader;
--	int sid_len;
-+	size_t sid_len;
- 	const char *server_sid;
- 
- 	connect_setup(transport, for_push);
-diff --git a/upload-pack.c b/upload-pack.c
-index e23f16dfdd..565e46058f 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1067,7 +1067,7 @@ static void receive_needs(struct upload_pack_data *data,
- 		const char *features;
- 		struct object_id oid_buf;
- 		const char *arg;
--		int feature_len;
-+		size_t feature_len;
- 
- 		reset_timeout(data->timeout);
- 		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
--- 
-2.40.0.493.gfc602f1919
+So if we have something like:
+
+   agent=i-like-symrefs symref=HEAD:refs/heads/foo
+
+then we'd find the "symref" value in the agent line, increment
+feature_list, and then find the real one. But our pointer difference
+will again be too short! And incrementing "offset" rather than assigning
+it won't help, because those skipped bytes are not accounted for in the
+existing value of "offset".
+
+So what we probably want is a third possibility I didn't allow for: keep
+the original value of feature_list intact, and use a separate pointer to
+increment. And then assigning "*offset = value + end - feature_list"
+will always be correct, because the offset will always be from the
+original, true beginning of the string.
+
+The fix is easy, but let me see if I can come up with a test.
+
+-Peff
