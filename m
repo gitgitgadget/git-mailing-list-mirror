@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F79BC77B6C
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 22:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AFA7C77B6C
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 22:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230016AbjDLWUj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 18:20:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60732 "EHLO
+        id S230098AbjDLWUo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 18:20:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230114AbjDLWUd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 18:20:33 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A13896A60
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 15:20:26 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id e10so4443241ybp.4
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 15:20:26 -0700 (PDT)
+        with ESMTP id S230097AbjDLWUj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 18:20:39 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7069383C2
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 15:20:29 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-54ee0b73e08so249763567b3.0
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 15:20:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681338025; x=1683930025;
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681338028; x=1683930028;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/LfGro+h1F09xBK4RMyYjrQBvNLcVwWdie470x5g0AQ=;
-        b=a+0BfR823aze/kPSRwhA9YFIJWXULMt8JSrJDNoQd129OUYedQf9GJLyX6u3B4iliY
-         dpuPKzmEsSrYf9j7R8UzYvEBcpK3QBsH8HF3PxD8EUT56KvbntUNqED+137P2tu52+S7
-         diVpS0ovmyhbDId8zOIHd4aPoyiJ8+ff6NlbKyqriNNW0QMU2OoYLD8gXu4B+6RfXVI2
-         J73Z4N0cmx5N14oPtVVCgNPkTmyR29CjcUA9lC/gtvNE3nIbUuc0NMzgmXx3Fjee4OE3
-         4/+dWsBZw9oY3wOxYXRuhutdXoroyHQ3F13qidp2XrezEsJrLw9hb3ngCIzyRAr5cFnn
-         qgVw==
+        bh=veA3cT8nwAjRstGR+3jsN+Mqq+aC6f8PYllE4p98wu8=;
+        b=bs7mjJhGTJTUSeLj9iGmXDSD9TiBdBolpFq9IxFGBweMxLd/APDFykVF/up7PVFMqB
+         lqraEJwUdeXLiKGiRebM3j+3o8W+wPTmC8ovp/+vAuO4H/6hoTuhUbydyytTNcmAvp9q
+         xBX2ti4GuLCaxibb9xai1DVuKXsrVm6KQFkht7Yx21bG/2P+0WP+FQBOHv9Bf92fgyzS
+         KNeB1rFV0BsGRk1H92rJm8kXs1QxSBhHP/X35UNfT0pyYoCmPqqD6oB+ahQFEkgaqBKI
+         5ZL5dMnJLEQK+bfvKJkWaLv6mjOz670tb3S3amc/m6KLnkflnvyY4VbagZFDo+aCtdka
+         jKvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681338025; x=1683930025;
+        d=1e100.net; s=20221208; t=1681338028; x=1683930028;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/LfGro+h1F09xBK4RMyYjrQBvNLcVwWdie470x5g0AQ=;
-        b=GJyGCeNdUxbIaDtRrjB0m7vkInPXupnbhQiSsjUYOilNWNwGw99DGLzSw5oq9iC6K+
-         cHMzG2ZtAIiNJqhKBP7lkOZ9wCHy4eGI0yekxixw0203XUY12TKQ9Ue436xDFY/urAs/
-         bwerXIS78wQD8l28wHMMfwhMtTOusb+1blSpi/E8RmOm+Gp9tRLuGgDrgeP4jjSikK3N
-         MH/Ka5JcUCldX/9lwxfddVBEczk4SuCVAMvLTJb0sI1BWOIrYhqODQNlDQqC1jjgHIVJ
-         l97pdP+QG1M2YzvsdUIYSS9E5UjWs7ddCwVlwGilD1Vg54OSsA06YnFKZ8uv5x+UYRB7
-         f3iA==
-X-Gm-Message-State: AAQBX9d+hBEY7SkZ/yk7ktJoniTXliBLVLJXZ0RHQckBV8ctkIu23P6o
-        OfnCEsm9lkgq4FuGenuR3sAmUeBhoMfKjRVyh6Bogw==
-X-Google-Smtp-Source: AKy350Z8vcQ9+JGV4IEcuf1B/Nq7ckF5Z2Bez1hkK3/53l7vEJXizlt18ZKmy7FFg+pGQNvFYWGzlw==
-X-Received: by 2002:a25:65d7:0:b0:b8f:545e:3428 with SMTP id z206-20020a2565d7000000b00b8f545e3428mr130752ybb.16.1681338025427;
-        Wed, 12 Apr 2023 15:20:25 -0700 (PDT)
+        bh=veA3cT8nwAjRstGR+3jsN+Mqq+aC6f8PYllE4p98wu8=;
+        b=CJlQb+dCtgGI1uAr+0AhXwbwDMtXdTdBSlZT79KlQINVL+52pyHkY+O7fst84FWb0v
+         GKi2g9XCb4o27h9WROSmosLX4UfTFFPg9Fms3Kb4IevSYklY/cNcrWFiTvOQyI/9uUUx
+         q1P2Ly9Uqcd5cKR1B5Qax8C9jJy7vYeXgt3XqW07kNajQdSZFaL0MctufGuTyMfTfZ1D
+         JSODwg7Q+cj7+CDGuHVDurRkHGk17aRfQi4xbOP9SNN6iib0UQJeXqa0ymLGPIJvT86K
+         H296SsdTUmefABGLTs7i24r95m95nsJy0FII1hECT5SLA0uQUEP+TBxTlZprB3jq/slW
+         4+pw==
+X-Gm-Message-State: AAQBX9eAfEULmBI3HNnGj6GfIX1COKXdSA3Y/AOt245pEyCYkfJl25We
+        a4470mdQIQzUKhJImyxLybSLlDbeNr7IXJytWnhgDQ==
+X-Google-Smtp-Source: AKy350Zq8MB1AguzcFlZjph64ig5N9a73tQzvZy7GdRMGGaLB8Xmm3I9ZE0a3wlVl7gXPIxGubuS+Q==
+X-Received: by 2002:a81:6a07:0:b0:541:876d:ae50 with SMTP id f7-20020a816a07000000b00541876dae50mr72550ywc.44.1681338028441;
+        Wed, 12 Apr 2023 15:20:28 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id s5-20020a25ba85000000b00b8bf2d8a5c5sm1572879ybg.56.2023.04.12.15.20.25
+        by smtp.gmail.com with ESMTPSA id d123-20020a811d81000000b0054f856bdc4dsm23824ywd.38.2023.04.12.15.20.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 15:20:25 -0700 (PDT)
-Date:   Wed, 12 Apr 2023 18:20:24 -0400
+        Wed, 12 Apr 2023 15:20:28 -0700 (PDT)
+Date:   Wed, 12 Apr 2023 18:20:27 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 3/7] pack-revindex: make `load_pack_revindex` take a
- repository
-Message-ID: <687a9a589249a327251b90f558917aa0f4ae79a4.1681338013.git.me@ttaylorr.com>
+Subject: [PATCH v2 4/7] pack-revindex: introduce
+ GIT_TEST_REV_INDEX_DIE_ON_DISK
+Message-ID: <8eec5bacd3a39d4d1586459f4a23422aff903139.1681338013.git.me@ttaylorr.com>
 References: <cover.1681166596.git.me@ttaylorr.com>
  <cover.1681338013.git.me@ttaylorr.com>
 MIME-Version: 1.0
@@ -66,190 +66,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a future commit, we will introduce a `pack.readReverseIndex`
-configuration, which forces Git to generate the reverse index from
-scratch instead of loading it from disk.
+In ec8e7760ac (pack-revindex: ensure that on-disk reverse indexes are
+given precedence, 2021-01-25), we introduced
+GIT_TEST_REV_INDEX_DIE_IN_MEMORY to abort the process when Git generated
+a reverse index from scratch.
 
-In order to avoid reading this configuration value more than once, we'll
-use the `repo_settings` struct to lazily load this value.
+ec8e7760ac was about ensuring that Git prefers a .rev file when
+available over generating the same information in memory from scratch.
 
-In order to access the `struct repo_settings`, add a repository argument
-to `load_pack_revindex`, and update all callers to pass the correct
-instance (in all cases, `the_repository`).
+In a subsequent patch, we'll introduce `pack.readReverseIndex`, which
+may be used to disable reading ".rev" files when available. In order to
+ensure that those files are indeed being ignored, introduce an analogous
+option to abort the process when Git reads a ".rev" file from disk.
 
-In certain instances, a new function-local variable is introduced to
-take the place of a `struct repository *` argument to the function
-itself to avoid propagating the new parameter even further throughout
-the tree.
-
-Co-authored-by: Derrick Stolee <derrickstolee@github.com>
-Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c   | 23 +++++++++++++----------
- pack-revindex.c |  4 ++--
- pack-revindex.h |  3 ++-
- packfile.c      |  2 +-
- 4 files changed, 18 insertions(+), 14 deletions(-)
+ pack-revindex.c | 3 +++
+ pack-revindex.h | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index b2e7d06d604..38b35c48237 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -463,7 +463,7 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
- 	return 0;
- }
- 
--static int load_reverse_index(struct bitmap_index *bitmap_git)
-+static int load_reverse_index(struct repository *r, struct bitmap_index *bitmap_git)
- {
- 	if (bitmap_is_midx(bitmap_git)) {
- 		uint32_t i;
-@@ -477,23 +477,23 @@ static int load_reverse_index(struct bitmap_index *bitmap_git)
- 		 * since we will need to make use of them in pack-objects.
- 		 */
- 		for (i = 0; i < bitmap_git->midx->num_packs; i++) {
--			ret = load_pack_revindex(bitmap_git->midx->packs[i]);
-+			ret = load_pack_revindex(r, bitmap_git->midx->packs[i]);
- 			if (ret)
- 				return ret;
- 		}
- 		return 0;
- 	}
--	return load_pack_revindex(bitmap_git->pack);
-+	return load_pack_revindex(r, bitmap_git->pack);
- }
- 
--static int load_bitmap(struct bitmap_index *bitmap_git)
-+static int load_bitmap(struct repository *r, struct bitmap_index *bitmap_git)
- {
- 	assert(bitmap_git->map);
- 
- 	bitmap_git->bitmaps = kh_init_oid_map();
- 	bitmap_git->ext_index.positions = kh_init_oid_pos();
- 
--	if (load_reverse_index(bitmap_git))
-+	if (load_reverse_index(r, bitmap_git))
- 		goto failed;
- 
- 	if (!(bitmap_git->commits = read_bitmap_1(bitmap_git)) ||
-@@ -580,7 +580,7 @@ struct bitmap_index *prepare_bitmap_git(struct repository *r)
- {
- 	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
- 
--	if (!open_bitmap(r, bitmap_git) && !load_bitmap(bitmap_git))
-+	if (!open_bitmap(r, bitmap_git) && !load_bitmap(r, bitmap_git))
- 		return bitmap_git;
- 
- 	free_bitmap_index(bitmap_git);
-@@ -589,9 +589,10 @@ struct bitmap_index *prepare_bitmap_git(struct repository *r)
- 
- struct bitmap_index *prepare_midx_bitmap_git(struct multi_pack_index *midx)
- {
-+	struct repository *r = the_repository;
- 	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
- 
--	if (!open_midx_bitmap_1(bitmap_git, midx) && !load_bitmap(bitmap_git))
-+	if (!open_midx_bitmap_1(bitmap_git, midx) && !load_bitmap(r, bitmap_git))
- 		return bitmap_git;
- 
- 	free_bitmap_index(bitmap_git);
-@@ -1592,7 +1593,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
- 	 * from disk. this is the point of no return; after this the rev_list
- 	 * becomes invalidated and we must perform the revwalk through bitmaps
- 	 */
--	if (load_bitmap(bitmap_git) < 0)
-+	if (load_bitmap(revs->repo, bitmap_git) < 0)
- 		goto cleanup;
- 
- 	object_array_clear(&revs->pending);
-@@ -1742,6 +1743,7 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 				       uint32_t *entries,
- 				       struct bitmap **reuse_out)
- {
-+	struct repository *r = the_repository;
- 	struct packed_git *pack;
- 	struct bitmap *result = bitmap_git->result;
- 	struct bitmap *reuse;
-@@ -1752,7 +1754,7 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 
- 	assert(result);
- 
--	load_reverse_index(bitmap_git);
-+	load_reverse_index(r, bitmap_git);
- 
- 	if (bitmap_is_midx(bitmap_git))
- 		pack = bitmap_git->midx->packs[midx_preferred_pack(bitmap_git)];
-@@ -2132,11 +2134,12 @@ int rebuild_bitmap(const uint32_t *reposition,
- uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
- 				struct packing_data *mapping)
- {
-+	struct repository *r = the_repository;
- 	uint32_t i, num_objects;
- 	uint32_t *reposition;
- 
- 	if (!bitmap_is_midx(bitmap_git))
--		load_reverse_index(bitmap_git);
-+		load_reverse_index(r, bitmap_git);
- 	else if (load_midx_revindex(bitmap_git->midx) < 0)
- 		BUG("rebuild_existing_bitmaps: missing required rev-cache "
- 		    "extension");
 diff --git a/pack-revindex.c b/pack-revindex.c
-index 03c7e81f9da..e3d69cc0f7a 100644
+index e3d69cc0f7a..44e1b3fed95 100644
 --- a/pack-revindex.c
 +++ b/pack-revindex.c
-@@ -283,7 +283,7 @@ static int load_pack_revindex_from_disk(struct packed_git *p)
- 	return ret;
- }
+@@ -205,6 +205,9 @@ static int load_revindex_from_disk(char *revindex_name,
+ 	size_t revindex_size;
+ 	struct revindex_header *hdr;
  
--int load_pack_revindex(struct packed_git *p)
-+int load_pack_revindex(struct repository *r, struct packed_git *p)
- {
- 	if (p->revindex || p->revindex_data)
- 		return 0;
-@@ -356,7 +356,7 @@ int offset_to_pack_pos(struct packed_git *p, off_t ofs, uint32_t *pos)
- {
- 	unsigned lo, hi;
++	if (git_env_bool(GIT_TEST_REV_INDEX_DIE_ON_DISK, 0))
++		die("dying as requested by '%s'", GIT_TEST_REV_INDEX_DIE_ON_DISK);
++
+ 	fd = git_open(revindex_name);
  
--	if (load_pack_revindex(p) < 0)
-+	if (load_pack_revindex(the_repository, p) < 0)
- 		return -1;
- 
- 	lo = 0;
+ 	if (fd < 0) {
 diff --git a/pack-revindex.h b/pack-revindex.h
-index 4974e75eb4d..3d1969ce8b9 100644
+index 3d1969ce8b9..ef8afee88b0 100644
 --- a/pack-revindex.h
 +++ b/pack-revindex.h
-@@ -39,6 +39,7 @@
+@@ -36,6 +36,7 @@
+ 
+ #define GIT_TEST_WRITE_REV_INDEX "GIT_TEST_WRITE_REV_INDEX"
+ #define GIT_TEST_REV_INDEX_DIE_IN_MEMORY "GIT_TEST_REV_INDEX_DIE_IN_MEMORY"
++#define GIT_TEST_REV_INDEX_DIE_ON_DISK "GIT_TEST_REV_INDEX_DIE_ON_DISK"
  
  struct packed_git;
  struct multi_pack_index;
-+struct repository;
- 
- /*
-  * load_pack_revindex populates the revindex's internal data-structures for the
-@@ -47,7 +48,7 @@ struct multi_pack_index;
-  * If a '.rev' file is present it is mmap'd, and pointers are assigned into it
-  * (instead of using the in-memory variant).
-  */
--int load_pack_revindex(struct packed_git *p);
-+int load_pack_revindex(struct repository *r, struct packed_git *p);
- 
- /*
-  * load_midx_revindex loads the '.rev' file corresponding to the given
-diff --git a/packfile.c b/packfile.c
-index b120405ccc8..717fd685c97 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -2151,7 +2151,7 @@ int for_each_object_in_pack(struct packed_git *p,
- 	int r = 0;
- 
- 	if (flags & FOR_EACH_OBJECT_PACK_ORDER) {
--		if (load_pack_revindex(p))
-+		if (load_pack_revindex(the_repository, p))
- 			return -1;
- 	}
- 
 -- 
 2.40.0.323.gedff6a80c63
 
