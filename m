@@ -2,84 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F2EBC77B6E
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 20:39:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83751C7619A
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 21:16:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229864AbjDLUj5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 16:39:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52650 "EHLO
+        id S229603AbjDLVQX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 17:16:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbjDLUj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 16:39:56 -0400
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::224])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 351179C
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 13:39:54 -0700 (PDT)
-Received: (Authenticated sender: robin@jarry.cc)
-        by mail.gandi.net (Postfix) with ESMTPSA id CE95CE0004;
-        Wed, 12 Apr 2023 20:39:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
-        t=1681331993;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=TY0EWLWjguDAvIXbQz/p1a2WH412+tZeQz8fEB0gJjQ=;
-        b=FimBhvlaMwFlzHV6wvciW9wmoBs/rhr1UjoY0Kye5Uid0tjyz2G1sSprZGPi335BK85Z6g
-        s3JoquoqTNa7KTxiN2XBe+RaIXVU0P0JAywWsxjPrpXvJpfLk6bLIey12rt6q7PNtjw2uI
-        OEkXZmr4W3cjskqWG+g4br7nHKqiJHwtgmjdkUh6v4cVaWxs9XlIuCH46YPK76e+bI46Fw
-        op2CzspWngESKe+Z5v4Wpg98m2o8kcU2uXi19PwDwEkk2t+ndcOuwnWG1EGw2AfVbJT3HR
-        u+NF1L/Q3sE9bKNo5QZR3eOQIPz1psIQf2FtVPlWe3zzOgnBn35FAegZ+hH8Qg==
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Wed, 12 Apr 2023 22:39:51 +0200
-Message-Id: <CRV2G5WD329G.3ATH750WRKPIF@ringo>
-Cc:     <git@vger.kernel.org>, "Phillip Wood" <phillip.wood123@gmail.com>,
-        =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, "Tim Culverhouse" <tim@timculverhouse.com>,
-        "Nicolas Dichtel" <nicolas.dichtel@6wind.com>,
-        "Bagas Sanjaya" <bagasdotme@gmail.com>,
-        "Eric Sunshine" <sunshine@sunshineco.com>,
-        "Michael Strawbridge" <michael.strawbridge@amd.com>
-Subject: Re: [PATCH v2] send-email: export patch counters in validate
- environment
-From:   "Robin Jarry" <robin@jarry.cc>
-To:     "Junio C Hamano" <gitster@pobox.com>
-X-Mailer: aerc/0.14.0-152-g2abc6042d510-dirty
-References: <20230411114723.89029-1-robin@jarry.cc>
- <20230412095434.140754-1-robin@jarry.cc> <xmqqfs957zs4.fsf@gitster.g>
- <CRUZR9IO75B2.3DTTR2N12SQRL@ringo> <xmqq7cug96qv.fsf@gitster.g>
-In-Reply-To: <xmqq7cug96qv.fsf@gitster.g>
+        with ESMTP id S229516AbjDLVQW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 17:16:22 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E9FC5244
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 14:16:21 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1a6715ee82fso2330555ad.1
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 14:16:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681334181; x=1683926181;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ew7jnduykgCNiXLA2hSD8gWlQ4y+fLcpr+dZ07PKkdo=;
+        b=s5NjQoGDDprsl2X2ljEZP/HlVoo5oQX3Zeqt5vuPgHiOEkdsYeF+cCZXcWA0Q95jVD
+         GXb4K9opjsxKDC6r+bzRQnPZOdhfxyl6Lcjxy9J9ubKkjpnx9acu2m88XrgdT7hDwWbO
+         CVL0dIvIPDz9nEPkMuYdK41fHs0oypYqHi19c9il0MYgMoQWkOBlSQTvkIC8rki8GXOV
+         2MzKtYBEsEEMq8zdU+lKvtInoelN3jrphJGYzYgDNeSpa8FnCkHFzu+F7W9DxAz76D7o
+         Od4X+VamGZ+HEw15KPcjZAhCsM4gn2pvn9bDkMP2hW8OPa1nnF7XFWxqKrx/RSoY8ys3
+         QR9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681334181; x=1683926181;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ew7jnduykgCNiXLA2hSD8gWlQ4y+fLcpr+dZ07PKkdo=;
+        b=KDFE7RdccUHyecjhLti5yi0zJIxFEaxTFVNtN2B0fH0KXVTKopIgpH/dwwLdaGsP/S
+         uIGBcM2Cff66sIVfA5Gy6/UQyupojUM+vMYvi4B3LdBQrSgs0NtY9a4HsKohhbLvX9sx
+         pd43lZFoip4tZB0HsLISIf+xiZmDHhah2cQx/TMTz+Nmhg+RVvZqg7rGHBnBK8Hu4d0c
+         uy5w1jf3jA/dUa8pHZDSu/s9kgVRVtq+vRf4vscMkhkv4SDbDILY1mSNHuYqjBjg4GrU
+         JL39GwXHKwlaMIw493iuGdkXeiaGEtWrxLRZAVh/jIYn474YlOYsNnm9Dka8wLBJOGu1
+         2i5g==
+X-Gm-Message-State: AAQBX9eTmdZnJqn9EvOmljSi7lFYCIq+/gc8a20Zm/IkHNU/ksX+A8hv
+        n34Xj7yzBWsRQ8lwMrMgUXQ=
+X-Google-Smtp-Source: AKy350YyVFf51K0K48jsEy+7h3SgWFtxxtTZydWQTCGG4Nf+3jXkk6x2gClrVYO6rqXyCuQdhO/4xw==
+X-Received: by 2002:a05:6a00:190b:b0:63a:e097:26b with SMTP id y11-20020a056a00190b00b0063ae097026bmr323980pfi.13.1681334180851;
+        Wed, 12 Apr 2023 14:16:20 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id b8-20020aa78108000000b0062d7c0dc4f4sm12058596pfi.80.2023.04.12.14.16.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 12 Apr 2023 14:16:20 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc:     git@vger.kernel.org, adlternative@gmail.com,
+        christian.couder@gmail.com
+Subject: Re: [PATCH v3 0/4] doc: interpret-trailers: don't use deprecated
+ config
+References: <cover.1680548208.git.code@khaugsbakk.name>
+        <cover.1681326818.git.code@khaugsbakk.name>
+Date:   Wed, 12 Apr 2023 14:16:19 -0700
+In-Reply-To: <cover.1681326818.git.code@khaugsbakk.name> (Kristoffer
+        Haugsbakk's message of "Wed, 12 Apr 2023 21:52:11 +0200")
+Message-ID: <xmqqr0so7qe4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano, Apr 12, 2023 at 22:37:
-> You are the user who just ran format-patch to prepare sending out
-> the patches, and you are checking your patches.  Wouldn't you have
-> the blobs already anyways?
+Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
 
-But these will be new blobs since we are applying the patches from files
-into another detached branch.
+> Replace deprecated `command` with `cmd` (patch 3). While visiting this
+> file also:
+>
+> • rewrite heredoc examples to use files which are shown with
+>   cat(1) (patch 1);
+> • use input redirection instead of using cat(1) piped into `git
+>   interpret-trailers` (patch 2); and
+> • fix an example that didn’t work properly (patch 4).
 
-> I'd rather not to see anybody go in that direction.  "set -e" is a
-> poor substitute for a properly designed error handling.  Between
->
-> 	set -e
-> 	command A
-> 	command B
-> 	command C
->
-> and
->
-> 	command A &&
-> 	command B &&
-> 	command C || die message
->
-> the former can only say "command B" failed because command B was run
-> under some condition that it did not like, but that is too low level
-> an error that is close to the implementation.  As opposed to the
-> latter that can talk about what it _means_ that any one of these
-> three commands did not succeed in the end-user's terms.
+This was a pleasant read.  I had small nits here and there but
+overall the series is very well crafted.
 
-Ok.
+Will queue.  Thanks.
