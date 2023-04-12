@@ -2,130 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0DC2C7619A
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 15:45:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8460C7619A
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 17:33:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229805AbjDLPpV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 11:45:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49302 "EHLO
+        id S229900AbjDLRds (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 13:33:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229572AbjDLPpV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 11:45:21 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E96D659E1
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 08:45:19 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id t14so15167864lft.7
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 08:45:19 -0700 (PDT)
+        with ESMTP id S229977AbjDLRdq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 13:33:46 -0400
+Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA6CE5FC6
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 10:33:42 -0700 (PDT)
+Received: by mail-oo1-xc2b.google.com with SMTP id f7-20020a4ab647000000b0054101f316c7so5182672ooo.13
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 10:33:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681314318; x=1683906318;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=49k9/l4oz/9wfWcLAWJZc4IHi8GgaYFRhvhf+XyPPU8=;
-        b=iFZt84Kn9bS14621x4xzxszSk4np32sVcWlnSF0xdBULiP+bVUUIK4tJ9LnDAnVZbP
-         7JBINu6udcTyLr/h7m6oJ7Fe7pPjXRqkh6PqRetTH77C5NDI7aVoiIwfKWU4MttqtKyl
-         hzMWE4IXVbBXLWs5bOGySO7WbgKfLIIOBf2y/KkgobAUI5N2uvLusV/Khj2qxLW3OvGm
-         NUV2+T7POVwaVcoV6VX6+xKW3HCznxYe/aKI2M50AL2KcwQOmVdc4pOfGSinuslDL4dm
-         qv8FVfL3IZw8XYxJAQvlSvZvsZTP9UIAiVjykiQ/tQQzYQJc+xzv7ictwLV6kYb25FYW
-         Bmkw==
+        d=github.com; s=google; t=1681320822; x=1683912822;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=afsIhIi/3oNVgGsO9ySfKVR186L49lbq0mmespnqqJA=;
+        b=WCwtvHrKhN1YcEFcF6WzP13nyF3cRhLLfT4dk6/bFfZohZqsfIUMqUB2QoIcW2mnEv
+         kga850x3Z8tOeznvnMf+yI+lBovD9xWOc8I5Oju8tMEGP+8VrjKQgq4DI1EhvYV9wgM4
+         vY/9aqxr+vy3Bs2zZ8L68t9bnQK6Chxi6ra2EpGL3lK8MfoDOm2Jd8BuajQj+dDhEijJ
+         3Vww3syGeRqs+tlR59BbzeD5m927thxDMz8biEwHI86SaP1JHh1AcqPnKlvVJq4h2xzd
+         PsE4JHsMlC6u/KFfkDG7FJlrJopUkhzpxWD0FZL8Cs63WjWzMgAZ0t5VaoZMIHHSfihd
+         ESSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681314318; x=1683906318;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=49k9/l4oz/9wfWcLAWJZc4IHi8GgaYFRhvhf+XyPPU8=;
-        b=cMROKuQqTMndKra572rhoqMvnGxIFVr7Dk8x3mmsORS0NdDEi9cEzTYMCQp18se6Ag
-         PUBItiadgKDnMsUm9CTXLuDUdey/inRdi/3xNfn5MWlUyWx8XCibByJfNAEMAVC2nJn3
-         W7RVNws7kvT3lfs1ZixxKdieZ0x1/9LTF7dly9cOjv9Lpu0RvO+l/dw76ngiOT5U1swv
-         Y33O1OjasiPuMY3rpLAiVy0kuCeI9pk0OtlD9tLVRRA/utmH82dO69TDh3B8nSOtN2D4
-         EcFaaLSqqHMC3TM4kZ3hPfEFz53AJCHjUi18+QN85VaXaKA+bcaTQtlz5hCU7XXwPOyy
-         9t0Q==
-X-Gm-Message-State: AAQBX9dmhpJ/35WPzP87lVhySNcynBlDMd4wfYzvLNmv/aKV4BIFWBRM
-        7bSCjXWY7GLdqHxqd0wKeIQO/TEMNBOLETP0omyYMidq
-X-Google-Smtp-Source: AKy350Z3CxxD1SRBZd78jqUMtGHL1yVRUlg7+XvzilrsNaYqChlUCJUwA6N48ySFIPzwmEIJIovqgd1DINpl1vszYzU=
-X-Received: by 2002:a19:ad07:0:b0:4ec:9ec1:dfa3 with SMTP id
- t7-20020a19ad07000000b004ec9ec1dfa3mr965986lfc.7.1681314317867; Wed, 12 Apr
- 2023 08:45:17 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681320822; x=1683912822;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=afsIhIi/3oNVgGsO9ySfKVR186L49lbq0mmespnqqJA=;
+        b=jqRxBZN1VMCy28SxjOpUGAgGUL3qyDeLi9TlXW+1vNirbnNDOFw32sCy5Pzfnp+x08
+         +tKpZPi7p7wsdqasDrZDm3wnwDbFGAcWWvgbuJ59GccV/6fbi1K6iGwM63ZBch7ThERh
+         5z3r6bC8/hxTvUU9Fc306JHk/4+z8wdGxhJmfsaVSCC6ADHR0XWb7ayEXZ/FcTihNLsR
+         Hzp4FdRZMYPafwA2yOhMYqY87Rlw11RtriB+PBEOl3bFs/X6AFPcLXDD0dUdMj/6Urk+
+         wXb6SrconAs2BbmP9con63ePhgLWESfK7bBOkCZZa5BXFUoDqywrXnJcIe+eshfojwzE
+         Rngg==
+X-Gm-Message-State: AAQBX9e+Jri4/nIIGcBlVn8hm4umh5dSUYqnfgqe506B/WyyEnB0RkIX
+        7c7Ylae6YefpU8ew5JItzVS5
+X-Google-Smtp-Source: AKy350b9AF9xsjX+IzC5Tgx0sJS2ftgoWox8Q4AtEBOL/XK1HDjYiXuf0gTavh0KCe2Uf7zvBfxr8w==
+X-Received: by 2002:a4a:41ce:0:b0:538:57d4:2d62 with SMTP id x197-20020a4a41ce000000b0053857d42d62mr61050ooa.2.1681320822081;
+        Wed, 12 Apr 2023 10:33:42 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id l25-20020a05683016d900b0068bd6cf405dsm6755128otr.1.2023.04.12.10.33.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Apr 2023 10:33:41 -0700 (PDT)
+Message-ID: <ba936ba7-b6f6-de57-ddca-accf6cebec72@github.com>
+Date:   Wed, 12 Apr 2023 13:33:39 -0400
 MIME-Version: 1.0
-References: <20230412134119.28257-1-markus.heidelberg@web.de>
-In-Reply-To: <20230412134119.28257-1-markus.heidelberg@web.de>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 12 Apr 2023 08:45:04 -0700
-Message-ID: <CABPp-BH1172tfZn5i0PvNm6Fw5OObKEKCqT1gjTr+hux86TexQ@mail.gmail.com>
-Subject: Re: [filter-repo PATCH] convert-svnexternals: fix parsing of wrongly
- transformed SVN revisions
-To:     Markus Heidelberg <markus.heidelberg@web.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH 3/7] pack-revindex: make `load_pack_revindex` take a
+ repository
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+References: <cover.1681166596.git.me@ttaylorr.com>
+ <be4faf11011efcfab479e5785e6c2bbac95309bd.1681166596.git.me@ttaylorr.com>
+ <d81c0fe8-580f-dbab-9904-e0ea8459576c@github.com>
+ <ZDXRajRky5XtFenU@nand.local>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <ZDXRajRky5XtFenU@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 12, 2023 at 6:42=E2=80=AFAM Markus Heidelberg
-<markus.heidelberg@web.de> wrote:
->
-> SVN revision numbers from svn:externals property, which are a multiple
-> of 1024 (2^10), are transformed by SubGit to contain a binary suffix
-> ("k", "m" and "g" have been checked) in .gitsvnextmodules file.
-> These aren't valid revision numbers in SVN either.
->
-> Examples:
->   1024 -> 1k
->   2048 -> 2k
->   1048576 -> 1m
->   1049600 -> 1025k
->   1073741824 -> 1g
->
-> This led to the following error:
->     svn_rev =3D int(parsed_config[section]['revision'])
-> ValueError: invalid literal for int() with base 10: '1k'
->
-> Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
-> ---
->  contrib/filter-repo-demos/convert-svnexternals | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/filter-repo-demos/convert-svnexternals b/contrib/fil=
-ter-repo-demos/convert-svnexternals
-> index 0c81507..39ff288 100644
-> --- a/contrib/filter-repo-demos/convert-svnexternals
-> +++ b/contrib/filter-repo-demos/convert-svnexternals
-> @@ -254,6 +254,21 @@ def get_absolute_svn_url(svnext_url, svn_root_url):
->
->    return True, svnext_url
->
-> +def parse_revision_value(value):
-> +  """
-> +  Parse the value of key 'revision' from a .gitsvnextmodules file and re=
-turn it
-> +  as integer.
-> +
-> +  Used to handle non-numeric values like 1k, 2k, 3k etc. added by SubGit
-> +  instead of 1024, 2048, 3072 etc., likewise 1m, 2m, ..., 1g, ...
-> +  """
-> +  suffix =3D value[-1]
-> +  if suffix in "kmg":
-> +    mult =3D {"k": 1024, "m": 1024**2, "g": 1024**3}
-> +    return int(value[0:-1]) * mult[suffix]
-> +  else:
-> +    return int(value)
-> +
->  def add_submodule_tree_entry(commit, parsed_config, section):
->    """
->    Add a submodule entry to the tree of a Git commit.
-> @@ -271,7 +286,7 @@ def add_submodule_tree_entry(commit, parsed_config, s=
-ection):
->
->    # Get SVN revision
->    if parsed_config.has_option(section, 'revision'):
-> -    svn_rev =3D int(parsed_config[section]['revision'])
-> +    svn_rev =3D parse_revision_value(parsed_config[section]['revision'])
->    else:
->      # TODO: revision has to be guessed according to commit timestamp, sk=
-ip for now
->      return False
-> --
-> 2.40.0
+On 4/11/2023 5:30 PM, Taylor Blau wrote:
+> On Tue, Apr 11, 2023 at 09:45:21AM -0400, Derrick Stolee wrote:
 
-Thanks for sending this in!  Applied.
+>> @@ -581,7 +580,7 @@ struct bitmap_index *prepare_bitmap_git(struct repository *r)
+>>  {
+>>  	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+>>
+>> -	if (!open_bitmap(r, bitmap_git) && !load_bitmap(bitmap_git))
+>> +	if (!open_bitmap(r, bitmap_git) && !load_bitmap(r, bitmap_git))
+>>  		return bitmap_git;
+>>
+>>  	free_bitmap_index(bitmap_git);
+> 
+> Oops; we are indeed dropping the repository pointer that was given to
+> prepare_bitmap_git() here. It's unfortunate that we have to work through
+> so many layers to propagate it back down, but I agree that it's the
+> right thing to do.
+> 
+>> @@ -590,9 +589,10 @@ struct bitmap_index *prepare_bitmap_git(struct repository *r)
+>>
+>>  struct bitmap_index *prepare_midx_bitmap_git(struct multi_pack_index *midx)
+>>  {
+>> +	struct repository *r = the_repository;
+> 
+> OK; and here we're using the trick you mentioned in the patch message to
+> avoid having to propagate this even further out. The rest of the patch
+> looks sensible to me.
+> 
+> In terms of working this one in, it feels odd to include it as a
+> separate commit since we know the one immediately prior to it is kind of
+> broken.
+> 
+> Do you want to squash these together? Something else? Anything is fine
+> with me here.
+
+Feel free to squash it in, to avoid having a commit where the chain is
+broken.
+
+Thanks,
+-Stolee
