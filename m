@@ -2,141 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59BFFC7619A
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 06:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 685ABC77B6E
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 06:29:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbjDLG0m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 02:26:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45732 "EHLO
+        id S229536AbjDLG32 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 02:29:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbjDLG0l (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 02:26:41 -0400
-Received: from cressida.uberspace.de (cressida.uberspace.de [185.26.156.202])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B072DAC
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 23:26:35 -0700 (PDT)
-Received: (qmail 17533 invoked by uid 989); 12 Apr 2023 06:26:33 -0000
-Authentication-Results: cressida.uberspace.de;
-        auth=pass (plain)
-From:   Matthias Beyer <mail@beyermatthias.de>
+        with ESMTP id S229459AbjDLG31 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 02:29:27 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BA324C24
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 23:29:25 -0700 (PDT)
+Received: (qmail 17837 invoked by uid 109); 12 Apr 2023 06:29:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Apr 2023 06:29:25 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17071 invoked by uid 111); 12 Apr 2023 06:29:24 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Apr 2023 02:29:24 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 12 Apr 2023 02:29:24 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Bug with git-config includeIf
-Date:   Wed, 12 Apr 2023 08:26:29 +0200
-Message-ID: <3613557.iIbC2pHGDl@takeshi>
-In-Reply-To: <xmqqr0sq9x0f.fsf@gitster.g>
-References: <3352350.44csPzL39Z@takeshi> <xmqqr0sq9x0f.fsf@gitster.g>
+Cc:     Taylor Blau <me@ttaylorr.com>, Jonas Haag <jonas@lophus.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: [PATCH 1/7] v0 protocol: fix infinite loop when parsing multi-valued
+ capabilities
+Message-ID: <20230412062924.GA1681312@coredump.intra.peff.net>
+References: <20230412062300.GA838367@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart9213427.CDJkKcVGEf"; micalg="pgp-sha256"; protocol="application/pgp-signature"
-X-Rspamd-Bar: ---
-X-Rspamd-Report: MIME_GOOD(-0.2) SIGNED_PGP(-2) MID_RHS_NOT_FQDN(0.5) BAYES_HAM(-2.113253)
-X-Rspamd-Score: -3.813253
-Received: from unknown (HELO unkown) (::1)
-        by cressida.uberspace.de (Haraka/3.0.1) with ESMTPSA; Wed, 12 Apr 2023 08:26:33 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=beyermatthias.de; s=uberspace;
-        h=from;
-        bh=QtXtoi5gEbueV9mqN9MXb6Y27eMcusekEMOKDAjjxMs=;
-        b=SToffoHbxV5IIL817aot+2OLuyCLPwF1bi0zt2B+4WUUyI1ggZSPlOXT+qxGfV6wWDugVEaec6
-        z93BuS097F3gkBkGme/WoIbB3E7JCulex/PUPFcFO0UTsK84o869SGv9aP9FkqQ41Cdy9v2S5Zd4
-        LB6yB1Qkgl/HA8xsEUcy3BuWhaJmp2Qc2eVLNZ1M50kDpSfUisDnYD7S0sHWVZgMSLDhfuc73WX3
-        cN7F38M/8e3s9kKTQ38/HmFhOCTOXLWd7GHzHP9Y2WVfOMCGbXma6Oukv3VCwS0H36v5LR30iHEE
-        EOAK7+T7ovKPgaNGtwpvqf+OYWQk4kylq8fe7vsUoCLvcojrohdtDUaDRk0f3dk/TsZFHYBOyc2e
-        b5eheePR+cCL9E6wrA0EIIUNx97rnVI2wehFa2ed7HscHQ5K1RoM8tf501kE1+98Do4r2pMIgG8/
-        IrDLoHO6yC0z5IrIhyqZsqlcq9H7wahgO8wjKgG1glSDpJW+uUk0qmtrcMUhTYYJ+nt4+Fye/FPm
-        NWAm3Y56TBGhWW7IMeKyodix2OKlHu6vjhoZVNNDJ2fVqssR/BYbKteUZbpf8ySmSjpD0GecssGB
-        AftbkzxTTj4bIHw5nZeGKEAXP6kqzqKcUe1kkqRK7OAm+sQduQARa+W9Z4yCKspmGlFPiDwoXbik
-        s=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230412062300.GA838367@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---nextPart9213427.CDJkKcVGEf
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"; protected-headers="v1"
-From: Matthias Beyer <mail@beyermatthias.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: Bug with git-config includeIf
-Date: Wed, 12 Apr 2023 08:26:29 +0200
-Message-ID: <3613557.iIbC2pHGDl@takeshi>
-In-Reply-To: <xmqqr0sq9x0f.fsf@gitster.g>
-References: <3352350.44csPzL39Z@takeshi> <xmqqr0sq9x0f.fsf@gitster.g>
-MIME-Version: 1.0
+If Git's client-side parsing of an upload-pack response (so git-fetch or
+ls-remote) sees multiple instances of a single capability, it can enter
+an infinite loop due to a bug in advancing the "offset" parameter in the
+parser.
 
-Hi,
+This bug can't happen between a client and server of the same Git
+version. The client bug is in parse_feature_value() when the caller
+passes in an offset parameter. And that only happens when the v0
+protocol is parsing "symref" and "object-format" capabilities, via
+next_server_feature_value(). But Git has never produced multiple
+object-format capabilities, and it stopped producing multiple symref
+values in d007dbf7d6 (Revert "upload-pack: send non-HEAD symbolic refs",
+2013-11-18).
 
-thanks for your reply.
+However, upload-pack did produce multiple symref entries for a while,
+and they are valid. Plus other implementations, such as Dulwich will
+still do so. So we should handle them. And even if we do not expect it,
+it is obviously a bug for the parser to enter an infinite loop.
 
-I found the issue. As always, one nastly little detail: ~/dev is actually a 
-symlink on my system(s) to ~/archive/development/
+The bug itself is pretty simple. Commit 2c6a403d96 (connect: add
+function to parse multiple v1 capability values, 2020-05-25) added the
+"offset" parameter, which is used as both an in- and out-parameter. When
+parsing the first "symref" capability, *offset will be 0 on input, and
+after parsing the capability, we set *offset to an index just past the
+value by taking a pointer difference "(value + end) - feature_list".
 
-git rev-parse --git-dir of course resolves that symlink and thus ~/dev/work/ 
-does not actually match ~/archive/development/
+But on the second call, now *offset is set to that larger index, which
+lets us skip past the first "symref" capability. However, we do so by
+incrementing feature_list. That means our pointer difference is now too
+small; it is counting from where we resumed parsing, not from the start
+of the original feature_list pointer. And because we incremented
+feature_list only inside our function, and not the caller, that
+increment is lost next time the function is called.
 
-Using that path in the includeIf produces the expected results. 
+The simplest solution is to account for those skipped bytes by
+incrementing *offset, rather than assigning to it. (The other possible
+solution is to add an extra level of pointer indirection to feature_list
+so that the caller knows we moved it forward, but that seems more
+complicated).
 
-Thanks for your patience.
-Matthias
+Since the bug can't be reproduced using the current version of
+git-upload-pack, we'll instead hard-code an input which triggers the
+problem. Before this patch it loops forever re-parsing the second symref
+entry. Now we check both that it finishes, and that it parses both
+entries correctly (a case we could not test at all before).
 
-Am Dienstag, 11. April 2023, 18:58:08 CEST schrieb Junio C Hamano:
-> Matthias Beyer <mail@beyermatthias.de> writes:
-> > [includeIf "gitdir:~/dev/work/"]
-> > 
-> >     path = ~/config/git/gitconfig_work
-> > 
-> > ```
-> > 
-> > That means, from my understanding, that all git repositories in ~/dev/work
-> > should now have the work-related email address set.
-> > 
-> > If I go to ~/dev/work/somerepo and `git config --get user.email` it indeed
-> > shows the expected email address.
-> 
-> The pattern given to "gitdir:" ends with "/" and implicitly "**" is
-> added after it.  If "~/dev/work/somerepo" is a repository, going
-> there and "git rev-parse --git-dir" would say ".git" or
-> "~/dev/work/somerepo/.git", then the includeIf should trigger.
-> 
-> > But if I go to a subdirectory in that repository, the very same command
-> > shows the private email address, and commits get written with that
-> > private email address.
-> 
-> I use exactly the same configuration (not for working on this
-> project, though), and your symptom does not reproduce for me, which
-> puzzles me.  I go to an equivelent of your ~/dev/work/somerepo/subdir
-> and "git rev-parse --git-dir" would still report an equivalent of
-> your "~/dev/work/somerepo/.git", and my "git config --show-origin user.name"
-> does point at the value of "includeIf.gitdir:~/dev/work/.path".
-> 
-> I wonder what the difference of the set-up is.
-> 
-> My ~/dev/work/somerepo/.git equivalent is a directory.  Perhas yours
-> is not?  That should not cause any difference and it is merely a
-> guess in the dark.
+We don't need to worry about testing v2 here; it communicates the
+capabilities in a completely different way, and doesn't use this code at
+all. There are tests earlier in t5512 that are meant to cover this (they
+don't, but we'll address that in a future patch).
 
---nextPart9213427.CDJkKcVGEf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
+Reported-by: Jonas Haag <jonas@lophus.org>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ connect.c            |  4 ++--
+ t/t5512-ls-remote.sh | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+), 2 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEUJGUus1GMTrRclzcEKWX9Kitz80FAmQ2TxUACgkQEKWX9Kit
-z83eGxAArTFr/mfDC9MksKQq6+9agb58qeIVjdUCw3+JXLRNnc8k/01YFBAfBdrb
-JG6mai8kFNg08TwYr7gcx8Mmdvs9akoqq1AiblXUSnSul2nAJp9YE8afw0yHKA+j
-+RsCgtWS+ljYydwoHjeI/RdBTQX7TAykWxEwCMAyjj92/T858A/eg8Bm3Uou8s4i
-FodRT3Rh2ijjezHpqJzZ0r+f0CIqX7mE7bSN/e11VW9K8gfDIR6TvIPVZmoMxY4G
-MfKsoa3NXPEKFAB85n1WMuZZkUH20a1VLm2jHwlKVhg+TuUjyjie7NAdMzYmBfPs
-Hoe4pljzS3XrHgFlyIq2sgs3s+PqB7fZq9ROoreD2UMmcde2Kwk9MuakN1OwQJUC
-IIftgbih8KVb8v8SJnIqii6ZAj78t+SSVdqSe8VJE49DjRWqWhmwOpzp7bK+EU2H
-EA1jbJgjCYT4lIdTbgxaOOhTOC4heYIHxaYboT/FbLNFNH9BEO9zWokJ6DQBIimd
-OYdZhzpRNNU437Inn/D8yVDu7gjWx7Fi+GKwxEChYWXrhw6KGAkZhmEo+eq1mgMc
-54eCTzgE7UYoW3YoZBIG8NLH7RqplFLRNRWhcvNpyz83Xfqn2FHYAca7wYOV0Y8N
-419BVUmH+rVaXgmnbu2iScqsUhYbeb3ELHM5UG/fop8LCePnOu4=
-=pVZR
------END PGP SIGNATURE-----
-
---nextPart9213427.CDJkKcVGEf--
-
-
+diff --git a/connect.c b/connect.c
+index c0c8a38178..5e265ba9d7 100644
+--- a/connect.c
++++ b/connect.c
+@@ -616,7 +616,7 @@ const char *parse_feature_value(const char *feature_list, const char *feature, i
+ 				if (lenp)
+ 					*lenp = 0;
+ 				if (offset)
+-					*offset = found + len - feature_list;
++					*offset += found + len - feature_list;
+ 				return value;
+ 			}
+ 			/* feature with a value (e.g., "agent=git/1.2.3") */
+@@ -628,7 +628,7 @@ const char *parse_feature_value(const char *feature_list, const char *feature, i
+ 				if (lenp)
+ 					*lenp = end;
+ 				if (offset)
+-					*offset = value + end - feature_list;
++					*offset += value + end - feature_list;
+ 				return value;
+ 			}
+ 			/*
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 20d063fb9a..64dc6fa91c 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -15,6 +15,19 @@ generate_references () {
+ 	done
+ }
+ 
++test_expect_success 'set up fake upload-pack' '
++	# This can be used to simulate an upload-pack that just shows the
++	# contents of the "input" file (prepared with the test-tool pkt-line
++	# helper), and does not do any negotiation (since ls-remote does not
++	# need it).
++	write_script cat-input <<-\EOF
++	# send our initial advertisement/response
++	cat input
++	# soak up the flush packet from the client
++	cat
++	EOF
++'
++
+ test_expect_success 'dies when no remote found' '
+ 	test_must_fail git ls-remote
+ '
+@@ -360,4 +373,35 @@ test_expect_success 'ls-remote prefixes work with all protocol versions' '
+ 	test_cmp expect actual.v2
+ '
+ 
++test_expect_success 'v0 clients can handle multiple symrefs' '
++	# Modern versions of Git will not return multiple symref capabilities
++	# for v0, so we have to hard-code the response. Note that we will
++	# always use both v0 and object-format=sha1 here, as the hard-coded
++	# response reflects a server that only supports those.
++	oid=1234567890123456789012345678901234567890 &&
++	symrefs="symref=refs/remotes/origin/HEAD:refs/remotes/origin/main" &&
++	symrefs="$symrefs symref=HEAD:refs/heads/main" &&
++
++	test-tool pkt-line pack >input.q <<-EOF &&
++	$oid HEADQ$symrefs
++	$oid refs/heads/main
++	$oid refs/remotes/origin/HEAD
++	$oid refs/remotes/origin/main
++	0000
++	EOF
++	q_to_nul <input.q >input &&
++
++	cat >expect <<-EOF &&
++	ref: refs/heads/main	HEAD
++	$oid	HEAD
++	$oid	refs/heads/main
++	ref: refs/remotes/origin/main	refs/remotes/origin/HEAD
++	$oid	refs/remotes/origin/HEAD
++	$oid	refs/remotes/origin/main
++	EOF
++
++	git ls-remote --symref --upload-pack=./cat-input . >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.40.0.493.gfc602f1919
 
