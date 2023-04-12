@@ -2,227 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40695C77B71
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 10:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27A2DC77B6E
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 13:42:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231598AbjDLKXf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 06:23:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36414 "EHLO
+        id S229939AbjDLNmt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 09:42:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231262AbjDLKXI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 06:23:08 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85CF27D89
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 03:23:05 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id A8A1D3200984;
-        Wed, 12 Apr 2023 06:23:04 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 12 Apr 2023 06:23:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1681294984; x=1681381384; bh=br
-        9prARjMcDuS9r+1lDr24rpMi1ZT2vNvswKW1/UsUU=; b=H70dU9eGWrcKnBXkWi
-        FnejIh7WTDQVa1zg8uxfFbcypvAQ/Y2cyI80ovsoRlh7q0/mONPZQf2tu6e3uJ06
-        73tNx4WKQ8Xl7BsYl83jB36RF8o+QHSBJIz+5HHnNGlKecmED3Am2jQRs3Ktg9YB
-        YygwE1D0pjqbxsSfKcYbbGYKxpUBN0BZJiBNb26nRdUdI6XwH/G2xR6SomuvH66t
-        f9I2Ln8YRcTlkvOX8C1k3GpDvqdEBL5/CgGb1JqwnILhB7uet8YFsWzL6IipJCX+
-        Gq0dSm7tlmM+eS4VLS3ulpQPVz7R1AMhxaP2t6dnlgG5aFneJ+N7hGBYLvH/yTjm
-        YzEQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1681294984; x=1681381384; bh=br9prARjMcDuS
-        9r+1lDr24rpMi1ZT2vNvswKW1/UsUU=; b=AlbL334gC6HzJ/iq5vpZetb6Wd0CE
-        IwGNfZy5QNpDFPQ2xMeQ9jptGTZwjv4q+w72nmE9Nm02qBdX0TW3MwIkFuymESNq
-        xW7Cu+zIq/bCr+nM2fg+UTHbgcIXClPEzi6pLbmXQtpTXpy29LHzbHSIheFOeNjd
-        Nlb3Cqszow1Hna2w4ism2mrHGL7dkSbnipTaXlNBw1w3jJHiX8SlgTa6rUKUpZhu
-        2/jqlytI5HzbLkw+TOcU+SNV796FrgzdINNPmR1WR0t6R1eoc1CkDxtTNP9UBPb4
-        6VgHugx7fBxgZXyBbin7F/RmJOy/0vIOUWAX9yBU5TnWcctQI7qjLd4PQ==
-X-ME-Sender: <xms:iIY2ZNCpJTXNYuGwaTNqhNkJw_9paBbK92uHdvaK4UyeanxQplnLTA>
-    <xme:iIY2ZLhJUKsA9wrIA9LdQO2vl308mGSXkZ8W_VhYGy3Zd2N7jl9ChAzjYPaU4RO8v
-    Pf89syA582bRsJKSw>
-X-ME-Received: <xmr:iIY2ZIkLa5C1FRKEIEwausr_v7VDMGImJLOt4MQAGzRa_ZZcCNXf3kvUY1ne34imdL_v4uY_gCqA1Si4FARg9y7sJHoth7zQwqck2yxUoaE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekiedgvdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:iIY2ZHxrIF_8FQdDr_SVBO4M1cKNnpshjfleH9kZfpFJQS9JfR3hBQ>
-    <xmx:iIY2ZCTw8nvqTZfx7MROsZZPadqa23tYNcPYnU7HkD5dy6d6IgAbVw>
-    <xmx:iIY2ZKYzRyQeYpE0igJj-JY6VCWye2bouYFGKpgRdaHKtfO1VhvDDA>
-    <xmx:iIY2ZNdddqvVSX4R7BY4_H9DB3DJ5ews8JSq6fyxDn_yXPJUrcOXQg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Apr 2023 06:23:02 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id a4cc6bbc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Wed, 12 Apr 2023 10:22:42 +0000 (UTC)
-Date:   Wed, 12 Apr 2023 12:23:01 +0200
-From:   Patrick Steinhardt <ps@pks.im>
+        with ESMTP id S229758AbjDLNms (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 09:42:48 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6440C7A9C
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 06:42:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1681306949; i=markus.heidelberg@web.de;
+        bh=8JJA/TAdL1tkeQ/SeTHYu0nU2sYC6tbicEcwjQbz/Ok=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=T41LgYgI0OLoAr4nOybkGbBtCabLzWQPI66K3l9faReA/Im3fa/6ar9+bLMcfFZ/M
+         tYHf+giyp+muZzpkBiXb1fDRSTYCmUElO9gYqtJ23/vN8qfuMqRyA5ytlYcwYqoadI
+         tq6DsF5TyNMgcLtshb7lhs1SsHzvGrZ8sb+3ZmoTSsOsX2NsDCJrseR8dgZ/ZhqpJM
+         anMYEbHtxR9Xv3Bt6hcA2RUExCQX7vt/BLuNjmTcTTKT0uDFo0UrsgFjxlfi+E8iZC
+         FVavwgnFi65QrJDNcOo5DD9s2dk0FECU+TDPrvQhsIUCE+0q1qX7FfrLP805fU/AP/
+         sgKINvUfqGmSA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost.localdomain ([46.223.163.182]) by smtp.web.de
+ (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1Mx0Ix-1qapzD3gLr-00y1Bn; Wed, 12 Apr 2023 15:42:28 +0200
+From:   Markus Heidelberg <markus.heidelberg@web.de>
 To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH v2 8/8] repack: disable writing bitmaps when doing a local
- geometric repack
-Message-ID: <b74d0a037b07706d07fad7b438fa0cb211726575.1681294715.git.ps@pks.im>
-References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
- <cover.1681294715.git.ps@pks.im>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Markus Heidelberg <markus.heidelberg@web.de>
+Subject: [filter-repo PATCH] convert-svnexternals: fix parsing of wrongly transformed SVN revisions
+Date:   Wed, 12 Apr 2023 15:41:19 +0200
+Message-Id: <20230412134119.28257-1-markus.heidelberg@web.de>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="soGiN+iHKjbWApds"
-Content-Disposition: inline
-In-Reply-To: <cover.1681294715.git.ps@pks.im>
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:lmNLgEA05O+MddBob9Rt+WHoCB3kgOdI0EtXUheAU8082vBPTvw
+ QlCvUgF6T3zgxQ0zYW4LmI8je0bIO7D60I/xUfnfx5Z4lx0jW5iM0hJGlltwz+/E2GfkJHJ
+ Ie5/VID/726ei1IYbnJsvF9Jov4zxA7gIpKId8lIoJASoWnZNIwLugQKeN103pYqKNxj9jc
+ EhYfmG+LwreHliqwrymow==
+UI-OutboundReport: notjunk:1;M01:P0:oOoHJLS/D20=;gvdA4uLpR/WqOEqwIYWqKcaqD3c
+ vrI7hDqdqXK/wcI4jhLqiKjWfQubTUTX4Y537phS/ncR37xwtJ7L9I5xUFuwOqAdNW6ot71aC
+ f8t9RC3IGG6su8q3c4+pieg8yyiaaM7P6JohnBH7/m2xSeoQgsx710Z1h+aujZ+V6pA5pFtSW
+ yXsE4wWyNdmfcyqd5lhSxdv/FCuZabzongV//0AIJz7G2dbkhSw96l3PkVGCuGe7GEQeqqNRZ
+ ex9+bEdcS+NxiuGoxdCL3EL6VNkDSKfsYDFAVQOjSC8E9+xNYB/aoMyIv/tZViF4Pycu7NlTs
+ 0iwqmMHixUZIhHf/OKJTE1h5ABdkXJfh+wMRY8qHGcFEM5F8mpp0LlwyBXxJlnQA4DF2sMsVg
+ 77PUxE2EXYZ+m9V/jFRTwSeIASRHGckoBEZkZX0SGgIRoBmUhDgIkCe11V7LQ2GwDw9x1vxJ9
+ XjZ1tFIq28N8T5af5sBOdbF0JRfNYWdaurQjMRQknWNS4ptxDIlhwvxGy1ADZU+2awD0Wb8Y8
+ i7LxKSNo8pQqbODStyNRBUxcVs1Xiu34jRP215OtYRGzLcRmuV/vf0alPxhO1T5N0s6D4Bm2g
+ PWodyxsRzGGcOdYc5O4AdpPiVQ7GwfskkTme1haXiIDFceEQShdY5vs9DoryXFeAuLjjKkrP+
+ XpHtq9aXYXlIwedZcMjOhvoEPWsTR0dLeiRcTj6hh/u9Wycl2FrsVCh/BfFK+fgyCz9cCXFgs
+ ZtilHwOiXzEK01buDvUnITwfzpLS7jVPcP4Ie5epZ9swneU4VzLKm4tqeSogeuUHd+E4Qeglx
+ 2cjgBuYGX3kPhj9Ma4xnHe7CJmcfI0FTI1xd27u5OaEfaky6TimBCw3GdghUV3THgayP81w1O
+ xwB0/PLVJh7JWeJHRawWwkl9SYkgCAJbG8ZXHTaLrPPseb6Sn+Gp/0KqQqVO85cLf+bRbhJ+j
+ 4sWjy8t+cO6PCo6ZuSjSDxy1UJY=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+SVN revision numbers from svn:externals property, which are a multiple
+of 1024 (2^10), are transformed by SubGit to contain a binary suffix
+("k", "m" and "g" have been checked) in .gitsvnextmodules file.
+These aren't valid revision numbers in SVN either.
 
---soGiN+iHKjbWApds
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Examples:
+  1024 -> 1k
+  2048 -> 2k
+  1048576 -> 1m
+  1049600 -> 1025k
+  1073741824 -> 1g
 
-In order to write a bitmap, we need to have full coverage of all objects
-that are about to be packed. In the traditional non-multi-pack-index
-world this meant we need to do a full repack of all objects into a
-single packfile. But in the new multi-pack-index world we can get away
-with writing bitmaps when we have multiple packfiles as long as the
-multi-pack-index covers all objects.
+This led to the following error:
+    svn_rev =3D int(parsed_config[section]['revision'])
+ValueError: invalid literal for int() with base 10: '1k'
 
-This is not always the case though. When writing multi-pack-indices in a
-repository that is connected to an alternate object directory we may end
-up writing a multi-pack-index that only has partial coverage of objects.
-The end result is that writing the bitmap will fail:
+Signed-off-by: Markus Heidelberg <markus.heidelberg@web.de>
+=2D--
+ contrib/filter-repo-demos/convert-svnexternals | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-    $ git multi-pack-index write --stdin-packs --bitmap <packfiles
-    warning: Failed to write bitmap index. Packfile doesn't have full closu=
-re (object 1529341d78cf45377407369acb0f4ff2b5cdae42 is missing)
-    error: could not write multi-pack bitmap
+diff --git a/contrib/filter-repo-demos/convert-svnexternals b/contrib/filt=
+er-repo-demos/convert-svnexternals
+index 0c81507..39ff288 100644
+=2D-- a/contrib/filter-repo-demos/convert-svnexternals
++++ b/contrib/filter-repo-demos/convert-svnexternals
+@@ -254,6 +254,21 @@ def get_absolute_svn_url(svnext_url, svn_root_url):
 
-Now there are two different ways to fix this. The first one would be to
-amend git-multi-pack-index(1) to disable writing bitmaps when we notice
-that we don't have full object coverage. But we ain't really got enough
-information there, and seeing that it is a low-level plumbing command it
-does not feel like the right place to fix this.
+   return True, svnext_url
 
-We can easily fix it at a higher level in git-repack(1) though. When all
-of the following conditions are true:
-
-    - We are asked to write a multi-pack index with bitmaps.
-
-    - We are asked to only include local objects via `-l`.
-
-    - We are connected to an alternate repository that has packfiles.
-
-Then we will override the user's ask and disable writing bitmaps with a
-warning. This is similar to what we do in git-pack-objects(1), where we
-also disable writing bitmaps in case we omit an object from the pack.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/repack.c            | 20 ++++++++++++++++++++
- t/t7703-repack-geometric.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
-
-diff --git a/builtin/repack.c b/builtin/repack.c
-index f57869f14a..07d92fdf87 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -881,6 +881,26 @@ int cmd_repack(int argc, const char **argv, const char=
- *prefix)
- 	if (pack_kept_objects < 0)
- 		pack_kept_objects =3D write_bitmaps > 0 && !write_midx;
-=20
-+	if (write_midx && write_bitmaps && geometric_factor && po_args.local) {
-+		struct packed_git *p;
++def parse_revision_value(value):
++  """
++  Parse the value of key 'revision' from a .gitsvnextmodules file and ret=
+urn it
++  as integer.
 +
-+		for (p =3D get_all_packs(the_repository); p; p =3D p->next) {
-+			if (p->pack_local)
-+				continue;
++  Used to handle non-numeric values like 1k, 2k, 3k etc. added by SubGit
++  instead of 1024, 2048, 3072 etc., likewise 1m, 2m, ..., 1g, ...
++  """
++  suffix =3D value[-1]
++  if suffix in "kmg":
++    mult =3D {"k": 1024, "m": 1024**2, "g": 1024**3}
++    return int(value[0:-1]) * mult[suffix]
++  else:
++    return int(value)
 +
-+			/*
-+			 * When asked to do a local repack, but we have
-+			 * packfiles that are inherited from an alternate, then
-+			 * we cannot guarantee that the multi-pack-index would
-+			 * have full coverage of all objects. We thus disable
-+			 * writing bitmaps in that case.
-+			 */
-+			warning(_("disabling bitmap writing, as some objects are not being pack=
-ed"));
-+			write_bitmaps =3D 0;
-+			break;
-+		}
-+	}
-+
- 	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE) && !write_midx)
- 		die(_(incremental_bitmap_conflict_error));
-=20
-diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index 96c8d4cdfa..0aaec9f853 100755
---- a/t/t7703-repack-geometric.sh
-+++ b/t/t7703-repack-geometric.sh
-@@ -420,4 +420,31 @@ test_expect_success '--geometric -l with non-intact ge=
-ometric sequence across OD
- 	test_cmp expected-objects actual-objects.sorted
- '
-=20
-+test_expect_success '--geometric -l disables writing bitmaps with non-loca=
-l packfiles' '
-+	test_when_finished "rm -fr shared member" &&
-+
-+	git init shared &&
-+	test_commit_bulk -C shared --start=3D1 1 &&
-+
-+	git clone --shared shared member &&
-+	test_commit_bulk -C member --start=3D2 1 &&
-+
-+	# When performing a geometric repack with `-l` while connecting to an
-+	# alternate object database that has a packfile we do not have full
-+	# coverage of objects. As a result, we expect that writing the bitmap
-+	# will be disabled.
-+	git -C member repack -l --geometric=3D2 --write-midx --write-bitmap-index=
- 2>err &&
-+	cat >expect <<-EOF &&
-+	warning: disabling bitmap writing, as some objects are not being packed
-+	EOF
-+	test_cmp expect err &&
-+	test ! -f member/.git/objects/pack/multi-pack-index-*.bitmap &&
-+
-+	# On the other hand, when we repack without `-l`, we should see that
-+	# the bitmap gets created.
-+	git -C member repack --geometric=3D2 --write-midx --write-bitmap-index 2>=
-err &&
-+	test_must_be_empty err &&
-+	test -f member/.git/objects/pack/multi-pack-index-*.bitmap
-+'
-+
- test_done
---=20
+ def add_submodule_tree_entry(commit, parsed_config, section):
+   """
+   Add a submodule entry to the tree of a Git commit.
+@@ -271,7 +286,7 @@ def add_submodule_tree_entry(commit, parsed_config, se=
+ction):
+
+   # Get SVN revision
+   if parsed_config.has_option(section, 'revision'):
+-    svn_rev =3D int(parsed_config[section]['revision'])
++    svn_rev =3D parse_revision_value(parsed_config[section]['revision'])
+   else:
+     # TODO: revision has to be guessed according to commit timestamp, ski=
+p for now
+     return False
+=2D-
 2.40.0
 
-
---soGiN+iHKjbWApds
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ2hoQACgkQVbJhu7ck
-PpTYtRAAqE1dOr4cjyfZsVbVZG//+0duqdlaV71gD8K+V/NENoEeQjxLBlvtzvHb
-hxISTdSkldWwzvBW0jOlEIcmIZWsfg2a+uuJ2mfVTh3ZD83RjUGctJWEHq+O1GtA
-f8hTcfyT0fEel7gLCVGnOxt080bu0c4AoM0mdajjakSRqkhC87kFHHVdZ1nRGWDl
-AB1efeOfrP7pyyyRDo5jLhSDQN7jmh1L+ngDKgHjnmSr3zQZuPUgPQaA/BnmZgYm
-0a7Ur7M70DhNysSIbib4HUCo8sxE5sNQQf0vDedg2o1O+QuFBciiV8zuB13PoHOj
-09OrqXioNGvROFfv0hhVJrGiTcJw0JfPJ9fpQs5xoq/mIqdxcQ5ralefKoF7OmuW
-kHs4VbG/wEygvS4f93NbPq93Dvw6KVmImzFKF0KCFExBDc91qoFJCINku0kxfBvR
-69AH8z4TZ18sOZwomvyY8EjzpcdCtBf1WjnMWN3HEvRPsXmQBvCCFr58wP/EerzQ
-Mnrca+MpvQsx3HLhCyx+dxzxvcYhg+BiipSNz1qWUE5Sdb/bKv57cQ0qjyMIIp5f
-GoJGzu65qX/kbsl7PfD0b3bj/uWybFryboqf1SRMySqwa2NkiOhCar2IFgeyQyaW
-W8nLprRxk0CE/Z826fYwipcacZUykDNC9fYB5hhybWci0XqgtcU=
-=sI07
------END PGP SIGNATURE-----
-
---soGiN+iHKjbWApds--
