@@ -2,117 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96848C7619A
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 06:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 596C5C7619A
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 06:48:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229825AbjDLGrB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 02:47:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57136 "EHLO
+        id S229791AbjDLGsT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 02:48:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229817AbjDLGq6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 02:46:58 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73AB061A1
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 23:46:54 -0700 (PDT)
-Received: (qmail 18117 invoked by uid 109); 12 Apr 2023 06:46:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 12 Apr 2023 06:46:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17264 invoked by uid 111); 12 Apr 2023 06:46:52 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 12 Apr 2023 02:46:52 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 12 Apr 2023 02:46:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Jonas Haag <jonas@lophus.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/7] v0 protocol: fix infinite loop when parsing
- multi-valued capabilities
-Message-ID: <20230412064651.GA1681676@coredump.intra.peff.net>
-References: <20230412062300.GA838367@coredump.intra.peff.net>
- <20230412062924.GA1681312@coredump.intra.peff.net>
+        with ESMTP id S229765AbjDLGsS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 02:48:18 -0400
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A8CF5B92
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 23:48:17 -0700 (PDT)
+Received: by mail-yb1-xb34.google.com with SMTP id v7so9180959ybi.0
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 23:48:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681282096; x=1683874096;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d8/NexVqII/xSg9aBEbR6qB6pxKdLlluodrkq8/PE4w=;
+        b=IerjK/qkZZ2Ib54LmXnt/Sg5HExMfWDiN4ndN717GpkR3M99eD5cYgP8fGRSrfv9O2
+         LsL4pXqVn5WrjoBfgx7Qz42ExvpPNA4zNwsqrmpjNQ5r4OV5jQt4PMqFm2msDqEHcgCo
+         5mBZS1IC7MRN7a71G5CbUj9AbcPwGYvqGlPelCUi8mcLbOj0F/roHoDNYIaUh4st/5eO
+         PFsiDltQGGONSFHY4BLrlgkwbfIBkDHC22R7On9UJFvB/YVkbRW9p3f6OgQUqhckqFg/
+         2TYp6sprqwMKfeY/a7/NTjWBvpondXQrIWpV2dMinykvzV865dVGOjUwdjM74gpdaqir
+         qhLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681282096; x=1683874096;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=d8/NexVqII/xSg9aBEbR6qB6pxKdLlluodrkq8/PE4w=;
+        b=CuZi52SvPvovfK+fsqEa4ekkZgMcdod8f4oHo+iUohoqhLOdKNgz627e9u6L2S4/sO
+         eA+1ryNMH6MYMPZnjcVtDUtaVb3iPBNAC3qoZmVvW3J/Hj1VN7zVH8aIoTzF8r5VrOjj
+         1RQYPBgfWwZg7WnjGjlCSf5ASbqNdISZ1WwOB2Lo1lqZlgZtOM7AlPv57XtL+A2ukIgQ
+         WFqloutlL1fIivsvhwKKC6RIWjitJ9vjgFrdSZRvSwX+1B5cUSBZko8CmxSWtY1KI7Gk
+         3y+AkJ4NgALW/kLxbl8yah90CVpHrD2Z5EyPOsvWgfICVymvvsFe9aksxGoM+o3m16Pm
+         DCXg==
+X-Gm-Message-State: AAQBX9flZ7eX/1bWx1tAv/Md/T/Pg4ehv7dBXe2mag8dkgH+lyZdYFV6
+        AZfUOwjInj8QYJcfZmIE682lNkAt4vQEiHJMpJSNC/ecrDIGh3af
+X-Google-Smtp-Source: AKy350a852YVsCAvtYkgdCDB+iOVfT/gz9IcmTxgO2ywAyNPP9ol7bWKzApubXsvnJhlPTSYlWKCOwqKCkT4rwdw0MQ=
+X-Received: by 2002:a25:cb4f:0:b0:b6a:5594:5936 with SMTP id
+ b76-20020a25cb4f000000b00b6a55945936mr1020117ybg.5.1681282096441; Tue, 11 Apr
+ 2023 23:48:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230412062924.GA1681312@coredump.intra.peff.net>
+References: <CAOLTT8Tg_Gkj6jid-sH_A=-xajN=rd=Vgh-nqHY5NcJ4-VExbg@mail.gmail.com>
+In-Reply-To: <CAOLTT8Tg_Gkj6jid-sH_A=-xajN=rd=Vgh-nqHY5NcJ4-VExbg@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Wed, 12 Apr 2023 14:48:25 +0800
+Message-ID: <CAOLTT8RAhCY_Xo_jDopggCVEF8t5Kghji4h+Td6Gja_3kMSpJQ@mail.gmail.com>
+Subject: Re: [QUESTION] How does Git ref backend work
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 12, 2023 at 02:29:24AM -0400, Jeff King wrote:
+ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2023=E5=B9=B44=E6=9C=8812=E6=
+=97=A5=E5=91=A8=E4=B8=89 14:25=E5=86=99=E9=81=93=EF=BC=9A
+>
+> 1. I noticed that normally refs transactions use the refs files-backend,
+> looking at the reference transaction of refs files-backend alone:
+> First, it opens a transaction in memory, then multiple update items
+> are added in memory, and finally, when the reference transaction
+> is committed, it creates a ref.lock for each update item, renames it
+> to the real address of the ref.
+>
+> but there seems to be some packed-backend logic coupled inside of
+> files-backend. This makes me wonder why these ref backends are not
+> independent?
+>
+> 2. Is the reftable backend in a usable state? How can I enable it?
+> I couldn't find any clues on https://www.git-scm.com/docs/reftable.
+> 3. Will future git refs backend possibly support external storage media
+> e.g. Redis?
+>
 
-> But on the second call, now *offset is set to that larger index, which
-> lets us skip past the first "symref" capability. However, we do so by
-> incrementing feature_list. That means our pointer difference is now too
-> small; it is counting from where we resumed parsing, not from the start
-> of the original feature_list pointer. And because we incremented
-> feature_list only inside our function, and not the caller, that
-> increment is lost next time the function is called.
-> 
-> The simplest solution is to account for those skipped bytes by
-> incrementing *offset, rather than assigning to it. (The other possible
-> solution is to add an extra level of pointer indirection to feature_list
-> so that the caller knows we moved it forward, but that seems more
-> complicated).
+I just found a similar discussion on the mailing list:
+https://lore.kernel.org/git/CAJoAoZn7Nt37Eh17dpLDK+YX2BaEaAaii2rJPXO3L0BmQQ=
+kcgQ@mail.gmail.com/
 
-Hmph. So after convincing myself that was the end of it, now I'm not so
-sure. We also increment feature_list if we find a false positive in the
-middle of another entry. I.e., the code even after this patch looks
-like:
-
-          while (*feature_list) {
-                  const char *found = strstr(feature_list, feature);
-                  if (!found)
-                          return NULL;
-                  if (feature_list == found || isspace(found[-1])) {
-                          const char *value = found + len;
-                          /* feature with no value (e.g., "thin-pack") */
-                          if (!*value || isspace(*value)) {
-                                  if (lenp)
-                                          *lenp = 0;
-                                  if (offset)
-                                          *offset += found + len - feature_list;
-                                  return value;
-                          }
-                          /* feature with a value (e.g., "agent=git/1.2.3") */
-                          else if (*value == '=') {
-                                  size_t end;
-  
-                                  value++;
-                                  end = strcspn(value, " \t\n");
-                                  if (lenp)
-                                          *lenp = end;
-                                  if (offset)
-                                          *offset += value + end - feature_list;
-                                  return value;
-                          }
-                          /*
-                           * otherwise we matched a substring of another feature;
-                           * keep looking
-                           */
-                  }
-                  feature_list = found + 1;
-          }
-          return NULL;
-
-So if we have something like:
-
-   agent=i-like-symrefs symref=HEAD:refs/heads/foo
-
-then we'd find the "symref" value in the agent line, increment
-feature_list, and then find the real one. But our pointer difference
-will again be too short! And incrementing "offset" rather than assigning
-it won't help, because those skipped bytes are not accounted for in the
-existing value of "offset".
-
-So what we probably want is a third possibility I didn't allow for: keep
-the original value of feature_list intact, and use a separate pointer to
-increment. And then assigning "*offset = value + end - feature_list"
-will always be correct, because the offset will always be from the
-original, true beginning of the string.
-
-The fix is easy, but let me see if I can come up with a test.
-
--Peff
+> Thanks,
+> --
+> ZheNing Hu
