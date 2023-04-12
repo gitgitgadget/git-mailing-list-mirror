@@ -2,160 +2,233 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A557C7619A
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 21:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E1D5C77B6C
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 21:45:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229503AbjDLVdq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 12 Apr 2023 17:33:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34158 "EHLO
+        id S229609AbjDLVpV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 17:45:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbjDLVdp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2023 17:33:45 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A51F9E
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 14:33:41 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-54f21cdfadbso194063277b3.7
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 14:33:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681335220; x=1683927220;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ios/QaPzaXLp+dqcyVm1kwYiy154lEbrdc5zq2CQU58=;
-        b=k8b/wyoY4xkQNAcn9/DD4Tom0kpgZEMkQLk/5ubFPY+e5vtWWgN8H0h8xQLbBilJ5j
-         OnpLq2HgHJEYmT536+Vz6fftGen7k5undl8RLkJWUSfFxvp+OQnrKuvbu0n6WPxI7ZW4
-         S/8My8xA/fkR3Wjqfj19Gpg4AG2zuT2E1EPq+acsO0kIQWOJu18bZMSZcX4WcOCn/vp9
-         nlxpFuv1ie4UXMANmM4o6OCWuNDUVRZVz7P91yHvVeg+5/OlvwZJJ+w6MKTpuJDo7873
-         N7K0UVE0lIgOY4hwFKGv38qQieT8eAFYbJ7Gtfg48LU8qFeDJ+8PnaGrm7kttXQpFDnF
-         MbPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681335220; x=1683927220;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ios/QaPzaXLp+dqcyVm1kwYiy154lEbrdc5zq2CQU58=;
-        b=V+gx/QjXaQ3sQsFMViWS7kuhP0hNTXIGA4jFmznMjscoNAjD4QoBjfpZ5TCE692IqU
-         n7/OkHhFTXmtBaT85olGIwlENP2LMcpSTAE37JntiMRLxE4yuVRWv8UtQX5b52kPiTCX
-         fGG3rItjD0aIWkVMpr/BapFw5pC/bszNZ15rpWSxR9VlbXVQo5auoV7iftL9RgRmLt3J
-         hMJub1ij4kxRVg+QQkiww9oXhEpYDDzDx9NQHhXHIeS4vQ8RTh3qTGESv9AUv07sG6eQ
-         Cuj4M5kpVAjEsBapF2NLOSLxfnfRtyCCwbZH3SPQLxX+kqubOrDeQIxnbyYlnO8J8VWE
-         Yatw==
-X-Gm-Message-State: AAQBX9cm6xPmR3QoF8yXmTXBOpXzHmh0C0dFwpQGsLYg1OJkl4Eji55b
-        +9ZOnZCjdWyQrojDRykPAAwYz1E3qwoPokkJ1jITDQ==
-X-Google-Smtp-Source: AKy350bS1KplLvkSIcagCt7xslRGSAwvUhvfrbrKRV83thvC5s3aW9TZDIY/j7PtTJK97YEDZibXSA==
-X-Received: by 2002:a0d:dc04:0:b0:54e:e9f9:83f with SMTP id f4-20020a0ddc04000000b0054ee9f9083fmr3237158ywe.38.1681335220233;
-        Wed, 12 Apr 2023 14:33:40 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bp7-20020a05690c068700b00545a08184b0sm4425240ywb.64.2023.04.12.14.33.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Apr 2023 14:33:39 -0700 (PDT)
-Date:   Wed, 12 Apr 2023 17:33:38 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com
-Subject: Re: [PATCH v2 4/8] pack-objects: fix error when packing same pack
- twice
-Message-ID: <ZDcjshQeoQ7e8TbB@nand.local>
-References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
- <cover.1681294715.git.ps@pks.im>
- <e7d30fd22c65b33defb944bd043a56d0c525f875.1681294715.git.ps@pks.im>
+        with ESMTP id S229482AbjDLVpU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 17:45:20 -0400
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4BD91FD2
+        for <git@vger.kernel.org>; Wed, 12 Apr 2023 14:45:17 -0700 (PDT)
+Received: (Authenticated sender: robin@jarry.cc)
+        by mail.gandi.net (Postfix) with ESMTPSA id D8CEA60006;
+        Wed, 12 Apr 2023 21:45:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
+        t=1681335916;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=t8leZAQcxzjXduo0kcVpSLamZnkvMZs4egJTfu0P4fg=;
+        b=QCThZfEaWHQhSYZA2avmMc76lDjFzR0nFIT5/0XjOGAjH2UEKiofJcr4uriAJbwfWRZr0s
+        kHiU8bRUwljN+D9mIZf6kmS37U6BAwPk5f20g5g9avQVdlPKv5b/N1OUmmz5xb4txEsJ9L
+        KwIBcm4BVE60cCSZ8fm6JtPKiZBexJO37TyRmGNhNirCOJy4ygrzcpvFnEwfk53mGy9Tw6
+        gg+hdfcWqe/ijBgO9dzuUZ7BwaVPSmzJ2bFVyAPVI1DWr2Z63B+XR1GppHtEYiqTvBMMWX
+        HTbsuYxq3BQM+akLP3W1feOGcKr8t0E/OM2/PPPfXflPoY51Y/psjJVNUR9txQ==
+From:   Robin Jarry <robin@jarry.cc>
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Tim Culverhouse <tim@timculverhouse.com>,
+        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Michael Strawbridge <michael.strawbridge@amd.com>,
+        Robin Jarry <robin@jarry.cc>
+Subject: [PATCH v3] send-email: export patch counters in validate environment
+Date:   Wed, 12 Apr 2023 23:45:02 +0200
+Message-Id: <20230412214502.90174-1-robin@jarry.cc>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230412095434.140754-1-robin@jarry.cc>
+References: <20230412095434.140754-1-robin@jarry.cc>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e7d30fd22c65b33defb944bd043a56d0c525f875.1681294715.git.ps@pks.im>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 12, 2023 at 12:22:44PM +0200, Patrick Steinhardt wrote:
-> When passed the same packfile twice via `--stdin-packs` we return an
-> error that the packfile supposedly was not found. This is because when
-> reading packs into the list of included or excluded packfiles, we will
-> happily re-add packfiles even if they are part of the lists already. And
-> while the list can now contain duplicates, we will only set the `util`
-> pointer of the first list entry to the `packed_git` structure. We notice
-> that at a later point when checking that all list entries have their
-> `util` pointer set and die with an error.
+When sending patch series (with a cover-letter or not)
+sendemail-validate is called with every email/patch file independently
+from the others. When one of the patches depends on a previous one, it
+may not be possible to use this hook in a meaningful way. A hook that
+wants to check some property of the whole series needs to know which
+patch is the final one.
 
-Well explained.
+Expose the current and total number of patches to the hook via the
+GIT_SENDEMAIL_PATCH_COUNTER and GIT_SENDEMAIL_PATCH_TOTAL environment
+variables so that both incremental and global validation is possible.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/pack-objects.c        |  2 ++
->  t/t5331-pack-objects-stdin.sh | 29 +++++++++++++++++++++++++++++
->  t/t7703-repack-geometric.sh   | 25 +++++++++++++++++++++++++
->  3 files changed, 56 insertions(+)
->  create mode 100755 t/t5331-pack-objects-stdin.sh
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 77d88f85b0..fdf3f440be 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -3359,7 +3359,9 @@ static void read_packs_list_from_stdin(void)
->  	}
->
->  	string_list_sort(&include_packs);
-> +	string_list_remove_duplicates(&include_packs, 0);
->  	string_list_sort(&exclude_packs);
-> +	string_list_remove_duplicates(&exclude_packs, 0);
+Sharing any other state between successive invocations of the validate
+hook must be done via external means. For example, by storing it in
+a git config sendemail.validateWorktree entry.
 
-I for some reason thought that string_list_remove_duplicates() sorted
-its first argument as a side-effect, but double checking on it, that
-isn't the case. So I agree that calling string_list_remove_duplicates()
-is the right thing to do here.
+Add a sample script with placeholders for validation.
 
-> diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
-> new file mode 100755
-> index 0000000000..ab34cfc729
-> --- /dev/null
-> +++ b/t/t5331-pack-objects-stdin.sh
+Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Robin Jarry <robin@jarry.cc>
+---
 
-Cool, I am glad that we are moving some of these tests out of t5300. We
-could probably go a little bit further, since there are a handful of
-purely `--stdin-packs`-related tests towards the bottom of that script
-that could or should also be moved out.
+Notes:
+    v2 -> v3:
+    
+    * Fixed style in sample script following Documentation/CodingGuidelines
+    * Used git worktree instead of a shallow clone.
+    * Removed set -e and added explicit error handling.
+    * Reworded some comments.
 
-We could also always do it later, but I wouldn't be sad to see an extra
-commit before this one that introduces t5331 and moves the last six or
-so `--stdin-packs` tests out of t5300. If nothing else, it would be
-nice to be able to run the tests for just that feature without having to
-skip a bunch of other unrelated tests.
+ Documentation/githooks.txt                 | 22 +++++++
+ git-send-email.perl                        | 17 +++++-
+ templates/hooks--sendemail-validate.sample | 71 ++++++++++++++++++++++
+ 3 files changed, 109 insertions(+), 1 deletion(-)
+ create mode 100755 templates/hooks--sendemail-validate.sample
 
-Luckily, those tests don't depend on any of the earlier ones or setup
-tests, so they should be able to move with a pure cut and paste.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 62908602e7be..c8e55b2613f5 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -600,6 +600,28 @@ the name of the file that holds the e-mail to be sent.  Exiting with a
+ non-zero status causes `git send-email` to abort before sending any
+ e-mails.
+ 
++The following environment variables are set when executing the hook.
++
++`GIT_SENDEMAIL_FILE_COUNTER`::
++	A 1-based counter incremented by one for every file holding an e-mail
++	to be sent (excluding any FIFOs). This counter does not follow the
++	patch series counter scheme. It will always start at 1 and will end at
++	GIT_SENDEMAIL_FILE_TOTAL.
++
++`GIT_SENDEMAIL_FILE_TOTAL`::
++	The total number of files that will be sent (excluding any FIFOs). This
++	counter does not follow the patch series counter scheme. It will always
++	be equal to the number of files being sent, whether there is a cover
++	letter or not.
++
++These variables may for instance be used to validate patch series.
++
++The sample `sendemail-validate` hook that comes with Git checks that all sent
++patches (excluding the cover letter) can be applied on top of the upstream
++repository default branch without conflicts. Some placeholders are left for
++additional validation steps to be performed after all patches of a given series
++have been applied.
++
+ fsmonitor-watchman
+ ~~~~~~~~~~~~~~~~~~
+ 
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 07f2a0cbeaad..497ec0354790 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -795,11 +795,26 @@ sub is_format_patch_arg {
+ @files = handle_backup_files(@files);
+ 
+ if ($validate) {
++	# FIFOs can only be read once, exclude them from validation.
++	my @real_files = ();
+ 	foreach my $f (@files) {
+ 		unless (-p $f) {
+-			validate_patch($f, $target_xfer_encoding);
++			push(@real_files, $f);
+ 		}
+ 	}
++
++	# Run the loop once again to avoid gaps in the counter due to FIFO
++	# arguments provided by the user.
++	my $num = 1;
++	my $num_files = scalar @real_files;
++	$ENV{GIT_SENDEMAIL_FILE_TOTAL} = "$num_files";
++	foreach my $r (@real_files) {
++		$ENV{GIT_SENDEMAIL_FILE_COUNTER} = "$num";
++		validate_patch($r, $target_xfer_encoding);
++		$num += 1;
++	}
++	delete $ENV{GIT_SENDEMAIL_FILE_COUNTER};
++	delete $ENV{GIT_SENDEMAIL_FILE_TOTAL};
+ }
+ 
+ if (@files) {
+diff --git a/templates/hooks--sendemail-validate.sample b/templates/hooks--sendemail-validate.sample
+new file mode 100755
+index 000000000000..f6dbaa24ad57
+--- /dev/null
++++ b/templates/hooks--sendemail-validate.sample
+@@ -0,0 +1,71 @@
++#!/bin/sh
++
++# An example hook script to validate a patch (and/or patch series) before
++# sending it via email.
++#
++# The hook should exit with non-zero status after issuing an appropriate
++# message if it wants to prevent the email(s) from being sent.
++#
++# To enable this hook, rename this file to "sendemail-validate".
++#
++# By default, it will only check that the patch(es) can be applied on top of
++# the default upstream branch without conflicts. Replace the XXX placeholders
++# with appropriate checks according to your needs.
++
++validate_cover_letter() {
++	file="$1"
++	# XXX: Add appropriate checks (e.g. spell checking).
++}
++
++validate_patch() {
++	file="$1"
++	# Ensure that the patch applies without conflicts.
++	git am -3 "$file" || return
++	# XXX: Add appropriate checks for this patch (e.g. checkpatch.pl).
++}
++
++validate_series() {
++	# XXX: Add appropriate checks for the whole series
++	# (e.g. quick build, coding style checks, etc.).
++}
++
++get_worktree() {
++	if ! git config --get sendemail.validateWorktree
++	then
++		# Initialize it to a temp dir, if unset.
++		worktree=$(mktemp --tmpdir -d sendemail-validate.XXXXXXX) &&
++		git config --add sendemail.validateWorktree "$worktree" &&
++		echo "$worktree"
++	fi
++}
++
++die() {
++	echo "sendemail-validate: error: $*" >&2
++	exit 1
++}
++
++# main -------------------------------------------------------------------------
++
++worktree=$(get_worktree) &&
++if test "$GIT_SENDEMAIL_FILE_COUNTER" = 1
++then
++	# ignore error if not a worktree
++	git worktree remove -f "$worktree" 2>/dev/null || :
++	echo "sendemail-validate: worktree $worktree"
++	git worktree add -fd --checkout "$worktree" refs/remotes/origin/HEAD
++fi || die "failed to prepare worktree for validation"
++
++unset GIT_DIR GIT_WORK_TREE
++cd "$worktree" &&
++
++if grep -q "^diff --git " "$1"
++then
++	validate_patch "$1"
++else
++	validate_cover_letter "$1"
++fi &&
++
++if test "$GIT_SENDEMAIL_FILE_COUNTER" = "$GIT_SENDEMAIL_FILE_TOTAL"
++then
++	validate_series
++fi
+-- 
+2.40.0
 
-> @@ -0,0 +1,29 @@
-> +#!/bin/sh
-> +
-> +test_description='pack-objects --stdin'
-> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +
-> +TEST_PASSES_SANITIZE_LEAK=true
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'pack-objects --stdin with duplicate packfile' '
-> +	test_when_finished "rm -fr repo" &&
-> +
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit "commit" &&
-> +		git repack -ad &&
-> +
-> +		(
-> +			basename .git/objects/pack/pack-*.pack &&
-> +			basename .git/objects/pack/pack-*.pack
-> +		) >packfiles &&
-> +
-> +		git pack-objects --stdin-packs generated-pack <packfiles &&
-> +		test_cmp generated-pack-*.pack .git/objects/pack/pack-*.pack
-
-I think that in practice that test_cmp'ing these two together will be
-just fine, but if you wanted to be extra careful, you could grab their
-object lists and compare those two together. That would allow you to
-continue passing this test without needing to worry about if you
-generated the same logical content with slightly different on-disk
-content.
-
-Thanks,
-Taylor
