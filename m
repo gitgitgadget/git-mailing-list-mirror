@@ -2,108 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8170BC7619A
-	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 00:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFAC5C77B6E
+	for <git@archiver.kernel.org>; Wed, 12 Apr 2023 05:43:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229521AbjDLAyF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 11 Apr 2023 20:54:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59952 "EHLO
+        id S229630AbjDLFnF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 12 Apr 2023 01:43:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbjDLAyD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2023 20:54:03 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F5FF359D
-        for <git@vger.kernel.org>; Tue, 11 Apr 2023 17:54:02 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 503BF5A569;
-        Wed, 12 Apr 2023 00:54:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1681260841;
-        bh=tPmKWtalccWfg1oPzCgME8Aoujojh38VEskbwbafobk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=oTyWfznXDj2VK+7N23cUOdJiNRVKcLfpsbykvATncwsnsdcMm77qcYA7rAJ1pVeux
-         f9GXk54DGBjkILl7FeLmw0vtbgUB5xxM5gXPhULxQEk80c4EG/d8+EAr3ztinfSfV6
-         meFuw1brFSm0S1pOYf4cQ5Qw3QPuZtbzZvDlHbo9C5PV9o0YotR33i9nSFO/9u5eas
-         dhOPVqQvJiGGwNtT7CB0sk3QdaNDV4uvvZoyczewa4QypFzJG1rHTyQm7iIgCwjgqi
-         WxfGxPLUmb1Eq8eiJyZQIWxxq/jTp+FqFRnStUc61v/uUG9EOtBealbDp3B+VSCTnB
-         h0shzM3uuEG/CtUX+rwj4uRxsGlBSZdH9lCnUxQ+jUdRGYftxNm29IpPgX7wzXFyhH
-         h31MVu8GABRjk4Hf55X8Ac/2nigAXtj/excd4vvFOLqpRgrUShdYDQoiXuhdV55aZR
-         WixPsL/XNXaqAxtAsFX5nNikRO4+yGaFRA6nbQ5dnv1rDff1R2f
-Date:   Wed, 12 Apr 2023 00:53:59 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jonas Haag <jonas@lophus.org>, git@vger.kernel.org
-Subject: Re: Infinite loop + memory leak in annotate_refs_with_symref_info
-Message-ID: <ZDYBJwCuXD6UCI5p@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>, Jonas Haag <jonas@lophus.org>,
-        git@vger.kernel.org
-References: <39035D34-8548-44B0-BBBB-5C36B3876C4A@lophus.org>
- <ZDXCKecwxo36fALm@nand.local>
+        with ESMTP id S229481AbjDLFnD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2023 01:43:03 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA1A85B82
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 22:42:39 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id c3so11327141pjg.1
+        for <git@vger.kernel.org>; Tue, 11 Apr 2023 22:42:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681278130; x=1683870130;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=g6ic/QfIRxXKe9AlGOVkQ9rWmolrxVZEOdiLji47WzY=;
+        b=jV2sCJA6DL2wbWP6zMivP2GfTkrGCLAe81GYzykwLNhZjjnuFyZOIEK+PUtCayvoyc
+         3S/Lp/yw1k5dmEhvTFd5g9R7f2fPgxvZyRDFT6/hVz9mb/0/nrd9N9n7C87rKsSVdIe6
+         Is3NhpGKdAkWUuGeSNZUisdaf19QtvfVz4fzv7jQp9vGs98Gd9YQOwdlLBiNI3GVt3Wt
+         6GSe+4NTZm5HBFOPcHvqrGImnV54hJtDaJNbPBCkgn3ONkorsXBoLw+SVbPpCJTkvVcE
+         8k0st+OX8Z6QnjOMglGuSGsJMAeyrghy/849TndsJuVM0wF+kCw2PHGBQIOC6h3y//+I
+         Sm5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1681278130; x=1683870130;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=g6ic/QfIRxXKe9AlGOVkQ9rWmolrxVZEOdiLji47WzY=;
+        b=z9LUj45+pzbBej+aUW9sESmffBMYkz0+tDrCNBqF+BNqFwzddZvZYOSJUg5xuvq5KA
+         TEQNKlNOs6obtqeSV2JEOvVIDkQmVdq+gHu1DgvwxuvnoKmmc0tXBdrxkARvb9sR9j9f
+         7/IINhjiTiy5tbJbfU3TzP45M9ZBgPFrnGqrCUaMzUswk92gnt6gO/X7WBDD6LrCFgr4
+         Ord8ZriyUUxpuiJT0d5jelsKjPBrUd3Mpxf+r4nHTDvqb1/OStsKetZGkOCWxJn0blnc
+         mbintan9c8PSz/yd0tvsCNM0WY+ZT731Qg3lyL6yzaZqaCyYiGCzTuFsPG9PvAkscT3Q
+         rLSQ==
+X-Gm-Message-State: AAQBX9e2+RFYs6l5O5/V1bidm6A7IYtTg+ZzGIYqyGE7ItXXL0oVFAzh
+        wGZKj+mjEeTiBGJJTkPnZTo=
+X-Google-Smtp-Source: AKy350Z86W3d/ljGDNxQHF/qBRMQWzoX/Fi1QnVDgcABuzXzz9bxsMTB8HfGMHndgosjXDIA52MuwQ==
+X-Received: by 2002:a17:902:d4ce:b0:1a0:6bd4:ea78 with SMTP id o14-20020a170902d4ce00b001a06bd4ea78mr16705306plg.31.1681278130478;
+        Tue, 11 Apr 2023 22:42:10 -0700 (PDT)
+Received: from localhost (254.80.82.34.bc.googleusercontent.com. [34.82.80.254])
+        by smtp.gmail.com with ESMTPSA id ix10-20020a170902f80a00b001a64c4023aesm628251plb.36.2023.04.11.22.42.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Apr 2023 22:42:09 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH v5 0/6] fsmonitor: Implement fsmonitor for Linux
+References: <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
+        <pull.1352.v5.git.git.1670882286.gitgitgadget@gmail.com>
+Date:   Tue, 11 Apr 2023 22:42:09 -0700
+In-Reply-To: <pull.1352.v5.git.git.1670882286.gitgitgadget@gmail.com> (Eric
+        DeCosta via GitGitGadget's message of "Mon, 12 Dec 2022 21:57:59
+        +0000")
+Message-ID: <xmqqzg7d8xn2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EdlknW2atkLZQk08"
-Content-Disposition: inline
-In-Reply-To: <ZDXCKecwxo36fALm@nand.local>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---EdlknW2atkLZQk08
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Goal is to deliver fsmonitor for Linux that is on par with fsmonitor for
+> Windows and Mac OS.
+>
+> This patch set builds upon previous work for done for Windows and Mac OS to
+> implement a fsmonitor back-end for Linux based on the Linux inotify API.
+> inotify differs significantly from the equivalent Windows and Mac OS APIs in
+> that a watch must be registered for every directory of interest (rather than
+> a singular watch at the root of the directory tree) and special care must be
+> taken to handle directory renames correctly.
+>
+> More information about inotify:
+> https://man7.org/linux/man-pages/man7/inotify.7.html
+>
+> v4 differs from v3:
+>
+>  * Code review feedback
 
-On 2023-04-11 at 20:25:13, Taylor Blau wrote:
-> Hi Jonas,
->=20
-> On Tue, Apr 11, 2023 at 10:53:59PM +0300, Jonas Haag wrote:
-> > Hello!
-> >
-> > There is an infinite loop with an accompanying memory leak in
-> > annotate_refs_with_symref_info that was introduced in Git 2.28 (I
-> > think in commit 2c6a403: =E2=80=9Cconnect: add function to parse multip=
-le v1
-> > capability values=E2=80=9D).
->=20
-> I'm not familiar with Klaus and don't have it installed, but a couple of
-> questions: were you able to reproduce this result with any other forges
-> or tools, and were you able to confirm that 2c6a403 is the culprit via a
-> bisection?
->=20
-> In case the answer to the latter question is "yes", I cc'd brian carlson
-> on this thread, since they are the original author of that patch.
+This has been dormant for full four months, and it seems to break
+linux-asan CI job when merged to 'seen',
 
-I may be the author of the patch, but I honestly don't remember much
-about that code except that it was a bear to write, and I am honestly
-not terribly surprised that it came out less than perfect.  I do
-apologize for the buggy code, though.
+  https://github.com/git/git/actions/runs/4672116751/jobs/8273938089
 
-It looks like Peff has come up with a patch downthread, and a test even,
-which I think will probably fix the problem, so I'll refrain from
-sending one myself for now.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+while the same 'seen' excluding this topic passes everything.
 
---EdlknW2atkLZQk08
-Content-Type: application/pgp-signature; name="signature.asc"
+  https://github.com/git/git/actions/runs/4674694371
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+For now, I'll drop this topic from 'seen'.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZDYBJwAKCRB8DEliiIei
-gVMbAPsHhfYgNl6KpyTVwCn+yBaNfrzSJ/hfEqIser/RqvxytgD8C2JmsYDymVKh
-kZBjmfg0EIDg3zD3uTJVOq3J7pSEQQw=
-=EksE
------END PGP SIGNATURE-----
+Thanks.
 
---EdlknW2atkLZQk08--
