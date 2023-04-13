@@ -2,126 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03B98C77B6C
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 10:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E31FC77B61
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 11:16:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230214AbjDMKfu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 06:35:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48332 "EHLO
+        id S230399AbjDMLQY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 07:16:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229790AbjDMKft (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 06:35:49 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB56030C7
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 03:35:47 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id w15-20020a056830410f00b006a386a0568dso14252980ott.4
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 03:35:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681382147; x=1683974147;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/2iFfS+9i1OQjUmufFes7e8oeza6lMb63CtV0QQNuMo=;
-        b=YchwoBkqZCyptk1fLPNjlLzSIZxbfT9M37V/f4r3efcyihD9rdUJXK0iTIxXh5/6xd
-         n4VgUvAQqZ2kKMIW5frQnZsmldL8vcOdkT/1yRpvQLQx4Xrfvrg9b/OyJt4fWNDCy5R4
-         zP+deCSQ1KwdIF7Amwa/tWGZR4flSzZRH1IOdYW9VlQCQrI6ylF2Tcm//Ih2Xkalm2j3
-         qBhvBvWZR2jM6ZV3ixmMdhvSHqcJSALDaqfZjuBmJs6yyslRrQzIHVa9S6JdibvYcE8/
-         uOOgNzdUebZMf+jJxNlqUVYfLyR2McG4ypF+9GkxNZhbwWNrvhBDbwvzUdMWOYeXhAsM
-         ww3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681382147; x=1683974147;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/2iFfS+9i1OQjUmufFes7e8oeza6lMb63CtV0QQNuMo=;
-        b=Hjuk+JgnEk8Vj+SN3dTzFZDsD0g31+wnQdHZNm9TQXjoQ5tPjTjvBVcMXRDhdcAZyO
-         npJoc/xHP1PZBmwtO+kNt2QLry5rnKofAAJkBH0z12ea5LV0xbS/nE1HAtuVvY3s88y0
-         38crheaNngROiMgE2mZP7gwblEyaofnZiUQUQd9+1ZCacrbSFzf1CZsSrfoK2IuQDgDE
-         Ph++xGdYYE/rTqKpViatLKi+PDp39CPJjY4H94c5HAQR7tNfdHFU+frY5fNRIdYWrM50
-         gJ0IPD7P4LhoCIpo9QEVnb56L2ZVJ2QI6ycHgLxsH3ngqEmD3QHrr3Ex7aBfTTxm2zgb
-         mkEw==
-X-Gm-Message-State: AAQBX9eVzGAm4P8pJjpHQXr+54y32v0IkjRchSOu9xnP8nngW0iPjkGz
-        3BIKwH/AlcNX/E5Q+pbIgMamUME1ZC29CR526FQ7Afg25wAIxQ==
-X-Google-Smtp-Source: AKy350ZaeR5XuV9w3307IEnofuoa0M++Y2YXEocKSCaQD8+NOna8Sm+76k9ZrfaewU95qZA/EqkbvtfxrjTNK904Ylc=
-X-Received: by 2002:a05:6830:a:b0:6a3:e43a:c707 with SMTP id
- c10-20020a056830000a00b006a3e43ac707mr430602otp.7.1681382146968; Thu, 13 Apr
- 2023 03:35:46 -0700 (PDT)
-MIME-Version: 1.0
-From:   Ilya Kamenshchikov <ikamenshchikov@gmail.com>
-Date:   Thu, 13 Apr 2023 12:35:36 +0200
-Message-ID: <CAAp-DqK=CPxpH0ZhA=k8GRFvSz3odoOLhOgAqfYSBpz28JK+hg@mail.gmail.com>
-Subject: Git branch capitalisation bug?
+        with ESMTP id S230064AbjDMLQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 07:16:12 -0400
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2601BF
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 04:16:10 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 4B4DC5C0143;
+        Thu, 13 Apr 2023 07:16:10 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Thu, 13 Apr 2023 07:16:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm3; t=1681384570; x=1681470970; bh=gd
+        9KpwTyqqu1to0OfxFuskUgZclLgXDuX5CdVRAHRqQ=; b=aqjOL5LFXBZqAC1caO
+        hI4tK+VuanOQxuvP/Vwv5gWdgaV0v2U6kLxm/sSvUTx8dPKz52VxO8oiSUjMLRaZ
+        fnXbtlYo0cJ6ksQqYBsQbrcqaqxoUsHX9n0RFP/l4GrDAb5/9+Oxg55e4uOs9aB8
+        DVdo1uEpVaIPZjmIh7qBr1HP62hvt5Gwi0bVWGEBHYAmPklvJkSE5xAS1QXASlo3
+        rselXBV6g1JrJRHGMFc/epw8cwlGfk4eEj3kGZoN6thMi1e8al9/ZjGJ1edfYBIl
+        kk01JFYDNgG98XYmpd1SQhEpgCaQ6SZbzilTc9D0lrYz1WqtQOVYS7yOs2dSffGW
+        A0lw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm3; t=1681384570; x=1681470970; bh=gd9KpwTyqqu1t
+        o0OfxFuskUgZclLgXDuX5CdVRAHRqQ=; b=ZDBHYtmjG4OmV8rHcbBy+wngNhGB6
+        DRDpKwtcy8e1KmkUp7wC7e2/GIOuE7z9YkDGfgJvt0LNKsFpJUGSIQl/vwv3AdzG
+        oW7wuq8Lz/CVsuKnY3cvK2r83orGFvHLPDqw87/0u/WX2k/UunGEvAfkcbkmovbL
+        G5WYD612jKACINJNkgPMk22liDHKJgoUCAXh21enTzMFXo/Y/3XGmEk/MipAeMQF
+        gvatefArG7HtJUkb37IEh2/IhKfxa17Tf4rSbouwGOoxr3eH9+FiUnBvlSTfIZaZ
+        +QJMHMAB5ex7wyOidyGlTGWXLot9LWrG3SgQlKW7DBe+u5YpyXITfqYtA==
+X-ME-Sender: <xms:euQ3ZB_4kj6GiusDwqZm6pSJBPzk_4ovEFKalQCpO4_DlcVg5xCmqQ>
+    <xme:euQ3ZFubCZZHEJi6SkX7MhlKATMZtRdlj9o62_b0tZRs9NUy1pFx0koamRZJtg9ik
+    BD8SEtE9nhfDhN0hQ>
+X-ME-Received: <xmr:euQ3ZPA_75z525IbfTKGemoUVUAmgZwkGzvqB3IUtsx9bm-gerpLOPy61XMou7JM24fNUDlMfq-I6Jo6FF8QbEPjYfrwKdFYh4MALPHlf_TDCOM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekkedgfeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:euQ3ZFdFcxuFAHMZe_v5RVL49Iu-X6vHoX0yKFK9mQ_dpRq29y1MBA>
+    <xmx:euQ3ZGN02NrATu3WuAsLfIe0N_N_7ej1APgmJznj4B2c603BFhvNDg>
+    <xmx:euQ3ZHkc5Uy-UsGk0ciVEEB6UeHM7prKnlA6DIFbMOOPEbxQfdETbQ>
+    <xmx:euQ3ZPaKSrJsLgR944irXvel6zynaTqQh4A4LP-C0UHGiymGmHk0Mg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Apr 2023 07:16:08 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 3ea7c0d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 13 Apr 2023 11:15:45 +0000 (UTC)
+Date:   Thu, 13 Apr 2023 13:16:06 +0200
+From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc:     Taylor Blau <me@ttaylorr.com>, peff@peff.net, dstolee@microsoft.com
+Subject: [PATCH v3 01/10] midx: fix segfault with no packs and invalid
+ preferred pack
+Message-ID: <dd8145beade440e5444130d3a3189b2c5d15a911.1681384405.git.ps@pks.im>
+References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
+ <cover.1681384405.git.ps@pks.im>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4vNzRKJbQEkxDjOe"
+Content-Disposition: inline
+In-Reply-To: <cover.1681384405.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Created a branch "feature/macos_tests", pushed to remote as
-"origin/feature/macos_tests".
 
-What did you expect to happen? (Expected behavior)
-remote branch "feature/macos_tests" to be created.
+--4vNzRKJbQEkxDjOe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-What happened instead? (Actual behavior)
-remote branch name is "Feature/macos_tests" (capitalised). This
-doesn't play nicely with not case sensitive macos FS.
+When asked to write a multi-pack-index the user can specify a preferred
+pack that is used as a tie breaker when multiple packs contain the same
+objects. When this packfile cannot be found, we just pick the first pack
+that is getting tracked by the newly written multi-pack-index as a
+fallback.
+
+Picking the fallback can fail in the case where we're asked to write a
+multi-pack-index with no packfiles at all: picking the fallback value
+will cause a segfault as we blindly index into the array of packfiles,
+which would be empty.
+
+Fix this bug by resetting the preferred packfile index to `-1` before
+searching for the preferred pack. This fixes the segfault as we already
+check for whether the index is `> - 1`. If it is not, we simply don't
+pick a preferred packfile at all.
+
+Helped-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ midx.c                      |  6 +++---
+ t/t5319-multi-pack-index.sh | 12 ++++++++++++
+ 2 files changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/midx.c b/midx.c
+index 47989f7ea7..67eb617591 100644
+--- a/midx.c
++++ b/midx.c
+@@ -1328,17 +1328,17 @@ static int write_midx_internal(const char *object_d=
+ir,
+ 	}
+=20
+ 	if (preferred_pack_name) {
+-		int found =3D 0;
++		ctx.preferred_pack_idx =3D -1;
++
+ 		for (i =3D 0; i < ctx.nr; i++) {
+ 			if (!cmp_idx_or_pack_name(preferred_pack_name,
+ 						  ctx.info[i].pack_name)) {
+ 				ctx.preferred_pack_idx =3D i;
+-				found =3D 1;
+ 				break;
+ 			}
+ 		}
+=20
+-		if (!found)
++		if (ctx.preferred_pack_idx =3D=3D -1)
+ 			warning(_("unknown preferred pack: '%s'"),
+ 				preferred_pack_name);
+ 	} else if (ctx.nr &&
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 499d5d4c78..0883c7c6bd 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -183,6 +183,18 @@ test_expect_success 'write midx with --stdin-packs' '
+=20
+ compare_results_with_midx "mixed mode (one pack + extra)"
+=20
++test_expect_success 'write with no objects and preferred pack' '
++	test_when_finished "rm -rf empty" &&
++	git init empty &&
++	test_must_fail git -C empty multi-pack-index write \
++		--stdin-packs --preferred-pack=3Ddoes-not-exist </dev/null 2>err &&
++	cat >expect <<-EOF &&
++	warning: unknown preferred pack: ${SQ}does-not-exist${SQ}
++	error: no pack files to index.
++	EOF
++	test_cmp expect err
++'
++
+ test_expect_success 'write progress off for redirected stderr' '
+ 	git multi-pack-index --object-dir=3D$objdir write 2>err &&
+ 	test_line_count =3D 0 err
+--=20
+2.40.0
 
 
+--4vNzRKJbQEkxDjOe
+Content-Type: application/pgp-signature; name="signature.asc"
 
-[System Info]
-git version:
-git version 2.40.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Darwin 21.6.0 Darwin Kernel Version 21.6.0: Mon Dec 19 20:44:01
-PST 2022; root:xnu-8020.240.18~2/RELEASE_X86_64 x86_64
-compiler info: clang: 14.0.0 (clang-1400.0.29.202)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /usr/local/bin/fish
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ35HUACgkQVbJhu7ck
+PpRyAA/9HGSPklFXq+ny19x2BO8PAzQWkCeSJtQK0lwyWoBqpG+IOGGsLp/y9e1w
+znBTFe/oKag4KhtqVGeffp1tpx4MbdRtLss2drRcqcr6E4oRCnjTtqTqMKzr352h
++15pxSXLPztjEoToXP692tnSYmmZKaAsoYHgUZrBKaioZypKK/NJD/r/KoPKvM+K
+7xrH0qWhfoh+qKmPkHrip5t1DhpGrTMVslfADUxGmD90sMYqrBWpIzWScpnxTDLh
+9f3zmlY2L+KjpRvhhzyg9uCEtLq5F+SU6CInXF2w6+4Pc22IAHTXceiweQYGsZkK
+tqERgDzAtg8XxKvd6x2UpMR7F3xMkio0kToN7m1ifjvl//vU1HngbZau9CYaszAT
+HnHo15dQuIVNO6S0pW6JmQXZCDY1oTyV7W7HAOGXN9MYw02M/0JrGO3YATYwHaRv
+v6rtwXgfsYaTuw1KQuOZ9IyufvHQf9TZR0BuIyHFBk5im0xXBe81ptPdjiriFpmY
+mB/3LStaVJ70Hy8MfpRDnRWxBdjEw/d58xLzSmOBg1OHk/goJEkrukRqwORFhxQK
+a7cn6GAkSorwrc8Attv8p2DZRmVsteI/bY9Vd2+//Gr3G6L6hEvbTgwJSDk2HrP9
+oFju/udtKqYec1h/tgqswbUHVGB1vE1U297gdo9MK4C8gf7E8z0=
+=Vij1
+-----END PGP SIGNATURE-----
 
-[Enabled Hooks]
-pre-push
-(remark: reproduced also when uninstalling this hook)
-
-Raw output:
-
-~ $ cd bosch/rlcore                                       (base) 12:11:42
-~/b/rlcore (feature/macos_tests|=E2=9C=9A2) $ git push            (base) 12=
-:11:49
-fatal: The current branch feature/macos_tests has no upstream branch.
-To push the current branch and set the remote as upstream, use
-
-    git push --set-upstream origin feature/macos_tests
-
-To have this happen automatically for branches without a tracking
-upstream, see 'push.autoSetupRemote' in 'git help config'.
-
-~/b/rlcore (feature/macos_tests|=E2=9C=9A2) [128] $ git push --set-upstream
-origin feature/macos_tests
-Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
-Thank you for filling out a Git bug report!
-remote:
-remote: Create a pull request for 'feature/macos_tests' on GitHub by visiti=
-ng:
-remote:      https://github.boschdevcloud.com/CR/rlcore/pull/new/feature/ma=
-cos_tests
-remote:
-To https://github.boschdevcloud.com/CR/rlcore.git
- * [new branch]        feature/macos_tests -> feature/macos_tests
-branch 'feature/macos_tests' set up to track 'origin/feature/macos_tests'.
-~/b/rlcore (feature/macos_tests|=E2=9C=9A2) $ gl                  (base) 12=
-:16:10
-c001bc75 2023-04-13 | commit message (#514) (HEAD ->
-feature/macos_tests, origin/main, origin/git_problems, origin/HEAD,
-origin/Feature/macos_tests) [Rich..]
-
-Best Regards,
---
-Ilya Kamen
+--4vNzRKJbQEkxDjOe--
