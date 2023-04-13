@@ -2,78 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 948B6C77B6C
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 11:16:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 759B5C77B61
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 11:16:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229632AbjDMLQ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 07:16:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50126 "EHLO
+        id S230032AbjDMLQj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 07:16:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbjDMLQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 07:16:23 -0400
+        with ESMTP id S231207AbjDMLQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 07:16:25 -0400
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A024E93E4
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 04:16:14 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 08F855C0138;
-        Thu, 13 Apr 2023 07:16:14 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C7B39EE1
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 04:16:19 -0700 (PDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 93D265C00F7;
+        Thu, 13 Apr 2023 07:16:18 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 13 Apr 2023 07:16:14 -0400
+  by compute1.internal (MEProxy); Thu, 13 Apr 2023 07:16:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1681384574; x=1681470974; bh=gW
-        PRXT63q7Y9UyTU1uylUeB4M2Uhh+kvmwTnBeCnWiI=; b=p1G42qI92NNtUH8ZAk
-        ZKEnCxP2abEsl5JCjQIOXVNiwXQmSAFKeH8n9V8Kx8/PpOepv4VQ0lCQPfiGqbcM
-        SLsMP9QRBmwAOommtPIANHyEC8ZZV/71eKQnurs33rpNP/Gngh+6xSNJxjPcyn3h
-        Oaz5sQ3espP1bOv2NVYCrBv/e9+WpsNAzGBgwPHIAvokmzI6jYvFJoVsdtd6Vu1b
-        ylcUoFohoIZRwIuo+xm3bVKgDwOkhBOjekQqiiYW1iM6b+KQZxFuR22oKK0GvN3t
-        1DOEkgcI+wkpZJ9q07xCEac/Ernd1W5Jg6wrntlVAwkGwy1PY9O7HA31vDnotjSF
-        IEMw==
+        :subject:subject:to:to; s=fm3; t=1681384578; x=1681470978; bh=j9
+        ybEYk24bL/jiuMo1i6Zntu7VgoT8tZFMME5+blZ2E=; b=RwWfUuB6oEPIlNKzqN
+        YsgcalYsZTuWx4hiClzdevFM3UAfqvOfCWArvzcSc90E5GMCmAWEr2zBZ8ro2Mkw
+        gRGtf6GL1D1ski0ZRHnCs7O8I99f4iv6gEBTLlIS/Jk6Ipk7XYTy+G2W1DEsLf9J
+        sXkOTFAMR4RqYN08fiPcPcrMw0p3D7DwGVDrILf1kOrynZL8WmRmCJyw6Rw1YYHH
+        qlq9UrtaeAlN0I71XXcqeUJOEkwPufG1KydHCF/NqHcfro30GdxYtxiPAp69kjUp
+        g/OkY0QtXcC/dwdg1ClMceGTCwYTmBSR7UomWTYt4ogpnDvkLT2YP1Uk/E2tzZPF
+        hvKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1681384574; x=1681470974; bh=gWPRXT63q7Y9U
-        yTU1uylUeB4M2Uhh+kvmwTnBeCnWiI=; b=DH5IawQlTgnipDgeMX9+eQvV43+6D
-        IwG9oGwY8jAXwWK3p2I/uvzaAo5mCATB445vp4E1X5lIbSFIjqcu5EyHVf3ydWDv
-        FQBhvkYXqlskGq5POD50GRhZ5luPEVAENxF6Z6fmtfeia241xjj9LKUvl969YzmN
-        +Z8aieN+yfqZ7dN9UU1MYgc+QHjf/Z/lxCWmlI/OVgTL9kwZVCVmc0yslH/BHXTL
-        RXoH+6aIsjKTUhPQa5Mj6L5RLrzU96WJkvdVSqpaRZfG8+5IImhUG7oXoG2yR1Tn
-        PBXFX1QdMh2iRk9whAY+m/1Fa/dW+l5GvAefWAWlsxSmaG7WciAa/VJQw==
-X-ME-Sender: <xms:feQ3ZKutbgjz4sstWdK6q-TQ19mJtbpip2iCoEQbVw-EyKi7xMOggg>
-    <xme:feQ3ZPevwbKZbsS4ITa5AyRt8bMqEsHBI_Gns0AmUuCf6OQq_xwnEX6I41zodMzu-
-    D6mwEnJE4dTkGUZ6A>
-X-ME-Received: <xmr:feQ3ZFwupIF6_PHWRFQQ0bjTyh7wWZbj4Q7mDPVn80AfY31Jcs9GLrkM_nKfjabCARR9v75TomITAwWJPNHdmiScSyvud-Pyb-0jkBIvz0sHtMI>
+        :x-sasl-enc; s=fm3; t=1681384578; x=1681470978; bh=j9ybEYk24bL/j
+        iuMo1i6Zntu7VgoT8tZFMME5+blZ2E=; b=QDeYgv8W293Dg/G3PdqySdYBm3IkJ
+        aGZqQKa6kEFc9OIptruzFHcZSMa+vp1+zA2MqnYXS+A6yXTc1cLqStx0gedN4Hf2
+        qNyllRX/7uvu8AIQhAbP+t7Fs/mSrMKiZVfG5Nu9hPpWeWc/gBO4qLuri8wTDfUo
+        EMv4E+o17tdvbl0xfoIJJ86My0p0Z3OIWXRKdT21cXHMWydfD97m5SeQl5PnVzH9
+        IgFMzU1aLiJGLgEbo2PxvTs1lUeNkA0HKPYjI52fOR4K/+zM+kFP8RPdvkRiQ3Ke
+        M9jeNLYsx3iHc3DotjrI60MiSpNjNvBd/9/ZgHMVbr1rW7CCJXIK8n89A==
+X-ME-Sender: <xms:guQ3ZM2xs8DSjYLPWXio88AxJe-PmY_CSmrjoZG0AJA1g-9rmZpiIQ>
+    <xme:guQ3ZHH-MnUTJC7di0PFefBwEwCEzyAv3PUk755NGYCKO7igg9UO7NoVRb6tAIEQu
+    FJ7R1iyXDubqO-EHw>
+X-ME-Received: <xmr:guQ3ZE403DxLFpf9DdeJ0RUhKjWCVu9Aqbqxzsx3ao9IZlLJhC8xWMmvvJ-QAiHJSF8lIuHSnGUMdhNRZasRzu2Dd79f3G1zFRtGuDoccdDcugk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekkedgfeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:feQ3ZFPRQX45PZNEUfVXl93ImcfmvnTYR-uSprwwtEto40SSTOdu8A>
-    <xmx:feQ3ZK923hKDDQwAFZC5ce6eibynsgY8XCq0ecCuuOcmZS3x3LAD_A>
-    <xmx:feQ3ZNVelJPiRqs1PRrJCvRj57myn1X8DjwYGUNZ0wvVPGSUGQuJrg>
-    <xmx:fuQ3ZMIKei-FdByEMbSGJBAxPB74yWaX4GTv91jC-ciVYDxv94K6bA>
+X-ME-Proxy: <xmx:guQ3ZF3Fi-HPK6vMaNhkFjv8GDtMg4yAtJALqZJtgkSzwsNL-eTqHQ>
+    <xmx:guQ3ZPFa1G-JIpGyI0870JxYy1dJIRy4aLgxojuHd93OXicvbSXhrg>
+    <xmx:guQ3ZO_aMbwZMprBpoI7b0X3qiC1wqHu71L3dHoIPujSMXavdvhQLQ>
+    <xmx:guQ3ZER1e9_QG2haOqJc1FmwIhenTcSQ5k7qvKboqDzBXcXtpk1hAQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Apr 2023 07:16:12 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 82dcf232 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 13 Apr 2023 11:15:50 +0000 (UTC)
-Date:   Thu, 13 Apr 2023 13:16:11 +0200
+ 13 Apr 2023 07:16:17 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 0ac6559f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 13 Apr 2023 11:15:54 +0000 (UTC)
+Date:   Thu, 13 Apr 2023 13:16:15 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>, peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH v3 02/10] repack: fix trying to use preferred pack in
- alternates
-Message-ID: <c5db1bc587701df35f2cb32270ab734ffdec2e32.1681384405.git.ps@pks.im>
+Subject: [PATCH v3 03/10] repack: fix generating multi-pack-index with only
+ non-local packs
+Message-ID: <8c3193268fd5938ebf85bd43a551d0c50d2e8336.1681384405.git.ps@pks.im>
 References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
  <cover.1681384405.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="/iHh7k078AuzJ+EH"
+        protocol="application/pgp-signature"; boundary="fdOK4MtmPzDQ/X1i"
 Content-Disposition: inline
 In-Reply-To: <cover.1681384405.git.ps@pks.im>
 Precedence: bulk
@@ -81,139 +81,87 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---/iHh7k078AuzJ+EH
+--fdOK4MtmPzDQ/X1i
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When doing a geometric repack with multi-pack-indices, then we ask
-git-multi-pack-index(1) to use the largest packfile as the preferred
-pack. It can happen though that the largest packfile is not part of the
-main object database, but instead part of an alternate object database.
-The result is that git-multi-pack-index(1) will not be able to find the
-preferred pack and print a warning. It then falls back to use the first
-packfile that the multi-pack-index shall reference.
+When writing the multi-pack-index with geometric repacking we will add
+all packfiles to the index that are part of the geometric sequence. This
+can potentially also include packfiles borrowed from an alternate object
+directory. But given that a multi-pack-index can only ever include packs
+that are part of the main object database this does not make much sense
+whatsoever.
 
-Fix this bug by only considering packfiles as preferred pack that are
-local. This is the right thing to do given that a multi-pack-index
-should never reference packfiles borrowed from an alternate.
+In the edge case where all packfiles are contained in the alternate
+object database and the local repository has none itself this bug can
+cause us to invoke git-multi-pack-index(1) with only non-local packfiles
+that it ultimately cannot find. This causes it to return an error and
+thus causes the geometric repack to fail.
 
-While at it, rename the function `get_largest_active_packfile()` to
-`get_preferred_pack()` to better document its intent.
+Fix the code to skip non-local packfiles.
 
-Helped-by: Taylor Blau <me@ttaylorr.com>
+Co-authored-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/repack.c            | 26 +++++++++++++++++++++-----
- t/t7703-repack-geometric.sh | 32 ++++++++++++++++++++++++++++++++
- 2 files changed, 53 insertions(+), 5 deletions(-)
+ builtin/repack.c            | 11 +++++++++++
+ t/t7703-repack-geometric.sh | 23 +++++++++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 87f73c8923..687419776d 100644
+index 687419776d..80fc860613 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -446,8 +446,10 @@ static void split_pack_geometry(struct pack_geometry *=
-geometry, int factor)
- 	geometry->split =3D split;
- }
+@@ -572,6 +572,17 @@ static void midx_included_packs(struct string_list *in=
+clude,
+ 		for (i =3D geometry->split; i < geometry->pack_nr; i++) {
+ 			struct packed_git *p =3D geometry->pack[i];
 =20
--static struct packed_git *get_largest_active_pack(struct pack_geometry *ge=
-ometry)
-+static struct packed_git *get_preferred_pack(struct pack_geometry *geometr=
-y)
- {
-+	uint32_t i;
++			/*
++			 * The multi-pack index never refers to packfiles part
++			 * of an alternate object database, so we skip these.
++			 * While git-multi-pack-index(1) would silently ignore
++			 * them anyway, this allows us to skip executing the
++			 * command completely when we have only non-local
++			 * packfiles.
++			 */
++			if (!p->pack_local)
++				continue;
 +
- 	if (!geometry) {
- 		/*
- 		 * No geometry means either an all-into-one repack (in which
-@@ -462,7 +464,21 @@ static struct packed_git *get_largest_active_pack(stru=
-ct pack_geometry *geometry
- 	}
- 	if (geometry->split =3D=3D geometry->pack_nr)
- 		return NULL;
--	return geometry->pack[geometry->pack_nr - 1];
-+
-+	/*
-+	 * The preferred pack is the largest pack above the split line. In
-+	 * other words, it is the largest pack that does not get rolled up in
-+	 * the geometric repack.
-+	 */
-+	for (i =3D geometry->pack_nr; i > geometry->split; i--)
-+		/*
-+		 * A pack that is not local would never be included in a
-+		 * multi-pack index. We thus skip over any non-local packs.
-+		 */
-+		if (geometry->pack[i - 1]->pack_local)
-+			return geometry->pack[i - 1];
-+
-+	return NULL;
- }
-=20
- static void clear_pack_geometry(struct pack_geometry *geometry)
-@@ -589,7 +605,7 @@ static int write_midx_included_packs(struct string_list=
- *include,
- {
- 	struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	struct string_list_item *item;
--	struct packed_git *largest =3D get_largest_active_pack(geometry);
-+	struct packed_git *preferred =3D get_preferred_pack(geometry);
- 	FILE *in;
- 	int ret;
-=20
-@@ -610,9 +626,9 @@ static int write_midx_included_packs(struct string_list=
- *include,
- 	if (write_bitmaps)
- 		strvec_push(&cmd.args, "--bitmap");
-=20
--	if (largest)
-+	if (preferred)
- 		strvec_pushf(&cmd.args, "--preferred-pack=3D%s",
--			     pack_basename(largest));
-+			     pack_basename(preferred));
-=20
- 	if (refs_snapshot)
- 		strvec_pushf(&cmd.args, "--refs-snapshot=3D%s", refs_snapshot);
+ 			strbuf_addstr(&buf, pack_basename(p));
+ 			strbuf_strip_suffix(&buf, ".pack");
+ 			strbuf_addstr(&buf, ".idx");
 diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index 8821fbd2dd..d6db362541 100755
+index d6db362541..7027676977 100755
 --- a/t/t7703-repack-geometric.sh
 +++ b/t/t7703-repack-geometric.sh
-@@ -281,4 +281,36 @@ test_expect_success '--geometric with pack.packSizeLim=
-it' '
- 	)
+@@ -313,4 +313,27 @@ test_expect_success '--geometric --write-midx with pac=
+kfiles in main and alterna
+ 	test_cmp expect actual
  '
 =20
-+test_expect_success '--geometric --write-midx with packfiles in main and a=
-lternate ODB' '
++test_expect_success '--geometric --with-midx with no local objects' '
 +	test_when_finished "rm -fr shared member" &&
 +
-+	# Create a shared repository that will serve as the alternate object
-+	# database for the member linked to it. It has got some objects on its
-+	# own that are packed into a single packfile.
++	# Create a repository with a single packfile that acts as alternate
++	# object database.
 +	git init shared &&
-+	test_commit -C shared common-object &&
++	test_commit -C shared "shared-objects" &&
 +	git -C shared repack -ad &&
 +
-+	# We create member so that its alternates file points to the shared
-+	# repository. We then create a commit in it so that git-repack(1) has
-+	# something to repack.
-+	# of the shared object database.
++	# Create a second repository linked to the first one and perform a
++	# geometric repack on it.
 +	git clone --shared shared member &&
-+	test_commit -C member unique-object &&
-+	git -C member repack --geometric=3D2 --write-midx 2>err &&
++	git -C member repack --geometric 2 --write-midx 2>err &&
 +	test_must_be_empty err &&
 +
-+	# We should see that a new packfile was generated.
-+	find shared/.git/objects/pack -type f -name "*.pack" >packs &&
-+	test_line_count =3D 1 packs &&
-+
-+	# We should also see a multi-pack-index. This multi-pack-index should
-+	# never refer to any packfiles in the alternate object database.
-+	test -f member/.git/objects/pack/multi-pack-index &&
-+	test-tool read-midx member/.git/objects >packs.midx &&
-+	grep "^pack-.*\.idx$" packs.midx | sort >actual &&
-+	basename member/.git/objects/pack/pack-*.idx >expect &&
-+	test_cmp expect actual
++	# Assert that we wrote neither a new packfile nor a multi-pack-index.
++	# We should not have a packfile because the single packfile in the
++	# alternate object database does not invalidate the geometric sequence.
++	# And we should not have a multi-pack-index because these only index
++	# local packfiles, and there are none.
++	test_dir_is_empty member/$packdir
 +'
 +
  test_done
@@ -221,24 +169,24 @@ lternate ODB' '
 2.40.0
 
 
---/iHh7k078AuzJ+EH
+--fdOK4MtmPzDQ/X1i
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ35HoACgkQVbJhu7ck
-PpQaBhAAjhh0i/0ilosYDQK5YqsMLnQhbAqZA0ZC41EXoY4bVFmQZrr6Jpa36zLM
-KYr7LU1d7Sf8apc/9AcWsPqC41Dn6Tzxh+5y89epQmEm6oLX0dL5vOaUhOPpUmNm
-HrUtOJS3keMsxcZWtFqbHhB3XXgyI6GqRhNJ3YGWAFaY+HJZb/JcApFAKRozEDSs
-qJD/oHUTzMeACAY7em5HG8yyMS8Q3u1ljhoZ3E9G7jnrZJiSoU7HyHlATfzmF228
-pdJ9uORBwOwf0MHKJK4XyRbpdQf5V6fWQ5qLc+eJxuIf4WbUaoQxetP4DWIyQfNi
-5hbJ6lQrOWLFxpnJeM4CaweHA8ND7n7B6JcfCOpBse5/IKy3ITkCf0e7SaXKAPwF
-YBMZXwGZP30FsDiHE1vlsikEMJQRlj9AQ1cFatQw1H7xL6IUnwWnpOS9HYdn7123
-hSAn/7oO1o0TfjTgEJEZfXtD5tnEmIdnrKt//uLtCBvyhXgD2/O4MaWOXEPZP+de
-S2iUxmSecrHoPvZHOV5cCcnxhuZl68NxxHMg/0ZOlq0uq6lupLXFdptbpMBYSxe/
-+vcrhS3Y6ybjJIq1VBPN/my3vrQAGzRT91Yurbg3WnYbJS3QF6iweBmIqBpUdGIv
-FwP90/2PDmD8HpGA0shquHzh43S3n+QsFqZGgU4dM8Yg/RR7aPI=
-=gIns
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ35H4ACgkQVbJhu7ck
+PpSmfQ/+MNbopBEXTeSuhsVPdz6h/WEUkBKdV+rUeoaAdtwPXMumLtFf7VJTSY39
+P9HAnaap9Y5v8rasJ83tEOn+yfKIctMLEc+/i1dmeW6Yj4QO5v4SdQwfsGXJYY/d
+v5CsQzTjuuAB9JNEIk5pXhxYyklkHoYDntCu6QCeo2+B2A2LwDS3OZ4fpMibNMjO
+0t1VjBLc2GR5zGFr+lE2NG4szG7GXoHo+XO/yHZt/yWTcE985lCFGE07Rln6pwUH
+Y77sYbdwiMVDToiHyNYKDAc5eIEwhdULh4yWm5x05Sr+bQvSgX1fx5Lv90U3FT0O
+uo7SFWqYZ6FiIJHCrlNsnK/tXkSBKkOOgPV+Hli4+rlXTvIWkVtAbEo2u1hNZYEN
+oqFF0qEN66icjPSbLzoVngh44S/FOQBuz1YsBU64ZxLyYX0nPigmbj+gO/2jvsnO
+MFseke4EOdqycrC8EvchLq+OtsKZ0cN/9EYDFrGrNHGZojFKlckal1+p6jX1V9JA
+D3TxnDyod7PBpH0lYKEQmKWYpBjzQMZrUXCCgJRWSmLicguYELts/waco3R0lQ4R
+Dk5x7oiy3KF+iFi5618YvOc7soEXmtKZHTnNCH6TRQxrCrxcEYC2qOi/hIUWfBpU
+DjwLXyxCV+FdK0IpjQcbBV3ZzIBrCqTG43bHV8Rz0krk8tjM0RM=
+=WAlE
 -----END PGP SIGNATURE-----
 
---/iHh7k078AuzJ+EH--
+--fdOK4MtmPzDQ/X1i--
