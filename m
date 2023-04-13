@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5E35C77B61
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 11:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C9DFC77B6E
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 11:57:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230383AbjDML5y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 07:57:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57142 "EHLO
+        id S230486AbjDML54 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 07:57:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229742AbjDML5v (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 07:57:51 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A70C26BC
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 04:57:50 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id e9e14a558f8ab-32a249b416fso2533885ab.1
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 04:57:50 -0700 (PDT)
+        with ESMTP id S229793AbjDML5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 07:57:52 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2AA09755
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 04:57:51 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id e9e14a558f8ab-32879a8cbe5so2360345ab.3
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 04:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681387069; x=1683979069;
+        d=gmail.com; s=20221208; t=1681387071; x=1683979071;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xes3FjJgCuGjh2JdFSJ6DWxb7d1pOy3wg+gVBpDfphc=;
-        b=TqEpDI3auLtchLDfrDiR6HZM8q67UJZQ7RwXWxkVNMdtHgju5RsyiRkf9N8S39wXBm
-         P2sXbd5ZTiwh4HCZbId5uTLZ6GGbu3wwbwkM30r+wRxdfarBa/pCQ1CSw9wk8oM78KtK
-         M+IY6/SfV31B5HeAqZpsYXCzlDXXJhLQohE+VGv+FjlfZexH/01dVDJ/lcdrtGPv5+EE
-         u8l4uMtwG2PQAd2LnOr416qe4aOToU3i1lFl8sNxTUfeOjltRnBjrPcbw59XW3QDnwbX
-         o2hYpDQ4Wz6CsdQOXeu3MCUpX8Vp/05UMDl0qVBapg6IGqzB8nbfTzIevXMRFCa5Lw+f
-         uHSA==
+        bh=4fodCi4KXNxQsZEylyi/LqaMcL76xV59ZSoYwH4S1b0=;
+        b=MLxxtFJ+nTqxKrCjTT0rfkzVpSYTWiXROv/Rt/2xq3gyBvlpaoz7qp3GY1i8zzkDjF
+         CmxMbzIqEjv1fd+uhhvPS40EXjNj91V6UmNNGoJLKERC26DiPUQVwCqgiisTC719NdZs
+         sOQzmnLpNeHYxRBzCmxSelzB80Wo9mecnI361TT45NQqYkqDrJ0mzye+SiueIK2IeeDh
+         qYZtT4aeD5h1E6ynFqT0rla1l7lNgoSE/jVCh4/uayjJgWBVFhizvK+v1qYXzBozdPeI
+         HXQpNi4GYNrTsC8NCgNhF/m75lHVBIBeQ1ZZWNOjsjSPmuPPMal1jV8TLzSeRSZo6SdE
+         4lqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681387069; x=1683979069;
+        d=1e100.net; s=20221208; t=1681387071; x=1683979071;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xes3FjJgCuGjh2JdFSJ6DWxb7d1pOy3wg+gVBpDfphc=;
-        b=b6YG5hPEkQLHql1rOqgfKQLhFGaoyhGo+GlQYv72K3BexjddeaKWzYL+PzF9PSp5Mv
-         n/01Y9EVEkEAOaBv9IpQHdw7lawAoqeRHWZZBDHEaiiFFQNa+A9xLPIFLkN+8ROLOKcT
-         ZpwUYHTIJleO2ttX1MTZ/OXuJKzK2/amXv4vW/rKNxwP2JC9snWfnpGCuPGOJ8w/9oSP
-         MEgusECf1p+KZ6x0s2URWlLHa1XQDGYmHzIeo0S0Xjkmm6/ENW/X5Td+Rktw3Hx0iA9A
-         9sEC8C3KvA1f8iDTbpffBeCLzhV+p+ugZfLnR5gkgSUAaO8A24oqxOtGMZ8DqiTIIdWC
-         NoYw==
-X-Gm-Message-State: AAQBX9dieJ7pCr8p/OyDsYrcoLVaZ3xdpfeG7jN6NQhmDSvSYZ8mSU76
-        4RuicdAyfomFbAmlbZ0Il9e3CiTsuPM=
-X-Google-Smtp-Source: AKy350bWGCzun7WNHEyTURyOGS3KFhNNNOEoB4dQmADlSX7Z9yrdMmX0xXRgug1kiQARS67crGuLzA==
-X-Received: by 2002:a92:c103:0:b0:329:5353:8575 with SMTP id p3-20020a92c103000000b0032953538575mr1397321ile.23.1681387069398;
-        Thu, 13 Apr 2023 04:57:49 -0700 (PDT)
+        bh=4fodCi4KXNxQsZEylyi/LqaMcL76xV59ZSoYwH4S1b0=;
+        b=iOLx/l8YQ1cJUGrNrx8vIJLDFIlAI/lC+Byev66usKJaKvOX1S/88UU4d/nve+vbz0
+         aah7CdtfvCQs8YI4fSVSOfhB8/rtuTAVo9QZoWvpNgIo6JcFB02fr0NahCe2mLcyRG52
+         Gf9drJjark+GMysavJ5vAyRnBJWmt/kARaAbUREP2nMgoLN7U+OJrTBMx8XO8hbQpf1w
+         w6HT3FllDs8dpIz1ivjzvA53UWFnJ1unP28jGlpbmyWu27ONvkUQhKf260wxYCZzHuOz
+         3k6H22PwSThNYQlTfam6nRL9cqM6GMHFuKx8cpQimuqtwxQhaPBCnK32Q8ecwFjDiaVP
+         2KQQ==
+X-Gm-Message-State: AAQBX9cKQ/CUtu2tCDlP3oRLSDMvdBAt5H7Uw9e8nmoBBxRdcTjJPKnY
+        SDLuUILdCf/fOCbR6lqremHK8IBgR+Q=
+X-Google-Smtp-Source: AKy350YUrr139BUykGDzQvqtj128Zn0RN3ZMRDHRp921MAUZS0D5arpy0jbNmSrU8Sb7ep+7KFPKTQ==
+X-Received: by 2002:a05:6e02:809:b0:329:5813:8de6 with SMTP id u9-20020a056e02080900b0032958138de6mr1491476ilm.18.1681387070816;
+        Thu, 13 Apr 2023 04:57:50 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id bt13-20020a056638430d00b0040907e6260asm413570jab.128.2023.04.13.04.57.48
+        by smtp.gmail.com with ESMTPSA id q18-20020a056638239200b0040b27189e8dsm416684jat.116.2023.04.13.04.57.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 04:57:48 -0700 (PDT)
+        Thu, 13 Apr 2023 04:57:50 -0700 (PDT)
 From:   Felipe Contreras <felipe.contreras@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         "brian m . carlson" <sandals@crustytoothpaste.net>,
         Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [RFC PATCH 02/12] doc: add missing manpage docinfo
-Date:   Thu, 13 Apr 2023 05:57:35 -0600
-Message-Id: <20230413115745.116063-3-felipe.contreras@gmail.com>
+Subject: [RFC PATCH 03/12] doc: remove unnecessary hack for asciidoctor
+Date:   Thu, 13 Apr 2023 05:57:36 -0600
+Message-Id: <20230413115745.116063-4-felipe.contreras@gmail.com>
 X-Mailer: git-send-email 2.40.0+fc1
 In-Reply-To: <20230413115745.116063-1-felipe.contreras@gmail.com>
 References: <20230413115745.116063-1-felipe.contreras@gmail.com>
@@ -69,40 +69,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We can remove the whole hack, since asciidoc.py already does that
-correctly since 2008.
+It was added in f6461b82b9 (Documentation: fix build with Asciidoctor 2,
+2019-09-15) to avoid newlines, but they don't matter.
 
 Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- Documentation/asciidoc.conf | 3 +++
- t/t0600-doc-tools.sh        | 2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ Documentation/Makefile    | 1 -
+ Documentation/manpage.xsl | 3 ---
+ t/t0600-doc-tools.sh      | 4 ++--
+ 3 files changed, 2 insertions(+), 6 deletions(-)
+ delete mode 100644 Documentation/manpage.xsl
 
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index 3e4c13971b..303d45dc34 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -56,6 +56,9 @@ ifdef::backend-docbook[]
- [header]
- template::[header-declarations]
- <refentry>
-+<refentryinfo>
-+template::[docinfo]
-+</refentryinfo>
- <refmeta>
- <refentrytitle>{mantitle}</refentrytitle>
- <manvolnum>{manvolnum}</manvolnum>
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 5cd35df61c..3fab7ce9cd 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -202,7 +202,6 @@ ASCIIDOC_EXTRA += -alitdd='&\#x2d;&\#x2d;'
+ ASCIIDOC_DEPS = asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
+ DBLATEX_COMMON =
+ XMLTO_EXTRA += --skip-validation
+-XMLTO_EXTRA += -x manpage.xsl
+ endif
+ 
+ SHELL_PATH ?= $(SHELL)
+diff --git a/Documentation/manpage.xsl b/Documentation/manpage.xsl
+deleted file mode 100644
+index ef64bab17a..0000000000
+--- a/Documentation/manpage.xsl
++++ /dev/null
+@@ -1,3 +0,0 @@
+-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+-	<xsl:import href="http://docbook.sourceforge.net/release/xsl-ns/current/manpages/docbook.xsl" />
+-</xsl:stylesheet>
 diff --git a/t/t0600-doc-tools.sh b/t/t0600-doc-tools.sh
-index 0f9a4053a9..db77db72e5 100755
+index db77db72e5..a80cd32cd6 100755
 --- a/t/t0600-doc-tools.sh
 +++ b/t/t0600-doc-tools.sh
-@@ -78,7 +78,7 @@ check_manpage() {
- 	test_cmp "$1.1.expected" "$1.1.actual"
+@@ -70,7 +70,7 @@ build_asciidoctor() {
+ 	asciidoctor -acompat-mode -atabsize=8 -I "$doc_dir" -rasciidoctor-extensions -alitdd='&#x2d;&#x2d;' \
+ 		-amanmanual='Git Manual' -amansource='Git 1.0.0' -arevdate='2005-01-01' -b docbook5 -d manpage \
+ 		-o "$1.xml" "$1.txt" &&
+-	xmltoman "$1" -x "$doc_dir"/manpage.xsl
++	xmltoman "$1"
  }
  
--test_expect_failure ASCIIDOC 'legacy asciidoc.py' '
-+test_expect_success ASCIIDOC 'legacy asciidoc.py' '
- 	build_asciidoc_py "git-foo" &&
+ check_manpage() {
+@@ -83,7 +83,7 @@ test_expect_success ASCIIDOC 'legacy asciidoc.py' '
+ 	check_manpage "git-foo"
+ '
+ 
+-test_expect_failure ASCIIDOCTOR 'modern asciidoctor (docbook5)' '
++test_expect_success ASCIIDOCTOR 'modern asciidoctor (docbook5)' '
+ 	build_asciidoctor "git-foo" &&
  	check_manpage "git-foo"
  '
 -- 
