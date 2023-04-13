@@ -2,107 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F145C77B6F
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 13:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8C7FC77B6E
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 13:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231362AbjDMNtl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 09:49:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51746 "EHLO
+        id S230112AbjDMNw6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 09:52:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230383AbjDMNtj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 09:49:39 -0400
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66D043584
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 06:49:36 -0700 (PDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-54fa9da5e5bso82730047b3.1
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 06:49:36 -0700 (PDT)
+        with ESMTP id S231454AbjDMNwx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 09:52:53 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3C610CC
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 06:52:50 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id n9-20020a05600c4f8900b003f05f617f3cso14818895wmq.2
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 06:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1681393775; x=1683985775;
+        d=gmail.com; s=20221208; t=1681393969; x=1683985969;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IACb5aAtTtbyQISNeTgggwiO3frZh3z8ueicizwRlM8=;
-        b=Vcznfl/Hl24p1wuBr9QUnJ0EjJ4e1BOKX/Pc/UyST49MjiSPbPci1DWN5q+eD7hkg4
-         A5hsqOxBpqK/1HTjxMjIbsJPs5wHvsK/qQhnAyTcE82uQphaPoC+CKRXib/j2hR26LAV
-         hXfbm8OXyQVsDnNfcLSvWxq2baFxxLhsYAztn82t6bL6ws/e9merMHTzLWPEr8bJgbgQ
-         D0Sk8AmwdVMgIcSFY6rckOjxDeST4RenVGTSGWNW7iw3VGpFD5b7oVcH2ukYEvFbjhQr
-         c3zXeSGKNnYhu9sa1pf7/aaWx9rJbqhSmCnowHcwMLEBWm8/7In6BDDyV2jkwDtDb7qv
-         04CA==
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=kZDHJSwJ3m/ReL3vZf0xAM+9NS+UeBe2gqhFfVtxpa0=;
+        b=HKZIXiF0Hr0ddOsMzQ5bPAQdq5JPuveWRfV3/ZWmzGhc6vRLfK/0rLZJtQJUl4KYDL
+         DoOycjVgIw6RWxLuRfMEhxgavGuddLYBlpF4kkt76NTWGNQIYg++xmGkb+LWJmC2aYfU
+         MFjVC8zdDeP//ixBbSrBjs/7Z/T/ZzcMfGQcPn/6AQllOWMNnZ3h2NEjTNKU2t9/SaoB
+         yoMuT4WJTe10IAn6STPxdX/xzGaVY4R+GkKDOqXKt/q/0kgpDoh4nz7+u4cVj1J0yv+w
+         a5F6o2xkpJC2FGKJ1GIAahsPn/4Kg+6F5WVLRs0StpzRa9hcD1jgk3O9ZmKZXrkRs2D+
+         2kjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681393775; x=1683985775;
+        d=1e100.net; s=20221208; t=1681393969; x=1683985969;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IACb5aAtTtbyQISNeTgggwiO3frZh3z8ueicizwRlM8=;
-        b=NHNcYiN+7m3npz0i/3dJV2qxKD/bFdQo0hai2RRNp+KrAxyRHl9LbzCtAsns5muALq
-         YBywbVUgLPD717kaNLHOeVjr5wWt5k8gxMHTZ2Y4uZnj6tePFPyb3n5U51r6X+KmgKan
-         +WidhP9wKxdhIncINIJY1zGcfN8x5SIM3wmFE6RXCrqXc6QGXk2ESDDdyQPwhm9N7EAx
-         jU4v+/gUfXpShqDzqbK27yUTRVmlsHoH0Y7N/vEHcqWDaeEnGPRr6M6+wZXNL2G5Euup
-         BE1guH461ft//0V0tKgzWkc8KTXUEp52/MfBY6WGBRTNZcprC4PeopGigK2FtWwpDizK
-         2KrQ==
-X-Gm-Message-State: AAQBX9fQkD7cJNG/oKdcT+Gwdzj23ojQ0IPzAT1dYLphFi/n2WjETZcq
-        eLZJfWLcovXxqPp/PlUwes5Q
-X-Google-Smtp-Source: AKy350adtm7V9ajBR1N8ie5kdCvxZbWZlk+Ae1TmaLyte/XrTtdwIX0jN7QM5YrGDfoPCGaVtRZbAw==
-X-Received: by 2002:a0d:e205:0:b0:54f:ba16:eee with SMTP id l5-20020a0de205000000b0054fba160eeemr1827891ywe.32.1681393775390;
-        Thu, 13 Apr 2023 06:49:35 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id 195-20020a810fcc000000b00545a08184f6sm453413ywp.134.2023.04.13.06.49.34
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kZDHJSwJ3m/ReL3vZf0xAM+9NS+UeBe2gqhFfVtxpa0=;
+        b=bzHe22WMbRAGLWKCfR8OLjSf1N+bj1FDqVIkGJZ5xkJ/NopfjBA9dUlw/s2W1AvMPk
+         vMdQ6HbtsQ9auzM71o/NJ+G0pKvkZZFf5byj5m2ys0+K7XEqz0f66Uf+bPxci5FPM42I
+         IRjjOmxNHtsUV/+9Ir/CaALUGGqZyCtOlL9pVAXSm98VG1fO4HXWN4JaA1b9Zl9YIZzw
+         6E66ZB0niJeinOk0WehtnhNiWzu5xaB6yB3QcHpAXjaKVIWuA9VTNRI1wscE3ael4lny
+         zUJzM2pwChwUTxq46P19eRylt5PdI8larrayOe9/kDq8GZkj/I09hLYI6x0dt37Tz0dY
+         ctPA==
+X-Gm-Message-State: AAQBX9e/PEUpJAidI40A2003IRZCmm+cnJ4LLKKvWXuI8EunpB1FPvXv
+        PrTXEez4COiyjsWkiYaHtlY=
+X-Google-Smtp-Source: AKy350ZDeJAQbvdicxb0ITfQduvT2yxu30kmKcgOlJqlfBQOv6T9LCEjTJdRcXp/XA/8N3e8GFwAlw==
+X-Received: by 2002:a05:600c:2904:b0:3ee:3df6:e411 with SMTP id i4-20020a05600c290400b003ee3df6e411mr1806792wmd.28.1681393968792;
+        Thu, 13 Apr 2023 06:52:48 -0700 (PDT)
+Received: from [192.168.1.212] ([90.253.53.152])
+        by smtp.gmail.com with ESMTPSA id u10-20020a7bc04a000000b003f09d7b6e20sm1926794wmc.2.2023.04.13.06.52.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Apr 2023 06:49:35 -0700 (PDT)
-Message-ID: <1d2e1796-c305-0876-533c-2fe0fd39d722@github.com>
-Date:   Thu, 13 Apr 2023 09:49:34 -0400
+        Thu, 13 Apr 2023 06:52:48 -0700 (PDT)
+Message-ID: <240577d5-3412-5a80-c7d9-e3d277869add@gmail.com>
+Date:   Thu, 13 Apr 2023 14:52:46 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 01/10] midx: fix segfault with no packs and invalid
- preferred pack
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3] send-email: export patch counters in validate
+ environment
 Content-Language: en-US
-To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, peff@peff.net, dstolee@microsoft.com
-References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
- <cover.1681384405.git.ps@pks.im>
- <dd8145beade440e5444130d3a3189b2c5d15a911.1681384405.git.ps@pks.im>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <dd8145beade440e5444130d3a3189b2c5d15a911.1681384405.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
+To:     Robin Jarry <robin@jarry.cc>, git@vger.kernel.org
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Tim Culverhouse <tim@timculverhouse.com>,
+        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Michael Strawbridge <michael.strawbridge@amd.com>
+References: <20230412095434.140754-1-robin@jarry.cc>
+ <20230412214502.90174-1-robin@jarry.cc>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20230412214502.90174-1-robin@jarry.cc>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/13/2023 7:16 AM, Patrick Steinhardt wrote:
+Hi Robin
 
-> Fix this bug by resetting the preferred packfile index to `-1` before
-> searching for the preferred pack. This fixes the segfault as we already
-> check for whether the index is `> - 1`. If it is not, we simply don't
-> pick a preferred packfile at all.
+On 12/04/2023 22:45, Robin Jarry wrote:
+> When sending patch series (with a cover-letter or not)
+> sendemail-validate is called with every email/patch file independently
+> from the others. When one of the patches depends on a previous one, it
+> may not be possible to use this hook in a meaningful way. A hook that
+> wants to check some property of the whole series needs to know which
+> patch is the final one.
+> 
+> Expose the current and total number of patches to the hook via the
+> GIT_SENDEMAIL_PATCH_COUNTER and GIT_SENDEMAIL_PATCH_TOTAL environment
+> variables so that both incremental and global validation is possible.
+> 
+> Sharing any other state between successive invocations of the validate
+> hook must be done via external means. For example, by storing it in
+> a git config sendemail.validateWorktree entry.
+> 
+> Add a sample script with placeholders for validation.
+> 
+> Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+> Signed-off-by: Robin Jarry <robin@jarry.cc>
+> ---
+> 
+> Notes:
+>      v2 -> v3:
+>      
+>      * Fixed style in sample script following Documentation/CodingGuidelines
+>      * Used git worktree instead of a shallow clone.
+>      * Removed set -e and added explicit error handling.
+>      * Reworded some comments.
 
->  	if (preferred_pack_name) {
-> -		int found = 0;
-> +		ctx.preferred_pack_idx = -1;
+I think the documentation and implementation look good, I've left a 
+comment about the example hook below. As Junio has previously mentioned, 
+it would be nice to have a test with this patch.
+
+> diff --git a/templates/hooks--sendemail-validate.sample b/templates/hooks--sendemail-validate.sample
+> new file mode 100755
+> index 000000000000..f6dbaa24ad57
+> --- /dev/null
+> +++ b/templates/hooks--sendemail-validate.sample
+> @@ -0,0 +1,71 @@
+> +#!/bin/sh
 > +
+> +# An example hook script to validate a patch (and/or patch series) before
+> +# sending it via email.
+> +#
+> +# The hook should exit with non-zero status after issuing an appropriate
+> +# message if it wants to prevent the email(s) from being sent.
+> +#
+> +# To enable this hook, rename this file to "sendemail-validate".
+> +#
+> +# By default, it will only check that the patch(es) can be applied on top of
+> +# the default upstream branch without conflicts. Replace the XXX placeholders
+> +# with appropriate checks according to your needs.
+> +
+> +validate_cover_letter() {
+> +	file="$1"
+> +	# XXX: Add appropriate checks (e.g. spell checking).
+> +}
+> +
+> +validate_patch() {
+> +	file="$1"
+> +	# Ensure that the patch applies without conflicts.
+> +	git am -3 "$file" || return
+> +	# XXX: Add appropriate checks for this patch (e.g. checkpatch.pl).
+> +}
+> +
+> +validate_series() {
+> +	# XXX: Add appropriate checks for the whole series
+> +	# (e.g. quick build, coding style checks, etc.).
+> +}
+> +
+> +get_worktree() {
+> +	if ! git config --get sendemail.validateWorktree
+> +	then
+> +		# Initialize it to a temp dir, if unset.
+> +		worktree=$(mktemp --tmpdir -d sendemail-validate.XXXXXXX) &&
+> +		git config --add sendemail.validateWorktree "$worktree" &&
+> +		echo "$worktree"
+> +	fi
+> +}
+> +
+> +die() {
+> +	echo "sendemail-validate: error: $*" >&2
+> +	exit 1
+> +}
+> +
+> +# main -------------------------------------------------------------------------
+> +
+> +worktree=$(get_worktree) &&
+> +if test "$GIT_SENDEMAIL_FILE_COUNTER" = 1
+> +then
+> +	# ignore error if not a worktree
+> +	git worktree remove -f "$worktree" 2>/dev/null || :
 
-This patch looks good, but I did need to think about it for a bit,
-so here are my thoughts (feel free to ignore):
+Now that you've got rid of "set -e" I don't think we need "|| :". I had 
+expected that we'd always create a new worktree on the first patch in a 
+series and remove it after processing the the last patch in the series, 
+but this seems to leave it in place until the next time send-email is 
+run or /tmp gets cleaned up. Also if I've understood it correctly the 
+name is set the first time this hook is run, rather than generating a 
+new name for each set of files that is validated.
 
-I briefly considered recommending that we set this as the default in
-an initializer macro, something like
+Best Wishes
 
-  #define WRITE_MIDX_CONTEXT_INIT { .preferred_pack_idx = -1 }
+Phillip
 
-but this struct is internal to the file and only constructed once
-(at the start of write_midx_internal).
-
-Further, outside the context of this patch we have this code:
-
-	} else if (ctx.nr &&
-		   (flags & (MIDX_WRITE_REV_INDEX | MIDX_WRITE_BITMAP))) {
-		struct packed_git *oldest = ctx.info[ctx.preferred_pack_idx].p;
-		ctx.preferred_pack_idx = 0;
-
-I don't see a way that ctx.preferred_pack_idx can be anything but zero
-here, but it's also not going to give a segfault because of the 'ctx.nr'
-condition.
-
-Thanks,
--Stolee
+> +	echo "sendemail-validate: worktree $worktree"
+> +	git worktree add -fd --checkout "$worktree" refs/remotes/origin/HEAD
+> +fi || die "failed to prepare worktree for validation"
+> +
+> +unset GIT_DIR GIT_WORK_TREE
+> +cd "$worktree" &&
+> +
+> +if grep -q "^diff --git " "$1"
+> +then
+> +	validate_patch "$1"
+> +else
+> +	validate_cover_letter "$1"
+> +fi &&
+> +
+> +if test "$GIT_SENDEMAIL_FILE_COUNTER" = "$GIT_SENDEMAIL_FILE_TOTAL"
+> +then
+> +	validate_series
+> +fi
