@@ -2,122 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 13843C77B6E
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 21:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06979C77B6E
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 22:19:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbjDMV4k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 17:56:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33486 "EHLO
+        id S229954AbjDMWTS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 18:19:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbjDMV4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 17:56:39 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5978561B3
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 14:56:38 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id y11-20020a17090a600b00b0024693e96b58so15650452pji.1
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 14:56:38 -0700 (PDT)
+        with ESMTP id S229612AbjDMWTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 18:19:17 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C9A426BE
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 15:19:16 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id m18so16480995plx.5
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 15:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1681422998; x=1684014998;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=github.com; s=google; t=1681424356; x=1684016356;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Kr+/uywrzmJt7aGlmxL23Rfi8DQbsD9K/ca34OIrMkY=;
-        b=OpM1j+a+ahuMTo2beCfABja5aAcnm3JAS+Jv5kXdUnXVeARqO8TROLxWDjAaNWtvtA
-         jg+Bp5rRMBPIGdeyAVkm6VxGur1A2DD64yoDKRrxrS8cVZ4A639HUN+g+fRZ/uKBEa48
-         udezKi9Uyp8r/1aqXGVd+PWkkB+aZbj/JvnaTKpOBuPZjumR8rPuWEJel+O7gs94hB7f
-         qrY8rWZYe3YtZUDHGlvYn5wHPgdmJWiAnGjX8fTKdifLhTBLoqAjhEyIlab0aROPypTi
-         TZlD8yxCgKoOOAK+bptY5Jm5tmsm7tXwBx4MwjADV8ampakXpipszcEBqfjsPtPcEXCW
-         ar5Q==
+        bh=RS48dKJVlv/8rN6zrzK/GMTOvV1y6gYa92DyzoGL78o=;
+        b=KG2UA7v8TY6XIbRcuLduHtKIAxI7Z6R6SJs+3kCvw9lseRZQxXDBOMSikQCh1kA9eB
+         KSeZOo4Dzdhz/380rsjFsT99ZDCNPyYcRbT7HxySvZc2eXmqb5GiBcN1JiobtoadAqbU
+         4V0UBgzjVWI1QcgAS3yoa9WwzJ3dtlVoX2l1TLvjMHwx3aq7QduU24e0YLGH1qTh5AZx
+         Q07iy0SpKZPFFwg8qJzmn4j5/83fkXDe5OVFUO2sRrnb6QENfnl0NsDgItKBj0rfItrb
+         xCwT+oDUS55UVLvGh/kZQPFdR2J3xIOuz4Q5Ce7WOBcKCJ/IyOPJy539Zaw3Fg2HW1aj
+         ID+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681422998; x=1684014998;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1681424356; x=1684016356;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kr+/uywrzmJt7aGlmxL23Rfi8DQbsD9K/ca34OIrMkY=;
-        b=MtcCUN3xoPrMOCNkbILJIii/5dsty3k2Zqqo+1WCNzf7wHV8dzE81BKah7KBMMgiXR
-         WzbjmtoPzaz2FdOKzzvDhnXdnetF6R7x6VKC5bFT37mjQn+8E53PMdShMu0H2ryHgGKq
-         E15Z4FdiWftD0i+RsrAKqhWzvX/cg1tYYkfy8yfIDzua5ySVbmr3/PMiSanvtdO+q8TA
-         +wGAbQVucUZDODRdaOqcg2CEfz1jGa5ZROTirf14y1tzPUbHu6Fr90Yc+fETZT/I03DT
-         ZOzu4Tk1REpcPyHKzEADULl7AnpdxsQY5MdkICWNjZ5FOKV5Ik1nT68t7BL+5o9fnzmw
-         gKUw==
-X-Gm-Message-State: AAQBX9eEWWa5wRGXEf0q1vSq6HCrCzWbeA2CwDX5zELj+8PepXTZ9G4q
-        J69AP5/zYZQc8ce0TkbIRrwv
-X-Google-Smtp-Source: AKy350bT8goc4PRlRXeJc/+/HQUaAWSeBv6o9yZouyVkCsA6yfsMKJK8pYEX57utQPPQBVKzmTYytw==
-X-Received: by 2002:a17:902:d482:b0:1a6:4532:1149 with SMTP id c2-20020a170902d48200b001a645321149mr517308plg.44.1681422997876;
-        Thu, 13 Apr 2023 14:56:37 -0700 (PDT)
+        bh=RS48dKJVlv/8rN6zrzK/GMTOvV1y6gYa92DyzoGL78o=;
+        b=M2YTMzVocAMQ/1BPOZ7c62t1WODShOn62FlVP7iRF3403JPnLPwXvipeM5NKd54MBz
+         kQkJqtIYvnoCN3NJLuri+JxaSKqVkGozhkiY8GW/4gUrY/+6bRYSfEIfcqYlRl0WGAvd
+         WsGsUJjolCqohPmq42eiKQEZlk7YavX1Ryxc454Wd9txrsRryeS5ibY4GRZw79WDKCZc
+         KMyjS2x3925cgvaP4Uta8SV2ZRLuhzEys8ncocQOfsFZXkWNwNxf1y+s63cWsT31k9ow
+         /6OWk5Q6F0W83QYFVS1q93R/Vv8YGBVumiWie6Mcpy5Wo6uDCE8KObhCrykVZ+dJpmMi
+         zc9Q==
+X-Gm-Message-State: AAQBX9e0E+vcZ4EER5YFs/V7blVcxKYsv4W3R7fQR9akS16MGWqHe5CO
+        PghpBfZjzXnsc7zObuFZAjuo
+X-Google-Smtp-Source: AKy350bvkHwKZn7iVWcuJmghSs5sk/mxDfK1wL1T9rOpPIoZa/K7dyxE8L4/VskFmxphDUtKRHpIMg==
+X-Received: by 2002:a17:90a:fc6:b0:237:97a3:1479 with SMTP id 64-20020a17090a0fc600b0023797a31479mr3563605pjz.28.1681424355709;
+        Thu, 13 Apr 2023 15:19:15 -0700 (PDT)
 Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id i12-20020a63cd0c000000b00517be28bcf9sm1822823pgg.86.2023.04.13.14.56.36
+        by smtp.gmail.com with ESMTPSA id s5-20020a170902a50500b001a04d37a4acsm1950959plq.9.2023.04.13.15.19.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Apr 2023 14:56:37 -0700 (PDT)
-Message-ID: <4ffff8e9-3e03-9c5f-4a42-b9102ed24e66@github.com>
-Date:   Thu, 13 Apr 2023 14:56:35 -0700
+        Thu, 13 Apr 2023 15:19:15 -0700 (PDT)
+Message-ID: <df61d79b-8234-d3fd-5eb5-614d1b97d046@github.com>
+Date:   Thu, 13 Apr 2023 15:19:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.10.0
-Subject: Re: [PATCH v7 1/2] t1092: add tests for `git diff-files`
+Subject: Re: What's cooking in git.git (Apr 2023, #03; Tue, 11)
 Content-Language: en-US
-To:     Shuqi Liang <cheskaqiqi@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, derrickstolee@github.com
-References: <20230320205241.105476-1-cheskaqiqi@gmail.com>
- <20230322161820.3609-1-cheskaqiqi@gmail.com>
- <20230322161820.3609-2-cheskaqiqi@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqo7ns69sz.fsf@gitster.g>
 From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <20230322161820.3609-2-cheskaqiqi@gmail.com>
+Cc:     Raghul Nanth A <nanth.raghul@gmail.com>,
+        Shuqi Liang <cheskaqiqi@gmail.com>
+In-Reply-To: <xmqqo7ns69sz.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shuqi Liang wrote:
-> +test_expect_success 'diff-files with pathspec inside sparse definition' '
-> +	init_repos &&
-> +
-> +	write_script edit-contents <<-\EOF &&
-> +	echo text >>"$1"
-> +	EOF
-> +
-> +	run_on_all ../edit-contents deep/a &&
-> +
-> +	test_all_match git diff-files &&
-> +
-> +	test_all_match git diff-files deep/a && 
-> +
-> +	# test wildcard
-> +	test_all_match git diff-files deep/*
+Junio C Hamano wrote:
+> * rn/sparse-diff-index (2023-04-10) 1 commit
+>  - diff-index: enable sparse index
+> 
+>  "git diff-index" command has been taught to work better with the
+>  sparse index.
+> 
+>  Comments?
+>  source: <20230408112342.404318-1-nanth.raghul@gmail.com>
 
-Should this pathspec be quoted (like you do for "folder*/a" below)?
+I just sent a review of the newest version [1] with some minor nits &
+questions that may prompt a re-roll (depending on the author's/others'
+thoughts).
 
-> +'
-> +
-> +test_expect_success 'diff-files with pathspec outside sparse definition' '
-> +	init_repos &&
-> +
-> +	test_sparse_match test_must_fail git diff-files folder2/a &&
-> +
-> +	write_script edit-contents <<-\EOF &&
-> +	echo text >>"$1"
-> +	EOF
-> +
-> +	# Add file to the index but outside of cone for sparse-checkout cases.
-> +	# Add file to the index without sparse-checkout cases to ensure all have 
-> +	# same output.
-> +	run_on_all mkdir -p folder1 &&
-> +	run_on_all cp a folder1/a &&
-> +
-> +	# file present on-disk without modifications
-> +	# use `--stat` to ignore file creation time differences in
-> +	# unrefreshed index
-> +	test_all_match git diff-files --stat &&
-> +	test_all_match git diff-files --stat folder1/a &&
-> +	test_all_match git diff-files --stat "folder*/a" &&
-> +
-> +	# file present on-disk with modifications
-> +	run_on_all ../edit-contents folder1/a &&
-> +	test_all_match git diff-files &&
-> +	test_all_match git diff-files folder1/a &&
-> +	test_all_match git diff-files "folder*/a" 
-> +'
-> +
->  test_done
+[1] https://lore.kernel.org/git/62821012-4fc3-5ad8-695c-70f7ab14a8c9@github.com/
+
+> * rn/sparse-describe (2023-04-03) 1 commit
+>  - describe: enable sparse index for describe
+> 
+>  "git describe --dirty" learns to work better with sparse-index.
+> 
+>  Will merge to 'next'?
+>  source: <20230403164749.246001-1-nanth.raghul@gmail.com>
+
+This looks good to me, agreed that it's ready for 'next'.
+
+> * sl/sparse-write-tree (2023-04-04) 1 commit
+>   (merged to 'next' on 2023-04-10 at 0cd39c23b1)
+>  + write-tree: integrate with sparse index
+> 
+>  "git write-tree" learns to work better with sparse-index.
+> 
+>  Will merge to 'master'.
+>  source: <20230404003539.1578245-1-cheskaqiqi@gmail.com>
+
+Sorry for getting to this one so late - I did have some comments [2] on the
+tests in this patch that weren't addressed. However, I'm fairly certain the
+integration itself is correct, so I may just submit the test updates as a
+separate patch in the (near-ish?) future.
+
+[2] https://lore.kernel.org/git/9d0309bd-943c-dd51-97cf-59721eda78f7@github.com/
+
+> * sl/diff-files-sparse (2023-03-22) 2 commits
+>  - diff-files: integrate with sparse index
+>  - t1092: add tests for `git diff-files`
+> 
+>  Teach "diff-files" not to expand sparse-index unless needed.
+> 
+>  Comments?
+>  source: <20230322161820.3609-1-cheskaqiqi@gmail.com>
+
+I also just sent a review for this one [3] [4], with similar nits &
+questions to those in the 'diff-index' integration.
+
+[3] https://lore.kernel.org/git/4ffff8e9-3e03-9c5f-4a42-b9102ed24e66@github.com/
+[4] https://lore.kernel.org/git/c382017a-8c65-24ba-5092-6b46428d8b9b@github.com/
 
