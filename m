@@ -2,68 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58D49C77B61
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 15:40:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40F47C77B71
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 16:14:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231480AbjDMPkU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 11:40:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59154 "EHLO
+        id S230293AbjDMQOR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 12:14:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230358AbjDMPkS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 11:40:18 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE8701712
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 08:40:17 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id p17so4224409pla.3
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 08:40:17 -0700 (PDT)
+        with ESMTP id S230204AbjDMQOK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 12:14:10 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F7DC9EE3
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 09:14:06 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id v9so20956749pjk.0
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 09:14:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681400417; x=1683992417;
+        d=gmail.com; s=20221208; t=1681402445; x=1683994445;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MTMMRn4dJl0Xy8rJdDpfioZhUQjqScXiWAXoBp0Ml0A=;
-        b=PCRcOq8w2B9HdnhHBASy0BP+g/QqOh+FduWdizvalz4hQ5kDLcDK/rDzFKwcdRbJUe
-         tbfzfqbVH7+gTNn3TQTS6WqRowtaNB9Zotn7VbQRxIM3N+CCHXioLsY2uAHfoWj+Heyx
-         c7YILW89y7E2WfMMXyaTHAZ8y48Mjjv7VG3d5D2Sv1ljgnGJYNsXZnahZrEcufajR/K4
-         Y44xr0yhQjMlmEa0OsUyZOKOMsVn09OTX8XXCnDNO5o5BsPcZDRxQosbi3S6vGw+UNCW
-         cERhfFy6s3hW1bhdCRx1IBmw7be6lsZn9qnJZVTsrRTxK9GdnWJJSXRm8fJPZlOOT8nD
-         JrkA==
+        bh=Rg7lnwfUlW9PXKIHeb8gZEeoTsW3Xub4AKXesqRpQok=;
+        b=XHPlIW+hw4wENnkFxZeoZpWEkYIJ7ybOZ7ldAjxaL3/bHNbTN1Tub1pq5JYrzbIStb
+         dQp3RC4bgrsza84njlhJr1qWgwxkGWpic746B+LIXbeIGkRYWMF04d8Zv04uDmKbS1CI
+         TQ/6abXWJ2srEZrlC5nlD0rJYIxmZfqZAEk5A469dfaKrPbiC50/bkmTYd0NrDaWlksy
+         s6cl/trUDD6rCAEJgF+2YEMYofwM9XHgYyh154zgQnlpON9QjQFHM+R1aVIwTg82erJf
+         sOlOGNwKIq5HOQtvPBzHdDJXGAEEFCSe8NGiBufRGuLIRsyBtXx4vCglGe/h/kXPlYv3
+         phvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681400417; x=1683992417;
+        d=1e100.net; s=20221208; t=1681402445; x=1683994445;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=MTMMRn4dJl0Xy8rJdDpfioZhUQjqScXiWAXoBp0Ml0A=;
-        b=WVqo3gVIdDKimh47cLXKVQHVCj3GZaQHp9aVIZZFqFVDM8FMsEbSm3MB0y5pDfvD8K
-         v397lk3h/izh8hR8VrGB//yeTzveNan26u9wZUooGMKSseTivyJ0H9LMtYhE3RettvNd
-         FLEXnbbk9W5KKGjGJdb7MoRm/IH5JEhwA5Nr0UH2qwQVg+7tMeLw0ML/2dnMQtkiiWXk
-         ebgpMA0O7SQFhVufXHJZ4svIXoshCmQzIo2fMo4L5FjduBH3wjRQQdyZc36eCE/3J83s
-         I0cCaTxSwUNFrK4LYMBaoIiIK2tIBUxWLzm6TuXqH6saedh5eey82qVLQvSG6neSg1nM
-         SM1w==
-X-Gm-Message-State: AAQBX9dRyXUF3sUfrMT0gVMW0oja9bkanjrDC3S2pKcMoef65YLStqBm
-        czM/AN+Fo7xkP/PzHGU0C2Y=
-X-Google-Smtp-Source: AKy350aoVqZ3eYCvZHC+Daag/ITnvWxLFQ+1SPyClG4j6hpCtT594lw0lKyG9Y1e4E84uH9b0E0gsA==
-X-Received: by 2002:a17:902:8492:b0:1a1:d5fd:1e9a with SMTP id c18-20020a170902849200b001a1d5fd1e9amr2251430plo.40.1681400417113;
-        Thu, 13 Apr 2023 08:40:17 -0700 (PDT)
+        bh=Rg7lnwfUlW9PXKIHeb8gZEeoTsW3Xub4AKXesqRpQok=;
+        b=PcDIkbDyyir97bJ1eHhqK6RXg2RwAcmavhPt5vWrhNExeikxGZQOFsOWFQuC34x1wI
+         Um111m9tqn0e0CxIJPnK3r9UWafqF/TC53YwQZajf0BAMHhaojidn1k43aee6V4GZepO
+         KJGBKuY/1T946zsQ2GIOv7A+EI/mRNjGnaAQh9xLoU+OtGefXBqVVZEDThANQffv4auW
+         m8J3+GqeSbeQI7XpkazL34E/3r8QGb+fZSOmYOwM4IDSAdHa1x7jpLIP+UgOGAPwQ/F9
+         V8dTABr64qKvOMEGt0T5zgT4KlaLldmBjMnHAq0KCUt1zCmc+eXT9zRs6wJyix8eevwd
+         BueQ==
+X-Gm-Message-State: AAQBX9crmjZaF5IhWgW2sV3UO0lMv/ODY8mJXTWLTC62/r3uQyYzJ0VC
+        OY+Hg2z2AydlKyJsl53kncf1cbE8xUE=
+X-Google-Smtp-Source: AKy350aTh5814QcSRsqZaWZyU3Fed4tYhCeGzryAyNESL1LqqSuqMO9ioD2Xx9d9PccgPSM5PD0wcA==
+X-Received: by 2002:a17:902:daca:b0:1a1:7b8d:6719 with SMTP id q10-20020a170902daca00b001a17b8d6719mr3109533plx.27.1681402445411;
+        Thu, 13 Apr 2023 09:14:05 -0700 (PDT)
 Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id ij30-20020a170902ab5e00b001a064cff3c5sm1642176plb.43.2023.04.13.08.40.16
+        by smtp.gmail.com with ESMTPSA id j9-20020a170902690900b001a52e3e3745sm1631929plk.296.2023.04.13.09.14.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 08:40:16 -0700 (PDT)
+        Thu, 13 Apr 2023 09:14:04 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>, peff@peff.net,
-        dstolee@microsoft.com
-Subject: Re: [PATCH v3 09/10] repack: honor `-l` when calculating pack geometry
-References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
-        <cover.1681384405.git.ps@pks.im>
-        <285695deafa5a4a49f774dc484782dd8e4fd4997.1681384405.git.ps@pks.im>
-        <52079b9b-a55c-e7d1-930e-38105dd8a85b@github.com>
-Date:   Thu, 13 Apr 2023 08:40:16 -0700
-In-Reply-To: <52079b9b-a55c-e7d1-930e-38105dd8a85b@github.com> (Derrick
-        Stolee's message of "Thu, 13 Apr 2023 09:59:02 -0400")
-Message-ID: <xmqq5y9zzt7j.fsf@gitster.g>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 6/7] config: enable `pack.writeReverseIndex` by default
+References: <cover.1681166596.git.me@ttaylorr.com>
+        <56a0fc0098e0b0551e01414c8e67c17fb1ba3054.1681166596.git.me@ttaylorr.com>
+Date:   Thu, 13 Apr 2023 09:14:04 -0700
+In-Reply-To: <56a0fc0098e0b0551e01414c8e67c17fb1ba3054.1681166596.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Mon, 10 Apr 2023 18:53:40 -0400")
+Message-ID: <xmqqttxjyd2r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,57 +68,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
->> +	test_line_count = 3 packed-objects &&
->> +	packed_objects member/.git/objects/pack/pack-*.idx >packed-objetcs &&
+> They are useful in GitHub's infrastructure, where we have seen a
+> dramatic increase in performance when writing ".rev" files[1]. In
+> particular:
 >
-> Typo: s/packed-objetcs/packed-objects/
+>   - an ~80% reduction in the time it takes to serve fetches on a popular
+>     repository, Homebrew/homebrew-core.
 >
->> +	test_line_count = 3 packed-objects &&
+>   - a ~60% reduction in the peak memory usage to serve fetches on that
+>     same repository.
+>
+>   - a collective savings of ~35% in CPU time across all pack-objects
+>     invocations serving fetches across all repositories in a single
+>     datacenter.
+>
+> Reverse indexes are also beneficial to end-users as well as forges. For
+> example, the time it takes to generate a pack containing the objects for
+> the 10 most recent commits in linux.git (representing a typical push) is
+> significantly faster when on-disk reverse indexes are available:
+> ...
+> In the more than two years since e37d0b8730 was merged, Git's
+> implementation of on-disk reverse indexes has been thoroughly tested,
+> both from users enabling `pack.writeReverseIndexes`, and from GitHub's
+> deployment of the feature. The latter has been running without incident
+> for more than two years.
 
-That's a good one.  Because the result file created by the previous
-step happens to also have three lines, the typo does not cause the
-test to fail, but it is not testing what it designed to test.
+What is missing is what extra overhead this adds to "git gc".  Does
+it add 5%?  15%?  How big an overhead do we find reasonable?
 
-Here is "git diff @{1}" after my local "rebase -i" ("diff" of the
-result is easier to read than "range-diff" in this case, as I did
-not touch any log message).
+Other than that, it looks like that the series is very well crafted.
+It was somewhat surprising that we still need to add a few new
+end-user facing or meant-for-testing knobs for a feature that we
+claim is well battle tested.  It is understandable that we benefit
+by having knobs to selectively _disable_ a part of the feature now
+it will be on by default.
 
-Thanks for a very good set of eyes.
+Will queue.  Thanks.
 
-diff --git c/t/t5331-pack-objects-stdin.sh w/t/t5331-pack-objects-stdin.sh
-index 45e24fa94a..acab31667a 100755
---- c/t/t5331-pack-objects-stdin.sh
-+++ w/t/t5331-pack-objects-stdin.sh
-@@ -7,7 +7,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
--packed_objects() {
-+packed_objects () {
- 	git show-index <"$1" >tmp-object-list &&
- 	cut -d' ' -f2 tmp-object-list | sort &&
- 	rm tmp-object-list
-diff --git c/t/t7703-repack-geometric.sh w/t/t7703-repack-geometric.sh
-index 33d7977fca..57796f3437 100755
---- c/t/t7703-repack-geometric.sh
-+++ w/t/t7703-repack-geometric.sh
-@@ -10,7 +10,7 @@ objdir=.git/objects
- packdir=$objdir/pack
- midx=$objdir/pack/multi-pack-index
- 
--packed_objects() {
-+packed_objects () {
- 	git show-index <"$1" >tmp-object-list &&
- 	cut -d' ' -f2 tmp-object-list &&
- 	rm tmp-object-list
-@@ -380,7 +380,7 @@ test_expect_success '--geometric -l with non-intact geometric sequence across OD
- 	# should have three objects and should be non-equal.
- 	packed_objects shared/.git/objects/pack/pack-*.idx >packed-objects &&
- 	test_line_count = 3 packed-objects &&
--	packed_objects member/.git/objects/pack/pack-*.idx >packed-objetcs &&
-+	packed_objects member/.git/objects/pack/pack-*.idx >packed-objects &&
- 	test_line_count = 3 packed-objects &&
- 	test "$(basename member/.git/objects/pack/pack-*.pack)" != "$(basename shared/.git/objects/pack/pack-*.pack)" &&
- 
