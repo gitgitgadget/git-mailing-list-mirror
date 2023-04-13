@@ -2,112 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A1C9C77B6E
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 15:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58D49C77B61
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 15:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231526AbjDMPOK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 11:14:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35998 "EHLO
+        id S231480AbjDMPkU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 11:40:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231561AbjDMPOE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 11:14:04 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EBF9A5E1
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 08:13:57 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id y11-20020a17090a600b00b0024693e96b58so14409659pji.1
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 08:13:57 -0700 (PDT)
+        with ESMTP id S230358AbjDMPkS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 11:40:18 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE8701712
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 08:40:17 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id p17so4224409pla.3
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 08:40:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681398836; x=1683990836;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vRzKNf/rWLsTQb8v7AjW87LRzgU62m2OaciRYvbOdH4=;
-        b=neiGZ0tlxEu+APjO2Jn4OECUvoxNKgtOPoZw6nKZ5Nt/8JpPW3/csTgMYof2mvaYvm
-         fAAVbml7PWFeVJvLKWreR5V0YHpNIyHvLK20mohQUpNY6+dEpKPQVQijuk2vP2i++0+U
-         UEI4KP8eAYH7eCIiO0BLYBzomWHYTjyKkW0EjtwgxIrlWAevAH+nkZmQ2J9o8PEfdThh
-         sdWbV2P2lugPgbm2N4+1Vos4QBz1+2BEKzWwTTEE1jVkHulLVFbgF/EvEDWUSf0EmEsz
-         5gBA1K5fgyqHWQiPIAndK6mSEg9fWrq0CCb9Dfd5BMn6P17bI1WIY1iJcFvqsZRA0xOw
-         UJkg==
+        d=gmail.com; s=20221208; t=1681400417; x=1683992417;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MTMMRn4dJl0Xy8rJdDpfioZhUQjqScXiWAXoBp0Ml0A=;
+        b=PCRcOq8w2B9HdnhHBASy0BP+g/QqOh+FduWdizvalz4hQ5kDLcDK/rDzFKwcdRbJUe
+         tbfzfqbVH7+gTNn3TQTS6WqRowtaNB9Zotn7VbQRxIM3N+CCHXioLsY2uAHfoWj+Heyx
+         c7YILW89y7E2WfMMXyaTHAZ8y48Mjjv7VG3d5D2Sv1ljgnGJYNsXZnahZrEcufajR/K4
+         Y44xr0yhQjMlmEa0OsUyZOKOMsVn09OTX8XXCnDNO5o5BsPcZDRxQosbi3S6vGw+UNCW
+         cERhfFy6s3hW1bhdCRx1IBmw7be6lsZn9qnJZVTsrRTxK9GdnWJJSXRm8fJPZlOOT8nD
+         JrkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681398836; x=1683990836;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vRzKNf/rWLsTQb8v7AjW87LRzgU62m2OaciRYvbOdH4=;
-        b=AQTFsGLwEgMec5ZCJ2RFVYUmDLQFAmuu+rCt5EwZFHQB49VW+rHsGZQ9+9SRCrfb/k
-         p9M09LQists+xyPxPylyJKcBdr8v8e/iITmR/3vNpjwgrcZF1hFz9k6TTLLiAbWZC1Nh
-         PkjhLRN8IQYfD71jPP+Z55gnwKVFBbzk082Fn1CXnxF3+4+BKVg2dIu+3afC7nh8ridx
-         mkr5bK9kDv7qKCOObKOAh9fGffT3HBMvqDbMxwgrsWXgTsqVI/ziHkNqyQbxPPf+KAHs
-         LIV9zMYddfYbfzw+QaFZqqfS3LLXP18xjy1oNKmdpJQw87rP8xWJGxYJi18yCEoHCYB8
-         pW5Q==
-X-Gm-Message-State: AAQBX9cVkA/8j82FfVT1YkUS6xExhnL0GHh6MXRc6sw6ZgVrvBCDKg3b
-        /2SltJa3nVqao1Z0TmswxpE=
-X-Google-Smtp-Source: AKy350am+ITupWbmRyFZUKyFUogNxFVcYiFu68INIny82rJMTYtVBdu8BZCAGiGgl3E6KmRmpY4RWQ==
-X-Received: by 2002:a17:902:a586:b0:1a6:3b9a:afda with SMTP id az6-20020a170902a58600b001a63b9aafdamr2433716plb.24.1681398836399;
-        Thu, 13 Apr 2023 08:13:56 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681400417; x=1683992417;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=MTMMRn4dJl0Xy8rJdDpfioZhUQjqScXiWAXoBp0Ml0A=;
+        b=WVqo3gVIdDKimh47cLXKVQHVCj3GZaQHp9aVIZZFqFVDM8FMsEbSm3MB0y5pDfvD8K
+         v397lk3h/izh8hR8VrGB//yeTzveNan26u9wZUooGMKSseTivyJ0H9LMtYhE3RettvNd
+         FLEXnbbk9W5KKGjGJdb7MoRm/IH5JEhwA5Nr0UH2qwQVg+7tMeLw0ML/2dnMQtkiiWXk
+         ebgpMA0O7SQFhVufXHJZ4svIXoshCmQzIo2fMo4L5FjduBH3wjRQQdyZc36eCE/3J83s
+         I0cCaTxSwUNFrK4LYMBaoIiIK2tIBUxWLzm6TuXqH6saedh5eey82qVLQvSG6neSg1nM
+         SM1w==
+X-Gm-Message-State: AAQBX9dRyXUF3sUfrMT0gVMW0oja9bkanjrDC3S2pKcMoef65YLStqBm
+        czM/AN+Fo7xkP/PzHGU0C2Y=
+X-Google-Smtp-Source: AKy350aoVqZ3eYCvZHC+Daag/ITnvWxLFQ+1SPyClG4j6hpCtT594lw0lKyG9Y1e4E84uH9b0E0gsA==
+X-Received: by 2002:a17:902:8492:b0:1a1:d5fd:1e9a with SMTP id c18-20020a170902849200b001a1d5fd1e9amr2251430plo.40.1681400417113;
+        Thu, 13 Apr 2023 08:40:17 -0700 (PDT)
 Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id p3-20020a1709026b8300b001a688de1f0esm1403632plk.234.2023.04.13.08.13.56
+        by smtp.gmail.com with ESMTPSA id ij30-20020a170902ab5e00b001a064cff3c5sm1642176plb.43.2023.04.13.08.40.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 08:13:56 -0700 (PDT)
+        Thu, 13 Apr 2023 08:40:16 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-Cc:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org,
-        peff@peff.net, phillip.wood123@gmail.com
-Subject: Re: [PATCH v3] branch, for-each-ref, tag: add option to omit empty
- lines
-References: <xmqqjzyoq35x.fsf@gitster.g>
-        <20230407175316.6404-1-oystwa@gmail.com>
-        <a8b34639-60fb-8a23-d1d9-1ef4410a2ba4@gmail.com>
-        <CAFaJEqtWg-6wvLNQy1DVSquVOu==E67gN7QYw-sAUf9fufOngw@mail.gmail.com>
-Date:   Thu, 13 Apr 2023 08:13:55 -0700
-In-Reply-To: <CAFaJEqtWg-6wvLNQy1DVSquVOu==E67gN7QYw-sAUf9fufOngw@mail.gmail.com>
-        (=?utf-8?Q?=22=C3=98ystein?= Walle"'s message of "Thu, 13 Apr 2023 09:17:02
- +0200")
-Message-ID: <xmqqbkjrzufg.fsf@gitster.g>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>, peff@peff.net,
+        dstolee@microsoft.com
+Subject: Re: [PATCH v3 09/10] repack: honor `-l` when calculating pack geometry
+References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
+        <cover.1681384405.git.ps@pks.im>
+        <285695deafa5a4a49f774dc484782dd8e4fd4997.1681384405.git.ps@pks.im>
+        <52079b9b-a55c-e7d1-930e-38105dd8a85b@github.com>
+Date:   Thu, 13 Apr 2023 08:40:16 -0700
+In-Reply-To: <52079b9b-a55c-e7d1-930e-38105dd8a85b@github.com> (Derrick
+        Stolee's message of "Thu, 13 Apr 2023 09:59:02 -0400")
+Message-ID: <xmqq5y9zzt7j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Øystein Walle <oystwa@gmail.com> writes:
+Derrick Stolee <derrickstolee@github.com> writes:
 
-> Sort of... I think I meant s/printed it/printed/ :-)
+>> +	test_line_count = 3 packed-objects &&
+>> +	packed_objects member/.git/objects/pack/pack-*.idx >packed-objetcs &&
 >
->> "git tag" is mentioned in the subject line, but not here.
+> Typo: s/packed-objetcs/packed-objects/
 >
-> It should definitely be added, yes. Junio, should I resend or will you touch up
-> the message? Not sure what the proper procedure is since it's already in seen.
+>> +	test_line_count = 3 packed-objects &&
 
-As I write in "What's cooking", being in 'seen' does not count all
-that much and we can freely replace them and erace the trace of
-"past mistakes", until the series hits 'next'.  For small changes
-like this, telling me to touch them up, as long as the necessary
-changes are obvious, is just fine.  Sending out v4 is also fine for
-a series of any size.
+That's a good one.  Because the result file created by the previous
+step happens to also have three lines, the typo does not cause the
+test to fail, but it is not testing what it designed to test.
 
-I just locally amended the commit log message.
+Here is "git diff @{1}" after my local "rebase -i" ("diff" of the
+result is easier to read than "range-diff" in this case, as I did
+not touch any log message).
 
-Thanks.
+Thanks for a very good set of eyes.
 
-1:  e0053ad012 ! 1:  aabfdc9514 branch, for-each-ref, tag: add option to omit empty lines
-    @@ Metadata
-      ## Commit message ##
-         branch, for-each-ref, tag: add option to omit empty lines
-     
-    -    If the given format string expands to the empty string a newline is
-    -    still printed it. This makes using the output linewise more tedious. For
-    +    If the given format string expands to the empty string, a newline is
-    +    still printed. This makes using the output linewise more tedious. For
-         example, git update-ref --stdin does not accept empty lines.
-     
-    -    Add options to branch and for-each-ref to not print these empty lines.
-    -    The default behavior remains the same.
-    +    Add options to "git branch", "git for-each-ref", and "git tag" to
-    +    not print these empty lines.  The default behavior remains the same.
-     
-         Signed-off-by: Øystein Walle <oystwa@gmail.com>
-         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+diff --git c/t/t5331-pack-objects-stdin.sh w/t/t5331-pack-objects-stdin.sh
+index 45e24fa94a..acab31667a 100755
+--- c/t/t5331-pack-objects-stdin.sh
++++ w/t/t5331-pack-objects-stdin.sh
+@@ -7,7 +7,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+-packed_objects() {
++packed_objects () {
+ 	git show-index <"$1" >tmp-object-list &&
+ 	cut -d' ' -f2 tmp-object-list | sort &&
+ 	rm tmp-object-list
+diff --git c/t/t7703-repack-geometric.sh w/t/t7703-repack-geometric.sh
+index 33d7977fca..57796f3437 100755
+--- c/t/t7703-repack-geometric.sh
++++ w/t/t7703-repack-geometric.sh
+@@ -10,7 +10,7 @@ objdir=.git/objects
+ packdir=$objdir/pack
+ midx=$objdir/pack/multi-pack-index
+ 
+-packed_objects() {
++packed_objects () {
+ 	git show-index <"$1" >tmp-object-list &&
+ 	cut -d' ' -f2 tmp-object-list &&
+ 	rm tmp-object-list
+@@ -380,7 +380,7 @@ test_expect_success '--geometric -l with non-intact geometric sequence across OD
+ 	# should have three objects and should be non-equal.
+ 	packed_objects shared/.git/objects/pack/pack-*.idx >packed-objects &&
+ 	test_line_count = 3 packed-objects &&
+-	packed_objects member/.git/objects/pack/pack-*.idx >packed-objetcs &&
++	packed_objects member/.git/objects/pack/pack-*.idx >packed-objects &&
+ 	test_line_count = 3 packed-objects &&
+ 	test "$(basename member/.git/objects/pack/pack-*.pack)" != "$(basename shared/.git/objects/pack/pack-*.pack)" &&
+ 
