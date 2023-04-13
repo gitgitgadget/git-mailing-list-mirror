@@ -2,145 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80070C77B6E
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 14:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A86D3C77B6E
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 14:54:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231375AbjDMOOC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 10:14:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46858 "EHLO
+        id S229716AbjDMOy5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 10:54:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230094AbjDMOOB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 10:14:01 -0400
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D153359D
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 07:14:00 -0700 (PDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id 5702B5C00D2;
-        Thu, 13 Apr 2023 10:13:56 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 13 Apr 2023 10:13:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1681395236; x=1681481636; bh=Ez
-        l+GYSOrESTIp+uZELXCOk115UmgKyI3lHPCu3v7AU=; b=pvsUCr8kdSwqYpu5D+
-        lfN1AnmJsdcar4t82Ly2+/JtyIDSg/Ocx3QlyDgcBeuhYQ7ssKkKC5qOn1wmmZ9j
-        DHNNWsmwAM09c+yC1Tbux5qF00RrYX+aaqkVjeiivrTxp81zqjTekvb7nw+Al1aD
-        CTDQZxTQOcvJeWWgq3fTeusHyvikEypDCc5aTJEyCkjDAlmciQMQRFj8yF8Q7pB+
-        ks6exd7EagV2JxezIzROaBu8eWm5gdx3gxw69W1KTNpCMVeYlPcdNvArboCJd2VU
-        L6pslGN3TX376HVWSGAgyFd8zW24PMLHmr7IYa+i0FXHtlkhBnFh2XrTMtjE0hAG
-        muOA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1681395236; x=1681481636; bh=Ezl+GYSOrESTI
-        p+uZELXCOk115UmgKyI3lHPCu3v7AU=; b=IhQcFevvPJ8r1dKcjhADVp4Gaslzi
-        1JL5lwmGJSJPiBruBVUK80/BSJa+5VeKSo9KVLHwrIVF9HVprc3Np+TZESekF4VL
-        3ASlCu4bU2m8bgHKvYITJt5Oc3zNsW1FZ57Ly5PsZFnx36oNKA7dkOzJ38V/pGST
-        7pVSpQgwcjL8M4BcflgQNzSMMeJy8Ouuib7j1lyZ/W62CAhCYqb3htQWOpfgQq6N
-        YE/gFxKZQylRrzGJK7MnUtuDJ8z2iX6DXUPDsY5gFTpmndhKOpjcR8lYoytByfPI
-        /pxwrxENDJiufyqCidrcT4Yk4J8zbFWxgEQRRIzwd3yqw8G5b3Xoj2Ytw==
-X-ME-Sender: <xms:Iw44ZLilSn6tGP0clwJv9seM0kz5cnIq4qALSi5sI2_P9GgqXmbLOw>
-    <xme:Iw44ZID7QXSQpMb_B113QsJ-DEOPziknJGM5duikFjcBEmc9aREP8HXFE99pItq6H
-    _5UEa1yMoPmQUWxhw>
-X-ME-Received: <xmr:Iw44ZLFtbZnc05dirSvYg7J6c5gFh3m9xbGJyvrGNQsLxO7aTbfED574d1pvZje_VAKJxOQxBnLbi-klOzEFivpP8PZX-fl-xfbFSVih9__aip8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekkedgjeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:Iw44ZIQmNIZFM0z4rM4jRfY7GU0ss7xK2SELMtKRvOzXc5PNjp1yKA>
-    <xmx:Iw44ZIzCwjTqmUv2R23E0zrItd_-Htmr9l4DzZptyvqfS-ugM6cp_g>
-    <xmx:Iw44ZO45rbOkLzouDtdG6Gm444oVeZPJH6PsK1XJfDhRG1tb9x94Kw>
-    <xmx:JA44ZE-vXdc9nVtfECC13hsKX4eYUWrNgic_CHgkvbLT8YTPrTmhOg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Apr 2023 10:13:54 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 62490cda (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 13 Apr 2023 14:13:28 +0000 (UTC)
-Date:   Thu, 13 Apr 2023 16:13:49 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, peff@peff.net,
-        dstolee@microsoft.com
-Subject: Re: [PATCH v3 09/10] repack: honor `-l` when calculating pack
- geometry
-Message-ID: <ZDgOHdxv5lbf49g6@ncase>
+        with ESMTP id S231389AbjDMOy4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 10:54:56 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A9E244B9
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 07:54:55 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id v7so14175442ybi.0
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 07:54:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1681397694; x=1683989694;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5hU6glpNTcBUNWuCPCWOEo6ZGvPGViDi6g2ILIqEVms=;
+        b=BfLv9DADRqNEfsY+OrBkxNTABq9sCZHliDdfAVQ/rCNNrRaFsPejtju6jdbq7n+pY9
+         ooGL8eXFlBcKBsAIiwkOONFc5Q5PHnf9CH/1KfAOZGqCnjOhx7kJOOBGYbAgS8g6ulOA
+         auLVAPNue+w7Fe4WCkPSm3qmfBjkdUrr7le0WxMix+m9RqEj13hOhDRNZdTM7JNUDC8Z
+         AmSXn2pFoJqaS0CMvQBsTz9k0OefyRHOmt9oSYq8Q2VJNRjUDCuCOzV3THEyZgNkOyTX
+         kprW+kaUfWEpKj0bODDOJ983v7/iOmnZxYRL5bnmPKFczDYZQuEOm67ttvls8OE/fAdm
+         QohA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681397694; x=1683989694;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5hU6glpNTcBUNWuCPCWOEo6ZGvPGViDi6g2ILIqEVms=;
+        b=dFe6Nsh1SA4un6myhG1mZXK0al+kndlfBlvPC8c3y3mXMgFkXqAcr8X2uj0uRAyuVc
+         YHoSQLw0oNGJZN/KoIvj//b3ugVKH1BYfoQDtOcLAmlN1hVzqocb4xmYv2ajp3fPl35f
+         yONxaA6EMHxd8NobregSy54nW4LA5QvDf36gMRpTNTtBela7sT/pg3A3eHB4YxDb8+3+
+         3OeH1kqK01QwjkOet6rC8E9Ake68C4l8rxSsA3cUhRc5CNKXfa8ttE03RuADVdzeWBQM
+         0TrpdyDLdoYA5kbaCwPDbmLMviyA/7eScT629G6nfIYjRp/EIsbrOf3Mvn2jKAmcKqhR
+         VOaw==
+X-Gm-Message-State: AAQBX9e9nLNuVKnGXLKb/su4agqC6fmamrg6FZp0lb+a1Qcz1/HfPaiH
+        wT6DgIzX2uK8PmOScVHM68z5lT7pYzNP/WI6kA==
+X-Google-Smtp-Source: AKy350Z6FXhY+uu2Jz33jmnUodvtlJ3zn+BjzoHhndD2OnjcFOWNtlxYf963OLuQ9v1RL1OlJ4ChoQ==
+X-Received: by 2002:a05:6902:110b:b0:b72:8a07:afcc with SMTP id o11-20020a056902110b00b00b728a07afccmr2558976ybu.46.1681397694420;
+        Thu, 13 Apr 2023 07:54:54 -0700 (PDT)
+Received: from [192.168.1.110] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id v12-20020a25848c000000b00b8f46d74e5dsm212757ybk.37.2023.04.13.07.54.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Apr 2023 07:54:54 -0700 (PDT)
+Message-ID: <cbcc6022-1f13-1fa7-aca3-5f87a9cc8eb5@github.com>
+Date:   Thu, 13 Apr 2023 10:54:53 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 00/10] repack: fix geometric repacking with
+ gitalternates
+Content-Language: en-US
+To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, peff@peff.net, dstolee@microsoft.com
 References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
  <cover.1681384405.git.ps@pks.im>
- <285695deafa5a4a49f774dc484782dd8e4fd4997.1681384405.git.ps@pks.im>
- <52079b9b-a55c-e7d1-930e-38105dd8a85b@github.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="HdqdIQGyQDWmqo74"
-Content-Disposition: inline
-In-Reply-To: <52079b9b-a55c-e7d1-930e-38105dd8a85b@github.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <cover.1681384405.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 4/13/2023 7:16 AM, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this is the third version of my patch series to fix geometric repacking
+> with repositories that are connected to an alternate object database.
+> 
+> Changes compared to v2:
+> 
+>     - I've simplified patch 1 to reset the preferred pack index instead
+>       of moving around some of the checks. This also causes us to print
+>       the warning for missing preferred packfiles again.
+> 
+>     - I've fixed the logic in patch 2 to find the preferred packfile to
+>       not return a packfile that would be rolled up in a geometric
+>       repack.
+> 
+>     - I've added an additional patch to split out preexisting tests for
+>       `--stdin-packs` into their own test file.
+> 
+>     - I've changed the unportable test added for geometric repacking
+>       with `-l` that used stat(1) to instead use our `test-tool chmtime`
+>       helper.
+> 
+>     - I've changed the logic that disables writing bitmaps in git-repack
+>       to cover more cases. It now always kicks in when doing a repack
+>       with `-l` that asks for bitmaps when connected to an alternate
+>       object directory.
+> 
+>     - In general, there's a bunch of small improvements left and right
+>       for the tests I'm adding.
 
---HdqdIQGyQDWmqo74
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I didn't get feedback on your v2 in time, but this v3 is very close.
 
-On Thu, Apr 13, 2023 at 09:59:02AM -0400, Derrick Stolee wrote:
-> On 4/13/2023 7:16 AM, Patrick Steinhardt wrote:
-> > When the user passes `-l` to git-repack(1), then they essentially ask us
-> > to only repack objects part of the local object database while ignoring
-> > any packfiles part of an alternate object database. And we in fact honor
-> > this bit when doing a geometric repack as the resulting packfile will
-> > only ever contain local objects.
->=20
-> > +	# Verify that our assumptions actually hold: both generated packfiles
-> > +	# should have three objects and should be non-equal.
-> > +	packed_objects shared/.git/objects/pack/pack-*.idx >packed-objects &&
-> > +	test_line_count =3D 3 packed-objects &&
-> > +	packed_objects member/.git/objects/pack/pack-*.idx >packed-objetcs &&
->=20
-> Typo: s/packed-objetcs/packed-objects/
->=20
-> > +	test_line_count =3D 3 packed-objects &&
-> > +	test "$(basename member/.git/objects/pack/pack-*.pack)" !=3D "$(basen=
-ame shared/.git/objects/pack/pack-*.pack)" &&
->=20
-> nit: could we do this where we store the output of the previous two
-> commands into different files and then use "! test_cmp"?
->=20
-> 	packed_objects shared/.git/objects/pack/pack-*.idx >shared-objects &&
-> 	packed_objects member/.git/objects/pack/pack-*.idx >member-objects &&
-> 	test_line_count =3D 3 shared-objects &&
-> 	test_line_count =3D 3 member-objects &&
-> 	! test_cmp shared-objects member-objects &&
+There's just the one test change in patch 9 that I think deserves a
+re-roll, but otherwise this looks good.
 
-Yeah, this is definitely easier to read.
-
-Patrick
-
---HdqdIQGyQDWmqo74
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ4DhwACgkQVbJhu7ck
-PpQYYA//SCO9YySXwTGz5awiSeZREHB1d6dsu8LNZUqp7vbqAqHdMpD18Zr8HEL2
-MWNyubAPK5VEI0FAzkhgmwCbL+7oqNTM4Mouak7gxCZkD29dEfTyY33tWZUcXFdE
-DUTE7cEfMDl81reBknkDr/kw6g3yywdVPSCMIW3qMn4wplNaBvM6YOGxKBhCm3nu
-PNXAUUjX6zQ4hbgSEsweC7bnuBRyydlz1ocADOSjaHrtLXX3ocHEcdPZQeRWmeJY
-/NbIXetP30ePPsaYU1ruyGpHouZpOM1mdlL/2H3uGlQLQGSFyM763GVuQptq+ptL
-FXqgZxrKmO80YUXEjJKjbgy6ZeAFS/2nvQ4eYhctwX9PO2F/6ABgmjfeC3JAgHDR
-v33yN/1wGtffoV0I2nn6VD4MB6xEaBSpwbfVMcHIjpn87Nd4a3szUeSW10dPYm3r
-EBL6QsjYVqjRZkdhcgN0La/zBgGpKmvfXg2Fmr6RlyfFW59zhtSTnWnU6nlMJg5U
-axEV8xu+pPeWGUoVXOGUed0dzA4aa9ZUdLxC7itIMPkhwGpo+azkW3EUFsM3lavP
-5La25Birr60FCinmcIdte+6XP+uJpPjPqin8K1dOqJ81KyrA1jHv4uALZh/UX8dz
-jgc0kZ6k0lDSVybPmx0mNQfX/0uz/1t+wx/aKrfNUCtV47wDzWk=
-=iIhm
------END PGP SIGNATURE-----
-
---HdqdIQGyQDWmqo74--
+Thanks,
+-Stolee
