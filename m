@@ -2,86 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ED9FC77B6C
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 07:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBFF6C77B61
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 07:47:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229583AbjDMHRo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 03:17:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36210 "EHLO
+        id S230200AbjDMHr6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 03:47:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229530AbjDMHRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 03:17:42 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52BA35FFE
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 00:17:40 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id z9so7977647ejx.11
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 00:17:40 -0700 (PDT)
+        with ESMTP id S229998AbjDMHr4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 03:47:56 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 156329014
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 00:47:41 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id k101-20020a9d19ee000000b006a14270bc7eso4294235otk.6
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 00:47:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681370259; x=1683962259;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+8qQrm5RXETU/rr0l1m/TQPuHmQvpx8iFFvSp20heJ0=;
-        b=lWPVRywzE2g0z/h3nq3+mx9dHnTx/qeUglUtwMc7K2mo+7/hNKilyMQ/7kAb8ndGoj
-         vGAjP1wMafgpKo3AhFHoUpwwtbbSXsbpBhxTGweUImAsyiVSt6F9D3AWrovLCDvt9lTI
-         csS9OiBlri+SNgOcLOX0RXUTrmVpfY+YgTWQjxTv398tkl0eXCFFt13bcWn+1bpBAAJQ
-         qFfLMl9c7WW3vyJmmtViQvVq3oXiMfg4qEZI5QalMEJplkaiBiX3F3+Y7WOtETzP+eAN
-         L0XOPlS6VKSl5p6lio3oIOuVUjd5myNfsGq7bW0HkvEOe3dT6gQTorxzx0+nyzfLbgiv
-         KibA==
+        d=gmail.com; s=20221208; t=1681372043; x=1683964043;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yHkiG6zGPDv1iDqQvjxt8W269TzqjX7Fyh5jrlc7qk4=;
+        b=UD/qlJEmQxYlt3L/Gq+9Hd1tjCwCOlRFWaOKJrgTHLzMK4T4fHyZV2FLcMI+KZEe/y
+         AgyEz8W099LufMk4/yZmlCYVYaSZ2cmlKDtKlsqRlTuTWEj3ICfaRzs4wTV2ZBW78PFi
+         ChJDAAkvi2a7Z3FyxwCyJ9GlqdcYjzcak2Y9yHfpCWtWd2aZwnoJ50qH4JXg961koR+3
+         hmZtA1pwQ87wjLnX6zbGRXa3f2QAKg5lSV+aOB9+rxO/sp1Wy3ayigu3L/oivx9d6NNi
+         1L8WJnYSmIkpBlzYqdrDA5Qfh7rukZehE8G7plpI4JFR8VycQtAZm2xL2SKudDDdvRgi
+         Nnfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681370259; x=1683962259;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+8qQrm5RXETU/rr0l1m/TQPuHmQvpx8iFFvSp20heJ0=;
-        b=PvBVaGTZRXGeICEP/W3KESZJJj0gnM2RNehl5wjkaMos7IgUUFjUAcbGqKpUz2hC5O
-         cdiFeIGjX5rYhwYSB0TSIx8sDnq5skfAPPg5cjqLnpWExh+DwIZ+wr8/x6E5I06j15V1
-         ojfCtecssQxOfehJnvo6JxX/hDOz903HrVOvZHb5dzB0eq0sgf4DAta40gqMl/Y3oJxS
-         5gRpC7RY05IMiZfHjU00Q7mTcUIHiIFY7+m13yFRvR1yB2roxmzvT0Bb9q853LCwESso
-         sIZ03i95v7Reh9gSwQmzfezTzkq8iO8rnAzKAbm1Yz5G13iljorMHaUG25bvd1i4Uulk
-         wQOQ==
-X-Gm-Message-State: AAQBX9d+sfxEQdEY+O/TL/C89k/QruL9FY4LRLywTc8E5iGNH/wJgOzo
-        KDuD3ZWDltOd8vy3nRfSsh+VqBgJ1qLVu7zPrk/q6A9M
-X-Google-Smtp-Source: AKy350Y4YbftbKX54t4XgLQ3iTThE7oOXslwZtKpwJAefBU93edvApU26i7/2kWA1xmozGAupE9FgMd8OsOOWExP1mc=
-X-Received: by 2002:a17:907:d090:b0:94e:aa09:7618 with SMTP id
- vc16-20020a170907d09000b0094eaa097618mr342031ejc.2.1681370258618; Thu, 13 Apr
- 2023 00:17:38 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681372043; x=1683964043;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yHkiG6zGPDv1iDqQvjxt8W269TzqjX7Fyh5jrlc7qk4=;
+        b=QJVC69Rq/Bv2rjxUiIt2+mr0Lbmv7SVm7x4FlshUirR51iWEqw207OnI9j054IenFx
+         uEALulgq6Wm7oOgd/LUhnHPCmqA/eGOr/dB3xWM/y9A9mosmsQYbBFUOybvJz3UqEWty
+         kXjHS6twzP5RNV5rDHAGNBurzmJv7J4QG9P5bEJJkfPozciyoW8uBTZ1KHrZo1ciwqjZ
+         aIq2UDT2ONav2Y5EbP9xUrBMkzAfzclnt7Zre1rnyt6QAFsKaCyimYZx5VA1BOI5fAO/
+         W4FffTK9CVr54c81+M8yJnPQD8XAQOy2QanMGX/buxm1ER79fNAoz96bO0kkMMyTH0wd
+         2I8A==
+X-Gm-Message-State: AAQBX9cf+Ao9ZuiELx5NpIM0l0rK4S4MMrw09GS++nF3N9rZDn6CC7ag
+        5XkFCrBwklSzQ8HB95xmC7qYDbqUjoE=
+X-Google-Smtp-Source: AKy350b4+N1drAhTKTxoOxOI1R9JDiWt8w+3Q1ntbBLBh+3CsToTtOWKapH8nXNJjWRnTksJG7lWbQ==
+X-Received: by 2002:a05:6830:1051:b0:6a4:319a:6d7f with SMTP id b17-20020a056830105100b006a4319a6d7fmr504369otp.9.1681372043641;
+        Thu, 13 Apr 2023 00:47:23 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id o2-20020a9d6d02000000b006a2f4a754e8sm443065otp.60.2023.04.13.00.47.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Apr 2023 00:47:22 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH] doc: set actual revdate for manpages
+Date:   Thu, 13 Apr 2023 01:47:22 -0600
+Message-Id: <20230413074722.71260-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.40.0+fc1
 MIME-Version: 1.0
-References: <xmqqjzyoq35x.fsf@gitster.g> <20230407175316.6404-1-oystwa@gmail.com>
- <a8b34639-60fb-8a23-d1d9-1ef4410a2ba4@gmail.com>
-In-Reply-To: <a8b34639-60fb-8a23-d1d9-1ef4410a2ba4@gmail.com>
-From:   =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
-Date:   Thu, 13 Apr 2023 09:17:02 +0200
-Message-ID: <CAFaJEqtWg-6wvLNQy1DVSquVOu==E67gN7QYw-sAUf9fufOngw@mail.gmail.com>
-Subject: Re: [PATCH v3] branch, for-each-ref, tag: add option to omit empty lines
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, peff@peff.net,
-        phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andrei,
+manpages expect the date of the last revision, if that is not found
+DocBook Stylesheets go through a series of hacks to generate one with
+the format `%d/%d/%Y` which is not ideal.
 
-On Thu, 13 Apr 2023 at 01:44, Andrei Rybak <rybak.a.v@gmail.com> wrote:
+In addition to this format not being standard, different tools generate
+dates with different formats.
 
-> It seems that a word is missing in the first sentence. Perhaps,
->
->    s/printed it/printed for it/
->
-> ?
+There's no need for any confusion if we specify the revision date, so
+let's do so.
 
-Sort of... I think I meant s/printed it/printed/ :-)
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
+---
 
-> "git tag" is mentioned in the subject line, but not here.
+This patch requires [1] to actually work, and has a simple conflict with
+[2], so it's written on top of both.
 
-It should definitely be added, yes. Junio, should I resend or will you touc=
-h up
-the message? Not sure what the proper procedure is since it's already in se=
-en.
+[1] https://lore.kernel.org/git/20230323221523.52472-1-felipe.contreras@gmail.com/
+[2] https://lore.kernel.org/git/20230408001829.11031-1-felipe.contreras@gmail.com/
 
-Thanks.
+ Documentation/Makefile | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-=C3=98sse
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 3133ea3182..b629176d7d 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -144,13 +144,16 @@ man5dir = $(mandir)/man5
+ man7dir = $(mandir)/man7
+ # DESTDIR =
+ 
++GIT_DATE := $(shell git show --quiet --pretty='%as')
++
+ ASCIIDOC = asciidoc
+ ASCIIDOC_EXTRA =
+ ASCIIDOC_HTML = xhtml11
+ ASCIIDOC_DOCBOOK = docbook
+ ASCIIDOC_CONF = -f asciidoc.conf
+ ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF) \
+-		-amanmanual='Git Manual' -amansource='Git $(GIT_VERSION)'
++		-amanmanual='Git Manual' -amansource='Git $(GIT_VERSION)' \
++		-arevdate='$(GIT_DATE)'
+ ASCIIDOC_DEPS = asciidoc.conf GIT-ASCIIDOCFLAGS
+ TXT_TO_HTML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_HTML)
+ TXT_TO_XML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_DOCBOOK)
+-- 
+2.40.0+fc1
+
