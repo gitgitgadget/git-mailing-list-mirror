@@ -2,99 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2335EC77B6E
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 23:31:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1202C77B61
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 23:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229663AbjDMXbn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 19:31:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58244 "EHLO
+        id S229733AbjDMXbr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 19:31:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbjDMXbm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 19:31:42 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF2DF2709
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 16:31:41 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-54bfa5e698eso467063197b3.13
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 16:31:41 -0700 (PDT)
+        with ESMTP id S229492AbjDMXbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 19:31:46 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9538B3ABB
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 16:31:45 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id h198so23710097ybg.12
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 16:31:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681428701; x=1684020701;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ryJ1csEzuTb2kEFQzlB99JgBkd801ntADmnteTwGD20=;
-        b=rS8yFWOknTxFfccRqqjIY8nGxei8ZeZ54vkqm3SI3z4JI4av+kbNVHMLvVY1o4pw9G
-         qp3gO6rd8Lz0NDsZdMxWtCHKyUNffbFQuDDwkQuBDVF3HKvSAh+tUGb2dKb26Ji/3UhB
-         ki7mH34rkJV6PEZGMVCSpXubwnetGMCncKQf/TgwNQJAuhSYpepUJKXdY8WiRhkQsJVU
-         bn7Hfsn6TTgUTc5c30mquGA3vIJODcVK2Tl7Q0BojLrUaABo9Zmt9XqwT13ELkvPImDk
-         5drQCsQ8qcMe1ZM7dtCoiavXQkpjCJkbLt0koMhOX0ySUxI5t5oJCe4yq8OhsTQ+UWlY
-         1nEg==
+        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681428704; x=1684020704;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=76KQIvRDAoWE4iUGUMJRAu6V6XAytZiNEGCb/l7TpcU=;
+        b=q/oryTdnJVMO4SxfQuUuIukvJowsix/vUeHGdwKVE7qgU5yqq/jMM8w+UHGnerNSD8
+         vorLNS6rm6uJu6ouNtEsbf11Y4oiXyZXAREl4RE+RkzC0DuUIW3wgUgmG+Lrk1JcWZns
+         Q80CY/Br0/COwyh3wgoF/3Twy/q+uuqi93HxMESlzHGKnbeMXF6e4Rx0g2/kBUFq5bA3
+         8fNkn4nbSOIcxSTTxtFgXYkreLuzJgJKmYYUKHvR93RCSbd2yZKl1JxHQgJsBzI0rRcV
+         +cLjKBaGfGgCjqjxfAoJG0NkPOyoVXl41sCiXoh7C2bwqbnsV2qP+qQQHb4maeonOjXL
+         wgkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681428701; x=1684020701;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ryJ1csEzuTb2kEFQzlB99JgBkd801ntADmnteTwGD20=;
-        b=HOjlvGun6zDYtweNGYiPyGw6dKumhe9sLxPm73HpwGR26xTeC9vb918OAYvbIibZUI
-         0HnRNm9qtMyktZDkIn8f620hl+j7bJrdN/Qn5f4x0AxKC3qj2dBN1m/rf/OWuJHGb7yj
-         5Xu4sBhP2NFDiJMUqRqQrgGwvbuWi+8O+Iq81Hk3lCeZ43JU6FPIDsGJRnVZSIT5rVFm
-         QwIYEn3kxHU+hu2TYqeGPswWaooieTPcFMBS4mmNhraRh6VPpRinXYmV9HPHo1Gyqzci
-         vO2RsnwOg/41nzXJ+S9LUT62vmuzSrjcz5EYNHkvD7PT9fn7uGqwdruTZeINe/ZJijoH
-         OIiA==
-X-Gm-Message-State: AAQBX9e77kjlyR3vbOG/AeFMHLid7PXMhHj0j0f69Jqoc6otIfUZWgkQ
-        96pN0ZZcWFzN8Pc4UicLuKhu3tk9PHJpbkLb9VSoWw==
-X-Google-Smtp-Source: AKy350aQLZFVHNmDBwwQl07UC/RoG4B+Sr/KW0HCftYoPmINL0FIk/t6u49N2ctiZcMJd7FCEYCV4Q==
-X-Received: by 2002:a0d:e68b:0:b0:4fb:8b40:5899 with SMTP id p133-20020a0de68b000000b004fb8b405899mr3633076ywe.7.1681428700722;
-        Thu, 13 Apr 2023 16:31:40 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681428704; x=1684020704;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=76KQIvRDAoWE4iUGUMJRAu6V6XAytZiNEGCb/l7TpcU=;
+        b=AU+8h3XODMFIQonnwjsl61T/T8g+8L1jrHAlbZ5qmknguaiL/W0mFH0h8f4U/xZ2+T
+         aHtLcrDJ8OacENzG/gkOU/MFjdSbcPA4z5gZhZF3z47QX/0irtGOfMeF2PhtP80ze5FH
+         /k6GX5HlldDdqIwyOs0ykur2DHQEz6vBJTOzviN3hM6FAJfh92M0IXs/Oc9unggtmO3P
+         gngTQG0m4J77bVQAryVkZvpNEZYCswZ1WeqgjELh3hQQvrG3pjid3UEyXioNa7w3Haou
+         Urq0pRzDAsANqFvRVXwKh81B5nx+CaTUU+LdZumb+AnoX/XIEM7zxyrPhcCSk1dRNdYY
+         65UQ==
+X-Gm-Message-State: AAQBX9fpUhNDrA89JTRVU76By1KQlocq3bYHC2zJnR5pfw6ymipSLNhK
+        KqlEQLy+4kliDjZtGA43m8kebwx2aM6LijQr0PoVkA==
+X-Google-Smtp-Source: AKy350YG6hTBcbdtn9E2I6TgIjMxw4qTuE0zRaRYMH9Qw/Omee8+Oys3uDG6AmpLzvmIFs95cNfa9A==
+X-Received: by 2002:a25:db0a:0:b0:b8f:f5f:13e9 with SMTP id g10-20020a25db0a000000b00b8f0f5f13e9mr3678724ybf.2.1681428704601;
+        Thu, 13 Apr 2023 16:31:44 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id dc6-20020a05690c0f0600b0054601bc6ce2sm801998ywb.118.2023.04.13.16.31.40
+        by smtp.gmail.com with ESMTPSA id s10-20020a5b074a000000b00b8f6eba39cesm61699ybq.57.2023.04.13.16.31.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 16:31:40 -0700 (PDT)
-Date:   Thu, 13 Apr 2023 19:31:39 -0400
+        Thu, 13 Apr 2023 16:31:44 -0700 (PDT)
+Date:   Thu, 13 Apr 2023 19:31:43 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/5] banned: mark `strok()`, `strtok_r()` as banned
-Message-ID: <cover.1681428696.git.me@ttaylorr.com>
+Subject: [PATCH 1/5] string-list: introduce
+ `string_list_split_in_place_multi()`
+Message-ID: <dda218c8c1fdc0ca2e4352b820f3432565a74a23.1681428696.git.me@ttaylorr.com>
+References: <cover.1681428696.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1681428696.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series adds `strtok()`, and its reentrant variant to the list of
-banned functions.
+Introduce a variant of the `string_list_split_in_place()` function that
+takes a string of accepted delimiters.
 
-The rationale is described in the final patch, but the gist is that even
-though `strtok_r()` is thread-safe, it imposes a burden on the caller
-and has confusing dataflow. For more details, the final patch has a full
-explanation.
+By contrast to its cousin `string_list_split_in_place()` which splits
+the given string at every instance of the single character `delim`, the
+`_multi` variant splits the given string any any character appearing in
+the string `delim`.
 
-The series is structured as follows:
+Instead of using `strchr(2)` to locate the first occurrence of the given
+delimiter character, `string_list_split_in_place_multi()` uses
+`strpbrk(2)` to find the first occurrence of *any* character in the given
+delimiter string.
 
-  - The first patch introduces `string_list_split_in_place_multi()`,
-    which allows us to split token delimited strings in place where
-    the set of accepted tokens is more than a single character.
+Since the `_multi` variant is a generalization of the original
+implementation, reimplement `string_list_split_in_place()` in terms of
+the more general function by providing a single-character string for the
+list of accepted delimiters.
 
-  - The next three patches replace the only in-tree uses of strtok() we
-    have, which are all in test helpers.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ string-list.c | 15 ++++++++++++---
+ string-list.h |  6 ++++++
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-  - The final patch marks the two functions as banned.
-
-Thanks in advance for your review!
-
-Taylor Blau (5):
-  string-list: introduce `string_list_split_in_place_multi()`
-  t/helper/test-hashmap.c: avoid using `strtok()`
-  t/helper/test-oidmap.c: avoid using `strtok()`
-  t/helper/test-json-writer.c: avoid using `strtok()`
-  banned.h: mark `strtok()`, `strtok_r()` as banned
-
- banned.h                    |  6 +++
- string-list.c               | 15 ++++++--
- string-list.h               |  6 +++
- t/helper/test-hashmap.c     | 30 +++++++++++----
- t/helper/test-json-writer.c | 76 +++++++++++++++++++++++--------------
- t/helper/test-oidmap.c      | 20 +++++++---
- 6 files changed, 109 insertions(+), 44 deletions(-)
-
+diff --git a/string-list.c b/string-list.c
+index db473f273e1..67f9ff18904 100644
+--- a/string-list.c
++++ b/string-list.c
+@@ -300,8 +300,8 @@ int string_list_split(struct string_list *list, const char *string,
+ 	}
+ }
+ 
+-int string_list_split_in_place(struct string_list *list, char *string,
+-			       int delim, int maxsplit)
++int string_list_split_in_place_multi(struct string_list *list, char *string,
++				     const char *delim, int maxsplit)
+ {
+ 	int count = 0;
+ 	char *p = string, *end;
+@@ -315,7 +315,7 @@ int string_list_split_in_place(struct string_list *list, char *string,
+ 			string_list_append(list, p);
+ 			return count;
+ 		}
+-		end = strchr(p, delim);
++		end = strpbrk(p, delim);
+ 		if (end) {
+ 			*end = '\0';
+ 			string_list_append(list, p);
+@@ -326,3 +326,12 @@ int string_list_split_in_place(struct string_list *list, char *string,
+ 		}
+ 	}
+ }
++
++int string_list_split_in_place(struct string_list *list, char *string,
++			       int delim, int maxsplit)
++{
++	char delim_s[2] = { delim, 0 };
++
++	return string_list_split_in_place_multi(list, string, delim_s,
++						maxsplit);
++}
+diff --git a/string-list.h b/string-list.h
+index c7b0d5d0008..670d4fc8fb7 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -268,7 +268,13 @@ int string_list_split(struct string_list *list, const char *string,
+  * new string_list_items point into string (which therefore must not
+  * be modified or freed while the string_list is in use).
+  * list->strdup_strings must *not* be set.
++ *
++ * The "_multi" variant splits the given string on any character
++ * appearing in "delim", and the non-"_multi" variant splits only on the
++ * given character.
+  */
++int string_list_split_in_place_multi(struct string_list *list, char *string,
++				     const char *delim, int maxsplit);
+ int string_list_split_in_place(struct string_list *list, char *string,
+ 			       int delim, int maxsplit);
+ #endif /* STRING_LIST_H */
 -- 
 2.38.0.16.g393fd4c6db
+
