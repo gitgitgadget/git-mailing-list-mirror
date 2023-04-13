@@ -2,78 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 759B5C77B61
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 11:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7DE8C77B6C
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 11:16:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230032AbjDMLQj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 07:16:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50698 "EHLO
+        id S231134AbjDMLQw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 07:16:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231207AbjDMLQZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 07:16:25 -0400
+        with ESMTP id S231138AbjDMLQh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 07:16:37 -0400
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C7B39EE1
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 04:16:19 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEDE39EE5
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 04:16:23 -0700 (PDT)
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 93D265C00F7;
-        Thu, 13 Apr 2023 07:16:18 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id 326A85C00F7;
+        Thu, 13 Apr 2023 07:16:23 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Thu, 13 Apr 2023 07:16:18 -0400
+  by compute1.internal (MEProxy); Thu, 13 Apr 2023 07:16:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1681384578; x=1681470978; bh=j9
-        ybEYk24bL/jiuMo1i6Zntu7VgoT8tZFMME5+blZ2E=; b=RwWfUuB6oEPIlNKzqN
-        YsgcalYsZTuWx4hiClzdevFM3UAfqvOfCWArvzcSc90E5GMCmAWEr2zBZ8ro2Mkw
-        gRGtf6GL1D1ski0ZRHnCs7O8I99f4iv6gEBTLlIS/Jk6Ipk7XYTy+G2W1DEsLf9J
-        sXkOTFAMR4RqYN08fiPcPcrMw0p3D7DwGVDrILf1kOrynZL8WmRmCJyw6Rw1YYHH
-        qlq9UrtaeAlN0I71XXcqeUJOEkwPufG1KydHCF/NqHcfro30GdxYtxiPAp69kjUp
-        g/OkY0QtXcC/dwdg1ClMceGTCwYTmBSR7UomWTYt4ogpnDvkLT2YP1Uk/E2tzZPF
-        hvKw==
+        :subject:subject:to:to; s=fm3; t=1681384583; x=1681470983; bh=Yo
+        q3Ol0C/r5DInKrvIhJCc4iy6qTwlwOhLMm28kwb68=; b=GUTGs2XcZjR4KNEyGX
+        28o4wm7mYpnKOvNRe15++493BT2EbY3avOWG5zjkon2afYCVhVaoXWsHVvpfiWO1
+        J0ynB3l/KXY0IAr3hrjgxSAQS4gXMj40UTHz5KXSh87+BH769IVTF4ya7wWuLvTc
+        iaQiGXdZVeS95D7fn2nMEsiOLrXrfClVvAcPoI7hRp5gzl2rSXKaXSkVUEQUpeag
+        dXFX8J4KClYYuGw8OX2Ivag5vT8pkgfpV2UN3E8+Gke/nbYUXTs/SAsBilEXKfAS
+        LBqTqlq4YwkkSi/7z2gSswpQQ1FLqt1b0LnHCmZ3QcAJ6mmU3/tJrvaCeH5HMNjy
+        CHBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1681384578; x=1681470978; bh=j9ybEYk24bL/j
-        iuMo1i6Zntu7VgoT8tZFMME5+blZ2E=; b=QDeYgv8W293Dg/G3PdqySdYBm3IkJ
-        aGZqQKa6kEFc9OIptruzFHcZSMa+vp1+zA2MqnYXS+A6yXTc1cLqStx0gedN4Hf2
-        qNyllRX/7uvu8AIQhAbP+t7Fs/mSrMKiZVfG5Nu9hPpWeWc/gBO4qLuri8wTDfUo
-        EMv4E+o17tdvbl0xfoIJJ86My0p0Z3OIWXRKdT21cXHMWydfD97m5SeQl5PnVzH9
-        IgFMzU1aLiJGLgEbo2PxvTs1lUeNkA0HKPYjI52fOR4K/+zM+kFP8RPdvkRiQ3Ke
-        M9jeNLYsx3iHc3DotjrI60MiSpNjNvBd/9/ZgHMVbr1rW7CCJXIK8n89A==
-X-ME-Sender: <xms:guQ3ZM2xs8DSjYLPWXio88AxJe-PmY_CSmrjoZG0AJA1g-9rmZpiIQ>
-    <xme:guQ3ZHH-MnUTJC7di0PFefBwEwCEzyAv3PUk755NGYCKO7igg9UO7NoVRb6tAIEQu
-    FJ7R1iyXDubqO-EHw>
-X-ME-Received: <xmr:guQ3ZE403DxLFpf9DdeJ0RUhKjWCVu9Aqbqxzsx3ao9IZlLJhC8xWMmvvJ-QAiHJSF8lIuHSnGUMdhNRZasRzu2Dd79f3G1zFRtGuDoccdDcugk>
+        :x-sasl-enc; s=fm3; t=1681384583; x=1681470983; bh=Yoq3Ol0C/r5DI
+        nKrvIhJCc4iy6qTwlwOhLMm28kwb68=; b=WUpTiQx7oX1smVLyq4nGOGBKIVQBw
+        wLKPXbTMLCsi6O8LjsHIXz3s3Urp20+TNCchSE7dcSaVuWQPWI8qNRupjWS6/RI4
+        ZKQgPlJvGx8squbf3KkwWVjelZSs0NRcgyj6TnpVyIwiM40H/jElrrXpIWasrIpb
+        kv4gsku4LzzQgtXZMItdrOnPR5mVtdGZ+ebwWscx0bhiScF5YUAAYz/Aie6s30o8
+        jRRu0MlFlILyq9w6yH+y10XrZ6IiRhutmNtLcbjkeTaGhdQnoOYQ8n9zYhqkq8Ut
+        O379ut2aNqvX6L42TjFehZnEeI/5qJNei5sjst2jJL9pzYWb7toN0ORYw==
+X-ME-Sender: <xms:h-Q3ZCc_PsATrKIlfG6Df9buk50Tw6OvAl5S1yiLyRtlGXThLK5uEA>
+    <xme:h-Q3ZMMJKBnIlaHIfKFSFtd-H4LxHIsnuv20ae8iOoHHllb3Gsy8JmW4cR__Hkmsr
+    QHqMFtC0dq1-ScOtw>
+X-ME-Received: <xmr:h-Q3ZDiy9b9-071bsQUP3DUrWLOYndlC7c_zZ68cZdt3Mi1tqQQNQuTcZDU0VLgv6JRnzC2uzYYWx0pJzaumxSSneYid5OJD5IE6_V0GFogmhZU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekkedgfeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedvnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:guQ3ZF3Fi-HPK6vMaNhkFjv8GDtMg4yAtJALqZJtgkSzwsNL-eTqHQ>
-    <xmx:guQ3ZPFa1G-JIpGyI0870JxYy1dJIRy4aLgxojuHd93OXicvbSXhrg>
-    <xmx:guQ3ZO_aMbwZMprBpoI7b0X3qiC1wqHu71L3dHoIPujSMXavdvhQLQ>
-    <xmx:guQ3ZER1e9_QG2haOqJc1FmwIhenTcSQ5k7qvKboqDzBXcXtpk1hAQ>
+X-ME-Proxy: <xmx:h-Q3ZP-dPprVK0lRlOMei4iy5-3syBqjqIWsyKdTYeLAlN3t5o091w>
+    <xmx:h-Q3ZOsj9PNXzM93XMnofD4jbRSK7BJpIzT5JioHinG3ht93fhF1OA>
+    <xmx:h-Q3ZGEJw57-qCCDss4LHnozTs-8DppXXM3iGuXie5iyK-OX3i7Efg>
+    <xmx:h-Q3ZH6jiffS3cRotfP22FtetUAkmHLUCb2QMLOJ4xGXRL06MotNhQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Apr 2023 07:16:17 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 0ac6559f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 13 Apr 2023 11:15:54 +0000 (UTC)
-Date:   Thu, 13 Apr 2023 13:16:15 +0200
+ 13 Apr 2023 07:16:21 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 3c0b2771 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 13 Apr 2023 11:15:58 +0000 (UTC)
+Date:   Thu, 13 Apr 2023 13:16:19 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>, peff@peff.net, dstolee@microsoft.com
-Subject: [PATCH v3 03/10] repack: fix generating multi-pack-index with only
- non-local packs
-Message-ID: <8c3193268fd5938ebf85bd43a551d0c50d2e8336.1681384405.git.ps@pks.im>
+Subject: [PATCH v3 04/10] pack-objects: split out `--stdin-packs` tests into
+ separate file
+Message-ID: <8d47d753dc03979bd515f473a591906ba03c0c2b.1681384405.git.ps@pks.im>
 References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
  <cover.1681384405.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="fdOK4MtmPzDQ/X1i"
+        protocol="application/pgp-signature"; boundary="1AkIszyILeUugda0"
 Content-Disposition: inline
 In-Reply-To: <cover.1681384405.git.ps@pks.im>
 Precedence: bulk
@@ -81,112 +81,342 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---fdOK4MtmPzDQ/X1i
+--1AkIszyILeUugda0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When writing the multi-pack-index with geometric repacking we will add
-all packfiles to the index that are part of the geometric sequence. This
-can potentially also include packfiles borrowed from an alternate object
-directory. But given that a multi-pack-index can only ever include packs
-that are part of the main object database this does not make much sense
-whatsoever.
+The test suite for git-pack-objects(1) is quite huge, and we're about to
+add more tests that relate to the `--stdin-packs` option. Split out all
+tests related to this option into a standalone file so that it becomes
+easier to test the feature in isolation.
 
-In the edge case where all packfiles are contained in the alternate
-object database and the local repository has none itself this bug can
-cause us to invoke git-multi-pack-index(1) with only non-local packfiles
-that it ultimately cannot find. This causes it to return an error and
-thus causes the geometric repack to fail.
-
-Fix the code to skip non-local packfiles.
-
-Co-authored-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/repack.c            | 11 +++++++++++
- t/t7703-repack-geometric.sh | 23 +++++++++++++++++++++++
- 2 files changed, 34 insertions(+)
+ t/t5300-pack-object.sh        | 135 -------------------------------
+ t/t5331-pack-objects-stdin.sh | 145 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 145 insertions(+), 135 deletions(-)
+ create mode 100755 t/t5331-pack-objects-stdin.sh
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 687419776d..80fc860613 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -572,6 +572,17 @@ static void midx_included_packs(struct string_list *in=
-clude,
- 		for (i =3D geometry->split; i < geometry->pack_nr; i++) {
- 			struct packed_git *p =3D geometry->pack[i];
-=20
-+			/*
-+			 * The multi-pack index never refers to packfiles part
-+			 * of an alternate object database, so we skip these.
-+			 * While git-multi-pack-index(1) would silently ignore
-+			 * them anyway, this allows us to skip executing the
-+			 * command completely when we have only non-local
-+			 * packfiles.
-+			 */
-+			if (!p->pack_local)
-+				continue;
-+
- 			strbuf_addstr(&buf, pack_basename(p));
- 			strbuf_strip_suffix(&buf, ".pack");
- 			strbuf_addstr(&buf, ".idx");
-diff --git a/t/t7703-repack-geometric.sh b/t/t7703-repack-geometric.sh
-index d6db362541..7027676977 100755
---- a/t/t7703-repack-geometric.sh
-+++ b/t/t7703-repack-geometric.sh
-@@ -313,4 +313,27 @@ test_expect_success '--geometric --write-midx with pac=
-kfiles in main and alterna
- 	test_cmp expect actual
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index f8a0f309e2..d2ce236d61 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -589,141 +589,6 @@ test_expect_success 'prefetch objects' '
+ 	test_line_count =3D 1 donelines
  '
 =20
-+test_expect_success '--geometric --with-midx with no local objects' '
-+	test_when_finished "rm -fr shared member" &&
+-test_expect_success 'setup for --stdin-packs tests' '
+-	git init stdin-packs &&
+-	(
+-		cd stdin-packs &&
+-
+-		test_commit A &&
+-		test_commit B &&
+-		test_commit C &&
+-
+-		for id in A B C
+-		do
+-			git pack-objects .git/objects/pack/pack-$id \
+-				--incremental --revs <<-EOF || exit 1
+-			refs/tags/$id
+-			EOF
+-		done &&
+-
+-		ls -la .git/objects/pack
+-	)
+-'
+-
+-test_expect_success '--stdin-packs with excluded packs' '
+-	(
+-		cd stdin-packs &&
+-
+-		PACK_A=3D"$(basename .git/objects/pack/pack-A-*.pack)" &&
+-		PACK_B=3D"$(basename .git/objects/pack/pack-B-*.pack)" &&
+-		PACK_C=3D"$(basename .git/objects/pack/pack-C-*.pack)" &&
+-
+-		git pack-objects test --stdin-packs <<-EOF &&
+-		$PACK_A
+-		^$PACK_B
+-		$PACK_C
+-		EOF
+-
+-		(
+-			git show-index <$(ls .git/objects/pack/pack-A-*.idx) &&
+-			git show-index <$(ls .git/objects/pack/pack-C-*.idx)
+-		) >expect.raw &&
+-		git show-index <$(ls test-*.idx) >actual.raw &&
+-
+-		cut -d" " -f2 <expect.raw | sort >expect &&
+-		cut -d" " -f2 <actual.raw | sort >actual &&
+-		test_cmp expect actual
+-	)
+-'
+-
+-test_expect_success '--stdin-packs is incompatible with --filter' '
+-	(
+-		cd stdin-packs &&
+-		test_must_fail git pack-objects --stdin-packs --stdout \
+-			--filter=3Dblob:none </dev/null 2>err &&
+-		test_i18ngrep "cannot use --filter with --stdin-packs" err
+-	)
+-'
+-
+-test_expect_success '--stdin-packs is incompatible with --revs' '
+-	(
+-		cd stdin-packs &&
+-		test_must_fail git pack-objects --stdin-packs --revs out \
+-			</dev/null 2>err &&
+-		test_i18ngrep "cannot use internal rev list with --stdin-packs" err
+-	)
+-'
+-
+-test_expect_success '--stdin-packs with loose objects' '
+-	(
+-		cd stdin-packs &&
+-
+-		PACK_A=3D"$(basename .git/objects/pack/pack-A-*.pack)" &&
+-		PACK_B=3D"$(basename .git/objects/pack/pack-B-*.pack)" &&
+-		PACK_C=3D"$(basename .git/objects/pack/pack-C-*.pack)" &&
+-
+-		test_commit D && # loose
+-
+-		git pack-objects test2 --stdin-packs --unpacked <<-EOF &&
+-		$PACK_A
+-		^$PACK_B
+-		$PACK_C
+-		EOF
+-
+-		(
+-			git show-index <$(ls .git/objects/pack/pack-A-*.idx) &&
+-			git show-index <$(ls .git/objects/pack/pack-C-*.idx) &&
+-			git rev-list --objects --no-object-names \
+-				refs/tags/C..refs/tags/D
+-
+-		) >expect.raw &&
+-		ls -la . &&
+-		git show-index <$(ls test2-*.idx) >actual.raw &&
+-
+-		cut -d" " -f2 <expect.raw | sort >expect &&
+-		cut -d" " -f2 <actual.raw | sort >actual &&
+-		test_cmp expect actual
+-	)
+-'
+-
+-test_expect_success '--stdin-packs with broken links' '
+-	(
+-		cd stdin-packs &&
+-
+-		# make an unreachable object with a bogus parent
+-		git cat-file -p HEAD >commit &&
+-		sed "s/$(git rev-parse HEAD^)/$(test_oid zero)/" <commit |
+-		git hash-object -w -t commit --stdin >in &&
+-
+-		git pack-objects .git/objects/pack/pack-D <in &&
+-
+-		PACK_A=3D"$(basename .git/objects/pack/pack-A-*.pack)" &&
+-		PACK_B=3D"$(basename .git/objects/pack/pack-B-*.pack)" &&
+-		PACK_C=3D"$(basename .git/objects/pack/pack-C-*.pack)" &&
+-		PACK_D=3D"$(basename .git/objects/pack/pack-D-*.pack)" &&
+-
+-		git pack-objects test3 --stdin-packs --unpacked <<-EOF &&
+-		$PACK_A
+-		^$PACK_B
+-		$PACK_C
+-		$PACK_D
+-		EOF
+-
+-		(
+-			git show-index <$(ls .git/objects/pack/pack-A-*.idx) &&
+-			git show-index <$(ls .git/objects/pack/pack-C-*.idx) &&
+-			git show-index <$(ls .git/objects/pack/pack-D-*.idx) &&
+-			git rev-list --objects --no-object-names \
+-				refs/tags/C..refs/tags/D
+-		) >expect.raw &&
+-		git show-index <$(ls test3-*.idx) >actual.raw &&
+-
+-		cut -d" " -f2 <expect.raw | sort >expect &&
+-		cut -d" " -f2 <actual.raw | sort >actual &&
+-		test_cmp expect actual
+-	)
+-'
+-
+ test_expect_success 'negative window clamps to 0' '
+ 	git pack-objects --progress --window=3D-1 neg-window <obj-list 2>stderr &&
+ 	check_deltas stderr =3D 0
+diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
+new file mode 100755
+index 0000000000..d5eece5899
+--- /dev/null
++++ b/t/t5331-pack-objects-stdin.sh
+@@ -0,0 +1,145 @@
++#!/bin/sh
 +
-+	# Create a repository with a single packfile that acts as alternate
-+	# object database.
-+	git init shared &&
-+	test_commit -C shared "shared-objects" &&
-+	git -C shared repack -ad &&
++test_description=3D'pack-objects --stdin'
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 +
-+	# Create a second repository linked to the first one and perform a
-+	# geometric repack on it.
-+	git clone --shared shared member &&
-+	git -C member repack --geometric 2 --write-midx 2>err &&
-+	test_must_be_empty err &&
++TEST_PASSES_SANITIZE_LEAK=3Dtrue
++. ./test-lib.sh
 +
-+	# Assert that we wrote neither a new packfile nor a multi-pack-index.
-+	# We should not have a packfile because the single packfile in the
-+	# alternate object database does not invalidate the geometric sequence.
-+	# And we should not have a multi-pack-index because these only index
-+	# local packfiles, and there are none.
-+	test_dir_is_empty member/$packdir
++test_expect_success 'setup for --stdin-packs tests' '
++	git init stdin-packs &&
++	(
++		cd stdin-packs &&
++
++		test_commit A &&
++		test_commit B &&
++		test_commit C &&
++
++		for id in A B C
++		do
++			git pack-objects .git/objects/pack/pack-$id \
++				--incremental --revs <<-EOF || exit 1
++			refs/tags/$id
++			EOF
++		done &&
++
++		ls -la .git/objects/pack
++	)
 +'
 +
- test_done
++test_expect_success '--stdin-packs with excluded packs' '
++	(
++		cd stdin-packs &&
++
++		PACK_A=3D"$(basename .git/objects/pack/pack-A-*.pack)" &&
++		PACK_B=3D"$(basename .git/objects/pack/pack-B-*.pack)" &&
++		PACK_C=3D"$(basename .git/objects/pack/pack-C-*.pack)" &&
++
++		git pack-objects test --stdin-packs <<-EOF &&
++		$PACK_A
++		^$PACK_B
++		$PACK_C
++		EOF
++
++		(
++			git show-index <$(ls .git/objects/pack/pack-A-*.idx) &&
++			git show-index <$(ls .git/objects/pack/pack-C-*.idx)
++		) >expect.raw &&
++		git show-index <$(ls test-*.idx) >actual.raw &&
++
++		cut -d" " -f2 <expect.raw | sort >expect &&
++		cut -d" " -f2 <actual.raw | sort >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success '--stdin-packs is incompatible with --filter' '
++	(
++		cd stdin-packs &&
++		test_must_fail git pack-objects --stdin-packs --stdout \
++			--filter=3Dblob:none </dev/null 2>err &&
++		test_i18ngrep "cannot use --filter with --stdin-packs" err
++	)
++'
++
++test_expect_success '--stdin-packs is incompatible with --revs' '
++	(
++		cd stdin-packs &&
++		test_must_fail git pack-objects --stdin-packs --revs out \
++			</dev/null 2>err &&
++		test_i18ngrep "cannot use internal rev list with --stdin-packs" err
++	)
++'
++
++test_expect_success '--stdin-packs with loose objects' '
++	(
++		cd stdin-packs &&
++
++		PACK_A=3D"$(basename .git/objects/pack/pack-A-*.pack)" &&
++		PACK_B=3D"$(basename .git/objects/pack/pack-B-*.pack)" &&
++		PACK_C=3D"$(basename .git/objects/pack/pack-C-*.pack)" &&
++
++		test_commit D && # loose
++
++		git pack-objects test2 --stdin-packs --unpacked <<-EOF &&
++		$PACK_A
++		^$PACK_B
++		$PACK_C
++		EOF
++
++		(
++			git show-index <$(ls .git/objects/pack/pack-A-*.idx) &&
++			git show-index <$(ls .git/objects/pack/pack-C-*.idx) &&
++			git rev-list --objects --no-object-names \
++				refs/tags/C..refs/tags/D
++
++		) >expect.raw &&
++		ls -la . &&
++		git show-index <$(ls test2-*.idx) >actual.raw &&
++
++		cut -d" " -f2 <expect.raw | sort >expect &&
++		cut -d" " -f2 <actual.raw | sort >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success '--stdin-packs with broken links' '
++	(
++		cd stdin-packs &&
++
++		# make an unreachable object with a bogus parent
++		git cat-file -p HEAD >commit &&
++		sed "s/$(git rev-parse HEAD^)/$(test_oid zero)/" <commit |
++		git hash-object -w -t commit --stdin >in &&
++
++		git pack-objects .git/objects/pack/pack-D <in &&
++
++		PACK_A=3D"$(basename .git/objects/pack/pack-A-*.pack)" &&
++		PACK_B=3D"$(basename .git/objects/pack/pack-B-*.pack)" &&
++		PACK_C=3D"$(basename .git/objects/pack/pack-C-*.pack)" &&
++		PACK_D=3D"$(basename .git/objects/pack/pack-D-*.pack)" &&
++
++		git pack-objects test3 --stdin-packs --unpacked <<-EOF &&
++		$PACK_A
++		^$PACK_B
++		$PACK_C
++		$PACK_D
++		EOF
++
++		(
++			git show-index <$(ls .git/objects/pack/pack-A-*.idx) &&
++			git show-index <$(ls .git/objects/pack/pack-C-*.idx) &&
++			git show-index <$(ls .git/objects/pack/pack-D-*.idx) &&
++			git rev-list --objects --no-object-names \
++				refs/tags/C..refs/tags/D
++		) >expect.raw &&
++		git show-index <$(ls test3-*.idx) >actual.raw &&
++
++		cut -d" " -f2 <expect.raw | sort >expect &&
++		cut -d" " -f2 <actual.raw | sort >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_done
 --=20
 2.40.0
 
 
---fdOK4MtmPzDQ/X1i
+--1AkIszyILeUugda0
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ35H4ACgkQVbJhu7ck
-PpSmfQ/+MNbopBEXTeSuhsVPdz6h/WEUkBKdV+rUeoaAdtwPXMumLtFf7VJTSY39
-P9HAnaap9Y5v8rasJ83tEOn+yfKIctMLEc+/i1dmeW6Yj4QO5v4SdQwfsGXJYY/d
-v5CsQzTjuuAB9JNEIk5pXhxYyklkHoYDntCu6QCeo2+B2A2LwDS3OZ4fpMibNMjO
-0t1VjBLc2GR5zGFr+lE2NG4szG7GXoHo+XO/yHZt/yWTcE985lCFGE07Rln6pwUH
-Y77sYbdwiMVDToiHyNYKDAc5eIEwhdULh4yWm5x05Sr+bQvSgX1fx5Lv90U3FT0O
-uo7SFWqYZ6FiIJHCrlNsnK/tXkSBKkOOgPV+Hli4+rlXTvIWkVtAbEo2u1hNZYEN
-oqFF0qEN66icjPSbLzoVngh44S/FOQBuz1YsBU64ZxLyYX0nPigmbj+gO/2jvsnO
-MFseke4EOdqycrC8EvchLq+OtsKZ0cN/9EYDFrGrNHGZojFKlckal1+p6jX1V9JA
-D3TxnDyod7PBpH0lYKEQmKWYpBjzQMZrUXCCgJRWSmLicguYELts/waco3R0lQ4R
-Dk5x7oiy3KF+iFi5618YvOc7soEXmtKZHTnNCH6TRQxrCrxcEYC2qOi/hIUWfBpU
-DjwLXyxCV+FdK0IpjQcbBV3ZzIBrCqTG43bHV8Rz0krk8tjM0RM=
-=WAlE
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ35IIACgkQVbJhu7ck
+PpT2ng//TCsVJZ3QJIJlJpN6/ODZR26XZQBIR/EaioInxGJWaKNpwBoQ4vE0M/TD
+OtFs5fDmMKcXAa91yTdbei3uPKaiMde4dylVY42hvOlYXdNH7HLH7Hgk1S38rSgn
+MRMBdrVw+DWNVO3pSXYqFKX6Od/1NAWNkjiNTdezqKUUUj8q/7bqBzCbaYvib2Ct
+YOHT/5146fa4CwhwvJIYZPaWNQ6Xl/5214PhXTsKVaBPi72KSDgPzzXtKKZBefyx
+Gt6L8GDspfNuyALLVSVYAqWkg3dRUCOdgvq87F9XY8fN5UU/Zs4o2eLRhwiWFGoY
+9t2+wqA/xuwOKA1XTbZFxs3mhsqyrgiPFfeWeC4TOTsivtaDsvlJAThLGdqiprBM
+7XnhZaIHYnjpg+eZr7kE3X3+QQVeGx/fca3My2RafhG3NDJ5KJk/b/UmzJl7DqAh
+l+kPlak1Ch1OTOQjDKy9Zn+9HVCOF9eld0IdkuEHHQhth6oR1JssMUSeaX33Po5o
+OoXTeW4LEARUY2Y3b9T4/dKCMo5SpYDoNW2WRhXLbCDP+xvfxKzITj6fd1xAKvk6
+2lhe9SdwNgdX/Ygj4ewqhSNPDXB2DcsLA4pdJ93e0T5HnHvA535i3iLmjjoqlFXg
+hP7s/SOsRlq6iVjKlkEkNgHy/+ky4ARDbvC3HvdfjIJJKDhBhMw=
+=NW+W
 -----END PGP SIGNATURE-----
 
---fdOK4MtmPzDQ/X1i--
+--1AkIszyILeUugda0--
