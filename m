@@ -2,138 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE7F6C77B71
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 06:41:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ED9FC77B6C
+	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 07:17:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229995AbjDMGlz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 02:41:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49580 "EHLO
+        id S229583AbjDMHRo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 03:17:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229866AbjDMGll (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 02:41:41 -0400
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 675CF83EE
-        for <git@vger.kernel.org>; Wed, 12 Apr 2023 23:41:33 -0700 (PDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id C25565C00EF;
-        Thu, 13 Apr 2023 02:41:30 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Thu, 13 Apr 2023 02:41:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1681368090; x=1681454490; bh=Sz
-        iBCZgllM4Ilf2uxyN+MKZZR6pz08dbknwuVyrKYIQ=; b=GZpTQGvYzcivGW4+/D
-        b7bBxxsHQihmNZ0TwFczWRJUmUOHtgZKojUvTxHIDjkO/tUoZg2IHBYOBlTlfczB
-        pK+2sSm1Eps3iowcDqsvQ1kFMGxiWkWDg8/cWSJ4ff/4ZcYPHGC1wisKZI3U4Hzj
-        kthTSUWYKmtx8MKqA7TmEpoi4FiksM/u6wLs5lIrcIbzroqrXJO9tTpBAHWBzf3G
-        qdPlrLXOuCK2xqPYzSAgjZrAJtGLzEcojqWNPWhJ0WAE4yJB8f3eNiHNy+eu3rb+
-        tG8yzqb0Zv1ah8IhnU8UMQ3ajmRJmq2R7/kTh2fWTjkymbab7mTozjmrnI8RGrkN
-        AeOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1681368090; x=1681454490; bh=SziBCZgllM4Il
-        f2uxyN+MKZZR6pz08dbknwuVyrKYIQ=; b=TL8GxK4i8NclS3PI1g5lryfh99ZgE
-        iiOnDo/5T+mx1r8nx/NMbH2GCTmX72gSrJLfWK5T+HeICuf5ybzwgw2wVrolyhf0
-        c4wRXHk/EEt5VJtZFHHucFv8TVIc1i+nsK+BAckyc49OvucZy4AY3tmxmC4RdECl
-        5buqXmmZOYJfPZH3VnIgp4R7tpa+blKdC9GZWiT2x4JiUAWERgWmfzY+k1E2DkT4
-        6uDUYepti/JbpMX5YYubGsnxrndOlfClqMuJWvkguiAb+HqnpjKk6AjP/N+WX4m5
-        se9sP2P/jJkWGGkhA7/rq7tokE84Ft/Ydsa8aQs1HaEx5ADd7ikGhX08A==
-X-ME-Sender: <xms:GqQ3ZAOdw54R9Je3DdevTVbP1xhuj5D3A7o_QWQC6rLZ1t2_fTa2jg>
-    <xme:GqQ3ZG-oFPlhHIUHzzvRZy_Bib8CtDa-YtRv1hDvlHwTywLZJ8Ui9qLITs-H1AqKU
-    k_eh3Pq1zcdkKPuvQ>
-X-ME-Received: <xmr:GqQ3ZHTJ0xzYrPemHyQL4Lq83_Y-druq823s1dNAkbwwuo_u8ZOJQv7gGKjhQSunRl3oudevni5_wr3qi07DMPDTf4RTFWlmmEZe6Uu3BnNvKkU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekjedgudduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepleejteffveehgeegteekteeiudeiie
-    eigeeigedtffehgeekhfejheefkefhveelnecuffhomhgrihhnpehgihhthhhusgdrtgho
-    mhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:GqQ3ZItq_iDeeyYBpYNxkhhrMNVu6v-r5WsQ8MBkA4k49SnNA_mIcw>
-    <xmx:GqQ3ZIcDdJ4XKYS04_PUrEiKqUVBn5Omh3JdPw8AsdSlO3zcniLdSw>
-    <xmx:GqQ3ZM1m64W_TKKOx2zpK2dra2MOS132lQVPVYdN2eg8-tDqPfYyMw>
-    <xmx:GqQ3ZA75eoweZpAon1TAIFO7hbDUSrcG32a6jGtpkXRV3Mgb63aILQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Apr 2023 02:41:29 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 04a8a197 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 13 Apr 2023 06:41:04 +0000 (UTC)
-Date:   Thu, 13 Apr 2023 08:41:24 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, peff@peff.net,
-        dstolee@microsoft.com
-Subject: Re: [PATCH v2 7/8] repack: honor `-l` when calculating pack geometry
-Message-ID: <ZDekFNg8eXr66BHl@ncase>
-References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
- <cover.1681294715.git.ps@pks.im>
- <608dde4ad52c28ef42845b6bfdcb168e252bd29b.1681294715.git.ps@pks.im>
- <xmqqr0sozmc2.fsf@gitster.g>
- <xmqqmt3cz7rp.fsf@gitster.g>
+        with ESMTP id S229530AbjDMHRm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 03:17:42 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52BA35FFE
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 00:17:40 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id z9so7977647ejx.11
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 00:17:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681370259; x=1683962259;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+8qQrm5RXETU/rr0l1m/TQPuHmQvpx8iFFvSp20heJ0=;
+        b=lWPVRywzE2g0z/h3nq3+mx9dHnTx/qeUglUtwMc7K2mo+7/hNKilyMQ/7kAb8ndGoj
+         vGAjP1wMafgpKo3AhFHoUpwwtbbSXsbpBhxTGweUImAsyiVSt6F9D3AWrovLCDvt9lTI
+         csS9OiBlri+SNgOcLOX0RXUTrmVpfY+YgTWQjxTv398tkl0eXCFFt13bcWn+1bpBAAJQ
+         qFfLMl9c7WW3vyJmmtViQvVq3oXiMfg4qEZI5QalMEJplkaiBiX3F3+Y7WOtETzP+eAN
+         L0XOPlS6VKSl5p6lio3oIOuVUjd5myNfsGq7bW0HkvEOe3dT6gQTorxzx0+nyzfLbgiv
+         KibA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681370259; x=1683962259;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+8qQrm5RXETU/rr0l1m/TQPuHmQvpx8iFFvSp20heJ0=;
+        b=PvBVaGTZRXGeICEP/W3KESZJJj0gnM2RNehl5wjkaMos7IgUUFjUAcbGqKpUz2hC5O
+         cdiFeIGjX5rYhwYSB0TSIx8sDnq5skfAPPg5cjqLnpWExh+DwIZ+wr8/x6E5I06j15V1
+         ojfCtecssQxOfehJnvo6JxX/hDOz903HrVOvZHb5dzB0eq0sgf4DAta40gqMl/Y3oJxS
+         5gRpC7RY05IMiZfHjU00Q7mTcUIHiIFY7+m13yFRvR1yB2roxmzvT0Bb9q853LCwESso
+         sIZ03i95v7Reh9gSwQmzfezTzkq8iO8rnAzKAbm1Yz5G13iljorMHaUG25bvd1i4Uulk
+         wQOQ==
+X-Gm-Message-State: AAQBX9d+sfxEQdEY+O/TL/C89k/QruL9FY4LRLywTc8E5iGNH/wJgOzo
+        KDuD3ZWDltOd8vy3nRfSsh+VqBgJ1qLVu7zPrk/q6A9M
+X-Google-Smtp-Source: AKy350Y4YbftbKX54t4XgLQ3iTThE7oOXslwZtKpwJAefBU93edvApU26i7/2kWA1xmozGAupE9FgMd8OsOOWExP1mc=
+X-Received: by 2002:a17:907:d090:b0:94e:aa09:7618 with SMTP id
+ vc16-20020a170907d09000b0094eaa097618mr342031ejc.2.1681370258618; Thu, 13 Apr
+ 2023 00:17:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="GetrKgvy0rkuGbQ0"
-Content-Disposition: inline
-In-Reply-To: <xmqqmt3cz7rp.fsf@gitster.g>
+References: <xmqqjzyoq35x.fsf@gitster.g> <20230407175316.6404-1-oystwa@gmail.com>
+ <a8b34639-60fb-8a23-d1d9-1ef4410a2ba4@gmail.com>
+In-Reply-To: <a8b34639-60fb-8a23-d1d9-1ef4410a2ba4@gmail.com>
+From:   =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>
+Date:   Thu, 13 Apr 2023 09:17:02 +0200
+Message-ID: <CAFaJEqtWg-6wvLNQy1DVSquVOu==E67gN7QYw-sAUf9fufOngw@mail.gmail.com>
+Subject: Re: [PATCH v3] branch, for-each-ref, tag: add option to omit empty lines
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, peff@peff.net,
+        phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Andrei,
 
---GetrKgvy0rkuGbQ0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, 13 Apr 2023 at 01:44, Andrei Rybak <rybak.a.v@gmail.com> wrote:
 
-On Wed, Apr 12, 2023 at 10:11:06PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
-> > Worse yet, even when stat(1) is available, when running
-> >
-> >     $ cd t && sh t7703-repack-geometric.sh --root=3D/dev/shm/testpen -i=
- -v
-> >
-> > in my environment (based on Debian), the lists fail to match at
-> > subseconds.
-> > ...
->=20
-> A CI run of 'seen' with this topic fails on macOS:
->=20
->   https://github.com/git/git/actions/runs/4683726291/jobs/8299125722#step=
-:4:2090
->=20
-> Almost the same 'seen' without this topic is CI clean:
->=20
->   https://github.com/git/git/actions/runs/4683470969
->=20
+> It seems that a word is missing in the first sentence. Perhaps,
+>
+>    s/printed it/printed for it/
+>
+> ?
 
-Thanks, I'll come up with an alternative in v3 of this patch series.
+Sort of... I think I meant s/printed it/printed/ :-)
 
-Patrick
+> "git tag" is mentioned in the subject line, but not here.
 
---GetrKgvy0rkuGbQ0
-Content-Type: application/pgp-signature; name="signature.asc"
+It should definitely be added, yes. Junio, should I resend or will you touc=
+h up
+the message? Not sure what the proper procedure is since it's already in se=
+en.
 
------BEGIN PGP SIGNATURE-----
+Thanks.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ3pBMACgkQVbJhu7ck
-PpQ9xhAAkdz23JT/hcLYyxo+YXl0Ga9VltylYHMI/hU3RsPZbXABaJeSsWgM5/et
-HZz1jlzLF632HAhRl8pxO/c71vsamm5eWDJcAhh06ewGDc4eWFtF3U+1Q3L06lGT
-FHx1tw5sZ0oXx11a/0PZevpAUU2sPhDtcF+24Ul/ASEmdBPoLWt1N3fqpsYd3ljF
-nmwqoi26fFviTIPz6NCpPL5Q51TOE5YiFmIvPcY/Wbm9pmWNO6was2aF0N3qWPoW
-rnDz74aGd8rK0CAQf9wuQ5gj+kXrwu4a3/9Rlk/enUV4P6rVkPBM7HN/gXinkWkR
-fVtTxYHwPWbnzzvbBZmUNKe+V7obImgUWml5617J1oCnArIGw15rWNNoZUDShBLT
-bEA9mWK9hQ2+xURHr6RCPzSwM2V5n7bwmovkH3/Vficv4MR8xVwpH+JHAgLkM3qN
-/AbQozC/9hwnEEB6MpmUP4gQrBWFljb2BUp55FO3h5vye9q+t+ALrCo1TJ+1HpTe
-dw1v8LkMJaGgzl4ulhBdxbfSJl3VqJPWC9i/z3sfwRpnBmmAsd/dfZZHxa+NC2LR
-oeUkB7cYtDzdxgvKD7awOqOZU76vtvF8vDNwv2ttv/QdHrVEiFz8t5+/oGvppo+k
-2TZ/PlOGzRpAPjmPsejAZ8U5ZYTv1tpFB1OPa6SdXQiEKMH/7n8=
-=2lfH
------END PGP SIGNATURE-----
-
---GetrKgvy0rkuGbQ0--
+=C3=98sse
