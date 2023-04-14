@@ -2,235 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72053C77B71
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 17:59:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23775C77B72
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 18:26:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230133AbjDNR67 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 13:58:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44112 "EHLO
+        id S229997AbjDNS0S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 14:26:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230011AbjDNR6q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 13:58:46 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88A6383CB
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 10:58:44 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id q6so6892933wrc.3
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 10:58:44 -0700 (PDT)
+        with ESMTP id S229461AbjDNS0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 14:26:17 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 069D510F1
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 11:26:16 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id w15-20020a056830410f00b006a386a0568dso16543337ott.4
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 11:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681495123; x=1684087123;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1681496775; x=1684088775;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zzM/60mSsNR0KJGFhVd8L6Cxs85i7APO+rqheyEtKZg=;
-        b=XFTz5SkMt1o7//p+xxYXwxktA2TjYMr3X8mZv/SNaicz7vZpOochoeLzcRruTzOto8
-         i2HBsZWe6ASq5tu4JaCeawYWCoB90BiS2B7A0IXhQqFtP34wtC2jcsusi5hL4PMRY8uK
-         QL0IsBUhQ4OtOnCYJZ/fC+lHdlshuWgtRRdpZGhK1Yfml40Yd1YWK3x/WA6RHfjlFj/N
-         xaTE4G7oDDW/KMO5UOipXqGzanAVzu3V3hCpRC+MMkDxwJqExSCxmOdUzY5itoYfuzUN
-         /Xl4lrytlwKyrDBFhU5Uqmov9eVeyRPRJ1Ac2ce8p0oSdu9Cr4497t9a54doxFBZYXep
-         +cEw==
+        bh=fw8b6Cv03jH/Lm3WLMagHJ5YiSuN5ulVpIRsxq/e8s4=;
+        b=gMRg0tVtbGVCVaGmT91T0ZTTchXJKlR9e4Z4iZ8pzHRMgARGajj9t7riiWxBwoYezl
+         gMUzEcIGr4r9c7aieo7mTnbPy0pR+jtSSNdKnqW5RVhNDOsxPu+iYD6Iue6ZdJnWOp0w
+         vSeML7KF5ApIROzYl7vsGkKhVAF1FvmaqNU8Gwprsio9YeuIRdTtNANbR60YGimv4GkA
+         hL1QnABsfud6J9yLWamaF0J8XdTtoF+tb0orS1cerMuzYUW9Ucn1VaPB6YzFB5U7xGxh
+         GGyI8tKQTG8ICc8bYiI73ybx+ENB7yqU1QnN9pPxVxtS4TePKgKifctQBIeyH/2o1ete
+         dItQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681495123; x=1684087123;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zzM/60mSsNR0KJGFhVd8L6Cxs85i7APO+rqheyEtKZg=;
-        b=Rbj1JkQ0MY4iNPTHDqiRegwRTWfe4G/M1MZH0GThG9Cd53+buztWjPodKaRJLvQpHk
-         izAEA3chG9Zn3SWVnowiqzFCYENBWKVlhhG3b7XSsf7iYAa4vtXKKHhC2wuC2pL4AEAu
-         06xUVIm4nTaL8d0+mlRJDCwJkeqlvimwYhh6SD9ZJtpFYL8ZNIhNPserFCAN9yPf27Ik
-         RE3FfgIfrtKigMFAhYTRvhO2wiD5LT3uAj6fE4l86rWmyZGO505/9AlDerFpU3DxEpq9
-         nRlVxUtYine9nfDRE0P4/On/IF6wgxwyOEfW9HQUX7By17PiGxuUgeH9T5f9nhvvYode
-         YWAw==
-X-Gm-Message-State: AAQBX9dGHLIkjcEjXw45OStLrXtx4J931KhMU7UGumJL4gu5PcnfRx5f
-        dxNF8vNt8n+EchGIE71lY3+CBoJKWSY=
-X-Google-Smtp-Source: AKy350bfarretQ65YLVO5valisWdUAJnlh0xTKS8YVIGItItFyiMyNcnv5rc/SPyHup7cMZUw87V5g==
-X-Received: by 2002:a5d:6291:0:b0:2f4:215a:98c5 with SMTP id k17-20020a5d6291000000b002f4215a98c5mr4927555wru.70.1681495122737;
-        Fri, 14 Apr 2023 10:58:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w13-20020adfec4d000000b002efb6e0c495sm4011251wrn.91.2023.04.14.10.58.42
+        d=1e100.net; s=20221208; t=1681496775; x=1684088775;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fw8b6Cv03jH/Lm3WLMagHJ5YiSuN5ulVpIRsxq/e8s4=;
+        b=U+Kzc+AHdjY5WrM3eUfv+yvkSdEIUPGAvvJaIfxgbvov1z6dgvGdpSqRT/dZdYoCWX
+         ELx5XoV7BnIVwYlJoEk/w4WUYyOwzaEQNHExuZvMPBlALYEKAkGID6YufrOUJVPaF6LM
+         CzjJbYz9UbiNj4zDP8uHL8mL+Xzd3GJW2cJy2FVaTHRwWQWFP+8rPHFtfO/wq7XS3kVA
+         JvIPjXjsHDTi3fcyzhpBrFI0cyO3PNPDKjM1NAnh05CjnhFp+2iIupUmctXNowT2NLog
+         Kosn1u+mg/4SvItm+uh0s5Q9M1BMAU7oHyxQtPIUBsCp9hNBlg8AOzQyl31j5XOZp67o
+         2IUw==
+X-Gm-Message-State: AAQBX9cINBURdVqvAgmvzzkxTnZG1jBaJZyBKaldL4jD7/EgIhneFaVc
+        zm6ehNiIXLOxBGWS6SboJm4=
+X-Google-Smtp-Source: AKy350aSVJmU772h/wGLbRZFeY1jA/Eyp6CVhe0plTx3LIG3fimUXDPvk2aPsrLFoAXV9xlYQAOX+A==
+X-Received: by 2002:a9d:6e97:0:b0:69f:77b1:fb52 with SMTP id a23-20020a9d6e97000000b0069f77b1fb52mr3601282otr.17.1681496775182;
+        Fri, 14 Apr 2023 11:26:15 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id p9-20020a056830130900b006a154373578sm639837otq.39.2023.04.14.11.26.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 10:58:42 -0700 (PDT)
-Message-Id: <0cdd4ab3d739e07357ea9efef2cdece633db6ebb.1681495119.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1515.git.1681495119.gitgitgadget@gmail.com>
-References: <pull.1515.git.1681495119.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 14 Apr 2023 17:58:37 +0000
-Subject: [PATCH 4/5] Documentation: document AUTO_MERGE
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+        Fri, 14 Apr 2023 11:26:14 -0700 (PDT)
+Date:   Fri, 14 Apr 2023 12:26:13 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Message-ID: <64399ac5685a4_5f77329495@chronos.notmuch>
+In-Reply-To: <xmqqildys97o.fsf@gitster.g>
+References: <20230413074722.71260-1-felipe.contreras@gmail.com>
+ <20230414070449.GA540206@coredump.intra.peff.net>
+ <643949a57396c_5b7e62948d@chronos.notmuch>
+ <xmqqildys97o.fsf@gitster.g>
+Subject: Re: [PATCH] doc: set actual revdate for manpages
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> >> > diff --git a/Documentation/Makefile b/Documentation/Makefile
+> >> > index 3133ea3182..b629176d7d 100644
+> >> > --- a/Documentation/Makefile
+> >> > +++ b/Documentation/Makefile
+> >> > @@ -144,13 +144,16 @@ man5dir = $(mandir)/man5
+> >> >  man7dir = $(mandir)/man7
+> >> >  # DESTDIR =
+> >> >  
+> >> > +GIT_DATE := $(shell git show --quiet --pretty='%as')
+> >> 
+> >> What will/should this do in a distribution tarball, where we won't have
+> >> a Git repository at all? I think we'll just end up with a blank date in
+> >> the xml file, though it looks like docbook turns that into today's date
+> >> in the result.
+> >> 
+> >> That's not _too_ bad, but feels a bit inconsistent (and it uses the
+> >> format you're trying to get rid of!).
+> >> 
+> >> It would be nicer to populate the date variable in that case, like we do
+> >> for GIT_VERSION. I think that could look something like this:
+> >
+> > Indeed, that would be better, but that totally can be done in a separate patch,
+> > or a separate series even.
+> 
+> Seeing Peff's change, it sounds so small a thing that it feels a bit
+> unnatural not to do that in the same series, at least to me.
 
-Since 5291828df8 (merge-ort: write $GIT_DIR/AUTO_MERGE whenever we hit a
-conflict, 2021-03-20), when using the 'ort' merge strategy, the special
-ref AUTO_MERGE is written when a merge operation results in conflicts.
-This ref points to a tree recording the conflicted state of the working
-tree and is very useful during conflict resolution. However, this ref is
-not documented.
+It should be a small thing, but the GIT-VERSION-GEN script has not been
+updated since 2008 and has a lot of issues (from my point of view).
 
-Add some documentation for AUTO_MERGE in git-diff(1), git-merge(1),
-gitrevisions(7) and in the user manual.
+I think it should be cleaned up first (I already sent a patch series for
+that), *then* it would be trivial to add another field.
 
-In git-diff(1), mention it at the end of the description section, when
-we mention that the command also accepts trees instead of commits, and
-also add an invocation to the "Various ways to check your working tree"
-example.
+But that would add another (unncessary) dependency to this series.
 
-In git-merge(1), add a step to the list of things that happen "when it
-is not obvious how to reconcile the changes", under the "True merge"
-secion. Also mention AUTO_MERGE in the "How to resolve conflicts"
-section, when mentioning 'git diff'.
+> Having said that, I think that "we make progress one step at a time"
+> is perfectly acceptable and may even be preferred, as long as the
+> formatted manpages from the tarball would not change between with
+> and without this patch.  That way, we make the output from a
+> repository better while keeping the output from a tarball extract
+> intact, and make the latter match the former in a later effort.
+> 
+> So, I "wasted" (not really---this was a fruitful validation that is
+> a part of a review process) some time to play with this on top of
+> 'seen' to see how well the tarball extract fares.  We get an error
+> message from "git show" complaining about "not a git repository" but
+> that is to be expected ("sh GIT-VERSION-GEN" does not share the
+> problem, though).
+> 
+> At least with the versions of toolchain picked by default in my
+> environment, I seem to be getting identical "04/14/2023" in a
+> directory extracted out of a tarball taken from 'seen' (with and
+> without this patch) in the formatted manpages, because we do not
+> have any record in the input either way.
+> 
+> Formatted output from a repository working tree changes from
+> "04/14/2023" to "2023-04-13".  The value change may be intended, but
+> I am not sure if the format change was intended or even welcome.
 
-In gitrevisions(7), add a mention of AUTO_MERGE along with the other
-special refs.
+I live in the vast majority of countries where MM/DD/YYYY makes
+absolutely no sense, so I think it's a plus if any man pages have a sane
+date.
 
-In the user manual, add a paragraph describing AUTO_MERGE to the
-"Getting conflict-resolution help during a merge" section, and include
-an example of a 'git diff AUTO_MERGE' invocation for the example
-conflict used in that section. Note that for uniformity we do not use
-backticks around AUTO_MERGE here since the rest of the document does not
-typeset special refs differently.
+I'm pretty sure I'm not alone on this, but some might disagree.
 
-Closes: https://github.com/gitgitgadget/git/issues/1471
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- Documentation/git-diff.txt    |  8 +++++++-
- Documentation/git-merge.txt   |  9 +++++++--
- Documentation/revisions.txt   |  6 +++++-
- Documentation/user-manual.txt | 27 +++++++++++++++++++++++++++
- 4 files changed, 46 insertions(+), 4 deletions(-)
+> If we want to correct the date format, it can totally be done in a
+> separate patch, or a separate series even, with some justification in
+> the proposed log message, I think.
 
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index 52b679256c4..a85cc756ebc 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -102,7 +102,11 @@ If --merge-base is given, use the merge base of the two commits for the
- Just in case you are doing something exotic, it should be
- noted that all of the <commit> in the above description, except
- in the `--merge-base` case and in the last two forms that use `..`
--notations, can be any <tree>.
-+notations, can be any <tree>. A tree of interest is the one pointed to
-+by the special ref `AUTO_MERGE`, which is written by the 'ort' merge
-+strategy upon hitting merge conflicts (see linkgit:git-merge[1]).
-+Comparing the working tree with `AUTO_MERGE` shows changes you've made
-+so far to resolve conflicts (see the examples below).
- 
- For a more complete list of ways to spell <commit>, see
- "SPECIFYING REVISIONS" section in linkgit:gitrevisions[7].
-@@ -152,6 +156,7 @@ Various ways to check your working tree::
- $ git diff            <1>
- $ git diff --cached   <2>
- $ git diff HEAD       <3>
-+$ git diff AUTO_MERGE <4>
- ------------
- +
- <1> Changes in the working tree not yet staged for the next commit.
-@@ -159,6 +164,7 @@ $ git diff HEAD       <3>
-     would be committing if you run `git commit` without `-a` option.
- <3> Changes in the working tree since your last commit; what you
-     would be committing if you run `git commit -a`
-+<4> Changes in the working tree you've made to resolve conflicts so far.
- 
- Comparing with arbitrary commits::
- +
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 23aefe28851..3f61389c1c2 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -196,7 +196,11 @@ happens:
-    can inspect the stages with `git ls-files -u`).  The working
-    tree files contain the result of the merge operation; i.e. 3-way
-    merge results with familiar conflict markers `<<<` `===` `>>>`.
--5. No other changes are made.  In particular, the local
-+5. A special ref `AUTO_MERGE` is written, pointing to a tree corresponding
-+   to the current content of the working tree (including conflict markers).
-+   Note that this ref is only written when the 'ort' merge strategy
-+   is used (the default).
-+6. No other changes are made.  In particular, the local
-    modifications you had before you started merge will stay the
-    same and the index entries for them stay as they were,
-    i.e. matching `HEAD`.
-@@ -336,7 +340,8 @@ You can work through the conflict with a number of tools:
- 
-  * Look at the diffs.  `git diff` will show a three-way diff,
-    highlighting changes from both the `HEAD` and `MERGE_HEAD`
--   versions.
-+   versions. `git diff AUTO_MERGE` will show what changes you've
-+   made so far to resolve conlicts.
- 
-  * Look at the diffs from each branch. `git log --merge -p <path>`
-    will show diffs first for the `HEAD` version and then the
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 98b8f89bc8d..b42a2bb30a5 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -33,7 +33,8 @@ characters and to avoid word splitting.
- 
-   . If '$GIT_DIR/<refname>' exists, that is what you mean (this is usually
-     useful only for `HEAD`, `FETCH_HEAD`, `ORIG_HEAD`, `MERGE_HEAD`,
--    `REBASE_HEAD`, `REVERT_HEAD`, `CHERRY_PICK_HEAD` and `BISECT_HEAD`);
-+    `REBASE_HEAD`, `REVERT_HEAD`, `CHERRY_PICK_HEAD`, `BISECT_HEAD`
-+    and `AUTO_MERGE`);
- 
-   . otherwise, 'refs/<refname>' if it exists;
- 
-@@ -64,6 +65,9 @@ run `git revert`.
- when you run `git cherry-pick`.
- `BISECT_HEAD` records the current commit to be tested when you
- run `git bisect --no-checkout`.
-+`AUTO_MERGE` records a tree object corresponding to the state the
-+'ort' merge strategy wrote to the working tree when a merge operation
-+resulted in conflicts.
- +
- Note that any of the 'refs/*' cases above may come either from
- the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index dc9c6a663a9..99e5f652e92 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -1343,6 +1343,33 @@ $ git diff -3 file.txt		# diff against stage 3
- $ git diff --theirs file.txt	# same as the above.
- -------------------------------------------------
- 
-+When using the 'ort' merge strategy (the default), before updating the working
-+tree with the result of the merge, Git writes a special ref named AUTO_MERGE
-+reflecting the state of the tree it is about to write. Conflicted paths that
-+could not be automatically merged are written to this tree with conflict
-+markers, just as in the working tree. AUTO_MERGE can thus be used with
-+linkgit:git-diff[1] to show the changes you've made so far to resolve
-+conflicts. Using the same example as above, after resolving the conflict we
-+get:
-+
-+-------------------------------------------------
-+$ git diff AUTO_MERGE
-+diff --git a/file.txt b/file.txt
-+index cd10406..8bf5ae7 100644
-+--- a/file.txt
-++++ b/file.txt
-+@@ -1,5 +1 @@
-+-<<<<<<< HEAD:file.txt
-+-Hello world
-+-=======
-+-Goodbye
-+->>>>>>> 77976da35a11db4580b80ae27e8d65caf5208086:file.txt
-++Goodbye world
-+-------------------------------------------------
-+
-+Notice that the diff shows we deleted the conflict markers and both versions,
-+and wrote "Goodbye world" instead.
-+
- The linkgit:git-log[1] and linkgit:gitk[1] commands also provide special help
- for merges:
- 
+Sure, but in order to do that we would need a way to convert the sane
+standard git dates to USA-centric dates, and I'm not so sure the
+tidyness of having both dates wrong is worth it.
+
+Would you consider something like this more welcome?
+
+  GIT_DATE := $(shell git show --quiet --pretty='%as' | sed -e 's|^\(.\+\)-\(.\+\)-\(.\+\)$|\2/\3/\1|'
+
 -- 
-gitgitgadget
-
+Felipe Contreras
