@@ -2,212 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6520CC77B72
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 12:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BAEDC77B6E
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 12:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230305AbjDNMRY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 08:17:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35190 "EHLO
+        id S229847AbjDNMSr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 08:18:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbjDNMRX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 08:17:23 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1BB8AD0C
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 05:17:21 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id by8so2331104ybb.9
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 05:17:21 -0700 (PDT)
+        with ESMTP id S229766AbjDNMSp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 08:18:45 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACF704ED5
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 05:18:44 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id k22-20020a9d7016000000b006a43382e5b9so2067572otj.3
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 05:18:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681474641; x=1684066641;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=etNgWf2zmXpSWYyT+fvuqV9Erd8HxOPLP+tN9UjTVEA=;
-        b=TEqnQF4BmG3Ihvrpf4dpoR3hvj0wLeRVtapnDzas+Tny5/swOGViZyHRtQ2CP+7EoJ
-         1amTLpr3Gfx0dzb75ppvJ4eQNsFNv9H0UQwSVE43Mw5U0XOM/YNAhZO9yZJz3F8jl0vZ
-         XwZ147hIDrP18mk3Ed4fGH4BPrQfKuJpxkyyZnUKKnSXaAfJf1bichuY5f+8puNc0wsh
-         6TxwztYJ2kRolu+xX25cdz8uE4yVAxhMvYsI4it3tOETDeLEqhmLetg8uU9i4UIn6akx
-         e1D69bi0WHgR2irW1CgNG8yc6PYLqNJAyE5y32MgsUjhVg9+v+T3qE96vO4jEjpXKlGq
-         8RwA==
+        d=gmail.com; s=20221208; t=1681474723; x=1684066723;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pu3dtNsOSPkRUjaovDWpJSrpjXg452dEqTCsKNpXO2A=;
+        b=pdzmFzE9BJJaoUISsmLqzX6AmUW7alZr8yDuFYaPLro11HbOVC2fWViVyKkS6FNwP3
+         EUFKC2d61F3KBoRSlzk5HWJp+8WUN2/U/YMt11LlFbehOVZwsNps8FJj/4/hI/ZUSaoP
+         rcJRzNs2+tpBJ/6Xvz2gUNVRIrbTK3obH9gA4hPYTE8mJ/49Ai+DPv92Lgs+lp65s7/R
+         GSlcyMd5d9ZQZTWYm5O7v9REt/F4rH5jw2RlWb/fJeyRIH2H6+ObDUWfWfb50hAF/1UO
+         KDBwWy4vl9DlEMo19Gqgi/0Ns0NHnNkIXFYwWiUYDL9/J5Ls811MzGmYmDG3mv1qUHeK
+         NAKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681474641; x=1684066641;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=etNgWf2zmXpSWYyT+fvuqV9Erd8HxOPLP+tN9UjTVEA=;
-        b=ZKQHOq9Uvm092ieF9Ja0Hifj8CLLvI/BVF3JhzSmwb9EB1QBCMQiT09kNC5JUBl6Up
-         GlFOhCVn9cDWlKxTSyxu3OpXKFnVoi3MpVd90E5oPsczRW4lq68XRdR+0HJhXaW8NvJL
-         QhMFZjgcRXiMcZAXqgXzhuiyFykYlMlKD5HLX3sR9k0QSk/OSbT+vR+p7bja8QOKIg40
-         ai/UMOPc9nS/TrvHEHdUvVLAR5MqrAD71/k/qNspLRmu+IMd+Brogrd/3SMRcy4BjRlC
-         Qy2sNADnBO3M9nGuRgVRb4N7WNFx7bzj0K59PvAqeY/CvSE+CFgSf55Y40nBx0O5RNBu
-         iztw==
-X-Gm-Message-State: AAQBX9cJpW1KWuZEeyDQMN1a83EqI41g6he0bs30jye6UlCriTFwkYFZ
-        h/qUPOzxMT3elH26r0f53N1+I5Sws+HXRukO3bs=
-X-Google-Smtp-Source: AKy350Y/dlBdFkXHoQPQhlKKNQSEvmuyYFpJZm9vFRJw60/xnkkCjMIGb9DMryXi2zqIodPX+VdmMwYPyfWQ062EzRw=
-X-Received: by 2002:a25:30c2:0:b0:b8f:553a:ddfd with SMTP id
- w185-20020a2530c2000000b00b8f553addfdmr2942168ybw.5.1681474640886; Fri, 14
- Apr 2023 05:17:20 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681474723; x=1684066723;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Pu3dtNsOSPkRUjaovDWpJSrpjXg452dEqTCsKNpXO2A=;
+        b=h51d7iZuOgKv4BoObpmURCSciHZMnmKNH4vU2YH6Cu1HlKeRRIMSQjQL3hBHsVktpE
+         2M3x0GgqXY7r1mpQe0zn5AfDFrhEYubJ3qQJOAuzG8rq3Fr6PFjR9sxZcT7psbELZHXt
+         8Pi9UTjHFI2nyUzI7hkNCR4GAQTg+lOa98iKQdSyPQTrjHokoS2TCCgL8iat99EHzlll
+         4w2aL4OKUhvUjni+7re/RtoPCmlWQhoiut+xeEeDTFdXNzA5xkUh8AE+ugA29v77i8X3
+         vHYnAYNAgcUxIoXkWCNqoeOCKvaWTUdmNwOZ2To166a1n6a8VDSSoq0B8JlewqQpJCcu
+         dYJw==
+X-Gm-Message-State: AAQBX9c3CR6SjI0ju/6WJiNrGKXU09QJo+VuGW12JJNE1l13B/6BZUwG
+        MIRGhuMCxzcMnltAJUIWFLN+IFQdYhw=
+X-Google-Smtp-Source: AKy350aBCXr+YG4AgiOM4n5Af1RaFCaWs7gE+lmlWDpgdYBGfe3SePHV38++/AFmL+/ehT69lENWSA==
+X-Received: by 2002:a05:6830:124c:b0:6a4:3e49:9eb2 with SMTP id s12-20020a056830124c00b006a43e499eb2mr1088769otp.19.1681474723381;
+        Fri, 14 Apr 2023 05:18:43 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id m18-20020a9d7ad2000000b00690e21a46e1sm1595403otn.56.2023.04.14.05.18.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Apr 2023 05:18:42 -0700 (PDT)
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH 00/18] version-gen: complete revamp/rewrite
+Date:   Fri, 14 Apr 2023 06:18:23 -0600
+Message-Id: <20230414121841.373980-1-felipe.contreras@gmail.com>
+X-Mailer: git-send-email 2.40.0+fc1
 MIME-Version: 1.0
-References: <CAOLTT8RTB7kpabN=Rv1nHvKTaYh6pLR6moOJhfC2wdtUG_xahQ@mail.gmail.com>
- <xmqqy1n3k63p.fsf@gitster.g> <CAOLTT8SXXKG3uEd8Q=uh3zx7XeUDUWezGgNUSCd1Fpq-Kyy-2A@mail.gmail.com>
- <ZDIUvK/bF7BFqX5q@nand.local> <CAOLTT8RbU6G67BtE9fSv4gEn10dtR7cT-jf+dcEfhvNhvcwETQ@mail.gmail.com>
- <20230410201414.GC104097@coredump.intra.peff.net> <CAOLTT8T9pJFr94acvUo-8EYriST1gOAkXaDZBxHk54o=Zm5=Sg@mail.gmail.com>
- <20230412074309.GB1695531@coredump.intra.peff.net> <CAOLTT8Rw796zxMYxg5+nx8+YoQVnfy=nPXH8Aq0j0Cw+GLT1rA@mail.gmail.com>
- <20230414073035.GB540206@coredump.intra.peff.net>
-In-Reply-To: <20230414073035.GB540206@coredump.intra.peff.net>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Fri, 14 Apr 2023 20:17:34 +0800
-Message-ID: <CAOLTT8SEeY1tfU39xHPJ21F7o3dmgEFwNCny=Z2F4Y2HFR3DzA@mail.gmail.com>
-Subject: Re: [Question] Can git cat-file have a type filtering option?
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>, johncai86@gmail.com,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> =E4=BA=8E2023=E5=B9=B44=E6=9C=8814=E6=97=A5=E5=91=
-=A8=E4=BA=94 15:30=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Wed, Apr 12, 2023 at 05:57:02PM +0800, ZheNing Hu wrote:
->
-> > > It's not just metadata; it's actually part of what we hash to get the
-> > > object id (though of course it doesn't _have_ to be stored in a linea=
-r
-> > > buffer, as the pack storage shows).
-> >
-> > I'm still puzzled why git calculated the object id based on {type, size=
-, data}
-> >  together instead of just {data}?
->
-> You'd have to ask Linus for the original reasoning. ;)
->
-> But one nice thing about including these, especially the type, in the
-> hash, is that the object id gives the complete context for an object.
-> So if another object claims to point to a tree, say, and points to a blob
-> instead, we can detect that problem immediately.
->
-> Or worse, think about something like "git show 1234abcd". If the
-> metadata was not part of the object, then how would we know if you
-> wanted to show a commit, or a blob (that happens to look like a commit),
-> etc? That metadata could be carried outside the hash, but then it has to
-> be stored somewhere, and is subject to ending up mismatched to the
-> contents. Hashing all of it (including the size) makes consistency
-> checking much easier.
->
+The version generation script needs some love, as the last true change was done in 2008.
 
-Oh, you are right, this could be to prevent conflicts between Git objects
-with identical content but different types. However, I always associate
-Git with the file system, where metadata such as file type and size is
-stored in the inode, while the file data is stored in separate chunks.
+This series step by step revamps the whole script ending in only a few lines of code:
 
-> > > For packed object, it effectively is metadata, just stuck at the fron=
-t
-> > > of the object contents, rather than in a separate table. That lets us
-> > > use the same .idx file for finding that metadata as we do for the
-> > > contents themselves (at the slight cost that if you're _just_ accessi=
-ng
-> > > metadata, the results are sparser within the file, which has worse
-> > > behavior for cold-cache disks).
-> >
-> > Agree. But what if there is a metadata table in the .idx file?
-> > We can even know the type and size of the object without accessing
-> > the packfile.
->
-> I'm not sure it would be any faster than accessing the packfile. If you
-> stick the metadata in the .idx file's oid lookup table, then lookups
-> perform a bit worse because you're wasting memory cache. If you make a
-> separate table in the .idx file that's OK, but I'm not sure it's
-> consistently better than finding the data in the packfile.
->
+    get_version () {
+        test -f version && cat version && return
+        git describe --match "v[0-9]*" --dirty 2>/dev/null | sed -e 's/-/+/' -e 's/^v//'
+    }
 
-Yes, but it maybe be very convenient if we need to filter by object
-type or size.
+    NEW="GIT_VERSION = $(get_version)"
 
-> The oid lookup table gives you a way to index the table in
-> constant-time (if you store the table as fixed-size entries in sha1
-> order), but we can also access the packfile in constant-time (the idx
-> table gives us offsets). The idx metadata table would have better cache
-> behavior if you're only looking at metadata, and not contents. But
-> otherwise it's worse (since you have to hit the packfile, too). And I
-> cheated a bit to say "fixed-size" above; the packfile metadata is in a
-> variable-length encoding, so in some ways it's more efficient.
->
+    test -r GIT-VERSION-FILE && test "$NEW" = "$(cat GIT-VERSION-FILE)" && exit
+    echo "$NEW" | tee GIT-VERSION-FILE >&2
 
-Yes, if we only use git cat-file --batch-check, we may be able to improve
-performance by avoiding access to the pack file. Additionally, I think
-this metadata table is very suitable for filtering and aggregating operatio=
-ns.
+There should be no functional changes except for the last patch that changes
+interim version from `2.40.0.$n.g${oid}` to `2.40.0+$n-g${oid}` as that causes
+the proper sorting.
 
-> So I doubt it would make any operations appreciably faster, and even if
-> it did, you'd possibly be trading off versus other operations. I think
-> the more interesting metadata is not type/size, but properties such as
-> those stored by the commit graph. And there we do have separate tables
-> for fast access (and it's a _lot_ faster, because it's helping us avoid
-> inflating the object contents).
->
+It's hard to see the actual changes to this script as 99% of the commits are
+just to bump the default version (which I don't know why it even exists).
 
-Yeah, optimizing the retrieval of metadata such as type/size may not provid=
-e
-as much benefit as recording the commit properties in the metadata table,
-like the commit graph optimization does.
+For reference, cleaning the history I came up with these actual changes in case
+anyone is interested:
 
-> > > I'm not sure how much of a speedup it would yield in practice, though=
-.
-> > > If you're printing the object contents, then the extra lookup is
-> > > probably not that expensive by comparison.
-> > >
-> >
-> > I feel like this solution may not be feasible. After we get the type an=
-d size
-> > for the first time, we go through different output processes for differ=
-ent types
-> > of objects: use `stream_blob()` for blobs, and `read_object_file()` wit=
-h
-> > `batch_write()` for other objects. If we obtain the content of a blob i=
-n one
-> > single read operation, then the performance optimization provided by
-> > `stream_blob()` would be invalidated.
->
-> Good point. So yeah, even to use it in today's code you'd need something
-> conditional. A few years ago I played with an option for object_info
-> that would let the caller say "please give me the object contents if
-> they are smaller than N bytes, otherwise don't".
->
-> And that would let many call-sites get type, size, and content together
-> most of the time (for small objects), and then stream only when
-> necessary. I still have the patches, and running them now it looks like
-> there's about a 10% speedup running:
->
->   git cat-file --unordered --batch-all-objects --batch >/dev/null
->
-> Other code paths dealing with blobs would likewise get a small speedup,
-> I'd think. I don't remember why I didn't send it. I think there was some
-> ugly refactoring that I needed to double-check, and my attention just
-> got pulled elsewhere. The messy patches are at:
->
->   https://github.com/peff/git jk/object-info-round-trip
->
-> if you're interested.
->
+c48799e560 (Teach GIT-VERSION-GEN about the .git file, 2008-02-20)
+1100ac81a9 (Change GIT-VERSION-GEN to call git commands with "git" not "git-"., 2006-05-22)
+374dfaa2e3 (Make GIT-VERSION-GEN tolerate missing git describe command again, 2006-01-26)
+5c7d3c9507 (Allow building of RPM from interim snapshot., 2006-01-16)
+181129d24c (For release tarballs, include the proper version, 2006-01-09)
+026351a035 (Make GIT-VERSION-GEN tolerate missing git describe command, 2005-12-30)
+9b88fcef7d (Makefile: use git-describe to mark the git version., 2005-12-27)
 
-Alright, this does feel a bit hackish, allowing most objects to fetch the
-content when first read and allowing blobs larger than N to be
-streamed via stream_blob().
+Cheers.
 
-I feel like this optimization for single-reads is a bit off-topic, I quote
-your previous sentence:
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index 9a1111af9b..99584bf86d 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -1,40 +1,11 @@
+ #!/bin/sh
+ 
+-GVF=GIT-VERSION-FILE
+-DEF_VER=v2.40.GIT
+-
+-LF='
+-'
+-
+-# First see if there is a version file (included in release tarballs),
+-# then try git-describe, then default.
+-if test -f version
+-then
+-	VN=$(cat version) || VN="$DEF_VER"
+-elif test -d ${GIT_DIR:-.git} -o -f .git &&
+-	VN=$(git describe --match "v[0-9]*" HEAD 2>/dev/null) &&
+-	case "$VN" in
+-	*$LF*) (exit 1) ;;
+-	v[0-9]*)
+-		git update-index -q --refresh
+-		test -z "$(git diff-index --name-only HEAD --)" ||
+-		VN="$VN-dirty" ;;
+-	esac
+-then
+-	VN=$(echo "$VN" | sed -e 's/-/./g');
+-else
+-	VN="$DEF_VER"
+-fi
+-
+-VN=$(expr "$VN" : v*'\(.*\)')
+-
+-if test -r $GVF
+-then
+-	VC=$(sed -e 's/^GIT_VERSION = //' <$GVF)
+-else
+-	VC=unset
+-fi
+-test "$VN" = "$VC" || {
+-	echo >&2 "GIT_VERSION = $VN"
+-	echo "GIT_VERSION = $VN" >$GVF
++get_version () {
++	test -f version && cat version && return
++	git describe --match "v[0-9]*" --dirty 2>/dev/null | sed -e 's/-/+/' -e 's/^v//'
+ }
++
++NEW="GIT_VERSION = $(get_version)"
++
++test -r GIT-VERSION-FILE && test "$NEW" = "$(cat GIT-VERSION-FILE)" && exit
++echo "$NEW" | tee GIT-VERSION-FILE >&2
 
-> So a nice thing about being able to do the filtering in one process is
-> that we could _eventually_ do it all with one object lookup. But I'd
-> probably wait on adding something like --type-filter until we have an
-> internal single-lookup API, and then we could time it to see how much
-> speedup we can get.
+Felipe Contreras (18):
+  version-gen: reorganize
+  version-gen: trivial cleanup
+  version-gen: refactor default version
+  version-gen: simplify v prefix removal
+  version-gen: simplify update check
+  version-gen: remove redundant check
+  version-gen: simplify `git describe` checks
+  version-gen: simplify dirty check
+  version-gen: move describe fix into function
+  version-gen: describe and sed in one go
+  version-gen: refactor describe function
+  version-gen: do v fix only when necessary
+  version-gen: move v fix into sed
+  version-gen: refactor main functionality
+  version-gen: remove default version
+  version-gen: refactor GIT_VERSION string
+  version-gen: get rid of GVF variable
+  version-gen: generate proper interim versions
 
-This optimization for single-reads doesn't seem to provide much benefit
-for implementing object filters, because we have already read the content
-of the object in advance?
+ GIT-VERSION-GEN | 45 ++++++++-------------------------------------
+ 1 file changed, 8 insertions(+), 37 deletions(-)
 
-ZheNing Hu
+-- 
+2.40.0+fc1
+
