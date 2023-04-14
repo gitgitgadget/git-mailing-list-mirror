@@ -2,112 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 414CBC77B7A
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 12:20:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 53C38C77B6E
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 12:40:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230383AbjDNMT5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 08:19:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36852 "EHLO
+        id S229733AbjDNMkv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 08:40:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231133AbjDNMTW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 08:19:22 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 800D9B47F
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 05:19:13 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id ec6so5163430oib.8
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 05:19:13 -0700 (PDT)
+        with ESMTP id S229705AbjDNMkt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 08:40:49 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20BB3B44E
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 05:40:13 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id x22-20020a9d6296000000b006a42c37ddcdso3335161otk.1
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 05:40:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681474752; x=1684066752;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1681476007; x=1684068007;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ec1J/m5HWnjTuS8Ur8RdtE/9QOvbxJc45gQAchmgOws=;
-        b=bM5fPHAnvrAdJoeakPN3A7bLYJl6Aad8g8U8nxhT4EjtbP/cTrRyrhXfI1+SmlzNQT
-         pGI2eZX3z598Oa373OzuzBDx7hKpaa+KZDmq15+CH1zvHLzckt/CZfOwztkSDNX1xfqt
-         zhkIPOmOWUMZTyMYIxofVExNCyaDcJmQSq+yEuUJ+LEjYJ33+0QZ+BEfuMWsg+6DqlCc
-         3oEc6ZVaHJJejKf49DQ/gdq9wvXgzl+PB7lZKcC+bnnRb/TBGBa3qE9nAhLt88ldbvR3
-         qa1A/8v1p7lChl3gP3udsySI46X+C5dJ/XYpwP9/g+CZE8mUfVqT4JR89kGg1E1oIjX3
-         LlzA==
+        bh=3a61vEJDeUh+3FN2l/GoMLUbRyPMyvUXptAT4ie23y4=;
+        b=cHnSsk8KrgVTpjNRvmh/sRfWrf19vXmcH01bO0M8Uij+s9VPe3OuJgVxF8tAvacFFg
+         /aRFXIFenalilS2Rr9AYnMJo7n3JFi+ieKQMQbcuSqbMF30MpQvK5YTzSpmD6JylfxBR
+         dY+YUJ9Ua+th5YhlpJ5so1qfYqt3lu8x4+r2qBlCHmi1Nj/y87LDFiAzdJWpZzfkzNod
+         OIYyxlPaCRYmA2NYbwxx559W+Sc56+BFbFG1nbI8kv+2zq7XUpjYg5psCm8U8uJVm/3K
+         UqZq2td4kghhyu7VdUY0I6581VzFatzTKE1I4vA1LVMN812voApWbE00gd0Fyt0Q9XWD
+         yzkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681474752; x=1684066752;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ec1J/m5HWnjTuS8Ur8RdtE/9QOvbxJc45gQAchmgOws=;
-        b=evpsyLPHeQltZSXHs8zJGIPuY8xXn10+9kij6kx9ckiMG0s7Rel6HYzUWVPyOiN+eB
-         9bhp360NfBkeUqw1MXpWPuNZ9NRgJwQJDFGV5YYrfk6ieEAVnU7mCxttinIUdx+Vqk9k
-         7KR7KQbSMigccLTh4mQT+tAyNU9rGXkIOEbwhBWKQaqBI1HZGWE0enZzEA7SANOXKWi0
-         VxUiFDHzHApVDXXXxZ0WseuOGCqGAccGQbECCMjDN7TxtDGhAldvwrkUqDp2GIPu0xEs
-         gkaIdSJay9bnMX0U8t22yr5H1DUpWMrwv+kHbDEYpSfFlrdxjsqRSv1Ca5LBXg1Nex4d
-         p67w==
-X-Gm-Message-State: AAQBX9c66iD98ze/fceyFK3TNdnRFoFthK2dPWKH7E5ZylIAjaLlwv6v
-        Vcgh2VMcqSyRp0k1RdhSLrP6sSGv8QU=
-X-Google-Smtp-Source: AKy350Zul7emKiF0AHQxvvILV7QNybW+NprWnNYuwq1gEdwerUKEwjcwymCtC8hfNh0JLAKPpdN41g==
-X-Received: by 2002:a05:6808:a92:b0:383:f8a3:2529 with SMTP id q18-20020a0568080a9200b00383f8a32529mr2389273oij.6.1681474752093;
-        Fri, 14 Apr 2023 05:19:12 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681476007; x=1684068007;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3a61vEJDeUh+3FN2l/GoMLUbRyPMyvUXptAT4ie23y4=;
+        b=V1Rbo+nnvE+SyybIJ3vZv3cVGEIFiEIEAX4AQOAHtoXu+Fsx3iuy8+0tanzga5OGvQ
+         SppFRPJhKf/kAKZT1T8KT9kF5rKbk/yQfGGOj1Ryo6DqeehdHUvYlkxEx6VJzIImyqKQ
+         46EAgljyaRb90nJlDgUMkExc9gsaIzODAtrD0w+vwiuY6Tw+wFPHRyks7S8AvFPLtDsq
+         5/kCbAQDWlbdQ7MgOr3j+85HHXcFfoTxrKivzNI5TdW5Oi9Snx9/ObboVhwC2JNPzILp
+         LxLJO1rg/NG+NeznE02vx2ve6bTX9OL6biVc8AKBrXhNN0gk3ZlzhTX7vtCQGJ3BdJhU
+         utDQ==
+X-Gm-Message-State: AAQBX9fYELhT3mR5l0Jy4iqNihrwvwQ3e/Es57ee9+EWXfBGPcGbw/dL
+        qOPb4qz5YJ9AIybMKDHPH2k=
+X-Google-Smtp-Source: AKy350ZUEdhibA1JLGd77GLp2XtM0WJdCzWuWKSn07Bvv355e3cXVhdWXO8K9DeX9Ou+24N0sn+lIg==
+X-Received: by 2002:a9d:7ac1:0:b0:69d:793c:a722 with SMTP id m1-20020a9d7ac1000000b0069d793ca722mr2443733otn.13.1681476007037;
+        Fri, 14 Apr 2023 05:40:07 -0700 (PDT)
 Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id z8-20020aca3308000000b0038c34e67d47sm834938oiz.55.2023.04.14.05.19.11
+        by smtp.gmail.com with ESMTPSA id g17-20020a9d6191000000b006a1394ea9f3sm1637478otk.30.2023.04.14.05.40.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 05:19:11 -0700 (PDT)
+        Fri, 14 Apr 2023 05:40:06 -0700 (PDT)
+Date:   Fri, 14 Apr 2023 06:40:05 -0600
 From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+To:     Jeff King <peff@peff.net>,
         Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH 18/18] version-gen: generate proper interim versions
-Date:   Fri, 14 Apr 2023 06:18:41 -0600
-Message-Id: <20230414121841.373980-19-felipe.contreras@gmail.com>
-X-Mailer: git-send-email 2.40.0+fc1
-In-Reply-To: <20230414121841.373980-1-felipe.contreras@gmail.com>
-References: <20230414121841.373980-1-felipe.contreras@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Message-ID: <643949a57396c_5b7e62948d@chronos.notmuch>
+In-Reply-To: <20230414070449.GA540206@coredump.intra.peff.net>
+References: <20230413074722.71260-1-felipe.contreras@gmail.com>
+ <20230414070449.GA540206@coredump.intra.peff.net>
+Subject: Re: [PATCH] doc: set actual revdate for manpages
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The change from dashes to dots was done in 2006 to satisfy some RPM
- requirements: 5c7d3c9507 (Allow building of RPM from interim snapshot.,
-2006-01-16).
+Jeff King wrote:
+> On Thu, Apr 13, 2023 at 01:47:22AM -0600, Felipe Contreras wrote:
+> 
+> > manpages expect the date of the last revision, if that is not found
+> > DocBook Stylesheets go through a series of hacks to generate one with
+> > the format `%d/%d/%Y` which is not ideal.
+> > 
+> > In addition to this format not being standard, different tools generate
+> > dates with different formats.
+> > 
+> > There's no need for any confusion if we specify the revision date, so
+> > let's do so.
+> 
+> That seems like a good goal, and should reduce our asciidoc/asciidoctor
+> diff considerably.
+> 
+> > This patch requires [1] to actually work, and has a simple conflict with
+> > [2], so it's written on top of both.
+> > 
+> > [1] https://lore.kernel.org/git/20230323221523.52472-1-felipe.contreras@gmail.com/
+> > [2] https://lore.kernel.org/git/20230408001829.11031-1-felipe.contreras@gmail.com/
+> 
+> I wasted a bit of time trying this out, so let me elaborate on "actually
+> work" for the benefit of other reviewers. Without the patch in [1]
+> (which is 8806120de6c on fc/remove-header-workarounds-for-asciidoc),
+> this patch works as advertised with asciidoctor, but has no effect with
+> asciidoc.  The reason is that asciidoc puts the <date> tags in the
+> header, and the custom header removed by 8806120de6c suppresses
+> asciidoc's default header entirely (so a workaround would be to include
+> the <date> tags in our custom header, but I don't see any reason not to
+> just build on top of 8806120de6c, as you did here).
 
-This probably was done because `2.40.0-100-g000` would be interpreted as
-version `2.40.0` release `100`.
+Yes, I also "wasted" a bit of time comparing the custom header introduced in
+7ef195ba3e (Documentation: Add version information to man pages, 2007-03-25) to
+what is in asciidoc and the difference is simple:
 
-It isn't clear because the commit message doesn't explain.
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf
+@@ -56,6 +56,9 @@ ifdef::backend-docbook[]
+ [header]
+ template::[header-declarations]
+ <refentry>
++<refentryinfo>
++template::[docinfo]
++</refentryinfo>
+ <refmeta>
+ <refentrytitle>{mantitle}</refentrytitle>
+ <manvolnum>{manvolnum}</manvolnum>
 
-But using a dot makes it worse because `2.40.0.n` will always be newer
-than `2.40.0-n`.
+This is of course not needed if we get rid of that custom header, but I sent
+the patch anyway for reference in a semi-unrelated patch series [1].
 
-What we want is an ordering such as:
+But to me the rationale is simple: the information isn't there because we are
+overriding the asciidoc header and not putting it there.
 
- * 2.40.0         # git release
- * 2.40.0+100-g00 # interim version
- * 2.40.0-1       # Fedora release
- * 2.40.0.1       # hypothetical git release
+> > diff --git a/Documentation/Makefile b/Documentation/Makefile
+> > index 3133ea3182..b629176d7d 100644
+> > --- a/Documentation/Makefile
+> > +++ b/Documentation/Makefile
+> > @@ -144,13 +144,16 @@ man5dir = $(mandir)/man5
+> >  man7dir = $(mandir)/man7
+> >  # DESTDIR =
+> >  
+> > +GIT_DATE := $(shell git show --quiet --pretty='%as')
+> 
+> What will/should this do in a distribution tarball, where we won't have
+> a Git repository at all? I think we'll just end up with a blank date in
+> the xml file, though it looks like docbook turns that into today's date
+> in the result.
+> 
+> That's not _too_ bad, but feels a bit inconsistent (and it uses the
+> format you're trying to get rid of!).
+> 
+> It would be nicer to populate the date variable in that case, like we do
+> for GIT_VERSION. I think that could look something like this:
 
-So we should use a single `+` sign for interim versions, and for the
-record that's what Mercurial does `6.3.3+hg591.dd42156b6441`.
+Indeed, that would be better, but that totally can be done in a separate patch,
+or a separate series even.
 
-[1] https://rpm-software-management.github.io/rpm/manual/dependencies.html
+The perfect doesn't have to be the enemy of the good, and that can be done
+later.
 
-Cc: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- GIT-VERSION-GEN | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+In the meantime something is better than nothing.
 
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index 161fcdf1ab..99584bf86d 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -2,7 +2,7 @@
- 
- get_version () {
- 	test -f version && cat version && return
--	git describe --match "v[0-9]*" --dirty 2>/dev/null | sed -e 's/-/./g' -e 's/^v//'
-+	git describe --match "v[0-9]*" --dirty 2>/dev/null | sed -e 's/-/+/' -e 's/^v//'
- }
- 
- NEW="GIT_VERSION = $(get_version)"
+For the record, the GIT-VERSION-GEN script can be simplified a lot, I had a
+patch from 2013 around, cleaned it up, and sent it a new series, so it should
+be easier to implement this on top of that [2].
+
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index 2ccc3a9bc9..307634a94f 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -144,8 +144,6 @@ man5dir = $(mandir)/man5
+>  man7dir = $(mandir)/man7
+>  # DESTDIR =
+>  
+> -GIT_DATE := $(shell git show --quiet --pretty='%as')
+> -
+>  ASCIIDOC = asciidoc
+>  ASCIIDOC_EXTRA =
+>  ASCIIDOC_HTML = xhtml11
+> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+> index 9a1111af9b..14903bd261 100755
+> --- a/GIT-VERSION-GEN
+> +++ b/GIT-VERSION-GEN
+> @@ -10,7 +10,8 @@ LF='
+>  # then try git-describe, then default.
+>  if test -f version
+>  then
+> -	VN=$(cat version) || VN="$DEF_VER"
+> +	VN=$(cut -d" " -f1 version) || VN="$DEF_VER"
+> +	DN=$(cut -d" " -f2 version) || DN=""
+
+Although this works, I have an issue with doing multiple unnecessary forks.
+
+This does the same, no?
+
+  read VN DN <version
+
+Cheers.
+
+[1] https://lore.kernel.org/git/20230413115745.116063-3-felipe.contreras@gmail.com/
+[2] https://lore.kernel.org/git/20230414121841.373980-1-felipe.contreras@gmail.com/
+
 -- 
-2.40.0+fc1
-
+Felipe Contreras
