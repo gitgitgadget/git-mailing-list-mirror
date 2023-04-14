@@ -2,126 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 692BCC77B70
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 08:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C227AC77B6E
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 08:30:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229932AbjDNIOE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 04:14:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52432 "EHLO
+        id S230327AbjDNIaS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 04:30:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229894AbjDNIOA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 04:14:00 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F65F271F
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 01:13:59 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id b40so1941391lfv.4
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 01:13:59 -0700 (PDT)
+        with ESMTP id S230473AbjDNI3w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 04:29:52 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DF4F901D
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 01:29:34 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id mb2so1082423qvb.10
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 01:29:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681460037; x=1684052037;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dtMPaTstwxS2FtFjw7Pt74StX9wReDixP8n6nXt2bes=;
-        b=FGP6gEPGzq21mCHQP0XQSlXFP2JbTb0S2QJgxxPj2/9LLxPWM+V2JtfHOl+vICoDTr
-         Q8Jxn+wczptbUdjA+Vjgir0AQWYBmY0ZLyeodMrE02Isa8iojecU3D0WV0h2TrHVUY+I
-         i+YVlifQVVYkvr8Ct/KKCflQDgDabq67V2Qtv7fF7dV69u692+oD/VTS4L8OjWZ7yukq
-         BWSLEI2BzuV1CMNKF9Tm7QypK4Rxdltv+s4IbHzai85dq4ZswP3lSK28EW1cP4p7qPUo
-         hhzoGg8v/crsriO705dlqa13KcAQQ7Yta/wjuQR7F/COZMVGux10DdjBYVOSr8XTiSq2
-         B4AA==
+        d=gmail.com; s=20221208; t=1681460972; x=1684052972;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fLUI9YlzqQO86ZI5zNo3VRTX+JioyZ8RjeyaguOLuik=;
+        b=XC1YxTGAF3Fbc3MJ+ELngiCbZmQ3WG7BlhVgH/ZLw/PGfd8UgLuagTtAi6Maq6v437
+         rv64+kk6leI9tQJIUaaGJr0OsbNY6yY+f9MwFzVQJoxFdDIBa5IB+bgqbxsO6ojdY4c+
+         E9RtbMefcYBs8xS/Y00JUt6Lu3+VbW8FAnHIEENaZ+1SgKQbeA3HS0r3wzXQaG28SW+O
+         UKCAf160TQGE0GZmWPELys307zz0d47s9YDTzsZFKNrhePhT/qh8lpdzOVjfxR5y69tE
+         EAua/X/BI3gGEEg40k0cEq2qswSp7VXLvHyEIG5a7HNr4Vwbs9evTkI+vj+cxYZ6/I4w
+         02Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681460037; x=1684052037;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dtMPaTstwxS2FtFjw7Pt74StX9wReDixP8n6nXt2bes=;
-        b=OHiGmR0pcxK6jN5YAmXoD/B93g5dHdUkdQpAuQbqnCag7bIXdNpdHbtTY9T+ktgTSW
-         /3gS+FVJ5lvG8stjR7KfGTZb+9es9pbX+feD5tdO+b5HD2VK61BmBp+1AbLU5IFY9Vvf
-         NrkR9+PIgBRWuR6oW2uyZyK0rESGt9NrCwmpLhcuCuvbT/87vT9F1Ai3eX5eNPvlVrlq
-         9CJhHrtCkay0EqkEUls9yJ+QZR9XN9DecfqRGyPdOR0caogSFF9tUyb7soRYoMu0EE4o
-         cKDYUdapnOn4eUjW3TDQzZ71vQlHUyhlOWJg9n/bfiSAuD5eIPQleyCg+du5gDkJXglG
-         l6cQ==
-X-Gm-Message-State: AAQBX9e9JClFzzF94fDjNTXnyVAexzVytEWQvPraCUIuS0VONWRZJ0Kb
-        nwHxA01OTPr7i+n135w/1GpSUQpqO1nmRQPyOjM=
-X-Google-Smtp-Source: AKy350Zv9ElfyUAnDtZplL8hLMkcS7PUebHUtohV5xsNDWtcivucuo7UgRHRPXJ4VffwwcYN2g6DUg==
-X-Received: by 2002:a19:ae17:0:b0:4ec:5607:9055 with SMTP id f23-20020a19ae17000000b004ec56079055mr1576869lfc.31.1681460037445;
-        Fri, 14 Apr 2023 01:13:57 -0700 (PDT)
-Received: from titov.fritz.box ([195.246.120.47])
-        by smtp.gmail.com with ESMTPSA id d9-20020a2e3309000000b002a76f63a657sm657506ljc.105.2023.04.14.01.13.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 01:13:57 -0700 (PDT)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Patrick Steinhardt <ps@pks.im>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v1 2/2] t1300: check stderr for "ignores pairs" tests
-Date:   Fri, 14 Apr 2023 10:13:52 +0200
-Message-Id: <20230414081352.810296-3-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230414081352.810296-1-rybak.a.v@gmail.com>
-References: <7a5de047-3535-3b87-f023-43c400d57131@gmail.com>
- <20230414081352.810296-1-rybak.a.v@gmail.com>
+        d=1e100.net; s=20221208; t=1681460972; x=1684052972;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fLUI9YlzqQO86ZI5zNo3VRTX+JioyZ8RjeyaguOLuik=;
+        b=Jg660Puw//JRcoy8Df391XjXZ5H/0sNUyeGBI7useR+CLBs9aTKZje5vyfUVclh610
+         BPL8nGQrX6BZqoP6qN01/zxWl2ri1NBu42yJek7tFvEawJaFXKftJMU8hkPizlw3c4yv
+         90G4c54So7J0BE4/0ASISIApWoHtvGdkGPktM52OFPx2KI5axTjlPJjuVPaUcP+jHj4o
+         Hs/lvbsM/uy+8BLDTdtcAXy+W88uojqnDrUpY3Py3I2pLBPLutpOjnVVAhu8PZHcsf7E
+         2M1b4jdtOI/MGdjZO0mz9GNLTsvA533Nt45I6JCDBbENkuD5v9bglbOWPEG+rSRFOwM/
+         snKw==
+X-Gm-Message-State: AAQBX9eECip2QDJQb0bppVNXkYdr626EDmpVww1HWP3ekgoXydF7NFgX
+        2DAZaCAsfZBnosNPdtAsu3L97x2HQGoqGWfcFUapbk0amCJv7A==
+X-Google-Smtp-Source: AKy350ahDBIglyowIT7mgHdfm2i1rwfkCwsR7Ylg4zcQvDPCzey/hWBeZ/YIwk1KbytjBLn3HtxYhAkbOCdR+99N7I4=
+X-Received: by 2002:a05:6214:412:b0:5e0:ad80:6846 with SMTP id
+ z18-20020a056214041200b005e0ad806846mr2437405qvx.0.1681460972037; Fri, 14 Apr
+ 2023 01:29:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Gabriel Furstenheim Milerud <furstenheim@gmail.com>
+Date:   Fri, 14 Apr 2023 10:29:21 +0200
+Message-ID: <CAJN3DWqbR-9sNGT=Njei5PNSGKVKSOgrY4K=FXVjUKEFQ27bWg@mail.gmail.com>
+Subject: Git bug.
+To:     git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000f1d04305f947a391"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tests "git config ignores pairs ..." in t1300-config.sh validate that
-"git config" ignores with various kinds of supplied pairs of environment
-variables GIT_CONFIG_KEY_* GIT_CONFIG_VALUE_* that should be ingored.
-By "ignores" here we mean that "git config" doesn't complain about them
-to standard error.  This is validated by redirecting the standard error
-to a file called "error" and asserting that it is empty.  However, two
-of these tests incorrectly redirect to standard output while calling the
-file "error", and test 'git config ignores pairs exceeding count'
-doesn't validate standard error at all.
+--000000000000f1d04305f947a391
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Fix it by redirecting standard error to file "error" and asserting its
-emptiness.
+Hi,
+Sorry if this is not the right address to report bugs. I'm following
+https://stackoverflow.com/questions/10728104/where-can-i-report-a-git-bug/1=
+0733251#10733251
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
- t/t1300-config.sh | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+Cheers
+Gabriel F=C3=BCrstenheim
 
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 696dca17c6..20a15ede5c 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1462,24 +1462,25 @@ test_expect_success 'git config ignores pairs exceeding count' '
- 	GIT_CONFIG_COUNT=1 \
- 		GIT_CONFIG_KEY_0="pair.one" GIT_CONFIG_VALUE_0="value" \
- 		GIT_CONFIG_KEY_1="pair.two" GIT_CONFIG_VALUE_1="value" \
--		git config --get-regexp "pair.*" >actual &&
-+		git config --get-regexp "pair.*" >actual 2>error &&
- 	cat >expect <<-EOF &&
- 	pair.one value
- 	EOF
--	test_cmp expect actual
-+	test_cmp expect actual &&
-+	test_must_be_empty error
- '
- 
- test_expect_success 'git config ignores pairs with zero count' '
- 	test_must_fail env \
- 		GIT_CONFIG_COUNT=0 GIT_CONFIG_KEY_0="pair.one" GIT_CONFIG_VALUE_0="value" \
--		git config pair.one >error &&
-+		git config pair.one 2>error &&
- 	test_must_be_empty error
- '
- 
- test_expect_success 'git config ignores pairs with empty count' '
- 	test_must_fail env \
- 		GIT_CONFIG_COUNT= GIT_CONFIG_KEY_0="pair.one" GIT_CONFIG_VALUE_0="value" \
--		git config pair.one >error &&
-+		git config pair.one 2>error &&
- 	test_must_be_empty error
- '
- 
--- 
-2.40.0
+--000000000000f1d04305f947a391
+Content-Type: text/plain; charset="US-ASCII"; name="git-bugreport-2023-04-14-1018.txt"
+Content-Disposition: attachment; 
+	filename="git-bugreport-2023-04-14-1018.txt"
+Content-Transfer-Encoding: base64
+Content-ID: <f_lggafoxo0>
+X-Attachment-Id: f_lggafoxo0
 
+VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
+IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
+LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
+cm9kdWNlIHlvdXIgaXNzdWUpCj4gcmVwb3NpdG9yeSBpbiBicmFuY2ggQQpnaXQgbmFtZS1yZXYg
+JChnaXQgcmV2LXBhcnNlIEhFQUQpIC0tbmFtZS1vbmx5Cj4gcmV0dXJucyBBCmdpdCBjaGVja291
+dCBCCmdpdCBuYW1lLXJldiAkKGdpdCByZXYtcGFyc2UgSEVBRCkgLS1uYW1lLW9ubHkKCgoKV2hh
+dCBkaWQgeW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBlY3RlZCBiZWhhdmlvcikKSXQgc2hvdWxk
+IHJldHVybiBCCgpXaGF0IGhhcHBlbmVkIGluc3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpCkl0IHJl
+dHVybnMgQQoKV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91IGV4cGVjdGVkIGFuZCB3
+aGF0IGFjdHVhbGx5IGhhcHBlbmVkPwpnaXQgcmV2LXBhcnNlIGRvZXMgbm90IHNlZW0gdG8gdXBk
+YXRlLiBTYW1lIGlzIGhhcHBlbm5pbmcgd2l0aCBnaXQgcmV2LXBhcnNlIEB7LTF9CgpBbnl0aGlu
+ZyBlbHNlIHlvdSB3YW50IHRvIGFkZDoKZ2l0IHZlcnNpb24gMi4zNC4xCgpJIHJlY2VudGx5IG1p
+Z3JhdGVkIHRvIHVidW50dSAyMi4gSW4gdWJ1bnR1IDE4IHdpdGggcHJldmlvdXMgZ2l0IHZlcnNp
+b24gaXMgd2FzIHdvcmtpbmcgYXMgZXhwZWN0ZWQuCgpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9m
+IHRoZSBidWcgcmVwb3J0IGJlbG93LgpZb3UgY2FuIGRlbGV0ZSBhbnkgbGluZXMgeW91IGRvbid0
+IHdpc2ggdG8gc2hhcmUuCgoKW1N5c3RlbSBJbmZvXQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24g
+Mi4zNC4xCmNwdTogeDg2XzY0Cm5vIGNvbW1pdCBhc3NvY2lhdGVkIHdpdGggdGhpcyBidWlsZApz
+aXplb2YtbG9uZzogOApzaXplb2Ytc2l6ZV90OiA4CnNoZWxsLXBhdGg6IC9iaW4vc2gKdW5hbWU6
+IExpbnV4IDUuMTkuMC0zOC1nZW5lcmljICMzOX4yMi4wNC4xLVVidW50dSBTTVAgUFJFRU1QVF9E
+WU5BTUlDIEZyaSBNYXIgMTcgMjE6MTY6MTUgVVRDIDIgeDg2XzY0CmNvbXBpbGVyIGluZm86IGdu
+dWM6IDExLjMKbGliYyBpbmZvOiBnbGliYzogMi4zNQokU0hFTEwgKHR5cGljYWxseSwgaW50ZXJh
+Y3RpdmUgc2hlbGwpOiAvYmluL2Jhc2gKCgpbRW5hYmxlZCBIb29rc10K
+--000000000000f1d04305f947a391--
