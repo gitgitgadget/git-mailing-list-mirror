@@ -2,65 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF304C77B6E
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 01:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A291C77B61
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 01:39:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229618AbjDNBNy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 21:13:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44362 "EHLO
+        id S229791AbjDNBjV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 21:39:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229479AbjDNBNx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 21:13:53 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C24D3A9D
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 18:13:49 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-63b509fe13eso221148b3a.1
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 18:13:49 -0700 (PDT)
+        with ESMTP id S229516AbjDNBjU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 21:39:20 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA8421FF1
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 18:39:19 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id 98e67ed59e1d1-247061537b3so397145a91.2
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 18:39:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681434829; x=1684026829;
+        d=gmail.com; s=20221208; t=1681436359; x=1684028359;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yn996VfkRt9Bk0u+a8O6Arl4D5szqkvsedwbEaLziA0=;
-        b=Mt2qwP72WvfxzrGlBm5n0ZloA0NyUh0lCGoXF+WvwkOKDZIJOYLR7fEdqmv+PPxvfb
-         /uTragrliiLN5UDXCIyKnv5VoI0Z7LLGauNLsadZ97Y2AXWQ0jHfvtiqNx4WUBO0afYs
-         7h0wsE4XQOU8JkjNx8AcdFehYxYLo0ECMjZmJRlUEWJNzy+e05xpTNV7va/HsOAZjBYD
-         4aB2kskkRBf9/g6UJI8sDYRsDZwIBe+zDQAdyLVJyxMg8DNUUhqPq8lDSWsY+sXScDhq
-         VDB5vIaNR+Clu8/o475FcT6K8nmQfkYAHBsnIKhU8T0h6t87lQyzuAIqa+Nx7Db3okHl
-         eMUA==
+        bh=AEI7wjBAn0ERMZQs8XyScf42Uhnj27LOmewVIIkMJa0=;
+        b=o3hbzUbTwjKnpMEk6et4d/X42y+amukk5kJyhEjpFiDoCpnX7EVSge+H1GZulF0ocE
+         U/iIzQXMeMj3f4QwBsVO6bPjTl6cX8N/EeYcBhvA6P5saCAsr1YDOsur3XkGMItpG6Ti
+         ubuoAOCRHEW2+Cx2J7NqDv4EKmGswk/c0apPM/NLifIpWt8S4F3SE0hV3qDCBo7J1tqE
+         PZSYx98t30YtjGJamzYFg+rsm6iIdi7ajr71352yOjMquGMxxUWHXXPsaNr8UZhjCfro
+         zJFSUtJhi4YMlaNfX6xKI7atGXRrDGuE/rsGr/OdMWYusaSzIXr3qPCk8ei+SB5lTsR4
+         aAaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681434829; x=1684026829;
+        d=1e100.net; s=20221208; t=1681436359; x=1684028359;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=yn996VfkRt9Bk0u+a8O6Arl4D5szqkvsedwbEaLziA0=;
-        b=SHlqzJ8X++LxHS/t8T2bE0k4oowJkOoS2+BLqvV8N4vATYZPpOtcIjZoXrUXQTjcZG
-         hCJB8wpyQkqM+qi43k6JYkSlSeaehOGOegRIkS3xIgc3qa/uG9b6/bMB/C+019y+Wxjj
-         /us9zTeXVesM0HOXmx52cQnxhTEdjhpSH8RFS3YpA+1ThLjP0wF1cOVb9ofMSMuXPAog
-         Ry5chkCSbyVZI/zNkZrUVwWSzj7BRBo6iFdzavqsMYlUF0YtqNeffxXYXS+Qu6BRcIC7
-         oO8Fh+tgVbtHIBIFjgF/b/jsvy4fcmUHre34as/MaNYyIpDGbI5KBog5V5mhlo/uCOZ+
-         OLhQ==
-X-Gm-Message-State: AAQBX9ddEqr69UmagaM9lj7x0tJTXpJ8xpfAsJ45X5hpsDE9InMDOfJD
-        VPy7JSsOdqhw+Tx/ndSLASk=
-X-Google-Smtp-Source: AKy350afh+pFAcYxxFmT7bSffAs1J8V+5WK9ONTnPx/4HPK5wgZqoaSQdAITUWQlqwaCQz8/QElbIg==
-X-Received: by 2002:a05:6a00:cd5:b0:628:4c9:a07 with SMTP id b21-20020a056a000cd500b0062804c90a07mr5571479pfv.29.1681434828835;
-        Thu, 13 Apr 2023 18:13:48 -0700 (PDT)
+        bh=AEI7wjBAn0ERMZQs8XyScf42Uhnj27LOmewVIIkMJa0=;
+        b=BYdMpwsesfjCCXtPbTeVSkXaG3rqs148Fg5llko+tMZEwye6QUdjhpWvXybVLHtUCm
+         ilE48mrmmusyrqyRgoXAMm6OjBnZnn5ctSXsrvGSHFsA/wVsW4HhupMTo3XzBmOJOyYc
+         5vVkAW2l36rmDthdt3T+JMeZSlq0Jb/1e9EcmFUN7c3acKNPOJwsO4hwTyoRQAQdB0d0
+         kQssXw5nItuMHV3a77FxEflOGwL1aSeDKmToyrbfBrzhuT9U89k46GdivppLvWg3XWbi
+         BD2gg2bMsozKqFkRyrPhj4L9+8+hAuwZuR8Ur9F1U1wiSrc3d1bDCEmCM4XViIliyhDD
+         SB+g==
+X-Gm-Message-State: AAQBX9dGo0ogL+8kHKvTLx7sx6C3jEmht2+tlJbiW7IoJvEhvuvr/7+V
+        M5jBRFhybN9KUROKl9SI5pA=
+X-Google-Smtp-Source: AKy350ZBz3MS9vsTt33bOTCPVPSIPsMdMdnPuSM2wPh7mxeabVMFQW2ipR1i6VpfTv4+0pZGBAof3Q==
+X-Received: by 2002:a05:6a00:1a03:b0:63b:62d1:d868 with SMTP id g3-20020a056a001a0300b0063b62d1d868mr2197002pfv.8.1681436359099;
+        Thu, 13 Apr 2023 18:39:19 -0700 (PDT)
 Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id r12-20020a62e40c000000b0063b63b32ae4sm315156pfh.85.2023.04.13.18.13.48
+        by smtp.gmail.com with ESMTPSA id c2-20020aa78c02000000b006395330344esm1984082pfd.29.2023.04.13.18.39.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 18:13:48 -0700 (PDT)
+        Thu, 13 Apr 2023 18:39:18 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     git@vger.kernel.org, Raghul Nanth A <nanth.raghul@gmail.com>,
-        Shuqi Liang <cheskaqiqi@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2023, #03; Tue, 11)
-References: <xmqqo7ns69sz.fsf@gitster.g>
-        <df61d79b-8234-d3fd-5eb5-614d1b97d046@github.com>
-Date:   Thu, 13 Apr 2023 18:13:48 -0700
-In-Reply-To: <df61d79b-8234-d3fd-5eb5-614d1b97d046@github.com> (Victoria Dye's
-        message of "Thu, 13 Apr 2023 15:19:13 -0700")
-Message-ID: <xmqqmt3bw9ir.fsf@gitster.g>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/5] banned.h: mark `strtok()`, `strtok_r()` as banned
+References: <cover.1681428696.git.me@ttaylorr.com>
+        <1d955f8bc6d2797def516897d019a186e461b648.1681428696.git.me@ttaylorr.com>
+Date:   Thu, 13 Apr 2023 18:39:18 -0700
+In-Reply-To: <1d955f8bc6d2797def516897d019a186e461b648.1681428696.git.me@ttaylorr.com>
+        (Taylor Blau's message of "Thu, 13 Apr 2023 19:31:54 -0400")
+Message-ID: <xmqq8revw8c9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,43 +67,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> Junio C Hamano wrote:
->> * rn/sparse-diff-index (2023-04-10) 1 commit
-> ...
-> I just sent a review of the newest version [1] ...
-
-Thanks.
-
->> * rn/sparse-describe (2023-04-03) 1 commit
->>  - describe: enable sparse index for describe
->> ... 
-> This looks good to me, agreed that it's ready for 'next'.
-
-Yeah, thanks for helping the author to polish the topic into a very
-good shape.
-
->> * sl/sparse-write-tree (2023-04-04) 1 commit
-> ...
-> Sorry for getting to this one so late - I did have some comments [2] on the
-> tests in this patch that weren't addressed. However, I'm fairly certain the
-> integration itself is correct, so I may just submit the test updates as a
-> separate patch in the (near-ish?) future.
-
-Again, very much appreciated.
-
->> * sl/diff-files-sparse (2023-03-22) 2 commits
->>  - diff-files: integrate with sparse index
->>  - t1092: add tests for `git diff-files`
->> 
->>  Teach "diff-files" not to expand sparse-index unless needed.
->> 
->>  Comments?
->>  source: <20230322161820.3609-1-cheskaqiqi@gmail.com>
+>   - `strtok_r()` forces the caller to maintain an extra string pointer
+>     to pass as its `saveptr` value
 >
-> I also just sent a review for this one [3] [4], ...
+>   - `strtok_r()` also requires that its `saveptr` value be unmodified
+>     between calls.
+>
+>   - `strtok()` (and by extension, `strtok_r()`) is confusing when used
+>     across multiple functions, since the caller is supposed to pass NULL
+>     as its first argument after the first call. This makes it difficult
+>     to determine what string is actually being tokenized without clear
+>     dataflow.
 
-Yup, I saw them.  Looked very sensible.
+It seems that the only existing users of strtok() are all in
+t/helper/ directory, so I personally do not think it is a huge loss
+if these two are forbidden.  While I do not see why we should use
+strtok(), none of the above sound like sensible reasons to ban
+strtok_r().  At best, they may point out awkwardness of the function
+to make you try finding an alternative that is easier-to-use before
+choosing strtok_r() for your application on a case-by-case basis.
 
-Thanks.
+If your application wants to chomp a string into tokens from left to
+right, inspecting the resulting token one-by-one as it goes until it
+hits a token that satisfies some condition and then terminate
+without wasting cycles on the rest, string_list_split_in_place() is
+a poor choice.  In such a use case, you do not know upfront where in
+the string the sought-after token would be, so you have to split the
+string in full without taking an early exit via maxsplit.  Also, you
+are restricted to a single byte value for the delimiter, and unlike
+strtok[_r](), string_list_split_in_place() does not squash a run of
+delimiter bytes into one inter-token delimiter.
+
+One gripe I have against use of strtok() is actually not with
+threading but because people often misuse it when strcspn() is what
+they want (i.e. measure the length of the "first token", so that
+they can then xmemdupz() a copy out), forgetting that strtok[_r]()
+is destructive.
+
+So, I dunno.
