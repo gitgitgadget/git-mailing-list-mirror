@@ -2,80 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2697C77B72
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 21:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91C7FC77B72
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 21:56:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229845AbjDNVpO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 17:45:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42052 "EHLO
+        id S229930AbjDNV4r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 17:56:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229840AbjDNVpN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 17:45:13 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DF9510FA
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 14:45:11 -0700 (PDT)
-Received: (qmail 23613 invoked by uid 109); 14 Apr 2023 21:45:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Apr 2023 21:45:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31901 invoked by uid 111); 14 Apr 2023 21:45:09 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Apr 2023 17:45:09 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 14 Apr 2023 17:45:08 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: set actual revdate for manpages
-Message-ID: <20230414214508.GB640081@coredump.intra.peff.net>
-References: <20230413074722.71260-1-felipe.contreras@gmail.com>
- <20230414070449.GA540206@coredump.intra.peff.net>
- <643949a57396c_5b7e62948d@chronos.notmuch>
- <xmqqildys97o.fsf@gitster.g>
+        with ESMTP id S229720AbjDNV4q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 17:56:46 -0400
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E4411FF0
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 14:56:45 -0700 (PDT)
+Received: by mail-yb1-xb30.google.com with SMTP id n203so8593152ybg.6
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 14:56:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1681509404; x=1684101404;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4Cc+duMJQzhbNZo69XZts93KicNOKgojmaaLGk7nPk4=;
+        b=H4hkbMP8fB8tcTbDil/j7+Q3p8FAGvcvSXbNCC4bsVXGXtuiZpHyXLN5LCJH+ytkMq
+         GVrVSOBdkkgfwge+6hYz3ylUDC2lv5Ox79dkzgwfDG17KTXTVTIhLva63ESIyDX/18j+
+         qb96u6VtsPTSxvZEzUjEk0CtEdI0h5XGVEAfSlUk0iehDqJcTBbWrNtfNxVcw6sKHRBZ
+         UsNkye9upZx7XDKakjFTFCaapuSQc9/aIYxOwsB/MBgpq++H7l+tqdBDy2M9bJKTvJFt
+         jOz3EcBAmA1e4OkR7M09/p/1GB8+TMfYPaqn5ssnmLsoLQdrceUuKlmhLVH5TDeC653q
+         6FOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681509404; x=1684101404;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4Cc+duMJQzhbNZo69XZts93KicNOKgojmaaLGk7nPk4=;
+        b=QCaG6HHvs8qSwbpwGYrejDNEkTOF2Alg6zpC1HQfLFfY8OT1qXv/Ht+CRTFpHJlfDX
+         oErQFm8nP8GnQh3IgVtzAZqdBYWwo4MzMGNkvu5YvN76o9hLD8BzsbzG9sqSzvtoLTcR
+         RpTsPFllKraQWqLJD+kwpofE12GpnPCCwwcLzCV+PxfzKY7pZUUaD6wb6hJsE6mRrlnL
+         I5ePwUJNKyPgGnlR4NTEP/7u+gq/TQEaW32/0PDpy24KAO+Tm4O38B6zKhmGelJTdYfA
+         3zvmHjOeJ5Q7F7D90OyMtsY3iwxaKYXfkzupEJVeYKyVjWgJ0jh+jNkuCvn2WtH1XiHj
+         pZAQ==
+X-Gm-Message-State: AAQBX9d41BolNeDACfX06P4oXXDk2oGCqW2y5C1o3YMZF0RLkY2RHRgF
+        L48aDMEz3IHpR7dfcvDWYJe3cBsd6rVM76rBleSQRaA5Rjvc4KvQ5IhlKw==
+X-Google-Smtp-Source: AKy350bUhVypdVmJE3hoNIoKhxUt6Jc6x7mvxwhWYOFj4oxCLGxR7/Sncvn2Fo8GSEA9yu+sS6W/WGd0mVVN0FXyzWk=
+X-Received: by 2002:a25:d708:0:b0:b8f:448e:2f9a with SMTP id
+ o8-20020a25d708000000b00b8f448e2f9amr4688222ybg.4.1681509404201; Fri, 14 Apr
+ 2023 14:56:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqildys97o.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Fri, 14 Apr 2023 14:56:33 -0700
+Message-ID: <CAFySSZAja6bJqffG39B3y=K+8ThLgwh8D+j8hfvbEu+tFa9Uuw@mail.gmail.com>
+Subject: Join us for Review Club
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 14, 2023 at 09:46:19AM -0700, Junio C Hamano wrote:
+Hi everyone!
 
-> So, I "wasted" (not really---this was a fruitful validation that is
-> a part of a review process) some time to play with this on top of
+Review Club is happening this Tuesday at 9:30 Pacific time (UTC-8).
+(CET friendly time for this week!). You can find more info at [1] and
+on gitcal [2]. We run a session every
+other week, and you can find the full schedule on gitcal.
 
-The word "wasted" is appearing in a lot of people's emails in this
-thread. ;) So let me just clarify that in the original I meant that I
-spent time puzzling over why it was not working, which was a waste
-because Felipe had already said it required the other patch.
+This week, we'll be discussing Christian Couder and Elijah Newren's new `git
+replay` command [3]. Since this patch series is too long to cover
+entirely in a one hour review club session, we'll mainly be focusing
+on the cover letter and patches 7 and forward. Let me know if you're
+interested and would
+like to join (off-list is fine), and I'll send you an invite :)
 
-It definitely would have helped if he had explained _why_ the other
-patch was necessary. But to be fair, the fault was at least as much mine
-for not heeding what he did say.
+See you there!
 
-But reviewers reproducing and tinkering is most certainly not a waste of
-time in general, and I didn't mean to imply it was (or that the patch
-itself was a waste of time).
-
-> Formatted output from a repository working tree changes from
-> "04/14/2023" to "2023-04-13".  The value change may be intended, but
-> I am not sure if the format change was intended or even welcome.  If
-> we want to correct the date format, it can totally be done in a
-> separate patch, or a separate series even, with some justification
-> in the proposed log message, I think.
-
-I think the change is welcome and intended. I would not mind seeing the
-two changes (format change, and using commit date versus "now")
-conceptually split, but I think it's much more tangled. Asciidoctor is
-already producing y-m-d dates, and python asciidoc is using m/d/y.
-Changing the latter requires passing in not just a format but the actual
-date. If we want it to be the current date, then we have to get that
-from somewhere, which may introduce portability questions (e.g., can we
-rely on "date"?).
-
-So doing it all in one patch, though this conversation may indicate that
-the commit message could do a better job of explaining the goal and
-implications.
-
--Peff
+[1] https://lore.kernel.org/git/Yfl1%2FZN%2FtaYwfGD0@google.com/
+[2] http://tinyurl.com/gitcal
+[3] https://lore.kernel.org/all/20230407072415.1360068-1-christian.couder@gmail.com/
