@@ -2,110 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12031C77B61
-	for <git@archiver.kernel.org>; Thu, 13 Apr 2023 23:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF304C77B6E
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 01:13:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230517AbjDMXcH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 13 Apr 2023 19:32:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58598 "EHLO
+        id S229618AbjDNBNy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 13 Apr 2023 21:13:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230184AbjDMXcC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2023 19:32:02 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E804422F
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 16:31:56 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-54fe3cd445aso7947647b3.5
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 16:31:56 -0700 (PDT)
+        with ESMTP id S229479AbjDNBNx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2023 21:13:53 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C24D3A9D
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 18:13:49 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-63b509fe13eso221148b3a.1
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 18:13:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20221208.gappssmtp.com; s=20221208; t=1681428715; x=1684020715;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8DzunMpXbpcg9jv9QPgZ6Aum2+UnYUBJ80s31+jU5nc=;
-        b=zAyw4ubwUM/d5G9vAizOc8+qHkuNCPnSawz+LfiYYqLRdVUSDI/92wojMvXq/PMVeu
-         tMYUO2xGMgQiZa0u4NBD4Y/jGIO46ALfdBwgLRQS62E4vUXcRlLbYpERPIEHb4usWRsP
-         T9QtfdiQfX76duqb1ZVhZL5LXX/D0CQxrP0G5pLJvQMAJp03LGmiVkiLpJYsebt/KNXl
-         9b5v2phYk+uTXAB5tmxdKG/1sXFKEa5px/k/2LC137cvBJHu/GNxj6oAIMZBV0FNQStn
-         xkW/TsOUiw1N03hFrO49go+P5jYoE3drCTCCzOmvPJ1kXTtvAFTJ/p+JsoOXF48fERw5
-         b+zA==
+        d=gmail.com; s=20221208; t=1681434829; x=1684026829;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yn996VfkRt9Bk0u+a8O6Arl4D5szqkvsedwbEaLziA0=;
+        b=Mt2qwP72WvfxzrGlBm5n0ZloA0NyUh0lCGoXF+WvwkOKDZIJOYLR7fEdqmv+PPxvfb
+         /uTragrliiLN5UDXCIyKnv5VoI0Z7LLGauNLsadZ97Y2AXWQ0jHfvtiqNx4WUBO0afYs
+         7h0wsE4XQOU8JkjNx8AcdFehYxYLo0ECMjZmJRlUEWJNzy+e05xpTNV7va/HsOAZjBYD
+         4aB2kskkRBf9/g6UJI8sDYRsDZwIBe+zDQAdyLVJyxMg8DNUUhqPq8lDSWsY+sXScDhq
+         VDB5vIaNR+Clu8/o475FcT6K8nmQfkYAHBsnIKhU8T0h6t87lQyzuAIqa+Nx7Db3okHl
+         eMUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681428715; x=1684020715;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8DzunMpXbpcg9jv9QPgZ6Aum2+UnYUBJ80s31+jU5nc=;
-        b=JjsydE/g0/fUr0pxJ6mssVY04X9Zn2xaPYgRgl1p6XJrAVE3iCibmKZJz8v/fbfE9D
-         FR9Splr4zc0Dan0BU1NVegsmE7VG6/lDDqZMdkaO7anm8BqKc7EzndUGmBpuuF8T/wgt
-         KtOZaOeJHYjh/HPk8NtLBGjL6bZClqNK3CjY5gVR1cC03jNscELOn56UnhCjlzaGRa9e
-         qKgVx2pP1weMpDl/ffWYUHzwXcdK6Vhzj7XMAPyR+R1mayuyAVxHfnQh7jSwf7ofUmpZ
-         9v1+AfyLiR9/9Ahk9ZtNTAQcKBsbzPmnRTzpKhFXudJMxCtcdKwl0hpJc/0vLFohapQa
-         41HQ==
-X-Gm-Message-State: AAQBX9euZjQmPqsLKT5s3UrBshllU/hflFjKHHxABU+sc8O+RPNwmcv7
-        KXmvhqMoeXM4R2ZEyWXaQe9eRExFGVUuiH2vYuFp/g==
-X-Google-Smtp-Source: AKy350Ykh7rbPSJUQXa9/WOlbcrx0YI5Ys/HPVZagfaF01JPM7KACYr3TBdWbKnkA2pLpbr2Lyl6Wg==
-X-Received: by 2002:a81:6ac3:0:b0:54f:1185:b57f with SMTP id f186-20020a816ac3000000b0054f1185b57fmr3850201ywc.29.1681428715420;
-        Thu, 13 Apr 2023 16:31:55 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a6-20020a814d06000000b0054ee8426468sm810346ywb.21.2023.04.13.16.31.55
+        d=1e100.net; s=20221208; t=1681434829; x=1684026829;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=yn996VfkRt9Bk0u+a8O6Arl4D5szqkvsedwbEaLziA0=;
+        b=SHlqzJ8X++LxHS/t8T2bE0k4oowJkOoS2+BLqvV8N4vATYZPpOtcIjZoXrUXQTjcZG
+         hCJB8wpyQkqM+qi43k6JYkSlSeaehOGOegRIkS3xIgc3qa/uG9b6/bMB/C+019y+Wxjj
+         /us9zTeXVesM0HOXmx52cQnxhTEdjhpSH8RFS3YpA+1ThLjP0wF1cOVb9ofMSMuXPAog
+         Ry5chkCSbyVZI/zNkZrUVwWSzj7BRBo6iFdzavqsMYlUF0YtqNeffxXYXS+Qu6BRcIC7
+         oO8Fh+tgVbtHIBIFjgF/b/jsvy4fcmUHre34as/MaNYyIpDGbI5KBog5V5mhlo/uCOZ+
+         OLhQ==
+X-Gm-Message-State: AAQBX9ddEqr69UmagaM9lj7x0tJTXpJ8xpfAsJ45X5hpsDE9InMDOfJD
+        VPy7JSsOdqhw+Tx/ndSLASk=
+X-Google-Smtp-Source: AKy350afh+pFAcYxxFmT7bSffAs1J8V+5WK9ONTnPx/4HPK5wgZqoaSQdAITUWQlqwaCQz8/QElbIg==
+X-Received: by 2002:a05:6a00:cd5:b0:628:4c9:a07 with SMTP id b21-20020a056a000cd500b0062804c90a07mr5571479pfv.29.1681434828835;
+        Thu, 13 Apr 2023 18:13:48 -0700 (PDT)
+Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
+        by smtp.gmail.com with ESMTPSA id r12-20020a62e40c000000b0063b63b32ae4sm315156pfh.85.2023.04.13.18.13.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Apr 2023 16:31:55 -0700 (PDT)
-Date:   Thu, 13 Apr 2023 19:31:54 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/5] banned.h: mark `strtok()`, `strtok_r()` as banned
-Message-ID: <1d955f8bc6d2797def516897d019a186e461b648.1681428696.git.me@ttaylorr.com>
-References: <cover.1681428696.git.me@ttaylorr.com>
+        Thu, 13 Apr 2023 18:13:48 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Victoria Dye <vdye@github.com>
+Cc:     git@vger.kernel.org, Raghul Nanth A <nanth.raghul@gmail.com>,
+        Shuqi Liang <cheskaqiqi@gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2023, #03; Tue, 11)
+References: <xmqqo7ns69sz.fsf@gitster.g>
+        <df61d79b-8234-d3fd-5eb5-614d1b97d046@github.com>
+Date:   Thu, 13 Apr 2023 18:13:48 -0700
+In-Reply-To: <df61d79b-8234-d3fd-5eb5-614d1b97d046@github.com> (Victoria Dye's
+        message of "Thu, 13 Apr 2023 15:19:13 -0700")
+Message-ID: <xmqqmt3bw9ir.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1681428696.git.me@ttaylorr.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`strtok_r()` is reentrant, but `strtok()` is not, meaning that using it
-is not thread-safe.
+Victoria Dye <vdye@github.com> writes:
 
-We could ban `strtok()` and force callers to use its reentrant
-counterpart, but there are a few drawbacks to doing so:
+> Junio C Hamano wrote:
+>> * rn/sparse-diff-index (2023-04-10) 1 commit
+> ...
+> I just sent a review of the newest version [1] ...
 
-  - `strtok_r()` forces the caller to maintain an extra string pointer
-    to pass as its `saveptr` value
+Thanks.
 
-  - `strtok_r()` also requires that its `saveptr` value be unmodified
-    between calls.
+>> * rn/sparse-describe (2023-04-03) 1 commit
+>>  - describe: enable sparse index for describe
+>> ... 
+> This looks good to me, agreed that it's ready for 'next'.
 
-  - `strtok()` (and by extension, `strtok_r()`) is confusing when used
-    across multiple functions, since the caller is supposed to pass NULL
-    as its first argument after the first call. This makes it difficult
-    to determine what string is actually being tokenized without clear
-    dataflow.
+Yeah, thanks for helping the author to polish the topic into a very
+good shape.
 
-So while we could ban only `strtok()`, there really is no good reason to
-use either when callers could instead use the much friendlier
-`string_list_split_in_place()` API, which avoids the above issues.
+>> * sl/sparse-write-tree (2023-04-04) 1 commit
+> ...
+> Sorry for getting to this one so late - I did have some comments [2] on the
+> tests in this patch that weren't addressed. However, I'm fairly certain the
+> integration itself is correct, so I may just submit the test updates as a
+> separate patch in the (near-ish?) future.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- banned.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+Again, very much appreciated.
 
-diff --git a/banned.h b/banned.h
-index 6ccf46bc197..9bd23ce5732 100644
---- a/banned.h
-+++ b/banned.h
-@@ -18,6 +18,12 @@
- #define strncpy(x,y,n) BANNED(strncpy)
- #undef strncat
- #define strncat(x,y,n) BANNED(strncat)
-+#if 0
-+#undef strtok
-+#define strtok(x,y) BANNED(strtok)
-+#undef strtok_r
-+#define strtok_r(x,y,z) BANNED(strtok_r)
-+#endif
- 
- #undef sprintf
- #undef vsprintf
--- 
-2.38.0.16.g393fd4c6db
+>> * sl/diff-files-sparse (2023-03-22) 2 commits
+>>  - diff-files: integrate with sparse index
+>>  - t1092: add tests for `git diff-files`
+>> 
+>>  Teach "diff-files" not to expand sparse-index unless needed.
+>> 
+>>  Comments?
+>>  source: <20230322161820.3609-1-cheskaqiqi@gmail.com>
+>
+> I also just sent a review for this one [3] [4], ...
+
+Yup, I saw them.  Looked very sensible.
+
+Thanks.
