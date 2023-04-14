@@ -2,133 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BBAAC77B72
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 18:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20D04C77B72
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 18:59:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229650AbjDNStL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 14:49:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37086 "EHLO
+        id S229703AbjDNS72 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 14:59:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229564AbjDNStJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 14:49:09 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D12846199
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 11:49:08 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id n17so3249525pln.8
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 11:49:08 -0700 (PDT)
+        with ESMTP id S229461AbjDNS71 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 14:59:27 -0400
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DDFC213A
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 11:59:26 -0700 (PDT)
+Received: by mail-oo1-xc30.google.com with SMTP id u18-20020a4ac992000000b005423ee7a8b2so619530ooq.0
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 11:59:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681498148; x=1684090148;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=npJxeHV1iTELtPxJJEL40GQDETYkXEwHE255t9U6law=;
-        b=peZQXiRlytRRZpjCdR3REBRJA1palKzeHFSO8h6yLi9eS0OvjD4aaSfza4k075Kha4
-         RxB4y0ayxMew0yrdIZLHX5zLgZmWlCluiVw0s7EfGCvYt7Re813/ZRAZ5irfk/0HuElR
-         CtFfIm9d/X01e+hZaSfJvEhLHIdJqN7tlUCVezCiBE6e/t1iUSfAshDvUUIPnAvG/es5
-         dlm+fH5QAuRFraum63/dg6nAKm4LnHp1yrv1wKX8DS99J4THaa7nA73k2LJYQg7d+TO3
-         ZUw1klwTAyg9RWslRnHbwVa1HPrGqq0l3oR2x6DNsnmRDoApin91SV9BLR+HpngakuXq
-         KPvA==
+        d=gmail.com; s=20221208; t=1681498765; x=1684090765;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/MsdeguKTMaSPzhAmSqaDaPPB+RO279nJQf2LwWjuIQ=;
+        b=G819674UZQ8rj5P8Qzaj+OeAj/Y2ca1JUGGp3fS+RAzwG4XZYb1Ap05eymHtsXnxU7
+         E8crPA+jqukP/bLfVKSvKZxaq1Cqgy5h1Q62faJUqczkaarHMPKZqoxso7QNMj6l7HO5
+         56o8ESIxDQhq/gNSRR55tG8uks+qbPe8wOhtjYOUuoSxSXwfifjYvkGHF2U7c7kn3VEb
+         qOQ/qUFdKj2B3Oo1w3TI3yS3RighVfBkAJZ56xfwb0YWRLro+Fm/GflpXITUvievw3zt
+         b5qWDAlnGan7HzvNdIyKPYcgMhCj3qOv4Xk1SgAncLBA3qAbSVxABwvxCn3G7nROhkB9
+         mqIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681498148; x=1684090148;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=npJxeHV1iTELtPxJJEL40GQDETYkXEwHE255t9U6law=;
-        b=gyIkZUlTsDXeIAwNpZjzID/tBZItOLRNa6pX4PmCKd6N4hcK98Q9PkCc5GL6Sw7t3K
-         Y46KRTE2qfT0CpppGB8C+yPdQrbhIpTexipe+3Wcam0sRZvuwRbQZfnDYufxZb6F+Q8z
-         wosRQv4EEeN5Hk0cUqnXmWUQoJk03oUo+SH7xJZDYIU/JCi/tRLJivnnnf+h/zs22jVT
-         22W/wxXBP9q1Q1pnQQnOugf6gnuAfuFZFdASwFULbp4oQV0exWhJ1r7VuZ7qafwJkg3w
-         /jEfzIOXMKNzESQjMuDqO/DM7D3iyrzgm+436T5dSEshpMn/s54QQGBoindx3MXh9j77
-         jBUQ==
-X-Gm-Message-State: AAQBX9cdyYrU9xtOECdtU7qSqff9n5m9YRPFWxb4VB0MAkPbKFNPPFGX
-        nUegMiIpJhiG6u6MO/8/Mak=
-X-Google-Smtp-Source: AKy350ZThVucJnaQx0Uqtt4fnD1M1kmuOFfkRFL7zhbxO999QrzO3pqXb0XsydcAoqMuzNIWr03p6w==
-X-Received: by 2002:a17:903:2289:b0:1a5:167f:620f with SMTP id b9-20020a170903228900b001a5167f620fmr5076894plh.15.1681498148144;
-        Fri, 14 Apr 2023 11:49:08 -0700 (PDT)
-Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id g9-20020a17090a128900b00233d6547000sm3063987pja.54.2023.04.14.11.49.07
+        d=1e100.net; s=20221208; t=1681498765; x=1684090765;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/MsdeguKTMaSPzhAmSqaDaPPB+RO279nJQf2LwWjuIQ=;
+        b=l2nZa/JxOdOtEzHUoOJ+x3tvZY+V2J1EKNWueRTtIAooVWd2GzRGMebAJCQHbY4LRB
+         B5MFkLMsdHBkvSgkwg7/LLzZHHoOkmMEBTMd7VKs0N4GnDJtb2iDgwAn/0bauJM1pP7T
+         cMXAI60qWIpBq6XyTwP9im4gelvJ80m+JR0HH1I4r9nG6b8XoYeRz0EO6v4zWDJMkOsA
+         OyMArF2ZtvKIQFFkCf3fAInYQWV1BK4gDDmYHg6dGnyvpBVK9TYeFrkhoporGw0Es4fL
+         CVZQUi6zd3e8rqXnIQjtqZHcMAefDa8a22puKrEV+Znbcml5cFIfHYeqTG8cRhQeARiq
+         A5wQ==
+X-Gm-Message-State: AAQBX9ettn7o9dT2xdR/+KRs7mgJS0yjdnOiiJqMxfN7xPEds7yjeZjG
+        yQDUFcUJzAp1FYTP1PYDN50=
+X-Google-Smtp-Source: AKy350aEkBJ1IZ9PIgI5hVM7Tvf7tmaJMMHDs8voLbeYZ0H3s563DqRkFg33dUpq9xt8XAKZpkApHw==
+X-Received: by 2002:a4a:9529:0:b0:542:1a98:e98f with SMTP id m38-20020a4a9529000000b005421a98e98fmr2581332ooi.5.1681498765428;
+        Fri, 14 Apr 2023 11:59:25 -0700 (PDT)
+Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
+        by smtp.gmail.com with ESMTPSA id 187-20020a4a09c4000000b00525240c6149sm1992764ooa.31.2023.04.14.11.59.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 11:49:07 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH 1/5] revisions.txt: document more special refs
-References: <pull.1515.git.1681495119.gitgitgadget@gmail.com>
-        <66c7e514157f3c8220eb994cea7c4659d5241042.1681495119.git.gitgitgadget@gmail.com>
-Date:   Fri, 14 Apr 2023 11:49:07 -0700
-In-Reply-To: <66c7e514157f3c8220eb994cea7c4659d5241042.1681495119.git.gitgitgadget@gmail.com>
-        (Philippe Blain via GitGitGadget's message of "Fri, 14 Apr 2023
-        17:58:34 +0000")
-Message-ID: <xmqq8reuqoyk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        Fri, 14 Apr 2023 11:59:24 -0700 (PDT)
+Date:   Fri, 14 Apr 2023 12:59:24 -0600
+From:   Felipe Contreras <felipe.contreras@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Message-ID: <6439a28c34fe7_5f77329440@chronos.notmuch>
+In-Reply-To: <xmqqv8hyqsc6.fsf@gitster.g>
+References: <20230413074722.71260-1-felipe.contreras@gmail.com>
+ <20230414070449.GA540206@coredump.intra.peff.net>
+ <xmqq5y9yv601.fsf@gitster.g>
+ <64397d3d67d21_5e3ce294a6@chronos.notmuch>
+ <xmqqv8hyqsc6.fsf@gitster.g>
+Subject: Re: [PATCH] doc: set actual revdate for manpages
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> >> Are we sure historical GIT_VERSION strings never had a SP in it?
+> >> I would be very surprised if we did, but the correctness of the
+> >> approach depends on that assumption.
+> >
+> > Why would that matter?
+> 
+> Ah, that is true.  What I should have worried more about was the
+> distribution package maintainers who may set their own version by
+> writing it in the "version" file themselves.
 
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
->
-> Some special refs, namely HEAD, FETCH_HEAD, ORIG_HEAD, MERGE_HEAD and
-> CHERRY_PICK_HEAD, are mentioned and described in 'gitrevisions', but some
-> others, namely REBASE_HEAD, REVERT_HEAD, and BISECT_HEAD, are not.
->
-> Add a small description of these special refs.
->
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
->  Documentation/revisions.txt | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-> index 9aa58052bc7..98b8f89bc8d 100644
-> --- a/Documentation/revisions.txt
-> +++ b/Documentation/revisions.txt
-> @@ -32,8 +32,8 @@ characters and to avoid word splitting.
->    first match in the following rules:
->  
->    . If '$GIT_DIR/<refname>' exists, that is what you mean (this is usually
-> -    useful only for `HEAD`, `FETCH_HEAD`, `ORIG_HEAD`, `MERGE_HEAD`
-> -    and `CHERRY_PICK_HEAD`);
-> +    useful only for `HEAD`, `FETCH_HEAD`, `ORIG_HEAD`, `MERGE_HEAD`,
-> +    `REBASE_HEAD`, `REVERT_HEAD`, `CHERRY_PICK_HEAD` and `BISECT_HEAD`);
+In reality they don't do that. I checked Arch Linux, Fedora, and Debian,
+and all of them leave the version alone.
 
-Adding missing ones and enumerating them indeed is good, but I
-wonder if the readers will be helped if they are exposed to the
-phrase "pseudoref" here.
+It does make sense becasue for example in Arch Linux `2.40.0-1` means
+version `2.40.0`, release `1`. I believe all packaging systems use the
+same semantical distinction.
 
-	This is usually useful only for the pseudorefs, i.e. `HEAD`,
-	`FETCH_HEAD`, ..."
+I asked ChatGPT, and this is what it said about `-1`:
 
-We have definition of it in the glossary, but it does not have an
-exhaustive list (and if we want to have an exhausitive list on this
-page, the glossary definition of pseudoref may want to point at this
-page).
+  -1 is the package release number. This number is used by the package
+  maintainers to indicate how many times the package has been built and
+  released. This number is typically incremented each time a new build
+  of the package is released, even if the underlying software has not
+  changed.
 
-It is an unrelated tangent that shouldn't be added to the
-documentation (yet), but didn't we have a plan to limit the
-pseudorefs to those names that end with "_HEAD"?
+So it makes sense for `git --version` to return the upstream version,
+not the package release number, and that's why packagers don't mess with
+that.
 
-> +`REBASE_HEAD`, during a rebase, records the commit at which the
-> +operation is currently stopped, either because of conflicts or an `edit`
-> +command in an interactive rebase.
+Either way, even though I don't think it matters in practice, I
+generally prefer to separate fields with tabs, or even newlines. If you
+consider this an issue, we could do:
 
-OK.
+  printf '%s\n' $(GIT_VERSION) $(GIT_DATE) >version
 
-> +`REVERT_HEAD` records the commit which you are reverting when you
-> +run `git revert`.
+  read -d'' VN DN <version
 
-OK.
+Cheers.
 
-
-> +`BISECT_HEAD` records the current commit to be tested when you
-> +run `git bisect --no-checkout`.
-
-OK.
-
-Looking very good.
+-- 
+Felipe Contreras
