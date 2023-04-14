@@ -2,98 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EBC1C77B6E
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 09:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08655C77B6F
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 09:41:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229615AbjDNJ06 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 05:26:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47782 "EHLO
+        id S229953AbjDNJlg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 05:41:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229870AbjDNJ04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 05:26:56 -0400
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFFBA5FDB
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 02:26:54 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.west.internal (Postfix) with ESMTP id 9FBC632009C3;
-        Fri, 14 Apr 2023 05:26:51 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
-  by compute6.internal (MEProxy); Fri, 14 Apr 2023 05:26:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-         h=cc:cc:content-type:content-type:date:date:from:from
-        :in-reply-to:in-reply-to:message-id:mime-version:references
-        :reply-to:sender:subject:subject:to:to; s=fm2; t=1681464411; x=
-        1681550811; bh=+TqavneGOKcsPMud45hWx6bG4ENJMLusOJ5hv4J7gjI=; b=g
-        bsroWsLmSJLKbbicFWnP+kE5Rpieb5cLu0s7ntZVjU96lBhuMbgaDRHYi0/CLvRh
-        Nyr4thUI9U5OxonrAaYaEk52wOaoESH5+chEfNVo50MnPmFooC+7yjBvRNLuCICa
-        2/Fzu9Kc1E6p2VuFa3MZbNwN/9zXryAlD10SvRFKAedcMSkBVjw6R5GK688nBEf3
-        AFYGHZyn/BDXrB8sQUTDERc+aciiVCj3B+qFa6x0qiR0h3fW5dR/DikXIzQ45GyA
-        ITKXQzLrgiryjzzOnBCbZTi54kytRPpz0sAUwNigiYvmRiKH1XI1xaoQogeiP/Mz
-        MDhrmDpnZU9MkfEffwKxg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1681464411; x=1681550811; bh=+TqavneGOKcsP
-        Mud45hWx6bG4ENJMLusOJ5hv4J7gjI=; b=OefVT+kVdIuE3G59AwZSYHxHk3U8u
-        0j/+Ju5Akj94nptuknoVpvZBhXw7kCaE8dll7sC/waXhvi2Yqik4RfhHC3CLZVsF
-        iOg/uYaP2DeSHrD4ib9bFd4E8hzrbqspTOApMjUbGs/IMSoG6j5vStdkn1J9+CYQ
-        NUcVsqMIfdTtpZWiNd76s9k3reAA5RakVEPspTk6jGvfYhunxKzQYpe1aQ2yC69c
-        Wnl67hY/SjhqBYufTcYCGm9Uidlq1C4gK5a/GihsNKqP+PgGyyECRei3Co9ALJTS
-        OgqjVENDidxgDOQLe2MVtK3B8WnoVm4fRP8XyQwnYstZ3lhzKhi9fJnSw==
-X-ME-Sender: <xms:Wxw5ZNssZLDxNSZ5btDwZBn_HjgRoAqW8k8W6kMEK9NF7Udv0VzYZu0>
-    <xme:Wxw5ZGf3zaYzpXU3WTMI8Aaj_vr0qJsK6f0iStvy3MVW1ytoIUPFnHDCRCv1ML0AW
-    -oblL-9bk7O9ij5nw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdeltddgudehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhephfekffejhedtiefgudektdehvedvheet
-    tdevkefgteffhefgieeguddutefgkeehnecuffhomhgrihhnpehsthgrtghkohhvvghrfh
-    hlohifrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:Wxw5ZAw5TW42ranuA4VZtnncSgTpMbvSKqNZSd1aCy3_PIN-D55Zhg>
-    <xmx:Wxw5ZEN-FZwVF2QQbvMR9qpgttEGYBoAAYXZqWgCMqH8xgj2ieNUsg>
-    <xmx:Wxw5ZN-4noBI-ZQwkWoe2wkwUYsJhb11InrOt-qwxtg-Wuvg4bjHTw>
-    <xmx:Wxw5ZCIQ3ZfTLRJgqB5ybN2n35gX2mbSrmhdQCI0iqclSL97fuM3pA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 0DD0015A0091; Fri, 14 Apr 2023 05:26:51 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-334-g8c072af647-fm-20230330.001-g8c072af6
-Mime-Version: 1.0
-Message-Id: <fe75dd24-344b-4c9b-b08f-af12f3beff11@app.fastmail.com>
-In-Reply-To: <CAJN3DWqbR-9sNGT=Njei5PNSGKVKSOgrY4K=FXVjUKEFQ27bWg@mail.gmail.com>
-References: <CAJN3DWqbR-9sNGT=Njei5PNSGKVKSOgrY4K=FXVjUKEFQ27bWg@mail.gmail.com>
-Date:   Fri, 14 Apr 2023 11:26:30 +0200
-From:   "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To:     "Gabriel Furstenheim Milerud" <furstenheim@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git bug.
-Content-Type: text/plain
+        with ESMTP id S229476AbjDNJle (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 05:41:34 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A2595260
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 02:41:33 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id op30so5618779qvb.3
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 02:41:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681465292; x=1684057292;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=5UNntYhIBz0yJX2J0ep9b0OnrIqKcfQ63mvoOLLWO6E=;
+        b=G3Vmz5gHI3OrOxRJvbQQu2TC8821IcY5LYIn3PJ2oWY+zZ5cyX6Fkta08S1eyiCYz5
+         fiI2m5r4JSeW/Tp8TcxAJs6ZnxvCLrrp0TnHWJeyqwM0bnMLqF9ermHSSSOeYtmlReZk
+         HMXuj8y15T2orP0D4+aMUh+wD9psPZbWbZx9yLPKWkpj52eZVl4FtX2dxeGSHnYmLRVh
+         Pqm5t68iYNWIB2WTBV5pEvtxT5+N+9wK7iaofzzQO7J5Qe84pUxl2tgm9awZvBajA0PJ
+         rNmdU9EOgk6QZWumyGKX9PR+le8TTfNhjApJSuQJ32TInt/+reme5nu2Dnkj8PjE5CBt
+         LTLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681465292; x=1684057292;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5UNntYhIBz0yJX2J0ep9b0OnrIqKcfQ63mvoOLLWO6E=;
+        b=NH30r1AQWEJqMk5HxkqvJPvxbaJkVmgzm8Xdcn7OMuocx6kwRKJB9UmvrRPo6P8psv
+         AgdDLGa7LFzmzxfXJrshmdbsR0bCaoBtuczyu9KItYcDDecNeLbVnPPR54/u2WoJ9L1c
+         GUfnHGeG6q6BI4f2FVfDzluw8wXn5hoZ3OS9yOny4xNczSHjMBv36YvjEuw5WWT/fJPc
+         OHy2vGyzhSFEciKGULZgbTpCXm3mAe91te59QeQ3MpBQq8zCmiRXVfPHEl6nzu3LiC3j
+         HK7jY8AOuIjW2NbCFfNCxYFR/4L3XvZSx7ExhB5vEPZ4I+sib7/DXvhKmxjrFvy7HZ3m
+         GuAw==
+X-Gm-Message-State: AAQBX9e5vMAlz5JuEqwJqgQjLdVdDK5ZXyhQX1WvLsoeIMeGAdfpkYFg
+        sWDiuDYeUNoGDY3IOXOSpLPqR+dfQX1VlibdSvgW1eqIz2sCUg==
+X-Google-Smtp-Source: AKy350ZDXgdz4XKohRKIrVWrldWQERoUZ2lV86OGgnvnMGZ/s7bp0L0z46sgu5AKJMk7tg0acBpvNj/HvcuzIFIUtpY=
+X-Received: by 2002:a05:6214:e43:b0:5a2:5e4c:4f55 with SMTP id
+ o3-20020a0562140e4300b005a25e4c4f55mr2200677qvc.16.1681465292352; Fri, 14 Apr
+ 2023 02:41:32 -0700 (PDT)
+MIME-Version: 1.0
+From:   Gabriel Furstenheim Milerud <furstenheim@gmail.com>
+Date:   Fri, 14 Apr 2023 11:41:21 +0200
+Message-ID: <CAJN3DWriXWYKyf+hJL+wZDCgwOZZsWRah=E8_HnKEWh1wcy4Ww@mail.gmail.com>
+Subject: Git bug
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 14, 2023, at 10:29, Gabriel Furstenheim Milerud wrote:
-> Hi,
-> Sorry if this is not the right address to report bugs. I'm following
-> https://stackoverflow.com/questions/10728104/where-can-i-report-a-git-bug/10733251#10733251
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-LGTM.
+What did you do before the bug happened? (Steps to reproduce your issue)
+> repository in branch A
+git name-rev $(git rev-parse HEAD) --name-only
+> returns A
+git checkout B
+git name-rev $(git rev-parse HEAD) --name-only
 
-VonC has amazing Git answers on SO, but I feel that this changelog-type
-answer is *too much* for a procedure which is just (based on the bug
-reports from the last month or so):
 
-1. Run `git bugreport`
-2. Edit the file by filling out the blanks and removing irrelevant stuff
-   (follow the instructions)
-3. Post the report as an inline plaintext email
 
-So basically the sibling answer https://stackoverflow.com/a/70175922/1725151
+What did you expect to happen? (Expected behavior)
+It should return B
 
--- 
-Kristoffer Haugsbakk
+What happened instead? (Actual behavior)
+It returns A
+
+What's different between what you expected and what actually happened?
+git rev-parse does not seem to update. Same is happenning with git
+rev-parse @{-1}
+
+Anything else you want to add:
+git version 2.34.1
+
+I recently migrated to ubuntu 22. In ubuntu 18 with previous git
+version is was working as expected.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.34.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.19.0-38-generic #39~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC
+Fri Mar 17 21:16:15 UTC 2 x86_64
+compiler info: gnuc: 11.3
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
