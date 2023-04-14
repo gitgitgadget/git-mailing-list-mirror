@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 693E5C77B72
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 19:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCF6AC77B72
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 19:49:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229939AbjDNTta (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 15:49:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53558 "EHLO
+        id S229908AbjDNTt4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 15:49:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229996AbjDNTtY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 15:49:24 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9EC14C39
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 12:49:19 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id hg14-20020a17090b300e00b002471efa7a8fso6113752pjb.0
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 12:49:19 -0700 (PDT)
+        with ESMTP id S229628AbjDNTtz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 15:49:55 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E1E949F5
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 12:49:54 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id la3so19212542plb.11
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 12:49:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1681501759; x=1684093759;
+        d=github.com; s=google; t=1681501794; x=1684093794;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CC4oRzqMk72n/6GwASutxIcm7ZjAxLSLXNxzCjp0AEE=;
-        b=F+T+BkMxRMUJjoeEBnFOAQUS7RGt2rWu07PTQja1v41H7rtoIXjByXzuXZFBpkY1wn
-         91JomY6cbZYpsyRp/ElG8F4dncOhsuDMLrF1RfIkskqIg5Qpi+EqyUiKGGgVB8A5g5Xr
-         7qyBuVBlXHQQq6ds8RB4n5s9UaLZZR9ohIRVVkn8SHJv0UgFAUy71VHCbHUbYkAS4Odx
-         I1ZGTAwO62/HM4dZRQztGG1zFSzgPabtbkSKDe5+vDHJmH9hP6vNPFC7WETs/Q1DcQ2L
-         aaVw7wnWAstUcVReIftRkQ2TO/M9SWDpoY5BBZrZIVPYHA2iqyp6R3AJkoKLFGPYi07m
-         yelQ==
+        bh=p4fx3rGxvZoQKm2zlKTrHGrlfWXuigVx2PePNLI34m0=;
+        b=amQU6E4kUNX2ja1JPs15pVWAKiwAY6EXeAkqQ7nnWdizTR7PqGRFnnzuXJg0e6m7PY
+         cAgwoEDPiIwVoQ7NCVahEkBoLD1m1AXowETkOlUB70HQRSvl0NSopIwzyYQGXG5We6ml
+         DWLpn9wHn8Cgq5LBRXy5p1qjyL0gdR2B6pGTl9FhCESz+oR6izJiOKRdgK+N68gHipG3
+         Ktf7VVcqgftbLS+jweAZ9g/sMzJjjFz+qYVYCO4q896AElbge/O4saar34whJqfd3jw4
+         DgOa7RhrEdl8vrdyif+w/bEIO4YhY5V8PYuBwbFYXTmInU5GYcmke1LgcWGRWl2+G1W+
+         CcOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681501759; x=1684093759;
+        d=1e100.net; s=20221208; t=1681501794; x=1684093794;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CC4oRzqMk72n/6GwASutxIcm7ZjAxLSLXNxzCjp0AEE=;
-        b=XZqYCILMGdpsuy7Xv0Eut3feJ21UHZAcgVdBYM1qnZpmVfddjS/4MIfIpf3FNF3rep
-         i7R9MWq7zuetUe2rrH0MKFcdxOs2WraEJck83Pyp9LNvLd1cRs5vRc+oA9MaEXC43hMK
-         Y1Pa8npr6WCBDSZkkE4JWDOanHdULGkaFo+zqTY+YeitMEli78hLKOdGZuYT3Y6IMvp7
-         kG3smlYbq0czu67PhzGYO8R0ThUL2+txWlyZOOSxIIBOak0/g6E+GMX8K/wG8Oagcj3S
-         1emKfYRHxTv8LbITn3Lzsdh5tJs6x3z6q0fxj2Az/9JFmMv6kZHS36xQ4F5THnjRrLze
-         nl6A==
-X-Gm-Message-State: AAQBX9fjMp4m3S4nkVsdOIrixOxWVOQoNNIn3jpP6QB/wKO4ro0iwPk+
-        SRcAdDzqiuVnvTwec6WU022k
-X-Google-Smtp-Source: AKy350ZAwBw7a/ZPKYTGs9DmVmzAsY63LhxQMxkMGHjI20ekEbEf9+ZiyBEe81uv3Oz2xpSHwsIEIQ==
-X-Received: by 2002:a05:6a20:4a04:b0:d7:380b:660 with SMTP id fr4-20020a056a204a0400b000d7380b0660mr7343188pzb.3.1681501758926;
-        Fri, 14 Apr 2023 12:49:18 -0700 (PDT)
+        bh=p4fx3rGxvZoQKm2zlKTrHGrlfWXuigVx2PePNLI34m0=;
+        b=TLxYo9anYhYVMj9tk5Chzxi617PE1ZkvJ/XjVpLeshpEDXdWyVwvV74mMz7EHZTt7P
+         ShRukI8W5U9KxE5h/AqGH0/zMZX9E4XrlNkMSLYTAm//FcQWOK/FPb2usN+SiWOXzH/+
+         YapAI751P1G9nb2U0XftTWxqeM0q2+SX4RttQ5IRfPpSJPOthGN+WePzbEAOUdqM1dSW
+         4JFVz6RWF51cvpvncSzwOLnXSSdMkhpSE58DEZyq2SwPejnGygQ9TtuR8tdgsdyjiEbL
+         ZaB2TEJuiBMu+WN2+LITCU2j7KDYd37gfM/04qIWtgpIV2yCa4apn7GH59tsCxBG7YKG
+         osRQ==
+X-Gm-Message-State: AAQBX9cq5mfAfLP5WmPduH4WLBwGzG+byaXl/K+vuYCEa2K1G5nk+ofF
+        7ZiZQF+14t9yT3CQ4nLbhCIf
+X-Google-Smtp-Source: AKy350amroSnSlSgOxxQ1rBwKIVY2nJYXM8/d1yI1HOePHXiQvU8FFEbukdGZ/LFH8iUdwcNFgRXOQ==
+X-Received: by 2002:a17:903:1c6:b0:1a5:298c:a6ed with SMTP id e6-20020a17090301c600b001a5298ca6edmr4429786plh.24.1681501794123;
+        Fri, 14 Apr 2023 12:49:54 -0700 (PDT)
 Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id 142-20020a630494000000b00513955cc174sm3186968pge.47.2023.04.14.12.49.18
+        by smtp.gmail.com with ESMTPSA id p8-20020a170902bd0800b001a656784229sm3383291pls.211.2023.04.14.12.49.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Apr 2023 12:49:18 -0700 (PDT)
-Message-ID: <ebcf2426-db40-e967-9db5-532869cac8ff@github.com>
-Date:   Fri, 14 Apr 2023 12:49:16 -0700
+        Fri, 14 Apr 2023 12:49:53 -0700 (PDT)
+Message-ID: <90d1402c-b0b0-4b7e-0c6e-930774b02dfe@github.com>
+Date:   Fri, 14 Apr 2023 12:49:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.10.0
-Subject: Re: [PATCH 1/5] revisions.txt: document more special refs
+Subject: Re: [PATCH 0/5] Document 'AUTO_MERGE' and more special refs
 Content-Language: en-US
 To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -62,9 +62,8 @@ Cc:     Elijah Newren <newren@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Philippe Blain <levraiphilippeblain@gmail.com>
 References: <pull.1515.git.1681495119.gitgitgadget@gmail.com>
- <66c7e514157f3c8220eb994cea7c4659d5241042.1681495119.git.gitgitgadget@gmail.com>
 From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <66c7e514157f3c8220eb994cea7c4659d5241042.1681495119.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1515.git.1681495119.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -72,37 +71,31 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Philippe Blain via GitGitGadget wrote:
-> @@ -55,8 +55,15 @@ you can easily change the tip of the branch back to the state before you ran
->  them.
->  `MERGE_HEAD` records the commit(s) which you are merging into your branch
->  when you run `git merge`.
-> +`REBASE_HEAD`, during a rebase, records the commit at which the
-> +operation is currently stopped, either because of conflicts or an `edit`
-> +command in an interactive rebase.
-> +`REVERT_HEAD` records the commit which you are reverting when you
-> +run `git revert`.
->  `CHERRY_PICK_HEAD` records the commit which you are cherry-picking
->  when you run `git cherry-pick`.
-> +`BISECT_HEAD` records the current commit to be tested when you
-> +run `git bisect --no-checkout`.
+> Here is a breakdown of the patches. First the "other special refs" patches:
+> 
+>  * [PATCH 1/5] revisions.txt: document more special refs
+>  * [PATCH 2/5] completion: complete REVERT_HEAD and BISECT_HEAD
+> 
+> Then a preparatory cleanup for the AUTO_MERGE patches:
+> 
+>  * [PATCH 3/5] git-merge.txt: modernize word choice in "True merge" section
+> 
+> Finally the AUTO_MERGE patches:
+> 
+>  * [PATCH 4/5] Documentation: document AUTO_MERGE
+>  * [PATCH 5/5] completion: complete AUTO_MERGE
+> 
+> Thanks Elijah for this very useful feature! Dscho, I'm CC-ing you since you
+> opened https://github.com/gitgitgadget/git/issues/1471, I hope that's OK.
+> 
+> Cheers,
+> 
+> Philippe.
 
-This is a fairly minor point, so feel free to ignore if you disagree or feel
-it's not worth the effort:
-
-Although the special refs in this list (HEAD, MERGE_HEAD, REBASE_HEAD etc.)
-are visually separated by newlines in this doc, they render in the manpages
-& HTML in a single monolithic paragraph (see [1]). With the addition of
-three more descriptions (four if you count 'AUTO_MERGE' in patch 4/5), that
-paragraph is getting large enough that it might be difficult for a reader to
-parse and find information about a specific ref. 
-
-To help with that, you could create visual separation in the rendered doc by
-adding a '+' between each special ref description; converting them into a
-bullet pointed list would also work, I think.
-
-[1] https://git-scm.com/docs/revisions#Documentation/revisions.txt-emltrefnamegtemegemmasterememheadsmasterememrefsheadsmasterem
-
->  +
->  Note that any of the 'refs/*' cases above may come either from
->  the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
+The documentation you've added is clear without being too verbose (the
+AUTO_MERGE description & example in patch 4 are especially helpful), the
+completion changes are a nice quality-of-life improvement, and the patches
+are well-organized. Aside from one minor (and entirely optional) suggestion
+in patch 1, everything in this series looks great to me. Thank you for
+making these changes! 
 
