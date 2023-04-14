@@ -2,287 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97573C77B71
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 15:53:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6168C77B71
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 15:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230386AbjDNPxA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 11:53:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40640 "EHLO
+        id S230192AbjDNP6o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 11:58:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230231AbjDNPw6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 11:52:58 -0400
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF11886AC
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 08:52:56 -0700 (PDT)
-Received: (Authenticated sender: robin@jarry.cc)
-        by mail.gandi.net (Postfix) with ESMTPSA id 4B3E31C0007;
-        Fri, 14 Apr 2023 15:52:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
-        t=1681487575;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=AvYXaBI5b8B+3/rtHmxpw4VdRzEmAnd2BZXhlw+G5DA=;
-        b=GzuXsAerPp7onl+Iy0v4wOhS7dS+CERGPXxbg2m7kwH3IvAEyjAR7R5LOHqC4YWwRn/BJn
-        vSPYDwg2R5R8kATg8r7y0xLA8/FYJL3NTcH9/pnT+3WzcNm4maD5KSwcX3Nnwfpd6wxn1z
-        JudISJCc7ZYn2IcnOY2DNPyL7O9JqGddZY01cKjC8A8HXpouObsbm64Bmu/a+pKpH1Q5nX
-        8ZvKWcvGdkWjDzgcvmv7m29EaRmmJt5CwW5E2MAvk1idV7rTguL5r45KxZfNmFxCxsw9h2
-        yc51yWWbz1PhlroRAvCVYSZsInYP92ME1kPf+bWsrSCYi/1LNfb0vc99qXRaRg==
-From:   Robin Jarry <robin@jarry.cc>
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Tim Culverhouse <tim@timculverhouse.com>,
-        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Michael Strawbridge <michael.strawbridge@amd.com>,
-        Robin Jarry <robin@jarry.cc>
-Subject: [PATCH v5] send-email: export patch counters in validate environment
-Date:   Fri, 14 Apr 2023 17:52:49 +0200
-Message-Id: <20230414155249.667180-1-robin@jarry.cc>
-X-Mailer: git-send-email 2.40.0
-In-Reply-To: <20230414152843.659667-1-robin@jarry.cc>
-References: <20230414152843.659667-1-robin@jarry.cc>
+        with ESMTP id S230219AbjDNP6n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 11:58:43 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CA4583E3
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 08:58:41 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id lh8so5736916plb.1
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 08:58:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1681487920; x=1684079920;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Nw0u4ZS0gHExBhZhwhPiFT1YDTAe1bBwciIk0C5Mi10=;
+        b=gUkLE2WA5X/29nvkjypl2+mDnQaEoG2qwvD/lFNj/BnZOwUi1ylMJNjvEzF0Nu7VSN
+         hfzj93F6WzElp+welh0uTMu4Uir0jFPxpCCWeWGCRUm4dP1JL+lx3Vh8TaEbHihVvfCt
+         aP8qxYP/OJzHqxBAoemPENjJCiuJOiw7jUqm6T2bw2qe/GTGsGpG8DJy47vsMcvUDLWm
+         OPHp3ZNSCY0YPny2ZMZSxLmmNX88XlWQpXal4Jt1I1pJjbsc99CYTTP4EB/eAMtUEiIJ
+         hIlNV+JkKUmVhxigdLHltEVoPNXxDB613F+vCCTk33n1MDbcMqAuPincf/XMiRK3SY8b
+         XXXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681487920; x=1684079920;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Nw0u4ZS0gHExBhZhwhPiFT1YDTAe1bBwciIk0C5Mi10=;
+        b=jnzy4mDapAfE1ZvOj7kTJuFa+PpuWx51ju+iVHUEdZ2s+SOcFI7EnmYVlo+nlu0NcL
+         7YD4SNAnMBICQTK4qJLAOGpMUJRujt6MM3ssyzwvARijeu1+iaAXOGfaFvY7SSd2xAmP
+         TixVkZxzIs9+H9573xAQoqxkslpiPDhMRhdNLTJnTk05xyS6AQH4DrYEIJEtbjHw6ykq
+         TDF6VrFyUrkV4VYTV2uOXasHx7iMw1UhsMYHnX5sVETKIqSanpwfX4c5ufP2zloJD8NM
+         5r85f7ViIaPSOCFTlDiDTe8tGafYTp4AB9vXNgCFIr4VmvFDBpTr3D6veIp8c9Pp+6Sd
+         50SQ==
+X-Gm-Message-State: AAQBX9ceHAAV4+zMIAmRrvrGEFpcOZoHqXmbROwb1wy/t2RLOL7cdnsD
+        3x5jKZAIWUsFWAcQVjwWehc=
+X-Google-Smtp-Source: AKy350Zi5FXiMRjdPath0Y7OvsN9Umw56g0n9zjnXRllTFwNRLO5lfGHrTq2c6oGz4ozVXAv6nT3EA==
+X-Received: by 2002:a17:902:d4d0:b0:19f:3234:fec5 with SMTP id o16-20020a170902d4d000b0019f3234fec5mr4072241plg.51.1681487920186;
+        Fri, 14 Apr 2023 08:58:40 -0700 (PDT)
+Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
+        by smtp.gmail.com with ESMTPSA id v12-20020a170902b7cc00b001a65fa33e62sm3230415plz.154.2023.04.14.08.58.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Apr 2023 08:58:39 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Git List <git@vger.kernel.org>, johncai86@gmail.com,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [Question] Can git cat-file have a type filtering option?
+References: <CAOLTT8RTB7kpabN=Rv1nHvKTaYh6pLR6moOJhfC2wdtUG_xahQ@mail.gmail.com>
+        <xmqqy1n3k63p.fsf@gitster.g>
+        <CAOLTT8SXXKG3uEd8Q=uh3zx7XeUDUWezGgNUSCd1Fpq-Kyy-2A@mail.gmail.com>
+        <ZDIUvK/bF7BFqX5q@nand.local>
+        <CAOLTT8RbU6G67BtE9fSv4gEn10dtR7cT-jf+dcEfhvNhvcwETQ@mail.gmail.com>
+        <20230410201414.GC104097@coredump.intra.peff.net>
+        <CAOLTT8T9pJFr94acvUo-8EYriST1gOAkXaDZBxHk54o=Zm5=Sg@mail.gmail.com>
+        <20230412074309.GB1695531@coredump.intra.peff.net>
+        <CAOLTT8Rw796zxMYxg5+nx8+YoQVnfy=nPXH8Aq0j0Cw+GLT1rA@mail.gmail.com>
+        <20230414073035.GB540206@coredump.intra.peff.net>
+        <CAOLTT8SEeY1tfU39xHPJ21F7o3dmgEFwNCny=Z2F4Y2HFR3DzA@mail.gmail.com>
+Date:   Fri, 14 Apr 2023 08:58:39 -0700
+In-Reply-To: <CAOLTT8SEeY1tfU39xHPJ21F7o3dmgEFwNCny=Z2F4Y2HFR3DzA@mail.gmail.com>
+        (ZheNing Hu's message of "Fri, 14 Apr 2023 20:17:34 +0800")
+Message-ID: <xmqqh6titpzk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When sending patch series (with a cover-letter or not)
-sendemail-validate is called with every email/patch file independently
-from the others. When one of the patches depends on a previous one, it
-may not be possible to use this hook in a meaningful way. A hook that
-wants to check some property of the whole series needs to know which
-patch is the final one.
+ZheNing Hu <adlternative@gmail.com> writes:
 
-Expose the current and total number of patches to the hook via the
-GIT_SENDEMAIL_PATCH_COUNTER and GIT_SENDEMAIL_PATCH_TOTAL environment
-variables so that both incremental and global validation is possible.
+> Oh, you are right, this could be to prevent conflicts between Git objects
+> with identical content but different types. However, I always associate
+> Git with the file system, where metadata such as file type and size is
+> stored in the inode, while the file data is stored in separate chunks.
 
-Sharing any other state between successive invocations of the validate
-hook must be done via external means. For example, by storing it in
-a git config sendemail.validateWorktree entry.
+I am afraid the presentation order Peff used caused a bit of
+confusion.  The true reason is what Peff brought up as "Or worse".
+We need to be able to tell, given only the name of an object,
+everything that we need to know about the object, and for that, we
+need the type information when we ask for an object by its name.
+Having size embedded in the data that comes back to us when we
+consult object database with an object name helps the implementation
+to pre-allocate a buffer and then inflate into it--there is no
+fundamental reason why it should be there.
 
-Add a sample script with placeholder validations and update tests to
-check that the counters are properly exported.
+It is a secondary problem created by the design choice that we store
+type together with contents, that the object type recorded in a tree
+entry may contradict the actual type of the object recorded in the
+tree entry.  We could have declared that the object type found in a
+tree entry is to be trusted, if we didn't record the type in the
+object database together with the object contents.
 
-Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Robin Jarry <robin@jarry.cc>
----
+I think your original question was not "why do we store type and
+size together with the contents?", but was "why do we include in the
+hash computation?", and all of the above discuss related tangent
+without touching the original question.
 
-Notes:
-    v4 -> v5:
-    
-    * Fixed shell syntax error introduced by last minute change.
-    
-    v3 -> v4:
-    
-    * Added test case.
-    * Make sure to always cleanup the temp worktree.
-    * Add configuration knobs to tweak the remote and ref on which to check
-      if the patches apply without conflicts.
-
- Documentation/githooks.txt                 | 22 +++++++
- git-send-email.perl                        | 17 ++++-
- t/t9001-send-email.sh                      | 31 +++++++++
- templates/hooks--sendemail-validate.sample | 77 ++++++++++++++++++++++
- 4 files changed, 146 insertions(+), 1 deletion(-)
- create mode 100755 templates/hooks--sendemail-validate.sample
-
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 62908602e7be..c8e55b2613f5 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -600,6 +600,28 @@ the name of the file that holds the e-mail to be sent.  Exiting with a
- non-zero status causes `git send-email` to abort before sending any
- e-mails.
- 
-+The following environment variables are set when executing the hook.
-+
-+`GIT_SENDEMAIL_FILE_COUNTER`::
-+	A 1-based counter incremented by one for every file holding an e-mail
-+	to be sent (excluding any FIFOs). This counter does not follow the
-+	patch series counter scheme. It will always start at 1 and will end at
-+	GIT_SENDEMAIL_FILE_TOTAL.
-+
-+`GIT_SENDEMAIL_FILE_TOTAL`::
-+	The total number of files that will be sent (excluding any FIFOs). This
-+	counter does not follow the patch series counter scheme. It will always
-+	be equal to the number of files being sent, whether there is a cover
-+	letter or not.
-+
-+These variables may for instance be used to validate patch series.
-+
-+The sample `sendemail-validate` hook that comes with Git checks that all sent
-+patches (excluding the cover letter) can be applied on top of the upstream
-+repository default branch without conflicts. Some placeholders are left for
-+additional validation steps to be performed after all patches of a given series
-+have been applied.
-+
- fsmonitor-watchman
- ~~~~~~~~~~~~~~~~~~
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 07f2a0cbeaad..497ec0354790 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -795,11 +795,26 @@ sub is_format_patch_arg {
- @files = handle_backup_files(@files);
- 
- if ($validate) {
-+	# FIFOs can only be read once, exclude them from validation.
-+	my @real_files = ();
- 	foreach my $f (@files) {
- 		unless (-p $f) {
--			validate_patch($f, $target_xfer_encoding);
-+			push(@real_files, $f);
- 		}
- 	}
-+
-+	# Run the loop once again to avoid gaps in the counter due to FIFO
-+	# arguments provided by the user.
-+	my $num = 1;
-+	my $num_files = scalar @real_files;
-+	$ENV{GIT_SENDEMAIL_FILE_TOTAL} = "$num_files";
-+	foreach my $r (@real_files) {
-+		$ENV{GIT_SENDEMAIL_FILE_COUNTER} = "$num";
-+		validate_patch($r, $target_xfer_encoding);
-+		$num += 1;
-+	}
-+	delete $ENV{GIT_SENDEMAIL_FILE_COUNTER};
-+	delete $ENV{GIT_SENDEMAIL_FILE_TOTAL};
- }
- 
- if (@files) {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 323952a572d6..7c7625759883 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -2326,6 +2326,37 @@ test_expect_success $PREREQ 'invoke hook' '
- 	)
- '
- 
-+expected_file_counter_output () {
-+	total=$1
-+	count=0
-+	while test $count -ne $total
-+	do
-+		count=$((count + 1)) &&
-+		echo "$count/$total" || return
-+	done
-+}
-+
-+test_expect_success $PREREQ '--validate hook allows counting of messages' '
-+	test_when_finished "rm -rf my-hooks.log" &&
-+	test_config core.hooksPath "my-hooks" &&
-+	mkdir -p my-hooks &&
-+
-+	write_script my-hooks/sendemail-validate <<-\EOF &&
-+		num=$GIT_SENDEMAIL_FILE_COUNTER &&
-+		tot=$GIT_SENDEMAIL_FILE_TOTAL &&
-+		echo "$num/$tot" >>my-hooks.log || exit 1
-+	EOF
-+
-+	>my-hooks.log &&
-+	expected_file_counter_output 4 >expect &&
-+	git send-email \
-+		--from="Example <from@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		--validate -3 --cover-letter --force &&
-+	test_cmp expect my-hooks.log
-+'
-+
- test_expect_success $PREREQ 'test that send-email works outside a repo' '
- 	nongit git send-email \
- 		--from="Example <nobody@example.com>" \
-diff --git a/templates/hooks--sendemail-validate.sample b/templates/hooks--sendemail-validate.sample
-new file mode 100755
-index 000000000000..ad2f9a86473d
---- /dev/null
-+++ b/templates/hooks--sendemail-validate.sample
-@@ -0,0 +1,77 @@
-+#!/bin/sh
-+
-+# An example hook script to validate a patch (and/or patch series) before
-+# sending it via email.
-+#
-+# The hook should exit with non-zero status after issuing an appropriate
-+# message if it wants to prevent the email(s) from being sent.
-+#
-+# To enable this hook, rename this file to "sendemail-validate".
-+#
-+# By default, it will only check that the patch(es) can be applied on top of
-+# the default upstream branch without conflicts in a secondary worktree. After
-+# validation (successful or not) of the last patch of a series, the worktree
-+# will be deleted.
-+#
-+# The following config variables can be set to change the default remote and
-+# remote ref that are used to apply the patches against:
-+#
-+#   sendemail.validateRemote (default: origin)
-+#   sendemail.validateRemoteRef (default: HEAD)
-+#
-+# Replace the TODO placeholders with appropriate checks according to your
-+# needs.
-+
-+validate_cover_letter() {
-+	file="$1"
-+	# TODO: Replace with appropriate checks (e.g. spell checking).
-+	true
-+}
-+
-+validate_patch() {
-+	file="$1"
-+	# Ensure that the patch applies without conflicts.
-+	git am -3 "$file" || return
-+	# TODO: Replace with appropriate checks for this patch
-+	# (e.g. checkpatch.pl).
-+	true
-+}
-+
-+validate_series() {
-+	# TODO: Replace with appropriate checks for the whole series
-+	# (e.g. quick build, coding style checks, etc.).
-+	true
-+}
-+
-+# main -------------------------------------------------------------------------
-+
-+if test "$GIT_SENDEMAIL_FILE_COUNTER" = 1
-+then
-+	remote=$(git config --default origin --get sendemail.validateRemote) &&
-+	ref=$(git config --default HEAD --get sendemail.validateRemoteRef) &&
-+	worktree=$(mktemp --tmpdir -d sendemail-validate.XXXXXXX) &&
-+	git worktree add -fd --checkout "$worktree" "refs/remotes/$remote/$ref" &&
-+	git config --replace-all sendemail.validateWorktree "$worktree"
-+else
-+	worktree=$(git config --get sendemail.validateWorktree)
-+fi || {
-+	echo "sendemail-validate: error: failed to prepare worktree" >&2
-+	exit 1
-+}
-+
-+unset GIT_DIR GIT_WORK_TREE
-+cd "$worktree" &&
-+
-+if grep -q "^diff --git " "$1"
-+then
-+	validate_patch "$1"
-+else
-+	validate_cover_letter "$1"
-+fi &&
-+
-+if test "$GIT_SENDEMAIL_FILE_COUNTER" = "$GIT_SENDEMAIL_FILE_TOTAL"
-+then
-+	git config --unset-all sendemail.validateWorktree &&
-+	trap 'git worktree remove -ff "$worktree"' EXIT &&
-+	validate_series
-+fi
--- 
-2.40.0
-
+The need to have type or size available when we ask the object
+database for data associated with the object does not necessarily
+mean they must be hashed together with the contents.  It was done
+merely because "why not? that way, we do not have to worry about
+catching corrupt values for type and size information we want to
+store together with the contents".  IOW, we could have checksummed
+these two pieces of information separately, but why bother?
