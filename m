@@ -2,79 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8EEEC77B6E
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 06:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8545C77B71
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 06:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230131AbjDNGCN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 02:02:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41894 "EHLO
+        id S230073AbjDNGCO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 02:02:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230096AbjDNGCA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 02:02:00 -0400
+        with ESMTP id S229457AbjDNGCD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 02:02:03 -0400
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E71E4200
-        for <git@vger.kernel.org>; Thu, 13 Apr 2023 23:01:58 -0700 (PDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 7B9945C0150;
-        Fri, 14 Apr 2023 02:01:57 -0400 (EDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4D0659C9
+        for <git@vger.kernel.org>; Thu, 13 Apr 2023 23:02:02 -0700 (PDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 2CAE15C0150;
+        Fri, 14 Apr 2023 02:02:02 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Fri, 14 Apr 2023 02:01:57 -0400
+  by compute3.internal (MEProxy); Fri, 14 Apr 2023 02:02:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1681452117; x=1681538517; bh=i1
-        3MXuNK53D3G4NYXDEFD4FFhgelAS5edVN0wECqYMo=; b=NfrcMXJ991/t/UGWYs
-        cin/fwkTL4SjQXPpKN7YikrisHsocRuBJgqMlRfx1kfeB7KjGsRj6joES4g5w/aI
-        xsp7as7NYeohnLh54oNG+Njy4waBaQmZssqqbA5aSAhbwa3nCOVDPlHeo6N/8LBr
-        a/0gbbfYoimxjxXN8h8xwWgRvdUXfw4LrbmXNzbcvmXbj7FI7TRpZPdYMtblRNN5
-        KbtQlt/gxnhEuGR6hxmlXlviww+1GrabMWFufHwuCZ2uxnQwDtpdvAafFhwJ7zFT
-        nJwl8oxmZ33FmeLgf7E7VN2Eoo/pdo6g+Jm4/UScbLDNuret1T3qDMfDm0SqqZzQ
-        5M7A==
+        :subject:subject:to:to; s=fm3; t=1681452122; x=1681538522; bh=2+
+        Z//fni4z4zAKjmn/l+zlBBaMvmCnevOWQin3uqTfA=; b=oOnATzeBjZ1ReFOJn0
+        dDbf7neVJhKqXdoJWEMp5HucaMA1/6ur3L9CLadA6UIhEw1m2dBKwC4aOaGtP2nV
+        V01mWIR7Qv0bbQ9Di1qCITX0n6m4VY/W0eEzYOVVNW48XDXHi3u9CS7DofAXhC6S
+        IzLThzaBIHbFAEsCbUBvWj7g6iS3r8IBXmeAeGKfXEZ4n8kt/MmauDcrRDlA6Syv
+        8O3vPPE7B/gF8MXJ/tgA4cGAeg4xgYar4xfJzfasoLQeHRq8EHGO0Q2uYsbsSNNp
+        scLROrtHEH7658nG5iEek9TV3oNcwW93bpY8K7tKWKDeY91oZFHRXktDiKdQrI+5
+        b3JQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1681452117; x=1681538517; bh=i13MXuNK53D3G
-        4NYXDEFD4FFhgelAS5edVN0wECqYMo=; b=f2vfJuMv9E3GInjtERSwp+S5HqIdk
-        X0lTkmq91sNmmC3dVHR+Ev/i7T/+uiEkkjioOwlZM38dIbUeMMxBtFUCIF7VS09l
-        dxfEVBqs2vIOpA5dglsQEWmSB0auLkYeBe1GdR5lrq+ymCb/7jgAP3G+G002SlU2
-        M0zAwk0Hq5puij3CN0/Uy20hrVWhkIvQPoKw9hVpKvSDYE/+QVMXRGrORaY9x87r
-        7QU8BGuS2O6C1zds40UnQtw/6Itap72YnuUArTF8miYSzOgYncJeiKhE+ExKcgXh
-        OwRjiuS/qbMENfu2jUd//nl4c/RNP8Vir0PwCeCpK7rbFJSNNl3vfV60g==
-X-ME-Sender: <xms:Vew4ZLmrhtozkIxR5n6BI61ry-HCH974Irb5iE1Z6dwu9ujC9yCTzQ>
-    <xme:Vew4ZO1vIQ4E78ndqVrPeyJ6tZ9CvxccU5tcAed0Tx9W3Aw_PBZKAE-Xl7Od0qUEs
-    cXWTfr-jbE9W8YcUw>
-X-ME-Received: <xmr:Vew4ZBrup7pmIwO0DJs8Jf8cw4nkPIIbetF5Rk4uLr7SeaQCBlkqg8Zra10PGAkXtBBSe7qzXp5kFkrJ-RMj2Dt02n1UEhzlT1-TsiHctLgV3CY>
+        :x-sasl-enc; s=fm3; t=1681452122; x=1681538522; bh=2+Z//fni4z4zA
+        Kjmn/l+zlBBaMvmCnevOWQin3uqTfA=; b=JXIy542iYaGAJ3cGAa8gXrcrf2Z1q
+        7pEa0x8Use720xOLrajPMD8HnMw/ILQKEfIGNF/TMOdtJkwmHsERwHqxkJ2luE00
+        7QE1s9khKGO+EUHw3bfrQDCFwqoYfgECw+etCv0u8DkjmIhE8jlzQaxNp2ed4Vvu
+        WpA/HWZwdpchuJG9oVGkXI2H2nBWVKvqajkBQkNiNr0qX9cF3caCzllKqjRvee6t
+        WncVDYp/0H3H+KiGK/0xhtMSh1tu92M7Hpcvlfp8ALMkNzyCWxsZxbQg4kfu4RLC
+        gjGb0/huEp0Y2Fcs/euxTUJVZlQS8v44wVTeVaaugRZrQsL1VSsKncwIg==
+X-ME-Sender: <xms:Wew4ZFjcJFkLVmjZYm9FnG0RQoURT9Uj1ao0k7_DshSTSdF8q-gxQw>
+    <xme:Wew4ZKD9vstNfj1qP785YxjOv3DMt-SPcgrxM7HPy3A8TWJ9Zt1N-hGOOpZgtmXgD
+    upvQKd4CESD5CvmTA>
+X-ME-Received: <xmr:Wew4ZFEVEN-d5A41fFVieLZADRumWotfOO8lVa3Pgljvp3Om5aKX8DJqUkn-9eb0oxafmeADBz0OwASzEWD0EBTAOlnZq0wCh9fOXWTYo5SnzGk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekledguddtgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
     dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
     sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgepudenucfr
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:Vew4ZDkpR6qQqGgXODe75oNSxIBrx1Xo5DzXjoWaiv6yE1Ts0TTCgA>
-    <xmx:Vew4ZJ2HJRo9K3u9elyYJyjb8ng8RR4W9EIIEp-MDVXuHC2lKIRlzA>
-    <xmx:Vew4ZCtodIW9RqkuV0_tXh-gztOW8Hs_B8YDmO_cjynX1rgChl91_Q>
-    <xmx:Vew4ZCyIkykRqNnnu3RXuBOOZ168DEI9p7y1pUyGYM1yzuWYlLhRZg>
+X-ME-Proxy: <xmx:Wuw4ZKRFj5ZgXrGGBMgcMKi5_6tDuZAPkB6wsHtgcOpmLVwQBDkpMQ>
+    <xmx:Wuw4ZCzDBXurDddBznmRwH896snCgaVVvHYxfyMkyIsRzWOfQGgubg>
+    <xmx:Wuw4ZA4-RCRk9Bp3zn5lMIdOATVtJGyBSDOA-m8W1EqP2No5Stis3A>
+    <xmx:Wuw4ZG8XBZ-MZ5NkKpFeJ_JcTxvbmFR_8rxay1gPOB5ZgR99jdUMFQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Apr 2023 02:01:55 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id abc99d09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 14 Apr 2023 06:01:53 +0000 (UTC)
-Date:   Fri, 14 Apr 2023 08:01:54 +0200
+ 14 Apr 2023 02:02:00 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 39d867ff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 14 Apr 2023 06:01:59 +0000 (UTC)
+Date:   Fri, 14 Apr 2023 08:01:59 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>, peff@peff.net,
         dstolee@microsoft.com, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 06/10] pack-objects: fix error when same packfile is
- included and excluded
-Message-ID: <33aea4c71edf60094e01ef245429befe1142c0ea.1681452028.git.ps@pks.im>
+Subject: [PATCH v4 07/10] pack-objects: extend test coverage of
+ `--stdin-packs` with alternates
+Message-ID: <f9d490f5b8bb41b93543bff46ea3d446fa07c2ee.1681452028.git.ps@pks.im>
 References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
  <cover.1681452028.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Umg/SX/jGYfcC9eZ"
+        protocol="application/pgp-signature"; boundary="o5XVuSuIkqVSt9b+"
 Content-Disposition: inline
 In-Reply-To: <cover.1681452028.git.ps@pks.im>
 Precedence: bulk
@@ -82,74 +82,77 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Umg/SX/jGYfcC9eZ
+--o5XVuSuIkqVSt9b+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When passing the same packfile both as included and excluded via the
-`--stdin-packs` option, then we will return an error because the
-excluded packfile cannot be found. This is because we will only set the
-`util` pointer for the included packfile list if it was found, so that
-we later die when we notice that it's in fact not set for the excluded
-packfile list.
-
-Fix this bug by always setting the `util` pointer for both the included
-and excluded list entries.
+We don't have any tests that verify that git-pack-objects(1) works with
+`--stdin-packs` when combined with alternate object directories. Add
+some to make sure that the basic functionality works as expected.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/pack-objects.c        |  8 +++-----
- t/t5331-pack-objects-stdin.sh | 20 ++++++++++++++++++++
- 2 files changed, 23 insertions(+), 5 deletions(-)
+ t/t5331-pack-objects-stdin.sh | 48 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 7d0e864c35..c5147d392f 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3355,11 +3355,9 @@ static void read_packs_list_from_stdin(void)
- 	for (p =3D get_all_packs(the_repository); p; p =3D p->next) {
- 		const char *pack_name =3D pack_basename(p);
-=20
--		item =3D string_list_lookup(&include_packs, pack_name);
--		if (!item)
--			item =3D string_list_lookup(&exclude_packs, pack_name);
--
--		if (item)
-+		if ((item =3D string_list_lookup(&include_packs, pack_name)))
-+			item->util =3D p;
-+		if ((item =3D string_list_lookup(&exclude_packs, pack_name)))
- 			item->util =3D p;
- 	}
-=20
 diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
-index 71c8a4a635..3ef736ec05 100755
+index 3ef736ec05..acab31667a 100755
 --- a/t/t5331-pack-objects-stdin.sh
 +++ b/t/t5331-pack-objects-stdin.sh
-@@ -169,4 +169,24 @@ test_expect_success 'pack-objects --stdin with duplica=
-te packfile' '
+@@ -189,4 +189,52 @@ test_expect_success 'pack-objects --stdin with same pa=
+ckfile excluded and includ
  	)
  '
 =20
-+test_expect_success 'pack-objects --stdin with same packfile excluded and =
-included' '
-+	test_when_finished "rm -fr repo" &&
++test_expect_success 'pack-objects --stdin with packfiles from alternate ob=
+ject database' '
++	test_when_finished "rm -fr shared member" &&
 +
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit "commit" &&
-+		git repack -ad &&
++	# Set up a shared repository with a single packfile.
++	git init shared &&
++	test_commit -C shared "shared-objects" &&
++	git -C shared repack -ad &&
++	basename shared/.git/objects/pack/pack-*.pack >packfile &&
 +
-+		{
-+			basename .git/objects/pack/pack-*.pack &&
-+			printf "^%s\n" "$(basename .git/objects/pack/pack-*.pack)"
-+		} >packfiles &&
++	# Set up a repository that is connected to the shared repository. This
++	# repository has no objects on its own, but we still expect to be able
++	# to pack objects from its alternate.
++	git clone --shared shared member &&
++	git -C member pack-objects --stdin-packs generated-pack <packfile &&
++	test_cmp shared/.git/objects/pack/pack-*.pack member/generated-pack-*.pack
++'
 +
-+		git pack-objects --stdin-packs generated-pack <packfiles &&
-+		packed_objects generated-pack-*.idx >packed-objects &&
-+		test_must_be_empty packed-objects
-+	)
++test_expect_success 'pack-objects --stdin with packfiles from main and alt=
+ernate object database' '
++	test_when_finished "rm -fr shared member" &&
++
++	# Set up a shared repository with a single packfile.
++	git init shared &&
++	test_commit -C shared "shared-commit" &&
++	git -C shared repack -ad &&
++
++	# Set up a repository that is connected to the shared repository. This
++	# repository has a second packfile so that we can verify that it is
++	# possible to write packs that include packfiles from different object
++	# databases.
++	git clone --shared shared member &&
++	test_commit -C member "local-commit" &&
++	git -C member repack -dl &&
++
++	{
++		basename shared/.git/objects/pack/pack-*.pack &&
++		basename member/.git/objects/pack/pack-*.pack
++	} >packfiles &&
++
++	{
++		packed_objects shared/.git/objects/pack/pack-*.idx &&
++		packed_objects member/.git/objects/pack/pack-*.idx
++	} | sort >expected-objects &&
++
++	git -C member pack-objects --stdin-packs generated-pack <packfiles &&
++	packed_objects member/generated-pack-*.idx >actual-objects &&
++	test_cmp expected-objects actual-objects
 +'
 +
  test_done
@@ -157,24 +160,24 @@ included' '
 2.40.0
 
 
---Umg/SX/jGYfcC9eZ
+--o5XVuSuIkqVSt9b+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ47FEACgkQVbJhu7ck
-PpSjow/+PFp+IFgg5FPJymrow2VKVRryXAbv1UmBcLH0rHqkqqMsFRfjqApESwqq
-pNYRigKp3PjfhuNzRYzns9yNyPcMEdTpGzTllNBkzBMSmXytjSS86+F+yaCLtq/A
-WZ0tWycTcxg8oYDix84Z0H0ykcD0eRSzevD7qalEEqyCuSP8bFQPmwguSXLd8CZC
-dkMIgk+pjoHj5MR1CzYZLW1jhVFJsbNzGBMFnnFBVEHY2sv9+cGv7evclMTdBcjF
-ZGQwFF7YVWqYWc+ZKjF9SqaP1+jg4HuPUmJK1NIsic3EWCNQViu3qpg7Q975/Det
-ylZ9XXVbEHWbHIkGaxrXjNHo2QKewWBbh1THbJd1unwhrYanl0J1X0IJafki4EZk
-UAmgUhLUpMdmlXxqy7FmUF1kYP0hQHIaq8V+6gKTmjrx1FzDtLLtXEdGWNA6sOH1
-RJwTDdreGY/FI7LLRRfB1tJeF79bZkHAnc7Y6mL1Fpfvm6mBghG2Y/H1+A2omDdn
-2NiSn0sEat0dH7ZsPXXtvTQOKGo0yMxAmRiikZUUL6rPqjz9FR6HaxRoCQexQM33
-auon9ljQ6YifqtuYRONquGXsTXTdVHWHRxjkaGA5li20iP/YFSiwmriVAQqKKfIG
-hNzLeDVPqohCXEickWKfmiAH2EQzYXe7Zbv3WlfgZUSvTCSKY48=
-=WwCo
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmQ47FYACgkQVbJhu7ck
+PpTGfA/8CtQXggKDoHHgWQA/IEjAyzZhsUYjyhCCraxVjuP5af5X5BPiCPa/Wer6
+fPORqYCkdj4BoRq/8oS+51QV06OXKWlbDJsEgwUhxSwY5OmXC3CEJmne4cwKhlPW
+37lA89Eo31MQNY1AIV6rBbfbgNNoPAcPpY0Aed15NYdlJSIE8aJOlQgJYniII7Sv
+FXHDacQUVFeWXmzDNVZq1xpQ9YwVb+SGCxKdrGNnz2cB5Bq/8xQ7F80+AaF+zVa+
+9msq60WmTrh4HhyvjdksSp0TgknNXiLSJIFLJI4CjfR44K+eJ0REw5RWxKGMDa0h
+wkX8BcqaaA3bogyIJ2BnGapJbcmX6Fe7/1V+APVDO8+a9H1dK2Lf5z/ZOLrYgdQF
+ehcQNzCMZMtam193IIBE4euDOfDWP5GvV9u4SLZjVRHuSuMeIH9FSRAO86yW2wyR
+R4fdAkBUoC70XrfaQr4LKWkaVE4bei9OAVU+SdbXMBBhTVLCZZfBJPoueXiFr6Qx
+eiUZj6ELm8bQPlCbDrzNmRVup+U8uxeNKkkFbIuPmNtSBg6Ds12XZQvCyfrQU8Qf
+ESI38rOEsQD9/797pMaa0nEctlovJyNhmKL21PUq5eqIv67xhnOFFAvTylXuRW5j
+s+ZOqEdQSQ7U0ZSkqlplLrBQXjkbBOv9fRnJUzLfabcUXWaou9g=
+=TVnY
 -----END PGP SIGNATURE-----
 
---Umg/SX/jGYfcC9eZ--
+--o5XVuSuIkqVSt9b+--
