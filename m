@@ -2,138 +2,283 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8A7BC77B72
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 15:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24BABC77B72
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 15:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231354AbjDNP23 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 11:28:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46606 "EHLO
+        id S231343AbjDNPaX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 11:30:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230356AbjDNP2N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 11:28:13 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4020B77F
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 08:27:29 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id l21so676051pla.5
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 08:27:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681486047; x=1684078047;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ugyz4ej+oz1TXvYJXb0y+lc9RCJ4kr0hqqX5OyNebyU=;
-        b=VfKnc1lK0qv2kD7WKZlzZk8UOOfiZrtUDHZLu4ccfwEQti3tKg7DLPKwVQFxPyQumK
-         A/cjG08hX5MRbxtZklt7M++LvQ5eH+JavTcUC9bLsQmctwjYLuSDHVUPneD3t2QjtxfP
-         lyRoAHj8Y8SHODCS29URe6P2mFE8VUNw5uWWH+JWSnSIZV92DyktznUVgWKO0DxxsWOe
-         RZRKMzVR+LuZi5LZkpQt3g5U0LPIOcHxcL017/GU3YEzWHoXom2buJT95zxMrBxgTerg
-         VarmaL7C97KsC9lX5GL11Jer2nfpk9WCfRckP5u3/CBKnuujKD/gQk+tFlkOhSoa0ng7
-         kY4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681486047; x=1684078047;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Ugyz4ej+oz1TXvYJXb0y+lc9RCJ4kr0hqqX5OyNebyU=;
-        b=OTbEkmBNphj35oaSocujkmMvvWocpy4qeoEHIQ9DZuALe9xRc/5gL0AIIXrXwRGK4j
-         rOXg7w2S3u7pFDFRgLjtuNTcYaxzgz4ixy/uBaJwhcigJovZLCaBL+MSpC4VAri6GMmV
-         EfkhK3EBVwk8YxSDGpYv3hTBdRDr1UxovdH5N3H/Nmyw+fvNQmoz+RqecjOvjunXp+OF
-         WkmYAWdMEgQ4LVZGKBSxAwqskr7Is3UB6D7aNMdv2pVgBmq7C9jNsNWl/0hziQHO2bjR
-         SlbRWCnr3TT7ahBdZsBRb19Jr5LRxdEbJKtCXr60OG7W3lB52yIJNKU9mcB2Jd2YkgPz
-         a8ZA==
-X-Gm-Message-State: AAQBX9fA1VEOpcmEIG1zaacuzpqF+He9CSVSClTySKViD54w/MWhDJfv
-        S5rauxoRX/eoYujHcLA6Hfw=
-X-Google-Smtp-Source: AKy350aEH5+606syGpiiTELg66jmmI4P3aeRJNQH3/sBJetJ5yZX3itzKTGGG94SiJhn41I8xi0fJA==
-X-Received: by 2002:a05:6a20:4e22:b0:eb:f7d2:561 with SMTP id gk34-20020a056a204e2200b000ebf7d20561mr5679864pzb.61.1681486046718;
-        Fri, 14 Apr 2023 08:27:26 -0700 (PDT)
-Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
-        by smtp.gmail.com with ESMTPSA id v62-20020a632f41000000b0050f6530959bsm2834186pgv.64.2023.04.14.08.27.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Apr 2023 08:27:26 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: set actual revdate for manpages
-References: <20230413074722.71260-1-felipe.contreras@gmail.com>
-        <20230414070449.GA540206@coredump.intra.peff.net>
-Date:   Fri, 14 Apr 2023 08:27:26 -0700
-In-Reply-To: <20230414070449.GA540206@coredump.intra.peff.net> (Jeff King's
-        message of "Fri, 14 Apr 2023 03:04:49 -0400")
-Message-ID: <xmqq5y9yv601.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S229774AbjDNPaN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 11:30:13 -0400
+Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C61FDCC0E
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 08:29:53 -0700 (PDT)
+Received: (Authenticated sender: robin@jarry.cc)
+        by mail.gandi.net (Postfix) with ESMTPSA id 4DFE0C0005;
+        Fri, 14 Apr 2023 15:28:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
+        t=1681486129;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=Zoi3G523tpfQ+ZRFOnK/U1B/TE39a2DcJXsuClt2DiQ=;
+        b=AZG21OqyknbJBUZhZ9b1tTR/SJKym49mnAYxAVeteLDhfZgHH/2EGtRrNa1EL6pqYpnyhS
+        y26MdCzy+k4tAL4icZ6icymyIdWElS033aP5JNCHfWdnIGAw29zv0HzD6VMBsH2yOF4YMk
+        v2NTBZrWgw6musZrRgrVKxx1w3UkrQgDdOEqnusbjAwyiWeZWcs5xBuuhdBi+phbiv4KVP
+        Lhcp+blMW7nl9xwmeyP7oqYQ2RABkuZ/Ue5Y+LVwnqMval6a5pUxKWbvdn+cNVVRdVy6Vy
+        WhhGawmbt7LUZeucxs4iwRNITPWIygemD2NtZotTIBs6pyl3PYEKJO9l5FZ73w==
+From:   Robin Jarry <robin@jarry.cc>
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Tim Culverhouse <tim@timculverhouse.com>,
+        Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Michael Strawbridge <michael.strawbridge@amd.com>,
+        Robin Jarry <robin@jarry.cc>
+Subject: [PATCH v4] send-email: export patch counters in validate environment
+Date:   Fri, 14 Apr 2023 17:28:43 +0200
+Message-Id: <20230414152843.659667-1-robin@jarry.cc>
+X-Mailer: git-send-email 2.40.0
+In-Reply-To: <20230412214502.90174-1-robin@jarry.cc>
+References: <20230412214502.90174-1-robin@jarry.cc>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+When sending patch series (with a cover-letter or not)
+sendemail-validate is called with every email/patch file independently
+from the others. When one of the patches depends on a previous one, it
+may not be possible to use this hook in a meaningful way. A hook that
+wants to check some property of the whole series needs to know which
+patch is the final one.
 
-> ...  The reason is that asciidoc puts the <date> tags in the
-> header, and the custom header removed by 8806120de6c suppresses
-> asciidoc's default header entirely (so a workaround would be to include
-> the <date> tags in our custom header, but I don't see any reason not to
-> just build on top of 8806120de6c, as you did here).
+Expose the current and total number of patches to the hook via the
+GIT_SENDEMAIL_PATCH_COUNTER and GIT_SENDEMAIL_PATCH_TOTAL environment
+variables so that both incremental and global validation is possible.
 
-I agree building on what is in-flight instead of making duplicate
-effort makes sense.
+Sharing any other state between successive invocations of the validate
+hook must be done via external means. For example, by storing it in
+a git config sendemail.validateWorktree entry.
 
->> diff --git a/Documentation/Makefile b/Documentation/Makefile
->> index 3133ea3182..b629176d7d 100644
->> --- a/Documentation/Makefile
->> +++ b/Documentation/Makefile
->> @@ -144,13 +144,16 @@ man5dir = $(mandir)/man5
->>  man7dir = $(mandir)/man7
->>  # DESTDIR =
->>  
->> +GIT_DATE := $(shell git show --quiet --pretty='%as')
->
-> What will/should this do in a distribution tarball, where we won't have
-> a Git repository at all? I think we'll just end up with a blank date in
-> the xml file, though it looks like docbook turns that into today's date
-> in the result.
->
-> That's not _too_ bad, but feels a bit inconsistent (and it uses the
-> format you're trying to get rid of!).
->
-> It would be nicer to populate the date variable in that case, like we do
-> for GIT_VERSION. I think that could look something like this:
+Add a sample script with placeholder validations and update tests to
+check that the counters are properly exported.
 
-I did wonder the same "what about tarball" thing while reading this
-last night and then stopped, and it is good to see somebody else
-brought it up ;-).  I like the "version" approach, as that is
-already an established way to deal with the same "the builder
-somehow wants to force the identifying string to a certain value in
-the build product".
+Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Robin Jarry <robin@jarry.cc>
+---
 
+Notes:
+    v3 -> v4:
+    
+    * Added test case.
+    * Make sure to always cleanup the temp worktree.
+    * Add configuration knobs to tweak the remote and ref on which to check
+      if the patches apply without conflicts.
 
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index 2ccc3a9bc9..307634a94f 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -144,8 +144,6 @@ man5dir = $(mandir)/man5
->  man7dir = $(mandir)/man7
->  # DESTDIR =
->  
-> -GIT_DATE := $(shell git show --quiet --pretty='%as')
-> -
->  ASCIIDOC = asciidoc
->  ASCIIDOC_EXTRA =
->  ASCIIDOC_HTML = xhtml11
-> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-> index 9a1111af9b..14903bd261 100755
-> --- a/GIT-VERSION-GEN
-> +++ b/GIT-VERSION-GEN
-> @@ -10,7 +10,8 @@ LF='
->  # then try git-describe, then default.
->  if test -f version
->  then
-> -	VN=$(cat version) || VN="$DEF_VER"
-> +	VN=$(cut -d" " -f1 version) || VN="$DEF_VER"
-> +	DN=$(cut -d" " -f2 version) || DN=""
+ Documentation/githooks.txt                 | 22 +++++++
+ git-send-email.perl                        | 17 ++++-
+ t/t9001-send-email.sh                      | 31 +++++++++
+ templates/hooks--sendemail-validate.sample | 77 ++++++++++++++++++++++
+ 4 files changed, 146 insertions(+), 1 deletion(-)
+ create mode 100755 templates/hooks--sendemail-validate.sample
 
-Are we sure historical GIT_VERSION strings never had a SP in it?
-I would be very surprised if we did, but the correctness of the
-approach depends on that assumption.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 62908602e7be..c8e55b2613f5 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -600,6 +600,28 @@ the name of the file that holds the e-mail to be sent.  Exiting with a
+ non-zero status causes `git send-email` to abort before sending any
+ e-mails.
+ 
++The following environment variables are set when executing the hook.
++
++`GIT_SENDEMAIL_FILE_COUNTER`::
++	A 1-based counter incremented by one for every file holding an e-mail
++	to be sent (excluding any FIFOs). This counter does not follow the
++	patch series counter scheme. It will always start at 1 and will end at
++	GIT_SENDEMAIL_FILE_TOTAL.
++
++`GIT_SENDEMAIL_FILE_TOTAL`::
++	The total number of files that will be sent (excluding any FIFOs). This
++	counter does not follow the patch series counter scheme. It will always
++	be equal to the number of files being sent, whether there is a cover
++	letter or not.
++
++These variables may for instance be used to validate patch series.
++
++The sample `sendemail-validate` hook that comes with Git checks that all sent
++patches (excluding the cover letter) can be applied on top of the upstream
++repository default branch without conflicts. Some placeholders are left for
++additional validation steps to be performed after all patches of a given series
++have been applied.
++
+ fsmonitor-watchman
+ ~~~~~~~~~~~~~~~~~~
+ 
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 07f2a0cbeaad..497ec0354790 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -795,11 +795,26 @@ sub is_format_patch_arg {
+ @files = handle_backup_files(@files);
+ 
+ if ($validate) {
++	# FIFOs can only be read once, exclude them from validation.
++	my @real_files = ();
+ 	foreach my $f (@files) {
+ 		unless (-p $f) {
+-			validate_patch($f, $target_xfer_encoding);
++			push(@real_files, $f);
+ 		}
+ 	}
++
++	# Run the loop once again to avoid gaps in the counter due to FIFO
++	# arguments provided by the user.
++	my $num = 1;
++	my $num_files = scalar @real_files;
++	$ENV{GIT_SENDEMAIL_FILE_TOTAL} = "$num_files";
++	foreach my $r (@real_files) {
++		$ENV{GIT_SENDEMAIL_FILE_COUNTER} = "$num";
++		validate_patch($r, $target_xfer_encoding);
++		$num += 1;
++	}
++	delete $ENV{GIT_SENDEMAIL_FILE_COUNTER};
++	delete $ENV{GIT_SENDEMAIL_FILE_TOTAL};
+ }
+ 
+ if (@files) {
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 323952a572d6..7c7625759883 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -2326,6 +2326,37 @@ test_expect_success $PREREQ 'invoke hook' '
+ 	)
+ '
+ 
++expected_file_counter_output () {
++	total=$1
++	count=0
++	while test $count -ne $total
++	do
++		count=$((count + 1)) &&
++		echo "$count/$total" || return
++	done
++}
++
++test_expect_success $PREREQ '--validate hook allows counting of messages' '
++	test_when_finished "rm -rf my-hooks.log" &&
++	test_config core.hooksPath "my-hooks" &&
++	mkdir -p my-hooks &&
++
++	write_script my-hooks/sendemail-validate <<-\EOF &&
++		num=$GIT_SENDEMAIL_FILE_COUNTER &&
++		tot=$GIT_SENDEMAIL_FILE_TOTAL &&
++		echo "$num/$tot" >>my-hooks.log || exit 1
++	EOF
++
++	>my-hooks.log &&
++	expected_file_counter_output 4 >expect &&
++	git send-email \
++		--from="Example <from@example.com>" \
++		--to=nobody@example.com \
++		--smtp-server="$(pwd)/fake.sendmail" \
++		--validate -3 --cover-letter --force &&
++	test_cmp expect my-hooks.log
++'
++
+ test_expect_success $PREREQ 'test that send-email works outside a repo' '
+ 	nongit git send-email \
+ 		--from="Example <nobody@example.com>" \
+diff --git a/templates/hooks--sendemail-validate.sample b/templates/hooks--sendemail-validate.sample
+new file mode 100755
+index 000000000000..dcefcc1f992f
+--- /dev/null
++++ b/templates/hooks--sendemail-validate.sample
+@@ -0,0 +1,77 @@
++#!/bin/sh
++
++# An example hook script to validate a patch (and/or patch series) before
++# sending it via email.
++#
++# The hook should exit with non-zero status after issuing an appropriate
++# message if it wants to prevent the email(s) from being sent.
++#
++# To enable this hook, rename this file to "sendemail-validate".
++#
++# By default, it will only check that the patch(es) can be applied on top of
++# the default upstream branch without conflicts in a secondary worktree. After
++# validation (successful or not) of the last patch of a series, the worktree
++# will be deleted.
++#
++# The following config variables can be set to change the default remote and
++# remote ref that are used to apply the patches against:
++#
++#   sendemail.validateRemote (default: origin)
++#   sendemail.validateRemoteRef (default: HEAD)
++#
++# Replace the TODO placeholders with appropriate checks according to your
++# needs.
++
++validate_cover_letter() {
++	file="$1"
++	# TODO: Replace with appropriate checks (e.g. spell checking).
++	true
++}
++
++validate_patch() {
++	file="$1"
++	# Ensure that the patch applies without conflicts.
++	git am -3 "$file" || return
++	# TODO: Replace with appropriate checks for this patch
++	# (e.g. checkpatch.pl).
++	true
++}
++
++validate_series() {
++	# TODO: Replace with appropriate checks for the whole series
++	# (e.g. quick build, coding style checks, etc.).
++	true
++}
++
++# main -------------------------------------------------------------------------
++
++if test "$GIT_SENDEMAIL_FILE_COUNTER" = 1
++then
++	remote=$(git config --default origin --get sendemail.validateRemote) &&
++	ref=$(git config --default HEAD --get sendemail.validateRemoteRef) &&
++	worktree=$(mktemp --tmpdir -d sendemail-validate.XXXXXXX) &&
++	git worktree add -fd --checkout "$worktree" "refs/remotes/$remote/$ref" &&
++	git config --replace-all sendemail.validateWorktree "$worktree" &&
++else
++	worktree=$(git config --get sendemail.validateWorktree)
++fi || {
++	echo "sendemail-validate: error: failed to prepare worktree" >&2
++	exit 1
++}
++
++unset GIT_DIR GIT_WORK_TREE
++cd "$worktree" &&
++
++if grep -q "^diff --git " "$1"
++then
++	validate_patch "$1"
++else
++	validate_cover_letter "$1"
++fi &&
++
++if test "$GIT_SENDEMAIL_FILE_COUNTER" = "$GIT_SENDEMAIL_FILE_TOTAL"
++then
++	git config --unset-all sendemail.validateWorktree &&
++	trap 'git worktree remove -ff "$worktree"' EXIT &&
++	validate_series
++fi
+-- 
+2.40.0
 
-Thanks.
