@@ -2,102 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D0F1C77B72
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 19:42:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 693E5C77B72
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 19:49:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229615AbjDNTmI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 15:42:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51492 "EHLO
+        id S229939AbjDNTta (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 15:49:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjDNTmH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 15:42:07 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D57F49EA
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 12:42:06 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 312D8202737;
-        Fri, 14 Apr 2023 15:42:03 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-        :to:cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=suFao5kdWxpXJ7MBNeODIhZ2v87Kbkza3eg5cN8
-        CoNo=; b=g2xQ1g6qA0XzuLBpIu5K5djSX9BNor1r3rIo6PM4y8rinI6fx6q8EVF
-        3iJsUBn6FzsvazYF/44lD0Xz07LTc/F2tzO9UnrFVd+ijFEADEwYpTzqmTv8nQsc
-        lnwlrtcdVLL+2HTSjGHDfxxRrkWng0IN73FYy1en5k4KSqpZdXFc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2A836202736;
-        Fri, 14 Apr 2023 15:42:03 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [108.15.224.39])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D3334202732;
-        Fri, 14 Apr 2023 15:41:58 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Date:   Fri, 14 Apr 2023 15:41:55 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 06/18] version-gen: remove redundant check
-Message-ID: <ZDmsg0njhtv_qM9a@pobox.com>
-References: <20230414121841.373980-1-felipe.contreras@gmail.com>
- <20230414121841.373980-7-felipe.contreras@gmail.com>
- <ZDltLSTxBCWRoMjK@pobox.com>
- <643991c58aef_5ecfe29433@chronos.notmuch>
- <ZDmjIqNwVMESgHnn@pobox.com>
- <6439aa5b2c776_6058729489@chronos.notmuch>
+        with ESMTP id S229996AbjDNTtY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 15:49:24 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9EC14C39
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 12:49:19 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id hg14-20020a17090b300e00b002471efa7a8fso6113752pjb.0
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 12:49:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google; t=1681501759; x=1684093759;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CC4oRzqMk72n/6GwASutxIcm7ZjAxLSLXNxzCjp0AEE=;
+        b=F+T+BkMxRMUJjoeEBnFOAQUS7RGt2rWu07PTQja1v41H7rtoIXjByXzuXZFBpkY1wn
+         91JomY6cbZYpsyRp/ElG8F4dncOhsuDMLrF1RfIkskqIg5Qpi+EqyUiKGGgVB8A5g5Xr
+         7qyBuVBlXHQQq6ds8RB4n5s9UaLZZR9ohIRVVkn8SHJv0UgFAUy71VHCbHUbYkAS4Odx
+         I1ZGTAwO62/HM4dZRQztGG1zFSzgPabtbkSKDe5+vDHJmH9hP6vNPFC7WETs/Q1DcQ2L
+         aaVw7wnWAstUcVReIftRkQ2TO/M9SWDpoY5BBZrZIVPYHA2iqyp6R3AJkoKLFGPYi07m
+         yelQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1681501759; x=1684093759;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CC4oRzqMk72n/6GwASutxIcm7ZjAxLSLXNxzCjp0AEE=;
+        b=XZqYCILMGdpsuy7Xv0Eut3feJ21UHZAcgVdBYM1qnZpmVfddjS/4MIfIpf3FNF3rep
+         i7R9MWq7zuetUe2rrH0MKFcdxOs2WraEJck83Pyp9LNvLd1cRs5vRc+oA9MaEXC43hMK
+         Y1Pa8npr6WCBDSZkkE4JWDOanHdULGkaFo+zqTY+YeitMEli78hLKOdGZuYT3Y6IMvp7
+         kG3smlYbq0czu67PhzGYO8R0ThUL2+txWlyZOOSxIIBOak0/g6E+GMX8K/wG8Oagcj3S
+         1emKfYRHxTv8LbITn3Lzsdh5tJs6x3z6q0fxj2Az/9JFmMv6kZHS36xQ4F5THnjRrLze
+         nl6A==
+X-Gm-Message-State: AAQBX9fjMp4m3S4nkVsdOIrixOxWVOQoNNIn3jpP6QB/wKO4ro0iwPk+
+        SRcAdDzqiuVnvTwec6WU022k
+X-Google-Smtp-Source: AKy350ZAwBw7a/ZPKYTGs9DmVmzAsY63LhxQMxkMGHjI20ekEbEf9+ZiyBEe81uv3Oz2xpSHwsIEIQ==
+X-Received: by 2002:a05:6a20:4a04:b0:d7:380b:660 with SMTP id fr4-20020a056a204a0400b000d7380b0660mr7343188pzb.3.1681501758926;
+        Fri, 14 Apr 2023 12:49:18 -0700 (PDT)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id 142-20020a630494000000b00513955cc174sm3186968pge.47.2023.04.14.12.49.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 14 Apr 2023 12:49:18 -0700 (PDT)
+Message-ID: <ebcf2426-db40-e967-9db5-532869cac8ff@github.com>
+Date:   Fri, 14 Apr 2023 12:49:16 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6439aa5b2c776_6058729489@chronos.notmuch>
-X-Pobox-Relay-ID: 6BB0D0E2-DAFC-11ED-B774-B31D44D1D7AA-09356542!pb-smtp21.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.10.0
+Subject: Re: [PATCH 1/5] revisions.txt: document more special refs
+Content-Language: en-US
+To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+References: <pull.1515.git.1681495119.gitgitgadget@gmail.com>
+ <66c7e514157f3c8220eb994cea7c4659d5241042.1681495119.git.gitgitgadget@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <66c7e514157f3c8220eb994cea7c4659d5241042.1681495119.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Felipe Contreras wrote:
-> Todd Zullinger wrote:
->> If I have a git repo, say ~/fedora/git which contains the
->> fedora packaging (spec file, etc.) and extract a git archive
->> in this directory, the describe will now pick up the data
->> from the parent git directory, won't it?
->> 
->>     $ git -C ~/fedora clone https://src.fedoraproject.org/rpms/git.git
->>     $ cd ~/fedora/git
->>     $ git -C ~/upstream/git archive --format=tar --prefix=git/ HEAD | tar xf -
->>     $ cd git
->>     $ make GIT-VERSION-GEN
->>     $ cat GIT-VERSION-FILE 
->>     GIT_VERSION = 
-> 
-> I don't think this is a realistic use-case, but supposing it is, what would be
-> the desired outcome in this case?
-> 
->  GIT_VERSION = 2.40.GIT
-> 
-> ?
+Philippe Blain via GitGitGadget wrote:
+> @@ -55,8 +55,15 @@ you can easily change the tip of the branch back to the state before you ran
+>  them.
+>  `MERGE_HEAD` records the commit(s) which you are merging into your branch
+>  when you run `git merge`.
+> +`REBASE_HEAD`, during a rebase, records the commit at which the
+> +operation is currently stopped, either because of conflicts or an `edit`
+> +command in an interactive rebase.
+> +`REVERT_HEAD` records the commit which you are reverting when you
+> +run `git revert`.
+>  `CHERRY_PICK_HEAD` records the commit which you are cherry-picking
+>  when you run `git cherry-pick`.
+> +`BISECT_HEAD` records the current commit to be tested when you
+> +run `git bisect --no-checkout`.
 
-That's what we get before this change.  I don't have an
-opinion on whether that could/should change, but if it does,
-it should be deliberate I think.
+This is a fairly minor point, so feel free to ignore if you disagree or feel
+it's not worth the effort:
 
->> The version file in the tarballs prevents this from
->> happening in the most common case, but it still feels like
->> this is loosening things a little more than it should.
-> 
-> If we care about this, the same behavior can be achieved with GIT_CEILING_DIRECTORIES:
-> 
->  GIT_CEILING_DIRECTORIES=$(cd .. && pwd) git describe ...
+Although the special refs in this list (HEAD, MERGE_HEAD, REBASE_HEAD etc.)
+are visually separated by newlines in this doc, they render in the manpages
+& HTML in a single monolithic paragraph (see [1]). With the addition of
+three more descriptions (four if you count 'AUTO_MERGE' in patch 4/5), that
+paragraph is getting large enough that it might be difficult for a reader to
+parse and find information about a specific ref. 
 
-I only mention it because it seemed like a change in
-behavior when the series aimed to not change any behavior.
-I'm sure there are plenty of things which could be changed
-while making imrpveoments here.  I think we'll be better off
-if those changes are all noted and deliberate.
+To help with that, you could create visual separation in the rendered doc by
+adding a '+' between each special ref description; converting them into a
+bullet pointed list would also work, I think.
 
-Thanks for working on this stuff, it is good to see
-improvements to this sort of plumbing.
+[1] https://git-scm.com/docs/revisions#Documentation/revisions.txt-emltrefnamegtemegemmasterememheadsmasterememrefsheadsmasterem
 
--- 
-Todd
+>  +
+>  Note that any of the 'refs/*' cases above may come either from
+>  the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
+
