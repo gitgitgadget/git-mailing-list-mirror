@@ -2,133 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78956C77B71
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 21:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38169C77B72
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 21:24:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229947AbjDNVYH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 17:24:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34330 "EHLO
+        id S230192AbjDNVYc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 17:24:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbjDNVYG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 17:24:06 -0400
+        with ESMTP id S230205AbjDNVYZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 17:24:25 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 849E192
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 14:24:05 -0700 (PDT)
-Received: (qmail 22340 invoked by uid 109); 14 Apr 2023 21:24:05 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 166139ED7
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 14:24:17 -0700 (PDT)
+Received: (qmail 22355 invoked by uid 109); 14 Apr 2023 21:24:17 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Apr 2023 21:24:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 14 Apr 2023 21:24:17 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31646 invoked by uid 111); 14 Apr 2023 21:24:04 -0000
+Received: (qmail 31653 invoked by uid 111); 14 Apr 2023 21:24:16 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Apr 2023 17:24:04 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 14 Apr 2023 17:24:16 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 14 Apr 2023 17:24:04 -0400
+Date:   Fri, 14 Apr 2023 17:24:16 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, Jonas Haag <jonas@lophus.org>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org
-Subject: [PATCH v3 0/7] v0 multiple-symref infinite loop fix and test cleanup
-Message-ID: <20230414212404.GA639653@coredump.intra.peff.net>
-References: <20230412062300.GA838367@coredump.intra.peff.net>
- <20230412063118.GC1681312@coredump.intra.peff.net>
- <20230412090423.GA2187240@coredump.intra.peff.net>
+Subject: [PATCH v3 1/7] v0 protocol: fix infinite loop when parsing
+ multi-valued capabilities
+Message-ID: <20230414212416.GA639756@coredump.intra.peff.net>
+References: <20230414212404.GA639653@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230412090423.GA2187240@coredump.intra.peff.net>
+In-Reply-To: <20230414212404.GA639653@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 12, 2023 at 05:04:23AM -0400, Jeff King wrote:
+If Git's client-side parsing of an upload-pack response (so git-fetch or
+ls-remote) sees multiple instances of a single capability, it can enter
+an infinite loop due to a bug in advancing the "offset" parameter in the
+parser.
 
-> I'll squash that in and update the commit message before I do the next
-> re-roll (but will still hold off a bit to get further comments).
+This bug can't happen between a client and server of the same Git
+version. The client bug is in parse_feature_value() when the caller
+passes in an offset parameter. And that only happens when the v0
+protocol is parsing "symref" and "object-format" capabilities, via
+next_server_feature_value(). But Git has never produced multiple
+object-format capabilities, and it stopped producing multiple symref
+values in d007dbf7d6 (Revert "upload-pack: send non-HEAD symbolic refs",
+2013-11-18).
 
-Nobody said anything, so I assume the rest of the series is perfect. ;)
+However, upload-pack did produce multiple symref entries for a while,
+and they are valid. Plus other implementations, such as Dulwich will
+still do so. So we should handle them. And even if we do not expect it,
+it is obviously a bug for the parser to enter an infinite loop.
 
-Junio, I see that you picked up this fix as a "squash", along with my
-other "v2" update. Here's a v3 that does the actual squash along with a
-commit message update. That ties up all loose ends from my perspective,
-but of course if anybody has review comments, please send them.
+The bug itself is pretty simple. Commit 2c6a403d96 (connect: add
+function to parse multiple v1 capability values, 2020-05-25) added the
+"offset" parameter, which is used as both an in- and out-parameter. When
+parsing the first "symref" capability, *offset will be 0 on input, and
+after parsing the capability, we set *offset to an index just past the
+value by taking a pointer difference "(value + end) - feature_list".
 
-The range-diff against what you have in jk/protocol-cap-parse-fix
-(after squashing) is below.
+But on the second call, now *offset is set to that larger index, which
+lets us skip past the first "symref" capability. However, we do so by
+incrementing feature_list. That means our pointer difference is now too
+small; it is counting from where we resumed parsing, not from the start
+of the original feature_list pointer. And because we incremented
+feature_list only inside our function, and not the caller, that
+increment is lost next time the function is called.
 
-  [1/7]: v0 protocol: fix infinite loop when parsing multi-valued capabilities
-  [2/7]: t5512: stop referring to "v1" protocol
-  [3/7]: v0 protocol: fix sha1/sha256 confusion for capabilities^{}
-  [4/7]: t5512: add v2 support for "ls-remote --symref" test
-  [5/7]: t5512: allow any protocol version for filtered symref test
-  [6/7]: t5512: test "ls-remote --heads --symref" filtering with v0 and v2
-  [7/7]: v0 protocol: use size_t for capability length/offset
+One solution would be to account for those skipped bytes by incrementing
+*offset, rather than assigning to it. But wait, there's more!
 
- builtin/receive-pack.c |   2 +-
- connect.c              |  30 ++++----
- connect.h              |   4 +-
- fetch-pack.c           |   4 +-
- send-pack.c            |   2 +-
- t/t5512-ls-remote.sh   | 156 +++++++++++++++++++++++------------------
- transport.c            |   2 +-
- upload-pack.c          |   2 +-
- 8 files changed, 112 insertions(+), 90 deletions(-)
+We also increment feature_list if we have a near-miss. Say we are
+looking for "symref" and find "almost-symref". In that case we'll point
+feature_list to the "y" in "almost-symref" and restart our search. But
+that again means our offset won't be correct, as it won't account for
+the bytes between the start of the string and that "y".
 
-1:  5471cf388b = 1:  117f371be1 v0 protocol: fix infinite loop when parsing multi-valued capabilities
-2:  eb3e6e6d1c = 2:  de695291b0 t5512: stop referring to "v1" protocol
-3:  c77b8ae4a0 ! 3:  515149d67a t5512: stop using jgit for capabilities^{} test
-    @@ Metadata
-     Author: Jeff King <peff@peff.net>
-     
-      ## Commit message ##
-    -    t5512: stop using jgit for capabilities^{} test
-    +    v0 protocol: fix sha1/sha256 confusion for capabilities^{}
-     
-         Commit eb398797cd (connect: advertized capability is not a ref,
-         2016-09-09) added support for an upload-pack server responding with:
-     
-           0000000000000000000000000000000000000000        capabilities^{}
-     
-    -    followed by a NUL and capabilities. This is not something Git itself has
-    -    ever produced for upload-pack, but JGit does. And hence the test used
-    -    JGit to reproduce the real-world situation. That was good for verifying
-    -    that the incompatibility was fixed, but it's a lousy regression test for
-    -    a few reasons:
-    +    followed by a NUL and the actual capabilities. We correctly parse the
-    +    oid using the packet_reader's hash_algo field, but then we compare it to
-    +    null_oid(), which will instead use our current repo's default algorithm.
-    +    If we're defaulting to sha256 locally but the other side is sha1, they
-    +    won't match and we'll fail to parse the line (and thus die()).
-     
-    -      - hardly anybody runs it, because you have to have jgit installed
-    +    This can cause a test failure when the suite is run with
-    +    GIT_TEST_DEFAULT_HASH=sha256, and we even do so regularly via the
-    +    linux-sha256 CI job. But since the test requires JGit to run, it's
-    +    usually just skipped, and nobody noticed the problem.
-    +
-    +    The reason the original patch used JGit is that Git itself does not ever
-    +    produce such a line via upload-pack; the feature was added to fix a
-    +    real-world problem when interacting with JGit. That was good for
-    +    verifying that the incompatibility was fixed, but it's not a good
-    +    regression test:
-    +
-    +      - hardly anybody runs it, because you have to have jgit installed;
-    +        hence this bug going unnoticed
-     
-           - we're depending on jgit's behavior for the test to do anything
-             useful. In particular, this behavior is only relevant to the v0
-    @@ Commit message
-             script.
-     
-         Instead, let's just hard-code the response that's of interest to us.
-    -    That will test exactly what we want for every run.
-    +    That will test exactly what we want for every run, and reveals the bug
-    +    when run in sha256 mode. And of course we'll fix the actual bug by using
-    +    the correct hash_algo struct.
-     
-         Signed-off-by: Jeff King <peff@peff.net>
-     
-4:  8db5b3c3bf = 4:  152d904a4a t5512: add v2 support for "ls-remote --symref" test
-5:  f1cd63e16e = 5:  87053ab90b t5512: allow any protocol version for filtered symref test
-6:  b6b9d1ad44 = 6:  37d300d244 t5512: test "ls-remote --heads --symref" filtering with v0 and v2
-7:  870d6e0a3b = 7:  4db6853ea2 v0 protocol: use size_t for capability length/offset
+So instead, let's just record the beginning of the feature_list string
+in a separate pointer that we never touch. That offset we take in and
+return is meant to be using that point as a base, and now we'll do so
+consistently.
+
+Since the bug can't be reproduced using the current version of
+git-upload-pack, we'll instead hard-code an input which triggers the
+problem. Before this patch it loops forever re-parsing the second symref
+entry. Now we check both that it finishes, and that it parses both
+entries correctly (a case we could not test at all before).
+
+We don't need to worry about testing v2 here; it communicates the
+capabilities in a completely different way, and doesn't use this code at
+all. There are tests earlier in t5512 that are meant to cover this (they
+don't, but we'll address that in a future patch).
+
+Reported-by: Jonas Haag <jonas@lophus.org>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ connect.c            |  5 +++--
+ t/t5512-ls-remote.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 2 deletions(-)
+
+diff --git a/connect.c b/connect.c
+index c0c8a38178..0dc739c4e5 100644
+--- a/connect.c
++++ b/connect.c
+@@ -597,6 +597,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
+ 
+ const char *parse_feature_value(const char *feature_list, const char *feature, int *lenp, int *offset)
+ {
++	const char *orig_start = feature_list;
+ 	int len;
+ 
+ 	if (!feature_list)
+@@ -616,7 +617,7 @@ const char *parse_feature_value(const char *feature_list, const char *feature, i
+ 				if (lenp)
+ 					*lenp = 0;
+ 				if (offset)
+-					*offset = found + len - feature_list;
++					*offset = found + len - orig_start;
+ 				return value;
+ 			}
+ 			/* feature with a value (e.g., "agent=git/1.2.3") */
+@@ -628,7 +629,7 @@ const char *parse_feature_value(const char *feature_list, const char *feature, i
+ 				if (lenp)
+ 					*lenp = end;
+ 				if (offset)
+-					*offset = value + end - feature_list;
++					*offset = value + end - orig_start;
+ 				return value;
+ 			}
+ 			/*
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 20d063fb9a..cab67282df 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -15,6 +15,19 @@ generate_references () {
+ 	done
+ }
+ 
++test_expect_success 'set up fake upload-pack' '
++	# This can be used to simulate an upload-pack that just shows the
++	# contents of the "input" file (prepared with the test-tool pkt-line
++	# helper), and does not do any negotiation (since ls-remote does not
++	# need it).
++	write_script cat-input <<-\EOF
++	# send our initial advertisement/response
++	cat input
++	# soak up the flush packet from the client
++	cat
++	EOF
++'
++
+ test_expect_success 'dies when no remote found' '
+ 	test_must_fail git ls-remote
+ '
+@@ -360,4 +373,43 @@ test_expect_success 'ls-remote prefixes work with all protocol versions' '
+ 	test_cmp expect actual.v2
+ '
+ 
++test_expect_success 'v0 clients can handle multiple symrefs' '
++	# Modern versions of Git will not return multiple symref capabilities
++	# for v0, so we have to hard-code the response. Note that we will
++	# always use both v0 and object-format=sha1 here, as the hard-coded
++	# response reflects a server that only supports those.
++	oid=1234567890123456789012345678901234567890 &&
++	symrefs="symref=refs/remotes/origin/HEAD:refs/remotes/origin/main" &&
++	symrefs="$symrefs symref=HEAD:refs/heads/main" &&
++
++	# Likewise we want to make sure our parser is not fooled by the string
++	# "symref" appearing as part of an earlier cap. But there is no way to
++	# do that via upload-pack, as arbitrary strings can appear only in a
++	# "symref" value itself (where we skip past the values as a whole)
++	# and "agent" (which always appears after "symref", so putting our
++	# parser in a confused state is less interesting).
++	caps="some other caps including a-fake-symref-cap" &&
++
++	test-tool pkt-line pack >input.q <<-EOF &&
++	$oid HEADQ$caps $symrefs
++	$oid refs/heads/main
++	$oid refs/remotes/origin/HEAD
++	$oid refs/remotes/origin/main
++	0000
++	EOF
++	q_to_nul <input.q >input &&
++
++	cat >expect <<-EOF &&
++	ref: refs/heads/main	HEAD
++	$oid	HEAD
++	$oid	refs/heads/main
++	ref: refs/remotes/origin/main	refs/remotes/origin/HEAD
++	$oid	refs/remotes/origin/HEAD
++	$oid	refs/remotes/origin/main
++	EOF
++
++	git ls-remote --symref --upload-pack=./cat-input . >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.40.0.515.gdfb9e78b42
+
