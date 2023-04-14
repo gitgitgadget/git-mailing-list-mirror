@@ -2,200 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E67E4C77B6E
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 17:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4BB2C77B71
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 17:14:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229786AbjDNRFX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 13:05:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34764 "EHLO
+        id S230260AbjDNROI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 13:14:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjDNRFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 13:05:21 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F414BE9
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 10:05:19 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-50489b16e6aso4346448a12.1
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 10:05:19 -0700 (PDT)
+        with ESMTP id S229672AbjDNROH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 13:14:07 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22C4026AB
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 10:14:06 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id y11-20020a17090a600b00b0024693e96b58so18237311pji.1
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 10:14:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1681491918; x=1684083918;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=df2v/MAfh+lA5WLKWOdeP9hxOHzZKhX4Fxu7T9DKeSU=;
-        b=GHAUZEzXtZyFOWVYEvERwpK/t91uk9fvSrsXrBqAqWQpdTRaCVjH/2puYYnVFyAL4/
-         t/7BRLsJ/1Upq4fueKp39sSDc0whBujblbhGwB5By3+kXbyHikpWRK47E57QtoaG3SmJ
-         XRl817p74yE2rgk0AYVAlLTz57oX/7+xxRji4=
+        d=gmail.com; s=20221208; t=1681492445; x=1684084445;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VKc3qk7zX14Oq+EHVHzBBrNlz8aty+2OLQzIjekxmUw=;
+        b=UxN7YnE3MjH8JDwI2GBcVIcy/HbJmD+kWy84zoQUmuIcmtW78fqsJ4Y/16d7dpaKsC
+         nCAWfsF7wy/aEOLCCR40NIv3z3Nfmg496UhPVzzQ+WuSlwgTyPz0mAYYptQS62OWnlVI
+         1m5X5DmD5uaUr7U6oC/LJVKY++WGJ8ouWLls9qe3PPgEyKCd+ZzuWz1SjScxGGHFZz++
+         bEHf1IIue5+PX6h2PXGC6iNxaJqaY4ca9MlQamdN0RPNgmT0lKIJSOms21HHErXEyvwa
+         ZFCiaG5kTGOU6K1yKRvuWsITGUsK8Ngq7Xo61MEl/hxfLZitKy8eP3Hrf7jFixEeLiLm
+         z21w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681491918; x=1684083918;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=df2v/MAfh+lA5WLKWOdeP9hxOHzZKhX4Fxu7T9DKeSU=;
-        b=CARiPK4il85AzWKqTSeDTj06S5PFquHLGRUE7r3XHUwP5hRcSxASlpNZpXPxhF1MTv
-         9ccirl0ChEpEhOW3OpzTA6gAPrIpgOO9ca/Atly04YJa5VCBerL3/ELMuiHYeHeJ5xkZ
-         7LeZ5YwRg4thwP7F4leqORwteO2dDNkuOx6AB0nzH+H83V/Ah4nvkcZAQjTIYhZr8CpH
-         priuDmI4Ez69Cvcj0zVI/g9XpQa6bePgwuuRS81mejVpwl/peOIa7d9ozEsFy+DKcLa+
-         PAQCg4vJidLNTc9bN8+7QnNpwhYcF/dAkONqNt1ZPj+1T3W9TeKPK5TNfI431xzmnW+s
-         FzHA==
-X-Gm-Message-State: AAQBX9dp6Cg7HqDKh5hQn0CMPqF/Te3QKYg6VpokzmZg52aockhay4Tc
-        37B1EqykcX3iVTblr+slaeAKB3uU+hJb8B7pYQzHlQ==
-X-Google-Smtp-Source: AKy350Yq8KJvLCQeT+CFpl5UfirKs5N71vZBWUN7fpQF1hincJ3nxScEI0CVuliq1ROgJ3qZEFCLlA==
-X-Received: by 2002:a50:eb4b:0:b0:504:b6a6:cbe0 with SMTP id z11-20020a50eb4b000000b00504b6a6cbe0mr6557527edp.12.1681491918046;
-        Fri, 14 Apr 2023 10:05:18 -0700 (PDT)
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com. [209.85.208.42])
-        by smtp.gmail.com with ESMTPSA id bf13-20020a0564021a4d00b005024459f431sm2305527edb.70.2023.04.14.10.05.16
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Apr 2023 10:05:17 -0700 (PDT)
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-50489c109f4so5268082a12.2
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 10:05:16 -0700 (PDT)
-X-Received: by 2002:a50:9f4f:0:b0:4fc:a484:c6ed with SMTP id
- b73-20020a509f4f000000b004fca484c6edmr3442030edf.2.1681491916568; Fri, 14 Apr
- 2023 10:05:16 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1681492445; x=1684084445;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VKc3qk7zX14Oq+EHVHzBBrNlz8aty+2OLQzIjekxmUw=;
+        b=SyUf6PSotDxGp8wbqgILTi8AOUs+gPeLFPtrOwh1pIGb0QwKbfZSzniqbdrkHlnmzp
+         xNoFCP6my5fxm//LNbJeZAuU465GaNIV/UnRdWLaT6sN6gxwDKCkNPIkQ6A/rVyRFT2y
+         oQjvvFKVI/mfbHNycxrD8LZVST4mDq8KWln78VjnNU8CrGWGetJJMvgXrz1l4F59D88D
+         gpJOvlWJX1N/cf1sx53V+58KJDcLuqjiZgqHXgvZNb3zl15ia09AyQ3qL5yvm0+f/8Ej
+         kAmzzi5BUwAvrsJIe/baLuxBcea4FgJRxoWrz0RczTvHzOQX3bvBWhOseFFajPvU873h
+         Z6dw==
+X-Gm-Message-State: AAQBX9dvL5uoLOjUGxkYx1zae5wRFyIfnhSyyL0yGbowpciYhH4rzPxD
+        3MUqQ8ugRsVLW9chguWgemc=
+X-Google-Smtp-Source: AKy350ZRtf07703xit5So1JISisF61CSnwZBm7ioj2ojdHMfYS1D79BDRlZ6Gaq5innNCkQOwN/vYA==
+X-Received: by 2002:a05:6a20:bc96:b0:d9:b024:4824 with SMTP id fx22-20020a056a20bc9600b000d9b0244824mr5344419pzb.26.1681492445303;
+        Fri, 14 Apr 2023 10:14:05 -0700 (PDT)
+Received: from localhost (170.102.105.34.bc.googleusercontent.com. [34.105.102.170])
+        by smtp.gmail.com with ESMTPSA id y9-20020a62b509000000b0063a04905379sm3266172pfe.137.2023.04.14.10.14.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Apr 2023 10:14:04 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Felipe Contreras <felipe.contreras@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH] doc: set actual revdate for manpages
+References: <20230413074722.71260-1-felipe.contreras@gmail.com>
+        <20230414070449.GA540206@coredump.intra.peff.net>
+        <643949a57396c_5b7e62948d@chronos.notmuch>
+        <xmqqildys97o.fsf@gitster.g>
+Date:   Fri, 14 Apr 2023 10:14:04 -0700
+In-Reply-To: <xmqqildys97o.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+        14 Apr 2023 09:46:19 -0700")
+Message-ID: <xmqqa5zas7xf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 MIME-Version: 1.0
-References: <CAOLTT8RTB7kpabN=Rv1nHvKTaYh6pLR6moOJhfC2wdtUG_xahQ@mail.gmail.com>
- <xmqqy1n3k63p.fsf@gitster.g> <CAOLTT8SXXKG3uEd8Q=uh3zx7XeUDUWezGgNUSCd1Fpq-Kyy-2A@mail.gmail.com>
- <ZDIUvK/bF7BFqX5q@nand.local> <CAOLTT8RbU6G67BtE9fSv4gEn10dtR7cT-jf+dcEfhvNhvcwETQ@mail.gmail.com>
- <20230410201414.GC104097@coredump.intra.peff.net> <CAOLTT8T9pJFr94acvUo-8EYriST1gOAkXaDZBxHk54o=Zm5=Sg@mail.gmail.com>
- <20230412074309.GB1695531@coredump.intra.peff.net> <CAOLTT8Rw796zxMYxg5+nx8+YoQVnfy=nPXH8Aq0j0Cw+GLT1rA@mail.gmail.com>
- <20230414073035.GB540206@coredump.intra.peff.net> <CAOLTT8SEeY1tfU39xHPJ21F7o3dmgEFwNCny=Z2F4Y2HFR3DzA@mail.gmail.com>
-In-Reply-To: <CAOLTT8SEeY1tfU39xHPJ21F7o3dmgEFwNCny=Z2F4Y2HFR3DzA@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Fri, 14 Apr 2023 10:04:59 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wjr-CMLX2Jo2++rwcv0VNr+HmZqXEVXNsJGiPRUwNxzBQ@mail.gmail.com>
-Message-ID: <CAHk-=wjr-CMLX2Jo2++rwcv0VNr+HmZqXEVXNsJGiPRUwNxzBQ@mail.gmail.com>
-Subject: Re: [Question] Can git cat-file have a type filtering option?
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>, johncai86@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 14, 2023 at 5:17=E2=80=AFAM ZheNing Hu <adlternative@gmail.com>=
- wrote:
->
-> Jeff King <peff@peff.net> =E4=BA=8E2023=E5=B9=B44=E6=9C=8814=E6=97=A5=E5=
-=91=A8=E4=BA=94 15:30=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > On Wed, Apr 12, 2023 at 05:57:02PM +0800, ZheNing Hu wrote:
-> > >
-> > > I'm still puzzled why git calculated the object id based on {type, si=
-ze, data}
-> > >  together instead of just {data}?
-> >
-> > You'd have to ask Linus for the original reasoning. ;)
+Junio C Hamano <gitster@pobox.com> writes:
 
-I originally thought of the git object store as "tagged pointers".
+> Formatted output from a repository working tree changes from
+> "04/14/2023" to "2023-04-13".  The value change may be intended,...
 
-That actually caused confusion initially when I tried to explain this
-to SCM people, because "tag" means something very different in an SCM
-environment than it means in computer architecture.
+Forgot to mention another thing.  While it may be a good idea to tie
+the datestamp etched in the formatted result to that of the source
+material, rather than the date the formatter happened to have been
+run, the committer date is more appropriate than the author date for
+that purpose, as the former is the date that the change made on the
+latter date (which is earlier) has become a part of the whole, from
+which the formatted result was produced.
 
-And the implication of a tagged pointer is that you have two parts of
-it - the "tag" and the "address". Both are relevant at all points.
+It may not make a big practical difference:
 
-This isn't quite as obvious in everyday moden git usage, because a lot
-of uses end up _only_ using the "address" (aka SHA1), but it's very
-much part of the object store design. Internally, the object layout
-never uses just the SHA1, it's all "type:SHA1", even if sometimes the
-types are implied (ie the tree object doesn't spell out "blob", but
-it's still explicit in the mode bits).
+ * For an individual who is trying out the changes just made, the
+   committer time and the author time are likely identical.
 
-This is very very obvious in "git cat-file", which was one of the
-original scripts in the first commit (but even there the tag/type has
-changed meaning over time: the very first version didn't use it as
-input at all, then it started verifying it, and then later it got the
-more subtle context of "peel the tags until you find this type").
+ * For a release process, what is at the tip of the released branch
+   is likely be the release notes and version bump, recorded by the
+   releaser, and again the committer time and the author time are
+   likely identical.
 
-You can also see this in the original README (again, go look at that
-first git commit): the README talks about the "tag of their type".
+ * For results of a pull request, the times are likely identical for
+   the merge commit.
 
-Of course, in practice git then walked away from having to specify the
-type all the time. It started even in that original release, in that
-the HEAD file never contained the type - because it was implicit (a
-HEAD is always a commit).
-
-So we ended up having a lot of situations like that where the actual
-tag part was implicit from context, and these days people basically
-never refer to the "full" object name with tag, but only the SHA1
-address.
-
-So now we have situations where the type really has to be looked up
-dynamically, because it's not explicitly encoded anywhere. While HEAD
-is supposed to always be a commit, other refs can be pretty much
-anything, and can point to a tag object, a commit, a tree or a blob.
-So then you actually have to look up the type based on the address.
-
-End result: these days people don't even think of git objects as
-"tagged pointers".  Even internally in git, lots of code just passes
-the "object name" along without any tag/type, just the raw SHA1 / OID.
-
-So that originally "everything is a tagged pointer" is much less true
-than it used to be, and now, instead of having tagged pointers, you
-mostly end up with just "bare pointers" and look up the type
-dynamically from there.
-
-And that "look up the type in the object" is possible because even
-originally, I did *not* want any kind of "object type aliasing".
-
-So even when looking up the object with the full "tag:pointer", the
-encoding of the object itself then also contains that object type, so
-that you can cross-check that you used the right tag.
-
-That said, you *can* see some of the effects of this "tagged pointers"
-in how the internals do things like
-
-    struct commit *commit =3D lookup_commit(repo, &oid);
-
-which conceptually very much is about tagged pointers. And the fact
-that two objects cannot alias is actually somewhat encoded in that: a
-"struct commit" contains a "struct object" as a member. But so does
-"struct blob" - and the two "struct object" cases are never the same
-"object".
-
-So there's never any worry about "could blob.object be the same object
-as commit.object"?
-
-That is actually inherent in the code, in how "lookup_commit()"
-actually does lookup_object() and then does object_as_type(OBJ_COMMIT)
-on the result.
-
-> Oh, you are right, this could be to prevent conflicts between Git objects
-> with identical content but different types. However, I always associate
-> Git with the file system, where metadata such as file type and size is
-> stored in the inode, while the file data is stored in separate chunks.
-
-See above: yes, git design was *also* influenced heavily by
-filesystems, but that was mostly in the sense of "this is how to
-encode these things without undue pain".
-
-The object database being immutable was partly a security and safety
-measure, but it was also very much partly a "rewriting files is going
-to be a major pain from a filesystem consistency standpoint - don't do
-it".
-
-But even more than a filesystem design, it's an "computer
-architecture" design. Think of the git object store as a very abstract
-computer architecture that has tagged pointers, stable storage, and no
-aliasing - and where the tag is actually verified at each lookup.
-
-The "no aliasing" means that no two distinct pointers can point to the
-same data. So a tagged pointer of type "commit" can not point to the
-same object as a tagged pointer of type "blob". They are distinct
-pointers, even if (maybe) the commit object encoding ends up then
-being identical to a blob object.
-
-And as mentioned, that "verified at each lookup" has mostly gone away,
-and "each lookup" has become more of a "can be verified by fsck", but
-it's probably still a good thing to think that way.
-
-You still have "lookup_object_by_type()" internally in git that takes
-the full tagged pointer, but almost nobody uses it any more. The
-closest you get is those "lookup_commit()" things (which are fairly
-common, still).
-
-              Linus
+but from the philosophical standpoint, it does matter.  Using the
+committer time would give us one more justification to use one
+single timestamp from the commit, when people complain "this manual
+page, as opposed to the other one that was changed in the latest
+release, has not seen any need to be updated for the past 3 years,
+yet the formatted output for these two manual pages carry the same
+date".
