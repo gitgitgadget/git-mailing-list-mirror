@@ -2,98 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C644C77B6E
-	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 13:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECFF8C77B6E
+	for <git@archiver.kernel.org>; Fri, 14 Apr 2023 13:28:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229831AbjDNNXy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 09:23:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53922 "EHLO
+        id S229493AbjDNN2i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 14 Apr 2023 09:28:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229853AbjDNNXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 09:23:51 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8C0A49CB
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 06:23:50 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id ec6so5286258oib.8
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 06:23:50 -0700 (PDT)
+        with ESMTP id S229446AbjDNN2h (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2023 09:28:37 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFBE06E87
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 06:28:35 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id c9so6707503ejz.1
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 06:28:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1681478630; x=1684070630;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1+Iqa+mkkrScysX0sSkxiJukJrdR8tn+b5pK29zR/7s=;
-        b=Bl8VwiL2Kfab1Kk8H2EE+yY1EcwPhGHMsWrh9SK8yBJwXVsHb+jKRFDbEbWZaEF2aA
-         zLFMnDDTdonpFUAYXJHaLN0KjAGXPMJ9cE2Yz5Tz+eYVJdvFjHx3MtgA3f746MRFAjfx
-         pi+XNUcbiQAG/IeaNHL4/7W/sjHPbSCPGSlDuMuH3oP02Udbq6T+HuKlLGBOSZ1/Gm27
-         AXXErb3jrF4yQNqfCi2dm6ldyIB3gJfIGnwUmqz8nFhWPLrGBD0o1KuUJQZem/cmXjk/
-         RF0jOkykBTn0gSl7Q67/pqmTA9S9uX1B/uFSiveZs1xHggwZK+9Y3qLVMzlvyM+PM8pG
-         1wrg==
+        d=gmail.com; s=20221208; t=1681478914; x=1684070914;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=joDDWYd132wEy2b/GezPTt5i4CbquUWp4nEecW7epHI=;
+        b=IPWmA8Y731bqMEPjSL/M2F4B9rF5NzBaICUTSLLhwr4EPUqZr/0WQn0yq4pJw9i1SG
+         HN6xoI9Q/g5ydRhzFniQs5dhc74W7zaFijd0Is5ssk1TNDtUqw1qkHdEtl1yPRhaWcM7
+         KJVSmir9uxHfT3qBKCls5BdGowcVKOyUH1FeEnBpf2mGSN3RK0xQHfeVs8GWaJHdgDnl
+         UTjnaVPt8FVRRLteABTBjDr2D5P25NoeEtz0mNPUPUpiaJ/GrDbwfyM6eUSO58m5Thw+
+         i/QgZ9n7AMBn0uqc2Jb+qps6nSLOrF13ulps6Dnp3yGWQbxINgeZwrel3St7P4yj5JiL
+         oNBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681478630; x=1684070630;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1+Iqa+mkkrScysX0sSkxiJukJrdR8tn+b5pK29zR/7s=;
-        b=Flt11agBTNK43teuKaXmkNm72ZSxipUy+krlSsDmfXkNvl8PynpGnkY3CKDSdaPvSy
-         qZn7bYFXlXpo8b5HYEawLKx97jtgoBcH+WQB75JpF0gdIv/UOkXSuMAXklj6UAZIMST9
-         OtXwwcfO6LkzJqQ/JDVfTEBhhlykMRM6s/ZPj1CtvuGVmosyC+OHFUK87UcsCbPU4cVB
-         6E5/swqfcLbNb1vK2q0Fi7eZUIAJSntMmyJu3WPj6XfZE9VSYP8mJkXsB196dEwtdqzn
-         Lwqkbv8kFQFzwW3o/4b9RoRLsGBRRLv3mjFmHS/wKMqeCovuqAa1aK6iNhmdEzRtkU8Q
-         Hqgw==
-X-Gm-Message-State: AAQBX9d9aOfz4bru8TuN1T1SRLVmR7gba021NDC35MzITWiKIqkfxV8L
-        fspfZ8oR3TP1JORWuG/37drca+kaFTXnQQzguQ==
-X-Google-Smtp-Source: AKy350YzcLb7jT7v/lFLQ2iWv7vyDjrCaxN1oyfsCgAQBsNBGZQzhW/qCjIz4ETkilO4MIWEVh3d/A==
-X-Received: by 2002:a05:6808:2798:b0:389:4ea4:7a40 with SMTP id es24-20020a056808279800b003894ea47a40mr2735348oib.6.1681478630056;
-        Fri, 14 Apr 2023 06:23:50 -0700 (PDT)
-Received: from [192.168.1.110] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id y62-20020aca3241000000b0038c233d05cbsm1366382oiy.47.2023.04.14.06.23.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 14 Apr 2023 06:23:49 -0700 (PDT)
-Message-ID: <15437c50-d3a1-1e34-b854-dc553e835cce@github.com>
-Date:   Fri, 14 Apr 2023 09:23:46 -0400
+        d=1e100.net; s=20221208; t=1681478914; x=1684070914;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=joDDWYd132wEy2b/GezPTt5i4CbquUWp4nEecW7epHI=;
+        b=eP92U+GrtoyY7HDXyK4GtuUlJ88monw1ZDfO80zDowV0jVW/qiTIyVaja6f1om8/85
+         JqzMhDlRttZPT4Nj8dOHuwAzOyercCfdFOqOmfKkYeH7lTGPr7Gb1XrQcNK2Q1kZFx8g
+         t4hJnFxQtU6M4HgQQlKeYbq38u90fmkjvBLmCq6WlPRZx2jzwMHGlp58hA30JrvDdi3c
+         ft3FeI/Dj//nyQIknYsPZ12JdJC/O5M0RhJDSHAbJrnqN7Xo81U329eJ8kGjC4pl+mH1
+         QnzuW9EcYBKGNjj7VMQlJJoWJgUILoswY7B2DfH7dKnw3Da/LL/cBlc1pbO4R5Ar9Fqg
+         vcOQ==
+X-Gm-Message-State: AAQBX9cQeQ8ZoTZz5RXRH36RfWr5ct96Yw2W4nK+NG11j/sIm1b7ZQi7
+        HuGE1lxDfnV6MxzS9CeJPBk/6RML3CmmswsHO93L1f2h4DiRog==
+X-Google-Smtp-Source: AKy350Z5nRN8c59++QEEKoWEw9wdIPGIjc9dC0QuibmGx9wAMtAfZCNmpYaeozi0HB7Gub69MblQrKZ3HPZoppk+2mM=
+X-Received: by 2002:a17:906:8597:b0:94e:d1d9:a59c with SMTP id
+ v23-20020a170906859700b0094ed1d9a59cmr1618728ejx.13.1681478914085; Fri, 14
+ Apr 2023 06:28:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v4 00/10] repack: fix geometric repacking with
- gitalternates
-To:     Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, peff@peff.net,
-        dstolee@microsoft.com, Junio C Hamano <gitster@pobox.com>
-References: <a07ed50feeec4bfc3e9736bf493b9876896bcdd2.1680606445.git.ps@pks.im>
- <cover.1681452028.git.ps@pks.im>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <cover.1681452028.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <7a5de047-3535-3b87-f023-43c400d57131@gmail.com>
+ <20230414081352.810296-1-rybak.a.v@gmail.com> <20230414081352.810296-3-rybak.a.v@gmail.com>
+In-Reply-To: <20230414081352.810296-3-rybak.a.v@gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Date:   Fri, 14 Apr 2023 15:28:17 +0200
+Message-ID: <CACayv=jL4t3cUVS=xXQ3fLxF26vDXRJ3khs2y4UjzBw947JVkw@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] t1300: check stderr for "ignores pairs" tests
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/14/2023 2:01 AM, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this is the fourth version of my patch series to fix geometric repacking
-> with repositories connected to an alternate object database.
-> 
-> This version only addresses some issues with the tests, the actual logic
-> remains untouched:
-> 
->     - The test added in t7700-repack.sh that verifies that `--local`
->       causes us to disable generation of the bitmap index was failing in
->       the linux-TEST-vars CI job. This was because it sets
->       GIT_TEST_MULTI_PACK_INDEX=1, which causes us to disable the bitmap
->       logic in git-repack(1). I've fixed this failure by explicitly
->       overriding the environment variable like other tests in the same
->       file do.
-> 
->     - I've converted path checks to use `test_path_is_missing` and
->       `test_path_is_file` instead of `test ! -f` and `test -f`.
-> 
->     - I've fixed a typo in t7703-repack-geometric.sh and shifted code
->       around a bit to make the test more readable, following Derrick's
->       suggestion.
+On Fri, 14 Apr 2023 at 10:13, Andrei Rybak <rybak.a.v@gmail.com> wrote:
+>
+> Tests "git config ignores pairs ..." in t1300-config.sh validate that
+> "git config" ignores with various kinds of supplied pairs of environment
+> variables GIT_CONFIG_KEY_* GIT_CONFIG_VALUE_* that should be ingored.
+> By "ignores" here we mean that "git config" doesn't complain about them
+> to standard error.
 
-Thanks for these updates. I'm happy with v4.
+After thinking about this some more, I've realized that this is an
+incorrect interpretation
+of the titles of these tests. The correct interpretation is more
+obvious from another test:
 
--Stolee
+    test_expect_success 'git config ignores pairs exceeding count' '
+           GIT_CONFIG_COUNT=3D1 \
+                  GIT_CONFIG_KEY_0=3D"pair.one" GIT_CONFIG_VALUE_0=3D"value=
+" \
+                  GIT_CONFIG_KEY_1=3D"pair.two" GIT_CONFIG_VALUE_1=3D"value=
+" \
+                  git config --get-regexp "pair.*" >actual &&
+           cat >expect <<-EOF &&
+           pair.one value
+           EOF
+           test_cmp expect actual
+    '
+
+Key-value pair "pair.two=3Dvalue" is ignored because it's outside of the
+range of the
+supplied value of GIT_CONFIG_COUNT.  That is, these tests validate that rea=
+ding
+of these environment variables reads GIT_CONFIG_COUNT first and only loads
+GIT_CONFIG_KEY_<n> and GIT_CONFIG_VALUE_<n> that fit in the range.
+
+> This is validated by redirecting the standard error
+> to a file called "error" and asserting that it is empty.  However, two
+> of these tests incorrectly redirect to standard output while calling the
+> file "error", and test 'git config ignores pairs exceeding count'
+> doesn't validate standard error at all.
+>
+> Fix it by redirecting standard error to file "error" and asserting its
+> emptiness.
+>
+> Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+> ---
+>  t/t1300-config.sh | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> index 696dca17c6..20a15ede5c 100755
+> --- a/t/t1300-config.sh
+> +++ b/t/t1300-config.sh
+> @@ -1462,24 +1462,25 @@ test_expect_success 'git config ignores pairs exc=
+eeding count' '
+>         GIT_CONFIG_COUNT=3D1 \
+>                 GIT_CONFIG_KEY_0=3D"pair.one" GIT_CONFIG_VALUE_0=3D"value=
+" \
+>                 GIT_CONFIG_KEY_1=3D"pair.two" GIT_CONFIG_VALUE_1=3D"value=
+" \
+> -               git config --get-regexp "pair.*" >actual &&
+> +               git config --get-regexp "pair.*" >actual 2>error &&
+>         cat >expect <<-EOF &&
+>         pair.one value
+>         EOF
+> -       test_cmp expect actual
+> +       test_cmp expect actual &&
+> +       test_must_be_empty error
+>  '
+>
+>  test_expect_success 'git config ignores pairs with zero count' '
+>         test_must_fail env \
+>                 GIT_CONFIG_COUNT=3D0 GIT_CONFIG_KEY_0=3D"pair.one" GIT_CO=
+NFIG_VALUE_0=3D"value" \
+> -               git config pair.one >error &&
+> +               git config pair.one 2>error &&
+>         test_must_be_empty error
+>  '
+>
+>  test_expect_success 'git config ignores pairs with empty count' '
+>         test_must_fail env \
+>                 GIT_CONFIG_COUNT=3D GIT_CONFIG_KEY_0=3D"pair.one" GIT_CON=
+FIG_VALUE_0=3D"value" \
+> -               git config pair.one >error &&
+> +               git config pair.one 2>error &&
+
+
+Same question as in =C3=86var's
+https://lore.kernel.org/git/230406.86pm8htnfk.gmgdl@evledraar.gmail.com/
+and my reply https://lore.kernel.org/git/c43e6b71-075a-e39a-7351-8595e145da=
+cf@gmail.com/
+applies here, though.  In tests 'git config ignores pairs with zero count' =
+and
+ 'git config ignores pairs with empty count' test_must_fail already asserts=
+ that
+"git config" couldn't get the value.  Should we be also inspecting
+both stdout and
+stderr, as the test  'git config ignores pairs exceeding count' does
+(after this patch)?
+
+>         test_must_be_empty error
+>  '
+
+>
+> --
+> 2.40.0
+>
