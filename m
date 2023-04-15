@@ -2,385 +2,271 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E90C5C77B71
-	for <git@archiver.kernel.org>; Sat, 15 Apr 2023 06:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DD60C7619A
+	for <git@archiver.kernel.org>; Sat, 15 Apr 2023 07:03:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229612AbjDOGvB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Apr 2023 02:51:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36928 "EHLO
+        id S229653AbjDOHDw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Apr 2023 03:03:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjDOGvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Apr 2023 02:51:00 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C177230C1
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 23:50:57 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id x34so7710554ljq.1
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 23:50:57 -0700 (PDT)
+        with ESMTP id S229540AbjDOHDv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Apr 2023 03:03:51 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97C4B5261
+        for <git@vger.kernel.org>; Sat, 15 Apr 2023 00:03:49 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id l7so6993213ljq.11
+        for <git@vger.kernel.org>; Sat, 15 Apr 2023 00:03:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681541456; x=1684133456;
+        d=gmail.com; s=20221208; t=1681542228; x=1684134228;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TMDxm1crpe6FeQylAo9IKLdmL/wT9UAdjKXvy9VHmVA=;
-        b=d7G2RUulDbdDEmM4SYbTHHYPJI2z0dFJxqPfbkLVMuvCRzo9g3z0oOHK5aWAiKjp6q
-         qYque/GHAOeshK0es+pMHMxCcE57gQ0d8r4ln0/ubYISADsu6HzkZ909opAnM84rM1bA
-         aWac0F7wWV3mRXRA6aKRBCdgLEmxWw33GG6SaVj7KV4pvlMqg7MEVuUq/4c168WygLF+
-         hCWpQdx9O3luxv2koi6jmptBZtX3SWnRwMQe9yJOCwUb5CMafhSXKQ/K+dBJyn3H74ex
-         tCswHh0HkuUugjRjh5gQJYWHGgoGXgesLq10Sakn/eYziHeKmG6bkctjlqkGI+tyyH7V
-         +KfQ==
+        bh=eKP0VTtA4YgUTkWinqXxg4aJAZghG8p9zDuIzgVpq+Y=;
+        b=lyEwIH4M6C9VKlSWsmHuBalrU02DrbI/Ea1tLrjCTmkSuCXmn4Pf9xvY9Fr58QEqiP
+         k1Vf3nzOAwP2gapgqWOMjUNlFFF3bXB5pt/m3lO4Y9AO+L0L0VvZMz/avbgvbWmlywD2
+         2BwjbaaLU6XCWTvnDg8T1Rrf9hF0h+hKSNIJe5psCBGE/8TnG5xX2OEMtSoreHe3c3os
+         XDj9840Of4CMtK1X6k09NOqkWwW2rG/BeQ94mQYR6PkeKaQn2wNpWpSg1DztdDJXv618
+         5MmwNAiJkRrUJXbQqtYMHGiMwH4a156hISoVpsug/lEGOWgBfaTYON+O2Y95FUqNqv1j
+         Hqsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681541456; x=1684133456;
+        d=1e100.net; s=20221208; t=1681542228; x=1684134228;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TMDxm1crpe6FeQylAo9IKLdmL/wT9UAdjKXvy9VHmVA=;
-        b=NhPKLxeCo8Rn6k68LHmpwCczZr73QFBSCmwqJBIKjPBFYHGtGpJVYMiFEYK8QR4OPi
-         GDC7/XnxqDtj3v+ia1BUFNOD/7VemBiotG1H2BzGZcLwpdHhHMOg5ukcqNcvAbjFVvns
-         2lV7MWapE+aoX+VNbz/K+ULH6xx65o7F+CBLtIleQs2ytiHGziQqTP2FivEyNqGaNQ+2
-         nExburzIGn8k9FC4ATa1LquMS5OlKQQz+ZSogvk2wcRj+E8HCZklNF4r46tFdQVQd3MW
-         fzZyNJeSZ6OtOHi2LDZb2b1m7nKsuOCVxYEfVOyNxRb86Iuhok2CuDHmgMcWxxKa/Sbi
-         6A+g==
-X-Gm-Message-State: AAQBX9fuOnMFNbwaPsboqoNA8XDnDuQuoAQhTgHW86kuYfnAbZ3NqsnT
-        1YPB0fP31YpxDnb/Nb55rl0Ys2S7xWkhRqvEq0k=
-X-Google-Smtp-Source: AKy350aE0s2M3Isj47rrkEorIV9Y2xIM2MbCpn7AtjmpFdO7Ep7CMw/glujhI/zCeaSD4NYX/bZTBMpSajc8g+0AJu8=
-X-Received: by 2002:a2e:9811:0:b0:2a7:73d8:d675 with SMTP id
- a17-20020a2e9811000000b002a773d8d675mr2647669ljj.1.1681541455654; Fri, 14 Apr
- 2023 23:50:55 -0700 (PDT)
+        bh=eKP0VTtA4YgUTkWinqXxg4aJAZghG8p9zDuIzgVpq+Y=;
+        b=hUZ4ddun3LGhyaQOa1bCXO3ZwIxoe02dn1Jrti371fkV9Yn6A2keooJSaD50XgOThU
+         K+pLbUYwXtXeJnjzXNoaI36XY0U1IbxqVkU/wlDzgj9rDtpFfKTNQJHVcFhseI/7VgkK
+         sQDEAimCrKsyXA0E7w/ocosKHzOsaKA0LLeC6PU9rtdwaUskJCDyKKV7dKcmOZ7tmzXG
+         9hblabn4NfrHxz/xlaDM14pUfIoekAeC/rIXRrwKfR+d+TJPzcMgqCIXtoNhQ5iEF0Zp
+         l9rdKVTZ80w/bd1FrrLFHlnmdaWgIIin5EPJFizy1Lr8sfLNkYNq+LpOqmochBJhnXh2
+         lIlw==
+X-Gm-Message-State: AAQBX9eS8ImE5SV0KCqIsw0hZ+l/FRjYJmBTpQVnuRG28VJD4vaH0dKI
+        OP7a3v/k/I+gOgIcO8sMDGGo49xj1mDc80Us+qk=
+X-Google-Smtp-Source: AKy350bz6rkr5ExtNQCPw0Vis2Cfm/Qc2voHVUxQz/Czqmd0/72CM8KxJnMLnlqhs2kQ/NidAVcf4l2n63aYyV2BIfY=
+X-Received: by 2002:a2e:9916:0:b0:2a7:a52b:123e with SMTP id
+ v22-20020a2e9916000000b002a7a52b123emr2670478lji.1.1681542227518; Sat, 15 Apr
+ 2023 00:03:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230407072415.1360068-1-christian.couder@gmail.com>
-In-Reply-To: <20230407072415.1360068-1-christian.couder@gmail.com>
+References: <pull.1515.git.1681495119.gitgitgadget@gmail.com> <0cdd4ab3d739e07357ea9efef2cdece633db6ebb.1681495119.git.gitgitgadget@gmail.com>
+In-Reply-To: <0cdd4ab3d739e07357ea9efef2cdece633db6ebb.1681495119.git.gitgitgadget@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 14 Apr 2023 23:44:51 -0700
-Message-ID: <CABPp-BE7yD_FJuGx4KtzO5YF-LXYHFrTWSf71ttNTcyMDpZgeg@mail.gmail.com>
-Subject: Re: [PATCH 00/14] Introduce new `git replay` command
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Patrick Steinhardt <ps@pks.im>,
+Date:   Sat, 15 Apr 2023 00:03:35 -0700
+Message-ID: <CABPp-BHyvVhVKa+M-GYTG3OEmgmoaEij15BFXQ6oyDDsboxS9g@mail.gmail.com>
+Subject: Re: [PATCH 4/5] Documentation: document AUTO_MERGE
+To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        John Cai <johncai86@gmail.com>
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 7, 2023 at 12:24=E2=80=AFAM Christian Couder
-<christian.couder@gmail.com> wrote:
+On Fri, Apr 14, 2023 at 10:58=E2=80=AFAM Philippe Blain via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> # Intro
+> From: Philippe Blain <levraiphilippeblain@gmail.com>
 >
-> `git replay` has initially been developed entirely by Elijah Newren
-> mostly between June and July 2022 at:
-
-(Sidenote: actually, there was a good chunk in Jan & Feb 2022 as well,
-and various design and idea work preceding that over a long time, some
-in the form of the fast-rebase test-tool...)
-
-> https://github.com/newren/git/commits/replay
+> Since 5291828df8 (merge-ort: write $GIT_DIR/AUTO_MERGE whenever we hit a
+> conflict, 2021-03-20), when using the 'ort' merge strategy, the special
+> ref AUTO_MERGE is written when a merge operation results in conflicts.
+> This ref points to a tree recording the conflicted state of the working
+> tree and is very useful during conflict resolution. However, this ref is
+> not documented.
 >
-> I took over a few months ago to polish and upstream it as GitLab is
-> interested in replacing libgit2, and for that purpose needs a command
-> to do server side (so without using a worktree) rebases, cherry-picks
-> and reverts.
+> Add some documentation for AUTO_MERGE in git-diff(1), git-merge(1),
+> gitrevisions(7) and in the user manual.
 >
-> I reduced the number of commits and features in this first patch
-> series, compared to what Elijah already developed. Especially I
-> stopped short of replaying merge commits and replaying
-> interactively. These and other features might be upstreamed in the
-> future after this patch series has graduated.
-
-...and also cleaned up my commits which were in a WIP state.  Thanks!  :-)
-
-> Thanks to Elijah, Patrick Steinhardt and Dscho for early reviews and
-> discussions.
+> In git-diff(1), mention it at the end of the description section, when
+> we mention that the command also accepts trees instead of commits, and
+> also add an invocation to the "Various ways to check your working tree"
+> example.
 >
-> Based on ae73b2c8f1 (The seventh batch, 2023-04-04)
+> In git-merge(1), add a step to the list of things that happen "when it
+> is not obvious how to reconcile the changes", under the "True merge"
+> secion. Also mention AUTO_MERGE in the "How to resolve conflicts"
+
+s/secion/section/
+
+> section, when mentioning 'git diff'.
 >
-> # Quick Overview (from Elijah)
-
-In particular, this comes from the replay-design-notes.txt file on the
-replay branch, up until the footnote links.
-
-<snip>
-
-My replay branch involved a whole bunch of aspirational ideas, work in
-progress, and some things that worked.  As noted above, you've taken
-this portion of the cover letter from my replay-design-notes.txt file
-on that branch, but that file involved my in-progress thought
-processes on all these ideas.  For this series, we should probably
-just focus on the server-side usecases since other aspects just
-weren't complete enough for use.  (I also thought the server-side
-aspects of git-replay weren't good enough for use either because I
-thought we'd need some conflict-related handling similar to what
-git-merge-tree does, but both you and Dscho have said you aren't
-worried about that, and are fine with just a simple non-zero exit
-status.)
-
-Anyway, deleting the forward-looking stuff and concentrating on the
-server-side replaying of commits would mean that we can at least
-delete the portion of this cover letter starting from here...
-
->   * Other performance ideas:
+> In gitrevisions(7), add a mention of AUTO_MERGE along with the other
+> special refs.
 >
->     * single-file control structures instead of directory of files
+> In the user manual, add a paragraph describing AUTO_MERGE to the
+> "Getting conflict-resolution help during a merge" section, and include
+> an example of a 'git diff AUTO_MERGE' invocation for the example
+> conflict used in that section. Note that for uniformity we do not use
+> backticks around AUTO_MERGE here since the rest of the document does not
+> typeset special refs differently.
 >
->     * avoid forking subprocesses unless explicitly requested (e.g.
->       --exec, --strategy, --run-hooks).  For example, definitely do not
->       invoke `git commit` or `git merge`.
+> Closes: https://github.com/gitgitgadget/git/issues/1471
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+>  Documentation/git-diff.txt    |  8 +++++++-
+>  Documentation/git-merge.txt   |  9 +++++++--
+>  Documentation/revisions.txt   |  6 +++++-
+>  Documentation/user-manual.txt | 27 +++++++++++++++++++++++++++
+>  4 files changed, 46 insertions(+), 4 deletions(-)
 >
->     * Sanitize hooks:
+> diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+> index 52b679256c4..a85cc756ebc 100644
+> --- a/Documentation/git-diff.txt
+> +++ b/Documentation/git-diff.txt
+> @@ -102,7 +102,11 @@ If --merge-base is given, use the merge base of the =
+two commits for the
+>  Just in case you are doing something exotic, it should be
+>  noted that all of the <commit> in the above description, except
+>  in the `--merge-base` case and in the last two forms that use `..`
+> -notations, can be any <tree>.
+> +notations, can be any <tree>. A tree of interest is the one pointed to
+> +by the special ref `AUTO_MERGE`, which is written by the 'ort' merge
+> +strategy upon hitting merge conflicts (see linkgit:git-merge[1]).
+> +Comparing the working tree with `AUTO_MERGE` shows changes you've made
+> +so far to resolve conflicts (see the examples below).
 >
->       * dispense with all per-commit hooks for sure (pre-commit,
->         post-commit, post-checkout).
+>  For a more complete list of ways to spell <commit>, see
+>  "SPECIFYING REVISIONS" section in linkgit:gitrevisions[7].
+> @@ -152,6 +156,7 @@ Various ways to check your working tree::
+>  $ git diff            <1>
+>  $ git diff --cached   <2>
+>  $ git diff HEAD       <3>
+> +$ git diff AUTO_MERGE <4>
+>  ------------
+>  +
+>  <1> Changes in the working tree not yet staged for the next commit.
+> @@ -159,6 +164,7 @@ $ git diff HEAD       <3>
+>      would be committing if you run `git commit` without `-a` option.
+>  <3> Changes in the working tree since your last commit; what you
+>      would be committing if you run `git commit -a`
+> +<4> Changes in the working tree you've made to resolve conflicts so far.
 >
->       * pre-rebase also seems to assume exactly 1 ref is written, and
->         invoking it repeatedly would be stupid.  Plus, it's specific
->         to "rebase".  So...ignore?  (Stolee's --ref-update option for
->         rebase probably broke the pre-rebase assumptions already...)
+>  Comparing with arbitrary commits::
+>  +
+> diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+> index 23aefe28851..3f61389c1c2 100644
+> --- a/Documentation/git-merge.txt
+> +++ b/Documentation/git-merge.txt
+> @@ -196,7 +196,11 @@ happens:
+>     can inspect the stages with `git ls-files -u`).  The working
+>     tree files contain the result of the merge operation; i.e. 3-way
+>     merge results with familiar conflict markers `<<<` `=3D=3D=3D` `>>>`.
+> -5. No other changes are made.  In particular, the local
+> +5. A special ref `AUTO_MERGE` is written, pointing to a tree correspondi=
+ng
+> +   to the current content of the working tree (including conflict marker=
+s).
+> +   Note that this ref is only written when the 'ort' merge strategy
+> +   is used (the default).
+> +6. No other changes are made.  In particular, the local
+>     modifications you had before you started merge will stay the
+>     same and the index entries for them stay as they were,
+>     i.e. matching `HEAD`.
+> @@ -336,7 +340,8 @@ You can work through the conflict with a number of to=
+ols:
 >
->       * post-rewrite hook might make sense, but fast-import got
->         exempted, and I think of replay like a patch-based analogue
->         to the snapshot-based fast-import.
+>   * Look at the diffs.  `git diff` will show a three-way diff,
+>     highlighting changes from both the `HEAD` and `MERGE_HEAD`
+> -   versions.
+> +   versions. `git diff AUTO_MERGE` will show what changes you've
+> +   made so far to resolve conlicts.
+
+s/conlicts/conflicts/
+
 >
->     * When not running server side, resolve conflicts in a sparse-cone
->       sparse-index worktree to reduce number of files written to a
->       working tree.  (See below as well)
+>   * Look at the diffs from each branch. `git log --merge -p <path>`
+>     will show diffs first for the `HEAD` version and then the
+> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> index 98b8f89bc8d..b42a2bb30a5 100644
+> --- a/Documentation/revisions.txt
+> +++ b/Documentation/revisions.txt
+> @@ -33,7 +33,8 @@ characters and to avoid word splitting.
 >
->     * [High risk of possible premature optimization] Avoid large
->       numbers of newly created loose objects, when replaying large
->       numbers of commits.  Two possibilities: (1) Consider using
->       tmp-objdir and pack objects from the tmp-objdir at end of
->       exercise, (2) Lift code from git-fast-import to immediately
->       stuff new objects into a pack?
+>    . If '$GIT_DIR/<refname>' exists, that is what you mean (this is usual=
+ly
+>      useful only for `HEAD`, `FETCH_HEAD`, `ORIG_HEAD`, `MERGE_HEAD`,
+> -    `REBASE_HEAD`, `REVERT_HEAD`, `CHERRY_PICK_HEAD` and `BISECT_HEAD`);
+> +    `REBASE_HEAD`, `REVERT_HEAD`, `CHERRY_PICK_HEAD`, `BISECT_HEAD`
+> +    and `AUTO_MERGE`);
 >
-> * Multiple branches and non-checked out branches
+>    . otherwise, 'refs/<refname>' if it exists;
 >
->   * The ability to operate on non-checked out branches also implies
->     that we should generally be able to replay when in a dirty working
->     tree (exception being when we expect to update HEAD and any of the
->     dirty files is one that needs to be updated by the replay).
+> @@ -64,6 +65,9 @@ run `git revert`.
+>  when you run `git cherry-pick`.
+>  `BISECT_HEAD` records the current commit to be tested when you
+>  run `git bisect --no-checkout`.
+> +`AUTO_MERGE` records a tree object corresponding to the state the
+> +'ort' merge strategy wrote to the working tree when a merge operation
+> +resulted in conflicts.
+>  +
+>  Note that any of the 'refs/*' cases above may come either from
+>  the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.tx=
+t
+> index dc9c6a663a9..99e5f652e92 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -1343,6 +1343,33 @@ $ git diff -3 file.txt           # diff against st=
+age 3
+>  $ git diff --theirs file.txt   # same as the above.
+>  -------------------------------------------------
 >
->   * Also, if we are operating locally on a non-checked out branch and
->     hit a conflict, we should have a way to resolve the conflict without
->     messing with the user's work on their current branch.
+> +When using the 'ort' merge strategy (the default), before updating the w=
+orking
+> +tree with the result of the merge, Git writes a special ref named AUTO_M=
+ERGE
+> +reflecting the state of the tree it is about to write. Conflicted paths =
+that
+> +could not be automatically merged are written to this tree with conflict
+> +markers, just as in the working tree. AUTO_MERGE can thus be used with
+> +linkgit:git-diff[1] to show the changes you've made so far to resolve
+> +conflicts. Using the same example as above, after resolving the conflict=
+ we
+> +get:
+
+Mostly...  To clarify, conflicted paths *with a textual conflict* are
+written with conflict markers.  Conflicted paths with non-textual
+conflicts are not.  There are several conflict types that fall into
+the non-textual conflict umbrella: binary files, file/directory,
+symlink/directory, symlink/file, modify/delete, rename/add,
+rename/delete, rename/rename (1to2), and various submodule and
+directory rename conflict types as well.
+
+The AUTO_MERGE stuff will only help with seeing how textual conflicts
+were resolved, it's not much help with the non-textual conflicts.
+
+(By contrast, the closely related --remerge-diff option to `git log`
+or `git show` does help see the resolution of *both* the textual and
+non-textual conflicts, but of course one can't use that option on the
+current merge until after first commiting the existing changes.)
+
+
+
+> +
+> +-------------------------------------------------
+> +$ git diff AUTO_MERGE
+> +diff --git a/file.txt b/file.txt
+> +index cd10406..8bf5ae7 100644
+> +--- a/file.txt
+> ++++ b/file.txt
+> +@@ -1,5 +1 @@
+> +-<<<<<<< HEAD:file.txt
+> +-Hello world
+> +-=3D=3D=3D=3D=3D=3D=3D
+> +-Goodbye
+> +->>>>>>> 77976da35a11db4580b80ae27e8d65caf5208086:file.txt
+> ++Goodbye world
+> +-------------------------------------------------
+> +
+> +Notice that the diff shows we deleted the conflict markers and both vers=
+ions,
+> +and wrote "Goodbye world" instead.
+> +
+>  The linkgit:git-log[1] and linkgit:gitk[1] commands also provide special=
+ help
+>  for merges:
 >
->     * Idea: new worktree with sparse cone + sparse index checkout,
->       containing only files in the root directory, and whatever is
->       necessary to get the conflicts
+> --
+> gitgitgadget
 >
->     * Companion to above idea: control structures should be written to
->       $GIT_COMMON_DIR/replay-${worktree}, so users can have multiple
->       replay sessions, and so we know which worktrees are associated
->       with which replay operations.
-
-...up to here.  Some of the other stuff could perhaps be trimmed as
-well, though I suspect at least some of it is useful from the
-perspective of letting others know of additional usecases we'd like to
-support (so that design suggestions don't curtail those additional
-future usecases).
-
-
->   - [1] https://lore.kernel.org/git/pull.749.v3.git.git.1586044818132.git=
-gitgadget@gmail.com/
->   - [2] https://github.com/martinvonz/jj/discussions/49
->   - [3] https://lore.kernel.org/git/CABPp-BE48=3D97k_3tnNqXPjSEfA163F8hoE=
-+HY0Zvz1SWB2B8EA@mail.gmail.com/
-
-This appears to be the end of the part you copied from replay-design-notes.=
-txt
-
-<snip>
-
-> * 9/14 replay: very coarse worktree updating
->
->      Make it handle conflicts in a very coarse way. This might not
->      work on bare repos, but it allows existing tests to pass and it's
->      nice to help cli users a bit when they get conflicts.
-
-I had the coarse working updating in git-replay mostly because it came
-from fast-rebase.  I did also use it to poke and prod early ideas,
-even though I knew that its current implementation might well be
-incompatible with some of the other ideas I had.
-
-I don't think this helps the server-side use though, and since it
-potentially conflicts with some of the other goals, I'd be inclined to
-say we should just drop this patch (and/or squash the next patch into
-this one.)
-
-> * 10/14 replay: make it a minimal server side command
->
->      After the cleaning up in previous ommits, it's now time to
->      radically change the way it works by stopping it to do ref
->      updates, to update the index and worktree, to consider HEAD as
->      special. Instead just make it output commands that should be
->      passed to `git update-ref --stdin`.
-
-A squashed 9 & 10 would thus be similar to patch 8 in the sense that
-its purpose was to get rid of something that made sense for
-fast-rebase but which doesn't align with the current goals of this
-command.
-
-<snip>
-
-> # Possibly controversial issues
->
-> * bare or not bare: this series works towards a command with the end
->   goal of it being usable and used on bare repos, contrary to existing
->   commands like `git rebase` and `git cherry-pick`, but the tests
->   currently don't check that, and in case of conflicts it won't
->   currently work on bare repos. One reason for that is that existing
->   tests in t6429 should continue to work, and one of these tests
->   requires some output in case of conflict. And it's nice for users to
->   get some help in case of conflict. It's also nice for users if
->   commands that should work on both bare and non bare repos work well
->   on non bare repos first as they are less likely to use them on bare
->   repos. So let's have a command that works well on non-bare repos
->   first, even if its end goal is to work fine on bare repos too. We
->   plan to improve things for bare repos soon after this first patch
->   series graduates.
-
-I think there's a lot of work to do for conflict handling, and if we
-want to submit this for inclusion then we should just exclude conflict
-handling entirely and adjust the tests accordingly.
-
-> * exit status: a successful, non-conflicted replay exits with code
->   0. When the replay has conflicts, the exit status is 1. If the
->   replay is not able to complete (or start) due to some kind of error,
->   the exit status is something other than 0 or 1. It has been
->   suggested in an internal review that conflicts might want to get a
->   more specific error code as an error code of 1 might be quite easy
->   to return by accident. It doesn't seem to me from their docs (which
->   might want to be improved, I didn't look at the code) that other
->   commands like `git merge` and `git rebase` exit with a special error
->   code in case of conflict.
-
-The merge backend does not provide any granularity finer than "had
-conflicts" for its return code.  This is somewhat cemented by the
-git-merge API as well, where it mandates that the return code of merge
-backends be 1 for conflicts:
-
-    /*
-     * The backend exits with 1 when conflicts are
-     * left to be resolved, with 2 when it does not
-     * handle the given merge at all.
-     */
-
-Because of this, all of git-merge-resolve, git-merge-octopus,
-git-merge-recursive, and git-merge-ort return 1 for conflicts.
-
-Of course, we do not have to use the return code of the merge backend
-as the exit status for `git replay`.  We could inspect the conflicts,
-somewhat like git-merge-tree does, except that instead of printing
-information about those conflicts, we could also let it guide us to
-choose a new exit status.  I'm not sure we'd want to do that, but we
-could.
-
-Since an exit status of 1 is pretty thoroughly baked in elsewhere for
-everything merge related, including `git-merge-tree`, I'd be inclined
-to leave this series as-is and have an exit status of 1 for conflicts.
-
-> * to guess or not to guess: commit 12/14 introduces the
->   guess_new_base() function which tries to find a base to rebase onto
->   when the --onto option is not provided, making this option actually
->   optional instead of mandatory. Given that it's an heuristic and the
->   command end goal is to be used on server side, we might want to
->   introduce this as an iterative improvement later. I still think it's
->   interesting to have it in for now though, as it shows that --onto
->   and --advance (which is introduced in the following commit) should
->   indeed be options. If --onto was always mandatory in the series,
->   people could argue that it shouldn't be an option and its argument
->   should always be the first (unconditional) argument of the command.
-
-I do not want a positional argument for <onto>; rebase's use of
-positional arguments is an example to avoid, IMO.
-
-I also don't want people thinking this is just rebase.  Rebase is
-perhaps used more than cherry-pick and as such a lot of the
-documentation and design goals talk about it more, but I designed this
-command very deliberately to be about handling both cherry-pick and
-rebase functionality in the same command.
-
-All that said, I remember spending a fair amount of time on the
-heuristic, but don't remember if I felt I had gotten it good enough or
-not.  If folks want to leave it out for a future series, that'd be
-fine, so long as it doesn't lead people to suggestions that'd conflict
-with the above points.
-
-> * make worktree and index changes optional: commit 10/14 stops
->   updating the index and worktree, but it might be better especially
->   for cli users to make that optional. The issue is that this would
->   make the command more complex while we are developing a number of
->   important features. It seems to me that this should rather be done
->   in an iterative improvement after the important features have
->   landed.
-
-I don't think worktree and index changes should be included in this
-series, even as an option.  The related code as currently written is
-incompatible with some other ideas expressed in the cover letter.
-Granted, those ideas might change, even dramatically, but I don't want
-us limiting the design space and I don't think the worktree or index
-updates in this series are ready for users to use yet.  (And there
-aren't any patches available, to my knowledge, that make them ready.
-Those still need to be written.)
-
-> * when and where to add tests and docs: although t6429 has tests that
->   are changed to use the new command instead of the fast-rebase
->   test-tool command as soon as the former is introduced, there is no
->   specific test script and no doc for the new command until commit
->   11/14 when standard revision ranges are used. This is done to avoid
->   churn in tests and docs while the final form of the command hasn't
->   crystalized enough. Adding tests and doc at this point makes this
->   commit quite big and possibly more difficult to review than if they
->   were in separate commits though. On the other hand when tests and
->   docs are added in specific commits some reviewers say it would be
->   better to introduce them when the related changes are made.
-
-I don't have opinions on this one.  Maybe I will after reading through
-this cleaned up series more carefully.
-
-> * --advance and --contained: these two advanced options might not
->   belong to this first series and could perhaps be added in a followup
->   series in separate commits. On the other hand the code for
->   --contained seems involved with the code of --advance and it's nice
->   to see soon that git replay can indeed do cherry-picking and rebase
->   many refs at once, and this way fullfil these parts of its promise.
-
---advance is the one option I thought I had a chance of getting my
-company to use server-side in the near term...
-
-Also, without --advance, I worry reviewers will make rebase-centric
-assumptions that preclude handling cherry-picks, so I'm really leery
-of deferring it based on that.
-
-I understand that --contained isn't as likely to be useful
-server-side, but it was the one piece that I really enjoyed using
-cli-side (especially since it pre-dated rebase --update-refs).  But
-yeah, it's utility is somewhat limited until there's some kind of
-conflict resolution mechanism provided.
-
-> * replaying diverging branches: 14/14 the last patch in the series,
->   which allow replaying diverging branches, can be seen as a
->   fundamental fix or alternatively as adding an interesting
->   feature. So it's debatable if it should be in its own patch along
->   with its own tests as in this series, or if it should be merged into
->   a previous patch and which one.
-
-I don't have opinions on this either.  Maybe I will after reading
-through the series?
-
-> * only 2 patches: this patch series can be seen from a high level
->   point of view as 1) introducing the new `git replay` command, and 2)
->   using `git replay` to replace, and get rid of, the fast-rebase
->   test-tool command. The fact that not much of the original
->   fast-rebase code and interface is left would agree with that point
->   of view. On the other hand, fast-rebase can also be seen as a first
->   iteration towards `git replay`. So it can also make sense to see how
->   `git replay` evolved from it.
-
-I preferred the angle of starting from fast-rebase, but I don't feel
-too strongly about it.  Mostly I just thought it'd make it easier for
-me, and for the few other people who already reviewed fast-rebase (and
-yes, I got review comments on it from a few different people back when
-it was proposed).  If dividing up the patches some other way makes it
-easier for others to reason about, and you want to switch it around,
-go for it.
