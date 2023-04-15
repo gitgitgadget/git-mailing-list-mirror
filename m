@@ -2,113 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5286EC77B71
-	for <git@archiver.kernel.org>; Sat, 15 Apr 2023 01:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 484F9C7619A
+	for <git@archiver.kernel.org>; Sat, 15 Apr 2023 05:08:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbjDOB10 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 14 Apr 2023 21:27:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35456 "EHLO
+        id S229496AbjDOFIg convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 15 Apr 2023 01:08:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbjDOB1Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2023 21:27:25 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE153A8E
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 18:27:24 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ec8133c698so781834e87.0
-        for <git@vger.kernel.org>; Fri, 14 Apr 2023 18:27:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681522042; x=1684114042;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hlz9WZDCwa4TjDaTaDW/u3E4Ug5AWs1JVUowgc1Z9QA=;
-        b=rapFamRU/+37524RG9on+mR6r7M9EWWEenkgrgFx8FwewsOoBqBa0vfH+CRXaw/p0h
-         vLkGL8+AEL0EKF7JTp6xhY/YPj1O74N1NaZD8WSvYoGqapgzkTC8jRZtvkEjG5xcHywb
-         5UoWBvZYns0dz6scV7qhPgbl2eSQQT281ha8BeWC8fLbCPla11bu3dWnE3ecBdotWHGR
-         DWzZu7td2rhuk33MnS4zRR+lrUXRiOP4dhj9uCFiqrkNWBBw+m2vJMbhkaaAtDABeyXU
-         pPpB4dp0ZNp3E7thRzYnIpGxxLXjVgtQJBx12YBKjrzigdeWBJGYlka+7eTbkAGLq7Hy
-         GIsw==
+        with ESMTP id S229459AbjDOFIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Apr 2023 01:08:34 -0400
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2B654C2B
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 22:08:33 -0700 (PDT)
+Received: by mail-qv1-f44.google.com with SMTP id e9so15822831qvv.2
+        for <git@vger.kernel.org>; Fri, 14 Apr 2023 22:08:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681522042; x=1684114042;
+        d=1e100.net; s=20221208; t=1681535313; x=1684127313;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hlz9WZDCwa4TjDaTaDW/u3E4Ug5AWs1JVUowgc1Z9QA=;
-        b=fYrDj5YFvg465eH/RF0c1jGLbpQRrqqMA/UHofFEfGaRH4VRdwy9oIZ80APV9G3lN2
-         yaDb5O8jXYQJuk02mwr22BoMdYluLJsIvVny61ZdK1HU5AVB3bfMe1D6+qd6f5WTxJlY
-         NDQCj1Vcl4bX6WbpVASsKEqt7TBh+Dz4pVHtBLGt0ueAZbL1l4/zB0eyP+Nk+dR6jDtQ
-         dB1Bt4egdk5nH0J1NK83uiUGPCGfq5oQXmrMsDC5qoPOn69U/RL06ElBlbqi+nLFiD2n
-         LbbUOxIaXgUdLULlIhsz5OwsyDRw1v99WW2XpaC5dIbZkdaqUZSEEaFcGuwinwWTMUQr
-         2zzQ==
-X-Gm-Message-State: AAQBX9fAEv4BPed1ADOThR46k599eagntLgaNOMoyJpjqaE5k7mEjzEi
-        QeSK3xBpmdFBeFUp7KJS49Yv5CGyKlNQBtiYEN0=
-X-Google-Smtp-Source: AKy350afIiu71ikLQC/thiE2YP73CF8Sf0msmiQqW2I4bYPmsscodlxCvuCuX8pa1d32EgxLSJbplTMS4FzFgZ7BwQY=
-X-Received: by 2002:a05:6512:10c5:b0:4e8:4409:bb76 with SMTP id
- k5-20020a05651210c500b004e84409bb76mr338636lfg.2.1681522041937; Fri, 14 Apr
- 2023 18:27:21 -0700 (PDT)
+        bh=k1afbuFWlyxB91mPaF3RJjLm/tOmldXzmxWkFwrfHEk=;
+        b=cUkrAM8zfRAqMaaUdsJDMhqCeHw7C/1qmsb/e0GkeUUTESenZOq0cnUAAlNBVEli2W
+         aEll58RleDkyIhIPFsXawpKYMT/hBmSmU1oSJVikR8JYNMSQo35ttnGjMpIqFSpnKKEg
+         zlWGNpDMQgalhRUsrVXKwni0b9PtUK8w8S7MzaSIr6F+61cjGaZp5mGpzj1w7K5f2wkn
+         hEMGb2j3uWzDUuRTWIgVhFb+a+hM+J1pAvvq9pr84WudyFo7YTEYONQC4xxy/MP+TjdD
+         ID0K3vhPpyXTSTAM8UIt+76nylFX2yOaNJ879JmB+HMxfNyowyb6pOWOVFEaorT/JUTn
+         PPrQ==
+X-Gm-Message-State: AAQBX9c3i2ncbouwbR9v13ucUv58dHCpNhkSrEiMVf3sXWyvH36NMtz7
+        lefO1qfRlpMgO1Th1HZ1W8R/L5AOkL/UfOEqZpM=
+X-Google-Smtp-Source: AKy350ZGyexFuW5o5uRF3zCJr9O5Schm+VDMK01K2nDdOLezG42Yj7j/neG2h9PeV2TyXZN42oyT5xc4mSuQXrigXXA=
+X-Received: by 2002:ad4:5c82:0:b0:5ec:b527:61e2 with SMTP id
+ o2-20020ad45c82000000b005ecb52761e2mr8905894qvh.48.1681535312742; Fri, 14 Apr
+ 2023 22:08:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1495.git.git.1681329955.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1495.git.git.1681329955.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 14 Apr 2023 18:27:09 -0700
-Message-ID: <CABPp-BEWaojwSpMaYT1VqNBYuhETm-QB9UyFsC-ePsu9B_e_aQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] cocci: codify authoring and reviewing practices
-To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Glen Choo <chooglen@google.com>
+References: <pull.1515.git.1681495119.gitgitgadget@gmail.com> <0cdd4ab3d739e07357ea9efef2cdece633db6ebb.1681495119.git.gitgitgadget@gmail.com>
+In-Reply-To: <0cdd4ab3d739e07357ea9efef2cdece633db6ebb.1681495119.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 15 Apr 2023 01:08:21 -0400
+Message-ID: <CAPig+cQQVby2g+_kfucbYdwOZW5_CEyyyOex=4hXoCJt7TkjeA@mail.gmail.com>
+Subject: Re: [PATCH 4/5] Documentation: document AUTO_MERGE
+To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 12, 2023 at 1:05=E2=80=AFPM Glen Choo via GitGitGadget
+On Fri, Apr 14, 2023 at 2:13 PM Philippe Blain via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
+> Add some documentation for AUTO_MERGE in git-diff(1), git-merge(1),
+> gitrevisions(7) and in the user manual.
 >
-> Here's the followup to the discussion in [1]. Sorry for the delay.
->
-> I've tried to incorporate most of the responses from that thread as well =
-as
-> suggest some guidelines that I think would make the authoring + reviewing
-> process smoother. I've opted for stronger wording to make the guidelines
-> easier to follow, but I don't feel strongly about the specifics.
->
-> [1]
-> https://lore.kernel.org/git/kl6l7cuycd3n.fsf@chooglen-macbookpro.roam.cor=
-p.google.com
->
-> Glen Choo (2):
->   cocci: add headings to and reword README
->   cocci: codify authoring and reviewing practices
->
->  contrib/coccinelle/README | 33 +++++++++++++++++++++++++++++----
->  1 file changed, 29 insertions(+), 4 deletions(-)
->
->
-> base-commit: f285f68a132109c234d93490671c00218066ace9
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-149=
-5%2Fchooglen%2Fpush-lsxuouxyokwo-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1495/c=
-hooglen/push-lsxuouxyokwo-v1
-> Pull-Request: https://github.com/git/git/pull/1495
-> --
-> gitgitgadget
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> @@ -1343,6 +1343,33 @@ $ git diff -3 file.txt           # diff against stage 3
+> +-------------------------------------------------
+> +$ git diff AUTO_MERGE
+> +diff --git a/file.txt b/file.txt
+> +index cd10406..8bf5ae7 100644
+> +--- a/file.txt
+> ++++ b/file.txt
+> +@@ -1,5 +1 @@
+> +-<<<<<<< HEAD:file.txt
+> +-Hello world
+> +-=======
+> +-Goodbye
+> +->>>>>>> 77976da35a11db4580b80ae27e8d65caf5208086:file.txt
+> ++Goodbye world
+> +-------------------------------------------------
+> +
+> +Notice that the diff shows we deleted the conflict markers and both versions,
+> +and wrote "Goodbye world" instead.
 
-I read through both patches, and I generally like them.
-
-I'm a little unsure on the "To give a Reviewed-by" bit of patch 2.
-For example, it could be possible that .cocci changes might apply a
-few different kinds of changes, and say only 2 of the 3 are reflected
-in the current tree, and those 2 types are handled correctly but the
-third type of change is buggy.  The .cocci files would then be a bug
-waiting to happen.  Maybe that's just a risk we take and it's okay for
-folks to give a Reviewed-by even being unfamiliar with cocci.  Maybe
-the wording should instead be "It's okay to give a Reviewed-by: on a
-series that also contains cocci changes when you are unfamiliar with
-coccinelle; just state that your Reviewed-by is limited to the other
-bits".  Or maybe the instructions should just be to give an Acked-by.
-You should probably have someone familiar enough with coccinelle that
-they know what is worth worrying about weigh in on that aspect.
-
-But you can have my Acked-by on the other bits.  :-)
+Some grammatical problem here. Perhaps s/and both/in both/, or maybe
+just drop "and both versions"?
