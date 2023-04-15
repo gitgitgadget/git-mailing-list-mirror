@@ -2,50 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89A7FC77B71
-	for <git@archiver.kernel.org>; Sat, 15 Apr 2023 08:59:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CBB4C77B71
+	for <git@archiver.kernel.org>; Sat, 15 Apr 2023 11:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229801AbjDOI7X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Apr 2023 04:59:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34150 "EHLO
+        id S230246AbjDOLGk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Apr 2023 07:06:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229845AbjDOI7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Apr 2023 04:59:22 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22475902E
-        for <git@vger.kernel.org>; Sat, 15 Apr 2023 01:59:19 -0700 (PDT)
-Received: (qmail 28567 invoked by uid 109); 15 Apr 2023 08:59:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 15 Apr 2023 08:59:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3055 invoked by uid 111); 15 Apr 2023 08:59:18 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 15 Apr 2023 04:59:18 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 15 Apr 2023 04:59:18 -0400
-From:   Jeff King <peff@peff.net>
-To:     Thomas Bock <bockthom@cs.uni-saarland.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Weird behavior of 'git log --before' or 'git log --date-order':
- Commits from 2011 are treated to be before 1980
-Message-ID: <20230415085918.GA679010@coredump.intra.peff.net>
-References: <7728e059-d58d-cce7-c011-fbc16eb22fb9@cs.uni-saarland.de>
- <20230415085207.GA656008@coredump.intra.peff.net>
+        with ESMTP id S230226AbjDOLGj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Apr 2023 07:06:39 -0400
+Received: from mailproxy03.manitu.net (mailproxy03.manitu.net [217.11.48.67])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC6AB3582
+        for <git@vger.kernel.org>; Sat, 15 Apr 2023 04:06:34 -0700 (PDT)
+Received: from localhost (unknown [IPv6:2001:9e8:6a4d:e900:272c:4c3e:5f23:14d9])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: michael@grubix.eu)
+        by mailproxy03.manitu.net (Postfix) with ESMTPSA id 592A812A01BF;
+        Sat, 15 Apr 2023 13:06:33 +0200 (CEST)
+From:   Michael J Gruber <git@grubix.eu>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Calvin Wan <calvinwan@google.com>
+Subject: [PATCH/RFD] fix connection via git protocol
+Date:   Sat, 15 Apr 2023 13:06:32 +0200
+Message-ID: <5d4e0ce10f537b4bb795a70dd51db12ecaf0206d.1681556597.git.git@grubix.eu>
+X-Mailer: git-send-email 2.40.0.403.g8e07f5f217
+In-Reply-To: <20230411074204.3024420-2-newren@gmail.com>
+References: <20230411074204.3024420-2-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230415085207.GA656008@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 15, 2023 at 04:52:07AM -0400, Jeff King wrote:
+5579f44d2f ("treewide: remove unnecessary cache.h inclusion", 2023-04-11)
+broke connections via git protocol because it removed the inclusion of
+the default port macro. While some may consider this transport to be
+deprecated, it still serves some purpose.
 
-> There may be also cases where the two diverge. Obviously having two
+connect.c (no more chache.h) and daemon.c (which still includes cache.h)
+are the only users of the macro. Hot fix the issue by copying the
+definition to connect.c.
 
-Sorry, my ability to type is going rapidly downhill this evening.
+A real fix will identify a proper common header file (I couldn't) or
+create a new one.
 
-I meant to say "there may be other cases where the two diverge". I.e.,
-the best way to be sure they behave the same is to make them share code.
+Signed-off-by: Michael J Gruber <git@grubix.eu>
+---
+ connect.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
--Peff
+diff --git a/connect.c b/connect.c
+index 5d8036197d..64f89e33cf 100644
+--- a/connect.c
++++ b/connect.c
+@@ -20,6 +20,8 @@
+ #include "alias.h"
+ #include "bundle-uri.h"
+ 
++#define DEFAULT_GIT_PORT 9418
++
+ static char *server_capabilities_v1;
+ static struct strvec server_capabilities_v2 = STRVEC_INIT;
+ static const char *next_server_feature_value(const char *feature, int *len, int *offset);
+-- 
+2.40.0.403.g8e07f5f217
+
