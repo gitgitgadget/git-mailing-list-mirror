@@ -2,84 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1333BC77B73
-	for <git@archiver.kernel.org>; Sun, 16 Apr 2023 18:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DEC8BC77B73
+	for <git@archiver.kernel.org>; Sun, 16 Apr 2023 19:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbjDPSlA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Apr 2023 14:41:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45594 "EHLO
+        id S229656AbjDPTKY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Apr 2023 15:10:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229674AbjDPSk7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Apr 2023 14:40:59 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28EACE74
-        for <git@vger.kernel.org>; Sun, 16 Apr 2023 11:40:58 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2a8aea2a610so8960951fa.3
-        for <git@vger.kernel.org>; Sun, 16 Apr 2023 11:40:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681670455; x=1684262455;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=wqYq7wuBB6HstTpXtce6TWyaHUi3KI6qWmjzubuv7w4=;
-        b=nu6+RgHOAGeDhbv7W7Dugv7Au5e6e9WdbPUf/eNDQBgPiFVMaIGFHnvOcF6RqDtnlM
-         A8QbA2r8WEm0Q6V7yp+8hm1nWJ2wkAeE9pPvjefXMC8XEiqK4XKtImBF0VMHeTUL8hF1
-         5go5Pq19l6Shh4risTXI0zcDBIoKDEIRYTWd80E0UHFFGT7douKblRlnZEHBHJtz+v/T
-         ytq0J4KBzRcLez0uda5HmduLZRzV/AmNW19jPcBr8f3llkGZ7V9rjQygRwJ9KvsKIt/0
-         qmjLPiSRbNfj552T+jBfPjBHIi9CyCbPFMsaBNkVO4R9twYY88hhhaxKq0HsDpJtGF5R
-         +/vA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681670455; x=1684262455;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wqYq7wuBB6HstTpXtce6TWyaHUi3KI6qWmjzubuv7w4=;
-        b=e3YSVHpg2lHdgb4Z/8whsBl4BOciNzBFcjQKbt9KOYVgugnM7tItF5tc9tTZluw5bw
-         LhyJ87yMdK2EQ1NpoBg09kcoymE4jLZgiYWeyXKet6r9y3JUmj9l5c2JjjY89Asqn6Gu
-         yMxJaicVgWoRQAg0tbFEwBY1u19EeHg8wT08ERdZrL08T5TUBEGB8r0fxkV0m59wxWAr
-         3XdSLsHeOB6+QX8fKauWeAndM5KIHiMjOWONfj5Xsdb7cQzR+3P039EgXoKcJwC85q7o
-         ap3bb6crV09kzz34m3UhykzziNClweZz9zZwKu40ikKYedWCoFAaVdQ+ZdUp/Xqt2A+Z
-         qJMQ==
-X-Gm-Message-State: AAQBX9cFV1JYIFVVaivQjAPhedEqSK0B4XzxHUPfHL+v9FhGrF//MCI8
-        Llp+o85NJWWW/E24awoFqRrhKGHrAfczat+46tydXNEQwvpAsg==
-X-Google-Smtp-Source: AKy350YwODtp6Kmf0WuIcd4t6vl9fgpggsdE74c2LUbMgaVB5KxxgbOiz19nNMKNzpyjdyW6GNKkSVhMArJsFthtMS8=
-X-Received: by 2002:a19:5214:0:b0:4eb:1192:ce6f with SMTP id
- m20-20020a195214000000b004eb1192ce6fmr1444470lfb.13.1681670455388; Sun, 16
- Apr 2023 11:40:55 -0700 (PDT)
+        with ESMTP id S229636AbjDPTKW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Apr 2023 15:10:22 -0400
+X-Greylist: delayed 314 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 16 Apr 2023 12:10:16 PDT
+Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.9])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDDEC30CA
+        for <git@vger.kernel.org>; Sun, 16 Apr 2023 12:10:16 -0700 (PDT)
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 4Q004D1hRNz1r1Ms;
+        Sun, 16 Apr 2023 21:05:00 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 4Q004D1RvJz1qqlS;
+        Sun, 16 Apr 2023 21:05:00 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id WtpaK7ZDHAwZ; Sun, 16 Apr 2023 21:04:59 +0200 (CEST)
+X-Auth-Info: iB9GRsuuJyc7y1BttlhjtSZblRrnsbqOwfk1Q2vUEpc4/77qlqOw+Bpj1xx6F/VT
+Received: from igel.home (aftr-82-135-86-95.dynamic.mnet-online.de [82.135.86.95])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Sun, 16 Apr 2023 21:04:59 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id 30D102C12AB; Sun, 16 Apr 2023 21:04:59 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     =?utf-8?Q?Ma=C3=ABl?= Nison <nison.mael@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Glob patterns w/ **; zero or more?
+In-Reply-To: <CANiF4iAaWB9j+Mma0-yfp6GvoQuM4k_OBAXn0keR+vCg8PQjmA@mail.gmail.com>
+        (=?utf-8?Q?=22Ma=C3=ABl?= Nison"'s message of "Sun, 16 Apr 2023 20:40:43
+ +0200")
+References: <CANiF4iAaWB9j+Mma0-yfp6GvoQuM4k_OBAXn0keR+vCg8PQjmA@mail.gmail.com>
+X-Yow:  Here I am in the POSTERIOR OLFACTORY LOBULE but I don't see CARL SAGAN
+ anywhere!!
+Date:   Sun, 16 Apr 2023 21:04:59 +0200
+Message-ID: <87ttxfsl5w.fsf@igel.home>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Ma=C3=ABl_Nison?= <nison.mael@gmail.com>
-Date:   Sun, 16 Apr 2023 20:40:43 +0200
-Message-ID: <CANiF4iAaWB9j+Mma0-yfp6GvoQuM4k_OBAXn0keR+vCg8PQjmA@mail.gmail.com>
-Subject: Glob patterns w/ **; zero or more?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Apr 16 2023, Maël Nison wrote:
 
-I noticed that, in a repo with a single `main.c` file, `git ls-files
-'./**/main.c'` (note the surrounding quotes, to avoid shell globbing)
-returns no result even though `git ls-files main.c` does. It however
-can find any `main.c` file located in a subdirectory, suggesting `**`
-is interpreted as "one or more" rather than "zero or more". Can you
-confirm it'd be a bug? I checked in both 2.38 and 2.40.
+> I noticed that, in a repo with a single `main.c` file, `git ls-files
+> './**/main.c'` (note the surrounding quotes, to avoid shell globbing)
+> returns no result even though `git ls-files main.c` does. It however
+> can find any `main.c` file located in a subdirectory, suggesting `**`
+> is interpreted as "one or more" rather than "zero or more". Can you
+> confirm it'd be a bug? I checked in both 2.38 and 2.40.
 
-For reference, the documentation is explicit that `**` is "zero or
-more", not "one or more", and it matches the behaviour from other glob
-implementations (emphasis mine):
+By default, pathspec matching does not take "**" specially, making it
+equivalen to "*", but it can match "/".  Thus "./**/main.c" is the same
+as "*/main.c" (the leading "./" always matches) and matches paths with
+at least one "/" in it (thus "*/main.c" does not match "main.c").
 
-> A slash followed by two consecutive asterisks then a slash matches ***zer=
-o or
-> more directories***. For example, "a/**/b" matches "a/b", "a/x/b", "a/x/y=
-/b" and so on.
+If you use ":(glob)./**/main.c", it uses shell glob matching, where "**"
+is special and "/**/" can match "/", but "*" does not match "/".
 
-Also quoting the bash documentation for reference:
-
-> globstar
-> If set, the pattern =E2=80=98**=E2=80=99 used in a filename expansion con=
-text will match all files
-> and zero or more directories and subdirectories. If the pattern is follow=
-ed by
-> a =E2=80=98/=E2=80=99, only directories and subdirectories match.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
