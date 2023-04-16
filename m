@@ -2,93 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6347CC77B61
-	for <git@archiver.kernel.org>; Sun, 16 Apr 2023 07:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B56BC77B61
+	for <git@archiver.kernel.org>; Sun, 16 Apr 2023 07:42:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230156AbjDPHJM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 16 Apr 2023 03:09:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54994 "EHLO
+        id S230114AbjDPHmS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Apr 2023 03:42:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229582AbjDPHJL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Apr 2023 03:09:11 -0400
+        with ESMTP id S229921AbjDPHmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Apr 2023 03:42:16 -0400
 Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FFED2707
-        for <git@vger.kernel.org>; Sun, 16 Apr 2023 00:09:10 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id jg21so55917457ejc.2
-        for <git@vger.kernel.org>; Sun, 16 Apr 2023 00:09:10 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CE41E64
+        for <git@vger.kernel.org>; Sun, 16 Apr 2023 00:42:15 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id u3so4346571ejj.12
+        for <git@vger.kernel.org>; Sun, 16 Apr 2023 00:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681628948; x=1684220948;
+        d=gmail.com; s=20221208; t=1681630934; x=1684222934;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=i6RBSGJM+nEjCrMrqq6zcQOu21mpXMvEu0aQkxiiU7s=;
-        b=Zs2JS3o3Fc9ytwP4BIyG3I6oqJ/NNKJvpxMoOkAWzpnoKgzxZEphiWRyOZn7AQJU4X
-         nbKwIvDKyXu6jPHOiLNI6oLKxcuEx22YM2aELwcujQ3MwFCxtXCYArUVb0HqiF/t2KL+
-         QZjKshZ9L+KfDVe3Ln1RcPp3YvYSa1PneDK13+1BbxSdElArw6TqelFaBtdx0l+3/tcc
-         9aAAQA2wby3h9IxbLqHrLZ8i6d7ccyTy7YLWMcl1Mp9CBQT70zQaob7Rpd7z/QOR8Jrj
-         5Ng4onsk0mE4UP6V63xE50iCcj8UnNAcNBJabHs1wn7LiHCgtBFKWAplM0gL5BVpOZHY
-         P5Ow==
+        bh=RRbrFOMrm31F8xIEbtfKPkT2PnZBkMnW214f0/SzlSg=;
+        b=GWcHe8S9KuQ87X49CytDYfEtbYOuZZHAIBj1vmRhhb7IjzjRSxxBhD6XvooJxGiXsQ
+         TAQDcxZ7tqv2E3tYfkS1FHG7flI3QDgHLjlu9Zap7h73slDJyZvUsbJxdcISOoE0WDfr
+         reyOw8XHzE/RVXY3Gv05jF97cWp0JHN7gaJZkzxE894TNC8MINZZIy+DQWKe9E3afDjO
+         4NhTotY6z84Bt8LobM7H1eckkrzocLuFBWK6YBz91MXs4rv673ZPd8GxFTrcBiqunJhZ
+         psWUKopLjFN74pU8Wye/ZHhSPsxUvjGnFivVdomR6D1EqjhC5tun1xhd02T/jbBTYM25
+         ASaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681628948; x=1684220948;
+        d=1e100.net; s=20221208; t=1681630934; x=1684222934;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=i6RBSGJM+nEjCrMrqq6zcQOu21mpXMvEu0aQkxiiU7s=;
-        b=OyP1322mnev5cj2XO+JO6SmizO9aHvq+x1/wnNLu/RtFeSYMBtD5Kt7WkqeUBDxgbC
-         +XCuxPH6LtYdos4wCJlj9DZDI82idt1MuWU7OBLnwKmJRnwmvOOkgqPI8aRfu1/7EKZB
-         P1N9knTGCutf8R530JL0DmidOQOJh+FzCHsQMgYPUbIBFZSr8P5UfgIY0v3RkN/D1Da2
-         6uh9gJfUR5zEnOP7oJG/YdgK6DHV9CwbibJr1uens6zwBZk9aWl+YXHEOHjfZJ81SCDs
-         w3rnz6mUHrgR5uBw6eJKd9PNzFDjKWLP+tN+GnYszFDIA9fnZrAlY02aeyS/ol7WZJv5
-         7mEg==
-X-Gm-Message-State: AAQBX9efpP4UkBgsJmfUoVClZCwFkIHqWUwHnFADSxkp+GzKKIIYDZ/o
-        rkyp9UuhMhFXddpOIrQKJS0=
-X-Google-Smtp-Source: AKy350ZsEQb9wOqTB5ZwnjnVWRZ+cjO79leTCgjF2GB04G62lyZf49tG3iD7kkBLPLeJ+as/pj8Pqg==
-X-Received: by 2002:a17:906:82c9:b0:933:1134:be1e with SMTP id a9-20020a17090682c900b009331134be1emr4045118ejy.53.1681628948324;
-        Sun, 16 Apr 2023 00:09:08 -0700 (PDT)
+        bh=RRbrFOMrm31F8xIEbtfKPkT2PnZBkMnW214f0/SzlSg=;
+        b=aVb3Fr6kLS2CFt1sIlmpUXH/6ziHHCCB4VDiCBB5dojsU+SXkAMHNN1e+9ROfEE8ZS
+         QjXuPZ/4gdQZhPjEDedW3Ju52fXmb4OxHAmEYb0nUAfl70w8s7moOOlL02HgZAzKkdnS
+         kln0suDHoBuJNyznrBva9D7SdydcipFrNTwkYCiw+UvD4dNlhsS7yCjVeiMNAgVM3Cbj
+         Pfz1blQKBDDqA4Ydut1UjY31hblEG70aYoV8rfOd2U8nEJOsFfE7dt/97QiOZ77hQiCI
+         L64lnMpG7+ASG3k0rZ93rRfy4RCeiziUNKTgelTkR4QYbRE8V11lZo6cCr0ARrsRKpYy
+         O5uw==
+X-Gm-Message-State: AAQBX9djT/0temc4hJUpjpXjABziYfmNTVE9n9i1+F6x/Mi6/6RQjaoz
+        kL1aiM36NC8kHsGpBwlkqrY=
+X-Google-Smtp-Source: AKy350Y1KdlnJNBJ/AG5brftTO1etDfh8N879DDkyNBl+ktYLq0xitxQ66M6C4i1F0JX6u5e4y/Lwg==
+X-Received: by 2002:a17:906:d7b3:b0:94e:8d63:9319 with SMTP id pk19-20020a170906d7b300b0094e8d639319mr4042095ejb.45.1681630934051;
+        Sun, 16 Apr 2023 00:42:14 -0700 (PDT)
 Received: from localhost (92-249-246-116.pool.digikabel.hu. [92.249.246.116])
-        by smtp.gmail.com with ESMTPSA id w18-20020a1709064a1200b0094e92b50076sm4704455eju.133.2023.04.16.00.09.07
+        by smtp.gmail.com with ESMTPSA id c1-20020a17090603c100b00882f9130eafsm4677616eja.26.2023.04.16.00.42.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 16 Apr 2023 00:09:07 -0700 (PDT)
-Date:   Sun, 16 Apr 2023 09:09:06 +0200
+        Sun, 16 Apr 2023 00:42:13 -0700 (PDT)
+Date:   Sun, 16 Apr 2023 09:42:12 +0200
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Rohit Ner <rohitner1@gmail.com>,
-        Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-        Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org
-Subject: Re: git log causing hang while browsing upstream linux
-Message-ID: <20230416070906.GA3271@szeder.dev>
-References: <CAKazavxTXwcZFtL2XyU3MpaUR=snWY8w8Lwpco+mkbqm2nWE=w@mail.gmail.com>
- <5b99135f-c1d4-434b-b508-35f5d66dd2bb@app.fastmail.com>
- <b5316855-971d-4b7b-89cd-e81ececc5124@app.fastmail.com>
- <CAKazavzS112w3wsxnA-2ibWH3xGrE_w7Av+VZg-DfgfH0aK72A@mail.gmail.com>
- <ZDSjBQhyDBGi9wBN@nand.local>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH 2/2] cocci: codify authoring and reviewing practices
+Message-ID: <20230416074212.GB3271@szeder.dev>
+References: <pull.1495.git.git.1681329955.gitgitgadget@gmail.com>
+ <75feb18dfd8af03f5e7ba02403a16a0ed4c2edaa.1681329955.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZDSjBQhyDBGi9wBN@nand.local>
+In-Reply-To: <75feb18dfd8af03f5e7ba02403a16a0ed4c2edaa.1681329955.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2023 at 08:00:05PM -0400, Taylor Blau wrote:
-> On Mon, Apr 10, 2023 at 10:37:15PM +0530, Rohit Ner wrote:
-> > I have not given the command more than 10 seconds, shouldn't the
-> > intended behaviour be to render the visible subgraph first?
+On Wed, Apr 12, 2023 at 08:05:55PM +0000, Glen Choo via GitGitGadget wrote:
+> From: Glen Choo <chooglen@google.com>
 > 
-> This is possible with Git's "commit-graph" feature, which you can read
-> about starting here:
+> This isn't set in stone; we expect this to be updated as the project
+> evolves.
 > 
-> 		https://devblogs.microsoft.com/devops/supercharging-the-git-commit-graph/
+> Signed-off-by: Glen Choo <chooglen@google.com>
+> ---
+>  contrib/coccinelle/README | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
 > 
-> TL;DR: if you run "git commit-graph write"
+> diff --git a/contrib/coccinelle/README b/contrib/coccinelle/README
+> index 9b28ba1c57a..055e3622e5c 100644
+> --- a/contrib/coccinelle/README
+> +++ b/contrib/coccinelle/README
+> @@ -92,3 +92,26 @@ that might be useful to developers.
+>  
+>     The absolute times will differ for you, but the relative speedup
+>     from caching should be on that order.
+> +
+> +== Authoring and reviewing coccinelle changes
+> +
+> +* When introducing and applying a new .cocci file, both the Git changes and
+> +  .cocci file should be reviewed.
+> +
+> +* Reviewers do not need to be coccinelle experts. To give a Reviewed-By, it is
+> +  enough for the reviewer to get a rough understanding of the proposed rules by
+> +  comparing the .cocci and Git changes, then checking that understanding
+> +  with the author.
+> +
+> +* Conversely, authors should consider that reviewers may not be coccinelle
+> +  experts. The primary aim should be to make .cocci files easy to understand,
+> +  e.g. by adding comments or by using rules that are easier to understand even
+> +  if they are less elegant.
+> +
+> +* .cocci rules should target only the problem it is trying to solve; "collateral
+> +  damage" is not allowed.
+> +
+> +* .cocci files used for refactoring should be temporarily kept in-tree to aid
 
-Please never recommend 'git commit-graph write' without '--reachable';
-scanning all packed objects to find commits to include in the
-commit-graph is just too inefficient for that.
+How should such semantic patches be kept in-tree?
+As .pending.cocci?  Then I think it would be better to point this out
+here.  Or as a "regular" semantic patch?  Then I'm not sure I agree
+with this recommendation, but perhaps a commit message explaining the
+reasoning behind this would help me make up my mind :)
 
-> once before running "git log
-> --oneline --graph", you'll get near-instantaneous results.
+It might also be worth mentioning that before submitting a new
+semantic patch developers should consider its cost-benefit ratio, in
+particular its effect on the runtime of 'make coccicheck', in the hope
+that we can avoid another 'unused.cocci' fiasco.
 
-The commit-graph has been enabled by default in v2.24.0, released over
-three years ago.  I wonder why Rohit's and/or Kristoffer's repos
-didn't have it already?!
-
+> +  the refactoring of out-of-tree code (e.g. in-flight topics). They should be
+> +  removed when enough time has been given for others to refactor their code,
+> +  i.e. ~1 release cycle.
+> -- 
+> gitgitgadget
