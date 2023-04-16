@@ -2,59 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 039CEC77B70
-	for <git@archiver.kernel.org>; Sun, 16 Apr 2023 03:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D4A0C77B71
+	for <git@archiver.kernel.org>; Sun, 16 Apr 2023 03:04:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230293AbjDPDEr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Apr 2023 23:04:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48088 "EHLO
+        id S230188AbjDPDEv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 15 Apr 2023 23:04:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230185AbjDPDEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Apr 2023 23:04:13 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE3E335BC
+        with ESMTP id S230198AbjDPDEP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Apr 2023 23:04:15 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20A253C13
         for <git@vger.kernel.org>; Sat, 15 Apr 2023 20:03:43 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f16ecaad2eso2701915e9.1
+Received: by mail-wm1-x32d.google.com with SMTP id he11-20020a05600c540b00b003ef6d684102so10093094wmb.3
         for <git@vger.kernel.org>; Sat, 15 Apr 2023 20:03:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20221208; t=1681614222; x=1684206222;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OHCC7pl/0MUm3RZQQbRwL8UeA/97RAGRt1GddcT9luo=;
-        b=jAhOYTVHzKaRRmp7UOKn+9m7t9bjydOj5KBGj7nuhZlaHox+f83pGLyrTGl2STqtvs
-         0kkNDJu00LzWhHT8NOvkCKLFD/DAPIKwCHi7g/pEofxLUEJxwJI3ZIGg1pQmiSQnOzYQ
-         oUgN5VSac5yg60uCl+6ZMJYzuQrZObcbcfoAs686FdkbJsMmHXXHrKQeqmKyq1hEbiwt
-         2ThXnjGcScTndjNwuvFEI8y4hGM4NP3mo1ubZn1Rbmf+GUbisN9Jnx1MH9b8YGjhJXXD
-         i82CvVsqJIuS686riAZmQ+QDOrTw5yixUUebsrlnLhNzoZb4Tz0IMNUsVYLOHvhCoS1A
-         tnTQ==
+        bh=v5CU5Bc3XP5YbogCT5M88UNwd1365uiEQvjRGnUczek=;
+        b=WyF7GekcLZlDUSIFu9kmAKdWVShhmGSuji9hUXzoopSNtoP8UHee9qwV+pFsxTKQye
+         smpeK2A7C++UcMIh+TIdN5UTQlECzcxnWTwz/XZuXRfqlfw2pd2ldbmSYSzD2IK4SAOz
+         OaxiFNIhH/n9n47WFty5t4Ryly8kN/0g0uZRP+1JqdBULo6oNQnhFk4QJPMCtSC7OzIN
+         gC2Ut5VYFjcMHr6zCbJx/GS0GV9DzSvLjC1XC9gv0/Wq6yaQrWagCvMDxwu3x/MGFJpY
+         Dgc+5ujuph9Wp/RTv5KCUsgBJqoaleX3eF92PGDr4FzHrnFI0XzbfsZlO3pRbm25CQhn
+         XsRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1681614222; x=1684206222;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OHCC7pl/0MUm3RZQQbRwL8UeA/97RAGRt1GddcT9luo=;
-        b=k4bLcvuwAIULezI8GCo0NNe+f6XZWfSDBgUmANd2iG6ooC7RKGLemB9nPv1hKec9c1
-         UXXK+m0xxofue1PZmwuyGi6G+IlyDAaODsP0oTD2ePr7hE0c7Ph34Eymi9RskUzB29fJ
-         wmnyuTB4LRS99cJ6weQG7jVdpp2TzATCFhglW+jynOECHmzQqI+gzwJ2sqtATlEhal+V
-         RzvdAY1Cmy7odcUgl/7cpz9JMObWtcs8LOUKnL0xy8QbQKR8dqcnJwJ8bQuDN6Ozsz9e
-         XnsKuk9hBBoigJHeWPdVN1jaZjiBVogrxtxACAbOrmec+uwpcBet/KHQhxP4PiBFSvLt
-         pt2g==
-X-Gm-Message-State: AAQBX9e2kZgWMJjMVeUKgV+jIs1YF7OLMCUGEe1OnSPUfnvCljCjdF8/
-        zBLI/O2XLRgIeDgeDDzDAAcxm0NydUw=
-X-Google-Smtp-Source: AKy350aS+gXz3Mg0ASVRUADkAUDMnPQvRD+2k/4MNaaBVCd8ZYQ7+oKd9V6O1aLgq4nVFxDmVw/org==
-X-Received: by 2002:adf:ef83:0:b0:2f8:4d7c:c3a9 with SMTP id d3-20020adfef83000000b002f84d7cc3a9mr2546751wro.43.1681614221944;
-        Sat, 15 Apr 2023 20:03:41 -0700 (PDT)
+        bh=v5CU5Bc3XP5YbogCT5M88UNwd1365uiEQvjRGnUczek=;
+        b=LDqodoHY//4nFdEYNb02ac8YSc3rPMptL66eiwiaZpkxgkPyvDN69+1Kd06kOJFUQ6
+         P5XgFSoX/m+cBi0SUxhJs9AyZNJsNSDV0KeX/Gn6sEuQIzLim0u6jRPR/+JvZnFz4OUF
+         P3Rt5C+UGjEXuN5uJtb7X951neyL8n6bYjEdGVMKRej/bzwDErd4RmOogeWkdctSN1Tk
+         Wogc9Vv7nOyHHlPdYdrxAvdZkZIE5YZtEhj33JdazSiPNvxw+pt8pvdkHVctqqu9kjZb
+         aw2OuTL+68jabnwXhmofnOzbHPY2ouHmjzaR5mNJJL7MFfLmSvemzsoj99o9VjNjpGy7
+         h9Bg==
+X-Gm-Message-State: AAQBX9dWFHb0OAdQ+Q3U1y6Rx68XFvN3FDFk3trsvUfyqIr2Ws+n58Qf
+        YmoMT5SyNXNjVwaOiApz8/oCmP5B9DM=
+X-Google-Smtp-Source: AKy350YZRxWjF7v09evH02gj+qOI3ZWtit3SdvIZbRY90CUZqIcGG1cJfFQI4g8wAP8+L7waLHoWPQ==
+X-Received: by 2002:a7b:ca56:0:b0:3ee:6cdf:c357 with SMTP id m22-20020a7bca56000000b003ee6cdfc357mr7362272wml.20.1681614222596;
+        Sat, 15 Apr 2023 20:03:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h19-20020a05600c351300b003f046ad52efsm11826468wmq.31.2023.04.15.20.03.41
+        by smtp.gmail.com with ESMTPSA id l21-20020a05600c4f1500b003f080b2f9f4sm11791935wmq.27.2023.04.15.20.03.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Apr 2023 20:03:41 -0700 (PDT)
-Message-Id: <d70e3b99daef23aa9064cb2d55240aa5e08cb8e4.1681614207.git.gitgitgadget@gmail.com>
+        Sat, 15 Apr 2023 20:03:42 -0700 (PDT)
+Message-Id: <f32d4fa3dbffa3879b7127f8910a7b4586bea81c.1681614207.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
 References: <pull.1517.git.1681614205.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 16 Apr 2023 03:03:24 +0000
-Subject: [PATCH 22/23] diff.h: reduce unnecessary includes
+Date:   Sun, 16 Apr 2023 03:03:25 +0000
+Subject: [PATCH 23/23] reftable: ensure git-compat-util.h is the first
+ (indirect) include
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,99 +72,77 @@ From: Elijah Newren <newren@gmail.com>
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- attr.c              | 1 +
- diff.h              | 1 -
- http-push.c         | 1 +
- line-log.c          | 1 +
- pack-bitmap-write.c | 1 +
- reflog.c            | 1 +
- tree-diff.c         | 1 +
- 7 files changed, 6 insertions(+), 1 deletion(-)
+ reftable/error.c         | 1 +
+ reftable/publicbasics.c  | 2 +-
+ reftable/tree.c          | 2 +-
+ reftable/tree_test.c     | 1 +
+ t/helper/test-reftable.c | 1 +
+ 5 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index 2d8aeb8b58c..ddf2b0cbc2e 100644
---- a/attr.c
-+++ b/attr.c
-@@ -20,6 +20,7 @@
- #include "object-store.h"
- #include "setup.h"
- #include "thread-utils.h"
-+#include "tree-walk.h"
+diff --git a/reftable/error.c b/reftable/error.c
+index 93941f21457..0d1766735e8 100644
+--- a/reftable/error.c
++++ b/reftable/error.c
+@@ -6,6 +6,7 @@ license that can be found in the LICENSE file or at
+ https://developers.google.com/open-source/licenses/bsd
+ */
  
- const char git_attr__true[] = "(builtin)true";
- const char git_attr__false[] = "\0(builtin)false";
-diff --git a/diff.h b/diff.h
-index 53aeb02a54b..69e574f4315 100644
---- a/diff.h
-+++ b/diff.h
-@@ -4,7 +4,6 @@
- #ifndef DIFF_H
- #define DIFF_H
++#include "system.h"
+ #include "reftable-error.h"
  
--#include "tree-walk.h"
- #include "pathspec.h"
- #include "oidset.h"
- #include "strbuf.h"
-diff --git a/http-push.c b/http-push.c
-index 3f184986362..866ba243a89 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -16,6 +16,7 @@
- #include "sigchain.h"
- #include "strvec.h"
+ #include <stdio.h>
+diff --git a/reftable/publicbasics.c b/reftable/publicbasics.c
+index 0ad7d5c0ff2..bcb82530d6c 100644
+--- a/reftable/publicbasics.c
++++ b/reftable/publicbasics.c
+@@ -6,10 +6,10 @@ license that can be found in the LICENSE file or at
+ https://developers.google.com/open-source/licenses/bsd
+ */
+ 
++#include "system.h"
+ #include "reftable-malloc.h"
+ 
+ #include "basics.h"
+-#include "system.h"
+ 
+ static void *(*reftable_malloc_ptr)(size_t sz);
+ static void *(*reftable_realloc_ptr)(void *, size_t);
+diff --git a/reftable/tree.c b/reftable/tree.c
+index b8899e060ab..a5bf8809854 100644
+--- a/reftable/tree.c
++++ b/reftable/tree.c
+@@ -6,10 +6,10 @@ license that can be found in the LICENSE file or at
+ https://developers.google.com/open-source/licenses/bsd
+ */
+ 
++#include "system.h"
  #include "tree.h"
-+#include "tree-walk.h"
- #include "packfile.h"
- #include "object-store.h"
- #include "commit-reach.h"
-diff --git a/line-log.c b/line-log.c
-index 10c19daec4a..6a7ac312a43 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -18,6 +18,7 @@
- #include "setup.h"
- #include "strvec.h"
- #include "bloom.h"
-+#include "tree-walk.h"
  
- static void range_set_grow(struct range_set *rs, size_t extra)
- {
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 3d3fd380654..cdffe2ce47d 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -19,6 +19,7 @@
- #include "prio-queue.h"
- #include "trace2.h"
+ #include "basics.h"
+-#include "system.h"
+ 
+ struct tree_node *tree_search(void *key, struct tree_node **rootp,
+ 			      int (*compare)(const void *, const void *),
+diff --git a/reftable/tree_test.c b/reftable/tree_test.c
+index cbff1255886..ac3a045ad4a 100644
+--- a/reftable/tree_test.c
++++ b/reftable/tree_test.c
+@@ -6,6 +6,7 @@ license that can be found in the LICENSE file or at
+ https://developers.google.com/open-source/licenses/bsd
+ */
+ 
++#include "system.h"
  #include "tree.h"
-+#include "tree-walk.h"
  
- struct bitmapped_commit {
- 	struct commit *commit;
-diff --git a/reflog.c b/reflog.c
-index 57dc7c0d051..ee1bf5d032c 100644
---- a/reflog.c
-+++ b/reflog.c
-@@ -5,6 +5,7 @@
- #include "refs.h"
- #include "revision.h"
- #include "tree.h"
-+#include "tree-walk.h"
- #include "worktree.h"
+ #include "basics.h"
+diff --git a/t/helper/test-reftable.c b/t/helper/test-reftable.c
+index 1f0a28cbb64..00237ef0d9e 100644
+--- a/t/helper/test-reftable.c
++++ b/t/helper/test-reftable.c
+@@ -1,3 +1,4 @@
++#include "reftable/system.h"
+ #include "reftable/reftable-tests.h"
+ #include "test-tool.h"
  
- /* Remember to update object flag allocation in object.h */
-diff --git a/tree-diff.c b/tree-diff.c
-index 9ea2dd7a6c3..20bb15f38d9 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -5,6 +5,7 @@
- #include "diff.h"
- #include "diffcore.h"
- #include "tree.h"
-+#include "tree-walk.h"
- 
- /*
-  * Some mode bits are also used internally for computations.
 -- 
 gitgitgadget
-
