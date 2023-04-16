@@ -2,83 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0C6BC77B71
-	for <git@archiver.kernel.org>; Sun, 16 Apr 2023 03:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9FF14C77B72
+	for <git@archiver.kernel.org>; Sun, 16 Apr 2023 05:28:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229904AbjDPDp2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 15 Apr 2023 23:45:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53190 "EHLO
+        id S229949AbjDPF2r (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 16 Apr 2023 01:28:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229803AbjDPDp0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Apr 2023 23:45:26 -0400
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E9582D57
-        for <git@vger.kernel.org>; Sat, 15 Apr 2023 20:45:24 -0700 (PDT)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-1842cddca49so27066781fac.1
-        for <git@vger.kernel.org>; Sat, 15 Apr 2023 20:45:24 -0700 (PDT)
+        with ESMTP id S229472AbjDPF2p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Apr 2023 01:28:45 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A76D1BF
+        for <git@vger.kernel.org>; Sat, 15 Apr 2023 22:28:44 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4ec8143400aso746790e87.0
+        for <git@vger.kernel.org>; Sat, 15 Apr 2023 22:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681616721; x=1684208721;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+        d=gmail.com; s=20221208; t=1681622922; x=1684214922;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5MZY6IdTsNYeJL7bLfzoRmB3Fjg7w64nkJiCWLXaIhk=;
-        b=dhWWjiV4ea5K/FP4Qw8bVrjGytciEjQ2nxxbDOjbEg803aoSkKKBhzdbknjw8ZJ1/F
-         kWDqPSK9MXRoe9dfOPQj6hawDX1Km7sfpj7QPL+O8kN71V0UpaEyWrcTnAqIKcAZYHet
-         cOm7K0pQERbkK/XNVuzfd3k0B3YQN8h17FbbC8UtkbEvwOwtGBqPyw8snZueB12LZjgU
-         NV0tTQ4H/pkYhwsv8jrsqulaGU/64uoC+eO9AmPdqpaE0Jk3QnvHdmYJAcoFjnrQRk14
-         lDydog0dfLXzT56laHNg5SjhSndgy1T40zK/wqQP+becAjWNcBKRB4Uq7Y80QeXSlKgj
-         dolQ==
+        bh=B4Wp/aFXzqzjXYG4uiLNGS+Q9se/nDEjx7apcU1Wr8M=;
+        b=bijUd2QBv/I+jBZ/ltcgut00lZRVV+4J+9hPECvxrLTu5C3XMq+vnZQRoTwvVpoZaQ
+         SG07CfWz7podClhMD1ljswlyHcwyrcUerzyB5t5Ld+HNt6PIm+G476Zg+awuP3QmqHhT
+         MDMKYgwreTfs49QOFpJojoJH69kZQeU7p8o/fYey+OgqmtDA2TmWJEXWAHoUAdno3gTg
+         2dAMdv62VpWibTPIHWDhhfkuQALB3iZ1xZc+XlPazl2604EKCI8LdO6FGzdW3kgS9aF6
+         cus/Smq81mOpbEB6/YhAbXEE0B0vY1QI63Rwac5f2ljI9IGB/ETd1mxwXn0qR7ZWdRtL
+         9bhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681616721; x=1684208721;
-        h=content-transfer-encoding:mime-version:subject:references
-         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=5MZY6IdTsNYeJL7bLfzoRmB3Fjg7w64nkJiCWLXaIhk=;
-        b=Hu8G0fOq4C9cYc62WXnIqzINuvhWv46TimQMV/0uP59vbMGwhgAQxIQOhqRz9VyBD3
-         XeHzB5slErRjUH/2JVd9Ya2fEru2VXIumTiswv3J5QWk4Km8xGcCVujSnHkJW1H1ukD5
-         0NQw8Ol2KKFZ33HSWbdNTjXV9VPMCNnD+KwbO1L2cEO/B8OvUJOvCeUuYu0gWpHJEymV
-         7csMTjsuNiFUjnxqejlMGyQJ92aH418xUvnCRhylUe6pAl3czy0LDp3W+GCxKr0ENvLi
-         DUuaOyTEYODlWeQQtcwtRt8Dh0SDYvKjaPV4gP0P3EG5A29v8l2kdlS/z1N2+c5Hq+wE
-         10RA==
-X-Gm-Message-State: AAQBX9fDPNymzwQxeqmLFryFns0RkbfxYyrsO8fAdRkVlCZQU2SWwfI4
-        DjUUfQNQQp/cvhDnggXy7e/q6qv4nEU=
-X-Google-Smtp-Source: AKy350YuObpJ9XADik7B5/9LybthVrCI2fHjx+GNkpPCjiMKA3MqDSulQ4t3MJgiT//zvIUkGjtq3w==
-X-Received: by 2002:a05:6871:593:b0:177:ac71:a216 with SMTP id u19-20020a056871059300b00177ac71a216mr6789818oan.11.1681616721440;
-        Sat, 15 Apr 2023 20:45:21 -0700 (PDT)
-Received: from localhost ([2806:2f0:4060:fff1:4ae7:daff:fe31:3285])
-        by smtp.gmail.com with ESMTPSA id yy21-20020a056871259500b0017ae1aede32sm3287503oab.46.2023.04.15.20.45.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Apr 2023 20:45:20 -0700 (PDT)
-Date:   Sat, 15 Apr 2023 21:45:20 -0600
-From:   Felipe Contreras <felipe.contreras@gmail.com>
-To:     Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Felipe Contreras <felipe.contreras@gmail.com>
-Message-ID: <643b6f503ad8d_3bb4294bc@chronos.notmuch>
-In-Reply-To: <20230408001829.11031-1-felipe.contreras@gmail.com>
-References: <20230408001829.11031-1-felipe.contreras@gmail.com>
-Subject: Re: [PATCH] doc: simplify man version
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
+        d=1e100.net; s=20221208; t=1681622922; x=1684214922;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=B4Wp/aFXzqzjXYG4uiLNGS+Q9se/nDEjx7apcU1Wr8M=;
+        b=ha8IR3v7cAbTM/icVgmiRfqHNCxWmHd5RLgrNBqXBn+af8/3is+kU09Nr7BY2fyyZk
+         9cXyq4zk+LQrHj28MJofsTR44Pqf5awA3UzfIXmwd8TGKlrgsnwQCfzEY0na7ffUGVot
+         zMLaahodA4tAfhffZfQeoJsacvyjh977kvRISeZhsZ5qC0R8N/C+9Ue0Pm+NV4FNlaWV
+         HWz91tsyNngz3Kob8CDXmReMQHOUoj344c+pEMDE/3V3L+3AUEiEpIqO5JKnnp+S6SaN
+         4cJVfRlXXY6xTWwMAbJxAceIGbFYAPUYxNk7+W9qqXky3rZpBodj3nod96ylAxfN7POW
+         v7gQ==
+X-Gm-Message-State: AAQBX9fKlwY0844YPbShER34tow9A5ZWYpvYCa0qRu/kkNzouxOT8cl7
+        q6JGZm3d3N9SEbaFUWJmpA8oJqI8Thy/jLEd1eA=
+X-Google-Smtp-Source: AKy350YyhrLWDjNjmUvO5egYYU0QnSgFgWYxCbUCPHuzKgxyxqG/qn93PgpXAQ6cdS66YzEeZw0m/7+REmCIEySgbig=
+X-Received: by 2002:a19:f80a:0:b0:4ea:fa15:5bce with SMTP id
+ a10-20020a19f80a000000b004eafa155bcemr1101062lff.7.1681622922217; Sat, 15 Apr
+ 2023 22:28:42 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230407072415.1360068-1-christian.couder@gmail.com>
+ <20230407072415.1360068-12-christian.couder@gmail.com> <8daf2603-2818-9c9d-7a06-6af2872a045a@github.com>
+ <89c78da5-388a-e52b-b20b-e376ac90de14@github.com> <CABPp-BGfG3VeY1gOugzig8PLan1AS66BMWnyFSOsLOy-zqLdXw@mail.gmail.com>
+In-Reply-To: <CABPp-BGfG3VeY1gOugzig8PLan1AS66BMWnyFSOsLOy-zqLdXw@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 15 Apr 2023 22:28:29 -0700
+Message-ID: <CABPp-BHeQpOwit742hVn5eMdeX3WUPCBg7JNhOKjdJsFQbZOdQ@mail.gmail.com>
+Subject: Re: [PATCH 11/14] replay: use standard revision ranges
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Patrick Steinhardt <ps@pks.im>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        John Cai <johncai86@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sat, Apr 15, 2023 at 12:07=E2=80=AFPM Elijah Newren <newren@gmail.com> w=
+rote:
+<snip>
+> > What happens if they add an --author filter?
+>
+> git fast-export accepts full revision ranges, including ones that make
+> no sense like this.  We could add patches to exclude such options, to
+> both replay and fast-export.  Or just document that they make no
+> sense.
+>
+> To answer the question as asked, though, let me first provide a little
+> background: for a commit A with parent B, git-replay checks whether
+> the parent of the current commit (i.e. for A that'd be B) has been
+> replayed (as B').  If so, it will make the parent of A' be B'.  If
+> there is no B' (e.g. because B was part of "upstream" and thus wasn't
+> replayed), it makes the parent of A' be whatever is passed to --onto.
+> This allows git-replay to not only rebase/replay a linear set of
+> patches, but a partially or even fully divergent set of branches.
 
-I noticed this patch landed in "next", but I found a typo:
-
-Felipe Contreras wrote:
-> There is no need for us to demand that that they add support for the
-> version field when in reality all that is going to happen is that both
-> fields are going to be joined.
-
-s/that that/that/
-
-Is there any procedure to fix this? Or is it a small enough issue to leave it
-as it is?
-
--- 
-Felipe Contreras
+A small clarification, which only matters to future work and not this
+particular series: the above description where ONTO is the fallback
+for a lack of B', is for first parent only.  For a second (or later)
+parent of A, which we'll refer to as C, if C has not been replayed as
+part of this operation, then we simply use the unmodified C as the
+second (or later) parent of A'.
